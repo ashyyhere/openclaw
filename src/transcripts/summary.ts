@@ -1,8 +1,8 @@
-// transcripts summary helpers and runtime behavior.
+// Heuristic transcript summary extraction and markdown rendering.
 import { normalizeStringEntries } from "../shared/string-normalization.js";
 import type { TranscriptSessionDescriptor, TranscriptUtterance } from "./provider-types.js";
 
-/** Shared type for Transcripts Summary in src/transcripts. */
+/** Generated transcript summary sections written beside captured utterances. */
 export type TranscriptsSummary = {
   sessionId: string;
   title: string;
@@ -48,7 +48,7 @@ function formatTranscript(utterances: TranscriptUtterance[]): string[] {
   return utterances.map(formatSpeakerLine).filter(Boolean);
 }
 
-/** Reused helper for summarize Transcripts behavior in src/transcripts. */
+/** Builds a lightweight summary from transcript utterance text and keyword matches. */
 export function summarizeTranscripts(params: {
   session: TranscriptSessionDescriptor;
   utterances: TranscriptUtterance[];
@@ -72,7 +72,7 @@ function renderList(items: string[]): string {
   return items.length > 0 ? items.map((item) => `- ${item}`).join("\n") : "- None captured";
 }
 
-/** Reused helper for render Transcripts Markdown behavior in src/transcripts. */
+/** Renders a transcript summary into stable Markdown sections. */
 export function renderTranscriptsMarkdown(summary: TranscriptsSummary): string {
   return [
     `# ${summary.title}`,

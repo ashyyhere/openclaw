@@ -1,7 +1,7 @@
-// transcripts config helpers and runtime behavior.
+// Transcript feature config normalization and auto-start defaults.
 import { normalizeOptionalString as readString } from "../shared/string-coerce.js";
 
-/** Shared type for Transcripts Auto Start Config in src/transcripts. */
+/** Raw config entry describing a transcript source to start automatically. */
 export type TranscriptsAutoStartConfig = {
   providerId: string;
   sessionId?: string;
@@ -12,7 +12,7 @@ export type TranscriptsAutoStartConfig = {
   meetingUrl?: string;
 };
 
-/** Shared type for Resolved Transcripts Auto Start Config in src/transcripts. */
+/** Normalized auto-start entry with empty fields removed. */
 export type ResolvedTranscriptsAutoStartConfig = {
   providerId: string;
   sessionId?: string;
@@ -23,14 +23,14 @@ export type ResolvedTranscriptsAutoStartConfig = {
   meetingUrl?: string;
 };
 
-/** Shared type for Transcripts Config in src/transcripts. */
+/** Raw transcript feature config from OpenClaw configuration. */
 export type TranscriptsConfig = {
   enabled?: boolean;
   maxUtterances?: number;
   autoStart?: TranscriptsAutoStartConfig[];
 };
 
-/** Shared type for Resolved Transcripts Config in src/transcripts. */
+/** Effective transcript config after defaults and bounds are applied. */
 export type ResolvedTranscriptsConfig = {
   enabled: boolean;
   maxUtterances: number;
@@ -61,7 +61,7 @@ function resolveAutoStart(raw: unknown): ResolvedTranscriptsAutoStartConfig[] {
     .filter((entry): entry is ResolvedTranscriptsAutoStartConfig => entry !== undefined);
 }
 
-/** Reused helper for resolve Transcripts Config behavior in src/transcripts. */
+/** Resolves transcript feature config with bounded utterance retention. */
 export function resolveTranscriptsConfig(raw: unknown): ResolvedTranscriptsConfig {
   const config = raw && typeof raw === "object" ? (raw as Record<string, unknown>) : {};
   const maxUtterances =
