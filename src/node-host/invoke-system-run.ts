@@ -1,4 +1,6 @@
-// node-host invoke system run helpers and runtime behavior.
+// Policy and execution pipeline for node-host system.run. This module parses
+// incoming commands, layers global/agent exec policy, applies approval and
+// allowlist decisions, then delegates to the local host or companion app.
 import crypto from "node:crypto";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { GatewayClient } from "../gateway/client.js";
@@ -220,7 +222,7 @@ function resolveAgentExecConfig(
   return entry?.tools?.exec;
 }
 
-/** Reused helper for resolve Effective System Run Exec Policy behavior in src/node-host. */
+/** Layer global, agent, mode, and persisted approval policy for system.run. */
 export function resolveEffectiveSystemRunExecPolicy(params: {
   cfg: OpenClawConfig;
   agentId: string | undefined;
@@ -278,7 +280,7 @@ async function resolveSystemRunAutoReviewer(params: {
   });
 }
 
-/** Shared type for Handle System Run Invoke Options in src/node-host. */
+/** Dependency-injected runtime used by the system.run invocation pipeline. */
 export type HandleSystemRunInvokeOptions = {
   client: GatewayClient;
   params: SystemRunParams;
@@ -372,7 +374,7 @@ function argvArraysMatch(left: readonly string[] | undefined, right: readonly st
   );
 }
 
-/** Re-exported API for src/node-host, starting with build System Run Approval Plan. */
+/** Approval-plan builder is re-exported for tests and node-host command routing. */
 export { buildSystemRunApprovalPlan } from "./invoke-system-run-plan.js";
 
 async function parseSystemRunPhase(
@@ -919,7 +921,7 @@ async function executeSystemRunPhase(
   );
 }
 
-/** Reused helper for handle System Run Invoke behavior in src/node-host. */
+/** Parse, authorize, execute, and report a single system.run request. */
 export async function handleSystemRunInvoke(opts: HandleSystemRunInvokeOptions): Promise<void> {
   const parsed = await parseSystemRunPhase(opts);
   if (!parsed) {

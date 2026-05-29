@@ -1,4 +1,6 @@
-// node-host invoke helpers and runtime behavior.
+// Gateway-facing node.invoke dispatcher. Built-in system commands, plugin
+// node-host commands, and exec approval updates all flow through this boundary
+// so result frames and host environment sanitization stay consistent.
 import { spawn } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
@@ -75,7 +77,7 @@ type NodeInvokeRequestPayload = {
   idempotencyKey?: string | null;
 };
 
-/** Re-exported API for src/node-host, starting with Skill Bins Provider. */
+/** Public skill-bin lookup contract consumed by system-run execution. */
 export type { SkillBinsProvider } from "./invoke-types.js";
 
 function resolveExecSecurity(value?: string): ExecSecurity {
@@ -95,7 +97,7 @@ function resolveExecAsk(value?: string): ExecAsk {
   return value === "off" || value === "on-miss" || value === "always" ? value : "on-miss";
 }
 
-/** Reused helper for sanitize Env behavior in src/node-host. */
+/** Sanitize environment overrides before spawning host commands. */
 export function sanitizeEnv(overrides?: Record<string, string> | null): Record<string, string> {
   return sanitizeHostExecEnv({ overrides, blockPathOverrides: true });
 }
@@ -107,7 +109,7 @@ function truncateOutput(raw: string, maxChars: number): { text: string; truncate
   return { text: `... (truncated) ${raw.slice(raw.length - maxChars)}`, truncated: true };
 }
 
-/** Reused helper for decode Captured Output Buffer behavior in src/node-host. */
+/** Decode captured command output with Windows console encoding support. */
 export function decodeCapturedOutputBuffer(params: {
   buffer: Buffer;
   platform?: NodeJS.Platform;
@@ -368,7 +370,7 @@ async function sendInvalidRequestResult(
   await sendErrorResult(client, frame, "INVALID_REQUEST", String(err));
 }
 
-/** Reused helper for handle Invoke behavior in src/node-host. */
+/** Route one validated node.invoke request to built-in or plugin command handlers. */
 export async function handleInvoke(
   frame: NodeInvokeRequestPayload,
   client: GatewayClient,
@@ -537,7 +539,7 @@ function decodeParams<T>(raw?: string | null): T {
   }
 }
 
-/** Reused helper for coerce Node Invoke Payload behavior in src/node-host. */
+/** Normalize a raw gateway node.invoke frame into the dispatcher payload shape. */
 export function coerceNodeInvokePayload(payload: unknown): NodeInvokeRequestPayload | null {
   if (!payload || typeof payload !== "object") {
     return null;
@@ -584,7 +586,7 @@ async function sendInvokeResult(
   }
 }
 
-/** Reused helper for build Node Invoke Result Params behavior in src/node-host. */
+/** Build the gateway result frame for a completed node.invoke request. */
 export function buildNodeInvokeResultParams(
   frame: NodeInvokeRequestPayload,
   result: {

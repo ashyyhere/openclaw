@@ -1,4 +1,6 @@
-// node-host plugin node host helpers and runtime behavior.
+// Node-host bridge for plugin-provided commands. The gateway loads plugin
+// command metadata once, then this module exposes the registered capability and
+// command set to node.invoke without importing plugin internals directly.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { getActivePluginRegistry } from "../plugins/runtime.js";
 
@@ -11,7 +13,7 @@ async function loadPluginRegistryLoaderModule() {
   return await pluginRegistryLoaderModulePromise;
 }
 
-/** Reused helper for ensure Node Host Plugin Registry behavior in src/node-host. */
+/** Load the plugin registry before node-host command discovery or invocation. */
 export async function ensureNodeHostPluginRegistry(params: {
   config: OpenClawConfig;
   env?: NodeJS.ProcessEnv;
@@ -24,7 +26,7 @@ export async function ensureNodeHostPluginRegistry(params: {
   });
 }
 
-/** Reused helper for list Registered Node Host Caps And Commands behavior in src/node-host. */
+/** Return deterministic plugin node-host capability and command names. */
 export function listRegisteredNodeHostCapsAndCommands(): {
   caps: string[];
   commands: string[];
@@ -44,7 +46,7 @@ export function listRegisteredNodeHostCapsAndCommands(): {
   };
 }
 
-/** Reused helper for invoke Registered Node Host Command behavior in src/node-host. */
+/** Dispatch a plugin-owned node-host command by its manifest command id. */
 export async function invokeRegisteredNodeHostCommand(
   command: string,
   paramsJSON?: string | null,
