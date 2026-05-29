@@ -1,10 +1,10 @@
-// llm session resources helpers and runtime behavior.
-/** Shared type for Session Resource Cleanup in src/llm. */
+// Session-scoped LLM resource cleanup registry.
+/** Cleanup callback invoked when a session or all sessions release provider resources. */
 export type SessionResourceCleanup = (sessionId?: string) => void;
 
 const sessionResourceCleanups = new Set<SessionResourceCleanup>();
 
-/** Reused helper for register Session Resource Cleanup behavior in src/llm. */
+/** Registers a cleanup callback and returns its unregister function. */
 export function registerSessionResourceCleanup(cleanup: SessionResourceCleanup): () => void {
   sessionResourceCleanups.add(cleanup);
   return () => {
@@ -12,7 +12,7 @@ export function registerSessionResourceCleanup(cleanup: SessionResourceCleanup):
   };
 }
 
-/** Reused helper for cleanup Session Resources behavior in src/llm. */
+/** Runs all registered cleanup callbacks and reports aggregate failures. */
 export function cleanupSessionResources(sessionId?: string): void {
   const errors: unknown[] = [];
   for (const cleanup of sessionResourceCleanups) {

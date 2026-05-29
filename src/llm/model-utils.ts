@@ -1,7 +1,7 @@
-// llm model utils helpers and runtime behavior.
+// Shared model cost and thinking-level normalization helpers.
 import type { Api, Model, ModelThinkingLevel, Usage } from "./types.js";
 
-/** Reused helper for calculate Cost behavior in src/llm. */
+/** Calculates per-million-token cost buckets in place on a usage record. */
 export function calculateCost<TApi extends Api>(model: Model<TApi>, usage: Usage): Usage["cost"] {
   usage.cost.input = (model.cost.input / 1000000) * usage.input;
   usage.cost.output = (model.cost.output / 1000000) * usage.output;
@@ -22,7 +22,7 @@ const EXTENDED_THINKING_LEVELS: ModelThinkingLevel[] = [
   "max",
 ];
 
-/** Reused helper for get Supported Thinking Levels behavior in src/llm. */
+/** Lists thinking levels a model supports after applying its provider-specific map. */
 export function getSupportedThinkingLevels<TApi extends Api>(
   model: Model<TApi>,
 ): ModelThinkingLevel[] {
@@ -42,7 +42,7 @@ export function getSupportedThinkingLevels<TApi extends Api>(
   });
 }
 
-/** Reused helper for clamp Thinking Level behavior in src/llm. */
+/** Chooses the nearest supported thinking level for a requested model setting. */
 export function clampThinkingLevel<TApi extends Api>(
   model: Model<TApi>,
   level: ModelThinkingLevel,
@@ -72,7 +72,7 @@ export function clampThinkingLevel<TApi extends Api>(
   return availableLevels[0] ?? "off";
 }
 
-/** Reused helper for models Are Equal behavior in src/llm. */
+/** Compares model identity by provider and model id. */
 export function modelsAreEqual<TApi extends Api>(
   a: Model<TApi> | null | undefined,
   b: Model<TApi> | null | undefined,

@@ -1,4 +1,4 @@
-// llm/utils json parse helpers and runtime behavior.
+// JSON repair and partial-parse helpers for streamed provider payloads.
 import { parse as partialParse } from "partial-json";
 
 const VALID_JSON_ESCAPES = new Set(['"', "\\", "/", "b", "f", "n", "r", "t", "u"]);
@@ -89,7 +89,7 @@ export function repairJson(json: string): string {
   return repaired;
 }
 
-/** Reused helper for parse Json With Repair behavior in src/llm/utils. */
+/** Parses JSON after repairing raw control characters and invalid string escapes. */
 export function parseJsonWithRepair(json: string): unknown {
   try {
     return JSON.parse(json) as unknown;

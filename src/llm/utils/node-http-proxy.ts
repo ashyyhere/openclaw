@@ -1,4 +1,4 @@
-// llm/utils node http proxy helpers and runtime behavior.
+// Node HTTP(S) proxy agent helpers for provider SDK clients.
 import type { Agent as HttpAgent } from "node:http";
 import type { Agent as HttpsAgent } from "node:https";
 import {
@@ -7,21 +7,21 @@ import {
   UNSUPPORTED_PROXY_PROTOCOL_MESSAGE,
 } from "../../infra/net/node-proxy-agent.js";
 
-/** Shared type for Node Http Proxy Agents in src/llm/utils. */
+/** Paired HTTP and HTTPS agents configured for one proxy endpoint. */
 export interface NodeHttpProxyAgents {
   httpAgent: HttpAgent;
   httpsAgent: HttpsAgent;
 }
 
-/** Re-exported API for src/llm/utils, starting with UNSUPPORTED PROXY PROTOCOL MESSAGE. */
+/** Shared error message for proxy URL schemes unsupported by Node provider clients. */
 export { UNSUPPORTED_PROXY_PROTOCOL_MESSAGE };
 
-/** Reused helper for resolve Http Proxy Url For Target behavior in src/llm/utils. */
+/** Resolves the proxy URL selected by environment rules for a target provider URL. */
 export function resolveHttpProxyUrlForTarget(targetUrl: string | URL): URL | undefined {
   return resolveEnvNodeProxyUrlForTarget(targetUrl);
 }
 
-/** Reused helper for create Http Proxy Agents For Target behavior in src/llm/utils. */
+/** Creates fixed HTTP(S) proxy agents when env proxy rules apply to the target. */
 export function createHttpProxyAgentsForTarget(
   targetUrl: string | URL,
 ): NodeHttpProxyAgents | undefined {
