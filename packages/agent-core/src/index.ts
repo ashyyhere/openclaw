@@ -1,4 +1,4 @@
-// packages/agent-core/src index helpers and runtime behavior.
+// Public agent-core package barrel for loops, runtime deps, harness, and compaction APIs.
 export * from "./agent.js";
 export * from "./agent-loop.js";
 export * from "./node.js";
@@ -18,9 +18,9 @@ export * from "./harness/session/memory-repo.js";
 export * from "./harness/session/memory-storage.js";
 export * from "./harness/session/repo-utils.js";
 export * from "./harness/session/session.js";
-/** Re-exported public API for packages/agent-core, starting with uuidv7. */
+/** UUID helper re-exported for session id generation. */
 export { uuidv7 } from "./harness/session/uuid.js";
-/** Re-exported public API for packages/agent-core. */
+/** Branch-summary compaction helpers used by session restore and UI summaries. */
 export {
   type BranchPreparation,
   type BranchPathEntry,
@@ -32,7 +32,7 @@ export {
   generateBranchSummary,
   prepareBranchEntries,
 } from "./harness/compaction/branch-summarization.js";
-/** Re-exported public API for packages/agent-core. */
+/** Core conversation compaction helpers and settings contracts. */
 export {
   calculateContextTokens,
   compact,
