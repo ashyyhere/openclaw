@@ -1,5 +1,5 @@
-// packages/memory-host-sdk/src/host openclaw runtime io helpers and runtime behavior.
-/** Re-exported public API for packages/memory-host-sdk. */
+// IO, logging, concurrency, warning, and platform helpers shared by memory host code.
+/** Runtime utility helpers reused by memory host adapters without importing core internals. */
 export {
   CHARS_PER_TOKEN_ESTIMATE,
   DEFAULT_SQLITE_WAL_AUTOCHECKPOINT_PAGES,
@@ -26,7 +26,7 @@ export {
   truncateUtf16Safe,
 } from "./openclaw-runtime.js";
 
-/** Re-exported public API for packages/memory-host-sdk. */
+/** Platform and SQLite maintenance types exposed by the IO facade. */
 export type {
   ProcessWarning,
   ResolveWindowsSpawnProgramCandidateParams,

@@ -1,7 +1,7 @@
-// packages/memory-host-sdk/src/host openclaw runtime network helpers and runtime behavior.
-/** Re-exported public API for packages/memory-host-sdk, starting with fetch With Ssr FGuard. */
+// Network facade for SSRF-guarded remote memory and embedding requests.
+/** Fetch wrapper that enforces SSRF policy before remote calls leave the process. */
 export { fetchWithSsrFGuard } from "../../../../src/infra/net/fetch-guard.js";
-/** Re-exported public API for packages/memory-host-sdk, starting with should Use Env Http Proxy For Url. */
+/** Proxy environment helper shared by remote provider clients. */
 export { shouldUseEnvHttpProxyForUrl } from "../../../../src/infra/net/proxy-env.js";
-/** Re-exported public API for packages/memory-host-sdk, starting with ssrf Policy From Http Base Url Allowed Hostname. */
+/** Builds a narrow SSRF policy from an allowed HTTP base URL hostname. */
 export { ssrfPolicyFromHttpBaseUrlAllowedHostname } from "../../../../src/infra/net/ssrf.js";

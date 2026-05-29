@@ -1,5 +1,5 @@
-// packages/memory-host-sdk/src/host openclaw runtime config helpers and runtime behavior.
-/** Re-exported public API for packages/memory-host-sdk. */
+// Config facade for memory host consumers that need canonical OpenClaw parsing.
+/** Config loading, secret normalization, duration, byte-size, and state-dir helpers. */
 export {
   getRuntimeConfig,
   hasConfiguredSecretInput,
@@ -10,7 +10,7 @@ export {
   resolveSessionTranscriptsDirForAgent,
   resolveStateDir,
 } from "./openclaw-runtime.js";
-/** Re-exported public API for packages/memory-host-sdk. */
+/** Public config shape types used by memory host resolution. */
 export type {
   MemoryBackend,
   MemoryCitationsMode,

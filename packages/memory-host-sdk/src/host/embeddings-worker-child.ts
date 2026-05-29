@@ -1,4 +1,4 @@
-// packages/memory-host-sdk/src/host embeddings worker child helpers and runtime behavior.
+// Child-process runtime for local embeddings so node-llama shutdown stays isolated.
 import { createLocalEmbeddingProviderInProcess } from "./embeddings.js";
 import type { EmbeddingProvider, EmbeddingProviderOptions } from "./embeddings.types.js";
 

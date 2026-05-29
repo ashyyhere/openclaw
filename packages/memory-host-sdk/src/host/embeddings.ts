@@ -1,4 +1,4 @@
-// packages/memory-host-sdk/src/host embeddings helpers and runtime behavior.
+// Local embedding provider factory using worker-backed or in-process node-llama runtimes.
 import { DEFAULT_LOCAL_MODEL } from "./embedding-defaults.js";
 import { sanitizeAndNormalizeEmbedding } from "./embedding-vectors.js";
 import { createLocalEmbeddingWorkerProvider } from "./embeddings-worker.js";
@@ -15,7 +15,7 @@ type DisposableResource = {
   dispose?: () => Promise<void> | void;
 };
 
-/** Re-exported public API for packages/memory-host-sdk. */
+/** Embedding provider contracts consumed by memory host backends. */
 export type {
   EmbeddingProvider,
   EmbeddingProviderFallback,
@@ -25,10 +25,10 @@ export type {
   GeminiTaskType,
 } from "./embeddings.types.js";
 
-/** Re-exported public API for packages/memory-host-sdk, starting with DEFAULT LOCAL MODEL. */
+/** Default local embedding model used when config omits a model path. */
 export { DEFAULT_LOCAL_MODEL } from "./embedding-defaults.js";
 
-/** Public type describing Local Embedding Provider Runtime Options for packages/memory-host-sdk. */
+/** Runtime-only knobs for tests and packaged worker script resolution. */
 export type LocalEmbeddingProviderRuntimeOptions = {
   workerScriptPath?: string;
 };
@@ -49,14 +49,14 @@ async function disposeResources(
   }
 }
 
-/** Public helper for create Local Embedding Provider behavior in packages/memory-host-sdk. */
+/** Creates the default local provider in an isolated worker process. */
 export async function createLocalEmbeddingProvider(
   options: EmbeddingProviderOptions,
 ): Promise<EmbeddingProvider> {
   return await createLocalEmbeddingWorkerProvider(options);
 }
 
-/** Public helper for create Local Embedding Provider In Process behavior in packages/memory-host-sdk. */
+/** Creates an in-process node-llama provider for the worker child runtime. */
 export async function createLocalEmbeddingProviderInProcess(
   options: EmbeddingProviderOptions,
 ): Promise<EmbeddingProvider> {

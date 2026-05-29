@@ -1,5 +1,5 @@
-// packages/memory-host-sdk/src/host warning filter helpers and runtime behavior.
-/** Re-exported public API for packages/memory-host-sdk, starting with install Process Warning Filter. */
+// Process warning filtering facade for optional experimental runtime modules.
+/** Installs and evaluates warning filters for noisy dependency/runtime warnings. */
 export { installProcessWarningFilter, shouldIgnoreWarning } from "./openclaw-runtime-io.js";
-/** Re-exported public API for packages/memory-host-sdk, starting with Process Warning. */
+/** Process warning shape accepted by the warning filter. */
 export type { ProcessWarning } from "./openclaw-runtime-io.js";

@@ -1,5 +1,5 @@
-// packages/memory-host-sdk/src/host openclaw runtime agent helpers and runtime behavior.
-/** Re-exported public API for packages/memory-host-sdk. */
+// Agent runtime facade for memory host code that cannot import core barrels directly.
+/** Agent path, parameter, cron, and memory-search config helpers. */
 export {
   DEFAULT_AGENT_COMPACTION_RESERVE_TOKENS_FLOOR,
   asToolParamsRecord,
@@ -16,7 +16,7 @@ export {
   resolveMemorySearchSyncConfig,
   resolveSessionAgentId,
 } from "./openclaw-runtime.js";
-/** Re-exported public API for packages/memory-host-sdk. */
+/** Agent runtime types needed by memory host adapters. */
 export type {
   AnyAgentTool,
   ResolvedMemorySearchConfig,

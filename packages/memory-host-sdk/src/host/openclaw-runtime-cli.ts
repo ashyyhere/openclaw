@@ -1,5 +1,5 @@
-// packages/memory-host-sdk/src/host openclaw runtime cli helpers and runtime behavior.
-/** Re-exported public API for packages/memory-host-sdk. */
+// CLI formatting, progress, and manager helpers exposed to memory host commands.
+/** CLI presentation and command runtime helpers reused by memory host entrypoints. */
 export {
   colorize,
   defaultRuntime,

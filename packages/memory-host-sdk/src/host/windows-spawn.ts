@@ -1,10 +1,10 @@
-// packages/memory-host-sdk/src/host windows spawn helpers and runtime behavior.
-/** Re-exported public API for packages/memory-host-sdk. */
+// Windows spawn policy facade used by memory host subprocess launchers.
+/** Windows executable resolution and materialization helpers. */
 export {
   materializeWindowsSpawnProgram,
   resolveWindowsSpawnProgram,
 } from "./openclaw-runtime-io.js";
-/** Re-exported public API for packages/memory-host-sdk. */
+/** Windows spawn request and resolution contracts. */
 export type {
   ResolveWindowsSpawnProgramParams,
   WindowsSpawnInvocation,

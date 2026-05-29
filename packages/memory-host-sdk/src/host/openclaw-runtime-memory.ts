@@ -1,5 +1,5 @@
-// packages/memory-host-sdk/src/host openclaw runtime memory helpers and runtime behavior.
-/** Re-exported public API for packages/memory-host-sdk. */
+// Memory capability facade for plugin/runtime memory registration helpers.
+/** Memory provider registry, prompt, artifact, and root-file helpers. */
 export {
   buildActiveMemoryPromptSection,
   emptyPluginConfigSchema,
@@ -12,7 +12,7 @@ export {
   resolveCanonicalRootMemoryFile,
   shouldSkipRootMemoryAuxiliaryPath,
 } from "./openclaw-runtime.js";
-/** Re-exported public API for packages/memory-host-sdk. */
+/** Memory plugin and embedding provider contracts from the core runtime facade. */
 export type {
   MemoryEmbeddingBatchChunk,
   MemoryEmbeddingBatchOptions,
