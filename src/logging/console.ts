@@ -1,4 +1,5 @@
-// logging console helpers and runtime behavior.
+// Console logging bridge: resolves user-visible console settings and mirrors
+// console.* output into structured file logs without stealing stdout.
 import util from "node:util";
 import { stripAnsi } from "../../packages/terminal-core/src/ansi.js";
 import type { OpenClawConfig } from "../config/types.js";
@@ -12,20 +13,20 @@ import { loggingState } from "./state.js";
 import { formatLocalIsoWithOffset, formatTimestamp } from "./timestamps.js";
 import type { ConsoleStyle, LoggerSettings } from "./types.js";
 
-/** Re-exported API for src/logging, starting with Console Style. */
+/** Console output formatting mode accepted by the logging configuration. */
 export type { ConsoleStyle } from "./types.js";
 type ConsoleSettings = {
   level: LogLevel;
   style: ConsoleStyle;
 };
-/** Shared type for Console Logger Settings in src/logging. */
+/** Resolved console logger settings after env, test, TTY, and config defaults. */
 export type ConsoleLoggerSettings = ConsoleSettings;
 
 type ConsoleConfigLoader = () => OpenClawConfig["logging"] | undefined;
 const loadConfigFallbackDefault: ConsoleConfigLoader = () => undefined;
 let loadConfigFallback: ConsoleConfigLoader = loadConfigFallbackDefault;
 
-/** Reused helper for set Console Config Loader For Tests behavior in src/logging. */
+/** Injects a fallback config loader so tests can avoid reading user config files. */
 export function setConsoleConfigLoaderForTests(loader?: ConsoleConfigLoader): void {
   loadConfigFallback = loader ?? loadConfigFallbackDefault;
 }
@@ -90,7 +91,7 @@ function consoleSettingsChanged(a: ConsoleSettings | null, b: ConsoleSettings) {
   return a.level !== b.level || a.style !== b.style;
 }
 
-/** Reused helper for get Console Settings behavior in src/logging. */
+/** Returns cached console settings, refreshing when level or style changed. */
 export function getConsoleSettings(): ConsoleLoggerSettings {
   const settings = resolveConsoleSettings();
   const cached = loggingState.cachedConsoleSettings as ConsoleSettings | null;
@@ -100,19 +101,19 @@ export function getConsoleSettings(): ConsoleLoggerSettings {
   return loggingState.cachedConsoleSettings as ConsoleSettings;
 }
 
-/** Reused helper for get Resolved Console Settings behavior in src/logging. */
+/** Public alias used by callers that want the final console settings shape. */
 export function getResolvedConsoleSettings(): ConsoleLoggerSettings {
   return getConsoleSettings();
 }
 
 // Route all console output (including tslog console writes) to stderr.
 // This keeps stdout clean for RPC/JSON modes.
-/** Reused helper for route Logs To Stderr behavior in src/logging. */
+/** Forces console output to stderr so JSON/RPC stdout stays machine-readable. */
 export function routeLogsToStderr(): void {
   loggingState.forceConsoleToStderr = true;
 }
 
-/** Reused helper for set Console Subsystem Filter behavior in src/logging. */
+/** Sets optional subsystem prefixes that are allowed through console output. */
 export function setConsoleSubsystemFilter(filters?: string[] | null): void {
   if (!filters || filters.length === 0) {
     loggingState.consoleSubsystemFilter = null;
@@ -122,7 +123,7 @@ export function setConsoleSubsystemFilter(filters?: string[] | null): void {
   loggingState.consoleSubsystemFilter = normalized.length > 0 ? normalized : null;
 }
 
-/** Reused helper for set Console Timestamp Prefix behavior in src/logging. */
+/** Enables timestamp prefixes for console lines that do not already have one. */
 export function setConsoleTimestampPrefix(enabled: boolean): void {
   loggingState.consoleTimestampPrefix = enabled;
 }
@@ -135,7 +136,7 @@ function normalizeConsoleSubsystem(subsystem?: string | null): string | null {
   return normalized.length > 0 ? normalized : null;
 }
 
-/** Reused helper for should Log Subsystem To Console behavior in src/logging. */
+/** Checks whether a subsystem matches the active console prefix allowlist. */
 export function shouldLogSubsystemToConsole(subsystem?: string | null): boolean {
   const filter = loggingState.consoleSubsystemFilter;
   if (!filter || filter.length === 0) {
@@ -173,7 +174,7 @@ function isEpipeError(err: unknown): boolean {
   return code === "EPIPE" || code === "EIO";
 }
 
-/** Reused helper for format Console Timestamp behavior in src/logging. */
+/** Formats the console timestamp using the same compact/pretty style contract as logs. */
 export function formatConsoleTimestamp(style: ConsoleStyle): string {
   const now = new Date();
   if (style === "pretty") {
@@ -259,7 +260,8 @@ export function enableConsoleCapture(): void {
         : "";
       try {
         const resolvedLogger = getLoggerLazy();
-        // Map console levels to file logger
+        // Mirror console severity into the file logger while preserving the
+        // original console method for the eventual terminal write.
         if (level === "trace") {
           resolvedLogger.trace(formatted);
         } else if (level === "debug") {

@@ -1,4 +1,5 @@
-// logging diagnostic support export helpers and runtime behavior.
+// Diagnostic support export builder: assembles redacted config, log tails, and
+// stability snapshots into the zip users can attach to bug reports.
 import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
@@ -33,7 +34,7 @@ import {
 } from "./diagnostic-support-redaction.js";
 import { readConfiguredLogTail, type LogTailPayload } from "./log-tail.js";
 
-/** Reused constant for DIAGNOSTIC SUPPORT EXPORT VERSION behavior in src/logging. */
+/** Manifest schema version for diagnostic support export zip contents. */
 export const DIAGNOSTIC_SUPPORT_EXPORT_VERSION = 1;
 
 const DEFAULT_LOG_LIMIT = 5000;
@@ -43,7 +44,7 @@ const SUPPORT_EXPORT_SUFFIX = ".zip";
 type Awaitable<T> = T | Promise<T>;
 type SupportSnapshotReader = () => Awaitable<unknown>;
 
-/** Shared type for Diagnostic Support Export Options in src/logging. */
+/** Inputs and test hooks for collecting a diagnostic support export artifact. */
 export type DiagnosticSupportExportOptions = {
   outputPath?: string;
   cwd?: string;
@@ -58,7 +59,7 @@ export type DiagnosticSupportExportOptions = {
   readHealthSnapshot?: SupportSnapshotReader;
 };
 
-/** Shared type for Diagnostic Support Export Manifest in src/logging. */
+/** Redacted manifest stored in every support export zip. */
 export type DiagnosticSupportExportManifest = {
   version: typeof DIAGNOSTIC_SUPPORT_EXPORT_VERSION;
   generatedAt: string;
@@ -75,16 +76,16 @@ export type DiagnosticSupportExportManifest = {
   };
 };
 
-/** Shared type for Diagnostic Support Export File in src/logging. */
+/** Single sanitized file that will be written into a support export zip. */
 export type DiagnosticSupportExportFile = DiagnosticSupportBundleFile;
 
-/** Shared type for Diagnostic Support Export Artifact in src/logging. */
+/** In-memory support export with manifest and zip-ready file entries. */
 export type DiagnosticSupportExportArtifact = {
   manifest: DiagnosticSupportExportManifest;
   files: DiagnosticSupportExportFile[];
 };
 
-/** Shared type for Write Diagnostic Support Export Result in src/logging. */
+/** Result returned after writing a support export zip to disk. */
 export type WriteDiagnosticSupportExportResult = {
   path: string;
   bytes: number;
@@ -547,12 +548,12 @@ function resolveOutputPath(options: {
       );
     }
   } catch {
-    // Non-existing output paths are treated as files.
+    // Missing output paths are valid targets; parent creation happens in the zip writer.
   }
   return resolved;
 }
 
-/** Reused helper for build Diagnostic Support Export behavior in src/logging. */
+/** Builds the redacted support export artifact without writing it to disk. */
 export async function buildDiagnosticSupportExport(
   options: DiagnosticSupportExportOptions = {},
 ): Promise<DiagnosticSupportExportArtifact> {
@@ -667,7 +668,7 @@ export async function buildDiagnosticSupportExport(
   };
 }
 
-/** Reused helper for write Diagnostic Support Export behavior in src/logging. */
+/** Writes a diagnostic support export zip and returns its manifest metadata. */
 export async function writeDiagnosticSupportExport(
   options: DiagnosticSupportExportOptions = {},
 ): Promise<WriteDiagnosticSupportExportResult> {
