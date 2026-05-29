@@ -1,7 +1,7 @@
-// routing peer kind match helpers and runtime behavior.
+// Compares route binding peer kinds with caller chat types.
 import type { ChatType } from "../channels/chat-type.js";
 
-/** Reused helper for peer Kind Matches behavior in src/routing. */
+/** Treats group and channel as compatible peer kinds while keeping direct distinct. */
 export function peerKindMatches(bindingKind: ChatType, scopeKind: ChatType): boolean {
   if (bindingKind === scopeKind) {
     return true;

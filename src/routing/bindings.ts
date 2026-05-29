@@ -1,4 +1,4 @@
-// routing bindings helpers and runtime behavior.
+// Reads route bindings and derives account bindings by channel and agent.
 import { resolveDefaultAgentId } from "../agents/agent-scope.js";
 import { listRouteBindings } from "../config/bindings.js";
 import type { AgentRouteBinding } from "../config/types.agents.js";
@@ -9,12 +9,12 @@ import {
 } from "./binding-scope.js";
 import { normalizeAgentId } from "./session-key.js";
 
-/** Reused helper for list Bindings behavior in src/routing. */
+/** Returns configured agent route bindings from the OpenClaw config. */
 export function listBindings(cfg: OpenClawConfig): AgentRouteBinding[] {
   return listRouteBindings(cfg);
 }
 
-/** Reused helper for list Bound Account Ids behavior in src/routing. */
+/** Lists account ids bound to any agent for a channel. */
 export function listBoundAccountIds(cfg: OpenClawConfig, channelId: string): string[] {
   const normalizedChannel = normalizeRouteBindingChannelId(channelId);
   if (!normalizedChannel) {
@@ -31,7 +31,7 @@ export function listBoundAccountIds(cfg: OpenClawConfig, channelId: string): str
   return Array.from(ids).toSorted((a, b) => a.localeCompare(b));
 }
 
-/** Reused helper for resolve Default Agent Bound Account Id behavior in src/routing. */
+/** Returns the first account bound to the default agent for a channel. */
 export function resolveDefaultAgentBoundAccountId(
   cfg: OpenClawConfig,
   channelId: string,
@@ -55,7 +55,7 @@ export function resolveDefaultAgentBoundAccountId(
   return null;
 }
 
-/** Reused helper for build Channel Account Bindings behavior in src/routing. */
+/** Builds a channel -> agent -> account-id map from normalized route bindings. */
 export function buildChannelAccountBindings(cfg: OpenClawConfig) {
   const map = new Map<string, Map<string, string[]>>();
   for (const binding of listBindings(cfg)) {
@@ -74,7 +74,7 @@ export function buildChannelAccountBindings(cfg: OpenClawConfig) {
   return map;
 }
 
-/** Reused helper for resolve Preferred Account Id behavior in src/routing. */
+/** Chooses a bound account when available, otherwise the configured default account. */
 export function resolvePreferredAccountId(params: {
   accountIds: string[];
   defaultAccountId: string;

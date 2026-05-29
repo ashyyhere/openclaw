@@ -1,4 +1,4 @@
-// routing channel route targets helpers and runtime behavior.
+// Collects channel ids each agent may receive from bindings and configured routes.
 import { normalizeChatChannelId } from "../channels/ids.js";
 import { listRouteBindings } from "../config/bindings.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -7,7 +7,7 @@ import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import { resolveAgentRoute } from "./resolve-route.js";
 import { DEFAULT_ACCOUNT_ID, normalizeAccountId, normalizeAgentId } from "./session-key.js";
 
-/** Shared type for Channel Route Target in src/routing. */
+/** Agent plus sorted channels that can route messages to it. */
 export type ChannelRouteTarget = {
   agentId: string;
   channels: string[];
@@ -67,7 +67,7 @@ function addTarget(byAgent: Map<string, Set<string>>, agentId: string, channel: 
   byAgent.set(normalizedAgentId, channels);
 }
 
-/** Reused helper for collect Channel Route Targets behavior in src/routing. */
+/** Computes route targets from explicit bindings and sampled configured channel accounts. */
 export function collectChannelRouteTargets(cfg: OpenClawConfig): ChannelRouteTarget[] {
   const byAgent = new Map<string, Set<string>>();
 

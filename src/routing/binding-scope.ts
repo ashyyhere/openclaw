@@ -1,17 +1,17 @@
-// routing binding scope helpers and runtime behavior.
+// Normalizes route binding match fields and evaluates binding scope constraints.
 import { normalizeChatChannelId } from "../channels/ids.js";
 import type { AgentRouteBinding } from "../config/types.agents.js";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import { normalizeAccountId, normalizeAgentId } from "./session-key.js";
 
-/** Shared type for Route Binding Scope Constraint in src/routing. */
+/** Optional guild/team/role constraints declared by a route binding. */
 export type RouteBindingScopeConstraint = {
   guildId?: string | null;
   teamId?: string | null;
   roles?: string[] | null;
 };
 
-/** Shared type for Route Binding Scope in src/routing. */
+/** Runtime peer scope used to decide if a route binding applies. */
 export type RouteBindingScope = {
   guildId?: string | null;
   teamId?: string | null;
@@ -19,14 +19,14 @@ export type RouteBindingScope = {
   memberRoleIds?: Iterable<string> | null;
 };
 
-/** Shared type for Normalized Route Binding Match in src/routing. */
+/** Canonical channel/account/agent triple extracted from a route binding. */
 export type NormalizedRouteBindingMatch = {
   agentId: string;
   accountId: string;
   channelId: string;
 };
 
-/** Reused helper for normalize Route Binding Id behavior in src/routing. */
+/** Coerces route binding ids to trimmed strings for scope comparison. */
 export function normalizeRouteBindingId(value: unknown): string {
   if (typeof value === "string") {
     return value.trim();
@@ -37,12 +37,12 @@ export function normalizeRouteBindingId(value: unknown): string {
   return "";
 }
 
-/** Reused helper for normalize Route Binding Roles behavior in src/routing. */
+/** Normalizes role constraints, treating empty arrays as no role constraint. */
 export function normalizeRouteBindingRoles(value: string[] | null | undefined): string[] | null {
   return Array.isArray(value) && value.length > 0 ? value : null;
 }
 
-/** Reused helper for normalize Route Binding Channel Id behavior in src/routing. */
+/** Normalizes channel ids using channel-specific rules with lowercase fallback. */
 export function normalizeRouteBindingChannelId(raw?: string | null): string | null {
   const normalized = normalizeChatChannelId(raw);
   if (normalized) {
@@ -52,7 +52,7 @@ export function normalizeRouteBindingChannelId(raw?: string | null): string | nu
   return fallback || null;
 }
 
-/** Reused helper for resolve Normalized Route Binding Match behavior in src/routing. */
+/** Extracts a usable normalized route-binding match, dropping wildcard/invalid accounts. */
 export function resolveNormalizedRouteBindingMatch(
   binding: AgentRouteBinding,
 ): NormalizedRouteBindingMatch | null {
@@ -109,7 +109,7 @@ function hasAnyRouteBindingRole(
   return roles.some((role) => memberRoleIdSet.has(role));
 }
 
-/** Reused helper for route Binding Scope Matches behavior in src/routing. */
+/** Returns true when guild/team and role constraints match the runtime scope. */
 export function routeBindingScopeMatches(
   constraint: RouteBindingScopeConstraint,
   scope: RouteBindingScope,

@@ -1,19 +1,19 @@
-// routing default account warnings helpers and runtime behavior.
+// Formats operator guidance for missing or ambiguous default channel accounts.
 function formatChannelDefaultAccountPath(channelKey: string): string {
   return `channels.${channelKey}.defaultAccount`;
 }
 
-/** Reused helper for format Channel Accounts Default Path behavior in src/routing. */
+/** Formats the config path for an account-map default entry. */
 export function formatChannelAccountsDefaultPath(channelKey: string): string {
   return `channels.${channelKey}.accounts.default`;
 }
 
-/** Reused helper for format Set Explicit Default Instruction behavior in src/routing. */
+/** Formats a short instruction for adding any explicit default account. */
 export function formatSetExplicitDefaultInstruction(channelKey: string): string {
   return `Set ${formatChannelDefaultAccountPath(channelKey)} or add ${formatChannelAccountsDefaultPath(channelKey)}`;
 }
 
-/** Reused helper for format Set Explicit Default To Configured Instruction behavior in src/routing. */
+/** Formats a short instruction for selecting from already configured accounts. */
 export function formatSetExplicitDefaultToConfiguredInstruction(params: {
   channelKey: string;
 }): string {
