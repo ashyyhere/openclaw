@@ -1,9 +1,9 @@
-// logging log test helpers helpers and runtime behavior.
+// Test helper for allocating isolated log file paths per suite.
 import crypto from "node:crypto";
 import path from "node:path";
 import { createSuiteTempRootTracker } from "../test-helpers/temp-dir.js";
 
-/** Reused helper for create Suite Log Path Tracker behavior in src/logging. */
+/** Creates a suite-scoped temp log root and unique log path generator. */
 export function createSuiteLogPathTracker(prefix: string) {
   const rootTracker = createSuiteTempRootTracker({ prefix });
   let logRoot = "";

@@ -1,5 +1,5 @@
-// logging timestamps helpers and runtime behavior.
-/** Reused helper for is Valid Time Zone behavior in src/logging. */
+// Formats timestamps with local timezone offsets for console and file logs.
+/** Returns true when Intl can format using the supplied timezone identifier. */
 export function isValidTimeZone(tz: string): boolean {
   try {
     new Intl.DateTimeFormat("en", { timeZone: tz }).format();
@@ -54,7 +54,7 @@ function getTimestampParts(date: Date, timeZone?: string) {
   };
 }
 
-/** Reused helper for format Timestamp behavior in src/logging. */
+/** Formats a timestamp in short, medium, or ISO-like long local-offset style. */
 export function formatTimestamp(date: Date, options?: FormatTimestampOptions): string {
   const style = options?.style ?? "medium";
   const parts = getTimestampParts(date, options?.timeZone);
