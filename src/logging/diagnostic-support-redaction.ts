@@ -1,4 +1,5 @@
-// logging diagnostic support redaction helpers and runtime behavior.
+// Support redaction policy for diagnostic exports: removes secrets, payloads,
+// private identifiers, and local path prefixes before artifacts leave the host.
 import path from "node:path";
 import { isSensitiveUrlQueryParamName } from "@openclaw/net-policy/redact-sensitive-url";
 import { isSecretRefShape } from "../config/redact-snapshot.secret-ref.js";
@@ -36,7 +37,7 @@ const MAX_SUPPORT_OBJECT_ENTRIES = 1000;
 const DEFAULT_TRUNCATION_SUFFIX = "...<truncated>";
 const TRUNCATED_SUPPORT_FIELD = "<truncated>";
 
-/** Shared type for Support Redaction Context in src/logging. */
+/** Host-local context used to redact state/home path prefixes from support data. */
 export type SupportRedactionContext = {
   env: NodeJS.ProcessEnv;
   stateDir: string;
@@ -231,7 +232,7 @@ function isSupportAbsolutePath(value: string): boolean {
   return path.isAbsolute(value) || isWindowsAbsolutePath(value);
 }
 
-/** Reused helper for redact Path For Support behavior in src/logging. */
+/** Redacts known private path prefixes and credentials from a path-like string. */
 export function redactPathForSupport(
   file: string | null | undefined,
   options: SupportRedactionContext,
@@ -283,7 +284,7 @@ function redactKnownPathPrefixesForSupport(
   return next;
 }
 
-/** Reused helper for redact Text For Support behavior in src/logging. */
+/** Removes credentials and service/contact identifiers from free-form support text. */
 export function redactTextForSupport(value: string): string {
   let redacted = redactCommonCredentialTextForSupport(value);
   redacted = redactSensitiveTextForSupport(redacted);
@@ -330,7 +331,7 @@ function redactLongIdentifiersForSupport(value: string): string {
   return value.replace(LONG_DECIMAL_ID_RE, "<redacted-id>");
 }
 
-/** Reused helper for redact Support String behavior in src/logging. */
+/** Applies support-safe text/path redaction and bounded-length truncation. */
 export function redactSupportString(
   value: string,
   redaction: SupportRedactionContext,
@@ -369,7 +370,7 @@ function sanitizeCommandArguments(args: unknown[], redaction: SupportRedactionCo
   });
 }
 
-/** Reused helper for sanitize Support Snapshot Value behavior in src/logging. */
+/** Sanitizes arbitrary status/health snapshots for support exports. */
 export function sanitizeSupportSnapshotValue(
   value: unknown,
   redaction: SupportRedactionContext,
@@ -416,7 +417,7 @@ export function sanitizeSupportSnapshotValue(
   return sanitized;
 }
 
-/** Reused helper for sanitize Support Config Value behavior in src/logging. */
+/** Sanitizes config-shaped data while preserving non-private operational settings. */
 export function sanitizeSupportConfigValue(
   value: unknown,
   redaction: SupportRedactionContext,

@@ -1,4 +1,5 @@
-// logging log tail helpers and runtime behavior.
+// Log tail reader for diagnostics: follows rolling log filenames, reads bounded
+// slices, and redacts lines before returning them to commands or support zips.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { getResolvedLoggerSettings } from "../logging.js";
@@ -11,7 +12,7 @@ const MAX_LIMIT = 5000;
 const MAX_BYTES = 1_000_000;
 const ROLLING_LOG_RE = /^openclaw-\d{4}-\d{2}-\d{2}\.log$/;
 
-/** Shared type for Log Tail Payload in src/logging. */
+/** Bounded log-tail result with cursor state for incremental diagnostics reads. */
 export type LogTailPayload = {
   file: string;
   cursor: number;
@@ -25,7 +26,7 @@ function isRollingLogFile(file: string): boolean {
   return ROLLING_LOG_RE.test(path.basename(file));
 }
 
-/** Reused helper for resolve Log File behavior in src/logging. */
+/** Resolves a rolling daily log path to the newest available log file. */
 export async function resolveLogFile(file: string): Promise<string> {
   const stat = await fs.stat(file).catch(() => null);
   if (stat) {
@@ -86,6 +87,8 @@ async function readLogSlice(params: {
 
   if (cursor != null) {
     if (cursor > size) {
+      // Cursor beyond EOF means the log rotated or shrank; restart from the
+      // newest bounded window and tell callers their cursor was reset.
       reset = true;
       start = Math.max(0, size - maxBytes);
       truncated = start > 0;
@@ -150,7 +153,7 @@ async function readLogSlice(params: {
   }
 }
 
-/** Reused helper for read Configured Log Tail behavior in src/logging. */
+/** Reads and redacts a bounded tail from the configured file logger output. */
 export async function readConfiguredLogTail(params?: {
   cursor?: number;
   limit?: number;

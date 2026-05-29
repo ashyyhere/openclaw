@@ -1,16 +1,17 @@
-// logging diagnostic support bundle helpers and runtime behavior.
+// Support bundle writer: builds safe relative files and writes either an
+// unpacked diagnostics directory or a zip archive.
 import fsp from "node:fs/promises";
 import path from "node:path";
 import { isPathInside } from "../infra/path-guards.js";
 
-/** Shared type for Diagnostic Support Bundle File in src/logging. */
+/** UTF-8 file entry that can be safely included in a diagnostic support bundle. */
 export type DiagnosticSupportBundleFile = {
   path: string;
   mediaType: string;
   content: string;
 };
 
-/** Shared type for Diagnostic Support Bundle Content in src/logging. */
+/** Manifest-facing metadata for a file included in a support bundle. */
 export type DiagnosticSupportBundleContent = {
   path: string;
   mediaType: string;
@@ -21,7 +22,7 @@ function supportBundleByteLength(content: string): number {
   return Buffer.byteLength(content, "utf8");
 }
 
-/** Reused helper for json Support Bundle File behavior in src/logging. */
+/** Creates a JSON support-bundle entry with a normalized safe relative path. */
 export function jsonSupportBundleFile(
   pathName: string,
   value: unknown,
@@ -33,7 +34,7 @@ export function jsonSupportBundleFile(
   };
 }
 
-/** Reused helper for jsonl Support Bundle File behavior in src/logging. */
+/** Creates a JSONL support-bundle entry from already-serialized lines. */
 export function jsonlSupportBundleFile(
   pathName: string,
   lines: readonly string[],
@@ -45,7 +46,7 @@ export function jsonlSupportBundleFile(
   };
 }
 
-/** Reused helper for text Support Bundle File behavior in src/logging. */
+/** Creates a plain-text support-bundle entry and guarantees a final newline. */
 export function textSupportBundleFile(
   pathName: string,
   content: string,
@@ -57,7 +58,7 @@ export function textSupportBundleFile(
   };
 }
 
-/** Reused helper for support Bundle Contents behavior in src/logging. */
+/** Summarizes bundle files for manifests without exposing file contents. */
 export function supportBundleContents(
   files: readonly DiagnosticSupportBundleFile[],
 ): DiagnosticSupportBundleContent[] {
@@ -89,6 +90,8 @@ function resolveSupportBundleFilePath(outputDir: string, pathName: string): stri
   const safePath = assertSafeBundleRelativePath(pathName);
   const resolvedBase = path.resolve(outputDir);
   const resolvedFile = path.resolve(resolvedBase, safePath);
+  // Re-check after path.resolve so crafted relative paths cannot escape the
+  // diagnostics directory through platform path normalization.
   if (resolvedFile === resolvedBase || !isPathInside(resolvedBase, resolvedFile)) {
     throw new Error(`Bundle file path escaped output directory: ${pathName}`);
   }
@@ -108,7 +111,7 @@ async function writeSupportBundleFile(
   });
 }
 
-/** Reused helper for write Support Bundle Directory behavior in src/logging. */
+/** Writes sanitized support-bundle files to a fresh diagnostics directory. */
 export async function writeSupportBundleDirectory(params: {
   outputDir: string;
   files: readonly DiagnosticSupportBundleFile[];
@@ -120,7 +123,7 @@ export async function writeSupportBundleDirectory(params: {
   return supportBundleContents(params.files);
 }
 
-/** Reused helper for write Support Bundle Zip behavior in src/logging. */
+/** Writes sanitized support-bundle files to a compressed zip archive. */
 export async function writeSupportBundleZip(params: {
   outputPath: string;
   files: readonly DiagnosticSupportBundleFile[];
