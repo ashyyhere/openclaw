@@ -1,4 +1,4 @@
-// talk agent consult runtime helpers and runtime behavior.
+// Runtime bridge from realtime voice consult calls into embedded OpenClaw agent runs.
 import { randomUUID } from "node:crypto";
 import path from "node:path";
 import type { RunEmbeddedAgentParams } from "../agents/embedded-agent-runner/run/params.js";
@@ -22,13 +22,13 @@ import {
   type RealtimeVoiceAgentConsultTranscriptEntry,
 } from "./agent-consult-tool.js";
 
-/** Shared type for Realtime Voice Agent Consult Runtime in src/talk. */
+/** Agent runtime surface required to run delegated realtime voice consults. */
 export type RealtimeVoiceAgentConsultRuntime = PluginRuntimeCore["agent"];
-/** Shared type for Realtime Voice Agent Consult Result in src/talk. */
+/** Speakable result returned from a delegated realtime voice consult. */
 export type RealtimeVoiceAgentConsultResult = { text: string };
-/** Shared type for Realtime Voice Agent Consult Context Mode in src/talk. */
+/** Whether consults use an isolated session or fork context from the caller session. */
 export type RealtimeVoiceAgentConsultContextMode = "isolated" | "fork";
-/** Re-exported API for src/talk. */
+/** Consult tool policy helpers re-exported for provider/session setup. */
 export {
   resolveRealtimeVoiceAgentConsultTools,
   resolveRealtimeVoiceAgentConsultToolsAllow,
@@ -48,7 +48,7 @@ const defaultRealtimeVoiceAgentConsultDeps: RealtimeVoiceAgentConsultDeps = {
 
 let realtimeVoiceAgentConsultDeps = defaultRealtimeVoiceAgentConsultDeps;
 
-/** Reused helper for set Realtime Voice Agent Consult Deps For Test behavior in src/talk. */
+/** Overrides fork/session dependencies for deterministic consult runtime tests. */
 export function setRealtimeVoiceAgentConsultDepsForTest(
   deps: Partial<RealtimeVoiceAgentConsultDeps> | null,
 ): void {
@@ -196,7 +196,7 @@ async function resolveRealtimeVoiceAgentConsultSessionEntry(params: {
   throw new Error("realtime voice agent consult session could not be initialized");
 }
 
-/** Reused helper for consult Realtime Voice Agent behavior in src/talk. */
+/** Runs the configured embedded agent for one realtime voice consult request. */
 export async function consultRealtimeVoiceAgent(params: {
   cfg: OpenClawConfig;
   agentRuntime: RealtimeVoiceAgentConsultRuntime;

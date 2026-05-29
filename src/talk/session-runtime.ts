@@ -1,4 +1,4 @@
-// talk session runtime helpers and runtime behavior.
+// Runtime wrapper that binds realtime voice provider bridges to audio sinks and callbacks.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { RealtimeVoiceProviderPlugin } from "../plugins/types.js";
 import type {
@@ -14,7 +14,7 @@ import type {
   RealtimeVoiceToolResultOptions,
 } from "./provider-types.js";
 
-/** Shared type for Realtime Voice Audio Sink in src/talk. */
+/** Output sink used by bridge sessions to deliver audio and playback marks. */
 export type RealtimeVoiceAudioSink = {
   isOpen?: () => boolean;
   sendAudio: (audio: Buffer) => void;
@@ -22,10 +22,10 @@ export type RealtimeVoiceAudioSink = {
   sendMark?: (markName: string) => void;
 };
 
-/** Shared type for Realtime Voice Mark Strategy in src/talk. */
+/** Strategy for handling provider playback marks when the sink can or cannot ack them. */
 export type RealtimeVoiceMarkStrategy = "transport" | "ack-immediately" | "ignore";
 
-/** Shared type for Realtime Voice Bridge Session in src/talk. */
+/** Safe bridge facade exposed to callers after provider bridge creation. */
 export type RealtimeVoiceBridgeSession = {
   bridge: RealtimeVoiceBridge;
   acknowledgeMark(): void;
@@ -39,7 +39,7 @@ export type RealtimeVoiceBridgeSession = {
   triggerGreeting(instructions?: string): void;
 };
 
-/** Shared type for Realtime Voice Bridge Session Params in src/talk. */
+/** Provider, audio sink, and callback wiring for a realtime voice bridge session. */
 export type RealtimeVoiceBridgeSessionParams = {
   provider: RealtimeVoiceProviderPlugin;
   cfg?: OpenClawConfig;
@@ -61,7 +61,7 @@ export type RealtimeVoiceBridgeSessionParams = {
   onClose?: (reason: RealtimeVoiceCloseReason) => void;
 };
 
-/** Reused helper for create Realtime Voice Bridge Session behavior in src/talk. */
+/** Creates a bridge session and routes provider callbacks through sink/session guards. */
 export function createRealtimeVoiceBridgeSession(
   params: RealtimeVoiceBridgeSessionParams,
 ): RealtimeVoiceBridgeSession {

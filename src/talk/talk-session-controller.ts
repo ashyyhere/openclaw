@@ -1,4 +1,4 @@
-// talk talk session controller helpers and runtime behavior.
+// Talk session state machine for turns, output audio, and recent event history.
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import {
   createTalkEventSequencer,
@@ -11,32 +11,32 @@ import {
   type TalkTransport,
 } from "./talk-events.js";
 
-/** Shared type for Talk Turn Failure Reason in src/talk. */
+/** Reason a turn-scoped operation could not be applied. */
 export type TalkTurnFailureReason = "no_active_turn" | "stale_turn";
 
-/** Shared type for Talk Turn Success in src/talk. */
+/** Successful turn operation with the emitted final event. */
 export type TalkTurnSuccess = {
   event: TalkEvent;
   ok: true;
   turnId: string;
 };
 
-/** Shared type for Talk Turn Failure in src/talk. */
+/** Failed turn operation that did not emit an event. */
 export type TalkTurnFailure = {
   ok: false;
   reason: TalkTurnFailureReason;
 };
 
-/** Shared type for Talk Turn Result in src/talk. */
+/** Result returned by operations that end or cancel a turn. */
 export type TalkTurnResult = TalkTurnSuccess | TalkTurnFailure;
 
-/** Shared type for Talk Ensure Turn Result in src/talk. */
+/** Active or newly-created turn id, optionally with the start event. */
 export type TalkEnsureTurnResult = {
   event?: TalkEvent;
   turnId: string;
 };
 
-/** Shared type for Talk Session Controller in src/talk. */
+/** Mutable session controller used by transports to emit correlated Talk events. */
 export type TalkSessionController = {
   readonly activeTurnId: string | undefined;
   readonly context: TalkEventContext;
@@ -52,20 +52,20 @@ export type TalkSessionController = {
   startOutputAudio(params?: { payload?: unknown; turnId?: string }): TalkEnsureTurnResult;
 };
 
-/** Shared type for Talk Session Controller Params in src/talk. */
+/** Session context and bounded history options for creating a controller. */
 export type TalkSessionControllerParams = TalkEventContext & {
   maxRecentEvents?: number;
   turnIdPrefix?: string;
 };
 
-/** Shared type for Talk Session Controller Options in src/talk. */
+/** Controller hooks for deterministic clocks, event sinks, and custom sequencers. */
 export type TalkSessionControllerOptions = {
   now?: () => Date | string;
   onEvent?: (event: TalkEvent) => void;
   sequencer?: TalkEventSequencer;
 };
 
-/** Reused helper for create Talk Session Controller behavior in src/talk. */
+/** Creates a Talk session controller that owns active-turn and output-audio state. */
 export function createTalkSessionController(
   params: TalkSessionControllerParams,
   options: TalkSessionControllerOptions = {},
@@ -206,7 +206,7 @@ export function createTalkSessionController(
   };
 }
 
-/** Reused helper for normalize Talk Transport behavior in src/talk. */
+/** Normalizes legacy transport labels to the public Talk transport ids. */
 export function normalizeTalkTransport(value: string | undefined): string | undefined {
   const normalized = normalizeOptionalString(value);
   if (!normalized) {
@@ -221,5 +221,5 @@ export function normalizeTalkTransport(value: string | undefined): string | unde
   return normalized;
 }
 
-/** Re-exported API for src/talk, starting with Talk Brain. */
+/** Public Talk event and transport types used by provider integrations. */
 export type { TalkBrain, TalkEvent, TalkEventContext, TalkEventInput, TalkMode, TalkTransport };
