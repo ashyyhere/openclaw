@@ -1,4 +1,4 @@
-// packages/agent-core/src/harness/session repo utils helpers and runtime behavior.
+// Shared repository helpers for session id, timestamp, wrapping, and forking.
 import {
   type FileError,
   type Result,
@@ -10,24 +10,24 @@ import {
 import { Session } from "./session.js";
 import { uuidv7 } from "./uuid.js";
 
-/** Public helper for create Session Id behavior in packages/agent-core. */
+/** Create a new session id using the harness UUIDv7 generator. */
 export function createSessionId(): string {
   return uuidv7();
 }
 
-/** Public helper for create Timestamp behavior in packages/agent-core. */
+/** Create the ISO timestamp format stored in session metadata and entries. */
 export function createTimestamp(): string {
   return new Date().toISOString();
 }
 
-/** Public helper for to Session behavior in packages/agent-core. */
+/** Wrap raw session storage in the high-level Session facade. */
 export function toSession<TMetadata extends SessionMetadata>(
   storage: SessionStorage<TMetadata>,
 ): Session<TMetadata> {
   return new Session(storage);
 }
 
-/** Public helper for get File System Result Or Throw behavior in packages/agent-core. */
+/** Unwrap filesystem results and translate failures into SessionError values. */
 export function getFileSystemResultOrThrow<TValue>(
   result: Result<TValue, FileError>,
   message: string,
@@ -39,7 +39,7 @@ export function getFileSystemResultOrThrow<TValue>(
   return result.value;
 }
 
-/** Public helper for get Entries To Fork behavior in packages/agent-core. */
+/** Resolve the transcript path copied into a forked session. */
 export async function getEntriesToFork(
   storage: SessionStorage,
   options: { entryId?: string; position?: "before" | "at" },

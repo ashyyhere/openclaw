@@ -1,9 +1,9 @@
-// packages/agent-core/src/harness/session memory storage helpers and runtime behavior.
+// In-memory session storage for tests and ephemeral harness sessions.
 import { type SessionMetadata, type SessionTreeEntry } from "../types.js";
 import { BaseSessionStorage } from "./storage-base.js";
 import { uuidv7 } from "./uuid.js";
 
-/** Public class implementing In Memory Session Storage behavior for packages/agent-core. */
+/** Mutable session tree storage backed by process-local arrays/maps. */
 export class InMemorySessionStorage<
   TMetadata extends SessionMetadata = SessionMetadata,
 > extends BaseSessionStorage<TMetadata> {

@@ -1,4 +1,4 @@
-// packages/agent-core/src/harness/session uuid helpers and runtime behavior.
+// UUIDv7 generator used for session and transcript entry ids.
 let lastTimestamp = -Infinity;
 let sequence = 0;
 
@@ -13,7 +13,7 @@ function fillRandomBytes(bytes: Uint8Array): void {
   }
 }
 
-/** Public helper for uuidv7 behavior in packages/agent-core. */
+/** Generate a monotonically sortable UUIDv7 string. */
 export function uuidv7(): string {
   const random = new Uint8Array(16);
   fillRandomBytes(random);

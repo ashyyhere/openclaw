@@ -23,7 +23,7 @@ import type {
 } from "../types.js";
 import { SessionError } from "../types.js";
 
-/** Public helper for build Session Context behavior in packages/agent-core. */
+/** Build model context from the current session branch, honoring compaction markers. */
 export function buildSessionContext(pathEntries: SessionTreeEntry[]): SessionContext {
   let thinkingLevel = "off";
   let model: { provider: string; modelId: string } | null = null;
@@ -99,7 +99,7 @@ export function buildSessionContext(pathEntries: SessionTreeEntry[]): SessionCon
   return { messages, thinkingLevel, model };
 }
 
-/** Public class implementing Session behavior for packages/agent-core. */
+/** High-level session API for appending transcript tree entries and branch state. */
 export class Session<TMetadata extends SessionMetadata = SessionMetadata> {
   private storage: SessionStorage<TMetadata>;
 
