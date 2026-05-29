@@ -1,4 +1,5 @@
-// plugin-sdk provider tools helpers and runtime behavior.
+// Provider tool-schema compatibility helpers normalize model tool schemas to
+// provider-specific subsets and report the fields each provider cannot accept.
 import type { TSchema } from "typebox";
 import {
   cleanSchemaForGemini,
@@ -12,10 +13,10 @@ import type {
 } from "./plugin-entry.js";
 
 // Shared provider-tool helpers for plugin-owned schema compatibility rewrites.
-/** Re-exported API for src/plugin-sdk, starting with clean Schema For Gemini. */
+/** Re-export schema cleanup primitives for provider plugins that need custom handling. */
 export { cleanSchemaForGemini, GEMINI_UNSUPPORTED_SCHEMA_KEYWORDS, stripUnsupportedSchemaKeywords };
 
-/** Reused helper for find Unsupported Schema Keywords behavior in src/plugin-sdk. */
+/** Recursively reports unsupported JSON-schema keywords with stable diagnostic paths. */
 export function findUnsupportedSchemaKeywords(
   schema: unknown,
   path: string,
@@ -58,7 +59,7 @@ export function findUnsupportedSchemaKeywords(
   return violations;
 }
 
-/** Reused helper for normalize Gemini Tool Schemas behavior in src/plugin-sdk. */
+/** Removes Gemini-unsupported schema keywords from every tool parameter schema. */
 export function normalizeGeminiToolSchemas(
   ctx: ProviderNormalizeToolSchemasContext,
 ): AnyAgentTool[] {
@@ -73,7 +74,7 @@ export function normalizeGeminiToolSchemas(
   });
 }
 
-/** Reused helper for inspect Gemini Tool Schemas behavior in src/plugin-sdk. */
+/** Reports Gemini schema incompatibilities without mutating tool definitions. */
 export function inspectGeminiToolSchemas(
   ctx: ProviderNormalizeToolSchemasContext,
 ): ProviderToolSchemaDiagnostic[] {
@@ -90,7 +91,7 @@ export function inspectGeminiToolSchemas(
   });
 }
 
-/** Reused helper for normalize Open AITool Schemas behavior in src/plugin-sdk. */
+/** Converts OpenAI Responses tool schemas toward strict object-schema requirements. */
 export function normalizeOpenAIToolSchemas(
   ctx: ProviderNormalizeToolSchemasContext,
 ): AnyAgentTool[] {
@@ -281,7 +282,7 @@ function normalizeOpenAIStrictCompatSchemaRecursive(
   return changed ? normalized : schema;
 }
 
-/** Reused helper for find Open AIStrict Schema Violations behavior in src/plugin-sdk. */
+/** Finds schema fields that prevent strict OpenAI Responses tool validation. */
 export function findOpenAIStrictSchemaViolations(
   schema: unknown,
   path: string,
@@ -355,7 +356,7 @@ export function findOpenAIStrictSchemaViolations(
   return violations;
 }
 
-/** Reused helper for inspect Open AITool Schemas behavior in src/plugin-sdk. */
+/** Reports OpenAI strict-schema diagnostics; currently quiet because callers can downgrade strictness. */
 export function inspectOpenAIToolSchemas(
   ctx: ProviderNormalizeToolSchemasContext,
 ): ProviderToolSchemaDiagnostic[] {
@@ -367,7 +368,7 @@ export function inspectOpenAIToolSchemas(
   return [];
 }
 
-/** Reused constant for DEEPSEEK UNSUPPORTED SCHEMA KEYWORDS behavior in src/plugin-sdk. */
+/** DeepSeek rejects direct JSON-schema union keywords in tool schemas. */
 export const DEEPSEEK_UNSUPPORTED_SCHEMA_KEYWORDS = new Set(["anyOf", "oneOf"]);
 
 function isNullSchemaVariant(schema: unknown): boolean {
@@ -471,7 +472,7 @@ function isStringConstVariant(entry: unknown): entry is { const: string } {
   return typeof record.const === "string";
 }
 
-/** Reused helper for normalize Deep Seek Tool Schemas behavior in src/plugin-sdk. */
+/** Flattens DeepSeek-incompatible unions while preserving nullable and string-literal semantics. */
 export function normalizeDeepSeekToolSchemas(
   ctx: ProviderNormalizeToolSchemasContext,
 ): AnyAgentTool[] {
@@ -489,7 +490,7 @@ export function normalizeDeepSeekToolSchemas(
   });
 }
 
-/** Reused helper for inspect Deep Seek Tool Schemas behavior in src/plugin-sdk. */
+/** Reports DeepSeek union keywords that would need normalization before provider calls. */
 export function inspectDeepSeekToolSchemas(
   ctx: ProviderNormalizeToolSchemasContext,
 ): ProviderToolSchemaDiagnostic[] {
@@ -506,10 +507,10 @@ export function inspectDeepSeekToolSchemas(
   });
 }
 
-/** Shared type for Provider Tool Compat Family in src/plugin-sdk. */
+/** Provider families with shared tool-schema normalization contracts. */
 export type ProviderToolCompatFamily = "deepseek" | "gemini" | "openai";
 
-/** Reused helper for build Provider Tool Compat Family Hooks behavior in src/plugin-sdk. */
+/** Returns normalize/inspect hooks for a provider tool compatibility family. */
 export function buildProviderToolCompatFamilyHooks(family: ProviderToolCompatFamily): {
   normalizeToolSchemas: (ctx: ProviderNormalizeToolSchemasContext) => AnyAgentTool[];
   inspectToolSchemas: (ctx: ProviderNormalizeToolSchemasContext) => ProviderToolSchemaDiagnostic[];
