@@ -1,9 +1,9 @@
-// ui/src/ui/chat deleted messages helpers and runtime behavior.
+// Per-session deleted-message state backed by local storage.
 import { getSafeLocalStorage } from "../../local-storage.ts";
 
 const PREFIX = "openclaw:deleted:";
 
-/** Reused class for Deleted Messages behavior in ui/src/ui/chat. */
+/** Tracks message keys hidden by the current browser for one chat session. */
 export class DeletedMessages {
   private key: string;
   private keys = new Set<string>();

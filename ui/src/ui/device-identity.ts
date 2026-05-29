@@ -1,4 +1,5 @@
-// ui/src/ui device identity helpers and runtime behavior.
+// Browser device identity helpers for Control UI pairing. A persisted Ed25519
+// keypair signs pairing payloads, and the public-key fingerprint is the device id.
 import { getPublicKeyAsync, signAsync, utils } from "@noble/ed25519";
 import { getSafeLocalStorage } from "../local-storage.ts";
 
@@ -10,7 +11,7 @@ type StoredIdentity = {
   createdAtMs: number;
 };
 
-/** Shared type for Device Identity in ui/src/ui. */
+/** Persisted local device keypair and derived device id. */
 export type DeviceIdentity = {
   deviceId: string;
   publicKey: string;
@@ -60,7 +61,7 @@ async function generateIdentity(): Promise<DeviceIdentity> {
   };
 }
 
-/** Reused helper for load Or Create Device Identity behavior in ui/src/ui. */
+/** Load a stored device identity or create and persist a new one. */
 export async function loadOrCreateDeviceIdentity(): Promise<DeviceIdentity> {
   const storage = getSafeLocalStorage();
   try {
@@ -109,7 +110,7 @@ export async function loadOrCreateDeviceIdentity(): Promise<DeviceIdentity> {
   return identity;
 }
 
-/** Reused helper for sign Device Payload behavior in ui/src/ui. */
+/** Sign a pairing/auth payload with the stored device private key. */
 export async function signDevicePayload(privateKeyBase64Url: string, payload: string) {
   const key = base64UrlDecode(privateKeyBase64Url);
   const data = new TextEncoder().encode(payload);

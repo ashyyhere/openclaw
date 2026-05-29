@@ -1,4 +1,6 @@
-// ui/src/ui app channels helpers and runtime behavior.
+// Channel action handlers for the app shell. They coordinate controller reloads,
+// WhatsApp login lifecycle calls, and Nostr profile save/import requests through
+// the gateway.
 import { resolveControlUiAuthHeader } from "./control-ui-auth.ts";
 import {
   loadChannels,
@@ -22,25 +24,25 @@ type ChannelsActionHost = ChannelsState &
     nostrProfileAccountId: string | null;
   };
 
-/** Reused helper for handle Whats App Start behavior in ui/src/ui. */
+/** Start or force a WhatsApp login flow, then refresh channel status. */
 export async function handleWhatsAppStart(host: ChannelsActionHost, force: boolean) {
   await startWhatsAppLogin(host as ChannelsState, force);
   await loadChannels(host as ChannelsState, true);
 }
 
-/** Reused helper for handle Whats App Wait behavior in ui/src/ui. */
+/** Wait for the active WhatsApp login flow, then refresh channel status. */
 export async function handleWhatsAppWait(host: ChannelsActionHost) {
   await waitWhatsAppLogin(host as ChannelsState);
   await loadChannels(host as ChannelsState, true);
 }
 
-/** Reused helper for handle Whats App Logout behavior in ui/src/ui. */
+/** Log out WhatsApp and refresh channel status. */
 export async function handleWhatsAppLogout(host: ChannelsActionHost) {
   await logoutWhatsApp(host as ChannelsState);
   await loadChannels(host as ChannelsState, true);
 }
 
-/** Reused helper for handle Channel Config Save behavior in ui/src/ui. */
+/** Save channel config and preserve the save error if reload clears it. */
 export async function handleChannelConfigSave(host: ChannelsActionHost) {
   const saved = await saveConfig(host as ConfigState);
   const saveError = host.lastError;
@@ -54,7 +56,7 @@ export async function handleChannelConfigSave(host: ChannelsActionHost) {
   await loadChannels(host as ChannelsState, true);
 }
 
-/** Reused helper for handle Channel Config Reload behavior in ui/src/ui. */
+/** Discard pending channel config edits and reload channel status. */
 export async function handleChannelConfigReload(host: ChannelsActionHost) {
   await loadConfig(host as ConfigState, { discardPendingChanges: true });
   await loadChannels(host as ChannelsState, true);
@@ -96,7 +98,7 @@ function buildGatewayHttpHeaders(host: ChannelsActionHost): Record<string, strin
   return authorization ? { Authorization: authorization } : {};
 }
 
-/** Reused helper for handle Nostr Profile Edit behavior in ui/src/ui. */
+/** Open the Nostr profile editor for one account. */
 export function handleNostrProfileEdit(
   host: ChannelsActionHost,
   accountId: string,
@@ -106,13 +108,13 @@ export function handleNostrProfileEdit(
   host.nostrProfileFormState = createNostrProfileFormState(profile ?? undefined);
 }
 
-/** Reused helper for handle Nostr Profile Cancel behavior in ui/src/ui. */
+/** Close the Nostr profile editor and clear its selected account. */
 export function handleNostrProfileCancel(host: ChannelsActionHost) {
   host.nostrProfileFormState = null;
   host.nostrProfileAccountId = null;
 }
 
-/** Reused helper for handle Nostr Profile Field Change behavior in ui/src/ui. */
+/** Update one Nostr profile field and clear its validation error. */
 export function handleNostrProfileFieldChange(
   host: ChannelsActionHost,
   field: keyof NostrProfile,
@@ -135,7 +137,7 @@ export function handleNostrProfileFieldChange(
   };
 }
 
-/** Reused helper for handle Nostr Profile Toggle Advanced behavior in ui/src/ui. */
+/** Toggle advanced Nostr profile fields in the editor. */
 export function handleNostrProfileToggleAdvanced(host: ChannelsActionHost) {
   const state = host.nostrProfileFormState;
   if (!state) {
@@ -147,7 +149,7 @@ export function handleNostrProfileToggleAdvanced(host: ChannelsActionHost) {
   };
 }
 
-/** Reused helper for handle Nostr Profile Save behavior in ui/src/ui. */
+/** Publish the edited Nostr profile and merge validation/persisted state back into the form. */
 export async function handleNostrProfileSave(host: ChannelsActionHost) {
   const state = host.nostrProfileFormState;
   if (!state || state.saving) {
@@ -220,7 +222,7 @@ export async function handleNostrProfileSave(host: ChannelsActionHost) {
   }
 }
 
-/** Reused helper for handle Nostr Profile Import behavior in ui/src/ui. */
+/** Import a Nostr profile from relays into the editor for review. */
 export async function handleNostrProfileImport(host: ChannelsActionHost) {
   const state = host.nostrProfileFormState;
   if (!state || state.importing) {
