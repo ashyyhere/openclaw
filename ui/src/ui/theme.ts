@@ -1,9 +1,9 @@
-// ui/src/ui theme helpers and runtime behavior.
-/** Shared type for Theme Name in ui/src/ui. */
+// Theme selection and resolution helpers for Control UI palettes.
+/** Configured theme family selected by the user. */
 export type ThemeName = "claw" | "knot" | "dash" | "custom";
-/** Shared type for Theme Mode in ui/src/ui. */
+/** Light/dark/system mode selected for a theme family. */
 export type ThemeMode = "system" | "light" | "dark";
-/** Shared type for Resolved Theme in ui/src/ui. */
+/** Concrete theme token set applied after resolving system mode. */
 export type ResolvedTheme =
   | "dark"
   | "light"
@@ -14,7 +14,7 @@ export type ResolvedTheme =
   | "custom"
   | "custom-light";
 
-/** Reused constant for VALID THEME NAMES behavior in ui/src/ui. */
+/** Supported persisted theme names. */
 export const VALID_THEME_NAMES = new Set<ThemeName>(["claw", "knot", "dash", "custom"]);
 const VALID_THEME_MODES = new Set<ThemeMode>(["system", "light", "dark"]);
 
@@ -41,12 +41,12 @@ function prefersLightScheme(): boolean {
   return globalThis.matchMedia("(prefers-color-scheme: light)").matches;
 }
 
-/** Reused helper for resolve System Theme behavior in ui/src/ui. */
+/** Resolve system mode to the current light/dark preference. */
 export function resolveSystemTheme(): ResolvedTheme {
   return prefersLightScheme() ? "light" : "dark";
 }
 
-/** Reused helper for parse Theme Selection behavior in ui/src/ui. */
+/** Parse persisted theme/mode values, including legacy theme aliases. */
 export function parseThemeSelection(
   themeRaw: unknown,
   modeRaw: unknown,
@@ -71,7 +71,7 @@ function resolveMode(mode: ThemeMode): "light" | "dark" {
   return mode;
 }
 
-/** Reused helper for resolve Theme behavior in ui/src/ui. */
+/** Resolve theme family and mode into the concrete applied theme. */
 export function resolveTheme(theme: ThemeName, mode: ThemeMode): ResolvedTheme {
   const resolvedMode = resolveMode(mode);
   if (theme === "claw") {
