@@ -1,12 +1,12 @@
-// packages/memory-host-sdk/src/host embedding provider adapter utils helpers and runtime behavior.
+// Shared adapter helpers for embedding provider implementations.
 import { normalizeLowercaseStringOrEmpty } from "./string-utils.js";
 
-/** Public helper for is Missing Embedding Api Key Error behavior in packages/memory-host-sdk. */
+/** Detects provider auth errors caused by missing embedding API keys. */
 export function isMissingEmbeddingApiKeyError(err: unknown): boolean {
   return err instanceof Error && err.message.includes("No API key found for provider");
 }
 
-/** Public helper for sanitize Embedding Cache Headers behavior in packages/memory-host-sdk. */
+/** Removes excluded headers and returns a stable sorted cache-key header list. */
 export function sanitizeEmbeddingCacheHeaders(
   headers: Record<string, string>,
   excludedHeaderNames: string[],
@@ -20,7 +20,7 @@ export function sanitizeEmbeddingCacheHeaders(
     .map(([key, value]) => [key, value]);
 }
 
-/** Public helper for map Batch Embeddings By Index behavior in packages/memory-host-sdk. */
+/** Reconstructs batch embedding results by original request index. */
 export function mapBatchEmbeddingsByIndex(
   byCustomId: Map<string, number[]>,
   count: number,

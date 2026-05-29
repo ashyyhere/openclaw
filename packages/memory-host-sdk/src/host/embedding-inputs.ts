@@ -1,39 +1,39 @@
-// packages/memory-host-sdk/src/host embedding inputs helpers and runtime behavior.
-/** Public type describing Embedding Input Text Part for packages/memory-host-sdk. */
+// Structured embedding input parts for text and inline multimodal data.
+/** Text part in a structured embedding input. */
 export type EmbeddingInputTextPart = {
   type: "text";
   text: string;
 };
 
-/** Public type describing Embedding Input Inline Data Part for packages/memory-host-sdk. */
+/** Inline binary payload encoded as base64 for multimodal embedding providers. */
 export type EmbeddingInputInlineDataPart = {
   type: "inline-data";
   mimeType: string;
   data: string;
 };
 
-/** Public type describing Embedding Input Part for packages/memory-host-sdk. */
+/** Structured embedding input part accepted by embedding providers. */
 export type EmbeddingInputPart = EmbeddingInputTextPart | EmbeddingInputInlineDataPart;
 
-/** Public type describing Embedding Input for packages/memory-host-sdk. */
+/** Embedding input with plain text plus optional provider-specific structured parts. */
 export type EmbeddingInput = {
   text: string;
   parts?: EmbeddingInputPart[];
 };
 
-/** Public helper for build Text Embedding Input behavior in packages/memory-host-sdk. */
+/** Wraps plain text in the structured embedding input shape. */
 export function buildTextEmbeddingInput(text: string): EmbeddingInput {
   return { text };
 }
 
-/** Public helper for is Inline Data Embedding Input Part behavior in packages/memory-host-sdk. */
+/** Type guard for inline-data embedding input parts. */
 export function isInlineDataEmbeddingInputPart(
   part: EmbeddingInputPart,
 ): part is EmbeddingInputInlineDataPart {
   return part.type === "inline-data";
 }
 
-/** Public helper for has Non Text Embedding Parts behavior in packages/memory-host-sdk. */
+/** Returns true when an embedding input includes inline-data parts. */
 export function hasNonTextEmbeddingParts(input: EmbeddingInput | undefined): boolean {
   if (!input?.parts?.length) {
     return false;

@@ -1,10 +1,10 @@
-// packages/memory-host-sdk/src/host embedding model limits helpers and runtime behavior.
+// Embedding model input token limit resolution.
 import type { EmbeddingProvider } from "./embeddings.js";
 
 const DEFAULT_EMBEDDING_MAX_INPUT_TOKENS = 8192;
 const DEFAULT_LOCAL_EMBEDDING_MAX_INPUT_TOKENS = 2048;
 
-/** Public helper for resolve Embedding Max Input Tokens behavior in packages/memory-host-sdk. */
+/** Resolves explicit provider token limits with local and remote defaults. */
 export function resolveEmbeddingMaxInputTokens(provider: EmbeddingProvider): number {
   if (typeof provider.maxInputTokens === "number") {
     return provider.maxInputTokens;

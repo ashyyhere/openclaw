@@ -1,9 +1,9 @@
-// packages/memory-host-sdk/src/host embeddings debug helpers and runtime behavior.
+// Opt-in stderr logging for memory embedding diagnostics.
 import { normalizeLowercaseStringOrEmpty } from "./string-utils.js";
 
 const debugEmbeddings = isTruthyEnvValue(process.env.OPENCLAW_DEBUG_MEMORY_EMBEDDINGS);
 
-/** Public helper for debug Embeddings Log behavior in packages/memory-host-sdk. */
+/** Writes embedding debug output only when OPENCLAW_DEBUG_MEMORY_EMBEDDINGS is truthy. */
 export function debugEmbeddingsLog(message: string, meta?: Record<string, unknown>): void {
   if (!debugEmbeddings) {
     return;

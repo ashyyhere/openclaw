@@ -1,5 +1,5 @@
-// packages/memory-host-sdk/src/host embeddings model normalize helpers and runtime behavior.
-/** Public helper for normalize Embedding Model With Prefixes behavior in packages/memory-host-sdk. */
+// Embedding model id normalization helpers.
+/** Removes supported provider prefixes from configured model refs, or returns the default. */
 export function normalizeEmbeddingModelWithPrefixes(params: {
   model: string;
   defaultModel: string;
