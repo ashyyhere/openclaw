@@ -1,14 +1,15 @@
-// ui/src/ui theme transition helpers and runtime behavior.
+// Theme transition entry point. Current UI applies themes immediately while
+// retaining the context/options shape for callers that pass pointer metadata.
 import type { ResolvedTheme } from "./theme.ts";
 
-/** Shared type for Theme Transition Context in ui/src/ui. */
+/** Pointer/element metadata retained for theme transition callers. */
 export type ThemeTransitionContext = {
   element?: HTMLElement | null;
   pointerClientX?: number;
   pointerClientY?: number;
 };
 
-/** Shared type for Theme Transition Options in ui/src/ui. */
+/** Inputs required to switch the resolved theme. */
 export type ThemeTransitionOptions = {
   nextTheme: ResolvedTheme;
   applyTheme: () => void;
@@ -24,7 +25,7 @@ const cleanupThemeTransition = (root: HTMLElement) => {
   root.style.removeProperty("--theme-switch-y");
 };
 
-/** Reused constant for start Theme Transition behavior in ui/src/ui. */
+/** Apply the next theme immediately and clean up transition CSS state. */
 export const startThemeTransition = ({
   nextTheme,
   applyTheme,

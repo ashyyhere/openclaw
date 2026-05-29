@@ -1,8 +1,8 @@
-// Shared types for ui/src/ui/views nodes types behavior.
+// Nodes view props shared between the renderer and app shell.
 import type { DevicePairingList } from "../controllers/devices.ts";
 import type { ExecApprovalsFile, ExecApprovalsSnapshot } from "../controllers/exec-approvals.ts";
 
-/** Shared type for Nodes Props in ui/src/ui/views. */
+/** State and callbacks required by the nodes view. */
 export type NodesProps = {
   loading: boolean;
   nodes: Array<Record<string, unknown>>;

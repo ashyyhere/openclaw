@@ -1,4 +1,4 @@
-// ui/src/ui app last active session helpers and runtime behavior.
+// Last-active-session settings helper.
 import type { UiSettings } from "./storage.ts";
 
 type LastActiveSessionHost = {
@@ -6,7 +6,7 @@ type LastActiveSessionHost = {
   applySettings(next: UiSettings): void;
 };
 
-/** Reused helper for set Last Active Session Key behavior in ui/src/ui. */
+/** Persist the latest non-empty active session key into UI settings. */
 export function setLastActiveSessionKey(host: LastActiveSessionHost, next: string) {
   const trimmed = next.trim();
   if (!trimmed || host.settings.lastActiveSessionKey === trimmed) {

@@ -1,4 +1,4 @@
-// ui/src/ui/chat chat welcome helpers and runtime behavior.
+// Chat welcome-state renderer shown before a session has visible messages.
 import { html } from "lit";
 import { t } from "../../i18n/index.ts";
 import {
@@ -8,7 +8,7 @@ import {
   resolveAssistantTextAvatar,
 } from "../views/agents-utils.ts";
 
-/** Shared type for Chat Welcome Props in ui/src/ui/chat. */
+/** Assistant identity and callbacks needed by the empty-chat welcome view. */
 export type ChatWelcomeProps = {
   assistantName: string;
   assistantAvatar: string | null;
@@ -36,14 +36,14 @@ function resolveAssistantAvatarUrl(
   });
 }
 
-/** Reused helper for resolve Assistant Display Avatar behavior in ui/src/ui/chat. */
+/** Resolve the welcome avatar as an image URL or text avatar. */
 export function resolveAssistantDisplayAvatar(
   props: Pick<ChatWelcomeProps, "assistantAvatar" | "assistantAvatarUrl">,
 ): string | null {
   return resolveAssistantAvatarUrl(props) ?? resolveAssistantTextAvatar(props.assistantAvatar);
 }
 
-/** Reused helper for render Welcome State behavior in ui/src/ui/chat. */
+/** Render the initial chat welcome view and quick-start suggestions. */
 export function renderWelcomeState(props: ChatWelcomeProps) {
   const name = props.assistantName || "Assistant";
   const avatar = resolveAssistantAvatarUrl(props);

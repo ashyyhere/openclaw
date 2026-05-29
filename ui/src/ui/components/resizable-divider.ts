@@ -1,4 +1,4 @@
-// ui/src/ui/components resizable divider helpers and runtime behavior.
+// Accessible draggable divider for resizable Control UI split views.
 import { LitElement, css, nothing } from "lit";
 import { property } from "lit/decorators.js";
 

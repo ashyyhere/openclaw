@@ -1,4 +1,5 @@
-// ui/src/ui/chat context notice helpers and runtime behavior.
+// Context-window usage notice. It computes themed warning colors and optional
+// compaction affordances from the current session token usage.
 import { html, nothing } from "lit";
 import { icons } from "../icons.ts";
 import type { GatewaySessionRow } from "../types.ts";
@@ -6,7 +7,7 @@ import type { GatewaySessionRow } from "../types.ts";
 const CONTEXT_NOTICE_RATIO = 0.85;
 const CONTEXT_COMPACT_RATIO = 0.9;
 
-/** Shared type for Context Notice Options in ui/src/ui/chat. */
+/** Controls available when rendering a context usage notice. */
 export type ContextNoticeOptions = {
   compactBusy?: boolean;
   compactDisabled?: boolean;
@@ -49,12 +50,12 @@ function getThemeNoticeColors() {
   return cachedThemeNoticeColors;
 }
 
-/** Reused helper for reset Context Notice Theme Cache For Test behavior in ui/src/ui/chat. */
+/** Clear cached theme colors for deterministic tests. */
 export function resetContextNoticeThemeCacheForTest(): void {
   cachedThemeNoticeColors = null;
 }
 
-/** Reused helper for get Context Notice View Model behavior in ui/src/ui/chat. */
+/** Build the context usage view model for a session row. */
 export function getContextNoticeViewModel(
   session: GatewaySessionRow | undefined,
   defaultContextTokens: number | null,
@@ -108,7 +109,7 @@ export function getContextNoticeViewModel(
   };
 }
 
-/** Reused helper for render Context Notice behavior in ui/src/ui/chat. */
+/** Render the context usage notice and optional compact action. */
 export function renderContextNotice(
   session: GatewaySessionRow | undefined,
   defaultContextTokens: number | null,
