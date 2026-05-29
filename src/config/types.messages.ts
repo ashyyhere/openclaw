@@ -1,8 +1,8 @@
-// config types messages helpers and runtime behavior.
+// Message, command, queue, broadcast, status-reaction, and TTS config contracts.
 import type { QueueDropPolicy, QueueMode, QueueModeByProvider } from "./types.queue.js";
 import type { TtsConfig } from "./types.tts.js";
 
-/** Shared type for Group Chat Config in src/config. */
+/** Group/channel inbound handling and visible reply policy. */
 export type GroupChatConfig = {
   mentionPatterns?: string[];
   historyLimit?: number;
@@ -20,12 +20,12 @@ export type GroupChatConfig = {
   visibleReplies?: "automatic" | "message_tool";
 };
 
-/** Shared type for Dm Config in src/config. */
+/** Direct-message history config. */
 export type DmConfig = {
   historyLimit?: number;
 };
 
-/** Shared type for Queue Config in src/config. */
+/** Inbound message queue mode, debounce, cap, and drop policy. */
 export type QueueConfig = {
   mode?: QueueMode;
   byChannel?: QueueModeByProvider;
@@ -36,19 +36,19 @@ export type QueueConfig = {
   drop?: QueueDropPolicy;
 };
 
-/** Shared type for Inbound Debounce By Provider in src/config. */
+/** Per-channel/provider inbound debounce overrides in milliseconds. */
 export type InboundDebounceByProvider = Record<string, number>;
 
-/** Shared type for Inbound Debounce Config in src/config. */
+/** Global and per-channel inbound debounce config. */
 export type InboundDebounceConfig = {
   debounceMs?: number;
   byChannel?: InboundDebounceByProvider;
 };
 
-/** Shared type for Broadcast Strategy in src/config. */
+/** Broadcast peer processing strategy. */
 export type BroadcastStrategy = "parallel" | "sequential";
 
-/** Shared type for Broadcast Config in src/config. */
+/** Broadcast fanout config keyed by peer id. */
 export type BroadcastConfig = {
   /** Default processing strategy for broadcast peers. */
   strategy?: BroadcastStrategy;
@@ -60,7 +60,7 @@ export type BroadcastConfig = {
   [peerId: string]: string[] | BroadcastStrategy | undefined;
 };
 
-/** Shared type for Audio Config in src/config. */
+/** Legacy audio transcription config. */
 export type AudioConfig = {
   /** @deprecated Use tools.media.audio.models instead. */
   transcription?: {
@@ -70,7 +70,7 @@ export type AudioConfig = {
   };
 };
 
-/** Shared type for Status Reactions Emoji Config in src/config. */
+/** Emoji names used for lifecycle status reactions. */
 export type StatusReactionsEmojiConfig = {
   thinking?: string;
   tool?: string;
@@ -86,7 +86,7 @@ export type StatusReactionsEmojiConfig = {
   compacting?: string;
 };
 
-/** Shared type for Status Reactions Timing Config in src/config. */
+/** Timing controls for status reaction debounce, stall warnings, and cleanup. */
 export type StatusReactionsTimingConfig = {
   /** Debounce interval for intermediate states (ms). Default: 700. */
   debounceMs?: number;
@@ -100,7 +100,7 @@ export type StatusReactionsTimingConfig = {
   errorHoldMs?: number;
 };
 
-/** Shared type for Status Reactions Config in src/config. */
+/** Lifecycle status reaction config for channels that support reactions. */
 export type StatusReactionsConfig = {
   /** Enable lifecycle status reactions (default: false). */
   enabled?: boolean;
@@ -110,7 +110,7 @@ export type StatusReactionsConfig = {
   timing?: StatusReactionsTimingConfig;
 };
 
-/** Shared type for Messages Config in src/config. */
+/** Top-level message handling config. */
 export type MessagesConfig = {
   /** @deprecated Use `whatsapp.messagePrefix` (WhatsApp-only inbound prefix). */
   messagePrefix?: string;
@@ -161,10 +161,10 @@ export type MessagesConfig = {
   tts?: TtsConfig;
 };
 
-/** Shared type for Native Commands Setting in src/config. */
+/** Native command registration setting shared by global and provider configs. */
 export type NativeCommandsSetting = boolean | "auto";
 
-/** Shared type for Command Owner Display in src/config. */
+/** Owner id rendering mode for prompts and diagnostics. */
 export type CommandOwnerDisplay = "raw" | "hash";
 
 /**
@@ -174,7 +174,7 @@ export type CommandOwnerDisplay = "raw" | "hash";
  */
 export type CommandAllowFrom = Record<string, Array<string | number>>;
 
-/** Shared type for Commands Config in src/config. */
+/** Global command parsing, registration, and authorization config. */
 export type CommandsConfig = {
   /** Enable native command registration when supported (default: "auto"). */
   native?: NativeCommandsSetting;
@@ -213,7 +213,7 @@ export type CommandsConfig = {
   allowFrom?: CommandAllowFrom;
 };
 
-/** Shared type for Provider Commands Config in src/config. */
+/** Provider/account-level native command registration overrides. */
 export type ProviderCommandsConfig = {
   /** Override native command registration for this provider (bool or "auto"). */
   native?: NativeCommandsSetting;

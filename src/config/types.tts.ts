@@ -1,14 +1,14 @@
-// config types tts helpers and runtime behavior.
-/** Shared type for Tts Provider in src/config. */
+// Text-to-speech config contracts for auto playback, personas, and provider overrides.
+/** TTS provider id selected by config or persona. */
 export type TtsProvider = string;
 
-/** Shared type for Tts Mode in src/config. */
+/** Reply phases eligible for TTS playback. */
 export type TtsMode = "final" | "all";
 
-/** Shared type for Tts Auto Mode in src/config. */
+/** Automatic TTS trigger policy. */
 export type TtsAutoMode = "off" | "always" | "inbound" | "tagged";
 
-/** Shared type for Tts Model Override Config in src/config. */
+/** Fine-grained allowlist for model-suggested TTS parameter overrides. */
 export type TtsModelOverrideConfig = {
   /** Enable model-provided overrides for TTS. */
   enabled?: boolean;
@@ -28,13 +28,13 @@ export type TtsModelOverrideConfig = {
   allowSeed?: boolean;
 };
 
-/** Shared type for Tts Provider Config Map in src/config. */
+/** Provider-specific TTS config keyed by speech provider id. */
 export type TtsProviderConfigMap = Record<string, Record<string, unknown>>;
 
-/** Shared type for Tts Persona Fallback Policy in src/config. */
+/** Behavior when a persona cannot be applied to the selected provider. */
 export type TtsPersonaFallbackPolicy = "preserve-persona" | "provider-defaults" | "fail";
 
-/** Shared type for Tts Persona Prompt Config in src/config. */
+/** Persona prompt metadata used to guide model-generated TTS directives. */
 export type TtsPersonaPromptConfig = {
   profile?: string;
   scene?: string;
@@ -45,7 +45,7 @@ export type TtsPersonaPromptConfig = {
   constraints?: string[];
 };
 
-/** Shared type for Tts Persona Config in src/config. */
+/** Named TTS persona with optional provider-specific bindings. */
 export type TtsPersonaConfig = {
   label?: string;
   description?: string;
@@ -57,12 +57,12 @@ export type TtsPersonaConfig = {
   providers?: TtsProviderConfigMap;
 };
 
-/** Shared type for Resolved Tts Persona in src/config. */
+/** TTS persona after config lookup attaches the persona id. */
 export type ResolvedTtsPersona = TtsPersonaConfig & {
   id: string;
 };
 
-/** Shared type for Tts Config in src/config. */
+/** Top-level TTS config block for outbound replies. */
 export type TtsConfig = {
   /** Auto-TTS mode (preferred). */
   auto?: TtsAutoMode;

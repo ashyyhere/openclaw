@@ -1,11 +1,11 @@
-// config types approvals helpers and runtime behavior.
-/** Shared type for Native Exec Approval Enable Mode in src/config. */
+// Approval forwarding config contracts for exec and plugin approvals.
+/** Enablement mode for native exec approval delivery. */
 export type NativeExecApprovalEnableMode = boolean | "auto";
 
-/** Shared type for Exec Approval Forwarding Mode in src/config. */
+/** Delivery fanout mode for forwarded approvals. */
 export type ExecApprovalForwardingMode = "session" | "targets" | "both";
 
-/** Shared type for Exec Approval Forward Target in src/config. */
+/** Explicit chat target for forwarded approval prompts. */
 export type ExecApprovalForwardTarget = {
   /** Channel id (e.g. "discord", "slack", or plugin channel id). */
   channel: string;
@@ -17,7 +17,7 @@ export type ExecApprovalForwardTarget = {
   threadId?: string | number;
 };
 
-/** Shared type for Exec Approval Forwarding Config in src/config. */
+/** Approval forwarding filters and destination config. */
 export type ExecApprovalForwardingConfig = {
   /** Enable forwarding exec approvals to chat channels. Default: false. */
   enabled?: boolean;
@@ -31,7 +31,7 @@ export type ExecApprovalForwardingConfig = {
   targets?: ExecApprovalForwardTarget[];
 };
 
-/** Shared type for Approvals Config in src/config. */
+/** Top-level approval forwarding config by approval family. */
 export type ApprovalsConfig = {
   exec?: ExecApprovalForwardingConfig;
   plugin?: ExecApprovalForwardingConfig;
