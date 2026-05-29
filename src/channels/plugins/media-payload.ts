@@ -1,11 +1,11 @@
 // Channel media payload normalization helpers.
-/** Shared type for Media Payload Input in src/channels/plugins. */
+/** Media attachment input accepted by channel plugin prompt payload builders. */
 export type MediaPayloadInput = {
   path: string;
   contentType?: string;
 };
 
-/** Shared type for Media Payload in src/channels/plugins. */
+/** Legacy prompt payload fields for single and multi-media attachments. */
 export type MediaPayload = {
   MediaPath?: string;
   MediaType?: string;
@@ -15,7 +15,7 @@ export type MediaPayload = {
   MediaTypes?: string[];
 };
 
-/** Reused helper for build Media Payload behavior in src/channels/plugins. */
+/** Build prompt-compatible media fields, optionally preserving media-type array alignment. */
 export function buildMediaPayload(
   mediaList: MediaPayloadInput[],
   opts?: { preserveMediaTypeCardinality?: boolean },

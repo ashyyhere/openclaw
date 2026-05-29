@@ -1,6 +1,6 @@
 // Message capability helpers for channel plugin declarations.
-/** Reused constant for CHANNEL MESSAGE CAPABILITIES behavior in src/channels/plugins. */
+/** Message capability ids channel plugins can advertise in their manifests. */
 export const CHANNEL_MESSAGE_CAPABILITIES = ["presentation", "delivery-pin"] as const;
 
-/** Shared type for Channel Message Capability in src/channels/plugins. */
+/** Supported channel message capability id. */
 export type ChannelMessageCapability = (typeof CHANNEL_MESSAGE_CAPABILITIES)[number];

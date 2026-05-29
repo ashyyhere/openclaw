@@ -16,7 +16,7 @@ import type { ConfiguredBindingResolution } from "./binding-types.js";
 
 const CONFIGURED_BINDING_ROUTE_READY_TIMEOUT_MS = 30_000;
 
-/** Shared type for Configured Binding Route Result in src/channels/plugins. */
+/** Route result after applying static configured binding rules for a conversation. */
 export type ConfiguredBindingRouteResult = {
   bindingResolution: ConfiguredBindingResolution | null;
   route: ResolvedAgentRoute;
@@ -24,7 +24,7 @@ export type ConfiguredBindingRouteResult = {
   boundAgentId?: string;
 };
 
-/** Shared type for Runtime Conversation Binding Route Result in src/channels/plugins. */
+/** Route result after applying persisted runtime conversation bindings. */
 export type RuntimeConversationBindingRouteResult = {
   bindingRecord: SessionBindingRecord | null;
   route: ResolvedAgentRoute;
@@ -69,7 +69,7 @@ function isPluginOwnedRuntimeBindingRecord(record: SessionBindingRecord | null):
   );
 }
 
-/** Reused helper for resolve Configured Binding Route behavior in src/channels/plugins. */
+/** Override an agent route when config binds the conversation to a stateful target. */
 export function resolveConfiguredBindingRoute(
   params: {
     cfg: OpenClawConfig;
@@ -114,7 +114,7 @@ export function resolveConfiguredBindingRoute(
   };
 }
 
-/** Reused helper for resolve Runtime Conversation Binding Route behavior in src/channels/plugins. */
+/** Override an agent route from runtime bindings while ignoring cron/plugin-owned bindings. */
 export function resolveRuntimeConversationBindingRoute(
   params: {
     route: ResolvedAgentRoute;
@@ -167,7 +167,7 @@ export function resolveRuntimeConversationBindingRoute(
   };
 }
 
-/** Reused helper for ensure Configured Binding Route Ready behavior in src/channels/plugins. */
+/** Wait briefly for a configured binding target to become routable before delivery. */
 export async function ensureConfiguredBindingRouteReady(params: {
   cfg: OpenClawConfig;
   bindingResolution: ConfiguredBindingResolution | null;
