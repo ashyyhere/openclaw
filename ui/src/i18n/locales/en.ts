@@ -1,7 +1,7 @@
-// ui/src/i18n/locales en helpers and runtime behavior.
+// English UI translation map.
 import type { TranslationMap } from "../lib/types.ts";
 
-/** Reused constant for en behavior in ui/src/i18n/locales. */
+/** Built-in English translations used as the UI fallback locale. */
 export const en: TranslationMap = {
   common: {
     health: "Health",

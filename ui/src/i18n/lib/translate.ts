@@ -1,4 +1,4 @@
-// ui/src/i18n/lib translate helpers and runtime behavior.
+// Stateful UI translation manager with persisted locale and English fallback.
 import { getSafeLocalStorage } from "../../local-storage.ts";
 import { en } from "../locales/en.ts";
 import {
@@ -12,7 +12,7 @@ import type { Locale, TranslationMap } from "./types.ts";
 
 type Subscriber = (locale: Locale) => void;
 
-/** Re-exported API for ui/src/i18n/lib, starting with SUPPORTED LOCALES. */
+/** Locale registry helpers re-exported for UI settings and controls. */
 export { SUPPORTED_LOCALES, isSupportedLocale };
 
 class I18nManager {
@@ -148,7 +148,7 @@ class I18nManager {
   }
 }
 
-/** Reused constant for i18n behavior in ui/src/i18n/lib. */
+/** Shared browser UI i18n manager singleton. */
 export const i18n = new I18nManager();
-/** Reused constant for t behavior in ui/src/i18n/lib. */
+/** Convenience translation function bound to the shared i18n manager. */
 export const t = (key: string, params?: Record<string, string>) => i18n.t(key, params);

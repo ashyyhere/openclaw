@@ -1,8 +1,8 @@
-// ui/src/i18n/lib lit controller helpers and runtime behavior.
+// Lit reactive controller that refreshes components after locale changes.
 import type { ReactiveController, ReactiveControllerHost } from "lit";
 import { i18n } from "./translate.ts";
 
-/** Reused class for I18n Controller behavior in ui/src/i18n/lib. */
+/** Subscribes a Lit host to the shared i18n manager for locale-change updates. */
 export class I18nController implements ReactiveController {
   private host: ReactiveControllerHost;
   private unsubscribe?: () => void;

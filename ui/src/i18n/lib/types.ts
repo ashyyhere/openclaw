@@ -1,8 +1,8 @@
-// Shared types for ui/src/i18n/lib types behavior.
-/** Shared type for Translation Map in ui/src/i18n/lib. */
+// Shared i18n locale and nested translation-map contracts.
+/** Recursive map of dot-addressable UI translation strings. */
 export type TranslationMap = { [key: string]: string | TranslationMap };
 
-/** Shared type for Locale in ui/src/i18n/lib. */
+/** Locale ids supported by the bundled UI translation registry. */
 export type Locale =
   | "en"
   | "zh-CN"
@@ -24,7 +24,7 @@ export type Locale =
   | "nl"
   | "fa";
 
-/** Shared type for I18n Config in ui/src/i18n/lib. */
+/** Full i18n configuration shape used by tests and future configuration surfaces. */
 export interface I18nConfig {
   locale: Locale;
   fallbackLocale: Locale;

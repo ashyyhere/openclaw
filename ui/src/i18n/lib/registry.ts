@@ -1,4 +1,4 @@
-// ui/src/i18n/lib registry helpers and runtime behavior.
+// Locale registry and lazy translation loading for the web UI.
 import type { Locale, TranslationMap } from "./types.ts";
 
 type LazyLocale = Exclude<Locale, "en">;
@@ -9,7 +9,7 @@ type LazyLocaleRegistration = {
   loader: () => Promise<LocaleModule>;
 };
 
-/** Reused constant for DEFAULT LOCALE behavior in ui/src/i18n/lib. */
+/** Built-in locale loaded synchronously and used as fallback for missing strings. */
 export const DEFAULT_LOCALE: Locale = "en";
 
 const LAZY_LOCALES: readonly LazyLocale[] = [
@@ -108,10 +108,10 @@ const LAZY_LOCALE_REGISTRY: Record<LazyLocale, LazyLocaleRegistration> = {
   },
 };
 
-/** Reused constant for SUPPORTED LOCALES behavior in ui/src/i18n/lib. */
+/** Locales exposed in UI settings and accepted by the i18n manager. */
 export const SUPPORTED_LOCALES: ReadonlyArray<Locale> = [DEFAULT_LOCALE, ...LAZY_LOCALES];
 
-/** Reused helper for is Supported Locale behavior in ui/src/i18n/lib. */
+/** Type guard for persisted, browser-reported, or user-selected locale ids. */
 export function isSupportedLocale(value: string | null | undefined): value is Locale {
   return value !== null && value !== undefined && SUPPORTED_LOCALES.includes(value as Locale);
 }
@@ -120,7 +120,7 @@ function isLazyLocale(locale: Locale): locale is LazyLocale {
   return LAZY_LOCALES.includes(locale as LazyLocale);
 }
 
-/** Reused helper for resolve Navigator Locale behavior in ui/src/i18n/lib. */
+/** Maps a browser language tag to the closest supported UI locale. */
 export function resolveNavigatorLocale(navLang: string): Locale {
   if (navLang.startsWith("zh")) {
     return navLang === "zh-TW" || navLang === "zh-HK" ? "zh-TW" : "zh-CN";
@@ -176,7 +176,7 @@ export function resolveNavigatorLocale(navLang: string): Locale {
   return DEFAULT_LOCALE;
 }
 
-/** Reused helper for load Lazy Locale Translation behavior in ui/src/i18n/lib. */
+/** Dynamically imports a non-English translation map when first selected. */
 export async function loadLazyLocaleTranslation(locale: Locale): Promise<TranslationMap | null> {
   if (!isLazyLocale(locale)) {
     return null;
