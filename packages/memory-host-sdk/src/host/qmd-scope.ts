@@ -1,4 +1,4 @@
-// packages/memory-host-sdk/src/host qmd scope helpers and runtime behavior.
+// QMD session-export scope matching helpers.
 import type { ResolvedQmdConfig } from "./backend-config.js";
 import {
   normalizeLowercaseStringOrEmpty,
@@ -11,7 +11,7 @@ type ParsedQmdSessionScope = {
   normalizedKey?: string;
 };
 
-/** Public helper for is Qmd Scope Allowed behavior in packages/memory-host-sdk. */
+/** Applies ordered session scope rules to decide whether QMD may index a session. */
 export function isQmdScopeAllowed(scope: ResolvedQmdConfig["scope"], sessionKey?: string): boolean {
   if (!scope) {
     return true;
@@ -55,12 +55,12 @@ export function isQmdScopeAllowed(scope: ResolvedQmdConfig["scope"], sessionKey?
   return fallback === "allow";
 }
 
-/** Public helper for derive Qmd Scope Channel behavior in packages/memory-host-sdk. */
+/** Extracts the normalized channel/provider segment from a scoped session key. */
 export function deriveQmdScopeChannel(key?: string): string | undefined {
   return parseQmdSessionScope(key).channel;
 }
 
-/** Public helper for derive Qmd Scope Chat Type behavior in packages/memory-host-sdk. */
+/** Derives direct/group/channel chat type from a session key for QMD scoping. */
 export function deriveQmdScopeChatType(key?: string): "channel" | "group" | "direct" | undefined {
   return parseQmdSessionScope(key).chatType;
 }

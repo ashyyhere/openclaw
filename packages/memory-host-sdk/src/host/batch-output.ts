@@ -1,5 +1,5 @@
-// packages/memory-host-sdk/src/host batch output helpers and runtime behavior.
-/** Public type describing Embedding Batch Output Line for packages/memory-host-sdk. */
+// OpenAI-compatible embedding batch output line normalization.
+/** Provider batch output line for one embedding request. */
 export type EmbeddingBatchOutputLine = {
   custom_id?: string;
   error?: { message?: string };
@@ -16,7 +16,7 @@ export type EmbeddingBatchOutputLine = {
   };
 };
 
-/** Public helper for apply Embedding Batch Output Line behavior in packages/memory-host-sdk. */
+/** Applies one batch output line into success/error maps by custom id. */
 export function applyEmbeddingBatchOutputLine(params: {
   line: EmbeddingBatchOutputLine;
   remaining: Set<string>;

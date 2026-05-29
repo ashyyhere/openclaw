@@ -1,7 +1,7 @@
-// packages/memory-host-sdk/src/host hash helpers and runtime behavior.
+// Stable SHA-256 hashing helper for memory files, chunks, and cache keys.
 import crypto from "node:crypto";
 
-/** Public helper for hash Text behavior in packages/memory-host-sdk. */
+/** Hashes text as lowercase SHA-256 hex. */
 export function hashText(value: string): string {
   return crypto.createHash("sha256").update(value).digest("hex");
 }

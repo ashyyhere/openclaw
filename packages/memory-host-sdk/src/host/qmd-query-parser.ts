@@ -1,8 +1,8 @@
-// packages/memory-host-sdk/src/host qmd query parser helpers and runtime behavior.
+// QMD query JSON parser with noisy-output and no-result handling.
 import { formatErrorMessage } from "./error-utils.js";
 import { normalizeLowercaseStringOrEmpty } from "./string-utils.js";
 
-/** Public type describing Qmd Query Result for packages/memory-host-sdk. */
+/** Normalized QMD query hit used by memory search results. */
 export type QmdQueryResult = {
   docid?: string;
   score?: number;
@@ -14,7 +14,7 @@ export type QmdQueryResult = {
   endLine?: number;
 };
 
-/** Public helper for parse Qmd Query Json behavior in packages/memory-host-sdk. */
+/** Parses QMD JSON output, accepting known no-result markers and noisy JSON arrays. */
 export function parseQmdQueryJson(stdout: string, stderr: string): QmdQueryResult[] {
   const trimmedStdout = stdout.trim();
   const trimmedStderr = stderr.trim();

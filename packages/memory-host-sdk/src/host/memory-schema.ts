@@ -1,8 +1,8 @@
-// packages/memory-host-sdk/src/host memory schema helpers and runtime behavior.
+// SQLite schema setup for memory file, chunk, cache, and FTS tables.
 import type { DatabaseSync } from "node:sqlite";
 import { formatErrorMessage } from "./error-utils.js";
 
-/** Public helper for ensure Memory Index Schema behavior in packages/memory-host-sdk. */
+/** Creates or migrates memory index tables and reports FTS availability. */
 export function ensureMemoryIndexSchema(params: {
   db: DatabaseSync;
   embeddingCacheTable: string;
