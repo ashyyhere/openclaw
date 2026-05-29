@@ -1,4 +1,4 @@
-// tasks task flow registry helpers and runtime behavior.
+// Stores task-flow state and keeps managed flows synchronized with task records.
 import crypto from "node:crypto";
 import { formatErrorMessage } from "../infra/errors.js";
 import { createSubsystemLogger } from "../logging/subsystem.js";
@@ -76,14 +76,14 @@ type FlowRecordCreateFields = {
   endedAt?: number | null;
 };
 
-/** Shared type for Create Flow Record Params in src/tasks. */
+/** Inputs for creating either a managed flow or a task-mirrored flow record. */
 export type CreateFlowRecordParams = FlowRecordCreateFields & {
   syncMode?: TaskFlowSyncMode;
   controllerId?: string | null;
   revision?: number;
 };
 
-/** Shared type for Task Flow Update Result in src/tasks. */
+/** Optimistic update result for flow writes guarded by an expected revision. */
 export type TaskFlowUpdateResult =
   | {
       applied: true;
@@ -116,6 +116,8 @@ function cloneFlowRecord(record: TaskFlowRecord): TaskFlowRecord {
 }
 
 function normalizeRestoredFlowRecord(record: TaskFlowRecord): TaskFlowRecord {
+  // Restored records may predate managed-flow controller ids, so assign a
+  // stable legacy owner instead of letting managed flows become unclaimable.
   const syncMode = record.syncMode === "task_mirrored" ? "task_mirrored" : "managed";
   const controllerId =
     syncMode === "managed"
@@ -193,7 +195,7 @@ function resolveFlowBlockedSummary(
   );
 }
 
-/** Reused helper for derive Task Flow Status From Task behavior in src/tasks. */
+/** Maps task lifecycle states into the smaller task-flow status model. */
 export function deriveTaskFlowStatusFromTask(
   task: Pick<TaskRecord, "status" | "terminalOutcome">,
 ): TaskFlowStatus {
@@ -260,7 +262,7 @@ function ensureFlowRegistryReady() {
   }));
 }
 
-/** Reused helper for get Task Flow Registry Restore Failure behavior in src/tasks. */
+/** Returns the last restore failure after the registry has attempted lazy hydration. */
 export function getTaskFlowRegistryRestoreFailure(): string | null {
   ensureFlowRegistryReady();
   return restoreFailureMessage;
@@ -372,14 +374,14 @@ function writeFlowRecord(next: TaskFlowRecord, previous?: TaskFlowRecord): TaskF
   return cloneFlowRecord(next);
 }
 
-/** Reused helper for create Flow Record behavior in src/tasks. */
+/** Creates and persists a flow record in the in-process registry. */
 export function createFlowRecord(params: CreateFlowRecordParams): TaskFlowRecord {
   ensureFlowRegistryReady();
   const record = buildFlowRecord(params);
   return writeFlowRecord(record);
 }
 
-/** Reused helper for create Managed Task Flow behavior in src/tasks. */
+/** Creates a controller-owned flow that runtime code updates by revision. */
 export function createManagedTaskFlow(
   params: FlowRecordCreateFields & {
     controllerId: string;
@@ -392,7 +394,7 @@ export function createManagedTaskFlow(
   });
 }
 
-/** Reused helper for create Task Flow For Task behavior in src/tasks. */
+/** Creates a flow projection for a task so plugin readers can inspect it by owner. */
 export function createTaskFlowForTask(params: {
   task: Pick<
     TaskRecord,
@@ -445,7 +447,7 @@ function updateFlowRecordByIdUnchecked(
   return writeFlowRecord(applyFlowPatch(current, patch), current);
 }
 
-/** Reused helper for update Flow Record By Id Expected Revision behavior in src/tasks. */
+/** Applies a flow patch only when the caller observed the current revision. */
 export function updateFlowRecordByIdExpectedRevision(params: {
   flowId: string;
   expectedRevision: number;
@@ -472,7 +474,7 @@ export function updateFlowRecordByIdExpectedRevision(params: {
   };
 }
 
-/** Reused helper for set Flow Waiting behavior in src/tasks. */
+/** Moves a managed flow into waiting or blocked state with persisted JSON state. */
 export function setFlowWaiting(params: {
   flowId: string;
   expectedRevision: number;
@@ -503,7 +505,7 @@ export function setFlowWaiting(params: {
   });
 }
 
-/** Reused helper for resume Flow behavior in src/tasks. */
+/** Clears wait/block fields and returns a managed flow to queued or running state. */
 export function resumeFlow(params: {
   flowId: string;
   expectedRevision: number;
@@ -528,7 +530,7 @@ export function resumeFlow(params: {
   });
 }
 
-/** Reused helper for finish Flow behavior in src/tasks. */
+/** Marks a managed flow succeeded and records its terminal timestamp. */
 export function finishFlow(params: {
   flowId: string;
   expectedRevision: number;
@@ -554,7 +556,7 @@ export function finishFlow(params: {
   });
 }
 
-/** Reused helper for fail Flow behavior in src/tasks. */
+/** Marks a managed flow failed while preserving optional block diagnostics. */
 export function failFlow(params: {
   flowId: string;
   expectedRevision: number;
@@ -582,7 +584,7 @@ export function failFlow(params: {
   });
 }
 
-/** Reused helper for request Flow Cancel behavior in src/tasks. */
+/** Records a cancellation request without changing the flow lifecycle status. */
 export function requestFlowCancel(params: {
   flowId: string;
   expectedRevision: number;
@@ -599,7 +601,7 @@ export function requestFlowCancel(params: {
   });
 }
 
-/** Reused helper for sync Flow From Task behavior in src/tasks. */
+/** Mirrors task status, timing, and blocked summaries into a task-backed flow. */
 export function syncFlowFromTask(
   task: Pick<
     TaskRecord,
@@ -654,14 +656,14 @@ export function syncFlowFromTask(
   });
 }
 
-/** Reused helper for get Task Flow By Id behavior in src/tasks. */
+/** Looks up a flow by id and returns a defensive clone. */
 export function getTaskFlowById(flowId: string): TaskFlowRecord | undefined {
   ensureFlowRegistryReady();
   const flow = flows.get(flowId);
   return flow ? cloneFlowRecord(flow) : undefined;
 }
 
-/** Reused helper for list Task Flows For Owner Key behavior in src/tasks. */
+/** Lists flows for an owner with newest records first. */
 export function listTaskFlowsForOwnerKey(ownerKey: string): TaskFlowRecord[] {
   ensureFlowRegistryReady();
   const normalizedOwnerKey = ownerKey.trim();
@@ -674,13 +676,13 @@ export function listTaskFlowsForOwnerKey(ownerKey: string): TaskFlowRecord[] {
     .toSorted((left, right) => right.createdAt - left.createdAt);
 }
 
-/** Reused helper for find Latest Task Flow For Owner Key behavior in src/tasks. */
+/** Returns the newest flow for an owner key, when any exist. */
 export function findLatestTaskFlowForOwnerKey(ownerKey: string): TaskFlowRecord | undefined {
   const flow = listTaskFlowsForOwnerKey(ownerKey)[0];
   return flow ? cloneFlowRecord(flow) : undefined;
 }
 
-/** Reused helper for resolve Task Flow For Lookup Token behavior in src/tasks. */
+/** Resolves either a concrete flow id or an owner key lookup token. */
 export function resolveTaskFlowForLookupToken(token: string): TaskFlowRecord | undefined {
   const lookup = token.trim();
   if (!lookup) {
@@ -689,7 +691,7 @@ export function resolveTaskFlowForLookupToken(token: string): TaskFlowRecord | u
   return getTaskFlowById(lookup) ?? findLatestTaskFlowForOwnerKey(lookup);
 }
 
-/** Reused helper for list Task Flow Records behavior in src/tasks. */
+/** Lists every flow record in newest-first order for admin and test surfaces. */
 export function listTaskFlowRecords(): TaskFlowRecord[] {
   ensureFlowRegistryReady();
   return [...flows.values()]
@@ -697,7 +699,7 @@ export function listTaskFlowRecords(): TaskFlowRecord[] {
     .toSorted((left, right) => right.createdAt - left.createdAt);
 }
 
-/** Reused helper for delete Task Flow Record By Id behavior in src/tasks. */
+/** Deletes a flow record and emits a best-effort observer event. */
 export function deleteTaskFlowRecordById(flowId: string): boolean {
   ensureFlowRegistryReady();
   const current = flows.get(flowId);
@@ -714,7 +716,7 @@ export function deleteTaskFlowRecordById(flowId: string): boolean {
   return true;
 }
 
-/** Reused helper for reset Task Flow Registry For Tests behavior in src/tasks. */
+/** Resets in-memory and backing flow state for isolated tests. */
 export function resetTaskFlowRegistryForTests(opts?: { persist?: boolean }) {
   flows.clear();
   restoreAttempted = false;

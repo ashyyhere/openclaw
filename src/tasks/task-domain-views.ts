@@ -1,4 +1,4 @@
-// tasks task domain views helpers and runtime behavior.
+// Converts internal task and flow records into plugin-facing read models.
 import type {
   TaskFlowDetail,
   TaskFlowView,
@@ -10,7 +10,7 @@ import type { TaskFlowRecord } from "./task-flow-registry.types.js";
 import { summarizeTaskRecords } from "./task-registry.summary.js";
 import type { TaskRecord, TaskRegistrySummary } from "./task-registry.types.js";
 
-/** Reused helper for map Task Run Aggregate Summary behavior in src/tasks. */
+/** Copies aggregate task counters into the stable plugin runtime view shape. */
 export function mapTaskRunAggregateSummary(summary: TaskRegistrySummary): TaskRunAggregateSummary {
   return {
     total: summary.total,
@@ -22,7 +22,7 @@ export function mapTaskRunAggregateSummary(summary: TaskRegistrySummary): TaskRu
   };
 }
 
-/** Reused helper for map Task Run View behavior in src/tasks. */
+/** Projects a task registry record into the summary shape exposed to plugins. */
 export function mapTaskRunView(task: TaskRecord): TaskRunView {
   return {
     id: task.taskId,
@@ -53,12 +53,12 @@ export function mapTaskRunView(task: TaskRecord): TaskRunView {
   };
 }
 
-/** Reused helper for map Task Run Detail behavior in src/tasks. */
+/** Returns the full task detail view; task records currently expose no extra detail fields. */
 export function mapTaskRunDetail(task: TaskRecord): TaskRunDetail {
   return mapTaskRunView(task);
 }
 
-/** Reused helper for map Task Flow View behavior in src/tasks. */
+/** Projects a flow registry record into the summary shape exposed to plugins. */
 export function mapTaskFlowView(flow: TaskFlowRecord): TaskFlowView {
   return {
     id: flow.flowId,
@@ -75,7 +75,7 @@ export function mapTaskFlowView(flow: TaskFlowRecord): TaskFlowView {
   };
 }
 
-/** Reused helper for map Task Flow Detail behavior in src/tasks. */
+/** Builds a flow detail view with task list, blocked state, and aggregate task counters. */
 export function mapTaskFlowDetail(params: {
   flow: TaskFlowRecord;
   tasks: TaskRecord[];
