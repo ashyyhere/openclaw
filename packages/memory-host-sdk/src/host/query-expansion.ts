@@ -1,4 +1,4 @@
-// packages/memory-host-sdk/src/host query expansion helpers and runtime behavior.
+// Multilingual keyword extraction helpers for fallback FTS memory search.
 import { normalizeLowercaseStringOrEmpty } from "./string-utils.js";
 
 /**
@@ -633,7 +633,7 @@ const STOP_WORDS_ZH = new Set([
   "告诉",
 ]);
 
-/** Public helper for is Query Stop Word Token behavior in packages/memory-host-sdk. */
+/** Returns whether a normalized query token is noise across supported languages. */
 export function isQueryStopWordToken(token: string): boolean {
   return (
     STOP_WORDS_EN.has(token) ||

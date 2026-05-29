@@ -1,4 +1,4 @@
-// packages/memory-host-sdk/src/host backend config helpers and runtime behavior.
+// Memory backend config resolver for builtin search and QMD integration.
 import fs from "node:fs";
 import path from "node:path";
 import {
@@ -29,14 +29,14 @@ function escapeQmdExactFilePattern(fileName: string): string {
   return fileName.replace(/[\\*?[\]{}()!+@]/g, "\\$&");
 }
 
-/** Public type describing Resolved Memory Backend Config for packages/memory-host-sdk. */
+/** Effective memory backend choice after global and agent config are merged. */
 export type ResolvedMemoryBackendConfig = {
   backend: MemoryBackend;
   citations: MemoryCitationsMode;
   qmd?: ResolvedQmdConfig;
 };
 
-/** Public type describing Resolved Qmd Collection for packages/memory-host-sdk. */
+/** QMD collection path, search glob, and source family passed to the indexer. */
 export type ResolvedQmdCollection = {
   name: string;
   path: string;
@@ -44,7 +44,7 @@ export type ResolvedQmdCollection = {
   kind: "memory" | "custom" | "sessions";
 };
 
-/** Public type describing Resolved Qmd Update Config for packages/memory-host-sdk. */
+/** QMD sync, startup, embedding, and timeout policy after defaults are applied. */
 export type ResolvedQmdUpdateConfig = {
   intervalMs: number;
   debounceMs: number;
@@ -58,7 +58,7 @@ export type ResolvedQmdUpdateConfig = {
   embedTimeoutMs: number;
 };
 
-/** Public type describing Resolved Qmd Limits Config for packages/memory-host-sdk. */
+/** QMD result, snippet, prompt-injection, and command timeout limits. */
 export type ResolvedQmdLimitsConfig = {
   maxResults: number;
   maxSnippetChars: number;
@@ -66,21 +66,21 @@ export type ResolvedQmdLimitsConfig = {
   timeoutMs: number;
 };
 
-/** Public type describing Resolved Qmd Session Config for packages/memory-host-sdk. */
+/** Session transcript export settings for QMD-backed memory search. */
 export type ResolvedQmdSessionConfig = {
   enabled: boolean;
   exportDir?: string;
   retentionDays?: number;
 };
 
-/** Public type describing Resolved Qmd Mcporter Config for packages/memory-host-sdk. */
+/** Optional mcporter bridge settings used when QMD is exposed through MCP. */
 export type ResolvedQmdMcporterConfig = {
   enabled: boolean;
   serverName: string;
   startDaemon: boolean;
 };
 
-/** Public type describing Resolved Qmd Config for packages/memory-host-sdk. */
+/** Fully resolved QMD configuration consumed by the runtime backend. */
 export type ResolvedQmdConfig = {
   command: string;
   mcporter: ResolvedQmdMcporterConfig;
@@ -396,7 +396,7 @@ function resolveDefaultCollections(
   }));
 }
 
-/** Public helper for resolve Memory Backend Config behavior in packages/memory-host-sdk. */
+/** Resolves memory backend configuration for an agent, including QMD collections. */
 export function resolveMemoryBackendConfig(params: {
   cfg: OpenClawConfig;
   agentId: string;
