@@ -1,4 +1,4 @@
-// tasks task status helpers and runtime behavior.
+// Builds user-facing background task status summaries while scrubbing internal context.
 import { sanitizeUserFacingText } from "../agents/embedded-agent-helpers/sanitize-user-facing-text.js";
 import {
   INTERNAL_RUNTIME_CONTEXT_BEGIN,
@@ -9,11 +9,11 @@ import type { TaskRecord } from "./task-registry.types.js";
 
 const ACTIVE_TASK_STATUSES = new Set(["queued", "running"]);
 const FAILURE_TASK_STATUSES = new Set(["failed", "timed_out", "lost"]);
-/** Reused constant for TASK STATUS RECENT WINDOW MS behavior in src/tasks. */
+/** Time window for showing recently completed terminal tasks in status surfaces. */
 export const TASK_STATUS_RECENT_WINDOW_MS = 5 * 60_000;
-/** Reused constant for TASK STATUS TITLE MAX CHARS behavior in src/tasks. */
+/** Maximum title length shown in compact task status output. */
 export const TASK_STATUS_TITLE_MAX_CHARS = 80;
-/** Reused constant for TASK STATUS DETAIL MAX CHARS behavior in src/tasks. */
+/** Maximum detail length shown in compact task status output. */
 export const TASK_STATUS_DETAIL_MAX_CHARS = 120;
 
 function isActiveTask(task: TaskRecord): boolean {
@@ -98,7 +98,7 @@ function sanitizeTaskStatusValue(value: unknown, errorContext: boolean): unknown
   return value;
 }
 
-/** Reused helper for sanitize Task Status Text behavior in src/tasks. */
+/** Sanitizes task status text, stripping leaked internal context and truncating when requested. */
 export function sanitizeTaskStatusText(
   value: unknown,
   opts?: { errorContext?: boolean; maxChars?: number },
@@ -121,17 +121,17 @@ export function sanitizeTaskStatusText(
   return sanitized;
 }
 
-/** Reused helper for format Task Status Title Text behavior in src/tasks. */
+/** Formats arbitrary task title input with fallback and title-length truncation. */
 export function formatTaskStatusTitleText(value: unknown, fallback = "Background task"): string {
   return sanitizeTaskStatusText(value, { maxChars: TASK_STATUS_TITLE_MAX_CHARS }) || fallback;
 }
 
-/** Reused helper for format Task Status Title behavior in src/tasks. */
+/** Formats the best display title for a task record. */
 export function formatTaskStatusTitle(task: TaskRecord): string {
   return formatTaskStatusTitleText(task.label?.trim() || task.task.trim());
 }
 
-/** Reused helper for format Task Status Detail behavior in src/tasks. */
+/** Formats progress, error, or terminal summary text for a task status line. */
 export function formatTaskStatusDetail(task: TaskRecord): string | undefined {
   if (task.status === "running" || task.status === "queued") {
     return (
@@ -156,7 +156,7 @@ export function formatTaskStatusDetail(task: TaskRecord): string | undefined {
   );
 }
 
-/** Shared type for Task Status Snapshot in src/tasks. */
+/** Prepared task status grouping for display surfaces. */
 export type TaskStatusSnapshot = {
   latest?: TaskRecord;
   focus?: TaskRecord;
@@ -168,7 +168,7 @@ export type TaskStatusSnapshot = {
   recentFailureCount: number;
 };
 
-/** Reused helper for build Task Status Snapshot behavior in src/tasks. */
+/** Builds active/recent/focused task groups after dropping expired records. */
 export function buildTaskStatusSnapshot(
   tasks: TaskRecord[],
   opts?: { now?: number },

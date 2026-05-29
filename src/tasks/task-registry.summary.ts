@@ -1,4 +1,4 @@
-// tasks task registry summary helpers and runtime behavior.
+// Aggregates task registry records into status/runtime counters.
 import type {
   TaskRecord,
   TaskRegistrySummary,
@@ -27,7 +27,7 @@ function createEmptyTaskRuntimeCounts(): TaskRuntimeCounts {
   };
 }
 
-/** Reused helper for create Empty Task Registry Summary behavior in src/tasks. */
+/** Creates a zeroed task registry summary with every known status/runtime key present. */
 export function createEmptyTaskRegistrySummary(): TaskRegistrySummary {
   return {
     total: 0,
@@ -39,7 +39,7 @@ export function createEmptyTaskRegistrySummary(): TaskRegistrySummary {
   };
 }
 
-/** Reused helper for summarize Task Records behavior in src/tasks. */
+/** Counts total, active, terminal, failure, status, and runtime buckets for task records. */
 export function summarizeTaskRecords(records: Iterable<TaskRecord>): TaskRegistrySummary {
   const summary = createEmptyTaskRegistrySummary();
   for (const task of records) {

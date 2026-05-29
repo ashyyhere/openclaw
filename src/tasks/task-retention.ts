@@ -1,17 +1,17 @@
-// tasks task retention helpers and runtime behavior.
+// Computes cleanup deadlines for terminal task records.
 import type { TaskRecord, TaskStatus } from "./task-registry.types.js";
 
-/** Reused constant for DEFAULT TASK RETENTION MS behavior in src/tasks. */
+/** Default retention window for completed task records. */
 export const DEFAULT_TASK_RETENTION_MS = 7 * 24 * 60 * 60_000;
-/** Reused constant for LOST TASK RETENTION MS behavior in src/tasks. */
+/** Shorter retention window for lost tasks, which can be noisy after crashes. */
 export const LOST_TASK_RETENTION_MS = 24 * 60 * 60_000;
 
-/** Reused helper for resolve Task Retention Ms behavior in src/tasks. */
+/** Returns the retention window for a task terminal status. */
 export function resolveTaskRetentionMs(status: TaskStatus): number {
   return status === "lost" ? LOST_TASK_RETENTION_MS : DEFAULT_TASK_RETENTION_MS;
 }
 
-/** Reused helper for resolve Task Cleanup After behavior in src/tasks. */
+/** Computes cleanup time from task terminal/event timestamps and status retention. */
 export function resolveTaskCleanupAfter(
   task: Pick<TaskRecord, "status" | "endedAt" | "lastEventAt" | "createdAt">,
 ): number {
@@ -19,7 +19,7 @@ export function resolveTaskCleanupAfter(
   return terminalAt + resolveTaskRetentionMs(task.status);
 }
 
-/** Reused helper for resolve Effective Task Cleanup After behavior in src/tasks. */
+/** Preserves explicit cleanup time except for lost tasks, which cap retention aggressively. */
 export function resolveEffectiveTaskCleanupAfter(
   task: Pick<TaskRecord, "status" | "endedAt" | "lastEventAt" | "createdAt" | "cleanupAfter">,
 ): number {
