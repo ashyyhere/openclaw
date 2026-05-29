@@ -1,4 +1,4 @@
-// ui/src/ui/chat status indicators helpers and runtime behavior.
+// Composer status indicators for chat runs, compaction, and fallback model state.
 import { html, nothing } from "lit";
 import type { CompactionStatus, FallbackStatus } from "../app-tool-stream.ts";
 import { icons } from "../icons.ts";
@@ -7,7 +7,7 @@ import { CHAT_RUN_STATUS_TOAST_DURATION_MS, type ChatRunUiStatus } from "./run-l
 const COMPACTION_TOAST_DURATION_MS = 5000;
 const FALLBACK_TOAST_DURATION_MS = 8000;
 
-/** Shared type for Composer Run Status in ui/src/ui/chat. */
+/** Run status state rendered beside the chat composer. */
 export type ComposerRunStatus =
   | ChatRunUiStatus
   | {
@@ -15,7 +15,7 @@ export type ComposerRunStatus =
       occurredAt?: number | null;
     };
 
-/** Reused helper for render Chat Run Status Indicator behavior in ui/src/ui/chat. */
+/** Render the transient chat run status indicator. */
 export function renderChatRunStatusIndicator(status: ComposerRunStatus | null | undefined) {
   if (!status) {
     return nothing;
@@ -51,7 +51,7 @@ export function renderChatRunStatusIndicator(status: ComposerRunStatus | null | 
   `;
 }
 
-/** Reused helper for render Compaction Indicator behavior in ui/src/ui/chat. */
+/** Render the context-compaction progress or completion toast. */
 export function renderCompactionIndicator(status: CompactionStatus | null | undefined) {
   if (!status) {
     return nothing;
@@ -84,7 +84,7 @@ export function renderCompactionIndicator(status: CompactionStatus | null | unde
   return nothing;
 }
 
-/** Reused helper for render Fallback Indicator behavior in ui/src/ui/chat. */
+/** Render the model fallback activation/cleared toast. */
 export function renderFallbackIndicator(status: FallbackStatus | null | undefined) {
   if (!status) {
     return nothing;

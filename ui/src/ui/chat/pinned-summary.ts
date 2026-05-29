@@ -1,7 +1,7 @@
-// ui/src/ui/chat pinned summary helpers and runtime behavior.
+// Pinned-message summary helper for compact pinned message lists.
 import { extractTextCached } from "./message-extract.ts";
 
-/** Reused helper for get Pinned Message Summary behavior in ui/src/ui/chat. */
+/** Extract display text for a pinned message summary. */
 export function getPinnedMessageSummary(message: unknown): string {
   return extractTextCached(message) ?? "";
 }

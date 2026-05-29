@@ -1,7 +1,8 @@
-// ui/src/ui/chat realtime talk pcm output helpers and runtime behavior.
+// PCM output queue for realtime talk. It schedules PCM chunks on an AudioContext
+// playhead so streamed audio stays ordered without gaps between chunks.
 import { base64ToBytes, pcm16ToFloat } from "./realtime-talk-audio.ts";
 
-/** Reused class for Realtime Talk Pcm Output Queue behavior in ui/src/ui/chat. */
+/** Queue and stop streamed PCM16 audio chunks for realtime talk playback. */
 export class RealtimeTalkPcmOutputQueue {
   private playhead = 0;
   private readonly sources = new Set<AudioBufferSourceNode>();

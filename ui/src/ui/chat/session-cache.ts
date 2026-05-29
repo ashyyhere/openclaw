@@ -1,7 +1,7 @@
-// ui/src/ui/chat session cache helpers and runtime behavior.
+// Small per-session LRU cache helper for chat UI state maps.
 const MAX_CACHED_CHAT_SESSIONS = 20;
 
-/** Reused helper for get Or Create Session Cache Value behavior in ui/src/ui/chat. */
+/** Return a cached session value or create one, evicting oldest sessions past the cap. */
 export function getOrCreateSessionCacheValue<T>(
   map: Map<string, T>,
   sessionKey: string,

@@ -1,4 +1,4 @@
-// ui/src/ui/chat chat avatar helpers and runtime behavior.
+// Chat avatar renderer for user, assistant, tool, and unknown message roles.
 import { html } from "lit";
 import type { AssistantIdentity } from "../assistant-identity.ts";
 import {
@@ -13,7 +13,7 @@ import {
 } from "../views/agents-utils.ts";
 import { normalizeRoleForGrouping } from "./role-normalizer.ts";
 
-/** Reused helper for render Chat Avatar behavior in ui/src/ui/chat. */
+/** Render the avatar element for one chat message role. */
 export function renderChatAvatar(
   role: string,
   assistant?: Pick<AssistantIdentity, "name" | "avatar">,

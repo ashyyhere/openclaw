@@ -1,4 +1,4 @@
-// ui/src/ui/chat side result render helpers and runtime behavior.
+// BTW/side-result renderer for assistant output that is not saved into history.
 import { html, nothing, type TemplateResult } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { icons } from "../icons.ts";
@@ -6,7 +6,7 @@ import { toSanitizedMarkdownHtml } from "../markdown.ts";
 import { detectTextDirection } from "../text-direction.ts";
 import type { ChatSideResult } from "./side-result.ts";
 
-/** Reused helper for render Side Result behavior in ui/src/ui/chat. */
+/** Render a dismissible side result panel. */
 export function renderSideResult(
   sideResult: ChatSideResult | null | undefined,
   onDismiss?: () => void,
