@@ -1,4 +1,4 @@
-// image-generation openai compatible image provider helpers and runtime behavior.
+// Factory for OpenAI-compatible image-generation and image-edit providers.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { isProviderApiKeyConfigured } from "openclaw/plugin-sdk/provider-auth";
 import { resolveApiKeyForProvider } from "openclaw/plugin-sdk/provider-auth-runtime";
@@ -23,10 +23,10 @@ import type {
 
 type ModelProviderConfig = NonNullable<NonNullable<OpenClawConfig["models"]>["providers"]>[string];
 
-/** Shared type for Open Ai Compatible Image Request Mode in src/image-generation. */
+/** OpenAI-compatible endpoint mode selected from whether reference images are present. */
 export type OpenAiCompatibleImageRequestMode = "generate" | "edit";
 
-/** Shared type for Open Ai Compatible Image Provider Request Params in src/image-generation. */
+/** Normalized request fields passed to provider-specific request builders. */
 export type OpenAiCompatibleImageProviderRequestParams = {
   req: ImageGenerationRequest;
   inputImages: ImageGenerationSourceImage[];
@@ -35,12 +35,12 @@ export type OpenAiCompatibleImageProviderRequestParams = {
   mode: OpenAiCompatibleImageRequestMode;
 };
 
-/** Shared type for Open Ai Compatible Image Provider Request Body in src/image-generation. */
+/** OpenAI-compatible request payload as JSON or multipart form data. */
 export type OpenAiCompatibleImageProviderRequestBody =
   | { kind: "json"; body: Record<string, unknown> }
   | { kind: "multipart"; form: FormData };
 
-/** Shared type for Open Ai Compatible Image Provider Options in src/image-generation. */
+/** Provider factory options for auth, URLs, capabilities, requests, and response parsing. */
 export type OpenAiCompatibleImageProviderOptions = {
   id: string;
   label: string;
@@ -128,7 +128,7 @@ function resolveRequestTimeoutMs(params: {
   });
 }
 
-/** Reused helper for create Open Ai Compatible Image Generation Provider behavior in src/image-generation. */
+/** Creates an image provider that calls OpenAI-compatible image generation/edit endpoints. */
 export function createOpenAiCompatibleImageGenerationProvider(
   options: OpenAiCompatibleImageProviderOptions,
 ): ImageGenerationProvider {
