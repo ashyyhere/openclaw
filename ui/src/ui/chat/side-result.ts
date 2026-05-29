@@ -1,7 +1,8 @@
-// ui/src/ui/chat side result helpers and runtime behavior.
+// Parser for side-channel chat results such as `btw` follow-up answers. It
+// accepts raw gateway payloads and returns the narrow shape rendered by chat UI.
 import { normalizeOptionalString } from "../string-coerce.ts";
 
-/** Shared type for Chat Side Result in ui/src/ui/chat. */
+/** Normalized side-result message rendered alongside a chat run. */
 export type ChatSideResult = {
   kind: "btw";
   runId: string;
@@ -13,7 +14,7 @@ export type ChatSideResult = {
   ts: number;
 };
 
-/** Reused helper for parse Chat Side Result behavior in ui/src/ui/chat. */
+/** Validate and normalize a raw side-result payload. */
 export function parseChatSideResult(payload: unknown): ChatSideResult | null {
   if (!payload || typeof payload !== "object") {
     return null;

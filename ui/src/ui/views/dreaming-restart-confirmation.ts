@@ -1,4 +1,5 @@
-// ui/src/ui/views dreaming restart confirmation helpers and runtime behavior.
+// Confirmation dialog for restarting the Dreaming service from Control UI.
+// Cancel is disabled while the restart request is in flight.
 import { html, nothing } from "lit";
 import { t } from "../../i18n/index.ts";
 import "../components/modal-dialog.ts";
@@ -11,7 +12,7 @@ type DreamingRestartConfirmationProps = {
   hasError: boolean;
 };
 
-/** Reused helper for render Dreaming Restart Confirmation behavior in ui/src/ui/views. */
+/** Render the Dreaming restart confirmation modal when requested. */
 export function renderDreamingRestartConfirmation(props: DreamingRestartConfirmationProps) {
   if (!props.open) {
     return nothing;

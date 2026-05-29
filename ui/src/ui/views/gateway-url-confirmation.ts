@@ -1,10 +1,12 @@
-// ui/src/ui/views gateway url confirmation helpers and runtime behavior.
+// Confirmation dialog for switching the Control UI to a manually entered
+// gateway URL. The warning is centralized here so callers only stage/cancel the
+// pending URL state.
 import { html, nothing } from "lit";
 import { t } from "../../i18n/index.ts";
 import type { AppViewState } from "../app-view-state.ts";
 import "../components/modal-dialog.ts";
 
-/** Reused helper for render Gateway Url Confirmation behavior in ui/src/ui/views. */
+/** Render the pending gateway URL confirmation modal when one is staged. */
 export function renderGatewayUrlConfirmation(state: AppViewState) {
   const { pendingGatewayUrl } = state;
   if (!pendingGatewayUrl) {

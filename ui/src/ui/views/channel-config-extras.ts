@@ -1,7 +1,9 @@
-// ui/src/ui/views channel config extras helpers and runtime behavior.
+// Helpers for displaying extra channel config fields that do not have bespoke
+// card rows. They support both current `channels.<id>` shape and older top-level
+// channel config snapshots.
 import { t } from "../../i18n/index.ts";
 
-/** Reused helper for resolve Channel Config Value behavior in ui/src/ui/views. */
+/** Resolve one channel's raw config object from current or legacy form state. */
 export function resolveChannelConfigValue(
   configForm: Record<string, unknown> | null | undefined,
   channelId: string,
@@ -21,7 +23,7 @@ export function resolveChannelConfigValue(
   return null;
 }
 
-/** Reused helper for format Channel Extra Value behavior in ui/src/ui/views. */
+/** Format an arbitrary config field value for a compact status row. */
 export function formatChannelExtraValue(raw: unknown): string {
   if (raw == null) {
     return t("common.na");
@@ -36,7 +38,7 @@ export function formatChannelExtraValue(raw: unknown): string {
   }
 }
 
-/** Reused helper for resolve Channel Extras behavior in ui/src/ui/views. */
+/** Return configured extra field rows for one channel card. */
 export function resolveChannelExtras(params: {
   configForm: Record<string, unknown> | null | undefined;
   channelId: string;

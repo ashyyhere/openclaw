@@ -1,4 +1,5 @@
-// ui/src/ui/views markdown sidebar helpers and runtime behavior.
+// Sidebar renderer for markdown, canvas, and tool-detail previews. It keeps
+// iframe sandbox policy and markdown sanitization centralized for side panels.
 import { html, nothing } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { resolveCanvasIframeUrl } from "../canvas-url.ts";
@@ -14,7 +15,7 @@ function resolveSidebarCanvasSandbox(
   return content.kind === "canvas" ? resolveEmbedSandbox(embedSandboxMode) : "allow-scripts";
 }
 
-/** Shared type for Markdown Sidebar Props in ui/src/ui/views. */
+/** Inputs and callbacks needed to render the preview sidebar. */
 export type MarkdownSidebarProps = {
   content: SidebarContent | null;
   error: string | null;
@@ -25,7 +26,7 @@ export type MarkdownSidebarProps = {
   allowExternalEmbedUrls?: boolean;
 };
 
-/** Reused helper for render Markdown Sidebar behavior in ui/src/ui/views. */
+/** Render the active sidebar preview or its raw-text fallback error state. */
 export function renderMarkdownSidebar(props: MarkdownSidebarProps) {
   const content = props.content;
   return html`

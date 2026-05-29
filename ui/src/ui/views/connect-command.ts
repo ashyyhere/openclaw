@@ -1,4 +1,5 @@
-// ui/src/ui/views connect command helpers and runtime behavior.
+// Connect-command display for the login gate. The whole command block acts as a
+// keyboard-accessible copy target while preserving the nested copy button.
 import { html } from "lit";
 import { t } from "../../i18n/index.ts";
 import { renderCopyButton } from "../chat/copy-as-markdown.ts";
@@ -11,7 +12,7 @@ async function copyCommand(command: string) {
   }
 }
 
-/** Reused helper for render Connect Command behavior in ui/src/ui/views. */
+/** Render a copyable shell command used to connect the Control UI. */
 export function renderConnectCommand(command: string) {
   const copyLabel = t("overview.connection.copyCommand");
   return html`
