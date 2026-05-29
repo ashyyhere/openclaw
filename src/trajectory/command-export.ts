@@ -1,11 +1,11 @@
-// trajectory command export helpers and runtime behavior.
+// CLI-facing trajectory export helpers with workspace-contained output path validation.
 import fsp from "node:fs/promises";
 import path from "node:path";
 import { pathExists } from "../infra/fs-safe.js";
 import { isPathInside } from "../infra/path-guards.js";
 import { exportTrajectoryBundle, resolveDefaultTrajectoryExportDir } from "./export.js";
 
-/** Shared type for Trajectory Command Export Summary in src/trajectory. */
+/** Summary printed after exporting one trajectory bundle from the CLI. */
 export type TrajectoryCommandExportSummary = {
   outputDir: string;
   displayPath: string;
@@ -68,7 +68,7 @@ async function resolveTrajectoryExportBaseDir(workspaceDir: string): Promise<{
   return { baseDir: path.resolve(baseDir), realBase };
 }
 
-/** Reused helper for resolve Trajectory Command Output Dir behavior in src/trajectory. */
+/** Resolves a safe output directory under `.openclaw/trajectory-exports` for command exports. */
 export async function resolveTrajectoryCommandOutputDir(params: {
   outputPath?: string;
   workspaceDir: string;
@@ -107,7 +107,7 @@ export async function resolveTrajectoryCommandOutputDir(params: {
   return outputDir;
 }
 
-/** Reused helper for export Trajectory For Command behavior in src/trajectory. */
+/** Exports a trajectory bundle and converts bundle metadata into CLI summary fields. */
 export async function exportTrajectoryForCommand(params: {
   outputDir?: string;
   outputPath?: string;
@@ -151,7 +151,7 @@ export async function exportTrajectoryForCommand(params: {
   };
 }
 
-/** Reused helper for format Trajectory Command Export Summary behavior in src/trajectory. */
+/** Formats the user-facing success message for a completed trajectory export. */
 export function formatTrajectoryCommandExportSummary(
   summary: TrajectoryCommandExportSummary,
 ): string {

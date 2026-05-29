@@ -1,16 +1,16 @@
-// OpenClaw globals helpers and runtime behavior.
-/** Re-exported API for src, starting with is Verbose. */
+// Global CLI verbosity/yes-mode facade plus themed console helpers.
+/** Re-export global process flags used by legacy CLI entrypoints. */
 export { isVerbose, isYes, setVerbose, setYes } from "./global-state.js";
 import { theme } from "../packages/terminal-core/src/theme.js";
 import { isVerbose } from "./global-state.js";
 import { getLogger, isFileLogLevelEnabled } from "./logging/logger.js";
 
-/** Reused helper for should Log Verbose behavior in src. */
+/** Checks whether verbose output should go to console or debug file logging. */
 export function shouldLogVerbose() {
   return isVerbose() || isFileLogLevelEnabled("debug");
 }
 
-/** Reused helper for log Verbose behavior in src. */
+/** Writes verbose text to debug logs and, when enabled, to the muted console stream. */
 export function logVerbose(message: string) {
   if (!shouldLogVerbose()) {
     return;
@@ -26,7 +26,7 @@ export function logVerbose(message: string) {
   console.log(theme.muted(message));
 }
 
-/** Reused helper for log Verbose Console behavior in src. */
+/** Writes muted console-only verbose output for callers that already handled file logging. */
 export function logVerboseConsole(message: string) {
   if (!isVerbose()) {
     return;
@@ -36,11 +36,11 @@ export function logVerboseConsole(message: string) {
 
 type ThemeFormatter = (value: string) => string;
 
-/** Reused constant for success behavior in src. */
+/** Theme formatter for success text. */
 export const success: ThemeFormatter = theme.success;
-/** Reused constant for warn behavior in src. */
+/** Theme formatter for warning text. */
 export const warn: ThemeFormatter = theme.warn;
-/** Reused constant for info behavior in src. */
+/** Theme formatter for informational text. */
 export const info: ThemeFormatter = theme.info;
-/** Reused constant for danger behavior in src. */
+/** Theme formatter for error/danger text. */
 export const danger: ThemeFormatter = theme.error;
