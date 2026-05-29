@@ -1,4 +1,4 @@
-// talk agent run control helpers and runtime behavior.
+// Runtime executor for spoken realtime voice controls against active embedded agent runs.
 import type { EmbeddedAgentQueueMessageOutcome } from "../agents/embedded-agent-runner/runs.js";
 import {
   abortEmbeddedAgentRun,
@@ -17,7 +17,7 @@ import {
 } from "./agent-run-control-shared.js";
 import type { TalkEvent } from "./talk-events.js";
 
-/** Re-exported API for src/talk. */
+/** Public voice-control schema and parser helpers shared with provider integrations. */
 export {
   buildRealtimeVoiceAgentCancelProviderResult,
   buildRealtimeVoiceAgentControlSpeechMessage,
@@ -57,7 +57,7 @@ const defaultDeps: RealtimeVoiceAgentControlDeps = {
   resolveActiveEmbeddedRunSessionId,
 };
 
-/** Reused helper for control Realtime Voice Agent Run behavior in src/talk. */
+/** Applies a realtime voice control request to the active embedded run for a session. */
 export async function controlRealtimeVoiceAgentRun(
   params: {
     sessionKey: string;

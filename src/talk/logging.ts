@@ -1,4 +1,4 @@
-// talk logging helpers and runtime behavior.
+// Structured logging adapter for low-volume realtime Talk events.
 import { getChildLogger } from "../logging/logger.js";
 import { firstFiniteTalkEventNumber, talkEventPayloadRecord } from "./event-metrics.js";
 import type { TalkEvent, TalkEventType } from "./talk-events.js";
@@ -21,7 +21,7 @@ const OMITTED_TALK_LOG_EVENT_TYPES = new Set<TalkEventType>([
 
 const TALK_LOGGER_BINDINGS = Object.freeze({ subsystem: "talk" });
 
-/** Reused helper for create Talk Log Record behavior in src/talk. */
+/** Converts a Talk event into structured logger fields, skipping noisy deltas. */
 export function createTalkLogRecord(event: TalkEvent): TalkLogRecord | undefined {
   if (OMITTED_TALK_LOG_EVENT_TYPES.has(event.type)) {
     return undefined;
@@ -59,7 +59,7 @@ export function createTalkLogRecord(event: TalkEvent): TalkLogRecord | undefined
   };
 }
 
-/** Reused helper for record Talk Log Event behavior in src/talk. */
+/** Emits a Talk event log record without letting logger failures break realtime audio. */
 export function recordTalkLogEvent(event: TalkEvent): void {
   const record = createTalkLogRecord(event);
   if (!record) {

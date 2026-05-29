@@ -1,15 +1,15 @@
-// talk session log runtime helpers and runtime behavior.
+// Bounded realtime voice session logs used by health probes and echo suppression.
 import { uniqueStrings } from "../shared/string-normalization.js";
 import type { RealtimeVoiceBridgeEvent, RealtimeVoiceRole } from "./provider-types.js";
 
-/** Shared type for Realtime Voice Transcript Entry in src/talk. */
+/** Timestamped transcript line retained for realtime voice diagnostics. */
 export type RealtimeVoiceTranscriptEntry = {
   at: string;
   role: RealtimeVoiceRole;
   text: string;
 };
 
-/** Shared type for Realtime Voice Transcript Health in src/talk. */
+/** Compact transcript health payload exposed to status/debug surfaces. */
 export type RealtimeVoiceTranscriptHealth = {
   realtimeTranscriptLines: number;
   lastRealtimeTranscriptAt?: string;
@@ -18,12 +18,12 @@ export type RealtimeVoiceTranscriptHealth = {
   recentRealtimeTranscript: RealtimeVoiceTranscriptEntry[];
 };
 
-/** Shared type for Realtime Voice Bridge Event Log Entry in src/talk. */
+/** Provider bridge event plus local receipt time. */
 export type RealtimeVoiceBridgeEventLogEntry = RealtimeVoiceBridgeEvent & {
   at: string;
 };
 
-/** Shared type for Realtime Voice Bridge Event Health in src/talk. */
+/** Compact bridge-event health payload without high-volume audio append events. */
 export type RealtimeVoiceBridgeEventHealth = {
   lastRealtimeEventAt?: string;
   lastRealtimeEventType?: string;
@@ -31,7 +31,7 @@ export type RealtimeVoiceBridgeEventHealth = {
   recentRealtimeEvents: RealtimeVoiceBridgeEventLogEntry[];
 };
 
-/** Reused helper for record Realtime Voice Transcript behavior in src/talk. */
+/** Appends a transcript line while keeping the in-memory ring buffer bounded. */
 export function recordRealtimeVoiceTranscript(
   transcript: RealtimeVoiceTranscriptEntry[],
   role: RealtimeVoiceRole,
@@ -46,7 +46,7 @@ export function recordRealtimeVoiceTranscript(
   return entry;
 }
 
-/** Reused helper for get Realtime Voice Transcript Health behavior in src/talk. */
+/** Summarizes the latest transcript state for diagnostics and health checks. */
 export function getRealtimeVoiceTranscriptHealth(
   transcript: RealtimeVoiceTranscriptEntry[],
 ): RealtimeVoiceTranscriptHealth {
@@ -60,7 +60,7 @@ export function getRealtimeVoiceTranscriptHealth(
   };
 }
 
-/** Reused helper for record Realtime Voice Bridge Event behavior in src/talk. */
+/** Records non-audio bridge events so health output stays useful and bounded. */
 export function recordRealtimeVoiceBridgeEvent(
   events: RealtimeVoiceBridgeEventLogEntry[],
   event: RealtimeVoiceBridgeEvent,
@@ -75,7 +75,7 @@ export function recordRealtimeVoiceBridgeEvent(
   }
 }
 
-/** Reused helper for get Realtime Voice Bridge Event Health behavior in src/talk. */
+/** Summarizes recent bridge traffic for realtime voice diagnostics. */
 export function getRealtimeVoiceBridgeEventHealth(
   events: RealtimeVoiceBridgeEventLogEntry[],
 ): RealtimeVoiceBridgeEventHealth {
@@ -111,7 +111,7 @@ function hasMeaningfulEchoOverlap(userTokens: string[], assistantTokens: string[
   return overlap / uniqueUserTokens.length >= 0.58;
 }
 
-/** Reused helper for is Likely Realtime Voice Assistant Echo Transcript behavior in src/talk. */
+/** Detects user transcript text that is probably leaked assistant output playback. */
 export function isLikelyRealtimeVoiceAssistantEchoTranscript(params: {
   transcript: RealtimeVoiceTranscriptEntry[];
   text: string;
@@ -147,7 +147,7 @@ export function isLikelyRealtimeVoiceAssistantEchoTranscript(params: {
   );
 }
 
-/** Reused helper for extend Realtime Voice Output Echo Suppression behavior in src/talk. */
+/** Extends input suppression through queued output playback plus tail latency. */
 export function extendRealtimeVoiceOutputEchoSuppression(params: {
   audio: Buffer;
   bytesPerMs: number;
