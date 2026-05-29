@@ -1,7 +1,8 @@
-// llm/utils/oauth openai codex jwt helpers and runtime behavior.
+// JWT helpers for extracting ChatGPT account metadata from OpenAI Codex OAuth
+// tokens. These decode claims only; they do not verify token signatures.
 const OPENAI_CODEX_AUTH_CLAIM = "https://api.openai.com/auth";
 
-/** Shared type for Open AICodex Jwt Payload in src/llm/utils. */
+/** Minimal OpenAI Codex JWT payload shape used by account selection. */
 export type OpenAICodexJwtPayload = {
   [OPENAI_CODEX_AUTH_CLAIM]?: {
     chatgpt_account_id?: unknown;
@@ -9,7 +10,7 @@ export type OpenAICodexJwtPayload = {
   [key: string]: unknown;
 };
 
-/** Reused helper for decode Open AICodex Jwt Payload behavior in src/llm/utils. */
+/** Decode a JWT payload into the claim object, returning null for malformed tokens. */
 export function decodeOpenAICodexJwtPayload(token: string): OpenAICodexJwtPayload | null {
   const parts = token.split(".");
   if (parts.length !== 3) {
@@ -27,7 +28,7 @@ export function decodeOpenAICodexJwtPayload(token: string): OpenAICodexJwtPayloa
   }
 }
 
-/** Reused helper for resolve Open AICodex Account Id behavior in src/llm/utils. */
+/** Resolve the ChatGPT account id embedded in an OpenAI Codex OAuth token. */
 export function resolveOpenAICodexAccountId(token: string): string | null {
   const accountId =
     decodeOpenAICodexJwtPayload(token)?.[OPENAI_CODEX_AUTH_CLAIM]?.chatgpt_account_id;

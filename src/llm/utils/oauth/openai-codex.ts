@@ -1,4 +1,5 @@
-// llm/utils/oauth openai codex helpers and runtime behavior.
+// OpenAI Codex OAuth adapter that bridges legacy callback-driven callers to the
+// provider plugin runtime.
 import { loadActivatedBundledPluginPublicSurfaceModuleSync } from "../../../plugin-sdk/facade-runtime.js";
 import type { RuntimeEnv } from "../../../runtime.js";
 import type { WizardPrompter } from "../../../wizard/prompts.js";
@@ -77,7 +78,7 @@ async function refreshViaProviderRuntime(refreshToken: string): Promise<OAuthCre
   return credentials as OAuthCredentials;
 }
 
-/** Reused helper for login Open AICodex behavior in src/llm/utils. */
+/** Run OpenAI Codex OAuth login and return credentials suitable for persistence. */
 export async function loginOpenAICodex(callbacks: OAuthLoginCallbacks): Promise<OAuthCredentials> {
   throwIfOAuthLoginAborted(callbacks.signal);
   const { loginOpenAICodexOAuth } = await import("../../../plugins/provider-openai-codex-oauth.js");
@@ -105,12 +106,12 @@ export async function loginOpenAICodex(callbacks: OAuthLoginCallbacks): Promise<
   return credentials;
 }
 
-/** Reused helper for refresh Open AICodex Token behavior in src/llm/utils. */
+/** Refresh OpenAI Codex OAuth credentials through the provider runtime. */
 export async function refreshOpenAICodexToken(refreshToken: string): Promise<OAuthCredentials> {
   return await refreshViaProviderRuntime(refreshToken);
 }
 
-/** Reused constant for openai Codex OAuth Provider behavior in src/llm/utils. */
+/** Registry entry for ChatGPT Plus/Pro OpenAI Codex OAuth credentials. */
 export const openaiCodexOAuthProvider: OAuthProviderInterface = {
   id: OPENAI_CODEX_PROVIDER_ID,
   name: "ChatGPT Plus/Pro (Codex Subscription)",

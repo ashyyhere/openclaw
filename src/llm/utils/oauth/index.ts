@@ -8,10 +8,10 @@
  */
 
 // Anthropic
-/** Re-exported API for src/llm/utils, starting with anthropic OAuth Provider. */
+/** Anthropic OAuth login/refresh provider exports. */
 export { anthropicOAuthProvider, loginAnthropic, refreshAnthropicToken } from "./anthropic.js";
 // GitHub Copilot
-/** Re-exported API for src/llm/utils. */
+/** GitHub Copilot OAuth login/refresh provider exports. */
 export {
   getGitHubCopilotBaseUrl,
   githubCopilotOAuthProvider,
@@ -20,7 +20,7 @@ export {
   refreshGitHubCopilotToken,
 } from "./github-copilot.js";
 // OpenAI Codex (ChatGPT OAuth)
-/** Re-exported API for src/llm/utils. */
+/** OpenAI Codex OAuth login/refresh provider exports. */
 export {
   loginOpenAICodex,
   openaiCodexOAuthProvider,
@@ -54,14 +54,14 @@ const oauthProviderRegistry = new Map<string, OAuthProviderInterface>(
 );
 
 /**
- * Get an OAuth provider by ID
+ * Get an OAuth provider by ID.
  */
 export function getOAuthProvider(id: OAuthProviderId): OAuthProviderInterface | undefined {
   return oauthProviderRegistry.get(id);
 }
 
 /**
- * Register a custom OAuth provider
+ * Register a custom OAuth provider.
  */
 export function registerOAuthProvider(provider: OAuthProviderInterface): void {
   oauthProviderRegistry.set(provider.id, provider);
@@ -83,7 +83,7 @@ export function unregisterOAuthProvider(id: string): void {
 }
 
 /**
- * Reset OAuth providers to built-ins.
+ * Reset the OAuth provider registry to built-in providers.
  */
 export function resetOAuthProviders(): void {
   oauthProviderRegistry.clear();
@@ -93,7 +93,7 @@ export function resetOAuthProviders(): void {
 }
 
 /**
- * Get all registered OAuth providers
+ * Get all registered OAuth providers.
  */
 export function getOAuthProviders(): OAuthProviderInterface[] {
   return Array.from(oauthProviderRegistry.values());
