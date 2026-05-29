@@ -1,4 +1,5 @@
-// ui/src main helpers and runtime behavior.
+// Control UI browser entrypoint: loads the app shell and manages the production
+// service worker cache boundary.
 import "./styles.css";
 import "./ui/app.ts";
 

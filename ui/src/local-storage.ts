@@ -1,4 +1,5 @@
-// ui/src local storage helpers and runtime behavior.
+// Browser storage guards for Control UI code that also runs in tests or
+// restricted browser contexts where storage access can throw.
 function isStorage(value: unknown): value is Storage {
   return (
     Boolean(value) &&
@@ -26,12 +27,12 @@ function getSafeStorage(name: "localStorage" | "sessionStorage"): Storage | null
   return descriptor && !descriptor.get && isStorage(descriptor.value) ? descriptor.value : null;
 }
 
-/** Reused helper for get Safe Local Storage behavior in ui/src. */
+/** Returns localStorage when it is accessible, otherwise null for safe fallback paths. */
 export function getSafeLocalStorage(): Storage | null {
   return getSafeStorage("localStorage");
 }
 
-/** Reused helper for get Safe Session Storage behavior in ui/src. */
+/** Returns sessionStorage when it is accessible, otherwise null for safe fallback paths. */
 export function getSafeSessionStorage(): Storage | null {
   return getSafeStorage("sessionStorage");
 }
