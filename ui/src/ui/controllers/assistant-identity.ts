@@ -1,9 +1,11 @@
-// ui/src/ui/controllers assistant identity helpers and runtime behavior.
+// Controller helpers for assistant identity display. Remote identity loads are
+// versioned by session key so stale async responses cannot overwrite a newer
+// session, while local avatar overrides still win.
 import { normalizeAssistantIdentity } from "../assistant-identity.ts";
 import type { GatewayBrowserClient } from "../gateway.ts";
 import { loadLocalAssistantIdentity, saveLocalAssistantIdentity } from "../storage.ts";
 
-/** Shared type for Assistant Identity State in ui/src/ui/controllers. */
+/** Mutable state for assistant name/avatar resolved for the active session. */
 export type AssistantIdentityState = {
   client: GatewayBrowserClient | null;
   connected: boolean;
@@ -16,7 +18,7 @@ export type AssistantIdentityState = {
   assistantAgentId: string | null;
 };
 
-/** Shared type for Assistant Avatar Override State in ui/src/ui/controllers. */
+/** Minimal state updated when the user changes a local assistant avatar. */
 export type AssistantAvatarOverrideState = {
   assistantAvatar?: string | null;
   assistantAvatarSource?: string | null;
@@ -44,7 +46,7 @@ function shouldApplyAssistantIdentityResult(
   );
 }
 
-/** Reused helper for load Assistant Identity behavior in ui/src/ui/controllers. */
+/** Load assistant identity for the current or provided session key. */
 export async function loadAssistantIdentity(
   state: AssistantIdentityState,
   opts?: { sessionKey?: string },
@@ -83,7 +85,7 @@ export async function loadAssistantIdentity(
   }
 }
 
-/** Reused helper for set Assistant Avatar Override behavior in ui/src/ui/controllers. */
+/** Persist and apply a local assistant avatar override. */
 export function setAssistantAvatarOverride(
   state: AssistantAvatarOverrideState,
   avatar: string | null,

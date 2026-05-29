@@ -1,8 +1,10 @@
-// ui/src/ui/controllers scope errors helpers and runtime behavior.
+// Shared helpers for RPC failures caused by missing operator scopes. Some
+// gateway responses still expose scope misses only through messages, so callers
+// centralize the fallback here.
 import { ConnectErrorDetailCodes } from "../../../../packages/gateway-protocol/src/connect-error-details.js";
 import { GatewayRequestError, resolveGatewayErrorDetailCode } from "../gateway.ts";
 
-/** Reused helper for is Missing Operator Read Scope Error behavior in ui/src/ui/controllers. */
+/** Return whether a gateway error represents missing operator.read scope. */
 export function isMissingOperatorReadScopeError(err: unknown): boolean {
   if (!(err instanceof GatewayRequestError)) {
     return false;
@@ -18,7 +20,7 @@ export function isMissingOperatorReadScopeError(err: unknown): boolean {
   return err.message.includes("missing scope: operator.read");
 }
 
-/** Reused helper for format Missing Operator Read Scope Message behavior in ui/src/ui/controllers. */
+/** Build the user-facing message for a feature blocked by missing read scope. */
 export function formatMissingOperatorReadScopeMessage(feature: string): string {
   return `This connection is missing operator.read, so ${feature} cannot be loaded yet.`;
 }

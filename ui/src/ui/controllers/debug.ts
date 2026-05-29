@@ -1,8 +1,9 @@
-// ui/src/ui/controllers debug helpers and runtime behavior.
+// Controller helpers for the Debug view. It loads common gateway diagnostics and
+// exposes an operator-entered raw RPC call surface for troubleshooting.
 import type { GatewayBrowserClient } from "../gateway.ts";
 import type { HealthSnapshot, StatusSummary } from "../types.ts";
 
-/** Shared type for Debug State in ui/src/ui/controllers. */
+/** Mutable state for Debug view snapshots and ad hoc RPC results. */
 export type DebugState = {
   client: GatewayBrowserClient | null;
   connected: boolean;
@@ -17,7 +18,7 @@ export type DebugState = {
   debugCallError: string | null;
 };
 
-/** Reused helper for load Debug behavior in ui/src/ui/controllers. */
+/** Load the standard Debug view status, health, model, and heartbeat snapshots. */
 export async function loadDebug(state: DebugState) {
   if (!state.client || !state.connected) {
     return;
@@ -45,7 +46,7 @@ export async function loadDebug(state: DebugState) {
   }
 }
 
-/** Reused helper for call Debug Method behavior in ui/src/ui/controllers. */
+/** Execute the operator-entered gateway method with JSON params. */
 export async function callDebugMethod(state: DebugState) {
   if (!state.client || !state.connected) {
     return;
