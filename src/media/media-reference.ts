@@ -1,4 +1,4 @@
-// media media reference helpers and runtime behavior.
+// Resolves media references from model/tool payloads into safe local paths or sandbox-relative paths.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { safeFileURLToPath } from "../infra/local-file-access.js";
@@ -7,7 +7,7 @@ import { getMediaDir, resolveMediaBufferPath } from "./store.js";
 
 type MediaReferenceErrorCode = "invalid-path" | "path-not-allowed";
 
-/** Reused class for Media Reference Error behavior in src/media. */
+/** Error thrown when a media reference is malformed or outside the inbound media store. */
 export class MediaReferenceError extends Error {
   code: MediaReferenceErrorCode;
 
@@ -30,7 +30,7 @@ type InboundMediaUri = {
   normalizedSource: string;
 };
 
-/** Reused helper for normalize Media Reference Source behavior in src/media. */
+/** Normalizes legacy `MEDIA:` prefixes while preserving real `media://` URIs. */
 export function normalizeMediaReferenceSource(source: string): string {
   const trimmed = source.trim();
   if (/^media:\/\//i.test(trimmed)) {
@@ -49,7 +49,7 @@ type MediaReferenceSourceInfo = {
   looksLikeWindowsDrivePath: boolean;
 };
 
-/** Reused helper for classify Media Reference Source behavior in src/media. */
+/** Classifies URL/path-like media references before local or inbound resolution. */
 export function classifyMediaReferenceSource(
   source: string,
   options?: { allowDataUrl?: boolean },
@@ -113,7 +113,7 @@ async function resolvePathForContainment(candidate: string): Promise<string> {
   }
 }
 
-/** Reused helper for parse Inbound Media Uri behavior in src/media. */
+/** Parses `media://inbound/<id>` references and rejects unsupported locations or unsafe ids. */
 export function parseInboundMediaUri(source: string): InboundMediaUri | null {
   const normalizedSource = normalizeMediaReferenceSource(source);
   if (!/^media:\/\//i.test(normalizedSource)) {
@@ -169,7 +169,7 @@ async function resolveInboundMediaUri(
   };
 }
 
-/** Reused helper for resolve Media Reference Sandbox Path behavior in src/media. */
+/** Rewrites inbound media URIs to sandbox-relative paths for agent-visible prompts. */
 export function resolveMediaReferenceSandboxPath(
   source: string,
   inboundDir = "media/inbound",
@@ -185,7 +185,7 @@ export function resolveMediaReferenceSandboxPath(
   };
 }
 
-/** Reused helper for resolve Inbound Media Reference behavior in src/media. */
+/** Resolves inbound media URI/path references to their physical media-store path. */
 export async function resolveInboundMediaReference(
   source: string,
 ): Promise<InboundMediaReference | null> {
@@ -226,7 +226,7 @@ export async function resolveInboundMediaReference(
   };
 }
 
-/** Reused helper for resolve Media Reference Local Path behavior in src/media. */
+/** Returns a physical inbound media path when possible, otherwise the normalized source. */
 export async function resolveMediaReferenceLocalPath(source: string): Promise<string> {
   const normalizedSource = normalizeMediaReferenceSource(source);
   return (await resolveInboundMediaReference(normalizedSource))?.physicalPath ?? normalizedSource;

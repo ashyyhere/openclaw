@@ -1,4 +1,4 @@
-// media input files helpers and runtime behavior.
+// Normalizes model input images/files from base64 or guarded URLs with size, MIME, and PDF limits.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { fetchWithSsrFGuard } from "../infra/net/fetch-guard.js";
 import type { SsrFPolicy } from "../infra/net/ssrf.js";
@@ -14,24 +14,24 @@ import { detectMime } from "./mime.js";
 import { extractPdfContent, type PdfExtractedImage } from "./pdf-extract.js";
 import { readResponseWithLimit } from "./read-response-with-limit.js";
 
-/** Shared type for Input Image Content in src/media. */
+/** Image content shape passed onward after extraction or PDF rendering. */
 export type InputImageContent = PdfExtractedImage;
 
-/** Shared type for Input File Extract Result in src/media. */
+/** Extracted text/images plus the filename associated with an input file. */
 export type InputFileExtractResult = {
   filename: string;
   text?: string;
   images?: InputImageContent[];
 };
 
-/** Shared type for Input Pdf Limits in src/media. */
+/** Limits used when extracting images/text from PDFs. */
 export type InputPdfLimits = {
   maxPages: number;
   maxPixels: number;
   minTextChars: number;
 };
 
-/** Shared type for Input File Limits in src/media. */
+/** Resolved file input limits after applying config defaults. */
 export type InputFileLimits = {
   allowUrl: boolean;
   urlAllowlist?: string[];
@@ -43,7 +43,7 @@ export type InputFileLimits = {
   pdf: InputPdfLimits;
 };
 
-/** Shared type for Input File Limits Config in src/media. */
+/** Optional config values for resolving file input limits. */
 export type InputFileLimitsConfig = {
   allowUrl?: boolean;
   allowedMimes?: string[];
@@ -58,7 +58,7 @@ export type InputFileLimitsConfig = {
   };
 };
 
-/** Shared type for Input Image Limits in src/media. */
+/** Resolved image input limits after applying config defaults. */
 export type InputImageLimits = {
   allowUrl: boolean;
   urlAllowlist?: string[];
@@ -68,7 +68,7 @@ export type InputImageLimits = {
   timeoutMs: number;
 };
 
-/** Shared type for Input Image Source in src/media. */
+/** Image input source accepted by model request preprocessing. */
 export type InputImageSource =
   | {
       type: "base64";
@@ -81,7 +81,7 @@ export type InputImageSource =
       mediaType?: string;
     };
 
-/** Shared type for Input File Source in src/media. */
+/** File input source accepted by model request preprocessing. */
 export type InputFileSource =
   | {
       type: "base64";
@@ -96,14 +96,14 @@ export type InputFileSource =
       filename?: string;
     };
 
-/** Shared type for Input Fetch Result in src/media. */
+/** Guarded URL fetch result with bytes and content-type metadata. */
 export type InputFetchResult = {
   buffer: Buffer;
   mimeType: string;
   contentType?: string;
 };
 
-/** Reused constant for DEFAULT INPUT IMAGE MIMES behavior in src/media. */
+/** Default MIME allowlist for image inputs. */
 export const DEFAULT_INPUT_IMAGE_MIMES = [
   "image/jpeg",
   "image/png",
@@ -112,7 +112,7 @@ export const DEFAULT_INPUT_IMAGE_MIMES = [
   "image/heic",
   "image/heif",
 ];
-/** Reused constant for DEFAULT INPUT FILE MIMES behavior in src/media. */
+/** Default MIME allowlist for file inputs. */
 export const DEFAULT_INPUT_FILE_MIMES = [
   "text/plain",
   "text/markdown",
@@ -121,21 +121,21 @@ export const DEFAULT_INPUT_FILE_MIMES = [
   "application/json",
   "application/pdf",
 ];
-/** Reused constant for DEFAULT INPUT IMAGE MAX BYTES behavior in src/media. */
+/** Default max bytes for one image input. */
 export const DEFAULT_INPUT_IMAGE_MAX_BYTES = 10 * 1024 * 1024;
-/** Reused constant for DEFAULT INPUT FILE MAX BYTES behavior in src/media. */
+/** Default max bytes for one file input. */
 export const DEFAULT_INPUT_FILE_MAX_BYTES = 5 * 1024 * 1024;
-/** Reused constant for DEFAULT INPUT FILE MAX CHARS behavior in src/media. */
+/** Default max text characters retained from one extracted file. */
 export const DEFAULT_INPUT_FILE_MAX_CHARS = 60_000;
-/** Reused constant for DEFAULT INPUT MAX REDIRECTS behavior in src/media. */
+/** Default redirect limit for input URL fetches. */
 export const DEFAULT_INPUT_MAX_REDIRECTS = 3;
-/** Reused constant for DEFAULT INPUT TIMEOUT MS behavior in src/media. */
+/** Default timeout for input URL fetches. */
 export const DEFAULT_INPUT_TIMEOUT_MS = 10_000;
-/** Reused constant for DEFAULT INPUT PDF MAX PAGES behavior in src/media. */
+/** Default maximum PDF pages to inspect. */
 export const DEFAULT_INPUT_PDF_MAX_PAGES = 4;
-/** Reused constant for DEFAULT INPUT PDF MAX PIXELS behavior in src/media. */
+/** Default maximum pixels rendered per extracted PDF image. */
 export const DEFAULT_INPUT_PDF_MAX_PIXELS = 4_000_000;
-/** Reused constant for DEFAULT INPUT PDF MIN TEXT CHARS behavior in src/media. */
+/** Default minimum PDF text threshold before image extraction is needed. */
 export const DEFAULT_INPUT_PDF_MIN_TEXT_CHARS = 200;
 const NORMALIZED_INPUT_IMAGE_MIME = "image/jpeg";
 const HEIC_INPUT_IMAGE_MIMES = new Set(["image/heic", "image/heif"]);
@@ -153,13 +153,13 @@ function rejectOversizedBase64Payload(params: {
   }
 }
 
-/** Reused helper for normalize Mime Type behavior in src/media. */
+/** Normalizes a MIME type by stripping parameters and lowercasing it. */
 export function normalizeMimeType(value: string | undefined): string | undefined {
   const [raw] = value?.split(";") ?? [];
   return normalizeOptionalLowercaseString(raw);
 }
 
-/** Reused helper for parse Content Type behavior in src/media. */
+/** Splits a Content-Type header into normalized MIME and optional charset. */
 export function parseContentType(value: string | undefined): {
   mimeType?: string;
   charset?: string;
@@ -175,13 +175,13 @@ export function parseContentType(value: string | undefined): {
   return { mimeType, charset };
 }
 
-/** Reused helper for normalize Mime List behavior in src/media. */
+/** Builds a normalized MIME allowlist from config values or fallback defaults. */
 export function normalizeMimeList(values: string[] | undefined, fallback: string[]): Set<string> {
   const input = values && values.length > 0 ? values : fallback;
   return new Set(input.flatMap((value) => normalizeMimeType(value) ?? []));
 }
 
-/** Reused helper for resolve Input File Limits behavior in src/media. */
+/** Applies defaults to optional file input limit config. */
 export function resolveInputFileLimits(config?: InputFileLimitsConfig): InputFileLimits {
   return {
     allowUrl: config?.allowUrl ?? true,
@@ -198,7 +198,7 @@ export function resolveInputFileLimits(config?: InputFileLimitsConfig): InputFil
   };
 }
 
-/** Reused helper for fetch With Guard behavior in src/media. */
+/** Fetches an input URL through SSRF guardrails with redirect, timeout, and byte limits. */
 export async function fetchWithGuard(params: {
   url: string;
   maxBytes: number;
@@ -331,7 +331,7 @@ async function resolveInputFileMime(params: {
   return sniffedMime;
 }
 
-/** Reused helper for extract Image Content From Source behavior in src/media. */
+/** Extracts and normalizes an image from base64 or guarded URL input. */
 export async function extractImageContentFromSource(
   source: InputImageSource,
   limits: InputImageLimits,
@@ -380,7 +380,7 @@ export async function extractImageContentFromSource(
   throw new Error(`Unsupported input_image source type: ${(source as { type: string }).type}`);
 }
 
-/** Reused helper for extract File Content From Source behavior in src/media. */
+/** Extracts text/images from a base64 or guarded URL file input according to MIME-specific handling. */
 export async function extractFileContentFromSource(params: {
   source: InputFileSource;
   limits: InputFileLimits;

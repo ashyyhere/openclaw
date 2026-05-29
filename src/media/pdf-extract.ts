@@ -1,4 +1,4 @@
-// media pdf extract helpers and runtime behavior.
+// PDF extraction facade over document-extractor plugins.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type {
   DocumentExtractedImage,
@@ -6,12 +6,12 @@ import type {
 } from "../plugins/document-extractor-types.js";
 import { extractDocumentContent } from "./document-extractors.runtime.js";
 
-/** Shared type for Pdf Extracted Image in src/media. */
+/** Image extracted from a PDF page by a document extractor plugin. */
 export type PdfExtractedImage = DocumentExtractedImage;
-/** Shared type for Pdf Extracted Content in src/media. */
+/** Text and images extracted from a PDF buffer. */
 export type PdfExtractedContent = DocumentExtractionResult;
 
-/** Reused helper for extract Pdf Content behavior in src/media. */
+/** Extracts PDF text/images or throws when no document-extractor plugin can handle PDFs. */
 export async function extractPdfContent(params: {
   buffer: Buffer;
   maxPages: number;

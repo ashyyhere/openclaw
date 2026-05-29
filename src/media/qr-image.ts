@@ -1,4 +1,4 @@
-// media qr image helpers and runtime behavior.
+// Renders QR code PNGs as base64/data URLs or private temporary files.
 import path from "node:path";
 import { tempWorkspace } from "../infra/private-temp-workspace.js";
 import { loadQrCodeRuntime, normalizeQrText } from "./qr-runtime.ts";
@@ -55,7 +55,7 @@ function resolveQrTempPathSegment(name: string, value: string): string {
   return value;
 }
 
-/** Reused helper for render Qr Png Base64 behavior in src/media. */
+/** Renders normalized QR text to a PNG base64 payload with bounded scale and margin options. */
 export async function renderQrPngBase64(
   input: string,
   opts: QrPngRenderOptions = {},
@@ -86,12 +86,12 @@ export async function renderQrPngBase64(
   return dataUrl.slice(QR_PNG_DATA_URL_PREFIX.length);
 }
 
-/** Reused helper for format Qr Png Data Url behavior in src/media. */
+/** Prefixes PNG base64 with a browser/model-compatible data URL header. */
 export function formatQrPngDataUrl(base64: string): string {
   return `${QR_PNG_DATA_URL_PREFIX}${base64}`;
 }
 
-/** Reused helper for render Qr Png Data Url behavior in src/media. */
+/** Renders QR text directly to a PNG data URL. */
 export async function renderQrPngDataUrl(
   input: string,
   opts: QrPngRenderOptions = {},
@@ -99,7 +99,7 @@ export async function renderQrPngDataUrl(
   return formatQrPngDataUrl(await renderQrPngBase64(input, opts));
 }
 
-/** Reused helper for write Qr Png Temp File behavior in src/media. */
+/** Writes a QR PNG into a private temp workspace and returns matching media local roots. */
 export async function writeQrPngTempFile(
   input: string,
   opts: QrPngTempFileOptions,
