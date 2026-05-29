@@ -9,7 +9,7 @@ import {
 import { getLoadedChannelPlugin } from "./plugins/index.js";
 import { resolveBundledChannelThreadBindingDefaultPlacement } from "./plugins/thread-binding-api.js";
 
-/** Re-exported API for src/channels. */
+/** Lifecycle helper re-exported for channel code that needs expiry calculations. */
 export {
   resolveThreadBindingLifecycle,
   type ThreadBindingLifecycleRecord,
@@ -33,10 +33,10 @@ type ChannelThreadBindingsContainerShape = {
   accounts?: Record<string, { threadBindings?: SessionThreadBindingsConfigShape } | undefined>;
 };
 
-/** Shared type for Thread Binding Spawn Kind in src/channels. */
+/** Session family controlled by thread-binding spawn policy. */
 export type ThreadBindingSpawnKind = "subagent" | "acp";
 
-/** Shared type for Thread Binding Spawn Policy in src/channels. */
+/** Resolved thread-binding spawn policy for one channel/account/kind tuple. */
 export type ThreadBindingSpawnPolicy = {
   channel: string;
   accountId: string;
@@ -45,24 +45,24 @@ export type ThreadBindingSpawnPolicy = {
   defaultSpawnContext: ThreadBindingSpawnContext;
 };
 
-/** Shared type for Thread Binding Spawn Context in src/channels. */
+/** Default context inheritance mode for sessions spawned from a native thread. */
 export type ThreadBindingSpawnContext = "isolated" | "fork";
 
 function normalizeChannelId(value: string | undefined | null): string {
   return normalizeLowercaseStringOrEmpty(value);
 }
 
-/** Reused helper for supports Automatic Thread Binding Spawn behavior in src/channels. */
+/** Return whether a channel can spawn top-level thread-bound sessions automatically. */
 export function supportsAutomaticThreadBindingSpawn(channel: string): boolean {
   return resolveDefaultTopLevelPlacement(channel) === "child";
 }
 
-/** Reused helper for requires Native Thread Context For Thread Here behavior in src/channels. */
+/** Return whether `/thread here` needs a native channel thread instead of the current chat. */
 export function requiresNativeThreadContextForThreadHere(channel: string): boolean {
   return resolveDefaultTopLevelPlacement(channel) === "child";
 }
 
-/** Reused helper for resolve Thread Binding Placement For Current Context behavior in src/channels. */
+/** Decide if a thread binding should attach to current context or create a child thread. */
 export function resolveThreadBindingPlacementForCurrentContext(params: {
   channel: string;
   threadId?: string;
@@ -102,7 +102,7 @@ function normalizeThreadBindingHours(raw: unknown): number | undefined {
   return raw;
 }
 
-/** Reused helper for resolve Thread Binding Idle Timeout Ms behavior in src/channels. */
+/** Resolve idle timeout from channel override, session default, then product default. */
 export function resolveThreadBindingIdleTimeoutMs(params: {
   channelIdleHoursRaw: unknown;
   sessionIdleHoursRaw: unknown;
@@ -114,7 +114,7 @@ export function resolveThreadBindingIdleTimeoutMs(params: {
   return Math.floor(idleHours * 60 * 60 * 1000);
 }
 
-/** Reused helper for resolve Thread Binding Max Age Ms behavior in src/channels. */
+/** Resolve max age from channel override, session default, then product default. */
 export function resolveThreadBindingMaxAgeMs(params: {
   channelMaxAgeHoursRaw: unknown;
   sessionMaxAgeHoursRaw: unknown;
@@ -126,7 +126,7 @@ export function resolveThreadBindingMaxAgeMs(params: {
   return Math.floor(maxAgeHours * 60 * 60 * 1000);
 }
 
-/** Reused helper for resolve Thread Binding Effective Expires At behavior in src/channels. */
+/** Resolve the effective expiry timestamp for a persisted thread binding record. */
 export function resolveThreadBindingEffectiveExpiresAt(params: {
   record: ThreadBindingLifecycleRecord;
   defaultIdleTimeoutMs: number;
@@ -135,7 +135,7 @@ export function resolveThreadBindingEffectiveExpiresAt(params: {
   return resolveSharedThreadBindingLifecycle(params).expiresAt;
 }
 
-/** Reused helper for resolve Thread Bindings Enabled behavior in src/channels. */
+/** Resolve global/channel thread-binding enablement, defaulting to enabled. */
 export function resolveThreadBindingsEnabled(params: {
   channelEnabledRaw: unknown;
   sessionEnabledRaw: unknown;
@@ -174,7 +174,7 @@ function normalizeSpawnContext(value: unknown): ThreadBindingSpawnContext | unde
   return value === "isolated" || value === "fork" ? value : undefined;
 }
 
-/** Reused helper for resolve Thread Binding Spawn Policy behavior in src/channels. */
+/** Resolve spawn enablement and default context from account, channel, and session config. */
 export function resolveThreadBindingSpawnPolicy(params: {
   cfg: OpenClawConfig;
   channel: string;
@@ -215,7 +215,7 @@ export function resolveThreadBindingSpawnPolicy(params: {
   };
 }
 
-/** Reused helper for resolve Thread Binding Idle Timeout Ms For Channel behavior in src/channels. */
+/** Resolve idle timeout for a concrete channel/account from config scopes. */
 export function resolveThreadBindingIdleTimeoutMsForChannel(params: {
   cfg: OpenClawConfig;
   channel: string;
@@ -228,7 +228,7 @@ export function resolveThreadBindingIdleTimeoutMsForChannel(params: {
   });
 }
 
-/** Reused helper for resolve Thread Binding Max Age Ms For Channel behavior in src/channels. */
+/** Resolve max age for a concrete channel/account from config scopes. */
 export function resolveThreadBindingMaxAgeMsForChannel(params: {
   cfg: OpenClawConfig;
   channel: string;
@@ -255,7 +255,7 @@ function resolveThreadBindingChannelScope(params: {
   });
 }
 
-/** Reused helper for format Thread Binding Disabled Error behavior in src/channels. */
+/** Format the operator-facing message when thread bindings are disabled. */
 export function formatThreadBindingDisabledError(params: {
   channel: string;
   accountId: string;
@@ -264,7 +264,7 @@ export function formatThreadBindingDisabledError(params: {
   return `Thread bindings are disabled for ${params.channel} (set channels.${params.channel}.threadBindings.enabled=true to override for this account, or session.threadBindings.enabled=true globally).`;
 }
 
-/** Reused helper for format Thread Binding Spawn Disabled Error behavior in src/channels. */
+/** Format the operator-facing message when thread-bound session spawning is disabled. */
 export function formatThreadBindingSpawnDisabledError(params: {
   channel: string;
   accountId: string;

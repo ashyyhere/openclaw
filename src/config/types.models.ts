@@ -1,4 +1,4 @@
-// config types models helpers and runtime behavior.
+// Model/provider config contracts shared by config loading, provider routing, and docs.
 import type {
   AnthropicMessagesCompat,
   OpenAICompletionsCompat,
@@ -9,7 +9,7 @@ import type { AgentRuntimePolicyConfig } from "./types.agents-shared.js";
 import type { ConfiguredModelProviderRequest } from "./types.provider-request.js";
 import type { SecretInput } from "./types.secrets.js";
 
-/** Reused constant for MODEL APIS behavior in src/config. */
+/** Supported provider API protocol identifiers in `models.providers.*.api`. */
 export const MODEL_APIS = [
   "openai-completions",
   "openai-responses",
@@ -23,7 +23,7 @@ export const MODEL_APIS = [
   "azure-openai-responses",
 ] as const;
 
-/** Shared type for Model Api in src/config. */
+/** Provider API protocol identifier used to select request/stream adapters. */
 export type ModelApi = (typeof MODEL_APIS)[number];
 
 type SupportedOpenAICompatFields = Pick<
@@ -55,14 +55,14 @@ type SupportedAnthropicMessagesCompatFields = Pick<
   "supportsEagerToolInputStreaming" | "supportsLongCacheRetention"
 >;
 
-/** Shared type for Supported Thinking Format in src/config. */
+/** Known provider-specific encodings for visible/internal reasoning content. */
 export type SupportedThinkingFormat =
   | NonNullable<OpenAICompletionsCompat["thinkingFormat"]>
   | "deepseek"
   | "openrouter"
   | "together";
 
-/** Reused constant for MODEL THINKING FORMATS behavior in src/config. */
+/** Config-accepted thinking-format values, kept in sync with provider compat handling. */
 export const MODEL_THINKING_FORMATS = [
   "openai",
   "openrouter",
@@ -73,12 +73,12 @@ export const MODEL_THINKING_FORMATS = [
   "zai",
 ] as const satisfies readonly SupportedThinkingFormat[];
 
-/** Reused helper for is Model Thinking Format behavior in src/config. */
+/** Narrow arbitrary config strings to thinking formats supported by this build. */
 export function isModelThinkingFormat(value: string): value is SupportedThinkingFormat {
   return (MODEL_THINKING_FORMATS as readonly string[]).includes(value);
 }
 
-/** Shared type for Model Compat Config in src/config. */
+/** Provider/model compatibility flags consumed by request shaping and streaming adapters. */
 export type ModelCompatConfig = SupportedOpenAICompatFields &
   SupportedOpenAIResponsesCompatFields &
   SupportedAnthropicMessagesCompatFields & {
@@ -98,7 +98,7 @@ export type ModelCompatConfig = SupportedOpenAICompatFields &
     requiresOpenAiAnthropicToolPayload?: boolean;
   };
 
-/** Shared type for Model Image Input Config in src/config. */
+/** Image input limits and compression hints for a configured model. */
 export type ModelImageInputConfig = {
   /** Provider-documented maximum encoded image payload size. */
   maxBytes?: number;
@@ -112,15 +112,15 @@ export type ModelImageInputConfig = {
   tokenMode?: "tile" | "detail" | "provider";
 };
 
-/** Shared type for Model Media Input Config in src/config. */
+/** Media input capability metadata grouped by attachment kind. */
 export type ModelMediaInputConfig = {
   image?: ModelImageInputConfig;
 };
 
-/** Shared type for Model Provider Auth Mode in src/config. */
+/** Authentication mechanism a model provider entry expects. */
 export type ModelProviderAuthMode = "api-key" | "aws-sdk" | "oauth" | "token";
 
-/** Shared type for Model Provider Local Service Config in src/config. */
+/** Local helper service that must be started before a provider is called. */
 export type ModelProviderLocalServiceConfig = {
   command: string;
   args?: string[];
@@ -131,7 +131,7 @@ export type ModelProviderLocalServiceConfig = {
   idleStopMs?: number;
 };
 
-/** Shared type for Model Definition Config in src/config. */
+/** Per-model runtime metadata nested under a configured provider. */
 export type ModelDefinitionConfig = {
   id: string;
   name: string;
@@ -177,7 +177,7 @@ export type ModelDefinitionConfig = {
   metadataSource?: "models-add";
 };
 
-/** Shared type for Model Provider Config in src/config. */
+/** Provider-level config plus the model definitions served through that provider. */
 export type ModelProviderConfig = {
   baseUrl: string;
   apiKey?: SecretInput;
@@ -202,15 +202,15 @@ export type ModelProviderConfig = {
   models: ModelDefinitionConfig[];
 };
 
-/** Shared type for Model Provider Declaration Config in src/config. */
+/** Public declaration alias kept for model config authoring surfaces. */
 export type ModelProviderDeclarationConfig = ModelProviderConfig;
 
-/** Shared type for Model Provider Config Input in src/config. */
+/** Partial provider config accepted before defaults/schema normalization. */
 export type ModelProviderConfigInput = Omit<Partial<ModelProviderConfig>, "models"> & {
   models?: ModelDefinitionConfig[];
 };
 
-/** Shared type for Bedrock Discovery Config in src/config. */
+/** Bedrock model discovery controls used when provider catalogs are refreshed. */
 export type BedrockDiscoveryConfig = {
   enabled?: boolean;
   region?: string;
@@ -220,24 +220,24 @@ export type BedrockDiscoveryConfig = {
   defaultMaxTokens?: number;
 };
 
-/** Shared type for Discovery Toggle Config in src/config. */
+/** Generic enable/disable wrapper for provider catalog discovery sections. */
 export type DiscoveryToggleConfig = {
   enabled?: boolean;
 };
 
-/** Shared type for Model Pricing Config in src/config. */
+/** Pricing refresh controls for model cost metadata. */
 export type ModelPricingConfig = {
   enabled?: boolean;
 };
 
-/** Shared type for Models Config in src/config. */
+/** Top-level models config block from `openclaw.json`. */
 export type ModelsConfig = {
   mode?: "merge" | "replace";
   providers?: Record<string, ModelProviderConfig>;
   pricing?: ModelPricingConfig;
 };
 
-/** Shared type for Models Config Input in src/config. */
+/** Top-level models config shape accepted before provider defaults are applied. */
 export type ModelsConfigInput = Omit<ModelsConfig, "providers"> & {
   providers?: Record<string, ModelProviderConfigInput>;
 };

@@ -9,13 +9,13 @@ import {
   resolveCustomCommands,
 } from "../shared/custom-command-config.js";
 
-/** Shared type for Telegram Custom Command Input in src/plugin-sdk. */
+/** Raw custom command entry accepted by the deprecated Telegram SDK bridge. */
 export type TelegramCustomCommandInput = {
   command?: string | null;
   description?: string | null;
 };
 
-/** Shared type for Telegram Custom Command Issue in src/plugin-sdk. */
+/** Validation issue returned with the original command index for UI diagnostics. */
 export type TelegramCustomCommandIssue = {
   index: number;
   field: "command" | "description";
@@ -51,25 +51,25 @@ function resolveTelegramCustomCommandsImpl(params: {
   });
 }
 
-/** Reused helper for get Telegram Command Name Pattern behavior in src/plugin-sdk. */
+/** Return the Telegram slash-command name contract without exposing a mutable regex. */
 export function getTelegramCommandNamePattern(): RegExp {
   return TELEGRAM_COMMAND_NAME_PATTERN_VALUE;
 }
 
-/** Reused constant for TELEGRAM COMMAND NAME PATTERN behavior in src/plugin-sdk. */
+/** Telegram slash-command name contract: lowercase letters, digits, and underscore. */
 export const TELEGRAM_COMMAND_NAME_PATTERN = TELEGRAM_COMMAND_NAME_PATTERN_VALUE;
 
-/** Reused helper for normalize Telegram Command Name behavior in src/plugin-sdk. */
+/** Normalize a Telegram command name before validation and duplicate checks. */
 export function normalizeTelegramCommandName(value: string): string {
   return normalizeTelegramCommandNameImpl(value);
 }
 
-/** Reused helper for normalize Telegram Command Description behavior in src/plugin-sdk. */
+/** Normalize Telegram command descriptions before manifest/config comparison. */
 export function normalizeTelegramCommandDescription(value: string): string {
   return normalizeTelegramCommandDescriptionImpl(value);
 }
 
-/** Reused helper for resolve Telegram Custom Commands behavior in src/plugin-sdk. */
+/** Normalize and validate Telegram custom commands with optional reserved/duplicate checks. */
 export function resolveTelegramCustomCommands(params: {
   commands?: TelegramCustomCommandInput[] | null;
   reservedCommands?: Set<string>;
