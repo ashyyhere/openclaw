@@ -1,16 +1,16 @@
-// status fallback notice state helpers and runtime behavior.
+// Status helper for detecting active model fallback notices.
 import { areRuntimeModelRefsEquivalent } from "../agents/model-runtime-aliases.js";
 import type { SessionEntry } from "../config/sessions.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 
-/** Shared type for Fallback Notice State in src/status. */
+/** Session fields that record selected-vs-active model fallback notice state. */
 export type FallbackNoticeState = Pick<
   SessionEntry,
   "fallbackNoticeSelectedModel" | "fallbackNoticeActiveModel" | "fallbackNoticeReason"
 >;
 
-/** Reused helper for resolve Active Fallback State behavior in src/status. */
+/** Checks whether the current selected/active model pair still matches a fallback notice. */
 export function resolveActiveFallbackState(params: {
   selectedModelRef: string;
   activeModelRef: string;

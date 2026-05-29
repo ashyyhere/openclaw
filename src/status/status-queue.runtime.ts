@@ -1,3 +1,3 @@
-// Runtime boundary for status status queue runtime behavior.
-/** Re-exported API for src/status, starting with get Followup Queue Depth. */
+// Runtime boundary for status queue metrics.
+/** Queue depth/settings helpers used by status rendering. */
 export { getFollowupQueueDepth, resolveQueueSettings } from "../auto-reply/reply/queue.js";

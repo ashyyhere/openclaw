@@ -1,4 +1,4 @@
-// status status text helpers and runtime behavior.
+// Status text builder for chat-visible runtime, model, context, task, and usage summaries.
 import os from "node:os";
 import {
   resolveAgentConfig,
@@ -44,7 +44,7 @@ import {
   formatTaskStatusTitle,
 } from "../tasks/task-status.js";
 import type { BuildStatusTextParams } from "./status-text.types.js";
-/** Re-exported API for src/status, starting with Build Status Text Params. */
+/** Input contract for building status text. */
 export type { BuildStatusTextParams } from "./status-text.types.js";
 
 const USAGE_OAUTH_ONLY_PROVIDERS = new Set([
@@ -187,14 +187,14 @@ function formatStatusUptimeDuration(ms: number): string {
   return formatDurationCompact(ms, { spaced: true }) ?? "0s";
 }
 
-/** Reused helper for build Status Uptime Line behavior in src/status. */
+/** Builds the gateway/system uptime line for status output. */
 export function buildStatusUptimeLine(): string {
   const gatewayUptimeMs = Math.max(0, Math.round(process.uptime() * 1000));
   const systemUptimeMs = Math.max(0, Math.round(os.uptime() * 1000));
   return `⏱️ Uptime: gateway ${formatStatusUptimeDuration(gatewayUptimeMs)} · system ${formatStatusUptimeDuration(systemUptimeMs)}`;
 }
 
-/** Reused helper for build Status Text behavior in src/status. */
+/** Builds the full multi-line status message for a session/channel. */
 export async function buildStatusText(params: BuildStatusTextParams): Promise<string> {
   const {
     cfg,

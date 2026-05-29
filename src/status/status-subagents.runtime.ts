@@ -1,7 +1,7 @@
-// Runtime boundary for status status subagents runtime behavior.
-/** Re-exported API for src/status, starting with list Controlled Subagent Runs. */
+// Runtime boundary for subagent status helpers.
+/** Lists controlled subagent runs for status text. */
 export { listControlledSubagentRuns } from "../agents/subagent-control.js";
-/** Re-exported API for src/status, starting with count Pending Descendant Runs. */
+/** Counts pending descendant subagent runs for status text. */
 export { countPendingDescendantRuns } from "../agents/subagent-registry.js";
-/** Re-exported API for src/status, starting with build Subagents Status Line. */
+/** Builds the rendered subagent status line. */
 export { buildSubagentsStatusLine } from "../auto-reply/reply/commands-status-subagents.js";

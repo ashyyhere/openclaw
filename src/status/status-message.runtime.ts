@@ -1,5 +1,5 @@
-// Runtime boundary for status status message runtime behavior.
-/** Reused helper for load Status Message Runtime Module behavior in src/status. */
+// Lazy runtime boundary for status message code used by lighter status imports.
+/** Loads the heavier auto-reply status runtime module on demand. */
 export async function loadStatusMessageRuntimeModule() {
   return await import("../auto-reply/status.runtime.js");
 }
