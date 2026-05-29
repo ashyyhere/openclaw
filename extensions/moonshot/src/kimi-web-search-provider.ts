@@ -1,4 +1,5 @@
-// extensions/moonshot/src kimi web search provider helpers and runtime behavior.
+// Kimi web search provider descriptor: keeps setup/tool metadata lightweight and
+// lazy-loads the runtime only when setup or search execution runs.
 import {
   createWebSearchProviderContractFields,
   type WebSearchProviderPlugin,
@@ -40,6 +41,7 @@ async function runKimiSearchProviderSetup(
   return await runtime.runKimiSearchProviderSetup(ctx);
 }
 
+/** Creates the Kimi web-search provider with lazy runtime setup/tool execution. */
 export function createKimiWebSearchProvider(): WebSearchProviderPlugin {
   return {
     id: "kimi",
