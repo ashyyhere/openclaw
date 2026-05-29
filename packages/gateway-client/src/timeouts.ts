@@ -1,4 +1,4 @@
-// packages/gateway-client/src timeouts helpers and runtime behavior.
+// Gateway client timeout constants and normalization helpers.
 function parseStrictPositiveInteger(value: string): number | undefined {
   const trimmed = value.trim();
   if (!/^\+?\d+$/u.test(trimmed)) {
@@ -8,16 +8,16 @@ function parseStrictPositiveInteger(value: string): number | undefined {
   return Number.isSafeInteger(parsed) && parsed > 0 ? parsed : undefined;
 }
 
-/** Public constant for MAX SAFE TIMEOUT DELAY MS behavior in packages/gateway-client. */
+/** Largest delay Node timers can schedule without overflowing signed 32-bit range. */
 export const MAX_SAFE_TIMEOUT_DELAY_MS = 2_147_483_647;
-/** Public constant for DEFAULT PREAUTH HANDSHAKE TIMEOUT MS behavior in packages/gateway-client. */
+/** Default server-side preauth handshake watchdog. */
 export const DEFAULT_PREAUTH_HANDSHAKE_TIMEOUT_MS = 15_000;
-/** Public constant for MIN CONNECT CHALLENGE TIMEOUT MS behavior in packages/gateway-client. */
+/** Minimum client challenge watchdog accepted after normalization. */
 export const MIN_CONNECT_CHALLENGE_TIMEOUT_MS = 250;
-/** Public constant for MAX CONNECT CHALLENGE TIMEOUT MS behavior in packages/gateway-client. */
+/** Default upper bound for the connect challenge watchdog. */
 export const MAX_CONNECT_CHALLENGE_TIMEOUT_MS = DEFAULT_PREAUTH_HANDSHAKE_TIMEOUT_MS;
 
-/** Public helper for resolve Safe Timeout Delay Ms behavior in packages/gateway-client. */
+/** Clamp timeout delays into the safe Node timer range and optional minimum. */
 export function resolveSafeTimeoutDelayMs(delayMs: number, opts?: { minMs?: number }): number {
   const rawMinMs = opts?.minMs ?? 1;
   const minMs = Math.min(
@@ -53,7 +53,7 @@ export function resolveFiniteTimeoutDelayMs(
   return resolveSafeTimeoutDelayMs(candidateMs, opts);
 }
 
-/** Public helper for clamp Connect Challenge Timeout Ms behavior in packages/gateway-client. */
+/** Clamp connect challenge timeout between protocol minimum and active maximum. */
 export function clampConnectChallengeTimeoutMs(
   timeoutMs: number,
   maxTimeoutMs = MAX_CONNECT_CHALLENGE_TIMEOUT_MS,
@@ -64,7 +64,7 @@ export function clampConnectChallengeTimeoutMs(
   );
 }
 
-/** Public helper for get Connect Challenge Timeout Ms From Env behavior in packages/gateway-client. */
+/** Read the connect challenge timeout override from process-style env input. */
 export function getConnectChallengeTimeoutMsFromEnv(
   env: NodeJS.ProcessEnv = process.env,
 ): number | undefined {
@@ -84,7 +84,7 @@ function normalizePositiveTimeoutMs(timeoutMs: unknown): number | undefined {
     : undefined;
 }
 
-/** Public helper for resolve Connect Challenge Timeout Ms behavior in packages/gateway-client. */
+/** Resolve the client challenge watchdog from explicit, env, and handshake settings. */
 export function resolveConnectChallengeTimeoutMs(
   timeoutMs?: number | null,
   params?: {
@@ -109,7 +109,7 @@ export function resolveConnectChallengeTimeoutMs(
   return clampConnectChallengeTimeoutMs(configuredPreauthTimeoutMs, maxTimeoutMs);
 }
 
-/** Public helper for get Preauth Handshake Timeout Ms From Env behavior in packages/gateway-client. */
+/** Read the preauth handshake timeout from production or test env overrides. */
 export function getPreauthHandshakeTimeoutMsFromEnv(env: NodeJS.ProcessEnv = process.env): number {
   const configuredTimeout =
     env.OPENCLAW_HANDSHAKE_TIMEOUT_MS || (env.VITEST && env.OPENCLAW_TEST_HANDSHAKE_TIMEOUT_MS);
@@ -122,7 +122,7 @@ export function getPreauthHandshakeTimeoutMsFromEnv(env: NodeJS.ProcessEnv = pro
   return DEFAULT_PREAUTH_HANDSHAKE_TIMEOUT_MS;
 }
 
-/** Public helper for resolve Preauth Handshake Timeout Ms behavior in packages/gateway-client. */
+/** Resolve preauth handshake timeout from env, configured value, or default. */
 export function resolvePreauthHandshakeTimeoutMs(params?: {
   env?: NodeJS.ProcessEnv;
   configuredTimeoutMs?: number | null;

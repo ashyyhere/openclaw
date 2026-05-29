@@ -1,7 +1,7 @@
-// packages/gateway-client/src event loop ready helpers and runtime behavior.
+// Event-loop readiness probe used before gateway reconnect and handshake attempts.
 import { resolveFiniteTimeoutDelayMs } from "./timeouts.js";
 
-/** Public type describing Event Loop Ready Result for packages/gateway-client. */
+/** Result from sampling timer drift until the event loop is responsive enough. */
 export type EventLoopReadyResult = {
   ready: boolean;
   elapsedMs: number;
@@ -10,7 +10,7 @@ export type EventLoopReadyResult = {
   aborted: boolean;
 };
 
-/** Public type describing Event Loop Ready Options for packages/gateway-client. */
+/** Tuning knobs for event-loop readiness polling and cancellation. */
 export type EventLoopReadyOptions = {
   maxWaitMs?: number;
   intervalMs?: number;
@@ -28,7 +28,7 @@ function resolvePositiveInteger(value: number | undefined, fallback: number): nu
   return Number.isFinite(value) && value !== undefined ? Math.max(1, Math.floor(value)) : fallback;
 }
 
-/** Public helper for wait For Event Loop Ready behavior in packages/gateway-client. */
+/** Wait until consecutive timer checks stay below the drift threshold. */
 export async function waitForEventLoopReady(
   options: EventLoopReadyOptions = {},
 ): Promise<EventLoopReadyResult> {
