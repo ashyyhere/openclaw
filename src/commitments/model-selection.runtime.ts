@@ -2,7 +2,7 @@
 import { resolveDefaultModelForAgent } from "../agents/model-selection.js";
 import type { OpenClawConfig } from "../config/config.js";
 
-/** Reused helper for resolve Commitment Default Model Ref behavior in src/commitments. */
+/** Resolves the default model used by the hidden commitment extractor. */
 export function resolveCommitmentDefaultModelRef(params: {
   cfg: OpenClawConfig;
   agentId?: string;

@@ -4,14 +4,14 @@ import type { OpenClawConfig } from "../config/config.js";
 
 const DEFAULT_COMMITMENT_EXTRACTION_DEBOUNCE_MS = 15_000;
 const DEFAULT_COMMITMENT_BATCH_MAX_ITEMS = 8;
-/** Reused constant for DEFAULT COMMITMENT EXTRACTION QUEUE MAX ITEMS behavior in src/commitments. */
+/** Default maximum queued hidden extraction items before new items are dropped. */
 export const DEFAULT_COMMITMENT_EXTRACTION_QUEUE_MAX_ITEMS = 64;
 const DEFAULT_COMMITMENT_CONFIDENCE_THRESHOLD = 0.72;
 const DEFAULT_COMMITMENT_CARE_CONFIDENCE_THRESHOLD = 0.86;
 const DEFAULT_COMMITMENT_EXTRACTION_TIMEOUT_SECONDS = 45;
-/** Reused constant for DEFAULT COMMITMENT MAX PER HEARTBEAT behavior in src/commitments. */
+/** Default maximum commitments delivered in one heartbeat pass. */
 export const DEFAULT_COMMITMENT_MAX_PER_HEARTBEAT = 3;
-/** Reused constant for DEFAULT COMMITMENT EXPIRE AFTER HOURS behavior in src/commitments. */
+/** Default grace period after a due window before active commitments expire. */
 export const DEFAULT_COMMITMENT_EXPIRE_AFTER_HOURS = 72;
 const DEFAULT_COMMITMENT_MAX_PER_DAY = 3;
 
@@ -34,7 +34,7 @@ function positiveInt(value: unknown, fallback: number): number {
     : fallback;
 }
 
-/** Reused helper for resolve Commitments Config behavior in src/commitments. */
+/** Resolves effective commitment extraction and delivery limits from config defaults. */
 export function resolveCommitmentsConfig(cfg?: OpenClawConfig): ResolvedCommitmentsConfig {
   const raw = cfg?.commitments;
   return {
@@ -51,7 +51,7 @@ export function resolveCommitmentsConfig(cfg?: OpenClawConfig): ResolvedCommitme
   };
 }
 
-/** Reused helper for resolve Commitment Timezone behavior in src/commitments. */
+/** Resolves the timezone used for commitment due-window extraction. */
 export function resolveCommitmentTimezone(cfg?: OpenClawConfig): string {
   return resolveUserTimezone(cfg?.agents?.defaults?.userTimezone);
 }

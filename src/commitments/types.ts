@@ -1,17 +1,17 @@
 // Public commitment domain types shared by extraction, storage, and heartbeat delivery.
-/** Shared type for Commitment Kind in src/commitments. */
+/** Category of follow-up opportunity inferred from a conversation turn. */
 export type CommitmentKind = "event_check_in" | "deadline_check" | "care_check_in" | "open_loop";
 
-/** Shared type for Commitment Sensitivity in src/commitments. */
+/** Sensitivity bucket used to tune confidence thresholds and delivery tone. */
 export type CommitmentSensitivity = "routine" | "personal" | "care";
 
-/** Shared type for Commitment Status in src/commitments. */
+/** Lifecycle state for an inferred commitment record. */
 export type CommitmentStatus = "pending" | "sent" | "dismissed" | "snoozed" | "expired";
 
-/** Shared type for Commitment Source in src/commitments. */
+/** Origin of a commitment candidate. */
 export type CommitmentSource = "inferred_user_context" | "agent_promise";
 
-/** Shared type for Commitment Scope in src/commitments. */
+/** Conversation scope that owns a commitment and determines delivery routing. */
 export type CommitmentScope = {
   agentId: string;
   sessionKey: string;
@@ -22,14 +22,14 @@ export type CommitmentScope = {
   senderId?: string;
 };
 
-/** Shared type for Commitment Due Window in src/commitments. */
+/** Earliest/latest delivery window in epoch milliseconds plus display timezone. */
 export type CommitmentDueWindow = {
   earliestMs: number;
   latestMs: number;
   timezone: string;
 };
 
-/** Shared type for Commitment Record in src/commitments. */
+/** Persisted commitment record with routing scope, delivery state, and source metadata. */
 export type CommitmentRecord = CommitmentScope & {
   id: string;
   kind: CommitmentKind;
@@ -57,13 +57,13 @@ export type CommitmentRecord = CommitmentScope & {
   expiredAtMs?: number;
 };
 
-/** Shared type for Commitment Store File in src/commitments. */
+/** Versioned JSON file shape for the commitment store. */
 export type CommitmentStoreFile = {
   version: 1;
   commitments: CommitmentRecord[];
 };
 
-/** Shared type for Commitment Candidate in src/commitments. */
+/** Model-produced candidate before validation and persistence. */
 export type CommitmentCandidate = {
   itemId: string;
   kind: CommitmentKind;
@@ -80,7 +80,7 @@ export type CommitmentCandidate = {
   };
 };
 
-/** Shared type for Commitment Extraction Item in src/commitments. */
+/** Hidden extraction input built from one conversation turn and existing pending context. */
 export type CommitmentExtractionItem = CommitmentScope & {
   itemId: string;
   nowMs: number;
@@ -98,7 +98,7 @@ export type CommitmentExtractionItem = CommitmentScope & {
   }>;
 };
 
-/** Shared type for Commitment Extraction Batch Result in src/commitments. */
+/** Parsed commitment extraction result for a batch of items. */
 export type CommitmentExtractionBatchResult = {
   candidates: CommitmentCandidate[];
 };

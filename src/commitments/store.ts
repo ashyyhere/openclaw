@@ -43,7 +43,7 @@ function defaultCommitmentStorePath(): string {
   return path.join(resolveStateDir(), "commitments", "commitments.json");
 }
 
-/** Reused helper for resolve Commitment Store Path behavior in src/commitments. */
+/** Resolves the private commitments JSON path, expanding `~` when supplied. */
 export function resolveCommitmentStorePath(storePath?: string): string {
   const trimmed = storePath?.trim();
   if (!trimmed) {
@@ -218,12 +218,12 @@ async function loadCommitmentStoreInternal(storePath?: string): Promise<LoadedCo
   }
 }
 
-/** Reused helper for load Commitment Store behavior in src/commitments. */
+/** Loads the commitment store, coercing legacy records and dropping invalid entries. */
 export async function loadCommitmentStore(storePath?: string): Promise<CommitmentStoreFile> {
   return (await loadCommitmentStoreInternal(storePath)).store;
 }
 
-/** Reused helper for save Commitment Store behavior in src/commitments. */
+/** Writes a sanitized commitment store file using private file-store permissions. */
 export async function saveCommitmentStore(
   storePath: string | undefined,
   store: CommitmentStoreFile,
@@ -342,7 +342,7 @@ async function loadCommitmentStoreWithExpiredMarked(nowMs: number): Promise<Comm
   });
 }
 
-/** Reused helper for list Pending Commitments For Scope behavior in src/commitments. */
+/** Lists active pending/snoozed commitments for one exact delivery scope. */
 export async function listPendingCommitmentsForScope(params: {
   cfg?: OpenClawConfig;
   scope: CommitmentScope;
@@ -366,7 +366,7 @@ export async function listPendingCommitmentsForScope(params: {
     .slice(0, limit);
 }
 
-/** Reused helper for upsert Inferred Commitments behavior in src/commitments. */
+/** Creates or refreshes inferred commitments, deduped within the same scope and key. */
 export async function upsertInferredCommitments(params: {
   cfg?: OpenClawConfig;
   item: CommitmentExtractionItem;
@@ -442,7 +442,7 @@ function countSentCommitmentsForSession(params: {
   ).length;
 }
 
-/** Reused helper for list Due Commitments For Session behavior in src/commitments. */
+/** Lists deliverable commitments for a session while enforcing daily and heartbeat limits. */
 export async function listDueCommitmentsForSession(params: {
   cfg?: OpenClawConfig;
   agentId: string;
@@ -489,7 +489,7 @@ export async function listDueCommitmentsForSession(params: {
     .slice(0, limit);
 }
 
-/** Reused helper for list Due Commitment Session Keys behavior in src/commitments. */
+/** Lists session keys with due commitments for an agent, respecting per-session daily limits. */
 export async function listDueCommitmentSessionKeys(params: {
   cfg?: OpenClawConfig;
   agentId: string;
@@ -527,7 +527,7 @@ export async function listDueCommitmentSessionKeys(params: {
   return [...keys].toSorted();
 }
 
-/** Reused helper for mark Commitments Attempted behavior in src/commitments. */
+/** Increments attempt counters for commitments selected for delivery. */
 export async function markCommitmentsAttempted(params: {
   cfg?: OpenClawConfig;
   ids: string[];
@@ -559,7 +559,7 @@ export async function markCommitmentsAttempted(params: {
   });
 }
 
-/** Reused helper for mark Commitments Status behavior in src/commitments. */
+/** Marks active commitments sent, dismissed, or expired and records the transition time. */
 export async function markCommitmentsStatus(params: {
   cfg?: OpenClawConfig;
   ids: string[];
@@ -594,7 +594,7 @@ export async function markCommitmentsStatus(params: {
   });
 }
 
-/** Reused helper for list Commitments behavior in src/commitments. */
+/** Lists commitments with optional status and agent filters for diagnostics/admin surfaces. */
 export async function listCommitments(params?: {
   cfg?: OpenClawConfig;
   status?: CommitmentStatus;

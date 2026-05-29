@@ -121,7 +121,7 @@ function extractJsonObjectCandidates(raw: string): string[] {
   return out;
 }
 
-/** Reused helper for parse Commitment Extraction Output behavior in src/commitments. */
+/** Parses model JSON output into commitment candidates, tolerating embedded JSON objects. */
 export function parseCommitmentExtractionOutput(raw: string): CommitmentExtractionBatchResult {
   const candidates: CommitmentCandidate[] = [];
   const trimmed = raw.trim();
@@ -158,7 +158,7 @@ export function parseCommitmentExtractionOutput(raw: string): CommitmentExtracti
   return { candidates };
 }
 
-/** Reused helper for hydrate Commitment Extraction Item behavior in src/commitments. */
+/** Adds existing pending commitments for the same scope before extraction. */
 export async function hydrateCommitmentExtractionItem(params: {
   cfg?: OpenClawConfig;
   item: Omit<CommitmentExtractionItem, "existingPending">;
@@ -208,7 +208,7 @@ function formatExtractionNow(valueMs: unknown): string {
   );
 }
 
-/** Reused helper for build Commitment Extraction Prompt behavior in src/commitments. */
+/** Builds the hidden classifier prompt for a batch of commitment extraction items. */
 export function buildCommitmentExtractionPrompt(params: {
   cfg?: OpenClawConfig;
   items: CommitmentExtractionItem[];
@@ -268,7 +268,7 @@ function resolveMinimumDueMs(params: {
   return params.nowMs + intervalMs;
 }
 
-/** Reused helper for validate Commitment Candidates behavior in src/commitments. */
+/** Filters model candidates by item id, confidence threshold, and future due window. */
 export function validateCommitmentCandidates(params: {
   cfg?: OpenClawConfig;
   items: CommitmentExtractionItem[];
@@ -331,7 +331,7 @@ export function validateCommitmentCandidates(params: {
   return validated;
 }
 
-/** Reused helper for persist Commitment Extraction Result behavior in src/commitments. */
+/** Validates extraction output and persists accepted commitments grouped by item. */
 export async function persistCommitmentExtractionResult(params: {
   cfg?: OpenClawConfig;
   items: CommitmentExtractionItem[];

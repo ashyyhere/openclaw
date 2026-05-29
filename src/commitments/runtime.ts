@@ -75,12 +75,12 @@ function clearTimer(handle: TimerHandle): void {
   (runtime.clearTimer ?? clearTimeout)(handle);
 }
 
-/** Reused helper for configure Commitment Extraction Runtime behavior in src/commitments. */
+/** Overrides extraction runtime dependencies for tests and embedded runtimes. */
 export function configureCommitmentExtractionRuntime(next: CommitmentExtractionRuntime): void {
   runtime = next;
 }
 
-/** Reused helper for reset Commitment Extraction Runtime For Tests behavior in src/commitments. */
+/** Clears queued extraction state, timers, cooldowns, and runtime overrides for tests. */
 export function resetCommitmentExtractionRuntimeForTests(): void {
   if (timer) {
     clearTimer(timer);
@@ -102,7 +102,7 @@ function isUsefulText(value: string | undefined): boolean {
   return Boolean(value?.trim());
 }
 
-/** Reused helper for enqueue Commitment Extraction behavior in src/commitments. */
+/** Enqueues a hidden extraction item when commitments are enabled and text is useful. */
 export function enqueueCommitmentExtraction(input: CommitmentExtractionEnqueueInput): boolean {
   const resolved = resolveCommitmentsConfig(input.cfg);
   const nowMs = input.nowMs ?? Date.now();
@@ -277,7 +277,7 @@ async function hydrateBatch(
   );
 }
 
-/** Reused helper for drain Commitment Extraction Queue behavior in src/commitments. */
+/** Drains queued extraction batches, validates results, and persists accepted commitments. */
 export async function drainCommitmentExtractionQueue(): Promise<number> {
   if (draining) {
     return 0;
