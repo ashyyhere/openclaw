@@ -6,16 +6,16 @@ import {
   type FsSafeErrorCode,
 } from "../infra/fs-safe.js";
 
-/** Shared type for Fs Safe Like Error in src/media. */
+/** Narrow fs-safe error shape used by media store callers without importing the concrete class. */
 export type FsSafeLikeError = {
   code: FsSafeErrorCode;
   message: string;
 };
 
-/** Reused constant for read Local File Safely behavior in src/media. */
+/** Runtime-bound safe local file reader after fs-safe defaults have been installed. */
 export const readLocalFileSafely = readLocalFileSafelyImpl;
 
-/** Reused helper for is Fs Safe Error behavior in src/media. */
+/** Checks whether an unknown read failure is an fs-safe policy error. */
 export function isFsSafeError(error: unknown): error is FsSafeLikeError {
   return error instanceof FsSafeError;
 }

@@ -1,14 +1,14 @@
 // Centralized current and legacy product names used by compatibility code.
-/** Reused constant for PROJECT NAME behavior in src/compat. */
+/** Canonical package/config/product key for current OpenClaw compatibility code. */
 export const PROJECT_NAME = "openclaw" as const;
 
 const LEGACY_PROJECT_NAMES = ["clawdbot"] as const;
 
-/** Reused constant for MANIFEST KEY behavior in src/compat. */
+/** Manifest key written for current OpenClaw manifests. */
 export const MANIFEST_KEY = PROJECT_NAME;
 
-/** Reused constant for LEGACY MANIFEST KEYS behavior in src/compat. */
+/** Legacy manifest keys accepted only where an explicit compatibility path exists. */
 export const LEGACY_MANIFEST_KEYS = LEGACY_PROJECT_NAMES;
 
-/** Reused constant for MACOS APP SOURCES DIR behavior in src/compat. */
+/** Current macOS app source directory used by build/release compatibility helpers. */
 export const MACOS_APP_SOURCES_DIR = "apps/macos/Sources/OpenClaw" as const;
