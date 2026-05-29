@@ -1,4 +1,4 @@
-// packages/gateway-protocol/src/schema config helpers and runtime behavior.
+// TypeBox schemas for gateway config editing, schema lookup, and update RPCs.
 import { Type } from "typebox";
 import { NonEmptyString } from "./primitives.js";
 
@@ -18,10 +18,10 @@ const ConfigDeliveryContextSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Config Get Params Schema behavior in packages/gateway-protocol. */
+/** Empty params schema for reading the current raw config document. */
 export const ConfigGetParamsSchema = Type.Object({}, { additionalProperties: false });
 
-/** Public constant for Config Set Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for replacing raw config with optional optimistic hash guard. */
 export const ConfigSetParamsSchema = Type.Object(
   {
     raw: NonEmptyString,
@@ -42,15 +42,15 @@ const ConfigApplyLikeParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Config Apply Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for applying config and scheduling any required restart. */
 export const ConfigApplyParamsSchema = ConfigApplyLikeParamsSchema;
-/** Public constant for Config Patch Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for patch-style config updates with the same apply metadata. */
 export const ConfigPatchParamsSchema = ConfigApplyLikeParamsSchema;
 
-/** Public constant for Config Schema Params Schema behavior in packages/gateway-protocol. */
+/** Empty params schema for requesting the generated config schema. */
 export const ConfigSchemaParamsSchema = Type.Object({}, { additionalProperties: false });
 
-/** Public constant for Config Schema Lookup Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for looking up a config schema node by path. */
 export const ConfigSchemaLookupParamsSchema = Type.Object(
   {
     path: ConfigSchemaLookupPathString,
@@ -58,10 +58,10 @@ export const ConfigSchemaLookupParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Update Status Params Schema behavior in packages/gateway-protocol. */
+/** Empty params schema for reading pending update/restart status. */
 export const UpdateStatusParamsSchema = Type.Object({}, { additionalProperties: false });
 
-/** Public constant for Update Run Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for running an update/restart flow with optional delivery context. */
 export const UpdateRunParamsSchema = Type.Object(
   {
     sessionKey: Type.Optional(Type.String()),
@@ -74,7 +74,7 @@ export const UpdateRunParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Config Ui Hint Schema behavior in packages/gateway-protocol. */
+/** UI metadata attached to generated config schema nodes. */
 export const ConfigUiHintSchema = Type.Object(
   {
     label: Type.Optional(Type.String()),
@@ -90,7 +90,7 @@ export const ConfigUiHintSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Config Schema Response Schema behavior in packages/gateway-protocol. */
+/** Response schema for generated config schema plus UI hints and versioning. */
 export const ConfigSchemaResponseSchema = Type.Object(
   {
     schema: Type.Unknown(),
@@ -101,7 +101,7 @@ export const ConfigSchemaResponseSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Config Schema Lookup Child Schema behavior in packages/gateway-protocol. */
+/** Child node summary returned by config schema lookup. */
 export const ConfigSchemaLookupChildSchema = Type.Object(
   {
     key: NonEmptyString,
@@ -118,7 +118,7 @@ export const ConfigSchemaLookupChildSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Config Schema Lookup Result Schema behavior in packages/gateway-protocol. */
+/** Lookup result for a config path, including reload semantics and children. */
 export const ConfigSchemaLookupResultSchema = Type.Object(
   {
     path: NonEmptyString,
