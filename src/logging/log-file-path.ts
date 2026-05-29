@@ -1,4 +1,5 @@
-// logging log file path helpers and runtime behavior.
+// Shared log-file path resolver used by config/status code that cannot import
+// the full logger runtime.
 import path from "node:path";
 import type { OpenClawConfig } from "../config/types.js";
 import {
@@ -37,7 +38,7 @@ function resolveDefaultRollingLogFile(date = new Date()): string {
   return path.join(logDir, `${LOG_PREFIX}-${formatLocalDate(date)}${LOG_SUFFIX}`);
 }
 
-/** Reused helper for resolve Configured Log File Path behavior in src/logging. */
+/** Resolves the configured log file path or today's default rolling log path. */
 export function resolveConfiguredLogFilePath(config?: OpenClawConfig | null): string {
   return config?.logging?.file ?? resolveDefaultRollingLogFile();
 }
