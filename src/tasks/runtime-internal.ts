@@ -1,5 +1,5 @@
-// tasks runtime internal helpers and runtime behavior.
-/** Re-exported API for src/tasks. */
+// Internal task registry facade used by task executor and runtime-owned task flows.
+/** Re-export internal task registry mutation/query helpers for task runtime modules. */
 export {
   cancelTaskById,
   createTaskRecord,
@@ -31,5 +31,5 @@ export {
   setTaskRunDeliveryStatusByRunId,
   updateTaskNotifyPolicyById,
 } from "./task-registry.js";
-/** Re-exported API for src/tasks, starting with Task Record. */
+/** Re-export task record type for internal runtime facades. */
 export type { TaskRecord } from "./task-registry.types.js";

@@ -1,4 +1,4 @@
-// tasks task registry store helpers and runtime behavior.
+// Runtime-configurable persistence and observer seams for the task registry.
 import {
   closeTaskRegistryDatabase,
   deleteTaskAndDeliveryStateFromSqlite,
@@ -14,10 +14,10 @@ import {
 import type { TaskRegistryStoreSnapshot } from "./task-registry.store.types.js";
 import type { TaskDeliveryState, TaskRecord } from "./task-registry.types.js";
 
-/** Re-exported API for src/tasks, starting with Task Registry Store Snapshot. */
+/** Re-export the persisted task registry snapshot shape. */
 export type { TaskRegistryStoreSnapshot } from "./task-registry.store.types.js";
 
-/** Shared type for Task Registry Store in src/tasks. */
+/** Storage contract used by the task registry to load/save tasks and delivery state. */
 export type TaskRegistryStore = {
   loadSnapshot: () => TaskRegistryStoreSnapshot;
   saveSnapshot: (snapshot: TaskRegistryStoreSnapshot) => void;
@@ -34,7 +34,7 @@ export type TaskRegistryStore = {
   close?: () => void;
 };
 
-/** Shared type for Task Registry Observer Event in src/tasks. */
+/** Incremental task registry mutation event emitted to observers. */
 export type TaskRegistryObserverEvent =
   | {
       kind: "restored";
@@ -51,7 +51,7 @@ export type TaskRegistryObserverEvent =
       previous: TaskRecord;
     };
 
-/** Shared type for Task Registry Observers in src/tasks. */
+/** Optional best-effort observer hooks for task registry mutations. */
 export type TaskRegistryObservers = {
   // Observers are incremental/best-effort only. Snapshot persistence belongs to TaskRegistryStore.
   onEvent?: (event: TaskRegistryObserverEvent) => void;
@@ -73,17 +73,17 @@ const defaultTaskRegistryStore: TaskRegistryStore = {
 let configuredTaskRegistryStore: TaskRegistryStore = defaultTaskRegistryStore;
 let configuredTaskRegistryObservers: TaskRegistryObservers | null = null;
 
-/** Reused helper for get Task Registry Store behavior in src/tasks. */
+/** Returns the currently configured task registry store. */
 export function getTaskRegistryStore(): TaskRegistryStore {
   return configuredTaskRegistryStore;
 }
 
-/** Reused helper for get Task Registry Observers behavior in src/tasks. */
+/** Returns optional task registry observers for incremental mutation notifications. */
 export function getTaskRegistryObservers(): TaskRegistryObservers | null {
   return configuredTaskRegistryObservers;
 }
 
-/** Reused helper for configure Task Registry Runtime behavior in src/tasks. */
+/** Overrides task registry store/observer runtime seams, primarily for tests and alternate runtimes. */
 export function configureTaskRegistryRuntime(params: {
   store?: TaskRegistryStore;
   observers?: TaskRegistryObservers | null;
@@ -96,7 +96,7 @@ export function configureTaskRegistryRuntime(params: {
   }
 }
 
-/** Reused helper for reset Task Registry Runtime For Tests behavior in src/tasks. */
+/** Restores the default SQLite-backed registry store and clears observers for tests. */
 export function resetTaskRegistryRuntimeForTests() {
   configuredTaskRegistryStore.close?.();
   configuredTaskRegistryStore = defaultTaskRegistryStore;

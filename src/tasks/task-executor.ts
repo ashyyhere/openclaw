@@ -1,4 +1,4 @@
-// tasks task executor helpers and runtime behavior.
+// Task executor facade for detached task lifecycle updates, task flows, retries, and cancellation.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { createSubsystemLogger } from "../logging/subsystem.js";
 import type {
@@ -92,7 +92,7 @@ function ensureSingleTaskFlow(params: {
 type TaskRunCreateParams = DetachedTaskCreateParams;
 type RunningTaskRunCreateParams = DetachedRunningTaskCreateParams;
 
-/** Reused helper for create Queued Task Run behavior in src/tasks. */
+/** Creates a queued task and links an eligible one-task flow for session-scoped detached runs. */
 export function createQueuedTaskRun(params: TaskRunCreateParams): TaskRecord {
   const task = createTaskRecord({
     ...params,
@@ -104,12 +104,12 @@ export function createQueuedTaskRun(params: TaskRunCreateParams): TaskRecord {
   });
 }
 
-/** Reused helper for get Flow Task Summary behavior in src/tasks. */
+/** Summarizes all task records currently linked to a flow. */
 export function getFlowTaskSummary(flowId: string): TaskRegistrySummary {
   return summarizeTaskRecords(listTasksForFlowId(flowId));
 }
 
-/** Reused helper for create Running Task Run behavior in src/tasks. */
+/** Creates a running task and links an eligible one-task flow for session-scoped detached runs. */
 export function createRunningTaskRun(params: RunningTaskRunCreateParams): TaskRecord {
   const task = createTaskRecord({
     ...params,
@@ -140,7 +140,7 @@ type RunTaskInFlowParams = {
   progressSummary?: string | null;
 };
 
-/** Reused helper for start Task Run By Run Id behavior in src/tasks. */
+/** Marks tasks matching a run id as running. */
 export function startTaskRunByRunId(params: {
   runId: string;
   runtime?: TaskRuntime;
@@ -153,7 +153,7 @@ export function startTaskRunByRunId(params: {
   return markTaskRunningByRunId(params);
 }
 
-/** Reused helper for record Task Run Progress By Run Id behavior in src/tasks. */
+/** Records progress summaries for tasks matching a run id. */
 export function recordTaskRunProgressByRunId(params: {
   runId: string;
   runtime?: TaskRuntime;
@@ -165,7 +165,7 @@ export function recordTaskRunProgressByRunId(params: {
   return recordTaskProgressByRunId(params);
 }
 
-/** Reused helper for complete Task Run By Run Id behavior in src/tasks. */
+/** Marks tasks matching a run id as succeeded. */
 export function completeTaskRunByRunId(params: {
   runId: string;
   runtime?: TaskRuntime;
@@ -182,12 +182,12 @@ export function completeTaskRunByRunId(params: {
   });
 }
 
-/** Reused helper for finalize Task Run By Run Id behavior in src/tasks. */
+/** Applies a terminal status to tasks matching a run id. */
 export function finalizeTaskRunByRunId(params: DetachedTaskFinalizeParams) {
   return finalizeTaskRunByRunIdInRegistry(params);
 }
 
-/** Reused helper for fail Task Run By Run Id behavior in src/tasks. */
+/** Marks tasks matching a run id as failed/timed out/cancelled. */
 export function failTaskRunByRunId(params: {
   runId: string;
   runtime?: TaskRuntime;
@@ -205,7 +205,7 @@ export function failTaskRunByRunId(params: {
   });
 }
 
-/** Reused helper for mark Task Run Lost By Id behavior in src/tasks. */
+/** Marks a task as lost by id, usually from maintenance recovery failure. */
 export function markTaskRunLostById(params: {
   taskId: string;
   endedAt: number;
@@ -216,7 +216,7 @@ export function markTaskRunLostById(params: {
   return markTaskLostById(params);
 }
 
-/** Reused helper for set Detached Task Delivery Status By Run Id behavior in src/tasks. */
+/** Updates completion delivery status for tasks matching a run id. */
 export function setDetachedTaskDeliveryStatusByRunId(params: {
   runId: string;
   runtime?: TaskRuntime;
@@ -345,7 +345,7 @@ function retryBlockedFlowTask(params: RetryBlockedFlowParams): RetryBlockedFlowR
   };
 }
 
-/** Reused helper for retry Blocked Flow As Queued Task Run behavior in src/tasks. */
+/** Retries a blocked flow by creating a queued child task from the latest blocked task. */
 export function retryBlockedFlowAsQueuedTaskRun(
   params: Omit<RetryBlockedFlowParams, "status" | "startedAt" | "lastEventAt" | "progressSummary">,
 ): RetryBlockedFlowResult {
@@ -355,7 +355,7 @@ export function retryBlockedFlowAsQueuedTaskRun(
   });
 }
 
-/** Reused helper for retry Blocked Flow As Running Task Run behavior in src/tasks. */
+/** Retries a blocked flow by creating a running child task from the latest blocked task. */
 export function retryBlockedFlowAsRunningTaskRun(
   params: Omit<RetryBlockedFlowParams, "status">,
 ): RetryBlockedFlowResult {
@@ -478,7 +478,7 @@ function mapRunTaskInFlowCreateError(params: {
   throw params.error;
 }
 
-/** Reused helper for run Task In Flow behavior in src/tasks. */
+/** Creates a managed child task in a non-terminal task flow. */
 export function runTaskInFlow(params: RunTaskInFlowParams): RunTaskInFlowResult {
   const flow = getTaskFlowById(params.flowId);
   if (!flow) {
@@ -556,7 +556,7 @@ export function runTaskInFlow(params: RunTaskInFlowParams): RunTaskInFlowResult 
   };
 }
 
-/** Reused helper for run Task In Flow For Owner behavior in src/tasks. */
+/** Creates a managed child task in a flow after owner-key access checks. */
 export function runTaskInFlowForOwner(
   params: RunTaskInFlowParams & { callerOwnerKey: string },
 ): RunTaskInFlowResult {
@@ -591,7 +591,7 @@ export function runTaskInFlowForOwner(
   });
 }
 
-/** Reused helper for cancel Flow By Id behavior in src/tasks. */
+/** Requests cancellation for a flow and cancels active child tasks before finalizing the flow. */
 export async function cancelFlowById(params: {
   cfg: OpenClawConfig;
   flowId: string;
@@ -674,7 +674,7 @@ export async function cancelFlowById(params: {
   };
 }
 
-/** Reused helper for cancel Flow By Id For Owner behavior in src/tasks. */
+/** Cancels a flow after owner-key access checks. */
 export async function cancelFlowByIdForOwner(params: {
   cfg: OpenClawConfig;
   flowId: string;
@@ -697,7 +697,7 @@ export async function cancelFlowByIdForOwner(params: {
   });
 }
 
-/** Reused helper for cancel Detached Task Run By Id behavior in src/tasks. */
+/** Cancels a detached task through the registered runtime, falling back to registry cancellation. */
 export async function cancelDetachedTaskRunById(params: { cfg: OpenClawConfig; taskId: string }) {
   const task = getTaskById(params.taskId);
   if (!task) {

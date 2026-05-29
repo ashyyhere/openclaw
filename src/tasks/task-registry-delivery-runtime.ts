@@ -1,3 +1,3 @@
-// tasks task registry delivery runtime helpers and runtime behavior.
-/** Re-exported API for src/tasks, starting with send Message. */
+// Delivery runtime seam for task registry terminal notifications.
+/** Re-export outbound message sender for task completion delivery. */
 export { sendMessage } from "../infra/outbound/message.js";
