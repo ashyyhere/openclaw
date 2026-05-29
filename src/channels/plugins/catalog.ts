@@ -21,7 +21,7 @@ import { isRecord, resolveConfigDir, resolveUserPath } from "../../utils.js";
 import { buildManifestChannelMeta } from "./channel-meta.js";
 import type { ChannelMeta } from "./types.public.js";
 
-/** Shared type for Channel Ui Meta Entry in src/channels/plugins. */
+/** Channel metadata shape optimized for UI lists and selectors. */
 export type ChannelUiMetaEntry = {
   id: string;
   label: string;
@@ -29,7 +29,7 @@ export type ChannelUiMetaEntry = {
   systemImage?: string;
 };
 
-/** Shared type for Channel Ui Catalog in src/channels/plugins. */
+/** UI-ready channel catalog plus lookup maps keyed by channel id. */
 export type ChannelUiCatalog = {
   entries: ChannelUiMetaEntry[];
   order: string[];
@@ -39,11 +39,11 @@ export type ChannelUiCatalog = {
   byId: Record<string, ChannelUiMetaEntry>;
 };
 
-/** Shared type for Channel Plugin Catalog Install in src/channels/plugins. */
+/** Install metadata for a channel plugin from ClawHub or npm. */
 export type ChannelPluginCatalogInstall = PluginPackageInstall &
   ({ clawhubSpec: string } | { npmSpec: string });
 
-/** Shared type for Channel Plugin Catalog Entry in src/channels/plugins. */
+/** Resolved channel plugin catalog entry with display metadata and install source. */
 export type ChannelPluginCatalogEntry = {
   id: string;
   pluginId?: string;
@@ -392,7 +392,7 @@ function buildExternalCatalogEntry(
   });
 }
 
-/** Reused helper for build Channel Ui Catalog behavior in src/channels/plugins. */
+/** Build UI catalog lookup tables from resolved channel plugin metadata. */
 export function buildChannelUiCatalog(
   plugins: Array<{ id: string; meta: ChannelMeta }>,
 ): ChannelUiCatalog {
@@ -421,7 +421,7 @@ export function buildChannelUiCatalog(
   return { entries, order, labels, detailLabels, systemImages, byId };
 }
 
-/** Reused helper for list Channel Plugin Catalog Entries behavior in src/channels/plugins. */
+/** List channel plugin catalog entries with discovery/official/external priority rules. */
 export function listChannelPluginCatalogEntries(
   options: CatalogOptions = {},
 ): ChannelPluginCatalogEntry[] {
@@ -489,7 +489,7 @@ export function listChannelPluginCatalogEntries(
     });
 }
 
-/** Reused helper for get Channel Plugin Catalog Entry behavior in src/channels/plugins. */
+/** Find a channel plugin catalog entry by trimmed channel id. */
 export function getChannelPluginCatalogEntry(
   id: string,
   options: CatalogOptions = {},
