@@ -1,4 +1,4 @@
-// packages/gateway-protocol/src/schema cron helpers and runtime behavior.
+// TypeBox schemas for cron job scheduling, delivery, state, and run history RPCs.
 import { Type, type TSchema } from "typebox";
 import { NonEmptyString } from "./primitives.js";
 
@@ -158,7 +158,7 @@ const CronRunLogJobIdSchema = Type.String({
   pattern: "^[^/\\\\]+$",
 });
 
-/** Public constant for Cron Schedule Schema behavior in packages/gateway-protocol. */
+/** Schedule schema for one-shot, interval, and cron-expression jobs. */
 export const CronScheduleSchema = Type.Union([
   Type.Object(
     {
@@ -186,7 +186,7 @@ export const CronScheduleSchema = Type.Union([
   ),
 ]);
 
-/** Public constant for Cron Payload Schema behavior in packages/gateway-protocol. */
+/** Payload schema for cron system events and agent turns. */
 export const CronPayloadSchema = Type.Union([
   Type.Object(
     {
@@ -201,7 +201,7 @@ export const CronPayloadSchema = Type.Union([
   }),
 ]);
 
-/** Public constant for Cron Payload Patch Schema behavior in packages/gateway-protocol. */
+/** Patch schema for updating cron payloads without requiring every field. */
 export const CronPayloadPatchSchema = Type.Union([
   Type.Object(
     {
@@ -216,7 +216,7 @@ export const CronPayloadPatchSchema = Type.Union([
   }),
 ]);
 
-/** Public constant for Cron Failure Alert Schema behavior in packages/gateway-protocol. */
+/** Failure alert policy after repeated cron errors or skipped runs. */
 export const CronFailureAlertSchema = Type.Object(
   {
     after: Type.Optional(Type.Integer({ minimum: 1 })),
@@ -230,7 +230,7 @@ export const CronFailureAlertSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Cron Failure Destination Schema behavior in packages/gateway-protocol. */
+/** Delivery destination used when cron failure notifications are routed elsewhere. */
 export const CronFailureDestinationSchema = Type.Object(
   {
     channel: Type.Optional(Type.Union([Type.Literal("last"), NonEmptyString])),
@@ -276,14 +276,14 @@ const CronDeliveryWebhookSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Cron Delivery Schema behavior in packages/gateway-protocol. */
+/** Delivery schema for disabled, channel announcement, or webhook output. */
 export const CronDeliverySchema = Type.Union([
   CronDeliveryNoopSchema,
   CronDeliveryAnnounceSchema,
   CronDeliveryWebhookSchema,
 ]);
 
-/** Public constant for Cron Delivery Patch Schema behavior in packages/gateway-protocol. */
+/** Patch schema for cron delivery settings. */
 export const CronDeliveryPatchSchema = Type.Object(
   {
     mode: Type.Optional(
@@ -304,7 +304,7 @@ const CronFailureNotificationDeliverySchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Cron Job State Schema behavior in packages/gateway-protocol. */
+/** Runtime state persisted for a cron job between scheduler runs. */
 export const CronJobStateSchema = Type.Object(
   {
     nextRunAtMs: Type.Optional(Type.Integer({ minimum: 0 })),
@@ -353,7 +353,7 @@ const CronJobStatePatchSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Cron Job Schema behavior in packages/gateway-protocol. */
+/** Full cron job record including schedule, payload, delivery, and state. */
 export const CronJobSchema = Type.Object(
   {
     id: NonEmptyString,
@@ -376,7 +376,7 @@ export const CronJobSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Cron List Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for filtering, sorting, and paginating cron jobs. */
 export const CronListParamsSchema = Type.Object(
   {
     includeDisabled: Type.Optional(Type.Boolean()),
@@ -393,13 +393,13 @@ export const CronListParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Cron Status Params Schema behavior in packages/gateway-protocol. */
+/** Empty params schema for cron scheduler status. */
 export const CronStatusParamsSchema = Type.Object({}, { additionalProperties: false });
 
-/** Public constant for Cron Get Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for reading one cron job by id or jobId. */
 export const CronGetParamsSchema = cronIdOrJobIdParams({});
 
-/** Public constant for Cron Add Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for creating a cron job. */
 export const CronAddParamsSchema = Type.Object(
   {
     name: NonEmptyString,
@@ -414,7 +414,7 @@ export const CronAddParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Cron Job Patch Schema behavior in packages/gateway-protocol. */
+/** Patch schema for mutable cron job fields and scheduler state. */
 export const CronJobPatchSchema = Type.Object(
   {
     name: Type.Optional(NonEmptyString),
@@ -430,20 +430,20 @@ export const CronJobPatchSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Cron Update Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for updating one cron job by id or jobId. */
 export const CronUpdateParamsSchema = cronIdOrJobIdParams({
   patch: CronJobPatchSchema,
 });
 
-/** Public constant for Cron Remove Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for removing one cron job by id or jobId. */
 export const CronRemoveParamsSchema = cronIdOrJobIdParams({});
 
-/** Public constant for Cron Run Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for running one cron job immediately or only if due. */
 export const CronRunParamsSchema = cronIdOrJobIdParams({
   mode: Type.Optional(Type.Union([Type.Literal("due"), Type.Literal("force")])),
 });
 
-/** Public constant for Cron Runs Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for filtering and paginating cron run history. */
 export const CronRunsParamsSchema = Type.Object(
   {
     scope: Type.Optional(Type.Union([Type.Literal("job"), Type.Literal("all")])),
@@ -464,7 +464,7 @@ export const CronRunsParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Cron Run Log Entry Schema behavior in packages/gateway-protocol. */
+/** Run-history log entry for a completed cron job attempt. */
 export const CronRunLogEntrySchema = Type.Object(
   {
     ts: Type.Integer({ minimum: 0 }),
