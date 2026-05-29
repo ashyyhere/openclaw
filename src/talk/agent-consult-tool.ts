@@ -1,34 +1,34 @@
-// talk agent consult tool helpers and runtime behavior.
+// Realtime voice consult tool schema, policy, and prompt builders.
 import {
   normalizeOptionalLowercaseString,
   normalizeOptionalString,
 } from "../shared/string-coerce.js";
 import type { RealtimeVoiceTool } from "./provider-types.js";
 
-/** Reused constant for REALTIME VOICE AGENT CONSULT TOOL NAME behavior in src/talk. */
+/** Stable function name exposed to realtime voice providers for agent delegation. */
 export const REALTIME_VOICE_AGENT_CONSULT_TOOL_NAME = "openclaw_agent_consult";
-/** Reused constant for REALTIME VOICE AGENT CONSULT TOOL POLICIES behavior in src/talk. */
+/** Supported tool-exposure policies for voice agent consultation. */
 export const REALTIME_VOICE_AGENT_CONSULT_TOOL_POLICIES = [
   "safe-read-only",
   "owner",
   "none",
 ] as const;
-/** Shared type for Realtime Voice Agent Consult Tool Policy in src/talk. */
+/** Policy controlling whether the voice model can consult the configured agent. */
 export type RealtimeVoiceAgentConsultToolPolicy =
   (typeof REALTIME_VOICE_AGENT_CONSULT_TOOL_POLICIES)[number];
-/** Shared type for Realtime Voice Agent Consult Args in src/talk. */
+/** Provider tool arguments accepted by openclaw_agent_consult. */
 export type RealtimeVoiceAgentConsultArgs = {
   question: string;
   context?: string;
   responseStyle?: string;
 };
-/** Shared type for Realtime Voice Agent Consult Transcript Entry in src/talk. */
+/** Transcript line passed into agent consult prompts for voice context. */
 export type RealtimeVoiceAgentConsultTranscriptEntry = {
   role: "user" | "assistant";
   text: string;
 };
 
-/** Reused constant for REALTIME VOICE AGENT CONSULT TOOL behavior in src/talk. */
+/** Realtime provider tool definition for delegating substantive work to OpenClaw. */
 export const REALTIME_VOICE_AGENT_CONSULT_TOOL: RealtimeVoiceTool = {
   type: "function",
   name: REALTIME_VOICE_AGENT_CONSULT_TOOL_NAME,
@@ -54,7 +54,7 @@ export const REALTIME_VOICE_AGENT_CONSULT_TOOL: RealtimeVoiceTool = {
   },
 };
 
-/** Reused helper for build Realtime Voice Agent Consult Working Response behavior in src/talk. */
+/** Builds the interim provider response while the delegated agent result is pending. */
 export function buildRealtimeVoiceAgentConsultWorkingResponse(
   audienceLabel = "person",
 ): Record<string, unknown> {
@@ -74,7 +74,7 @@ const SAFE_READ_ONLY_TOOLS = [
   "memory_get",
 ] as const;
 
-/** Reused helper for is Realtime Voice Agent Consult Tool Policy behavior in src/talk. */
+/** Type guard for persisted/configured consult tool policy values. */
 export function isRealtimeVoiceAgentConsultToolPolicy(
   value: unknown,
 ): value is RealtimeVoiceAgentConsultToolPolicy {
@@ -86,7 +86,7 @@ export function isRealtimeVoiceAgentConsultToolPolicy(
   );
 }
 
-/** Reused helper for resolve Realtime Voice Agent Consult Tool Policy behavior in src/talk. */
+/** Normalizes a configured consult policy with a caller-provided fallback. */
 export function resolveRealtimeVoiceAgentConsultToolPolicy(
   value: unknown,
   fallback: RealtimeVoiceAgentConsultToolPolicy,
@@ -95,7 +95,7 @@ export function resolveRealtimeVoiceAgentConsultToolPolicy(
   return isRealtimeVoiceAgentConsultToolPolicy(normalized) ? normalized : fallback;
 }
 
-/** Reused helper for resolve Realtime Voice Agent Consult Tools behavior in src/talk. */
+/** Builds the realtime tool list, preserving custom tools after the consult tool. */
 export function resolveRealtimeVoiceAgentConsultTools(
   policy: RealtimeVoiceAgentConsultToolPolicy,
   customTools: RealtimeVoiceTool[] = [],
@@ -112,7 +112,7 @@ export function resolveRealtimeVoiceAgentConsultTools(
   return [...tools.values()];
 }
 
-/** Reused helper for resolve Realtime Voice Agent Consult Tools Allow behavior in src/talk. */
+/** Maps consult policy to the provider tool allow-list contract. */
 export function resolveRealtimeVoiceAgentConsultToolsAllow(
   policy: RealtimeVoiceAgentConsultToolPolicy,
 ): string[] | undefined {
@@ -125,7 +125,7 @@ export function resolveRealtimeVoiceAgentConsultToolsAllow(
   return [];
 }
 
-/** Reused helper for build Realtime Voice Agent Consult Policy Instructions behavior in src/talk. */
+/** Generates voice-model instructions that decide when consultation is required. */
 export function buildRealtimeVoiceAgentConsultPolicyInstructions(config: {
   toolPolicy: RealtimeVoiceAgentConsultToolPolicy;
   consultPolicy?: "auto" | "substantive" | "always";
@@ -149,7 +149,7 @@ export function buildRealtimeVoiceAgentConsultPolicyInstructions(config: {
   ].join("\n");
 }
 
-/** Reused helper for parse Realtime Voice Agent Consult Args behavior in src/talk. */
+/** Parses consult tool args, accepting legacy question aliases from providers. */
 export function parseRealtimeVoiceAgentConsultArgs(args: unknown): RealtimeVoiceAgentConsultArgs {
   const question =
     readConsultStringArg(args, "question") ??
@@ -166,7 +166,7 @@ export function parseRealtimeVoiceAgentConsultArgs(args: unknown): RealtimeVoice
   };
 }
 
-/** Reused helper for build Realtime Voice Agent Consult Chat Message behavior in src/talk. */
+/** Converts consult args into the chat message sent to the delegated agent. */
 export function buildRealtimeVoiceAgentConsultChatMessage(args: unknown): string {
   const parsed = parseRealtimeVoiceAgentConsultArgs(args);
   return [
@@ -178,7 +178,7 @@ export function buildRealtimeVoiceAgentConsultChatMessage(args: unknown): string
     .join("\n\n");
 }
 
-/** Reused helper for build Realtime Voice Agent Consult Prompt behavior in src/talk. */
+/** Builds the full delegated-agent prompt from voice context and recent transcript. */
 export function buildRealtimeVoiceAgentConsultPrompt(params: {
   args: unknown;
   transcript: RealtimeVoiceAgentConsultTranscriptEntry[];
@@ -211,7 +211,7 @@ export function buildRealtimeVoiceAgentConsultPrompt(params: {
     .join("\n\n");
 }
 
-/** Reused helper for collect Realtime Voice Agent Consult Visible Text behavior in src/talk. */
+/** Collects user-visible delegated-agent text while dropping errors and reasoning chunks. */
 export function collectRealtimeVoiceAgentConsultVisibleText(
   payloads: Array<{ text?: unknown; isError?: boolean; isReasoning?: boolean }>,
 ): string | null {
