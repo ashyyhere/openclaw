@@ -1,4 +1,6 @@
-// ui/src/ui/chat build chat items helpers and runtime behavior.
+// Chat item builder. It normalizes message history, hides heartbeat/tool noise,
+// lifts canvas previews into assistant messages, applies search filtering, and
+// groups visible messages for rendering.
 import type { ChatItem, MessageGroup, NormalizedMessage, ToolCard } from "../types/chat-types.ts";
 import {
   isAssistantHeartbeatAckForDisplay,
@@ -11,7 +13,7 @@ import { normalizeRoleForGrouping } from "./role-normalizer.ts";
 import { messageMatchesSearchQuery } from "./search-match.ts";
 import { extractToolCards, extractToolPreview } from "./tool-cards.ts";
 
-/** Shared type for Build Chat Items Props in ui/src/ui/chat. */
+/** Inputs used to build renderable chat items from history and live stream state. */
 export type BuildChatItemsProps = {
   sessionKey: string;
   messages: unknown[];
@@ -459,7 +461,7 @@ function resolveHistoryStartIndex(messages: unknown[], showToolCalls: boolean): 
   return startIndex;
 }
 
-/** Reused helper for build Chat Items behavior in ui/src/ui/chat. */
+/** Build grouped chat render items from history, tool messages, stream, and search state. */
 export function buildChatItems(props: BuildChatItemsProps): Array<ChatItem | MessageGroup> {
   let items: ChatItem[] = [];
   const history = (Array.isArray(props.messages) ? props.messages : []).filter(

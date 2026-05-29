@@ -1,5 +1,5 @@
-// ui/src/ui/chat realtime talk audio helpers and runtime behavior.
-/** Reused helper for bytes To Base64 behavior in ui/src/ui/chat. */
+// Realtime-talk audio encoding helpers for base64 and PCM16/float conversion.
+/** Encode bytes as base64 without overflowing the argument stack. */
 export function bytesToBase64(bytes: Uint8Array): string {
   let binary = "";
   const chunkSize = 0x8000;
@@ -10,7 +10,7 @@ export function bytesToBase64(bytes: Uint8Array): string {
   return btoa(binary);
 }
 
-/** Reused helper for base64 To Bytes behavior in ui/src/ui/chat. */
+/** Decode base64 audio payloads into bytes. */
 export function base64ToBytes(value: string): Uint8Array {
   const binary = atob(value);
   const bytes = new Uint8Array(binary.length);
@@ -20,7 +20,7 @@ export function base64ToBytes(value: string): Uint8Array {
   return bytes;
 }
 
-/** Reused helper for float To Pcm16 behavior in ui/src/ui/chat. */
+/** Convert normalized float audio samples into little-endian PCM16 bytes. */
 export function floatToPcm16(samples: Float32Array): Uint8Array {
   const bytes = new Uint8Array(samples.length * 2);
   const view = new DataView(bytes.buffer);
@@ -31,7 +31,7 @@ export function floatToPcm16(samples: Float32Array): Uint8Array {
   return bytes;
 }
 
-/** Reused helper for pcm16 To Float behavior in ui/src/ui/chat. */
+/** Convert little-endian PCM16 bytes into normalized float audio samples. */
 export function pcm16ToFloat(bytes: Uint8Array): Float32Array {
   const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
   const samples = new Float32Array(Math.floor(bytes.byteLength / 2));
