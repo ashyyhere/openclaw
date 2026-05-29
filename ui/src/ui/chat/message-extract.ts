@@ -1,4 +1,6 @@
-// ui/src/ui/chat message extract helpers and runtime behavior.
+// Chat message text extraction. It strips internal/runtime metadata, preserves
+// assistant-visible text, extracts thinking blocks separately, and caches results
+// for repeated render passes.
 import { stripInternalRuntimeContext } from "../../../../src/agents/internal-runtime-context.js";
 import { stripInboundMetadata } from "../../../../src/auto-reply/reply/strip-inbound-meta.js";
 import { stripEnvelope } from "../../../../src/shared/chat-envelope.js";
@@ -20,7 +22,7 @@ function processMessageText(text: string, role: string): string {
     : stripEnvelope(withoutInternalContext);
 }
 
-/** Reused helper for extract Text behavior in ui/src/ui/chat. */
+/** Extract displayable message text after role-specific cleanup. */
 export function extractText(message: unknown): string | null {
   const m = message as Record<string, unknown>;
   const role = typeof m.role === "string" ? m.role : "";
@@ -32,7 +34,7 @@ export function extractText(message: unknown): string | null {
   return processMessageText(raw, role);
 }
 
-/** Reused helper for extract Text Cached behavior in ui/src/ui/chat. */
+/** Extract displayable message text with per-object caching. */
 export function extractTextCached(message: unknown): string | null {
   if (!message || typeof message !== "object") {
     return extractText(message);
@@ -46,7 +48,7 @@ export function extractTextCached(message: unknown): string | null {
   return value;
 }
 
-/** Reused helper for extract Thinking behavior in ui/src/ui/chat. */
+/** Extract reasoning/thinking text from structured blocks or legacy tags. */
 export function extractThinking(message: unknown): string | null {
   const m = message as Record<string, unknown>;
   const content = m.content;
@@ -78,7 +80,7 @@ export function extractThinking(message: unknown): string | null {
   return extracted.length > 0 ? extracted.join("\n") : null;
 }
 
-/** Reused helper for extract Thinking Cached behavior in ui/src/ui/chat. */
+/** Extract thinking text with per-object caching. */
 export function extractThinkingCached(message: unknown): string | null {
   if (!message || typeof message !== "object") {
     return extractThinking(message);
@@ -92,7 +94,7 @@ export function extractThinkingCached(message: unknown): string | null {
   return value;
 }
 
-/** Reused helper for extract Raw Text behavior in ui/src/ui/chat. */
+/** Extract raw text from known message content shapes without cleanup. */
 export function extractRawText(message: unknown): string | null {
   const m = message as Record<string, unknown>;
   const content = m.content;
@@ -119,7 +121,7 @@ export function extractRawText(message: unknown): string | null {
   return null;
 }
 
-/** Reused helper for format Reasoning Markdown behavior in ui/src/ui/chat. */
+/** Format extracted reasoning as italicized markdown. */
 export function formatReasoningMarkdown(text: string): string {
   const trimmed = text.trim();
   if (!trimmed) {

@@ -1,9 +1,9 @@
-// ui/src/ui/chat run controls helpers and runtime behavior.
+// Chat composer run controls for new-session, export, send/queue, and stop.
 import { html, nothing } from "lit";
 import { t } from "../../i18n/index.ts";
 import { icons } from "../icons.ts";
 
-/** Shared type for Chat Run Controls Props in ui/src/ui/chat. */
+/** State and callbacks needed to render chat run controls. */
 export type ChatRunControlsProps = {
   canAbort: boolean;
   connected: boolean;
@@ -18,7 +18,7 @@ export type ChatRunControlsProps = {
   onStoreDraft: (draft: string) => void;
 };
 
-/** Reused helper for render Chat Run Controls behavior in ui/src/ui/chat. */
+/** Render the right-side chat composer controls. */
 export function renderChatRunControls(props: ChatRunControlsProps) {
   return html`
     <div class="agent-chat__toolbar-right">
