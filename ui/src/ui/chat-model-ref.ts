@@ -1,10 +1,12 @@
-// ui/src/ui chat model ref helpers and runtime behavior.
+// Chat model reference helpers. They normalize raw and provider-qualified model
+// refs, preserve ambiguous server values, and build display labels/options from
+// the model catalog.
 import type { ChatModelOverride } from "./chat-model-ref.types.ts";
 import type { ModelCatalogEntry } from "./types.ts";
-/** Re-exported API for ui/src/ui, starting with Chat Model Override. */
+/** Stored chat model override shape shared with controller state. */
 export type { ChatModelOverride } from "./chat-model-ref.types.ts";
 
-/** Reused helper for build Qualified Chat Model Value behavior in ui/src/ui. */
+/** Prefix a model id with its provider unless it is already qualified by that provider. */
 export function buildQualifiedChatModelValue(model: string, provider?: string | null): string {
   const trimmedModel = model.trim();
   if (!trimmedModel) {
@@ -20,7 +22,7 @@ export function buildQualifiedChatModelValue(model: string, provider?: string | 
     : `${trimmedProvider}/${trimmedModel}`;
 }
 
-/** Reused helper for create Chat Model Override behavior in ui/src/ui. */
+/** Convert a select value into the raw/qualified override shape. */
 export function createChatModelOverride(value: string): ChatModelOverride | null {
   const trimmed = value.trim();
   if (!trimmed) {
@@ -32,7 +34,7 @@ export function createChatModelOverride(value: string): ChatModelOverride | null
   return { kind: "raw", value: trimmed };
 }
 
-/** Reused helper for normalize Chat Model Override Value behavior in ui/src/ui. */
+/** Resolve an override to a stable select value using catalog disambiguation. */
 export function normalizeChatModelOverrideValue(
   override: ChatModelOverride | null | undefined,
   catalog: ModelCatalogEntry[],
@@ -51,7 +53,7 @@ export function normalizeChatModelOverrideValue(
   return resolveUniqueCatalogValueById(trimmed, catalog) || trimmed;
 }
 
-/** Reused helper for resolve Server Chat Model Value behavior in ui/src/ui. */
+/** Resolve a server model/provider pair into the qualified value used by the UI. */
 export function resolveServerChatModelValue(
   model?: string | null,
   provider?: string | null,
@@ -109,7 +111,7 @@ function resolveUniqueCatalogValueById(model: string, catalog: ModelCatalogEntry
   return matchedValue;
 }
 
-/** Reused helper for resolve Preferred Server Chat Model Value behavior in ui/src/ui. */
+/** Prefer catalog-backed model values while preserving ambiguous slash-containing refs. */
 export function resolvePreferredServerChatModelValue(
   model: string | null | undefined,
   provider: string | null | undefined,
@@ -159,7 +161,7 @@ export function resolvePreferredServerChatModelValue(
   return resolveServerChatModelValue(trimmedModel, trimmedProvider);
 }
 
-/** Reused helper for format Chat Model Display behavior in ui/src/ui. */
+/** Format a qualified model ref as `model · provider` for compact display. */
 export function formatChatModelDisplay(value: string): string {
   const trimmed = value.trim();
   if (!trimmed) {
@@ -189,10 +191,10 @@ function createNameProviderKey(name: string, provider?: string | null): string {
   return `${name.toLowerCase()}\u0000${provider?.trim().toLowerCase() ?? ""}`;
 }
 
-/** Shared type for Chat Model Display Lookup in ui/src/ui. */
+/** Lookup from normalized qualified model ref to display label. */
 export type ChatModelDisplayLookup = ReadonlyMap<string, string>;
 
-/** Reused helper for build Catalog Display Lookup behavior in ui/src/ui. */
+/** Build catalog display labels that include provider/id only when needed. */
 export function buildCatalogDisplayLookup(catalog: ModelCatalogEntry[]): Map<string, string> {
   const nameToValues = new Map<string, Set<string>>();
   const nameProviderToValues = new Map<string, Set<string>>();
@@ -243,7 +245,7 @@ export function buildCatalogDisplayLookup(catalog: ModelCatalogEntry[]): Map<str
   return displayLookup;
 }
 
-/** Reused helper for format Catalog Entry Display behavior in ui/src/ui. */
+/** Format one catalog entry with a precomputed display lookup. */
 export function formatCatalogEntryDisplay(
   entry: ModelCatalogEntry,
   displayLookup: ChatModelDisplayLookup,
@@ -251,7 +253,7 @@ export function formatCatalogEntryDisplay(
   return displayLookup.get(createQualifiedCatalogKey(entry)) ?? formatRawCatalogLabel(entry);
 }
 
-/** Reused helper for format Catalog Chat Model Display From Lookup behavior in ui/src/ui. */
+/** Format a model value using a precomputed catalog lookup. */
 export function formatCatalogChatModelDisplayFromLookup(
   value: string,
   displayLookup: ChatModelDisplayLookup,
@@ -264,12 +266,12 @@ export function formatCatalogChatModelDisplayFromLookup(
   return displayLookup.get(trimmed.toLowerCase()) ?? formatChatModelDisplay(trimmed);
 }
 
-/** Reused helper for format Catalog Chat Model Display behavior in ui/src/ui. */
+/** Format a model value using catalog display disambiguation. */
 export function formatCatalogChatModelDisplay(value: string, catalog: ModelCatalogEntry[]): string {
   return formatCatalogChatModelDisplayFromLookup(value, buildCatalogDisplayLookup(catalog));
 }
 
-/** Reused helper for build Chat Model Option behavior in ui/src/ui. */
+/** Build a select option for one catalog entry. */
 export function buildChatModelOption(
   entry: ModelCatalogEntry,
   catalog: ModelCatalogEntry[] = [entry],
@@ -277,7 +279,7 @@ export function buildChatModelOption(
   return buildChatModelOptionFromLookup(entry, buildCatalogDisplayLookup(catalog));
 }
 
-/** Reused helper for build Chat Model Option From Lookup behavior in ui/src/ui. */
+/** Build a select option using a precomputed catalog display lookup. */
 export function buildChatModelOptionFromLookup(
   entry: ModelCatalogEntry,
   displayLookup: ChatModelDisplayLookup,

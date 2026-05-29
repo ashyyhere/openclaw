@@ -1,5 +1,5 @@
-// ui/src/ui app events helpers and runtime behavior.
-/** Shared type for Event Log Entry in ui/src/ui. */
+// Event-log entry shape shared by app state and event-log rendering.
+/** One gateway/app event captured for the Control UI event log. */
 export type EventLogEntry = {
   ts: number;
   event: string;

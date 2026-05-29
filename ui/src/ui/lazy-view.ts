@@ -1,4 +1,5 @@
-// ui/src/ui lazy view helpers and runtime behavior.
+// Lazy view loader for code-split Control UI panes. It keeps module, pending,
+// and error state together so renderers can show loading/retry shells.
 import { html } from "lit";
 import { t } from "../i18n/index.ts";
 
@@ -9,7 +10,7 @@ type LazyState<T> = {
   hasError: boolean;
 };
 
-/** Shared type for Lazy View in ui/src/ui. */
+/** Mutable handle for a lazily loaded view module. */
 export type LazyView<T> = {
   read: () => T | null;
   retry: () => void;
@@ -18,7 +19,7 @@ export type LazyView<T> = {
   pending: () => boolean;
 };
 
-/** Reused helper for create Lazy View behavior in ui/src/ui. */
+/** Create a lazy module handle and notify when loading state changes. */
 export function createLazyView<T>(loader: () => Promise<T>, onChange?: () => void): LazyView<T> {
   const state: LazyState<T> = { mod: null, promise: null, error: undefined, hasError: false };
 
@@ -77,7 +78,7 @@ function formatLazyViewError(error: unknown): string {
   return t("lazyView.unknownError");
 }
 
-/** Reused helper for render Lazy View behavior in ui/src/ui. */
+/** Render a lazy view module or its loading/error fallback. */
 export function renderLazyView<M>(view: LazyView<M>, render: (mod: M) => unknown) {
   const mod = view.read();
   if (mod !== null) {

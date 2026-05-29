@@ -1,15 +1,16 @@
-// ui/src/ui activity model helpers and runtime behavior.
+// Activity model for live tool-event summaries. It redacts sensitive output,
+// truncates previews, and keeps a bounded list of recent tool activity rows.
 import { formatUnknownText, truncateText } from "./format.ts";
 
-/** Reused constant for ACTIVITY ENTRY LIMIT behavior in ui/src/ui. */
+/** Maximum number of recent tool activity rows retained in app state. */
 export const ACTIVITY_ENTRY_LIMIT = 100;
-/** Reused constant for ACTIVITY OUTPUT PREVIEW LIMIT behavior in ui/src/ui. */
+/** Maximum characters kept for a redacted tool output preview. */
 export const ACTIVITY_OUTPUT_PREVIEW_LIMIT = 2_000;
 
-/** Shared type for Activity Status in ui/src/ui. */
+/** Lifecycle status for a visible tool activity entry. */
 export type ActivityStatus = "running" | "done" | "error";
 
-/** Shared type for Activity Entry in ui/src/ui. */
+/** Redacted and summarized tool activity row for the UI. */
 export type ActivityEntry = {
   id: string;
   toolCallId: string;
@@ -178,7 +179,7 @@ function buildSummary(toolName: string, status: ActivityStatus, hiddenArgCount: 
   return `${toolName} ${statusLabel(status)}; ${argText}`;
 }
 
-/** Reused helper for update Activity From Tool Event behavior in ui/src/ui. */
+/** Merge one streamed tool event into the bounded activity list. */
 export function updateActivityFromToolEvent(host: ActivityHost, payload: ToolEventPayload) {
   if (!Array.isArray(host.activityEntries)) {
     return;
@@ -221,7 +222,7 @@ export function updateActivityFromToolEvent(host: ActivityHost, payload: ToolEve
   host.activityEntries = next.slice(-ACTIVITY_ENTRY_LIMIT);
 }
 
-/** Reused helper for reset Activity Entries behavior in ui/src/ui. */
+/** Clear all tracked tool activity rows from the host state. */
 export function resetActivityEntries(host: ActivityHost) {
   if (Array.isArray(host.activityEntries)) {
     host.activityEntries = [];
