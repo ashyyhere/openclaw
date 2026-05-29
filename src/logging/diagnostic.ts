@@ -1,4 +1,5 @@
-// logging diagnostic helpers and runtime behavior.
+// Diagnostic event facade: records webhook/message/session/run health events,
+// heartbeat sampling, stuck-session checks, and test reset hooks.
 import { monitorEventLoopDelay, performance } from "node:perf_hooks";
 import { getRuntimeConfig } from "../config/config.js";
 import { resolveAllAgentSessionStoreTargetsSync } from "../config/sessions/targets.js";
@@ -64,7 +65,7 @@ import {
   startDiagnosticStabilityRecorder,
   stopDiagnosticStabilityRecorder,
 } from "./diagnostic-stability.js";
-/** Re-exported API for src/logging, starting with diagnostic Logger. */
+/** Diagnostic subsystem logger and lane queue event helpers. */
 export { diagnosticLogger, logLaneDequeue, logLaneEnqueue } from "./diagnostic-runtime.js";
 
 const webhookStats = {
@@ -444,7 +445,7 @@ function formatDiagnosticWorkLabels(work: DiagnosticWorkSnapshot): string {
   return parts.join(" ");
 }
 
-/** Reused helper for resolve Stuck Session Warn Ms behavior in src/logging. */
+/** Resolves the configured stale-session warning threshold with safe bounds. */
 export function resolveStuckSessionWarnMs(config?: OpenClawConfig): number {
   const raw = config?.diagnostics?.stuckSessionWarnMs;
   if (typeof raw !== "number" || !Number.isFinite(raw)) {
@@ -457,7 +458,7 @@ export function resolveStuckSessionWarnMs(config?: OpenClawConfig): number {
   return rounded;
 }
 
-/** Reused helper for resolve Stuck Session Abort Ms behavior in src/logging. */
+/** Resolves the no-progress abort threshold, never below the warning threshold. */
 export function resolveStuckSessionAbortMs(
   config: OpenClawConfig | undefined,
   stuckSessionWarnMs: number,
@@ -566,7 +567,7 @@ function isIdleQueuedRecoverableSessionStall(params: {
   );
 }
 
-/** Reused helper for log Webhook Received behavior in src/logging. */
+/** Records that a channel webhook/update was received. */
 export function logWebhookReceived(params: {
   channel: string;
   updateType?: string;
@@ -593,7 +594,7 @@ export function logWebhookReceived(params: {
   markActivity();
 }
 
-/** Reused helper for log Webhook Processed behavior in src/logging. */
+/** Records successful channel webhook/update processing latency. */
 export function logWebhookProcessed(params: {
   channel: string;
   updateType?: string;
@@ -623,7 +624,7 @@ export function logWebhookProcessed(params: {
   markActivity();
 }
 
-/** Reused helper for log Webhook Error behavior in src/logging. */
+/** Records a channel webhook/update processing failure. */
 export function logWebhookError(params: {
   channel: string;
   updateType?: string;
@@ -649,7 +650,7 @@ export function logWebhookError(params: {
   markActivity();
 }
 
-/** Reused helper for log Message Queued behavior in src/logging. */
+/** Increments diagnostic session queue depth for an inbound message. */
 export function logMessageQueued(params: {
   sessionId?: string;
   sessionKey?: string;
@@ -683,7 +684,7 @@ export function logMessageQueued(params: {
   markActivity();
 }
 
-/** Reused helper for log Message Received behavior in src/logging. */
+/** Records a received message before dispatch begins. */
 export function logMessageReceived(params: {
   sessionId?: string;
   sessionKey?: string;
@@ -716,7 +717,7 @@ export function logMessageReceived(params: {
   markActivity();
 }
 
-/** Reused helper for log Message Dispatch Started behavior in src/logging. */
+/** Records that a queued message entered dispatch. */
 export function logMessageDispatchStarted(params: {
   sessionId?: string;
   sessionKey?: string;
@@ -743,7 +744,7 @@ export function logMessageDispatchStarted(params: {
   markActivity();
 }
 
-/** Reused helper for log Message Dispatch Completed behavior in src/logging. */
+/** Records dispatch completion, skip, or error with latency and reason metadata. */
 export function logMessageDispatchCompleted(params: {
   sessionId?: string;
   sessionKey?: string;
@@ -785,7 +786,7 @@ export function logMessageDispatchCompleted(params: {
   markActivity();
 }
 
-/** Reused helper for log Message Processed behavior in src/logging. */
+/** Records final message processing outcome for diagnostics and stability snapshots. */
 export function logMessageProcessed(params: {
   channel: string;
   messageId?: number | string;
@@ -832,7 +833,7 @@ export function logMessageProcessed(params: {
   markActivity();
 }
 
-/** Reused helper for log Session Turn Created behavior in src/logging. */
+/** Records that an agent turn was created for a session. */
 export function logSessionTurnCreated(params: {
   runId: string;
   sessionId?: string;
@@ -865,7 +866,7 @@ export function logSessionTurnCreated(params: {
   markActivity();
 }
 
-/** Reused helper for log Session State Change behavior in src/logging. */
+/** Updates diagnostic session state and emits the state transition event. */
 export function logSessionStateChange(
   params: SessionRef & {
     state: SessionStateValue;
@@ -911,7 +912,7 @@ export function logSessionStateChange(
   markActivity();
 }
 
-/** Reused helper for update Diagnostic Session File behavior in src/logging. */
+/** Updates the session JSONL file path tracked for stuck-session diagnostics. */
 export function updateDiagnosticSessionFile(params: SessionRef) {
   if (!areDiagnosticsEnabledForProcess()) {
     return;
@@ -921,7 +922,7 @@ export function updateDiagnosticSessionFile(params: SessionRef) {
   markActivity();
 }
 
-/** Reused helper for mark Diagnostic Session Progress behavior in src/logging. */
+/** Marks a diagnostic session as recently active without changing state. */
 export function markDiagnosticSessionProgress(params: SessionRef) {
   if (!areDiagnosticsEnabledForProcess()) {
     return;
@@ -985,7 +986,7 @@ function formatSessionActivityLogFields(activity: DiagnosticSessionActivitySnaps
   return fields.join(" ");
 }
 
-/** Reused helper for log Session Attention behavior in src/logging. */
+/** Classifies and emits long-running, stalled, or stuck session diagnostics. */
 export function logSessionAttention(
   params: SessionRef & {
     state: SessionStateValue;
@@ -1095,7 +1096,7 @@ export function logSessionAttention(
   return classification;
 }
 
-/** Reused helper for log Run Attempt behavior in src/logging. */
+/** Records a model/run retry attempt for a session. */
 export function logRunAttempt(params: SessionRef & { runId: string; attempt: number }) {
   if (!areDiagnosticsEnabledForProcess()) {
     return;
@@ -1115,7 +1116,7 @@ export function logRunAttempt(params: SessionRef & { runId: string; attempt: num
   markActivity();
 }
 
-/** Reused helper for log Tool Loop Action behavior in src/logging. */
+/** Records a detected tool-loop warning or block action. */
 export function logToolLoopAction(
   params: SessionRef & {
     toolName: string;
@@ -1160,7 +1161,7 @@ export function logToolLoopAction(
   markActivity();
 }
 
-/** Reused helper for log Active Runs behavior in src/logging. */
+/** Logs the current active processing sessions for manual diagnostics. */
 export function logActiveRuns() {
   if (!areDiagnosticsEnabledForProcess()) {
     return;
@@ -1175,7 +1176,7 @@ export function logActiveRuns() {
 
 let heartbeatInterval: NodeJS.Timeout | null = null;
 
-/** Reused helper for start Diagnostic Heartbeat behavior in src/logging. */
+/** Starts process diagnostics: heartbeat events, liveness sampling, memory sampling, and recovery. */
 export function startDiagnosticHeartbeat(
   config?: OpenClawConfig,
   opts?: StartDiagnosticHeartbeatOptions,
@@ -1330,7 +1331,7 @@ export function startDiagnosticHeartbeat(
   heartbeatInterval.unref?.();
 }
 
-/** Reused helper for stop Diagnostic Heartbeat behavior in src/logging. */
+/** Stops heartbeat/liveness/stability diagnostics and removes fatal hooks. */
 export function stopDiagnosticHeartbeat() {
   if (heartbeatInterval) {
     clearInterval(heartbeatInterval);
@@ -1341,12 +1342,12 @@ export function stopDiagnosticHeartbeat() {
   uninstallDiagnosticStabilityFatalHook();
 }
 
-/** Reused helper for get Diagnostic Session State Count For Test behavior in src/logging. */
+/** Returns tracked diagnostic session count for tests. */
 export function getDiagnosticSessionStateCountForTest(): number {
   return getDiagnosticSessionStateCountForTestImpl();
 }
 
-/** Reused helper for reset Diagnostic State For Test behavior in src/logging. */
+/** Resets all process-local diagnostic state between tests. */
 export function resetDiagnosticStateForTest(): void {
   resetDiagnosticSessionRecoveryCoordinatorForTest();
   resetDiagnosticSessionStateForTest();
