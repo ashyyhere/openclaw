@@ -1,8 +1,8 @@
-// utils reaction level helpers and runtime behavior.
-/** Shared type for Reaction Level in src/utils. */
+// Normalizes reaction feature levels into explicit ACK and agent-reaction switches.
+/** Configured reaction behavior level. */
 export type ReactionLevel = "off" | "ack" | "minimal" | "extensive";
 
-/** Shared type for Resolved Reaction Level in src/utils. */
+/** Derived reaction switches consumed by channel/runtime code. */
 export type ResolvedReactionLevel = {
   level: ReactionLevel;
   /** Whether ACK reactions (e.g., 👀 when processing) are enabled. */
@@ -34,7 +34,7 @@ function parseLevel(
   return { kind: "invalid" };
 }
 
-/** Reused helper for resolve Reaction Level behavior in src/utils. */
+/** Resolves a raw config value, default, and invalid fallback into channel-ready reaction settings. */
 export function resolveReactionLevel(params: {
   value: unknown;
   defaultLevel: ReactionLevel;

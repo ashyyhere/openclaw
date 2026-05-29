@@ -1,4 +1,4 @@
-// utils usage format helpers and runtime behavior.
+// Usage formatting and cost-estimation helpers for token totals, model pricing, and cache-backed pricing lookups.
 import path from "node:path";
 import { resolveDefaultAgentDir } from "../agents/agent-scope-config.js";
 import { modelKey, normalizeModelRef, normalizeProviderId } from "../agents/model-selection.js";
@@ -35,7 +35,7 @@ type RawPricingTier = {
   range: [number, number] | [number];
 };
 
-/** Shared type for Model Cost Config in src/utils. */
+/** Per-million-token pricing for a model, optionally with input-token tier overrides. */
 export type ModelCostConfig = {
   input: number;
   output: number;
@@ -48,7 +48,7 @@ export type ModelCostConfig = {
   tieredPricing?: PricingTier[];
 };
 
-/** Shared type for Usage Totals in src/utils. */
+/** Token usage fields accepted by cost estimation and display helpers. */
 export type UsageTotals = {
   input?: number;
   output?: number;
@@ -97,7 +97,7 @@ let providerCostIndexByConfig = new WeakMap<
 let modelKeyCache = new Map<string, string | null>();
 let sortedPricingTiersByInput = new WeakMap<PricingTier[], PricingTier[]>();
 
-/** Reused helper for format Token Count behavior in src/utils. */
+/** Formats token counts into compact display strings such as `1.2k` or `3.4m`. */
 export function formatTokenCount(value?: number): string {
   if (value === undefined || !Number.isFinite(value)) {
     return "0";
@@ -117,7 +117,7 @@ export function formatTokenCount(value?: number): string {
   return String(Math.round(safe));
 }
 
-/** Reused helper for format Usd behavior in src/utils. */
+/** Formats a USD value with enough precision for sub-cent usage costs. */
 export function formatUsd(value?: number): string | undefined {
   if (value === undefined || !Number.isFinite(value)) {
     return undefined;
@@ -591,7 +591,7 @@ function serializeCostIndex(
   return Array.from(entries.entries()).toSorted(([a], [b]) => a.localeCompare(b));
 }
 
-/** Reused helper for resolve Model Cost Config Fingerprint behavior in src/utils. */
+/** Builds a stable fingerprint across configured, bundled, and gateway-cached model pricing. */
 export function resolveModelCostConfigFingerprint(config?: OpenClawConfig): string {
   return stableCostFingerprintValue({
     configuredRaw: serializeCostIndex(
@@ -604,7 +604,7 @@ export function resolveModelCostConfigFingerprint(config?: OpenClawConfig): stri
   });
 }
 
-/** Reused helper for resolve Model Cost Config behavior in src/utils. */
+/** Resolves pricing for a provider/model from direct config, normalized config, bundled models, or gateway cache. */
 export function resolveModelCostConfig(params: {
   provider?: string;
   model?: string;
@@ -714,7 +714,7 @@ function computeTieredCost(
   );
 }
 
-/** Reused helper for estimate Usage Cost behavior in src/utils. */
+/** Estimates USD cost from token usage and flat or tiered per-million pricing. */
 export function estimateUsageCost(params: {
   usage?: NormalizedUsage | UsageTotals | null;
   cost?: ModelCostConfig;
@@ -746,7 +746,7 @@ export function estimateUsageCost(params: {
   return total / 1_000_000;
 }
 
-/** Reused helper for reset Usage Format Caches For Test behavior in src/utils. */
+/** Clears module-level pricing caches for tests that mutate model catalogs or gateway pricing. */
 export function resetUsageFormatCachesForTest(): void {
   modelsJsonCostCache = null;
   providerCostIndexByConfig = new WeakMap();

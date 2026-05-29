@@ -1,4 +1,4 @@
-// utils provider utils helpers and runtime behavior.
+// Provider capability helpers for reasoning output mode decisions.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { ProviderRuntimePluginHandle } from "../plugins/provider-hook-runtime.js";
 import type { ProviderRuntimeModel } from "../plugins/provider-runtime-model.types.js";
@@ -12,10 +12,7 @@ const BUILTIN_REASONING_OUTPUT_MODES = {
   "google-generative-ai": "tagged",
 } as const;
 
-/**
- * Utility functions for provider-specific logic and capabilities.
- */
-
+/** Resolves whether reasoning should use native API fields or tagged text output for a provider/model. */
 export function resolveReasoningOutputMode(params: {
   provider: string | undefined | null;
   config?: OpenClawConfig;

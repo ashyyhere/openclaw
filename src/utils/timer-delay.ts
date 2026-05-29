@@ -1,7 +1,7 @@
-// utils timer delay helpers and runtime behavior.
+// Re-exports gateway timeout clamping helpers and wraps Node timers with the same safety bounds.
 import { resolveSafeTimeoutDelayMs } from "../../packages/gateway-client/src/timeouts.js";
 
-/** Re-exported API for src/utils. */
+/** Re-export shared timeout clamping helpers from the gateway client package. */
 export {
   addSafeTimeoutDelayGraceMs,
   MAX_SAFE_TIMEOUT_DELAY_MS,
@@ -9,7 +9,7 @@ export {
   resolveSafeTimeoutDelayMs,
 } from "../../packages/gateway-client/src/timeouts.js";
 
-/** Reused helper for set Safe Timeout behavior in src/utils. */
+/** Schedules a timeout after clamping the delay into Node's safe timer range. */
 export function setSafeTimeout(
   callback: () => void,
   delayMs: number,

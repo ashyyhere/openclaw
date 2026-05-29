@@ -1,4 +1,4 @@
-// utils transcript tools helpers and runtime behavior.
+// Transcript inspection helpers for tool-call names and tool-result counts.
 import {
   normalizeOptionalLowercaseString,
   normalizeOptionalString,
@@ -16,7 +16,7 @@ const normalizeType = (value: unknown): string => {
   return typeof value === "string" ? (normalizeOptionalLowercaseString(value) ?? "") : "";
 };
 
-/** Reused constant for extract Tool Call Names behavior in src/utils. */
+/** Extracts unique tool-call names from top-level fields and structured content blocks. */
 export const extractToolCallNames = (message: Record<string, unknown>): string[] => {
   const names = new Set<string>();
   const toolNameRaw = message.toolName ?? message.tool_name;
@@ -49,11 +49,11 @@ export const extractToolCallNames = (message: Record<string, unknown>): string[]
   return Array.from(names);
 };
 
-/** Reused constant for has Tool Call behavior in src/utils. */
+/** Returns true when a transcript message contains any recognized tool call. */
 export const hasToolCall = (message: Record<string, unknown>): boolean =>
   extractToolCallNames(message).length > 0;
 
-/** Reused constant for count Tool Results behavior in src/utils. */
+/** Counts tool-result content blocks and the subset marked as errors. */
 export const countToolResults = (message: Record<string, unknown>): ToolResultCounts => {
   const content = message.content;
   if (!Array.isArray(content)) {

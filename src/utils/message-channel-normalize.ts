@@ -1,4 +1,4 @@
-// utils message channel normalize helpers and runtime behavior.
+// Normalizes channel ids and separates deliverable chat channels from gateway-only internal channels.
 import { CHANNEL_IDS } from "../channels/ids.js";
 import { listRegisteredChannelPluginIds } from "../channels/registry.js";
 import { uniqueStrings } from "../shared/string-normalization.js";
@@ -10,13 +10,13 @@ import { normalizeMessageChannel as normalizeMessageChannelCore } from "./messag
 
 type ChannelId = string & { readonly __openclawChannelIdBrand?: never };
 
-/** Shared type for Deliverable Message Channel in src/utils. */
+/** Channel id that can be delivered through a bundled or registered chat channel. */
 export type DeliverableMessageChannel = ChannelId;
 
-/** Shared type for Gateway Message Channel in src/utils. */
+/** Channel id accepted by the gateway, including internal webchat. */
 export type GatewayMessageChannel = DeliverableMessageChannel;
 
-/** Reused helper for normalize Message Channel behavior in src/utils. */
+/** Normalizes user/plugin channel text into the canonical lowercase channel id form. */
 export function normalizeMessageChannel(raw?: string | null): string | undefined {
   return normalizeMessageChannelCore(raw);
 }
@@ -25,7 +25,7 @@ const listPluginChannelIds = (): string[] => {
   return listRegisteredChannelPluginIds();
 };
 
-/** Reused constant for list Deliverable Message Channels behavior in src/utils. */
+/** Lists bundled and currently registered plugin channels that can receive delivery. */
 export const listDeliverableMessageChannels = (): ChannelId[] =>
   uniqueStrings([...CHANNEL_IDS, ...listPluginChannelIds()]) as ChannelId[];
 
@@ -34,17 +34,17 @@ const listGatewayMessageChannels = (): GatewayMessageChannel[] => [
   INTERNAL_MESSAGE_CHANNEL,
 ];
 
-/** Reused helper for is Gateway Message Channel behavior in src/utils. */
+/** Checks whether a channel is accepted by gateway protocol handlers. */
 export function isGatewayMessageChannel(value: string): value is GatewayMessageChannel {
   return listGatewayMessageChannels().includes(value as GatewayMessageChannel);
 }
 
-/** Reused helper for is Deliverable Message Channel behavior in src/utils. */
+/** Checks whether a channel can be sent through a real channel implementation. */
 export function isDeliverableMessageChannel(value: string): value is DeliverableMessageChannel {
   return listDeliverableMessageChannels().includes(value as DeliverableMessageChannel);
 }
 
-/** Reused helper for resolve Gateway Message Channel behavior in src/utils. */
+/** Normalizes and validates a raw gateway channel value. */
 export function resolveGatewayMessageChannel(
   raw?: string | null,
 ): GatewayMessageChannel | undefined {
@@ -55,7 +55,7 @@ export function resolveGatewayMessageChannel(
   return isGatewayMessageChannel(normalized) ? normalized : undefined;
 }
 
-/** Reused helper for resolve Message Channel behavior in src/utils. */
+/** Resolves a primary channel with fallback, returning the first normalized value. */
 export function resolveMessageChannel(
   primary?: string | null,
   fallback?: string | null,
@@ -63,5 +63,5 @@ export function resolveMessageChannel(
   return normalizeMessageChannel(primary) ?? normalizeMessageChannel(fallback);
 }
 
-/** Re-exported API for src/utils, starting with Internal Message Channel. */
+/** Re-export internal channel type for callers that only need normalization types. */
 export type { InternalMessageChannel };
