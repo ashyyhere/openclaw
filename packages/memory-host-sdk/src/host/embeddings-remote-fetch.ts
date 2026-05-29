@@ -1,4 +1,4 @@
-// packages/memory-host-sdk/src/host embeddings remote fetch helpers and runtime behavior.
+// Remote embedding response fetch and validation helpers.
 import { postJson } from "./post-json.js";
 import type { SsrFPolicy } from "./ssrf-policy.js";
 
@@ -29,7 +29,7 @@ function resolveExpectedEmbeddingCount(body: unknown): number | undefined {
   return Array.isArray(input) ? input.length : undefined;
 }
 
-/** Public helper for fetch Remote Embedding Vectors behavior in packages/memory-host-sdk. */
+/** Fetches embedding vectors and validates response shape and vector numeric values. */
 export async function fetchRemoteEmbeddingVectors(params: {
   url: string;
   headers: Record<string, string>;

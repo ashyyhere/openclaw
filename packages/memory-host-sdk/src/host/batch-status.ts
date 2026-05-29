@@ -1,4 +1,4 @@
-// packages/memory-host-sdk/src/host batch status helpers and runtime behavior.
+// Remote embedding batch completion and failure helpers.
 const TERMINAL_FAILURE_STATES = new Set(["failed", "expired", "cancelled", "canceled"]);
 
 type BatchStatusLike = {
@@ -8,13 +8,13 @@ type BatchStatusLike = {
   error_file_id?: string | null;
 };
 
-/** Public type describing Batch Completion Result for packages/memory-host-sdk. */
+/** Completed batch output and optional provider error file ids. */
 export type BatchCompletionResult = {
   outputFileId: string;
   errorFileId?: string;
 };
 
-/** Public helper for resolve Batch Completion From Status behavior in packages/memory-host-sdk. */
+/** Converts a completed provider status into a usable batch output descriptor. */
 export function resolveBatchCompletionFromStatus(params: {
   provider: string;
   batchId: string;
@@ -29,7 +29,7 @@ export function resolveBatchCompletionFromStatus(params: {
   };
 }
 
-/** Public helper for throw If Batch Terminal Failure behavior in packages/memory-host-sdk. */
+/** Throws a provider-specific error when a batch reaches a terminal failure state. */
 export async function throwIfBatchTerminalFailure(params: {
   provider: string;
   status: BatchStatusLike;
@@ -46,7 +46,7 @@ export async function throwIfBatchTerminalFailure(params: {
   throw new Error(`${params.provider} batch ${params.status.id ?? "<unknown>"} ${state}${suffix}`);
 }
 
-/** Public helper for resolve Completed Batch Result behavior in packages/memory-host-sdk. */
+/** Returns completed batch output or waits/errors based on the configured wait policy. */
 export async function resolveCompletedBatchResult(params: {
   provider: string;
   status: BatchStatusLike;

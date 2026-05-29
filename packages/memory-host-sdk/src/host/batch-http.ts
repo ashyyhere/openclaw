@@ -1,9 +1,9 @@
-// packages/memory-host-sdk/src/host batch http helpers and runtime behavior.
+// Retrying JSON POST wrapper for remote embedding batch APIs.
 import { postJson } from "./post-json.js";
 import { retryAsync } from "./retry-utils.js";
 import type { SsrFPolicy } from "./ssrf-policy.js";
 
-/** Public helper for post Json With Retry behavior in packages/memory-host-sdk. */
+/** POSTs JSON with retries for rate-limit and transient server responses. */
 export async function postJsonWithRetry<T>(params: {
   url: string;
   headers: Record<string, string>;

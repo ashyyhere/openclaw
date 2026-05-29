@@ -1,4 +1,4 @@
-// packages/memory-host-sdk/src/host embeddings remote client helpers and runtime behavior.
+// Remote embedding client config resolution and auth header construction.
 import type { EmbeddingProviderOptions } from "./embeddings.types.js";
 import { requireApiKey, resolveApiKeyForProvider } from "./openclaw-runtime-auth.js";
 import { buildRemoteBaseUrlPolicy } from "./remote-http.js";
@@ -6,7 +6,7 @@ import { resolveMemorySecretInputString } from "./secret-input.js";
 import type { SsrFPolicy } from "./ssrf-policy.js";
 import { normalizeOptionalString } from "./string-utils.js";
 
-/** Public type describing Remote Embedding Provider Id for packages/memory-host-sdk. */
+/** Remote embedding provider id used for config and credential lookup. */
 export type RemoteEmbeddingProviderId = string;
 
 function resolveOpenClawAttributionHeaders(): Record<string, string> {
@@ -29,7 +29,7 @@ function isNativeOpenAIEmbeddingRoute(provider: string, baseUrl: string): boolea
   }
 }
 
-/** Public helper for resolve Remote Embedding Bearer Client behavior in packages/memory-host-sdk. */
+/** Resolves base URL, bearer auth, configured headers, and SSRF policy for a provider. */
 export async function resolveRemoteEmbeddingBearerClient(params: {
   provider: RemoteEmbeddingProviderId;
   options: EmbeddingProviderOptions;

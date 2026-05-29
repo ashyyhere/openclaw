@@ -1,7 +1,7 @@
-// packages/memory-host-sdk/src/host batch provider common helpers and runtime behavior.
+// Shared remote embedding batch provider contracts.
 import type { EmbeddingBatchOutputLine } from "./batch-output.js";
 
-/** Public type describing Embedding Batch Status for packages/memory-host-sdk. */
+/** Minimal provider batch status shape used by batch polling and completion code. */
 export type EmbeddingBatchStatus = {
   id?: string;
   status?: string;
@@ -9,8 +9,8 @@ export type EmbeddingBatchStatus = {
   error_file_id?: string | null;
 };
 
-/** Public type describing Provider Batch Output Line for packages/memory-host-sdk. */
+/** Provider output line shape after normalizing embedding batch results. */
 export type ProviderBatchOutputLine = EmbeddingBatchOutputLine;
 
-/** Public constant for EMBEDDING BATCH ENDPOINT behavior in packages/memory-host-sdk. */
+/** OpenAI-compatible endpoint used for embedding requests inside batch files. */
 export const EMBEDDING_BATCH_ENDPOINT = "/v1/embeddings";

@@ -1,4 +1,4 @@
-// packages/memory-host-sdk/src/host embeddings remote provider helpers and runtime behavior.
+// OpenAI-compatible remote embedding provider adapter.
 import {
   resolveRemoteEmbeddingBearerClient,
   type RemoteEmbeddingProviderId,
@@ -7,7 +7,7 @@ import { fetchRemoteEmbeddingVectors } from "./embeddings-remote-fetch.js";
 import type { EmbeddingProvider, EmbeddingProviderOptions } from "./embeddings.types.js";
 import type { SsrFPolicy } from "./ssrf-policy.js";
 
-/** Public type describing Remote Embedding Client for packages/memory-host-sdk. */
+/** Resolved remote embedding endpoint, auth headers, model, and fetch policy. */
 export type RemoteEmbeddingClient = {
   baseUrl: string;
   headers: Record<string, string>;
@@ -16,7 +16,7 @@ export type RemoteEmbeddingClient = {
   model: string;
 };
 
-/** Public helper for create Remote Embedding Provider behavior in packages/memory-host-sdk. */
+/** Creates an EmbeddingProvider backed by a remote /embeddings-compatible endpoint. */
 export function createRemoteEmbeddingProvider(params: {
   id: string;
   client: RemoteEmbeddingClient;
@@ -53,7 +53,7 @@ export function createRemoteEmbeddingProvider(params: {
   };
 }
 
-/** Public helper for resolve Remote Embedding Client behavior in packages/memory-host-sdk. */
+/** Resolves the remote embedding client and normalizes the selected model id. */
 export async function resolveRemoteEmbeddingClient(params: {
   provider: RemoteEmbeddingProviderId;
   options: EmbeddingProviderOptions;
