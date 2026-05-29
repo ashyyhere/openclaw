@@ -11,7 +11,7 @@ function loadInboundSessionRuntime() {
   return inboundSessionRuntimePromise;
 }
 
-/** Reused helper for record Inbound Session Meta Safe behavior in src/channels. */
+/** Records inbound session metadata while isolating persistence failures from message handling. */
 export async function recordInboundSessionMetaSafe(params: {
   cfg: OpenClawConfig;
   agentId: string;

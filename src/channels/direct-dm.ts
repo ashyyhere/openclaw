@@ -9,7 +9,7 @@ import {
 } from "../plugin-sdk/reply-payload.js";
 import { createChannelReplyPipeline } from "./message/reply-pipeline.js";
 import { runPreparedInboundReply } from "./turn/kernel.js";
-/** Re-exported API for src/channels. */
+/** Re-export legacy direct-DM authorization helpers for compatibility callers. */
 export {
   createPreCryptoDirectDmAuthorizer,
   resolveInboundDirectDmAccessWithRuntime,
@@ -17,7 +17,7 @@ export {
   type DirectDmCommandAuthorizationRuntime,
   type ResolvedInboundDirectDmAccess,
 } from "./direct-dm-access.js";
-/** Re-exported API for src/channels. */
+/** Re-export pre-crypto direct-DM guard policy helpers. */
 export {
   createDirectDmPreCryptoGuardPolicy,
   type DirectDmPreCryptoGuardPolicy,
@@ -64,7 +64,6 @@ type DirectDmRuntime = {
   };
 };
 
-/** Route, envelope, record, and dispatch one direct-DM turn through the standard pipeline. */
 /** Dispatch an inbound direct-message turn using explicit runtime hooks. */
 export async function dispatchInboundDirectDmWithRuntime(params: {
   cfg: OpenClawConfig;

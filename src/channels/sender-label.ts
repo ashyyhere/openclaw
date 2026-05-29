@@ -1,7 +1,7 @@
 /** Builds human-readable sender labels from channel profile fields. */
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 
-/** Shared type for Sender Label Params in src/channels. */
+/** Candidate sender identity fields from channel-specific profile data. */
 export type SenderLabelParams = {
   name?: string;
   username?: string;
@@ -20,7 +20,7 @@ function normalizeSenderLabelParams(params: SenderLabelParams) {
   };
 }
 
-/** Reused helper for resolve Sender Label behavior in src/channels. */
+/** Chooses one display label, adding an id/address suffix when it disambiguates the sender. */
 export function resolveSenderLabel(params: SenderLabelParams): string | null {
   const { name, username, tag, e164, id } = normalizeSenderLabelParams(params);
 
@@ -32,7 +32,7 @@ export function resolveSenderLabel(params: SenderLabelParams): string | null {
   return display || idPart || null;
 }
 
-/** Reused helper for list Sender Label Candidates behavior in src/channels. */
+/** Lists normalized sender labels usable for matching allowlists or diagnostics. */
 export function listSenderLabelCandidates(params: SenderLabelParams): string[] {
   const candidates = new Set<string>();
   const { name, username, tag, e164, id } = normalizeSenderLabelParams(params);

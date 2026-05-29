@@ -16,7 +16,7 @@ function normalizeThreadBindingDurationMs(raw: unknown): number {
   return durationMs;
 }
 
-/** Reused helper for format Thread Binding Duration Label behavior in src/channels. */
+/** Formats thread-binding timeouts as compact labels for channel system messages. */
 export function formatThreadBindingDurationLabel(durationMs: number): string {
   if (durationMs <= 0) {
     return "disabled";
@@ -31,7 +31,7 @@ export function formatThreadBindingDurationLabel(durationMs: number): string {
   return `${totalMinutes}m`;
 }
 
-/** Reused helper for resolve Thread Binding Thread Name behavior in src/channels. */
+/** Builds a bounded human-readable thread name for a bound agent session. */
 export function resolveThreadBindingThreadName(params: {
   agentId?: string;
   label?: string;
@@ -42,7 +42,7 @@ export function resolveThreadBindingThreadName(params: {
   return raw.slice(0, 100);
 }
 
-/** Reused helper for resolve Thread Binding Intro Text behavior in src/channels. */
+/** Builds the system intro text posted when a channel thread starts routing to a session. */
 export function resolveThreadBindingIntroText(params: {
   agentId?: string;
   label?: string;
@@ -85,7 +85,7 @@ export function resolveThreadBindingIntroText(params: {
   return prefixSystemMessage(`${intro}\n${details.join("\n")}`);
 }
 
-/** Reused helper for resolve Thread Binding Farewell Text behavior in src/channels. */
+/** Builds the system farewell text posted when a thread binding expires or is closed. */
 export function resolveThreadBindingFarewellText(params: {
   reason?: string;
   farewellText?: string;

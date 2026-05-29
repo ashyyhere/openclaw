@@ -5,7 +5,7 @@ type TypingStartGuard = {
   isTripped: () => boolean;
 };
 
-/** Reused helper for create Typing Start Guard behavior in src/channels. */
+/** Creates a guard that stops retrying typing indicators after sealing, blocking, or repeated failures. */
 export function createTypingStartGuard(params: {
   isSealed: () => boolean;
   shouldBlock?: () => boolean;

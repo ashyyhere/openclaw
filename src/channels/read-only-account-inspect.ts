@@ -4,10 +4,10 @@ import { getBundledChannelAccountInspector } from "./plugins/bundled.js";
 import { getLoadedChannelPlugin } from "./plugins/registry.js";
 import type { ChannelId } from "./plugins/types.public.js";
 
-/** Shared type for Read Only Inspected Account in src/channels. */
+/** Account metadata returned by read-only bundled/plugin inspectors. */
 export type ReadOnlyInspectedAccount = Record<string, unknown>;
 
-/** Reused helper for inspect Read Only Channel Account behavior in src/channels. */
+/** Inspects a channel account using only lightweight inspectors, avoiding live runtime startup. */
 export async function inspectReadOnlyChannelAccount(params: {
   channelId: ChannelId;
   cfg: OpenClawConfig;

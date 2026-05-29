@@ -3,7 +3,7 @@ import type { MsgContext } from "../auto-reply/templating.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import { normalizeChatType } from "./chat-type.js";
 
-/** Reused helper for validate Sender Identity behavior in src/channels. */
+/** Validates inbound sender fields enough to flag malformed channel payloads without blocking direct chats. */
 export function validateSenderIdentity(ctx: MsgContext): string[] {
   const issues: string[] = [];
 

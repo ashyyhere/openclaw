@@ -3,7 +3,7 @@ import { resolveEnvelopeFormatOptions } from "../auto-reply/envelope.js";
 import { readSessionUpdatedAt, resolveStorePath } from "../config/sessions.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 
-/** Reused helper for resolve Inbound Session Envelope Context behavior in src/channels. */
+/** Resolves session store, envelope options, and previous timestamp for inbound replies. */
 export function resolveInboundSessionEnvelopeContext(params: {
   cfg: OpenClawConfig;
   agentId: string;

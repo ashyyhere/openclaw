@@ -13,7 +13,7 @@ import {
   resolveDmGroupAccessWithLists,
 } from "../plugin-sdk/channel-access-compat.js";
 import type { ChannelId } from "./plugins/types.public.js";
-/** Re-exported API for src/channels, starting with Access Group Membership Resolver. */
+/** Re-export access-group resolver type used by legacy direct-DM authorization seams. */
 export type { AccessGroupMembershipResolver } from "../plugin-sdk/access-groups.js";
 
 /** Runtime hooks needed to compute legacy direct-DM command authorization. */
