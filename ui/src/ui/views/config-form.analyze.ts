@@ -1,7 +1,8 @@
-// ui/src/ui/views config form analyze helpers and runtime behavior.
+// Config schema analyzer. It normalizes the JSON Schema subset the UI can
+// render and records unsupported paths so the form can fall back to raw editing.
 import { pathKey, schemaType, type JsonSchema } from "./config-form.shared.ts";
 
-/** Shared type for Config Schema Analysis in ui/src/ui/views. */
+/** Normalized schema plus paths the generated form cannot render safely. */
 export type ConfigSchemaAnalysis = {
   schema: JsonSchema | null;
   unsupportedPaths: string[];
@@ -38,7 +39,7 @@ function uniqueValues(values: unknown[]): unknown[] {
   return unique;
 }
 
-/** Reused helper for analyze Config Schema behavior in ui/src/ui/views. */
+/** Normalize a raw schema into the renderable subset for the config form. */
 export function analyzeConfigSchema(raw: unknown): ConfigSchemaAnalysis {
   if (!raw || typeof raw !== "object") {
     return { schema: null, unsupportedPaths: ["<root>"] };

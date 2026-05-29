@@ -1,8 +1,10 @@
-// ui/src/ui/views config form shared helpers and runtime behavior.
+// Shared schema and hint helpers for the generated config form. These helpers
+// keep path matching, defaults, labels, and sensitivity detection consistent
+// across analysis, node rendering, and full-form rendering.
 import { normalizeLowercaseStringOrEmpty } from "../string-coerce.ts";
 import type { ConfigUiHint, ConfigUiHints } from "../types.ts";
 
-/** Shared type for Json Schema in ui/src/ui/views. */
+/** Minimal JSON Schema shape supported by the Control UI config renderer. */
 export type JsonSchema = {
   type?: string | string[];
   title?: string;
@@ -23,7 +25,7 @@ export type JsonSchema = {
   nullable?: boolean;
 };
 
-/** Reused helper for schema Type behavior in ui/src/ui/views. */
+/** Return the effective non-null schema type when type is a union. */
 export function schemaType(schema: JsonSchema): string | undefined {
   if (!schema) {
     return undefined;
@@ -34,7 +36,7 @@ export function schemaType(schema: JsonSchema): string | undefined {
   return schema.type;
 }
 
-/** Reused helper for default Value behavior in ui/src/ui/views. */
+/** Create a renderable default value for a schema node. */
 export function defaultValue(schema?: JsonSchema): unknown {
   if (!schema) {
     return "";
@@ -60,12 +62,12 @@ export function defaultValue(schema?: JsonSchema): unknown {
   }
 }
 
-/** Reused helper for path Key behavior in ui/src/ui/views. */
+/** Convert a string path into the dotted key used by UI hints. */
 export function pathKey(path: Array<string | number>): string {
   return path.filter((segment) => typeof segment === "string").join(".");
 }
 
-/** Reused helper for hint For Path behavior in ui/src/ui/views. */
+/** Resolve direct or wildcard UI hints for a schema path. */
 export function hintForPath(path: Array<string | number>, hints: ConfigUiHints) {
   const key = pathKey(path);
   const direct = hints[key];
@@ -95,7 +97,7 @@ export function hintForPath(path: Array<string | number>, hints: ConfigUiHints) 
   return undefined;
 }
 
-/** Reused helper for humanize behavior in ui/src/ui/views. */
+/** Convert config keys into readable fallback labels. */
 export function humanize(raw: string) {
   return raw
     .replace(/_/g, " ")
@@ -127,7 +129,7 @@ const SENSITIVE_PATTERNS = [
 
 const ENV_VAR_PLACEHOLDER_PATTERN = /^\$\{[^}]*\}$/;
 
-/** Reused constant for REDACTED PLACEHOLDER behavior in ui/src/ui/views. */
+/** Placeholder shown in the config form when sensitive values are hidden. */
 export const REDACTED_PLACEHOLDER = "[redacted - click reveal to view]";
 
 const MAX_SENSITIVE_SCAN_DEPTH = 64;
@@ -156,7 +158,7 @@ function isEnvVarPlaceholder(value: string): boolean {
   return ENV_VAR_PLACEHOLDER_PATTERN.test(value.trim());
 }
 
-/** Reused helper for is Sensitive Config Path behavior in ui/src/ui/views. */
+/** Return whether a dotted config path name implies sensitive data. */
 export function isSensitiveConfigPath(path: string): boolean {
   const lowerPath = normalizeLowercaseStringOrEmpty(path);
   const whitelisted = SENSITIVE_KEY_WHITELIST_SUFFIXES.some((suffix) => lowerPath.endsWith(suffix));
@@ -174,7 +176,7 @@ function isHintSensitive(hint: ConfigUiHint | undefined): boolean {
   return hint?.sensitive ?? false;
 }
 
-/** Reused helper for has Sensitive Config Data behavior in ui/src/ui/views. */
+/** Scan a config value tree to decide whether it contains revealable sensitive data. */
 export function hasSensitiveConfigData(
   value: unknown,
   path: Array<string | number>,
@@ -217,7 +219,7 @@ function hasSensitiveConfigDataInner(
   return false;
 }
 
-/** Reused helper for count Sensitive Config Values behavior in ui/src/ui/views. */
+/** Count sensitive leaves under a config value tree for hidden-value summaries. */
 export function countSensitiveConfigValues(
   value: unknown,
   path: Array<string | number>,

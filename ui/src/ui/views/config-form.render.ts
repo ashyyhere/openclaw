@@ -1,4 +1,6 @@
-// ui/src/ui/views config form render helpers and runtime behavior.
+// Full generated config-form renderer. It arranges top-level schema sections,
+// applies section metadata/icons, filters by search, and delegates each field
+// tree to the recursive node renderer.
 import { html, nothing } from "lit";
 import { icons } from "../icons.ts";
 import { normalizeLowercaseStringOrEmpty } from "../string-coerce.ts";
@@ -6,7 +8,7 @@ import type { ConfigUiHints } from "../types.ts";
 import { matchesNodeSearch, parseConfigSearchQuery, renderNode } from "./config-form.node.ts";
 import { hintForPath, humanize, schemaType, type JsonSchema } from "./config-form.shared.ts";
 
-/** Shared type for Config Form Props in ui/src/ui/views. */
+/** Props required to render and edit the generated config form. */
 export type ConfigFormProps = {
   schema: JsonSchema | null;
   uiHints: ConfigUiHints;
@@ -278,7 +280,7 @@ const sectionIcons = {
 };
 
 // Section metadata
-/** Reused constant for SECTION META behavior in ui/src/ui/views. */
+/** Labels and descriptions for known top-level config sections. */
 export const SECTION_META: Record<string, { label: string; description: string }> = {
   env: {
     label: "Environment Variables",
@@ -363,7 +365,7 @@ function matchesSearch(params: {
   });
 }
 
-/** Reused helper for render Config Form behavior in ui/src/ui/views. */
+/** Render the generated config form from normalized schema and current values. */
 export function renderConfigForm(props: ConfigFormProps) {
   if (!props.schema) {
     return html` <div class="muted">Schema unavailable.</div> `;
