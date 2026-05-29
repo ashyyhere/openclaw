@@ -1,10 +1,11 @@
-// ui/src/ui icons helpers and runtime behavior.
+// Inline SVG icon registry for the Control UI. Icons are Lit templates using
+// currentColor so callers can theme them through surrounding text/icon styles.
 import { html, type TemplateResult } from "lit";
 
 // Lucide-style SVG icons
 // All icons use currentColor for stroke
 
-/** Reused constant for icons behavior in ui/src/ui. */
+/** Named icon templates shared across Control UI views and controls. */
 export const icons = {
   // Navigation icons
   messageSquare: html`
@@ -478,21 +479,21 @@ export const icons = {
   `,
 } as const;
 
-/** Shared type for Icon Name in ui/src/ui. */
+/** Valid key for the shared icon registry. */
 export type IconName = keyof typeof icons;
 
-/** Reused helper for icon behavior in ui/src/ui. */
+/** Return the SVG template for a named icon. */
 export function icon(name: IconName): TemplateResult {
   return icons[name];
 }
 
-/** Reused helper for render Icon behavior in ui/src/ui. */
+/** Render a named icon inside an aria-hidden span. */
 export function renderIcon(name: IconName, className = "nav-item__icon"): TemplateResult {
   return html`<span class=${className} aria-hidden="true">${icons[name]}</span>`;
 }
 
 // Legacy function for compatibility
-/** Reused helper for render Emoji Icon behavior in ui/src/ui. */
+/** Render legacy icon content that may be text/emoji or an SVG template. */
 export function renderEmojiIcon(
   iconContent: string | TemplateResult,
   className: string,
@@ -500,7 +501,7 @@ export function renderEmojiIcon(
   return html`<span class=${className} aria-hidden="true">${iconContent}</span>`;
 }
 
-/** Reused helper for set Emoji Icon behavior in ui/src/ui. */
+/** Set legacy text icon content on an existing element. */
 export function setEmojiIcon(target: HTMLElement | null, icon: string): void {
   if (!target) {
     return;

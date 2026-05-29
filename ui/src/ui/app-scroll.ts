@@ -1,4 +1,6 @@
-// ui/src/ui app scroll helpers and runtime behavior.
+// Scroll coordination for chat, logs, activity, and topbar layout. It preserves
+// user scroll position during streaming while still following new content when
+// the user is near the bottom or auto-follow is enabled.
 import { normalizeChatAutoScrollMode, type ChatAutoScrollMode } from "./storage.ts";
 
 /** Distance (px) from the bottom within which we consider the user "near bottom". */
@@ -39,7 +41,7 @@ type ChatScrollOptions = {
   source?: "auto" | "manual";
 };
 
-/** Reused helper for schedule Chat Scroll behavior in ui/src/ui. */
+/** Schedule chat autoscroll after Lit renders, respecting user position and preference. */
 export function scheduleChatScroll(
   host: ScrollHost,
   force = false,
@@ -148,7 +150,7 @@ export function scheduleChatScroll(
   });
 }
 
-/** Reused helper for schedule Logs Scroll behavior in ui/src/ui. */
+/** Schedule log autoscroll when already near the bottom or forced. */
 export function scheduleLogsScroll(host: ScrollHost, force = false) {
   if (host.logsScrollFrame) {
     cancelAnimationFrame(host.logsScrollFrame);
@@ -171,7 +173,7 @@ export function scheduleLogsScroll(host: ScrollHost, force = false) {
   });
 }
 
-/** Reused helper for schedule Activity Scroll behavior in ui/src/ui. */
+/** Schedule activity-feed autoscroll when auto-follow is active or forced. */
 export function scheduleActivityScroll(host: ScrollHost, force = false) {
   if (host.activityScrollFrame) {
     cancelAnimationFrame(host.activityScrollFrame);
@@ -198,7 +200,7 @@ export function scheduleActivityScroll(host: ScrollHost, force = false) {
   });
 }
 
-/** Reused helper for handle Chat Scroll behavior in ui/src/ui. */
+/** Update chat scroll state from a user or programmatic scroll event. */
 export function handleChatScroll(host: ScrollHost, event: Event) {
   const container = event.currentTarget as HTMLElement | null;
   if (!container) {
@@ -238,7 +240,7 @@ export function handleChatScroll(host: ScrollHost, event: Event) {
   }
 }
 
-/** Reused helper for handle Logs Scroll behavior in ui/src/ui. */
+/** Track whether the logs panel is currently near the bottom. */
 export function handleLogsScroll(host: ScrollHost, event: Event) {
   const container = event.currentTarget as HTMLElement | null;
   if (!container) {
@@ -248,7 +250,7 @@ export function handleLogsScroll(host: ScrollHost, event: Event) {
   host.logsAtBottom = distanceFromBottom < 80;
 }
 
-/** Reused helper for handle Activity Scroll behavior in ui/src/ui. */
+/** Track whether the activity panel is currently near the bottom. */
 export function handleActivityScroll(host: ScrollHost, event: Event) {
   const container = event.currentTarget as HTMLElement | null;
   if (!container) {
@@ -258,7 +260,7 @@ export function handleActivityScroll(host: ScrollHost, event: Event) {
   host.activityAtBottom = distanceFromBottom < 120;
 }
 
-/** Reused helper for reset Chat Scroll behavior in ui/src/ui. */
+/** Reset chat scroll flags when switching sessions or clearing history. */
 export function resetChatScroll(host: ScrollHost) {
   host.chatHasAutoScrolled = false;
   host.chatUserNearBottom = true;
@@ -269,7 +271,7 @@ export function resetChatScroll(host: ScrollHost) {
   host.chatProgrammaticScrollTarget = 0;
 }
 
-/** Reused helper for export Logs behavior in ui/src/ui. */
+/** Download visible log lines as a timestamped text file. */
 export function exportLogs(lines: string[], label: string) {
   if (lines.length === 0) {
     return;
@@ -284,7 +286,7 @@ export function exportLogs(lines: string[], label: string) {
   URL.revokeObjectURL(url);
 }
 
-/** Reused helper for observe Topbar behavior in ui/src/ui. */
+/** Keep the CSS topbar-height variable in sync with the rendered topbar. */
 export function observeTopbar(host: ScrollHost) {
   if (typeof ResizeObserver === "undefined") {
     return;
