@@ -1,4 +1,4 @@
-// packages/gateway-client/src readiness helpers and runtime behavior.
+// Helpers for delaying gateway-client start until the event loop is responsive.
 import type { GatewayClientOptions } from "./client.js";
 import {
   waitForEventLoopReady,
@@ -7,17 +7,17 @@ import {
 } from "./event-loop-ready.js";
 import { resolveConnectChallengeTimeoutMs } from "./timeouts.js";
 
-/** Public type describing Gateway Client Startable for packages/gateway-client. */
+/** Minimal client shape needed by readiness start helpers. */
 export type GatewayClientStartable = {
   start(): void;
 };
 
-/** Public type describing Event Loop Ready Waiter for packages/gateway-client. */
+/** Injectable event-loop readiness waiter used by tests and clients. */
 export type EventLoopReadyWaiter = (
   options?: EventLoopReadyOptions,
 ) => Promise<EventLoopReadyResult>;
 
-/** Public type describing Gateway Client Start Readiness Options for packages/gateway-client. */
+/** Options for deriving readiness wait timeout before starting a client. */
 export type GatewayClientStartReadinessOptions = {
   timeoutMs?: number;
   clientOptions?: Pick<
@@ -47,7 +47,7 @@ function resolveGatewayClientStartReadinessTimeoutMs(
   });
 }
 
-/** Public helper for start Gateway Client With Readiness Wait behavior in packages/gateway-client. */
+/** Start a client only after an injected readiness waiter reports success. */
 export async function startGatewayClientWithReadinessWait(
   waitForReady: EventLoopReadyWaiter,
   client: GatewayClientStartable,
@@ -63,7 +63,7 @@ export async function startGatewayClientWithReadinessWait(
   return readiness;
 }
 
-/** Public helper for start Gateway Client When Event Loop Ready behavior in packages/gateway-client. */
+/** Start a client after the default event-loop readiness probe succeeds. */
 export async function startGatewayClientWhenEventLoopReady(
   client: GatewayClientStartable,
   options: GatewayClientStartReadinessOptions = {},

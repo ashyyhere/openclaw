@@ -1,29 +1,29 @@
-// packages/gateway-protocol/src/schema devices helpers and runtime behavior.
+// TypeBox schemas for device pairing, token rotation, and pairing events.
 import { Type } from "typebox";
 import { NonEmptyString } from "./primitives.js";
 
-/** Public constant for Device Pair List Params Schema behavior in packages/gateway-protocol. */
+/** Empty params schema for listing pending device-pair requests. */
 export const DevicePairListParamsSchema = Type.Object({}, { additionalProperties: false });
 
-/** Public constant for Device Pair Approve Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for approving a pending device-pair request. */
 export const DevicePairApproveParamsSchema = Type.Object(
   { requestId: NonEmptyString },
   { additionalProperties: false },
 );
 
-/** Public constant for Device Pair Reject Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for rejecting a pending device-pair request. */
 export const DevicePairRejectParamsSchema = Type.Object(
   { requestId: NonEmptyString },
   { additionalProperties: false },
 );
 
-/** Public constant for Device Pair Remove Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for removing a paired device. */
 export const DevicePairRemoveParamsSchema = Type.Object(
   { deviceId: NonEmptyString },
   { additionalProperties: false },
 );
 
-/** Public constant for Device Token Rotate Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for rotating a device token for a role and optional scopes. */
 export const DeviceTokenRotateParamsSchema = Type.Object(
   {
     deviceId: NonEmptyString,
@@ -33,7 +33,7 @@ export const DeviceTokenRotateParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Device Token Revoke Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for revoking one device token role. */
 export const DeviceTokenRevokeParamsSchema = Type.Object(
   {
     deviceId: NonEmptyString,
@@ -42,7 +42,7 @@ export const DeviceTokenRevokeParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Device Pair Requested Event Schema behavior in packages/gateway-protocol. */
+/** Event payload emitted when a device requests pairing. */
 export const DevicePairRequestedEventSchema = Type.Object(
   {
     requestId: NonEmptyString,
@@ -64,7 +64,7 @@ export const DevicePairRequestedEventSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Device Pair Resolved Event Schema behavior in packages/gateway-protocol. */
+/** Event payload emitted after a device pairing request is resolved. */
 export const DevicePairResolvedEventSchema = Type.Object(
   {
     requestId: NonEmptyString,

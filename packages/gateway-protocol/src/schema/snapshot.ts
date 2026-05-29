@@ -1,8 +1,8 @@
-// packages/gateway-protocol/src/schema snapshot helpers and runtime behavior.
+// TypeBox schemas for gateway status snapshots sent to clients.
 import { Type } from "typebox";
 import { NonEmptyString } from "./primitives.js";
 
-/** Public constant for Presence Entry Schema behavior in packages/gateway-protocol. */
+/** One connected client or node presence entry in a gateway snapshot. */
 export const PresenceEntrySchema = Type.Object(
   {
     host: Type.Optional(NonEmptyString),
@@ -25,10 +25,10 @@ export const PresenceEntrySchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Health Snapshot Schema behavior in packages/gateway-protocol. */
+/** Gateway health payload is intentionally open-ended for producer-owned fields. */
 export const HealthSnapshotSchema = Type.Any();
 
-/** Public constant for Session Defaults Schema behavior in packages/gateway-protocol. */
+/** Default session identifiers and scope advertised by the gateway. */
 export const SessionDefaultsSchema = Type.Object(
   {
     defaultAgentId: NonEmptyString,
@@ -39,7 +39,7 @@ export const SessionDefaultsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for State Version Schema behavior in packages/gateway-protocol. */
+/** Monotonic state versions used by clients to detect snapshot freshness. */
 export const StateVersionSchema = Type.Object(
   {
     presence: Type.Integer({ minimum: 0 }),
@@ -48,7 +48,7 @@ export const StateVersionSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Snapshot Schema behavior in packages/gateway-protocol. */
+/** Full gateway snapshot sent after connection and state changes. */
 export const SnapshotSchema = Type.Object(
   {
     presence: Type.Array(PresenceEntrySchema),
