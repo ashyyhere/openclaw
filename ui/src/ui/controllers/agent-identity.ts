@@ -1,8 +1,9 @@
-// ui/src/ui/controllers agent identity helpers and runtime behavior.
+// Controller helpers for lazy-loading agent identity display data. Results are
+// cached by agent id so repeated panels can share the same gateway response.
 import type { GatewayBrowserClient } from "../gateway.ts";
 import type { AgentIdentityResult } from "../types.ts";
 
-/** Shared type for Agent Identity State in ui/src/ui/controllers. */
+/** Mutable cache and loading state for agent identity lookups. */
 export type AgentIdentityState = {
   client: GatewayBrowserClient | null;
   connected: boolean;
@@ -11,7 +12,7 @@ export type AgentIdentityState = {
   agentIdentityById: Record<string, AgentIdentityResult>;
 };
 
-/** Reused helper for load Agent Identity behavior in ui/src/ui/controllers. */
+/** Load one missing agent identity into the by-id cache. */
 export async function loadAgentIdentity(state: AgentIdentityState, agentId: string) {
   if (!state.client || !state.connected || state.agentIdentityLoading) {
     return;
@@ -35,7 +36,7 @@ export async function loadAgentIdentity(state: AgentIdentityState, agentId: stri
   }
 }
 
-/** Reused helper for load Agent Identities behavior in ui/src/ui/controllers. */
+/** Load all missing agent identities from a requested id list. */
 export async function loadAgentIdentities(state: AgentIdentityState, agentIds: string[]) {
   if (!state.client || !state.connected || state.agentIdentityLoading) {
     return;

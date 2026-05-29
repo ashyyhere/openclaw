@@ -1,10 +1,12 @@
-// ui/src/ui/controllers model auth status helpers and runtime behavior.
+// Controller helpers for model auth status in Control UI. The low-level loader
+// preserves transport errors, while the state wrapper stores a fallback snapshot
+// plus visible error text.
 import type { GatewayBrowserClient } from "../gateway.ts";
 import type { ModelAuthStatusResult } from "../types.ts";
 
 const FALLBACK: ModelAuthStatusResult = { ts: 0, providers: [] };
 
-/** Shared type for Model Auth Status State in ui/src/ui/controllers. */
+/** Mutable state for the model-auth status panel. */
 export type ModelAuthStatusState = {
   client: GatewayBrowserClient | null;
   connected: boolean;
@@ -31,7 +33,7 @@ export async function loadModelAuthStatus(
   return result ?? FALLBACK;
 }
 
-/** Reused helper for load Model Auth Status State behavior in ui/src/ui/controllers. */
+/** Load model auth status into UI state with loading/error guards. */
 export async function loadModelAuthStatusState(
   state: ModelAuthStatusState,
   opts?: { refresh?: boolean },

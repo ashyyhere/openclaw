@@ -1,7 +1,8 @@
-// ui/src/ui/controllers nodes helpers and runtime behavior.
+// Controller helpers for node-host discovery in Control UI. Node rows are raw
+// gateway objects because plugin-provided node metadata can vary by provider.
 import type { GatewayBrowserClient } from "../gateway.ts";
 
-/** Shared type for Nodes State in ui/src/ui/controllers. */
+/** Mutable node-list state for the Nodes view. */
 export type NodesState = {
   client: GatewayBrowserClient | null;
   connected: boolean;
@@ -10,7 +11,7 @@ export type NodesState = {
   lastError: string | null;
 };
 
-/** Reused helper for load Nodes behavior in ui/src/ui/controllers. */
+/** Load registered node-host capabilities, optionally suppressing visible errors. */
 export async function loadNodes(state: NodesState, opts?: { quiet?: boolean }) {
   if (!state.client || !state.connected) {
     return;

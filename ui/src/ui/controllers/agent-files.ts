@@ -1,4 +1,6 @@
-// ui/src/ui/controllers agent files helpers and runtime behavior.
+// Controller helpers for browsing and editing per-agent files. The controller
+// keeps server contents and local drafts separate so refreshes do not overwrite
+// edited drafts unless requested.
 import type { GatewayBrowserClient } from "../gateway.ts";
 import type {
   AgentFileEntry,
@@ -7,7 +9,7 @@ import type {
   AgentsFilesSetResult,
 } from "../types.ts";
 
-/** Shared type for Agent Files State in ui/src/ui/controllers. */
+/** Mutable state for agent file list, active file contents, drafts, and saves. */
 export type AgentFilesState = {
   client: GatewayBrowserClient | null;
   connected: boolean;
@@ -34,7 +36,7 @@ function mergeFileEntry(
   return { ...list, files: nextFiles };
 }
 
-/** Reused helper for load Agent Files behavior in ui/src/ui/controllers. */
+/** Load the file list for one agent and clear a stale active selection. */
 export async function loadAgentFiles(state: AgentFilesState, agentId: string) {
   if (!state.client || !state.connected || state.agentFilesLoading) {
     return;
@@ -58,7 +60,7 @@ export async function loadAgentFiles(state: AgentFilesState, agentId: string) {
   }
 }
 
-/** Reused helper for load Agent File Content behavior in ui/src/ui/controllers. */
+/** Load one agent file's content, preserving an edited draft by default. */
 export async function loadAgentFileContent(
   state: AgentFilesState,
   agentId: string,
@@ -100,7 +102,7 @@ export async function loadAgentFileContent(
   }
 }
 
-/** Reused helper for save Agent File behavior in ui/src/ui/controllers. */
+/** Save one agent file and update list, base content, and draft snapshots. */
 export async function saveAgentFile(
   state: AgentFilesState,
   agentId: string,

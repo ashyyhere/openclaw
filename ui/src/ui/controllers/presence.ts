@@ -1,4 +1,6 @@
-// ui/src/ui/controllers presence helpers and runtime behavior.
+// Controller helpers for loading instance presence into Control UI state. The
+// controller owns loading/error flags and translates missing read-scope errors
+// into user-facing status text.
 import type { GatewayBrowserClient } from "../gateway.ts";
 import type { PresenceEntry } from "../types.ts";
 import {
@@ -6,7 +8,7 @@ import {
   isMissingOperatorReadScopeError,
 } from "./scope-errors.ts";
 
-/** Shared type for Presence State in ui/src/ui/controllers. */
+/** Mutable state required to request and render system presence. */
 export type PresenceState = {
   client: GatewayBrowserClient | null;
   connected: boolean;
@@ -16,7 +18,7 @@ export type PresenceState = {
   presenceStatus: string | null;
 };
 
-/** Reused helper for load Presence behavior in ui/src/ui/controllers. */
+/** Load current instance presence through the gateway. */
 export async function loadPresence(state: PresenceState) {
   if (!state.client || !state.connected) {
     return;

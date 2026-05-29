@@ -7,7 +7,7 @@ import {
   isMissingOperatorReadScopeError,
 } from "./scope-errors.ts";
 
-/** Shared type for Logs State in ui/src/ui/controllers. */
+/** Mutable state for log-tail paging, file metadata, and parsed entries. */
 export type LogsState = {
   client: GatewayBrowserClient | null;
   connected: boolean;
@@ -53,7 +53,7 @@ function normalizeLevel(value: unknown): LogLevel | null {
   return LEVELS.has(lowered) ? lowered : null;
 }
 
-/** Reused helper for parse Log Line behavior in ui/src/ui/controllers. */
+/** Parse one raw log line into a display row while stripping ANSI sequences. */
 export function parseLogLine(line: string): LogEntry {
   if (!line.trim()) {
     return { raw: line, message: line };
@@ -105,7 +105,7 @@ export function parseLogLine(line: string): LogEntry {
   }
 }
 
-/** Reused helper for load Logs behavior in ui/src/ui/controllers. */
+/** Fetch the next log-tail page and append or reset the bounded display buffer. */
 export async function loadLogs(state: LogsState, opts?: { reset?: boolean; quiet?: boolean }) {
   const quiet = opts?.quiet === true;
   if (!state.client || !state.connected || (state.logsLoading && !quiet)) {
