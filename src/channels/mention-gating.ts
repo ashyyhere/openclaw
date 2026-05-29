@@ -32,14 +32,14 @@ export type MentionGateWithBypassResult = MentionGateResult & {
   shouldBypassMention: boolean;
 };
 
-/** Shared type for Inbound Implicit Mention Kind in src/channels. */
+/** Non-textual signals that can satisfy mention gating in group conversations. */
 export type InboundImplicitMentionKind =
   | "reply_to_bot"
   | "quoted_bot"
   | "bot_thread_participant"
   | "native";
 
-/** Shared type for Inbound Mention Facts in src/channels. */
+/** Observed mention facts extracted from one inbound channel event. */
 export type InboundMentionFacts = {
   canDetectMention: boolean;
   wasMentioned: boolean;
@@ -47,7 +47,7 @@ export type InboundMentionFacts = {
   implicitMentionKinds?: readonly InboundImplicitMentionKind[];
 };
 
-/** Shared type for Inbound Mention Policy in src/channels. */
+/** Channel/account policy used to decide whether mention gating skips a turn. */
 export type InboundMentionPolicy = {
   isGroup: boolean;
   requireMention: boolean;
@@ -60,25 +60,25 @@ export type InboundMentionPolicy = {
 /** @deprecated Prefer the nested `{ facts, policy }` call shape for new code. */
 export type ResolveInboundMentionDecisionFlatParams = InboundMentionFacts & InboundMentionPolicy;
 
-/** Shared type for Resolve Inbound Mention Decision Nested Params in src/channels. */
+/** Preferred call shape that separates observed facts from configured policy. */
 export type ResolveInboundMentionDecisionNestedParams = {
   facts: InboundMentionFacts;
   policy: InboundMentionPolicy;
 };
 
-/** Shared type for Resolve Inbound Mention Decision Params in src/channels. */
+/** Accepted mention-decision call shapes, including the deprecated flat shape. */
 export type ResolveInboundMentionDecisionParams =
   | ResolveInboundMentionDecisionFlatParams
   | ResolveInboundMentionDecisionNestedParams;
 
-/** Shared type for Inbound Mention Decision in src/channels. */
+/** Mention-gating decision plus the implicit/bypass reasons that made it pass. */
 export type InboundMentionDecision = MentionGateResult & {
   implicitMention: boolean;
   matchedImplicitMentionKinds: InboundImplicitMentionKind[];
   shouldBypassMention: boolean;
 };
 
-/** Reused helper for implicit Mention Kind When behavior in src/channels. */
+/** Return a singleton implicit-mention reason only when the caller observed it. */
 export function implicitMentionKindWhen(
   kind: InboundImplicitMentionKind,
   enabled: boolean,
@@ -176,7 +176,7 @@ function normalizeMentionDecisionParams(
   };
 }
 
-/** Reused helper for resolve Inbound Mention Decision behavior in src/channels. */
+/** Resolve whether an inbound group/channel event should run despite mention gating. */
 export function resolveInboundMentionDecision(
   params: ResolveInboundMentionDecisionParams,
 ): InboundMentionDecision {
