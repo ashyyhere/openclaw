@@ -1,7 +1,9 @@
+// ui/src/ui/chat pinned messages helpers and runtime behavior.
 import { getSafeLocalStorage } from "../../local-storage.ts";
 
 const PREFIX = "openclaw:pinned:";
 
+/** Reused class for Pinned Messages behavior in ui/src/ui/chat. */
 export class PinnedMessages {
   private key: string;
   private pinnedIndices = new Set<number>();

@@ -1,5 +1,7 @@
+// daemon cmd set helpers and runtime behavior.
 type CmdSetAssignment = { key: string; value: string };
 
+/** Reused helper for assert No Cmd Line Break behavior in src/daemon. */
 export function assertNoCmdLineBreak(value: string, field: string): void {
   if (/[\r\n]/.test(value)) {
     throw new Error(`${field} cannot contain CR or LF in Windows task scripts.`);
@@ -30,6 +32,7 @@ function unescapeCmdSetAssignmentComponent(value: string): string {
   return out;
 }
 
+/** Reused helper for parse Cmd Set Assignment behavior in src/daemon. */
 export function parseCmdSetAssignment(line: string): CmdSetAssignment | null {
   const raw = line.trim();
   if (!raw) {
@@ -55,6 +58,7 @@ export function parseCmdSetAssignment(line: string): CmdSetAssignment | null {
   };
 }
 
+/** Reused helper for render Cmd Set Assignment behavior in src/daemon. */
 export function renderCmdSetAssignment(key: string, value: string): string {
   assertNoCmdLineBreak(key, "Environment variable name");
   assertNoCmdLineBreak(value, "Environment variable value");

@@ -1,3 +1,4 @@
+// extensions/openai openai codex provider helpers and runtime behavior.
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";
 import type {
   ProviderAuthContext,

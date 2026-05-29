@@ -1,9 +1,11 @@
+// media-understanding shared helpers and runtime behavior.
 import path from "node:path";
 import {
   assertOkOrThrowHttpError,
   createProviderHttpError,
   readProviderJsonObjectResponse,
 } from "../agents/provider-http-errors.js";
+/** Re-exported API for src/media-understanding. */
 export {
   assertOkOrThrowHttpError,
   readProviderJsonObjectResponse,
@@ -34,8 +36,11 @@ import {
   resolveTimerTimeoutMs,
 } from "../shared/number-coercion.js";
 import { fetchWithTimeout } from "../utils/fetch-timeout.js";
+/** Re-exported API for src/media-understanding, starting with fetch With Timeout. */
 export { fetchWithTimeout };
+/** Re-exported API for src/media-understanding, starting with normalize Base Url. */
 export { normalizeBaseUrl } from "../agents/provider-request-config.js";
+/** Re-exported API for src/media-understanding, starting with sanitize Configured Model Provider Request. */
 export { sanitizeConfiguredModelProviderRequest } from "../agents/provider-request-config.js";
 
 const DEFAULT_GUARDED_HTTP_TIMEOUT_MS = 60_000;
@@ -43,6 +48,7 @@ const MAX_ERROR_CHARS = 300;
 const MAX_ERROR_RESPONSE_BYTES = 4096;
 const MAX_AUDIT_CONTEXT_CHARS = 80;
 
+/** Reused helper for resolve Audio Transcription Upload File Name behavior in src/media-understanding. */
 export function resolveAudioTranscriptionUploadFileName(fileName?: string, mime?: string): string {
   const trimmed = fileName?.trim();
   const baseName = trimmed ? path.basename(trimmed) : "audio";
@@ -57,6 +63,7 @@ export function resolveAudioTranscriptionUploadFileName(fileName?: string, mime?
   return baseName;
 }
 
+/** Reused helper for build Audio Transcription Form Data behavior in src/media-understanding. */
 export function buildAudioTranscriptionFormData(params: {
   buffer: Buffer;
   fileName?: string;
@@ -78,12 +85,14 @@ export function buildAudioTranscriptionFormData(params: {
   return form;
 }
 
+/** Shared type for Provider Operation Deadline in src/media-understanding. */
 export type ProviderOperationDeadline = {
   deadlineAtMs?: number;
   label: string;
   timeoutMs?: number;
 };
 
+/** Shared type for Provider Operation Timeout Ms in src/media-understanding. */
 export type ProviderOperationTimeoutMs = number | (() => number);
 
 type GuardedProviderRequestParams = {
@@ -100,6 +109,7 @@ type GuardedProviderRequestParams = {
   mode?: GuardedFetchMode;
 };
 
+/** Reused helper for create Provider Operation Deadline behavior in src/media-understanding. */
 export function createProviderOperationDeadline(params: {
   timeoutMs?: number;
   label: string;
@@ -121,6 +131,7 @@ export function createProviderOperationDeadline(params: {
   };
 }
 
+/** Reused helper for resolve Provider Operation Timeout Ms behavior in src/media-understanding. */
 export function resolveProviderOperationTimeoutMs(params: {
   deadline: ProviderOperationDeadline;
   defaultTimeoutMs: number;
@@ -137,6 +148,7 @@ export function resolveProviderOperationTimeoutMs(params: {
   return Math.max(1, Math.min(defaultTimeoutMs, remainingMs));
 }
 
+/** Reused helper for create Provider Operation Timeout Resolver behavior in src/media-understanding. */
 export function createProviderOperationTimeoutResolver(params: {
   deadline: ProviderOperationDeadline;
   defaultTimeoutMs: number;
@@ -144,6 +156,7 @@ export function createProviderOperationTimeoutResolver(params: {
   return () => resolveProviderOperationTimeoutMs(params);
 }
 
+/** Reused helper for wait Provider Operation Poll Interval behavior in src/media-understanding. */
 export async function waitProviderOperationPollInterval(params: {
   deadline: ProviderOperationDeadline;
   pollIntervalMs: number;
@@ -160,6 +173,7 @@ export async function waitProviderOperationPollInterval(params: {
   await new Promise((resolve) => setTimeout(resolve, Math.min(params.pollIntervalMs, remainingMs)));
 }
 
+/** Reused helper for poll Provider Operation Json behavior in src/media-understanding. */
 export async function pollProviderOperationJson<TPayload>(
   params: {
     url: string;
@@ -231,6 +245,7 @@ export async function pollProviderOperationJson<TPayload>(
   throw new Error(params.timeoutMessage);
 }
 
+/** Reused helper for fetch Provider Operation Response behavior in src/media-understanding. */
 export async function fetchProviderOperationResponse(params: {
   stage: ProviderOperationRetryStage;
   url: string;
@@ -260,6 +275,7 @@ export async function fetchProviderOperationResponse(params: {
   });
 }
 
+/** Reused helper for fetch Provider Download Response behavior in src/media-understanding. */
 export async function fetchProviderDownloadResponse(params: {
   url: string;
   init?: RequestInit;
@@ -309,6 +325,7 @@ function sanitizeAuditContext(auditContext: string | undefined): string | undefi
   return cleaned.slice(0, MAX_AUDIT_CONTEXT_CHARS);
 }
 
+/** Reused helper for resolve Provider Http Request Config behavior in src/media-understanding. */
 export function resolveProviderHttpRequestConfig(params: {
   baseUrl?: string;
   defaultBaseUrl: string;
@@ -391,6 +408,7 @@ function shouldAutoUpgradeToTrustedEnvProxy(params: {
   return shouldUseEnvHttpProxyForUrl(params.url);
 }
 
+/** Reused helper for fetch With Timeout Guarded behavior in src/media-understanding. */
 export async function fetchWithTimeoutGuarded(
   url: string,
   init: RequestInit,
@@ -632,6 +650,7 @@ export async function postMultipartRequest(params: GuardedPostRequestParams<Body
   });
 }
 
+/** Reused helper for read Error Response behavior in src/media-understanding. */
 export async function readErrorResponse(res: Response): Promise<string | undefined> {
   let reader: ReadableStreamDefaultReader<Uint8Array> | undefined;
   try {
@@ -688,6 +707,7 @@ export async function readErrorResponse(res: Response): Promise<string | undefin
   }
 }
 
+/** Reused helper for require Transcription Text behavior in src/media-understanding. */
 export function requireTranscriptionText(
   value: string | undefined,
   missingMessage: string,

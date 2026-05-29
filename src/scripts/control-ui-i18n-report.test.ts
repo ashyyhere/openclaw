@@ -1,3 +1,4 @@
+// Tests scripts control ui i18n report test behavior.
 import { describe, expect, it } from "vitest";
 import {
   filterRawCopyEntries,

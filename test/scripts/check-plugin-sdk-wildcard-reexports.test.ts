@@ -1,3 +1,4 @@
+// Tests test/scripts check plugin sdk wildcard reexports test behavior.
 import { describe, expect, it } from "vitest";
 import { findPluginSdkWildcardReexports } from "../../scripts/check-plugin-sdk-wildcard-reexports.mjs";
 

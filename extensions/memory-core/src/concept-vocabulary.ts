@@ -1,3 +1,4 @@
+// extensions/memory-core/src concept vocabulary helpers and runtime behavior.
 import path from "node:path";
 import { normalizeLowercaseStringOrEmpty } from "openclaw/plugin-sdk/string-coerce-runtime";
 

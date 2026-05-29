@@ -1,3 +1,4 @@
+// Tests extensions/feishu/src sequential queue test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { createSequentialQueue } from "./sequential-queue.js";
 

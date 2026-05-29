@@ -1,13 +1,17 @@
+// plugin-sdk channel pairing helpers and runtime behavior.
 import type { ChannelId } from "../channels/plugins/types.public.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   createLoggedPairingApprovalNotifier,
   createPairingPrefixStripper,
   createTextPairingAdapter,
 } from "../channels/plugins/pairing-adapters.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   readChannelAllowFromStore,
   readChannelAllowFromStoreSync,
 } from "../pairing/pairing-store.js";
+/** Re-exported API for src/plugin-sdk, starting with resolve Channel Allow From Path. */
 export { resolveChannelAllowFromPath } from "../pairing/pairing-store.js";
 import { issuePairingChallenge } from "../pairing/pairing-challenge.js";
 import type { PluginRuntime } from "../plugins/runtime/types.js";

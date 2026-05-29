@@ -1,3 +1,4 @@
+// Tests plugins/contracts registry contract test behavior.
 import { describe, expect, it } from "vitest";
 import { uniqueSortedStrings } from "../../plugin-sdk/test-helpers/string-utils.js";
 import { loadPluginManifestRegistry, type PluginManifestRecord } from "../manifest-registry.js";

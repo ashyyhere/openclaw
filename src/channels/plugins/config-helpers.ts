@@ -1,3 +1,4 @@
+// Channel plugin config read and normalization helpers.
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { DEFAULT_ACCOUNT_ID } from "../../routing/session-key.js";
 
@@ -13,6 +14,7 @@ function isConfiguredSecretValue(value: unknown): boolean {
   return Boolean(value);
 }
 
+/** Reused helper for set Account Enabled In Config Section behavior in src/channels/plugins. */
 export function setAccountEnabledInConfigSection(params: {
   cfg: OpenClawConfig;
   sectionKey: string;
@@ -57,6 +59,7 @@ export function setAccountEnabledInConfigSection(params: {
   } as OpenClawConfig;
 }
 
+/** Reused helper for delete Account From Config Section behavior in src/channels/plugins. */
 export function deleteAccountFromConfigSection(params: {
   cfg: OpenClawConfig;
   sectionKey: string;
@@ -119,6 +122,7 @@ export function deleteAccountFromConfigSection(params: {
   return nextCfg;
 }
 
+/** Reused helper for clear Account Entry Fields behavior in src/channels/plugins. */
 export function clearAccountEntryFields<TAccountEntry extends object>(params: {
   accounts?: Record<string, TAccountEntry>;
   accountId: string;

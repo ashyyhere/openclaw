@@ -1,3 +1,4 @@
+// extensions/anthropic provider contract api helpers and runtime behavior.
 import type { ProviderPlugin } from "openclaw/plugin-sdk/provider-model-shared";
 
 const noopAuth = async () => ({ profiles: [] });

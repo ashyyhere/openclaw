@@ -1,3 +1,4 @@
+/** Public SDK builders for channel approval delivery, native surfaces, and split adapters. */
 import type { ExecApprovalRequest } from "../infra/exec-approvals.js";
 import type { PluginApprovalRequest } from "../infra/plugin-approvals.js";
 import type { ChannelApprovalCapability } from "./channel-contract.js";
@@ -145,6 +146,8 @@ function buildApproverRestrictedNativeApprovalCapability(
           return false;
         }
         if (params.requireMatchingTurnSourceChannel) {
+          // Some native transports can only prove they own requests that originated from the same
+          // channel; keep fallback delivery available for cross-channel forwarded approvals.
           const turnSourceChannel = normalizeMessageChannel(
             input.request.request.turnSourceChannel,
           );
@@ -188,12 +191,14 @@ function buildApproverRestrictedNativeApprovalCapability(
   });
 }
 
+/** Build a split approval adapter that restricts approval actions to configured approvers. */
 export function createApproverRestrictedNativeApprovalAdapter(
   params: ApproverRestrictedNativeApprovalParams,
 ) {
   return splitChannelApprovalCapability(buildApproverRestrictedNativeApprovalCapability(params));
 }
 
+/** Compose a full channel approval capability from optional auth, delivery, render, and native parts. */
 export function createChannelApprovalCapability(params: {
   authorizeActorAction?: ChannelApprovalCapability["authorizeActorAction"];
   getActionAvailabilityState?: ChannelApprovalCapability["getActionAvailabilityState"];
@@ -226,6 +231,7 @@ export function createChannelApprovalCapability(params: {
   };
 }
 
+/** Split a full approval capability into the adapter shape expected by older channel wiring. */
 export function splitChannelApprovalCapability(capability: ChannelApprovalCapability): {
   auth: {
     authorizeActorAction?: ChannelApprovalCapability["authorizeActorAction"];
@@ -254,6 +260,7 @@ export function splitChannelApprovalCapability(capability: ChannelApprovalCapabi
   };
 }
 
+/** Build a complete approver-restricted native approval capability without splitting it. */
 export function createApproverRestrictedNativeApprovalCapability(
   params: ApproverRestrictedNativeApprovalParams,
 ): ChannelApprovalCapability {

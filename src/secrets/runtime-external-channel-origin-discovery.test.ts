@@ -1,3 +1,4 @@
+// Tests secrets runtime external channel origin discovery test behavior.
 import { describe, expect, it, vi } from "vitest";
 
 const { loadPluginMetadataSnapshotMock, loadChannelSecretContractApiMock } = vi.hoisted(() => ({

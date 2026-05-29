@@ -1,3 +1,4 @@
+// llm/providers cloudflare helpers and runtime behavior.
 import type { Model } from "../types.js";
 
 /** Workers AI direct endpoint. */
@@ -16,6 +17,7 @@ export const CLOUDFLARE_AI_GATEWAY_OPENAI_BASE_URL =
 export const CLOUDFLARE_AI_GATEWAY_ANTHROPIC_BASE_URL =
   "https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/anthropic";
 
+/** Reused helper for is Cloudflare Provider behavior in src/llm/providers. */
 export function isCloudflareProvider(provider: string): boolean {
   return provider === "cloudflare-workers-ai" || provider === "cloudflare-ai-gateway";
 }

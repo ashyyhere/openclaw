@@ -1,4 +1,5 @@
 #!/usr/bin/env -S node --import tsx
+// scripts test force helpers and runtime behavior.
 import { spawnSync } from "node:child_process";
 import os from "node:os";
 import path from "node:path";

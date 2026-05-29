@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/monitor thread title generate test behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import * as agentRuntimeModule from "openclaw/plugin-sdk/simple-completion-runtime";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";

@@ -1,3 +1,4 @@
+// Tests extensions/twitch/src config schema test behavior.
 import { buildChannelConfigSchema } from "openclaw/plugin-sdk/channel-config-schema";
 import { validateJsonSchemaValue } from "openclaw/plugin-sdk/json-schema-runtime";
 import { describe, expect, it } from "vitest";

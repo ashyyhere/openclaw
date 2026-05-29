@@ -1,3 +1,4 @@
+/** Tests provider auth warm worker behavior. */
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";

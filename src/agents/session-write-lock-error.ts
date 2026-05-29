@@ -1,5 +1,7 @@
+/** Error type and guard for session write lock acquisition timeouts. */
 const SESSION_WRITE_LOCK_TIMEOUT_CODE = "OPENCLAW_SESSION_WRITE_LOCK_TIMEOUT";
 
+/** Error thrown when a session write lock cannot be acquired in time. */
 export class SessionWriteLockTimeoutError extends Error {
   readonly code = SESSION_WRITE_LOCK_TIMEOUT_CODE;
   readonly timeoutMs: number;
@@ -17,6 +19,7 @@ export class SessionWriteLockTimeoutError extends Error {
   }
 }
 
+/** Return whether an unknown error is a session write-lock timeout. */
 export function isSessionWriteLockTimeoutError(err: unknown): boolean {
   return (
     err instanceof SessionWriteLockTimeoutError ||

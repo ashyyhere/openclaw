@@ -1,3 +1,4 @@
+/** Main embedded-agent execution loop and provider failover orchestration. */
 import { randomBytes } from "node:crypto";
 import fs from "node:fs/promises";
 import { sanitizeForLog } from "../../../packages/terminal-core/src/ansi.js";
@@ -455,6 +456,7 @@ function buildHandledReplyPayloads(reply?: ReplyPayload) {
   ];
 }
 
+/** Runs one embedded-agent reply attempt sequence for a channel request. */
 export async function runEmbeddedAgent(
   params: RunEmbeddedAgentParams,
 ): Promise<EmbeddedAgentRunResult> {

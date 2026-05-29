@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server models helpers and runtime behavior.
 import { uniqueStrings } from "openclaw/plugin-sdk/string-coerce-runtime";
 import type { resolveCodexAppServerAuthProfileIdForAgent } from "./auth-bridge.js";
 import type { CodexAppServerClient } from "./client.js";

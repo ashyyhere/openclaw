@@ -1,3 +1,4 @@
+/** Installs skills from local paths or git specs while preserving source provenance. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { redactSensitiveUrlLikeString } from "@openclaw/net-policy/redact-sensitive-url";
@@ -32,6 +33,7 @@ type SkillSourceOrigin = {
   };
 };
 
+/** Result for path/git skill installs, including resolved git provenance when available. */
 export type SkillSourceInstallResult =
   | {
       ok: true;
@@ -365,6 +367,7 @@ async function installPathSkill(params: {
   });
 }
 
+/** Returns true for path/git skill install specs handled outside the bundled registry. */
 export function isSkillSourceInstallSpec(raw: string): boolean {
   const trimmed = raw.trim();
   return (
@@ -376,6 +379,7 @@ export function isSkillSourceInstallSpec(raw: string): boolean {
   );
 }
 
+/** Installs a skill from a local directory or `git:` spec into the workspace skills folder. */
 export async function installSkillFromSource(params: {
   workspaceDir: string;
   spec: string;

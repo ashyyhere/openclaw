@@ -1,3 +1,4 @@
+// Inbound event context builder helpers.
 import {
   commandTurnKindToSource,
   createCommandTurnContext,
@@ -52,6 +53,7 @@ type BuildAccessFacts = Omit<AccessFacts, "commands"> & {
   commands?: Partial<NonNullable<AccessFacts["commands"]>>;
 };
 
+/** Shared type for Build Channel Inbound Event Context Params in src/channels/inbound-event. */
 export type BuildChannelInboundEventContextParams = {
   channel: string;
   accountId?: string;
@@ -87,6 +89,7 @@ type UntrustedStructuredContextEntries = NonNullable<
   FinalizedMsgContext["UntrustedStructuredContext"]
 >;
 
+/** Shared type for Built Channel Inbound Event Context in src/channels/inbound-event. */
 export type BuiltChannelInboundEventContext = FinalizedMsgContext & {
   Body: string;
   BodyForAgent: string;
@@ -156,6 +159,7 @@ function keepSupplementalContext(params: {
   });
 }
 
+/** Reused helper for filter Channel Inbound Supplemental Context behavior in src/channels/inbound-event. */
 export function filterChannelInboundSupplementalContext(params: {
   supplemental?: SupplementalContextFacts;
   contextVisibility?: ContextVisibilityMode;
@@ -194,6 +198,7 @@ export function filterChannelInboundSupplementalContext(params: {
   };
 }
 
+/** Reused helper for filter Channel Inbound Quote Context behavior in src/channels/inbound-event. */
 export function filterChannelInboundQuoteContext(
   contextVisibility: ContextVisibilityMode | undefined,
   quote: SupplementalContextFacts["quote"] | undefined,
@@ -351,9 +356,11 @@ function finalizePreparedChannelInboundContext<T extends Record<string, unknown>
 export function finalizeChannelInboundContext<T extends Record<string, unknown>>(
   params: FinalizeChannelInboundContextAsyncParams<T>,
 ): Promise<FinalizeChannelInboundContextResult<T>>;
+/** Reused helper for finalize Channel Inbound Context behavior in src/channels/inbound-event. */
 export function finalizeChannelInboundContext<T extends Record<string, unknown>>(
   params: FinalizeChannelInboundContextParams<T>,
 ): FinalizeChannelInboundContextResult<T>;
+/** Reused helper for finalize Channel Inbound Context behavior in src/channels/inbound-event. */
 export function finalizeChannelInboundContext<T extends Record<string, unknown>>(
   params: FinalizeChannelInboundContextParams<T> &
     Partial<ChannelInboundSupplementalResolutionOptions>,
@@ -449,12 +456,15 @@ function resolveChannelCommandContext(params: {
   });
 }
 
+/** Reused helper for build Channel Inbound Event Context behavior in src/channels/inbound-event. */
 export function buildChannelInboundEventContext(
   params: BuildChannelInboundEventContextAsyncParams,
 ): Promise<BuiltChannelInboundEventContext>;
+/** Reused helper for build Channel Inbound Event Context behavior in src/channels/inbound-event. */
 export function buildChannelInboundEventContext(
   params: BuildChannelInboundEventContextParams,
 ): BuiltChannelInboundEventContext;
+/** Reused helper for build Channel Inbound Event Context behavior in src/channels/inbound-event. */
 export function buildChannelInboundEventContext(
   params: BuildChannelInboundEventContextParams &
     Partial<ChannelInboundSupplementalResolutionOptions>,

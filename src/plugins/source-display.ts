@@ -1,9 +1,12 @@
+// plugins source display helpers and runtime behavior.
 import path from "node:path";
 import { isPathInside } from "../infra/path-guards.js";
 import { shortenHomeInString } from "../utils.js";
 import type { PluginRecord } from "./registry.js";
 import type { PluginSourceRoots } from "./roots.js";
+/** Re-exported API for src/plugins, starting with resolve Plugin Source Roots. */
 export { resolvePluginSourceRoots } from "./roots.js";
+/** Re-exported API for src/plugins, starting with Plugin Source Roots. */
 export type { PluginSourceRoots } from "./roots.js";
 
 function tryRelative(root: string, filePath: string): string | null {
@@ -18,6 +21,7 @@ function tryRelative(root: string, filePath: string): string | null {
   return rel.replaceAll("\\", "/");
 }
 
+/** Reused helper for format Plugin Source For Table behavior in src/plugins. */
 export function formatPluginSourceForTable(
   plugin: Pick<PluginRecord, "source" | "origin">,
   roots: PluginSourceRoots,

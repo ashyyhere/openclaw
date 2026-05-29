@@ -1,3 +1,4 @@
+// infra/command-explainer format helpers and runtime behavior.
 import type { ExecApprovalCommandSpan } from "../exec-approvals.js";
 import { normalizeExecutableToken } from "../exec-wrapper-tokens.js";
 import {
@@ -41,6 +42,7 @@ function hasUnsupportedShellWrapper(explanation: CommandExplanation): boolean {
   );
 }
 
+/** Reused helper for format Command Spans behavior in src/infra/command-explainer. */
 export function formatCommandSpans(explanation: CommandExplanation): ExecApprovalCommandSpan[] {
   if (hasUnsupportedShellWrapper(explanation)) {
     return [];

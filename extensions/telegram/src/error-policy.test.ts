@@ -1,3 +1,4 @@
+// Tests Telegram error policy resolution and cooldown suppression behavior.
 import { MAX_DATE_TIMESTAMP_MS } from "openclaw/plugin-sdk/number-runtime";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {

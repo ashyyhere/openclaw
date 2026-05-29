@@ -1,3 +1,4 @@
+// packages/gateway-protocol/src/schema primitives helpers and runtime behavior.
 import { Type } from "typebox";
 import { GATEWAY_CLIENT_IDS, GATEWAY_CLIENT_MODES } from "../client-info.js";
 import {
@@ -12,16 +13,21 @@ const ENV_SECRET_REF_ID_RE = /^[A-Z][A-Z0-9_]{0,127}$/;
 const INPUT_PROVENANCE_KIND_VALUES = ["external_user", "inter_session", "internal_system"] as const;
 const SESSION_LABEL_MAX_LENGTH = 512;
 
+/** Public constant for Non Empty String behavior in packages/gateway-protocol. */
 export const NonEmptyString = Type.String({ minLength: 1 });
+/** Public constant for CHAT SEND SESSION KEY MAX LENGTH behavior in packages/gateway-protocol. */
 export const CHAT_SEND_SESSION_KEY_MAX_LENGTH = 512;
+/** Public constant for Chat Send Session Key String behavior in packages/gateway-protocol. */
 export const ChatSendSessionKeyString = Type.String({
   minLength: 1,
   maxLength: CHAT_SEND_SESSION_KEY_MAX_LENGTH,
 });
+/** Public constant for Session Label String behavior in packages/gateway-protocol. */
 export const SessionLabelString = Type.String({
   minLength: 1,
   maxLength: SESSION_LABEL_MAX_LENGTH,
 });
+/** Public constant for Input Provenance Schema behavior in packages/gateway-protocol. */
 export const InputProvenanceSchema = Type.Object(
   {
     kind: Type.String({ enum: [...INPUT_PROVENANCE_KIND_VALUES] }),
@@ -33,10 +39,13 @@ export const InputProvenanceSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Gateway Client Id Schema behavior in packages/gateway-protocol. */
 export const GatewayClientIdSchema = Type.Enum(GATEWAY_CLIENT_IDS);
 
+/** Public constant for Gateway Client Mode Schema behavior in packages/gateway-protocol. */
 export const GatewayClientModeSchema = Type.Enum(GATEWAY_CLIENT_MODES);
 
+/** Public constant for Secret Ref Source Schema behavior in packages/gateway-protocol. */
 export const SecretRefSourceSchema = Type.Union([
   Type.Literal("env"),
   Type.Literal("file"),
@@ -87,10 +96,12 @@ const ExecSecretRefSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Secret Ref Schema behavior in packages/gateway-protocol. */
 export const SecretRefSchema = Type.Union([
   EnvSecretRefSchema,
   FileSecretRefSchema,
   ExecSecretRefSchema,
 ]);
 
+/** Public constant for Secret Input Schema behavior in packages/gateway-protocol. */
 export const SecretInputSchema = Type.Union([Type.String(), SecretRefSchema]);

@@ -1,3 +1,4 @@
+// extensions/qa-lab/src/providers index helpers and runtime behavior.
 import { aimockProviderDefinition } from "./aimock/index.js";
 import { liveFrontierProviderDefinition } from "./live-frontier/index.js";
 import { mockOpenAiProviderDefinition } from "./mock-openai/index.js";

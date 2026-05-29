@@ -1,3 +1,4 @@
+// daemon service audit helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { normalizeEnvVarKey } from "../infra/host-env-security.js";
@@ -25,6 +26,7 @@ import { isNonMinimalServicePathEntry, normalizeServicePathEntry } from "./servi
 import type { GatewayServiceEnvironmentValueSource } from "./service-types.js";
 import { resolveSystemdUserUnitPath } from "./systemd.js";
 
+/** Shared type for Gateway Service Command in src/daemon. */
 export type GatewayServiceCommand = {
   programArguments: string[];
   workingDirectory?: string;
@@ -33,6 +35,7 @@ export type GatewayServiceCommand = {
   sourcePath?: string;
 } | null;
 
+/** Shared type for Service Config Issue in src/daemon. */
 export type ServiceConfigIssue = {
   code: string;
   message: string;
@@ -40,11 +43,13 @@ export type ServiceConfigIssue = {
   level?: "recommended" | "aggressive";
 };
 
+/** Shared type for Service Config Audit in src/daemon. */
 export type ServiceConfigAudit = {
   ok: boolean;
   issues: ServiceConfigIssue[];
 };
 
+/** Reused constant for SERVICE AUDIT CODES behavior in src/daemon. */
 export const SERVICE_AUDIT_CODES = {
   gatewayCommandMissing: "gateway-command-missing",
   gatewayEntrypointMismatch: "gateway-entrypoint-mismatch",
@@ -68,6 +73,7 @@ export const SERVICE_AUDIT_CODES = {
   systemdKillModeProcessOrNone: "systemd-kill-mode-process-or-none",
 } as const;
 
+/** Reused helper for needs Node Runtime Migration behavior in src/daemon. */
 export function needsNodeRuntimeMigration(issues: ServiceConfigIssue[]): boolean {
   return issues.some(
     (issue) =>
@@ -281,6 +287,7 @@ function readGatewayServiceCommandPortState(
   return { kind: "missing" };
 }
 
+/** Reused helper for read Gateway Service Command Port behavior in src/daemon. */
 export function readGatewayServiceCommandPort(programArguments?: string[]): number | undefined {
   const servicePort = readGatewayServiceCommandPortState(programArguments);
   return servicePort.kind === "valid" ? servicePort.port : undefined;
@@ -423,6 +430,7 @@ function auditProxyServiceEnvironment(
   });
 }
 
+/** Reused helper for read Embedded Gateway Token behavior in src/daemon. */
 export function readEmbeddedGatewayToken(command: GatewayServiceCommand): string | undefined {
   if (!command) {
     return undefined;
@@ -599,6 +607,7 @@ export function checkTokenDrift(params: {
   return null;
 }
 
+/** Reused helper for audit Gateway Service Config behavior in src/daemon. */
 export async function auditGatewayServiceConfig(params: {
   env: Record<string, string | undefined>;
   command: GatewayServiceCommand;

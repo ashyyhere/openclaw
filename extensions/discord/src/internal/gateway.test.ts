@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/internal gateway test behavior.
 import { EventEmitter } from "node:events";
 import {
   GatewayCloseCodes,

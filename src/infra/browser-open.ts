@@ -1,3 +1,4 @@
+// infra browser open helpers and runtime behavior.
 import path from "node:path";
 import { runCommandWithTimeout } from "../process/exec.js";
 import { detectBinary } from "./detect-binary.js";
@@ -40,6 +41,7 @@ function normalizeBrowserOpenUrl(raw: string): string | null {
   }
 }
 
+/** Reused helper for resolve Browser Open Command behavior in src/infra. */
 export async function resolveBrowserOpenCommand(): Promise<BrowserOpenCommand> {
   const platform = process.platform;
   const hasDisplay = Boolean(process.env.DISPLAY || process.env.WAYLAND_DISPLAY);
@@ -88,6 +90,7 @@ export async function resolveBrowserOpenCommand(): Promise<BrowserOpenCommand> {
   return { argv: null, reason: "unsupported-platform" };
 }
 
+/** Reused helper for detect Browser Open Support behavior in src/infra. */
 export async function detectBrowserOpenSupport(): Promise<BrowserOpenSupport> {
   const resolved = await resolveBrowserOpenCommand();
   if (!resolved.argv) {
@@ -96,6 +99,7 @@ export async function detectBrowserOpenSupport(): Promise<BrowserOpenSupport> {
   return { ok: true, command: resolved.command };
 }
 
+/** Reused helper for open Url behavior in src/infra. */
 export async function openUrl(url: string): Promise<boolean> {
   if (shouldSkipBrowserOpenInTests()) {
     return false;

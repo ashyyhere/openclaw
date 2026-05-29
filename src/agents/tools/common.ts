@@ -1,3 +1,4 @@
+/** Shared parameter readers, result builders, and progress helpers for tools. */
 import type { TSchema } from "typebox";
 import { readLocalFileSafely } from "../../infra/fs-safe.js";
 import { detectMime } from "../../media/mime.js";
@@ -17,6 +18,7 @@ import type {
 } from "../runtime/index.js";
 import { sanitizeToolResultImages } from "../tool-images.js";
 
+/** Shared type for Agent Tool With Meta in src/agents/tools. */
 export type AgentToolWithMeta<TParameters extends TSchema, TResult> = AgentTool<
   TParameters,
   TResult
@@ -34,17 +36,20 @@ type ErasedAgentToolExecute = {
   ): Promise<AgentToolResult<unknown>>;
 };
 
+/** Shared type for Any Agent Tool in src/agents/tools. */
 export type AnyAgentTool = Omit<AgentTool, "execute"> &
   ErasedAgentToolExecute & {
     displaySummary?: string;
   };
 
+/** Normalizes unknown tool params into an object record. */
 export function asToolParamsRecord(params: unknown): Record<string, unknown> {
   return params && typeof params === "object" && !Array.isArray(params)
     ? (params as Record<string, unknown>)
     : {};
 }
 
+/** Shared type for String Param Options in src/agents/tools. */
 export type StringParamOptions = {
   required?: boolean;
   trim?: boolean;
@@ -52,11 +57,13 @@ export type StringParamOptions = {
   allowEmpty?: boolean;
 };
 
+/** Shared type for Action Gate in src/agents/tools. */
 export type ActionGate<T extends Record<string, boolean | undefined>> = (
   key: keyof T,
   defaultValue?: boolean,
 ) => boolean;
 
+/** Reused class for Tool Input Error behavior in src/agents/tools. */
 export class ToolInputError extends Error {
   readonly status: number = 400;
 
@@ -66,6 +73,7 @@ export class ToolInputError extends Error {
   }
 }
 
+/** Reused class for Tool Authorization Error behavior in src/agents/tools. */
 export class ToolAuthorizationError extends ToolInputError {
   override readonly status = 403;
 
@@ -75,6 +83,7 @@ export class ToolAuthorizationError extends ToolInputError {
   }
 }
 
+/** Builds a small action gate from feature-flag-style booleans. */
 export function createActionGate<T extends Record<string, boolean | undefined>>(
   actions: T | undefined,
 ): ActionGate<T> {
@@ -91,16 +100,19 @@ function readParamRaw(params: Record<string, unknown>, key: string): unknown {
   return readSnakeCaseParamRaw(params, key);
 }
 
+/** Reused helper for read String Param behavior in src/agents/tools. */
 export function readStringParam(
   params: Record<string, unknown>,
   key: string,
   options: StringParamOptions & { required: true },
 ): string;
+/** Reused helper for read String Param behavior in src/agents/tools. */
 export function readStringParam(
   params: Record<string, unknown>,
   key: string,
   options?: StringParamOptions,
 ): string | undefined;
+/** Reused helper for read String Param behavior in src/agents/tools. */
 export function readStringParam(
   params: Record<string, unknown>,
   key: string,
@@ -130,6 +142,7 @@ export function readStringParam(
  * - "default" (case-insensitive) => undefined (sentinel: reset/fallback)
  * - otherwise returns trimmed explicit model string
  */
+/** Normalizes explicit tool model override strings. */
 export function normalizeToolModelOverride(value: string | undefined): string | undefined {
   if (typeof value !== "string") {
     return undefined;
@@ -141,6 +154,7 @@ export function normalizeToolModelOverride(value: string | undefined): string | 
   return trimmed;
 }
 
+/** Reused helper for read String Or Number Param behavior in src/agents/tools. */
 export function readStringOrNumberParam(
   params: Record<string, unknown>,
   key: string,
@@ -163,6 +177,7 @@ export function readStringOrNumberParam(
   return undefined;
 }
 
+/** Reused helper for read Number Param behavior in src/agents/tools. */
 export function readNumberParam(
   params: Record<string, unknown>,
   key: string,
@@ -211,6 +226,7 @@ export function readNumberParam(
   return integer ? Math.trunc(value) : value;
 }
 
+/** Reused helper for read Positive Integer Param behavior in src/agents/tools. */
 export function readPositiveIntegerParam(
   params: Record<string, unknown>,
   key: string,
@@ -232,6 +248,7 @@ export function readPositiveIntegerParam(
   return value;
 }
 
+/** Reused helper for read Non Negative Integer Param behavior in src/agents/tools. */
 export function readNonNegativeIntegerParam(
   params: Record<string, unknown>,
   key: string,
@@ -253,6 +270,7 @@ export function readNonNegativeIntegerParam(
   return value;
 }
 
+/** Reused helper for read Finite Number Param behavior in src/agents/tools. */
 export function readFiniteNumberParam(
   params: Record<string, unknown>,
   key: string,
@@ -288,16 +306,19 @@ export function readFiniteNumberParam(
   return value;
 }
 
+/** Reused helper for read String Array Param behavior in src/agents/tools. */
 export function readStringArrayParam(
   params: Record<string, unknown>,
   key: string,
   options: StringParamOptions & { required: true },
 ): string[];
+/** Reused helper for read String Array Param behavior in src/agents/tools. */
 export function readStringArrayParam(
   params: Record<string, unknown>,
   key: string,
   options?: StringParamOptions,
 ): string[] | undefined;
+/** Reused helper for read String Array Param behavior in src/agents/tools. */
 export function readStringArrayParam(
   params: Record<string, unknown>,
   key: string,
@@ -331,12 +352,14 @@ export function readStringArrayParam(
   return undefined;
 }
 
+/** Shared type for Reaction Params in src/agents/tools. */
 export type ReactionParams = {
   emoji: string;
   remove: boolean;
   isEmpty: boolean;
 };
 
+/** Reused helper for read Reaction Params behavior in src/agents/tools. */
 export function readReactionParams(
   params: Record<string, unknown>,
   options: {
@@ -358,6 +381,7 @@ export function readReactionParams(
   return { emoji, remove, isEmpty: !emoji };
 }
 
+/** Serializes a tool payload into stable user-visible text. */
 export function stringifyToolPayload(payload: unknown): string {
   if (typeof payload === "string") {
     return payload;
@@ -373,6 +397,7 @@ export function stringifyToolPayload(payload: unknown): string {
   return String(payload);
 }
 
+/** Builds a text-only successful tool result. */
 export function textResult<TDetails>(text: string, details: TDetails): AgentToolResult<TDetails> {
   return {
     content: [
@@ -385,6 +410,7 @@ export function textResult<TDetails>(text: string, details: TDetails): AgentTool
   };
 }
 
+/** Reused helper for failed Text Result behavior in src/agents/tools. */
 export function failedTextResult<TDetails extends { status: "failed" }>(
   text: string,
   details: TDetails,
@@ -392,16 +418,20 @@ export function failedTextResult<TDetails extends { status: "failed" }>(
   return textResult(text, details);
 }
 
+/** Reused helper for payload Text Result behavior in src/agents/tools. */
 export function payloadTextResult<TDetails>(payload: TDetails): AgentToolResult<TDetails> {
   return textResult(stringifyToolPayload(payload), payload);
 }
 
+/** Builds a JSON text result from an arbitrary payload. */
 export function jsonResult(payload: unknown): AgentToolResult<unknown> {
   return textResult(JSON.stringify(payload, null, 2), payload);
 }
 
+/** Shared type for Public Tool Progress in src/agents/tools. */
 export type PublicToolProgress = Pick<AgentToolProgress, "text" | "id">;
 
+/** Reused helper for tool Progress Result behavior in src/agents/tools. */
 export function toolProgressResult(progress: PublicToolProgress): AgentToolResult<undefined> {
   return {
     content: [],
@@ -417,6 +447,7 @@ export function toolProgressResult(progress: PublicToolProgress): AgentToolResul
 
 // Tool progress is a UI side channel. The model-facing tool result remains in
 // `content`; progress text must already be safe to show in channel previews.
+/** Emits progress through the optional tool update callback. */
 export function emitToolProgress(
   onUpdate: AgentToolUpdateCallback | undefined,
   progress: PublicToolProgress,
@@ -434,6 +465,7 @@ export function emitToolProgress(
 
 // Long-running tools can arm delayed progress and cancel it on completion or
 // abort. This avoids stale "still working" lines after a fast or canceled call.
+/** Reused helper for schedule Tool Progress behavior in src/agents/tools. */
 export function scheduleToolProgress(
   onUpdate: AgentToolUpdateCallback | undefined,
   progress: PublicToolProgress,
@@ -461,6 +493,7 @@ export function scheduleToolProgress(
   return clear;
 }
 
+/** Builds an image tool result from base64 data and metadata. */
 export async function imageResult(params: {
   label: string;
   path: string;
@@ -498,6 +531,7 @@ export async function imageResult(params: {
   return await sanitizeToolResultImages(result, params.label, params.imageSanitization);
 }
 
+/** Builds an image tool result from a local file path. */
 export async function imageResultFromFile(params: {
   label: string;
   path: string;
@@ -518,6 +552,7 @@ export async function imageResultFromFile(params: {
   });
 }
 
+/** Shared type for Available Tag in src/agents/tools. */
 export type AvailableTag = {
   id?: string;
   name: string;
@@ -531,6 +566,7 @@ export type AvailableTag = {
  * Returns `undefined` when the value is missing or not an array.
  * Entries that lack a string `name` are silently dropped.
  */
+/** Parses provider tag metadata into normalized available tags. */
 export function parseAvailableTags(raw: unknown): AvailableTag[] | undefined {
   if (raw === undefined || raw === null) {
     return undefined;

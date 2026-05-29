@@ -1,3 +1,4 @@
+// extensions/codex prompt overlay helpers and runtime behavior.
 import {
   GPT5_BEHAVIOR_CONTRACT,
   GPT5_HEARTBEAT_PROMPT_OVERLAY,

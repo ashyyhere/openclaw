@@ -1,3 +1,4 @@
+/** Covers noVNC URL and observer token helpers for sandbox browsers. */
 import { describe, expect, it } from "vitest";
 import {
   buildNoVncDirectUrl,

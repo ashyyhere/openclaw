@@ -1,3 +1,4 @@
+/** Registers install/status/start/stop/restart gateway service commands. */
 import type { Command } from "commander";
 import { createLazyImportLoader } from "../../shared/lazy-promise.js";
 import { inheritOptionFromParent } from "../command-options.js";
@@ -53,6 +54,7 @@ function resolveRestartOptions(cmdOpts: DaemonLifecycleOptions, command?: Comman
   };
 }
 
+/** Reused helper for add Gateway Service Commands behavior in src/cli/daemon-cli. */
 export function addGatewayServiceCommands(parent: Command, opts?: { statusDescription?: string }) {
   parent
     .command("status")

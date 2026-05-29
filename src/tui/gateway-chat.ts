@@ -1,3 +1,4 @@
+// tui gateway chat helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import {
   GATEWAY_CLIENT_CAPS,
@@ -38,12 +39,14 @@ import type {
   TuiSessionList,
 } from "./tui-backend.js";
 
+/** Shared type for Gateway Connection Options in src/tui. */
 export type GatewayConnectionOptions = {
   url?: string;
   token?: string;
   password?: string;
 };
 
+/** Shared type for Gateway Event in src/tui. */
 export type GatewayEvent = TuiEvent;
 
 const STARTUP_CHAT_HISTORY_RETRY_TIMEOUT_MS = 60_000;
@@ -96,10 +99,14 @@ function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+/** Shared type for Gateway Session List in src/tui. */
 export type GatewaySessionList = TuiSessionList;
+/** Shared type for Gateway Agents List in src/tui. */
 export type GatewayAgentsList = TuiAgentsList;
+/** Shared type for Gateway Model Choice in src/tui. */
 export type GatewayModelChoice = TuiModelChoice;
 
+/** Reused class for Gateway Chat Client behavior in src/tui. */
 export class GatewayChatClient implements TuiBackend {
   private client: GatewayClient;
   private readyPromise: Promise<void>;
@@ -265,6 +272,7 @@ export class GatewayChatClient implements TuiBackend {
   }
 }
 
+/** Reused helper for resolve Gateway Connection behavior in src/tui. */
 export async function resolveGatewayConnection(
   opts: GatewayConnectionOptions,
 ): Promise<ResolvedGatewayConnection> {

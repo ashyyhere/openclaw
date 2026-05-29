@@ -1,4 +1,5 @@
 #!/usr/bin/env bun
+// scripts/dev discord acp plain language smoke helpers and runtime behavior.
 import { execFile } from "node:child_process";
 // Manual ACP thread smoke for plain-language routing.
 // Keep this script available for regression/debug validation. Do not delete.

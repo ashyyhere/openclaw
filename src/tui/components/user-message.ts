@@ -1,6 +1,8 @@
+// tui/components user message helpers and runtime behavior.
 import { theme } from "../theme/theme.js";
 import { MarkdownMessageComponent } from "./markdown-message.js";
 
+/** Reused class for User Message Component behavior in src/tui/components. */
 export class UserMessageComponent extends MarkdownMessageComponent {
   constructor(text: string) {
     super(text, 1, {

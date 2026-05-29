@@ -1,3 +1,4 @@
+/** Tests Telegram account SDK helper behavior. */
 import { describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => {

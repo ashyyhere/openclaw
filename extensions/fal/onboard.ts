@@ -1,3 +1,4 @@
+// extensions/fal onboard helpers and runtime behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/provider-onboard";
 
 export const FAL_DEFAULT_IMAGE_MODEL_REF = "fal/fal-ai/flux/dev";

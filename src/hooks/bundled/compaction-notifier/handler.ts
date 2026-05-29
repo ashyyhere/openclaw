@@ -1,3 +1,4 @@
+// hooks/bundled/compaction-notifier handler helpers and runtime behavior.
 import { asFiniteNumber } from "../../../shared/number-coercion.js";
 import type { HookHandler } from "../../hooks.js";
 

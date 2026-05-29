@@ -1,3 +1,4 @@
+/** Tests ACP session manager lifecycle, turns, and runtime control behavior. */
 import { setTimeout as scheduleNativeTimeout } from "node:timers";
 import { setTimeout as sleep } from "node:timers/promises";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";

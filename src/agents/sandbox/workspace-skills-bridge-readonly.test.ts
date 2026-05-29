@@ -1,3 +1,4 @@
+/** Covers readonly workspace skill mounts through the filesystem bridge. */
 import { spawnSync } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";

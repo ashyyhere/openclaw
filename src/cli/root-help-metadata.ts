@@ -1,5 +1,7 @@
+/** Reads precomputed startup metadata for root help rendering. */
 import { readCliStartupMetadata } from "./startup-metadata.js";
 
+/** Shared type for Precomputed Subcommand Help Name in src/cli. */
 export type PrecomputedSubcommandHelpName = "doctor" | "gateway" | "models" | "plugins";
 
 let precomputedRootHelpText: string | null | undefined;
@@ -40,30 +42,35 @@ function loadPrecomputedHelpText(
   return null;
 }
 
+/** Reused helper for load Precomputed Root Help Text behavior in src/cli. */
 export function loadPrecomputedRootHelpText(): string | null {
   return loadPrecomputedHelpText("rootHelpText", precomputedRootHelpText, (value) => {
     precomputedRootHelpText = value;
   });
 }
 
+/** Reused helper for load Precomputed Browser Help Text behavior in src/cli. */
 export function loadPrecomputedBrowserHelpText(): string | null {
   return loadPrecomputedHelpText("browserHelpText", precomputedBrowserHelpText, (value) => {
     precomputedBrowserHelpText = value;
   });
 }
 
+/** Reused helper for load Precomputed Secrets Help Text behavior in src/cli. */
 export function loadPrecomputedSecretsHelpText(): string | null {
   return loadPrecomputedHelpText("secretsHelpText", precomputedSecretsHelpText, (value) => {
     precomputedSecretsHelpText = value;
   });
 }
 
+/** Reused helper for load Precomputed Nodes Help Text behavior in src/cli. */
 export function loadPrecomputedNodesHelpText(): string | null {
   return loadPrecomputedHelpText("nodesHelpText", precomputedNodesHelpText, (value) => {
     precomputedNodesHelpText = value;
   });
 }
 
+/** Reused helper for load Precomputed Subcommand Help Text behavior in src/cli. */
 export function loadPrecomputedSubcommandHelpText(commandName: string): string | null {
   if (!isPrecomputedSubcommandHelpName(commandName)) {
     return null;
@@ -89,6 +96,7 @@ export function loadPrecomputedSubcommandHelpText(commandName: string): string |
   return null;
 }
 
+/** Reused helper for output Precomputed Root Help Text behavior in src/cli. */
 export function outputPrecomputedRootHelpText(): boolean {
   const rootHelpText = loadPrecomputedRootHelpText();
   if (!rootHelpText) {
@@ -98,6 +106,7 @@ export function outputPrecomputedRootHelpText(): boolean {
   return true;
 }
 
+/** Reused helper for output Precomputed Browser Help Text behavior in src/cli. */
 export function outputPrecomputedBrowserHelpText(): boolean {
   const browserHelpText = loadPrecomputedBrowserHelpText();
   if (!browserHelpText) {
@@ -107,6 +116,7 @@ export function outputPrecomputedBrowserHelpText(): boolean {
   return true;
 }
 
+/** Reused helper for output Precomputed Secrets Help Text behavior in src/cli. */
 export function outputPrecomputedSecretsHelpText(): boolean {
   const secretsHelpText = loadPrecomputedSecretsHelpText();
   if (!secretsHelpText) {
@@ -116,6 +126,7 @@ export function outputPrecomputedSecretsHelpText(): boolean {
   return true;
 }
 
+/** Reused helper for output Precomputed Nodes Help Text behavior in src/cli. */
 export function outputPrecomputedNodesHelpText(): boolean {
   const nodesHelpText = loadPrecomputedNodesHelpText();
   if (!nodesHelpText) {
@@ -125,6 +136,7 @@ export function outputPrecomputedNodesHelpText(): boolean {
   return true;
 }
 
+/** Reused helper for output Precomputed Subcommand Help Text behavior in src/cli. */
 export function outputPrecomputedSubcommandHelpText(commandName: string): boolean {
   const helpText = loadPrecomputedSubcommandHelpText(commandName);
   if (!helpText) {
@@ -161,6 +173,7 @@ function setPrecomputedSubcommandHelpText(
   };
 }
 
+/** Reused constant for testing behavior in src/cli. */
 export const testing = {
   resetPrecomputedRootHelpTextForTests(): void {
     precomputedRootHelpText = undefined;
@@ -170,4 +183,5 @@ export const testing = {
     precomputedSubcommandHelpText = undefined;
   },
 };
+/** Re-exported API for src/cli, starting with testing. */
 export { testing as __testing };

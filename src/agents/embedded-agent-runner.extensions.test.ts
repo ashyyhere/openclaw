@@ -1,3 +1,4 @@
+/** Tests extension tool integration in embedded-agent runner. */
 import { SessionManager } from "openclaw/plugin-sdk/agent-sessions";
 import { afterEach, describe, expect, it } from "vitest";
 import { createEmptyPluginRegistry } from "../plugins/registry.js";

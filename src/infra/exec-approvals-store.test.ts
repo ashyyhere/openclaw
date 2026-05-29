@@ -1,3 +1,4 @@
+// Tests infra exec approvals store test behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";

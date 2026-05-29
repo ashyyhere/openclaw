@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/browser chrome loopback ssrf integration test behavior.
 import { createServer, type Server } from "node:http";
 import type { AddressInfo } from "node:net";
 import { afterEach, describe, expect, it } from "vitest";

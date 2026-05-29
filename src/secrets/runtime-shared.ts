@@ -1,3 +1,4 @@
+// secrets runtime shared helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { coerceSecretRef, type SecretRef } from "../config/types.secrets.js";
 import type { PluginManifestRegistry } from "../plugins/manifest-registry.js";
@@ -6,6 +7,7 @@ import type { SecretRefResolveCache } from "./resolve-types.js";
 import { assertExpectedResolvedSecretValue } from "./secret-value.js";
 import { isRecord } from "./shared.js";
 
+/** Shared type for Secret Resolver Warning Code in src/secrets. */
 export type SecretResolverWarningCode =
   | "SECRETS_REF_OVERRIDES_PLAINTEXT"
   | "SECRETS_REF_IGNORED_INACTIVE_SURFACE"
@@ -18,12 +20,14 @@ export type SecretResolverWarningCode =
   | "WEB_FETCH_PROVIDER_KEY_UNRESOLVED_FALLBACK_USED"
   | "WEB_FETCH_PROVIDER_KEY_UNRESOLVED_NO_FALLBACK";
 
+/** Shared type for Secret Resolver Warning in src/secrets. */
 export type SecretResolverWarning = {
   code: SecretResolverWarningCode;
   path: string;
   message: string;
 };
 
+/** Shared type for Secret Assignment in src/secrets. */
 export type SecretAssignment = {
   ref: SecretRef;
   path: string;
@@ -31,6 +35,7 @@ export type SecretAssignment = {
   apply: (value: unknown) => void;
 };
 
+/** Shared type for Resolver Context in src/secrets. */
 export type ResolverContext = {
   sourceConfig: OpenClawConfig;
   env: NodeJS.ProcessEnv;
@@ -41,9 +46,12 @@ export type ResolverContext = {
   assignments: SecretAssignment[];
 };
 
+/** Shared type for Secret Defaults in src/secrets. */
 export type SecretDefaults = NonNullable<OpenClawConfig["secrets"]>["defaults"];
+/** Re-exported API for src/secrets, starting with Secret Ref Resolve Cache. */
 export type { SecretRefResolveCache } from "./resolve-types.js";
 
+/** Reused helper for create Resolver Context behavior in src/secrets. */
 export function createResolverContext(params: {
   sourceConfig: OpenClawConfig;
   env: NodeJS.ProcessEnv;
@@ -60,10 +68,12 @@ export function createResolverContext(params: {
   };
 }
 
+/** Reused helper for push Assignment behavior in src/secrets. */
 export function pushAssignment(context: ResolverContext, assignment: SecretAssignment): void {
   context.assignments.push(assignment);
 }
 
+/** Reused helper for push Warning behavior in src/secrets. */
 export function pushWarning(context: ResolverContext, warning: SecretResolverWarning): void {
   const warningKey = `${warning.code}:${warning.path}:${warning.message}`;
   if (context.warningKeys.has(warningKey)) {
@@ -73,6 +83,7 @@ export function pushWarning(context: ResolverContext, warning: SecretResolverWar
   context.warnings.push(warning);
 }
 
+/** Reused helper for push Inactive Surface Warning behavior in src/secrets. */
 export function pushInactiveSurfaceWarning(params: {
   context: ResolverContext;
   path: string;
@@ -88,6 +99,7 @@ export function pushInactiveSurfaceWarning(params: {
   });
 }
 
+/** Reused helper for collect Secret Input Assignment behavior in src/secrets. */
 export function collectSecretInputAssignment(params: {
   value: unknown;
   path: string;
@@ -118,6 +130,7 @@ export function collectSecretInputAssignment(params: {
   });
 }
 
+/** Reused helper for apply Resolved Assignments behavior in src/secrets. */
 export function applyResolvedAssignments(params: {
   assignments: SecretAssignment[];
   resolved: Map<string, unknown>;
@@ -140,10 +153,12 @@ export function applyResolvedAssignments(params: {
   }
 }
 
+/** Reused helper for has Own Property behavior in src/secrets. */
 export function hasOwnProperty(record: Record<string, unknown>, key: string): boolean {
   return Object.prototype.hasOwnProperty.call(record, key);
 }
 
+/** Reused helper for is Enabled Flag behavior in src/secrets. */
 export function isEnabledFlag(value: unknown): boolean {
   if (!isRecord(value)) {
     return true;
@@ -151,6 +166,7 @@ export function isEnabledFlag(value: unknown): boolean {
   return value.enabled !== false;
 }
 
+/** Reused helper for is Channel Account Effectively Enabled behavior in src/secrets. */
 export function isChannelAccountEffectivelyEnabled(
   channel: Record<string, unknown>,
   account: Record<string, unknown>,

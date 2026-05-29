@@ -1,3 +1,4 @@
+// extensions/signal/src/monitor mentions helpers and runtime behavior.
 import type { SignalMention } from "./event-handler.types.js";
 
 const OBJECT_REPLACEMENT = "\uFFFC";

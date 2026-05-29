@@ -1,3 +1,4 @@
+// Tests gateway status helpers without requiring a live daemon.
 import { describe, expect, it } from "vitest";
 import { summarizeLogTail } from "./gateway.js";
 

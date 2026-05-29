@@ -1,3 +1,4 @@
+// secrets credential matrix helpers and runtime behavior.
 import { getSourceSecretTargetRegistry } from "./target-registry-data.js";
 import { getUnsupportedSecretRefSurfacePatterns } from "./unsupported-surface-policy.js";
 
@@ -12,6 +13,7 @@ type CredentialMatrixEntry = {
   notes?: string;
 };
 
+/** Shared type for Secret Ref Credential Matrix Document in src/secrets. */
 export type SecretRefCredentialMatrixDocument = {
   version: 1;
   matrixId: "strictly-user-supplied-credentials";
@@ -21,6 +23,7 @@ export type SecretRefCredentialMatrixDocument = {
   entries: CredentialMatrixEntry[];
 };
 
+/** Reused helper for build Secret Ref Credential Matrix behavior in src/secrets. */
 export function buildSecretRefCredentialMatrix(): SecretRefCredentialMatrixDocument {
   const entriesByKey = new Map<string, CredentialMatrixEntry>();
   for (const entry of getSourceSecretTargetRegistry()) {

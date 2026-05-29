@@ -1,3 +1,4 @@
+// scripts/e2e/parallels guest transports helpers and runtime behavior.
 import { run } from "./host-command.ts";
 import type { PhaseRunner } from "./phase-runner.ts";
 import { encodePowerShell, psSingleQuote } from "./powershell.ts";

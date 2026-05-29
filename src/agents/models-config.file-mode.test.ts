@@ -1,3 +1,4 @@
+/** Tests private file modes for generated models.json writes. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";

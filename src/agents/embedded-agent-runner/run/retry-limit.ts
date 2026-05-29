@@ -1,8 +1,10 @@
+/** Builds final run results when retry/failover limits are exhausted. */
 import { FailoverError, resolveFailoverStatus } from "../../failover-error.js";
 import type { EmbeddedRunLivenessState } from "../types.js";
 import type { EmbeddedAgentMeta, EmbeddedAgentRunResult } from "../types.js";
 import type { RetryLimitFailoverDecision } from "./failover-policy.js";
 
+/** Converts retry-limit exhaustion into a surfaced result or thrown failover error. */
 export function handleRetryLimitExhaustion(params: {
   message: string;
   decision: RetryLimitFailoverDecision;

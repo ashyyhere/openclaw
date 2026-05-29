@@ -1,3 +1,4 @@
+// Shared types for extensions/qqbot/src types behavior.
 import type { SecretInput } from "openclaw/plugin-sdk/secret-input";
 import type { QQBotDmPolicy, QQBotGroupPolicy } from "./engine/access/index.js";
 

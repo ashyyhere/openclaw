@@ -1,3 +1,4 @@
+// Reply threading helpers for channel-specific reply targets.
 import { getChannelPlugin } from "../../channels/plugins/index.js";
 import type { ChannelThreadingAdapter } from "../../channels/plugins/types.core.js";
 import { normalizeAnyChannelId } from "../../channels/registry.js";
@@ -25,6 +26,7 @@ function normalizeReplyToModeChatType(
     : undefined;
 }
 
+/** Reused helper for resolve Configured Reply To Mode behavior in src/auto-reply/reply. */
 export function resolveConfiguredReplyToMode(
   cfg: OpenClawConfig,
   channel?: OriginatingChannelType,
@@ -53,6 +55,7 @@ export function resolveConfiguredReplyToMode(
   return channelConfig?.replyToMode ?? "all";
 }
 
+/** Reused helper for resolve Reply To Mode With Threading behavior in src/auto-reply/reply. */
 export function resolveReplyToModeWithThreading(
   cfg: OpenClawConfig,
   threading: ChannelThreadingAdapter | undefined,
@@ -70,6 +73,7 @@ export function resolveReplyToModeWithThreading(
   return resolved ?? resolveConfiguredReplyToMode(cfg, params.channel, params.chatType);
 }
 
+/** Reused helper for resolve Reply To Mode behavior in src/auto-reply/reply. */
 export function resolveReplyToMode(
   cfg: OpenClawConfig,
   channel?: OriginatingChannelType,
@@ -89,6 +93,7 @@ export function resolveReplyToMode(
   });
 }
 
+/** Reused helper for create Reply To Mode Filter behavior in src/auto-reply/reply. */
 export function createReplyToModeFilter(
   mode: ReplyToMode,
   opts: { allowExplicitReplyTagsWhenOff?: boolean } = {},
@@ -134,6 +139,7 @@ export function createReplyToModeFilter(
   };
 }
 
+/** Reused helper for resolve Implicit Current Message Reply Allowance behavior in src/auto-reply/reply. */
 export function resolveImplicitCurrentMessageReplyAllowance(
   mode: ReplyToMode | undefined,
   policy?: ReplyThreadingPolicy,
@@ -148,6 +154,7 @@ export function resolveImplicitCurrentMessageReplyAllowance(
   return mode !== "batched";
 }
 
+/** Reused helper for resolve Batched Reply Threading Policy behavior in src/auto-reply/reply. */
 export function resolveBatchedReplyThreadingPolicy(
   mode: ReplyToMode,
   isBatched: boolean,
@@ -160,6 +167,7 @@ export function resolveBatchedReplyThreadingPolicy(
   };
 }
 
+/** Reused helper for create Reply To Mode Filter For Channel behavior in src/auto-reply/reply. */
 export function createReplyToModeFilterForChannel(
   mode: ReplyToMode,
   channel?: OriginatingChannelType,

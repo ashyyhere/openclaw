@@ -1,3 +1,4 @@
+// Tests config runtime overrides test behavior.
 import { beforeEach, describe, expect, it } from "vitest";
 import {
   applyConfigOverrides,

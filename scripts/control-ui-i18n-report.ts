@@ -1,3 +1,4 @@
+// scripts control ui i18n report helpers and runtime behavior.
 import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import path from "node:path";

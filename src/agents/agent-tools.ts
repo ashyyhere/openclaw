@@ -1,3 +1,4 @@
+/** Builds the default OpenClaw coding tool set and applies runtime tool policies. */
 import path from "node:path";
 import type { SourceReplyDeliveryMode } from "../auto-reply/get-reply-options.types.js";
 import { HEARTBEAT_RESPONSE_TOOL_NAME } from "../auto-reply/heartbeat-tool-response.js";
@@ -211,6 +212,7 @@ function createLazyProcessTool(defaults?: ProcessToolDefaults): AnyAgentTool {
   } as AnyAgentTool;
 }
 
+/** Resolve the process-tool scope key for agent/session/channel context. */
 export function resolveProcessToolScopeKey(params: {
   scopeKey?: string;
   sessionKey?: string;
@@ -363,8 +365,10 @@ function resolveExecConfig(params: { cfg?: OpenClawConfig; agentId?: string }) {
   };
 }
 
+/** Re-exported API for src/agents, starting with resolve Tool Loop Detection Config. */
 export { resolveToolLoopDetectionConfig } from "./tool-loop-detection-config.js";
 
+/** Reused constant for testing behavior in src/agents. */
 export const testing = {
   cleanToolSchemaForGemini,
   getToolParamsRecord,
@@ -373,6 +377,7 @@ export const testing = {
   applyModelProviderToolPolicy,
 } as const;
 
+/** Shared type for Open Claw Coding Tool Construction Plan in src/agents. */
 export type OpenClawCodingToolConstructionPlan = {
   includeBaseCodingTools: boolean;
   includeShellTools: boolean;
@@ -381,6 +386,7 @@ export type OpenClawCodingToolConstructionPlan = {
   includePluginTools: boolean;
 };
 
+/** Create the configured OpenClaw coding tools for an agent run. */
 export function createOpenClawCodingTools(options?: {
   agentId?: string;
   exec?: ExecToolDefaults & ProcessToolDefaults;
@@ -1154,4 +1160,5 @@ export function createOpenClawCodingTools(options?: {
   // on the wire and maps them back for tool dispatch.
   return withDeferredFollowupDescriptions;
 }
+/** Re-exported API for src/agents, starting with testing. */
 export { testing as __testing };

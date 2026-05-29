@@ -1,3 +1,4 @@
+// extensions/whatsapp/src channel outbound helpers and runtime behavior.
 import {
   createMessageReceiptFromOutboundResults,
   defineChannelMessageAdapter,

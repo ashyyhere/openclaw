@@ -1,3 +1,4 @@
+// Coverage for command authorization gates.
 import { describe, expect, it } from "vitest";
 import {
   resolveCommandAuthorizedFromAuthorizers,

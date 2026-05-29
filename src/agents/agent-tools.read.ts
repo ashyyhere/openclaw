@@ -1,3 +1,4 @@
+/** Read/write/edit tool wrappers for host workspace and sandbox path policy. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { URL } from "node:url";
@@ -26,6 +27,7 @@ import type { SandboxFsBridge } from "./sandbox/fs-bridge.js";
 import { createEditTool, createReadTool, createWriteTool } from "./sessions/index.js";
 import { sanitizeToolResultImages } from "./tool-images.js";
 
+/** Re-exported API for src/agents. */
 export {
   REQUIRED_PARAM_GROUPS,
   assertRequiredParams,
@@ -425,6 +427,7 @@ async function normalizeReadImageResult(
   return { ...result, content: nextContent };
 }
 
+/** Wrap a file tool so paths stay inside a workspace root. */
 export function wrapToolWorkspaceRootGuard(tool: AnyAgentTool, root: string): AnyAgentTool {
   return wrapToolWorkspaceRootGuardWithOptions(tool, root);
 }
@@ -515,6 +518,7 @@ function mapContainerPathToRoot(params: {
   };
 }
 
+/** Resolve a tool path against workspace root and reject escaped paths. */
 export function resolveToolPathAgainstWorkspaceRoot(params: {
   filePath: string;
   root: string;
@@ -621,6 +625,7 @@ async function appendMemoryFlushContent(params: {
   await fs.writeFile(params.absolutePath, next, "utf-8");
 }
 
+/** Wrap memory writes so daily memory files are append-only flush targets. */
 export function wrapToolMemoryFlushAppendOnlyWrite(
   tool: AnyAgentTool,
   options: MemoryFlushAppendOnlyWriteOptions,
@@ -715,6 +720,7 @@ async function assertSandboxPathWithinAnyRoot(params: {
   throw firstRootEscapeError ?? new Error("Path guard has no configured roots.");
 }
 
+/** Wrap a file tool with workspace-root and sandbox path options. */
 export function wrapToolWorkspaceRootGuardWithOptions(
   tool: AnyAgentTool,
   root: string,
@@ -790,6 +796,7 @@ type SandboxToolParams = {
   imageSanitization?: ImageSanitizationLimits;
 };
 
+/** Create a sandbox-bridged read tool. */
 export function createSandboxedReadTool(params: SandboxToolParams) {
   const base = createReadTool(params.root, {
     operations: createSandboxReadOperations(params),
@@ -800,6 +807,7 @@ export function createSandboxedReadTool(params: SandboxToolParams) {
   });
 }
 
+/** Create a sandbox-bridged write tool. */
 export function createSandboxedWriteTool(params: SandboxToolParams) {
   const base = createWriteTool(params.root, {
     operations: createSandboxWriteOperations(params),
@@ -807,6 +815,7 @@ export function createSandboxedWriteTool(params: SandboxToolParams) {
   return wrapToolParamValidation(base, REQUIRED_PARAM_GROUPS.write);
 }
 
+/** Create a sandbox-bridged edit tool. */
 export function createSandboxedEditTool(params: SandboxToolParams) {
   const base = createEditTool(params.root, {
     operations: createSandboxEditOperations(params),
@@ -814,6 +823,7 @@ export function createSandboxedEditTool(params: SandboxToolParams) {
   return wrapToolParamValidation(base, REQUIRED_PARAM_GROUPS.edit);
 }
 
+/** Create a host workspace write tool with root-guard policy. */
 export function createHostWorkspaceWriteTool(root: string, options?: { workspaceOnly?: boolean }) {
   const base = createWriteTool(root, {
     operations: createHostWriteOperations(root, options),
@@ -821,6 +831,7 @@ export function createHostWorkspaceWriteTool(root: string, options?: { workspace
   return wrapToolParamValidation(base, REQUIRED_PARAM_GROUPS.write);
 }
 
+/** Create a host workspace edit tool with root-guard policy. */
 export function createHostWorkspaceEditTool(root: string, options?: { workspaceOnly?: boolean }) {
   const base = createEditTool(root, {
     operations: createHostEditOperations(root, options),
@@ -828,6 +839,7 @@ export function createHostWorkspaceEditTool(root: string, options?: { workspaceO
   return wrapToolParamValidation(base, REQUIRED_PARAM_GROUPS.edit);
 }
 
+/** Create the OpenClaw read tool with adaptive paging and image sanitization. */
 export function createOpenClawReadTool(
   base: AnyAgentTool,
   options?: OpenClawReadToolOptions,

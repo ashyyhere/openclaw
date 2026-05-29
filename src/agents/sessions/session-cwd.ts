@@ -1,5 +1,7 @@
+/** Validates and formats missing session cwd errors. */
 import { existsSync } from "node:fs";
 
+/** Shared type for Session Cwd Issue in src/agents/sessions. */
 export interface SessionCwdIssue {
   sessionFile?: string;
   sessionCwd: string;
@@ -11,6 +13,7 @@ interface SessionCwdSource {
   getSessionFile(): string | undefined;
 }
 
+/** Returns missing-cwd details when a stored session cwd no longer exists. */
 export function getMissingSessionCwdIssue(
   sessionManager: SessionCwdSource,
   fallbackCwd: string,
@@ -32,15 +35,18 @@ export function getMissingSessionCwdIssue(
   };
 }
 
+/** Formats a missing-cwd issue as a hard error. */
 export function formatMissingSessionCwdError(issue: SessionCwdIssue): string {
   const sessionFile = issue.sessionFile ? `\nSession file: ${issue.sessionFile}` : "";
   return `Stored session working directory does not exist: ${issue.sessionCwd}${sessionFile}\nCurrent working directory: ${issue.fallbackCwd}`;
 }
 
+/** Formats a missing-cwd issue as a prompt warning. */
 export function formatMissingSessionCwdPrompt(issue: SessionCwdIssue): string {
   return `cwd from session file does not exist\n${issue.sessionCwd}\n\ncontinue in current cwd\n${issue.fallbackCwd}`;
 }
 
+/** Reused class for Missing Session Cwd Error behavior in src/agents/sessions. */
 export class MissingSessionCwdError extends Error {
   readonly issue: SessionCwdIssue;
 
@@ -51,6 +57,7 @@ export class MissingSessionCwdError extends Error {
   }
 }
 
+/** Throws when a stored session cwd is missing and no fallback is acceptable. */
 export function assertSessionCwdExists(
   sessionManager: SessionCwdSource,
   fallbackCwd: string,

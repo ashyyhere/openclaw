@@ -1,3 +1,4 @@
+// extensions/web-readability web content extractor helpers and runtime behavior.
 import type {
   WebContentExtractionRequest,
   WebContentExtractionResult,

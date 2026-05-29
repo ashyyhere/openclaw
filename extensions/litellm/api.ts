@@ -1,3 +1,5 @@
+// extensions/litellm api helpers and runtime behavior.
+/** Re-exported litellm plugin public API. */
 export {
   applyLitellmConfig,
   applyLitellmProviderConfig,

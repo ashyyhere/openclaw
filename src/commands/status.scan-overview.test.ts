@@ -1,3 +1,4 @@
+/** Tests fast status overview collection. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { collectStatusScanOverview } from "./status.scan-overview.ts";
 

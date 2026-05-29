@@ -1,3 +1,4 @@
+/** Builds the normalized runtime plan used by embedded-agent attempts. */
 import type { TSchema } from "typebox";
 import type { ThinkLevel } from "../../auto-reply/thinking.js";
 import { isSilentReplyPayloadText, SILENT_REPLY_TOKEN } from "../../auto-reply/tokens.js";
@@ -90,6 +91,7 @@ function resolveProviderRuntimeHandleForPlugins(params: {
   });
 }
 
+/** Builds delivery behavior for reply payloads produced by a runtime. */
 export function buildAgentRuntimeDeliveryPlan(
   params: BuildAgentRuntimeDeliveryPlanParams,
 ): AgentRuntimeDeliveryPlan {
@@ -131,12 +133,14 @@ export function buildAgentRuntimeDeliveryPlan(
   };
 }
 
+/** Builds default outcome classification behavior for runtime attempts. */
 export function buildAgentRuntimeOutcomePlan(): AgentRuntimeOutcomePlan {
   return {
     classifyRunResult: classifyEmbeddedAgentRunResultForModelFallback,
   };
 }
 
+/** Combines model, tool, prompt, auth, delivery, and transport runtime plans. */
 export function buildAgentRuntimePlan(params: BuildAgentRuntimePlanParams): AgentRuntimePlan {
   const config = asOpenClawConfig(params.config);
   const model = asProviderRuntimeModel(params.model);

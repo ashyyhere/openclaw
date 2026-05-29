@@ -1,6 +1,8 @@
+// Shared types for packages/memory-host-sdk/src/host embeddings types behavior.
 import type { OpenClawConfig, SecretInput } from "../engine-foundation.js";
 import type { EmbeddingInput } from "./embedding-inputs.js";
 
+/** Public type describing Embedding Provider for packages/memory-host-sdk. */
 export type EmbeddingProvider = {
   id: string;
   model: string;
@@ -14,14 +16,19 @@ export type EmbeddingProvider = {
   close?: () => Promise<void> | void;
 };
 
+/** Public type describing Embedding Provider Call Options for packages/memory-host-sdk. */
 export type EmbeddingProviderCallOptions = {
   signal?: AbortSignal;
 };
 
+/** Public type describing Embedding Provider Id for packages/memory-host-sdk. */
 export type EmbeddingProviderId = string;
+/** Public type describing Embedding Provider Request for packages/memory-host-sdk. */
 export type EmbeddingProviderRequest = string;
+/** Public type describing Embedding Provider Fallback for packages/memory-host-sdk. */
 export type EmbeddingProviderFallback = string;
 
+/** Public type describing Gemini Task Type for packages/memory-host-sdk. */
 export type GeminiTaskType =
   | "RETRIEVAL_QUERY"
   | "RETRIEVAL_DOCUMENT"
@@ -31,6 +38,7 @@ export type GeminiTaskType =
   | "QUESTION_ANSWERING"
   | "FACT_VERIFICATION";
 
+/** Public type describing Embedding Provider Options for packages/memory-host-sdk. */
 export type EmbeddingProviderOptions = {
   config: OpenClawConfig;
   agentDir?: string;

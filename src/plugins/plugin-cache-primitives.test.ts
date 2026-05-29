@@ -1,3 +1,4 @@
+// Tests plugins plugin cache primitives test behavior.
 import { describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {

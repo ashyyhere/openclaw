@@ -1,3 +1,4 @@
+/** Tests channel message normalization and SDK message helpers. */
 import { describe, expect, it, vi } from "vitest";
 import { defineChannelMessageAdapter as defineCoreChannelMessageAdapter } from "../channels/message/index.js";
 import { defineChannelMessageAdapter } from "./channel-outbound.js";

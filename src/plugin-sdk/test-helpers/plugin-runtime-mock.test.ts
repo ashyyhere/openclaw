@@ -1,3 +1,4 @@
+// Tests plugin-sdk/test-helpers plugin runtime mock test behavior.
 import { createPluginRuntimeMock } from "openclaw/plugin-sdk/channel-test-helpers";
 import { describe, expect, it, vi } from "vitest";
 

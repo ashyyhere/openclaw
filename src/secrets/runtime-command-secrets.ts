@@ -1,3 +1,4 @@
+// secrets runtime command secrets helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveSecretInputRef } from "../config/types.secrets.js";
 import { resolveManifestContractOwnerPluginId } from "../plugins/plugin-registry.js";
@@ -17,8 +18,10 @@ import { resolveRuntimeWebTools } from "./runtime-web-tools.js";
 import { assertExpectedResolvedSecretValue } from "./secret-value.js";
 import { discoverConfigSecretTargetsByIds } from "./target-registry.js";
 
+/** Re-exported API for src/secrets, starting with Command Secret Assignment. */
 export type { CommandSecretAssignment } from "./command-config.js";
 
+/** Shared type for Command Secret Provider Overrides in src/secrets. */
 export type CommandSecretProviderOverrides = {
   webSearch?: string;
   webFetch?: string;
@@ -392,6 +395,7 @@ async function resolveForcedActiveCommandSecretTargets(params: {
   }
 }
 
+/** Reused helper for resolve Command Secrets From Active Runtime Snapshot behavior in src/secrets. */
 export function resolveCommandSecretsFromActiveRuntimeSnapshot(params: {
   commandName: string;
   targetIds: ReadonlySet<string>;

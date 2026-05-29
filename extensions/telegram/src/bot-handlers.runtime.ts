@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/telegram/src bot handlers runtime behavior.
 import type { Message, ReactionTypeEmoji } from "grammy/types";
 import { parseExecApprovalCommandText } from "openclaw/plugin-sdk/approval-reply-runtime";
 import { resolveChannelConfigWrites } from "openclaw/plugin-sdk/channel-config-helpers";

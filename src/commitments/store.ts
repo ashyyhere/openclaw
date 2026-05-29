@@ -1,3 +1,4 @@
+// Private-file store for inferred commitments and delivery bookkeeping.
 import { randomBytes } from "node:crypto";
 import path from "node:path";
 import type { OpenClawConfig } from "../config/config.js";
@@ -42,6 +43,7 @@ function defaultCommitmentStorePath(): string {
   return path.join(resolveStateDir(), "commitments", "commitments.json");
 }
 
+/** Reused helper for resolve Commitment Store Path behavior in src/commitments. */
 export function resolveCommitmentStorePath(storePath?: string): string {
   const trimmed = storePath?.trim();
   if (!trimmed) {
@@ -216,10 +218,12 @@ async function loadCommitmentStoreInternal(storePath?: string): Promise<LoadedCo
   }
 }
 
+/** Reused helper for load Commitment Store behavior in src/commitments. */
 export async function loadCommitmentStore(storePath?: string): Promise<CommitmentStoreFile> {
   return (await loadCommitmentStoreInternal(storePath)).store;
 }
 
+/** Reused helper for save Commitment Store behavior in src/commitments. */
 export async function saveCommitmentStore(
   storePath: string | undefined,
   store: CommitmentStoreFile,
@@ -338,6 +342,7 @@ async function loadCommitmentStoreWithExpiredMarked(nowMs: number): Promise<Comm
   });
 }
 
+/** Reused helper for list Pending Commitments For Scope behavior in src/commitments. */
 export async function listPendingCommitmentsForScope(params: {
   cfg?: OpenClawConfig;
   scope: CommitmentScope;
@@ -361,6 +366,7 @@ export async function listPendingCommitmentsForScope(params: {
     .slice(0, limit);
 }
 
+/** Reused helper for upsert Inferred Commitments behavior in src/commitments. */
 export async function upsertInferredCommitments(params: {
   cfg?: OpenClawConfig;
   item: CommitmentExtractionItem;
@@ -436,6 +442,7 @@ function countSentCommitmentsForSession(params: {
   ).length;
 }
 
+/** Reused helper for list Due Commitments For Session behavior in src/commitments. */
 export async function listDueCommitmentsForSession(params: {
   cfg?: OpenClawConfig;
   agentId: string;
@@ -482,6 +489,7 @@ export async function listDueCommitmentsForSession(params: {
     .slice(0, limit);
 }
 
+/** Reused helper for list Due Commitment Session Keys behavior in src/commitments. */
 export async function listDueCommitmentSessionKeys(params: {
   cfg?: OpenClawConfig;
   agentId: string;
@@ -519,6 +527,7 @@ export async function listDueCommitmentSessionKeys(params: {
   return [...keys].toSorted();
 }
 
+/** Reused helper for mark Commitments Attempted behavior in src/commitments. */
 export async function markCommitmentsAttempted(params: {
   cfg?: OpenClawConfig;
   ids: string[];
@@ -550,6 +559,7 @@ export async function markCommitmentsAttempted(params: {
   });
 }
 
+/** Reused helper for mark Commitments Status behavior in src/commitments. */
 export async function markCommitmentsStatus(params: {
   cfg?: OpenClawConfig;
   ids: string[];
@@ -584,6 +594,7 @@ export async function markCommitmentsStatus(params: {
   });
 }
 
+/** Reused helper for list Commitments behavior in src/commitments. */
 export async function listCommitments(params?: {
   cfg?: OpenClawConfig;
   status?: CommitmentStatus;

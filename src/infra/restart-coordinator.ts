@@ -1,3 +1,4 @@
+// infra restart coordinator helpers and runtime behavior.
 import { getActiveEmbeddedRunCount } from "../agents/embedded-agent-runner/run-state.js";
 import { getTotalPendingReplies } from "../auto-reply/reply/dispatcher-registry.js";
 import { getTotalQueueSize } from "../process/command-queue.js";
@@ -7,6 +8,7 @@ import {
 } from "../tasks/task-registry.maintenance.js";
 import { scheduleGatewaySigusr1Restart, type ScheduledRestart } from "./restart.js";
 
+/** Shared type for Safe Gateway Restart Counts in src/infra. */
 export type SafeGatewayRestartCounts = {
   queueSize: number;
   pendingReplies: number;
@@ -15,6 +17,7 @@ export type SafeGatewayRestartCounts = {
   totalActive: number;
 };
 
+/** Shared type for Safe Gateway Restart Blocker in src/infra. */
 export type SafeGatewayRestartBlocker = {
   kind: "queue" | "reply" | "embedded-run" | "task";
   count: number;
@@ -22,6 +25,7 @@ export type SafeGatewayRestartBlocker = {
   task?: ActiveTaskRestartBlocker;
 };
 
+/** Shared type for Safe Gateway Restart Preflight in src/infra. */
 export type SafeGatewayRestartPreflight = {
   safe: boolean;
   counts: SafeGatewayRestartCounts;
@@ -29,6 +33,7 @@ export type SafeGatewayRestartPreflight = {
   summary: string;
 };
 
+/** Shared type for Safe Gateway Restart Request Result in src/infra. */
 export type SafeGatewayRestartRequestResult = {
   ok: true;
   status: "scheduled" | "deferred" | "coalesced";
@@ -77,6 +82,7 @@ function createFallbackTaskBlocker(count: number): SafeGatewayRestartBlocker {
   };
 }
 
+/** Reused helper for create Safe Gateway Restart Preflight behavior in src/infra. */
 export function createSafeGatewayRestartPreflight(
   inspectors: Partial<SafeRestartInspectors> = {},
 ): SafeGatewayRestartPreflight {
@@ -145,6 +151,7 @@ export function createSafeGatewayRestartPreflight(
   };
 }
 
+/** Reused helper for request Safe Gateway Restart behavior in src/infra. */
 export function requestSafeGatewayRestart(
   opts: {
     reason?: string;

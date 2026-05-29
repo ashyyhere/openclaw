@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server native hook relay helpers and runtime behavior.
 import { createHash } from "node:crypto";
 import {
   registerNativeHookRelay,

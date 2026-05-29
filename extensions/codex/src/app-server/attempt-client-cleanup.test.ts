@@ -1,3 +1,4 @@
+// Tests extensions/codex/src/app-server attempt client cleanup test behavior.
 import { describe, expect, it, vi } from "vitest";
 import {
   interruptCodexTurnBestEffort,

@@ -1,3 +1,4 @@
+// extensions/github-copilot models defaults helpers and runtime behavior.
 import type { ModelDefinitionConfig } from "openclaw/plugin-sdk/provider-model-shared";
 import {
   resolveCopilotModelCompat,

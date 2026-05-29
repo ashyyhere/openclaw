@@ -1,3 +1,4 @@
+// config/sessions combined store gateway helpers and runtime behavior.
 import { resolveDefaultAgentId } from "../../agents/agent-scope.js";
 import {
   canonicalizeSpawnedByForAgent,
@@ -58,6 +59,7 @@ function mergeSessionEntryIntoCombined(params: {
   }
 }
 
+/** Reused helper for load Combined Session Store For Gateway behavior in src/config/sessions. */
 export function loadCombinedSessionStoreForGateway(
   cfg: OpenClawConfig,
   opts: { agentId?: string; configuredAgentsOnly?: boolean } = {},

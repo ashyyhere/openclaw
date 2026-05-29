@@ -1,13 +1,16 @@
+// infra wsl helpers and runtime behavior.
 import { readFileSync } from "node:fs";
 import fs from "node:fs/promises";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
 let wslCached: boolean | null = null;
 
+/** Reused helper for reset WSLState For Tests behavior in src/infra. */
 export function resetWSLStateForTests(): void {
   wslCached = null;
 }
 
+/** Reused helper for is WSLEnv behavior in src/infra. */
 export function isWSLEnv(): boolean {
   if (process.env.WSL_INTEROP || process.env.WSL_DISTRO_NAME || process.env.WSLENV) {
     return true;
@@ -49,6 +52,7 @@ export function isWSL2Sync(): boolean {
   }
 }
 
+/** Reused helper for is WSL behavior in src/infra. */
 export async function isWSL(): Promise<boolean> {
   if (wslCached !== null) {
     return wslCached;

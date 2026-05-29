@@ -1,3 +1,4 @@
+// extensions/telegram/src normalize helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "openclaw/plugin-sdk/string-coerce-runtime";
 import { normalizeTelegramLookupTarget, parseTelegramTarget } from "./targets.js";
 

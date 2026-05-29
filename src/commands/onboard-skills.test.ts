@@ -1,3 +1,4 @@
+/** Tests skill onboarding status and install prompts. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import type { RuntimeEnv } from "../runtime.js";

@@ -1,3 +1,4 @@
+// Tests extensions/mattermost/src/mattermost reconnect test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { runWithReconnect } from "./reconnect.js";
 

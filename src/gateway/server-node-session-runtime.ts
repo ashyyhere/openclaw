@@ -1,3 +1,4 @@
+// gateway server node session runtime helpers and runtime behavior.
 import { NodeRegistry, type SerializedEventPayload } from "./node-registry.js";
 import {
   createSessionEventSubscriberRegistry,
@@ -6,6 +7,7 @@ import {
 import { createNodeSubscriptionManager } from "./server-node-subscriptions.js";
 import { hasConnectedTalkNode } from "./server-talk-nodes.js";
 
+/** Reused helper for create Gateway Node Session Runtime behavior in src/gateway. */
 export function createGatewayNodeSessionRuntime(params: {
   broadcast: (event: string, payload: unknown, opts?: { dropIfSlow?: boolean }) => void;
 }) {

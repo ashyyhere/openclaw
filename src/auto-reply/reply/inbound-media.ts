@@ -1,5 +1,7 @@
+// Inbound media normalization for reply context.
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 
+/** Shared type for Inbound Media Context in src/auto-reply/reply. */
 export type InboundMediaContext = {
   StickerMediaIncluded?: unknown;
   Sticker?: unknown;
@@ -14,6 +16,7 @@ function hasNormalizedStringEntry(values: readonly unknown[] | undefined): boole
   return Array.isArray(values) && values.some((value) => normalizeOptionalString(value));
 }
 
+/** Reused helper for has Inbound Media behavior in src/auto-reply/reply. */
 export function hasInboundMedia(ctx: InboundMediaContext): boolean {
   return Boolean(
     ctx.StickerMediaIncluded ||

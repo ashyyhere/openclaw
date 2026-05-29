@@ -1,3 +1,4 @@
+/** Tests simple completion model selection for agents. */
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import { resolveSimpleCompletionSelectionForAgent } from "./simple-completion-runtime.js";

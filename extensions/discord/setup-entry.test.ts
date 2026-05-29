@@ -1,3 +1,4 @@
+// Tests extensions/discord setup entry test behavior.
 import { describe, expect, it } from "vitest";
 import setupEntry from "./setup-entry.js";
 

@@ -1,3 +1,4 @@
+// extensions/zalo/src group access helpers and runtime behavior.
 import type { GroupPolicy } from "openclaw/plugin-sdk/config-contracts";
 import { resolveOpenProviderRuntimeGroupPolicy } from "openclaw/plugin-sdk/runtime-group-policy";
 

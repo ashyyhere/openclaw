@@ -1,3 +1,4 @@
+// Tests extensions/slack/src stream mode test behavior.
 import { describe, expect, it } from "vitest";
 import {
   applyAppendOnlyStreamUpdate,

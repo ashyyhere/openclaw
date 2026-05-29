@@ -1,3 +1,4 @@
+/** E2E test for legacy state migrations in yes-mode doctor runs. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { ProviderPlugin } from "../plugins/types.js";
 import {

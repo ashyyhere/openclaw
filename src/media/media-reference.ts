@@ -1,3 +1,4 @@
+// media media reference helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { safeFileURLToPath } from "../infra/local-file-access.js";
@@ -6,6 +7,7 @@ import { getMediaDir, resolveMediaBufferPath } from "./store.js";
 
 type MediaReferenceErrorCode = "invalid-path" | "path-not-allowed";
 
+/** Reused class for Media Reference Error behavior in src/media. */
 export class MediaReferenceError extends Error {
   code: MediaReferenceErrorCode;
 
@@ -28,6 +30,7 @@ type InboundMediaUri = {
   normalizedSource: string;
 };
 
+/** Reused helper for normalize Media Reference Source behavior in src/media. */
 export function normalizeMediaReferenceSource(source: string): string {
   const trimmed = source.trim();
   if (/^media:\/\//i.test(trimmed)) {
@@ -46,6 +49,7 @@ type MediaReferenceSourceInfo = {
   looksLikeWindowsDrivePath: boolean;
 };
 
+/** Reused helper for classify Media Reference Source behavior in src/media. */
 export function classifyMediaReferenceSource(
   source: string,
   options?: { allowDataUrl?: boolean },
@@ -109,6 +113,7 @@ async function resolvePathForContainment(candidate: string): Promise<string> {
   }
 }
 
+/** Reused helper for parse Inbound Media Uri behavior in src/media. */
 export function parseInboundMediaUri(source: string): InboundMediaUri | null {
   const normalizedSource = normalizeMediaReferenceSource(source);
   if (!/^media:\/\//i.test(normalizedSource)) {
@@ -164,6 +169,7 @@ async function resolveInboundMediaUri(
   };
 }
 
+/** Reused helper for resolve Media Reference Sandbox Path behavior in src/media. */
 export function resolveMediaReferenceSandboxPath(
   source: string,
   inboundDir = "media/inbound",
@@ -179,6 +185,7 @@ export function resolveMediaReferenceSandboxPath(
   };
 }
 
+/** Reused helper for resolve Inbound Media Reference behavior in src/media. */
 export async function resolveInboundMediaReference(
   source: string,
 ): Promise<InboundMediaReference | null> {
@@ -219,6 +226,7 @@ export async function resolveInboundMediaReference(
   };
 }
 
+/** Reused helper for resolve Media Reference Local Path behavior in src/media. */
 export async function resolveMediaReferenceLocalPath(source: string): Promise<string> {
   const normalizedSource = normalizeMediaReferenceSource(source);
   return (await resolveInboundMediaReference(normalizedSource))?.physicalPath ?? normalizedSource;

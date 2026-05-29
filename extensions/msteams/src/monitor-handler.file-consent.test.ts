@@ -1,3 +1,4 @@
+// Tests extensions/msteams/src monitor handler file consent test behavior.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

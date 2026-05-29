@@ -1,3 +1,4 @@
+// gateway call helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import { isLoopbackIpAddress } from "@openclaw/net-policy/ip";
 import { redactSensitiveUrlLikeString } from "@openclaw/net-policy/redact-sensitive-url";
@@ -53,8 +54,10 @@ import {
   resolveLeastPrivilegeOperatorScopesForMethod,
   type OperatorScope,
 } from "./method-scopes.js";
+/** Re-exported API for src/gateway, starting with Gateway Connection Details. */
 export type { GatewayConnectionDetails };
 
+/** Shared type for Gateway Request Function in src/gateway. */
 export type GatewayRequestFunction = <T = Record<string, unknown>>(
   method: string,
   params?: unknown,
@@ -92,20 +95,25 @@ type CallGatewayBaseOptions = {
   configPath?: string;
 };
 
+/** Shared type for Call Gateway Scoped Options in src/gateway. */
 export type CallGatewayScopedOptions = CallGatewayBaseOptions & {
   scopes: OperatorScope[];
 };
 
+/** Shared type for Call Gateway Cli Options in src/gateway. */
 export type CallGatewayCliOptions = CallGatewayBaseOptions & {
   scopes?: OperatorScope[];
 };
 
+/** Shared type for Call Gateway Options in src/gateway. */
 export type CallGatewayOptions = CallGatewayBaseOptions & {
   scopes?: OperatorScope[];
 };
 
+/** Shared type for Gateway Transport Error Kind in src/gateway. */
 export type GatewayTransportErrorKind = "closed" | "timeout";
 
+/** Reused class for Gateway Transport Error behavior in src/gateway. */
 export class GatewayTransportError extends Error {
   readonly kind: GatewayTransportErrorKind;
   readonly connectionDetails: GatewayConnectionDetails;
@@ -137,6 +145,7 @@ export class GatewayTransportError extends Error {
   }
 }
 
+/** Reused class for Gateway Credentials Required Error behavior in src/gateway. */
 export class GatewayCredentialsRequiredError extends Error {
   readonly method: string;
   readonly configPath: string;
@@ -155,6 +164,7 @@ export class GatewayCredentialsRequiredError extends Error {
   }
 }
 
+/** Shared type for Gateway Transport Error Json in src/gateway. */
 export type GatewayTransportErrorJson = {
   ok: false;
   error: {
@@ -177,6 +187,7 @@ function firstGatewayErrorLine(message: string): string {
   return message.split("\n", 1)[0]?.trim() || message;
 }
 
+/** Reused helper for format Gateway Transport Error Json behavior in src/gateway. */
 export function formatGatewayTransportErrorJson(value: unknown): GatewayTransportErrorJson | null {
   if (!isGatewayTransportError(value)) {
     return null;
@@ -204,6 +215,7 @@ export function formatGatewayTransportErrorJson(value: unknown): GatewayTranspor
   };
 }
 
+/** Reused helper for is Gateway Transport Error behavior in src/gateway. */
 export function isGatewayTransportError(value: unknown): value is GatewayTransportError {
   if (value instanceof GatewayTransportError) {
     return true;
@@ -219,6 +231,7 @@ export function isGatewayTransportError(value: unknown): value is GatewayTranspo
   );
 }
 
+/** Reused helper for is Gateway Credentials Required Error behavior in src/gateway. */
 export function isGatewayCredentialsRequiredError(
   value: unknown,
 ): value is GatewayCredentialsRequiredError {
@@ -302,6 +315,7 @@ function resolveGatewayPortValue(config?: OpenClawConfig, env?: NodeJS.ProcessEn
   return resolveGatewayPortFn(config, env);
 }
 
+/** Reused helper for build Gateway Connection Details behavior in src/gateway. */
 export function buildGatewayConnectionDetails(
   options: {
     config?: OpenClawConfig;
@@ -317,6 +331,7 @@ export function buildGatewayConnectionDetails(
   });
 }
 
+/** Reused constant for testing behavior in src/gateway. */
 export const testing = {
   setDepsForTests(deps: Partial<typeof defaultGatewayCallDeps> | undefined): void {
     gatewayCallDeps.createGatewayClient =
@@ -450,8 +465,10 @@ function ensureGatewayCallCanAuthenticate(params: {
   });
 }
 
+/** Re-exported API for src/gateway, starting with Explicit Gateway Auth. */
 export type { ExplicitGatewayAuth } from "./credentials.js";
 
+/** Reused helper for resolve Explicit Gateway Auth behavior in src/gateway. */
 export function resolveExplicitGatewayAuth(opts?: ExplicitGatewayAuth): ExplicitGatewayAuth {
   const token =
     typeof opts?.token === "string" && opts.token.trim().length > 0 ? opts.token.trim() : undefined;
@@ -462,6 +479,7 @@ export function resolveExplicitGatewayAuth(opts?: ExplicitGatewayAuth): Explicit
   return { token, password };
 }
 
+/** Reused helper for ensure Explicit Gateway Auth behavior in src/gateway. */
 export function ensureExplicitGatewayAuth(params: {
   urlOverride?: string;
   urlOverrideSource?: "cli" | "env";
@@ -634,6 +652,7 @@ async function resolveGatewayCredentialsWithEnv(
   });
 }
 
+/** Re-exported API for src/gateway, starting with resolve Gateway Credentials With Secret Inputs. */
 export { resolveGatewayCredentialsWithSecretInputs };
 
 async function resolveGatewayTlsFingerprint(params: {
@@ -1005,12 +1024,14 @@ async function callGatewayWithScopes<T = Record<string, unknown>>(
   });
 }
 
+/** Reused helper for call Gateway Scoped behavior in src/gateway. */
 export async function callGatewayScoped<T = Record<string, unknown>>(
   opts: CallGatewayScopedOptions,
 ): Promise<T> {
   return await callGatewayWithScopes(opts, opts.scopes);
 }
 
+/** Reused helper for call Gateway Cli behavior in src/gateway. */
 export async function callGatewayCli<T = Record<string, unknown>>(
   opts: CallGatewayCliOptions,
 ): Promise<T> {
@@ -1022,6 +1043,7 @@ export async function callGatewayCli<T = Record<string, unknown>>(
   return await callGatewayWithScopes(opts, scopes);
 }
 
+/** Reused helper for call Gateway Least Privilege behavior in src/gateway. */
 export async function callGatewayLeastPrivilege<T = Record<string, unknown>>(
   opts: CallGatewayBaseOptions,
 ): Promise<T> {
@@ -1029,6 +1051,7 @@ export async function callGatewayLeastPrivilege<T = Record<string, unknown>>(
   return await callGatewayWithScopes(opts, scopes);
 }
 
+/** Reused helper for call Gateway behavior in src/gateway. */
 export async function callGateway<T = Record<string, unknown>>(
   opts: CallGatewayOptions,
 ): Promise<T> {
@@ -1054,7 +1077,9 @@ export async function callGateway<T = Record<string, unknown>>(
   });
 }
 
+/** Reused helper for random Idempotency Key behavior in src/gateway. */
 export function randomIdempotencyKey() {
   return randomUUID();
 }
+/** Re-exported API for src/gateway, starting with testing. */
 export { testing as __testing };

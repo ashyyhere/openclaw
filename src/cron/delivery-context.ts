@@ -1,3 +1,4 @@
+// cron delivery context helpers and runtime behavior.
 import { extractDeliveryInfo } from "../config/sessions/delivery-info.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {
@@ -6,6 +7,7 @@ import {
 } from "../utils/delivery-context.shared.js";
 import type { CronDelivery, CronMessageChannel } from "./types.js";
 
+/** Reused helper for cron Delivery From Context behavior in src/cron. */
 export function cronDeliveryFromContext(context?: DeliveryContext): CronDelivery | null {
   const normalized = normalizeDeliveryContext(context);
   if (!normalized?.to) {
@@ -27,6 +29,7 @@ export function cronDeliveryFromContext(context?: DeliveryContext): CronDelivery
   return delivery;
 }
 
+/** Reused helper for resolve Cron Stored Delivery Context behavior in src/cron. */
 export function resolveCronStoredDeliveryContext(params: {
   cfg: OpenClawConfig;
   sessionKey?: string;
@@ -42,6 +45,7 @@ export function resolveCronStoredDeliveryContext(params: {
   return deliveryContext;
 }
 
+/** Reused helper for resolve Cron Creation Delivery behavior in src/cron. */
 export function resolveCronCreationDelivery(params: {
   cfg: OpenClawConfig;
   currentDeliveryContext?: DeliveryContext;

@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/telegram/src telegram ingress worker runtime behavior.
 import { parentPort, workerData } from "node:worker_threads";
 import { resolveTelegramAllowedUpdates } from "./allowed-updates.js";
 import { normalizeTelegramApiRoot } from "./api-root.js";

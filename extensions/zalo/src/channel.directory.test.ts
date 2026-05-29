@@ -1,3 +1,4 @@
+// Tests extensions/zalo/src channel directory test behavior.
 import {
   createDirectoryTestRuntime,
   expectDirectorySurface,

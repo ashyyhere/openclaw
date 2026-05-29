@@ -1,3 +1,4 @@
+/** Public SDK helpers for replacing managed markdown blocks. */
 export type ManagedMarkdownBlockParams = {
   original: string;
   body: string;
@@ -14,10 +15,12 @@ function isLineWhitespace(value: string): boolean {
   return /^[\t \r\n]*$/.test(value);
 }
 
+/** Ensure generated markdown content ends with one trailing newline. */
 export function withTrailingNewline(content: string): string {
   return content.endsWith("\n") ? content : `${content}\n`;
 }
 
+/** Replace or append one named managed block while preserving surrounding markdown. */
 export function replaceManagedMarkdownBlock(params: ManagedMarkdownBlockParams): string {
   const headingPrefix = params.heading ? `${params.heading}\n` : "";
   const managedBlock = `${headingPrefix}${params.startMarker}\n${params.body}\n${params.endMarker}`;

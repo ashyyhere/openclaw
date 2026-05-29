@@ -1,3 +1,4 @@
+// gateway server control ui root helpers and runtime behavior.
 import path from "node:path";
 import {
   ensureControlUiAssetsBuilt,
@@ -8,6 +9,7 @@ import {
 import type { RuntimeEnv } from "../runtime.js";
 import type { ControlUiRootState } from "./control-ui.js";
 
+/** Reused helper for resolve Gateway Control Ui Root State behavior in src/gateway. */
 export async function resolveGatewayControlUiRootState(params: {
   controlUiRootOverride?: string;
   controlUiEnabled: boolean;

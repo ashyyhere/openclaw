@@ -1,3 +1,4 @@
+/** Smoke tests for top-level CLI program command registration. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { buildProgram } from "./program.js";
 import {

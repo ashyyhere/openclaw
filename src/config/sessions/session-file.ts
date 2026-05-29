@@ -1,8 +1,10 @@
+// config/sessions session file helpers and runtime behavior.
 import { resolveSessionFilePath } from "./paths.js";
 import type { ResolvedSessionMaintenanceConfig } from "./store-maintenance.js";
 import { updateSessionStore } from "./store.js";
 import type { SessionEntry } from "./types.js";
 
+/** Reused helper for resolve And Persist Session File behavior in src/config/sessions. */
 export async function resolveAndPersistSessionFile(params: {
   sessionId: string;
   sessionKey: string;

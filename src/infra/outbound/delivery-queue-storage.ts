@@ -1,3 +1,4 @@
+// infra/outbound delivery queue storage helpers and runtime behavior.
 import path from "node:path";
 import {
   ackJsonDurableQueueEntry,
@@ -26,6 +27,7 @@ const QUEUE_DIRNAME = "delivery-queue";
 const FAILED_DIRNAME = "failed";
 const QUEUE_TEMP_PREFIX = ".delivery-queue";
 
+/** Shared type for Queued Rendered Message Batch Plan in src/infra/outbound. */
 export type QueuedRenderedMessageBatchPlan = {
   payloadCount: number;
   textCount: number;
@@ -37,6 +39,7 @@ export type QueuedRenderedMessageBatchPlan = {
   items: readonly RenderedMessageBatchPlanItem[];
 };
 
+/** Shared type for Queued Reply Payload Sending Hook in src/infra/outbound. */
 export type QueuedReplyPayloadSendingHook = {
   kind: ReplyDispatchKind;
   channel?: string;
@@ -45,6 +48,7 @@ export type QueuedReplyPayloadSendingHook = {
   context: PluginHookReplyPayloadSendingContext;
 };
 
+/** Shared type for Queued Delivery Payload in src/infra/outbound. */
 export type QueuedDeliveryPayload = {
   channel: Exclude<OutboundChannel, "none">;
   to: string;
@@ -75,6 +79,7 @@ export type QueuedDeliveryPayload = {
   gatewayClientScopes?: readonly string[];
 };
 
+/** Shared type for Queued Delivery in src/infra/outbound. */
 export interface QueuedDelivery extends QueuedDeliveryPayload {
   id: string;
   enqueuedAt: number;
@@ -85,6 +90,7 @@ export interface QueuedDelivery extends QueuedDeliveryPayload {
   recoveryState?: "send_attempt_started" | "unknown_after_send";
 }
 
+/** Reused helper for resolve Queue Dir behavior in src/infra/outbound. */
 export function resolveQueueDir(stateDir?: string): string {
   const base = stateDir ?? resolveStateDir();
   return path.join(base, QUEUE_DIRNAME);
@@ -209,6 +215,7 @@ export async function failDelivery(id: string, error: string, stateDir?: string)
   await writeQueueEntry(filePath, entry);
 }
 
+/** Reused helper for mark Delivery Platform Send Attempt Started behavior in src/infra/outbound. */
 export async function markDeliveryPlatformSendAttemptStarted(
   id: string,
   stateDir?: string,
@@ -220,6 +227,7 @@ export async function markDeliveryPlatformSendAttemptStarted(
   await writeQueueEntry(filePath, entry);
 }
 
+/** Reused helper for mark Delivery Platform Outcome Unknown behavior in src/infra/outbound. */
 export async function markDeliveryPlatformOutcomeUnknown(
   id: string,
   stateDir?: string,

@@ -1,3 +1,4 @@
+// extensions/nextcloud-talk/src signature helpers and runtime behavior.
 import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
 import { normalizeLowercaseStringOrEmpty } from "openclaw/plugin-sdk/string-coerce-runtime";
 import type { NextcloudTalkWebhookHeaders } from "./types.js";

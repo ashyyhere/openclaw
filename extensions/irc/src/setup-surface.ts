@@ -1,3 +1,4 @@
+// extensions/irc/src setup surface helpers and runtime behavior.
 import { parseStrictPositiveInteger } from "openclaw/plugin-sdk/number-runtime";
 import { DEFAULT_ACCOUNT_ID } from "openclaw/plugin-sdk/routing";
 import type {

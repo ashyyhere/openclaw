@@ -1,3 +1,4 @@
+// extensions/telegram directory contract api helpers and runtime behavior.
 export {
   listTelegramDirectoryGroupsFromConfig,
   listTelegramDirectoryPeersFromConfig,

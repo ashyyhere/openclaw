@@ -1,7 +1,9 @@
+// infra dedupe helpers and runtime behavior.
 import { resolveGlobalSingleton } from "../shared/global-singleton.js";
 import { pruneMapToMaxSize } from "./map-size.js";
 import { resolveNonNegativeIntegerOption } from "./numeric-options.js";
 
+/** Shared type for Dedupe Cache in src/infra. */
 export type DedupeCache = {
   check: (key: string | undefined | null, now?: number) => boolean;
   peek: (key: string | undefined | null, now?: number) => boolean;
@@ -10,6 +12,7 @@ export type DedupeCache = {
   size: () => number;
 };
 
+/** Shared type for Dedupe Cache Options in src/infra. */
 export type DedupeCacheOptions = {
   ttlMs: number;
   maxSize: number;
@@ -18,6 +21,7 @@ export type DedupeCacheOptions = {
 /** @deprecated Use resolveNonNegativeIntegerOption for new internal numeric option normalization. */
 export { resolveNonNegativeIntegerOption as resolveDedupeNonNegativeInteger };
 
+/** Reused helper for create Dedupe Cache behavior in src/infra. */
 export function createDedupeCache(options: DedupeCacheOptions): DedupeCache {
   const ttlMs = resolveNonNegativeIntegerOption(options.ttlMs, 0);
   const maxSize = resolveNonNegativeIntegerOption(options.maxSize, 0);
@@ -90,6 +94,7 @@ export function createDedupeCache(options: DedupeCacheOptions): DedupeCache {
   };
 }
 
+/** Reused helper for resolve Global Dedupe Cache behavior in src/infra. */
 export function resolveGlobalDedupeCache(key: symbol, options: DedupeCacheOptions): DedupeCache {
   return resolveGlobalSingleton(key, () => createDedupeCache(options));
 }

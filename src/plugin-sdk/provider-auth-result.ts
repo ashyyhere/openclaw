@@ -1,3 +1,4 @@
+/** Public SDK helpers for normalized provider auth result payloads. */
 import { buildAuthProfileId } from "../agents/auth-profiles/identity.js";
 import type { AuthProfileCredential } from "../agents/auth-profiles/types.js";
 import { normalizeConfiguredProviderCatalogModelId } from "../agents/model-ref-shared.js";
@@ -64,6 +65,8 @@ function normalizeProviderConfigModelIdsForAuthResult(
 function normalizeProviderAuthConfigPatchModelRefs(
   patch: Partial<OpenClawConfig>,
 ): Partial<OpenClawConfig> {
+  // Auth flows may return config patches with user-facing model aliases; normalize them before
+  // writing so provider catalogs and agent defaults agree on canonical ids.
   let next = patch;
   const defaults = patch.agents?.defaults;
   if (defaults) {

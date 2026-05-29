@@ -1,3 +1,4 @@
+// extensions/together index helpers and runtime behavior.
 import { defineSingleProviderPluginEntry } from "openclaw/plugin-sdk/provider-entry";
 import { applyTogetherConfig, TOGETHER_DEFAULT_MODEL_REF } from "./onboard.js";
 import { buildTogetherProvider } from "./provider-catalog.js";

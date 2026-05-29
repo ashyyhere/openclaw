@@ -1,3 +1,4 @@
+// extensions/ollama web search contract api helpers and runtime behavior.
 import {
   createWebSearchProviderContractFields,
   type WebSearchProviderPlugin,

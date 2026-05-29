@@ -1,3 +1,4 @@
+// plugins provider auth helpers helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { resolveDefaultAgentDir } from "../agents/agent-scope-config.js";
@@ -24,11 +25,13 @@ type UpsertAuthProfileParams = Parameters<typeof upsertAuthProfileWithLock>[0];
 const resolveAuthAgentDir = (agentDir?: string, config?: OpenClawConfig) =>
   agentDir ?? resolveDefaultAgentDir(config ?? {});
 
+/** Shared type for Api Key Storage Options in src/plugins. */
 export type ApiKeyStorageOptions = {
   secretInputMode?: SecretInputMode;
   config?: OpenClawConfig;
 };
 
+/** Shared type for Write OAuth Credentials Options in src/plugins. */
 export type WriteOAuthCredentialsOptions = {
   syncSiblingAgents?: boolean;
   profileName?: string;
@@ -84,6 +87,7 @@ function resolveApiKeySecretInput(
   return normalized;
 }
 
+/** Reused helper for build Api Key Credential behavior in src/plugins. */
 export function buildApiKeyCredential(
   provider: string,
   input: SecretInput,
@@ -113,6 +117,7 @@ export function buildApiKeyCredential(
   };
 }
 
+/** Reused helper for upsert Api Key Profile behavior in src/plugins. */
 export function upsertApiKeyProfile(params: {
   provider: string;
   input: SecretInput;
@@ -144,6 +149,7 @@ async function upsertAuthProfileWithLockOrThrow(params: UpsertAuthProfileParams)
   }
 }
 
+/** Reused helper for apply Auth Profile Config behavior in src/plugins. */
 export function applyAuthProfileConfig(
   cfg: OpenClawConfig,
   params: {
@@ -278,6 +284,7 @@ function resolveSiblingAgentDirs(primaryAgentDir: string): string[] {
   return result;
 }
 
+/** Reused helper for write OAuth Credentials behavior in src/plugins. */
 export async function writeOAuthCredentials(
   provider: string,
   creds: OAuthCredentials,

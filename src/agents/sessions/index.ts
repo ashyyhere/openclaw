@@ -11,7 +11,9 @@ export * from "./bash-executor.js";
 export * from "./compaction/index.js";
 export * from "./event-bus.js";
 export * from "./extensions/index.js";
+/** Re-exported API for src/agents/sessions, starting with Readonly Footer Data Provider. */
 export type { ReadonlyFooterDataProvider } from "./footer-data-provider.js";
+/** Re-exported API for src/agents/sessions, starting with convert To Llm. */
 export { convertToLlm } from "./messages.js";
 export * from "./model-registry.js";
 export * from "./model-resolver.js";
@@ -19,6 +21,7 @@ export * from "./package-manager.js";
 export * from "./resource-loader.js";
 export * from "./sdk.js";
 export * from "./session-manager.js";
+/** Re-exported API for src/agents/sessions. */
 export {
   FileSettingsStorage,
   InMemorySettingsStorage,

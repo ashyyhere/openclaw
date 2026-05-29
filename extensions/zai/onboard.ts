@@ -1,3 +1,4 @@
+// extensions/zai onboard helpers and runtime behavior.
 import {
   applyProviderConfigWithModelCatalogPreset,
   type OpenClawConfig,

@@ -1,3 +1,4 @@
+// test-utils secret file fixture helpers and runtime behavior.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
@@ -7,6 +8,7 @@ type SecretFiles = {
   tokenFile?: string;
 };
 
+/** Reused helper for with Temp Secret Files behavior in src/test-utils. */
 export async function withTempSecretFiles<T>(
   prefix: string,
   secrets: { password?: string; token?: string },

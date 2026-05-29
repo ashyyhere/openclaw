@@ -1,3 +1,4 @@
+// Tests gateway security path test behavior.
 import { describe, expect, it } from "vitest";
 import {
   PROTECTED_PLUGIN_ROUTE_PREFIXES,

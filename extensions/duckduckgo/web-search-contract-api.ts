@@ -1,3 +1,4 @@
+// extensions/duckduckgo web search contract api helpers and runtime behavior.
 import type { WebSearchProviderPlugin } from "openclaw/plugin-sdk/provider-web-search-contract";
 import { createDuckDuckGoWebSearchProviderBase } from "./src/ddg-search-provider.shared.js";
 

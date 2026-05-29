@@ -1,3 +1,4 @@
+// extensions/discord/src delivery retry helpers and runtime behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import {
   resolveRetryConfig,

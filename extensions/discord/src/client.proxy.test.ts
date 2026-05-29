@@ -1,3 +1,4 @@
+// Tests extensions/discord/src client proxy test behavior.
 import http from "node:http";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { fetch as undiciFetch } from "undici";

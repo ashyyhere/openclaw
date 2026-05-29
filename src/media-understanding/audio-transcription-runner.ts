@@ -1,3 +1,4 @@
+// media-understanding audio transcription runner helpers and runtime behavior.
 import type { MsgContext } from "../auto-reply/templating.js";
 import type { OpenClawConfig } from "../config/types.js";
 import type { ActiveMediaModel } from "./active-model.types.js";
@@ -9,6 +10,7 @@ import {
 } from "./runner.js";
 import type { MediaAttachment, MediaUnderstandingProvider } from "./types.js";
 
+/** Reused helper for run Audio Transcription behavior in src/media-understanding. */
 export async function runAudioTranscription(params: {
   ctx: MsgContext;
   cfg: OpenClawConfig;

@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src approval handler runtime test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { telegramApprovalNativeRuntime } from "./approval-handler.runtime.js";
 

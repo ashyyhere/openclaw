@@ -1,3 +1,4 @@
+// Tests extensions/codex/src/app-server openclaw owned tool runtime contract test behavior.
 import type { AnyAgentTool } from "openclaw/plugin-sdk/agent-harness";
 import { wrapToolWithBeforeToolCallHook } from "openclaw/plugin-sdk/agent-harness-runtime";
 import {

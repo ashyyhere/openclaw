@@ -1,3 +1,4 @@
+/** Tests webhooks CLI command registration and runtime delegation. */
 import { Command } from "commander";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { registerWebhooksCli } from "./webhooks-cli.js";

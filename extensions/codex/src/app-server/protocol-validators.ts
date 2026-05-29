@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server protocol validators helpers and runtime behavior.
 import { Compile, type Validator as TypeBoxValidator } from "typebox/compile";
 import dynamicToolCallParamsSchema from "./protocol-generated/json/DynamicToolCallParams.json" with { type: "json" };
 import errorNotificationSchema from "./protocol-generated/json/v2/ErrorNotification.json" with { type: "json" };

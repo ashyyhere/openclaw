@@ -1,3 +1,4 @@
+/** Live regression tests for MCP-style prompt/cache behavior. */
 import type { AssistantMessage, Tool } from "openclaw/plugin-sdk/llm";
 import { Type } from "typebox";
 import { describe, expect, it } from "vitest";

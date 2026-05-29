@@ -1,3 +1,4 @@
+// Session lifecycle hook dispatch for reply runs.
 import { resolveSessionAgentId } from "../../agents/agent-scope.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type {
@@ -6,6 +7,7 @@ import type {
   PluginHookSessionStartEvent,
 } from "../../plugins/hook-types.js";
 
+/** Shared type for Session Hook Context in src/auto-reply/reply. */
 export type SessionHookContext = {
   sessionId: string;
   sessionKey: string;
@@ -24,6 +26,7 @@ function buildSessionHookContext(params: {
   };
 }
 
+/** Reused helper for build Session Start Hook Payload behavior in src/auto-reply/reply. */
 export function buildSessionStartHookPayload(params: {
   sessionId: string;
   sessionKey: string;
@@ -47,6 +50,7 @@ export function buildSessionStartHookPayload(params: {
   };
 }
 
+/** Reused helper for build Session End Hook Payload behavior in src/auto-reply/reply. */
 export function buildSessionEndHookPayload(params: {
   sessionId: string;
   sessionKey: string;

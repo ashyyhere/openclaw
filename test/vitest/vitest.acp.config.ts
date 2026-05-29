@@ -1,3 +1,4 @@
+// test/vitest vitest acp config helpers and runtime behavior.
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
 export function createAcpVitestConfig(env?: Record<string, string | undefined>) {

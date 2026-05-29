@@ -1,3 +1,4 @@
+// daemon program args helpers and runtime behavior.
 import { execFileSync } from "node:child_process";
 import { constants as fsConstants } from "node:fs";
 import fs from "node:fs/promises";
@@ -16,6 +17,7 @@ type GatewayProgramArgs = {
 
 type GatewayRuntimePreference = "auto" | "node" | "bun";
 
+/** Reused constant for OPENCLAW WRAPPER ENV KEY behavior in src/daemon. */
 export const OPENCLAW_WRAPPER_ENV_KEY = "OPENCLAW_WRAPPER";
 
 async function resolveCliEntrypointPathForService(): Promise<string> {
@@ -180,6 +182,7 @@ async function resolveBinaryPath(binary: string): Promise<string> {
   }
 }
 
+/** Reused helper for resolve Open Claw Wrapper Path behavior in src/daemon. */
 export async function resolveOpenClawWrapperPath(
   inputPath: string | undefined,
 ): Promise<string | undefined> {
@@ -283,6 +286,7 @@ async function resolveCliProgramArguments(params: {
   };
 }
 
+/** Reused helper for resolve Gateway Program Arguments behavior in src/daemon. */
 export async function resolveGatewayProgramArguments(params: {
   port: number;
   dev?: boolean;
@@ -300,6 +304,7 @@ export async function resolveGatewayProgramArguments(params: {
   });
 }
 
+/** Reused helper for resolve Node Program Arguments behavior in src/daemon. */
 export async function resolveNodeProgramArguments(params: {
   host: string;
   port: number;

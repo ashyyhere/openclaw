@@ -1,3 +1,4 @@
+// flows health check adapter helpers and runtime behavior.
 import type {
   HealthCheckInput,
   HealthCheckRunResult,
@@ -5,6 +6,7 @@ import type {
 } from "./health-check-runner-types.js";
 import type { HealthCheck, HealthRepairContext } from "./health-checks.js";
 
+/** Reused helper for define Split Health Check behavior in src/flows. */
 export function defineSplitHealthCheck(check: HealthCheck): RegisteredHealthCheck {
   return {
     id: check.id,
@@ -49,6 +51,7 @@ export function defineSplitHealthCheck(check: HealthCheck): RegisteredHealthChec
   };
 }
 
+/** Reused helper for normalize Health Check behavior in src/flows. */
 export function normalizeHealthCheck(check: HealthCheckInput): RegisteredHealthCheck {
   if (
     "detect" in check &&

@@ -1,3 +1,4 @@
+// Tests extensions/qa-lab/src lab server ui test behavior.
 import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

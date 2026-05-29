@@ -1,3 +1,4 @@
+// extensions/lobster/src lobster runner helpers and runtime behavior.
 import { readFileSync } from "node:fs";
 import { stat } from "node:fs/promises";
 import { createRequire } from "node:module";

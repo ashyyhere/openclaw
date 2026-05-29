@@ -1,7 +1,9 @@
+// Shared test helpers for reply modules.
 import { vi } from "vitest";
 import type { FollowupRun } from "./queue.js";
 import type { TypingController } from "./typing.js";
 
+/** Reused helper for create Mock Typing Controller behavior in src/auto-reply/reply. */
 export function createMockTypingController(
   overrides: Partial<TypingController> = {},
 ): TypingController {
@@ -18,6 +20,7 @@ export function createMockTypingController(
   };
 }
 
+/** Reused helper for create Mock Followup Run behavior in src/auto-reply/reply. */
 export function createMockFollowupRun(
   overrides: Partial<Omit<FollowupRun, "run">> & { run?: Partial<FollowupRun["run"]> } = {},
 ): FollowupRun {

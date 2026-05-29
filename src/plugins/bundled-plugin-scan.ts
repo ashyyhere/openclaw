@@ -1,3 +1,4 @@
+// plugins bundled plugin scan helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
@@ -12,12 +13,15 @@ const RUNTIME_SIDECAR_ARTIFACTS = new Set([
   "thread-bindings-runtime.js",
 ]);
 
+/** Re-exported API for src/plugins, starting with normalize Optional String. */
 export { normalizeOptionalString as trimBundledPluginString };
 
+/** Reused helper for normalize Bundled Plugin String List behavior in src/plugins. */
 export function normalizeBundledPluginStringList(value: unknown): string[] {
   return normalizeTrimmedStringList(value);
 }
 
+/** Reused helper for rewrite Bundled Plugin Entry To Built Path behavior in src/plugins. */
 export function rewriteBundledPluginEntryToBuiltPath(
   entry: string | undefined,
 ): string | undefined {
@@ -48,6 +52,7 @@ function isTopLevelPublicSurfaceSource(name: string): boolean {
   return !/(\.test|\.spec)(\.[cm]?[jt]s)$/u.test(name);
 }
 
+/** Reused helper for derive Bundled Plugin Id Hint behavior in src/plugins. */
 export function deriveBundledPluginIdHint(params: {
   entryPath: string;
   manifestId: string;
@@ -68,6 +73,7 @@ export function deriveBundledPluginIdHint(params: {
   return `${unscoped}/${base}`;
 }
 
+/** Reused helper for collect Bundled Plugin Public Surface Artifacts behavior in src/plugins. */
 export function collectBundledPluginPublicSurfaceArtifacts(params: {
   pluginDir: string;
   sourceEntry: string;
@@ -90,6 +96,7 @@ export function collectBundledPluginPublicSurfaceArtifacts(params: {
   return artifacts.length > 0 ? artifacts : undefined;
 }
 
+/** Reused helper for collect Bundled Plugin Runtime Sidecar Artifacts behavior in src/plugins. */
 export function collectBundledPluginRuntimeSidecarArtifacts(
   publicSurfaceArtifacts: readonly string[] | undefined,
 ): readonly string[] | undefined {
@@ -102,6 +109,7 @@ export function collectBundledPluginRuntimeSidecarArtifacts(
   return artifacts.length > 0 ? artifacts : undefined;
 }
 
+/** Reused helper for resolve Bundled Plugin Scan Dir behavior in src/plugins. */
 export function resolveBundledPluginScanDir(params: {
   packageRoot: string;
   runningFromBuiltArtifact: boolean;

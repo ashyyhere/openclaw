@@ -1,3 +1,4 @@
+// extensions/slack/src/monitor thread resolution helpers and runtime behavior.
 import type { WebClient as SlackWebClient } from "@slack/web-api";
 import { pruneMapToMaxSize } from "openclaw/plugin-sdk/collection-runtime";
 import {

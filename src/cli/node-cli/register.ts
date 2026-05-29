@@ -1,3 +1,4 @@
+/** Registers node host and daemon CLI commands. */
 import type { Command } from "commander";
 import { formatDocsLink } from "../../../packages/terminal-core/src/links.js";
 import { theme } from "../../../packages/terminal-core/src/theme.js";
@@ -24,6 +25,7 @@ function parsePortOption(value: unknown, fallback: number): number | null {
   return parsePort(value);
 }
 
+/** Reused helper for register Node Cli behavior in src/cli/node-cli. */
 export function registerNodeCli(program: Command) {
   const node = program
     .command("node")

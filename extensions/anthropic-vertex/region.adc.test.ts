@@ -1,3 +1,4 @@
+// Tests extensions/anthropic-vertex region adc test behavior.
 import { platform } from "node:os";
 import path from "node:path";
 import { afterAll, afterEach, describe, expect, it, vi } from "vitest";

@@ -1,3 +1,4 @@
+// scripts tool search gateway e2e helpers and runtime behavior.
 import fs from "node:fs/promises";
 import net from "node:net";
 import os from "node:os";

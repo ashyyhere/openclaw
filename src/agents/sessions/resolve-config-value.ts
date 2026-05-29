@@ -101,6 +101,7 @@ export function resolveConfigValueUncached(config: string): string | undefined {
   return envValue || config;
 }
 
+/** Reused helper for resolve Config Value Or Throw behavior in src/agents/sessions. */
 export function resolveConfigValueOrThrow(config: string, description: string): string {
   const resolvedValue = resolveConfigValueUncached(config);
   if (resolvedValue !== undefined) {
@@ -133,6 +134,7 @@ export function resolveHeaders(
   return Object.keys(resolved).length > 0 ? resolved : undefined;
 }
 
+/** Reused helper for resolve Headers Or Throw behavior in src/agents/sessions. */
 export function resolveHeadersOrThrow(
   headers: Record<string, string> | undefined,
   description: string,

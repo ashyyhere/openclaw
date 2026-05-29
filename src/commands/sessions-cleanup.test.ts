@@ -1,3 +1,4 @@
+/** Tests sessions cleanup command behavior. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { SessionEntry } from "../config/sessions.js";
 import type { RuntimeEnv } from "../runtime.js";

@@ -1,3 +1,4 @@
+// Tests packages/net-policy/src redact sensitive url test behavior.
 import { describe, expect, it } from "vitest";
 import {
   isSensitiveUrlQueryParamName,

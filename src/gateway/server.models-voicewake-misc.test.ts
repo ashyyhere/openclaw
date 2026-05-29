@@ -1,3 +1,4 @@
+// Tests gateway server models voicewake misc test behavior.
 import fs from "node:fs/promises";
 import { createServer } from "node:net";
 import path from "node:path";

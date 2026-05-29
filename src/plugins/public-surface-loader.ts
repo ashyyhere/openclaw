@@ -1,3 +1,4 @@
+// plugins public surface loader helpers and runtime behavior.
 import fs from "node:fs";
 import { createRequire } from "node:module";
 import path from "node:path";
@@ -114,6 +115,7 @@ function loadPublicSurfaceModule(modulePath: string): unknown {
 }
 
 // oxlint-disable-next-line typescript/no-unnecessary-type-parameters -- Dynamic public artifact loaders use caller-supplied module surface types.
+/** Reused helper for load Bundled Plugin Public Artifact Module Sync behavior in src/plugins. */
 export function loadBundledPluginPublicArtifactModuleSync<T extends object>(params: {
   dirName: string;
   artifactBasename: string;
@@ -167,6 +169,7 @@ export function loadBundledPluginPublicArtifactModuleSync<T extends object>(para
   }
 }
 
+/** Reused helper for resolve Bundled Plugin Public Artifact Path behavior in src/plugins. */
 export function resolveBundledPluginPublicArtifactPath(params: {
   dirName: string;
   artifactBasename: string;
@@ -174,6 +177,7 @@ export function resolveBundledPluginPublicArtifactPath(params: {
   return resolvePublicSurfaceLocation(params)?.modulePath ?? null;
 }
 
+/** Reused helper for reset Bundled Plugin Public Artifact Loader For Test behavior in src/plugins. */
 export function resetBundledPluginPublicArtifactLoaderForTest(): void {
   publicSurfaceModuleCache.clear();
   publicSurfaceLocationCache.clear();

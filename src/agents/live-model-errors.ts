@@ -1,3 +1,5 @@
+/** Provider error classifiers used by live model tests. */
+/** Return whether an error message means the model id is unavailable. */
 export function isModelNotFoundErrorMessage(raw: string): boolean {
   const msg = raw.trim();
   if (!msg) {
@@ -45,6 +47,7 @@ export function isModelNotFoundErrorMessage(raw: string): boolean {
   return false;
 }
 
+/** Return whether a MiniMax error message means the model id is unavailable. */
 export function isMiniMaxModelNotFoundErrorMessage(raw: string): boolean {
   const msg = raw.trim();
   if (!msg) {

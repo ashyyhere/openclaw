@@ -15,6 +15,7 @@ import { repairMissingPluginInstallsForIds } from "./missing-configured-plugin-i
 import { asObjectRecord } from "./object.js";
 import { shouldDeferConfiguredPluginInstallRepair } from "./update-phase.js";
 
+/** Reused constant for CONFIGURED PLUGIN INSTALL RELEASE VERSION behavior in src/commands/doctor. */
 export const CONFIGURED_PLUGIN_INSTALL_RELEASE_VERSION = "2026.5.2-beta.1";
 
 const AGENT_HARNESS_RUNTIME_PLUGIN_IDS: Readonly<Record<string, string>> = {
@@ -253,6 +254,7 @@ function addEligiblePluginId(cfg: OpenClawConfig, pluginIds: Set<string>, plugin
   pluginIds.add(normalized);
 }
 
+/** Reused helper for should Run Configured Plugin Install Release Step behavior in src/commands/doctor. */
 export function shouldRunConfiguredPluginInstallReleaseStep(params: {
   currentVersion?: string | null;
   touchedVersion?: string | null;
@@ -270,6 +272,7 @@ export function shouldRunConfiguredPluginInstallReleaseStep(params: {
   return touchedComparedToRelease === null || touchedComparedToRelease < 0;
 }
 
+/** Reused helper for collect Release Configured Plugin Ids behavior in src/commands/doctor. */
 export function collectReleaseConfiguredPluginIds(params: {
   cfg: OpenClawConfig;
   env?: NodeJS.ProcessEnv;
@@ -324,6 +327,7 @@ export function collectReleaseConfiguredPluginIds(params: {
   };
 }
 
+/** Reused helper for maybe Run Configured Plugin Install Release Step behavior in src/commands/doctor. */
 export async function maybeRunConfiguredPluginInstallReleaseStep(params: {
   cfg: OpenClawConfig;
   env?: NodeJS.ProcessEnv;

@@ -1,3 +1,4 @@
+// extensions/telegram/src directory config helpers and runtime behavior.
 import { normalizeAccountId } from "openclaw/plugin-sdk/account-core";
 import { mapAllowFromEntries } from "openclaw/plugin-sdk/channel-config-helpers";
 import type { OpenClawConfig, TelegramAccountConfig } from "openclaw/plugin-sdk/config-contracts";

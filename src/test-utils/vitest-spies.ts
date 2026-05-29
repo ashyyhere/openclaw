@@ -1,5 +1,7 @@
+// test-utils vitest spies helpers and runtime behavior.
 import { vi } from "vitest";
 
+/** Shared type for Restorable Mock in src/test-utils. */
 export type RestorableMock = {
   mockRestore(): void;
 };
@@ -18,11 +20,14 @@ function isPromiseLike<T>(value: T | Promise<T>): value is Promise<T> {
   );
 }
 
+/** Reused helper for with Restored Mocks behavior in src/test-utils. */
 export function withRestoredMocks<T>(
   mocks: readonly RestorableMock[],
   run: () => Promise<T>,
 ): Promise<T>;
+/** Reused helper for with Restored Mocks behavior in src/test-utils. */
 export function withRestoredMocks<T>(mocks: readonly RestorableMock[], run: () => T): T;
+/** Reused helper for with Restored Mocks behavior in src/test-utils. */
 export function withRestoredMocks<T>(
   mocks: readonly RestorableMock[],
   run: () => T | Promise<T>,
@@ -40,12 +45,16 @@ export function withRestoredMocks<T>(
   }
 }
 
+/** Reused helper for mock Process Platform behavior in src/test-utils. */
 export function mockProcessPlatform(platform: NodeJS.Platform): RestorableMock {
   return vi.spyOn(process, "platform", "get").mockReturnValue(platform);
 }
 
+/** Reused helper for with Mocked Platform behavior in src/test-utils. */
 export function withMockedPlatform<T>(platform: NodeJS.Platform, run: () => Promise<T>): Promise<T>;
+/** Reused helper for with Mocked Platform behavior in src/test-utils. */
 export function withMockedPlatform<T>(platform: NodeJS.Platform, run: () => T): T;
+/** Reused helper for with Mocked Platform behavior in src/test-utils. */
 export function withMockedPlatform<T>(
   platform: NodeJS.Platform,
   run: () => T | Promise<T>,
@@ -53,8 +62,11 @@ export function withMockedPlatform<T>(
   return withRestoredMocks([mockProcessPlatform(platform)], run);
 }
 
+/** Reused helper for with Mocked Windows Platform behavior in src/test-utils. */
 export function withMockedWindowsPlatform<T>(run: () => Promise<T>): Promise<T>;
+/** Reused helper for with Mocked Windows Platform behavior in src/test-utils. */
 export function withMockedWindowsPlatform<T>(run: () => T): T;
+/** Reused helper for with Mocked Windows Platform behavior in src/test-utils. */
 export function withMockedWindowsPlatform<T>(run: () => T | Promise<T>): T | Promise<T> {
   return withMockedPlatform("win32", run);
 }

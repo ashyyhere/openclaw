@@ -1,3 +1,4 @@
+// Tests secrets runtime legacy x search test behavior.
 import { describe, expect, it, vi } from "vitest";
 import {
   asConfig,

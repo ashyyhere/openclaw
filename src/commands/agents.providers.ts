@@ -1,3 +1,4 @@
+/** Builds provider and channel status indexes for agent listings. */
 import { isChannelVisibleInConfiguredLists } from "../channels/plugins/exposure.js";
 import { resolveChannelDefaultAccountId } from "../channels/plugins/helpers.js";
 import { normalizeChannelId } from "../channels/plugins/index.js";
@@ -29,6 +30,7 @@ function providerAccountKey(provider: ChannelId, accountId?: string) {
   return `${provider}:${accountId ?? DEFAULT_ACCOUNT_ID}`;
 }
 
+/** Reused helper for build Provider Summary Metadata Index behavior in src/commands. */
 export function buildProviderSummaryMetadataIndex(
   cfg: OpenClawConfig,
 ): Map<ChannelId, ProviderSummaryMetadata> {
@@ -90,6 +92,7 @@ async function resolveReadOnlyAccount(params: {
   return params.plugin.config.resolveAccount(params.cfg, params.accountId);
 }
 
+/** Reused helper for build Provider Status Index behavior in src/commands. */
 export async function buildProviderStatusIndex(
   cfg: OpenClawConfig,
 ): Promise<Map<string, ProviderAccountStatus>> {
@@ -192,6 +195,7 @@ function formatProviderEntry(entry: ProviderAccountStatus): string {
   return `${label}: ${formatProviderState(entry)}`;
 }
 
+/** Reused helper for summarize Bindings behavior in src/commands. */
 export function summarizeBindings(
   cfg: OpenClawConfig,
   bindings: AgentBinding[],
@@ -221,6 +225,7 @@ export function summarizeBindings(
   return [...seen.values()];
 }
 
+/** Reused helper for list Providers For Agent behavior in src/commands. */
 export function listProvidersForAgent(params: {
   summaryIsDefault: boolean;
   cfg: OpenClawConfig;

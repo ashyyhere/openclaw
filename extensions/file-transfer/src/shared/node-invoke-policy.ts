@@ -1,3 +1,4 @@
+// extensions/file-transfer/src/shared node invoke policy helpers and runtime behavior.
 import { spawn } from "node:child_process";
 import { readPositiveIntegerParam } from "openclaw/plugin-sdk/param-readers";
 import type {

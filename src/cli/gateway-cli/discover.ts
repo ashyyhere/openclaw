@@ -3,23 +3,28 @@ import type { GatewayBonjourBeacon } from "../../infra/bonjour-discovery.js";
 import { buildGatewayDiscoveryTarget } from "../../infra/gateway-discovery-targets.js";
 import { parseTimeoutMsWithFallback } from "../parse-timeout.js";
 
+/** Shared type for Gateway Discover Opts in src/cli/gateway-cli. */
 export type GatewayDiscoverOpts = {
   timeout?: string;
   json?: boolean;
 };
 
+/** Reused helper for parse Discover Timeout Ms behavior in src/cli/gateway-cli. */
 export function parseDiscoverTimeoutMs(raw: unknown, fallbackMs: number): number {
   return parseTimeoutMsWithFallback(raw, fallbackMs, { invalidType: "error" });
 }
 
+/** Reused helper for pick Beacon Host behavior in src/cli/gateway-cli. */
 export function pickBeaconHost(beacon: GatewayBonjourBeacon): string | null {
   return buildGatewayDiscoveryTarget(beacon).endpoint?.host ?? null;
 }
 
+/** Reused helper for pick Gateway Port behavior in src/cli/gateway-cli. */
 export function pickGatewayPort(beacon: GatewayBonjourBeacon): number | null {
   return buildGatewayDiscoveryTarget(beacon).endpoint?.port ?? null;
 }
 
+/** Reused helper for dedupe Beacons behavior in src/cli/gateway-cli. */
 export function dedupeBeacons(beacons: GatewayBonjourBeacon[]): GatewayBonjourBeacon[] {
   const out: GatewayBonjourBeacon[] = [];
   const seen = new Set<string>();
@@ -42,6 +47,7 @@ export function dedupeBeacons(beacons: GatewayBonjourBeacon[]): GatewayBonjourBe
   return out;
 }
 
+/** Reused helper for render Beacon Lines behavior in src/cli/gateway-cli. */
 export function renderBeaconLines(beacon: GatewayBonjourBeacon, rich: boolean): string[] {
   const target = buildGatewayDiscoveryTarget(beacon);
   const title = colorize(rich, theme.accentBright, target.title);

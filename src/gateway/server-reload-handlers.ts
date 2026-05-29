@@ -1,3 +1,4 @@
+// gateway server reload handlers helpers and runtime behavior.
 import { disposeAllSessionMcpRuntimes } from "../agents/agent-bundle-mcp-tools.js";
 import {
   getActiveEmbeddedRunCount,
@@ -81,6 +82,7 @@ type GatewayGmailRestartAbortController = {
   signal: AbortSignal;
 };
 
+/** Shared type for Gateway Plugin Reload Result in src/gateway. */
 export type GatewayPluginReloadResult = {
   restartChannels: ReadonlySet<ChannelKind>;
   activeChannels: ReadonlySet<ChannelKind>;
@@ -185,6 +187,7 @@ type ManagedGatewayConfigReloaderParams = Omit<
   clients: Iterable<SharedGatewayAuthClient>;
 };
 
+/** Reused helper for create Gateway Reload Handlers behavior in src/gateway. */
 export function createGatewayReloadHandlers(params: GatewayReloadHandlerParams) {
   const getActiveCounts = () => {
     const queueSize = getTotalQueueSize();
@@ -602,6 +605,7 @@ export function createGatewayReloadHandlers(params: GatewayReloadHandlerParams) 
   return { applyHotReload, requestGatewayRestart };
 }
 
+/** Reused helper for start Managed Gateway Config Reloader behavior in src/gateway. */
 export function startManagedGatewayConfigReloader(params: ManagedGatewayConfigReloaderParams) {
   if (params.minimalTestGateway) {
     return { stop: async () => {} };

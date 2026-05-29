@@ -1,3 +1,4 @@
+// infra approval view model helpers and runtime behavior.
 import type {
   ApprovalMetadataView,
   ApprovalRequest,
@@ -101,6 +102,7 @@ function buildPluginViewBase<TPhase extends ApprovalPhase>(
   };
 }
 
+/** Reused helper for build Pending Approval View behavior in src/infra. */
 export function buildPendingApprovalView(request: ApprovalRequest): PendingApprovalView {
   if (request.id.startsWith("plugin:")) {
     const pluginRequest = request as PluginApprovalRequest;
@@ -125,6 +127,7 @@ export function buildPendingApprovalView(request: ApprovalRequest): PendingAppro
   };
 }
 
+/** Reused helper for build Resolved Approval View behavior in src/infra. */
 export function buildResolvedApprovalView(
   request: ApprovalRequest,
   resolved: ApprovalResolved,
@@ -145,6 +148,7 @@ export function buildResolvedApprovalView(
   };
 }
 
+/** Reused helper for build Expired Approval View behavior in src/infra. */
 export function buildExpiredApprovalView(request: ApprovalRequest): ExpiredApprovalView {
   if (request.id.startsWith("plugin:")) {
     return buildPluginViewBase(request as PluginApprovalRequest, "expired");

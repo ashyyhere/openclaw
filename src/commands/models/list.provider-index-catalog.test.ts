@@ -1,3 +1,4 @@
+// Tests bundled provider-index preview rows for model-list output.
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { loadProviderIndexCatalogRowsForList } from "./list.provider-index-catalog.js";

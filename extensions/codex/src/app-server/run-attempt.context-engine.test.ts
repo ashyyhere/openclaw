@@ -1,3 +1,4 @@
+// Tests extensions/codex/src/app-server run attempt context engine test behavior.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

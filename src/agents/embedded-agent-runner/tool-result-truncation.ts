@@ -1,3 +1,4 @@
+/** Truncates oversized tool-result text in messages, sessions, and transcripts. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { formatErrorMessage } from "../../infra/errors.js";
 import type { TextContent } from "../../llm/types.js";
@@ -38,7 +39,9 @@ const MAX_TOOL_RESULT_CONTEXT_SHARE = 0.3;
  * request-local ceiling so oversized tool output cannot dominate the next turn.
  */
 export const DEFAULT_MAX_LIVE_TOOL_RESULT_CHARS = 16_000;
+/** Reused constant for LARGE CONTEXT MAX LIVE TOOL RESULT CHARS behavior in src/agents/embedded-agent-runner. */
 export const LARGE_CONTEXT_MAX_LIVE_TOOL_RESULT_CHARS = 32_000;
+/** Reused constant for XL CONTEXT MAX LIVE TOOL RESULT CHARS behavior in src/agents/embedded-agent-runner. */
 export const XL_CONTEXT_MAX_LIVE_TOOL_RESULT_CHARS = 64_000;
 const LARGE_CONTEXT_TOOL_RESULT_TOKENS = 100_000;
 const XL_CONTEXT_TOOL_RESULT_TOKENS = 200_000;
@@ -60,6 +63,7 @@ const DEFAULT_SUFFIX = (truncatedChars: number) =>
   formatContextLimitTruncationNotice(truncatedChars);
 const COMPACT_RECOVERY_SUFFIX = (truncatedChars: number) =>
   `[... ${Math.max(1, Math.floor(truncatedChars))} chars truncated; narrow args]`;
+/** Reused constant for MIN TRUNCATED TEXT CHARS behavior in src/agents/embedded-agent-runner. */
 export const MIN_TRUNCATED_TEXT_CHARS = MIN_KEEP_CHARS + DEFAULT_SUFFIX(1).length;
 
 function resolveSuffixFactory(
@@ -137,6 +141,7 @@ function hasImportantTail(text: string): boolean {
  * This ensures error messages and summaries at the end of tool output
  * aren't lost during truncation.
  */
+/** Truncates one text payload while preserving useful head/tail context. */
 export function truncateToolResultText(
   text: string,
   maxChars: number,
@@ -205,6 +210,7 @@ export function truncateToolResultText(
  * Uses a rough 4 chars ≈ 1 token heuristic (conservative for English text;
  * actual ratio varies by tokenizer).
  */
+/** Calculates the default live tool-result cap for a model context window. */
 export function calculateMaxToolResultChars(contextWindowTokens: number): number {
   return calculateMaxToolResultCharsWithCap(
     contextWindowTokens,
@@ -212,6 +218,7 @@ export function calculateMaxToolResultChars(contextWindowTokens: number): number
   );
 }
 
+/** Resolves the automatic live tool-result cap for the current context window. */
 export function resolveAutoLiveToolResultMaxChars(contextWindowTokens: number): number {
   if (!Number.isFinite(contextWindowTokens)) {
     return DEFAULT_MAX_LIVE_TOOL_RESULT_CHARS;
@@ -226,6 +233,7 @@ export function resolveAutoLiveToolResultMaxChars(contextWindowTokens: number): 
   return DEFAULT_MAX_LIVE_TOOL_RESULT_CHARS;
 }
 
+/** Applies an explicit cap over the context-window-derived tool-result limit. */
 export function calculateMaxToolResultCharsWithCap(
   contextWindowTokens: number,
   hardCapChars: number,
@@ -236,6 +244,7 @@ export function calculateMaxToolResultCharsWithCap(
   return Math.min(maxChars, Math.max(1, hardCapChars));
 }
 
+/** Resolves the configured or automatic max live tool-result size. */
 export function resolveLiveToolResultMaxChars(params: {
   contextWindowTokens: number;
   cfg?: OpenClawConfig;
@@ -249,6 +258,7 @@ export function resolveLiveToolResultMaxChars(params: {
 /**
  * Get the total character count of text content blocks in a tool result message.
  */
+/** Measures tool-result text length without rewriting message content. */
 export function getToolResultTextLength(msg: AgentMessage): number {
   if (!msg || (msg as { role?: string }).role !== "toolResult") {
     return 0;
@@ -273,6 +283,7 @@ export function getToolResultTextLength(msg: AgentMessage): number {
  * Truncate a tool result message's text content blocks to fit within maxChars.
  * Returns a new message (does not mutate the original).
  */
+/** Truncates a single tool-result message and returns whether it changed. */
 export function truncateToolResultMessage(
   msg: AgentMessage,
   maxChars: number,
@@ -332,6 +343,7 @@ export function truncateToolResultMessage(
  * This is used as a pre-emptive guard before sending messages to the LLM,
  * without modifying the session file.
  */
+/** Applies tool-result truncation across a mutable message list. */
 export function truncateOversizedToolResultsInMessages(
   messages: AgentMessage[],
   contextWindowTokens: number,
@@ -383,6 +395,7 @@ function calculateRecoveryAggregateToolResultChars(
   );
 }
 
+/** Shared type for Tool Result Reduction Potential in src/agents/embedded-agent-runner. */
 export type ToolResultReductionPotential = {
   maxChars: number;
   aggregateBudgetChars: number;
@@ -605,6 +618,7 @@ function buildToolResultReplacementPlan(params: {
     aggregateReducibleChars,
   };
 }
+/** Estimates how many tokens/chars could be recovered by truncating results. */
 export function estimateToolResultReductionPotential(params: {
   messages: AgentMessage[];
   contextWindowTokens: number;
@@ -796,6 +810,7 @@ async function truncateOversizedToolResultsInTranscriptState(params: {
   };
 }
 
+/** Truncates oversized results held in the in-memory SessionManager state. */
 export function truncateOversizedToolResultsInSessionManager(params: {
   sessionManager: SessionManager;
   contextWindowTokens: number;
@@ -815,6 +830,7 @@ export function truncateOversizedToolResultsInSessionManager(params: {
   }
 }
 
+/** Truncates oversized results in both SessionManager state and session file. */
 export async function truncateOversizedToolResultsInSession(params: {
   sessionFile: string;
   contextWindowTokens: number;
@@ -855,6 +871,7 @@ export async function truncateOversizedToolResultsInSession(params: {
 /**
  * Check if a tool result message exceeds the size limit for a given context window.
  */
+/** Checks whether one message exceeds the live tool-result size cap. */
 export function isOversizedToolResult(
   msg: AgentMessage,
   contextWindowTokens: number,
@@ -870,6 +887,7 @@ export function isOversizedToolResult(
   return getToolResultTextLength(msg) > maxChars;
 }
 
+/** Fast heuristic for whether a session may benefit from tool-result truncation. */
 export function sessionLikelyHasOversizedToolResults(params: {
   messages: AgentMessage[];
   contextWindowTokens: number;

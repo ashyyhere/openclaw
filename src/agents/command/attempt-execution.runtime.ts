@@ -1,3 +1,4 @@
+/** Runtime imports isolated for command attempt execution. */
 export {
   buildAcpResult,
   createAcpVisibleTextAccumulator,

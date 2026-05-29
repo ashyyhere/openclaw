@@ -1,3 +1,4 @@
+// Image resize pipeline for model attachment limits and coordinate notes.
 import type { ImageContent } from "../../llm/types.js";
 import {
   createImageProcessor,
@@ -5,6 +6,7 @@ import {
   type ImageProbe,
 } from "../../media/image-ops.js";
 
+/** Constraints used when shrinking image attachments before sending them to a model. */
 export interface ImageResizeOptions {
   maxWidth?: number; // Default: 2000
   maxHeight?: number; // Default: 2000
@@ -12,6 +14,7 @@ export interface ImageResizeOptions {
   jpegQuality?: number; // Default: 80
 }
 
+/** Result metadata for a resize attempt, including original and sent dimensions. */
 export interface ResizedImage {
   data: string; // base64
   mimeType: string;

@@ -1,6 +1,8 @@
+/** Applies deferred-followup guidance to shell/process tool descriptions. */
 import type { AnyAgentTool } from "./agent-tools.types.js";
 import { describeExecTool, describeProcessTool } from "./bash-tools.descriptions.js";
 
+/** Return tools with exec/process descriptions adjusted for deferred follow-up workflows. */
 export function applyDeferredFollowupToolDescriptions(
   tools: AnyAgentTool[],
   params?: { agentId?: string },

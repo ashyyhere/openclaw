@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src exec approval resolver test behavior.
 import type { ExecApprovalReplyDecision } from "openclaw/plugin-sdk/approval-reply-runtime";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 

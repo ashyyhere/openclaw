@@ -1,11 +1,13 @@
 import { asDateTimestampMs } from "../../shared/number-coercion.js";
 import type { AuthProfileCredential, OAuthCredential } from "./types.js";
 
+/** Reused helper for normalize Auth Identity Token behavior in src/agents/auth-profiles. */
 export function normalizeAuthIdentityToken(value: string | undefined): string | undefined {
   const trimmed = value?.trim();
   return trimmed ? trimmed : undefined;
 }
 
+/** Reused helper for normalize Auth Email Token behavior in src/agents/auth-profiles. */
 export function normalizeAuthEmailToken(value: string | undefined): string | undefined {
   return normalizeAuthIdentityToken(value)?.toLowerCase();
 }
@@ -71,6 +73,7 @@ export function isSafeToCopyOAuthIdentity(
   return true;
 }
 
+/** Shared type for OAuth Mirror Decision Reason in src/agents/auth-profiles. */
 export type OAuthMirrorDecisionReason =
   | "no-existing-credential"
   | "incoming-fresher"
@@ -79,6 +82,7 @@ export type OAuthMirrorDecisionReason =
   | "identity-mismatch-or-regression"
   | "incoming-not-fresher";
 
+/** Shared type for OAuth Mirror Decision in src/agents/auth-profiles. */
 export type OAuthMirrorDecision =
   | {
       shouldMirror: true;
@@ -89,6 +93,7 @@ export type OAuthMirrorDecision =
       reason: Exclude<OAuthMirrorDecisionReason, "no-existing-credential" | "incoming-fresher">;
     };
 
+/** Reused helper for should Mirror Refreshed OAuth Credential behavior in src/agents/auth-profiles. */
 export function shouldMirrorRefreshedOAuthCredential(params: {
   existing: AuthProfileCredential | undefined;
   refreshed: OAuthCredential;

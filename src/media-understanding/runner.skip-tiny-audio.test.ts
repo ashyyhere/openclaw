@@ -1,3 +1,4 @@
+// Tests media-understanding runner skip tiny audio test behavior.
 import { describe, expect, it, vi } from "vitest";
 import type { MsgContext } from "../auto-reply/templating.js";
 import type { OpenClawConfig } from "../config/types.js";

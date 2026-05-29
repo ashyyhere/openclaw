@@ -1,3 +1,4 @@
+// gateway startup tasks helpers and runtime behavior.
 import { formatErrorMessage } from "../infra/errors.js";
 
 type StartupTaskResult =
@@ -5,6 +6,7 @@ type StartupTaskResult =
   | { status: "ran" }
   | { status: "failed"; reason: string };
 
+/** Shared type for Startup Task in src/gateway. */
 export type StartupTask = {
   source: string;
   agentId?: string;
@@ -30,6 +32,7 @@ function taskMeta(task: StartupTask, result?: StartupTaskResult): Record<string,
   };
 }
 
+/** Reused helper for run Startup Tasks behavior in src/gateway. */
 export async function runStartupTasks(params: {
   tasks: StartupTask[];
   log: StartupTaskLogger;

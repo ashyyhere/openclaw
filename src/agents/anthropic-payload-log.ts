@@ -1,3 +1,4 @@
+/** Optional redacted JSONL payload logging for Anthropic-compatible requests. */
 import crypto from "node:crypto";
 import path from "node:path";
 import { resolveStateDir } from "../config/paths.js";
@@ -97,6 +98,7 @@ type AnthropicPayloadLogger = {
   recordUsage: (messages: AgentMessage[], error?: unknown) => void;
 };
 
+/** Create an Anthropic payload logger when enabled by environment config. */
 export function createAnthropicPayloadLogger(params: {
   env?: NodeJS.ProcessEnv;
   runId?: string;

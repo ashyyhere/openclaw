@@ -1,3 +1,4 @@
+/** Shared CLI runner input, prepared backend, and prepared context types. */
 import type { SourceReplyDeliveryMode } from "../../auto-reply/get-reply-options.types.js";
 import type { ReplyOperation } from "../../auto-reply/reply/reply-run-registry.js";
 import type { ThinkLevel } from "../../auto-reply/thinking.js";
@@ -25,6 +26,7 @@ import type {
 } from "../embedded-agent-runner/run/params.js";
 import type { SilentReplyPromptMode } from "../system-prompt.types.js";
 
+/** Full request payload for running a CLI-backed agent turn. */
 export type RunCliAgentParams = {
   sessionId: string;
   sessionKey?: string;
@@ -104,6 +106,7 @@ export type RunCliAgentParams = {
   cleanupBundleMcpOnRunEnd?: boolean;
 };
 
+/** Backend-specific prepared execution metadata and cleanup. */
 export type CliPreparedBackend = {
   backend: CliBackendConfig;
   cleanup?: () => Promise<void>;
@@ -112,6 +115,7 @@ export type CliPreparedBackend = {
   env?: Record<string, string>;
 };
 
+/** Reuse decision for an existing CLI session. */
 export type CliReusableSession = {
   sessionId?: string;
   invalidatedReason?:
@@ -124,6 +128,7 @@ export type CliReusableSession = {
     | "orphaned-tool-use";
 };
 
+/** Fully prepared CLI run context passed to the executor. */
 export type PreparedCliRunContext = {
   params: RunCliAgentParams;
   effectiveAuthProfileId?: string;

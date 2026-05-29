@@ -1,3 +1,4 @@
+// extensions/zalouser/src send receipt helpers and runtime behavior.
 import {
   createMessageReceiptFromOutboundResults,
   type MessageReceipt,

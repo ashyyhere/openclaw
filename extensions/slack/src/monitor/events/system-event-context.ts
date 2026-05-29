@@ -1,3 +1,4 @@
+// extensions/slack/src/monitor/events system event context helpers and runtime behavior.
 import { logVerbose } from "openclaw/plugin-sdk/runtime-env";
 import { authorizeSlackSystemEventSender } from "../auth.js";
 import { resolveSlackChannelLabel } from "../channel-config.js";

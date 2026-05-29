@@ -1,3 +1,4 @@
+// Runtime boundary for plugins web content extractors runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveEnabledBundledManifestContractPlugins } from "./bundled-manifest-contract-plugins.js";
 import { loadBundledWebContentExtractorEntriesFromDir } from "./web-content-extractor-public-artifacts.js";
@@ -15,6 +16,7 @@ function compareExtractors(
   return left.id.localeCompare(right.id) || left.pluginId.localeCompare(right.pluginId);
 }
 
+/** Reused helper for resolve Plugin Web Content Extractors behavior in src/plugins. */
 export function resolvePluginWebContentExtractors(params?: {
   config?: OpenClawConfig;
   workspaceDir?: string;

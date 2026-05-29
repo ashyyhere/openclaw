@@ -1,3 +1,4 @@
+// infra system run command helpers and runtime behavior.
 import {
   extractShellWrapperCommand,
   hasEnvManipulationBeforeShellWrapper,
@@ -39,6 +40,7 @@ type ResolvedSystemRunCommand =
       details?: Record<string, unknown>;
     };
 
+/** Reused helper for format Exec Command behavior in src/infra. */
 export function formatExecCommand(argv: string[]): string {
   return argv
     .map((arg) => {
@@ -54,6 +56,7 @@ export function formatExecCommand(argv: string[]): string {
     .join(" ");
 }
 
+/** Reused helper for extract Shell Command From Argv behavior in src/infra. */
 export function extractShellCommandFromArgv(argv: string[]): string | null {
   return extractShellWrapperCommand(argv).command;
 }
@@ -141,6 +144,7 @@ function normalizeRawCommandText(rawCommand?: unknown): string | null {
   return typeof rawCommand === "string" && rawCommand.trim().length > 0 ? rawCommand.trim() : null;
 }
 
+/** Reused helper for validate System Run Command Consistency behavior in src/infra. */
 export function validateSystemRunCommandConsistency(params: {
   argv: string[];
   rawCommand?: string | null;
@@ -177,6 +181,7 @@ export function validateSystemRunCommandConsistency(params: {
   };
 }
 
+/** Reused helper for resolve System Run Command behavior in src/infra. */
 export function resolveSystemRunCommand(params: {
   command?: unknown;
   rawCommand?: unknown;
@@ -184,6 +189,7 @@ export function resolveSystemRunCommand(params: {
   return resolveSystemRunCommandWithMode(params, false);
 }
 
+/** Reused helper for resolve System Run Command Request behavior in src/infra. */
 export function resolveSystemRunCommandRequest(params: {
   command?: unknown;
   rawCommand?: unknown;

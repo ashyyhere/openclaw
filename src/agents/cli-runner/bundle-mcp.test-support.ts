@@ -1,3 +1,4 @@
+/** Shared harness for bundled MCP CLI runner tests. */
 import { afterAll, beforeAll } from "vitest";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import {
@@ -13,6 +14,7 @@ let bundleProbeWorkspaceDir = "";
 let bundleProbeServerPath = "";
 let envSnapshot: ReturnType<typeof captureEnv> | undefined;
 
+/** Reused constant for cli Bundle Mcp Harness behavior in src/agents/cli-runner. */
 export const cliBundleMcpHarness = {
   tempHarness,
   get bundleProbeHomeDir() {
@@ -26,6 +28,7 @@ export const cliBundleMcpHarness = {
   },
 };
 
+/** Reused helper for require Mcp Config Path behavior in src/agents/cli-runner. */
 export function requireMcpConfigPath(args: readonly string[] | undefined): string {
   const configFlagIndex = args?.indexOf("--mcp-config") ?? -1;
   if (configFlagIndex < 0) {
@@ -38,6 +41,7 @@ export function requireMcpConfigPath(args: readonly string[] | undefined): strin
   return generatedConfigPath;
 }
 
+/** Reused helper for setup Cli Bundle Mcp Test Harness behavior in src/agents/cli-runner. */
 export function setupCliBundleMcpTestHarness(): void {
   beforeAll(async () => {
     envSnapshot = captureEnv(["OPENCLAW_BUNDLED_PLUGINS_DIR"]);
@@ -64,6 +68,7 @@ function createEnabledBundleProbeConfig(): OpenClawConfig {
   };
 }
 
+/** Reused helper for prepare Bundle Probe Cli Config behavior in src/agents/cli-runner. */
 export async function prepareBundleProbeCliConfig(params?: {
   additionalConfig?: Parameters<typeof prepareCliBundleMcpConfig>[0]["additionalConfig"];
 }) {

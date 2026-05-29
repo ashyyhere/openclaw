@@ -1,3 +1,4 @@
+// extensions/opencode-go stream helpers and runtime behavior.
 import type { ProviderWrapStreamFnContext } from "openclaw/plugin-sdk/plugin-entry";
 import {
   createDeepSeekV4OpenAICompatibleThinkingWrapper,

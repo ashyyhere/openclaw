@@ -1,3 +1,4 @@
+// pairing setup code helpers and runtime behavior.
 import os from "node:os";
 import {
   isCarrierGradeNatIpv4Address,
@@ -25,22 +26,26 @@ import {
 } from "../shared/string-coerce.js";
 import { resolveTailnetHostWithRunner } from "../shared/tailscale-status.js";
 
+/** Shared type for Pairing Setup Payload in src/pairing. */
 export type PairingSetupPayload = {
   url: string;
   bootstrapToken: string;
 };
 
+/** Shared type for Pairing Setup Command Result in src/pairing. */
 export type PairingSetupCommandResult = {
   code: number | null;
   stdout: string;
   stderr?: string;
 };
 
+/** Shared type for Pairing Setup Command Runner in src/pairing. */
 export type PairingSetupCommandRunner = (
   argv: string[],
   opts: { timeoutMs: number },
 ) => Promise<PairingSetupCommandResult>;
 
+/** Shared type for Resolve Pairing Setup Options in src/pairing. */
 export type ResolvePairingSetupOptions = {
   env?: NodeJS.ProcessEnv;
   publicUrl?: string;
@@ -51,6 +56,7 @@ export type ResolvePairingSetupOptions = {
   networkInterfaces?: () => ReturnType<typeof os.networkInterfaces>;
 };
 
+/** Shared type for Pairing Setup Resolution in src/pairing. */
 export type PairingSetupResolution =
   | {
       ok: true;
@@ -352,12 +358,14 @@ async function resolveGatewayUrl(
   };
 }
 
+/** Reused helper for encode Pairing Setup Code behavior in src/pairing. */
 export function encodePairingSetupCode(payload: PairingSetupPayload): string {
   const json = JSON.stringify(payload);
   const base64 = Buffer.from(json, "utf8").toString("base64");
   return base64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
 }
 
+/** Reused helper for resolve Pairing Setup From Config behavior in src/pairing. */
 export async function resolvePairingSetupFromConfig(
   cfg: OpenClawConfig,
   options: ResolvePairingSetupOptions = {},

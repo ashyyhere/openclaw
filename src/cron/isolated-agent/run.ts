@@ -1,3 +1,4 @@
+// cron/isolated-agent run helpers and runtime behavior.
 import { retireSessionMcpRuntime } from "../../agents/agent-bundle-mcp-tools.js";
 import { hasAnyAuthProfileStoreSource } from "../../agents/auth-profiles/source-check.js";
 import { resolveAgentHarnessPolicy } from "../../agents/harness/selection.js";
@@ -190,6 +191,7 @@ async function retireRolledCronSessionMcpRuntime(params: {
   });
 }
 
+/** Re-exported API for src/cron/isolated-agent, starting with Run Cron Agent Turn Result. */
 export type { RunCronAgentTurnResult } from "./run.types.js";
 
 type CronExecutionRuntime = typeof import("./run-executor.runtime.js");
@@ -1200,6 +1202,7 @@ function disposeCronRunContext(params: {
   (params.cronSession as { store?: unknown }).store = undefined;
 }
 
+/** Reused helper for run Cron Isolated Agent Turn behavior in src/cron/isolated-agent. */
 export async function runCronIsolatedAgentTurn(params: {
   cfg: OpenClawConfig;
   deps: CliDeps;

@@ -1,9 +1,12 @@
+// logging redact helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { compileConfigRegex } from "../security/config-regex.js";
 import { readLoggingConfig } from "./config.js";
 import { replacePatternBounded } from "./redact-bounded.js";
 
+/** Shared type for Redact Sensitive Mode in src/logging. */
 export type RedactSensitiveMode = "off" | "tools";
+/** Shared type for Redact Pattern in src/logging. */
 export type RedactPattern = string | RegExp;
 type LoggingConfig = OpenClawConfig["logging"];
 
@@ -102,11 +105,13 @@ let defaultResolvedPatterns: RegExp[] | undefined;
 const DEFAULT_REDACT_PREFILTER_RE =
   /(?:KEY|TOKEN|SECRET|PASSWORD|PASSWD|AUTH|COOKIE|SIGNATURE|CARD|CVC|CVV|PAYMENT|PRIVATE KEY|[?&]pass=|security[-_]?code|securityCode|\bBearer\s+|sk-|ghp_|github_pat_|xox[baprs]-|xapp-|gsk_|AIza|ya29\.|1\/\/0|eyJ|pplx-|npm_|AKID|LTAI|hf_|r8_|\bbot\d{6,}:|\b\d{6,}:[A-Za-z0-9_-]{20,})/i;
 
+/** Shared type for Redact Options in src/logging. */
 export type RedactOptions = {
   mode?: RedactSensitiveMode;
   patterns?: RedactPattern[];
 };
 
+/** Shared type for Resolved Redact Options in src/logging. */
 export type ResolvedRedactOptions = {
   mode: RedactSensitiveMode;
   patterns: RegExp[];
@@ -247,6 +252,7 @@ function resolveConfigRedaction(): RedactOptions {
   };
 }
 
+/** Reused helper for resolve Redact Options behavior in src/logging. */
 export function resolveRedactOptions(options?: RedactOptions): ResolvedRedactOptions {
   const resolved = options ?? resolveConfigRedaction();
   const mode = normalizeMode(resolved.mode);
@@ -262,6 +268,7 @@ export function resolveRedactOptions(options?: RedactOptions): ResolvedRedactOpt
   };
 }
 
+/** Reused helper for redact Sensitive Text behavior in src/logging. */
 export function redactSensitiveText(text: string, options?: RedactOptions): string {
   if (!text) {
     return text;
@@ -280,6 +287,7 @@ export function redactSensitiveText(text: string, options?: RedactOptions): stri
   return redactText(text, resolved.patterns);
 }
 
+/** Reused helper for redact Tool Detail behavior in src/logging. */
 export function redactToolDetail(detail: string): string {
   const resolved = resolveConfigRedaction();
   if (normalizeMode(resolved.mode) !== "tools") {
@@ -302,10 +310,12 @@ function resolveToolPayloadRedaction(
 // Forces tools-mode regardless of `logging.redactSensitive` (which governs log
 // output, not UI surfaces), and merges user `logging.redactPatterns` with the
 // built-in defaults so both apply.
+/** Reused helper for redact Tool Payload Text behavior in src/logging. */
 export function redactToolPayloadText(text: string): string {
   return redactToolPayloadTextWithConfig(text, readLoggingConfig());
 }
 
+/** Reused helper for redact Tool Payload Text With Config behavior in src/logging. */
 export function redactToolPayloadTextWithConfig(
   text: string,
   loggingConfig?: LoggingConfig,
@@ -316,6 +326,7 @@ export function redactToolPayloadTextWithConfig(
   return redactSensitiveText(text, resolveToolPayloadRedaction(loggingConfig));
 }
 
+/** Reused helper for is Sensitive Field Key behavior in src/logging. */
 export function isSensitiveFieldKey(key: string): boolean {
   return STRUCTURED_SECRET_FIELD_RE.test(key) || STRUCTURED_SECRET_ENV_FIELD_RE.test(key);
 }
@@ -349,6 +360,7 @@ function redactSensitiveFieldValueWithOptions(
   return value;
 }
 
+/** Reused helper for redact Sensitive Field Value behavior in src/logging. */
 export function redactSensitiveFieldValue(
   key: string,
   value: string,
@@ -357,6 +369,7 @@ export function redactSensitiveFieldValue(
   return redactSensitiveFieldValueWithOptions(key, value, options ?? resolveToolPayloadRedaction());
 }
 
+/** Reused helper for redact Sensitive Field Value With Config behavior in src/logging. */
 export function redactSensitiveFieldValueWithConfig(
   key: string,
   value: string,
@@ -416,6 +429,7 @@ function redactStructuredSecretValue(
   return value;
 }
 
+/** Reused helper for redact Secrets behavior in src/logging. */
 export function redactSecrets<T>(value: T): T {
   const options = resolveToolPayloadRedaction();
   if (typeof value === "string") {
@@ -430,6 +444,7 @@ export function redactSecrets<T>(value: T): T {
   return redactStructuredSecretValue("", value, new WeakSet<object>(), options) as T;
 }
 
+/** Reused helper for get Default Redact Patterns behavior in src/logging. */
 export function getDefaultRedactPatterns(): string[] {
   return [...DEFAULT_REDACT_PATTERNS];
 }
@@ -438,6 +453,7 @@ export function getDefaultRedactPatterns(): string[] {
 // Lines are joined before redacting so multiline patterns (e.g. PEM blocks) can match across
 // line boundaries, then split back. Use this instead of mapping redactSensitiveText when
 // options are resolved once per request.
+/** Reused helper for redact Sensitive Lines behavior in src/logging. */
 export function redactSensitiveLines(lines: string[], resolved: ResolvedRedactOptions): string[] {
   if (resolved.mode === "off" || !resolved.patterns.length || lines.length === 0) {
     return lines;

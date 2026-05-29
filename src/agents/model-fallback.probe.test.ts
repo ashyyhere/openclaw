@@ -1,3 +1,4 @@
+/** Tests model fallback probe cooldown behavior. */
 import { randomUUID } from "node:crypto";
 import os from "node:os";
 import path from "node:path";

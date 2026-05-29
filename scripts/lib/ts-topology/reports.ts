@@ -1,3 +1,4 @@
+// scripts/lib/ts-topology reports helpers and runtime behavior.
 import type { ReportModule, TopologyEnvelope, TopologyRecord } from "./types.js";
 
 function canonicalExportName(record: TopologyRecord): string {

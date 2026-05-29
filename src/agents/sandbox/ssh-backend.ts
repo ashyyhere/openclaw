@@ -1,3 +1,4 @@
+/** SSH-backed sandbox backend implementation. */
 import path from "node:path";
 import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";
 import type {
@@ -37,6 +38,7 @@ type ResolvedSshRuntimePaths = {
   remoteAgentWorkspaceDir: string;
 };
 
+/** Reused constant for ssh Sandbox Backend Manager behavior in src/agents/sandbox. */
 export const sshSandboxBackendManager: SandboxBackendManager = {
   async describeRuntime({ entry, config, agentId }) {
     const cfg = resolveSandboxConfigForAgent(config, agentId);
@@ -100,6 +102,7 @@ export const sshSandboxBackendManager: SandboxBackendManager = {
   },
 };
 
+/** Creates or reuses an SSH sandbox session and returns a backend handle. */
 export async function createSshSandboxBackend(
   params: CreateSandboxBackendParams,
 ): Promise<SandboxBackendHandle> {

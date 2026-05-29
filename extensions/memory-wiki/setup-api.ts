@@ -1,3 +1,4 @@
+// extensions/memory-wiki setup api helpers and runtime behavior.
 import { definePluginEntry } from "./api.js";
 import { migrateMemoryWikiLegacyConfig } from "./src/config-compat.js";
 

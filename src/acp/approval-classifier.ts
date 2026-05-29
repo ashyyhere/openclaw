@@ -1,3 +1,4 @@
+/** Classifies ACP tool calls into approval-risk categories for policy decisions. */
 import { homedir } from "node:os";
 import path from "node:path";
 import { isKnownCoreToolId } from "../agents/tool-catalog.js";
@@ -28,6 +29,7 @@ const CONTROL_PLANE_TOOL_IDS = new Set([
   "session_status",
 ]);
 
+/** Risk category assigned to an ACP tool call before approval policy runs. */
 export type AcpApprovalClass =
   | "readonly_scoped"
   | "readonly_search"
@@ -185,6 +187,7 @@ function isReadToolCallScopedToCwd(
   return isPathInside(path.resolve(cwd), absolutePath);
 }
 
+/** Classify one ACP tool call from command/path metadata without executing it. */
 export function classifyAcpToolApproval(params: {
   toolCall?: {
     title?: string | null;

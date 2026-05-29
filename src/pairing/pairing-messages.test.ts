@@ -1,3 +1,4 @@
+// Tests pairing pairing messages test behavior.
 import { expectPairingReplyText } from "openclaw/plugin-sdk/channel-test-helpers";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { captureEnv } from "../test-utils/env.js";

@@ -1,3 +1,4 @@
+// Tests extensions/discord/src api barrel test behavior.
 import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";

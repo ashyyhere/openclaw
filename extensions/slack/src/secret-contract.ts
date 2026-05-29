@@ -1,3 +1,4 @@
+// extensions/slack/src secret contract helpers and runtime behavior.
 import {
   collectConditionalChannelFieldAssignments,
   collectSimpleChannelFieldAssignments,

@@ -1,10 +1,13 @@
+/** Shared Commander helpers for CLI option parsing and action args. */
 import { InvalidArgumentError, type Command } from "commander";
 import { parseStrictPositiveInteger } from "../../infra/parse-finite-number.js";
 
+/** Reused helper for collect Option behavior in src/cli/program. */
 export function collectOption(value: string, previous: string[] = []): string[] {
   return [...previous, value];
 }
 
+/** Reused helper for parse Positive Int Or Undefined behavior in src/cli/program. */
 export function parsePositiveIntOrUndefined(value: unknown): number | undefined {
   if (value === undefined || value === null || value === "") {
     return undefined;
@@ -12,10 +15,12 @@ export function parsePositiveIntOrUndefined(value: unknown): number | undefined 
   return parseStrictPositiveInteger(value);
 }
 
+/** Reused helper for parse Strict Positive Int Or Undefined behavior in src/cli/program. */
 export function parseStrictPositiveIntOrUndefined(value: unknown): number | undefined {
   return parseStrictPositiveInteger(value);
 }
 
+/** Reused helper for parse Strict Positive Int Option behavior in src/cli/program. */
 export function parseStrictPositiveIntOption(value: string, flag: string): number {
   const parsed = parseStrictPositiveInteger(value);
   if (parsed === undefined) {
@@ -24,6 +29,7 @@ export function parseStrictPositiveIntOption(value: string, flag: string): numbe
   return parsed;
 }
 
+/** Reused helper for resolve Action Args behavior in src/cli/program. */
 export function resolveActionArgs(actionCommand?: Command): string[] {
   if (!actionCommand) {
     return [];
@@ -72,6 +78,7 @@ function stringifyOptionValue(value: unknown): string | undefined {
   return undefined;
 }
 
+/** Reused helper for resolve Command Option Args behavior in src/cli/program. */
 export function resolveCommandOptionArgs(command?: Command): string[] {
   if (!command) {
     return [];

@@ -1,3 +1,4 @@
+/** Handles sessions-yield interruption and context artifacts during attempts. */
 import type { AgentMessage } from "../../runtime/index.js";
 import { log } from "../logger.js";
 import { resolveEmbeddedAbortSettleTimeoutMs } from "./attempt.abort-settle-timeout.js";
@@ -12,6 +13,7 @@ function buildSessionsYieldContextMessage(message: string): string {
   return `${message}\n\n[Context: The previous turn ended intentionally via sessions_yield while waiting for a follow-up event.]`;
 }
 
+/** Waits briefly for abort-triggered session-yield cleanup to settle. */
 export async function waitForSessionsYieldAbortSettle(params: {
   settlePromise: Promise<void> | null;
   runId: string;
@@ -46,6 +48,7 @@ export async function waitForSessionsYieldAbortSettle(params: {
 }
 
 // Return a synthetic aborted response so agent runtime unwinds without a real provider call.
+/** Builds the synthetic response used when a sessions-yield interrupt wins. */
 export function createYieldAbortedResponse(model: {
   api?: string;
   provider?: string;
@@ -107,6 +110,7 @@ export function createYieldAbortedResponse(model: {
 
 // Queue a hidden steering message so agent runtime injects it before the next
 // LLM call once the current assistant turn finishes executing its tool calls.
+/** Queues an interrupt message so the active session stops after yielding. */
 export function queueSessionsYieldInterruptMessage(activeSession: {
   agent: { steer: (message: AgentMessage) => void };
 }) {
@@ -121,6 +125,7 @@ export function queueSessionsYieldInterruptMessage(activeSession: {
 }
 
 // Append the caller-provided yield payload as a hidden session message once the run is idle.
+/** Persists the context marker emitted for a sessions-yield handoff. */
 export async function persistSessionsYieldContextMessage(
   activeSession: {
     sendCustomMessage: (
@@ -147,6 +152,7 @@ export async function persistSessionsYieldContextMessage(
 }
 
 // Remove the synthetic yield interrupt + aborted assistant entry from the live transcript.
+/** Removes sessions-yield custom artifacts before continuing normal delivery. */
 export function stripSessionsYieldArtifacts(activeSession: {
   messages: AgentMessage[];
   agent: { state: { messages: AgentMessage[] } };

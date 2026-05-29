@@ -1,3 +1,4 @@
+// Coverage for command argument formatters used in native command menus.
 import { describe, expect, it } from "vitest";
 import { COMMAND_ARG_FORMATTERS } from "./commands-args.js";
 import type { CommandArgValues } from "./commands-registry.types.js";

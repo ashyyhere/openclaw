@@ -1,3 +1,4 @@
+// Tests extensions/slack/src progress blocks test behavior.
 import { describe, expect, it } from "vitest";
 import {
   buildSlackProgressDraftBlocks,

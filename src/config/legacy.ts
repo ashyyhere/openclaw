@@ -1,3 +1,4 @@
+// config legacy helpers and runtime behavior.
 import { LEGACY_CONFIG_RULES } from "./legacy.rules.js";
 import type { LegacyConfigRule } from "./legacy.shared.js";
 import type { LegacyConfigIssue } from "./types.js";
@@ -13,6 +14,7 @@ function getPathValue(root: Record<string, unknown>, path: string[]): unknown {
   return cursor;
 }
 
+/** Reused helper for find Legacy Config Issues behavior in src/config. */
 export function findLegacyConfigIssues(
   raw: unknown,
   sourceRaw?: unknown,

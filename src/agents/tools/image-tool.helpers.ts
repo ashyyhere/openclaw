@@ -1,3 +1,4 @@
+/** Helper functions for media-understanding image tool config and payloads. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { AssistantMessage } from "../../llm/types.js";
 import { estimateBase64DecodedBytes } from "../../media/base64.js";
@@ -7,6 +8,7 @@ import { isMinimaxVlmProvider } from "../minimax-vlm.js";
 import { findNormalizedProviderValue, normalizeProviderId } from "../model-selection.js";
 import { coerceToolModelConfig, type ToolModelConfig } from "./model-config.helpers.js";
 
+/** Shared type for Image Model Config in src/agents/tools. */
 export type ImageModelConfig = ToolModelConfig;
 
 const IMAGE_REASONING_FALLBACK_SIGNATURES = new Set([
@@ -54,6 +56,7 @@ function isImageReasoningFallbackSignature(value: unknown): boolean {
   return id.startsWith("rs_") && (type === "reasoning" || type.startsWith("reasoning."));
 }
 
+/** Detects image responses that contain reasoning but no visible text. */
 export function hasImageReasoningOnlyResponse(message: AssistantMessage): boolean {
   if (extractAssistantText(message).trim() || !Array.isArray(message.content)) {
     return false;
@@ -79,6 +82,7 @@ export function hasImageReasoningOnlyResponse(message: AssistantMessage): boolea
   return false;
 }
 
+/** Decodes a data URL into media type and base64 payload. */
 export function decodeDataUrl(
   dataUrl: string,
   opts?: { maxBytes?: number },
@@ -107,6 +111,7 @@ export function decodeDataUrl(
   return { buffer, mimeType, kind: "image" };
 }
 
+/** Coerces assistant image output into visible fallback text. */
 export function coerceImageAssistantText(params: {
   message: AssistantMessage;
   provider: string;
@@ -131,6 +136,7 @@ export function coerceImageAssistantText(params: {
   throw new Error(`Image model returned no text (${params.provider}/${params.model}).`);
 }
 
+/** Reads image model config with tool defaults applied. */
 export function coerceImageModelConfig(cfg?: OpenClawConfig): ImageModelConfig {
   return coerceToolModelConfig(cfg?.agents?.defaults?.imageModel);
 }
@@ -211,6 +217,7 @@ function resolveProviderlessConfiguredImageModelRef(params: {
   );
 }
 
+/** Resolves configured image model references for a tool call. */
 export function resolveConfiguredImageModelRefs(params: {
   cfg?: OpenClawConfig;
   imageModelConfig: ImageModelConfig;
@@ -235,6 +242,7 @@ export function resolveConfiguredImageModelRefs(params: {
   };
 }
 
+/** Resolves a provider-specific vision model from config candidates. */
 export function resolveProviderVisionModelFromConfig(params: {
   cfg?: OpenClawConfig;
   provider: string;

@@ -1,3 +1,4 @@
+// Tests test/scripts dev tooling safety test behavior.
 import { describe, expect, it } from "vitest";
 import { testing as promptProbeTesting } from "../../scripts/anthropic-prompt-probe.ts";
 import { testing as claudeUsageTesting } from "../../scripts/debug-claude-usage.ts";

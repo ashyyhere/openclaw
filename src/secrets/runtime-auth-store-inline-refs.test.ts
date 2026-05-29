@@ -1,3 +1,4 @@
+// Tests secrets runtime auth store inline refs test behavior.
 import { describe, expect, it } from "vitest";
 import { activateSecretsRuntimeSnapshot } from "./runtime.js";
 import {

@@ -1,5 +1,7 @@
+// gateway openresponses shape helpers and runtime behavior.
 import type { OutputItem } from "./open-responses.schema.js";
 
+/** Reused helper for create Assistant Output Item behavior in src/gateway. */
 export function createAssistantOutputItem(params: {
   id: string;
   text: string;
@@ -16,6 +18,7 @@ export function createAssistantOutputItem(params: {
   };
 }
 
+/** Reused helper for create Function Call Output Item behavior in src/gateway. */
 export function createFunctionCallOutputItem(params: {
   id: string;
   callId: string;

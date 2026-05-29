@@ -1,3 +1,4 @@
+// extensions/discord/src session key normalization helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "openclaw/plugin-sdk/string-coerce-runtime";
 
 type DiscordSessionKeyContext = {

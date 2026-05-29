@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src conversation route base session key test behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import {
   testing as conversationBindingTesting,

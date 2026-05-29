@@ -1,3 +1,4 @@
+/** Adapts channel setup wizard hooks into OpenClaw setup runtime calls. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { createDelegatedSetupWizardStatusResolvers } from "./setup-wizard-binary.js";
 import type { ChannelSetupDmPolicy } from "./setup-wizard-types.js";
@@ -15,16 +16,19 @@ type ResolveGroupAllowlistParams = Parameters<
   NonNullable<NonNullable<ChannelSetupWizard["groupAccess"]>["resolveAllowlist"]>
 >[0];
 
+/** Reused helper for create Delegated Resolve Configured behavior in src/channels/plugins. */
 export function createDelegatedResolveConfigured(loadWizard: () => Promise<ChannelSetupWizard>) {
   return async ({ cfg, accountId }: ResolveConfiguredParams) =>
     await (await loadWizard()).status.resolveConfigured({ cfg, accountId });
 }
 
+/** Reused helper for create Delegated Prepare behavior in src/channels/plugins. */
 export function createDelegatedPrepare(loadWizard: () => Promise<ChannelSetupWizard>) {
   return async (params: Parameters<NonNullable<ChannelSetupWizard["prepare"]>>[0]) =>
     await (await loadWizard()).prepare?.(params);
 }
 
+/** Reused helper for create Delegated Finalize behavior in src/channels/plugins. */
 export function createDelegatedFinalize(loadWizard: () => Promise<ChannelSetupWizard>) {
   return async (params: Parameters<NonNullable<ChannelSetupWizard["finalize"]>>[0]) =>
     await (await loadWizard()).finalize?.(params);
@@ -35,6 +39,7 @@ type DelegatedStatusBase = Omit<
   "resolveConfigured" | "resolveStatusLines" | "resolveSelectionHint" | "resolveQuickstartScore"
 >;
 
+/** Reused helper for create Delegated Setup Wizard Proxy behavior in src/channels/plugins. */
 export function createDelegatedSetupWizardProxy(params: {
   channel: string;
   loadWizard: () => Promise<ChannelSetupWizard>;
@@ -70,6 +75,7 @@ export function createDelegatedSetupWizardProxy(params: {
   } satisfies ChannelSetupWizard;
 }
 
+/** Reused helper for create Allowlist Setup Wizard Proxy behavior in src/channels/plugins. */
 export function createAllowlistSetupWizardProxy<TGroupResolved>(params: {
   loadWizard: () => Promise<ChannelSetupWizard>;
   createBase: (handlers: {

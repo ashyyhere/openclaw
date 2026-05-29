@@ -1,6 +1,8 @@
+// packages/agent-core/src/harness file loader utils helpers and runtime behavior.
 import { parse } from "yaml";
 import { type ExecutionEnv, type FileInfo, type Result, toError } from "./types.js";
 
+/** Public type describing File Info Diagnostic for packages/agent-core. */
 export interface FileInfoDiagnostic {
   type: "warning";
   code: "file_info_failed";
@@ -12,6 +14,7 @@ interface FileInfoDiagnostics {
   push(diagnostic: FileInfoDiagnostic): unknown;
 }
 
+/** Public helper for parse Frontmatter behavior in packages/agent-core. */
 export function parseFrontmatter(
   content: string,
 ): Result<{ frontmatter: Record<string, unknown>; body: string }, Error> {
@@ -35,6 +38,7 @@ export function parseFrontmatter(
   }
 }
 
+/** Public helper for resolve File Info Kind behavior in packages/agent-core. */
 export async function resolveFileInfoKind(
   env: ExecutionEnv,
   info: FileInfo,
@@ -72,22 +76,26 @@ export async function resolveFileInfoKind(
     : undefined;
 }
 
+/** Public helper for join Env Path behavior in packages/agent-core. */
 export function joinEnvPath(base: string, child: string): string {
   return `${base.replace(/\/+$/, "")}/${child.replace(/^\/+/, "")}`;
 }
 
+/** Public helper for dirname Env Path behavior in packages/agent-core. */
 export function dirnameEnvPath(path: string): string {
   const normalized = path.replace(/\/+$/, "");
   const slashIndex = normalized.lastIndexOf("/");
   return slashIndex <= 0 ? "/" : normalized.slice(0, slashIndex);
 }
 
+/** Public helper for basename Env Path behavior in packages/agent-core. */
 export function basenameEnvPath(path: string): string {
   const normalized = path.replace(/\/+$/, "");
   const slashIndex = normalized.lastIndexOf("/");
   return slashIndex === -1 ? normalized : normalized.slice(slashIndex + 1);
 }
 
+/** Public helper for relative Env Path behavior in packages/agent-core. */
 export function relativeEnvPath(root: string, path: string): string {
   const normalizedRoot = root.replace(/\/+$/, "");
   const normalizedPath = path.replace(/\/+$/, "");

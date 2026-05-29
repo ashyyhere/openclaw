@@ -1,3 +1,4 @@
+// Tests infra non fatal cleanup test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { runBestEffortCleanup } from "./non-fatal-cleanup.js";
 

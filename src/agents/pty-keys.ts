@@ -1,3 +1,4 @@
+/** Encodes human-readable PTY key names into terminal byte sequences. */
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import { escapeRegExp } from "../utils.js";
 
@@ -6,7 +7,9 @@ const CR = "\r";
 const TAB = "\t";
 const BACKSPACE = "\x7f";
 
+/** Terminal sequence that starts bracketed paste mode. */
 export const BRACKETED_PASTE_START = `${ESC}[200~`;
+/** Terminal sequence that ends bracketed paste mode. */
 export const BRACKETED_PASTE_END = `${ESC}[201~`;
 
 type Modifiers = {
@@ -113,6 +116,7 @@ type KeyEncodingResult = {
   warnings: string[];
 };
 
+/** Return whether encoded keys depend on terminal cursor-key mode. */
 export function hasCursorModeSensitiveKeys(request: KeyEncodingRequest): boolean {
   return (
     request.keys?.some((raw) => {
@@ -129,6 +133,7 @@ export function hasCursorModeSensitiveKeys(request: KeyEncodingRequest): boolean
   );
 }
 
+/** Encode literal, hex, and named key requests into terminal bytes. */
 export function encodeKeySequence(
   request: KeyEncodingRequest,
   cursorKeyMode?: "normal" | "application",
@@ -160,6 +165,7 @@ export function encodeKeySequence(
   return { data, warnings };
 }
 
+/** Wrap pasted text in bracketed-paste markers when enabled. */
 export function encodePaste(text: string, bracketed = true): string {
   if (!bracketed) {
     return text;

@@ -1,3 +1,4 @@
+// extensions/telegram/src/bot delivery send helpers and runtime behavior.
 import { type Bot, GrammyError } from "grammy";
 import { createTelegramRetryRunner } from "openclaw/plugin-sdk/retry-runtime";
 import type { RuntimeEnv } from "openclaw/plugin-sdk/runtime-env";

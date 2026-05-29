@@ -1,3 +1,4 @@
+// gateway/methods registry helpers and runtime behavior.
 import type { PluginRegistry } from "../../plugins/registry-types.js";
 import { normalizePluginGatewayMethodScope } from "../../shared/gateway-method-policy.js";
 import { ADMIN_SCOPE, type OperatorScope } from "../operator-scopes.js";
@@ -15,7 +16,9 @@ import {
   NODE_GATEWAY_METHOD_SCOPE,
 } from "./descriptor.js";
 
+/** Shared type for Gateway Method Registry in src/gateway/methods. */
 export type GatewayMethodRegistry = GatewayMethodRegistryView;
+/** Re-exported API for src/gateway/methods, starting with create Core Gateway Method Descriptors. */
 export { createCoreGatewayMethodDescriptors, isCoreGatewayMethodClassified };
 
 function normalizeMethodName(name: string): string {
@@ -48,6 +51,7 @@ function normalizeDescriptor(input: GatewayMethodDescriptorInput): GatewayMethod
   };
 }
 
+/** Reused helper for create Gateway Method Registry behavior in src/gateway/methods. */
 export function createGatewayMethodRegistry(
   inputs: readonly GatewayMethodDescriptorInput[],
 ): GatewayMethodRegistry {
@@ -73,6 +77,7 @@ export function createGatewayMethodRegistry(
   };
 }
 
+/** Reused helper for create Gateway Method Descriptors From Handlers behavior in src/gateway/methods. */
 export function createGatewayMethodDescriptorsFromHandlers(params: {
   handlers: Record<string, GatewayMethodHandler>;
   owner: GatewayMethodOwner;
@@ -94,6 +99,7 @@ export function createGatewayMethodDescriptorsFromHandlers(params: {
   });
 }
 
+/** Reused helper for create Plugin Gateway Method Descriptor behavior in src/gateway/methods. */
 export function createPluginGatewayMethodDescriptor(params: {
   pluginId: string;
   name: string;
@@ -109,6 +115,7 @@ export function createPluginGatewayMethodDescriptor(params: {
   };
 }
 
+/** Reused helper for create Plugin Gateway Method Descriptors behavior in src/gateway/methods. */
 export function createPluginGatewayMethodDescriptors(
   registry: Pick<PluginRegistry, "gatewayHandlers"> &
     Partial<Pick<PluginRegistry, "gatewayMethodDescriptors">>,

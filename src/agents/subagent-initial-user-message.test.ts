@@ -1,3 +1,4 @@
+/** Regression coverage for initial user-visible subagent task message formatting. */
 import { describe, expect, it } from "vitest";
 import { buildSubagentInitialUserMessage } from "./subagent-initial-user-message.js";
 import { buildSubagentSystemPrompt } from "./subagent-system-prompt.js";

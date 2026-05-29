@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/browser server context ensure browser available waits for cdp ready test behavior.
 import type { ChildProcessWithoutNullStreams } from "node:child_process";
 import { EventEmitter } from "node:events";
 import { afterEach, describe, expect, it, vi } from "vitest";

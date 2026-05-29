@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/browser register runtime behavior.
 export { createBrowserTool } from "./src/browser-tool.js";
 export { handleBrowserGatewayRequest } from "./src/gateway/browser-request.js";
 export { runBrowserProxyCommand } from "./src/node-host/invoke-browser.js";

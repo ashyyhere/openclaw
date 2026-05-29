@@ -1,5 +1,7 @@
+// ui/src/ui/views skills grouping helpers and runtime behavior.
 import type { SkillStatusEntry } from "../types.ts";
 
+/** Shared type for Skill Group in ui/src/ui/views. */
 export type SkillGroup = {
   id: string;
   label: string;
@@ -13,6 +15,7 @@ const SKILL_SOURCE_GROUPS: Array<{ id: string; label: string; sources: string[] 
   { id: "extra", label: "Extra Skills", sources: ["openclaw-extra"] },
 ];
 
+/** Reused helper for group Skills behavior in ui/src/ui/views. */
 export function groupSkills(skills: SkillStatusEntry[]): SkillGroup[] {
   const groups = new Map<string, SkillGroup>();
   for (const def of SKILL_SOURCE_GROUPS) {

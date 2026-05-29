@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor model picker preferences migrations helpers and runtime behavior.
 import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";

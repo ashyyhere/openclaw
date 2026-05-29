@@ -1,3 +1,4 @@
+// extensions/google oauth http helpers and runtime behavior.
 import { fetchWithSsrFGuard } from "openclaw/plugin-sdk/ssrf-runtime";
 import { DEFAULT_FETCH_TIMEOUT_MS } from "./oauth.shared.js";
 

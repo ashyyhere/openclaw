@@ -1,3 +1,4 @@
+// Tests test/scripts openclaw cross os release checks test behavior.
 import {
   mkdirSync,
   mkdtempSync,

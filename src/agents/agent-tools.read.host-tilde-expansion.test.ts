@@ -1,3 +1,4 @@
+/** Tests tilde expansion in host read/write/edit tool paths. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

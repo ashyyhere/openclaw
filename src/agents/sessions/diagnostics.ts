@@ -1,3 +1,4 @@
+/** Diagnostics produced while loading session resources. */
 export interface ResourceCollision {
   resourceType: "extension" | "skill" | "prompt" | "theme";
   name: string; // skill name, command/tool/flag name, prompt name, theme name
@@ -7,6 +8,7 @@ export interface ResourceCollision {
   loserSource?: string;
 }
 
+/** Shared type for Resource Diagnostic in src/agents/sessions. */
 export interface ResourceDiagnostic {
   type: "warning" | "error" | "collision";
   message: string;

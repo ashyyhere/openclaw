@@ -1,3 +1,4 @@
+// test/vitest vitest gateway server config helpers and runtime behavior.
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
 const gatewayServerBackedHttpTests = [

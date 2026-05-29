@@ -1,3 +1,4 @@
+// extensions/codex/src conversation control helpers and runtime behavior.
 import { CODEX_CONTROL_METHODS } from "./app-server/capabilities.js";
 import {
   isCodexFastServiceTier,

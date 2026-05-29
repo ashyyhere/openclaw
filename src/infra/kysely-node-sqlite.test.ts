@@ -1,3 +1,4 @@
+// Tests infra kysely node sqlite test behavior.
 import { DatabaseSync } from "node:sqlite";
 import { CompiledQuery, Kysely, sql, type Generated } from "kysely";
 import { afterEach, describe, expect, it, vi } from "vitest";

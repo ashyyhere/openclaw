@@ -1,3 +1,4 @@
+// infra install source utils helpers and runtime behavior.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
@@ -9,6 +10,7 @@ import { pathExists } from "./fs-safe.js";
 import { applyNpmFreshnessBypassEnv, type NpmProjectInstallEnvOptions } from "./npm-install-env.js";
 import { withTempWorkspace } from "./private-temp-workspace.js";
 
+/** Shared type for Npm Spec Resolution in src/infra. */
 export type NpmSpecResolution = {
   name?: string;
   version?: string;
@@ -19,6 +21,7 @@ export type NpmSpecResolution = {
   packageOpenClaw?: Record<string, unknown>;
 };
 
+/** Shared type for Npm Resolution Fields in src/infra. */
 export type NpmResolutionFields = {
   resolvedName?: string;
   resolvedVersion?: string;
@@ -28,6 +31,7 @@ export type NpmResolutionFields = {
   resolvedAt?: string;
 };
 
+/** Reused helper for build Npm Resolution Fields behavior in src/infra. */
 export function buildNpmResolutionFields(resolution?: NpmSpecResolution): NpmResolutionFields {
   return {
     resolvedName: resolution?.name,
@@ -39,6 +43,7 @@ export function buildNpmResolutionFields(resolution?: NpmSpecResolution): NpmRes
   };
 }
 
+/** Reused helper for create Npm Metadata Env behavior in src/infra. */
 export function createNpmMetadataEnv(
   scope: Pick<NpmProjectInstallEnvOptions, "npmConfigCwd"> = {},
 ): NodeJS.ProcessEnv {
@@ -70,6 +75,7 @@ function normalizeNpmViewMetadata(value: unknown): NpmSpecResolution | null {
   };
 }
 
+/** Reused helper for resolve Npm Spec Metadata behavior in src/infra. */
 export async function resolveNpmSpecMetadata(params: { spec: string; timeoutMs?: number }): Promise<
   | {
       ok: true;
@@ -120,11 +126,13 @@ export async function resolveNpmSpecMetadata(params: { spec: string; timeoutMs?:
   }
 }
 
+/** Shared type for Npm Integrity Drift in src/infra. */
 export type NpmIntegrityDrift = {
   expectedIntegrity: string;
   actualIntegrity: string;
 };
 
+/** Reused helper for with Temp Dir behavior in src/infra. */
 export async function withTempDir<T>(
   prefix: string,
   fn: (tmpDir: string) => Promise<T>,
@@ -132,6 +140,7 @@ export async function withTempDir<T>(
   return await withTempWorkspace({ rootDir: os.tmpdir(), prefix }, async (tmp) => fn(tmp.dir));
 }
 
+/** Reused helper for resolve Archive Source Path behavior in src/infra. */
 export async function resolveArchiveSourcePath(archivePath: string): Promise<
   | {
       ok: true;
@@ -282,6 +291,7 @@ async function findPackedArchiveInDir(cwd: string): Promise<string | undefined> 
   return sortedByMtime[0]?.name;
 }
 
+/** Reused helper for pack Npm Spec To Archive behavior in src/infra. */
 export async function packNpmSpecToArchive(params: {
   spec: string;
   timeoutMs: number;
@@ -342,6 +352,7 @@ export async function packNpmSpecToArchive(params: {
   };
 }
 
+/** Reused helper for resolve Npm Pack Archive Metadata behavior in src/infra. */
 export async function resolveNpmPackArchiveMetadata(params: {
   archivePath: string;
   timeoutMs?: number;

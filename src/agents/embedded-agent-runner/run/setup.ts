@@ -1,3 +1,4 @@
+/** Resolves model setup inputs before an embedded attempt starts. */
 import type { OpenClawConfig } from "../../../config/types.openclaw.js";
 import type { ProviderRuntimeModel } from "../../../plugins/provider-runtime-model.types.js";
 import type {
@@ -39,6 +40,7 @@ type HookRunnerLike = {
   ): Promise<PluginHookBeforeAgentStartResult | undefined>;
 };
 
+/** Runs before-model hooks and resolves their model selection result. */
 export async function resolveHookModelSelection(params: {
   prompt: string;
   attachments?: PluginHookBeforeModelResolveAttachment[];
@@ -103,6 +105,7 @@ export async function resolveHookModelSelection(params: {
   };
 }
 
+/** Builds attachment metadata passed to before-model hooks. */
 export function buildBeforeModelResolveAttachments(
   images: readonly { mimeType?: string }[] | undefined,
 ): PluginHookBeforeModelResolveAttachment[] | undefined {
@@ -115,6 +118,7 @@ export function buildBeforeModelResolveAttachments(
   }));
 }
 
+/** Chooses the runtime model after hook overrides and static model info. */
 export function resolveEffectiveRuntimeModel(params: {
   cfg: OpenClawConfig | undefined;
   provider: string;

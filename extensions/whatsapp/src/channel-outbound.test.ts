@@ -1,3 +1,4 @@
+// Tests extensions/whatsapp/src channel outbound test behavior.
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 const hoisted = vi.hoisted(() => ({

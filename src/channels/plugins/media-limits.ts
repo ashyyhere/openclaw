@@ -1,8 +1,10 @@
+// Channel media limit helpers for plugin manifests and runtime checks.
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { normalizeAccountId } from "../../routing/session-key.js";
 
 const MB = 1024 * 1024;
 
+/** Reused helper for resolve Channel Media Max Bytes behavior in src/channels/plugins. */
 export function resolveChannelMediaMaxBytes(params: {
   cfg: OpenClawConfig;
   // Channel-specific config lives under different keys; keep this helper generic

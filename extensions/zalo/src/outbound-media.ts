@@ -1,3 +1,4 @@
+// extensions/zalo/src outbound media helpers and runtime behavior.
 import { randomBytes } from "node:crypto";
 import { rmSync } from "node:fs";
 import { readdir, readFile, stat, unlink } from "node:fs/promises";

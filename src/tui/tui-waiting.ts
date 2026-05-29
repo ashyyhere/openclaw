@@ -1,9 +1,11 @@
+// tui tui waiting helpers and runtime behavior.
 type MinimalTheme = {
   dim: (s: string) => string;
   bold: (s: string) => string;
   accentSoft: (s: string) => string;
 };
 
+/** Reused constant for default Waiting Phrases behavior in src/tui. */
 export const defaultWaitingPhrases = [
   "flibbertigibbeting",
   "kerfuffling",
@@ -17,11 +19,13 @@ export const defaultWaitingPhrases = [
   "conjuring",
 ];
 
+/** Reused helper for pick Waiting Phrase behavior in src/tui. */
 export function pickWaitingPhrase(tick: number, phrases = defaultWaitingPhrases) {
   const idx = Math.floor(tick / 10) % phrases.length;
   return phrases[idx] ?? phrases[0] ?? "waiting";
 }
 
+/** Reused helper for shimmer Text behavior in src/tui. */
 export function shimmerText(theme: MinimalTheme, text: string, tick: number) {
   const width = 6;
   const hi = (ch: string) => theme.bold(theme.accentSoft(ch));
@@ -38,6 +42,7 @@ export function shimmerText(theme: MinimalTheme, text: string, tick: number) {
   return out;
 }
 
+/** Reused helper for build Waiting Status Message behavior in src/tui. */
 export function buildWaitingStatusMessage(params: {
   theme: MinimalTheme;
   tick: number;

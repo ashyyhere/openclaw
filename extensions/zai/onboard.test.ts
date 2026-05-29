@@ -1,3 +1,4 @@
+// Tests extensions/zai onboard test behavior.
 import { resolveAgentModelPrimaryValue } from "openclaw/plugin-sdk/provider-onboard";
 import { expectProviderOnboardPreservesPrimary } from "openclaw/plugin-sdk/provider-test-contracts";
 import { beforeAll, describe, expect, it } from "vitest";

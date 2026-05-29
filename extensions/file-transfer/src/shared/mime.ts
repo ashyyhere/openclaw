@@ -1,3 +1,4 @@
+// extensions/file-transfer/src/shared mime helpers and runtime behavior.
 import { mimeTypeFromFilePath } from "openclaw/plugin-sdk/media-mime";
 
 // MIME types we treat as inline-displayable images for vision-capable models.

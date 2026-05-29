@@ -1,3 +1,4 @@
+/** Test helpers for QA runtime filesystem and fixture setup. */
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -9,12 +10,14 @@ type QaRuntimeModule = {
 
 type SurfaceLoaderMock = ReturnType<typeof vi.fn>;
 
+/** Reused helper for cleanup Temp Dirs behavior in src/plugin-sdk. */
 export function cleanupTempDirs(tempDirs: string[]): void {
   for (const dir of tempDirs.splice(0)) {
     fs.rmSync(dir, { recursive: true, force: true });
   }
 }
 
+/** Reused helper for restore Private Qa Cli Env behavior in src/plugin-sdk. */
 export function restorePrivateQaCliEnv(originalPrivateQaCli: string | undefined): void {
   if (originalPrivateQaCli === undefined) {
     delete process.env.OPENCLAW_ENABLE_PRIVATE_QA_CLI;
@@ -23,6 +26,7 @@ export function restorePrivateQaCliEnv(originalPrivateQaCli: string | undefined)
   }
 }
 
+/** Reused helper for make Private Qa Source Root behavior in src/plugin-sdk. */
 export function makePrivateQaSourceRoot(tempDirs: string[], prefix: string): string {
   const sourceRoot = fs.mkdtempSync(path.join(os.tmpdir(), prefix));
   tempDirs.push(sourceRoot);
@@ -40,6 +44,7 @@ function makeQaRuntimeSurface() {
   };
 }
 
+/** Reused helper for expect Qa Lab Runtime Surface Load behavior in src/plugin-sdk. */
 export async function expectQaLabRuntimeSurfaceLoad(params: {
   importRuntime: () => Promise<QaRuntimeModule>;
   loadBundledPluginPublicSurfaceModuleSync: SurfaceLoaderMock;
@@ -56,6 +61,7 @@ export async function expectQaLabRuntimeSurfaceLoad(params: {
   });
 }
 
+/** Reused helper for expect Private Qa Lab Runtime Surface Load behavior in src/plugin-sdk. */
 export async function expectPrivateQaLabRuntimeSurfaceLoad(params: {
   tempDirs: string[];
   importRuntime: () => Promise<QaRuntimeModule>;

@@ -1,3 +1,4 @@
+// extensions/qa-lab/src suite runtime gateway helpers and runtime behavior.
 import { setTimeout as sleep } from "node:timers/promises";
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";
 import { fetchWithSsrFGuard } from "openclaw/plugin-sdk/ssrf-runtime";

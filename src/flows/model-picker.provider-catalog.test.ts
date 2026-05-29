@@ -1,3 +1,4 @@
+// Tests flows model picker provider catalog test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { ModelDefinitionConfig } from "../config/types.models.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";

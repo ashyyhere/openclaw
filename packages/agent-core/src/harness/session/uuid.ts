@@ -1,3 +1,4 @@
+// packages/agent-core/src/harness/session uuid helpers and runtime behavior.
 let lastTimestamp = -Infinity;
 let sequence = 0;
 
@@ -12,6 +13,7 @@ function fillRandomBytes(bytes: Uint8Array): void {
   }
 }
 
+/** Public helper for uuidv7 behavior in packages/agent-core. */
 export function uuidv7(): string {
   const random = new Uint8Array(16);
   fillRandomBytes(random);

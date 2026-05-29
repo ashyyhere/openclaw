@@ -35,6 +35,7 @@ function loadGatewayTlsModule() {
   return gatewayTlsModuleLoader.load();
 }
 
+/** Reused helper for gateway Status Command behavior in src/commands. */
 export async function gatewayStatusCommand(
   opts: {
     url?: string;

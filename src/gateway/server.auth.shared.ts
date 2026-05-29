@@ -1,3 +1,4 @@
+// gateway server auth shared helpers and runtime behavior.
 import os from "node:os";
 import path from "node:path";
 import { expect } from "vitest";
@@ -384,6 +385,7 @@ async function ensurePairedDeviceTokenForCurrentIdentity(ws: WebSocket): Promise
   };
 }
 
+/** Re-exported API for src/gateway. */
 export {
   approvePendingPairingIfNeeded,
   BACKEND_GATEWAY_CLIENT,
@@ -423,7 +425,11 @@ export {
   withRuntimeVersionEnv,
   writeTrustedProxyControlUiConfig,
 };
+/** Re-exported API for src/gateway, starting with Connect Error Detail Codes. */
 export { ConnectErrorDetailCodes } from "../../packages/gateway-protocol/src/connect-error-details.js";
+/** Re-exported API for src/gateway, starting with get Preauth Handshake Timeout Ms From Env. */
 export { getPreauthHandshakeTimeoutMsFromEnv } from "./handshake-timeouts.js";
+/** Re-exported API for src/gateway, starting with PROTOCOL VERSION. */
 export { PROTOCOL_VERSION } from "../../packages/gateway-protocol/src/index.js";
+/** Re-exported API for src/gateway, starting with GATEWAY CLIENT MODES. */
 export { GATEWAY_CLIENT_MODES, GATEWAY_CLIENT_NAMES } from "../utils/message-channel.js";

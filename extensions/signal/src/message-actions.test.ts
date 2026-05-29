@@ -1,3 +1,4 @@
+// Tests extensions/signal/src message actions test behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 

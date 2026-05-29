@@ -1,3 +1,4 @@
+/** Registers nodes location command. */
 import type { Command } from "commander";
 import { randomIdempotencyKey } from "../../gateway/call.js";
 import { defaultRuntime } from "../../runtime.js";
@@ -12,6 +13,7 @@ import {
 } from "./rpc.js";
 import type { NodesRpcOpts } from "./types.js";
 
+/** Reused helper for register Nodes Location Commands behavior in src/cli/nodes-cli. */
 export function registerNodesLocationCommands(nodes: Command) {
   const location = nodes.command("location").description("Fetch location from a paired node");
 

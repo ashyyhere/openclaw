@@ -1,3 +1,4 @@
+/** Tests host file tools when workspace-only mode is disabled. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

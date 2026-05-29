@@ -1,3 +1,4 @@
+// Tests extensions/anthropic stream wrappers test behavior.
 import type { StreamFn } from "openclaw/plugin-sdk/agent-core";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {

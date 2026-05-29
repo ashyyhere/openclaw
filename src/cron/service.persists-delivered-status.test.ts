@@ -1,3 +1,4 @@
+// Tests cron service persists delivered status test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { CronService } from "./service.js";
 import {

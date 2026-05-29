@@ -1,3 +1,4 @@
+// extensions/whatsapp/src active listener helpers and runtime behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { resolveDefaultWhatsAppAccountId } from "./account-ids.js";
 import { getRegisteredWhatsAppConnectionController } from "./connection-controller-registry.js";

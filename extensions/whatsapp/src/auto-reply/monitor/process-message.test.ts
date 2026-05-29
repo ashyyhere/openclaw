@@ -1,3 +1,4 @@
+// Tests extensions/whatsapp/src/auto-reply/monitor process message test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { WhatsAppSendResult } from "../../inbound/send-result.js";
 

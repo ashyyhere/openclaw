@@ -1,3 +1,4 @@
+// packages/gateway-protocol/src/schema wizard helpers and runtime behavior.
 import { Type } from "typebox";
 import { NonEmptyString } from "./primitives.js";
 
@@ -8,6 +9,7 @@ const WizardRunStatusSchema = Type.Union([
   Type.Literal("error"),
 ]);
 
+/** Public constant for Wizard Start Params Schema behavior in packages/gateway-protocol. */
 export const WizardStartParamsSchema = Type.Object(
   {
     mode: Type.Optional(Type.Union([Type.Literal("local"), Type.Literal("remote")])),
@@ -16,6 +18,7 @@ export const WizardStartParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Wizard Answer Schema behavior in packages/gateway-protocol. */
 export const WizardAnswerSchema = Type.Object(
   {
     stepId: NonEmptyString,
@@ -24,6 +27,7 @@ export const WizardAnswerSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Wizard Next Params Schema behavior in packages/gateway-protocol. */
 export const WizardNextParamsSchema = Type.Object(
   {
     sessionId: NonEmptyString,
@@ -39,10 +43,13 @@ const WizardSessionIdParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Wizard Cancel Params Schema behavior in packages/gateway-protocol. */
 export const WizardCancelParamsSchema = WizardSessionIdParamsSchema;
 
+/** Public constant for Wizard Status Params Schema behavior in packages/gateway-protocol. */
 export const WizardStatusParamsSchema = WizardSessionIdParamsSchema;
 
+/** Public constant for Wizard Step Option Schema behavior in packages/gateway-protocol. */
 export const WizardStepOptionSchema = Type.Object(
   {
     value: Type.Unknown(),
@@ -52,6 +59,7 @@ export const WizardStepOptionSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Wizard Step Schema behavior in packages/gateway-protocol. */
 export const WizardStepSchema = Type.Object(
   {
     id: NonEmptyString,
@@ -83,10 +91,12 @@ const WizardResultFields = {
   error: Type.Optional(Type.String()),
 };
 
+/** Public constant for Wizard Next Result Schema behavior in packages/gateway-protocol. */
 export const WizardNextResultSchema = Type.Object(WizardResultFields, {
   additionalProperties: false,
 });
 
+/** Public constant for Wizard Start Result Schema behavior in packages/gateway-protocol. */
 export const WizardStartResultSchema = Type.Object(
   {
     sessionId: NonEmptyString,
@@ -95,6 +105,7 @@ export const WizardStartResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Wizard Status Result Schema behavior in packages/gateway-protocol. */
 export const WizardStatusResultSchema = Type.Object(
   {
     status: WizardRunStatusSchema,

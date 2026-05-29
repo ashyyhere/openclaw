@@ -1,3 +1,4 @@
+/** Model-backed exec safety reviewer wiring and response parsing. */
 import { z } from "zod";
 import type { AgentModelConfig } from "../config/types.agents-shared.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -27,6 +28,7 @@ const execAutoReviewResponseSchema = z.object({
   rationale: z.string().optional(),
 });
 
+/** Config for model-backed exec auto-review. */
 export type ExecReviewerConfig = {
   model?: AgentModelConfig;
   timeoutMs?: number;
@@ -104,6 +106,7 @@ function extractJsonObject(text: string): string | null {
   return null;
 }
 
+/** Parse and harden a model exec-review response. */
 export function parseExecAutoReviewResponse(text: string): ExecAutoReviewDecision {
   const objectText = extractJsonObject(text);
   if (!objectText) {
@@ -222,6 +225,7 @@ async function raceWithReviewerTimeout<T>(
   }
 }
 
+/** Create an exec auto-reviewer that calls the configured model. */
 export function createModelExecAutoReviewer(params: {
   cfg?: OpenClawConfig;
   agentId?: string;

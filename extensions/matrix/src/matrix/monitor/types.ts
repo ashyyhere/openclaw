@@ -1,3 +1,4 @@
+// Shared types for extensions/matrix/src/matrix/monitor types behavior.
 import { MATRIX_REACTION_EVENT_TYPE } from "../reaction-common.js";
 import type { EncryptedFile, MessageEventContent } from "../sdk.js";
 export type { MatrixRawEvent } from "../sdk.js";

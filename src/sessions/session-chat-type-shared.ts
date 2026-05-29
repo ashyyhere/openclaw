@@ -1,6 +1,8 @@
+// sessions session chat type shared helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import { parseAgentSessionKey } from "./session-key-utils.js";
 
+/** Shared type for Session Key Chat Type in src/sessions. */
 export type SessionKeyChatType = "direct" | "group" | "channel" | "unknown";
 
 function deriveBuiltInLegacySessionChatType(
@@ -18,6 +20,7 @@ function deriveBuiltInLegacySessionChatType(
   return undefined;
 }
 
+/** Reused helper for derive Session Chat Type From Scoped Key behavior in src/sessions. */
 export function deriveSessionChatTypeFromScopedKey(
   scopedSessionKey: string,
   deriveLegacySessionChatTypes: Array<

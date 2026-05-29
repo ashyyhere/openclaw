@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server dynamic tool execution helpers and runtime behavior.
 import {
   embeddedAgentLog,
   type EmbeddedRunAttemptParams,

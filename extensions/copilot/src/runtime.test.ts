@@ -1,3 +1,4 @@
+// Tests extensions/copilot/src runtime test behavior.
 import { normalize, resolve, sep } from "node:path";
 import type { CopilotClient, CopilotClientOptions } from "@github/copilot-sdk";
 import { afterEach, describe, expect, it, vi } from "vitest";

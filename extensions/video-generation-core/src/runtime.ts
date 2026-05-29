@@ -1,3 +1,4 @@
+// extensions/video-generation-core/src runtime helpers and runtime behavior.
 export {
   generateVideo,
   listRuntimeVideoGenerationProviders,

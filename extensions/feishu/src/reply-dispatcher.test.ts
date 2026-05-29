@@ -1,3 +1,4 @@
+// Tests extensions/feishu/src reply dispatcher test behavior.
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 type StreamingSessionStub = {

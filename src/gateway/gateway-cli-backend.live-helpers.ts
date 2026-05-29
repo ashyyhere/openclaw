@@ -1,3 +1,4 @@
+// gateway gateway cli backend live helpers helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -28,16 +29,19 @@ import { GatewayClient, type GatewayClientOptions } from "./client.js";
 // websocket handshake needs a wider budget than the single-provider reruns.
 const CLI_GATEWAY_CONNECT_TIMEOUT_MS = 60_000;
 
+/** Shared type for Bootstrap Workspace Context in src/gateway. */
 export type BootstrapWorkspaceContext = {
   expectedInjectedFiles: string[];
   workspaceDir: string;
   workspaceRootDir: string;
 };
 
+/** Shared type for System Prompt Report in src/gateway. */
 export type SystemPromptReport = {
   injectedWorkspaceFiles?: Array<{ name?: string }>;
 };
 
+/** Shared type for Cli Backend Live Model Selection in src/gateway. */
 export type CliBackendLiveModelSelection = {
   providerId: string;
   cliModelKey: string;
@@ -46,6 +50,7 @@ export type CliBackendLiveModelSelection = {
   agentRuntime: { id: string };
 };
 
+/** Shared type for Cli Backend Live Env Snapshot in src/gateway. */
 export type CliBackendLiveEnvSnapshot = {
   configPath?: string;
   stateDir?: string;
@@ -76,6 +81,7 @@ function normalizeCliRuntimeModelTarget(raw: string | undefined): string | undef
   return binding ? `${binding.provider}/${parsed.model}` : raw;
 }
 
+/** Reused helper for resolve Cli Backend Live Model Selection behavior in src/gateway. */
 export function resolveCliBackendLiveModelSelection(params: {
   rawModel: string;
   defaultProvider: string;
@@ -116,6 +122,7 @@ export function resolveCliBackendLiveModelSelection(params: {
   };
 }
 
+/** Reused helper for parse Json String Array behavior in src/gateway. */
 export function parseJsonStringArray(name: string, raw?: string): string[] | undefined {
   const trimmed = raw?.trim();
   if (!trimmed) {
@@ -128,6 +135,7 @@ export function parseJsonStringArray(name: string, raw?: string): string[] | und
   return parsed;
 }
 
+/** Reused helper for parse Image Mode behavior in src/gateway. */
 export function parseImageMode(raw?: string): "list" | "repeat" | undefined {
   const trimmed = raw?.trim();
   if (!trimmed) {
@@ -139,6 +147,7 @@ export function parseImageMode(raw?: string): "list" | "repeat" | undefined {
   throw new Error("OPENCLAW_LIVE_CLI_BACKEND_IMAGE_MODE must be 'list' or 'repeat'.");
 }
 
+/** Reused helper for should Run Cli Image Probe behavior in src/gateway. */
 export function shouldRunCliImageProbe(providerId: string): boolean {
   const raw = process.env.OPENCLAW_LIVE_CLI_BACKEND_IMAGE_PROBE?.trim();
   if (raw) {
@@ -147,6 +156,7 @@ export function shouldRunCliImageProbe(providerId: string): boolean {
   return resolveCliBackendLiveTest(providerId)?.defaultImageProbe === true;
 }
 
+/** Reused helper for should Run Cli Mcp Probe behavior in src/gateway. */
 export function shouldRunCliMcpProbe(providerId: string): boolean {
   const raw = process.env.OPENCLAW_LIVE_CLI_BACKEND_MCP_PROBE?.trim();
   if (raw) {
@@ -155,6 +165,7 @@ export function shouldRunCliMcpProbe(providerId: string): boolean {
   return resolveCliBackendLiveTest(providerId)?.defaultMcpProbe === true;
 }
 
+/** Reused helper for resolve Cli Backend Live Args behavior in src/gateway. */
 export function resolveCliBackendLiveArgs(params: {
   providerId: string;
   defaultArgs?: string[];
@@ -178,6 +189,7 @@ export function resolveCliBackendLiveArgs(params: {
   return { args, resumeArgs };
 }
 
+/** Reused helper for resolve Cli Model Switch Probe Target behavior in src/gateway. */
 export function resolveCliModelSwitchProbeTarget(
   providerId: string,
   modelRef: string,
@@ -193,6 +205,7 @@ export function resolveCliModelSwitchProbeTarget(
   return "claude-cli/claude-opus-4-6";
 }
 
+/** Reused helper for should Run Cli Model Switch Probe behavior in src/gateway. */
 export function shouldRunCliModelSwitchProbe(providerId: string, modelRef: string): boolean {
   const raw = process.env.OPENCLAW_LIVE_CLI_BACKEND_MODEL_SWITCH_PROBE?.trim();
   if (raw) {
@@ -201,6 +214,7 @@ export function shouldRunCliModelSwitchProbe(providerId: string, modelRef: strin
   return typeof resolveCliModelSwitchProbeTarget(providerId, modelRef) === "string";
 }
 
+/** Reused helper for matches Cli Backend Reply behavior in src/gateway. */
 export function matchesCliBackendReply(text: string, expected: string): boolean {
   const normalized = text.trim();
   const target = expected.trim();
@@ -213,6 +227,7 @@ export function matchesCliBackendReply(text: string, expected: string): boolean 
   );
 }
 
+/** Reused helper for with Claude Mcp Config Overrides behavior in src/gateway. */
 export function withClaudeMcpConfigOverrides(args: string[], mcpConfigPath: string): string[] {
   const next = [...args];
   if (!next.includes("--strict-mcp-config")) {
@@ -224,6 +239,7 @@ export function withClaudeMcpConfigOverrides(args: string[], mcpConfigPath: stri
   return next;
 }
 
+/** Reused helper for get Free Gateway Port behavior in src/gateway. */
 export async function getFreeGatewayPort(): Promise<number> {
   return await getFreePortBlockWithPermissionFallback({
     offsets: [0, 1, 2, 4],
@@ -231,6 +247,7 @@ export async function getFreeGatewayPort(): Promise<number> {
   });
 }
 
+/** Reused helper for create Bootstrap Workspace behavior in src/gateway. */
 export async function createBootstrapWorkspace(
   tempDir: string,
 ): Promise<BootstrapWorkspaceContext> {
@@ -257,6 +274,7 @@ function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+/** Reused helper for should Retry Cli Cron Mcp Probe Reply behavior in src/gateway. */
 export function shouldRetryCliCronMcpProbeReply(text: string): boolean {
   const normalized = normalizeLowercaseStringOrEmpty(text);
   if (!normalized) {
@@ -306,6 +324,7 @@ export function shouldRetryCliCronMcpProbeReply(text: string): boolean {
   );
 }
 
+/** Reused helper for connect Test Gateway Client behavior in src/gateway. */
 export async function connectTestGatewayClient(params: {
   url: string;
   token: string;
@@ -439,6 +458,7 @@ function isRetryableGatewayConnectError(error: Error): boolean {
   );
 }
 
+/** Reused helper for snapshot Cli Backend Live Env behavior in src/gateway. */
 export function snapshotCliBackendLiveEnv(): CliBackendLiveEnvSnapshot {
   return {
     configPath: process.env.OPENCLAW_CONFIG_PATH,
@@ -457,6 +477,7 @@ export function snapshotCliBackendLiveEnv(): CliBackendLiveEnvSnapshot {
   };
 }
 
+/** Reused helper for apply Cli Backend Live Env behavior in src/gateway. */
 export function applyCliBackendLiveEnv(preservedEnv: ReadonlySet<string>): void {
   process.env.OPENCLAW_SKIP_CHANNELS = "1";
   process.env.OPENCLAW_SKIP_PROVIDERS = "1";
@@ -473,6 +494,7 @@ export function applyCliBackendLiveEnv(preservedEnv: ReadonlySet<string>): void 
   }
 }
 
+/** Reused helper for restore Cli Backend Live Env behavior in src/gateway. */
 export function restoreCliBackendLiveEnv(snapshot: CliBackendLiveEnvSnapshot): void {
   restoreEnvVar("OPENCLAW_CONFIG_PATH", snapshot.configPath);
   restoreEnvVar("OPENCLAW_STATE_DIR", snapshot.stateDir);
@@ -497,6 +519,7 @@ function restoreEnvVar(name: string, value: string | undefined): void {
   process.env[name] = value;
 }
 
+/** Reused helper for ensure Paired Test Gateway Client Identity behavior in src/gateway. */
 export async function ensurePairedTestGatewayClientIdentity(params?: {
   displayName?: string;
 }): Promise<DeviceIdentity> {

@@ -1,3 +1,4 @@
+// Tests plugins document extractor public artifacts test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const { publicArtifactModule } = vi.hoisted(() => ({

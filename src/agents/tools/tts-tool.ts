@@ -1,3 +1,4 @@
+/** Agent tool for generating speech audio from text. */
 import { Type } from "typebox";
 import { getRuntimeConfig } from "../../config/config.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
@@ -43,6 +44,7 @@ function sanitizeTranscriptForToolContent(text: string): string {
     });
 }
 
+/** Creates the text-to-speech AgentTool. */
 export function createTtsTool(opts?: {
   config?: OpenClawConfig;
   agentChannel?: GatewayMessageChannel;

@@ -1,3 +1,4 @@
+/** Onboards against an existing remote gateway target. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { SecretInput } from "../config/types.secrets.js";
 import { isSecureWebSocketUrl } from "../gateway/net.js";
@@ -45,6 +46,7 @@ function validateGatewayWebSocketUrl(value: string): string | undefined {
   return undefined;
 }
 
+/** Reused helper for prompt Remote Gateway Config behavior in src/commands. */
 export async function promptRemoteGatewayConfig(
   cfg: OpenClawConfig,
   prompter: WizardPrompter,

@@ -1,3 +1,4 @@
+// Runtime boundary for plugins document extractors runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { normalizeStringEntries, sortUniqueStrings } from "../shared/string-normalization.js";
 import { resolveEnabledBundledManifestContractPlugins } from "./bundled-manifest-contract-plugins.js";
@@ -36,6 +37,7 @@ function resolveExplicitAllowedDocumentExtractorPluginIds(params: {
   );
 }
 
+/** Reused helper for resolve Plugin Document Extractors behavior in src/plugins. */
 export function resolvePluginDocumentExtractors(params?: {
   config?: OpenClawConfig;
   workspaceDir?: string;

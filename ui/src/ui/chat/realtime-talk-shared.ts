@@ -1,3 +1,4 @@
+// ui/src/ui/chat realtime talk shared helpers and runtime behavior.
 import { REALTIME_VOICE_AGENT_CONSULT_TOOL_NAME } from "../../../../src/talk/agent-consult-tool.js";
 import {
   buildRealtimeVoiceAgentCancelProviderResult,
@@ -10,15 +11,19 @@ import type { RealtimeVoiceAgentControlMode } from "../../../../src/talk/agent-r
 import type { TalkEvent } from "../../../../src/talk/talk-events.js";
 import type { GatewayBrowserClient, GatewayEventFrame } from "../gateway.ts";
 
+/** Shared type for Realtime Talk Status in ui/src/ui/chat. */
 export type RealtimeTalkStatus = "idle" | "connecting" | "listening" | "thinking" | "error";
+/** Shared type for Realtime Talk Event in ui/src/ui/chat. */
 export type RealtimeTalkEvent = TalkEvent;
 
+/** Shared type for Realtime Talk Callbacks in ui/src/ui/chat. */
 export type RealtimeTalkCallbacks = {
   onStatus?: (status: RealtimeTalkStatus, detail?: string) => void;
   onTranscript?: (entry: { role: "user" | "assistant"; text: string; final: boolean }) => void;
   onTalkEvent?: (event: RealtimeTalkEvent) => void;
 };
 
+/** Shared type for Realtime Talk Event Input in ui/src/ui/chat. */
 export type RealtimeTalkEventInput<TPayload = unknown> = {
   type: RealtimeTalkEvent["type"];
   payload?: TPayload;
@@ -30,6 +35,7 @@ export type RealtimeTalkEventInput<TPayload = unknown> = {
   parentId?: string;
 };
 
+/** Shared type for Realtime Talk Audio Contract in ui/src/ui/chat. */
 export type RealtimeTalkAudioContract = {
   inputEncoding: "pcm16" | "g711_ulaw";
   inputSampleRateHz: number;
@@ -37,6 +43,7 @@ export type RealtimeTalkAudioContract = {
   outputSampleRateHz: number;
 };
 
+/** Shared type for Realtime Talk Web Rtc Sdp Session Result in ui/src/ui/chat. */
 export type RealtimeTalkWebRtcSdpSessionResult = {
   provider: string;
   transport: "webrtc";
@@ -50,6 +57,7 @@ export type RealtimeTalkWebRtcSdpSessionResult = {
   consultFastMode?: boolean;
 };
 
+/** Shared type for Realtime Talk Json Pcm Web Socket Session Result in ui/src/ui/chat. */
 export type RealtimeTalkJsonPcmWebSocketSessionResult = {
   provider: string;
   transport: "provider-websocket";
@@ -65,6 +73,7 @@ export type RealtimeTalkJsonPcmWebSocketSessionResult = {
   consultFastMode?: boolean;
 };
 
+/** Shared type for Realtime Talk Gateway Relay Session Result in ui/src/ui/chat. */
 export type RealtimeTalkGatewayRelaySessionResult = {
   provider: string;
   transport: "gateway-relay";
@@ -77,6 +86,7 @@ export type RealtimeTalkGatewayRelaySessionResult = {
   consultFastMode?: boolean;
 };
 
+/** Shared type for Realtime Talk Managed Room Session Result in ui/src/ui/chat. */
 export type RealtimeTalkManagedRoomSessionResult = {
   provider: string;
   transport: "managed-room";
@@ -89,17 +99,20 @@ export type RealtimeTalkManagedRoomSessionResult = {
   consultFastMode?: boolean;
 };
 
+/** Shared type for Realtime Talk Session Result in ui/src/ui/chat. */
 export type RealtimeTalkSessionResult =
   | RealtimeTalkWebRtcSdpSessionResult
   | RealtimeTalkJsonPcmWebSocketSessionResult
   | RealtimeTalkGatewayRelaySessionResult
   | RealtimeTalkManagedRoomSessionResult;
 
+/** Shared type for Realtime Talk Transport in ui/src/ui/chat. */
 export type RealtimeTalkTransport = {
   start(): Promise<void>;
   stop(): void;
 };
 
+/** Shared type for Realtime Talk Transport Context in ui/src/ui/chat. */
 export type RealtimeTalkTransportContext = {
   client: GatewayBrowserClient;
   sessionKey: string;
@@ -108,6 +121,7 @@ export type RealtimeTalkTransportContext = {
   consultFastMode?: boolean;
 };
 
+/** Reused helper for create Realtime Talk Event Emitter behavior in ui/src/ui/chat. */
 export function createRealtimeTalkEventEmitter(
   ctx: RealtimeTalkTransportContext,
   session: RealtimeTalkSessionResult,
@@ -293,6 +307,7 @@ function emitRealtimeTalkAgentProgress(
   });
 }
 
+/** Reused helper for steer Realtime Talk Active Consult behavior in ui/src/ui/chat. */
 export async function steerRealtimeTalkActiveConsult(params: {
   ctx: RealtimeTalkTransportContext;
   text: string;
@@ -348,6 +363,7 @@ export async function steerRealtimeTalkActiveConsult(params: {
   }
 }
 
+/** Reused helper for submit Realtime Talk Agent Control behavior in ui/src/ui/chat. */
 export async function submitRealtimeTalkAgentControl(params: {
   ctx: RealtimeTalkTransportContext;
   args: unknown;
@@ -419,6 +435,7 @@ function maybeSpeakRealtimeTalkControlResult(
   }
 }
 
+/** Reused helper for submit Realtime Talk Consult behavior in ui/src/ui/chat. */
 export async function submitRealtimeTalkConsult(params: {
   ctx: RealtimeTalkTransportContext;
   args: unknown;
@@ -511,6 +528,7 @@ function isAbortError(error: unknown): boolean {
   );
 }
 
+/** Re-exported API for ui/src/ui/chat. */
 export {
   REALTIME_VOICE_AGENT_CONSULT_TOOL_NAME,
   REALTIME_VOICE_AGENT_CONTROL_TOOL_NAME,

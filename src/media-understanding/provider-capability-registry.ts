@@ -1,3 +1,4 @@
+// media-understanding provider capability registry helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.js";
 import { resolvePluginCapabilityProviders } from "../plugins/capability-provider-runtime.js";
 import { resolveImageCapableConfigProviderIds } from "./config-provider-models.js";
@@ -15,6 +16,7 @@ function mergeProviderCapabilities(
   });
 }
 
+/** Reused helper for build Media Understanding Capability Registry behavior in src/media-understanding. */
 export function buildMediaUnderstandingCapabilityRegistry(
   cfg?: OpenClawConfig,
 ): MediaUnderstandingCapabilityRegistry {

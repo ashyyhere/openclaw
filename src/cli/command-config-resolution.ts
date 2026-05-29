@@ -1,3 +1,4 @@
+/** Resolves CLI command config snapshots with optional secret hydration. */
 import { applyPluginAutoEnable } from "../config/plugin-auto-enable.js";
 import type { OpenClawConfig } from "../config/types.js";
 import type { RuntimeEnv } from "../runtime.js";
@@ -6,6 +7,7 @@ import {
   resolveCommandSecretRefsViaGateway,
 } from "./command-secret-gateway.js";
 
+/** Reused helper for resolve Command Config With Secrets behavior in src/cli. */
 export async function resolveCommandConfigWithSecrets<TConfig extends OpenClawConfig>(params: {
   config: TConfig;
   commandName: string;

@@ -1,3 +1,4 @@
+/** Embedded agent LSP runtime that exposes language-server features as tools. */
 import { spawn, type ChildProcess } from "node:child_process";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { sanitizeHostExecEnv } from "../infra/host-env-security.js";
@@ -46,6 +47,7 @@ type LspServerCapabilities = {
   [key: string]: unknown;
 };
 
+/** Shared type for Bundle Lsp Tool Runtime in src/agents. */
 export type BundleLspToolRuntime = {
   tools: AnyAgentTool[];
   sessions: Array<{ serverName: string; capabilities: LspServerCapabilities }>;
@@ -69,6 +71,7 @@ function delay(ms: number): Promise<void> {
   });
 }
 
+/** Spawn one configured LSP server process with sanitized host env. */
 export function spawnLspServerProcess(config: StdioMcpServerLaunchConfig): ChildProcess {
   const mergedEnv = sanitizeHostExecEnv({ baseEnv: process.env, overrides: config.env ?? null });
   const program = resolveWindowsSpawnProgram({
@@ -395,6 +398,7 @@ function formatLspResult(
   };
 }
 
+/** Create language-server-backed agent tools for configured bundled LSP servers. */
 export async function createBundleLspToolRuntime(params: {
   workspaceDir: string;
   cfg?: OpenClawConfig;
@@ -488,6 +492,7 @@ export async function createBundleLspToolRuntime(params: {
   }
 }
 
+/** Dispose all active bundled LSP sessions, primarily for tests/shutdown. */
 export async function disposeAllBundleLspRuntimes(): Promise<void> {
   await disposeSessions(activeBundleLspSessions);
 }

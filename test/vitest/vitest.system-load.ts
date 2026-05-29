@@ -1,3 +1,4 @@
+// test/vitest vitest system load helpers and runtime behavior.
 import { spawnSync } from "node:child_process";
 
 type EnvMap = Record<string, string | undefined>;

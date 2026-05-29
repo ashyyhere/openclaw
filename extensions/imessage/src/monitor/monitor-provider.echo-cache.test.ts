@@ -1,3 +1,4 @@
+// Tests extensions/imessage/src/monitor monitor provider echo cache test behavior.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

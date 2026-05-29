@@ -1,3 +1,4 @@
+// extensions/qa-lab/src discovery eval helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "openclaw/plugin-sdk/string-coerce-runtime";
 import { readQaScenarioExecutionConfig } from "./scenario-catalog.js";
 

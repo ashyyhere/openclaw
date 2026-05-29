@@ -1,8 +1,10 @@
+// plugins current plugin metadata state helpers and runtime behavior.
 let currentPluginMetadataSnapshot: unknown;
 let currentPluginMetadataSnapshotConfigFingerprint: string | undefined;
 let currentPluginMetadataSnapshotCompatiblePolicyHashes: readonly string[] | undefined;
 let currentPluginMetadataSnapshotCompatibleConfigFingerprints: readonly string[] | undefined;
 
+/** Reused helper for set Current Plugin Metadata Snapshot State behavior in src/plugins. */
 export function setCurrentPluginMetadataSnapshotState(
   snapshot: unknown,
   configFingerprint: string | undefined,
@@ -19,6 +21,7 @@ export function setCurrentPluginMetadataSnapshotState(
     : undefined;
 }
 
+/** Reused helper for clear Current Plugin Metadata Snapshot State behavior in src/plugins. */
 export function clearCurrentPluginMetadataSnapshotState(): void {
   currentPluginMetadataSnapshot = undefined;
   currentPluginMetadataSnapshotConfigFingerprint = undefined;
@@ -26,6 +29,7 @@ export function clearCurrentPluginMetadataSnapshotState(): void {
   currentPluginMetadataSnapshotCompatibleConfigFingerprints = undefined;
 }
 
+/** Reused helper for get Current Plugin Metadata Snapshot State behavior in src/plugins. */
 export function getCurrentPluginMetadataSnapshotState(): {
   snapshot: unknown;
   configFingerprint: string | undefined;

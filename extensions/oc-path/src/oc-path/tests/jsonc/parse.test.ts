@@ -1,3 +1,4 @@
+// Tests extensions/oc-path/src/oc-path/tests/jsonc parse test behavior.
 import { describe, expect, it } from "vitest";
 import { MAX_JSONC_INPUT_BYTES, parseJsonc } from "../../jsonc/parse.js";
 

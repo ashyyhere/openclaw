@@ -1,3 +1,4 @@
+// config sessions helpers and runtime behavior.
 export * from "./sessions/combined-store-gateway.js";
 export * from "./sessions/group.js";
 export * from "./sessions/goals.js";

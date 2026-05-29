@@ -1,3 +1,4 @@
+/** Registers security and gateway auth inspection CLI commands. */
 import type { Command } from "commander";
 import { formatDocsLink } from "../../packages/terminal-core/src/links.js";
 import { isRich, theme } from "../../packages/terminal-core/src/theme.js";
@@ -71,6 +72,7 @@ function formatSummary(summary: { critical: number; warn: number; info: number }
   return parts.join(" · ");
 }
 
+/** Reused helper for register Security Cli behavior in src/cli. */
 export function registerSecurityCli(program: Command) {
   const security = program
     .command("security")

@@ -1,3 +1,4 @@
+// plugin-sdk/test-helpers provider catalog helpers and runtime behavior.
 export {
   expectAugmentedCodexCatalog,
   expectedAugmentedOpenaiCodexCatalogEntriesWithGpt55,

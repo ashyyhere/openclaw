@@ -1,3 +1,4 @@
+/** Tests workspace manifest model selection normalization. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 

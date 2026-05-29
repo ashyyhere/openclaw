@@ -1,3 +1,4 @@
+// Tests extensions/memory-wiki/src source sync test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { syncMemoryWikiImportedSources } from "./source-sync.js";
 

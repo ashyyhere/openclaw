@@ -1,3 +1,4 @@
+// Tests extensions/discord/src config schema test behavior.
 import { describe, expect, it } from "vitest";
 import { DiscordConfigSchema } from "../config-api.js";
 

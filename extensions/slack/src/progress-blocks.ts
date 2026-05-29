@@ -1,3 +1,4 @@
+// extensions/slack/src progress blocks helpers and runtime behavior.
 import { createHash } from "node:crypto";
 import type { AnyChunk } from "@slack/types";
 import type { Block, KnownBlock } from "@slack/web-api";

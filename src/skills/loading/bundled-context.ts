@@ -1,3 +1,4 @@
+/** Loads bundled skills into a compact runtime context. */
 import { createSubsystemLogger } from "../../logging/subsystem.js";
 import { resolveBundledSkillsDir, type BundledSkillsResolveOptions } from "./bundled-dir.js";
 import { loadSkillsFromDirSafe } from "./local-loader.js";
@@ -6,11 +7,13 @@ const skillsLogger = createSubsystemLogger("skills");
 let hasWarnedMissingBundledDir = false;
 let cachedBundledContext: { dir: string; names: Set<string> } | null = null;
 
+/** Shared type for Bundled Skills Context in src/agents/skills. */
 export type BundledSkillsContext = {
   dir?: string;
   names: Set<string>;
 };
 
+/** Resolves bundled skill entries and prompt text for a workspace. */
 export function resolveBundledSkillsContext(
   opts: BundledSkillsResolveOptions = {},
 ): BundledSkillsContext {

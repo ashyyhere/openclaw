@@ -1,3 +1,4 @@
+// gateway server request context helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { GatewayServerLiveState } from "./server-live-state.js";
 import type { GatewayRequestContext, GatewayClient } from "./server-methods/types.js";
@@ -10,6 +11,7 @@ type GatewayRequestContextClient = GatewayClient & {
   invalidatedReason?: string;
 };
 
+/** Shared type for Gateway Request Context Params in src/gateway. */
 export type GatewayRequestContextParams = {
   deps: GatewayRequestContext["deps"];
   runtimeState: Pick<GatewayServerLiveState, "cronState">;
@@ -68,6 +70,7 @@ export type GatewayRequestContextParams = {
   unavailableGatewayMethods: ReadonlySet<string>;
 };
 
+/** Reused helper for create Gateway Request Context behavior in src/gateway. */
 export function createGatewayRequestContext(
   params: GatewayRequestContextParams,
 ): GatewayRequestContext {

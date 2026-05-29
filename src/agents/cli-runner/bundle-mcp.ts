@@ -1,3 +1,4 @@
+/** Prepares loopback MCP server config for CLI backend runs. */
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import os from "node:os";
@@ -136,6 +137,7 @@ async function prepareModeSpecificBundleMcpConfig(params: {
   };
 }
 
+/** Reused helper for prepare Cli Bundle Mcp Config behavior in src/agents/cli-runner. */
 export async function prepareCliBundleMcpConfig(params: {
   enabled: boolean;
   mode?: CliBundleMcpMode;

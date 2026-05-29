@@ -1,3 +1,4 @@
+// Tests infra/outbound message action runner context test behavior.
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import type { ChannelPlugin } from "../../channels/plugins/types.js";
 import type { OpenClawConfig } from "../../config/config.js";

@@ -1,3 +1,5 @@
+// packages/speech-core runtime api helpers and runtime behavior.
+/** Re-exported public API for packages/speech-core. */
 export {
   buildTtsSystemPromptHint,
   getLastTtsAttempt,

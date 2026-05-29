@@ -1,3 +1,4 @@
+// extensions/discord/src/internal interaction options helpers and runtime behavior.
 import {
   type APIApplicationCommandInteractionDataBasicOption,
   type APIApplicationCommandInteractionDataOption,

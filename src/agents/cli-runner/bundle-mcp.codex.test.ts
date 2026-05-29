@@ -1,3 +1,4 @@
+/** Regression coverage for Codex bundled MCP argument injection. */
 import { describe, expect, it } from "vitest";
 import { prepareCliBundleMcpConfig } from "./bundle-mcp.js";
 

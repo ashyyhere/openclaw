@@ -1,3 +1,4 @@
+/** Derives runtime and terminal status metrics from subagent session entries. */
 import { SUBAGENT_ENDED_REASON_KILLED } from "./subagent-lifecycle-events.js";
 import type { SubagentRunRecord } from "./subagent-registry.types.js";
 
@@ -15,12 +16,14 @@ function resolveSubagentSessionStartedAtInternal(
     : undefined;
 }
 
+/** Reused helper for get Subagent Session Started At behavior in src/agents. */
 export function getSubagentSessionStartedAt(
   entry: Pick<SubagentRunRecord, "sessionStartedAt" | "startedAt" | "createdAt"> | null | undefined,
 ): number | undefined {
   return entry ? resolveSubagentSessionStartedAtInternal(entry) : undefined;
 }
 
+/** Reused helper for get Subagent Session Runtime Ms behavior in src/agents. */
 export function getSubagentSessionRuntimeMs(
   entry:
     | Pick<SubagentRunRecord, "startedAt" | "endedAt" | "accumulatedRuntimeMs">
@@ -46,6 +49,7 @@ export function getSubagentSessionRuntimeMs(
   return Math.max(0, accumulatedRuntimeMs + Math.max(0, currentRunEndedAt - entry.startedAt));
 }
 
+/** Reused helper for resolve Subagent Session Status behavior in src/agents. */
 export function resolveSubagentSessionStatus(
   entry: Pick<SubagentRunRecord, "endedAt" | "endedReason" | "outcome"> | null | undefined,
 ): "running" | "killed" | "failed" | "timeout" | "done" | undefined {

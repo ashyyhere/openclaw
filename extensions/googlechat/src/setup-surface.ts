@@ -1,3 +1,4 @@
+// extensions/googlechat/src setup surface helpers and runtime behavior.
 import {
   addWildcardAllowFrom,
   applySetupAccountConfigPatch,

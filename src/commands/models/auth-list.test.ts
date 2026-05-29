@@ -1,3 +1,4 @@
+// Tests `models auth list` output, filtering, and credential redaction.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { AuthProfileStore } from "../../agents/auth-profiles.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";

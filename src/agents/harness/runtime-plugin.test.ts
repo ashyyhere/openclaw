@@ -1,3 +1,4 @@
+/** Covers plugin activation needed by selected agent harnesses. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 

@@ -1,12 +1,15 @@
+// secrets target registry pattern helpers and runtime behavior.
 import { parseConfigPathArrayIndex } from "../shared/path-array-index.js";
 import { isRecord, parseDotPath } from "./shared.js";
 import type { SecretTargetRegistryEntry } from "./target-registry-types.js";
 
+/** Shared type for Path Pattern Token in src/secrets. */
 export type PathPatternToken =
   | { kind: "literal"; value: string }
   | { kind: "wildcard" }
   | { kind: "array"; field: string };
 
+/** Shared type for Compiled Target Registry Entry in src/secrets. */
 export type CompiledTargetRegistryEntry = SecretTargetRegistryEntry & {
   pathTokens: PathPatternToken[];
   pathDynamicTokenCount: number;
@@ -14,6 +17,7 @@ export type CompiledTargetRegistryEntry = SecretTargetRegistryEntry & {
   refPathDynamicTokenCount: number;
 };
 
+/** Shared type for Expanded Path Match in src/secrets. */
 export type ExpandedPathMatch = {
   segments: string[];
   captures: string[];
@@ -24,6 +28,7 @@ function countDynamicPatternTokens(tokens: PathPatternToken[]): number {
   return tokens.filter((token) => token.kind === "wildcard" || token.kind === "array").length;
 }
 
+/** Reused helper for parse Path Pattern behavior in src/secrets. */
 export function parsePathPattern(pathPattern: string): PathPatternToken[] {
   const segments = parseDotPath(pathPattern);
   return segments.map((segment) => {
@@ -41,6 +46,7 @@ export function parsePathPattern(pathPattern: string): PathPatternToken[] {
   });
 }
 
+/** Reused helper for compile Target Registry Entry behavior in src/secrets. */
 export function compileTargetRegistryEntry(
   entry: SecretTargetRegistryEntry,
 ): CompiledTargetRegistryEntry {
@@ -64,6 +70,7 @@ export function compileTargetRegistryEntry(
   };
 }
 
+/** Reused helper for match Path Tokens behavior in src/secrets. */
 export function matchPathTokens(
   segments: string[],
   tokens: PathPatternToken[],
@@ -102,6 +109,7 @@ export function matchPathTokens(
   return index === segments.length ? { captures } : null;
 }
 
+/** Reused helper for materialize Path Tokens behavior in src/secrets. */
 export function materializePathTokens(
   tokens: PathPatternToken[],
   captures: string[],
@@ -132,6 +140,7 @@ export function materializePathTokens(
   return captureIndex === captures.length ? out : null;
 }
 
+/** Reused helper for expand Path Tokens behavior in src/secrets. */
 export function expandPathTokens(root: unknown, tokens: PathPatternToken[]): ExpandedPathMatch[] {
   const out: ExpandedPathMatch[] = [];
   const walk = (

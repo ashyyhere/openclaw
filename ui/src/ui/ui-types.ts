@@ -1,3 +1,5 @@
+// ui/src/ui ui types helpers and runtime behavior.
+/** Shared type for Chat Attachment in ui/src/ui. */
 export type ChatAttachment = {
   id: string;
   dataUrl?: string;
@@ -7,6 +9,7 @@ export type ChatAttachment = {
   sizeBytes?: number;
 };
 
+/** Shared type for Chat Queue Item in ui/src/ui. */
 export type ChatQueueItem = {
   id: string;
   text: string;
@@ -25,8 +28,10 @@ export type ChatQueueItem = {
   agentId?: string;
 };
 
+/** Reused constant for CRON CHANNEL LAST behavior in ui/src/ui. */
 export const CRON_CHANNEL_LAST = "last";
 
+/** Shared type for Cron Form State in ui/src/ui. */
 export type CronFormState = {
   name: string;
   description: string;

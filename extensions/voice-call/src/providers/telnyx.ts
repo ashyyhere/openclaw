@@ -1,3 +1,4 @@
+// extensions/voice-call/src/providers telnyx helpers and runtime behavior.
 import crypto from "node:crypto";
 import type { TelnyxConfig } from "../config.js";
 import type {

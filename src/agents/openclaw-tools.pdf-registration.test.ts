@@ -1,3 +1,4 @@
+/** Tests PDF tool registration in OpenClaw tools. */
 import { describe, expect, it } from "vitest";
 import { collectPresentOpenClawTools } from "./openclaw-tools.registration.js";
 import { createPdfTool } from "./tools/pdf-tool.js";

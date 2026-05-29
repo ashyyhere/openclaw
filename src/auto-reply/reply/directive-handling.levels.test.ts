@@ -1,3 +1,4 @@
+// Coverage for inline directive level parsing.
 import { describe, expect, it, vi } from "vitest";
 import { resolveCurrentDirectiveLevels } from "./directive-handling.levels.js";
 

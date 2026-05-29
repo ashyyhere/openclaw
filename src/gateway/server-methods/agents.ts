@@ -1,3 +1,4 @@
+// gateway/server-methods agents helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import {
@@ -72,6 +73,7 @@ const agentsHandlerDeps = {
   isWorkspaceSetupCompleted,
 };
 
+/** Reused constant for testing behavior in src/gateway/server-methods. */
 export const testing = {
   setDepsForTests(
     overrides: Partial<{
@@ -445,6 +447,7 @@ async function buildIdentityMarkdownOrRespondUnsafe(params: {
   }
 }
 
+/** Reused constant for agents Handlers behavior in src/gateway/server-methods. */
 export const agentsHandlers: GatewayRequestHandlers = {
   "agents.list": ({ params, respond, context }) => {
     if (!validateAgentsListParams(params)) {
@@ -862,4 +865,5 @@ export const agentsHandlers: GatewayRequestHandlers = {
     );
   },
 };
+/** Re-exported API for src/gateway/server-methods, starting with testing. */
 export { testing as __testing };

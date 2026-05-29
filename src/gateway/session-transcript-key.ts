@@ -1,3 +1,4 @@
+// gateway session transcript key helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { getRuntimeConfig } from "../config/io.js";
@@ -53,10 +54,12 @@ function sessionKeyMatchesTranscriptPath(params: {
   ).some((candidate) => resolveTranscriptPathForComparison(candidate) === params.targetPath);
 }
 
+/** Reused helper for clear Session Transcript Key Cache For Tests behavior in src/gateway. */
 export function clearSessionTranscriptKeyCacheForTests(): void {
   TRANSCRIPT_SESSION_KEY_CACHE.clear();
 }
 
+/** Reused helper for resolve Session Key For Transcript File behavior in src/gateway. */
 export function resolveSessionKeyForTranscriptFile(sessionFile: string): string | undefined {
   const targetPath = resolveTranscriptPathForComparison(sessionFile);
   if (!targetPath) {

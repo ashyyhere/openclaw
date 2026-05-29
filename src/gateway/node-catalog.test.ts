@@ -1,3 +1,4 @@
+// Tests gateway node catalog test behavior.
 import { describe, expect, it } from "vitest";
 import {
   createKnownNodeCatalog,

@@ -1,3 +1,4 @@
+// Tests gateway server startup memory test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import type { MemoryQmdUpdateConfig } from "../config/types.memory.js";

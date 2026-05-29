@@ -1,3 +1,4 @@
+// extensions/msteams/src graph group management helpers and runtime behavior.
 import type { OpenClawConfig } from "../runtime-api.js";
 import { resolveConversationPath, resolveGraphConversationId } from "./graph-messages.js";
 import {

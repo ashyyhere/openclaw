@@ -1,3 +1,4 @@
+/** Covers tool construction decisions for embedded-agent attempts. */
 import { describe, expect, it } from "vitest";
 import {
   applyEmbeddedAttemptToolsAllow,

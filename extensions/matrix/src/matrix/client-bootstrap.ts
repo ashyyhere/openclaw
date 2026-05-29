@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix client bootstrap helpers and runtime behavior.
 import { requireRuntimeConfig } from "openclaw/plugin-sdk/plugin-config-runtime";
 import type { CoreConfig } from "../types.js";
 import { getActiveMatrixClient } from "./active-client.js";

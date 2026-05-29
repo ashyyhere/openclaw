@@ -1,3 +1,4 @@
+/** Covers actionable errors when the Docker CLI is missing. */
 import { describe, expect, it } from "vitest";
 import { withEnvAsync } from "../../test-utils/env.js";
 import { execDockerRaw } from "./docker.js";

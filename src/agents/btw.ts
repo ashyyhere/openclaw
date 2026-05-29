@@ -1,3 +1,4 @@
+/** Implements ephemeral /btw side-question answering over current conversation context. */
 import type { GetReplyOptions } from "../auto-reply/get-reply-options.types.js";
 import type { ReplyPayload } from "../auto-reply/reply-payload.js";
 import type { ReasoningLevel, ThinkLevel } from "../auto-reply/thinking.js";
@@ -312,6 +313,7 @@ type RunBtwSideQuestionParams = {
   currentChannelId?: string;
 };
 
+/** Answer a /btw side question without continuing the main task. */
 export async function runBtwSideQuestion(
   params: RunBtwSideQuestionParams,
 ): Promise<ReplyPayload | undefined> {

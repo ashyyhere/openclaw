@@ -1,3 +1,4 @@
+// Coverage for reset hook fallback behavior in get-reply.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   buildNativeResetContext,

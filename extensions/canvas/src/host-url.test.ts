@@ -1,3 +1,4 @@
+// Tests extensions/canvas/src host url test behavior.
 import { describe, expect, it } from "vitest";
 import { resolveCanvasHostUrl } from "./host-url.js";
 

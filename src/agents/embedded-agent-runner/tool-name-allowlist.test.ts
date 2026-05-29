@@ -1,3 +1,4 @@
+/** Covers tool allowlist merging for built-in, client, and registered tools. */
 import { describe, expect, it } from "vitest";
 import { findClientToolNameConflicts } from "../agent-tool-definition-adapter.js";
 import { createStubTool } from "../test-helpers/agent-tool-stubs.js";

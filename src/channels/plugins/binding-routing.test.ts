@@ -1,3 +1,4 @@
+// Coverage for configured binding routing.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   testing,

@@ -1,3 +1,4 @@
+// extensions/slack/src approval auth helpers and runtime behavior.
 import {
   createResolvedApproverActionAuthAdapter,
   resolveApprovalApprovers,

@@ -1,3 +1,4 @@
+// extensions/acpx/src codex trust config helpers and runtime behavior.
 import path from "node:path";
 
 function stripTomlComment(line: string): string {

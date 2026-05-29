@@ -1,3 +1,4 @@
+// infra gateway discovery targets helpers and runtime behavior.
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import {
   resolveGatewayDiscoveryEndpoint,
@@ -20,6 +21,7 @@ function pickSshPort(beacon: GatewayBonjourBeacon): number | null {
     : null;
 }
 
+/** Reused helper for build Gateway Discovery Target behavior in src/infra. */
 export function buildGatewayDiscoveryTarget(
   beacon: GatewayBonjourBeacon,
   opts?: { sshUser?: string | null },
@@ -41,12 +43,14 @@ export function buildGatewayDiscoveryTarget(
   };
 }
 
+/** Reused helper for build Gateway Discovery Label behavior in src/infra. */
 export function buildGatewayDiscoveryLabel(beacon: GatewayBonjourBeacon): string {
   const target = buildGatewayDiscoveryTarget(beacon);
   const hint = target.endpoint ? `${target.endpoint.host}:${target.endpoint.port}` : "host unknown";
   return `${target.title} (${hint})`;
 }
 
+/** Reused helper for serialize Gateway Discovery Beacon behavior in src/infra. */
 export function serializeGatewayDiscoveryBeacon(beacon: GatewayBonjourBeacon) {
   const target = buildGatewayDiscoveryTarget(beacon);
   return {

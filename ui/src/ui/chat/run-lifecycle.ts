@@ -1,9 +1,12 @@
+// ui/src/ui/chat run lifecycle helpers and runtime behavior.
 import { resetToolStream, type CompactionStatus, type FallbackStatus } from "../app-tool-stream.ts";
 import { isSessionRunActive } from "../session-run-state.ts";
 import type { SessionRunStatus, SessionsListResult } from "../types.ts";
 
+/** Reused constant for CHAT RUN STATUS TOAST DURATION MS behavior in ui/src/ui/chat. */
 export const CHAT_RUN_STATUS_TOAST_DURATION_MS = 5_000;
 
+/** Shared type for Chat Run Ui Status in ui/src/ui/chat. */
 export type ChatRunUiStatus = {
   phase: "done" | "interrupted";
   runId: string | null;
@@ -155,6 +158,7 @@ function reconcileSessionRows(
   }
 }
 
+/** Reused helper for reconcile Chat Run Lifecycle behavior in ui/src/ui/chat. */
 export function reconcileChatRunLifecycle(host: RunLifecycleHost, options: ReconcileOptions = {}) {
   const occurredAt = Date.now();
   const runId = options.runId ?? host.chatRunId ?? null;
@@ -198,6 +202,7 @@ function currentSessionRow(host: RunLifecycleHost) {
   return host.sessionsResult?.sessions.find((row) => row.key === host.sessionKey);
 }
 
+/** Reused helper for reconcile Chat Run From Current Session Row behavior in ui/src/ui/chat. */
 export function reconcileChatRunFromCurrentSessionRow(
   host: RunLifecycleHost,
   options: { publishRunStatus?: boolean } = {},

@@ -1,3 +1,4 @@
+// ui/src/ui/chat chat welcome helpers and runtime behavior.
 import { html } from "lit";
 import { t } from "../../i18n/index.ts";
 import {
@@ -7,6 +8,7 @@ import {
   resolveAssistantTextAvatar,
 } from "../views/agents-utils.ts";
 
+/** Shared type for Chat Welcome Props in ui/src/ui/chat. */
 export type ChatWelcomeProps = {
   assistantName: string;
   assistantAvatar: string | null;
@@ -34,12 +36,14 @@ function resolveAssistantAvatarUrl(
   });
 }
 
+/** Reused helper for resolve Assistant Display Avatar behavior in ui/src/ui/chat. */
 export function resolveAssistantDisplayAvatar(
   props: Pick<ChatWelcomeProps, "assistantAvatar" | "assistantAvatarUrl">,
 ): string | null {
   return resolveAssistantAvatarUrl(props) ?? resolveAssistantTextAvatar(props.assistantAvatar);
 }
 
+/** Reused helper for render Welcome State behavior in ui/src/ui/chat. */
 export function renderWelcomeState(props: ChatWelcomeProps) {
   const name = props.assistantName || "Assistant";
   const avatar = resolveAssistantAvatarUrl(props);

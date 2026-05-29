@@ -1,3 +1,4 @@
+// Tests gateway server model catalog test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { GatewayModelChoice } from "./server-model-catalog.js";

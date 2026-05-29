@@ -1,3 +1,4 @@
+// extensions/discord/src recipient resolution helpers and runtime behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { requireRuntimeConfig } from "openclaw/plugin-sdk/plugin-config-runtime";
 import { resolveDiscordAccount } from "./accounts.js";

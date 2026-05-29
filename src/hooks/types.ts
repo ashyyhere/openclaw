@@ -1,3 +1,5 @@
+// Shared types for hooks types behavior.
+/** Shared type for Hook Install Spec in src/hooks. */
 export type HookInstallSpec = {
   id?: string;
   kind: "bundled" | "npm" | "git";
@@ -7,6 +9,7 @@ export type HookInstallSpec = {
   bins?: string[];
 };
 
+/** Shared type for Open Claw Hook Metadata in src/hooks. */
 export type OpenClawHookMetadata = {
   always?: boolean;
   hookKey?: string;
@@ -26,12 +29,15 @@ export type OpenClawHookMetadata = {
   install?: HookInstallSpec[];
 };
 
+/** Shared type for Hook Invocation Policy in src/hooks. */
 export type HookInvocationPolicy = {
   enabled: boolean;
 };
 
+/** Shared type for Parsed Hook Frontmatter in src/hooks. */
 export type ParsedHookFrontmatter = Record<string, string>;
 
+/** Shared type for Hook in src/hooks. */
 export type Hook = {
   name: string;
   description: string;
@@ -42,8 +48,10 @@ export type Hook = {
   handlerPath: string; // Path to handler module (handler.ts/js)
 };
 
+/** Shared type for Hook Source in src/hooks. */
 export type HookSource = Hook["source"];
 
+/** Shared type for Hook Entry in src/hooks. */
 export type HookEntry = {
   hook: Hook;
   frontmatter: ParsedHookFrontmatter;
@@ -51,6 +59,7 @@ export type HookEntry = {
   invocation?: HookInvocationPolicy;
 };
 
+/** Shared type for Hook Eligibility Context in src/hooks. */
 export type HookEligibilityContext = {
   remote?: {
     platforms: string[];

@@ -1,3 +1,4 @@
+/** Tests cleanup of stale plugin dependency directories. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

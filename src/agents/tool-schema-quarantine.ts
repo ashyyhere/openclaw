@@ -1,3 +1,4 @@
+/** Quarantines provider-rejected tool schemas and emits trusted diagnostics. */
 import { emitTrustedDiagnosticEvent } from "../infra/diagnostic-events.js";
 import { createSubsystemLogger } from "../logging/subsystem.js";
 import { getPluginToolMeta } from "../plugins/tools.js";
@@ -6,6 +7,7 @@ import type { AnyAgentTool } from "./tools/common.js";
 
 const log = createSubsystemLogger("agents/tools");
 
+/** Reused helper for log Runtime Tool Schema Quarantine behavior in src/agents. */
 export function logRuntimeToolSchemaQuarantine(params: {
   diagnostics: readonly RuntimeToolSchemaDiagnostic[];
   tools: readonly AnyAgentTool[];

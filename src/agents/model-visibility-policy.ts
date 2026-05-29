@@ -1,3 +1,4 @@
+/** Builds model visibility policies from config, catalog, and fallbacks. */
 import { resolveAgentModelFallbackValues } from "../config/model-input.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveAgentModelFallbacksOverride } from "./agent-scope.js";
@@ -8,6 +9,7 @@ import {
   type ModelVisibilityPolicy,
 } from "./model-selection-shared.js";
 
+/** Normalization flags used when runtime metadata is available. */
 export const RUNTIME_MODEL_VISIBILITY_NORMALIZATION = {
   allowManifestNormalization: true,
   allowPluginNormalization: true,
@@ -23,6 +25,7 @@ function resolveAllowedFallbacks(params: { cfg: OpenClawConfig; agentId?: string
   return resolveAgentModelFallbackValues(params.cfg.agents?.defaults?.model);
 }
 
+/** Create a model visibility policy for current config/catalog state. */
 export function createModelVisibilityPolicy(
   params: {
     cfg: OpenClawConfig;
@@ -52,4 +55,5 @@ export function createModelVisibilityPolicy(
   });
 }
 
+/** Re-exported API for src/agents, starting with Model Visibility Policy. */
 export type { ModelVisibilityPolicy };

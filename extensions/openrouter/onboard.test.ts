@@ -1,3 +1,4 @@
+// Tests extensions/openrouter onboard test behavior.
 import {
   expectProviderOnboardAllowlistAlias,
   expectProviderOnboardPrimaryAndFallbacks,

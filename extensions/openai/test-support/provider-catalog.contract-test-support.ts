@@ -1,3 +1,4 @@
+// extensions/openai/test-support provider catalog contract test support helpers and runtime behavior.
 import {
   registerProviderPlugin,
   requireRegisteredProvider,

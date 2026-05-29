@@ -1,4 +1,5 @@
 #!/usr/bin/env -S node --import tsx
+// scripts qa otel smoke helpers and runtime behavior.
 
 import { spawn, type ChildProcess } from "node:child_process";
 import { randomUUID } from "node:crypto";

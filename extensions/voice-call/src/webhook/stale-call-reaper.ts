@@ -1,3 +1,4 @@
+// extensions/voice-call/src/webhook stale call reaper helpers and runtime behavior.
 import type { CallManager } from "../manager.js";
 import { TerminalStates } from "../types.js";
 

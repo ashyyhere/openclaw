@@ -1,3 +1,4 @@
+// gateway live agent probes helpers and runtime behavior.
 import { execFile } from "node:child_process";
 import { randomBytes } from "node:crypto";
 import { promisify } from "node:util";
@@ -21,6 +22,7 @@ type CronListCliResult = {
   }>;
 };
 
+/** Shared type for Cron List Job in src/gateway. */
 export type CronListJob = NonNullable<CronListCliResult["jobs"]>[number];
 
 type LiveCronProbeSpec = {
@@ -31,11 +33,13 @@ type LiveCronProbeSpec = {
   argsJson: string;
 };
 
+/** Reused helper for is Claude Like Live Agent behavior in src/gateway. */
 export function isClaudeLikeLiveAgent(raw: string): boolean {
   const normalized = normalizeOptionalLowercaseString(raw);
   return normalized === "claude" || normalized === "claude-cli";
 }
 
+/** Reused helper for assert Live Image Probe Reply behavior in src/gateway. */
 export function assertLiveImageProbeReply(text: string): void {
   const normalized = normalizeOptionalLowercaseString(text);
   if (normalized !== "cat" && !/(^|[^a-z])cat[.!?`'")\]]*$/.test(normalized ?? "")) {
@@ -43,6 +47,7 @@ export function assertLiveImageProbeReply(text: string): void {
   }
 }
 
+/** Reused helper for should Run Live Image Probe behavior in src/gateway. */
 export function shouldRunLiveImageProbe(params: { agent: string; override?: string }): boolean {
   const override = params.override?.trim();
   if (override) {
@@ -59,6 +64,7 @@ export function shouldRunLiveImageProbe(params: { agent: string; override?: stri
   return normalizeOptionalLowercaseString(params.agent) !== "opencode";
 }
 
+/** Reused helper for create Live Cron Probe Spec behavior in src/gateway. */
 export function createLiveCronProbeSpec(
   params: {
     agentId?: string;
@@ -87,6 +93,7 @@ export function createLiveCronProbeSpec(
   return { nonce, name, message, at, argsJson };
 }
 
+/** Reused helper for build Live Cron Probe Message behavior in src/gateway. */
 export function buildLiveCronProbeMessage(params: {
   agent: string;
   argsJson: string;
@@ -129,6 +136,7 @@ export function buildLiveCronProbeMessage(params: {
   );
 }
 
+/** Reused helper for run Open Claw Cli Json behavior in src/gateway. */
 export async function runOpenClawCliJson<T>(args: string[], env: NodeJS.ProcessEnv): Promise<T> {
   const childEnv = { ...env };
   delete childEnv.VITEST;
@@ -169,6 +177,7 @@ export async function runOpenClawCliJson<T>(args: string[], env: NodeJS.ProcessE
   }
 }
 
+/** Reused helper for assert Cron Job Visible Via Cli behavior in src/gateway. */
 export async function assertCronJobVisibleViaCli(params: {
   port: number;
   token: string;
@@ -195,6 +204,7 @@ export async function assertCronJobVisibleViaCli(params: {
   );
 }
 
+/** Reused helper for assert Cron Job Matches behavior in src/gateway. */
 export function assertCronJobMatches(params: {
   job: CronListJob;
   expectedName: string;

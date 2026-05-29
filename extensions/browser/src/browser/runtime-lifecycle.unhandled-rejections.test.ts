@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/browser runtime lifecycle unhandled rejections test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const { getUnhandledRejectionHandlers, registerUnhandledRejectionHandlerMock, resetHandlers } =

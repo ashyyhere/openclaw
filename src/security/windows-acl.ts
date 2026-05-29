@@ -1,3 +1,5 @@
+// security windows acl helpers and runtime behavior.
+/** Re-exported API for src/security. */
 export {
   createIcaclsResetCommand,
   formatIcaclsResetCommand,

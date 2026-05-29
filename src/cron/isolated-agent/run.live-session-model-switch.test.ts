@@ -1,3 +1,4 @@
+// Tests cron/isolated-agent run live session model switch test behavior.
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { LiveSessionModelSwitchError } from "../../agents/live-model-switch-error.js";
 import {

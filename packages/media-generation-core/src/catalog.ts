@@ -24,6 +24,7 @@ export type MediaGenerationCatalogEntry<TCapabilities = unknown> = {
   warnings?: readonly string[];
 };
 
+/** Shared type for Media Generation Catalog Provider in src/media-generation. */
 export type MediaGenerationCatalogProvider<TCapabilities = unknown> = {
   id: string;
   aliases?: readonly string[];
@@ -37,6 +38,7 @@ function uniqueModels(provider: { defaultModel?: string; models?: readonly strin
   return uniqueTrimmedStrings([provider.defaultModel, ...(provider.models ?? [])]);
 }
 
+/** Reused helper for synthesize Media Generation Catalog Entries behavior in src/media-generation. */
 export function synthesizeMediaGenerationCatalogEntries<TCapabilities>(params: {
   kind: MediaGenerationCatalogKind;
   provider: MediaGenerationCatalogProvider<TCapabilities>;
@@ -63,6 +65,7 @@ export function synthesizeMediaGenerationCatalogEntries<TCapabilities>(params: {
   });
 }
 
+/** Reused helper for list Media Generation Provider Models behavior in src/media-generation. */
 export function listMediaGenerationProviderModels(provider: {
   defaultModel?: string;
   models?: readonly string[];

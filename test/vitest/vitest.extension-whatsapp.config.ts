@@ -1,3 +1,4 @@
+// test/vitest vitest extension whatsapp config helpers and runtime behavior.
 import { whatsAppExtensionTestRoots } from "./vitest.extension-whatsapp-paths.mjs";
 import { loadPatternListFromEnv } from "./vitest.pattern-file.ts";
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";

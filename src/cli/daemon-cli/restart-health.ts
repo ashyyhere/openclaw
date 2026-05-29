@@ -1,3 +1,4 @@
+/** Evaluates daemon restart health after service lifecycle operations. */
 import type { PluginHealthErrorSummary } from "../../commands/health.types.js";
 import { createConfigIO } from "../../config/io.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
@@ -18,14 +19,18 @@ import {
 } from "../../shared/string-coerce.js";
 import { sleep } from "../../utils.js";
 
+/** Reused constant for DEFAULT RESTART HEALTH TIMEOUT MS behavior in src/cli/daemon-cli. */
 export const DEFAULT_RESTART_HEALTH_TIMEOUT_MS = 60_000;
+/** Reused constant for DEFAULT RESTART HEALTH DELAY MS behavior in src/cli/daemon-cli. */
 export const DEFAULT_RESTART_HEALTH_DELAY_MS = 500;
+/** Reused constant for DEFAULT RESTART HEALTH ATTEMPTS behavior in src/cli/daemon-cli. */
 export const DEFAULT_RESTART_HEALTH_ATTEMPTS = Math.ceil(
   DEFAULT_RESTART_HEALTH_TIMEOUT_MS / DEFAULT_RESTART_HEALTH_DELAY_MS,
 );
 const STOPPED_FREE_EARLY_EXIT_GRACE_MS = 10_000;
 const WINDOWS_STOPPED_FREE_EARLY_EXIT_GRACE_MS = 90_000;
 
+/** Shared type for Gateway Restart Wait Outcome in src/cli/daemon-cli. */
 export type GatewayRestartWaitOutcome =
   | "healthy"
   | "plugin-errors"
@@ -35,6 +40,7 @@ export type GatewayRestartWaitOutcome =
   | "stopped-free"
   | "timeout";
 
+/** Shared type for Gateway Restart Snapshot in src/cli/daemon-cli. */
 export type GatewayRestartSnapshot = {
   runtime: GatewayServiceRuntime;
   portUsage: PortUsage;
@@ -52,6 +58,7 @@ export type GatewayRestartSnapshot = {
   elapsedMs?: number;
 };
 
+/** Shared type for Gateway Port Health Snapshot in src/cli/daemon-cli. */
 export type GatewayPortHealthSnapshot = {
   portUsage: PortUsage;
   healthy: boolean;
@@ -321,6 +328,7 @@ async function inspectGatewayPortHealth(params: {
   return { portUsage, healthy };
 }
 
+/** Reused helper for inspect Gateway Restart behavior in src/cli/daemon-cli. */
 export async function inspectGatewayRestart(params: {
   service: GatewayService;
   port: number;
@@ -512,6 +520,7 @@ function withWaitContext(
   return { ...snapshot, waitOutcome, elapsedMs };
 }
 
+/** Reused helper for wait For Gateway Healthy Restart behavior in src/cli/daemon-cli. */
 export async function waitForGatewayHealthyRestart(params: {
   service: GatewayService;
   port: number;
@@ -579,6 +588,7 @@ export async function waitForGatewayHealthyRestart(params: {
   return withWaitContext(snapshot, "timeout", attempts * delayMs);
 }
 
+/** Reused helper for wait For Gateway Healthy Listener behavior in src/cli/daemon-cli. */
 export async function waitForGatewayHealthyListener(params: {
   port: number;
   attempts?: number;
@@ -623,6 +633,7 @@ function renderPortUsageDiagnostics(snapshot: GatewayPortHealthSnapshot): string
   return lines;
 }
 
+/** Reused helper for render Restart Diagnostics behavior in src/cli/daemon-cli. */
 export function renderRestartDiagnostics(snapshot: GatewayRestartSnapshot): string[] {
   const lines: string[] = [];
   if (snapshot.versionMismatch) {
@@ -661,10 +672,12 @@ export function renderRestartDiagnostics(snapshot: GatewayRestartSnapshot): stri
   return lines;
 }
 
+/** Reused helper for render Gateway Port Health Diagnostics behavior in src/cli/daemon-cli. */
 export function renderGatewayPortHealthDiagnostics(snapshot: GatewayPortHealthSnapshot): string[] {
   return renderPortUsageDiagnostics(snapshot);
 }
 
+/** Reused helper for terminate Stale Gateway Pids behavior in src/cli/daemon-cli. */
 export async function terminateStaleGatewayPids(pids: number[]): Promise<number[]> {
   const targets = Array.from(
     new Set(pids.filter((pid): pid is number => Number.isFinite(pid) && pid > 0)),

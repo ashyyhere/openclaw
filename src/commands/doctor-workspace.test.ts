@@ -1,3 +1,4 @@
+/** Tests workspace doctor checks and repairs. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

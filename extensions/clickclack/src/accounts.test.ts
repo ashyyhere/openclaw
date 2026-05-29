@@ -1,3 +1,4 @@
+// Tests extensions/clickclack/src accounts test behavior.
 import { describe, expect, it } from "vitest";
 import {
   listClickClackAccountIds,

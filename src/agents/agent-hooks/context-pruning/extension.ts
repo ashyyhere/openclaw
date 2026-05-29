@@ -1,3 +1,4 @@
+/** Session-manager extension that prunes old tool context before model calls. */
 import type { ContextEvent, ExtensionAPI, ExtensionContext } from "../../sessions/index.js";
 import { pruneContextMessages } from "./pruner.js";
 import { getContextPruningRuntime } from "./runtime.js";

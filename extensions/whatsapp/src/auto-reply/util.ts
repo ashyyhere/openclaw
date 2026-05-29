@@ -1,3 +1,4 @@
+// extensions/whatsapp/src/auto-reply util helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "openclaw/plugin-sdk/string-coerce-runtime";
 
 export function elide(text?: string, limit = 400) {

@@ -1,3 +1,4 @@
+// Tests shared silent reply policy test behavior.
 import { describe, expect, it } from "vitest";
 import {
   DEFAULT_SILENT_REPLY_POLICY,

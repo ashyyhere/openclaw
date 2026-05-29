@@ -1,12 +1,16 @@
+// Media metadata helpers for reply history entries.
 import { mimeTypeFromFilePath } from "../../media/mime.js";
 import { asFiniteNumber } from "../../shared/number-coercion.js";
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 import type { MsgContext } from "../templating.js";
 import type { HistoryEntry, HistoryMediaEntry } from "./history.types.js";
 
+/** Reused constant for RECENT HISTORY IMAGE TTL MS behavior in src/auto-reply/reply. */
 export const RECENT_HISTORY_IMAGE_TTL_MS = 30 * 60_000;
+/** Reused constant for RECENT HISTORY IMAGE LIMIT behavior in src/auto-reply/reply. */
 export const RECENT_HISTORY_IMAGE_LIMIT = 4;
 
+/** Shared type for Recent Inbound History Image in src/auto-reply/reply. */
 export type RecentInboundHistoryImage = {
   path: string;
   contentType: string;
@@ -49,6 +53,7 @@ function resolveHistoryEntries(ctx: MsgContext): HistoryEntry[] {
   return Array.isArray(ctx.InboundHistory) ? ctx.InboundHistory : [];
 }
 
+/** Reused helper for resolve Recent Inbound History Images behavior in src/auto-reply/reply. */
 export function resolveRecentInboundHistoryImages(params: {
   ctx: MsgContext;
   nowMs?: number;
@@ -106,6 +111,7 @@ export function resolveRecentInboundHistoryImages(params: {
   return out.toReversed();
 }
 
+/** Reused helper for append Recent History Image Context behavior in src/auto-reply/reply. */
 export function appendRecentHistoryImageContext(params: {
   promptText: string;
   images: RecentInboundHistoryImage[];

@@ -1,3 +1,4 @@
+// Tests ui/src/ui/controllers exec approval test behavior.
 import { describe, expect, it, vi } from "vitest";
 import {
   addExecApproval,

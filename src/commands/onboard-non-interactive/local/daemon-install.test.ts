@@ -1,3 +1,4 @@
+// Tests non-interactive gateway daemon install planning without leaking plaintext tokens.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../../../config/config.js";
 import { installGatewayDaemonNonInteractive } from "./daemon-install.js";

@@ -1,3 +1,4 @@
+/** Tests daemon status data gathering from services, config, and logs. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

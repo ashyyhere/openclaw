@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src/matrix/actions summary test behavior.
 import { describe, expect, it } from "vitest";
 import { summarizeMatrixRawEvent } from "./summary.js";
 

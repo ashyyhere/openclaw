@@ -1,3 +1,4 @@
+/** Shared test harness for daemon lifecycle core command tests. */
 import { vi } from "vitest";
 import type { GatewayService } from "../../../daemon/service.js";
 import type { MockFn } from "../../../test-utils/vitest-mock-fn.js";

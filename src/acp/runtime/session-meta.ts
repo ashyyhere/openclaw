@@ -1,3 +1,4 @@
+/** ACP session metadata persistence helpers backed by OpenClaw session stores. */
 import { getRuntimeConfig } from "../../config/config.js";
 import { resolveStorePath } from "../../config/sessions/paths.js";
 import { loadSessionStore } from "../../config/sessions/store-load.js";
@@ -20,6 +21,7 @@ function loadSessionStoreRuntime() {
   return sessionStoreRuntimePromise;
 }
 
+/** Shared type for Acp Session Store Entry in src/acp/runtime. */
 export type AcpSessionStoreEntry = {
   cfg: OpenClawConfig;
   storePath: string;
@@ -50,6 +52,7 @@ function resolveStoreSessionKey(store: Record<string, SessionEntry>, sessionKey:
   return lower;
 }
 
+/** Resolve the session-store path that owns an ACP session key. */
 export function resolveSessionStorePathForAcp(params: {
   sessionKey: string;
   cfg?: OpenClawConfig;
@@ -62,6 +65,7 @@ export function resolveSessionStorePathForAcp(params: {
   return { cfg, storePath };
 }
 
+/** Read one persisted ACP session entry from the owning session store. */
 export function readAcpSessionEntry(params: {
   sessionKey: string;
   cfg?: OpenClawConfig;
@@ -96,6 +100,7 @@ export function readAcpSessionEntry(params: {
   };
 }
 
+/** List all persisted ACP session entries across configured agent stores. */
 export async function listAcpSessionEntries(params: {
   cfg?: OpenClawConfig;
   env?: NodeJS.ProcessEnv;
@@ -134,6 +139,7 @@ export async function listAcpSessionEntries(params: {
   return entries;
 }
 
+/** Mutate ACP metadata for one session entry with store maintenance controls. */
 export async function upsertAcpSessionMeta(params: {
   sessionKey: string;
   cfg?: OpenClawConfig;

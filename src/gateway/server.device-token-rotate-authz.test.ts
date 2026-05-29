@@ -1,3 +1,4 @@
+// Tests gateway server device token rotate authz test behavior.
 import { afterAll, beforeAll, describe, expect, test } from "vitest";
 import { WebSocket } from "ws";
 import {

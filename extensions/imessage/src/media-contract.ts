@@ -1,3 +1,4 @@
+// extensions/imessage/src media contract helpers and runtime behavior.
 import { mergeInboundPathRoots } from "openclaw/plugin-sdk/channel-inbound";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { resolveIMessageAccount } from "./accounts.js";

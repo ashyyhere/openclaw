@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/browser pw session connections test behavior.
 import { chromium } from "playwright-core";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import * as chromeModule from "./chrome.js";

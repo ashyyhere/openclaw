@@ -1,3 +1,4 @@
+// Tests extensions/zai model definitions test behavior.
 import { describe, expect, it } from "vitest";
 import { buildZaiModelDefinition, ZAI_DEFAULT_COST } from "./model-definitions.js";
 

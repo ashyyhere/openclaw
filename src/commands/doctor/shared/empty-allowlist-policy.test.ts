@@ -1,3 +1,4 @@
+/** Tests empty allowlist warning collection for accounts. */
 import { describe, expect, it, vi } from "vitest";
 import { collectEmptyAllowlistPolicyWarningsForAccount } from "./empty-allowlist-policy.js";
 

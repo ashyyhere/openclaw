@@ -1,3 +1,4 @@
+// extensions/discord/src/voice segment helpers and runtime behavior.
 import path from "node:path";
 import { Readable } from "node:stream";
 import type { DiscordAccountConfig, OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";

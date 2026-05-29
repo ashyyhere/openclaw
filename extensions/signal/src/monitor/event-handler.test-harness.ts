@@ -1,3 +1,4 @@
+// extensions/signal/src/monitor event handler test harness helpers and runtime behavior.
 import type { SignalEventHandlerDeps, SignalReactionMessage } from "./event-handler.types.js";
 
 export function createBaseSignalEventHandlerDeps(

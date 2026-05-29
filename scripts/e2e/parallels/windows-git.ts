@@ -1,3 +1,4 @@
+// scripts/e2e/parallels windows git helpers and runtime behavior.
 import path from "node:path";
 import type { WindowsGuest } from "./guest-transports.ts";
 import { die, run, say } from "./host-command.ts";

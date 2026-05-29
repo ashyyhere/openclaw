@@ -1,3 +1,4 @@
+/** Regression coverage for the layered tool policy pipeline. */
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import {
   applyToolPolicyPipeline,

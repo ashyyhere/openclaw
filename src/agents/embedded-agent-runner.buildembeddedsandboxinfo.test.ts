@@ -1,3 +1,4 @@
+/** Tests embedded sandbox info construction. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import * as execApprovals from "../infra/exec-approvals.js";
 import { buildEmbeddedSandboxInfo } from "./embedded-agent-runner.js";

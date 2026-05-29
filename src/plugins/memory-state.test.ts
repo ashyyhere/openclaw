@@ -1,3 +1,4 @@
+// Tests plugins memory state test behavior.
 import { afterEach, describe, expect, it } from "vitest";
 import {
   resetMemoryPluginState,

@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src network config test behavior.
 import type { TelegramNetworkConfig } from "openclaw/plugin-sdk/config-contracts";
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 

@@ -1,3 +1,4 @@
+// gateway/server-methods config test helpers helpers and runtime behavior.
 import { vi, type Mock } from "vitest";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { GatewayRequestHandlerOptions } from "./types.js";
@@ -25,6 +26,7 @@ function createGatewayLog(): GatewayLogMocks {
   };
 }
 
+/** Reused helper for create Config Write Snapshot behavior in src/gateway/server-methods. */
 export function createConfigWriteSnapshot(config: OpenClawConfig) {
   return {
     snapshot: {
@@ -46,6 +48,7 @@ export function createConfigWriteSnapshot(config: OpenClawConfig) {
   };
 }
 
+/** Reused helper for create Config Handler Harness behavior in src/gateway/server-methods. */
 export function createConfigHandlerHarness(args?: {
   method?: string;
   params?: unknown;
@@ -76,6 +79,7 @@ export function createConfigHandlerHarness(args?: {
   };
 }
 
+/** Reused helper for flush Config Handler Microtasks behavior in src/gateway/server-methods. */
 export async function flushConfigHandlerMicrotasks() {
   await new Promise<void>((resolve) => queueMicrotask(resolve));
 }

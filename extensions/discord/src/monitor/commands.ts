@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor commands helpers and runtime behavior.
 import type { DiscordSlashCommandConfig } from "openclaw/plugin-sdk/config-contracts";
 
 export function resolveDiscordSlashCommandConfig(

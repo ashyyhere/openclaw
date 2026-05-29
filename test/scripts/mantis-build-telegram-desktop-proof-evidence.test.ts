@@ -1,3 +1,4 @@
+// Tests test/scripts mantis build telegram desktop proof evidence test behavior.
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";

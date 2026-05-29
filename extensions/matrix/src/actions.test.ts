@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src actions test behavior.
 import { beforeEach, describe, expect, it } from "vitest";
 import type { PluginRuntime } from "../runtime-api.js";
 import { matrixMessageActions } from "./actions.js";

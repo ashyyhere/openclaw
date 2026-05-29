@@ -1,3 +1,4 @@
+// extensions/telegram/src bot core helpers and runtime behavior.
 import {
   resolveChannelGroupPolicy,
   resolveChannelGroupRequireMention,

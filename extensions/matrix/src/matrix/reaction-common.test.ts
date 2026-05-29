@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src/matrix reaction common test behavior.
 import { describe, expect, it } from "vitest";
 import {
   buildMatrixReactionContent,

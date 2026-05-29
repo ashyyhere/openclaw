@@ -1,3 +1,5 @@
+// Parser for config values entered through chat commands.
+/** Reused helper for parse Config Value behavior in src/auto-reply/reply. */
 export function parseConfigValue(raw: string): {
   value?: unknown;
   error?: string;

@@ -1,3 +1,4 @@
+// extensions/msteams/src feedback reflection store helpers and runtime behavior.
 import fs from "node:fs/promises";
 import { writeJsonFileAtomically } from "openclaw/plugin-sdk/json-store";
 

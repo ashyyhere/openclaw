@@ -1,3 +1,4 @@
+// test/vitest vitest extension media config helpers and runtime behavior.
 import { mediaExtensionTestRoots } from "./vitest.extension-media-paths.mjs";
 import { loadPatternListFromEnv } from "./vitest.pattern-file.ts";
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";

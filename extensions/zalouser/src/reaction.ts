@@ -1,3 +1,4 @@
+// extensions/zalouser/src reaction helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "openclaw/plugin-sdk/string-coerce-runtime";
 import { Reactions } from "./zca-constants.js";
 

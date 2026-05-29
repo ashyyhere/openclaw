@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix/monitor recent invite helpers and runtime behavior.
 import type { MatrixRoomConfig } from "../../types.js";
 import type { MatrixRoomInfo } from "./room-info.js";
 import { resolveMatrixRoomConfig } from "./rooms.js";

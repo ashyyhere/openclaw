@@ -1,3 +1,4 @@
+// Tests extensions/nostr/src nostr profile fuzz test behavior.
 import { describe, expect, it } from "vitest";
 import type { NostrProfile } from "./config-schema.js";
 import {

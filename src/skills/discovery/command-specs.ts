@@ -1,3 +1,4 @@
+/** Builds slash/native command specs exposed by loaded skills. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { createSubsystemLogger } from "../../logging/subsystem.js";
 import { loadEnabledClaudeBundleCommands } from "../../plugins/bundle-commands.js";
@@ -71,6 +72,7 @@ function resolveUniqueSkillCommandName(base: string, used: Set<string>): string 
   return `${base.slice(0, Math.max(1, SKILL_COMMAND_MAX_LENGTH - 2))}_x`;
 }
 
+/** Builds command dispatch specs from visible workspace skills. */
 export function buildWorkspaceSkillCommandSpecs(
   workspaceDir: string,
   opts?: {

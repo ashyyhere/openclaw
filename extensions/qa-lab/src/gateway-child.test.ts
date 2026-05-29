@@ -1,3 +1,4 @@
+// Tests extensions/qa-lab/src gateway child test behavior.
 import { EventEmitter } from "node:events";
 import { lstat, mkdir, mkdtemp, readFile, readdir, rm, symlink, writeFile } from "node:fs/promises";
 import os from "node:os";

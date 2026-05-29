@@ -1,3 +1,4 @@
+// Tests config config misc test behavior.
 import { describe, expect, it } from "vitest";
 import {
   getConfigValueAtPath,

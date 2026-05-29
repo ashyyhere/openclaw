@@ -1,3 +1,4 @@
+// Tests extensions/mattermost/src/mattermost send test behavior.
 import { expectProvidedCfgSkipsRuntimeLoad } from "openclaw/plugin-sdk/channel-test-helpers";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 

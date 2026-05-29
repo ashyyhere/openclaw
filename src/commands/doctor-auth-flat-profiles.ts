@@ -1,3 +1,4 @@
+/** Doctor checks and repairs for flat auth profile store layout. */
 import fs from "node:fs";
 import path from "node:path";
 import { note } from "../../packages/terminal-core/src/note.js";
@@ -44,6 +45,7 @@ type AwsSdkAuthProfileMarkerStore = {
   profiles: AwsSdkProfileMarker[];
 };
 
+/** Shared type for Legacy Flat Auth Profile Repair Result in src/commands. */
 export type LegacyFlatAuthProfileRepairResult = {
   detected: string[];
   changes: string[];
@@ -308,6 +310,7 @@ function removeAwsSdkProfileMarkers(raw: Record<string, unknown>, profileIds: st
   }
 }
 
+/** Reused helper for maybe Repair Legacy Flat Auth Profile Stores behavior in src/commands. */
 export async function maybeRepairLegacyFlatAuthProfileStores(params: {
   cfg: OpenClawConfig;
   prompter: DoctorPrompter;
@@ -452,6 +455,7 @@ function backupCanonicalApiKeyAlias(authPath: string, now: () => number): string
   return backupPath;
 }
 
+/** Reused helper for maybe Repair Canonical Api Key Field Alias behavior in src/commands. */
 export async function maybeRepairCanonicalApiKeyFieldAlias(params: {
   cfg: OpenClawConfig;
   prompter: DoctorPrompter;

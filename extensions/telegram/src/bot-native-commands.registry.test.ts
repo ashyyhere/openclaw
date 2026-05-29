@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src bot native commands registry test behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { clearPluginCommands, registerPluginCommand } from "openclaw/plugin-sdk/plugin-runtime";
 import { afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";

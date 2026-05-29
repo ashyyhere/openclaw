@@ -1,3 +1,4 @@
+/** Shared provider helpers for web_search implementations. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { normalizeResolvedSecretInputString } from "../../config/types.secrets.js";
 import { createLazyImportLoader } from "../../shared/lazy-promise.js";
@@ -36,6 +37,7 @@ async function loadSelfHostedWebToolsEndpoint(): Promise<
   return (await webGuardedFetchLoader.load()).withSelfHostedWebToolsEndpoint;
 }
 
+/** Shared type for Search Config Record in src/agents/tools. */
 export type SearchConfigRecord = (NonNullable<OpenClawConfig["tools"]>["web"] extends infer Web
   ? Web extends { search?: infer Search }
     ? Search
@@ -50,28 +52,36 @@ type UnsupportedWebSearchFilterName =
   | "date_after"
   | "date_before";
 
+/** Reused constant for DEFAULT SEARCH COUNT behavior in src/agents/tools. */
 export const DEFAULT_SEARCH_COUNT = 5;
+/** Reused constant for MAX SEARCH COUNT behavior in src/agents/tools. */
 export const MAX_SEARCH_COUNT = 10;
+/** Reused constant for SEARCH CACHE behavior in src/agents/tools. */
 export const SEARCH_CACHE = new Map<string, CacheEntry<Record<string, unknown>>>();
 
+/** Resolves search timeout seconds from provider config. */
 export function resolveSearchTimeoutSeconds(searchConfig?: SearchConfigRecord): number {
   return resolveTimeoutSeconds(searchConfig?.timeoutSeconds, DEFAULT_TIMEOUT_SECONDS);
 }
 
+/** Resolves search cache TTL from provider config. */
 export function resolveSearchCacheTtlMs(searchConfig?: SearchConfigRecord): number {
   return resolveCacheTtlMs(searchConfig?.cacheTtlMinutes, DEFAULT_CACHE_TTL_MINUTES);
 }
 
+/** Resolves bounded search result count. */
 export function resolveSearchCount(value: unknown, fallback: number): number {
   const parsed = typeof value === "number" && Number.isFinite(value) ? value : fallback;
   const clamped = Math.max(1, Math.min(MAX_SEARCH_COUNT, Math.floor(parsed)));
   return clamped;
 }
 
+/** Reused helper for read Configured Secret String behavior in src/agents/tools. */
 export function readConfiguredSecretString(value: unknown, path: string): string | undefined {
   return normalizeSecretInput(normalizeResolvedSecretInputString({ value, path })) || undefined;
 }
 
+/** Reused helper for read Provider Env Value behavior in src/agents/tools. */
 export function readProviderEnvValue(envVars: string[]): string | undefined {
   for (const envVar of envVars) {
     const value = normalizeSecretInput(process.env[envVar]);
@@ -82,6 +92,7 @@ export function readProviderEnvValue(envVars: string[]): string | undefined {
   return undefined;
 }
 
+/** Reused helper for with Trusted Web Search Endpoint behavior in src/agents/tools. */
 export async function withTrustedWebSearchEndpoint<T>(
   params: {
     url: string;
@@ -103,6 +114,7 @@ export async function withTrustedWebSearchEndpoint<T>(
   );
 }
 
+/** Reused helper for with Self Hosted Web Search Endpoint behavior in src/agents/tools. */
 export async function withSelfHostedWebSearchEndpoint<T>(
   params: {
     url: string;
@@ -124,6 +136,7 @@ export async function withSelfHostedWebSearchEndpoint<T>(
   );
 }
 
+/** Posts JSON to a trusted web tools endpoint and parses the response. */
 export async function postTrustedWebToolsJson<T>(
   params: {
     url: string;
@@ -168,12 +181,14 @@ export async function postTrustedWebToolsJson<T>(
   );
 }
 
+/** Reused helper for throw Web Search Api Error behavior in src/agents/tools. */
 export async function throwWebSearchApiError(res: Response, providerLabel: string): Promise<never> {
   const detailResult = await readResponseText(res, { maxBytes: 64_000 });
   const detail = detailResult.text;
   throw new Error(`${providerLabel} API error (${res.status}): ${detail || res.statusText}`);
 }
 
+/** Reused helper for resolve Site Name behavior in src/agents/tools. */
 export function resolveSiteName(url: string | undefined): string | undefined {
   if (!url) {
     return undefined;
@@ -225,6 +240,7 @@ function isValidIsoDate(value: string): boolean {
   );
 }
 
+/** Reused helper for iso To Perplexity Date behavior in src/agents/tools. */
 export function isoToPerplexityDate(iso: string): string | undefined {
   const match = iso.match(ISO_DATE_PATTERN);
   if (!match) {
@@ -234,6 +250,7 @@ export function isoToPerplexityDate(iso: string): string | undefined {
   return `${Number.parseInt(month, 10)}/${Number.parseInt(day, 10)}/${year}`;
 }
 
+/** Reused helper for normalize To Iso Date behavior in src/agents/tools. */
 export function normalizeToIsoDate(value: string): string | undefined {
   const trimmed = value.trim();
   if (ISO_DATE_PATTERN.test(trimmed)) {
@@ -248,6 +265,7 @@ export function normalizeToIsoDate(value: string): string | undefined {
   return undefined;
 }
 
+/** Reused helper for parse Iso Date Range behavior in src/agents/tools. */
 export function parseIsoDateRange(params: {
   rawDateAfter?: string;
   rawDateBefore?: string;
@@ -292,6 +310,7 @@ export function parseIsoDateRange(params: {
   return { dateAfter, dateBefore };
 }
 
+/** Normalizes provider freshness/date filters. */
 export function normalizeFreshness(
   value: string | undefined,
   provider: WebSearchFreshnessProvider,
@@ -397,12 +416,14 @@ export function readCachedSearchPayload(cacheKey: string): Record<string, unknow
   return cached ? { ...cached.value, cached: true } : undefined;
 }
 
+/** Builds a stable key for web search cache entries. */
 export function buildSearchCacheKey(parts: Array<string | number | boolean | undefined>): string {
   return normalizeCacheKey(
     parts.map((part) => (part === undefined ? "default" : String(part))).join(":"),
   );
 }
 
+/** Reused helper for write Cached Search Payload behavior in src/agents/tools. */
 export function writeCachedSearchPayload(
   cacheKey: string,
   payload: Record<string, unknown>,
@@ -439,6 +460,7 @@ function describeUnsupportedSearchFilter(name: UnsupportedWebSearchFilterName): 
   throw new Error("Unsupported web search filter");
 }
 
+/** Builds a provider response for unsupported filter combinations. */
 export function buildUnsupportedSearchFilterResponse(
   params: Record<string, unknown>,
   provider: string,

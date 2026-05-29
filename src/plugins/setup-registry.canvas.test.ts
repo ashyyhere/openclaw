@@ -1,3 +1,4 @@
+// Tests plugins setup registry canvas test behavior.
 import path from "node:path";
 import { describe, expect, test } from "vitest";
 import type { OpenClawConfig } from "../config/types.openclaw.js";

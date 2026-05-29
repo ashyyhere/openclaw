@@ -1,3 +1,4 @@
+// gateway server runtime state helpers and runtime behavior.
 import type { IncomingMessage, Server as HttpServer, ServerResponse } from "node:http";
 import type { Duplex } from "node:stream";
 import { WebSocketServer } from "ws";

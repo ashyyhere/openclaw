@@ -1,3 +1,4 @@
+/** Abort/error helpers for embedded-agent runner operations. */
 import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";
 
 /**

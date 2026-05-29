@@ -1,3 +1,4 @@
+// Tests gateway/server-methods commands test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { ChatCommandDefinition } from "../../auto-reply/commands-registry.types.js";
 

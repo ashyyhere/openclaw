@@ -1,3 +1,4 @@
+// Tests extensions/qa-matrix/src/substrate e2ee client test behavior.
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { testing } from "./e2ee-client.js";

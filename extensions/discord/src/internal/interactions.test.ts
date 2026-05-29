@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/internal interactions test behavior.
 import {
   ComponentType,
   type GuildMemberFlags,

@@ -1,3 +1,4 @@
+// test/vitest vitest contracts channel session config helpers and runtime behavior.
 import {
   channelSessionContractPatterns,
   createContractsVitestConfig,

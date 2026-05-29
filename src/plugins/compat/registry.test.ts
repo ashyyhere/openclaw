@@ -1,3 +1,4 @@
+// Tests plugins/compat registry test behavior.
 import fs from "node:fs";
 import { describe, expect, it } from "vitest";
 import { listGitTrackedFiles } from "../../test-utils/repo-files.js";

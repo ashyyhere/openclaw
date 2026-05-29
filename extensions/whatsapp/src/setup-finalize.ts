@@ -1,3 +1,4 @@
+// extensions/whatsapp/src setup finalize helpers and runtime behavior.
 import {
   DEFAULT_ACCOUNT_ID,
   splitSetupEntries,

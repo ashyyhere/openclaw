@@ -1,3 +1,4 @@
+// Reply turn admission policy for suppressing or allowing inbound turns.
 import {
   createReplyOperation,
   REPLY_RUN_IDLE_SETTLE_TIMEOUT_MS,
@@ -6,8 +7,10 @@ import {
   type ReplyOperation,
 } from "./reply-run-registry.js";
 
+/** Shared type for Reply Turn Kind in src/auto-reply/reply. */
 export type ReplyTurnKind = "visible" | "heartbeat" | "queued_followup" | "control_abort";
 
+/** Shared type for Reply Turn Admission in src/auto-reply/reply. */
 export type ReplyTurnAdmission =
   | { status: "owned"; operation: ReplyOperation }
   | {
@@ -20,6 +23,7 @@ function isAbortSignalAborted(signal: AbortSignal | undefined): boolean {
   return signal?.aborted === true;
 }
 
+/** Reused helper for admit Reply Turn behavior in src/auto-reply/reply. */
 export async function admitReplyTurn(params: {
   sessionKey: string;
   sessionId: string;
@@ -75,6 +79,7 @@ export async function admitReplyTurn(params: {
   }
 }
 
+/** Reused helper for resolve Reply Turn Kind behavior in src/auto-reply/reply. */
 export function resolveReplyTurnKind(opts?: { isHeartbeat?: boolean }): ReplyTurnKind {
   return opts?.isHeartbeat === true ? "heartbeat" : "visible";
 }

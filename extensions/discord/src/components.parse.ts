@@ -1,3 +1,4 @@
+// extensions/discord/src components parse helpers and runtime behavior.
 import { ButtonStyle, TextInputStyle } from "discord-api-types/v10";
 import { normalizeLowercaseStringOrEmpty } from "openclaw/plugin-sdk/string-coerce-runtime";
 import type {

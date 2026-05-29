@@ -1,3 +1,4 @@
+// extensions/mattermost/src group mentions helpers and runtime behavior.
 import { resolveChannelGroupRequireMention } from "openclaw/plugin-sdk/channel-policy";
 import { resolveMattermostAccount } from "./mattermost/accounts.js";
 import type { ChannelGroupContext } from "./runtime-api.js";

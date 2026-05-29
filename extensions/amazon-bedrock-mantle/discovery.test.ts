@@ -1,3 +1,4 @@
+// Tests extensions/amazon-bedrock-mantle discovery test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const {

@@ -1,3 +1,4 @@
+// Coverage for collecting queued reply runs.
 import { describe, expect, it, vi } from "vitest";
 import type { FollowupRun, QueueSettings } from "./queue.js";
 import { enqueueFollowupRun, scheduleFollowupDrain } from "./queue.js";

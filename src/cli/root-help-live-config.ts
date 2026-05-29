@@ -1,3 +1,4 @@
+/** Loads config-sensitive plugin metadata for root help rendering. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { RootHelpRenderOptions } from "./program/root-help.js";
 
@@ -9,6 +10,7 @@ function hasListEntries(value: string[] | undefined): boolean {
   return Array.isArray(value) && value.length > 0;
 }
 
+/** Reused helper for has Plugin Help Affecting Config behavior in src/cli. */
 export function hasPluginHelpAffectingConfig(config: OpenClawConfig | null | undefined): boolean {
   const plugins = config?.plugins;
   if (!plugins) {
@@ -25,12 +27,14 @@ export function hasPluginHelpAffectingConfig(config: OpenClawConfig | null | und
   );
 }
 
+/** Reused helper for has Plugin Help Affecting Env behavior in src/cli. */
 export function hasPluginHelpAffectingEnv(env: NodeJS.ProcessEnv): boolean {
   return Boolean(
     env.OPENCLAW_BUNDLED_PLUGINS_DIR?.trim() || env.OPENCLAW_DISABLE_BUNDLED_PLUGINS?.trim(),
   );
 }
 
+/** Reused helper for load Root Help Render Options For Config Sensitive Plugins behavior in src/cli. */
 export async function loadRootHelpRenderOptionsForConfigSensitivePlugins(
   env: NodeJS.ProcessEnv = process.env,
 ): Promise<RootHelpRenderOptions | null> {

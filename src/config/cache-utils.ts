@@ -1,6 +1,8 @@
+// config cache utils helpers and runtime behavior.
 import fs from "node:fs";
 import { parseStrictNonNegativeInteger } from "../infra/parse-finite-number.js";
 
+/** Reused helper for resolve Cache Ttl Ms behavior in src/config. */
 export function resolveCacheTtlMs(params: {
   envValue: string | undefined;
   defaultTtlMs: number;
@@ -15,6 +17,7 @@ export function resolveCacheTtlMs(params: {
   return defaultTtlMs;
 }
 
+/** Reused helper for is Cache Enabled behavior in src/config. */
 export function isCacheEnabled(ttlMs: number): boolean {
   return ttlMs > 0;
 }
@@ -58,6 +61,7 @@ function isCacheEntryExpired(storedAt: number, now: number, ttlMs: number): bool
   return now - storedAt > ttlMs;
 }
 
+/** Reused helper for create Expiring Map Cache behavior in src/config. */
 export function createExpiringMapCache<TKey, TValue>(options: {
   ttlMs: CacheTtlResolver;
   pruneIntervalMs?: CachePruneIntervalResolver;
@@ -146,6 +150,7 @@ type FileStatSnapshot = {
   sizeBytes: number;
 };
 
+/** Reused helper for get File Stat Snapshot behavior in src/config. */
 export function getFileStatSnapshot(filePath: string): FileStatSnapshot | undefined {
   try {
     const stats = fs.statSync(filePath);

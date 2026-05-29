@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor system events helpers and runtime behavior.
 import { type Message, MessageType } from "../internal/discord.js";
 import { formatDiscordUserTag } from "./format.js";
 

@@ -1,3 +1,4 @@
+// Session key helpers used by runtime policy decisions.
 import { normalizeChatType } from "../../channels/chat-type.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import {
@@ -83,6 +84,7 @@ function isMainSessionAlias(params: {
   );
 }
 
+/** Reused helper for resolve Runtime Policy Session Key behavior in src/auto-reply/reply. */
 export function resolveRuntimePolicySessionKey(params: {
   cfg?: OpenClawConfig;
   ctx?: RuntimePolicyContext;

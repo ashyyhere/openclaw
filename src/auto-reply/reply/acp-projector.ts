@@ -1,3 +1,4 @@
+// ACP runtime event projection into chat reply payloads.
 import type { AcpRuntimeEvent, AcpSessionUpdateTag } from "../../acp/runtime/types.js";
 import { EmbeddedBlockChunker } from "../../agents/embedded-agent-block-chunker.js";
 import { formatToolSummary, resolveToolDisplay } from "../../agents/tool-display.js";
@@ -26,6 +27,7 @@ const ACP_LIVE_HARD_FLUSH_CHARS = 480;
 const TERMINAL_TOOL_STATUSES = new Set(["completed", "failed", "cancelled", "done", "error"]);
 const HIDDEN_BOUNDARY_TAGS = new Set<AcpSessionUpdateTag>(["tool_call", "tool_call_update"]);
 
+/** Shared type for Acp Projected Delivery Meta in src/auto-reply/reply. */
 export type AcpProjectedDeliveryMeta = {
   tag?: AcpSessionUpdateTag;
   toolCallId?: string;
@@ -160,11 +162,13 @@ function renderToolSummaryText(event: Extract<AcpRuntimeEvent, { type: "tool_cal
   return formatToolSummary(display);
 }
 
+/** Shared type for Acp Reply Projector in src/auto-reply/reply. */
 export type AcpReplyProjector = {
   onEvent: (event: AcpRuntimeEvent) => Promise<void>;
   flush: (force?: boolean) => Promise<void>;
 };
 
+/** Reused helper for create Acp Reply Projector behavior in src/auto-reply/reply. */
 export function createAcpReplyProjector(params: {
   cfg: OpenClawConfig;
   shouldSendToolSummaries: boolean;

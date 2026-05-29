@@ -1,3 +1,4 @@
+/** Regression coverage for embedded-agent extension factory setup. */
 import type { SessionManager } from "openclaw/plugin-sdk/agent-sessions";
 import type { Api, Model } from "openclaw/plugin-sdk/llm";
 import { describe, expect, it, vi } from "vitest";

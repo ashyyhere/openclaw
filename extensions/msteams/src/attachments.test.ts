@@ -1,3 +1,4 @@
+// Tests extensions/msteams/src attachments test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { PluginRuntime, SsrFPolicy } from "../runtime-api.js";
 import { readRemoteMediaResponse } from "./attachments.test-helpers.js";

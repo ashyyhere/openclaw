@@ -1,7 +1,9 @@
+// media outbound attachment helpers and runtime behavior.
 import { buildOutboundMediaLoadOptions, type OutboundMediaAccess } from "./load-options.js";
 import { saveMediaBuffer } from "./store.js";
 import { loadWebMedia } from "./web-media.js";
 
+/** Reused helper for resolve Outbound Attachment From Url behavior in src/media. */
 export async function resolveOutboundAttachmentFromUrl(
   mediaUrl: string,
   maxBytes: number,

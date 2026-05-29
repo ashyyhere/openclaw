@@ -1,3 +1,4 @@
+// extensions/slack/src/monitor commands helpers and runtime behavior.
 import type { SlackSlashCommandConfig } from "openclaw/plugin-sdk/config-contracts";
 import { normalizeOptionalString } from "openclaw/plugin-sdk/string-coerce-runtime";
 

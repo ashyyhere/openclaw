@@ -1,3 +1,4 @@
+// Tests infra/outbound abort test behavior.
 import { describe, expect, it } from "vitest";
 import { throwIfAborted } from "./abort.js";
 

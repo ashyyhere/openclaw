@@ -1,3 +1,4 @@
+/** Resolves strict tool mode for native OpenAI-compatible transports. */
 import { readStringValue } from "../shared/string-coerce.js";
 import { resolveProviderRequestCapabilities } from "./provider-attribution.js";
 
@@ -36,6 +37,7 @@ function resolvesToNativeOpenAIStrictTools(
   );
 }
 
+/** Return the strict tool flag to send or omit for a model/transport. */
 export function resolveOpenAIStrictToolSetting(
   model: OpenAIStrictToolModel,
   options?: { transport?: OpenAITransportKind; supportsStrictMode?: boolean },

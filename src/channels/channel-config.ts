@@ -1,8 +1,11 @@
+// Channel config match helpers for direct, parent, and wildcard entries.
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import { normalizeUniqueSingleOrTrimmedStringList } from "../shared/string-normalization.js";
 
+/** Source of a matched channel config entry. */
 export type ChannelMatchSource = "direct" | "parent" | "wildcard";
 
+/** Match result for channel config lookup with fallback metadata. */
 export type ChannelEntryMatch<T> = {
   entry?: T;
   key?: string;
@@ -14,6 +17,7 @@ export type ChannelEntryMatch<T> = {
   matchSource?: ChannelMatchSource;
 };
 
+/** Copy match metadata onto a resolved config result. */
 export function applyChannelMatchMeta<
   TResult extends { matchKey?: string; matchSource?: ChannelMatchSource },
 >(result: TResult, match: ChannelEntryMatch<unknown>): TResult {
@@ -24,6 +28,7 @@ export function applyChannelMatchMeta<
   return result;
 }
 
+/** Resolve a matched channel config entry and attach match metadata. */
 export function resolveChannelMatchConfig<
   TEntry,
   TResult extends { matchKey?: string; matchSource?: ChannelMatchSource },
@@ -34,6 +39,7 @@ export function resolveChannelMatchConfig<
   return applyChannelMatchMeta(resolveEntry(match.entry), match);
 }
 
+/** Normalize a user-visible channel slug for config key matching. */
 export function normalizeChannelSlug(value: string): string {
   return normalizeLowercaseStringOrEmpty(value)
     .replace(/^#/, "")
@@ -41,10 +47,12 @@ export function normalizeChannelSlug(value: string): string {
     .replace(/^-+|-+$/g, "");
 }
 
+/** Build normalized channel key candidates from raw keys. */
 export function buildChannelKeyCandidates(...keys: Array<string | undefined | null>): string[] {
   return normalizeUniqueSingleOrTrimmedStringList(keys);
 }
 
+/** Resolve a channel entry with direct, parent, and wildcard fallbacks. */
 export function resolveChannelEntryMatch<T>(params: {
   entries?: Record<string, T>;
   keys: string[];
@@ -67,6 +75,7 @@ export function resolveChannelEntryMatch<T>(params: {
   return match;
 }
 
+/** Resolve a channel entry or fallback to a provided default entry. */
 export function resolveChannelEntryMatchWithFallback<T>(params: {
   entries?: Record<string, T>;
   keys: string[];
@@ -151,6 +160,7 @@ export function resolveChannelEntryMatchWithFallback<T>(params: {
   return direct;
 }
 
+/** Resolve allowlist decisions from nested channel config sections. */
 export function resolveNestedAllowlistDecision(params: {
   outerConfigured: boolean;
   outerMatched: boolean;

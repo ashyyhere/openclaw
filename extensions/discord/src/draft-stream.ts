@@ -1,3 +1,4 @@
+// extensions/discord/src draft stream helpers and runtime behavior.
 import { createFinalizableDraftLifecycle } from "openclaw/plugin-sdk/channel-outbound";
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";
 import {

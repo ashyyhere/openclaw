@@ -1,3 +1,4 @@
+// infra install mode options helpers and runtime behavior.
 type InstallMode = "install" | "update";
 
 type InstallModeOptions<TLogger> = {
@@ -10,6 +11,7 @@ type TimedInstallModeOptions<TLogger> = InstallModeOptions<TLogger> & {
   timeoutMs?: number;
 };
 
+/** Reused helper for resolve Install Mode Options behavior in src/infra. */
 export function resolveInstallModeOptions<TLogger>(
   params: InstallModeOptions<TLogger>,
   defaultLogger: TLogger,
@@ -25,6 +27,7 @@ export function resolveInstallModeOptions<TLogger>(
   };
 }
 
+/** Reused helper for resolve Timed Install Mode Options behavior in src/infra. */
 export function resolveTimedInstallModeOptions<TLogger>(
   params: TimedInstallModeOptions<TLogger>,
   defaultLogger: TLogger,

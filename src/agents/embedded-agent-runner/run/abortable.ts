@@ -1,3 +1,4 @@
+/** Converts abort signals into rejecting wrappers for embedded-run async work. */
 function getAbortReason(signal: AbortSignal): unknown {
   return "reason" in signal ? (signal as { reason?: unknown }).reason : undefined;
 }
@@ -14,6 +15,7 @@ function makeAbortError(signal: AbortSignal): Error {
   return err;
 }
 
+/** Races a promise against an AbortSignal and rejects with AbortError on abort. */
 export function abortable<T>(signal: AbortSignal, promise: Promise<T>): Promise<T> {
   if (signal.aborted) {
     return Promise.reject(makeAbortError(signal));

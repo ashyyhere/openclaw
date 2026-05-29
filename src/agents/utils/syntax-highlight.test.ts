@@ -1,3 +1,4 @@
+// Regression coverage for syntax highlighting package loading and theme rendering.
 import { describe, expect, it } from "vitest";
 import { highlight, supportsLanguage } from "./syntax-highlight.js";
 

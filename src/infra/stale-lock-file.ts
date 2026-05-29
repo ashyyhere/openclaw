@@ -1,14 +1,17 @@
+// infra stale lock file helpers and runtime behavior.
 import {
   getProcessStartTime as defaultGetProcessStartTime,
   isPidDefinitelyDead as defaultIsPidDefinitelyDead,
 } from "../shared/pid-alive.js";
 
+/** Shared type for Lock File Owner Payload in src/infra. */
 export type LockFileOwnerPayload = {
   pid?: number;
   createdAt?: string;
   starttime?: number;
 };
 
+/** Reused helper for read Lock File Owner Payload behavior in src/infra. */
 export function readLockFileOwnerPayload(
   payload: Record<string, unknown> | null,
 ): LockFileOwnerPayload | null {
@@ -22,6 +25,7 @@ export function readLockFileOwnerPayload(
   };
 }
 
+/** Reused helper for should Remove Dead Owner Or Expired Lock behavior in src/infra. */
 export function shouldRemoveDeadOwnerOrExpiredLock(params: {
   payload: Record<string, unknown> | null;
   staleMs: number;

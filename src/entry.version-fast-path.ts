@@ -1,6 +1,8 @@
+// OpenClaw entry version fast path helpers and runtime behavior.
 import { isRootVersionInvocation } from "./cli/argv.js";
 import { resolveCliContainerTarget } from "./cli/container-target.js";
 
+/** Reused helper for try Handle Root Version Fast Path behavior in src. */
 export function tryHandleRootVersionFastPath(
   argv: string[],
   deps: {

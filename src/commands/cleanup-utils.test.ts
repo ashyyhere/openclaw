@@ -1,3 +1,4 @@
+/** Tests cleanup planning helpers and default-model repair. */
 import path from "node:path";
 import { describe, expect, it, test, vi } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";

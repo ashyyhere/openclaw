@@ -1,3 +1,4 @@
+// Tests infra pairing pending test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { rejectPendingPairingRequest } from "./pairing-pending.js";
 

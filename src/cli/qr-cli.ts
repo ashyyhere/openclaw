@@ -1,3 +1,4 @@
+/** Registers QR setup and pairing helper CLI commands. */
 import type { Command } from "commander";
 import { formatDocsLink } from "../../packages/terminal-core/src/links.js";
 import { theme } from "../../packages/terminal-core/src/theme.js";
@@ -89,6 +90,7 @@ function emitQrSecretResolveDiagnostics(diagnostics: string[], opts: QrCliOption
   }
 }
 
+/** Reused helper for register Qr Cli behavior in src/cli. */
 export function registerQrCli(program: Command) {
   program
     .command("qr")

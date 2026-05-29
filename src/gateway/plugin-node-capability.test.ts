@@ -1,3 +1,4 @@
+// Tests gateway plugin node capability test behavior.
 import { describe, expect, test } from "vitest";
 import {
   buildPluginNodeCapabilityScopedHostUrl,

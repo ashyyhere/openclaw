@@ -1,4 +1,6 @@
+/** Public SDK barrel for realtime voice provider plugin contracts. */
 export type { RealtimeVoiceProviderPlugin } from "../plugins/types.js";
+/** Re-exported API for src/plugin-sdk. */
 export type {
   RealtimeVoiceAudioFormat,
   RealtimeVoiceBargeInOptions,
@@ -19,10 +21,12 @@ export type {
   RealtimeVoiceToolCallEvent,
   RealtimeVoiceToolResultOptions,
 } from "../talk/provider-types.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   REALTIME_VOICE_AUDIO_FORMAT_G711_ULAW_8KHZ,
   REALTIME_VOICE_AUDIO_FORMAT_PCM16_24KHZ,
 } from "../talk/provider-types.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   createTalkEventSequencer,
   TALK_EVENT_TYPES,
@@ -35,9 +39,13 @@ export {
   type TalkMode,
   type TalkTransport,
 } from "../talk/talk-events.js";
+/** Re-exported API for src/plugin-sdk, starting with create Talk Diagnostic Event. */
 export { createTalkDiagnosticEvent, recordTalkDiagnosticEvent } from "../talk/diagnostics.js";
+/** Re-exported API for src/plugin-sdk, starting with create Talk Log Record. */
 export { createTalkLogRecord, recordTalkLogEvent } from "../talk/logging.js";
+/** Re-exported API for src/plugin-sdk, starting with record Talk Observability Event. */
 export { recordTalkObservabilityEvent } from "../talk/observability.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   createTalkSessionController,
   normalizeTalkTransport,
@@ -50,6 +58,7 @@ export {
   type TalkTurnResult,
   type TalkTurnSuccess,
 } from "../talk/talk-session-controller.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   REALTIME_VOICE_ACTIVATION_NAME_MAX_WORDS,
   isSupportedRealtimeVoiceActivationName,
@@ -63,10 +72,12 @@ export {
   type RealtimeVoiceActivationNameMatchKind,
   type RealtimeVoiceActivationNameTranscriptResult,
 } from "../talk/activation-name.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   classifySkippableRealtimeVoiceConsultTranscript,
   type SkippableRealtimeVoiceConsultTranscriptReason,
 } from "../talk/consult-transcript.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   matchRealtimeVoiceConsultQuestions,
   normalizeRealtimeVoiceConsultQuestion,
@@ -75,6 +86,7 @@ export {
   type RealtimeVoiceConsultQuestionMatchOptions,
   type RealtimeVoiceSpeakableToolResultOptions,
 } from "../talk/consult-question.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   createRealtimeVoiceForcedConsultCoordinator,
   type RealtimeVoiceForcedConsultCoordinator,
@@ -84,12 +96,14 @@ export {
   type RealtimeVoiceForcedConsultNativeRecentOptions,
   type RealtimeVoiceForcedConsultTimer,
 } from "../talk/forced-consult-coordinator.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   createRealtimeVoiceTurnContextTracker,
   type RealtimeVoiceTurnContextHandle,
   type RealtimeVoiceTurnContextTracker,
   type RealtimeVoiceTurnContextTrackerOptions,
 } from "../talk/turn-context-tracker.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   createRealtimeVoiceOutputActivityTracker,
   type RealtimeVoiceOutputActivityDelta,
@@ -97,6 +111,7 @@ export {
   type RealtimeVoiceOutputActivityTracker,
   type RealtimeVoiceOutputActivityTrackerOptions,
 } from "../talk/output-activity-tracker.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   buildRealtimeVoiceAgentConsultChatMessage,
   buildRealtimeVoiceAgentConsultPolicyInstructions,
@@ -115,17 +130,20 @@ export {
   type RealtimeVoiceAgentConsultToolPolicy,
   type RealtimeVoiceAgentConsultTranscriptEntry,
 } from "../talk/agent-consult-tool.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   consultRealtimeVoiceAgent,
   type RealtimeVoiceAgentConsultResult,
   type RealtimeVoiceAgentConsultRuntime,
 } from "../talk/agent-consult-runtime.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   createRealtimeVoiceAgentTalkbackQueue,
   type RealtimeVoiceAgentTalkbackQueue,
   type RealtimeVoiceAgentTalkbackQueueParams,
   type RealtimeVoiceAgentTalkbackResult,
 } from "../talk/agent-talkback-runtime.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   buildRealtimeVoiceAgentCancelProviderResult,
   buildRealtimeVoiceAgentControlSpeechMessage,
@@ -143,23 +161,27 @@ export {
   type RealtimeVoiceAgentControlProviderResult,
   type RealtimeVoiceAgentControlResult,
 } from "../talk/agent-run-control.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   resolveRealtimeVoiceFastContextConsult,
   type RealtimeVoiceFastContextConfig,
   type RealtimeVoiceFastContextConsultResult,
   type RealtimeVoiceFastContextLabels,
 } from "../talk/fast-context-runtime.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   canonicalizeRealtimeVoiceProviderId,
   getRealtimeVoiceProvider,
   listRealtimeVoiceProviders,
   normalizeRealtimeVoiceProviderId,
 } from "../talk/provider-registry.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   resolveConfiguredRealtimeVoiceProvider,
   type ResolvedRealtimeVoiceProvider,
   type ResolveConfiguredRealtimeVoiceProviderParams,
 } from "../talk/provider-resolver.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   createRealtimeVoiceBridgeSession,
   type RealtimeVoiceAudioSink,
@@ -167,6 +189,7 @@ export {
   type RealtimeVoiceBridgeSessionParams,
   type RealtimeVoiceMarkStrategy,
 } from "../talk/session-runtime.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   extendRealtimeVoiceOutputEchoSuppression,
   getRealtimeVoiceBridgeEventHealth,
@@ -179,6 +202,7 @@ export {
   type RealtimeVoiceTranscriptEntry,
   type RealtimeVoiceTranscriptHealth,
 } from "../talk/session-log-runtime.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   convertPcmToMulaw8k,
   mulawToPcm,

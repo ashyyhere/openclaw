@@ -1,3 +1,4 @@
+/** Tool parameter schema normalization wrappers for provider compatibility. */
 import { copyPluginToolMeta } from "../plugins/tools.js";
 import {
   normalizeToolParameterSchema,
@@ -6,6 +7,7 @@ import {
 import type { AnyAgentTool } from "./agent-tools.types.js";
 import { copyChannelAgentToolMeta } from "./channel-tools.js";
 
+/** Re-exported API for src/agents, starting with normalize Tool Parameter Schema. */
 export { normalizeToolParameterSchema };
 
 function isObjectSchemaWithNoRequiredParams(schema: unknown): boolean {
@@ -59,6 +61,7 @@ function addEmptyObjectArgumentPreparation(tool: AnyAgentTool, parameters: unkno
   };
 }
 
+/** Normalize one tool's parameter schema and preserve tool metadata. */
 export function normalizeToolParameters(
   tool: AnyAgentTool,
   options?: ToolParameterSchemaOptions,

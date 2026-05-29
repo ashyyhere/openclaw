@@ -1,3 +1,4 @@
+/** Runs compaction lifecycle for CLI-backed sessions. */
 import type { SessionEntry } from "../../config/sessions/types.js";
 import type { AgentCompactionMode } from "../../config/types.agent-defaults.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
@@ -112,10 +113,12 @@ const cliCompactionDeps: CliCompactionDeps = {
   recordCliCompactionInStore: recordCliCompactionInStoreImpl,
 };
 
+/** Reused helper for set Cli Compaction Test Deps behavior in src/agents/command. */
 export function setCliCompactionTestDeps(overrides: Partial<typeof cliCompactionDeps>): void {
   Object.assign(cliCompactionDeps, overrides);
 }
 
+/** Reused helper for reset Cli Compaction Test Deps behavior in src/agents/command. */
 export function resetCliCompactionTestDeps(): void {
   Object.assign(cliCompactionDeps, {
     openSessionManager: (sessionFile: string) => SessionManager.open(sessionFile),
@@ -435,6 +438,7 @@ async function compactNativeHarnessCliTranscript(params: {
   return { compacted: true, result };
 }
 
+/** Reused helper for run Cli Turn Compaction Lifecycle behavior in src/agents/command. */
 export async function runCliTurnCompactionLifecycle(params: {
   cfg: OpenClawConfig;
   sessionId: string;

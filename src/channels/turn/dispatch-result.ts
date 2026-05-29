@@ -1,5 +1,7 @@
+/** Type guard helpers for dispatch results returned by channel turn handlers. */
 import type { ReplyDispatchKind } from "../../auto-reply/reply/reply-dispatcher.types.js";
 
+/** Shared type for Channel Turn Dispatch Result Like in src/channels/turn. */
 export type ChannelTurnDispatchResultLike =
   | {
       queuedFinal?: boolean;
@@ -8,18 +10,21 @@ export type ChannelTurnDispatchResultLike =
   | null
   | undefined;
 
+/** Shared type for Channel Turn Visible Delivery Signals in src/channels/turn. */
 export type ChannelTurnVisibleDeliverySignals = {
   observedReplyDelivery?: boolean;
   fallbackDelivered?: boolean;
   deliverySummaryDelivered?: boolean;
 };
 
+/** Reused constant for EMPTY CHANNEL TURN DISPATCH COUNTS behavior in src/channels/turn. */
 export const EMPTY_CHANNEL_TURN_DISPATCH_COUNTS: Record<ReplyDispatchKind, number> = {
   tool: 0,
   block: 0,
   final: 0,
 };
 
+/** Reused helper for resolve Channel Turn Dispatch Counts behavior in src/channels/turn. */
 export function resolveChannelTurnDispatchCounts(
   result: ChannelTurnDispatchResultLike,
 ): Record<ReplyDispatchKind, number> {
@@ -29,6 +34,7 @@ export function resolveChannelTurnDispatchCounts(
   };
 }
 
+/** Reused helper for has Visible Channel Turn Dispatch behavior in src/channels/turn. */
 export function hasVisibleChannelTurnDispatch(
   result: ChannelTurnDispatchResultLike,
   signals: ChannelTurnVisibleDeliverySignals = {},
@@ -45,6 +51,7 @@ export function hasVisibleChannelTurnDispatch(
   );
 }
 
+/** Reused helper for has Final Channel Turn Dispatch behavior in src/channels/turn. */
 export function hasFinalChannelTurnDispatch(
   result: ChannelTurnDispatchResultLike,
   signals: Pick<

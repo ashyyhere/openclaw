@@ -136,6 +136,7 @@ function applySelectionToSession(params: {
   }
 }
 
+/** Reused helper for apply Reset Model Override behavior in src/auto-reply/reply. */
 export async function applyResetModelOverride(params: {
   cfg: OpenClawConfig;
   agentId?: string;

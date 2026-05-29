@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix startup abort helpers and runtime behavior.
 export function createMatrixStartupAbortError(): Error {
   const error = new Error("Matrix startup aborted");
   error.name = "AbortError";

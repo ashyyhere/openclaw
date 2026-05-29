@@ -1,3 +1,5 @@
+// plugins path safety helpers and runtime behavior.
+/** Re-exported API for src/plugins. */
 export {
   isNotFoundPathError,
   hasNodeErrorCode,

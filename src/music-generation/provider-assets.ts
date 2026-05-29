@@ -1,3 +1,4 @@
+// music-generation provider assets helpers and runtime behavior.
 import { fetchProviderDownloadResponse } from "../media-understanding/shared.js";
 import { maxBytesForKind } from "../media/constants.js";
 import { extensionForMime } from "../media/mime.js";
@@ -6,6 +7,7 @@ import { isRecord } from "../shared/record-coerce.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import type { GeneratedMusicAsset } from "./types.js";
 
+/** Shared type for Generated Music File Candidate in src/music-generation. */
 export type GeneratedMusicFileCandidate = {
   url: string;
   mimeType?: string;
@@ -49,6 +51,7 @@ function pushGeneratedMusicFileCandidate(
   });
 }
 
+/** Reused helper for extract Generated Music File Candidates behavior in src/music-generation. */
 export function extractGeneratedMusicFileCandidates(
   payload: unknown,
   keys: readonly string[] = ["audio", "audio_file"],
@@ -63,6 +66,7 @@ export function extractGeneratedMusicFileCandidates(
   return candidates;
 }
 
+/** Reused helper for generated Music Asset From Base64 behavior in src/music-generation. */
 export function generatedMusicAssetFromBase64(params: {
   base64: string;
   mimeType: string;
@@ -77,6 +81,7 @@ export function generatedMusicAssetFromBase64(params: {
   };
 }
 
+/** Reused helper for download Generated Music Asset behavior in src/music-generation. */
 export async function downloadGeneratedMusicAsset(params: {
   candidate: GeneratedMusicFileCandidate;
   timeoutMs: number;

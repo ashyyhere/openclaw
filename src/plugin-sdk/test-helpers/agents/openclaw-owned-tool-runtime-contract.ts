@@ -1,3 +1,4 @@
+// plugin-sdk/test-helpers/agents openclaw owned tool runtime contract helpers and runtime behavior.
 import { vi } from "vitest";
 import { resetAdjustedParamsByToolCallIdForTests } from "../../../agents/agent-tools.before-tool-call.state.js";
 import type { AgentToolResult } from "../../../agents/runtime/index.js";

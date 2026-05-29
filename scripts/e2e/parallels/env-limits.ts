@@ -1,3 +1,4 @@
+// scripts/e2e/parallels env limits helpers and runtime behavior.
 import { die } from "./host-command.ts";
 
 const positiveIntPattern = /^[1-9]\d*$/u;

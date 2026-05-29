@@ -1,3 +1,4 @@
+// extensions/browser/src/browser screenshot helpers and runtime behavior.
 import {
   buildImageResizeSideGrid,
   getImageMetadata,

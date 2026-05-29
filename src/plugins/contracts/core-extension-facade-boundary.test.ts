@@ -1,3 +1,4 @@
+// Tests plugins/contracts core extension facade boundary test behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";

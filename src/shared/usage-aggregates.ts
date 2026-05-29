@@ -1,3 +1,4 @@
+// shared usage aggregates helpers and runtime behavior.
 type LatencyTotalsLike = {
   count: number;
   sum: number;
@@ -29,6 +30,7 @@ type LatencyLike = {
 
 type DailyLatencyInput = LatencyLike & { date: string };
 
+/** Reused helper for merge Usage Latency behavior in src/shared. */
 export function mergeUsageLatency(
   totals: LatencyTotalsLike,
   latency: LatencyLike | undefined,
@@ -43,6 +45,7 @@ export function mergeUsageLatency(
   totals.p95Max = Math.max(totals.p95Max, latency.p95Ms);
 }
 
+/** Reused helper for merge Usage Daily Latency behavior in src/shared. */
 export function mergeUsageDailyLatency(
   dailyLatencyMap: Map<string, DailyLatencyLike>,
   dailyLatency?: DailyLatencyInput[] | null,
@@ -65,6 +68,7 @@ export function mergeUsageDailyLatency(
   }
 }
 
+/** Reused helper for build Usage Aggregate Tail behavior in src/shared. */
 export function buildUsageAggregateTail<
   TTotals extends { totalCost: number },
   TDaily extends DailyLike,

@@ -33,6 +33,7 @@ let providerRuntimePluginCache: ConfigScopedRuntimeCache<ProviderPlugin | null> 
 const defaultProviderRuntimePluginCache = new PluginLruCache<ProviderPlugin | null>(128);
 const PREPARED_PROVIDER_RUNTIME_SURFACES = ["channel"] as const;
 
+/** Shared type for Provider Runtime Plugin Lookup Params in src/plugins. */
 export type ProviderRuntimePluginLookupParams = {
   provider: string;
   modelId?: string | null;
@@ -43,14 +44,17 @@ export type ProviderRuntimePluginLookupParams = {
   bundledProviderVitestCompat?: boolean;
 };
 
+/** Shared type for Provider Runtime Plugin Handle in src/plugins. */
 export type ProviderRuntimePluginHandle = ProviderRuntimePluginLookupParams & {
   plugin?: ProviderPlugin;
 };
 
+/** Shared type for Provider Runtime Plugin Handle Params in src/plugins. */
 export type ProviderRuntimePluginHandleParams = ProviderRuntimePluginLookupParams & {
   runtimeHandle?: ProviderRuntimePluginHandle;
 };
 
+/** Reused helper for clear Provider Runtime Plugin Cache For Test behavior in src/plugins. */
 export function clearProviderRuntimePluginCacheForTest(): void {
   providerRuntimePluginCache = new WeakMap();
   defaultProviderRuntimePluginCache.clear();
@@ -183,6 +187,7 @@ function findProviderRuntimePluginInRegistry(params: {
     });
 }
 
+/** Reused helper for resolve Provider Plugins For Hooks behavior in src/plugins. */
 export function resolveProviderPluginsForHooks(params: {
   config?: OpenClawConfig;
   workspaceDir?: string;
@@ -218,6 +223,7 @@ export function resolveProviderPluginsForHooks(params: {
   return resolved;
 }
 
+/** Reused helper for resolve Provider Runtime Plugin behavior in src/plugins. */
 export function resolveProviderRuntimePlugin(
   params: ProviderRuntimePluginLookupParams,
 ): ProviderPlugin | undefined {
@@ -295,6 +301,7 @@ export function resolveProviderRuntimePlugin(
   return plugin ?? undefined;
 }
 
+/** Reused helper for resolve Loaded Provider Runtime Plugin behavior in src/plugins. */
 export function resolveLoadedProviderRuntimePlugin(
   params: ProviderRuntimePluginLookupParams,
 ): ProviderPlugin | undefined {
@@ -308,6 +315,7 @@ export function resolveLoadedProviderRuntimePlugin(
   });
 }
 
+/** Reused helper for resolve Provider Hook Plugin behavior in src/plugins. */
 export function resolveProviderHookPlugin(params: {
   provider: string;
   config?: OpenClawConfig;
@@ -324,6 +332,7 @@ export function resolveProviderHookPlugin(params: {
   );
 }
 
+/** Reused helper for resolve Provider Runtime Plugin Handle behavior in src/plugins. */
 export function resolveProviderRuntimePluginHandle(
   params: ProviderRuntimePluginLookupParams,
 ): ProviderRuntimePluginHandle {
@@ -343,6 +352,7 @@ export function resolveProviderRuntimePluginHandle(
   };
 }
 
+/** Reused helper for ensure Provider Runtime Plugin Handle behavior in src/plugins. */
 export function ensureProviderRuntimePluginHandle(
   params: ProviderRuntimePluginHandleParams,
 ): ProviderRuntimePluginHandle {
@@ -364,6 +374,7 @@ export function ensureProviderRuntimePluginHandle(
   return params.runtimeHandle;
 }
 
+/** Reused helper for prepare Provider Extra Params behavior in src/plugins. */
 export function prepareProviderExtraParams(params: {
   provider: string;
   config?: OpenClawConfig;
@@ -378,6 +389,7 @@ export function prepareProviderExtraParams(params: {
   );
 }
 
+/** Reused helper for resolve Provider Extra Params For Transport behavior in src/plugins. */
 export function resolveProviderExtraParamsForTransport(params: {
   provider: string;
   config?: OpenClawConfig;
@@ -392,6 +404,7 @@ export function resolveProviderExtraParamsForTransport(params: {
   );
 }
 
+/** Reused helper for resolve Provider Auth Profile Id behavior in src/plugins. */
 export function resolveProviderAuthProfileId(params: {
   provider: string;
   config?: OpenClawConfig;
@@ -406,6 +419,7 @@ export function resolveProviderAuthProfileId(params: {
   return typeof resolved === "string" && resolved.trim() ? resolved.trim() : undefined;
 }
 
+/** Reused helper for resolve Provider Followup Fallback Route behavior in src/plugins. */
 export function resolveProviderFollowupFallbackRoute(params: {
   provider: string;
   config?: OpenClawConfig;
@@ -420,6 +434,7 @@ export function resolveProviderFollowupFallbackRoute(params: {
   );
 }
 
+/** Reused helper for wrap Provider Stream Fn behavior in src/plugins. */
 export function wrapProviderStreamFn(params: {
   provider: string;
   config?: OpenClawConfig;

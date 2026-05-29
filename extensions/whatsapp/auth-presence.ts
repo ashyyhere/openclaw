@@ -1,3 +1,4 @@
+// extensions/whatsapp auth presence helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "openclaw/plugin-sdk/account-id";

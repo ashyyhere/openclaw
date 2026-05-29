@@ -1,3 +1,4 @@
+// Tests shared gateway bind url test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { resolveGatewayBindUrl } from "./gateway-bind-url.js";
 

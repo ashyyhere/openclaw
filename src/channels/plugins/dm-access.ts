@@ -1,13 +1,18 @@
+// Direct-message access helpers for channel plugins.
 import { normalizeStringEntries } from "../../shared/string-normalization.js";
 
+/** Shared type for Channel Dm Allow From Mode in src/channels/plugins. */
 export type ChannelDmAllowFromMode = "topOnly" | "topOrNested" | "nestedOnly";
+/** Shared type for Channel Dm Policy in src/channels/plugins. */
 export type ChannelDmPolicy = "pairing" | "allowlist" | "open" | "disabled";
 
+/** Shared type for Channel Dm Access in src/channels/plugins. */
 export type ChannelDmAccess = {
   dmPolicy?: ChannelDmPolicy;
   allowFrom?: Array<string | number>;
 };
 
+/** Shared type for Dm Access Record in src/channels/plugins. */
 export type DmAccessRecord = Record<string, unknown>;
 
 type DmFieldKind = "policy" | "allowFrom";
@@ -17,11 +22,13 @@ type DmFieldPaths = {
   legacyPath: readonly string[];
 };
 
+/** Shared type for Compat Mutation Result in src/channels/plugins. */
 export type CompatMutationResult = {
   entry: DmAccessRecord;
   changed: boolean;
 };
 
+/** Reused helper for normalize Channel Dm Policy behavior in src/channels/plugins. */
 export function normalizeChannelDmPolicy(value: string | undefined): ChannelDmPolicy | undefined {
   return value === "pairing" || value === "allowlist" || value === "open" || value === "disabled"
     ? value
@@ -122,6 +129,7 @@ function readCanonicalOrLegacy(
   return readPath(entry, paths.canonicalPath) ?? readPath(entry, paths.legacyPath);
 }
 
+/** Reused helper for resolve Channel Dm Policy behavior in src/channels/plugins. */
 export function resolveChannelDmPolicy(params: {
   account?: DmAccessRecord | null;
   parent?: DmAccessRecord | null;
@@ -136,6 +144,7 @@ export function resolveChannelDmPolicy(params: {
   return typeof value === "string" ? normalizeChannelDmPolicy(value) : undefined;
 }
 
+/** Reused helper for resolve Channel Dm Allow From behavior in src/channels/plugins. */
 export function resolveChannelDmAllowFrom(params: {
   account?: DmAccessRecord | null;
   parent?: DmAccessRecord | null;
@@ -148,6 +157,7 @@ export function resolveChannelDmAllowFrom(params: {
   return Array.isArray(value) ? (value as Array<string | number>) : undefined;
 }
 
+/** Reused helper for resolve Channel Dm Access behavior in src/channels/plugins. */
 export function resolveChannelDmAccess(params: {
   account?: DmAccessRecord | null;
   parent?: DmAccessRecord | null;
@@ -160,6 +170,7 @@ export function resolveChannelDmAccess(params: {
   };
 }
 
+/** Reused helper for set Canonical Dm Allow From behavior in src/channels/plugins. */
 export function setCanonicalDmAllowFrom(params: {
   entry: DmAccessRecord;
   mode: ChannelDmAllowFromMode;
@@ -178,6 +189,7 @@ export function setCanonicalDmAllowFrom(params: {
   params.changes?.push(`- ${formatPath(params.pathPrefix, paths.canonicalPath)}: ${params.reason}`);
 }
 
+/** Reused helper for normalize Legacy Dm Aliases behavior in src/channels/plugins. */
 export function normalizeLegacyDmAliases(params: {
   entry: DmAccessRecord;
   pathPrefix: string;
@@ -260,6 +272,7 @@ function hasWildcard(list?: Array<string | number>) {
   return list?.some((value) => String(value).trim() === "*") ?? false;
 }
 
+/** Reused helper for ensure Open Dm Policy Allow From Wildcard behavior in src/channels/plugins. */
 export function ensureOpenDmPolicyAllowFromWildcard(params: {
   entry: DmAccessRecord;
   mode: ChannelDmAllowFromMode;

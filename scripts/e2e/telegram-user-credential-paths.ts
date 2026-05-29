@@ -1,3 +1,4 @@
+// scripts/e2e telegram user credential paths helpers and runtime behavior.
 import { chmod, mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 

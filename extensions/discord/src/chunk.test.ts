@@ -1,3 +1,4 @@
+// Tests extensions/discord/src chunk test behavior.
 import { countLines, hasBalancedFences } from "openclaw/plugin-sdk/test-fixtures";
 import { describe, expect, it } from "vitest";
 import { chunkDiscordText, chunkDiscordTextWithMode } from "./chunk.js";

@@ -1,3 +1,4 @@
+/** Ensures root and plugin-generated models.json files match current config/catalogs. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import {
@@ -29,6 +30,7 @@ import {
 } from "./plugin-model-catalog.js";
 import { stableStringify } from "./stable-stringify.js";
 
+/** Re-exported API for src/agents, starting with reset Models Json Ready Cache For Test. */
 export { resetModelsJsonReadyCacheForTest } from "./models-config-state.js";
 
 async function readFileMtimeMs(pathname: string): Promise<number | null> {
@@ -116,12 +118,14 @@ async function readExistingModelsFile(pathname: string): Promise<{
   }
 }
 
+/** Best-effort chmod repair for private generated models.json files. */
 export async function ensureModelsFileModeForModelsJson(pathname: string): Promise<void> {
   await fs.chmod(pathname, 0o600).catch(() => {
     // best-effort
   });
 }
 
+/** Write models.json content through the private file-store atomic writer. */
 export async function writeModelsFileAtomicForModelsJson(
   targetPath: string,
   contents: string,
@@ -280,6 +284,7 @@ async function withModelsJsonWriteLock<T>(targetPath: string, run: () => Promise
   }
 }
 
+/** Generate or refresh models.json for an agent directory if the plan changed. */
 export async function ensureOpenClawModelsJson(
   config?: OpenClawConfig,
   agentDirOverride?: string,

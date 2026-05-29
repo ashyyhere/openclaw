@@ -1,3 +1,4 @@
+// extensions/msteams/src storage helpers and runtime behavior.
 import path from "node:path";
 import { getMSTeamsRuntime } from "./runtime.js";
 

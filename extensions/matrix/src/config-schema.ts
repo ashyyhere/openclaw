@@ -1,3 +1,4 @@
+// extensions/matrix/src config schema helpers and runtime behavior.
 import { buildChannelConfigSchema } from "openclaw/plugin-sdk/channel-config-primitives";
 import {
   AllowFromListSchema,

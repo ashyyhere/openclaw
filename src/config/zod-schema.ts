@@ -1,3 +1,4 @@
+// config zod schema helpers and runtime behavior.
 import { z } from "zod";
 import { parseByteSize } from "../cli/parse-bytes.js";
 import { parseDurationMs } from "../cli/parse-duration.js";
@@ -413,6 +414,7 @@ const CommitmentsSchema = z
   .strict()
   .optional();
 
+/** Reused constant for Open Claw Schema behavior in src/config. */
 export const OpenClawSchema = z
   .object({
     $schema: z.string().optional(),

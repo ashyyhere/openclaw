@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src/bot native quote test behavior.
 import { describe, expect, it } from "vitest";
 import { buildTelegramNativeQuoteCandidate } from "./native-quote.js";
 

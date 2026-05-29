@@ -1,3 +1,4 @@
+// Tests infra diagnostic llm content test behavior.
 import { describe, expect, it } from "vitest";
 import { resolveDiagnosticModelContentCapturePolicy } from "./diagnostic-llm-content.js";
 

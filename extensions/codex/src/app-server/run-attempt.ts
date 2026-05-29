@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server run attempt helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import {

@@ -1,3 +1,4 @@
+/** Adds gateway-specific secret targets needed by CLI command execution. */
 import {
   GATEWAY_CLIENT_MODES,
   GATEWAY_CLIENT_NAMES,
@@ -31,6 +32,7 @@ type ResolveCommandSecretsResult = {
   hadUnresolvedTargets: boolean;
 };
 
+/** Shared type for Command Secret Resolution Mode in src/cli. */
 export type CommandSecretResolutionMode =
   | "enforce_resolved"
   | "read_only_status"
@@ -86,6 +88,7 @@ const commandSecretGatewayDeps: CommandSecretGatewayDeps = {
   resolveRuntimeWebTools,
 };
 
+/** Reused constant for testing behavior in src/cli. */
 export const testing = {
   setDepsForTest(overrides: Partial<CommandSecretGatewayDeps>): () => void {
     const previous = { ...commandSecretGatewayDeps };
@@ -807,6 +810,7 @@ async function resolveTargetSecretLocally(params: {
   }
 }
 
+/** Reused helper for resolve Command Secret Refs Via Gateway behavior in src/cli. */
 export async function resolveCommandSecretRefsViaGateway(params: {
   config: OpenClawConfig;
   commandName: string;
@@ -1065,4 +1069,5 @@ export async function resolveCommandSecretRefsViaGateway(params: {
     hadUnresolvedTargets: Object.values(targetStatesByPath).includes("unresolved"),
   };
 }
+/** Re-exported API for src/cli, starting with testing. */
 export { testing as __testing };

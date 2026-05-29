@@ -1,3 +1,4 @@
+// Tests gateway channel health policy test behavior.
 import { describe, expect, it } from "vitest";
 import { evaluateChannelHealth, resolveChannelRestartReason } from "./channel-health-policy.js";
 

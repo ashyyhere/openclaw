@@ -1,3 +1,4 @@
+/** Covers native hook relay registration, invocation, and stale bridge handling. */
 import { randomUUID } from "node:crypto";
 import { rmSync, statSync, writeFileSync } from "node:fs";
 import fs from "node:fs/promises";

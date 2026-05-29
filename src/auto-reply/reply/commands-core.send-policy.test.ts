@@ -1,3 +1,4 @@
+// Coverage for send policy behavior in core command handling.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { CommandHandler, HandleCommandsParams } from "./commands-types.js";
 

@@ -1,3 +1,4 @@
+// Shared types for extensions/memory-core/src cli types behavior.
 export type MemoryCommandOptions = {
   agent?: string;
   json?: boolean;

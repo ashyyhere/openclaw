@@ -1,3 +1,4 @@
+/** Resolves trusted agent id binding for host-owned session references. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {
   parseAgentSessionKey,

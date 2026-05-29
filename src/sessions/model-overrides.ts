@@ -1,6 +1,8 @@
+// sessions model overrides helpers and runtime behavior.
 import type { SessionEntry } from "../config/sessions.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 
+/** Shared type for Model Override Selection in src/sessions. */
 export type ModelOverrideSelection = {
   provider: string;
   model: string;
@@ -20,6 +22,7 @@ function clearFallbackOrigin(entry: SessionEntry): boolean {
   return updated;
 }
 
+/** Reused helper for apply Model Override To Session Entry behavior in src/sessions. */
 export function applyModelOverrideToSessionEntry(params: {
   entry: SessionEntry;
   selection: ModelOverrideSelection;
@@ -158,6 +161,7 @@ function wrappedOverrideModel(provider: string, model: string): string {
   return `${provider}/${model}`;
 }
 
+/** Reused helper for repair Provider Wrapped Model Override behavior in src/sessions. */
 export function repairProviderWrappedModelOverride(params: {
   entry: SessionEntry;
   defaultProvider: string;

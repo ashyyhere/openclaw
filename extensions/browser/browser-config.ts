@@ -1,3 +1,4 @@
+// extensions/browser browser config helpers and runtime behavior.
 export {
   DEFAULT_AI_SNAPSHOT_MAX_CHARS,
   DEFAULT_BROWSER_DEFAULT_PROFILE_NAME,

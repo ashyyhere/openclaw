@@ -1,9 +1,11 @@
+/** Resolves how long to wait for SDK sessions to settle after abort. */
 import { parseStrictPositiveInteger } from "../../../infra/parse-finite-number.js";
 
 type AbortSettleTimeoutEnv = Partial<
   Pick<NodeJS.ProcessEnv, "OPENCLAW_EMBEDDED_ABORT_SETTLE_TIMEOUT_MS" | "OPENCLAW_TEST_FAST">
 >;
 
+/** Returns the configured abort settle timeout, with a faster test default. */
 export function resolveEmbeddedAbortSettleTimeoutMs(
   env: AbortSettleTimeoutEnv = process.env,
 ): number {

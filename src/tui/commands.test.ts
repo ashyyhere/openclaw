@@ -1,3 +1,4 @@
+// Tests tui commands test behavior.
 import { describe, expect, it } from "vitest";
 import { getSlashCommands, helpText, parseCommand } from "./commands.js";
 

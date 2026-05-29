@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/browser screenshot test behavior.
 import fs from "node:fs/promises";
 import { getImageMetadata } from "openclaw/plugin-sdk/media-runtime";
 import { createSolidPngBuffer } from "openclaw/plugin-sdk/test-fixtures";

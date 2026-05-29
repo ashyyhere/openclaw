@@ -1,3 +1,4 @@
+// Shared types for extensions/slack/src/monitor/message-handler types behavior.
 import type { MessageMetadata } from "@slack/types";
 import type { HistoryEntry } from "openclaw/plugin-sdk/reply-history";
 import type { FinalizedMsgContext } from "openclaw/plugin-sdk/reply-runtime";

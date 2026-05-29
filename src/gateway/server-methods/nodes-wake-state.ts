@@ -1,7 +1,12 @@
+// gateway/server-methods nodes wake state helpers and runtime behavior.
+/** Reused constant for NODE WAKE RECONNECT WAIT MS behavior in src/gateway/server-methods. */
 export const NODE_WAKE_RECONNECT_WAIT_MS = 3_000;
+/** Reused constant for NODE WAKE RECONNECT RETRY WAIT MS behavior in src/gateway/server-methods. */
 export const NODE_WAKE_RECONNECT_RETRY_WAIT_MS = 12_000;
+/** Reused constant for NODE WAKE RECONNECT POLL MS behavior in src/gateway/server-methods. */
 export const NODE_WAKE_RECONNECT_POLL_MS = 150;
 
+/** Shared type for Node Wake Attempt in src/gateway/server-methods. */
 export type NodeWakeAttempt = {
   available: boolean;
   throttled: boolean;
@@ -16,9 +21,12 @@ type NodeWakeState = {
   inFlight?: Promise<NodeWakeAttempt>;
 };
 
+/** Reused constant for node Wake By Id behavior in src/gateway/server-methods. */
 export const nodeWakeById = new Map<string, NodeWakeState>();
+/** Reused constant for node Wake Nudge By Id behavior in src/gateway/server-methods. */
 export const nodeWakeNudgeById = new Map<string, number>();
 
+/** Reused helper for clear Node Wake State behavior in src/gateway/server-methods. */
 export function clearNodeWakeState(nodeId: string): void {
   nodeWakeById.delete(nodeId);
   nodeWakeNudgeById.delete(nodeId);
@@ -28,6 +36,7 @@ export function clearNodeWakeState(nodeId: string): void {
 // early-return paths. Mirrors the pattern used in agent-wait-dedupe.ts:223
 // and agents.ts:78 — keep production surface untouched and do not expose the
 // underlying Map reference.
+/** Reused constant for testing behavior in src/gateway/server-methods. */
 export const testing = {
   getNodeWakeByIdSize(): number {
     return nodeWakeById.size;
@@ -40,4 +49,5 @@ export const testing = {
     nodeWakeNudgeById.clear();
   },
 };
+/** Re-exported API for src/gateway/server-methods, starting with testing. */
 export { testing as __testing };

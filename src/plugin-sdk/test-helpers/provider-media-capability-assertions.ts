@@ -1,3 +1,4 @@
+// plugin-sdk/test-helpers provider media capability assertions helpers and runtime behavior.
 import { expect } from "vitest";
 import { listSupportedMusicGenerationModes } from "../../music-generation/capabilities.js";
 import type { MusicGenerationProviderPlugin } from "../../plugins/types.js";

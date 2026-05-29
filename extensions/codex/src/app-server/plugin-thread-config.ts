@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server plugin thread config helpers and runtime behavior.
 import crypto from "node:crypto";
 import { embeddedAgentLog } from "openclaw/plugin-sdk/agent-harness-runtime";
 import {

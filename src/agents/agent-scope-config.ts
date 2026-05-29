@@ -1,3 +1,4 @@
+/** Agent config lookup and path resolution helpers. */
 import path from "node:path";
 import { resolveStateDir } from "../config/paths.js";
 import type {
@@ -12,6 +13,7 @@ import { resolveDefaultAgentWorkspaceDir } from "./workspace-default.js";
 
 type AgentEntry = NonNullable<NonNullable<OpenClawConfig["agents"]>["list"]>[number];
 
+/** Shared type for Resolved Agent Config in src/agents. */
 export type ResolvedAgentConfig = {
   name?: string;
   workspace?: string;
@@ -57,6 +59,7 @@ function stripNullBytes(s: string): string {
   return s.replaceAll("\0", "");
 }
 
+/** Return normalized configured agent entries. */
 export function listAgentEntries(cfg: OpenClawConfig): AgentEntry[] {
   const list = cfg.agents?.list;
   if (!Array.isArray(list)) {
@@ -65,6 +68,7 @@ export function listAgentEntries(cfg: OpenClawConfig): AgentEntry[] {
   return list.filter((entry): entry is AgentEntry => entry !== null && typeof entry === "object");
 }
 
+/** Return configured agent ids, falling back to the default agent id. */
 export function listAgentIds(cfg: OpenClawConfig): string[] {
   const agents = listAgentEntries(cfg);
   if (agents.length === 0) {
@@ -83,6 +87,7 @@ export function listAgentIds(cfg: OpenClawConfig): string[] {
   return ids.length > 0 ? ids : [DEFAULT_AGENT_ID];
 }
 
+/** Resolve the configured default agent id. */
 export function resolveDefaultAgentId(cfg: OpenClawConfig): string {
   const agents = listAgentEntries(cfg);
   if (agents.length === 0) {
@@ -102,6 +107,7 @@ function resolveAgentEntry(cfg: OpenClawConfig, agentId: string): AgentEntry | u
   return listAgentEntries(cfg).find((entry) => normalizeAgentId(entry.id) === id);
 }
 
+/** Resolve one agent config with defaults folded into selected fields. */
 export function resolveAgentConfig(
   cfg: OpenClawConfig,
   agentId: string,
@@ -156,6 +162,7 @@ export function resolveAgentConfig(
   };
 }
 
+/** Resolve context-limit config for an agent or defaults. */
 export function resolveAgentContextLimits(
   cfg: OpenClawConfig | undefined,
   agentId?: string | null,
@@ -167,6 +174,7 @@ export function resolveAgentContextLimits(
   return resolveAgentConfig(cfg, agentId)?.contextLimits ?? defaults;
 }
 
+/** Resolve the workspace directory for an agent id. */
 export function resolveAgentWorkspaceDir(
   cfg: OpenClawConfig,
   agentId: string,
@@ -192,6 +200,7 @@ export function resolveAgentWorkspaceDir(
   return stripNullBytes(path.join(stateDir, `workspace-${id}`));
 }
 
+/** Resolve the persistent agent directory for an agent id. */
 export function resolveAgentDir(
   cfg: OpenClawConfig,
   agentId: string,
@@ -206,6 +215,7 @@ export function resolveAgentDir(
   return path.join(root, "agents", id, "agent");
 }
 
+/** Resolve the persistent directory for the default agent. */
 export function resolveDefaultAgentDir(
   cfg: OpenClawConfig,
   env: NodeJS.ProcessEnv = process.env,

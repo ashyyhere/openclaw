@@ -1,3 +1,4 @@
+// Tests infra abort signal test behavior.
 import { describe, expect, it } from "vitest";
 import { waitForAbortSignal } from "./abort-signal.js";
 

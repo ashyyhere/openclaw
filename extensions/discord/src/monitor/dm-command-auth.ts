@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor dm command auth helpers and runtime behavior.
 import {
   type AccessGroupMembershipFact,
   type ChannelIngressEventInput,

@@ -1,3 +1,4 @@
+// ui/src/ui control ui performance helpers and runtime behavior.
 import type { EventLogEntry } from "./app-events.ts";
 import type { GatewayRequestTiming } from "./gateway.ts";
 import type { Tab } from "./navigation.ts";
@@ -13,6 +14,7 @@ type ControlUiPerformanceHost = {
   controlUiTabPaintSeq?: number;
 };
 
+/** Shared type for Control Ui Refresh Run in ui/src/ui. */
 export type ControlUiRefreshRun = {
   seq: number;
   tab: Tab;
@@ -48,12 +50,14 @@ type ResponsivenessPerformanceEntry = PerformanceEntry & {
   scripts?: LongAnimationFrameScriptTiming[];
 };
 
+/** Reused helper for control Ui Now Ms behavior in ui/src/ui. */
 export function controlUiNowMs(): number {
   return typeof performance !== "undefined" && typeof performance.now === "function"
     ? performance.now()
     : Date.now();
 }
 
+/** Reused helper for rounded Control Ui Duration Ms behavior in ui/src/ui. */
 export function roundedControlUiDurationMs(durationMs: number): number {
   return Math.max(0, Math.round(durationMs));
 }
@@ -86,6 +90,7 @@ function logPerformanceEvent(event: string, payload: Record<string, unknown>, wa
   logger(`[openclaw] ${event}`, payload);
 }
 
+/** Reused helper for record Control Ui Performance Event behavior in ui/src/ui. */
 export function recordControlUiPerformanceEvent(
   host: ControlUiPerformanceHost,
   event: string,
@@ -133,6 +138,7 @@ function keepLatestBufferedEventsForType(
   });
 }
 
+/** Reused helper for schedule Control Ui Tab Visible Timing behavior in ui/src/ui. */
 export function scheduleControlUiTabVisibleTiming(
   host: ControlUiPerformanceHost,
   previousTab: Tab,
@@ -159,6 +165,7 @@ export function scheduleControlUiTabVisibleTiming(
     .then(() => runAfterPaint(record));
 }
 
+/** Reused helper for begin Control Ui Refresh behavior in ui/src/ui. */
 export function beginControlUiRefresh(
   host: ControlUiPerformanceHost,
   tab: Tab,
@@ -175,6 +182,7 @@ export function beginControlUiRefresh(
   return run;
 }
 
+/** Reused helper for is Current Control Ui Refresh behavior in ui/src/ui. */
 export function isCurrentControlUiRefresh(
   host: ControlUiPerformanceHost,
   run: ControlUiRefreshRun,
@@ -182,6 +190,7 @@ export function isCurrentControlUiRefresh(
   return host.controlUiRefreshSeq === run.seq && host.tab === run.tab;
 }
 
+/** Reused helper for finish Control Ui Refresh behavior in ui/src/ui. */
 export function finishControlUiRefresh(
   host: ControlUiPerformanceHost,
   run: ControlUiRefreshRun,
@@ -203,6 +212,7 @@ export function finishControlUiRefresh(
   );
 }
 
+/** Reused helper for record Control Ui Rpc Timing behavior in ui/src/ui. */
 export function recordControlUiRpcTiming(
   host: ControlUiPerformanceHost,
   timing: GatewayRequestTiming,
@@ -224,6 +234,7 @@ export function recordControlUiRpcTiming(
   );
 }
 
+/** Reused helper for record Control Ui Render Timing behavior in ui/src/ui. */
 export function recordControlUiRenderTiming(
   host: ControlUiPerformanceHost,
   surface: string,
@@ -322,6 +333,7 @@ function recordResponsivenessEntry(
   );
 }
 
+/** Reused helper for start Control Ui Responsiveness Observer behavior in ui/src/ui. */
 export function startControlUiResponsivenessObserver(
   host: ControlUiPerformanceHost,
 ): ControlUiResponsivenessObserver | null {

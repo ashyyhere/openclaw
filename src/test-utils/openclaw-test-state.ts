@@ -1,3 +1,4 @@
+// test-utils openclaw test state helpers and runtime behavior.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
@@ -15,6 +16,7 @@ type OpenClawTestStateScenario =
   | "gateway-loopback"
   | "external-service";
 
+/** Shared type for Open Claw Test State Options in src/test-utils. */
 export type OpenClawTestStateOptions = {
   prefix?: string;
   label?: string;
@@ -29,6 +31,7 @@ export type OpenClawTestStateOptions = {
   };
 };
 
+/** Shared type for Open Claw Test State in src/test-utils. */
 export type OpenClawTestState = {
   root: string;
   home: string;
@@ -241,6 +244,7 @@ async function writeJsonFile(filePath: string, value: unknown): Promise<string> 
   return filePath;
 }
 
+/** Reused helper for create Open Claw Test State behavior in src/test-utils. */
 export async function createOpenClawTestState(
   options: OpenClawTestStateOptions = {},
 ): Promise<OpenClawTestState> {
@@ -336,6 +340,7 @@ export async function createOpenClawTestState(
   return state;
 }
 
+/** Reused helper for with Open Claw Test State behavior in src/test-utils. */
 export async function withOpenClawTestState<T>(
   options: OpenClawTestStateOptions,
   fn: (state: OpenClawTestState) => Promise<T>,

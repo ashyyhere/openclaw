@@ -1,3 +1,4 @@
+// extensions/browser/src/cli browser cli resize helpers and runtime behavior.
 import { ACT_MAX_VIEWPORT_DIMENSION } from "../browser/act-policy.js";
 import { callBrowserResize, type BrowserParentOpts } from "./browser-cli-shared.js";
 import { danger, defaultRuntime } from "./core-api.js";
@@ -18,9 +19,7 @@ export async function runBrowserResizeWithOutput(params: {
     return;
   }
   if (width > ACT_MAX_VIEWPORT_DIMENSION || height > ACT_MAX_VIEWPORT_DIMENSION) {
-    defaultRuntime.error(
-      danger(`width and height must not exceed ${ACT_MAX_VIEWPORT_DIMENSION}`),
-    );
+    defaultRuntime.error(danger(`width and height must not exceed ${ACT_MAX_VIEWPORT_DIMENSION}`));
     defaultRuntime.exit(1);
     return;
   }

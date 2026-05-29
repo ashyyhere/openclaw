@@ -1,3 +1,4 @@
+// extensions/qqbot/src/engine/messaging outbound types helpers and runtime behavior.
 import type { MessageReceipt } from "openclaw/plugin-sdk/channel-outbound";
 import type { GatewayAccount } from "../types.js";
 

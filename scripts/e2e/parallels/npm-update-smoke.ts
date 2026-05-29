@@ -1,4 +1,5 @@
 #!/usr/bin/env -S pnpm tsx
+// scripts/e2e/parallels npm update smoke helpers and runtime behavior.
 import { spawn } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { readFile, rm, writeFile } from "node:fs/promises";

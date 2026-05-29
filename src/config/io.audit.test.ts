@@ -1,3 +1,4 @@
+// Tests config io audit test behavior.
 import fs from "node:fs";
 import { promises as fsPromises } from "node:fs";
 import path from "node:path";

@@ -1,3 +1,4 @@
+// Tests tui tui command handlers test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { createCommandHandlers } from "./tui-command-handlers.js";
 import {

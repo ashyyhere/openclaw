@@ -1,9 +1,11 @@
+// infra npm install env helpers and runtime behavior.
 import { execFileSync } from "node:child_process";
 import fsSync from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { uniqueStrings } from "../shared/string-normalization.js";
 
+/** Shared type for Npm Project Install Env Options in src/infra. */
 export type NpmProjectInstallEnvOptions = {
   cacheDir?: string;
   npmConfigCwd?: string;
@@ -253,6 +255,7 @@ function resolveNpmFreshnessBypassMode(
   return hasRawNpmConfigKey(env, "before", scope) ? "before" : "min-release-age";
 }
 
+/** Reused helper for create Npm Freshness Bypass Args behavior in src/infra. */
 export function createNpmFreshnessBypassArgs(
   env: NodeJS.ProcessEnv = process.env,
   now = new Date(),
@@ -264,6 +267,7 @@ export function createNpmFreshnessBypassArgs(
   return [`--before=${now.toISOString()}`];
 }
 
+/** Reused helper for apply Npm Freshness Bypass Env behavior in src/infra. */
 export function applyNpmFreshnessBypassEnv(
   env: NodeJS.ProcessEnv,
   now = new Date(),
@@ -284,6 +288,7 @@ export function applyNpmFreshnessBypassEnv(
   }
 }
 
+/** Reused helper for create Npm Project Install Env behavior in src/infra. */
 export function createNpmProjectInstallEnv(
   env: NodeJS.ProcessEnv,
   options: NpmProjectInstallEnvOptions = {},
@@ -313,10 +318,12 @@ export function createNpmProjectInstallEnv(
   return installEnv;
 }
 
+/** Reused helper for has Npm Script Shell Setting behavior in src/infra. */
 export function hasNpmScriptShellSetting(env: NodeJS.ProcessEnv): boolean {
   return NPM_CONFIG_SCRIPT_SHELL_KEYS.some((key) => Boolean(env[key]?.trim()));
 }
 
+/** Reused helper for resolve Posix Npm Script Shell behavior in src/infra. */
 export function resolvePosixNpmScriptShell(env: NodeJS.ProcessEnv): string | null {
   if (process.platform === "win32") {
     return null;
@@ -328,6 +335,7 @@ export function resolvePosixNpmScriptShell(env: NodeJS.ProcessEnv): string | nul
   return shell && path.isAbsolute(shell) && fsSync.existsSync(shell) ? shell : null;
 }
 
+/** Reused helper for apply Posix Npm Script Shell Env behavior in src/infra. */
 export function applyPosixNpmScriptShellEnv(env: NodeJS.ProcessEnv): void {
   if (hasNpmScriptShellSetting(env)) {
     return;

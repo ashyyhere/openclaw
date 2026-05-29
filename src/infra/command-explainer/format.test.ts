@@ -1,3 +1,4 @@
+// Tests infra/command-explainer format test behavior.
 import { describe, expect, it } from "vitest";
 import { explainShellCommand } from "./extract.js";
 import { formatCommandSpans } from "./format.js";

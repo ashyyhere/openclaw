@@ -1,3 +1,4 @@
+// extensions/qa-lab/src web runtime helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import { chromium, type Browser, type BrowserContext, type Page } from "playwright-core";
 

@@ -1,3 +1,4 @@
+// extensions/gradium tts helpers and runtime behavior.
 import { assertOkOrThrowProviderError } from "openclaw/plugin-sdk/provider-http";
 import { readResponseWithLimit } from "openclaw/plugin-sdk/response-limit-runtime";
 import { fetchWithSsrFGuard } from "openclaw/plugin-sdk/ssrf-runtime";

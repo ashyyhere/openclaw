@@ -1,3 +1,4 @@
+// Tests extensions/synology-chat/src core test behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import {
   createPluginSetupWizardConfigure,

@@ -1,3 +1,4 @@
+// extensions/telegram/src inline buttons helpers and runtime behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import type { TelegramInlineButtonsScope } from "openclaw/plugin-sdk/config-contracts";
 import {

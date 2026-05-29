@@ -1,3 +1,5 @@
+// media test helpers helpers and runtime behavior.
+/** Reused helper for create Png Buffer With Dimensions behavior in src/media. */
 export function createPngBufferWithDimensions(params: { width: number; height: number }): Buffer {
   const signature = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
   const ihdrLength = Buffer.from([0x00, 0x00, 0x00, 0x0d]);

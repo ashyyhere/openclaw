@@ -1,3 +1,4 @@
+// Tests extensions/zalouser/src message sid test behavior.
 import { describe, expect, it } from "vitest";
 import {
   formatZalouserMessageSidFull,

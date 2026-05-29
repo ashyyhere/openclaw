@@ -1,3 +1,4 @@
+// infra/outbound targets resolve shared helpers and runtime behavior.
 import { mapAllowFromEntries } from "openclaw/plugin-sdk/channel-config-helpers";
 import type { ChannelPlugin } from "../../channels/plugins/types.plugin.js";
 import type { ChannelOutboundTargetMode } from "../../channels/plugins/types.public.js";
@@ -8,8 +9,10 @@ import type { GatewayMessageChannel } from "../../utils/message-channel.js";
 import { validateTargetProviderPrefix } from "./channel-target-prefix.js";
 import { missingTargetError } from "./target-errors.js";
 
+/** Shared type for Outbound Target Resolution in src/infra/outbound. */
 export type OutboundTargetResolution = { ok: true; to: string } | { ok: false; error: Error };
 
+/** Shared type for Resolve Outbound Target Params in src/infra/outbound. */
 export type ResolveOutboundTargetParams = {
   channel: GatewayMessageChannel;
   to?: string;
@@ -25,6 +28,7 @@ function buildWebChatDeliveryError(): Error {
   );
 }
 
+/** Reused helper for resolve Outbound Target With Plugin behavior in src/infra/outbound. */
 export function resolveOutboundTargetWithPlugin(params: {
   plugin: ChannelPlugin | undefined;
   target: ResolveOutboundTargetParams;

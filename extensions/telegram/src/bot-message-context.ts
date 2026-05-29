@@ -1,3 +1,4 @@
+// extensions/telegram/src bot message context helpers and runtime behavior.
 import type { ReactionTypeEmoji } from "grammy/types";
 import {
   resolveAckReaction,

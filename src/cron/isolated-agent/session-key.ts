@@ -1,7 +1,9 @@
+// cron/isolated-agent session key helpers and runtime behavior.
 import { canonicalizeMainSessionAlias } from "../../config/sessions/main-session.js";
 import type { SessionScope } from "../../config/sessions/types.js";
 import { toAgentStoreSessionKey } from "../../routing/session-key.js";
 
+/** Reused helper for resolve Cron Agent Session Key behavior in src/cron/isolated-agent. */
 export function resolveCronAgentSessionKey(params: {
   sessionKey: string;
   agentId: string;

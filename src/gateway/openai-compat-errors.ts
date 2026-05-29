@@ -1,6 +1,8 @@
+// gateway openai compat errors helpers and runtime behavior.
 import type { FailoverReason } from "../agents/embedded-agent-helpers/types.js";
 import { describeFailoverError, resolveFailoverStatus } from "../agents/failover-error.js";
 
+/** Shared type for Open Ai Compat Error in src/gateway. */
 export type OpenAiCompatError = {
   status: number;
   error: {
@@ -50,6 +52,7 @@ function messageForReason(params: {
   return params.rawError?.trim() || params.message.trim() || "request failed";
 }
 
+/** Reused helper for resolve Open Ai Compat Error behavior in src/gateway. */
 export function resolveOpenAiCompatError(err: unknown): OpenAiCompatError | undefined {
   const described = describeFailoverError(err);
   const reason = described.reason;
@@ -76,6 +79,7 @@ export function resolveOpenAiCompatError(err: unknown): OpenAiCompatError | unde
   };
 }
 
+/** Reused helper for validate Open Ai Sampling Params behavior in src/gateway. */
 export function validateOpenAiSamplingParams(params: {
   temperature?: unknown;
   topP?: unknown;

@@ -567,6 +567,7 @@ function addIssue(issues: Map<string, Set<string>>, key: string, sourceLabel: st
   issues.set(key, sources);
 }
 
+/** Reused helper for collect Plugin Tool Allowlist Warnings behavior in src/commands/doctor. */
 export function collectPluginToolAllowlistWarnings(params: {
   cfg: OpenClawConfig;
   env?: NodeJS.ProcessEnv;

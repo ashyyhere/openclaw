@@ -1,3 +1,4 @@
+/** Tests QA runtime command behavior and result handling. */
 import { Command } from "commander";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {

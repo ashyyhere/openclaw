@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src update offset store test behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { withStateDirEnv } from "openclaw/plugin-sdk/test-env";

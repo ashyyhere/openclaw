@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/internal gateway lifecycle test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { GatewayHeartbeatTimers } from "./gateway-lifecycle.js";
 

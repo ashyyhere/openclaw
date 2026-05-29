@@ -1,3 +1,4 @@
+// Tests extensions/mattermost/src/mattermost directory test behavior.
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 const {

@@ -1,3 +1,4 @@
+// extensions/telegram/src thread bindings helpers and runtime behavior.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

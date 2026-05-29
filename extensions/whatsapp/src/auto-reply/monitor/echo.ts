@@ -1,3 +1,4 @@
+// extensions/whatsapp/src/auto-reply/monitor echo helpers and runtime behavior.
 export type EchoTracker = {
   rememberText: (
     text: string | undefined,

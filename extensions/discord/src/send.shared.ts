@@ -1,3 +1,4 @@
+// extensions/discord/src send shared helpers and runtime behavior.
 import { PollLayoutType } from "discord-api-types/payloads/v10";
 import type { RESTAPIPoll } from "discord-api-types/rest/v10";
 import type { APIChannel } from "discord-api-types/v10";

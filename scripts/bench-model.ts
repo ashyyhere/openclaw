@@ -1,3 +1,4 @@
+// scripts bench model helpers and runtime behavior.
 import { completeSimple, type Model } from "openclaw/plugin-sdk/llm";
 
 type Usage = {

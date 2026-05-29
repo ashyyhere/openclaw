@@ -1,3 +1,4 @@
+// Shared types for extensions/msteams/src monitor handler types behavior.
 import { type OpenClawConfig, type RuntimeEnv } from "../runtime-api.js";
 import type { MSTeamsConversationStore } from "./conversation-store.js";
 import type { MSTeamsMonitorLogger } from "./monitor-types.js";

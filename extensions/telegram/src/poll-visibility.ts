@@ -1,3 +1,4 @@
+// extensions/telegram/src poll visibility helpers and runtime behavior.
 export function resolveTelegramPollVisibility(params: {
   pollAnonymous?: boolean;
   pollPublic?: boolean;

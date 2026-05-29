@@ -1,3 +1,4 @@
+// extensions/line/src config schema helpers and runtime behavior.
 import {
   buildChannelConfigSchema,
   requireOpenAllowFrom,

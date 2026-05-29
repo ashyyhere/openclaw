@@ -1,3 +1,4 @@
+// Tests extensions/slack/src blocks test behavior.
 import { describe, expect, it } from "vitest";
 import { buildSlackBlocksFallbackText } from "./blocks-fallback.js";
 import { parseSlackBlocksInput } from "./blocks-input.js";

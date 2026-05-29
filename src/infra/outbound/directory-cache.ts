@@ -1,3 +1,4 @@
+// infra/outbound directory cache helpers and runtime behavior.
 import type { ChannelDirectoryEntryKind, ChannelId } from "../../channels/plugins/types.public.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { resolveNonNegativeIntegerOption } from "../numeric-options.js";
@@ -7,6 +8,7 @@ type CacheEntry<T> = {
   fetchedAt: number;
 };
 
+/** Shared type for Directory Cache Key in src/infra/outbound. */
 export type DirectoryCacheKey = {
   channel: ChannelId;
   accountId?: string | null;
@@ -15,11 +17,13 @@ export type DirectoryCacheKey = {
   signature?: string | null;
 };
 
+/** Reused helper for build Directory Cache Key behavior in src/infra/outbound. */
 export function buildDirectoryCacheKey(key: DirectoryCacheKey): string {
   const signature = key.signature ?? "default";
   return `${key.channel}:${key.accountId ?? "default"}:${key.kind}:${key.source}:${signature}`;
 }
 
+/** Reused class for Directory Cache behavior in src/infra/outbound. */
 export class DirectoryCache<T> {
   private readonly cache = new Map<string, CacheEntry<T>>();
   private lastConfigRef: OpenClawConfig | null = null;

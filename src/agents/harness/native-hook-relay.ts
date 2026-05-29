@@ -1,3 +1,4 @@
+/** Hosts native provider hook relays for harness lifecycle/tool events. */
 import { createHash, randomUUID } from "node:crypto";
 import {
   chmodSync,
@@ -41,6 +42,7 @@ import { callGatewayTool } from "../tools/gateway.js";
 import { runAgentHarnessAfterToolCallHook } from "./hook-helpers.js";
 import { runAgentHarnessBeforeAgentFinalizeHook } from "./lifecycle-hook-helpers.js";
 
+/** Shared type for Json Value in src/agents/harness. */
 export type JsonValue =
   | null
   | boolean
@@ -58,9 +60,12 @@ const NATIVE_HOOK_RELAY_EVENTS = [
 
 const NATIVE_HOOK_RELAY_PROVIDERS = ["codex"] as const;
 
+/** Shared type for Native Hook Relay Event in src/agents/harness. */
 export type NativeHookRelayEvent = (typeof NATIVE_HOOK_RELAY_EVENTS)[number];
+/** Shared type for Native Hook Relay Provider in src/agents/harness. */
 export type NativeHookRelayProvider = (typeof NATIVE_HOOK_RELAY_PROVIDERS)[number];
 
+/** Shared type for Native Hook Relay Invocation in src/agents/harness. */
 export type NativeHookRelayInvocation = {
   provider: NativeHookRelayProvider;
   relayId: string;
@@ -83,12 +88,14 @@ export type NativeHookRelayInvocation = {
   receivedAt: string;
 };
 
+/** Shared type for Native Hook Relay Process Response in src/agents/harness. */
 export type NativeHookRelayProcessResponse = {
   stdout: string;
   stderr: string;
   exitCode: number;
 };
 
+/** Shared type for Native Hook Relay Registration in src/agents/harness. */
 export type NativeHookRelayRegistration = {
   relayId: string;
   provider: NativeHookRelayProvider;
@@ -105,6 +112,7 @@ export type NativeHookRelayRegistration = {
   signal?: AbortSignal;
 };
 
+/** Shared type for Native Hook Relay Registration Handle in src/agents/harness. */
 export type NativeHookRelayRegistrationHandle = NativeHookRelayRegistration & {
   generation?: string;
   shouldRelayEvent: (event: NativeHookRelayEvent) => boolean;
@@ -113,6 +121,7 @@ export type NativeHookRelayRegistrationHandle = NativeHookRelayRegistration & {
   unregister: () => void;
 };
 
+/** Shared type for Register Native Hook Relay Params in src/agents/harness. */
 export type RegisterNativeHookRelayParams = {
   provider: NativeHookRelayProvider;
   relayId?: string;
@@ -130,6 +139,7 @@ export type RegisterNativeHookRelayParams = {
   signal?: AbortSignal;
 };
 
+/** Shared type for Native Hook Relay Command Options in src/agents/harness. */
 export type NativeHookRelayCommandOptions = {
   executable?: string;
   nice?: number | false;
@@ -137,6 +147,7 @@ export type NativeHookRelayCommandOptions = {
   timeoutMs?: number;
 };
 
+/** Shared type for Invoke Native Hook Relay Params in src/agents/harness. */
 export type InvokeNativeHookRelayParams = {
   provider: unknown;
   relayId: unknown;
@@ -146,6 +157,7 @@ export type InvokeNativeHookRelayParams = {
   requireGeneration?: boolean;
 };
 
+/** Shared type for Invoke Native Hook Relay Bridge Params in src/agents/harness. */
 export type InvokeNativeHookRelayBridgeParams = InvokeNativeHookRelayParams & {
   registrationTimeoutMs?: number;
   timeoutMs?: number;
@@ -293,6 +305,7 @@ type NativeHookRelayPreToolUseApproval = {
   resolutionPromise?: Promise<NativeHookRelayDeferredApprovalOutcome>;
 };
 
+/** Shared type for Native Hook Relay Deferred Approval Outcome in src/agents/harness. */
 export type NativeHookRelayDeferredApprovalOutcome =
   | {
       handled: true;
@@ -396,6 +409,7 @@ const nativeHookRelayProviderAdapters: Record<
   },
 };
 
+/** Registers a native hook relay process and returns its lifecycle handle. */
 export function registerNativeHookRelay(
   params: RegisterNativeHookRelayParams,
 ): ActiveNativeHookRelayRegistrationHandle {
@@ -512,6 +526,7 @@ function resolveNativeHookRelayNicePrefix(value: number | false | undefined): st
   return ["nice", "-n", String(nice)];
 }
 
+/** Builds the command/environment used to launch a native hook relay. */
 export function buildNativeHookRelayCommand(params: {
   provider: NativeHookRelayProvider;
   relayId: string;
@@ -575,6 +590,7 @@ function nativeHookRelayEventHasLocalWork(
   return true;
 }
 
+/** Invokes matching native hook relays for an event and provider. */
 export async function invokeNativeHookRelay(
   params: InvokeNativeHookRelayParams,
 ): Promise<NativeHookRelayProcessResponse> {
@@ -626,6 +642,7 @@ export async function invokeNativeHookRelay(
   });
 }
 
+/** Checks whether an invocation should reach any registered native relay. */
 export function hasNativeHookRelayInvocation(params: {
   relayId: string;
   event: NativeHookRelayEvent;
@@ -643,6 +660,7 @@ export function hasNativeHookRelayInvocation(params: {
   );
 }
 
+/** Resolves deferred tool approval decisions through native relay state. */
 export async function resolveNativeHookRelayDeferredToolApproval(params: {
   relayId: string;
   toolUseId?: string;
@@ -697,6 +715,7 @@ async function resolveNativeHookRelayPreToolUseApproval(
   };
 }
 
+/** Calls one native relay bridge endpoint with serialized invocation data. */
 export async function invokeNativeHookRelayBridge(
   params: InvokeNativeHookRelayBridgeParams,
 ): Promise<NativeHookRelayProcessResponse> {
@@ -749,6 +768,7 @@ export async function invokeNativeHookRelayBridge(
   throw lastError instanceof Error ? lastError : new Error(String(lastError));
 }
 
+/** Renders a tool-call response when the native relay bridge is unavailable. */
 export function renderNativeHookRelayUnavailableResponse(params: {
   provider: unknown;
   event: unknown;
@@ -767,6 +787,7 @@ export function renderNativeHookRelayUnavailableResponse(params: {
   return adapter.renderNoopResponse(event);
 }
 
+/** Detects stale bridge registrations so callers can retry registration. */
 export function isNativeHookRelayBridgeStaleRegistrationError(error: unknown): boolean {
   return (
     error instanceof Error && error.message === NATIVE_HOOK_RELAY_BRIDGE_STALE_REGISTRATION_ERROR
@@ -2268,6 +2289,7 @@ function isJsonObject(value: unknown): value is Record<string, unknown> {
   }
 }
 
+/** Reused constant for testing behavior in src/agents/harness. */
 export const testing = {
   clearNativeHookRelaysForTests(): void {
     for (const relayId of relayBridges.keys()) {
@@ -2328,4 +2350,5 @@ export const testing = {
     nativeHookRelayDeferredToolApprovalRequester = requester;
   },
 } as const;
+/** Re-exported API for src/agents/harness, starting with testing. */
 export { testing as __testing };

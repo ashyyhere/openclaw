@@ -1,3 +1,4 @@
+// Tests extensions/diffs/src language hints test behavior.
 import type { FileDiffMetadata } from "@pierre/diffs";
 import { describe, expect, it } from "vitest";
 import {

@@ -1,3 +1,4 @@
+// Tests extensions/voice-call/src webhook security test behavior.
 import crypto from "node:crypto";
 import { MAX_DATE_TIMESTAMP_MS } from "openclaw/plugin-sdk/number-runtime";
 import { describe, expect, it, vi } from "vitest";

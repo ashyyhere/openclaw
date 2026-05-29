@@ -1,10 +1,14 @@
+// infra/net/proxy active proxy state helpers and runtime behavior.
 import type { ProxyConfig } from "../../../config/zod-schema.proxy.js";
 import type { ManagedProxyTlsOptions } from "./proxy-tls.js";
 
+/** Shared type for Active Managed Proxy Url in src/infra/net. */
 export type ActiveManagedProxyUrl = Readonly<URL>;
 
+/** Shared type for Active Managed Proxy Loopback Mode in src/infra/net. */
 export type ActiveManagedProxyLoopbackMode = NonNullable<NonNullable<ProxyConfig>["loopbackMode"]>;
 
+/** Shared type for Active Managed Proxy Registration in src/infra/net. */
 export type ActiveManagedProxyRegistration = {
   proxyUrl: ActiveManagedProxyUrl;
   loopbackMode: ActiveManagedProxyLoopbackMode;
@@ -12,6 +16,7 @@ export type ActiveManagedProxyRegistration = {
   stopped: boolean;
 };
 
+/** Shared type for Register Active Managed Proxy Options in src/infra/net. */
 export type RegisterActiveManagedProxyOptions = {
   loopbackMode?: ActiveManagedProxyLoopbackMode;
   proxyTls?: ManagedProxyTlsOptions;
@@ -41,6 +46,7 @@ function readInheritedActiveManagedProxyLoopbackMode(): ActiveManagedProxyLoopba
   );
 }
 
+/** Reused helper for register Active Managed Proxy Url behavior in src/infra/net. */
 export function registerActiveManagedProxyUrl(
   proxyUrl: URL,
   options: ActiveManagedProxyLoopbackMode | RegisterActiveManagedProxyOptions = "gateway-only",
@@ -91,6 +97,7 @@ function areProxyTlsOptionsEqual(
   return left?.ca === right?.ca;
 }
 
+/** Reused helper for stop Active Managed Proxy Registration behavior in src/infra/net. */
 export function stopActiveManagedProxyRegistration(
   registration: ActiveManagedProxyRegistration,
 ): void {
@@ -109,18 +116,22 @@ export function stopActiveManagedProxyRegistration(
   }
 }
 
+/** Reused helper for get Active Managed Proxy Loopback Mode behavior in src/infra/net. */
 export function getActiveManagedProxyLoopbackMode(): ActiveManagedProxyLoopbackMode | undefined {
   return activeProxyLoopbackMode ?? readInheritedActiveManagedProxyLoopbackMode();
 }
 
+/** Reused helper for get Active Managed Proxy Url behavior in src/infra/net. */
 export function getActiveManagedProxyUrl(): ActiveManagedProxyUrl | undefined {
   return activeProxyUrl;
 }
 
+/** Reused helper for get Active Managed Proxy Tls Options behavior in src/infra/net. */
 export function getActiveManagedProxyTlsOptions(): ManagedProxyTlsOptions | undefined {
   return activeProxyTlsOptions;
 }
 
+/** Reused helper for reset Active Managed Proxy State For Tests behavior in src/infra/net. */
 export function resetActiveManagedProxyStateForTests(): void {
   activeProxyUrl = undefined;
   activeProxyLoopbackMode = undefined;

@@ -1,3 +1,4 @@
+// secrets runtime config collectors helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { PluginOrigin } from "../plugins/plugin-origin.types.js";
 import { collectChannelConfigAssignments } from "./runtime-config-collectors-channels.js";
@@ -5,6 +6,7 @@ import { collectCoreConfigAssignments } from "./runtime-config-collectors-core.j
 import { collectPluginConfigAssignments } from "./runtime-config-collectors-plugins.js";
 import type { ResolverContext } from "./runtime-shared.js";
 
+/** Reused helper for collect Config Assignments behavior in src/secrets. */
 export function collectConfigAssignments(params: {
   config: OpenClawConfig;
   context: ResolverContext;

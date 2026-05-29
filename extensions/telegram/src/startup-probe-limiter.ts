@@ -1,3 +1,4 @@
+// extensions/telegram/src startup probe limiter helpers and runtime behavior.
 const TELEGRAM_STARTUP_PROBE_CONCURRENCY = 2;
 
 type StartupProbeSlot = () => void;

@@ -1,3 +1,4 @@
+/** Tests tool media handling in embedded-agent subscription handlers. */
 import { describe, expect, it, vi } from "vitest";
 import {
   handleToolExecutionEnd,
@@ -43,7 +44,8 @@ function createMockContext(overrides?: {
     },
     log: { debug: vi.fn(), info: vi.fn(), warn: vi.fn() },
     builtinToolNames: overrides?.builtinToolNames,
-    trustedLocalMediaToolNames: overrides?.trustedLocalMediaToolNames ?? overrides?.builtinToolNames,
+    trustedLocalMediaToolNames:
+      overrides?.trustedLocalMediaToolNames ?? overrides?.builtinToolNames,
     shouldEmitToolResult: vi.fn(() => false),
     shouldEmitToolOutput: vi.fn(() => overrides?.shouldEmitToolOutput ?? false),
     emitToolSummary: vi.fn(),

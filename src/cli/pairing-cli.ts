@@ -1,3 +1,4 @@
+/** Registers CLI commands for channel pairing approval workflows. */
 import type { Command } from "commander";
 import { formatDocsLink } from "../../packages/terminal-core/src/links.js";
 import { getTerminalTableWidth, renderTable } from "../../packages/terminal-core/src/table.js";
@@ -84,6 +85,7 @@ async function maybeBootstrapCommandOwnerFromPairing(params: {
   return { ownerEntry, bootstrapped: true };
 }
 
+/** Reused helper for register Pairing Cli behavior in src/cli. */
 export function registerPairingCli(program: Command) {
   const channels = listPairingChannels();
   const pairing = program

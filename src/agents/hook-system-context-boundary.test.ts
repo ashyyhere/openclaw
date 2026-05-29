@@ -1,3 +1,4 @@
+/** Tests plugin system-context boundary wrapping. */
 import { describe, expect, it } from "vitest";
 import { wrapPluginSystemContextSection } from "./hook-system-context-boundary.js";
 

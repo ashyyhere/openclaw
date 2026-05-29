@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src inbound event delivery test behavior.
 import { describe, expect, it } from "vitest";
 import {
   beginTelegramInboundEventDeliveryCorrelation,

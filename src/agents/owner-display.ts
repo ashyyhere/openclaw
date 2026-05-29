@@ -1,3 +1,4 @@
+/** Resolves owner identity display and hash-secret config for prompts. */
 import crypto from "node:crypto";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";

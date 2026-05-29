@@ -1,7 +1,9 @@
+/** Registers emoji and sticker message commands. */
 import type { Command } from "commander";
 import { collectOption } from "../helpers.js";
 import type { MessageCliHelpers } from "./helpers.js";
 
+/** Reused helper for register Message Emoji Commands behavior in src/cli/program. */
 export function registerMessageEmojiCommands(message: Command, helpers: MessageCliHelpers) {
   const emoji = message.command("emoji").description("Emoji actions");
 
@@ -27,6 +29,7 @@ export function registerMessageEmojiCommands(message: Command, helpers: MessageC
     });
 }
 
+/** Reused helper for register Message Sticker Commands behavior in src/cli/program. */
 export function registerMessageStickerCommands(message: Command, helpers: MessageCliHelpers) {
   const sticker = message.command("sticker").description("Sticker actions");
 

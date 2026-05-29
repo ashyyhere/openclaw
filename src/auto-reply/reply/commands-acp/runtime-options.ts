@@ -1,3 +1,4 @@
+// ACP command runtime option resolution.
 import { getAcpSessionManager } from "../../../acp/control-plane/manager.js";
 import {
   parseRuntimeTimeoutSecondsInput,
@@ -104,6 +105,7 @@ async function withSingleTargetValue<T>(params: {
   return await params.run(resolved);
 }
 
+/** Reused helper for handle Acp Status Action behavior in src/auto-reply/reply. */
 export async function handleAcpStatusAction(
   params: HandleCommandsParams,
   restTokens: string[],
@@ -183,6 +185,7 @@ export async function handleAcpStatusAction(
   });
 }
 
+/** Reused helper for handle Acp Set Mode Action behavior in src/auto-reply/reply. */
 export async function handleAcpSetModeAction(
   params: HandleCommandsParams,
   restTokens: string[],
@@ -215,6 +218,7 @@ export async function handleAcpSetModeAction(
   });
 }
 
+/** Reused helper for handle Acp Set Action behavior in src/auto-reply/reply. */
 export async function handleAcpSetAction(
   params: HandleCommandsParams,
   restTokens: string[],
@@ -264,6 +268,7 @@ export async function handleAcpSetAction(
   });
 }
 
+/** Reused helper for handle Acp Cwd Action behavior in src/auto-reply/reply. */
 export async function handleAcpCwdAction(
   params: HandleCommandsParams,
   restTokens: string[],
@@ -296,6 +301,7 @@ export async function handleAcpCwdAction(
   });
 }
 
+/** Reused helper for handle Acp Permissions Action behavior in src/auto-reply/reply. */
 export async function handleAcpPermissionsAction(
   params: HandleCommandsParams,
   restTokens: string[],
@@ -329,6 +335,7 @@ export async function handleAcpPermissionsAction(
   });
 }
 
+/** Reused helper for handle Acp Timeout Action behavior in src/auto-reply/reply. */
 export async function handleAcpTimeoutAction(
   params: HandleCommandsParams,
   restTokens: string[],
@@ -362,6 +369,7 @@ export async function handleAcpTimeoutAction(
   });
 }
 
+/** Reused helper for handle Acp Model Action behavior in src/auto-reply/reply. */
 export async function handleAcpModelAction(
   params: HandleCommandsParams,
   restTokens: string[],
@@ -395,6 +403,7 @@ export async function handleAcpModelAction(
   });
 }
 
+/** Reused helper for handle Acp Reset Options Action behavior in src/auto-reply/reply. */
 export async function handleAcpResetOptionsAction(
   params: HandleCommandsParams,
   restTokens: string[],

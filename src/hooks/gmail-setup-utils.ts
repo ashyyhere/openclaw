@@ -1,3 +1,4 @@
+// hooks gmail setup utils helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { formatErrorMessage } from "../infra/errors.js";
@@ -11,6 +12,7 @@ let cachedPythonPath: string | null | undefined;
 let gcloudBin: string | undefined;
 const MAX_OUTPUT_CHARS = 800;
 
+/** Reused helper for reset Gmail Setup Utils Caches For Test behavior in src/hooks. */
 export function resetGmailSetupUtilsCachesForTest(): void {
   cachedPythonPath = undefined;
 }
@@ -118,6 +120,7 @@ function ensureGcloudOnPath(): boolean {
   return false;
 }
 
+/** Reused helper for resolve Python Executable Path behavior in src/hooks. */
 export async function resolvePythonExecutablePath(): Promise<string | undefined> {
   if (cachedPythonPath !== undefined) {
     return cachedPythonPath ?? undefined;
@@ -164,6 +167,7 @@ async function runGcloudCommand(
   });
 }
 
+/** Reused helper for ensure Dependency behavior in src/hooks. */
 export async function ensureDependency(bin: string, brewArgs: string[]) {
   if (bin === "gcloud" && ensureGcloudOnPath()) {
     return;
@@ -190,6 +194,7 @@ export async function ensureDependency(bin: string, brewArgs: string[]) {
   }
 }
 
+/** Reused helper for ensure Gcloud Auth behavior in src/hooks. */
 export async function ensureGcloudAuth() {
   const res = await runGcloudCommand(
     ["auth", "list", "--filter", "status:ACTIVE", "--format", "value(account)"],
@@ -204,6 +209,7 @@ export async function ensureGcloudAuth() {
   }
 }
 
+/** Reused helper for run Gcloud behavior in src/hooks. */
 export async function runGcloud(args: string[]) {
   const result = await runGcloudCommand(args, 120_000);
   if (result.code !== 0) {
@@ -212,6 +218,7 @@ export async function runGcloud(args: string[]) {
   return result;
 }
 
+/** Reused helper for ensure Topic behavior in src/hooks. */
 export async function ensureTopic(projectId: string, topicName: string) {
   const describe = await runGcloudCommand(
     ["pubsub", "topics", "describe", topicName, "--project", projectId],
@@ -223,6 +230,7 @@ export async function ensureTopic(projectId: string, topicName: string) {
   await runGcloud(["pubsub", "topics", "create", topicName, "--project", projectId]);
 }
 
+/** Reused helper for ensure Subscription behavior in src/hooks. */
 export async function ensureSubscription(
   projectId: string,
   subscription: string,
@@ -260,6 +268,7 @@ export async function ensureSubscription(
   ]);
 }
 
+/** Reused helper for ensure Tailscale Endpoint behavior in src/hooks. */
 export async function ensureTailscaleEndpoint(params: {
   mode: "off" | "serve" | "funnel";
   path: string;
@@ -318,6 +327,7 @@ export async function ensureTailscaleEndpoint(params: {
   return params.token ? `${baseUrl}?token=${params.token}` : baseUrl;
 }
 
+/** Reused helper for resolve Project Id From Gog Credentials behavior in src/hooks. */
 export async function resolveProjectIdFromGogCredentials(): Promise<string | null> {
   const candidates = gogCredentialsPaths();
   for (const candidate of candidates) {

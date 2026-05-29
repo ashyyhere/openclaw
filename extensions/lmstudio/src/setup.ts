@@ -1,3 +1,4 @@
+// extensions/lmstudio/src setup helpers and runtime behavior.
 import { parseStrictPositiveInteger } from "openclaw/plugin-sdk/number-runtime";
 import {
   removeProviderAuthProfilesWithLock,

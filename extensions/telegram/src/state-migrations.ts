@@ -1,3 +1,4 @@
+// extensions/telegram/src state migrations helpers and runtime behavior.
 import path from "node:path";
 import type { ChannelLegacyStateMigrationPlan } from "openclaw/plugin-sdk/channel-contract";
 import { resolveChannelAllowFromPath } from "openclaw/plugin-sdk/channel-pairing";

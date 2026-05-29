@@ -1,3 +1,4 @@
+// Tests extensions/slack/src send unfurl test behavior.
 import type { WebClient } from "@slack/web-api";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { describe, expect, it, vi } from "vitest";

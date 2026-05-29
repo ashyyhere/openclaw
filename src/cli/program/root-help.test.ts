@@ -1,3 +1,4 @@
+/** Tests root help rendering from command and plugin descriptors. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { renderRootHelpText } from "./root-help.js";
 

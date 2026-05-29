@@ -1,3 +1,4 @@
+// infra resolve system bin helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { getWindowsInstallRoots, getWindowsProgramFilesRoots } from "./windows-install-roots.js";

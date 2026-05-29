@@ -1,3 +1,4 @@
+// Tests extensions/twitch/src client manager registry test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   clearRegistryForTest,

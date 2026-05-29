@@ -1,3 +1,4 @@
+// extensions/voice-call/src realtime fast context helpers and runtime behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import {
   resolveRealtimeVoiceFastContextConsult,

@@ -1,3 +1,4 @@
+/** Tests live model error classifiers. */
 import { describe, expect, it } from "vitest";
 import {
   isMiniMaxModelNotFoundErrorMessage,

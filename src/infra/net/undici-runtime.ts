@@ -1,11 +1,14 @@
+// infra/net undici runtime helpers and runtime behavior.
 import { createRequire } from "node:module";
 import net from "node:net";
 import { isRecord as isObjectRecord } from "../../shared/record-coerce.js";
 import { addActiveManagedProxyTlsOptions } from "./proxy/managed-proxy-undici.js";
 import { resolveUndiciAutoSelectFamilyConnectOptions } from "./undici-family-policy.js";
 
+/** Reused constant for TEST UNDICI RUNTIME DEPS KEY behavior in src/infra/net. */
 export const TEST_UNDICI_RUNTIME_DEPS_KEY = "__OPENCLAW_TEST_UNDICI_RUNTIME_DEPS__";
 
+/** Shared type for Undici Runtime Deps in src/infra/net. */
 export type UndiciRuntimeDeps = {
   Agent: typeof import("undici").Agent;
   EnvHttpProxyAgent: typeof import("undici").EnvHttpProxyAgent;
@@ -14,6 +17,7 @@ export type UndiciRuntimeDeps = {
   fetch: typeof import("undici").fetch;
 };
 
+/** Shared type for Undici Global Dispatcher Deps in src/infra/net. */
 export type UndiciGlobalDispatcherDeps = Pick<UndiciRuntimeDeps, "Agent" | "EnvHttpProxyAgent"> & {
   getGlobalDispatcher: typeof import("undici").getGlobalDispatcher;
   setGlobalDispatcher: typeof import("undici").setGlobalDispatcher;
@@ -126,6 +130,7 @@ function addIpSafeProxyClientFactory<TOptions extends object>(options: TOptions)
   };
 }
 
+/** Reused helper for load Undici Runtime Deps behavior in src/infra/net. */
 export function loadUndiciRuntimeDeps(): UndiciRuntimeDeps {
   const override = (globalThis as Record<string, unknown>)[TEST_UNDICI_RUNTIME_DEPS_KEY];
   if (isUndiciRuntimeDeps(override)) {
@@ -143,6 +148,7 @@ export function loadUndiciRuntimeDeps(): UndiciRuntimeDeps {
   };
 }
 
+/** Reused helper for load Undici Global Dispatcher Deps behavior in src/infra/net. */
 export function loadUndiciGlobalDispatcherDeps(): UndiciGlobalDispatcherDeps {
   const override = (globalThis as Record<string, unknown>)[TEST_UNDICI_RUNTIME_DEPS_KEY];
   if (isUndiciGlobalDispatcherDeps(override)) {
@@ -203,6 +209,7 @@ function withHttp1OnlyDispatcherOptions<T extends object | undefined>(
   return base;
 }
 
+/** Reused helper for create Http1 Agent behavior in src/infra/net. */
 export function createHttp1Agent(
   options?: UndiciAgentOptions,
   timeoutMs?: number,
@@ -211,6 +218,7 @@ export function createHttp1Agent(
   return new Agent(withHttp1OnlyDispatcherOptions(options, timeoutMs));
 }
 
+/** Reused helper for create Http1 Env Http Proxy Agent behavior in src/infra/net. */
 export function createHttp1EnvHttpProxyAgent(
   options?: UndiciEnvHttpProxyAgentOptions,
   timeoutMs?: number,
@@ -228,6 +236,7 @@ export function createHttp1EnvHttpProxyAgent(
   );
 }
 
+/** Reused helper for create Http1 Proxy Agent behavior in src/infra/net. */
 export function createHttp1ProxyAgent(
   options: UndiciProxyAgentOptions,
   timeoutMs?: number,

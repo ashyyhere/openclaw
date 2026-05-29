@@ -1,3 +1,4 @@
+/** Verifies HTML entity decoding inside streamed tool call arguments. */
 import { describe, expect, it } from "vitest";
 import { decodeHtmlEntitiesInObject } from "./tool-call-argument-decoding.js";
 

@@ -1,3 +1,4 @@
+// Tests extensions/whatsapp/src/auto-reply/monitor process message audio preflight test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 // Mock the lazy-loaded audio preflight runtime boundary

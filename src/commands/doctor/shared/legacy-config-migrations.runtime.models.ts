@@ -934,6 +934,7 @@ const RETIRED_MODEL_REF_RULES: LegacyConfigRule[] = [
   match: (value) => scanKnownModelRefs(value),
 }));
 
+/** Reused constant for LEGACY CONFIG MIGRATIONS RUNTIME MODELS behavior in src/commands/doctor. */
 export const LEGACY_CONFIG_MIGRATIONS_RUNTIME_MODELS: LegacyConfigMigrationSpec[] = [
   defineLegacyConfigMigration({
     id: "models.retired-model-refs",

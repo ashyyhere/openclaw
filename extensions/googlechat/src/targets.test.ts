@@ -1,3 +1,4 @@
+// Tests extensions/googlechat/src targets test behavior.
 import { afterAll, afterEach, describe, expect, it, vi } from "vitest";
 import type { ResolvedGoogleChatAccount } from "./accounts.js";
 import { downloadGoogleChatMedia, sendGoogleChatMessage } from "./api.js";

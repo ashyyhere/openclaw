@@ -1,7 +1,9 @@
+// test-utils fixture suite helpers and runtime behavior.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 
+/** Reused helper for create Fixture Suite behavior in src/test-utils. */
 export function createFixtureSuite(rootPrefix: string) {
   let fixtureRoot = "";
   let fixtureCount = 0;

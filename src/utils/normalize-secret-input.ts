@@ -28,6 +28,7 @@ export function normalizeSecretInput(value: unknown): string {
   return latin1Only.trim();
 }
 
+/** Reused helper for normalize Optional Secret Input behavior in src/utils. */
 export function normalizeOptionalSecretInput(value: unknown): string | undefined {
   const normalized = normalizeSecretInput(value);
   return normalized ? normalized : undefined;

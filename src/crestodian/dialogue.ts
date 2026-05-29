@@ -1,3 +1,4 @@
+// crestodian dialogue helpers and runtime behavior.
 import type { RuntimeEnv } from "../runtime.js";
 import type { CrestodianAssistantPlan, CrestodianAssistantPlanner } from "./assistant.js";
 import {
@@ -12,14 +13,17 @@ type CrestodianDialogueOptions = {
   planWithAssistant?: CrestodianAssistantPlanner;
 };
 
+/** Reused helper for approval Question behavior in src/crestodian. */
 export function approvalQuestion(operation: CrestodianOperation): string {
   return `Apply this operation: ${describeCrestodianPersistentOperation(operation)}?`;
 }
 
+/** Reused helper for is Yes behavior in src/crestodian. */
 export function isYes(input: string): boolean {
   return /^(y|yes|apply|do it|approved?)$/i.test(input.trim());
 }
 
+/** Reused helper for resolve Crestodian Operation behavior in src/crestodian. */
 export async function resolveCrestodianOperation(
   input: string,
   runtime: RuntimeEnv,

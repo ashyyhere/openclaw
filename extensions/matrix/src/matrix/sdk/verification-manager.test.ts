@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src/matrix/sdk verification manager test behavior.
 import { EventEmitter } from "node:events";
 import {
   VerificationPhase,

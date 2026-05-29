@@ -1,3 +1,4 @@
+// Tests shared node resolve test behavior.
 import { describe, expect, it } from "vitest";
 import { resolveNodeFromNodeList, resolveNodeIdFromNodeList } from "./node-resolve.js";
 

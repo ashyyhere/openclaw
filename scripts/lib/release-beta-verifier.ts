@@ -1,3 +1,4 @@
+// scripts/lib release beta verifier helpers and runtime behavior.
 import { execFileSync } from "node:child_process";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";

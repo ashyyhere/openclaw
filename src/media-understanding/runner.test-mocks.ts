@@ -1,5 +1,7 @@
+// media-understanding runner test mocks helpers and runtime behavior.
 import { vi } from "vitest";
 
+/** Reused helper for create Available Model Auth Mock Module behavior in src/media-understanding. */
 export function createAvailableModelAuthMockModule() {
   return {
     hasAvailableAuthForProvider: vi.fn(() => true),
@@ -12,6 +14,7 @@ export function createAvailableModelAuthMockModule() {
   };
 }
 
+/** Reused helper for create Empty Capability Provider Mock Module behavior in src/media-understanding. */
 export function createEmptyCapabilityProviderMockModule() {
   return {
     resolvePluginCapabilityProviders: () => [],

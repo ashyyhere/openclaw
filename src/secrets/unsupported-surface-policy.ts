@@ -1,3 +1,4 @@
+// secrets unsupported surface policy helpers and runtime behavior.
 import { GENERATED_BUNDLED_CHANNEL_CONFIG_METADATA } from "../config/bundled-channel-config-metadata.generated.js";
 import { isRecord } from "../utils.js";
 
@@ -150,15 +151,18 @@ function collectPatternCandidates(params: {
   });
 }
 
+/** Reused helper for get Unsupported Secret Ref Surface Patterns behavior in src/secrets. */
 export function getUnsupportedSecretRefSurfacePatterns(): string[] {
   return [...unsupportedSecretRefSurfacePatterns];
 }
 
+/** Shared type for Unsupported Secret Ref Config Candidate in src/secrets. */
 export type UnsupportedSecretRefConfigCandidate = {
   path: string;
   value: unknown;
 };
 
+/** Reused helper for collect Unsupported Secret Ref Config Candidates behavior in src/secrets. */
 export function collectUnsupportedSecretRefConfigCandidates(
   raw: unknown,
 ): UnsupportedSecretRefConfigCandidate[] {

@@ -1,3 +1,4 @@
+/** Builds realtime voice bootstrap instructions from identity/profile files. */
 import path from "node:path";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveUserPath, truncateUtf16Safe } from "../utils.js";
@@ -10,12 +11,14 @@ import {
   DEFAULT_USER_FILENAME,
 } from "./workspace.js";
 
+/** Profile files eligible for realtime bootstrap context injection. */
 export const REALTIME_BOOTSTRAP_CONTEXT_FILE_NAMES = [
   DEFAULT_IDENTITY_FILENAME,
   DEFAULT_USER_FILENAME,
   DEFAULT_SOUL_FILENAME,
 ] as const;
 
+/** Allowed realtime bootstrap profile file names. */
 export type RealtimeBootstrapContextFileName =
   (typeof REALTIME_BOOTSTRAP_CONTEXT_FILE_NAMES)[number];
 
@@ -65,6 +68,7 @@ function normalizeRealtimeBootstrapContextFileNames(
   return normalized;
 }
 
+/** Resolve bounded realtime bootstrap instructions for selected profile files. */
 export async function resolveRealtimeBootstrapContextInstructions(params: {
   agentId: string;
   config: OpenClawConfig;

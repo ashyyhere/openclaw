@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/moonshot/src kimi web search provider runtime behavior.
 import {
   createProviderHttpError,
   readProviderJsonObjectResponse,

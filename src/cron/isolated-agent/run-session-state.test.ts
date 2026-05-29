@@ -1,3 +1,4 @@
+// Tests cron/isolated-agent run session state test behavior.
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import os from "node:os";

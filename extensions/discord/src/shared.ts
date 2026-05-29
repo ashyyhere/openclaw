@@ -1,3 +1,4 @@
+// extensions/discord/src shared helpers and runtime behavior.
 import { describeAccountSnapshot } from "openclaw/plugin-sdk/account-helpers";
 import { normalizeAccountId } from "openclaw/plugin-sdk/account-id";
 import { formatAllowFromLowercase } from "openclaw/plugin-sdk/allow-from";

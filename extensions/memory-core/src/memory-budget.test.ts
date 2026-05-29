@@ -1,3 +1,4 @@
+// Tests extensions/memory-core/src memory budget test behavior.
 import { describe, expect, it } from "vitest";
 import { compactMemoryForBudget, DEFAULT_MEMORY_FILE_MAX_CHARS } from "./memory-budget.js";
 

@@ -1,3 +1,4 @@
+// Tests extensions/openai memory embedding adapter test behavior.
 import type { MemoryEmbeddingProvider } from "openclaw/plugin-sdk/memory-core-host-engine-embeddings";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 

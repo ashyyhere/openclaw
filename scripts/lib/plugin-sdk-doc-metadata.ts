@@ -1,3 +1,4 @@
+// scripts/lib plugin sdk doc metadata helpers and runtime behavior.
 export type PluginSdkDocCategory =
   | "channel"
   | "core"

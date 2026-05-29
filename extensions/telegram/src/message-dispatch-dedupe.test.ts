@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src message dispatch dedupe test behavior.
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";

@@ -1,3 +1,4 @@
+// Shared types for extensions/voice-call/src types behavior.
 import { z } from "zod";
 import type { CallMode } from "./config.js";
 

@@ -1,3 +1,4 @@
+// scripts/dev gateway ws client helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import WebSocket from "ws";
 

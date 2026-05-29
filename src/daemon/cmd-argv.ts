@@ -1,6 +1,8 @@
+// daemon cmd argv helpers and runtime behavior.
 import { splitArgsPreservingQuotes } from "./arg-split.js";
 import { assertNoCmdLineBreak } from "./cmd-set.js";
 
+/** Reused helper for quote Cmd Script Arg behavior in src/daemon. */
 export function quoteCmdScriptArg(value: string): string {
   assertNoCmdLineBreak(value, "Command argument");
   if (!value) {
@@ -17,6 +19,7 @@ function unescapeCmdScriptArg(value: string): string {
   return value.replace(/\^!/g, "!").replace(/%%/g, "%");
 }
 
+/** Reused helper for parse Cmd Script Command Line behavior in src/daemon. */
 export function parseCmdScriptCommandLine(value: string): string[] {
   // Script renderer escapes quotes (`\"`) and cmd expansions (`%%`, `^!`).
   // Keep all other backslashes literal so Windows drive/UNC paths survive.

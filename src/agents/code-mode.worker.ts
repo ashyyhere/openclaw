@@ -1,3 +1,4 @@
+/** QuickJS worker process for sandboxed code-mode execution and snapshots. */
 import { randomUUID } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { createRequire } from "node:module";

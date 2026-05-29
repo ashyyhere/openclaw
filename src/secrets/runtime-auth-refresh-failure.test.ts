@@ -1,3 +1,4 @@
+// Tests secrets runtime auth refresh failure test behavior.
 import os from "node:os";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { withTempHome } from "../config/home-env.test-harness.js";

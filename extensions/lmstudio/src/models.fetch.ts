@@ -1,3 +1,4 @@
+// extensions/lmstudio/src models fetch helpers and runtime behavior.
 import { createSubsystemLogger } from "openclaw/plugin-sdk/logging-core";
 import { resolveTimerTimeoutMs } from "openclaw/plugin-sdk/number-runtime";
 import { readProviderJsonArrayFieldResponse } from "openclaw/plugin-sdk/provider-http";

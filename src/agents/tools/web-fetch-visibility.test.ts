@@ -1,3 +1,4 @@
+/** Covers HTML visibility and invisible Unicode sanitizers. */
 import { describe, expect, it } from "vitest";
 import { sanitizeHtml, stripInvisibleUnicode } from "./web-fetch-visibility.js";
 

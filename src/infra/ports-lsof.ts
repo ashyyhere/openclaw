@@ -1,3 +1,4 @@
+// infra ports lsof helpers and runtime behavior.
 import fs from "node:fs";
 import fsPromises from "node:fs/promises";
 
@@ -15,6 +16,7 @@ async function canExecute(path: string): Promise<boolean> {
   }
 }
 
+/** Reused helper for resolve Lsof Command behavior in src/infra. */
 export async function resolveLsofCommand(): Promise<string> {
   for (const candidate of LSOF_CANDIDATES) {
     if (await canExecute(candidate)) {
@@ -24,6 +26,7 @@ export async function resolveLsofCommand(): Promise<string> {
   return "lsof";
 }
 
+/** Reused helper for resolve Lsof Command Sync behavior in src/infra. */
 export function resolveLsofCommandSync(): string {
   for (const candidate of LSOF_CANDIDATES) {
     try {

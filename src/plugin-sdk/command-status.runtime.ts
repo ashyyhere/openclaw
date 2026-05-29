@@ -1,3 +1,4 @@
+/** Runtime implementation for building direct `/status` replies for arbitrary sessions. */
 import { listAgentEntries, resolveSessionAgentId } from "../agents/agent-scope.js";
 import { resolveDefaultModelForAgent } from "../agents/model-selection.js";
 import { buildStatusReply } from "../auto-reply/reply/commands-status.js";
@@ -9,6 +10,7 @@ import type { ReplyPayload } from "../auto-reply/types.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { loadSessionEntry } from "../gateway/session-utils.js";
 
+/** Inputs needed to render a status reply outside the active reply pipeline. */
 export type ResolveDirectStatusReplyForSessionParams = {
   cfg: OpenClawConfig;
   sessionKey: string;
@@ -20,6 +22,7 @@ export type ResolveDirectStatusReplyForSessionParams = {
   defaultGroupActivation: () => "always" | "mention";
 };
 
+/** Load a session, resolve its model/directive state, and render the standard status payload. */
 export async function resolveDirectStatusReplyForSession(
   params: ResolveDirectStatusReplyForSessionParams,
 ): Promise<ReplyPayload | undefined> {
@@ -89,6 +92,8 @@ export async function resolveDirectStatusReplyForSession(
     statusEntry?.reasoningLevel !== undefined && statusEntry.reasoningLevel !== null;
   const canUseReasoningState = params.senderIsOwner || params.isAuthorizedSender;
   if (!canUseReasoningState && (sessionReasoningExplicitlySet || hasAgentReasoningDefault)) {
+    // Reasoning state can expose model/provider intent; hide explicit reasoning for unauthorized
+    // status readers while still showing general status fields.
     resolvedReasoningLevel = "off";
   }
   const reasoningExplicitlySet = sessionReasoningExplicitlySet || hasAgentReasoningDefault;

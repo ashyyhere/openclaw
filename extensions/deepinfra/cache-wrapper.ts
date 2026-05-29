@@ -1,3 +1,4 @@
+// extensions/deepinfra cache wrapper helpers and runtime behavior.
 import {
   applyAnthropicEphemeralCacheControlMarkers,
   streamWithPayloadPatch,

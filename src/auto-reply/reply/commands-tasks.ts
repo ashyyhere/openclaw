@@ -1,3 +1,4 @@
+// Chat command handlers for task listing and management.
 import { resolveSessionAgentId } from "../../agents/agent-scope.js";
 import { logVerbose } from "../../globals.js";
 import { formatDurationCompact } from "../../infra/format-time/format-duration.ts";
@@ -110,6 +111,7 @@ function buildTasksText(params: { sessionKey: string; agentId: string }): string
   return lines.join("\n");
 }
 
+/** Reused helper for build Tasks Reply behavior in src/auto-reply/reply. */
 export async function buildTasksReply(params: HandleCommandsParams): Promise<ReplyPayload> {
   const agentId = resolveSessionAgentId({
     sessionKey: params.sessionKey,
@@ -123,6 +125,7 @@ export async function buildTasksReply(params: HandleCommandsParams): Promise<Rep
   };
 }
 
+/** Reused constant for handle Tasks Command behavior in src/auto-reply/reply. */
 export const handleTasksCommand: CommandHandler = async (params, allowTextCommands) => {
   if (!allowTextCommands) {
     return null;

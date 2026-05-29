@@ -1,3 +1,4 @@
+// extensions/migrate-claude apply helpers and runtime behavior.
 import path from "node:path";
 import { summarizeMigrationItems } from "openclaw/plugin-sdk/migration";
 import {

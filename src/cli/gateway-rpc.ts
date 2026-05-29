@@ -1,3 +1,4 @@
+/** Registers generic gateway RPC CLI commands. */
 import type { Command } from "commander";
 import type {
   GatewayClientMode,
@@ -7,6 +8,7 @@ import type { OperatorScope } from "../gateway/operator-scopes.js";
 import type { DeviceIdentity } from "../infra/device-identity.js";
 import { createLazyImportLoader } from "../shared/lazy-promise.js";
 import type { GatewayRpcOpts } from "./gateway-rpc.types.js";
+/** Re-exported API for src/cli, starting with Gateway Rpc Opts. */
 export type { GatewayRpcOpts } from "./gateway-rpc.types.js";
 
 type GatewayRpcRuntimeModule = typeof import("./gateway-rpc.runtime.js");
@@ -19,6 +21,7 @@ async function loadGatewayRpcRuntime(): Promise<GatewayRpcRuntimeModule> {
   return gatewayRpcRuntimeLoader.load();
 }
 
+/** Reused helper for add Gateway Client Options behavior in src/cli. */
 export function addGatewayClientOptions(cmd: Command) {
   return cmd
     .option("--url <url>", "Gateway WebSocket URL (defaults to gateway.remote.url when configured)")
@@ -27,6 +30,7 @@ export function addGatewayClientOptions(cmd: Command) {
     .option("--expect-final", "Wait for final response (agent)", false);
 }
 
+/** Reused helper for call Gateway From Cli behavior in src/cli. */
 export async function callGatewayFromCli(
   method: string,
   opts: GatewayRpcOpts,

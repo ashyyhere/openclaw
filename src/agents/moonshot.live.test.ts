@@ -1,3 +1,4 @@
+/** Live tests for Moonshot provider compatibility. */
 import { completeSimple, type Model } from "openclaw/plugin-sdk/llm";
 import { describe, expect, it } from "vitest";
 import {

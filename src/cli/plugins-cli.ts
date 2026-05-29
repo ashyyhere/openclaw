@@ -1,3 +1,4 @@
+/** Registers plugin management CLI commands. */
 import type { Command } from "commander";
 import { formatDocsLink } from "../../packages/terminal-core/src/links.js";
 import { theme } from "../../packages/terminal-core/src/theme.js";
@@ -6,21 +7,25 @@ import type { PluginsListOptions } from "./plugins-list-command.js";
 import { parseStrictPositiveIntOption } from "./program/helpers.js";
 import { applyParentDefaultHelpAction } from "./program/parent-default-help.js";
 
+/** Shared type for Plugin Update Options in src/cli. */
 export type PluginUpdateOptions = {
   all?: boolean;
   dryRun?: boolean;
   dangerouslyForceUnsafeInstall?: boolean;
 };
 
+/** Shared type for Plugin Marketplace List Options in src/cli. */
 export type PluginMarketplaceListOptions = {
   json?: boolean;
 };
 
+/** Shared type for Plugin Search Options in src/cli. */
 export type PluginSearchOptions = {
   json?: boolean;
   limit?: number;
 };
 
+/** Shared type for Plugin Uninstall Options in src/cli. */
 export type PluginUninstallOptions = {
   keepFiles?: boolean;
   /** @deprecated Use keepFiles. */
@@ -29,22 +34,26 @@ export type PluginUninstallOptions = {
   dryRun?: boolean;
 };
 
+/** Shared type for Plugin Registry Options in src/cli. */
 export type PluginRegistryOptions = {
   json?: boolean;
   refresh?: boolean;
 };
 
+/** Shared type for Plugin Authoring Build Options in src/cli. */
 export type PluginAuthoringBuildOptions = {
   root?: string;
   entry?: string;
   check?: boolean;
 };
 
+/** Shared type for Plugin Authoring Validate Options in src/cli. */
 export type PluginAuthoringValidateOptions = {
   root?: string;
   entry?: string;
 };
 
+/** Shared type for Plugin Authoring Init Options in src/cli. */
 export type PluginAuthoringInitOptions = {
   directory?: string;
   force?: boolean;

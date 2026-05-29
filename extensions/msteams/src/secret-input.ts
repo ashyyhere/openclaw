@@ -1,3 +1,4 @@
+// extensions/msteams/src secret input helpers and runtime behavior.
 import {
   hasConfiguredSecretInput,
   normalizeResolvedSecretInputString,

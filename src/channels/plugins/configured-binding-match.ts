@@ -1,3 +1,4 @@
+// Configured binding record matching helpers.
 import type { ConversationRef } from "../../infra/outbound/session-binding-service.js";
 import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "../../routing/session-key.js";
 import {
@@ -14,6 +15,7 @@ import type {
   ChannelConfiguredBindingMatch,
 } from "./types.adapters.js";
 
+/** Reused helper for resolve Account Match Priority behavior in src/channels/plugins. */
 export function resolveAccountMatchPriority(match: string | undefined, actual: string): 0 | 1 | 2 {
   const trimmed = (match ?? "").trim();
   if (!trimmed) {
@@ -38,11 +40,13 @@ function matchCompiledBindingConversation(params: {
   });
 }
 
+/** Reused helper for resolve Compiled Binding Channel behavior in src/channels/plugins. */
 export function resolveCompiledBindingChannel(raw: string): ConfiguredBindingChannel | null {
   const normalized = normalizeOptionalLowercaseString(raw);
   return normalized ? (normalized as ConfiguredBindingChannel) : null;
 }
 
+/** Reused helper for to Configured Binding Conversation Ref behavior in src/channels/plugins. */
 export function toConfiguredBindingConversationRef(conversation: ConversationRef): {
   channel: ConfiguredBindingChannel;
   accountId: string;
@@ -62,6 +66,7 @@ export function toConfiguredBindingConversationRef(conversation: ConversationRef
   };
 }
 
+/** Reused helper for materialize Configured Binding Record behavior in src/channels/plugins. */
 export function materializeConfiguredBindingRecord(params: {
   rule: CompiledConfiguredBinding;
   accountId: string;
@@ -73,6 +78,7 @@ export function materializeConfiguredBindingRecord(params: {
   });
 }
 
+/** Reused helper for resolve Matching Configured Binding behavior in src/channels/plugins. */
 export function resolveMatchingConfiguredBinding(params: {
   rules: CompiledConfiguredBinding[];
   conversation: ReturnType<typeof toConfiguredBindingConversationRef>;

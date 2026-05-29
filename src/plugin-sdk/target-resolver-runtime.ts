@@ -1,3 +1,4 @@
+/** Runtime SDK barrel for outbound target resolver helpers. */
 export {
   buildUnresolvedTargetResults,
   resolveTargetsWithOptionalToken,

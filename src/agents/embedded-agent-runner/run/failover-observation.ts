@@ -1,3 +1,4 @@
+/** Normalizes and logs structured failover decision observations. */
 import { redactIdentifier } from "../../../logging/redact-identifier.js";
 import type { AuthProfileFailureReason } from "../../auth-profiles.js";
 import {
@@ -8,6 +9,7 @@ import {
 import type { FailoverReason } from "../../embedded-agent-helpers.js";
 import { log } from "../logger.js";
 
+/** Shared type for Failover Decision Logger Input in src/agents/embedded-agent-runner. */
 export type FailoverDecisionLoggerInput = {
   stage: "prompt" | "assistant";
   decision: "rotate_profile" | "fallback_model" | "surface_error";
@@ -26,8 +28,10 @@ export type FailoverDecisionLoggerInput = {
   status?: number;
 };
 
+/** Shared type for Failover Decision Logger Base in src/agents/embedded-agent-runner. */
 export type FailoverDecisionLoggerBase = Omit<FailoverDecisionLoggerInput, "decision" | "status">;
 
+/** Redacts identifiers and derives common fields for failover decision logs. */
 export function normalizeFailoverDecisionObservationBase(
   base: FailoverDecisionLoggerBase,
 ): FailoverDecisionLoggerBase {
@@ -38,6 +42,7 @@ export function normalizeFailoverDecisionObservationBase(
   };
 }
 
+/** Creates a logger closure bound to one failover decision context. */
 export function createFailoverDecisionLogger(
   base: FailoverDecisionLoggerBase,
 ): (

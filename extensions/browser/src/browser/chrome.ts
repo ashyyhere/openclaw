@@ -1,3 +1,4 @@
+// extensions/browser/src/browser chrome helpers and runtime behavior.
 import { type ChildProcess, type ChildProcessWithoutNullStreams, spawn } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";

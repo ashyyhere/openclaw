@@ -1,3 +1,4 @@
+// Tests security safe regex test behavior.
 import { describe, expect, it } from "vitest";
 import {
   compileSafeRegex,

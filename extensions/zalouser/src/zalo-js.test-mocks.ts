@@ -1,3 +1,4 @@
+// extensions/zalouser/src zalo js test mocks helpers and runtime behavior.
 import { vi, type Mock } from "vitest";
 
 type ZaloJsModule = typeof import("./zalo-js.js");

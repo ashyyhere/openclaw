@@ -1,3 +1,4 @@
+// extensions/synology-chat/src channel test mocks helpers and runtime behavior.
 import type { IncomingMessage, ServerResponse } from "node:http";
 import type { Mock } from "vitest";
 import { vi } from "vitest";

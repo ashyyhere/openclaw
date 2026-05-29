@@ -1,3 +1,4 @@
+// Tests shared frontmatter test behavior.
 import { describe, expect, it, test } from "vitest";
 import {
   applyOpenClawManifestInstallCommonFields,

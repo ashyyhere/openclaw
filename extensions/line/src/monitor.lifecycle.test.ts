@@ -1,3 +1,4 @@
+// Tests extensions/line/src monitor lifecycle test behavior.
 import crypto from "node:crypto";
 import { EventEmitter } from "node:events";
 import type { IncomingMessage, ServerResponse } from "node:http";

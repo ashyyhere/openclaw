@@ -1,3 +1,4 @@
+// extensions/voice-call/src gateway continue operation helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";
 import type { VoiceCallConfig } from "./config.js";

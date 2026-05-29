@@ -1,3 +1,4 @@
+// Tests infra safe package install test behavior.
 import { describe, expect, it } from "vitest";
 import { createSafeNpmInstallArgs, createSafeNpmInstallEnv } from "./safe-package-install.js";
 

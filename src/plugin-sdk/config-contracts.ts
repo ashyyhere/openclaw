@@ -1,7 +1,10 @@
 // Focused public config shape types used by bundled and third-party plugins.
 
+/** Re-exported API for src/plugin-sdk, starting with Channel Group Policy. */
 export type { ChannelGroupPolicy } from "../config/group-policy.js";
+/** Re-exported API for src/plugin-sdk, starting with Session Scope. */
 export type { SessionScope } from "../config/sessions/types.js";
+/** Re-exported API for src/plugin-sdk. */
 export type {
   AccessGroupsConfig,
   AuthConfig,

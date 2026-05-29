@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix media errors helpers and runtime behavior.
 const MATRIX_MEDIA_SIZE_LIMIT_ERROR_MESSAGE = "Matrix media exceeds configured size limit";
 
 export class MatrixMediaSizeLimitError extends Error {

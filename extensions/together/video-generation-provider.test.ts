@@ -1,3 +1,4 @@
+// Tests extensions/together video generation provider test behavior.
 import {
   getProviderHttpMocks,
   installProviderHttpMockCleanup,

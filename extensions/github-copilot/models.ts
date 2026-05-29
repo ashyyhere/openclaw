@@ -1,3 +1,4 @@
+// extensions/github-copilot models helpers and runtime behavior.
 import type {
   ProviderResolveDynamicModelContext,
   ProviderRuntimeModel,

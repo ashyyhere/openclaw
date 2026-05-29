@@ -1,3 +1,4 @@
+// ui/src/ui/controllers presence helpers and runtime behavior.
 import type { GatewayBrowserClient } from "../gateway.ts";
 import type { PresenceEntry } from "../types.ts";
 import {
@@ -5,6 +6,7 @@ import {
   isMissingOperatorReadScopeError,
 } from "./scope-errors.ts";
 
+/** Shared type for Presence State in ui/src/ui/controllers. */
 export type PresenceState = {
   client: GatewayBrowserClient | null;
   connected: boolean;
@@ -14,6 +16,7 @@ export type PresenceState = {
   presenceStatus: string | null;
 };
 
+/** Reused helper for load Presence behavior in ui/src/ui/controllers. */
 export async function loadPresence(state: PresenceState) {
   if (!state.client || !state.connected) {
     return;

@@ -1,5 +1,7 @@
+// cron retry hint helpers and runtime behavior.
 import type { CronRetryOn } from "../config/types.cron.js";
 
+/** Shared type for Cron Retry Hint in src/cron. */
 export type CronRetryHint = {
   retryable: boolean;
   category?: CronRetryOn;
@@ -16,6 +18,7 @@ const TRANSIENT_PATTERNS: Record<CronRetryOn, RegExp> = {
   server_error: /\b5\d{2}\b/,
 };
 
+/** Reused helper for resolve Cron Execution Retry Hint behavior in src/cron. */
 export function resolveCronExecutionRetryHint(
   error: string | undefined,
   retryOn?: CronRetryOn[],

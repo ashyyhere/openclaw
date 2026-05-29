@@ -1,3 +1,4 @@
+// extensions/memory-core/src tools citations helpers and runtime behavior.
 import {
   parseAgentSessionKey,
   type MemoryCitationsMode,

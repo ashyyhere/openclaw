@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src bot message context dm topic threadid test behavior.
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   getRecordedUpdateLastRoute,

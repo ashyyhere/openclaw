@@ -1,3 +1,4 @@
+// Shared types for extensions/qa-lab/src lab server types behavior.
 import type { QaBusState } from "./bus-state.js";
 import type { QaSelfCheckResult } from "./self-check.js";
 

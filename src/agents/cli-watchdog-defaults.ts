@@ -1,11 +1,15 @@
+/** Shared watchdog timeout defaults for fresh and resumed CLI turns. */
+/** Lower bound for CLI watchdog timers after config ratio calculations. */
 export const CLI_WATCHDOG_MIN_TIMEOUT_MS = 1_000;
 
+/** Timeout defaults for fresh CLI turns. */
 export const CLI_FRESH_WATCHDOG_DEFAULTS = {
   noOutputTimeoutRatio: 0.8,
   minMs: 180_000,
   maxMs: 600_000,
 } as const;
 
+/** Timeout defaults for resumed CLI turns. */
 export const CLI_RESUME_WATCHDOG_DEFAULTS = {
   noOutputTimeoutRatio: 0.3,
   minMs: 60_000,

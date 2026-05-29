@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/browser server evaluate disabled does not block storage test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { getFreePort } from "./test-port.js";
 import { getBrowserTestFetch } from "./test-support/fetch.js";

@@ -1,3 +1,4 @@
+// Tests config config skills entries config test behavior.
 import { describe, expect, it } from "vitest";
 import { OpenClawSchema } from "./zod-schema.js";
 

@@ -1,3 +1,4 @@
+// Tests test/scripts committer test behavior.
 import { execFileSync } from "node:child_process";
 import { cpSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";

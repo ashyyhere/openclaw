@@ -1,3 +1,4 @@
+/** Ls tool definition for listing workspace directory entries. */
 import { existsSync, readdirSync, statSync } from "node:fs";
 import nodePath from "node:path";
 import { Text } from "@earendil-works/pi-tui";
@@ -20,6 +21,7 @@ const lsSchema = Type.Object({
     Type.Number({ description: "Maximum number of entries to return (default: 500)" }),
   ),
 });
+/** Re-exported API for src/agents/sessions, starting with Ls Tool Details. */
 export type { LsToolDetails, LsToolInput } from "./tool-contracts.js";
 
 const DEFAULT_LIMIT = 500;
@@ -45,6 +47,7 @@ const defaultLsOperations: LsOperations = {
   readdir: readdirSync,
 };
 
+/** Shared type for Ls Tool Options in src/agents/sessions. */
 export interface LsToolOptions {
   /** Custom operations for directory listing. Default: local filesystem */
   operations?: LsOperations;
@@ -102,6 +105,7 @@ function formatLsResult(
   return text;
 }
 
+/** Creates the SDK tool definition for directory listing. */
 export function createLsToolDefinition(
   cwd: string,
   options?: LsToolOptions,
@@ -241,6 +245,7 @@ export function createLsToolDefinition(
   };
 }
 
+/** Creates the runtime AgentTool wrapper for directory listing. */
 export function createLsTool(cwd: string, options?: LsToolOptions): AgentTool<typeof lsSchema> {
   return wrapToolDefinition(createLsToolDefinition(cwd, options));
 }

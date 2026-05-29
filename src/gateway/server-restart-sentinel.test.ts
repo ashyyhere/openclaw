@@ -1,3 +1,4 @@
+// Tests gateway server restart sentinel test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { ChannelPlugin } from "../channels/plugins/types.plugin.js";
 

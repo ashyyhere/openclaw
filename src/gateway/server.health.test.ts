@@ -1,3 +1,4 @@
+// Tests gateway server health test behavior.
 import { randomUUID } from "node:crypto";
 import { afterAll, beforeAll, describe, expect, test } from "vitest";
 import { emitAgentEvent } from "../infra/agent-events.js";

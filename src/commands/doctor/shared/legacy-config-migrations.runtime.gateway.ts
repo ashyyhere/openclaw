@@ -1,3 +1,4 @@
+/** Legacy runtime config migrations for gateway settings. */
 import {
   buildDefaultControlUiAllowedOrigins,
   hasConfiguredControlUiAllowedOrigins,
@@ -62,6 +63,7 @@ function escapeControlForLog(value: string): string {
   return value.replace(/\r/g, "\\r").replace(/\n/g, "\\n").replace(/\t/g, "\\t");
 }
 
+/** Reused constant for LEGACY CONFIG MIGRATIONS RUNTIME GATEWAY behavior in src/commands/doctor. */
 export const LEGACY_CONFIG_MIGRATIONS_RUNTIME_GATEWAY: LegacyConfigMigrationSpec[] = [
   defineLegacyConfigMigration({
     id: "gateway.controlUi.allowedOrigins-seed-for-non-loopback",

@@ -1,3 +1,4 @@
+// extensions/qa-lab/src suite runtime transport helpers and runtime behavior.
 import { setTimeout as sleep } from "node:timers/promises";
 import {
   createFailureAwareTransportWaitForCondition,

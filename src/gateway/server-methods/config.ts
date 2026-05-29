@@ -1,3 +1,4 @@
+// gateway/server-methods config helpers and runtime behavior.
 import { execFile } from "node:child_process";
 import {
   ErrorCodes,
@@ -152,6 +153,7 @@ function escapePowerShellSingleQuotedString(value: string): string {
   return value.replaceAll("'", "''");
 }
 
+/** Reused helper for resolve Config Open Command behavior in src/gateway/server-methods. */
 export function resolveConfigOpenCommand(
   configPath: string,
   platform: NodeJS.Platform = process.platform,
@@ -357,10 +359,12 @@ async function ensureResolvableSecretRefsOrRespond(params: {
   }
 }
 
+/** Reused helper for clear Config Schema Response Cache For Tests behavior in src/gateway/server-methods. */
 export function clearConfigSchemaResponseCacheForTests() {
   configSchemaResponseCache = null;
 }
 
+/** Reused helper for load Config Schema Response For Tests behavior in src/gateway/server-methods. */
 export function loadConfigSchemaResponseForTests(): ConfigSchemaResponse {
   return loadSchemaWithPlugins();
 }
@@ -398,6 +402,7 @@ function loadSchemaWithPlugins(): ConfigSchemaResponse {
   return response;
 }
 
+/** Reused constant for config Handlers behavior in src/gateway/server-methods. */
 export const configHandlers: GatewayRequestHandlers = {
   "config.get": async ({ params, respond }) => {
     if (!assertValidParams(params, validateConfigGetParams, "config.get", respond)) {

@@ -1,3 +1,4 @@
+// gateway live env test helpers helpers and runtime behavior.
 const COMMON_LIVE_ENV_NAMES = [
   "OPENCLAW_AGENT_RUNTIME",
   "OPENCLAW_CONFIG_PATH",
@@ -12,8 +13,10 @@ const COMMON_LIVE_ENV_NAMES = [
   "OPENCLAW_STATE_DIR",
 ] as const;
 
+/** Shared type for Live Env Snapshot in src/gateway. */
 export type LiveEnvSnapshot = Record<string, string | undefined>;
 
+/** Reused helper for snapshot Live Env behavior in src/gateway. */
 export function snapshotLiveEnv(extraNames: readonly string[] = []): LiveEnvSnapshot {
   const snapshot: LiveEnvSnapshot = {};
   for (const name of [...COMMON_LIVE_ENV_NAMES, ...extraNames]) {
@@ -22,6 +25,7 @@ export function snapshotLiveEnv(extraNames: readonly string[] = []): LiveEnvSnap
   return snapshot;
 }
 
+/** Reused helper for restore Live Env behavior in src/gateway. */
 export function restoreLiveEnv(snapshot: LiveEnvSnapshot): void {
   for (const [name, value] of Object.entries(snapshot)) {
     if (value === undefined) {

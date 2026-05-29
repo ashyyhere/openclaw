@@ -1,3 +1,4 @@
+// extensions/whatsapp/src group session key helpers and runtime behavior.
 import {
   DEFAULT_ACCOUNT_ID,
   normalizeAccountId,

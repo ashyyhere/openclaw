@@ -1,3 +1,4 @@
+// scripts qa coverage report helpers and runtime behavior.
 import { runQaCoverageReportCommand } from "../extensions/qa-lab/src/cli.runtime.ts";
 import { booleanFlag, parseFlagArgs, stringFlag, stringListFlag } from "./lib/arg-utils.mjs";
 

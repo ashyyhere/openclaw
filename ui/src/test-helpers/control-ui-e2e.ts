@@ -1,3 +1,4 @@
+// ui/src/test-helpers control ui e2e helpers and runtime behavior.
 import { existsSync } from "node:fs";
 import { createRequire } from "node:module";
 import { createServer as createNetServer } from "node:net";

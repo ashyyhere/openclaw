@@ -1,9 +1,12 @@
+/** Render ACP backend/session identifiers for status and thread replies. */
 import type { SessionAcpIdentity, SessionAcpMeta } from "../../config/sessions/types.js";
 import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";
 import { normalizeText } from "../normalize-text.js";
 import { isSessionIdentityPending, resolveSessionIdentityFromMeta } from "./session-identity.js";
 
+/** Reused constant for ACP SESSION IDENTITY RENDERER VERSION behavior in src/acp/runtime. */
 export const ACP_SESSION_IDENTITY_RENDERER_VERSION = "v1";
+/** Shared type for Acp Session Identifier Render Mode in src/acp/runtime. */
 export type AcpSessionIdentifierRenderMode = "status" | "thread";
 
 type SessionResumeHintResolver = (params: { agentSessionId: string }) => string;
@@ -57,6 +60,7 @@ function resolveAcpAgentResumeHintLine(params: {
   return resolver ? resolver({ agentSessionId }) : undefined;
 }
 
+/** Resolve ACP session identifier lines from stored session metadata. */
 export function resolveAcpSessionIdentifierLines(params: {
   sessionKey: string;
   meta?: SessionAcpMeta;
@@ -70,6 +74,7 @@ export function resolveAcpSessionIdentifierLines(params: {
   });
 }
 
+/** Render ACP session identifier lines from a normalized identity object. */
 export function resolveAcpSessionIdentifierLinesFromIdentity(params: {
   backend: string;
   identity?: SessionAcpIdentity;
@@ -101,6 +106,7 @@ export function resolveAcpSessionIdentifierLinesFromIdentity(params: {
   return lines;
 }
 
+/** Resolve the effective runtime cwd from ACP session metadata. */
 export function resolveAcpSessionCwd(meta?: SessionAcpMeta): string | undefined {
   const runtimeCwd = normalizeText(meta?.runtimeOptions?.cwd);
   if (runtimeCwd) {
@@ -109,6 +115,7 @@ export function resolveAcpSessionCwd(meta?: SessionAcpMeta): string | undefined 
   return normalizeText(meta?.cwd);
 }
 
+/** Resolve compact ACP session detail lines suitable for thread replies. */
 export function resolveAcpThreadSessionDetailLines(params: {
   sessionKey: string;
   meta?: SessionAcpMeta;

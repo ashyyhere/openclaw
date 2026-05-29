@@ -1,3 +1,4 @@
+// extensions/feishu/src chat schema helpers and runtime behavior.
 import { optionalPositiveIntegerSchema } from "openclaw/plugin-sdk/channel-actions";
 import { Type, type Static } from "typebox";
 

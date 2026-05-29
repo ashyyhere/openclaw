@@ -1,3 +1,4 @@
+// extensions/qa-lab/src scenario packs helpers and runtime behavior.
 import { uniqueStrings } from "openclaw/plugin-sdk/string-coerce-runtime";
 
 export type QaScenarioPackDefinition = {

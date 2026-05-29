@@ -1,3 +1,4 @@
+/** Shared mock connection/gateway helpers for ACP translator tests. */
 import type { AgentSideConnection } from "@agentclientprotocol/sdk";
 import { vi } from "vitest";
 import type { GatewayClient } from "../gateway/client.js";
@@ -7,6 +8,7 @@ type TestAcpConnection = AgentSideConnection & {
   __sessionUpdateMock: ReturnType<typeof vi.fn>;
 };
 
+/** Reused helper for create Acp Connection behavior in src/acp. */
 export function createAcpConnection(
   params: {
     requestPermission?: ReturnType<typeof vi.fn>;
@@ -23,6 +25,7 @@ export function createAcpConnection(
   } as unknown as TestAcpConnection;
 }
 
+/** Reused helper for create Acp Gateway behavior in src/acp. */
 export function createAcpGateway(
   request: GatewayClient["request"] = vi.fn(async () => ({ ok: true })) as GatewayClient["request"],
 ): GatewayClient {

@@ -1,3 +1,4 @@
+// infra exec safety helpers and runtime behavior.
 const SHELL_METACHARS = /[;&|`$<>]/;
 const CONTROL_CHARS = /[\r\n]/;
 const QUOTE_CHARS = /["']/;
@@ -13,6 +14,7 @@ function isLikelyPath(value: string): boolean {
   return /^[A-Za-z]:[\\/]/.test(value);
 }
 
+/** Reused helper for is Safe Executable Value behavior in src/infra. */
 export function isSafeExecutableValue(value: string | null | undefined): boolean {
   if (!value) {
     return false;

@@ -1,3 +1,4 @@
+/** Shared provider runtime mocks for embedded-agent model tests. */
 import { lowercasePreservingWhitespace } from "../../shared/string-coerce.js";
 import type { OpenRouterModelCapabilities } from "./openrouter-model-capabilities.js";
 
@@ -573,6 +574,7 @@ function buildDynamicModel(
   }
 }
 
+/** Reused helper for create Provider Runtime Test Mock behavior in src/agents/embedded-agent-runner. */
 export function createProviderRuntimeTestMock(options: ProviderRuntimeTestMockOptions = {}) {
   const handledDynamicProviders = new Set(
     options.handledDynamicProviders ?? [

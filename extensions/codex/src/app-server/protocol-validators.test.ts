@@ -1,3 +1,4 @@
+// Tests extensions/codex/src/app-server protocol validators test behavior.
 import { describe, expect, it } from "vitest";
 import {
   readCodexModelListResponse,

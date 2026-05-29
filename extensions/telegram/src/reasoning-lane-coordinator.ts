@@ -1,3 +1,4 @@
+// extensions/telegram/src reasoning lane coordinator helpers and runtime behavior.
 import { formatReasoningMessage } from "openclaw/plugin-sdk/agent-runtime";
 import type { ReplyPayload } from "openclaw/plugin-sdk/reply-runtime";
 import { normalizeLowercaseStringOrEmpty } from "openclaw/plugin-sdk/string-coerce-runtime";

@@ -1,3 +1,4 @@
+// extensions/qa-lab/src suite merge patch helpers and runtime behavior.
 import { isRecord as isPlainObject } from "openclaw/plugin-sdk/string-coerce-runtime";
 
 const QA_MERGE_PATCH_BLOCKED_KEYS = new Set(["__proto__", "constructor", "prototype"]);

@@ -1,3 +1,4 @@
+// infra exec approvals analysis helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import { splitShellArgs } from "../utils/shell-argv.js";
 import {
@@ -10,6 +11,7 @@ import {
 } from "./exec-wrapper-resolution.js";
 import { POSIX_INLINE_COMMAND_FLAGS, resolveInlineCommandMatch } from "./shell-inline-command.js";
 
+/** Re-exported API for src/infra. */
 export {
   matchAllowlist,
   parseExecArgvToken,
@@ -31,6 +33,7 @@ export {
   type ExecArgvToken,
 } from "./exec-command-resolution.js";
 
+/** Shared type for Exec Command Segment in src/infra. */
 export type ExecCommandSegment = {
   raw: string;
   argv: string[];
@@ -38,6 +41,7 @@ export type ExecCommandSegment = {
   resolution: CommandResolution | null;
 };
 
+/** Shared type for Exec Command Analysis in src/infra. */
 export type ExecCommandAnalysis = {
   ok: boolean;
   reason?: string;
@@ -45,8 +49,10 @@ export type ExecCommandAnalysis = {
   chains?: ExecCommandSegment[][]; // Segments grouped by chain operator (&&, ||, ;)
 };
 
+/** Shared type for Shell Chain Operator in src/infra. */
 export type ShellChainOperator = "&&" | "||" | ";";
 
+/** Shared type for Shell Chain Part in src/infra. */
 export type ShellChainPart = {
   part: string;
   opToNext: ShellChainOperator | null;
@@ -676,6 +682,7 @@ function analyzeWindowsShellCommand(params: {
   };
 }
 
+/** Reused helper for is Windows Platform behavior in src/infra. */
 export function isWindowsPlatform(platform?: string | null): boolean {
   const normalized = normalizeLowercaseStringOrEmpty(platform);
   return normalized.startsWith("win");
@@ -838,6 +845,7 @@ function shellEscapeSingleArg(value: string): string {
 // strings (unlike cmd.exe delayed expansion), so "Hello!" is safe to pass through.
 const WINDOWS_UNSAFE_CMD_META = /[%`]|\$(?=[A-Za-z_{(?$])/;
 
+/** Reused helper for windows Escape Arg behavior in src/infra. */
 export function windowsEscapeArg(value: string): { ok: true; escaped: string } | { ok: false } {
   if (value === "") {
     return { ok: true, escaped: '""' };
@@ -985,6 +993,7 @@ function finalizeRebuiltShellCommand(
   return { ok: true, command: rebuilt.command };
 }
 
+/** Reused helper for resolve Planned Segment Argv behavior in src/infra. */
 export function resolvePlannedSegmentArgv(segment: ExecCommandSegment): string[] | null {
   if (segment.resolution?.policyBlocked === true) {
     return null;
@@ -1159,6 +1168,7 @@ export function buildSafeBinsShellCommand(params: {
   return finalizeRebuiltShellCommand(rebuilt, params.segments.length);
 }
 
+/** Reused helper for build Enforced Shell Command behavior in src/infra. */
 export function buildEnforcedShellCommand(params: {
   command: string;
   segments: ExecCommandSegment[];
@@ -1198,6 +1208,7 @@ export function splitCommandChain(command: string): string[] | null {
   return parts.map((p) => p.part);
 }
 
+/** Reused helper for analyze Shell Command behavior in src/infra. */
 export function analyzeShellCommand(params: {
   command: string;
   cwd?: string;
@@ -1246,6 +1257,7 @@ export function analyzeShellCommand(params: {
   return { ok: true, segments };
 }
 
+/** Reused helper for analyze Argv Command behavior in src/infra. */
 export function analyzeArgvCommand(params: {
   argv: string[];
   cwd?: string;

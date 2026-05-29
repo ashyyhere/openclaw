@@ -1,15 +1,19 @@
+// shared store writer queue helpers and runtime behavior.
+/** Shared type for Store Writer Task in src/shared. */
 export type StoreWriterTask = {
   fn: () => Promise<unknown>;
   resolve: (value: unknown) => void;
   reject: (reason: unknown) => void;
 };
 
+/** Shared type for Store Writer Queue in src/shared. */
 export type StoreWriterQueue = {
   running: boolean;
   pending: StoreWriterTask[];
   drainPromise: Promise<void> | null;
 };
 
+/** Shared type for Store Writer Queues in src/shared. */
 export type StoreWriterQueues = Map<string, StoreWriterQueue>;
 
 function getOrCreateStoreWriterQueue(
@@ -72,6 +76,7 @@ async function drainStoreWriterQueue(queues: StoreWriterQueues, storePath: strin
   await queue.drainPromise;
 }
 
+/** Reused helper for run Queued Store Write behavior in src/shared. */
 export async function runQueuedStoreWrite<T>(params: {
   queues: StoreWriterQueues;
   storePath: string;
@@ -97,6 +102,7 @@ export async function runQueuedStoreWrite<T>(params: {
   });
 }
 
+/** Reused helper for clear Store Writer Queues For Test behavior in src/shared. */
 export function clearStoreWriterQueuesForTest(queues: StoreWriterQueues, message: string): void {
   for (const queue of queues.values()) {
     for (const task of queue.pending) {
@@ -106,6 +112,7 @@ export function clearStoreWriterQueuesForTest(queues: StoreWriterQueues, message
   queues.clear();
 }
 
+/** Reused helper for drain Store Writer Queues For Test behavior in src/shared. */
 export async function drainStoreWriterQueuesForTest(
   queues: StoreWriterQueues,
   message: string,

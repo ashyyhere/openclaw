@@ -1,3 +1,4 @@
+// extensions/discord directory contract api helpers and runtime behavior.
 export {
   listDiscordDirectoryGroupsFromConfig,
   listDiscordDirectoryPeersFromConfig,

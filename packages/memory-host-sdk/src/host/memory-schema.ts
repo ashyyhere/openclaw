@@ -1,6 +1,8 @@
+// packages/memory-host-sdk/src/host memory schema helpers and runtime behavior.
 import type { DatabaseSync } from "node:sqlite";
 import { formatErrorMessage } from "./error-utils.js";
 
+/** Public helper for ensure Memory Index Schema behavior in packages/memory-host-sdk. */
 export function ensureMemoryIndexSchema(params: {
   db: DatabaseSync;
   embeddingCacheTable: string;

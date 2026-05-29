@@ -1,3 +1,4 @@
+// Tests extensions/memory-wiki/src config test behavior.
 import fs from "node:fs";
 import path from "node:path";
 import {

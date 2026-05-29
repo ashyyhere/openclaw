@@ -1,3 +1,4 @@
+// Tests infra path env test behavior.
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { ensureOpenClawCliOnPath } from "./path-env.js";

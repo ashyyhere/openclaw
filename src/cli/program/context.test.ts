@@ -1,3 +1,4 @@
+/** Tests CLI program context construction. */
 import { describe, expect, it, vi } from "vitest";
 import { createProgramContext } from "./context.js";
 

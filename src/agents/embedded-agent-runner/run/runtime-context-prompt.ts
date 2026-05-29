@@ -1,3 +1,4 @@
+/** Builds current-turn runtime context text and custom messages. */
 import {
   extractInternalRuntimeContext,
   OPENCLAW_NEXT_TURN_RUNTIME_CONTEXT_HEADER,
@@ -6,6 +7,7 @@ import {
   OPENCLAW_RUNTIME_EVENT_HEADER,
 } from "../../internal-runtime-context.js";
 import type { CurrentInboundPromptContext } from "./params.js";
+/** Re-exported API for src/agents/embedded-agent-runner, starting with OPENCLAW RUNTIME CONTEXT CUSTOM TYPE. */
 export { OPENCLAW_RUNTIME_CONTEXT_CUSTOM_TYPE };
 
 const OPENCLAW_RUNTIME_EVENT_USER_PROMPT = "Continue the OpenClaw runtime event.";
@@ -18,6 +20,7 @@ type RuntimeContextPromptParts = {
   runtimeSystemContext?: string;
 };
 
+/** Shared type for Runtime Context Custom Message in src/agents/embedded-agent-runner. */
 export type RuntimeContextCustomMessage = {
   role: "custom";
   customType: string;
@@ -29,6 +32,7 @@ export type RuntimeContextCustomMessage = {
 
 type EmptyTranscriptMode = "model-prompt" | "runtime-event";
 
+/** Builds the optional header prefix for current inbound prompt context. */
 export function buildCurrentInboundPromptContextPrefix(
   context: CurrentInboundPromptContext | undefined,
   options?: { preferResumableText?: boolean },
@@ -40,6 +44,7 @@ export function buildCurrentInboundPromptContextPrefix(
   return text?.trim() ?? "";
 }
 
+/** Combines prompt text with current inbound context details. */
 export function buildCurrentInboundPrompt(params: {
   context: CurrentInboundPromptContext | undefined;
   prompt: string;
@@ -70,6 +75,7 @@ function removeLastPromptOccurrence(text: string, prompt: string): string | null
     .trim();
 }
 
+/** Splits runtime context into prompt-visible sections and custom metadata. */
 export function resolveRuntimeContextPromptParts(params: {
   effectivePrompt: string;
   transcriptPrompt?: string;
@@ -150,14 +156,17 @@ function buildRuntimeContextMessageContent(params: {
   ].join("\n");
 }
 
+/** Wraps next-turn runtime context as system context text. */
 export function buildRuntimeContextSystemContext(runtimeContext: string): string {
   return buildRuntimeContextMessageContent({ runtimeContext, kind: "next-turn" });
 }
 
+/** Wraps current event runtime context as system context text. */
 export function buildRuntimeEventSystemContext(runtimeContext: string): string {
   return buildRuntimeContextMessageContent({ runtimeContext, kind: "runtime-event" });
 }
 
+/** Builds the custom message that carries runtime context through the transcript. */
 export function buildRuntimeContextCustomMessage(
   runtimeContext: string | undefined,
 ): RuntimeContextCustomMessage | undefined {

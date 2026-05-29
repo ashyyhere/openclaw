@@ -1,3 +1,4 @@
+/** Tests lazy imported command group descriptor construction. */
 import { describe, expect, it, vi } from "vitest";
 import {
   buildCommandGroupEntries,

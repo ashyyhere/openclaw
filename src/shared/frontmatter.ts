@@ -1,13 +1,16 @@
+// shared frontmatter helpers and runtime behavior.
 import JSON5 from "json5";
 import { LEGACY_MANIFEST_KEYS, MANIFEST_KEY } from "../compat/legacy-names.js";
 import { parseBooleanValue } from "../utils/boolean.js";
 import { normalizeOptionalLowercaseString, readStringValue } from "./string-coerce.js";
 import { normalizeCsvOrLooseStringList } from "./string-normalization.js";
 
+/** Reused helper for normalize String List behavior in src/shared. */
 export function normalizeStringList(input: unknown): string[] {
   return normalizeCsvOrLooseStringList(input);
 }
 
+/** Reused helper for get Frontmatter String behavior in src/shared. */
 export function getFrontmatterString(
   frontmatter: Record<string, unknown>,
   key: string,
@@ -15,11 +18,13 @@ export function getFrontmatterString(
   return readStringValue(frontmatter[key]);
 }
 
+/** Reused helper for parse Frontmatter Bool behavior in src/shared. */
 export function parseFrontmatterBool(value: string | undefined, fallback: boolean): boolean {
   const parsed = parseBooleanValue(value);
   return parsed === undefined ? fallback : parsed;
 }
 
+/** Reused helper for resolve Open Claw Manifest Block behavior in src/shared. */
 export function resolveOpenClawManifestBlock(params: {
   frontmatter: Record<string, unknown>;
   key?: string;
@@ -48,6 +53,7 @@ export function resolveOpenClawManifestBlock(params: {
   }
 }
 
+/** Shared type for Open Claw Manifest Requires in src/shared. */
 export type OpenClawManifestRequires = {
   bins: string[];
   anyBins: string[];
@@ -55,6 +61,7 @@ export type OpenClawManifestRequires = {
   config: string[];
 };
 
+/** Reused helper for resolve Open Claw Manifest Requires behavior in src/shared. */
 export function resolveOpenClawManifestRequires(
   metadataObj: Record<string, unknown>,
 ): OpenClawManifestRequires | undefined {
@@ -73,6 +80,7 @@ export function resolveOpenClawManifestRequires(
   };
 }
 
+/** Reused helper for resolve Open Claw Manifest Install behavior in src/shared. */
 export function resolveOpenClawManifestInstall<T>(
   metadataObj: Record<string, unknown>,
   parseInstallSpec: (input: unknown) => T | undefined,
@@ -83,10 +91,12 @@ export function resolveOpenClawManifestInstall<T>(
     .filter((entry): entry is T => Boolean(entry));
 }
 
+/** Reused helper for resolve Open Claw Manifest Os behavior in src/shared. */
 export function resolveOpenClawManifestOs(metadataObj: Record<string, unknown>): string[] {
   return normalizeStringList(metadataObj.os);
 }
 
+/** Shared type for Parsed Open Claw Manifest Install Base in src/shared. */
 export type ParsedOpenClawManifestInstallBase = {
   raw: Record<string, unknown>;
   kind: string;
@@ -95,6 +105,7 @@ export type ParsedOpenClawManifestInstallBase = {
   bins?: string[];
 };
 
+/** Reused helper for parse Open Claw Manifest Install Base behavior in src/shared. */
 export function parseOpenClawManifestInstallBase(
   input: unknown,
   allowedKinds: readonly string[],
@@ -127,6 +138,7 @@ export function parseOpenClawManifestInstallBase(
   return spec;
 }
 
+/** Reused helper for apply Open Claw Manifest Install Common Fields behavior in src/shared. */
 export function applyOpenClawManifestInstallCommonFields<
   T extends { id?: string; label?: string; bins?: string[] },
 >(spec: T, parsed: Pick<ParsedOpenClawManifestInstallBase, "id" | "label" | "bins">): T {

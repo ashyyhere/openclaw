@@ -1,3 +1,4 @@
+// extensions/memory-core/src/memory embedding test mocks helpers and runtime behavior.
 import { vi, type Mock } from "vitest";
 import "./test-runtime-mocks.js";
 

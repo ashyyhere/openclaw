@@ -1,3 +1,4 @@
+// extensions/canvas/src capability helpers and runtime behavior.
 import {
   buildPluginNodeCapabilityScopedHostUrl,
   DEFAULT_PLUGIN_NODE_CAPABILITY_TTL_MS,

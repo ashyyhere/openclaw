@@ -1,3 +1,4 @@
+// extensions/pixverse index helpers and runtime behavior.
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 import { PIXVERSE_PROVIDER_ID } from "./constants.js";
 import { buildPixVerseApiKeyAuthMethod } from "./onboard.js";

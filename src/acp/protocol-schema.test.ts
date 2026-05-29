@@ -1,3 +1,4 @@
+/** Tests ACP protocol schema assumptions against the bundled SDK. */
 import { PROTOCOL_VERSION } from "@agentclientprotocol/sdk";
 import {
   zCloseSessionRequest,

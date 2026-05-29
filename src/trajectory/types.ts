@@ -1,11 +1,15 @@
+// Shared types for trajectory types behavior.
+/** Shared type for Trajectory Event Source in src/trajectory. */
 export type TrajectoryEventSource = "runtime" | "transcript" | "export";
 
+/** Shared type for Trajectory Tool Definition in src/trajectory. */
 export type TrajectoryToolDefinition = {
   name: string;
   description?: string;
   parameters?: unknown;
 };
 
+/** Shared type for Trajectory Event in src/trajectory. */
 export type TrajectoryEvent = {
   traceSchema: "openclaw-trajectory";
   schemaVersion: 1;
@@ -27,6 +31,7 @@ export type TrajectoryEvent = {
   data?: Record<string, unknown>;
 };
 
+/** Shared type for Trajectory Bundle Manifest in src/trajectory. */
 export type TrajectoryBundleManifest = {
   traceSchema: "openclaw-trajectory";
   schemaVersion: 1;
@@ -52,6 +57,7 @@ export type TrajectoryBundleManifest = {
   warnings?: TrajectoryBundleWarning[];
 };
 
+/** Shared type for Trajectory Bundle Warning in src/trajectory. */
 export type TrajectoryBundleWarning = {
   source: "session" | "runtime";
   code:

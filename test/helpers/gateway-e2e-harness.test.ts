@@ -1,3 +1,4 @@
+// Tests test/helpers gateway e2e harness test behavior.
 import { createServer, type Server } from "node:http";
 import { afterEach, describe, expect, it } from "vitest";
 import { postJson } from "./gateway-e2e-harness.js";

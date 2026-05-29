@@ -1,3 +1,4 @@
+// Tests extensions/openai default models test behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/provider-onboard";
 import { describe, expect, it } from "vitest";
 import { applyOpenAIConfig, applyOpenAIProviderConfig, OPENAI_DEFAULT_MODEL } from "./api.js";

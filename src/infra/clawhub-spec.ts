@@ -1,5 +1,7 @@
+// infra clawhub spec helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
+/** Reused helper for parse Claw Hub Plugin Spec behavior in src/infra. */
 export function parseClawHubPluginSpec(raw: string): {
   name: string;
   version?: string;

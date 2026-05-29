@@ -1,3 +1,4 @@
+// Tests config/sessions reset test behavior.
 import { beforeEach, describe, expect, it } from "vitest";
 import { setActivePluginRegistry } from "../../plugins/runtime.js";
 import { createSessionConversationTestRegistry } from "../../test-utils/session-conversation-registry.js";

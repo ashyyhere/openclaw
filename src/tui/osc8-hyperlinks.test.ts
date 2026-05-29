@@ -1,3 +1,4 @@
+// Tests tui osc8 hyperlinks test behavior.
 import { describe, expect, it } from "vitest";
 import { addOsc8Hyperlinks, extractUrls, wrapOsc8 } from "./osc8-hyperlinks.js";
 

@@ -1,3 +1,4 @@
+// config/sessions targets helpers and runtime behavior.
 import fsSync from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -12,12 +13,14 @@ import { resolveStateDir } from "../paths.js";
 import type { OpenClawConfig } from "../types.openclaw.js";
 import { resolveAgentsDirFromSessionStorePath, resolveStorePath } from "./paths.js";
 
+/** Shared type for Session Store Selection Options in src/config/sessions. */
 export type SessionStoreSelectionOptions = {
   store?: string;
   agent?: string;
   allAgents?: boolean;
 };
 
+/** Shared type for Session Store Target in src/config/sessions. */
 export type SessionStoreTarget = {
   agentId: string;
   storePath: string;
@@ -60,6 +63,7 @@ function shouldSkipDiscoveredAgentDirName(dirName: string, agentId: string): boo
   );
 }
 
+/** Reused helper for list Configured Session Store Agent Ids behavior in src/config/sessions. */
 export function listConfiguredSessionStoreAgentIds(cfg: OpenClawConfig): string[] {
   const ids = new Set(listAgentIds(cfg).map((agentId) => normalizeAgentId(agentId)));
   const addAcpAgentId = (agentId: string | undefined) => {
@@ -167,6 +171,7 @@ function toDiscoveredSessionStoreTarget(
   };
 }
 
+/** Reused helper for resolve All Agent Session Store Targets Sync behavior in src/config/sessions. */
 export function resolveAllAgentSessionStoreTargetsSync(
   cfg: OpenClawConfig,
   params: { env?: NodeJS.ProcessEnv } = {},
@@ -233,6 +238,7 @@ export function resolveAllAgentSessionStoreTargetsSync(
   return dedupeTargetsByStorePath([...validatedConfiguredTargets, ...discoveredTargets]);
 }
 
+/** Reused helper for resolve Agent Session Store Targets Sync behavior in src/config/sessions. */
 export function resolveAgentSessionStoreTargetsSync(
   cfg: OpenClawConfig,
   agentId: string,
@@ -318,6 +324,7 @@ export function resolveAgentSessionStoreTargetsSync(
   return dedupeTargetsByStorePath(targets);
 }
 
+/** Reused helper for resolve All Agent Session Store Targets behavior in src/config/sessions. */
 export async function resolveAllAgentSessionStoreTargets(
   cfg: OpenClawConfig,
   params: { env?: NodeJS.ProcessEnv } = {},
@@ -401,6 +408,7 @@ export async function resolveAllAgentSessionStoreTargets(
   return dedupeTargetsByStorePath([...validatedConfiguredTargets, ...discoveredTargets]);
 }
 
+/** Reused helper for resolve Session Store Targets behavior in src/config/sessions. */
 export function resolveSessionStoreTargets(
   cfg: OpenClawConfig,
   opts: SessionStoreSelectionOptions,

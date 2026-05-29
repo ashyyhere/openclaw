@@ -1,3 +1,4 @@
+// extensions/migrate-claude source helpers and runtime behavior.
 import os from "node:os";
 import path from "node:path";
 import { exists, isDirectory, readJsonObject, resolveHomePath } from "./helpers.js";

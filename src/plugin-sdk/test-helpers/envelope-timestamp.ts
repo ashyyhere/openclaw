@@ -1,3 +1,4 @@
+// plugin-sdk/test-helpers envelope timestamp helpers and runtime behavior.
 import {
   formatUtcTimestamp,
   formatZonedTimestamp,

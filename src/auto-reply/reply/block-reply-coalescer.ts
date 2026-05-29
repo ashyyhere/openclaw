@@ -1,8 +1,10 @@
+// Coalescing helpers for block-based reply payload delivery.
 import { resolveSendableOutboundReplyParts } from "openclaw/plugin-sdk/reply-payload";
 import { isReplyPayloadStatusNotice } from "../reply-payload.js";
 import type { ReplyPayload } from "../types.js";
 import type { BlockStreamingCoalescing } from "./block-streaming.js";
 
+/** Shared type for Block Reply Coalescer in src/auto-reply/reply. */
 export type BlockReplyCoalescer = {
   enqueue: (payload: ReplyPayload) => void;
   flush: (options?: { force?: boolean }) => Promise<void>;
@@ -10,6 +12,7 @@ export type BlockReplyCoalescer = {
   stop: () => void;
 };
 
+/** Reused helper for create Block Reply Coalescer behavior in src/auto-reply/reply. */
 export function createBlockReplyCoalescer(params: {
   config: BlockStreamingCoalescing;
   shouldAbort: () => boolean;

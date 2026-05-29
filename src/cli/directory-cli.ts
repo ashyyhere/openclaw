@@ -1,3 +1,4 @@
+/** Registers CLI commands for channel directory lookup and listing. */
 import type { Command } from "commander";
 import { formatDocsLink } from "../../packages/terminal-core/src/links.js";
 import { getTerminalTableWidth, renderTable } from "../../packages/terminal-core/src/table.js";
@@ -60,6 +61,7 @@ function printDirectoryList(params: {
   );
 }
 
+/** Reused helper for register Directory Cli behavior in src/cli. */
 export function registerDirectoryCli(program: Command) {
   const directory = program
     .command("directory")

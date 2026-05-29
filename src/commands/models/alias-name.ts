@@ -1,3 +1,5 @@
+// Normalizes user-defined model aliases for config storage and lookup.
+/** Reused helper for normalize Alias behavior in src/commands/models. */
 export function normalizeAlias(alias: string): string {
   const trimmed = alias.trim();
   if (!trimmed) {

@@ -1,3 +1,4 @@
+// ui/src/ui/chat realtime talk helpers and runtime behavior.
 import { normalizeTalkTransport } from "../../../../src/talk/talk-session-controller.js";
 import type { GatewayBrowserClient } from "../gateway.ts";
 import { GatewayRelayRealtimeTalkTransport } from "./realtime-talk-gateway-relay.ts";
@@ -15,6 +16,7 @@ import {
 } from "./realtime-talk-shared.ts";
 import { WebRtcSdpRealtimeTalkTransport } from "./realtime-talk-webrtc.ts";
 
+/** Re-exported API for ui/src/ui/chat. */
 export type {
   RealtimeTalkCallbacks,
   RealtimeTalkEvent,
@@ -22,6 +24,7 @@ export type {
   RealtimeTalkStatus,
 };
 
+/** Shared type for Realtime Talk Launch Options in ui/src/ui/chat. */
 export type RealtimeTalkLaunchOptions = {
   provider?: string;
   model?: string;
@@ -70,6 +73,7 @@ function compactLaunchParams(
   return Object.fromEntries(Object.entries(params).filter(([, value]) => value !== undefined));
 }
 
+/** Reused class for Realtime Talk Session behavior in ui/src/ui/chat. */
 export class RealtimeTalkSession {
   private transport: RealtimeTalkTransport | null = null;
   private closed = false;

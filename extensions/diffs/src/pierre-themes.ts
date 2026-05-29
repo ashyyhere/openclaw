@@ -1,3 +1,4 @@
+// extensions/diffs/src pierre themes helpers and runtime behavior.
 import { createRequire } from "node:module";
 import type { ThemeRegistrationResolved } from "@pierre/diffs";
 import { RegisteredCustomThemes, ResolvedThemes, ResolvingThemes } from "@pierre/diffs";

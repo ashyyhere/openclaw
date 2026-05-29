@@ -1,3 +1,4 @@
+// extensions/file-transfer/src/tools descriptors helpers and runtime behavior.
 import { optionalPositiveIntegerSchema } from "openclaw/plugin-sdk/channel-actions";
 import type { AnyAgentTool } from "openclaw/plugin-sdk/plugin-entry";
 import { Type } from "typebox";

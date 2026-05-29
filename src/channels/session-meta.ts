@@ -1,3 +1,4 @@
+/** Lazy bridge for recording inbound session metadata without cold-start cost. */
 import type { MsgContext } from "../auto-reply/templating.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 
@@ -10,6 +11,7 @@ function loadInboundSessionRuntime() {
   return inboundSessionRuntimePromise;
 }
 
+/** Reused helper for record Inbound Session Meta Safe behavior in src/channels. */
 export async function recordInboundSessionMetaSafe(params: {
   cfg: OpenClawConfig;
   agentId: string;

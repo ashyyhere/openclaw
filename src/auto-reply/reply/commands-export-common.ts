@@ -1,3 +1,4 @@
+// Shared helpers for exporting session artifacts from chat commands.
 import {
   resolveDefaultSessionStorePath,
   resolveSessionFilePath,
@@ -10,6 +11,7 @@ import { resolveAgentIdFromSessionKey } from "../../routing/session-key.js";
 import type { ReplyPayload } from "../types.js";
 import type { HandleCommandsParams } from "./commands-types.js";
 
+/** Shared type for Export Command Session Target in src/auto-reply/reply. */
 export interface ExportCommandSessionTarget {
   entry: SessionEntry;
   sessionFile: string;
@@ -21,6 +23,7 @@ function escapeRegExp(value: string): string {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
+/** Reused helper for parse Export Command Output Path behavior in src/auto-reply/reply. */
 export function parseExportCommandOutputPath(
   commandBodyNormalized: string,
   aliases: readonly string[],
@@ -40,6 +43,7 @@ export function parseExportCommandOutputPath(
   return { outputPath };
 }
 
+/** Reused helper for resolve Export Command Session Target behavior in src/auto-reply/reply. */
 export function resolveExportCommandSessionTarget(
   params: HandleCommandsParams,
 ): ExportCommandSessionTarget | ReplyPayload {
@@ -65,6 +69,7 @@ export function resolveExportCommandSessionTarget(
   }
 }
 
+/** Reused helper for is Reply Payload behavior in src/auto-reply/reply. */
 export function isReplyPayload(
   value: ExportCommandSessionTarget | ReplyPayload,
 ): value is ReplyPayload {

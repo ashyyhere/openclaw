@@ -1,3 +1,4 @@
+// ACP install hint helpers for missing runtime dependencies.
 import { existsSync } from "node:fs";
 import path from "node:path";
 import type { OpenClawConfig } from "../../../config/types.openclaw.js";
@@ -7,6 +8,7 @@ import {
   normalizeOptionalString,
 } from "../../../shared/string-coerce.js";
 
+/** Reused helper for resolve Acp Install Command Hint behavior in src/auto-reply/reply. */
 export function resolveAcpInstallCommandHint(cfg: OpenClawConfig): string {
   const configured = normalizeOptionalString(cfg.acp?.runtime?.installCommand);
   if (configured) {

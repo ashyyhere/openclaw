@@ -1,3 +1,4 @@
+// extensions/mattermost/src/mattermost monitor slash helpers and runtime behavior.
 import { isLoopbackHost } from "openclaw/plugin-sdk/gateway-runtime";
 import type { ResolvedMattermostAccount } from "./accounts.js";
 import {

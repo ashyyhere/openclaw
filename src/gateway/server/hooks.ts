@@ -1,3 +1,4 @@
+// gateway/server hooks helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import { sanitizeInboundSystemTags } from "../../auto-reply/reply/inbound-text.js";
 import type { CliDeps } from "../../cli/deps.types.js";
@@ -84,6 +85,7 @@ function formatHookRunWarningConsoleMessage(params: {
   return parts.join(" ");
 }
 
+/** Reused helper for create Gateway Hooks Request Handler behavior in src/gateway/server. */
 export function createGatewayHooksRequestHandler(params: {
   deps: CliDeps;
   getHooksConfig: () => HooksConfigResolved | null;

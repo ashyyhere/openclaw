@@ -1,3 +1,4 @@
+// extensions/matrix index helpers and runtime behavior.
 import {
   defineBundledChannelEntry,
   type OpenClawPluginApi,

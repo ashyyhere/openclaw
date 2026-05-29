@@ -1,3 +1,4 @@
+// extensions/codex media understanding provider helpers and runtime behavior.
 import {
   type JsonSchemaObject,
   validateJsonSchemaValue,

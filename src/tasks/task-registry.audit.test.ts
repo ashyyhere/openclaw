@@ -1,3 +1,4 @@
+// Tests tasks task registry audit test behavior.
 import { describe, expect, it } from "vitest";
 import {
   listTaskAuditFindings,

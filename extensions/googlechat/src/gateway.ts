@@ -1,3 +1,4 @@
+// extensions/googlechat/src gateway helpers and runtime behavior.
 import {
   createAccountStatusSink,
   runPassiveAccountLifecycle,

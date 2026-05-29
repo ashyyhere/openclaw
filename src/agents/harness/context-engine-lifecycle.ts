@@ -1,3 +1,4 @@
+/** Bridges context-engine bootstrap, assembly, finalize, and maintenance in harnesses. */
 import type { MemoryCitationsMode } from "../../config/types.memory.js";
 import type { ContextEngine, ContextEngineRuntimeContext } from "../../context-engine/types.js";
 import { runContextEngineMaintenance } from "../embedded-agent-runner/context-engine-maintenance.js";
@@ -9,6 +10,7 @@ import { stripRuntimeContextCustomMessages } from "../internal-runtime-context.j
 import type { AgentMessage } from "../runtime/index.js";
 import type { SessionWriteLockAcquireTimeoutConfig } from "../session-write-lock.js";
 
+/** Shared type for Harness Context Engine in src/agents/harness. */
 export type HarnessContextEngine = ContextEngine;
 
 /**

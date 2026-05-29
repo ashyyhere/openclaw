@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src topic conversation test behavior.
 import { describe, expect, it } from "vitest";
 import { parseTelegramTopicConversation } from "./topic-conversation.js";
 

@@ -1,3 +1,4 @@
+// extensions/copilot/src auth bridge helpers and runtime behavior.
 import { createHash } from "node:crypto";
 import { homedir as osHomedir } from "node:os";
 import { join, normalize, resolve, sep } from "node:path";

@@ -1,3 +1,4 @@
+// extensions/nextcloud-talk/src setup surface helpers and runtime behavior.
 import { DEFAULT_ACCOUNT_ID } from "openclaw/plugin-sdk/routing";
 import { hasConfiguredSecretInput } from "openclaw/plugin-sdk/secret-input";
 import {

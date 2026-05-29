@@ -1,3 +1,4 @@
+/** Shared gateway CLI labels, service names, and output helpers. */
 import {
   resolveGatewayLaunchAgentLabel,
   resolveGatewaySystemdServiceName,
@@ -30,6 +31,7 @@ function renderGatewayServiceStopHints(env: NodeJS.ProcessEnv = process.env): st
   }
 }
 
+/** Reused helper for maybe Explain Gateway Service Stop behavior in src/cli/gateway-cli. */
 export async function maybeExplainGatewayServiceStop() {
   const service = resolveGatewayService();
   let loaded: boolean | null = null;

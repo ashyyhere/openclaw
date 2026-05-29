@@ -1,3 +1,4 @@
+// Tests test/scripts format generated module test behavior.
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { resolveGeneratedModuleFormatter } from "../../scripts/lib/format-generated-module.mjs";

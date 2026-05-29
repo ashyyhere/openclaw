@@ -1,3 +1,4 @@
+/** Covers node list parsing and selection helpers. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const gatewayMocks = vi.hoisted(() => ({

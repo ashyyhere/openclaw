@@ -1,5 +1,7 @@
+/** Creates SDK sessions with embedded-agent resource-loader wiring. */
 import type { CreateAgentSessionOptions } from "../../sessions/index.js";
 
+/** Shared type for Embedded Agent Session Options in src/agents/embedded-agent-runner. */
 export type EmbeddedAgentSessionOptions = {
   cwd: string;
   agentDir: string;
@@ -15,6 +17,7 @@ export type EmbeddedAgentSessionOptions = {
   withSessionWriteLock?: CreateAgentSessionOptions["withSessionWriteLock"];
 };
 
+/** Runs a callback with session options that include an embedded resource loader. */
 export async function createEmbeddedAgentSessionWithResourceLoader<Result>(params: {
   createAgentSession: (options: EmbeddedAgentSessionOptions) => Promise<Result> | Result;
   options: EmbeddedAgentSessionOptions;

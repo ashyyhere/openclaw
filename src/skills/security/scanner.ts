@@ -1,3 +1,4 @@
+// security skill scanner helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { hasErrnoCode } from "../../infra/errors.js";
@@ -7,8 +8,10 @@ import { isPathInside } from "../../security/scan-paths.js";
 // Types
 // ---------------------------------------------------------------------------
 
+/** Shared type for Skill Scan Severity in src/security. */
 export type SkillScanSeverity = "info" | "warn" | "critical";
 
+/** Shared type for Skill Scan Finding in src/security. */
 export type SkillScanFinding = {
   ruleId: string;
   severity: SkillScanSeverity;
@@ -18,6 +21,7 @@ export type SkillScanFinding = {
   evidence: string;
 };
 
+/** Shared type for Skill Scan Summary in src/security. */
 export type SkillScanSummary = {
   scannedFiles: number;
   critical: number;
@@ -27,6 +31,7 @@ export type SkillScanSummary = {
   findings: SkillScanFinding[];
 };
 
+/** Shared type for Skill Scan Options in src/security. */
 export type SkillScanOptions = {
   excludeTestFiles?: boolean;
   includeHiddenDirectories?: boolean;
@@ -83,6 +88,7 @@ type DirEntryCacheEntry = {
 };
 const DIR_ENTRY_CACHE = new Map<string, DirEntryCacheEntry>();
 
+/** Reused helper for is Scannable behavior in src/security. */
 export function isScannable(filePath: string): boolean {
   return SCANNABLE_EXTENSIONS.has(path.extname(filePath).toLowerCase());
 }
@@ -128,6 +134,7 @@ function setCachedDirEntries(dirPath: string, entry: DirEntryCacheEntry): void {
   DIR_ENTRY_CACHE.set(dirPath, entry);
 }
 
+/** Reused helper for clear Skill Scan Cache For Test behavior in src/security. */
 export function clearSkillScanCacheForTest(): void {
   FILE_SCAN_CACHE.clear();
   DIR_ENTRY_CACHE.clear();
@@ -389,6 +396,7 @@ function findSourceRuleMatch(params: {
   return { line: 1, evidence: params.source.slice(0, 120) };
 }
 
+/** Reused helper for scan Source behavior in src/security. */
 export function scanSource(source: string, filePath: string): SkillScanFinding[] {
   const findings: SkillScanFinding[] = [];
   const lines = source.split("\n");
@@ -770,6 +778,7 @@ async function scanFileWithCache(params: {
   return { scanned: true, findings };
 }
 
+/** Reused helper for scan Directory behavior in src/security. */
 export async function scanDirectory(
   dirPath: string,
   opts?: SkillScanOptions,
@@ -792,6 +801,7 @@ export async function scanDirectory(
   return allFindings;
 }
 
+/** Reused helper for scan Directory With Summary behavior in src/security. */
 export async function scanDirectoryWithSummary(
   dirPath: string,
   opts?: SkillScanOptions,

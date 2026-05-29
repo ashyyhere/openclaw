@@ -102,6 +102,7 @@ function unwrapPromptDataWrapperLines(text: string): string {
   return changed ? output.join("\n") : text;
 }
 
+/** Reused helper for strip Internal Runtime Scaffolding behavior in src/infra/outbound. */
 export function stripInternalRuntimeScaffolding(text: string): string {
   let stripped = unwrapPromptDataWrapperLines(text)
     .replace(INTERNAL_RUNTIME_SCAFFOLDING_BLOCK_RE, "")

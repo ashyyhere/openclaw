@@ -1,3 +1,4 @@
+// link-understanding detect helpers and runtime behavior.
 import { isBlockedHostnameOrIp } from "../infra/net/ssrf.js";
 import { DEFAULT_MAX_LINKS } from "./defaults.js";
 
@@ -31,6 +32,7 @@ function isAllowedUrl(raw: string): boolean {
   }
 }
 
+/** Reused helper for extract Links From Message behavior in src/link-understanding. */
 export function extractLinksFromMessage(message: string, opts?: { maxLinks?: number }): string[] {
   const source = message?.trim();
   if (!source) {

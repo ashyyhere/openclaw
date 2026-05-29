@@ -1,3 +1,4 @@
+// logging diagnostic memory helpers and runtime behavior.
 import {
   emitInternalDiagnosticEvent as emitDiagnosticEvent,
   type DiagnosticMemoryPressureEvent,
@@ -186,6 +187,7 @@ function logMemoryPressure(params: {
   }
 }
 
+/** Reused helper for emit Diagnostic Memory Sample behavior in src/logging. */
 export function emitDiagnosticMemorySample(options?: {
   now?: number;
   memoryUsage?: NodeJS.MemoryUsage;
@@ -246,6 +248,7 @@ export function emitDiagnosticMemorySample(options?: {
   return memory;
 }
 
+/** Reused helper for reset Diagnostic Memory For Test behavior in src/logging. */
 export function resetDiagnosticMemoryForTest(): void {
   state.lastSample = null;
   state.lastPressureAtByKey.clear();

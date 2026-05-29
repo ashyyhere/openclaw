@@ -1,3 +1,4 @@
+// plugins loader test fixtures helpers and runtime behavior.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -6,8 +7,11 @@ import { withEnv } from "../test-utils/env.js";
 import { clearPluginLoaderCache, loadOpenClawPlugins } from "./loader.js";
 import { resetPluginRuntimeStateForTest } from "./runtime.js";
 
+/** Shared type for Temp Plugin in src/plugins. */
 export type TempPlugin = { dir: string; file: string; id: string };
+/** Shared type for Plugin Load Config in src/plugins. */
 export type PluginLoadConfig = NonNullable<Parameters<typeof loadOpenClawPlugins>[0]>["config"];
+/** Shared type for Plugin Registry in src/plugins. */
 export type PluginRegistry = ReturnType<typeof loadOpenClawPlugins>;
 
 function chmodSafeDir(dir: string) {
@@ -23,6 +27,7 @@ function mkdtempSafe(prefix: string) {
   return dir;
 }
 
+/** Reused helper for mkdir Safe behavior in src/plugins. */
 export function mkdirSafe(dir: string) {
   fs.mkdirSync(dir, { recursive: true });
   chmodSafeDir(dir);
@@ -33,12 +38,14 @@ let tempDirIndex = 0;
 const prevBundledDir = process.env.OPENCLAW_BUNDLED_PLUGINS_DIR;
 const prevDisableBundledPlugins = process.env.OPENCLAW_DISABLE_BUNDLED_PLUGINS;
 
+/** Reused constant for EMPTY PLUGIN SCHEMA behavior in src/plugins. */
 export const EMPTY_PLUGIN_SCHEMA = {
   type: "object",
   additionalProperties: false,
   properties: {},
 };
 
+/** Reused helper for inline Channel Plugin Entry Factory Source behavior in src/plugins. */
 export function inlineChannelPluginEntryFactorySource(): string {
   return `function defineChannelPluginEntry(options) {
   return {
@@ -70,12 +77,14 @@ export function inlineChannelPluginEntryFactorySource(): string {
 `;
 }
 
+/** Reused helper for make Temp Dir behavior in src/plugins. */
 export function makeTempDir() {
   const dir = path.join(fixtureRoot, `case-${tempDirIndex++}`);
   mkdirSafe(dir);
   return dir;
 }
 
+/** Reused helper for write Plugin behavior in src/plugins. */
 export function writePlugin(params: {
   id: string;
   body: string;
@@ -103,11 +112,13 @@ export function writePlugin(params: {
   return { dir, file, id: params.id };
 }
 
+/** Reused helper for use No Bundled Plugins behavior in src/plugins. */
 export function useNoBundledPlugins() {
   process.env.OPENCLAW_DISABLE_BUNDLED_PLUGINS = "1";
   delete process.env.OPENCLAW_BUNDLED_PLUGINS_DIR;
 }
 
+/** Reused helper for load Bundle Fixture behavior in src/plugins. */
 export function loadBundleFixture(params: {
   pluginId: string;
   build: (bundleRoot: string) => void;
@@ -137,6 +148,7 @@ export function loadBundleFixture(params: {
   );
 }
 
+/** Reused helper for reset Plugin Loader Test State For Test behavior in src/plugins. */
 export function resetPluginLoaderTestStateForTest() {
   clearPluginLoaderCache();
   resetPluginRuntimeStateForTest();
@@ -153,6 +165,7 @@ export function resetPluginLoaderTestStateForTest() {
   }
 }
 
+/** Reused helper for cleanup Plugin Loader Fixtures For Test behavior in src/plugins. */
 export function cleanupPluginLoaderFixturesForTest() {
   try {
     fs.rmSync(fixtureRoot, { recursive: true, force: true });

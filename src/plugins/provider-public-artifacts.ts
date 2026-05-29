@@ -17,6 +17,7 @@ import { loadBundledPluginPublicArtifactModuleSync } from "./public-surface-load
 const PROVIDER_POLICY_ARTIFACT_CANDIDATES = ["provider-policy-api.js"] as const;
 const providerPolicySurfaceByPluginId = new Map<string, BundledProviderPolicySurface | null>();
 
+/** Shared type for Bundled Provider Policy Surface in src/plugins. */
 export type BundledProviderPolicySurface = {
   normalizeConfig?: (ctx: ProviderNormalizeConfigContext) => ModelProviderConfig | null | undefined;
   applyConfigDefaults?: (

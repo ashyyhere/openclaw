@@ -1,3 +1,4 @@
+/** Resolves sandbox config from global, agent, and session settings. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { SandboxSshSettings } from "../../config/types.sandbox.js";
 import { normalizeSecretInputString } from "../../config/types.secrets.js";
@@ -29,6 +30,7 @@ import type {
   SandboxSshConfig,
 } from "./types.js";
 
+/** Reused constant for DANGEROUS SANDBOX DOCKER BOOLEAN KEYS behavior in src/agents/sandbox. */
 export const DANGEROUS_SANDBOX_DOCKER_BOOLEAN_KEYS = [
   "dangerouslyAllowReservedContainerTargets",
   "dangerouslyAllowExternalBindSources",
@@ -56,6 +58,7 @@ function resolveDangerousSandboxDockerBooleans(
   return resolved;
 }
 
+/** Builds Docker create flags for sandbox browser containers. */
 export function resolveSandboxBrowserDockerCreateConfig(params: {
   docker: SandboxDockerConfig;
   browser: SandboxBrowserConfig;
@@ -72,6 +75,7 @@ export function resolveSandboxBrowserDockerCreateConfig(params: {
   return params.browser.binds !== undefined ? { ...base, binds: params.browser.binds } : base;
 }
 
+/** Resolves per-agent/session sandbox scope and legacy per-session overrides. */
 export function resolveSandboxScope(params: {
   scope?: SandboxScope;
   perSession?: boolean;
@@ -85,6 +89,7 @@ export function resolveSandboxScope(params: {
   return "agent";
 }
 
+/** Resolves Docker sandbox runtime config with defaults applied. */
 export function resolveSandboxDockerConfig(params: {
   scope: SandboxScope;
   globalDocker?: Partial<SandboxDockerConfig>;
@@ -132,6 +137,7 @@ export function resolveSandboxDockerConfig(params: {
   };
 }
 
+/** Resolves browser container config for sandbox sessions. */
 export function resolveSandboxBrowserConfig(params: {
   scope: SandboxScope;
   globalBrowser?: Partial<SandboxBrowserConfig>;
@@ -166,6 +172,7 @@ export function resolveSandboxBrowserConfig(params: {
   };
 }
 
+/** Resolves pruning limits for stale sandbox containers. */
 export function resolveSandboxPruneConfig(params: {
   scope: SandboxScope;
   globalPrune?: Partial<SandboxPruneConfig>;
@@ -188,6 +195,7 @@ function normalizeRemoteRoot(value: string | undefined, fallback: string): strin
   return posix.replace(/\/+$/g, "") || "/";
 }
 
+/** Resolves SSH sandbox backend config. */
 export function resolveSandboxSshConfig(params: {
   scope: SandboxScope;
   globalSsh?: Partial<SandboxSshSettings>;
@@ -222,6 +230,7 @@ export function resolveSandboxSshConfig(params: {
   };
 }
 
+/** Resolves the complete sandbox config for an agent/session pair. */
 export function resolveSandboxConfigForAgent(
   cfg?: OpenClawConfig,
   agentId?: string,

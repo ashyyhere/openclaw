@@ -1,3 +1,4 @@
+// Tests extensions/line/src monitor durable test behavior.
 import { describe, expect, it } from "vitest";
 import { resolveLineDurableReplyOptions } from "./monitor-durable.js";
 

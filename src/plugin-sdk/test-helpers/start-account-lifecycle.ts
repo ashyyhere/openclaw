@@ -1,3 +1,4 @@
+// plugin-sdk/test-helpers start account lifecycle helpers and runtime behavior.
 import { expect, vi } from "vitest";
 import type { ChannelAccountSnapshot, ChannelGatewayContext } from "../testing.js";
 import { createStartAccountContext } from "./start-account-context.js";

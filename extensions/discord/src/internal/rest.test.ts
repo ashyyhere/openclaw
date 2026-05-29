@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/internal rest test behavior.
 import { createServer, type Server } from "node:http";
 import { fetch as undiciFetch } from "undici";
 import { afterEach, describe, expect, it, vi } from "vitest";

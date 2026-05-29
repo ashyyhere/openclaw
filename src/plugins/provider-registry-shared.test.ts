@@ -1,3 +1,4 @@
+// Tests plugins provider registry shared test behavior.
 import { describe, expect, it } from "vitest";
 import { buildCapabilityProviderMaps } from "./provider-registry-shared.js";
 

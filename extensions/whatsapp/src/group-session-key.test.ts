@@ -1,3 +1,4 @@
+// Tests extensions/whatsapp/src group session key test behavior.
 import { describe, expect, it } from "vitest";
 import { resolveWhatsAppGroupSessionRoute, testing } from "./group-session-key.js";
 

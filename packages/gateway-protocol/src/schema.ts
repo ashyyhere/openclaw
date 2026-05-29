@@ -1,3 +1,4 @@
+// packages/gateway-protocol/src schema helpers and runtime behavior.
 export * from "./schema/primitives.js";
 export * from "./schema/agent.js";
 export * from "./schema/agents-models-skills.js";

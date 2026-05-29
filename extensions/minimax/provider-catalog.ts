@@ -1,3 +1,4 @@
+// extensions/minimax provider catalog helpers and runtime behavior.
 import type {
   ModelDefinitionConfig,
   ModelProviderConfig,

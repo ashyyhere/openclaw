@@ -1,3 +1,4 @@
+// Shared types for extensions/discord/src/monitor message handler preflight types behavior.
 import type { InboundEventKind } from "openclaw/plugin-sdk/channel-inbound";
 import type { ChannelBotLoopProtectionFacts } from "openclaw/plugin-sdk/channel-inbound";
 import type { OpenClawConfig, ReplyToMode } from "openclaw/plugin-sdk/config-contracts";

@@ -1,3 +1,4 @@
+// scripts check live cache helpers and runtime behavior.
 import { runLiveCacheRegression } from "../src/agents/live-cache-regression-runner.js";
 import { LIVE_CACHE_TEST_ENABLED, logLiveCache } from "../src/agents/live-cache-test-support.js";
 

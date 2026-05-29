@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/monitor provider test behavior.
 import { EventEmitter } from "node:events";
 import type { ChannelRuntimeSurface } from "openclaw/plugin-sdk/channel-contract";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";

@@ -1,3 +1,4 @@
+// extensions/xiaomi onboard helpers and runtime behavior.
 import {
   createDefaultModelsPresetAppliers,
   type OpenClawConfig,

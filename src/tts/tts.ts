@@ -1,3 +1,5 @@
+// tts tts helpers and runtime behavior.
+/** Re-exported API for src/tts. */
 export {
   testApi as _test,
   testApi,

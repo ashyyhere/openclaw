@@ -1,3 +1,4 @@
+// Tests extensions/admin-http-rpc/src handler test behavior.
 import { Readable } from "node:stream";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { handleAdminHttpRpcRequest } from "./handler.js";

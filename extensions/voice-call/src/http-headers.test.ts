@@ -1,3 +1,4 @@
+// Tests extensions/voice-call/src http headers test behavior.
 import { describe, expect, it } from "vitest";
 import { getHeader } from "./http-headers.js";
 

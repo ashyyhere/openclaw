@@ -1,3 +1,4 @@
+// gateway/server-methods cron helpers and runtime behavior.
 import {
   ErrorCodes,
   errorShape,
@@ -161,6 +162,7 @@ function assertValidCronUpdateDelivery(params: {
   });
 }
 
+/** Reused constant for cron Handlers behavior in src/gateway/server-methods. */
 export const cronHandlers: GatewayRequestHandlers = {
   wake: ({ params, respond, context }) => {
     if (!validateWakeParams(params)) {

@@ -1,3 +1,4 @@
+/** Tests compaction retry behavior for summary generation failures. */
 import type { AgentMessage } from "openclaw/plugin-sdk/agent-core";
 import type { ExtensionContext } from "openclaw/plugin-sdk/agent-sessions";
 import * as agentSessions from "openclaw/plugin-sdk/agent-sessions";

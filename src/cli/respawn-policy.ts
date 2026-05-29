@@ -1,3 +1,4 @@
+/** Decides whether CLI startup should respawn under a different runtime. */
 import { resolveCliArgvInvocation } from "./argv-invocation.js";
 import { getCommandPositionalsWithRootOptions } from "./argv.js";
 
@@ -40,6 +41,7 @@ function isForegroundGatewayRunArgv(argv: string[]): boolean {
   return positionals.length === 0 || (positionals.length === 1 && positionals[0] === "run");
 }
 
+/** Reused helper for should Skip Respawn For Argv behavior in src/cli. */
 export function shouldSkipRespawnForArgv(argv: string[]): boolean {
   const invocation = resolveCliArgvInvocation(argv);
   return (
@@ -49,6 +51,7 @@ export function shouldSkipRespawnForArgv(argv: string[]): boolean {
   );
 }
 
+/** Reused helper for should Skip Startup Environment Respawn For Argv behavior in src/cli. */
 export function shouldSkipStartupEnvironmentRespawnForArgv(argv: string[]): boolean {
   const invocation = resolveCliArgvInvocation(argv);
   return (

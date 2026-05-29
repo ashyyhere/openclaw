@@ -1,3 +1,4 @@
+// config recovery policy helpers and runtime behavior.
 import type { ConfigFileSnapshot, ConfigValidationIssue } from "./types.openclaw.js";
 
 const PLUGIN_ENTRY_PATH_PREFIX = "plugins.entries.";
@@ -25,6 +26,7 @@ function isPluginPolicyIssue(issue: ConfigValidationIssue): boolean {
   );
 }
 
+/** Reused helper for is Plugin Packaging Runtime Output Issue behavior in src/config. */
 export function isPluginPackagingRuntimeOutputIssue(issue: ConfigValidationIssue): boolean {
   const path = issue.path.trim();
   const message = issue.message.trim().toLowerCase();

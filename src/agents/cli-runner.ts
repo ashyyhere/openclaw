@@ -1,3 +1,4 @@
+/** Orchestrates prepared CLI backend runs, hooks, transcript updates, and cleanup. */
 import type { ReplyPayload } from "../auto-reply/reply-payload.js";
 import { SILENT_REPLY_TOKEN } from "../auto-reply/tokens.js";
 import { formatErrorMessage } from "../infra/errors.js";
@@ -252,6 +253,7 @@ async function finalizeCliContextEngineTurn(params: {
   }
 }
 
+/** Prepare and execute one CLI-backed agent turn. */
 export async function runCliAgent(params: RunCliAgentParams): Promise<EmbeddedAgentRunResult> {
   // Cron gate must fire before prepareCliRunContext — that call allocates
   // backend resources released only by runPreparedCliAgent's try…finally.
@@ -322,6 +324,7 @@ export async function runCliAgent(params: RunCliAgentParams): Promise<EmbeddedAg
   }
 }
 
+/** Execute an already-prepared CLI run context and finalize agent lifecycle hooks. */
 export async function runPreparedCliAgent(
   context: PreparedCliRunContext,
 ): Promise<EmbeddedAgentRunResult> {
@@ -808,11 +811,13 @@ export async function runPreparedCliAgent(
   }
 }
 
+/** Compatibility params for callers still using the Claude-specific CLI wrapper. */
 export type RunClaudeCliAgentParams = Omit<RunCliAgentParams, "provider" | "cliSessionId"> & {
   provider?: string;
   claudeSessionId?: string;
 };
 
+/** Convert Claude-specific wrapper params into the generic CLI runner contract. */
 export function buildRunClaudeCliAgentParams(params: RunClaudeCliAgentParams): RunCliAgentParams {
   return {
     sessionId: params.sessionId,
@@ -849,6 +854,7 @@ export function buildRunClaudeCliAgentParams(params: RunClaudeCliAgentParams): R
   };
 }
 
+/** Run the Claude CLI through the generic CLI agent path. */
 export async function runClaudeCliAgent(
   params: RunClaudeCliAgentParams,
 ): Promise<EmbeddedAgentRunResult> {

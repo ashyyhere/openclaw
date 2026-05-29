@@ -1,3 +1,4 @@
+// Tests extensions/zalo runtime api test behavior.
 import { describe, expect, it } from "vitest";
 import * as runtime from "./runtime-api.js";
 

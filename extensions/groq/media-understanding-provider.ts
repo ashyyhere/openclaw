@@ -1,3 +1,4 @@
+// extensions/groq media understanding provider helpers and runtime behavior.
 import {
   transcribeOpenAiCompatibleAudio,
   type MediaUnderstandingProvider,

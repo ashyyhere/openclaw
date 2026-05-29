@@ -1,11 +1,14 @@
+// Slash command parser for set/unset forms.
 import { parseSlashCommandOrNull } from "./commands-slash-parse.js";
 import { parseConfigValue } from "./config-value.js";
 
+/** Shared type for Set Unset Parse Result in src/auto-reply/reply. */
 export type SetUnsetParseResult =
   | { kind: "set"; path: string; value: unknown }
   | { kind: "unset"; path: string }
   | { kind: "error"; message: string };
 
+/** Reused helper for parse Set Unset Command behavior in src/auto-reply/reply. */
 export function parseSetUnsetCommand(params: {
   slash: string;
   action: "set" | "unset";
@@ -38,6 +41,7 @@ export function parseSetUnsetCommand(params: {
   return { kind: "set", path, value: parsed.value };
 }
 
+/** Reused helper for parse Set Unset Command Action behavior in src/auto-reply/reply. */
 export function parseSetUnsetCommandAction<T>(params: {
   slash: string;
   action: string;
@@ -62,6 +66,7 @@ export function parseSetUnsetCommandAction<T>(params: {
     : params.onUnset(parsed.path);
 }
 
+/** Reused helper for parse Slash Command With Set Unset behavior in src/auto-reply/reply. */
 export function parseSlashCommandWithSetUnset<T>(params: {
   raw: string;
   slash: string;

@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src/matrix sdk test behavior.
 import "fake-indexeddb/auto";
 import { EventEmitter } from "node:events";
 import fs from "node:fs";

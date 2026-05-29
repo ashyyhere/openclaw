@@ -1,3 +1,4 @@
+/** Summarizes daemon service status for status output. */
 import {
   summarizeGatewayServiceLayout,
   type GatewayServiceLayoutSummary,
@@ -5,6 +6,7 @@ import {
 import type { GatewayServiceRuntime } from "../daemon/service-runtime.js";
 import { readGatewayServiceState, type GatewayService } from "../daemon/service.js";
 
+/** Shared type for Service Status Summary in src/commands. */
 export type ServiceStatusSummary = {
   label: string;
   installed: boolean | null;
@@ -16,6 +18,7 @@ export type ServiceStatusSummary = {
   layout?: GatewayServiceLayoutSummary;
 };
 
+/** Reused helper for read Service Status Summary behavior in src/commands. */
 export async function readServiceStatusSummary(
   service: GatewayService,
   fallbackLabel: string,

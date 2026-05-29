@@ -1,3 +1,4 @@
+// Tests extensions/codex/src/app-server plugin inventory test behavior.
 import { describe, expect, it } from "vitest";
 import { CodexAppInventoryCache } from "./app-inventory-cache.js";
 import { CODEX_PLUGINS_MARKETPLACE_NAME } from "./config.js";

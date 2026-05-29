@@ -1,3 +1,4 @@
+// extensions/whatsapp/src image preview helpers and runtime behavior.
 import type { AnyMessageContent } from "baileys";
 import { getImageMetadata, resizeToJpeg } from "openclaw/plugin-sdk/media-runtime";
 

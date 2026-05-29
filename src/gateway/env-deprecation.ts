@@ -1,3 +1,4 @@
+// gateway env deprecation helpers and runtime behavior.
 import { isVitestRuntimeEnv } from "../infra/env.js";
 
 const LEGACY_ENV_PREFIXES = ["CLAWDBOT_", "MOLTBOT_"] as const;
@@ -5,6 +6,7 @@ type LegacyEnvPrefix = (typeof LEGACY_ENV_PREFIXES)[number];
 
 let warned = false;
 
+/** Reused helper for warn Legacy Open Claw Env Vars behavior in src/gateway. */
 export function warnLegacyOpenClawEnvVars(env: NodeJS.ProcessEnv = process.env): void {
   if (warned || isVitestRuntimeEnv(env)) {
     return;
@@ -37,6 +39,7 @@ export function warnLegacyOpenClawEnvVars(env: NodeJS.ProcessEnv = process.env):
   warned = true;
 }
 
+/** Reused helper for reset Legacy Open Claw Env Warning For Test behavior in src/gateway. */
 export function resetLegacyOpenClawEnvWarningForTest(): void {
   warned = false;
 }

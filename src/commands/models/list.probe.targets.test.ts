@@ -1,3 +1,4 @@
+// Tests auth probe target discovery from profiles, env, config, and secret refs.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { AuthProfileStore } from "../../agents/auth-profiles.js";
 import type { ModelCatalogEntry } from "../../agents/model-catalog.js";

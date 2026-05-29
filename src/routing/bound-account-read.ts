@@ -1,3 +1,4 @@
+// routing bound account read helpers and runtime behavior.
 import { normalizeChatType, type ChatType } from "../channels/chat-type.js";
 import { listRouteBindings } from "../config/bindings.js";
 import type { AgentRouteBinding } from "../config/types.agents.js";
@@ -57,6 +58,7 @@ function buildExactPeerIdSet(params: {
   return exactPeerIds;
 }
 
+/** Reused helper for resolve First Bound Account Id behavior in src/routing. */
 export function resolveFirstBoundAccountId(params: {
   cfg: OpenClawConfig;
   channelId: string;

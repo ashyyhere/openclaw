@@ -1,3 +1,4 @@
+// Remote non-interactive onboarding writes gateway connection config without local daemon setup.
 import { formatCliCommand } from "../../cli/command-format.js";
 import { logConfigUpdated } from "../../config/logging.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
@@ -8,6 +9,7 @@ import { applyWizardMetadata } from "../onboard-helpers.js";
 import type { OnboardOptions } from "../onboard-types.js";
 import { commitNonInteractiveOnboardConfig } from "./config-write.js";
 
+/** Reused helper for run Non Interactive Remote Setup behavior in src/commands/onboard-non-interactive. */
 export async function runNonInteractiveRemoteSetup(params: {
   opts: OnboardOptions;
   runtime: RuntimeEnv;

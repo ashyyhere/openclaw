@@ -1,3 +1,4 @@
+// Tests extensions/copilot/src sdk loader test behavior.
 import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";

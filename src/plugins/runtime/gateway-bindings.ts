@@ -1,3 +1,4 @@
+// plugins/runtime gateway bindings helpers and runtime behavior.
 import { resolveGlobalSingleton } from "../../shared/global-singleton.js";
 import type { PluginRuntime } from "./types.js";
 
@@ -10,6 +11,7 @@ type GatewaySubagentState = {
   nodes: PluginRuntime["nodes"] | undefined;
 };
 
+/** Reused constant for gateway Subagent State behavior in src/plugins/runtime. */
 export const gatewaySubagentState = resolveGlobalSingleton<GatewaySubagentState>(
   GATEWAY_SUBAGENT_SYMBOL,
   () => ({
@@ -28,6 +30,7 @@ export function setGatewaySubagentRuntime(subagent: PluginRuntime["subagent"]): 
   gatewaySubagentState.subagent = subagent;
 }
 
+/** Reused helper for set Gateway Nodes Runtime behavior in src/plugins/runtime. */
 export function setGatewayNodesRuntime(nodes: PluginRuntime["nodes"]): void {
   gatewaySubagentState.nodes = nodes;
 }

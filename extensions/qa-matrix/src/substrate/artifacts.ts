@@ -1,3 +1,4 @@
+// extensions/qa-matrix/src/substrate artifacts helpers and runtime behavior.
 import type { MatrixQaObservedEvent } from "./events.js";
 
 export function buildMatrixQaObservedEventsArtifact(params: {

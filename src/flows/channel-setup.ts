@@ -1,3 +1,4 @@
+// flows channel setup helpers and runtime behavior.
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../agents/agent-scope.js";
 import { getBundledChannelSetupPlugin } from "../channels/plugins/bundled.js";
 import { resolveChannelDefaultAccountId } from "../channels/plugins/helpers.js";
@@ -52,8 +53,10 @@ import {
   resolveChannelSetupSelectionContributions,
   resolveQuickstartDefault,
 } from "./channel-setup.status.js";
+/** Re-exported API for src/flows, starting with note Channel Status. */
 export { noteChannelStatus } from "./channel-setup.status.js";
 
+/** Reused helper for create Channel Onboarding Post Write Hook Collector behavior in src/flows. */
 export function createChannelOnboardingPostWriteHookCollector() {
   const hooks = new Map<string, ChannelOnboardingPostWriteHook>();
   return {
@@ -68,6 +71,7 @@ export function createChannelOnboardingPostWriteHookCollector() {
   };
 }
 
+/** Reused helper for run Collected Channel Onboarding Post Write Hooks behavior in src/flows. */
 export async function runCollectedChannelOnboardingPostWriteHooks(params: {
   hooks: ChannelOnboardingPostWriteHook[];
   cfg: OpenClawConfig;
@@ -85,6 +89,7 @@ export async function runCollectedChannelOnboardingPostWriteHooks(params: {
   }
 }
 
+/** Reused helper for create Channel Onboarding Post Write Hook behavior in src/flows. */
 export function createChannelOnboardingPostWriteHook(params: {
   accountId?: string;
   adapter?: Pick<ChannelSetupWizardAdapter, "afterConfigWritten">;
@@ -109,6 +114,7 @@ export function createChannelOnboardingPostWriteHook(params: {
 
 // Channel-specific prompts moved into setup flow adapters.
 
+/** Reused helper for setup Channels behavior in src/flows. */
 export async function setupChannels(
   cfg: OpenClawConfig,
   runtime: RuntimeEnv,

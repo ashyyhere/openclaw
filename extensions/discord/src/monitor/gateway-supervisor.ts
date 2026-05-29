@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor gateway supervisor helpers and runtime behavior.
 import type { EventEmitter } from "node:events";
 import { danger } from "openclaw/plugin-sdk/runtime-env";
 import type { RuntimeEnv } from "openclaw/plugin-sdk/runtime-env";

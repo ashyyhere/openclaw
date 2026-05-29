@@ -1,3 +1,4 @@
+// extensions/tts-local-cli index helpers and runtime behavior.
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 import { buildCliSpeechProvider } from "./speech-provider.js";
 

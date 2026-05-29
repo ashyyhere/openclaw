@@ -1,3 +1,4 @@
+// Tests extensions/whatsapp/src outbound base test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { createWhatsAppOutboundBase } from "./outbound-base.js";
 import { createWhatsAppPollFixture } from "./outbound-test-support.js";

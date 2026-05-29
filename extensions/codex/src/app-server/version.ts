@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server version helpers and runtime behavior.
 export const MIN_CODEX_APP_SERVER_VERSION = "0.125.0";
 export const MIN_CODEX_SANDBOX_EXEC_SERVER_APP_SERVER_VERSION = "0.132.0";
 export const MANAGED_CODEX_APP_SERVER_PACKAGE = "@openai/codex";

@@ -1,3 +1,4 @@
+// Shared types for extensions/matrix/src types behavior.
 import type { ChannelBotLoopProtectionConfig } from "openclaw/plugin-sdk/config-contracts";
 import type {
   ContextVisibilityMode,

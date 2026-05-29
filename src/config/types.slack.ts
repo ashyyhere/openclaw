@@ -1,3 +1,4 @@
+// config types slack helpers and runtime behavior.
 import type {
   ChannelStreamingBlockConfig,
   ChannelStreamingProgressConfig,
@@ -18,6 +19,7 @@ import type {
 import type { DmConfig, ProviderCommandsConfig } from "./types.messages.js";
 import type { GroupToolPolicyBySenderConfig, GroupToolPolicyConfig } from "./types.tools.js";
 
+/** Shared type for Slack Dm Config in src/config. */
 export type SlackDmConfig = {
   /** If false, ignore all incoming Slack DMs. Default: true. */
   enabled?: boolean;
@@ -33,6 +35,7 @@ export type SlackDmConfig = {
   replyToMode?: ReplyToMode;
 };
 
+/** Shared type for Slack Channel Config in src/config. */
 export type SlackChannelConfig = {
   /** If false, disable the bot in this channel. */
   enabled?: boolean;
@@ -53,12 +56,16 @@ export type SlackChannelConfig = {
   systemPrompt?: string;
 };
 
+/** Shared type for Slack Reaction Notification Mode in src/config. */
 export type SlackReactionNotificationMode = "off" | "own" | "all" | "allowlist";
+/** Shared type for Slack Streaming Mode in src/config. */
 export type SlackStreamingMode = "off" | "partial" | "block" | "progress";
+/** Shared type for Slack Streaming Progress Config in src/config. */
 export type SlackStreamingProgressConfig = ChannelStreamingProgressConfig & {
   /** Opt in to Slack-native task cards for progress mode. Default: false. */
   nativeTaskCards?: boolean;
 };
+/** Shared type for Slack Channel Streaming Config in src/config. */
 export type SlackChannelStreamingConfig = {
   mode?: StreamingMode;
   chunkMode?: TextChunkMode;
@@ -67,7 +74,9 @@ export type SlackChannelStreamingConfig = {
   progress?: SlackStreamingProgressConfig;
   block?: ChannelStreamingBlockConfig;
 };
+/** Shared type for Slack Exec Approval Target in src/config. */
 export type SlackExecApprovalTarget = "dm" | "channel" | "both";
+/** Shared type for Slack Exec Approval Config in src/config. */
 export type SlackExecApprovalConfig = {
   /** Enable mode for Slack exec approvals on this account. Default: auto when approvers can be resolved; false disables. */
   enabled?: import("./types.approvals.js").NativeExecApprovalEnableMode;
@@ -80,12 +89,14 @@ export type SlackExecApprovalConfig = {
   /** Where to send approval prompts. Default: "dm". */
   target?: SlackExecApprovalTarget;
 };
+/** Shared type for Slack Capabilities Config in src/config. */
 export type SlackCapabilitiesConfig =
   | string[]
   | {
       interactiveReplies?: boolean;
     };
 
+/** Shared type for Slack Action Config in src/config. */
 export type SlackActionConfig = {
   reactions?: boolean;
   messages?: boolean;
@@ -97,6 +108,7 @@ export type SlackActionConfig = {
   emojiList?: boolean;
 };
 
+/** Shared type for Slack Slash Command Config in src/config. */
 export type SlackSlashCommandConfig = {
   /** Enable handling for the configured slash command (default: false). */
   enabled?: boolean;
@@ -108,6 +120,7 @@ export type SlackSlashCommandConfig = {
   ephemeral?: boolean;
 };
 
+/** Shared type for Slack Thread Config in src/config. */
 export type SlackThreadConfig = {
   /** Scope for thread history context (thread|channel). Default: thread. */
   historyScope?: "thread" | "channel";
@@ -125,6 +138,7 @@ export type SlackThreadConfig = {
   requireExplicitMention?: boolean;
 };
 
+/** Shared type for Slack Socket Mode Config in src/config. */
 export type SlackSocketModeConfig = {
   /** Slack SDK pong timeout in milliseconds. Socket Mode only. Default: 15000. */
   clientPingTimeout?: number;
@@ -134,6 +148,7 @@ export type SlackSocketModeConfig = {
   pingPongLoggingEnabled?: boolean;
 };
 
+/** Shared type for Slack Account Config in src/config. */
 export type SlackAccountConfig = {
   /** Optional display name for this account (used in CLI/UI lists). */
   name?: string;
@@ -240,6 +255,7 @@ export type SlackAccountConfig = {
   typingReaction?: string;
 };
 
+/** Shared type for Slack Config in src/config. */
 export type SlackConfig = {
   /** Optional per-account Slack configuration (multi-account). */
   accounts?: Record<string, SlackAccountConfig>;

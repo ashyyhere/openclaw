@@ -1,3 +1,4 @@
+// Tests plugins registry dual kind memory gate test behavior.
 import {
   createPluginRegistryFixture,
   registerTestPlugin,

@@ -15,6 +15,7 @@ const MISSING_SCOPE_PATTERN = /\bmissing scope:\s*[a-z0-9._-]+/i;
 
 type TargetKind = "explicit" | "configRemote" | "localLoopback" | "sshTunnel";
 
+/** Shared type for Gateway Status Target in src/commands/gateway-status. */
 export type GatewayStatusTarget = {
   id: string;
   kind: TargetKind;
@@ -29,6 +30,7 @@ export type GatewayStatusTarget = {
   };
 };
 
+/** Shared type for Gateway Config Summary in src/commands/gateway-status. */
 export type GatewayConfigSummary = {
   path: string | null;
   exists: boolean;
@@ -67,6 +69,7 @@ function parseIntOrNull(value: unknown): number | null {
   return parseStrictInteger(s) ?? null;
 }
 
+/** Reused helper for parse Timeout Ms behavior in src/commands/gateway-status. */
 export function parseTimeoutMs(raw: unknown, fallbackMs: number): number {
   return parseTimeoutMsWithFallback(raw, fallbackMs);
 }
@@ -82,6 +85,7 @@ function normalizeWsUrl(value: string): string | null {
   return trimmed;
 }
 
+/** Reused helper for resolve Targets behavior in src/commands/gateway-status. */
 export function resolveTargets(cfg: OpenClawConfig, explicitUrl?: string): GatewayStatusTarget[] {
   const targets: GatewayStatusTarget[] = [];
   const add = (t: GatewayStatusTarget) => {
@@ -129,6 +133,7 @@ function isLoopbackProbeTarget(target: Pick<GatewayStatusTarget, "kind" | "url">
   }
 }
 
+/** Reused helper for resolve Probe Budget Ms behavior in src/commands/gateway-status. */
 export function resolveProbeBudgetMs(
   overallMs: number,
   target: Pick<GatewayStatusTarget, "kind" | "active" | "url">,
@@ -148,6 +153,7 @@ export function resolveProbeBudgetMs(
   return overallMs;
 }
 
+/** Reused helper for sanitize Ssh Target behavior in src/commands/gateway-status. */
 export function sanitizeSshTarget(value: unknown): string | null {
   if (typeof value !== "string") {
     return null;
@@ -159,6 +165,7 @@ export function sanitizeSshTarget(value: unknown): string | null {
   return trimmed.replace(/^ssh\s+/, "");
 }
 
+/** Reused helper for resolve Auth For Target behavior in src/commands/gateway-status. */
 export async function resolveAuthForTarget(
   cfg: OpenClawConfig,
   target: GatewayStatusTarget,
@@ -176,8 +183,10 @@ export async function resolveAuthForTarget(
   });
 }
 
+/** Re-exported API for src/commands/gateway-status, starting with pick Gateway Self Presence. */
 export { pickGatewaySelfPresence };
 
+/** Reused helper for extract Config Summary behavior in src/commands/gateway-status. */
 export function extractConfigSummary(snapshotUnknown: unknown): GatewayConfigSummary {
   const snap = snapshotUnknown as Partial<ConfigFileSnapshot> | null;
   const path = typeof snap?.path === "string" ? snap.path : null;
@@ -244,6 +253,7 @@ export function extractConfigSummary(snapshotUnknown: unknown): GatewayConfigSum
   };
 }
 
+/** Reused helper for build Network Hints behavior in src/commands/gateway-status. */
 export function buildNetworkHints(cfg: OpenClawConfig) {
   const { tailnetIPv4 } = inspectBestEffortPrimaryTailnetIPv4();
   const port = resolveGatewayPort(cfg);
@@ -255,6 +265,7 @@ export function buildNetworkHints(cfg: OpenClawConfig) {
   };
 }
 
+/** Reused helper for render Target Header behavior in src/commands/gateway-status. */
 export function renderTargetHeader(target: GatewayStatusTarget, rich: boolean) {
   const kindLabel =
     target.kind === "localLoopback"
@@ -269,6 +280,7 @@ export function renderTargetHeader(target: GatewayStatusTarget, rich: boolean) {
   return `${colorize(rich, theme.heading, kindLabel)} ${colorize(rich, theme.muted, target.url)}`;
 }
 
+/** Reused helper for is Scope Limited Probe Failure behavior in src/commands/gateway-status. */
 export function isScopeLimitedProbeFailure(probe: GatewayProbeResult): boolean {
   if (probe.ok || probe.connectLatencyMs == null) {
     return false;
@@ -276,10 +288,12 @@ export function isScopeLimitedProbeFailure(probe: GatewayProbeResult): boolean {
   return MISSING_SCOPE_PATTERN.test(probe.error ?? "");
 }
 
+/** Reused helper for is Post Connect Probe Failure behavior in src/commands/gateway-status. */
 export function isPostConnectProbeFailure(probe: GatewayProbeResult): boolean {
   return !probe.ok && probe.connectLatencyMs != null;
 }
 
+/** Reused helper for is Probe Reachable behavior in src/commands/gateway-status. */
 export function isProbeReachable(probe: GatewayProbeResult): boolean {
   return probe.ok || probe.connectLatencyMs != null;
 }
@@ -288,6 +302,7 @@ function getGatewayProbeCapability(probe: GatewayProbeResult): GatewayProbeCapab
   return probe.auth.capability;
 }
 
+/** Reused helper for summarize Gateway Probe Capability behavior in src/commands/gateway-status. */
 export function summarizeGatewayProbeCapability(
   probes: GatewayProbeResult[],
 ): GatewayProbeCapability {
@@ -347,6 +362,7 @@ function renderProbeCapabilityLine(probe: GatewayProbeResult, rich: boolean) {
   );
 }
 
+/** Reused helper for render Probe Summary Line behavior in src/commands/gateway-status. */
 export function renderProbeSummaryLine(probe: GatewayProbeResult, rich: boolean) {
   const capability = renderProbeCapabilityLine(probe, rich);
   if (probe.ok) {

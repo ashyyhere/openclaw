@@ -1,3 +1,4 @@
+// Tests routing session key continuity test behavior.
 import { describe, it, expect } from "vitest";
 import { buildAgentSessionKey } from "./resolve-route.js";
 

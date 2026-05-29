@@ -1,3 +1,4 @@
+/** Tests status update restart guidance formatting. */
 import { describe, expect, it } from "vitest";
 import type { RestartSentinelPayload } from "../infra/restart-sentinel.js";
 import {

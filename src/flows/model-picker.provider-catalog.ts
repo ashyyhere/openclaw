@@ -136,6 +136,7 @@ function modelFromProviderCatalog(params: {
   };
 }
 
+/** Reused helper for load Preferred Provider Picker Catalog behavior in src/flows. */
 export async function loadPreferredProviderPickerCatalog(params: {
   cfg: OpenClawConfig;
   preferredProvider: string;

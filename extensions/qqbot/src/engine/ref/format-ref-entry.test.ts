@@ -1,3 +1,4 @@
+// Tests extensions/qqbot/src/engine/ref format ref entry test behavior.
 import { describe, expect, it } from "vitest";
 import { formatRefEntryForAgent } from "./format-ref-entry.js";
 import type { RefIndexEntry } from "./types.js";

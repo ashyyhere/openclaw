@@ -1,3 +1,4 @@
+// process exec helpers and runtime behavior.
 import { execFile, spawn } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
@@ -161,6 +162,7 @@ function resolveChildProcessInvocation(params: {
   };
 }
 
+/** Reused helper for should Spawn With Shell behavior in src/process. */
 export function shouldSpawnWithShell(params: {
   resolvedCommand: string;
   platform: NodeJS.Platform;
@@ -175,6 +177,7 @@ export function shouldSpawnWithShell(params: {
 }
 
 // Simple promise-wrapped execFile with optional verbosity logging.
+/** Reused helper for run Exec behavior in src/process. */
 export async function runExec(
   command: string,
   args: string[],
@@ -232,6 +235,7 @@ export async function runExec(
   }
 }
 
+/** Shared type for Spawn Result in src/process. */
 export type SpawnResult = {
   pid?: number;
   stdout: string;
@@ -245,6 +249,7 @@ export type SpawnResult = {
   noOutputTimedOut?: boolean;
 };
 
+/** Shared type for Command Options in src/process. */
 export type CommandOptions = {
   timeoutMs: number;
   cwd?: string;
@@ -304,6 +309,7 @@ function appendCapturedOutput(
   }
 }
 
+/** Reused helper for resolve Process Exit Code behavior in src/process. */
 export function resolveProcessExitCode(params: {
   explicitCode: number | null | undefined;
   childExitCode: number | null | undefined;
@@ -328,6 +334,7 @@ export function resolveProcessExitCode(params: {
   );
 }
 
+/** Reused helper for resolve Command Env behavior in src/process. */
 export function resolveCommandEnv(params: {
   argv: string[];
   env?: NodeJS.ProcessEnv;
@@ -361,6 +368,7 @@ export function resolveCommandEnv(params: {
   return markOpenClawExecEnv(resolvedEnv);
 }
 
+/** Reused helper for run Command With Timeout behavior in src/process. */
 export async function runCommandWithTimeout(
   argv: string[],
   optionsOrTimeout: number | CommandOptions,

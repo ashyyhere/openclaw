@@ -1,3 +1,4 @@
+// Tests extensions/slack/src/monitor provider allowlist test behavior.
 import { CHANNEL_APPROVAL_NATIVE_RUNTIME_CONTEXT_CAPABILITY } from "openclaw/plugin-sdk/approval-handler-adapter-runtime";
 import type { ChannelRuntimeSurface } from "openclaw/plugin-sdk/channel-contract";
 import { beforeEach, describe, expect, it, vi } from "vitest";

@@ -1,3 +1,4 @@
+// Tests extensions/codex/src/app-server config test behavior.
 import fs from "node:fs/promises";
 import { describe, expect, it, vi } from "vitest";
 import {

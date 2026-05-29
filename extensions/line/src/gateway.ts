@@ -1,3 +1,4 @@
+// extensions/line/src gateway helpers and runtime behavior.
 import { createLazyRuntimeModule } from "openclaw/plugin-sdk/lazy-runtime";
 import { resolveLineAccount } from "./accounts.js";
 import {

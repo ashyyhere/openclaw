@@ -1,3 +1,4 @@
+/** Covers sensitive stop-reason recovery for streamed attempt responses. */
 import type { StreamFn } from "openclaw/plugin-sdk/agent-core";
 import {
   createAssistantMessageEventStream,

@@ -1,3 +1,4 @@
+// Tests gateway/server-methods sessions send followup status test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { expectSubagentFollowupReactivation } from "./subagent-followup.test-helpers.js";
 import type { GatewayRequestContext, RespondFn } from "./types.js";

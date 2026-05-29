@@ -1,3 +1,4 @@
+// Tests extensions/discord/src retry test behavior.
 import { describe, expect, it, vi } from "vitest";
 import {
   getDiscordDeliveryRetryAfterMs,

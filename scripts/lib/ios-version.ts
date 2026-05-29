@@ -1,3 +1,4 @@
+// scripts/lib ios version helpers and runtime behavior.
 import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 

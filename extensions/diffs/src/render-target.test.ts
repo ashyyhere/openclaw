@@ -1,3 +1,4 @@
+// Tests extensions/diffs/src render target test behavior.
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 const { preloadFileDiffMock, preloadMultiFileDiffMock } = vi.hoisted(() => ({

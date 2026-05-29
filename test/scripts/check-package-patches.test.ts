@@ -1,3 +1,4 @@
+// Tests test/scripts check package patches test behavior.
 import { execFileSync } from "node:child_process";
 import { mkdirSync, rmSync, writeFileSync } from "node:fs";
 import path from "node:path";

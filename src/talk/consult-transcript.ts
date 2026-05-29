@@ -1,3 +1,4 @@
+// talk consult transcript helpers and runtime behavior.
 const REALTIME_VOICE_CONSULT_TRAILING_FRAGMENT_WORDS = new Set([
   "a",
   "about",
@@ -22,12 +23,14 @@ const REALTIME_VOICE_CONSULT_TRAILING_FRAGMENT_WORDS = new Set([
   "with",
 ]);
 
+/** Shared type for Skippable Realtime Voice Consult Transcript Reason in src/talk. */
 export type SkippableRealtimeVoiceConsultTranscriptReason =
   | "empty"
   | "incomplete-transcript"
   | "trailing-fragment"
   | "non-actionable-closing";
 
+/** Reused helper for classify Skippable Realtime Voice Consult Transcript behavior in src/talk. */
 export function classifySkippableRealtimeVoiceConsultTranscript(
   text: string,
 ): SkippableRealtimeVoiceConsultTranscriptReason | undefined {

@@ -1,3 +1,4 @@
+// Tests plugins plugin module loader cache test behavior.
 import path from "node:path";
 import { importFreshModule } from "openclaw/plugin-sdk/test-fixtures";
 import { afterEach, describe, expect, it, vi } from "vitest";

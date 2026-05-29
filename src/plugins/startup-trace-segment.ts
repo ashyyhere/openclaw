@@ -1,5 +1,7 @@
+// plugins startup trace segment helpers and runtime behavior.
 const SAFE_STARTUP_TRACE_SEGMENT_CHAR = /^[A-Za-z0-9_-]$/u;
 
+/** Reused helper for encode Startup Trace Segment behavior in src/plugins. */
 export function encodeStartupTraceSegment(value: string): string {
   if (!value) {
     return "~";

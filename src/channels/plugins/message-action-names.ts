@@ -1,3 +1,5 @@
+// Message action naming and normalization helpers.
+/** Reused constant for CHANNEL MESSAGE ACTION NAMES behavior in src/channels/plugins. */
 export const CHANNEL_MESSAGE_ACTION_NAMES = [
   "send",
   "broadcast",
@@ -58,4 +60,5 @@ export const CHANNEL_MESSAGE_ACTION_NAMES = [
   "upload-file",
 ] as const;
 
+/** Shared type for Channel Message Action Name in src/channels/plugins. */
 export type ChannelMessageActionName = (typeof CHANNEL_MESSAGE_ACTION_NAMES)[number];

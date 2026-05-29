@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix/sdk verification status helpers and runtime behavior.
 import type { MatrixDeviceVerificationStatusLike } from "./types.js";
 
 function isMatrixDeviceLocallyVerified(

@@ -1,3 +1,4 @@
+// extensions/memory-core manager runtime helpers and runtime behavior.
 export {
   closeAllMemoryIndexManagers,
   closeMemoryIndexManagersForAgent,

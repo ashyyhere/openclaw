@@ -1,3 +1,4 @@
+// Tests llm/utils/oauth pkce test behavior.
 import { describe, expect, it } from "vitest";
 import { generateOAuthState, generatePKCE } from "./pkce.js";
 

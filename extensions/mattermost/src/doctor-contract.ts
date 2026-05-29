@@ -1,3 +1,4 @@
+// extensions/mattermost/src doctor contract helpers and runtime behavior.
 import { createLegacyPrivateNetworkDoctorContract } from "openclaw/plugin-sdk/ssrf-runtime";
 
 const contract = createLegacyPrivateNetworkDoctorContract({

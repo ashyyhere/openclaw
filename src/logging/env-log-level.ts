@@ -1,7 +1,9 @@
+// logging env log level helpers and runtime behavior.
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import { ALLOWED_LOG_LEVELS, type LogLevel, tryParseLogLevel } from "./levels.js";
 import { loggingState } from "./state.js";
 
+/** Reused helper for resolve Env Log Level Override behavior in src/logging. */
 export function resolveEnvLogLevelOverride(): LogLevel | undefined {
   const trimmed = normalizeOptionalString(process.env.OPENCLAW_LOG_LEVEL) ?? "";
   if (!trimmed) {

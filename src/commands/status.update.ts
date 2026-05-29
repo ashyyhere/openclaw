@@ -1,3 +1,4 @@
+/** Resolves and formats update availability for status output. */
 import { formatCliCommand } from "../cli/command-format.js";
 import { resolveOpenClawPackageRoot } from "../infra/openclaw-root.js";
 import { normalizeUpdateChannel, resolveRegistryUpdateChannel } from "../infra/update-channels.js";
@@ -8,6 +9,7 @@ import {
 } from "../infra/update-check.js";
 import { VERSION } from "../version.js";
 
+/** Reused helper for get Update Check Result behavior in src/commands. */
 export async function getUpdateCheckResult(params: {
   timeoutMs: number;
   fetchGit: boolean;
@@ -32,6 +34,7 @@ export async function getUpdateCheckResult(params: {
   });
 }
 
+/** Shared type for Update Availability in src/commands. */
 export type UpdateAvailability = {
   available: boolean;
   hasGitUpdate: boolean;
@@ -40,6 +43,7 @@ export type UpdateAvailability = {
   gitBehind: number | null;
 };
 
+/** Reused helper for resolve Update Availability behavior in src/commands. */
 export function resolveUpdateAvailability(update: UpdateCheckResult): UpdateAvailability {
   const latestVersion = update.registry?.latestVersion ?? null;
   const registryCmp = latestVersion ? compareSemverStrings(VERSION, latestVersion) : null;
@@ -59,6 +63,7 @@ export function resolveUpdateAvailability(update: UpdateCheckResult): UpdateAvai
   };
 }
 
+/** Reused helper for format Update Available Hint behavior in src/commands. */
 export function formatUpdateAvailableHint(update: UpdateCheckResult): string | null {
   const availability = resolveUpdateAvailability(update);
   if (!availability.available) {
@@ -76,6 +81,7 @@ export function formatUpdateAvailableHint(update: UpdateCheckResult): string | n
   return `Update available${suffix}. Run: ${formatCliCommand("openclaw update")}`;
 }
 
+/** Reused helper for format Update One Liner behavior in src/commands. */
 export function formatUpdateOneLiner(update: UpdateCheckResult): string {
   const parts: string[] = [];
 

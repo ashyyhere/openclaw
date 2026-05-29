@@ -1,3 +1,4 @@
+// extensions/msteams/src attachments helpers and runtime behavior.
 export {
   downloadMSTeamsBotFrameworkAttachments,
   isBotFrameworkPersonalChatId,

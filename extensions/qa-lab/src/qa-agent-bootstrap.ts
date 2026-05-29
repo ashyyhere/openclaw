@@ -1,3 +1,4 @@
+// extensions/qa-lab/src qa agent bootstrap helpers and runtime behavior.
 import {
   DEFAULT_QA_AGENT_IDENTITY_MARKDOWN,
   readQaBootstrapScenarioCatalog,

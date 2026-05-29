@@ -1,3 +1,4 @@
+// test/helpers image fixtures helpers and runtime behavior.
 export {
   createGrayscaleAlphaPngBuffer,
   createNoisyPngBuffer,

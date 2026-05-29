@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/cli browser cli lazy test behavior.
 import { Command } from "commander";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 

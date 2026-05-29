@@ -21,6 +21,7 @@ const MIN_SWEEP_INTERVAL_MS = 5 * 60_000; // 5 minutes
 
 const lastSweepAtMsByStore = new Map<string, number>();
 
+/** Reused helper for resolve Retention Ms behavior in src/cron. */
 export function resolveRetentionMs(cronConfig?: CronConfig): number | null {
   if (cronConfig?.sessionRetention === false) {
     return null; // pruning disabled

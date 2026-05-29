@@ -1,3 +1,4 @@
+// Shell selection, environment, output sanitation, and process cleanup helpers.
 import { spawnSync } from "node:child_process";
 import { existsSync } from "node:fs";
 import { delimiter } from "node:path";
@@ -7,6 +8,7 @@ import {
 } from "../../process/kill-tree.js";
 import { getBinDir } from "../config.js";
 
+/** Shell executable and argument prefix for running one command string. */
 export interface ShellConfig {
   shell: string;
   args: string[];
@@ -113,6 +115,7 @@ export function getShellConfig(customShellPath?: string): ShellConfig {
   return { shell: "sh", args: ["-c"] };
 }
 
+/** Return an environment with OpenClaw's managed bin directory prepended to PATH. */
 export function getShellEnv(): NodeJS.ProcessEnv {
   const binDir = getBinDir();
   const pathKey = Object.keys(process.env).find((key) => key.toLowerCase() === "path") ?? "PATH";
@@ -183,14 +186,17 @@ export function sanitizeBinaryOutput(str: string): string {
  */
 const trackedDetachedChildPids = new Set<number>();
 
+/** Track a detached child PID so shutdown handlers can clean it up later. */
 export function trackDetachedChildPid(pid: number): void {
   trackedDetachedChildPids.add(pid);
 }
 
+/** Stop tracking a detached child PID once it exits or ownership transfers. */
 export function untrackDetachedChildPid(pid: number): void {
   trackedDetachedChildPids.delete(pid);
 }
 
+/** Kill and forget all detached child processes currently owned by this process. */
 export function killTrackedDetachedChildren(): void {
   for (const pid of trackedDetachedChildPids) {
     killProcessTree(pid);
@@ -198,6 +204,7 @@ export function killTrackedDetachedChildren(): void {
   trackedDetachedChildPids.clear();
 }
 
+/** Kill a process tree using the shared graceful/forceful tree killer. */
 export function killProcessTree(pid: number, opts?: KillProcessTreeOptions): void {
   killProcessTreeGracefully(pid, { force: true, ...opts });
 }

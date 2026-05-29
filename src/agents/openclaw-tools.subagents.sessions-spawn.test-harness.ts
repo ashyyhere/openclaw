@@ -1,3 +1,4 @@
+/** Shared gateway/session harness for sessions_spawn tool tests. */
 import { vi, type Mock } from "vitest";
 import type { SubagentLifecycleHookRunner } from "../plugins/hooks.js";
 import { resolveRequesterStoreKey } from "./subagent-requester-store-key.js";
@@ -137,10 +138,12 @@ let cachedCreateSessionsSpawnTool: CreateSessionsSpawnTool | null = null;
 let cachedSubagentRegistryTesting: SubagentRegistryTesting | null = null;
 let cachedSubagentSpawnTesting: SubagentSpawnTesting | null = null;
 
+/** Return the gateway mock used by sessions_spawn harnesses. */
 export function getCallGatewayMock(): Mock {
   return hoisted.callGatewayMock;
 }
 
+/** Wait until a sessions_spawn side effect has been observed by the harness. */
 export async function waitForSessionsSpawnEvent(
   label: string,
   predicate: () => boolean,
@@ -161,30 +164,37 @@ export async function waitForSessionsSpawnEvent(
   });
 }
 
+/** Reset sessions_spawn runtime config to its default fixture. */
 export function resetSessionsSpawnConfigOverride(): void {
   hoisted.state.configOverride = hoisted.defaultConfigOverride;
 }
 
+/** Override sessions_spawn runtime config for a test. */
 export function setSessionsSpawnConfigOverride(next: SessionsSpawnTestConfig): void {
   hoisted.state.configOverride = next;
 }
 
+/** Reset custom subagent announcement behavior for sessions_spawn tests. */
 export function resetSessionsSpawnAnnounceFlowOverride(): void {
   hoisted.state.runSubagentAnnounceFlowOverride = hoisted.state.defaultRunSubagentAnnounceFlow;
 }
 
+/** Reset custom lifecycle hook runner for sessions_spawn tests. */
 export function resetSessionsSpawnHookRunnerOverride(): void {
   hoisted.state.hookRunnerOverride = null;
 }
 
+/** Override lifecycle hook runner for sessions_spawn tests. */
 export function setSessionsSpawnHookRunnerOverride(next: SessionsSpawnHookRunner): void {
   hoisted.state.hookRunnerOverride = next;
 }
 
+/** Override subagent announcement behavior for sessions_spawn tests. */
 export function setSessionsSpawnAnnounceFlowOverride(next: RunSubagentAnnounceFlow): void {
   hoisted.state.runSubagentAnnounceFlowOverride = next;
 }
 
+/** Create a sessions_spawn tool wired to harness mocks. */
 export async function getSessionsSpawnTool(opts: CreateOpenClawToolsOpts) {
   if (!cachedSubagentSpawnTesting || !cachedSubagentRegistryTesting) {
     const [{ testing: subagentSpawnTesting }, { testing: subagentRegistryTesting }] =
@@ -242,6 +252,7 @@ export async function getSessionsSpawnTool(opts: CreateOpenClawToolsOpts) {
   return cachedCreateSessionsSpawnTool(opts);
 }
 
+/** Install gateway mock behavior and capture calls for sessions_spawn tests. */
 export function setupSessionsSpawnGatewayMock(setupOpts: SessionsSpawnGatewayMockOptions): {
   calls: Array<GatewayRequest>;
   waitCalls: Array<AgentWaitCall>;

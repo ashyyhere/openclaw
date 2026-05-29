@@ -1,8 +1,12 @@
+/** Extra live-model turn probes for file and image capability checks. */
 import type { AssistantMessage, Context, Model } from "../llm/types.js";
 
+/** Expected token used by live file probe prompts. */
 export const LIVE_MODEL_FILE_PROBE_TOKEN = "opal";
 
+/** Env flag for live model file probes. */
 export const LIVE_MODEL_FILE_PROBE_ENV = "OPENCLAW_LIVE_MODEL_FILE_PROBE";
+/** Env flag for live model image probes. */
 export const LIVE_MODEL_IMAGE_PROBE_ENV = "OPENCLAW_LIVE_MODEL_IMAGE_PROBE";
 
 const PROBE_PNG_BASE64 =
@@ -48,6 +52,7 @@ function modelKey(model: Pick<Model, "id" | "provider">): string {
   return `${model.provider}/${model.id}`;
 }
 
+/** Return whether an optional live model probe env flag is enabled. */
 export function isLiveModelProbeEnabled(
   env: Record<string, string | undefined>,
   key: string,
@@ -59,6 +64,7 @@ export function isLiveModelProbeEnabled(
   return !["0", "false", "no", "off"].includes(raw);
 }
 
+/** Extract text from an assistant message for probe assertions. */
 export function extractAssistantText(message: Pick<AssistantMessage, "content">): string {
   return message.content
     .filter((block) => block.type === "text")
@@ -67,14 +73,17 @@ export function extractAssistantText(message: Pick<AssistantMessage, "content">)
     .join(" ");
 }
 
+/** Return whether a model declares image input support. */
 export function modelSupportsImageInput(model: Pick<Model, "input">): boolean {
   return model.input.includes("image");
 }
 
+/** Return whether all extra probes should be skipped for a known model. */
 export function shouldSkipLiveModelExtraProbes(model: Pick<Model, "id" | "provider">): boolean {
   return KNOWN_EMPTY_EXTRA_PROBE_MODELS.has(modelKey(model));
 }
 
+/** Return whether the file probe should be skipped for a known model. */
 export function shouldSkipLiveModelFileProbe(model: Pick<Model, "id" | "provider">): boolean {
   if (model.provider === "opencode-go") {
     return true;
@@ -82,10 +91,12 @@ export function shouldSkipLiveModelFileProbe(model: Pick<Model, "id" | "provider
   return KNOWN_EMPTY_FILE_PROBE_MODELS.has(modelKey(model));
 }
 
+/** Return whether the image probe should be skipped for a known model. */
 export function shouldSkipLiveModelImageProbe(model: Pick<Model, "id" | "provider">): boolean {
   return KNOWN_EMPTY_IMAGE_PROBE_MODELS.has(modelKey(model));
 }
 
+/** Build the initial file-capability live probe context. */
 export function buildLiveModelFileProbeContext(params: { systemPrompt?: string }): Context {
   return {
     systemPrompt: params.systemPrompt,
@@ -101,6 +112,7 @@ export function buildLiveModelFileProbeContext(params: { systemPrompt?: string }
   };
 }
 
+/** Build the retry file-capability live probe context. */
 export function buildLiveModelFileProbeRetryContext(params: { systemPrompt?: string }): Context {
   return {
     systemPrompt: params.systemPrompt,
@@ -117,6 +129,7 @@ export function buildLiveModelFileProbeRetryContext(params: { systemPrompt?: str
   };
 }
 
+/** Build the image-capability live probe context. */
 export function buildLiveModelImageProbeContext(params: { systemPrompt?: string }): Context {
   return {
     systemPrompt: params.systemPrompt,
@@ -140,10 +153,12 @@ export function buildLiveModelImageProbeContext(params: { systemPrompt?: string 
   };
 }
 
+/** Return whether file-probe response text satisfies the expected token. */
 export function fileProbeTextMatches(text: string): boolean {
   return text.toLowerCase().includes(LIVE_MODEL_FILE_PROBE_TOKEN.toLowerCase());
 }
 
+/** Return whether image-probe response text satisfies the expected answer. */
 export function imageProbeTextMatches(text: string): boolean {
   return /\bok\b/i.test(text);
 }

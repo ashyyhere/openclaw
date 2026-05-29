@@ -1,3 +1,4 @@
+/** Tests shared bash tool helpers. */
 import { mkdir, mkdtemp, rm } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

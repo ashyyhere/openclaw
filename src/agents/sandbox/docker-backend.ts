@@ -1,3 +1,4 @@
+/** Docker-backed sandbox backend implementation. */
 import { buildDockerExecArgs } from "../bash-tools.shared.js";
 import type { SandboxBackendCommandParams } from "./backend-handle.types.js";
 import type {
@@ -29,6 +30,7 @@ function resolveConfiguredDockerRuntimeImage(params: {
   }
 }
 
+/** Ensures a Docker container and returns an executable sandbox handle. */
 export async function createDockerSandboxBackend(
   params: CreateSandboxBackendParams,
 ): Promise<SandboxBackendHandle> {
@@ -88,6 +90,7 @@ function createDockerSandboxBackendHandle(params: {
   };
 }
 
+/** Executes the sandbox filesystem helper inside a Docker container. */
 export function runDockerSandboxShellCommand(
   params: {
     containerName: string;
@@ -112,6 +115,7 @@ export function runDockerSandboxShellCommand(
   });
 }
 
+/** Reused constant for docker Sandbox Backend Manager behavior in src/agents/sandbox. */
 export const dockerSandboxBackendManager: SandboxBackendManager = {
   async describeRuntime({ entry, config, agentId }) {
     const state = await dockerContainerState(entry.containerName);

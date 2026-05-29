@@ -1,3 +1,4 @@
+// extensions/voice-call/src websocket test support helpers and runtime behavior.
 import { once } from "node:events";
 import http from "node:http";
 import { WebSocket } from "ws";

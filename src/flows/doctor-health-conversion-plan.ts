@@ -1,3 +1,5 @@
+// flows doctor health conversion plan helpers and runtime behavior.
+/** Shared type for Doctor Health Conversion Kind in src/flows. */
 export type DoctorHealthConversionKind =
   | "already-detect"
   | "detect-only"
@@ -7,6 +9,7 @@ export type DoctorHealthConversionKind =
   | "terminal-side-effect"
   | "interactive-maintenance";
 
+/** Shared type for Doctor Health Conversion Rule in src/flows. */
 export interface DoctorHealthConversionRule {
   readonly contributionId: string;
   readonly conversion: DoctorHealthConversionKind;
@@ -14,6 +17,7 @@ export interface DoctorHealthConversionRule {
   readonly rule: string;
 }
 
+/** Reused constant for doctor Health Conversion Rules behavior in src/flows. */
 export const doctorHealthConversionRules = [
   {
     contributionId: "doctor:gateway-config",

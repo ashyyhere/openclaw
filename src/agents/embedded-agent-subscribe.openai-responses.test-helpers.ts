@@ -1,5 +1,8 @@
+/** Helpers for OpenAI Responses embedded-agent subscription tests. */
+/** Text phase variants used by OpenAI Responses subscription test events. */
 export type OpenAiResponsesTextEventPhase = "commentary" | "final_answer";
 
+/** Build an OpenAI Responses text block fixture. */
 export function createOpenAiResponsesTextBlock(params: {
   text: string;
   id: string;
@@ -16,6 +19,7 @@ export function createOpenAiResponsesTextBlock(params: {
   };
 }
 
+/** Build a partial OpenAI Responses assistant message fixture. */
 export function createOpenAiResponsesPartial(params: {
   text: string;
   id: string;
@@ -41,6 +45,7 @@ export function createOpenAiResponsesPartial(params: {
   };
 }
 
+/** Build an OpenAI Responses text event fixture. */
 export function createOpenAiResponsesTextEvent(params: {
   type: "text_delta" | "text_end";
   text: string;

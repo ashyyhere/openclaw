@@ -1,3 +1,4 @@
+// Tests commitment extraction prompt parsing, validation, and persistence.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

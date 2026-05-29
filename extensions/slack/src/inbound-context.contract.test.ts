@@ -1,3 +1,4 @@
+// Tests extensions/slack/src inbound context contract test behavior.
 import { expectChannelInboundContextContract } from "openclaw/plugin-sdk/channel-contract-testing";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { createTempHomeEnv } from "openclaw/plugin-sdk/test-env";

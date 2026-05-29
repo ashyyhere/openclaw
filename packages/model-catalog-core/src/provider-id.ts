@@ -2,6 +2,7 @@ export function normalizeLowercaseStringOrEmpty(value: unknown): string {
   return typeof value === "string" ? value.trim().toLowerCase() : "";
 }
 
+/** Normalize provider ids for map lookups and comparisons. */
 export function normalizeProviderId(provider: string): string {
   return normalizeLowercaseStringOrEmpty(provider);
 }
@@ -11,6 +12,7 @@ export function normalizeProviderIdForAuth(provider: string): string {
   return normalizeProviderId(provider);
 }
 
+/** Find a provider-map value using normalized provider key comparison. */
 export function findNormalizedProviderValue<T>(
   entries: Record<string, T> | undefined,
   provider: string,
@@ -27,6 +29,7 @@ export function findNormalizedProviderValue<T>(
   return undefined;
 }
 
+/** Find the original provider-map key matching a normalized provider id. */
 export function findNormalizedProviderKey(
   entries: Record<string, unknown> | undefined,
   provider: string,

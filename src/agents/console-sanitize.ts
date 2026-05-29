@@ -1,3 +1,5 @@
+/** Sanitizes short text snippets before logging them to consoles. */
+/** Strip control characters and truncate text for console diagnostics. */
 export function sanitizeForConsole(text: string | undefined, maxChars = 200): string | undefined {
   const trimmed = text?.trim();
   if (!trimmed) {

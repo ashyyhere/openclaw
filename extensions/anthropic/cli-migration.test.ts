@@ -1,3 +1,4 @@
+// Tests extensions/anthropic cli migration test behavior.
 import type {
   ProviderAuthContext,
   ProviderAuthMethodNonInteractiveContext,

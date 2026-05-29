@@ -1,3 +1,4 @@
+// Coverage for configured binding target resolution.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   ensureConfiguredBindingTargetReady,

@@ -1,3 +1,4 @@
+// Tests extensions/qa-lab/src/live-transports/shared live transport cli runtime test behavior.
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { resolveLiveTransportQaRunOptions } from "./live-transport-cli.runtime.js";

@@ -1,3 +1,4 @@
+// Tests llm/providers/stream-wrappers google test behavior.
 import { describe, expect, it } from "vitest";
 import { sanitizeGoogleThinkingPayload } from "./google.js";
 

@@ -1,3 +1,4 @@
+// Tests extensions/memory-core/src/memory manager search test behavior.
 import {
   ensureMemoryIndexSchema,
   loadSqliteVecExtension,

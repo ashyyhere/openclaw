@@ -92,6 +92,7 @@ function estimateSessionRunCostUsd(params: {
   return resolveNonNegativeNumber(estimateUsageCost({ usage: params.usage, cost }));
 }
 
+/** Reused helper for persist Session Usage Update behavior in src/auto-reply/reply. */
 export async function persistSessionUsageUpdate(params: {
   storePath?: string;
   sessionKey?: string;

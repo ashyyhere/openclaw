@@ -1,3 +1,4 @@
+// config io write prepare helpers and runtime behavior.
 import { isDeepStrictEqual } from "node:util";
 import { normalizeConfiguredProviderCatalogModelId } from "@openclaw/model-catalog-core/provider-model-id-normalization";
 import { parseConfigPathArrayIndex } from "../shared/path-array-index.js";
@@ -26,6 +27,7 @@ function cloneUnknown<T>(value: T): T {
   return structuredClone(value);
 }
 
+/** Reused helper for create Merge Patch behavior in src/config. */
 export function createMergePatch(base: unknown, target: unknown): unknown {
   if (!isRecord(base) || !isRecord(target)) {
     return cloneUnknown(target);
@@ -61,6 +63,7 @@ export function createMergePatch(base: unknown, target: unknown): unknown {
   return patch;
 }
 
+/** Reused helper for project Source Onto Runtime Shape behavior in src/config. */
 export function projectSourceOntoRuntimeShape(source: unknown, runtime: unknown): unknown {
   if (!isRecord(source) || !isRecord(runtime)) {
     return cloneUnknown(source);
@@ -568,6 +571,7 @@ function mergeMissingExplicitValues(
   return { changed, value: changed ? next : currentValue };
 }
 
+/** Reused helper for inject Explicitly Set Paths behavior in src/config. */
 export function injectExplicitlySetPaths(params: {
   valueSource: unknown;
   persistedCandidate: unknown;
@@ -609,6 +613,7 @@ export function injectExplicitlySetPaths(params: {
   return next;
 }
 
+/** Reused helper for resolve Persist Candidate For Write behavior in src/config. */
 export function resolvePersistCandidateForWrite(params: {
   runtimeConfig: unknown;
   sourceConfig: unknown;
@@ -677,6 +682,7 @@ function preserveRootSchemaUri(params: {
   };
 }
 
+/** Reused helper for format Config Validation Failure behavior in src/config. */
 export function formatConfigValidationFailure(pathLabel: string, issueMessage: string): string {
   const match = issueMessage.match(OPEN_DM_POLICY_ALLOW_FROM_RE);
   const policyPath = match?.groups?.policyPath?.trim();
@@ -789,6 +795,7 @@ function unsetPathForWriteAt(
   };
 }
 
+/** Reused helper for unset Path For Write behavior in src/config. */
 export function unsetPathForWrite(
   root: OpenClawConfig,
   pathSegments: string[],
@@ -809,6 +816,7 @@ export function unsetPathForWrite(
   return { changed: false, next: root };
 }
 
+/** Reused helper for apply Unset Paths For Write behavior in src/config. */
 export function applyUnsetPathsForWrite(
   root: OpenClawConfig,
   unsetPaths: readonly string[][] | undefined,
@@ -826,6 +834,7 @@ export function applyUnsetPathsForWrite(
   return next;
 }
 
+/** Reused helper for resolve Managed Unset Paths For Write behavior in src/config. */
 export function resolveManagedUnsetPathsForWrite(
   unsetPaths: readonly string[][] | undefined,
 ): string[][] {
@@ -845,6 +854,7 @@ export function resolveManagedUnsetPathsForWrite(
   return next;
 }
 
+/** Reused helper for collect Changed Paths behavior in src/config. */
 export function collectChangedPaths(
   base: unknown,
   target: unknown,
@@ -908,6 +918,7 @@ function isPathChanged(path: string, changedPaths: Set<string>): boolean {
   return changedPaths.has("");
 }
 
+/** Reused helper for restore Env Refs From Map behavior in src/config. */
 export function restoreEnvRefsFromMap(
   value: unknown,
   path: string,
@@ -950,6 +961,7 @@ export function restoreEnvRefsFromMap(
   return value;
 }
 
+/** Reused helper for resolve Write Env Snapshot For Path behavior in src/config. */
 export function resolveWriteEnvSnapshotForPath(params: {
   actualConfigPath: string;
   expectedConfigPath?: string;

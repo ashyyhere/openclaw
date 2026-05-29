@@ -1,3 +1,4 @@
+// Tests extensions/zalouser/src group policy test behavior.
 import { describe, expect, it } from "vitest";
 import {
   buildZalouserGroupCandidates,

@@ -1,3 +1,4 @@
+/** Registers nodes screen capture commands. */
 import type { Command } from "commander";
 import { defaultRuntime } from "../../runtime.js";
 import { shortenHomePath } from "../../utils.js";
@@ -19,6 +20,7 @@ import {
 } from "./rpc.js";
 import type { NodesRpcOpts } from "./types.js";
 
+/** Reused helper for register Nodes Screen Commands behavior in src/cli/nodes-cli. */
 export function registerNodesScreenCommands(nodes: Command) {
   const screen = nodes
     .command("screen")

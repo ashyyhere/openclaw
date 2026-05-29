@@ -1,3 +1,4 @@
+// Tests extensions/acpx/src/runtime-internals mcp proxy test behavior.
 import { spawn } from "node:child_process";
 import { chmod, mkdtemp, rm, writeFile } from "node:fs/promises";
 import os from "node:os";

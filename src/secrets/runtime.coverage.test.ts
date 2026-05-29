@@ -1,3 +1,4 @@
+// Tests secrets runtime coverage test behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { afterAll, beforeAll, describe, expect, test, vi } from "vitest";

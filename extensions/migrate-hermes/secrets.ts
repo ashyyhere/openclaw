@@ -1,3 +1,4 @@
+// extensions/migrate-hermes secrets helpers and runtime behavior.
 import { loadAuthProfileStoreWithoutExternalProfiles } from "openclaw/plugin-sdk/agent-runtime";
 import type { MigrationItem, MigrationProviderContext } from "openclaw/plugin-sdk/plugin-entry";
 import { updateAuthProfileStoreWithLock } from "openclaw/plugin-sdk/provider-auth";

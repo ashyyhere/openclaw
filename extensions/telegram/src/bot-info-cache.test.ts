@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src bot info cache test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   deleteCachedTelegramBotInfo,

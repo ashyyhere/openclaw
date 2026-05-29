@@ -1,3 +1,4 @@
+// config redact snapshot helpers and runtime behavior.
 import {
   hasSensitiveUrlHintTag,
   isSensitiveUrlConfigPath,
@@ -407,6 +408,7 @@ export function redactConfigObject<T>(value: T, uiHints?: ConfigUiHints): T {
   return redactObject(value, uiHints);
 }
 
+/** Reused helper for redact Config Snapshot behavior in src/config. */
 export function redactConfigSnapshot(
   snapshot: ConfigFileSnapshot,
   uiHints?: ConfigUiHints,

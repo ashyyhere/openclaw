@@ -1,3 +1,4 @@
+/** Implements the agents delete command with workspace safety checks. */
 import { findOverlappingWorkspaceAgentIds } from "../agents/agent-delete-safety.js";
 import { resolveAgentDir, resolveAgentWorkspaceDir } from "../agents/agent-scope.js";
 import { formatCliCommand } from "../cli/command-format.js";
@@ -56,6 +57,7 @@ async function maybeDeleteAgentThroughGateway(params: {
   }
 }
 
+/** Reused helper for agents Delete Command behavior in src/commands. */
 export async function agentsDeleteCommand(
   opts: AgentsDeleteOptions,
   runtime: RuntimeEnv = defaultRuntime,

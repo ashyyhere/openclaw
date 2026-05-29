@@ -1,3 +1,4 @@
+/** Registers CLI commands for channel plugin discovery and status. */
 import type { Command } from "commander";
 import { formatDocsLink } from "../../packages/terminal-core/src/links.js";
 import { theme } from "../../packages/terminal-core/src/theme.js";
@@ -87,6 +88,7 @@ async function addChannelSetupOptions(command: Command): Promise<Command> {
   return command;
 }
 
+/** Reused helper for register Channels Cli behavior in src/cli. */
 export async function registerChannelsCli(
   program: Command,
   argv: string[] = process.argv,

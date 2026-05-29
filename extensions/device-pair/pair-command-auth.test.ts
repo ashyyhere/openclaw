@@ -1,3 +1,4 @@
+// Tests extensions/device-pair pair command auth test behavior.
 import { describe, expect, it } from "vitest";
 import { resolvePairingCommandAuthState } from "./pair-command-auth.js";
 

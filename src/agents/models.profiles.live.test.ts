@@ -1,3 +1,4 @@
+/** Live tests for model auth profiles and generated provider config. */
 import { writeSync } from "node:fs";
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
 import { type Api, completeSimple, type Model } from "openclaw/plugin-sdk/llm";

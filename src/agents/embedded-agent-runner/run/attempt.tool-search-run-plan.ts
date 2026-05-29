@@ -1,3 +1,4 @@
+/** Plans how tool-search tools are exposed during an embedded attempt. */
 import { normalizeToolName } from "../../tool-policy.js";
 import {
   TOOL_CALL_RAW_TOOL_NAME,
@@ -7,6 +8,7 @@ import {
 } from "../../tool-search.js";
 import { collectAllowedToolNames } from "../tool-name-allowlist.js";
 
+/** Reused constant for TOOL SEARCH CONTROL ALLOWLIST NAMES behavior in src/agents/embedded-agent-runner. */
 export const TOOL_SEARCH_CONTROL_ALLOWLIST_NAMES = [
   TOOL_SEARCH_CODE_MODE_TOOL_NAME,
   TOOL_SEARCH_RAW_TOOL_NAME,
@@ -16,6 +18,7 @@ export const TOOL_SEARCH_CONTROL_ALLOWLIST_NAMES = [
 
 type CollectAllowedToolNamesParams = Parameters<typeof collectAllowedToolNames>[0];
 
+/** Shared type for Tool Search Run Plan in src/agents/embedded-agent-runner. */
 export type ToolSearchRunPlan = {
   visibleAllowedToolNames: Set<string>;
   replayAllowedToolNames: Set<string>;
@@ -23,6 +26,7 @@ export type ToolSearchRunPlan = {
   emptyAllowlistCallableNames: string[];
 };
 
+/** Builds callable tool names used to decide empty-allowlist behavior. */
 export function buildCallableToolNamesForEmptyAllowlistCheck(params: {
   effectiveToolNames: string[];
   autoAddedToolSearchControlNames?: Set<string>;
@@ -39,6 +43,7 @@ export function buildCallableToolNamesForEmptyAllowlistCheck(params: {
   ];
 }
 
+/** Builds auto-added tool-search controls for allowlist checks. */
 export function buildAutoAddedToolSearchControlNamesForAllowlistCheck(params: {
   toolSearchControlsEnabled: boolean;
   explicitAllowlistSources: Array<{ entries: string[] }>;
@@ -74,6 +79,7 @@ function collectExplicitlyAllowedClientToolNames(params: {
     .filter((name) => explicitNames.has(normalizeToolName(name)));
 }
 
+/** Builds the final tool-search enablement plan for an attempt. */
 export function buildToolSearchRunPlan(params: {
   visibleTools: CollectAllowedToolNamesParams["tools"];
   uncompactedTools: CollectAllowedToolNamesParams["tools"];

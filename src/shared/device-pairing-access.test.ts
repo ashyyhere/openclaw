@@ -1,3 +1,4 @@
+// Tests shared device pairing access test behavior.
 import { describe, expect, it } from "vitest";
 import { resolvePendingDeviceApprovalState } from "./device-pairing-access.js";
 

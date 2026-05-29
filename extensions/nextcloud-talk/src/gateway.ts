@@ -1,3 +1,4 @@
+// extensions/nextcloud-talk/src gateway helpers and runtime behavior.
 import { createAccountStatusSink } from "openclaw/plugin-sdk/channel-outbound";
 import { runStoppablePassiveMonitor } from "openclaw/plugin-sdk/extension-shared";
 import { resolveNextcloudTalkAccount, type ResolvedNextcloudTalkAccount } from "./accounts.js";

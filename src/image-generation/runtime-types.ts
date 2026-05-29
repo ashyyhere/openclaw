@@ -1,3 +1,4 @@
+// image-generation runtime types helpers and runtime behavior.
 import type { AuthProfileStore } from "../agents/auth-profiles/types.js";
 import type { FallbackAttempt } from "../agents/model-fallback.types.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -15,6 +16,7 @@ import type {
   ImageGenerationSourceImage,
 } from "./types.js";
 
+/** Shared type for Generate Image Params in src/image-generation. */
 export type GenerateImageParams = {
   cfg: OpenClawConfig;
   prompt: string;
@@ -37,6 +39,7 @@ export type GenerateImageParams = {
   ssrfPolicy?: SsrFPolicy;
 };
 
+/** Shared type for Generate Image Runtime Result in src/image-generation. */
 export type GenerateImageRuntimeResult = {
   images: GeneratedImageAsset[];
   provider: string;
@@ -47,8 +50,10 @@ export type GenerateImageRuntimeResult = {
   ignoredOverrides: ImageGenerationIgnoredOverride[];
 };
 
+/** Shared type for List Runtime Image Generation Providers Params in src/image-generation. */
 export type ListRuntimeImageGenerationProvidersParams = {
   config?: OpenClawConfig;
 };
 
+/** Shared type for Runtime Image Generation Provider in src/image-generation. */
 export type RuntimeImageGenerationProvider = ImageGenerationProvider;

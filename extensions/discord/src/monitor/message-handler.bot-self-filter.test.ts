@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/monitor message handler bot self filter test behavior.
 import { describe, expect, it } from "vitest";
 import {
   createDiscordMessageHandler,

@@ -1,3 +1,4 @@
+// plugin-sdk/test-helpers http test server helpers and runtime behavior.
 import { createServer, type RequestListener } from "node:http";
 import type { AddressInfo } from "node:net";
 

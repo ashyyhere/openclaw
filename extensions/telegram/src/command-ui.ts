@@ -1,3 +1,4 @@
+// extensions/telegram/src command ui helpers and runtime behavior.
 import type { ReplyPayload } from "openclaw/plugin-sdk/reply-runtime";
 import {
   buildBrowseProvidersButton,

@@ -1,3 +1,4 @@
+// Command gate helpers for config flags and authorization decisions.
 import { isCommandFlagEnabled, type CommandFlagKey } from "../../config/commands.flags.js";
 import { logVerbose } from "../../globals.js";
 import { redactIdentifier } from "../../logging/redact-identifier.js";
@@ -12,6 +13,7 @@ function buildNativeCommandGateReply(text: string): CommandHandlerResult {
   };
 }
 
+/** Reused helper for reject Unauthorized Command behavior in src/auto-reply/reply. */
 export function rejectUnauthorizedCommand(
   params: HandleCommandsParams,
   commandLabel: string,
@@ -28,6 +30,7 @@ export function rejectUnauthorizedCommand(
   return { shouldContinue: false };
 }
 
+/** Reused helper for reject Non Owner Command behavior in src/auto-reply/reply. */
 export function rejectNonOwnerCommand(
   params: HandleCommandsParams,
   commandLabel: string,
@@ -44,6 +47,7 @@ export function rejectNonOwnerCommand(
   return { shouldContinue: false };
 }
 
+/** Reused helper for require Gateway Client Scope behavior in src/auto-reply/reply. */
 export function requireGatewayClientScope(
   params: HandleCommandsParams,
   config: {
@@ -68,6 +72,7 @@ export function requireGatewayClientScope(
   };
 }
 
+/** Reused helper for build Disabled Command Reply behavior in src/auto-reply/reply. */
 export function buildDisabledCommandReply(params: {
   label: string;
   configKey: CommandFlagKey;
@@ -81,6 +86,7 @@ export function buildDisabledCommandReply(params: {
   };
 }
 
+/** Reused helper for require Command Flag Enabled behavior in src/auto-reply/reply. */
 export function requireCommandFlagEnabled(
   cfg: { commands?: unknown } | undefined,
   params: {

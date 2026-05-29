@@ -1,8 +1,10 @@
+// media configured max bytes helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { maxBytesForKind, type MediaKind } from "./constants.js";
 
 const MB = 1024 * 1024;
 
+/** Reused helper for resolve Configured Media Max Bytes behavior in src/media. */
 export function resolveConfiguredMediaMaxBytes(cfg?: OpenClawConfig): number | undefined {
   const configured = cfg?.agents?.defaults?.mediaMaxMb;
   if (typeof configured === "number" && Number.isFinite(configured) && configured > 0) {
@@ -11,10 +13,12 @@ export function resolveConfiguredMediaMaxBytes(cfg?: OpenClawConfig): number | u
   return undefined;
 }
 
+/** Reused helper for resolve Generated Media Max Bytes behavior in src/media. */
 export function resolveGeneratedMediaMaxBytes(cfg: OpenClawConfig | undefined, kind: MediaKind) {
   return resolveConfiguredMediaMaxBytes(cfg) ?? maxBytesForKind(kind);
 }
 
+/** Reused helper for resolve Channel Account Media Max Mb behavior in src/media. */
 export function resolveChannelAccountMediaMaxMb(params: {
   cfg: OpenClawConfig;
   channel?: string | null;

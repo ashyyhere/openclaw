@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor provider startup log helpers and runtime behavior.
 import { isVerbose, type RuntimeEnv } from "openclaw/plugin-sdk/runtime-env";
 import type { GatewayPlugin } from "../internal/gateway.js";
 

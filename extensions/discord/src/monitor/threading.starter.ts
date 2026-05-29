@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor threading starter helpers and runtime behavior.
 import type { ReplyToMode } from "openclaw/plugin-sdk/config-contracts";
 import { createReplyReferencePlanner } from "openclaw/plugin-sdk/reply-reference";
 import { normalizeOptionalString } from "openclaw/plugin-sdk/string-coerce-runtime";

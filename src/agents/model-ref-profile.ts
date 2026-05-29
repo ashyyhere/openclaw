@@ -1,3 +1,5 @@
+/** Splits trailing auth profile selectors from model refs. */
+/** Split a model ref suffix of the form `@profile`. */
 export function splitTrailingAuthProfile(raw: string): {
   model: string;
   profile?: string;

@@ -1,3 +1,4 @@
+// plugins clawhub helpers and runtime behavior.
 import { createHash } from "node:crypto";
 import fs from "node:fs/promises";
 import JSZip from "jszip";
@@ -297,6 +298,7 @@ function resolveTopLevelLegacyArchiveVerification(
   return integrity ? { kind: "archive-integrity", integrity } : null;
 }
 
+/** Reused helper for format Claw Hub Specifier behavior in src/plugins. */
 export function formatClawHubSpecifier(params: { name: string; version?: string }): string {
   return `clawhub:${params.name}${params.version ? `@${params.version}` : ""}`;
 }
@@ -1032,6 +1034,7 @@ function logClawHubPackageSummary(params: {
   }
 }
 
+/** Reused helper for install Plugin From Claw Hub behavior in src/plugins. */
 export async function installPluginFromClawHub(
   params: InstallSafetyOverrides & {
     spec: string;

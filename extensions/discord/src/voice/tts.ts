@@ -1,3 +1,4 @@
+// extensions/discord/src/voice tts helpers and runtime behavior.
 import {
   getTtsProvider,
   resolveAgentDir,

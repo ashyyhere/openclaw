@@ -1,3 +1,4 @@
+// Tests gateway/server-methods skills upload test behavior.
 import { createHash, randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import os from "node:os";

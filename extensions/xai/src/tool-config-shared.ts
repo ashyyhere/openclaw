@@ -1,3 +1,4 @@
+// extensions/xai/src tool config shared helpers and runtime behavior.
 import { isRecord } from "openclaw/plugin-sdk/string-coerce-runtime";
 import { normalizeXaiModelId } from "../model-id.js";
 

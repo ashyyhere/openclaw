@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/monitor listeners test behavior.
 import { beforeAll, describe, expect, it, vi } from "vitest";
 
 let DiscordMessageListener: typeof import("./listeners.js").DiscordMessageListener;

@@ -1,3 +1,4 @@
+/** Tests update progress failure hint inference. */
 import { describe, expect, it } from "vitest";
 import type { UpdateRunResult } from "../../infra/update-runner.js";
 import { inferUpdateFailureHints } from "./progress.js";

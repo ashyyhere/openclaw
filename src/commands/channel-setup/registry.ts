@@ -1,3 +1,4 @@
+/** Registry accessors for channel setup plugins and setup wizards. */
 import { listChannelSetupPlugins } from "../../channels/plugins/setup-registry.js";
 import { buildChannelSetupWizardAdapterFromSetupWizard } from "../../channels/plugins/setup-wizard.js";
 import type { ChannelSetupWizard } from "../../channels/plugins/setup-wizard.js";
@@ -31,6 +32,7 @@ function isDeclarativeChannelSetupWizard(
   );
 }
 
+/** Reused helper for resolve Channel Setup Wizard Adapter For Plugin behavior in src/commands/channel-setup. */
 export function resolveChannelSetupWizardAdapterForPlugin(
   plugin?: ChannelPlugin,
 ): ChannelSetupWizardAdapter | undefined {
@@ -68,6 +70,7 @@ const getChannelSetupWizardAdapterMap = () => {
   return adapters;
 };
 
+/** Reused helper for get Channel Setup Wizard Adapter behavior in src/commands/channel-setup. */
 export function getChannelSetupWizardAdapter(
   channel: ChannelChoice,
 ): ChannelSetupWizardAdapter | undefined {

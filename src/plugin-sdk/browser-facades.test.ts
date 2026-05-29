@@ -1,3 +1,4 @@
+/** Tests browser facade modules exposed through plugin-sdk subpaths. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const loadBundledPluginPublicSurfaceModuleSync = vi.hoisted(() => vi.fn());

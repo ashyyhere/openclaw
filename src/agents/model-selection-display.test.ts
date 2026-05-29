@@ -1,3 +1,4 @@
+/** Tests model selection display formatting. */
 import { describe, expect, it } from "vitest";
 import {
   resolveModelDisplayName,

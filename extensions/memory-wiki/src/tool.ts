@@ -1,3 +1,4 @@
+// extensions/memory-wiki/src tool helpers and runtime behavior.
 import path from "node:path";
 import { optionalFiniteNumberSchema } from "openclaw/plugin-sdk/channel-actions";
 import { Type } from "typebox";

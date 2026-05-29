@@ -1,3 +1,4 @@
+/** Tests config-only channel status output. */
 import { describe, expect, it, vi } from "vitest";
 import type { ChannelPlugin } from "../channels/plugins/types.js";
 import { makeDirectPlugin } from "../test-utils/channel-plugin-test-fixtures.js";

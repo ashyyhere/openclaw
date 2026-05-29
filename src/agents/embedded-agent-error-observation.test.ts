@@ -1,3 +1,4 @@
+/** Tests redacted embedded-agent error observation fields. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import * as loggingConfigModule from "../logging/config.js";
 import {

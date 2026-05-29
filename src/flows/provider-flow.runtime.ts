@@ -1,3 +1,4 @@
+// Runtime boundary for flows provider flow runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import * as providerWizard from "../plugins/provider-wizard.js";
 import type { ProviderModelPickerEntry } from "../plugins/provider-wizard.js";
@@ -37,6 +38,7 @@ function resolveProviderDocsById(params?: {
   );
 }
 
+/** Reused helper for resolve Provider Model Picker Flow Entries behavior in src/flows. */
 export function resolveProviderModelPickerFlowEntries(params?: {
   config?: OpenClawConfig;
   workspaceDir?: string;
@@ -47,6 +49,7 @@ export function resolveProviderModelPickerFlowEntries(params?: {
   );
 }
 
+/** Reused helper for resolve Provider Model Picker Flow Contributions behavior in src/flows. */
 export function resolveProviderModelPickerFlowContributions(params?: {
   config?: OpenClawConfig;
   workspaceDir?: string;

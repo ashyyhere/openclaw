@@ -1,3 +1,4 @@
+// extensions/whatsapp/src login qr helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import { logInfo } from "openclaw/plugin-sdk/logging-core";
 import { resolveTimerTimeoutMs } from "openclaw/plugin-sdk/number-runtime";

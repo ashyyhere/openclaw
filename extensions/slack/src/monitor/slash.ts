@@ -1,3 +1,4 @@
+// extensions/slack/src/monitor slash helpers and runtime behavior.
 import type { SlackActionMiddlewareArgs, SlackCommandMiddlewareArgs } from "@slack/bolt";
 import { resolveDefaultModelForAgent } from "openclaw/plugin-sdk/agent-runtime";
 import { createChannelMessageReplyPipeline } from "openclaw/plugin-sdk/channel-outbound";

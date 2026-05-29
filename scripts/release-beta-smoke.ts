@@ -1,4 +1,5 @@
 #!/usr/bin/env -S pnpm tsx
+// scripts release beta smoke helpers and runtime behavior.
 import { spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";

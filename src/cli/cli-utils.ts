@@ -1,6 +1,8 @@
+/** Shared helpers for registering and running Commander CLI commands. */
 import type { Command } from "commander";
 import { formatErrorMessage } from "../infra/errors.js";
 
+/** Re-exported API for src/cli, starting with format Error Message. */
 export { formatErrorMessage };
 
 type ManagerLookupResult<T> = {
@@ -8,6 +10,7 @@ type ManagerLookupResult<T> = {
   error?: string;
 };
 
+/** Reused helper for with Manager behavior in src/cli. */
 export async function withManager<T>(params: {
   getManager: () => Promise<ManagerLookupResult<T>>;
   onMissing: (error?: string) => void;
@@ -31,6 +34,7 @@ export async function withManager<T>(params: {
   }
 }
 
+/** Reused helper for run Command With Runtime behavior in src/cli. */
 export async function runCommandWithRuntime(
   runtime: { error: (message: string) => void; exit: (code: number) => void },
   action: () => Promise<void>,
@@ -49,6 +53,7 @@ export async function runCommandWithRuntime(
 }
 
 // oxlint-disable-next-line typescript/no-unnecessary-type-parameters -- Commander option values are typed by the caller.
+/** Reused helper for resolve Option From Command behavior in src/cli. */
 export function resolveOptionFromCommand<T>(
   command: Command | undefined,
   key: string,

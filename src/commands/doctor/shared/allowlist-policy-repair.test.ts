@@ -1,3 +1,4 @@
+/** Tests allowlist policy repair for allowFrom config. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { maybeRepairAllowlistPolicyAllowFrom } from "./allowlist-policy-repair.js";
 

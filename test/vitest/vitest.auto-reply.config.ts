@@ -1,3 +1,4 @@
+// test/vitest vitest auto reply config helpers and runtime behavior.
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
 export function createAutoReplyVitestConfig(env?: Record<string, string | undefined>) {

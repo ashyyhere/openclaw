@@ -1,3 +1,4 @@
+// extensions/migrate-claude provider helpers and runtime behavior.
 import type {
   MigrationPlan,
   MigrationProviderContext,

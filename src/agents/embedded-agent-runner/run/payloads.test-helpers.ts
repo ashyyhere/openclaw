@@ -1,9 +1,12 @@
+/** Test helpers for embedded-run reply payload assertions. */
 import { expect } from "vitest";
 import { buildEmbeddedRunPayloads } from "./payloads.js";
 
+/** Shared type for Build Payload Params in src/agents/embedded-agent-runner. */
 export type BuildPayloadParams = Parameters<typeof buildEmbeddedRunPayloads>[0];
 type RunPayloads = ReturnType<typeof buildEmbeddedRunPayloads>;
 
+/** Builds payloads with default successful attempt metadata for tests. */
 export function buildPayloads(overrides: Partial<BuildPayloadParams> = {}) {
   return buildEmbeddedRunPayloads({
     assistantTexts: [],
@@ -23,6 +26,7 @@ export function buildPayloads(overrides: Partial<BuildPayloadParams> = {}) {
   });
 }
 
+/** Asserts a single text payload and returns it for deeper checks. */
 export function expectSinglePayloadText(
   payloads: RunPayloads,
   text: string,
@@ -35,6 +39,7 @@ export function expectSinglePayloadText(
   }
 }
 
+/** Asserts a single tool-error payload and returns it for deeper checks. */
 export function expectSingleToolErrorPayload(
   payloads: RunPayloads,
   params: { title: string; detail?: string; absentDetail?: string },

@@ -1,3 +1,4 @@
+// Tests ui/src/styles layout mobile test behavior.
 import { describe, expect, it } from "vitest";
 import { readStyleSheet } from "../../../test/helpers/ui-style-fixtures.js";
 

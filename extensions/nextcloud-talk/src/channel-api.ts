@@ -1,3 +1,4 @@
+// extensions/nextcloud-talk/src channel api helpers and runtime behavior.
 export type { ChannelPlugin } from "openclaw/plugin-sdk/channel-plugin-common";
 export type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 export { clearAccountEntryFields } from "openclaw/plugin-sdk/channel-plugin-common";

@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src native tool progress draft test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { createNativeTelegramToolProgressDraft } from "./native-tool-progress-draft.js";
 

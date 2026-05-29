@@ -1,3 +1,4 @@
+// Handles Matrix own-device verification attempts during monitor startup.
 import { createHash } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";

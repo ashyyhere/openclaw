@@ -1,3 +1,4 @@
+// Tests media read byte stream with limit test behavior.
 import { Readable } from "node:stream";
 import { describe, expect, it, vi } from "vitest";
 import { readByteStreamWithLimit } from "./read-byte-stream-with-limit.js";

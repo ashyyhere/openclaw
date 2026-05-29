@@ -1,8 +1,10 @@
+/** Parses human-readable duration values used by CLI options. */
 import {
   normalizeLowercaseStringOrEmpty,
   normalizeOptionalString,
 } from "../shared/string-coerce.js";
 
+/** Shared type for Duration Ms Parse Options in src/cli. */
 export type DurationMsParseOptions = {
   defaultUnit?: "ms" | "s" | "m" | "h" | "d";
 };
@@ -29,6 +31,7 @@ function roundSafeDurationMs(raw: string, value: number): number {
   return ms;
 }
 
+/** Reused helper for parse Duration Ms behavior in src/cli. */
 export function parseDurationMs(raw: string, opts?: DurationMsParseOptions): number {
   const trimmed = normalizeLowercaseStringOrEmpty(normalizeOptionalString(raw) ?? "");
   if (!trimmed) {

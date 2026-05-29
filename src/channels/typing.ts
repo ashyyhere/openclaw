@@ -1,7 +1,9 @@
+/** Creates channel typing indicator callbacks with startup guards and keepalives. */
 import { parseFiniteNumber } from "../shared/number-coercion.js";
 import { createTypingKeepaliveLoop } from "./typing-lifecycle.js";
 import { createTypingStartGuard } from "./typing-start-guard.js";
 
+/** Shared type for Typing Callbacks in src/channels. */
 export type TypingCallbacks = {
   onReplyStart: () => Promise<void>;
   onIdle?: () => void;
@@ -9,6 +11,7 @@ export type TypingCallbacks = {
   onCleanup?: () => void;
 };
 
+/** Shared type for Create Typing Callbacks Params in src/channels. */
 export type CreateTypingCallbacksParams = {
   start: () => Promise<void>;
   stop?: () => Promise<void>;
@@ -36,6 +39,7 @@ function resolveDurationMsOption(value: number | undefined, fallback: number): n
   return parsed === undefined ? fallback : Math.floor(parsed);
 }
 
+/** Reused helper for create Typing Callbacks behavior in src/channels. */
 export function createTypingCallbacks(params: CreateTypingCallbacksParams): TypingCallbacks {
   const stop = params.stop;
   const keepaliveIntervalMs = resolveKeepaliveIntervalMs(params.keepaliveIntervalMs);

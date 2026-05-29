@@ -1,3 +1,4 @@
+// Tests extensions/nostr/src channel test behavior.
 import {
   createPluginSetupWizardConfigure,
   createTestWizardPrompter,

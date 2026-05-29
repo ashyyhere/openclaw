@@ -1,3 +1,4 @@
+// extensions/feishu/src setup surface helpers and runtime behavior.
 import {
   DEFAULT_ACCOUNT_ID,
   formatDocsLink,

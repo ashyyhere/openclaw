@@ -1,3 +1,4 @@
+// Tests extensions/whatsapp/src login coverage test behavior.
 import { rmSync } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";

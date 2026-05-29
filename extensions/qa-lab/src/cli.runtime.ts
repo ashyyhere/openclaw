@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/qa-lab/src cli runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";

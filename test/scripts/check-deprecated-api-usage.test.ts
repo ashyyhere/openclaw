@@ -1,3 +1,4 @@
+// Tests test/scripts check deprecated api usage test behavior.
 import { describe, expect, it } from "vitest";
 import { buildDeprecatedPluginSdkModuleSpecifiers } from "../../scripts/lib/deprecated-plugin-sdk-usage.mjs";
 import deprecatedPublicPluginSdkSubpaths from "../../scripts/lib/plugin-sdk-deprecated-public-subpaths.json" with { type: "json" };

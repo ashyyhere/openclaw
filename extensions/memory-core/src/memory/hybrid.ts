@@ -1,3 +1,4 @@
+// extensions/memory-core/src/memory hybrid helpers and runtime behavior.
 import { normalizeStringEntries } from "openclaw/plugin-sdk/string-coerce-runtime";
 import { applyMMRToHybridResults, type MMRConfig, DEFAULT_MMR_CONFIG } from "./mmr.js";
 import {

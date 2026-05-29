@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/browser/src/browser playwright core runtime behavior.
 import { createRequire } from "node:module";
 import type * as PlaywrightCore from "playwright-core";
 

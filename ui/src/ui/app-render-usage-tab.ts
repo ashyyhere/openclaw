@@ -1,3 +1,4 @@
+// ui/src/ui app render usage tab helpers and runtime behavior.
 import { nothing } from "lit";
 import type { AppViewState } from "./app-view-state.ts";
 import type { UsageState } from "./controllers/usage.ts";
@@ -40,6 +41,7 @@ const debouncedLoadUsage = (state: UsageState) => {
   usageDateDebounceTimeout = window.setTimeout(() => void loadUsage(state), 400);
 };
 
+/** Reused helper for render Usage Tab behavior in ui/src/ui. */
 export function renderUsageTab(state: AppViewState) {
   if (state.tab !== "usage") {
     return nothing;

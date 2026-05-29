@@ -1,3 +1,4 @@
+// extensions/twitch/src config helpers and runtime behavior.
 import {
   listCombinedAccountIds,
   normalizeAccountId,

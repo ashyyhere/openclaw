@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor reply context helpers and runtime behavior.
 import type { Guild, Message, User } from "../internal/discord.js";
 import { resolveTimestampMs } from "./format.js";
 import { resolveDiscordSenderIdentity } from "./sender-identity.js";

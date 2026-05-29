@@ -1,5 +1,7 @@
+/** Shared MCP config coercion helpers. */
 import { isDangerousHostEnvVarName } from "../infra/host-env-security.js";
 
+/** Return whether a value can be treated as an MCP config record. */
 export function isMcpConfigRecord(value: unknown): value is Record<string, unknown> {
   return value !== null && typeof value === "object" && !Array.isArray(value);
 }
@@ -39,6 +41,7 @@ function toMcpFilteredStringRecord(
   return entries.length > 0 ? Object.fromEntries(entries) : undefined;
 }
 
+/** Coerce an unknown record into string-valued MCP config entries. */
 export function toMcpStringRecord(
   value: unknown,
   options?: { onDroppedEntry?: (key: string, value: unknown) => void },
@@ -46,6 +49,7 @@ export function toMcpStringRecord(
   return toMcpFilteredStringRecord(value, options);
 }
 
+/** Coerce an unknown record into MCP env entries. */
 export function toMcpEnvRecord(
   value: unknown,
   options?: { onDroppedEntry?: (key: string, value: unknown) => void },
@@ -57,6 +61,7 @@ export function toMcpEnvRecord(
   });
 }
 
+/** Coerce an unknown value into a non-empty MCP string array. */
 export function toMcpStringArray(value: unknown): string[] | undefined {
   if (!Array.isArray(value)) {
     return undefined;

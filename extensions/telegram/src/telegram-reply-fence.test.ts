@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src telegram reply fence test behavior.
 import { describe, expect, it } from "vitest";
 import {
   beginTelegramReplyFence,

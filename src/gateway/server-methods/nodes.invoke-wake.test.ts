@@ -1,3 +1,4 @@
+// Tests gateway/server-methods nodes invoke wake test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { ErrorCodes } from "../../../packages/gateway-protocol/src/index.js";
 import { MAX_TIMER_TIMEOUT_MS } from "../../shared/number-coercion.js";

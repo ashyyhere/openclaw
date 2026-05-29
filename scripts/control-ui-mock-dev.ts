@@ -1,3 +1,4 @@
+// scripts control ui mock dev helpers and runtime behavior.
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { createServer, type Plugin, type ViteDevServer } from "vite";

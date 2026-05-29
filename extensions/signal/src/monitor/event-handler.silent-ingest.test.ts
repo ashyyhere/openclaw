@@ -1,3 +1,4 @@
+// Tests extensions/signal/src/monitor event handler silent ingest test behavior.
 import { describe, expect, it, vi } from "vitest";
 import {
   createBaseSignalEventHandlerDeps,

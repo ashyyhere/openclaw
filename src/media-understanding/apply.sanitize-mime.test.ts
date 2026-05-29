@@ -1,3 +1,4 @@
+// Tests media-understanding apply sanitize mime test behavior.
 import { describe, expect, it } from "vitest";
 import { sanitizeMimeType } from "./apply.js";
 

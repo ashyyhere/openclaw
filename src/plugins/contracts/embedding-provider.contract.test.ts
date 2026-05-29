@@ -1,3 +1,4 @@
+// Tests plugins/contracts embedding provider contract test behavior.
 import * as embeddingProviderSdk from "openclaw/plugin-sdk/embedding-providers";
 import {
   createPluginRegistryFixture,

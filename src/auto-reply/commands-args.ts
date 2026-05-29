@@ -1,3 +1,4 @@
+// Command argument parsing and formatting helpers for chat command definitions.
 import {
   normalizeOptionalLowercaseString,
   normalizeOptionalString,
@@ -152,6 +153,7 @@ const formatExecArgs: CommandArgsFormatter = (values) => {
   return parts.length > 0 ? parts.join(" ") : undefined;
 };
 
+/** Shared formatters for rendering structured command arguments back to text. */
 export const COMMAND_ARG_FORMATTERS: Record<string, CommandArgsFormatter> = {
   config: formatConfigArgs,
   mcp: formatMcpArgs,

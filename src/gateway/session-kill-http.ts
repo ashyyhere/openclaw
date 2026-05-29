@@ -1,3 +1,4 @@
+// gateway session kill http helpers and runtime behavior.
 import type { IncomingMessage, ServerResponse } from "node:http";
 import {
   killControlledSubagentRun,
@@ -45,6 +46,7 @@ function resolveSessionKeyFromPath(pathname: string): SessionKeyPathResolution {
   }
 }
 
+/** Reused helper for handle Session Kill Http Request behavior in src/gateway. */
 export async function handleSessionKillHttpRequest(
   req: IncomingMessage,
   res: ServerResponse,

@@ -1,3 +1,4 @@
+// extensions/qa-matrix/src/runners/contract scenario types helpers and runtime behavior.
 import type { MatrixQaObservedEvent } from "../../substrate/events.js";
 
 export type MatrixQaReplyArtifact = {

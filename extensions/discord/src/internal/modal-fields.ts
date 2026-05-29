@@ -1,3 +1,4 @@
+// extensions/discord/src/internal modal fields helpers and runtime behavior.
 import { type APIRole, type APIUser } from "discord-api-types/v10";
 import { Role, User, type StructureClient } from "./structures.js";
 

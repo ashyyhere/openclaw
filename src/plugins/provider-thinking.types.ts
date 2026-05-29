@@ -10,6 +10,7 @@ export type ProviderThinkingPolicyContext = {
   modelId: string;
 };
 
+/** Shared type for Provider Thinking Model Compat in src/plugins. */
 export type ProviderThinkingModelCompat = {
   thinkingFormat?: string;
   supportedReasoningEfforts?: readonly string[] | null;
@@ -31,6 +32,7 @@ export type ProviderDefaultThinkingPolicyContext = ProviderThinkingPolicyContext
   compat?: ProviderThinkingModelCompat | null;
 };
 
+/** Shared type for Provider Thinking Level Id in src/plugins. */
 export type ProviderThinkingLevelId =
   | "off"
   | "minimal"
@@ -41,6 +43,7 @@ export type ProviderThinkingLevelId =
   | "adaptive"
   | "max";
 
+/** Shared type for Provider Thinking Level in src/plugins. */
 export type ProviderThinkingLevel = {
   id: ProviderThinkingLevelId;
   /**
@@ -56,6 +59,7 @@ export type ProviderThinkingLevel = {
   rank?: number;
 };
 
+/** Shared type for Provider Thinking Profile in src/plugins. */
 export type ProviderThinkingProfile = {
   levels: ProviderThinkingLevel[] | ReadonlyArray<ProviderThinkingLevel>;
   defaultLevel?: ProviderThinkingLevelId | null;

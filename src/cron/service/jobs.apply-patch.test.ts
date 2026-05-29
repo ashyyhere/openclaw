@@ -1,3 +1,4 @@
+// Tests cron/service jobs apply patch test behavior.
 import { describe, expect, it } from "vitest";
 import type { CronJob } from "../types.js";
 import { applyJobPatch } from "./jobs.js";

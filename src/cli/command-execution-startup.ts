@@ -1,3 +1,4 @@
+/** Runs common startup steps before executing a CLI command handler. */
 import { routeLogsToStderr } from "../logging/console.js";
 import type { RuntimeEnv } from "../runtime.js";
 import { resolveCliArgvInvocation } from "./argv-invocation.js";
@@ -12,6 +13,7 @@ const hasJsonFlag = (argv: readonly string[]) =>
 const hasVersionFlag = (argv: readonly string[]) =>
   argv.some((arg) => arg === "--version" || arg === "-V");
 
+/** Reused helper for resolve Cli Execution Startup Context behavior in src/cli. */
 export function resolveCliExecutionStartupContext(params: {
   argv: string[];
   jsonOutputMode: boolean;
@@ -33,6 +35,7 @@ export function resolveCliExecutionStartupContext(params: {
   };
 }
 
+/** Reused helper for apply Cli Execution Startup Presentation behavior in src/cli. */
 export async function applyCliExecutionStartupPresentation(params: {
   argv?: string[];
   routeLogsToStderrOnSuppress?: boolean;
@@ -57,6 +60,7 @@ export async function applyCliExecutionStartupPresentation(params: {
   emitCliBanner(params.version);
 }
 
+/** Reused helper for ensure Cli Execution Bootstrap behavior in src/cli. */
 export async function ensureCliExecutionBootstrap(params: {
   runtime: RuntimeEnv;
   commandPath: string[];

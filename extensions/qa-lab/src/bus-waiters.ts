@@ -1,3 +1,4 @@
+// extensions/qa-lab/src bus waiters helpers and runtime behavior.
 import type {
   QaBusEvent,
   QaBusMessage,

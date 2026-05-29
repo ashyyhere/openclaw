@@ -62,6 +62,7 @@ function resolveProfileSourceAgentDir(params: {
     : params.agentDir;
 }
 
+/** Reused helper for resolve Provider Auth Overview behavior in src/commands/models. */
 export function resolveProviderAuthOverview(params: {
   provider: string;
   cfg: OpenClawConfig;

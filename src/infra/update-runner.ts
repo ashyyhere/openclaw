@@ -1,3 +1,4 @@
+// infra update runner helpers and runtime behavior.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
@@ -38,6 +39,7 @@ import {
   type UpdatePackageManagerFailureReason,
 } from "./update-package-manager.js";
 
+/** Shared type for Update Step Result in src/infra. */
 export type UpdateStepResult = {
   name: string;
   command: string;
@@ -48,6 +50,7 @@ export type UpdateStepResult = {
   stderrTail?: string | null;
 };
 
+/** Shared type for Update Run Result in src/infra. */
 export type UpdateRunResult = {
   status: "ok" | "error" | "skipped";
   mode: "git" | "pnpm" | "bun" | "npm" | "unknown";
@@ -103,6 +106,7 @@ type CommandRunner = (
   options: CommandOptions,
 ) => Promise<{ stdout: string; stderr: string; code: number | null }>;
 
+/** Shared type for Update Step Info in src/infra. */
 export type UpdateStepInfo = {
   name: string;
   command: string;
@@ -110,12 +114,14 @@ export type UpdateStepInfo = {
   total: number;
 };
 
+/** Shared type for Update Step Completion in src/infra. */
 export type UpdateStepCompletion = UpdateStepInfo & {
   durationMs: number;
   exitCode: number | null;
   stderrTail?: string | null;
 };
 
+/** Shared type for Update Step Progress in src/infra. */
 export type UpdateStepProgress = {
   onStepStart?: (step: UpdateStepInfo) => void;
   onStepComplete?: (step: UpdateStepCompletion) => void;
@@ -133,6 +139,7 @@ type UpdateRunnerOptions = {
   progress?: UpdateStepProgress;
 };
 
+/** Shared type for Update Install Surface in src/infra. */
 export type UpdateInstallSurface =
   | {
       kind: "git";
@@ -665,6 +672,7 @@ async function buildUpdateCommandRunner(
   };
 }
 
+/** Reused helper for resolve Update Install Surface behavior in src/infra. */
 export async function resolveUpdateInstallSurface(
   opts: Pick<UpdateRunnerOptions, "cwd" | "argv1" | "timeoutMs" | "runCommand"> = {},
 ): Promise<UpdateInstallSurface> {
@@ -717,6 +725,7 @@ export async function resolveUpdateInstallSurface(
   };
 }
 
+/** Reused helper for run Gateway Update behavior in src/infra. */
 export async function runGatewayUpdate(opts: UpdateRunnerOptions = {}): Promise<UpdateRunResult> {
   const startedAt = Date.now();
   const { defaultCommandEnv, runCommand } = await buildUpdateCommandRunner(opts.runCommand);

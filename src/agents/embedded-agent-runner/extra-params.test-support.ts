@@ -1,9 +1,11 @@
+/** Test harness for capturing extra params applied to stream payloads. */
 import type { ThinkLevel } from "../../auto-reply/thinking.shared.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { Context, Model, SimpleStreamOptions } from "../../llm/types.js";
 import type { StreamFn } from "../runtime/index.js";
 import { testing as extraParamsTesting, applyExtraParamsToAgent } from "./extra-params.js";
 
+/** Shared type for Extra Params Capture in src/agents/embedded-agent-runner. */
 export type ExtraParamsCapture<TPayload extends Record<string, unknown>> = {
   headers?: Record<string, string>;
   options?: SimpleStreamOptions;
@@ -37,6 +39,7 @@ type RunExtraParamsCaseParams<
   thinkingLevel?: ThinkLevel;
 };
 
+/** Runs one extra-params case and captures the provider payload. */
 export function runExtraParamsCase<
   TApi extends "openai-completions" | "openai-responses" | "azure-openai-responses",
   TPayload extends Record<string, unknown>,

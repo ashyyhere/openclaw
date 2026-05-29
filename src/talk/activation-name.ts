@@ -1,8 +1,13 @@
+// talk activation name helpers and runtime behavior.
+/** Reused constant for REALTIME VOICE ACTIVATION NAME MAX WORDS behavior in src/talk. */
 export const REALTIME_VOICE_ACTIVATION_NAME_MAX_WORDS = 2;
 
+/** Shared type for Realtime Voice Activation Name Edge in src/talk. */
 export type RealtimeVoiceActivationNameEdge = "leading" | "trailing";
+/** Shared type for Realtime Voice Activation Name Match Kind in src/talk. */
 export type RealtimeVoiceActivationNameMatchKind = "exact" | "fuzzy";
 
+/** Shared type for Realtime Voice Activation Name Transcript Result in src/talk. */
 export type RealtimeVoiceActivationNameTranscriptResult =
   | {
       allowed: true;
@@ -32,15 +37,18 @@ type PreparedEdgeActivationNameCandidate = {
   compact: string;
 };
 
+/** Reused helper for realtime Voice Activation Name Word Count behavior in src/talk. */
 export function realtimeVoiceActivationNameWordCount(value: string): number {
   return Array.from(value.matchAll(/[a-z0-9]+/gi)).length;
 }
 
+/** Reused helper for normalize Realtime Voice Activation Name behavior in src/talk. */
 export function normalizeRealtimeVoiceActivationName(value: string): string | undefined {
   const normalized = value.toLowerCase().replace(/\s+/g, " ").trim();
   return normalized || undefined;
 }
 
+/** Reused helper for normalize Realtime Voice Activation Name Prefix behavior in src/talk. */
 export function normalizeRealtimeVoiceActivationNamePrefix(
   value: string,
   maxWords = REALTIME_VOICE_ACTIVATION_NAME_MAX_WORDS,
@@ -52,6 +60,7 @@ export function normalizeRealtimeVoiceActivationNamePrefix(
   return words.slice(0, maxWords).join(" ");
 }
 
+/** Reused helper for is Supported Realtime Voice Activation Name behavior in src/talk. */
 export function isSupportedRealtimeVoiceActivationName(
   value: string,
   maxWords = REALTIME_VOICE_ACTIVATION_NAME_MAX_WORDS,
@@ -60,6 +69,7 @@ export function isSupportedRealtimeVoiceActivationName(
   return wordCount >= 1 && wordCount <= maxWords;
 }
 
+/** Reused helper for normalize Supported Realtime Voice Activation Name behavior in src/talk. */
 export function normalizeSupportedRealtimeVoiceActivationName(
   value: string | undefined,
   maxWords = REALTIME_VOICE_ACTIVATION_NAME_MAX_WORDS,
@@ -73,10 +83,12 @@ export function normalizeSupportedRealtimeVoiceActivationName(
     : undefined;
 }
 
+/** Reused helper for sort Realtime Voice Activation Names behavior in src/talk. */
 export function sortRealtimeVoiceActivationNames(names: string[]): string[] {
   return names.toSorted((left, right) => right.length - left.length || left.localeCompare(right));
 }
 
+/** Reused helper for match Realtime Voice Activation Name behavior in src/talk. */
 export function matchRealtimeVoiceActivationName(
   text: string,
   activationNames: string[],

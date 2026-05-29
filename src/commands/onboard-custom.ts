@@ -1,3 +1,4 @@
+/** Prompts for custom provider API settings during onboarding. */
 import { modelKey } from "../agents/model-selection.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { SecretInput } from "../config/types.secrets.js";
@@ -20,6 +21,7 @@ import {
   type CustomApiCompatibility,
   type CustomApiResult,
 } from "./onboard-custom-config.js";
+/** Re-exported API for src/commands. */
 export {
   applyCustomApiConfig,
   buildAnthropicVerificationProbeRequest,
@@ -214,6 +216,7 @@ async function applyCustomApiRetryChoice(params: {
   return { baseUrl, apiKey, resolvedApiKey, modelId };
 }
 
+/** Reused helper for prompt Custom Api Config behavior in src/commands. */
 export async function promptCustomApiConfig(params: {
   prompter: WizardPrompter;
   runtime: RuntimeEnv;

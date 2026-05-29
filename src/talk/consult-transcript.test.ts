@@ -1,3 +1,4 @@
+// Tests talk consult transcript test behavior.
 import { describe, expect, it } from "vitest";
 import { classifySkippableRealtimeVoiceConsultTranscript } from "./consult-transcript.js";
 

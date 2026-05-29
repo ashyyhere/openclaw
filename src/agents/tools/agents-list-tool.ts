@@ -1,3 +1,4 @@
+/** Tool for listing configured OpenClaw agents. */
 import { Type } from "typebox";
 import { getRuntimeConfig } from "../../config/config.js";
 import {
@@ -27,6 +28,7 @@ type AgentListEntry = {
   };
 };
 
+/** Creates the agents-list AgentTool. */
 export function createAgentsListTool(opts?: {
   agentSessionKey?: string;
   /** Explicit agent ID override for cron/hook sessions. */

@@ -1,3 +1,4 @@
+// infra/outbound bound delivery router helpers and runtime behavior.
 import { normalizeConversationRef } from "./session-binding-normalization.js";
 import {
   getSessionBindingService,
@@ -6,6 +7,7 @@ import {
   type SessionBindingService,
 } from "./session-binding-service.js";
 
+/** Shared type for Bound Delivery Router Input in src/infra/outbound. */
 export type BoundDeliveryRouterInput = {
   eventKind: "task_completion";
   targetSessionKey: string;
@@ -13,12 +15,14 @@ export type BoundDeliveryRouterInput = {
   failClosed: boolean;
 };
 
+/** Shared type for Bound Delivery Router Result in src/infra/outbound. */
 export type BoundDeliveryRouterResult = {
   binding: SessionBindingRecord | null;
   mode: "bound" | "fallback";
   reason: string;
 };
 
+/** Shared type for Bound Delivery Router in src/infra/outbound. */
 export type BoundDeliveryRouter = {
   resolveDestination: (input: BoundDeliveryRouterInput) => BoundDeliveryRouterResult;
 };
@@ -55,6 +59,7 @@ function resolveBindingForRequester(
   return null;
 }
 
+/** Reused helper for create Bound Delivery Router behavior in src/infra/outbound. */
 export function createBoundDeliveryRouter(
   service: SessionBindingService = getSessionBindingService(),
 ): BoundDeliveryRouter {

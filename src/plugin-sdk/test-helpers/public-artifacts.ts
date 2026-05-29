@@ -1,3 +1,4 @@
+// plugin-sdk/test-helpers public artifacts helpers and runtime behavior.
 import {
   assertUniqueValues,
   BUNDLED_RUNTIME_SIDECAR_PATHS,

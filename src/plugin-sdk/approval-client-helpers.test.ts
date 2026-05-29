@@ -1,3 +1,4 @@
+/** Tests channel exec approval client profile gating, filters, and target recipients. */
 import { describe, expect, it } from "vitest";
 import {
   createChannelExecApprovalProfile,

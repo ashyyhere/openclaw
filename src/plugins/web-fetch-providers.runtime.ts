@@ -1,3 +1,4 @@
+// Runtime boundary for plugins web fetch providers runtime behavior.
 import { loadOpenClawPlugins } from "./loader.js";
 import type { PluginLoadOptions } from "./loader.js";
 import { type PluginManifestRecord } from "./manifest-registry.js";
@@ -45,6 +46,7 @@ function mapRegistryWebFetchProviders(params: {
   });
 }
 
+/** Reused helper for resolve Plugin Web Fetch Providers behavior in src/plugins. */
 export function resolvePluginWebFetchProviders(params: {
   config?: PluginLoadOptions["config"];
   workspaceDir?: string;
@@ -63,6 +65,7 @@ export function resolvePluginWebFetchProviders(params: {
   });
 }
 
+/** Reused helper for resolve Runtime Web Fetch Providers behavior in src/plugins. */
 export function resolveRuntimeWebFetchProviders(params: {
   config?: PluginLoadOptions["config"];
   workspaceDir?: string;

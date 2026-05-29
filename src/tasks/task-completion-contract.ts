@@ -1,5 +1,7 @@
+// tasks task completion contract helpers and runtime behavior.
 import type { TaskTerminalOutcome } from "./task-registry.types.js";
 
+/** Shared type for Required Completion Terminal Result in src/tasks. */
 export type RequiredCompletionTerminalResult = {
   terminalOutcome?: Extract<TaskTerminalOutcome, "blocked">;
   terminalSummary?: string;
@@ -48,6 +50,7 @@ function hasNonProgressFollowupSentence(value: string): boolean {
   return matchesProgressOnlyPrefix(firstSentence) && !isProgressOnlyCompletionText(rest);
 }
 
+/** Reused helper for is Progress Only Completion Text behavior in src/tasks. */
 export function isProgressOnlyCompletionText(value: string | null | undefined): boolean {
   const normalized = normalizeCompletionText(value);
   if (!normalized) {
@@ -59,6 +62,7 @@ export function isProgressOnlyCompletionText(value: string | null | undefined): 
   return matchesProgressOnlyPrefix(normalized);
 }
 
+/** Reused helper for resolve Required Completion Terminal Result behavior in src/tasks. */
 export function resolveRequiredCompletionTerminalResult(
   resultText: string | null | undefined,
 ): RequiredCompletionTerminalResult {
@@ -79,6 +83,7 @@ export function resolveRequiredCompletionTerminalResult(
   return {};
 }
 
+/** Reused helper for resolve Required Completion Delivery Failure Terminal Result behavior in src/tasks. */
 export function resolveRequiredCompletionDeliveryFailureTerminalResult(
   reason: string | null | undefined,
 ): RequiredCompletionTerminalResult {

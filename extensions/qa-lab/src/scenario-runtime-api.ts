@@ -1,3 +1,4 @@
+// extensions/qa-lab/src scenario runtime api helpers and runtime behavior.
 import type * as NodeFs from "node:fs/promises";
 import type * as NodePath from "node:path";
 import type { QaTransportState } from "./qa-transport.js";

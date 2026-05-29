@@ -1,3 +1,4 @@
+// infra/outbound channel selection helpers and runtime behavior.
 import { listChannelPlugins } from "../../channels/plugins/index.js";
 import type { ChannelPlugin } from "../../channels/plugins/types.plugin.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
@@ -15,7 +16,9 @@ import {
 import { formatErrorMessage } from "../errors.js";
 import { resolveOutboundChannelPlugin } from "./channel-resolution.js";
 
+/** Shared type for Message Channel Id in src/infra/outbound. */
 export type MessageChannelId = DeliverableMessageChannel;
+/** Shared type for Message Channel Selection Source in src/infra/outbound. */
 export type MessageChannelSelectionSource =
   | "explicit"
   | "tool-context-fallback"
@@ -202,6 +205,7 @@ async function isPluginConfigured(plugin: ChannelPlugin, cfg: OpenClawConfig): P
   return false;
 }
 
+/** Reused helper for list Configured Message Channels behavior in src/infra/outbound. */
 export async function listConfiguredMessageChannels(
   cfg: OpenClawConfig,
 ): Promise<MessageChannelId[]> {
@@ -217,6 +221,7 @@ export async function listConfiguredMessageChannels(
   return channels;
 }
 
+/** Reused helper for resolve Message Channel Selection behavior in src/infra/outbound. */
 export async function resolveMessageChannelSelection(params: {
   cfg: OpenClawConfig;
   channel?: string | null;
@@ -293,9 +298,11 @@ export async function resolveMessageChannelSelection(params: {
   throw new Error(formatMultipleConfiguredChannelsMessage(configured));
 }
 
+/** Reused constant for testing behavior in src/infra/outbound. */
 export const testing = {
   resetLoggedChannelSelectionErrors() {
     loggedChannelSelectionErrors.clear();
   },
 };
+/** Re-exported API for src/infra/outbound, starting with testing. */
 export { testing as __testing };

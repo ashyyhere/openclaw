@@ -1,6 +1,8 @@
+// logging diagnostic session attention helpers and runtime behavior.
 import type { DiagnosticSessionActiveWorkKind } from "../infra/diagnostic-events.js";
 import type { DiagnosticSessionActivitySnapshot } from "./diagnostic-run-activity.js";
 
+/** Shared type for Session Attention Classification in src/logging. */
 export type SessionAttentionClassification =
   | {
       eventType: "session.long_running";
@@ -24,6 +26,7 @@ export type SessionAttentionClassification =
       recoveryEligible: true;
     };
 
+/** Reused helper for classify Session Attention behavior in src/logging. */
 export function classifySessionAttention(params: {
   state?: "idle" | "processing" | "waiting";
   queueDepth: number;
@@ -100,6 +103,7 @@ export function classifySessionAttention(params: {
   };
 }
 
+/** Reused helper for is Terminal Diagnostic Progress Reason behavior in src/logging. */
 export function isTerminalDiagnosticProgressReason(reason: string | undefined): boolean {
   if (!reason) {
     return false;

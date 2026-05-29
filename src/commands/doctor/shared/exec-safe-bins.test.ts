@@ -1,3 +1,4 @@
+/** Tests safe executable bin doctor checks. */
 import { chmodSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { delimiter, join } from "node:path";

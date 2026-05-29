@@ -1,3 +1,4 @@
+// extensions/lobster index helpers and runtime behavior.
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 import type { AnyAgentTool, OpenClawPluginApi, OpenClawPluginToolFactory } from "./runtime-api.js";
 import { createLobsterTool } from "./src/lobster-tool.js";

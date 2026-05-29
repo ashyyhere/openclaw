@@ -1,3 +1,4 @@
+// plugins bundled source overlays helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
@@ -9,6 +10,7 @@ function decodeMountInfoPath(value: string): string {
   );
 }
 
+/** Reused helper for parse Linux Mount Info Mount Points behavior in src/plugins. */
 export function parseLinuxMountInfoMountPoints(mountInfo: string): Set<string> {
   const mountPoints = new Set<string>();
   for (const line of mountInfo.split(/\r?\n/u)) {
@@ -49,6 +51,7 @@ function sourceOverlaysDisabled(env: NodeJS.ProcessEnv): boolean {
   return raw === "1" || raw === "true";
 }
 
+/** Reused helper for is Bundled Source Overlay Path behavior in src/plugins. */
 export function isBundledSourceOverlayPath(params: {
   sourcePath: string;
   mountPoints?: ReadonlySet<string>;
@@ -58,6 +61,7 @@ export function isBundledSourceOverlayPath(params: {
   return mountPoints.has(resolved) || isFilesystemMountPoint(resolved);
 }
 
+/** Reused helper for list Bundled Source Overlay Dirs behavior in src/plugins. */
 export function listBundledSourceOverlayDirs(params: {
   bundledRoot?: string;
   env?: NodeJS.ProcessEnv;

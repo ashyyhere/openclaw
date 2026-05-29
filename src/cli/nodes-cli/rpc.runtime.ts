@@ -1,3 +1,4 @@
+/** Runtime gateway client helpers for nodes CLI RPC calls. */
 import {
   GATEWAY_CLIENT_MODES,
   GATEWAY_CLIENT_NAMES,
@@ -15,6 +16,7 @@ function resolveNodesTransportTimeoutMs(opts: NodesRpcOpts, overrideMs?: number)
   return overrideMs ?? parseTimeoutMsWithFallback(opts.timeout, DEFAULT_NODES_RPC_TIMEOUT_MS);
 }
 
+/** Reused helper for call Gateway Cli Runtime behavior in src/cli/nodes-cli. */
 export async function callGatewayCliRuntime(
   method: string,
   opts: NodesRpcOpts,
@@ -40,6 +42,7 @@ export async function callGatewayCliRuntime(
   );
 }
 
+/** Reused helper for call Node Pair Approval Gateway Cli Runtime behavior in src/cli/nodes-cli. */
 export async function callNodePairApprovalGatewayCliRuntime(
   method: "node.pair.list" | "node.pair.approve",
   opts: NodesRpcOpts,

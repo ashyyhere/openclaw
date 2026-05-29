@@ -1,3 +1,4 @@
+// Tests test/scripts check changelog attributions test behavior.
 import { execFileSync } from "node:child_process";
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import os from "node:os";

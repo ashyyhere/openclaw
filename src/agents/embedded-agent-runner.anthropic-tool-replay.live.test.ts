@@ -1,3 +1,4 @@
+/** Live tests for Anthropic tool replay in embedded-agent runner. */
 import type { Message, Model } from "openclaw/plugin-sdk/llm";
 import { describe, expect, it, vi } from "vitest";
 import { wrapStreamFnSanitizeMalformedToolCalls } from "./embedded-agent-runner/run/attempt.tool-call-normalization.js";

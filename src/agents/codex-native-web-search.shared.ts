@@ -1,10 +1,14 @@
+/** Shared config parsing for Codex native web search. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { normalizeUniqueTrimmedStringList } from "../shared/string-normalization.js";
 import { isRecord } from "../utils.js";
 
+/** Codex native search network mode. */
 export type CodexNativeSearchMode = "cached" | "live";
+/** Codex native search context-size hint. */
 export type CodexNativeSearchContextSize = "low" | "medium" | "high";
 
+/** Approximate user location passed to Codex native search. */
 export type CodexNativeSearchUserLocation = {
   country?: string;
   region?: string;
@@ -12,6 +16,7 @@ export type CodexNativeSearchUserLocation = {
   timezone?: string;
 };
 
+/** Normalized Codex native web-search config. */
 export type ResolvedCodexNativeWebSearchConfig = {
   enabled: boolean;
   mode: CodexNativeSearchMode;
@@ -51,6 +56,7 @@ function normalizeUserLocation(value: unknown): CodexNativeSearchUserLocation | 
     : undefined;
 }
 
+/** Resolve Codex native web-search config from OpenClaw config. */
 export function resolveCodexNativeWebSearchConfig(
   config: OpenClawConfig | undefined,
 ): ResolvedCodexNativeWebSearchConfig {
@@ -64,6 +70,7 @@ export function resolveCodexNativeWebSearchConfig(
   };
 }
 
+/** Format a short runtime description for enabled Codex native search. */
 export function describeCodexNativeWebSearch(
   config: OpenClawConfig | undefined,
 ): string | undefined {

@@ -1,3 +1,4 @@
+// extensions/discord/src/internal gateway lifecycle helpers and runtime behavior.
 type GatewayTimer = NodeJS.Timeout;
 
 export class GatewayHeartbeatTimers {

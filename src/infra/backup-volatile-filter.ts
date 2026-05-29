@@ -1,3 +1,4 @@
+// infra backup volatile filter helpers and runtime behavior.
 import path from "node:path";
 
 /**
@@ -59,6 +60,7 @@ function filePathCandidates(input: string): string[] {
   return [normalized, normalizePosix(`/${normalized}`)];
 }
 
+/** Shared type for Volatile Filter Plan in src/infra. */
 export type VolatileFilterPlan = {
   /** Canonical state directories the filter should treat as volatile anchors. */
   stateDirs: string[];

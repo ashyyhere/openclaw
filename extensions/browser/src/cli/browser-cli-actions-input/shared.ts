@@ -1,3 +1,4 @@
+// extensions/browser/src/cli/browser-cli-actions-input shared helpers and runtime behavior.
 import fs from "node:fs/promises";
 import type { Command } from "commander";
 import { callBrowserRequest, type BrowserParentOpts } from "../browser-cli-shared.js";

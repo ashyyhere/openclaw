@@ -1,3 +1,4 @@
+// Tests ui/src/ui app native bridge test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { initNativeBridge, isWebView2, sendToNative } from "./app-native-bridge.ts";
 import {

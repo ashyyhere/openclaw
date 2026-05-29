@@ -1,3 +1,4 @@
+/** TypeBox helpers for string enum schemas accepted by providers. */
 import { Type } from "typebox";
 
 type StringEnumOptions<T extends readonly string[]> = {
@@ -9,6 +10,7 @@ type StringEnumOptions<T extends readonly string[]> = {
 
 // Avoid Type.Union([Type.Literal(...)]) which compiles to anyOf.
 // Some providers reject anyOf in tool schemas; a flat string enum is safer.
+/** Builds a required string enum schema from literal choices. */
 export function stringEnum<T extends readonly string[]>(
   values: T,
   options: StringEnumOptions<T> = {},
@@ -25,6 +27,7 @@ export function stringEnum<T extends readonly string[]>(
   });
 }
 
+/** Builds an optional string enum schema from literal choices. */
 export function optionalStringEnum<T extends readonly string[]>(
   values: T,
   options: StringEnumOptions<T> = {},

@@ -1,3 +1,4 @@
+// Shared types for scripts/e2e/parallels types behavior.
 export type Provider = "openai" | "anthropic" | "minimax";
 export type Mode = "fresh" | "upgrade" | "both";
 export type Platform = "macos" | "windows" | "linux";

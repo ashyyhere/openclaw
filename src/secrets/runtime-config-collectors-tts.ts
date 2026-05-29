@@ -1,3 +1,4 @@
+// secrets runtime config collectors tts helpers and runtime behavior.
 import {
   collectSecretInputAssignment,
   type ResolverContext,
@@ -28,6 +29,7 @@ function collectProviderApiKeyAssignment(params: {
   });
 }
 
+/** Reused helper for collect Tts Api Key Assignments behavior in src/secrets. */
 export function collectTtsApiKeyAssignments(params: {
   tts: Record<string, unknown>;
   pathPrefix: string;

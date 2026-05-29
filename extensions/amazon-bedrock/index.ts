@@ -1,3 +1,4 @@
+// extensions/amazon-bedrock index helpers and runtime behavior.
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 import { registerAmazonBedrockPlugin } from "./register.sync.runtime.js";
 

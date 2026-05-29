@@ -1,3 +1,4 @@
+/** Public Codex native web-search facade and relevance checks. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {
   hasAvailableCodexAuth,
@@ -5,17 +6,20 @@ import {
 } from "./codex-native-web-search-core.js";
 import { resolveCodexNativeWebSearchConfig } from "./codex-native-web-search.shared.js";
 import { resolveDefaultModelForAgent } from "./model-selection.js";
+/** Re-exported API for src/agents. */
 export {
   buildCodexNativeWebSearchTool,
   patchCodexNativeWebSearchPayload,
   resolveCodexNativeSearchActivation,
   shouldSuppressManagedWebSearchTool,
 } from "./codex-native-web-search-core.js";
+/** Re-exported API for src/agents. */
 export {
   describeCodexNativeWebSearch,
   resolveCodexNativeWebSearchConfig,
 } from "./codex-native-web-search.shared.js";
 
+/** Return whether Codex native search is relevant to the current config or default model. */
 export function isCodexNativeWebSearchRelevant(params: {
   config: OpenClawConfig;
   agentId?: string;

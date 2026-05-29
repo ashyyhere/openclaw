@@ -1,3 +1,4 @@
+// Tests extensions/firecrawl/src firecrawl tools test behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { mockPinnedHostnameResolution } from "openclaw/plugin-sdk/test-env";
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";

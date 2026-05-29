@@ -1,3 +1,4 @@
+/** Tests QA parent watchdog process monitoring. */
 import { describe, expect, it, vi } from "vitest";
 import {
   installQaParentWatchdog,

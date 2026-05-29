@@ -1,8 +1,10 @@
+// gateway hosted plugin surface url helpers and runtime behavior.
 import { parseStrictPositiveInteger } from "../infra/parse-finite-number.js";
 import { isLoopbackHost } from "./net.js";
 
 type HostSource = string | null | undefined;
 
+/** Shared type for Hosted Plugin Surface Url Params in src/gateway. */
 export type HostedPluginSurfaceUrlParams = {
   port?: number;
   hostOverride?: HostSource;
@@ -61,6 +63,7 @@ const parseForwardedHost = (value: HostSource | HostSource[]) => {
   return raw?.split(",")[0]?.trim();
 };
 
+/** Reused helper for resolve Hosted Plugin Surface Url behavior in src/gateway. */
 export function resolveHostedPluginSurfaceUrl(params: HostedPluginSurfaceUrlParams) {
   const port = params.port;
   if (!port) {

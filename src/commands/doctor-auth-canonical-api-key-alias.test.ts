@@ -1,3 +1,4 @@
+/** Tests doctor repair for canonical API-key auth aliases. */
 import fs from "node:fs";
 import path from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";

@@ -1,8 +1,10 @@
+// gateway/server-methods chat test helpers helpers and runtime behavior.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { CURRENT_SESSION_VERSION } from "../../config/sessions/version.js";
 
+/** Reused helper for create Transcript Fixture Sync behavior in src/gateway/server-methods. */
 export function createTranscriptFixtureSync(params: {
   prefix: string;
   sessionId: string;

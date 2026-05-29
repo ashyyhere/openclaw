@@ -1,3 +1,4 @@
+// Tests test/scripts kitchen sink rpc walk test behavior.
 import { EventEmitter } from "node:events";
 import fs, {
   existsSync,

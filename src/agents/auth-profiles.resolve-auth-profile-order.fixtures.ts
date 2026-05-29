@@ -1,6 +1,8 @@
+/** Fixtures for auth-profile ordering tests. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { AuthProfileStore } from "./auth-profiles.js";
 
+/** Reused constant for ANTHROPIC STORE behavior in src/agents. */
 export const ANTHROPIC_STORE: AuthProfileStore = {
   version: 1,
   profiles: {
@@ -17,6 +19,7 @@ export const ANTHROPIC_STORE: AuthProfileStore = {
   },
 };
 
+/** Reused constant for ANTHROPIC CFG behavior in src/agents. */
 export const ANTHROPIC_CFG: OpenClawConfig = {
   auth: {
     profiles: {

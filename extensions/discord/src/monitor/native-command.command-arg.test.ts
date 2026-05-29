@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/monitor native command command arg test behavior.
 import type { ChatCommandDefinition } from "openclaw/plugin-sdk/command-auth-native";
 import * as commandRegistryModule from "openclaw/plugin-sdk/command-auth-native";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";

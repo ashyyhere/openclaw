@@ -1,3 +1,4 @@
+/** Public SDK helpers for Windows command spawning compatibility. */
 import { readFileSync, statSync } from "node:fs";
 import path from "node:path";
 import {
@@ -6,13 +7,16 @@ import {
 } from "../shared/string-coerce.js";
 import { normalizeStringEntries } from "../shared/string-normalization.js";
 
+/** Shared type for Windows Spawn Resolution in src/plugin-sdk. */
 export type WindowsSpawnResolution =
   | "direct"
   | "node-entrypoint"
   | "exe-entrypoint"
   | "shell-fallback";
 
+/** Shared type for Windows Spawn Candidate Resolution in src/plugin-sdk. */
 export type WindowsSpawnCandidateResolution = Exclude<WindowsSpawnResolution, "shell-fallback">;
+/** Shared type for Windows Spawn Program Candidate in src/plugin-sdk. */
 export type WindowsSpawnProgramCandidate = {
   command: string;
   leadingArgv: string[];
@@ -20,6 +24,7 @@ export type WindowsSpawnProgramCandidate = {
   windowsHide?: boolean;
 };
 
+/** Shared type for Windows Spawn Program in src/plugin-sdk. */
 export type WindowsSpawnProgram = {
   command: string;
   leadingArgv: string[];
@@ -28,6 +33,7 @@ export type WindowsSpawnProgram = {
   windowsHide?: boolean;
 };
 
+/** Shared type for Windows Spawn Invocation in src/plugin-sdk. */
 export type WindowsSpawnInvocation = {
   command: string;
   argv: string[];
@@ -36,6 +42,7 @@ export type WindowsSpawnInvocation = {
   windowsHide?: boolean;
 };
 
+/** Shared type for Resolve Windows Spawn Program Params in src/plugin-sdk. */
 export type ResolveWindowsSpawnProgramParams = {
   command: string;
   platform?: NodeJS.Platform;
@@ -45,10 +52,12 @@ export type ResolveWindowsSpawnProgramParams = {
   /** Trusted compatibility escape hatch for callers that intentionally accept shell-mediated wrapper execution. */
   allowShellFallback?: boolean;
 };
+/** Shared type for Resolve Windows Spawn Program Candidate Params in src/plugin-sdk. */
 export type ResolveWindowsSpawnProgramCandidateParams = Omit<
   ResolveWindowsSpawnProgramParams,
   "allowShellFallback"
 >;
+/** Shared type for Windows Spawn Command Inline Args in src/plugin-sdk. */
 export type WindowsSpawnCommandInlineArgs = {
   executable: string;
   arguments: string;
@@ -104,6 +113,7 @@ function readCommandToken(command: string): { token: string; rest: string } | nu
   };
 }
 
+/** Reused helper for detect Windows Spawn Command Inline Args behavior in src/plugin-sdk. */
 export function detectWindowsSpawnCommandInlineArgs(
   command: string,
 ): WindowsSpawnCommandInlineArgs | null {

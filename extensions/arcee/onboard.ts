@@ -1,3 +1,4 @@
+// extensions/arcee onboard helpers and runtime behavior.
 import {
   createModelCatalogPresetAppliers,
   type OpenClawConfig,

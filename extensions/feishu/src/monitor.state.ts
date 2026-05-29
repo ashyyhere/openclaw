@@ -1,3 +1,4 @@
+// extensions/feishu/src monitor state helpers and runtime behavior.
 import * as http from "node:http";
 import type * as Lark from "@larksuiteoapi/node-sdk";
 import {

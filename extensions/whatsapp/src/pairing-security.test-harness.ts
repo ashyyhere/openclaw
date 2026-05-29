@@ -1,3 +1,4 @@
+// extensions/whatsapp/src pairing security test harness helpers and runtime behavior.
 import { vi, type Mock } from "vitest";
 
 export type AsyncMock<TArgs extends unknown[] = unknown[], TResult = unknown> = {

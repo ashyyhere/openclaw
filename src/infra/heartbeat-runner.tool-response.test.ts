@@ -1,3 +1,4 @@
+// Tests infra heartbeat runner tool response test behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";

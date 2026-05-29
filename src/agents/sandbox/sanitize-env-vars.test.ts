@@ -1,3 +1,4 @@
+/** Covers sandbox environment variable sanitization. */
 import { describe, expect, it } from "vitest";
 import { sanitizeEnvVars, sanitizeExplicitSandboxEnvVars } from "./sanitize-env-vars.js";
 

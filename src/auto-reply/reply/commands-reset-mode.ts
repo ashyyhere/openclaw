@@ -1,7 +1,10 @@
+// Reset mode normalization for session reset commands.
 import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";
 
+/** Shared type for Soft Reset Parse Result in src/auto-reply/reply. */
 export type SoftResetParseResult = { matched: false } | { matched: true; tail: string };
 
+/** Reused helper for parse Soft Reset Command behavior in src/auto-reply/reply. */
 export function parseSoftResetCommand(commandBodyNormalized: string): SoftResetParseResult {
   const normalized = normalizeLowercaseStringOrEmpty(commandBodyNormalized);
   const resetMatch = normalized.match(/^\/reset(?:\s|$)/);

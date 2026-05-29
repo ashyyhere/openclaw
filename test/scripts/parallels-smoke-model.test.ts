@@ -1,3 +1,4 @@
+// Tests test/scripts parallels smoke model test behavior.
 import { chmodSync, copyFileSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { createServer } from "node:net";
 import { tmpdir } from "node:os";

@@ -1,3 +1,4 @@
+// Tests extensions/elevenlabs media understanding provider test behavior.
 import { mockPinnedHostnameResolution } from "openclaw/plugin-sdk/test-env";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {

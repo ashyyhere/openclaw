@@ -1,3 +1,4 @@
+// Tests node-host runner test behavior.
 import { describe, expect, it, vi } from "vitest";
 import type { GatewayClientOptions } from "../gateway/client.js";
 import {

@@ -1,3 +1,4 @@
+// Shared helpers for subagent command actions.
 import { resolveStoredSubagentCapabilities } from "../../../agents/subagent-capabilities.js";
 import type { ResolvedSubagentController } from "../../../agents/subagent-control.js";
 import { subagentRuns } from "../../../agents/subagent-registry-memory.js";
@@ -27,22 +28,28 @@ import {
   type SubagentTargetResolution,
 } from "../subagents-utils.js";
 
+/** Re-exported API for src/auto-reply/reply, starting with strip Tool Messages. */
 export { stripToolMessages };
+/** Re-exported API for src/auto-reply/reply, starting with resolve Command Surface Channel. */
 export { resolveCommandSurfaceChannel, resolveChannelAccountId };
+/** Re-exported API for src/auto-reply/reply, starting with Chat Message. */
 export type { ChatMessage } from "../commands-subagents-text.js";
 
+/** Reused constant for COMMAND behavior in src/auto-reply/reply. */
 export const COMMAND = "/subagents";
 const COMMAND_FOCUS = "/focus";
 const COMMAND_UNFOCUS = "/unfocus";
 const COMMAND_AGENTS = "/agents";
 const ACTIONS = new Set(["list", "log", "info", "help"]);
 
+/** Reused constant for RECENT WINDOW MINUTES behavior in src/auto-reply/reply. */
 export const RECENT_WINDOW_MINUTES = 30;
 
 type SubagentsAction = "list" | "log" | "info" | "focus" | "unfocus" | "agents" | "help";
 
 type SubagentsCommandParams = Parameters<CommandHandler>[0];
 
+/** Shared type for Subagents Command Context in src/auto-reply/reply. */
 export type SubagentsCommandContext = {
   params: SubagentsCommandParams;
   handledPrefix: string;
@@ -51,6 +58,7 @@ export type SubagentsCommandContext = {
   restTokens: string[];
 };
 
+/** Reused helper for stop With Text behavior in src/auto-reply/reply. */
 export function stopWithText(text: string): CommandHandlerResult {
   return { shouldContinue: false, reply: { text } };
 }
@@ -90,6 +98,7 @@ function resolveSubagentTarget(
   });
 }
 
+/** Reused helper for resolve Subagent Entry For Token behavior in src/auto-reply/reply. */
 export function resolveSubagentEntryForToken(
   runs: SubagentRunRecord[],
   token: string | undefined,
@@ -101,6 +110,7 @@ export function resolveSubagentEntryForToken(
   return { entry: resolved.entry };
 }
 
+/** Reused helper for resolve Requester Session Key behavior in src/auto-reply/reply. */
 export function resolveRequesterSessionKey(
   params: SubagentsCommandParams,
   opts?: { preferCommandTarget?: boolean },
@@ -119,6 +129,7 @@ export function resolveRequesterSessionKey(
   return resolveInternalSessionKey({ key: raw, alias, mainKey });
 }
 
+/** Reused helper for resolve Command Subagent Controller behavior in src/auto-reply/reply. */
 export function resolveCommandSubagentController(
   params: SubagentsCommandParams,
   requesterKey: string,
@@ -142,6 +153,7 @@ export function resolveCommandSubagentController(
   };
 }
 
+/** Reused helper for resolve Handled Prefix behavior in src/auto-reply/reply. */
 export function resolveHandledPrefix(normalized: string): string | null {
   return normalized.startsWith(COMMAND)
     ? COMMAND
@@ -154,6 +166,7 @@ export function resolveHandledPrefix(normalized: string): string | null {
           : null;
 }
 
+/** Reused helper for resolve Subagents Action behavior in src/auto-reply/reply. */
 export function resolveSubagentsAction(params: {
   handledPrefix: string;
   restTokens: string[];
@@ -186,6 +199,7 @@ type FocusTargetResolution = {
   label?: string;
 };
 
+/** Reused helper for resolve Focus Target Session behavior in src/auto-reply/reply. */
 export async function resolveFocusTargetSession(params: {
   runs: SubagentRunRecord[];
   token: string;
@@ -241,6 +255,7 @@ export async function resolveFocusTargetSession(params: {
   return null;
 }
 
+/** Reused helper for build Subagents Help behavior in src/auto-reply/reply. */
 export function buildSubagentsHelp() {
   return [
     "Subagents",
@@ -258,6 +273,7 @@ export function buildSubagentsHelp() {
   ].join("\n");
 }
 
+/** Reused helper for format Log Lines behavior in src/auto-reply/reply. */
 export function formatLogLines(messages: ChatMessage[]) {
   const lines: string[] = [];
   for (const msg of messages) {

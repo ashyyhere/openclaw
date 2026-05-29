@@ -1,3 +1,4 @@
+/** Regression coverage for Google prompt cache stream preparation. */
 import crypto from "node:crypto";
 import type { StreamFn } from "openclaw/plugin-sdk/agent-core";
 import type { Model } from "openclaw/plugin-sdk/llm";

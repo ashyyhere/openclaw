@@ -1,3 +1,4 @@
+/** Applies parsed update hunks to existing file content. */
 import fs from "node:fs/promises";
 
 type UpdateFileChunk = {
@@ -11,6 +12,7 @@ async function defaultReadFile(filePath: string): Promise<string> {
   return fs.readFile(filePath, "utf8");
 }
 
+/** Apply update chunks to one file and return the new contents. */
 export async function applyUpdateHunk(
   filePath: string,
   chunks: UpdateFileChunk[],

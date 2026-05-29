@@ -1,3 +1,4 @@
+/** Tests configure wizard channel selection and config mutation. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const select = vi.hoisted(() => vi.fn());

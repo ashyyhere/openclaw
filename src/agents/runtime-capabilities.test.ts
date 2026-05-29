@@ -1,3 +1,4 @@
+/** Tests runtime/channel capability collection. */
 import { describe, expect, it } from "vitest";
 import { collectRuntimeChannelCapabilities } from "./runtime-capabilities.js";
 

@@ -1,3 +1,4 @@
+// Tests extensions/msteams/src mentions test behavior.
 import { describe, expect, it } from "vitest";
 import { buildMentionEntities, formatMentionText, parseMentions } from "./mentions.js";
 

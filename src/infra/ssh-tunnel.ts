@@ -1,3 +1,4 @@
+// infra ssh tunnel helpers and runtime behavior.
 import { spawn } from "node:child_process";
 import net from "node:net";
 import { normalizeStringEntries } from "../shared/string-normalization.js";
@@ -5,12 +6,14 @@ import { formatErrorMessage, isErrno } from "./errors.js";
 import { parseStrictPositiveInteger } from "./parse-finite-number.js";
 import { ensurePortAvailable } from "./ports.js";
 
+/** Shared type for Ssh Parsed Target in src/infra. */
 export type SshParsedTarget = {
   user?: string;
   host: string;
   port: number;
 };
 
+/** Shared type for Ssh Tunnel in src/infra. */
 export type SshTunnel = {
   parsedTarget: SshParsedTarget;
   localPort: number;
@@ -20,6 +23,7 @@ export type SshTunnel = {
   stop: () => Promise<void>;
 };
 
+/** Reused helper for parse Ssh Target behavior in src/infra. */
 export function parseSshTarget(raw: string): SshParsedTarget | null {
   const trimmed = raw.trim().replace(/^ssh\s+/, "");
   if (!trimmed) {
@@ -102,6 +106,7 @@ async function waitForLocalListener(port: number, timeoutMs: number): Promise<vo
   throw new Error(`ssh tunnel did not start listening on localhost:${port}`);
 }
 
+/** Reused helper for start Ssh Port Forward behavior in src/infra. */
 export async function startSshPortForward(opts: {
   target: string;
   identity?: string;

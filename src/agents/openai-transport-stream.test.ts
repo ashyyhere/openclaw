@@ -1,3 +1,4 @@
+/** Tests OpenAI transport stream payloads, usage, and compatibility behavior. */
 import { createServer } from "node:http";
 import type { Api, Model } from "openclaw/plugin-sdk/llm";
 import { describe, expect, it, vi } from "vitest";

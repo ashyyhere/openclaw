@@ -1,3 +1,4 @@
+/** Public SDK file-lock helpers backed by fs-safe with OpenClaw stale-lock recovery. */
 import "../infra/fs-safe-defaults.js";
 import {
   acquireFileLock as acquireFsSafeFileLock,
@@ -7,6 +8,7 @@ import {
 import { shouldRemoveDeadOwnerOrExpiredLock } from "../infra/stale-lock-file.js";
 import { getProcessStartTime } from "../shared/pid-alive.js";
 
+/** Retry and stale-lock policy for acquiring a sidecar file lock. */
 export type FileLockOptions = {
   retries: {
     retries: number;
@@ -18,19 +20,24 @@ export type FileLockOptions = {
   stale: number;
 };
 
+/** Acquired file lock handle; callers must release it when work completes. */
 export type FileLockHandle = {
   lockPath: string;
   release: () => Promise<void>;
 };
 
+/** Reused constant for FILE LOCK TIMEOUT ERROR CODE behavior in src/plugin-sdk. */
 export const FILE_LOCK_TIMEOUT_ERROR_CODE = "file_lock_timeout";
+/** Reused constant for FILE LOCK STALE ERROR CODE behavior in src/plugin-sdk. */
 export const FILE_LOCK_STALE_ERROR_CODE = "file_lock_stale";
 
+/** Shared type for File Lock Timeout Error in src/plugin-sdk. */
 export type FileLockTimeoutError = Error & {
   code: typeof FILE_LOCK_TIMEOUT_ERROR_CODE;
   lockPath: string;
 };
 
+/** Shared type for File Lock Stale Error in src/plugin-sdk. */
 export type FileLockStaleError = Error & {
   code: typeof FILE_LOCK_STALE_ERROR_CODE;
   lockPath: string;
@@ -44,6 +51,8 @@ async function shouldReclaimPluginLock(params: {
   staleMs: number;
   nowMs: number;
 }): Promise<boolean> {
+  // Plugin locks use the same process-start-time payload as core locks so stale recovery can
+  // distinguish PID reuse from a genuinely dead owner.
   return shouldRemoveDeadOwnerOrExpiredLock({
     payload: params.payload,
     staleMs: params.staleMs,
@@ -67,10 +76,12 @@ function normalizeLockError(err: unknown): never {
   throw err;
 }
 
+/** Reused helper for reset File Lock State For Test behavior in src/plugin-sdk. */
 export function resetFileLockStateForTest(): void {
   resetFileLockManagerForTest(FILE_LOCK_MANAGER_KEY, FILE_LOCK_MANAGER_KEY);
 }
 
+/** Reused helper for drain File Lock State For Test behavior in src/plugin-sdk. */
 export async function drainFileLockStateForTest(): Promise<void> {
   await drainFileLockManagerForTest(FILE_LOCK_MANAGER_KEY, FILE_LOCK_MANAGER_KEY);
 }

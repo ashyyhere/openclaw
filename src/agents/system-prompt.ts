@@ -1,3 +1,4 @@
+/** Builds the primary agent system prompt from config, tools, skills, memory, and runtime context. */
 import { createHmac, createHash } from "node:crypto";
 import type { SourceReplyDeliveryMode } from "../auto-reply/get-reply-options.types.js";
 import type { ReasoningLevel, ThinkLevel } from "../auto-reply/thinking.js";
@@ -287,6 +288,7 @@ function buildMemorySection(params: {
   });
 }
 
+/** Reused helper for build Agent Bootstrap System Context behavior in src/agents. */
 export function buildAgentBootstrapSystemContext(params: {
   bootstrapMode?: BootstrapMode;
   hasBootstrapFileInProjectContext?: boolean;
@@ -319,6 +321,7 @@ export function buildAgentBootstrapSystemContext(params: {
   ];
 }
 
+/** Reused helper for build Agent Bootstrap System Prompt Sections behavior in src/agents. */
 export function buildAgentBootstrapSystemPromptSections(params: {
   bootstrapMode?: BootstrapMode;
   bootstrapTruncationNotice?: string;
@@ -605,6 +608,7 @@ function formatFullAccessBlockedReason(reason?: EmbeddedFullAccessBlockedReason)
 
 const MODEL_IDENTITY_PREFIX = "Current model identity:";
 
+/** Reused helper for build Model Identity Prompt Line behavior in src/agents. */
 export function buildModelIdentityPromptLine(model?: string): string | undefined {
   const trimmed = model?.trim();
   if (!trimmed) {
@@ -613,6 +617,7 @@ export function buildModelIdentityPromptLine(model?: string): string | undefined
   return `${MODEL_IDENTITY_PREFIX} ${trimmed}. If asked what model you are, answer with this value for the current run.`;
 }
 
+/** Reused helper for append Model Identity System Prompt behavior in src/agents. */
 export function appendModelIdentitySystemPrompt(params: {
   systemPrompt: string;
   model?: string;
@@ -647,6 +652,7 @@ export function appendModelIdentitySystemPrompt(params: {
   return base ? `${base}\n\n${line}` : line;
 }
 
+/** Reused helper for build Agent System Prompt behavior in src/agents. */
 export function buildAgentSystemPrompt(params: {
   workspaceDir: string;
   defaultThinkLevel?: ThinkLevel;
@@ -1337,6 +1343,7 @@ function buildActiveProcessSessionReferenceLines(
   ];
 }
 
+/** Reused helper for build Runtime Line behavior in src/agents. */
 export function buildRuntimeLine(
   runtimeInfo?: {
     agentId?: string;

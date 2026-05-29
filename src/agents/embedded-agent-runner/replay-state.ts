@@ -1,13 +1,16 @@
+/** Tracks replay history metadata observed during embedded-agent attempts. */
 export type EmbeddedRunReplayState = {
   replayInvalid: boolean;
   hadPotentialSideEffects: boolean;
 };
 
+/** Shared type for Embedded Run Replay Metadata in src/agents/embedded-agent-runner. */
 export type EmbeddedRunReplayMetadata = {
   hadPotentialSideEffects: boolean;
   replaySafe: boolean;
 };
 
+/** Reused helper for create Embedded Run Replay State behavior in src/agents/embedded-agent-runner. */
 export function createEmbeddedRunReplayState(
   state?: Partial<EmbeddedRunReplayState>,
 ): EmbeddedRunReplayState {
@@ -17,6 +20,7 @@ export function createEmbeddedRunReplayState(
   };
 }
 
+/** Reused helper for merge Embedded Run Replay State behavior in src/agents/embedded-agent-runner. */
 export function mergeEmbeddedRunReplayState(
   current: EmbeddedRunReplayState,
   next?: Partial<EmbeddedRunReplayState>,
@@ -31,6 +35,7 @@ export function mergeEmbeddedRunReplayState(
   };
 }
 
+/** Reused helper for observe Replay Metadata behavior in src/agents/embedded-agent-runner. */
 export function observeReplayMetadata(
   current: EmbeddedRunReplayState,
   metadata?: EmbeddedRunReplayMetadata | null,
@@ -47,6 +52,7 @@ export function observeReplayMetadata(
   });
 }
 
+/** Reused helper for replay Metadata From State behavior in src/agents/embedded-agent-runner. */
 export function replayMetadataFromState(state: EmbeddedRunReplayState): EmbeddedRunReplayMetadata {
   return {
     hadPotentialSideEffects: state.hadPotentialSideEffects,

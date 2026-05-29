@@ -1,3 +1,4 @@
+/** Tests skills CLI status and install-check output. */
 import { describe, expect, it, vi } from "vitest";
 import type { SkillStatusEntry, SkillStatusReport } from "../skills/discovery/status.js";
 import { createEmptyInstallChecks } from "./requirements-test-fixtures.js";

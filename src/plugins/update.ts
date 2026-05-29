@@ -1,3 +1,4 @@
+// plugins update helpers and runtime behavior.
 import path from "node:path";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { PluginInstallRecord } from "../config/types.plugins.js";
@@ -51,14 +52,17 @@ import {
 import { linkOpenClawPeerDependencies } from "./plugin-peer-link.js";
 import { defaultSlotIdForKey } from "./slots.js";
 
+/** Shared type for Plugin Update Logger in src/plugins. */
 export type PluginUpdateLogger = {
   info?: (message: string) => void;
   warn?: (message: string) => void;
   error?: (message: string) => void;
 };
 
+/** Shared type for Plugin Update Status in src/plugins. */
 export type PluginUpdateStatus = "updated" | "unchanged" | "skipped" | "error";
 
+/** Shared type for Plugin Update Outcome in src/plugins. */
 export type PluginUpdateOutcome = {
   pluginId: string;
   status: PluginUpdateStatus;
@@ -67,12 +71,14 @@ export type PluginUpdateOutcome = {
   nextVersion?: string;
 };
 
+/** Shared type for Plugin Update Summary in src/plugins. */
 export type PluginUpdateSummary = {
   config: OpenClawConfig;
   changed: boolean;
   outcomes: PluginUpdateOutcome[];
 };
 
+/** Shared type for Plugin Update Integrity Drift Params in src/plugins. */
 export type PluginUpdateIntegrityDriftParams = {
   pluginId: string;
   spec: string;
@@ -83,6 +89,7 @@ export type PluginUpdateIntegrityDriftParams = {
   dryRun: boolean;
 };
 
+/** Shared type for Plugin Channel Sync Summary in src/plugins. */
 export type PluginChannelSyncSummary = {
   switchedToBundled: string[];
   switchedToClawHub: string[];
@@ -91,6 +98,7 @@ export type PluginChannelSyncSummary = {
   errors: string[];
 };
 
+/** Shared type for Plugin Channel Sync Result in src/plugins. */
 export type PluginChannelSyncResult = {
   config: OpenClawConfig;
   changed: boolean;
@@ -520,6 +528,7 @@ function isOfficialClawHubInstallRecord(record: PluginInstallRecord): boolean {
   return (record.clawhubUrl ?? "").replace(/\/+$/, "") === "https://clawhub.ai";
 }
 
+/** Reused helper for resolve Trusted Source Linked Official Npm Spec behavior in src/plugins. */
 export function resolveTrustedSourceLinkedOfficialNpmSpec(params: {
   pluginId: string;
   record: PluginInstallRecord;
@@ -544,6 +553,7 @@ export function resolveTrustedSourceLinkedOfficialNpmSpec(params: {
   return recordedPackageNames.includes(officialPackageName) ? officialSpec : undefined;
 }
 
+/** Reused helper for resolve Trusted Source Linked Official Claw Hub Spec behavior in src/plugins. */
 export function resolveTrustedSourceLinkedOfficialClawHubSpec(params: {
   pluginId: string;
   record: PluginInstallRecord;
@@ -974,6 +984,7 @@ async function repairOpenClawPeerLinksForNpmInstalls(params: {
   return repaired;
 }
 
+/** Reused helper for update Npm Installed Plugins behavior in src/plugins. */
 export async function updateNpmInstalledPlugins(params: {
   config: OpenClawConfig;
   logger?: PluginUpdateLogger;
@@ -1803,6 +1814,7 @@ export async function updateNpmInstalledPlugins(params: {
   return { config: next, changed, outcomes };
 }
 
+/** Reused helper for sync Plugins For Update Channel behavior in src/plugins. */
 export async function syncPluginsForUpdateChannel(params: {
   config: OpenClawConfig;
   channel: UpdateChannel;

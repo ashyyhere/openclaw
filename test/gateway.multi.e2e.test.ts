@@ -1,3 +1,4 @@
+// Tests test gateway multi e2e test behavior.
 import { afterAll, describe, expect, it } from "vitest";
 import { GatewayClient } from "../src/gateway/client.js";
 import {

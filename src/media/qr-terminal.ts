@@ -1,3 +1,4 @@
+// media qr terminal helpers and runtime behavior.
 import { loadQrCodeRuntime, normalizeQrText } from "./qr-runtime.ts";
 
 type QrTerminalModules = {
@@ -44,6 +45,7 @@ function renderCompactTerminalQr(modules: QrTerminalModules): string {
   return lines.join("\n");
 }
 
+/** Reused helper for render Qr Terminal behavior in src/media. */
 export async function renderQrTerminal(
   input: string,
   opts: { small?: boolean } = {},

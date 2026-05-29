@@ -1,3 +1,4 @@
+// gateway/server-methods deleted agent guard test helpers helpers and runtime behavior.
 import { vi } from "vitest";
 
 const deletedAgentSessionMocks = vi.hoisted(() => ({
@@ -15,11 +16,13 @@ vi.mock("../session-utils.js", async () => {
   };
 });
 
+/** Reused helper for reset Deleted Agent Session Mocks behavior in src/gateway/server-methods. */
 export function resetDeletedAgentSessionMocks(): void {
   deletedAgentSessionMocks.loadSessionEntry.mockReset();
   deletedAgentSessionMocks.resolveDeletedAgentIdFromSessionKey.mockReset();
 }
 
+/** Reused helper for mock Deleted Agent Session behavior in src/gateway/server-methods. */
 export function mockDeletedAgentSession(orphanKey = "agent:deleted-agent:main"): string {
   deletedAgentSessionMocks.loadSessionEntry.mockReturnValue({
     cfg: {},

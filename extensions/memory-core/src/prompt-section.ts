@@ -1,3 +1,4 @@
+// extensions/memory-core/src prompt section helpers and runtime behavior.
 import type { MemoryPromptSectionBuilder } from "openclaw/plugin-sdk/memory-core-host-runtime-core";
 
 export const buildPromptSection: MemoryPromptSectionBuilder = ({

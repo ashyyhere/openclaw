@@ -1,3 +1,4 @@
+// hooks plugin hooks helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -18,6 +19,7 @@ type PluginHookDirEntry = {
   pluginId: string;
 };
 
+/** Reused helper for resolve Plugin Hook Dirs behavior in src/hooks. */
 export function resolvePluginHookDirs(params: {
   workspaceDir: string | undefined;
   config?: OpenClawConfig;

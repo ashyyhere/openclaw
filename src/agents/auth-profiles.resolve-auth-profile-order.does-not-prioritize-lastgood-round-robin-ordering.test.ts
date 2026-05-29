@@ -1,3 +1,4 @@
+/** Tests auth-profile ordering avoids last-good round-robin priority. */
 import { describe, expect, it, vi } from "vitest";
 import {
   ANTHROPIC_CFG,

@@ -1,8 +1,10 @@
+// Heartbeat prompt, task parsing, and due-time scheduling logic.
 import { parseDurationMs } from "../cli/parse-duration.js";
 import { escapeRegExp } from "../shared/regexp.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import { HEARTBEAT_TOKEN } from "./tokens.js";
 
+/** Shared type for Heartbeat Task in src/auto-reply. */
 export type HeartbeatTask = {
   name: string;
   interval: string;
@@ -13,12 +15,18 @@ export type HeartbeatTask = {
 // Keep it tight and avoid encouraging the model to invent/rehash "open loops" from prior chat context.
 const HEARTBEAT_CONTEXT_PROMPT =
   "Read HEARTBEAT.md if it exists (workspace context). Follow it strictly. Do not infer or repeat old tasks from prior chats.";
+/** Reused constant for HEARTBEAT PROMPT behavior in src/auto-reply. */
 export const HEARTBEAT_PROMPT = `${HEARTBEAT_CONTEXT_PROMPT} If nothing needs attention, reply HEARTBEAT_OK.`;
+/** Reused constant for HEARTBEAT RESPONSE TOOL INSTRUCTIONS behavior in src/auto-reply. */
 export const HEARTBEAT_RESPONSE_TOOL_INSTRUCTIONS =
   "Use heartbeat_respond to report the wake outcome. Set notify=false when nothing needs the user's attention. Set notify=true with notificationText only when the user should be interrupted.";
+/** Reused constant for HEARTBEAT RESPONSE TOOL PROMPT behavior in src/auto-reply. */
 export const HEARTBEAT_RESPONSE_TOOL_PROMPT = `${HEARTBEAT_CONTEXT_PROMPT} ${HEARTBEAT_RESPONSE_TOOL_INSTRUCTIONS}`;
+/** Reused constant for HEARTBEAT TRANSCRIPT PROMPT behavior in src/auto-reply. */
 export const HEARTBEAT_TRANSCRIPT_PROMPT = "[OpenClaw heartbeat poll]";
+/** Reused constant for DEFAULT HEARTBEAT EVERY behavior in src/auto-reply. */
 export const DEFAULT_HEARTBEAT_EVERY = "30m";
+/** Reused constant for DEFAULT HEARTBEAT ACK MAX CHARS behavior in src/auto-reply. */
 export const DEFAULT_HEARTBEAT_ACK_MAX_CHARS = 300;
 
 /**
@@ -71,6 +79,7 @@ export function isHeartbeatContentEffectivelyEmpty(content: string | undefined |
   return true;
 }
 
+/** Reused helper for resolve Heartbeat Prompt behavior in src/auto-reply. */
 export function resolveHeartbeatPrompt(raw?: string): string {
   const trimmed = normalizeOptionalString(raw) ?? "";
   return trimmed || HEARTBEAT_PROMPT;
@@ -87,6 +96,7 @@ function appendHeartbeatResponseToolInstructions(prompt: string): string {
   return `${trimmed}\n\n${HEARTBEAT_RESPONSE_TOOL_INSTRUCTIONS}`;
 }
 
+/** Reused helper for resolve Heartbeat Prompt For Response Tool behavior in src/auto-reply. */
 export function resolveHeartbeatPromptForResponseTool(raw?: string): string {
   const trimmed = normalizeOptionalString(raw) ?? "";
   return trimmed
@@ -144,6 +154,7 @@ function stripTokenAtEdges(raw: string): { text: string; didStrip: boolean } {
   return { text: collapsed, didStrip };
 }
 
+/** Reused helper for strip Heartbeat Token behavior in src/auto-reply. */
 export function stripHeartbeatToken(
   raw?: string,
   opts: { mode?: StripHeartbeatMode; maxAckChars?: number } = {},

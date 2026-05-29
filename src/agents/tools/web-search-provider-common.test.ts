@@ -1,3 +1,4 @@
+/** Covers shared web_search provider cache boundaries. */
 import { describe, expect, it, vi } from "vitest";
 
 describe("web_search shared cache", () => {

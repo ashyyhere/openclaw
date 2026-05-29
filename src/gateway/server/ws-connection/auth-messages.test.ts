@@ -1,3 +1,4 @@
+// Tests gateway/server/ws-connection auth messages test behavior.
 import { describe, expect, it } from "vitest";
 import { formatGatewayAuthFailureMessage } from "./auth-messages.js";
 

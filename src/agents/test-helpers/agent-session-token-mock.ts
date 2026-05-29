@@ -1,3 +1,4 @@
+/** Vitest mock that makes agent-session token counting deterministic. */
 import { vi } from "vitest";
 
 const agentSessionTokenMocks = vi.hoisted(() => {

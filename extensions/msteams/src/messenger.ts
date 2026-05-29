@@ -1,3 +1,4 @@
+// extensions/msteams/src messenger helpers and runtime behavior.
 import {
   isSilentReplyText,
   SILENT_REPLY_TOKEN,

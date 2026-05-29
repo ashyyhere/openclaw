@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/qa-lab/src qa credentials common runtime behavior.
 import { isLoopbackHost } from "openclaw/plugin-sdk/gateway-runtime";
 import { parseStrictPositiveInteger } from "openclaw/plugin-sdk/number-runtime";
 

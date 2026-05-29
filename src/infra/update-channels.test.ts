@@ -1,3 +1,4 @@
+// Tests infra update channels test behavior.
 import { describe, expect, it } from "vitest";
 import {
   channelToNpmTag,

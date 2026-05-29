@@ -1,3 +1,4 @@
+/** Tests fetch auth SDK helpers and request credential behavior. */
 import { describe, expect, it, vi } from "vitest";
 import { fetchWithBearerAuthScopeFallback } from "./fetch-auth.js";
 import { resolveRequestUrl } from "./request-url.js";

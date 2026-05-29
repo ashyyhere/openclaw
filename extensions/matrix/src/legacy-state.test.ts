@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src legacy state test behavior.
 import fs from "node:fs";
 import path from "node:path";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";

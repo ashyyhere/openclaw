@@ -1,3 +1,4 @@
+// extensions/telegram/src group policy helpers and runtime behavior.
 import type { ChannelGroupContext } from "openclaw/plugin-sdk/channel-contract";
 import {
   resolveChannelGroupRequireMention,

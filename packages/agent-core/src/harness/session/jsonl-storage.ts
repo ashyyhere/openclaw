@@ -1,3 +1,4 @@
+// packages/agent-core/src/harness/session jsonl storage helpers and runtime behavior.
 import type { FileSystem, JsonlSessionMetadata, SessionTreeEntry } from "../types.js";
 import { SessionError, toError } from "../types.js";
 import { getFileSystemResultOrThrow } from "./repo-utils.js";
@@ -125,6 +126,7 @@ function headerToSessionMetadata(header: SessionHeader, path: string): JsonlSess
   };
 }
 
+/** Public helper for load Jsonl Session Metadata behavior in packages/agent-core. */
 export async function loadJsonlSessionMetadata(
   fs: JsonlSessionStorageFileSystem,
   filePath: string,
@@ -168,6 +170,7 @@ async function loadJsonlStorage(
   return { header, entries, leafId };
 }
 
+/** Public class implementing Jsonl Session Storage behavior for packages/agent-core. */
 export class JsonlSessionStorage extends BaseSessionStorage<JsonlSessionMetadata> {
   private readonly fs: JsonlSessionStorageFileSystem;
   private readonly filePath: string;

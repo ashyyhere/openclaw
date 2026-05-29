@@ -1,3 +1,4 @@
+// Tests plugins/runtime index test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { DEFAULT_MODEL, DEFAULT_PROVIDER } from "../../agents/defaults.js";
 import {

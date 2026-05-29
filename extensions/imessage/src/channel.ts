@@ -1,3 +1,4 @@
+// extensions/imessage/src channel helpers and runtime behavior.
 import { buildDmGroupAccountAllowlistAdapter } from "openclaw/plugin-sdk/allowlist-config-edit";
 import { createChatChannelPlugin } from "openclaw/plugin-sdk/channel-core";
 import {

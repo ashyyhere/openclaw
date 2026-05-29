@@ -1,5 +1,7 @@
+// Standard set/unset command parser adapters.
 import { parseSlashCommandWithSetUnset } from "./commands-setunset.js";
 
+/** Reused helper for parse Standard Set Unset Slash Command behavior in src/auto-reply/reply. */
 export function parseStandardSetUnsetSlashCommand<T>(params: {
   raw: string;
   slash: string;

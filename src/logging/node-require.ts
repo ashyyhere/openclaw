@@ -1,3 +1,5 @@
+// logging node require helpers and runtime behavior.
+/** Reused helper for resolve Node Require From Meta behavior in src/logging. */
 export function resolveNodeRequireFromMeta(metaUrl: string): NodeJS.Require | null {
   const getBuiltinModule = (
     process as NodeJS.Process & {

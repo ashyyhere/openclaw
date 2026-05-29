@@ -1,3 +1,4 @@
+// plugins package entry resolution helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import {
@@ -138,6 +139,7 @@ async function validatePackageExtensionEntry(params: {
   return { ok: true, exists: true };
 }
 
+/** Reused helper for validate Package Extension Entries For Install behavior in src/plugins. */
 export async function validatePackageExtensionEntriesForInstall(params: {
   packageDir: string;
   extensions: string[];
@@ -597,6 +599,7 @@ function resolvePackageRuntimeEntrySource(params: {
   return null;
 }
 
+/** Reused helper for resolve Package Setup Source behavior in src/plugins. */
 export function resolvePackageSetupSource(params: {
   packageDir: string;
   packageRootRealPath?: string;
@@ -632,6 +635,7 @@ export function resolvePackageSetupSource(params: {
   });
 }
 
+/** Reused helper for resolve Package Runtime Extension Sources behavior in src/plugins. */
 export function resolvePackageRuntimeExtensionSources(params: {
   packageDir: string;
   packageRootRealPath?: string;

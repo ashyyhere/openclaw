@@ -1,3 +1,4 @@
+// hooks configured helpers and runtime behavior.
 import type { HookConfig, HookInstallRecord } from "../config/types.hooks.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { getLegacyInternalHookHandlers } from "./legacy-config.js";
@@ -17,6 +18,7 @@ function hasConfiguredInstalls(installs: Record<string, HookInstallRecord> | und
   return installs ? Object.keys(installs).length > 0 : false;
 }
 
+/** Reused helper for has Configured Internal Hooks behavior in src/hooks. */
 export function hasConfiguredInternalHooks(config: OpenClawConfig): boolean {
   const internal = config.hooks?.internal;
   if (!internal || internal.enabled === false) {
@@ -37,6 +39,7 @@ export function hasConfiguredInternalHooks(config: OpenClawConfig): boolean {
   return getLegacyInternalHookHandlers(config).length > 0;
 }
 
+/** Reused helper for resolve Configured Internal Hook Names behavior in src/hooks. */
 export function resolveConfiguredInternalHookNames(config: OpenClawConfig): Set<string> | null {
   const internal = config.hooks?.internal;
   if (!internal || internal.enabled === false) {

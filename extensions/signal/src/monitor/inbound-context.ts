@@ -1,3 +1,4 @@
+// extensions/signal/src/monitor inbound context helpers and runtime behavior.
 import { filterChannelInboundQuoteContext } from "openclaw/plugin-sdk/channel-inbound";
 import { resolveChannelContextVisibilityMode } from "openclaw/plugin-sdk/context-visibility-runtime";
 import type { ContextVisibilityDecision } from "openclaw/plugin-sdk/security-runtime";

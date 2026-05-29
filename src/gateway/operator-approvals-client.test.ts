@@ -1,3 +1,4 @@
+// Tests gateway operator approvals client test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const clientState = vi.hoisted(() => ({

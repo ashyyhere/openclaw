@@ -1,3 +1,4 @@
+// Tests extensions/kimi-coding provider catalog test behavior.
 import { describe, expect, it } from "vitest";
 import { buildKimiCodingProvider, normalizeKimiCodingModelId } from "./provider-catalog.js";
 

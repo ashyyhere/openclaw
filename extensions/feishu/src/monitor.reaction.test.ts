@@ -1,3 +1,4 @@
+// Tests extensions/feishu/src monitor reaction test behavior.
 import {
   createInboundDebouncer,
   resolveInboundDebounceMs,

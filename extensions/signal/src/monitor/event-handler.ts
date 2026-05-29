@@ -1,3 +1,4 @@
+// extensions/signal/src/monitor event handler helpers and runtime behavior.
 import { resolveHumanDelayConfig } from "openclaw/plugin-sdk/agent-runtime";
 import { logTypingFailure } from "openclaw/plugin-sdk/channel-feedback";
 import {

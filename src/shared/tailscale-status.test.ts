@@ -1,3 +1,4 @@
+// Tests shared tailscale status test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { resolveTailnetHostWithRunner } from "./tailscale-status.js";
 

@@ -1,3 +1,4 @@
+// Tests infra push apns http2 live test behavior.
 import { createServer, type Server } from "node:http";
 import { connect } from "node:net";
 import { afterAll, describe, expect, it } from "vitest";

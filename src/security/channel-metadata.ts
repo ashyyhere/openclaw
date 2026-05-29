@@ -1,3 +1,4 @@
+// security channel metadata helpers and runtime behavior.
 import { uniqueStrings } from "../shared/string-normalization.js";
 import { wrapExternalContent } from "./external-content.js";
 
@@ -19,6 +20,7 @@ function truncateText(value: string, maxChars: number): string {
   return `${trimmed}...`;
 }
 
+/** Reused helper for build Untrusted Channel Metadata behavior in src/security. */
 export function buildUntrustedChannelMetadata(params: {
   source: string;
   label: string;

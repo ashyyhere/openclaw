@@ -1,3 +1,4 @@
+/** Tests process send-keys encoding and stdin writes. */
 import { expect, test } from "vitest";
 import { createProcessSessionFixture } from "./bash-process-registry.test-helpers.js";
 import { handleProcessSendKeys, type WritableStdin } from "./bash-tools.process-send-keys.js";

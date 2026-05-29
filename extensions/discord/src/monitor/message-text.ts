@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor message text helpers and runtime behavior.
 import { ComponentType } from "discord-api-types/v10";
 import { normalizeOptionalString } from "openclaw/plugin-sdk/string-coerce-runtime";
 import type { Message } from "../internal/discord.js";

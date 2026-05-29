@@ -1,3 +1,4 @@
+/** Covers session reference and visibility resolution. */
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../../config/config.js";
 const callGatewayMock = vi.fn();

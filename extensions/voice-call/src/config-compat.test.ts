@@ -1,3 +1,4 @@
+// Tests extensions/voice-call/src config compat test behavior.
 import { describe, expect, it } from "vitest";
 import {
   VOICE_CALL_LEGACY_CONFIG_REMOVAL_VERSION,

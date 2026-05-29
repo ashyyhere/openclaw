@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src format test behavior.
 import { describe, expect, it } from "vitest";
 import {
   markdownToTelegramChunks,

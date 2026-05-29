@@ -1,3 +1,4 @@
+// extensions/feishu/src directory static helpers and runtime behavior.
 import {
   listDirectoryGroupEntriesFromMapKeysAndAllowFrom,
   listDirectoryUserEntriesFromAllowFromAndMapKeys,

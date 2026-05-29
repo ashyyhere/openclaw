@@ -1,3 +1,4 @@
+// extensions/feishu/src accounts helpers and runtime behavior.
 import {
   DEFAULT_ACCOUNT_ID,
   type OpenClawConfig as ClawdbotConfig,

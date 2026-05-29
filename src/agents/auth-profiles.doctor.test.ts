@@ -1,3 +1,4 @@
+/** Tests auth-profile doctor hints and diagnostics. */
 import { describe, expect, it } from "vitest";
 import { formatAuthDoctorHint } from "./auth-profiles/doctor.js";
 import type { AuthProfileStore } from "./auth-profiles/types.js";

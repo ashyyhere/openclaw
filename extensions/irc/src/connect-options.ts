@@ -1,3 +1,4 @@
+// extensions/irc/src connect options helpers and runtime behavior.
 import type { ResolvedIrcAccount } from "./accounts.js";
 import type { IrcClientOptions } from "./client.js";
 

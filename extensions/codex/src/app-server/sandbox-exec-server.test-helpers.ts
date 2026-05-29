@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server sandbox exec server test helpers helpers and runtime behavior.
 import type { SandboxContext } from "openclaw/plugin-sdk/sandbox";
 import { vi } from "vitest";
 import WebSocket from "ws";

@@ -1,3 +1,4 @@
+// infra tailscale helpers and runtime behavior.
 import { existsSync } from "node:fs";
 import { colorize, isRich, theme } from "../../packages/terminal-core/src/theme.js";
 import { formatCliCommand } from "../cli/command-format.js";
@@ -109,6 +110,7 @@ export async function findTailscaleBinary(): Promise<string | null> {
   return null;
 }
 
+/** Reused helper for get Tailnet Hostname behavior in src/infra. */
 export async function getTailnetHostname(exec: typeof runExec = runExec, detectedBinary?: string) {
   // Derive tailnet hostname (or IP fallback) from tailscale status JSON.
   const candidates = detectedBinary
@@ -155,6 +157,7 @@ export async function getTailnetHostname(exec: typeof runExec = runExec, detecte
  */
 let cachedTailscaleBinary: string | null = null;
 
+/** Reused helper for get Test Tailscale Binary Override behavior in src/infra. */
 export function getTestTailscaleBinaryOverride(
   env: NodeJS.ProcessEnv = process.env,
 ): string | null {
@@ -181,6 +184,7 @@ async function getTailscaleBinary(): Promise<string> {
   return cachedTailscaleBinary ?? "tailscale";
 }
 
+/** Reused helper for ensure Go Installed behavior in src/infra. */
 export async function ensureGoInstalled(
   exec: typeof runExec = runExec,
   prompt: typeof promptYesNo = promptYesNo,
@@ -206,6 +210,7 @@ export async function ensureGoInstalled(
   await exec("brew", ["install", "go"]);
 }
 
+/** Reused helper for ensure Tailscaled Installed behavior in src/infra. */
 export async function ensureTailscaledInstalled(
   exec: typeof runExec = runExec,
   prompt: typeof promptYesNo = promptYesNo,
@@ -239,6 +244,7 @@ type ExecErrorDetails = {
   code?: unknown;
 };
 
+/** Shared type for Tailscale Whois Identity in src/infra. */
 export type TailscaleWhoisIdentity = {
   login: string;
   name?: string;
@@ -306,6 +312,7 @@ async function execWithSudoFallback(
   }
 }
 
+/** Reused helper for ensure Funnel behavior in src/infra. */
 export async function ensureFunnel(
   port: number,
   exec: typeof runExec = runExec,
@@ -396,6 +403,7 @@ export async function ensureFunnel(
   }
 }
 
+/** Reused helper for enable Tailscale Serve behavior in src/infra. */
 export async function enableTailscaleServe(port: number, exec: typeof runExec = runExec) {
   const tailscaleBin = await getTailscaleBinary();
   await execWithSudoFallback(exec, tailscaleBin, ["serve", "--bg", "--yes", `${port}`], {
@@ -404,6 +412,7 @@ export async function enableTailscaleServe(port: number, exec: typeof runExec = 
   });
 }
 
+/** Reused helper for has Tailscale Funnel Route For Port behavior in src/infra. */
 export async function hasTailscaleFunnelRouteForPort(
   port: number,
   exec: typeof runExec = runExec,
@@ -423,6 +432,7 @@ export async function hasTailscaleFunnelRouteForPort(
 
 const TAILSCALE_LOOPBACK_PROXY_HOSTS = new Set(["127.0.0.1", "localhost", "[::1]", "::1"]);
 
+/** Reused helper for tailscale Funnel Status Covers Port behavior in src/infra. */
 export function tailscaleFunnelStatusCoversPort(
   status: Record<string, unknown>,
   port: number,
@@ -495,6 +505,7 @@ function funnelStatusBackendsForPort(status: Record<string, unknown>): Set<strin
   return backends;
 }
 
+/** Reused helper for disable Tailscale Serve behavior in src/infra. */
 export async function disableTailscaleServe(exec: typeof runExec = runExec) {
   const tailscaleBin = await getTailscaleBinary();
   await execWithSudoFallback(exec, tailscaleBin, ["serve", "reset"], {
@@ -503,6 +514,7 @@ export async function disableTailscaleServe(exec: typeof runExec = runExec) {
   });
 }
 
+/** Reused helper for enable Tailscale Funnel behavior in src/infra. */
 export async function enableTailscaleFunnel(port: number, exec: typeof runExec = runExec) {
   const tailscaleBin = await getTailscaleBinary();
   await execWithSudoFallback(exec, tailscaleBin, ["funnel", "--bg", "--yes", `${port}`], {
@@ -511,6 +523,7 @@ export async function enableTailscaleFunnel(port: number, exec: typeof runExec =
   });
 }
 
+/** Reused helper for disable Tailscale Funnel behavior in src/infra. */
 export async function disableTailscaleFunnel(exec: typeof runExec = runExec) {
   const tailscaleBin = await getTailscaleBinary();
   await execWithSudoFallback(exec, tailscaleBin, ["funnel", "reset"], {
@@ -564,6 +577,7 @@ function writeCachedWhois(ip: string, value: TailscaleWhoisIdentity | null, ttlM
   }
 }
 
+/** Reused helper for read Tailscale Whois Identity behavior in src/infra. */
 export async function readTailscaleWhoisIdentity(
   ip: string,
   exec: typeof runExec = runExec,

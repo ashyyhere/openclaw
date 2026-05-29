@@ -1,3 +1,4 @@
+// Utility helpers for subagent command output.
 import type { SubagentRunRecord } from "../../agents/subagent-registry.js";
 import {
   normalizeLowercaseStringOrEmpty,
@@ -6,11 +7,13 @@ import {
 import { sanitizeTaskStatusText } from "../../tasks/task-status.js";
 import { truncateUtf16Safe } from "../../utils.js";
 
+/** Reused helper for resolve Subagent Label behavior in src/auto-reply/reply. */
 export function resolveSubagentLabel(entry: SubagentRunRecord, fallback = "subagent") {
   const raw = normalizeOptionalString(entry.label) || normalizeOptionalString(entry.task) || "";
   return raw || fallback;
 }
 
+/** Reused helper for format Run Label behavior in src/auto-reply/reply. */
 export function formatRunLabel(entry: SubagentRunRecord, options?: { maxLength?: number }) {
   const raw = sanitizeTaskStatusText(resolveSubagentLabel(entry)) || "subagent";
   const maxLength = options?.maxLength ?? 72;
@@ -20,6 +23,7 @@ export function formatRunLabel(entry: SubagentRunRecord, options?: { maxLength?:
   return raw.length > maxLength ? `${truncateUtf16Safe(raw, maxLength).trimEnd()}…` : raw;
 }
 
+/** Reused helper for format Run Status behavior in src/auto-reply/reply. */
 export function formatRunStatus(entry: SubagentRunRecord) {
   if (!entry.endedAt) {
     return "running";
@@ -28,6 +32,7 @@ export function formatRunStatus(entry: SubagentRunRecord) {
   return status === "ok" ? "done" : status;
 }
 
+/** Reused helper for sort Subagent Runs behavior in src/auto-reply/reply. */
 export function sortSubagentRuns(runs: SubagentRunRecord[]) {
   return [...runs].toSorted((a, b) => {
     const aTime = a.startedAt ?? a.createdAt ?? 0;
@@ -36,11 +41,13 @@ export function sortSubagentRuns(runs: SubagentRunRecord[]) {
   });
 }
 
+/** Shared type for Subagent Target Resolution in src/auto-reply/reply. */
 export type SubagentTargetResolution = {
   entry?: SubagentRunRecord;
   error?: string;
 };
 
+/** Reused helper for resolve Subagent Target From Runs behavior in src/auto-reply/reply. */
 export function resolveSubagentTargetFromRuns(params: {
   runs: SubagentRunRecord[];
   token: string | undefined;

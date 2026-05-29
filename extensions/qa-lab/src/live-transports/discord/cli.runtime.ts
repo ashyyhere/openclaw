@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/qa-lab/src/live-transports/discord cli runtime behavior.
 import { printLiveTransportQaArtifacts } from "../shared/live-artifacts.js";
 import type { LiveTransportQaCommandOptions } from "../shared/live-transport-cli.js";
 import { resolveLiveTransportQaRunOptions } from "../shared/live-transport-cli.runtime.js";

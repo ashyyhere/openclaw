@@ -1,3 +1,4 @@
+// Tests memory-host-sdk dreaming test behavior.
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import {

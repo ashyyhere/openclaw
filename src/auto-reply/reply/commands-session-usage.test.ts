@@ -1,3 +1,4 @@
+// Coverage for session usage command behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../../config/config.js";
 import type {

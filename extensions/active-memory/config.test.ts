@@ -1,3 +1,4 @@
+// Tests extensions/active-memory config test behavior.
 import fs from "node:fs";
 import {
   type JsonSchemaObject,

@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/monitor message handler process test behavior.
 import { MessageFlags } from "discord-api-types/v10";
 import { DEFAULT_EMOJIS, DEFAULT_TIMING } from "openclaw/plugin-sdk/channel-feedback";
 import {

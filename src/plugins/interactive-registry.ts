@@ -1,3 +1,4 @@
+// plugins interactive registry helpers and runtime behavior.
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 import {
   normalizePluginInteractiveNamespace,
@@ -13,11 +14,13 @@ import {
 } from "./interactive-state.js";
 import type { PluginInteractiveHandlerRegistration } from "./types.js";
 
+/** Shared type for Interactive Registration Result in src/plugins. */
 export type InteractiveRegistrationResult = {
   ok: boolean;
   error?: string;
 };
 
+/** Reused helper for resolve Plugin Interactive Namespace Match behavior in src/plugins. */
 export function resolvePluginInteractiveNamespaceMatch(
   channel: string,
   data: string,
@@ -29,6 +32,7 @@ export function resolvePluginInteractiveNamespaceMatch(
   });
 }
 
+/** Reused helper for register Plugin Interactive Handler behavior in src/plugins. */
 export function registerPluginInteractiveHandler(
   pluginId: string,
   registration: PluginInteractiveHandlerRegistration,
@@ -59,14 +63,17 @@ export function registerPluginInteractiveHandler(
   return { ok: true };
 }
 
+/** Reused helper for clear Plugin Interactive Handlers behavior in src/plugins. */
 export function clearPluginInteractiveHandlers(): void {
   clearPluginInteractiveHandlersState();
 }
 
+/** Reused helper for clear Plugin Interactive Handler Registrations behavior in src/plugins. */
 export function clearPluginInteractiveHandlerRegistrations(): void {
   clearPluginInteractiveHandlerRegistrationsState();
 }
 
+/** Reused helper for clear Plugin Interactive Handlers For Plugin behavior in src/plugins. */
 export function clearPluginInteractiveHandlersForPlugin(pluginId: string): void {
   const interactiveHandlers = getPluginInteractiveHandlersState();
   for (const [key, value] of interactiveHandlers.entries()) {
@@ -76,10 +83,12 @@ export function clearPluginInteractiveHandlersForPlugin(pluginId: string): void 
   }
 }
 
+/** Reused helper for list Plugin Interactive Handlers behavior in src/plugins. */
 export function listPluginInteractiveHandlers(): RegisteredInteractiveHandler[] {
   return Array.from(getPluginInteractiveHandlersState().values());
 }
 
+/** Reused helper for restore Plugin Interactive Handlers behavior in src/plugins. */
 export function restorePluginInteractiveHandlers(
   registrations: readonly RegisteredInteractiveHandler[],
 ): void {

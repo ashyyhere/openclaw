@@ -1,3 +1,4 @@
+// packages/gateway-client/src index helpers and runtime behavior.
 export * from "./client.js";
 export * from "./device-auth.js";
 export * from "./event-loop-ready.js";

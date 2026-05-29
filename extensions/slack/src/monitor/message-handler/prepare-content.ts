@@ -1,3 +1,4 @@
+// extensions/slack/src/monitor/message-handler prepare content helpers and runtime behavior.
 import type { WebClient as SlackWebClient } from "@slack/web-api";
 import { runTasksWithConcurrency } from "openclaw/plugin-sdk/concurrency-runtime";
 import { logVerbose } from "openclaw/plugin-sdk/runtime-env";

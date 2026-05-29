@@ -1,3 +1,4 @@
+// Tests extensions/ollama/src stream runtime test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 const { fetchWithSsrFGuardMock } = vi.hoisted(() => ({

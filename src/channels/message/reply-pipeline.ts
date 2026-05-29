@@ -1,3 +1,4 @@
+// Channel reply pipeline builder for prefixes, typing, and delivery mode.
 import type { SourceReplyDeliveryMode } from "../../auto-reply/get-reply-options.types.js";
 import type { ReplyPayload } from "../../auto-reply/reply-payload.js";
 import {
@@ -19,12 +20,18 @@ import {
   type TypingCallbacks,
 } from "../typing.js";
 
+/** Shared type for Reply Prefix Context in src/channels/message. */
 export type ReplyPrefixContext = ReplyPrefixContextBundle["prefixContext"];
+/** Re-exported API for src/channels/message, starting with Reply Prefix Context Bundle. */
 export type { ReplyPrefixContextBundle, ReplyPrefixOptions };
+/** Re-exported API for src/channels/message, starting with Create Typing Callbacks Params. */
 export type { CreateTypingCallbacksParams, TypingCallbacks };
+/** Re-exported API for src/channels/message, starting with create Reply Prefix Context. */
 export { createReplyPrefixContext, createReplyPrefixOptions, createTypingCallbacks };
+/** Re-exported API for src/channels/message, starting with Source Reply Delivery Mode. */
 export type { SourceReplyDeliveryMode };
 
+/** Resolve source reply delivery mode for a channel message pipeline. */
 export function resolveChannelSourceReplyDeliveryMode(params: {
   cfg: OpenClawConfig;
   ctx: SourceReplyDeliveryModeContext;
@@ -34,11 +41,13 @@ export function resolveChannelSourceReplyDeliveryMode(params: {
   return resolveSourceReplyDeliveryMode(params);
 }
 
+/** Shared type for Channel Reply Pipeline in src/channels/message. */
 export type ChannelReplyPipeline = ReplyPrefixOptions & {
   typingCallbacks?: TypingCallbacks;
   transformReplyPayload?: (payload: ReplyPayload) => ReplyPayload | null;
 };
 
+/** Shared type for Create Channel Reply Pipeline Params in src/channels/message. */
 export type CreateChannelReplyPipelineParams = {
   cfg: Parameters<typeof createReplyPrefixOptions>[0]["cfg"];
   agentId: string;
@@ -49,6 +58,7 @@ export type CreateChannelReplyPipelineParams = {
   transformReplyPayload?: (payload: ReplyPayload) => ReplyPayload | null;
 };
 
+/** Create channel reply pipeline helpers for one channel/account context. */
 export function createChannelReplyPipeline(
   params: CreateChannelReplyPipelineParams,
 ): ChannelReplyPipeline {

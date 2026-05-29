@@ -1,3 +1,4 @@
+// extensions/whatsapp/src auto reply impl helpers and runtime behavior.
 export { HEARTBEAT_PROMPT, stripHeartbeatToken } from "openclaw/plugin-sdk/reply-runtime";
 export { HEARTBEAT_TOKEN, SILENT_REPLY_TOKEN } from "openclaw/plugin-sdk/reply-runtime";
 

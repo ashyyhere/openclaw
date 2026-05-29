@@ -1,3 +1,4 @@
+// tools planner helpers and runtime behavior.
 import { evaluateToolAvailability } from "./availability.js";
 import { ToolPlanContractError } from "./diagnostics.js";
 import type {
@@ -29,6 +30,7 @@ function assertUniqueNames(descriptors: readonly ToolDescriptor[]): void {
   }
 }
 
+/** Reused helper for build Tool Plan behavior in src/tools. */
 export function buildToolPlan(options: BuildToolPlanOptions): ToolPlan {
   const descriptors = options.descriptors.toSorted(compareDescriptors);
   assertUniqueNames(descriptors);

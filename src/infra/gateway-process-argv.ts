@@ -1,3 +1,4 @@
+// infra gateway process argv helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import { normalizeStringEntries } from "../shared/string-normalization.js";
 
@@ -5,6 +6,7 @@ function normalizeProcArg(arg: string): string {
   return normalizeLowercaseStringOrEmpty(arg.replaceAll("\\", "/"));
 }
 
+/** Reused helper for parse Proc Cmdline behavior in src/infra. */
 export function parseProcCmdline(raw: string): string[] {
   return normalizeStringEntries(raw.split("\0"));
 }
@@ -35,6 +37,7 @@ export function parseWindowsCmdline(raw: string): string[] {
   return args;
 }
 
+/** Reused helper for is Gateway Argv behavior in src/infra. */
 export function isGatewayArgv(args: string[], opts?: { allowGatewayBinary?: boolean }): boolean {
   const normalized = args.map(normalizeProcArg);
   if (!normalized.includes("gateway")) {

@@ -1,3 +1,4 @@
+// extensions/microsoft-foundry auth helpers and runtime behavior.
 import type {
   ProviderAuthContext,
   ProviderAuthMethod,

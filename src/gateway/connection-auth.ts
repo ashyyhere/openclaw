@@ -1,3 +1,4 @@
+// gateway connection auth helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveGatewayCredentialsWithSecretInputs } from "./credentials-secret-inputs.js";
 import type {
@@ -9,6 +10,7 @@ import type {
 } from "./credentials.js";
 import { resolveGatewayCredentialsFromConfig } from "./credentials.js";
 
+/** Shared type for Gateway Connection Auth Options in src/gateway. */
 export type GatewayConnectionAuthOptions = {
   config: OpenClawConfig;
   env?: NodeJS.ProcessEnv;
@@ -43,6 +45,7 @@ function toGatewayCredentialOptions(
   };
 }
 
+/** Reused helper for resolve Gateway Connection Auth behavior in src/gateway. */
 export async function resolveGatewayConnectionAuth(
   params: GatewayConnectionAuthOptions,
 ): Promise<{ token?: string; password?: string }> {
@@ -52,6 +55,7 @@ export async function resolveGatewayConnectionAuth(
   });
 }
 
+/** Reused helper for resolve Gateway Connection Auth From Config behavior in src/gateway. */
 export function resolveGatewayConnectionAuthFromConfig(
   params: Omit<GatewayConnectionAuthOptions, "config"> & { cfg: OpenClawConfig },
 ): { token?: string; password?: string } {

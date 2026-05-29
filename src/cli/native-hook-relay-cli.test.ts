@@ -1,3 +1,4 @@
+/** Tests native hook relay CLI stream bridging and process handling. */
 import { describe, expect, it, vi } from "vitest";
 import {
   createReadableTextStream,

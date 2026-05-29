@@ -1,3 +1,4 @@
+// Tests daemon systemd hints test behavior.
 import { describe, expect, it } from "vitest";
 import { formatCliCommand } from "../cli/command-format.js";
 import { isSystemdUnavailableDetail, renderSystemdUnavailableHints } from "./systemd-hints.js";

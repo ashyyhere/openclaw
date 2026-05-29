@@ -1,3 +1,4 @@
+/** Public SDK barrel for lazy runtime module/method binding helpers. */
 export {
   createLazyRuntimeModule,
   createLazyRuntimeMethod,

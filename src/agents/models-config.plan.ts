@@ -1,3 +1,4 @@
+/** Plans generated models.json contents and plugin-owned catalog writes. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { PluginMetadataSnapshot } from "../plugins/plugin-metadata-snapshot.js";
 import { isRecord } from "../utils.js";
@@ -21,6 +22,7 @@ import {
 } from "./plugin-model-catalog.js";
 
 type ModelsConfig = NonNullable<OpenClawConfig["models"]>;
+/** Dependency hook used by tests and callers to resolve implicit provider catalogs. */
 export type ResolveImplicitProvidersForModelsJson = (params: {
   agentDir: string;
   config: OpenClawConfig;
@@ -33,6 +35,7 @@ export type ResolveImplicitProvidersForModelsJson = (params: {
   providerDiscoveryEntriesOnly?: boolean;
 }) => Promise<Record<string, ProviderConfig>>;
 
+/** Write/noop/skip decision for root and plugin generated model catalogs. */
 export type ModelsJsonPlan =
   | {
       action: "skip";
@@ -83,6 +86,7 @@ function buildPluginCatalogWrites(
   );
 }
 
+/** Resolve and merge implicit/explicit providers before serialization planning. */
 export async function resolveProvidersForModelsJsonWithDeps(
   params: {
     cfg: OpenClawConfig;
@@ -164,6 +168,7 @@ function filterWritableProviders(
   return Object.keys(next).length === Object.keys(providers).length ? providers : next;
 }
 
+/** Build the filesystem write plan for generated models.json files. */
 export async function planOpenClawModelsJsonWithDeps(
   params: {
     cfg: OpenClawConfig;
@@ -274,6 +279,7 @@ export async function planOpenClawModelsJsonWithDeps(
   };
 }
 
+/** Plan generated models.json files using the production provider resolver. */
 export async function planOpenClawModelsJson(
   params: Parameters<typeof planOpenClawModelsJsonWithDeps>[0],
 ): Promise<ModelsJsonPlan> {

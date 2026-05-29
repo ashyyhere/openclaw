@@ -1,3 +1,4 @@
+// Runtime boundary for cron/isolated-agent delivery target runtime behavior.
 import type { ChannelId } from "../../channels/plugins/types.public.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { resolveOutboundChannelPlugin } from "../../infra/outbound/channel-resolution.js";
@@ -9,10 +10,14 @@ import {
   resolveChannelTarget,
   type ResolvedMessagingTarget,
 } from "../../infra/outbound/target-resolver.js";
+/** Re-exported API for src/cron/isolated-agent, starting with get Loaded Channel Plugin For Read. */
 export { getLoadedChannelPluginForRead } from "../../channels/plugins/registry-loaded-read.js";
+/** Re-exported API for src/cron/isolated-agent, starting with map Allow From Entries. */
 export { mapAllowFromEntries } from "../../plugin-sdk/channel-config-helpers.js";
+/** Re-exported API for src/cron/isolated-agent, starting with resolve First Bound Account Id. */
 export { resolveFirstBoundAccountId } from "../../routing/bound-account-read.js";
 
+/** Reused helper for resolve Channel Target For Delivery behavior in src/cron/isolated-agent. */
 export async function resolveChannelTargetForDelivery(params: {
   cfg: OpenClawConfig;
   channel: ChannelId;
@@ -40,6 +45,7 @@ export async function resolveChannelTargetForDelivery(params: {
   }
 }
 
+/** Reused helper for resolve Outbound Session Route For Delivery behavior in src/cron/isolated-agent. */
 export async function resolveOutboundSessionRouteForDelivery(params: {
   cfg: OpenClawConfig;
   channel: ChannelId;
@@ -58,6 +64,7 @@ export async function resolveOutboundSessionRouteForDelivery(params: {
   return await resolveOutboundSessionRoute(params);
 }
 
+/** Reused helper for channel Can Resolve Outbound Session Route behavior in src/cron/isolated-agent. */
 export function channelCanResolveOutboundSessionRoute(params: {
   cfg: OpenClawConfig;
   channel: ChannelId;

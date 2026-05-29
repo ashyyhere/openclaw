@@ -1,3 +1,4 @@
+// media store helpers and runtime behavior.
 import "../infra/fs-safe-defaults.js";
 import crypto from "node:crypto";
 import { createWriteStream } from "node:fs";
@@ -19,6 +20,7 @@ import { detectMime, extensionForMime } from "./mime.js";
 import { isFsSafeError, readLocalFileSafely, type FsSafeLikeError } from "./store.runtime.js";
 
 const resolveMediaDir = () => path.join(resolveConfigDir(), "media");
+/** Reused constant for MEDIA MAX BYTES behavior in src/media. */
 export const MEDIA_MAX_BYTES = 5 * 1024 * 1024; // 5MB default
 const MAX_BYTES = MEDIA_MAX_BYTES;
 const DEFAULT_TTL_MS = 2 * 60 * 1000; // 2 minutes
@@ -93,6 +95,7 @@ let httpRequestImpl: RequestImpl = defaultHttpRequestImpl;
 let httpsRequestImpl: RequestImpl = defaultHttpsRequestImpl;
 let resolvePinnedHostnameImpl: ResolvePinnedHostnameImpl = defaultResolvePinnedHostnameImpl;
 
+/** Reused helper for set Media Store Network Deps For Test behavior in src/media. */
 export function setMediaStoreNetworkDepsForTest(deps?: {
   httpRequest?: RequestImpl;
   httpsRequest?: RequestImpl;
@@ -143,10 +146,12 @@ export function extractOriginalFilename(filePath: string): string {
   return basename; // Fallback: use as-is
 }
 
+/** Reused helper for get Media Dir behavior in src/media. */
 export function getMediaDir() {
   return resolveMediaDir();
 }
 
+/** Reused helper for ensure Media Dir behavior in src/media. */
 export async function ensureMediaDir() {
   const mediaDir = resolveMediaDir();
   await fs.mkdir(mediaDir, { recursive: true, mode: 0o700 });
@@ -185,6 +190,7 @@ async function retryAfterRecreatingDir<T>(dir: string, run: () => Promise<T>): P
   }
 }
 
+/** Reused helper for clean Old Media behavior in src/media. */
 export async function cleanOldMedia(ttlMs = DEFAULT_TTL_MS, options: CleanOldMediaOptions = {}) {
   await openMediaStore().pruneExpired({
     maxDepth: options.recursive ? undefined : 1,
@@ -295,6 +301,7 @@ async function downloadToFile(
   });
 }
 
+/** Shared type for Saved Media in src/media. */
 export type SavedMedia = {
   id: string;
   path: string;
@@ -460,6 +467,7 @@ async function writeMediaStreamToFile(params: {
   }
 }
 
+/** Shared type for Save Media Source Error Code in src/media. */
 export type SaveMediaSourceErrorCode =
   | "invalid-path"
   | "not-found"
@@ -467,6 +475,7 @@ export type SaveMediaSourceErrorCode =
   | "path-mismatch"
   | "too-large";
 
+/** Reused class for Save Media Source Error behavior in src/media. */
 export class SaveMediaSourceError extends Error {
   code: SaveMediaSourceErrorCode;
 
@@ -509,6 +518,7 @@ function toSaveMediaSourceError(err: FsSafeLikeError, maxBytes = MAX_BYTES): Sav
   }
 }
 
+/** Reused helper for save Media Source behavior in src/media. */
 export async function saveMediaSource(
   source: string,
   headers?: Record<string, string>,
@@ -557,6 +567,7 @@ export async function saveMediaSource(
   }
 }
 
+/** Reused helper for save Media Buffer behavior in src/media. */
 export async function saveMediaBuffer(
   buffer: Buffer,
   contentType?: string,
@@ -588,6 +599,7 @@ export async function saveMediaBuffer(
   return buildSavedMediaResult({ dir, id, size: buffer.byteLength, contentType: mime });
 }
 
+/** Reused helper for save Media Stream behavior in src/media. */
 export async function saveMediaStream(
   stream: AsyncIterable<unknown>,
   contentType?: string,
@@ -667,6 +679,7 @@ export async function resolveMediaBufferPath(id: string, subdir = "inbound"): Pr
   }
 }
 
+/** Shared type for Read Media Buffer Result in src/media. */
 export type ReadMediaBufferResult = {
   id: string;
   path: string;
@@ -674,6 +687,7 @@ export type ReadMediaBufferResult = {
   size: number;
 };
 
+/** Reused helper for read Media Buffer behavior in src/media. */
 export async function readMediaBuffer(
   id: string,
   subdir = "inbound",

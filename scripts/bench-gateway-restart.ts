@@ -1,3 +1,4 @@
+// scripts bench gateway restart helpers and runtime behavior.
 import { spawn, spawnSync, type ChildProcessWithoutNullStreams } from "node:child_process";
 import fs from "node:fs";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";

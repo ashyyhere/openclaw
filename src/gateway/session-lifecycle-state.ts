@@ -118,6 +118,7 @@ function resolveRuntimeMs(params: {
   return undefined;
 }
 
+/** Reused helper for derive Gateway Session Lifecycle Snapshot behavior in src/gateway. */
 export function deriveGatewaySessionLifecycleSnapshot(params: {
   session?: Partial<LifecycleSessionShape> | null;
   event: LifecycleEventLike;
@@ -158,6 +159,7 @@ export function deriveGatewaySessionLifecycleSnapshot(params: {
   };
 }
 
+/** Reused helper for derive Persisted Session Lifecycle Patch behavior in src/gateway. */
 export function derivePersistedSessionLifecyclePatch(params: {
   entry?: Partial<PersistedLifecycleSessionShape> | null;
   event: LifecycleEventLike;
@@ -172,6 +174,7 @@ export function derivePersistedSessionLifecyclePatch(params: {
   };
 }
 
+/** Reused helper for persist Gateway Session Lifecycle Event behavior in src/gateway. */
 export async function persistGatewaySessionLifecycleEvent(params: {
   sessionKey: string;
   agentId?: string;

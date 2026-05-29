@@ -1,3 +1,4 @@
+/** Covers abort signal forwarding for web_search. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createWebSearchTool } from "./web-search.js";
 

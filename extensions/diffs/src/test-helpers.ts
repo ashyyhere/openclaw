@@ -1,3 +1,4 @@
+// extensions/diffs/src test helpers helpers and runtime behavior.
 import { execFile } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";

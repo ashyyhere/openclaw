@@ -1,3 +1,4 @@
+/** Resolves user-facing display text for tool calls and tool results. */
 import { redactToolDetail } from "../logging/redact.js";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import { shortenHomeInString } from "../utils.js";
@@ -42,6 +43,7 @@ const DETAIL_LABEL_OVERRIDES: Record<string, string> = {
 };
 const MAX_DETAIL_ENTRIES = 8;
 
+/** Reused helper for resolve Tool Display behavior in src/agents. */
 export function resolveToolDisplay(params: {
   name?: string;
   args?: unknown;
@@ -80,11 +82,13 @@ export function resolveToolDisplay(params: {
   };
 }
 
+/** Reused helper for format Tool Detail behavior in src/agents. */
 export function formatToolDetail(display: ToolDisplay): string | undefined {
   const detailRaw = display.detail ? redactToolDetail(display.detail) : undefined;
   return formatToolDetailText(detailRaw);
 }
 
+/** Reused helper for format Tool Summary behavior in src/agents. */
 export function formatToolSummary(display: ToolDisplay): string {
   const detail = formatToolDetail(display);
   if (detail && (display.name === "bash" || display.name === "exec")) {

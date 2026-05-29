@@ -1,5 +1,7 @@
+// plugins validation diagnostics helpers and runtime behavior.
 import type { PluginDiagnostic } from "./manifest-types.js";
 
+/** Reused helper for push Plugin Validation Diagnostic behavior in src/plugins. */
 export function pushPluginValidationDiagnostic(params: {
   level: PluginDiagnostic["level"];
   pluginId: string;

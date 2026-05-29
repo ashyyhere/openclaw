@@ -1,3 +1,4 @@
+// Main `models list` command: loads config, gathers row sources, probes auth, and renders output.
 import { parseModelRef } from "../../agents/model-selection.js";
 import type { ModelRegistry } from "../../llm/model-registry.js";
 import type { Model } from "../../llm/types.js";
@@ -42,6 +43,7 @@ function loadSourcePlanModule(): Promise<SourcePlanModule> {
   return sourcePlanModuleLoader.load();
 }
 
+/** Reused helper for models List Command behavior in src/commands/models. */
 export async function modelsListCommand(
   opts: {
     all?: boolean;

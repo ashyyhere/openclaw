@@ -1,3 +1,4 @@
+// config materialize helpers and runtime behavior.
 import type { PluginManifestRegistry } from "../plugins/manifest-registry.js";
 import {
   applyCompactionDefaults,
@@ -44,14 +45,17 @@ const MATERIALIZATION_PROFILES: Record<ConfigMaterializationMode, Materializatio
   },
 };
 
+/** Reused helper for as Resolved Source Config behavior in src/config. */
 export function asResolvedSourceConfig(config: OpenClawConfig): ResolvedSourceConfig {
   return config as ResolvedSourceConfig;
 }
 
+/** Reused helper for as Runtime Config behavior in src/config. */
 export function asRuntimeConfig(config: OpenClawConfig): RuntimeConfig {
   return config as RuntimeConfig;
 }
 
+/** Reused helper for materialize Runtime Config behavior in src/config. */
 export function materializeRuntimeConfig(
   config: OpenClawConfig,
   mode: ConfigMaterializationMode,

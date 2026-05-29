@@ -1,3 +1,4 @@
+// infra/outbound deliver helpers and runtime behavior.
 import { resolveChunkMode, resolveTextChunkLimit } from "../../auto-reply/chunk.js";
 import { runReplyPayloadSendingHook } from "../../auto-reply/reply/reply-payload-sending-hook.js";
 import type { ReplyPayload } from "../../auto-reply/types.js";
@@ -89,13 +90,19 @@ import { type OutboundSendDeps } from "./send-deps.js";
 import type { OutboundSessionContext } from "./session-context.js";
 import type { OutboundChannel } from "./targets.js";
 
+/** Re-exported API for src/infra/outbound, starting with Outbound Delivery Result. */
 export type { OutboundDeliveryResult } from "./deliver-types.js";
+/** Re-exported API for src/infra/outbound, starting with Normalized Outbound Payload. */
 export type { NormalizedOutboundPayload } from "./payloads.js";
+/** Re-exported API for src/infra/outbound, starting with normalize Outbound Payloads. */
 export { normalizeOutboundPayloads } from "./payloads.js";
+/** Re-exported API for src/infra/outbound, starting with resolve Outbound Send Dep. */
 export { resolveOutboundSendDep, type OutboundSendDeps } from "./send-deps.js";
 
+/** Shared type for Outbound Delivery Queue Policy in src/infra/outbound. */
 export type OutboundDeliveryQueuePolicy = "required" | "best_effort";
 
+/** Shared type for Outbound Delivery Intent in src/infra/outbound. */
 export type OutboundDeliveryIntent = {
   id: string;
   channel: Exclude<OutboundChannel, "none">;
@@ -104,14 +111,17 @@ export type OutboundDeliveryIntent = {
   queuePolicy: OutboundDeliveryQueuePolicy;
 };
 
+/** Shared type for Durable Final Delivery Requirement in src/infra/outbound. */
 export type DurableFinalDeliveryRequirement = keyof NonNullable<
   ChannelDeliveryCapabilities["durableFinal"]
 >;
 
+/** Shared type for Durable Final Delivery Requirements in src/infra/outbound. */
 export type DurableFinalDeliveryRequirements = Partial<
   Record<DurableFinalDeliveryRequirement, boolean>
 >;
 
+/** Shared type for Outbound Durable Delivery Support in src/infra/outbound. */
 export type OutboundDurableDeliverySupport =
   | { ok: true }
   | {
@@ -298,6 +308,7 @@ async function runChannelMessageSendWithLifecycle<
   }
 }
 
+/** Reused helper for resolve Outbound Durable Final Delivery Support behavior in src/infra/outbound. */
 export async function resolveOutboundDurableFinalDeliverySupport(params: {
   cfg: OpenClawConfig;
   channel: Exclude<OutboundChannel, "none">;
@@ -1237,6 +1248,7 @@ export async function deliverOutboundPayloads(
   return await deliverOutboundPayloadsInternal(params);
 }
 
+/** Reused helper for deliver Outbound Payloads Internal behavior in src/infra/outbound. */
 export async function deliverOutboundPayloadsInternal(
   params: DeliverOutboundPayloadsParams,
 ): Promise<OutboundDeliveryResult[]> {

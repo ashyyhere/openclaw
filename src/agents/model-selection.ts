@@ -1,3 +1,4 @@
+/** High-level model selection, persistence, allowlist, and default helpers. */
 import {
   resolveAgentModelFallbackValues,
   resolveAgentModelPrimaryValue,
@@ -17,6 +18,7 @@ import { DEFAULT_MODEL, DEFAULT_PROVIDER } from "./defaults.js";
 import { findModelInCatalog } from "./model-catalog-lookup.js";
 import type { ModelCatalogEntry } from "./model-catalog.types.js";
 import { splitTrailingAuthProfile } from "./model-ref-profile.js";
+/** Re-exported API for src/agents. */
 export {
   resolveThinkingDefault,
   resolveThinkingDefaultWithRuntimeCatalog,
@@ -53,8 +55,10 @@ import {
   type ModelRefStatus,
 } from "./model-selection-shared.js";
 
+/** Re-exported API for src/agents, starting with Model Alias Index. */
 export type { ModelAliasIndex, ModelManifestNormalizationContext, ModelRef, ModelRefStatus };
 
+/** Supported thinking/reasoning effort levels. */
 export type ThinkLevel =
   | "off"
   | "minimal"
@@ -65,6 +69,7 @@ export type ThinkLevel =
   | "adaptive"
   | "max";
 
+/** Re-exported API for src/agents. */
 export {
   buildConfiguredAllowlistKeys,
   buildConfiguredModelCatalog,
@@ -85,12 +90,14 @@ export {
   resolveHooksGmailModel,
   resolveModelRefFromString,
 };
+/** Re-exported API for src/agents, starting with is Cli Provider. */
 export { isCliProvider } from "./model-selection-cli.js";
 
 function normalizePersistedDefaultProvider(value: unknown): string {
   return normalizeOptionalString(value) ?? DEFAULT_PROVIDER;
 }
 
+/** Resolve persisted provider/model override fields. */
 export function resolvePersistedOverrideModelRef(params: {
   defaultProvider?: unknown;
   overrideProvider?: unknown;
@@ -118,6 +125,7 @@ export function resolvePersistedOverrideModelRef(params: {
  * Runtime-first resolver for persisted model metadata.
  * Use this when callers intentionally want the last executed model identity.
  */
+/** Resolve persisted runtime provider/model fields. */
 export function resolvePersistedModelRef(params: {
   defaultProvider?: unknown;
   runtimeProvider?: unknown;
@@ -155,6 +163,7 @@ export function resolvePersistedModelRef(params: {
  * Use this for control/status/UI surfaces that should honor explicit session
  * overrides before falling back to runtime identity.
  */
+/** Resolve the effective persisted selected model ref. */
 export function resolvePersistedSelectedModelRef(params: {
   defaultProvider?: unknown;
   runtimeProvider?: unknown;
@@ -180,6 +189,7 @@ export function resolvePersistedSelectedModelRef(params: {
   });
 }
 
+/** Normalize model override fields loaded from session store. */
 export function normalizeStoredOverrideModel(params: {
   providerOverride?: unknown;
   modelOverride?: unknown;
@@ -202,6 +212,7 @@ export function normalizeStoredOverrideModel(params: {
   };
 }
 
+/** Resolve canonical allowlist key for a model ref. */
 export function resolveAllowlistModelKey(
   raw: string,
   defaultProvider: string,
@@ -211,6 +222,7 @@ export function resolveAllowlistModelKey(
   return resolveAllowlistModelKeyFromShared({ cfg, raw, defaultProvider, manifestPlugins });
 }
 
+/** Resolve default provider/model for an agent. */
 export function resolveDefaultModelForAgent(
   params: {
     cfg: OpenClawConfig;
@@ -246,6 +258,7 @@ export function resolveDefaultModelForAgent(
   });
 }
 
+/** Canonicalize model refs whose only mismatch is catalog casing. */
 export async function canonicalizeCaseOnlyCatalogModelRef(params: {
   raw: string | undefined;
   cfg?: OpenClawConfig;
@@ -320,6 +333,7 @@ function resolveAllowedFallbacks(params: { cfg: OpenClawConfig; agentId?: string
   return resolveAgentModelFallbackValues(params.cfg.agents?.defaults?.model);
 }
 
+/** Resolve configured model selection for a subagent. */
 export function resolveSubagentConfiguredModelSelection(params: {
   cfg: OpenClawConfig;
   agentId: string;
@@ -352,6 +366,7 @@ function resolveModelThroughAliases(value: string, aliasIndex: ModelAliasIndex):
   return value;
 }
 
+/** Resolve model selection supplied when spawning a subagent. */
 export function resolveSubagentSpawnModelSelection(params: {
   cfg: OpenClawConfig;
   agentId: string;
@@ -376,6 +391,7 @@ export function resolveSubagentSpawnModelSelection(params: {
   return resolveModelThroughAliases(raw, aliasIndex);
 }
 
+/** Build the allowed model key set from config and fallbacks. */
 export function buildAllowedModelSet(
   params: {
     cfg: OpenClawConfig;
@@ -402,6 +418,7 @@ export function buildAllowedModelSet(
   });
 }
 
+/** Return status of a model ref against catalog and allowlist. */
 export function getModelRefStatus(
   params: {
     cfg: OpenClawConfig;
@@ -443,6 +460,7 @@ function getModelRefStatusForResolve(
   });
 }
 
+/** Resolve a raw model ref to an allowed provider/model or error. */
 export function resolveAllowedModelRef(
   params: {
     cfg: OpenClawConfig;
@@ -492,6 +510,7 @@ export function resolveAllowedModelRef(
 }
 
 /** Default reasoning level when session/directive do not set it: "on" if model supports reasoning, else "off". */
+/** Resolve default thinking/reasoning level for a provider/model. */
 export function resolveReasoningDefault(params: {
   provider: string;
   model: string;

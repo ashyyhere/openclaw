@@ -1,3 +1,4 @@
+// extensions/nostr/src nostr state store helpers and runtime behavior.
 import os from "node:os";
 import path from "node:path";
 import { safeParseJsonWithSchema } from "openclaw/plugin-sdk/extension-shared";

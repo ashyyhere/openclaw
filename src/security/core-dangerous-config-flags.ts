@@ -1,5 +1,7 @@
+// security core dangerous config flags helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 
+/** Reused helper for collect Core Insecure Or Dangerous Flags behavior in src/security. */
 export function collectCoreInsecureOrDangerousFlags(cfg: OpenClawConfig): string[] {
   const enabledFlags: string[] = [];
   if (cfg.gateway?.controlUi?.allowInsecureAuth === true) {

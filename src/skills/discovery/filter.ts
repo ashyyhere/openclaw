@@ -1,5 +1,7 @@
+/** Normalizes and matches skill filter entries. */
 import { normalizeStringEntries, sortUniqueStrings } from "../../shared/string-normalization.js";
 
+/** Normalizes optional skill filter values for runtime use. */
 export function normalizeSkillFilter(skillFilter?: ReadonlyArray<unknown>): string[] | undefined {
   if (skillFilter === undefined) {
     return undefined;
@@ -7,6 +9,7 @@ export function normalizeSkillFilter(skillFilter?: ReadonlyArray<unknown>): stri
   return normalizeStringEntries(skillFilter);
 }
 
+/** Normalizes a skill id/name for case-insensitive comparison. */
 export function normalizeSkillFilterForComparison(
   skillFilter?: ReadonlyArray<unknown>,
 ): string[] | undefined {
@@ -17,6 +20,7 @@ export function normalizeSkillFilterForComparison(
   return sortUniqueStrings(normalized);
 }
 
+/** Checks whether a skill id or name matches a configured filter. */
 export function matchesSkillFilter(
   cached?: ReadonlyArray<unknown>,
   next?: ReadonlyArray<unknown>,

@@ -1,3 +1,4 @@
+/** Migrates legacy memory dreaming cron payload shapes. */
 import {
   MANAGED_MEMORY_DREAMING_CRON_NAME,
   MANAGED_MEMORY_DREAMING_CRON_TAG,
@@ -61,6 +62,7 @@ function rewriteDreamingJobShape(raw: UnknownRecord): void {
   raw.delivery = { mode: "none" };
 }
 
+/** Reused helper for migrate Legacy Dreaming Payload Shape behavior in src/commands. */
 export function migrateLegacyDreamingPayloadShape(jobs: UnknownRecord[]): {
   changed: boolean;
   rewrittenCount: number;
@@ -79,6 +81,7 @@ export function migrateLegacyDreamingPayloadShape(jobs: UnknownRecord[]): {
   return { changed: rewrittenCount > 0, rewrittenCount };
 }
 
+/** Reused helper for count Stale Dreaming Jobs behavior in src/commands. */
 export function countStaleDreamingJobs(jobs: UnknownRecord[]): number {
   let count = 0;
   for (const raw of jobs) {

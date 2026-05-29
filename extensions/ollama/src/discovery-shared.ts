@@ -1,3 +1,4 @@
+// extensions/ollama/src discovery shared helpers and runtime behavior.
 import { getCachedLiveCatalogValue } from "openclaw/plugin-sdk/provider-catalog-shared";
 import type { ModelProviderConfig } from "openclaw/plugin-sdk/provider-model-shared";
 import { normalizeOptionalString } from "openclaw/plugin-sdk/string-coerce-runtime";

@@ -1,7 +1,9 @@
+// gateway test http response helpers and runtime behavior.
 import type { ServerResponse } from "node:http";
 import { PassThrough } from "node:stream";
 import { vi } from "vitest";
 
+/** Reused helper for make Mock Http Response behavior in src/gateway. */
 export function makeMockHttpResponse(): {
   res: ServerResponse;
   setHeader: ReturnType<typeof vi.fn>;

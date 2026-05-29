@@ -1,3 +1,4 @@
+// Browser-bundle guard for heartbeat transcript filtering helpers.
 import { build } from "esbuild";
 import { describe, expect, it } from "vitest";
 

@@ -1,3 +1,4 @@
+// Tests gateway server plugin node capability auth test behavior.
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { connect, type Socket } from "node:net";
 import type { Duplex } from "node:stream";

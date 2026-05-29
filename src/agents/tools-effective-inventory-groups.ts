@@ -1,3 +1,4 @@
+/** Groups effective tool inventory rows for compact reporting. */
 import type {
   EffectiveToolInventoryEntry,
   EffectiveToolInventoryGroup,
@@ -17,6 +18,7 @@ function groupLabel(source: EffectiveToolSource): string {
   }
 }
 
+/** Reused helper for build Effective Tool Inventory Groups behavior in src/agents. */
 export function buildEffectiveToolInventoryGroups(
   entries: readonly EffectiveToolInventoryEntry[],
 ): EffectiveToolInventoryGroup[] {

@@ -1,3 +1,4 @@
+/** Validation and merge helpers for ACP runtime options carried in session metadata. */
 import { isAbsolute } from "node:path";
 import type { AcpSessionRuntimeOptions, SessionAcpMeta } from "../../config/sessions/types.js";
 import { parseStrictPositiveInteger } from "../../infra/parse-finite-number.js";
@@ -5,6 +6,7 @@ import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";
 import { normalizeText } from "../normalize-text.js";
 import { AcpRuntimeError } from "../runtime/errors.js";
 
+/** Re-exported API for src/acp/control-plane, starting with normalize Text. */
 export { normalizeText } from "../normalize-text.js";
 
 const MAX_RUNTIME_MODE_LENGTH = 64;
@@ -73,6 +75,7 @@ function validateBackendOptionValue(rawValue: unknown): string {
   });
 }
 
+/** Reused helper for validate Runtime Mode Input behavior in src/acp/control-plane. */
 export function validateRuntimeModeInput(rawMode: unknown): string {
   return validateBoundedText({
     value: rawMode,
@@ -81,6 +84,7 @@ export function validateRuntimeModeInput(rawMode: unknown): string {
   });
 }
 
+/** Reused helper for validate Runtime Model Input behavior in src/acp/control-plane. */
 export function validateRuntimeModelInput(rawModel: unknown): string {
   return validateBoundedText({
     value: rawModel,
@@ -97,6 +101,7 @@ function validateRuntimeThinkingInput(rawThinking: unknown): string {
   });
 }
 
+/** Reused helper for validate Runtime Permission Profile Input behavior in src/acp/control-plane. */
 export function validateRuntimePermissionProfileInput(rawProfile: unknown): string {
   return validateBoundedText({
     value: rawProfile,
@@ -105,6 +110,7 @@ export function validateRuntimePermissionProfileInput(rawProfile: unknown): stri
   });
 }
 
+/** Reused helper for validate Runtime Cwd Input behavior in src/acp/control-plane. */
 export function validateRuntimeCwdInput(rawCwd: unknown): string {
   const cwd = validateBoundedText({
     value: rawCwd,
@@ -130,6 +136,7 @@ function validateRuntimeTimeoutSecondsInput(rawTimeout: unknown): number {
   return timeout;
 }
 
+/** Reused helper for parse Runtime Timeout Seconds Input behavior in src/acp/control-plane. */
 export function parseRuntimeTimeoutSecondsInput(rawTimeout: unknown): number {
   const normalized = normalizeText(rawTimeout);
   if (!normalized || !/^\d+$/.test(normalized)) {
@@ -138,6 +145,7 @@ export function parseRuntimeTimeoutSecondsInput(rawTimeout: unknown): number {
   return validateRuntimeTimeoutSecondsInput(parseStrictPositiveInteger(normalized) ?? 0);
 }
 
+/** Reused helper for validate Runtime Config Option Input behavior in src/acp/control-plane. */
 export function validateRuntimeConfigOptionInput(
   rawKey: unknown,
   rawValue: unknown,
@@ -151,6 +159,7 @@ export function validateRuntimeConfigOptionInput(
   };
 }
 
+/** Reused helper for validate Runtime Option Patch behavior in src/acp/control-plane. */
 export function validateRuntimeOptionPatch(
   patch: Partial<AcpSessionRuntimeOptions> | undefined,
 ): Partial<AcpSessionRuntimeOptions> {
@@ -239,6 +248,7 @@ export function validateRuntimeOptionPatch(
   return next;
 }
 
+/** Normalize a partial runtime option patch into canonical metadata shape. */
 export function normalizeRuntimeOptions(
   options: AcpSessionRuntimeOptions | undefined,
 ): AcpSessionRuntimeOptions {
@@ -270,6 +280,7 @@ export function normalizeRuntimeOptions(
   };
 }
 
+/** Merge existing runtime options with a control-plane patch and defaults. */
 export function mergeRuntimeOptions(params: {
   current?: AcpSessionRuntimeOptions;
   patch?: Partial<AcpSessionRuntimeOptions>;
@@ -287,6 +298,7 @@ export function mergeRuntimeOptions(params: {
   });
 }
 
+/** Reused helper for resolve Runtime Options From Meta behavior in src/acp/control-plane. */
 export function resolveRuntimeOptionsFromMeta(meta: SessionAcpMeta): AcpSessionRuntimeOptions {
   const normalized = normalizeRuntimeOptions(meta.runtimeOptions);
   if (normalized.cwd || !meta.cwd) {
@@ -298,6 +310,7 @@ export function resolveRuntimeOptionsFromMeta(meta: SessionAcpMeta): AcpSessionR
   });
 }
 
+/** Reused helper for runtime Options Equal behavior in src/acp/control-plane. */
 export function runtimeOptionsEqual(
   a: AcpSessionRuntimeOptions | undefined,
   b: AcpSessionRuntimeOptions | undefined,
@@ -305,6 +318,7 @@ export function runtimeOptionsEqual(
   return JSON.stringify(normalizeRuntimeOptions(a)) === JSON.stringify(normalizeRuntimeOptions(b));
 }
 
+/** Reused helper for build Runtime Control Signature behavior in src/acp/control-plane. */
 export function buildRuntimeControlSignature(options: AcpSessionRuntimeOptions): string {
   const normalized = normalizeRuntimeOptions(options);
   const extras = Object.entries(normalized.backendExtras ?? {}).toSorted(([a], [b]) =>
@@ -320,6 +334,7 @@ export function buildRuntimeControlSignature(options: AcpSessionRuntimeOptions):
   });
 }
 
+/** Reused helper for build Runtime Config Option Pairs behavior in src/acp/control-plane. */
 export function buildRuntimeConfigOptionPairs(
   options: AcpSessionRuntimeOptions,
   advertisedConfigOptionKeys?: readonly string[],
@@ -393,6 +408,7 @@ function resolveRuntimeConfigOptionAliases(key: string): readonly string[] {
   return [key];
 }
 
+/** Reused helper for resolve Runtime Config Option Key behavior in src/acp/control-plane. */
 export function resolveRuntimeConfigOptionKey(
   key: string,
   advertisedConfigOptionKeys?: readonly string[],
@@ -416,6 +432,7 @@ export function resolveRuntimeConfigOptionKey(
   return normalizedKey;
 }
 
+/** Reused helper for infer Runtime Option Patch From Config Option behavior in src/acp/control-plane. */
 export function inferRuntimeOptionPatchFromConfigOption(
   key: string,
   value: string,

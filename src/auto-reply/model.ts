@@ -1,7 +1,9 @@
+// Parser for inline model selection directives.
 import { splitTrailingAuthProfile } from "../agents/model-ref-profile.js";
 import { normalizeStringEntries } from "../shared/string-normalization.js";
 import { escapeRegExp } from "../utils.js";
 
+/** Reused helper for extract Model Directive behavior in src/auto-reply. */
 export function extractModelDirective(
   body?: string,
   options?: { aliases?: string[] },

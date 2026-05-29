@@ -1,3 +1,4 @@
+// Tests extensions/zalouser/src zalo quote metadata test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { __testing as zaloTesting } from "./zalo-js.js";
 

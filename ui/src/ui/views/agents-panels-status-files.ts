@@ -1,3 +1,4 @@
+// ui/src/ui/views agents panels status files helpers and runtime behavior.
 import { applyPreviewTheme } from "@create-markdown/preview";
 import DOMPurify from "dompurify";
 import { html, nothing } from "lit";
@@ -216,6 +217,7 @@ function summarizeChannelAccounts(accounts: ChannelAccountSnapshot[]) {
   };
 }
 
+/** Reused helper for render Agent Channels behavior in ui/src/ui/views. */
 export function renderAgentChannels(params: {
   context: AgentContext;
   configForm: Record<string, unknown> | null;
@@ -320,6 +322,7 @@ export function renderAgentChannels(params: {
   `;
 }
 
+/** Reused helper for render Agent Cron behavior in ui/src/ui/views. */
 export function renderAgentCron(params: {
   context: AgentContext;
   agentId: string;
@@ -418,6 +421,7 @@ export function renderAgentCron(params: {
   `;
 }
 
+/** Reused helper for render Agent Files behavior in ui/src/ui/views. */
 export function renderAgentFiles(params: {
   agentId: string;
   agentFilesList: AgentsFilesListResult | null;

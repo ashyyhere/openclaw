@@ -1,3 +1,4 @@
+// extensions/signal/src setup surface helpers and runtime behavior.
 import {
   createSetupTranslator,
   createDetectedBinaryStatus,

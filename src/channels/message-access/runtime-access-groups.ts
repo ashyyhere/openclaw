@@ -1,3 +1,4 @@
+// Runtime access-group expansion for channel ingress allowlists.
 import { normalizeStringEntries, uniqueStrings } from "../../shared/string-normalization.js";
 import { parseAccessGroupAllowFromEntry } from "../allow-from.js";
 import type { ChannelIngressAdapter, ResolveChannelMessageIngressParams } from "./runtime-types.js";
@@ -11,12 +12,14 @@ function accessGroupNames(entries: readonly (string | number)[]): string[] {
   );
 }
 
+/** List access-group names referenced by allowlist entry groups. */
 export function allReferencedAccessGroupNames(
   entries: Array<readonly (string | number)[]>,
 ): string[] {
   return uniqueStrings(entries.flatMap((entryGroup) => accessGroupNames(entryGroup)));
 }
 
+/** Normalize direct entries while preserving access-group references for later resolution. */
 export async function normalizeEffectiveEntries(params: {
   adapter: ChannelIngressAdapter;
   accountId: string;
@@ -42,6 +45,7 @@ export async function normalizeEffectiveEntries(params: {
   ]);
 }
 
+/** Resolve access-group membership facts for channel ingress decisions. */
 export async function resolveRuntimeAccessGroupMembershipFacts(params: {
   input: ResolveChannelMessageIngressParams;
   channelId: ChannelIngressChannelId;

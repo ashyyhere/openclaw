@@ -1,3 +1,4 @@
+// Tests utils timer delay test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { MAX_SAFE_TIMEOUT_DELAY_MS, setSafeTimeout } from "./timer-delay.js";
 

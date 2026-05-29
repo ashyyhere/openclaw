@@ -1,3 +1,4 @@
+/** Tests ACP translator prompt lifecycle and gateway event handling. */
 import type {
   CloseSessionRequest,
   InitializeRequest,

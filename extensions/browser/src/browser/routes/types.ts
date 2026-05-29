@@ -1,3 +1,4 @@
+// Shared types for extensions/browser/src/browser/routes types behavior.
 export type BrowserRequest = {
   params: Record<string, string>;
   query: Record<string, unknown>;

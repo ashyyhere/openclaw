@@ -1,3 +1,4 @@
+// extensions/signal/src account types helpers and runtime behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 
 export type SignalAccountConfig = Omit<

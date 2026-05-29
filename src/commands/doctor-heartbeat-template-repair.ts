@@ -1,3 +1,4 @@
+/** Repairs stale heartbeat templates in agent workspace files. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { note } from "../../packages/terminal-core/src/note.js";
@@ -86,6 +87,7 @@ const KNOWN_REPAIRABLE_DIRTY_HEARTBEAT_TEMPLATES = [
   DOCS_HEARTBEAT_TEMPLATE_PAGE_AS_TEMPLATE,
 ] as const;
 
+/** Shared type for Heartbeat Template Repair Analysis in src/commands. */
 export type HeartbeatTemplateRepairAnalysis =
   | { status: "clean" }
   | { status: "dirty-template" }
@@ -95,6 +97,7 @@ function linesEqual(left: readonly string[], right: readonly string[]): boolean 
   return left.length === right.length && left.every((line, index) => line === right[index]);
 }
 
+/** Reused helper for analyze Heartbeat Template For Repair behavior in src/commands. */
 export function analyzeHeartbeatTemplateForRepair(
   content: string,
 ): HeartbeatTemplateRepairAnalysis {
@@ -124,6 +127,7 @@ async function readCleanHeartbeatTemplate(): Promise<string> {
   return await fs.readFile(templatePath, "utf-8");
 }
 
+/** Reused helper for maybe Repair Heartbeat Template behavior in src/commands. */
 export async function maybeRepairHeartbeatTemplate(params: {
   cfg: OpenClawConfig;
   shouldRepair: boolean;

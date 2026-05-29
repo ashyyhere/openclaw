@@ -1,3 +1,4 @@
+// tasks task domain views helpers and runtime behavior.
 import type {
   TaskFlowDetail,
   TaskFlowView,
@@ -9,6 +10,7 @@ import type { TaskFlowRecord } from "./task-flow-registry.types.js";
 import { summarizeTaskRecords } from "./task-registry.summary.js";
 import type { TaskRecord, TaskRegistrySummary } from "./task-registry.types.js";
 
+/** Reused helper for map Task Run Aggregate Summary behavior in src/tasks. */
 export function mapTaskRunAggregateSummary(summary: TaskRegistrySummary): TaskRunAggregateSummary {
   return {
     total: summary.total,
@@ -20,6 +22,7 @@ export function mapTaskRunAggregateSummary(summary: TaskRegistrySummary): TaskRu
   };
 }
 
+/** Reused helper for map Task Run View behavior in src/tasks. */
 export function mapTaskRunView(task: TaskRecord): TaskRunView {
   return {
     id: task.taskId,
@@ -50,10 +53,12 @@ export function mapTaskRunView(task: TaskRecord): TaskRunView {
   };
 }
 
+/** Reused helper for map Task Run Detail behavior in src/tasks. */
 export function mapTaskRunDetail(task: TaskRecord): TaskRunDetail {
   return mapTaskRunView(task);
 }
 
+/** Reused helper for map Task Flow View behavior in src/tasks. */
 export function mapTaskFlowView(flow: TaskFlowRecord): TaskFlowView {
   return {
     id: flow.flowId,
@@ -70,6 +75,7 @@ export function mapTaskFlowView(flow: TaskFlowRecord): TaskFlowView {
   };
 }
 
+/** Reused helper for map Task Flow Detail behavior in src/tasks. */
 export function mapTaskFlowDetail(params: {
   flow: TaskFlowRecord;
   tasks: TaskRecord[];

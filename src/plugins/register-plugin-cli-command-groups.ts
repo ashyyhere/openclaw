@@ -1,3 +1,4 @@
+// plugins register plugin cli command groups helpers and runtime behavior.
 import type { Command } from "commander";
 import {
   findCommandGroupEntry,
@@ -8,11 +9,13 @@ import {
 } from "../cli/program/register-command-groups.js";
 import type { OpenClawPluginCliCommandDescriptor, PluginLogger } from "./types.js";
 
+/** Shared type for Plugin Cli Command Group Entry in src/plugins. */
 export type PluginCliCommandGroupEntry = CommandGroupEntry & {
   pluginId: string;
   parentPath?: readonly string[];
 };
 
+/** Shared type for Plugin Cli Command Group Mode in src/plugins. */
 export type PluginCliCommandGroupMode = "eager" | "lazy";
 
 function canRegisterPluginCliLazily(entry: PluginCliCommandGroupEntry): boolean {
@@ -45,6 +48,7 @@ function commandNamesFor(program: Command): Set<string> {
   return new Set(program.commands.flatMap((command) => [command.name(), ...command.aliases()]));
 }
 
+/** Reused helper for register Plugin Cli Command Groups behavior in src/plugins. */
 export async function registerPluginCliCommandGroups(
   program: Command,
   entries: readonly PluginCliCommandGroupEntry[],

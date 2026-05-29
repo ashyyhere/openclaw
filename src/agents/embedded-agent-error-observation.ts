@@ -1,3 +1,4 @@
+/** Builds redacted observation metadata for provider/runtime errors. */
 import { readLoggingConfig } from "../logging/config.js";
 import { redactIdentifier } from "../logging/redact-identifier.js";
 import { getDefaultRedactPatterns, redactSensitiveText } from "../logging/redact.js";
@@ -10,6 +11,7 @@ import {
 } from "./embedded-agent-helpers.js";
 import { stableStringify } from "./stable-stringify.js";
 
+/** Re-exported API for src/agents, starting with sanitize For Console. */
 export { sanitizeForConsole } from "./console-sanitize.js";
 
 const MAX_OBSERVATION_INPUT_CHARS = 64_000;
@@ -81,6 +83,7 @@ function redactObservationText(text: string | undefined): string | undefined {
   });
 }
 
+/** Return whether raw provider error text should be suppressed from console suffixes. */
 export function shouldSuppressRawErrorConsoleSuffix(
   providerRuntimeFailureKind?: ProviderRuntimeFailureKind,
 ): boolean {
@@ -117,6 +120,7 @@ function buildObservationFingerprint(params: {
   return getApiErrorPayloadFingerprint(params.raw);
 }
 
+/** Build structured, redacted observation fields from raw API errors. */
 export function buildApiErrorObservationFields(
   rawError?: string,
   opts?: { provider?: string },
@@ -176,6 +180,7 @@ export function buildApiErrorObservationFields(
   }
 }
 
+/** Build redacted observation fields for plain-text errors. */
 export function buildTextObservationFields(
   text?: string,
   opts?: { provider?: string },

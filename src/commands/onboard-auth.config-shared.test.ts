@@ -1,3 +1,4 @@
+/** Tests shared onboarding auth config mutation helpers. */
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import type { AgentModelEntryConfig } from "../config/types.agent-defaults.js";

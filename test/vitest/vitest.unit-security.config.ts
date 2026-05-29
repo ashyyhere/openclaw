@@ -1,3 +1,4 @@
+// test/vitest vitest unit security config helpers and runtime behavior.
 import { createUnitVitestConfigWithOptions } from "./vitest.unit.config.ts";
 
 export default createUnitVitestConfigWithOptions(process.env, {

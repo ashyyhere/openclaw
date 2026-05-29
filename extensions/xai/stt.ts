@@ -1,3 +1,4 @@
+// extensions/xai stt helpers and runtime behavior.
 import type {
   AudioTranscriptionRequest,
   AudioTranscriptionResult,

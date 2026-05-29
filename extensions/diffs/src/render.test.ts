@@ -1,3 +1,4 @@
+// Tests extensions/diffs/src render test behavior.
 import {
   disposeHighlighter,
   RegisteredCustomThemes,

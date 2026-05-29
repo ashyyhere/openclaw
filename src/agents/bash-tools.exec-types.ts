@@ -1,3 +1,4 @@
+/** Shared types for exec tool defaults, approvals, and result details. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { EventSessionRoutingPolicy } from "../infra/event-session-routing.js";
 import type { ExecApprovalDecision } from "../infra/exec-approvals.js";
@@ -14,6 +15,7 @@ import type { BashSandboxConfig } from "./bash-tools.shared.js";
 import type { EmbeddedFullAccessBlockedReason } from "./embedded-agent-runner/types.js";
 import type { ExecReviewerConfig } from "./exec-auto-reviewer.js";
 
+/** Shared type for Exec Tool Defaults in src/agents. */
 export type ExecToolDefaults = {
   hasCronTool?: boolean;
   host?: ExecTarget;
@@ -63,6 +65,7 @@ export type ExecToolDefaults = {
   cwd?: string;
 };
 
+/** Shared type for Exec Approval Followup Outcome in src/agents. */
 export type ExecApprovalFollowupOutcome = {
   status: "completed" | "failed";
   exitCode: number | null;
@@ -78,10 +81,12 @@ type ExecApprovalFollowupContext = {
   outcome: ExecApprovalFollowupOutcome;
 };
 
+/** Shared type for Exec Approval Followup Factory in src/agents. */
 export type ExecApprovalFollowupFactory = (
   context: ExecApprovalFollowupContext,
 ) => string | undefined | Promise<string | undefined>;
 
+/** Shared type for Exec Elevated Defaults in src/agents. */
 export type ExecElevatedDefaults = {
   enabled: boolean;
   allowed: boolean;
@@ -90,6 +95,7 @@ export type ExecElevatedDefaults = {
   fullAccessBlockedReason?: EmbeddedFullAccessBlockedReason;
 };
 
+/** Shared type for Exec Tool Details in src/agents. */
 export type ExecToolDetails =
   | {
       status: "running";

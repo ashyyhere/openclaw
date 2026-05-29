@@ -1,3 +1,4 @@
+// Tests extensions/slack/src send blocks test behavior.
 import { describe, expect, it } from "vitest";
 import { createSlackSendTestClient, installSlackBlockTestMocks } from "./blocks.test-helpers.js";
 import {

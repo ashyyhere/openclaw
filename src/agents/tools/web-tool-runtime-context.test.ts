@@ -1,3 +1,4 @@
+/** Covers runtime context resolution for web_fetch and web_search tools. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   resolveWebFetchToolRuntimeContext,

@@ -1,3 +1,4 @@
+// infra install package dir helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { runCommandWithTimeout } from "../process/exec.js";
@@ -148,6 +149,7 @@ async function resolveInstallPublishTarget(params: {
   };
 }
 
+/** Reused helper for install Package Dir behavior in src/infra. */
 export async function installPackageDir(params: {
   sourceDir: string;
   targetDir: string;
@@ -354,6 +356,7 @@ export async function installPackageDir(params: {
   return { ok: true };
 }
 
+/** Reused helper for install Package Dir With Manifest Deps behavior in src/infra. */
 export async function installPackageDirWithManifestDeps(params: {
   sourceDir: string;
   targetDir: string;

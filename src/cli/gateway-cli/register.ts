@@ -1,3 +1,4 @@
+/** Registers gateway CLI command group and subcommands. */
 import type { Command } from "commander";
 import { formatDocsLink } from "../../../packages/terminal-core/src/links.js";
 import { colorize, isRich, theme } from "../../../packages/terminal-core/src/theme.js";
@@ -451,6 +452,7 @@ async function writeSupportExportFromCli(opts: {
   }
 }
 
+/** Reused helper for register Gateway Cli behavior in src/cli/gateway-cli. */
 export function registerGatewayCli(program: Command) {
   const gateway = addGatewayRunCommand(
     program

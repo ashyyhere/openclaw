@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor provider helpers and runtime behavior.
 import type { ChannelRuntimeSurface } from "openclaw/plugin-sdk/channel-contract";
 import {
   listNativeCommandSpecsForConfig,

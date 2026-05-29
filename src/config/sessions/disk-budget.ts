@@ -1,3 +1,4 @@
+// config/sessions disk budget helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import {
@@ -20,11 +21,13 @@ import { projectSessionStoreForPersistence } from "./skill-prompt-blobs.js";
 import { shouldPreserveMaintenanceEntry } from "./store-maintenance.js";
 import type { SessionEntry } from "./types.js";
 
+/** Shared type for Session Disk Budget Config in src/config/sessions. */
 export type SessionDiskBudgetConfig = {
   maxDiskBytes: number | null;
   highWaterBytes: number | null;
 };
 
+/** Shared type for Session Disk Budget Sweep Result in src/config/sessions. */
 export type SessionDiskBudgetSweepResult = {
   totalBytesBefore: number;
   totalBytesAfter: number;
@@ -36,6 +39,7 @@ export type SessionDiskBudgetSweepResult = {
   overBudget: boolean;
 };
 
+/** Shared type for Session Unreferenced Artifact Sweep Result in src/config/sessions. */
 export type SessionUnreferencedArtifactSweepResult = {
   scannedFiles: number;
   removedFiles: number;
@@ -43,6 +47,7 @@ export type SessionUnreferencedArtifactSweepResult = {
   olderThanMs: number;
 };
 
+/** Shared type for Session Disk Budget Logger in src/config/sessions. */
 export type SessionDiskBudgetLogger = {
   warn: (message: string, context?: Record<string, unknown>) => void;
   info: (message: string, context?: Record<string, unknown>) => void;
@@ -175,6 +180,7 @@ function resolveSessionArtifactPathsForEntry(params: {
   return paths;
 }
 
+/** Reused helper for resolve Session Artifact Canonical Paths For Entry behavior in src/config/sessions. */
 export function resolveSessionArtifactCanonicalPathsForEntry(params: {
   sessionsDir: string;
   entry: SessionEntry;
@@ -433,6 +439,7 @@ async function removePromptBlobFileForBudget(params: {
   });
 }
 
+/** Reused helper for prune Unreferenced Session Artifacts behavior in src/config/sessions. */
 export async function pruneUnreferencedSessionArtifacts(params: {
   store: Record<string, SessionEntry>;
   storePath: string;
@@ -532,6 +539,7 @@ export async function pruneUnreferencedSessionArtifacts(params: {
   };
 }
 
+/** Reused helper for enforce Session Disk Budget behavior in src/config/sessions. */
 export async function enforceSessionDiskBudget(params: {
   store: Record<string, SessionEntry>;
   storePath: string;

@@ -1,3 +1,4 @@
+// Rendered message batch planning from reply payloads.
 import type { ReplyPayload } from "../../auto-reply/reply-payload.js";
 import type {
   RenderedMessageBatch,
@@ -51,6 +52,7 @@ function createRenderedMessageBatchPlanItem(
   };
 }
 
+/** Build a structured render plan for reply payload delivery. */
 export function createRenderedMessageBatchPlan(
   payloads: readonly ReplyPayload[],
 ): RenderedMessageBatchPlan {
@@ -83,6 +85,7 @@ export function createRenderedMessageBatchPlan(
   );
 }
 
+/** Build a rendered message batch with original payloads and delivery plan. */
 export function createRenderedMessageBatch(
   payloads: ReplyPayload[],
 ): RenderedMessageBatch<ReplyPayload> {

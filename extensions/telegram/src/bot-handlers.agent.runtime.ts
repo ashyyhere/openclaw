@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/telegram/src bot handlers agent runtime behavior.
 export {
   resolveAgentDir,
   resolveDefaultAgentId,

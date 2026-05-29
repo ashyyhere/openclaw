@@ -1,3 +1,4 @@
+/** Resolves command session ids, session keys, and stored session bindings. */
 import crypto from "node:crypto";
 import type { MsgContext } from "../../auto-reply/templating.js";
 import {
@@ -32,6 +33,7 @@ import { resolveSessionIdMatchSelection } from "../../sessions/session-id-resolu
 import { listAgentIds, resolveDefaultAgentId } from "../agent-scope.js";
 import { clearBootstrapSnapshotOnSessionRollover } from "../bootstrap-cache.js";
 
+/** Normalized session identity selected for an agent command. */
 export type SessionResolution = {
   sessionId: string;
   sessionKey?: string;
@@ -55,6 +57,7 @@ type SessionIdMatchSet = {
   storeByKey: Map<string, SessionKeyResolution>;
 };
 
+/** Builds a stable session key for explicit session ids. */
 export function buildExplicitSessionIdSessionKey(params: {
   sessionId: string;
   agentId?: string;
@@ -181,6 +184,7 @@ function collectSessionIdMatchesForRequest(opts: {
  * This scopes the lookup to the target store without implicitly converting `agentId`
  * into that agent's main session key.
  */
+/** Finds a stored session key that already owns a session id. */
 export function resolveStoredSessionKeyForSessionId(opts: {
   cfg: OpenClawConfig;
   sessionId: string;
@@ -207,6 +211,7 @@ export function resolveStoredSessionKeyForSessionId(opts: {
   };
 }
 
+/** Resolves the best session key for one command request. */
 export function resolveSessionKeyForRequest(opts: {
   cfg: OpenClawConfig;
   to?: string;
@@ -301,6 +306,7 @@ export function resolveSessionKeyForRequest(opts: {
   return { sessionKey, sessionStore, storePath };
 }
 
+/** Resolves full session identity and entry for one command request. */
 export function resolveSession(opts: {
   cfg: OpenClawConfig;
   to?: string;

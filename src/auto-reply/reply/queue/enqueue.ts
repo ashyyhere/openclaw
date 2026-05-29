@@ -1,3 +1,4 @@
+// Queue enqueue helpers for delayed reply runs.
 import { resolveGlobalDedupeCache } from "../../../infra/dedupe.js";
 import { channelRouteDedupeKey } from "../../../plugin-sdk/channel-route.js";
 import { normalizeOptionalString } from "../../../shared/string-coerce.js";
@@ -63,6 +64,7 @@ function isRunAlreadyQueued(
   return items.some((item) => item.prompt === run.prompt && hasSameRouting(item));
 }
 
+/** Reused helper for enqueue Followup Run behavior in src/auto-reply/reply. */
 export function enqueueFollowupRun(
   key: string,
   run: FollowupRun,
@@ -137,6 +139,7 @@ export function enqueueFollowupRun(
   return true;
 }
 
+/** Reused helper for get Followup Queue Depth behavior in src/auto-reply/reply. */
 export function getFollowupQueueDepth(key: string): number {
   const queue = getExistingFollowupQueue(key);
   if (!queue) {
@@ -145,6 +148,7 @@ export function getFollowupQueueDepth(key: string): number {
   return queue.items.length;
 }
 
+/** Reused helper for reset Recent Queued Message Id Dedupe behavior in src/auto-reply/reply. */
 export function resetRecentQueuedMessageIdDedupe(): void {
   RECENT_QUEUE_MESSAGE_IDS.clear();
 }

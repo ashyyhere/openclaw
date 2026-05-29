@@ -1,3 +1,4 @@
+/** Tests subscription waits across multiple compaction retries before resolving. */
 import { describe, expect, it, vi } from "vitest";
 import { onAgentEvent } from "../infra/agent-events.js";
 import { createSubscribedSessionHarness } from "./embedded-agent-subscribe.e2e-harness.js";

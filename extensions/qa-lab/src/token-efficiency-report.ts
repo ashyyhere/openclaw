@@ -1,3 +1,4 @@
+// extensions/qa-lab/src token efficiency report helpers and runtime behavior.
 import type { RuntimeId, RuntimeParityCell, RuntimeParityResult } from "./runtime-parity.js";
 
 export type TokenEfficiencyRuntimeUsage = {

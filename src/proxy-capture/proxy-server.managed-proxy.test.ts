@@ -1,3 +1,4 @@
+// Tests proxy-capture proxy server managed proxy test behavior.
 import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { createServer as createHttpServer } from "node:http";
 import { Socket, type AddressInfo } from "node:net";

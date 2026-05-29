@@ -1,3 +1,4 @@
+// scripts/e2e/parallels phase runner helpers and runtime behavior.
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import { say, warn } from "./host-command.ts";

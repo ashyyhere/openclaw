@@ -1,3 +1,4 @@
+// Tests extensions/nvidia provider catalog test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   buildLiveNvidiaProvider,

@@ -1,3 +1,4 @@
+/** Contract tests for channel registry coverage across session binding channels. */
 import { describe, expect, it } from "vitest";
 import { sessionBindingContractChannelIds } from "./test-helpers/manifest.js";
 

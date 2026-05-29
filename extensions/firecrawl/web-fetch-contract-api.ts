@@ -1,3 +1,4 @@
+// extensions/firecrawl web fetch contract api helpers and runtime behavior.
 import {
   enablePluginInConfig,
   type WebFetchProviderPlugin,

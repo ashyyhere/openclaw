@@ -1,3 +1,4 @@
+// extensions/ollama/src memory embedding adapter helpers and runtime behavior.
 import type { MemoryEmbeddingProviderAdapter } from "openclaw/plugin-sdk/memory-core-host-engine-embeddings";
 import {
   DEFAULT_OLLAMA_EMBEDDING_MODEL,

@@ -58,16 +58,19 @@ let blockedHostPathsCache:
     }
   | undefined;
 
+/** Shared type for Validate Bind Mounts Options in src/agents/sandbox. */
 export type ValidateBindMountsOptions = {
   allowedSourceRoots?: string[];
   allowSourcesOutsideAllowedRoots?: boolean;
   allowReservedContainerTargets?: boolean;
 };
 
+/** Shared type for Validate Network Mode Options in src/agents/sandbox. */
 export type ValidateNetworkModeOptions = {
   allowContainerNamespaceJoin?: boolean;
 };
 
+/** Shared type for Blocked Bind Reason in src/agents/sandbox. */
 export type BlockedBindReason =
   | { kind: "targets"; blockedPath: string }
   | { kind: "covers"; blockedPath: string }
@@ -368,6 +371,7 @@ export function validateBindMounts(
   }
 }
 
+/** Reused helper for validate Network Mode behavior in src/agents/sandbox. */
 export function validateNetworkMode(
   network: string | undefined,
   options?: ValidateNetworkModeOptions,
@@ -393,6 +397,7 @@ export function validateNetworkMode(
   }
 }
 
+/** Reused helper for validate Seccomp Profile behavior in src/agents/sandbox. */
 export function validateSeccompProfile(profile: string | undefined): void {
   if (profile && BLOCKED_SECCOMP_PROFILES.has(normalizeOptionalLowercaseString(profile) ?? "")) {
     throw new Error(
@@ -403,6 +408,7 @@ export function validateSeccompProfile(profile: string | undefined): void {
   }
 }
 
+/** Reused helper for validate Apparmor Profile behavior in src/agents/sandbox. */
 export function validateApparmorProfile(profile: string | undefined): void {
   if (profile && BLOCKED_APPARMOR_PROFILES.has(normalizeOptionalLowercaseString(profile) ?? "")) {
     throw new Error(
@@ -413,6 +419,7 @@ export function validateApparmorProfile(profile: string | undefined): void {
   }
 }
 
+/** Reused helper for validate Sandbox Security behavior in src/agents/sandbox. */
 export function validateSandboxSecurity(
   cfg: {
     binds?: string[];

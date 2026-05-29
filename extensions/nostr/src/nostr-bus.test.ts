@@ -1,3 +1,4 @@
+// Tests extensions/nostr/src nostr bus test behavior.
 import { describe, expect, it } from "vitest";
 import {
   validatePrivateKey,

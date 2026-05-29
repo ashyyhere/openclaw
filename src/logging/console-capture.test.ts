@@ -1,3 +1,4 @@
+// Tests logging console capture test behavior.
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { setVerbose } from "../global-state.js";
 import {

@@ -1,3 +1,4 @@
+// plugin-sdk/test-helpers provider onboard helpers and runtime behavior.
 import { expect } from "vitest";
 import {
   resolveAgentModelFallbackValues,

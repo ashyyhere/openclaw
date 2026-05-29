@@ -1,3 +1,4 @@
+// extensions/discord/src/test-support configured binding runtime helpers and runtime behavior.
 type ConfiguredBindingConversationRuntimeModule = {
   ensureConfiguredBindingRouteReady: (...args: never[]) => unknown;
   resolveConfiguredBindingRoute: (...args: never[]) => unknown;

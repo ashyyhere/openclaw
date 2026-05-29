@@ -1,3 +1,4 @@
+// extensions/matrix/src group mentions helpers and runtime behavior.
 import { resolveMatrixAccountConfig } from "./matrix/accounts.js";
 import { resolveMatrixRoomConfig } from "./matrix/monitor/rooms.js";
 import { normalizeMatrixResolvableTarget } from "./matrix/target-ids.js";

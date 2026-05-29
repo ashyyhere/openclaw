@@ -1,11 +1,15 @@
+// config channel compat normalization helpers and runtime behavior.
 import {
   normalizeLegacyDmAliases,
   type CompatMutationResult,
 } from "../channels/plugins/dm-access.js";
 
+/** Re-exported API for src/config, starting with normalize Legacy Dm Aliases. */
 export { normalizeLegacyDmAliases };
+/** Re-exported API for src/config, starting with Compat Mutation Result. */
 export type { CompatMutationResult };
 
+/** Shared type for Legacy Streaming Alias Options in src/config. */
 export type LegacyStreamingAliasOptions = {
   resolvedMode: string;
   includePreviewChunk?: boolean;
@@ -13,6 +17,7 @@ export type LegacyStreamingAliasOptions = {
   offModeLegacyNotice?: (pathPrefix: string) => string;
 };
 
+/** Shared type for Normalize Legacy Channel Account Params in src/config. */
 export type NormalizeLegacyChannelAccountParams = {
   account: Record<string, unknown>;
   accountId: string;
@@ -20,12 +25,14 @@ export type NormalizeLegacyChannelAccountParams = {
   changes: string[];
 };
 
+/** Reused helper for as Object Record behavior in src/config. */
 export function asObjectRecord(value: unknown): Record<string, unknown> | null {
   return value && typeof value === "object" && !Array.isArray(value)
     ? (value as Record<string, unknown>)
     : null;
 }
 
+/** Reused helper for has Legacy Account Streaming Aliases behavior in src/config. */
 export function hasLegacyAccountStreamingAliases(
   value: unknown,
   match: (entry: unknown) => boolean,
@@ -45,6 +52,7 @@ function ensureNestedRecord(owner: Record<string, unknown>, key: string): Record
   return {};
 }
 
+/** Reused helper for normalize Legacy Streaming Aliases behavior in src/config. */
 export function normalizeLegacyStreamingAliases(
   params: {
     entry: Record<string, unknown>;
@@ -177,6 +185,7 @@ export function normalizeLegacyStreamingAliases(
   return { entry: updated, changed };
 }
 
+/** Reused helper for normalize Legacy Channel Aliases behavior in src/config. */
 export function normalizeLegacyChannelAliases(params: {
   entry: Record<string, unknown>;
   pathPrefix: string;
@@ -269,6 +278,7 @@ export function normalizeLegacyChannelAliases(params: {
   return { entry: updated, changed };
 }
 
+/** Reused helper for has Legacy Streaming Aliases behavior in src/config. */
 export function hasLegacyStreamingAliases(
   value: unknown,
   options?: { includePreviewChunk?: boolean; includeNativeTransport?: boolean },

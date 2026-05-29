@@ -1,3 +1,4 @@
+/** Public SDK barrel for temp path helpers. */
 export {
   buildRandomTempFilePath,
   createTempDownloadTarget,
@@ -5,6 +6,7 @@ export {
   sanitizeTempFileName,
   withTempDownloadPath,
 } from "../infra/temp-download.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   tempWorkspace,
   tempWorkspaceSync,

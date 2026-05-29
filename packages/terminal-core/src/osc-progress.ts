@@ -1,14 +1,17 @@
+// terminal osc progress helpers and runtime behavior.
 const OSC_PROGRESS_PREFIX = "\u001b]9;4;";
 const OSC_PROGRESS_ST = "\u001b\\";
 const OSC_PROGRESS_BEL = "\u0007";
 const OSC_PROGRESS_C1_ST = "\u009c";
 
+/** Shared type for Osc Progress Controller in src/terminal. */
 export type OscProgressController = {
   setIndeterminate: (label: string) => void;
   setPercent: (label: string, percent: number) => void;
   clear: () => void;
 };
 
+/** Reused helper for supports Osc Progress behavior in src/terminal. */
 export function supportsOscProgress(env: NodeJS.ProcessEnv, isTty: boolean): boolean {
   if (!isTty) {
     return false;
@@ -39,6 +42,7 @@ function formatOscProgress(state: number, percent: number | null, label: string)
   return `${OSC_PROGRESS_PREFIX}${state};${normalizedPercent};${cleanLabel}${OSC_PROGRESS_ST}`;
 }
 
+/** Reused helper for create Osc Progress Controller behavior in src/terminal. */
 export function createOscProgressController(params: {
   env: NodeJS.ProcessEnv;
   isTty: boolean;

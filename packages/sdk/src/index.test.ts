@@ -1,3 +1,4 @@
+// Tests packages/sdk/src index test behavior.
 import { describe, expect, it } from "vitest";
 import { EventHub, OpenClaw, normalizeGatewayEvent } from "./index.js";
 import type {

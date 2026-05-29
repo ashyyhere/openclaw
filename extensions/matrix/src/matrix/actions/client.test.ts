@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src/matrix/actions client test behavior.
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   createMockMatrixClient,

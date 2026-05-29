@@ -1,3 +1,4 @@
+/** Live tests for OpenAI reasoning compatibility across auth/profile modes. */
 import type { AgentMessage } from "openclaw/plugin-sdk/agent-core";
 import { SessionManager } from "openclaw/plugin-sdk/agent-sessions";
 import type { Api, Model } from "openclaw/plugin-sdk/llm";

@@ -1,3 +1,4 @@
+// Tests test/scripts vitest local scheduling test behavior.
 import { describe, expect, it } from "vitest";
 import {
   resolveLocalVitestEnv,

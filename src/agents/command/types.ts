@@ -1,3 +1,4 @@
+/** Public option and context types for agent command execution. */
 import type { AgentInternalEvent } from "../../agents/internal-events.js";
 import type { SpawnedRunMetadata } from "../../agents/spawned-context.js";
 import type { PromptMode } from "../../agents/system-prompt.types.js";
@@ -14,8 +15,10 @@ export type ImageContent = {
   data: string;
   mimeType: string;
 };
+/** Re-exported API for src/agents/command, starting with Agent Stream Params. */
 export type { AgentStreamParams } from "./shared-types.js";
 
+/** Metadata overrides attached to command results for fallback/handoff paths. */
 export type AgentCommandResultMetaOverrides = {
   transport?: "embedded";
   fallbackFrom?: "gateway";
@@ -24,8 +27,10 @@ export type AgentCommandResultMetaOverrides = {
   fallbackSessionKey?: string;
 };
 
+/** Source marker for ACP turns dispatched outside normal inbound routing. */
 export type AcpTurnSource = "manual_spawn";
 
+/** Channel/group/thread context used by an agent run. */
 export type AgentRunContext = {
   messageChannel?: string;
   accountId?: string;
@@ -38,6 +43,7 @@ export type AgentRunContext = {
   hasRepliedRef?: { value: boolean };
 };
 
+/** Complete trusted agent command options accepted by local/internal callers. */
 export type AgentCommandOpts = {
   message: string;
   /** User-visible transcript body; defaults to message and excludes runtime-only context. */
@@ -140,6 +146,7 @@ export type AgentCommandOpts = {
   suppressPromptPersistence?: boolean;
 };
 
+/** Ingress-safe command options with explicit trust/model-override controls. */
 export type AgentCommandIngressOpts = Omit<
   AgentCommandOpts,
   "senderIsOwner" | "allowModelOverride" | "resultMetaOverrides"

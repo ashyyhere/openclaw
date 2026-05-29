@@ -1,3 +1,4 @@
+// Tests plugins hardlink policy test behavior.
 import { describe, expect, it } from "vitest";
 import { isNixStorePluginRoot, shouldRejectHardlinkedPluginFiles } from "./hardlink-policy.js";
 

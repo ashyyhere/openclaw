@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/qa-lab/src qa credentials admin runtime behavior.
 import { randomUUID } from "node:crypto";
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";
 import { resolveTimerTimeoutMs } from "openclaw/plugin-sdk/number-runtime";

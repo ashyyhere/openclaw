@@ -1,3 +1,4 @@
+// extensions/irc/src inbound helpers and runtime behavior.
 import { logInboundDrop } from "openclaw/plugin-sdk/channel-inbound";
 import {
   channelIngressRoutes,

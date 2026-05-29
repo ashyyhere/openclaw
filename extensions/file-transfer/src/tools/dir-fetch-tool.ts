@@ -1,3 +1,4 @@
+// extensions/file-transfer/src/tools dir fetch tool helpers and runtime behavior.
 import { spawn } from "node:child_process";
 import crypto from "node:crypto";
 import fs from "node:fs/promises";

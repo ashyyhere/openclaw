@@ -5,37 +5,45 @@ import {
 } from "../../shared/number-coercion.js";
 import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";
 
+/** Shared type for Cache Entry in src/agents/tools. */
 export type CacheEntry<T> = {
   value: T;
   expiresAt: number;
   insertedAt: number;
 };
 
+/** Reused constant for DEFAULT TIMEOUT SECONDS behavior in src/agents/tools. */
 export const DEFAULT_TIMEOUT_SECONDS = 30;
+/** Reused constant for DEFAULT CACHE TTL MINUTES behavior in src/agents/tools. */
 export const DEFAULT_CACHE_TTL_MINUTES = 15;
 const DEFAULT_CACHE_MAX_ENTRIES = 100;
 
+/** Reused helper for resolve Timeout Seconds behavior in src/agents/tools. */
 export function resolveTimeoutSeconds(value: unknown, fallback: number): number {
   const parsed = typeof value === "number" && Number.isFinite(value) ? value : fallback;
   return Math.min(MAX_TIMER_TIMEOUT_SECONDS, Math.max(1, Math.floor(parsed)));
 }
 
+/** Reused helper for resolve Positive Timeout Seconds behavior in src/agents/tools. */
 export function resolvePositiveTimeoutSeconds(value: unknown, fallback: number): number {
   const parsed =
     typeof value === "number" && Number.isFinite(value) && value > 0 ? value : fallback;
   return Math.min(MAX_TIMER_TIMEOUT_SECONDS, Math.max(1, Math.floor(parsed)));
 }
 
+/** Reused helper for resolve Cache Ttl Ms behavior in src/agents/tools. */
 export function resolveCacheTtlMs(value: unknown, fallbackMinutes: number): number {
   const minutes =
     typeof value === "number" && Number.isFinite(value) ? Math.max(0, value) : fallbackMinutes;
   return Math.round(minutes * 60_000);
 }
 
+/** Reused helper for normalize Cache Key behavior in src/agents/tools. */
 export function normalizeCacheKey(value: string): string {
   return normalizeLowercaseStringOrEmpty(value);
 }
 
+/** Reused helper for read Cache behavior in src/agents/tools. */
 export function readCache<T>(
   cache: Map<string, CacheEntry<T>>,
   key: string,
@@ -52,6 +60,7 @@ export function readCache<T>(
   return { value: entry.value, cached: true };
 }
 
+/** Reused helper for write Cache behavior in src/agents/tools. */
 export function writeCache<T>(
   cache: Map<string, CacheEntry<T>>,
   key: string,
@@ -79,6 +88,7 @@ export function writeCache<T>(
   });
 }
 
+/** Reused helper for with Timeout behavior in src/agents/tools. */
 export function withTimeout(signal: AbortSignal | undefined, timeoutMs: number): AbortSignal {
   if (timeoutMs <= 0) {
     return signal ?? new AbortController().signal;
@@ -105,6 +115,7 @@ export function withTimeout(signal: AbortSignal | undefined, timeoutMs: number):
   return controller.signal;
 }
 
+/** Shared type for Read Response Text Result in src/agents/tools. */
 export type ReadResponseTextResult = {
   text: string;
   truncated: boolean;
@@ -219,6 +230,7 @@ function decodeResponseBytes(res: Response, bytes: Uint8Array): string {
   }
 }
 
+/** Reused helper for read Response Text behavior in src/agents/tools. */
 export async function readResponseText(
   res: Response,
   options?: { maxBytes?: number },

@@ -1,3 +1,4 @@
+// gateway talk agent consult helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import {
   ErrorCodes,
@@ -16,6 +17,7 @@ import type {
 import { registerTalkRealtimeRelayAgentRun } from "./talk-realtime-relay.js";
 import { formatForLog } from "./ws-log.js";
 
+/** Reused helper for start Talk Realtime Agent Consult behavior in src/gateway. */
 export async function startTalkRealtimeAgentConsult(params: {
   context: GatewayRequestContext;
   client: GatewayClient | null;

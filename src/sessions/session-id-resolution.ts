@@ -1,3 +1,4 @@
+// sessions session id resolution helpers and runtime behavior.
 import type { SessionEntry } from "../config/sessions.js";
 import { toAgentRequestSessionKey } from "../routing/session-key.js";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
@@ -12,6 +13,7 @@ type NormalizedSessionIdMatch = {
   isStructural: boolean;
 };
 
+/** Shared type for Session Id Match Selection in src/sessions. */
 export type SessionIdMatchSelection =
   | { kind: "none" }
   | { kind: "ambiguous"; sessionKeys: string[] }
@@ -93,6 +95,7 @@ function selectFreshestUniqueMatch(
   return undefined;
 }
 
+/** Reused helper for resolve Session Id Match Selection behavior in src/sessions. */
 export function resolveSessionIdMatchSelection(
   matches: Array<[string, SessionEntry]>,
   sessionId: string,
@@ -125,6 +128,7 @@ export function resolveSessionIdMatchSelection(
   return { kind: "ambiguous", sessionKeys: canonicalMatches.map((match) => match.sessionKey) };
 }
 
+/** Reused helper for resolve Preferred Session Key For Session Id Matches behavior in src/sessions. */
 export function resolvePreferredSessionKeyForSessionIdMatches(
   matches: Array<[string, SessionEntry]>,
   sessionId: string,

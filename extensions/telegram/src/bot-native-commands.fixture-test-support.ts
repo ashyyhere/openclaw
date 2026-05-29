@@ -1,3 +1,4 @@
+// extensions/telegram/src bot native commands fixture test support helpers and runtime behavior.
 import type { RuntimeEnv } from "openclaw/plugin-sdk/runtime-env";
 import { vi } from "vitest";
 import type { OpenClawConfig, TelegramAccountConfig } from "../runtime-api.js";

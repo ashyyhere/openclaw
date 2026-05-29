@@ -1,9 +1,11 @@
+// ui/src/ui/views debug helpers and runtime behavior.
 import { html, nothing } from "lit";
 import { t } from "../../i18n/index.ts";
 import type { EventLogEntry } from "../app-events.ts";
 import { formatTimeMs } from "../format.ts";
 import { formatEventPayload } from "../presenter.ts";
 
+/** Shared type for Debug Props in ui/src/ui/views. */
 export type DebugProps = {
   loading: boolean;
   status: Record<string, unknown> | null;
@@ -22,6 +24,7 @@ export type DebugProps = {
   onCall: () => void;
 };
 
+/** Reused helper for render Debug behavior in ui/src/ui/views. */
 export function renderDebug(props: DebugProps) {
   const securityAudit =
     props.status && typeof props.status === "object"

@@ -1,8 +1,10 @@
+// ui/src/ui/controllers model auth status helpers and runtime behavior.
 import type { GatewayBrowserClient } from "../gateway.ts";
 import type { ModelAuthStatusResult } from "../types.ts";
 
 const FALLBACK: ModelAuthStatusResult = { ts: 0, providers: [] };
 
+/** Shared type for Model Auth Status State in ui/src/ui/controllers. */
 export type ModelAuthStatusState = {
   client: GatewayBrowserClient | null;
   connected: boolean;
@@ -29,6 +31,7 @@ export async function loadModelAuthStatus(
   return result ?? FALLBACK;
 }
 
+/** Reused helper for load Model Auth Status State behavior in ui/src/ui/controllers. */
 export async function loadModelAuthStatusState(
   state: ModelAuthStatusState,
   opts?: { refresh?: boolean },

@@ -1,3 +1,4 @@
+/** Tests delegated binary detection controls used by setup wizards. */
 import { describe, expect, it, vi } from "vitest";
 import {
   createCliPathTextInput,

@@ -1,5 +1,7 @@
+/** Runtime helper for reconciling successful compaction counts into session store. */
 import { resolveStorePath, updateSessionStoreEntry } from "../config/sessions.js";
 
+/** Persist the highest observed compaction count after a successful compaction. */
 export async function reconcileSessionStoreCompactionCountAfterSuccess(params: {
   sessionKey?: string;
   agentId?: string;

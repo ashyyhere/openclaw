@@ -1,3 +1,4 @@
+// extensions/msteams/src oauth flow helpers and runtime behavior.
 import { generateHexPkceVerifierChallenge } from "openclaw/plugin-sdk/provider-auth";
 import {
   generateOAuthState,

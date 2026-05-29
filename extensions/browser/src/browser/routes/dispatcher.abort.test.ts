@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/browser/routes dispatcher abort test behavior.
 import { beforeAll, describe, expect, it, vi } from "vitest";
 import type { BrowserRouteContext } from "../server-context.js";
 

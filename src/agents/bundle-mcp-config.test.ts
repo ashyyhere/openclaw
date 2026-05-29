@@ -1,3 +1,4 @@
+/** Tests merged bundle MCP config loading and CLI server config conversion. */
 import { describe, expect, it, vi } from "vitest";
 import { loadMergedBundleMcpConfig, toCliBundleMcpServerConfig } from "./bundle-mcp-config.js";
 

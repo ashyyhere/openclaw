@@ -1,3 +1,4 @@
+// extensions/qa-lab/src reply failure helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "openclaw/plugin-sdk/string-coerce-runtime";
 
 const FAILURE_REPLY_PREFIXES = [

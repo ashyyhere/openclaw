@@ -1,3 +1,4 @@
+// security audit model refs helpers and runtime behavior.
 import { DEFAULT_PROVIDER } from "../agents/defaults.js";
 import { modelKey } from "../agents/model-selection-normalize.js";
 import {
@@ -10,6 +11,7 @@ import {
 } from "../config/model-input.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 
+/** Shared type for Audit Model Ref in src/security. */
 export type AuditModelRef = { id: string; source: string };
 
 function resolveAuditModelId(
@@ -47,6 +49,7 @@ function addModelRef(params: {
   });
 }
 
+/** Reused helper for collect Audit Model Refs behavior in src/security. */
 export function collectAuditModelRefs(cfg: OpenClawConfig): AuditModelRef[] {
   const aliasIndex = buildModelAliasIndex({
     cfg,

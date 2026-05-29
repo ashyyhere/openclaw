@@ -1,3 +1,4 @@
+/** Serializes file mutations by canonical path inside session tools. */
 import { realpathSync } from "node:fs";
 import { resolve } from "node:path";
 
@@ -16,6 +17,7 @@ function getMutationQueueKey(filePath: string): string {
  * Serialize file mutation operations targeting the same file.
  * Operations for different files still run in parallel.
  */
+/** Runs a mutation after prior mutations for the same file have settled. */
 export async function withFileMutationQueue<T>(filePath: string, fn: () => Promise<T>): Promise<T> {
   const key = getMutationQueueKey(filePath);
   const currentQueue = fileMutationQueues.get(key) ?? Promise.resolve();

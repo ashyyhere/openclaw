@@ -1,3 +1,4 @@
+/** Covers normalized logging fields for failover decisions. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { log } from "../logger.js";
 import {

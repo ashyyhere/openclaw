@@ -1,3 +1,4 @@
+// extensions/discord/src config ui hints helpers and runtime behavior.
 import type { ChannelConfigUiHint } from "openclaw/plugin-sdk/channel-core";
 
 export const discordChannelConfigUiHints = {

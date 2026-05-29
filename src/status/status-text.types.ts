@@ -1,3 +1,4 @@
+// Shared types for status status text types behavior.
 import type {
   ElevatedLevel,
   ReasoningLevel,
@@ -8,6 +9,7 @@ import type { SessionEntry, SessionScope } from "../config/sessions.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { MediaUnderstandingDecision } from "../media-understanding/types.js";
 
+/** Shared type for Build Status Text Params in src/status. */
 export type BuildStatusTextParams = {
   cfg: OpenClawConfig;
   sessionEntry?: SessionEntry;

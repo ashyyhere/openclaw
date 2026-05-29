@@ -1,3 +1,4 @@
+// extensions/nostr/src gateway helpers and runtime behavior.
 import {
   resolveStableChannelMessageIngress,
   type StableChannelIngressIdentityParams,

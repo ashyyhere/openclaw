@@ -1,3 +1,4 @@
+// Tests gateway/server-methods chat abort authorization test behavior.
 import { describe, expect, it } from "vitest";
 import {
   createActiveRun,

@@ -1,3 +1,4 @@
+// Shared command registry construction and validation helpers.
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 import { normalizeStringEntries } from "../shared/string-normalization.js";
 import { COMMAND_ARG_FORMATTERS } from "./commands-args.js";
@@ -41,6 +42,7 @@ type DefineChatCommandInput = {
   tier?: CommandTier;
 };
 
+/** Define a chat command while preserving its typed metadata shape. */
 export function defineChatCommand(command: DefineChatCommandInput): ChatCommandDefinition {
   const aliases = (command.textAliases ?? (command.textAlias ? [command.textAlias] : []))
     .map((alias) => alias.trim())
@@ -97,6 +99,7 @@ function registerAlias(commands: ChatCommandDefinition[], key: string, ...aliase
   }
 }
 
+/** Validate command registry invariants that command menus and routing rely on. */
 export function assertCommandRegistry(commands: ChatCommandDefinition[]): void {
   const keys = new Set<string>();
   const nativeNames = new Set<string>();
@@ -147,6 +150,7 @@ export function assertCommandRegistry(commands: ChatCommandDefinition[]): void {
   }
 }
 
+/** Reused helper for build Builtin Chat Commands behavior in src/auto-reply. */
 export function buildBuiltinChatCommands(
   params: { listThinkingLevels?: ListThinkingLevels } = {},
 ): ChatCommandDefinition[] {

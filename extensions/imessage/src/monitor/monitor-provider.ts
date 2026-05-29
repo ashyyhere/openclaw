@@ -1,3 +1,4 @@
+// extensions/imessage/src/monitor monitor provider helpers and runtime behavior.
 import fs from "node:fs/promises";
 import { resolveHumanDelayConfig } from "openclaw/plugin-sdk/agent-runtime";
 import { CHANNEL_APPROVAL_NATIVE_RUNTIME_CONTEXT_CAPABILITY } from "openclaw/plugin-sdk/approval-handler-runtime";

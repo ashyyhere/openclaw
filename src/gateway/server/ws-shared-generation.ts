@@ -1,3 +1,4 @@
+// gateway/server ws shared generation helpers and runtime behavior.
 import { createHash } from "node:crypto";
 import type { GatewayTrustedProxyConfig } from "../../config/types.gateway.js";
 import type { ResolvedGatewayAuth } from "../auth.js";
@@ -33,6 +34,7 @@ function normalizeTrustedProxyConfig(trustedProxy: GatewayTrustedProxyConfig | u
   };
 }
 
+/** Reused helper for resolve Shared Gateway Session Generation behavior in src/gateway/server. */
 export function resolveSharedGatewaySessionGeneration(
   auth: ResolvedGatewayAuth,
   trustedProxies?: readonly string[],

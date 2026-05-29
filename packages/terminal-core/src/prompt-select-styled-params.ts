@@ -1,3 +1,4 @@
+// terminal prompt select styled params helpers and runtime behavior.
 import { stylePromptHint, stylePromptMessage } from "./prompt-style.js";
 
 type SelectParamsLike = {
@@ -15,6 +16,7 @@ const defaultStylers: PromptSelectStylers = {
   hint: stylePromptHint,
 };
 
+/** Reused helper for style Select Params behavior in src/terminal. */
 export function styleSelectParams<TParams extends SelectParamsLike>(
   params: TParams,
   stylers: PromptSelectStylers = defaultStylers,

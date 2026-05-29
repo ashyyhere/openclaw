@@ -1,3 +1,4 @@
+// Tests gateway server close test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { InternalHookEvent } from "../hooks/internal-hooks.js";
 

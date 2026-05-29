@@ -1,3 +1,4 @@
+// Tests extensions/twitch/src probe test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { probeTwitch } from "./probe.js";
 import type { TwitchAccountConfig } from "./types.js";

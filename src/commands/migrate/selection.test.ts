@@ -1,3 +1,4 @@
+// Tests migration item selection, shortcuts, and hidden config-item reconciliation.
 import { describe, expect, it } from "vitest";
 import type { MigrationItem, MigrationPlan } from "../../plugins/types.js";
 import {

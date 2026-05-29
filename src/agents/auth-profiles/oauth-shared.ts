@@ -1,13 +1,16 @@
+/** Shared OAuth credential comparison, bootstrap, overlay, and replacement helpers. */
 import { cloneAuthProfileStore } from "./clone.js";
 import { hasUsableOAuthCredential as hasUsableStoredOAuthCredential } from "./credential-state.js";
 import type { AuthProfileStore, OAuthCredential } from "./types.js";
 
+/** Shared type for Runtime External OAuth Profile in src/agents/auth-profiles. */
 export type RuntimeExternalOAuthProfile = {
   profileId: string;
   credential: OAuthCredential;
   persistence?: "runtime-only" | "persisted";
 };
 
+/** Reused helper for are OAuth Credentials Equivalent behavior in src/agents/auth-profiles. */
 export function areOAuthCredentialsEquivalent(
   a: OAuthCredential | undefined,
   b: OAuthCredential,
@@ -40,6 +43,7 @@ function hasNewerStoredOAuthCredential(
   );
 }
 
+/** Reused helper for should Replace Stored OAuth Credential behavior in src/agents/auth-profiles. */
 export function shouldReplaceStoredOAuthCredential(
   existing: OAuthCredential | undefined,
   incoming: OAuthCredential,
@@ -53,6 +57,7 @@ export function shouldReplaceStoredOAuthCredential(
   return !hasNewerStoredOAuthCredential(existing, incoming);
 }
 
+/** Reused helper for has Usable OAuth Credential behavior in src/agents/auth-profiles. */
 export function hasUsableOAuthCredential(
   credential: OAuthCredential | undefined,
   now = Date.now(),
@@ -60,15 +65,18 @@ export function hasUsableOAuthCredential(
   return hasUsableStoredOAuthCredential(credential, { now });
 }
 
+/** Reused helper for normalize Auth Identity Token behavior in src/agents/auth-profiles. */
 export function normalizeAuthIdentityToken(value: string | undefined): string | undefined {
   const trimmed = value?.trim();
   return trimmed ? trimmed : undefined;
 }
 
+/** Reused helper for normalize Auth Email Token behavior in src/agents/auth-profiles. */
 export function normalizeAuthEmailToken(value: string | undefined): string | undefined {
   return normalizeAuthIdentityToken(value)?.toLowerCase();
 }
 
+/** Reused helper for has OAuth Identity behavior in src/agents/auth-profiles. */
 export function hasOAuthIdentity(
   credential: Pick<OAuthCredential, "accountId" | "email">,
 ): boolean {
@@ -78,6 +86,7 @@ export function hasOAuthIdentity(
   );
 }
 
+/** Reused helper for has Matching OAuth Identity behavior in src/agents/auth-profiles. */
 export function hasMatchingOAuthIdentity(
   existing: Pick<OAuthCredential, "accountId" | "email">,
   incoming: Pick<OAuthCredential, "accountId" | "email">,
@@ -142,6 +151,7 @@ export function isSafeToAdoptBootstrapOAuthIdentity(
   });
 }
 
+/** Reused helper for is Safe To Adopt Main Store OAuth Identity behavior in src/agents/auth-profiles. */
 export function isSafeToAdoptMainStoreOAuthIdentity(
   existing: OAuthCredential | undefined,
   incoming: OAuthCredential,
@@ -152,6 +162,7 @@ export function isSafeToAdoptMainStoreOAuthIdentity(
   });
 }
 
+/** Reused helper for should Bootstrap From External Cli Credential behavior in src/agents/auth-profiles. */
 export function shouldBootstrapFromExternalCliCredential(params: {
   existing: OAuthCredential | undefined;
   imported: OAuthCredential;
@@ -164,6 +175,7 @@ export function shouldBootstrapFromExternalCliCredential(params: {
   return hasUsableOAuthCredential(params.imported, now);
 }
 
+/** Reused helper for overlay Runtime External OAuth Profiles behavior in src/agents/auth-profiles. */
 export function overlayRuntimeExternalOAuthProfiles(
   store: AuthProfileStore,
   profiles: Iterable<RuntimeExternalOAuthProfile>,
@@ -193,6 +205,7 @@ export function overlayRuntimeExternalOAuthProfiles(
   return next;
 }
 
+/** Reused helper for should Persist Runtime External OAuth Profile behavior in src/agents/auth-profiles. */
 export function shouldPersistRuntimeExternalOAuthProfile(params: {
   profileId: string;
   credential: OAuthCredential;

@@ -1,3 +1,4 @@
+// Tests talk talk events test behavior.
 import { describe, expect, it } from "vitest";
 import { createTalkEventSequencer } from "./talk-events.js";
 

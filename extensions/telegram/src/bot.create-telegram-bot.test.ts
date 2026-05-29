@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src bot create telegram bot test behavior.
 import {
   escapeRegExp,
   formatEnvelopeTimestamp,

@@ -1,7 +1,9 @@
+/** Resolves prompt-surface-specific OpenClaw tool fallback text. */
 import { isOpenClawMainPromptSurface } from "../plugins/agent-prompt-surface-kind.js";
 import type { AgentPromptSurfaceKind } from "../plugins/types.js";
 import { isAcpSessionKey, isSubagentSessionKey } from "../routing/session-key.js";
 
+/** Context used when rendering agent prompts for a runtime surface. */
 export type AgentPromptRenderContext = {
   surface: AgentPromptSurfaceKind;
   agentRuntimeId?: string;
@@ -13,6 +15,7 @@ export type AgentPromptRenderContext = {
   runtimeCapabilities?: readonly string[];
 };
 
+/** Build fallback tool-list text for prompt surfaces without native tool lists. */
 export function buildOpenClawToolFallbackText(params: {
   surface: AgentPromptSurfaceKind;
   execToolName: string;
@@ -44,6 +47,7 @@ export function buildOpenClawToolFallbackText(params: {
   return "No OpenClaw tool list is injected for this runtime prompt surface. Use only tools exposed directly by the active backend.";
 }
 
+/** Return whether prompt workflow hints should be rendered for a surface. */
 export function shouldRenderOpenClawToolWorkflowHints(params: {
   surface: AgentPromptSurfaceKind;
   hasToolList: boolean;
@@ -51,6 +55,7 @@ export function shouldRenderOpenClawToolWorkflowHints(params: {
   return isOpenClawMainPromptSurface(params.surface);
 }
 
+/** Resolve prompt surface from session-key namespace. */
 export function resolveAgentPromptSurfaceForSessionKey(
   sessionKey?: string,
 ): AgentPromptSurfaceKind {

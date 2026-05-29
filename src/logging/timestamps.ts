@@ -1,3 +1,5 @@
+// logging timestamps helpers and runtime behavior.
+/** Reused helper for is Valid Time Zone behavior in src/logging. */
 export function isValidTimeZone(tz: string): boolean {
   try {
     new Intl.DateTimeFormat("en", { timeZone: tz }).format();
@@ -52,6 +54,7 @@ function getTimestampParts(date: Date, timeZone?: string) {
   };
 }
 
+/** Reused helper for format Timestamp behavior in src/logging. */
 export function formatTimestamp(date: Date, options?: FormatTimestampOptions): string {
   const style = options?.style ?? "medium";
   const parts = getTimestampParts(date, options?.timeZone);

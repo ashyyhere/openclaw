@@ -1,3 +1,4 @@
+// Tests extensions/codex/src/app-server run attempt usage limits test behavior.
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { rememberCodexRateLimits } from "./rate-limit-cache.js";

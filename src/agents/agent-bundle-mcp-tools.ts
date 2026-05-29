@@ -1,3 +1,4 @@
+/** Public bundled MCP runtime/tool barrel for agent tool assembly. */
 export type {
   BundleMcpToolRuntime,
   McpCatalogTool,
@@ -7,6 +8,7 @@ export type {
   SessionMcpRuntime,
   SessionMcpRuntimeManager,
 } from "./agent-bundle-mcp-types.js";
+/** Re-exported API for src/agents. */
 export {
   testing,
   testing as __testing,
@@ -21,6 +23,7 @@ export {
   retireSessionMcpRuntime,
   retireSessionMcpRuntimeForSessionKey,
 } from "./agent-bundle-mcp-runtime.js";
+/** Re-exported API for src/agents. */
 export {
   buildBundleMcpToolsFromCatalog,
   createBundleMcpToolRuntime,

@@ -1,3 +1,4 @@
+// extensions/discord/src outbound send context helpers and runtime behavior.
 import { createReplyToFanout, type ReplyToResolution } from "openclaw/plugin-sdk/channel-outbound";
 import {
   resolveOutboundSendDep,

@@ -1,3 +1,4 @@
+/** Adapter contracts implemented by channel plugins for runtime integration. */
 import type { ReplyPayload } from "../../auto-reply/reply-payload.js";
 import type { LegacyConfigRule } from "../../config/legacy.shared.js";
 import type { AgentBinding } from "../../config/types.agents.js";
@@ -16,6 +17,7 @@ import type { SecretTargetRegistryEntry } from "../../secrets/target-registry-ty
 import type { ChannelApprovalNativeAdapter } from "./approval-native.types.js";
 import type { ChannelRuntimeSurface } from "./channel-runtime-surface.types.js";
 import type { ConfigWriteTarget } from "./config-writes.js";
+/** Re-exported API for src/channels/plugins. */
 export type {
   ChannelOutboundAdapter,
   ChannelOutboundChunkContext,
@@ -39,18 +41,23 @@ import type {
   ChannelSetupInput,
   ChannelStatusIssue,
 } from "./types.core.js";
+/** Re-exported API for src/channels/plugins, starting with Channel Pairing Adapter. */
 export type { ChannelPairingAdapter } from "./pairing.types.js";
 
 type ConfiguredBindingRule = AgentBinding;
+/** Re-exported API for src/channels/plugins, starting with Channel Approval Kind. */
 export type { ChannelApprovalKind } from "../../infra/approval-types.js";
 
+/** Shared type for Channel Action Availability State in src/channels/plugins. */
 export type ChannelActionAvailabilityState =
   | { kind: "enabled" }
   | { kind: "disabled" }
   | { kind: "unsupported" };
 
+/** Shared type for Channel Approval Initiating Surface State in src/channels/plugins. */
 export type ChannelApprovalInitiatingSurfaceState = ChannelActionAvailabilityState;
 
+/** Shared type for Channel Approval Forward Target in src/channels/plugins. */
 export type ChannelApprovalForwardTarget = {
   channel: string;
   to: string;
@@ -59,13 +66,16 @@ export type ChannelApprovalForwardTarget = {
   source?: "session" | "target";
 };
 
+/** Shared type for Channel Capabilities Display Tone in src/channels/plugins. */
 export type ChannelCapabilitiesDisplayTone = "default" | "muted" | "success" | "warn" | "error";
 
+/** Shared type for Channel Capabilities Display Line in src/channels/plugins. */
 export type ChannelCapabilitiesDisplayLine = {
   text: string;
   tone?: ChannelCapabilitiesDisplayTone;
 };
 
+/** Shared type for Channel Capabilities Diagnostics in src/channels/plugins. */
 export type ChannelCapabilitiesDiagnostics = {
   lines?: ChannelCapabilitiesDisplayLine[];
   details?: Record<string, unknown>;
@@ -73,6 +83,7 @@ export type ChannelCapabilitiesDiagnostics = {
 
 type ChannelAdapterCallback<T extends (...args: never[]) => unknown> = T;
 
+/** Shared type for Channel Setup Adapter in src/channels/plugins. */
 export type ChannelSetupAdapter = {
   resolveAccountId?: (params: {
     cfg: OpenClawConfig;
@@ -113,6 +124,7 @@ export type ChannelSetupAdapter = {
   }) => string | undefined;
 };
 
+/** Shared type for Channel Config Adapter in src/channels/plugins. */
 export type ChannelConfigAdapter<ResolvedAccount> = {
   listAccountIds: (cfg: OpenClawConfig) => string[];
   resolveAccount: (cfg: OpenClawConfig, accountId?: string | null) => ResolvedAccount;
@@ -154,6 +166,7 @@ export type ChannelConfigAdapter<ResolvedAccount> = {
   }) => string | undefined;
 };
 
+/** Shared type for Channel Secrets Adapter in src/channels/plugins. */
 export type ChannelSecretsAdapter = {
   secretTargetRegistryEntries?: readonly SecretTargetRegistryEntry[];
   unsupportedSecretRefSurfacePatterns?: readonly string[];
@@ -168,12 +181,14 @@ export type ChannelSecretsAdapter = {
   }) => void;
 };
 
+/** Shared type for Channel Group Adapter in src/channels/plugins. */
 export type ChannelGroupAdapter = {
   resolveRequireMention?: (params: ChannelGroupContext) => boolean | undefined;
   resolveGroupIntroHint?: (params: ChannelGroupContext) => string | undefined;
   resolveToolPolicy?: (params: ChannelGroupContext) => GroupToolPolicyConfig | undefined;
 };
 
+/** Shared type for Channel Status Adapter in src/channels/plugins. */
 export type ChannelStatusAdapter<ResolvedAccount, Probe = unknown, Audit = unknown> = {
   defaultRuntime?: ChannelAccountSnapshot;
   buildChannelSummary?: ChannelAdapterCallback<
@@ -236,6 +251,7 @@ export type ChannelStatusAdapter<ResolvedAccount, Probe = unknown, Audit = unkno
   collectStatusIssues?: (accounts: ChannelAccountSnapshot[]) => ChannelStatusIssue[];
 };
 
+/** Shared type for Channel Gateway Context in src/channels/plugins. */
 export type ChannelGatewayContext<ResolvedAccount = unknown> = {
   cfg: OpenClawConfig;
   accountId: string;
@@ -313,24 +329,28 @@ export type ChannelGatewayContext<ResolvedAccount = unknown> = {
   channelRuntime?: ChannelRuntimeSurface;
 };
 
+/** Shared type for Channel Logout Result in src/channels/plugins. */
 export type ChannelLogoutResult = {
   cleared: boolean;
   loggedOut?: boolean;
   [key: string]: unknown;
 };
 
+/** Shared type for Channel Login With Qr Start Result in src/channels/plugins. */
 export type ChannelLoginWithQrStartResult = {
   qrDataUrl?: string;
   message: string;
   connected?: boolean;
 };
 
+/** Shared type for Channel Login With Qr Wait Result in src/channels/plugins. */
 export type ChannelLoginWithQrWaitResult = {
   connected: boolean;
   message: string;
   qrDataUrl?: string;
 };
 
+/** Shared type for Channel Logout Context in src/channels/plugins. */
 export type ChannelLogoutContext<ResolvedAccount = unknown> = {
   cfg: OpenClawConfig;
   accountId: string;
@@ -339,6 +359,7 @@ export type ChannelLogoutContext<ResolvedAccount = unknown> = {
   log?: ChannelLogSink;
 };
 
+/** Shared type for Channel Gateway Adapter in src/channels/plugins. */
 export type ChannelGatewayAdapter<ResolvedAccount = unknown> = {
   startAccount?: (ctx: ChannelGatewayContext<ResolvedAccount>) => Promise<unknown>;
   stopAccount?: (ctx: ChannelGatewayContext<ResolvedAccount>) => Promise<void>;
@@ -358,6 +379,7 @@ export type ChannelGatewayAdapter<ResolvedAccount = unknown> = {
   logoutAccount?: (ctx: ChannelLogoutContext<ResolvedAccount>) => Promise<ChannelLogoutResult>;
 };
 
+/** Shared type for Channel Auth Adapter in src/channels/plugins. */
 export type ChannelAuthAdapter = {
   login?: (params: {
     cfg: OpenClawConfig;
@@ -368,6 +390,7 @@ export type ChannelAuthAdapter = {
   }) => Promise<void>;
 };
 
+/** Shared type for Channel Heartbeat Adapter in src/channels/plugins. */
 export type ChannelHeartbeatAdapter = {
   checkReady?: (params: {
     cfg: OpenClawConfig;
@@ -412,6 +435,7 @@ type ChannelDirectoryListGroupMembersParams = {
   runtime: RuntimeEnv;
 };
 
+/** Shared type for Channel Directory Adapter in src/channels/plugins. */
 export type ChannelDirectoryAdapter = {
   self?: (params: ChannelDirectorySelfParams) => Promise<ChannelDirectoryEntry | null>;
   listPeers?: (params: ChannelDirectoryListParams) => Promise<ChannelDirectoryEntry[]>;
@@ -423,8 +447,10 @@ export type ChannelDirectoryAdapter = {
   ) => Promise<ChannelDirectoryEntry[]>;
 };
 
+/** Shared type for Channel Resolve Kind in src/channels/plugins. */
 export type ChannelResolveKind = "user" | "group";
 
+/** Shared type for Channel Resolve Result in src/channels/plugins. */
 export type ChannelResolveResult = {
   input: string;
   resolved: boolean;
@@ -433,6 +459,7 @@ export type ChannelResolveResult = {
   note?: string;
 };
 
+/** Shared type for Channel Resolver Adapter in src/channels/plugins. */
 export type ChannelResolverAdapter = {
   resolveTargets: (params: {
     cfg: OpenClawConfig;
@@ -443,6 +470,7 @@ export type ChannelResolverAdapter = {
   }) => Promise<ChannelResolveResult[]>;
 };
 
+/** Shared type for Channel Elevated Adapter in src/channels/plugins. */
 export type ChannelElevatedAdapter = {
   allowFromFallback?: (params: {
     cfg: OpenClawConfig;
@@ -450,6 +478,7 @@ export type ChannelElevatedAdapter = {
   }) => Array<string | number> | undefined;
 };
 
+/** Shared type for Channel Command Adapter in src/channels/plugins. */
 export type ChannelCommandAdapter = {
   enforceOwnerForCommands?: boolean;
   skipWhenConfigEmpty?: boolean;
@@ -486,19 +515,23 @@ export type ChannelCommandAdapter = {
   buildModelBrowseChannelData?: () => ReplyPayload["channelData"] | null;
 };
 
+/** Shared type for Channel Doctor Config Mutation in src/channels/plugins. */
 export type ChannelDoctorConfigMutation = {
   config: OpenClawConfig;
   changes: string[];
   warnings?: string[];
 };
 
+/** Shared type for Channel Doctor Legacy Config Rule in src/channels/plugins. */
 export type ChannelDoctorLegacyConfigRule = LegacyConfigRule;
 
+/** Shared type for Channel Doctor Sequence Result in src/channels/plugins. */
 export type ChannelDoctorSequenceResult = {
   changeNotes: string[];
   warningNotes: string[];
 };
 
+/** Shared type for Channel Doctor Empty Allowlist Account Context in src/channels/plugins. */
 export type ChannelDoctorEmptyAllowlistAccountContext = {
   account: Record<string, unknown>;
   channelName: string;
@@ -508,6 +541,7 @@ export type ChannelDoctorEmptyAllowlistAccountContext = {
   prefix: string;
 };
 
+/** Shared type for Channel Doctor Adapter in src/channels/plugins. */
 export type ChannelDoctorAdapter = {
   dmAllowFromMode?: "topOnly" | "topOrNested" | "nestedOnly";
   groupModel?: "sender" | "route" | "hybrid";
@@ -543,6 +577,7 @@ export type ChannelDoctorAdapter = {
   ) => boolean;
 };
 
+/** Shared type for Channel Lifecycle Adapter in src/channels/plugins. */
 export type ChannelLifecycleAdapter = {
   onAccountConfigChanged?: (params: {
     prevCfg: OpenClawConfig;
@@ -573,6 +608,7 @@ export type ChannelLifecycleAdapter = {
   }) => ChannelLegacyStateMigrationPlan[] | Promise<ChannelLegacyStateMigrationPlan[]>;
 };
 
+/** Shared type for Channel Approval Delivery Adapter in src/channels/plugins. */
 export type ChannelApprovalDeliveryAdapter = {
   hasConfiguredDmRoute?: (params: { cfg: OpenClawConfig }) => boolean;
   shouldSuppressForwardingFallback?: (params: {
@@ -582,11 +618,13 @@ export type ChannelApprovalDeliveryAdapter = {
     request: ExecApprovalRequest | PluginApprovalRequest;
   }) => boolean;
 };
+/** Shared type for Channel Approve Command Behavior in src/channels/plugins. */
 export type ChannelApproveCommandBehavior =
   | { kind: "allow" }
   | { kind: "ignore" }
   | { kind: "reply"; text: string };
 
+/** Re-exported API for src/channels/plugins. */
 export type {
   ChannelApprovalNativeAdapter,
   ChannelApprovalNativeDeliveryCapabilities,
@@ -596,6 +634,7 @@ export type {
   ChannelApprovalNativeTarget,
 } from "./approval-native.types.js";
 
+/** Shared type for Channel Approval Render Adapter in src/channels/plugins. */
 export type ChannelApprovalRenderAdapter = {
   exec?: {
     buildPendingPayload?: (params: {
@@ -625,6 +664,7 @@ export type ChannelApprovalRenderAdapter = {
   };
 };
 
+/** Shared type for Channel Approval Adapter in src/channels/plugins. */
 export type ChannelApprovalAdapter = {
   delivery?: ChannelApprovalDeliveryAdapter;
   nativeRuntime?: ChannelApprovalNativeRuntimeAdapter;
@@ -637,6 +677,7 @@ export type ChannelApprovalAdapter = {
   }) => string | null | undefined;
 };
 
+/** Shared type for Channel Approval Capability in src/channels/plugins. */
 export type ChannelApprovalCapability = ChannelApprovalAdapter & {
   authorizeActorAction?: (params: {
     cfg: OpenClawConfig;
@@ -668,6 +709,7 @@ export type ChannelApprovalCapability = ChannelApprovalAdapter & {
   }) => ChannelApproveCommandBehavior | undefined;
 };
 
+/** Shared type for Channel Allowlist Adapter in src/channels/plugins. */
 export type ChannelAllowlistAdapter = {
   applyConfigEdit?: (params: {
     cfg: OpenClawConfig;
@@ -724,15 +766,18 @@ export type ChannelAllowlistAdapter = {
   supportsScope?: (params: { scope: "dm" | "group" | "all" }) => boolean;
 };
 
+/** Shared type for Channel Configured Binding Conversation Ref in src/channels/plugins. */
 export type ChannelConfiguredBindingConversationRef = {
   conversationId: string;
   parentConversationId?: string;
 };
 
+/** Shared type for Channel Configured Binding Match in src/channels/plugins. */
 export type ChannelConfiguredBindingMatch = ChannelConfiguredBindingConversationRef & {
   matchPriority?: number;
 };
 
+/** Shared type for Channel Command Conversation Context in src/channels/plugins. */
 export type ChannelCommandConversationContext = {
   accountId: string;
   threadId?: string;
@@ -747,6 +792,7 @@ export type ChannelCommandConversationContext = {
   fallbackTo?: string;
 };
 
+/** Shared type for Channel Configured Binding Provider in src/channels/plugins. */
 export type ChannelConfiguredBindingProvider = {
   selfParentConversationByDefault?: boolean;
   compileConfiguredBinding: (params: {
@@ -764,6 +810,7 @@ export type ChannelConfiguredBindingProvider = {
   ) => ChannelConfiguredBindingConversationRef | null;
 };
 
+/** Shared type for Channel Conversation Binding Support in src/channels/plugins. */
 export type ChannelConversationBindingSupport = {
   supportsCurrentConversationBinding?: boolean;
   /**
@@ -840,6 +887,7 @@ export type ChannelConversationBindingSupport = {
       }>;
 };
 
+/** Shared type for Channel Security Adapter in src/channels/plugins. */
 export type ChannelSecurityAdapter<ResolvedAccount = unknown> = {
   applyConfigFixes?: (params: {
     cfg: OpenClawConfig;

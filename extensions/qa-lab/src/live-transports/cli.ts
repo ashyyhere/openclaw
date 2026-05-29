@@ -1,3 +1,4 @@
+// extensions/qa-lab/src/live-transports cli helpers and runtime behavior.
 import { listQaRunnerCliContributions } from "openclaw/plugin-sdk/qa-runner-runtime";
 import { discordQaCliRegistration } from "./discord/cli.js";
 import type { LiveTransportQaCliRegistration } from "./shared/live-transport-cli.js";

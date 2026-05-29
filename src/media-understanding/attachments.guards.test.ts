@@ -1,3 +1,4 @@
+// Tests media-understanding attachments guards test behavior.
 import { describe, expect, it } from "vitest";
 import { selectAttachments } from "./attachments.js";
 import type { MediaAttachment } from "./types.js";

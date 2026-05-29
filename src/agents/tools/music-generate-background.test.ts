@@ -1,3 +1,4 @@
+/** Covers background music generation task lifecycle behavior. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { MUSIC_GENERATION_TASK_KIND } from "../music-generation-task-status.js";
 import {

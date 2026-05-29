@@ -1,3 +1,4 @@
+// process/supervisor/adapters test support helpers and runtime behavior.
 import { expect, vi } from "vitest";
 
 type WaitResult = {
@@ -5,6 +6,7 @@ type WaitResult = {
   signal: number | NodeJS.Signals | null;
 };
 
+/** Reused helper for expect Wait Stays Pending Until Sigkill Fallback behavior in src/process/supervisor. */
 export async function expectWaitStaysPendingUntilSigkillFallback(
   waitPromise: Promise<WaitResult>,
   triggerKill: () => void,
@@ -24,6 +26,7 @@ export async function expectWaitStaysPendingUntilSigkillFallback(
   await expect(waitPromise).resolves.toEqual({ code: null, signal: "SIGKILL" });
 }
 
+/** Reused helper for expect Real Exit Wins Over Sigkill Fallback behavior in src/process/supervisor. */
 export async function expectRealExitWinsOverSigkillFallback(params: {
   waitPromise: Promise<WaitResult>;
   triggerKill: () => void;

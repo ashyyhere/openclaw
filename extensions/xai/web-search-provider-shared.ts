@@ -1,3 +1,4 @@
+// extensions/xai web search provider shared helpers and runtime behavior.
 import {
   createWebSearchProviderContractFields,
   type WebSearchProviderPlugin,

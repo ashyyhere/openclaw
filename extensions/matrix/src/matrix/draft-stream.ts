@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix draft stream helpers and runtime behavior.
 import { createDraftStreamLoop } from "openclaw/plugin-sdk/channel-outbound";
 import type { CoreConfig } from "../types.js";
 import type { MatrixClient } from "./sdk.js";

@@ -1,3 +1,4 @@
+/** Tests provider request config merge, auth, proxy, TLS, and headers. */
 import { describe, expect, it } from "vitest";
 import type { ConfiguredProviderRequest } from "../config/types.provider-request.js";
 import type { SecretRef } from "../config/types.secrets.js";

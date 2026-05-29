@@ -1,3 +1,4 @@
+// Tests plugins installs test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { buildNpmResolutionInstallFields, recordPluginInstall } from "./installs.js";
 

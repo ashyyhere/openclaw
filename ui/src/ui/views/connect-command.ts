@@ -1,3 +1,4 @@
+// ui/src/ui/views connect command helpers and runtime behavior.
 import { html } from "lit";
 import { t } from "../../i18n/index.ts";
 import { renderCopyButton } from "../chat/copy-as-markdown.ts";
@@ -10,6 +11,7 @@ async function copyCommand(command: string) {
   }
 }
 
+/** Reused helper for render Connect Command behavior in ui/src/ui/views. */
 export function renderConnectCommand(command: string) {
   const copyLabel = t("overview.connection.copyCommand");
   return html`

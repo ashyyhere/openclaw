@@ -1,3 +1,4 @@
+// gateway chat display projection helpers and runtime behavior.
 import { createHash } from "node:crypto";
 import { OPENCLAW_RUNTIME_CONTEXT_CUSTOM_TYPE } from "../agents/internal-runtime-context.js";
 import { isHeartbeatOkResponse, isHeartbeatUserMessage } from "../auto-reply/heartbeat-filter.js";
@@ -17,6 +18,7 @@ import { stripInlineDirectiveTagsForDisplay } from "../utils/directive-tags.js";
 import { stripEnvelopeFromMessages } from "./chat-sanitize.js";
 import { isSuppressedControlReplyText } from "./control-reply-text.js";
 
+/** Reused constant for DEFAULT CHAT HISTORY TEXT MAX CHARS behavior in src/gateway. */
 export const DEFAULT_CHAT_HISTORY_TEXT_MAX_CHARS = 8_000;
 
 type RoleContentMessage = {
@@ -32,6 +34,7 @@ type PendingMessageToolVisibleReply = {
   succeeded: boolean;
 };
 
+/** Reused helper for resolve Effective Chat History Max Chars behavior in src/gateway. */
 export function resolveEffectiveChatHistoryMaxChars(
   cfg: { gateway?: { webchat?: { chatHistoryMaxChars?: number } } },
   maxChars?: number,
@@ -58,6 +61,7 @@ function truncateChatHistoryText(
   };
 }
 
+/** Reused helper for is Tool History Block Type behavior in src/gateway. */
 export function isToolHistoryBlockType(type: unknown): boolean {
   if (typeof type !== "string") {
     return false;
@@ -847,6 +851,7 @@ function shouldDropAssistantHistoryMessage(message: unknown): boolean {
   return !hasAssistantNonTextContent(message);
 }
 
+/** Reused helper for sanitize Chat History Messages behavior in src/gateway. */
 export function sanitizeChatHistoryMessages(
   messages: unknown[],
   maxChars: number = DEFAULT_CHAT_HISTORY_TEXT_MAX_CHARS,
@@ -1198,6 +1203,7 @@ function filterVisibleProjectedHistoryMessages(
   return changed ? visible : messages;
 }
 
+/** Reused helper for project Chat Display Messages behavior in src/gateway. */
 export function projectChatDisplayMessages(
   messages: unknown[],
   options?: { maxChars?: number; stripEnvelope?: boolean },
@@ -1227,6 +1233,7 @@ function limitChatDisplayMessages<T>(messages: T[], maxMessages?: number): T[] {
   return messages.slice(-Math.floor(maxMessages));
 }
 
+/** Reused helper for project Recent Chat Display Messages behavior in src/gateway. */
 export function projectRecentChatDisplayMessages(
   messages: unknown[],
   options?: { maxChars?: number; maxMessages?: number; stripEnvelope?: boolean },
@@ -1237,6 +1244,7 @@ export function projectRecentChatDisplayMessages(
   );
 }
 
+/** Reused helper for project Chat Display Message behavior in src/gateway. */
 export function projectChatDisplayMessage(
   message: unknown,
   options?: { maxChars?: number; stripEnvelope?: boolean },

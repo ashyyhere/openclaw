@@ -1,3 +1,4 @@
+/** Applies selected auth choices to provider and plugin config. */
 import { formatCliCommand } from "../cli/command-format.js";
 import { applyAuthChoiceLoadedPluginProvider } from "../plugins/provider-auth-choice.js";
 import type { ApplyAuthChoiceParams, ApplyAuthChoiceResult } from "./auth-choice.apply.types.js";
@@ -60,6 +61,7 @@ async function formatDeprecatedProviderChoiceError(
   return `Auth choice ${JSON.stringify(authChoice)} is no longer supported. Use ${JSON.stringify(deprecatedChoice.choiceId)} instead, or run ${formatCliCommand("openclaw onboard")} to choose interactively.`;
 }
 
+/** Reused helper for apply Auth Choice behavior in src/commands. */
 export async function applyAuthChoice(
   params: ApplyAuthChoiceParams,
 ): Promise<ApplyAuthChoiceResult> {

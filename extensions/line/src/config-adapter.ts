@@ -1,3 +1,4 @@
+// extensions/line/src config adapter helpers and runtime behavior.
 import { createScopedChannelConfigAdapter } from "openclaw/plugin-sdk/channel-config-helpers";
 import { normalizeStringEntries } from "openclaw/plugin-sdk/string-coerce-runtime";
 import {

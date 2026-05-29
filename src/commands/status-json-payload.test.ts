@@ -1,3 +1,4 @@
+/** Tests status JSON payload construction. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { VERSION } from "../version.js";
 import { resolveStatusUpdateChannelInfo } from "./status-all/format.js";

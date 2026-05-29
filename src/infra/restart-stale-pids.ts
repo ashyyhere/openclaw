@@ -1,3 +1,4 @@
+// infra restart stale pids helpers and runtime behavior.
 import { spawnSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import path from "node:path";
@@ -621,6 +622,7 @@ export function cleanStaleGatewayProcessesSync(portOverride?: number): number[] 
   }
 }
 
+/** Reused constant for testing behavior in src/infra. */
 export const testing = {
   setSleepSyncOverride(fn: ((ms: number) => void) | null) {
     sleepSyncOverride = fn;
@@ -634,4 +636,5 @@ export const testing = {
   /** Invoke sleepSync directly (bypasses the override) for unit-testing the real Atomics path. */
   callSleepSyncRaw: sleepSync,
 };
+/** Re-exported API for src/infra, starting with testing. */
 export { testing as __testing };

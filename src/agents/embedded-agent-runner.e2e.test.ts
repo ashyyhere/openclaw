@@ -1,3 +1,4 @@
+/** End-to-end tests for embedded-agent runner turns. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import "./test-helpers/fast-coding-tools.js";

@@ -1,3 +1,4 @@
+// Tests extensions/imessage/src approval native test behavior.
 import type {
   ExecApprovalRequest,
   PluginApprovalRequest,

@@ -1,3 +1,4 @@
+// Tests gateway gateway misc test behavior.
 import * as fs from "node:fs/promises";
 import type { IncomingMessage, ServerResponse } from "node:http";
 import * as os from "node:os";

@@ -1,8 +1,10 @@
+// logging diagnostic session recovery helpers and runtime behavior.
 import type {
   DiagnosticSessionActiveWorkKind,
   DiagnosticSessionState,
 } from "../infra/diagnostic-events.js";
 
+/** Shared type for Diagnostic Session Recovery Status in src/logging. */
 export type DiagnosticSessionRecoveryStatus =
   | "aborted"
   | "released"
@@ -10,6 +12,7 @@ export type DiagnosticSessionRecoveryStatus =
   | "noop"
   | "failed";
 
+/** Shared type for Diagnostic Session Recovery Skip Reason in src/logging. */
 export type DiagnosticSessionRecoverySkipReason =
   | "active_embedded_run"
   | "active_reply_work"
@@ -18,8 +21,10 @@ export type DiagnosticSessionRecoverySkipReason =
   | "missing_session_ref"
   | "stale_session_state";
 
+/** Shared type for Diagnostic Session Recovery Noop Reason in src/logging. */
 export type DiagnosticSessionRecoveryNoopReason = "no_active_work";
 
+/** Shared type for Stuck Session Recovery Request in src/logging. */
 export type StuckSessionRecoveryRequest = {
   sessionId?: string;
   sessionKey?: string;
@@ -45,6 +50,7 @@ type DiagnosticSessionRecoveryBaseOutcome = {
   activeWorkKind?: DiagnosticSessionActiveWorkKind;
 };
 
+/** Shared type for Stuck Session Recovery Outcome in src/logging. */
 export type StuckSessionRecoveryOutcome =
   | (DiagnosticSessionRecoveryBaseOutcome & {
       status: "aborted";
@@ -79,6 +85,7 @@ export type StuckSessionRecoveryOutcome =
       error: string;
     });
 
+/** Reused helper for recovery Outcome Mutates Session State behavior in src/logging. */
 export function recoveryOutcomeMutatesSessionState(
   outcome: StuckSessionRecoveryOutcome | undefined,
 ): boolean {
@@ -92,6 +99,7 @@ export function recoveryOutcomeMutatesSessionState(
   );
 }
 
+/** Reused helper for recovery Outcome Clears Queued Session State behavior in src/logging. */
 export function recoveryOutcomeClearsQueuedSessionState(
   outcome: StuckSessionRecoveryOutcome,
 ): boolean {
@@ -102,10 +110,12 @@ export function recoveryOutcomeClearsQueuedSessionState(
   );
 }
 
+/** Reused helper for recovery Outcome Released Count behavior in src/logging. */
 export function recoveryOutcomeReleasedCount(outcome: StuckSessionRecoveryOutcome): number {
   return "released" in outcome ? outcome.released : 0;
 }
 
+/** Reused helper for format Recovery Outcome behavior in src/logging. */
 export function formatRecoveryOutcome(outcome: StuckSessionRecoveryOutcome): string {
   const fields = [
     `status=${outcome.status}`,

@@ -1,3 +1,4 @@
+// extensions/diagnostics-prometheus index helpers and runtime behavior.
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 import { createDiagnosticsPrometheusExporter } from "./src/service.js";
 

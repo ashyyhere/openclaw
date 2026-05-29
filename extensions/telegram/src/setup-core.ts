@@ -1,3 +1,4 @@
+// extensions/telegram/src setup core helpers and runtime behavior.
 import type { ChannelSetupAdapter } from "openclaw/plugin-sdk/setup-runtime";
 import {
   createEnvPatchedAccountSetupAdapter,

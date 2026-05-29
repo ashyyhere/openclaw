@@ -1,3 +1,5 @@
+// infra backoff helpers and runtime behavior.
+/** Shared type for Backoff Policy in src/infra. */
 export type BackoffPolicy = {
   initialMs: number;
   maxMs: number;
@@ -5,12 +7,14 @@ export type BackoffPolicy = {
   jitter: number;
 };
 
+/** Reused helper for compute Backoff behavior in src/infra. */
 export function computeBackoff(policy: BackoffPolicy, attempt: number) {
   const base = policy.initialMs * policy.factor ** Math.max(attempt - 1, 0);
   const jitter = base * policy.jitter * Math.random();
   return Math.min(policy.maxMs, Math.round(base + jitter));
 }
 
+/** Reused helper for sleep With Abort behavior in src/infra. */
 export async function sleepWithAbort(ms: number, abortSignal?: AbortSignal) {
   if (ms <= 0) {
     return;

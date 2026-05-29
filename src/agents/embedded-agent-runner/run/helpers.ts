@@ -1,3 +1,4 @@
+/** Shared small helpers for embedded-run retry, usage, and result metadata. */
 import type { OpenClawConfig } from "../../../config/types.openclaw.js";
 import { generateSecureToken } from "../../../infra/secure-random.js";
 import type { AssistantMessage } from "../../../llm/types.js";
@@ -16,6 +17,7 @@ type UsageSnapshot = {
   total?: number;
 };
 
+/** Shared type for Runtime Auth State in src/agents/embedded-agent-runner. */
 export type RuntimeAuthState = {
   generation: number;
   sourceApiKey: string;
@@ -26,22 +28,28 @@ export type RuntimeAuthState = {
   refreshInFlight?: Promise<void>;
 };
 
+/** Reused constant for RUNTIME AUTH REFRESH MARGIN MS behavior in src/agents/embedded-agent-runner. */
 export const RUNTIME_AUTH_REFRESH_MARGIN_MS = 5 * 60 * 1000;
+/** Reused constant for RUNTIME AUTH REFRESH RETRY MS behavior in src/agents/embedded-agent-runner. */
 export const RUNTIME_AUTH_REFRESH_RETRY_MS = 60 * 1000;
+/** Reused constant for RUNTIME AUTH REFRESH MIN DELAY MS behavior in src/agents/embedded-agent-runner. */
 export const RUNTIME_AUTH_REFRESH_MIN_DELAY_MS = 5 * 1000;
 
 const DEFAULT_OVERLOAD_FAILOVER_BACKOFF_MS = 0;
 const DEFAULT_MAX_OVERLOAD_PROFILE_ROTATIONS = 1;
 const DEFAULT_MAX_RATE_LIMIT_PROFILE_ROTATIONS = 1;
 
+/** Reused helper for resolve Overload Failover Backoff Ms behavior in src/agents/embedded-agent-runner. */
 export function resolveOverloadFailoverBackoffMs(cfg?: OpenClawConfig): number {
   return cfg?.auth?.cooldowns?.overloadedBackoffMs ?? DEFAULT_OVERLOAD_FAILOVER_BACKOFF_MS;
 }
 
+/** Reused helper for resolve Overload Profile Rotation Limit behavior in src/agents/embedded-agent-runner. */
 export function resolveOverloadProfileRotationLimit(cfg?: OpenClawConfig): number {
   return cfg?.auth?.cooldowns?.overloadedProfileRotations ?? DEFAULT_MAX_OVERLOAD_PROFILE_ROTATIONS;
 }
 
+/** Reused helper for resolve Rate Limit Profile Rotation Limit behavior in src/agents/embedded-agent-runner. */
 export function resolveRateLimitProfileRotationLimit(cfg?: OpenClawConfig): number {
   return (
     cfg?.auth?.cooldowns?.rateLimitedProfileRotations ?? DEFAULT_MAX_RATE_LIMIT_PROFILE_ROTATIONS
@@ -52,6 +60,7 @@ const ANTHROPIC_MAGIC_STRING_TRIGGER_REFUSAL = "ANTHROPIC_MAGIC_STRING_TRIGGER_R
 const ANTHROPIC_MAGIC_STRING_REPLACEMENT = "ANTHROPIC MAGIC STRING TRIGGER REFUSAL (redacted)";
 
 // Avoid Anthropic's refusal test token poisoning session transcripts.
+/** Reused helper for scrub Anthropic Refusal Magic behavior in src/agents/embedded-agent-runner. */
 export function scrubAnthropicRefusalMagic(prompt: string): string {
   if (!prompt.includes(ANTHROPIC_MAGIC_STRING_TRIGGER_REFUSAL)) {
     return prompt;
@@ -62,6 +71,7 @@ export function scrubAnthropicRefusalMagic(prompt: string): string {
   );
 }
 
+/** Reused helper for create Compaction Diag Id behavior in src/agents/embedded-agent-runner. */
 export function createCompactionDiagId(): string {
   return `ovf-${Date.now().toString(36)}-${generateSecureToken(4)}`;
 }
@@ -72,6 +82,7 @@ const MIN_RUN_RETRY_ITERATIONS = 32;
 const MAX_RUN_RETRY_ITERATIONS = 160;
 
 // Defensive guard for the outer run loop across all retry branches.
+/** Reused helper for resolve Max Run Retry Iterations behavior in src/agents/embedded-agent-runner. */
 export function resolveMaxRunRetryIterations(
   profileCandidateCount: number,
   cfg?: OpenClawConfig,
@@ -90,6 +101,7 @@ export function resolveMaxRunRetryIterations(
   return Math.min(maxLimit, Math.max(minLimit, scaled));
 }
 
+/** Reused helper for resolve Active Error Context behavior in src/agents/embedded-agent-runner. */
 export function resolveActiveErrorContext(params: {
   provider: string;
   model: string;
@@ -101,6 +113,7 @@ export function resolveActiveErrorContext(params: {
   return resolveReportedModelRef(params);
 }
 
+/** Reused helper for is Assistant For Model Ref behavior in src/agents/embedded-agent-runner. */
 export function isAssistantForModelRef(
   assistant: { provider?: string; model?: string } | undefined,
   ref: { provider: string; model: string },
@@ -119,6 +132,7 @@ function isEmbeddedHarnessProvider(provider: string): boolean {
   return provider.trim().toLowerCase() === "openclaw";
 }
 
+/** Reused helper for resolve Reported Model Ref behavior in src/agents/embedded-agent-runner. */
 export function resolveReportedModelRef(params: {
   provider: string;
   model: string;
@@ -147,6 +161,7 @@ export function resolveReportedModelRef(params: {
   };
 }
 
+/** Reused helper for build Usage Agent Meta Fields behavior in src/agents/embedded-agent-runner. */
 export function buildUsageAgentMetaFields(params: {
   usageAccumulator: UsageAccumulator;
   lastAssistantUsage?: UsageSnapshot | null;
@@ -202,6 +217,7 @@ export function buildErrorAgentMeta(params: {
   };
 }
 
+/** Reused helper for resolve Final Assistant Visible Text behavior in src/agents/embedded-agent-runner. */
 export function resolveFinalAssistantVisibleText(
   lastAssistant: AssistantMessage | undefined,
 ): string | undefined {
@@ -212,6 +228,7 @@ export function resolveFinalAssistantVisibleText(
   return visibleText || undefined;
 }
 
+/** Reused helper for resolve Final Assistant Raw Text behavior in src/agents/embedded-agent-runner. */
 export function resolveFinalAssistantRawText(
   lastAssistant: AssistantMessage | undefined,
 ): string | undefined {

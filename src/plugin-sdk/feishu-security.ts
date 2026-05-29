@@ -14,6 +14,7 @@ function loadSecuritySurface(): SecuritySurface {
   });
 }
 
+/** Reused constant for collect Feishu Security Audit Findings behavior in src/plugin-sdk. */
 export const collectFeishuSecurityAuditFindings: SecuritySurface["collectFeishuSecurityAuditFindings"] =
   ((...args) =>
     loadSecuritySurface().collectFeishuSecurityAuditFindings(

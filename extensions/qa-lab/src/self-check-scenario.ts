@@ -1,3 +1,4 @@
+// extensions/qa-lab/src self check scenario helpers and runtime behavior.
 import { extractQaToolPayload } from "./extract-tool-payload.js";
 import type { QaScenarioDefinition } from "./scenario.js";
 

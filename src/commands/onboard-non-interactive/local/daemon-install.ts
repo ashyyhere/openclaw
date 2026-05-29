@@ -1,3 +1,4 @@
+// Installs the gateway daemon during non-interactive onboarding when requested.
 import type { OpenClawConfig } from "../../../config/types.openclaw.js";
 import { resolveGatewayService } from "../../../daemon/service.js";
 import { isSystemdUserServiceAvailable } from "../../../daemon/systemd.js";
@@ -9,6 +10,7 @@ import { resolveGatewayInstallToken } from "../../gateway-install-token.js";
 import type { OnboardOptions } from "../../onboard-types.js";
 import { ensureSystemdUserLingerNonInteractive } from "../../systemd-linger.js";
 
+/** Reused helper for install Gateway Daemon Non Interactive behavior in src/commands/onboard-non-interactive. */
 export async function installGatewayDaemonNonInteractive(params: {
   nextConfig: OpenClawConfig;
   opts: OnboardOptions;

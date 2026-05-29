@@ -1,3 +1,4 @@
+/** Bootstrap context budget analysis, warnings, and truncation reporting. */
 import path from "node:path";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import type { EmbeddedContextFile } from "./embedded-agent-helpers.js";
@@ -103,6 +104,7 @@ function appendSeenSignature(signatures: string[], signature: string): string[] 
   return next.slice(-DEFAULT_BOOTSTRAP_PROMPT_WARNING_SIGNATURE_HISTORY_MAX);
 }
 
+/** Resolve previously seen bootstrap warning signatures from stored report metadata. */
 export function resolveBootstrapWarningSignaturesSeen(report?: {
   bootstrapTruncation?: {
     warningMode?: BootstrapPromptWarningMode;
@@ -126,6 +128,7 @@ export function resolveBootstrapWarningSignaturesSeen(report?: {
   return single ? [single] : [];
 }
 
+/** Build per-file raw/injected character stats for bootstrap context files. */
 export function buildBootstrapInjectionStats(params: {
   bootstrapFiles: WorkspaceBootstrapFile[];
   injectedFiles: EmbeddedContextFile[];
@@ -166,6 +169,7 @@ export function buildBootstrapInjectionStats(params: {
   });
 }
 
+/** Analyze bootstrap files for truncation and near-limit warnings. */
 export function analyzeBootstrapBudget(params: {
   files: BootstrapInjectionStat[];
   bootstrapMaxChars: number;
@@ -225,6 +229,7 @@ export function analyzeBootstrapBudget(params: {
   };
 }
 
+/** Build a stable dedupe signature for bootstrap truncation warnings. */
 export function buildBootstrapTruncationSignature(
   analysis: BootstrapBudgetAnalysis,
 ): string | undefined {
@@ -258,6 +263,7 @@ export function buildBootstrapTruncationSignature(
   });
 }
 
+/** Format user-facing bootstrap truncation warning lines. */
 export function formatBootstrapTruncationWarningLines(params: {
   analysis: BootstrapBudgetAnalysis;
   maxFiles?: number;
@@ -306,6 +312,7 @@ export function formatBootstrapTruncationWarningLines(params: {
   return lines;
 }
 
+/** Build prompt warning state for bootstrap truncation. */
 export function buildBootstrapPromptWarning(params: {
   analysis: BootstrapBudgetAnalysis;
   mode: BootstrapPromptWarningMode;
@@ -338,6 +345,7 @@ export function buildBootstrapPromptWarning(params: {
   };
 }
 
+/** Append bootstrap warning lines to a prompt when needed. */
 export function appendBootstrapPromptWarning(
   prompt: string,
   warningLines?: string[],
@@ -361,6 +369,7 @@ export function appendBootstrapPromptWarning(
   return prompt ? `${prompt}\n\n${warningBlock}` : warningBlock;
 }
 
+/** Build a compact notice for persisted bootstrap warning metadata. */
 export function buildBootstrapPromptWarningNotice(warningLines?: string[]): string | undefined {
   const hasWarning = (warningLines ?? []).some((line) => line.trim().length > 0);
   if (!hasWarning) {
@@ -373,6 +382,7 @@ export function buildBootstrapPromptWarningNotice(warningLines?: string[]): stri
   ].join("\n");
 }
 
+/** Build report metadata for bootstrap truncation warnings. */
 export function buildBootstrapTruncationReportMeta(params: {
   analysis: BootstrapBudgetAnalysis;
   warningMode: BootstrapPromptWarningMode;

@@ -1,3 +1,4 @@
+// Shared channel message adapter, receipt, lifecycle, and capability types.
 import type { ReplyPayload } from "../../auto-reply/reply-payload.js";
 import type { ReplyToMode } from "../../config/types.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
@@ -5,8 +6,10 @@ import type { OutboundSendDeps } from "../../infra/outbound/send-deps.js";
 import type { OutboundMediaAccess } from "../../media/load-options.js";
 import type { PollInput } from "../../polls.js";
 
+/** Durability policy for final message delivery. */
 export type MessageDurabilityPolicy = "required" | "best_effort" | "disabled";
 
+/** Capabilities a channel may declare for durable final delivery. */
 export const durableFinalDeliveryCapabilities = [
   "text",
   "media",
@@ -23,12 +26,15 @@ export const durableFinalDeliveryCapabilities = [
   "afterCommit",
 ] as const;
 
+/** Shared type for Durable Final Delivery Capability in src/channels/message. */
 export type DurableFinalDeliveryCapability = (typeof durableFinalDeliveryCapabilities)[number];
 
+/** Shared type for Durable Final Delivery Requirement Map in src/channels/message. */
 export type DurableFinalDeliveryRequirementMap = Partial<
   Record<DurableFinalDeliveryCapability, boolean>
 >;
 
+/** Shared type for Durable Final Delivery Payload Shape in src/channels/message. */
 export type DurableFinalDeliveryPayloadShape = {
   text?: string | null;
   replyToId?: string | null;
@@ -36,6 +42,7 @@ export type DurableFinalDeliveryPayloadShape = {
   mediaUrls?: readonly (string | null | undefined)[] | null;
 };
 
+/** Shared type for Message Receipt Source Result in src/channels/message. */
 export type MessageReceiptSourceResult = {
   channel?: string;
   messageId?: string;
@@ -49,6 +56,7 @@ export type MessageReceiptSourceResult = {
   meta?: Record<string, unknown>;
 };
 
+/** Shared type for Message Receipt Part Kind in src/channels/message. */
 export type MessageReceiptPartKind =
   | "text"
   | "media"
@@ -58,6 +66,7 @@ export type MessageReceiptPartKind =
   | "preview"
   | "unknown";
 
+/** Shared type for Message Receipt Part in src/channels/message. */
 export type MessageReceiptPart = {
   platformMessageId: string;
   kind: MessageReceiptPartKind;
@@ -67,6 +76,7 @@ export type MessageReceiptPart = {
   raw?: MessageReceiptSourceResult;
 };
 
+/** Shared type for Message Receipt in src/channels/message. */
 export type MessageReceipt = {
   primaryPlatformMessageId?: string;
   platformMessageIds: string[];
@@ -79,6 +89,7 @@ export type MessageReceipt = {
   raw?: readonly MessageReceiptSourceResult[];
 };
 
+/** Shared type for Rendered Message Batch Plan Kind in src/channels/message. */
 export type RenderedMessageBatchPlanKind =
   | "text"
   | "media"
@@ -88,6 +99,7 @@ export type RenderedMessageBatchPlanKind =
   | "channelData"
   | "empty";
 
+/** Shared type for Rendered Message Batch Plan Item in src/channels/message. */
 export type RenderedMessageBatchPlanItem = {
   index: number;
   kinds: readonly RenderedMessageBatchPlanKind[];
@@ -99,6 +111,7 @@ export type RenderedMessageBatchPlanItem = {
   hasChannelData?: boolean;
 };
 
+/** Shared type for Rendered Message Batch Plan in src/channels/message. */
 export type RenderedMessageBatchPlan = {
   payloadCount: number;
   textCount: number;
@@ -110,13 +123,16 @@ export type RenderedMessageBatchPlan = {
   items: readonly RenderedMessageBatchPlanItem[];
 };
 
+/** Shared type for Rendered Message Batch in src/channels/message. */
 export type RenderedMessageBatch<TPayload = unknown> = {
   payloads: TPayload[];
   plan: RenderedMessageBatchPlan;
 };
 
+/** Shared type for Live Message Phase in src/channels/message. */
 export type LiveMessagePhase = "idle" | "previewing" | "finalizing" | "finalized" | "cancelled";
 
+/** Shared type for Live Message State in src/channels/message. */
 export type LiveMessageState<TPayload = unknown> = {
   phase: LiveMessagePhase;
   canFinalizeInPlace: boolean;
@@ -124,6 +140,7 @@ export type LiveMessageState<TPayload = unknown> = {
   lastRendered?: RenderedMessageBatch<TPayload>;
 };
 
+/** Shared type for Message Send Context in src/channels/message. */
 export type MessageSendContext<TPayload = unknown, TSendResult = unknown> = {
   id: string;
   channel: string;
@@ -144,6 +161,7 @@ export type MessageSendContext<TPayload = unknown, TSendResult = unknown> = {
   fail(error: unknown): Promise<void>;
 };
 
+/** Shared type for Channel Message Send Text Context in src/channels/message. */
 export type ChannelMessageSendTextContext<TConfig = OpenClawConfig> = {
   cfg: TConfig;
   to: string;
@@ -159,6 +177,7 @@ export type ChannelMessageSendTextContext<TConfig = OpenClawConfig> = {
   gatewayClientScopes?: readonly string[];
 };
 
+/** Shared type for Channel Message Send Media Context in src/channels/message. */
 export type ChannelMessageSendMediaContext<TConfig = OpenClawConfig> =
   ChannelMessageSendTextContext<TConfig> & {
     mediaUrl: string;
@@ -170,6 +189,7 @@ export type ChannelMessageSendMediaContext<TConfig = OpenClawConfig> =
     forceDocument?: boolean;
   };
 
+/** Shared type for Channel Message Send Payload Context in src/channels/message. */
 export type ChannelMessageSendPayloadContext<TConfig = OpenClawConfig> =
   ChannelMessageSendTextContext<TConfig> & {
     payload: ReplyPayload;
@@ -182,6 +202,7 @@ export type ChannelMessageSendPayloadContext<TConfig = OpenClawConfig> =
     forceDocument?: boolean;
   };
 
+/** Shared type for Channel Message Send Poll Context in src/channels/message. */
 export type ChannelMessageSendPollContext<TConfig = OpenClawConfig> = Omit<
   ChannelMessageSendTextContext<TConfig>,
   "text" | "threadId"
@@ -191,19 +212,23 @@ export type ChannelMessageSendPollContext<TConfig = OpenClawConfig> = Omit<
   isAnonymous?: boolean;
 };
 
+/** Shared type for Channel Message Send Result in src/channels/message. */
 export type ChannelMessageSendResult = {
   receipt: MessageReceipt;
   messageId?: string;
 };
 
+/** Shared type for Channel Message Send Attempt Kind in src/channels/message. */
 export type ChannelMessageSendAttemptKind = "text" | "media" | "payload" | "poll";
 
+/** Shared type for Channel Message Send Attempt Context in src/channels/message. */
 export type ChannelMessageSendAttemptContext<TConfig = OpenClawConfig> =
   | (ChannelMessageSendTextContext<TConfig> & { kind: "text" })
   | (ChannelMessageSendMediaContext<TConfig> & { kind: "media" })
   | (ChannelMessageSendPayloadContext<TConfig> & { kind: "payload" })
   | (ChannelMessageSendPollContext<TConfig> & { kind: "poll" });
 
+/** Shared type for Channel Message Send Success Context in src/channels/message. */
 export type ChannelMessageSendSuccessContext<
   TConfig = OpenClawConfig,
   TSendResult extends ChannelMessageSendResult = ChannelMessageSendResult,
@@ -212,17 +237,20 @@ export type ChannelMessageSendSuccessContext<
   attemptToken?: unknown;
 };
 
+/** Shared type for Channel Message Send Failure Context in src/channels/message. */
 export type ChannelMessageSendFailureContext<TConfig = OpenClawConfig> =
   ChannelMessageSendAttemptContext<TConfig> & {
     error: unknown;
     attemptToken?: unknown;
   };
 
+/** Shared type for Channel Message Send Commit Context in src/channels/message. */
 export type ChannelMessageSendCommitContext<
   TConfig = OpenClawConfig,
   TSendResult extends ChannelMessageSendResult = ChannelMessageSendResult,
 > = ChannelMessageSendSuccessContext<TConfig, TSendResult>;
 
+/** Shared type for Channel Message Unknown Send Context in src/channels/message. */
 export type ChannelMessageUnknownSendContext<TConfig = OpenClawConfig> = {
   cfg: TConfig;
   queueId: string;
@@ -240,6 +268,7 @@ export type ChannelMessageUnknownSendContext<TConfig = OpenClawConfig> = {
   silent?: boolean;
 };
 
+/** Shared type for Channel Message Unknown Send Reconciliation Result in src/channels/message. */
 export type ChannelMessageUnknownSendReconciliationResult =
   | {
       status: "sent";
@@ -255,6 +284,7 @@ export type ChannelMessageUnknownSendReconciliationResult =
       retryable?: boolean;
     };
 
+/** Shared type for Channel Message Send Lifecycle Adapter in src/channels/message. */
 export type ChannelMessageSendLifecycleAdapter<
   TConfig = OpenClawConfig,
   TSendResult extends ChannelMessageSendResult = ChannelMessageSendResult,
@@ -269,6 +299,7 @@ export type ChannelMessageSendLifecycleAdapter<
   ) => Promise<void> | void;
 };
 
+/** Shared type for Channel Message Send Adapter in src/channels/message. */
 export type ChannelMessageSendAdapter<
   TConfig = OpenClawConfig,
   TSendResult extends ChannelMessageSendResult = ChannelMessageSendResult,
@@ -280,6 +311,7 @@ export type ChannelMessageSendAdapter<
   lifecycle?: ChannelMessageSendLifecycleAdapter<TConfig, TSendResult>;
 };
 
+/** Shared type for Channel Message Durable Final Adapter in src/channels/message. */
 export type ChannelMessageDurableFinalAdapter = {
   capabilities?: DurableFinalDeliveryRequirementMap;
   reconcileUnknownSend?: (
@@ -290,6 +322,7 @@ export type ChannelMessageDurableFinalAdapter = {
     | null;
 };
 
+/** Shared type for Channel Message Live Capability in src/channels/message. */
 export type ChannelMessageLiveCapability =
   | "draftPreview"
   | "previewFinalization"
@@ -297,6 +330,7 @@ export type ChannelMessageLiveCapability =
   | "nativeStreaming"
   | "quietFinalization";
 
+/** Reused constant for channel Message Live Capabilities behavior in src/channels/message. */
 export const channelMessageLiveCapabilities = [
   "draftPreview",
   "previewFinalization",
@@ -305,6 +339,7 @@ export const channelMessageLiveCapabilities = [
   "quietFinalization",
 ] as const satisfies readonly ChannelMessageLiveCapability[];
 
+/** Reused constant for live Preview Finalizer Capabilities behavior in src/channels/message. */
 export const livePreviewFinalizerCapabilities = [
   "finalEdit",
   "normalFallback",
@@ -313,27 +348,33 @@ export const livePreviewFinalizerCapabilities = [
   "retainOnAmbiguousFailure",
 ] as const;
 
+/** Shared type for Live Preview Finalizer Capability in src/channels/message. */
 export type LivePreviewFinalizerCapability = (typeof livePreviewFinalizerCapabilities)[number];
 
+/** Shared type for Live Preview Finalizer Capability Map in src/channels/message. */
 export type LivePreviewFinalizerCapabilityMap = Partial<
   Record<LivePreviewFinalizerCapability, boolean>
 >;
 
+/** Shared type for Channel Message Live Finalizer Adapter Shape in src/channels/message. */
 export type ChannelMessageLiveFinalizerAdapterShape = {
   capabilities?: LivePreviewFinalizerCapabilityMap;
 };
 
+/** Shared type for Channel Message Live Adapter Shape in src/channels/message. */
 export type ChannelMessageLiveAdapterShape = {
   capabilities?: Partial<Record<ChannelMessageLiveCapability, boolean>>;
   finalizer?: ChannelMessageLiveFinalizerAdapterShape;
 };
 
+/** Shared type for Channel Message Receive Ack Policy in src/channels/message. */
 export type ChannelMessageReceiveAckPolicy =
   | "after_receive_record"
   | "after_agent_dispatch"
   | "after_durable_send"
   | "manual";
 
+/** Reused constant for channel Message Receive Ack Policies behavior in src/channels/message. */
 export const channelMessageReceiveAckPolicies = [
   "after_receive_record",
   "after_agent_dispatch",
@@ -341,11 +382,13 @@ export const channelMessageReceiveAckPolicies = [
   "manual",
 ] as const satisfies readonly ChannelMessageReceiveAckPolicy[];
 
+/** Shared type for Channel Message Receive Adapter Shape in src/channels/message. */
 export type ChannelMessageReceiveAdapterShape = {
   defaultAckPolicy?: ChannelMessageReceiveAckPolicy;
   supportedAckPolicies?: readonly ChannelMessageReceiveAckPolicy[];
 };
 
+/** Shared type for Channel Message Adapter Shape in src/channels/message. */
 export type ChannelMessageAdapterShape<
   TConfig = OpenClawConfig,
   TSendResult extends ChannelMessageSendResult = ChannelMessageSendResult,
@@ -357,12 +400,15 @@ export type ChannelMessageAdapterShape<
   receive?: ChannelMessageReceiveAdapterShape;
 };
 
+/** Shared type for Channel Message Adapter in src/channels/message. */
 export type ChannelMessageAdapter<
   TAdapter extends ChannelMessageAdapterShape = ChannelMessageAdapterShape,
 > = TAdapter;
 
+/** Shared type for Durable Final Requirement Extras in src/channels/message. */
 export type DurableFinalRequirementExtras = DurableFinalDeliveryRequirementMap;
 
+/** Shared type for Derive Durable Final Delivery Requirements Params in src/channels/message. */
 export type DeriveDurableFinalDeliveryRequirementsParams = {
   payload: DurableFinalDeliveryPayloadShape;
   replyToId?: string | null;
@@ -377,6 +423,7 @@ export type DeriveDurableFinalDeliveryRequirementsParams = {
   extraCapabilities?: DurableFinalRequirementExtras;
 };
 
+/** Shared type for Durable Message Send Intent in src/channels/message. */
 export type DurableMessageSendIntent<TPayload = unknown> = {
   id: string;
   channel: string;

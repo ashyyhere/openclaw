@@ -1,3 +1,4 @@
+// Tests test/scripts check gateway watch regression test behavior.
 import { EventEmitter } from "node:events";
 import fs from "node:fs";
 import os from "node:os";

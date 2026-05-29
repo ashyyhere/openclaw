@@ -1,3 +1,4 @@
+// extensions/discord/src/actions handle action helpers and runtime behavior.
 import type { AgentToolResult } from "openclaw/plugin-sdk/agent-core";
 import {
   readPositiveIntegerParam,

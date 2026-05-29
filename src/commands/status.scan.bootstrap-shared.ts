@@ -1,3 +1,4 @@
+/** Cold-start status summary helpers used before runtime state is loaded. */
 import type { OpenClawConfig } from "../config/types.js";
 import type { UpdateCheckResult } from "../infra/update-check.js";
 import { runExec } from "../process/exec.js";
@@ -22,6 +23,7 @@ function buildColdStartAgentLocalStatuses() {
   };
 }
 
+/** Reused helper for build Cold Start Status Summary behavior in src/commands. */
 export function buildColdStartStatusSummary() {
   return {
     runtimeVersion: null,
@@ -77,6 +79,7 @@ type StatusScanCoreBootstrapParams<TAgentStatus> = {
   getAgentLocalStatuses: (cfg: OpenClawConfig) => Promise<TAgentStatus>;
 };
 
+/** Reused helper for create Status Scan Core Bootstrap behavior in src/commands. */
 export async function createStatusScanCoreBootstrap<TAgentStatus>(
   params: StatusScanCoreBootstrapParams<TAgentStatus>,
 ) {

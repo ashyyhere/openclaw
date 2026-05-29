@@ -1,3 +1,4 @@
+// packages/gateway-protocol/src/schema artifacts helpers and runtime behavior.
 import { Type } from "typebox";
 import { NonEmptyString } from "./primitives.js";
 
@@ -8,10 +9,12 @@ const ArtifactQueryParamsProperties = {
   agentId: Type.Optional(NonEmptyString),
 };
 
+/** Public constant for Artifact Query Params Schema behavior in packages/gateway-protocol. */
 export const ArtifactQueryParamsSchema = Type.Object(ArtifactQueryParamsProperties, {
   additionalProperties: false,
 });
 
+/** Public constant for Artifact Get Params Schema behavior in packages/gateway-protocol. */
 export const ArtifactGetParamsSchema = Type.Object(
   {
     ...ArtifactQueryParamsProperties,
@@ -20,6 +23,7 @@ export const ArtifactGetParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Artifact Summary Schema behavior in packages/gateway-protocol. */
 export const ArtifactSummarySchema = Type.Object(
   {
     id: NonEmptyString,
@@ -42,8 +46,10 @@ export const ArtifactSummarySchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Artifacts List Params Schema behavior in packages/gateway-protocol. */
 export const ArtifactsListParamsSchema = ArtifactQueryParamsSchema;
 
+/** Public constant for Artifacts List Result Schema behavior in packages/gateway-protocol. */
 export const ArtifactsListResultSchema = Type.Object(
   {
     artifacts: Type.Array(ArtifactSummarySchema),
@@ -51,8 +57,10 @@ export const ArtifactsListResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Artifacts Get Params Schema behavior in packages/gateway-protocol. */
 export const ArtifactsGetParamsSchema = ArtifactGetParamsSchema;
 
+/** Public constant for Artifacts Get Result Schema behavior in packages/gateway-protocol. */
 export const ArtifactsGetResultSchema = Type.Object(
   {
     artifact: ArtifactSummarySchema,
@@ -60,8 +68,10 @@ export const ArtifactsGetResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Artifacts Download Params Schema behavior in packages/gateway-protocol. */
 export const ArtifactsDownloadParamsSchema = ArtifactGetParamsSchema;
 
+/** Public constant for Artifacts Download Result Schema behavior in packages/gateway-protocol. */
 export const ArtifactsDownloadResultSchema = Type.Object(
   {
     artifact: ArtifactSummarySchema,

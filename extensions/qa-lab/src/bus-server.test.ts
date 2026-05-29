@@ -1,3 +1,4 @@
+// Tests extensions/qa-lab/src bus server test behavior.
 import { Agent, createServer, request } from "node:http";
 import { afterEach, describe, expect, it } from "vitest";
 import { closeQaHttpServer, handleQaBusRequest, startQaBusServer } from "./bus-server.js";

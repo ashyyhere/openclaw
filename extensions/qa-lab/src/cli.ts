@@ -1,3 +1,4 @@
+// extensions/qa-lab/src cli helpers and runtime behavior.
 import type { Command } from "commander";
 import { parseStrictPositiveInteger } from "openclaw/plugin-sdk/number-runtime";
 import { collectString } from "./cli-options.js";

@@ -1,3 +1,4 @@
+/** Tests ACP runtime metadata in session listings. */
 import { describe, expect, it } from "vitest";
 import { resolveModelAgentRuntimeMetadata } from "../agents/agent-runtime-metadata.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";

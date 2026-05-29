@@ -1,3 +1,4 @@
+// extensions/oc-path cli registration helpers and runtime behavior.
 import type { OpenClawPluginApi } from "openclaw/plugin-sdk/plugin-entry";
 
 export function registerOcPathCli(api: OpenClawPluginApi): void {

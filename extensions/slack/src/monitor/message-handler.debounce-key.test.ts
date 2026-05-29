@@ -1,3 +1,4 @@
+// Tests extensions/slack/src/monitor message handler debounce key test behavior.
 import { describe, expect, it } from "vitest";
 import type { SlackMessageEvent } from "../types.js";
 import { buildSlackDebounceKey } from "./message-handler/debounce-key.js";

@@ -1,17 +1,22 @@
+// infra/outbound channel target helpers and runtime behavior.
 import {
   hasNonEmptyString as sharedHasNonEmptyString,
   normalizeOptionalString,
 } from "../../shared/string-coerce.js";
 import { MESSAGE_ACTION_TARGET_MODE } from "./message-action-spec.js";
 
+/** Reused constant for has Non Empty String behavior in src/infra/outbound. */
 export const hasNonEmptyString = sharedHasNonEmptyString;
 
+/** Reused constant for CHANNEL TARGET DESCRIPTION behavior in src/infra/outbound. */
 export const CHANNEL_TARGET_DESCRIPTION =
   "Recipient/channel: E.164 for WhatsApp/Signal, Telegram chat id/@username, Discord/Slack/Mattermost <channelId|user:ID|channel:ID>, or iMessage handle/chat_id";
 
+/** Reused constant for CHANNEL TARGETS DESCRIPTION behavior in src/infra/outbound. */
 export const CHANNEL_TARGETS_DESCRIPTION =
   "Recipient/channel targets (same format as --target); accepts ids or names when the directory is available.";
 
+/** Reused helper for apply Target To Params behavior in src/infra/outbound. */
 export function applyTargetToParams(params: {
   action: string;
   args: Record<string, unknown>;

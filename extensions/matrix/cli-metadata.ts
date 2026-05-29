@@ -1,3 +1,4 @@
+// extensions/matrix cli metadata helpers and runtime behavior.
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 import { registerMatrixCliMetadata } from "./src/cli-metadata.js";
 

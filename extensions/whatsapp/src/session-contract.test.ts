@@ -1,3 +1,4 @@
+// Tests extensions/whatsapp/src session contract test behavior.
 import { describe, expect, it } from "vitest";
 import {
   canonicalizeLegacySessionKey,

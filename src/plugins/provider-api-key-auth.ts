@@ -1,3 +1,4 @@
+// plugins provider api key auth helpers and runtime behavior.
 import { upsertAuthProfileWithLock } from "../agents/auth-profiles/profiles.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { SecretInput } from "../config/types.secrets.js";
@@ -90,6 +91,7 @@ async function applyApiKeyConfig(params: {
   return params.defaultModel ? applyPrimaryModel(next, params.defaultModel) : next;
 }
 
+/** Reused helper for create Provider Api Key Auth Method behavior in src/plugins. */
 export function createProviderApiKeyAuthMethod(
   params: ProviderApiKeyAuthMethodOptions,
 ): ProviderAuthMethod {

@@ -1,3 +1,4 @@
+// Tests extensions/file-transfer/src/shared params test behavior.
 import { describe, expect, it } from "vitest";
 import { readClampedInt, readGatewayCallOptions } from "./params.js";
 

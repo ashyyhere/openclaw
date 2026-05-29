@@ -1,3 +1,4 @@
+// extensions/migrate-hermes model helpers and runtime behavior.
 import {
   resolveAgentEffectiveModelPrimary,
   resolveDefaultAgentId,

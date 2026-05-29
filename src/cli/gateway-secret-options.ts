@@ -1,3 +1,4 @@
+/** Resolves gateway URL and token options from flags, files, and defaults. */
 import { readSecretFromFile } from "../acp/secret-file.js";
 import { defaultRuntime } from "../runtime.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
@@ -26,6 +27,7 @@ function warnGatewaySecretCliFlag(flag: "--token" | "--password"): void {
   );
 }
 
+/** Reused helper for resolve Gateway Auth Options behavior in src/cli. */
 export function resolveGatewayAuthOptions(opts: {
   token?: unknown;
   tokenFile?: unknown;

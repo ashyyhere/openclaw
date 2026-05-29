@@ -1,3 +1,4 @@
+// Tests infra provider usage test behavior.
 import { beforeEach, describe, expect, it } from "vitest";
 import { createProviderUsageFetch } from "../test-utils/provider-usage-fetch.js";
 import {

@@ -1,3 +1,4 @@
+// ui/src/ui/views usage helpers and runtime behavior.
 import { html, nothing } from "lit";
 import { t } from "../../i18n/index.ts";
 import { getUsageCacheRefreshTitle } from "../usage-cache-status.ts";
@@ -41,6 +42,7 @@ import type {
   UsageTotals,
 } from "./usageTypes.ts";
 
+/** Re-exported API for ui/src/ui/views, starting with Usage Column Id. */
 export type { UsageColumnId, SessionLogEntry, SessionLogRole };
 
 function createEmptyUsageTotals(): UsageTotals {
@@ -134,6 +136,7 @@ function renderUsageEmptyState(onRefresh: () => void) {
   `;
 }
 
+/** Reused helper for render Usage behavior in ui/src/ui/views. */
 export function renderUsage(props: UsageProps) {
   const { data, filters, display, detail, callbacks } = props;
   const filterActions = callbacks.filters;

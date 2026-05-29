@@ -1,3 +1,4 @@
+/** Calls provider-runtime policy hooks without loading runtime plugins on hot paths. */
 import {
   applyProviderNativeStreamingUsageCompatWithPlugin,
   normalizeProviderConfigWithPlugin,
@@ -6,6 +7,7 @@ import {
 import { resolveProviderPluginLookupKey } from "./models-config.providers.policy.lookup.js";
 import type { ProviderConfig } from "./models-config.providers.secrets.js";
 
+/** Apply provider-owned native-streaming usage compatibility policy. */
 export function applyProviderNativeStreamingUsagePolicy(
   providerKey: string,
   provider: ProviderConfig,
@@ -23,6 +25,7 @@ export function applyProviderNativeStreamingUsagePolicy(
   );
 }
 
+/** Apply provider-owned config normalization policy. */
 export function normalizeProviderConfigPolicy(
   providerKey: string,
   provider: ProviderConfig,
@@ -40,6 +43,7 @@ export function normalizeProviderConfigPolicy(
   );
 }
 
+/** Resolve provider-owned API-key env fallback policy. */
 export function resolveProviderConfigApiKeyPolicy(
   providerKey: string,
   provider?: ProviderConfig,

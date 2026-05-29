@@ -1,3 +1,4 @@
+/** Tests legacy config migration application. */
 import { describe, expect, it } from "vitest";
 import { findLegacyConfigIssues } from "../../../config/legacy.js";
 import type { OpenClawConfig } from "../../../config/types.js";

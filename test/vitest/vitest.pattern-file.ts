@@ -1,3 +1,4 @@
+// test/vitest vitest pattern file helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 

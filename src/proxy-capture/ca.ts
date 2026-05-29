@@ -1,3 +1,4 @@
+// proxy-capture ca helpers and runtime behavior.
 import { execFile } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
@@ -6,6 +7,7 @@ import { resolveSystemBin } from "../infra/resolve-system-bin.js";
 
 const execFileAsync = promisify(execFile);
 
+/** Reused helper for ensure Debug Proxy Ca behavior in src/proxy-capture. */
 export async function ensureDebugProxyCa(certDir: string): Promise<{
   certPath: string;
   keyPath: string;

@@ -1,3 +1,4 @@
+/** Streaming filter for DeepSeek DSML tool-call markup. */
 const DSML_KINDS = ["tool_use_error", "tool_calls", "tool_call", "function_calls"] as const;
 const DSML_BARS = ["|", "｜"] as const;
 
@@ -10,11 +11,13 @@ const DSML_CLOSE_TOKENS = DSML_BARS.flatMap((bar) =>
 const MAX_OPEN_TOKEN_LEN = Math.max(...DSML_OPEN_TOKENS.map((token) => token.length));
 const MAX_CLOSE_TOKEN_LEN = Math.max(...DSML_CLOSE_TOKENS.map((token) => token.length));
 
+/** Stateful chunk filter that suppresses DSML blocks from visible text. */
 export interface DeepSeekTextFilter {
   push(chunk: string): string[];
   flush(): string[];
 }
 
+/** Create a streaming DeepSeek DSML text filter. */
 export function createDeepSeekTextFilter(): DeepSeekTextFilter {
   let buffer = "";
   let insideDsml = false;

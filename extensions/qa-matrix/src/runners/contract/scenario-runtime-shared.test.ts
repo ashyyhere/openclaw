@@ -1,3 +1,4 @@
+// Tests extensions/qa-matrix/src/runners/contract scenario runtime shared test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { resolveMatrixQaNoReplyWindowMs } from "./scenario-runtime-shared.js";
 

@@ -1,5 +1,8 @@
+// media load options helpers and runtime behavior.
+/** Shared type for Outbound Media Read File in src/media. */
 export type OutboundMediaReadFile = (filePath: string) => Promise<Buffer>;
 
+/** Shared type for Outbound Media Access in src/media. */
 export type OutboundMediaAccess = {
   localRoots?: readonly string[];
   readFile?: OutboundMediaReadFile;
@@ -7,6 +10,7 @@ export type OutboundMediaAccess = {
   workspaceDir?: string;
 };
 
+/** Shared type for Outbound Media Load Params in src/media. */
 export type OutboundMediaLoadParams = {
   maxBytes?: number;
   mediaAccess?: OutboundMediaAccess;
@@ -21,6 +25,7 @@ export type OutboundMediaLoadParams = {
   workspaceDir?: string;
 };
 
+/** Shared type for Outbound Media Load Options in src/media. */
 export type OutboundMediaLoadOptions = {
   maxBytes?: number;
   localRoots?: readonly string[] | "any";
@@ -35,6 +40,7 @@ export type OutboundMediaLoadOptions = {
   workspaceDir?: string;
 };
 
+/** Reused helper for resolve Outbound Media Local Roots behavior in src/media. */
 export function resolveOutboundMediaLocalRoots(
   mediaLocalRoots?: readonly string[] | "any",
 ): readonly string[] | "any" | undefined {
@@ -44,6 +50,7 @@ export function resolveOutboundMediaLocalRoots(
   return mediaLocalRoots && mediaLocalRoots.length > 0 ? mediaLocalRoots : undefined;
 }
 
+/** Reused helper for resolve Outbound Media Access behavior in src/media. */
 export function resolveOutboundMediaAccess(
   params: {
     mediaAccess?: OutboundMediaAccess;
@@ -67,6 +74,7 @@ export function resolveOutboundMediaAccess(
   };
 }
 
+/** Reused helper for build Outbound Media Load Options behavior in src/media. */
 export function buildOutboundMediaLoadOptions(
   params: OutboundMediaLoadParams = {},
 ): OutboundMediaLoadOptions {

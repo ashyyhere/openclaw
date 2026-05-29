@@ -1,3 +1,4 @@
+// gateway credential planner helpers and runtime behavior.
 import { containsEnvVarReference } from "../config/env-substitution.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { hasConfiguredSecretInput, resolveSecretInputRef } from "../config/types.secrets.js";
@@ -17,6 +18,7 @@ type GatewayConfiguredCredentialInput = {
   hasSecretRef: boolean;
 };
 
+/** Shared type for Gateway Credential Plan in src/gateway. */
 export type GatewayCredentialPlan = {
   configuredMode: "local" | "remote";
   authMode?: string;
@@ -43,6 +45,7 @@ export type GatewayCredentialPlan = {
 
 type GatewaySecretDefaults = NonNullable<OpenClawConfig["secrets"]>["defaults"];
 
+/** Reused constant for trim To Undefined behavior in src/gateway. */
 export const trimToUndefined = normalizeOptionalString;
 
 /**
@@ -60,10 +63,12 @@ export function trimCredentialToUndefined(value: unknown): string | undefined {
   return trimmed;
 }
 
+/** Reused helper for has Gateway Token Env Candidate behavior in src/gateway. */
 export function hasGatewayTokenEnvCandidate(env: NodeJS.ProcessEnv = process.env): boolean {
   return Boolean(trimToUndefined(env.OPENCLAW_GATEWAY_TOKEN));
 }
 
+/** Reused helper for has Gateway Password Env Candidate behavior in src/gateway. */
 export function hasGatewayPasswordEnvCandidate(env: NodeJS.ProcessEnv = process.env): boolean {
   return Boolean(trimToUndefined(env.OPENCLAW_GATEWAY_PASSWORD));
 }
@@ -86,6 +91,7 @@ function resolveConfiguredGatewayCredentialInput(params: {
   };
 }
 
+/** Reused helper for create Gateway Credential Plan behavior in src/gateway. */
 export function createGatewayCredentialPlan(params: {
   config: OpenClawConfig;
   env?: NodeJS.ProcessEnv;

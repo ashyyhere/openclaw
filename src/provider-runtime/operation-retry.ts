@@ -1,8 +1,11 @@
+// provider-runtime operation retry helpers and runtime behavior.
 import { sleepWithAbort } from "../infra/backoff.js";
 import { formatErrorMessage } from "../infra/errors.js";
 
+/** Shared type for Provider Operation Retry Stage in src/provider-runtime. */
 export type ProviderOperationRetryStage = "read" | "poll" | "download" | "create";
 
+/** Shared type for Transient Provider Retry Params in src/provider-runtime. */
 export type TransientProviderRetryParams = {
   error: unknown;
   message: string;
@@ -12,6 +15,7 @@ export type TransientProviderRetryParams = {
   stage?: ProviderOperationRetryStage;
 };
 
+/** Shared type for Transient Provider Retry Options in src/provider-runtime. */
 export type TransientProviderRetryOptions = {
   /**
    * Total executions, including the first call.
@@ -25,14 +29,17 @@ export type TransientProviderRetryOptions = {
   sleep?: (ms: number, signal?: AbortSignal) => Promise<void>;
 };
 
+/** Shared type for Transient Provider Retry Config in src/provider-runtime. */
 export type TransientProviderRetryConfig = boolean | TransientProviderRetryOptions;
 
+/** Reused constant for DEFAULT TRANSIENT PROVIDER RETRY OPTIONS behavior in src/provider-runtime. */
 export const DEFAULT_TRANSIENT_PROVIDER_RETRY_OPTIONS = {
   attempts: 2,
   baseDelayMs: 250,
   maxDelayMs: 1_000,
 } as const satisfies TransientProviderRetryOptions;
 
+/** Reused helper for resolve Transient Provider Retry Options behavior in src/provider-runtime. */
 export function resolveTransientProviderRetryOptions(
   options?: TransientProviderRetryConfig,
 ): TransientProviderRetryOptions | undefined {
@@ -45,12 +52,14 @@ export function resolveTransientProviderRetryOptions(
   return options;
 }
 
+/** Reused helper for default Transient Provider Retry For Stage behavior in src/provider-runtime. */
 export function defaultTransientProviderRetryForStage(
   stage: ProviderOperationRetryStage,
 ): TransientProviderRetryConfig | undefined {
   return stage === "create" ? undefined : true;
 }
 
+/** Reused helper for provider Operation Retry Config behavior in src/provider-runtime. */
 export function providerOperationRetryConfig(
   stage: ProviderOperationRetryStage,
   options?: TransientProviderRetryConfig,
@@ -142,6 +151,7 @@ function hasTimeoutSignal(error: unknown, message: string): boolean {
   );
 }
 
+/** Reused helper for is Transient Provider Operation Error behavior in src/provider-runtime. */
 export function isTransientProviderOperationError(error: unknown, message: string): boolean {
   const status = readErrorStatus(error);
   if (status !== undefined) {
@@ -170,6 +180,7 @@ export function isTransientProviderOperationError(error: unknown, message: strin
   return false;
 }
 
+/** Reused helper for resolve Transient Provider Attempts behavior in src/provider-runtime. */
 export function resolveTransientProviderAttempts(options?: TransientProviderRetryOptions): number {
   if (!options) {
     return 1;
@@ -180,6 +191,7 @@ export function resolveTransientProviderAttempts(options?: TransientProviderRetr
   return Math.max(1, options.attempts);
 }
 
+/** Reused helper for resolve Transient Provider Delay Ms behavior in src/provider-runtime. */
 export function resolveTransientProviderDelayMs(
   options: TransientProviderRetryOptions,
   attemptNumber: number,
@@ -197,6 +209,7 @@ export function resolveTransientProviderDelayMs(
   return Math.min(maxDelayMs, baseDelayMs * 2 ** Math.max(attemptNumber - 1, 0));
 }
 
+/** Reused helper for should Retry Same Key Provider Operation behavior in src/provider-runtime. */
 export function shouldRetrySameKeyProviderOperation(params: {
   options: TransientProviderRetryOptions;
   error: unknown;
@@ -226,6 +239,7 @@ export function shouldRetrySameKeyProviderOperation(params: {
     : isTransientProviderOperationError(params.error, params.message);
 }
 
+/** Reused helper for execute Provider Operation With Retry behavior in src/provider-runtime. */
 export async function executeProviderOperationWithRetry<T>(params: {
   provider: string;
   stage: ProviderOperationRetryStage;

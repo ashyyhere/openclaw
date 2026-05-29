@@ -1,3 +1,4 @@
+// node-host invoke system run plan helpers and runtime behavior.
 import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
@@ -28,6 +29,7 @@ import {
 } from "../shared/string-coerce.js";
 import { splitShellArgs } from "../utils/shell-argv.js";
 
+/** Shared type for Approved Cwd Snapshot in src/node-host. */
 export type ApprovedCwdSnapshot = {
   cwd: string;
   stat: fs.Stats;
@@ -1061,6 +1063,7 @@ function pnpmDlxTailMayNeedStableBinding(argv: string[], cwd: string | undefined
   return snapshot.ok && snapshot.snapshot !== null;
 }
 
+/** Reused helper for resolve Mutable File Operand Snapshot Sync behavior in src/node-host. */
 export function resolveMutableFileOperandSnapshotSync(params: {
   argv: string[];
   cwd: string | undefined;
@@ -1176,6 +1179,7 @@ function resolveCanonicalApprovalCwdSync(cwd: string):
   };
 }
 
+/** Reused helper for revalidate Approved Cwd Snapshot behavior in src/node-host. */
 export function revalidateApprovedCwdSnapshot(params: { snapshot: ApprovedCwdSnapshot }): boolean {
   const current = resolveCanonicalApprovalCwdSync(params.snapshot.cwd);
   if (!current.ok) {
@@ -1184,6 +1188,7 @@ export function revalidateApprovedCwdSnapshot(params: { snapshot: ApprovedCwdSna
   return sameFileIdentity(params.snapshot.stat, current.snapshot.stat);
 }
 
+/** Reused helper for revalidate Approved Mutable File Operand behavior in src/node-host. */
 export function revalidateApprovedMutableFileOperand(params: {
   snapshot: SystemRunApprovalFileOperand;
   argv: string[];
@@ -1210,6 +1215,7 @@ export function revalidateApprovedMutableFileOperand(params: {
   }
 }
 
+/** Reused helper for harden Approved Execution Paths behavior in src/node-host. */
 export function hardenApprovedExecutionPaths(params: {
   approvedByAsk: boolean;
   argv: string[];
@@ -1304,6 +1310,7 @@ export function hardenApprovedExecutionPaths(params: {
   };
 }
 
+/** Reused helper for build System Run Approval Plan behavior in src/node-host. */
 export function buildSystemRunApprovalPlan(params: {
   command?: unknown;
   rawCommand?: unknown;

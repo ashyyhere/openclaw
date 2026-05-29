@@ -1,3 +1,4 @@
+// config schema shared helpers and runtime behavior.
 type JsonSchemaObject = {
   type?: string | string[];
   properties?: Record<string, JsonSchemaObject>;
@@ -8,10 +9,12 @@ type JsonSchemaObject = {
   oneOf?: JsonSchemaObject[];
 };
 
+/** Reused helper for clone Schema behavior in src/config. */
 export function cloneSchema<T>(value: T): T {
   return structuredClone(value);
 }
 
+/** Reused helper for as Schema Object behavior in src/config. */
 export function asSchemaObject(value: unknown): object | null {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
     return null;
@@ -19,6 +22,7 @@ export function asSchemaObject(value: unknown): object | null {
   return value;
 }
 
+/** Reused helper for schema Has Children behavior in src/config. */
 export function schemaHasChildren(schema: JsonSchemaObject): boolean {
   if (schema.properties && Object.keys(schema.properties).length > 0) {
     return true;
@@ -37,6 +41,7 @@ export function schemaHasChildren(schema: JsonSchemaObject): boolean {
   return Boolean(schema.items && typeof schema.items === "object");
 }
 
+/** Reused helper for find Wildcard Hint Match behavior in src/config. */
 export function findWildcardHintMatch<T>(params: {
   uiHints: Record<string, T>;
   path: string;

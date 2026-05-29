@@ -1,3 +1,4 @@
+/** E2E-style tests for basic nodes CLI commands through the full program. */
 import { Command } from "commander";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createIosNodeListResponse } from "./program.nodes-test-helpers.js";

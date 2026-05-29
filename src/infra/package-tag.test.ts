@@ -1,3 +1,4 @@
+// Tests infra package tag test behavior.
 import { describe, expect, it } from "vitest";
 import { normalizePackageTagInput } from "./package-tag.js";
 

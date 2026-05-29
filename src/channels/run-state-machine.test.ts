@@ -1,3 +1,4 @@
+/** Tests run-state machine transitions for busy and active-run counters. */
 import { describe, expect, it, vi } from "vitest";
 import { createRunStateMachine } from "./run-state-machine.js";
 

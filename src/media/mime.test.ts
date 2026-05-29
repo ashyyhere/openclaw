@@ -1,3 +1,4 @@
+// Tests media mime test behavior.
 import JSZip from "jszip";
 import { describe, expect, it } from "vitest";
 import { mediaKindFromMime } from "./constants.js";

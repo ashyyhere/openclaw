@@ -1,3 +1,4 @@
+// Tests gateway server channels test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { ChannelRuntimeSurface } from "../channels/plugins/channel-runtime-surface.types.js";
 import {

@@ -17,19 +17,24 @@ import type { HeartbeatWakeIntent, HeartbeatWakeSource } from "./heartbeat-wake.
 // Default minimum spacing between heartbeat runs for the same agent, regardless
 // of configured `every`. Even when `nextDueMs` is enforced, two wakes arriving
 // within milliseconds can race the schedule update; this floor prevents that.
+/** Reused constant for DEFAULT MIN WAKE SPACING MS behavior in src/infra. */
 export const DEFAULT_MIN_WAKE_SPACING_MS = 30_000;
 
 // Flood guard: if more than this many wakes for the same agent fall within the
 // flood window, the dispatcher logs a warning and forces the wake to defer to
 // the next scheduled tick. Tuned so a normal heartbeat that legitimately uses
 // `manual` retry doesn't trip it but a feedback loop does.
+/** Reused constant for DEFAULT FLOOD WINDOW MS behavior in src/infra. */
 export const DEFAULT_FLOOD_WINDOW_MS = 60_000;
+/** Reused constant for DEFAULT FLOOD THRESHOLD behavior in src/infra. */
 export const DEFAULT_FLOOD_THRESHOLD = 5;
 
+/** Shared type for Defer Decision in src/infra. */
 export type DeferDecision =
   | { defer: false }
   | { defer: true; reason: "not-due" | "min-spacing" | "flood" };
 
+/** Shared type for Should Defer Input in src/infra. */
 export type ShouldDeferInput = {
   /** Scheduler behavior requested by the wake producer. */
   intent: HeartbeatWakeIntent;

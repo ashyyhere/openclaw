@@ -1,3 +1,4 @@
+// cron service issue regressions test helpers helpers and runtime behavior.
 import { vi } from "vitest";
 import {
   createDefaultIsolatedRunner,
@@ -16,9 +17,11 @@ import { CronService } from "./service.js";
 
 type CronServiceOptions = ConstructorParameters<typeof CronService>[0];
 
+/** Reused constant for setup Cron Issue Regression Fixtures behavior in src/cron. */
 export const setupCronIssueRegressionFixtures = () =>
   setupCronRegressionFixtures({ prefix: "cron-issues-" });
 
+/** Re-exported API for src/cron. */
 export {
   createAbortAwareIsolatedRunner,
   createDueIsolatedJob,
@@ -31,6 +34,7 @@ export {
   writeCronStoreSnapshot,
 };
 
+/** Reused helper for start Cron For Store behavior in src/cron. */
 export async function startCronForStore(params: {
   storePath: string;
   cronEnabled?: boolean;

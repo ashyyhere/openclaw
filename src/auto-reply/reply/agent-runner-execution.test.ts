@@ -1,3 +1,4 @@
+// Coverage for reply agent execution lifecycle and result handling.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { LiveSessionModelSwitchError } from "../../agents/live-model-switch-error.js";
 import type { SessionEntry } from "../../config/sessions.js";

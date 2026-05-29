@@ -1,3 +1,4 @@
+/** Step helpers for doctor config validation and repair flow. */
 import { formatConfigIssueLines } from "../../../config/issue-format.js";
 import { protectActiveAuthProfileConfig } from "../../doctor-auth-profile-config.js";
 import { stripUnknownConfigKeys } from "../../doctor-config-analysis.js";
@@ -5,6 +6,7 @@ import type { DoctorConfigPreflightResult } from "../../doctor-config-preflight.
 import type { DoctorConfigMutationState } from "./config-mutation-state.js";
 import { migrateLegacyConfig } from "./legacy-config-migrate.js";
 
+/** Reused helper for apply Legacy Compatibility Step behavior in src/commands/doctor. */
 export function applyLegacyCompatibilityStep(params: {
   snapshot: DoctorConfigPreflightResult["snapshot"];
   state: DoctorConfigMutationState;
@@ -69,6 +71,7 @@ export function applyLegacyCompatibilityStep(params: {
   };
 }
 
+/** Reused helper for apply Unknown Config Key Step behavior in src/commands/doctor. */
 export function applyUnknownConfigKeyStep(params: {
   state: DoctorConfigMutationState;
   shouldRepair: boolean;

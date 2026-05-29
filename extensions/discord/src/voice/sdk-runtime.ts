@@ -1,3 +1,4 @@
+// extensions/discord/src/voice sdk runtime helpers and runtime behavior.
 import { createRequire } from "node:module";
 
 type DiscordVoiceSdk = typeof import("@discordjs/voice");

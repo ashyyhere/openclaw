@@ -1,3 +1,4 @@
+/** Covers skill watcher refresh behavior and ignored paths. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

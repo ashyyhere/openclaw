@@ -1,8 +1,10 @@
+/** Deletes or preserves subagent sessions and related resources after run completion. */
 import type { callGateway as defaultCallGateway } from "../gateway/call.js";
 import type { SpawnSubagentMode } from "./subagent-spawn.types.js";
 
 type CallGateway = typeof defaultCallGateway;
 
+/** Reused helper for delete Subagent Session For Cleanup behavior in src/agents. */
 export async function deleteSubagentSessionForCleanup(params: {
   callGateway: CallGateway;
   childSessionKey: string;

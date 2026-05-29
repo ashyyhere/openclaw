@@ -1,10 +1,13 @@
+// memory-host-sdk events helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { appendRegularFile } from "../infra/fs-safe.js";
 import type { MemoryDreamingPhaseName } from "./dreaming.js";
 
+/** Reused constant for MEMORY HOST EVENT LOG RELATIVE PATH behavior in src/memory-host-sdk. */
 export const MEMORY_HOST_EVENT_LOG_RELATIVE_PATH = path.join("memory", ".dreams", "events.jsonl");
 
+/** Shared type for Memory Host Recall Recorded Event in src/memory-host-sdk. */
 export type MemoryHostRecallRecordedEvent = {
   type: "memory.recall.recorded";
   timestamp: string;
@@ -18,6 +21,7 @@ export type MemoryHostRecallRecordedEvent = {
   }>;
 };
 
+/** Shared type for Memory Host Promotion Applied Event in src/memory-host-sdk. */
 export type MemoryHostPromotionAppliedEvent = {
   type: "memory.promotion.applied";
   timestamp: string;
@@ -33,6 +37,7 @@ export type MemoryHostPromotionAppliedEvent = {
   }>;
 };
 
+/** Shared type for Memory Host Dream Completed Event in src/memory-host-sdk. */
 export type MemoryHostDreamCompletedEvent = {
   type: "memory.dream.completed";
   timestamp: string;
@@ -43,15 +48,18 @@ export type MemoryHostDreamCompletedEvent = {
   storageMode: "inline" | "separate" | "both";
 };
 
+/** Shared type for Memory Host Event in src/memory-host-sdk. */
 export type MemoryHostEvent =
   | MemoryHostRecallRecordedEvent
   | MemoryHostPromotionAppliedEvent
   | MemoryHostDreamCompletedEvent;
 
+/** Reused helper for resolve Memory Host Event Log Path behavior in src/memory-host-sdk. */
 export function resolveMemoryHostEventLogPath(workspaceDir: string): string {
   return path.join(workspaceDir, MEMORY_HOST_EVENT_LOG_RELATIVE_PATH);
 }
 
+/** Reused helper for append Memory Host Event behavior in src/memory-host-sdk. */
 export async function appendMemoryHostEvent(
   workspaceDir: string,
   event: MemoryHostEvent,
@@ -65,6 +73,7 @@ export async function appendMemoryHostEvent(
   });
 }
 
+/** Reused helper for read Memory Host Events behavior in src/memory-host-sdk. */
 export async function readMemoryHostEvents(params: {
   workspaceDir: string;
   limit?: number;

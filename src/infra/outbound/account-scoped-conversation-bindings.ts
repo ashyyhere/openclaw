@@ -1,3 +1,4 @@
+// infra/outbound account scoped conversation bindings helpers and runtime behavior.
 import { resolveThreadBindingConversationIdFromBindingId } from "../../channels/thread-binding-id.js";
 import {
   resolveThreadBindingIdleTimeoutMsForChannel,
@@ -13,6 +14,7 @@ import {
   type SessionBindingRecord,
 } from "./session-binding-service.js";
 
+/** Shared type for Account Scoped Conversation Binding Record in src/infra/outbound. */
 export type AccountScopedConversationBindingRecord<TKind extends string = string> = {
   accountId: string;
   conversationId: string;
@@ -25,6 +27,7 @@ export type AccountScopedConversationBindingRecord<TKind extends string = string
   lastActivityAt: number;
 };
 
+/** Shared type for Account Scoped Conversation Binding Manager in src/infra/outbound. */
 export type AccountScopedConversationBindingManager<TKind extends string = string> = {
   accountId: string;
   getByConversationId: (
@@ -115,6 +118,7 @@ function toSessionBindingRecord<TKind extends string>(params: {
   };
 }
 
+/** Reused helper for create Account Scoped Conversation Binding Manager behavior in src/infra/outbound. */
 export function createAccountScopedConversationBindingManager<TKind extends string>(params: {
   channel: string;
   cfg: OpenClawConfig;
@@ -340,6 +344,7 @@ export function createAccountScopedConversationBindingManager<TKind extends stri
   return manager;
 }
 
+/** Reused helper for reset Account Scoped Conversation Bindings For Tests behavior in src/infra/outbound. */
 export function resetAccountScopedConversationBindingsForTests(params: { stateKey: symbol }) {
   const state = getState(params.stateKey);
   for (const manager of state.managersByAccountId.values()) {

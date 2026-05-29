@@ -9,8 +9,10 @@ import { resolvePinnedHostnameWithPolicy, type SsrFPolicy } from "openclaw/plugi
 const ZALO_API_BASE = "https://bot-api.zaloplatforms.com";
 const ZALO_MEDIA_SSRF_POLICY: SsrFPolicy = {};
 
+/** Public zalo plugin type for Zalo Fetch. */
 export type ZaloFetch = (input: string, init?: RequestInit) => Promise<Response>;
 
+/** Public zalo plugin type for Zalo Api Response. */
 export type ZaloApiResponse<T = unknown> = {
   ok: boolean;
   result?: T;
@@ -18,12 +20,14 @@ export type ZaloApiResponse<T = unknown> = {
   description?: string;
 };
 
+/** Public zalo plugin type for Zalo Bot Info. */
 export type ZaloBotInfo = {
   id: string;
   name: string;
   avatar?: string;
 };
 
+/** Public zalo plugin type for Zalo Message. */
 export type ZaloMessage = {
   message_id: string;
   from: {
@@ -45,6 +49,7 @@ export type ZaloMessage = {
   message_type?: string;
 };
 
+/** Public zalo plugin type for Zalo Update. */
 export type ZaloUpdate = {
   event_name:
     | "message.text.received"
@@ -54,38 +59,45 @@ export type ZaloUpdate = {
   message?: ZaloMessage;
 };
 
+/** Public zalo plugin type for Zalo Send Message Params. */
 export type ZaloSendMessageParams = {
   chat_id: string;
   text: string;
 };
 
+/** Public zalo plugin type for Zalo Send Photo Params. */
 export type ZaloSendPhotoParams = {
   chat_id: string;
   photo: string;
   caption?: string;
 };
 
+/** Public zalo plugin type for Zalo Send Chat Action Params. */
 export type ZaloSendChatActionParams = {
   chat_id: string;
   action: "typing" | "upload_photo";
 };
 
+/** Public zalo plugin type for Zalo Set Webhook Params. */
 export type ZaloSetWebhookParams = {
   url: string;
   secret_token: string;
 };
 
+/** Public zalo plugin type for Zalo Webhook Info. */
 export type ZaloWebhookInfo = {
   url?: string;
   updated_at?: number;
   has_custom_certificate?: boolean;
 };
 
+/** Public zalo plugin type for Zalo Get Updates Params. */
 export type ZaloGetUpdatesParams = {
   /** Timeout in seconds (passed as string to API) */
   timeout?: number;
 };
 
+/** Public zalo plugin class for Zalo Api Error behavior. */
 export class ZaloApiError extends Error {
   constructor(
     message: string,

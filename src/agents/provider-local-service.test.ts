@@ -1,3 +1,4 @@
+/** Tests managed provider local service lifecycle behavior. */
 import fs from "node:fs/promises";
 import net from "node:net";
 import os from "node:os";

@@ -1,5 +1,7 @@
+// Reply routing policy helpers for message channels and private routes.
 import { INTERNAL_MESSAGE_CHANNEL, normalizeMessageChannel } from "../../utils/message-channel.js";
 
+/** Reused helper for resolve Reply Routing Decision behavior in src/auto-reply/reply. */
 export function resolveReplyRoutingDecision(params: {
   provider?: string;
   surface?: string;

@@ -15,6 +15,7 @@ import { lookupCachedContextTokens, MODEL_CONTEXT_TOKEN_CACHE } from "./context-
 import { CONTEXT_WINDOW_RUNTIME_STATE } from "./context-runtime-state.js";
 import { normalizeProviderId } from "./model-selection.js";
 
+/** Re-exported API for src/agents, starting with reset Context Window Cache For Test. */
 export { resetContextWindowCacheForTest } from "./context-runtime-state.js";
 
 type ModelEntry = {
@@ -45,6 +46,7 @@ const ANTHROPIC_GA_1M_MODEL_PREFIXES = [
   "claude-sonnet-4-6",
   "claude-sonnet-4.6",
 ] as const;
+/** Reused constant for ANTHROPIC CONTEXT 1 M TOKENS behavior in src/agents. */
 export const ANTHROPIC_CONTEXT_1M_TOKENS = 1_048_576;
 const CONFIG_LOAD_RETRY_POLICY: BackoffPolicy = {
   initialMs: 1_000,
@@ -53,6 +55,7 @@ const CONFIG_LOAD_RETRY_POLICY: BackoffPolicy = {
   jitter: 0,
 };
 
+/** Reused helper for apply Discovered Context Windows behavior in src/agents. */
 export function applyDiscoveredContextWindows(params: {
   cache: Map<string, number>;
   models: ModelEntry[];
@@ -82,6 +85,7 @@ export function applyDiscoveredContextWindows(params: {
   }
 }
 
+/** Reused helper for apply Configured Context Windows behavior in src/agents. */
 export function applyConfiguredContextWindows(params: {
   cache: Map<string, number>;
   modelsConfig: ModelsConfig | undefined;
@@ -153,6 +157,7 @@ function primeConfiguredContextWindows(): OpenClawConfig | undefined {
   }
 }
 
+/** Reused helper for ensure Context Window Cache Loaded behavior in src/agents. */
 export function ensureContextWindowCacheLoaded(): Promise<void> {
   if (CONTEXT_WINDOW_RUNTIME_STATE.loadPromise) {
     return CONTEXT_WINDOW_RUNTIME_STATE.loadPromise;
@@ -204,6 +209,7 @@ export function ensureContextWindowCacheLoaded(): Promise<void> {
   return CONTEXT_WINDOW_RUNTIME_STATE.loadPromise;
 }
 
+/** Reused helper for lookup Context Tokens behavior in src/agents. */
 export function lookupContextTokens(
   modelId?: string,
   options?: { allowAsyncLoad?: boolean; skipRuntimeConfigLoad?: boolean },
@@ -361,6 +367,7 @@ function resolveModelFamilyId(modelId: string): string {
   return normalized.includes("/") ? (normalized.split("/").at(-1) ?? normalized) : normalized;
 }
 
+/** Reused helper for resolve Context Tokens For Model behavior in src/agents. */
 export function resolveContextTokensForModel(params: {
   cfg?: OpenClawConfig;
   provider?: string;

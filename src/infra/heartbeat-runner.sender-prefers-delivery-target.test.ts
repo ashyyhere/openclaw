@@ -1,3 +1,4 @@
+// Tests infra heartbeat runner sender prefers delivery target test behavior.
 import { describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import { runHeartbeatOnce } from "./heartbeat-runner.js";

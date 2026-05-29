@@ -1,3 +1,5 @@
+// media content length helpers and runtime behavior.
+/** Reused helper for parse Media Content Length behavior in src/media. */
 export function parseMediaContentLength(raw: string | null): number | null {
   if (raw === null) {
     return null;

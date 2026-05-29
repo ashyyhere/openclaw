@@ -1,3 +1,4 @@
+/** Reads, waits for, and formats subagent completion output for announcement flows. */
 import { isSilentReplyText, SILENT_REPLY_TOKEN } from "../auto-reply/tokens.js";
 import { asFiniteNumber } from "../shared/number-coercion.js";
 import { buildAgentRunTerminalOutcomeFromWaitResult } from "./agent-run-terminal-outcome.js";
@@ -64,6 +65,7 @@ type AgentWaitResult = {
   providerStarted?: boolean;
 };
 
+/** Terminal status/timing summary for a child run being announced. */
 export type SubagentRunOutcome = {
   status: "ok" | "error" | "timeout" | "unknown";
   error?: string;
@@ -72,6 +74,7 @@ export type SubagentRunOutcome = {
   elapsedMs?: number;
 };
 
+/** Adds elapsed timing to a subagent outcome when start/end timestamps are available. */
 export function withSubagentOutcomeTiming(
   outcome: SubagentRunOutcome,
   timing: {
@@ -194,6 +197,7 @@ function selectSubagentOutputText(snapshot: SubagentOutputSnapshot): string | un
   return undefined;
 }
 
+/** Reads the latest assistant-visible output for a subagent session. */
 export async function readSubagentOutput(
   sessionKey: string,
   _outcome?: SubagentRunOutcome,
@@ -229,6 +233,7 @@ export async function readSubagentOutput(
   return undefined;
 }
 
+/** Re-reads subagent output briefly to cover completion/write races. */
 export async function readLatestSubagentOutputWithRetry(params: {
   sessionKey: string;
   maxWaitMs: number;
@@ -243,6 +248,7 @@ export async function readLatestSubagentOutputWithRetry(params: {
   });
 }
 
+/** Waits for a child run to settle and maps gateway status into announce outcome. */
 export async function waitForSubagentRunOutcome(
   runId: string,
   timeoutMs: number,
@@ -258,6 +264,7 @@ export async function waitForSubagentRunOutcome(
   });
 }
 
+/** Applies wait outcome context to captured completion text and fallback reporting. */
 export function applySubagentWaitOutcome(params: {
   wait: AgentWaitResult | undefined;
   outcome: SubagentRunOutcome | undefined;
@@ -293,6 +300,7 @@ export function applySubagentWaitOutcome(params: {
   return next;
 }
 
+/** Captures a subagent completion reply with optional wait/retry behavior. */
 export async function captureSubagentCompletionReply(
   sessionKey: string,
   options?: { waitForReply?: boolean; outcome?: SubagentRunOutcome; sessionFile?: string },
@@ -365,6 +373,7 @@ function selectChildCompletionResultText(child: ChildCompletionRow): string | un
   )?.trim();
 }
 
+/** Formats child completion rows into parent-readable findings text. */
 export function buildChildCompletionFindings(
   children: Array<ChildCompletionRow>,
 ): string | undefined {
@@ -408,6 +417,7 @@ export function buildChildCompletionFindings(
   return ["Child completion results:", "", ...sections].join("\n\n");
 }
 
+/** Keeps only the latest completion row per child session/run identity. */
 export function dedupeLatestChildCompletionRows(
   children: Array<{
     childSessionKey: string;
@@ -439,6 +449,7 @@ export function dedupeLatestChildCompletionRows(
   return [...latestByChildSessionKey.values()];
 }
 
+/** Filters completion rows to direct children of the current requester session. */
 export function filterCurrentDirectChildCompletionRows(
   children: Array<{
     runId: string;
@@ -516,6 +527,7 @@ function formatTokenCount(value?: number) {
   return String(Math.round(value));
 }
 
+/** Builds a compact stats suffix for announcement messages. */
 export async function buildCompactAnnounceStatsLine(params: {
   sessionKey: string;
   startedAt?: number;
@@ -559,6 +571,7 @@ export async function buildCompactAnnounceStatsLine(params: {
   return `Stats: ${parts.join(" • ")}`;
 }
 
+/** Test-only override hook for announcement-output dependencies. */
 export const testing = {
   setDepsForTest(overrides?: Partial<SubagentAnnounceOutputDeps>) {
     subagentAnnounceOutputDeps = overrides
@@ -569,4 +582,5 @@ export const testing = {
       : defaultSubagentAnnounceOutputDeps;
   },
 };
+/** Re-exported API for src/agents, starting with testing. */
 export { testing as __testing };

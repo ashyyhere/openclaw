@@ -1,3 +1,4 @@
+/** Registers migration commands for config and state upgrades. */
 import type { Command } from "commander";
 import { theme } from "../../../packages/terminal-core/src/theme.js";
 import {
@@ -87,6 +88,7 @@ function readVerifyPluginApps(value: unknown): boolean {
   return value === true;
 }
 
+/** Reused helper for register Migrate Command behavior in src/cli/program. */
 export function registerMigrateCommand(program: Command) {
   const migrate = addVerifyPluginAppsOption(
     program

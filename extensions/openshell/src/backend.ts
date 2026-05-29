@@ -1,3 +1,4 @@
+// extensions/openshell/src backend helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import type {

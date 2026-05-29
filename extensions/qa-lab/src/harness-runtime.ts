@@ -1,3 +1,4 @@
+// extensions/qa-lab/src harness runtime helpers and runtime behavior.
 import {
   buildMentionRegexes,
   implicitMentionKindWhen,

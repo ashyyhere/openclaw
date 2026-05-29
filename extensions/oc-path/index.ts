@@ -1,3 +1,4 @@
+// extensions/oc-path index helpers and runtime behavior.
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 import { registerOcPathCli } from "./cli-registration.js";
 

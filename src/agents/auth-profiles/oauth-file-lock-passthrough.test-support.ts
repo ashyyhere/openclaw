@@ -1,3 +1,4 @@
+/** Passthrough file-lock mocks for OAuth refresh tests. */
 import { vi } from "vitest";
 
 vi.mock("../../infra/file-lock.js", () => ({

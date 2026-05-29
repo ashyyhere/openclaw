@@ -1,3 +1,4 @@
+/** Tests web-search provider contract helpers and field mapping. */
 import { describe, expect, it } from "vitest";
 import { createWebSearchProviderContractFields } from "./provider-web-search-contract.js";
 

@@ -1,3 +1,4 @@
+// extensions/slack/src actions helpers and runtime behavior.
 import type { Block, KnownBlock, WebClient } from "@slack/web-api";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { requireRuntimeConfig } from "openclaw/plugin-sdk/plugin-config-runtime";

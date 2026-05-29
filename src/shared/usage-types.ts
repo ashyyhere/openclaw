@@ -1,3 +1,4 @@
+// shared usage types helpers and runtime behavior.
 import type { SessionSystemPromptReport } from "../config/sessions/types.js";
 import type {
   CostUsageSummary,
@@ -10,6 +11,7 @@ import type {
   SessionToolUsage,
 } from "../infra/session-cost-usage.js";
 
+/** Shared type for Session Usage Entry in src/shared. */
 export type SessionUsageEntry = {
   key: string;
   label?: string;
@@ -41,6 +43,7 @@ export type SessionUsageEntry = {
   contextWeight?: SessionSystemPromptReport | null;
 };
 
+/** Shared type for Sessions Usage Aggregates in src/shared. */
 export type SessionsUsageAggregates = {
   messages: SessionMessageCounts;
   tools: SessionToolUsage;
@@ -61,6 +64,7 @@ export type SessionsUsageAggregates = {
   }>;
 };
 
+/** Shared type for Sessions Usage Result in src/shared. */
 export type SessionsUsageResult = {
   updatedAt: number;
   startDate: string;

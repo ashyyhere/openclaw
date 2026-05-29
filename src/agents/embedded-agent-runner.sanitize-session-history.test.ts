@@ -1,3 +1,4 @@
+/** Tests embedded-agent session-history sanitization cases. */
 import type { AgentMessage } from "openclaw/plugin-sdk/agent-core";
 import type {
   AssistantMessage,

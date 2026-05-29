@@ -1,3 +1,4 @@
+// Tests extensions/discord/src resolve channels test behavior.
 import { withFetchPreconnect } from "openclaw/plugin-sdk/test-env";
 import { describe, expect, it } from "vitest";
 import { resolveDiscordChannelAllowlist } from "./resolve-channels.js";

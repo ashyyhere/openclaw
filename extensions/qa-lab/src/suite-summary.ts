@@ -1,3 +1,4 @@
+// extensions/qa-lab/src suite summary helpers and runtime behavior.
 import type { QaProviderMode } from "./model-selection.js";
 import type { RuntimeId, RuntimeParityResult } from "./runtime-parity.js";
 

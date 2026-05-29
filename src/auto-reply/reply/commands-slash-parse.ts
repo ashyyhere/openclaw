@@ -1,11 +1,14 @@
+// Generic slash command parser used by command handlers.
 import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";
 
+/** Shared type for Slash Command Parse Result in src/auto-reply/reply. */
 export type SlashCommandParseResult =
   | { kind: "no-match" }
   | { kind: "empty" }
   | { kind: "invalid" }
   | { kind: "parsed"; action: string; args: string };
 
+/** Shared type for Parsed Slash Command in src/auto-reply/reply. */
 export type ParsedSlashCommand =
   | { ok: true; action: string; args: string }
   | { ok: false; message: string };
@@ -39,6 +42,7 @@ function parseSlashCommandActionArgs(raw: string, slash: string): SlashCommandPa
   return { kind: "parsed", action, args };
 }
 
+/** Reused helper for parse Slash Command Or Null behavior in src/auto-reply/reply. */
 export function parseSlashCommandOrNull(
   raw: string,
   slash: string,

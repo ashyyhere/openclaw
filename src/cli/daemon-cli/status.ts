@@ -4,6 +4,7 @@ import { gatherDaemonStatus } from "./status.gather.js";
 import { printDaemonStatus } from "./status.print.js";
 import type { DaemonStatusOptions } from "./types.js";
 
+/** Reused helper for run Daemon Status behavior in src/cli/daemon-cli. */
 export async function runDaemonStatus(opts: DaemonStatusOptions) {
   try {
     if (opts.requireRpc && !opts.probe) {

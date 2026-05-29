@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server plugin approval roundtrip helpers and runtime behavior.
 import {
   callGatewayTool,
   type EmbeddedRunAttemptParams,

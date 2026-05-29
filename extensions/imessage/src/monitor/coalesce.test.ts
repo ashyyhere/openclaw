@@ -1,3 +1,4 @@
+// Tests extensions/imessage/src/monitor coalesce test behavior.
 import { describe, expect, it } from "vitest";
 import {
   combineIMessagePayloads,

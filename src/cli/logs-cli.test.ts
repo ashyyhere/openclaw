@@ -1,3 +1,4 @@
+/** Tests logs CLI command behavior across gateway and local modes. */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { GatewayTransportError } from "../gateway/call.js";
 import { runRegisteredCli } from "../test-utils/command-runner.js";

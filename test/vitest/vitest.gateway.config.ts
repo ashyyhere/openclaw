@@ -1,3 +1,4 @@
+// test/vitest vitest gateway config helpers and runtime behavior.
 import { createProjectShardVitestConfig } from "./vitest.project-shard-config.ts";
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 

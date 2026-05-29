@@ -4,6 +4,7 @@ import {
 } from "./subagent-registry.store.sqlite.js";
 import type { SubagentRunRecord } from "./subagent-registry.types.js";
 
+/** Reused helper for persist Subagent Runs To Disk behavior in src/agents. */
 export function persistSubagentRunsToDisk(runs: Map<string, SubagentRunRecord>) {
   try {
     saveSubagentRegistryToSqlite(runs);
@@ -12,10 +13,12 @@ export function persistSubagentRunsToDisk(runs: Map<string, SubagentRunRecord>) 
   }
 }
 
+/** Reused helper for persist Subagent Runs To Disk Or Throw behavior in src/agents. */
 export function persistSubagentRunsToDiskOrThrow(runs: Map<string, SubagentRunRecord>) {
   saveSubagentRegistryToSqlite(runs);
 }
 
+/** Reused helper for restore Subagent Runs From Disk behavior in src/agents. */
 export function restoreSubagentRunsFromDisk(params: {
   runs: Map<string, SubagentRunRecord>;
   mergeOnly?: boolean;
@@ -38,6 +41,7 @@ export function restoreSubagentRunsFromDisk(params: {
   return added;
 }
 
+/** Reused helper for get Subagent Runs Snapshot For Read behavior in src/agents. */
 export function getSubagentRunsSnapshotForRead(
   inMemoryRuns: Map<string, SubagentRunRecord>,
 ): Map<string, SubagentRunRecord> {

@@ -1,3 +1,4 @@
+// extensions/line/src actions helpers and runtime behavior.
 import type { messagingApi } from "@line/bot-sdk";
 
 export type Action = messagingApi.Action;

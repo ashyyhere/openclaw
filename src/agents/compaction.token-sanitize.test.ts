@@ -1,3 +1,4 @@
+/** Tests compaction token estimation after sensitive detail sanitization. */
 import type { AgentMessage } from "openclaw/plugin-sdk/agent-core";
 import { describe, expect, it, vi } from "vitest";
 

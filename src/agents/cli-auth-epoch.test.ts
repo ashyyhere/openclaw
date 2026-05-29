@@ -1,3 +1,4 @@
+/** Tests CLI auth epoch derivation from credential state. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { AuthProfileStore } from "./auth-profiles/types.js";
 import {

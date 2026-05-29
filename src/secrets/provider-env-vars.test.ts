@@ -1,3 +1,4 @@
+// Tests secrets provider env vars test behavior.
 import { describe, expect, it } from "vitest";
 import {
   getProviderEnvVars,

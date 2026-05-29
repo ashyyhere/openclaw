@@ -1,3 +1,4 @@
+// Resolves provider API keys for non-interactive onboarding from flags, env, or auth profiles.
 import {
   ensureAuthProfileStore,
   resolveApiKeyForProfile,
@@ -10,6 +11,7 @@ import type { RuntimeEnv } from "../../runtime.js";
 import { normalizeOptionalSecretInput } from "../../utils/normalize-secret-input.js";
 import type { SecretInputMode } from "../onboard-types.js";
 
+/** Shared type for Non Interactive Api Key Source in src/commands/onboard-non-interactive. */
 export type NonInteractiveApiKeySource = "flag" | "env" | "profile";
 
 function parseEnvVarNameFromSourceLabel(source: string | undefined): string | undefined {
@@ -49,6 +51,7 @@ async function resolveApiKeyFromProfiles(params: {
   return null;
 }
 
+/** Reused helper for resolve Non Interactive Api Key behavior in src/commands/onboard-non-interactive. */
 export async function resolveNonInteractiveApiKey(params: {
   provider: string;
   cfg: OpenClawConfig;

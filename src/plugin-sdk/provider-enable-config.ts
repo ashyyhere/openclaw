@@ -1,3 +1,4 @@
+/** Public SDK helper for enabling provider plugins in config patches. */
 import { ensurePluginAllowlisted } from "../config/plugins-allowlist.js";
 
 type ProviderPluginConfig = {
@@ -13,6 +14,7 @@ type ProviderEnableConfigCarrier = {
   };
 };
 
+/** Result from enabling a provider plugin or explaining why it stayed disabled. */
 export type PluginEnableResult<TConfig extends ProviderEnableConfigCarrier> = {
   config: TConfig;
   enabled: boolean;

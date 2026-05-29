@@ -1,4 +1,5 @@
 #!/usr/bin/env -S node --import tsx
+// scripts/dev channel message flows helpers and runtime behavior.
 import { setTimeout as sleep } from "node:timers/promises";
 import { fileURLToPath } from "node:url";
 import { Bot, type ApiClientOptions } from "grammy";

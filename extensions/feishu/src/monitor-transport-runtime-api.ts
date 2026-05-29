@@ -1,3 +1,4 @@
+// extensions/feishu/src monitor transport runtime api helpers and runtime behavior.
 export type { RuntimeEnv } from "../runtime-api.js";
 export { safeEqualSecret } from "openclaw/plugin-sdk/security-runtime";
 export {

@@ -1,3 +1,4 @@
+// extensions/memory-core/src/memory manager reindex state helpers and runtime behavior.
 import {
   hashText,
   normalizeExtraMemoryPaths,

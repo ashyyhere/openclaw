@@ -1,3 +1,4 @@
+// Tests media input files fetch guard test behavior.
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 const fetchWithSsrFGuardMock = vi.fn();

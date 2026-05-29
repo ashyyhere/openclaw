@@ -1,3 +1,4 @@
+// Tests gateway server tools catalog test behavior.
 import { describe, expect, it } from "vitest";
 import { connectOk, installGatewayTestHooks, rpcReq } from "./test-helpers.js";
 import { withServer } from "./test-with-server.js";

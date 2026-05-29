@@ -1,3 +1,5 @@
+// utils mask api key helpers and runtime behavior.
+/** Reused constant for mask Api Key behavior in src/utils. */
 export const maskApiKey = (value: string): string => {
   const trimmed = value.trim();
   if (!trimmed) {

@@ -1,5 +1,6 @@
 // Focused low-level text/runtime helpers used by bundled plugins.
 
+/** Re-exported API for src/plugin-sdk. */
 export {
   CONFIG_DIR,
   clamp,
@@ -21,5 +22,7 @@ export {
   sliceUtf16Safe,
   truncateUtf16Safe,
 } from "../utils.js";
+/** Re-exported API for src/plugin-sdk, starting with fetch With Timeout. */
 export { fetchWithTimeout } from "../utils/fetch-timeout.js";
+/** Re-exported API for src/plugin-sdk, starting with with Timeout. */
 export { withTimeout } from "../utils/with-timeout.js";

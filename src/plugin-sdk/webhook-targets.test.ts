@@ -1,3 +1,4 @@
+/** Tests webhook target registration and matching helpers. */
 import { EventEmitter } from "node:events";
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { afterEach, describe, expect, it, vi } from "vitest";

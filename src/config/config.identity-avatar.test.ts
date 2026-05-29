@@ -1,3 +1,4 @@
+// Tests config config identity avatar test behavior.
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { withTempHome } from "./test-helpers.js";

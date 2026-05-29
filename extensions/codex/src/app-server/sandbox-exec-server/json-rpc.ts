@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server/sandbox-exec-server json rpc helpers and runtime behavior.
 import type { RawData, WebSocket } from "ws";
 import type { JsonObject, JsonValue } from "../protocol.js";
 import type { HttpHeader, JsonRpcRequest } from "./types.js";

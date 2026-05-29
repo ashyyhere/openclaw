@@ -1,3 +1,4 @@
+// infra restart handoff helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
@@ -5,8 +6,10 @@ import { resolveStateDir } from "../config/paths.js";
 import { createSubsystemLogger } from "../logging/subsystem.js";
 import { isRecord } from "../shared/record-coerce.js";
 
+/** Reused constant for GATEWAY SUPERVISOR RESTART HANDOFF FILENAME behavior in src/infra. */
 export const GATEWAY_SUPERVISOR_RESTART_HANDOFF_FILENAME =
   "gateway-supervisor-restart-handoff.json";
+/** Reused constant for GATEWAY SUPERVISOR RESTART HANDOFF KIND behavior in src/infra. */
 export const GATEWAY_SUPERVISOR_RESTART_HANDOFF_KIND = "gateway-supervisor-restart-handoff";
 const GATEWAY_RESTART_HANDOFF_TTL_MS = 60_000;
 const GATEWAY_RESTART_TRACE_HANDOFF_MAX_DURATION_MS = 10 * 60_000;
@@ -17,7 +20,9 @@ const MAX_REASON_LENGTH = 200;
 
 const handoffLog = createSubsystemLogger("restart-handoff");
 
+/** Shared type for Gateway Restart Handoff Restart Kind in src/infra. */
 export type GatewayRestartHandoffRestartKind = "full-process" | "update-process";
+/** Shared type for Gateway Restart Handoff Source in src/infra. */
 export type GatewayRestartHandoffSource =
   | "config-write"
   | "gateway-update"
@@ -25,8 +30,10 @@ export type GatewayRestartHandoffSource =
   | "plugin-change"
   | "signal"
   | "unknown";
+/** Shared type for Gateway Restart Handoff Supervisor Mode in src/infra. */
 export type GatewayRestartHandoffSupervisorMode = "launchd" | "systemd" | "schtasks" | "external";
 
+/** Shared type for Gateway Restart Handoff in src/infra. */
 export type GatewayRestartHandoff = {
   kind: typeof GATEWAY_SUPERVISOR_RESTART_HANDOFF_KIND;
   version: 1;
@@ -77,6 +84,7 @@ function formatDiagnosticValue(value: string): string {
   return normalized.trimEnd();
 }
 
+/** Reused helper for format Gateway Restart Handoff Diagnostic behavior in src/infra. */
 export function formatGatewayRestartHandoffDiagnostic(
   handoff: GatewayRestartHandoff,
   now = Date.now(),
@@ -110,6 +118,7 @@ function unlinkRegularFileSync(filePath: string): boolean {
   }
 }
 
+/** Reused helper for clear Gateway Restart Handoff Sync behavior in src/infra. */
 export function clearGatewayRestartHandoffSync(env: NodeJS.ProcessEnv = process.env): void {
   unlinkRegularFileSync(resolveGatewayRestartHandoffPath(env));
 }
@@ -277,6 +286,7 @@ function readGatewayRestartHandoffRawSync(env: NodeJS.ProcessEnv): string | null
   }
 }
 
+/** Reused helper for write Gateway Restart Handoff Sync behavior in src/infra. */
 export function writeGatewayRestartHandoffSync(opts: {
   env?: NodeJS.ProcessEnv;
   pid?: number;
@@ -350,6 +360,7 @@ export function writeGatewayRestartHandoffSync(opts: {
   }
 }
 
+/** Reused helper for read Gateway Restart Handoff Sync behavior in src/infra. */
 export function readGatewayRestartHandoffSync(
   env: NodeJS.ProcessEnv = process.env,
   now = Date.now(),
@@ -365,6 +376,7 @@ export function readGatewayRestartHandoffSync(
   return payload;
 }
 
+/** Reused helper for consume Gateway Restart Handoff For Exited Process Sync behavior in src/infra. */
 export function consumeGatewayRestartHandoffForExitedProcessSync(opts: {
   env?: NodeJS.ProcessEnv;
   exitedPid?: number;

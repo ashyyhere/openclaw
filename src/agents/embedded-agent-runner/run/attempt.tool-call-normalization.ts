@@ -1,3 +1,4 @@
+/** Normalizes tool-call ids and names for provider replay compatibility. */
 import { visitObjectContentBlocks } from "../../../shared/message-content-blocks.js";
 import { normalizeLowercaseStringOrEmpty } from "../../../shared/string-coerce.js";
 import {
@@ -900,6 +901,7 @@ function wrapStreamTrimToolCallNames(
   return stream;
 }
 
+/** Wraps streaming so tool-call names are trimmed before downstream handling. */
 export function wrapStreamFnTrimToolCallNames(
   baseFn: StreamFn,
   allowedToolNames?: Set<string>,
@@ -932,6 +934,7 @@ type ReplayToolCallIdSanitizerDecision = {
   isOpenAIResponsesApi: boolean;
 };
 
+/** Decides whether replayed tool-call ids need provider-specific sanitizing. */
 export function shouldApplyReplayToolCallIdSanitizer(
   params: ReplayToolCallIdSanitizerDecision,
 ): params is ReplayToolCallIdSanitizerDecision & { toolCallIdMode: ToolCallIdMode } {
@@ -940,6 +943,7 @@ export function shouldApplyReplayToolCallIdSanitizer(
   );
 }
 
+/** Sanitizes replayed tool-call ids before sending history to a stream. */
 export function sanitizeReplayToolCallIdsForStream(params: {
   messages: AgentMessage[];
   mode: ToolCallIdMode;
@@ -959,12 +963,14 @@ export function sanitizeReplayToolCallIdsForStream(params: {
   return sanitizeToolUseResultPairing(sanitized);
 }
 
+/** Downgrades OpenAI Responses replay blocks into stream-compatible history. */
 export function sanitizeOpenAIResponsesReplayForStream(messages: AgentMessage[]): AgentMessage[] {
   return downgradeOpenAIFunctionCallReasoningPairs(
     normalizeOpenAIResponsesToolCallIds(downgradeOpenAIReasoningBlocks(messages)),
   );
 }
 
+/** Wraps streams with provider-specific malformed tool-call sanitizers. */
 export function wrapStreamFnSanitizeMalformedToolCalls(
   baseFn: StreamFn,
   allowedToolNames?: Set<string>,

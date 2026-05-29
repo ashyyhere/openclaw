@@ -1,3 +1,4 @@
+// Tests extensions/feishu/src tool result test behavior.
 import { describe, expect, it } from "vitest";
 import {
   jsonToolResult,

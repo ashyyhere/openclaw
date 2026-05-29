@@ -1,5 +1,7 @@
+/** Test helper for constructing baseline agent tool handler state. */
 import { createEmbeddedRunReplayState } from "./embedded-agent-runner/replay-state.js";
 
+/** Create a fresh mutable tool-handler state fixture. */
 export function createBaseToolHandlerState() {
   return {
     replayState: createEmbeddedRunReplayState(),

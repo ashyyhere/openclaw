@@ -1,7 +1,9 @@
+/** Ensures static model allowlist entries exist for selected model refs. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { DEFAULT_PROVIDER } from "./defaults.js";
 import { resolveStaticAllowlistModelKey } from "./model-ref-shared.js";
 
+/** Add a model ref and canonical key to static model allowlist config. */
 export function ensureStaticModelAllowlistEntry(params: {
   cfg: OpenClawConfig;
   modelRef: string;

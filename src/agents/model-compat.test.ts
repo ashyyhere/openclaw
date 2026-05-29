@@ -1,3 +1,4 @@
+/** Tests model compatibility config behavior. */
 import type { Api, Model } from "openclaw/plugin-sdk/llm";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 

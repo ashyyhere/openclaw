@@ -1,3 +1,4 @@
+// Shared types for plugins provider config context types behavior.
 import type { ModelProviderConfig } from "../config/types.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 

@@ -1,3 +1,4 @@
+/** Regression coverage for configured subagent spawn depth limits. */
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   createSubagentSpawnTestConfig,

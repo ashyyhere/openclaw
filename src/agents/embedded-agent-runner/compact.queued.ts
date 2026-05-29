@@ -1,3 +1,4 @@
+/** Queue wrapper for serialized embedded-agent compaction. */
 import { ensureContextEnginesInitialized } from "../../context-engine/init.js";
 import {
   resolveContextEngine,

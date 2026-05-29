@@ -1,3 +1,4 @@
+// plugins plugin lookup table helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {
   resolveGatewayStartupPluginPlanFromRegistry,
@@ -12,10 +13,13 @@ import {
 } from "./plugin-metadata-snapshot.js";
 import type { PluginRegistrySnapshot } from "./plugin-registry-snapshot.js";
 
+/** Shared type for Plugin Look Up Table Owner Maps in src/plugins. */
 export type PluginLookUpTableOwnerMaps = PluginMetadataSnapshotOwnerMaps;
 
+/** Shared type for Plugin Look Up Table Startup Plan in src/plugins. */
 export type PluginLookUpTableStartupPlan = GatewayStartupPluginPlan;
 
+/** Shared type for Plugin Look Up Table Metrics in src/plugins. */
 export type PluginLookUpTableMetrics = {
   registrySnapshotMs: number;
   manifestRegistryMs: number;
@@ -28,6 +32,7 @@ export type PluginLookUpTableMetrics = {
   deferredChannelPluginCount: number;
 };
 
+/** Shared type for Plugin Look Up Table in src/plugins. */
 export type PluginLookUpTable = PluginMetadataSnapshot & {
   key: string;
   startup: PluginLookUpTableStartupPlan;
@@ -38,6 +43,7 @@ export type PluginLookUpTable = PluginMetadataSnapshot & {
     >;
 };
 
+/** Shared type for Load Plugin Look Up Table Params in src/plugins. */
 export type LoadPluginLookUpTableParams = {
   config: OpenClawConfig;
   activationSourceConfig?: OpenClawConfig;
@@ -52,6 +58,7 @@ let lookupTableMemoBySnapshot = new WeakMap<
   Map<string, PluginLookUpTable>
 >();
 
+/** Reused helper for clear Plugin Look Up Table Memo For Test behavior in src/plugins. */
 export function clearPluginLookUpTableMemoForTest(): void {
   lookupTableMemoBySnapshot = new WeakMap<PluginMetadataSnapshot, Map<string, PluginLookUpTable>>();
 }
@@ -79,6 +86,7 @@ function createPluginLookUpTableMemoKey(params: {
   });
 }
 
+/** Reused helper for load Plugin Look Up Table behavior in src/plugins. */
 export function loadPluginLookUpTable(params: LoadPluginLookUpTableParams): PluginLookUpTable {
   const requestedSnapshotConfig = params.activationSourceConfig ?? params.config;
   const metadataSnapshot =

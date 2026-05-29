@@ -1,3 +1,4 @@
+// Tests extensions/opencode onboard test behavior.
 import {
   expectProviderOnboardAllowlistAlias,
   expectProviderOnboardPrimaryAndFallbacks,

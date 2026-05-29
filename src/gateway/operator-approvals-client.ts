@@ -1,3 +1,4 @@
+// gateway operator approvals client helpers and runtime behavior.
 import { isLoopbackIpAddress } from "@openclaw/net-policy/ip";
 import {
   GATEWAY_CLIENT_MODES,
@@ -47,6 +48,7 @@ function shouldOmitApprovalRuntimeDeviceIdentity(params: {
   return shouldOmitOperatorApprovalDeviceIdentity(params);
 }
 
+/** Reused helper for create Operator Approvals Gateway Client behavior in src/gateway. */
 export async function createOperatorApprovalsGatewayClient(
   params: Pick<
     GatewayClientOptions,
@@ -96,6 +98,7 @@ export async function createOperatorApprovalsGatewayClient(
   });
 }
 
+/** Reused helper for with Operator Approvals Gateway Client behavior in src/gateway. */
 export async function withOperatorApprovalsGatewayClient<T>(
   params: {
     config: OpenClawConfig;

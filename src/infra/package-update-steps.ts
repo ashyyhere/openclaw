@@ -1,3 +1,4 @@
+// infra package update steps helpers and runtime behavior.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
@@ -20,6 +21,7 @@ import {
 
 const PACKAGE_MANAGER_SWAP_SOURCE_HARDLINKS = "allow" as const;
 
+/** Shared type for Package Update Step Result in src/infra. */
 export type PackageUpdateStepResult = {
   name: string;
   command: string;
@@ -480,6 +482,7 @@ async function swapStagedNpmInstall(params: {
   }
 }
 
+/** Reused helper for run Global Package Update Steps behavior in src/infra. */
 export async function runGlobalPackageUpdateSteps(params: {
   installTarget: ResolvedGlobalInstallTarget;
   installSpec: string;

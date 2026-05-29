@@ -1,3 +1,4 @@
+/** Tests conversion from message receipts to channel delivery results. */
 import { describe, expect, it } from "vitest";
 import { createChannelDeliveryResultFromReceipt } from "./delivery-result.js";
 

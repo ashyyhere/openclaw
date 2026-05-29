@@ -1,3 +1,4 @@
+// extensions/minimax image generation provider helpers and runtime behavior.
 import type { ImageGenerationProvider } from "openclaw/plugin-sdk/image-generation";
 import { canonicalizeBase64 } from "openclaw/plugin-sdk/media-runtime";
 import { isProviderApiKeyConfigured } from "openclaw/plugin-sdk/provider-auth";

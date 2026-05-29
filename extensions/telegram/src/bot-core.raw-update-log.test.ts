@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src bot core raw update log test behavior.
 import { describe, expect, it } from "vitest";
 import { stringifyTelegramRawUpdateForLog } from "./raw-update-log.js";
 

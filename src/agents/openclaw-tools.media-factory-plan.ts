@@ -1,3 +1,4 @@
+/** Plans optional media/PDF tool factories from config, policy, and auth signals. */
 import {
   resolveAgentModelFallbackValues,
   resolveAgentModelPrimaryValue,
@@ -16,6 +17,7 @@ import {
   loadCapabilityMetadataSnapshot,
 } from "./tools/manifest-capability-availability.js";
 
+/** Availability decision for optional media/PDF tool factories. */
 export type OptionalMediaToolFactoryPlan = {
   imageGenerate: boolean;
   videoGenerate: boolean;
@@ -66,6 +68,7 @@ function isToolAllowedByFactoryPolicy(params: {
   });
 }
 
+/** Return whether a tool is explicitly allowed by a non-empty factory allowlist. */
 export function isToolExplicitlyAllowedByFactoryPolicy(params: {
   toolName: string;
   allowlist?: string[];
@@ -77,6 +80,7 @@ export function isToolExplicitlyAllowedByFactoryPolicy(params: {
   return isToolAllowedByFactoryPolicy(params);
 }
 
+/** Merge allow/deny policy lists while preserving first-seen order. */
 export function mergeFactoryPolicyList(
   ...lists: Array<string[] | undefined>
 ): string[] | undefined {
@@ -99,6 +103,7 @@ function mergeBuiltInFactoryAllowlist(...lists: Array<string[] | undefined>): st
   return uniqueStrings(["*", ...withoutDefaultPluginMarker]);
 }
 
+/** Decide whether the image-understanding tool can be constructed. */
 export function resolveImageToolFactoryAvailable(params: {
   config?: OpenClawConfig;
   agentDir?: string;
@@ -164,6 +169,7 @@ function hasConfiguredVisionModelAuthSignal(params: {
   return false;
 }
 
+/** Resolve optional media and PDF tool factory availability for a tool set. */
 export function resolveOptionalMediaToolFactoryPlan(params: {
   config?: OpenClawConfig;
   workspaceDir?: string;

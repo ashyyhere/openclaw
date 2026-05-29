@@ -1,3 +1,4 @@
+// extensions/discord/src/voice sanitize helpers and runtime behavior.
 import { stripInlineDirectiveTagsForDisplay } from "openclaw/plugin-sdk/text-chunking";
 import { escapeRegExp } from "openclaw/plugin-sdk/text-utility-runtime";
 

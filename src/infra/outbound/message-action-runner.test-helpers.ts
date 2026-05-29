@@ -1,3 +1,4 @@
+// infra/outbound message action runner test helpers helpers and runtime behavior.
 import type {
   ChannelDirectoryEntryKind,
   ChannelMessageActionName,
@@ -9,6 +10,7 @@ import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { createChannelTestPluginBase } from "../../test-utils/channel-plugins.js";
 import { runMessageAction } from "./message-action-runner.js";
 
+/** Reused constant for workspace Config behavior in src/infra/outbound. */
 export const workspaceConfig = {
   channels: {
     workspace: {
@@ -18,6 +20,7 @@ export const workspaceConfig = {
   },
 } as OpenClawConfig;
 
+/** Reused constant for direct Chat Config behavior in src/infra/outbound. */
 export const directChatConfig = {
   channels: {
     directchat: {
@@ -26,8 +29,10 @@ export const directChatConfig = {
   },
 } as OpenClawConfig;
 
+/** Reused constant for direct Outbound behavior in src/infra/outbound. */
 export const directOutbound: ChannelOutboundAdapter = { deliveryMode: "direct" };
 
+/** Reused constant for run Dry Action behavior in src/infra/outbound. */
 export const runDryAction = (params: {
   cfg: OpenClawConfig;
   action: ChannelMessageActionName;
@@ -48,6 +53,7 @@ export const runDryAction = (params: {
     agentId: params.agentId,
   });
 
+/** Reused constant for run Dry Send behavior in src/infra/outbound. */
 export const runDrySend = (params: {
   cfg: OpenClawConfig;
   actionParams: Record<string, unknown>;
@@ -117,6 +123,7 @@ function createConfiguredTestPlugin(params: {
   };
 }
 
+/** Reused constant for workspace Test Plugin behavior in src/infra/outbound. */
 export const workspaceTestPlugin = createConfiguredTestPlugin({
   id: "workspace",
   isConfigured: (cfg) => Boolean(cfg.channels?.workspace?.botToken?.trim()),
@@ -134,6 +141,7 @@ export const workspaceTestPlugin = createConfiguredTestPlugin({
   },
 });
 
+/** Reused constant for forum Test Plugin behavior in src/infra/outbound. */
 export const forumTestPlugin = createConfiguredTestPlugin({
   id: "forum",
   isConfigured: (cfg) => Boolean(cfg.channels?.forum?.botToken?.trim()),
@@ -150,6 +158,7 @@ export const forumTestPlugin = createConfiguredTestPlugin({
   },
 });
 
+/** Reused constant for direct Chat Test Plugin behavior in src/infra/outbound. */
 export const directChatTestPlugin = createConfiguredTestPlugin({
   id: "directchat",
   isConfigured: (cfg) => Boolean(cfg.channels?.directchat),

@@ -1,11 +1,15 @@
+/** Chutes OAuth PKCE, callback parsing, token exchange, and refresh helpers. */
 import { createHash, randomBytes } from "node:crypto";
 import { resolveExpiresAtMsFromDurationSeconds } from "../infra/parse-finite-number.js";
 import type { OAuthCredentials } from "../llm/oauth.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 
 const CHUTES_OAUTH_ISSUER = "https://api.chutes.ai";
+/** Reused constant for CHUTES AUTHORIZE ENDPOINT behavior in src/agents. */
 export const CHUTES_AUTHORIZE_ENDPOINT = `${CHUTES_OAUTH_ISSUER}/idp/authorize`;
+/** Reused constant for CHUTES TOKEN ENDPOINT behavior in src/agents. */
 export const CHUTES_TOKEN_ENDPOINT = `${CHUTES_OAUTH_ISSUER}/idp/token`;
+/** Reused constant for CHUTES USERINFO ENDPOINT behavior in src/agents. */
 export const CHUTES_USERINFO_ENDPOINT = `${CHUTES_OAUTH_ISSUER}/idp/userinfo`;
 
 const DEFAULT_EXPIRES_BUFFER_MS = 5 * 60 * 1000;
@@ -18,6 +22,7 @@ type ChutesUserInfo = {
   created_at?: string;
 };
 
+/** Shared type for Chutes OAuth App Config in src/agents. */
 export type ChutesOAuthAppConfig = {
   clientId: string;
   clientSecret?: string;
@@ -29,12 +34,14 @@ type ChutesStoredOAuth = OAuthCredentials & {
   clientId?: string;
 };
 
+/** Generate a PKCE verifier/challenge pair for Chutes OAuth. */
 export function generateChutesPkce(): ChutesPkce {
   const verifier = randomBytes(32).toString("hex");
   const challenge = createHash("sha256").update(verifier).digest("base64url");
   return { verifier, challenge };
 }
 
+/** Parse and validate pasted Chutes OAuth callback input. */
 export function parseOAuthCallbackInput(
   input: string,
   expectedState: string,
@@ -109,6 +116,7 @@ async function fetchChutesUserInfo(params: {
   return typed;
 }
 
+/** Exchange a Chutes OAuth authorization code for stored credentials. */
 export async function exchangeChutesCodeForTokens(params: {
   app: ChutesOAuthAppConfig;
   code: string;
@@ -172,6 +180,7 @@ export async function exchangeChutesCodeForTokens(params: {
   } as unknown as ChutesStoredOAuth;
 }
 
+/** Refresh Chutes OAuth credentials with the refresh token. */
 export async function refreshChutesTokens(params: {
   credential: ChutesStoredOAuth;
   fetchFn?: typeof fetch;

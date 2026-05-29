@@ -1,3 +1,4 @@
+/** E2E regression coverage for archiving completed subagent registry records. */
 import { promises as fs } from "node:fs";
 import os from "node:os";
 import path from "node:path";

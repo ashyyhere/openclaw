@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server native subagent notification helpers and runtime behavior.
 import type { CodexServerNotification, JsonObject, JsonValue } from "./protocol.js";
 import { isJsonObject } from "./protocol.js";
 

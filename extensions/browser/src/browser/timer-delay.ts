@@ -1,3 +1,4 @@
+// extensions/browser/src/browser timer delay helpers and runtime behavior.
 export const MAX_SAFE_TIMEOUT_DELAY_MS = 2_147_483_647;
 
 export function normalizeBrowserTimerDelayMs(timeoutMs: number, opts?: { minMs?: number }): number {

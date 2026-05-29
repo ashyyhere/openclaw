@@ -1,3 +1,4 @@
+// test-utils session conversation registry helpers and runtime behavior.
 import { parseThreadSessionSuffix } from "../sessions/session-key-utils.js";
 import { createTestRegistry } from "./channel-plugins.js";
 
@@ -49,6 +50,7 @@ function resolveFeishuSessionConversation(params: { kind: "group" | "channel"; r
   };
 }
 
+/** Reused helper for create Session Conversation Test Registry behavior in src/test-utils. */
 export function createSessionConversationTestRegistry() {
   return createTestRegistry([
     {

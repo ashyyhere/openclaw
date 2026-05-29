@@ -1,3 +1,4 @@
+// Tests infra voicewake routing test behavior.
 import { describe, expect, it } from "vitest";
 import {
   normalizeVoiceWakeRoutingConfig,

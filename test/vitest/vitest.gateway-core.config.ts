@@ -1,3 +1,4 @@
+// test/vitest vitest gateway core config helpers and runtime behavior.
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
 const nonCoreGatewayTestExclude = [

@@ -1,3 +1,4 @@
+// Tests extensions/ollama provider discovery import guard test behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";

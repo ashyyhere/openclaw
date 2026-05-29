@@ -1,3 +1,4 @@
+/** Tests daemon response hint generation. */
 import { describe, expect, it } from "vitest";
 import { buildDaemonHintItems } from "./response.js";
 

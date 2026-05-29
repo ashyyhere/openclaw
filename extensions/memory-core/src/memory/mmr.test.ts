@@ -1,3 +1,4 @@
+// Tests extensions/memory-core/src/memory mmr test behavior.
 import { describe, it, expect } from "vitest";
 import {
   tokenize,

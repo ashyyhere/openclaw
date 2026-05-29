@@ -1,3 +1,4 @@
+// plugins npm project roots helpers and runtime behavior.
 import fs from "node:fs";
 import fsp from "node:fs/promises";
 import path from "node:path";
@@ -11,6 +12,7 @@ function sortPaths(paths: string[]): string[] {
   return paths.toSorted((left, right) => left.localeCompare(right));
 }
 
+/** Reused helper for list Managed Plugin Npm Project Roots Sync behavior in src/plugins. */
 export function listManagedPluginNpmProjectRootsSync(npmRoot: string): string[] {
   const projectsDir = resolvePluginNpmProjectsDir(npmRoot);
   try {
@@ -28,6 +30,7 @@ export function listManagedPluginNpmProjectRootsSync(npmRoot: string): string[] 
   }
 }
 
+/** Reused helper for list Managed Plugin Npm Project Roots behavior in src/plugins. */
 export async function listManagedPluginNpmProjectRoots(npmRoot: string): Promise<string[]> {
   const projectsDir = resolvePluginNpmProjectsDir(npmRoot);
   try {
@@ -44,10 +47,12 @@ export async function listManagedPluginNpmProjectRoots(npmRoot: string): Promise
   }
 }
 
+/** Reused helper for list Managed Plugin Npm Roots Sync behavior in src/plugins. */
 export function listManagedPluginNpmRootsSync(npmRoot: string): string[] {
   return [npmRoot, ...listManagedPluginNpmProjectRootsSync(npmRoot)];
 }
 
+/** Reused helper for list Managed Plugin Npm Roots behavior in src/plugins. */
 export async function listManagedPluginNpmRoots(npmRoot: string): Promise<string[]> {
   return [npmRoot, ...(await listManagedPluginNpmProjectRoots(npmRoot))];
 }

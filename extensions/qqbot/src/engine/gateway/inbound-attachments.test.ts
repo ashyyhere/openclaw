@@ -1,3 +1,4 @@
+// Tests extensions/qqbot/src/engine/gateway inbound attachments test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { processAttachments, type AudioConvertPort } from "./inbound-attachments.js";
 

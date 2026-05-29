@@ -1,3 +1,4 @@
+// extensions/codex/src/migration targets helpers and runtime behavior.
 import path from "node:path";
 import {
   resolveAgentConfig,

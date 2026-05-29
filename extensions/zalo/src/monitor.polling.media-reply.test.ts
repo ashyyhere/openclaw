@@ -1,3 +1,4 @@
+// Tests extensions/zalo/src monitor polling media reply test behavior.
 import { chmod, mkdir, writeFile } from "node:fs/promises";
 import type { ServerResponse } from "node:http";
 import { join } from "node:path";

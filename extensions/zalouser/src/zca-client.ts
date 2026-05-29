@@ -1,3 +1,4 @@
+// extensions/zalouser/src zca client helpers and runtime behavior.
 import {
   LoginQRCallbackEventType,
   Reactions,

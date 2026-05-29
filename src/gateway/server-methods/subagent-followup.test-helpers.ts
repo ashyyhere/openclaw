@@ -1,5 +1,7 @@
+// gateway/server-methods subagent followup test helpers helpers and runtime behavior.
 import { expect } from "vitest";
 
+/** Reused helper for expect Subagent Followup Reactivation behavior in src/gateway/server-methods. */
 export function expectSubagentFollowupReactivation(params: {
   replaceSubagentRunAfterSteerMock: unknown;
   broadcastToConnIds: unknown;

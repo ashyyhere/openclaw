@@ -1,3 +1,4 @@
+/** Regression coverage for compact skill path rendering in prompts. */
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";

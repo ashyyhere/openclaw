@@ -1,3 +1,4 @@
+// gateway/server/plugins-http route match helpers and runtime behavior.
 import type { PluginRegistry } from "../../../plugins/registry.js";
 import { canonicalizePathVariant } from "../../security-path.js";
 import {
@@ -8,6 +9,7 @@ import {
 
 type PluginHttpRouteEntry = NonNullable<PluginRegistry["httpRoutes"]>[number];
 
+/** Reused helper for does Plugin Route Match Path behavior in src/gateway/server. */
 export function doesPluginRouteMatchPath(
   route: PluginHttpRouteEntry,
   context: PluginRoutePathContext,
@@ -19,6 +21,7 @@ export function doesPluginRouteMatchPath(
   return context.candidates.some((candidate) => candidate === routeCanonicalPath);
 }
 
+/** Reused helper for find Matching Plugin Http Routes behavior in src/gateway/server. */
 export function findMatchingPluginHttpRoutes(
   registry: PluginRegistry,
   context: PluginRoutePathContext,
@@ -44,6 +47,7 @@ export function findMatchingPluginHttpRoutes(
   return [...exactMatches, ...prefixMatches];
 }
 
+/** Reused helper for find Registered Plugin Http Route behavior in src/gateway/server. */
 export function findRegisteredPluginHttpRoute(
   registry: PluginRegistry,
   pathname: string,
@@ -52,6 +56,7 @@ export function findRegisteredPluginHttpRoute(
   return findMatchingPluginHttpRoutes(registry, pathContext)[0];
 }
 
+/** Reused helper for is Registered Plugin Http Route Path behavior in src/gateway/server. */
 export function isRegisteredPluginHttpRoutePath(
   registry: PluginRegistry,
   pathname: string,

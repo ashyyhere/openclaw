@@ -1,3 +1,4 @@
+/** Resolves sandbox host/container path mappings and bind mounts. */
 import os from "node:os";
 import path from "node:path";
 import { isPathInside } from "../../infra/path-guards.js";
@@ -15,6 +16,7 @@ import {
 } from "./path-utils.js";
 import { resolveReadOnlyWorkspaceSkillMounts } from "./workspace-mounts.js";
 
+/** Shared type for Sandbox Fs Mount in src/agents/sandbox. */
 export type SandboxFsMount = {
   hostRoot: string;
   containerRoot: string;
@@ -22,6 +24,7 @@ export type SandboxFsMount = {
   source: "workspace" | "agent" | "bind" | "protectedSkill";
 };
 
+/** Shared type for Sandbox Resolved Fs Path in src/agents/sandbox. */
 export type SandboxResolvedFsPath = {
   hostPath: string;
   relativePath: string;
@@ -35,6 +38,7 @@ type ParsedBindMount = {
   writable: boolean;
 };
 
+/** Parses one sandbox bind mount spec into host/container/mode fields. */
 export function parseSandboxBindMount(spec: string): ParsedBindMount | null {
   const trimmed = spec.trim();
   if (!trimmed) {
@@ -61,6 +65,7 @@ export function parseSandboxBindMount(spec: string): ParsedBindMount | null {
   };
 }
 
+/** Builds ordered filesystem mounts visible to the sandbox bridge. */
 export function buildSandboxFsMounts(sandbox: SandboxFsBridgeContext): SandboxFsMount[] {
   const mounts: SandboxFsMount[] = [
     {
@@ -113,6 +118,7 @@ export function buildSandboxFsMounts(sandbox: SandboxFsBridgeContext): SandboxFs
   return dedupeMounts(mounts);
 }
 
+/** Resolves host roots for writable sandbox bind mounts. */
 export function resolveWritableSandboxBindHostRoots(
   binds: readonly string[] | undefined,
 ): string[] {
@@ -134,6 +140,7 @@ export function resolveWritableSandboxBindHostRoots(
   return roots;
 }
 
+/** Detects bind mounts whose container paths alias default workspace roots. */
 export function hasSandboxBindContainerPathAliases(binds: readonly string[] | undefined): boolean {
   for (const parsed of parseSandboxBindMounts(binds)) {
     if (parsed.hostRoot !== parsed.containerRoot) {
@@ -143,6 +150,7 @@ export function hasSandboxBindContainerPathAliases(binds: readonly string[] | un
   return false;
 }
 
+/** Detects readonly bind shadows that can hide writable host roots. */
 export function hasSandboxBindReadonlyHostShadows(binds: readonly string[] | undefined): boolean {
   const parsedBinds = parseSandboxBindMounts(binds);
   const writableRoots = parsedBinds.filter((bind) => bind.writable).map((bind) => bind.hostRoot);
@@ -163,6 +171,7 @@ function parseSandboxBindMounts(binds: readonly string[] | undefined): ParsedBin
   return parsed;
 }
 
+/** Resolves a sandbox path against known mounts and access policy. */
 export function resolveSandboxFsPathWithMounts(params: {
   filePath: string;
   cwd: string;

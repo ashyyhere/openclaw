@@ -1,3 +1,4 @@
+// plugins capability provider runtime helpers and runtime behavior.
 import { resolveVoiceModelRefs } from "../../packages/speech-core/voice-models.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { sortUniqueStrings } from "../shared/string-normalization.js";
@@ -99,6 +100,7 @@ function uniqueSorted(values: Iterable<string>): string[] {
   return sortUniqueStrings(values);
 }
 
+/** Reused helper for load Capability Manifest Snapshot behavior in src/plugins. */
 export function loadCapabilityManifestSnapshot(params: {
   cfg?: OpenClawConfig;
   workspaceDir?: string;
@@ -151,6 +153,7 @@ function resolveBundledCapabilityCompatPluginIds(params: {
   return resolveCapabilityPluginIds(params).bundledCompatPluginIds;
 }
 
+/** Reused helper for resolve Manifest Capability Provider Ids behavior in src/plugins. */
 export function resolveManifestCapabilityProviderIds(params: {
   key: CapabilityProviderRegistryKey;
   cfg?: OpenClawConfig;
@@ -164,6 +167,7 @@ export function resolveManifestCapabilityProviderIds(params: {
   });
 }
 
+/** Reused helper for resolve Bundled Capability Provider Ids behavior in src/plugins. */
 export function resolveBundledCapabilityProviderIds(params: {
   key: CapabilityProviderRegistryKey;
   cfg?: OpenClawConfig;
@@ -510,6 +514,7 @@ function loadCapabilityProviderEntries<K extends CapabilityProviderRegistryKey>(
   return entries.length > 0 ? mergeCapabilityProviderEntries(entries, captured) : captured;
 }
 
+/** Reused helper for resolve Plugin Capability Provider behavior in src/plugins. */
 export function resolvePluginCapabilityProvider<K extends CapabilityProviderRegistryKey>(params: {
   key: K;
   providerId: string;
@@ -582,6 +587,7 @@ function resolveCachedCapabilityProviderEntries<K extends CapabilityProviderRegi
   }) as PluginRegistry[K];
 }
 
+/** Reused helper for resolve Plugin Capability Providers behavior in src/plugins. */
 export function resolvePluginCapabilityProviders<K extends CapabilityProviderRegistryKey>(params: {
   key: K;
   cfg?: OpenClawConfig;

@@ -1,3 +1,4 @@
+// Tests extensions/oc-path/src/oc-path/tests/jsonl resolve test behavior.
 import { describe, expect, it } from "vitest";
 import { findOcPaths } from "../../find.js";
 import { parseJsonl } from "../../jsonl/parse.js";

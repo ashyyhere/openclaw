@@ -1,3 +1,4 @@
+// infra/outbound targets loaded helpers and runtime behavior.
 import { getLoadedChannelPluginForRead } from "../../channels/plugins/registry-loaded-read.js";
 import type { ChannelPlugin } from "../../channels/plugins/types.plugin.js";
 import type { ChannelOutboundTargetMode } from "../../channels/plugins/types.public.js";
@@ -18,6 +19,7 @@ function resolveLoadedOutboundChannelPlugin(channel: string): ChannelPlugin | un
   return getLoadedChannelPluginForRead(normalized);
 }
 
+/** Reused helper for try Resolve Loaded Outbound Target behavior in src/infra/outbound. */
 export function tryResolveLoadedOutboundTarget(params: {
   channel: GatewayMessageChannel;
   to?: string;

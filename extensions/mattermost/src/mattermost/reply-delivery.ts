@@ -1,3 +1,4 @@
+// extensions/mattermost/src/mattermost reply delivery helpers and runtime behavior.
 import type { OpenClawConfig, PluginRuntime } from "openclaw/plugin-sdk/core";
 import { getAgentScopedMediaLocalRoots } from "openclaw/plugin-sdk/media-runtime";
 import {

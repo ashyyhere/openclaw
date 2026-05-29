@@ -1,3 +1,4 @@
+// extensions/arcee provider catalog helpers and runtime behavior.
 import type { ModelProviderConfig } from "openclaw/plugin-sdk/provider-model-shared";
 import { buildArceeModelDefinition, ARCEE_BASE_URL, ARCEE_MODEL_CATALOG } from "./models.js";
 

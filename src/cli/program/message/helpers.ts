@@ -1,3 +1,4 @@
+/** Shared helpers for registering message-channel CLI subcommands. */
 import type { Command } from "commander";
 import { getChannelPlugin } from "../../../channels/plugins/index.js";
 import {
@@ -18,6 +19,7 @@ import { runCommandWithRuntime } from "../../cli-utils.js";
 import { createDefaultDeps } from "../../deps.js";
 import { ensurePluginRegistryLoaded, type PluginRegistryScope } from "../../plugin-registry.js";
 
+/** Shared type for Message Cli Helpers in src/cli/program. */
 export type MessageCliHelpers = {
   withMessageBase: (command: Command) => Command;
   withMessageTarget: (command: Command) => Command;
@@ -136,6 +138,7 @@ function resolveMessagePluginPreloadPlan(
   return { preload: false };
 }
 
+/** Reused helper for create Message Cli Helpers behavior in src/cli/program. */
 export function createMessageCliHelpers(
   message: Command,
   messageChannelOptions: string,

@@ -1,8 +1,11 @@
+// infra cli root options helpers and runtime behavior.
+/** Reused constant for FLAG TERMINATOR behavior in src/infra. */
 export const FLAG_TERMINATOR = "--";
 
 const ROOT_BOOLEAN_FLAGS = new Set(["--dev", "--no-color"]);
 const ROOT_VALUE_FLAGS = new Set(["--profile", "--log-level", "--container"]);
 
+/** Reused helper for is Value Token behavior in src/infra. */
 export function isValueToken(arg: string | undefined): boolean {
   if (!arg || arg === FLAG_TERMINATOR) {
     return false;
@@ -13,6 +16,7 @@ export function isValueToken(arg: string | undefined): boolean {
   return /^-\d+(?:\.\d+)?$/.test(arg);
 }
 
+/** Reused helper for consume Root Option Token behavior in src/infra. */
 export function consumeRootOptionToken(args: ReadonlyArray<string>, index: number): number {
   const arg = args[index];
   if (!arg) {

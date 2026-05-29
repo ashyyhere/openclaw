@@ -1,3 +1,4 @@
+// infra/command-explainer extract helpers and runtime behavior.
 import type { Node as TreeSitterNode } from "web-tree-sitter";
 import type { InterpreterInlineEvalHit } from "../command-analysis/inline-eval.js";
 import {
@@ -1123,6 +1124,7 @@ async function walk(
   }
 }
 
+/** Reused helper for explain Shell Command behavior in src/infra/command-explainer. */
 export async function explainShellCommand(source: string): Promise<CommandExplanation> {
   const tree = await parseBashForCommandExplanation(source);
   try {

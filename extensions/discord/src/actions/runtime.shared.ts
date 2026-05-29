@@ -1,3 +1,4 @@
+// extensions/discord/src/actions runtime shared helpers and runtime behavior.
 import {
   parseAvailableTags,
   readNonNegativeIntegerParam,

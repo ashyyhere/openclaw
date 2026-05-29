@@ -1,3 +1,4 @@
+// extensions/line/src/flex-templates basic cards helpers and runtime behavior.
 import { attachFooterText } from "./common.js";
 import type {
   Action,

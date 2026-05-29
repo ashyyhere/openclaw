@@ -1,3 +1,4 @@
+/** Agent tool for fetching and extracting web page content. */
 import { Type } from "typebox";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { SsrFBlockedError, type LookupFn, type SsrFPolicy } from "../../infra/net/ssrf.js";
@@ -639,6 +640,7 @@ async function runWebFetch(params: WebFetchRuntimeParams): Promise<Record<string
   }
 }
 
+/** Creates the web_fetch AgentTool. */
 export function createWebFetchTool(options?: {
   config?: OpenClawConfig;
   sandboxed?: boolean;

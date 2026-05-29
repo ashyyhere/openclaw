@@ -1,5 +1,7 @@
+/** Shared MCP config normalization for CLI backend bundle adapters. */
 import type { BundleMcpServerConfig } from "../../plugins/bundle-mcp.js";
 import { isRecord } from "../../shared/record-coerce.js";
+/** Re-exported API for src/agents/cli-runner, starting with is Record. */
 export { isRecord } from "../../shared/record-coerce.js";
 
 function normalizeStringArray(value: unknown): string[] | undefined {
@@ -8,6 +10,7 @@ function normalizeStringArray(value: unknown): string[] | undefined {
     : undefined;
 }
 
+/** Reused helper for normalize String Record behavior in src/agents/cli-runner. */
 export function normalizeStringRecord(value: unknown): Record<string, string> | undefined {
   if (!isRecord(value)) {
     return undefined;
@@ -18,6 +21,7 @@ export function normalizeStringRecord(value: unknown): Record<string, string> | 
   return entries.length > 0 ? Object.fromEntries(entries) : undefined;
 }
 
+/** Reused helper for decode Header Env Placeholder behavior in src/agents/cli-runner. */
 export function decodeHeaderEnvPlaceholder(
   value: string,
 ): { envVar: string; bearer: boolean } | null {
@@ -32,6 +36,7 @@ export function decodeHeaderEnvPlaceholder(
   return null;
 }
 
+/** Reused helper for apply Common Server Config behavior in src/agents/cli-runner. */
 export function applyCommonServerConfig(
   next: Record<string, unknown>,
   server: BundleMcpServerConfig,

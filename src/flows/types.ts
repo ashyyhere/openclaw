@@ -1,3 +1,4 @@
+// Shared types for flows types behavior.
 type FlowDocsLink = {
   path: string;
   label?: string;
@@ -13,6 +14,7 @@ type FlowOptionGroup = {
   hint?: string;
 };
 
+/** Shared type for Flow Option in src/flows. */
 export type FlowOption<Value extends string = string> = {
   value: Value;
   label: string;
@@ -23,6 +25,7 @@ export type FlowOption<Value extends string = string> = {
   assistantVisibility?: "visible" | "manual-only";
 };
 
+/** Shared type for Flow Contribution in src/flows. */
 export type FlowContribution<Value extends string = string> = {
   id: string;
   kind: FlowContributionKind;
@@ -31,6 +34,7 @@ export type FlowContribution<Value extends string = string> = {
   source?: string;
 };
 
+/** Reused helper for sort Flow Contributions By Label behavior in src/flows. */
 export function sortFlowContributionsByLabel<T extends FlowContribution>(
   contributions: readonly T[],
 ): T[] {

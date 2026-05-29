@@ -1,3 +1,4 @@
+// gateway/server-methods diagnostics helpers and runtime behavior.
 import { ErrorCodes, errorShape } from "../../../packages/gateway-protocol/src/index.js";
 import {
   getDiagnosticStabilitySnapshot,
@@ -5,6 +6,7 @@ import {
 } from "../../logging/diagnostic-stability.js";
 import type { GatewayRequestHandlers } from "./types.js";
 
+/** Reused constant for diagnostics Handlers behavior in src/gateway/server-methods. */
 export const diagnosticsHandlers: GatewayRequestHandlers = {
   "diagnostics.stability": async ({ params, respond }) => {
     try {

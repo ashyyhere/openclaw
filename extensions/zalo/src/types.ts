@@ -1,3 +1,4 @@
+// Shared types for extensions/zalo/src types behavior.
 import type { SecretInput } from "openclaw/plugin-sdk/secret-input";
 
 export type ZaloAccountConfig = {

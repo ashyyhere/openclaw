@@ -1,3 +1,4 @@
+// Tests packages/memory-host-sdk/src/host batch error utils test behavior.
 import { describe, expect, it } from "vitest";
 import { extractBatchErrorMessage, formatUnavailableBatchError } from "./batch-error-utils.js";
 

@@ -1,3 +1,4 @@
+// Tests extensions/moonshot media understanding provider test behavior.
 import {
   createRequestCaptureJsonFetch,
   installPinnedHostnameTestHooks,

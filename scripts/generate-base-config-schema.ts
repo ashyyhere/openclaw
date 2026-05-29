@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// scripts generate base config schema helpers and runtime behavior.
 import { pathToFileURL } from "node:url";
 import { computeBaseConfigSchemaResponse } from "../src/config/schema-base.js";
 

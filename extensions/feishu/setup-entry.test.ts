@@ -1,3 +1,4 @@
+// Tests extensions/feishu setup entry test behavior.
 import { afterAll, describe, expect, it, vi } from "vitest";
 
 vi.mock("@larksuiteoapi/node-sdk", () => {

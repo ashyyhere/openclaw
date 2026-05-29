@@ -1,3 +1,4 @@
+/** Builds normalized tool catalog entries for model and UI surfaces. */
 import {
   CRON_TOOL_DISPLAY_SUMMARY,
   EXEC_TOOL_DISPLAY_SUMMARY,
@@ -10,6 +11,7 @@ import {
   UPDATE_PLAN_TOOL_DISPLAY_SUMMARY,
 } from "./tool-description-presets.js";
 
+/** Shared type for Tool Profile Id in src/agents. */
 export type ToolProfileId = "minimal" | "coding" | "messaging" | "full";
 
 type ToolProfilePolicy = {
@@ -385,8 +387,10 @@ function buildCoreToolGroupMap() {
   };
 }
 
+/** Reused constant for CORE TOOL GROUPS behavior in src/agents. */
 export const CORE_TOOL_GROUPS = buildCoreToolGroupMap();
 
+/** Reused constant for PROFILE OPTIONS behavior in src/agents. */
 export const PROFILE_OPTIONS = [
   { id: "minimal", label: "Minimal" },
   { id: "coding", label: "Coding" },
@@ -394,6 +398,7 @@ export const PROFILE_OPTIONS = [
   { id: "full", label: "Full" },
 ] as const;
 
+/** Reused helper for resolve Core Tool Profile Policy behavior in src/agents. */
 export function resolveCoreToolProfilePolicy(profile?: string): ToolProfilePolicy | undefined {
   if (!profile) {
     return undefined;
@@ -411,6 +416,7 @@ export function resolveCoreToolProfilePolicy(profile?: string): ToolProfilePolic
   };
 }
 
+/** Reused helper for list Core Tool Sections behavior in src/agents. */
 export function listCoreToolSections(): CoreToolSection[] {
   return CORE_TOOL_SECTION_ORDER.map((section) => ({
     id: section.id,
@@ -423,6 +429,7 @@ export function listCoreToolSections(): CoreToolSection[] {
   })).filter((section) => section.tools.length > 0);
 }
 
+/** Reused helper for resolve Core Tool Profiles behavior in src/agents. */
 export function resolveCoreToolProfiles(toolId: string): ToolProfileId[] {
   const tool = CORE_TOOL_BY_ID.get(toolId);
   if (!tool) {
@@ -431,6 +438,7 @@ export function resolveCoreToolProfiles(toolId: string): ToolProfileId[] {
   return [...tool.profiles];
 }
 
+/** Reused helper for is Known Core Tool Id behavior in src/agents. */
 export function isKnownCoreToolId(toolId: string): boolean {
   return CORE_TOOL_BY_ID.has(toolId);
 }

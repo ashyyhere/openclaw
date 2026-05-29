@@ -1,3 +1,4 @@
+// extensions/whatsapp/src session contract helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "openclaw/plugin-sdk/string-coerce-runtime";
 
 function extractLegacyWhatsAppGroupId(key: string): string | null {

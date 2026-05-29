@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src config schema test behavior.
 import { describe, expect, it } from "vitest";
 import { TelegramConfigSchema } from "../config-api.js";
 

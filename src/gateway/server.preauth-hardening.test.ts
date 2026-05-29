@@ -1,3 +1,4 @@
+// Tests gateway server preauth hardening test behavior.
 import { writeFile } from "node:fs/promises";
 import http from "node:http";
 import { afterEach, describe, expect, it } from "vitest";

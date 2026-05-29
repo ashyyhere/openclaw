@@ -1,3 +1,4 @@
+// markdown ir helpers and runtime behavior.
 import MarkdownIt from "markdown-it";
 import { chunkText } from "./chunk-text.js";
 import type { MarkdownTableMode } from "./types.js";
@@ -28,6 +29,7 @@ type MarkdownToken = {
   level?: number;
 };
 
+/** Shared type for Markdown Style in src/markdown. */
 export type MarkdownStyle =
   | "bold"
   | "italic"
@@ -37,6 +39,7 @@ export type MarkdownStyle =
   | "spoiler"
   | "blockquote";
 
+/** Shared type for Markdown Style Span in src/markdown. */
 export type MarkdownStyleSpan = {
   start: number;
   end: number;
@@ -44,12 +47,14 @@ export type MarkdownStyleSpan = {
   language?: string;
 };
 
+/** Shared type for Markdown Link Span in src/markdown. */
 export type MarkdownLinkSpan = {
   start: number;
   end: number;
   href: string;
 };
 
+/** Shared type for Markdown IR in src/markdown. */
 export type MarkdownIR = {
   text: string;
   styles: MarkdownStyleSpan[];
@@ -68,11 +73,13 @@ function createStyleSpan(params: MarkdownStyleSpan): MarkdownStyleSpan {
   return span;
 }
 
+/** Shared type for Markdown Table Data in src/markdown. */
 export type MarkdownTableData = {
   headers: string[];
   rows: string[][];
 };
 
+/** Shared type for Markdown Table Meta in src/markdown. */
 export type MarkdownTableMeta = MarkdownTableData & {
   placeholderOffset: number;
 };
@@ -115,6 +122,7 @@ type RenderState = RenderTarget & {
   collectedTables: MarkdownTableMeta[];
 };
 
+/** Shared type for Markdown Parse Options in src/markdown. */
 export type MarkdownParseOptions = {
   linkify?: boolean;
   enableSpoilers?: boolean;
@@ -966,6 +974,7 @@ function sliceLinkSpans(spans: MarkdownLinkSpan[], start: number, end: number): 
   return sliced;
 }
 
+/** Reused helper for slice Markdown IR behavior in src/markdown. */
 export function sliceMarkdownIR(ir: MarkdownIR, start: number, end: number): MarkdownIR {
   return {
     text: ir.text.slice(start, end),
@@ -974,10 +983,12 @@ export function sliceMarkdownIR(ir: MarkdownIR, start: number, end: number): Mar
   };
 }
 
+/** Reused helper for markdown To IR behavior in src/markdown. */
 export function markdownToIR(markdown: string, options: MarkdownParseOptions = {}): MarkdownIR {
   return markdownToIRWithMeta(markdown, options).ir;
 }
 
+/** Reused helper for markdown To IRWith Meta behavior in src/markdown. */
 export function markdownToIRWithMeta(
   markdown: string,
   options: MarkdownParseOptions = {},
@@ -1040,6 +1051,7 @@ export function markdownToIRWithMeta(
   };
 }
 
+/** Reused helper for chunk Markdown IR behavior in src/markdown. */
 export function chunkMarkdownIR(ir: MarkdownIR, limit: number): MarkdownIR[] {
   if (!ir.text) {
     return [];

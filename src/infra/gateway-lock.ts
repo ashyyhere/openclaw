@@ -1,3 +1,4 @@
+// infra gateway lock helpers and runtime behavior.
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import fsSync from "node:fs";
@@ -36,6 +37,7 @@ type GatewayLockHandle = {
   release: () => Promise<void>;
 };
 
+/** Shared type for Gateway Lock Options in src/infra. */
 export type GatewayLockOptions = {
   env?: NodeJS.ProcessEnv;
   timeoutMs?: number;
@@ -51,6 +53,7 @@ export type GatewayLockOptions = {
   readProcessCmdline?: (pid: number) => string[] | null;
 };
 
+/** Reused class for Gateway Lock Error behavior in src/infra. */
 export class GatewayLockError extends Error {
   constructor(
     message: string,
@@ -244,6 +247,7 @@ function resolveGatewayLockPath(env: NodeJS.ProcessEnv, lockDir = resolveGateway
   return { lockPath, configPath };
 }
 
+/** Reused helper for acquire Gateway Lock behavior in src/infra. */
 export async function acquireGatewayLock(
   opts: GatewayLockOptions = {},
 ): Promise<GatewayLockHandle | null> {

@@ -1,3 +1,4 @@
+// gateway server discovery helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { getTailnetHostname } from "../infra/tailscale.js";
@@ -11,6 +12,7 @@ type ResolveBonjourCliPathOptions = {
   statSync?: (path: string) => fs.Stats;
 };
 
+/** Reused helper for format Bonjour Instance Name behavior in src/gateway. */
 export function formatBonjourInstanceName(displayName: string) {
   const trimmed = displayName.trim();
   if (!trimmed) {
@@ -22,6 +24,7 @@ export function formatBonjourInstanceName(displayName: string) {
   return `${trimmed} (OpenClaw)`;
 }
 
+/** Reused helper for resolve Bonjour Cli Path behavior in src/gateway. */
 export function resolveBonjourCliPath(opts: ResolveBonjourCliPathOptions = {}): string | undefined {
   const env = opts.env ?? process.env;
   const envPath = env.OPENCLAW_CLI_PATH?.trim();
@@ -64,6 +67,7 @@ export function resolveBonjourCliPath(opts: ResolveBonjourCliPathOptions = {}): 
   return undefined;
 }
 
+/** Reused helper for resolve Tailnet Dns Hint behavior in src/gateway. */
 export async function resolveTailnetDnsHint(opts?: {
   env?: NodeJS.ProcessEnv;
   exec?: typeof runExec;

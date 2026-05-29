@@ -1,3 +1,4 @@
+// Tests extensions/slack/src config schema test behavior.
 import { describe, expect, it } from "vitest";
 import { SlackConfigSchema } from "../config-api.js";
 

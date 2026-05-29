@@ -1,3 +1,4 @@
+// Tests extensions/codex/src/app-server attempt results test behavior.
 import type { EmbeddedRunAttemptResult } from "openclaw/plugin-sdk/agent-harness-runtime";
 import { describe, expect, it } from "vitest";
 import {

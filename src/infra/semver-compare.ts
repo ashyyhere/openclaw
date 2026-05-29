@@ -1,3 +1,4 @@
+// infra semver compare helpers and runtime behavior.
 type ComparableSemver = {
   major: number;
   minor: number;
@@ -5,6 +6,7 @@ type ComparableSemver = {
   prerelease: string[] | null;
 };
 
+/** Reused helper for normalize Legacy Dot Beta Version behavior in src/infra. */
 export function normalizeLegacyDotBetaVersion(version: string): string {
   const trimmed = version.trim();
   const dotBetaMatch = /^([vV]?[0-9]+\.[0-9]+\.[0-9]+)\.beta(?:\.([0-9A-Za-z.-]+))?$/.exec(trimmed);
@@ -16,6 +18,7 @@ export function normalizeLegacyDotBetaVersion(version: string): string {
   return suffix ? `${base}-beta.${suffix}` : `${base}-beta`;
 }
 
+/** Reused helper for parse Comparable Semver behavior in src/infra. */
 export function parseComparableSemver(
   version: string | null | undefined,
   options?: { normalizeLegacyDotBeta?: boolean },
@@ -44,6 +47,7 @@ export function parseComparableSemver(
   };
 }
 
+/** Reused helper for compare Prerelease Identifiers behavior in src/infra. */
 export function comparePrereleaseIdentifiers(a: string[] | null, b: string[] | null): number {
   if (!a?.length && !b?.length) {
     return 0;
@@ -91,6 +95,7 @@ export function comparePrereleaseIdentifiers(a: string[] | null, b: string[] | n
   return 0;
 }
 
+/** Reused helper for compare Comparable Semver behavior in src/infra. */
 export function compareComparableSemver(
   a: ComparableSemver | null,
   b: ComparableSemver | null,

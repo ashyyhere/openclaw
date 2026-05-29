@@ -1,7 +1,9 @@
+/** Resolves configured thresholds for repeated tool-call loop detection. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { ToolLoopDetectionConfig } from "../config/types.tools.js";
 import { resolveAgentConfig } from "./agent-scope.js";
 
+/** Reused helper for resolve Tool Loop Detection Config behavior in src/agents. */
 export function resolveToolLoopDetectionConfig(params: {
   cfg?: OpenClawConfig;
   agentId?: string;

@@ -1,3 +1,4 @@
+// extensions/telegram/src message cache helpers and runtime behavior.
 import { createHash } from "node:crypto";
 import fs from "node:fs";
 import type { Message } from "grammy/types";

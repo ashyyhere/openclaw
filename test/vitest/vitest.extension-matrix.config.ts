@@ -1,3 +1,4 @@
+// test/vitest vitest extension matrix config helpers and runtime behavior.
 import { matrixExtensionTestRoots } from "./vitest.extension-matrix-paths.mjs";
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 

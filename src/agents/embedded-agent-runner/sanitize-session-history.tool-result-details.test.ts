@@ -1,3 +1,4 @@
+/** Verifies tool-result detail redaction in sanitized session history. */
 import type { AgentMessage } from "openclaw/plugin-sdk/agent-core";
 import { SessionManager } from "openclaw/plugin-sdk/agent-sessions";
 import type { ToolResultMessage, UserMessage } from "openclaw/plugin-sdk/llm";

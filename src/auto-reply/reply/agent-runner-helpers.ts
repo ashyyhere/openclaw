@@ -1,3 +1,4 @@
+// Shared helper functions for constructing reply agent runs.
 import {
   hasOutboundReplyContent,
   resolveSendableOutboundReplyParts,
@@ -11,6 +12,7 @@ import type { TypingSignaler } from "./typing-mode.js";
 const hasAudioMedia = (urls?: string[]): boolean =>
   Boolean(urls?.some((url) => isAudioFileName(url)));
 
+/** Reused constant for is Audio Payload behavior in src/auto-reply/reply. */
 export const isAudioPayload = (payload: ReplyPayload): boolean =>
   hasAudioMedia(resolveSendableOutboundReplyParts(payload).mediaUrls);
 
@@ -69,14 +71,17 @@ function createVerboseGate(
   };
 }
 
+/** Reused constant for create Should Emit Tool Result behavior in src/auto-reply/reply. */
 export const createShouldEmitToolResult = (params: VerboseGateParams): (() => boolean) => {
   return createVerboseGate(params, (level) => level !== "off");
 };
 
+/** Reused constant for create Should Emit Tool Output behavior in src/auto-reply/reply. */
 export const createShouldEmitToolOutput = (params: VerboseGateParams): (() => boolean) => {
   return createVerboseGate(params, (level) => level === "full");
 };
 
+/** Reused constant for signal Typing If Needed behavior in src/auto-reply/reply. */
 export const signalTypingIfNeeded = async (
   payloads: ReplyPayload[],
   typingSignals: TypingSignaler,

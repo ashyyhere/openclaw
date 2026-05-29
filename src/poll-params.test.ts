@@ -1,3 +1,4 @@
+// Tests OpenClaw poll params test behavior.
 import { describe, expect, it } from "vitest";
 import { hasPollCreationParams } from "./poll-params.js";
 

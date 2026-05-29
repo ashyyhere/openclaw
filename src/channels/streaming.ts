@@ -1,3 +1,4 @@
+/** Formats streaming tool progress and text chunks for channel messages. */
 import { formatToolDetail, resolveToolDisplay } from "../agents/tool-display.js";
 import { formatToolAggregate } from "../auto-reply/tool-meta.js";
 import type {
@@ -13,6 +14,7 @@ import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 import { normalizeTrimmedStringList } from "../shared/string-normalization.js";
 import { asBoolean } from "../utils/boolean.js";
 
+/** Re-exported API for src/channels. */
 export type {
   ChannelDeliveryStreamingConfig,
   ChannelPreviewStreamingConfig,
@@ -24,6 +26,7 @@ export type {
   StreamingMode,
   TextChunkMode,
 } from "../config/types.base.js";
+/** Re-exported API for src/channels, starting with Slack Channel Streaming Config. */
 export type { SlackChannelStreamingConfig } from "../config/types.slack.js";
 
 type StreamingCompatEntry = {
@@ -94,6 +97,7 @@ function asCommandTextMode(value: unknown): ChannelStreamingCommandTextMode | un
   return value === "raw" || value === "status" ? value : undefined;
 }
 
+/** Reused constant for DEFAULT PROGRESS DRAFT LABELS behavior in src/channels. */
 export const DEFAULT_PROGRESS_DRAFT_LABELS = [
   "Working",
   "Shelling",
@@ -117,6 +121,7 @@ export const DEFAULT_PROGRESS_DRAFT_LABELS = [
   "Surfacing",
 ] as const;
 
+/** Reused constant for DEFAULT PROGRESS DRAFT INITIAL DELAY MS behavior in src/channels. */
 export const DEFAULT_PROGRESS_DRAFT_INITIAL_DELAY_MS = 5_000;
 const DEFAULT_PROGRESS_DRAFT_MAX_LINE_CHARS = 120;
 const MIN_TRUNCATED_FINAL_PREFIX_CHARS = 48;
@@ -132,6 +137,7 @@ const NON_WORK_PROGRESS_TOOL_NAMES = new Set([
   "typing",
 ]);
 
+/** Reused helper for is Channel Progress Draft Work Tool Name behavior in src/channels. */
 export function isChannelProgressDraftWorkToolName(name: string | null | undefined): boolean {
   const normalized = normalizeOptionalLowercaseString(name);
   return Boolean(normalized && !NON_WORK_PROGRESS_TOOL_NAMES.has(normalized));
@@ -141,6 +147,7 @@ function stripTrailingEllipsis(text: string): string {
   return text.replace(/(?:\s*(?:\.{3}|\u2026))+$/u, "").trimEnd();
 }
 
+/** Reused helper for is Potential Truncated Final behavior in src/channels. */
 export function isPotentialTruncatedFinal(finalText: string): boolean {
   const trimmedFinal = finalText.trimEnd();
   const untruncatedFinal = stripTrailingEllipsis(trimmedFinal);
@@ -149,6 +156,7 @@ export function isPotentialTruncatedFinal(finalText: string): boolean {
   );
 }
 
+/** Reused helper for select Longer Final Text behavior in src/channels. */
 export function selectLongerFinalText(params: {
   finalText: string;
   candidateTexts: readonly (string | undefined)[];
@@ -178,6 +186,7 @@ export function selectLongerFinalText(params: {
   return undefined;
 }
 
+/** Reused helper for resolve Transcript Backed Channel Final Text behavior in src/channels. */
 export async function resolveTranscriptBackedChannelFinalText(params: {
   finalText: string;
   resolveCandidateText: () => Promise<string | undefined>;
@@ -194,16 +203,19 @@ export async function resolveTranscriptBackedChannelFinalText(params: {
   );
 }
 
+/** Shared type for Channel Progress Line Options in src/channels. */
 export type ChannelProgressLineOptions = {
   markdown?: boolean;
   detailMode?: "explain" | "raw";
   commandText?: ChannelStreamingCommandTextMode;
 };
 
+/** Shared type for Channel Progress Draft Render Mode in src/channels. */
 export type ChannelProgressDraftRenderMode = "text" | "rich";
 
 const EMOJI_PREFIX_RE = /^\p{Extended_Pictographic}/u;
 
+/** Shared type for Channel Progress Draft Line Input in src/channels. */
 export type ChannelProgressDraftLineInput =
   | {
       event: "tool";
@@ -263,8 +275,10 @@ export type ChannelProgressDraftLineInput =
       summary?: string;
     };
 
+/** Shared type for Channel Progress Draft Line Kind in src/channels. */
 export type ChannelProgressDraftLineKind = ChannelProgressDraftLineInput["event"];
 
+/** Shared type for Channel Progress Draft Line in src/channels. */
 export type ChannelProgressDraftLine = {
   id?: string;
   kind: ChannelProgressDraftLineKind;
@@ -373,6 +387,7 @@ function shouldPrefixProgressLine(line: string): boolean {
   return !EMOJI_PREFIX_RE.test(line);
 }
 
+/** Reused helper for format Channel Progress Draft Line behavior in src/channels. */
 export function formatChannelProgressDraftLine(
   input: ChannelProgressDraftLineInput,
   options?: ChannelProgressLineOptions,
@@ -380,6 +395,7 @@ export function formatChannelProgressDraftLine(
   return buildChannelProgressDraftLine(input, options)?.text;
 }
 
+/** Reused helper for resolve Channel Progress Draft Line Options behavior in src/channels. */
 export function resolveChannelProgressDraftLineOptions(
   entry: StreamingCompatEntry | null | undefined,
   options?: ChannelProgressLineOptions,
@@ -390,6 +406,7 @@ export function resolveChannelProgressDraftLineOptions(
   };
 }
 
+/** Reused helper for build Channel Progress Draft Line For Entry behavior in src/channels. */
 export function buildChannelProgressDraftLineForEntry(
   entry: StreamingCompatEntry | null | undefined,
   input: ChannelProgressDraftLineInput,
@@ -401,6 +418,7 @@ export function buildChannelProgressDraftLineForEntry(
   );
 }
 
+/** Reused helper for format Channel Progress Draft Line For Entry behavior in src/channels. */
 export function formatChannelProgressDraftLineForEntry(
   entry: StreamingCompatEntry | null | undefined,
   input: ChannelProgressDraftLineInput,
@@ -409,6 +427,7 @@ export function formatChannelProgressDraftLineForEntry(
   return buildChannelProgressDraftLineForEntry(entry, input, options)?.text;
 }
 
+/** Reused helper for build Channel Progress Draft Line behavior in src/channels. */
 export function buildChannelProgressDraftLine(
   input: ChannelProgressDraftLineInput,
   options?: ChannelProgressLineOptions,
@@ -513,6 +532,7 @@ export function buildChannelProgressDraftLine(
   return undefined;
 }
 
+/** Reused helper for create Channel Progress Draft Gate behavior in src/channels. */
 export function createChannelProgressDraftGate(params: {
   onStart: () => void | Promise<void>;
   initialDelayMs?: number;
@@ -587,6 +607,7 @@ export function createChannelProgressDraftGate(params: {
   };
 }
 
+/** Reused helper for get Channel Streaming Config Object behavior in src/channels. */
 export function getChannelStreamingConfigObject(
   entry: StreamingCompatEntry | null | undefined,
 ): ChannelStreamingConfig | undefined {
@@ -594,6 +615,7 @@ export function getChannelStreamingConfigObject(
   return streaming ? (streaming as ChannelStreamingConfig) : undefined;
 }
 
+/** Reused helper for resolve Channel Streaming Chunk Mode behavior in src/channels. */
 export function resolveChannelStreamingChunkMode(
   entry: StreamingCompatEntry | null | undefined,
 ): TextChunkMode | undefined {
@@ -603,6 +625,7 @@ export function resolveChannelStreamingChunkMode(
   );
 }
 
+/** Reused helper for resolve Channel Streaming Block Enabled behavior in src/channels. */
 export function resolveChannelStreamingBlockEnabled(
   entry: StreamingCompatEntry | null | undefined,
 ): boolean | undefined {
@@ -610,6 +633,7 @@ export function resolveChannelStreamingBlockEnabled(
   return asBoolean(config?.block?.enabled) ?? asBoolean(entry?.blockStreaming);
 }
 
+/** Reused helper for resolve Channel Streaming Block Coalesce behavior in src/channels. */
 export function resolveChannelStreamingBlockCoalesce(
   entry: StreamingCompatEntry | null | undefined,
 ): BlockStreamingCoalesceConfig | undefined {
@@ -620,6 +644,7 @@ export function resolveChannelStreamingBlockCoalesce(
   );
 }
 
+/** Reused helper for resolve Channel Streaming Preview Chunk behavior in src/channels. */
 export function resolveChannelStreamingPreviewChunk(
   entry: StreamingCompatEntry | null | undefined,
 ): BlockStreamingChunkConfig | undefined {
@@ -630,6 +655,7 @@ export function resolveChannelStreamingPreviewChunk(
   );
 }
 
+/** Reused helper for resolve Channel Streaming Preview Tool Progress behavior in src/channels. */
 export function resolveChannelStreamingPreviewToolProgress(
   entry: StreamingCompatEntry | null | undefined,
   defaultValue = true,
@@ -645,6 +671,7 @@ export function resolveChannelStreamingPreviewToolProgress(
   return asBoolean(config?.preview?.toolProgress) ?? defaultValue;
 }
 
+/** Reused helper for resolve Channel Streaming Progress Commentary behavior in src/channels. */
 export function resolveChannelStreamingProgressCommentary(
   entry: StreamingCompatEntry | null | undefined,
   defaultValue = false,
@@ -657,6 +684,7 @@ export function resolveChannelStreamingProgressCommentary(
   return asBoolean(progress?.commentary) ?? defaultValue;
 }
 
+/** Reused helper for resolve Channel Streaming Preview Command Text behavior in src/channels. */
 export function resolveChannelStreamingPreviewCommandText(
   entry: StreamingCompatEntry | null | undefined,
   defaultValue: ChannelStreamingCommandTextMode = "raw",
@@ -669,6 +697,7 @@ export function resolveChannelStreamingPreviewCommandText(
   );
 }
 
+/** Reused helper for resolve Channel Streaming Preview Native Tool Progress behavior in src/channels. */
 export function resolveChannelStreamingPreviewNativeToolProgress(
   entry: StreamingCompatEntry | null | undefined,
   defaultValue = false,
@@ -678,6 +707,7 @@ export function resolveChannelStreamingPreviewNativeToolProgress(
   return asBoolean(preview?.nativeToolProgress) ?? defaultValue;
 }
 
+/** Reused helper for resolve Channel Streaming Preview Native Tool Progress Allow From behavior in src/channels. */
 export function resolveChannelStreamingPreviewNativeToolProgressAllowFrom(
   entry: StreamingCompatEntry | null | undefined,
 ): Array<string | number> | undefined {
@@ -686,6 +716,7 @@ export function resolveChannelStreamingPreviewNativeToolProgressAllowFrom(
   return asStringNumberArray(preview?.nativeToolProgressAllowFrom);
 }
 
+/** Reused helper for resolve Channel Streaming Suppress Default Tool Progress Messages behavior in src/channels. */
 export function resolveChannelStreamingSuppressDefaultToolProgressMessages(
   entry: StreamingCompatEntry | null | undefined,
   options?: {
@@ -710,6 +741,7 @@ export function resolveChannelStreamingSuppressDefaultToolProgressMessages(
   return options?.previewToolProgressEnabled ?? resolveChannelStreamingPreviewToolProgress(entry);
 }
 
+/** Reused helper for resolve Channel Streaming Native Transport behavior in src/channels. */
 export function resolveChannelStreamingNativeTransport(
   entry: StreamingCompatEntry | null | undefined,
 ): boolean | undefined {
@@ -717,6 +749,7 @@ export function resolveChannelStreamingNativeTransport(
   return asBoolean(config?.nativeTransport) ?? asBoolean(entry?.nativeStreaming);
 }
 
+/** Reused helper for resolve Channel Preview Stream Mode behavior in src/channels. */
 export function resolveChannelPreviewStreamMode(
   entry: StreamingCompatEntry | null | undefined,
   defaultMode: "off" | "partial",
@@ -738,6 +771,7 @@ export function resolveChannelPreviewStreamMode(
   return defaultMode;
 }
 
+/** Reused helper for resolve Channel Progress Draft Config behavior in src/channels. */
 export function resolveChannelProgressDraftConfig(
   entry: StreamingCompatEntry | null | undefined,
 ): ChannelStreamingProgressConfig {
@@ -761,6 +795,7 @@ function hashProgressSeed(seed: string): number {
   return hash >>> 0;
 }
 
+/** Reused helper for resolve Channel Progress Draft Label behavior in src/channels. */
 export function resolveChannelProgressDraftLabel(params: {
   entry?: StreamingCompatEntry | null;
   seed?: string;
@@ -783,6 +818,7 @@ export function resolveChannelProgressDraftLabel(params: {
   return labels[index] ?? labels[0];
 }
 
+/** Reused helper for resolve Channel Progress Draft Max Lines behavior in src/channels. */
 export function resolveChannelProgressDraftMaxLines(
   entry: StreamingCompatEntry | null | undefined,
   defaultValue = 8,
@@ -791,6 +827,7 @@ export function resolveChannelProgressDraftMaxLines(
   return configured && configured > 0 ? configured : defaultValue;
 }
 
+/** Reused helper for resolve Channel Progress Draft Max Line Chars behavior in src/channels. */
 export function resolveChannelProgressDraftMaxLineChars(
   entry: StreamingCompatEntry | null | undefined,
   defaultValue = DEFAULT_PROGRESS_DRAFT_MAX_LINE_CHARS,
@@ -799,6 +836,7 @@ export function resolveChannelProgressDraftMaxLineChars(
   return configured && configured > 0 ? configured : defaultValue;
 }
 
+/** Reused helper for resolve Channel Progress Draft Render behavior in src/channels. */
 export function resolveChannelProgressDraftRender(
   entry: StreamingCompatEntry | null | undefined,
   defaultValue: ChannelProgressDraftRenderMode = "text",
@@ -919,6 +957,7 @@ function getProgressDraftLineText(line: string | ChannelProgressDraftLine): stri
   return `${prefix}${label}`.trim();
 }
 
+/** Reused helper for normalize Channel Progress Draft Line Identity behavior in src/channels. */
 export function normalizeChannelProgressDraftLineIdentity(
   line: string | ChannelProgressDraftLine | undefined,
 ): string {
@@ -926,6 +965,7 @@ export function normalizeChannelProgressDraftLineIdentity(
   return text?.replace(/\s+/g, " ").trim() ?? "";
 }
 
+/** Reused helper for merge Channel Progress Draft Line behavior in src/channels. */
 export function mergeChannelProgressDraftLine<TLine extends string | ChannelProgressDraftLine>(
   lines: TLine[],
   line: TLine,
@@ -957,6 +997,7 @@ export function mergeChannelProgressDraftLine<TLine extends string | ChannelProg
   return [...lines, line].slice(-maxLines);
 }
 
+/** Reused helper for format Channel Progress Draft Text behavior in src/channels. */
 export function formatChannelProgressDraftText(params: {
   entry?: StreamingCompatEntry | null;
   lines: Array<string | ChannelProgressDraftLine>;

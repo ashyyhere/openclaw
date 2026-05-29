@@ -1,3 +1,4 @@
+// Tests plugins/contracts provider family plugin tests test behavior.
 import fs from "node:fs";
 import { basename, dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";

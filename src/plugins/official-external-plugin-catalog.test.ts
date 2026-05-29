@@ -1,3 +1,4 @@
+// Tests plugins official external plugin catalog test behavior.
 import { describe, expect, it } from "vitest";
 import {
   type OfficialExternalPluginCatalogEntry,

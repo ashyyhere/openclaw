@@ -1,3 +1,4 @@
+// Tests infra channel runtime context test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { createRuntimeChannel } from "../plugins/runtime/runtime-channel.js";
 import {

@@ -1,3 +1,4 @@
+// scripts/lib plugin npm release helpers and runtime behavior.
 import { execFileSync } from "node:child_process";
 import { mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";

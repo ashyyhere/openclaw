@@ -1,3 +1,4 @@
+// Tests llm/providers openai compatible auth test behavior.
 import { afterEach, describe, expect, it } from "vitest";
 import type { Context, Model } from "../types.js";
 import { streamOpenAICompletions } from "./openai-completions.js";

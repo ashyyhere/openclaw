@@ -1,3 +1,4 @@
+// Tests extensions/feishu/src typing test behavior.
 import { describe, expect, it } from "vitest";
 import { isFeishuBackoffError, getBackoffCodeFromResponse, FeishuBackoffError } from "./typing.js";
 

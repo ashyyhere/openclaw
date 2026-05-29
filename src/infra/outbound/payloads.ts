@@ -1,3 +1,4 @@
+// infra/outbound payloads helpers and runtime behavior.
 import { resolveSendableOutboundReplyParts } from "openclaw/plugin-sdk/reply-payload";
 import { parseReplyDirectives } from "../../auto-reply/reply/reply-directives.js";
 import {
@@ -21,6 +22,7 @@ import {
 import { type SilentReplyConversationType } from "../../shared/silent-reply-policy.js";
 import { stripUnsupportedCitationControlMarkers } from "../../shared/text/citation-control-markers.js";
 
+/** Shared type for Normalized Outbound Payload in src/infra/outbound. */
 export type NormalizedOutboundPayload = {
   text: string;
   mediaUrls: string[];
@@ -33,6 +35,7 @@ export type NormalizedOutboundPayload = {
   hookContent?: string;
 };
 
+/** Shared type for Outbound Payload Json in src/infra/outbound. */
 export type OutboundPayloadJson = {
   text: string;
   mediaUrl: string | null;
@@ -44,6 +47,7 @@ export type OutboundPayloadJson = {
   channelData?: Record<string, unknown>;
 };
 
+/** Shared type for Outbound Payload Plan in src/infra/outbound. */
 export type OutboundPayloadPlan = {
   sourceIndex: number;
   payload: ReplyPayload;
@@ -61,6 +65,7 @@ type OutboundPayloadPlanContext = {
   extractMarkdownImages?: boolean;
 };
 
+/** Shared type for Outbound Payload Mirror in src/infra/outbound. */
 export type OutboundPayloadMirror = {
   text: string;
   mediaUrls: string[];
@@ -247,6 +252,7 @@ function createOutboundPayloadPlanEntry(
   };
 }
 
+/** Reused helper for create Outbound Payload Plan behavior in src/infra/outbound. */
 export function createOutboundPayloadPlan(
   payloads: readonly ReplyPayload[],
   context: OutboundPayloadPlanContext = {},
@@ -281,12 +287,14 @@ export function createOutboundPayloadPlan(
   return plan;
 }
 
+/** Reused helper for project Outbound Payload Plan For Delivery behavior in src/infra/outbound. */
 export function projectOutboundPayloadPlanForDelivery(
   plan: readonly OutboundPayloadPlan[],
 ): ReplyPayload[] {
   return plan.map((entry) => entry.payload);
 }
 
+/** Reused helper for project Outbound Payload Plan For Outbound behavior in src/infra/outbound. */
 export function projectOutboundPayloadPlanForOutbound(
   plan: readonly OutboundPayloadPlan[],
 ): NormalizedOutboundPayload[] {
@@ -315,6 +323,7 @@ export function projectOutboundPayloadPlanForOutbound(
   return normalizedPayloads;
 }
 
+/** Reused helper for project Outbound Payload Plan For Json behavior in src/infra/outbound. */
 export function projectOutboundPayloadPlanForJson(
   plan: readonly OutboundPayloadPlan[],
 ): OutboundPayloadJson[] {
@@ -335,6 +344,7 @@ export function projectOutboundPayloadPlanForJson(
   return normalized;
 }
 
+/** Reused helper for project Outbound Payload Plan For Mirror behavior in src/infra/outbound. */
 export function projectOutboundPayloadPlanForMirror(
   plan: readonly OutboundPayloadPlan[],
 ): OutboundPayloadMirror {
@@ -347,6 +357,7 @@ export function projectOutboundPayloadPlanForMirror(
   };
 }
 
+/** Reused helper for summarize Outbound Payload For Transport behavior in src/infra/outbound. */
 export function summarizeOutboundPayloadForTransport(
   payload: ReplyPayload,
 ): NormalizedOutboundPayload {
@@ -369,24 +380,28 @@ export function summarizeOutboundPayloadForTransport(
   };
 }
 
+/** Reused helper for normalize Reply Payloads For Delivery behavior in src/infra/outbound. */
 export function normalizeReplyPayloadsForDelivery(
   payloads: readonly ReplyPayload[],
 ): ReplyPayload[] {
   return projectOutboundPayloadPlanForDelivery(createOutboundPayloadPlan(payloads));
 }
 
+/** Reused helper for normalize Outbound Payloads behavior in src/infra/outbound. */
 export function normalizeOutboundPayloads(
   payloads: readonly ReplyPayload[],
 ): NormalizedOutboundPayload[] {
   return projectOutboundPayloadPlanForOutbound(createOutboundPayloadPlan(payloads));
 }
 
+/** Reused helper for normalize Outbound Payloads For Json behavior in src/infra/outbound. */
 export function normalizeOutboundPayloadsForJson(
   payloads: readonly ReplyPayload[],
 ): OutboundPayloadJson[] {
   return projectOutboundPayloadPlanForJson(createOutboundPayloadPlan(payloads));
 }
 
+/** Reused helper for format Outbound Payload Log behavior in src/infra/outbound. */
 export function formatOutboundPayloadLog(
   payload: Pick<NormalizedOutboundPayload, "text" | "channelData"> & {
     mediaUrls: readonly string[];

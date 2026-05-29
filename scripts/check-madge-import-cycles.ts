@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// scripts check madge import cycles helpers and runtime behavior.
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";

@@ -1,3 +1,4 @@
+// Tests plugins memory runtime test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const resolveRuntimePluginRegistryMock =

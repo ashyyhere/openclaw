@@ -1,3 +1,4 @@
+// Tests extensions/thread-ownership index test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawPluginApi } from "./api.js";
 import register from "./index.js";

@@ -1,3 +1,4 @@
+/** Safely loads local skill markdown files from a directory. */
 import fs from "node:fs";
 import path from "node:path";
 import { openRootFileSync } from "../../infra/boundary-file-read.js";
@@ -99,6 +100,7 @@ function listCandidateSkillDirs(dir: string): string[] {
   }
 }
 
+/** Loads valid skills from a directory without throwing on bad entries. */
 export function loadSkillsFromDirSafe(params: { dir: string; source: string; maxBytes?: number }): {
   skills: Skill[];
   frontmatterByFilePath: ReadonlyMap<string, ParsedSkillFrontmatter>;
@@ -145,6 +147,7 @@ export function loadSkillsFromDirSafe(params: { dir: string; source: string; max
   };
 }
 
+/** Reads only skill frontmatter within size and boundary limits. */
 export function readSkillFrontmatterSafe(params: {
   rootDir: string;
   filePath: string;

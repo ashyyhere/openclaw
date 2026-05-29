@@ -1,3 +1,4 @@
+// Tests extensions/qa-matrix/src/runners/contract model selection test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const loadQaRuntimeModule = vi.hoisted(() => vi.fn());

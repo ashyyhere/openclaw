@@ -1,8 +1,12 @@
+// config nix mode write guard helpers and runtime behavior.
 import { resolveIsNixMode } from "./paths.js";
 
+/** Reused constant for NIX OPENCLAW AGENT FIRST URL behavior in src/config. */
 export const NIX_OPENCLAW_AGENT_FIRST_URL = "https://github.com/openclaw/nix-openclaw#quick-start";
+/** Reused constant for OPENCLAW NIX OVERVIEW URL behavior in src/config. */
 export const OPENCLAW_NIX_OVERVIEW_URL = "https://docs.openclaw.ai/install/nix";
 
+/** Reused class for Nix Mode Config Mutation Error behavior in src/config. */
 export class NixModeConfigMutationError extends Error {
   readonly code = "OPENCLAW_NIX_MODE_CONFIG_IMMUTABLE";
 
@@ -12,6 +16,7 @@ export class NixModeConfigMutationError extends Error {
   }
 }
 
+/** Reused helper for format Nix Mode Config Mutation Message behavior in src/config. */
 export function formatNixModeConfigMutationMessage(params: { configPath?: string } = {}): string {
   return [
     "Config is managed by Nix (`OPENCLAW_NIX_MODE=1`), so OpenClaw treats openclaw.json as immutable.",
@@ -24,6 +29,7 @@ export function formatNixModeConfigMutationMessage(params: { configPath?: string
   ].join("\n");
 }
 
+/** Reused helper for assert Config Write Allowed In Current Mode behavior in src/config. */
 export function assertConfigWriteAllowedInCurrentMode(
   params: {
     configPath?: string;

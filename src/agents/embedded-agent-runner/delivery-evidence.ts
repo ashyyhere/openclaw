@@ -1,3 +1,4 @@
+/** Detects visible outbound delivery evidence from embedded-agent results. */
 import { normalizeStringEntries, uniqueStrings } from "../../shared/string-normalization.js";
 import { hasAcceptedSessionSpawn } from "../accepted-session-spawn.js";
 
@@ -12,6 +13,7 @@ type AgentPayloadLike = {
   isReasoning?: unknown;
 };
 
+/** Shared type for Agent Delivery Evidence in src/agents/embedded-agent-runner. */
 export type AgentDeliveryEvidence = {
   payloads?: unknown;
   deliveryStatus?: {
@@ -74,6 +76,7 @@ function collectMediaUrlsFromRecord(record: Record<string, unknown>, output: Set
   }
 }
 
+/** Reused helper for collect Delivered Media Urls behavior in src/agents/embedded-agent-runner. */
 export function collectDeliveredMediaUrls(result: AgentDeliveryEvidence): string[] {
   const urls = new Set<string>();
   if (Array.isArray(result.payloads)) {
@@ -89,6 +92,7 @@ export function collectDeliveredMediaUrls(result: AgentDeliveryEvidence): string
   return Array.from(urls);
 }
 
+/** Reused helper for collect Messaging Tool Delivered Media Urls behavior in src/agents/embedded-agent-runner. */
 export function collectMessagingToolDeliveredMediaUrls(
   result: Pick<AgentDeliveryEvidence, "messagingToolSentMediaUrls" | "messagingToolSentTargets">,
 ): string[] {
@@ -104,6 +108,7 @@ export function collectMessagingToolDeliveredMediaUrls(
   return Array.from(urls);
 }
 
+/** Reused helper for has Delivered Expected Media behavior in src/agents/embedded-agent-runner. */
 export function hasDeliveredExpectedMedia(
   result: AgentDeliveryEvidence,
   expectedMediaUrls: readonly string[],
@@ -120,6 +125,7 @@ function hasPositiveNumber(value: unknown): boolean {
   return typeof value === "number" && Number.isFinite(value) && value > 0;
 }
 
+/** Reused helper for get Gateway Agent Result behavior in src/agents/embedded-agent-runner. */
 export function getGatewayAgentResult(response: unknown): AgentDeliveryEvidence | null {
   if (!response || typeof response !== "object") {
     return null;
@@ -147,6 +153,7 @@ function hasAgentDeliveryEvidenceShape(value: object): boolean {
   );
 }
 
+/** Reused helper for has Visible Agent Payload behavior in src/agents/embedded-agent-runner. */
 export function hasVisibleAgentPayload(
   result: Pick<AgentDeliveryEvidence, "payloads">,
   options: { includeErrorPayloads?: boolean; includeReasoningPayloads?: boolean } = {},
@@ -177,12 +184,14 @@ export function hasVisibleAgentPayload(
   });
 }
 
+/** Reused helper for has Messaging Tool Delivery Evidence behavior in src/agents/embedded-agent-runner. */
 export function hasMessagingToolDeliveryEvidence(result: AgentDeliveryEvidence): boolean {
   return (
     result.didSendViaMessagingTool === true || hasCommittedMessagingToolDeliveryEvidence(result)
   );
 }
 
+/** Reused helper for has Committed Messaging Tool Delivery Evidence behavior in src/agents/embedded-agent-runner. */
 export function hasCommittedMessagingToolDeliveryEvidence(
   result: Pick<
     AgentDeliveryEvidence,
@@ -196,6 +205,7 @@ export function hasCommittedMessagingToolDeliveryEvidence(
   );
 }
 
+/** Reused helper for has Outbound Delivery Evidence behavior in src/agents/embedded-agent-runner. */
 export function hasOutboundDeliveryEvidence(result: AgentDeliveryEvidence): boolean {
   return (
     hasMessagingToolDeliveryEvidence(result) ||
@@ -206,6 +216,7 @@ export function hasOutboundDeliveryEvidence(result: AgentDeliveryEvidence): bool
   );
 }
 
+/** Reused helper for get Agent Command Delivery Failure behavior in src/agents/embedded-agent-runner. */
 export function getAgentCommandDeliveryFailure(result: AgentDeliveryEvidence): string | undefined {
   const status = result.deliveryStatus?.status;
   if (status !== "failed" && status !== "partial_failed") {

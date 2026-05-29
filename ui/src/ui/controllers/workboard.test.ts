@@ -1,3 +1,4 @@
+// Tests ui/src/ui/controllers workboard test behavior.
 import { describe, expect, it, vi } from "vitest";
 import type { GatewaySessionRow } from "../types.ts";
 import {

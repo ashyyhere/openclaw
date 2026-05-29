@@ -1,3 +1,4 @@
+// Coverage for reply agent utility helpers.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { FollowupRun } from "./queue.js";
 

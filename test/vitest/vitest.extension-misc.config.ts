@@ -1,3 +1,4 @@
+// test/vitest vitest extension misc config helpers and runtime behavior.
 import { miscExtensionTestRoots } from "./vitest.extension-misc-paths.mjs";
 import { loadPatternListFromEnv } from "./vitest.pattern-file.ts";
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";

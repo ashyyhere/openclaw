@@ -1,3 +1,4 @@
+// extensions/discord runtime api actions helpers and runtime behavior.
 export { handleDiscordAction } from "./src/actions/runtime.js";
 export {
   isDiscordModerationAction,

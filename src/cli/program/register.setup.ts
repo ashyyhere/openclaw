@@ -1,9 +1,11 @@
+/** Registers setup command and guided setup options. */
 import type { Command } from "commander";
 import { formatDocsLink } from "../../../packages/terminal-core/src/links.js";
 import { theme } from "../../../packages/terminal-core/src/theme.js";
 import { runCommandWithRuntime } from "../cli-utils.js";
 import { hasExplicitOptions } from "../command-options.js";
 
+/** Reused helper for register Setup Command behavior in src/cli/program. */
 export function registerSetupCommand(program: Command): void {
   program
     .command("setup")

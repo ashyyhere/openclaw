@@ -1,3 +1,4 @@
+/** Tests image sanitization limit resolution. */
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import { resolveImageSanitizationLimits } from "./image-sanitization.js";

@@ -1,3 +1,4 @@
+// process/supervisor/adapters pty helpers and runtime behavior.
 import { signalProcessTree } from "../../kill-tree.js";
 import { prepareOomScoreAdjustedSpawn } from "../../linux-oom-score.js";
 import type { ManagedRunStdin, SpawnProcessAdapter } from "../types.js";
@@ -33,6 +34,7 @@ type PtyModule = {
   };
 };
 
+/** Shared type for Pty Adapter in src/process/supervisor. */
 export type PtyAdapter = SpawnProcessAdapter;
 
 let ptyModulePromise: Promise<PtyModule> | null = null;
@@ -42,6 +44,7 @@ async function loadPtyModule(): Promise<PtyModule> {
   return ptyModulePromise;
 }
 
+/** Reused helper for create Pty Adapter behavior in src/process/supervisor. */
 export async function createPtyAdapter(params: {
   shell: string;
   args: string[];

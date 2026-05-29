@@ -1,3 +1,4 @@
+// Reminder guard that prevents reply agents from duplicating pending cron work.
 import { loadCronStore, resolveCronStorePath } from "../../cron/store.js";
 import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";
 import type { ReplyPayload } from "../types.js";
@@ -10,6 +11,7 @@ const REMINDER_COMMITMENT_PATTERNS: RegExp[] = [
   /\b(?:i\s*['’]?ll|i will)\s+(?:set|create|schedule)\s+(?:a\s+)?reminder\b/i,
 ];
 
+/** Reused helper for has Unbacked Reminder Commitment behavior in src/auto-reply/reply. */
 export function hasUnbackedReminderCommitment(text: string): boolean {
   const normalized = normalizeLowercaseStringOrEmpty(text);
   if (!normalized.trim()) {
@@ -46,6 +48,7 @@ export async function hasSessionRelatedCronJobs(params: {
   }
 }
 
+/** Reused helper for append Unscheduled Reminder Note behavior in src/auto-reply/reply. */
 export function appendUnscheduledReminderNote(payloads: ReplyPayload[]): ReplyPayload[] {
   let appended = false;
   return payloads.map((payload) => {

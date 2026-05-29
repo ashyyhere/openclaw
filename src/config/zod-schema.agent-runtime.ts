@@ -1,3 +1,4 @@
+// config zod schema agent runtime helpers and runtime behavior.
 import { z } from "zod";
 import { splitSandboxBindSpec } from "../agents/sandbox/bind-spec.js";
 import { isSandboxHostPathAbsolute } from "../agents/sandbox/host-paths.js";
@@ -55,6 +56,7 @@ function validateSandboxBindEntries(
   }
 }
 
+/** Reused constant for Agent Run Retries Config Schema behavior in src/config. */
 export const AgentRunRetriesConfigSchema = z
   .object({
     base: z.number().int().positive().optional(),
@@ -79,6 +81,7 @@ const AgentEntryEmbeddedAgentConfigSchema = z
   })
   .strict();
 
+/** Reused constant for Heartbeat Schema behavior in src/config. */
 export const HeartbeatSchema = z
   .object({
     every: z.string().optional(),
@@ -292,6 +295,7 @@ const SandboxPruneSchema = z
   .strict()
   .optional();
 
+/** Reused constant for Agent Context Limits Schema behavior in src/config. */
 export const AgentContextLimitsSchema = z
   .object({
     memoryGetMaxChars: z.number().int().min(1).max(250_000).optional(),
@@ -317,6 +321,7 @@ const ToolPolicyBaseSchema = z
   })
   .strict();
 
+/** Reused constant for Tool Policy Schema behavior in src/config. */
 export const ToolPolicySchema = ToolPolicyBaseSchema.superRefine((value, ctx) => {
   if (value.allow && value.allow.length > 0 && value.alsoAllow && value.alsoAllow.length > 0) {
     ctx.addIssue({
@@ -529,6 +534,7 @@ const ToolPolicyWithProfileSchema = z
   });
 
 // Provider docking: allowlists keyed by provider id (no schema updates when adding providers).
+/** Reused constant for Elevated Allow From Schema behavior in src/config. */
 export const ElevatedAllowFromSchema = z
   .record(z.string(), z.array(z.union([z.string(), z.number()])))
   .optional();
@@ -723,6 +729,7 @@ const SandboxSshSchema = z
   .strict()
   .optional();
 
+/** Reused constant for Agent Sandbox Schema behavior in src/config. */
 export const AgentSandboxSchema = z
   .object({
     mode: z.union([z.literal("off"), z.literal("non-main"), z.literal("all")]).optional(),
@@ -829,6 +836,7 @@ const AgentToolsSchema = z
   })
   .optional();
 
+/** Reused constant for Memory Search Schema behavior in src/config. */
 export const MemorySearchSchema = z
   .object({
     enabled: z.boolean().optional(),
@@ -986,6 +994,7 @@ export const MemorySearchSchema = z
   })
   .strict()
   .optional();
+/** Re-exported API for src/config, starting with Agent Model Schema. */
 export { AgentModelSchema, AgentToolModelSchema };
 
 const AgentRuntimeAcpSchema = z
@@ -1014,6 +1023,7 @@ const AgentRuntimeSchema = z
   ])
   .optional();
 
+/** Reused constant for Agent Embedded Harness Schema behavior in src/config. */
 export const AgentEmbeddedHarnessSchema = z
   .object({
     runtime: z.string().optional(),
@@ -1021,6 +1031,7 @@ export const AgentEmbeddedHarnessSchema = z
   .strict()
   .optional();
 
+/** Reused constant for Agent Runtime Policy Schema behavior in src/config. */
 export const AgentRuntimePolicySchema = z
   .object({
     id: z.string().optional(),
@@ -1028,6 +1039,7 @@ export const AgentRuntimePolicySchema = z
   .strict()
   .optional();
 
+/** Reused constant for Agent Model Runtime Entry Schema behavior in src/config. */
 export const AgentModelRuntimeEntrySchema = z
   .object({
     alias: z.string().optional(),
@@ -1037,6 +1049,7 @@ export const AgentModelRuntimeEntrySchema = z
   })
   .strict();
 
+/** Reused constant for Agent Entry Schema behavior in src/config. */
 export const AgentEntrySchema = z
   .object({
     id: z.string(),
@@ -1094,6 +1107,7 @@ export const AgentEntrySchema = z
   })
   .strict();
 
+/** Reused constant for Tools Schema behavior in src/config. */
 export const ToolsSchema = z
   .object({
     ...CommonToolPolicyFields,

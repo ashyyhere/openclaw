@@ -1,3 +1,4 @@
+// Tests extensions/whatsapp/src/auto-reply/monitor last route test behavior.
 import { afterEach, describe, expect, it } from "vitest";
 import { trackBackgroundTask } from "./last-route.js";
 

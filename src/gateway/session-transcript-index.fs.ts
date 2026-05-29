@@ -1,3 +1,4 @@
+// gateway session transcript index fs helpers and runtime behavior.
 import fs from "node:fs";
 import { StringDecoder } from "node:string_decoder";
 
@@ -6,6 +7,7 @@ const MAX_TRANSCRIPT_INDEX_CACHE_ENTRIES = 256;
 
 type ParsedTranscriptRecord = Record<string, unknown>;
 
+/** Shared type for Indexed Transcript Entry in src/gateway. */
 export type IndexedTranscriptEntry = {
   seq: number;
   id?: string;
@@ -76,6 +78,7 @@ function setCachedIndex(filePath: string, entry: CacheEntry): void {
   }
 }
 
+/** Reused helper for clear Session Transcript Index Cache behavior in src/gateway. */
 export function clearSessionTranscriptIndexCache(): void {
   transcriptIndexCache.clear();
   transcriptIndexBuilds.clear();
@@ -230,6 +233,7 @@ async function buildSessionTranscriptIndex(
   };
 }
 
+/** Reused helper for read Session Transcript Index behavior in src/gateway. */
 export async function readSessionTranscriptIndex(
   filePath: string,
   opts: ReadSessionTranscriptIndexOptions = {},

@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server/sandbox-exec-server filesystem helpers and runtime behavior.
 import { posix as pathPosix } from "node:path";
 import type { SandboxFsStat } from "openclaw/plugin-sdk/sandbox";
 import type { JsonObject, JsonValue } from "../protocol.js";

@@ -1,3 +1,4 @@
+// extensions/feishu/src comment shared helpers and runtime behavior.
 import {
   isRecord as sharedIsRecord,
   normalizeOptionalString,

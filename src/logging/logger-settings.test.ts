@@ -1,3 +1,4 @@
+// Tests logging logger settings test behavior.
 import path from "node:path";
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 

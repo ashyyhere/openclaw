@@ -1,3 +1,4 @@
+// Tests plugins hooks sync only test behavior.
 import type { AgentMessage } from "openclaw/plugin-sdk/agent-core";
 import { describe, expect, it, vi } from "vitest";
 import { createHookRunner, type HookRunnerLogger } from "./hooks.js";

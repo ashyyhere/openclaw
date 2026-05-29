@@ -1,3 +1,4 @@
+/** E2E test for doctor warnings when state directory is missing. */
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

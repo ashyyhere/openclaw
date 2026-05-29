@@ -1,3 +1,4 @@
+// scripts/e2e/parallels update job timeout helpers and runtime behavior.
 interface TimedUpdateJobOptions {
   append(this: void, chunk: string): void;
   label: string;

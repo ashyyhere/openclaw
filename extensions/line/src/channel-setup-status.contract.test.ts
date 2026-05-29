@@ -1,3 +1,4 @@
+// Tests extensions/line/src channel setup status contract test behavior.
 import {
   installChannelSetupContractSuite,
   installChannelStatusContractSuite,

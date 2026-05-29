@@ -237,6 +237,7 @@ function renderReactions(payload: unknown, opts: FormatOpts): string[] | null {
   ];
 }
 
+/** Reused helper for format Message Cli Text behavior in src/commands. */
 export function formatMessageCliText(result: MessageActionRunResult): string[] {
   const rich = isRich();
   const ok = (text: string) => (rich ? theme.success(text) : text);

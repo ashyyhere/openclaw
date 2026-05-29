@@ -1,3 +1,4 @@
+// Tests test/scripts upgrade survivor config recipe test behavior.
 import { describe, expect, it } from "vitest";
 import { resolveUpgradeSurvivorOpenClawCommand } from "../../scripts/e2e/lib/upgrade-survivor/config-recipe.mjs";
 

@@ -1,7 +1,9 @@
+// Reply directive helpers for media and payload extraction.
 import { splitMediaFromOutput } from "../../media/parse.js";
 import { parseInlineDirectives } from "../../utils/directive-tags.js";
 import { isSilentReplyPayloadText, SILENT_REPLY_TOKEN } from "../tokens.js";
 
+/** Shared type for Reply Directive Parse Result in src/auto-reply/reply. */
 export type ReplyDirectiveParseResult = {
   text: string;
   mediaUrls?: string[];
@@ -13,12 +15,14 @@ export type ReplyDirectiveParseResult = {
   isSilent: boolean;
 };
 
+/** Shared type for Reply Directive Parse Options in src/auto-reply/reply. */
 export type ReplyDirectiveParseOptions = {
   currentMessageId?: string;
   silentToken?: string;
   extractMarkdownImages?: boolean;
 };
 
+/** Reused helper for parse Reply Directives behavior in src/auto-reply/reply. */
 export function parseReplyDirectives(
   raw: string,
   options: ReplyDirectiveParseOptions = {},

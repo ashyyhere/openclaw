@@ -1,3 +1,4 @@
+// Tests infra approval errors test behavior.
 import { describe, expect, it } from "vitest";
 import { isApprovalNotFoundError } from "./approval-errors.js";
 

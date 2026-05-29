@@ -1,5 +1,8 @@
+// config types cli helpers and runtime behavior.
+/** Shared type for Cli Banner Tagline Mode in src/config. */
 export type CliBannerTaglineMode = "random" | "default" | "off";
 
+/** Shared type for Cli Config in src/config. */
 export type CliConfig = {
   banner?: {
     /**

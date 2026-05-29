@@ -1,3 +1,4 @@
+// extensions/discord/src target resolver helpers and runtime behavior.
 import { buildMessagingTarget, type MessagingTarget } from "openclaw/plugin-sdk/channel-targets";
 import type { DirectoryConfigParams } from "openclaw/plugin-sdk/directory-runtime";
 import { resolveDiscordAccount, resolveDiscordAccountAllowFrom } from "./accounts.js";

@@ -1,13 +1,16 @@
+// logging diagnostic support bundle helpers and runtime behavior.
 import fsp from "node:fs/promises";
 import path from "node:path";
 import { isPathInside } from "../infra/path-guards.js";
 
+/** Shared type for Diagnostic Support Bundle File in src/logging. */
 export type DiagnosticSupportBundleFile = {
   path: string;
   mediaType: string;
   content: string;
 };
 
+/** Shared type for Diagnostic Support Bundle Content in src/logging. */
 export type DiagnosticSupportBundleContent = {
   path: string;
   mediaType: string;
@@ -18,6 +21,7 @@ function supportBundleByteLength(content: string): number {
   return Buffer.byteLength(content, "utf8");
 }
 
+/** Reused helper for json Support Bundle File behavior in src/logging. */
 export function jsonSupportBundleFile(
   pathName: string,
   value: unknown,
@@ -29,6 +33,7 @@ export function jsonSupportBundleFile(
   };
 }
 
+/** Reused helper for jsonl Support Bundle File behavior in src/logging. */
 export function jsonlSupportBundleFile(
   pathName: string,
   lines: readonly string[],
@@ -40,6 +45,7 @@ export function jsonlSupportBundleFile(
   };
 }
 
+/** Reused helper for text Support Bundle File behavior in src/logging. */
 export function textSupportBundleFile(
   pathName: string,
   content: string,
@@ -51,6 +57,7 @@ export function textSupportBundleFile(
   };
 }
 
+/** Reused helper for support Bundle Contents behavior in src/logging. */
 export function supportBundleContents(
   files: readonly DiagnosticSupportBundleFile[],
 ): DiagnosticSupportBundleContent[] {
@@ -101,6 +108,7 @@ async function writeSupportBundleFile(
   });
 }
 
+/** Reused helper for write Support Bundle Directory behavior in src/logging. */
 export async function writeSupportBundleDirectory(params: {
   outputDir: string;
   files: readonly DiagnosticSupportBundleFile[];
@@ -112,6 +120,7 @@ export async function writeSupportBundleDirectory(params: {
   return supportBundleContents(params.files);
 }
 
+/** Reused helper for write Support Bundle Zip behavior in src/logging. */
 export async function writeSupportBundleZip(params: {
   outputPath: string;
   files: readonly DiagnosticSupportBundleFile[];

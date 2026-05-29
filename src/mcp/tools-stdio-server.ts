@@ -1,3 +1,4 @@
+// mcp tools stdio server helpers and runtime behavior.
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { CallToolRequestSchema, ListToolsRequestSchema } from "@modelcontextprotocol/sdk/types.js";
@@ -6,6 +7,7 @@ import { routeLogsToStderr } from "../logging/console.js";
 import { VERSION } from "../version.js";
 import { createPluginToolsMcpHandlers } from "./plugin-tools-handlers.js";
 
+/** Reused helper for create Tools Mcp Server behavior in src/mcp. */
 export function createToolsMcpServer(params: { name: string; tools: AnyAgentTool[] }): Server {
   const handlers = createPluginToolsMcpHandlers(params.tools);
   const server = new Server(
@@ -21,6 +23,7 @@ export function createToolsMcpServer(params: { name: string; tools: AnyAgentTool
   return server;
 }
 
+/** Reused helper for connect Tools Mcp Server To Stdio behavior in src/mcp. */
 export async function connectToolsMcpServerToStdio(server: Server): Promise<void> {
   // MCP stdio requires stdout to stay protocol-only.
   routeLogsToStderr();

@@ -1,3 +1,4 @@
+// Tests extensions/slack/src sent thread cache test behavior.
 import { importFreshModule } from "openclaw/plugin-sdk/test-fixtures";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { clearSlackRuntime, setSlackRuntime } from "./runtime.js";

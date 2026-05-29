@@ -1,3 +1,4 @@
+/** Builds pinned Python mutation scripts for sandbox filesystem writes. */
 import { PATH_ALIAS_POLICIES } from "../../infra/path-alias-guards.js";
 import type {
   PathSafetyCheck,
@@ -6,6 +7,7 @@ import type {
 } from "./fs-bridge-path-safety.js";
 import type { SandboxFsCommandPlan } from "./fs-bridge-shell-command-plans.js";
 
+/** Reused constant for SANDBOX PINNED MUTATION PYTHON CANDIDATES behavior in src/agents/sandbox. */
 export const SANDBOX_PINNED_MUTATION_PYTHON_CANDIDATES = [
   "/usr/bin/python3",
   "/usr/local/bin/python3",
@@ -13,6 +15,7 @@ export const SANDBOX_PINNED_MUTATION_PYTHON_CANDIDATES = [
   "/bin/python3",
 ] as const;
 
+/** Reused constant for SANDBOX PINNED MUTATION PYTHON behavior in src/agents/sandbox. */
 export const SANDBOX_PINNED_MUTATION_PYTHON = [
   "import errno",
   "import os",
@@ -436,6 +439,7 @@ function buildPinnedMutationPlan(params: {
   };
 }
 
+/** Builds a pinned write plan guarded by path-safety checks. */
 export function buildPinnedWritePlan(params: {
   check: PathSafetyCheck;
   pinned: PinnedSandboxEntry;
@@ -453,6 +457,7 @@ export function buildPinnedWritePlan(params: {
   });
 }
 
+/** Builds a pinned mkdir -p plan guarded by path-safety checks. */
 export function buildPinnedMkdirpPlan(params: {
   check: PathSafetyCheck;
   pinned: PinnedSandboxDirectoryEntry;
@@ -463,6 +468,7 @@ export function buildPinnedMkdirpPlan(params: {
   });
 }
 
+/** Builds a pinned remove plan guarded by path-safety checks. */
 export function buildPinnedRemovePlan(params: {
   check: PathSafetyCheck;
   pinned: PinnedSandboxEntry;
@@ -490,6 +496,7 @@ export function buildPinnedRemovePlan(params: {
   });
 }
 
+/** Builds a pinned rename plan guarded by source and target checks. */
 export function buildPinnedRenamePlan(params: {
   fromCheck: PathSafetyCheck;
   toCheck: PathSafetyCheck;

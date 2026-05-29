@@ -1,3 +1,4 @@
+// infra runtime status helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
 type RuntimeStatusFormatInput = {
@@ -7,6 +8,7 @@ type RuntimeStatusFormatInput = {
   details?: string[];
 };
 
+/** Reused helper for format Runtime Status With Details behavior in src/infra. */
 export function formatRuntimeStatusWithDetails({
   status,
   pid,

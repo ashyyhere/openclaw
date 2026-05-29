@@ -1,3 +1,4 @@
+// Tests extensions/feishu/src tools config test behavior.
 import { describe, expect, it } from "vitest";
 import { FeishuConfigSchema } from "./config-schema.js";
 import { resolveToolsConfig } from "./tools-config.js";

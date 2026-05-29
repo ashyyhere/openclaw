@@ -1,3 +1,4 @@
+// extensions/whatsapp login qr runtime helpers and runtime behavior.
 type StartWebLoginWithQr = typeof import("./src/login-qr.js").startWebLoginWithQr;
 type WaitForWebLogin = typeof import("./src/login-qr.js").waitForWebLogin;
 

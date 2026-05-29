@@ -1,3 +1,4 @@
+// Tests llm/providers google shared convert test behavior.
 import { describe, expect, it } from "vitest";
 import type { Context, Tool } from "../types.js";
 import { convertMessages, convertTools } from "./google-shared.js";

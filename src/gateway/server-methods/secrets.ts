@@ -1,3 +1,4 @@
+// gateway/server-methods secrets helpers and runtime behavior.
 import {
   ErrorCodes,
   errorShape,
@@ -48,6 +49,7 @@ function invalidSecretsResolveField(
   return "targetIds";
 }
 
+/** Reused helper for create Secrets Handlers behavior in src/gateway/server-methods. */
 export function createSecretsHandlers(params: {
   reloadSecrets: () => Promise<{ warningCount: number }>;
   resolveSecrets: (params: {

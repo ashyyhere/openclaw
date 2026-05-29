@@ -1,3 +1,4 @@
+// Tests process/supervisor supervisor test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { SpawnProcessAdapter } from "./types.js";
 

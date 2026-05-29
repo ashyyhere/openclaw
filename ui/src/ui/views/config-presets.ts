@@ -5,6 +5,7 @@
 
 export type ConfigPresetId = "personal" | "codeAgent" | "teamBot" | "minimal";
 
+/** Shared type for Config Preset Patch in ui/src/ui/views. */
 export type ConfigPresetPatch = {
   agents: {
     defaults: {
@@ -15,6 +16,7 @@ export type ConfigPresetPatch = {
   };
 };
 
+/** Shared type for Config Preset in ui/src/ui/views. */
 export type ConfigPreset = {
   id: ConfigPresetId;
   label: string;
@@ -25,6 +27,7 @@ export type ConfigPreset = {
   patch: ConfigPresetPatch;
 };
 
+/** Reused constant for CONFIG PRESETS behavior in ui/src/ui/views. */
 export const CONFIG_PRESETS: ConfigPreset[] = [
   {
     id: "personal",
@@ -97,6 +100,7 @@ export const CONFIG_PRESETS: ConfigPreset[] = [
   },
 ];
 
+/** Reused helper for get Preset By Id behavior in ui/src/ui/views. */
 export function getPresetById(id: ConfigPresetId): ConfigPreset | undefined {
   return CONFIG_PRESETS.find((p) => p.id === id);
 }

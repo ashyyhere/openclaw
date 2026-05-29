@@ -1,3 +1,5 @@
+// gateway gateway codex harness live helpers helpers and runtime behavior.
+/** Reused constant for EXPECTED CODEX MODELS COMMAND TEXT behavior in src/gateway. */
 export const EXPECTED_CODEX_MODELS_COMMAND_TEXT = [
   "Codex models:",
   "Available Codex models",
@@ -75,6 +77,7 @@ export const EXPECTED_CODEX_MODELS_COMMAND_TEXT = [
   "Current OpenClaw session status reports the active model as:",
 ] as const;
 
+/** Reused constant for EXPECTED CODEX STATUS COMMAND TEXT behavior in src/gateway. */
 export const EXPECTED_CODEX_STATUS_COMMAND_TEXT = [
   "Codex app-server:",
   "Model: `codex/",
@@ -96,6 +99,7 @@ export const EXPECTED_CODEX_STATUS_COMMAND_TEXT = [
   "Ready.",
 ] as const;
 
+/** Reused helper for is Expected Codex Status Command Text behavior in src/gateway. */
 export function isExpectedCodexStatusCommandText(text: string): boolean {
   const normalized = text.toLowerCase();
   const mentionsOpenClawStatus =
@@ -156,6 +160,7 @@ export function isExpectedCodexStatusCommandText(text: string): boolean {
   );
 }
 
+/** Reused helper for is Expected Codex Models Command Text behavior in src/gateway. */
 export function isExpectedCodexModelsCommandText(text: string): boolean {
   const normalized = text.toLowerCase();
   const mentionsCodexModelsCommand =

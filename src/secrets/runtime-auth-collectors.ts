@@ -1,3 +1,4 @@
+// secrets runtime auth collectors helpers and runtime behavior.
 import { assertNoOAuthSecretRefPolicyViolations } from "../agents/auth-profiles/policy.js";
 import type { AuthProfileCredential, AuthProfileStore } from "../agents/auth-profiles/types.js";
 import { resolveSecretInputRef } from "../config/types.secrets.js";
@@ -99,6 +100,7 @@ function collectTokenProfileAssignment(params: {
   });
 }
 
+/** Reused helper for collect Auth Store Assignments behavior in src/secrets. */
 export function collectAuthStoreAssignments(params: {
   store: AuthProfileStore;
   context: ResolverContext;

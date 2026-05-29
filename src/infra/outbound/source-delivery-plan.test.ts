@@ -1,3 +1,4 @@
+// Tests infra/outbound source delivery plan test behavior.
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("./target-normalization.js", () => ({

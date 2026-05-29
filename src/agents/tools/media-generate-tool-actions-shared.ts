@@ -36,8 +36,10 @@ type MediaGenerateListProviderDetails<TProvider extends MediaGenerateProvider> =
   catalog: ReturnType<typeof synthesizeMediaGenerationCatalogEntries<TProvider["capabilities"]>>;
 };
 
+/** Re-exported API for src/agents/tools, starting with Media Generate Action Result. */
 export type { MediaGenerateActionResult };
 
+/** Builds a provider/model listing action result for a media tool. */
 export function createMediaGenerateProviderListActionResult<
   TProvider extends MediaGenerateProvider,
 >(params: {
@@ -115,6 +117,7 @@ export function createMediaGenerateProviderListActionResult<
   };
 }
 
+/** Builds status and duplicate-guard action helpers for a media task kind. */
 export function createMediaGenerateTaskStatusActions<Task>(params: {
   inactiveText: string;
   findActiveTask: (sessionKey?: string) => Task | undefined;

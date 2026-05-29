@@ -1,3 +1,4 @@
+// extensions/policy/src tool policy conformance helpers and runtime behavior.
 export const POLICY_TOOL_GROUPS: Record<string, readonly string[]> = {
   "group:openclaw": [
     "code_execution",

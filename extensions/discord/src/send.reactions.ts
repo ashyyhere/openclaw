@@ -1,3 +1,4 @@
+// extensions/discord/src send reactions helpers and runtime behavior.
 import { requireRuntimeConfig } from "openclaw/plugin-sdk/plugin-config-runtime";
 import {
   createOwnMessageReaction,

@@ -1,3 +1,4 @@
+/** Prepared SettingsManager factory for embedded agent runs. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { PluginMetadataSnapshot } from "../plugins/plugin-metadata-snapshot.js";
 import {
@@ -47,6 +48,7 @@ function createRuntimeEmbeddedAgentSettingsManager(
   );
 }
 
+/** Create a runtime SettingsManager with bundle/project settings and compaction policy applied. */
 export function createPreparedEmbeddedAgentSettingsManager(params: {
   cwd: string;
   agentDir: string;

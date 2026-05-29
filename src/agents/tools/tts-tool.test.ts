@@ -1,3 +1,4 @@
+/** Covers text-to-speech tool behavior. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import * as ttsRuntime from "../../tts/tts.js";
 import { createTtsTool } from "./tts-tool.js";

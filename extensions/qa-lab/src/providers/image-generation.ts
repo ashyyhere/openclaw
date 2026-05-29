@@ -1,3 +1,4 @@
+// extensions/qa-lab/src/providers image generation helpers and runtime behavior.
 import {
   normalizeTrimmedStringList,
   uniqueStrings,

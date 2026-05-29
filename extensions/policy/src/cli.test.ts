@@ -1,3 +1,4 @@
+// Tests extensions/policy/src cli test behavior.
 import { promises as fs } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";

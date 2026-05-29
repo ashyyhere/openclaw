@@ -4,8 +4,11 @@
  * import the generic SDK subpaths directly.
  */
 export { resolveControlCommandGate } from "./command-auth.js";
+/** Re-exported API for src/plugin-sdk, starting with format Pairing Approve Hint. */
 export { formatPairingApproveHint } from "./channel-plugin-common.js";
+/** Re-exported API for src/plugin-sdk, starting with History Entry. */
 export type { HistoryEntry } from "./reply-history.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   createChannelHistoryWindow,
   buildPendingHistoryContextFromMap,

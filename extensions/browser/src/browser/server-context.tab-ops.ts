@@ -1,3 +1,4 @@
+// extensions/browser/src/browser server context tab ops helpers and runtime behavior.
 import { resolveBrowserNavigationProxyMode } from "./browser-proxy-mode.js";
 import { resolveCdpControlPolicy } from "./cdp-reachability-policy.js";
 import { isSelectableCdpBrowserTarget } from "./cdp-target-filter.js";

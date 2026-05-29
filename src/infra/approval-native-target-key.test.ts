@@ -1,3 +1,4 @@
+// Tests infra approval native target key test behavior.
 import { describe, expect, it } from "vitest";
 import { buildChannelApprovalNativeTargetKey } from "./approval-native-target-key.js";
 

@@ -1,3 +1,4 @@
+// Tests extensions/slack/src/monitor replies test behavior.
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 const sendMock = vi.fn();

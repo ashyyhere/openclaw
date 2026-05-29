@@ -1,8 +1,11 @@
+// shared/text code regions helpers and runtime behavior.
+/** Shared type for Code Region in src/shared/text. */
 export interface CodeRegion {
   start: number;
   end: number;
 }
 
+/** Reused helper for find Code Regions behavior in src/shared/text. */
 export function findCodeRegions(text: string): CodeRegion[] {
   const regions: CodeRegion[] = [];
 
@@ -26,6 +29,7 @@ export function findCodeRegions(text: string): CodeRegion[] {
   return regions;
 }
 
+/** Reused helper for is Inside Code behavior in src/shared/text. */
 export function isInsideCode(pos: number, regions: CodeRegion[]): boolean {
   return regions.some((r) => pos >= r.start && pos < r.end);
 }

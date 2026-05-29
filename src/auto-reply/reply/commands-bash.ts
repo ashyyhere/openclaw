@@ -1,8 +1,10 @@
+// Chat command handler for shell command execution.
 import { resolveSessionAgentId } from "../../agents/agent-scope.js";
 import { handleBashChatCommand } from "./bash-command.js";
 import { rejectUnauthorizedCommand } from "./command-gates.js";
 import type { CommandHandler } from "./commands-types.js";
 
+/** Reused constant for handle Bash Command behavior in src/auto-reply/reply. */
 export const handleBashCommand: CommandHandler = async (params, allowTextCommands) => {
   if (!allowTextCommands) {
     return null;

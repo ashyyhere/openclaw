@@ -1,3 +1,4 @@
+// Shared types for extensions/xai/src web search response types behavior.
 export type XaiWebSearchResponse = {
   output?: Array<{
     type?: string;

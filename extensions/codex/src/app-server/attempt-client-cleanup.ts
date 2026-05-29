@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server attempt client cleanup helpers and runtime behavior.
 import { embeddedAgentLog } from "openclaw/plugin-sdk/agent-harness-runtime";
 import type { CodexAppServerClient } from "./client.js";
 import { retireSharedCodexAppServerClientIfCurrent } from "./shared-client.js";

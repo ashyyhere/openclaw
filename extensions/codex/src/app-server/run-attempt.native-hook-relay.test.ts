@@ -1,3 +1,4 @@
+// Tests extensions/codex/src/app-server run attempt native hook relay test behavior.
 import path from "node:path";
 import {
   abortAgentHarnessRun,

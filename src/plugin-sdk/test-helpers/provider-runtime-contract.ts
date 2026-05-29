@@ -1,3 +1,4 @@
+// plugin-sdk/test-helpers provider runtime contract helpers and runtime behavior.
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { ProviderRuntimeModel } from "../plugin-entry.js";
 import { registerProviderPlugin, requireRegisteredProvider } from "../plugin-test-runtime.js";

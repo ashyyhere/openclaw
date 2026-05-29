@@ -1,3 +1,4 @@
+/** Public SDK utilities for rendering and checking the generated Plugin SDK API baseline. */
 import { createHash } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -11,6 +12,7 @@ import {
 } from "../../scripts/lib/plugin-sdk-doc-metadata.ts";
 import { publicPluginSdkEntrypoints } from "../../scripts/lib/plugin-sdk-entries.mjs";
 
+/** Stable export kind labels used in generated API baseline records. */
 export type PluginSdkApiExportKind =
   | "class"
   | "const"
@@ -22,11 +24,13 @@ export type PluginSdkApiExportKind =
   | "unknown"
   | "variable";
 
+/** Repo-relative source location for an SDK module or export. */
 export type PluginSdkApiSourceLink = {
   line: number;
   path: string;
 };
 
+/** One exported symbol from a public Plugin SDK entrypoint. */
 export type PluginSdkApiExport = {
   declaration: string | null;
   exportName: string;
@@ -34,6 +38,7 @@ export type PluginSdkApiExport = {
   source: PluginSdkApiSourceLink | null;
 };
 
+/** Complete public surface summary for one Plugin SDK entrypoint. */
 export type PluginSdkApiModule = {
   category: PluginSdkDocCategory;
   entrypoint: PluginSdkDocEntrypoint;
@@ -42,17 +47,20 @@ export type PluginSdkApiModule = {
   source: PluginSdkApiSourceLink;
 };
 
+/** Full generated Plugin SDK API baseline consumed by docs and checks. */
 export type PluginSdkApiBaseline = {
   generatedBy: "scripts/generate-plugin-sdk-api-baseline.ts";
   modules: PluginSdkApiModule[];
 };
 
+/** Rendered baseline payloads before they are written or compared. */
 export type PluginSdkApiBaselineRender = {
   baseline: PluginSdkApiBaseline;
   json: string;
   jsonl: string;
 };
 
+/** Result from writing or checking the generated baseline artifacts. */
 export type PluginSdkApiBaselineWriteResult = {
   changed: boolean;
   wrote: boolean;
@@ -97,6 +105,7 @@ function normalizeDeclarationImportSpecifier(repoRoot: string, value: string): s
   return relative.split(path.sep).join(path.posix.sep);
 }
 
+/** Normalize absolute declaration imports so generated baseline output is repo-portable. */
 export function normalizePluginSdkApiDeclarationText(repoRoot: string, value: string): string {
   return value.replaceAll(
     /import\("([^"]+)"((?:\s*,[^)]*)?)\)/g,
@@ -287,6 +296,8 @@ function printNode(
       )};`,
     );
     if (rendered.length > 1200) {
+      // Large structural aliases make baseline diffs noisy and brittle; source links remain the
+      // canonical detail when the rendered declaration crosses the compact threshold.
       return `export type ${declaration.name.text} = /* see source */`;
     }
     return rendered;
@@ -453,6 +464,7 @@ function buildJsonlLines(baseline: PluginSdkApiBaseline): string[] {
   return lines;
 }
 
+/** Render the current public Plugin SDK surface as JSON and JSONL baseline content. */
 export async function renderPluginSdkApiBaseline(params?: {
   repoRoot?: string;
 }): Promise<PluginSdkApiBaselineRender> {
@@ -521,6 +533,7 @@ function validateMetadata(): void {
   }
 }
 
+/** Write or check Plugin SDK API baseline artifacts, including the tracked hash file. */
 export async function writePluginSdkApiBaselineStatefile(params?: {
   repoRoot?: string;
   check?: boolean;

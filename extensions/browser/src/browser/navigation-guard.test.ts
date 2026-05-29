@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/browser navigation guard test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { SsrFBlockedError, type LookupFn } from "../infra/net/ssrf.js";
 import {

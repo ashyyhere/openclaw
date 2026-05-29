@@ -1,3 +1,4 @@
+/** Process tool for managing background exec sessions. */
 import { formatDurationCompact } from "../infra/format-time/format-duration.ts";
 import { getDiagnosticSessionState } from "../logging/diagnostic-session-state.js";
 import { killProcessTree } from "../process/kill-tree.js";
@@ -30,6 +31,7 @@ import type { AgentToolResult } from "./runtime/index.js";
 import { PROCESS_TOOL_DISPLAY_SUMMARY } from "./tool-description-presets.js";
 import type { AgentToolWithMeta } from "./tools/common.js";
 
+/** Shared type for Process Tool Defaults in src/agents. */
 export type ProcessToolDefaults = {
   cleanupMs?: number;
   hasCronTool?: boolean;
@@ -173,6 +175,7 @@ async function sleepPollInterval(ms: number, signal?: AbortSignal): Promise<void
   });
 }
 
+/** Create the process agent tool for session list/poll/log/input/kill actions. */
 export function createProcessTool(
   defaults?: ProcessToolDefaults,
 ): AgentToolWithMeta<typeof processSchema, unknown> {
@@ -739,4 +742,5 @@ export function createProcessTool(
   };
 }
 
+/** Reused constant for process Tool behavior in src/agents. */
 export const processTool = createProcessTool();

@@ -1,3 +1,4 @@
+// Coverage for heartbeat prompt and transcript artifact filtering.
 import { describe, expect, it } from "vitest";
 import {
   filterHeartbeatTranscriptArtifacts,

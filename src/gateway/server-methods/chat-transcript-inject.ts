@@ -1,3 +1,4 @@
+// gateway/server-methods chat transcript inject helpers and runtime behavior.
 import type { SessionManager } from "../../agents/sessions/session-manager.js";
 import { appendSessionTranscriptMessage } from "../../config/sessions/transcript-append.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
@@ -6,12 +7,14 @@ import { emitSessionTranscriptUpdate } from "../../sessions/transcript-events.js
 
 type AppendMessageArg = Parameters<SessionManager["appendMessage"]>[0];
 
+/** Shared type for Gateway Injected Abort Meta in src/gateway/server-methods. */
 export type GatewayInjectedAbortMeta = {
   aborted: true;
   origin: "rpc" | "stop-command";
   runId: string;
 };
 
+/** Shared type for Gateway Injected Transcript Append Result in src/gateway/server-methods. */
 export type GatewayInjectedTranscriptAppendResult = {
   ok: boolean;
   messageId?: string;
@@ -19,6 +22,7 @@ export type GatewayInjectedTranscriptAppendResult = {
   error?: string;
 };
 
+/** Shared type for Gateway Injected Tts Supplement Marker in src/gateway/server-methods. */
 export type GatewayInjectedTtsSupplementMarker = {
   textSha256: string;
 };
@@ -47,6 +51,7 @@ function resolveInjectedAssistantContent(params: {
   return [{ type: "text", text: `${labelPrefix}${params.message}` }];
 }
 
+/** Reused helper for append Injected Assistant Message To Transcript behavior in src/gateway/server-methods. */
 export async function appendInjectedAssistantMessageToTranscript(params: {
   transcriptPath: string;
   sessionKey?: string;

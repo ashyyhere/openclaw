@@ -1,3 +1,4 @@
+// Tests test/scripts embedded run abort leak test behavior.
 import { spawnSync } from "node:child_process";
 import { mkdtempSync, readdirSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";

@@ -1,3 +1,4 @@
+// extensions/telegram/src api fetch helpers and runtime behavior.
 import type { TelegramNetworkConfig } from "openclaw/plugin-sdk/config-contracts";
 import { resolveTelegramApiBase, resolveTelegramFetch } from "./fetch.js";
 import { makeProxyFetch } from "./proxy.js";

@@ -1,3 +1,4 @@
+/** Sends direct outbound text/media payloads through channel adapters. */
 import { sendTextMediaPayload } from "openclaw/plugin-sdk/reply-payload";
 import { chunkText } from "../../../auto-reply/chunk.js";
 import type { OpenClawConfig } from "../../../config/types.openclaw.js";
@@ -25,6 +26,7 @@ type DirectSendFn<TOpts extends Record<string, unknown>, TResult extends DirectS
   text: string,
   opts: TOpts,
 ) => Promise<TResult>;
+/** Re-exported API for src/channels/plugins. */
 export {
   resolvePayloadMediaUrls,
   sendPayloadMediaSequence,
@@ -33,6 +35,7 @@ export {
   sendTextMediaPayload,
 } from "openclaw/plugin-sdk/reply-payload";
 
+/** Reused helper for resolve Scoped Channel Media Max Bytes behavior in src/channels/plugins. */
 export function resolveScopedChannelMediaMaxBytes(params: {
   cfg: OpenClawConfig;
   accountId?: string | null;
@@ -45,6 +48,7 @@ export function resolveScopedChannelMediaMaxBytes(params: {
   });
 }
 
+/** Reused helper for create Scoped Channel Media Max Bytes Resolver behavior in src/channels/plugins. */
 export function createScopedChannelMediaMaxBytesResolver(channel: string) {
   return (params: { cfg: OpenClawConfig; accountId?: string | null }) =>
     resolveScopedChannelMediaMaxBytes({
@@ -56,6 +60,7 @@ export function createScopedChannelMediaMaxBytesResolver(channel: string) {
     });
 }
 
+/** Reused helper for create Direct Text Media Outbound behavior in src/channels/plugins. */
 export function createDirectTextMediaOutbound<
   TOpts extends Record<string, unknown>,
   TResult extends DirectSendResult,

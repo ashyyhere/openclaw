@@ -1,6 +1,8 @@
+/** Runtime registry for context-pruning extension dependencies. */
 import { createSessionManagerRuntimeRegistry } from "../session-manager-runtime-registry.js";
 import type { EffectiveContextPruningSettings } from "./settings.js";
 
+/** Runtime values supplied by the session manager to context pruning hooks. */
 export type ContextPruningRuntimeValue = {
   settings: EffectiveContextPruningSettings;
   contextWindowTokens?: number | null;
@@ -13,6 +15,8 @@ export type ContextPruningRuntimeValue = {
 // ExtensionContext (ctx.sessionManager) that we used when calling setContextPruningRuntime.
 const registry = createSessionManagerRuntimeRegistry<ContextPruningRuntimeValue>();
 
+/** Reused constant for set Context Pruning Runtime behavior in src/agents/agent-hooks. */
 export const setContextPruningRuntime = registry.set;
 
+/** Reused constant for get Context Pruning Runtime behavior in src/agents/agent-hooks. */
 export const getContextPruningRuntime = registry.get;

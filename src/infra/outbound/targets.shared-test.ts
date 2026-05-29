@@ -1,3 +1,4 @@
+// infra/outbound targets shared test helpers and runtime behavior.
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { setActivePluginRegistry } from "../../plugins/runtime.js";
 import { resolveOutboundTarget } from "./targets.js";
@@ -8,6 +9,7 @@ import {
   createTestChannelPlugin,
 } from "./targets.test-helpers.js";
 
+/** Shared test hook installer for outbound target plugin registry resolution. */
 export function installResolveOutboundTargetPluginRegistryHooks(): void {
   beforeEach(() => {
     setActivePluginRegistry(
@@ -24,6 +26,7 @@ export function installResolveOutboundTargetPluginRegistryHooks(): void {
   });
 }
 
+/** Shared behavior test suite for outbound target resolution. */
 export function runResolveOutboundTargetCoreTests(): void {
   describe("resolveOutboundTarget", () => {
     installResolveOutboundTargetPluginRegistryHooks();

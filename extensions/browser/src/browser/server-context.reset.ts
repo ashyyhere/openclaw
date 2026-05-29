@@ -1,3 +1,4 @@
+// extensions/browser/src/browser server context reset helpers and runtime behavior.
 import fs from "node:fs";
 import type { ResolvedBrowserProfile } from "./config.js";
 import { BrowserResetUnsupportedError } from "./errors.js";

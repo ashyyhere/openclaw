@@ -1,3 +1,4 @@
+// Tests infra exec approval forwarder test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { ReplyPayload } from "../auto-reply/types.js";
 import type { ChannelPlugin } from "../channels/plugins/types.js";

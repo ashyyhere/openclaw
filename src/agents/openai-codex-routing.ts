@@ -1,7 +1,9 @@
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 
+/** Canonical OpenAI API-key provider id. */
 export const OPENAI_PROVIDER_ID = "openai";
+/** OpenAI provider id backed by Codex/ChatGPT auth. */
 export const OPENAI_CODEX_PROVIDER_ID = "openai-codex";
 
 function isOfficialOpenAIBaseUrl(baseUrl: unknown): boolean {
@@ -36,10 +38,12 @@ export function isOpenAIProvider(provider: string | undefined): boolean {
   return normalized === OPENAI_PROVIDER_ID || normalized === OPENAI_CODEX_PROVIDER_ID;
 }
 
+/** Return whether a provider id is the Codex-auth OpenAI provider. */
 export function isOpenAICodexProvider(provider: string | undefined): boolean {
   return normalizeProviderId(provider ?? "") === OPENAI_CODEX_PROVIDER_ID;
 }
 
+/** Return whether OpenAI should default to Codex runtime/auth for this config. */
 export function openAIProviderUsesCodexRuntimeByDefault(params: {
   provider?: string;
   config?: OpenClawConfig;
@@ -47,6 +51,7 @@ export function openAIProviderUsesCodexRuntimeByDefault(params: {
   return isOpenAIProvider(params.provider) && !openAIProviderUsesCustomBaseUrl(params.config);
 }
 
+/** Parse the provider prefix from a provider/model ref string. */
 export function parseModelRefProvider(value: unknown): string | undefined {
   if (typeof value !== "string") {
     return undefined;
@@ -58,10 +63,12 @@ export function parseModelRefProvider(value: unknown): string | undefined {
   return normalizeProviderId(value.trim().slice(0, slashIndex));
 }
 
+/** Return whether a model ref targets the canonical OpenAI provider. */
 export function modelRefUsesOpenAIProvider(value: unknown): boolean {
   return parseModelRefProvider(value) === OPENAI_PROVIDER_ID;
 }
 
+/** Return whether selecting a model should ensure the Codex plugin is installed. */
 export function modelSelectionShouldEnsureCodexPlugin(params: {
   model?: string;
   config?: OpenClawConfig;
@@ -90,6 +97,7 @@ export function listOpenAIAuthProfileProvidersForAgentRuntime(params: {
     : [OPENAI_PROVIDER_ID];
 }
 
+/** Resolve the provider id used for runtime execution of an OpenAI request. */
 export function resolveOpenAIRuntimeProvider(params: {
   provider: string;
   harnessRuntime?: string;
@@ -102,6 +110,7 @@ export function resolveOpenAIRuntimeProvider(params: {
   return isOpenAIProvider(params.provider) ? OPENAI_PROVIDER_ID : params.provider;
 }
 
+/** Resolve the provider id displayed for a selected OpenAI model/runtime. */
 export function resolveSelectedOpenAIRuntimeProvider(params: {
   provider: string;
   harnessRuntime?: string;
@@ -114,6 +123,7 @@ export function resolveSelectedOpenAIRuntimeProvider(params: {
   return isOpenAIProvider(params.provider) ? OPENAI_PROVIDER_ID : params.provider;
 }
 
+/** Resolve provider id stored in context config for a runtime selection. */
 export function resolveContextConfigProviderForRuntime(params: {
   provider: string;
   runtimeId?: string;

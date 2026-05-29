@@ -1,3 +1,4 @@
+// Coverage for shared subagent command helpers.
 import { describe, expect, it } from "vitest";
 import { extractMessageText } from "./commands-subagents-text.js";
 

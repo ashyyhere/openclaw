@@ -1,3 +1,4 @@
+// infra restart helpers and runtime behavior.
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
@@ -14,12 +15,14 @@ import { cleanStaleGatewayProcessesSync, findGatewayPidsOnPortSync } from "./res
 import type { RestartAttempt } from "./restart.types.js";
 import { relaunchGatewayScheduledTask } from "./windows-task-restart.js";
 
+/** Re-exported API for src/infra, starting with Restart Attempt. */
 export type { RestartAttempt } from "./restart.types.js";
 
 const SPAWN_TIMEOUT_MS = 2000;
 const SIGUSR1_AUTH_GRACE_MS = 5000;
 const DEFAULT_DEFERRAL_POLL_MS = 500;
 const DEFAULT_DEFERRAL_STILL_PENDING_WARN_MS = 30_000;
+/** Reused constant for DEFAULT RESTART DEFERRAL TIMEOUT MS behavior in src/infra. */
 export const DEFAULT_RESTART_DEFERRAL_TIMEOUT_MS = 300_000;
 const RESTART_COOLDOWN_MS = 30_000;
 const LAUNCHCTL_ALREADY_LOADED_EXIT_CODE = 37;
@@ -29,6 +32,7 @@ const GATEWAY_RESTART_INTENT_MAX_BYTES = 1024;
 
 const restartLog = createSubsystemLogger("restart");
 
+/** Re-exported API for src/infra, starting with find Gateway Pids On Port Sync. */
 export { findGatewayPidsOnPortSync };
 
 let sigusr1AuthorizedCount = 0;
@@ -76,11 +80,13 @@ function clearActiveDeferralPolls(): void {
   activeDeferralPolls.clear();
 }
 
+/** Reused helper for reset Gateway Restart State For In Process Restart behavior in src/infra. */
 export function resetGatewayRestartStateForInProcessRestart(): void {
   clearActiveDeferralPolls();
   clearPendingScheduledRestart();
 }
 
+/** Shared type for Restart Audit Info in src/infra. */
 export type RestartAuditInfo = {
   actor?: string;
   deviceId?: string;
@@ -97,6 +103,7 @@ type GatewayRestartIntentPayload = {
   waitMs?: number;
 };
 
+/** Shared type for Gateway Restart Intent in src/infra. */
 export type GatewayRestartIntent = {
   reason?: string;
   force?: boolean;
@@ -124,6 +131,7 @@ function normalizeRestartIntentPid(pid: number | undefined): number | null {
   return typeof pid === "number" && Number.isSafeInteger(pid) && pid > 0 ? pid : null;
 }
 
+/** Reused helper for write Gateway Restart Intent Sync behavior in src/infra. */
 export function writeGatewayRestartIntentSync(opts: {
   env?: NodeJS.ProcessEnv;
   targetPid?: number;
@@ -163,6 +171,7 @@ export function writeGatewayRestartIntentSync(opts: {
   }
 }
 
+/** Reused helper for clear Gateway Restart Intent Sync behavior in src/infra. */
 export function clearGatewayRestartIntentSync(env: NodeJS.ProcessEnv = process.env): void {
   unlinkGatewayRestartIntentFileSync(resolveGatewayRestartIntentPath(env));
 }
@@ -202,6 +211,7 @@ function normalizeRestartIntentReason(reason: string | undefined): string | unde
   return normalized ? normalized.slice(0, 200) : undefined;
 }
 
+/** Reused helper for consume Gateway Restart Intent Payload Sync behavior in src/infra. */
 export function consumeGatewayRestartIntentPayloadSync(
   env: NodeJS.ProcessEnv = process.env,
   now = Date.now(),
@@ -237,6 +247,7 @@ export function consumeGatewayRestartIntentPayloadSync(
   };
 }
 
+/** Reused helper for consume Gateway Restart Intent Sync behavior in src/infra. */
 export function consumeGatewayRestartIntentSync(
   env: NodeJS.ProcessEnv = process.env,
   now = Date.now(),
@@ -349,10 +360,12 @@ function resetSigusr1AuthorizationIfExpired(now = Date.now()) {
   sigusr1AuthorizedUntil = 0;
 }
 
+/** Reused helper for set Gateway Sigusr1 Restart Policy behavior in src/infra. */
 export function setGatewaySigusr1RestartPolicy(opts?: { allowExternal?: boolean }) {
   sigusr1ExternalAllowed = opts?.allowExternal === true;
 }
 
+/** Reused helper for is Gateway Sigusr1 Restart Externally Allowed behavior in src/infra. */
 export function isGatewaySigusr1RestartExternallyAllowed() {
   return sigusr1ExternalAllowed;
 }
@@ -366,6 +379,7 @@ function authorizeGatewaySigusr1Restart(delayMs = 0) {
   }
 }
 
+/** Reused helper for consume Gateway Sigusr1 Restart Authorization behavior in src/infra. */
 export function consumeGatewaySigusr1RestartAuthorization(): boolean {
   resetSigusr1AuthorizationIfExpired();
   if (sigusr1AuthorizedCount <= 0) {
@@ -378,6 +392,7 @@ export function consumeGatewaySigusr1RestartAuthorization(): boolean {
   return true;
 }
 
+/** Reused helper for peek Gateway Sigusr1 Restart Reason behavior in src/infra. */
 export function peekGatewaySigusr1RestartReason(): string | undefined {
   return hasUnconsumedRestartSignal() ? emittedRestartReason : undefined;
 }
@@ -415,6 +430,7 @@ function rollBackGatewayRestartEmission(): void {
   consumeGatewaySigusr1RestartAuthorization();
 }
 
+/** Shared type for Restart Deferral Hooks in src/infra. */
 export type RestartDeferralHooks = {
   onDeferring?: (pending: number) => void;
   onStillPending?: (pending: number, elapsedMs: number) => void;
@@ -423,11 +439,13 @@ export type RestartDeferralHooks = {
   onCheckError?: (err: unknown) => void;
 };
 
+/** Shared type for Restart Emit Hooks in src/infra. */
 export type RestartEmitHooks = {
   beforeEmit?: () => Promise<void>;
   afterEmitRejected?: () => Promise<void>;
 };
 
+/** Reused helper for resolve Gateway Restart Deferral Timeout Ms behavior in src/infra. */
 export function resolveGatewayRestartDeferralTimeoutMs(timeoutMs: unknown): number | undefined {
   if (typeof timeoutMs !== "number" || !Number.isFinite(timeoutMs)) {
     return DEFAULT_RESTART_DEFERRAL_TIMEOUT_MS;
@@ -596,6 +614,7 @@ function normalizeSystemdUnit(raw?: string, profile?: string): string {
   return unit.endsWith(".service") ? unit : `${unit}.service`;
 }
 
+/** Reused helper for trigger Open Claw Restart behavior in src/infra. */
 export function triggerOpenClawRestart(): RestartAttempt {
   if (process.env.VITEST || process.env.NODE_ENV === "test") {
     return { ok: true, method: "supervisor", detail: "test mode" };
@@ -706,6 +725,7 @@ export function triggerOpenClawRestart(): RestartAttempt {
   };
 }
 
+/** Shared type for Scheduled Restart in src/infra. */
 export type ScheduledRestart = {
   ok: boolean;
   pid: number;
@@ -717,6 +737,7 @@ export type ScheduledRestart = {
   cooldownMsApplied: number;
 };
 
+/** Reused helper for schedule Gateway Sigusr1 Restart behavior in src/infra. */
 export function scheduleGatewaySigusr1Restart(opts?: {
   delayMs?: number;
   reason?: string;
@@ -862,6 +883,7 @@ export function scheduleGatewaySigusr1Restart(opts?: {
   };
 }
 
+/** Reused constant for testing behavior in src/infra. */
 export const testing = {
   resetSigusr1State() {
     sigusr1AuthorizedCount = 0;
@@ -878,4 +900,5 @@ export const testing = {
     clearPendingScheduledRestart();
   },
 };
+/** Re-exported API for src/infra, starting with testing. */
 export { testing as __testing };

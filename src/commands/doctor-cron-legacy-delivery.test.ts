@@ -1,3 +1,4 @@
+/** Tests conversion of legacy cron delivery payloads. */
 import { describe, expect, it } from "vitest";
 import {
   buildDeliveryFromLegacyPayload,

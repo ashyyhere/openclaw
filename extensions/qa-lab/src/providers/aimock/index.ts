@@ -1,3 +1,4 @@
+// extensions/qa-lab/src/providers/aimock index helpers and runtime behavior.
 import { createMockQaProviderDefinition } from "../shared/mock-provider-definition.js";
 
 export const aimockProviderDefinition = createMockQaProviderDefinition({

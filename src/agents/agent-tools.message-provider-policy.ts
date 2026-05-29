@@ -1,3 +1,4 @@
+/** Message-provider-specific filtering for agent tools. */
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 
 const TOOL_DENY_BY_MESSAGE_PROVIDER: Readonly<Record<string, readonly string[]>> = {
@@ -9,6 +10,7 @@ const TOOL_ALLOW_BY_MESSAGE_PROVIDER: Readonly<Record<string, readonly string[]>
   node: ["canvas", "image", "pdf", "tts", "web_fetch", "web_search"],
 };
 
+/** Filter tool names by message provider allow/deny policy. */
 export function filterToolNamesByMessageProvider(
   toolNames: readonly string[],
   messageProvider?: string,
@@ -30,6 +32,7 @@ export function filterToolNamesByMessageProvider(
   return toolNames.filter((toolName) => !deniedSet.has(toolName));
 }
 
+/** Filter tool objects by message provider allow/deny policy. */
 export function filterToolsByMessageProvider<TTool extends { name: string }>(
   tools: readonly TTool[],
   messageProvider?: string,

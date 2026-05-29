@@ -1,3 +1,4 @@
+// Durable final delivery capability requirement derivation.
 import type {
   DeriveDurableFinalDeliveryRequirementsParams,
   DurableFinalDeliveryCapability,
@@ -26,6 +27,7 @@ function setRequired(
   }
 }
 
+/** Derive which durable-final capabilities are required for a send request. */
 export function deriveDurableFinalDeliveryRequirements(
   params: DeriveDurableFinalDeliveryRequirementsParams,
 ): DurableFinalDeliveryRequirementMap {

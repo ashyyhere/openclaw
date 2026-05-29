@@ -1,3 +1,4 @@
+/** Public SDK barrel for core channel plugin types and base plugin construction. */
 export type {
   ChannelConfigUiHint,
   ChannelPlugin,
@@ -10,9 +11,11 @@ export type {
 
 import { createChannelPluginBase as createChannelPluginBaseFromCore } from "./core.js";
 
+/** Reused constant for create Channel Plugin Base behavior in src/plugin-sdk. */
 export const createChannelPluginBase: typeof createChannelPluginBaseFromCore = (params) =>
   createChannelPluginBaseFromCore(params);
 
+/** Re-exported API for src/plugin-sdk. */
 export {
   buildChannelConfigSchema,
   buildChannelOutboundSessionRoute,

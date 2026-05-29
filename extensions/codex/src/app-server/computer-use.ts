@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server computer use helpers and runtime behavior.
 import { existsSync } from "node:fs";
 import { describeControlFailure } from "./capabilities.js";
 import type { CodexAppServerClient } from "./client.js";

@@ -1,3 +1,4 @@
+// scripts/dev tui pty test watch helpers and runtime behavior.
 import { spawn } from "node:child_process";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";

@@ -1,3 +1,4 @@
+/** Shared command-runner helpers for plugins CLI tests. */
 import { Command } from "commander";
 import type { Mock } from "vitest";
 import { vi } from "vitest";
@@ -33,23 +34,32 @@ function invokeMock<TArgs extends unknown[], TResult>(mock: unknown, ...args: TA
   return (mock as (...args: TArgs) => TResult)(...args);
 }
 
+/** Reused constant for load Config behavior in src/cli. */
 export const loadConfig: Mock<LoadConfigFn> = vi.fn<LoadConfigFn>(() => ({}) as OpenClawConfig);
+/** Reused constant for read Config File Snapshot behavior in src/cli. */
 export const readConfigFileSnapshot: AsyncUnknownMock = vi.fn();
+/** Reused constant for write Config File behavior in src/cli. */
 export const writeConfigFile: AsyncUnknownMock = vi.fn(async () => undefined);
+/** Reused constant for replace Config File behavior in src/cli. */
 export const replaceConfigFile: AsyncUnknownMock = vi.fn(
   async (params: { nextConfig: OpenClawConfig }) => await writeConfigFile(params.nextConfig),
 ) as AsyncUnknownMock;
 const resolveStateDir: Mock<() => string> = vi.fn(() => "/tmp/openclaw-state");
+/** Reused constant for install Plugin From Marketplace behavior in src/cli. */
 export const installPluginFromMarketplace: Mock<InstallPluginFromMarketplaceFn> = vi.fn();
+/** Reused constant for install Plugin From Git Spec behavior in src/cli. */
 export const installPluginFromGitSpec: Mock<InstallPluginFromGitSpecFn> = vi.fn();
 const parseGitPluginSpec: Mock<ParseGitPluginSpecFn> = vi.fn();
 const listMarketplacePlugins: Mock<ListMarketplacePluginsFn> = vi.fn();
 const resolveMarketplaceInstallShortcut: Mock<ResolveMarketplaceInstallShortcutFn> = vi.fn();
+/** Reused constant for enable Plugin In Config behavior in src/cli. */
 export const enablePluginInConfig: UnknownMock = vi.fn();
+/** Reused constant for record Plugin Install behavior in src/cli. */
 export const recordPluginInstall: UnknownMock = vi.fn();
 const loadInstalledPluginIndexInstallRecords: AsyncUnknownMock = vi.fn(async () =>
   clonePluginInstallRecords(mockInstalledPluginIndexInstallRecords),
 );
+/** Reused constant for write Persisted Installed Plugin Index Install Records behavior in src/cli. */
 export const writePersistedInstalledPluginIndexInstallRecords: AsyncUnknownMock = vi.fn(
   async (records: unknown) => {
     mockInstalledPluginIndexInstallRecords = clonePluginInstallRecords(
@@ -57,37 +67,61 @@ export const writePersistedInstalledPluginIndexInstallRecords: AsyncUnknownMock 
     );
   },
 );
+/** Reused constant for load Plugin Manifest Registry behavior in src/cli. */
 export const loadPluginManifestRegistry: UnknownMock = vi.fn();
+/** Reused constant for build Plugin Snapshot Report behavior in src/cli. */
 export const buildPluginSnapshotReport: UnknownMock = vi.fn();
+/** Reused constant for build Plugin Registry Snapshot Report behavior in src/cli. */
 export const buildPluginRegistrySnapshotReport: UnknownMock = vi.fn();
+/** Reused constant for build Plugin Inspect Report behavior in src/cli. */
 export const buildPluginInspectReport: UnknownMock = vi.fn();
 const buildAllPluginInspectReports: UnknownMock = vi.fn();
+/** Reused constant for build Plugin Diagnostics Report behavior in src/cli. */
 export const buildPluginDiagnosticsReport: UnknownMock = vi.fn();
 const buildPluginCompatibilityNotices: UnknownMock = vi.fn();
+/** Reused constant for inspect Plugin Registry behavior in src/cli. */
 export const inspectPluginRegistry: AsyncUnknownMock = vi.fn();
+/** Reused constant for refresh Plugin Registry behavior in src/cli. */
 export const refreshPluginRegistry: AsyncUnknownMock = vi.fn();
+/** Reused constant for clear Plugin Registry Load Cache behavior in src/cli. */
 export const clearPluginRegistryLoadCache: UnknownMock = vi.fn();
+/** Reused constant for apply Exclusive Slot Selection behavior in src/cli. */
 export const applyExclusiveSlotSelection: UnknownMock = vi.fn();
+/** Reused constant for plan Plugin Uninstall behavior in src/cli. */
 export const planPluginUninstall: UnknownMock = vi.fn();
+/** Reused constant for apply Plugin Uninstall Directory Removal behavior in src/cli. */
 export const applyPluginUninstallDirectoryRemoval: AsyncUnknownMock = vi.fn();
 const uninstallPlugin: AsyncUnknownMock = vi.fn();
+/** Reused constant for update Npm Installed Plugins behavior in src/cli. */
 export const updateNpmInstalledPlugins: AsyncUnknownMock = vi.fn();
+/** Reused constant for update Npm Installed Hook Packs behavior in src/cli. */
 export const updateNpmInstalledHookPacks: AsyncUnknownMock = vi.fn();
+/** Reused constant for prompt Yes No behavior in src/cli. */
 export const promptYesNo: AsyncUnknownMock = vi.fn();
+/** Reused class for Prompt Input Closed Error behavior in src/cli. */
 export class PromptInputClosedError extends Error {
   constructor() {
     super("Prompt input closed before an answer was received.");
     this.name = "PromptInputClosedError";
   }
 }
+/** Reused constant for install Plugin From Npm Spec behavior in src/cli. */
 export const installPluginFromNpmSpec: AsyncUnknownMock = vi.fn();
+/** Reused constant for install Plugin From Npm Pack Archive behavior in src/cli. */
 export const installPluginFromNpmPackArchive: AsyncUnknownMock = vi.fn();
+/** Reused constant for install Plugin From Path behavior in src/cli. */
 export const installPluginFromPath: AsyncUnknownMock = vi.fn();
+/** Reused constant for install Plugin From Claw Hub behavior in src/cli. */
 export const installPluginFromClawHub: AsyncUnknownMock = vi.fn();
+/** Reused constant for parse Claw Hub Plugin Spec behavior in src/cli. */
 export const parseClawHubPluginSpec: Mock<ParseClawHubPluginSpecFn> = vi.fn();
+/** Reused constant for find Bundled Plugin Source Mock behavior in src/cli. */
 export const findBundledPluginSourceMock: UnknownMock = vi.fn();
+/** Reused constant for install Hooks From Npm Spec behavior in src/cli. */
 export const installHooksFromNpmSpec: AsyncUnknownMock = vi.fn();
+/** Reused constant for install Hooks From Path behavior in src/cli. */
 export const installHooksFromPath: AsyncUnknownMock = vi.fn();
+/** Reused constant for record Hook Install behavior in src/cli. */
 export const recordHookInstall: UnknownMock = vi.fn();
 
 const { defaultRuntime, runtimeLogs, runtimeErrors, resetRuntimeCapture } = vi.hoisted(() => {
@@ -125,8 +159,10 @@ const { defaultRuntime, runtimeLogs, runtimeErrors, resetRuntimeCapture } = vi.h
   };
 });
 
+/** Re-exported API for src/cli, starting with runtime Errors. */
 export { runtimeErrors, runtimeLogs };
 
+/** Reused helper for set Installed Plugin Index Install Records behavior in src/cli. */
 export function setInstalledPluginIndexInstallRecords(records: PluginInstallRecordMap): void {
   mockInstalledPluginIndexInstallRecords = clonePluginInstallRecords(records);
 }
@@ -650,8 +686,10 @@ vi.mock("../infra/clawhub.js", () => ({
 
 const { registerPluginsCli } = await import("./plugins-cli.js");
 
+/** Re-exported API for src/cli, starting with register Plugins Cli. */
 export { registerPluginsCli };
 
+/** Reused helper for run Plugins Command behavior in src/cli. */
 export async function runPluginsCommand(argv: string[]) {
   const program = new Command();
   program.exitOverride();
@@ -659,6 +697,7 @@ export async function runPluginsCommand(argv: string[]) {
   return await program.parseAsync(argv, { from: "user" });
 }
 
+/** Reused helper for reset Plugins Cli Test State behavior in src/cli. */
 export function resetPluginsCliTestState() {
   resetRuntimeCapture();
   restoreRuntimeCaptureMocks();

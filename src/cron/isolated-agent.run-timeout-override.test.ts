@@ -1,3 +1,4 @@
+// Tests cron isolated agent run timeout override test behavior.
 import { describe, expect, it } from "vitest";
 import { MAX_TIMER_TIMEOUT_MS } from "../shared/number-coercion.js";
 import { resolveCronRunTimeoutOverrideMs } from "./isolated-agent/run-timeout.js";

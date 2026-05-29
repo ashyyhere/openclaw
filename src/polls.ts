@@ -1,3 +1,5 @@
+// OpenClaw polls helpers and runtime behavior.
+/** Shared type for Poll Input in src. */
 export type PollInput = {
   question: string;
   options: string[];
@@ -14,6 +16,7 @@ export type PollInput = {
   durationHours?: number;
 };
 
+/** Shared type for Normalized Poll Input in src. */
 export type NormalizedPollInput = {
   question: string;
   options: string[];
@@ -26,6 +29,7 @@ type NormalizePollOptions = {
   maxOptions?: number;
 };
 
+/** Reused helper for resolve Poll Max Selections behavior in src. */
 export function resolvePollMaxSelections(
   optionCount: number,
   allowMultiselect: boolean | undefined,
@@ -33,6 +37,7 @@ export function resolvePollMaxSelections(
   return allowMultiselect ? Math.max(2, optionCount) : 1;
 }
 
+/** Reused helper for normalize Poll Input behavior in src. */
 export function normalizePollInput(
   input: PollInput,
   options: NormalizePollOptions = {},
@@ -90,6 +95,7 @@ export function normalizePollInput(
   };
 }
 
+/** Reused helper for normalize Poll Duration Hours behavior in src. */
 export function normalizePollDurationHours(
   value: number | undefined,
   options: { defaultHours: number; maxHours: number },

@@ -1,3 +1,4 @@
+/** Delegates tool schema normalization to provider runtime hooks. */
 import type { TSchema } from "typebox";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { ProviderRuntimePluginHandle } from "../../plugins/provider-hook-runtime.js";
@@ -44,6 +45,7 @@ function buildProviderToolSchemaContext<TSchemaType extends TSchema = TSchema, T
  * Runs provider-owned tool-schema normalization without encoding provider
  * families in the embedded runner.
  */
+/** Normalizes tool schemas through provider hooks while preserving tool identity. */
 export function normalizeProviderToolSchemas<
   TSchemaType extends TSchema = TSchema,
   TResult = unknown,
@@ -66,6 +68,7 @@ export function normalizeProviderToolSchemas<
 /**
  * Logs provider-owned tool-schema diagnostics after normalization.
  */
+/** Emits diagnostics about provider-specific tool schema compatibility. */
 export function logProviderToolSchemaDiagnostics(params: ProviderToolSchemaParams): void {
   const provider = params.provider.trim();
   const diagnostics = inspectProviderToolSchemasWithPlugin({

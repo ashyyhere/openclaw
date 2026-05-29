@@ -1,3 +1,4 @@
+// extensions/discord/src/voice session helpers and runtime behavior.
 import type { resolveAgentRoute } from "openclaw/plugin-sdk/routing";
 import { logVerbose } from "openclaw/plugin-sdk/runtime-env";
 import type { TranscriptUtterance } from "openclaw/plugin-sdk/transcripts";

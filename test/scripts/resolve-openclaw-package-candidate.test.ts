@@ -1,3 +1,4 @@
+// Tests test/scripts resolve openclaw package candidate test behavior.
 import { execFile } from "node:child_process";
 import { access, mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";

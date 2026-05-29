@@ -1,3 +1,4 @@
+// Tests gateway agent prompt test behavior.
 import { describe, expect, it } from "vitest";
 import { STREAM_ERROR_FALLBACK_TEXT } from "../agents/stream-message-shared.js";
 import { buildHistoryContextFromEntries } from "../auto-reply/reply/history.js";

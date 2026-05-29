@@ -1,3 +1,4 @@
+// gateway/server-methods system helpers and runtime behavior.
 import { ErrorCodes, errorShape } from "../../../packages/gateway-protocol/src/index.js";
 import { resolveMainSessionKeyFromConfig } from "../../config/sessions.js";
 import {
@@ -16,6 +17,7 @@ import {
 import { broadcastPresenceSnapshot } from "../server/presence-events.js";
 import type { GatewayRequestHandlers } from "./types.js";
 
+/** Reused constant for system Handlers behavior in src/gateway/server-methods. */
 export const systemHandlers: GatewayRequestHandlers = {
   "gateway.identity.get": ({ respond }) => {
     const identity = loadOrCreateDeviceIdentity();

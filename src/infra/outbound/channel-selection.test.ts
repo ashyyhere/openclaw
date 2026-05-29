@@ -1,3 +1,4 @@
+// Tests infra/outbound channel selection test behavior.
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({

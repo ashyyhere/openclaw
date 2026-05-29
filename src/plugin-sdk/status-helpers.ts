@@ -1,11 +1,16 @@
+/** Public SDK helpers for channel status issues and summaries. */
 import type { ChannelStatusAdapter } from "../channels/plugins/types.adapters.js";
 import type { ChannelAccountSnapshot } from "../channels/plugins/types.core.js";
 import type { ChannelStatusIssue } from "../channels/plugins/types.public.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
+/** Re-exported API for src/plugin-sdk, starting with Channel Account Snapshot. */
 export type { ChannelAccountSnapshot } from "../channels/plugins/types.core.js";
+/** Re-exported API for src/plugin-sdk, starting with Channel Status Issue. */
 export type { ChannelStatusIssue } from "../channels/plugins/types.public.js";
+/** Re-exported API for src/plugin-sdk, starting with is Record. */
 export { isRecord } from "../channels/plugins/status-issues/shared.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   appendMatchMetadata,
   asString,
@@ -13,6 +18,7 @@ export {
   formatMatchMetadata,
   resolveEnabledConfiguredAccountId,
 } from "../channels/plugins/status-issues/shared.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   resolveReactionLevel,
   type ReactionLevel,

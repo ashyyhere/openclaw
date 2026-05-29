@@ -1,3 +1,4 @@
+// Tests extensions/feishu/src docx table ops test behavior.
 import { describe, expect, it } from "vitest";
 import { cleanBlocksForDescendant } from "./docx-table-ops.js";
 

@@ -1,3 +1,4 @@
+// Tests extensions/imessage/src/monitor conversation repair test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { isIMessageAnchorless, repairIMessageConversationAnchor } from "./conversation-repair.js";
 import type { IMessagePayload } from "./types.js";

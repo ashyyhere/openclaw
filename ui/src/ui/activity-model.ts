@@ -1,10 +1,15 @@
+// ui/src/ui activity model helpers and runtime behavior.
 import { formatUnknownText, truncateText } from "./format.ts";
 
+/** Reused constant for ACTIVITY ENTRY LIMIT behavior in ui/src/ui. */
 export const ACTIVITY_ENTRY_LIMIT = 100;
+/** Reused constant for ACTIVITY OUTPUT PREVIEW LIMIT behavior in ui/src/ui. */
 export const ACTIVITY_OUTPUT_PREVIEW_LIMIT = 2_000;
 
+/** Shared type for Activity Status in ui/src/ui. */
 export type ActivityStatus = "running" | "done" | "error";
 
+/** Shared type for Activity Entry in ui/src/ui. */
 export type ActivityEntry = {
   id: string;
   toolCallId: string;
@@ -173,6 +178,7 @@ function buildSummary(toolName: string, status: ActivityStatus, hiddenArgCount: 
   return `${toolName} ${statusLabel(status)}; ${argText}`;
 }
 
+/** Reused helper for update Activity From Tool Event behavior in ui/src/ui. */
 export function updateActivityFromToolEvent(host: ActivityHost, payload: ToolEventPayload) {
   if (!Array.isArray(host.activityEntries)) {
     return;
@@ -215,6 +221,7 @@ export function updateActivityFromToolEvent(host: ActivityHost, payload: ToolEve
   host.activityEntries = next.slice(-ACTIVITY_ENTRY_LIMIT);
 }
 
+/** Reused helper for reset Activity Entries behavior in ui/src/ui. */
 export function resetActivityEntries(host: ActivityHost) {
   if (Array.isArray(host.activityEntries)) {
     host.activityEntries = [];

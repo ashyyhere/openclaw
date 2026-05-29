@@ -1,3 +1,4 @@
+// infra approval handler bootstrap helpers and runtime behavior.
 import { resolveChannelApprovalCapability } from "../channels/plugins/approvals.js";
 import type { ChannelRuntimeSurface } from "../channels/plugins/channel-runtime-surface.types.js";
 import type { ChannelPlugin } from "../channels/plugins/types.plugin.js";
@@ -39,6 +40,7 @@ function formatRetryableApprovalBootstrapStartError(error: unknown): string {
   return message;
 }
 
+/** Reused helper for start Channel Approval Handler Bootstrap behavior in src/infra. */
 export async function startChannelApprovalHandlerBootstrap(params: {
   plugin: Pick<ChannelPlugin, "id" | "meta" | "approvalCapability">;
   cfg: OpenClawConfig;

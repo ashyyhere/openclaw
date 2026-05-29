@@ -1,3 +1,4 @@
+// Tests infra/outbound conversation id test behavior.
 import { describe, expect, it } from "vitest";
 import { resolveConversationIdFromTargets } from "./conversation-id.js";
 

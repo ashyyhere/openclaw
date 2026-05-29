@@ -1,3 +1,4 @@
+/** Tests Moonshot provider config generation. */
 import { describe, expect, it, vi } from "vitest";
 import type { ModelProviderConfig } from "../config/types.models.js";
 import { applyProviderNativeStreamingUsageCompat } from "../plugin-sdk/provider-catalog-shared.js";

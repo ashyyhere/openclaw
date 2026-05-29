@@ -1,3 +1,4 @@
+/** Resolves subagent depth from session keys and persisted session-store ancestry. */
 import fs from "node:fs";
 import { resolveStorePath } from "../config/sessions/paths.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -110,6 +111,7 @@ function resolveEntryForSessionKey(params: {
   return undefined;
 }
 
+/** Returns persisted spawn depth, deriving it from parent ancestry when needed. */
 export function getSubagentDepthFromSessionStore(
   sessionKey: string | undefined | null,
   opts?: {

@@ -9,6 +9,7 @@ import {
 } from "./status-all/report-sections.js";
 import { appendStatusReportSections } from "./status-all/text-report.js";
 
+/** Reused helper for build Status Command Report Lines behavior in src/commands. */
 export async function buildStatusCommandReportLines(params: {
   heading: (text: string) => string;
   muted: (text: string) => string;

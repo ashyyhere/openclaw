@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/telegram/src bot native commands runtime behavior.
 export {
   ensureConfiguredBindingRouteReady,
   recordInboundSessionMetaSafe,

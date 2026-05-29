@@ -1,3 +1,4 @@
+// extensions/whatsapp/src inbound policy helpers and runtime behavior.
 import { resolveStableChannelMessageIngress } from "openclaw/plugin-sdk/channel-ingress-runtime";
 import {
   resolveChannelGroupPolicy,

@@ -1,3 +1,4 @@
+// ui/src/ui/controllers config helpers and runtime behavior.
 import { applyMergePatch } from "../../../../src/config/merge-patch.ts";
 import type { GatewayBrowserClient } from "../gateway.ts";
 import type { ConfigSchemaResponse, ConfigSnapshot, ConfigUiHints } from "../types.ts";
@@ -11,6 +12,7 @@ import {
   setPathValue,
 } from "./config/form-utils.ts";
 
+/** Shared type for Config State in ui/src/ui/controllers. */
 export type ConfigState = {
   client: GatewayBrowserClient | null;
   connected: boolean;
@@ -43,10 +45,12 @@ export type ConfigState = {
 
 const autoAllowlistedPluginIdsByState = new WeakMap<ConfigState, Set<string>>();
 
+/** Shared type for Load Config Options in ui/src/ui/controllers. */
 export type LoadConfigOptions = {
   discardPendingChanges?: boolean;
 };
 
+/** Reused helper for load Config behavior in ui/src/ui/controllers. */
 export async function loadConfig(state: ConfigState, options: LoadConfigOptions = {}) {
   if (!state.client || !state.connected) {
     return;
@@ -63,6 +67,7 @@ export async function loadConfig(state: ConfigState, options: LoadConfigOptions 
   }
 }
 
+/** Reused helper for load Config Schema behavior in ui/src/ui/controllers. */
 export async function loadConfigSchema(state: ConfigState) {
   if (!state.client || !state.connected) {
     return;
@@ -104,6 +109,7 @@ function resolveEditableSnapshotConfig(
   );
 }
 
+/** Reused helper for apply Config Snapshot behavior in ui/src/ui/controllers. */
 export function applyConfigSnapshot(
   state: ConfigState,
   snapshot: ConfigSnapshot,
@@ -256,16 +262,19 @@ function syncConfigDraft(state: ConfigState, nextForm: Record<string, unknown>) 
   state.configFormDirty = nextRaw !== originalRaw;
 }
 
+/** Reused helper for save Config behavior in ui/src/ui/controllers. */
 export async function saveConfig(state: ConfigState): Promise<boolean> {
   return submitConfigChange(state, "config.set", "configSaving");
 }
 
+/** Reused helper for apply Config behavior in ui/src/ui/controllers. */
 export async function applyConfig(state: ConfigState): Promise<boolean> {
   return submitConfigChange(state, "config.apply", "configApplying", {
     sessionKey: state.applySessionKey,
   });
 }
 
+/** Reused helper for run Update behavior in ui/src/ui/controllers. */
 export async function runUpdate(state: ConfigState) {
   if (!state.client || !state.connected) {
     return;
@@ -375,6 +384,7 @@ function syncEnabledPluginAllowlist(
   untrackAutoAllowlistedPluginId(state, pluginId);
 }
 
+/** Reused helper for update Config Form Value behavior in ui/src/ui/controllers. */
 export function updateConfigFormValue(
   state: ConfigState,
   path: Array<string | number>,
@@ -390,6 +400,7 @@ export function updateConfigFormValue(
   });
 }
 
+/** Reused helper for update Config Raw Value behavior in ui/src/ui/controllers. */
 export function updateConfigRawValue(state: ConfigState, value: string) {
   state.configRaw = value;
   state.configFormDirty = value !== state.configRawOriginal;
@@ -400,6 +411,7 @@ export function updateConfigRawValue(state: ConfigState, value: string) {
   }
 }
 
+/** Reused helper for stage Config Preset behavior in ui/src/ui/controllers. */
 export function stageConfigPreset(state: ConfigState, patch: Record<string, unknown>) {
   const snapshotConfig = resolveEditableSnapshotConfig(state.configSnapshot);
   const baseSource = state.configForm ?? snapshotConfig;
@@ -414,6 +426,7 @@ export function stageConfigPreset(state: ConfigState, patch: Record<string, unkn
   syncConfigDraft(state, cloneConfigObject(merged as Record<string, unknown>));
 }
 
+/** Reused helper for reset Config Pending Changes behavior in ui/src/ui/controllers. */
 export function resetConfigPendingChanges(state: ConfigState) {
   const editableConfig = resolveEditableSnapshotConfig(state.configSnapshot);
   state.configForm = cloneConfigObject(state.configFormOriginal ?? editableConfig ?? {});
@@ -425,10 +438,12 @@ export function resetConfigPendingChanges(state: ConfigState) {
   autoAllowlistedPluginIdsByState.delete(state);
 }
 
+/** Reused helper for remove Config Form Value behavior in ui/src/ui/controllers. */
 export function removeConfigFormValue(state: ConfigState, path: Array<string | number>) {
   mutateConfigForm(state, (draft) => removePathValue(draft, path));
 }
 
+/** Reused helper for find Agent Config Entry Index behavior in ui/src/ui/controllers. */
 export function findAgentConfigEntryIndex(
   config: Record<string, unknown> | null,
   agentId: string,
@@ -450,6 +465,7 @@ export function findAgentConfigEntryIndex(
   );
 }
 
+/** Reused helper for ensure Agent Config Entry behavior in ui/src/ui/controllers. */
 export function ensureAgentConfigEntry(state: ConfigState, agentId: string): number {
   const normalizedAgentId = agentId.trim();
   if (!normalizedAgentId) {
@@ -466,6 +482,7 @@ export function ensureAgentConfigEntry(state: ConfigState, agentId: string): num
   return nextIndex;
 }
 
+/** Reused helper for stage Default Agent Config Entry behavior in ui/src/ui/controllers. */
 export function stageDefaultAgentConfigEntry(state: ConfigState, agentId: string): boolean {
   const normalizedAgentId = agentId.trim();
   if (!normalizedAgentId) {
@@ -497,6 +514,7 @@ export function stageDefaultAgentConfigEntry(state: ConfigState, agentId: string
   return true;
 }
 
+/** Reused helper for open Config File behavior in ui/src/ui/controllers. */
 export async function openConfigFile(state: ConfigState): Promise<void> {
   if (!state.client || !state.connected) {
     return;

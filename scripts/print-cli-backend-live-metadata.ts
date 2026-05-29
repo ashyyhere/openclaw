@@ -1,3 +1,4 @@
+// scripts print cli backend live metadata helpers and runtime behavior.
 import { pathToFileURL } from "node:url";
 import { resolveCliBackendConfig, resolveCliBackendLiveTest } from "../src/agents/cli-backends.js";
 

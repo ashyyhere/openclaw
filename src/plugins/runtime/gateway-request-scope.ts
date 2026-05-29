@@ -1,3 +1,4 @@
+// plugins/runtime gateway request scope helpers and runtime behavior.
 import { AsyncLocalStorage } from "node:async_hooks";
 import type {
   GatewayRequestContext,
@@ -5,6 +6,7 @@ import type {
 } from "../../gateway/server-methods/types.js";
 import { resolveGlobalSingleton } from "../../shared/global-singleton.js";
 
+/** Shared type for Plugin Runtime Gateway Request Scope in src/plugins/runtime. */
 export type PluginRuntimeGatewayRequestScope = {
   context?: GatewayRequestContext;
   client?: GatewayRequestOptions["client"];
@@ -14,6 +16,7 @@ export type PluginRuntimeGatewayRequestScope = {
   gatewayMethodDispatchAllowed?: boolean;
 };
 
+/** Shared type for Plugin Runtime Plugin Scope in src/plugins/runtime. */
 export type PluginRuntimePluginScope = {
   pluginId: string;
   pluginSource?: string;

@@ -1,10 +1,17 @@
+// Shared mocks for directive behavior E2E-style tests.
 import { vi, type Mock } from "vitest";
 
+/** Reused constant for run Embedded Agent Mock behavior in src/auto-reply. */
 export const runEmbeddedAgentMock: Mock = vi.fn();
+/** Reused constant for compact Embedded Agent Session Mock behavior in src/auto-reply. */
 export const compactEmbeddedAgentSessionMock: Mock = vi.fn();
+/** Reused constant for load Model Catalog Mock behavior in src/auto-reply. */
 export const loadModelCatalogMock: Mock = vi.fn();
+/** Reused constant for resolve Command Secret Refs Via Gateway Mock behavior in src/auto-reply. */
 export const resolveCommandSecretRefsViaGatewayMock: Mock = vi.fn();
+/** Reused constant for clear Session Auth Profile Override Mock behavior in src/auto-reply. */
 export const clearSessionAuthProfileOverrideMock: Mock = vi.fn();
+/** Reused constant for resolve Session Auth Profile Override Mock behavior in src/auto-reply. */
 export const resolveSessionAuthProfileOverrideMock: Mock = vi.fn();
 
 function objectRecord(value: unknown): Record<string, unknown> | undefined {
@@ -53,13 +60,16 @@ async function runMockedReplyAgent(runParams: unknown, params: unknown) {
   return normalized.length === 1 ? normalized[0] : normalized;
 }
 
+/** Reused helper for run Directive Behavior Reply Agent behavior in src/auto-reply. */
 export async function runDirectiveBehaviorReplyAgent(params: unknown) {
   const runParams = objectRecord(objectRecord(params)?.followupRun)?.run ?? {};
   return await runMockedReplyAgent(runParams, params);
 }
 
+/** Reused constant for run Reply Agent Mock behavior in src/auto-reply. */
 export const runReplyAgentMock: Mock = vi.fn(runDirectiveBehaviorReplyAgent);
 
+/** Reused helper for run Directive Behavior Prepared Reply behavior in src/auto-reply. */
 export async function runDirectiveBehaviorPreparedReply(params: unknown) {
   const input = objectRecord(params) ?? {};
   const runParams = {
@@ -78,6 +88,7 @@ export async function runDirectiveBehaviorPreparedReply(params: unknown) {
   return await runMockedReplyAgent(runParams, params);
 }
 
+/** Reused constant for run Prepared Reply Mock behavior in src/auto-reply. */
 export const runPreparedReplyMock: Mock = vi.fn(runDirectiveBehaviorPreparedReply);
 
 vi.mock("../agents/embedded-agent.js", () => ({

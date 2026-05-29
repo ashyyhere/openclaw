@@ -1,3 +1,4 @@
+// extensions/anthropic index helpers and runtime behavior.
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 import { registerAnthropicPlugin } from "./register.runtime.js";
 

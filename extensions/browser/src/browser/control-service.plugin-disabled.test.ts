@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/browser control service plugin disabled test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({

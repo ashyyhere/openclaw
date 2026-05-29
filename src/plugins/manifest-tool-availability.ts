@@ -1,3 +1,4 @@
+// plugins manifest tool availability helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { coerceSecretRef, type SecretRef } from "../config/types.secrets.js";
 import { resolveDefaultSecretProviderAlias } from "../secrets/ref-contract.js";
@@ -10,7 +11,9 @@ import type {
 } from "./manifest.js";
 
 type ToolMetadata = NonNullable<PluginManifestRecord["toolMetadata"]>[string];
+/** Shared type for Manifest Config Availability Signal in src/plugins. */
 export type ManifestConfigAvailabilitySignal = PluginManifestCapabilityProviderConfigSignal;
+/** Shared type for Manifest Auth Availability Signal in src/plugins. */
 export type ManifestAuthAvailabilitySignal = PluginManifestCapabilityProviderAuthSignal;
 
 function readPath(root: unknown, path: string | undefined): unknown {
@@ -95,6 +98,7 @@ function hasConfiguredValue(params: {
   return params.value !== undefined && params.value !== null;
 }
 
+/** Reused helper for manifest Config Signal Passes behavior in src/plugins. */
 export function manifestConfigSignalPasses(params: {
   config?: OpenClawConfig;
   env: NodeJS.ProcessEnv;
@@ -153,6 +157,7 @@ function normalizeBaseUrlForManifestGuard(value: string): string {
   return value.trim().replace(/\/+$/, "");
 }
 
+/** Reused helper for manifest Provider Base Url Guard Passes behavior in src/plugins. */
 export function manifestProviderBaseUrlGuardPasses(params: {
   config?: OpenClawConfig;
   guard: ManifestAuthAvailabilitySignal["providerBaseUrl"];
@@ -175,6 +180,7 @@ export function manifestProviderBaseUrlGuardPasses(params: {
   );
 }
 
+/** Reused helper for manifest Plugin Setup Provider Env Vars behavior in src/plugins. */
 export function manifestPluginSetupProviderEnvVars(
   plugin: PluginManifestRecord,
   providerId: string,
@@ -186,6 +192,7 @@ export function manifestPluginSetupProviderEnvVars(
   return plugin.providerAuthEnvVars?.[providerId] ?? [];
 }
 
+/** Reused helper for has Non Empty Manifest Env Candidate behavior in src/plugins. */
 export function hasNonEmptyManifestEnvCandidate(
   env: NodeJS.ProcessEnv,
   envVars: readonly string[],
@@ -251,6 +258,7 @@ function toolMetadataPasses(params: {
   return false;
 }
 
+/** Reused helper for has Manifest Tool Availability behavior in src/plugins. */
 export function hasManifestToolAvailability(params: {
   plugin: PluginManifestRecord;
   toolNames: readonly string[];

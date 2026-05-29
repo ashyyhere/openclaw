@@ -1,3 +1,4 @@
+// extensions/browser/src/browser/routes agent act normalize helpers and runtime behavior.
 import {
   ACT_MAX_BATCH_ACTIONS,
   ACT_MAX_CLICK_DELAY_MS,

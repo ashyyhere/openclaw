@@ -1,3 +1,4 @@
+// extensions/tlon/src/urbit fetch helpers and runtime behavior.
 import {
   fetchWithSsrFGuard,
   type LookupFn,

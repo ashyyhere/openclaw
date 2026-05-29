@@ -1,3 +1,4 @@
+/** Tests shared doctor formatting helpers. */
 import { describe, expect, it } from "vitest";
 import { buildGatewayRuntimeHints } from "./doctor-format.js";
 

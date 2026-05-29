@@ -1,3 +1,4 @@
+// ui/src/ui/chat chat avatar helpers and runtime behavior.
 import { html } from "lit";
 import type { AssistantIdentity } from "../assistant-identity.ts";
 import {
@@ -12,6 +13,7 @@ import {
 } from "../views/agents-utils.ts";
 import { normalizeRoleForGrouping } from "./role-normalizer.ts";
 
+/** Reused helper for render Chat Avatar behavior in ui/src/ui/chat. */
 export function renderChatAvatar(
   role: string,
   assistant?: Pick<AssistantIdentity, "name" | "avatar">,

@@ -1,3 +1,4 @@
+// Tests plugins hook runner global test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { createMockPluginRegistry } from "./hooks.test-helpers.js";
 

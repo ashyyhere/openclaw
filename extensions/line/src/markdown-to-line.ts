@@ -1,3 +1,4 @@
+// extensions/line/src markdown to line helpers and runtime behavior.
 import type { messagingApi } from "@line/bot-sdk";
 import { stripMarkdown } from "openclaw/plugin-sdk/text-chunking";
 import { createReceiptCard, toFlexMessage, type FlexBubble } from "./flex-templates.js";

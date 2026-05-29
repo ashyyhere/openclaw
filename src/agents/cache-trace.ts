@@ -1,3 +1,4 @@
+/** Optional JSONL tracing for prompt/session cache diagnostics. */
 import crypto from "node:crypto";
 import path from "node:path";
 import { resolveStateDir } from "../config/paths.js";
@@ -128,6 +129,7 @@ function summarizeMessages(messages: AgentMessage[]): {
   };
 }
 
+/** Create a cache trace recorder when diagnostics are enabled. */
 export function createCacheTrace(params: CacheTraceInit): CacheTrace | null {
   const cfg = resolveCacheTraceConfig(params);
   if (!cfg.enabled) {

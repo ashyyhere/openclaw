@@ -1,3 +1,4 @@
+// Tests extensions/line/src auto reply delivery test behavior.
 import { describe, expect, it, vi } from "vitest";
 import type { LineAutoReplyDeps } from "./auto-reply-delivery.js";
 import { deliverLineAutoReply } from "./auto-reply-delivery.js";

@@ -1,3 +1,4 @@
+// test/vitest vitest extension telegram config helpers and runtime behavior.
 import { telegramExtensionTestRoots } from "./vitest.extension-telegram-paths.mjs";
 import { loadPatternListFromEnv } from "./vitest.pattern-file.ts";
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";

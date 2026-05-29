@@ -1,3 +1,4 @@
+// Tests gateway/server ws connection test behavior.
 import { EventEmitter } from "node:events";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { WebSocketServer } from "ws";

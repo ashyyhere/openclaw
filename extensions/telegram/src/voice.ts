@@ -1,3 +1,4 @@
+// extensions/telegram/src voice helpers and runtime behavior.
 import { isVoiceCompatibleAudio } from "openclaw/plugin-sdk/media-runtime";
 
 function resolveTelegramVoiceDecision(opts: {

@@ -1,3 +1,4 @@
+// Tests test/scripts changed lanes test behavior.
 import { execFileSync, spawnSync } from "node:child_process";
 import { mkdirSync, unlinkSync, writeFileSync } from "node:fs";
 import path from "node:path";

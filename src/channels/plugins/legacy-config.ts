@@ -1,3 +1,4 @@
+// Legacy config rule helpers for channel plugins.
 import type { LegacyConfigRule } from "../../config/legacy.shared.js";
 import type { OpenClawConfig } from "../../config/types.js";
 import { listPluginDoctorLegacyConfigRules } from "../../plugins/doctor-contract-registry.js";
@@ -70,6 +71,7 @@ function collectRelevantChannelIdsForTouchedPaths(params: {
   return filteredChannelIds.filter((channelId) => touchedChannelIds.has(channelId));
 }
 
+/** Reused helper for collect Channel Legacy Config Rules behavior in src/channels/plugins. */
 export function collectChannelLegacyConfigRules(
   raw?: unknown,
   touchedPaths?: ReadonlyArray<ReadonlyArray<string>>,

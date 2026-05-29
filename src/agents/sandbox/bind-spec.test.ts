@@ -1,3 +1,4 @@
+/** Covers parsing Docker-style bind mount specifications. */
 import { describe, expect, it } from "vitest";
 import { splitSandboxBindSpec } from "./bind-spec.js";
 

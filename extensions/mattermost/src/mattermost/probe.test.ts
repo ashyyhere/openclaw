@@ -1,3 +1,4 @@
+// Tests extensions/mattermost/src/mattermost probe test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { probeMattermost } from "./probe.js";
 

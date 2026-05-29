@@ -1,3 +1,4 @@
+// Tests ui/src/ui text direction test behavior.
 import { describe, expect, it } from "vitest";
 import { detectTextDirection } from "./text-direction.ts";
 

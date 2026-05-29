@@ -1,3 +1,4 @@
+/** E2E tests for before-tool-call hook execution. */
 import os from "node:os";
 import path from "node:path";
 import { beforeEach, describe, expect, it, vi } from "vitest";

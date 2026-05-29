@@ -1,3 +1,4 @@
+// scripts gh read helpers and runtime behavior.
 import { execFileSync, spawnSync } from "node:child_process";
 import { createPrivateKey, createSign } from "node:crypto";
 import { readFileSync } from "node:fs";

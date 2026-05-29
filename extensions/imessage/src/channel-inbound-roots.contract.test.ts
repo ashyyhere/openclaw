@@ -1,3 +1,4 @@
+// Tests extensions/imessage/src channel inbound roots contract test behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { describe, expect, it } from "vitest";
 import {

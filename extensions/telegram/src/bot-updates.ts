@@ -1,3 +1,4 @@
+// extensions/telegram/src bot updates helpers and runtime behavior.
 import type { Message } from "grammy/types";
 import { createDedupeCache } from "openclaw/plugin-sdk/dedupe-runtime";
 import type { TelegramContext } from "./bot/types.js";

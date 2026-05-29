@@ -1,3 +1,4 @@
+/** Public SDK helpers for LM Studio provider config/auth setup. */
 import type { OpenClawConfig } from "../config/types.js";
 import type {
   ProviderAuthMethodNonInteractiveContext,
@@ -8,6 +9,7 @@ import type {
 } from "../plugins/types.js";
 import type { WizardPrompter } from "../wizard/prompts.js";
 
+/** Re-exported API for src/plugin-sdk. */
 export type {
   OpenClawPluginApi,
   ProviderAuthContext,
@@ -18,7 +20,9 @@ export type {
   ProviderPrepareDynamicModelContext,
   ProviderRuntimeModel,
 } from "../plugins/types.js";
+/** Re-exported API for src/plugin-sdk, starting with Lmstudio Model Base. */
 export type { LmstudioModelBase, LmstudioModelWire } from "./lmstudio-runtime.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   LMSTUDIO_DEFAULT_API_KEY_ENV_VAR,
   LMSTUDIO_DEFAULT_BASE_URL,
@@ -83,19 +87,23 @@ function loadFacadeModule(): FacadeModule {
   });
 }
 
+/** Reused constant for prompt And Configure Lmstudio Interactive behavior in src/plugin-sdk. */
 export const promptAndConfigureLmstudioInteractive: FacadeModule["promptAndConfigureLmstudioInteractive"] =
   ((...args) =>
     loadFacadeModule().promptAndConfigureLmstudioInteractive(
       ...args,
     )) as FacadeModule["promptAndConfigureLmstudioInteractive"];
+/** Reused constant for configure Lmstudio Non Interactive behavior in src/plugin-sdk. */
 export const configureLmstudioNonInteractive: FacadeModule["configureLmstudioNonInteractive"] = ((
   ...args
 ) =>
   loadFacadeModule().configureLmstudioNonInteractive(
     ...args,
   )) as FacadeModule["configureLmstudioNonInteractive"];
+/** Reused constant for discover Lmstudio Provider behavior in src/plugin-sdk. */
 export const discoverLmstudioProvider: FacadeModule["discoverLmstudioProvider"] = ((...args) =>
   loadFacadeModule().discoverLmstudioProvider(...args)) as FacadeModule["discoverLmstudioProvider"];
+/** Reused constant for prepare Lmstudio Dynamic Models behavior in src/plugin-sdk. */
 export const prepareLmstudioDynamicModels: FacadeModule["prepareLmstudioDynamicModels"] = ((
   ...args
 ) =>

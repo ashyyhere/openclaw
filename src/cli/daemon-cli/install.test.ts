@@ -1,3 +1,4 @@
+/** Tests daemon install planning, env handling, and runtime output. */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { ResolvedGatewayAuth } from "../../gateway/auth.js";
 import { captureFullEnv } from "../../test-utils/env.js";

@@ -1,7 +1,9 @@
+// ui/src/ui navigation helpers and runtime behavior.
 import { t } from "../i18n/index.ts";
 import type { IconName } from "./icons.js";
 import { normalizeLowercaseStringOrEmpty } from "./string-coerce.ts";
 
+/** Reused constant for TAB GROUPS behavior in ui/src/ui. */
 export const TAB_GROUPS = [
   { label: "chat", tabs: ["chat"] },
   {
@@ -15,6 +17,7 @@ export const TAB_GROUPS = [
   },
 ] as const;
 
+/** Shared type for Tab in ui/src/ui. */
 export type Tab =
   | "agents"
   | "activity"
@@ -38,6 +41,7 @@ export type Tab =
   | "logs"
   | "dreams";
 
+/** Reused constant for SETTINGS TABS behavior in ui/src/ui. */
 export const SETTINGS_TABS = [
   "config",
   "channels",
@@ -83,6 +87,7 @@ const PATH_TO_TAB = new Map<string, Tab>([
   ...Object.entries(PATH_ALIASES),
 ]);
 
+/** Reused helper for normalize Base Path behavior in ui/src/ui. */
 export function normalizeBasePath(basePath: string): string {
   if (!basePath) {
     return "";
@@ -100,6 +105,7 @@ export function normalizeBasePath(basePath: string): string {
   return base;
 }
 
+/** Reused helper for normalize Path behavior in ui/src/ui. */
 export function normalizePath(path: string): string {
   if (!path) {
     return "/";
@@ -114,16 +120,19 @@ export function normalizePath(path: string): string {
   return normalized;
 }
 
+/** Reused helper for path For Tab behavior in ui/src/ui. */
 export function pathForTab(tab: Tab, basePath = ""): string {
   const base = normalizeBasePath(basePath);
   const path = TAB_PATHS[tab];
   return base ? `${base}${path}` : path;
 }
 
+/** Reused helper for is Settings Tab behavior in ui/src/ui. */
 export function isSettingsTab(tab: Tab): boolean {
   return (SETTINGS_TABS as readonly Tab[]).includes(tab);
 }
 
+/** Reused helper for is Tab In Group behavior in ui/src/ui. */
 export function isTabInGroup(group: (typeof TAB_GROUPS)[number], tab: Tab): boolean {
   if (group.label === "settings") {
     return isSettingsTab(tab);
@@ -131,6 +140,7 @@ export function isTabInGroup(group: (typeof TAB_GROUPS)[number], tab: Tab): bool
   return (group.tabs as readonly Tab[]).includes(tab);
 }
 
+/** Reused helper for tab From Path behavior in ui/src/ui. */
 export function tabFromPath(pathname: string, basePath = ""): Tab | null {
   const base = normalizeBasePath(basePath);
   let path = pathname || "/";
@@ -151,6 +161,7 @@ export function tabFromPath(pathname: string, basePath = ""): Tab | null {
   return PATH_TO_TAB.get(normalized) ?? null;
 }
 
+/** Reused helper for infer Base Path From Pathname behavior in ui/src/ui. */
 export function inferBasePathFromPathname(pathname: string): string {
   let normalized = normalizePath(pathname);
   if (normalized.endsWith("/index.html")) {
@@ -173,6 +184,7 @@ export function inferBasePathFromPathname(pathname: string): string {
   return `/${segments.join("/")}`;
 }
 
+/** Reused helper for icon For Tab behavior in ui/src/ui. */
 export function iconForTab(tab: Tab): IconName {
   switch (tab) {
     case "agents":
@@ -222,6 +234,7 @@ export function iconForTab(tab: Tab): IconName {
   }
 }
 
+/** Reused helper for title For Tab behavior in ui/src/ui. */
 export function titleForTab(tab: Tab) {
   if (tab === "config") {
     return t("nav.settings");
@@ -229,6 +242,7 @@ export function titleForTab(tab: Tab) {
   return t(`tabs.${tab}`);
 }
 
+/** Reused helper for subtitle For Tab behavior in ui/src/ui. */
 export function subtitleForTab(tab: Tab) {
   return t(`subtitles.${tab}`);
 }

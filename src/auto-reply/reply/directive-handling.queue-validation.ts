@@ -1,3 +1,4 @@
+// Validation helpers for directives applied to queued runs.
 import type { SessionEntry } from "../../config/sessions.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { ReplyPayload } from "../types.js";
@@ -5,6 +6,7 @@ import type { InlineDirectives } from "./directive-handling.parse.js";
 import { withOptions } from "./directive-handling.shared.js";
 import { resolveQueueSettings } from "./queue/settings.js";
 
+/** Reused helper for maybe Handle Queue Directive behavior in src/auto-reply/reply. */
 export function maybeHandleQueueDirective(params: {
   directives: InlineDirectives;
   cfg: OpenClawConfig;

@@ -1,3 +1,4 @@
+// Tests extensions/feishu/src external keys test behavior.
 import { describe, expect, it } from "vitest";
 import { normalizeFeishuExternalKey } from "./external-keys.js";
 

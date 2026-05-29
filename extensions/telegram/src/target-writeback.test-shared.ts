@@ -1,3 +1,4 @@
+// extensions/telegram/src target writeback test shared helpers and runtime behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { beforeAll, beforeEach, describe, expect, it, vi, type Mock } from "vitest";
 

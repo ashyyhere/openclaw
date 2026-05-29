@@ -1,5 +1,7 @@
+// ui/src/ui/controllers nodes helpers and runtime behavior.
 import type { GatewayBrowserClient } from "../gateway.ts";
 
+/** Shared type for Nodes State in ui/src/ui/controllers. */
 export type NodesState = {
   client: GatewayBrowserClient | null;
   connected: boolean;
@@ -8,6 +10,7 @@ export type NodesState = {
   lastError: string | null;
 };
 
+/** Reused helper for load Nodes behavior in ui/src/ui/controllers. */
 export async function loadNodes(state: NodesState, opts?: { quiet?: boolean }) {
   if (!state.client || !state.connected) {
     return;

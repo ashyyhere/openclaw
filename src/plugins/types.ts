@@ -1,3 +1,4 @@
+// Shared types for plugins types behavior.
 import type { IncomingMessage, ServerResponse } from "node:http";
 import type { Duplex } from "node:stream";
 import type {
@@ -154,14 +155,18 @@ import type { WebFetchProviderPlugin, WebSearchProviderPlugin } from "./web-prov
 type ModelProviderRequestTransportOverrides =
   import("../agents/provider-request-config.js").ModelProviderRequestTransportOverrides;
 
+/** Re-exported API for src/plugins, starting with Plugin Runtime. */
 export type { PluginRuntime } from "./runtime/types.js";
+/** Re-exported API for src/plugins, starting with Plugin Origin. */
 export type { PluginOrigin } from "./plugin-origin.types.js";
+/** Re-exported API for src/plugins. */
 export type {
   PluginBundleFormat,
   PluginConfigUiHint,
   PluginDiagnostic,
   PluginFormat,
 } from "./manifest-types.js";
+/** Re-exported API for src/plugins. */
 export type {
   OpenClawPluginActiveModelContext,
   OpenClawPluginHookOptions,
@@ -169,8 +174,11 @@ export type {
   OpenClawPluginToolFactory,
   OpenClawPluginToolOptions,
 } from "./tool-types.js";
+/** Re-exported API for src/plugins, starting with Any Agent Tool. */
 export type { AnyAgentTool } from "../agents/tools/common.js";
+/** Re-exported API for src/plugins, starting with Agent Harness. */
 export type { AgentHarness } from "../agents/harness/types.js";
+/** Re-exported API for src/plugins. */
 export type {
   AgentToolResultMiddleware,
   AgentToolResultMiddlewareContext,
@@ -181,6 +189,7 @@ export type {
   AgentToolResultMiddlewareRuntime,
   OpenClawAgentToolResult,
 } from "./agent-tool-result-middleware-types.js";
+/** Re-exported API for src/plugins. */
 export type {
   PluginConversationBinding,
   PluginConversationBindingRequestParams,
@@ -188,6 +197,7 @@ export type {
   PluginConversationBindingResolvedEvent,
   PluginConversationBindingResolutionDecision,
 } from "./conversation-binding.types.js";
+/** Re-exported API for src/plugins. */
 export type {
   CliBackendAuthEpochMode,
   CliBackendNormalizeConfigContext,
@@ -203,6 +213,7 @@ export type {
   PluginTextTransforms,
 } from "./cli-backend.types.js";
 export * from "./hook-types.js";
+/** Re-exported API for src/plugins. */
 export type {
   PluginAgentEventEmitParams,
   PluginAgentEventEmitResult,
@@ -235,6 +246,7 @@ export type {
   PluginTrustedToolPolicyRegistration,
 } from "./host-hooks.js";
 
+/** Shared type for Provider Auth Option Bag in src/plugins. */
 export type ProviderAuthOptionBag = {
   token?: string;
   tokenProvider?: string;
@@ -250,7 +262,9 @@ export type PluginLogger = {
   error: (message: string) => void;
 };
 
+/** Re-exported API for src/plugins, starting with Plugin Kind. */
 export type { PluginKind } from "./plugin-kind.types.js";
+/** Re-exported API for src/plugins. */
 export type {
   ProviderExternalAuthProfile,
   ProviderExternalOAuthProfile,
@@ -259,6 +273,7 @@ export type {
   ProviderResolveSyntheticAuthContext,
   ProviderSyntheticAuthResult,
 } from "./provider-external-auth.types.js";
+/** Re-exported API for src/plugins. */
 export type {
   PluginWebFetchProviderEntry,
   PluginWebSearchProviderEntry,
@@ -277,8 +292,10 @@ export type {
   WebSearchProviderToolExecutionContext,
   WebSearchRuntimeMetadataContext,
 } from "./web-provider-types.js";
+/** Re-exported API for src/plugins, starting with Provider Runtime Model. */
 export type { ProviderRuntimeModel } from "./provider-runtime-model.types.js";
 
+/** Shared type for Plugin Config Validation in src/plugins. */
 export type PluginConfigValidation =
   | { ok: true; value?: unknown }
   | { ok: false; errors: string[] };
@@ -304,6 +321,7 @@ export type OpenClawPluginConfigSchema = {
   jsonSchema?: JsonSchemaObject;
 };
 
+/** Shared type for Provider Auth Kind in src/plugins. */
 export type ProviderAuthKind = "oauth" | "api_key" | "token" | "device_code" | "custom";
 
 /** Standard result payload returned by provider auth methods. */
@@ -368,12 +386,14 @@ export type ProviderAuthContext = {
   };
 };
 
+/** Shared type for Provider Non Interactive Api Key Result in src/plugins. */
 export type ProviderNonInteractiveApiKeyResult = {
   key: string;
   source: "profile" | "env" | "flag";
   envVarName?: string;
 };
 
+/** Shared type for Provider Resolve Non Interactive Api Key Params in src/plugins. */
 export type ProviderResolveNonInteractiveApiKeyParams = {
   provider: string;
   flagValue?: string;
@@ -384,6 +404,7 @@ export type ProviderResolveNonInteractiveApiKeyParams = {
   required?: boolean;
 };
 
+/** Shared type for Provider Non Interactive Api Key Credential Params in src/plugins. */
 export type ProviderNonInteractiveApiKeyCredentialParams = {
   provider: string;
   resolved: ProviderNonInteractiveApiKeyResult;
@@ -391,6 +412,7 @@ export type ProviderNonInteractiveApiKeyCredentialParams = {
   metadata?: Record<string, string>;
 };
 
+/** Shared type for Provider Auth Method Non Interactive Context in src/plugins. */
 export type ProviderAuthMethodNonInteractiveContext = {
   authChoice: string;
   config: OpenClawConfig;
@@ -407,6 +429,7 @@ export type ProviderAuthMethodNonInteractiveContext = {
   ) => ApiKeyCredential | null;
 };
 
+/** Shared type for Provider Auth Method in src/plugins. */
 export type ProviderAuthMethod = {
   id: string;
   label: string;
@@ -426,8 +449,10 @@ export type ProviderAuthMethod = {
   ) => Promise<OpenClawConfig | null>;
 };
 
+/** Shared type for Provider Catalog Order in src/plugins. */
 export type ProviderCatalogOrder = "simple" | "profile" | "paired" | "late";
 
+/** Shared type for Provider Catalog Context in src/plugins. */
 export type ProviderCatalogContext = {
   config: OpenClawConfig;
   agentDir?: string;
@@ -451,23 +476,27 @@ export type ProviderCatalogContext = {
   };
 };
 
+/** Shared type for Provider Catalog Result in src/plugins. */
 export type ProviderCatalogResult =
   | { provider: ModelProviderConfig }
   | { providers: Record<string, ModelProviderConfig> }
   | null
   | undefined;
 
+/** Shared type for Provider Plugin Catalog in src/plugins. */
 export type ProviderPluginCatalog = {
   order?: ProviderCatalogOrder;
   run: (ctx: ProviderCatalogContext) => Promise<ProviderCatalogResult>;
 };
 
+/** Shared type for Unified Model Catalog Provider Context in src/plugins. */
 export type UnifiedModelCatalogProviderContext = ProviderCatalogContext & {
   signal?: AbortSignal;
   includeLive?: boolean;
   timeoutMs?: number;
 };
 
+/** Shared type for Unified Model Catalog Provider Plugin in src/plugins. */
 export type UnifiedModelCatalogProviderPlugin = {
   provider: string;
   kinds: readonly UnifiedModelCatalogKind[];
@@ -487,6 +516,7 @@ export type UnifiedModelCatalogProviderPlugin = {
     | undefined;
 };
 
+/** Shared type for Provider Runtime Provider Config in src/plugins. */
 export type ProviderRuntimeProviderConfig = {
   baseUrl?: string;
   api?: ModelProviderConfig["api"];
@@ -524,6 +554,7 @@ export type ProviderResolveDynamicModelContext = {
  */
 export type ProviderPrepareDynamicModelContext = ProviderResolveDynamicModelContext;
 
+/** Shared type for Provider Prefer Runtime Resolved Model Context in src/plugins. */
 export type ProviderPreferRuntimeResolvedModelContext = {
   config?: OpenClawConfig;
   agentDir?: string;
@@ -559,6 +590,7 @@ export type ProviderNormalizeModelIdContext = {
   modelId: string;
 };
 
+/** Re-exported API for src/plugins. */
 export type {
   ProviderApplyConfigDefaultsContext,
   ProviderNormalizeConfigContext,
@@ -706,6 +738,7 @@ export type ProviderPrepareExtraParamsContext = {
   thinkingLevel?: ThinkLevel;
 };
 
+/** Shared type for Provider Extra Params For Transport Context in src/plugins. */
 export type ProviderExtraParamsForTransportContext = Omit<
   ProviderPrepareExtraParamsContext,
   "extraParams"
@@ -715,14 +748,17 @@ export type ProviderExtraParamsForTransportContext = Omit<
   extraParams: Record<string, unknown>;
 };
 
+/** Shared type for Provider Extra Params For Transport Result in src/plugins. */
 export type ProviderExtraParamsForTransportResult = {
   patch?: Record<string, unknown> | null;
 };
 
+/** Shared type for Provider Resolve Prompt Overlay Context in src/plugins. */
 export type ProviderResolvePromptOverlayContext = ProviderSystemPromptContributionContext & {
   baseOverlay?: ProviderSystemPromptContribution;
 };
 
+/** Shared type for Provider Followup Fallback Route Context in src/plugins. */
 export type ProviderFollowupFallbackRouteContext = {
   config?: OpenClawConfig;
   agentDir?: string;
@@ -736,11 +772,13 @@ export type ProviderFollowupFallbackRouteContext = {
   dispatcherAvailable: boolean;
 };
 
+/** Shared type for Provider Followup Fallback Route Result in src/plugins. */
 export type ProviderFollowupFallbackRouteResult = {
   route?: "origin" | "dispatcher" | "drop";
   reason?: string;
 };
 
+/** Shared type for Provider Resolve Auth Profile Id Context in src/plugins. */
 export type ProviderResolveAuthProfileIdContext = {
   config?: OpenClawConfig;
   agentDir?: string;
@@ -753,10 +791,13 @@ export type ProviderResolveAuthProfileIdContext = {
   authStore: AuthProfileStore;
 };
 
+/** Shared type for Provider Replay Sanitize Mode in src/plugins. */
 export type ProviderReplaySanitizeMode = "full" | "images-only";
 
+/** Shared type for Provider Replay Tool Call Id Mode in src/plugins. */
 export type ProviderReplayToolCallIdMode = "strict" | "strict9";
 
+/** Shared type for Provider Reasoning Output Mode in src/plugins. */
 export type ProviderReasoningOutputMode = "native" | "tagged";
 
 /**
@@ -812,11 +853,13 @@ export type ProviderReplayPolicyContext = {
   model?: ProviderRuntimeModel;
 };
 
+/** Shared type for Provider Replay Session Entry in src/plugins. */
 export type ProviderReplaySessionEntry = {
   customType: string;
   data?: unknown;
 };
 
+/** Shared type for Provider Replay Session State in src/plugins. */
 export type ProviderReplaySessionState = {
   getCustomEntries(): ProviderReplaySessionEntry[];
   appendCustomEntry(customType: string, data: unknown): void;
@@ -857,6 +900,7 @@ export type ProviderNormalizeToolSchemasContext = ProviderReplayPolicyContext & 
   tools: AnyAgentTool[];
 };
 
+/** Shared type for Provider Tool Schema Diagnostic in src/plugins. */
 export type ProviderToolSchemaDiagnostic = {
   toolName: string;
   toolIndex?: number;
@@ -1064,11 +1108,13 @@ export type ProviderBuiltInModelSuppressionContext = {
   baseUrl?: string;
 };
 
+/** Shared type for Provider Built In Model Suppression Result in src/plugins. */
 export type ProviderBuiltInModelSuppressionResult = {
   suppress: boolean;
   errorMessage?: string;
 };
 
+/** Re-exported API for src/plugins. */
 export type {
   ProviderDefaultThinkingPolicyContext,
   ProviderThinkingProfile,
@@ -1123,6 +1169,7 @@ export type ProviderDiscoveryResult = ProviderCatalogResult;
  */
 export type ProviderPluginDiscovery = ProviderPluginCatalog;
 
+/** Shared type for Provider Plugin Wizard Setup in src/plugins. */
 export type ProviderPluginWizardSetup = {
   choiceId?: string;
   choiceLabel?: string;
@@ -1178,6 +1225,7 @@ export type ProviderPluginWizard = {
   modelPicker?: ProviderPluginWizardModelPicker;
 };
 
+/** Shared type for Provider OAuth Profile Id Repair in src/plugins. */
 export type ProviderOAuthProfileIdRepair = {
   /**
    * Legacy OAuth profile id to migrate away from.
@@ -1193,6 +1241,7 @@ export type ProviderOAuthProfileIdRepair = {
   promptLabel?: string;
 };
 
+/** Shared type for Provider Model Selected Context in src/plugins. */
 export type ProviderModelSelectedContext = {
   config: OpenClawConfig;
   model: string;
@@ -1201,6 +1250,7 @@ export type ProviderModelSelectedContext = {
   workspaceDir?: string;
 };
 
+/** Shared type for Provider Defer Synthetic Profile Auth Context in src/plugins. */
 export type ProviderDeferSyntheticProfileAuthContext = {
   config?: OpenClawConfig;
   provider: string;
@@ -1208,6 +1258,7 @@ export type ProviderDeferSyntheticProfileAuthContext = {
   resolvedApiKey?: string;
 };
 
+/** Shared type for Provider System Prompt Contribution Context in src/plugins. */
 export type ProviderSystemPromptContributionContext = {
   config?: OpenClawConfig;
   agentDir?: string;
@@ -1221,10 +1272,12 @@ export type ProviderSystemPromptContributionContext = {
   trigger?: "cron" | "heartbeat" | "manual" | "memory" | "overflow" | "user";
 };
 
+/** Shared type for Provider Transform System Prompt Context in src/plugins. */
 export type ProviderTransformSystemPromptContext = ProviderSystemPromptContributionContext & {
   systemPrompt: string;
 };
 
+/** Shared type for Plugin Text Transform Registration in src/plugins. */
 export type PluginTextTransformRegistration = PluginTextTransforms;
 
 /** Text-inference provider capability registered by a plugin. */
@@ -1854,6 +1907,7 @@ export type SpeechProviderPlugin = {
   listVoices?: (req: SpeechListVoicesRequest) => Promise<SpeechVoiceOption[]>;
 };
 
+/** Shared type for Plugin Speech Provider Entry in src/plugins. */
 export type PluginSpeechProviderEntry = SpeechProviderPlugin & {
   pluginId: string;
 };
@@ -1873,6 +1927,7 @@ export type RealtimeTranscriptionProviderPlugin = {
   createSession: (req: RealtimeTranscriptionSessionCreateRequest) => RealtimeTranscriptionSession;
 };
 
+/** Shared type for Plugin Realtime Transcription Provider Entry in src/plugins. */
 export type PluginRealtimeTranscriptionProviderEntry = RealtimeTranscriptionProviderPlugin & {
   pluginId: string;
 };
@@ -1880,6 +1935,7 @@ export type PluginRealtimeTranscriptionProviderEntry = RealtimeTranscriptionProv
 /** Transcript source capability registered by a channel or meeting plugin. */
 export type TranscriptSourceProvider = TranscriptsSourceProviderCapability;
 
+/** Shared type for Plugin Transcripts Source Provider Entry in src/plugins. */
 export type PluginTranscriptsSourceProviderEntry = TranscriptSourceProvider & {
   pluginId: string;
 };
@@ -1901,15 +1957,21 @@ export type RealtimeVoiceProviderPlugin = {
   ) => Promise<RealtimeVoiceBrowserSession>;
 };
 
+/** Shared type for Plugin Realtime Voice Provider Entry in src/plugins. */
 export type PluginRealtimeVoiceProviderEntry = RealtimeVoiceProviderPlugin & {
   pluginId: string;
 };
 
+/** Shared type for Media Understanding Provider Plugin in src/plugins. */
 export type MediaUnderstandingProviderPlugin = MediaUnderstandingProvider;
+/** Shared type for Image Generation Provider Plugin in src/plugins. */
 export type ImageGenerationProviderPlugin = ImageGenerationProvider;
+/** Shared type for Video Generation Provider Plugin in src/plugins. */
 export type VideoGenerationProviderPlugin = VideoGenerationProvider;
+/** Shared type for Music Generation Provider Plugin in src/plugins. */
 export type MusicGenerationProviderPlugin = MusicGenerationProvider;
 
+/** Shared type for Open Claw Plugin Gateway Method in src/plugins. */
 export type OpenClawPluginGatewayMethod = {
   method: string;
   handler: GatewayRequestHandler;
@@ -1919,6 +1981,7 @@ export type OpenClawPluginGatewayMethod = {
 // Plugin Commands
 // =============================================================================
 
+/** Shared type for Plugin Command Diagnostics Session in src/plugins. */
 export type PluginCommandDiagnosticsSession = {
   /** Stable host session key when available. */
   sessionKey?: string;
@@ -2022,15 +2085,19 @@ export const AGENT_PROMPT_SURFACE_KINDS = [
   "subagent",
 ] as const;
 
+/** Shared type for Agent Prompt Surface Kind in src/plugins. */
 export type AgentPromptSurfaceKind = (typeof AGENT_PROMPT_SURFACE_KINDS)[number];
 
+/** Shared type for Agent Prompt Guidance Entry in src/plugins. */
 export type AgentPromptGuidanceEntry = {
   text: string;
   surfaces?: readonly AgentPromptSurfaceKind[];
 };
 
+/** Shared type for Agent Prompt Guidance in src/plugins. */
 export type AgentPromptGuidance = string | AgentPromptGuidanceEntry;
 
+/** Shared type for Open Claw Plugin Command Definition in src/plugins. */
 export type OpenClawPluginCommandDefinition = {
   /** Command name without leading slash (e.g., "tts") */
   name: string;
@@ -2076,10 +2143,12 @@ export type OpenClawPluginCommandDefinition = {
   handler: PluginCommandHandler;
 };
 
+/** Shared type for Plugin Interactive Handler Result in src/plugins. */
 export type PluginInteractiveHandlerResult = {
   handled?: boolean;
 } | void;
 
+/** Shared type for Plugin Interactive Registration in src/plugins. */
 export type PluginInteractiveRegistration<
   TContext = unknown,
   TChannel extends string = string,
@@ -2090,23 +2159,30 @@ export type PluginInteractiveRegistration<
   handler: (ctx: TContext) => Promise<TResult> | TResult;
 };
 
+/** Shared type for Plugin Interactive Handler Registration in src/plugins. */
 export type PluginInteractiveHandlerRegistration = PluginInteractiveRegistration;
 
+/** Shared type for Open Claw Plugin Http Route Auth in src/plugins. */
 export type OpenClawPluginHttpRouteAuth = "gateway" | "plugin";
+/** Shared type for Open Claw Plugin Http Route Match in src/plugins. */
 export type OpenClawPluginHttpRouteMatch = "exact" | "prefix";
+/** Shared type for Open Claw Plugin Gateway Runtime Scope Surface in src/plugins. */
 export type OpenClawPluginGatewayRuntimeScopeSurface = "write-default" | "trusted-operator";
 
+/** Shared type for Open Claw Plugin Http Route Handler in src/plugins. */
 export type OpenClawPluginHttpRouteHandler = (
   req: IncomingMessage,
   res: ServerResponse,
 ) => Promise<boolean | void> | boolean | void;
 
+/** Shared type for Open Claw Plugin Http Route Upgrade Handler in src/plugins. */
 export type OpenClawPluginHttpRouteUpgradeHandler = (
   req: IncomingMessage,
   socket: Duplex,
   head: Buffer,
 ) => Promise<boolean | void> | boolean | void;
 
+/** Shared type for Open Claw Plugin Http Route Params in src/plugins. */
 export type OpenClawPluginHttpRouteParams = {
   path: string;
   handler: OpenClawPluginHttpRouteHandler;
@@ -2121,10 +2197,12 @@ export type OpenClawPluginHttpRouteParams = {
   replaceExisting?: boolean;
 };
 
+/** Shared type for Open Claw Plugin Hosted Media Resolver in src/plugins. */
 export type OpenClawPluginHostedMediaResolver = (
   mediaUrl: string,
 ) => string | null | undefined | Promise<string | null | undefined>;
 
+/** Shared type for Open Claw Plugin Cli Context in src/plugins. */
 export type OpenClawPluginCliContext = {
   /**
    * Command object where this plugin should register its commands.
@@ -2139,6 +2217,7 @@ export type OpenClawPluginCliContext = {
   logger: PluginLogger;
 };
 
+/** Shared type for Open Claw Plugin Cli Registrar in src/plugins. */
 export type OpenClawPluginCliRegistrar = (ctx: OpenClawPluginCliContext) => void | Promise<void>;
 
 /**
@@ -2155,6 +2234,7 @@ export type OpenClawPluginCliCommandDescriptor = {
   hasSubcommands: boolean;
 };
 
+/** Shared type for Open Claw Plugin Node Cli Feature Options in src/plugins. */
 export type OpenClawPluginNodeCliFeatureOptions = {
   /** Explicit node feature command names owned under `openclaw nodes`. */
   commands?: string[];
@@ -2167,12 +2247,14 @@ export type OpenClawPluginNodeCliFeatureOptions = {
   descriptors?: OpenClawPluginCliCommandDescriptor[];
 };
 
+/** Shared type for Open Claw Plugin Reload Registration in src/plugins. */
 export type OpenClawPluginReloadRegistration = {
   restartPrefixes?: string[];
   hotPrefixes?: string[];
   noopPrefixes?: string[];
 };
 
+/** Shared type for Open Claw Plugin Node Host Command in src/plugins. */
 export type OpenClawPluginNodeHostCommand = {
   command: string;
   cap?: string;
@@ -2180,6 +2262,7 @@ export type OpenClawPluginNodeHostCommand = {
   handle: (paramsJSON?: string | null) => Promise<string>;
 };
 
+/** Shared type for Open Claw Plugin Node Invoke Transport Result in src/plugins. */
 export type OpenClawPluginNodeInvokeTransportResult =
   | {
       ok: true;
@@ -2193,8 +2276,10 @@ export type OpenClawPluginNodeInvokeTransportResult =
       details?: Record<string, unknown>;
     };
 
+/** Shared type for Open Claw Plugin Node Invoke Approval Decision in src/plugins. */
 export type OpenClawPluginNodeInvokeApprovalDecision = "allow-once" | "allow-always" | "deny";
 
+/** Shared type for Open Claw Plugin Node Invoke Policy Approval Runtime in src/plugins. */
 export type OpenClawPluginNodeInvokePolicyApprovalRuntime = {
   request: (input: {
     title: string;
@@ -2211,6 +2296,7 @@ export type OpenClawPluginNodeInvokePolicyApprovalRuntime = {
   }>;
 };
 
+/** Shared type for Open Claw Plugin Node Invoke Policy Context in src/plugins. */
 export type OpenClawPluginNodeInvokePolicyContext = {
   nodeId: string;
   command: string;
@@ -2238,6 +2324,7 @@ export type OpenClawPluginNodeInvokePolicyContext = {
   }) => Promise<OpenClawPluginNodeInvokeTransportResult>;
 };
 
+/** Shared type for Open Claw Plugin Node Invoke Policy Result in src/plugins. */
 export type OpenClawPluginNodeInvokePolicyResult =
   | {
       ok: true;
@@ -2252,6 +2339,7 @@ export type OpenClawPluginNodeInvokePolicyResult =
       unavailable?: boolean;
     };
 
+/** Shared type for Open Claw Plugin Node Invoke Policy in src/plugins. */
 export type OpenClawPluginNodeInvokePolicy = {
   commands: string[];
   /**
@@ -2274,6 +2362,7 @@ export type OpenClawPluginNodeInvokePolicy = {
   ) => Promise<OpenClawPluginNodeInvokePolicyResult> | OpenClawPluginNodeInvokePolicyResult;
 };
 
+/** Shared type for Open Claw Plugin Security Audit Context in src/plugins. */
 export type OpenClawPluginSecurityAuditContext = {
   config: OpenClawConfig;
   sourceConfig: OpenClawConfig;
@@ -2282,10 +2371,12 @@ export type OpenClawPluginSecurityAuditContext = {
   configPath: string;
 };
 
+/** Shared type for Open Claw Plugin Security Audit Collector in src/plugins. */
 export type OpenClawPluginSecurityAuditCollector = (
   ctx: OpenClawPluginSecurityAuditContext,
 ) => SecurityAuditFinding[] | Promise<SecurityAuditFinding[]>;
 
+/** Shared type for Open Claw Gateway Discovery Advertise Context in src/plugins. */
 export type OpenClawGatewayDiscoveryAdvertiseContext = {
   machineDisplayName: string;
   gatewayPort: number;
@@ -2299,6 +2390,7 @@ export type OpenClawGatewayDiscoveryAdvertiseContext = {
   minimal: boolean;
 };
 
+/** Shared type for Open Claw Gateway Discovery Service in src/plugins. */
 export type OpenClawGatewayDiscoveryService = {
   id: string;
   advertise: (
@@ -2335,6 +2427,7 @@ export type OpenClawPluginService = {
   stop?: (ctx: OpenClawPluginServiceContext) => void | Promise<void>;
 };
 
+/** Shared type for Open Claw Plugin Channel Registration in src/plugins. */
 export type OpenClawPluginChannelRegistration = {
   plugin: ChannelPlugin;
 };
@@ -2360,6 +2453,7 @@ export type OpenClawPluginDefinition = {
   activate?: (api: OpenClawPluginApi) => void;
 };
 
+/** Shared type for Open Claw Plugin Module in src/plugins. */
 export type OpenClawPluginModule = OpenClawPluginDefinition | ((api: OpenClawPluginApi) => void);
 
 /**
@@ -2384,6 +2478,7 @@ export type PluginRegistrationMode =
   | "setup-runtime"
   | "cli-metadata";
 
+/** Shared type for Plugin Config Migration in src/plugins. */
 export type PluginConfigMigration = (config: OpenClawConfig) =>
   | {
       config: OpenClawConfig;
@@ -2392,6 +2487,7 @@ export type PluginConfigMigration = (config: OpenClawConfig) =>
   | null
   | undefined;
 
+/** Shared type for Migration Item Status in src/plugins. */
 export type MigrationItemStatus =
   | "planned"
   | "migrated"
@@ -2399,6 +2495,7 @@ export type MigrationItemStatus =
   | "warning"
   | "conflict"
   | "error";
+/** Shared type for Migration Item Kind in src/plugins. */
 export type MigrationItemKind =
   | "auth"
   | "config"
@@ -2410,6 +2507,7 @@ export type MigrationItemKind =
   | "file"
   | "archive"
   | "manual";
+/** Shared type for Migration Item Action in src/plugins. */
 export type MigrationItemAction =
   | "copy"
   | "create"
@@ -2420,6 +2518,7 @@ export type MigrationItemAction =
   | "skip"
   | "manual";
 
+/** Shared type for Migration Item in src/plugins. */
 export type MigrationItem = {
   id: string;
   kind: MigrationItemKind | (string & {});
@@ -2433,6 +2532,7 @@ export type MigrationItem = {
   details?: Record<string, unknown>;
 };
 
+/** Shared type for Migration Summary in src/plugins. */
 export type MigrationSummary = {
   total: number;
   planned: number;
@@ -2443,6 +2543,7 @@ export type MigrationSummary = {
   sensitive: number;
 };
 
+/** Shared type for Migration Detection in src/plugins. */
 export type MigrationDetection = {
   found: boolean;
   source?: string;
@@ -2451,6 +2552,7 @@ export type MigrationDetection = {
   message?: string;
 };
 
+/** Shared type for Migration Plan in src/plugins. */
 export type MigrationPlan = {
   providerId: string;
   source: string;
@@ -2462,15 +2564,18 @@ export type MigrationPlan = {
   metadata?: Record<string, unknown>;
 };
 
+/** Shared type for Migration Apply Result in src/plugins. */
 export type MigrationApplyResult = MigrationPlan & {
   backupPath?: string;
   reportDir?: string;
 };
 
+/** Shared type for Migration Provider Preparation in src/plugins. */
 export type MigrationProviderPreparation = {
   dispose?: () => void | Promise<void>;
 };
 
+/** Shared type for Migration Provider Context in src/plugins. */
 export type MigrationProviderContext = {
   config: OpenClawConfig;
   runtime?: PluginRuntime;
@@ -2501,20 +2606,24 @@ export type MigrationProviderPlugin = {
   ) => MigrationApplyResult | Promise<MigrationApplyResult>;
 };
 
+/** Shared type for Plugin Setup Auto Enable Context in src/plugins. */
 export type PluginSetupAutoEnableContext = {
   config: OpenClawConfig;
   env: NodeJS.ProcessEnv;
 };
 
+/** Shared type for Plugin Setup Auto Enable Probe in src/plugins. */
 export type PluginSetupAutoEnableProbe = (
   ctx: PluginSetupAutoEnableContext,
 ) => string | string[] | null | undefined;
 
+/** Shared type for Open Claw Plugin Session State Api in src/plugins. */
 export type OpenClawPluginSessionStateApi = {
   /** Register plugin-owned session state projected into Gateway session rows. */
   registerSessionExtension: (extension: PluginSessionExtensionRegistration) => void;
 };
 
+/** Shared type for Open Claw Plugin Session Workflow Api in src/plugins. */
 export type OpenClawPluginSessionWorkflowApi = {
   /** Queue one plugin-owned context injection for the next agent turn in a session. */
   enqueueNextTurnInjection: (
@@ -2545,6 +2654,7 @@ export type OpenClawPluginSessionWorkflowApi = {
   ) => Promise<PluginSessionTurnUnscheduleByTagResult>;
 };
 
+/** Shared type for Open Claw Plugin Session Controls Api in src/plugins. */
 export type OpenClawPluginSessionControlsApi = {
   /** Register a typed session action that clients can dispatch through the Gateway. */
   registerSessionAction: (action: PluginSessionActionRegistration) => void;
@@ -2552,12 +2662,14 @@ export type OpenClawPluginSessionControlsApi = {
   registerControlUiDescriptor: (descriptor: PluginControlUiDescriptor) => void;
 };
 
+/** Shared type for Open Claw Plugin Session Api in src/plugins. */
 export type OpenClawPluginSessionApi = {
   state: OpenClawPluginSessionStateApi;
   workflow: OpenClawPluginSessionWorkflowApi;
   controls: OpenClawPluginSessionControlsApi;
 };
 
+/** Shared type for Open Claw Plugin Agent Events Api in src/plugins. */
 export type OpenClawPluginAgentEventsApi = {
   /** Subscribe to sanitized agent events through the host-owned plugin lifecycle. */
   registerAgentEventSubscription: (subscription: PluginAgentEventSubscriptionRegistration) => void;
@@ -2565,10 +2677,12 @@ export type OpenClawPluginAgentEventsApi = {
   emitAgentEvent: (params: PluginAgentEventEmitParams) => PluginAgentEventEmitResult;
 };
 
+/** Shared type for Open Claw Plugin Agent Api in src/plugins. */
 export type OpenClawPluginAgentApi = {
   events: OpenClawPluginAgentEventsApi;
 };
 
+/** Shared type for Open Claw Plugin Run Context Api in src/plugins. */
 export type OpenClawPluginRunContextApi = {
   /** Store namespaced, JSON-compatible data for the active run. Cleared on run end/error. */
   setRunContext: (patch: PluginRunContextPatch) => boolean;
@@ -2578,6 +2692,7 @@ export type OpenClawPluginRunContextApi = {
   clearRunContext: (params: { runId: string; namespace?: string }) => void;
 };
 
+/** Shared type for Open Claw Plugin Lifecycle Api in src/plugins. */
 export type OpenClawPluginLifecycleApi = {
   /** Register cleanup hooks for plugin-owned host state and background work. */
   registerRuntimeLifecycle: (lifecycle: PluginRuntimeLifecycleRegistration) => void;

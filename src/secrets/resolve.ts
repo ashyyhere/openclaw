@@ -1,3 +1,4 @@
+// secrets resolve helpers and runtime behavior.
 import { spawn } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -46,6 +47,7 @@ const DEFAULT_EXEC_MAX_OUTPUT_BYTES = 1024 * 1024;
 const WINDOWS_ABS_PATH_PATTERN = /^[A-Za-z]:[\\/]/;
 const WINDOWS_UNC_PATH_PATTERN = /^\\\\[^\\]+\\[^\\]+/;
 
+/** Re-exported API for src/secrets, starting with Secret Ref Resolve Cache. */
 export type { SecretRefResolveCache } from "./resolve-types.js";
 
 type ResolveSecretRefOptions = {
@@ -63,6 +65,7 @@ type ResolutionLimits = {
 
 type ProviderResolutionOutput = Map<string, unknown>;
 
+/** Reused class for Secret Provider Resolution Error behavior in src/secrets. */
 export class SecretProviderResolutionError extends Error {
   readonly scope = "provider" as const;
   readonly source: SecretRefSource;
@@ -81,6 +84,7 @@ export class SecretProviderResolutionError extends Error {
   }
 }
 
+/** Reused class for Secret Ref Resolution Error behavior in src/secrets. */
 export class SecretRefResolutionError extends Error {
   readonly scope = "ref" as const;
   readonly source: SecretRefSource;
@@ -102,6 +106,7 @@ export class SecretRefResolutionError extends Error {
   }
 }
 
+/** Reused helper for is Provider Scoped Secret Resolution Error behavior in src/secrets. */
 export function isProviderScopedSecretResolutionError(
   value: unknown,
 ): value is SecretProviderResolutionError {
@@ -863,6 +868,7 @@ async function resolveProviderRefs(params: {
   }
 }
 
+/** Reused helper for resolve Secret Ref Values behavior in src/secrets. */
 export async function resolveSecretRefValues(
   refs: SecretRef[],
   options: ResolveSecretRefOptions,
@@ -952,6 +958,7 @@ export async function resolveSecretRefValues(
   return resolved;
 }
 
+/** Reused helper for resolve Secret Ref Value behavior in src/secrets. */
 export async function resolveSecretRefValue(
   ref: SecretRef,
   options: ResolveSecretRefOptions,
@@ -983,6 +990,7 @@ export async function resolveSecretRefValue(
   return await promise;
 }
 
+/** Reused helper for resolve Secret Ref String behavior in src/secrets. */
 export async function resolveSecretRefString(
   ref: SecretRef,
   options: ResolveSecretRefOptions,

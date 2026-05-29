@@ -1,3 +1,4 @@
+// gateway active sessions shutdown tracker helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 
 // Module-level tracker of sessions that have received `session_start` but not
@@ -13,6 +14,7 @@ import type { OpenClawConfig } from "../config/types.openclaw.js";
 // reset / delete / compaction is forgotten before the shutdown drain ever
 // runs. That is what keeps the shutdown finalizer from double-firing.
 
+/** Shared type for Active Session For Shutdown in src/gateway. */
 export type ActiveSessionForShutdown = {
   cfg: OpenClawConfig;
   sessionKey: string;
@@ -24,6 +26,7 @@ export type ActiveSessionForShutdown = {
 
 const trackedSessions = new Map<string, ActiveSessionForShutdown>();
 
+/** Reused helper for note Active Session For Shutdown behavior in src/gateway. */
 export function noteActiveSessionForShutdown(entry: ActiveSessionForShutdown): void {
   if (!entry.sessionId) {
     return;
@@ -31,6 +34,7 @@ export function noteActiveSessionForShutdown(entry: ActiveSessionForShutdown): v
   trackedSessions.set(entry.sessionId, entry);
 }
 
+/** Reused helper for forget Active Session For Shutdown behavior in src/gateway. */
 export function forgetActiveSessionForShutdown(sessionId: string | undefined): void {
   if (!sessionId) {
     return;
@@ -38,10 +42,12 @@ export function forgetActiveSessionForShutdown(sessionId: string | undefined): v
   trackedSessions.delete(sessionId);
 }
 
+/** Reused helper for list Active Sessions For Shutdown behavior in src/gateway. */
 export function listActiveSessionsForShutdown(): ActiveSessionForShutdown[] {
   return Array.from(trackedSessions.values());
 }
 
+/** Reused helper for clear Active Sessions For Shutdown Tracker behavior in src/gateway. */
 export function clearActiveSessionsForShutdownTracker(): void {
   trackedSessions.clear();
 }

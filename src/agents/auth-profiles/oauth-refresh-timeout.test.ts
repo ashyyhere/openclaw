@@ -1,3 +1,4 @@
+/** Regression coverage for OAuth refresh timeout handling. */
 import { describe, expect, it } from "vitest";
 import { OAUTH_REFRESH_CALL_TIMEOUT_MS, OAUTH_REFRESH_LOCK_OPTIONS } from "./constants.js";
 

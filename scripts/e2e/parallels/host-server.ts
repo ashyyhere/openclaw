@@ -1,3 +1,4 @@
+// scripts/e2e/parallels host server helpers and runtime behavior.
 import { spawn, type ChildProcessWithoutNullStreams } from "node:child_process";
 import { createServer } from "node:http";
 import { createConnection } from "node:net";

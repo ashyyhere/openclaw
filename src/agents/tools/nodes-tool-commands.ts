@@ -1,3 +1,4 @@
+/** Command action handlers for the nodes management tool. */
 import crypto from "node:crypto";
 import { formatErrorMessage } from "../../infra/errors.js";
 import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";
@@ -23,12 +24,14 @@ const NODE_READ_ACTION_COMMANDS = {
   device_health: "device.health",
 } as const;
 
+/** Shared type for Node Command Action in src/agents/tools. */
 export type NodeCommandAction =
   | keyof typeof NODE_READ_ACTION_COMMANDS
   | "notifications_action"
   | "location_get"
   | "invoke";
 
+/** Executes one gateway-backed node command action. */
 export async function executeNodeCommandAction(params: {
   action: NodeCommandAction;
   input: Record<string, unknown>;

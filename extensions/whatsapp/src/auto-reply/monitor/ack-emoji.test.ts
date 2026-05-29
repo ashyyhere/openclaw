@@ -1,3 +1,4 @@
+// Tests extensions/whatsapp/src/auto-reply/monitor ack emoji test behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { describe, expect, it } from "vitest";
 import { resolveWhatsAppAckEmoji } from "./ack-emoji.js";

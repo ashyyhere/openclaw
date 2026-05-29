@@ -1,3 +1,4 @@
+// media audio transcode helpers and runtime behavior.
 import { spawn } from "node:child_process";
 import path from "node:path";
 import { writeExternalFileWithinRoot } from "../infra/fs-safe.js";
@@ -42,6 +43,7 @@ function normalizeOutputFileName(value?: string): string {
   return DEFAULT_OUTPUT_FILE_NAME;
 }
 
+/** Reused helper for transcode Audio Buffer To Opus behavior in src/media. */
 export async function transcodeAudioBufferToOpus(params: {
   audioBuffer: Buffer;
   inputExtension?: string;
@@ -100,6 +102,7 @@ export async function transcodeAudioBufferToOpus(params: {
   );
 }
 
+/** Shared type for Audio Container Transcode Outcome in src/media. */
 export type AudioContainerTranscodeOutcome =
   | { ok: true; buffer: Buffer }
   | {
@@ -113,6 +116,7 @@ export type AudioContainerTranscodeOutcome =
       detail?: string;
     };
 
+/** Reused helper for transcode Audio Buffer behavior in src/media. */
 export async function transcodeAudioBuffer(params: {
   audioBuffer: Buffer;
   sourceExtension: string;

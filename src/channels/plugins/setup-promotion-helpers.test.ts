@@ -1,3 +1,4 @@
+/** Tests promotion of single-account setup values from legacy channel config. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const getBundledChannelPluginMock = vi.hoisted(() => vi.fn());

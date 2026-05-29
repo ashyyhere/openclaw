@@ -1,3 +1,4 @@
+// extensions/whatsapp/src/auto-reply/monitor peer helpers and runtime behavior.
 import { getSenderIdentity } from "../../identity.js";
 import { jidToE164, normalizeE164 } from "../../text-runtime.js";
 import type { WebInboundMsg } from "../types.js";

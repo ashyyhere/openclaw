@@ -1,3 +1,4 @@
+// daemon runtime binary helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
 const NODE_VERSIONED_PATTERN = /^node(?:-\d+|\d+)(?:\.\d+)*(?:\.exe)?$/;
@@ -9,6 +10,7 @@ function normalizeRuntimeBasename(execPath: string): string {
   return normalizeLowercaseStringOrEmpty(basename);
 }
 
+/** Reused helper for is Node Runtime behavior in src/daemon. */
 export function isNodeRuntime(execPath: string): boolean {
   const base = normalizeRuntimeBasename(execPath);
   return (
@@ -20,6 +22,7 @@ export function isNodeRuntime(execPath: string): boolean {
   );
 }
 
+/** Reused helper for is Bun Runtime behavior in src/daemon. */
 export function isBunRuntime(execPath: string): boolean {
   const base = normalizeRuntimeBasename(execPath);
   return base === "bun" || base === "bun.exe";

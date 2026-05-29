@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server trajectory helpers and runtime behavior.
 import nodeFs from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";

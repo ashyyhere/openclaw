@@ -1,3 +1,4 @@
+/** Agent tool for running configured web search providers. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { RuntimeWebSearchMetadata } from "../../secrets/runtime-web-tools.types.js";
 import { resolveWebSearchProviderId, runWebSearch } from "../../web-search/runtime.js";
@@ -69,6 +70,7 @@ function isWebSearchDisabled(config?: OpenClawConfig): boolean {
   return Boolean(search && typeof search === "object" && search.enabled === false);
 }
 
+/** Creates the web_search AgentTool. */
 export function createWebSearchTool(options?: {
   config?: OpenClawConfig;
   agentDir?: string;
@@ -112,9 +114,11 @@ export function createWebSearchTool(options?: {
   };
 }
 
+/** Reused constant for testing behavior in src/agents/tools. */
 export const testing = {
   SEARCH_CACHE,
   resolveSearchProvider: (search?: Parameters<typeof resolveWebSearchProviderId>[0]["search"]) =>
     resolveWebSearchProviderId({ search }),
 };
+/** Re-exported API for src/agents/tools, starting with testing. */
 export { testing as __testing };

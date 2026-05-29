@@ -1,3 +1,4 @@
+// Command body normalization and alias resolution for text command routing.
 import type { OpenClawConfig } from "../config/types.js";
 import {
   normalizeLowercaseStringOrEmpty,
@@ -49,6 +50,7 @@ function getTextAliasMap(): Map<string, TextAliasSpec> {
   return map;
 }
 
+/** Normalize raw command text before alias matching. */
 export function normalizeCommandBody(raw: string, options?: CommandNormalizeOptions): string {
   const trimmed = raw.trim();
   if (!trimmed.startsWith("/")) {
@@ -100,6 +102,7 @@ export function normalizeCommandBody(raw: string, options?: CommandNormalizeOpti
   return normalizedRest ? `${tokenSpec.canonical} ${normalizedRest}` : tokenSpec.canonical;
 }
 
+/** Return command detection functions for the active config. */
 export function getCommandDetection(_cfg?: OpenClawConfig): CommandDetection {
   const commands = getChatCommands();
   if (cachedDetection && cachedDetectionCommands === commands) {
@@ -133,6 +136,7 @@ export function getCommandDetection(_cfg?: OpenClawConfig): CommandDetection {
   return cachedDetection;
 }
 
+/** Reused helper for maybe Resolve Text Alias behavior in src/auto-reply. */
 export function maybeResolveTextAlias(raw: string, cfg?: OpenClawConfig) {
   const trimmed = normalizeCommandBody(raw).trim();
   if (!trimmed.startsWith("/")) {
@@ -154,6 +158,7 @@ export function maybeResolveTextAlias(raw: string, cfg?: OpenClawConfig) {
   return getTextAliasMap().has(tokenKey) ? tokenKey : null;
 }
 
+/** Reused helper for resolve Text Command behavior in src/auto-reply. */
 export function resolveTextCommand(
   raw: string,
   cfg?: OpenClawConfig,

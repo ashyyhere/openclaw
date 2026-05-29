@@ -1,3 +1,4 @@
+// extensions/slack/src/monitor dm auth helpers and runtime behavior.
 import { formatAllowlistMatchMeta } from "openclaw/plugin-sdk/allow-from";
 import { createChannelPairingChallengeIssuer } from "openclaw/plugin-sdk/channel-pairing";
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";

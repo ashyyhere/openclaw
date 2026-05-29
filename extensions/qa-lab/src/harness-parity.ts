@@ -1,3 +1,4 @@
+// extensions/qa-lab/src harness parity helpers and runtime behavior.
 import { createHash } from "node:crypto";
 import type {
   RuntimeId,

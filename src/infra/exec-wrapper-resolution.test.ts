@@ -1,3 +1,4 @@
+// Tests infra exec wrapper resolution test behavior.
 import { describe, expect, test } from "vitest";
 import {
   basenameLower,

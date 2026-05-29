@@ -1,3 +1,4 @@
+/** Runtime SDK pair-loop guard for suppressing repeated bidirectional auto-pair messages. */
 export type PairLoopGuardSettings = {
   enabled: boolean;
   maxEventsPerWindow: number;
@@ -5,6 +6,7 @@ export type PairLoopGuardSettings = {
   cooldownMs: number;
 };
 
+/** User-configurable pair-loop guard settings in config-friendly seconds/counts. */
 export type PairLoopGuardConfig = {
   enabled?: boolean;
   maxEventsPerWindow?: number;
@@ -19,10 +21,12 @@ const PAIR_LOOP_GUARD_CONFIG_KEYS = [
   "cooldownSeconds",
 ] as const satisfies ReadonlyArray<keyof PairLoopGuardConfig>;
 
+/** Result from recording a pair event and checking suppression state. */
 export type PairLoopGuardResult =
   | { suppressed: false }
   | { suppressed: true; cooldownUntilMs: number };
 
+/** Shared type for Pair Loop Guard Snapshot Entry in src/plugin-sdk. */
 export type PairLoopGuardSnapshotEntry = {
   key: string;
   recentCount: number;
@@ -36,6 +40,7 @@ type PairLoopGuardEntry = {
   cooldownUntilMs: number;
 };
 
+/** Shared type for Pair Loop Guard in src/plugin-sdk. */
 export type PairLoopGuard = {
   recordAndCheck: (params: {
     scopeId: string;
@@ -52,6 +57,7 @@ export type PairLoopGuard = {
 const DEFAULT_PRUNE_INTERVAL_MS = 60_000;
 const KEY_SEPARATOR = "\u0001";
 
+/** Reused constant for DEFAULT PAIR LOOP GUARD CONFIG behavior in src/plugin-sdk. */
 export const DEFAULT_PAIR_LOOP_GUARD_CONFIG: Required<PairLoopGuardConfig> = {
   enabled: true,
   maxEventsPerWindow: 20,
@@ -59,6 +65,7 @@ export const DEFAULT_PAIR_LOOP_GUARD_CONFIG: Required<PairLoopGuardConfig> = {
   cooldownSeconds: 60,
 };
 
+/** Reused constant for DEFAULT PAIR LOOP GUARD SETTINGS behavior in src/plugin-sdk. */
 export const DEFAULT_PAIR_LOOP_GUARD_SETTINGS: PairLoopGuardSettings = {
   enabled: DEFAULT_PAIR_LOOP_GUARD_CONFIG.enabled,
   maxEventsPerWindow: DEFAULT_PAIR_LOOP_GUARD_CONFIG.maxEventsPerWindow,
@@ -66,6 +73,7 @@ export const DEFAULT_PAIR_LOOP_GUARD_SETTINGS: PairLoopGuardSettings = {
   cooldownMs: DEFAULT_PAIR_LOOP_GUARD_CONFIG.cooldownSeconds * 1000,
 };
 
+/** Merge pair-loop guard config layers, preserving only explicitly supplied keys. */
 export function mergePairLoopGuardConfig(
   ...configs: Array<PairLoopGuardConfig | undefined>
 ): PairLoopGuardConfig | undefined {
@@ -104,6 +112,7 @@ function positiveInteger(value: unknown): number | undefined {
     : undefined;
 }
 
+/** Resolve effective pair-loop guard settings from default and account-specific config. */
 export function resolvePairLoopGuardSettings(params: {
   config?: PairLoopGuardConfig;
   defaultsConfig?: PairLoopGuardConfig;
@@ -142,6 +151,7 @@ function buildPairKey(params: {
   senderId: string;
   receiverId: string;
 }): string {
+  // Sender/receiver order is normalized so A->B and B->A count toward the same loop window.
   const lhs = params.senderId < params.receiverId ? params.senderId : params.receiverId;
   const rhs = params.senderId < params.receiverId ? params.receiverId : params.senderId;
   return [params.scopeId, params.conversationId, lhs, rhs].join(KEY_SEPARATOR);
@@ -156,6 +166,7 @@ function countCurrentWindowEvents(entry: PairLoopGuardEntry, nowMs: number): num
   return entry.recentMs.filter((timestampMs) => timestampMs <= nowMs).length;
 }
 
+/** Create an in-memory pair-loop guard with periodic inactive-pair pruning. */
 export function createPairLoopGuard(params?: { pruneIntervalMs?: number }): PairLoopGuard {
   const tracked = new Map<string, PairLoopGuardEntry>();
   const pruneIntervalMs = params?.pruneIntervalMs ?? DEFAULT_PRUNE_INTERVAL_MS;

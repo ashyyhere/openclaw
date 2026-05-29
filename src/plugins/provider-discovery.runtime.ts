@@ -1,3 +1,4 @@
+// Runtime boundary for plugins provider discovery runtime behavior.
 import path from "node:path";
 import type { NormalizedModelCatalogRow } from "@openclaw/model-catalog-core/model-catalog-types";
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
@@ -51,6 +52,7 @@ function resolveProviderDiscoveryDependencyRoot(rootDir: string): string {
   return rootDir;
 }
 
+/** Reused helper for clear Provider Discovery Module Loaders behavior in src/plugins. */
 export function clearProviderDiscoveryModuleLoaders(): void {
   providerDiscoveryModuleLoaders.clear();
   for (const [modulePath, rootDir] of providerDiscoveryModuleRoots) {

@@ -1,3 +1,4 @@
+/** Runtime SDK barrel for secret input normalization helpers. */
 export {
   coerceSecretRef,
   hasConfiguredSecretInput,
@@ -9,6 +10,7 @@ export {
   type SecretInputStringResolution,
   type SecretInputStringResolutionMode,
 } from "../config/types.secrets.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   resolveConfiguredSecretInputString,
   resolveConfiguredSecretInputWithFallback,

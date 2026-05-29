@@ -1,3 +1,4 @@
+// Tests extensions/whatsapp/src directory config test behavior.
 import { createDirectoryTestRuntime } from "openclaw/plugin-sdk/channel-test-helpers";
 import { describe, expect, it } from "vitest";
 import {

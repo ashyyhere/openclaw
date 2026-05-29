@@ -1,3 +1,4 @@
+// extensions/line/src channel access token helpers and runtime behavior.
 export function resolveLineChannelAccessToken(
   explicit: string | undefined,
   params: { accountId: string; channelAccessToken: string },

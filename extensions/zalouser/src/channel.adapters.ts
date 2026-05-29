@@ -1,3 +1,4 @@
+// extensions/zalouser/src channel adapters helpers and runtime behavior.
 import { createScopedDmSecurityResolver } from "openclaw/plugin-sdk/channel-config-helpers";
 import { defineChannelMessageAdapter } from "openclaw/plugin-sdk/channel-outbound";
 import { createPairingPrefixStripper } from "openclaw/plugin-sdk/channel-pairing";

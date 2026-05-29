@@ -1,3 +1,4 @@
+// infra exec approval reply helpers and runtime behavior.
 import type { ReplyPayload } from "../auto-reply/types.js";
 import type {
   InteractiveReply,
@@ -22,12 +23,15 @@ import {
   type ExecHost,
 } from "./exec-approvals.js";
 
+/** Shared type for Exec Approval Reply Decision in src/infra. */
 export type ExecApprovalReplyDecision = ExecApprovalDecision;
+/** Shared type for Exec Approval Unavailable Reason in src/infra. */
 export type ExecApprovalUnavailableReason =
   | "initiating-platform-disabled"
   | "initiating-platform-unsupported"
   | "no-approval-route";
 
+/** Shared type for Exec Approval Reply Metadata in src/infra. */
 export type ExecApprovalReplyMetadata = {
   approvalId: string;
   approvalSlug: string;
@@ -37,6 +41,7 @@ export type ExecApprovalReplyMetadata = {
   sessionKey?: string;
 };
 
+/** Shared type for Exec Approval Action Descriptor in src/infra. */
 export type ExecApprovalActionDescriptor = {
   decision: ExecApprovalReplyDecision;
   label: string;
@@ -44,6 +49,7 @@ export type ExecApprovalActionDescriptor = {
   command: string;
 };
 
+/** Shared type for Exec Approval Pending Reply Params in src/infra. */
 export type ExecApprovalPendingReplyParams = {
   warningText?: string;
   approvalId: string;
@@ -61,6 +67,7 @@ export type ExecApprovalPendingReplyParams = {
   nowMs?: number;
 };
 
+/** Shared type for Exec Approval Unavailable Reply Params in src/infra. */
 export type ExecApprovalUnavailableReplyParams = {
   warningText?: string;
   channel?: string;
@@ -103,6 +110,7 @@ function buildApprovalCommandFence(
   return buildFence(descriptors.map((descriptor) => descriptor.command).join("\n"), "txt");
 }
 
+/** Reused helper for build Exec Approval Command Text behavior in src/infra. */
 export function buildExecApprovalCommandText(params: {
   approvalCommandId: string;
   decision: ExecApprovalReplyDecision;
@@ -110,6 +118,7 @@ export function buildExecApprovalCommandText(params: {
   return `/approve ${params.approvalCommandId} ${params.decision}`;
 }
 
+/** Reused helper for build Exec Approval Action Descriptors behavior in src/infra. */
 export function buildExecApprovalActionDescriptors(params: {
   approvalCommandId: string;
   ask?: string | null;
@@ -255,10 +264,12 @@ export function buildExecApprovalInteractiveReply(params: {
   });
 }
 
+/** Reused helper for get Exec Approval Approver Dm Notice Text behavior in src/infra. */
 export function getExecApprovalApproverDmNoticeText(): string {
   return "Approval required. I sent approval DMs to the approvers for this account.";
 }
 
+/** Reused helper for parse Exec Approval Command Text behavior in src/infra. */
 export function parseExecApprovalCommandText(
   raw: string,
 ): { approvalId: string; decision: ExecApprovalReplyDecision } | null {
@@ -277,6 +288,7 @@ export function parseExecApprovalCommandText(
   };
 }
 
+/** Reused helper for format Exec Approval Expires In behavior in src/infra. */
 export function formatExecApprovalExpiresIn(expiresAtMs: number, nowMs: number): string {
   const totalSeconds = Math.max(0, Math.round((expiresAtMs - nowMs) / 1000));
   if (totalSeconds < 60) {
@@ -308,6 +320,7 @@ function buildFence(text: string, language?: string): string {
   return `${fence}${languagePrefix}\n${text}\n${fence}`;
 }
 
+/** Reused helper for get Exec Approval Reply Metadata behavior in src/infra. */
 export function getExecApprovalReplyMetadata(
   payload: ReplyPayload,
 ): ExecApprovalReplyMetadata | null {
@@ -344,6 +357,7 @@ export function getExecApprovalReplyMetadata(
   };
 }
 
+/** Reused helper for build Exec Approval Pending Reply Payload behavior in src/infra. */
 export function buildExecApprovalPendingReplyPayload(
   params: ExecApprovalPendingReplyParams,
 ): ReplyPayload {
@@ -412,6 +426,7 @@ export function buildExecApprovalPendingReplyPayload(
   };
 }
 
+/** Reused helper for build Exec Approval Unavailable Reply Payload behavior in src/infra. */
 export function buildExecApprovalUnavailableReplyPayload(
   params: ExecApprovalUnavailableReplyParams,
 ): ReplyPayload {

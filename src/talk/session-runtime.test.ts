@@ -1,3 +1,4 @@
+// Tests talk session runtime test behavior.
 import { describe, expect, it, vi } from "vitest";
 import type { RealtimeVoiceProviderPlugin } from "../plugins/types.js";
 import {

@@ -1,3 +1,4 @@
+// Tests config zod schema providers lazy runtime test behavior.
 import { importFreshModule } from "openclaw/plugin-sdk/test-fixtures";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 

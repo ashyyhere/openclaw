@@ -1,3 +1,4 @@
+// Tests test/scripts tool search gateway e2e test behavior.
 import { describe, expect, it } from "vitest";
 import {
   fetchJson,

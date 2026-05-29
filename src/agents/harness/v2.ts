@@ -1,3 +1,4 @@
+/** Adapts legacy agent harness implementations to the V2 lifecycle contract. */
 import {
   assertContextEngineHostSupport,
   type ContextEngineHostSupport,
@@ -34,20 +35,24 @@ type AgentHarnessV2RunBase = {
   contextEngineHost?: ContextEngineHostSupport;
 };
 
+/** Shared type for Agent Harness V2 Prepared Run in src/agents/harness. */
 export type AgentHarnessV2PreparedRun = AgentHarnessV2RunBase & {
   lifecycleState: "prepared";
 };
 
+/** Shared type for Agent Harness V2 Session in src/agents/harness. */
 export type AgentHarnessV2Session = AgentHarnessV2RunBase & {
   lifecycleState: "started";
 };
 
+/** Shared type for Agent Harness V2 Tool Call in src/agents/harness. */
 export type AgentHarnessV2ToolCall = {
   id?: string;
   name: string;
   input?: unknown;
 };
 
+/** Shared type for Agent Harness V2 Cleanup Params in src/agents/harness. */
 export type AgentHarnessV2CleanupParams = {
   prepared?: AgentHarnessV2PreparedRun;
   session?: AgentHarnessV2Session;
@@ -55,6 +60,7 @@ export type AgentHarnessV2CleanupParams = {
   error?: unknown;
 };
 
+/** Shared type for Agent Harness V2 in src/agents/harness. */
 export type AgentHarnessV2 = {
   id: string;
   label: string;
@@ -75,6 +81,7 @@ export type AgentHarnessV2 = {
   dispose?(): Promise<void> | void;
 };
 
+/** Wraps a legacy harness in the V2 prepare/run/cleanup lifecycle. */
 export function adaptAgentHarnessToV2(harness: AgentHarness): AgentHarnessV2 {
   return {
     id: harness.id,
@@ -210,6 +217,7 @@ function emitAgentHarnessRunError(params: {
   });
 }
 
+/** Executes a V2 harness attempt with cleanup and diagnostic classification. */
 export async function runAgentHarnessV2LifecycleAttempt(
   harness: AgentHarnessV2,
   params: AgentHarnessAttemptParams,

@@ -1,3 +1,4 @@
+/** Regression coverage for embedded-agent model alias behavior. */
 import { describe, expect, it } from "vitest";
 import { normalizeEmbeddedAgentRuntime } from "../agent-runtime-id.js";
 import * as embeddedAgentRunner from "../embedded-agent-runner.js";

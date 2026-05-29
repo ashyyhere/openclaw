@@ -1,3 +1,4 @@
+// tasks task flow registry maintenance helpers and runtime behavior.
 import { listTasksForFlowId } from "./runtime-internal.js";
 import {
   listTaskFlowAuditFindings,
@@ -14,6 +15,7 @@ import type { TaskFlowRecord } from "./task-flow-registry.types.js";
 
 const TASK_FLOW_RETENTION_MS = 7 * 24 * 60 * 60_000;
 
+/** Shared type for Task Flow Registry Maintenance Summary in src/tasks. */
 export type TaskFlowRegistryMaintenanceSummary = {
   reconciled: number;
   pruned: number;
@@ -123,10 +125,12 @@ function repairTerminalMirroredFlowTimestamp(flow: TaskFlowRecord): boolean {
   return false;
 }
 
+/** Reused helper for get Inspectable Task Flow Audit Summary behavior in src/tasks. */
 export function getInspectableTaskFlowAuditSummary(): TaskFlowAuditSummary {
   return summarizeTaskFlowAuditFindings(listTaskFlowAuditFindings());
 }
 
+/** Reused helper for preview Task Flow Registry Maintenance behavior in src/tasks. */
 export function previewTaskFlowRegistryMaintenance(): TaskFlowRegistryMaintenanceSummary {
   const now = Date.now();
   let reconciled = 0;
@@ -147,6 +151,7 @@ export function previewTaskFlowRegistryMaintenance(): TaskFlowRegistryMaintenanc
   return { reconciled, pruned };
 }
 
+/** Reused helper for run Task Flow Registry Maintenance behavior in src/tasks. */
 export async function runTaskFlowRegistryMaintenance(): Promise<TaskFlowRegistryMaintenanceSummary> {
   const now = Date.now();
   let reconciled = 0;

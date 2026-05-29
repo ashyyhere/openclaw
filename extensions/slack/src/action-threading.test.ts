@@ -1,3 +1,4 @@
+// Tests extensions/slack/src action threading test behavior.
 import { describe, expect, it } from "vitest";
 import { resolveSlackAutoThreadId } from "./action-threading.js";
 

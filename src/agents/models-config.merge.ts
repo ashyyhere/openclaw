@@ -1,7 +1,9 @@
+/** Merges implicit provider catalogs with explicit user models.json provider config. */
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import { isNonSecretApiKeyMarker } from "./model-auth-markers.js";
 import type { ProviderConfig } from "./models-config.providers.secrets.js";
 
+/** Provider row already present in a generated or user-edited models.json file. */
 export type ExistingProviderConfig = ProviderConfig & {
   apiKey?: string;
   baseUrl?: string;
@@ -34,6 +36,7 @@ function getProviderModelId(model: unknown): string {
   return normalizeOptionalString(id) ?? "";
 }
 
+/** Merge one provider's implicit catalog metadata with explicit user overrides. */
 export function mergeProviderModels(
   implicit: ProviderConfig,
   explicit: ProviderConfig,
@@ -134,6 +137,7 @@ export function mergeProviderModels(
   };
 }
 
+/** Merge implicit provider maps with explicit provider maps by provider id. */
 export function mergeProviders(params: {
   implicit?: Record<string, ProviderConfig> | null;
   explicit?: Record<string, ProviderConfig> | null;
@@ -219,6 +223,7 @@ function isExistingProviderSelfContained(entry: ExistingProviderConfig): boolean
   return Boolean(entry.baseUrl?.trim() && entry.apiKey);
 }
 
+/** Preserve existing secrets/base URLs while refreshing generated provider metadata. */
 export function mergeWithExistingProviderSecrets(params: {
   nextProviders: Record<string, ProviderConfig>;
   existingProviders: Record<string, ExistingProviderConfig>;

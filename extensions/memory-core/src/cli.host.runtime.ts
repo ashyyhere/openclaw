@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/memory-core/src cli host runtime behavior.
 export {
   colorize,
   defaultRuntime,

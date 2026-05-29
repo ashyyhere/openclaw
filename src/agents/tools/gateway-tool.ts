@@ -1,3 +1,4 @@
+/** Admin tool for gateway status, config, and restart operations. */
 import { isDeepStrictEqual } from "node:util";
 import { Type } from "typebox";
 import { isRestartEnabled } from "../../config/commands.flags.js";
@@ -68,6 +69,7 @@ const ALLOWED_GATEWAY_CONFIG_PATHS = [
 export const ALLOWED_GATEWAY_CONFIG_PATHS_FOR_TEST = ALLOWED_GATEWAY_CONFIG_PATHS;
 
 /** @internal Exposed for regression tests only; do not import from runtime code. */
+/** Test-only assertion wrapper for gateway config mutation allowlist. */
 export function assertGatewayConfigMutationAllowedForTest(params: {
   action: "config.apply" | "config.patch";
   currentConfig: Record<string, unknown>;
@@ -361,6 +363,7 @@ const GatewayToolSchema = Type.Object({
 // - Claude/Vertex has other JSON Schema quirks.
 // Conditional requirements (like `raw` for config.apply) are enforced at runtime.
 
+/** Creates the gateway admin AgentTool. */
 export function createGatewayTool(opts?: {
   agentSessionKey?: string;
   config?: OpenClawConfig;

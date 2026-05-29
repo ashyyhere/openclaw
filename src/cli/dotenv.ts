@@ -1,7 +1,9 @@
+/** Loads workspace and global dotenv files for CLI command startup. */
 import path from "node:path";
 import { resolveStateDir } from "../config/paths.js";
 import { loadGlobalRuntimeDotEnvFiles, loadWorkspaceDotEnvFile } from "../infra/dotenv.js";
 
+/** Reused helper for load Cli Dot Env behavior in src/cli. */
 export function loadCliDotEnv(opts?: { quiet?: boolean }) {
   const quiet = opts?.quiet ?? true;
   const cwdEnvPath = path.join(process.cwd(), ".env");

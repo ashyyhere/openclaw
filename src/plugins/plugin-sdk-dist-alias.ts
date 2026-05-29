@@ -1,3 +1,4 @@
+// plugins plugin sdk dist alias helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { tryReadJsonSync, writeJsonSync } from "../infra/json-files.js";
@@ -150,6 +151,7 @@ function writeRuntimeModuleWrapper(sourcePath: string, targetPath: string): void
   fs.writeFileSync(targetPath, content, "utf8");
 }
 
+/** Reused helper for ensure Open Claw Plugin Sdk Alias behavior in src/plugins. */
 export function ensureOpenClawPluginSdkAlias(distRoot: string): void {
   const pluginSdkDir = path.join(distRoot, "plugin-sdk");
   if (!fs.existsSync(pluginSdkDir)) {

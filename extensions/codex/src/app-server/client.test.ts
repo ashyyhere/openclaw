@@ -1,3 +1,4 @@
+// Tests extensions/codex/src/app-server client test behavior.
 import { EventEmitter } from "node:events";
 import { PassThrough } from "node:stream";
 import { embeddedAgentLog, OPENCLAW_VERSION } from "openclaw/plugin-sdk/agent-harness-runtime";

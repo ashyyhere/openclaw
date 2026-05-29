@@ -1,3 +1,4 @@
+// infra voicewake routing helpers and runtime behavior.
 import path from "node:path";
 import { resolveStateDir } from "../config/paths.js";
 import {
@@ -19,6 +20,7 @@ type VoiceWakeRouteRule = {
   target: VoiceWakeRouteTarget;
 };
 
+/** Shared type for Voice Wake Routing Config in src/infra. */
 export type VoiceWakeRoutingConfig = {
   version: 1;
   defaultTarget: VoiceWakeRouteTarget;
@@ -41,6 +43,7 @@ function resolvePath(baseDir?: string) {
   return path.join(root, "settings", "voicewake-routing.json");
 }
 
+/** Reused helper for normalize Voice Wake Trigger Word behavior in src/infra. */
 export function normalizeVoiceWakeTriggerWord(value: string): string {
   return value
     .toLowerCase()
@@ -154,6 +157,7 @@ function validateRouteTargetInput(
   };
 }
 
+/** Reused helper for validate Voice Wake Routing Config Input behavior in src/infra. */
 export function validateVoiceWakeRoutingConfigInput(
   input: unknown,
 ): { ok: true } | { ok: false; message: string } {
@@ -221,6 +225,7 @@ export function validateVoiceWakeRoutingConfigInput(
   }
   return { ok: true };
 }
+/** Reused helper for normalize Voice Wake Routing Config behavior in src/infra. */
 export function normalizeVoiceWakeRoutingConfig(input: unknown): VoiceWakeRoutingConfig {
   if (!input || typeof input !== "object") {
     return { ...DEFAULT_ROUTING };
@@ -251,6 +256,7 @@ export function normalizeVoiceWakeRoutingConfig(input: unknown): VoiceWakeRoutin
 
 const withLock = createAsyncLock();
 
+/** Reused helper for load Voice Wake Routing Config behavior in src/infra. */
 export async function loadVoiceWakeRoutingConfig(
   baseDir?: string,
 ): Promise<VoiceWakeRoutingConfig> {
@@ -262,6 +268,7 @@ export async function loadVoiceWakeRoutingConfig(
   return normalizeVoiceWakeRoutingConfig(existing);
 }
 
+/** Reused helper for set Voice Wake Routing Config behavior in src/infra. */
 export async function setVoiceWakeRoutingConfig(
   config: unknown,
   baseDir?: string,
@@ -295,6 +302,7 @@ function resolveVoiceWakeRouteTarget(
   return { mode: "current" };
 }
 
+/** Reused helper for resolve Voice Wake Route By Trigger behavior in src/infra. */
 export function resolveVoiceWakeRouteByTrigger(params: {
   trigger: string | undefined;
   config: VoiceWakeRoutingConfig;

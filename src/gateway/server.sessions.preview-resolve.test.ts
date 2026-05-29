@@ -1,3 +1,4 @@
+// Tests gateway server sessions preview resolve test behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { expect, test } from "vitest";

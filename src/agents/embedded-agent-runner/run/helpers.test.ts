@@ -1,3 +1,4 @@
+/** Covers embedded-run helper metadata, usage, and final text extraction. */
 import type { AssistantMessage } from "openclaw/plugin-sdk/llm";
 import { describe, expect, it } from "vitest";
 import { createUsageAccumulator } from "../usage-accumulator.js";

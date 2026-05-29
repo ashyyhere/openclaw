@@ -1,3 +1,4 @@
+// Tests cron/service jobs schedule error isolation test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { CronJob, CronStoreFile } from "../types.js";
 import { recomputeNextRuns } from "./jobs.js";

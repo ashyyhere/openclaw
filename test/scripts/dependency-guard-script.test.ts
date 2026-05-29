@@ -1,3 +1,4 @@
+// Tests test/scripts dependency guard script test behavior.
 import { describe, expect, it } from "vitest";
 import {
   GITHUB_ERROR_BODY_MAX_BYTES,

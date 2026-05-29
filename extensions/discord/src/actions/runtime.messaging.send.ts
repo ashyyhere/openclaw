@@ -1,3 +1,4 @@
+// extensions/discord/src/actions runtime messaging send helpers and runtime behavior.
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";
 import {
   assertMediaNotDataUrl,

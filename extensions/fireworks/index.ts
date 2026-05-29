@@ -1,3 +1,4 @@
+// extensions/fireworks index helpers and runtime behavior.
 import type { ProviderResolveDynamicModelContext } from "openclaw/plugin-sdk/plugin-entry";
 import { defineSingleProviderPluginEntry } from "openclaw/plugin-sdk/provider-entry";
 import {

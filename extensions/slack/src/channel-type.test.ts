@@ -1,3 +1,4 @@
+// Tests extensions/slack/src channel type test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   resetSlackChannelTypeCacheForTest,

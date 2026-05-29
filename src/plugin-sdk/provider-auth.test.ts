@@ -1,3 +1,4 @@
+/** Tests provider auth SDK helpers and auth method behavior. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { AuthProfileStore } from "../agents/auth-profiles/types.js";
 

@@ -1,3 +1,4 @@
+// llm/providers google helpers and runtime behavior.
 import { type GenerateContentParameters, GoogleGenAI } from "@google/genai";
 import { getEnvApiKey } from "../env-api-keys.js";
 import type { Context, Model, SimpleStreamOptions, StreamFunction } from "../types.js";
@@ -12,11 +13,13 @@ import {
 } from "./google-shared.js";
 import { buildBaseOptions } from "./simple-options.js";
 
+/** Shared type for Google Options in src/llm/providers. */
 export type GoogleOptions = GoogleProviderOptions;
 
 // Counter for generating unique tool call IDs
 let toolCallCounter = 0;
 
+/** Reused constant for stream Google behavior in src/llm/providers. */
 export const streamGoogle: StreamFunction<"google-generative-ai", GoogleOptions> = (
   model: Model<"google-generative-ai">,
   context: Context,
@@ -41,6 +44,7 @@ export const streamGoogle: StreamFunction<"google-generative-ai", GoogleOptions>
   return stream;
 };
 
+/** Reused constant for stream Simple Google behavior in src/llm/providers. */
 export const streamSimpleGoogle: StreamFunction<"google-generative-ai", SimpleStreamOptions> = (
   model: Model<"google-generative-ai">,
   context: Context,

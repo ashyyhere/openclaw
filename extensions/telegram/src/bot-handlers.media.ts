@@ -1,3 +1,4 @@
+// extensions/telegram/src bot handlers media helpers and runtime behavior.
 import type { Message } from "grammy/types";
 import { MediaFetchError } from "openclaw/plugin-sdk/media-runtime";
 

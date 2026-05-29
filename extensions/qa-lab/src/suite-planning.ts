@@ -1,3 +1,4 @@
+// extensions/qa-lab/src suite planning helpers and runtime behavior.
 import path from "node:path";
 import { parseStrictNonNegativeInteger } from "openclaw/plugin-sdk/number-runtime";
 import { normalizeLowercaseStringOrEmpty } from "openclaw/plugin-sdk/string-coerce-runtime";

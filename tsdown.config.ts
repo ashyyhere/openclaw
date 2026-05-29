@@ -1,3 +1,4 @@
+// repo tsdown config helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { defineConfig, type UserConfig } from "tsdown";

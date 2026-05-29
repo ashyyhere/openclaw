@@ -1,3 +1,4 @@
+/** Conversation compaction, chunking, fallback summarization, and handoff helpers. */
 import type { AgentCompactionIdentifierPolicy } from "../config/types.agent-defaults.js";
 import { formatErrorMessage } from "../infra/errors.js";
 import { retryAsync } from "../infra/retry.js";
@@ -78,6 +79,7 @@ const HANDOFF_INSTRUCTIONS = [
   "- Pending items and next intended steps.",
 ].join("\n");
 
+/** Extra instruction controls for compaction summarization. */
 export type CompactionSummarizationInstructions = {
   identifierPolicy?: AgentCompactionIdentifierPolicy;
   identifierInstructions?: string;
@@ -121,6 +123,7 @@ function resolveIdentifierPreservationInstructions(
   return IDENTIFIER_PRESERVATION_INSTRUCTIONS;
 }
 
+/** Merge custom compaction instructions with identifier-preservation policy. */
 export function buildCompactionSummarizationInstructions(
   customInstructions?: string,
   instructions?: CompactionSummarizationInstructions,
@@ -325,6 +328,7 @@ export async function summarizeWithFallback(params: {
   );
 }
 
+/** Summarize history in multiple stages, then merge partial summaries. */
 export async function summarizeInStages(params: {
   messages: AgentMessage[];
   model: NonNullable<ExtensionContext["model"]>;
@@ -420,6 +424,7 @@ export async function summarizeForHandoff(params: {
   });
 }
 
+/** Resolve a positive context-window token count for a model. */
 export function resolveContextWindowTokens(model?: ExtensionContext["model"]): number {
   const effective =
     (model as { contextTokens?: number } | undefined)?.contextTokens ?? model?.contextWindow;

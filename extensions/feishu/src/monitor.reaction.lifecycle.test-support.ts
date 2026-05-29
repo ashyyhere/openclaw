@@ -1,3 +1,4 @@
+// extensions/feishu/src monitor reaction lifecycle test support helpers and runtime behavior.
 import { describe, expect, it } from "vitest";
 import type { ClawdbotConfig } from "../runtime-api.js";
 import {

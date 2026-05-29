@@ -1,12 +1,10 @@
+/** Writes tasks command JSON output. */
 import type { RuntimeEnv } from "../runtime.js";
 import { writeRuntimeJson } from "../runtime.js";
 import { listTaskRecords } from "../tasks/runtime-internal.js";
 import { listTaskFlowAuditFindings } from "../tasks/task-flow-registry.audit.js";
 import { listTaskFlowRecords } from "../tasks/task-flow-runtime-internal.js";
-import {
-  listTaskAuditFindings,
-  summarizeTaskAuditFindings,
-} from "../tasks/task-registry.audit.js";
+import { listTaskAuditFindings, summarizeTaskAuditFindings } from "../tasks/task-registry.audit.js";
 import type { TaskRecord } from "../tasks/task-registry.types.js";
 import {
   buildTaskSystemAuditFindings,
@@ -20,12 +18,14 @@ function listTaskJsonRecords(): TaskRecord[] {
   return listTaskRecords();
 }
 
+/** Shared type for Tasks List Json Args in src/commands. */
 export type TasksListJsonArgs = {
   json?: boolean;
   runtime?: string;
   status?: string;
 };
 
+/** Shared type for Tasks Audit Json Args in src/commands. */
 export type TasksAuditJsonArgs = {
   json?: boolean;
   severity?: string;
@@ -102,6 +102,7 @@ function buildTasksAuditJsonPayload(opts: TasksAuditJsonArgs) {
   };
 }
 
+/** Reused helper for tasks List Json Command behavior in src/commands. */
 export async function tasksListJsonCommand(
   opts: TasksListJsonArgs,
   runtime: RuntimeEnv,
@@ -109,6 +110,7 @@ export async function tasksListJsonCommand(
   writeRuntimeJson(runtime, buildTasksListJsonPayload(opts));
 }
 
+/** Reused helper for tasks Audit Json Command behavior in src/commands. */
 export async function tasksAuditJsonCommand(
   opts: TasksAuditJsonArgs,
   runtime: RuntimeEnv,

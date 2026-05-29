@@ -1,3 +1,4 @@
+/** Covers model catalog document/PDF capability checks. */
 import { describe, expect, it } from "vitest";
 import { modelSupportsDocument } from "../model-catalog.js";
 

@@ -1,3 +1,4 @@
+// extensions/qa-lab/src suite runtime agent process helpers and runtime behavior.
 import { spawn } from "node:child_process";
 import { randomUUID } from "node:crypto";
 import path from "node:path";

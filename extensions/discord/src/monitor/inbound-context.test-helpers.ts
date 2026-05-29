@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor inbound context test helpers helpers and runtime behavior.
 import { finalizeInboundContext } from "openclaw/plugin-sdk/reply-dispatch-runtime";
 import { buildDiscordInboundAccessContext } from "./inbound-context.js";
 

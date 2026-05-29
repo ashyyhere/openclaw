@@ -1,3 +1,4 @@
+// packages/memory-host-sdk/src/host embeddings helpers and runtime behavior.
 import { DEFAULT_LOCAL_MODEL } from "./embedding-defaults.js";
 import { sanitizeAndNormalizeEmbedding } from "./embedding-vectors.js";
 import { createLocalEmbeddingWorkerProvider } from "./embeddings-worker.js";
@@ -14,6 +15,7 @@ type DisposableResource = {
   dispose?: () => Promise<void> | void;
 };
 
+/** Re-exported public API for packages/memory-host-sdk. */
 export type {
   EmbeddingProvider,
   EmbeddingProviderFallback,
@@ -23,8 +25,10 @@ export type {
   GeminiTaskType,
 } from "./embeddings.types.js";
 
+/** Re-exported public API for packages/memory-host-sdk, starting with DEFAULT LOCAL MODEL. */
 export { DEFAULT_LOCAL_MODEL } from "./embedding-defaults.js";
 
+/** Public type describing Local Embedding Provider Runtime Options for packages/memory-host-sdk. */
 export type LocalEmbeddingProviderRuntimeOptions = {
   workerScriptPath?: string;
 };
@@ -45,12 +49,14 @@ async function disposeResources(
   }
 }
 
+/** Public helper for create Local Embedding Provider behavior in packages/memory-host-sdk. */
 export async function createLocalEmbeddingProvider(
   options: EmbeddingProviderOptions,
 ): Promise<EmbeddingProvider> {
   return await createLocalEmbeddingWorkerProvider(options);
 }
 
+/** Public helper for create Local Embedding Provider In Process behavior in packages/memory-host-sdk. */
 export async function createLocalEmbeddingProviderInProcess(
   options: EmbeddingProviderOptions,
 ): Promise<EmbeddingProvider> {

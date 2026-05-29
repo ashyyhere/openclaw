@@ -1,3 +1,4 @@
+// config backup rotation helpers and runtime behavior.
 import path from "node:path";
 
 const CONFIG_BACKUP_COUNT = 5;
@@ -13,6 +14,7 @@ interface BackupMaintenanceFs extends BackupRotationFs {
   copyFile: (from: string, to: string) => Promise<void>;
 }
 
+/** Reused helper for rotate Config Backups behavior in src/config. */
 export async function rotateConfigBackups(
   configPath: string,
   ioFs: BackupRotationFs,
@@ -120,6 +122,7 @@ interface PreUpdateSnapshotFs {
 
 const preUpdateConfigSnapshotsWritten = new Set<string>();
 
+/** Reused helper for create Pre Update Config Snapshot behavior in src/config. */
 export async function createPreUpdateConfigSnapshot(params: {
   configPath: string;
   fs: PreUpdateSnapshotFs;

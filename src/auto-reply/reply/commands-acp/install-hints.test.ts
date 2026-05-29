@@ -1,3 +1,4 @@
+// Coverage for ACP install hint rendering.
 import path from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../../../config/config.js";

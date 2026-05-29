@@ -1,3 +1,4 @@
+/** Regression coverage for inline provider model expansion. */
 import { describe, expect, it } from "vitest";
 import { buildInlineProviderModels, resolveProviderModelInput } from "./model.inline-provider.js";
 import { makeModel } from "./model.test-harness.js";

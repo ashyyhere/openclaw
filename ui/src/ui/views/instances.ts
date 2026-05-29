@@ -1,9 +1,11 @@
+// ui/src/ui/views instances helpers and runtime behavior.
 import { html, nothing } from "lit";
 import { t } from "../../i18n/index.ts";
 import { icons } from "../icons.ts";
 import { formatPresenceAge } from "../presenter.ts";
 import type { PresenceEntry } from "../types.ts";
 
+/** Shared type for Instances Props in ui/src/ui/views. */
 export type InstancesProps = {
   loading: boolean;
   entries: PresenceEntry[];
@@ -14,6 +16,7 @@ export type InstancesProps = {
 
 let hostsRevealed = false;
 
+/** Reused helper for render Instances behavior in ui/src/ui/views. */
 export function renderInstances(props: InstancesProps) {
   const masked = !hostsRevealed;
 

@@ -1,3 +1,4 @@
+// Writes non-interactive onboard config while preserving pending plugin install records.
 import {
   commitConfigWriteWithPendingPluginInstalls,
   hasPendingPluginInstallRecords,
@@ -7,6 +8,7 @@ import {
 import { replaceConfigFile } from "../../config/config.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 
+/** Reused helper for commit Non Interactive Onboard Config behavior in src/commands/onboard-non-interactive. */
 export async function commitNonInteractiveOnboardConfig(params: {
   nextConfig: OpenClawConfig;
   baseConfig: OpenClawConfig;

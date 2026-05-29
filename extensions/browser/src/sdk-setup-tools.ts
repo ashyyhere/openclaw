@@ -1,3 +1,4 @@
+// extensions/browser/src sdk setup tools helpers and runtime behavior.
 export {
   callGatewayTool,
   listNodes,

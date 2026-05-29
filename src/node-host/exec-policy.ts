@@ -1,3 +1,4 @@
+// node-host exec policy helpers and runtime behavior.
 import { requiresExecApproval, type ExecAsk, type ExecSecurity } from "../infra/exec-approvals.js";
 
 type ExecApprovalDecision = "allow-once" | "allow-always" | null;
@@ -21,6 +22,7 @@ type SystemRunPolicyDecision = {
     }
 );
 
+/** Reused helper for resolve Exec Approval Decision behavior in src/node-host. */
 export function resolveExecApprovalDecision(value: unknown): ExecApprovalDecision {
   if (value === "allow-once" || value === "allow-always") {
     return value;
@@ -28,6 +30,7 @@ export function resolveExecApprovalDecision(value: unknown): ExecApprovalDecisio
   return null;
 }
 
+/** Reused helper for format System Run Allowlist Miss Message behavior in src/node-host. */
 export function formatSystemRunAllowlistMissMessage(params?: {
   shellWrapperBlocked?: boolean;
   windowsShellWrapperBlocked?: boolean;
@@ -49,6 +52,7 @@ export function formatSystemRunAllowlistMissMessage(params?: {
   return "SYSTEM_RUN_DENIED: allowlist miss";
 }
 
+/** Reused helper for evaluate System Run Policy behavior in src/node-host. */
 export function evaluateSystemRunPolicy(params: {
   security: ExecSecurity;
   ask: ExecAsk;

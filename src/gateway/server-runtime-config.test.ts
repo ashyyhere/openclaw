@@ -1,3 +1,4 @@
+// Tests gateway server runtime config test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { __resetContainerCacheForTest } from "./net.js";
 import { resolveGatewayRuntimeConfig } from "./server-runtime-config.js";

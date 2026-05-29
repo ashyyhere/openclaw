@@ -1,3 +1,4 @@
+// extensions/imessage/src status core helpers and runtime behavior.
 import type { ResolvedIMessageAccount } from "./accounts.js";
 import type { IMessageProbe } from "./probe.js";
 

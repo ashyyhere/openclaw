@@ -1,3 +1,4 @@
+// Tests test/scripts test perf budget test behavior.
 import { describe, expect, it } from "vitest";
 import { testing } from "../../scripts/test-perf-budget.mjs";
 

@@ -1,3 +1,4 @@
+/** Regression coverage for subagent target allow/deny policy resolution. */
 import { describe, expect, it } from "vitest";
 import {
   resolveSubagentAllowedTargetIds,

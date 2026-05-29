@@ -1,3 +1,4 @@
+/** Renders the root CLI help page from descriptors and live plugin metadata. */
 import { Command } from "commander";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { getPluginCliCommandDescriptors } from "../../plugins/cli.js";
@@ -11,6 +12,7 @@ import { getCoreCliCommandDescriptors } from "./core-command-descriptors.js";
 import { configureProgramHelp } from "./help.js";
 import { getSubCliEntries } from "./subcli-descriptors.js";
 
+/** Shared type for Root Help Render Options in src/cli/program. */
 export type RootHelpRenderOptions = Pick<PluginLoadOptions, "pluginSdkResolution"> & {
   config?: OpenClawConfig;
   env?: NodeJS.ProcessEnv;
@@ -54,6 +56,7 @@ async function buildRootHelpProgram(renderOptions?: RootHelpRenderOptions): Prom
   return program;
 }
 
+/** Reused helper for render Root Help Text behavior in src/cli/program. */
 export async function renderRootHelpText(renderOptions?: RootHelpRenderOptions): Promise<string> {
   const program = await buildRootHelpProgram(renderOptions);
   let output = "";
@@ -71,6 +74,7 @@ export async function renderRootHelpText(renderOptions?: RootHelpRenderOptions):
   return output;
 }
 
+/** Reused helper for output Root Help behavior in src/cli/program. */
 export async function outputRootHelp(renderOptions?: RootHelpRenderOptions): Promise<void> {
   process.stdout.write(await renderRootHelpText(renderOptions));
 }

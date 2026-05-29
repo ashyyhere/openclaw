@@ -1,3 +1,4 @@
+// Tests extensions/xai x search live test behavior.
 import { isBillingErrorMessage } from "openclaw/plugin-sdk/test-env";
 import { describe, expect, it } from "vitest";
 import { createXSearchTool } from "./x-search.js";

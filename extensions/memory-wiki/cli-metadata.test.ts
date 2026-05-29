@@ -1,3 +1,4 @@
+// Tests extensions/memory-wiki cli metadata test behavior.
 import { Command } from "commander";
 import { createTestPluginApi } from "openclaw/plugin-sdk/plugin-test-api";
 import { beforeEach, describe, expect, it, vi } from "vitest";

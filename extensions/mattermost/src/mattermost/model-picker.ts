@@ -1,3 +1,4 @@
+// extensions/mattermost/src/mattermost model picker helpers and runtime behavior.
 import { createHash } from "node:crypto";
 import {
   resolveStoredModelOverride,

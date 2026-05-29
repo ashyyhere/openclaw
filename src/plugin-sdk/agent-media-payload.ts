@@ -1,5 +1,8 @@
+// plugin-sdk agent media payload helpers and runtime behavior.
+/** Re-exported API for src/plugin-sdk, starting with get Agent Scoped Media Local Roots. */
 export { getAgentScopedMediaLocalRoots } from "../media/local-roots.js";
 
+/** Shared type for Agent Media Payload in src/plugin-sdk. */
 export type AgentMediaPayload = {
   MediaPath?: string;
   MediaType?: string;

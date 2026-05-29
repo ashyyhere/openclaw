@@ -1,3 +1,5 @@
+// Shared types for plugin-state plugin state store types behavior.
+/** Shared type for Plugin State Entry in src/plugin-state. */
 export type PluginStateEntry<T> = {
   key: string;
   value: T;
@@ -5,6 +7,7 @@ export type PluginStateEntry<T> = {
   expiresAt?: number;
 };
 
+/** Shared type for Plugin State Keyed Store in src/plugin-state. */
 export type PluginStateKeyedStore<T> = {
   register(key: string, value: T, opts?: { ttlMs?: number }): Promise<void>;
   registerIfAbsent(key: string, value: T, opts?: { ttlMs?: number }): Promise<boolean>;
@@ -15,6 +18,7 @@ export type PluginStateKeyedStore<T> = {
   clear(): Promise<void>;
 };
 
+/** Shared type for Plugin State Sync Keyed Store in src/plugin-state. */
 export type PluginStateSyncKeyedStore<T> = {
   register(key: string, value: T, opts?: { ttlMs?: number }): void;
   registerIfAbsent(key: string, value: T, opts?: { ttlMs?: number }): boolean;
@@ -25,6 +29,7 @@ export type PluginStateSyncKeyedStore<T> = {
   clear(): void;
 };
 
+/** Shared type for Open Keyed Store Options in src/plugin-state. */
 export type OpenKeyedStoreOptions = {
   namespace: string;
   maxEntries: number;
@@ -32,6 +37,7 @@ export type OpenKeyedStoreOptions = {
   env?: NodeJS.ProcessEnv;
 };
 
+/** Shared type for Plugin State Store Error Code in src/plugin-state. */
 export type PluginStateStoreErrorCode =
   | "PLUGIN_STATE_SQLITE_UNAVAILABLE"
   | "PLUGIN_STATE_OPEN_FAILED"
@@ -41,6 +47,7 @@ export type PluginStateStoreErrorCode =
   | "PLUGIN_STATE_LIMIT_EXCEEDED"
   | "PLUGIN_STATE_INVALID_INPUT";
 
+/** Shared type for Plugin State Store Operation in src/plugin-state. */
 export type PluginStateStoreOperation =
   | "load-sqlite"
   | "open"
@@ -55,6 +62,7 @@ export type PluginStateStoreOperation =
   | "probe"
   | "close";
 
+/** Shared type for Plugin State Store Error Options in src/plugin-state. */
 export type PluginStateStoreErrorOptions = {
   code: PluginStateStoreErrorCode;
   operation: PluginStateStoreOperation;
@@ -62,6 +70,7 @@ export type PluginStateStoreErrorOptions = {
   cause?: unknown;
 };
 
+/** Reused class for Plugin State Store Error behavior in src/plugin-state. */
 export class PluginStateStoreError extends Error {
   readonly code: PluginStateStoreErrorCode;
   readonly operation: PluginStateStoreOperation;
@@ -78,6 +87,7 @@ export class PluginStateStoreError extends Error {
   }
 }
 
+/** Shared type for Plugin State Store Probe Step in src/plugin-state. */
 export type PluginStateStoreProbeStep = {
   name: string;
   ok: boolean;
@@ -85,6 +95,7 @@ export type PluginStateStoreProbeStep = {
   message?: string;
 };
 
+/** Shared type for Plugin State Store Probe Result in src/plugin-state. */
 export type PluginStateStoreProbeResult = {
   ok: boolean;
   databasePath: string;

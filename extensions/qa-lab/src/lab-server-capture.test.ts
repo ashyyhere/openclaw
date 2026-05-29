@@ -1,3 +1,4 @@
+// Tests extensions/qa-lab/src lab server capture test behavior.
 import { createServer } from "node:http";
 import { afterEach, describe, expect, it } from "vitest";
 import { mapCaptureEventForQa, probeTcpReachability } from "./lab-server-capture.js";

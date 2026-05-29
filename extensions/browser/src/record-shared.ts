@@ -1,3 +1,4 @@
+// extensions/browser/src record shared helpers and runtime behavior.
 import {
   asNullableRecord,
   hasNonEmptyString as sharedHasNonEmptyString,

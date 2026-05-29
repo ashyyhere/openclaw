@@ -1,3 +1,4 @@
+// Tests hooks/bundled/boot-md handler test behavior.
 import path from "node:path";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { InternalHookEvent } from "../../internal-hooks.js";

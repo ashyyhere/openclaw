@@ -1,7 +1,9 @@
+// gateway/server/ws-connection connect policy helpers and runtime behavior.
 import type { ConnectParams } from "../../../../packages/gateway-protocol/src/index.js";
 import type { GatewayRole } from "../../role-policy.js";
 import { roleCanSkipDeviceIdentity } from "../../role-policy.js";
 
+/** Shared type for Control Ui Auth Policy in src/gateway/server. */
 export type ControlUiAuthPolicy = {
   isControlUi: boolean;
   allowInsecureAuthConfigured: boolean;
@@ -10,6 +12,7 @@ export type ControlUiAuthPolicy = {
   device: ConnectParams["device"] | null | undefined;
 };
 
+/** Reused helper for resolve Control Ui Auth Policy behavior in src/gateway/server. */
 export function resolveControlUiAuthPolicy(params: {
   isControlUi: boolean;
   controlUiConfig:
@@ -34,6 +37,7 @@ export function resolveControlUiAuthPolicy(params: {
   };
 }
 
+/** Reused helper for should Skip Control Ui Pairing behavior in src/gateway/server. */
 export function shouldSkipControlUiPairing(
   policy: ControlUiAuthPolicy,
   role: GatewayRole,
@@ -60,6 +64,7 @@ export function shouldSkipControlUiPairing(
   return role === "operator" && policy.allowBypass;
 }
 
+/** Reused helper for is Trusted Proxy Control Ui Operator Auth behavior in src/gateway/server. */
 export function isTrustedProxyControlUiOperatorAuth(params: {
   isControlUi: boolean;
   role: GatewayRole;
@@ -76,12 +81,14 @@ export function isTrustedProxyControlUiOperatorAuth(params: {
   );
 }
 
+/** Shared type for Missing Device Identity Decision in src/gateway/server. */
 export type MissingDeviceIdentityDecision =
   | { kind: "allow" }
   | { kind: "reject-control-ui-insecure-auth" }
   | { kind: "reject-unauthorized" }
   | { kind: "reject-device-required" };
 
+/** Reused helper for should Clear Unbound Scopes For Missing Device Identity behavior in src/gateway/server. */
 export function shouldClearUnboundScopesForMissingDeviceIdentity(params: {
   decision: MissingDeviceIdentityDecision;
   controlUiAuthPolicy: ControlUiAuthPolicy;
@@ -99,6 +106,7 @@ export function shouldClearUnboundScopesForMissingDeviceIdentity(params: {
   );
 }
 
+/** Reused helper for evaluate Missing Device Identity behavior in src/gateway/server. */
 export function evaluateMissingDeviceIdentity(params: {
   hasDeviceIdentity: boolean;
   role: GatewayRole;

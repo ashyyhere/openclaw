@@ -1,3 +1,4 @@
+// Tests proxy-capture env test behavior.
 import { describe, expect, it } from "vitest";
 import {
   OPENCLAW_DEBUG_PROXY_ENABLED,

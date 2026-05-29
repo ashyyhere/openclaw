@@ -1,3 +1,4 @@
+// Tests extensions/discord/src network config test behavior.
 import type * as dns from "node:dns";
 import { afterEach, describe, expect, it, vi } from "vitest";
 

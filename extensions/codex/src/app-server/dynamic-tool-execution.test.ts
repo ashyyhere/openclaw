@@ -1,3 +1,4 @@
+// Tests extensions/codex/src/app-server dynamic tool execution test behavior.
 import { embeddedAgentLog } from "openclaw/plugin-sdk/agent-harness-runtime";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {

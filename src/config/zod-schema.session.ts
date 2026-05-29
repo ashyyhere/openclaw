@@ -1,3 +1,4 @@
+// config zod schema session helpers and runtime behavior.
 import { z } from "zod";
 import { parseByteSize } from "../cli/parse-bytes.js";
 import { parseDurationMs } from "../cli/parse-duration.js";
@@ -23,8 +24,10 @@ const SessionResetConfigSchema = z
   })
   .strict();
 
+/** Reused constant for Session Send Policy Schema behavior in src/config. */
 export const SessionSendPolicySchema = createAllowDenyChannelRulesSchema();
 
+/** Reused constant for Session Schema behavior in src/config. */
 export const SessionSchema = z
   .object({
     scope: z.union([z.literal("per-sender"), z.literal("global")]).optional(),
@@ -152,6 +155,7 @@ export const SessionSchema = z
   .strict()
   .optional();
 
+/** Reused constant for Messages Schema behavior in src/config. */
 export const MessagesSchema = z
   .object({
     messagePrefix: z.string().optional(),
@@ -204,6 +208,7 @@ export const MessagesSchema = z
   .strict()
   .optional();
 
+/** Reused constant for Commands Schema behavior in src/config. */
 export const CommandsSchema = z
   .object({
     native: NativeCommandsSettingSchema.optional().default("auto"),

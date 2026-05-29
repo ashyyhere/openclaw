@@ -1,3 +1,4 @@
+/** Registers nodes status and list commands. */
 import type { Command } from "commander";
 import { sanitizeTerminalText } from "../../../packages/terminal-core/src/safe-text.js";
 import { getTerminalTableWidth, renderTable } from "../../../packages/terminal-core/src/table.js";
@@ -180,6 +181,7 @@ function sanitizePairedNodeForListJson(node: PairedNodeListRow): Omit<PairedNode
   return copy as Omit<PairedNodeListRow, "token">;
 }
 
+/** Reused helper for register Nodes Status Commands behavior in src/cli/nodes-cli. */
 export function registerNodesStatusCommands(nodes: Command) {
   nodesCallOpts(
     nodes

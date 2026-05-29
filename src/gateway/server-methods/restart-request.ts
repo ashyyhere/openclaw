@@ -1,3 +1,4 @@
+// gateway/server-methods restart request helpers and runtime behavior.
 import { stringifyRouteThreadId } from "../../plugin-sdk/channel-route.js";
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 
@@ -34,6 +35,7 @@ function parseRestartDeliveryContext(params: unknown): {
   return { deliveryContext: normalizedContext, threadId };
 }
 
+/** Reused helper for parse Restart Request Params behavior in src/gateway/server-methods. */
 export function parseRestartRequestParams(params: unknown): {
   sessionKey: string | undefined;
   deliveryContext: RestartDeliveryContext | undefined;

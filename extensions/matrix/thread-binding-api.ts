@@ -1,3 +1,4 @@
+// extensions/matrix thread binding api helpers and runtime behavior.
 export {
   defaultTopLevelPlacement,
   resolveMatrixInboundConversation as resolveInboundConversation,

@@ -1,3 +1,4 @@
+// extensions/msteams/src policy helpers and runtime behavior.
 import type {
   AllowlistMatch,
   ChannelGroupContext,

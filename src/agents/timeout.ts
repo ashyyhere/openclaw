@@ -1,3 +1,4 @@
+/** Resolves agent run timeout values from config and request overrides. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { clampTimerTimeoutMs, MAX_TIMER_TIMEOUT_MS } from "../shared/number-coercion.js";
 
@@ -6,12 +7,14 @@ const DEFAULT_AGENT_TIMEOUT_SECONDS = 48 * 60 * 60;
 const normalizeNumber = (value: unknown): number | undefined =>
   typeof value === "number" && Number.isFinite(value) ? Math.floor(value) : undefined;
 
+/** Reused helper for resolve Agent Timeout Seconds behavior in src/agents. */
 export function resolveAgentTimeoutSeconds(cfg?: OpenClawConfig): number {
   const raw = normalizeNumber(cfg?.agents?.defaults?.timeoutSeconds);
   const seconds = raw ?? DEFAULT_AGENT_TIMEOUT_SECONDS;
   return Math.max(seconds, 1);
 }
 
+/** Reused helper for resolve Agent Timeout Ms behavior in src/agents. */
 export function resolveAgentTimeoutMs(opts: {
   cfg?: OpenClawConfig;
   overrideMs?: number | null;

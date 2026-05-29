@@ -1,3 +1,4 @@
+// extensions/feishu/src agent config helpers and runtime behavior.
 import type { ClawdbotConfig } from "./bot-runtime-api.js";
 
 type ReasoningDefault = "on" | "stream" | "off";

@@ -1,9 +1,11 @@
+// daemon service layout helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { pathExists } from "../infra/fs-safe.js";
 import { readPackageName, readPackageVersion } from "../infra/package-json.js";
 import type { GatewayServiceCommandConfig } from "./service-types.js";
 
+/** Shared type for Gateway Service Layout Summary in src/daemon. */
 export type GatewayServiceLayoutSummary = {
   execStart: string;
   sourcePath?: string;
@@ -97,6 +99,7 @@ async function resolveOpenClawPackageRoot(entrypoint: string): Promise<string | 
   return undefined;
 }
 
+/** Reused helper for summarize Gateway Service Layout behavior in src/daemon. */
 export async function summarizeGatewayServiceLayout(
   command: GatewayServiceCommandConfig | null,
 ): Promise<GatewayServiceLayoutSummary | undefined> {

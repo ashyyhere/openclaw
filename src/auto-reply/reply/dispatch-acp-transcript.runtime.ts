@@ -1,3 +1,4 @@
+// Runtime helpers for ACP transcript paths.
 import { resolveAcpSessionCwd } from "../../acp/runtime/session-identifiers.js";
 import { resolveSessionAgentId } from "../../agents/agent-scope.js";
 import { persistAcpTurnTranscript } from "../../agents/command/attempt-execution.js";
@@ -9,6 +10,7 @@ import {
 import type { SessionAcpMeta } from "../../config/sessions/types.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 
+/** Reused helper for persist Acp Dispatch Transcript behavior in src/auto-reply/reply. */
 export async function persistAcpDispatchTranscript(params: {
   cfg: OpenClawConfig;
   sessionKey: string;

@@ -1,3 +1,4 @@
+/** Repairs stale bundled plugin load paths in config and install records. */
 import path from "node:path";
 import { sanitizeForLog } from "../../../../packages/terminal-core/src/ansi.js";
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../../../agents/agent-scope.js";
@@ -30,6 +31,7 @@ function isOpenClawNodeModulesPackageRoot(packageRoot: string): boolean {
   return packageDir === "openclaw" && parentDir === "node_modules";
 }
 
+/** Reused helper for scan Bundled Plugin Load Path Migrations behavior in src/commands/doctor. */
 export function scanBundledPluginLoadPathMigrations(
   cfg: OpenClawConfig,
   env: NodeJS.ProcessEnv = process.env,
@@ -105,6 +107,7 @@ export function scanBundledPluginLoadPathMigrations(
   return hits;
 }
 
+/** Reused helper for collect Bundled Plugin Load Path Warnings behavior in src/commands/doctor. */
 export function collectBundledPluginLoadPathWarnings(params: {
   hits: BundledPluginLoadPathHit[];
   doctorFixCommand: string;
@@ -120,6 +123,7 @@ export function collectBundledPluginLoadPathWarnings(params: {
   return lines.map((line) => sanitizeForLog(line));
 }
 
+/** Reused helper for maybe Repair Bundled Plugin Load Paths behavior in src/commands/doctor. */
 export function maybeRepairBundledPluginLoadPaths(
   cfg: OpenClawConfig,
   env: NodeJS.ProcessEnv = process.env,

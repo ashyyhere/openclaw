@@ -1,3 +1,4 @@
+// ui/src/ui/views activity helpers and runtime behavior.
 import { html, nothing } from "lit";
 import { t } from "../../i18n/index.ts";
 import type { ActivityEntry, ActivityStatus } from "../activity-model.ts";
@@ -7,6 +8,7 @@ import { normalizeLowercaseStringOrEmpty, sortUniqueStrings } from "../string-co
 
 const STATUS_ORDER: ActivityStatus[] = ["running", "done", "error"];
 
+/** Shared type for Activity Props in ui/src/ui/views. */
 export type ActivityProps = {
   entries: ActivityEntry[];
   filterText: string;
@@ -175,6 +177,7 @@ function renderEntry(props: ActivityProps, entry: ActivityEntry) {
   `;
 }
 
+/** Reused helper for render Activity behavior in ui/src/ui/views. */
 export function renderActivity(props: ActivityProps) {
   const toolNames = resolveToolNames(props.entries);
   const filtered = filterEntries(props);

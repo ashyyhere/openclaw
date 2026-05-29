@@ -1,3 +1,4 @@
+// extensions/browser/src/cli browser cli inspect helpers and runtime behavior.
 import fs from "node:fs/promises";
 import type { Command } from "commander";
 import { normalizeOptionalString } from "openclaw/plugin-sdk/string-coerce-runtime";

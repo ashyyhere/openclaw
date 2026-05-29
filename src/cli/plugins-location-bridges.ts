@@ -1,3 +1,4 @@
+/** Builds bridge records for externalized bundled plugin install locations. */
 import type { ExternalizedBundledPluginBridge } from "../plugins/externalized-bundled-plugins.js";
 import { readPersistedInstalledPluginIndex } from "../plugins/installed-plugin-index-store.js";
 import type { InstalledPluginIndexRecord } from "../plugins/installed-plugin-index.js";
@@ -48,6 +49,7 @@ function buildBridgeFromPersistedBundledRecord(
   };
 }
 
+/** Reused helper for list Persisted Bundled Plugin Location Bridges behavior in src/cli. */
 export async function listPersistedBundledPluginLocationBridges(options: {
   workspaceDir?: string;
   env?: NodeJS.ProcessEnv;

@@ -1,3 +1,4 @@
+// Tests extensions/feishu/src policy test behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/core";
 import { describe, expect, it } from "vitest";
 import { FeishuConfigSchema } from "./config-schema.js";

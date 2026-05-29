@@ -1,3 +1,5 @@
+/** Baseline floors for live prompt-cache regression checks. */
+/** Minimum or warning floor for a live cache regression lane. */
 export type LiveCacheFloor = {
   observedCacheRead?: number;
   observedCacheWrite?: number;
@@ -11,6 +13,7 @@ export type LiveCacheFloor = {
   warnOnly?: boolean;
 };
 
+/** Provider/lane cache floors observed from known-good live runs. */
 export const LIVE_CACHE_REGRESSION_BASELINE = {
   anthropic: {
     disabled: {

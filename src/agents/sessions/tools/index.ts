@@ -1,3 +1,4 @@
+/** Factory exports for built-in session coding tools. */
 export {
   type BashSpawnContext,
   type BashSpawnHook,
@@ -6,7 +7,9 @@ export {
   createBashToolDefinition,
   createLocalBashOperations,
 } from "./bash.js";
+/** Re-exported API for src/agents/sessions, starting with Bash Operations. */
 export type { BashOperations } from "./bash-operations.js";
+/** Re-exported API for src/agents/sessions. */
 export type {
   BashToolDetails,
   BashToolInput,
@@ -22,37 +25,44 @@ export type {
   ReadToolInput,
   WriteToolInput,
 } from "./tool-contracts.js";
+/** Re-exported API for src/agents/sessions. */
 export {
   createEditTool,
   createEditToolDefinition,
   type EditOperations,
   type EditToolOptions,
 } from "./edit.js";
+/** Re-exported API for src/agents/sessions, starting with with File Mutation Queue. */
 export { withFileMutationQueue } from "./file-mutation-queue.js";
+/** Re-exported API for src/agents/sessions. */
 export {
   createFindTool,
   createFindToolDefinition,
   type FindOperations,
   type FindToolOptions,
 } from "./find.js";
+/** Re-exported API for src/agents/sessions. */
 export {
   createGrepTool,
   createGrepToolDefinition,
   type GrepOperations,
   type GrepToolOptions,
 } from "./grep.js";
+/** Re-exported API for src/agents/sessions. */
 export {
   createLsTool,
   createLsToolDefinition,
   type LsOperations,
   type LsToolOptions,
 } from "./ls.js";
+/** Re-exported API for src/agents/sessions. */
 export {
   createReadTool,
   createReadToolDefinition,
   type ReadOperations,
   type ReadToolOptions,
 } from "./read.js";
+/** Re-exported API for src/agents/sessions. */
 export {
   DEFAULT_MAX_BYTES,
   DEFAULT_MAX_LINES,
@@ -63,6 +73,7 @@ export {
   truncateLine,
   truncateTail,
 } from "./truncate.js";
+/** Re-exported API for src/agents/sessions. */
 export {
   createWriteTool,
   createWriteToolDefinition,
@@ -80,9 +91,13 @@ import { createLsTool, createLsToolDefinition, type LsToolOptions } from "./ls.j
 import { createReadTool, createReadToolDefinition, type ReadToolOptions } from "./read.js";
 import { createWriteTool, createWriteToolDefinition, type WriteToolOptions } from "./write.js";
 
+/** Shared type for Tool in src/agents/sessions. */
 export type Tool = AgentTool;
+/** Shared type for Tool Def in src/agents/sessions. */
 export type ToolDef = ToolDefinition;
+/** Shared type for Tool Name in src/agents/sessions. */
 export type ToolName = "read" | "bash" | "edit" | "write" | "grep" | "find" | "ls";
+/** Reused constant for all Tool Names behavior in src/agents/sessions. */
 export const allToolNames: Set<ToolName> = new Set([
   "read",
   "bash",
@@ -93,6 +108,7 @@ export const allToolNames: Set<ToolName> = new Set([
   "ls",
 ]);
 
+/** Shared type for Tools Options in src/agents/sessions. */
 export interface ToolsOptions {
   read?: ReadToolOptions;
   bash?: BashToolOptions;
@@ -103,6 +119,7 @@ export interface ToolsOptions {
   ls?: LsToolOptions;
 }
 
+/** Creates one built-in tool definition by tool name. */
 export function createToolDefinition(
   toolName: ToolName,
   cwd: string,
@@ -128,6 +145,7 @@ export function createToolDefinition(
   }
 }
 
+/** Creates one built-in AgentTool by tool name. */
 export function createTool(toolName: ToolName, cwd: string, options?: ToolsOptions): Tool {
   switch (toolName) {
     case "read":
@@ -149,6 +167,7 @@ export function createTool(toolName: ToolName, cwd: string, options?: ToolsOptio
   }
 }
 
+/** Creates write-capable built-in tool definitions. */
 export function createCodingToolDefinitions(cwd: string, options?: ToolsOptions): ToolDef[] {
   return [
     createReadToolDefinition(cwd, options?.read),
@@ -158,6 +177,7 @@ export function createCodingToolDefinitions(cwd: string, options?: ToolsOptions)
   ];
 }
 
+/** Creates read-only built-in tool definitions. */
 export function createReadOnlyToolDefinitions(cwd: string, options?: ToolsOptions): ToolDef[] {
   return [
     createReadToolDefinition(cwd, options?.read),
@@ -167,6 +187,7 @@ export function createReadOnlyToolDefinitions(cwd: string, options?: ToolsOption
   ];
 }
 
+/** Creates all built-in tool definitions. */
 export function createAllToolDefinitions(
   cwd: string,
   options?: ToolsOptions,
@@ -182,6 +203,7 @@ export function createAllToolDefinitions(
   };
 }
 
+/** Creates write-capable built-in AgentTools. */
 export function createCodingTools(cwd: string, options?: ToolsOptions): Tool[] {
   return [
     createReadTool(cwd, options?.read),
@@ -191,6 +213,7 @@ export function createCodingTools(cwd: string, options?: ToolsOptions): Tool[] {
   ];
 }
 
+/** Creates read-only built-in AgentTools. */
 export function createReadOnlyTools(cwd: string, options?: ToolsOptions): Tool[] {
   return [
     createReadTool(cwd, options?.read),
@@ -200,6 +223,7 @@ export function createReadOnlyTools(cwd: string, options?: ToolsOptions): Tool[]
   ];
 }
 
+/** Creates all built-in AgentTools keyed by tool name. */
 export function createAllTools(cwd: string, options?: ToolsOptions): Record<ToolName, Tool> {
   return {
     read: createReadTool(cwd, options?.read),

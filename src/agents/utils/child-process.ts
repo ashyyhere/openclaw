@@ -1,3 +1,4 @@
+// Cross-platform child process wrappers and lifecycle helpers.
 import {
   type ChildProcess,
   type ChildProcessByStdio,
@@ -15,18 +16,22 @@ import crossSpawn from "cross-spawn";
 
 const EXIT_STDIO_GRACE_MS = 100;
 
+/** Spawn a child process, using cross-spawn only where Windows needs command lookup fixes. */
 export function spawnProcess(
   command: string,
   args: string[],
   options: SpawnOptionsWithStdioTuple<StdioNull, StdioPipe, StdioPipe>,
 ): ChildProcessByStdio<null, Readable, Readable>;
+/** Reused helper for spawn Process behavior in src/agents/utils. */
 export function spawnProcess(command: string, args: string[], options: SpawnOptions): ChildProcess;
+/** Reused helper for spawn Process behavior in src/agents/utils. */
 export function spawnProcess(command: string, args: string[], options: SpawnOptions): ChildProcess {
   return process.platform === "win32"
     ? crossSpawn(command, args, options)
     : nodeSpawn(command, args, options);
 }
 
+/** Synchronous variant of spawnProcess for short command probes. */
 export function spawnProcessSync(
   command: string,
   args: string[],

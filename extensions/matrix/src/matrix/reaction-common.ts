@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix reaction common helpers and runtime behavior.
 import { normalizeOptionalString } from "openclaw/plugin-sdk/string-coerce-runtime";
 
 export const MATRIX_ANNOTATION_RELATION_TYPE = "m.annotation";

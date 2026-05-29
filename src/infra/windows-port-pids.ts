@@ -1,3 +1,4 @@
+// infra windows port pids helpers and runtime behavior.
 import { spawnSync } from "node:child_process";
 import { parseCmdScriptCommandLine } from "../daemon/cmd-argv.js";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
@@ -6,10 +7,12 @@ import { parseStrictPositiveInteger } from "./parse-finite-number.js";
 
 const DEFAULT_TIMEOUT_MS = 5_000;
 
+/** Shared type for Windows Listening Pids Result in src/infra. */
 export type WindowsListeningPidsResult =
   | { ok: true; pids: number[] }
   | { ok: false; permanent: boolean };
 
+/** Shared type for Windows Process Args Result in src/infra. */
 export type WindowsProcessArgsResult =
   | { ok: true; args: string[] | null }
   | { ok: false; permanent: boolean };
@@ -54,6 +57,7 @@ function parseListeningPidsFromNetstat(stdout: string, port: number): number[] {
   return [...pids];
 }
 
+/** Reused helper for read Windows Listening Pids On Port Sync behavior in src/infra. */
 export function readWindowsListeningPidsOnPortSync(
   port: number,
   timeoutMs = DEFAULT_TIMEOUT_MS,
@@ -62,6 +66,7 @@ export function readWindowsListeningPidsOnPortSync(
   return result.ok ? result.pids : [];
 }
 
+/** Reused helper for read Windows Listening Pids Result Sync behavior in src/infra. */
 export function readWindowsListeningPidsResultSync(
   port: number,
   timeoutMs = DEFAULT_TIMEOUT_MS,
@@ -101,6 +106,7 @@ function extractWindowsCommandLine(raw: string): string | null {
   return lines.find((line) => normalizeLowercaseStringOrEmpty(line) !== "commandline") ?? null;
 }
 
+/** Reused helper for read Windows Process Args Sync behavior in src/infra. */
 export function readWindowsProcessArgsSync(
   pid: number,
   timeoutMs = DEFAULT_TIMEOUT_MS,
@@ -109,6 +115,7 @@ export function readWindowsProcessArgsSync(
   return result.ok ? result.args : null;
 }
 
+/** Reused helper for read Windows Process Args Result Sync behavior in src/infra. */
 export function readWindowsProcessArgsResultSync(
   pid: number,
   timeoutMs = DEFAULT_TIMEOUT_MS,

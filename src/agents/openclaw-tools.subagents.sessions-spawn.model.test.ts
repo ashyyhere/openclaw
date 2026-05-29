@@ -1,3 +1,4 @@
+/** Tests sessions_spawn model and thinking planning. */
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import { DEFAULT_MODEL, DEFAULT_PROVIDER } from "./defaults.js";

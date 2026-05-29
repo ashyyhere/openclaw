@@ -1,6 +1,8 @@
+/** Program-level context shared across CLI command registration. */
 import { VERSION } from "../../version.js";
 import { resolveCliChannelOptions } from "../channel-options.js";
 
+/** Shared type for Program Context in src/cli/program. */
 export type ProgramContext = {
   programVersion: string;
   channelOptions: string[];
@@ -8,6 +10,7 @@ export type ProgramContext = {
   agentChannelOptions: string;
 };
 
+/** Reused helper for create Program Context behavior in src/cli/program. */
 export function createProgramContext(): ProgramContext {
   let cachedChannelOptions: string[] | undefined;
   const getChannelOptions = (): string[] => {

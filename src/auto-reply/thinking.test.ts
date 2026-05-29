@@ -1,3 +1,4 @@
+// Coverage for thinking level detection and provider/model support.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const providerRuntimeMocks = vi.hoisted(() => ({

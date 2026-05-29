@@ -1,3 +1,4 @@
+// scripts/lib/ts-topology context helpers and runtime behavior.
 import { execFileSync } from "node:child_process";
 import path from "node:path";
 import ts from "typescript";

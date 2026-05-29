@@ -1,3 +1,4 @@
+/** Agent tool for asking document-capable models about PDFs. */
 import { Type } from "typebox";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { complete } from "../../llm/stream.js";
@@ -59,6 +60,7 @@ const PDF_REMOTE_READ_IDLE_TIMEOUT_MS = 120_000;
 const PDF_MIN_TEXT_CHARS = 200;
 const PDF_MAX_PIXELS = 4_000_000;
 
+/** Reused constant for Pdf Tool Schema behavior in src/agents/tools. */
 export const PdfToolSchema = Type.Object({
   prompt: Type.Optional(Type.String()),
   pdf: Type.Optional(Type.String({ description: "One PDF path/URL." })),
@@ -81,6 +83,7 @@ export const PdfToolSchema = Type.Object({
 // Model resolution (mirrors image tool pattern)
 // ---------------------------------------------------------------------------
 
+/** Re-exported API for src/agents/tools, starting with resolve Pdf Model Config For Tool. */
 export { resolvePdfModelConfigForTool } from "./pdf-tool.model-config.js";
 
 function hasExplicitPdfToolModelConfig(config?: OpenClawConfig): boolean {
@@ -273,6 +276,7 @@ async function runPdfPrompt(params: {
 // PDF tool factory
 // ---------------------------------------------------------------------------
 
+/** Creates the PDF understanding AgentTool. */
 export function createPdfTool(options?: {
   config?: OpenClawConfig;
   agentDir?: string;

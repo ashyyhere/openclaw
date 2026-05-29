@@ -1,9 +1,11 @@
+// cron isolated agent delivery test helpers helpers and runtime behavior.
 import { expect, vi } from "vitest";
 import { runEmbeddedAgent } from "../agents/embedded-agent.js";
 import type { CliDeps } from "../cli/deps.js";
 import { runCronIsolatedAgentTurn } from "./isolated-agent.js";
 import { makeCfg, makeJob } from "./isolated-agent.test-harness.js";
 
+/** Reused helper for create Cli Deps behavior in src/cron. */
 export function createCliDeps(overrides: Partial<CliDeps> = {}): CliDeps {
   return {
     sendMessageSlack: vi.fn().mockResolvedValue({ messageTs: "slack-1", channel: "C1" }),
@@ -18,6 +20,7 @@ export function createCliDeps(overrides: Partial<CliDeps> = {}): CliDeps {
   };
 }
 
+/** Reused helper for mock Agent Payloads behavior in src/cron. */
 export function mockAgentPayloads(
   payloads: Array<Record<string, unknown>>,
   extra: Partial<Awaited<ReturnType<typeof runEmbeddedAgent>>> = {},
@@ -32,6 +35,7 @@ export function mockAgentPayloads(
   });
 }
 
+/** Reused helper for expect Direct Telegram Delivery behavior in src/cron. */
 export function expectDirectTelegramDelivery(
   deps: CliDeps,
   params: { chatId: string; text: string; messageThreadId?: number },
@@ -46,6 +50,7 @@ export function expectDirectTelegramDelivery(
   );
 }
 
+/** Reused helper for run Telegram Announce Turn behavior in src/cron. */
 export async function runTelegramAnnounceTurn(params: {
   home: string;
   storePath: string;

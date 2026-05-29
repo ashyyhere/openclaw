@@ -1,3 +1,4 @@
+/** Tests allowlist helper behavior. */
 import { describe, expect, it } from "vitest";
 import { hasAllowFromEntries } from "./allowlist.js";
 

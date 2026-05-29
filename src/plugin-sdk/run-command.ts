@@ -1,12 +1,15 @@
+// plugin-sdk run command helpers and runtime behavior.
 import { formatErrorMessage } from "../infra/errors.js";
 import { runCommandWithTimeout } from "../process/exec.js";
 
+/** Shared type for Plugin Command Run Result in src/plugin-sdk. */
 export type PluginCommandRunResult = {
   code: number;
   stdout: string;
   stderr: string;
 };
 
+/** Shared type for Plugin Command Run Options in src/plugin-sdk. */
 export type PluginCommandRunOptions = {
   argv: string[];
   timeoutMs: number;

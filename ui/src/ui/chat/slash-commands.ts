@@ -1,3 +1,4 @@
+// ui/src/ui/chat slash commands helpers and runtime behavior.
 import type {
   CommandEntry,
   CommandsListResult,
@@ -7,10 +8,13 @@ import type { GatewayBrowserClient } from "../gateway.ts";
 import type { IconName } from "../icons.ts";
 import { normalizeLowercaseStringOrEmpty } from "../string-coerce.ts";
 
+/** Shared type for Slash Command Category in ui/src/ui/chat. */
 export type SlashCommandCategory = "session" | "model" | "agents" | "tools";
 
+/** Shared type for Slash Command Tier in ui/src/ui/chat. */
 export type SlashCommandTier = "essential" | "standard" | "power";
 
+/** Shared type for Slash Command Def in ui/src/ui/chat. */
 export type SlashCommandDef = {
   key: string;
   name: string;
@@ -424,10 +428,12 @@ function buildFallbackSlashCommands(): SlashCommandDef[] {
   return buildLocalSlashCommands();
 }
 
+/** Reused constant for SLASH COMMANDS behavior in ui/src/ui/chat. */
 export const SLASH_COMMANDS: SlashCommandDef[] = buildFallbackSlashCommands();
 
 let refreshSeq = 0;
 
+/** Reused helper for refresh Slash Commands behavior in ui/src/ui/chat. */
 export async function refreshSlashCommands(params: {
   client: GatewayBrowserClient | null;
   agentId?: string | null;
@@ -459,6 +465,7 @@ export async function refreshSlashCommands(params: {
   }
 }
 
+/** Reused helper for reset Slash Commands For Test behavior in ui/src/ui/chat. */
 export function resetSlashCommandsForTest(): void {
   refreshSeq = 0;
   replaceSlashCommands(buildFallbackSlashCommands());
@@ -466,6 +473,7 @@ export function resetSlashCommandsForTest(): void {
 
 const CATEGORY_ORDER: SlashCommandCategory[] = ["session", "model", "tools", "agents"];
 
+/** Reused constant for CATEGORY LABELS behavior in ui/src/ui/chat. */
 export const CATEGORY_LABELS: Record<SlashCommandCategory, string> = {
   session: "Session",
   model: "Model",
@@ -479,6 +487,7 @@ const TIER_ORDER: Record<SlashCommandTier, number> = {
   power: 2,
 };
 
+/** Reused helper for get Slash Command Completions behavior in ui/src/ui/chat. */
 export function getSlashCommandCompletions(
   filter: string,
   options?: { showAll?: boolean },
@@ -527,11 +536,13 @@ export function getHiddenCommandCount(): number {
   return SLASH_COMMANDS.filter((cmd) => (cmd.tier ?? "standard") === "power").length;
 }
 
+/** Shared type for Parsed Slash Command in ui/src/ui/chat. */
 export type ParsedSlashCommand = {
   command: SlashCommandDef;
   args: string;
 };
 
+/** Reused helper for parse Slash Command behavior in ui/src/ui/chat. */
 export function parseSlashCommand(text: string): ParsedSlashCommand | null {
   const trimmed = text.trim();
   if (!trimmed.startsWith("/")) {

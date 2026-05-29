@@ -17,6 +17,7 @@ import { DEFAULT_MAX_BYTES, truncateTail } from "./tools/truncate.js";
 // Types
 // ============================================================================
 
+/** Shared type for Bash Executor Options in src/agents/sessions. */
 export interface BashExecutorOptions {
   /** Callback for streaming output chunks (already sanitized) */
   onChunk?: (chunk: string) => void;
@@ -24,6 +25,7 @@ export interface BashExecutorOptions {
   signal?: AbortSignal;
 }
 
+/** Shared type for Bash Result in src/agents/sessions. */
 export interface BashResult {
   /** Combined stdout + stderr output (sanitized, possibly truncated) */
   output: string;

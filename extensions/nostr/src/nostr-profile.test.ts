@@ -1,3 +1,4 @@
+// Tests extensions/nostr/src nostr profile test behavior.
 import { verifyEvent, getPublicKey } from "nostr-tools";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { NostrProfile } from "./config-schema.js";

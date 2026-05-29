@@ -1,6 +1,8 @@
+/** Test fixture for Claude API billing-style error payloads. */
 const CLAUDE_API_ERROR_MESSAGE =
   "Third-party apps now draw from your extra usage, not your plan limits. We've added a $200 credit to get you started. Claim it at claude.ai/settings/usage and keep going.";
 
+/** Creates a serialized Claude API error fixture. */
 export function createClaudeApiErrorFixture() {
   const apiError = `API Error: 400 ${JSON.stringify({
     type: "error",

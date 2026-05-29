@@ -1,3 +1,4 @@
+// Shared ACP command helpers.
 import { randomUUID } from "node:crypto";
 import { toAcpRuntimeErrorText } from "../../../acp/runtime/error-text.js";
 import type { AcpRuntimeError } from "../../../acp/runtime/errors.js";
@@ -12,30 +13,44 @@ import {
 import type { CommandHandlerResult, HandleCommandsParams } from "../commands-types.js";
 import { resolveAcpCommandChannel, resolveAcpCommandThreadId } from "./context.js";
 
+/** Reused constant for COMMAND behavior in src/auto-reply/reply. */
 export const COMMAND = "/acp";
 const ACP_SPAWN_USAGE =
   "Usage: /acp spawn [harness-id] [--mode persistent|oneshot] [--thread auto|here|off] [--bind here|off] [--cwd <path>] [--label <label>].";
 const ACP_STEER_USAGE =
   "Usage: /acp steer [--session <session-key|session-id|session-label>] <instruction>";
+/** Reused constant for ACP SET MODE USAGE behavior in src/auto-reply/reply. */
 export const ACP_SET_MODE_USAGE =
   "Usage: /acp set-mode <mode> [session-key|session-id|session-label]";
 const ACP_SET_USAGE = "Usage: /acp set <key> <value> [session-key|session-id|session-label]";
+/** Reused constant for ACP CWD USAGE behavior in src/auto-reply/reply. */
 export const ACP_CWD_USAGE = "Usage: /acp cwd <path> [session-key|session-id|session-label]";
+/** Reused constant for ACP PERMISSIONS USAGE behavior in src/auto-reply/reply. */
 export const ACP_PERMISSIONS_USAGE =
   "Usage: /acp permissions <profile> [session-key|session-id|session-label]";
+/** Reused constant for ACP TIMEOUT USAGE behavior in src/auto-reply/reply. */
 export const ACP_TIMEOUT_USAGE =
   "Usage: /acp timeout <seconds> [session-key|session-id|session-label]";
+/** Reused constant for ACP MODEL USAGE behavior in src/auto-reply/reply. */
 export const ACP_MODEL_USAGE =
   "Usage: /acp model <model-id> [session-key|session-id|session-label]";
+/** Reused constant for ACP RESET OPTIONS USAGE behavior in src/auto-reply/reply. */
 export const ACP_RESET_OPTIONS_USAGE =
   "Usage: /acp reset-options [session-key|session-id|session-label]";
+/** Reused constant for ACP STATUS USAGE behavior in src/auto-reply/reply. */
 export const ACP_STATUS_USAGE = "Usage: /acp status [session-key|session-id|session-label]";
+/** Reused constant for ACP INSTALL USAGE behavior in src/auto-reply/reply. */
 export const ACP_INSTALL_USAGE = "Usage: /acp install";
+/** Reused constant for ACP DOCTOR USAGE behavior in src/auto-reply/reply. */
 export const ACP_DOCTOR_USAGE = "Usage: /acp doctor";
+/** Reused constant for ACP SESSIONS USAGE behavior in src/auto-reply/reply. */
 export const ACP_SESSIONS_USAGE = "Usage: /acp sessions";
+/** Reused constant for ACP STEER OUTPUT LIMIT behavior in src/auto-reply/reply. */
 export const ACP_STEER_OUTPUT_LIMIT = 800;
+/** Re-exported API for src/auto-reply/reply, starting with SESSION ID RE. */
 export { SESSION_ID_RE } from "../../../sessions/session-id.js";
 
+/** Shared type for Acp Action in src/auto-reply/reply. */
 export type AcpAction =
   | "spawn"
   | "cancel"
@@ -54,9 +69,12 @@ export type AcpAction =
   | "install"
   | "help";
 
+/** Shared type for Acp Spawn Thread Mode in src/auto-reply/reply. */
 export type AcpSpawnThreadMode = "auto" | "here" | "off";
+/** Shared type for Acp Spawn Bind Mode in src/auto-reply/reply. */
 export type AcpSpawnBindMode = "here" | "off";
 
+/** Shared type for Parsed Spawn Input in src/auto-reply/reply. */
 export type ParsedSpawnInput = {
   agentId: string;
   mode: AcpRuntimeSessionMode;
@@ -66,16 +84,19 @@ export type ParsedSpawnInput = {
   label?: string;
 };
 
+/** Shared type for Parsed Steer Input in src/auto-reply/reply. */
 export type ParsedSteerInput = {
   sessionToken?: string;
   instruction: string;
 };
 
+/** Shared type for Parsed Single Value Command Input in src/auto-reply/reply. */
 export type ParsedSingleValueCommandInput = {
   value: string;
   sessionToken?: string;
 };
 
+/** Shared type for Parsed Set Command Input in src/auto-reply/reply. */
 export type ParsedSetCommandInput = {
   key: string;
   value: string;
@@ -85,6 +106,7 @@ export type ParsedSetCommandInput = {
 const ACP_UNICODE_DASH_PREFIX_RE =
   /^[\u2010\u2011\u2012\u2013\u2014\u2015\u2212\uFE58\uFE63\uFF0D]+/;
 
+/** Reused helper for stop With Text behavior in src/auto-reply/reply. */
 export function stopWithText(text: string): CommandHandlerResult {
   return {
     shouldContinue: false,
@@ -92,6 +114,7 @@ export function stopWithText(text: string): CommandHandlerResult {
   };
 }
 
+/** Reused helper for resolve Acp Action behavior in src/auto-reply/reply. */
 export function resolveAcpAction(tokens: string[]): AcpAction {
   const action = normalizeOptionalLowercaseString(tokens[0]);
   if (
@@ -181,6 +204,7 @@ function resolveDefaultSpawnThreadMode(params: HandleCommandsParams): AcpSpawnTh
   return currentThreadId ? "here" : "auto";
 }
 
+/** Reused helper for parse Spawn Input behavior in src/auto-reply/reply. */
 export function parseSpawnInput(
   params: HandleCommandsParams,
   tokens: string[],
@@ -324,6 +348,7 @@ export function parseSpawnInput(
   };
 }
 
+/** Reused helper for parse Steer Input behavior in src/auto-reply/reply. */
 export function parseSteerInput(
   tokens: string[],
 ): { ok: true; value: ParsedSteerInput } | { ok: false; error: string } {
@@ -370,6 +395,7 @@ export function parseSteerInput(
   };
 }
 
+/** Reused helper for parse Single Value Command Input behavior in src/auto-reply/reply. */
 export function parseSingleValueCommandInput(
   tokens: string[],
   usage: string,
@@ -391,6 +417,7 @@ export function parseSingleValueCommandInput(
   };
 }
 
+/** Reused helper for parse Set Command Input behavior in src/auto-reply/reply. */
 export function parseSetCommandInput(
   tokens: string[],
 ): { ok: true; value: ParsedSetCommandInput } | { ok: false; error: string } {
@@ -419,6 +446,7 @@ export function parseSetCommandInput(
   };
 }
 
+/** Reused helper for parse Optional Single Target behavior in src/auto-reply/reply. */
 export function parseOptionalSingleTarget(
   tokens: string[],
   usage: string,
@@ -433,6 +461,7 @@ export function parseOptionalSingleTarget(
   };
 }
 
+/** Reused helper for resolve Acp Help Text behavior in src/auto-reply/reply. */
 export function resolveAcpHelpText(): string {
   return [
     "ACP commands:",
@@ -461,6 +490,7 @@ export function resolveAcpHelpText(): string {
   ].join("\n");
 }
 
+/** Reused helper for format Runtime Options Text behavior in src/auto-reply/reply. */
 export function formatRuntimeOptionsText(options: AcpSessionRuntimeOptions): string {
   const extras = options.backendExtras
     ? Object.entries(options.backendExtras)
@@ -482,6 +512,7 @@ export function formatRuntimeOptionsText(options: AcpSessionRuntimeOptions): str
   return parts.join(", ");
 }
 
+/** Reused helper for format Acp Capabilities Text behavior in src/auto-reply/reply. */
 export function formatAcpCapabilitiesText(controls: string[]): string {
   if (controls.length === 0) {
     return "(none)";
@@ -489,6 +520,7 @@ export function formatAcpCapabilitiesText(controls: string[]): string {
   return controls.toSorted().join(", ");
 }
 
+/** Reused helper for resolve Command Request Id behavior in src/auto-reply/reply. */
 export function resolveCommandRequestId(params: HandleCommandsParams): string {
   const value =
     params.ctx.MessageSidFull ??
@@ -507,6 +539,7 @@ export function resolveCommandRequestId(params: HandleCommandsParams): string {
   return randomUUID();
 }
 
+/** Reused helper for collect Acp Error Text behavior in src/auto-reply/reply. */
 export function collectAcpErrorText(params: {
   error: unknown;
   fallbackCode: AcpRuntimeError["code"];
@@ -519,6 +552,7 @@ export function collectAcpErrorText(params: {
   });
 }
 
+/** Reused helper for with Acp Command Error Boundary behavior in src/auto-reply/reply. */
 export async function withAcpCommandErrorBoundary<T>(params: {
   run: () => Promise<T>;
   fallbackCode: AcpRuntimeError["code"];

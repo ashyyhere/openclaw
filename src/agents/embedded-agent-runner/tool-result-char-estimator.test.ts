@@ -1,3 +1,4 @@
+/** Covers cached character estimates for tool-result-heavy histories. */
 import type { AgentMessage } from "openclaw/plugin-sdk/agent-core";
 import { describe, expect, it } from "vitest";
 import {

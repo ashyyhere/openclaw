@@ -1,3 +1,4 @@
+// config test helpers helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { withTempHome as withTempHomeBase } from "openclaw/plugin-sdk/test-env";
@@ -11,6 +12,7 @@ function resetConfigTestRuntimeState(): void {
   clearPluginSetupRegistryCache();
 }
 
+/** Reused helper for with Temp Home behavior in src/config. */
 export async function withTempHome<T>(fn: (home: string) => Promise<T>): Promise<T> {
   resetConfigTestRuntimeState();
   try {
@@ -34,6 +36,7 @@ export async function withTempHome<T>(fn: (home: string) => Promise<T>): Promise
   }
 }
 
+/** Reused helper for write Open Claw Config behavior in src/config. */
 export async function writeOpenClawConfig(home: string, config: unknown): Promise<string> {
   const configPath = path.join(home, ".openclaw", "openclaw.json");
   await fs.mkdir(path.dirname(configPath), { recursive: true });
@@ -41,6 +44,7 @@ export async function writeOpenClawConfig(home: string, config: unknown): Promis
   return configPath;
 }
 
+/** Reused helper for write State Dir Dot Env behavior in src/config. */
 export async function writeStateDirDotEnv(
   content: string,
   params?: {
@@ -58,6 +62,7 @@ export async function writeStateDirDotEnv(
   return { dotEnvPath, stateDir };
 }
 
+/** Reused helper for with Temp Home Config behavior in src/config. */
 export async function withTempHomeConfig<T>(
   config: unknown,
   fn: (params: { home: string; configPath: string }) => Promise<T>,
@@ -97,6 +102,7 @@ export async function withEnvOverride<T>(
   }
 }
 
+/** Reused helper for build Web Search Provider Config behavior in src/config. */
 export function buildWebSearchProviderConfig(params: {
   provider: NonNullable<
     NonNullable<NonNullable<NonNullable<OpenClawConfig["tools"]>["web"]>["search"]>["provider"]

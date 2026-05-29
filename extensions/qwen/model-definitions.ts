@@ -1,3 +1,4 @@
+// extensions/qwen model definitions helpers and runtime behavior.
 export {
   buildQwenDefaultModelDefinition,
   buildQwenModelDefinition,

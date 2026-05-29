@@ -1,3 +1,4 @@
+// Tests gateway server cron lazy test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { CliDeps } from "../cli/deps.types.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";

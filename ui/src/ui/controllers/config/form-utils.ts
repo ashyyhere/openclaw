@@ -1,9 +1,12 @@
+// ui/src/ui/controllers/config form utils helpers and runtime behavior.
 import JSON5 from "json5";
 
+/** Reused helper for clone Config Object behavior in ui/src/ui/controllers. */
 export function cloneConfigObject<T>(value: T): T {
   return structuredClone(value);
 }
 
+/** Reused helper for serialize Config Form behavior in ui/src/ui/controllers. */
 export function serializeConfigForm(form: Record<string, unknown>): string {
   return `${JSON.stringify(form, null, 2).trimEnd()}\n`;
 }
@@ -92,6 +95,7 @@ function sanitizeRedactedValue(params: {
   return keepValue(next);
 }
 
+/** Reused helper for sanitize Redacted Form For Submit behavior in ui/src/ui/controllers. */
 export function sanitizeRedactedFormForSubmit(
   form: Record<string, unknown>,
   originalForm: Record<string, unknown> | null | undefined,
@@ -178,6 +182,7 @@ function resolvePathContainer(
   };
 }
 
+/** Reused helper for set Path Value behavior in ui/src/ui/controllers. */
 export function setPathValue(
   obj: Record<string, unknown> | unknown[],
   path: Array<string | number>,
@@ -199,6 +204,7 @@ export function setPathValue(
   }
 }
 
+/** Reused helper for remove Path Value behavior in ui/src/ui/controllers. */
 export function removePathValue(
   obj: Record<string, unknown> | unknown[],
   path: Array<string | number>,

@@ -1,3 +1,4 @@
+/** Covers harness selection, attempt dispatch, and compaction routing. */
 import type { Api, Model } from "openclaw/plugin-sdk/llm";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../../config/config.js";

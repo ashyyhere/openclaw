@@ -1,3 +1,4 @@
+// Conversation target resolution for command and inbound channel contexts.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {
   resolveTargetPrefixedChannel,
@@ -45,6 +46,7 @@ type ConversationResolution = {
   source: ConversationResolutionSource;
 };
 
+/** Input for resolving command-provided conversation targets. */
 export type ResolveCommandConversationResolutionInput = {
   cfg: OpenClawConfig;
   channel?: string | null;
@@ -281,6 +283,7 @@ function buildThreadingContext(params: {
   };
 }
 
+/** Resolve default placement for channel thread bindings. */
 export function resolveChannelDefaultBindingPlacement(
   rawChannel?: string | null,
 ): "current" | "child" | undefined {
@@ -293,6 +296,7 @@ export function resolveChannelDefaultBindingPlacement(
   return pluginPlacement ?? resolveBundledChannelThreadBindingDefaultPlacement(channel);
 }
 
+/** Resolve a canonical conversation target for a command turn. */
 export function resolveCommandConversationResolution(
   params: ResolveCommandConversationResolutionInput,
 ): ConversationResolution | null {
@@ -400,6 +404,7 @@ export function resolveCommandConversationResolution(
   });
 }
 
+/** Resolve a canonical conversation target from inbound channel context. */
 export function resolveInboundConversationResolution(
   params: ResolveInboundConversationResolutionInput,
 ): ConversationResolution | null {

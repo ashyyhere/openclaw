@@ -1,7 +1,9 @@
+/** Runtime availability checks for ACP session spawning. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { isAcpEnabledByPolicy } from "../policy.js";
 import { getAcpRuntimeBackend } from "./registry.js";
 
+/** Return whether an ACP backend can be spawned in the current policy/sandbox. */
 export function isAcpRuntimeSpawnAvailable(params: {
   config?: OpenClawConfig;
   sandboxed?: boolean;

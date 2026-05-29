@@ -1,3 +1,4 @@
+// Tests infra session maintenance warning test behavior.
 import { randomUUID } from "node:crypto";
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 

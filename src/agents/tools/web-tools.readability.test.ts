@@ -1,3 +1,4 @@
+/** Covers readability extractor integration for web tools. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const { resolvePluginWebContentExtractorsMock } = vi.hoisted(() => ({

@@ -1,3 +1,4 @@
+// Tests mcp openclaw tools serve test behavior.
 import { describe, expect, it } from "vitest";
 import { resolveOpenClawToolsForMcp } from "./openclaw-tools-serve.js";
 import { createPluginToolsMcpHandlers } from "./plugin-tools-handlers.js";

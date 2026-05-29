@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor model picker helpers and runtime behavior.
 export {
   buildDiscordModelPickerCustomId,
   buildDiscordModelPickerProviderItems,

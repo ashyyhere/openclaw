@@ -1,3 +1,4 @@
+/** Covers bash execution through injected operation adapters. */
 import { rm, stat } from "node:fs/promises";
 import { describe, expect, it } from "vitest";
 import { executeBashWithOperations } from "./bash-executor.js";

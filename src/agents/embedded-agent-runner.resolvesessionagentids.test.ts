@@ -1,3 +1,4 @@
+/** Tests session agent-id resolution in embedded-agent runner. */
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import { resolveSessionAgentIds } from "./agent-scope.js";

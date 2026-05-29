@@ -1,5 +1,6 @@
 // Narrow SSRF dispatcher helpers for plugins that pin DNS resolution before fetch.
 
+/** Re-exported API for src/plugin-sdk. */
 export {
   closeDispatcher,
   createPinnedDispatcher,

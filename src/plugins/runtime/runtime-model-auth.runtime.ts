@@ -1,3 +1,4 @@
+// Runtime boundary for plugins/runtime runtime model auth runtime behavior.
 import {
   getApiKeyForModel as resolveModelApiKey,
   resolveApiKeyForProvider as resolveProviderApiKey,
@@ -7,12 +8,14 @@ import type { Model } from "../../llm/types.js";
 import { prepareProviderRuntimeAuth } from "../provider-runtime.runtime.js";
 import type { ResolvedProviderRuntimeAuth } from "./model-auth-types.js";
 
+/** Reused helper for get Api Key For Model behavior in src/plugins/runtime. */
 export async function getApiKeyForModel(
   params: Parameters<typeof resolveModelApiKey>[0],
 ): Promise<Awaited<ReturnType<typeof resolveModelApiKey>>> {
   return resolveModelApiKey(params);
 }
 
+/** Reused helper for resolve Api Key For Provider behavior in src/plugins/runtime. */
 export async function resolveApiKeyForProvider(
   params: Parameters<typeof resolveProviderApiKey>[0],
 ): Promise<Awaited<ReturnType<typeof resolveProviderApiKey>>> {

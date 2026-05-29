@@ -1,3 +1,4 @@
+// Tests extensions/codex/src/app-server transport websocket test behavior.
 import { afterEach, describe, expect, it } from "vitest";
 import { WebSocketServer, type RawData } from "ws";
 import { CodexAppServerClient } from "./client.js";

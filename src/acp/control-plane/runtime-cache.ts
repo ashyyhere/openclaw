@@ -1,5 +1,7 @@
+/** Process-local cache for ACP runtime handles and idle lifecycle state. */
 import type { AcpRuntime, AcpRuntimeHandle, AcpRuntimeSessionMode } from "../runtime/types.js";
 
+/** Mutable runtime state retained while an ACP runtime can be reused. */
 export type CachedRuntimeState = {
   runtime: AcpRuntime;
   handle: AcpRuntimeHandle;
@@ -16,6 +18,7 @@ type RuntimeCacheEntry = {
   lastTouchedAt: number;
 };
 
+/** Shared type for Cached Runtime Snapshot in src/acp/control-plane. */
 export type CachedRuntimeSnapshot = {
   actorKey: string;
   state: CachedRuntimeState;
@@ -23,6 +26,7 @@ export type CachedRuntimeSnapshot = {
   idleMs: number;
 };
 
+/** Cache of ACP runtime handles keyed by runtime identity and session mode. */
 export class RuntimeCache {
   private readonly cache = new Map<string, RuntimeCacheEntry>();
 

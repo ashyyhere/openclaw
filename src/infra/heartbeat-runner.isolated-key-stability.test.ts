@@ -1,3 +1,4 @@
+// Tests infra heartbeat runner isolated key stability test behavior.
 import fs from "node:fs/promises";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import * as replyModule from "../auto-reply/reply.js";

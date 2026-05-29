@@ -1,3 +1,4 @@
+// Durable message sending through outbound delivery with receipts and recovery state.
 import type { ReplyPayload } from "../../auto-reply/reply-payload.js";
 import { formatErrorMessage } from "../../infra/errors.js";
 import type { OutboundDeliveryResult } from "../../infra/outbound/deliver-types.js";
@@ -26,6 +27,7 @@ import type {
 
 const log = createSubsystemLogger("channels/message/send");
 
+/** Parameters for sending a durable batch of reply payloads. */
 export type DurableMessageBatchSendParams = Omit<
   DeliverOutboundPayloadsParams,
   "abortSignal" | "onDeliveryIntent" | "payloads" | "queuePolicy"
@@ -38,12 +40,15 @@ export type DurableMessageBatchSendParams = Omit<
   previousReceipt?: MessageReceipt;
 };
 
+/** Shared type for Durable Message Suppression Reason in src/channels/message. */
 export type DurableMessageSuppressionReason =
   | OutboundPayloadDeliverySuppressionReason
   | "no_visible_result";
 
+/** Shared type for Durable Message Failure Stage in src/channels/message. */
 export type DurableMessageFailureStage = "platform_send" | "queue" | "unknown";
 
+/** Shared type for Durable Message Payload Delivery Outcome in src/channels/message. */
 export type DurableMessagePayloadDeliveryOutcome =
   | {
       index: number;
@@ -67,6 +72,7 @@ export type DurableMessagePayloadDeliveryOutcome =
       stage: DurableMessageFailureStage;
     };
 
+/** Shared type for Durable Message Batch Send Result in src/channels/message. */
 export type DurableMessageBatchSendResult =
   | {
       status: "sent";
@@ -99,6 +105,7 @@ export type DurableMessageBatchSendResult =
       payloadOutcomes?: DurableMessagePayloadDeliveryOutcome[];
     };
 
+/** Shared type for Durable Message Delivery Outcome in src/channels/message. */
 export type DurableMessageDeliveryOutcome = DurableMessageBatchSendResult;
 
 const neverAbortedSignal = new AbortController().signal;
@@ -129,6 +136,7 @@ function toDurablePayloadOutcomes(
   return outcomes.map((outcome) => toDurablePayloadOutcome(outcome));
 }
 
+/** Shared type for Durable Message Send Context Params in src/channels/message. */
 export type DurableMessageSendContextParams = DurableMessageBatchSendParams & {
   durability?: Exclude<MessageDurabilityPolicy, "disabled">;
   preview?: LiveMessageState<ReplyPayload>;
@@ -145,11 +153,13 @@ export type DurableMessageSendContextParams = DurableMessageBatchSendParams & {
   onSendFailure?: (error: unknown) => Promise<void> | void;
 };
 
+/** Shared type for Durable Message Send Context in src/channels/message. */
 export type DurableMessageSendContext = MessageSendContext<
   ReplyPayload,
   DurableMessageBatchSendResult
 >;
 
+/** Run a durable message send with lifecycle callbacks and context assembly. */
 export async function withDurableMessageSendContext<T>(
   params: DurableMessageSendContextParams,
   run: (ctx: DurableMessageSendContext) => Promise<T>,
@@ -331,6 +341,7 @@ export async function withDurableMessageSendContext<T>(
   }
 }
 
+/** Send a durable batch of reply payloads and return delivery/receipt state. */
 export async function sendDurableMessageBatch(
   params: DurableMessageSendContextParams,
 ): Promise<DurableMessageBatchSendResult> {

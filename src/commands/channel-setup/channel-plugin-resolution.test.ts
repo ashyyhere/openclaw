@@ -1,3 +1,4 @@
+/** Tests channel setup plugin resolution from config and catalog data. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { ChannelPluginCatalogEntry } from "../../channels/plugins/catalog.js";
 import type { ChannelPlugin } from "../../channels/plugins/types.js";

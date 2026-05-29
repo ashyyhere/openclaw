@@ -1,3 +1,4 @@
+/** Builds channel reply payloads from embedded-run results and metadata. */
 import type { SourceReplyDeliveryMode } from "../../../auto-reply/get-reply-options.types.js";
 import {
   createHeartbeatToolResponsePayload,
@@ -197,6 +198,7 @@ function resolveToolErrorWarningPolicy(params: {
   };
 }
 
+/** Converts a completed embedded run into reply payloads for delivery. */
 export function buildEmbeddedRunPayloads(params: {
   assistantTexts: string[];
   toolMetas: ToolMetaEntry[];

@@ -1,3 +1,4 @@
+// ui/src/ui/views markdown sidebar helpers and runtime behavior.
 import { html, nothing } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { resolveCanvasIframeUrl } from "../canvas-url.ts";
@@ -13,6 +14,7 @@ function resolveSidebarCanvasSandbox(
   return content.kind === "canvas" ? resolveEmbedSandbox(embedSandboxMode) : "allow-scripts";
 }
 
+/** Shared type for Markdown Sidebar Props in ui/src/ui/views. */
 export type MarkdownSidebarProps = {
   content: SidebarContent | null;
   error: string | null;
@@ -23,6 +25,7 @@ export type MarkdownSidebarProps = {
   allowExternalEmbedUrls?: boolean;
 };
 
+/** Reused helper for render Markdown Sidebar behavior in ui/src/ui/views. */
 export function renderMarkdownSidebar(props: MarkdownSidebarProps) {
   const content = props.content;
   return html`

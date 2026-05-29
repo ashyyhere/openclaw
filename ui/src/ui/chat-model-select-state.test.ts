@@ -1,3 +1,4 @@
+// Tests ui/src/ui chat model select state test behavior.
 import { describe, expect, it } from "vitest";
 import {
   resolveChatModelOverrideValue,

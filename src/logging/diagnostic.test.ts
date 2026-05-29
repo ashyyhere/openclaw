@@ -1,3 +1,4 @@
+// Tests logging diagnostic test behavior.
 import fs from "node:fs";
 import { importFreshModule } from "openclaw/plugin-sdk/test-fixtures";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";

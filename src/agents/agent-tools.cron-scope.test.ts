@@ -1,3 +1,4 @@
+/** Tests cron-scoped tool construction and policy. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { AnyAgentTool } from "./tools/common.js";
 

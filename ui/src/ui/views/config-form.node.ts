@@ -1,3 +1,4 @@
+// ui/src/ui/views config form node helpers and runtime behavior.
 import { html, nothing, type TemplateResult } from "lit";
 import { formatUnknownText } from "../format.ts";
 import { icons as sharedIcons } from "../icons.ts";
@@ -161,6 +162,7 @@ type SensitiveRenderState = {
   canReveal: boolean;
 };
 
+/** Shared type for Config Search Criteria in ui/src/ui/views. */
 export type ConfigSearchCriteria = {
   text: string;
   tags: string[];
@@ -217,6 +219,7 @@ function hasSearchCriteria(criteria: ConfigSearchCriteria | undefined): boolean 
   return Boolean(criteria && (criteria.text.length > 0 || criteria.tags.length > 0));
 }
 
+/** Reused helper for parse Config Search Query behavior in ui/src/ui/views. */
 export function parseConfigSearchQuery(query: string): ConfigSearchCriteria {
   const tags: string[] = [];
   const seen = new Set<string>();
@@ -333,6 +336,7 @@ function matchesNodeSelf(params: {
   ]);
 }
 
+/** Reused helper for matches Node Search behavior in ui/src/ui/views. */
 export function matchesNodeSearch(params: {
   schema: JsonSchema;
   value: unknown;
@@ -428,6 +432,7 @@ function renderTags(tags: string[]): TemplateResult | typeof nothing {
   `;
 }
 
+/** Reused helper for render Node behavior in ui/src/ui/views. */
 export function renderNode(params: {
   schema: JsonSchema;
   value: unknown;

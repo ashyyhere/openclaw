@@ -1,3 +1,4 @@
+// Tests plugins web provider public artifacts fallback test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({

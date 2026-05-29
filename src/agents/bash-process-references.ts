@@ -1,3 +1,4 @@
+/** Active background process reference formatting for agent replies. */
 import { formatDurationCompact } from "../infra/format-time/format-duration.js";
 import { listRunningSessions } from "./bash-process-registry.js";
 import { deriveSessionName } from "./bash-tools.shared.js";
@@ -5,6 +6,7 @@ import { deriveSessionName } from "./bash-tools.shared.js";
 const DEFAULT_ACTIVE_PROCESS_LIMIT = 8;
 const MAX_COMMAND_LABEL_CHARS = 140;
 
+/** Shared type for Active Process Session Reference in src/agents. */
 export type ActiveProcessSessionReference = {
   sessionId: string;
   status: "running";
@@ -28,6 +30,7 @@ function truncate(value: string, maxChars: number): string {
   return `${value.slice(0, Math.max(0, maxChars - 3))}...`;
 }
 
+/** List active background process sessions for a scope key. */
 export function listActiveProcessSessionReferences(params: {
   scopeKey?: string;
   now?: number;
@@ -64,6 +67,7 @@ export function listActiveProcessSessionReferences(params: {
     }));
 }
 
+/** Format one active process reference for display. */
 export function formatActiveProcessSessionReference(
   session: ActiveProcessSessionReference,
 ): string {

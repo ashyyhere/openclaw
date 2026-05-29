@@ -1,3 +1,4 @@
+// Tests interactive payload test behavior.
 import { describe, expect, it } from "vitest";
 import {
   hasReplyChannelData,

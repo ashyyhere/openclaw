@@ -1,3 +1,4 @@
+// Tests shared requirements test behavior.
 import { describe, expect, it } from "vitest";
 import {
   buildConfigChecks,

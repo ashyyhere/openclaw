@@ -1,3 +1,4 @@
+// crestodian rescue message helpers and runtime behavior.
 import { createHash, randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -25,6 +26,7 @@ type RescuePendingOperation = {
   auditDetails: Record<string, unknown>;
 };
 
+/** Shared type for Crestodian Rescue Message Input in src/crestodian. */
 export type CrestodianRescueMessageInput = {
   cfg: OpenClawConfig;
   command: CommandContext;
@@ -55,6 +57,7 @@ function createCaptureRuntime(): { runtime: RuntimeEnv; read: () => string } {
   };
 }
 
+/** Reused helper for extract Crestodian Rescue Message behavior in src/crestodian. */
 export function extractCrestodianRescueMessage(commandBody: string): string | null {
   const normalized = commandBody.trim();
   const lower = normalized.toLowerCase();
@@ -140,6 +143,7 @@ function formatUnsupportedRemoteOperation(operation: CrestodianOperation): strin
   return null;
 }
 
+/** Reused helper for run Crestodian Rescue Message behavior in src/crestodian. */
 export async function runCrestodianRescueMessage(
   input: CrestodianRescueMessageInput,
 ): Promise<string | null> {

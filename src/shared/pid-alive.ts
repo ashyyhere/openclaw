@@ -1,3 +1,4 @@
+// shared pid alive helpers and runtime behavior.
 import fsSync from "node:fs";
 
 function isValidPid(pid: number): boolean {
@@ -21,6 +22,7 @@ function isZombieProcess(pid: number): boolean {
   }
 }
 
+/** Reused helper for is Pid Alive behavior in src/shared. */
 export function isPidAlive(pid: number): boolean {
   if (!isValidPid(pid)) {
     return false;
@@ -36,6 +38,7 @@ export function isPidAlive(pid: number): boolean {
   return true;
 }
 
+/** Reused helper for is Pid Definitely Dead behavior in src/shared. */
 export function isPidDefinitelyDead(pid: number): boolean {
   if (!isValidPid(pid)) {
     return true;

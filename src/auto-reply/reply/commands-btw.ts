@@ -1,3 +1,4 @@
+// Chat command handler for BTW follow-up runs.
 import { resolveAgentDir, resolveSessionAgentId } from "../../agents/agent-scope.js";
 import { runBtwSideQuestion } from "../../agents/btw.js";
 import { extractBtwQuestion } from "./btw-command.js";
@@ -6,6 +7,7 @@ import type { CommandHandler } from "./commands-types.js";
 
 const BTW_USAGE = "Usage: /btw [side question]";
 
+/** Reused constant for handle Btw Command behavior in src/auto-reply/reply. */
 export const handleBtwCommand: CommandHandler = async (params, allowTextCommands) => {
   if (!allowTextCommands) {
     return null;

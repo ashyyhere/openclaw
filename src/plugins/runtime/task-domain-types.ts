@@ -1,3 +1,4 @@
+// plugins/runtime task domain types helpers and runtime behavior.
 import type { JsonValue } from "../../tasks/task-flow-registry.types.js";
 import type {
   TaskDeliveryStatus,
@@ -11,6 +12,7 @@ import type {
 } from "../../tasks/task-registry.types.js";
 import type { DeliveryContext } from "../../utils/delivery-context.types.js";
 
+/** Shared type for Task Run Aggregate Summary in src/plugins/runtime. */
 export type TaskRunAggregateSummary = {
   total: number;
   active: number;
@@ -20,6 +22,7 @@ export type TaskRunAggregateSummary = {
   byRuntime: TaskRuntimeCounts;
 };
 
+/** Shared type for Task Run View in src/plugins/runtime. */
 export type TaskRunView = {
   id: string;
   runtime: TaskRuntime;
@@ -48,8 +51,10 @@ export type TaskRunView = {
   terminalOutcome?: TaskTerminalOutcome;
 };
 
+/** Shared type for Task Run Detail in src/plugins/runtime. */
 export type TaskRunDetail = TaskRunView;
 
+/** Shared type for Task Run Cancel Result in src/plugins/runtime. */
 export type TaskRunCancelResult = {
   found: boolean;
   cancelled: boolean;
@@ -57,6 +62,7 @@ export type TaskRunCancelResult = {
   task?: TaskRunDetail;
 };
 
+/** Shared type for Task Flow View in src/plugins/runtime. */
 export type TaskFlowView = {
   id: string;
   ownerKey: string;
@@ -71,6 +77,7 @@ export type TaskFlowView = {
   endedAt?: number;
 };
 
+/** Shared type for Task Flow Detail in src/plugins/runtime. */
 export type TaskFlowDetail = TaskFlowView & {
   state?: JsonValue;
   wait?: JsonValue;

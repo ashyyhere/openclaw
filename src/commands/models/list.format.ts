@@ -1,11 +1,14 @@
 import { isRich as isRichTerminal, theme } from "../../../packages/terminal-core/src/theme.js";
 export { maskApiKey } from "../../utils/mask-api-key.js";
 
+/** Reused constant for is Rich behavior in src/commands/models. */
 export const isRich = (opts?: { json?: boolean; plain?: boolean }) =>
   isRichTerminal() && !opts?.json && !opts?.plain;
 
+/** Reused constant for pad behavior in src/commands/models. */
 export const pad = (value: string, size: number) => value.padEnd(size);
 
+/** Reused constant for format Tag behavior in src/commands/models. */
 export const formatTag = (tag: string, rich: boolean) => {
   if (!rich) {
     return tag;
@@ -34,6 +37,7 @@ export const formatTag = (tag: string, rich: boolean) => {
   return theme.muted(tag);
 };
 
+/** Reused constant for truncate behavior in src/commands/models. */
 export const truncate = (value: string, max: number) => {
   if (value.length <= max) {
     return value;

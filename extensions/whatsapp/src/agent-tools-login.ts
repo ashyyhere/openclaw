@@ -1,3 +1,4 @@
+// extensions/whatsapp/src agent tools login helpers and runtime behavior.
 import {
   optionalPositiveIntegerSchema,
   readPositiveIntegerParam,

@@ -1,3 +1,4 @@
+// secrets channel contract api helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -70,11 +71,13 @@ function loadBundledChannelPublicArtifact(
   return undefined;
 }
 
+/** Shared type for Bundled Channel Secret Contract Api in src/secrets. */
 export type BundledChannelSecretContractApi = Pick<
   BundledChannelContractApi,
   "collectRuntimeConfigAssignments" | "secretTargetRegistryEntries"
 >;
 
+/** Reused helper for load Bundled Channel Secret Contract Api behavior in src/secrets. */
 export function loadBundledChannelSecretContractApi(
   channelId: string,
 ): BundledChannelSecretContractApi | undefined {
@@ -198,6 +201,7 @@ function listChannelSecretContractRecords(params: {
     });
 }
 
+/** Reused helper for load Channel Secret Contract Api behavior in src/secrets. */
 export function loadChannelSecretContractApi(params: {
   channelId: string;
   config: OpenClawConfig;
@@ -223,6 +227,7 @@ export function loadChannelSecretContractApi(params: {
   return undefined;
 }
 
+/** Reused helper for load Channel Secret Contract Api For Record behavior in src/secrets. */
 export function loadChannelSecretContractApiForRecord(
   record: PluginManifestRecord,
 ): BundledChannelSecretContractApi | undefined {
@@ -232,11 +237,13 @@ export function loadChannelSecretContractApiForRecord(
   return loadExternalChannelSecretContractFromRecord(record);
 }
 
+/** Shared type for Bundled Channel Security Contract Api in src/secrets. */
 export type BundledChannelSecurityContractApi = Pick<
   BundledChannelContractApi,
   "unsupportedSecretRefSurfacePatterns" | "collectUnsupportedSecretRefConfigCandidates"
 >;
 
+/** Reused helper for load Bundled Channel Security Contract Api behavior in src/secrets. */
 export function loadBundledChannelSecurityContractApi(
   channelId: string,
 ): BundledChannelSecurityContractApi | undefined {

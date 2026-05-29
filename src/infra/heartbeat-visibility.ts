@@ -1,7 +1,9 @@
+// infra heartbeat visibility helpers and runtime behavior.
 import type { ChannelHeartbeatVisibilityConfig } from "../config/types.channels.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { GatewayMessageChannel } from "../utils/message-channel.js";
 
+/** Shared type for Resolved Heartbeat Visibility in src/infra. */
 export type ResolvedHeartbeatVisibility = {
   showOk: boolean;
   showAlerts: boolean;

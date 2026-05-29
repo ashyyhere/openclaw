@@ -1,3 +1,4 @@
+// Tests infra/outbound channel target test behavior.
 import { describe, expect, it } from "vitest";
 import { applyTargetToParams } from "./channel-target.js";
 

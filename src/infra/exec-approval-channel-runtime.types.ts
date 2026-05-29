@@ -1,3 +1,4 @@
+// Shared types for infra exec approval channel runtime types behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { ExecApprovalRequest, ExecApprovalResolved } from "./exec-approvals.js";
 import type { PluginApprovalRequest, PluginApprovalResolved } from "./plugin-approvals.js";
@@ -5,8 +6,10 @@ import type { PluginApprovalRequest, PluginApprovalResolved } from "./plugin-app
 type ApprovalRequestEvent = ExecApprovalRequest | PluginApprovalRequest;
 type ApprovalResolvedEvent = ExecApprovalResolved | PluginApprovalResolved;
 
+/** Shared type for Exec Approval Channel Runtime Event Kind in src/infra. */
 export type ExecApprovalChannelRuntimeEventKind = "exec" | "plugin";
 
+/** Shared type for Exec Approval Channel Runtime Adapter in src/infra. */
 export type ExecApprovalChannelRuntimeAdapter<
   TPending,
   TRequest extends ApprovalRequestEvent = ExecApprovalRequest,
@@ -31,6 +34,7 @@ export type ExecApprovalChannelRuntimeAdapter<
   nowMs?: () => number;
 };
 
+/** Shared type for Exec Approval Channel Runtime in src/infra. */
 export type ExecApprovalChannelRuntime<
   TRequest extends ApprovalRequestEvent = ExecApprovalRequest,
   TResolved extends ApprovalResolvedEvent = ExecApprovalResolved,

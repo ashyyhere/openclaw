@@ -1,14 +1,17 @@
+// tts tts provider helpers helpers and runtime behavior.
 import { rmSync } from "node:fs";
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 
 const TEMP_FILE_CLEANUP_DELAY_MS = 5 * 60 * 1000; // 5 minutes
 
+/** Reused helper for require In Range behavior in src/tts. */
 export function requireInRange(value: number, min: number, max: number, label: string): void {
   if (!Number.isFinite(value) || value < min || value > max) {
     throw new Error(`${label} must be between ${min} and ${max}`);
   }
 }
 
+/** Reused helper for normalize Language Code behavior in src/tts. */
 export function normalizeLanguageCode(code?: string): string | undefined {
   const normalized = normalizeOptionalLowercaseString(code);
   if (!normalized) {
@@ -20,6 +23,7 @@ export function normalizeLanguageCode(code?: string): string | undefined {
   return normalized;
 }
 
+/** Reused helper for normalize Apply Text Normalization behavior in src/tts. */
 export function normalizeApplyTextNormalization(mode?: string): "auto" | "on" | "off" | undefined {
   const normalized = normalizeOptionalLowercaseString(mode);
   if (!normalized) {
@@ -31,6 +35,7 @@ export function normalizeApplyTextNormalization(mode?: string): "auto" | "on" | 
   throw new Error("applyTextNormalization must be one of: auto, on, off");
 }
 
+/** Reused helper for normalize Seed behavior in src/tts. */
 export function normalizeSeed(seed?: number): number | undefined {
   if (seed == null) {
     return undefined;
@@ -42,6 +47,7 @@ export function normalizeSeed(seed?: number): number | undefined {
   return next;
 }
 
+/** Reused helper for schedule Cleanup behavior in src/tts. */
 export function scheduleCleanup(
   tempDir: string,
   delayMs: number = TEMP_FILE_CLEANUP_DELAY_MS,

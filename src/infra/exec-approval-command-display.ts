@@ -1,3 +1,4 @@
+// infra exec approval command display helpers and runtime behavior.
 import { redactSensitiveText, resolveRedactOptions } from "../logging/redact.js";
 import type { ExecApprovalRequestPayload } from "./exec-approvals.js";
 
@@ -38,6 +39,7 @@ function escapeInvisibles(text: string, options?: { preserveLineBreaks?: boolean
   );
 }
 
+/** Shared type for Sanitized Exec Approval Display Text in src/infra. */
 export type SanitizedExecApprovalDisplayText = {
   text: string;
   truncated: boolean;
@@ -180,16 +182,19 @@ function sanitizeExecApprovalDisplayTextInternal(
   return truncateForDisplay(out);
 }
 
+/** Reused helper for sanitize Exec Approval Display Text behavior in src/infra. */
 export function sanitizeExecApprovalDisplayText(commandText: string): string {
   return sanitizeExecApprovalDisplayTextInternal(commandText).text;
 }
 
+/** Reused helper for sanitize Exec Approval Display Text With Status behavior in src/infra. */
 export function sanitizeExecApprovalDisplayTextWithStatus(
   commandText: string,
 ): SanitizedExecApprovalDisplayText {
   return sanitizeExecApprovalDisplayTextInternal(commandText);
 }
 
+/** Reused helper for sanitize Exec Approval Warning Text behavior in src/infra. */
 export function sanitizeExecApprovalWarningText(warningText: string): string {
   return sanitizeExecApprovalDisplayTextInternal(normalizeDisplayLineBreaks(warningText), {
     preserveLineBreaks: true,
@@ -209,6 +214,7 @@ function normalizePreview(commandText: string, commandPreview?: string | null): 
   return preview;
 }
 
+/** Reused helper for resolve Exec Approval Command Display behavior in src/infra. */
 export function resolveExecApprovalCommandDisplay(request: ExecApprovalRequestPayload): {
   commandText: string;
   commandPreview: string | null;

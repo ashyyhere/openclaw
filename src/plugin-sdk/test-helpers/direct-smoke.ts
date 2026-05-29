@@ -1,3 +1,4 @@
+// plugin-sdk/test-helpers direct smoke helpers and runtime behavior.
 import { execFile } from "node:child_process";
 import path from "node:path";
 import { fileURLToPath } from "node:url";

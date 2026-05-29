@@ -1,3 +1,4 @@
+// extensions/browser/src/cli browser cli manage helpers and runtime behavior.
 import type { Command } from "commander";
 import { runCommandWithRuntime } from "../core-api.js";
 import {

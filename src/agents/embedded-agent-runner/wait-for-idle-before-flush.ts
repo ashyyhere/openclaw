@@ -1,3 +1,4 @@
+/** Waits for idle agents before flushing pending tool-result delivery state. */
 type IdleAwareAgent = {
   waitForIdle?: (() => Promise<void>) | undefined;
 };
@@ -40,6 +41,7 @@ async function waitForAgentIdleBestEffort(
   }
 }
 
+/** Flushes pending tool results after agent idle, or clears them on timeout/failure. */
 export async function flushPendingToolResultsAfterIdle(opts: {
   agent: IdleAwareAgent | null | undefined;
   sessionManager: ToolResultFlushManager | null | undefined;

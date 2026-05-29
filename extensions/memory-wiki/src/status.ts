@@ -1,3 +1,4 @@
+// extensions/memory-wiki/src status helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { listActiveMemoryPublicArtifacts } from "openclaw/plugin-sdk/memory-host-core";

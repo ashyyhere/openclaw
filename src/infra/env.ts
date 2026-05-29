@@ -1,3 +1,4 @@
+// infra env helpers and runtime behavior.
 import type { SubsystemLogger } from "../logging/subsystem.js";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
@@ -33,6 +34,7 @@ function formatEnvValue(value: string, redact?: boolean): string {
   return `${singleLine.slice(0, 160)}…`;
 }
 
+/** Reused helper for log Accepted Env Option behavior in src/infra. */
 export function logAcceptedEnvOption(option: AcceptedEnvOption): void {
   if (process.env.VITEST || process.env.NODE_ENV === "test") {
     return;
@@ -56,12 +58,14 @@ export function logAcceptedEnvOption(option: AcceptedEnvOption): void {
     });
 }
 
+/** Reused helper for normalize Zai Env behavior in src/infra. */
 export function normalizeZaiEnv(): void {
   if (!process.env.ZAI_API_KEY?.trim() && process.env.Z_AI_API_KEY?.trim()) {
     process.env.ZAI_API_KEY = process.env.Z_AI_API_KEY;
   }
 }
 
+/** Reused helper for is Truthy Env Value behavior in src/infra. */
 export function isTruthyEnvValue(value?: string): boolean {
   if (typeof value !== "string") {
     return false;
@@ -77,6 +81,7 @@ export function isTruthyEnvValue(value?: string): boolean {
   }
 }
 
+/** Reused helper for is Vitest Runtime Env behavior in src/infra. */
 export function isVitestRuntimeEnv(env: NodeJS.ProcessEnv = process.env): boolean {
   return (
     env.VITEST === "true" ||
@@ -87,6 +92,7 @@ export function isVitestRuntimeEnv(env: NodeJS.ProcessEnv = process.env): boolea
   );
 }
 
+/** Reused helper for normalize Env behavior in src/infra. */
 export function normalizeEnv(): void {
   normalizeZaiEnv();
 }

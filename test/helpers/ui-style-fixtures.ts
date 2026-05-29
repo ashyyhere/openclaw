@@ -1,3 +1,4 @@
+// test/helpers ui style fixtures helpers and runtime behavior.
 import { existsSync, readFileSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";

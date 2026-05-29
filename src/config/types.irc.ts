@@ -1,6 +1,8 @@
+// config types irc helpers and runtime behavior.
 import type { CommonChannelMessagingConfig } from "./types.channel-messaging-common.js";
 import type { GroupToolPolicyBySenderConfig, GroupToolPolicyConfig } from "./types.tools.js";
 
+/** Shared type for Irc Account Config in src/config. */
 export type IrcAccountConfig = CommonChannelMessagingConfig & {
   /** IRC server hostname (example: irc.example.com). */
   host?: string;
@@ -53,6 +55,7 @@ export type IrcAccountConfig = CommonChannelMessagingConfig & {
   mentionPatterns?: string[];
 };
 
+/** Shared type for Irc Config in src/config. */
 export type IrcConfig = {
   /** Optional per-account IRC configuration (multi-account). */
   accounts?: Record<string, IrcAccountConfig>;

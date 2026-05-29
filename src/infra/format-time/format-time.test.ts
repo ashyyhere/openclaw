@@ -1,3 +1,4 @@
+// Tests infra/format-time format time test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { formatUtcTimestamp, formatZonedTimestamp, resolveTimezone } from "./format-datetime.js";
 import {

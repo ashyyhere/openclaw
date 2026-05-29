@@ -1,3 +1,4 @@
+// config paths helpers and runtime behavior.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -16,6 +17,7 @@ export function resolveIsNixMode(env: NodeJS.ProcessEnv = process.env): boolean 
   return env.OPENCLAW_NIX_MODE === "1";
 }
 
+/** Reused constant for is Nix Mode behavior in src/config. */
 export const isNixMode = resolveIsNixMode();
 
 // Support the remaining legacy pre-rebrand state dir.
@@ -41,14 +43,17 @@ function newStateDir(homedir: () => string = resolveDefaultHomeDir): string {
   return path.join(homedir(), NEW_STATE_DIRNAME);
 }
 
+/** Reused helper for resolve Legacy State Dir behavior in src/config. */
 export function resolveLegacyStateDir(homedir: () => string = resolveDefaultHomeDir): string {
   return legacyStateDirs(homedir)[0] ?? newStateDir(homedir);
 }
 
+/** Reused helper for resolve Legacy State Dirs behavior in src/config. */
 export function resolveLegacyStateDirs(homedir: () => string = resolveDefaultHomeDir): string[] {
   return legacyStateDirs(homedir);
 }
 
+/** Reused helper for resolve New State Dir behavior in src/config. */
 export function resolveNewStateDir(homedir: () => string = resolveDefaultHomeDir): string {
   return newStateDir(homedir);
 }
@@ -89,6 +94,7 @@ export function resolveStateDir(
   return newDir;
 }
 
+/** Reused helper for normalize State Dir Env behavior in src/config. */
 export function normalizeStateDirEnv(env: NodeJS.ProcessEnv = process.env): void {
   const effectiveHomedir = () => resolveRequiredHomeDir(env, envHomedir(env));
   const openclawOverride = env.OPENCLAW_STATE_DIR?.trim();
@@ -145,6 +151,7 @@ export function resolveIncludeRoots(
   return roots;
 }
 
+/** Reused constant for STATE DIR behavior in src/config. */
 export const STATE_DIR = resolveStateDir();
 
 /**
@@ -228,6 +235,7 @@ export function resolveConfigPath(
   return path.join(stateDir, CONFIG_FILENAME);
 }
 
+/** Reused constant for CONFIG PATH behavior in src/config. */
 export const CONFIG_PATH = resolveConfigPathCandidate();
 
 /**
@@ -260,6 +268,7 @@ export function resolveDefaultConfigCandidates(
   return candidates;
 }
 
+/** Reused constant for DEFAULT GATEWAY PORT behavior in src/config. */
 export const DEFAULT_GATEWAY_PORT = 18789;
 
 /**
@@ -293,6 +302,7 @@ export function resolveOAuthDir(
   return path.join(stateDir, "credentials");
 }
 
+/** Reused helper for resolve OAuth Path behavior in src/config. */
 export function resolveOAuthPath(
   env: NodeJS.ProcessEnv = process.env,
   stateDir: string = resolveStateDir(env, envHomedir(env)),
@@ -328,6 +338,7 @@ function parseGatewayPortEnvValue(raw: string | undefined): number | null {
   return parseTcpPort(suffix);
 }
 
+/** Reused helper for resolve Gateway Port behavior in src/config. */
 export function resolveGatewayPort(
   cfg?: OpenClawConfig,
   env: NodeJS.ProcessEnv = process.env,

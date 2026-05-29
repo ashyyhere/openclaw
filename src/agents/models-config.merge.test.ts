@@ -1,3 +1,4 @@
+/** Tests merging implicit and explicit generated provider config. */
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { ExistingProviderConfig } from "./models-config.merge.js";
 import type { ProviderConfig } from "./models-config.providers.secrets.js";

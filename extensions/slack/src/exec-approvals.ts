@@ -1,3 +1,4 @@
+// extensions/slack/src exec approvals helpers and runtime behavior.
 import { resolveApprovalApprovers } from "openclaw/plugin-sdk/approval-auth-runtime";
 import {
   createChannelExecApprovalProfile,

@@ -1,3 +1,4 @@
+// Tests test/scripts mantis telegram desktop proof workflow test behavior.
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { dirname, normalize } from "node:path";
 import { describe, expect, it } from "vitest";

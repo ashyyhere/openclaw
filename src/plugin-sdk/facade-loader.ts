@@ -1,3 +1,4 @@
+/** Public SDK loader for bundled plugin facade modules with boundary checks and lazy proxies. */
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -112,19 +113,23 @@ function createLazyFacadeProxyValue<T extends object>(params: {
   }) as T;
 }
 
+/** Create an object proxy that loads the real facade only on first use. */
 export function createLazyFacadeObjectValue<T extends object>(load: () => T): T {
   return createLazyFacadeProxyValue({ load, target: {} });
 }
 
+/** Create an array proxy that loads the real facade only on first use. */
 export function createLazyFacadeArrayValue<T extends readonly unknown[]>(load: () => T): T {
   return createLazyFacadeProxyValue({ load, target: [] });
 }
 
+/** Resolved facade module path plus the root it must stay inside. */
 export type FacadeModuleLocation = {
   modulePath: string;
   boundaryRoot: string;
 };
 
+/** Load a facade module from a pre-resolved location after validating the boundary root. */
 export function loadFacadeModuleAtLocationSync<T extends object>(params: {
   location: FacadeModuleLocation;
   trackedPluginId: string | (() => string);
@@ -162,6 +167,8 @@ export function loadFacadeModuleAtLocationSync<T extends object>(params: {
 
   let loaded: T;
   try {
+    // Cache a sentinel before execution so cyclic facade imports see one stable object; replace
+    // its properties after the module finishes loading.
     loaded =
       params.loadModule?.(location.modulePath) ??
       (getModuleLoader(location.modulePath)(location.modulePath) as T);
@@ -180,6 +187,7 @@ export function loadFacadeModuleAtLocationSync<T extends object>(params: {
 }
 
 // oxlint-disable-next-line typescript/no-unnecessary-type-parameters -- Dynamic facade loaders use caller-supplied module surface types.
+/** Resolve and load a bundled plugin public surface module synchronously. */
 export function loadBundledPluginPublicSurfaceModuleSync<T extends object>(params: {
   dirName: string;
   artifactBasename: string;
@@ -198,6 +206,7 @@ export function loadBundledPluginPublicSurfaceModuleSync<T extends object>(param
   });
 }
 
+/** Reused helper for load Bundled Plugin Public Surface Module behavior in src/plugin-sdk. */
 export async function loadBundledPluginPublicSurfaceModule<T extends object>(params: {
   dirName: string;
   artifactBasename: string;
@@ -248,10 +257,12 @@ export async function loadBundledPluginPublicSurfaceModule<T extends object>(par
   }
 }
 
+/** List bundled plugin ids whose facade modules have been imported in this process. */
 export function listImportedBundledPluginFacadeIds(): string[] {
   return [...loadedFacadePluginIds].toSorted((left, right) => left.localeCompare(right));
 }
 
+/** Reused helper for reset Facade Loader State For Test behavior in src/plugin-sdk. */
 export function resetFacadeLoaderStateForTest(): void {
   loadedFacadeModules.clear();
   loadedFacadePluginIds.clear();
@@ -260,6 +271,7 @@ export function resetFacadeLoaderStateForTest(): void {
   cachedOpenClawPackageRoot = undefined;
 }
 
+/** Reused helper for set Facade Loader Source Transform Factory For Test behavior in src/plugin-sdk. */
 export function setFacadeLoaderSourceTransformFactoryForTest(
   factory: PluginModuleLoaderFactory | undefined,
 ): void {

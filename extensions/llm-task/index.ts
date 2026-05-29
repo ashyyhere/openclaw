@@ -1,3 +1,4 @@
+// extensions/llm-task index helpers and runtime behavior.
 import { optionalPositiveIntegerSchema } from "openclaw/plugin-sdk/channel-actions";
 import { defineToolPlugin } from "openclaw/plugin-sdk/tool-plugin";
 import { Type } from "typebox";

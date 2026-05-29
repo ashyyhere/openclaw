@@ -1,3 +1,4 @@
+// extensions/anthropic cli migration helpers and runtime behavior.
 import {
   CLAUDE_CLI_PROFILE_ID,
   type OpenClawConfig,

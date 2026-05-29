@@ -1,3 +1,4 @@
+// config context visibility helpers and runtime behavior.
 import { resolveAccountEntry } from "../routing/account-lookup.js";
 import { normalizeAccountId } from "../routing/session-key.js";
 import type { OpenClawConfig } from "./config.js";
@@ -16,12 +17,14 @@ type ContextVisibilityDefaultsConfig = {
   };
 };
 
+/** Reused helper for resolve Default Context Visibility behavior in src/config. */
 export function resolveDefaultContextVisibility(
   cfg: ContextVisibilityDefaultsConfig,
 ): ContextVisibilityMode | undefined {
   return cfg.channels?.defaults?.contextVisibility;
 }
 
+/** Reused helper for resolve Channel Context Visibility Mode behavior in src/config. */
 export function resolveChannelContextVisibilityMode(params: {
   cfg: OpenClawConfig;
   channel: string;

@@ -1,3 +1,4 @@
+// Keyboard-level tests for the custom migration multiselect prompt shortcuts.
 import { PassThrough, Writable } from "node:stream";
 import { describe, expect, it } from "vitest";
 import {

@@ -1,3 +1,4 @@
+/** Warms and checks provider auth state for model availability/UI paths. */
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { Worker } from "node:worker_threads";
@@ -40,6 +41,7 @@ type PreparedProviderAuthState = {
   providers: ReadonlyMap<string, boolean>;
 };
 
+/** Snapshot of provider auth availability for the current config. */
 export type ProviderAuthWarmSnapshot = {
   agents: Array<{
     agentId: string;
@@ -105,6 +107,7 @@ function cancelCurrentProviderAuthWarmWorker(): void {
   void current.worker.terminate();
 }
 
+/** Clear cached provider auth state. */
 export function clearCurrentProviderAuthState(): void {
   currentProviderAuthStates = null;
   currentProviderAuthStateGeneration += 1;
@@ -142,6 +145,7 @@ function resolveProviderAuthConfigFingerprint(cfg: OpenClawConfig | undefined): 
   return fingerprint;
 }
 
+/** Return whether a model provider currently has usable auth. */
 export async function hasAuthForModelProvider(params: {
   provider: string;
   modelApi?: string;
@@ -242,6 +246,7 @@ export async function hasAuthForModelProvider(params: {
   return false;
 }
 
+/** Create a provider auth predicate with shared state/cache. */
 export function createProviderAuthChecker(params: {
   cfg?: OpenClawConfig;
   workspaceDir?: string;
@@ -340,6 +345,7 @@ function shouldOmitFalsePreparedAuthForProcessSyntheticProvider(params: {
     .some((ref) => eligibleRefs.has(normalizeProviderId(ref)));
 }
 
+/** Build a snapshot of auth availability for configured providers. */
 export async function buildCurrentProviderAuthStateSnapshot(
   cfg: OpenClawConfig,
   options: {
@@ -428,6 +434,7 @@ export async function buildCurrentProviderAuthStateSnapshot(
   return serializeProviderAuthStates(states);
 }
 
+/** Warm provider auth state on the main thread. */
 export async function warmCurrentProviderAuthState(
   cfg: OpenClawConfig,
   options: { isCancelled?: () => boolean } = {},
@@ -665,6 +672,7 @@ function runProviderAuthWarmWorker(params: {
   });
 }
 
+/** Warm provider auth state using a worker when available. */
 export async function warmCurrentProviderAuthStateOffMainThread(
   cfg: OpenClawConfig,
   options: {

@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src format wrap md test behavior.
 import { describe, expect, it } from "vitest";
 import {
   markdownToTelegramChunks,

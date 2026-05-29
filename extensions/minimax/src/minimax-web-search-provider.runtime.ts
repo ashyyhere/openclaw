@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/minimax/src minimax web search provider runtime behavior.
 import {
   createProviderHttpError,
   formatProviderHttpErrorMessage,

@@ -1,6 +1,8 @@
+// shared/text tool call shaped text helpers and runtime behavior.
 import { asOptionalRecord } from "../record-coerce.js";
 import { normalizeOptionalString as readTrimmedString } from "../string-coerce.js";
 
+/** Shared type for Tool Call Shaped Text Detection in src/shared/text. */
 export type ToolCallShapedTextDetection = {
   kind: "json_tool_call" | "xml_tool_call" | "bracketed_tool_call" | "react_action";
   toolName?: string;
@@ -215,6 +217,7 @@ function detectReactAction(text: string): ToolCallShapedTextDetection | null {
   return { kind: "react_action", toolName: match[1] };
 }
 
+/** Reused helper for detect Tool Call Shaped Text behavior in src/shared/text. */
 export function detectToolCallShapedText(text: string): ToolCallShapedTextDetection | null {
   const trimmed = text.slice(0, MAX_SCAN_CHARS).trim();
   if (!trimmed || !TOOL_TEXT_PREFILTER_RE.test(trimmed)) {

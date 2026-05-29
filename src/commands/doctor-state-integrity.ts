@@ -1,3 +1,4 @@
+/** Doctor checks for state directory integrity and storage backing. */
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -331,6 +332,7 @@ type LinuxMountInfoEntry = {
   source: string;
 };
 
+/** Shared type for Linux Sd Backed State Dir in src/commands. */
 export type LinuxSdBackedStateDir = {
   path: string;
   mountPoint: string;
@@ -418,6 +420,7 @@ function tryReadLinuxMountInfo(): string | null {
   }
 }
 
+/** Reused helper for detect Linux Sd Backed State Dir behavior in src/commands. */
 export function detectLinuxSdBackedStateDir(
   stateDir: string,
   deps?: {
@@ -470,6 +473,7 @@ export function detectLinuxSdBackedStateDir(
   };
 }
 
+/** Reused helper for format Linux Sd Backed State Dir Warning behavior in src/commands. */
 export function formatLinuxSdBackedStateDirWarning(
   displayStateDir: string,
   linuxSdBackedStateDir: LinuxSdBackedStateDir,
@@ -488,6 +492,7 @@ export function formatLinuxSdBackedStateDirWarning(
   ].join("\n");
 }
 
+/** Reused helper for detect Mac Cloud Synced State Dir behavior in src/commands. */
 export function detectMacCloudSyncedStateDir(
   stateDir: string,
   deps?: {
@@ -611,6 +616,7 @@ function shouldSuppressOrphanTranscriptWarning(cfg: OpenClawConfig, agentId: str
   return backendConfig?.backend === "qmd" && backendConfig.qmd?.sessions.enabled === true;
 }
 
+/** Reused helper for note State Integrity behavior in src/commands. */
 export async function noteStateIntegrity(
   cfg: OpenClawConfig,
   prompter: DoctorPrompterLike,
@@ -1057,6 +1063,7 @@ export async function noteStateIntegrity(
   }
 }
 
+/** Reused helper for collect Workspace Backup Tip behavior in src/commands. */
 export function collectWorkspaceBackupTip(workspaceDir: string): string | null {
   if (!existsDir(workspaceDir)) {
     return null;
@@ -1072,6 +1079,7 @@ export function collectWorkspaceBackupTip(workspaceDir: string): string | null {
   ].join("\n");
 }
 
+/** Reused helper for note Workspace Backup Tip behavior in src/commands. */
 export function noteWorkspaceBackupTip(workspaceDir: string) {
   const tip = collectWorkspaceBackupTip(workspaceDir);
   if (tip) {

@@ -1,3 +1,4 @@
+/** Tests reply payload normalization, media delivery, and content detection helpers. */
 import { describe, expect, it, vi } from "vitest";
 import {
   buildTtsSupplementMediaPayload,

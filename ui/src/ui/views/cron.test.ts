@@ -1,3 +1,4 @@
+// Tests ui/src/ui/views cron test behavior.
 import { render } from "lit";
 import { describe, expect, it, vi } from "vitest";
 import { DEFAULT_CRON_FORM } from "../app-defaults.ts";

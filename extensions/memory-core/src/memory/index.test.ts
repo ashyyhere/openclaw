@@ -1,3 +1,4 @@
+// Tests extensions/memory-core/src/memory index test behavior.
 import { mkdirSync, rmSync } from "node:fs";
 import fs from "node:fs/promises";
 import os from "node:os";

@@ -17,11 +17,13 @@ export function resolveTimezone(value: string): string | undefined {
   }
 }
 
+/** Shared type for Format Timestamp Options in src/infra/format-time. */
 export type FormatTimestampOptions = {
   /** Include seconds in the output. Default: false */
   displaySeconds?: boolean;
 };
 
+/** Shared type for Format Zoned Timestamp Options in src/infra/format-time. */
 export type FormatZonedTimestampOptions = FormatTimestampOptions & {
   /** IANA timezone string (e.g., 'America/New_York'). Default: system timezone */
   timeZone?: string;

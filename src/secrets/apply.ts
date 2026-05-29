@@ -1,3 +1,4 @@
+// secrets apply helpers and runtime behavior.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -84,6 +85,7 @@ type MutableAuthProfileStore = Record<string, unknown> & {
   profiles: Record<string, unknown>;
 };
 
+/** Shared type for Secrets Apply Result in src/secrets. */
 export type SecretsApplyResult = {
   mode: "dry-run" | "write";
   changed: boolean;
@@ -754,6 +756,7 @@ function toJsonWrite(pathname: string, value: Record<string, unknown>): ApplyWri
   };
 }
 
+/** Reused helper for run Secrets Apply behavior in src/secrets. */
 export async function runSecretsApply(params: {
   plan: SecretsApplyPlan;
   env?: NodeJS.ProcessEnv;
@@ -869,6 +872,7 @@ export async function runSecretsApply(params: {
   };
 }
 
+/** Reused constant for testing behavior in src/secrets. */
 export const testing = {
   async projectConfigForTest(params: {
     plan: SecretsApplyPlan;
@@ -883,4 +887,5 @@ export const testing = {
     return projected.nextConfig;
   },
 };
+/** Re-exported API for src/secrets, starting with testing. */
 export { testing as __testing };

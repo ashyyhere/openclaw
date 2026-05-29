@@ -1,6 +1,8 @@
+// packages/gateway-protocol/src/schema tasks helpers and runtime behavior.
 import { Type } from "typebox";
 import { NonEmptyString } from "./primitives.js";
 
+/** Public constant for Task Ledger Status Schema behavior in packages/gateway-protocol. */
 export const TaskLedgerStatusSchema = Type.Union([
   Type.Literal("queued"),
   Type.Literal("running"),
@@ -12,6 +14,7 @@ export const TaskLedgerStatusSchema = Type.Union([
 
 const TimestampSchema = Type.Union([Type.String(), Type.Integer({ minimum: 0 })]);
 
+/** Public constant for Task Summary Schema behavior in packages/gateway-protocol. */
 export const TaskSummarySchema = Type.Object(
   {
     id: NonEmptyString,
@@ -39,6 +42,7 @@ export const TaskSummarySchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Tasks List Params Schema behavior in packages/gateway-protocol. */
 export const TasksListParamsSchema = Type.Object(
   {
     status: Type.Optional(Type.Union([TaskLedgerStatusSchema, Type.Array(TaskLedgerStatusSchema)])),
@@ -50,6 +54,7 @@ export const TasksListParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Tasks List Result Schema behavior in packages/gateway-protocol. */
 export const TasksListResultSchema = Type.Object(
   {
     tasks: Type.Array(TaskSummarySchema),
@@ -58,6 +63,7 @@ export const TasksListResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Tasks Get Params Schema behavior in packages/gateway-protocol. */
 export const TasksGetParamsSchema = Type.Object(
   {
     taskId: NonEmptyString,
@@ -65,6 +71,7 @@ export const TasksGetParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Tasks Get Result Schema behavior in packages/gateway-protocol. */
 export const TasksGetResultSchema = Type.Object(
   {
     task: TaskSummarySchema,
@@ -72,6 +79,7 @@ export const TasksGetResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Tasks Cancel Params Schema behavior in packages/gateway-protocol. */
 export const TasksCancelParamsSchema = Type.Object(
   {
     taskId: NonEmptyString,
@@ -80,6 +88,7 @@ export const TasksCancelParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Tasks Cancel Result Schema behavior in packages/gateway-protocol. */
 export const TasksCancelResultSchema = Type.Object(
   {
     found: Type.Boolean(),

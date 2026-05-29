@@ -1,3 +1,4 @@
+// infra push web helpers and runtime behavior.
 import { createHash, randomUUID } from "node:crypto";
 import path from "node:path";
 import { resolveStateDir } from "../config/paths.js";
@@ -99,6 +100,7 @@ async function persistState(state: WebPushRegistrationState, baseDir?: string): 
 
 // --- VAPID keys ---
 
+/** Reused helper for resolve Vapid Keys behavior in src/infra. */
 export async function resolveVapidKeys(baseDir?: string): Promise<VapidKeyPair> {
   // Env vars take precedence — allows operators to share a stable VAPID
   // identity across multiple gateway instances.
@@ -158,6 +160,7 @@ type RegisterWebPushParams = {
   baseDir?: string;
 };
 
+/** Reused helper for register Web Push Subscription behavior in src/infra. */
 export async function registerWebPushSubscription(
   params: RegisterWebPushParams,
 ): Promise<WebPushSubscription> {
@@ -190,6 +193,7 @@ export async function registerWebPushSubscription(
   });
 }
 
+/** Reused helper for load Web Push Subscription behavior in src/infra. */
 export async function loadWebPushSubscription(
   subscriptionId: string,
   baseDir?: string,
@@ -203,11 +207,13 @@ export async function loadWebPushSubscription(
   return null;
 }
 
+/** Reused helper for list Web Push Subscriptions behavior in src/infra. */
 export async function listWebPushSubscriptions(baseDir?: string): Promise<WebPushSubscription[]> {
   const state = await loadState(baseDir);
   return Object.values(state.subscriptionsByEndpointHash);
 }
 
+/** Reused helper for clear Web Push Subscription behavior in src/infra. */
 export async function clearWebPushSubscription(
   subscriptionId: string,
   baseDir?: string,
@@ -225,6 +231,7 @@ export async function clearWebPushSubscription(
   });
 }
 
+/** Reused helper for clear Web Push Subscription By Endpoint behavior in src/infra. */
 export async function clearWebPushSubscriptionByEndpoint(
   endpoint: string,
   baseDir?: string,
@@ -254,6 +261,7 @@ function applyVapidDetails(webPush: WebPushRuntime, keys: VapidKeyPair): void {
   webPush.setVapidDetails(keys.subject, keys.publicKey, keys.privateKey);
 }
 
+/** Reused helper for send Web Push Notification behavior in src/infra. */
 export async function sendWebPushNotification(
   subscription: WebPushSubscription,
   payload: WebPushPayload,
@@ -304,6 +312,7 @@ async function sendPreparedWebPushNotification(
   }
 }
 
+/** Reused helper for broadcast Web Push behavior in src/infra. */
 export async function broadcastWebPush(
   payload: WebPushPayload,
   baseDir?: string,

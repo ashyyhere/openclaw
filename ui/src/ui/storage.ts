@@ -1,3 +1,4 @@
+// ui/src/ui storage helpers and runtime behavior.
 const SETTINGS_KEY_PREFIX = "openclaw.control.settings.v1:";
 const LEGACY_SETTINGS_KEY = "openclaw.control.settings.v1";
 const LOCAL_USER_IDENTITY_KEY = "openclaw.control.user.v1";
@@ -34,15 +35,22 @@ import {
   type LocalUserIdentity,
 } from "./user-identity.ts";
 
+/** Reused constant for BORDER RADIUS STOPS behavior in ui/src/ui. */
 export const BORDER_RADIUS_STOPS = [0, 25, 50, 75, 100] as const;
+/** Shared type for Border Radius Stop in ui/src/ui. */
 export type BorderRadiusStop = (typeof BORDER_RADIUS_STOPS)[number];
 
+/** Reused constant for TEXT SCALE STOPS behavior in ui/src/ui. */
 export const TEXT_SCALE_STOPS = [90, 100, 110, 125, 140] as const;
+/** Shared type for Text Scale Stop in ui/src/ui. */
 export type TextScaleStop = (typeof TEXT_SCALE_STOPS)[number];
 
+/** Reused constant for CHAT AUTO SCROLL MODES behavior in ui/src/ui. */
 export const CHAT_AUTO_SCROLL_MODES = ["always", "near-bottom", "off"] as const;
+/** Shared type for Chat Auto Scroll Mode in ui/src/ui. */
 export type ChatAutoScrollMode = (typeof CHAT_AUTO_SCROLL_MODES)[number];
 
+/** Reused helper for normalize Chat Auto Scroll Mode behavior in ui/src/ui. */
 export function normalizeChatAutoScrollMode(value: unknown): ChatAutoScrollMode {
   return CHAT_AUTO_SCROLL_MODES.includes(value as ChatAutoScrollMode)
     ? (value as ChatAutoScrollMode)
@@ -62,6 +70,7 @@ function snapBorderRadius(value: number): BorderRadiusStop {
   return best;
 }
 
+/** Reused helper for normalize Text Scale behavior in ui/src/ui. */
 export function normalizeTextScale(value: unknown, fallback: TextScaleStop = 100): TextScaleStop {
   if (typeof value !== "number" || !Number.isFinite(value)) {
     return fallback;
@@ -78,6 +87,7 @@ export function normalizeTextScale(value: unknown, fallback: TextScaleStop = 100
   return best;
 }
 
+/** Shared type for Ui Settings in ui/src/ui. */
 export type UiSettings = {
   gatewayUrl: string;
   token: string;
@@ -100,6 +110,7 @@ export type UiSettings = {
   locale?: string;
 };
 
+/** Re-exported API for ui/src/ui, starting with Local User Identity. */
 export type { LocalUserIdentity } from "./user-identity.ts";
 
 function isViteDevPage(): boolean {
@@ -218,6 +229,7 @@ function persistSessionToken(gatewayUrl: string, token: string) {
   }
 }
 
+/** Reused helper for load Settings behavior in ui/src/ui. */
 export function loadSettings(): UiSettings {
   const { pageUrl: pageDerivedUrl, effectiveUrl: defaultUrl } = deriveDefaultGatewayUrl();
   const storage = getSafeLocalStorage();
@@ -319,10 +331,12 @@ export function loadSettings(): UiSettings {
   }
 }
 
+/** Reused helper for save Settings behavior in ui/src/ui. */
 export function saveSettings(next: UiSettings) {
   persistSettings(next);
 }
 
+/** Reused helper for load Local User Identity behavior in ui/src/ui. */
 export function loadLocalUserIdentity(): LocalUserIdentity {
   const storage = getSafeLocalStorage();
   try {
@@ -336,6 +350,7 @@ export function loadLocalUserIdentity(): LocalUserIdentity {
   }
 }
 
+/** Reused helper for save Local User Identity behavior in ui/src/ui. */
 export function saveLocalUserIdentity(next: LocalUserIdentity) {
   const storage = getSafeLocalStorage();
   const normalized = normalizeLocalUserIdentity(next);
@@ -351,8 +366,10 @@ export function saveLocalUserIdentity(next: LocalUserIdentity) {
   }
 }
 
+/** Shared type for Local Assistant Identity in ui/src/ui. */
 export type LocalAssistantIdentity = { avatar: string | null };
 
+/** Reused helper for load Local Assistant Identity behavior in ui/src/ui. */
 export function loadLocalAssistantIdentity(): LocalAssistantIdentity {
   const storage = getSafeLocalStorage();
   try {
@@ -367,6 +384,7 @@ export function loadLocalAssistantIdentity(): LocalAssistantIdentity {
   }
 }
 
+/** Reused helper for save Local Assistant Identity behavior in ui/src/ui. */
 export function saveLocalAssistantIdentity(next: LocalAssistantIdentity) {
   const storage = getSafeLocalStorage();
   try {

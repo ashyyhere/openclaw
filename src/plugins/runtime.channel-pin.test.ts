@@ -1,3 +1,4 @@
+// Tests plugins runtime channel pin test behavior.
 import { afterEach, describe, expect, it } from "vitest";
 import { loadChannelOutboundAdapter } from "../channels/plugins/outbound/load.js";
 import { getChannelPlugin } from "../channels/plugins/registry.js";

@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src approval handler runtime test behavior.
 import type {
   ExecApprovalRequest,
   PluginApprovalRequest,

@@ -1,3 +1,4 @@
+/** Tests image generation tool registration. */
 import { describeOpenClawGenerationToolRegistration } from "./openclaw-tools.generation.test-support.js";
 
 describeOpenClawGenerationToolRegistration({

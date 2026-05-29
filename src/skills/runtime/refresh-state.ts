@@ -1,3 +1,4 @@
+/** Process-local state for skill snapshot refresh notifications. */
 export type SkillsChangeEvent = {
   workspaceDir?: string;
   reason: "watch" | "watch-targets" | "manual" | "remote-node" | "config-change" | "workshop";
@@ -24,10 +25,12 @@ function emit(event: SkillsChangeEvent) {
   }
 }
 
+/** Sets the error handler used by skill refresh listeners. */
 export function setSkillsChangeListenerErrorHandler(handler?: (err: unknown) => void): void {
   listenerErrorHandler = handler;
 }
 
+/** Registers a listener for skill change events. */
 export function registerSkillsChangeListener(listener: (event: SkillsChangeEvent) => void) {
   listeners.add(listener);
   return () => {
@@ -35,6 +38,7 @@ export function registerSkillsChangeListener(listener: (event: SkillsChangeEvent
   };
 }
 
+/** Increments global and optional workspace skill snapshot versions. */
 export function bumpSkillsSnapshotVersion(params?: {
   workspaceDir?: string;
   reason?: SkillsChangeEvent["reason"];
@@ -54,6 +58,7 @@ export function bumpSkillsSnapshotVersion(params?: {
   return globalVersion;
 }
 
+/** Returns the current skill snapshot version for global or workspace scope. */
 export function getSkillsSnapshotVersion(workspaceDir?: string): number {
   if (!workspaceDir) {
     return globalVersion;
@@ -62,6 +67,7 @@ export function getSkillsSnapshotVersion(workspaceDir?: string): number {
   return Math.max(globalVersion, local);
 }
 
+/** Checks whether a cached snapshot version is stale. */
 export function shouldRefreshSnapshotForVersion(
   cachedVersion?: number,
   nextVersion?: number,
@@ -71,6 +77,7 @@ export function shouldRefreshSnapshotForVersion(
   return next === 0 ? cached > 0 : cached < next;
 }
 
+/** Clears skill refresh state for isolated tests. */
 export function resetSkillsRefreshStateForTest(): void {
   listeners.clear();
   workspaceVersions.clear();

@@ -1,3 +1,4 @@
+// Tests config io shell env expected keys test behavior.
 import { describe, expect, it, vi } from "vitest";
 
 const listKnownChannelEnvVarNames = vi.hoisted(() => vi.fn(() => ["DISCORD_BOT_TOKEN"]));

@@ -1,7 +1,9 @@
+// ui/src/ui/components dashboard header helpers and runtime behavior.
 import { LitElement, html, nothing } from "lit";
 import { property } from "lit/decorators.js";
 import { pathForTab, titleForTab, type Tab } from "../navigation.js";
 
+/** Reused class for Dashboard Header behavior in ui/src/ui/components. */
 export class DashboardHeader extends LitElement {
   override createRenderRoot() {
     return this;

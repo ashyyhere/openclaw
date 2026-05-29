@@ -1,3 +1,4 @@
+// Tests infra heartbeat active hours test behavior.
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import { isWithinActiveHours } from "./heartbeat-active-hours.js";

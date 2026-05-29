@@ -1,3 +1,4 @@
+// extensions/qqbot/src/engine/commands/builtin register all helpers and runtime behavior.
 import type { SlashCommandRegistry } from "../slash-commands.js";
 import { registerApproveCommands } from "./register-approve.js";
 import { registerBasicBotCommands } from "./register-basic.js";

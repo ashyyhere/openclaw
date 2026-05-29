@@ -1,3 +1,4 @@
+// Tests default model setting against source/runtime config split and Codex repairs.
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../../config/config.js";

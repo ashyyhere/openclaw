@@ -1,3 +1,4 @@
+// Tests music-generation capabilities test behavior.
 import { describe, expect, it } from "vitest";
 import {
   listSupportedMusicGenerationModes,

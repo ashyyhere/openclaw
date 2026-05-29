@@ -1,3 +1,5 @@
+// logging levels helpers and runtime behavior.
+/** Reused constant for ALLOWED LOG LEVELS behavior in src/logging. */
 export const ALLOWED_LOG_LEVELS = [
   "silent",
   "fatal",
@@ -8,8 +10,10 @@ export const ALLOWED_LOG_LEVELS = [
   "trace",
 ] as const;
 
+/** Shared type for Log Level in src/logging. */
 export type LogLevel = (typeof ALLOWED_LOG_LEVELS)[number];
 
+/** Reused helper for try Parse Log Level behavior in src/logging. */
 export function tryParseLogLevel(level?: string): LogLevel | undefined {
   if (typeof level !== "string") {
     return undefined;
@@ -18,10 +22,12 @@ export function tryParseLogLevel(level?: string): LogLevel | undefined {
   return ALLOWED_LOG_LEVELS.includes(candidate as LogLevel) ? (candidate as LogLevel) : undefined;
 }
 
+/** Reused helper for normalize Log Level behavior in src/logging. */
 export function normalizeLogLevel(level?: string, fallback: LogLevel = "info") {
   return tryParseLogLevel(level) ?? fallback;
 }
 
+/** Reused helper for level To Min Level behavior in src/logging. */
 export function levelToMinLevel(level: LogLevel): number {
   // tslog v4 logLevelId (src/index.ts): silly=0, trace=1, debug=2, info=3, warn=4, error=5, fatal=6
   // tslog filters: logLevelId < minLevel is dropped, so higher minLevel = more restrictive.

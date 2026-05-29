@@ -20,6 +20,7 @@ import type {
 } from "./plugin-state-store.types.js";
 import { PluginStateStoreError } from "./plugin-state-store.types.js";
 
+/** Re-exported API for src/plugin-state. */
 export type {
   OpenKeyedStoreOptions,
   PluginStateEntry,
@@ -30,7 +31,9 @@ export type {
   PluginStateStoreProbeResult,
   PluginStateStoreProbeStep,
 } from "./plugin-state-store.types.js";
+/** Re-exported API for src/plugin-state, starting with Plugin State Store Error. */
 export { PluginStateStoreError } from "./plugin-state-store.types.js";
+/** Re-exported API for src/plugin-state. */
 export {
   closePluginStateDatabase,
   closePluginStateSqliteStore,
@@ -393,6 +396,7 @@ function createSyncKeyedStoreForPluginId<T>(
   };
 }
 
+/** Reused helper for create Plugin State Keyed Store behavior in src/plugin-state. */
 export function createPluginStateKeyedStore<T>(
   pluginId: string,
   options: OpenKeyedStoreOptions,
@@ -403,6 +407,7 @@ export function createPluginStateKeyedStore<T>(
   return createKeyedStoreForPluginId<T>(pluginId, options);
 }
 
+/** Reused helper for create Plugin State Sync Keyed Store behavior in src/plugin-state. */
 export function createPluginStateSyncKeyedStore<T>(
   pluginId: string,
   options: OpenKeyedStoreOptions,
@@ -413,23 +418,27 @@ export function createPluginStateSyncKeyedStore<T>(
   return createSyncKeyedStoreForPluginId<T>(pluginId, options);
 }
 
+/** Reused helper for create Core Plugin State Keyed Store behavior in src/plugin-state. */
 export function createCorePluginStateKeyedStore<T>(
   options: OpenKeyedStoreOptions & { ownerId: `core:${string}` },
 ): PluginStateKeyedStore<T> {
   return createKeyedStoreForPluginId<T>(options.ownerId, options);
 }
 
+/** Reused helper for create Core Plugin State Sync Keyed Store behavior in src/plugin-state. */
 export function createCorePluginStateSyncKeyedStore<T>(
   options: OpenKeyedStoreOptions & { ownerId: `core:${string}` },
 ): PluginStateSyncKeyedStore<T> {
   return createSyncKeyedStoreForPluginId<T>(options.ownerId, options);
 }
 
+/** Reused helper for clear Plugin State Store For Tests behavior in src/plugin-state. */
 export function clearPluginStateStoreForTests(): void {
   clearPluginStateDatabaseForTests();
   namespaceOptionSignatures.clear();
 }
 
+/** Reused helper for reset Plugin State Store For Tests behavior in src/plugin-state. */
 export function resetPluginStateStoreForTests(options: { closeDatabase?: boolean } = {}): void {
   if (options.closeDatabase !== false) {
     closePluginStateDatabase();

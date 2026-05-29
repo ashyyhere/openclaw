@@ -1,3 +1,4 @@
+// extensions/matrix/src onboarding test harness helpers and runtime behavior.
 import type { OutputRuntimeEnv } from "openclaw/plugin-sdk/runtime";
 import type { ChannelSetupWizardAdapter } from "openclaw/plugin-sdk/setup";
 import { afterEach, vi } from "vitest";

@@ -1,3 +1,4 @@
+// Tests extensions/signal/src approval auth test behavior.
 import { describe, expect, it } from "vitest";
 import { signalApprovalAuth } from "./approval-auth.js";
 

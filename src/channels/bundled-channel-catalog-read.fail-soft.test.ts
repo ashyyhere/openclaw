@@ -1,3 +1,4 @@
+// Coverage for fail-soft bundled channel catalog reads.
 import { importFreshModule } from "openclaw/plugin-sdk/test-fixtures";
 import { afterEach, describe, expect, it, vi } from "vitest";
 

@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/googlechat/src google auth runtime behavior.
 import fs from "node:fs/promises";
 import type { ConnectionOptions } from "node:tls";
 import { parseMediaContentLength } from "openclaw/plugin-sdk/media-runtime";

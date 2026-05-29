@@ -1,5 +1,8 @@
+// logging diagnostic session state helpers and runtime behavior.
+/** Shared type for Session State Value in src/logging. */
 export type SessionStateValue = "idle" | "processing" | "waiting";
 
+/** Shared type for Session State in src/logging. */
 export type SessionState = {
   sessionId?: string;
   sessionKey?: string;
@@ -16,6 +19,7 @@ export type SessionState = {
   commandPollCounts?: Map<string, { count: number; lastPollAt: number }>;
 };
 
+/** Shared type for Tool Call Record in src/logging. */
 export type ToolCallRecord = {
   toolName: string;
   argsHash: string;
@@ -26,12 +30,14 @@ export type ToolCallRecord = {
   timestamp: number;
 };
 
+/** Shared type for Session Ref in src/logging. */
 export type SessionRef = {
   sessionId?: string;
   sessionKey?: string;
   sessionFile?: string;
 };
 
+/** Reused constant for diagnostic Session States behavior in src/logging. */
 export const diagnosticSessionStates = new Map<string, SessionState>();
 
 const SESSION_STATE_TTL_MS = 30 * 60 * 1000;
@@ -40,6 +46,7 @@ const SESSION_STATE_MAX_ENTRIES = 2000;
 
 let lastSessionPruneAt = 0;
 
+/** Reused helper for prune Diagnostic Session States behavior in src/logging. */
 export function pruneDiagnosticSessionStates(now = Date.now(), force = false): void {
   const shouldPruneForSize = diagnosticSessionStates.size > SESSION_STATE_MAX_ENTRIES;
   if (!force && !shouldPruneForSize && now - lastSessionPruneAt < SESSION_STATE_PRUNE_INTERVAL_MS) {
@@ -139,6 +146,7 @@ function mergeSessionState(target: SessionState, source: SessionState): void {
   }
 }
 
+/** Reused helper for get Diagnostic Session State behavior in src/logging. */
 export function getDiagnosticSessionState(ref: SessionRef): SessionState {
   pruneDiagnosticSessionStates();
   const key = resolveSessionKey(ref);
@@ -178,6 +186,7 @@ export function getDiagnosticSessionState(ref: SessionRef): SessionState {
   return created;
 }
 
+/** Reused helper for peek Diagnostic Session State behavior in src/logging. */
 export function peekDiagnosticSessionState(ref: SessionRef): SessionState | undefined {
   const key = resolveSessionKey(ref);
   return (
@@ -186,15 +195,18 @@ export function peekDiagnosticSessionState(ref: SessionRef): SessionState | unde
   );
 }
 
+/** Reused helper for get Diagnostic Session State Count For Test behavior in src/logging. */
 export function getDiagnosticSessionStateCountForTest(): number {
   return diagnosticSessionStates.size;
 }
 
+/** Reused helper for reset Diagnostic Session State For Test behavior in src/logging. */
 export function resetDiagnosticSessionStateForTest(): void {
   diagnosticSessionStates.clear();
   lastSessionPruneAt = 0;
 }
 
+/** Reused helper for is Diagnostic Session State Current behavior in src/logging. */
 export function isDiagnosticSessionStateCurrent(params: {
   sessionId?: string;
   sessionKey?: string;

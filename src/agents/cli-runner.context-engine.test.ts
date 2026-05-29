@@ -1,3 +1,4 @@
+/** Tests CLI runner context-engine lifecycle integration. */
 import type { AgentMessage } from "openclaw/plugin-sdk/agent-core";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { ContextEngine } from "../context-engine/types.js";

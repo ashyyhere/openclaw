@@ -1,3 +1,4 @@
+/** Registers CLI commands for MCP server and config management. */
 import { Command } from "commander";
 import { buildBundleMcpToolsFromCatalog } from "../agents/agent-bundle-mcp-materialize.js";
 import { createSessionMcpRuntime } from "../agents/agent-bundle-mcp-runtime.js";
@@ -105,6 +106,7 @@ function buildMcpProbeConfig(params: {
   };
 }
 
+/** Registers CLI subcommands for MCP serve/list/set/unset/probe operations. */
 export function registerMcpCli(program: Command) {
   const mcp = program.command("mcp").description("Manage OpenClaw MCP config and channel bridge");
 

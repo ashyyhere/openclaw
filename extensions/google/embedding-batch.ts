@@ -1,3 +1,4 @@
+// extensions/google embedding batch helpers and runtime behavior.
 import crypto from "node:crypto";
 import {
   buildEmbeddingBatchGroupOptions,

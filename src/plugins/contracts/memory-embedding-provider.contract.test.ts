@@ -1,3 +1,4 @@
+// Tests plugins/contracts memory embedding provider contract test behavior.
 import {
   createPluginRegistryFixture,
   registerVirtualTestPlugin,

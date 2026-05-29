@@ -1,3 +1,4 @@
+// Tests test/scripts codex app server protocol source test behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";

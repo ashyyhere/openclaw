@@ -1,3 +1,4 @@
+// Runtime mocks for get-reply tests.
 import { vi } from "vitest";
 import { registerGetReplyCommonMocks } from "./get-reply.test-mocks.js";
 

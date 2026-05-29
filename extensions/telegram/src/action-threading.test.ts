@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src action threading test behavior.
 import { describe, expect, it } from "vitest";
 import { resolveTelegramAutoThreadId } from "./action-threading.js";
 

@@ -1,3 +1,4 @@
+/** Tracks per-command JSON output mode on Commander command instances. */
 import type { Command } from "commander";
 import { hasFlag } from "../argv.js";
 
@@ -38,6 +39,7 @@ function commandSelectedJsonFlag(command: Command, argv: string[]): boolean {
   return hasFlag(argv, "--json");
 }
 
+/** Reused helper for set Command Json Mode behavior in src/cli/program. */
 export function setCommandJsonMode(command: Command, mode: JsonMode): Command {
   (command as JsonModeCommand)[jsonModeSymbol] = mode;
   return command;
@@ -50,6 +52,7 @@ function getCommandJsonMode(command: Command, argv: string[] = process.argv): Js
   return getDeclaredCommandJsonMode(command);
 }
 
+/** Reused helper for is Command Json Output Mode behavior in src/cli/program. */
 export function isCommandJsonOutputMode(command: Command, argv: string[] = process.argv): boolean {
   return getCommandJsonMode(command, argv) === "output";
 }

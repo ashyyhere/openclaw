@@ -1,3 +1,4 @@
+// scripts diffs shiki curated helpers and runtime behavior.
 import {
   createBundledHighlighter,
   createCssVariablesTheme,

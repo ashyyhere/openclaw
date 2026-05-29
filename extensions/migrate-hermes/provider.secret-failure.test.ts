@@ -1,3 +1,4 @@
+// Tests extensions/migrate-hermes provider secret failure test behavior.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

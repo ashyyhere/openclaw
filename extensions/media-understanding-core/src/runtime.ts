@@ -1,3 +1,4 @@
+// extensions/media-understanding-core/src runtime helpers and runtime behavior.
 export {
   describeImageFile,
   describeImageFileWithModel,

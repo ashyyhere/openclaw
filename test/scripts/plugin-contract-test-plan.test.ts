@@ -1,3 +1,4 @@
+// Tests test/scripts plugin contract test plan test behavior.
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { createPluginContractTestShards } from "../../scripts/lib/plugin-contract-test-plan.mjs";

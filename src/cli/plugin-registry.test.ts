@@ -1,3 +1,4 @@
+/** Tests plugin registry CLI-facing compatibility exports. */
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { createEmptyPluginRegistry } from "../plugins/registry.js";
 

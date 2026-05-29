@@ -1,3 +1,4 @@
+// Tests gateway session subagent reactivation test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const getLatestSubagentRunByChildSessionKeyMock = vi.fn();

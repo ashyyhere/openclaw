@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix/client config helpers and runtime behavior.
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";
 import { resolveOptionalIntegerOption } from "openclaw/plugin-sdk/number-runtime";
 import { requireRuntimeConfig } from "openclaw/plugin-sdk/plugin-config-runtime";

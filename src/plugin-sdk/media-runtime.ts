@@ -13,6 +13,7 @@ export * from "../media/inbound-path-policy.js";
 export * from "../media/load-options.js";
 export * from "../media/local-media-access.js";
 export * from "../media/local-roots.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   IMAGE_REDUCE_QUALITY_STEPS,
   ImageProcessorUnavailableError,
@@ -49,14 +50,17 @@ export * from "../media/read-byte-stream-with-limit.js";
 export * from "../media/read-response-with-limit.js";
 export * from "../media/store.js";
 export * from "../media/temp-files.js";
+/** Re-exported API for src/plugin-sdk, starting with resolve Channel Media Max Bytes. */
 export { resolveChannelMediaMaxBytes } from "../channels/plugins/media-limits.js";
 export * from "./agent-media-payload.js";
 export * from "../media-understanding/audio-preflight.ts";
 export * from "../media-understanding/defaults.js";
 export * from "../media-understanding/image-runtime.ts";
 export * from "../media-understanding/runner.js";
+/** Re-exported API for src/plugin-sdk, starting with normalize Media Provider Id. */
 export { normalizeMediaProviderId } from "../media-understanding/provider-registry.js";
 export * from "../polls.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   createDirectTextMediaOutbound,
   createScopedChannelMediaMaxBytesResolver,

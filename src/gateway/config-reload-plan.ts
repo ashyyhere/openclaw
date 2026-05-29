@@ -1,3 +1,4 @@
+// gateway config reload plan helpers and runtime behavior.
 import { type ChannelId, listChannelPlugins } from "../channels/plugins/index.js";
 import {
   getActivePluginChannelRegistryVersion,
@@ -6,8 +7,10 @@ import {
 } from "../plugins/runtime.js";
 import { isPlainObject } from "../utils.js";
 
+/** Shared type for Channel Kind in src/gateway. */
 export type ChannelKind = ChannelId;
 
+/** Shared type for Gateway Reload Plan in src/gateway. */
 export type GatewayReloadPlan = {
   changedPaths: string[];
   restartGateway: boolean;
@@ -30,6 +33,7 @@ type ReloadRule = {
   actions?: ReloadAction[];
 };
 
+/** Shared type for Config Reload Metadata in src/gateway. */
 export type ConfigReloadMetadata = {
   kind: ReloadRule["kind"];
 };
@@ -226,6 +230,7 @@ function matchRule(path: string): ReloadRule | null {
   return null;
 }
 
+/** Reused helper for resolve Config Reload Metadata behavior in src/gateway. */
 export function resolveConfigReloadMetadata(path: string): ConfigReloadMetadata {
   if (isPluginInstallTimestampPath(path)) {
     return { kind: "none" };
@@ -253,6 +258,7 @@ function getPluginInstallRecords(config: unknown): Record<string, unknown> {
   return isPlainObject(installs) ? installs : {};
 }
 
+/** Reused helper for list Plugin Install Timestamp Metadata Paths behavior in src/gateway. */
 export function listPluginInstallTimestampMetadataPaths(
   prevConfig: unknown,
   nextConfig: unknown,
@@ -278,6 +284,7 @@ export function listPluginInstallTimestampMetadataPaths(
   return paths;
 }
 
+/** Reused helper for list Plugin Install Whole Record Paths behavior in src/gateway. */
 export function listPluginInstallWholeRecordPaths(
   prevConfig: unknown,
   nextConfig: unknown,
@@ -298,6 +305,7 @@ export function listPluginInstallWholeRecordPaths(
   return paths;
 }
 
+/** Reused helper for build Gateway Reload Plan behavior in src/gateway. */
 export function buildGatewayReloadPlan(
   changedPaths: string[],
   options: GatewayReloadPlanOptions = {},

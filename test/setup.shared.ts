@@ -1,3 +1,4 @@
+// test setup shared helpers and runtime behavior.
 import { vi } from "vitest";
 
 const openAiCodexTokenRefreshTestHook = "__OPENCLAW_TEST_REFRESH_OPENAI_CODEX_TOKEN__";

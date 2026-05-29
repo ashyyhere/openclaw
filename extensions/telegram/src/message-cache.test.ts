@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src message cache test behavior.
 import { readFile, rm, writeFile } from "node:fs/promises";
 import type { Message } from "grammy/types";
 import { describe, expect, it } from "vitest";

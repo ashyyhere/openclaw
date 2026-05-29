@@ -1,3 +1,4 @@
+// extensions/slack/src scopes helpers and runtime behavior.
 import type { WebClient } from "@slack/web-api";
 import {
   isRecord,

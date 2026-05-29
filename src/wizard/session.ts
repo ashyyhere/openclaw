@@ -1,12 +1,15 @@
+// wizard session helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import { WizardCancelledError, type WizardProgress, type WizardPrompter } from "./prompts.js";
 
+/** Shared type for Wizard Step Option in src/wizard. */
 export type WizardStepOption = {
   value: unknown;
   label: string;
   hint?: string;
 };
 
+/** Shared type for Wizard Step in src/wizard. */
 export type WizardStep = {
   id: string;
   type: "note" | "select" | "text" | "confirm" | "multiselect" | "progress" | "action";
@@ -20,8 +23,10 @@ export type WizardStep = {
   executor?: "gateway" | "client";
 };
 
+/** Shared type for Wizard Session Status in src/wizard. */
 export type WizardSessionStatus = "running" | "done" | "cancelled" | "error";
 
+/** Shared type for Wizard Next Result in src/wizard. */
 export type WizardNextResult = {
   done: boolean;
   step?: WizardStep;
@@ -167,6 +172,7 @@ class WizardSessionPrompter implements WizardPrompter {
   }
 }
 
+/** Reused class for Wizard Session behavior in src/wizard. */
 export class WizardSession {
   private currentStep: WizardStep | null = null;
   private stepDeferred: Deferred<WizardStep | null> | null = null;

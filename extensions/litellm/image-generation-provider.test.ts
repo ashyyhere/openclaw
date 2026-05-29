@@ -1,3 +1,4 @@
+// Tests extensions/litellm image generation provider test behavior.
 import { afterAll, afterEach, describe, expect, it, vi } from "vitest";
 import { buildLitellmImageGenerationProvider } from "./image-generation-provider.js";
 

@@ -1,3 +1,4 @@
+// Tests extensions/qa-lab/src/live-transports/slack slack live runtime test behavior.
 import fs from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";

@@ -1,5 +1,6 @@
 // Numeric coercion helpers for plugin runtime inputs.
 
+/** Re-exported API for src/plugin-sdk. */
 export {
   asDateTimestampMs,
   asFiniteNumberInRange,
@@ -32,4 +33,5 @@ export {
   resolveExpiresAtMsFromDurationOrEpoch,
   resolveExpiresAtMsFromEpochSeconds,
 } from "../shared/number-coercion.js";
+/** Re-exported API for src/plugin-sdk, starting with MAX TCP PORT. */
 export { MAX_TCP_PORT, parseTcpPort } from "../infra/tcp-port.js";

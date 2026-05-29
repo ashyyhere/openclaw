@@ -1,3 +1,4 @@
+/** Waits for gateway agent runs and reads updated assistant replies. */
 import { callGateway } from "../gateway/call.js";
 import { formatErrorMessage } from "../infra/errors.js";
 import { normalizeBlockedLivenessWaitStatus } from "../shared/agent-liveness.js";
@@ -44,11 +45,13 @@ function resolveRunWaitDeadlineAtMs(params: { deadlineAtMs?: number; timeoutMs?:
   );
 }
 
+/** Assistant reply text plus stable fingerprint for change detection. */
 export type AssistantReplySnapshot = {
   text?: string;
   fingerprint?: string;
 };
 
+/** Normalized result returned by agent.wait gateway calls. */
 export type AgentWaitResult = {
   status: "ok" | "timeout" | "error" | "pending";
   error?: string;
@@ -62,6 +65,7 @@ export type AgentWaitResult = {
   providerStarted?: boolean;
 };
 
+/** Summary of waiting for a set of pending agent runs to drain. */
 export type AgentRunsDrainResult = {
   timedOut: boolean;
   pendingRunIds: string[];
@@ -128,6 +132,7 @@ const RECOVERABLE_AGENT_WAIT_ERROR_PATTERNS: readonly RegExp[] = [
   /\b(ECONNRESET|ECONNREFUSED|ETIMEDOUT|EPIPE|EHOSTUNREACH|ENETUNREACH)\b/i,
 ];
 
+/** Return whether an agent.wait error is transient enough to retry/continue. */
 export function isRecoverableAgentWaitError(error: string | undefined): boolean {
   const message = error?.trim();
   if (!message) {
@@ -175,6 +180,7 @@ function resolveLatestAssistantReplySnapshot(messages: unknown[]): AssistantRepl
   return {};
 }
 
+/** Read latest non-tool assistant reply snapshot from session history. */
 export async function readLatestAssistantReplySnapshot(params: {
   sessionKey: string;
   limit?: number;
@@ -191,6 +197,7 @@ export async function readLatestAssistantReplySnapshot(params: {
   );
 }
 
+/** Read latest non-tool assistant reply text from session history. */
 export async function readLatestAssistantReply(params: {
   sessionKey: string;
   limit?: number;
@@ -205,6 +212,7 @@ export async function readLatestAssistantReply(params: {
   ).text;
 }
 
+/** Wait for one gateway agent run and normalize status/error fields. */
 export async function waitForAgentRun(params: {
   runId: string;
   timeoutMs: number;
@@ -239,6 +247,7 @@ export async function waitForAgentRun(params: {
   }
 }
 
+/** Wait for a run and return a new assistant reply when it differs from baseline. */
 export async function waitForAgentRunAndReadUpdatedAssistantReply(params: {
   runId: string;
   sessionKey: string;
@@ -272,6 +281,7 @@ export async function waitForAgentRunAndReadUpdatedAssistantReply(params: {
   };
 }
 
+/** Wait until all observed pending runs finish or the deadline expires. */
 export async function waitForAgentRunsToDrain(params: {
   getPendingRunIds: () => Iterable<string>;
   initialPendingRunIds?: Iterable<string>;
@@ -307,6 +317,7 @@ export async function waitForAgentRunsToDrain(params: {
   };
 }
 
+/** Test-only dependency overrides for run wait helpers. */
 export const testing = {
   setDepsForTest(overrides?: Partial<{ callGateway: GatewayCaller }>) {
     runWaitDeps = overrides
@@ -317,4 +328,5 @@ export const testing = {
       : defaultRunWaitDeps;
   },
 };
+/** Re-exported API for src/agents, starting with testing. */
 export { testing as __testing };

@@ -1,3 +1,4 @@
+// extensions/openai test api helpers and runtime behavior.
 export { buildOpenAIImageGenerationProvider } from "./image-generation-provider.js";
 export { openaiMediaUnderstandingProvider } from "./media-understanding-provider.js";
 export { buildOpenAIRealtimeTranscriptionProvider } from "./realtime-transcription-provider.js";

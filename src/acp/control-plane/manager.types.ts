@@ -1,3 +1,4 @@
+/** Shared ACP control-plane types for sessions, turns, lifecycle, and observability. */
 import type {
   SessionAcpIdentity,
   AcpSessionRuntimeOptions,
@@ -22,6 +23,7 @@ import type {
   AcpRuntimeStatus,
 } from "../runtime/types.js";
 
+/** Shared type for Acp Session Resolution in src/acp/control-plane. */
 export type AcpSessionResolution =
   | {
       kind: "none";
@@ -38,6 +40,7 @@ export type AcpSessionResolution =
       meta: SessionAcpMeta;
     };
 
+/** Shared type for Acp Initialize Session Input in src/acp/control-plane. */
 export type AcpInitializeSessionInput = {
   cfg: OpenClawConfig;
   sessionKey: string;
@@ -49,11 +52,13 @@ export type AcpInitializeSessionInput = {
   backendId?: string;
 };
 
+/** Shared type for Acp Turn Attachment in src/acp/control-plane. */
 export type AcpTurnAttachment = {
   mediaType: string;
   data: string;
 };
 
+/** Shared type for Acp Run Turn Input in src/acp/control-plane. */
 export type AcpRunTurnInput = {
   cfg: OpenClawConfig;
   sessionKey: string;
@@ -66,11 +71,13 @@ export type AcpRunTurnInput = {
   onEvent?: (event: AcpRuntimeEvent) => Promise<void> | void;
 };
 
+/** Shared type for Acp Turn Lifecycle Event in src/acp/control-plane. */
 export type AcpTurnLifecycleEvent = {
   type: "prompt_submitted";
   at: number;
 };
 
+/** Shared type for Acp Close Session Input in src/acp/control-plane. */
 export type AcpCloseSessionInput = {
   cfg: OpenClawConfig;
   sessionKey: string;
@@ -81,12 +88,14 @@ export type AcpCloseSessionInput = {
   requireAcpSession?: boolean;
 };
 
+/** Shared type for Acp Close Session Result in src/acp/control-plane. */
 export type AcpCloseSessionResult = {
   runtimeClosed: boolean;
   runtimeNotice?: string;
   metaCleared: boolean;
 };
 
+/** Shared type for Acp Session Status in src/acp/control-plane. */
 export type AcpSessionStatus = {
   sessionKey: string;
   backend: string;
@@ -101,6 +110,7 @@ export type AcpSessionStatus = {
   lastError?: string;
 };
 
+/** Shared type for Acp Manager Observability Snapshot in src/acp/control-plane. */
 export type AcpManagerObservabilitySnapshot = {
   runtimeCache: {
     activeSessions: number;
@@ -119,12 +129,14 @@ export type AcpManagerObservabilitySnapshot = {
   errorsByCode: Record<string, number>;
 };
 
+/** Shared type for Acp Startup Identity Reconcile Result in src/acp/control-plane. */
 export type AcpStartupIdentityReconcileResult = {
   checked: number;
   resolved: number;
   failed: number;
 };
 
+/** Shared type for Active Turn State in src/acp/control-plane. */
 export type ActiveTurnState = {
   runtime: AcpRuntime;
   handle: AcpRuntimeHandle;
@@ -132,6 +144,7 @@ export type ActiveTurnState = {
   cancelPromise?: Promise<void>;
 };
 
+/** Shared type for Turn Latency Stats in src/acp/control-plane. */
 export type TurnLatencyStats = {
   completed: number;
   failed: number;
@@ -139,6 +152,7 @@ export type TurnLatencyStats = {
   maxMs: number;
 };
 
+/** Shared type for Acp Session Manager Deps in src/acp/control-plane. */
 export type AcpSessionManagerDeps = {
   listAcpSessions: typeof listAcpSessionEntries;
   readSessionEntry: typeof readAcpSessionEntry;
@@ -147,6 +161,7 @@ export type AcpSessionManagerDeps = {
   requireRuntimeBackend: typeof requireAcpRuntimeBackend;
 };
 
+/** Reused constant for DEFAULT DEPS behavior in src/acp/control-plane. */
 export const DEFAULT_DEPS: AcpSessionManagerDeps = {
   listAcpSessions: listAcpSessionEntries,
   readSessionEntry: readAcpSessionEntry,
@@ -155,4 +170,5 @@ export const DEFAULT_DEPS: AcpSessionManagerDeps = {
   requireRuntimeBackend: requireAcpRuntimeBackend,
 };
 
+/** Re-exported API for src/acp/control-plane, starting with Acp Session Runtime Options. */
 export type { AcpSessionRuntimeOptions, SessionAcpMeta, SessionEntry };

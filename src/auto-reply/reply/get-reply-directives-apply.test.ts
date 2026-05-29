@@ -1,3 +1,4 @@
+// Coverage for applying parsed reply directives.
 import { describe, expect, it } from "vitest";
 import { formatModelOverrideResetEvent } from "./get-reply-directives-apply.js";
 

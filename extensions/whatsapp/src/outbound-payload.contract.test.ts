@@ -1,3 +1,4 @@
+// Tests extensions/whatsapp/src outbound payload contract test behavior.
 import {
   installChannelOutboundPayloadContractSuite,
   primeChannelOutboundSendMock,

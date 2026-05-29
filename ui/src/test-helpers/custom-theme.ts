@@ -1,3 +1,4 @@
+// ui/src/test-helpers custom theme helpers and runtime behavior.
 import { normalizeImportedCustomTheme } from "../ui/custom-theme.ts";
 
 export function createTweakcnThemePayload() {

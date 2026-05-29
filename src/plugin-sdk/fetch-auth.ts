@@ -1,8 +1,10 @@
+// plugin-sdk fetch auth helpers and runtime behavior.
 import {
   normalizeHeadersInitForFetch,
   normalizeRequestInitHeadersForFetch,
 } from "../infra/fetch-headers.js";
 
+/** Shared type for Scope Token Provider in src/plugin-sdk. */
 export type ScopeTokenProvider = {
   getAccessToken: (scope: string) => Promise<string>;
 };

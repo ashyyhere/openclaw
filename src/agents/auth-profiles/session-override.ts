@@ -1,3 +1,4 @@
+/** Reads and clears per-session auth profile override selections. */
 import type { SessionEntry } from "../../config/sessions/types.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { createLazyImportLoader } from "../../shared/lazy-promise.js";
@@ -59,6 +60,7 @@ function uniqueProviders(provider: string, acceptedProviderIds?: readonly string
   return [...providers];
 }
 
+/** Reused helper for clear Session Auth Profile Override behavior in src/agents/auth-profiles. */
 export async function clearSessionAuthProfileOverride(params: {
   sessionEntry: SessionEntry;
   sessionStore: Record<string, SessionEntry>;
@@ -80,6 +82,7 @@ export async function clearSessionAuthProfileOverride(params: {
   }
 }
 
+/** Reused helper for resolve Session Auth Profile Override behavior in src/agents/auth-profiles. */
 export async function resolveSessionAuthProfileOverride(params: {
   cfg: OpenClawConfig;
   provider: string;

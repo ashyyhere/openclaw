@@ -1,3 +1,4 @@
+// plugins/contracts speech vitest registry helpers and runtime behavior.
 import { loadBundledCapabilityRuntimeRegistry } from "../bundled-capability-runtime.js";
 import type {
   ImageGenerationProviderPlugin,
@@ -11,41 +12,49 @@ import type {
 } from "../types.js";
 import { BUNDLED_PLUGIN_CONTRACT_SNAPSHOTS } from "./inventory/bundled-capability-metadata.js";
 
+/** Shared type for Speech Provider Contract Entry in src/plugins/contracts. */
 export type SpeechProviderContractEntry = {
   pluginId: string;
   provider: SpeechProviderPlugin;
 };
 
+/** Shared type for Media Understanding Provider Contract Entry in src/plugins/contracts. */
 export type MediaUnderstandingProviderContractEntry = {
   pluginId: string;
   provider: MediaUnderstandingProviderPlugin;
 };
 
+/** Shared type for Transcripts Source Provider Contract Entry in src/plugins/contracts. */
 export type TranscriptsSourceProviderContractEntry = {
   pluginId: string;
   provider: TranscriptSourceProvider;
 };
 
+/** Shared type for Realtime Voice Provider Contract Entry in src/plugins/contracts. */
 export type RealtimeVoiceProviderContractEntry = {
   pluginId: string;
   provider: RealtimeVoiceProviderPlugin;
 };
 
+/** Shared type for Realtime Transcription Provider Contract Entry in src/plugins/contracts. */
 export type RealtimeTranscriptionProviderContractEntry = {
   pluginId: string;
   provider: RealtimeTranscriptionProviderPlugin;
 };
 
+/** Shared type for Image Generation Provider Contract Entry in src/plugins/contracts. */
 export type ImageGenerationProviderContractEntry = {
   pluginId: string;
   provider: ImageGenerationProviderPlugin;
 };
 
+/** Shared type for Video Generation Provider Contract Entry in src/plugins/contracts. */
 export type VideoGenerationProviderContractEntry = {
   pluginId: string;
   provider: VideoGenerationProviderPlugin;
 };
 
+/** Shared type for Music Generation Provider Contract Entry in src/plugins/contracts. */
 export type MusicGenerationProviderContractEntry = {
   pluginId: string;
   provider: MusicGenerationProviderPlugin;
@@ -180,6 +189,7 @@ function loadVitestCapabilityContractEntries<T>(params: {
   );
 }
 
+/** Reused helper for load Vitest Speech Provider Contract Registry behavior in src/plugins/contracts. */
 export function loadVitestSpeechProviderContractRegistry(): SpeechProviderContractEntry[] {
   const entries = loadVitestCapabilityContractEntries({
     contract: "speechProviders",
@@ -204,6 +214,7 @@ export function loadVitestSpeechProviderContractRegistry(): SpeechProviderContra
   ];
 }
 
+/** Reused helper for load Vitest Media Understanding Provider Contract Registry behavior in src/plugins/contracts. */
 export function loadVitestMediaUnderstandingProviderContractRegistry(): MediaUnderstandingProviderContractEntry[] {
   return loadVitestCapabilityContractEntries({
     contract: "mediaUnderstandingProviders",
@@ -215,6 +226,7 @@ export function loadVitestMediaUnderstandingProviderContractRegistry(): MediaUnd
   });
 }
 
+/** Reused helper for load Vitest Transcripts Source Provider Contract Registry behavior in src/plugins/contracts. */
 export function loadVitestTranscriptsSourceProviderContractRegistry(): TranscriptsSourceProviderContractEntry[] {
   return loadVitestCapabilityContractEntries({
     contract: "transcriptSourceProviders",
@@ -227,6 +239,7 @@ export function loadVitestTranscriptsSourceProviderContractRegistry(): Transcrip
   });
 }
 
+/** Reused helper for load Vitest Realtime Voice Provider Contract Registry behavior in src/plugins/contracts. */
 export function loadVitestRealtimeVoiceProviderContractRegistry(): RealtimeVoiceProviderContractEntry[] {
   return loadVitestCapabilityContractEntries({
     contract: "realtimeVoiceProviders",
@@ -238,6 +251,7 @@ export function loadVitestRealtimeVoiceProviderContractRegistry(): RealtimeVoice
   });
 }
 
+/** Reused helper for load Vitest Realtime Transcription Provider Contract Registry behavior in src/plugins/contracts. */
 export function loadVitestRealtimeTranscriptionProviderContractRegistry(): RealtimeTranscriptionProviderContractEntry[] {
   return loadVitestCapabilityContractEntries({
     contract: "realtimeTranscriptionProviders",
@@ -249,6 +263,7 @@ export function loadVitestRealtimeTranscriptionProviderContractRegistry(): Realt
   });
 }
 
+/** Reused helper for load Vitest Image Generation Provider Contract Registry behavior in src/plugins/contracts. */
 export function loadVitestImageGenerationProviderContractRegistry(): ImageGenerationProviderContractEntry[] {
   return loadVitestCapabilityContractEntries({
     contract: "imageGenerationProviders",
@@ -260,6 +275,7 @@ export function loadVitestImageGenerationProviderContractRegistry(): ImageGenera
   });
 }
 
+/** Reused helper for load Vitest Video Generation Provider Contract Registry behavior in src/plugins/contracts. */
 export function loadVitestVideoGenerationProviderContractRegistry(): VideoGenerationProviderContractEntry[] {
   const entries = loadVitestCapabilityContractEntries({
     contract: "videoGenerationProviders",
@@ -289,6 +305,7 @@ export function loadVitestVideoGenerationProviderContractRegistry(): VideoGenera
   ];
 }
 
+/** Reused helper for load Vitest Music Generation Provider Contract Registry behavior in src/plugins/contracts. */
 export function loadVitestMusicGenerationProviderContractRegistry(): MusicGenerationProviderContractEntry[] {
   const entries = loadVitestCapabilityContractEntries({
     contract: "musicGenerationProviders",

@@ -1,3 +1,4 @@
+// Tests extensions/qqbot/src secret contract test behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import {
   applyResolvedAssignments,

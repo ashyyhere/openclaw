@@ -1,3 +1,4 @@
+// Tests plugins/contracts auth choice contract test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { clearRuntimeAuthProfileStoreSnapshots } from "../../agents/auth-profiles/store.js";
 import { resolvePreferredProviderForAuthChoice } from "../../plugins/provider-auth-choice-preference.js";

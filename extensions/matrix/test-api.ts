@@ -1,3 +1,4 @@
+// extensions/matrix test api helpers and runtime behavior.
 export { matrixPlugin } from "./src/channel.js";
 export { MatrixClient } from "./src/matrix/sdk.js";
 export type {

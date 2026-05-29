@@ -1,3 +1,4 @@
+// Tests extensions/xai image generation provider test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { buildXaiImageGenerationProvider } from "./image-generation-provider.js";
 

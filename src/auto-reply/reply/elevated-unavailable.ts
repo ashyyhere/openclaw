@@ -1,5 +1,7 @@
+// User-facing copy for unavailable elevated command paths.
 import { formatCliCommand } from "../../cli/command-format.js";
 
+/** Reused helper for format Elevated Unavailable Message behavior in src/auto-reply/reply. */
 export function formatElevatedUnavailableMessage(params: {
   runtimeSandboxed: boolean;
   failures: Array<{ gate: string; key: string }>;

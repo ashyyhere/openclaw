@@ -1,3 +1,4 @@
+// Subagent command action for listing available agents.
 import { subagentRuns } from "../../../agents/subagent-registry-memory.js";
 import { countPendingDescendantRunsFromRuns } from "../../../agents/subagent-registry-queries.js";
 import { getSubagentRunsSnapshotForRead } from "../../../agents/subagent-registry-state.js";
@@ -28,6 +29,7 @@ function supportsConversationBindings(channel: string): boolean {
   );
 }
 
+/** Reused helper for handle Subagents Agents Action behavior in src/auto-reply/reply. */
 export function handleSubagentsAgentsAction(ctx: SubagentsCommandContext): CommandHandlerResult {
   const { params, requesterKey, runs } = ctx;
   const runsSnapshot = getSubagentRunsSnapshotForRead(subagentRuns);

@@ -1,3 +1,4 @@
+/** Covers web_fetch fallback behavior when provider extraction is unavailable. */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../../config/config.js";
 import { withFetchPreconnect } from "../../test-utils/fetch-mock.js";

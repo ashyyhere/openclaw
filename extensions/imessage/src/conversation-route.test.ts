@@ -1,3 +1,4 @@
+// Tests extensions/imessage/src conversation route test behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import {
   testing as sessionBindingTesting,

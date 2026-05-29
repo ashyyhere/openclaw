@@ -1,3 +1,4 @@
+// extensions/ollama/src wsl2 crash loop check helpers and runtime behavior.
 import { execFile } from "node:child_process";
 import { access } from "node:fs/promises";
 import { promisify } from "node:util";

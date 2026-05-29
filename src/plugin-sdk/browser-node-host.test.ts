@@ -1,3 +1,4 @@
+/** Tests browser node-host proxy command runtime facade delegation. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const loadActivatedBundledPluginPublicSurfaceModuleSync = vi.hoisted(() => vi.fn());

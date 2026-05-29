@@ -1,3 +1,4 @@
+// gateway/server http listen helpers and runtime behavior.
 import type { Server as HttpServer } from "node:http";
 import { GatewayLockError } from "../../infra/gateway-lock.js";
 import { sleep } from "../../utils.js";
@@ -15,6 +16,7 @@ async function closeServerQuietly(httpServer: HttpServer): Promise<void> {
   });
 }
 
+/** Reused helper for listen Gateway Http Server behavior in src/gateway/server. */
 export async function listenGatewayHttpServer(params: {
   httpServer: HttpServer;
   bindHost: string;

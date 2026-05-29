@@ -1,3 +1,4 @@
+// Tests gateway server startup early test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 type StartGatewayDiscovery = typeof import("./server-discovery-runtime.js").startGatewayDiscovery;

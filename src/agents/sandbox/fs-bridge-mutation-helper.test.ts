@@ -1,3 +1,4 @@
+/** Covers pinned mutation helper scripts for sandbox filesystem operations. */
 import { spawnSync } from "node:child_process";
 import { existsSync } from "node:fs";
 import fs from "node:fs/promises";

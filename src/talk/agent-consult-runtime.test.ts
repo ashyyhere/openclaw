@@ -1,3 +1,4 @@
+// Tests talk agent consult runtime test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { RunEmbeddedAgentParams } from "../agents/embedded-agent-runner/run/params.js";
 import {

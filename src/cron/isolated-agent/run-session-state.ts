@@ -1,3 +1,4 @@
+// cron/isolated-agent run session state helpers and runtime behavior.
 import fs from "node:fs";
 import type { LiveSessionModelSelection } from "../../agents/live-model-switch.js";
 import type { SessionEntry } from "../../config/sessions.js";
@@ -7,11 +8,14 @@ import type { resolveCronSession } from "./session.js";
 
 type MutableSessionStore = Record<string, SessionEntry>;
 
+/** Shared type for Mutable Cron Session Entry in src/cron/isolated-agent. */
 export type MutableCronSessionEntry = SessionEntry;
+/** Shared type for Mutable Cron Session in src/cron/isolated-agent. */
 export type MutableCronSession = ReturnType<typeof resolveCronSession> & {
   store: MutableSessionStore;
   sessionEntry: MutableCronSessionEntry;
 };
+/** Shared type for Cron Live Selection in src/cron/isolated-agent. */
 export type CronLiveSelection = LiveSessionModelSelection;
 
 type UpdateSessionStore = (
@@ -19,6 +23,7 @@ type UpdateSessionStore = (
   update: (store: MutableSessionStore) => void,
 ) => Promise<void>;
 
+/** Shared type for Persist Cron Session Entry in src/cron/isolated-agent. */
 export type PersistCronSessionEntry = () => Promise<void>;
 
 function cronTranscriptExists(entry: SessionEntry): boolean {
@@ -43,6 +48,7 @@ function toNonResumableCronSessionEntry(entry: SessionEntry): SessionEntry {
   return next as SessionEntry;
 }
 
+/** Reused helper for create Persist Cron Session Entry behavior in src/cron/isolated-agent. */
 export function createPersistCronSessionEntry(params: {
   isFastTestEnv: boolean;
   cronSession: MutableCronSession;
@@ -66,6 +72,7 @@ export function createPersistCronSessionEntry(params: {
   };
 }
 
+/** Reused helper for adopt Cron Run Session Metadata behavior in src/cron/isolated-agent. */
 export function adoptCronRunSessionMetadata(params: {
   entry: MutableCronSessionEntry;
   sessionKey: string;
@@ -103,6 +110,7 @@ export function adoptCronRunSessionMetadata(params: {
   return changed;
 }
 
+/** Reused helper for persist Cron Skills Snapshot If Changed behavior in src/cron/isolated-agent. */
 export async function persistCronSkillsSnapshotIfChanged(params: {
   isFastTestEnv: boolean;
   cronSession: MutableCronSession;
@@ -124,6 +132,7 @@ export async function persistCronSkillsSnapshotIfChanged(params: {
   await params.persistSessionEntry();
 }
 
+/** Reused helper for mark Cron Session Pre Run behavior in src/cron/isolated-agent. */
 export function markCronSessionPreRun(params: {
   entry: MutableCronSessionEntry;
   provider: string;
@@ -134,6 +143,7 @@ export function markCronSessionPreRun(params: {
   params.entry.systemSent = true;
 }
 
+/** Reused helper for sync Cron Session Live Selection behavior in src/cron/isolated-agent. */
 export function syncCronSessionLiveSelection(params: {
   entry: MutableCronSessionEntry;
   liveSelection: CronLiveSelection;

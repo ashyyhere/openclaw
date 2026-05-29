@@ -1,9 +1,11 @@
+// gateway/server-methods voicewake helpers and runtime behavior.
 import { ErrorCodes, errorShape } from "../../../packages/gateway-protocol/src/index.js";
 import { loadVoiceWakeConfig, setVoiceWakeTriggers } from "../../infra/voicewake.js";
 import { normalizeVoiceWakeTriggers } from "../server-utils.js";
 import { formatForLog } from "../ws-log.js";
 import type { GatewayRequestHandlers } from "./types.js";
 
+/** Reused constant for voicewake Handlers behavior in src/gateway/server-methods. */
 export const voicewakeHandlers: GatewayRequestHandlers = {
   "voicewake.get": async ({ respond }) => {
     try {

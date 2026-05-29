@@ -1,3 +1,4 @@
+// extensions/imessage/src/monitor strip imsg length prefixed text helpers and runtime behavior.
 type Varint = {
   nextOffset: number;
   value: number;

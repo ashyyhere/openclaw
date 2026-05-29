@@ -1,3 +1,4 @@
+// Tests extensions/signal/src/monitor access policy test behavior.
 import type { AccessGroupsConfig, OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { describe, expect, it, vi } from "vitest";
 import { handleSignalDirectMessageAccess, resolveSignalAccessState } from "./access-policy.js";

@@ -1,3 +1,4 @@
+// Tests extensions/qa-lab/src/live-transports/shared live transport scenarios test behavior.
 import fs from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";

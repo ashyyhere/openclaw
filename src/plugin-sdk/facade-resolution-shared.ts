@@ -1,3 +1,4 @@
+/** Shared facade resolution helpers for bundled and registry plugin public surfaces. */
 import fs from "node:fs";
 import path from "node:path";
 import { areBundledPluginsDisabled } from "../plugins/bundled-dir.js";
@@ -8,6 +9,7 @@ import {
   resolveBundledPluginSourcePublicSurfacePath,
 } from "../plugins/public-surface-runtime.js";
 
+/** Resolved facade module path plus the root used for boundary enforcement. */
 export type FacadeModuleLocationLike = {
   modulePath: string;
   boundaryRoot: string;
@@ -19,6 +21,7 @@ type FacadeRegistryRecordLike = {
   channels: readonly string[];
 };
 
+/** Build a cache key that includes bundled-dir and disabled-state resolution inputs. */
 export function createFacadeResolutionKey(params: {
   dirName: string;
   artifactBasename: string;
@@ -31,6 +34,7 @@ export function createFacadeResolutionKey(params: {
   }::${disabledKey}`;
 }
 
+/** Resolve which root should bound a facade module path. */
 export function resolveFacadeBoundaryRoot(params: {
   modulePath: string;
   bundledPluginsDir?: string | null;
@@ -45,6 +49,7 @@ export function resolveFacadeBoundaryRoot(params: {
     : params.packageRoot;
 }
 
+/** Resolve a bundled facade location, preferring source in source checkouts and dist in builds. */
 export function resolveBundledFacadeModuleLocation(params: {
   currentModulePath: string;
   packageRoot: string;
@@ -93,6 +98,7 @@ export function resolveBundledFacadeModuleLocation(params: {
     : null;
 }
 
+/** Resolve a plugin facade from registry records by id, root dir name, then channel id. */
 export function resolveRegistryPluginModuleLocationFromRecords(params: {
   registry: readonly FacadeRegistryRecordLike[];
   dirName: string;

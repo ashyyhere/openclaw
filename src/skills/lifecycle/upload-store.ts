@@ -1,3 +1,4 @@
+// gateway/server-methods skills upload store helpers and runtime behavior.
 import { createHash, randomUUID } from "node:crypto";
 import { createReadStream } from "node:fs";
 import fs from "node:fs/promises";
@@ -13,10 +14,15 @@ import {
 } from "../../shared/number-coercion.js";
 import { validateRequestedSkillSlug } from "./archive-install.js";
 
+/** Reused constant for SKILL UPLOAD TTL MS behavior in src/gateway/server-methods. */
 export const SKILL_UPLOAD_TTL_MS = 60 * 60 * 1000;
+/** Reused constant for MAX SKILL UPLOAD CHUNK BYTES behavior in src/gateway/server-methods. */
 export const MAX_SKILL_UPLOAD_CHUNK_BYTES = 4 * 1024 * 1024;
+/** Reused constant for MAX SKILL UPLOAD BASE64 LENGTH behavior in src/gateway/server-methods. */
 export const MAX_SKILL_UPLOAD_BASE64_LENGTH = Math.ceil(MAX_SKILL_UPLOAD_CHUNK_BYTES / 3) * 4;
+/** Reused constant for MAX ACTIVE SKILL UPLOADS behavior in src/gateway/server-methods. */
 export const MAX_ACTIVE_SKILL_UPLOADS = 32;
+/** Reused constant for SKILL UPLOAD IDEMPOTENCY KEY MAX LENGTH behavior in src/gateway/server-methods. */
 export const SKILL_UPLOAD_IDEMPOTENCY_KEY_MAX_LENGTH = 2048;
 
 const SHA256_PATTERN = /^[a-f0-9]{64}$/i;
@@ -25,6 +31,7 @@ const UPLOAD_ID_PATTERN =
 const BASE64_PATTERN = /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/;
 const locks = new Map<string, { lock: ReturnType<typeof createAsyncLock>; references: number }>();
 
+/** Reused class for Skill Upload Request Error behavior in src/gateway/server-methods. */
 export class SkillUploadRequestError extends Error {
   constructor(message: string) {
     super(message);
@@ -32,6 +39,7 @@ export class SkillUploadRequestError extends Error {
   }
 }
 
+/** Shared type for Skill Upload Record in src/gateway/server-methods. */
 export type SkillUploadRecord = {
   version: 1;
   kind: "skill-archive";
@@ -50,6 +58,7 @@ export type SkillUploadRecord = {
   idempotencyKeyHash?: string;
 };
 
+/** Shared type for Skill Upload Store in src/gateway/server-methods. */
 export type SkillUploadStore = ReturnType<typeof createSkillUploadStore>;
 
 type BeginParams = {
@@ -100,6 +109,7 @@ async function withLock<T>(key: string, fn: () => Promise<T>): Promise<T> {
   }
 }
 
+/** Reused helper for normalize Skill Upload Sha256 behavior in src/gateway/server-methods. */
 export function normalizeSkillUploadSha256(value: string | undefined): string | undefined {
   if (value === undefined) {
     return undefined;
@@ -367,6 +377,7 @@ async function readCommittedRecord(
   return record;
 }
 
+/** Reused helper for create Skill Upload Store behavior in src/gateway/server-methods. */
 export function createSkillUploadStore(options?: {
   rootDir?: string;
   now?: () => number;
@@ -607,4 +618,5 @@ export function createSkillUploadStore(options?: {
   };
 }
 
+/** Reused constant for default Skill Upload Store behavior in src/gateway/server-methods. */
 export const defaultSkillUploadStore = createSkillUploadStore();

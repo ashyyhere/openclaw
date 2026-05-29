@@ -1,3 +1,4 @@
+/** Resolves compatibility defaults for OpenAI Chat Completions-style providers. */
 import type { Model } from "../llm/types.js";
 import type { ProviderEndpointClass, ProviderRequestCapabilities } from "./provider-attribution.js";
 import { resolveProviderRequestCapabilities } from "./provider-attribution.js";
@@ -33,6 +34,7 @@ function isDefaultRouteProvider(provider: string | undefined, ...ids: string[]) 
   return provider !== undefined && ids.includes(provider);
 }
 
+/** Build default request/stream compatibility flags for a provider route. */
 export function resolveOpenAICompletionsCompatDefaults(
   input: OpenAICompletionsCompatDefaultsInput,
 ): OpenAICompletionsCompatDefaults {
@@ -136,6 +138,7 @@ function resolveOpenAICompletionsCompatDefaultsFromCapabilities(
   return resolveOpenAICompletionsCompatDefaults(input);
 }
 
+/** Resolve request capabilities and completion compatibility defaults for a model. */
 export function detectOpenAICompletionsCompat(
   model: Pick<Model<"openai-completions">, "provider" | "baseUrl" | "id"> & {
     compat?: { supportsStore?: boolean } | null;

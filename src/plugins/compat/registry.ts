@@ -1,3 +1,4 @@
+// plugins/compat registry helpers and runtime behavior.
 import type { PluginCompatRecord } from "./types.js";
 
 const CHANNEL_RUNTIME_SDK_SURFACE = ["openclaw/plugin-sdk/channel", "runtime"].join("-");
@@ -6,6 +7,7 @@ const LEGACY_CONFIG_MIGRATE_TEST_PATH = [
   "migrate.test.ts",
 ].join("-");
 
+/** Reused constant for PLUGIN COMPAT RECORDS behavior in src/plugins/compat. */
 export const PLUGIN_COMPAT_RECORDS = [
   {
     code: "legacy-before-agent-start",
@@ -1040,17 +1042,21 @@ export const PLUGIN_COMPAT_RECORDS = [
   },
 ] as const satisfies readonly PluginCompatRecord[];
 
+/** Shared type for Plugin Compat Code in src/plugins/compat. */
 export type PluginCompatCode = (typeof PLUGIN_COMPAT_RECORDS)[number]["code"];
+/** Shared type for Known Plugin Compat Record in src/plugins/compat. */
 export type KnownPluginCompatRecord = PluginCompatRecord<PluginCompatCode>;
 
 const pluginCompatRecordByCode = new Map<PluginCompatCode, KnownPluginCompatRecord>(
   PLUGIN_COMPAT_RECORDS.map((record) => [record.code, record]),
 );
 
+/** Reused helper for list Plugin Compat Records behavior in src/plugins/compat. */
 export function listPluginCompatRecords(): readonly KnownPluginCompatRecord[] {
   return PLUGIN_COMPAT_RECORDS;
 }
 
+/** Reused helper for get Plugin Compat Record behavior in src/plugins/compat. */
 export function getPluginCompatRecord(code: PluginCompatCode): KnownPluginCompatRecord {
   const record = pluginCompatRecordByCode.get(code);
   if (!record) {
@@ -1059,10 +1065,12 @@ export function getPluginCompatRecord(code: PluginCompatCode): KnownPluginCompat
   return record;
 }
 
+/** Reused helper for is Plugin Compat Code behavior in src/plugins/compat. */
 export function isPluginCompatCode(code: string): code is PluginCompatCode {
   return pluginCompatRecordByCode.has(code as PluginCompatCode);
 }
 
+/** Reused helper for list Deprecated Plugin Compat Records behavior in src/plugins/compat. */
 export function listDeprecatedPluginCompatRecords(): readonly KnownPluginCompatRecord[] {
   return PLUGIN_COMPAT_RECORDS.filter((record) =>
     (["deprecated", "removal-pending"] as readonly string[]).includes(record.status),

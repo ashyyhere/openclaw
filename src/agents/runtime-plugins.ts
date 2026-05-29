@@ -1,3 +1,4 @@
+/** Loads runtime plugin registry before agent/tool execution. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { getCurrentPluginMetadataSnapshot } from "../plugins/current-plugin-metadata-snapshot.js";
 import { getActivePluginRuntimeSubagentMode } from "../plugins/runtime.js";
@@ -27,6 +28,7 @@ function resolveStartupPluginIdsFromCurrentSnapshot(params: {
   return pluginIds.filter((pluginId): pluginId is string => typeof pluginId === "string");
 }
 
+/** Ensure standalone runtime plugins are loaded for the active workspace/config. */
 export function ensureRuntimePluginsLoaded(params: {
   config?: OpenClawConfig;
   workspaceDir?: string | null;

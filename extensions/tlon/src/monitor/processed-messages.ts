@@ -1,3 +1,4 @@
+// extensions/tlon/src/monitor processed messages helpers and runtime behavior.
 import { createDedupeCache } from "../../runtime-api.js";
 
 type ProcessedMessageTracker = {

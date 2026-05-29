@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/voice audio test behavior.
 import { Readable } from "node:stream";
 import { describe, expect, it, vi } from "vitest";
 import {

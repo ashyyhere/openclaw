@@ -1,3 +1,4 @@
+// Tests extensions/xai realtime transcription provider test behavior.
 import { createServer } from "node:http";
 import type { AddressInfo } from "node:net";
 import { afterEach, describe, expect, it, vi } from "vitest";

@@ -1,3 +1,4 @@
+/** Tests text extraction from content block arrays. */
 import { describe, expect, it } from "vitest";
 import { collectTextContentBlocks } from "./content-blocks.js";
 

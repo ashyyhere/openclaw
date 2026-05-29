@@ -1,3 +1,4 @@
+/** Injects bundled MCP configuration into Codex CLI arguments and user config. */
 import { normalizeConfiguredMcpServers } from "../../config/mcp-config-normalize.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { BundleMcpConfig, BundleMcpServerConfig } from "../../plugins/bundle-mcp.js";
@@ -54,6 +55,7 @@ function isCodexMcpServerAllowedForAgent(
   return agentIds.includes(normalizeAgentId(options.agentId));
 }
 
+/** Reused helper for inject Codex Mcp Config Args behavior in src/agents/cli-runner. */
 export function injectCodexMcpConfigArgs(
   args: string[] | undefined,
   config: BundleMcpConfig,

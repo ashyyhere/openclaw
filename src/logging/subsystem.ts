@@ -1,3 +1,4 @@
+// logging subsystem helpers and runtime behavior.
 import { Chalk } from "chalk";
 import type { Logger as TsLogger } from "tslog";
 import { clearActiveProgressLine } from "../../packages/terminal-core/src/progress-line.js";
@@ -16,6 +17,7 @@ import { loggingState } from "./state.js";
 
 type LogObj = { date?: Date } & Record<string, unknown>;
 
+/** Shared type for Subsystem Logger in src/logging. */
 export type SubsystemLogger = {
   subsystem: string;
   isEnabled: (level: LogLevel, target?: "any" | "console" | "file") => boolean;
@@ -185,6 +187,7 @@ function formatSubsystemForConsole(subsystem: string): string {
   return parts.join("/");
 }
 
+/** Reused helper for strip Redundant Subsystem Prefix For Console behavior in src/logging. */
 export function stripRedundantSubsystemPrefixForConsole(
   message: string,
   displaySubsystem: string,
@@ -361,6 +364,7 @@ function logToFile(
   }
 }
 
+/** Reused helper for create Subsystem Logger behavior in src/logging. */
 export function createSubsystemLogger(subsystem: string): SubsystemLogger {
   const resolvedSubsystem = normalizeSubsystemLabel(subsystem);
 
@@ -474,6 +478,7 @@ export function createSubsystemLogger(subsystem: string): SubsystemLogger {
   return logger;
 }
 
+/** Reused helper for runtime For Logger behavior in src/logging. */
 export function runtimeForLogger(
   logger: SubsystemLogger,
   exit: RuntimeEnv["exit"] = defaultRuntime.exit,
@@ -505,6 +510,7 @@ export function runtimeForLogger(
   };
 }
 
+/** Reused helper for create Subsystem Runtime behavior in src/logging. */
 export function createSubsystemRuntime(
   subsystem: string,
   exit: RuntimeEnv["exit"] = defaultRuntime.exit,

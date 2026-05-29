@@ -1,3 +1,4 @@
+// ui/src/ui/views agents utils helpers and runtime behavior.
 import { html, nothing } from "lit";
 import {
   expandToolGroups,
@@ -16,6 +17,7 @@ import type {
   ToolsCatalogResult,
 } from "../types.ts";
 
+/** Shared type for Agent Tool Entry in ui/src/ui/views. */
 export type AgentToolEntry = {
   id: string;
   label: string;
@@ -26,6 +28,7 @@ export type AgentToolEntry = {
   defaultProfiles?: string[];
 };
 
+/** Shared type for Agent Tool Section in ui/src/ui/views. */
 export type AgentToolSection = {
   id: string;
   label: string;
@@ -34,6 +37,7 @@ export type AgentToolSection = {
   tools: AgentToolEntry[];
 };
 
+/** Reused constant for FALLBACK TOOL SECTIONS behavior in ui/src/ui/views. */
 export const FALLBACK_TOOL_SECTIONS: AgentToolSection[] = [
   {
     id: "fs",
@@ -118,6 +122,7 @@ export const FALLBACK_TOOL_SECTIONS: AgentToolSection[] = [
   },
 ];
 
+/** Reused constant for PROFILE OPTIONS behavior in ui/src/ui/views. */
 export const PROFILE_OPTIONS = [
   { id: "minimal", label: "Minimal" },
   { id: "coding", label: "Coding" },
@@ -125,6 +130,7 @@ export const PROFILE_OPTIONS = [
   { id: "full", label: "Full" },
 ] as const;
 
+/** Reused helper for resolve Tool Sections behavior in ui/src/ui/views. */
 export function resolveToolSections(
   toolsCatalogResult: ToolsCatalogResult | null,
 ): AgentToolSection[] {
@@ -148,6 +154,7 @@ export function resolveToolSections(
   return FALLBACK_TOOL_SECTIONS;
 }
 
+/** Reused helper for resolve Tool Profile Options behavior in ui/src/ui/views. */
 export function resolveToolProfileOptions(
   toolsCatalogResult: ToolsCatalogResult | null,
 ): readonly ToolCatalogProfile[] | typeof PROFILE_OPTIONS {
@@ -191,6 +198,7 @@ type ConfigSnapshot = {
   };
 };
 
+/** Reused helper for normalize Agent Label behavior in ui/src/ui/views. */
 export function normalizeAgentLabel(agent: {
   id: string;
   name?: string;
@@ -203,10 +211,12 @@ export function normalizeAgentLabel(agent: {
 
 const CONTROL_UI_AVATAR_URL_RE = /^(data:image\/|\/(?!\/))/i;
 
+/** Reused helper for is Renderable Control Ui Avatar Url behavior in ui/src/ui/views. */
 export function isRenderableControlUiAvatarUrl(value: string): boolean {
   return CONTROL_UI_AVATAR_URL_RE.test(value);
 }
 
+/** Reused helper for resolve Agent Avatar Url behavior in ui/src/ui/views. */
 export function resolveAgentAvatarUrl(
   agent: { identity?: { avatar?: string; avatarUrl?: string } },
   agentIdentity?: AgentIdentityResult | null,
@@ -231,6 +241,7 @@ export function resolveAgentAvatarUrl(
 // `URL.createObjectURL` after an authenticated avatar fetch) in addition to
 // config-sanitized candidates. The config path still gates untrusted
 // http(s)/data sources through `resolveAgentAvatarUrl`.
+/** Reused helper for resolve Chat Avatar Render Url behavior in ui/src/ui/views. */
 export function resolveChatAvatarRenderUrl(
   candidate: string | null | undefined,
   agent: { identity?: { avatar?: string; avatarUrl?: string } },
@@ -243,11 +254,13 @@ export function resolveChatAvatarRenderUrl(
   return resolveAgentAvatarUrl(agent, agentIdentity);
 }
 
+/** Reused helper for agent Logo Url behavior in ui/src/ui/views. */
 export function agentLogoUrl(basePath: string): string {
   const base = normalizeOptionalString(basePath)?.replace(/\/$/, "") ?? "";
   return base ? `${base}/favicon.svg` : "favicon.svg";
 }
 
+/** Reused helper for assistant Avatar Fallback Url behavior in ui/src/ui/views. */
 export function assistantAvatarFallbackUrl(basePath: string): string {
   const base = normalizeOptionalString(basePath)?.replace(/\/$/, "") ?? "";
   return base ? `${base}/apple-touch-icon.png` : "apple-touch-icon.png";
@@ -260,6 +273,7 @@ function isAvatarUrl(value: string): boolean {
 
 const UNSAFE_ASSISTANT_TEXT_AVATAR_CHARS = /[\u200B-\u200F\u202A-\u202E\u2060-\u206F\uFEFF]/u;
 
+/** Reused helper for resolve Assistant Text Avatar behavior in ui/src/ui/views. */
 export function resolveAssistantTextAvatar(value: string | null | undefined): string | null {
   const trimmed = value?.trim();
   if (!trimmed || trimmed === DEFAULT_ASSISTANT_AVATAR) {
@@ -303,6 +317,7 @@ function isLikelyEmoji(value: string) {
   return true;
 }
 
+/** Reused helper for resolve Agent Emoji behavior in ui/src/ui/views. */
 export function resolveAgentEmoji(
   agent: { identity?: { emoji?: string; avatar?: string } },
   agentIdentity?: AgentIdentityResult | null,
@@ -345,10 +360,12 @@ function resolveAgentTextAvatar(
   return null;
 }
 
+/** Reused helper for agent Badge Text behavior in ui/src/ui/views. */
 export function agentBadgeText(agentId: string, defaultId: string | null) {
   return defaultId && agentId === defaultId ? "default" : null;
 }
 
+/** Reused helper for agent Avatar Hue behavior in ui/src/ui/views. */
 export function agentAvatarHue(id: string): number {
   let hash = 0;
   for (let i = 0; i < id.length; i += 1) {
@@ -357,6 +374,7 @@ export function agentAvatarHue(id: string): number {
   return ((hash % 360) + 360) % 360;
 }
 
+/** Reused helper for format Bytes behavior in ui/src/ui/views. */
 export function formatBytes(bytes?: number) {
   if (bytes == null || !Number.isFinite(bytes)) {
     return "-";
@@ -374,6 +392,7 @@ export function formatBytes(bytes?: number) {
   return `${size.toFixed(size < 10 ? 1 : 0)} ${units[unitIndex]}`;
 }
 
+/** Reused helper for resolve Agent Config behavior in ui/src/ui/views. */
 export function resolveAgentConfig(config: Record<string, unknown> | null, agentId: string) {
   const cfg = config as ConfigSnapshot | null;
   const list = cfg?.agents?.list ?? [];
@@ -385,6 +404,7 @@ export function resolveAgentConfig(config: Record<string, unknown> | null, agent
   };
 }
 
+/** Shared type for Agent Context in ui/src/ui/views. */
 export type AgentContext = {
   workspace: string;
   model: string;
@@ -395,6 +415,7 @@ export type AgentContext = {
   isDefault: boolean;
 };
 
+/** Reused helper for build Agent Context behavior in ui/src/ui/views. */
 export function buildAgentContext(
   agent: AgentsListResult["agents"][number],
   configForm: Record<string, unknown> | null,
@@ -439,6 +460,7 @@ export function buildAgentContext(
   };
 }
 
+/** Reused helper for resolve Agent Runtime Label behavior in ui/src/ui/views. */
 export function resolveAgentRuntimeLabel(
   agentRuntime?: AgentsListResult["agents"][number]["agentRuntime"],
 ): string {
@@ -447,6 +469,7 @@ export function resolveAgentRuntimeLabel(
   return fallback ? `${id} (fallback ${fallback})` : id;
 }
 
+/** Reused helper for resolve Model Label behavior in ui/src/ui/views. */
 export function resolveModelLabel(model?: unknown): string {
   if (!model) {
     return "-";
@@ -465,11 +488,13 @@ export function resolveModelLabel(model?: unknown): string {
   return "-";
 }
 
+/** Reused helper for normalize Model Value behavior in ui/src/ui/views. */
 export function normalizeModelValue(label: string): string {
   const match = label.match(/^(.+) \(\+\d+ fallback\)$/);
   return match ? match[1] : label;
 }
 
+/** Reused helper for resolve Model Primary behavior in ui/src/ui/views. */
 export function resolveModelPrimary(model?: unknown): string | null {
   if (!model) {
     return null;
@@ -496,6 +521,7 @@ export function resolveModelPrimary(model?: unknown): string | null {
   return null;
 }
 
+/** Reused helper for resolve Model Fallbacks behavior in ui/src/ui/views. */
 export function resolveModelFallbacks(model?: unknown): string[] | null {
   if (!model || typeof model === "string") {
     return null;
@@ -514,6 +540,7 @@ export function resolveModelFallbacks(model?: unknown): string[] | null {
   return null;
 }
 
+/** Reused helper for resolve Effective Model Fallbacks behavior in ui/src/ui/views. */
 export function resolveEffectiveModelFallbacks(
   entryModel?: unknown,
   defaultModel?: unknown,
@@ -558,6 +585,7 @@ function addModelConfigIds(target: Set<string>, modelConfig: unknown) {
   }
 }
 
+/** Reused helper for sort Locale Strings behavior in ui/src/ui/views. */
 export function sortLocaleStrings(values: Iterable<string>): string[] {
   const sorted = Array.from(values);
   const buffer = Array.from({ length: sorted.length }, () => "");
@@ -595,6 +623,7 @@ export function sortLocaleStrings(values: Iterable<string>): string[] {
   return sorted;
 }
 
+/** Reused helper for resolve Configured Cron Model Suggestions behavior in ui/src/ui/views. */
 export function resolveConfiguredCronModelSuggestions(
   configForm: Record<string, unknown> | null,
 ): string[] {
@@ -629,6 +658,7 @@ export function resolveConfiguredCronModelSuggestions(
   return sortLocaleStrings(out);
 }
 
+/** Reused helper for parse Fallback List behavior in ui/src/ui/views. */
 export function parseFallbackList(value: string): string[] {
   return value
     .split(",")
@@ -667,6 +697,7 @@ function resolveConfiguredModels(
   return options;
 }
 
+/** Reused helper for build Model Options behavior in ui/src/ui/views. */
 export function buildModelOptions(
   configForm: Record<string, unknown> | null,
   current?: string | null,
@@ -763,6 +794,7 @@ function matchesAny(name: string, patterns: CompiledPattern[]) {
   return false;
 }
 
+/** Reused helper for is Allowed By Policy behavior in ui/src/ui/views. */
 export function isAllowedByPolicy(name: string, policy?: ToolPolicy) {
   if (!policy) {
     return true;
@@ -785,6 +817,7 @@ export function isAllowedByPolicy(name: string, policy?: ToolPolicy) {
   return false;
 }
 
+/** Reused helper for matches List behavior in ui/src/ui/views. */
 export function matchesList(name: string, list?: string[]) {
   if (!Array.isArray(list) || list.length === 0) {
     return false;
@@ -800,6 +833,7 @@ export function matchesList(name: string, list?: string[]) {
   return false;
 }
 
+/** Reused helper for resolve Tool Profile behavior in ui/src/ui/views. */
 export function resolveToolProfile(profile: string) {
   return resolveToolProfilePolicy(profile) ?? undefined;
 }

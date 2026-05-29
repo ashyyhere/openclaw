@@ -1,3 +1,4 @@
+// Coverage for channel approval adapter helpers.
 import { describe, expect, it, vi } from "vitest";
 import { resolveChannelApprovalAdapter, resolveChannelApprovalCapability } from "./approvals.js";
 

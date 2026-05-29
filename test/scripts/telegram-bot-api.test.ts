@@ -1,3 +1,4 @@
+// Tests test/scripts telegram bot api test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   readTelegramBotApiLimits,

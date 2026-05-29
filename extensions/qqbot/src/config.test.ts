@@ -1,3 +1,4 @@
+// Tests extensions/qqbot/src config test behavior.
 import fs from "node:fs";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import {

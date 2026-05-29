@@ -1,5 +1,8 @@
+// Shared types for media-generation normalization types behavior.
+/** Shared type for Media Normalization Value in src/media-generation. */
 export type MediaNormalizationValue = string | number | boolean;
 
+/** Shared type for Media Normalization Entry in src/media-generation. */
 export type MediaNormalizationEntry<TValue extends MediaNormalizationValue> = {
   requested?: TValue;
   applied?: TValue;
@@ -7,6 +10,7 @@ export type MediaNormalizationEntry<TValue extends MediaNormalizationValue> = {
   supportedValues?: readonly TValue[];
 };
 
+/** Shared type for Media Generation Normalization Metadata Input in src/media-generation. */
 export type MediaGenerationNormalizationMetadataInput = {
   size?: MediaNormalizationEntry<string>;
   aspectRatio?: MediaNormalizationEntry<string>;

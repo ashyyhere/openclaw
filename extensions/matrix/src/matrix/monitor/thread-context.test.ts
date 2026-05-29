@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src/matrix/monitor thread context test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { createPollStartEvent } from "./test-events.js";
 import {

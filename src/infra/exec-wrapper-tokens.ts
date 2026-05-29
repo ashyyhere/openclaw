@@ -1,3 +1,4 @@
+// infra exec wrapper tokens helpers and runtime behavior.
 import path from "node:path";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
@@ -12,6 +13,7 @@ function stripWindowsExecutableSuffix(value: string): string {
   return value;
 }
 
+/** Reused helper for basename Lower behavior in src/infra. */
 export function basenameLower(token: string): string {
   const win = path.win32.basename(token);
   const posix = path.posix.basename(token);
@@ -19,6 +21,7 @@ export function basenameLower(token: string): string {
   return normalizeLowercaseStringOrEmpty(base);
 }
 
+/** Reused helper for normalize Executable Token behavior in src/infra. */
 export function normalizeExecutableToken(token: string): string {
   return stripWindowsExecutableSuffix(basenameLower(token));
 }

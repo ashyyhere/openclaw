@@ -1,3 +1,4 @@
+// media-understanding apply helpers and runtime behavior.
 import path from "node:path";
 import { finalizeInboundContext } from "../auto-reply/reply/inbound-context.js";
 import type { MsgContext } from "../auto-reply/templating.js";
@@ -38,6 +39,7 @@ import type {
   MediaUnderstandingProvider,
 } from "./types.js";
 
+/** Shared type for Apply Media Understanding Result in src/media-understanding. */
 export type ApplyMediaUnderstandingResult = {
   outputs: MediaUnderstandingOutput[];
   decisions: MediaUnderstandingDecision[];
@@ -88,6 +90,7 @@ const MIME_TYPE_WITH_OPTIONAL_PARAMS = new RegExp(
   "i",
 );
 
+/** Reused helper for sanitize Mime Type behavior in src/media-understanding. */
 export function sanitizeMimeType(value?: string): string | undefined {
   const trimmed = normalizeOptionalString(value);
   if (!trimmed) {
@@ -519,6 +522,7 @@ async function extractFileBlocks(params: {
   return blocks;
 }
 
+/** Reused helper for apply Media Understanding behavior in src/media-understanding. */
 export async function applyMediaUnderstanding(params: {
   ctx: MsgContext;
   cfg: OpenClawConfig;

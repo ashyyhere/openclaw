@@ -1,3 +1,4 @@
+/** Shared doctor output formatting and gateway runtime hints. */
 import { formatCliCommand } from "../cli/command-format.js";
 import {
   resolveGatewayLaunchAgentLabel,
@@ -25,12 +26,14 @@ type RuntimeHintOptions = {
   env?: Record<string, string | undefined>;
 };
 
+/** Reused helper for format Gateway Runtime Summary behavior in src/commands. */
 export function formatGatewayRuntimeSummary(
   runtime: GatewayServiceRuntime | undefined,
 ): string | null {
   return formatRuntimeStatus(runtime);
 }
 
+/** Reused helper for build Gateway Runtime Hints behavior in src/commands. */
 export function buildGatewayRuntimeHints(
   runtime: GatewayServiceRuntime | undefined,
   options: RuntimeHintOptions = {},

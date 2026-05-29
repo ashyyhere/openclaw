@@ -1,3 +1,4 @@
+// extensions/codex/src conversation turn input helpers and runtime behavior.
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import type { PluginHookInboundClaimEvent } from "openclaw/plugin-sdk/plugin-entry";

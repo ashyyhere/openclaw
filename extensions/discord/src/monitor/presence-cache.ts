@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor presence cache helpers and runtime behavior.
 import type { GatewayPresenceUpdate } from "discord-api-types/v10";
 
 /**

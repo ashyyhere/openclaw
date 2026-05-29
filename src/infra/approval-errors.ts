@@ -1,3 +1,4 @@
+// infra approval errors helpers and runtime behavior.
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 
 const INVALID_REQUEST = "INVALID_REQUEST";
@@ -15,6 +16,7 @@ function readApprovalNotFoundDetailsReason(value: unknown): string | null {
   return typeof reason === "string" ? (normalizeOptionalString(reason) ?? null) : null;
 }
 
+/** Reused helper for is Approval Not Found Error behavior in src/infra. */
 export function isApprovalNotFoundError(err: unknown): boolean {
   if (!(err instanceof Error)) {
     return false;

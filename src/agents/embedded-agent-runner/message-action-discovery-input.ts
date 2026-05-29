@@ -1,5 +1,7 @@
+/** Builds input text used to discover message-channel actions. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 
+/** Reused helper for build Embedded Message Action Discovery Input behavior in src/agents/embedded-agent-runner. */
 export function buildEmbeddedMessageActionDiscoveryInput(params: {
   cfg?: OpenClawConfig;
   channel: string;

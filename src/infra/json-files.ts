@@ -1,3 +1,4 @@
+// infra json files helpers and runtime behavior.
 import "./fs-safe-defaults.js";
 import {
   JsonFileReadError,
@@ -11,6 +12,7 @@ type WriteTextAtomicBeforeRename = (params: {
   tempPath: string;
 }) => Promise<void>;
 
+/** Re-exported API for src/infra. */
 export {
   JsonFileReadError,
   readJsonSync,
@@ -24,6 +26,7 @@ export {
   writeJsonSync,
 } from "@openclaw/fs-safe/json";
 
+/** Reused helper for read Json behavior in src/infra. */
 export async function readJson<T>(filePath: string): Promise<T> {
   try {
     return await readJsonImpl<T>(filePath);
@@ -32,10 +35,12 @@ export async function readJson<T>(filePath: string): Promise<T> {
   }
 }
 
+/** Reused helper for read Json File Strict behavior in src/infra. */
 export async function readJsonFileStrict<T>(filePath: string): Promise<T> {
   return readJson<T>(filePath);
 }
 
+/** Reused helper for read Json If Exists behavior in src/infra. */
 export async function readJsonIfExists<T>(filePath: string): Promise<T | null> {
   try {
     return await readJsonIfExistsImpl<T>(filePath);
@@ -47,6 +52,7 @@ export async function readJsonIfExists<T>(filePath: string): Promise<T | null> {
   }
 }
 
+/** Reused helper for read Durable Json File behavior in src/infra. */
 export async function readDurableJsonFile<T>(filePath: string): Promise<T | null> {
   return readJsonIfExists<T>(filePath);
 }
@@ -65,12 +71,15 @@ export async function tryReadJson<T>(filePath: string): Promise<T | null> {
   }
 }
 
+/** Reused helper for read Json File behavior in src/infra. */
 export async function readJsonFile<T>(filePath: string): Promise<T | null> {
   return tryReadJson<T>(filePath);
 }
 
+/** Re-exported API for src/infra, starting with create Async Lock. */
 export { createAsyncLock } from "@openclaw/fs-safe/advanced";
 
+/** Shared type for Write Text Atomic Options in src/infra. */
 export type WriteTextAtomicOptions = {
   mode?: number;
   dirMode?: number;
@@ -85,6 +94,7 @@ export type WriteTextAtomicOptions = {
   tempPrefix?: string;
 };
 
+/** Reused helper for write Text Atomic behavior in src/infra. */
 export async function writeTextAtomic(
   filePath: string,
   content: string,

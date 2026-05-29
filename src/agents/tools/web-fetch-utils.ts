@@ -1,5 +1,7 @@
+/** HTML/text extraction helpers used by web_fetch. */
 import { sanitizeHtml, stripInvisibleUnicode } from "./web-fetch-visibility.js";
 
+/** Shared type for Extract Mode in src/agents/tools. */
 export type ExtractMode = "markdown" | "text";
 
 function decodeEntities(value: string): string {
@@ -18,6 +20,7 @@ function stripTags(value: string): string {
   return decodeEntities(value.replace(/<[^>]+>/g, ""));
 }
 
+/** Collapses whitespace for extracted web text. */
 export function normalizeWhitespace(value: string): string {
   return value
     .replace(/\r/g, "")
@@ -27,6 +30,7 @@ export function normalizeWhitespace(value: string): string {
     .trim();
 }
 
+/** Converts sanitized HTML into markdown and optional title. */
 export function htmlToMarkdown(html: string): { text: string; title?: string } {
   const titleMatch = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
   const title = titleMatch ? normalizeWhitespace(stripTags(titleMatch[1])) : undefined;
@@ -58,6 +62,7 @@ export function htmlToMarkdown(html: string): { text: string; title?: string } {
   return { text, title };
 }
 
+/** Converts markdown into plain text for text extraction mode. */
 export function markdownToText(markdown: string): string {
   let text = markdown;
   text = text.replace(/!\[[^\]]*]\([^)]+\)/g, "");
@@ -72,6 +77,7 @@ export function markdownToText(markdown: string): string {
   return normalizeWhitespace(text);
 }
 
+/** Reused helper for truncate Text behavior in src/agents/tools. */
 export function truncateText(
   value: string,
   maxChars: number,
@@ -82,6 +88,7 @@ export function truncateText(
   return { text: value.slice(0, maxChars), truncated: true };
 }
 
+/** Extracts basic HTML content when no provider extractor is available. */
 export async function extractBasicHtmlContent(params: {
   html: string;
   extractMode: ExtractMode;

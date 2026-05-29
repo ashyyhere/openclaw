@@ -1,3 +1,4 @@
+// extensions/discord runtime api send helpers and runtime behavior.
 export {
   resolveDiscordOutboundSessionRoute,
   type ResolveDiscordOutboundSessionRouteParams,

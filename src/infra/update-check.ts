@@ -1,3 +1,4 @@
+// infra update check helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { runCommandWithTimeout } from "../process/exec.js";
@@ -7,8 +8,10 @@ import { compareOpenClawReleaseVersions } from "./npm-registry-spec.js";
 import { compareComparableSemver, parseComparableSemver } from "./semver-compare.js";
 import { channelToNpmTag, type UpdateChannel } from "./update-channels.js";
 
+/** Shared type for Package Manager in src/infra. */
 export type PackageManager = "pnpm" | "bun" | "npm" | "unknown";
 
+/** Shared type for Git Update Status in src/infra. */
 export type GitUpdateStatus = {
   root: string;
   sha: string | null;
@@ -22,6 +25,7 @@ export type GitUpdateStatus = {
   error?: string;
 };
 
+/** Shared type for Deps Status in src/infra. */
 export type DepsStatus = {
   manager: PackageManager;
   status: "ok" | "missing" | "stale" | "unknown";
@@ -30,18 +34,21 @@ export type DepsStatus = {
   reason?: string;
 };
 
+/** Shared type for Registry Status in src/infra. */
 export type RegistryStatus = {
   latestVersion: string | null;
   tag?: string;
   error?: string;
 };
 
+/** Shared type for Npm Tag Status in src/infra. */
 export type NpmTagStatus = {
   tag: string;
   version: string | null;
   error?: string;
 };
 
+/** Shared type for Npm Package Target Status in src/infra. */
 export type NpmPackageTargetStatus = {
   target: string;
   version: string | null;
@@ -49,6 +56,7 @@ export type NpmPackageTargetStatus = {
   error?: string;
 };
 
+/** Shared type for Update Check Result in src/infra. */
 export type UpdateCheckResult = {
   root: string | null;
   installKind: "git" | "package" | "unknown";
@@ -58,6 +66,7 @@ export type UpdateCheckResult = {
   registry?: RegistryStatus;
 };
 
+/** Reused helper for format Git Install Label behavior in src/infra. */
 export function formatGitInstallLabel(update: UpdateCheckResult): string | null {
   if (update.installKind !== "git") {
     return null;
@@ -97,6 +106,7 @@ async function detectGitRoot(root: string): Promise<string | null> {
   return top ? path.resolve(top) : null;
 }
 
+/** Reused helper for check Git Update Status behavior in src/infra. */
 export async function checkGitUpdateStatus(params: {
   root: string;
   timeoutMs?: number;
@@ -226,6 +236,7 @@ function resolveDepsMarker(params: { root: string; manager: PackageManager }): {
   return { lockfilePath: null, markerPath: null };
 }
 
+/** Reused helper for check Deps Status behavior in src/infra. */
 export async function checkDepsStatus(params: {
   root: string;
   manager: PackageManager;
@@ -294,6 +305,7 @@ export async function checkDepsStatus(params: {
   };
 }
 
+/** Reused helper for fetch Npm Latest Version behavior in src/infra. */
 export async function fetchNpmLatestVersion(params?: {
   timeoutMs?: number;
 }): Promise<RegistryStatus> {
@@ -304,6 +316,7 @@ export async function fetchNpmLatestVersion(params?: {
   };
 }
 
+/** Reused helper for fetch Npm Registry Version For Channel behavior in src/infra. */
 export async function fetchNpmRegistryVersionForChannel(params: {
   channel: UpdateChannel;
   timeoutMs?: number;
@@ -318,6 +331,7 @@ export async function fetchNpmRegistryVersionForChannel(params: {
   };
 }
 
+/** Reused helper for fetch Npm Package Target Status behavior in src/infra. */
 export async function fetchNpmPackageTargetStatus(params: {
   target: string;
   timeoutMs?: number;
@@ -345,6 +359,7 @@ export async function fetchNpmPackageTargetStatus(params: {
   }
 }
 
+/** Reused helper for fetch Npm Tag Version behavior in src/infra. */
 export async function fetchNpmTagVersion(params: {
   tag: string;
   timeoutMs?: number;
@@ -360,6 +375,7 @@ export async function fetchNpmTagVersion(params: {
   };
 }
 
+/** Reused helper for resolve Npm Channel Tag behavior in src/infra. */
 export async function resolveNpmChannelTag(params: {
   channel: UpdateChannel;
   timeoutMs?: number;
@@ -384,6 +400,7 @@ export async function resolveNpmChannelTag(params: {
   return { tag: channelTag, version: channelStatus.version };
 }
 
+/** Reused helper for compare Semver Strings behavior in src/infra. */
 export function compareSemverStrings(a: string | null, b: string | null): number | null {
   if (a && b) {
     const openClawReleaseCmp = compareOpenClawReleaseVersions(a, b);
@@ -397,6 +414,7 @@ export function compareSemverStrings(a: string | null, b: string | null): number
   );
 }
 
+/** Reused helper for check Update Status behavior in src/infra. */
 export async function checkUpdateStatus(params: {
   root: string | null;
   timeoutMs?: number;

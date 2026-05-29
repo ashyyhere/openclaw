@@ -1,3 +1,5 @@
+// test-utils model fallback mock helpers and runtime behavior.
+/** Reused helper for run With Model Fallback behavior in src/test-utils. */
 export async function runWithModelFallback(params: {
   provider: string;
   model: string;

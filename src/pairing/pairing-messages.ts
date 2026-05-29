@@ -1,6 +1,8 @@
+// pairing pairing messages helpers and runtime behavior.
 import { formatCliCommand } from "../cli/command-format.js";
 import type { PairingChannel } from "./pairing-store.types.js";
 
+/** Reused helper for build Pairing Reply behavior in src/pairing. */
 export function buildPairingReply(params: {
   channel: PairingChannel;
   idLine: string;

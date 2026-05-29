@@ -1,3 +1,4 @@
+// infra voicewake helpers and runtime behavior.
 import path from "node:path";
 import { resolveStateDir } from "../config/paths.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
@@ -24,10 +25,12 @@ function sanitizeTriggers(triggers: string[] | undefined | null): string[] {
 
 const withLock = createAsyncLock();
 
+/** Reused helper for default Voice Wake Triggers behavior in src/infra. */
 export function defaultVoiceWakeTriggers() {
   return [...DEFAULT_TRIGGERS];
 }
 
+/** Reused helper for load Voice Wake Config behavior in src/infra. */
 export async function loadVoiceWakeConfig(baseDir?: string): Promise<VoiceWakeConfig> {
   const filePath = resolvePath(baseDir);
   const existing = await tryReadJson<VoiceWakeConfig>(filePath);
@@ -43,6 +46,7 @@ export async function loadVoiceWakeConfig(baseDir?: string): Promise<VoiceWakeCo
   };
 }
 
+/** Reused helper for set Voice Wake Triggers behavior in src/infra. */
 export async function setVoiceWakeTriggers(
   triggers: string[],
   baseDir?: string,

@@ -1,3 +1,4 @@
+/** Tests attaching and reading program context on Commander commands. */
 import { Command } from "commander";
 import { describe, expect, it } from "vitest";
 import type { ProgramContext } from "./context.js";

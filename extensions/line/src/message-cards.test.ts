@@ -1,3 +1,4 @@
+// Tests extensions/line/src message cards test behavior.
 import { describe, expect, it } from "vitest";
 import {
   createActionCard,

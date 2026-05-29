@@ -1,3 +1,4 @@
+// Tests hooks gmail watcher test behavior.
 import { EventEmitter } from "node:events";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 

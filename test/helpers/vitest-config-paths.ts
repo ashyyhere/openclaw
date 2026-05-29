@@ -1,3 +1,4 @@
+// test/helpers vitest config paths helpers and runtime behavior.
 import path from "node:path";
 
 export function normalizeConfigPath(value: unknown): unknown {

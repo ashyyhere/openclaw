@@ -1,3 +1,4 @@
+/** Shared helpers for tool-specific model config and auth checks. */
 import {
   resolveAgentModelFallbackValues,
   resolveAgentModelPrimaryValue,
@@ -17,14 +18,17 @@ import { DEFAULT_MODEL, DEFAULT_PROVIDER } from "../defaults.js";
 import { hasUsableCustomProviderApiKey, resolveEnvApiKey } from "../model-auth.js";
 import { resolveConfiguredModelRef } from "../model-selection.js";
 
+/** Shared type for Tool Model Config in src/agents/tools. */
 export type ToolModelConfig = { primary?: string; fallbacks?: string[]; timeoutMs?: number };
 
+/** Checks whether any tool model config fields are set. */
 export function hasToolModelConfig(model: ToolModelConfig | undefined): boolean {
   return Boolean(
     model?.primary?.trim() || (model?.fallbacks ?? []).some((entry) => entry.trim().length > 0),
   );
 }
 
+/** Resolves the default provider/model reference from config. */
 export function resolveDefaultModelRef(cfg?: OpenClawConfig): { provider: string; model: string } {
   if (cfg) {
     const resolved = resolveConfiguredModelRef({
@@ -37,6 +41,7 @@ export function resolveDefaultModelRef(cfg?: OpenClawConfig): { provider: string
   return { provider: DEFAULT_PROVIDER, model: DEFAULT_MODEL };
 }
 
+/** Reused helper for has Auth For Provider behavior in src/agents/tools. */
 export function hasAuthForProvider(params: {
   provider: string;
   agentDir?: string;
@@ -48,6 +53,7 @@ export function hasAuthForProvider(params: {
   return hasAuthProfileForProvider({ ...params, includeExternalCli: true });
 }
 
+/** Reused helper for has Auth Profile For Provider behavior in src/agents/tools. */
 export function hasAuthProfileForProvider(params: {
   provider: string;
   agentDir?: string;
@@ -79,6 +85,7 @@ export function hasAuthProfileForProvider(params: {
   return profileIds.some((profileId) => store.profiles[profileId]?.type === params.type);
 }
 
+/** Checks whether a provider has usable auth for a tool call. */
 export function hasProviderAuthForTool(params: {
   provider: string;
   cfg?: OpenClawConfig;
@@ -98,6 +105,7 @@ export function hasProviderAuthForTool(params: {
   return hasUsableCustomProviderApiKey(params.cfg, params.provider);
 }
 
+/** Coerces config model settings into the tool model config shape. */
 export function coerceToolModelConfig(model?: AgentToolModelConfig): ToolModelConfig {
   const primary = resolveAgentModelPrimaryValue(model);
   const fallbacks = resolveAgentModelFallbackValues(model);
@@ -109,6 +117,7 @@ export function coerceToolModelConfig(model?: AgentToolModelConfig): ToolModelCo
   };
 }
 
+/** Builds a tool model config from primary/fallback/timeout candidates. */
 export function buildToolModelConfigFromCandidates(params: {
   explicit: ToolModelConfig;
   cfg?: OpenClawConfig;

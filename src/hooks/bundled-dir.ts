@@ -1,7 +1,9 @@
+// hooks bundled dir helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+/** Reused helper for resolve Bundled Hooks Dir behavior in src/hooks. */
 export function resolveBundledHooksDir(): string | undefined {
   const override = process.env.OPENCLAW_BUNDLED_HOOKS_DIR?.trim();
   if (override) {

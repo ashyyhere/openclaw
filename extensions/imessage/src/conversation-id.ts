@@ -1,3 +1,4 @@
+// extensions/imessage/src conversation id helpers and runtime behavior.
 import {
   matchIMessageAcpConversation,
   normalizeIMessageAcpConversationId,

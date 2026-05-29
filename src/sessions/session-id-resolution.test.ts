@@ -1,3 +1,4 @@
+// Tests sessions session id resolution test behavior.
 import { describe, expect, it } from "vitest";
 import type { SessionEntry } from "../config/sessions/types.js";
 import {

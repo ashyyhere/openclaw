@@ -1,3 +1,4 @@
+// Coverage for before-deliver reply hooks.
 import { describe, expect, it } from "vitest";
 import type { ReplyPayload } from "../types.js";
 import { createReplyDispatcher } from "./reply-dispatcher.js";

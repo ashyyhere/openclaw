@@ -4,11 +4,13 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
+/** Shared type for Configured Model Ref in src/config. */
 export type ConfiguredModelRef = {
   path: string;
   value: string;
 };
 
+/** Reused constant for AGENT MODEL CONFIG KEYS behavior in src/config. */
 export const AGENT_MODEL_CONFIG_KEYS = [
   "model",
   "imageModel",
@@ -19,6 +21,7 @@ export const AGENT_MODEL_CONFIG_KEYS = [
   "pdfModel",
 ] as const;
 
+/** Reused helper for collect Configured Model Refs behavior in src/config. */
 export function collectConfiguredModelRefs(
   config: unknown,
   options: { includeChannelModelOverrides?: boolean } = {},
@@ -117,6 +120,7 @@ export function collectConfiguredModelRefs(
   return refs;
 }
 
+/** Reused helper for collect Configured Model Ref Values behavior in src/config. */
 export function collectConfiguredModelRefValues(
   config: unknown,
   options?: { includeChannelModelOverrides?: boolean },
@@ -124,6 +128,7 @@ export function collectConfiguredModelRefValues(
   return collectConfiguredModelRefs(config, options).map((ref) => ref.value);
 }
 
+/** Reused helper for extract Provider From Model Ref behavior in src/config. */
 export function extractProviderFromModelRef(value: string): string | null {
   const trimmed = value.trim();
   const slash = trimmed.indexOf("/");

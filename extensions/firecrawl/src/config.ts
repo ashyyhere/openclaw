@@ -1,3 +1,4 @@
+// extensions/firecrawl/src config helpers and runtime behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { canResolveEnvSecretRefInReadOnlyPath } from "openclaw/plugin-sdk/extension-shared";
 import { resolvePositiveTimeoutSeconds } from "openclaw/plugin-sdk/provider-web-fetch";

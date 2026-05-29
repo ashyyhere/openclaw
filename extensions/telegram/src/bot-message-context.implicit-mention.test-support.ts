@@ -1,3 +1,4 @@
+// extensions/telegram/src bot message context implicit mention test support helpers and runtime behavior.
 import { describe, expect, it } from "vitest";
 import { buildTelegramMessageContextForTest } from "./bot-message-context.test-harness.js";
 import { TELEGRAM_FORUM_SERVICE_FIELDS } from "./forum-service-message.js";

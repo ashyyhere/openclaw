@@ -1,5 +1,7 @@
+// Drain helper for pending tool tasks before final delivery.
 const DEFAULT_PENDING_TOOL_DRAIN_IDLE_TIMEOUT_MS = 30_000;
 
+/** Shared type for Pending Tool Task Drain Result in src/auto-reply/reply. */
 export type PendingToolTaskDrainResult =
   | { kind: "settled" }
   | { kind: "timeout"; remaining: number };
@@ -29,6 +31,7 @@ function createIdleTimeoutPromise(timeoutMs: number): {
   };
 }
 
+/** Reused helper for drain Pending Tool Tasks behavior in src/auto-reply/reply. */
 export async function drainPendingToolTasks({
   tasks,
   idleTimeoutMs = DEFAULT_PENDING_TOOL_DRAIN_IDLE_TIMEOUT_MS,

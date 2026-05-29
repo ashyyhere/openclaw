@@ -1,3 +1,4 @@
+/** Tests ACP client process spawning and protocol lifecycle behavior. */
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import type { RequestPermissionRequest } from "@agentclientprotocol/sdk";

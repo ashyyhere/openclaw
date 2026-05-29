@@ -1,3 +1,4 @@
+// packages/memory-host-sdk/src/host sqlite vec helpers and runtime behavior.
 import type { DatabaseSync } from "node:sqlite";
 import { formatErrorMessage } from "./error-utils.js";
 import { resolveSqliteVecPlatformVariant } from "./sqlite-vec-platform-variant.js";
@@ -27,6 +28,7 @@ function isMissingSqliteVecPackageError(err: unknown): boolean {
   );
 }
 
+/** Public helper for load Sqlite Vec Extension behavior in packages/memory-host-sdk. */
 export async function loadSqliteVecExtension(params: {
   db: DatabaseSync;
   extensionPath?: string;

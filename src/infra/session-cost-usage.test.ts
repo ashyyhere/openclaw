@@ -1,3 +1,4 @@
+// Tests infra session cost usage test behavior.
 import nodeFs from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";

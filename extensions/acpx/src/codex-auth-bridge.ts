@@ -1,14 +1,15 @@
+// extensions/acpx/src codex auth bridge helpers and runtime behavior.
 import fsSync from "node:fs";
 import fs from "node:fs/promises";
 import { createRequire } from "node:module";
 import os from "node:os";
 import path from "node:path";
 import { readJsonFileWithFallback } from "openclaw/plugin-sdk/json-store";
-import { quoteCommandPart, splitCommandParts } from "./command-line.js";
 import {
   extractTrustedCodexProjectPaths,
   renderIsolatedCodexConfig,
 } from "./codex-trust-config.js";
+import { quoteCommandPart, splitCommandParts } from "./command-line.js";
 import { resolveAcpxPluginRoot } from "./config.js";
 import type { ResolvedAcpxPluginConfig } from "./config.js";
 import {

@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor thread bindings session adapter helpers and runtime behavior.
 import {
   resolveThreadBindingConversationIdFromBindingId,
   type BindingTargetKind,

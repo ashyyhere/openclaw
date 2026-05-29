@@ -1,3 +1,4 @@
+// routing resolve route helpers and runtime behavior.
 import { resolveDefaultAgentId } from "../agents/agent-scope.js";
 import type { ChatType } from "../channels/chat-type.js";
 import { normalizeChatType } from "../channels/chat-type.js";
@@ -25,11 +26,13 @@ import {
 /** @deprecated Use ChatType from channels/chat-type.js */
 export type RoutePeerKind = ChatType;
 
+/** Shared type for Route Peer in src/routing. */
 export type RoutePeer = {
   kind: ChatType;
   id: string;
 };
 
+/** Shared type for Resolve Agent Route Input in src/routing. */
 export type ResolveAgentRouteInput = {
   cfg: OpenClawConfig;
   channel: string;
@@ -43,6 +46,7 @@ export type ResolveAgentRouteInput = {
   memberRoleIds?: string[];
 };
 
+/** Shared type for Resolved Agent Route in src/routing. */
 export type ResolvedAgentRoute = {
   agentId: string;
   channel: string;
@@ -66,8 +70,10 @@ export type ResolvedAgentRoute = {
     | "default";
 };
 
+/** Re-exported API for src/routing, starting with DEFAULT ACCOUNT ID. */
 export { DEFAULT_ACCOUNT_ID } from "./session-key.js";
 
+/** Reused helper for derive Last Route Policy behavior in src/routing. */
 export function deriveLastRoutePolicy(params: {
   sessionKey: string;
   mainSessionKey: string;
@@ -75,6 +81,7 @@ export function deriveLastRoutePolicy(params: {
   return params.sessionKey === params.mainSessionKey ? "main" : "session";
 }
 
+/** Reused helper for resolve Inbound Last Route Session Key behavior in src/routing. */
 export function resolveInboundLastRouteSessionKey(params: {
   route: Pick<ResolvedAgentRoute, "lastRoutePolicy" | "mainSessionKey">;
   sessionKey: string;
@@ -90,6 +97,7 @@ function normalizeId(value: unknown): string {
   return normalizeRouteBindingId(value);
 }
 
+/** Reused helper for build Agent Session Key behavior in src/routing. */
 export function buildAgentSessionKey(params: {
   agentId: string;
   channel: string;
@@ -150,6 +158,7 @@ function resolveAgentLookupCache(cfg: OpenClawConfig): AgentLookupCache {
   return next;
 }
 
+/** Reused helper for pick First Existing Agent Id behavior in src/routing. */
 export function pickFirstExistingAgentId(cfg: OpenClawConfig, agentId: string): string {
   const lookup = resolveAgentLookupCache(cfg);
   const trimmed = (agentId ?? "").trim();
@@ -607,6 +616,7 @@ function matchesBindingScope(match: NormalizedBindingMatch, scope: BindingScope)
   return routeBindingScopeMatches(match, scope);
 }
 
+/** Reused helper for resolve Agent Route behavior in src/routing. */
 export function resolveAgentRoute(input: ResolveAgentRouteInput): ResolvedAgentRoute {
   const channel = normalizeToken(input.channel);
   const accountId = normalizeAccountId(input.accountId);

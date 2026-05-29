@@ -1,3 +1,4 @@
+// Chat command handlers for plugin dock surfaces.
 import { getActivePluginChannelRegistry } from "../../plugins/runtime.js";
 import {
   normalizeLowercaseStringOrEmpty,
@@ -112,6 +113,7 @@ function resolveLinkedDockTarget(params: {
   return null;
 }
 
+/** Reused constant for handle Dock Command behavior in src/auto-reply/reply. */
 export const handleDockCommand: CommandHandler = async (params, allowTextCommands) => {
   if (!allowTextCommands) {
     return null;

@@ -1,3 +1,4 @@
+/** Doctor checks and repairs for workspace and agent files. */
 import fs from "node:fs";
 import path from "node:path";
 import { note } from "../../packages/terminal-core/src/note.js";
@@ -15,6 +16,7 @@ import {
 import { shortenHomePath } from "../utils.js";
 import type { DoctorPrompter } from "./doctor-prompter.js";
 
+/** Reused constant for MEMORY SYSTEM PROMPT behavior in src/commands. */
 export const MEMORY_SYSTEM_PROMPT = [
   "Memory system not found in workspace.",
   "Paste this into your agent:",
@@ -24,6 +26,7 @@ export const MEMORY_SYSTEM_PROMPT = [
   "https://github.com/openclaw/openclaw/commit/7d1fee70e76f2f634f1b41fca927ee663914183a",
 ].join("\n");
 
+/** Reused helper for should Suggest Memory System behavior in src/commands. */
 export async function shouldSuggestMemorySystem(workspaceDir: string): Promise<boolean> {
   const entries = await listWorkspaceEntries(workspaceDir);
   if (entries.has(CANONICAL_ROOT_MEMORY_FILENAME)) {
@@ -50,11 +53,13 @@ export async function shouldSuggestMemorySystem(workspaceDir: string): Promise<b
   return true;
 }
 
+/** Shared type for Legacy Workspace Detection in src/commands. */
 export type LegacyWorkspaceDetection = {
   activeWorkspace: string;
   legacyDirs: string[];
 };
 
+/** Reused helper for detect Legacy Workspace Dirs behavior in src/commands. */
 export function detectLegacyWorkspaceDirs(params: {
   workspaceDir: string;
 }): LegacyWorkspaceDetection {
@@ -63,6 +68,7 @@ export function detectLegacyWorkspaceDirs(params: {
   return { activeWorkspace, legacyDirs };
 }
 
+/** Reused helper for format Legacy Workspace Warning behavior in src/commands. */
 export function formatLegacyWorkspaceWarning(detection: LegacyWorkspaceDetection): string {
   return [
     "Extra workspace directories detected (may contain old agent files):",
@@ -72,6 +78,7 @@ export function formatLegacyWorkspaceWarning(detection: LegacyWorkspaceDetection
   ].join("\n");
 }
 
+/** Shared type for Root Memory Files Detection in src/commands. */
 export type RootMemoryFilesDetection = {
   workspaceDir: string;
   canonicalPath: string;
@@ -113,6 +120,7 @@ async function listWorkspaceEntries(workspaceDir: string): Promise<Set<string>> 
   }
 }
 
+/** Reused helper for detect Root Memory Files behavior in src/commands. */
 export async function detectRootMemoryFiles(
   workspaceDir: string,
 ): Promise<RootMemoryFilesDetection> {
@@ -143,6 +151,7 @@ function formatBytes(bytes?: number): string {
   return typeof bytes === "number" ? `${bytes} bytes` : "size unknown";
 }
 
+/** Reused helper for format Root Memory Files Warning behavior in src/commands. */
 export function formatRootMemoryFilesWarning(detection: RootMemoryFilesDetection): string | null {
   if (detection.canonicalExists && detection.legacyExists) {
     return [
@@ -157,6 +166,7 @@ export function formatRootMemoryFilesWarning(detection: RootMemoryFilesDetection
   return null;
 }
 
+/** Shared type for Root Memory Migration Result in src/commands. */
 export type RootMemoryMigrationResult = {
   changed: boolean;
   canonicalPath: string;
@@ -207,6 +217,7 @@ function buildMergedLegacyRootMemorySection(params: {
   ].join("\n");
 }
 
+/** Reused helper for migrate Legacy Root Memory File behavior in src/commands. */
 export async function migrateLegacyRootMemoryFile(
   workspaceDir: string,
 ): Promise<RootMemoryMigrationResult> {
@@ -246,6 +257,7 @@ export async function migrateLegacyRootMemoryFile(
   };
 }
 
+/** Reused helper for note Workspace Memory Health behavior in src/commands. */
 export async function noteWorkspaceMemoryHealth(cfg: OpenClawConfig): Promise<void> {
   try {
     const agentId = resolveDefaultAgentId(cfg);
@@ -261,6 +273,7 @@ export async function noteWorkspaceMemoryHealth(cfg: OpenClawConfig): Promise<vo
   }
 }
 
+/** Reused helper for maybe Repair Workspace Memory Health behavior in src/commands. */
 export async function maybeRepairWorkspaceMemoryHealth(params: {
   cfg: OpenClawConfig;
   prompter: DoctorPrompter;

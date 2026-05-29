@@ -1,3 +1,4 @@
+// Tests extensions/google provider policy api test behavior.
 import { describe, expect, it } from "vitest";
 import { normalizeConfig, resolveThinkingProfile } from "./provider-policy-api.js";
 

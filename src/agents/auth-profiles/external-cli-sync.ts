@@ -19,6 +19,7 @@ import {
 } from "./oauth-shared.js";
 import type { AuthProfileStore, OAuthCredential } from "./types.js";
 
+/** Re-exported API for src/agents/auth-profiles. */
 export {
   areOAuthCredentialsEquivalent,
   hasUsableOAuthCredential,
@@ -28,12 +29,14 @@ export {
   shouldReplaceStoredOAuthCredential,
 } from "./oauth-shared.js";
 
+/** Shared type for External Cli Resolved Profile in src/agents/auth-profiles. */
 export type ExternalCliResolvedProfile = {
   profileId: string;
   credential: OAuthCredential;
   persistence?: "runtime-only" | "persisted";
 };
 
+/** Shared type for External Cli Auth Profile Options in src/agents/auth-profiles. */
 export type ExternalCliAuthProfileOptions = {
   allowKeychainPrompt?: boolean;
   providerIds?: Iterable<string>;
@@ -66,6 +69,7 @@ function normalizeAuthEmailToken(value: string | undefined): string | undefined 
 }
 
 // Keep this gate aligned with the canonical identity-copy rule in oauth.ts.
+/** Reused helper for is Safe To Use External Cli Credential behavior in src/agents/auth-profiles. */
 export function isSafeToUseExternalCliCredential(
   existing: OAuthCredential | undefined,
   imported: OAuthCredential,
@@ -193,6 +197,7 @@ function hasInlineOAuthTokenMaterial(credential: OAuthCredential): boolean {
   );
 }
 
+/** Reused helper for read External Cli Bootstrap Credential behavior in src/agents/auth-profiles. */
 export function readExternalCliBootstrapCredential(params: {
   profileId: string;
   credential: OAuthCredential;
@@ -216,8 +221,10 @@ export function readExternalCliBootstrapCredential(params: {
   );
 }
 
+/** Reused constant for read Managed External Cli Credential behavior in src/agents/auth-profiles. */
 export const readManagedExternalCliCredential = readExternalCliBootstrapCredential;
 
+/** Reused helper for read External Cli Fallback Credential behavior in src/agents/auth-profiles. */
 export function readExternalCliFallbackCredential(params: {
   profileId: string;
   credential: OAuthCredential;

@@ -1,3 +1,4 @@
+// Tests extensions/irc/src config schema test behavior.
 import { describe, expect, it } from "vitest";
 import { IrcConfigSchema } from "./config-schema.js";
 

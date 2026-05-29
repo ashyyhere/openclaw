@@ -1,3 +1,4 @@
+// scripts/fixtures packed plugin sdk type smoke helpers and runtime behavior.
 type PublicPluginSdkModules = [
   typeof import("openclaw/plugin-sdk"),
   typeof import("openclaw/plugin-sdk/channel-entry-contract"),

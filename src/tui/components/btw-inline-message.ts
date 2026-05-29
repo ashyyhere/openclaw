@@ -1,3 +1,4 @@
+// tui/components btw inline message helpers and runtime behavior.
 import { Container, Spacer, Text } from "@earendil-works/pi-tui";
 import { theme } from "../theme/theme.js";
 import { AssistantMessageComponent } from "./assistant-message.js";
@@ -8,6 +9,7 @@ type BtwInlineMessageParams = {
   isError?: boolean;
 };
 
+/** Reused class for Btw Inline Message behavior in src/tui/components. */
 export class BtwInlineMessage extends Container {
   constructor(params: BtwInlineMessageParams) {
     super();

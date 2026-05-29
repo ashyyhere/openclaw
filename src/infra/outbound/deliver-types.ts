@@ -1,6 +1,8 @@
+// infra/outbound deliver types helpers and runtime behavior.
 import type { MessageReceipt } from "../../channels/message/types.js";
 import type { ChannelId } from "../../channels/plugins/channel-id.types.js";
 
+/** Shared type for Outbound Delivery Result in src/infra/outbound. */
 export type OutboundDeliveryResult = {
   channel: Exclude<ChannelId, "none">;
   messageId: string;
@@ -16,6 +18,7 @@ export type OutboundDeliveryResult = {
   meta?: Record<string, unknown>;
 };
 
+/** Shared type for Outbound Payload Delivery Suppression Reason in src/infra/outbound. */
 export type OutboundPayloadDeliverySuppressionReason =
   | "cancelled_by_message_sending_hook"
   | "cancelled_by_reply_payload_sending_hook"
@@ -24,8 +27,10 @@ export type OutboundPayloadDeliverySuppressionReason =
   | "no_visible_payload"
   | "adapter_returned_no_identity";
 
+/** Shared type for Outbound Delivery Failure Stage in src/infra/outbound. */
 export type OutboundDeliveryFailureStage = "platform_send" | "queue" | "unknown";
 
+/** Shared type for Outbound Payload Delivery Outcome in src/infra/outbound. */
 export type OutboundPayloadDeliveryOutcome =
   | {
       index: number;
@@ -49,6 +54,7 @@ export type OutboundPayloadDeliveryOutcome =
       stage: OutboundDeliveryFailureStage;
     };
 
+/** Reused class for Outbound Delivery Error behavior in src/infra/outbound. */
 export class OutboundDeliveryError extends Error {
   readonly results: OutboundDeliveryResult[];
   readonly payloadOutcomes: OutboundPayloadDeliveryOutcome[];
@@ -73,6 +79,7 @@ export class OutboundDeliveryError extends Error {
   }
 }
 
+/** Reused helper for is Outbound Delivery Error behavior in src/infra/outbound. */
 export function isOutboundDeliveryError(error: unknown): error is OutboundDeliveryError {
   return error instanceof OutboundDeliveryError;
 }

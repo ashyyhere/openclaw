@@ -1,10 +1,14 @@
+/** Watches parent QA processes and terminates orphaned gateway runs. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { createSubsystemLogger } from "../../logging/subsystem.js";
 import { uniqueStrings } from "../../shared/string-normalization.js";
 
+/** Reused constant for QA PARENT PID ENV behavior in src/cli/gateway-cli. */
 export const QA_PARENT_PID_ENV = "OPENCLAW_QA_PARENT_PID";
+/** Reused constant for QA TEMP ROOT ENV behavior in src/cli/gateway-cli. */
 export const QA_TEMP_ROOT_ENV = "OPENCLAW_QA_TEMP_ROOT";
+/** Reused constant for QA STAGED RUNTIME ROOT ENV behavior in src/cli/gateway-cli. */
 export const QA_STAGED_RUNTIME_ROOT_ENV = "OPENCLAW_QA_STAGED_RUNTIME_ROOT";
 
 const DEFAULT_QA_PARENT_WATCHDOG_INTERVAL_MS = 1000;
@@ -30,6 +34,7 @@ type QaParentWatchdogDeps = {
   setInterval?: (callback: () => void, ms: number) => QaParentWatchdogTimer;
 };
 
+/** Shared type for Qa Parent Watchdog Handle in src/cli/gateway-cli. */
 export type QaParentWatchdogHandle = {
   parentPid: number;
   stop: () => void;
@@ -76,6 +81,7 @@ function pathContains(root: string, candidate: string): boolean {
   );
 }
 
+/** Reused helper for install Qa Parent Watchdog behavior in src/cli/gateway-cli. */
 export function installQaParentWatchdog(
   deps: QaParentWatchdogDeps = {},
 ): QaParentWatchdogHandle | null {

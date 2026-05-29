@@ -1,8 +1,10 @@
+/** Shared persisted subagent registry record and delivery state contracts. */
 import type { DeliveryContext } from "../utils/delivery-context.types.js";
 import type { SubagentRunOutcome } from "./subagent-announce-output.js";
 import type { SubagentLifecycleEndedReason } from "./subagent-lifecycle-events.js";
 import type { SpawnSubagentMode } from "./subagent-spawn.types.js";
 
+/** Durable outbox payload used to deliver a child completion to its requester. */
 export type PendingFinalDeliveryPayload = {
   requesterSessionKey: string;
   requesterOrigin?: DeliveryContext;
@@ -21,6 +23,7 @@ export type PendingFinalDeliveryPayload = {
   wakeOnDescendantSettle?: boolean;
 };
 
+/** Execution lifecycle state for one subagent run. */
 export type SubagentExecutionState = {
   status: "running" | "interrupted" | "terminal";
   startedAt?: number;
@@ -31,6 +34,7 @@ export type SubagentExecutionState = {
   transcriptFile?: string;
 };
 
+/** Captured completion text and fallback text for one subagent run. */
 export type SubagentCompletionState = {
   required: boolean;
   resultText?: string | null;
@@ -39,6 +43,7 @@ export type SubagentCompletionState = {
   fallbackCapturedAt?: number;
 };
 
+/** Delivery lifecycle for sending a subagent completion back to its requester. */
 export type SubagentCompletionDeliveryState = {
   status:
     | "not_required"
@@ -71,6 +76,7 @@ export type SubagentCompletionDeliveryState = {
   lastDropReason?: "queue_cap" | "parent_run_ended" | "sink_unavailable" | "dedupe";
 };
 
+/** Persisted registry record for a spawned subagent run. */
 export type SubagentRunRecord = {
   runId: string;
   childSessionKey: string;

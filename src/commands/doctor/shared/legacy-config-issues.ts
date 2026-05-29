@@ -1,3 +1,4 @@
+/** Finds legacy config issues across core and channel rules. */
 import { collectChannelLegacyConfigRules } from "../../../channels/plugins/legacy-config.js";
 import { findLegacyConfigIssues } from "../../../config/legacy.js";
 import type { LegacyConfigRule } from "../../../config/legacy.shared.js";
@@ -35,6 +36,7 @@ function collectPluginLegacyConfigRules(
   return listPluginDoctorLegacyConfigRules({ config: raw as OpenClawConfig, pluginIds });
 }
 
+/** Reused helper for find Doctor Legacy Config Issues behavior in src/commands/doctor. */
 export function findDoctorLegacyConfigIssues(
   raw: unknown,
   sourceRaw?: unknown,

@@ -1,3 +1,4 @@
+// Tests infra exec wrapper trust plan test behavior.
 import { describe, expect, test } from "vitest";
 import { resolveExecWrapperTrustPlan } from "./exec-wrapper-trust-plan.js";
 

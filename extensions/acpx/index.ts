@@ -1,3 +1,4 @@
+// extensions/acpx index helpers and runtime behavior.
 import { tryDispatchAcpReplyHook } from "openclaw/plugin-sdk/acp-runtime-backend";
 import { createAcpxRuntimeService } from "./register.runtime.js";
 import type { OpenClawPluginApi } from "./runtime-api.js";

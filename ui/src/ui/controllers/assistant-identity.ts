@@ -1,7 +1,9 @@
+// ui/src/ui/controllers assistant identity helpers and runtime behavior.
 import { normalizeAssistantIdentity } from "../assistant-identity.ts";
 import type { GatewayBrowserClient } from "../gateway.ts";
 import { loadLocalAssistantIdentity, saveLocalAssistantIdentity } from "../storage.ts";
 
+/** Shared type for Assistant Identity State in ui/src/ui/controllers. */
 export type AssistantIdentityState = {
   client: GatewayBrowserClient | null;
   connected: boolean;
@@ -14,6 +16,7 @@ export type AssistantIdentityState = {
   assistantAgentId: string | null;
 };
 
+/** Shared type for Assistant Avatar Override State in ui/src/ui/controllers. */
 export type AssistantAvatarOverrideState = {
   assistantAvatar?: string | null;
   assistantAvatarSource?: string | null;
@@ -41,6 +44,7 @@ function shouldApplyAssistantIdentityResult(
   );
 }
 
+/** Reused helper for load Assistant Identity behavior in ui/src/ui/controllers. */
 export async function loadAssistantIdentity(
   state: AssistantIdentityState,
   opts?: { sessionKey?: string },
@@ -79,6 +83,7 @@ export async function loadAssistantIdentity(
   }
 }
 
+/** Reused helper for set Assistant Avatar Override behavior in ui/src/ui/controllers. */
 export function setAssistantAvatarOverride(
   state: AssistantAvatarOverrideState,
   avatar: string | null,

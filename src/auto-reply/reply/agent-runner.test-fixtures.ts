@@ -1,8 +1,10 @@
+// Shared fixtures for reply agent runner tests.
 import fs from "node:fs/promises";
 import path from "node:path";
 import type { SessionEntry } from "../../config/sessions.js";
 import type { FollowupRun } from "./queue.js";
 
+/** Reused helper for create Test Followup Run behavior in src/auto-reply/reply. */
 export function createTestFollowupRun(overrides: Partial<FollowupRun["run"]> = {}): FollowupRun {
   return {
     prompt: "hello",
@@ -32,6 +34,7 @@ export function createTestFollowupRun(overrides: Partial<FollowupRun["run"]> = {
   } as unknown as FollowupRun;
 }
 
+/** Reused helper for write Test Session Store behavior in src/auto-reply/reply. */
 export async function writeTestSessionStore(
   storePath: string,
   sessionKey: string,

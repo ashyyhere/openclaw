@@ -1,3 +1,4 @@
+// daemon service helpers and runtime behavior.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -48,6 +49,7 @@ import {
   stopSystemdService,
   uninstallSystemdService,
 } from "./systemd.js";
+/** Re-exported API for src/daemon. */
 export type {
   GatewayServiceCommandConfig,
   GatewayServiceControlArgs,
@@ -70,6 +72,7 @@ function ignoreServiceWriteResult<TArgs extends GatewayServiceInstallArgs>(
   };
 }
 
+/** Shared type for Gateway Service in src/daemon. */
 export type GatewayService = {
   label: string;
   loadedText: string;
@@ -164,12 +167,14 @@ function collectGatewayServiceStartRepairIssues(
   return issues;
 }
 
+/** Reused helper for format Gateway Service Start Repair Issues behavior in src/daemon. */
 export function formatGatewayServiceStartRepairIssues(
   issues: GatewayServiceStartRepairIssue[],
 ): string {
   return issues.map((issue) => issue.message).join("; ");
 }
 
+/** Reused helper for read Gateway Service State behavior in src/daemon. */
 export async function readGatewayServiceState(
   service: GatewayService,
   args: GatewayServiceEnvArgs = {},
@@ -191,6 +196,7 @@ export async function readGatewayServiceState(
   };
 }
 
+/** Reused helper for start Gateway Service behavior in src/daemon. */
 export async function startGatewayService(
   service: GatewayService,
   args: GatewayServiceControlArgs,
@@ -231,6 +237,7 @@ export async function startGatewayService(
   }
 }
 
+/** Reused helper for describe Gateway Service Restart behavior in src/daemon. */
 export function describeGatewayServiceRestart(
   serviceNoun: string,
   result: GatewayServiceRestartResult,
@@ -332,6 +339,7 @@ function isSupportedGatewayServicePlatform(
   return Object.hasOwn(GATEWAY_SERVICE_REGISTRY, platform);
 }
 
+/** Reused helper for resolve Gateway Service behavior in src/daemon. */
 export function resolveGatewayService(): GatewayService {
   if (isSupportedGatewayServicePlatform(process.platform)) {
     return withFutureConfigGuard(GATEWAY_SERVICE_REGISTRY[process.platform]);

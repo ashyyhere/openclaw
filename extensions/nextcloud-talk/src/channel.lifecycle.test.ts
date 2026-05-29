@@ -1,3 +1,4 @@
+// Tests extensions/nextcloud-talk/src channel lifecycle test behavior.
 import { createStartAccountContext } from "openclaw/plugin-sdk/channel-test-helpers";
 import {
   expectStopPendingUntilAbort,

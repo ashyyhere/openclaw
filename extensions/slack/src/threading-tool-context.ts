@@ -1,3 +1,4 @@
+// extensions/slack/src threading tool context helpers and runtime behavior.
 import type {
   ChannelThreadingContext,
   ChannelThreadingToolContext,

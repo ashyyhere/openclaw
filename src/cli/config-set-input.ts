@@ -1,3 +1,4 @@
+/** Parses CLI config set inputs from literals, JSON, files, and stdin. */
 import fs from "node:fs";
 import JSON5 from "json5";
 import {
@@ -5,6 +6,7 @@ import {
   normalizeStringifiedOptionalString,
 } from "../shared/string-coerce.js";
 
+/** Shared type for Config Set Options in src/cli. */
 export type ConfigSetOptions = {
   strictJson?: boolean;
   /** @deprecated Use strictJson. */
@@ -36,6 +38,7 @@ export type ConfigSetOptions = {
   batchFile?: string;
 };
 
+/** Shared type for Config Set Batch Entry in src/cli. */
 export type ConfigSetBatchEntry = {
   path: string;
   value?: unknown;
@@ -43,16 +46,19 @@ export type ConfigSetBatchEntry = {
   provider?: unknown;
 };
 
+/** Reused helper for has Batch Mode behavior in src/cli. */
 export function hasBatchMode(opts: ConfigSetOptions): boolean {
   return Boolean(
     normalizeOptionalString(opts.batchJson) || normalizeOptionalString(opts.batchFile),
   );
 }
 
+/** Reused helper for has Ref Builder Options behavior in src/cli. */
 export function hasRefBuilderOptions(opts: ConfigSetOptions): boolean {
   return Boolean(opts.refProvider || opts.refSource || opts.refId);
 }
 
+/** Reused helper for has Provider Builder Options behavior in src/cli. */
 export function hasProviderBuilderOptions(opts: ConfigSetOptions): boolean {
   return Boolean(
     opts.providerSource ||
@@ -116,6 +122,7 @@ function parseBatchEntries(raw: string, sourceLabel: string): ConfigSetBatchEntr
   return out;
 }
 
+/** Reused helper for parse Batch Source behavior in src/cli. */
 export function parseBatchSource(opts: ConfigSetOptions): ConfigSetBatchEntry[] | null {
   const batchJson = normalizeOptionalString(opts.batchJson);
   const batchFile = normalizeOptionalString(opts.batchFile);

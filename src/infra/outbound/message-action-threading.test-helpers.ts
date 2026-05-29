@@ -1,3 +1,4 @@
+// infra/outbound message action threading test helpers helpers and runtime behavior.
 import { vi } from "vitest";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 
@@ -38,6 +39,7 @@ function resolveOutboundThreadId(
   return resolved ?? undefined;
 }
 
+/** Reused helper for create Outbound Threading Mock behavior in src/infra/outbound. */
 export function createOutboundThreadingMock() {
   const resolveOutboundReplyToId = vi.fn(
     (

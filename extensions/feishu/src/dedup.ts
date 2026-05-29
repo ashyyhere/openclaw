@@ -1,3 +1,4 @@
+// extensions/feishu/src dedup helpers and runtime behavior.
 import { createHash } from "node:crypto";
 import os from "node:os";
 import path from "node:path";

@@ -1,9 +1,12 @@
+/** Normalizes max-token params across provider spelling variants. */
 const MAX_TOKENS_PARAM_KEYS = ["maxTokens", "max_completion_tokens", "max_tokens"] as const;
 
+/** Resolve a non-negative max-token value. */
 export function resolveNonNegativeMaxTokensParam(value: unknown): number | undefined {
   return typeof value === "number" && Number.isFinite(value) && value >= 0 ? value : undefined;
 }
 
+/** Resolve max-token value from any supported provider param key. */
 export function resolveMaxTokensParam(
   params: Record<string, unknown> | undefined,
 ): number | undefined {
@@ -19,6 +22,7 @@ export function resolveMaxTokensParam(
   return undefined;
 }
 
+/** Canonicalize max-token params to `maxTokens` in a merged param object. */
 export function canonicalizeMaxTokensParam(params: {
   merged: Record<string, unknown>;
   sources: Array<Record<string, unknown> | undefined>;

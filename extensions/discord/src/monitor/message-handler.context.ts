@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor message handler context helpers and runtime behavior.
 import {
   buildChannelInboundEventContext,
   formatInboundEnvelope,

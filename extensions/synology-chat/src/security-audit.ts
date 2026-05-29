@@ -1,3 +1,4 @@
+// extensions/synology-chat/src security audit helpers and runtime behavior.
 import type { ResolvedSynologyChatAccount } from "./types.js";
 
 export function collectSynologyChatSecurityAuditFindings(params: {

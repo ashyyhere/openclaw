@@ -1,3 +1,4 @@
+// infra exec allowlist pattern helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
@@ -88,6 +89,7 @@ function compileGlobRegex(pattern: string): RegExp {
   return compiled;
 }
 
+/** Reused helper for matches Exec Allowlist Pattern behavior in src/infra. */
 export function matchesExecAllowlistPattern(pattern: string, target: string): boolean {
   const trimmed = pattern.trim();
   if (!trimmed) {

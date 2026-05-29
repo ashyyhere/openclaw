@@ -1,3 +1,4 @@
+// Tests extensions/msteams/src file consent helpers test behavior.
 import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
 import { prepareFileConsentActivity, requiresFileConsent } from "./file-consent-helpers.js";
 import {

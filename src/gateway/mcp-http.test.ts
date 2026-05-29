@@ -1,3 +1,4 @@
+// Tests gateway mcp http test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { getFreePortBlockWithPermissionFallback } from "../test-utils/ports.js";
 

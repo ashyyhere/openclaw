@@ -1,3 +1,4 @@
+/** Resolves configured model refs against catalog and allowlist state. */
 import { resolveAgentModelFallbackValues } from "../config/model-input.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { ModelCatalogEntry } from "./model-catalog.types.js";
@@ -9,6 +10,7 @@ import {
   type ModelRefStatus,
 } from "./model-selection-shared.js";
 
+/** Re-exported API for src/agents. */
 export {
   buildConfiguredAllowlistKeys,
   buildModelAliasIndex,
@@ -17,12 +19,14 @@ export {
   resolveHooksGmailModel,
   resolveModelRefFromString,
 } from "./model-selection-shared.js";
+/** Re-exported API for src/agents, starting with Model Ref Status. */
 export type { ModelRefStatus } from "./model-selection-shared.js";
 
 function resolveDefaultFallbackModels(cfg: OpenClawConfig): string[] {
   return resolveAgentModelFallbackValues(cfg.agents?.defaults?.model);
 }
 
+/** Return status of a normalized model ref against catalog/allowlist. */
 export function getModelRefStatus(
   params: {
     cfg: OpenClawConfig;
@@ -44,6 +48,7 @@ export function getModelRefStatus(
   });
 }
 
+/** Resolve a raw model ref to an allowed provider/model or error. */
 export function resolveAllowedModelRef(
   params: {
     cfg: OpenClawConfig;

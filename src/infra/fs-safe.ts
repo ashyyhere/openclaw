@@ -1,3 +1,4 @@
+// infra fs safe helpers and runtime behavior.
 import "./fs-safe-defaults.js";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -8,7 +9,9 @@ import {
 } from "@openclaw/fs-safe/advanced";
 import { root as fsSafeRoot, type ReadResult } from "@openclaw/fs-safe/root";
 
+/** Re-exported API for src/infra, starting with Fs Safe Error. */
 export { FsSafeError, type FsSafeErrorCode } from "@openclaw/fs-safe/errors";
+/** Re-exported API for src/infra. */
 export {
   assertAbsolutePathInput,
   canonicalPathFromExistingAncestor,
@@ -21,10 +24,15 @@ export {
   type ResolvedAbsolutePath,
   type ResolvedWritableAbsolutePath,
 } from "@openclaw/fs-safe/advanced";
+/** Re-exported API for src/infra, starting with is Path Inside. */
 export { isPathInside } from "@openclaw/fs-safe/path";
+/** Re-exported API for src/infra, starting with path Exists. */
 export { pathExists, pathExistsSync } from "@openclaw/fs-safe/advanced";
+/** Re-exported API for src/infra, starting with move Path To Trash. */
 export { movePathToTrash, type MovePathToTrashOptions } from "@openclaw/fs-safe/advanced";
+/** Re-exported API for src/infra, starting with read Local File From Roots. */
 export { readLocalFileFromRoots, resolveLocalPathFromRootsSync } from "@openclaw/fs-safe/advanced";
+/** Re-exported API for src/infra. */
 export {
   appendRegularFile,
   appendRegularFileSync,
@@ -34,6 +42,7 @@ export {
   statRegularFile,
   statRegularFileSync,
 } from "@openclaw/fs-safe/advanced";
+/** Re-exported API for src/infra. */
 export {
   openLocalFileSafely,
   readLocalFileSafely,
@@ -42,12 +51,15 @@ export {
   type OpenResult,
   type ReadResult,
 } from "@openclaw/fs-safe/root";
+/** Re-exported API for src/infra, starting with sanitize Untrusted File Name. */
 export { sanitizeUntrustedFileName } from "@openclaw/fs-safe/advanced";
+/** Re-exported API for src/infra. */
 export {
   readSecureFile,
   type SecureFileReadOptions,
   type SecureFileReadResult,
 } from "@openclaw/fs-safe/secure-file";
+/** Re-exported API for src/infra. */
 export {
   walkDirectory,
   walkDirectorySync,
@@ -55,8 +67,10 @@ export {
   type WalkDirectoryOptions,
   type WalkDirectoryResult,
 } from "@openclaw/fs-safe/walk";
+/** Re-exported API for src/infra, starting with with Timeout. */
 export { withTimeout } from "@openclaw/fs-safe/advanced";
 
+/** Shared type for External File Write Options in src/infra. */
 export type ExternalFileWriteOptions = {
   rootDir: string;
   path: string;
@@ -65,10 +79,12 @@ export type ExternalFileWriteOptions = {
   tempPrefix?: string;
 };
 
+/** Shared type for External File Write Result in src/infra. */
 export type ExternalFileWriteResult = {
   path: string;
 };
 
+/** Reused helper for ensure Absolute Directory behavior in src/infra. */
 export async function ensureAbsoluteDirectory(
   dirPath: string,
   options?: { scopeLabel?: string; mode?: number },
@@ -102,6 +118,7 @@ export async function ensureAbsoluteDirectory(
   return { ok: false, error: new Error(result.error) };
 }
 
+/** Reused helper for write External File Within Root behavior in src/infra. */
 export async function writeExternalFileWithinRoot(
   options: ExternalFileWriteOptions,
 ): Promise<ExternalFileWriteResult> {

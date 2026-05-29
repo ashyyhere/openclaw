@@ -1,3 +1,4 @@
+// Tests config config backup rotation test behavior.
 import fs from "node:fs/promises";
 import { describe, expect, it } from "vitest";
 import {

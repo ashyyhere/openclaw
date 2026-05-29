@@ -1,3 +1,4 @@
+// Tests extensions/zalouser/src doctor test behavior.
 import { describe, expect, it } from "vitest";
 import { zalouserDoctor } from "./doctor.js";
 

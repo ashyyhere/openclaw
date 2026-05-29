@@ -1,3 +1,4 @@
+// Coverage for block streaming behavior in reply orchestration.
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import { withFastReplyConfig } from "./reply/get-reply-fast-path.js";

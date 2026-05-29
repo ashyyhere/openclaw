@@ -1,3 +1,4 @@
+/** Prompt regression covering workspace skill precedence over managed skills. */
 import path from "node:path";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { withEnv } from "../../test-utils/env.js";

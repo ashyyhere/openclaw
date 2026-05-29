@@ -1,3 +1,4 @@
+// Tests full status-all report assembly and diagnosis handoff payloads.
 import { describe, expect, it, vi } from "vitest";
 import type { ProgressReporter } from "../../cli/progress.js";
 import { buildStatusAllReportLines } from "./report-lines.js";

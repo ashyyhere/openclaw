@@ -1,3 +1,4 @@
+// extensions/imessage config api helpers and runtime behavior.
 export {
   buildChannelConfigSchema,
   IMessageConfigSchema,

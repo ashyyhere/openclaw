@@ -1,3 +1,4 @@
+// Tests infra/outbound directory cache test behavior.
 import { describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../../config/config.js";
 import { DirectoryCache, buildDirectoryCacheKey } from "./directory-cache.js";

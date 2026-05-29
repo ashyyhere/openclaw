@@ -1,3 +1,4 @@
+/** ACP lineage metadata projection for spawned/subagent sessions. */
 import type { GatewaySessionRow } from "../gateway/session-utils.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 
@@ -7,6 +8,7 @@ const SUBAGENT_CONTROL_SCOPES = ["children", "none"] as const;
 type SubagentRole = (typeof SUBAGENT_ROLES)[number];
 type SubagentControlScope = (typeof SUBAGENT_CONTROL_SCOPES)[number];
 
+/** Shared type for Acp Session Lineage Meta in src/acp. */
 export type AcpSessionLineageMeta = {
   sessionKey: string;
   kind?: string;
@@ -20,6 +22,7 @@ export type AcpSessionLineageMeta = {
   spawnedCwd?: string;
 };
 
+/** Gateway session row fields needed to render ACP lineage metadata. */
 export type AcpSessionLineageRow = Pick<
   GatewaySessionRow,
   | "key"
@@ -46,6 +49,7 @@ function readEnum<T extends string>(value: unknown, allowed: readonly T[]): T | 
   return allowed.find((candidate) => candidate === normalized);
 }
 
+/** Convert a gateway session row into ACP session-lineage metadata. */
 export function toAcpSessionLineageMeta(row: AcpSessionLineageRow): AcpSessionLineageMeta {
   const sessionKey = normalizeOptionalString(row.key) ?? row.key;
   const kind = normalizeOptionalString(row.kind);

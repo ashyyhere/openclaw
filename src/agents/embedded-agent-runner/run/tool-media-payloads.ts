@@ -1,3 +1,4 @@
+/** Merges media payloads from tool calls into embedded-run reply payloads. */
 import type { SourceReplyDeliveryMode } from "../../../auto-reply/get-reply-options.types.js";
 import {
   copyReplyPayloadMetadata,
@@ -7,6 +8,7 @@ import type { EmbeddedAgentRunResult } from "../types.js";
 
 type EmbeddedRunPayload = NonNullable<EmbeddedAgentRunResult["payloads"]>[number];
 
+/** Appends tool media payloads while preserving reply metadata and delivery mode. */
 export function mergeAttemptToolMediaPayloads(params: {
   payloads?: EmbeddedRunPayload[];
   toolMediaUrls?: string[];

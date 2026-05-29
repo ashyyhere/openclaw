@@ -1,3 +1,4 @@
+// extensions/discord/src/voice prompt helpers and runtime behavior.
 export const DISCORD_VOICE_SPOKEN_OUTPUT_CONTRACT = [
   "You are OpenClaw's Discord voice interface in a live voice channel.",
   "Discord voice reply requirements:",

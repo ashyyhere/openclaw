@@ -42,11 +42,13 @@ export function resolveRuntimeEnv(params: {
   logger: LoggerLike;
   exitError?: (code: number) => Error;
 }): RuntimeEnv;
+/** Reused helper for resolve Runtime Env behavior in src/plugin-sdk. */
 export function resolveRuntimeEnv(params: {
   runtime?: undefined;
   logger: LoggerLike;
   exitError?: (code: number) => Error;
 }): OutputRuntimeEnv;
+/** Reused helper for resolve Runtime Env behavior in src/plugin-sdk. */
 export function resolveRuntimeEnv(params: {
   runtime?: RuntimeEnv;
   logger: LoggerLike;
@@ -61,11 +63,13 @@ export function resolveRuntimeEnvWithUnavailableExit(params: {
   logger: LoggerLike;
   unavailableMessage?: string;
 }): RuntimeEnv;
+/** Reused helper for resolve Runtime Env With Unavailable Exit behavior in src/plugin-sdk. */
 export function resolveRuntimeEnvWithUnavailableExit(params: {
   runtime?: undefined;
   logger: LoggerLike;
   unavailableMessage?: string;
 }): OutputRuntimeEnv;
+/** Reused helper for resolve Runtime Env With Unavailable Exit behavior in src/plugin-sdk. */
 export function resolveRuntimeEnvWithUnavailableExit(params: {
   runtime?: RuntimeEnv;
   logger: LoggerLike;

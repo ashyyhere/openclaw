@@ -1,9 +1,11 @@
+/** Session tool access and visibility helpers. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { resolveSandboxSessionToolsVisibility } from "../../plugin-sdk/session-visibility.js";
 import { isSubagentSessionKey } from "../../routing/session-key.js";
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 import { resolveInternalSessionKey, resolveMainSessionAlias } from "./sessions-resolution.js";
 
+/** Re-exported API for src/agents/tools. */
 export {
   createAgentToAgentPolicy,
   createSessionVisibilityChecker,
@@ -13,6 +15,7 @@ export {
   resolveEffectiveSessionToolsVisibility,
 } from "../../plugin-sdk/session-visibility.js";
 
+/** Resolves session tool context when sandbox visibility limits apply. */
 export function resolveSandboxedSessionToolContext(params: {
   cfg: OpenClawConfig;
   agentSessionKey?: string;

@@ -1,3 +1,4 @@
+/** ACP agent implementation that translates ACP requests to gateway operations. */
 import { randomUUID } from "node:crypto";
 import os from "node:os";
 import path from "node:path";
@@ -575,6 +576,7 @@ function resolveLedgerSessionId(session: { sessionId: string; ledgerSessionId?: 
   return session.ledgerSessionId ?? session.sessionId;
 }
 
+/** ACP protocol agent backed by the OpenClaw gateway client. */
 export class AcpGatewayAgent implements Agent {
   private connection: AgentSideConnection;
   private gateway: GatewayClient;

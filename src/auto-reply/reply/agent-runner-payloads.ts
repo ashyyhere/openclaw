@@ -1,3 +1,4 @@
+// Conversion from agent run results to sendable reply payloads.
 import { resolveSendableOutboundReplyParts } from "openclaw/plugin-sdk/reply-payload";
 import { sanitizeUserFacingText } from "../../agents/embedded-agent-helpers/sanitize-user-facing-text.js";
 import type { MessagingToolSend } from "../../agents/embedded-agent-messaging.types.js";
@@ -155,6 +156,7 @@ function copyPayloadWithSanitizedText(
   return next;
 }
 
+/** Reused helper for build Reply Payloads behavior in src/auto-reply/reply. */
 export async function buildReplyPayloads(params: {
   payloads: ReplyPayload[];
   isHeartbeat: boolean;

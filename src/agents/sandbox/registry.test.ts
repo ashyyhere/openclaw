@@ -1,3 +1,4 @@
+/** Covers sandbox registry persistence, migration, and locking. */
 import fs from "node:fs/promises";
 import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 

@@ -1,3 +1,4 @@
+// tui commands helpers and runtime behavior.
 import type { SlashCommand } from "@earendil-works/pi-tui";
 import type { CommandEntry } from "../../packages/gateway-protocol/src/index.js";
 import { listChatCommands, listChatCommandsForConfig } from "../auto-reply/commands-registry.js";
@@ -13,11 +14,13 @@ const ELEVATED_LEVELS = ["on", "off", "ask", "full"];
 const ACTIVATION_LEVELS = ["mention", "always"];
 const USAGE_FOOTER_LEVELS = ["off", "tokens", "full"];
 
+/** Shared type for Parsed Command in src/tui. */
 export type ParsedCommand = {
   name: string;
   args: string;
 };
 
+/** Shared type for Slash Command Options in src/tui. */
 export type SlashCommandOptions = {
   cfg?: OpenClawConfig;
   provider?: string;
@@ -62,6 +65,7 @@ function appendSlashCommand(
   commands.push({ name: normalizedName, description });
 }
 
+/** Reused helper for parse Command behavior in src/tui. */
 export function parseCommand(input: string): ParsedCommand {
   const trimmed = input.replace(/^\//, "").trim();
   if (!trimmed) {
@@ -75,6 +79,7 @@ export function parseCommand(input: string): ParsedCommand {
   };
 }
 
+/** Reused helper for get Slash Commands behavior in src/tui. */
 export function getSlashCommands(options: SlashCommandOptions = {}): SlashCommand[] {
   const thinkLevels = options.thinkingLevels?.length
     ? options.thinkingLevels.map((level) => level.label)
@@ -176,6 +181,7 @@ export function getSlashCommands(options: SlashCommandOptions = {}): SlashComman
   return commands;
 }
 
+/** Reused helper for help Text behavior in src/tui. */
 export function helpText(options: SlashCommandOptions = {}): string {
   const thinkLevels = formatThinkingLevels(options.provider, options.model, "|");
   return [

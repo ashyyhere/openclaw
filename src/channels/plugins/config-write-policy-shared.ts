@@ -1,3 +1,4 @@
+// Shared config write policy helpers for channel account sections.
 import { resolveAccountEntry } from "../../routing/account-lookup.js";
 import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "../../routing/session-key.js";
 
@@ -14,17 +15,20 @@ type ConfigWritePolicyConfig = {
   channels?: Record<string, ChannelConfigWithAccounts>;
 };
 
+/** Shared type for Config Write Scope Like in src/channels/plugins. */
 export type ConfigWriteScopeLike<TChannelId extends string = string> = {
   channelId?: TChannelId | null;
   accountId?: string | null;
 };
 
+/** Shared type for Config Write Target Like in src/channels/plugins. */
 export type ConfigWriteTargetLike<TChannelId extends string = string> =
   | { kind: "global" }
   | { kind: "channel"; scope: { channelId: TChannelId } }
   | { kind: "account"; scope: { channelId: TChannelId; accountId: string } }
   | { kind: "ambiguous"; scopes: ConfigWriteScopeLike<TChannelId>[] };
 
+/** Shared type for Config Write Authorization Result Like in src/channels/plugins. */
 export type ConfigWriteAuthorizationResultLike<TChannelId extends string = string> =
   | { allowed: true }
   | {
@@ -65,6 +69,7 @@ function resolveChannelAccountConfig(
   return resolveAccountEntry(channelConfig.accounts, normalizeAccountId(accountId));
 }
 
+/** Reused helper for resolve Channel Config Writes Shared behavior in src/channels/plugins. */
 export function resolveChannelConfigWritesShared(params: {
   cfg: ConfigWritePolicyConfig;
   channelId?: string | null;
@@ -79,6 +84,7 @@ export function resolveChannelConfigWritesShared(params: {
   return value !== false;
 }
 
+/** Reused helper for authorize Config Write Shared behavior in src/channels/plugins. */
 export function authorizeConfigWriteShared<TChannelId extends string>(params: {
   cfg: ConfigWritePolicyConfig;
   origin?: ConfigWriteScopeLike<TChannelId>;
@@ -132,6 +138,7 @@ export function authorizeConfigWriteShared<TChannelId extends string>(params: {
   return { allowed: true };
 }
 
+/** Reused helper for resolve Explicit Config Write Target Shared behavior in src/channels/plugins. */
 export function resolveExplicitConfigWriteTargetShared<TChannelId extends string>(
   scope: ConfigWriteScopeLike<TChannelId>,
 ): ConfigWriteTargetLike<TChannelId> {
@@ -145,6 +152,7 @@ export function resolveExplicitConfigWriteTargetShared<TChannelId extends string
   return { kind: "account", scope: { channelId: scope.channelId, accountId } };
 }
 
+/** Reused helper for resolve Config Write Target From Path Shared behavior in src/channels/plugins. */
 export function resolveConfigWriteTargetFromPathShared<TChannelId extends string>(params: {
   path: string[];
   normalizeChannelId: (raw: string) => TChannelId | null | undefined;
@@ -174,6 +182,7 @@ export function resolveConfigWriteTargetFromPathShared<TChannelId extends string
   });
 }
 
+/** Reused helper for can Bypass Config Write Policy Shared behavior in src/channels/plugins. */
 export function canBypassConfigWritePolicyShared(params: {
   channel?: string | null;
   gatewayClientScopes?: string[] | null;
@@ -185,6 +194,7 @@ export function canBypassConfigWritePolicyShared(params: {
   );
 }
 
+/** Reused helper for format Config Write Denied Message Shared behavior in src/channels/plugins. */
 export function formatConfigWriteDeniedMessageShared<TChannelId extends string>(params: {
   result: Exclude<ConfigWriteAuthorizationResultLike<TChannelId>, { allowed: true }>;
   fallbackChannelId?: TChannelId | null;

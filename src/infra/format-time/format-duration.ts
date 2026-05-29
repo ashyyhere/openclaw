@@ -1,13 +1,17 @@
+// infra/format-time format duration helpers and runtime behavior.
+/** Shared type for Format Duration Seconds Options in src/infra/format-time. */
 export type FormatDurationSecondsOptions = {
   decimals?: number;
   unit?: "s" | "seconds";
 };
 
+/** Shared type for Format Duration Compact Options in src/infra/format-time. */
 export type FormatDurationCompactOptions = {
   /** Add space between units: "2m 5s" instead of "2m5s". Default: false */
   spaced?: boolean;
 };
 
+/** Reused helper for format Duration Seconds behavior in src/infra/format-time. */
 export function formatDurationSeconds(
   ms: number,
   options: FormatDurationSecondsOptions = {},

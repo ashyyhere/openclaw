@@ -1,5 +1,8 @@
+// Shared log message helpers for channel ingress and delivery failures.
+/** Logger function accepted by channel helper utilities. */
 export type LogFn = (message: string) => void;
 
+/** Log a dropped inbound event with optional target context. */
 export function logInboundDrop(params: {
   log: LogFn;
   channel: string;
@@ -10,6 +13,7 @@ export function logInboundDrop(params: {
   params.log(`${params.channel}: drop ${params.reason}${target}`);
 }
 
+/** Log a typing indicator failure with optional action context. */
 export function logTypingFailure(params: {
   log: LogFn;
   channel: string;
@@ -22,6 +26,7 @@ export function logTypingFailure(params: {
   params.log(`${params.channel} typing${action} failed${target}: ${String(params.error)}`);
 }
 
+/** Log an acknowledgement cleanup failure. */
 export function logAckFailure(params: {
   log: LogFn;
   channel: string;

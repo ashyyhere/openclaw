@@ -1,3 +1,4 @@
+// Tests infra fetch headers test behavior.
 import { describe, expect, it } from "vitest";
 import {
   normalizeHeadersInitForFetch,

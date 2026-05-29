@@ -1,3 +1,4 @@
+// test/mocks baileys helpers and runtime behavior.
 import { EventEmitter } from "node:events";
 import { vi } from "vitest";
 

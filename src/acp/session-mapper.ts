@@ -1,3 +1,4 @@
+/** Maps ACP session metadata to OpenClaw gateway session keys. */
 import type { GatewayClient } from "../gateway/client.js";
 import { readBool, readString } from "./meta.js";
 import type { AcpServerOptions } from "./types.js";
@@ -10,6 +11,7 @@ type AcpSessionMeta = {
   prefixCwd?: boolean;
 };
 
+/** Parse ACP request metadata that can select or reset a gateway session. */
 export function parseSessionMeta(meta: unknown): AcpSessionMeta {
   if (!meta || typeof meta !== "object") {
     return {};
@@ -24,6 +26,7 @@ export function parseSessionMeta(meta: unknown): AcpSessionMeta {
   };
 }
 
+/** Resolve the gateway session key targeted by an ACP request. */
 export async function resolveSessionKey(params: {
   meta: AcpSessionMeta;
   fallbackKey: string;
@@ -84,6 +87,7 @@ export async function resolveSessionKey(params: {
   return params.fallbackKey;
 }
 
+/** Reset the resolved gateway session when ACP metadata/options request it. */
 export async function resetSessionIfNeeded(params: {
   meta: AcpSessionMeta;
   sessionKey: string;

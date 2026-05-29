@@ -1,3 +1,4 @@
+// Tests test vitest ui package config test behavior.
 import { describe, expect, it } from "vitest";
 import uiConfig from "../ui/vitest.config.ts";
 import uiNodeConfig from "../ui/vitest.node.config.ts";

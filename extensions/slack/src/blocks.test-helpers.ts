@@ -1,3 +1,4 @@
+// extensions/slack/src blocks test helpers helpers and runtime behavior.
 import type { WebClient } from "@slack/web-api";
 import { vi } from "vitest";
 

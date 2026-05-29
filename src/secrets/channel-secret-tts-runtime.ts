@@ -1,3 +1,4 @@
+// secrets channel secret tts runtime helpers and runtime behavior.
 import type {
   ChannelAccountPredicate,
   ChannelAccountSurface,
@@ -6,6 +7,7 @@ import { collectTtsApiKeyAssignments } from "./runtime-config-collectors-tts.js"
 import type { ResolverContext, SecretDefaults } from "./runtime-shared.js";
 import { isRecord } from "./shared.js";
 
+/** Reused helper for collect Nested Channel Tts Assignments behavior in src/secrets. */
 export function collectNestedChannelTtsAssignments(params: {
   channelKey: string;
   nestedKey: string;

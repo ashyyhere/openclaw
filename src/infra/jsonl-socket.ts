@@ -1,3 +1,4 @@
+// infra jsonl socket helpers and runtime behavior.
 import net from "node:net";
 import { clearTimeout as clearNodeTimeout, setTimeout as setNodeTimeout } from "node:timers";
 import { resolveTimerTimeoutMs } from "../shared/number-coercion.js";

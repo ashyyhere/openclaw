@@ -1,3 +1,4 @@
+// extensions/qqbot/src/engine/config group helpers and runtime behavior.
 import { asBoolean } from "openclaw/plugin-sdk/string-coerce-runtime";
 import { asOptionalObjectRecord as asRecord } from "../utils/string-normalize.js";
 import { resolveAccountBase } from "./resolve.js";

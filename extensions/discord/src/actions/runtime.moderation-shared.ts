@@ -1,3 +1,4 @@
+// extensions/discord/src/actions runtime moderation shared helpers and runtime behavior.
 import { PermissionFlagsBits } from "discord-api-types/v10";
 import { readNonNegativeIntegerParam, readStringParam } from "../runtime-api.js";
 

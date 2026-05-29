@@ -1,3 +1,4 @@
+// Tests gateway session transcript key test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { SessionEntry } from "../config/sessions/types.js";
 

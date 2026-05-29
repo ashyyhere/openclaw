@@ -1,3 +1,4 @@
+// Tests process exec test behavior.
 import type { ChildProcess } from "node:child_process";
 import { EventEmitter } from "node:events";
 import process from "node:process";

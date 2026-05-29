@@ -1,3 +1,4 @@
+// Tests logging message lifecycle test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const diagnosticMocks = vi.hoisted(() => ({

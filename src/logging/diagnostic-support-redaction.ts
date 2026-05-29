@@ -1,3 +1,4 @@
+// logging diagnostic support redaction helpers and runtime behavior.
 import path from "node:path";
 import { isSensitiveUrlQueryParamName } from "@openclaw/net-policy/redact-sensitive-url";
 import { isSecretRefShape } from "../config/redact-snapshot.secret-ref.js";
@@ -35,6 +36,7 @@ const MAX_SUPPORT_OBJECT_ENTRIES = 1000;
 const DEFAULT_TRUNCATION_SUFFIX = "...<truncated>";
 const TRUNCATED_SUPPORT_FIELD = "<truncated>";
 
+/** Shared type for Support Redaction Context in src/logging. */
 export type SupportRedactionContext = {
   env: NodeJS.ProcessEnv;
   stateDir: string;
@@ -229,6 +231,7 @@ function isSupportAbsolutePath(value: string): boolean {
   return path.isAbsolute(value) || isWindowsAbsolutePath(value);
 }
 
+/** Reused helper for redact Path For Support behavior in src/logging. */
 export function redactPathForSupport(
   file: string | null | undefined,
   options: SupportRedactionContext,
@@ -280,6 +283,7 @@ function redactKnownPathPrefixesForSupport(
   return next;
 }
 
+/** Reused helper for redact Text For Support behavior in src/logging. */
 export function redactTextForSupport(value: string): string {
   let redacted = redactCommonCredentialTextForSupport(value);
   redacted = redactSensitiveTextForSupport(redacted);
@@ -326,6 +330,7 @@ function redactLongIdentifiersForSupport(value: string): string {
   return value.replace(LONG_DECIMAL_ID_RE, "<redacted-id>");
 }
 
+/** Reused helper for redact Support String behavior in src/logging. */
 export function redactSupportString(
   value: string,
   redaction: SupportRedactionContext,
@@ -364,6 +369,7 @@ function sanitizeCommandArguments(args: unknown[], redaction: SupportRedactionCo
   });
 }
 
+/** Reused helper for sanitize Support Snapshot Value behavior in src/logging. */
 export function sanitizeSupportSnapshotValue(
   value: unknown,
   redaction: SupportRedactionContext,
@@ -410,6 +416,7 @@ export function sanitizeSupportSnapshotValue(
   return sanitized;
 }
 
+/** Reused helper for sanitize Support Config Value behavior in src/logging. */
 export function sanitizeSupportConfigValue(
   value: unknown,
   redaction: SupportRedactionContext,

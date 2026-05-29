@@ -1,3 +1,4 @@
+/** Resolves stable auth profile identity metadata from config and credentials. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 import type { AuthProfileStore } from "./types.js";
@@ -14,6 +15,7 @@ function resolveStoredMetadata(store: AuthProfileStore | undefined, profileId: s
   };
 }
 
+/** Reused helper for build Auth Profile Id behavior in src/agents/auth-profiles. */
 export function buildAuthProfileId(params: {
   providerId: string;
   profileName?: string | null;
@@ -24,6 +26,7 @@ export function buildAuthProfileId(params: {
   return `${profilePrefix}:${profileName}`;
 }
 
+/** Reused helper for resolve Auth Profile Metadata behavior in src/agents/auth-profiles. */
 export function resolveAuthProfileMetadata(params: {
   cfg?: OpenClawConfig;
   store?: AuthProfileStore;

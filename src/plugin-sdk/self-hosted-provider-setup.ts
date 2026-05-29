@@ -10,6 +10,7 @@ export type {
   ProviderDiscoveryContext,
 } from "../plugins/types.js";
 
+/** Re-exported API for src/plugin-sdk. */
 export {
   applyProviderDefaultModel,
   configureOpenAICompatibleSelfHostedProviderNonInteractive,

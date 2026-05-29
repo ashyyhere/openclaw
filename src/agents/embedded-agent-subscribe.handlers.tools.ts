@@ -1,3 +1,4 @@
+/** Handles embedded-agent tool execution lifecycle, media, and progress events. */
 import {
   HEARTBEAT_RESPONSE_TOOL_NAME,
   normalizeHeartbeatToolResponse,
@@ -205,6 +206,7 @@ function buildToolStartKey(runId: string, toolCallId: string): string {
   return `${runId}:${toolCallId}`;
 }
 
+/** Count currently active tool executions for a run. */
 export function countActiveToolExecutions(runId: string): number {
   const prefix = `${runId}:`;
   let count = 0;
@@ -861,6 +863,7 @@ async function emitToolResultOutput(params: {
   });
 }
 
+/** Handle tool execution start events and emit progress/reply boundaries. */
 export function handleToolExecutionStart(
   ctx: ToolHandlerContext,
   evt: AgentEvent & { toolName: string; toolCallId: string; args: unknown },
@@ -1065,6 +1068,7 @@ export function handleToolExecutionStart(
   return continueAfterBlockReplyFlush();
 }
 
+/** Handle live tool execution updates and progress output. */
 export function handleToolExecutionUpdate(
   ctx: ToolHandlerContext,
   evt: AgentEvent & {
@@ -1156,6 +1160,7 @@ export function handleToolExecutionUpdate(
   }
 }
 
+/** Finalize tool execution output, media, replay state, and hooks. */
 export async function handleToolExecutionEnd(
   ctx: ToolHandlerContext,
   evt: AgentEvent & {

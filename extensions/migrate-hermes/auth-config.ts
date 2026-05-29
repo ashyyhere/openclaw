@@ -1,3 +1,4 @@
+// extensions/migrate-hermes auth config helpers and runtime behavior.
 import type { MigrationProviderContext } from "openclaw/plugin-sdk/plugin-entry";
 import { applyAuthProfileConfig, type OpenClawConfig } from "openclaw/plugin-sdk/provider-auth";
 

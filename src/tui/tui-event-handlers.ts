@@ -1,3 +1,4 @@
+// tui tui event handlers helpers and runtime behavior.
 import { classifyFailoverReason, isAuthErrorMessage } from "../agents/embedded-agent-helpers.js";
 import { parseAgentSessionKey } from "../sessions/session-key-utils.js";
 import { formatRawAssistantErrorForUi } from "../shared/assistant-error-format.js";
@@ -55,6 +56,7 @@ const LIFECYCLE_ERROR_RETRY_GRACE_MS = 15_000;
 const STREAMING_WATCHDOG_USER_MESSAGE =
   "This response is taking longer than expected. Still waiting for the current run.";
 
+/** Reused helper for create Event Handlers behavior in src/tui. */
 export function createEventHandlers(context: EventHandlerContext) {
   const {
     chatLog,

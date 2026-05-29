@@ -1,3 +1,4 @@
+// test/vitest vitest plugins config helpers and runtime behavior.
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
 export function createPluginsVitestConfig(env?: Record<string, string | undefined>) {

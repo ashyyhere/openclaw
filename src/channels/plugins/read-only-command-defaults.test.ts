@@ -1,3 +1,4 @@
+/** Tests read-only command defaults loaded from plugin metadata snapshots. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const loadPluginMetadataSnapshot = vi.hoisted(() => vi.fn());

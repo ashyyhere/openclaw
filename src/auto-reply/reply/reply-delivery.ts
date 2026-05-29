@@ -1,3 +1,4 @@
+// Reply delivery helpers for payload dispatch and channel hooks.
 import { hasOutboundReplyContent } from "openclaw/plugin-sdk/reply-payload";
 import { logVerbose } from "../../globals.js";
 import { copyReplyPayloadMetadata } from "../reply-payload.js";
@@ -9,8 +10,10 @@ import { parseReplyDirectives } from "./reply-directives.js";
 import { applyReplyTagsToPayload, isRenderablePayload } from "./reply-payloads.js";
 import type { TypingSignaler } from "./typing-mode.js";
 
+/** Shared type for Reply Directive Parse Mode in src/auto-reply/reply. */
 export type ReplyDirectiveParseMode = "always" | "auto" | "never";
 
+/** Reused helper for normalize Reply Payload Directives behavior in src/auto-reply/reply. */
 export function normalizeReplyPayloadDirectives(params: {
   payload: ReplyPayload;
   currentMessageId?: string;
@@ -72,6 +75,7 @@ async function sendDirectBlockReply(params: {
   await params.onBlockReply(params.payload);
 }
 
+/** Reused helper for create Block Reply Delivery Handler behavior in src/auto-reply/reply. */
 export function createBlockReplyDeliveryHandler(params: {
   onBlockReply: (payload: ReplyPayload, context?: BlockReplyContext) => Promise<void> | void;
   currentMessageId?: string;

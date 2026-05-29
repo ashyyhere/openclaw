@@ -1,3 +1,4 @@
+// Formatting helpers for model-visible inbound and agent message envelopes.
 import { resolveUserTimezone } from "../agents/date-time.js";
 import { normalizeChatType } from "../channels/chat-type.js";
 import { resolveSenderLabel, type SenderLabelParams } from "../channels/sender-label.js";
@@ -24,6 +25,7 @@ type AgentEnvelopeParams = {
   envelope?: EnvelopeFormatOptions;
 };
 
+/** Shared type for Envelope Format Options in src/auto-reply. */
 export type EnvelopeFormatOptions = {
   /**
    * "local" (default), "utc", "user", or an explicit IANA timezone string.
@@ -66,6 +68,7 @@ function sanitizeEnvelopeHeaderPart(value: string): string {
     .trim();
 }
 
+/** Reused helper for resolve Envelope Format Options behavior in src/auto-reply. */
 export function resolveEnvelopeFormatOptions(cfg?: OpenClawConfig): EnvelopeFormatOptions {
   const defaults = cfg?.agents?.defaults;
   return {
@@ -106,6 +109,7 @@ function resolveEnvelopeTimezone(options: NormalizedEnvelopeOptions): ResolvedEn
   return explicit ? { mode: "iana", timeZone: explicit } : { mode: "utc" };
 }
 
+/** Reused helper for format Envelope Timestamp behavior in src/auto-reply. */
 export function formatEnvelopeTimestamp(
   ts: number | Date | undefined,
   options?: EnvelopeFormatOptions,
@@ -153,6 +157,7 @@ export function formatEnvelopeTimestamp(
   return weekday ? `${weekday} ${formatted}` : formatted;
 }
 
+/** Reused helper for format Agent Envelope behavior in src/auto-reply. */
 export function formatAgentEnvelope(params: AgentEnvelopeParams): string {
   const channel = sanitizeEnvelopeHeaderPart(normalizeOptionalString(params.channel) || "Channel");
   const parts: string[] = [channel];
@@ -194,6 +199,7 @@ export function formatAgentEnvelope(params: AgentEnvelopeParams): string {
   return `${header} ${params.body}`;
 }
 
+/** Reused helper for format Inbound Envelope behavior in src/auto-reply. */
 export function formatInboundEnvelope(params: {
   channel: string;
   from: string;
@@ -227,6 +233,7 @@ export function formatInboundEnvelope(params: {
   });
 }
 
+/** Reused helper for format Inbound From Label behavior in src/auto-reply. */
 export function formatInboundFromLabel(params: {
   isGroup: boolean;
   groupLabel?: string;

@@ -1,3 +1,4 @@
+// Tests test/scripts openwebui probe test behavior.
 import { spawn } from "node:child_process";
 import { createServer, type Server as HttpServer } from "node:http";
 import { createServer as createTcpServer, type Server as TcpServer, type Socket } from "node:net";

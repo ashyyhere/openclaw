@@ -1,3 +1,4 @@
+/** Registers private QA commands when the private QA feature is enabled. */
 import fs from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
@@ -6,6 +7,7 @@ import { resolveOpenClawPackageRootSync } from "../../infra/openclaw-root.js";
 const PRIVATE_QA_DIST_RELATIVE_PATH = path.join("dist", "plugin-sdk", "qa-lab.js");
 const SOURCE_CHECKOUT_MARKER_RELATIVE_PATHS = [".git", "pnpm-workspace.yaml"] as const;
 
+/** Reused helper for is Private Qa Cli Enabled behavior in src/cli/program. */
 export function isPrivateQaCliEnabled(env: NodeJS.ProcessEnv = process.env): boolean {
   return env.OPENCLAW_ENABLE_PRIVATE_QA_CLI === "1";
 }
@@ -52,6 +54,7 @@ async function dynamicImportPrivateQaCliModule(
   return (await import(specifier)) as Record<string, unknown>;
 }
 
+/** Reused helper for load Private Qa Cli Module behavior in src/cli/program. */
 export function loadPrivateQaCliModule(params?: {
   env?: NodeJS.ProcessEnv;
   cwd?: string;

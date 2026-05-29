@@ -1,3 +1,4 @@
+// extensions/msteams/src sdk helpers and runtime behavior.
 import * as fs from "node:fs";
 import { normalizeBotFrameworkServiceUrl } from "./bot-framework-service-url.js";
 import type { MSTeamsCloudName } from "./cloud.js";

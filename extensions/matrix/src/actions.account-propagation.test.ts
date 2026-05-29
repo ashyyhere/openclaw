@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src actions account propagation test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { ChannelMessageActionContext } from "../runtime-api.js";
 import type { CoreConfig } from "./types.js";

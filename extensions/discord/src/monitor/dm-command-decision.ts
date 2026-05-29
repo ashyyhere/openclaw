@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor dm command decision helpers and runtime behavior.
 import type { ResolvedChannelMessageIngress } from "openclaw/plugin-sdk/channel-ingress-runtime";
 import { createChannelPairingChallengeIssuer } from "openclaw/plugin-sdk/channel-pairing";
 import { upsertChannelPairingRequest } from "openclaw/plugin-sdk/conversation-runtime";

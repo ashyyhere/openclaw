@@ -1,3 +1,4 @@
+// Tests test/scripts live plugin tool assertions test behavior.
 import { spawnSync } from "node:child_process";
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";

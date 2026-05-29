@@ -1,3 +1,4 @@
+// extensions/moonshot media understanding provider helpers and runtime behavior.
 import {
   buildOpenAiCompatibleVideoRequestBody,
   coerceOpenAiCompatibleVideoText,

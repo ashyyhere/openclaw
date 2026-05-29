@@ -1,3 +1,4 @@
+// config/sessions transcript write context helpers and runtime behavior.
 import { AsyncLocalStorage } from "node:async_hooks";
 import path from "node:path";
 
@@ -33,6 +34,7 @@ function contextMatches(params: {
   return Boolean(contextSessionKey && sessionKey && contextSessionKey === sessionKey);
 }
 
+/** Reused helper for with Owned Session Transcript Writes behavior in src/config/sessions. */
 export async function withOwnedSessionTranscriptWrites<T>(
   context: OwnedSessionTranscriptWriteContext,
   run: () => Promise<T>,
@@ -40,6 +42,7 @@ export async function withOwnedSessionTranscriptWrites<T>(
   return await ownedTranscriptWriteContext.run(context, run);
 }
 
+/** Reused helper for bind Owned Session Transcript Writes behavior in src/config/sessions. */
 export function bindOwnedSessionTranscriptWrites<TArgs extends unknown[], TResult>(
   context: OwnedSessionTranscriptWriteContext,
   run: (...args: TArgs) => TResult,
@@ -47,6 +50,7 @@ export function bindOwnedSessionTranscriptWrites<TArgs extends unknown[], TResul
   return (...args) => ownedTranscriptWriteContext.run(context, () => run(...args));
 }
 
+/** Reused helper for run With Owned Session Transcript Write Lock behavior in src/config/sessions. */
 export async function runWithOwnedSessionTranscriptWriteLock<T>(
   params: {
     sessionFile?: string;
@@ -57,6 +61,7 @@ export async function runWithOwnedSessionTranscriptWriteLock<T>(
   return await runWithOwnedSessionTranscriptWriteContext(params, run);
 }
 
+/** Reused helper for run With Owned Session Transcript Write Publication behavior in src/config/sessions. */
 export async function runWithOwnedSessionTranscriptWritePublication<T>(
   params: {
     sessionFile?: string;
@@ -69,6 +74,7 @@ export async function runWithOwnedSessionTranscriptWritePublication<T>(
   });
 }
 
+/** Reused helper for resolve Owned Session Transcript Write Lock Runner behavior in src/config/sessions. */
 export function resolveOwnedSessionTranscriptWriteLockRunner(params: {
   sessionFile?: string;
   sessionKey?: string;

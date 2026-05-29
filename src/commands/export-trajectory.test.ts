@@ -1,3 +1,4 @@
+/** Tests trajectory export command behavior. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { RuntimeEnv } from "../runtime.js";
 import { exportTrajectoryCommand } from "./export-trajectory.js";

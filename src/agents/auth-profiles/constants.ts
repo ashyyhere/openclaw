@@ -1,10 +1,13 @@
+/** Shared auth profile filenames, ids, timeouts, lock options, and logger. */
 import { createSubsystemLogger } from "../../logging/subsystem.js";
+/** Re-exported API for src/agents/auth-profiles. */
 export {
   AUTH_PROFILE_FILENAME,
   AUTH_STATE_FILENAME,
   LEGACY_AUTH_FILENAME,
 } from "./path-constants.js";
 
+/** Reused constant for AUTH STORE VERSION behavior in src/agents/auth-profiles. */
 export const AUTH_STORE_VERSION = 1;
 
 /** @deprecated Anthropic provider-owned CLI profile id; do not use from third-party plugins. */
@@ -15,6 +18,7 @@ export const OPENAI_CODEX_DEFAULT_PROFILE_ID = "openai:default";
 /** @deprecated MiniMax provider-owned CLI profile id; do not use from third-party plugins. */
 export const MINIMAX_CLI_PROFILE_ID = "minimax-portal:minimax-cli";
 
+/** Reused constant for AUTH STORE LOCK OPTIONS behavior in src/agents/auth-profiles. */
 export const AUTH_STORE_LOCK_OPTIONS = {
   retries: {
     retries: 10,
@@ -40,6 +44,7 @@ export const AUTH_STORE_LOCK_OPTIONS = {
 // Retry budget note: keep the MINIMUM cumulative retry window comfortably
 // above OAUTH_REFRESH_CALL_TIMEOUT_MS so waiters do not give up while a
 // legitimate slow refresh is still within its allowed runtime budget.
+/** Reused constant for OAUTH REFRESH LOCK OPTIONS behavior in src/agents/auth-profiles. */
 export const OAUTH_REFRESH_LOCK_OPTIONS = {
   retries: {
     retries: 20,
@@ -56,9 +61,13 @@ export const OAUTH_REFRESH_LOCK_OPTIONS = {
 // surfaced as a refresh failure. Keep strictly below
 // OAUTH_REFRESH_LOCK_OPTIONS.stale so the lock is never treated as stale
 // by a waiter while the owner is still doing legitimate work.
+/** Reused constant for OAUTH REFRESH CALL TIMEOUT MS behavior in src/agents/auth-profiles. */
 export const OAUTH_REFRESH_CALL_TIMEOUT_MS = 120_000;
 
+/** Reused constant for EXTERNAL CLI SYNC TTL MS behavior in src/agents/auth-profiles. */
 export const EXTERNAL_CLI_SYNC_TTL_MS = 15 * 60 * 1000;
+/** Reused constant for EXTERNAL CLI NEAR EXPIRY MS behavior in src/agents/auth-profiles. */
 export const EXTERNAL_CLI_NEAR_EXPIRY_MS = 10 * 60 * 1000;
 
+/** Reused constant for log behavior in src/agents/auth-profiles. */
 export const log = createSubsystemLogger("agents/auth-profiles");

@@ -1,3 +1,4 @@
+// flows doctor core checks helpers and runtime behavior.
 import path from "node:path";
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../agents/agent-scope.js";
 import {
@@ -81,6 +82,7 @@ const defaultCoreHealthCheckDeps: CoreHealthCheckDeps = {
   collectRuntimeToolSchemaFindings: collectRuntimeToolSchemaFindingsWithRuntime,
 };
 
+/** Reused helper for config Validation Issues To Health Findings behavior in src/flows. */
 export function configValidationIssuesToHealthFindings(
   issues: readonly ConfigValidationIssue[],
 ): readonly HealthFinding[] {
@@ -153,6 +155,7 @@ function resolveDoctorMode(cfg: OpenClawConfig): "local" | "remote" {
   return cfg.gateway?.mode === "remote" ? "remote" : "local";
 }
 
+/** Reused helper for build Gateway Token Secret Ref Unavailable Message behavior in src/flows. */
 export function buildGatewayTokenSecretRefUnavailableMessage(params: {
   cfg: OpenClawConfig;
   ref: SecretRef;
@@ -171,6 +174,7 @@ export function buildGatewayTokenSecretRefUnavailableMessage(params: {
   return "Gateway token is managed via SecretRef and is currently unavailable.";
 }
 
+/** Reused helper for build Gateway Token Secret Ref Fix Hint behavior in src/flows. */
 export function buildGatewayTokenSecretRefFixHint(ref: SecretRef): string {
   if (ref.source === "exec") {
     return "Run `openclaw doctor --allow-exec` to verify exec SecretRefs during doctor, or `openclaw secrets audit --allow-exec` to audit all exec SecretRefs.";
@@ -873,6 +877,7 @@ function createConvertedWorkflowChecks(deps: CoreHealthCheckDeps): readonly Heal
 
 let registered = false;
 
+/** Reused helper for register Core Health Checks behavior in src/flows. */
 export function registerCoreHealthChecks(): void {
   if (registered) {
     return;
@@ -883,10 +888,12 @@ export function registerCoreHealthChecks(): void {
   registered = true;
 }
 
+/** Reused helper for reset Core Health Checks For Test behavior in src/flows. */
 export function resetCoreHealthChecksForTest(): void {
   registered = false;
 }
 
+/** Reused helper for create Core Health Checks behavior in src/flows. */
 export function createCoreHealthChecks(
   deps: CoreHealthCheckDeps = defaultCoreHealthCheckDeps,
 ): readonly HealthCheck[] {
@@ -901,6 +908,7 @@ export function createCoreHealthChecks(
   ];
 }
 
+/** Reused constant for CORE HEALTH CHECKS behavior in src/flows. */
 export const CORE_HEALTH_CHECKS: readonly HealthCheck[] = createCoreHealthChecks();
 
 function formatMissingSkillSummary(skill: SkillStatusEntry): string {

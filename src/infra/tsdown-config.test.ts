@@ -1,3 +1,4 @@
+// Tests infra tsdown config test behavior.
 import { readFileSync } from "node:fs";
 import { bundledPluginRoot } from "openclaw/plugin-sdk/test-fixtures";
 import { describe, expect, it } from "vitest";

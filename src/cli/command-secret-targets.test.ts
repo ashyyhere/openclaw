@@ -1,3 +1,4 @@
+/** Tests command-specific secret target selection from registry metadata. */
 import { describe, expect, it, vi } from "vitest";
 
 const REGISTRY_IDS = [

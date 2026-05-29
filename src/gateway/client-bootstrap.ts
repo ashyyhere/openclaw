@@ -1,8 +1,10 @@
+// gateway client bootstrap helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveGatewayConnectionAuth } from "./connection-auth.js";
 import { buildGatewayConnectionDetailsWithResolvers } from "./connection-details.js";
 import type { ExplicitGatewayAuth } from "./credentials.js";
 
+/** Reused helper for resolve Gateway Url Override Source behavior in src/gateway. */
 export function resolveGatewayUrlOverrideSource(urlSource: string): "cli" | "env" | undefined {
   if (urlSource === "cli --url") {
     return "cli";
@@ -13,6 +15,7 @@ export function resolveGatewayUrlOverrideSource(urlSource: string): "cli" | "env
   return undefined;
 }
 
+/** Reused helper for resolve Gateway Client Bootstrap behavior in src/gateway. */
 export async function resolveGatewayClientBootstrap(params: {
   config: OpenClawConfig;
   gatewayUrl?: string;

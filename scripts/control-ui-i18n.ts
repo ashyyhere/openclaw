@@ -1,3 +1,4 @@
+// scripts control ui i18n helpers and runtime behavior.
 import { spawn } from "node:child_process";
 import { createHash } from "node:crypto";
 import { existsSync } from "node:fs";

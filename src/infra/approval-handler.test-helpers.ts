@@ -1,6 +1,8 @@
+// infra approval handler test helpers helpers and runtime behavior.
 import { vi } from "vitest";
 import type { ChannelApprovalNativeRuntimeAdapter } from "./approval-handler-runtime.js";
 
+/** Shared type for Approval Native Runtime Adapter Stub Params in src/infra. */
 export type ApprovalNativeRuntimeAdapterStubParams = {
   resolveApprovalKind?: ChannelApprovalNativeRuntimeAdapter["resolveApprovalKind"];
   buildResolvedResult?: ChannelApprovalNativeRuntimeAdapter["presentation"]["buildResolvedResult"];
@@ -13,6 +15,7 @@ export type ApprovalNativeRuntimeAdapterStubParams = {
   bindPending?: NonNullable<ChannelApprovalNativeRuntimeAdapter["interactions"]>["bindPending"];
 };
 
+/** Reused helper for create Approval Native Runtime Adapter Stubs behavior in src/infra. */
 export function createApprovalNativeRuntimeAdapterStubs(
   params: ApprovalNativeRuntimeAdapterStubParams = {},
 ): ChannelApprovalNativeRuntimeAdapter {

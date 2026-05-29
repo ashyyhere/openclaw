@@ -1,7 +1,9 @@
+// hooks policy helpers and runtime behavior.
 import type { OpenClawConfig, HookConfig } from "../config/config.js";
 import { resolveHookKey } from "./frontmatter.js";
 import type { HookEntry, HookSource } from "./types.js";
 
+/** Shared type for Hook Enable State Reason in src/hooks. */
 export type HookEnableStateReason = "disabled in config" | "workspace hook (disabled by default)";
 
 type HookEnableState = {
@@ -58,6 +60,7 @@ function getHookSourcePolicy(source: HookSource): HookSourcePolicy {
   return HOOK_SOURCE_POLICIES[source];
 }
 
+/** Reused helper for resolve Hook Config behavior in src/hooks. */
 export function resolveHookConfig(
   config: OpenClawConfig | undefined,
   hookKey: string,
@@ -73,6 +76,7 @@ export function resolveHookConfig(
   return entry;
 }
 
+/** Reused helper for resolve Hook Enable State behavior in src/hooks. */
 export function resolveHookEnableState(params: {
   entry: HookEntry;
   config?: OpenClawConfig;
@@ -106,6 +110,7 @@ function canOverrideHook(candidate: HookEntry, existing: HookEntry): boolean {
   );
 }
 
+/** Reused helper for resolve Hook Entries behavior in src/hooks. */
 export function resolveHookEntries(
   entries: HookEntry[],
   opts?: {

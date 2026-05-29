@@ -1,3 +1,4 @@
+// logging diagnostic support export helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
@@ -32,6 +33,7 @@ import {
 } from "./diagnostic-support-redaction.js";
 import { readConfiguredLogTail, type LogTailPayload } from "./log-tail.js";
 
+/** Reused constant for DIAGNOSTIC SUPPORT EXPORT VERSION behavior in src/logging. */
 export const DIAGNOSTIC_SUPPORT_EXPORT_VERSION = 1;
 
 const DEFAULT_LOG_LIMIT = 5000;
@@ -41,6 +43,7 @@ const SUPPORT_EXPORT_SUFFIX = ".zip";
 type Awaitable<T> = T | Promise<T>;
 type SupportSnapshotReader = () => Awaitable<unknown>;
 
+/** Shared type for Diagnostic Support Export Options in src/logging. */
 export type DiagnosticSupportExportOptions = {
   outputPath?: string;
   cwd?: string;
@@ -55,6 +58,7 @@ export type DiagnosticSupportExportOptions = {
   readHealthSnapshot?: SupportSnapshotReader;
 };
 
+/** Shared type for Diagnostic Support Export Manifest in src/logging. */
 export type DiagnosticSupportExportManifest = {
   version: typeof DIAGNOSTIC_SUPPORT_EXPORT_VERSION;
   generatedAt: string;
@@ -71,13 +75,16 @@ export type DiagnosticSupportExportManifest = {
   };
 };
 
+/** Shared type for Diagnostic Support Export File in src/logging. */
 export type DiagnosticSupportExportFile = DiagnosticSupportBundleFile;
 
+/** Shared type for Diagnostic Support Export Artifact in src/logging. */
 export type DiagnosticSupportExportArtifact = {
   manifest: DiagnosticSupportExportManifest;
   files: DiagnosticSupportExportFile[];
 };
 
+/** Shared type for Write Diagnostic Support Export Result in src/logging. */
 export type WriteDiagnosticSupportExportResult = {
   path: string;
   bytes: number;
@@ -545,6 +552,7 @@ function resolveOutputPath(options: {
   return resolved;
 }
 
+/** Reused helper for build Diagnostic Support Export behavior in src/logging. */
 export async function buildDiagnosticSupportExport(
   options: DiagnosticSupportExportOptions = {},
 ): Promise<DiagnosticSupportExportArtifact> {
@@ -659,6 +667,7 @@ export async function buildDiagnosticSupportExport(
   };
 }
 
+/** Reused helper for write Diagnostic Support Export behavior in src/logging. */
 export async function writeDiagnosticSupportExport(
   options: DiagnosticSupportExportOptions = {},
 ): Promise<WriteDiagnosticSupportExportResult> {

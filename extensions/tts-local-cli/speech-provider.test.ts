@@ -1,3 +1,4 @@
+// Tests extensions/tts-local-cli speech provider test behavior.
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";

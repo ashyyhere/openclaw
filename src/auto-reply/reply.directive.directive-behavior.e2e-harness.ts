@@ -1,3 +1,4 @@
+// Test harness for directive behavior E2E-style reply flows.
 import { afterEach, beforeEach, vi } from "vitest";
 import { clearRuntimeAuthProfileStoreSnapshots } from "../agents/auth-profiles.js";
 import { clearSessionStoreCacheForTest } from "../config/sessions.js";
@@ -89,6 +90,7 @@ function createDirectiveBehaviorProviderRegistry(): ReturnType<typeof createEmpt
   return registry;
 }
 
+/** Reused helper for install Directive Behavior E2 EHooks behavior in src/auto-reply. */
 export function installDirectiveBehaviorE2EHooks() {
   beforeEach(async () => {
     await resetSkillsRefreshForTest();

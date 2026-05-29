@@ -1,5 +1,7 @@
+// ui/src/ui/views channel config extras helpers and runtime behavior.
 import { t } from "../../i18n/index.ts";
 
+/** Reused helper for resolve Channel Config Value behavior in ui/src/ui/views. */
 export function resolveChannelConfigValue(
   configForm: Record<string, unknown> | null | undefined,
   channelId: string,
@@ -19,6 +21,7 @@ export function resolveChannelConfigValue(
   return null;
 }
 
+/** Reused helper for format Channel Extra Value behavior in ui/src/ui/views. */
 export function formatChannelExtraValue(raw: unknown): string {
   if (raw == null) {
     return t("common.na");
@@ -33,6 +36,7 @@ export function formatChannelExtraValue(raw: unknown): string {
   }
 }
 
+/** Reused helper for resolve Channel Extras behavior in ui/src/ui/views. */
 export function resolveChannelExtras(params: {
   configForm: Record<string, unknown> | null | undefined;
   channelId: string;

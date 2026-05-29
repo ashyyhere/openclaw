@@ -1,3 +1,4 @@
+/** Tests individual human status report sections. */
 import { describe, expect, it } from "vitest";
 import type { HealthSummary } from "./health.js";
 import {

@@ -1,3 +1,4 @@
+// test-utils web provider runtime test helpers helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type {
   PluginWebFetchProviderEntry,
@@ -18,11 +19,13 @@ type CommonWebProviderTestParams = {
     | PluginWebFetchProviderEntry["getConfiguredCredentialFallback"];
 };
 
+/** Shared type for Web Search Test Provider Params in src/test-utils. */
 export type WebSearchTestProviderParams = CommonWebProviderTestParams & {
   createTool?: PluginWebSearchProviderEntry["createTool"];
   getConfiguredCredentialFallback?: PluginWebSearchProviderEntry["getConfiguredCredentialFallback"];
 };
 
+/** Shared type for Web Fetch Test Provider Params in src/test-utils. */
 export type WebFetchTestProviderParams = CommonWebProviderTestParams & {
   createTool?: PluginWebFetchProviderEntry["createTool"];
   getConfiguredCredentialFallback?: PluginWebFetchProviderEntry["getConfiguredCredentialFallback"];
@@ -56,6 +59,7 @@ function createDefaultProviderTool(providerId: string) {
   };
 }
 
+/** Reused helper for create Web Search Test Provider behavior in src/test-utils. */
 export function createWebSearchTestProvider(
   params: WebSearchTestProviderParams,
 ): PluginWebSearchProviderEntry {
@@ -65,6 +69,7 @@ export function createWebSearchTestProvider(
   };
 }
 
+/** Reused helper for create Web Fetch Test Provider behavior in src/test-utils. */
 export function createWebFetchTestProvider(
   params: WebFetchTestProviderParams,
 ): PluginWebFetchProviderEntry {

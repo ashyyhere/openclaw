@@ -1,3 +1,4 @@
+// ui/src/ui app tool stream helpers and runtime behavior.
 import { updateActivityFromToolEvent, type ActivityEntry } from "./activity-model.ts";
 import { createChatModelOverride } from "./chat-model-ref.ts";
 import type { ChatModelOverride } from "./chat-model-ref.types.ts";
@@ -15,6 +16,7 @@ const TOOL_STREAM_LIMIT = 50;
 const TOOL_STREAM_THROTTLE_MS = 80;
 const TOOL_OUTPUT_CHAR_LIMIT = 120_000;
 
+/** Shared type for Agent Event Payload in ui/src/ui. */
 export type AgentEventPayload = {
   runId: string;
   seq: number;
@@ -25,6 +27,7 @@ export type AgentEventPayload = {
   data: Record<string, unknown>;
 };
 
+/** Shared type for Session Operation Event Payload in ui/src/ui. */
 export type SessionOperationEventPayload = {
   operationId?: string;
   operation?: string;
@@ -36,6 +39,7 @@ export type SessionOperationEventPayload = {
   reason?: string;
 };
 
+/** Shared type for Tool Stream Entry in ui/src/ui. */
 export type ToolStreamEntry = {
   toolCallId: string;
   runId: string;
@@ -404,6 +408,7 @@ function syncToolStreamMessages(host: ToolStreamHost) {
     .filter((msg): msg is Record<string, unknown> => Boolean(msg));
 }
 
+/** Reused helper for flush Tool Stream Sync behavior in ui/src/ui. */
 export function flushToolStreamSync(host: ToolStreamHost) {
   if (host.toolStreamSyncTimer != null) {
     clearTimeout(host.toolStreamSyncTimer);
@@ -412,6 +417,7 @@ export function flushToolStreamSync(host: ToolStreamHost) {
   syncToolStreamMessages(host);
 }
 
+/** Reused helper for schedule Tool Stream Sync behavior in ui/src/ui. */
 export function scheduleToolStreamSync(host: ToolStreamHost, force = false) {
   if (force) {
     flushToolStreamSync(host);
@@ -426,6 +432,7 @@ export function scheduleToolStreamSync(host: ToolStreamHost, force = false) {
   );
 }
 
+/** Reused helper for reset Tool Stream behavior in ui/src/ui. */
 export function resetToolStream(host: ToolStreamHost) {
   if (host.toolStreamSyncTimer != null) {
     clearTimeout(host.toolStreamSyncTimer);
@@ -437,6 +444,7 @@ export function resetToolStream(host: ToolStreamHost) {
   host.chatStreamSegments = [];
 }
 
+/** Shared type for Compaction Status in ui/src/ui. */
 export type CompactionStatus = {
   phase: "active" | "retrying" | "complete";
   runId: string | null;
@@ -444,6 +452,7 @@ export type CompactionStatus = {
   completedAt: number | null;
 };
 
+/** Shared type for Fallback Status in ui/src/ui. */
 export type FallbackStatus = {
   phase?: "active" | "cleared";
   selected: string;
@@ -502,6 +511,7 @@ function setCompactionComplete(host: CompactionHost, runId: string) {
   scheduleCompactionClear(host, COMPACTION_TOAST_DURATION_MS, { phase: "complete", runId });
 }
 
+/** Reused helper for handle Session Operation Event behavior in ui/src/ui. */
 export function handleSessionOperationEvent(
   host: ToolStreamHost,
   payload?: SessionOperationEventPayload,
@@ -562,6 +572,7 @@ export function handleSessionOperationEvent(
   compactionHost.compactionStatus = null;
 }
 
+/** Reused helper for handle Compaction Event behavior in ui/src/ui. */
 export function handleCompactionEvent(host: CompactionHost, payload: AgentEventPayload) {
   const data = payload.data ?? {};
   const phase = typeof data.phase === "string" ? data.phase : "";
@@ -721,6 +732,7 @@ function handleLifecycleFallbackEvent(host: CompactionHost, payload: AgentEventP
   }, FALLBACK_TOAST_DURATION_MS);
 }
 
+/** Reused helper for handle Agent Event behavior in ui/src/ui. */
 export function handleAgentEvent(host: ToolStreamHost, payload?: AgentEventPayload) {
   if (!payload) {
     return;

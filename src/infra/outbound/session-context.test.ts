@@ -1,3 +1,4 @@
+// Tests infra/outbound session context test behavior.
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 const resolveSessionAgentIdMock = vi.hoisted(() => vi.fn());

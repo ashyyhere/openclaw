@@ -1,3 +1,4 @@
+// extensions/whatsapp/src resolve outbound target helpers and runtime behavior.
 import { missingTargetError } from "openclaw/plugin-sdk/channel-feedback";
 import { normalizeStringEntries } from "openclaw/plugin-sdk/string-coerce-runtime";
 import {

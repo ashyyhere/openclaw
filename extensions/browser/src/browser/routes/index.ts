@@ -1,3 +1,4 @@
+// extensions/browser/src/browser/routes index helpers and runtime behavior.
 import type { BrowserRouteContext } from "../server-context.js";
 import { registerBrowserAgentRoutes } from "./agent.js";
 import { registerBrowserBasicRoutes } from "./basic.js";

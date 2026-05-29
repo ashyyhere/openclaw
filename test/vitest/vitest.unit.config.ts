@@ -1,3 +1,4 @@
+// test/vitest vitest unit config helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { defineConfig } from "vitest/config";

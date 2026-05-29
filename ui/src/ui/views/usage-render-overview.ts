@@ -1,3 +1,4 @@
+// ui/src/ui/views usage render overview helpers and runtime behavior.
 import { html, nothing } from "lit";
 import { formatDurationCompact } from "../../../../src/infra/format-time/format-duration.ts";
 import { t } from "../../i18n/index.ts";
@@ -1185,6 +1186,7 @@ function renderSessionsCard(
   `;
 }
 
+/** Re-exported API for ui/src/ui/views. */
 export {
   renderCostBreakdownCompact,
   renderDailyChartCompact,

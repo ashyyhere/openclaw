@@ -1,20 +1,25 @@
+// test-utils repo files helpers and runtime behavior.
 import { spawnSync } from "node:child_process";
 import path from "node:path";
 
 const gitTrackedFilesCache = new Map<string, string[] | null>();
 
+/** Reused helper for to Repo Path behavior in src/test-utils. */
 export function toRepoPath(filePath: string): string {
   return filePath.replaceAll("\\", "/");
 }
 
+/** Reused helper for to Repo Relative Path behavior in src/test-utils. */
 export function toRepoRelativePath(repoRoot: string, filePath: string): string {
   return toRepoPath(path.relative(repoRoot, filePath));
 }
 
+/** Reused helper for sort Repo Paths behavior in src/test-utils. */
 export function sortRepoPaths(paths: Iterable<string>): string[] {
   return [...paths].map(toRepoPath).toSorted();
 }
 
+/** Reused helper for list Git Tracked Files behavior in src/test-utils. */
 export function listGitTrackedFiles(params: {
   pathspecs: string | readonly string[];
   repoRoot?: string;

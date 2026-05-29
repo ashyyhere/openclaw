@@ -1,3 +1,4 @@
+/** Tests configured and automatic provider selection helpers. */
 import { describe, expect, it } from "vitest";
 import {
   resolveConfiguredCapabilityProvider,

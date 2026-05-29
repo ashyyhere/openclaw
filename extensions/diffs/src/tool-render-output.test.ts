@@ -1,3 +1,4 @@
+// Tests extensions/diffs/src tool render output test behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { createTestPluginApi } from "openclaw/plugin-sdk/plugin-test-api";

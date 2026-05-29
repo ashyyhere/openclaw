@@ -1,8 +1,10 @@
+// plugins lazy service module helpers and runtime behavior.
 import { isTruthyEnvValue } from "../infra/env.js";
 import { toSafeImportPath } from "./import-specifier.js";
 
 type LazyServiceModule = Record<string, unknown>;
 
+/** Shared type for Lazy Plugin Service Handle in src/plugins. */
 export type LazyPluginServiceHandle = {
   stop: () => Promise<void>;
 };
@@ -18,6 +20,7 @@ function resolveExport<T>(mod: LazyServiceModule, names: string[]): T | null {
   return null;
 }
 
+/** Reused helper for default Load Override Module behavior in src/plugins. */
 export async function defaultLoadOverrideModule(
   specifier: string,
   importModule: (specifier: string) => Promise<LazyServiceModule> = async (source: string) =>
@@ -26,6 +29,7 @@ export async function defaultLoadOverrideModule(
   return importModule(toSafeImportPath(specifier));
 }
 
+/** Reused helper for start Lazy Plugin Service Module behavior in src/plugins. */
 export async function startLazyPluginServiceModule(params: {
   skipEnvVar?: string;
   overrideEnvVar?: string;

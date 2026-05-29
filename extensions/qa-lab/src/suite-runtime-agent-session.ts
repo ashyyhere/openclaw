@@ -1,3 +1,4 @@
+// extensions/qa-lab/src suite runtime agent session helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { setTimeout as sleep } from "node:timers/promises";

@@ -1,3 +1,4 @@
+// Coverage for inbound debounce policy.
 import { describe, expect, it, vi } from "vitest";
 import {
   createChannelInboundDebouncer,

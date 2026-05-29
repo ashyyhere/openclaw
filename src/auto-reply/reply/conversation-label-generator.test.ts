@@ -1,3 +1,4 @@
+// Coverage for conversation label generation.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const completeSimple = vi.hoisted(() => vi.fn());

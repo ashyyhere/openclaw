@@ -1,3 +1,4 @@
+/** Public SDK barrel for document extraction contracts. */
 export type {
   DocumentExtractedImage,
   DocumentExtractionRequest,

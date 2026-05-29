@@ -1,3 +1,4 @@
+/** MCP stdio client transport backed by OpenClaw process spawning. */
 import { spawn, type ChildProcess } from "node:child_process";
 import process from "node:process";
 import { PassThrough } from "node:stream";
@@ -8,6 +9,7 @@ import type { JSONRPCMessage } from "@modelcontextprotocol/sdk/types.js";
 import { killProcessTree, signalProcessTree } from "../process/kill-tree.js";
 import { prepareOomScoreAdjustedSpawn } from "../process/linux-oom-score.js";
 
+/** Launch parameters for an OpenClaw-managed stdio MCP server. */
 export type OpenClawStdioServerParameters = {
   command: string;
   args?: string[];
@@ -25,6 +27,7 @@ function delay(ms: number) {
   });
 }
 
+/** Transport implementation that bridges MCP JSON-RPC over child stdio. */
 export class OpenClawStdioClientTransport implements Transport {
   onclose?: () => void;
   onerror?: (error: Error) => void;

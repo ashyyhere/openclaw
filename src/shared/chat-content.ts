@@ -1,3 +1,5 @@
+// shared chat content helpers and runtime behavior.
+/** Reused helper for coerce Chat Content Text behavior in src/shared. */
 export function coerceChatContentText(value: unknown): string {
   if (typeof value === "string") {
     return value;
@@ -23,6 +25,7 @@ export function coerceChatContentText(value: unknown): string {
   return "";
 }
 
+/** Reused helper for extract Text From Chat Content behavior in src/shared. */
 export function extractTextFromChatContent(
   content: unknown,
   opts?: {

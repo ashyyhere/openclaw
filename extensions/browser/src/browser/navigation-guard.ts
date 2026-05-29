@@ -1,3 +1,4 @@
+// extensions/browser/src/browser navigation guard helpers and runtime behavior.
 import { isIP } from "node:net";
 import {
   isPrivateNetworkAllowedByPolicy,

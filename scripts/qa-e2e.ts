@@ -1,3 +1,4 @@
+// scripts qa e2e helpers and runtime behavior.
 import { pathToFileURL } from "node:url";
 
 export function enablePrivateQaScriptEnv(env: NodeJS.ProcessEnv = process.env) {

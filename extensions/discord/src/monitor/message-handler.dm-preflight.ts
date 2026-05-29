@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor message handler dm preflight helpers and runtime behavior.
 import { logVerbose } from "openclaw/plugin-sdk/runtime-env";
 import { resolveDiscordConversationIdentity } from "../conversation-identity.js";
 import type { User } from "../internal/discord.js";

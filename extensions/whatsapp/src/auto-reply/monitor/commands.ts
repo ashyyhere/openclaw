@@ -1,3 +1,4 @@
+// extensions/whatsapp/src/auto-reply/monitor commands helpers and runtime behavior.
 export function stripMentionsForCommand(
   text: string,
   mentionRegexes: RegExp[],

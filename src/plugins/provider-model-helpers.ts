@@ -1,9 +1,11 @@
+// plugins provider model helpers helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import { uniqueStrings } from "../shared/string-normalization.js";
 import { normalizeModelCompat } from "./provider-model-compat.js";
 import type { ProviderRuntimeModel } from "./provider-runtime-model.types.js";
 import type { ProviderResolveDynamicModelContext } from "./types.js";
 
+/** Reused helper for matches Exact Or Prefix behavior in src/plugins. */
 export function matchesExactOrPrefix(id: string, values: readonly string[]): boolean {
   const normalizedId = normalizeLowercaseStringOrEmpty(id);
   return values.some((value) => {
@@ -12,6 +14,7 @@ export function matchesExactOrPrefix(id: string, values: readonly string[]): boo
   });
 }
 
+/** Reused helper for clone First Template Model behavior in src/plugins. */
 export function cloneFirstTemplateModel(params: {
   providerId: string;
   modelId: string;

@@ -1,3 +1,4 @@
+// extensions/codex/src/migration auth helpers and runtime behavior.
 import { loadAuthProfileStoreWithoutExternalProfiles } from "openclaw/plugin-sdk/agent-runtime";
 import {
   createMigrationItem,

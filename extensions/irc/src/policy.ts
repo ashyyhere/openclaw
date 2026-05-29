@@ -1,3 +1,4 @@
+// extensions/irc/src policy helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "openclaw/plugin-sdk/string-coerce-runtime";
 import type { IrcChannelConfig } from "./types.js";
 

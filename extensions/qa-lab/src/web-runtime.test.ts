@@ -1,3 +1,4 @@
+// Tests extensions/qa-lab/src web runtime test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const {

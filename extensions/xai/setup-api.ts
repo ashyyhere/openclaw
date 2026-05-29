@@ -1,3 +1,4 @@
+// extensions/xai setup api helpers and runtime behavior.
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 import { isRecord } from "./src/tool-config-shared.js";
 

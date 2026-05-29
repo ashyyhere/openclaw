@@ -1,3 +1,4 @@
+/** Registers DNS helper commands delegated to the packaged DNS tool. */
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
@@ -103,6 +104,7 @@ function ensureImportLine(corefilePath: string, importGlob: string): boolean {
   return true;
 }
 
+/** Reused helper for register Dns Cli behavior in src/cli. */
 export function registerDnsCli(program: Command) {
   const dns = program
     .command("dns")

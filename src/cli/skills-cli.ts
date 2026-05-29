@@ -1,3 +1,4 @@
+/** Registers CLI commands for skill discovery, status, and verification. */
 import type { Command } from "commander";
 import { formatDocsLink } from "../../packages/terminal-core/src/links.js";
 import { theme } from "../../packages/terminal-core/src/theme.js";
@@ -47,11 +48,13 @@ import { resolveOptionFromCommand } from "./cli-utils.js";
 import { parseStrictPositiveIntOption } from "./program/helpers.js";
 import { formatSkillInfo, formatSkillsCheck, formatSkillsList } from "./skills-cli.format.js";
 
+/** Re-exported API for src/cli. */
 export type {
   SkillInfoOptions,
   SkillsCheckOptions,
   SkillsListOptions,
 } from "./skills-cli.format.js";
+/** Re-exported API for src/cli, starting with format Skill Info. */
 export { formatSkillInfo, formatSkillsCheck, formatSkillsList } from "./skills-cli.format.js";
 
 type SkillStatusReport = Awaited<

@@ -1,12 +1,17 @@
+// talk provider types helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { TalkTransport } from "./talk-events.js";
 
+/** Shared type for Realtime Voice Provider Id in src/talk. */
 export type RealtimeVoiceProviderId = string;
 
+/** Shared type for Realtime Voice Role in src/talk. */
 export type RealtimeVoiceRole = "user" | "assistant";
 
+/** Shared type for Realtime Voice Close Reason in src/talk. */
 export type RealtimeVoiceCloseReason = "completed" | "error";
 
+/** Shared type for Realtime Voice Audio Format in src/talk. */
 export type RealtimeVoiceAudioFormat =
   | {
       encoding: "g711_ulaw";
@@ -19,18 +24,21 @@ export type RealtimeVoiceAudioFormat =
       channels: 1;
     };
 
+/** Reused constant for REALTIME VOICE AUDIO FORMAT G711 ULAW 8 KHZ behavior in src/talk. */
 export const REALTIME_VOICE_AUDIO_FORMAT_G711_ULAW_8KHZ: RealtimeVoiceAudioFormat = {
   encoding: "g711_ulaw",
   sampleRateHz: 8000,
   channels: 1,
 };
 
+/** Reused constant for REALTIME VOICE AUDIO FORMAT PCM16 24 KHZ behavior in src/talk. */
 export const REALTIME_VOICE_AUDIO_FORMAT_PCM16_24KHZ: RealtimeVoiceAudioFormat = {
   encoding: "pcm16",
   sampleRateHz: 24000,
   channels: 1,
 };
 
+/** Shared type for Realtime Voice Tool in src/talk. */
 export type RealtimeVoiceTool = {
   type: "function";
   name: string;
@@ -42,6 +50,7 @@ export type RealtimeVoiceTool = {
   };
 };
 
+/** Shared type for Realtime Voice Tool Call Event in src/talk. */
 export type RealtimeVoiceToolCallEvent = {
   itemId: string;
   callId: string;
@@ -49,6 +58,7 @@ export type RealtimeVoiceToolCallEvent = {
   args: unknown;
 };
 
+/** Shared type for Realtime Voice Tool Result Options in src/talk. */
 export type RealtimeVoiceToolResultOptions = {
   /**
    * Submit the tool result without prompting the realtime provider to generate a new assistant
@@ -58,6 +68,7 @@ export type RealtimeVoiceToolResultOptions = {
   willContinue?: boolean;
 };
 
+/** Shared type for Realtime Voice Bridge Event in src/talk. */
 export type RealtimeVoiceBridgeEvent = {
   direction: "client" | "server";
   type: string;
@@ -66,6 +77,7 @@ export type RealtimeVoiceBridgeEvent = {
   responseId?: string;
 };
 
+/** Shared type for Realtime Voice Bridge Callbacks in src/talk. */
 export type RealtimeVoiceBridgeCallbacks = {
   onAudio: (audio: Buffer) => void;
   onClearAudio: () => void;
@@ -78,8 +90,10 @@ export type RealtimeVoiceBridgeCallbacks = {
   onClose?: (reason: RealtimeVoiceCloseReason) => void;
 };
 
+/** Shared type for Realtime Voice Provider Config in src/talk. */
 export type RealtimeVoiceProviderConfig = Record<string, unknown>;
 
+/** Shared type for Realtime Voice Provider Capabilities in src/talk. */
 export type RealtimeVoiceProviderCapabilities = {
   transports: TalkTransport[];
   inputAudioFormats: RealtimeVoiceAudioFormat[];
@@ -91,16 +105,19 @@ export type RealtimeVoiceProviderCapabilities = {
   supportsSessionResumption?: boolean;
 };
 
+/** Shared type for Realtime Voice Provider Resolve Config Context in src/talk. */
 export type RealtimeVoiceProviderResolveConfigContext = {
   cfg: OpenClawConfig;
   rawConfig: RealtimeVoiceProviderConfig;
 };
 
+/** Shared type for Realtime Voice Provider Configured Context in src/talk. */
 export type RealtimeVoiceProviderConfiguredContext = {
   cfg?: OpenClawConfig;
   providerConfig: RealtimeVoiceProviderConfig;
 };
 
+/** Shared type for Realtime Voice Bridge Create Request in src/talk. */
 export type RealtimeVoiceBridgeCreateRequest = RealtimeVoiceBridgeCallbacks & {
   cfg?: OpenClawConfig;
   providerConfig: RealtimeVoiceProviderConfig;
@@ -111,6 +128,7 @@ export type RealtimeVoiceBridgeCreateRequest = RealtimeVoiceBridgeCallbacks & {
   tools?: RealtimeVoiceTool[];
 };
 
+/** Shared type for Realtime Voice Browser Session Create Request in src/talk. */
 export type RealtimeVoiceBrowserSessionCreateRequest = {
   cfg?: OpenClawConfig;
   providerConfig: RealtimeVoiceProviderConfig;
@@ -124,6 +142,7 @@ export type RealtimeVoiceBrowserSessionCreateRequest = {
   reasoningEffort?: string;
 };
 
+/** Shared type for Realtime Voice Browser Audio Contract in src/talk. */
 export type RealtimeVoiceBrowserAudioContract = {
   inputEncoding: "pcm16" | "g711_ulaw";
   inputSampleRateHz: number;
@@ -131,6 +150,7 @@ export type RealtimeVoiceBrowserAudioContract = {
   outputSampleRateHz: number;
 };
 
+/** Shared type for Realtime Voice Browser Web Rtc Sdp Session in src/talk. */
 export type RealtimeVoiceBrowserWebRtcSdpSession = {
   provider: RealtimeVoiceProviderId;
   transport: "webrtc";
@@ -142,6 +162,7 @@ export type RealtimeVoiceBrowserWebRtcSdpSession = {
   expiresAt?: number;
 };
 
+/** Shared type for Realtime Voice Browser Json Pcm Web Socket Session in src/talk. */
 export type RealtimeVoiceBrowserJsonPcmWebSocketSession = {
   provider: RealtimeVoiceProviderId;
   transport: "provider-websocket";
@@ -155,6 +176,7 @@ export type RealtimeVoiceBrowserJsonPcmWebSocketSession = {
   expiresAt?: number;
 };
 
+/** Shared type for Realtime Voice Browser Gateway Relay Session in src/talk. */
 export type RealtimeVoiceBrowserGatewayRelaySession = {
   provider: RealtimeVoiceProviderId;
   transport: "gateway-relay";
@@ -165,6 +187,7 @@ export type RealtimeVoiceBrowserGatewayRelaySession = {
   expiresAt?: number;
 };
 
+/** Shared type for Realtime Voice Browser Managed Room Session in src/talk. */
 export type RealtimeVoiceBrowserManagedRoomSession = {
   provider: RealtimeVoiceProviderId;
   transport: "managed-room";
@@ -175,12 +198,14 @@ export type RealtimeVoiceBrowserManagedRoomSession = {
   expiresAt?: number;
 };
 
+/** Shared type for Realtime Voice Browser Session in src/talk. */
 export type RealtimeVoiceBrowserSession =
   | RealtimeVoiceBrowserWebRtcSdpSession
   | RealtimeVoiceBrowserJsonPcmWebSocketSession
   | RealtimeVoiceBrowserGatewayRelaySession
   | RealtimeVoiceBrowserManagedRoomSession;
 
+/** Shared type for Realtime Voice Bridge in src/talk. */
 export type RealtimeVoiceBridge = {
   supportsToolResultContinuation?: boolean;
   connect(): Promise<void>;
@@ -195,6 +220,7 @@ export type RealtimeVoiceBridge = {
   isConnected(): boolean;
 };
 
+/** Shared type for Realtime Voice Barge In Options in src/talk. */
 export type RealtimeVoiceBargeInOptions = {
   /**
    * The caller has already confirmed assistant audio is still playing in its output sink.

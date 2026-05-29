@@ -1,3 +1,4 @@
+// test/vitest vitest project shard config helpers and runtime behavior.
 import { defineConfig } from "vitest/config";
 import { nonIsolatedRunnerPath, sharedVitestConfig } from "./vitest.shared.config.ts";
 

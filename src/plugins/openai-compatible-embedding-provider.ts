@@ -11,9 +11,11 @@ import type {
   EmbeddingProviderCreateOptions,
 } from "./embedding-provider-types.js";
 
+/** Reused constant for OPENAI COMPATIBLE EMBEDDING PROVIDER ID behavior in src/plugins. */
 export const OPENAI_COMPATIBLE_EMBEDDING_PROVIDER_ID = "openai-compatible";
 const OPENAI_COMPATIBLE_MODEL_APIS = new Set(["openai-completions", "openai-responses"]);
 
+/** Shared type for Open AICompatible Embedding Client in src/plugins. */
 export type OpenAICompatibleEmbeddingClient = {
   baseUrl: string;
   headers: Record<string, string>;
@@ -326,6 +328,7 @@ async function postEmbeddingRequest(params: {
   }
 }
 
+/** Reused helper for create Open AICompatible Embedding Client behavior in src/plugins. */
 export async function createOpenAICompatibleEmbeddingClient(
   options: EmbeddingProviderCreateOptions,
 ): Promise<OpenAICompatibleEmbeddingClient> {
@@ -362,6 +365,7 @@ export async function createOpenAICompatibleEmbeddingClient(
   };
 }
 
+/** Reused helper for create Open AICompatible Embedding Provider behavior in src/plugins. */
 export async function createOpenAICompatibleEmbeddingProvider(
   options: EmbeddingProviderCreateOptions,
 ): Promise<{
@@ -398,6 +402,7 @@ export async function createOpenAICompatibleEmbeddingProvider(
   };
 }
 
+/** Reused constant for open AICompatible Embedding Provider Adapter behavior in src/plugins. */
 export const openAICompatibleEmbeddingProviderAdapter: EmbeddingProviderAdapter = {
   id: OPENAI_COMPATIBLE_EMBEDDING_PROVIDER_ID,
   transport: "remote",

@@ -1,3 +1,4 @@
+// extensions/openrouter music generation provider helpers and runtime behavior.
 import type {
   MusicGenerationProvider,
   MusicGenerationRequest,

@@ -1,3 +1,4 @@
+/** Errors shared by agent harness registration and selection. */
 export class MissingAgentHarnessError extends Error {
   readonly harnessId: string;
 
@@ -8,6 +9,7 @@ export class MissingAgentHarnessError extends Error {
   }
 }
 
+/** Narrows unknown errors to missing harness selection failures. */
 export function isMissingAgentHarnessError(err: unknown): err is MissingAgentHarnessError {
   return err instanceof MissingAgentHarnessError;
 }

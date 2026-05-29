@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix/monitor direct helpers and runtime behavior.
 import { promoteMatrixDirectRoomCandidate } from "../direct-management.js";
 import {
   hasDirectMatrixMemberFlag,

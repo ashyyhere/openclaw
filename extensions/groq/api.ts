@@ -1,3 +1,4 @@
+// extensions/groq api helpers and runtime behavior.
 import type { ModelCompatConfig } from "openclaw/plugin-sdk/provider-model-shared";
 
 const GROQ_QWEN3_32B_ID = "qwen/qwen3-32b";
@@ -26,6 +27,7 @@ function normalizeGroqModelId(modelId: string | undefined): string {
   return modelId?.trim().toLowerCase() ?? "";
 }
 
+/** Public groq plugin helper for resolve Groq Reasoning Compat Patch behavior. */
 export function resolveGroqReasoningCompatPatch(
   modelId: string,
 ): Pick<

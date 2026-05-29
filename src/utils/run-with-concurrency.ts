@@ -1,5 +1,8 @@
+// utils run with concurrency helpers and runtime behavior.
+/** Shared type for Concurrency Error Mode in src/utils. */
 export type ConcurrencyErrorMode = "continue" | "stop";
 
+/** Reused helper for run Tasks With Concurrency behavior in src/utils. */
 export async function runTasksWithConcurrency<T>(params: {
   tasks: Array<() => Promise<T>>;
   limit: number;

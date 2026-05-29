@@ -1,8 +1,10 @@
+// Plugin command parsing helpers.
 import {
   normalizeOptionalLowercaseString,
   normalizeOptionalString,
 } from "../../shared/string-coerce.js";
 
+/** Shared type for Plugins Command in src/auto-reply/reply. */
 export type PluginsCommand =
   | { action: "list" }
   | { action: "inspect"; name?: string }
@@ -11,6 +13,7 @@ export type PluginsCommand =
   | { action: "disable"; name: string }
   | { action: "error"; message: string };
 
+/** Reused helper for parse Plugins Command behavior in src/auto-reply/reply. */
 export function parsePluginsCommand(raw: string): PluginsCommand | null {
   const match = raw.match(/^\/plugins?(?:\s+(.*))?$/i);
   if (!match) {

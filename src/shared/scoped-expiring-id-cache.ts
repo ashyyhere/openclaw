@@ -1,3 +1,5 @@
+// shared scoped expiring id cache helpers and runtime behavior.
+/** Shared type for Scoped Expiring Id Cache in src/shared. */
 export type ScopedExpiringIdCache<TScope extends string | number, TId extends string | number> = {
   record: (scope: TScope, id: TId, now?: number) => void;
   has: (scope: TScope, id: TId, now?: number) => boolean;
@@ -8,6 +10,7 @@ function resolveNonNegativeInteger(value: number, fallback: number): number {
   return Number.isFinite(value) ? Math.max(0, Math.floor(value)) : fallback;
 }
 
+/** Reused helper for create Scoped Expiring Id Cache behavior in src/shared. */
 export function createScopedExpiringIdCache<
   TScope extends string | number,
   TId extends string | number,

@@ -1,7 +1,9 @@
+// Applies skill installer defaults for non-interactive onboarding.
 import type { OpenClawConfig } from "../../../config/types.openclaw.js";
 import type { RuntimeEnv } from "../../../runtime.js";
 import type { OnboardOptions } from "../../onboard-types.js";
 
+/** Reused helper for apply Non Interactive Skills Config behavior in src/commands/onboard-non-interactive. */
 export function applyNonInteractiveSkillsConfig(params: {
   nextConfig: OpenClawConfig;
   opts: OnboardOptions;

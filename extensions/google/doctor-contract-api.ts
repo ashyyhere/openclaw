@@ -1,3 +1,4 @@
+// extensions/google doctor contract api helpers and runtime behavior.
 import type { DoctorSessionRouteStateOwner } from "openclaw/plugin-sdk/runtime-doctor";
 
 export const sessionRouteStateOwners: DoctorSessionRouteStateOwner[] = [

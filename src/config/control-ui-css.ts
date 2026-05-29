@@ -1,3 +1,4 @@
+// config control ui css helpers and runtime behavior.
 const CSS_WIDTH_KEYWORDS = new Set(["none", "min-content", "max-content"]);
 const CSS_WIDTH_FUNCTIONS = new Set(["calc", "clamp", "fit-content", "max", "min"]);
 const CSS_WIDTH_UNITS = new Set(["ch", "em", "rem", "vh", "vmax", "vmin", "vw", "px"]);
@@ -35,10 +36,12 @@ function hasAllowedIdentifiers(value: string): boolean {
   return true;
 }
 
+/** Reused helper for normalize Control Ui Chat Message Max Width behavior in src/config. */
 export function normalizeControlUiChatMessageMaxWidth(value: string): string {
   return value.trim().replace(/\s+/g, " ");
 }
 
+/** Reused helper for is Valid Control Ui Chat Message Max Width behavior in src/config. */
 export function isValidControlUiChatMessageMaxWidth(value: string): boolean {
   const normalized = normalizeControlUiChatMessageMaxWidth(value);
   if (normalized.length === 0 || normalized.length > CSS_WIDTH_MAX_LENGTH) {

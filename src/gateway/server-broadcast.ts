@@ -1,3 +1,4 @@
+// gateway server broadcast helpers and runtime behavior.
 import { logRejectedLargePayload } from "../logging/diagnostic-payload.js";
 import {
   ADMIN_SCOPE,
@@ -92,6 +93,7 @@ function hasEventScope(client: GatewayWsClient, event: string): boolean {
   return required.some((scope) => scopes.includes(scope));
 }
 
+/** Reused helper for create Gateway Broadcaster behavior in src/gateway. */
 export function createGatewayBroadcaster(params: { clients: Set<GatewayWsClient> }) {
   const clientSeq = new WeakMap<GatewayWsClient, number>();
   const reportedSlowPayloadClients = new WeakSet<GatewayWsClient>();

@@ -1,3 +1,4 @@
+/** Public SDK in-memory rate/concurrency guards for webhook handlers. */
 import { pruneMapToMaxSize } from "../infra/map-size.js";
 import { resolveWebhookIntegerOption } from "./webhook-numeric-options.js";
 
@@ -11,32 +12,38 @@ type CounterState = {
   updatedAtMs: number;
 };
 
+/** Shared type for Fixed Window Rate Limiter in src/plugin-sdk. */
 export type FixedWindowRateLimiter = {
   isRateLimited: (key: string, nowMs?: number) => boolean;
   size: () => number;
   clear: () => void;
 };
 
+/** Shared type for Bounded Counter in src/plugin-sdk. */
 export type BoundedCounter = {
   increment: (key: string, nowMs?: number) => number;
   size: () => number;
   clear: () => void;
 };
 
+/** Reused constant for WEBHOOK RATE LIMIT DEFAULTS behavior in src/plugin-sdk. */
 export const WEBHOOK_RATE_LIMIT_DEFAULTS = Object.freeze({
   windowMs: 60_000,
   maxRequests: 120,
   maxTrackedKeys: 4_096,
 });
 
+/** Reused constant for WEBHOOK ANOMALY COUNTER DEFAULTS behavior in src/plugin-sdk. */
 export const WEBHOOK_ANOMALY_COUNTER_DEFAULTS = Object.freeze({
   maxTrackedKeys: 4_096,
   ttlMs: 6 * 60 * 60_000,
   logEvery: 25,
 });
 
+/** Reused constant for WEBHOOK ANOMALY STATUS CODES behavior in src/plugin-sdk. */
 export const WEBHOOK_ANOMALY_STATUS_CODES = Object.freeze([400, 401, 408, 413, 415, 429]);
 
+/** Shared type for Webhook Anomaly Tracker in src/plugin-sdk. */
 export type WebhookAnomalyTracker = {
   record: (params: {
     key: string;

@@ -1,3 +1,4 @@
+/** Regression coverage for post-compaction tool-loop guard. */
 import { describe, expect, it } from "vitest";
 import {
   createPostCompactionLoopGuard,

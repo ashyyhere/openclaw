@@ -1,3 +1,4 @@
+// extensions/msteams/src reply stream controller helpers and runtime behavior.
 import {
   createChannelProgressDraftGate,
   type ChannelProgressDraftLine,

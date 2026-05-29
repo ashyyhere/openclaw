@@ -1,3 +1,4 @@
+// extensions/matrix/src setup dm policy helpers and runtime behavior.
 import type { DmPolicy } from "openclaw/plugin-sdk/config-contracts";
 import { addWildcardAllowFrom, normalizeAllowFromEntries } from "openclaw/plugin-sdk/setup";
 import type { MatrixConfig } from "./types.js";

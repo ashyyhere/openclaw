@@ -1,3 +1,4 @@
+// test/vitest vitest extension zalo config helpers and runtime behavior.
 import { zaloExtensionTestRoots } from "./vitest.extension-zalo-paths.mjs";
 import { loadPatternListFromEnv } from "./vitest.pattern-file.ts";
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";

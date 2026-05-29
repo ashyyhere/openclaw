@@ -1,3 +1,4 @@
+/** Tests workspace-only policy with sandbox-mounted paths. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { describe, expect, it, vi } from "vitest";

@@ -1,3 +1,4 @@
+// Tests extensions/qqbot/src/engine/utils image size test behavior.
 import { Buffer } from "node:buffer";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 

@@ -1,3 +1,4 @@
+// ACP dispatch bypass for command-only turns.
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { isCommandEnabled } from "../commands-registry-list.js";
 import { maybeResolveTextAlias } from "../commands-registry-normalize.js";
@@ -21,6 +22,7 @@ function isLocalCommandCandidate(text: string): boolean {
   return /^\/(?:status|unfocus)(?:\s|$)/i.test(text) || /^\/(?:verbose|v)(?:[\s:]|$)/i.test(text);
 }
 
+/** Reused helper for should Bypass Acp Dispatch For Command behavior in src/auto-reply/reply. */
 export function shouldBypassAcpDispatchForCommand(
   ctx: FinalizedMsgContext,
   cfg: OpenClawConfig,

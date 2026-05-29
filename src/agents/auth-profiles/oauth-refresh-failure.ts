@@ -2,6 +2,7 @@ import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
 import { sanitizeForLog } from "../../../packages/terminal-core/src/ansi.js";
 import { formatCliCommand } from "../../cli/command-format.js";
 
+/** Shared type for OAuth Refresh Failure Reason in src/agents/auth-profiles. */
 export type OAuthRefreshFailureReason =
   | "refresh_token_reused"
   | "invalid_grant"
@@ -60,6 +61,7 @@ export function classifyOAuthRefreshFailureReason(
   return null;
 }
 
+/** Reused helper for classify OAuth Refresh Failure behavior in src/agents/auth-profiles. */
 export function classifyOAuthRefreshFailure(message: string): {
   provider: string | null;
   reason: OAuthRefreshFailureReason | null;
@@ -75,6 +77,7 @@ export function classifyOAuthRefreshFailure(message: string): {
   };
 }
 
+/** Reused helper for build OAuth Refresh Failure Login Command behavior in src/agents/auth-profiles. */
 export function buildOAuthRefreshFailureLoginCommand(provider: string | null | undefined): string {
   const canonicalProvider = canonicalizeOAuthRefreshFailureProvider(
     sanitizeOAuthRefreshFailureProvider(provider),

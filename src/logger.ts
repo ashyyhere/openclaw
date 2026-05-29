@@ -40,6 +40,7 @@ const warn = theme.warn;
 const success = theme.success;
 const danger = theme.error;
 
+/** Reused helper for log Info behavior in src. */
 export function logInfo(message: string, runtime: RuntimeEnv = defaultRuntime) {
   logWithSubsystem({
     message,
@@ -51,6 +52,7 @@ export function logInfo(message: string, runtime: RuntimeEnv = defaultRuntime) {
   });
 }
 
+/** Reused helper for log Warn behavior in src. */
 export function logWarn(message: string, runtime: RuntimeEnv = defaultRuntime) {
   logWithSubsystem({
     message,
@@ -62,6 +64,7 @@ export function logWarn(message: string, runtime: RuntimeEnv = defaultRuntime) {
   });
 }
 
+/** Reused helper for log Success behavior in src. */
 export function logSuccess(message: string, runtime: RuntimeEnv = defaultRuntime) {
   logWithSubsystem({
     message,
@@ -73,6 +76,7 @@ export function logSuccess(message: string, runtime: RuntimeEnv = defaultRuntime
   });
 }
 
+/** Reused helper for log Error behavior in src. */
 export function logError(message: string, runtime: RuntimeEnv = defaultRuntime) {
   logWithSubsystem({
     message,
@@ -84,6 +88,7 @@ export function logError(message: string, runtime: RuntimeEnv = defaultRuntime) 
   });
 }
 
+/** Reused helper for log Debug behavior in src. */
 export function logDebug(message: string) {
   // Always emit to file logger (level-filtered); console only when verbose.
   getLogger().debug(message);

@@ -1,3 +1,4 @@
+/** Tests live cache regression runner evaluation logic. */
 import { describe, expect, it } from "vitest";
 import { testing } from "./live-cache-regression-runner.js";
 

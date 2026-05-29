@@ -1,3 +1,4 @@
+// ui/src/ui/views overview cards helpers and runtime behavior.
 import { html, nothing, type TemplateResult } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { asDateTimestampMs } from "../../../../src/shared/number-coercion.js";
@@ -21,6 +22,7 @@ import type {
   ModelAuthStatusResult,
 } from "../types.ts";
 
+/** Shared type for Overview Cards Props in ui/src/ui/views. */
 export type OverviewCardsProps = {
   usageResult: SessionsUsageResult | null;
   sessionsResult: SessionsListResult | null;
@@ -112,6 +114,7 @@ function renderSkeletonCards() {
   `;
 }
 
+/** Reused helper for render Overview Cards behavior in ui/src/ui/views. */
 export function renderOverviewCards(props: OverviewCardsProps) {
   const dataLoaded =
     props.usageResult != null || props.sessionsResult != null || props.skillsReport != null;

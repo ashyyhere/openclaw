@@ -1,3 +1,4 @@
+// tui/components tool execution helpers and runtime behavior.
 import { Box, Container, Markdown, Spacer, Text } from "@earendil-works/pi-tui";
 import { formatToolDetail, resolveToolDisplay } from "../../agents/tool-display.js";
 import { markdownTheme, theme } from "../theme/theme.js";
@@ -52,6 +53,7 @@ function extractText(result?: ToolResult): string {
   return lines.join("\n").trim();
 }
 
+/** Reused class for Tool Execution Component behavior in src/tui/components. */
 export class ToolExecutionComponent extends Container {
   private box: Box;
   private header: Text;

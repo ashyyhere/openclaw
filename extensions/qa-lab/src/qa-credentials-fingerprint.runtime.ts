@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/qa-lab/src qa credentials fingerprint runtime behavior.
 import { createHash } from "node:crypto";
 
 export function fingerprintQaCredentialId(credentialId: string | undefined) {

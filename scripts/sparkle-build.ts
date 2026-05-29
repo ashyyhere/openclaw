@@ -1,4 +1,5 @@
 #!/usr/bin/env -S node --import tsx
+// scripts sparkle build helpers and runtime behavior.
 
 import { pathToFileURL } from "node:url";
 

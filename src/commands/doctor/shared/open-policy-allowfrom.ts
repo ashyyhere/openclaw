@@ -4,6 +4,7 @@ import type { OpenClawConfig } from "../../../config/types.openclaw.js";
 import { resolveAllowFromMode, type AllowFromMode } from "./allow-from-mode.js";
 import { asObjectRecord } from "./object.js";
 
+/** Reused helper for collect Open Policy Allow From Warnings behavior in src/commands/doctor. */
 export function collectOpenPolicyAllowFromWarnings(params: {
   changes: string[];
   doctorFixCommand: string;
@@ -17,6 +18,7 @@ export function collectOpenPolicyAllowFromWarnings(params: {
   ];
 }
 
+/** Reused helper for maybe Repair Open Policy Allow From behavior in src/commands/doctor. */
 export function maybeRepairOpenPolicyAllowFrom(cfg: OpenClawConfig): {
   config: OpenClawConfig;
   changes: string[];

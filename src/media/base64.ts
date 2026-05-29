@@ -1,3 +1,5 @@
+// media base64 helpers and runtime behavior.
+/** Reused helper for estimate Base64 Decoded Bytes behavior in src/media. */
 export function estimateBase64DecodedBytes(base64: string): number {
   // Avoid `trim()`/`replace()` here: they allocate a second (potentially huge) string.
   // We only need a conservative decoded-size estimate to enforce budgets before Buffer.from(..., "base64").

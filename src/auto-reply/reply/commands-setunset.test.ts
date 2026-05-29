@@ -1,3 +1,4 @@
+// Coverage for set/unset command parsing.
 import { describe, expect, it } from "vitest";
 import { parseStandardSetUnsetSlashCommand } from "./commands-setunset-standard.js";
 import {

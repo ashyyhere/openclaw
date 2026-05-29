@@ -1,3 +1,4 @@
+/** Covers workspace inheritance for sessions spawned by attempts. */
 import { describe, expect, it } from "vitest";
 import { createAgentToolsSandboxContext } from "../../test-helpers/agent-tools-sandbox-context.js";
 import { resolveAttemptSpawnWorkspaceDir } from "./attempt.thread-helpers.js";

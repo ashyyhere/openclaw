@@ -1,3 +1,4 @@
+/** Tests CLI banner formatting across terminal width and config variants. */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { formatCliBannerLine } from "./banner.js";
 

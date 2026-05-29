@@ -1,3 +1,4 @@
+// Tests migration preview/result formatting, hidden config entries, and warnings.
 import { describe, expect, it } from "vitest";
 import { stripAnsi } from "../../../packages/terminal-core/src/ansi.js";
 import type { MigrationItem, MigrationPlan } from "../../plugins/types.js";

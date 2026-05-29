@@ -1,3 +1,4 @@
+// Tests infra/outbound channel bootstrap runtime test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { createEmptyPluginRegistry } from "../../plugins/registry-empty.js";

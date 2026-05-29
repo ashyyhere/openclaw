@@ -1,3 +1,4 @@
+// extensions/signal reaction runtime api helpers and runtime behavior.
 export {
   removeReactionSignal,
   sendReactionSignal,

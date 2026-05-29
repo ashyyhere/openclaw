@@ -1,3 +1,4 @@
+// infra exec approval channel runtime helpers and runtime behavior.
 import { readConnectErrorDetailCode } from "../../packages/gateway-protocol/src/connect-error-details.js";
 import type { EventFrame } from "../../packages/gateway-protocol/src/index.js";
 import { startGatewayClientWhenEventLoopReady } from "../gateway/client-start-readiness.js";
@@ -12,6 +13,7 @@ import type {
 } from "./exec-approval-channel-runtime.types.js";
 import type { ExecApprovalRequest, ExecApprovalResolved } from "./exec-approvals.js";
 import type { PluginApprovalRequest, PluginApprovalResolved } from "./plugin-approvals.js";
+/** Re-exported API for src/infra. */
 export type {
   ExecApprovalChannelRuntime,
   ExecApprovalChannelRuntimeAdapter,
@@ -21,6 +23,7 @@ export type {
 type ApprovalRequestEvent = ExecApprovalRequest | PluginApprovalRequest;
 type ApprovalResolvedEvent = ExecApprovalResolved | PluginApprovalResolved;
 
+/** Reused class for Exec Approval Channel Runtime Terminal Start Error behavior in src/infra. */
 export class ExecApprovalChannelRuntimeTerminalStartError extends Error {
   readonly detailCode: string | null;
 
@@ -35,6 +38,7 @@ export class ExecApprovalChannelRuntimeTerminalStartError extends Error {
   }
 }
 
+/** Reused helper for is Exec Approval Channel Runtime Terminal Start Error behavior in src/infra. */
 export function isExecApprovalChannelRuntimeTerminalStartError(
   error: unknown,
 ): error is ExecApprovalChannelRuntimeTerminalStartError {
@@ -73,6 +77,7 @@ function readGatewayConnectErrorDetailCode(error: unknown): string | null {
   return readConnectErrorDetailCode((error as { details?: unknown }).details);
 }
 
+/** Reused helper for create Exec Approval Channel Runtime behavior in src/infra. */
 export function createExecApprovalChannelRuntime<
   TPending,
   TRequest extends ApprovalRequestEvent = ExecApprovalRequest,

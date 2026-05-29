@@ -18,6 +18,7 @@ export function exportChatMarkdown(messages: unknown[], assistantName: string): 
   URL.revokeObjectURL(url);
 }
 
+/** Reused helper for build Chat Markdown behavior in ui/src/ui/chat. */
 export function buildChatMarkdown(messages: unknown[], assistantName: string): string | null {
   const history = Array.isArray(messages) ? messages : [];
   if (history.length === 0) {

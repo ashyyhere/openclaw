@@ -1,3 +1,4 @@
+// Tests ui/src/ui open external url test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { openExternalUrlSafe, resolveSafeExternalUrl } from "./open-external-url.ts";
 

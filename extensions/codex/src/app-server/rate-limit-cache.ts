@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server rate limit cache helpers and runtime behavior.
 import type { JsonValue } from "./protocol.js";
 
 const DEFAULT_CODEX_RATE_LIMIT_CACHE_MAX_AGE_MS = 10 * 60_000;

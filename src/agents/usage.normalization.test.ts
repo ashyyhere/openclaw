@@ -1,3 +1,4 @@
+/** Regression coverage for usage normalization edge cases. */
 import { describe, expect, it } from "vitest";
 import { deriveSessionTotalTokens, hasNonzeroUsage, normalizeUsage } from "./usage.js";
 

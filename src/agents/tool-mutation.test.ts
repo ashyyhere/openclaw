@@ -1,3 +1,4 @@
+/** Regression coverage for tool mutation classification. */
 import { describe, expect, it } from "vitest";
 import {
   buildToolActionFingerprint,

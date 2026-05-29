@@ -1,3 +1,4 @@
+// Tests config port defaults test behavior.
 import { describe, expect, it } from "vitest";
 import {
   DEFAULT_BROWSER_CDP_PORT_RANGE_END,

@@ -1,3 +1,4 @@
+// extensions/migrate-claude plan helpers and runtime behavior.
 import { createMigrationItem, summarizeMigrationItems } from "openclaw/plugin-sdk/migration";
 import type {
   MigrationItem,

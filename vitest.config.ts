@@ -1,3 +1,4 @@
+// repo vitest config helpers and runtime behavior.
 export {
   default,
   resolveDefaultVitestPool,

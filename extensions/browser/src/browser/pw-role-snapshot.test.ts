@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/browser pw role snapshot test behavior.
 import { describe, expect, it } from "vitest";
 import {
   buildRoleSnapshotFromAiSnapshot,

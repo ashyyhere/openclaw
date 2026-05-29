@@ -1,3 +1,4 @@
+// extensions/slack/src/monitor/events modal input summary helpers and runtime behavior.
 export type ModalInputSummary = {
   blockId: string;
   actionId: string;

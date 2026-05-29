@@ -1,3 +1,4 @@
+// gateway/server-methods logs helpers and runtime behavior.
 import {
   ErrorCodes,
   errorShape,
@@ -7,6 +8,7 @@ import {
 import { readConfiguredLogTail } from "../../logging/log-tail.js";
 import type { GatewayRequestHandlers } from "./types.js";
 
+/** Reused constant for logs Handlers behavior in src/gateway/server-methods. */
 export const logsHandlers: GatewayRequestHandlers = {
   "logs.tail": async ({ params, respond }) => {
     if (!validateLogsTailParams(params)) {

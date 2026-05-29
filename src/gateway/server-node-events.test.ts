@@ -1,3 +1,4 @@
+// Tests gateway server node events test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { PROTOCOL_VERSION } from "../../packages/gateway-protocol/src/index.js";
 import type { OpenClawConfig } from "../config/config.js";

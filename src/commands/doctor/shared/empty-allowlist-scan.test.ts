@@ -1,3 +1,4 @@
+/** Tests empty allowlist scan behavior. */
 import { describe, expect, it, vi } from "vitest";
 import { scanEmptyAllowlistPolicyWarnings } from "./empty-allowlist-scan.js";
 

@@ -1,3 +1,4 @@
+/** Shared assistant message builders for provider stream adapters and error repair. */
 import type { AssistantMessage, StopReason, Usage } from "../llm/types.js";
 
 type StreamModelDescriptor = {
@@ -6,6 +7,7 @@ type StreamModelDescriptor = {
   id: string;
 };
 
+/** Builds a zeroed usage object with matching zero-cost fields. */
 export function buildZeroUsage(): Usage {
   return {
     input: 0,
@@ -17,6 +19,7 @@ export function buildZeroUsage(): Usage {
   };
 }
 
+/** Builds usage counts when token/cost pricing is unavailable for a stream. */
 export function buildUsageWithNoCost(params: {
   input?: number;
   output?: number;
@@ -38,6 +41,7 @@ export function buildUsageWithNoCost(params: {
   };
 }
 
+/** Builds a normalized assistant message from stream adapter output. */
 export function buildAssistantMessage(params: {
   model: StreamModelDescriptor;
   content: AssistantMessage["content"];
@@ -57,6 +61,7 @@ export function buildAssistantMessage(params: {
   };
 }
 
+/** Builds a normalized assistant message for adapters that cannot report usage. */
 export function buildAssistantMessageWithZeroUsage(params: {
   model: StreamModelDescriptor;
   content: AssistantMessage["content"];
@@ -87,8 +92,10 @@ export function buildAssistantMessageWithZeroUsage(params: {
 // This constant is the single source of truth used by replay normalization and
 // session-file repair as well, so a session repaired offline reads identically
 // to a live stream-error turn (and the repair pass remains idempotent).
+/** Reused constant for STREAM ERROR FALLBACK TEXT behavior in src/agents. */
 export const STREAM_ERROR_FALLBACK_TEXT = "[assistant turn failed before producing content]";
 
+/** Builds a replay-safe assistant error turn with details kept outside replayed content. */
 export function buildStreamErrorAssistantMessage(params: {
   model: StreamModelDescriptor;
   errorMessage: string;

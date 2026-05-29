@@ -1,3 +1,4 @@
+// Tests ui/src/ui chat event reload test behavior.
 import { describe, expect, it } from "vitest";
 import { shouldReloadHistoryForFinalEvent } from "./chat-event-reload.ts";
 

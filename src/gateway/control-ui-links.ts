@@ -1,3 +1,4 @@
+// gateway control ui links helpers and runtime behavior.
 import {
   inspectBestEffortPrimaryTailnetIPv4,
   pickBestEffortPrimaryLanIPv4,
@@ -5,6 +6,7 @@ import {
 import { normalizeControlUiBasePath } from "./control-ui-shared.js";
 import { isValidIPv4 } from "./net.js";
 
+/** Reused helper for resolve Control Ui Links behavior in src/gateway. */
 export function resolveControlUiLinks(params: {
   port: number;
   bind?: "auto" | "lan" | "loopback" | "custom" | "tailnet";

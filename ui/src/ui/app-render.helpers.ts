@@ -1,3 +1,4 @@
+// ui/src/ui app render helpers helpers and runtime behavior.
 import { html, nothing } from "lit";
 import { t } from "../i18n/index.ts";
 import { createChatSessionsLoadOverrides, refreshChat, refreshChatAvatar } from "./app-chat.ts";
@@ -32,6 +33,7 @@ import type { ThemeMode } from "./theme.ts";
 import type { SessionsListResult } from "./types.ts";
 import type { ChatQueueItem } from "./ui-types.ts";
 
+/** Re-exported API for ui/src/ui, starting with is Cron Session Key. */
 export { isCronSessionKey, parseSessionKey, resolveSessionDisplayName, resolveSessionOptionGroups };
 
 type SessionDefaultsSnapshot = {
@@ -55,6 +57,7 @@ type ChatRefreshHost = AppViewState & {
   updateComplete?: Promise<unknown>;
 };
 
+/** Reused helper for handle Chat Manual Refresh behavior in ui/src/ui. */
 export async function handleChatManualRefresh(state: ChatRefreshHost): Promise<void> {
   state.chatManualRefreshInFlight = true;
   state.chatNewMessagesBelow = false;
@@ -74,12 +77,14 @@ export async function handleChatManualRefresh(state: ChatRefreshHost): Promise<v
   }
 }
 
+/** Reused helper for resolve Assistant Attachment Auth Token behavior in ui/src/ui. */
 export function resolveAssistantAttachmentAuthToken(
   state: Pick<AppViewState, "hello" | "settings" | "password">,
 ) {
   return resolveControlUiAuthToken(state);
 }
 
+/** Reused helper for resolve Dashboard Header Context behavior in ui/src/ui. */
 export function resolveDashboardHeaderContext(
   state: Pick<AppViewState, "agentsList" | "sessionKey">,
 ): { agentLabel: string } {
@@ -188,6 +193,7 @@ const NEW_CHAT_SESSIONS_LOADING_MESSAGE =
 const NEW_CHAT_CREATE_FAILED_MESSAGE =
   "New Chat could not create a new session. Try again in a moment.";
 
+/** Reused helper for render Tab behavior in ui/src/ui. */
 export function renderTab(state: AppViewState, tab: Tab, opts?: { collapsed?: boolean }) {
   const href = pathForTab(tab, state.basePath);
   const isActive = tab === "config" ? isSettingsTab(state.tab) : state.tab === tab;
@@ -265,6 +271,7 @@ function renderCronFilterIcon(hiddenCount: number) {
   `;
 }
 
+/** Reused helper for render Chat Session Select behavior in ui/src/ui. */
 export function renderChatSessionSelect(state: AppViewState) {
   return renderChatSessionSelectBase(state, switchChatSession, { surface: "desktop" });
 }
@@ -318,6 +325,7 @@ function renderChatAutoScrollToggle(state: AppViewState) {
   `;
 }
 
+/** Reused helper for render Chat Controls behavior in ui/src/ui. */
 export function renderChatControls(state: AppViewState) {
   const hideCron = state.sessionsHideCron ?? true;
   const hiddenCronCount = hideCron ? countHiddenCronSessions(state, state.sessionsResult) : 0;
@@ -642,6 +650,7 @@ export function renderChatMobileToggle(state: AppViewState) {
   `;
 }
 
+/** Reused helper for switch Chat Session behavior in ui/src/ui. */
 export function switchChatSession(state: AppViewState, nextSessionKey: string) {
   const previousSessionKey = state.sessionKey;
   const nextSessionRow =
@@ -670,6 +679,7 @@ export function switchChatSession(state: AppViewState, nextSessionKey: string) {
   void refreshSessionOptions(state);
 }
 
+/** Reused helper for dismiss Chat Error behavior in ui/src/ui. */
 export function dismissChatError(state: AppViewState) {
   state.lastError = null;
   state.lastErrorCode = null;
@@ -687,6 +697,7 @@ export function dismissChatError(state: AppViewState) {
   }
 }
 
+/** Reused helper for create Chat Session behavior in ui/src/ui. */
 export async function createChatSession(state: AppViewState): Promise<boolean> {
   if (!state.client || !state.connected) {
     return false;
@@ -776,6 +787,7 @@ const THEME_MODE_OPTIONS: ThemeModeOption[] = [
   { id: "dark", labelKey: "common.dark", short: "DARK" },
 ];
 
+/** Reused helper for render Topbar Theme Mode Toggle behavior in ui/src/ui. */
 export function renderTopbarThemeModeToggle(state: AppViewState) {
   const modeIcon = (mode: ThemeMode) => {
     if (mode === "system") {
@@ -819,6 +831,7 @@ export function renderTopbarThemeModeToggle(state: AppViewState) {
   `;
 }
 
+/** Reused helper for render Sidebar Connection Status behavior in ui/src/ui. */
 export function renderSidebarConnectionStatus(state: AppViewState) {
   const label = state.connected ? t("common.online") : t("common.offline");
   const toneClass = state.connected

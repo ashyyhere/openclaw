@@ -1,3 +1,4 @@
+// extensions/firecrawl/src firecrawl search tool helpers and runtime behavior.
 import type { OpenClawPluginApi } from "openclaw/plugin-sdk/plugin-runtime";
 import {
   jsonResult,

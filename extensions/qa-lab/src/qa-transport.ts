@@ -1,3 +1,4 @@
+// extensions/qa-lab/src qa transport helpers and runtime behavior.
 import { setTimeout as sleep } from "node:timers/promises";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import type { QaProviderMode } from "./model-selection.js";

@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/browser/routes agent snapshot local managed test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createBrowserRouteApp, createBrowserRouteResponse } from "./test-helpers.js";
 import type { BrowserRequest } from "./types.js";

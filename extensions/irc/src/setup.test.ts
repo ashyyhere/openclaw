@@ -1,3 +1,4 @@
+// Tests extensions/irc/src setup test behavior.
 import {
   expectStopPendingUntilAbort,
   startAccountAndTrackLifecycle,

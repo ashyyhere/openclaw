@@ -1,3 +1,4 @@
+// Message adapter definition helper with default manual receive behavior.
 import type {
   ChannelMessageAdapter,
   ChannelMessageAdapterShape,
@@ -16,6 +17,7 @@ type ChannelMessageAdapterWithDefaultReceive<TAdapter extends ChannelMessageAdap
       : NonNullable<TAdapter["receive"]>;
   };
 
+/** Define a channel message adapter and fill default receive ack policy. */
 export function defineChannelMessageAdapter<const TAdapter extends ChannelMessageAdapterShape>(
   adapter: TAdapter,
 ): ChannelMessageAdapter<ChannelMessageAdapterWithDefaultReceive<TAdapter>> {

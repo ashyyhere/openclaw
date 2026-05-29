@@ -1,3 +1,4 @@
+// extensions/browser/src/browser output directories helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { ensureAbsoluteDirectory } from "../sdk-security-runtime.js";

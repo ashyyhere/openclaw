@@ -27,6 +27,7 @@ import { deriveGatewaySessionLifecycleSnapshot } from "./session-lifecycle-state
 import { loadSessionEntry } from "./session-utils.js";
 import { formatForLog } from "./ws-log.js";
 
+/** Re-exported API for src/gateway. */
 export {
   createChatRunRegistry,
   createChatRunState,
@@ -34,6 +35,7 @@ export {
   createSessionMessageSubscriberRegistry,
   createToolEventRecipientRegistry,
 } from "./server-chat-state.js";
+/** Re-exported API for src/gateway. */
 export type {
   ChatRunEntry,
   ChatRunRegistry,
@@ -155,12 +157,14 @@ function normalizeHeartbeatChatFinalText(params: {
  */
 const AGENT_LIFECYCLE_ERROR_RETRY_GRACE_MS = 15_000;
 
+/** Shared type for Chat Event Broadcast in src/gateway. */
 export type ChatEventBroadcast = (
   event: string,
   payload: unknown,
   opts?: { dropIfSlow?: boolean },
 ) => void;
 
+/** Shared type for Node Send To Session in src/gateway. */
 export type NodeSendToSession = (sessionKey: string, event: string, payload: unknown) => void;
 
 const CHAT_ERROR_KINDS = new Set<ErrorKind>([
@@ -226,6 +230,7 @@ function resolveBroadcastDelta(params: {
   return deltaText ? { deltaText } : undefined;
 }
 
+/** Shared type for Agent Event Handler Options in src/gateway. */
 export type AgentEventHandlerOptions = {
   broadcast: ChatEventBroadcast;
   broadcastToConnIds: (
@@ -252,6 +257,7 @@ export type AgentEventHandlerOptions = {
   }) => void;
 };
 
+/** Reused helper for create Agent Event Handler behavior in src/gateway. */
 export function createAgentEventHandler({
   broadcast,
   broadcastToConnIds,

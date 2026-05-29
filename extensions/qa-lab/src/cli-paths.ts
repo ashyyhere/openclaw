@@ -1,3 +1,4 @@
+// extensions/qa-lab/src cli paths helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { assertNoSymlinkParents, pathScope } from "openclaw/plugin-sdk/security-runtime";

@@ -1,3 +1,4 @@
+/** Regression coverage for legacy subagent delivery state normalization. */
 import { describe, expect, it } from "vitest";
 import { normalizeSubagentRunState } from "./subagent-delivery-state.js";
 import type { LegacySubagentRunRecord } from "./subagent-delivery-state.js";

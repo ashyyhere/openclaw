@@ -1,3 +1,4 @@
+// Coverage for system prompt command behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { resolveSessionAgentIds } from "../../agents/agent-scope.js";
 import { createOpenClawCodingTools } from "../../agents/agent-tools.js";

@@ -1,3 +1,4 @@
+/** Repairs heartbeat messages stored in main session archives. */
 import fs from "node:fs";
 import path from "node:path";
 import type { note } from "../../packages/terminal-core/src/note.js";
@@ -32,6 +33,7 @@ type TranscriptHeartbeatSummary = {
   heartbeatOkAssistantMessages: number;
 };
 
+/** Shared type for Heartbeat Main Session Repair Candidate in src/commands. */
 export type HeartbeatMainSessionRepairCandidate = {
   reason: "metadata" | "transcript";
   summary?: TranscriptHeartbeatSummary;
@@ -120,6 +122,7 @@ function summarizeTranscriptHeartbeatMessages(
   return summary.inspectedMessages > 0 ? summary : null;
 }
 
+/** Reused helper for resolve Heartbeat Main Session Repair Candidate behavior in src/commands. */
 export function resolveHeartbeatMainSessionRepairCandidate(params: {
   entry: SessionEntry | undefined;
   transcriptPath?: string;
@@ -176,6 +179,7 @@ function resolveHeartbeatMainRecoveryKey(params: {
   return null;
 }
 
+/** Reused helper for move Heartbeat Main Session Entry behavior in src/commands. */
 export function moveHeartbeatMainSessionEntry(params: {
   store: Record<string, SessionEntry>;
   mainKey: string;
@@ -194,6 +198,7 @@ function resolveTuiLastSessionPath(stateDir: string): string {
   return path.join(stateDir, "tui", "last-session.json");
 }
 
+/** Reused helper for clear Tui Last Session Pointers behavior in src/commands. */
 export function clearTuiLastSessionPointers(params: {
   filePath: string;
   sessionKeys: ReadonlySet<string>;
@@ -233,6 +238,7 @@ export function clearTuiLastSessionPointers(params: {
   return removed;
 }
 
+/** Reused helper for repair Heartbeat Poisoned Main Session behavior in src/commands. */
 export async function repairHeartbeatPoisonedMainSession(params: {
   cfg: OpenClawConfig;
   store: Record<string, SessionEntry>;

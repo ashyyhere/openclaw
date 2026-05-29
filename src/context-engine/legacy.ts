@@ -1,3 +1,4 @@
+// context-engine legacy helpers and runtime behavior.
 import type { AgentMessage } from "../agents/runtime/index.js";
 import type { MemoryCitationsMode } from "../config/types.memory.js";
 import { delegateCompactionToRuntime } from "./delegate.js";

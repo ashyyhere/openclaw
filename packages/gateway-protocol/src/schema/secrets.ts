@@ -1,8 +1,11 @@
+// packages/gateway-protocol/src/schema secrets helpers and runtime behavior.
 import { Type, type Static } from "typebox";
 import { NonEmptyString } from "./primitives.js";
 
+/** Public constant for Secrets Reload Params Schema behavior in packages/gateway-protocol. */
 export const SecretsReloadParamsSchema = Type.Object({}, { additionalProperties: false });
 
+/** Public constant for Secrets Resolve Params Schema behavior in packages/gateway-protocol. */
 export const SecretsResolveParamsSchema = Type.Object(
   {
     commandName: NonEmptyString,
@@ -23,8 +26,10 @@ export const SecretsResolveParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public type describing Secrets Resolve Params for packages/gateway-protocol. */
 export type SecretsResolveParams = Static<typeof SecretsResolveParamsSchema>;
 
+/** Public constant for Secrets Resolve Assignment Schema behavior in packages/gateway-protocol. */
 export const SecretsResolveAssignmentSchema = Type.Object(
   {
     path: Type.Optional(NonEmptyString),
@@ -34,6 +39,7 @@ export const SecretsResolveAssignmentSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Secrets Resolve Result Schema behavior in packages/gateway-protocol. */
 export const SecretsResolveResultSchema = Type.Object(
   {
     ok: Type.Optional(Type.Boolean()),
@@ -44,4 +50,5 @@ export const SecretsResolveResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public type describing Secrets Resolve Result for packages/gateway-protocol. */
 export type SecretsResolveResult = Static<typeof SecretsResolveResultSchema>;

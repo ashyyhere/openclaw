@@ -1,3 +1,4 @@
+// media ffmpeg exec helpers and runtime behavior.
 import { execFile, type ExecFileOptions } from "node:child_process";
 import { promisify } from "node:util";
 import { resolveSystemBin } from "../infra/resolve-system-bin.js";
@@ -10,6 +11,7 @@ import {
 
 const execFileAsync = promisify(execFile);
 
+/** Shared type for Media Exec Options in src/media. */
 export type MediaExecOptions = {
   timeoutMs?: number;
   maxBufferBytes?: number;
@@ -41,6 +43,7 @@ function requireSystemBin(name: string): string {
   return resolved;
 }
 
+/** Reused helper for resolve Ffmpeg Bin behavior in src/media. */
 export function resolveFfmpegBin(): string {
   return requireSystemBin("ffmpeg");
 }
@@ -49,6 +52,7 @@ function isBrokenPipeError(error: Error): boolean {
   return (error as NodeJS.ErrnoException).code === "EPIPE";
 }
 
+/** Reused helper for run Ffprobe behavior in src/media. */
 export async function runFfprobe(args: string[], options?: MediaExecOptions): Promise<string> {
   const execOptions = resolveExecOptions(MEDIA_FFPROBE_TIMEOUT_MS, options);
   if (options?.input == null) {
@@ -76,6 +80,7 @@ export async function runFfprobe(args: string[], options?: MediaExecOptions): Pr
   });
 }
 
+/** Reused helper for run Ffmpeg behavior in src/media. */
 export async function runFfmpeg(args: string[], options?: MediaExecOptions): Promise<string> {
   const { stdout } = await execFileAsync(
     resolveFfmpegBin(),
@@ -85,6 +90,7 @@ export async function runFfmpeg(args: string[], options?: MediaExecOptions): Pro
   return stdout.toString();
 }
 
+/** Reused helper for parse Ffprobe Csv Fields behavior in src/media. */
 export function parseFfprobeCsvFields(stdout: string, maxFields: number): string[] {
   return stdout
     .trim()
@@ -100,6 +106,7 @@ function parseFfprobeSampleRateHz(value: string | undefined): number | null {
   return Number.isSafeInteger(sampleRate) && sampleRate > 0 ? sampleRate : null;
 }
 
+/** Reused helper for parse Ffprobe Codec And Sample Rate behavior in src/media. */
 export function parseFfprobeCodecAndSampleRate(stdout: string): {
   codec: string | null;
   sampleRateHz: number | null;

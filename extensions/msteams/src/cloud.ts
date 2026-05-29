@@ -1,3 +1,4 @@
+// extensions/msteams/src cloud helpers and runtime behavior.
 import type { MSTeamsConfig } from "../runtime-api.js";
 
 export type MSTeamsCloudName = "Public" | "USGov" | "USGovDoD" | "China";

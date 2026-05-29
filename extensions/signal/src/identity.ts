@@ -1,3 +1,4 @@
+// extensions/signal/src identity helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "openclaw/plugin-sdk/string-coerce-runtime";
 import { normalizeE164 } from "openclaw/plugin-sdk/text-utility-runtime";
 import { looksLikeUuid } from "./uuid.js";

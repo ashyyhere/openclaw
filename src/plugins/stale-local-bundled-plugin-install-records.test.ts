@@ -1,3 +1,4 @@
+// Tests plugins stale local bundled plugin install records test behavior.
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import type { PluginInstallRecord } from "../config/types.plugins.js";

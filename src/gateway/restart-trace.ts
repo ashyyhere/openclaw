@@ -1,3 +1,4 @@
+// gateway restart trace helpers and runtime behavior.
 import { performance } from "node:perf_hooks";
 import { isTruthyEnvValue } from "../infra/env.js";
 import { createSubsystemLogger } from "../logging/subsystem.js";
@@ -11,6 +12,7 @@ type RestartTraceMetricValue = boolean | number | string | null | undefined;
 type RestartTraceMetrics =
   | Readonly<Record<string, RestartTraceMetricValue>>
   | ReadonlyArray<readonly [string, RestartTraceMetricValue]>;
+/** Shared type for Gateway Restart Trace Handoff in src/gateway. */
 export type GatewayRestartTraceHandoff = {
   startedAt: number;
   lastAt: number;
@@ -97,6 +99,7 @@ function emitRestartTraceDetail(name: string, metrics: RestartTraceMetrics): voi
   restartTraceLog.info(`restart trace: ${name} ${formatted}`);
 }
 
+/** Reused helper for start Gateway Restart Trace behavior in src/gateway. */
 export function startGatewayRestartTrace(name: string, metrics?: RestartTraceMetrics): void {
   if (!isRestartTraceEnabled()) {
     active = false;
@@ -113,6 +116,7 @@ function isGatewayRestartTraceActive(): boolean {
   return isRestartTraceEnabled() && active;
 }
 
+/** Reused helper for mark Gateway Restart Trace behavior in src/gateway. */
 export function markGatewayRestartTrace(name: string, metrics?: RestartTraceMetrics): void {
   if (!isGatewayRestartTraceActive()) {
     return;
@@ -122,11 +126,13 @@ export function markGatewayRestartTrace(name: string, metrics?: RestartTraceMetr
   lastAt = now;
 }
 
+/** Reused helper for finish Gateway Restart Trace behavior in src/gateway. */
 export function finishGatewayRestartTrace(name: string, metrics?: RestartTraceMetrics): void {
   markGatewayRestartTrace(name, metrics);
   active = false;
 }
 
+/** Reused helper for measure Gateway Restart Trace behavior in src/gateway. */
 export async function measureGatewayRestartTrace<T>(
   name: string,
   run: () => Promise<T> | T,
@@ -150,6 +156,7 @@ export async function measureGatewayRestartTrace<T>(
   }
 }
 
+/** Reused helper for record Gateway Restart Trace behavior in src/gateway. */
 export function recordGatewayRestartTrace(
   name: string,
   durationMs: number,
@@ -163,6 +170,7 @@ export function recordGatewayRestartTrace(
   lastAt = now;
 }
 
+/** Reused helper for record Gateway Restart Trace Span behavior in src/gateway. */
 export function recordGatewayRestartTraceSpan(
   name: string,
   durationMs: number,
@@ -175,6 +183,7 @@ export function recordGatewayRestartTraceSpan(
   emitRestartTrace(name, Math.max(0, durationMs), Math.max(0, totalMs), metrics);
 }
 
+/** Reused helper for record Gateway Restart Trace Detail behavior in src/gateway. */
 export function recordGatewayRestartTraceDetail(name: string, metrics: RestartTraceMetrics): void {
   if (!isGatewayRestartTraceActive()) {
     return;
@@ -182,6 +191,7 @@ export function recordGatewayRestartTraceDetail(name: string, metrics: RestartTr
   emitRestartTraceDetail(name, metrics);
 }
 
+/** Reused helper for collect Gateway Process Memory Usage Mb behavior in src/gateway. */
 export function collectGatewayProcessMemoryUsageMb(): ReadonlyArray<readonly [string, number]> {
   const usage = process.memoryUsage();
   const toMb = (bytes: number) => bytes / 1024 / 1024;
@@ -275,6 +285,7 @@ function normalizeRestartTraceHandoff(value: unknown): GatewayRestartTraceHandof
   };
 }
 
+/** Reused helper for capture Gateway Restart Trace Handoff behavior in src/gateway. */
 export function captureGatewayRestartTraceHandoff(): GatewayRestartTraceHandoff | undefined {
   if (!isGatewayRestartTraceActive()) {
     return undefined;
@@ -282,6 +293,7 @@ export function captureGatewayRestartTraceHandoff(): GatewayRestartTraceHandoff 
   return { startedAt, lastAt };
 }
 
+/** Reused helper for create Gateway Restart Trace Handoff Env behavior in src/gateway. */
 export function createGatewayRestartTraceHandoffEnv(
   handoff: GatewayRestartTraceHandoff | undefined = captureGatewayRestartTraceHandoff(),
 ): NodeJS.ProcessEnv | undefined {
@@ -295,6 +307,7 @@ export function createGatewayRestartTraceHandoffEnv(
   };
 }
 
+/** Reused helper for resume Gateway Restart Trace From Handoff behavior in src/gateway. */
 export function resumeGatewayRestartTraceFromHandoff(
   handoff: unknown,
   metrics?: RestartTraceMetrics,
@@ -313,6 +326,7 @@ export function resumeGatewayRestartTraceFromHandoff(
   return true;
 }
 
+/** Reused helper for resume Gateway Restart Trace From Env behavior in src/gateway. */
 export function resumeGatewayRestartTraceFromEnv(
   env: NodeJS.ProcessEnv = process.env,
   metrics?: RestartTraceMetrics,
@@ -330,6 +344,7 @@ export function resumeGatewayRestartTraceFromEnv(
   );
 }
 
+/** Reused helper for reset Gateway Restart Trace For Test behavior in src/gateway. */
 export function resetGatewayRestartTraceForTest(): void {
   startedAt = 0;
   lastAt = 0;

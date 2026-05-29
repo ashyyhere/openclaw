@@ -1,3 +1,4 @@
+// Tests ui/src/ui/views agents panels tools skills browser test behavior.
 import { render } from "lit";
 import { describe, expect, it } from "vitest";
 import { renderAgentTools } from "./agents-panels-tools-skills.ts";

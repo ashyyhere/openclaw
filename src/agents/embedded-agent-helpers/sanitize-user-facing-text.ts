@@ -1,3 +1,4 @@
+/** Sanitizes provider/raw transport errors before showing them to users. */
 import { stripInboundMetadata } from "../../auto-reply/reply/strip-inbound-meta.js";
 import { stripPlainTextToolCallBlocks } from "../../plugin-sdk/tool-payload.js";
 import {
@@ -30,6 +31,7 @@ import {
   isTimeoutErrorMessage,
 } from "./failover-matches.js";
 
+/** Reused helper for format Billing Error Message behavior in src/agents/embedded-agent-helpers. */
 export function formatBillingErrorMessage(provider?: string, model?: string): string {
   const providerName = provider?.trim();
   const modelName = model?.trim();
@@ -41,6 +43,7 @@ export function formatBillingErrorMessage(provider?: string, model?: string): st
   return "⚠️ API provider returned a billing error — your API key has run out of credits or has an insufficient balance. Check your provider's billing dashboard and top up or switch to a different API key.";
 }
 
+/** Reused constant for BILLING ERROR USER MESSAGE behavior in src/agents/embedded-agent-helpers. */
 export const BILLING_ERROR_USER_MESSAGE = formatBillingErrorMessage();
 
 const RATE_LIMIT_ERROR_USER_MESSAGE = "⚠️ API rate limit reached. Please try again later.";
@@ -102,6 +105,7 @@ function extractProviderRateLimitMessage(raw: string): string | undefined {
   return `⚠️ ${trimmed}`;
 }
 
+/** Reused helper for format Rate Limit Or Overloaded Error Copy behavior in src/agents/embedded-agent-helpers. */
 export function formatRateLimitOrOverloadedErrorCopy(raw: string): string | undefined {
   if (isRateLimitErrorMessage(raw)) {
     return extractProviderRateLimitMessage(raw) ?? RATE_LIMIT_ERROR_USER_MESSAGE;
@@ -115,6 +119,7 @@ export function formatRateLimitOrOverloadedErrorCopy(raw: string): string | unde
   return undefined;
 }
 
+/** Reused helper for format Transport Error Copy behavior in src/agents/embedded-agent-helpers. */
 export function formatTransportErrorCopy(raw: string): string | undefined {
   if (!raw) {
     return undefined;
@@ -175,6 +180,7 @@ export function formatTransportErrorCopy(raw: string): string | undefined {
   return undefined;
 }
 
+/** Reused helper for format Disk Space Error Copy behavior in src/agents/embedded-agent-helpers. */
 export function formatDiskSpaceErrorCopy(raw: string): string | undefined {
   if (!raw) {
     return undefined;
@@ -206,6 +212,7 @@ function isReasoningConstraintErrorMessage(raw: string): boolean {
   );
 }
 
+/** Reused helper for is Invalid Streaming Event Order Error behavior in src/agents/embedded-agent-helpers. */
 export function isInvalidStreamingEventOrderError(raw: string): boolean {
   if (!raw) {
     return false;
@@ -218,6 +225,7 @@ export function isInvalidStreamingEventOrderError(raw: string): boolean {
   );
 }
 
+/** Reused helper for is Streaming Json Parse Error behavior in src/agents/embedded-agent-helpers. */
 export function isStreamingJsonParseError(raw: string): boolean {
   if (!raw) {
     return false;
@@ -286,6 +294,7 @@ function shouldRewriteContextOverflowText(raw: string): boolean {
   );
 }
 
+/** Reused helper for get Api Error Payload Fingerprint behavior in src/agents/embedded-agent-helpers. */
 export function getApiErrorPayloadFingerprint(raw?: string): string | null {
   if (!raw) {
     return null;
@@ -297,6 +306,7 @@ export function getApiErrorPayloadFingerprint(raw?: string): string | null {
   return stableStringify(payload);
 }
 
+/** Reused helper for is Raw Api Error Payload behavior in src/agents/embedded-agent-helpers. */
 export function isRawApiErrorPayload(raw?: string): boolean {
   return getApiErrorPayloadFingerprint(raw) !== null;
 }
@@ -385,6 +395,7 @@ function collapseConsecutiveDuplicateBlocks(text: string): string {
   return result.join("\n\n");
 }
 
+/** Reused helper for is Likely Http Error Text behavior in src/agents/embedded-agent-helpers. */
 export function isLikelyHttpErrorText(raw: string): boolean {
   if (isCloudflareOrHtmlErrorPage(raw)) {
     return true;
@@ -400,6 +411,7 @@ export function isLikelyHttpErrorText(raw: string): boolean {
   return HTTP_ERROR_HINTS.some((hint) => message.includes(hint));
 }
 
+/** Reused helper for sanitize User Facing Text behavior in src/agents/embedded-agent-helpers. */
 export function sanitizeUserFacingText(text: unknown, opts?: { errorContext?: boolean }): string {
   const raw = coerceChatContentText(text);
   if (!raw) {

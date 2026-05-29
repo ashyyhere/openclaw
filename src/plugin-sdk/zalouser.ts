@@ -6,6 +6,7 @@ export {
   resolveSenderCommandAuthorization,
   resolveSenderCommandAuthorizationWithRuntime,
 } from "./command-auth.js";
+/** Re-exported API for src/plugin-sdk. */
 export type {
   CommandAuthorizationRuntime,
   ResolveSenderCommandAuthorizationParams,

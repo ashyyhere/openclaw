@@ -1,3 +1,4 @@
+// Tests infra watch node test behavior.
 import { createHash } from "node:crypto";
 import { EventEmitter } from "node:events";
 import fs from "node:fs";

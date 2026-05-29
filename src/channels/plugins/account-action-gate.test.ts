@@ -1,3 +1,4 @@
+// Coverage for channel account action gates.
 import { describe, expect, it } from "vitest";
 import { createAccountActionGate } from "./account-action-gate.js";
 

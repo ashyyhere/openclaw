@@ -15,6 +15,7 @@ import {
 } from "../utils/delivery-context.shared.js";
 import type { DeliveryContext } from "../utils/delivery-context.types.js";
 
+/** Shared type for System Event in src/infra. */
 export type SystemEvent = {
   text: string;
   ts: number;
@@ -76,6 +77,7 @@ function cloneSystemEvent(event: SystemEvent): SystemEvent {
   };
 }
 
+/** Reused helper for is System Event Context Changed behavior in src/infra. */
 export function isSystemEventContextChanged(
   sessionKey: string,
   contextKey?: string | null,
@@ -99,6 +101,7 @@ function findDuplicateInQueue(
   return queue.some((event) => isDuplicateSystemEvent(event, incoming));
 }
 
+/** Reused helper for enqueue System Event behavior in src/infra. */
 export function enqueueSystemEvent(text: string, options: SystemEventOptions) {
   const key = requireSessionKey(options.sessionKey);
   const entry = getOrCreateSessionQueue(key);
@@ -128,6 +131,7 @@ export function enqueueSystemEvent(text: string, options: SystemEventOptions) {
   return true;
 }
 
+/** Reused helper for drain System Event Entries behavior in src/infra. */
 export function drainSystemEventEntries(sessionKey: string): SystemEvent[] {
   const key = requireSessionKey(sessionKey);
   const entry = getSessionQueue(key);
@@ -187,6 +191,7 @@ function resetQueueState(key: string, entry: SessionQueue) {
   entry.lastContextKey = null;
 }
 
+/** Reused helper for consume System Event Entries behavior in src/infra. */
 export function consumeSystemEventEntries(
   sessionKey: string,
   consumedEntries: readonly SystemEvent[],
@@ -207,6 +212,7 @@ export function consumeSystemEventEntries(
   return removed;
 }
 
+/** Reused helper for consume Selected System Event Entries behavior in src/infra. */
 export function consumeSelectedSystemEventEntries(
   sessionKey: string,
   consumedEntries: readonly SystemEvent[],
@@ -231,22 +237,27 @@ export function consumeSelectedSystemEventEntries(
   return removed;
 }
 
+/** Reused helper for drain System Events behavior in src/infra. */
 export function drainSystemEvents(sessionKey: string): string[] {
   return drainSystemEventEntries(sessionKey).map((event) => event.text);
 }
 
+/** Reused helper for peek System Event Entries behavior in src/infra. */
 export function peekSystemEventEntries(sessionKey: string): SystemEvent[] {
   return getSessionQueue(sessionKey)?.queue.map(cloneSystemEvent) ?? [];
 }
 
+/** Reused helper for peek System Events behavior in src/infra. */
 export function peekSystemEvents(sessionKey: string): string[] {
   return peekSystemEventEntries(sessionKey).map((event) => event.text);
 }
 
+/** Reused helper for has System Events behavior in src/infra. */
 export function hasSystemEvents(sessionKey: string) {
   return (getSessionQueue(sessionKey)?.queue.length ?? 0) > 0;
 }
 
+/** Reused helper for resolve System Event Delivery Context behavior in src/infra. */
 export function resolveSystemEventDeliveryContext(
   events: readonly SystemEvent[],
 ): DeliveryContext | undefined {
@@ -257,6 +268,7 @@ export function resolveSystemEventDeliveryContext(
   return resolved;
 }
 
+/** Reused helper for reset System Events For Test behavior in src/infra. */
 export function resetSystemEventsForTest() {
   queues.clear();
 }

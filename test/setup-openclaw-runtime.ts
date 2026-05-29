@@ -1,3 +1,4 @@
+// test setup openclaw runtime helpers and runtime behavior.
 import { afterAll, afterEach, beforeAll, vi } from "vitest";
 import type {
   ChannelId,

@@ -1,3 +1,4 @@
+/** Small decision helpers for embedded-agent attempt execution. */
 import type { OpenClawConfig } from "../../../config/config.js";
 import {
   resolveSessionLockMaxHoldFromTimeout,
@@ -6,6 +7,7 @@ import {
 import { UNKNOWN_TOOL_THRESHOLD } from "../../tool-loop-detection.js";
 import type { EmbeddedRunAttemptParams } from "./types.js";
 
+/** Builds transcript write-lock options from the attempt timeout budget. */
 export function resolveEmbeddedAttemptSessionWriteLockOptions(params: {
   config?: OpenClawConfig;
   compactionTimeoutMs: number;
@@ -22,12 +24,14 @@ export function resolveEmbeddedAttemptSessionWriteLockOptions(params: {
   });
 }
 
+/** Resolves which auth profile id should be attached to stream options. */
 export function resolveAttemptStreamAuthProfileId(
   params: Pick<EmbeddedRunAttemptParams, "authProfileId" | "runtimePlan">,
 ): string | undefined {
   return params.runtimePlan?.auth.forwardedAuthProfileId;
 }
 
+/** Resolves the unknown-tool guard threshold for loop detection. */
 export function resolveUnknownToolGuardThreshold(loopDetection?: {
   enabled?: boolean;
   unknownToolThreshold?: number;
@@ -48,10 +52,12 @@ export function resolveUnknownToolGuardThreshold(loopDetection?: {
   return UNKNOWN_TOOL_THRESHOLD;
 }
 
+/** Skips LLM output hooks when the attempt failed before provider submission. */
 export function shouldRunLlmOutputHooksForAttempt(params: { promptErrorSource: string | null }) {
   return params.promptErrorSource !== "hook:before_agent_run";
 }
 
+/** Chooses the provider id used in tool-policy diagnostic messages. */
 export function resolveAttemptToolPolicyMessageProvider(params: {
   messageProvider?: string;
   messageChannel?: string;

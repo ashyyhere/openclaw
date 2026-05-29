@@ -1,3 +1,4 @@
+/** Tests Codex app-server extension integration. */
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import { clearRuntimeConfigSnapshot, setRuntimeConfigSnapshot } from "../config/config.js";

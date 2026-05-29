@@ -1,8 +1,10 @@
+// flows doctor tool result cap advice helpers and runtime behavior.
 import {
   calculateMaxToolResultCharsWithCap,
   resolveAutoLiveToolResultMaxChars,
 } from "../agents/embedded-agent-runner/tool-result-truncation.js";
 
+/** Shared type for Tool Result Cap Doctor Advice Params in src/flows. */
 export type ToolResultCapDoctorAdviceParams = {
   contextWindowTokens: number;
   modelKey: string;
@@ -15,6 +17,7 @@ function formatNumber(value: number): string {
   return String(Math.max(0, Math.floor(value))).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+/** Reused helper for build Tool Result Cap Doctor Advice behavior in src/flows. */
 export function buildToolResultCapDoctorAdvice(params: ToolResultCapDoctorAdviceParams): string[] {
   if (!Number.isFinite(params.contextWindowTokens) || params.contextWindowTokens <= 0) {
     return [];

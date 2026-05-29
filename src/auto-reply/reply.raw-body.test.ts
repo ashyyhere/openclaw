@@ -1,3 +1,4 @@
+// Coverage for raw body preservation across directive and prompt handling.
 import { describe, expect, it } from "vitest";
 import { parseInlineDirectives } from "./reply/directive-handling.parse.js";
 import { finalizeInboundContext } from "./reply/inbound-context.js";

@@ -1,3 +1,4 @@
+// media mime helpers and runtime behavior.
 import path from "node:path";
 import { createLazyImportLoader } from "../shared/lazy-promise.js";
 import { type MediaKind, mediaKindFromMime } from "./constants.js";
@@ -95,6 +96,7 @@ const AUDIO_FILE_EXTENSIONS = new Set([
 
 const fileTypeModuleLoader = createLazyImportLoader(() => import("file-type"));
 
+/** Reused helper for normalize Mime Type behavior in src/media. */
 export function normalizeMimeType(mime?: string | null): string | undefined {
   if (!mime) {
     return undefined;
@@ -142,6 +144,7 @@ function sniffKnownAudioMagic(buffer: Buffer): string | undefined {
   return undefined;
 }
 
+/** Reused helper for get File Extension behavior in src/media. */
 export function getFileExtension(filePath?: string | null): string | undefined {
   if (!filePath) {
     return undefined;
@@ -158,6 +161,7 @@ export function getFileExtension(filePath?: string | null): string | undefined {
   return ext || undefined;
 }
 
+/** Reused helper for mime Type From File Path behavior in src/media. */
 export function mimeTypeFromFilePath(filePath?: string | null): string | undefined {
   const ext = getFileExtension(filePath);
   if (!ext) {
@@ -166,6 +170,7 @@ export function mimeTypeFromFilePath(filePath?: string | null): string | undefin
   return MIME_BY_EXT[ext];
 }
 
+/** Reused helper for is Audio File Name behavior in src/media. */
 export function isAudioFileName(fileName?: string | null): boolean {
   const ext = getFileExtension(fileName);
   if (!ext) {
@@ -174,6 +179,7 @@ export function isAudioFileName(fileName?: string | null): boolean {
   return AUDIO_FILE_EXTENSIONS.has(ext);
 }
 
+/** Reused helper for detect Mime behavior in src/media. */
 export function detectMime(opts: {
   buffer?: Buffer;
   headerMime?: string | null;
@@ -230,6 +236,7 @@ async function detectMimeImpl(opts: {
   return undefined;
 }
 
+/** Reused helper for extension For Mime behavior in src/media. */
 export function extensionForMime(mime?: string | null): string | undefined {
   const normalized = normalizeMimeType(mime);
   if (!normalized) {
@@ -238,6 +245,7 @@ export function extensionForMime(mime?: string | null): string | undefined {
   return EXT_BY_MIME[normalized];
 }
 
+/** Reused helper for is Gif Media behavior in src/media. */
 export function isGifMedia(opts: {
   contentType?: string | null;
   fileName?: string | null;
@@ -249,6 +257,7 @@ export function isGifMedia(opts: {
   return ext === ".gif";
 }
 
+/** Reused helper for image Mime From Format behavior in src/media. */
 export function imageMimeFromFormat(format?: string | null): string | undefined {
   if (!format) {
     return undefined;
@@ -272,6 +281,7 @@ export function imageMimeFromFormat(format?: string | null): string | undefined 
   }
 }
 
+/** Reused helper for kind From Mime behavior in src/media. */
 export function kindFromMime(mime?: string | null): MediaKind | undefined {
   return mediaKindFromMime(normalizeMimeType(mime));
 }

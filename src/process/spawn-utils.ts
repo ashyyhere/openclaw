@@ -1,11 +1,14 @@
+// process spawn utils helpers and runtime behavior.
 import type { ChildProcess, SpawnOptions } from "node:child_process";
 import { spawn } from "node:child_process";
 
+/** Shared type for Spawn Fallback in src/process. */
 export type SpawnFallback = {
   label: string;
   options: SpawnOptions;
 };
 
+/** Shared type for Spawn With Fallback Result in src/process. */
 export type SpawnWithFallbackResult = {
   child: ChildProcess;
   usedFallback: boolean;
@@ -23,6 +26,7 @@ type SpawnWithFallbackParams = {
 
 const DEFAULT_RETRY_CODES = ["EBADF"];
 
+/** Reused helper for resolve Command Stdio behavior in src/process. */
 export function resolveCommandStdio(params: {
   hasInput: boolean;
   preferInherit: boolean;
@@ -80,6 +84,7 @@ async function spawnAndWaitForSpawn(
   });
 }
 
+/** Reused helper for spawn With Fallback behavior in src/process. */
 export async function spawnWithFallback(
   params: SpawnWithFallbackParams,
 ): Promise<SpawnWithFallbackResult> {

@@ -1,3 +1,4 @@
+/** Tests non-interactive onboarding gateway config behavior. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest";

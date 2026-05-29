@@ -1,3 +1,4 @@
+/** Normalizes inline provider/model config into runtime model definitions. */
 import type { ModelDefinitionConfig, ModelProviderConfig } from "../../config/types.js";
 import { normalizeGoogleApiBaseUrl } from "../../infra/google-api-base-url.js";
 import type { Api } from "../../llm/types.js";
@@ -10,6 +11,7 @@ import {
   sanitizeConfiguredModelProviderRequest,
 } from "../provider-request-config.js";
 
+/** Shared type for Inline Model Entry in src/agents/embedded-agent-runner. */
 export type InlineModelEntry = Omit<ModelDefinitionConfig, "api"> & {
   api?: Api;
   provider: string;
@@ -17,6 +19,7 @@ export type InlineModelEntry = Omit<ModelDefinitionConfig, "api"> & {
   headers?: Record<string, string>;
 };
 
+/** Shared type for Inline Provider Config in src/agents/embedded-agent-runner. */
 export type InlineProviderConfig = {
   baseUrl?: string;
   api?: ModelDefinitionConfig["api"];
@@ -32,6 +35,7 @@ export type InlineProviderConfig = {
   localService?: ModelProviderConfig["localService"];
 };
 
+/** Normalizes a resolved transport API string for model routing. */
 export function normalizeResolvedTransportApi(
   api: unknown,
 ): ModelDefinitionConfig["api"] | undefined {
@@ -52,6 +56,7 @@ export function normalizeResolvedTransportApi(
   }
 }
 
+/** Sanitizes inline model headers into string-only metadata. */
 export function sanitizeModelHeaders(
   headers: unknown,
   opts?: { stripSecretRefMarkers?: boolean },
@@ -94,6 +99,7 @@ function isLegacyFoundryVisionModelCandidate(params: {
   );
 }
 
+/** Resolves provider/model input after inline provider defaults are applied. */
 export function resolveProviderModelInput(params: {
   provider?: string;
   modelId?: string;
@@ -127,6 +133,7 @@ function resolveInlineProviderTransport(params: { api?: Api | null; baseUrl?: st
   };
 }
 
+/** Builds model definitions declared inline under a provider config. */
 export function buildInlineProviderModels(
   providers: Record<string, InlineProviderConfig>,
 ): InlineModelEntry[] {

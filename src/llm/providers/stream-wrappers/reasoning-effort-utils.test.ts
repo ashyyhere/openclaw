@@ -1,3 +1,4 @@
+// Tests llm/providers/stream-wrappers reasoning effort utils test behavior.
 import { describe, expect, it } from "vitest";
 import { mapThinkingLevelToReasoningEffort } from "./reasoning-effort-utils.js";
 

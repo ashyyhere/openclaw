@@ -1,3 +1,4 @@
+// Tests extensions/openrouter image generation provider test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   buildOpenRouterImageGenerationProvider,

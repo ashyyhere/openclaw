@@ -1,3 +1,4 @@
+/** Declares lightweight route specs used before full command registration. */
 import { hasFlag } from "../argv.js";
 import { cliCommandCatalog, type CliCommandCatalogEntry } from "../command-catalog.js";
 import { matchesCommandPath } from "../command-path-matches.js";
@@ -7,6 +8,7 @@ import {
   type AnyRoutedCommandDefinition,
 } from "./routed-command-definitions.js";
 
+/** Shared type for Route Spec in src/cli/program. */
 export type RouteSpec = {
   matches: (path: string[]) => boolean;
   canRun?: (argv: string[]) => boolean;
@@ -43,6 +45,7 @@ function createParsedRoute(params: {
   };
 }
 
+/** Reused constant for routed Commands behavior in src/cli/program. */
 export const routedCommands: RouteSpec[] = cliCommandCatalog
   .filter(
     (

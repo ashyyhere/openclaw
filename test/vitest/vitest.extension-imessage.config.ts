@@ -1,3 +1,4 @@
+// test/vitest vitest extension imessage config helpers and runtime behavior.
 import { createSingleChannelExtensionVitestConfig } from "./vitest.extension-channel-single-config.ts";
 
 export function createExtensionImessageVitestConfig(

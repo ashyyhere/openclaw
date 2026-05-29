@@ -1,5 +1,7 @@
+/** Required-parameter validation wrappers for built-in agent tools. */
 import type { AnyAgentTool } from "./agent-tools.types.js";
 
+/** Shared type for Required Param Group in src/agents. */
 export type RequiredParamGroup = {
   keys: readonly string[];
   allowEmpty?: boolean;
@@ -78,6 +80,7 @@ function hasValidEditReplacements(record: Record<string, unknown>): boolean {
   );
 }
 
+/** Reused constant for REQUIRED PARAM GROUPS behavior in src/agents. */
 export const REQUIRED_PARAM_GROUPS = {
   read: [{ keys: ["path"], label: "path" }],
   write: [
@@ -90,10 +93,12 @@ export const REQUIRED_PARAM_GROUPS = {
   ],
 } as const;
 
+/** Return tool params as a record when possible. */
 export function getToolParamsRecord(params: unknown): Record<string, unknown> | undefined {
   return params && typeof params === "object" ? (params as Record<string, unknown>) : undefined;
 }
 
+/** Throw a retry-guidance error when required tool params are missing. */
 export function assertRequiredParams(
   record: Record<string, unknown> | undefined,
   groups: readonly RequiredParamGroup[],
@@ -135,6 +140,7 @@ export function assertRequiredParams(
   }
 }
 
+/** Wrap a tool execute function with required-parameter validation. */
 export function wrapToolParamValidation(
   tool: AnyAgentTool,
   requiredParamGroups?: readonly RequiredParamGroup[],

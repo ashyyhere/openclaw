@@ -1,3 +1,4 @@
+/** Discovers setup-capable channel plugins for onboarding and add commands. */
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../../agents/agent-scope.js";
 import { listChatChannels } from "../../channels/chat-meta.js";
 import { type ChannelPluginCatalogEntry } from "../../channels/plugins/catalog.js";
@@ -20,12 +21,14 @@ type ChannelCatalogEntry = {
   meta: ChannelMeta;
 };
 
+/** Reused helper for should Show Channel In Setup behavior in src/commands/channel-setup. */
 export function shouldShowChannelInSetup(
   meta: Pick<ChannelMeta, "exposure" | "showConfigured" | "showInSetup">,
 ): boolean {
   return isChannelVisibleInSetup(meta);
 }
 
+/** Shared type for Resolved Channel Setup Entries in src/commands/channel-setup. */
 export type ResolvedChannelSetupEntries = {
   entries: ChannelCatalogEntry[];
   installedCatalogEntries: ChannelPluginCatalogEntry[];
@@ -38,6 +41,7 @@ function resolveWorkspaceDir(cfg: OpenClawConfig, workspaceDir?: string): string
   return workspaceDir ?? resolveAgentWorkspaceDir(cfg, resolveDefaultAgentId(cfg));
 }
 
+/** Reused helper for list Manifest Installed Channel Ids behavior in src/commands/channel-setup. */
 export function listManifestInstalledChannelIds(params: {
   cfg: OpenClawConfig;
   workspaceDir?: string;
@@ -57,6 +61,7 @@ export function listManifestInstalledChannelIds(params: {
   );
 }
 
+/** Reused helper for is Catalog Channel Installed behavior in src/commands/channel-setup. */
 export function isCatalogChannelInstalled(params: {
   cfg: OpenClawConfig;
   entry: ChannelPluginCatalogEntry;
@@ -66,6 +71,7 @@ export function isCatalogChannelInstalled(params: {
   return listManifestInstalledChannelIds(params).has(params.entry.id as ChannelChoice);
 }
 
+/** Reused helper for resolve Channel Setup Entries behavior in src/commands/channel-setup. */
 export function resolveChannelSetupEntries(params: {
   cfg: OpenClawConfig;
   installedPlugins: ChannelPlugin[];

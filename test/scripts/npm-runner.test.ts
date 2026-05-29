@@ -1,3 +1,4 @@
+// Tests test/scripts npm runner test behavior.
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { resolveNpmRunner } from "../../scripts/npm-runner.mjs";

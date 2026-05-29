@@ -1,3 +1,4 @@
+/** Covers V2 harness adapter lifecycle behavior. */
 import type { Api, Model } from "openclaw/plugin-sdk/llm";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { OPENCLAW_EMBEDDED_CONTEXT_ENGINE_HOST } from "../../context-engine/host-compat.js";

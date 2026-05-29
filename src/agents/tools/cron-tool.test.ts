@@ -1,3 +1,4 @@
+/** Covers cron tool create/list/update/delete gateway behavior. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const { callGatewayMock, extractDeliveryInfoMock } = vi.hoisted(() => ({

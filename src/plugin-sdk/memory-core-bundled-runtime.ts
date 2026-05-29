@@ -1,3 +1,4 @@
+// plugin-sdk memory core bundled runtime helpers and runtime behavior.
 import { loadBundledPluginPublicSurfaceModuleSync } from "./facade-loader.js";
 // Manual facade. Keep loader boundary explicit.
 import type {
@@ -180,27 +181,32 @@ function loadRuntimeFacadeModule(): RuntimeFacadeModule {
   });
 }
 
+/** Reused constant for create Embedding Provider behavior in src/plugin-sdk. */
 export const createEmbeddingProvider: RuntimeFacadeModule["createEmbeddingProvider"] = ((...args) =>
   loadRuntimeFacadeModule().createEmbeddingProvider(
     ...args,
   )) as RuntimeFacadeModule["createEmbeddingProvider"];
 
+/** Reused constant for register Built In Memory Embedding Providers behavior in src/plugin-sdk. */
 export const registerBuiltInMemoryEmbeddingProviders: RuntimeFacadeModule["registerBuiltInMemoryEmbeddingProviders"] =
   ((...args) =>
     loadRuntimeFacadeModule().registerBuiltInMemoryEmbeddingProviders(
       ...args,
     )) as RuntimeFacadeModule["registerBuiltInMemoryEmbeddingProviders"];
 
+/** Reused constant for remove Grounded Short Term Candidates behavior in src/plugin-sdk. */
 export const removeGroundedShortTermCandidates: RuntimeFacadeModule["removeGroundedShortTermCandidates"] =
   ((...args) =>
     loadRuntimeFacadeModule().removeGroundedShortTermCandidates(
       ...args,
     )) as RuntimeFacadeModule["removeGroundedShortTermCandidates"];
+/** Reused constant for repair Dreaming Artifacts behavior in src/plugin-sdk. */
 export const repairDreamingArtifacts: RuntimeFacadeModule["repairDreamingArtifacts"] = ((...args) =>
   loadRuntimeFacadeModule().repairDreamingArtifacts(
     ...args,
   )) as RuntimeFacadeModule["repairDreamingArtifacts"];
 
+/** Reused constant for preview Grounded Rem Markdown behavior in src/plugin-sdk. */
 export const previewGroundedRemMarkdown: ApiFacadeModule["previewGroundedRemMarkdown"] = ((
   ...args
 ) =>
@@ -208,16 +214,19 @@ export const previewGroundedRemMarkdown: ApiFacadeModule["previewGroundedRemMark
     ...args,
   )) as ApiFacadeModule["previewGroundedRemMarkdown"];
 
+/** Reused constant for dedupe Dream Diary Entries behavior in src/plugin-sdk. */
 export const dedupeDreamDiaryEntries: ApiFacadeModule["dedupeDreamDiaryEntries"] = ((...args) =>
   loadApiFacadeModule().dedupeDreamDiaryEntries(
     ...args,
   )) as ApiFacadeModule["dedupeDreamDiaryEntries"];
 
+/** Reused constant for write Backfill Diary Entries behavior in src/plugin-sdk. */
 export const writeBackfillDiaryEntries: ApiFacadeModule["writeBackfillDiaryEntries"] = ((...args) =>
   loadApiFacadeModule().writeBackfillDiaryEntries(
     ...args,
   )) as ApiFacadeModule["writeBackfillDiaryEntries"];
 
+/** Reused constant for remove Backfill Diary Entries behavior in src/plugin-sdk. */
 export const removeBackfillDiaryEntries: ApiFacadeModule["removeBackfillDiaryEntries"] = ((
   ...args
 ) =>
@@ -225,11 +234,13 @@ export const removeBackfillDiaryEntries: ApiFacadeModule["removeBackfillDiaryEnt
     ...args,
   )) as ApiFacadeModule["removeBackfillDiaryEntries"];
 
+/** Reused constant for filter Recall Entries Within Lookback behavior in src/plugin-sdk. */
 export const filterRecallEntriesWithinLookback: ApiFacadeModule["filterRecallEntriesWithinLookback"] =
   ((...args) =>
     loadApiFacadeModule().filterRecallEntriesWithinLookback(
       ...args,
     )) as ApiFacadeModule["filterRecallEntriesWithinLookback"];
 
+/** Reused constant for preview Rem Harness behavior in src/plugin-sdk. */
 export const previewRemHarness: ApiFacadeModule["previewRemHarness"] = ((...args) =>
   loadApiFacadeModule().previewRemHarness(...args)) as ApiFacadeModule["previewRemHarness"];

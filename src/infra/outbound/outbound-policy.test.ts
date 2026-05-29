@@ -1,3 +1,4 @@
+// Tests infra/outbound outbound policy test behavior.
 import { beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { vi } from "vitest";
 import type { ChannelMessageActionName } from "../../channels/plugins/types.js";

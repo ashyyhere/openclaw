@@ -1,3 +1,4 @@
+// extensions/browser/src plugin service helpers and runtime behavior.
 import {
   startLazyPluginServiceModule,
   type LazyPluginServiceHandle,

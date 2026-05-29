@@ -1,3 +1,4 @@
+// extensions/elevenlabs setup api helpers and runtime behavior.
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 import { migrateElevenLabsLegacyTalkConfig } from "./config-compat.js";
 

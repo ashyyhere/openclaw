@@ -1,3 +1,4 @@
+// Selection helpers for interactive/non-interactive migration skill and plugin filters.
 import path from "node:path";
 import { markMigrationItemSkipped, summarizeMigrationItems } from "../../plugin-sdk/migration.js";
 import type { MigrationItem, MigrationPlan } from "../../plugins/types.js";
@@ -6,17 +7,27 @@ import { normalizeOptionalString } from "../../shared/string-coerce.js";
 import { uniqueStrings } from "../../shared/string-normalization.js";
 import { MIGRATION_CONFLICT_REASON_PHRASES } from "./output.js";
 
+/** Reused constant for MIGRATION SKILL NOT SELECTED REASON behavior in src/commands/migrate. */
 export const MIGRATION_SKILL_NOT_SELECTED_REASON = "not selected for migration";
+/** Reused constant for MIGRATION PLUGIN NOT SELECTED REASON behavior in src/commands/migrate. */
 export const MIGRATION_PLUGIN_NOT_SELECTED_REASON = "not selected for migration";
+/** Reused constant for MIGRATION SELECTION ACCEPT behavior in src/commands/migrate. */
 export const MIGRATION_SELECTION_ACCEPT = "__openclaw_migrate_accept_recommended__";
+/** Reused constant for MIGRATION SELECTION TOGGLE ALL ON behavior in src/commands/migrate. */
 export const MIGRATION_SELECTION_TOGGLE_ALL_ON = "__openclaw_migrate_toggle_all_on__";
+/** Reused constant for MIGRATION SELECTION TOGGLE ALL OFF behavior in src/commands/migrate. */
 export const MIGRATION_SELECTION_TOGGLE_ALL_OFF = "__openclaw_migrate_toggle_all_off__";
+/** Reused constant for MIGRATION SKILL SELECTION ACCEPT behavior in src/commands/migrate. */
 export const MIGRATION_SKILL_SELECTION_ACCEPT = MIGRATION_SELECTION_ACCEPT;
+/** Reused constant for MIGRATION SKILL SELECTION TOGGLE ALL ON behavior in src/commands/migrate. */
 export const MIGRATION_SKILL_SELECTION_TOGGLE_ALL_ON = MIGRATION_SELECTION_TOGGLE_ALL_ON;
+/** Reused constant for MIGRATION SKILL SELECTION TOGGLE ALL OFF behavior in src/commands/migrate. */
 export const MIGRATION_SKILL_SELECTION_TOGGLE_ALL_OFF = MIGRATION_SELECTION_TOGGLE_ALL_OFF;
 
 type InteractiveMigrationSelection = { action: "select"; selectedItemIds: Set<string> };
+/** Shared type for Interactive Migration Skill Selection in src/commands/migrate. */
 export type InteractiveMigrationSkillSelection = InteractiveMigrationSelection;
+/** Shared type for Interactive Migration Plugin Selection in src/commands/migrate. */
 export type InteractiveMigrationPluginSelection = InteractiveMigrationSelection;
 
 function normalizeSelectionRef(value: string): string {
@@ -173,6 +184,7 @@ function resolveSelectedPluginItemIds(
   });
 }
 
+/** Reused helper for get Selectable Migration Skill Items behavior in src/commands/migrate. */
 export function getSelectableMigrationSkillItems(plan: MigrationPlan): MigrationItem[] {
   return plan.items.filter(
     (item) =>
@@ -182,6 +194,7 @@ export function getSelectableMigrationSkillItems(plan: MigrationPlan): Migration
   );
 }
 
+/** Reused helper for get Selectable Migration Plugin Items behavior in src/commands/migrate. */
 export function getSelectableMigrationPluginItems(plan: MigrationPlan): MigrationItem[] {
   // Only source-installed curated Codex plugins become selectable install items.
   // Cached/manual-review plugin bundles are emitted as manual items, the aggregate
@@ -196,28 +209,34 @@ export function getSelectableMigrationPluginItems(plan: MigrationPlan): Migratio
   );
 }
 
+/** Reused helper for get Migration Skill Selection Value behavior in src/commands/migrate. */
 export function getMigrationSkillSelectionValue(item: MigrationItem): string {
   return item.id;
 }
 
+/** Reused helper for get Migration Plugin Selection Value behavior in src/commands/migrate. */
 export function getMigrationPluginSelectionValue(item: MigrationItem): string {
   return item.id;
 }
 
+/** Reused helper for format Migration Plugin Selection Label behavior in src/commands/migrate. */
 export function formatMigrationPluginSelectionLabel(item: MigrationItem): string {
   return readMigrationPluginName(item) ?? item.id.replace(/^plugin:/u, "");
 }
 
+/** Reused helper for get Default Migration Skill Selection Values behavior in src/commands/migrate. */
 export function getDefaultMigrationSkillSelectionValues(items: readonly MigrationItem[]): string[] {
   return items.filter((item) => item.status === "planned").map(getMigrationSkillSelectionValue);
 }
 
+/** Reused helper for get Default Migration Plugin Selection Values behavior in src/commands/migrate. */
 export function getDefaultMigrationPluginSelectionValues(
   items: readonly MigrationItem[],
 ): string[] {
   return items.filter((item) => item.status === "planned").map(getMigrationPluginSelectionValue);
 }
 
+/** Reused helper for format Migration Skill Selection Label behavior in src/commands/migrate. */
 export function formatMigrationSkillSelectionLabel(item: MigrationItem): string {
   return readMigrationSkillName(item) ?? item.id.replace(/^skill:/u, "");
 }
@@ -229,6 +248,7 @@ function humanizeMigrationConflictReason(reason: string | undefined): string {
   return MIGRATION_CONFLICT_REASON_PHRASES[reason] ?? reason;
 }
 
+/** Reused helper for format Migration Skill Selection Hint behavior in src/commands/migrate. */
 export function formatMigrationSkillSelectionHint(item: MigrationItem): string | undefined {
   if (item.status !== "conflict") {
     return undefined;
@@ -238,6 +258,7 @@ export function formatMigrationSkillSelectionHint(item: MigrationItem): string |
   return sourceLabel ? `${sourceLabel} ${reason}` : reason;
 }
 
+/** Reused helper for format Migration Plugin Selection Hint behavior in src/commands/migrate. */
 export function formatMigrationPluginSelectionHint(item: MigrationItem): string | undefined {
   if (item.status !== "conflict") {
     return undefined;
@@ -247,6 +268,7 @@ export function formatMigrationPluginSelectionHint(item: MigrationItem): string 
   return marketplace ? `${marketplace} plugin ${reason}` : reason;
 }
 
+/** Reused helper for apply Migration Selected Skill Item Ids behavior in src/commands/migrate. */
 export function applyMigrationSelectedSkillItemIds(
   plan: MigrationPlan,
   selectedItemIds: ReadonlySet<string>,
@@ -265,6 +287,7 @@ export function applyMigrationSelectedSkillItemIds(
   };
 }
 
+/** Reused helper for apply Migration Skill Selection behavior in src/commands/migrate. */
 export function applyMigrationSkillSelection(
   plan: MigrationPlan,
   selectedSkillRefs: readonly string[] | undefined,
@@ -277,6 +300,7 @@ export function applyMigrationSkillSelection(
   return applyMigrationSelectedSkillItemIds(plan, selectedIds);
 }
 
+/** Reused helper for apply Migration Plugin Selection behavior in src/commands/migrate. */
 export function applyMigrationPluginSelection(
   plan: MigrationPlan,
   selectedPluginRefs: readonly string[] | undefined,
@@ -289,6 +313,7 @@ export function applyMigrationPluginSelection(
   return applyMigrationSelectedPluginItemIds(plan, selectedIds);
 }
 
+/** Reused helper for apply Migration Selected Plugin Item Ids behavior in src/commands/migrate. */
 export function applyMigrationSelectedPluginItemIds(
   plan: MigrationPlan,
   selectedItemIds: ReadonlySet<string>,
@@ -424,6 +449,7 @@ function resolveMigrationSelectionBulkToggleValues(
   return undefined;
 }
 
+/** Reused helper for resolve Interactive Migration Skill Selection behavior in src/commands/migrate. */
 export function resolveInteractiveMigrationSkillSelection(
   items: readonly MigrationItem[],
   selectedValues: readonly string[],
@@ -435,6 +461,7 @@ export function resolveInteractiveMigrationSkillSelection(
   );
 }
 
+/** Reused helper for resolve Interactive Migration Plugin Selection behavior in src/commands/migrate. */
 export function resolveInteractiveMigrationPluginSelection(
   items: readonly MigrationItem[],
   selectedValues: readonly string[],
@@ -446,6 +473,7 @@ export function resolveInteractiveMigrationPluginSelection(
   );
 }
 
+/** Reused helper for reconcile Interactive Migration Skill Toggle Values behavior in src/commands/migrate. */
 export function reconcileInteractiveMigrationSkillToggleValues(
   selectedValues: readonly string[],
   activatedValue: string | undefined,
@@ -465,6 +493,7 @@ export function reconcileInteractiveMigrationSkillToggleValues(
   );
 }
 
+/** Reused helper for reconcile Interactive Migration Enter Values behavior in src/commands/migrate. */
 export function reconcileInteractiveMigrationEnterValues(
   selectedValues: readonly string[],
   activatedValue: string | undefined,
@@ -485,6 +514,7 @@ export function reconcileInteractiveMigrationEnterValues(
   return [...selectedValues];
 }
 
+/** Reused helper for reconcile Interactive Migration Shortcut Values behavior in src/commands/migrate. */
 export function reconcileInteractiveMigrationShortcutValues(
   previousValues: readonly string[],
   selectedValues: readonly string[],

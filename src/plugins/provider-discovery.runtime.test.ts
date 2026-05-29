@@ -1,3 +1,4 @@
+// Tests plugins provider discovery runtime test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { PluginManifestRecord } from "./manifest-registry.js";
 import type { ProviderPlugin } from "./types.js";

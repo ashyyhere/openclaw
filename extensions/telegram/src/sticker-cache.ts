@@ -1,3 +1,4 @@
+// extensions/telegram/src sticker cache helpers and runtime behavior.
 import { resolveApiKeyForProvider } from "openclaw/plugin-sdk/agent-runtime";
 import type { ModelCatalogEntry } from "openclaw/plugin-sdk/agent-runtime";
 import {

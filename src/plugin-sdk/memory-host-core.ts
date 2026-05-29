@@ -1,3 +1,4 @@
+/** Public SDK helpers for memory-host config paths and file access. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import type { OpenClawConfig } from "../config/config.js";
@@ -32,6 +33,7 @@ async function listMarkdownFilesRecursive(rootDir: string): Promise<string[]> {
   return files.toSorted((left, right) => left.localeCompare(right));
 }
 
+/** Reused helper for list Memory Workspace Public Artifacts behavior in src/plugin-sdk. */
 export async function listMemoryWorkspacePublicArtifacts(params: {
   workspaceDir: string;
   agentIds: string[];
@@ -87,6 +89,7 @@ export async function listMemoryWorkspacePublicArtifacts(params: {
   return [...deduped.values()];
 }
 
+/** Reused helper for list Memory Host Public Artifacts behavior in src/plugin-sdk. */
 export async function listMemoryHostPublicArtifacts(params: {
   cfg: OpenClawConfig;
 }): Promise<MemoryPluginPublicArtifact[]> {

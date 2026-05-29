@@ -1,3 +1,4 @@
+// Tests config zod schema typing mode test behavior.
 import { describe, expect, it } from "vitest";
 import { AgentDefaultsSchema } from "./zod-schema.agent-defaults.js";
 import { SessionSchema } from "./zod-schema.session.js";

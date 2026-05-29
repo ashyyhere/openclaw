@@ -1,3 +1,4 @@
+/** Legacy setup command for writing initial OpenClaw config. */
 import fs from "node:fs/promises";
 import JSON5 from "json5";
 import { z } from "zod";
@@ -128,6 +129,7 @@ async function readConfigFileRaw(configPath: string): Promise<{
   }
 }
 
+/** Reused helper for setup Command behavior in src/commands. */
 export async function setupCommand(
   opts?: { workspace?: string },
   runtime: RuntimeEnv = defaultRuntime,

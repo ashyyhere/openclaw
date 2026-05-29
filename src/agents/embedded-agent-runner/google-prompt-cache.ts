@@ -1,3 +1,4 @@
+/** Prepares Google prompt cache metadata and stream wrappers. */
 import crypto from "node:crypto";
 import { parseGeminiAuth } from "../../infra/gemini-auth.js";
 import { normalizeGoogleApiBaseUrl } from "../../infra/google-api-base-url.js";
@@ -452,6 +453,7 @@ async function ensureGooglePromptCache(
   return created.cachedContent;
 }
 
+/** Reused helper for prepare Google Prompt Cache Stream Fn behavior in src/agents/embedded-agent-runner. */
 export async function prepareGooglePromptCacheStreamFn(
   params: PrepareGooglePromptCacheStreamFnParams,
   deps: GooglePromptCacheDeps = {},

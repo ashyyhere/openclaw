@@ -1,3 +1,4 @@
+// extensions/qa-lab/src bus state helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import { sanitizeQaBusToolCalls } from "openclaw/plugin-sdk/qa-channel-protocol";
 import {

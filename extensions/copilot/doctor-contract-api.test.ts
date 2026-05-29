@@ -1,3 +1,4 @@
+// Tests extensions/copilot doctor contract api test behavior.
 import { describe, expect, it } from "vitest";
 import {
   legacyConfigRules,

@@ -1,3 +1,4 @@
+// scripts/lib npm verify exec helpers and runtime behavior.
 import { execFileSync } from "node:child_process";
 
 export type NpmVerifyCommandInvocation = {

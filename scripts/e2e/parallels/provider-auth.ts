@@ -1,3 +1,4 @@
+// scripts/e2e/parallels provider auth helpers and runtime behavior.
 import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";

@@ -1,3 +1,4 @@
+/** Doctor checks for bundled control UI assets. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { note } from "../../packages/terminal-core/src/note.js";
@@ -10,6 +11,7 @@ import { runCommandWithTimeout } from "../process/exec.js";
 import type { RuntimeEnv } from "../runtime.js";
 import type { DoctorPrompter } from "./doctor-prompter.js";
 
+/** Reused helper for maybe Repair Ui Protocol Freshness behavior in src/commands. */
 export async function maybeRepairUiProtocolFreshness(
   _runtime: RuntimeEnv,
   prompter: DoctorPrompter,

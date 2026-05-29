@@ -1,3 +1,4 @@
+// Tests extensions/zalouser/src security audit test behavior.
 import { describe, expect, it } from "vitest";
 import { collectZalouserSecurityAuditFindings } from "./security-audit.js";
 import type { ResolvedZalouserAccount, ZalouserAccountConfig } from "./types.js";

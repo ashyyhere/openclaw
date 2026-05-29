@@ -1,3 +1,4 @@
+/** Shared helpers for live prompt-cache tests. */
 import { getRuntimeConfig } from "../config/config.js";
 import { isTruthyEnvValue } from "../infra/env.js";
 import { parseStrictInteger } from "../infra/parse-finite-number.js";
@@ -12,17 +13,20 @@ import { normalizeProviderId, parseModelRef } from "./model-selection.js";
 import { ensureOpenClawModelsJson } from "./models-config.js";
 import { buildAssistantMessageWithZeroUsage } from "./stream-message-shared.js";
 
+/** Global gate for live cache tests. */
 export const LIVE_CACHE_TEST_ENABLED =
   isLiveTestEnabled() && isTruthyEnvValue(process.env.OPENCLAW_LIVE_CACHE_TEST);
 
 const DEFAULT_HEARTBEAT_MS = 20_000;
 const DEFAULT_TIMEOUT_MS = 90_000;
 
+/** Resolved live model plus API key for direct calls. */
 export type LiveResolvedModel = {
   apiKey: string;
   model: Model;
 };
 
+/** Live model fixture and all candidate keys for retry pools. */
 export type LiveResolvedModelPool = {
   apiKeys: string[];
   fixture: LiveResolvedModel;
@@ -36,10 +40,12 @@ function toInt(value: string | undefined, fallback: number): number {
   return parseStrictInteger(trimmed) ?? fallback;
 }
 
+/** Log live cache progress to stderr. */
 export function logLiveCache(message: string): void {
   process.stderr.write(`[live-cache] ${message}\n`);
 }
 
+/** Wrap a long live-cache operation with periodic heartbeat logs. */
 export async function withLiveCacheHeartbeat<T>(
   operation: Promise<T>,
   context: string,
@@ -69,6 +75,7 @@ export async function withLiveCacheHeartbeat<T>(
   }
 }
 
+/** Run completeSimple with live-test timeout and heartbeat behavior. */
 export async function completeSimpleWithLiveTimeout<TApi extends Api>(
   model: Model<TApi>,
   context: Parameters<typeof completeSimple<TApi>>[1],
@@ -108,6 +115,7 @@ export async function completeSimpleWithLiveTimeout<TApi extends Api>(
   }
 }
 
+/** Build stable repeated text for prompt-cache probes. */
 export function buildStableCachePrefix(tag: string, sections = 160): string {
   const lines = [
     `Stable cache prefix for ${tag}.`,
@@ -122,6 +130,7 @@ export function buildStableCachePrefix(tag: string, sections = 160): string {
   return lines.join("\n");
 }
 
+/** Extract assistant text from a live model response. */
 export function extractAssistantText(message: AssistantMessage): string {
   return message.content
     .filter((block) => block.type === "text")
@@ -130,6 +139,7 @@ export function extractAssistantText(message: AssistantMessage): string {
     .join(" ");
 }
 
+/** Build an assistant history turn for live cache warmup/probe tests. */
 export function buildAssistantHistoryTurn(
   text: string,
   model?: Pick<Model, "api" | "provider" | "id">,
@@ -146,6 +156,7 @@ export function buildAssistantHistoryTurn(
   });
 }
 
+/** Compute prompt-cache hit rate from usage fields. */
 export function computeCacheHitRate(usage: {
   input?: number;
   cacheRead?: number;
@@ -161,6 +172,7 @@ export function computeCacheHitRate(usage: {
   return cacheRead / totalPrompt;
 }
 
+/** Resolve a direct live model fixture and key pool. */
 export async function resolveLiveDirectModelPool(params: {
   provider: "anthropic" | "openai";
   api: "anthropic-messages" | "openai-responses";
@@ -243,12 +255,14 @@ export async function resolveLiveDirectModelPool(params: {
   };
 }
 
+/** Resolve the default direct live model fixture. */
 export async function resolveLiveDirectModel(
   params: Parameters<typeof resolveLiveDirectModelPool>[0],
 ): Promise<LiveResolvedModel> {
   return (await resolveLiveDirectModelPool(params)).fixture;
 }
 
+/** Temporarily apply a live model API key while running a callback. */
 export function withLiveDirectModelApiKey(
   fixture: LiveResolvedModel,
   apiKey: string,

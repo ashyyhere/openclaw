@@ -1,3 +1,4 @@
+// Coverage for provider/model fallback state transitions and notices.
 import { afterEach, describe, expect, it } from "vitest";
 import { testing as cliBackendsTesting } from "../agents/cli-backends.js";
 import {

@@ -1,3 +1,4 @@
+// extensions/whatsapp/src/inbound access control test harness helpers and runtime behavior.
 import { beforeEach, vi } from "vitest";
 import {
   type AsyncMock,

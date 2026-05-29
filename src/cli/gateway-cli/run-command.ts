@@ -1,3 +1,4 @@
+/** Adds gateway run command options to Commander commands. */
 import type { Command } from "commander";
 
 const GATEWAY_AUTH_MODES = ["none", "token", "password", "trusted-proxy"] as const;
@@ -7,6 +8,7 @@ function formatModeChoices(modes: readonly string[]): string {
   return modes.map((mode) => `"${mode}"`).join("|");
 }
 
+/** Reused helper for add Gateway Run Command behavior in src/cli/gateway-cli. */
 export function addGatewayRunCommand(cmd: Command): Command {
   return cmd
     .option("--port <port>", "Port for the gateway WebSocket")

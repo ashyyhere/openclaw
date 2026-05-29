@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor native interaction channel context helpers and runtime behavior.
 import { ChannelType } from "../internal/discord.js";
 import type { DiscordChannelInfoClient } from "./message-utils.js";
 import { resolveDiscordThreadLikeChannelContext } from "./thread-channel-context.js";

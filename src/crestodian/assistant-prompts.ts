@@ -1,8 +1,12 @@
+// crestodian assistant prompts helpers and runtime behavior.
 import type { CrestodianOverview } from "./overview.js";
 
+/** Reused constant for CRESTODIAN ASSISTANT TIMEOUT MS behavior in src/crestodian. */
 export const CRESTODIAN_ASSISTANT_TIMEOUT_MS = 10_000;
+/** Reused constant for CRESTODIAN ASSISTANT MAX TOKENS behavior in src/crestodian. */
 export const CRESTODIAN_ASSISTANT_MAX_TOKENS = 512;
 
+/** Reused constant for CRESTODIAN ASSISTANT SYSTEM PROMPT behavior in src/crestodian. */
 export const CRESTODIAN_ASSISTANT_SYSTEM_PROMPT = [
   "You are Crestodian, OpenClaw's ring-zero setup helper.",
   "Turn the user's request into exactly one safe OpenClaw Crestodian command.",
@@ -38,12 +42,14 @@ export const CRESTODIAN_ASSISTANT_SYSTEM_PROMPT = [
   "If unsure, choose overview.",
 ].join("\n");
 
+/** Shared type for Crestodian Assistant Plan in src/crestodian. */
 export type CrestodianAssistantPlan = {
   command: string;
   reply?: string;
   modelLabel?: string;
 };
 
+/** Reused helper for build Crestodian Assistant User Prompt behavior in src/crestodian. */
 export function buildCrestodianAssistantUserPrompt(params: {
   input: string;
   overview: CrestodianOverview;
@@ -84,6 +90,7 @@ export function buildCrestodianAssistantUserPrompt(params: {
   ].join("\n");
 }
 
+/** Reused helper for parse Crestodian Assistant Plan Text behavior in src/crestodian. */
 export function parseCrestodianAssistantPlanText(
   rawText: string | undefined,
 ): CrestodianAssistantPlan | null {

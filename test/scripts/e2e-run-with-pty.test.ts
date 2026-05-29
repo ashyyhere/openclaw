@@ -1,3 +1,4 @@
+// Tests test/scripts e2e run with pty test behavior.
 import { spawn } from "node:child_process";
 import { mkdtemp, readFile, rm } from "node:fs/promises";
 import os from "node:os";

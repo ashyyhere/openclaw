@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src/matrix/monitor mentions test behavior.
 import { describe, expect, it, vi } from "vitest";
 
 // Mock the runtime before importing resolveMentions

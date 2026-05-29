@@ -1,3 +1,4 @@
+// Tests extensions/acpx/src/runtime-internals mcp command line test behavior.
 import { describe, expect, it } from "vitest";
 
 type SplitCommandLine = (

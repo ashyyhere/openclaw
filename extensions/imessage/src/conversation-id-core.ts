@@ -1,3 +1,4 @@
+// extensions/imessage/src conversation id core helpers and runtime behavior.
 import { normalizeIMessageHandle, parseIMessageTarget } from "./targets.js";
 
 export function normalizeIMessageAcpConversationId(

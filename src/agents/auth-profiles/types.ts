@@ -1,8 +1,11 @@
+/** Shared auth profile credential, state, store, and repair result types. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { SecretRef } from "../../config/types.secrets.js";
 
+/** Provider id associated with OAuth credentials. */
 export type OAuthProvider = string;
 
+/** Shared type for OAuth Credentials in src/agents/auth-profiles. */
 export type OAuthCredentials = {
   access: string;
   refresh: string;
@@ -16,6 +19,7 @@ export type OAuthCredentials = {
   idToken?: string;
 };
 
+/** Shared type for Api Key Credential in src/agents/auth-profiles. */
 export type ApiKeyCredential = {
   type: "api_key";
   provider: string;
@@ -29,6 +33,7 @@ export type ApiKeyCredential = {
   metadata?: Record<string, string>;
 };
 
+/** Shared type for Token Credential in src/agents/auth-profiles. */
 export type TokenCredential = {
   /**
    * Static bearer-style token (often OAuth access token / PAT).
@@ -46,6 +51,7 @@ export type TokenCredential = {
   displayName?: string;
 };
 
+/** Shared type for OAuth Credential in src/agents/auth-profiles. */
 export type OAuthCredential = OAuthCredentials & {
   type: "oauth";
   provider: string;
@@ -59,8 +65,10 @@ export type OAuthCredential = OAuthCredentials & {
   displayName?: string;
 };
 
+/** Any persisted credential shape supported by auth profiles. */
 export type AuthProfileCredential = ApiKeyCredential | TokenCredential | OAuthCredential;
 
+/** Shared type for Auth Profile Failure Reason in src/agents/auth-profiles. */
 export type AuthProfileFailureReason =
   | "auth"
   | "auth_permanent"
@@ -76,7 +84,9 @@ export type AuthProfileFailureReason =
   | "unclassified"
   | "unknown";
 
+/** Shared type for Auth Profile Blocked Reason in src/agents/auth-profiles. */
 export type AuthProfileBlockedReason = "subscription_limit";
+/** Shared type for Auth Profile Blocked Source in src/agents/auth-profiles. */
 export type AuthProfileBlockedSource = "codex_rate_limits" | "wham";
 
 /** Per-profile usage statistics for round-robin and cooldown tracking */
@@ -96,6 +106,7 @@ export type ProfileUsageStats = {
   lastFailureAt?: number;
 };
 
+/** Shared type for Auth Profile State in src/agents/auth-profiles. */
 export type AuthProfileState = {
   /**
    * Optional per-agent preferred profile order overrides.
@@ -108,15 +119,18 @@ export type AuthProfileState = {
   usageStats?: Record<string, ProfileUsageStats>;
 };
 
+/** Shared type for Auth Profile Secrets Store in src/agents/auth-profiles. */
 export type AuthProfileSecretsStore = {
   version: number;
   profiles: Record<string, AuthProfileCredential>;
 };
 
+/** Shared type for Auth Profile State Store in src/agents/auth-profiles. */
 export type AuthProfileStateStore = {
   version: number;
 } & AuthProfileState;
 
+/** Full auth profile store after secrets, state, and runtime metadata are merged. */
 export type AuthProfileStore = AuthProfileSecretsStore &
   AuthProfileState & {
     /** Runtime-only provenance for external OAuth profiles overlaid onto this store. */
@@ -125,6 +139,7 @@ export type AuthProfileStore = AuthProfileSecretsStore &
     runtimeExternalProfileIdsAuthoritative?: boolean;
   };
 
+/** Shared type for Auth Profile Id Repair Result in src/agents/auth-profiles. */
 export type AuthProfileIdRepairResult = {
   config: OpenClawConfig;
   changes: string[];

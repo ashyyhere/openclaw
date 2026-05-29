@@ -1,3 +1,4 @@
+// Tests extensions/codex/src command rpc test behavior.
 import { describe, expect, it } from "vitest";
 import { CodexAppServerRpcError } from "./app-server/client.js";
 import { safeValue } from "./command-rpc.js";

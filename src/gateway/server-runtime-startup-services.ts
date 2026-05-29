@@ -1,3 +1,4 @@
+// gateway server runtime startup services helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { ChannelHealthMonitor } from "./channel-health-monitor.js";
 import { startChannelHealthMonitor } from "./channel-health-monitor.js";
@@ -11,6 +12,7 @@ type GatewayRuntimeServiceLogger = {
   error: (message: string) => void;
 };
 
+/** Shared type for Gateway Channel Manager in src/gateway. */
 export type GatewayChannelManager = Parameters<
   typeof startChannelHealthMonitor
 >[0]["channelManager"];
@@ -22,6 +24,7 @@ function createNoopHeartbeatRunner() {
   };
 }
 
+/** Reused helper for start Gateway Channel Health Monitor behavior in src/gateway. */
 export function startGatewayChannelHealthMonitor(params: {
   cfg: OpenClawConfig;
   channelManager: GatewayChannelManager;
@@ -42,6 +45,7 @@ export function startGatewayChannelHealthMonitor(params: {
   });
 }
 
+/** Reused helper for start Gateway Runtime Services behavior in src/gateway. */
 export function startGatewayRuntimeServices(params: {
   minimalTestGateway: boolean;
   cfgAtStart: OpenClawConfig;

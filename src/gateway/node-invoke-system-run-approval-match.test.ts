@@ -1,3 +1,4 @@
+// Tests gateway node invoke system run approval match test behavior.
 import { describe, expect, test } from "vitest";
 import { buildSystemRunApprovalBinding } from "../infra/system-run-approval-binding.js";
 import { evaluateSystemRunApprovalMatch } from "./node-invoke-system-run-approval-match.js";

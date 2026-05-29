@@ -1,3 +1,4 @@
+// extensions/browser/src/browser server agent contract test harness helpers and runtime behavior.
 import {
   getBrowserControlServerBaseUrl,
   installBrowserControlServerHooks,

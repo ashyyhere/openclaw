@@ -1,3 +1,4 @@
+/** Tests OpenAI tool-call id preservation in embedded-agent runner. */
 import type { AgentMessage } from "openclaw/plugin-sdk/agent-core";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 import {

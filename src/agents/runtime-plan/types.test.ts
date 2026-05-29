@@ -1,3 +1,4 @@
+/** Guardrail tests that keep runtime-plan types dependency-light. */
 import fs from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";

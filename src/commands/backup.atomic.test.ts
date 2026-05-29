@@ -1,3 +1,4 @@
+/** Tests atomic backup creation and failure cleanup. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

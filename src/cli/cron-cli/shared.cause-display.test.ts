@@ -1,3 +1,4 @@
+/** Tests cron JSON output preserves cause display fields. */
 import { describe, expect, it } from "vitest";
 import { defaultRuntime } from "../../runtime.js";
 import { printCronJson } from "./shared.js";

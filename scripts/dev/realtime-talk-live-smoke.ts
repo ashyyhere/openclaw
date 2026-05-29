@@ -1,3 +1,4 @@
+// scripts/dev realtime talk live smoke helpers and runtime behavior.
 import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";

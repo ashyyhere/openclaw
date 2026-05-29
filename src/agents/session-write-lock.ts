@@ -1,3 +1,4 @@
+/** File-backed session write lock with stale-lock cleanup and watchdogs. */
 import "../infra/fs-safe-defaults.js";
 import type fsSync from "node:fs";
 import fs from "node:fs/promises";
@@ -20,6 +21,7 @@ function isValidLockNumber(value: unknown): value is number {
   return typeof value === "number" && Number.isInteger(value) && value >= 0;
 }
 
+/** Inspection result for one session lock file. */
 export type SessionLockInspection = {
   lockPath: string;
   pid: number | null;
@@ -31,6 +33,7 @@ export type SessionLockInspection = {
   removed: boolean;
 };
 
+/** Reads owner process argv while deciding whether a lock is stale. */
 export type SessionLockOwnerProcessArgsReader = (pid: number) => string[] | null;
 
 const CLEANUP_SIGNALS = ["SIGINT", "SIGTERM", "SIGQUIT", "SIGABRT"] as const;
@@ -38,8 +41,11 @@ type CleanupSignal = (typeof CLEANUP_SIGNALS)[number];
 const CLEANUP_STATE_KEY = Symbol.for("openclaw.sessionWriteLockCleanupState");
 const WATCHDOG_STATE_KEY = Symbol.for("openclaw.sessionWriteLockWatchdogState");
 
+/** Default age before an unowned session lock is stale. */
 export const DEFAULT_SESSION_WRITE_LOCK_STALE_MS = 30 * 60 * 1000;
+/** Default maximum hold time written into lock payloads. */
 export const DEFAULT_SESSION_WRITE_LOCK_MAX_HOLD_MS = 5 * 60 * 1000;
+/** Default timeout for acquiring a session write lock. */
 export const DEFAULT_SESSION_WRITE_LOCK_ACQUIRE_TIMEOUT_MS = 60_000;
 const DEFAULT_WATCHDOG_INTERVAL_MS = 60_000;
 const DEFAULT_TIMEOUT_GRACE_MS = 2 * 60 * 1000;
@@ -83,6 +89,7 @@ function isFileLockError(error: unknown, code: string): boolean {
   return (error as { code?: unknown } | null)?.code === code;
 }
 
+/** Config subset that controls session write lock timing. */
 export type SessionWriteLockAcquireTimeoutConfig = {
   session?: {
     writeLock?: {
@@ -154,6 +161,7 @@ function resolveSessionWriteLockMs(params: {
   );
 }
 
+/** Resolve write-lock acquire timeout from env/config/default. */
 export function resolveSessionWriteLockAcquireTimeoutMs(
   config?: SessionWriteLockAcquireTimeoutConfig,
   env?: NodeJS.ProcessEnv,
@@ -167,6 +175,7 @@ export function resolveSessionWriteLockAcquireTimeoutMs(
   });
 }
 
+/** Resolve stale lock age from env/config/default. */
 export function resolveSessionWriteLockStaleMs(
   config?: SessionWriteLockAcquireTimeoutConfig,
   env?: NodeJS.ProcessEnv,
@@ -179,6 +188,7 @@ export function resolveSessionWriteLockStaleMs(
   });
 }
 
+/** Resolve maximum lock hold time from env/config/default. */
 export function resolveSessionWriteLockMaxHoldMs(
   config?: SessionWriteLockAcquireTimeoutConfig,
   params: { env?: NodeJS.ProcessEnv; fallback?: number } = {},
@@ -191,6 +201,7 @@ export function resolveSessionWriteLockMaxHoldMs(
   });
 }
 
+/** Resolve all session write lock timing options. */
 export function resolveSessionWriteLockOptions(
   config?: SessionWriteLockAcquireTimeoutConfig,
   params: { env?: NodeJS.ProcessEnv; maxHoldMsFallback?: number } = {},
@@ -249,6 +260,7 @@ function resolvePositiveMs(
   return value;
 }
 
+/** Resolve lock max-hold duration from an acquire timeout plus grace. */
 export function resolveSessionLockMaxHoldFromTimeout(params: {
   timeoutMs: number;
   graceMs?: number;
@@ -684,6 +696,7 @@ function inspectLockPayloadForSession(params: {
   return inspected;
 }
 
+/** Inspect and optionally remove stale session lock files in a sessions dir. */
 export async function cleanStaleLockFiles(params: {
   sessionsDir: string;
   config?: SessionWriteLockAcquireTimeoutConfig;
@@ -773,6 +786,7 @@ export async function cleanStaleLockFiles(params: {
   return { locks, cleaned };
 }
 
+/** Acquire an exclusive write lock for one session file. */
 export async function acquireSessionWriteLock(params: {
   sessionFile: string;
   timeoutMs?: number;
@@ -871,6 +885,7 @@ export async function acquireSessionWriteLock(params: {
   }
 }
 
+/** Test-only controls for session write lock globals. */
 export const testing = {
   cleanupSignals: [...CLEANUP_SIGNALS],
   handleTerminationSignal,
@@ -882,16 +897,19 @@ export const testing = {
   },
 };
 
+/** Drain lock manager/watchdog state between tests. */
 export async function drainSessionWriteLockStateForTest(): Promise<void> {
   await SESSION_LOCKS.drain();
   stopWatchdogTimer();
   unregisterCleanupHandlers();
 }
 
+/** Reset held locks, timers, handlers, and process start resolver for tests. */
 export function resetSessionWriteLockStateForTest(): void {
   releaseAllLocksSync();
   stopWatchdogTimer();
   unregisterCleanupHandlers();
   resolveProcessStartTimeForLock = getProcessStartTime;
 }
+/** Re-exported API for src/agents, starting with testing. */
 export { testing as __testing };

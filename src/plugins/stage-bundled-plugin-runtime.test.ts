@@ -1,3 +1,4 @@
+// Tests plugins stage bundled plugin runtime test behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";

@@ -21,6 +21,7 @@ import { defaultSlotIdForKey } from "../../../plugins/slots.js";
 import { uniqueStrings } from "../../../shared/string-normalization.js";
 import { isRecord, resolveUserPath } from "../../../utils.js";
 
+/** Shared type for Host Candidate in src/commands/doctor. */
 export type HostCandidate = {
   runtimeId: string;
   host: ContextEngineHostSupport;

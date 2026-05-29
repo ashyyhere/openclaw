@@ -4,6 +4,7 @@
  */
 
 export * from "../agents/agent-scope.js";
+/** Re-exported API for src/plugin-sdk, starting with resolve Open Claw Agent Dir. */
 export { resolveOpenClawAgentDir } from "./agent-dir-compat.js";
 export * from "../agents/current-time.js";
 export * from "../agents/date-time.js";
@@ -30,6 +31,7 @@ export * from "../tools/index.js";
 export * from "../agents/agent-command.js";
 export * from "../tts/tts.js";
 
+/** Re-exported API for src/plugin-sdk. */
 export {
   CLAUDE_CLI_PROFILE_ID,
   CODEX_CLI_PROFILE_ID,
@@ -69,6 +71,7 @@ export {
   resolveAuthProfileOrder,
   resolveAuthStorePathForDisplay,
 } from "../agents/auth-profiles.js";
+/** Re-exported API for src/plugin-sdk. */
 export type {
   ApiKeyCredential,
   AuthCredentialReasonCode,

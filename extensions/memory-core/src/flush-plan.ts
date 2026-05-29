@@ -1,3 +1,4 @@
+// extensions/memory-core/src flush plan helpers and runtime behavior.
 import {
   DEFAULT_AGENT_COMPACTION_RESERVE_TOKENS_FLOOR,
   parseNonNegativeByteSize,

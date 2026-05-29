@@ -1,3 +1,4 @@
+// plugins tools helpers and runtime behavior.
 import { compileGlobPatterns, matchesAnyGlobPattern } from "../agents/glob-pattern.js";
 import { DEFAULT_PLUGIN_TOOLS_ALLOWLIST_ENTRY, normalizeToolName } from "../agents/tool-policy.js";
 import type { AnyAgentTool } from "../agents/tools/common.js";
@@ -32,11 +33,13 @@ import {
 } from "./tool-descriptor-cache.js";
 import type { OpenClawPluginToolContext } from "./types.js";
 
+/** Re-exported API for src/plugins. */
 export {
   resetPluginToolDescriptorCache,
   resetPluginToolDescriptorCache as resetPluginToolFactoryCache,
 } from "./tool-descriptor-cache.js";
 
+/** Shared type for Plugin Tool Meta in src/plugins. */
 export type PluginToolMeta = {
   pluginId: string;
   optional: boolean;
@@ -64,14 +67,17 @@ const PLUGIN_TOOL_FACTORY_SUMMARY_LIMIT = 20;
 
 const pluginToolMeta = new WeakMap<AnyAgentTool, PluginToolMeta>();
 
+/** Reused helper for set Plugin Tool Meta behavior in src/plugins. */
 export function setPluginToolMeta(tool: AnyAgentTool, meta: PluginToolMeta): void {
   pluginToolMeta.set(tool, meta);
 }
 
+/** Reused helper for get Plugin Tool Meta behavior in src/plugins. */
 export function getPluginToolMeta(tool: AnyAgentTool): PluginToolMeta | undefined {
   return pluginToolMeta.get(tool);
 }
 
+/** Reused helper for copy Plugin Tool Meta behavior in src/plugins. */
 export function copyPluginToolMeta(source: AnyAgentTool, target: AnyAgentTool): void {
   const meta = pluginToolMeta.get(source);
   if (meta) {
@@ -878,6 +884,7 @@ function resolvePluginToolLoadState(params: {
   return { context, env, loadOptions, onlyPluginIds, runtimeOptions, snapshot };
 }
 
+/** Reused helper for ensure Standalone Plugin Tool Registry Loaded behavior in src/plugins. */
 export function ensureStandalonePluginToolRegistryLoaded(params: {
   context: OpenClawPluginToolContext;
   toolAllowlist?: string[];
@@ -897,6 +904,7 @@ export function ensureStandalonePluginToolRegistryLoaded(params: {
   });
 }
 
+/** Reused helper for resolve Plugin Tools behavior in src/plugins. */
 export function resolvePluginTools(params: {
   context: OpenClawPluginToolContext;
   existingToolNames?: Set<string>;

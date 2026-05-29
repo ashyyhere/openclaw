@@ -1,3 +1,4 @@
+/** Installs pre-action hooks that prepare runtime state before command handlers. */
 import type { Command } from "commander";
 import { setVerbose } from "../../globals.js";
 import type { LogLevel } from "../../logging/levels.js";
@@ -95,6 +96,7 @@ function isGuidedConfigCommandPath(commandPath: string[]): boolean {
   );
 }
 
+/** Reused helper for register Pre Action Hooks behavior in src/cli/program. */
 export function registerPreActionHooks(program: Command, programVersion: string) {
   program.hook("preAction", async (_thisCommand, actionCommand) => {
     setProcessTitleForCommand(actionCommand);

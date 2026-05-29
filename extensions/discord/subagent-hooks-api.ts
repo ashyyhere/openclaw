@@ -1,3 +1,4 @@
+// extensions/discord subagent hooks api helpers and runtime behavior.
 import type { OpenClawPluginApi } from "openclaw/plugin-sdk/channel-entry-contract";
 
 type DiscordSubagentHooksModule = typeof import("./src/subagent-hooks.js");

@@ -1,3 +1,4 @@
+// Tests extensions/googlechat/src setup test behavior.
 import {
   expectLifecyclePatch,
   expectPendingUntilAbort,

@@ -1,5 +1,7 @@
+// test-utils channel plugin test fixtures helpers and runtime behavior.
 import type { ChannelPlugin } from "../channels/plugins/types.plugin.js";
 
+/** Reused helper for make Direct Plugin behavior in src/test-utils. */
 export function makeDirectPlugin(params: {
   id: string;
   label: string;

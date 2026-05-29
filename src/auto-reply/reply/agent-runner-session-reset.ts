@@ -1,3 +1,4 @@
+// Session reset helpers used by reply agent orchestration.
 import fs from "node:fs";
 import type { SessionEntry } from "../../config/sessions.js";
 import {
@@ -25,6 +26,7 @@ const deps = {
   error: (message: string) => defaultRuntime.error(message),
 };
 
+/** Reused helper for set Agent Runner Session Reset Test Deps behavior in src/auto-reply/reply. */
 export function setAgentRunnerSessionResetTestDeps(overrides?: Partial<typeof deps>): void {
   Object.assign(deps, {
     generateSecureUuid,
@@ -35,6 +37,7 @@ export function setAgentRunnerSessionResetTestDeps(overrides?: Partial<typeof de
   });
 }
 
+/** Reused helper for reset Reply Run Session behavior in src/auto-reply/reply. */
 export async function resetReplyRunSession(params: {
   options: ResetSessionOptions;
   sessionKey?: string;

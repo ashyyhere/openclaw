@@ -1,3 +1,4 @@
+/** Regression coverage for transcript retention/redaction policy. */
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveProviderRuntimePlugin } from "../plugins/provider-hook-runtime.js";

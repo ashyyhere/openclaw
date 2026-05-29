@@ -1,6 +1,8 @@
+// infra exec host helpers and runtime behavior.
 import crypto from "node:crypto";
 import { requestJsonlSocket } from "./jsonl-socket.js";
 
+/** Shared type for Exec Host Request in src/infra. */
 export type ExecHostRequest = {
   command: string[];
   rawCommand?: string | null;
@@ -13,6 +15,7 @@ export type ExecHostRequest = {
   approvalDecision?: "allow-once" | "allow-always" | null;
 };
 
+/** Shared type for Exec Host Run Result in src/infra. */
 export type ExecHostRunResult = {
   exitCode?: number;
   timedOut: boolean;
@@ -28,10 +31,12 @@ type ExecHostError = {
   reason?: string;
 };
 
+/** Shared type for Exec Host Response in src/infra. */
 export type ExecHostResponse =
   | { ok: true; payload: ExecHostRunResult }
   | { ok: false; error: ExecHostError };
 
+/** Reused helper for request Exec Host Via Socket behavior in src/infra. */
 export async function requestExecHostViaSocket(params: {
   socketPath: string;
   token: string;

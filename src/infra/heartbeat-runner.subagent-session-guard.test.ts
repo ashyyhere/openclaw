@@ -1,3 +1,4 @@
+// Tests infra heartbeat runner subagent session guard test behavior.
 import fs from "node:fs/promises";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";

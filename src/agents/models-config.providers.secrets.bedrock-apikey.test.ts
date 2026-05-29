@@ -1,3 +1,4 @@
+/** Tests Bedrock AWS SDK auth markers in generated provider secrets. */
 import { describe, expect, it } from "vitest";
 import { NON_ENV_SECRETREF_MARKER } from "./model-auth-markers.js";
 import type { ProviderConfig } from "./models-config.providers.secret-helpers.js";

@@ -1,3 +1,4 @@
+/** Registers agent management commands. */
 import type { Command } from "commander";
 import { formatDocsLink } from "../../../packages/terminal-core/src/links.js";
 import { theme } from "../../../packages/terminal-core/src/theme.js";
@@ -60,6 +61,7 @@ async function loadSetVerbose(): Promise<GlobalStateModule["setVerbose"]> {
   return (await import("../../global-state.js")).setVerbose;
 }
 
+/** Reused helper for register Agent Commands behavior in src/cli/program. */
 export function registerAgentCommands(
   program: Command,
   args: { agentChannelOptions: string },

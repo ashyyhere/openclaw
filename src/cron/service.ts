@@ -1,3 +1,4 @@
+// cron service helpers and runtime behavior.
 import type { CronServiceContract, CronServiceRunResult } from "./service-contract.js";
 import type { CronListPageOptions } from "./service/list-page-types.js";
 import * as ops from "./service/ops.js";
@@ -8,8 +9,10 @@ import {
 } from "./service/state.js";
 import type { CronJob, CronJobCreate, CronJobPatch } from "./types.js";
 
+/** Re-exported API for src/cron, starting with Cron Event. */
 export type { CronEvent, CronServiceDeps } from "./service/state.js";
 
+/** Reused class for Cron Service behavior in src/cron. */
 export class CronService implements CronServiceContract {
   private readonly state;
   constructor(deps: CronServiceDeps) {

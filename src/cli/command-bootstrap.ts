@@ -1,3 +1,4 @@
+/** Bootstraps config and plugin registry state before command execution. */
 import type { RuntimeEnv } from "../runtime.js";
 import { createLazyImportLoader } from "../shared/lazy-promise.js";
 import type { CliPluginRegistryPolicy } from "./command-catalog.js";
@@ -10,6 +11,7 @@ function loadConfigGuardModule() {
   return configGuardModuleLoader.load();
 }
 
+/** Reused helper for ensure Cli Command Bootstrap behavior in src/cli. */
 export async function ensureCliCommandBootstrap(params: {
   runtime: RuntimeEnv;
   commandPath: string[];

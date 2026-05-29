@@ -1,3 +1,4 @@
+/** End-to-end tests for agent-specific sandbox config. */
 import { EventEmitter } from "node:events";
 import path from "node:path";
 import { Readable } from "node:stream";

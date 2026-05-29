@@ -1,3 +1,4 @@
+// extensions/discord/src directory config helpers and runtime behavior.
 import { normalizeAccountId } from "openclaw/plugin-sdk/account-id";
 import {
   createResolvedDirectoryEntriesLister,

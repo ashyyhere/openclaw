@@ -1,3 +1,4 @@
+// plugin-sdk/test-helpers/agents outcome fallback runtime contract helpers and runtime behavior.
 import type { EmbeddedAgentRunResult } from "../../../agents/embedded-agent-runner/types.js";
 
 export const OUTCOME_FALLBACK_RUNTIME_CONTRACT = {

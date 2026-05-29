@@ -8,6 +8,7 @@ import { access, readFile } from "node:fs/promises";
 import * as Diff from "diff";
 import { resolveToCwd } from "./path-utils.js";
 
+/** Reused helper for detect Line Ending behavior in src/agents/sessions. */
 export function detectLineEnding(content: string): "\r\n" | "\n" {
   const crlfIdx = content.indexOf("\r\n");
   const lfIdx = content.indexOf("\n");
@@ -20,10 +21,12 @@ export function detectLineEnding(content: string): "\r\n" | "\n" {
   return crlfIdx < lfIdx ? "\r\n" : "\n";
 }
 
+/** Reused helper for normalize To LF behavior in src/agents/sessions. */
 export function normalizeToLF(text: string): string {
   return text.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
 }
 
+/** Reused helper for restore Line Endings behavior in src/agents/sessions. */
 export function restoreLineEndings(text: string, ending: "\r\n" | "\n"): string {
   return ending === "\r\n" ? text.replace(/\n/g, "\r\n") : text;
 }
@@ -58,6 +61,7 @@ export function normalizeForFuzzyMatch(text: string): string {
   );
 }
 
+/** Shared type for Fuzzy Match Result in src/agents/sessions. */
 export interface FuzzyMatchResult {
   /** Whether a match was found */
   found: boolean;
@@ -74,6 +78,7 @@ export interface FuzzyMatchResult {
   contentForReplacement: string;
 }
 
+/** Shared type for Edit in src/agents/sessions. */
 export interface Edit {
   oldText: string;
   newText: string;
@@ -86,6 +91,7 @@ interface MatchedEdit {
   newText: string;
 }
 
+/** Shared type for Applied Edits Result in src/agents/sessions. */
 export interface AppliedEditsResult {
   baseContent: string;
   newContent: string;
@@ -414,15 +420,18 @@ export function generateDiffString(
   return { diff: output.join("\n"), firstChangedLine };
 }
 
+/** Shared type for Edit Diff Result in src/agents/sessions. */
 export interface EditDiffResult {
   diff: string;
   firstChangedLine: number | undefined;
 }
 
+/** Shared type for Edit Diff Error in src/agents/sessions. */
 export interface EditDiffError {
   error: string;
 }
 
+/** Shared type for Edit Diff Operations in src/agents/sessions. */
 export interface EditDiffOperations {
   readFile: (absolutePath: string) => Promise<Buffer | string>;
   access: (absolutePath: string) => Promise<void>;

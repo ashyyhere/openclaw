@@ -1,3 +1,4 @@
+/** Covers context-engine lifecycle integration for agent harnesses. */
 import type { AgentMessage } from "openclaw/plugin-sdk/agent-core";
 import { describe, expect, it, vi } from "vitest";
 import type { ContextEngine } from "../../context-engine/types.js";

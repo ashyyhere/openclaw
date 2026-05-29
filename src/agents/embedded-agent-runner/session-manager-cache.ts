@@ -1,3 +1,4 @@
+/** Small TTL cache for embedded-agent session manager file warmup. */
 import { Buffer } from "node:buffer";
 import fs from "node:fs/promises";
 import {
@@ -24,6 +25,7 @@ function resolveSessionManagerCachePruneInterval(ttlMs: number): number {
   );
 }
 
+/** Shared type for Session Manager Cache in src/agents/embedded-agent-runner. */
 export type SessionManagerCache = {
   clear: () => void;
   isSessionManagerCached: (sessionFile: string) => boolean;
@@ -32,6 +34,7 @@ export type SessionManagerCache = {
   trackSessionManagerAccess: (sessionFile: string) => void;
 };
 
+/** Creates an isolated cache instance for session file warmup and tests. */
 export function createSessionManagerCache(options?: {
   clock?: () => number;
   fsModule?: Pick<typeof fs, "open">;
@@ -84,10 +87,12 @@ export function createSessionManagerCache(options?: {
 
 const sessionManagerCache = createSessionManagerCache();
 
+/** Marks a session file as recently accessed in the process-wide cache. */
 export function trackSessionManagerAccess(sessionFile: string): void {
   sessionManagerCache.trackSessionManagerAccess(sessionFile);
 }
 
+/** Reads a small prefix so later SessionManager startup hits warm OS cache. */
 export async function prewarmSessionFile(sessionFile: string): Promise<void> {
   await sessionManagerCache.prewarmSessionFile(sessionFile);
 }

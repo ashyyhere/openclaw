@@ -1,3 +1,4 @@
+// Inbound debounce helpers for coalescing rapid channel events.
 import type { InboundDebounceByProvider } from "../config/types.messages.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 
@@ -18,6 +19,7 @@ const resolveChannelOverride = (params: {
   return resolveMs(params.byChannel[params.channel]);
 };
 
+/** Reused helper for resolve Inbound Debounce Ms behavior in src/auto-reply. */
 export function resolveInboundDebounceMs(params: {
   cfg: OpenClawConfig;
   channel: string;
@@ -44,6 +46,7 @@ type DebounceBuffer<T> = {
 
 const DEFAULT_MAX_TRACKED_KEYS = 2048;
 
+/** Shared type for Inbound Debounce Create Params in src/auto-reply. */
 export type InboundDebounceCreateParams<T> = {
   debounceMs: number;
   maxTrackedKeys?: number;
@@ -56,6 +59,7 @@ export type InboundDebounceCreateParams<T> = {
   onCancel?: (items: T[]) => void;
 };
 
+/** Reused helper for create Inbound Debouncer behavior in src/auto-reply. */
 export function createInboundDebouncer<T>(params: InboundDebounceCreateParams<T>) {
   const buffers = new Map<string, DebounceBuffer<T>>();
   const keyChains = new Map<string, Promise<void>>();

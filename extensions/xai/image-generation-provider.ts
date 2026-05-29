@@ -1,3 +1,4 @@
+// extensions/xai image generation provider helpers and runtime behavior.
 import type {
   ImageGenerationProvider,
   ImageGenerationRequest,

@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor native command model picker interaction helpers and runtime behavior.
 import {
   buildCommandTextFromArgs,
   findCommandByNativeName,

@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor native command model picker apply helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import type { ChatCommandDefinition, CommandArgs } from "openclaw/plugin-sdk/command-auth-native";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";

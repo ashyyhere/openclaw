@@ -1,3 +1,4 @@
+/** Tests process tool integration with the supervisor. */
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 const { supervisorMock } = vi.hoisted(() => ({

@@ -1,8 +1,10 @@
+/** CLI-provider detection helper for model selection. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveRuntimeCliBackends } from "../plugins/cli-backends.runtime.js";
 import { resolvePluginSetupCliBackendDescriptor } from "../plugins/setup-registry.runtime.js";
 import { normalizeProviderId } from "./model-selection-normalize.js";
 
+/** Return whether a provider id points at a CLI backend. */
 export function isCliProvider(provider: string, cfg?: OpenClawConfig): boolean {
   const normalized = normalizeProviderId(provider);
   const backends = cfg?.agents?.defaults?.cliBackends ?? {};

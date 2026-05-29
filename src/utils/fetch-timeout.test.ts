@@ -1,3 +1,4 @@
+// Tests utils fetch timeout test behavior.
 import { Stream } from "openai/streaming";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 

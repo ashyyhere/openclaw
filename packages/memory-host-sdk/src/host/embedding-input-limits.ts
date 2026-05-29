@@ -1,3 +1,4 @@
+// packages/memory-host-sdk/src/host embedding input limits helpers and runtime behavior.
 import type { EmbeddingInput } from "./embedding-inputs.js";
 
 // Helpers for enforcing embedding model input size limits.
@@ -6,6 +7,7 @@ import type { EmbeddingInput } from "./embedding-inputs.js";
 // Tokenizers operate over bytes; a token must contain at least one byte, so
 // token_count <= utf8_byte_length.
 
+/** Public helper for estimate Utf8 Bytes behavior in packages/memory-host-sdk. */
 export function estimateUtf8Bytes(text: string): number {
   if (!text) {
     return 0;
@@ -13,6 +15,7 @@ export function estimateUtf8Bytes(text: string): number {
   return Buffer.byteLength(text, "utf8");
 }
 
+/** Public helper for estimate Structured Embedding Input Bytes behavior in packages/memory-host-sdk. */
 export function estimateStructuredEmbeddingInputBytes(input: EmbeddingInput): number {
   if (!input.parts?.length) {
     return estimateUtf8Bytes(input.text);
@@ -29,6 +32,7 @@ export function estimateStructuredEmbeddingInputBytes(input: EmbeddingInput): nu
   return total;
 }
 
+/** Public helper for split Text To Utf8 Byte Limit behavior in packages/memory-host-sdk. */
 export function splitTextToUtf8ByteLimit(text: string, maxUtf8Bytes: number): string[] {
   if (maxUtf8Bytes <= 0) {
     return [text];

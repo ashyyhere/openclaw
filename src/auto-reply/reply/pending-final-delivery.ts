@@ -1,3 +1,4 @@
+// Pending final delivery tracking for streamed replies.
 import {
   isSilentReplyPayloadText,
   isSilentReplyText,
@@ -8,6 +9,7 @@ import {
 } from "../tokens.js";
 import { stripInternalMetadataForDisplay } from "./display-text-sanitize.js";
 
+/** Reused helper for sanitize Pending Final Delivery Text behavior in src/auto-reply/reply. */
 export function sanitizePendingFinalDeliveryText(text: string): string {
   let stripped = stripInternalMetadataForDisplay(text).trim();
   if (isSilentReplyPayloadText(stripped, SILENT_REPLY_TOKEN)) {

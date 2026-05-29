@@ -1,8 +1,10 @@
+/** Types for provider/plugin-contributed system prompt sections. */
 export type ProviderSystemPromptSectionId =
   | "interaction_style"
   | "tool_call_style"
   | "execution_bias";
 
+/** Shared type for Provider System Prompt Contribution in src/agents. */
 export type ProviderSystemPromptContribution = {
   /**
    * Cache-stable provider guidance inserted above the system-prompt cache boundary.

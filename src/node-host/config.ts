@@ -1,9 +1,11 @@
+// node-host config helpers and runtime behavior.
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { resolveStateDir } from "../config/paths.js";
 import { writeJson } from "../infra/json-files.js";
 
+/** Shared type for Node Host Gateway Config in src/node-host. */
 export type NodeHostGatewayConfig = {
   host?: string;
   port?: number;
@@ -42,6 +44,7 @@ function normalizeConfig(config: Partial<NodeHostConfig> | null): NodeHostConfig
   return base;
 }
 
+/** Reused helper for load Node Host Config behavior in src/node-host. */
 export async function loadNodeHostConfig(): Promise<NodeHostConfig | null> {
   const filePath = resolveNodeHostConfigPath();
   try {
@@ -53,11 +56,13 @@ export async function loadNodeHostConfig(): Promise<NodeHostConfig | null> {
   }
 }
 
+/** Reused helper for save Node Host Config behavior in src/node-host. */
 export async function saveNodeHostConfig(config: NodeHostConfig): Promise<void> {
   const filePath = resolveNodeHostConfigPath();
   await writeJson(filePath, config, { mode: 0o600 });
 }
 
+/** Reused helper for ensure Node Host Config behavior in src/node-host. */
 export async function ensureNodeHostConfig(): Promise<NodeHostConfig> {
   const existing = await loadNodeHostConfig();
   const normalized = normalizeConfig(existing);

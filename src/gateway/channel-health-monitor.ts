@@ -1,3 +1,4 @@
+// gateway channel health monitor helpers and runtime behavior.
 import type { ChannelId } from "../channels/plugins/types.public.js";
 import { createSubsystemLogger } from "../logging/subsystem.js";
 import {
@@ -44,6 +45,7 @@ type ChannelHealthMonitorDeps = {
   abortSignal?: AbortSignal;
 };
 
+/** Shared type for Channel Health Monitor in src/gateway. */
 export type ChannelHealthMonitor = {
   stop: () => void;
 };
@@ -73,6 +75,7 @@ function resolveTimingPolicy(
   };
 }
 
+/** Reused helper for start Channel Health Monitor behavior in src/gateway. */
 export function startChannelHealthMonitor(deps: ChannelHealthMonitorDeps): ChannelHealthMonitor {
   const {
     channelManager,

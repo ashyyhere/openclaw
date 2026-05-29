@@ -1,3 +1,4 @@
+// Tests gateway control plane rate limit test behavior.
 import { afterEach, describe, expect, test } from "vitest";
 import {
   consumeControlPlaneWriteBudget,

@@ -1,3 +1,4 @@
+// Tests plugins openai compatible embedding provider test behavior.
 import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
 import type { AddressInfo } from "node:net";
 import { afterEach, describe, expect, it } from "vitest";

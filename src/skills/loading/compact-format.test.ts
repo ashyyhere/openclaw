@@ -1,3 +1,4 @@
+/** Covers compact skill prompt formatting. */
 import os from "node:os";
 import { formatSkillsForPrompt as upstreamFormatSkillsForPrompt } from "openclaw/plugin-sdk/agent-sessions";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";

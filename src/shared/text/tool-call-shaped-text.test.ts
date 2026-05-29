@@ -1,3 +1,4 @@
+// Tests shared/text tool call shaped text test behavior.
 import { describe, expect, it } from "vitest";
 import { detectToolCallShapedText } from "./tool-call-shaped-text.js";
 

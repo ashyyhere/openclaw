@@ -1,3 +1,4 @@
+// extensions/zalouser/src config schema helpers and runtime behavior.
 import {
   AllowFromListSchema,
   buildCatchallMultiAccountChannelSchema,

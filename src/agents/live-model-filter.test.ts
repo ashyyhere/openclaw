@@ -1,3 +1,4 @@
+/** Tests live model filtering and priority selection. */
 import { describe, expect, it } from "vitest";
 import {
   resolveHighSignalLiveModelLimit,

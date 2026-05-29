@@ -1,3 +1,4 @@
+/** Shared mocked harness for embedded-agent compaction hook tests. */
 import { vi, type Mock } from "vitest";
 import type { PluginMetadataSnapshot } from "../../plugins/plugin-metadata-snapshot.js";
 import { clearAgentHarnesses } from "../harness/registry.js";
@@ -19,6 +20,7 @@ type MockEmbeddedAgentStreamFn = Mock<
   (model?: unknown, context?: unknown, options?: unknown) => unknown
 >;
 
+/** Reused constant for context Engine Compact Mock behavior in src/agents/embedded-agent-runner. */
 export const contextEngineCompactMock = vi.fn(async () => ({
   ok: true as boolean,
   compacted: true as boolean,
@@ -28,17 +30,21 @@ export const contextEngineCompactMock = vi.fn(async () => ({
     | undefined,
 }));
 
+/** Reused constant for hook Runner behavior in src/agents/embedded-agent-runner. */
 export const hookRunner = {
   hasHooks: vi.fn<(hookName?: string) => boolean>(),
   runBeforeCompaction: vi.fn(async () => undefined),
   runAfterCompaction: vi.fn(async () => undefined),
 };
 
+/** Reused constant for ensure Runtime Plugins Loaded behavior in src/agents/embedded-agent-runner. */
 export const ensureRuntimePluginsLoaded: Mock<(params?: unknown) => void> = vi.fn();
+/** Reused constant for resolve Context Engine Mock behavior in src/agents/embedded-agent-runner. */
 export const resolveContextEngineMock = vi.fn(async () => ({
   info: { ownsCompaction: true as boolean },
   compact: contextEngineCompactMock,
 }));
+/** Reused constant for resolve Model Mock behavior in src/agents/embedded-agent-runner. */
 export const resolveModelMock: Mock<
   (provider?: string, modelId?: string, agentDir?: string, cfg?: unknown) => MockResolvedModel
 > = vi.fn((_provider?: string, _modelId?: string, _agentDir?: string, _cfg?: unknown) => ({
@@ -47,16 +53,20 @@ export const resolveModelMock: Mock<
   authStorage: { setRuntimeApiKey: vi.fn() },
   modelRegistry: {},
 }));
+/** Reused constant for session Compact Impl behavior in src/agents/embedded-agent-runner. */
 export const sessionCompactImpl = vi.fn(async () => ({
   summary: "summary",
   firstKeptEntryId: "entry-1",
   tokensBefore: 120,
   details: { ok: true },
 }));
+/** Reused constant for trigger Internal Hook behavior in src/agents/embedded-agent-runner. */
 export const triggerInternalHook: Mock<(event?: unknown) => void> = vi.fn();
+/** Reused constant for sanitize Session History Mock behavior in src/agents/embedded-agent-runner. */
 export const sanitizeSessionHistoryMock = vi.fn(
   async (params: { messages: unknown[] }) => params.messages,
 );
+/** Reused constant for get Memory Search Manager Mock behavior in src/agents/embedded-agent-runner. */
 export const getMemorySearchManagerMock: Mock<
   (params?: unknown) => Promise<MockMemorySearchManager>
 > = vi.fn(async () => ({
@@ -64,6 +74,7 @@ export const getMemorySearchManagerMock: Mock<
     sync: vi.fn(async (_params?: unknown) => {}),
   },
 }));
+/** Reused constant for resolve Memory Search Config Mock behavior in src/agents/embedded-agent-runner. */
 export const resolveMemorySearchConfigMock = vi.fn(() => ({
   sources: ["sessions"],
   sync: {
@@ -72,13 +83,18 @@ export const resolveMemorySearchConfigMock = vi.fn(() => ({
     },
   },
 }));
+/** Reused constant for resolve Session Agent Id Mock behavior in src/agents/embedded-agent-runner. */
 export const resolveSessionAgentIdMock = vi.fn(() => "main");
+/** Reused constant for resolve Session Agent Ids Mock behavior in src/agents/embedded-agent-runner. */
 export const resolveSessionAgentIdsMock = vi.fn(() => ({
   defaultAgentId: "main",
   sessionAgentId: "main",
 }));
+/** Reused constant for estimate Tokens Mock behavior in src/agents/embedded-agent-runner. */
 export const estimateTokensMock = vi.fn((_message?: unknown) => 10);
+/** Reused constant for resolve Agent Harness Policy Mock behavior in src/agents/embedded-agent-runner. */
 export const resolveAgentHarnessPolicyMock = vi.fn(() => ({ runtime: "openclaw" }));
+/** Reused constant for resolve Context Window Info Mock behavior in src/agents/embedded-agent-runner. */
 export const resolveContextWindowInfoMock = vi.fn(() => ({ tokens: 128_000 }));
 function createDefaultSessionMessages(): unknown[] {
   return [
@@ -94,7 +110,9 @@ function createDefaultSessionMessages(): unknown[] {
     },
   ];
 }
+/** Reused constant for session Messages behavior in src/agents/embedded-agent-runner. */
 export const sessionMessages: unknown[] = createDefaultSessionMessages();
+/** Reused constant for session Abort Compaction Mock behavior in src/agents/embedded-agent-runner. */
 export const sessionAbortCompactionMock: Mock<(reason?: unknown) => void> = vi.fn();
 function createMockCompactionSession() {
   const session = {
@@ -126,6 +144,7 @@ function createMockCompactionSession() {
   };
   return session;
 }
+/** Reused constant for create Agent Session Mock behavior in src/agents/embedded-agent-runner. */
 export const createAgentSessionMock = vi.fn(async (_options?: unknown) => ({
   session: createMockCompactionSession(),
 }));
@@ -142,14 +161,19 @@ function createMockToolDefinitions(tools: unknown[] = []) {
     };
   });
 }
+/** Reused constant for create Open Claw Coding Tools Mock behavior in src/agents/embedded-agent-runner. */
 export const createOpenClawCodingToolsMock = vi.fn(() => []);
+/** Reused constant for guard Session Manager Mock behavior in src/agents/embedded-agent-runner. */
 export const guardSessionManagerMock = vi.fn(() => ({
   flushPendingToolResults: vi.fn(),
 }));
+/** Reused constant for apply Agent Compaction Settings From Config Mock behavior in src/agents/embedded-agent-runner. */
 export const applyAgentCompactionSettingsFromConfigMock = vi.fn();
+/** Reused constant for create Prepared Embedded Agent Settings Manager Mock behavior in src/agents/embedded-agent-runner. */
 export const createPreparedEmbeddedAgentSettingsManagerMock = vi.fn(() => ({
   getGlobalSettings: vi.fn(() => ({})),
 }));
+/** Reused constant for list Registered Plugin Agent Prompt Guidance Mock behavior in src/agents/embedded-agent-runner. */
 export const listRegisteredPluginAgentPromptGuidanceMock = vi.fn((params?: { surface?: string }) =>
   params?.surface === "subagent"
     ? ["Subagent compact command guidance."]
@@ -157,22 +181,31 @@ export const listRegisteredPluginAgentPromptGuidanceMock = vi.fn((params?: { sur
       ? ["ACP compact command guidance."]
       : ["Main compact command guidance."],
 );
+/** Reused constant for build Embedded System Prompt Mock behavior in src/agents/embedded-agent-runner. */
 export const buildEmbeddedSystemPromptMock = vi.fn(() => "");
+/** Reused constant for resolve Embedded Agent Stream Fn Mock behavior in src/agents/embedded-agent-runner. */
 export const resolveEmbeddedAgentStreamFnMock: Mock<
   (params?: unknown) => MockEmbeddedAgentStreamFn
 > = vi.fn((_params?: unknown) => vi.fn());
+/** Reused constant for register Provider Stream For Model Mock behavior in src/agents/embedded-agent-runner. */
 export const registerProviderStreamForModelMock: Mock<(params?: unknown) => unknown> = vi.fn();
+/** Reused constant for apply Extra Params To Agent Mock behavior in src/agents/embedded-agent-runner. */
 export const applyExtraParamsToAgentMock = vi.fn(() => ({ effectiveExtraParams: {} }));
+/** Reused constant for resolve Agent Transport Override Mock behavior in src/agents/embedded-agent-runner. */
 export const resolveAgentTransportOverrideMock: Mock<(params?: unknown) => string | undefined> =
   vi.fn(() => undefined);
+/** Reused constant for resolve Sandbox Context Mock behavior in src/agents/embedded-agent-runner. */
 export const resolveSandboxContextMock = vi.fn(async () => null);
+/** Reused constant for maybe Compact Agent Harness Session Mock behavior in src/agents/embedded-agent-runner. */
 export const maybeCompactAgentHarnessSessionMock: Mock<(params?: unknown) => Promise<unknown>> =
   vi.fn(async () => undefined);
+/** Reused constant for rotate Transcript After Compaction Mock behavior in src/agents/embedded-agent-runner. */
 export const rotateTranscriptAfterCompactionMock: Mock<
   (_params?: unknown) => Promise<CompactionTranscriptRotation>
 > = vi.fn(async () => ({
   rotated: false,
 }));
+/** Reused constant for enqueue Command In Lane Mock behavior in src/agents/embedded-agent-runner. */
 export const enqueueCommandInLaneMock = vi.fn((_lane: unknown, task: () => unknown) => task());
 
 function createCompactHooksRuntimePlan(params: BuildAgentRuntimePlanParams): AgentRuntimePlan {
@@ -283,6 +316,7 @@ const emptyPluginMetadataSnapshot: PluginMetadataSnapshot = {
   },
 };
 
+/** Reused helper for reset Compact Session State Mocks behavior in src/agents/embedded-agent-runner. */
 export function resetCompactSessionStateMocks(): void {
   sanitizeSessionHistoryMock.mockReset();
   sanitizeSessionHistoryMock.mockImplementation(async (params: { messages: unknown[] }) => {
@@ -348,6 +382,7 @@ export function resetCompactSessionStateMocks(): void {
   buildEmbeddedSystemPromptMock.mockReturnValue("");
 }
 
+/** Reused helper for reset Compact Hooks Harness Mocks behavior in src/agents/embedded-agent-runner. */
 export function resetCompactHooksHarnessMocks(): void {
   clearAgentHarnesses();
   hookRunner.hasHooks.mockReset();
@@ -407,6 +442,7 @@ export function resetCompactHooksHarnessMocks(): void {
   });
 }
 
+/** Reused helper for load Compact Hooks Harness behavior in src/agents/embedded-agent-runner. */
 export async function loadCompactHooksHarness(): Promise<{
   compactEmbeddedAgentSessionDirect: typeof import("./compact.js").compactEmbeddedAgentSessionDirect;
   compactEmbeddedAgentSession: typeof import("./compact.queued.js").compactEmbeddedAgentSession;

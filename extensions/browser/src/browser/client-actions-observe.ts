@@ -1,3 +1,4 @@
+// extensions/browser/src/browser client actions observe helpers and runtime behavior.
 import type { BrowserActionPathResult } from "./client-actions-types.js";
 import { buildProfileQuery, withBaseUrl } from "./client-actions-url.js";
 import { fetchBrowserJson } from "./client-fetch.js";

@@ -1,3 +1,4 @@
+// logging logger helpers and runtime behavior.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -25,6 +26,7 @@ import { redactSecrets, redactSensitiveText } from "./redact.js";
 import { loggingState } from "./state.js";
 import { formatTimestamp } from "./timestamps.js";
 import type { LoggerSettings } from "./types.js";
+/** Re-exported API for src/logging, starting with Logger Settings. */
 export type { LoggerSettings } from "./types.js";
 
 type ProcessWithBuiltinModule = NodeJS.Process & {
@@ -53,7 +55,9 @@ function resolveDefaultLogFile(defaultLogDir: string): string {
     : `${POSIX_OPENCLAW_TMP_DIR}/openclaw.log`;
 }
 
+/** Reused constant for DEFAULT LOG DIR behavior in src/logging. */
 export const DEFAULT_LOG_DIR = resolveDefaultLogDir();
+/** Reused constant for DEFAULT LOG FILE behavior in src/logging. */
 export const DEFAULT_LOG_FILE = resolveDefaultLogFile(DEFAULT_LOG_DIR); // legacy single-file path
 
 const LOG_PREFIX = "openclaw";
@@ -69,6 +73,7 @@ type ResolvedSettings = {
   file: string;
   maxFileBytes: number;
 };
+/** Shared type for Logger Resolved Settings in src/logging. */
 export type LoggerResolvedSettings = ResolvedSettings;
 type TsLogRecord = Record<string, unknown>;
 type LoggerConfigLoader = () => OpenClawConfig["logging"] | undefined;
@@ -84,6 +89,7 @@ const MAX_DIAGNOSTIC_LOG_MESSAGE_CHARS = 4 * 1024;
 const loadLoggerConfigDefault: LoggerConfigLoader = () => readLoggingConfig();
 let loadLoggerConfig: LoggerConfigLoader = loadLoggerConfigDefault;
 
+/** Reused helper for set Logger Config Loader For Tests behavior in src/logging. */
 export function setLoggerConfigLoaderForTests(loader?: LoggerConfigLoader): void {
   loadLoggerConfig = loader ?? loadLoggerConfigDefault;
   loggingState.cachedLogger = null;
@@ -523,6 +529,7 @@ function settingsChanged(a: ResolvedSettings | null, b: ResolvedSettings) {
   return a.level !== b.level || a.file !== b.file || a.maxFileBytes !== b.maxFileBytes;
 }
 
+/** Reused helper for is File Log Level Enabled behavior in src/logging. */
 export function isFileLogLevelEnabled(level: LogLevel): boolean {
   const settings = (loggingState.cachedSettings as ResolvedSettings | null) ?? resolveSettings();
   if (!loggingState.cachedSettings) {
@@ -628,6 +635,7 @@ function appendLogLine(file: string, line: string): boolean {
   }
 }
 
+/** Reused helper for get Logger behavior in src/logging. */
 export function getLogger(): TsLogger<LogObj> {
   const settings = resolveSettings();
   const cachedLogger = loggingState.cachedLogger as TsLogger<LogObj> | null;
@@ -639,6 +647,7 @@ export function getLogger(): TsLogger<LogObj> {
   return loggingState.cachedLogger as TsLogger<LogObj>;
 }
 
+/** Reused helper for get Child Logger behavior in src/logging. */
 export function getChildLogger(
   bindings?: Record<string, unknown>,
   opts?: { level?: LogLevel },
@@ -654,6 +663,7 @@ export function getChildLogger(
 }
 
 // Baileys expects a pino-like logger shape. Provide a lightweight adapter.
+/** Reused helper for to Pino Like Logger behavior in src/logging. */
 export function toPinoLikeLogger(logger: TsLogger<LogObj>, level: LogLevel): PinoLikeLogger {
   const buildChild = (bindings?: Record<string, unknown>) =>
     toPinoLikeLogger(
@@ -676,6 +686,7 @@ export function toPinoLikeLogger(logger: TsLogger<LogObj>, level: LogLevel): Pin
   };
 }
 
+/** Shared type for Pino Like Logger in src/logging. */
 export type PinoLikeLogger = {
   level: string;
   child: (bindings?: Record<string, unknown>) => PinoLikeLogger;
@@ -687,11 +698,13 @@ export type PinoLikeLogger = {
   fatal: (...args: unknown[]) => void;
 };
 
+/** Reused helper for get Resolved Logger Settings behavior in src/logging. */
 export function getResolvedLoggerSettings(): LoggerResolvedSettings {
   return resolveSettings();
 }
 
 // Test helpers
+/** Reused helper for set Logger Override behavior in src/logging. */
 export function setLoggerOverride(settings: LoggerSettings | null) {
   loggingState.overrideSettings = settings;
   loggingState.cachedLogger = null;
@@ -699,6 +712,7 @@ export function setLoggerOverride(settings: LoggerSettings | null) {
   loggingState.cachedConsoleSettings = null;
 }
 
+/** Reused helper for reset Logger behavior in src/logging. */
 export function resetLogger() {
   loggingState.cachedLogger = null;
   loggingState.cachedSettings = null;
@@ -707,10 +721,12 @@ export function resetLogger() {
   loadLoggerConfig = loadLoggerConfigDefault;
 }
 
+/** Reused constant for test Api behavior in src/logging. */
 export const testApi = {
   resolveActiveLogFile,
   shouldSkipMutatingLoggingConfigRead,
 };
+/** Re-exported API for src/logging, starting with test Api. */
 export { testApi as __test__ };
 
 function formatLocalDate(date: Date): string {

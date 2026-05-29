@@ -1,3 +1,4 @@
+/** Covers media-understanding image tool behavior and payload handling. */
 import fsSync from "node:fs";
 import fs from "node:fs/promises";
 import os from "node:os";

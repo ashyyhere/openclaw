@@ -1,3 +1,4 @@
+// Tests extensions/codex/src/app-server run attempt vision tools test behavior.
 import { describe, expect, it } from "vitest";
 import { filterToolsForVisionInputs } from "./vision-tools.js";
 

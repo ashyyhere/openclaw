@@ -1,3 +1,4 @@
+/** Tests conversion between channel routes and delivery/session context. */
 import { beforeEach, describe, expect, it } from "vitest";
 import { setActivePluginRegistry } from "../plugins/runtime.js";
 import { createChannelTestPluginBase, createTestRegistry } from "../test-utils/channel-plugins.js";

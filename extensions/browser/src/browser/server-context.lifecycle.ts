@@ -1,3 +1,4 @@
+// extensions/browser/src/browser server context lifecycle helpers and runtime behavior.
 import type { ResolvedBrowserProfile } from "./config.js";
 import { getBrowserProfileCapabilities } from "./profile-capabilities.js";
 import { getPwAiModule } from "./pw-ai-module.js";

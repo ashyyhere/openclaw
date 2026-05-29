@@ -1,3 +1,4 @@
+// config types channels helpers and runtime behavior.
 import type { ContextVisibilityMode, GroupPolicy } from "./types.base.js";
 import type { ChannelBotLoopProtectionConfig } from "./types.bot-loop-protection.js";
 import type {
@@ -14,12 +15,15 @@ import type { SlackConfig } from "./types.slack.js";
 import type { TelegramConfig } from "./types.telegram.js";
 import type { WhatsAppConfig } from "./types.whatsapp.js";
 
+/** Re-exported API for src/config. */
 export type {
   ChannelHealthMonitorConfig,
   ChannelHeartbeatVisibilityConfig,
 } from "./types.channel-health.js";
+/** Re-exported API for src/config, starting with Channel Bot Loop Protection Config. */
 export type { ChannelBotLoopProtectionConfig } from "./types.bot-loop-protection.js";
 
+/** Shared type for Channel Defaults Config in src/config. */
 export type ChannelDefaultsConfig = {
   groupPolicy?: GroupPolicy;
   contextVisibility?: ContextVisibilityMode;
@@ -29,8 +33,10 @@ export type ChannelDefaultsConfig = {
   botLoopProtection?: ChannelBotLoopProtectionConfig;
 };
 
+/** Shared type for Channel Model By Channel Config in src/config. */
 export type ChannelModelByChannelConfig = Record<string, Record<string, string>>;
 
+/** Shared type for Extension Nested Policy Config in src/config. */
 export type ExtensionNestedPolicyConfig = {
   policy?: string;
   allowFrom?: Array<string | number> | ReadonlyArray<string | number>;
@@ -76,6 +82,7 @@ export type ExtensionChannelConfig = {
   [key: string]: unknown;
 };
 
+/** Shared type for Channels Config in src/config. */
 export interface ChannelsConfig {
   defaults?: ChannelDefaultsConfig;
   /** Map provider -> channel id -> model override. */

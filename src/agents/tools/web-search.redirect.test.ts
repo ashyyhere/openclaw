@@ -1,3 +1,4 @@
+/** Covers citation redirect handling for web_search results. */
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 const { withStrictWebToolsEndpointMock } = vi.hoisted(() => ({

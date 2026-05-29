@@ -1,8 +1,10 @@
+/** Host-backed sandbox filesystem bridge for tests. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { resolveSandboxPath } from "../sandbox-paths.js";
 import type { SandboxFsBridge, SandboxFsStat, SandboxResolvedPath } from "../sandbox/fs-bridge.js";
 
+/** Creates a sandbox fs bridge using a caller-provided resolver. */
 export function createSandboxFsBridgeFromResolver(
   resolvePath: (filePath: string, cwd?: string) => SandboxResolvedPath,
 ): SandboxFsBridge {
@@ -76,6 +78,7 @@ export function createSandboxFsBridgeFromResolver(
   };
 }
 
+/** Creates a sandbox fs bridge rooted at a host directory. */
 export function createHostSandboxFsBridge(rootDir: string): SandboxFsBridge {
   const root = path.resolve(rootDir);
 

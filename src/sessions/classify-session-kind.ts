@@ -1,5 +1,7 @@
+// sessions classify session kind helpers and runtime behavior.
 import { isCronSessionKey } from "./session-key-utils.js";
 
+/** Shared type for Session Kind in src/sessions. */
 export type SessionKind = "cron" | "direct" | "group" | "global" | "spawn-child" | "unknown";
 
 /**

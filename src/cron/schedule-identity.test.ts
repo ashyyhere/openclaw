@@ -1,3 +1,4 @@
+// Tests cron schedule identity test behavior.
 import { describe, expect, it } from "vitest";
 import { cronSchedulingInputsEqual, tryCronScheduleIdentity } from "./schedule-identity.js";
 

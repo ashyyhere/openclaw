@@ -1,3 +1,4 @@
+// extensions/image-generation-core/src runtime helpers and runtime behavior.
 export {
   generateImage,
   listRuntimeImageGenerationProviders,

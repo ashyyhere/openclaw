@@ -1,3 +1,4 @@
+// extensions/imessage/src/monitor reaction system event helpers and runtime behavior.
 import type { RuntimeEnv } from "openclaw/plugin-sdk/runtime-env";
 import { enqueueSystemEvent } from "openclaw/plugin-sdk/system-event-runtime";
 

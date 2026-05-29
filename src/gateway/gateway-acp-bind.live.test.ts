@@ -1,3 +1,4 @@
+// Tests gateway gateway acp bind live test behavior.
 import { randomBytes, randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import net from "node:net";

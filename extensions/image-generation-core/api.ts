@@ -1,4 +1,7 @@
+// extensions/image-generation-core api helpers and runtime behavior.
+/** Re-exported image-generation-core plugin public API, starting with Auth Profile Store. */
 export type { AuthProfileStore } from "openclaw/plugin-sdk/image-generation-core";
+/** Re-exported image-generation-core plugin public API. */
 export {
   buildNoCapabilityModelConfiguredMessage,
   createSubsystemLogger,
@@ -16,6 +19,7 @@ export {
   resolveCapabilityModelCandidates,
   throwCapabilityGenerationFailure,
 } from "openclaw/plugin-sdk/image-generation-core";
+/** Re-exported image-generation-core plugin public API. */
 export type {
   FallbackAttempt,
   GeneratedImageAsset,

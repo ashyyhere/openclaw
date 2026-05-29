@@ -1,7 +1,10 @@
+/** Public ACP runtime adapter contracts used by core and backend plugins. */
 export type AcpRuntimePromptMode = "prompt" | "steer";
 
+/** Shared type for Acp Runtime Session Mode in src/acp/runtime. */
 export type AcpRuntimeSessionMode = "persistent" | "oneshot";
 
+/** Shared type for Acp Session Update Tag in src/acp/runtime. */
 export type AcpSessionUpdateTag =
   | "agent_message_chunk"
   | "agent_thought_chunk"
@@ -15,8 +18,10 @@ export type AcpSessionUpdateTag =
   | "plan"
   | (string & {});
 
+/** Shared type for Acp Runtime Control in src/acp/runtime. */
 export type AcpRuntimeControl = "session/set_mode" | "session/set_config_option" | "session/status";
 
+/** Shared type for Acp Runtime Handle in src/acp/runtime. */
 export type AcpRuntimeHandle = {
   sessionKey: string;
   backend: string;
@@ -31,6 +36,7 @@ export type AcpRuntimeHandle = {
   agentSessionId?: string;
 };
 
+/** Shared type for Acp Runtime Ensure Input in src/acp/runtime. */
 export type AcpRuntimeEnsureInput = {
   sessionKey: string;
   agent: string;
@@ -44,11 +50,13 @@ export type AcpRuntimeEnsureInput = {
   env?: Record<string, string>;
 };
 
+/** Shared type for Acp Runtime Turn Attachment in src/acp/runtime. */
 export type AcpRuntimeTurnAttachment = {
   mediaType: string;
   data: string;
 };
 
+/** Shared type for Acp Runtime Turn Input in src/acp/runtime. */
 export type AcpRuntimeTurnInput = {
   handle: AcpRuntimeHandle;
   text: string;
@@ -58,6 +66,7 @@ export type AcpRuntimeTurnInput = {
   signal?: AbortSignal;
 };
 
+/** Shared type for Acp Runtime Capabilities in src/acp/runtime. */
 export type AcpRuntimeCapabilities = {
   controls: AcpRuntimeControl[];
   /**
@@ -67,6 +76,7 @@ export type AcpRuntimeCapabilities = {
   configOptionKeys?: string[];
 };
 
+/** Shared type for Acp Runtime Status in src/acp/runtime. */
 export type AcpRuntimeStatus = {
   summary?: string;
   /** Backend-local record identifier, if exposed by adapter/runtime. */
@@ -78,6 +88,7 @@ export type AcpRuntimeStatus = {
   details?: Record<string, unknown>;
 };
 
+/** Shared type for Acp Runtime Doctor Report in src/acp/runtime. */
 export type AcpRuntimeDoctorReport = {
   ok: boolean;
   code?: string;
@@ -86,6 +97,7 @@ export type AcpRuntimeDoctorReport = {
   details?: string[];
 };
 
+/** Shared type for Acp Runtime Event in src/acp/runtime. */
 export type AcpRuntimeEvent =
   | {
       type: "text_delta";
@@ -120,6 +132,7 @@ export type AcpRuntimeEvent =
       retryable?: boolean;
     };
 
+/** Shared type for Acp Runtime Turn Result Error in src/acp/runtime. */
 export type AcpRuntimeTurnResultError = {
   message: string;
   code?: string;
@@ -127,6 +140,7 @@ export type AcpRuntimeTurnResultError = {
   retryable?: boolean;
 };
 
+/** Shared type for Acp Runtime Turn Result in src/acp/runtime. */
 export type AcpRuntimeTurnResult =
   | {
       status: "completed";
@@ -141,6 +155,7 @@ export type AcpRuntimeTurnResult =
       error: AcpRuntimeTurnResultError;
     };
 
+/** Shared type for Acp Runtime Turn in src/acp/runtime. */
 export interface AcpRuntimeTurn {
   readonly requestId: string;
   readonly events: AsyncIterable<AcpRuntimeEvent>;
@@ -149,6 +164,7 @@ export interface AcpRuntimeTurn {
   closeStream(input?: { reason?: string }): Promise<void>;
 }
 
+/** Shared type for Acp Runtime in src/acp/runtime. */
 export interface AcpRuntime {
   ensureSession(input: AcpRuntimeEnsureInput): Promise<AcpRuntimeHandle>;
 

@@ -1,3 +1,4 @@
+// extensions/qa-lab/src bus server helpers and runtime behavior.
 import { createServer, type IncomingMessage, type Server, type ServerResponse } from "node:http";
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";
 import {

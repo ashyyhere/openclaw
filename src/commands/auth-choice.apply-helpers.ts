@@ -1,3 +1,4 @@
+/** Compatibility barrel for provider auth input normalization helpers. */
 export {
   normalizeSecretInputModeInput,
   normalizeTokenProviderInput,

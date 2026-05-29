@@ -1,3 +1,4 @@
+// Tests infra approval native route coordinator test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   clearApprovalNativeRouteStateForTest,

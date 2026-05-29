@@ -5,6 +5,7 @@
 import { formatSkillsForPrompt, type Skill } from "../../skills/loading/session.js";
 import { getDocsPath, getExamplesPath, getReadmePath } from "../config.js";
 
+/** Shared type for Build System Prompt Options in src/agents/sessions. */
 export interface BuildSystemPromptOptions {
   /** Custom system prompt (replaces default). */
   customPrompt?: string;

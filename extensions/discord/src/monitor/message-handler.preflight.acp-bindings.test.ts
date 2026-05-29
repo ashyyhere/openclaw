@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/monitor message handler preflight acp bindings test behavior.
 import * as conversationBindingRuntime from "openclaw/plugin-sdk/conversation-binding-runtime";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 

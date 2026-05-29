@@ -1,3 +1,4 @@
+// Tests ui/src/ui/chat tool expansion state test behavior.
 import { afterEach, describe, expect, it } from "vitest";
 import type { MessageGroup } from "../types/chat-types.ts";
 import {

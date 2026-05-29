@@ -1,3 +1,4 @@
+// link-understanding runner helpers and runtime behavior.
 import type { MsgContext } from "../auto-reply/templating.js";
 import { applyTemplate } from "../auto-reply/templating.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -184,6 +185,7 @@ async function runLinkEntries(params: {
   return null;
 }
 
+/** Reused helper for run Link Understanding behavior in src/link-understanding. */
 export async function runLinkUnderstanding(params: {
   cfg: OpenClawConfig;
   ctx: MsgContext;

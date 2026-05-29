@@ -1,3 +1,4 @@
+/** Regression coverage for CLI runner system prompt helper behavior. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { clearPluginCommands, registerPluginCommand } from "../../plugins/commands.js";
 import { buildCliAgentSystemPrompt } from "./helpers.js";

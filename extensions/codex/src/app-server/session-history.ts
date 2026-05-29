@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server session history helpers and runtime behavior.
 import fs from "node:fs/promises";
 import type { AgentMessage } from "openclaw/plugin-sdk/agent-harness-runtime";
 import type { SessionEntry } from "openclaw/plugin-sdk/agent-sessions";

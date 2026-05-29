@@ -1,3 +1,4 @@
+// Tests extensions/alibaba video generation provider test behavior.
 import {
   getProviderHttpMocks,
   installProviderHttpMockCleanup,

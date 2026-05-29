@@ -1,3 +1,4 @@
+// Coverage for typing policy decisions.
 import { describe, expect, it } from "vitest";
 import { resolveRunTypingPolicy } from "./typing-policy.js";
 

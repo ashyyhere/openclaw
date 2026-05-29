@@ -1,8 +1,11 @@
+// terminal stream writer helpers and runtime behavior.
+/** Shared type for Safe Stream Writer Options in src/terminal. */
 export type SafeStreamWriterOptions = {
   beforeWrite?: () => void;
   onBrokenPipe?: (err: NodeJS.ErrnoException, stream: NodeJS.WriteStream) => void;
 };
 
+/** Shared type for Safe Stream Writer in src/terminal. */
 export type SafeStreamWriter = {
   write: (stream: NodeJS.WriteStream, text: string) => boolean;
   writeLine: (stream: NodeJS.WriteStream, text: string) => boolean;
@@ -15,6 +18,7 @@ function isBrokenPipeError(err: unknown): err is NodeJS.ErrnoException {
   return code === "EPIPE" || code === "EIO";
 }
 
+/** Reused helper for create Safe Stream Writer behavior in src/terminal. */
 export function createSafeStreamWriter(options: SafeStreamWriterOptions = {}): SafeStreamWriter {
   let closed = false;
   let notified = false;

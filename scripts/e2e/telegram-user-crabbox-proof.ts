@@ -1,4 +1,5 @@
 #!/usr/bin/env -S node --import tsx
+// scripts/e2e telegram user crabbox proof helpers and runtime behavior.
 
 import { type ChildProcess, spawn, type SpawnOptionsWithoutStdio } from "node:child_process";
 import fs from "node:fs";

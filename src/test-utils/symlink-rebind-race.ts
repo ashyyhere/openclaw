@@ -1,7 +1,9 @@
+// test-utils symlink rebind race helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { vi } from "vitest";
 
+/** Reused helper for create Rebindable Directory Alias behavior in src/test-utils. */
 export async function createRebindableDirectoryAlias(params: {
   aliasPath: string;
   targetPath: string;
@@ -12,6 +14,7 @@ export async function createRebindableDirectoryAlias(params: {
   await fs.symlink(targetPath, aliasPath, process.platform === "win32" ? "junction" : undefined);
 }
 
+/** Reused helper for with Realpath Symlink Rebind Race behavior in src/test-utils. */
 export async function withRealpathSymlinkRebindRace<T>(params: {
   shouldFlip: (realpathInput: string) => boolean;
   symlinkPath: string;

@@ -1,3 +1,4 @@
+// extensions/deepseek thinking helpers and runtime behavior.
 import type { ProviderThinkingProfile } from "openclaw/plugin-sdk/plugin-entry";
 import { isDeepSeekV4ModelId } from "./models.js";
 

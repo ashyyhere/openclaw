@@ -1,3 +1,4 @@
+// gateway mcp http request helpers and runtime behavior.
 import type { IncomingMessage, ServerResponse } from "node:http";
 import type { SourceReplyDeliveryMode } from "../auto-reply/get-reply-options.types.js";
 import type { InboundEventKind } from "../channels/inbound-event/kind.js";
@@ -79,6 +80,7 @@ function rejectsBrowserLoopbackRequest(req: IncomingMessage): boolean {
   }).ok;
 }
 
+/** Reused helper for validate Mcp Loopback Request behavior in src/gateway. */
 export function validateMcpLoopbackRequest(params: {
   req: IncomingMessage;
   res: ServerResponse;
@@ -164,6 +166,7 @@ export function validateMcpLoopbackRequest(params: {
   return { senderIsOwner };
 }
 
+/** Reused helper for read Mcp Http Body behavior in src/gateway. */
 export async function readMcpHttpBody(req: IncomingMessage): Promise<string> {
   return await new Promise((resolve, reject) => {
     const chunks: Buffer[] = [];
@@ -182,6 +185,7 @@ export async function readMcpHttpBody(req: IncomingMessage): Promise<string> {
   });
 }
 
+/** Reused helper for resolve Mcp Request Context behavior in src/gateway. */
 export function resolveMcpRequestContext(
   req: IncomingMessage,
   cfg: OpenClawConfig,

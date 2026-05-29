@@ -1,3 +1,4 @@
+// infra exec safe bin trust helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import {
@@ -26,6 +27,7 @@ type TrustedSafeBinCache = {
   dirs: Set<string>;
 };
 
+/** Shared type for Writable Trusted Safe Bin Dir in src/infra. */
 export type WritableTrustedSafeBinDir = {
   dir: string;
   groupWritable: boolean;
@@ -84,6 +86,7 @@ function normalizeTrustedDir(value: string, forComparison = true): string | null
   return forComparison ? normalizeTrustComparisonPath(trimmed) : path.resolve(trimmed);
 }
 
+/** Reused helper for normalize Trusted Safe Bin Dirs behavior in src/infra. */
 export function normalizeTrustedSafeBinDirs(entries?: readonly string[] | null): string[] {
   if (!Array.isArray(entries)) {
     return [];
@@ -165,6 +168,7 @@ function buildTrustedSafeBinCacheKey(
   return `${dirsKey}\u0002${binsKey}\u0002${targetDirsKey}`;
 }
 
+/** Reused helper for build Trusted Safe Bin Dirs behavior in src/infra. */
 export function buildTrustedSafeBinDirs(params: TrustedSafeBinDirsParams = {}): Set<string> {
   const baseDirs = params.baseDirs ?? DEFAULT_SAFE_BIN_TRUSTED_DIRS;
   const extraDirs = params.extraDirs ?? [];
@@ -178,6 +182,7 @@ export function buildTrustedSafeBinDirs(params: TrustedSafeBinDirsParams = {}): 
   return new Set([...resolveTrustedSafeBinDirs(entries), ...targetDirs]);
 }
 
+/** Reused helper for get Trusted Safe Bin Dirs behavior in src/infra. */
 export function getTrustedSafeBinDirs(
   params: {
     baseDirs?: readonly string[];
@@ -205,12 +210,14 @@ export function getTrustedSafeBinDirs(
   return dirs;
 }
 
+/** Reused helper for is Trusted Safe Bin Path behavior in src/infra. */
 export function isTrustedSafeBinPath(params: TrustedSafeBinPathParams): boolean {
   const trustedDirs = params.trustedDirs ?? getTrustedSafeBinDirs();
   const resolvedDir = normalizeTrustComparisonPath(path.dirname(path.resolve(params.resolvedPath)));
   return trustedDirs.has(resolvedDir);
 }
 
+/** Reused helper for list Writable Explicit Trusted Safe Bin Dirs behavior in src/infra. */
 export function listWritableExplicitTrustedSafeBinDirs(
   entries?: readonly string[] | null,
 ): WritableTrustedSafeBinDir[] {

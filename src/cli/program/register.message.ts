@@ -1,3 +1,4 @@
+/** Registers message command group and subcommands. */
 import type { Command } from "commander";
 import { formatDocsLink } from "../../../packages/terminal-core/src/links.js";
 import { theme } from "../../../packages/terminal-core/src/theme.js";
@@ -21,6 +22,7 @@ import { registerMessageReadEditDeleteCommands } from "./message/register.read-e
 import { registerMessageSendCommand } from "./message/register.send.js";
 import { registerMessageThreadCommands } from "./message/register.thread.js";
 
+/** Reused helper for register Message Commands behavior in src/cli/program. */
 export function registerMessageCommands(program: Command, ctx: ProgramContext) {
   const message = program
     .command("message")

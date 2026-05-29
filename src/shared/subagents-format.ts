@@ -1,5 +1,8 @@
+// shared subagents format helpers and runtime behavior.
+/** Re-exported API for src/shared, starting with format Duration Compact. */
 export { formatDurationCompact } from "../infra/format-time/format-duration.ts";
 
+/** Reused helper for format Token Short behavior in src/shared. */
 export function formatTokenShort(value?: number) {
   if (!value || !Number.isFinite(value) || value <= 0) {
     return undefined;
@@ -17,6 +20,7 @@ export function formatTokenShort(value?: number) {
   return `${(n / 1_000_000).toFixed(1).replace(/\.0$/, "")}m`;
 }
 
+/** Reused helper for truncate Line behavior in src/shared. */
 export function truncateLine(value: string, maxLength: number) {
   if (value.length <= maxLength) {
     return value;
@@ -24,12 +28,14 @@ export function truncateLine(value: string, maxLength: number) {
   return `${value.slice(0, maxLength).trimEnd()}...`;
 }
 
+/** Shared type for Token Usage Like in src/shared. */
 export type TokenUsageLike = {
   totalTokens?: unknown;
   inputTokens?: unknown;
   outputTokens?: unknown;
 };
 
+/** Reused helper for resolve Total Tokens behavior in src/shared. */
 export function resolveTotalTokens(entry?: TokenUsageLike) {
   if (!entry || typeof entry !== "object") {
     return undefined;
@@ -43,6 +49,7 @@ export function resolveTotalTokens(entry?: TokenUsageLike) {
   return total > 0 ? total : undefined;
 }
 
+/** Reused helper for resolve Io Tokens behavior in src/shared. */
 export function resolveIoTokens(entry?: TokenUsageLike) {
   if (!entry || typeof entry !== "object") {
     return undefined;
@@ -62,6 +69,7 @@ export function resolveIoTokens(entry?: TokenUsageLike) {
   return { input, output, total };
 }
 
+/** Reused helper for format Token Usage Display behavior in src/shared. */
 export function formatTokenUsageDisplay(entry?: TokenUsageLike) {
   const io = resolveIoTokens(entry);
   const promptCache = resolveTotalTokens(entry);

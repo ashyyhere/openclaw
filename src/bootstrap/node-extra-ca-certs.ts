@@ -1,14 +1,18 @@
+// Node TLS environment helpers for system CA bundle discovery.
 import fs from "node:fs";
 
+/** Common Linux system CA bundle paths checked when Node does not inherit OS trust. */
 export const LINUX_CA_BUNDLE_PATHS = [
   "/etc/ssl/certs/ca-certificates.crt",
   "/etc/pki/tls/certs/ca-bundle.crt",
   "/etc/ssl/ca-bundle.pem",
 ] as const;
 
+/** Mutable environment map used by startup environment resolvers. */
 export type EnvMap = Record<string, string | undefined>;
 type AccessSyncFn = (path: string, mode?: number) => void;
 
+/** Resolve the first readable Linux system CA bundle path. */
 export function resolveLinuxSystemCaBundle(
   params: {
     platform?: NodeJS.Platform;
@@ -32,6 +36,7 @@ export function resolveLinuxSystemCaBundle(
   return undefined;
 }
 
+/** Return true when the current Node binary appears managed by a version manager. */
 export function isNodeVersionManagerRuntime(
   env: EnvMap = process.env as EnvMap,
   execPath: string = process.execPath,
@@ -42,6 +47,7 @@ export function isNodeVersionManagerRuntime(
   return execPath.includes("/.nvm/");
 }
 
+/** Resolve automatic NODE_EXTRA_CA_CERTS when the current runtime needs explicit CA trust. */
 export function resolveAutoNodeExtraCaCerts(
   params: {
     env?: EnvMap;

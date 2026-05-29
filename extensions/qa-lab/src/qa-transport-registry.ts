@@ -1,3 +1,4 @@
+// extensions/qa-lab/src qa transport registry helpers and runtime behavior.
 import type { QaBusState } from "./bus-state.js";
 import {
   createQaChannelTransport,

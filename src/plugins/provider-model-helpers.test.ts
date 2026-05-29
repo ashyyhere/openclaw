@@ -1,3 +1,4 @@
+// Tests plugins provider model helpers test behavior.
 import type { ModelRegistry } from "openclaw/plugin-sdk/agent-sessions";
 import { describe, expect, it } from "vitest";
 import { cloneFirstTemplateModel, matchesExactOrPrefix } from "./provider-model-helpers.js";

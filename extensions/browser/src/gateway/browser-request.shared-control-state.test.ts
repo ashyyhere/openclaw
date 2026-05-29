@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/gateway browser request shared control state test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { getFreePort } from "../browser/test-port.js";
 import type { OpenClawConfig } from "../config/config.js";

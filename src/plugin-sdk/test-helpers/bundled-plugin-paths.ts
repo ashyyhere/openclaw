@@ -1,3 +1,4 @@
+// plugin-sdk/test-helpers bundled plugin paths helpers and runtime behavior.
 export const BUNDLED_PLUGIN_ROOT_DIR = "extensions";
 export const BUNDLED_PLUGIN_PATH_PREFIX = `${BUNDLED_PLUGIN_ROOT_DIR}/`;
 export const BUNDLED_PLUGIN_TEST_GLOB = `${BUNDLED_PLUGIN_ROOT_DIR}/**/*.test.ts`;

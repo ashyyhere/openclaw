@@ -1,3 +1,4 @@
+// gateway plugin node capability helpers and runtime behavior.
 import { randomBytes } from "node:crypto";
 import { safeEqualSecret } from "../security/secret-equal.js";
 import {
@@ -7,22 +8,27 @@ import {
   resolveExpiresAtMsFromDurationMs,
 } from "../shared/number-coercion.js";
 
+/** Reused constant for PLUGIN NODE CAPABILITY PATH PREFIX behavior in src/gateway. */
 export const PLUGIN_NODE_CAPABILITY_PATH_PREFIX = "/__openclaw__/cap";
 const PLUGIN_NODE_CAPABILITY_QUERY_PARAM = "oc_cap";
+/** Reused constant for DEFAULT PLUGIN NODE CAPABILITY TTL MS behavior in src/gateway. */
 export const DEFAULT_PLUGIN_NODE_CAPABILITY_TTL_MS = 10 * 60_000;
 
+/** Shared type for Plugin Node Capability Surface in src/gateway. */
 export type PluginNodeCapabilitySurface = {
   surface: string;
   ttlMs?: number;
   scopeKey?: string;
 };
 
+/** Shared type for Plugin Node Capability Client in src/gateway. */
 export type PluginNodeCapabilityClient = {
   pluginSurfaceUrls?: Record<string, string>;
   pluginNodeCapabilitySurfaces?: Record<string, PluginNodeCapabilitySurface>;
   pluginNodeCapabilities?: Record<string, { capability: string; expiresAtMs: number }>;
 };
 
+/** Reused helper for index Plugin Node Capability Surfaces behavior in src/gateway. */
 export function indexPluginNodeCapabilitySurfaces(
   surfaces: readonly PluginNodeCapabilitySurface[],
 ): Record<string, PluginNodeCapabilitySurface> {
@@ -44,6 +50,7 @@ export function indexPluginNodeCapabilitySurfaces(
   return indexed;
 }
 
+/** Shared type for Normalized Plugin Node Capability Url in src/gateway. */
 export type NormalizedPluginNodeCapabilityUrl = {
   pathname: string;
   capability?: string;
@@ -71,6 +78,7 @@ function resolvePluginNodeCapabilityStorageKey(surface: PluginNodeCapabilitySurf
   return scopeKey ? `${normalizedSurface}\0${scopeKey}` : normalizedSurface;
 }
 
+/** Reused helper for resolve Plugin Node Capability Ttl Ms behavior in src/gateway. */
 export function resolvePluginNodeCapabilityTtlMs(surface: PluginNodeCapabilitySurface) {
   return asPositiveSafeInteger(surface.ttlMs) ?? DEFAULT_PLUGIN_NODE_CAPABILITY_TTL_MS;
 }
@@ -82,10 +90,12 @@ export function resolvePluginNodeCapabilityExpiresAtMs(
   return resolveExpiresAtMsFromDurationMs(resolvePluginNodeCapabilityTtlMs(surface), { nowMs });
 }
 
+/** Reused helper for mint Plugin Node Capability Token behavior in src/gateway. */
 export function mintPluginNodeCapabilityToken(): string {
   return randomBytes(18).toString("base64url");
 }
 
+/** Reused helper for build Plugin Node Capability Scoped Host Url behavior in src/gateway. */
 export function buildPluginNodeCapabilityScopedHostUrl(
   baseUrl: string,
   capability: string,
@@ -107,6 +117,7 @@ export function buildPluginNodeCapabilityScopedHostUrl(
   }
 }
 
+/** Reused helper for replace Plugin Node Capability In Scoped Host Url behavior in src/gateway. */
 export function replacePluginNodeCapabilityInScopedHostUrl(
   scopedUrl: string,
   capability: string,
@@ -140,6 +151,7 @@ export function replacePluginNodeCapabilityInScopedHostUrl(
   }
 }
 
+/** Reused helper for normalize Plugin Node Capability Scoped Url behavior in src/gateway. */
 export function normalizePluginNodeCapabilityScopedUrl(
   rawUrl: string,
 ): NormalizedPluginNodeCapabilityUrl {
@@ -199,6 +211,7 @@ export function normalizePluginNodeCapabilityScopedUrl(
   };
 }
 
+/** Reused helper for set Client Plugin Node Capability behavior in src/gateway. */
 export function setClientPluginNodeCapability(params: {
   client: PluginNodeCapabilityClient;
   surface: PluginNodeCapabilitySurface;
@@ -218,6 +231,7 @@ export function setClientPluginNodeCapability(params: {
   };
 }
 
+/** Reused helper for refresh Client Plugin Node Capability behavior in src/gateway. */
 export function refreshClientPluginNodeCapability(params: {
   client: PluginNodeCapabilityClient;
   surface: PluginNodeCapabilitySurface;
@@ -265,6 +279,7 @@ export function refreshClientPluginNodeCapability(params: {
   };
 }
 
+/** Reused helper for has Authorized Plugin Node Capability behavior in src/gateway. */
 export function hasAuthorizedPluginNodeCapability(params: {
   clients: Iterable<PluginNodeCapabilityClient>;
   surface: PluginNodeCapabilitySurface;

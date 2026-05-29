@@ -1,12 +1,16 @@
+// Shared reply dispatcher types.
 import type { ReplyPayload } from "../types.js";
 
+/** Shared type for Reply Dispatch Kind in src/auto-reply/reply. */
 export type ReplyDispatchKind = "tool" | "block" | "final";
 
+/** Shared type for Reply Dispatch Before Deliver in src/auto-reply/reply. */
 export type ReplyDispatchBeforeDeliver = (
   payload: ReplyPayload,
   info: { kind: ReplyDispatchKind },
 ) => Promise<ReplyPayload | null> | ReplyPayload | null;
 
+/** Shared type for Reply Dispatcher in src/auto-reply/reply. */
 export type ReplyDispatcher = {
   sendToolResult: (payload: ReplyPayload) => boolean;
   sendBlockReply: (payload: ReplyPayload) => boolean;

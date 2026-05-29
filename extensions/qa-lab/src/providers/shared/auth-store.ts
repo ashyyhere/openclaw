@@ -1,3 +1,4 @@
+// extensions/qa-lab/src/providers/shared auth store helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 

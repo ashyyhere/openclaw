@@ -1,3 +1,4 @@
+// extensions/matrix/src outbound helpers and runtime behavior.
 import { createReplyToFanout } from "openclaw/plugin-sdk/channel-outbound";
 import {
   renderMessagePresentationFallbackText,

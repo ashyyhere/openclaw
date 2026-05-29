@@ -1,3 +1,4 @@
+/** Tests interactive prompt helpers and yes/verbose global flags. */
 import readline from "node:readline/promises";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { isYes, setVerbose, setYes } from "../globals.js";

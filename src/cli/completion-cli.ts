@@ -1,3 +1,4 @@
+/** Registers shell completion commands and generates completion scripts. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { Command, Option } from "commander";
@@ -21,6 +22,7 @@ import { getCoreCliCommandNames, registerCoreCliByName } from "./program/command
 import { getProgramContext } from "./program/program-context.js";
 import { getSubCliEntries, registerSubCliByName } from "./program/register.subclis-core.js";
 
+/** Reused helper for get Completion Script behavior in src/cli. */
 export function getCompletionScript(shell: CompletionShell, program: Command): string {
   if (shell === "zsh") {
     return generateZshCompletion(program);
@@ -167,6 +169,7 @@ async function registerSubcommandsForCompletion(program: Command): Promise<void>
   }
 }
 
+/** Reused helper for register Completion Cli behavior in src/cli. */
 export function registerCompletionCli(program: Command) {
   program
     .command("completion")

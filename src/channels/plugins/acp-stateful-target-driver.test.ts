@@ -1,3 +1,4 @@
+// Coverage for ACP stateful target driver behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const resetMocks = vi.hoisted(() => ({

@@ -1,3 +1,4 @@
+// Tests extensions/oc-path/src/oc-path/tests/scenarios real world fixtures test behavior.
 import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";

@@ -1,3 +1,4 @@
+// Tests ui/src/styles/chat text test behavior.
 import { describe, expect, it } from "vitest";
 import { readStyleSheet } from "../../../../test/helpers/ui-style-fixtures.js";
 

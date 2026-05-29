@@ -1,3 +1,4 @@
+// extensions/openai embedding provider helpers and runtime behavior.
 import {
   fetchRemoteEmbeddingVectors,
   resolveRemoteEmbeddingClient,

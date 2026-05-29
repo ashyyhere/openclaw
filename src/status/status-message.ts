@@ -1,3 +1,4 @@
+// status status message helpers and runtime behavior.
 import fs from "node:fs";
 import { resolveContextTokensForModel } from "../agents/context.js";
 import { DEFAULT_CONTEXT_TOKENS, DEFAULT_MODEL, DEFAULT_PROVIDER } from "../agents/defaults.js";
@@ -68,6 +69,7 @@ type AgentConfig = Partial<AgentDefaults> & {
   model?: AgentDefaults["model"] | string;
 };
 
+/** Reused constant for format Token Count behavior in src/status. */
 export const formatTokenCount = formatTokenCountShared;
 
 type QueueStatus = {
@@ -79,6 +81,7 @@ type QueueStatus = {
   showDetails?: boolean;
 };
 
+/** Shared type for Status Args in src/status. */
 export type StatusArgs = {
   config?: OpenClawConfig;
   agent: AgentConfig;
@@ -246,6 +249,7 @@ const formatEstimatedContextBudgetTokens = (
   return `~${totalLabel}/${ctxLabel}${pct !== null ? ` (${pct}% est)` : " (est)"}`;
 };
 
+/** Reused constant for format Context Usage Short behavior in src/status. */
 export const formatContextUsageShort = (
   total: number | null | undefined,
   contextTokens: number | null | undefined,
@@ -545,6 +549,7 @@ function hasUserPinnedModelSelection(entry: SessionEntry | undefined): boolean {
   return !hasSessionAutoModelFallbackProvenance(entry);
 }
 
+/** Reused helper for build Status Message behavior in src/status. */
 export function buildStatusMessage(args: StatusArgs): string {
   const now = args.now ?? Date.now();
   const entry = args.sessionEntry;

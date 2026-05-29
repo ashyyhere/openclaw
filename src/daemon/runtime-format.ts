@@ -1,3 +1,4 @@
+// daemon runtime format helpers and runtime behavior.
 import { formatRuntimeStatusWithDetails } from "../infra/runtime-status.ts";
 import { getSystemdCgroupHygieneSummary } from "./service-runtime.js";
 
@@ -28,6 +29,7 @@ function formatLastExitStatus(status: number): string {
   return signalName ? `last exit ${status} (${signalName})` : `last exit ${status}`;
 }
 
+/** Reused helper for format Runtime Status behavior in src/daemon. */
 export function formatRuntimeStatus(runtime: ServiceRuntimeLike | undefined): string | null {
   if (!runtime) {
     return null;

@@ -1,3 +1,4 @@
+/** Resolves channel setup plugins for command flows. */
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../../agents/agent-scope.js";
 import {
   listChannelPluginCatalogEntries,
@@ -105,6 +106,7 @@ function loadScopedChannelPlugin(params: {
   return findScopedChannelPlugin(snapshot, params.channelId, params.supports);
 }
 
+/** Reused helper for resolve Installable Channel Plugin behavior in src/commands/channel-setup. */
 export async function resolveInstallableChannelPlugin(params: {
   cfg: OpenClawConfig;
   runtime: RuntimeEnv;

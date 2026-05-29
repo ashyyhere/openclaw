@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/imessage/src approval handler runtime behavior.
 import {
   buildChannelApprovalExpiredText,
   buildChannelApprovalResolvedText,

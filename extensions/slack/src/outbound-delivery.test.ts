@@ -1,3 +1,4 @@
+// Tests extensions/slack/src outbound delivery test behavior.
 import {
   addTestHook,
   createEmptyPluginRegistry,

@@ -1,3 +1,4 @@
+// Tests config zod schema markdown tables test behavior.
 import { describe, expect, it } from "vitest";
 import { MarkdownTableModeSchema } from "./zod-schema.core.js";
 

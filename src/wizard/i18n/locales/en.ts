@@ -1,5 +1,7 @@
+// wizard/i18n/locales en helpers and runtime behavior.
 import type { WizardTranslationMap } from "../types.js";
 
+/** Reused constant for en behavior in src/wizard/i18n. */
 export const en = {
   common: {
     back: "Back",

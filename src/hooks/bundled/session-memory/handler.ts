@@ -131,6 +131,7 @@ function resolveDisplaySessionKey(params: {
  */
 const pendingSessionMemoryWrites = new Set<Promise<void>>();
 
+/** Reused helper for flush Session Memory Writes For Test behavior in src/hooks/bundled. */
 export async function flushSessionMemoryWritesForTest(): Promise<void> {
   await Promise.allSettled(pendingSessionMemoryWrites);
 }

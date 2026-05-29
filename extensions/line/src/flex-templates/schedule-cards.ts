@@ -1,3 +1,4 @@
+// extensions/line/src/flex-templates schedule cards helpers and runtime behavior.
 import { attachFooterText } from "./common.js";
 import type { Action, FlexBox, FlexBubble, FlexComponent, FlexText } from "./types.js";
 

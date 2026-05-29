@@ -1,3 +1,4 @@
+// extensions/google-meet/src/test-support plugin harness helpers and runtime behavior.
 import type { OpenClawPluginApi } from "openclaw/plugin-sdk/plugin-entry";
 import { createTestPluginApi } from "openclaw/plugin-sdk/plugin-test-api";
 import { vi } from "vitest";

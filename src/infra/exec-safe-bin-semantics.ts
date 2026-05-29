@@ -1,3 +1,4 @@
+// infra exec safe bin semantics helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
 type SafeBinSemanticValidationParams = {
@@ -54,6 +55,7 @@ const SAFE_BIN_SEMANTIC_RULES: Readonly<Record<string, SafeBinSemanticRule>> = {
   },
 };
 
+/** Reused helper for normalize Safe Bin Name behavior in src/infra. */
 export function normalizeSafeBinName(raw: string): string {
   const trimmed = normalizeLowercaseStringOrEmpty(raw);
   if (!trimmed) {
@@ -69,10 +71,12 @@ function getSafeBinSemanticRule(binName?: string): SafeBinSemanticRule | undefin
   return normalized ? SAFE_BIN_SEMANTIC_RULES[normalized] : undefined;
 }
 
+/** Reused helper for validate Safe Bin Semantics behavior in src/infra. */
 export function validateSafeBinSemantics(params: SafeBinSemanticValidationParams): boolean {
   return getSafeBinSemanticRule(params.binName)?.validate?.(params) ?? true;
 }
 
+/** Reused helper for list Risky Configured Safe Bins behavior in src/infra. */
 export function listRiskyConfiguredSafeBins(entries: Iterable<string>): Array<{
   bin: string;
   warning: string;

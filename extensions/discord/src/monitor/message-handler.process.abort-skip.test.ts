@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/monitor message handler process abort skip test behavior.
 import { describe, expect, it } from "vitest";
 import { formatDiscordReplySkip } from "./message-handler.process.js";
 

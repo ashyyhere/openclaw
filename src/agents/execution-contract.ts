@@ -1,3 +1,4 @@
+/** Resolves strict-agentic execution-contract activation for supported models. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import { resolveAgentExecutionContract, resolveSessionAgentIds } from "./agent-scope.js";
@@ -112,6 +113,7 @@ export function resolveEffectiveExecutionContract(params: {
   return "strict-agentic";
 }
 
+/** Reused helper for is Strict Agentic Execution Contract Active behavior in src/agents. */
 export function isStrictAgenticExecutionContractActive(params: {
   config?: OpenClawConfig;
   sessionKey?: string;

@@ -1,3 +1,4 @@
+// Tests extensions/google web search provider test behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { withEnv, withEnvAsync, withFetchPreconnect } from "openclaw/plugin-sdk/test-env";
 import { afterEach, describe, expect, it, vi } from "vitest";

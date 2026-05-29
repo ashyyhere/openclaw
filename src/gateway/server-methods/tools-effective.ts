@@ -1,17 +1,16 @@
+// gateway/server-methods tools effective helpers and runtime behavior.
 import {
   ErrorCodes,
   errorShape,
   formatValidationErrors,
   validateToolsEffectiveParams,
 } from "../../../packages/gateway-protocol/src/index.js";
-import {
-  buildEffectiveToolInventoryGroups,
-} from "../../agents/tools-effective-inventory-groups.js";
-import { buildRuntimeCompatibleMcpToolInventory } from "../../agents/tools-effective-mcp-inventory.js";
+import { buildEffectiveToolInventoryGroups } from "../../agents/tools-effective-inventory-groups.js";
 import type {
   EffectiveToolInventoryNotice,
   EffectiveToolInventoryResult,
 } from "../../agents/tools-effective-inventory.types.js";
+import { buildRuntimeCompatibleMcpToolInventory } from "../../agents/tools-effective-mcp-inventory.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { logDebug, logWarn } from "../../logger.js";
 import { stringifyRouteThreadId } from "../../plugin-sdk/channel-route.js";
@@ -569,6 +568,7 @@ async function handleToolsEffectiveRequest(params: {
   }
 }
 
+/** Reused constant for tools Effective Handlers behavior in src/gateway/server-methods. */
 export const toolsEffectiveHandlers: GatewayRequestHandlers = {
   "tools.effective": async ({ params, respond, context }) => {
     await handleToolsEffectiveRequest({
@@ -579,6 +579,7 @@ export const toolsEffectiveHandlers: GatewayRequestHandlers = {
   },
 };
 
+/** Reused constant for testing behavior in src/gateway/server-methods. */
 export const testing = {
   resetToolsEffectiveCacheForTest() {
     toolsEffectiveCache.clear();
@@ -592,4 +593,5 @@ export const testing = {
     nowForToolsEffectiveCache = () => Date.now();
   },
 } as const;
+/** Re-exported API for src/gateway/server-methods, starting with testing. */
 export { testing as __testing };

@@ -1,3 +1,4 @@
+/** Tests missing explicit default account warning collection. */
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import { collectMissingExplicitDefaultAccountWarnings } from "./doctor/shared/default-account-warnings.js";

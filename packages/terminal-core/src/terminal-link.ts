@@ -1,3 +1,5 @@
+// terminal terminal link helpers and runtime behavior.
+/** Reused helper for format Terminal Link behavior in src/terminal. */
 export function formatTerminalLink(
   label: string,
   url: string,

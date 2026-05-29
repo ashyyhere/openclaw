@@ -1,3 +1,4 @@
+// plugins install paths helpers and runtime behavior.
 import path from "node:path";
 import {
   resolveSafeInstallDir,
@@ -7,10 +8,12 @@ import {
 } from "../infra/install-safe-path.js";
 import { resolveConfigDir, resolveUserPath } from "../utils.js";
 
+/** Reused helper for safe Plugin Install File Name behavior in src/plugins. */
 export function safePluginInstallFileName(input: string): string {
   return safeDirName(input);
 }
 
+/** Reused helper for encode Plugin Install Dir Name behavior in src/plugins. */
 export function encodePluginInstallDirName(pluginId: string): string {
   const trimmed = pluginId.trim();
   if (!trimmed.includes("/")) {
@@ -21,6 +24,7 @@ export function encodePluginInstallDirName(pluginId: string): string {
   return `@${safePathSegmentHashed(trimmed)}`;
 }
 
+/** Reused helper for validate Plugin Id behavior in src/plugins. */
 export function validatePluginId(pluginId: string): string | null {
   const trimmed = pluginId.trim();
   if (!trimmed) {
@@ -51,6 +55,7 @@ export function validatePluginId(pluginId: string): string | null {
   return null;
 }
 
+/** Reused helper for matches Expected Plugin Id behavior in src/plugins. */
 export function matchesExpectedPluginId(params: {
   expectedPluginId?: string;
   pluginId: string;
@@ -73,6 +78,7 @@ export function matchesExpectedPluginId(params: {
   );
 }
 
+/** Reused helper for resolve Default Plugin Extensions Dir behavior in src/plugins. */
 export function resolveDefaultPluginExtensionsDir(
   env: NodeJS.ProcessEnv = process.env,
   homedir?: () => string,
@@ -80,6 +86,7 @@ export function resolveDefaultPluginExtensionsDir(
   return path.join(resolveConfigDir(env, homedir), "extensions");
 }
 
+/** Reused helper for resolve Default Plugin Npm Dir behavior in src/plugins. */
 export function resolveDefaultPluginNpmDir(
   env: NodeJS.ProcessEnv = process.env,
   homedir?: () => string,
@@ -87,6 +94,7 @@ export function resolveDefaultPluginNpmDir(
   return path.join(resolveConfigDir(env, homedir), "npm");
 }
 
+/** Reused helper for encode Plugin Npm Project Dir Name behavior in src/plugins. */
 export function encodePluginNpmProjectDirName(packageName: string): string {
   const trimmed = packageName.trim();
   if (!trimmed) {
@@ -95,11 +103,13 @@ export function encodePluginNpmProjectDirName(packageName: string): string {
   return safePathSegmentHashed(trimmed);
 }
 
+/** Reused helper for resolve Plugin Npm Projects Dir behavior in src/plugins. */
 export function resolvePluginNpmProjectsDir(npmDir?: string): string {
   const npmBase = npmDir ? resolveUserPath(npmDir) : resolveDefaultPluginNpmDir();
   return path.join(npmBase, "projects");
 }
 
+/** Reused helper for resolve Plugin Npm Project Dir behavior in src/plugins. */
 export function resolvePluginNpmProjectDir(params: {
   packageName: string;
   npmDir?: string;
@@ -110,6 +120,7 @@ export function resolvePluginNpmProjectDir(params: {
   );
 }
 
+/** Reused helper for resolve Plugin Npm Package Dir behavior in src/plugins. */
 export function resolvePluginNpmPackageDir(params: {
   packageName: string;
   npmDir?: string;
@@ -121,6 +132,7 @@ export function resolvePluginNpmPackageDir(params: {
   );
 }
 
+/** Reused helper for resolve Default Plugin Git Dir behavior in src/plugins. */
 export function resolveDefaultPluginGitDir(
   env: NodeJS.ProcessEnv = process.env,
   homedir?: () => string,
@@ -128,6 +140,7 @@ export function resolveDefaultPluginGitDir(
   return path.join(resolveConfigDir(env, homedir), "git");
 }
 
+/** Reused helper for resolve Plugin Install Dir behavior in src/plugins. */
 export function resolvePluginInstallDir(pluginId: string, extensionsDir?: string): string {
   const extensionsBase = extensionsDir
     ? resolveUserPath(extensionsDir)

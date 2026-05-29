@@ -1,11 +1,13 @@
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
 import type { AuthProfileStore, ProfileUsageStats } from "./types.js";
 
+/** Reused helper for is Auth Cooldown Bypassed For Provider behavior in src/agents/auth-profiles. */
 export function isAuthCooldownBypassedForProvider(provider: string | undefined): boolean {
   const normalized = normalizeProviderId(provider ?? "");
   return normalized === "openrouter" || normalized === "kilocode";
 }
 
+/** Reused helper for resolve Profile Unusable Until behavior in src/agents/auth-profiles. */
 export function resolveProfileUnusableUntil(
   stats: Pick<ProfileUsageStats, "blockedUntil" | "cooldownUntil" | "disabledUntil">,
 ): number | null {
@@ -18,6 +20,7 @@ export function resolveProfileUnusableUntil(
   return Math.max(...values);
 }
 
+/** Reused helper for is Active Unusable Window behavior in src/agents/auth-profiles. */
 export function isActiveUnusableWindow(until: number | undefined, now: number): boolean {
   return typeof until === "number" && Number.isFinite(until) && until > 0 && now < until;
 }

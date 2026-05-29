@@ -1,3 +1,4 @@
+/** In-memory cache for loaded auth profile stores keyed by file mtimes. */
 import { cloneAuthProfileStore } from "./clone.js";
 import { EXTERNAL_CLI_SYNC_TTL_MS } from "./constants.js";
 import type { AuthProfileStore } from "./types.js";
@@ -12,6 +13,7 @@ const loadedAuthStoreCache = new Map<
   }
 >();
 
+/** Reused helper for read Cached Auth Profile Store behavior in src/agents/auth-profiles. */
 export function readCachedAuthProfileStore(params: {
   authPath: string;
   authMtimeMs: number | null;
@@ -31,6 +33,7 @@ export function readCachedAuthProfileStore(params: {
   return cloneAuthProfileStore(cached.store);
 }
 
+/** Reused helper for write Cached Auth Profile Store behavior in src/agents/auth-profiles. */
 export function writeCachedAuthProfileStore(params: {
   authPath: string;
   authMtimeMs: number | null;
@@ -45,6 +48,7 @@ export function writeCachedAuthProfileStore(params: {
   });
 }
 
+/** Reused helper for clear Loaded Auth Store Cache behavior in src/agents/auth-profiles. */
 export function clearLoadedAuthStoreCache(): void {
   loadedAuthStoreCache.clear();
 }

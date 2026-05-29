@@ -1,3 +1,4 @@
+// Tests OpenRouter model scan command behavior and config/auth loading shortcuts.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { ModelScanResult } from "../../agents/model-scan.js";
 import type { RuntimeEnv } from "../../runtime.js";

@@ -14,17 +14,20 @@ const loadChannelMessageRuntimeModule = async () => {
   return await channelMessageRuntimeModulePromise;
 };
 
+/** Re-exported API for src/plugin-sdk. */
 export type {
   DurableInboundReplyDeliveryOptions,
   DurableInboundReplyDeliveryParams,
   DurableInboundReplyDeliveryResult,
 } from "../channels/turn/kernel.js";
+/** Re-exported API for src/plugin-sdk. */
 export type {
   DurableMessageBatchSendParams,
   DurableMessageBatchSendResult,
   DurableMessageSendContext,
   DurableMessageSendContextParams,
 } from "../channels/message/runtime.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   createReplyPrefixContext,
   createReplyPrefixOptions,
@@ -33,6 +36,7 @@ export {
   resolveChannelSourceReplyDeliveryMode as resolveChannelMessageSourceReplyDeliveryMode,
 } from "../channels/message/index.js";
 
+/** Re-exported API for src/plugin-sdk. */
 export {
   createFinalizableDraftLifecycle,
   createFinalizableDraftStreamControls,
@@ -40,40 +44,59 @@ export {
   clearFinalizableDraftMessage,
   takeMessageIdAfterStop,
 } from "../channels/draft-stream-controls.js";
+/** Re-exported API for src/plugin-sdk, starting with Finalizable Draft Stream State. */
 export type { FinalizableDraftStreamState } from "../channels/draft-stream-controls.js";
+/** Re-exported API for src/plugin-sdk, starting with create Draft Stream Loop. */
 export { createDraftStreamLoop } from "../channels/draft-stream-loop.js";
+/** Re-exported API for src/plugin-sdk, starting with Draft Stream Loop. */
 export type { DraftStreamLoop } from "../channels/draft-stream-loop.js";
+/** Re-exported API for src/plugin-sdk, starting with create Runtime Outbound Delegates. */
 export { createRuntimeOutboundDelegates } from "../channels/plugins/runtime-forwarders.js";
+/** Re-exported API for src/plugin-sdk, starting with create Channel Run Queue. */
 export { createChannelRunQueue } from "./channel-lifecycle.core.js";
+/** Re-exported API for src/plugin-sdk. */
 export type {
   ChannelRunQueue,
   ChannelRunQueueParams,
   ChannelRunQueueTaskContext,
 } from "./channel-lifecycle.core.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   createAccountStatusSink,
   keepHttpServerTaskAlive,
   runPassiveAccountLifecycle,
   waitUntilAbort,
 } from "./channel-lifecycle.core.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   createOutboundPayloadPlan,
   projectOutboundPayloadPlanForDelivery,
 } from "../infra/outbound/payloads.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   buildOutboundSessionContext,
   type OutboundSessionContext,
 } from "../infra/outbound/session-context.js";
+/** Re-exported API for src/plugin-sdk, starting with Outbound Delivery Formatting Options. */
 export type { OutboundDeliveryFormattingOptions } from "../infra/outbound/formatting.js";
+/** Re-exported API for src/plugin-sdk, starting with resolve Agent Outbound Identity. */
 export { resolveAgentOutboundIdentity } from "../infra/outbound/identity.js";
+/** Re-exported API for src/plugin-sdk, starting with Outbound Identity. */
 export type { OutboundIdentity } from "../infra/outbound/identity.js";
+/** Re-exported API for src/plugin-sdk, starting with create Reply To Fanout. */
 export { createReplyToFanout } from "../infra/outbound/reply-policy.js";
+/** Re-exported API for src/plugin-sdk, starting with Reply To Resolution. */
 export type { ReplyToResolution } from "../infra/outbound/reply-policy.js";
+/** Re-exported API for src/plugin-sdk, starting with resolve Outbound Send Dep. */
 export { resolveOutboundSendDep } from "../infra/outbound/send-deps.js";
+/** Re-exported API for src/plugin-sdk, starting with Outbound Send Deps. */
 export type { OutboundSendDeps } from "../infra/outbound/send-deps.js";
+/** Re-exported API for src/plugin-sdk, starting with sanitize For Plain Text. */
 export { sanitizeForPlainText } from "../infra/outbound/sanitize-text.js";
+/** Re-exported API for src/plugin-sdk, starting with log Ack Failure. */
 export { logAckFailure, logTypingFailure } from "../channels/logging.js";
 export * from "../channels/streaming.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   classifyDurableSendRecoveryState,
   createChannelMessageAdapterFromOutbound,
@@ -107,6 +130,7 @@ export {
   verifyDurableFinalCapabilityProofs,
   verifyLivePreviewFinalizerCapabilityProofs,
 } from "../channels/message/index.js";
+/** Re-exported API for src/plugin-sdk. */
 export type {
   ChannelMessageAdapter,
   ChannelMessageAdapterShape,
@@ -186,12 +210,14 @@ export type {
   RenderedMessageBatchPlanKind,
 } from "../channels/message/index.js";
 
+/** Reused constant for deliver Inbound Reply With Message Send Context behavior in src/plugin-sdk. */
 export const deliverInboundReplyWithMessageSendContext: ChannelInboundKernelModule["deliverInboundReplyWithMessageSendContext"] =
   async (...args) => {
     const mod = await import("../channels/turn/kernel.js");
     return await mod.deliverInboundReplyWithMessageSendContext(...args);
   };
 
+/** Reused helper for send Durable Message Batch behavior in src/plugin-sdk. */
 export async function sendDurableMessageBatch(
   params: DurableMessageSendContextParams,
 ): Promise<DurableMessageBatchSendResult> {
@@ -199,6 +225,7 @@ export async function sendDurableMessageBatch(
   return await mod.sendDurableMessageBatch(params);
 }
 
+/** Reused helper for with Durable Message Send Context behavior in src/plugin-sdk. */
 export async function withDurableMessageSendContext<T>(
   params: DurableMessageSendContextParams,
   run: (ctx: DurableMessageSendContext) => Promise<T>,

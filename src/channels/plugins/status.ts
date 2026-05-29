@@ -1,3 +1,4 @@
+/** Produces status summaries for channel plugin accounts and sessions. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 import { inspectChannelAccount } from "../account-inspection.js";
@@ -6,6 +7,7 @@ import type { ChannelPlugin } from "./types.plugin.js";
 import type { ChannelAccountSnapshot } from "./types.public.js";
 
 // Channel docking: status snapshots flow through plugin.status hooks here.
+/** Reused helper for build Channel Account Snapshot From Account behavior in src/channels/plugins. */
 export async function buildChannelAccountSnapshotFromAccount<ResolvedAccount>(params: {
   plugin: ChannelPlugin<ResolvedAccount>;
   cfg: OpenClawConfig;
@@ -56,6 +58,7 @@ export async function buildChannelAccountSnapshotFromAccount<ResolvedAccount>(pa
   };
 }
 
+/** Reused helper for build Read Only Source Channel Account Snapshot behavior in src/channels/plugins. */
 export async function buildReadOnlySourceChannelAccountSnapshot<ResolvedAccount>(params: {
   plugin: ChannelPlugin<ResolvedAccount>;
   cfg: OpenClawConfig;
@@ -74,6 +77,7 @@ export async function buildReadOnlySourceChannelAccountSnapshot<ResolvedAccount>
   });
 }
 
+/** Reused helper for build Channel Account Snapshot behavior in src/channels/plugins. */
 export async function buildChannelAccountSnapshot<ResolvedAccount>(params: {
   plugin: ChannelPlugin<ResolvedAccount>;
   cfg: OpenClawConfig;

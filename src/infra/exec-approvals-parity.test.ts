@@ -1,3 +1,4 @@
+// Tests infra exec approvals parity test behavior.
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import {

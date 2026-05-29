@@ -1,5 +1,8 @@
+// packages/memory-host-sdk/src/host secret input utils helpers and runtime behavior.
+/** Public type describing Secret Ref Source for packages/memory-host-sdk. */
 export type SecretRefSource = "env" | "file" | "exec";
 
+/** Public type describing Secret Ref for packages/memory-host-sdk. */
 export type SecretRef = {
   source: SecretRefSource;
   provider: string;
@@ -52,9 +55,7 @@ function isLegacySecretRefWithoutProvider(
     return false;
   }
   return (
-    hasSecretRefSource(value.source) &&
-    hasNonEmptyString(value.id) &&
-    value.provider === undefined
+    hasSecretRefSource(value.source) && hasNonEmptyString(value.id) && value.provider === undefined
   );
 }
 
@@ -106,6 +107,7 @@ function coerceSecretRef(value: unknown): SecretRef | null {
   return parseEnvTemplateSecretRef(value) ?? parseLegacySecretRefEnvMarker(value);
 }
 
+/** Public helper for has Configured Secret Input behavior in packages/memory-host-sdk. */
 export function hasConfiguredSecretInput(value: unknown): boolean {
   if (normalizeSecretInputString(value)) {
     return true;
@@ -123,10 +125,12 @@ function createUnresolvedSecretInputError(params: { path: string; ref: SecretRef
   );
 }
 
+/** Public helper for resolve Secret Input Ref behavior in packages/memory-host-sdk. */
 export function resolveSecretInputRef(value: unknown): SecretRef | null {
   return coerceSecretRef(value);
 }
 
+/** Public helper for normalize Resolved Secret Input String behavior in packages/memory-host-sdk. */
 export function normalizeResolvedSecretInputString(params: {
   value: unknown;
   path: string;
@@ -142,6 +146,7 @@ export function normalizeResolvedSecretInputString(params: {
   throw createUnresolvedSecretInputError({ path: params.path, ref });
 }
 
+/** Public helper for normalize Env Secret Input String behavior in packages/memory-host-sdk. */
 export function normalizeEnvSecretInputString(value: unknown): string | undefined {
   return normalizeSecretInputString(value);
 }

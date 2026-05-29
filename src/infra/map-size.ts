@@ -1,3 +1,5 @@
+// infra map size helpers and runtime behavior.
+/** Reused helper for prune Map To Max Size behavior in src/infra. */
 export function pruneMapToMaxSize<K, V>(map: Map<K, V>, maxSize: number): void {
   if (Number.isNaN(maxSize) || maxSize === Number.POSITIVE_INFINITY) {
     return;

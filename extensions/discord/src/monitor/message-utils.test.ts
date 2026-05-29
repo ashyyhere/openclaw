@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/monitor message utils test behavior.
 import {
   ComponentType,
   MessageFlags,

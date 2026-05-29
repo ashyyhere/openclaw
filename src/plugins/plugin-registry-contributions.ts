@@ -25,27 +25,32 @@ import {
   type LoadPluginRegistryParams,
   type PluginRegistrySnapshot,
 } from "./plugin-registry-snapshot.js";
+/** Re-exported API for src/plugins. */
 export {
   createPluginRegistryIdNormalizer,
   type PluginRegistryIdNormalizerOptions,
 } from "./plugin-registry-id-normalizer.js";
 
+/** Shared type for Plugin Look Up Table in src/plugins. */
 export type PluginLookUpTable = Pick<
   PluginMetadataSnapshot,
   "index" | "manifestRegistry" | "plugins" | "normalizePluginId" | "owners"
 >;
 
+/** Shared type for Plugin Registry Contribution Options in src/plugins. */
 export type PluginRegistryContributionOptions = LoadPluginRegistryParams & {
   includeDisabled?: boolean;
   lookUpTable?: PluginLookUpTable;
 };
 
+/** Shared type for Load Plugin Registry Manifest Params in src/plugins. */
 export type LoadPluginRegistryManifestParams = LoadPluginRegistryParams & {
   includeDisabled?: boolean;
   pluginIds?: readonly string[];
   bundledChannelConfigCollector?: BundledChannelConfigCollector;
 };
 
+/** Shared type for Plugin Registry Contribution Key in src/plugins. */
 export type PluginRegistryContributionKey =
   | "providers"
   | "channels"
@@ -56,43 +61,52 @@ export type PluginRegistryContributionKey =
   | "commandAliases"
   | "contracts";
 
+/** Shared type for Resolve Plugin Contribution Owners Params in src/plugins. */
 export type ResolvePluginContributionOwnersParams = PluginRegistryContributionOptions & {
   contribution: PluginRegistryContributionKey;
   matches: string | ((contributionId: string) => boolean);
 };
 
+/** Shared type for List Plugin Contribution Ids Params in src/plugins. */
 export type ListPluginContributionIdsParams = PluginRegistryContributionOptions & {
   contribution: PluginRegistryContributionKey;
 };
 
+/** Shared type for Resolve Provider Owners Params in src/plugins. */
 export type ResolveProviderOwnersParams = PluginRegistryContributionOptions & {
   providerId: string;
 };
 
+/** Shared type for Resolve Channel Owners Params in src/plugins. */
 export type ResolveChannelOwnersParams = PluginRegistryContributionOptions & {
   channelId: string;
 };
 
+/** Shared type for Resolve Cli Backend Owners Params in src/plugins. */
 export type ResolveCliBackendOwnersParams = PluginRegistryContributionOptions & {
   cliBackendId: string;
 };
 
+/** Shared type for Resolve Setup Provider Owners Params in src/plugins. */
 export type ResolveSetupProviderOwnersParams = PluginRegistryContributionOptions & {
   setupProviderId: string;
 };
 
+/** Shared type for Resolve Manifest Contract Plugin Ids Params in src/plugins. */
 export type ResolveManifestContractPluginIdsParams = LoadPluginRegistryParams & {
   contract: PluginManifestContractListKey;
   origin?: PluginOrigin;
   onlyPluginIds?: readonly string[];
 };
 
+/** Shared type for Resolve Manifest Contract Owner Plugin Id Params in src/plugins. */
 export type ResolveManifestContractOwnerPluginIdParams = LoadPluginRegistryParams & {
   contract: PluginManifestContractListKey;
   value: string | undefined;
   origin?: PluginOrigin;
 };
 
+/** Shared type for Resolve Manifest Contract Plugin Ids By Compatibility Runtime Path Params in src/plugins. */
 export type ResolveManifestContractPluginIdsByCompatibilityRuntimePathParams =
   LoadPluginRegistryParams & {
     contract: PluginManifestContractListKey;
@@ -313,6 +327,7 @@ function loadCurrentManifestRegistryForPluginRegistry(
   };
 }
 
+/** Reused helper for load Plugin Manifest Registry For Plugin Registry behavior in src/plugins. */
 export function loadPluginManifestRegistryForPluginRegistry(
   params: LoadPluginRegistryManifestParams = {},
 ): PluginManifestRegistry {
@@ -334,6 +349,7 @@ export function loadPluginManifestRegistryForPluginRegistry(
   });
 }
 
+/** Reused helper for normalize Plugins Config With Registry behavior in src/plugins. */
 export function normalizePluginsConfigWithRegistry(
   config: OpenClawConfig["plugins"] | undefined,
   index: PluginRegistrySnapshot,
@@ -345,6 +361,7 @@ export function normalizePluginsConfigWithRegistry(
   );
 }
 
+/** Reused helper for list Plugin Contribution Ids behavior in src/plugins. */
 export function listPluginContributionIds(
   params: ListPluginContributionIdsParams,
 ): readonly string[] {
@@ -355,6 +372,7 @@ export function listPluginContributionIds(
   );
 }
 
+/** Reused helper for resolve Plugin Contribution Owners behavior in src/plugins. */
 export function resolvePluginContributionOwners(
   params: ResolvePluginContributionOwnersParams,
 ): readonly string[] {
@@ -384,6 +402,7 @@ export function resolvePluginContributionOwners(
   );
 }
 
+/** Reused helper for resolve Provider Owners behavior in src/plugins. */
 export function resolveProviderOwners(params: ResolveProviderOwnersParams): readonly string[] {
   const providerId = normalizeProviderId(params.providerId);
   if (!providerId) {
@@ -411,6 +430,7 @@ export function resolveProviderOwners(params: ResolveProviderOwnersParams): read
   });
 }
 
+/** Reused helper for resolve Channel Owners behavior in src/plugins. */
 export function resolveChannelOwners(params: ResolveChannelOwnersParams): readonly string[] {
   const channelId = normalizeContributionId(params.channelId);
   if (!channelId) {
@@ -423,6 +443,7 @@ export function resolveChannelOwners(params: ResolveChannelOwnersParams): readon
   });
 }
 
+/** Reused helper for resolve Cli Backend Owners behavior in src/plugins. */
 export function resolveCliBackendOwners(params: ResolveCliBackendOwnersParams): readonly string[] {
   const cliBackendId = normalizeContributionId(params.cliBackendId);
   if (!cliBackendId) {
@@ -435,6 +456,7 @@ export function resolveCliBackendOwners(params: ResolveCliBackendOwnersParams): 
   });
 }
 
+/** Reused helper for resolve Setup Provider Owners behavior in src/plugins. */
 export function resolveSetupProviderOwners(
   params: ResolveSetupProviderOwnersParams,
 ): readonly string[] {
@@ -449,6 +471,7 @@ export function resolveSetupProviderOwners(
   });
 }
 
+/** Reused helper for resolve Manifest Contract Plugin Ids behavior in src/plugins. */
 export function resolveManifestContractPluginIds(
   params: ResolveManifestContractPluginIdsParams,
 ): string[] {
@@ -462,6 +485,7 @@ export function resolveManifestContractPluginIds(
     .toSorted((left, right) => left.localeCompare(right));
 }
 
+/** Reused helper for resolve Manifest Contract Plugin Ids By Compatibility Runtime Path behavior in src/plugins. */
 export function resolveManifestContractPluginIdsByCompatibilityRuntimePath(
   params: ResolveManifestContractPluginIdsByCompatibilityRuntimePathParams,
 ): string[] {
@@ -480,6 +504,7 @@ export function resolveManifestContractPluginIdsByCompatibilityRuntimePath(
     .toSorted((left, right) => left.localeCompare(right));
 }
 
+/** Reused helper for resolve Manifest Contract Owner Plugin Id behavior in src/plugins. */
 export function resolveManifestContractOwnerPluginId(
   params: ResolveManifestContractOwnerPluginIdParams,
 ): string | undefined {

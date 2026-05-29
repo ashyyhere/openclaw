@@ -22,6 +22,7 @@ import {
 } from "./models-config.providers.secret-helpers.js";
 import { resolveProviderIdForAuth } from "./provider-auth-aliases.js";
 
+/** Re-exported API for src/agents. */
 export type {
   ProfileApiKeyResolution,
   ProviderApiKeyResolver,
@@ -30,6 +31,7 @@ export type {
   SecretDefaults,
 } from "./models-config.providers.secret-helpers.js";
 
+/** Re-exported API for src/agents. */
 export {
   listAuthProfilesForProvider,
   normalizeApiKeyConfig,
@@ -84,6 +86,7 @@ function resolveProviderIdForAuthFromCaches(
   return caches.aliasMap[normalized] ?? normalized;
 }
 
+/** Create a provider apiKey resolver backed by env, source config, and profiles. */
 export function createProviderApiKeyResolver(
   env: NodeJS.ProcessEnv,
   authStoreInput: AuthProfileStoreInput,
@@ -130,6 +133,7 @@ export function createProviderApiKeyResolver(
   };
 }
 
+/** Create a provider auth resolver that reports auth mode/source provenance. */
 export function createProviderAuthResolver(
   env: NodeJS.ProcessEnv,
   authStoreInput: AuthProfileStoreInput,

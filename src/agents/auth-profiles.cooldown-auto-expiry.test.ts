@@ -1,3 +1,4 @@
+/** Tests auth-profile cooldown auto-expiry behavior. */
 import { describe, expect, it, vi } from "vitest";
 import { resolveAuthProfileOrder } from "./auth-profiles/order.js";
 import type { AuthProfileStore } from "./auth-profiles/types.js";

@@ -1,3 +1,4 @@
+/** Tests channel inbound SDK contracts and helper behavior. */
 import { describe, expect, it } from "vitest";
 import {
   buildChannelInboundEventContext,

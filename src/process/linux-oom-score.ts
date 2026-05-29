@@ -1,3 +1,4 @@
+// process linux oom score helpers and runtime behavior.
 import fs from "node:fs";
 
 /**
@@ -51,12 +52,14 @@ function defaultShellAvailable(): boolean {
   return cachedShellAvailable;
 }
 
+/** Shared type for Oom Wrap Options in src/process. */
 export type OomWrapOptions = {
   platform?: NodeJS.Platform;
   env?: NodeJS.ProcessEnv;
   shellAvailable?: () => boolean;
 };
 
+/** Shared type for Oom Score Adjusted Spawn in src/process. */
 export type OomScoreAdjustedSpawn = {
   command: string;
   args: string[];
@@ -95,6 +98,7 @@ function hardenShellEnv(baseEnv: NodeJS.ProcessEnv | undefined): NodeJS.ProcessE
   return next;
 }
 
+/** Reused helper for prepare Oom Score Adjusted Spawn behavior in src/process. */
 export function prepareOomScoreAdjustedSpawn(
   command: string,
   args: readonly string[] = [],
@@ -115,6 +119,7 @@ export function prepareOomScoreAdjustedSpawn(
   };
 }
 
+/** Reused helper for wrap Argv For Child Oom Score Raise behavior in src/process. */
 export function wrapArgvForChildOomScoreRaise(
   argv: readonly string[],
   options?: OomWrapOptions,

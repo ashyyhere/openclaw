@@ -1,3 +1,4 @@
+// extensions/discord/src/actions runtime messaging helpers and runtime behavior.
 import type { AgentToolResult } from "openclaw/plugin-sdk/agent-core";
 import type { ActionGate, DiscordActionConfig, OpenClawConfig } from "../runtime-api.js";
 import { handleDiscordMessageManagementAction } from "./runtime.messaging.messages.js";

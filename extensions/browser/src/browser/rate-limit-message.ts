@@ -1,3 +1,4 @@
+// extensions/browser/src/browser rate limit message helpers and runtime behavior.
 const BROWSER_SERVICE_RATE_LIMIT_MESSAGE =
   "Browser service rate limit reached. " +
   "Wait for the current session to complete, or retry later.";

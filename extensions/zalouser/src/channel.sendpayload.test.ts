@@ -1,3 +1,4 @@
+// Tests extensions/zalouser/src channel sendpayload test behavior.
 import {
   installChannelOutboundPayloadContractSuite,
   primeChannelOutboundSendMock,

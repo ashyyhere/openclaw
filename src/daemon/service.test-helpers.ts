@@ -1,6 +1,8 @@
+// daemon service test helpers helpers and runtime behavior.
 import { vi } from "vitest";
 import type { GatewayService } from "./service.js";
 
+/** Reused helper for create Mock Gateway Service behavior in src/daemon. */
 export function createMockGatewayService(overrides: Partial<GatewayService> = {}): GatewayService {
   return {
     label: "LaunchAgent",

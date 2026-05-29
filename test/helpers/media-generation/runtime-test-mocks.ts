@@ -1,3 +1,4 @@
+// test/helpers/media-generation runtime test mocks helpers and runtime behavior.
 type ClearableMock = {
   mockClear(): unknown;
 };

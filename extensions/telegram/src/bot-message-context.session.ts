@@ -1,3 +1,4 @@
+// extensions/telegram/src bot message context session helpers and runtime behavior.
 import {
   type BuildChannelInboundEventContextAsyncParams,
   type BuiltChannelInboundEventContext,

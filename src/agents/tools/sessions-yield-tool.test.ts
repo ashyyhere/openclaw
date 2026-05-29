@@ -1,3 +1,4 @@
+/** Covers sessions yield tool result shape. */
 import { describe, expect, it, vi } from "vitest";
 import { createSessionsYieldTool } from "./sessions-yield-tool.js";
 

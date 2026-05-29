@@ -1,3 +1,4 @@
+// extensions/google oauth token shared helpers and runtime behavior.
 import { readStringValue } from "openclaw/plugin-sdk/string-coerce-runtime";
 
 type GoogleOauthApiKeyCredential = {

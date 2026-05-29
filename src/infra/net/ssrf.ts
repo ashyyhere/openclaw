@@ -1,3 +1,4 @@
+// infra/net ssrf helpers and runtime behavior.
 import { lookup as dnsLookupCb, type LookupAddress } from "node:dns";
 import { lookup as dnsLookup } from "node:dns/promises";
 import {
@@ -32,6 +33,7 @@ type LookupCallback = (
 type LookupResult = LookupAddress | LookupAddress[];
 const DISPATCHER_CLOSE_TIMEOUT_MS = 100;
 
+/** Reused class for Ssr FBlocked Error behavior in src/infra/net. */
 export class SsrFBlockedError extends Error {
   constructor(message: string) {
     super(message);
@@ -39,8 +41,10 @@ export class SsrFBlockedError extends Error {
   }
 }
 
+/** Shared type for Lookup Fn in src/infra/net. */
 export type LookupFn = typeof dnsLookup;
 
+/** Shared type for Ssr FPolicy in src/infra/net. */
 export type SsrFPolicy = {
   allowPrivateNetwork?: boolean;
   dangerouslyAllowPrivateNetwork?: boolean;
@@ -85,6 +89,7 @@ function normalizeSsrFPolicyForComparison(policy?: SsrFPolicy) {
   };
 }
 
+/** Reused helper for is Same Ssr FPolicy behavior in src/infra/net. */
 export function isSameSsrFPolicy(a?: SsrFPolicy, b?: SsrFPolicy): boolean {
   return (
     JSON.stringify(normalizeSsrFPolicyForComparison(a)) ===
@@ -92,6 +97,7 @@ export function isSameSsrFPolicy(a?: SsrFPolicy, b?: SsrFPolicy): boolean {
   );
 }
 
+/** Reused helper for merge Ssr FPolicies behavior in src/infra/net. */
 export function mergeSsrFPolicies(
   ...policies: Array<SsrFPolicy | undefined>
 ): SsrFPolicy | undefined {
@@ -131,6 +137,7 @@ export function mergeSsrFPolicies(
   return Object.keys(merged).length > 0 ? merged : undefined;
 }
 
+/** Reused helper for ssrf Policy From Http Base Url Allowed Hostname behavior in src/infra/net. */
 export function ssrfPolicyFromHttpBaseUrlAllowedHostname(baseUrl: string): SsrFPolicy | undefined {
   const trimmed = baseUrl.trim();
   if (!trimmed) {
@@ -177,11 +184,13 @@ function normalizeSsrFPolicyOrigins(values?: string[]): string[] {
   ).toSorted();
 }
 
+/** Reused helper for ssrf Policy From Http Base Url Allowed Origin behavior in src/infra/net. */
 export function ssrfPolicyFromHttpBaseUrlAllowedOrigin(baseUrl: string): SsrFPolicy | undefined {
   const origin = normalizeSsrFPolicyOrigin(baseUrl);
   return origin ? { allowedOrigins: [origin] } : undefined;
 }
 
+/** Reused helper for ssrf Policy From Http Base Url Fake Ip Hostname Allowlist behavior in src/infra/net. */
 export function ssrfPolicyFromHttpBaseUrlFakeIpHostnameAllowlist(
   baseUrl: string,
 ): SsrFPolicy | undefined {
@@ -214,10 +223,12 @@ function normalizeHostnameSet(values?: string[]): Set<string> {
   return new Set(normalizePolicyHostnames(values));
 }
 
+/** Reused helper for normalize Hostname Allowlist behavior in src/infra/net. */
 export function normalizeHostnameAllowlist(values?: string[]): string[] {
   return normalizePolicyHostnames(values).filter((value) => value !== "*" && value !== "*.");
 }
 
+/** Reused helper for is Private Network Allowed By Policy behavior in src/infra/net. */
 export function isPrivateNetworkAllowedByPolicy(policy?: SsrFPolicy): boolean {
   return policy?.dangerouslyAllowPrivateNetwork === true || policy?.allowPrivateNetwork === true;
 }
@@ -229,6 +240,7 @@ function shouldSkipPrivateNetworkChecks(hostname: string, policy?: SsrFPolicy): 
   );
 }
 
+/** Reused helper for resolve Ssr FPolicy For Url behavior in src/infra/net. */
 export function resolveSsrFPolicyForUrl(url: URL, policy?: SsrFPolicy): SsrFPolicy | undefined {
   if (!policy?.allowedOrigins?.length) {
     return policy;
@@ -260,6 +272,7 @@ function resolveIpv6SpecialUseBlockOptions(policy?: SsrFPolicy): Ipv6SpecialUseB
   };
 }
 
+/** Reused helper for is Hostname Allowed By Pattern behavior in src/infra/net. */
 export function isHostnameAllowedByPattern(hostname: string, pattern: string): boolean {
   if (pattern.startsWith("*.")) {
     const suffix = pattern.slice(2);
@@ -271,6 +284,7 @@ export function isHostnameAllowedByPattern(hostname: string, pattern: string): b
   return hostname === pattern;
 }
 
+/** Reused helper for matches Hostname Allowlist behavior in src/infra/net. */
 export function matchesHostnameAllowlist(hostname: string, allowlist: string[]): boolean {
   if (allowlist.length === 0) {
     return true;
@@ -292,6 +306,7 @@ function looksLikeUnsupportedIpv4Literal(address: string): boolean {
 }
 
 // Returns true for private/internal and special-use non-global addresses.
+/** Reused helper for is Private Ip Address behavior in src/infra/net. */
 export function isPrivateIpAddress(address: string, policy?: SsrFPolicy): boolean {
   const normalized = normalizeHostname(address);
   if (!normalized) {
@@ -329,6 +344,7 @@ export function isPrivateIpAddress(address: string, policy?: SsrFPolicy): boolea
   return false;
 }
 
+/** Reused helper for is Blocked Hostname behavior in src/infra/net. */
 export function isBlockedHostname(hostname: string): boolean {
   const normalized = normalizeHostname(hostname);
   if (!normalized) {
@@ -348,6 +364,7 @@ function isBlockedHostnameNormalized(normalized: string): boolean {
   );
 }
 
+/** Reused helper for is Blocked Hostname Or Ip behavior in src/infra/net. */
 export function isBlockedHostnameOrIp(hostname: string, policy?: SsrFPolicy): boolean {
   const normalized = normalizeHostname(hostname);
   if (!normalized) {
@@ -421,6 +438,7 @@ function normalizeLookupResults(results: LookupResult): readonly LookupAddress[]
   return [results];
 }
 
+/** Reused helper for create Pinned Lookup behavior in src/infra/net. */
 export function createPinnedLookup(params: {
   hostname: string;
   addresses: string[];
@@ -483,17 +501,20 @@ export function createPinnedLookup(params: {
   }) as typeof dnsLookupCb;
 }
 
+/** Shared type for Pinned Hostname in src/infra/net. */
 export type PinnedHostname = {
   hostname: string;
   addresses: string[];
   lookup: typeof dnsLookupCb;
 };
 
+/** Shared type for Pinned Hostname Override in src/infra/net. */
 export type PinnedHostnameOverride = {
   hostname: string;
   addresses: string[];
 };
 
+/** Shared type for Pinned Dispatcher Policy in src/infra/net. */
 export type PinnedDispatcherPolicy =
   | {
       mode: "direct";
@@ -532,6 +553,7 @@ function dedupeAndPreferIpv4(results: readonly LookupAddress[]): string[] {
   return [...ipv4, ...otherFamilies];
 }
 
+/** Reused helper for resolve Pinned Hostname With Policy behavior in src/infra/net. */
 export async function resolvePinnedHostnameWithPolicy(
   hostname: string,
   params: { lookupFn?: LookupFn; policy?: SsrFPolicy } = {},
@@ -572,10 +594,12 @@ export async function resolvePinnedHostnameWithPolicy(
   };
 }
 
+/** Reused helper for assert Hostname Allowed With Policy behavior in src/infra/net. */
 export function assertHostnameAllowedWithPolicy(hostname: string, policy?: SsrFPolicy): string {
   return resolveHostnamePolicyChecks(hostname, policy).normalized;
 }
 
+/** Reused helper for resolve Pinned Hostname behavior in src/infra/net. */
 export async function resolvePinnedHostname(
   hostname: string,
   lookupFn: LookupFn = dnsLookup,
@@ -620,6 +644,7 @@ function resolvePinnedDispatcherLookup(
   });
 }
 
+/** Reused helper for create Pinned Dispatcher behavior in src/infra/net. */
 export function createPinnedDispatcher(
   pinned: PinnedHostname,
   policy?: PinnedDispatcherPolicy,
@@ -701,6 +726,7 @@ async function waitForDispatcherClose(candidate: ClosableDispatcher): Promise<vo
   }
 }
 
+/** Reused helper for close Dispatcher behavior in src/infra/net. */
 export async function closeDispatcher(dispatcher?: Dispatcher | null): Promise<void> {
   if (!dispatcher) {
     return;
@@ -713,6 +739,7 @@ export async function closeDispatcher(dispatcher?: Dispatcher | null): Promise<v
   }
 }
 
+/** Reused helper for assert Public Hostname behavior in src/infra/net. */
 export async function assertPublicHostname(
   hostname: string,
   lookupFn: LookupFn = dnsLookup,

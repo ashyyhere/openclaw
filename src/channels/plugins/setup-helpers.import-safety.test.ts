@@ -1,3 +1,4 @@
+/** Guards setup helper imports from pulling heavyweight plugin discovery at load time. */
 import { importFreshModule } from "openclaw/plugin-sdk/test-fixtures";
 import { afterEach, describe, expect, it, vi } from "vitest";
 

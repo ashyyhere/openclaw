@@ -1,3 +1,4 @@
+// Tests test/scripts targeted docker lane groups test behavior.
 import { describe, expect, it } from "vitest";
 import { planTargetedDockerLaneGroups } from "../../scripts/plan-targeted-docker-lane-groups.mjs";
 

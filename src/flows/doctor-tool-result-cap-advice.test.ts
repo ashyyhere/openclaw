@@ -1,3 +1,4 @@
+// Tests flows doctor tool result cap advice test behavior.
 import { describe, expect, it } from "vitest";
 import { buildToolResultCapDoctorAdvice } from "./doctor-tool-result-cap-advice.js";
 

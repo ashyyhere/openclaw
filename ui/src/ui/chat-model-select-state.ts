@@ -1,3 +1,4 @@
+// ui/src/ui chat model select state helpers and runtime behavior.
 import type { AppViewState } from "./app-view-state.ts";
 import {
   buildCatalogDisplayLookup,
@@ -14,11 +15,13 @@ type ChatModelSelectStateInput = Pick<
   "sessionKey" | "chatModelOverrides" | "chatModelCatalog" | "sessionsResult"
 >;
 
+/** Shared type for Chat Model Select Option in ui/src/ui. */
 export type ChatModelSelectOption = {
   value: string;
   label: string;
 };
 
+/** Shared type for Chat Model Select State in ui/src/ui. */
 export type ChatModelSelectState = {
   currentOverride: string;
   defaultModel: string;
@@ -31,6 +34,7 @@ function resolveActiveSessionRow(state: ChatModelSelectStateInput) {
   return state.sessionsResult?.sessions?.find((row) => row.key === state.sessionKey);
 }
 
+/** Reused helper for resolve Chat Model Override Value behavior in ui/src/ui. */
 export function resolveChatModelOverrideValue(state: ChatModelSelectStateInput): string {
   const catalog = state.chatModelCatalog ?? [];
 
@@ -85,6 +89,7 @@ function buildChatModelOptions(
   return options;
 }
 
+/** Reused helper for resolve Chat Model Select State behavior in ui/src/ui. */
 export function resolveChatModelSelectState(
   state: ChatModelSelectStateInput,
 ): ChatModelSelectState {

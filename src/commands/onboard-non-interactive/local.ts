@@ -1,3 +1,4 @@
+// Local non-interactive onboarding: workspace, gateway config, daemon install, and health proof.
 import { formatCliCommand } from "../../cli/command-format.js";
 import { resolveGatewayPort } from "../../config/config.js";
 import { logConfigUpdated } from "../../config/logging.js";
@@ -33,6 +34,7 @@ const WINDOWS_INSTALL_DAEMON_HEALTH_PROBE_TIMEOUT_MS = 15_000;
 const INSTALL_DAEMON_HEALTH_COMMAND_TIMEOUT_MS = 10_000;
 const WINDOWS_INSTALL_DAEMON_HEALTH_COMMAND_TIMEOUT_MS = 90_000;
 
+/** Reused helper for resolve Install Daemon Gateway Health Timing behavior in src/commands/onboard-non-interactive. */
 export function resolveInstallDaemonGatewayHealthTiming(
   platform: NodeJS.Platform = process.platform,
 ): {
@@ -95,6 +97,7 @@ async function collectGatewayHealthFailureDiagnostics(): Promise<
     : undefined;
 }
 
+/** Reused helper for resolve Gateway Health Probe Token behavior in src/commands/onboard-non-interactive. */
 export async function resolveGatewayHealthProbeToken(
   nextConfig: OpenClawConfig,
 ): Promise<{ token?: string; password?: string; unresolvedRefReason?: string }> {
@@ -136,6 +139,7 @@ function formatGatewayHealthFailureDetail(params: {
   return detail || undefined;
 }
 
+/** Reused helper for run Non Interactive Local Setup behavior in src/commands/onboard-non-interactive. */
 export async function runNonInteractiveLocalSetup(params: {
   opts: OnboardOptions;
   runtime: RuntimeEnv;

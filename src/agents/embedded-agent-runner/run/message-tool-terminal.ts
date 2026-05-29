@@ -1,3 +1,4 @@
+/** Terminates attempts after explicit message tool sends when no LLM text is needed. */
 import type { SourceReplyDeliveryMode } from "../../../auto-reply/get-reply-options.types.js";
 import { isMessageToolSendActionName } from "../../embedded-agent-messaging.js";
 import { isToolResultError } from "../../embedded-agent-subscribe.tools.js";
@@ -147,6 +148,7 @@ function deliveryEnvelopeIndicatesDelivered(value: unknown, depth = 0): boolean 
   );
 }
 
+/** Decides whether a message tool send should end the assistant turn immediately. */
 export function shouldTerminateAfterMessageToolOnlySend(params: {
   sourceReplyDeliveryMode?: SourceReplyDeliveryMode;
   context: AfterToolCallContext;
@@ -183,6 +185,7 @@ export function shouldTerminateAfterMessageToolOnlySend(params: {
   return true;
 }
 
+/** Installs an after-tool hook that records terminal message-tool sends. */
 export function installMessageToolOnlyTerminalHook(params: {
   agent: Agent;
   sourceReplyDeliveryMode?: SourceReplyDeliveryMode;

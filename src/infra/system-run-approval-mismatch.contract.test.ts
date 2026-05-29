@@ -1,3 +1,4 @@
+// Tests infra system run approval mismatch contract test behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";

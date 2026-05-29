@@ -1,3 +1,4 @@
+// extensions/google model id helpers and runtime behavior.
 const ANTIGRAVITY_BARE_PRO_IDS = new Set(["gemini-3-pro", "gemini-3.1-pro", "gemini-3-1-pro"]);
 const GOOGLE_PROVIDER_PREFIX = "google/";
 

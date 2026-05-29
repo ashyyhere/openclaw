@@ -1,3 +1,4 @@
+// extensions/whatsapp/src channel actions helpers and runtime behavior.
 import {
   listWhatsAppAccountIds,
   resolveWhatsAppAccount,

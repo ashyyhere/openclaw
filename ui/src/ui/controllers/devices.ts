@@ -1,7 +1,9 @@
+// ui/src/ui/controllers devices helpers and runtime behavior.
 import { clearDeviceAuthToken, storeDeviceAuthToken } from "../device-auth.ts";
 import { loadOrCreateDeviceIdentity } from "../device-identity.ts";
 import type { GatewayBrowserClient } from "../gateway.ts";
 
+/** Shared type for Device Token Summary in ui/src/ui/controllers. */
 export type DeviceTokenSummary = {
   role: string;
   scopes?: string[];
@@ -11,6 +13,7 @@ export type DeviceTokenSummary = {
   lastUsedAtMs?: number;
 };
 
+/** Shared type for Pending Device in ui/src/ui/controllers. */
 export type PendingDevice = {
   requestId: string;
   deviceId: string;
@@ -24,6 +27,7 @@ export type PendingDevice = {
   ts?: number;
 };
 
+/** Shared type for Paired Device in ui/src/ui/controllers. */
 export type PairedDevice = {
   deviceId: string;
   publicKey?: string;
@@ -36,11 +40,13 @@ export type PairedDevice = {
   approvedAtMs?: number;
 };
 
+/** Shared type for Device Pairing List in ui/src/ui/controllers. */
 export type DevicePairingList = {
   pending: PendingDevice[];
   paired: PairedDevice[];
 };
 
+/** Shared type for Devices State in ui/src/ui/controllers. */
 export type DevicesState = {
   client: GatewayBrowserClient | null;
   connected: boolean;
@@ -49,6 +55,7 @@ export type DevicesState = {
   devicesList: DevicePairingList | null;
 };
 
+/** Reused helper for load Devices behavior in ui/src/ui/controllers. */
 export async function loadDevices(state: DevicesState, opts?: { quiet?: boolean }) {
   if (!state.client || !state.connected) {
     return;
@@ -78,6 +85,7 @@ export async function loadDevices(state: DevicesState, opts?: { quiet?: boolean 
   }
 }
 
+/** Reused helper for approve Device Pairing behavior in ui/src/ui/controllers. */
 export async function approveDevicePairing(state: DevicesState, requestId: string) {
   if (!state.client || !state.connected) {
     return;
@@ -90,6 +98,7 @@ export async function approveDevicePairing(state: DevicesState, requestId: strin
   }
 }
 
+/** Reused helper for reject Device Pairing behavior in ui/src/ui/controllers. */
 export async function rejectDevicePairing(state: DevicesState, requestId: string) {
   if (!state.client || !state.connected) {
     return;
@@ -106,6 +115,7 @@ export async function rejectDevicePairing(state: DevicesState, requestId: string
   }
 }
 
+/** Reused helper for rotate Device Token behavior in ui/src/ui/controllers. */
 export async function rotateDeviceToken(
   state: DevicesState,
   params: { deviceId: string; role: string; scopes?: string[] },
@@ -139,6 +149,7 @@ export async function rotateDeviceToken(
   }
 }
 
+/** Reused helper for revoke Device Token behavior in ui/src/ui/controllers. */
 export async function revokeDeviceToken(
   state: DevicesState,
   params: { deviceId: string; role: string },

@@ -262,6 +262,7 @@ export function stripInboundMetadata(text: string): string {
     .replace(LEADING_TIMESTAMP_PREFIX_RE, "");
 }
 
+/** Reused helper for strip Leading Inbound Metadata behavior in src/auto-reply/reply. */
 export function stripLeadingInboundMetadata(text: string): string {
   if (!text || !SENTINEL_FAST_RE.test(text)) {
     return text;
@@ -310,6 +311,7 @@ export function stripLeadingInboundMetadata(text: string): string {
   return strippedRemainder.join("\n");
 }
 
+/** Reused helper for extract Inbound Sender Label behavior in src/auto-reply/reply. */
 export function extractInboundSenderLabel(text: string): string | null {
   if (!text || !SENTINEL_FAST_RE.test(text)) {
     return null;

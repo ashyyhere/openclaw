@@ -1,3 +1,4 @@
+// extensions/slack/src group policy helpers and runtime behavior.
 import { normalizeAccountId } from "openclaw/plugin-sdk/account-resolution";
 import type { ChannelGroupContext } from "openclaw/plugin-sdk/channel-contract";
 import {

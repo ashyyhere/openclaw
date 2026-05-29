@@ -1,3 +1,4 @@
+// pairing pairing store helpers and runtime behavior.
 import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
@@ -27,6 +28,7 @@ import {
   type AllowFromStore,
 } from "./allow-from-store-file.js";
 import type { PairingChannel } from "./pairing-store.types.js";
+/** Re-exported API for src/pairing, starting with Pairing Channel. */
 export type { PairingChannel } from "./pairing-store.types.js";
 
 const PAIRING_CODE_LENGTH = 8;
@@ -46,6 +48,7 @@ const PAIRING_STORE_LOCK_OPTIONS = {
 } as const;
 const PAIRING_ALLOW_FROM_CACHE_NAMESPACE = "pairing-store";
 
+/** Shared type for Pairing Request in src/pairing. */
 export type PairingRequest = {
   id: string;
   code: string;
@@ -63,6 +66,7 @@ function resolvePairingPath(channel: PairingChannel, env: NodeJS.ProcessEnv = pr
   return path.join(resolvePairingCredentialsDir(env), `${safeChannelKey(channel)}-pairing.json`);
 }
 
+/** Reused helper for resolve Channel Allow From Path behavior in src/pairing. */
 export function resolveChannelAllowFromPath(
   channel: PairingChannel,
   env: NodeJS.ProcessEnv = process.env,
@@ -421,6 +425,7 @@ async function updateAllowFromStoreEntry(params: {
   );
 }
 
+/** Reused helper for read Legacy Channel Allow From Store behavior in src/pairing. */
 export async function readLegacyChannelAllowFromStore(
   channel: PairingChannel,
   env: NodeJS.ProcessEnv = process.env,
@@ -429,6 +434,7 @@ export async function readLegacyChannelAllowFromStore(
   return await readAllowFromStateForPath(channel, filePath);
 }
 
+/** Reused helper for read Channel Allow From Store behavior in src/pairing. */
 export async function readChannelAllowFromStore(
   channel: PairingChannel,
   env: NodeJS.ProcessEnv = process.env,
@@ -452,6 +458,7 @@ export async function readChannelAllowFromStore(
   return dedupePreserveOrder([...scopedEntries, ...legacyEntries]);
 }
 
+/** Reused helper for read Legacy Channel Allow From Store Sync behavior in src/pairing. */
 export function readLegacyChannelAllowFromStoreSync(
   channel: PairingChannel,
   env: NodeJS.ProcessEnv = process.env,
@@ -460,6 +467,7 @@ export function readLegacyChannelAllowFromStoreSync(
   return readAllowFromStateForPathSync(channel, filePath);
 }
 
+/** Reused helper for read Channel Allow From Store Sync behavior in src/pairing. */
 export function readChannelAllowFromStoreSync(
   channel: PairingChannel,
   env: NodeJS.ProcessEnv = process.env,
@@ -481,6 +489,7 @@ export function readChannelAllowFromStoreSync(
   return dedupePreserveOrder([...scopedEntries, ...legacyEntries]);
 }
 
+/** Reused helper for clear Pairing Allow From Read Cache For Test behavior in src/pairing. */
 export function clearPairingAllowFromReadCacheForTest(): void {
   clearAllowFromFileReadCacheForNamespace(PAIRING_ALLOW_FROM_CACHE_NAMESPACE);
 }
@@ -521,6 +530,7 @@ async function mutateChannelAllowFromStoreEntry(
   });
 }
 
+/** Reused helper for add Channel Allow From Store Entry behavior in src/pairing. */
 export async function addChannelAllowFromStoreEntry(
   params: AllowFromStoreEntryUpdateParams,
 ): Promise<{ changed: boolean; allowFrom: string[] }> {
@@ -532,6 +542,7 @@ export async function addChannelAllowFromStoreEntry(
   });
 }
 
+/** Reused helper for remove Channel Allow From Store Entry behavior in src/pairing. */
 export async function removeChannelAllowFromStoreEntry(
   params: AllowFromStoreEntryUpdateParams,
 ): Promise<{ changed: boolean; allowFrom: string[] }> {
@@ -544,6 +555,7 @@ export async function removeChannelAllowFromStoreEntry(
   });
 }
 
+/** Reused helper for list Channel Pairing Requests behavior in src/pairing. */
 export async function listChannelPairingRequests(
   channel: PairingChannel,
   env: NodeJS.ProcessEnv = process.env,
@@ -584,6 +596,7 @@ export async function listChannelPairingRequests(
   );
 }
 
+/** Reused helper for upsert Channel Pairing Request behavior in src/pairing. */
 export async function upsertChannelPairingRequest(params: {
   channel: PairingChannel;
   id: string | number;
@@ -684,6 +697,7 @@ export async function upsertChannelPairingRequest(params: {
   );
 }
 
+/** Reused helper for approve Channel Pairing Code behavior in src/pairing. */
 export async function approveChannelPairingCode(params: {
   channel: PairingChannel;
   code: string;

@@ -1,3 +1,4 @@
+// Tests gateway/server-methods nodes pending test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { nodePendingHandlers } from "./nodes-pending.js";
 

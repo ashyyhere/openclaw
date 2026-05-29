@@ -1,3 +1,4 @@
+/** Resolves workspace and plugin metadata context for model discovery. */
 import { getRuntimeConfig } from "../config/config.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { getCurrentPluginMetadataSnapshot } from "../plugins/current-plugin-metadata-snapshot.js";
@@ -5,6 +6,7 @@ import { resolvePluginMetadataSnapshot } from "../plugins/plugin-metadata-snapsh
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "./agent-scope.js";
 import type { PluginModelCatalogMetadataSnapshot } from "./plugin-model-catalog.js";
 
+/** Resolve workspace dir used by model discovery. */
 export function resolveModelWorkspaceDir(
   cfg: OpenClawConfig | undefined,
   explicitWorkspaceDir: string | undefined,
@@ -15,6 +17,7 @@ export function resolveModelWorkspaceDir(
   return resolveAgentWorkspaceDir(cfg, resolveDefaultAgentId(cfg));
 }
 
+/** Resolve plugin metadata snapshot used by model discovery/catalog loading. */
 export function resolveModelPluginMetadataSnapshot(params: {
   allowWorkspaceScopedCurrent?: boolean;
   config?: OpenClawConfig;

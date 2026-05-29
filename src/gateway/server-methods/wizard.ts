@@ -1,3 +1,4 @@
+// gateway/server-methods wizard helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import {
   ErrorCodes,
@@ -34,6 +35,7 @@ function findWizardSessionOrRespond(params: {
   return session;
 }
 
+/** Reused constant for wizard Handlers behavior in src/gateway/server-methods. */
 export const wizardHandlers: GatewayRequestHandlers = {
   "wizard.start": async ({ params, respond, context }) => {
     if (!assertValidParams(params, validateWizardStartParams, "wizard.start", respond)) {

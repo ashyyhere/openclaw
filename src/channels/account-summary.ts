@@ -1,3 +1,4 @@
+// Channel account summary and allowlist formatting helpers.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { normalizeStringEntries } from "../shared/string-normalization.js";
 import { isRecord } from "../utils.js";
@@ -5,6 +6,7 @@ import { projectSafeChannelAccountSnapshotFields } from "./account-snapshot-fiel
 import type { ChannelAccountSnapshot } from "./plugins/types.core.js";
 import type { ChannelPlugin } from "./plugins/types.plugin.js";
 
+/** Build a safe account snapshot for channel status output. */
 export function buildChannelAccountSnapshot(params: {
   plugin: ChannelPlugin;
   account: unknown;
@@ -23,6 +25,7 @@ export function buildChannelAccountSnapshot(params: {
   };
 }
 
+/** Format channel allowFrom entries through plugin-specific display hooks when present. */
 export function formatChannelAllowFrom(params: {
   plugin: ChannelPlugin;
   cfg: OpenClawConfig;
@@ -39,6 +42,7 @@ export function formatChannelAllowFrom(params: {
   return normalizeStringEntries(params.allowFrom);
 }
 
+/** Resolve whether an account is enabled by plugin config and account data. */
 export function resolveChannelAccountEnabled(params: {
   plugin: ChannelPlugin;
   account: unknown;
@@ -51,6 +55,7 @@ export function resolveChannelAccountEnabled(params: {
   return enabled !== false;
 }
 
+/** Resolve whether an account is configured by plugin config and account data. */
 export async function resolveChannelAccountConfigured(params: {
   plugin: ChannelPlugin;
   account: unknown;

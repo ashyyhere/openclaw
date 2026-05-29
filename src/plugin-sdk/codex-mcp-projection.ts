@@ -3,4 +3,5 @@
 // can attach the same user `mcp.servers` entries to its thread config without
 // deep-importing core helpers.
 
+/** Re-exported API for src/plugin-sdk, starting with build Codex User Mcp Servers Thread Config Patch. */
 export { buildCodexUserMcpServersThreadConfigPatch } from "../agents/cli-runner/bundle-mcp-codex.js";

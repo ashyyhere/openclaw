@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server session binding helpers and runtime behavior.
 import fs from "node:fs/promises";
 import { embeddedAgentLog } from "openclaw/plugin-sdk/agent-harness-runtime";
 import {

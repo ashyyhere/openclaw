@@ -1,3 +1,4 @@
+/** In-memory registry for foreground/background bash process sessions. */
 import type { ChildProcessWithoutNullStreams } from "node:child_process";
 import type { EventSessionRoutingPolicy } from "../infra/event-session-routing.js";
 import type { TerminationReason } from "../process/supervisor/types.js";
@@ -19,8 +20,10 @@ function clampTtl(value: number | undefined) {
 
 let jobTtlMs = clampTtl(readEnvInt("OPENCLAW_BASH_JOB_TTL_MS", "PI_BASH_JOB_TTL_MS"));
 
+/** Shared type for Process Status in src/agents. */
 export type ProcessStatus = "running" | "completed" | "failed" | "killed";
 
+/** Shared type for Session Stdin in src/agents. */
 export type SessionStdin = {
   write: (data: string, cb?: (err?: Error | null) => void) => void;
   end: () => void;
@@ -32,6 +35,7 @@ export type SessionStdin = {
   writableFinished?: boolean;
 };
 
+/** Shared type for Process Session in src/agents. */
 export interface ProcessSession {
   id: string;
   command: string;
@@ -78,6 +82,7 @@ export interface ProcessSession {
   cursorKeyMode: "unknown" | "normal" | "application";
 }
 
+/** Shared type for Finished Session in src/agents. */
 export interface FinishedSession {
   id: string;
   command: string;
@@ -104,28 +109,34 @@ function isSessionIdTaken(id: string) {
   return runningSessions.has(id) || finishedSessions.has(id);
 }
 
+/** Create an unused process session slug. */
 export function createSessionSlug(): string {
   return createSessionSlugId(isSessionIdTaken);
 }
 
+/** Add a running process session to the registry. */
 export function addSession(session: ProcessSession) {
   runningSessions.set(session.id, session);
   startSweeper();
 }
 
+/** Lookup a running process session. */
 export function getSession(id: string) {
   return runningSessions.get(id);
 }
 
+/** Lookup a finished process session. */
 export function getFinishedSession(id: string) {
   return finishedSessions.get(id);
 }
 
+/** Delete running and finished process state for a session id. */
 export function deleteSession(id: string) {
   runningSessions.delete(id);
   finishedSessions.delete(id);
 }
 
+/** Append process output while maintaining bounded pending/tail buffers. */
 export function appendOutput(session: ProcessSession, stream: "stdout" | "stderr", chunk: string) {
   session.pendingStdout ??= [];
   session.pendingStderr ??= [];
@@ -156,6 +167,7 @@ export function appendOutput(session: ProcessSession, stream: "stdout" | "stderr
   session.tail = tail(session.aggregated, 2000);
 }
 
+/** Reused helper for drain Session behavior in src/agents. */
 export function drainSession(session: ProcessSession) {
   const stdout = session.pendingStdout.join("");
   const stderr = session.pendingStderr.join("");
@@ -166,6 +178,7 @@ export function drainSession(session: ProcessSession) {
   return { stdout, stderr };
 }
 
+/** Reused helper for mark Exited behavior in src/agents. */
 export function markExited(
   session: ProcessSession,
   exitCode: number | null,
@@ -181,6 +194,7 @@ export function markExited(
   moveToFinished(session, status);
 }
 
+/** Reused helper for mark Backgrounded behavior in src/agents. */
 export function markBackgrounded(session: ProcessSession) {
   session.backgrounded = true;
 }
@@ -240,6 +254,7 @@ function moveToFinished(session: ProcessSession, status: ProcessStatus) {
   });
 }
 
+/** Reused helper for tail behavior in src/agents. */
 export function tail(text: string, max = 2000) {
   if (text.length <= max) {
     return text;
@@ -285,6 +300,7 @@ function capPendingBuffer(buffer: string[], pendingChars: number, cap: number) {
   return pendingChars;
 }
 
+/** Reused helper for trim With Cap behavior in src/agents. */
 export function trimWithCap(text: string, max: number) {
   if (text.length <= max) {
     return text;
@@ -292,24 +308,29 @@ export function trimWithCap(text: string, max: number) {
   return text.slice(text.length - max);
 }
 
+/** Reused helper for list Running Sessions behavior in src/agents. */
 export function listRunningSessions() {
   return Array.from(runningSessions.values()).filter((s) => s.backgrounded);
 }
 
+/** Reused helper for list Finished Sessions behavior in src/agents. */
 export function listFinishedSessions() {
   return Array.from(finishedSessions.values());
 }
 
+/** Reused helper for clear Finished behavior in src/agents. */
 export function clearFinished() {
   finishedSessions.clear();
 }
 
+/** Reused helper for reset Process Registry For Tests behavior in src/agents. */
 export function resetProcessRegistryForTests() {
   runningSessions.clear();
   finishedSessions.clear();
   stopSweeper();
 }
 
+/** Reused helper for set Job Ttl Ms behavior in src/agents. */
 export function setJobTtlMs(value?: number) {
   if (value === undefined || Number.isNaN(value)) {
     return;

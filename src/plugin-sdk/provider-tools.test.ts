@@ -1,3 +1,4 @@
+/** Tests provider tool schema and tool-call helper behavior. */
 import { describe, expect, it } from "vitest";
 import {
   buildProviderToolCompatFamilyHooks,

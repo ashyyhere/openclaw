@@ -1,3 +1,4 @@
+// extensions/qa-matrix/src/substrate events helpers and runtime behavior.
 export type MatrixQaRoomEvent = {
   content?: Record<string, unknown>;
   event_id?: string;

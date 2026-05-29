@@ -1,3 +1,4 @@
+/** Collects memory search status for status command scans. */
 import os from "node:os";
 import path from "node:path";
 import { resolveMemorySearchConfig } from "../agents/memory-search.js";
@@ -19,10 +20,12 @@ function loadStatusScanDepsRuntimeModule() {
   return statusScanDepsRuntimeModuleLoader.load();
 }
 
+/** Reused helper for resolve Default Memory Store Path behavior in src/commands. */
 export function resolveDefaultMemoryStorePath(agentId: string): string {
   return path.join(resolveStateDir(process.env, os.homedir), "memory", `${agentId}.sqlite`);
 }
 
+/** Reused helper for resolve Status Memory Status Snapshot behavior in src/commands. */
 export async function resolveStatusMemoryStatusSnapshot(params: {
   cfg: OpenClawConfig;
   agentStatus: Awaited<ReturnType<typeof getAgentLocalStatusesFn>>;

@@ -1,3 +1,4 @@
+// test/vitest vitest media config helpers and runtime behavior.
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
 export function createMediaVitestConfig(env?: Record<string, string | undefined>) {

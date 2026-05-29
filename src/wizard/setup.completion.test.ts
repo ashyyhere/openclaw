@@ -1,3 +1,4 @@
+// Tests wizard setup completion test behavior.
 import path from "node:path";
 import { describe, expect, it, vi } from "vitest";
 import { resolveCompletionProfilePath } from "../cli/completion-runtime.js";

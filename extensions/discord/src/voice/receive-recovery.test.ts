@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/voice receive recovery test behavior.
 import { describe, expect, it, vi } from "vitest";
 import {
   analyzeVoiceReceiveError,

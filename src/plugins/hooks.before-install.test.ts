@@ -1,3 +1,4 @@
+// Tests plugins hooks before install test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createHookRunner } from "./hooks.js";
 import { addTestHook } from "./hooks.test-helpers.js";

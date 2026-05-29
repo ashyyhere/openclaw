@@ -1,3 +1,4 @@
+// extensions/browser/src/browser constants helpers and runtime behavior.
 export const DEFAULT_OPENCLAW_BROWSER_ENABLED = true;
 export const DEFAULT_BROWSER_EVALUATE_ENABLED = true;
 export const DEFAULT_OPENCLAW_BROWSER_COLOR = "#FF4500";

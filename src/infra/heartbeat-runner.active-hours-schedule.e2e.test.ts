@@ -1,3 +1,4 @@
+// Tests infra heartbeat runner active hours schedule e2e test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import { startHeartbeatRunner } from "./heartbeat-runner.js";

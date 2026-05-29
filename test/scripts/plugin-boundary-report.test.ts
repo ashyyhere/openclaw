@@ -1,3 +1,4 @@
+// Tests test/scripts plugin boundary report test behavior.
 import { describe, expect, it } from "vitest";
 import { createPluginBoundaryReport } from "../../scripts/plugin-boundary-report.js";
 

@@ -1,3 +1,4 @@
+// Tests extensions/ollama ollama live test behavior.
 import { spawnSync } from "node:child_process";
 import * as fsSync from "node:fs";
 import fs from "node:fs/promises";

@@ -1,4 +1,5 @@
 #!/usr/bin/env -S node --import tsx
+// scripts plugin clawhub owner preflight helpers and runtime behavior.
 
 import { readFileSync } from "node:fs";
 import { pathToFileURL } from "node:url";

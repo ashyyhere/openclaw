@@ -1,3 +1,4 @@
+// Tests terminal safe text test behavior.
 import { describe, expect, it } from "vitest";
 import { sanitizeTerminalText } from "./safe-text.js";
 

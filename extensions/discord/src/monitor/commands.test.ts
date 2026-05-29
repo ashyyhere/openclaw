@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/monitor commands test behavior.
 import { describe, expect, it } from "vitest";
 import { resolveDiscordSlashCommandConfig } from "./commands.js";
 

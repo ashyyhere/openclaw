@@ -1,11 +1,17 @@
+// Public commitment domain types shared by extraction, storage, and heartbeat delivery.
+/** Shared type for Commitment Kind in src/commitments. */
 export type CommitmentKind = "event_check_in" | "deadline_check" | "care_check_in" | "open_loop";
 
+/** Shared type for Commitment Sensitivity in src/commitments. */
 export type CommitmentSensitivity = "routine" | "personal" | "care";
 
+/** Shared type for Commitment Status in src/commitments. */
 export type CommitmentStatus = "pending" | "sent" | "dismissed" | "snoozed" | "expired";
 
+/** Shared type for Commitment Source in src/commitments. */
 export type CommitmentSource = "inferred_user_context" | "agent_promise";
 
+/** Shared type for Commitment Scope in src/commitments. */
 export type CommitmentScope = {
   agentId: string;
   sessionKey: string;
@@ -16,12 +22,14 @@ export type CommitmentScope = {
   senderId?: string;
 };
 
+/** Shared type for Commitment Due Window in src/commitments. */
 export type CommitmentDueWindow = {
   earliestMs: number;
   latestMs: number;
   timezone: string;
 };
 
+/** Shared type for Commitment Record in src/commitments. */
 export type CommitmentRecord = CommitmentScope & {
   id: string;
   kind: CommitmentKind;
@@ -49,11 +57,13 @@ export type CommitmentRecord = CommitmentScope & {
   expiredAtMs?: number;
 };
 
+/** Shared type for Commitment Store File in src/commitments. */
 export type CommitmentStoreFile = {
   version: 1;
   commitments: CommitmentRecord[];
 };
 
+/** Shared type for Commitment Candidate in src/commitments. */
 export type CommitmentCandidate = {
   itemId: string;
   kind: CommitmentKind;
@@ -70,6 +80,7 @@ export type CommitmentCandidate = {
   };
 };
 
+/** Shared type for Commitment Extraction Item in src/commitments. */
 export type CommitmentExtractionItem = CommitmentScope & {
   itemId: string;
   nowMs: number;
@@ -87,6 +98,7 @@ export type CommitmentExtractionItem = CommitmentScope & {
   }>;
 };
 
+/** Shared type for Commitment Extraction Batch Result in src/commitments. */
 export type CommitmentExtractionBatchResult = {
   candidates: CommitmentCandidate[];
 };

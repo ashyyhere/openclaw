@@ -1,3 +1,5 @@
+// infra/outbound message action test fixtures helpers and runtime behavior.
+/** Reused helper for create Pinboard Message Action Bootstrap Registry Mock behavior in src/infra/outbound. */
 export function createPinboardMessageActionBootstrapRegistryMock() {
   return (channel: string) => {
     if (channel === "pinboard") {

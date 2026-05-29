@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor message run queue helpers and runtime behavior.
 import { createChannelRunQueue } from "openclaw/plugin-sdk/channel-outbound";
 import type { ClaimableDedupe } from "openclaw/plugin-sdk/persistent-dedupe";
 import { danger } from "openclaw/plugin-sdk/runtime-env";

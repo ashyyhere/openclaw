@@ -20,17 +20,25 @@ if (shouldWarnExtensionApiImport) {
   );
 }
 
+/** Re-exported API for src, starting with resolve Agent Dir. */
 export { resolveAgentDir, resolveAgentWorkspaceDir } from "./agents/agent-scope.js";
+/** Re-exported API for src, starting with DEFAULT MODEL. */
 export { DEFAULT_MODEL, DEFAULT_PROVIDER } from "./agents/defaults.js";
+/** Re-exported API for src, starting with resolve Agent Identity. */
 export { resolveAgentIdentity } from "./agents/identity.js";
+/** Re-exported API for src, starting with resolve Thinking Default. */
 export { resolveThinkingDefault } from "./agents/model-selection.js";
+/** Re-exported API for src. */
 export {
   runEmbeddedAgent,
   /** @deprecated Use runEmbeddedAgent. */
   runEmbeddedAgent as runEmbeddedPiAgent,
 } from "./agents/embedded-agent.js";
+/** Re-exported API for src, starting with resolve Agent Timeout Ms. */
 export { resolveAgentTimeoutMs } from "./agents/timeout.js";
+/** Re-exported API for src, starting with ensure Agent Workspace. */
 export { ensureAgentWorkspace } from "./agents/workspace.js";
+/** Re-exported API for src. */
 export {
   resolveStorePath,
   loadSessionStore,

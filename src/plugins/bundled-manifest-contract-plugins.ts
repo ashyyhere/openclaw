@@ -1,3 +1,4 @@
+// plugins bundled manifest contract plugins helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {
   resolveBundledPluginCompatibleLoadValues,
@@ -16,6 +17,7 @@ function createPluginIdSet(pluginIds: readonly string[] | undefined): Set<string
   return pluginIds && pluginIds.length > 0 ? new Set(pluginIds) : null;
 }
 
+/** Reused helper for list Bundled Manifest Contract Plugin Ids behavior in src/plugins. */
 export function listBundledManifestContractPluginIds(params: {
   plugins: readonly PluginManifestRecord[];
   contract: PluginManifestContractListKey;
@@ -33,6 +35,7 @@ export function listBundledManifestContractPluginIds(params: {
     .toSorted((left, right) => left.localeCompare(right));
 }
 
+/** Reused helper for resolve Enabled Bundled Manifest Contract Plugins behavior in src/plugins. */
 export function resolveEnabledBundledManifestContractPlugins(params: {
   config?: OpenClawConfig;
   workspaceDir?: string;

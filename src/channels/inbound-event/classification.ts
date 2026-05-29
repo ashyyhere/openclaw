@@ -1,8 +1,10 @@
+// Inbound event classification helpers for channel adapters.
 import { resolveAgentConfig } from "../../agents/agent-scope.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { ConversationFacts } from "../turn/types.js";
 import type { InboundEventKind } from "./kind.js";
 
+/** Shared type for Classify Channel Inbound Event Params in src/channels/inbound-event. */
 export type ClassifyChannelInboundEventParams = {
   conversation: Pick<ConversationFacts, "kind">;
   unmentionedGroupPolicy?: InboundEventKind;
@@ -12,6 +14,7 @@ export type ClassifyChannelInboundEventParams = {
   commandSource?: "native" | "text";
 };
 
+/** Reused helper for classify Channel Inbound Event behavior in src/channels/inbound-event. */
 export function classifyChannelInboundEvent(
   params: ClassifyChannelInboundEventParams,
 ): InboundEventKind {
@@ -32,6 +35,7 @@ export function classifyChannelInboundEvent(
   return "room_event";
 }
 
+/** Reused helper for resolve Unmentioned Group Inbound Policy behavior in src/channels/inbound-event. */
 export function resolveUnmentionedGroupInboundPolicy(params: {
   cfg: OpenClawConfig;
   agentId?: string;

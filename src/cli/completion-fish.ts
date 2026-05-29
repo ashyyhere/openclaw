@@ -1,3 +1,4 @@
+/** Fish shell completion string escaping helpers. */
 export function escapeFishDescription(value: string): string {
   return value.replace(/'/g, "'\\''");
 }
@@ -11,6 +12,7 @@ function parseOptionFlags(flags: string): { long?: string; short?: string } {
   return { long, short };
 }
 
+/** Reused helper for build Fish Subcommand Completion Line behavior in src/cli. */
 export function buildFishSubcommandCompletionLine(params: {
   rootCmd: string;
   condition: string;
@@ -21,6 +23,7 @@ export function buildFishSubcommandCompletionLine(params: {
   return `complete -c ${params.rootCmd} -n "${params.condition}" -a "${params.name}" -d '${desc}'\n`;
 }
 
+/** Reused helper for build Fish Option Completion Line behavior in src/cli. */
 export function buildFishOptionCompletionLine(params: {
   rootCmd: string;
   condition: string;

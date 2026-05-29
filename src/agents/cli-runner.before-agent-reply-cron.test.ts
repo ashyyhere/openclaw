@@ -1,3 +1,4 @@
+/** Tests CLI runner before-agent-reply hook behavior for cron turns. */
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { SILENT_REPLY_TOKEN } from "../auto-reply/tokens.js";
 import { cliBackendLog } from "./cli-runner/log.js";

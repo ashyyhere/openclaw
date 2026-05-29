@@ -1,3 +1,4 @@
+/** Tests container-target command rerouting and argument rewriting. */
 import { describe, expect, it, vi } from "vitest";
 import {
   maybeRunCliInContainer,

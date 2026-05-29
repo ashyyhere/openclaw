@@ -1,3 +1,4 @@
+// Tests plugins/contracts runtime import side effects contract test behavior.
 import fs from "node:fs";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { assertNoImportTimeSideEffects } from "../../plugin-sdk/test-helpers/import-side-effects.js";

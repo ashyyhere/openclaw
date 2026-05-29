@@ -1,3 +1,4 @@
+// infra/outbound message action tts helpers and runtime behavior.
 import type { ReplyPayload } from "../../auto-reply/reply-payload.js";
 import {
   loadSessionStore,
@@ -15,6 +16,7 @@ function loadMessageActionTtsRuntime() {
   return ttsRuntimePromise;
 }
 
+/** Reused helper for resolve Message Action Session Tts Auto behavior in src/infra/outbound. */
 export function resolveMessageActionSessionTtsAuto(params: {
   cfg: OpenClawConfig;
   sessionKey?: string;
@@ -33,6 +35,7 @@ export function resolveMessageActionSessionTtsAuto(params: {
   }
 }
 
+/** Reused helper for maybe Apply Tts To Message Action Send Payload behavior in src/infra/outbound. */
 export async function maybeApplyTtsToMessageActionSendPayload(params: {
   payload: ReplyPayload;
   cfg: OpenClawConfig;

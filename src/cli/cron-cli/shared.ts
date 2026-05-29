@@ -21,6 +21,7 @@ import {
 import type { GatewayRpcOpts } from "../gateway-rpc.js";
 import { callGatewayFromCli } from "../gateway-rpc.js";
 
+/** Reused constant for get Cron Channel Options behavior in src/cli/cron-cli. */
 export const getCronChannelOptions = () => {
   // Keep help truthful even before the plugin registry is bootstrapped.
   const pluginIds = listChannelPlugins()
@@ -52,6 +53,7 @@ function addCronRunCauseFields(value: unknown): unknown {
   return { ...record, entries: nextEntries };
 }
 
+/** Reused helper for print Cron Json behavior in src/cli/cron-cli. */
 export function printCronJson(value: unknown) {
   defaultRuntime.writeJson(addCronRunCauseFields(value));
 }
@@ -95,11 +97,13 @@ function computeStatus(job: CronJob): string {
   return state.lastRunStatus ?? state.lastStatus ?? "idle";
 }
 
+/** Reused helper for handle Cron Cli Error behavior in src/cli/cron-cli. */
 export function handleCronCliError(err: unknown) {
   defaultRuntime.error(danger(String(err)));
   defaultRuntime.exit(1);
 }
 
+/** Reused helper for warn If Cron Scheduler Disabled behavior in src/cli/cron-cli. */
 export async function warnIfCronSchedulerDisabled(opts: GatewayRpcOpts) {
   try {
     const res = (await callGatewayFromCli("cron.status", opts, {})) as {
@@ -124,6 +128,7 @@ export async function warnIfCronSchedulerDisabled(opts: GatewayRpcOpts) {
   }
 }
 
+/** Reused helper for parse Duration Ms behavior in src/cli/cron-cli. */
 export function parseDurationMs(input: string): number | null {
   const raw = input.trim();
   if (!raw) {
@@ -151,6 +156,7 @@ export function parseDurationMs(input: string): number | null {
   return Math.floor(n * factor);
 }
 
+/** Reused helper for parse Cron Stagger Ms behavior in src/cli/cron-cli. */
 export function parseCronStaggerMs(params: {
   staggerRaw: string;
   useExact: boolean;
@@ -168,6 +174,7 @@ export function parseCronStaggerMs(params: {
   return parsed;
 }
 
+/** Reused helper for parse Cron Tools Allow behavior in src/cli/cron-cli. */
 export function parseCronToolsAllow(input: unknown): string[] | undefined {
   const raw = Array.isArray(input)
     ? input.map((value) => String(value)).join(" ")
@@ -307,6 +314,7 @@ const formatStatus = (job: CronJob) => {
   return state.lastStatus ?? "idle";
 };
 
+/** Reused helper for coerce Cron Delivery Previews behavior in src/cli/cron-cli. */
 export function coerceCronDeliveryPreviews(value: unknown): Map<string, CronDeliveryPreview> {
   const previews =
     value && typeof value === "object"
@@ -329,6 +337,7 @@ export function coerceCronDeliveryPreviews(value: unknown): Map<string, CronDeli
   );
 }
 
+/** Reused helper for print Cron List behavior in src/cli/cron-cli. */
 export function printCronList(
   jobs: CronJob[],
   runtime: RuntimeEnv = defaultRuntime,
@@ -431,6 +440,7 @@ export function printCronList(
   }
 }
 
+/** Reused helper for print Cron Show behavior in src/cli/cron-cli. */
 export function printCronShow(
   job: CronJob,
   runtime: RuntimeEnv = defaultRuntime,

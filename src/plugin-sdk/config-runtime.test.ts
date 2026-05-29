@@ -1,3 +1,4 @@
+/** Tests config runtime SDK helpers and normalized runtime config behavior. */
 import { describe, expect, it } from "vitest";
 import {
   resolveLivePluginConfigObject,

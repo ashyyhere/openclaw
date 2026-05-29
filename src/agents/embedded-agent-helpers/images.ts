@@ -1,3 +1,4 @@
+/** Sanitizes image blocks in replayed embedded-agent session messages. */
 import type { ImageSanitizationLimits } from "../image-sanitization.js";
 import type { AgentMessage, AgentToolResult } from "../runtime/index.js";
 import type { ToolCallIdMode } from "../tool-call-id.js";
@@ -28,6 +29,7 @@ function ensureNonEmptyContent<T>(content: T[]): T[] {
   return [{ type: "text", text: EMPTY_CONTENT_PLACEHOLDER }] as T[];
 }
 
+/** Reused helper for is Empty Assistant Message Content behavior in src/agents/embedded-agent-helpers. */
 export function isEmptyAssistantMessageContent(
   message: Extract<AgentMessage, { role: "assistant" }>,
 ): boolean {
@@ -50,6 +52,7 @@ export function isEmptyAssistantMessageContent(
   });
 }
 
+/** Reused helper for sanitize Session Messages Images behavior in src/agents/embedded-agent-helpers. */
 export async function sanitizeSessionMessagesImages(
   messages: AgentMessage[],
   label: string,

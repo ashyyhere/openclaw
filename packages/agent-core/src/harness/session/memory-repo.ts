@@ -1,7 +1,9 @@
+// packages/agent-core/src/harness/session memory repo helpers and runtime behavior.
 import { type Session, SessionError, type SessionMetadata, type SessionRepo } from "../types.js";
 import { InMemorySessionStorage } from "./memory-storage.js";
 import { createSessionId, createTimestamp, getEntriesToFork, toSession } from "./repo-utils.js";
 
+/** Public class implementing In Memory Session Repo behavior for packages/agent-core. */
 export class InMemorySessionRepo implements SessionRepo<SessionMetadata, { id?: string }> {
   private sessions = new Map<string, Session>();
 

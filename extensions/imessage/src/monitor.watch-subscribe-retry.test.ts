@@ -1,3 +1,4 @@
+// Tests extensions/imessage/src monitor watch subscribe retry test behavior.
 import type { waitForTransportReady } from "openclaw/plugin-sdk/transport-ready-runtime";
 import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { createIMessageRpcClient, IMessageRpcClient } from "./client.js";

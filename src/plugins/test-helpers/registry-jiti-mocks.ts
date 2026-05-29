@@ -1,3 +1,4 @@
+// plugins/test-helpers registry jiti mocks helpers and runtime behavior.
 import { vi } from "vitest";
 
 const registryJitiMocks = vi.hoisted(() => ({

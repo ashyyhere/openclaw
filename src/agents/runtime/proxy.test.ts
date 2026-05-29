@@ -1,3 +1,4 @@
+/** Covers streaming proxy behavior for the agent runtime facade. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { Context, Model, Usage } from "../../llm/types.js";
 import { streamProxy } from "./proxy.js";

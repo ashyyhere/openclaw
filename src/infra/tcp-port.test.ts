@@ -1,3 +1,4 @@
+// Tests infra tcp port test behavior.
 import { describe, expect, it } from "vitest";
 import { parseTcpPort } from "./tcp-port.js";
 

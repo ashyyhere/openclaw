@@ -1,3 +1,4 @@
+// extensions/googlechat/src channel adapters helpers and runtime behavior.
 import { adaptScopedAccountAccessor } from "openclaw/plugin-sdk/channel-config-helpers";
 import {
   createMessageReceiptFromOutboundResults,

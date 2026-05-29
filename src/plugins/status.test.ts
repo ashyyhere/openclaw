@@ -1,3 +1,4 @@
+// Tests plugins status test behavior.
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { PluginMemoryEmbeddingProviderRegistration } from "./registry-types.js";
 import {

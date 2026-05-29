@@ -1,3 +1,4 @@
+// plugins http registry helpers and runtime behavior.
 import { AsyncLocalStorage } from "node:async_hooks";
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { normalizePluginHttpPath } from "./http-path.js";
@@ -5,6 +6,7 @@ import { findOverlappingPluginHttpRoute } from "./http-route-overlap.js";
 import type { PluginHttpRouteRegistration, PluginRegistry } from "./registry.js";
 import { requireActivePluginHttpRouteRegistry } from "./runtime.js";
 
+/** Shared type for Plugin Http Route Handler in src/plugins. */
 export type PluginHttpRouteHandler = (
   req: IncomingMessage,
   res: ServerResponse,
@@ -12,10 +14,12 @@ export type PluginHttpRouteHandler = (
 
 const pluginHttpRouteRegistryScope = new AsyncLocalStorage<PluginRegistry>();
 
+/** Reused helper for with Plugin Http Route Registry behavior in src/plugins. */
 export function withPluginHttpRouteRegistry<T>(registry: PluginRegistry, run: () => T): T {
   return pluginHttpRouteRegistryScope.run(registry, run);
 }
 
+/** Reused helper for register Plugin Http Route behavior in src/plugins. */
 export function registerPluginHttpRoute(params: {
   path?: string | null;
   fallbackPath?: string | null;

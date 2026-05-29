@@ -1,3 +1,4 @@
+// Tests test/scripts check cli startup memory test behavior.
 import { spawnSync } from "node:child_process";
 import { readdirSync, mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";

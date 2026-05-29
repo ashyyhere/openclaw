@@ -1,3 +1,4 @@
+// Import boundary coverage for get-reply modules.
 import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";

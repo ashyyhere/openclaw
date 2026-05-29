@@ -1,3 +1,4 @@
+/** Regression coverage for subagent list indexing, active/recent status, and text output. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

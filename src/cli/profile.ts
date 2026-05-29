@@ -1,3 +1,4 @@
+/** Handles profile selection, env vars, and profile-aware CLI help text. */
 import os from "node:os";
 import path from "node:path";
 import { isValueToken } from "../infra/cli-root-options.js";
@@ -20,6 +21,7 @@ function isCommandLocalProfileOption(out: string[]): boolean {
   return primary === "qa" && secondary === "matrix";
 }
 
+/** Reused helper for parse Cli Profile Args behavior in src/cli. */
 export function parseCliProfileArgs(argv: string[]): CliProfileParseResult {
   let profile: string | null = null;
   let sawDev = false;
@@ -83,6 +85,7 @@ function resolveProfileStateDir(
   return path.join(resolveRequiredHomeDir(env as NodeJS.ProcessEnv, homedir), `.openclaw${suffix}`);
 }
 
+/** Reused helper for apply Cli Profile Env behavior in src/cli. */
 export function applyCliProfileEnv(params: {
   profile: string;
   env?: Record<string, string | undefined>;

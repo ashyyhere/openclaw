@@ -1,3 +1,4 @@
+// Tests extensions/slack/src channel migration test behavior.
 import { describe, expect, it } from "vitest";
 import { migrateSlackChannelConfig, migrateSlackChannelsInPlace } from "./channel-migration.js";
 

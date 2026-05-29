@@ -1,15 +1,18 @@
+/** Resolves media paths through sandbox filesystem bridges. */
 import path from "node:path";
 import { resolveMediaReferenceSandboxPath } from "../media/media-reference.js";
 import { assertSandboxPath } from "./sandbox-paths.js";
 import type { SandboxFsBridge, SandboxResolvedPath } from "./sandbox/fs-bridge.js";
 import { isPathInsideContainerRoot, normalizeContainerPath } from "./sandbox/path-utils.js";
 
+/** Sandbox bridge config used to resolve media references. */
 export type SandboxedBridgeMediaPathConfig = {
   root: string;
   bridge: SandboxFsBridge;
   workspaceOnly?: boolean;
 };
 
+/** Build a readFile helper backed by a sandbox filesystem bridge. */
 export function createSandboxBridgeReadFile(params: {
   sandbox: Pick<SandboxedBridgeMediaPathConfig, "root" | "bridge">;
 }): (filePath: string) => Promise<Buffer> {
@@ -20,6 +23,7 @@ export function createSandboxBridgeReadFile(params: {
     });
 }
 
+/** Resolve a media path to host/container path while enforcing sandbox bounds. */
 export async function resolveSandboxedBridgeMediaPath(params: {
   sandbox: SandboxedBridgeMediaPathConfig;
   mediaPath: string;

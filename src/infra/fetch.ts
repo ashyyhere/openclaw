@@ -1,3 +1,4 @@
+// infra fetch helpers and runtime behavior.
 import { bindAbortRelay } from "../utils/fetch-timeout.js";
 import { normalizeRequestInitHeadersForFetch } from "./fetch-headers.js";
 
@@ -34,6 +35,7 @@ function withDuplex(
     : ({ duplex: "half" as const } as RequestInitWithDuplex);
 }
 
+/** Reused helper for wrap Fetch With Abort Signal behavior in src/infra. */
 export function wrapFetchWithAbortSignal(fetchImpl: typeof fetch): typeof fetch {
   if ((fetchImpl as FetchWithAbortSignalMarker)[wrapFetchWithAbortSignalMarker]) {
     return fetchImpl;
@@ -101,6 +103,7 @@ export function wrapFetchWithAbortSignal(fetchImpl: typeof fetch): typeof fetch 
   return wrappedFetch;
 }
 
+/** Reused helper for resolve Fetch behavior in src/infra. */
 export function resolveFetch(fetchImpl?: typeof fetch): typeof fetch | undefined {
   const resolved = fetchImpl ?? globalThis.fetch;
   if (!resolved) {

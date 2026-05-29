@@ -1,13 +1,16 @@
+/** Shared fixtures for overflow-triggered embedded-agent compaction tests. */
 import { buildAttemptReplayMetadata } from "./run/incomplete-turn.js";
 import type { EmbeddedRunAttemptResult } from "./run/types.js";
 
 const DEFAULT_OVERFLOW_ERROR_MESSAGE =
   "request_too_large: Request size exceeds model context window";
 
+/** Reused helper for make Overflow Error behavior in src/agents/embedded-agent-runner. */
 export function makeOverflowError(message: string = DEFAULT_OVERFLOW_ERROR_MESSAGE): Error {
   return new Error(message);
 }
 
+/** Reused helper for make Compaction Success behavior in src/agents/embedded-agent-runner. */
 export function makeCompactionSuccess(params: {
   summary: string;
   firstKeptEntryId?: string;
@@ -30,6 +33,7 @@ export function makeCompactionSuccess(params: {
   };
 }
 
+/** Reused helper for make Attempt Result behavior in src/agents/embedded-agent-runner. */
 export function makeAttemptResult(
   overrides: Partial<EmbeddedRunAttemptResult> = {},
 ): EmbeddedRunAttemptResult {
@@ -99,6 +103,7 @@ type MockCompactDirect = {
   }) => unknown;
 };
 
+/** Reused helper for mock Overflow Retry Success behavior in src/agents/embedded-agent-runner. */
 export function mockOverflowRetrySuccess(params: {
   runEmbeddedAttempt: MockRunEmbeddedAttempt;
   compactDirect: MockCompactDirect;
@@ -122,6 +127,7 @@ export function mockOverflowRetrySuccess(params: {
   return overflowError;
 }
 
+/** Reused helper for queue Overflow Attempt With Oversized Tool Output behavior in src/agents/embedded-agent-runner. */
 export function queueOverflowAttemptWithOversizedToolOutput(
   runEmbeddedAttempt: MockRunEmbeddedAttempt,
   overflowError: Error = makeOverflowError(),

@@ -1,3 +1,4 @@
+/** Helper functions for PDF tool input/model/text handling. */
 import {
   resolveAgentModelFallbackValues,
   resolveAgentModelPrimaryValue,
@@ -7,8 +8,10 @@ import type { AssistantMessage } from "../../llm/types.js";
 import { providerSupportsNativePdfDocument } from "../../media-understanding/defaults.js";
 import { extractAssistantText } from "../embedded-agent-utils.js";
 
+/** Shared type for Pdf Model Config in src/agents/tools. */
 export type PdfModelConfig = { primary?: string; fallbacks?: string[] };
 
+/** Resolves PDF input paths/URLs from tool params. */
 export function resolvePdfInputs(record: Record<string, unknown>): string[] {
   const pdfCandidates: string[] = [];
   if (typeof record.pdf === "string") {
@@ -37,6 +40,7 @@ export function resolvePdfInputs(record: Record<string, unknown>): string[] {
 /**
  * Check whether a provider supports native PDF document input.
  */
+/** Checks whether a provider supports native PDF document input. */
 export function providerSupportsNativePdf(provider: string): boolean {
   return providerSupportsNativePdfDocument({ providerId: provider });
 }
@@ -44,6 +48,7 @@ export function providerSupportsNativePdf(provider: string): boolean {
 /**
  * Parse a page range string (e.g. "1-5", "3", "1-3,7-9") into an array of 1-based page numbers.
  */
+/** Parses a page range string into one-based page numbers. */
 export function parsePageRange(range: string, maxPages: number): number[] {
   const pages = new Set<number>();
   const parts = range.split(",").map((p) => p.trim());
@@ -74,6 +79,7 @@ export function parsePageRange(range: string, maxPages: number): number[] {
   return Array.from(pages).toSorted((a, b) => a - b);
 }
 
+/** Coerces PDF assistant output into visible fallback text. */
 export function coercePdfAssistantText(params: {
   message: AssistantMessage;
   provider: string;
@@ -100,6 +106,7 @@ export function coercePdfAssistantText(params: {
   throw new Error(`PDF model returned no text (${label}).`);
 }
 
+/** Reads PDF model config with defaults applied. */
 export function coercePdfModelConfig(cfg?: OpenClawConfig): PdfModelConfig {
   const primary = resolveAgentModelPrimaryValue(cfg?.agents?.defaults?.pdfModel);
   const fallbacks = resolveAgentModelFallbackValues(cfg?.agents?.defaults?.pdfModel);
@@ -113,6 +120,7 @@ export function coercePdfModelConfig(cfg?: OpenClawConfig): PdfModelConfig {
   return modelConfig;
 }
 
+/** Reused helper for resolve Pdf Tool Max Tokens behavior in src/agents/tools. */
 export function resolvePdfToolMaxTokens(
   modelMaxTokens: number | undefined,
   requestedMaxTokens = 4096,

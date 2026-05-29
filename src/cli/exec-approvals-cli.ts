@@ -1,3 +1,4 @@
+/** Registers CLI commands for inspecting and managing exec approvals. */
 import fs from "node:fs/promises";
 import type { Command } from "commander";
 import JSON5 from "json5";
@@ -472,6 +473,7 @@ function registerAllowlistMutationCommand(params: {
   return command;
 }
 
+/** Reused helper for register Exec Approvals Cli behavior in src/cli. */
 export function registerExecApprovalsCli(program: Command) {
   const formatExample = (cmd: string, desc: string) =>
     `  ${theme.command(cmd)}\n    ${theme.muted(desc)}`;

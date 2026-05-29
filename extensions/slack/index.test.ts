@@ -1,3 +1,4 @@
+// Tests extensions/slack index test behavior.
 import { assertBundledChannelEntries } from "openclaw/plugin-sdk/channel-test-helpers";
 import { describe, expect, it, vi } from "vitest";
 import entry from "./index.js";

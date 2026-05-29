@@ -227,6 +227,7 @@ interface ProviderRequestConfig {
   authHeader?: boolean;
 }
 
+/** Shared type for Resolved Request Auth in src/agents/sessions. */
 export type ResolvedRequestAuth =
   | {
       ok: true;

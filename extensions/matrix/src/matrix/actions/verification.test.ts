@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src/matrix/actions verification test behavior.
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 const withResolvedActionClientMock = vi.fn();

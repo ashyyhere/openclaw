@@ -1,3 +1,4 @@
+// infra provider usage fetch claude helpers and runtime behavior.
 import {
   buildUsageHttpErrorSnapshot,
   fetchJson,
@@ -124,6 +125,7 @@ async function fetchClaudeWebUsage(
   };
 }
 
+/** Reused helper for fetch Claude Usage behavior in src/infra. */
 export async function fetchClaudeUsage(
   token: string,
   timeoutMs: number,

@@ -1,3 +1,4 @@
+// test/vitest vitest config helpers and runtime behavior.
 import { defineConfig } from "vitest/config";
 import {
   resolveDefaultVitestPool,

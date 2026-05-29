@@ -1,3 +1,4 @@
+/** Bundled Anthropic Vertex stream facade loader. */
 import { loadBundledPluginPublicSurfaceModuleSync } from "../plugin-sdk/facade-runtime.js";
 import type { StreamFn } from "./runtime/index.js";
 
@@ -20,6 +21,7 @@ function loadAnthropicVertexStreamFacade(): AnthropicVertexStreamFacade {
   });
 }
 
+/** Resolve the Anthropic Vertex stream function for a model/env pair. */
 export function createAnthropicVertexStreamFnForModel(
   model: { baseUrl?: string },
   env: NodeJS.ProcessEnv = process.env,

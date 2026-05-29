@@ -1,3 +1,4 @@
+// scripts/e2e/parallels lane runner helpers and runtime behavior.
 import { warn } from "./host-command.ts";
 
 export type SmokeLane = "fresh" | "upgrade";

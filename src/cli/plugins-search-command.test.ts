@@ -1,3 +1,4 @@
+/** Tests plugin search command output and query handling. */
 import { Command } from "commander";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 

@@ -1,8 +1,11 @@
+/** Public type contract for prepared agent runtime plans. */
 import type { TSchema } from "typebox";
 import type { AgentTool } from "../runtime/index.js";
 
+/** Shared type for Agent Runtime Transport in src/agents/runtime-plan. */
 export type AgentRuntimeTransport = "sse" | "websocket" | "auto";
 
+/** Shared type for Agent Runtime Think Level in src/agents/runtime-plan. */
 export type AgentRuntimeThinkLevel =
   | "off"
   | "minimal"
@@ -13,7 +16,9 @@ export type AgentRuntimeThinkLevel =
   | "adaptive"
   | "max";
 
+/** Shared type for Agent Runtime Prompt Mode in src/agents/runtime-plan. */
 export type AgentRuntimePromptMode = "full" | "minimal" | "none";
+/** Shared type for Agent Runtime Prompt Trigger in src/agents/runtime-plan. */
 export type AgentRuntimePromptTrigger =
   | "cron"
   | "heartbeat"
@@ -22,6 +27,7 @@ export type AgentRuntimePromptTrigger =
   | "overflow"
   | "user";
 
+/** Shared type for Agent Runtime Failover Reason in src/agents/runtime-plan. */
 export type AgentRuntimeFailoverReason =
   | "auth"
   | "auth_permanent"
@@ -38,8 +44,10 @@ export type AgentRuntimeFailoverReason =
   | "unclassified"
   | "unknown";
 
+/** Shared type for Agent Runtime Config in src/agents/runtime-plan. */
 export type AgentRuntimeConfig = unknown;
 
+/** Shared type for Agent Runtime Model in src/agents/runtime-plan. */
 export type AgentRuntimeModel = {
   id?: string;
   name?: string;
@@ -60,16 +68,19 @@ export type AgentRuntimeModel = {
   compat?: unknown;
 };
 
+/** Shared type for Agent Runtime Text Replacement in src/agents/runtime-plan. */
 export type AgentRuntimeTextReplacement = {
   from: string | RegExp;
   to: string;
 };
 
+/** Shared type for Agent Runtime Text Transforms in src/agents/runtime-plan. */
 export type AgentRuntimeTextTransforms = {
   input?: AgentRuntimeTextReplacement[];
   output?: AgentRuntimeTextReplacement[];
 };
 
+/** Shared type for Agent Runtime Provider Handle in src/agents/runtime-plan. */
 export type AgentRuntimeProviderHandle = {
   provider: string;
   config?: AgentRuntimeConfig;
@@ -79,6 +90,7 @@ export type AgentRuntimeProviderHandle = {
   bundledProviderVitestCompat?: boolean;
 };
 
+/** Shared type for Agent Runtime Interactive Button Style in src/agents/runtime-plan. */
 export type AgentRuntimeInteractiveButtonStyle = "primary" | "secondary" | "success" | "danger";
 
 /** Portable action control exposed to agent runtime reply payloads. */
@@ -142,6 +154,7 @@ export type AgentRuntimeInteractiveReply = {
   blocks: AgentRuntimeInteractiveReplyBlock[];
 };
 
+/** Shared type for Agent Runtime Message Presentation Tone in src/agents/runtime-plan. */
 export type AgentRuntimeMessagePresentationTone =
   | "info"
   | "success"
@@ -149,6 +162,7 @@ export type AgentRuntimeMessagePresentationTone =
   | "danger"
   | "neutral";
 
+/** Shared type for Agent Runtime Message Presentation Block in src/agents/runtime-plan. */
 export type AgentRuntimeMessagePresentationBlock =
   | {
       type: "text";
@@ -171,6 +185,7 @@ export type AgentRuntimeMessagePresentationBlock =
       options: AgentRuntimeMessagePresentationOption[];
     };
 
+/** Shared type for Agent Runtime Message Presentation in src/agents/runtime-plan. */
 export type AgentRuntimeMessagePresentation = {
   /** Optional short heading rendered before blocks when supported. */
   title?: string;
@@ -180,16 +195,19 @@ export type AgentRuntimeMessagePresentation = {
   blocks: AgentRuntimeMessagePresentationBlock[];
 };
 
+/** Shared type for Agent Runtime Reply Payload Delivery Pin in src/agents/runtime-plan. */
 export type AgentRuntimeReplyPayloadDeliveryPin = {
   enabled: boolean;
   notify?: boolean;
   required?: boolean;
 };
 
+/** Shared type for Agent Runtime Reply Payload Delivery in src/agents/runtime-plan. */
 export type AgentRuntimeReplyPayloadDelivery = {
   pin?: boolean | AgentRuntimeReplyPayloadDeliveryPin;
 };
 
+/** Shared type for Agent Runtime Reply Payload in src/agents/runtime-plan. */
 export type AgentRuntimeReplyPayload = {
   text?: string;
   mediaUrl?: string;
@@ -223,17 +241,20 @@ export type AgentRuntimeReplyPayload = {
   channelData?: Record<string, unknown>;
 };
 
+/** Shared type for Agent Runtime System Prompt Section Id in src/agents/runtime-plan. */
 export type AgentRuntimeSystemPromptSectionId =
   | "interaction_style"
   | "tool_call_style"
   | "execution_bias";
 
+/** Shared type for Agent Runtime System Prompt Contribution in src/agents/runtime-plan. */
 export type AgentRuntimeSystemPromptContribution = {
   stablePrefix?: string;
   dynamicSuffix?: string;
   sectionOverrides?: Partial<Record<AgentRuntimeSystemPromptSectionId, string>>;
 };
 
+/** Shared type for Agent Runtime System Prompt Contribution Context in src/agents/runtime-plan. */
 export type AgentRuntimeSystemPromptContributionContext = {
   config?: AgentRuntimeConfig;
   agentDir?: string;
@@ -247,13 +268,16 @@ export type AgentRuntimeSystemPromptContributionContext = {
   trigger?: AgentRuntimePromptTrigger;
 };
 
+/** Shared type for Agent Runtime Followup Fallback Route Result in src/agents/runtime-plan. */
 export type AgentRuntimeFollowupFallbackRouteResult = {
   route?: "origin" | "dispatcher" | "drop";
   reason?: string;
 };
 
+/** Shared type for Agent Runtime Tool Call Id Mode in src/agents/runtime-plan. */
 export type AgentRuntimeToolCallIdMode = "strict" | "strict9";
 
+/** Shared type for Agent Runtime Transcript Policy in src/agents/runtime-plan. */
 export type AgentRuntimeTranscriptPolicy = {
   sanitizeMode: "full" | "images-only";
   sanitizeToolCallIds: boolean;
@@ -274,6 +298,7 @@ export type AgentRuntimeTranscriptPolicy = {
   allowSyntheticToolResults: boolean;
 };
 
+/** Shared type for Agent Runtime Outcome Classification in src/agents/runtime-plan. */
 export type AgentRuntimeOutcomeClassification =
   | {
       message: string;
@@ -288,6 +313,7 @@ export type AgentRuntimeOutcomeClassification =
   | null
   | undefined;
 
+/** Shared type for Agent Runtime Outcome Classifier in src/agents/runtime-plan. */
 export type AgentRuntimeOutcomeClassifier = (params: {
   provider: string;
   model: string;
@@ -296,6 +322,7 @@ export type AgentRuntimeOutcomeClassifier = (params: {
   hasBlockReplyPipelineOutput?: boolean;
 }) => AgentRuntimeOutcomeClassification;
 
+/** Shared type for Agent Runtime Resolved Ref in src/agents/runtime-plan. */
 export type AgentRuntimeResolvedRef = {
   provider: string;
   modelId: string;
@@ -304,6 +331,7 @@ export type AgentRuntimeResolvedRef = {
   transport?: AgentRuntimeTransport;
 };
 
+/** Shared type for Agent Runtime Auth Plan in src/agents/runtime-plan. */
 export type AgentRuntimeAuthPlan = {
   providerForAuth: string;
   authProfileProviderForAuth: string;
@@ -312,6 +340,7 @@ export type AgentRuntimeAuthPlan = {
   forwardedAuthProfileCandidateIds?: string[];
 };
 
+/** Shared type for Agent Runtime Prompt Plan in src/agents/runtime-plan. */
 export type AgentRuntimePromptPlan = {
   provider: string;
   modelId: string;
@@ -327,13 +356,16 @@ export type AgentRuntimePromptPlan = {
 };
 
 // Keep the leaf runtime-plan contract decoupled from plugin metadata internals.
+/** Shared type for Agent Runtime Prepared Metadata Snapshot in src/agents/runtime-plan. */
 export type AgentRuntimePreparedMetadataSnapshot = object;
 
+/** Shared type for Prepared Open Claw Tool Planning in src/agents/runtime-plan. */
 export type PreparedOpenClawToolPlanning = {
   metadataSnapshot?: AgentRuntimePreparedMetadataSnapshot;
   loadMetadataSnapshot?: () => AgentRuntimePreparedMetadataSnapshot;
 };
 
+/** Shared type for Agent Runtime Tool Plan in src/agents/runtime-plan. */
 export type AgentRuntimeToolPlan = {
   preparedPlanning?: PreparedOpenClawToolPlanning;
   normalize<TSchemaType extends TSchema = TSchema, TResult = unknown>(
@@ -354,6 +386,7 @@ export type AgentRuntimeToolPlan = {
   ): void;
 };
 
+/** Shared type for Agent Runtime Delivery Plan in src/agents/runtime-plan. */
 export type AgentRuntimeDeliveryPlan = {
   isSilentPayload(
     payload: Pick<
@@ -370,10 +403,12 @@ export type AgentRuntimeDeliveryPlan = {
   }): AgentRuntimeFollowupFallbackRouteResult | undefined;
 };
 
+/** Shared type for Agent Runtime Outcome Plan in src/agents/runtime-plan. */
 export type AgentRuntimeOutcomePlan = {
   classifyRunResult: AgentRuntimeOutcomeClassifier;
 };
 
+/** Shared type for Agent Runtime Transport Plan in src/agents/runtime-plan. */
 export type AgentRuntimeTransportPlan = {
   extraParams: Record<string, unknown>;
   resolveExtraParams(params?: {
@@ -386,6 +421,7 @@ export type AgentRuntimeTransportPlan = {
   }): Record<string, unknown>;
 };
 
+/** Shared type for Agent Runtime Plan in src/agents/runtime-plan. */
 export type AgentRuntimePlan = {
   resolvedRef: AgentRuntimeResolvedRef;
   providerRuntimeHandle?: AgentRuntimeProviderHandle;
@@ -414,6 +450,7 @@ export type AgentRuntimePlan = {
   };
 };
 
+/** Shared type for Build Agent Runtime Delivery Plan Params in src/agents/runtime-plan. */
 export type BuildAgentRuntimeDeliveryPlanParams = {
   config?: AgentRuntimeConfig;
   workspaceDir?: string;
@@ -423,6 +460,7 @@ export type BuildAgentRuntimeDeliveryPlanParams = {
   providerRuntimeHandle?: AgentRuntimeProviderHandle;
 };
 
+/** Shared type for Build Agent Runtime Plan Params in src/agents/runtime-plan. */
 export type BuildAgentRuntimePlanParams = {
   config?: AgentRuntimeConfig;
   workspaceDir?: string;

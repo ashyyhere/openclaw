@@ -1,3 +1,4 @@
+/** Anthropic Messages transport stream adapter for OpenClaw runtime models. */
 import { getEnvApiKey } from "../llm/env-api-keys.js";
 import { calculateCost } from "../llm/model-utils.js";
 import type { AnthropicOptions } from "../llm/providers/anthropic.js";
@@ -931,6 +932,7 @@ function resolveAnthropicTransportOptions(
   return resolved;
 }
 
+/** Create the stream function backed by the Anthropic Messages API transport. */
 export function createAnthropicMessagesTransportStreamFn(): StreamFn {
   return (rawModel, context, rawOptions) => {
     const model = rawModel as AnthropicTransportModel;

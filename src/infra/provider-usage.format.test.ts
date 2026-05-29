@@ -1,3 +1,4 @@
+// Tests infra provider usage format test behavior.
 import { describe, expect, it } from "vitest";
 import {
   formatUsageReportLines,

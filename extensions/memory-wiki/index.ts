@@ -1,3 +1,4 @@
+// extensions/memory-wiki index helpers and runtime behavior.
 import { definePluginEntry } from "./api.js";
 import { registerWikiCli } from "./src/cli.js";
 import { memoryWikiConfigSchema, resolveMemoryWikiConfig } from "./src/config.js";

@@ -1,3 +1,4 @@
+// Tests tools boundary test behavior.
 import { spawnSync } from "node:child_process";
 import fs, { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";

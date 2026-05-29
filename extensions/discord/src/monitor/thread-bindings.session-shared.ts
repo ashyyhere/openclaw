@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor thread bindings session shared helpers and runtime behavior.
 import { normalizeAccountId } from "openclaw/plugin-sdk/routing";
 import {
   BINDINGS_BY_THREAD_ID,

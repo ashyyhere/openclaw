@@ -1,3 +1,4 @@
+// extensions/voice-call/src/manager store helpers and runtime behavior.
 import path from "node:path";
 import {
   appendRegularFile,

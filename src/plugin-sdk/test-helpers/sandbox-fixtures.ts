@@ -1,3 +1,4 @@
+// plugin-sdk/test-helpers sandbox fixtures helpers and runtime behavior.
 import type {
   SandboxBrowserConfig,
   SandboxPruneConfig,

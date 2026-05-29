@@ -1,3 +1,4 @@
+// Tests gateway server aux handlers test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {

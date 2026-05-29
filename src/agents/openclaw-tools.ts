@@ -1,3 +1,4 @@
+/** Constructs the core OpenClaw tool list plus allowed plugin tools. */
 import type { SourceReplyDeliveryMode } from "../auto-reply/get-reply-options.types.js";
 import type { InboundEventKind } from "../channels/inbound-event/kind.js";
 import { selectApplicableRuntimeConfig } from "../config/config.js";
@@ -76,6 +77,7 @@ const defaultOpenClawToolsDeps: OpenClawToolsDeps = {
 
 let openClawToolsDeps: OpenClawToolsDeps = defaultOpenClawToolsDeps;
 
+/** Build the available tool inventory for one agent/session runtime context. */
 export function createOpenClawTools(
   options?: {
     sandboxBrowserBridgeUrl?: string;
@@ -211,6 +213,8 @@ export function createOpenClawTools(
     toolDenylist: options?.pluginToolDenylist,
   });
   const trimmedRunSessionKey = options?.runSessionKey?.trim();
+  // Cron-triggered media jobs should be owned by the live cron run session so
+  // async task notifications and cleanup attach to the current execution.
   const mediaGenerationAgentSessionKey =
     trimmedRunSessionKey && isCronRunSessionKey(trimmedRunSessionKey)
       ? trimmedRunSessionKey
@@ -370,6 +374,8 @@ export function createOpenClawTools(
     !embedded ||
     options?.sourceReplyDeliveryMode === "message_tool_only" ||
     messageExplicitlyAllowed;
+  // Embedded runs normally hide gateway/session mutation tools; subagent binding
+  // opts back in only when the gateway bridge can safely bind the child run.
   const includeSubagentSpawnTool = !embedded || options?.allowGatewaySubagentBinding === true;
   const effectiveCallGateway = embedded
     ? createEmbeddedCallGateway()
@@ -536,6 +542,8 @@ export function createOpenClawTools(
     return allTools;
   }
   const hookAgentId = options?.requesterAgentIdOverride ?? sessionAgentId;
+  // Wrap at construction so direct callers and plugin-owned tools share the
+  // same before_tool_call policy unless a later boundary explicitly owns it.
   const defaultHookContext: HookContext = {
     ...(hookAgentId ? { agentId: hookAgentId } : {}),
     ...(resolvedConfig ? { config: resolvedConfig } : {}),
@@ -556,6 +564,7 @@ export function createOpenClawTools(
   );
 }
 
+/** Test-only dependency and media-plan hooks for OpenClaw tool construction. */
 export const testing = {
   resolveOptionalMediaToolFactoryPlan,
   setDepsForTest(overrides?: Partial<OpenClawToolsDeps>) {
@@ -567,4 +576,5 @@ export const testing = {
       : defaultOpenClawToolsDeps;
   },
 };
+/** Re-exported API for src/agents, starting with testing. */
 export { testing as __testing };

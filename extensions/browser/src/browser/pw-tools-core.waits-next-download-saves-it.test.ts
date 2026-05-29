@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/browser pw tools core waits next download saves it test behavior.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

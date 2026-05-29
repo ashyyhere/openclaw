@@ -1,3 +1,4 @@
+// extensions/telegram/src status reaction variants helpers and runtime behavior.
 import type { ReactionTypeEmoji } from "grammy/types";
 import { DEFAULT_EMOJIS, type StatusReactionEmojis } from "openclaw/plugin-sdk/channel-feedback";
 import {

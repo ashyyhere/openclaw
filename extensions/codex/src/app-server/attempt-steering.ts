@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server attempt steering helpers and runtime behavior.
 import { embeddedAgentLog } from "openclaw/plugin-sdk/agent-harness-runtime";
 import type { CodexAppServerClient } from "./client.js";
 import type { CodexUserInput } from "./protocol.js";

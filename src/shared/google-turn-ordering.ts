@@ -1,7 +1,9 @@
+// shared google turn ordering helpers and runtime behavior.
 import type { AgentMessage } from "../agents/runtime/index.js";
 
 const GOOGLE_TURN_ORDER_BOOTSTRAP_TEXT = "(session bootstrap)";
 
+/** Reused helper for sanitize Google Assistant First Ordering behavior in src/shared. */
 export function sanitizeGoogleAssistantFirstOrdering(messages: AgentMessage[]): AgentMessage[] {
   const first = messages[0] as { role?: unknown; content?: unknown } | undefined;
   const role = first?.role;

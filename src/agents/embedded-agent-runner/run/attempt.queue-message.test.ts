@@ -1,3 +1,4 @@
+/** Covers queued steering messages into active embedded sessions. */
 import { describe, expect, it, vi } from "vitest";
 import {
   cancelQueuedSteeringMessage,

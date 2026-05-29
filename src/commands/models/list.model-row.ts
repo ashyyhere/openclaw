@@ -1,7 +1,9 @@
+// Converts registry/catalog model records into normalized `models list` rows.
 import { modelKey } from "../../agents/model-ref-shared.js";
 import { isLocalBaseUrl } from "./list.local-url.js";
 import type { ModelRow } from "./list.types.js";
 
+/** Shared type for List Row Model in src/commands/models. */
 export type ListRowModel = {
   id: string;
   name: string;
@@ -12,8 +14,10 @@ export type ListRowModel = {
   contextTokens?: number | null;
 };
 
+/** Shared type for Model Auth Availability Resolver in src/commands/models. */
 export type ModelAuthAvailabilityResolver = (provider: string) => boolean;
 
+/** Reused helper for to Model Row behavior in src/commands/models. */
 export function toModelRow(params: {
   model?: ListRowModel;
   key: string;

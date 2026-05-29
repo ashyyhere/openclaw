@@ -1,3 +1,4 @@
+/** Public SDK helper for plugin runtime singleton slots. */
 export type { PluginRuntime } from "../plugins/runtime/types.js";
 
 const pluginRuntimeStoreRegistryKey = Symbol.for("openclaw.plugin-sdk.runtime-store-registry");
@@ -51,12 +52,14 @@ export function createPluginRuntimeStore<T>(errorMessage: string): {
   tryGetRuntime: () => T | null;
   getRuntime: () => T;
 };
+/** Reused helper for create Plugin Runtime Store behavior in src/plugin-sdk. */
 export function createPluginRuntimeStore<T>(options: PluginRuntimeStoreOptions): {
   setRuntime: (next: T) => void;
   clearRuntime: () => void;
   tryGetRuntime: () => T | null;
   getRuntime: () => T;
 };
+/** Reused helper for create Plugin Runtime Store behavior in src/plugin-sdk. */
 export function createPluginRuntimeStore<T>(options: string | PluginRuntimeStoreOptions): {
   setRuntime: (next: T) => void;
   clearRuntime: () => void;

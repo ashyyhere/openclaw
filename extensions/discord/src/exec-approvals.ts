@@ -1,3 +1,4 @@
+// extensions/discord/src exec approvals helpers and runtime behavior.
 import type { ChannelOutboundPayloadHint } from "openclaw/plugin-sdk/channel-contract";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import type { DiscordExecApprovalConfig } from "openclaw/plugin-sdk/config-contracts";

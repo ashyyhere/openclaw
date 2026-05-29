@@ -1,3 +1,4 @@
+// test/vitest vitest contracts channel surface config helpers and runtime behavior.
 import {
   channelSurfaceContractPatterns,
   createContractsVitestConfig,

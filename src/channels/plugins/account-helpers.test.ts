@@ -1,3 +1,4 @@
+// Coverage for channel account helper functions.
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../../config/config.js";
 import { normalizeAccountId } from "../../routing/session-key.js";

@@ -1,3 +1,4 @@
+// extensions/telegram/src error policy helpers and runtime behavior.
 import type {
   TelegramAccountConfig,
   TelegramDirectConfig,

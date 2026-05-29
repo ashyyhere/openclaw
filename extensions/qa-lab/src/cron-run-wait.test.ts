@@ -1,3 +1,4 @@
+// Tests extensions/qa-lab/src cron run wait test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { waitForCronRunCompletion } from "./cron-run-wait.js";
 

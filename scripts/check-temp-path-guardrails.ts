@@ -1,3 +1,4 @@
+// scripts check temp path guardrails helpers and runtime behavior.
 import { execFileSync } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";

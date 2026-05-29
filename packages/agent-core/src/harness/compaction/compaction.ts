@@ -1,3 +1,4 @@
+// packages/agent-core/src/harness/compaction compaction helpers and runtime behavior.
 import type {
   AssistantMessage,
   Context,
@@ -431,6 +432,7 @@ export function findCutPoint(
   };
 }
 
+/** Public constant for SUMMARIZATION SYSTEM PROMPT behavior in packages/agent-core. */
 export const SUMMARIZATION_SYSTEM_PROMPT = `You are a context summarization assistant. Your task is to read a conversation between a user and an AI coding assistant, then produce a structured summary following the exact format specified.
 
 Do NOT continue the conversation. Do NOT respond to any questions in the conversation. ONLY output the structured summary.`;
@@ -714,6 +716,7 @@ Summarize the prefix to provide context for the retained suffix:
 
 Be concise. Focus on what's needed to understand the kept suffix.`;
 
+/** Re-exported public API for packages/agent-core, starting with serialize Conversation. */
 export { serializeConversation } from "./utils.js";
 
 /** Generate compaction summary data from prepared session history. */

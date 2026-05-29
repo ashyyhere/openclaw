@@ -1,3 +1,4 @@
+/** Tests exec policy CLI hashing, config writes, and status output. */
 import crypto from "node:crypto";
 import { Command } from "commander";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";

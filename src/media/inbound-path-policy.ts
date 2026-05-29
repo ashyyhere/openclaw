@@ -1,3 +1,4 @@
+// media inbound path policy helpers and runtime behavior.
 import path from "node:path";
 
 const WILDCARD_SEGMENT = "*";
@@ -44,6 +45,7 @@ function matchesRootPattern(params: { candidatePath: string; rootPattern: string
   return true;
 }
 
+/** Reused helper for is Valid Inbound Path Root Pattern behavior in src/media. */
 export function isValidInboundPathRootPattern(value: string): boolean {
   const normalized = normalizePosixAbsolutePath(value);
   if (!normalized) {
@@ -56,6 +58,7 @@ export function isValidInboundPathRootPattern(value: string): boolean {
   return segments.every((segment) => segment === WILDCARD_SEGMENT || !segment.includes("*"));
 }
 
+/** Reused helper for normalize Inbound Path Roots behavior in src/media. */
 export function normalizeInboundPathRoots(roots?: readonly string[]): string[] {
   const normalized: string[] = [];
   const seen = new Set<string>();
@@ -76,6 +79,7 @@ export function normalizeInboundPathRoots(roots?: readonly string[]): string[] {
   return normalized;
 }
 
+/** Reused helper for merge Inbound Path Roots behavior in src/media. */
 export function mergeInboundPathRoots(
   ...rootsLists: Array<readonly string[] | undefined>
 ): string[] {
@@ -94,6 +98,7 @@ export function mergeInboundPathRoots(
   return merged;
 }
 
+/** Reused helper for is Inbound Path Allowed behavior in src/media. */
 export function isInboundPathAllowed(params: {
   filePath: string;
   roots: readonly string[];

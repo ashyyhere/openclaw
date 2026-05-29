@@ -1,4 +1,5 @@
 #!/usr/bin/env -S node --import tsx
+// scripts openclaw npm postpublish verify helpers and runtime behavior.
 
 import {
   existsSync,

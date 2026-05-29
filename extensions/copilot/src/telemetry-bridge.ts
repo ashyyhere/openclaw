@@ -1,3 +1,4 @@
+// extensions/copilot/src telemetry bridge helpers and runtime behavior.
 import type { CopilotClientOptions } from "@github/copilot-sdk";
 
 // Telemetry bridge for the GitHub Copilot agent runtime.

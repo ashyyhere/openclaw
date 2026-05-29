@@ -1,3 +1,4 @@
+/** Marks parent commands that should show help when no subcommand is provided. */
 import type { Command } from "commander";
 
 const parentDefaultHelpCommands = new WeakSet<Command>();
@@ -38,6 +39,7 @@ export function applyParentDefaultHelpAction(parent: Command): void {
   });
 }
 
+/** Reused helper for is Parent Default Help Action behavior in src/cli/program. */
 export function isParentDefaultHelpAction(parent: Command): boolean {
   return parentDefaultHelpCommands.has(parent);
 }

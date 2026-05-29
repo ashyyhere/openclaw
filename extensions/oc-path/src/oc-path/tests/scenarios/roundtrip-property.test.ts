@@ -1,3 +1,4 @@
+// Tests extensions/oc-path/src/oc-path/tests/scenarios roundtrip property test behavior.
 import { describe, expect, it } from "vitest";
 import { emitMd } from "../../emit.js";
 import { parseMd } from "../../parse.js";
@@ -81,7 +82,6 @@ describe("roundtrip-property", () => {
     expect(roundTrip(raw)).toBe(raw);
   });
 });
-
 
 function generateCorpus(count: number): string[] {
   const corpus: string[] = [];

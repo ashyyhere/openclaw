@@ -1,3 +1,4 @@
+// Tests extensions/mistral api test behavior.
 import { registerSingleProviderPlugin } from "openclaw/plugin-sdk/plugin-test-runtime";
 import { describe, expect, it } from "vitest";
 import {

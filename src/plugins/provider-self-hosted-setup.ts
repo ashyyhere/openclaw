@@ -30,6 +30,7 @@ import type {
   ProviderNonInteractiveApiKeyResult,
 } from "./types.js";
 
+/** Re-exported API for src/plugins. */
 export {
   SELF_HOSTED_DEFAULT_CONTEXT_WINDOW,
   SELF_HOSTED_DEFAULT_COST,
@@ -138,6 +139,7 @@ async function discoverLlamaCppRuntimeContextTokens(params: {
   }
 }
 
+/** Reused helper for discover Open AICompatible Local Models behavior in src/plugins. */
 export async function discoverOpenAICompatibleLocalModels(params: {
   baseUrl: string;
   apiKey?: string;
@@ -234,6 +236,7 @@ export async function discoverOpenAICompatibleLocalModels(params: {
   }
 }
 
+/** Reused helper for apply Provider Default Model behavior in src/plugins. */
 export function applyProviderDefaultModel(cfg: OpenClawConfig, modelRef: string): OpenClawConfig {
   const existingModel = cfg.agents?.defaults?.model;
   const fallbacks =
@@ -339,6 +342,7 @@ function buildSelfHostedProviderAuthResult(
   };
 }
 
+/** Reused helper for prompt And Configure Open AICompatible Self Hosted Provider behavior in src/plugins. */
 export async function promptAndConfigureOpenAICompatibleSelfHostedProvider(
   params: OpenAICompatibleSelfHostedProviderSetupParams,
 ): Promise<OpenAICompatibleSelfHostedProviderPromptResult> {
@@ -389,6 +393,7 @@ export async function promptAndConfigureOpenAICompatibleSelfHostedProvider(
   };
 }
 
+/** Reused helper for prompt And Configure Open AICompatible Self Hosted Provider Auth behavior in src/plugins. */
 export async function promptAndConfigureOpenAICompatibleSelfHostedProviderAuth(
   params: OpenAICompatibleSelfHostedProviderSetupParams,
 ): Promise<ProviderAuthResult> {
@@ -396,6 +401,7 @@ export async function promptAndConfigureOpenAICompatibleSelfHostedProviderAuth(
   return buildSelfHostedProviderAuthResult(result);
 }
 
+/** Reused helper for discover Open AICompatible Self Hosted Provider behavior in src/plugins. */
 export async function discoverOpenAICompatibleSelfHostedProvider<
   T extends Record<string, unknown>,
 >(params: {
@@ -453,6 +459,7 @@ function buildSelfHostedProviderCredential(params: {
   });
 }
 
+/** Reused helper for configure Open AICompatible Self Hosted Provider Non Interactive behavior in src/plugins. */
 export async function configureOpenAICompatibleSelfHostedProviderNonInteractive(params: {
   ctx: ProviderAuthMethodNonInteractiveContext;
   providerId: string;

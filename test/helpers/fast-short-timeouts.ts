@@ -1,3 +1,4 @@
+// test/helpers fast short timeouts helpers and runtime behavior.
 import { setTimeout as nativeSetTimeout } from "node:timers";
 import { vi } from "vitest";
 

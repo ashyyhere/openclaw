@@ -1,3 +1,4 @@
+// extensions/discord/src resolve allowlist common helpers and runtime behavior.
 import type { DiscordGuildSummary } from "./guilds.js";
 import { normalizeDiscordSlug } from "./monitor/allow-list.js";
 import { normalizeDiscordToken } from "./token.js";

@@ -1,3 +1,4 @@
+// infra device bootstrap helpers and runtime behavior.
 import path from "node:path";
 import { createSubsystemLogger } from "../logging/subsystem.js";
 import {
@@ -15,8 +16,10 @@ import { resolvePairingPaths } from "./pairing-files.js";
 import { createAsyncLock, pruneExpiredPending, tryReadJson, writeJson } from "./pairing-files.js";
 import { generatePairingToken, verifyPairingToken } from "./pairing-token.js";
 
+/** Reused constant for DEVICE BOOTSTRAP TOKEN TTL MS behavior in src/infra. */
 export const DEVICE_BOOTSTRAP_TOKEN_TTL_MS = 10 * 60 * 1000;
 
+/** Shared type for Device Bootstrap Token Record in src/infra. */
 export type DeviceBootstrapTokenRecord = {
   token: string;
   ts: number;
@@ -226,6 +229,7 @@ async function persistState(state: DeviceBootstrapStateFile, baseDir?: string): 
   await writeJson(bootstrapPath, state);
 }
 
+/** Reused helper for issue Device Bootstrap Token behavior in src/infra. */
 export async function issueDeviceBootstrapToken(
   params: {
     baseDir?: string;
@@ -260,6 +264,7 @@ export async function issueDeviceBootstrapToken(
   });
 }
 
+/** Reused helper for clear Device Bootstrap Tokens behavior in src/infra. */
 export async function clearDeviceBootstrapTokens(
   params: {
     baseDir?: string;
@@ -273,6 +278,7 @@ export async function clearDeviceBootstrapTokens(
   });
 }
 
+/** Reused helper for revoke Device Bootstrap Token behavior in src/infra. */
 export async function revokeDeviceBootstrapToken(params: {
   token: string;
   baseDir?: string;
@@ -296,6 +302,7 @@ export async function revokeDeviceBootstrapToken(params: {
   });
 }
 
+/** Reused helper for revoke Device Bootstrap Tokens For Device behavior in src/infra. */
 export async function revokeDeviceBootstrapTokensForDevice(params: {
   deviceId: string;
   publicKey: string;
@@ -326,6 +333,7 @@ export async function revokeDeviceBootstrapTokensForDevice(params: {
   });
 }
 
+/** Reused helper for restore Device Bootstrap Token behavior in src/infra. */
 export async function restoreDeviceBootstrapToken(params: {
   record: DeviceBootstrapTokenRecord;
   baseDir?: string;
@@ -337,6 +345,7 @@ export async function restoreDeviceBootstrapToken(params: {
   });
 }
 
+/** Reused helper for get Device Bootstrap Token Profile behavior in src/infra. */
 export async function getDeviceBootstrapTokenProfile(params: {
   token: string;
   baseDir?: string;
@@ -354,6 +363,7 @@ export async function getDeviceBootstrapTokenProfile(params: {
   });
 }
 
+/** Reused helper for redeem Device Bootstrap Token Profile behavior in src/infra. */
 export async function redeemDeviceBootstrapTokenProfile(params: {
   token: string;
   role: string;
@@ -412,6 +422,7 @@ export async function redeemDeviceBootstrapTokenProfile(params: {
   });
 }
 
+/** Reused helper for verify Device Bootstrap Token behavior in src/infra. */
 export async function verifyDeviceBootstrapToken(params: {
   token: string;
   deviceId: string;

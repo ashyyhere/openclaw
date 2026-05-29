@@ -1,3 +1,4 @@
+// Tests extensions/memory-core/src/memory manager fts state test behavior.
 import { DatabaseSync } from "node:sqlite";
 import { afterEach, describe, expect, it } from "vitest";
 import { deleteMemoryFtsRows } from "./manager-fts-state.js";

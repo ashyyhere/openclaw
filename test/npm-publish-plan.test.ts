@@ -1,3 +1,4 @@
+// Tests test npm publish plan test behavior.
 import { describe, expect, it } from "vitest";
 import {
   resolveNpmDistTagMirrorAuth,

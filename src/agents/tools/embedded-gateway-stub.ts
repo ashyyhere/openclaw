@@ -1,3 +1,4 @@
+/** In-process gateway implementation used by embedded agent tools. */
 import type {
   SessionsListParams,
   SessionsResolveParams,
@@ -193,6 +194,7 @@ async function handleChatHistory(params: Record<string, unknown>): Promise<{
   };
 }
 
+/** Creates an embedded callGateway adapter for session-related tool calls. */
 export function createEmbeddedCallGateway(): EmbeddedCallGateway {
   return async <T = Record<string, unknown>>(opts: CallGatewayOptions): Promise<T> => {
     const method = opts.method?.trim();

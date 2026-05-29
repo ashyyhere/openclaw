@@ -1,3 +1,4 @@
+/** Tests bounded agent cleanup step timeouts. */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   AGENT_CLEANUP_STEP_TIMEOUT_MS,

@@ -1,3 +1,4 @@
+// extensions/feishu/src docx helpers and runtime behavior.
 import { existsSync } from "node:fs";
 import { homedir } from "node:os";
 import { isAbsolute, resolve } from "node:path";

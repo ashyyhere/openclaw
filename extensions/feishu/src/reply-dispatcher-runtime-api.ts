@@ -1,3 +1,4 @@
+// extensions/feishu/src reply dispatcher runtime api helpers and runtime behavior.
 export {
   createReplyPrefixContext,
   type ClawdbotConfig,

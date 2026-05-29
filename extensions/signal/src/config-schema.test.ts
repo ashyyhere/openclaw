@@ -1,3 +1,4 @@
+// Tests extensions/signal/src config schema test behavior.
 import { describe, expect, it } from "vitest";
 import { SignalConfigSchema } from "../config-api.js";
 

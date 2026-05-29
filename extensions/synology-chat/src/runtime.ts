@@ -1,3 +1,4 @@
+// extensions/synology-chat/src runtime helpers and runtime behavior.
 import { createPluginRuntimeStore, type PluginRuntime } from "openclaw/plugin-sdk/runtime-store";
 
 const { setRuntime: setSynologyRuntime, getRuntime: getSynologyRuntime } =

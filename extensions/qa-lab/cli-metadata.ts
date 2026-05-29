@@ -1,3 +1,4 @@
+// extensions/qa-lab cli metadata helpers and runtime behavior.
 import { definePluginEntry } from "openclaw/plugin-sdk/core";
 
 export default definePluginEntry({

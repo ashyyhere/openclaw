@@ -1,3 +1,4 @@
+// Tests test/scripts check cli bootstrap imports test behavior.
 import { mkdtempSync, mkdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";

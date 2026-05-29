@@ -1,3 +1,4 @@
+// Tests extensions/lobster/src lobster runner test behavior.
 import fs from "node:fs/promises";
 import { createRequire } from "node:module";
 import os from "node:os";

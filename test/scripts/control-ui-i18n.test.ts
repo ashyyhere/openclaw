@@ -1,3 +1,4 @@
+// Tests test/scripts control ui i18n test behavior.
 import process from "node:process";
 import { describe, expect, it } from "vitest";
 import { appendBoundedProcessOutput, runProcess } from "../../scripts/control-ui-i18n.ts";

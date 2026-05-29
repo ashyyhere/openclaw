@@ -1,3 +1,4 @@
+// Test plugin fixtures for group mention activation behavior.
 import type { OpenClawConfig } from "../config/config.js";
 import { setActivePluginRegistry } from "../plugins/runtime.js";
 import { createChannelTestPluginBase, createTestRegistry } from "../test-utils/channel-plugins.js";
@@ -84,6 +85,7 @@ function resolveSlackRequireMentionForTest(params: TestChannelGroupContext): boo
   return true;
 }
 
+/** Reused helper for install Group Require Mention Test Plugins behavior in src/auto-reply. */
 export function installGroupRequireMentionTestPlugins() {
   setActivePluginRegistry(
     createTestRegistry([

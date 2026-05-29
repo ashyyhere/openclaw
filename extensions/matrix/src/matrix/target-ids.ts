@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix target ids helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "openclaw/plugin-sdk/string-coerce-runtime";
 
 type MatrixTarget = { kind: "room"; id: string } | { kind: "user"; id: string };

@@ -1,3 +1,4 @@
+/** Adapts provider models to simple-completion transport APIs. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { getApiProvider } from "../llm/api-registry.js";
 import type { Api, Model } from "../llm/types.js";
@@ -75,6 +76,7 @@ function prepareCodexSimpleTransportModel<TApi extends Api>(
   };
 }
 
+/** Register/alias transport stream functions needed by simple completion. */
 export function prepareModelForSimpleCompletion<TApi extends Api>(params: {
   model: Model<TApi>;
   cfg?: OpenClawConfig;

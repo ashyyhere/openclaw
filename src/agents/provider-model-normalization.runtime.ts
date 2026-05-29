@@ -1,3 +1,4 @@
+/** Runtime bridge for provider-owned model id normalization. */
 import { createRequire } from "node:module";
 
 type ProviderRuntimeModule = Pick<
@@ -33,6 +34,7 @@ function loadProviderRuntime(): ProviderRuntimeModule | null {
   return null;
 }
 
+/** Normalize provider model ids through the optional provider runtime module. */
 export function normalizeProviderModelIdWithRuntime(params: {
   provider: string;
   context: {

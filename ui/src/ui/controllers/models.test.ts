@@ -1,3 +1,4 @@
+// Tests ui/src/ui/controllers models test behavior.
 import { describe, expect, it, vi } from "vitest";
 import type { GatewayBrowserClient } from "../gateway.ts";
 import { loadModels } from "./models.ts";

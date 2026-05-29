@@ -1,3 +1,4 @@
+/** Tests tool-result sanitization, errors, and messaging extraction. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import * as loggingConfigModule from "../logging/config.js";
 import {

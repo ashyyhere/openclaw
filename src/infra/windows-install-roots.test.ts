@@ -1,3 +1,4 @@
+// Tests infra windows install roots test behavior.
 import { afterEach, describe, expect, it } from "vitest";
 import {
   privateTestApi,

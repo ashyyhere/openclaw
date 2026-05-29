@@ -1,3 +1,4 @@
+// extensions/discord/src retry helpers and runtime behavior.
 import {
   collectErrorGraphCandidates,
   extractErrorCode,

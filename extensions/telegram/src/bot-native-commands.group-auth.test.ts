@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src bot native commands group auth test behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import type { ChannelGroupPolicy } from "openclaw/plugin-sdk/config-contracts";
 import type { TelegramAccountConfig } from "openclaw/plugin-sdk/config-contracts";

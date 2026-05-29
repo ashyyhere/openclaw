@@ -1,3 +1,4 @@
+// extensions/codex/src command formatters helpers and runtime behavior.
 import type { CodexComputerUseStatus } from "./app-server/computer-use.js";
 import type { CodexAppServerModelListResult } from "./app-server/models.js";
 import { isJsonObject, type JsonObject, type JsonValue } from "./app-server/protocol.js";

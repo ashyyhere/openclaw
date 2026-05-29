@@ -1,7 +1,9 @@
+// Subagent command action for active run lists.
 import { buildSubagentList } from "../../../agents/subagent-list.js";
 import type { CommandHandlerResult } from "../commands-types.js";
 import { type SubagentsCommandContext, RECENT_WINDOW_MINUTES, stopWithText } from "./shared.js";
 
+/** Reused helper for handle Subagents List Action behavior in src/auto-reply/reply. */
 export function handleSubagentsListAction(ctx: SubagentsCommandContext): CommandHandlerResult {
   const { params, runs } = ctx;
   const list = buildSubagentList({

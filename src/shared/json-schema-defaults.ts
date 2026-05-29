@@ -1,3 +1,4 @@
+// shared json schema defaults helpers and runtime behavior.
 import { Compile } from "typebox/compile";
 import type { JsonSchemaObject } from "./json-schema.types.js";
 import { parseConfigPathArrayIndex } from "./path-array-index.js";
@@ -455,6 +456,7 @@ function resolveSchemaRef(
   return localTarget.found ? localTarget : resolveSchemaResourceRef(root, ref, baseId);
 }
 
+/** Reused helper for normalize Json Schema For Type Box behavior in src/shared. */
 export function normalizeJsonSchemaForTypeBox(schema: JsonSchemaValue): JsonSchemaValue {
   return normalizeJsonSchemaNode(schema) as JsonSchemaValue;
 }
@@ -700,6 +702,7 @@ function findJsonSchemaNodeError(
   return undefined;
 }
 
+/** Reused helper for find Json Schema Shape Error behavior in src/shared. */
 export function findJsonSchemaShapeError(schema: JsonSchemaValue): string | undefined {
   return findJsonSchemaNodeError(schema, "<schema>", schema, schema, undefined);
 }
@@ -1263,6 +1266,7 @@ function applySchemaDefaults(
   return nextValue;
 }
 
+/** Reused helper for apply Json Schema Defaults behavior in src/shared. */
 export function applyJsonSchemaDefaults<T>(schema: JsonSchemaValue, value: T): T {
   return applySchemaDefaults(schema, value) as T;
 }

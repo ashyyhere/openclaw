@@ -1,5 +1,7 @@
+/** Steers active SDK sessions and optionally waits for transcript commit. */
 import { log } from "../logger.js";
 
+/** Shared type for Embedded Agent Active Session Steer Target in src/agents/embedded-agent-runner. */
 export type EmbeddedAgentActiveSessionSteerTarget = {
   agent?: unknown;
   getSteeringMessages?(): readonly string[];
@@ -7,6 +9,7 @@ export type EmbeddedAgentActiveSessionSteerTarget = {
   subscribe(listener: (event: unknown) => void): () => void;
 };
 
+/** Reused constant for DEFAULT QUEUE TRANSCRIPT COMMIT TIMEOUT MS behavior in src/agents/embedded-agent-runner. */
 export const DEFAULT_QUEUE_TRANSCRIPT_COMMIT_TIMEOUT_MS = 120_000;
 
 function extractQueuedUserMessageText(message: unknown): string | undefined {
@@ -76,6 +79,7 @@ function getAgentSteeringQueueMessages(agent: unknown): unknown[] | undefined {
   return Array.isArray(messages) ? messages : undefined;
 }
 
+/** Cancels a queued steering message by pushing an interruption into the session. */
 export async function cancelQueuedSteeringMessage(
   activeSession: EmbeddedAgentActiveSessionSteerTarget,
   text: string,
@@ -103,6 +107,7 @@ export async function cancelQueuedSteeringMessage(
   return true;
 }
 
+/** Sends steering text and waits until the session transcript has committed it. */
 export async function steerAndWaitForTranscriptCommit(
   activeSession: EmbeddedAgentActiveSessionSteerTarget,
   text: string,
@@ -191,6 +196,7 @@ export async function steerAndWaitForTranscriptCommit(
   });
 }
 
+/** Steers an active session and honors delivery wait options when supported. */
 export async function steerActiveSessionWithOptionalDeliveryWait(
   activeSession: EmbeddedAgentActiveSessionSteerTarget,
   text: string,

@@ -1,3 +1,4 @@
+/** Renders update command progress and failure guidance. */
 import { spinner } from "@clack/prompts";
 import { theme } from "../../../packages/terminal-core/src/theme.js";
 import { formatDurationPrecise } from "../../infra/format-time/format-duration.ts";
@@ -40,6 +41,7 @@ function getStepLabel(step: UpdateStepInfo): string {
   return STEP_LABELS[step.name] ?? step.name;
 }
 
+/** Reused helper for infer Update Failure Hints behavior in src/cli/update-cli. */
 export function inferUpdateFailureHints(result: UpdateRunResult): string[] {
   if (result.status !== "error") {
     return [];
@@ -107,11 +109,13 @@ export function inferUpdateFailureHints(result: UpdateRunResult): string[] {
   return hints;
 }
 
+/** Shared type for Progress Controller in src/cli/update-cli. */
 export type ProgressController = {
   progress: UpdateStepProgress;
   stop: () => void;
 };
 
+/** Reused helper for create Update Progress behavior in src/cli/update-cli. */
 export function createUpdateProgress(enabled: boolean): ProgressController {
   if (!enabled) {
     return {
@@ -175,6 +179,7 @@ type PrintResultOptions = UpdateCommandOptions & {
   hideSteps?: boolean;
 };
 
+/** Reused helper for print Result behavior in src/cli/update-cli. */
 export function printResult(result: UpdateRunResult, opts: PrintResultOptions): void {
   if (opts.json) {
     defaultRuntime.writeJson(result);

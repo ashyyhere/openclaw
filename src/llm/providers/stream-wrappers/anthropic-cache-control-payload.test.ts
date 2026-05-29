@@ -1,3 +1,4 @@
+// Tests llm/providers/stream-wrappers anthropic cache control payload test behavior.
 import { describe, expect, it } from "vitest";
 import { applyAnthropicEphemeralCacheControlMarkers } from "./anthropic-cache-control-payload.js";
 

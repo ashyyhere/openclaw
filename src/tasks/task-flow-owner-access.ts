@@ -1,3 +1,4 @@
+// tasks task flow owner access helpers and runtime behavior.
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import {
   findLatestTaskFlowForOwnerKey,
@@ -6,6 +7,7 @@ import {
 } from "./task-flow-registry.js";
 import type { TaskFlowRecord } from "./task-flow-registry.types.js";
 
+/** Reused helper for get Task Flow By Id For Owner behavior in src/tasks. */
 export function getTaskFlowByIdForOwner(params: {
   flowId: string;
   callerOwnerKey: string;
@@ -17,11 +19,13 @@ export function getTaskFlowByIdForOwner(params: {
     : undefined;
 }
 
+/** Reused helper for list Task Flows For Owner behavior in src/tasks. */
 export function listTaskFlowsForOwner(params: { callerOwnerKey: string }): TaskFlowRecord[] {
   const ownerKey = normalizeOptionalString(params.callerOwnerKey);
   return ownerKey ? listTaskFlowsForOwnerKey(ownerKey) : [];
 }
 
+/** Reused helper for find Latest Task Flow For Owner behavior in src/tasks. */
 export function findLatestTaskFlowForOwner(params: {
   callerOwnerKey: string;
 }): TaskFlowRecord | undefined {
@@ -29,6 +33,7 @@ export function findLatestTaskFlowForOwner(params: {
   return ownerKey ? findLatestTaskFlowForOwnerKey(ownerKey) : undefined;
 }
 
+/** Reused helper for resolve Task Flow For Lookup Token For Owner behavior in src/tasks. */
 export function resolveTaskFlowForLookupTokenForOwner(params: {
   token: string;
   callerOwnerKey: string;

@@ -1,3 +1,4 @@
+// test/vitest vitest auto reply reply config helpers and runtime behavior.
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 import { autoReplyReplySubtreeTestInclude } from "./vitest.test-shards.mjs";
 

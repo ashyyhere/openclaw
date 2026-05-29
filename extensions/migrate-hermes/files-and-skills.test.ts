@@ -1,3 +1,4 @@
+// Tests extensions/migrate-hermes files and skills test behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { MIGRATION_REASON_TARGET_EXISTS } from "openclaw/plugin-sdk/migration";

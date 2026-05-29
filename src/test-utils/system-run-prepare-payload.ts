@@ -1,3 +1,4 @@
+// test-utils system run prepare payload helpers and runtime behavior.
 import { formatExecCommand } from "../infra/system-run-command.js";
 
 type SystemRunPrepareInput = {
@@ -8,6 +9,7 @@ type SystemRunPrepareInput = {
   sessionKey?: unknown;
 };
 
+/** Reused helper for build System Run Prepare Payload behavior in src/test-utils. */
 export function buildSystemRunPreparePayload(params: SystemRunPrepareInput) {
   const argv = Array.isArray(params.command) ? params.command.map(String) : [];
   const previewCommand =

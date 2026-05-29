@@ -1,3 +1,4 @@
+// extensions/googlechat/src monitor reply delivery helpers and runtime behavior.
 import {
   deliverTextOrMediaReply,
   resolveSendableOutboundReplyParts,

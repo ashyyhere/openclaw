@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/qa-lab/src/live-transports/discord discord live runtime behavior.
 import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";

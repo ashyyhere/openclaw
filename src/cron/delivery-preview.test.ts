@@ -1,3 +1,4 @@
+// Tests cron delivery preview test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { makeCronJob } from "./delivery.test-helpers.js";
 

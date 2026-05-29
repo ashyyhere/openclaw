@@ -1,3 +1,4 @@
+// gateway rate limit attempt serialization helpers and runtime behavior.
 import { AUTH_RATE_LIMIT_SCOPE_DEFAULT, normalizeRateLimitClientIp } from "./auth-rate-limit.js";
 
 const pendingAttempts = new Map<string, Promise<void>>();
@@ -10,6 +11,7 @@ function buildSerializationKey(ip: string | undefined, scope: string | undefined
   return `${normalizeScope(scope)}:${normalizeRateLimitClientIp(ip)}`;
 }
 
+/** Reused helper for with Serialized Rate Limit Attempt behavior in src/gateway. */
 export async function withSerializedRateLimitAttempt<T>(params: {
   ip: string | undefined;
   scope: string | undefined;

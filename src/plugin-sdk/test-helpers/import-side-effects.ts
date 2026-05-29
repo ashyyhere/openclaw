@@ -1,3 +1,4 @@
+// plugin-sdk/test-helpers import side effects helpers and runtime behavior.
 function formatImportSideEffectCall(args: readonly unknown[]): string {
   if (args.length === 0) {
     return "(no args)";

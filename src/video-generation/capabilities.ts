@@ -1,3 +1,4 @@
+// video-generation capabilities helpers and runtime behavior.
 import type {
   VideoGenerationMode,
   VideoGenerationModeCapabilities,
@@ -5,6 +6,7 @@ import type {
   VideoGenerationTransformCapabilities,
 } from "./types.js";
 
+/** Reused helper for resolve Video Generation Mode behavior in src/video-generation. */
 export function resolveVideoGenerationMode(params: {
   inputImageCount?: number;
   inputVideoCount?: number;
@@ -23,6 +25,7 @@ export function resolveVideoGenerationMode(params: {
   return "generate";
 }
 
+/** Reused helper for list Supported Video Generation Modes behavior in src/video-generation. */
 export function listSupportedVideoGenerationModes(
   provider: Pick<VideoGenerationProvider, "capabilities">,
 ): VideoGenerationMode[] {
@@ -38,6 +41,7 @@ export function listSupportedVideoGenerationModes(
   return modes;
 }
 
+/** Reused helper for resolve Video Generation Mode Capabilities behavior in src/video-generation. */
 export function resolveVideoGenerationModeCapabilities(params: {
   provider?: Pick<VideoGenerationProvider, "capabilities">;
   model?: string;

@@ -1,3 +1,4 @@
+/** Tests browser plugin tool integration in OpenClaw tool resolution. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import { resetConfigRuntimeState, setRuntimeConfigSnapshot } from "../config/config.js";

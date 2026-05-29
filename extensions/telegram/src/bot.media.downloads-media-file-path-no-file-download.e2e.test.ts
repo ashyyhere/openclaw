@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src bot media downloads media file path no file download e2e test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { telegramBotDepsForTest } from "./bot.media.e2e-harness.js";
 import { setNextSavedMediaPath } from "./bot.media.e2e-harness.js";

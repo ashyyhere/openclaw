@@ -1,3 +1,4 @@
+// extensions/anthropic doctor contract api helpers and runtime behavior.
 import type { DoctorSessionRouteStateOwner } from "openclaw/plugin-sdk/runtime-doctor";
 
 export const legacyConfigRules = [];

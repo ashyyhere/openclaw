@@ -1,3 +1,4 @@
+// extensions/ollama/src/sanitizers visible content helpers and runtime behavior.
 import {
   createKimiInlineReasoningSanitizer,
   isOllamaCloudKimiModelRef,

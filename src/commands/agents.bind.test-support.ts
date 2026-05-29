@@ -1,3 +1,4 @@
+/** Test support for loading agent binding command modules with mocks. */
 import type { Mock } from "vitest";
 import { vi } from "vitest";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -8,7 +9,9 @@ type ReplaceConfigFileResult = Awaited<
   ReturnType<(typeof import("../config/config.js"))["replaceConfigFile"]>
 >;
 
+/** Reused constant for read Config File Snapshot Mock behavior in src/commands. */
 export const readConfigFileSnapshotMock: Mock<(...args: unknown[]) => Promise<unknown>> = vi.fn();
+/** Reused constant for write Config File Mock behavior in src/commands. */
 export const writeConfigFileMock: Mock<(...args: unknown[]) => Promise<unknown>> = vi
   .fn()
   .mockResolvedValue(undefined);
@@ -44,16 +47,19 @@ vi.mock("./agents.command-shared.js", () => ({
   requireValidConfigFileSnapshot: async () => readConfigFileSnapshotMock(),
 }));
 
+/** Reused constant for runtime behavior in src/commands. */
 export const runtime = createTestRuntime();
 
 const agentsBindCommandModuleLoader = createLazyImportLoader(
   () => import("./agents.commands.bind.js"),
 );
 
+/** Reused helper for load Fresh Agents Bind Command Module For Test behavior in src/commands. */
 export async function loadFreshAgentsBindCommandModuleForTest() {
   return await agentsBindCommandModuleLoader.load();
 }
 
+/** Reused helper for reset Agents Bind Test Harness behavior in src/commands. */
 export function resetAgentsBindTestHarness(): void {
   readConfigFileSnapshotMock.mockClear();
   writeConfigFileMock.mockClear();

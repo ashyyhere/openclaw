@@ -1,3 +1,4 @@
+/** Tests model catalog loading, caching, and manifest entries. */
 import { mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";

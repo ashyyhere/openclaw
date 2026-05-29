@@ -1,3 +1,4 @@
+/** Chooses OpenClaw transport stream implementations for provider model APIs. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { Api, Model } from "../llm/types.js";
 import { resolveProviderStreamFn } from "../plugins/provider-runtime.js";
@@ -99,14 +100,17 @@ function hasOpenClawTransportRequirement(model: Model): boolean {
   return Boolean(request?.proxy || request?.tls || getModelProviderLocalService(model));
 }
 
+/** Return whether OpenClaw transport mode supports a model API. */
 export function isTransportAwareApiSupported(api: Api): boolean {
   return SUPPORTED_TRANSPORT_APIS.has(api);
 }
 
+/** Resolve the simple-stream API alias for transport-aware models. */
 export function resolveTransportAwareSimpleApi(api: Api): Api | undefined {
   return SIMPLE_TRANSPORT_API_ALIAS[api];
 }
 
+/** Create transport stream only when a model has proxy/TLS/local-service needs. */
 export function createTransportAwareStreamFnForModel(
   model: Model,
   ctx?: ProviderTransportStreamContext,
@@ -122,6 +126,7 @@ export function createTransportAwareStreamFnForModel(
   return createSupportedTransportStreamFn(model, ctx);
 }
 
+/** Create OpenClaw transport stream regardless of whether transport extras exist. */
 export function createOpenClawTransportStreamFnForModel(
   model: Model,
   ctx?: ProviderTransportStreamContext,
@@ -136,6 +141,7 @@ export function createOpenClawTransportStreamFnForModel(
   return createSupportedTransportStreamFn(model, ctx);
 }
 
+/** Create fallback OpenClaw transport stream for embedded-runner boundaries. */
 export function createBoundaryAwareStreamFnForModel(
   model: Model,
   ctx?: ProviderTransportStreamContext,
@@ -148,6 +154,7 @@ export function createBoundaryAwareStreamFnForModel(
   return createSupportedTransportStreamFn(model, ctx);
 }
 
+/** Rewrite a model to the transport-aware simple-stream API alias when needed. */
 export function prepareTransportAwareSimpleModel<TApi extends Api>(
   model: Model<TApi>,
   ctx?: ProviderTransportStreamContext,
@@ -163,6 +170,7 @@ export function prepareTransportAwareSimpleModel<TApi extends Api>(
   };
 }
 
+/** Build the simple-stream function for a transport-aware model. */
 export function buildTransportAwareSimpleStreamFn(
   model: Model,
   ctx?: ProviderTransportStreamContext,

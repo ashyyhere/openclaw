@@ -1,3 +1,4 @@
+// Tests extensions/oc-path/src/oc-path/tests slug test behavior.
 import { describe, expect, it } from "vitest";
 import { slugify } from "../slug.js";
 

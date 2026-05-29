@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor native command options helpers and runtime behavior.
 import { ApplicationCommandOptionType } from "discord-api-types/v10";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import {

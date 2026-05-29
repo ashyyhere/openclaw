@@ -1,3 +1,4 @@
+// extensions/nextcloud-talk/src monitor test harness helpers and runtime behavior.
 import { type AddressInfo } from "node:net";
 import { afterEach } from "vitest";
 import { createNextcloudTalkWebhookServer } from "./monitor.js";

@@ -1,3 +1,4 @@
+// Tests plugins active runtime registry test behavior.
 import { afterEach, describe, expect, it } from "vitest";
 import { getLoadedRuntimePluginRegistry } from "./active-runtime-registry.js";
 import { testing, clearPluginLoaderCache } from "./loader.js";

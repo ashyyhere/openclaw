@@ -1,3 +1,4 @@
+// extensions/qqbot/src/engine/messaging outbound result helpers helpers and runtime behavior.
 import path from "node:path";
 import { UPLOAD_PREPARE_FALLBACK_CODE } from "../api/retry.js";
 import { MediaFileType } from "../types.js";

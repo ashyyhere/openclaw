@@ -8,10 +8,12 @@ import { root as fsRoot, type OpenResult } from "../infra/fs-safe.js";
 export * from "../secrets/channel-secret-collector-runtime.js";
 export * from "../secrets/runtime-shared.js";
 export * from "../secrets/shared.js";
+/** Shared type for this surface in src/plugin-sdk. */
 export type * from "../secrets/target-registry-types.js";
 export * from "../security/channel-metadata.js";
 export * from "../security/context-visibility.js";
 export * from "./channel-access-compat.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   ACCESS_GROUP_ALLOW_FROM_PREFIX,
   expandAllowFromWithAccessGroups,
@@ -24,6 +26,7 @@ export {
 } from "./access-groups.js";
 export * from "../security/external-content.js";
 export * from "../security/safe-regex.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   appendRegularFile,
   appendRegularFileSync,
@@ -46,6 +49,7 @@ export {
   type FsSafeErrorCode as SafeOpenErrorCode,
 } from "../infra/fs-safe.js";
 
+/** Reused helper for open File Within Root behavior in src/plugin-sdk. */
 export async function openFileWithinRoot(params: {
   rootDir: string;
   relativePath: string;
@@ -61,6 +65,7 @@ export async function openFileWithinRoot(params: {
   });
 }
 
+/** Reused helper for write File From Path Within Root behavior in src/plugin-sdk. */
 export async function writeFileFromPathWithinRoot(params: {
   rootDir: string;
   relativePath: string;
@@ -74,9 +79,13 @@ export async function writeFileFromPathWithinRoot(params: {
   });
 }
 
+/** Re-exported API for src/plugin-sdk, starting with extract Error Code. */
 export { extractErrorCode, formatErrorMessage } from "../infra/errors.js";
+/** Re-exported API for src/plugin-sdk, starting with has Proxy Env Configured. */
 export { hasProxyEnvConfigured } from "../infra/net/proxy-env.js";
+/** Re-exported API for src/plugin-sdk, starting with normalize Hostname. */
 export { normalizeHostname } from "../infra/net/hostname.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   SsrFBlockedError,
   isBlockedHostnameOrIp,
@@ -86,7 +95,9 @@ export {
   type LookupFn,
   type SsrFPolicy,
 } from "../infra/net/ssrf.js";
+/** Re-exported API for src/plugin-sdk, starting with is Not Found Path Error. */
 export { isNotFoundPathError, isPathInside } from "../infra/path-guards.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   assertAbsolutePathInput,
   canonicalPathFromExistingAncestor,
@@ -100,12 +111,15 @@ export {
   type ResolvedAbsolutePath,
   type ResolvedWritableAbsolutePath,
 } from "../infra/fs-safe.js";
+/** Re-exported API for src/plugin-sdk, starting with sanitize Untrusted File Name. */
 export { sanitizeUntrustedFileName } from "../infra/fs-safe-advanced.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   privateFileStore,
   privateFileStoreSync,
   type PrivateFileStore,
 } from "../infra/private-file-store.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   movePathWithCopyFallback,
   replaceFileAtomic,
@@ -117,18 +131,23 @@ export {
   type ReplaceFileAtomicSyncFileSystem,
   type ReplaceFileAtomicSyncOptions,
 } from "../infra/replace-file.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   writeSiblingTempFile,
   type WriteSiblingTempFileOptions,
   type WriteSiblingTempFileResult,
 } from "../infra/sibling-temp-file.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   assertNoSymlinkParents,
   assertNoSymlinkParentsSync,
   type AssertNoSymlinkParentsOptions,
 } from "../infra/fs-safe-advanced.js";
+/** Re-exported API for src/plugin-sdk, starting with ensure Port Available. */
 export { ensurePortAvailable } from "../infra/ports.js";
+/** Re-exported API for src/plugin-sdk, starting with generate Secure Token. */
 export { generateSecureToken } from "../infra/secure-random.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   resolveExistingPathsWithinRoot,
   pathScope,
@@ -137,7 +156,11 @@ export {
   resolveStrictExistingPathsWithinRoot,
   resolveWritablePathWithinRoot,
 } from "../infra/root-paths.js";
+/** Re-exported API for src/plugin-sdk, starting with write Via Sibling Temp Path. */
 export { writeViaSiblingTempPath } from "../infra/fs-safe-advanced.js";
+/** Re-exported API for src/plugin-sdk, starting with resolve Preferred Open Claw Tmp Dir. */
 export { resolvePreferredOpenClawTmpDir } from "../infra/tmp-openclaw-dir.js";
+/** Re-exported API for src/plugin-sdk, starting with redact Sensitive Text. */
 export { redactSensitiveText } from "../logging/redact.js";
+/** Re-exported API for src/plugin-sdk, starting with safe Equal Secret. */
 export { safeEqualSecret } from "../security/secret-equal.js";

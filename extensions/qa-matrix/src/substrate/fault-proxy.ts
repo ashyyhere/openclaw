@@ -1,3 +1,4 @@
+// extensions/qa-matrix/src/substrate fault proxy helpers and runtime behavior.
 import {
   createServer,
   type IncomingHttpHeaders,

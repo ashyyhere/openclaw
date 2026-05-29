@@ -1,3 +1,4 @@
+/** Covers assistant-error failover decisions and user-facing messages. */
 import { describe, expect, it, vi } from "vitest";
 import { formatBillingErrorMessage } from "../../embedded-agent-helpers.js";
 import { FailoverError } from "../../failover-error.js";

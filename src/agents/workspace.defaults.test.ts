@@ -1,3 +1,4 @@
+/** Regression coverage for workspace default directory choices. */
 import path from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { resolveDefaultAgentWorkspaceDir } from "./workspace.js";

@@ -1,3 +1,4 @@
+/** Regression coverage for stored credential eligibility checks. */
 import { describe, expect, it } from "vitest";
 import {
   DEFAULT_OAUTH_REFRESH_MARGIN_MS,

@@ -1,3 +1,4 @@
+// Runtime boundary for plugins providers runtime behavior.
 import { sortUniqueStrings } from "../shared/string-normalization.js";
 import { withActivatedPluginIds } from "./activation-context.js";
 import { resolveBundledPluginCompatibleActivationInputs } from "./activation-context.js";
@@ -287,6 +288,7 @@ function resolveRuntimeProviderPluginLoadState(
   return { loadOptions };
 }
 
+/** Reused helper for is Plugin Providers Load In Flight behavior in src/plugins. */
 export function isPluginProvidersLoadInFlight(
   params: Parameters<typeof resolvePluginProviders>[0],
 ): boolean {
@@ -310,6 +312,7 @@ export function isPluginProvidersLoadInFlight(
   return isPluginRegistryLoadInFlight(loadState.loadOptions);
 }
 
+/** Reused helper for resolve Plugin Providers behavior in src/plugins. */
 export function resolvePluginProviders(params: {
   config?: PluginLoadOptions["config"];
   workspaceDir?: string;

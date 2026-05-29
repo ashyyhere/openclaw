@@ -1,3 +1,4 @@
+/** Formats CLI failure output with optional debug detail. */
 import { isTruthyEnvValue } from "../infra/env.js";
 import { formatErrorMessage, formatUncaughtError } from "../infra/errors.js";
 import { formatCliCommand } from "./command-format.js";
@@ -26,6 +27,7 @@ function pushPrefixed(out: string[], value: string): void {
   }
 }
 
+/** Reused helper for format Cli Failure Lines behavior in src/cli. */
 export function formatCliFailureLines(options: FormatCliFailureOptions): string[] {
   const env = options.env ?? process.env;
   const lines = [

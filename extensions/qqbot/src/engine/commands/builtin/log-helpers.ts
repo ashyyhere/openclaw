@@ -1,3 +1,4 @@
+// extensions/qqbot/src/engine/commands/builtin log helpers helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { loadJsonFile } from "openclaw/plugin-sdk/json-store";

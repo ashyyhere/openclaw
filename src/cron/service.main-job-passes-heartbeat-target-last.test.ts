@@ -1,3 +1,4 @@
+// Tests cron service main job passes heartbeat target last test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { CronService } from "./service.js";
 import { setupCronServiceSuite, writeCronStoreSnapshot } from "./service.test-harness.js";

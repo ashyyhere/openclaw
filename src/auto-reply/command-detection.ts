@@ -1,3 +1,4 @@
+// Text command detection used before heavier reply and authorization handling.
 import type { OpenClawConfig } from "../config/types.js";
 import {
   normalizeLowercaseStringOrEmpty,
@@ -9,6 +10,7 @@ import type { CommandNormalizeOptions } from "./commands-registry.types.js";
 import { isAbortTrigger } from "./reply/abort-primitives.js";
 import { stripInboundMetadata } from "./reply/strip-inbound-meta.js";
 
+/** Return true when text exactly invokes a known control command. */
 export function hasControlCommand(
   text?: string,
   cfg?: OpenClawConfig,
@@ -51,6 +53,7 @@ export function hasControlCommand(
   return false;
 }
 
+/** Return true when the inbound body should be treated as a control command. */
 export function isControlCommandMessage(
   text?: string,
   cfg?: OpenClawConfig,
@@ -79,6 +82,7 @@ export function isControlCommandMessage(
  * This intentionally errs on the side of false positives; CommandAuthorized only gates
  * command/directive execution, not normal chat replies.
  */
+/** Return true when text contains inline command-like tokens. */
 export function hasInlineCommandTokens(text?: string): boolean {
   const body = text ?? "";
   if (!body.trim()) {
@@ -87,6 +91,7 @@ export function hasInlineCommandTokens(text?: string): boolean {
   return /(?:^|\s)[/!][a-z]/i.test(body);
 }
 
+/** Return true when command authorization needs to be resolved for the message. */
 export function shouldComputeCommandAuthorized(
   text?: string,
   cfg?: OpenClawConfig,

@@ -1,3 +1,4 @@
+/** Covers bootstrap completion marker persistence decisions. */
 import { describe, expect, it } from "vitest";
 import { shouldPersistCompletedBootstrapTurn } from "./attempt.thread-helpers.js";
 

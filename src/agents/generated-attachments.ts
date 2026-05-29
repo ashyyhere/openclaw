@@ -1,7 +1,9 @@
+/** Formats generated media attachments for prompts and reply payloads. */
 import { basenameFromAnyPath } from "../media/file-name.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import { uniqueStrings } from "../shared/string-normalization.js";
 
+/** Generated attachment metadata passed between child and parent tasks. */
 export type AgentGeneratedAttachment = {
   type?: "image" | "audio" | "video" | "file";
   path?: string;
@@ -12,6 +14,7 @@ export type AgentGeneratedAttachment = {
   name?: string;
 };
 
+/** Build a stable generated-attachment reference token. */
 export function generatedAttachmentReference(
   attachment: AgentGeneratedAttachment,
 ): string | undefined {
@@ -20,6 +23,7 @@ export function generatedAttachmentReference(
   );
 }
 
+/** Extract media URLs from generated attachments. */
 export function mediaUrlsFromGeneratedAttachments(
   attachments: readonly AgentGeneratedAttachment[] | undefined,
 ): string[] {
@@ -28,6 +32,7 @@ export function mediaUrlsFromGeneratedAttachments(
   );
 }
 
+/** Resolve a display name for a generated attachment. */
 export function nameFromGeneratedAttachment(
   attachment: AgentGeneratedAttachment,
 ): string | undefined {
@@ -37,6 +42,7 @@ export function nameFromGeneratedAttachment(
   );
 }
 
+/** Format generated attachment lines for internal prompt context. */
 export function formatGeneratedAttachmentLines(
   attachments: readonly AgentGeneratedAttachment[] | undefined,
 ): string[] {

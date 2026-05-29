@@ -1,3 +1,4 @@
+// ui/src/ui tool display helpers and runtime behavior.
 import SHARED_TOOL_DISPLAY_JSON from "../../../apps/shared/OpenClawKit/Sources/OpenClawKit/Resources/tool-display.json" with { type: "json" };
 import {
   defaultTitle,
@@ -24,6 +25,7 @@ type SharedToolDisplayConfig = {
   tools?: Record<string, SharedToolDisplaySpec>;
 };
 
+/** Shared type for Tool Display in ui/src/ui. */
 export type ToolDisplay = {
   name: string;
   icon: IconName;
@@ -97,6 +99,7 @@ function shortenHomeInString(input: string): string {
   return input;
 }
 
+/** Reused helper for resolve Tool Display behavior in ui/src/ui. */
 export function resolveToolDisplay(params: {
   name?: string;
   args?: unknown;
@@ -134,6 +137,7 @@ export function resolveToolDisplay(params: {
   };
 }
 
+/** Reused helper for format Tool Detail behavior in ui/src/ui. */
 export function formatToolDetail(display: ToolDisplay): string | undefined {
   return formatToolDetailText(display.detail, { prefixWithWith: true });
 }

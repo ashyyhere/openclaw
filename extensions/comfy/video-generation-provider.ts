@@ -1,3 +1,4 @@
+// extensions/comfy video generation provider helpers and runtime behavior.
 import type {
   GeneratedVideoAsset,
   VideoGenerationProvider,

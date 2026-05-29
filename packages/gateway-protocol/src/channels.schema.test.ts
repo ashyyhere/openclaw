@@ -1,3 +1,4 @@
+// Tests packages/gateway-protocol/src channels schema test behavior.
 import { Compile } from "typebox/compile";
 import { describe, expect, it } from "vitest";
 import { ChannelsStatusResultSchema, WebLoginWaitParamsSchema } from "./schema/channels.js";

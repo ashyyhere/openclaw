@@ -1,3 +1,4 @@
+/** Public SDK provider stream family hooks and wrapper composition presets. */
 import { createGoogleThinkingPayloadWrapper } from "../llm/providers/stream-wrappers/google.js";
 import { createMinimaxFastModeWrapper } from "../llm/providers/stream-wrappers/minimax.js";
 import { resolveMoonshotThinkingKeep } from "../llm/providers/stream-wrappers/moonshot-thinking.js";
@@ -27,6 +28,7 @@ import {
   createToolStreamWrapper,
   resolveMoonshotThinkingType,
 } from "./provider-stream-shared.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   applyAnthropicEphemeralCacheControlMarkers,
   applyAnthropicPayloadPolicyToParams,
@@ -45,6 +47,7 @@ export {
   stripTrailingAnthropicAssistantPrefillWhenThinking,
 } from "./provider-stream-shared.js";
 
+/** Shared type for Provider Stream Family in src/plugin-sdk. */
 export type ProviderStreamFamily =
   | "google-thinking"
   | "kilocode-thinking"
@@ -56,6 +59,7 @@ export type ProviderStreamFamily =
 
 type ProviderStreamFamilyHooks = Pick<ProviderPlugin, "wrapStreamFn">;
 
+/** Reused helper for build Provider Stream Family Hooks behavior in src/plugin-sdk. */
 export function buildProviderStreamFamilyHooks(
   family: ProviderStreamFamily,
 ): ProviderStreamFamilyHooks {
@@ -165,21 +169,26 @@ export const TOOL_STREAM_DEFAULT_ON_HOOKS =
 
 // Public stream-wrapper helpers for provider plugins.
 
+/** Re-exported API for src/plugin-sdk. */
 export {
   createAnthropicToolPayloadCompatibilityWrapper,
   createOpenAIAnthropicToolPayloadCompatibilityWrapper,
 } from "../llm/providers/stream-wrappers/anthropic-family-tool-payload-compat.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   createGoogleThinkingPayloadWrapper,
   sanitizeGoogleThinkingPayload,
 } from "../llm/providers/stream-wrappers/google.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   createKilocodeWrapper,
   createOpenRouterSystemCacheWrapper,
   createOpenRouterWrapper,
   isProxyReasoningUnsupported,
 } from "../llm/providers/stream-wrappers/proxy.js";
+/** Re-exported API for src/plugin-sdk, starting with create Minimax Fast Mode Wrapper. */
 export { createMinimaxFastModeWrapper } from "../llm/providers/stream-wrappers/minimax.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   createOpenAIAttributionHeadersWrapper,
   createCodexNativeWebSearchWrapper,
@@ -193,6 +202,7 @@ export {
   resolveOpenAIServiceTier,
   resolveOpenAITextVerbosity,
 } from "../llm/providers/stream-wrappers/openai.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   getOpenRouterModelCapabilities,
   loadOpenRouterModelCapabilities,

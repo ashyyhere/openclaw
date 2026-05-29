@@ -1,3 +1,4 @@
+// Tests plugins loader records test behavior.
 import { describe, expect, it } from "vitest";
 import { createPluginRecord } from "./loader-records.js";
 

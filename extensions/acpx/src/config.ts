@@ -1,3 +1,4 @@
+// extensions/acpx/src config helpers and runtime behavior.
 import fs from "node:fs";
 import { createRequire } from "node:module";
 import path from "node:path";

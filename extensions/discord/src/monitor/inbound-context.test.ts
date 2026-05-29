@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/monitor inbound context test behavior.
 import { describe, expect, it } from "vitest";
 import {
   createDiscordSupplementalContextAccessChecker,

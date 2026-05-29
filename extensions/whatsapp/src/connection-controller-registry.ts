@@ -1,3 +1,4 @@
+// extensions/whatsapp/src connection controller registry helpers and runtime behavior.
 import type { ActiveWebListener } from "./inbound/types.js";
 
 type WhatsAppConnectionControllerHandle = {

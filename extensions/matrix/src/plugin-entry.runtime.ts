@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/matrix/src plugin entry runtime behavior.
 import type { GatewayRequestHandlerOptions } from "openclaw/plugin-sdk/gateway-runtime";
 import { normalizeOptionalString } from "openclaw/plugin-sdk/string-coerce-runtime";
 import { formatMatrixErrorMessage } from "./matrix/errors.js";

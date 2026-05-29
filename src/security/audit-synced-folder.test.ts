@@ -1,3 +1,4 @@
+// Tests security audit synced folder test behavior.
 import { describe, expect, it } from "vitest";
 import { collectSyncedFolderFindings } from "./audit-extra.sync.js";
 

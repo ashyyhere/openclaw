@@ -1,3 +1,4 @@
+// extensions/nextcloud-talk/src channel helpers and runtime behavior.
 import { describeWebhookAccountSnapshot } from "openclaw/plugin-sdk/account-helpers";
 import { createChatChannelPlugin } from "openclaw/plugin-sdk/channel-core";
 import { createLoggedPairingApprovalNotifier } from "openclaw/plugin-sdk/channel-pairing";

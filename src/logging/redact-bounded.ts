@@ -1,3 +1,4 @@
+// logging redact bounded helpers and runtime behavior.
 const REDACT_REGEX_CHUNK_THRESHOLD = 32_768;
 const REDACT_REGEX_CHUNK_SIZE = 16_384;
 
@@ -6,6 +7,7 @@ type BoundedRedactOptions = {
   chunkSize?: number;
 };
 
+/** Reused helper for replace Pattern Bounded behavior in src/logging. */
 export function replacePatternBounded(
   text: string,
   pattern: RegExp,

@@ -1,3 +1,4 @@
+// extensions/matrix/src secret contract helpers and runtime behavior.
 import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "openclaw/plugin-sdk/account-id";
 import {
   collectSecretInputAssignment,

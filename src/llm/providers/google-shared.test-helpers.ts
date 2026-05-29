@@ -1,3 +1,4 @@
+// llm/providers google shared test helpers helpers and runtime behavior.
 import { expect } from "vitest";
 import type { Model } from "../types.js";
 
@@ -18,6 +19,7 @@ function makeZeroUsageSnapshot() {
   };
 }
 
+/** Reused constant for as Record behavior in src/llm/providers. */
 export const asRecord = (value: unknown): Record<string, unknown> => {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
     throw new Error("expected record");
@@ -32,11 +34,13 @@ type ConvertedTools = ReadonlyArray<{
   }>;
 }>;
 
+/** Reused constant for get First Tool Parameters behavior in src/llm/providers. */
 export const getFirstToolParameters = (converted: ConvertedTools): Record<string, unknown> => {
   const functionDeclaration = asRecord(converted?.[0]?.functionDeclarations?.[0]);
   return asRecord(functionDeclaration.parametersJsonSchema ?? functionDeclaration.parameters);
 };
 
+/** Reused constant for make Model behavior in src/llm/providers. */
 export const makeModel = (id: string): Model<"google-generative-ai"> =>
   ({
     id,
@@ -51,6 +55,7 @@ export const makeModel = (id: string): Model<"google-generative-ai"> =>
     maxTokens: 1,
   }) as Model<"google-generative-ai">;
 
+/** Reused constant for make Gemini Cli Model behavior in src/llm/providers. */
 export const makeGeminiCliModel = (id: string): Model<"google-gemini-cli"> =>
   ({
     id,
@@ -65,6 +70,7 @@ export const makeGeminiCliModel = (id: string): Model<"google-gemini-cli"> =>
     maxTokens: 1,
   }) as Model<"google-gemini-cli">;
 
+/** Reused helper for make Google Assistant Message behavior in src/llm/providers. */
 export function makeGoogleAssistantMessage(model: string, content: unknown) {
   return {
     role: "assistant",
@@ -78,6 +84,7 @@ export function makeGoogleAssistantMessage(model: string, content: unknown) {
   };
 }
 
+/** Reused helper for make Gemini Cli Assistant Message behavior in src/llm/providers. */
 export function makeGeminiCliAssistantMessage(model: string, content: unknown) {
   return {
     role: "assistant",
@@ -91,6 +98,7 @@ export function makeGeminiCliAssistantMessage(model: string, content: unknown) {
   };
 }
 
+/** Reused helper for expect Converted Roles behavior in src/llm/providers. */
 export function expectConvertedRoles(contents: Array<{ role?: string }>, expectedRoles: string[]) {
   expect(contents).toHaveLength(expectedRoles.length);
   for (const [index, role] of expectedRoles.entries()) {

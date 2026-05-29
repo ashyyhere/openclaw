@@ -1,7 +1,9 @@
+/** Helpers for injecting bootstrap context into embedded attempt workspaces. */
 import path from "node:path";
 import { isAcpSessionKey, isSubagentSessionKey } from "../../../routing/session-key.js";
 import type { EmbeddedContextFile } from "../../embedded-agent-helpers.js";
 
+/** Returns whether this session should receive primary bootstrap context. */
 export function isPrimaryBootstrapRun(sessionKey?: string): boolean {
   return !isSubagentSessionKey(sessionKey) && !isAcpSessionKey(sessionKey);
 }
@@ -15,6 +17,7 @@ function isRelativePathInsideOrEqual(relativePath: string): boolean {
   );
 }
 
+/** Rewrites injected context paths from source cwd into attempt workspace paths. */
 export function remapInjectedContextFilesToWorkspace(params: {
   files: EmbeddedContextFile[];
   sourceWorkspaceDir: string;

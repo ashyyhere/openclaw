@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix/sdk idb persistence lock helpers and runtime behavior.
 import type { FileLockOptions } from "openclaw/plugin-sdk/file-lock";
 
 export const MATRIX_IDB_PERSIST_INTERVAL_MS = 60_000;

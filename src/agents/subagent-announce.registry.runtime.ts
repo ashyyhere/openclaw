@@ -1,3 +1,4 @@
+/** Runtime registry imports isolated for subagent announcement tests. */
 export {
   countActiveDescendantRuns,
   countPendingDescendantRuns,

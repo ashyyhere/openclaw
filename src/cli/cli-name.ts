@@ -1,3 +1,4 @@
+/** Resolves the displayed CLI binary name from process argv. */
 import path from "node:path";
 
 const DEFAULT_CLI_NAME = "openclaw";
@@ -5,6 +6,7 @@ const DEFAULT_CLI_NAME = "openclaw";
 const KNOWN_CLI_NAMES = new Set([DEFAULT_CLI_NAME]);
 const CLI_PREFIX_RE = /^(?:((?:pnpm|npm|bunx|npx)\s+))?(openclaw)\b/;
 
+/** Reused helper for resolve Cli Name behavior in src/cli. */
 export function resolveCliName(argv: string[] = process.argv): string {
   const argv1 = argv[1];
   if (!argv1) {
@@ -17,6 +19,7 @@ export function resolveCliName(argv: string[] = process.argv): string {
   return DEFAULT_CLI_NAME;
 }
 
+/** Reused helper for replace Cli Name behavior in src/cli. */
 export function replaceCliName(command: string, cliName = resolveCliName()): string {
   if (!command.trim()) {
     return command;

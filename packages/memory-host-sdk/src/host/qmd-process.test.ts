@@ -1,3 +1,4 @@
+// Tests packages/memory-host-sdk/src/host qmd process test behavior.
 import { EventEmitter } from "node:events";
 import fs from "node:fs/promises";
 import os from "node:os";

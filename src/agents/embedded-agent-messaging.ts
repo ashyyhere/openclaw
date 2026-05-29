@@ -1,3 +1,4 @@
+/** Identifies messaging tools and send actions during embedded-agent runs. */
 import { getChannelPlugin, normalizeChannelId } from "../channels/plugins/index.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 
@@ -10,12 +11,14 @@ const MESSAGE_TOOL_SEND_ACTIONS = new Set([
   "upload-file",
 ]);
 
+/** Return whether an action name sends or uploads a message. */
 export function isMessageToolSendActionName(action: unknown): boolean {
   const normalized = normalizeOptionalString(action) ?? "";
   return MESSAGE_TOOL_SEND_ACTIONS.has(normalized);
 }
 
 // Provider docking: any plugin with `actions` opts into messaging tool handling.
+/** Return whether a tool belongs to core or channel messaging. */
 export function isMessagingTool(toolName: string): boolean {
   if (CORE_MESSAGING_TOOLS.has(toolName)) {
     return true;
@@ -24,6 +27,7 @@ export function isMessagingTool(toolName: string): boolean {
   return Boolean(providerId && getChannelPlugin(providerId)?.actions);
 }
 
+/** Return whether a messaging tool invocation sends a user-visible message. */
 export function isMessagingToolSendAction(
   toolName: string,
   args: Record<string, unknown>,

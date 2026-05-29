@@ -1,3 +1,4 @@
+// test/helpers/agents llm stream simple mock helpers and runtime behavior.
 import { vi } from "vitest";
 
 type LlmMockModule = Record<string, unknown>;

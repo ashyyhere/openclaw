@@ -1,3 +1,4 @@
+// Tests extensions/zalouser/src send test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createZalouserSendReceipt } from "./send-receipt.js";
 import {

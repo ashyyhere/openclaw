@@ -1,3 +1,4 @@
+/** Tests provider endpoint attribution and request routing policy. */
 import { describe, expect, it, vi } from "vitest";
 
 function expectRecordFields(record: unknown, expected: Record<string, unknown>) {

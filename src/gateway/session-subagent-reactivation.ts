@@ -1,9 +1,11 @@
+// gateway session subagent reactivation helpers and runtime behavior.
 import { getLatestSubagentRunByChildSessionKey } from "../agents/subagent-registry-read.js";
 
 async function loadSessionSubagentReactivationRuntime() {
   return import("./session-subagent-reactivation.runtime.js");
 }
 
+/** Reused helper for reactivate Completed Subagent Session behavior in src/gateway. */
 export async function reactivateCompletedSubagentSession(params: {
   sessionKey: string;
   runId?: string;

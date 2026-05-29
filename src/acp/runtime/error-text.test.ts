@@ -1,3 +1,4 @@
+/** Tests ACP runtime error text and next-step rendering. */
 import { describe, expect, it } from "vitest";
 import { formatAcpRuntimeErrorText, toAcpRuntimeErrorText } from "./error-text.js";
 import { AcpRuntimeError, toAcpRuntimeError } from "./errors.js";

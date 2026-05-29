@@ -1,3 +1,4 @@
+// Tests extensions/codex/src/app-server transcript repair runtime contract test behavior.
 import {
   assistantHistoryMessage,
   currentPromptHistoryMessage,

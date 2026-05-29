@@ -1,9 +1,11 @@
+/** Parses host/container/options bind mount specifications. */
 type SplitBindSpec = {
   host: string;
   container: string;
   options: string;
 };
 
+/** Splits a bind spec while preserving Windows drive-letter paths. */
 export function splitSandboxBindSpec(spec: string): SplitBindSpec | null {
   const separator = getHostContainerSeparatorIndex(spec);
   if (separator === -1) {

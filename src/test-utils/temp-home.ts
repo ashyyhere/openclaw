@@ -1,3 +1,4 @@
+// test-utils temp home helpers and runtime behavior.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
@@ -12,6 +13,7 @@ const HOME_ENV_KEYS = [
   "OPENCLAW_STATE_DIR",
 ] as const;
 
+/** Shared type for Temp Home Env in src/test-utils. */
 export type TempHomeEnv = {
   home: string;
   restore: () => Promise<void>;
@@ -41,6 +43,7 @@ async function ensurePrefixRoot(prefix: string): Promise<string> {
   }
 }
 
+/** Reused helper for create Temp Home Env behavior in src/test-utils. */
 export async function createTempHomeEnv(prefix: string): Promise<TempHomeEnv> {
   const prefixRoot = await ensurePrefixRoot(prefix);
   const home = path.join(prefixRoot, `home-${String(nextHomeIndex)}`);

@@ -1,3 +1,4 @@
+// Tests shared lazy promise test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { createLazyImportLoader, createLazyPromiseLoader } from "./lazy-promise.js";
 

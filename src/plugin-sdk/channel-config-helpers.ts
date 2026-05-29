@@ -1,3 +1,4 @@
+/** Public SDK builders for channel config adapters, writes, allowlists, and DM policy access. */
 import {
   deleteAccountFromConfigSection as deleteAccountFromConfigSectionInSection,
   setAccountEnabledInConfigSection as setAccountEnabledInConfigSectionInSection,
@@ -18,6 +19,7 @@ import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "../routing/session-key.j
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 import { normalizeStringEntries } from "../shared/string-normalization.js";
 
+/** Re-exported API for src/plugin-sdk. */
 export {
   ensureOpenDmPolicyAllowFromWildcard,
   normalizeChannelDmPolicy,
@@ -34,8 +36,11 @@ export {
 
 const INTERNAL_MESSAGE_CHANNEL = "webchat";
 
+/** Origin scope used when checking whether a config write is allowed. */
 export type ConfigWriteScope = ConfigWriteScopeLike;
+/** Target scope that a channel config write will mutate. */
 export type ConfigWriteTarget = ConfigWriteTargetLike;
+/** Allow/deny result from channel config write authorization. */
 export type ConfigWriteAuthorizationResult = ConfigWriteAuthorizationResultLike;
 
 type ChannelCrudConfigAdapter<ResolvedAccount> = Pick<
@@ -61,6 +66,7 @@ type ChannelConfigAdapterWithAccessors<ResolvedAccount> = Pick<
   | "resolveDefaultTo"
 >;
 
+/** Resolve whether channel config writes are enabled for a channel/account pair. */
 export function resolveChannelConfigWrites(params: {
   cfg: OpenClawConfig;
   channelId?: string | null;
@@ -69,6 +75,7 @@ export function resolveChannelConfigWrites(params: {
   return resolveChannelConfigWritesShared(params);
 }
 
+/** Authorize a channel config write from one origin scope to one target scope. */
 export function authorizeConfigWrite(params: {
   cfg: OpenClawConfig;
   origin?: ConfigWriteScope;
@@ -78,6 +85,7 @@ export function authorizeConfigWrite(params: {
   return authorizeConfigWriteShared(params);
 }
 
+/** Return whether gateway/client scopes can bypass normal channel config write policy. */
 export function canBypassConfigWritePolicy(params: {
   channel?: string | null;
   gatewayClientScopes?: string[] | null;
@@ -89,6 +97,7 @@ export function canBypassConfigWritePolicy(params: {
   });
 }
 
+/** Format a user-facing denial reason for rejected channel config writes. */
 export function formatConfigWriteDeniedMessage(params: {
   result: Exclude<ConfigWriteAuthorizationResult, { allowed: true }>;
   fallbackChannelId?: string | null;
@@ -252,6 +261,8 @@ function resolveAccessorAccountWithFallback<
     | undefined,
   fallbackResolveAccessorAccount: (params: ChannelConfigAccessorParams<Config>) => AccessorAccount,
 ): (params: ChannelConfigAccessorParams<Config>) => AccessorAccount {
+  // Some channels read allowlists/default targets from a derived account shape. Default to the
+  // CRUD account resolver so simple adapters do not need duplicate accessor functions.
   return resolveAccessorAccount ?? fallbackResolveAccessorAccount;
 }
 
@@ -548,6 +559,8 @@ export function createHybridChannelConfigBase<
     deleteAccount({ cfg, accountId }) {
       if (normalizeAccountId(accountId) === DEFAULT_ACCOUNT_ID) {
         if (params.preserveSectionOnDefaultDelete) {
+          // Hybrid channels can keep non-account metadata at channel root; clear configured base
+          // fields instead of deleting the whole section when callers request preservation.
           return clearTopLevelChannelConfigFields({
             cfg,
             sectionKey: params.sectionKey,
@@ -653,4 +666,5 @@ export function createScopedDmSecurityResolver<
   };
 }
 
+/** Re-exported API for src/plugin-sdk, starting with build Account Scoped Dm Security Policy. */
 export { buildAccountScopedDmSecurityPolicy };

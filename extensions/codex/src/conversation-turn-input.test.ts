@@ -1,3 +1,4 @@
+// Tests extensions/codex/src conversation turn input test behavior.
 import { describe, expect, it } from "vitest";
 import { buildCodexConversationTurnInput } from "./conversation-turn-input.js";
 

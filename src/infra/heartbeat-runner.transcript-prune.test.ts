@@ -1,3 +1,4 @@
+// Tests infra heartbeat runner transcript prune test behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { beforeEach, describe, expect, it, vi } from "vitest";

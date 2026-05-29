@@ -1,3 +1,4 @@
+// Coverage for ACP command bypass dispatch behavior.
 import { beforeEach, describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../../config/config.js";
 import { setActivePluginRegistry } from "../../plugins/runtime.js";

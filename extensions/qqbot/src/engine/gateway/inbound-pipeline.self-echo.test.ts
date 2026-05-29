@@ -1,3 +1,4 @@
+// Tests extensions/qqbot/src/engine/gateway inbound pipeline self echo test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { QQBotInboundAccess } from "../adapter/index.js";
 import type { RefIndexEntry } from "../ref/types.js";

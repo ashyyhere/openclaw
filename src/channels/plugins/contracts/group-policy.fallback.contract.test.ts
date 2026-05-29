@@ -1,3 +1,4 @@
+/** Contract tests for channel group-policy fallback behavior. */
 import { describe, expect, it } from "vitest";
 import { resolveOpenProviderRuntimeGroupPolicy } from "../../../config/runtime-group-policy.js";
 import { installChannelRuntimeGroupPolicyFallbackSuite } from "./test-helpers/group-policy-contract-suites.js";

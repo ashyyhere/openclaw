@@ -1,3 +1,4 @@
+/** Integration tests for missing default account binding warnings. */
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import {

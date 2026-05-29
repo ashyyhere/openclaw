@@ -1,3 +1,4 @@
+/** Tests provider-specific generated config policies. */
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("../plugins/provider-runtime.js", () => ({

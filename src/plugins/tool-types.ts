@@ -1,9 +1,11 @@
+// plugins tool types helpers and runtime behavior.
 import type { ToolFsPolicy } from "../agents/tool-fs-policy.types.js";
 import type { AnyAgentTool } from "../agents/tools/common.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { HookEntry } from "../hooks/types.js";
 import type { DeliveryContext } from "../utils/delivery-context.types.js";
 
+/** Shared type for Open Claw Plugin Active Model Context in src/plugins. */
 export type OpenClawPluginActiveModelContext = {
   provider?: string;
   modelId?: string;
@@ -48,16 +50,19 @@ export type OpenClawPluginToolContext = {
   sandboxed?: boolean;
 };
 
+/** Shared type for Open Claw Plugin Tool Factory in src/plugins. */
 export type OpenClawPluginToolFactory = (
   ctx: OpenClawPluginToolContext,
 ) => AnyAgentTool | AnyAgentTool[] | null | undefined;
 
+/** Shared type for Open Claw Plugin Tool Options in src/plugins. */
 export type OpenClawPluginToolOptions = {
   name?: string;
   names?: string[];
   optional?: boolean;
 };
 
+/** Shared type for Open Claw Plugin Hook Options in src/plugins. */
 export type OpenClawPluginHookOptions = {
   entry?: HookEntry;
   name?: string;

@@ -1,3 +1,4 @@
+/** Tests ACP translator session creation rate limiting. */
 import type {
   LoadSessionRequest,
   NewSessionRequest,

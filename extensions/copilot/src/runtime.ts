@@ -1,3 +1,4 @@
+// extensions/copilot/src runtime helpers and runtime behavior.
 import { normalize, resolve, sep } from "node:path";
 import type { CopilotClient, CopilotClientOptions } from "@github/copilot-sdk";
 import { loadCopilotSdk } from "./sdk-loader.js";

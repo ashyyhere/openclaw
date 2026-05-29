@@ -1,3 +1,4 @@
+// Tests extensions/signal/src approval reactions test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   addSignalApprovalReactionHintToText,

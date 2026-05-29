@@ -1,3 +1,4 @@
+// Tests infra gateway lock test behavior.
 import { createHash } from "node:crypto";
 import { EventEmitter } from "node:events";
 import fsSync from "node:fs";

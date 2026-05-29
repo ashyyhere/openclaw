@@ -1,3 +1,4 @@
+// extensions/imessage/src imessage test plugin helpers and runtime behavior.
 import type {
   ChannelMessageActionAdapter,
   ChannelMessageActionName,

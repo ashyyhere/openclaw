@@ -1,3 +1,4 @@
+// extensions/browser/src/browser server context remote tab ops harness helpers and runtime behavior.
 import { vi } from "vitest";
 import { withBrowserFetchPreconnect } from "../../test-fetch.js";
 import { resolveCdpControlPolicy } from "./cdp-reachability-policy.js";

@@ -1,3 +1,4 @@
+/** Covers sessions spawn tool routing for subagents and ACP. */
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 const hoisted = vi.hoisted(() => {

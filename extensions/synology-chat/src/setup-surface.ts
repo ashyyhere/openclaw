@@ -1,3 +1,4 @@
+// extensions/synology-chat/src setup surface helpers and runtime behavior.
 import {
   createAllowFromSection,
   createSetupTranslator,

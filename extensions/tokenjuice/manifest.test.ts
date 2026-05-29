@@ -1,3 +1,4 @@
+// Tests extensions/tokenjuice manifest test behavior.
 import fs from "node:fs";
 import { describe, expect, it } from "vitest";
 

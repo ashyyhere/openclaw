@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/qa-lab/src/providers/live-frontier model selection runtime behavior.
 import {
   listProfilesForProvider,
   loadAuthProfileStoreForRuntime,

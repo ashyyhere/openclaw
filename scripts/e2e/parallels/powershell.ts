@@ -1,3 +1,4 @@
+// scripts/e2e/parallels powershell helpers and runtime behavior.
 import {
   configPathMapKey,
   modelProviderConfigBatchJson,

@@ -1,3 +1,4 @@
+// tui tui command handlers helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import type { Component, SelectItem, TUI } from "@earendil-works/pi-tui";
 import type { SessionsPatchResult } from "../../packages/gateway-protocol/src/index.js";

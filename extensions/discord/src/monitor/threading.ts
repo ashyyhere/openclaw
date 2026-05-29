@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor threading helpers and runtime behavior.
 export {
   maybeCreateDiscordAutoThread,
   resolveDiscordAutoThreadContext,

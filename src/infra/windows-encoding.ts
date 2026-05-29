@@ -1,3 +1,4 @@
+// infra windows encoding helpers and runtime behavior.
 import { spawnSync } from "node:child_process";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
@@ -13,6 +14,7 @@ const WINDOWS_CODEPAGE_ENCODING_MAP: Record<number, string> = {
 
 let cachedWindowsConsoleEncoding: string | null | undefined;
 
+/** Reused helper for parse Windows Code Page behavior in src/infra. */
 export function parseWindowsCodePage(raw: string): number | null {
   if (!raw) {
     return null;
@@ -28,6 +30,7 @@ export function parseWindowsCodePage(raw: string): number | null {
   return codePage;
 }
 
+/** Reused helper for resolve Windows Console Encoding behavior in src/infra. */
 export function resolveWindowsConsoleEncoding(): string | null {
   if (process.platform !== "win32") {
     return null;
@@ -51,6 +54,7 @@ export function resolveWindowsConsoleEncoding(): string | null {
   return cachedWindowsConsoleEncoding;
 }
 
+/** Reused helper for decode Windows Output Buffer behavior in src/infra. */
 export function decodeWindowsOutputBuffer(params: {
   buffer: Buffer;
   platform?: NodeJS.Platform;
@@ -77,6 +81,7 @@ export function decodeWindowsOutputBuffer(params: {
   }
 }
 
+/** Reused helper for create Windows Output Decoder behavior in src/infra. */
 export function createWindowsOutputDecoder(params?: {
   platform?: NodeJS.Platform;
   windowsEncoding?: string | null;

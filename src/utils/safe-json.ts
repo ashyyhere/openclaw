@@ -1,3 +1,5 @@
+// utils safe json helpers and runtime behavior.
+/** Reused helper for safe Json Stringify behavior in src/utils. */
 export function safeJsonStringify(value: unknown): string | null {
   try {
     return JSON.stringify(value, (_key, val) => {

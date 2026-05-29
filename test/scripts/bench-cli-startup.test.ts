@@ -1,3 +1,4 @@
+// Tests test/scripts bench cli startup test behavior.
 import { describe, expect, it } from "vitest";
 import { testing } from "../../scripts/bench-cli-startup.ts";
 

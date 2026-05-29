@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/whatsapp/src/auto-reply config runtime behavior.
 export {
   evaluateSessionFreshness,
   loadSessionStore,

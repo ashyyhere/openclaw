@@ -1,3 +1,4 @@
+// Tests test/scripts extension source classifier test behavior.
 import { describe, expect, it } from "vitest";
 import { classifyBundledExtensionSourcePath } from "../../scripts/lib/extension-source-classifier.mjs";
 

@@ -1,3 +1,4 @@
+// extensions/qqbot/src/engine/gateway inbound attachments helpers and runtime behavior.
 import type { AudioConvertPort } from "../adapter/audio.port.js";
 import { downloadFile } from "../utils/file-utils.js";
 import { getQQBotMediaDir } from "../utils/platform.js";

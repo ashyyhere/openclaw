@@ -1,3 +1,4 @@
+/** Tests external CLI auth-profile discovery for agent credentials. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 

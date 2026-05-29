@@ -1,3 +1,4 @@
+/** Tests human-readable session slug generation. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createSessionSlug } from "./session-slug.js";
 

@@ -1,3 +1,4 @@
+// Inline reply parsing helpers.
 import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";
 import { collapseInlineHorizontalWhitespace } from "./reply-inline-whitespace.js";
 
@@ -11,6 +12,7 @@ const INLINE_SIMPLE_COMMAND_RE = /(?:^|\s)\/(help|commands|whoami|id)(?=$|\s|:)/
 
 const INLINE_STATUS_RE = /(?:^|\s)\/status(?=$|\s|:)(?:\s*:\s*)?/gi;
 
+/** Reused helper for extract Inline Simple Command behavior in src/auto-reply/reply. */
 export function extractInlineSimpleCommand(body?: string): {
   command: string;
   cleaned: string;
@@ -31,6 +33,7 @@ export function extractInlineSimpleCommand(body?: string): {
   return { command, cleaned };
 }
 
+/** Reused helper for strip Inline Status behavior in src/auto-reply/reply. */
 export function stripInlineStatus(body: string): {
   cleaned: string;
   didStrip: boolean;

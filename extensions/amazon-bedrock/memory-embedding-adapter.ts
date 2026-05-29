@@ -1,3 +1,4 @@
+// extensions/amazon-bedrock memory embedding adapter helpers and runtime behavior.
 import {
   isMissingEmbeddingApiKeyError,
   type MemoryEmbeddingProviderAdapter,

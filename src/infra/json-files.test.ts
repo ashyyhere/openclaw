@@ -1,3 +1,4 @@
+// Tests infra json files test behavior.
 import fs from "node:fs";
 import fsPromises from "node:fs/promises";
 import path from "node:path";

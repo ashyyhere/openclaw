@@ -1,9 +1,11 @@
+// plugins hooks test helpers helpers and runtime behavior.
 import { uniqueStrings } from "../shared/string-normalization.js";
 import { createHookRunner } from "./hooks.js";
 import type { PluginRegistry } from "./registry.js";
 import { createPluginRecord } from "./status.test-helpers.js";
 import type { PluginHookAgentContext, PluginHookRegistration } from "./types.js";
 
+/** Reused helper for create Mock Plugin Registry behavior in src/plugins. */
 export function createMockPluginRegistry(
   hooks: Array<{
     hookName: string;
@@ -65,6 +67,7 @@ export function createMockPluginRegistry(
   } as unknown as PluginRegistry;
 }
 
+/** Reused constant for TEST PLUGIN AGENT CTX behavior in src/plugins. */
 export const TEST_PLUGIN_AGENT_CTX: PluginHookAgentContext = {
   runId: "test-run-id",
   agentId: "test-agent",
@@ -74,6 +77,7 @@ export const TEST_PLUGIN_AGENT_CTX: PluginHookAgentContext = {
   messageProvider: "test",
 };
 
+/** Reused helper for add Test Hook behavior in src/plugins. */
 export function addTestHook(params: {
   registry: PluginRegistry;
   pluginId: string;
@@ -114,6 +118,7 @@ function addTestHooks(
   }
 }
 
+/** Reused helper for add Static Test Hooks behavior in src/plugins. */
 export function addStaticTestHooks<TResult>(
   registry: PluginRegistry,
   params: {
@@ -137,6 +142,7 @@ export function addStaticTestHooks<TResult>(
   );
 }
 
+/** Reused helper for create Hook Runner With Registry behavior in src/plugins. */
 export function createHookRunnerWithRegistry(
   hooks: Array<{
     hookName: string;

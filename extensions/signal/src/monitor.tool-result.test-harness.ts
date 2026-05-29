@@ -1,3 +1,4 @@
+// extensions/signal/src monitor tool result test harness helpers and runtime behavior.
 import type { MockFn } from "openclaw/plugin-sdk/plugin-test-runtime";
 import { beforeEach, vi } from "vitest";
 import type { SignalDaemonExitEvent, SignalDaemonHandle } from "./daemon.js";

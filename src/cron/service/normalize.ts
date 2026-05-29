@@ -1,8 +1,10 @@
+// cron/service normalize helpers and runtime behavior.
 import { normalizeAgentId } from "../../routing/session-key.js";
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 import { truncateUtf16Safe } from "../../utils.js";
 import type { CronPayload } from "../types.js";
 
+/** Reused helper for normalize Required Name behavior in src/cron/service. */
 export function normalizeRequiredName(raw: unknown) {
   if (typeof raw !== "string") {
     throw new Error("cron job name is required");
@@ -21,6 +23,7 @@ function truncateText(input: string, maxLen: number) {
   return `${truncateUtf16Safe(input, Math.max(0, maxLen - 1)).trimEnd()}…`;
 }
 
+/** Reused helper for normalize Optional Agent Id behavior in src/cron/service. */
 export function normalizeOptionalAgentId(raw: unknown) {
   const trimmed = normalizeOptionalString(raw);
   if (!trimmed) {
@@ -29,6 +32,7 @@ export function normalizeOptionalAgentId(raw: unknown) {
   return normalizeAgentId(trimmed);
 }
 
+/** Reused helper for infer Legacy Name behavior in src/cron/service. */
 export function inferLegacyName(job: {
   schedule?: { kind?: unknown; everyMs?: unknown; expr?: unknown };
   payload?: { kind?: unknown; text?: unknown; message?: unknown };
@@ -61,6 +65,7 @@ export function inferLegacyName(job: {
   return "Cron job";
 }
 
+/** Reused helper for normalize Payload To System Text behavior in src/cron/service. */
 export function normalizePayloadToSystemText(payload: CronPayload) {
   if (payload.kind === "systemEvent") {
     const text = (payload as { text?: unknown }).text;

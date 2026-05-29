@@ -1,3 +1,4 @@
+/** Covers stable hash inputs for sandbox and browser container config. */
 import { describe, expect, it } from "vitest";
 import { computeSandboxBrowserConfigHash, computeSandboxConfigHash } from "./config-hash.js";
 import type { SandboxDockerConfig } from "./types.js";

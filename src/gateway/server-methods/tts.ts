@@ -1,3 +1,4 @@
+// gateway/server-methods tts helpers and runtime behavior.
 import { ErrorCodes, errorShape } from "../../../packages/gateway-protocol/src/index.js";
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 import {
@@ -25,6 +26,7 @@ import {
 import { formatForLog } from "../ws-log.js";
 import type { GatewayRequestHandlers } from "./types.js";
 
+/** Reused constant for tts Handlers behavior in src/gateway/server-methods. */
 export const ttsHandlers: GatewayRequestHandlers = {
   "tts.status": async ({ respond, context }) => {
     try {

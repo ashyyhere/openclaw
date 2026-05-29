@@ -1,3 +1,4 @@
+// scripts/e2e/parallels macos discord helpers and runtime behavior.
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import type { MacosGuest } from "./guest-transports.ts";

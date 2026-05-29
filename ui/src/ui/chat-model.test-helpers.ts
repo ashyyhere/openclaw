@@ -1,3 +1,4 @@
+// ui/src/ui chat model test helpers helpers and runtime behavior.
 import type {
   GatewaySessionRow,
   ModelCatalogEntry,
@@ -5,33 +6,39 @@ import type {
   SessionsPatchResult,
 } from "./types.ts";
 
+/** Reused constant for OPENAI GPT5 MODEL behavior in ui/src/ui. */
 export const OPENAI_GPT5_MODEL: ModelCatalogEntry = {
   id: "gpt-5",
   name: "GPT-5",
   provider: "openai",
 };
 
+/** Reused constant for OPENAI GPT5 MINI MODEL behavior in ui/src/ui. */
 export const OPENAI_GPT5_MINI_MODEL: ModelCatalogEntry = {
   id: "gpt-5-mini",
   name: "GPT-5 Mini",
   provider: "openai",
 };
 
+/** Reused constant for DEEPSEEK CHAT MODEL behavior in ui/src/ui. */
 export const DEEPSEEK_CHAT_MODEL: ModelCatalogEntry = {
   id: "deepseek-chat",
   name: "DeepSeek Chat",
   provider: "deepseek",
 };
 
+/** Reused constant for DEFAULT CHAT MODEL CATALOG behavior in ui/src/ui. */
 export const DEFAULT_CHAT_MODEL_CATALOG = [
   OPENAI_GPT5_MODEL,
   OPENAI_GPT5_MINI_MODEL,
 ] satisfies ModelCatalogEntry[];
 
+/** Reused helper for create Model Catalog behavior in ui/src/ui. */
 export function createModelCatalog(...entries: ModelCatalogEntry[]): ModelCatalogEntry[] {
   return [...entries];
 }
 
+/** Reused helper for create Ambiguous Model Catalog behavior in ui/src/ui. */
 export function createAmbiguousModelCatalog(
   id: string,
   ...providers: string[]
@@ -43,6 +50,7 @@ export function createAmbiguousModelCatalog(
   }));
 }
 
+/** Reused helper for create Main Session Row behavior in ui/src/ui. */
 export function createMainSessionRow(
   overrides: Partial<GatewaySessionRow> = {},
 ): GatewaySessionRow {
@@ -54,6 +62,7 @@ export function createMainSessionRow(
   };
 }
 
+/** Reused helper for create Sessions List Result behavior in ui/src/ui. */
 export function createSessionsListResult(
   params: {
     model?: string | null;
@@ -103,6 +112,7 @@ export function createSessionsListResult(
   };
 }
 
+/** Reused helper for create Resolved Model Patch behavior in ui/src/ui. */
 export function createResolvedModelPatch(
   model: string,
   modelProvider?: string | null,

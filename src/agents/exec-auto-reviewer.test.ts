@@ -1,3 +1,4 @@
+/** Tests model-backed exec auto-review response parsing and reviewer behavior. */
 import { describe, expect, it, vi } from "vitest";
 import { MAX_TIMER_TIMEOUT_MS } from "../shared/number-coercion.js";
 import {

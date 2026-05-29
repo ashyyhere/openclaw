@@ -1,3 +1,4 @@
+// infra provider usage fetch codex helpers and runtime behavior.
 import { resolveProviderRequestHeaders } from "../agents/provider-request-config.js";
 import { parseStrictFiniteNumber } from "./parse-finite-number.js";
 import {
@@ -53,6 +54,7 @@ function resolveSecondaryWindowLabel(params: {
   return "Day";
 }
 
+/** Reused helper for fetch Codex Usage behavior in src/infra. */
 export async function fetchCodexUsage(
   token: string,
   accountId: string | undefined,

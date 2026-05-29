@@ -1,3 +1,4 @@
+/** Renders terminal-colored unified diffs for interactive agent mode. */
 import * as Diff from "diff";
 import { theme } from "../theme/theme.js";
 
@@ -70,6 +71,7 @@ function renderIntraLineDiff(
   return { removedLine, addedLine };
 }
 
+/** Shared type for Render Diff Options in src/agents/modes. */
 export interface RenderDiffOptions {
   /** File path (unused, kept for API compatibility) */
   filePath?: string;
@@ -81,6 +83,7 @@ export interface RenderDiffOptions {
  * - Removed lines: red, with inverse on changed tokens
  * - Added lines: green, with inverse on changed tokens
  */
+/** Converts raw diff text into colorized terminal output. */
 export function renderDiff(diffText: string, _options: RenderDiffOptions = {}): string {
   const lines = diffText.split("\n");
   const result: string[] = [];

@@ -1,3 +1,4 @@
+/** Shared backup path, config, and metadata helpers. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import {
@@ -9,9 +10,12 @@ import {
 import { pathExists, shortenHomePath } from "../utils.js";
 import { buildCleanupPlan, isPathWithin } from "./cleanup-utils.js";
 
+/** Shared type for Backup Asset Kind in src/commands. */
 export type BackupAssetKind = "state" | "config" | "credentials" | "workspace";
+/** Shared type for Backup Skip Reason in src/commands. */
 export type BackupSkipReason = "covered" | "missing";
 
+/** Shared type for Backup Asset in src/commands. */
 export type BackupAsset = {
   kind: BackupAssetKind;
   sourcePath: string;
@@ -19,6 +23,7 @@ export type BackupAsset = {
   archivePath: string;
 };
 
+/** Shared type for Skipped Backup Asset in src/commands. */
 export type SkippedBackupAsset = {
   kind: BackupAssetKind;
   sourcePath: string;
@@ -27,6 +32,7 @@ export type SkippedBackupAsset = {
   coveredBy?: string;
 };
 
+/** Shared type for Backup Plan in src/commands. */
 export type BackupPlan = {
   stateDir: string;
   configPath: string;
@@ -57,6 +63,7 @@ function backupAssetPriority(kind: BackupAssetKind): number {
   throw new Error("Unsupported backup asset kind");
 }
 
+/** Reused helper for format Backup Archive Timestamp behavior in src/commands. */
 export function formatBackupArchiveTimestamp(
   nowMs = Date.now(),
   offsetMinutes = -new Date(nowMs).getTimezoneOffset(),
@@ -77,14 +84,17 @@ export function formatBackupArchiveTimestamp(
   return `${year}-${month}-${day}T${hours}-${minutes}-${seconds}.${millis}${sign}${offsetHours}-${offsetMins}`;
 }
 
+/** Reused helper for build Backup Archive Root behavior in src/commands. */
 export function buildBackupArchiveRoot(nowMs = Date.now()): string {
   return `${formatBackupArchiveTimestamp(nowMs)}-openclaw-backup`;
 }
 
+/** Reused helper for build Backup Archive Basename behavior in src/commands. */
 export function buildBackupArchiveBasename(nowMs = Date.now()): string {
   return `${buildBackupArchiveRoot(nowMs)}.tar.gz`;
 }
 
+/** Reused helper for encode Absolute Path For Backup Archive behavior in src/commands. */
 export function encodeAbsolutePathForBackupArchive(sourcePath: string): string {
   const normalized = sourcePath.replaceAll("\\", "/");
   const windowsMatch = normalized.match(/^([A-Za-z]):\/(.*)$/);
@@ -99,10 +109,12 @@ export function encodeAbsolutePathForBackupArchive(sourcePath: string): string {
   return path.posix.join("relative", normalized);
 }
 
+/** Reused helper for build Backup Archive Path behavior in src/commands. */
 export function buildBackupArchivePath(archiveRoot: string, sourcePath: string): string {
   return path.posix.join(archiveRoot, "payload", encodeAbsolutePathForBackupArchive(sourcePath));
 }
 
+/** Reused helper for resolve Backup Plan From Paths behavior in src/commands. */
 export async function resolveBackupPlanFromPaths(params: {
   stateDir: string;
   configPath: string;
@@ -263,6 +275,7 @@ async function canonicalizeExistingPath(targetPath: string): Promise<string> {
   }
 }
 
+/** Reused helper for resolve Backup Plan From Disk behavior in src/commands. */
 export async function resolveBackupPlanFromDisk(
   params: {
     includeWorkspace?: boolean;

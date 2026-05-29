@@ -1,3 +1,4 @@
+// Tests extensions/feishu/src tool account test behavior.
 import { describe, expect, it } from "vitest";
 import { resolveFeishuToolAccount } from "./tool-account.js";
 

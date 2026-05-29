@@ -16,10 +16,14 @@ import { formatCliCommand } from "../command-format.js";
 import { parsePort } from "../shared/parse-port.js";
 import { createDaemonActionContext } from "./response.js";
 
+/** Re-exported API for src/cli/daemon-cli, starting with format Runtime Status. */
 export { formatRuntimeStatus };
+/** Re-exported API for src/cli/daemon-cli, starting with parse Port. */
 export { parsePort };
+/** Re-exported API for src/cli/daemon-cli, starting with resolve Daemon Container Context. */
 export { resolveDaemonContainerContext };
 
+/** Reused helper for create Daemon Install Action Context behavior in src/cli/daemon-cli. */
 export function createDaemonInstallActionContext(jsonFlag: unknown) {
   const json = Boolean(jsonFlag);
   return {
@@ -28,6 +32,7 @@ export function createDaemonInstallActionContext(jsonFlag: unknown) {
   };
 }
 
+/** Reused helper for fail If Nix Daemon Install Mode behavior in src/cli/daemon-cli. */
 export function failIfNixDaemonInstallMode(
   fail: (message: string, hints?: string[]) => void,
   env: NodeJS.ProcessEnv = process.env,
@@ -39,6 +44,7 @@ export function failIfNixDaemonInstallMode(
   return true;
 }
 
+/** Reused helper for create Cli Status Text Styles behavior in src/cli/daemon-cli. */
 export function createCliStatusTextStyles() {
   const rich = isRich();
   return {
@@ -52,6 +58,7 @@ export function createCliStatusTextStyles() {
   };
 }
 
+/** Reused helper for resolve Runtime Status Color behavior in src/cli/daemon-cli. */
 export function resolveRuntimeStatusColor(status: string | undefined): (value: string) => string {
   const runtimeStatus = status ?? "unknown";
   return runtimeStatus === "running"
@@ -63,6 +70,7 @@ export function resolveRuntimeStatusColor(status: string | undefined): (value: s
         : theme.warn;
 }
 
+/** Reused helper for parse Port From Args behavior in src/cli/daemon-cli. */
 export function parsePortFromArgs(programArguments: string[] | undefined): number | null {
   if (!programArguments?.length) {
     return null;
@@ -87,6 +95,7 @@ export function parsePortFromArgs(programArguments: string[] | undefined): numbe
   return null;
 }
 
+/** Reused helper for pick Probe Host For Bind behavior in src/cli/daemon-cli. */
 export function pickProbeHostForBind(
   bindMode: string,
   tailnetIPv4: string | undefined,
@@ -115,6 +124,7 @@ const SAFE_DAEMON_ENV_KEYS = [
   "OPENCLAW_NIX_MODE",
 ];
 
+/** Reused helper for filter Daemon Env behavior in src/cli/daemon-cli. */
 export function filterDaemonEnv(env: Record<string, string> | undefined): Record<string, string> {
   if (!env) {
     return {};
@@ -130,11 +140,13 @@ export function filterDaemonEnv(env: Record<string, string> | undefined): Record
   return filtered;
 }
 
+/** Reused helper for safe Daemon Env behavior in src/cli/daemon-cli. */
 export function safeDaemonEnv(env: Record<string, string> | undefined): string[] {
   const filtered = filterDaemonEnv(env);
   return Object.entries(filtered).map(([key, value]) => `${key}=${value}`);
 }
 
+/** Reused helper for normalize Listener Address behavior in src/cli/daemon-cli. */
 export function normalizeListenerAddress(raw: string): string {
   let value = raw.trim();
   if (!value) {
@@ -145,6 +157,7 @@ export function normalizeListenerAddress(raw: string): string {
   return value.trim();
 }
 
+/** Reused helper for render Runtime Hints behavior in src/cli/daemon-cli. */
 export function renderRuntimeHints(
   runtime: { missingUnit?: boolean; missingSupervision?: boolean; status?: string } | undefined,
   env: NodeJS.ProcessEnv = process.env,
@@ -186,6 +199,7 @@ export function renderRuntimeHints(
   return hints;
 }
 
+/** Reused helper for render Gateway Service Start Hints behavior in src/cli/daemon-cli. */
 export function renderGatewayServiceStartHints(env: NodeJS.ProcessEnv = process.env): string[] {
   const profile = env.OPENCLAW_PROFILE;
   const container = resolveDaemonContainerContext(env);
@@ -202,6 +216,7 @@ export function renderGatewayServiceStartHints(env: NodeJS.ProcessEnv = process.
   return [`Restart the container or the service that manages it for ${container}.`];
 }
 
+/** Reused helper for filter Container Generic Hints behavior in src/cli/daemon-cli. */
 export function filterContainerGenericHints(
   hints: string[],
   env: NodeJS.ProcessEnv = process.env,

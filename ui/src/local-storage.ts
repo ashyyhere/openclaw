@@ -1,3 +1,4 @@
+// ui/src local storage helpers and runtime behavior.
 function isStorage(value: unknown): value is Storage {
   return (
     Boolean(value) &&
@@ -25,10 +26,12 @@ function getSafeStorage(name: "localStorage" | "sessionStorage"): Storage | null
   return descriptor && !descriptor.get && isStorage(descriptor.value) ? descriptor.value : null;
 }
 
+/** Reused helper for get Safe Local Storage behavior in ui/src. */
 export function getSafeLocalStorage(): Storage | null {
   return getSafeStorage("localStorage");
 }
 
+/** Reused helper for get Safe Session Storage behavior in ui/src. */
 export function getSafeSessionStorage(): Storage | null {
   return getSafeStorage("sessionStorage");
 }

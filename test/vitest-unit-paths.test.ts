@@ -1,3 +1,4 @@
+// Tests test vitest unit paths test behavior.
 import { bundledPluginFile } from "openclaw/plugin-sdk/test-fixtures";
 import { describe, expect, it } from "vitest";
 import { isUnitConfigTestFile } from "./vitest/vitest.unit-paths.mjs";

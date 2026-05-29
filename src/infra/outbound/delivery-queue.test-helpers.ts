@@ -1,9 +1,11 @@
+// infra/outbound delivery queue test helpers helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { afterAll, beforeAll, beforeEach, vi } from "vitest";
 import { resolvePreferredOpenClawTmpDir } from "../tmp-openclaw-dir.js";
 import type { DeliverFn, RecoveryLogger } from "./delivery-queue.js";
 
+/** Reused helper for install Delivery Queue Tmp Dir Hooks behavior in src/infra/outbound. */
 export function installDeliveryQueueTmpDirHooks(): { readonly tmpDir: () => string } {
   let tmpDir = "";
   let fixtureRoot = "";
@@ -31,12 +33,14 @@ export function installDeliveryQueueTmpDirHooks(): { readonly tmpDir: () => stri
   };
 }
 
+/** Reused helper for read Queued Entry behavior in src/infra/outbound. */
 export function readQueuedEntry(tmpDir: string, id: string): Record<string, unknown> {
   return JSON.parse(
     fs.readFileSync(path.join(tmpDir, "delivery-queue", `${id}.json`), "utf-8"),
   ) as Record<string, unknown>;
 }
 
+/** Reused helper for set Queued Entry State behavior in src/infra/outbound. */
 export function setQueuedEntryState(
   tmpDir: string,
   id: string,
@@ -68,6 +72,7 @@ export function setQueuedEntryState(
   fs.writeFileSync(filePath, JSON.stringify(entry), "utf-8");
 }
 
+/** Reused helper for create Recovery Log behavior in src/infra/outbound. */
 export function createRecoveryLog(): RecoveryLogger & {
   info: ReturnType<typeof vi.fn<(msg: string) => void>>;
   warn: ReturnType<typeof vi.fn<(msg: string) => void>>;
@@ -80,6 +85,7 @@ export function createRecoveryLog(): RecoveryLogger & {
   };
 }
 
+/** Reused helper for as Deliver Fn behavior in src/infra/outbound. */
 export function asDeliverFn(deliver: ReturnType<typeof vi.fn>): DeliverFn {
   return deliver as DeliverFn;
 }

@@ -5,10 +5,12 @@
  * deprecated plugin compatibility exports; core internals still use them behind the facade.
  */
 export type { HistoryEntry, HistoryMediaEntry } from "../auto-reply/reply/history.types.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   createChannelHistoryWindow,
   type ChannelHistoryWindow,
 } from "../channels/turn/history-window.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   DEFAULT_GROUP_HISTORY_LIMIT,
   HISTORY_CONTEXT_MARKER,

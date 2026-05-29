@@ -1,3 +1,4 @@
+// gateway server discovery runtime helpers and runtime behavior.
 import { isTruthyEnvValue } from "../infra/env.js";
 import { parseStrictPositiveInteger } from "../infra/parse-finite-number.js";
 import { pickPrimaryTailnetIPv4, pickPrimaryTailnetIPv6 } from "../infra/tailnet.js";
@@ -24,6 +25,7 @@ function resolveDiscoveryAdvertiseTimeoutMs(env: NodeJS.ProcessEnv): number {
   return parsed;
 }
 
+/** Reused helper for start Gateway Discovery behavior in src/gateway. */
 export async function startGatewayDiscovery(params: {
   machineDisplayName: string;
   port: number;

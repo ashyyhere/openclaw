@@ -1,3 +1,4 @@
+/** Tests channel doctor compatibility mutations and warnings. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   collectChannelDoctorCompatibilityMutations,

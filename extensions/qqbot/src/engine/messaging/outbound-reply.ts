@@ -1,3 +1,4 @@
+// extensions/qqbot/src/engine/messaging outbound reply helpers and runtime behavior.
 import { debugLog } from "../utils/log.js";
 import { ReplyLimiter, type ReplyLimitResult } from "./reply-limiter.js";
 

@@ -1,3 +1,4 @@
+// extensions/cloudflare-ai-gateway models helpers and runtime behavior.
 import type { ModelDefinitionConfig } from "openclaw/plugin-sdk/provider-model-shared";
 
 export const CLOUDFLARE_AI_GATEWAY_PROVIDER_ID = "cloudflare-ai-gateway";

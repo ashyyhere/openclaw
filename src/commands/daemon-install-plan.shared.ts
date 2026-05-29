@@ -1,3 +1,4 @@
+/** Shared Node/Bun runtime and path resolution for daemon install plans. */
 import fs from "node:fs";
 import path from "node:path";
 import { resolvePreferredNodePath } from "../daemon/runtime-paths.js";
@@ -7,12 +8,14 @@ import {
 } from "./daemon-install-runtime-warning.js";
 import type { GatewayDaemonRuntime } from "./daemon-runtime.js";
 
+/** Reused helper for resolve Gateway Dev Mode behavior in src/commands. */
 export function resolveGatewayDevMode(argv: string[] = process.argv): boolean {
   const entry = argv[1];
   const normalizedEntry = entry?.replaceAll("\\", "/");
   return normalizedEntry?.includes("/src/") && normalizedEntry.endsWith(".ts");
 }
 
+/** Reused helper for resolve Daemon Install Runtime Inputs behavior in src/commands. */
 export async function resolveDaemonInstallRuntimeInputs(params: {
   env: Record<string, string | undefined>;
   runtime: GatewayDaemonRuntime;
@@ -29,6 +32,7 @@ export async function resolveDaemonInstallRuntimeInputs(params: {
   return { devMode, nodePath };
 }
 
+/** Reused helper for emit Daemon Install Runtime Warning behavior in src/commands. */
 export async function emitDaemonInstallRuntimeWarning(params: {
   env: Record<string, string | undefined>;
   runtime: GatewayDaemonRuntime;
@@ -45,6 +49,7 @@ export async function emitDaemonInstallRuntimeWarning(params: {
   });
 }
 
+/** Reused helper for resolve Daemon Node Bin Dir behavior in src/commands. */
 export function resolveDaemonNodeBinDir(nodePath?: string): string[] | undefined {
   const trimmed = nodePath?.trim();
   if (!trimmed || !path.isAbsolute(trimmed)) {
@@ -86,6 +91,7 @@ function addUniquePathDir(dirs: string[], dir: string | undefined): void {
   dirs.push(dir);
 }
 
+/** Reused helper for resolve Daemon Open Claw Bin Dir behavior in src/commands. */
 export function resolveDaemonOpenClawBinDir(
   params: {
     argv?: string[];
@@ -133,6 +139,7 @@ export function resolveDaemonOpenClawBinDir(
   return dirs.length > 0 ? dirs : undefined;
 }
 
+/** Reused helper for resolve Daemon Service Path Dirs behavior in src/commands. */
 export function resolveDaemonServicePathDirs(params: {
   nodePath?: string;
   argv?: string[];

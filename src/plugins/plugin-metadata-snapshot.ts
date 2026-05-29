@@ -1,3 +1,4 @@
+// plugins plugin metadata snapshot helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
@@ -52,6 +53,7 @@ const MAX_PLUGIN_METADATA_SNAPSHOT_MEMOS = 8;
 
 let pluginMetadataSnapshotMemos: PluginMetadataSnapshotMemo[] = [];
 
+/** Reused helper for clear Load Plugin Metadata Snapshot Memo behavior in src/plugins. */
 export function clearLoadPluginMetadataSnapshotMemo(): void {
   pluginMetadataSnapshotMemos = [];
 }
@@ -73,6 +75,7 @@ const MEMO_RELEVANT_ENV_KEYS = [
   "USERPROFILE",
   "XDG_CONFIG_HOME",
 ] as const;
+/** Re-exported API for src/plugins. */
 export type {
   LoadPluginMetadataSnapshotParams,
   PluginMetadataManifestView,
@@ -425,6 +428,7 @@ function normalizeInstalledPluginIndex(index: InstalledPluginIndex): InstalledPl
   } as InstalledPluginIndex;
 }
 
+/** Reused helper for is Plugin Metadata Snapshot Compatible behavior in src/plugins. */
 export function isPluginMetadataSnapshotCompatible(params: {
   snapshot: Pick<
     PluginMetadataSnapshot,
@@ -539,6 +543,7 @@ function buildPluginMetadataOwnerMaps(
   };
 }
 
+/** Reused helper for list Plugin Origins From Metadata Snapshot behavior in src/plugins. */
 export function listPluginOriginsFromMetadataSnapshot(
   snapshot: Pick<PluginMetadataSnapshot, "plugins">,
 ): ReadonlyMap<string, PluginManifestRecord["origin"]> {
@@ -547,6 +552,7 @@ export function listPluginOriginsFromMetadataSnapshot(
 
 // Process-local memoization keeps the hot snapshot work cached while checking
 // the persisted metadata files that the installed-index loader consumes.
+/** Reused helper for load Plugin Metadata Snapshot behavior in src/plugins. */
 export function loadPluginMetadataSnapshot(
   params: LoadPluginMetadataSnapshotParams,
 ): PluginMetadataSnapshot {
@@ -638,6 +644,7 @@ function canMemoizePluginMetadataSnapshotResult(result: {
   return hasCompleteSnapshotShape && hasPluginMetadata;
 }
 
+/** Reused helper for resolve Plugin Metadata Snapshot behavior in src/plugins. */
 export function resolvePluginMetadataSnapshot(
   params: ResolvePluginMetadataSnapshotParams,
 ): PluginMetadataSnapshot {

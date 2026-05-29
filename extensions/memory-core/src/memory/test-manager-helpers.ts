@@ -1,3 +1,4 @@
+// extensions/memory-core/src/memory test manager helpers helpers and runtime behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/memory-core-host-engine-foundation";
 import type { MemoryIndexManager } from "./index.js";
 

@@ -1,3 +1,4 @@
+/** Persists and dispatches live-session model switch requests. */
 import { resolveStorePath } from "../config/sessions/paths.js";
 import { loadSessionStore, updateSessionStore } from "../config/sessions/store.js";
 import type { SessionEntry } from "../config/sessions/types.js";
@@ -12,7 +13,9 @@ import {
   resolveDefaultModelForAgent,
   resolvePersistedSelectedModelRef,
 } from "./model-selection.js";
+/** Re-exported API for src/agents, starting with Live Session Model Switch Error. */
 export { LiveSessionModelSwitchError } from "./live-model-switch-error.js";
+/** Selected live provider/model and optional auth profile. */
 export type LiveSessionModelSelection = EmbeddedRunModelSwitchRequest;
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
@@ -20,6 +23,7 @@ import { normalizeOptionalString } from "../shared/string-coerce.js";
 const OPENAI_PROVIDER_ID = "openai";
 const OPENAI_CODEX_PROVIDER_ID = "openai-codex";
 
+/** Resolve persisted live-session model selection for a session. */
 export function resolveLiveSessionModelSelection(params: {
   cfg?: { session?: { store?: string } } | undefined;
   sessionKey?: string;
@@ -72,6 +76,7 @@ export function resolveLiveSessionModelSelection(params: {
   };
 }
 
+/** Request a model switch for an active embedded-agent live session. */
 export function requestLiveSessionModelSwitch(params: {
   sessionEntry?: Pick<SessionEntry, "sessionId">;
   selection: LiveSessionModelSelection;
@@ -88,6 +93,7 @@ export function requestLiveSessionModelSwitch(params: {
   return true;
 }
 
+/** Consume a pending model switch for an embedded-agent live session. */
 export function consumeLiveSessionModelSwitch(
   sessionId: string,
 ): LiveSessionModelSelection | undefined {
@@ -107,6 +113,7 @@ function isAlreadyAppliedOpenAICodexRuntimePromotion(
   );
 }
 
+/** Compare two live-session model selections for provider/model/auth changes. */
 export function hasDifferentLiveSessionModelSelection(
   current: {
     provider: string;
@@ -130,6 +137,7 @@ export function hasDifferentLiveSessionModelSelection(
   );
 }
 
+/** Return whether live-session model selection should be persisted/tracked. */
 export function shouldTrackPersistedLiveSessionModelSelection(
   current: {
     provider: string;
@@ -163,6 +171,7 @@ export function shouldTrackPersistedLiveSessionModelSelection(
  * (`consumeEmbeddedRunModelSwitch`) which could not distinguish between
  * user-initiated `/model` switches and system-initiated fallback rotations.
  */
+/** Return whether a live session should switch away from its current model. */
 export function shouldSwitchToLiveModel(params: {
   cfg?: { session?: { store?: string } } | undefined;
   sessionKey?: string;
@@ -227,6 +236,7 @@ export function shouldSwitchToLiveModel(params: {
  * Clear the `liveModelSwitchPending` flag from the session entry on disk so
  * subsequent retry iterations do not re-trigger the switch.
  */
+/** Clear persisted pending live-model switch state from a session entry. */
 export async function clearLiveModelSwitchPending(params: {
   cfg?: { session?: { store?: string } } | undefined;
   sessionKey?: string;

@@ -1,3 +1,4 @@
+// Tests infra approval native route notice test behavior.
 import { describe, expect, it } from "vitest";
 import {
   describeApprovalDeliveryDestination,

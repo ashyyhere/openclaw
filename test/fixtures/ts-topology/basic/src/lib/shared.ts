@@ -1,3 +1,4 @@
+// test/fixtures/ts-topology/basic/src/lib shared helpers and runtime behavior.
 export function sharedThing() {
   return "shared";
 }

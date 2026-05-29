@@ -1,3 +1,4 @@
+// test-utils npm spec install test helpers helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { expect } from "vitest";
@@ -36,6 +37,7 @@ function createSuccessfulSpawnResult(stdout = ""): SpawnResult {
   };
 }
 
+/** Reused helper for mock Npm View Metadata Result behavior in src/test-utils. */
 export function mockNpmViewMetadataResult(
   run: {
     mockImplementation: (
@@ -65,6 +67,7 @@ export function mockNpmViewMetadataResult(
   });
 }
 
+/** Reused helper for expect Unsupported Npm Spec behavior in src/test-utils. */
 export async function expectUnsupportedNpmSpec(
   install: (spec: string) => Promise<InstallResultLike>,
   spec = "github:evil/evil",
@@ -77,6 +80,7 @@ export async function expectUnsupportedNpmSpec(
   expect(result.error).toContain("unsupported npm spec");
 }
 
+/** Reused helper for mock Npm Pack Metadata Result behavior in src/test-utils. */
 export function mockNpmPackMetadataResult(
   run: {
     mockImplementation: (
@@ -105,6 +109,7 @@ export function mockNpmPackMetadataResult(
   });
 }
 
+/** Reused helper for expect Integrity Drift Rejected behavior in src/test-utils. */
 export function expectIntegrityDriftRejected(params: {
   onIntegrityDrift: (...args: unknown[]) => unknown;
   result: InstallResultLike;
@@ -124,6 +129,7 @@ export function expectIntegrityDriftRejected(params: {
   expect(params.result.error).toContain("integrity drift");
 }
 
+/** Reused helper for expect Install Uses Ignore Scripts behavior in src/test-utils. */
 export async function expectInstallUsesIgnoreScripts(params: {
   run: {
     mockResolvedValue: (value: SpawnResult) => unknown;

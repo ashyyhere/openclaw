@@ -1,3 +1,4 @@
+// extensions/discord/src audit core helpers and runtime behavior.
 import { ChannelType } from "discord-api-types/v10";
 import type {
   DiscordGuildChannelConfig,

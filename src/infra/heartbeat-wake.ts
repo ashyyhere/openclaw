@@ -1,14 +1,20 @@
+// infra heartbeat wake helpers and runtime behavior.
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import { normalizeHeartbeatWakeReason } from "./heartbeat-reason.js";
 
+/** Shared type for Heartbeat Run Result in src/infra. */
 export type HeartbeatRunResult =
   | { status: "ran"; durationMs: number }
   | { status: "skipped"; reason: string }
   | { status: "failed"; reason: string };
 
+/** Reused constant for HEARTBEAT SKIP REQUESTS IN FLIGHT behavior in src/infra. */
 export const HEARTBEAT_SKIP_REQUESTS_IN_FLIGHT = "requests-in-flight";
+/** Reused constant for HEARTBEAT SKIP CRON IN PROGRESS behavior in src/infra. */
 export const HEARTBEAT_SKIP_CRON_IN_PROGRESS = "cron-in-progress";
+/** Reused constant for HEARTBEAT SKIP LANES BUSY behavior in src/infra. */
 export const HEARTBEAT_SKIP_LANES_BUSY = "lanes-busy";
+/** Shared type for Retryable Heartbeat Busy Skip Reason in src/infra. */
 export type RetryableHeartbeatBusySkipReason =
   | typeof HEARTBEAT_SKIP_REQUESTS_IN_FLIGHT
   | typeof HEARTBEAT_SKIP_CRON_IN_PROGRESS
@@ -20,12 +26,15 @@ const RETRYABLE_BUSY_SKIP_REASONS = new Set([
   HEARTBEAT_SKIP_LANES_BUSY,
 ]);
 
+/** Reused helper for is Retryable Heartbeat Busy Skip Reason behavior in src/infra. */
 export function isRetryableHeartbeatBusySkipReason(reason: string): boolean {
   return RETRYABLE_BUSY_SKIP_REASONS.has(reason);
 }
 
+/** Shared type for Heartbeat Wake Intent in src/infra. */
 export type HeartbeatWakeIntent = "scheduled" | "event" | "immediate" | "manual";
 
+/** Shared type for Heartbeat Wake Source in src/infra. */
 export type HeartbeatWakeSource =
   | "interval"
   | "manual"
@@ -41,12 +50,14 @@ export type HeartbeatWakeSource =
   | "retry"
   | "other";
 
+/** Shared type for Heartbeat Wake Override in src/infra. */
 export type HeartbeatWakeOverride = {
   target?: string;
   to?: string | undefined;
   accountId?: string | undefined;
 };
 
+/** Shared type for Heartbeat Wake Request in src/infra. */
 export type HeartbeatWakeRequest = {
   source: HeartbeatWakeSource;
   intent: HeartbeatWakeIntent;
@@ -56,14 +67,17 @@ export type HeartbeatWakeRequest = {
   heartbeat?: HeartbeatWakeOverride;
 };
 
+/** Shared type for Heartbeat Wake Handler in src/infra. */
 export type HeartbeatWakeHandler = (opts: HeartbeatWakeRequest) => Promise<HeartbeatRunResult>;
 
 let heartbeatsEnabled = true;
 
+/** Reused helper for set Heartbeats Enabled behavior in src/infra. */
 export function setHeartbeatsEnabled(enabled: boolean) {
   heartbeatsEnabled = enabled;
 }
 
+/** Reused helper for are Heartbeats Enabled behavior in src/infra. */
 export function areHeartbeatsEnabled(): boolean {
   return heartbeatsEnabled;
 }
@@ -311,6 +325,7 @@ export function setHeartbeatWakeHandler(next: HeartbeatWakeHandler | null): () =
   };
 }
 
+/** Reused helper for request Heartbeat behavior in src/infra. */
 export function requestHeartbeat(opts: {
   source: HeartbeatWakeSource;
   intent: HeartbeatWakeIntent;
@@ -331,14 +346,17 @@ export function requestHeartbeat(opts: {
   schedule(opts.coalesceMs ?? DEFAULT_COALESCE_MS, "normal");
 }
 
+/** Reused helper for has Heartbeat Wake Handler behavior in src/infra. */
 export function hasHeartbeatWakeHandler() {
   return handler !== null;
 }
 
+/** Reused helper for has Pending Heartbeat Wake behavior in src/infra. */
 export function hasPendingHeartbeatWake() {
   return pendingWakes.size > 0 || Boolean(timer) || scheduled;
 }
 
+/** Reused helper for reset Heartbeat Wake State For Tests behavior in src/infra. */
 export function resetHeartbeatWakeStateForTests() {
   if (timer) {
     clearTimeout(timer);

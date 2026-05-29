@@ -1,3 +1,4 @@
+// extensions/whatsapp/src/inbound durable receive helpers and runtime behavior.
 import { createHash } from "node:crypto";
 import type { WAMessage } from "baileys";
 import { createDurableInboundReceiveJournal } from "openclaw/plugin-sdk/channel-outbound";

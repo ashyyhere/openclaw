@@ -1,3 +1,4 @@
+// extensions/discord/src/internal api guild helpers and runtime behavior.
 import {
   Routes,
   type APIChannel,

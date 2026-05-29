@@ -1,3 +1,4 @@
+// Tests logging logger redaction behavior test behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";

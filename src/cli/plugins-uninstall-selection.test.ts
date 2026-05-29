@@ -1,3 +1,4 @@
+/** Tests plugin uninstall id selection from specs and config records. */
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import { resolvePluginUninstallId } from "./plugins-uninstall-selection.js";

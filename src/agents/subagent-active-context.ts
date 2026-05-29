@@ -1,3 +1,4 @@
+/** Builds transient system-prompt context listing currently active subagents. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { sanitizeForPromptLiteral } from "./sanitize-for-prompt.js";
 import { listControlledSubagentRuns } from "./subagent-control.js";
@@ -8,6 +9,7 @@ function quotePromptData(value: string): string {
   return JSON.stringify(sanitizeForPromptLiteral(value));
 }
 
+/** Returns prompt text for active child runs controlled by the current session. */
 export function buildActiveSubagentSystemPromptAddition(params: {
   cfg: OpenClawConfig;
   controllerSessionKey?: string;

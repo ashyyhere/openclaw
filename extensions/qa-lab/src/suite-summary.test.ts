@@ -1,3 +1,4 @@
+// Tests extensions/qa-lab/src suite summary test behavior.
 import { describe, expect, it } from "vitest";
 import {
   countQaSuiteFailedScenarios,

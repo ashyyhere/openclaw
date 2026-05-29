@@ -1,3 +1,4 @@
+// extensions/oc-path/src/oc-path/yaml ast helpers and runtime behavior.
 import type { Document, LineCounter } from "yaml";
 
 export interface YamlAst {

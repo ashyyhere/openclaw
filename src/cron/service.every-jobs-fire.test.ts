@@ -1,3 +1,4 @@
+// Tests cron service every jobs fire test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { CronService } from "./service.js";
 import {

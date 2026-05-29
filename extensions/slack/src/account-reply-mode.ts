@@ -1,3 +1,4 @@
+// extensions/slack/src account reply mode helpers and runtime behavior.
 import type { SlackAccountConfig } from "./runtime-api.js";
 
 type SlackReplyToMode = "off" | "first" | "all" | "batched";

@@ -1,3 +1,4 @@
+/** Splits SDK tools into provider custom tools and OpenClaw-managed tools. */
 import { toToolDefinitions } from "../agent-tool-definition-adapter.js";
 import type { HookContext } from "../agent-tools.before-tool-call.js";
 import type { AgentTool } from "../runtime/index.js";
@@ -6,6 +7,7 @@ import type { AgentTool } from "../runtime/index.js";
 // and extended toolset remain consistent across providers.
 type AnyAgentTool = AgentTool;
 
+/** Separates local built-ins from custom definitions passed to provider runtimes. */
 export function splitSdkTools(options: {
   tools: AnyAgentTool[];
   sandboxEnabled: boolean;

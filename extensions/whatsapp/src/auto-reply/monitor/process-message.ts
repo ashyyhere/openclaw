@@ -1,3 +1,4 @@
+// extensions/whatsapp/src/auto-reply/monitor process message helpers and runtime behavior.
 import {
   logAckFailure,
   removeAckReactionHandleAfterReply,

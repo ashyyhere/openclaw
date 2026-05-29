@@ -23,9 +23,11 @@ function isMissingQaLabFacadeError(err: unknown): boolean {
   );
 }
 
+/** Reused constant for register Qa Lab Cli behavior in src/plugin-sdk. */
 export const registerQaLabCli: FacadeModule["registerQaLabCli"] = ((...args) =>
   loadFacadeModule().registerQaLabCli(...args)) as FacadeModule["registerQaLabCli"];
 
+/** Reused constant for is Qa Lab Cli Available behavior in src/plugin-sdk. */
 export const isQaLabCliAvailable: FacadeModule["isQaLabCliAvailable"] = (() => {
   try {
     return loadFacadeModule().isQaLabCliAvailable();

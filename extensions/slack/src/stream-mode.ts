@@ -1,3 +1,4 @@
+// extensions/slack/src stream mode helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "openclaw/plugin-sdk/string-coerce-runtime";
 import {
   mapStreamingModeToSlackLegacyDraftStreamMode,

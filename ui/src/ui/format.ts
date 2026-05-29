@@ -1,11 +1,15 @@
+// ui/src/ui format helpers and runtime behavior.
 import { formatDurationHuman } from "../../../src/infra/format-time/format-duration.ts";
 import { formatRelativeTimestamp } from "../../../src/infra/format-time/format-relative.ts";
 import { asDateTimestampMs } from "../../../src/shared/number-coercion.js";
 import { t } from "../i18n/index.ts";
 
+/** Re-exported API for ui/src/ui, starting with format Relative Timestamp. */
 export { formatRelativeTimestamp, formatDurationHuman };
+/** Re-exported API for ui/src/ui, starting with strip Thinking Tags. */
 export { stripThinkingTags } from "./strip-thinking-tags.ts";
 
+/** Reused helper for format Unknown Text behavior in ui/src/ui. */
 export function formatUnknownText(
   value: unknown,
   opts: { fallback?: string; pretty?: boolean } = {},
@@ -37,6 +41,7 @@ export function formatUnknownText(
   return Object.prototype.toString.call(value);
 }
 
+/** Reused helper for format Ms behavior in ui/src/ui. */
 export function formatMs(ms?: number | null): string {
   const timestampMs = asDateTimestampMs(ms);
   if (timestampMs === undefined) {
@@ -76,6 +81,7 @@ export function formatDateTimeMs(
   return timestampMs === undefined ? fallback : new Date(timestampMs).toLocaleString([], options);
 }
 
+/** Reused helper for format List behavior in ui/src/ui. */
 export function formatList(values?: Array<string | null | undefined>): string {
   if (!values || values.length === 0) {
     return "none";
@@ -83,6 +89,7 @@ export function formatList(values?: Array<string | null | undefined>): string {
   return values.filter((v): v is string => Boolean(v && v.trim())).join(", ");
 }
 
+/** Reused helper for clamp Text behavior in ui/src/ui. */
 export function clampText(value: string, max = 120): string {
   if (value.length <= max) {
     return value;
@@ -90,6 +97,7 @@ export function clampText(value: string, max = 120): string {
   return `${value.slice(0, Math.max(0, max - 1))}…`;
 }
 
+/** Reused helper for truncate Text behavior in ui/src/ui. */
 export function truncateText(
   value: string,
   max: number,
@@ -108,11 +116,13 @@ export function truncateText(
   };
 }
 
+/** Reused helper for to Number behavior in ui/src/ui. */
 export function toNumber(value: string, fallback: number): number {
   const n = Number(value);
   return Number.isFinite(n) ? n : fallback;
 }
 
+/** Reused helper for format Cost behavior in ui/src/ui. */
 export function formatCost(cost: number | null | undefined, fallback = "$0.00"): string {
   if (cost == null || !Number.isFinite(cost)) {
     return fallback;
@@ -129,6 +139,7 @@ export function formatCost(cost: number | null | undefined, fallback = "$0.00"):
   return `$${cost.toFixed(2)}`;
 }
 
+/** Reused helper for format Tokens behavior in ui/src/ui. */
 export function formatTokens(tokens: number | null | undefined, fallback = "0"): string {
   if (tokens == null || !Number.isFinite(tokens)) {
     return fallback;
@@ -144,6 +155,7 @@ export function formatTokens(tokens: number | null | undefined, fallback = "0"):
   return m < 10 ? `${m.toFixed(1)}M` : `${Math.round(m)}M`;
 }
 
+/** Reused helper for parse Session Key Parts behavior in ui/src/ui. */
 export function parseSessionKeyParts(
   key: string,
 ): { agentId: string; channel: string; accountId: string } | null {

@@ -1,3 +1,4 @@
+// Tests secrets runtime web tools test behavior.
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import type {

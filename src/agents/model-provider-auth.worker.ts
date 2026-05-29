@@ -1,3 +1,4 @@
+/** Worker entrypoint for provider auth warming. */
 import { parentPort, workerData } from "node:worker_threads";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { replaceRuntimeAuthProfileStoreSnapshots, type AuthProfileStore } from "./auth-profiles.js";
@@ -43,6 +44,7 @@ function isWorkerInput(value: unknown): value is ProviderAuthWarmWorkerInput {
   );
 }
 
+/** Run provider auth warmup for a worker input payload. */
 export async function runProviderAuthWarmWorkerInput(
   input: unknown,
 ): Promise<ProviderAuthWarmWorkerResult> {

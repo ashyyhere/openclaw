@@ -1,3 +1,5 @@
+// Low-level directive argument parsing helpers.
+/** Reused helper for skip Directive Arg Prefix behavior in src/auto-reply/reply. */
 export function skipDirectiveArgPrefix(raw: string): number {
   let i = 0;
   const len = raw.length;
@@ -13,6 +15,7 @@ export function skipDirectiveArgPrefix(raw: string): number {
   return i;
 }
 
+/** Reused helper for take Directive Token behavior in src/auto-reply/reply. */
 export function takeDirectiveToken(
   raw: string,
   startIndex: number,

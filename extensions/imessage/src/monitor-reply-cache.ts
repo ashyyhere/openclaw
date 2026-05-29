@@ -1,3 +1,4 @@
+// extensions/imessage/src monitor reply cache helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { logVerbose } from "openclaw/plugin-sdk/runtime-env";

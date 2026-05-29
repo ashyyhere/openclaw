@@ -1,3 +1,4 @@
+// transcripts provider registry helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {
   resolvePluginCapabilityProvider,
@@ -9,6 +10,7 @@ import {
 } from "../plugins/provider-registry-shared.js";
 import type { TranscriptSourceProvider } from "./provider-types.js";
 
+/** Reused helper for normalize Transcript Source Provider Id behavior in src/transcripts. */
 export function normalizeTranscriptSourceProviderId(
   providerId: string | undefined,
 ): string | undefined {
@@ -29,10 +31,12 @@ function buildProviderMaps(cfg?: OpenClawConfig): {
   return buildCapabilityProviderMaps(resolveTranscriptsSourceProviderEntries(cfg));
 }
 
+/** Reused helper for list Transcript Source Providers behavior in src/transcripts. */
 export function listTranscriptSourceProviders(cfg?: OpenClawConfig): TranscriptSourceProvider[] {
   return [...buildProviderMaps(cfg).canonical.values()];
 }
 
+/** Reused helper for get Transcript Source Provider behavior in src/transcripts. */
 export function getTranscriptSourceProvider(
   providerId: string | undefined,
   cfg?: OpenClawConfig,

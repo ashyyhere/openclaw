@@ -1,3 +1,4 @@
+// Tests test/scripts arg utils test behavior.
 import { describe, expect, it } from "vitest";
 import {
   floatFlag,

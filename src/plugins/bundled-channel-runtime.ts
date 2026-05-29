@@ -1,3 +1,4 @@
+// plugins bundled channel runtime helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { resolveBundledPluginGeneratedPath } from "./bundled-plugin-metadata.js";
@@ -15,6 +16,7 @@ type BundledMetadataScope =
   | { kind: "empty" }
   | { kind: "env"; env: NodeJS.ProcessEnv };
 
+/** Shared type for Bundled Channel Plugin Metadata in src/plugins. */
 export type BundledChannelPluginMetadata = {
   dirName: string;
   source: BundledChannelEntryPathPair;
@@ -92,6 +94,7 @@ function toBundledChannelPluginMetadata(
   };
 }
 
+/** Reused helper for list Bundled Channel Plugin Metadata behavior in src/plugins. */
 export function listBundledChannelPluginMetadata(params?: {
   rootDir?: string;
   scanDir?: string;
@@ -108,6 +111,7 @@ export function listBundledChannelPluginMetadata(params?: {
   }).plugins.flatMap((record) => toBundledChannelPluginMetadata(record) ?? []);
 }
 
+/** Reused helper for resolve Bundled Channel Generated Path behavior in src/plugins. */
 export function resolveBundledChannelGeneratedPath(
   rootDir: string,
   entry: BundledChannelPluginMetadata["source"] | BundledChannelPluginMetadata["setupSource"],
@@ -117,6 +121,7 @@ export function resolveBundledChannelGeneratedPath(
   return resolveBundledPluginGeneratedPath(rootDir, entry, pluginDirName, scanDir);
 }
 
+/** Reused helper for resolve Bundled Channel Workspace Path behavior in src/plugins. */
 export function resolveBundledChannelWorkspacePath(params: {
   rootDir: string;
   scanDir?: string;

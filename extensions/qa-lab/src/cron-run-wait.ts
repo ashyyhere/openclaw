@@ -1,3 +1,4 @@
+// extensions/qa-lab/src cron run wait helpers and runtime behavior.
 import { setTimeout as sleep } from "node:timers/promises";
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";
 

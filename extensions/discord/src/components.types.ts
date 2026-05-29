@@ -1,3 +1,4 @@
+// Shared types for extensions/discord/src components types behavior.
 import type { TopLevelComponents } from "./internal/discord.js";
 
 export type DiscordComponentButtonStyle = "primary" | "secondary" | "success" | "danger" | "link";

@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor native command bypass helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "openclaw/plugin-sdk/string-coerce-runtime";
 
 export function shouldBypassConfiguredAcpEnsure(commandName: string): boolean {

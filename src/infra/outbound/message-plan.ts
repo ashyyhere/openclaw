@@ -1,3 +1,4 @@
+// infra/outbound message plan helpers and runtime behavior.
 import {
   chunkByParagraph,
   chunkMarkdownTextWithMode,
@@ -6,6 +7,7 @@ import {
 import type { OutboundDeliveryFormattingOptions } from "./formatting.js";
 import type { ReplyToOverride } from "./reply-policy.js";
 
+/** Shared type for Outbound Message Send Overrides in src/infra/outbound. */
 export type OutboundMessageSendOverrides = ReplyToOverride & {
   threadId?: string | number | null;
   audioAsVoice?: boolean;
@@ -13,6 +15,7 @@ export type OutboundMessageSendOverrides = ReplyToOverride & {
   formatting?: OutboundDeliveryFormattingOptions;
 };
 
+/** Shared type for Outbound Message Unit in src/infra/outbound. */
 export type OutboundMessageUnit =
   | {
       kind: "text";
@@ -26,6 +29,7 @@ export type OutboundMessageUnit =
       overrides: OutboundMessageSendOverrides;
     };
 
+/** Shared type for Outbound Message Chunker in src/infra/outbound. */
 export type OutboundMessageChunker = (
   text: string,
   limit: number,
@@ -61,6 +65,7 @@ function chunkTextForPlan(params: {
     : params.chunker(params.text, params.limit);
 }
 
+/** Reused helper for plan Outbound Text Message Units behavior in src/infra/outbound. */
 export function planOutboundTextMessageUnits(params: {
   text: string;
   overrides: OutboundMessageSendOverrides;
@@ -125,6 +130,7 @@ export function planOutboundTextMessageUnits(params: {
   }).map(planChunkedTextUnit);
 }
 
+/** Reused helper for plan Outbound Media Message Units behavior in src/infra/outbound. */
 export function planOutboundMediaMessageUnits(params: {
   caption: string;
   mediaUrls: readonly string[];

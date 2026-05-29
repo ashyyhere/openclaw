@@ -1,3 +1,4 @@
+/** Extracts structured failure signals from embedded-agent run errors/results. */
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 import { isExecLikeToolName, type ToolErrorSummary } from "../tool-error-summary.js";
 import type { EmbeddedRunFailureSignal } from "./types.js";
@@ -15,6 +16,7 @@ function resolveFailureSignalCode(
   return undefined;
 }
 
+/** Reused helper for resolve Embedded Run Failure Signal behavior in src/agents/embedded-agent-runner. */
 export function resolveEmbeddedRunFailureSignal(params: {
   trigger?: string | undefined;
   lastToolError?: ToolErrorSummary | undefined;

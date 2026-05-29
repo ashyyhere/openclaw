@@ -1,3 +1,4 @@
+// Tests gateway session utils perf test behavior.
 import path from "node:path";
 import { describe, test, expect, vi } from "vitest";
 import * as thinking from "../auto-reply/thinking.js";

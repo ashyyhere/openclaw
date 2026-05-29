@@ -1,3 +1,4 @@
+// packages/memory-host-sdk/src/host config utils helpers and runtime behavior.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -7,48 +8,62 @@ import {
   normalizeStringEntries,
   uniqueStrings,
 } from "./string-utils.js";
+/** Re-exported public API for packages/memory-host-sdk, starting with split Shell Args. */
 export { splitShellArgs } from "./openclaw-runtime-io.js";
 
+/** Public type describing Chat Type for packages/memory-host-sdk. */
 export type ChatType = "direct" | "group" | "channel";
+/** Public type describing Memory Backend for packages/memory-host-sdk. */
 export type MemoryBackend = "builtin" | "qmd";
+/** Public type describing Memory Citations Mode for packages/memory-host-sdk. */
 export type MemoryCitationsMode = "auto" | "on" | "off";
+/** Public type describing Memory Qmd Search Mode for packages/memory-host-sdk. */
 export type MemoryQmdSearchMode = "query" | "search" | "vsearch";
+/** Public type describing Memory Qmd Startup Mode for packages/memory-host-sdk. */
 export type MemoryQmdStartupMode = "off" | "idle" | "immediate";
 
+/** Public type describing Session Send Policy Action for packages/memory-host-sdk. */
 export type SessionSendPolicyAction = "allow" | "deny";
+/** Public type describing Session Send Policy Match for packages/memory-host-sdk. */
 export type SessionSendPolicyMatch = {
   channel?: string;
   chatType?: ChatType;
   keyPrefix?: string;
   rawKeyPrefix?: string;
 };
+/** Public type describing Session Send Policy Rule for packages/memory-host-sdk. */
 export type SessionSendPolicyRule = {
   action: SessionSendPolicyAction;
   match?: SessionSendPolicyMatch;
 };
+/** Public type describing Session Send Policy Config for packages/memory-host-sdk. */
 export type SessionSendPolicyConfig = {
   default?: SessionSendPolicyAction;
   rules?: SessionSendPolicyRule[];
 };
 
+/** Public type describing Memory Qmd Index Path for packages/memory-host-sdk. */
 export type MemoryQmdIndexPath = {
   path: string;
   name?: string;
   pattern?: string;
 };
 
+/** Public type describing Memory Qmd Mcporter Config for packages/memory-host-sdk. */
 export type MemoryQmdMcporterConfig = {
   enabled?: boolean;
   serverName?: string;
   startDaemon?: boolean;
 };
 
+/** Public type describing Memory Qmd Session Config for packages/memory-host-sdk. */
 export type MemoryQmdSessionConfig = {
   enabled?: boolean;
   exportDir?: string;
   retentionDays?: number;
 };
 
+/** Public type describing Memory Qmd Update Config for packages/memory-host-sdk. */
 export type MemoryQmdUpdateConfig = {
   interval?: string;
   debounceMs?: number;
@@ -62,6 +77,7 @@ export type MemoryQmdUpdateConfig = {
   embedTimeoutMs?: number;
 };
 
+/** Public type describing Memory Qmd Limits Config for packages/memory-host-sdk. */
 export type MemoryQmdLimitsConfig = {
   maxResults?: number;
   maxSnippetChars?: number;
@@ -69,6 +85,7 @@ export type MemoryQmdLimitsConfig = {
   timeoutMs?: number;
 };
 
+/** Public type describing Memory Qmd Config for packages/memory-host-sdk. */
 export type MemoryQmdConfig = {
   command?: string;
   mcporter?: MemoryQmdMcporterConfig;
@@ -82,12 +99,14 @@ export type MemoryQmdConfig = {
   scope?: SessionSendPolicyConfig;
 };
 
+/** Public type describing Memory Config for packages/memory-host-sdk. */
 export type MemoryConfig = {
   backend?: MemoryBackend;
   citations?: MemoryCitationsMode;
   qmd?: MemoryQmdConfig;
 };
 
+/** Public type describing Memory Search Config for packages/memory-host-sdk. */
 export type MemorySearchConfig = {
   enabled?: boolean;
   extraPaths?: string[];
@@ -96,11 +115,13 @@ export type MemorySearchConfig = {
   };
 };
 
+/** Public type describing Agent Context Limits Config for packages/memory-host-sdk. */
 export type AgentContextLimitsConfig = {
   memoryGetMaxChars?: number;
   memoryGetDefaultLines?: number;
 };
 
+/** Public type describing Secret Input for packages/memory-host-sdk. */
 export type SecretInput =
   | string
   | {
@@ -117,6 +138,7 @@ type AgentConfig = {
   contextLimits?: AgentContextLimitsConfig;
 };
 
+/** Public type describing Open Claw Config for packages/memory-host-sdk. */
 export type OpenClawConfig = {
   agents?: {
     defaults?: {
@@ -139,6 +161,7 @@ export type OpenClawConfig = {
   };
 };
 
+/** Public constant for CANONICAL ROOT MEMORY FILENAME behavior in packages/memory-host-sdk. */
 export const CANONICAL_ROOT_MEMORY_FILENAME = "MEMORY.md";
 
 const DEFAULT_AGENT_ID = "main";
@@ -164,6 +187,7 @@ function roundDurationMs(raw: string, value: number): number {
   return rounded;
 }
 
+/** Public helper for normalize Agent Id behavior in packages/memory-host-sdk. */
 export function normalizeAgentId(value: string | undefined | null): string {
   const trimmed = (value ?? "").trim();
   if (!trimmed) {
@@ -209,6 +233,7 @@ function resolveRequiredHomeDir(
   return rawHome ? path.resolve(rawHome) : path.resolve(process.cwd());
 }
 
+/** Public helper for resolve User Path behavior in packages/memory-host-sdk. */
 export function resolveUserPath(
   input: string,
   env: NodeJS.ProcessEnv = process.env,
@@ -228,6 +253,7 @@ function legacyStateDirs(homedir: () => string): string[] {
   return LEGACY_STATE_DIRNAMES.map((dir) => path.join(homedir(), dir));
 }
 
+/** Public helper for resolve State Dir behavior in packages/memory-host-sdk. */
 export function resolveStateDir(
   env: NodeJS.ProcessEnv = process.env,
   homedir: () => string = os.homedir,
@@ -284,6 +310,7 @@ function stripNullBytes(value: string): string {
   return value.replaceAll("\0", "");
 }
 
+/** Public helper for resolve Agent Workspace Dir behavior in packages/memory-host-sdk. */
 export function resolveAgentWorkspaceDir(
   cfg: OpenClawConfig,
   agentId: string,
@@ -306,6 +333,7 @@ export function resolveAgentWorkspaceDir(
   return stripNullBytes(path.join(resolveStateDir(env), `workspace-${id}`));
 }
 
+/** Public helper for resolve Agent Context Limits behavior in packages/memory-host-sdk. */
 export function resolveAgentContextLimits(
   cfg: OpenClawConfig | undefined,
   agentId?: string | null,
@@ -317,6 +345,7 @@ export function resolveAgentContextLimits(
   return resolveAgentConfig(cfg, agentId)?.contextLimits ?? defaults;
 }
 
+/** Public helper for resolve Memory Search Config behavior in packages/memory-host-sdk. */
 export function resolveMemorySearchConfig(
   cfg: OpenClawConfig,
   agentId: string,
@@ -337,6 +366,7 @@ export function resolveMemorySearchConfig(
   };
 }
 
+/** Public helper for parse Duration Ms behavior in packages/memory-host-sdk. */
 export function parseDurationMs(
   raw: string,
   opts?: { defaultUnit?: "ms" | "s" | "m" | "h" | "d" },

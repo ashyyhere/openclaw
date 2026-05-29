@@ -1,3 +1,4 @@
+// test/vitest discord api types gateway v10 runtime helpers and runtime behavior.
 import { createRequire } from "node:module";
 import type * as DiscordGatewayApiTypes from "discord-api-types/gateway/v10";
 

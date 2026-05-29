@@ -1,3 +1,4 @@
+// Tests secrets runtime nextcloud talk file precedence test behavior.
 import { describe, expect, it } from "vitest";
 import "./runtime-nextcloud-talk.test-support.ts";
 import {

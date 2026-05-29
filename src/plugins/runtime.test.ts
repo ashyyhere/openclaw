@@ -1,3 +1,4 @@
+// Tests plugins runtime test behavior.
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { isPluginRegistryRetired } from "./registry-lifecycle.js";
 import { createEmptyPluginRegistry } from "./registry.js";

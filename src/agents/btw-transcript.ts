@@ -1,3 +1,4 @@
+/** Transcript lookup and branch extraction for /btw side questions. */
 import { readFile } from "node:fs/promises";
 import {
   resolveSessionFilePath,
@@ -12,6 +13,7 @@ import {
   type SessionEntry as AgentSessionEntry,
 } from "./sessions/session-manager.js";
 
+/** Resolve the transcript path backing a /btw side-question session. */
 export function resolveBtwSessionTranscriptPath(params: {
   sessionId: string;
   sessionEntry?: StoredSessionEntry;
@@ -99,6 +101,7 @@ function isTrailingUserMessage(entry: AgentSessionEntry | undefined): boolean {
   );
 }
 
+/** Read conversation messages for /btw context, respecting transcript branches. */
 export async function readBtwTranscriptMessages(params: {
   sessionFile: string;
   sessionId: string;

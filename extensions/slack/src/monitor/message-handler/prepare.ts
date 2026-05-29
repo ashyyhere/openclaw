@@ -1,3 +1,4 @@
+// extensions/slack/src/monitor/message-handler prepare helpers and runtime behavior.
 import {
   resolveAckReaction,
   shouldAckReaction as shouldAckReactionGate,

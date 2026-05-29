@@ -1,3 +1,4 @@
+// infra path prepend helpers and runtime behavior.
 import path from "node:path";
 import {
   normalizeStringEntries,
@@ -21,6 +22,7 @@ export function findPathKey(env: Record<string, string>): string {
   return "PATH";
 }
 
+/** Reused helper for normalize Path Prepend behavior in src/infra. */
 export function normalizePathPrepend(entries?: string[]) {
   if (!Array.isArray(entries)) {
     return [];
@@ -41,6 +43,7 @@ export function normalizePathPrepend(entries?: string[]) {
   return normalized;
 }
 
+/** Reused helper for merge Path Prepend behavior in src/infra. */
 export function mergePathPrepend(existing: string | undefined, prepend: string[]) {
   if (prepend.length === 0) {
     return existing;
@@ -50,6 +53,7 @@ export function mergePathPrepend(existing: string | undefined, prepend: string[]
   );
 }
 
+/** Reused helper for remove Path Prepend behavior in src/infra. */
 export function removePathPrepend(
   existing: string | undefined,
   prepend: string[],
@@ -67,6 +71,7 @@ export function removePathPrepend(
   return remaining.join(path.delimiter);
 }
 
+/** Reused helper for apply Path Prepend behavior in src/infra. */
 export function applyPathPrepend(
   env: Record<string, string>,
   prepend: string[] | undefined,

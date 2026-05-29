@@ -1,3 +1,4 @@
+// Tests infra exec auto review test behavior.
 import { describe, expect, it } from "vitest";
 import { defaultExecAutoReviewer, type ExecAutoReviewInput } from "./exec-auto-review.js";
 

@@ -1,3 +1,4 @@
+/** Regression coverage for embedded-agent lane selection. */
 import { describe, expect, it } from "vitest";
 import { CommandLane } from "../../process/lanes.js";
 import { resolveGlobalLane, resolveSessionLane } from "./lanes.js";

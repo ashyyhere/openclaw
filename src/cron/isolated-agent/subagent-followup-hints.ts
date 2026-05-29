@@ -1,3 +1,4 @@
+// cron/isolated-agent subagent followup hints helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";
 
 const SUBAGENT_FOLLOWUP_HINTS = [
@@ -30,6 +31,7 @@ function normalizeHintText(value: string): string {
   return normalizeLowercaseStringOrEmpty(value).replace(/\s+/g, " ");
 }
 
+/** Reused helper for is Likely Interim Cron Message behavior in src/cron/isolated-agent. */
 export function isLikelyInterimCronMessage(value: string): boolean {
   const normalized = normalizeHintText(value);
   if (!normalized) {
@@ -42,6 +44,7 @@ export function isLikelyInterimCronMessage(value: string): boolean {
   return words <= 45 && INTERIM_CRON_HINTS.some((hint) => normalized.includes(hint));
 }
 
+/** Reused helper for expects Subagent Followup behavior in src/cron/isolated-agent. */
 export function expectsSubagentFollowup(value: string): boolean {
   const normalized = normalizeHintText(value);
   return Boolean(normalized && SUBAGENT_FOLLOWUP_HINTS.some((hint) => normalized.includes(hint)));

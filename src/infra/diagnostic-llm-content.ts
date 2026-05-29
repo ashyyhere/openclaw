@@ -1,3 +1,5 @@
+// infra diagnostic llm content helpers and runtime behavior.
+/** Shared type for Diagnostic Model Content Capture Policy in src/infra. */
 export type DiagnosticModelContentCapturePolicy = {
   inputMessages: boolean;
   outputMessages: boolean;
@@ -35,6 +37,7 @@ function withDerivedFields(
   };
 }
 
+/** Reused helper for resolve Diagnostic Model Content Capture Policy behavior in src/infra. */
 export function resolveDiagnosticModelContentCapturePolicy(
   config: unknown,
 ): DiagnosticModelContentCapturePolicy {

@@ -1,3 +1,4 @@
+/** Collects doctor warnings for Codex route/provider mismatches. */
 import fs from "node:fs";
 import { AGENT_MODEL_CONFIG_KEYS } from "@openclaw/model-catalog-core/configured-model-refs";
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
@@ -2681,6 +2682,7 @@ function collectCodexAppServerCommandWarnings(cfg: OpenClawConfig): string[] {
   ];
 }
 
+/** Reused helper for collect Codex Route Warnings behavior in src/commands/doctor. */
 export function collectCodexRouteWarnings(params: {
   cfg: OpenClawConfig;
   env?: NodeJS.ProcessEnv;
@@ -2781,6 +2783,7 @@ export function collectCodexRouteWarnings(params: {
   return warnings;
 }
 
+/** Reused helper for maybe Repair Codex Routes behavior in src/commands/doctor. */
 export function maybeRepairCodexRoutes(params: {
   cfg: OpenClawConfig;
   env?: NodeJS.ProcessEnv;
@@ -2898,6 +2901,7 @@ function clearStaleSessionRuntimePins(entry: SessionEntry): boolean {
   return changed;
 }
 
+/** Reused helper for repair Codex Session Store Routes behavior in src/commands/doctor. */
 export function repairCodexSessionStoreRoutes(params: {
   store: Record<string, SessionEntry>;
   now?: number;
@@ -2950,6 +2954,7 @@ function scanCodexSessionStoreRoutes(store: Record<string, SessionEntry>): strin
   });
 }
 
+/** Reused helper for maybe Repair Codex Session Routes behavior in src/commands/doctor. */
 export async function maybeRepairCodexSessionRoutes(params: {
   cfg: OpenClawConfig;
   env?: NodeJS.ProcessEnv;

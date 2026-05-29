@@ -1,3 +1,4 @@
+/** Preflight checks that promote valid config snapshots for doctor recovery. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { note } from "../../packages/terminal-core/src/note.js";
@@ -66,6 +67,7 @@ async function maybeMigrateLegacyConfig(): Promise<string[]> {
   return changes;
 }
 
+/** Shared type for Doctor Config Preflight Result in src/commands. */
 export type DoctorConfigPreflightResult = {
   snapshot: Awaited<ReturnType<typeof readConfigFileSnapshot>>;
   baseConfig: OpenClawConfig;
@@ -92,6 +94,7 @@ function addDoctorLegacyIssues(
   return { ...snapshot, legacyIssues };
 }
 
+/** Reused helper for should Skip Plugin Validation For Doctor Config Preflight behavior in src/commands. */
 export function shouldSkipPluginValidationForDoctorConfigPreflight(
   env: NodeJS.ProcessEnv = process.env,
 ): boolean {

@@ -1,3 +1,4 @@
+// ui/src/i18n/lib translate helpers and runtime behavior.
 import { getSafeLocalStorage } from "../../local-storage.ts";
 import { en } from "../locales/en.ts";
 import {
@@ -11,6 +12,7 @@ import type { Locale, TranslationMap } from "./types.ts";
 
 type Subscriber = (locale: Locale) => void;
 
+/** Re-exported API for ui/src/i18n/lib, starting with SUPPORTED LOCALES. */
 export { SUPPORTED_LOCALES, isSupportedLocale };
 
 class I18nManager {
@@ -146,5 +148,7 @@ class I18nManager {
   }
 }
 
+/** Reused constant for i18n behavior in ui/src/i18n/lib. */
 export const i18n = new I18nManager();
+/** Reused constant for t behavior in ui/src/i18n/lib. */
 export const t = (key: string, params?: Record<string, string>) => i18n.t(key, params);

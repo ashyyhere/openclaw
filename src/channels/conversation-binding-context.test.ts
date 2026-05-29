@@ -1,3 +1,4 @@
+// Coverage for conversation binding context resolution.
 import { afterEach, describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import { setActivePluginRegistry } from "../plugins/runtime.js";

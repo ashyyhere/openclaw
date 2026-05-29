@@ -1,3 +1,4 @@
+// extensions/msteams/src resolve allowlist helpers and runtime behavior.
 import { mapAllowlistResolutionInputs } from "openclaw/plugin-sdk/allow-from";
 import {
   normalizeLowercaseStringOrEmpty,

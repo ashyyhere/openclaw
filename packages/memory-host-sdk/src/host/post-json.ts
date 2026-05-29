@@ -1,7 +1,9 @@
+// packages/memory-host-sdk/src/host post json helpers and runtime behavior.
 import { withRemoteHttpResponse } from "./remote-http.js";
 import { readResponseJsonWithLimit, readResponseTextSnippet } from "./response-snippet.js";
 import type { SsrFPolicy } from "./ssrf-policy.js";
 
+/** Public helper for post Json behavior in packages/memory-host-sdk. */
 export async function postJson<T>(params: {
   url: string;
   headers: Record<string, string>;

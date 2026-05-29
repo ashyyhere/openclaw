@@ -1,3 +1,4 @@
+// Tests extensions/whatsapp/src auto reply web auto reply connection and logging e2e test behavior.
 import "./test-helpers.js";
 import crypto from "node:crypto";
 import fs from "node:fs/promises";

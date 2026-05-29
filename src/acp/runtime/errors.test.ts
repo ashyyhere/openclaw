@@ -1,3 +1,4 @@
+/** Tests ACP runtime error coercion and cause-chain formatting. */
 import { describe, expect, it } from "vitest";
 import {
   AcpRuntimeError,

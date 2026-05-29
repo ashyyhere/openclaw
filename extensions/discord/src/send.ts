@@ -1,3 +1,4 @@
+// extensions/discord/src send helpers and runtime behavior.
 export {
   createChannelDiscord,
   deleteChannelDiscord,

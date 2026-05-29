@@ -1,3 +1,4 @@
+/** Integration tests for daemon install file and service behavior. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";

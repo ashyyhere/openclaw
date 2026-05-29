@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix/actions summary helpers and runtime behavior.
 import { isMatrixNotFoundError } from "../errors.js";
 import { resolveMatrixMessageAttachment, resolveMatrixMessageBody } from "../media-text.js";
 import { fetchMatrixPollMessageSummary } from "../poll-summary.js";

@@ -1,3 +1,4 @@
+// Tests extensions/voice-call/src response model test behavior.
 import { describe, expect, it } from "vitest";
 import { VoiceCallConfigSchema } from "./config.js";
 import type { CoreAgentDeps } from "./core-bridge.js";

@@ -1,3 +1,4 @@
+// test/vitest vitest agents embedded agent config helpers and runtime behavior.
 import { agentsEmbeddedTestPatterns } from "./vitest.agents-paths.mjs";
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 

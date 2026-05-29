@@ -1,6 +1,8 @@
+// Message tool API exposed by channel plugins.
 import { loadBundledPluginPublicArtifactModuleSync } from "../../plugins/public-surface-loader.js";
 import type { ChannelMessageActionAdapter, ChannelMessageToolDiscovery } from "./types.public.js";
 
+/** Shared type for Channel Message Tool Discovery Adapter in src/channels/plugins. */
 export type ChannelMessageToolDiscoveryAdapter = Pick<
   ChannelMessageActionAdapter,
   "describeMessageTool"
@@ -28,6 +30,7 @@ function loadBundledChannelMessageToolApi(channelId: string): MessageToolApi | u
   }
 }
 
+/** Reused helper for resolve Bundled Channel Message Tool Discovery Adapter behavior in src/channels/plugins. */
 export function resolveBundledChannelMessageToolDiscoveryAdapter(
   channelId: string,
 ): ChannelMessageToolDiscoveryAdapter | undefined {
@@ -38,6 +41,7 @@ export function resolveBundledChannelMessageToolDiscoveryAdapter(
   return { describeMessageTool };
 }
 
+/** Reused helper for describe Bundled Channel Message Tool behavior in src/channels/plugins. */
 export function describeBundledChannelMessageTool(params: {
   channelId: string;
   context: Parameters<NonNullable<ChannelMessageToolDiscoveryAdapter["describeMessageTool"]>>[0];

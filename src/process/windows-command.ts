@@ -1,7 +1,9 @@
+// process windows command helpers and runtime behavior.
 import path from "node:path";
 import process from "node:process";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
+/** Reused helper for resolve Windows Command Shim behavior in src/process. */
 export function resolveWindowsCommandShim(params: {
   command: string;
   cmdCommands: readonly string[];

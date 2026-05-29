@@ -1,3 +1,4 @@
+// scripts/lib dev tooling safety helpers and runtime behavior.
 import path from "node:path";
 import { redactSensitiveText } from "../../src/logging/redact.js";
 

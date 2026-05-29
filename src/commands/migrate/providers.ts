@@ -1,3 +1,4 @@
+// Resolves plugin-backed migration providers and provider option payloads.
 import { getRuntimeConfig } from "../../config/config.js";
 import {
   ensureStandaloneMigrationProviderRegistryLoaded,
@@ -9,6 +10,7 @@ import type { RuntimeEnv } from "../../runtime.js";
 import { buildMigrationContext } from "./context.js";
 import type { MigrateCommonOptions } from "./types.js";
 
+/** Reused helper for resolve Migration Provider behavior in src/commands/migrate. */
 export function resolveMigrationProvider(
   providerId: string,
   config = getRuntimeConfig(),
@@ -26,6 +28,7 @@ export function resolveMigrationProvider(
   return provider;
 }
 
+/** Reused helper for build Migration Provider Options behavior in src/commands/migrate. */
 export function buildMigrationProviderOptions(
   opts: MigrateCommonOptions,
   providerId = opts.provider,
@@ -40,6 +43,7 @@ export function buildMigrationProviderOptions(
   return Object.keys(options).length > 0 ? options : undefined;
 }
 
+/** Reused helper for create Migration Plan behavior in src/commands/migrate. */
 export async function createMigrationPlan(
   runtime: RuntimeEnv,
   opts: MigrateCommonOptions & { provider: string },

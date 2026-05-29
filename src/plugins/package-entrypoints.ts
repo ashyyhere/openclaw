@@ -1,10 +1,13 @@
+// plugins package entrypoints helpers and runtime behavior.
 import path from "node:path";
 import { uniqueStrings } from "../shared/string-normalization.js";
 
+/** Reused helper for is Type Script Package Entry behavior in src/plugins. */
 export function isTypeScriptPackageEntry(entryPath: string): boolean {
   return [".ts", ".mts", ".cts"].includes(path.extname(entryPath).toLowerCase());
 }
 
+/** Reused helper for list Built Runtime Entry Candidates behavior in src/plugins. */
 export function listBuiltRuntimeEntryCandidates(entryPath: string): string[] {
   if (!isTypeScriptPackageEntry(entryPath)) {
     return [];

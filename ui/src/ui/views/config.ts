@@ -1,3 +1,4 @@
+// ui/src/ui/views config helpers and runtime behavior.
 import JSON5 from "json5";
 import { html, nothing, type TemplateResult } from "lit";
 import { t } from "../../i18n/index.ts";
@@ -39,6 +40,7 @@ const TEXT_SCALE_LABELS: Record<TextScaleStop, string> = {
   140: "XXL",
 };
 
+/** Shared type for Web Push Ui State in ui/src/ui/views. */
 export type WebPushUiState = {
   supported: boolean;
   permission: NotificationPermission | "unsupported";
@@ -46,6 +48,7 @@ export type WebPushUiState = {
   loading: boolean;
 };
 
+/** Shared type for Config Props in ui/src/ui/views. */
 export type ConfigProps = {
   raw: string;
   originalRaw: string;
@@ -1185,11 +1188,13 @@ function toggleSensitivePathReveal(path: Array<string | number>) {
   }
 }
 
+/** Reused helper for reset Config View State For Tests behavior in ui/src/ui/views. */
 export function resetConfigViewStateForTests() {
   resetConfigEphemeralState();
   lastConfigContextKey = null;
 }
 
+/** Reused helper for render Config behavior in ui/src/ui/views. */
 export function renderConfig(props: ConfigProps) {
   const showModeToggle = props.showModeToggle ?? false;
   const showRootTab = props.showRootTab ?? true;

@@ -1,3 +1,4 @@
+// extensions/anthropic cli catalog helpers and runtime behavior.
 import type { ModelCatalogEntry } from "openclaw/plugin-sdk/agent-runtime";
 import { CLAUDE_CLI_BACKEND_ID, CLAUDE_CLI_DEFAULT_ALLOWLIST_REFS } from "./cli-constants.js";
 

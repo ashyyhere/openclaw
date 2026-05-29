@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/matrix/src matrix migration runtime behavior.
 export { autoMigrateLegacyMatrixState, detectLegacyMatrixState } from "./legacy-state.js";
 export { autoPrepareLegacyMatrixCrypto, detectLegacyMatrixCrypto } from "./legacy-crypto.js";
 export {

@@ -1,3 +1,4 @@
+/** Routes raw CLI argv to command handlers and startup policy. */
 import { isTruthyEnvValue } from "../infra/env.js";
 import { defaultRuntime } from "../runtime.js";
 import { resolveCliArgvInvocation } from "./argv-invocation.js";
@@ -37,6 +38,7 @@ async function prepareRoutedCommand(params: {
   });
 }
 
+/** Reused helper for try Route Cli behavior in src/cli. */
 export async function tryRouteCli(argv: string[]): Promise<boolean> {
   if (isTruthyEnvValue(process.env.OPENCLAW_DISABLE_ROUTE_FIRST)) {
     return false;

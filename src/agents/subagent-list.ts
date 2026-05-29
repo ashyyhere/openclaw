@@ -1,3 +1,4 @@
+/** Builds subagent list/status output from registry snapshots and session stores. */
 import { resolveSubagentLabel, sortSubagentRuns } from "../auto-reply/reply/subagents-utils.js";
 import { resolveStorePath } from "../config/sessions/paths.js";
 import { loadSessionStore } from "../config/sessions/store-load.js";
@@ -66,6 +67,7 @@ function resolveStorePathForKey(cfg: OpenClawConfig, parsed?: ParsedAgentSession
   });
 }
 
+/** Resolves a session entry and caches the owning store by path. */
 export function resolveSessionEntryForKey(params: {
   cfg: OpenClawConfig;
   key: string;
@@ -84,6 +86,7 @@ export function resolveSessionEntryForKey(params: {
   };
 }
 
+/** Indexes the latest run per child session plus active child links by controller. */
 export function buildLatestSubagentRunIndex(
   runs: Map<string, SubagentRunRecord>,
   options?: { now?: number },
@@ -133,6 +136,7 @@ export function buildLatestSubagentRunIndex(
   };
 }
 
+/** Creates a memoized pending-descendant counter over a stable run snapshot. */
 export function createPendingDescendantCounter(runsSnapshot?: Map<string, SubagentRunRecord>) {
   const pendingDescendantCache = new Map<string, number>();
   return (sessionKey: string) => {
@@ -146,6 +150,7 @@ export function createPendingDescendantCounter(runsSnapshot?: Map<string, Subage
   };
 }
 
+/** Returns true for live runs or ended runs still waiting on descendants. */
 export function isActiveSubagentRun(
   entry: SubagentRunRecord,
   pendingDescendantCount: (sessionKey: string) => number,
@@ -214,6 +219,7 @@ function buildListText(params: {
   return lines.join("\n");
 }
 
+/** Builds active/recent subagent list items and rendered text for status tools. */
 export function buildSubagentList(params: {
   cfg: OpenClawConfig;
   runs: SubagentRunRecord[];

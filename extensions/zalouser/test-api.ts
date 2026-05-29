@@ -1,3 +1,4 @@
+// extensions/zalouser test api helpers and runtime behavior.
 export { sendMessageZalouser } from "./src/send.js";
 export { parseZalouserOutboundTarget } from "./src/session-route.js";
 export {

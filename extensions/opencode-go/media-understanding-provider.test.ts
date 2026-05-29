@@ -1,3 +1,4 @@
+// Tests extensions/opencode-go media understanding provider test behavior.
 import { describe, expect, it } from "vitest";
 import { opencodeGoMediaUnderstandingProvider } from "./media-understanding-provider.js";
 

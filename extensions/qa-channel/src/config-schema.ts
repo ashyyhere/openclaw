@@ -1,3 +1,4 @@
+// extensions/qa-channel/src config schema helpers and runtime behavior.
 import {
   ToolPolicySchema,
   buildChannelConfigSchema,

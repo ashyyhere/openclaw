@@ -1,3 +1,4 @@
+/** Normalizes persisted cron jobs and repairs stale schedule fields. */
 import { randomUUID } from "node:crypto";
 import { parseAbsoluteTimeMs } from "../cron/parse.js";
 import { getInvalidPersistedCronJobReason } from "../cron/persisted-shape.js";
@@ -234,6 +235,7 @@ function stripLegacyTopLevelFields(raw: Record<string, unknown>) {
   }
 }
 
+/** Reused helper for normalize Stored Cron Jobs behavior in src/commands. */
 export function normalizeStoredCronJobs(
   jobs: Array<Record<string, unknown>>,
 ): NormalizeCronStoreJobsResult {

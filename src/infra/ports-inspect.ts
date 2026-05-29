@@ -1,3 +1,4 @@
+// infra ports inspect helpers and runtime behavior.
 import os from "node:os";
 import { runCommandWithTimeout } from "../process/exec.js";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
@@ -648,6 +649,7 @@ async function checkPortInUse(port: number): Promise<PortUsageStatus> {
   return sawUnknown ? "unknown" : "free";
 }
 
+/** Reused helper for inspect Port Usage behavior in src/infra. */
 export async function inspectPortUsage(port: number): Promise<PortUsage> {
   const errors: string[] = [];
   const result =
@@ -677,6 +679,7 @@ export async function inspectPortUsage(port: number): Promise<PortUsage> {
   };
 }
 
+/** Reused helper for inspect Port Connections behavior in src/infra. */
 export async function inspectPortConnections(port: number): Promise<PortConnections> {
   const result =
     process.platform === "win32"

@@ -1,3 +1,4 @@
+// extensions/diffs/src viewer payload helpers and runtime behavior.
 import { DIFF_INDICATORS, DIFF_LAYOUTS, DIFF_THEMES } from "./types.js";
 import type { DiffViewerPayload } from "./types.js";
 

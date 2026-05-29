@@ -1,3 +1,4 @@
+// extensions/codex-supervisor/src plugin tools helpers and runtime behavior.
 import { jsonResult, readStringParam, type AnyAgentTool } from "openclaw/plugin-sdk/core";
 import { Type } from "typebox";
 import {

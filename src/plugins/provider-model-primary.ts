@@ -1,3 +1,4 @@
+// plugins provider model primary helpers and runtime behavior.
 import {
   normalizeAgentModelMapForConfig,
   normalizeAgentModelRefForConfig,
@@ -15,6 +16,7 @@ function resolvePrimaryModel(model?: AgentModelListConfig | string): string | un
   return undefined;
 }
 
+/** Reused helper for apply Agent Default Primary Model behavior in src/plugins. */
 export function applyAgentDefaultPrimaryModel(params: {
   cfg: OpenClawConfig;
   model: string;
@@ -49,6 +51,7 @@ export function applyAgentDefaultPrimaryModel(params: {
   };
 }
 
+/** Reused helper for apply Primary Model behavior in src/plugins. */
 export function applyPrimaryModel(cfg: OpenClawConfig, model: string): OpenClawConfig {
   const normalizedModel = normalizeAgentModelRefForConfig(model);
   const defaults = cfg.agents?.defaults;

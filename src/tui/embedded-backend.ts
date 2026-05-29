@@ -1,3 +1,4 @@
+// tui embedded backend helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import type { SessionsPatchResult } from "../../packages/gateway-protocol/src/index.js";
 import { agentCommandFromIngress } from "../agents/agent-command.js";
@@ -260,6 +261,7 @@ async function waitForQueuedLocalRun(previousRun: QueuedSessionRun, runId: strin
   }
 }
 
+/** Reused class for Embedded Tui Backend behavior in src/tui. */
 export class EmbeddedTuiBackend implements TuiBackend {
   readonly connection = { url: "local embedded" };
 

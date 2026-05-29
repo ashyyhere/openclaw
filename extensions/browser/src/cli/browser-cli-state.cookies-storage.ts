@@ -1,3 +1,4 @@
+// extensions/browser/src/cli browser cli state cookies storage helpers and runtime behavior.
 import type { Command } from "commander";
 import { normalizeOptionalString } from "openclaw/plugin-sdk/string-coerce-runtime";
 import { callBrowserRequest, type BrowserParentOpts } from "./browser-cli-shared.js";

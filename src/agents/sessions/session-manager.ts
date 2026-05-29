@@ -1,3 +1,4 @@
+/** Persists, parses, and queries JSONL session transcripts. */
 import { randomUUID } from "node:crypto";
 import {
   closeSync,
@@ -27,8 +28,10 @@ import {
 } from "../runtime/index.js";
 import { type BashExecutionMessage, type CustomMessage } from "./messages.js";
 
+/** Re-exported API for src/agents/sessions, starting with CURRENT SESSION VERSION. */
 export { CURRENT_SESSION_VERSION };
 
+/** Shared type for Session Header in src/agents/sessions. */
 export interface SessionHeader {
   type: "session";
   version?: number; // v1 sessions don't have this
@@ -38,11 +41,13 @@ export interface SessionHeader {
   parentSession?: string;
 }
 
+/** Shared type for New Session Options in src/agents/sessions. */
 export interface NewSessionOptions {
   id?: string;
   parentSession?: string;
 }
 
+/** Shared type for Session Entry Base in src/agents/sessions. */
 export interface SessionEntryBase {
   type: string;
   id: string;
@@ -50,22 +55,26 @@ export interface SessionEntryBase {
   timestamp: string;
 }
 
+/** Shared type for Session Message Entry in src/agents/sessions. */
 export interface SessionMessageEntry extends SessionEntryBase {
   type: "message";
   message: AgentMessage;
 }
 
+/** Shared type for Thinking Level Change Entry in src/agents/sessions. */
 export interface ThinkingLevelChangeEntry extends SessionEntryBase {
   type: "thinking_level_change";
   thinkingLevel: string;
 }
 
+/** Shared type for Model Change Entry in src/agents/sessions. */
 export interface ModelChangeEntry extends SessionEntryBase {
   type: "model_change";
   provider: string;
   modelId: string;
 }
 
+/** Shared type for Compaction Entry in src/agents/sessions. */
 export interface CompactionEntry<T = unknown> extends SessionEntryBase {
   type: "compaction";
   summary: string;
@@ -77,6 +86,7 @@ export interface CompactionEntry<T = unknown> extends SessionEntryBase {
   fromHook?: boolean;
 }
 
+/** Shared type for Branch Summary Entry in src/agents/sessions. */
 export interface BranchSummaryEntry<T = unknown> extends SessionEntryBase {
   type: "branch_summary";
   fromId: string;
@@ -161,12 +171,14 @@ export interface SessionTreeNode {
   labelTimestamp?: string;
 }
 
+/** Shared type for Session Context in src/agents/sessions. */
 export interface SessionContext {
   messages: AgentMessage[];
   thinkingLevel: string;
   model: { provider: string; modelId: string } | null;
 }
 
+/** Shared type for Session Info in src/agents/sessions. */
 export interface SessionInfo {
   path: string;
   id: string;
@@ -183,6 +195,7 @@ export interface SessionInfo {
   allMessagesText: string;
 }
 
+/** Shared type for Readonly Session Manager in src/agents/sessions. */
 export type ReadonlySessionManager = Pick<
   SessionManager,
   | "getCwd"
@@ -286,11 +299,13 @@ function migrateToCurrentVersion(entries: FileEntry[]): boolean {
 }
 
 /** Exported for testing */
+/** Mutates parsed entries to the current session transcript shape. */
 export function migrateSessionEntries(entries: FileEntry[]): void {
   migrateToCurrentVersion(entries);
 }
 
 /** Exported for compaction.test.ts */
+/** Parses a JSONL session file into typed entries. */
 export function parseSessionEntries(content: string): FileEntry[] {
   const entries: FileEntry[] = [];
   const lines = content.trim().split("\n");
@@ -310,6 +325,7 @@ export function parseSessionEntries(content: string): FileEntry[] {
   return entries;
 }
 
+/** Finds the newest compaction entry in a session transcript. */
 export function getLatestCompactionEntry(entries: SessionEntry[]): CompactionEntry | null {
   for (let i = entries.length - 1; i >= 0; i--) {
     if (entries[i].type === "compaction") {
@@ -324,6 +340,7 @@ export function getLatestCompactionEntry(entries: SessionEntry[]): CompactionEnt
  * If leafId is provided, walks from that entry to root.
  * Handles compaction and branch summaries along the path.
  */
+/** Builds message context from session tree state. */
 export function buildSessionContext(
   entries: SessionEntry[],
   leafId?: string | null,
@@ -370,6 +387,7 @@ export function buildSessionContext(
  * Compute the default session directory for a cwd.
  * Encodes cwd into a safe directory name under ~/.openclaw/agent/sessions/.
  */
+/** Resolves the default session directory for a workspace and agent dir. */
 export function getDefaultSessionDir(cwd: string, agentDir: string = getDefaultAgentDir()): string {
   const safePath = `--${cwd.replace(/^[/\\]/, "").replace(/[/\\:]/g, "-")}--`;
   const sessionDir = join(agentDir, "sessions", safePath);
@@ -380,6 +398,7 @@ export function getDefaultSessionDir(cwd: string, agentDir: string = getDefaultA
 }
 
 /** Exported for testing */
+/** Loads and parses session entries from disk. */
 export function loadEntriesFromFile(filePath: string): FileEntry[] {
   if (!existsSync(filePath)) {
     return [];
@@ -431,6 +450,7 @@ function isValidSessionFile(filePath: string): boolean {
 }
 
 /** Exported for testing */
+/** Finds the newest session file in a session directory. */
 export function findMostRecentSession(sessionDir: string): string | null {
   try {
     const files = readdirSync(sessionDir)
@@ -594,6 +614,7 @@ async function buildSessionInfo(filePath: string): Promise<SessionInfo | null> {
   }
 }
 
+/** Shared type for Session List Progress in src/agents/sessions. */
 export type SessionListProgress = (loaded: number, total: number) => void;
 
 const MAX_CONCURRENT_SESSION_INFO_LOADS = 10;

@@ -1,3 +1,4 @@
+// extensions/imessage/src/monitor coalesce helpers and runtime behavior.
 import type { IMessagePayload } from "./types.js";
 
 // Keep the coalescing contract narrow (caps, ID tracking, reply-context

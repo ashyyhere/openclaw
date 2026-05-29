@@ -1,3 +1,4 @@
+/** Runtime checks that decide whether bundled plugin facade modules may be loaded. */
 import fs from "node:fs";
 import path from "node:path";
 import JSON5 from "json5";
@@ -31,6 +32,7 @@ const ALWAYS_ALLOWED_RUNTIME_DIR_NAMES = new Set([
 ]);
 const EMPTY_FACADE_BOUNDARY_CONFIG: OpenClawConfig = {};
 
+/** Minimal manifest fields needed to evaluate facade activation policy. */
 export type FacadePluginManifestLike = Pick<
   PluginManifestRecord,
   "id" | "origin" | "enabledByDefault" | "enabledByDefaultOnPlatforms" | "rootDir" | "channels"
@@ -45,6 +47,8 @@ function readFacadeBoundaryConfigSafely(): {
   rawConfig: OpenClawConfig;
 } {
   try {
+    // Facade checks run during module loading; prefer snapshots and fall back to disk, but never
+    // let config parse/read failures crash unrelated facade denial decisions.
     const sourceSnapshot = getRuntimeConfigSourceSnapshot();
     if (sourceSnapshot) {
       return { rawConfig: sourceSnapshot };
@@ -110,6 +114,7 @@ function getFacadeManifestRegistry(params: {
   }).plugins;
 }
 
+/** Resolve a registry plugin facade location from the current manifest registry snapshot. */
 export function resolveRegistryPluginModuleLocation(params: {
   dirName: string;
   artifactBasename: string;
@@ -237,6 +242,7 @@ function resolveBundledPluginManifestRecord(params: {
   return resolved;
 }
 
+/** Resolve the plugin id to record when a facade surface is imported. */
 export function resolveTrackedFacadePluginId(params: {
   dirName: string;
   artifactBasename: string;
@@ -248,6 +254,7 @@ export function resolveTrackedFacadePluginId(params: {
   return resolveBundledPluginManifestRecord(params)?.id ?? params.dirName;
 }
 
+/** Resolve whether a bundled plugin public surface can be loaded for current config/platform. */
 export function resolveBundledPluginPublicSurfaceAccess(params: {
   dirName: string;
   artifactBasename: string;
@@ -260,6 +267,8 @@ export function resolveBundledPluginPublicSurfaceAccess(params: {
     params.artifactBasename === "runtime-api.js" &&
     ALWAYS_ALLOWED_RUNTIME_DIR_NAMES.has(params.dirName)
   ) {
+    // Core media runtimes are bundled implementation details behind SDK facades and remain
+    // loadable even when user-facing plugin activation is disabled.
     return {
       allowed: true,
       pluginId: params.dirName,
@@ -285,6 +294,7 @@ export function resolveBundledPluginPublicSurfaceAccess(params: {
   });
 }
 
+/** Evaluate facade access from an already-resolved manifest and activation source. */
 export function evaluateBundledPluginPublicSurfaceAccess(params: {
   params: { dirName: string; artifactBasename: string };
   manifestRecord: FacadePluginManifestLike;
@@ -316,6 +326,7 @@ export function evaluateBundledPluginPublicSurfaceAccess(params: {
   };
 }
 
+/** Throw the standard blocked-facade error for denied access. */
 export function throwForBundledPluginPublicSurfaceAccess(params: {
   access: { allowed: boolean; pluginId?: string; reason?: string };
   request: { dirName: string; artifactBasename: string };
@@ -326,6 +337,7 @@ export function throwForBundledPluginPublicSurfaceAccess(params: {
   );
 }
 
+/** Resolve facade access and throw when the bundled plugin runtime is not activated. */
 export function resolveActivatedBundledPluginPublicSurfaceAccessOrThrow(params: {
   dirName: string;
   artifactBasename: string;

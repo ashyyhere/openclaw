@@ -1,3 +1,4 @@
+// media local roots helpers and runtime behavior.
 import path from "node:path";
 import { resolveAgentWorkspaceDir } from "../agents/agent-scope.js";
 import {
@@ -28,6 +29,7 @@ function resolveCachedPreferredTmpDir(): string {
   return cachedPreferredTmpDir;
 }
 
+/** Reused helper for build Media Local Roots behavior in src/media. */
 export function buildMediaLocalRoots(
   stateDir: string,
   configDir: string,
@@ -48,10 +50,12 @@ export function buildMediaLocalRoots(
   );
 }
 
+/** Reused helper for get Default Media Local Roots behavior in src/media. */
 export function getDefaultMediaLocalRoots(): readonly string[] {
   return buildMediaLocalRoots(resolveStateDir(), resolveConfigDir());
 }
 
+/** Reused helper for get Agent Scoped Media Local Roots behavior in src/media. */
 export function getAgentScopedMediaLocalRoots(
   cfg: OpenClawConfig,
   agentId?: string,
@@ -93,6 +97,7 @@ function resolveLocalMediaPath(source: string): string | undefined {
   return undefined;
 }
 
+/** Reused helper for append Local Media Parent Roots behavior in src/media. */
 export function appendLocalMediaParentRoots(
   roots: readonly string[],
   mediaSources?: readonly string[],
@@ -115,6 +120,7 @@ export function appendLocalMediaParentRoots(
   return appended;
 }
 
+/** Reused helper for get Agent Scoped Media Local Roots For Sources behavior in src/media. */
 export function getAgentScopedMediaLocalRootsForSources(params: {
   cfg: OpenClawConfig;
   agentId?: string;

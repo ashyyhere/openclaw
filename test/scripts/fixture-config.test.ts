@@ -1,3 +1,4 @@
+// Tests test/scripts fixture config test behavior.
 import { spawnSync } from "node:child_process";
 import { mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";

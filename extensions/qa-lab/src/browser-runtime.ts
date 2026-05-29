@@ -1,3 +1,4 @@
+// extensions/qa-lab/src browser runtime helpers and runtime behavior.
 import { sleep } from "openclaw/plugin-sdk/runtime-env";
 
 type QaBrowserGateway = {

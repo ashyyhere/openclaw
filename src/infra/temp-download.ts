@@ -1,3 +1,4 @@
+// infra temp download helpers and runtime behavior.
 import "./fs-safe-defaults.js";
 import crypto from "node:crypto";
 import path from "node:path";
@@ -7,6 +8,7 @@ import { resolvePreferredOpenClawTmpDir } from "./tmp-openclaw-dir.js";
 
 const logger = createSubsystemLogger("infra:temp-download");
 
+/** Re-exported API for src/infra, starting with resolve Preferred Open Claw Tmp Dir. */
 export { resolvePreferredOpenClawTmpDir } from "./tmp-openclaw-dir.js";
 
 type TempDownloadTarget = {
@@ -36,12 +38,14 @@ function sanitizeTempExtension(extension?: string): string {
   return token ? `.${token}` : "";
 }
 
+/** Reused helper for sanitize Temp File Name behavior in src/infra. */
 export function sanitizeTempFileName(fileName: string): string {
   const base = path.basename(fileName).replace(/[^a-zA-Z0-9._-]+/g, "-");
   const normalized = base.replace(/^-+|-+$/g, "");
   return normalized || "download.bin";
 }
 
+/** Reused helper for build Random Temp File Path behavior in src/infra. */
 export function buildRandomTempFilePath(params: {
   prefix: string;
   extension?: string;
@@ -78,6 +82,7 @@ function buildTempDownloadTarget(
   };
 }
 
+/** Reused helper for create Temp Download Target behavior in src/infra. */
 export async function createTempDownloadTarget(params: {
   prefix: string;
   fileName?: string;
@@ -102,6 +107,7 @@ export async function createTempDownloadTarget(params: {
   };
 }
 
+/** Reused helper for with Temp Download Path behavior in src/infra. */
 export async function withTempDownloadPath<T>(
   params: {
     prefix: string;

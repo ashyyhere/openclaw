@@ -21,6 +21,7 @@ function sanitizePromptLabel(label: string | undefined): string | undefined {
   return sanitized || undefined;
 }
 
+/** Reused helper for maybe Repair Legacy OAuth Profile Ids behavior in src/commands. */
 export async function maybeRepairLegacyOAuthProfileIds(
   cfg: OpenClawConfig,
   prompter: DoctorPrompter,

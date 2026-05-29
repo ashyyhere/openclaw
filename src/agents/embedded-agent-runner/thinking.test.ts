@@ -1,3 +1,4 @@
+/** Covers assistant thinking preservation, stripping, and recovery wrappers. */
 import type { AgentMessage } from "openclaw/plugin-sdk/agent-core";
 import { createAssistantMessageEventStream } from "openclaw/plugin-sdk/llm";
 import { describe, expect, it } from "vitest";

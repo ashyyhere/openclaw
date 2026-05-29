@@ -1,9 +1,11 @@
+// Reply payload shape and metadata helpers shared across delivery paths.
 import type {
   InteractiveReply,
   MessagePresentation,
   ReplyPayloadDelivery,
 } from "../interactive/payload.js";
 
+/** Shared type for Reply Payload in src/auto-reply. */
 export type ReplyPayload = {
   text?: string;
   mediaUrl?: string;
@@ -59,13 +61,16 @@ export type ReplyPayload = {
   channelData?: Record<string, unknown>;
 };
 
+/** Shared type for Reply Payload Tts Supplement in src/auto-reply. */
 export type ReplyPayloadTtsSupplement = {
   spokenText: string;
   visibleTextAlreadyDelivered?: boolean;
 };
 
+/** Reused constant for REPLY MEDIA FAILURE WARNING behavior in src/auto-reply. */
 export const REPLY_MEDIA_FAILURE_WARNING = "⚠️ Media failed.";
 
+/** Reused helper for append Reply Media Failure Warning behavior in src/auto-reply. */
 export function appendReplyMediaFailureWarning(text: string | undefined): string {
   if (!text?.trim()) {
     return REPLY_MEDIA_FAILURE_WARNING;
@@ -84,6 +89,7 @@ function hasReplyPayloadMedia(payload: Pick<ReplyPayload, "mediaUrl" | "mediaUrl
   return Boolean(payload.mediaUrl?.trim() || payload.mediaUrls?.some((url) => url.trim()));
 }
 
+/** Reused helper for get Reply Payload Tts Supplement behavior in src/auto-reply. */
 export function getReplyPayloadTtsSupplement(
   payload: Pick<ReplyPayload, "mediaUrl" | "mediaUrls" | "ttsSupplement">,
 ): ReplyPayloadTtsSupplement | undefined {
@@ -99,12 +105,14 @@ export function getReplyPayloadTtsSupplement(
   };
 }
 
+/** Reused helper for is Reply Payload Tts Supplement behavior in src/auto-reply. */
 export function isReplyPayloadTtsSupplement(
   payload: Pick<ReplyPayload, "mediaUrl" | "mediaUrls" | "ttsSupplement">,
 ): boolean {
   return Boolean(getReplyPayloadTtsSupplement(payload));
 }
 
+/** Reused helper for mark Reply Payload As Tts Supplement behavior in src/auto-reply. */
 export function markReplyPayloadAsTtsSupplement<T extends ReplyPayload>(
   payload: T,
   spokenText: string = payload.spokenText ?? payload.text ?? "",
@@ -126,6 +134,7 @@ export function markReplyPayloadAsTtsSupplement<T extends ReplyPayload>(
   };
 }
 
+/** Reused helper for build Tts Supplement Media Payload behavior in src/auto-reply. */
 export function buildTtsSupplementMediaPayload(payload: ReplyPayload): ReplyPayload {
   const supplement = getReplyPayloadTtsSupplement(payload);
   if (!supplement) {
@@ -145,6 +154,7 @@ export function buildTtsSupplementMediaPayload(payload: ReplyPayload): ReplyPayl
   };
 }
 
+/** Shared type for Reply Payload Metadata in src/auto-reply. */
 export type ReplyPayloadMetadata = {
   assistantMessageIndex?: number;
   /**
@@ -173,6 +183,7 @@ export type ReplyPayloadMetadata = {
 
 const replyPayloadMetadata = new WeakMap<object, ReplyPayloadMetadata>();
 
+/** Reused helper for set Reply Payload Metadata behavior in src/auto-reply. */
 export function setReplyPayloadMetadata<T extends object>(
   payload: T,
   metadata: ReplyPayloadMetadata,
@@ -182,25 +193,30 @@ export function setReplyPayloadMetadata<T extends object>(
   return payload;
 }
 
+/** Reused helper for get Reply Payload Metadata behavior in src/auto-reply. */
 export function getReplyPayloadMetadata(payload: object): ReplyPayloadMetadata | undefined {
   return replyPayloadMetadata.get(payload);
 }
 
+/** Reused helper for is Reply Payload Non Terminal Tool Error Warning behavior in src/auto-reply. */
 export function isReplyPayloadNonTerminalToolErrorWarning(payload: object): boolean {
   return getReplyPayloadMetadata(payload)?.nonTerminalToolErrorWarning === true;
 }
 
+/** Reused helper for copy Reply Payload Metadata behavior in src/auto-reply. */
 export function copyReplyPayloadMetadata<T extends object>(source: object, payload: T): T {
   const metadata = getReplyPayloadMetadata(source);
   return metadata ? setReplyPayloadMetadata(payload, metadata) : payload;
 }
 
+/** Reused helper for mark Reply Payload For Source Suppression Delivery behavior in src/auto-reply. */
 export function markReplyPayloadForSourceSuppressionDelivery<T extends object>(payload: T): T {
   return setReplyPayloadMetadata(payload, {
     deliverDespiteSourceReplySuppression: true,
   });
 }
 
+/** Reused helper for is Reply Payload Status Notice behavior in src/auto-reply. */
 export function isReplyPayloadStatusNotice(
   payload: Pick<ReplyPayload, "isCompactionNotice" | "isFallbackNotice" | "isStatusNotice">,
 ): boolean {

@@ -1,3 +1,4 @@
+// Tests extensions/memory-core/src dreaming narrative test behavior.
 import { createHash } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";

@@ -1,3 +1,4 @@
+// Tests infra tmp openclaw dir test behavior.
 import { constants as fsConstants } from "node:fs";
 import path from "node:path";
 import { describe, expect, it, vi } from "vitest";

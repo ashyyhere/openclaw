@@ -1,3 +1,4 @@
+// Channel ingress access decision graph builder.
 import { uniqueStrings } from "../../shared/string-normalization.js";
 import { resolveCommandAuthorizedFromAuthorizers } from "../command-gating.js";
 import { resolveInboundMentionDecision } from "../mention-gating.js";
@@ -253,6 +254,7 @@ function activationGate(params: {
   });
 }
 
+/** Decide whether an inbound channel message should dispatch, observe, skip, drop, or pair. */
 export function decideChannelIngress(
   state: ChannelIngressState,
   policy: ChannelIngressPolicyInput,

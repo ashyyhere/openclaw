@@ -1,3 +1,4 @@
+/** Tests gateway configure section for host and port choices. */
 import { describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import type { RuntimeEnv } from "../runtime.js";

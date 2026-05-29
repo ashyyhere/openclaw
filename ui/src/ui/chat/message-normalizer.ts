@@ -13,6 +13,7 @@ import { mediaKindFromMime } from "../../../../src/media/constants.js";
 import { splitMediaFromOutput } from "../../../../src/media/parse.js";
 import { parseInlineDirectives } from "../../../../src/utils/directive-tags.js";
 import type { NormalizedMessage, MessageContentItem } from "../types/chat-types.ts";
+/** Re-exported API for ui/src/ui/chat, starting with is Tool Result Message. */
 export { isToolResultMessage, normalizeRoleForGrouping } from "./role-normalizer.ts";
 
 function coerceCanvasPreview(
@@ -210,6 +211,7 @@ function mergeAdjacentTextItems(items: MessageContentItem[]): MessageContentItem
   return merged.filter((item) => item.type !== "text" || Boolean(item.text?.trim()));
 }
 
+/** Reused helper for strip Message Display Metadata Text behavior in ui/src/ui/chat. */
 export function stripMessageDisplayMetadataText(text: string): string {
   return stripInboundMetadata(text);
 }

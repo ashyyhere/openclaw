@@ -1,5 +1,7 @@
+// node-host invoke types helpers and runtime behavior.
 import type { SkillBinTrustEntry, SystemRunApprovalPlan } from "../infra/exec-approvals.js";
 
+/** Shared type for System Run Params in src/node-host. */
 export type SystemRunParams = {
   command: string[];
   rawCommand?: string | null;
@@ -16,6 +18,7 @@ export type SystemRunParams = {
   suppressNotifyOnExit?: boolean | null;
 };
 
+/** Shared type for Run Result in src/node-host. */
 export type RunResult = {
   exitCode?: number;
   timedOut: boolean;
@@ -26,6 +29,7 @@ export type RunResult = {
   truncated: boolean;
 };
 
+/** Shared type for Exec Event Payload in src/node-host. */
 export type ExecEventPayload = {
   sessionKey: string;
   runId: string;
@@ -39,6 +43,7 @@ export type ExecEventPayload = {
   suppressNotifyOnExit?: boolean;
 };
 
+/** Shared type for Exec Finished Result in src/node-host. */
 export type ExecFinishedResult = {
   stdout?: string;
   stderr?: string;
@@ -48,6 +53,7 @@ export type ExecFinishedResult = {
   success?: boolean;
 };
 
+/** Shared type for Exec Finished Event Params in src/node-host. */
 export type ExecFinishedEventParams = {
   sessionKey: string;
   runId: string;
@@ -56,6 +62,7 @@ export type ExecFinishedEventParams = {
   suppressNotifyOnExit?: boolean;
 };
 
+/** Shared type for Skill Bins Provider in src/node-host. */
 export type SkillBinsProvider = {
   current(force?: boolean): Promise<SkillBinTrustEntry[]>;
 };

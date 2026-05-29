@@ -1,3 +1,4 @@
+// Tests plugins install npm spec e2e test behavior.
 import { execFile, execFileSync } from "node:child_process";
 import crypto from "node:crypto";
 import fs from "node:fs/promises";

@@ -1,3 +1,4 @@
+/** Optional raw embedded-agent stream logger for diagnostics. */
 import fs from "node:fs";
 import path from "node:path";
 import { resolveStateDir } from "../config/paths.js";
@@ -17,6 +18,7 @@ function resolveRawStreamPath(): string {
   );
 }
 
+/** Append one raw stream event when raw-stream diagnostics are enabled. */
 export function appendRawStream(payload: Record<string, unknown>) {
   if (!isRawStreamEnabled()) {
     return;

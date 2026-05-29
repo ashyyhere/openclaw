@@ -1,3 +1,4 @@
+/** Tests GitHub Copilot profile tokens for generated provider auth. */
 import { describe, expect, it, vi } from "vitest";
 import {
   planOpenClawModelsJson,

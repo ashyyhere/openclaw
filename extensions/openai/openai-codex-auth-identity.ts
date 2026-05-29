@@ -1,3 +1,4 @@
+// extensions/openai openai codex auth identity helpers and runtime behavior.
 import { parseStrictPositiveInteger } from "openclaw/plugin-sdk/number-runtime";
 import { trimNonEmptyString } from "./openai-codex-shared.js";
 

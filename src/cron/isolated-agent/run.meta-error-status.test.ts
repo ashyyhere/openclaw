@@ -1,3 +1,4 @@
+// Tests cron/isolated-agent run meta error status test behavior.
 import { describe, expect, it } from "vitest";
 import { CommandLaneTaskTimeoutError } from "../../process/command-queue.js";
 import {

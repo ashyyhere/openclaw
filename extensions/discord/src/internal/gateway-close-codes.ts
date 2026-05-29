@@ -1,3 +1,4 @@
+// extensions/discord/src/internal gateway close codes helpers and runtime behavior.
 import { GatewayCloseCodes } from "discord-api-types/v10";
 
 const fatalGatewayCloseCodes = new Set<GatewayCloseCodes>([

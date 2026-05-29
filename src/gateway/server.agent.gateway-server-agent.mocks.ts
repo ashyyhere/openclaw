@@ -1,12 +1,15 @@
+// gateway server agent gateway server agent mocks helpers and runtime behavior.
 import { vi } from "vitest";
 import { createEmptyPluginRegistry, type PluginRegistry } from "../plugins/registry.js";
 import { setActivePluginRegistry } from "../plugins/runtime.js";
 import { setTestPluginRegistry } from "./test-helpers.plugin-registry.js";
 
+/** Reused constant for registry State behavior in src/gateway. */
 export const registryState: { registry: PluginRegistry } = {
   registry: createEmptyPluginRegistry(),
 };
 
+/** Reused helper for set Registry behavior in src/gateway. */
 export function setRegistry(registry: PluginRegistry) {
   registryState.registry = registry;
   setTestPluginRegistry(registry);

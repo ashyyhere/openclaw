@@ -1,3 +1,4 @@
+/** Regression coverage for subagent announcement dispatch phase ordering. */
 import { describe, expect, it, vi } from "vitest";
 import {
   mapSteerOutcomeToDeliveryResult,

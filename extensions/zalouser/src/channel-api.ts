@@ -1,3 +1,4 @@
+// extensions/zalouser/src channel api helpers and runtime behavior.
 export { formatAllowFromLowercase } from "openclaw/plugin-sdk/allow-from";
 export type {
   ChannelDirectoryEntry,

@@ -1,3 +1,4 @@
+// Tests infra/command-analysis inline eval test behavior.
 import { describe, expect, it } from "vitest";
 import type { InterpreterInlineEvalHit } from "./inline-eval.js";
 import {

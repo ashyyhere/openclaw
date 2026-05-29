@@ -1,3 +1,4 @@
+// Shared types for extensions/telegram/src runtime types behavior.
 import type { ChannelMessageActionAdapter } from "openclaw/plugin-sdk/channel-contract";
 import type { PluginRuntime } from "openclaw/plugin-sdk/channel-core";
 import type { TelegramMonitorFn } from "./monitor.types.js";

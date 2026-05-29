@@ -1,3 +1,4 @@
+// gateway server startup config helpers and runtime behavior.
 import { isDeepStrictEqual } from "node:util";
 import {
   formatInvalidConfigRecoveryHint,
@@ -59,6 +60,7 @@ type RuntimeSecretsActivationParams = {
   activate: boolean;
 };
 
+/** Shared type for Activate Runtime Secrets in src/gateway. */
 export type ActivateRuntimeSecrets = ((
   config: OpenClawConfig,
   params: RuntimeSecretsActivationParams,
@@ -91,12 +93,14 @@ function secretsPrepareTimelineAttributes(
   };
 }
 
+/** Shared type for Gateway Startup Config Snapshot Load Result in src/gateway. */
 export type GatewayStartupConfigSnapshotLoadResult = {
   snapshot: ConfigFileSnapshot;
   wroteConfig: boolean;
   pluginMetadataSnapshot?: PluginMetadataSnapshot;
 };
 
+/** Reused helper for load Gateway Startup Config Snapshot behavior in src/gateway. */
 export async function loadGatewayStartupConfigSnapshot(params: {
   minimalTestGateway: boolean;
   log: GatewayStartupLog;
@@ -162,6 +166,7 @@ function withRuntimeConfig(
   };
 }
 
+/** Reused helper for create Runtime Secrets Activator behavior in src/gateway. */
 export function createRuntimeSecretsActivator(params: {
   logSecrets: GatewayStartupLog;
   emitStateEvent: (
@@ -396,6 +401,7 @@ export function createRuntimeSecretsActivator(params: {
   return activateRuntimeSecrets;
 }
 
+/** Reused helper for assert Valid Gateway Startup Config Snapshot behavior in src/gateway. */
 export function assertValidGatewayStartupConfigSnapshot(
   snapshot: ConfigFileSnapshot,
   options: { includeDoctorHint?: boolean } = {},
@@ -416,6 +422,7 @@ export function assertValidGatewayStartupConfigSnapshot(
   throw new Error(`Invalid config at ${snapshot.path}.\n${issues}${recoveryHint}`);
 }
 
+/** Reused helper for prepare Gateway Startup Config behavior in src/gateway. */
 export async function prepareGatewayStartupConfig(params: {
   configSnapshot: ConfigFileSnapshot;
   authOverride?: GatewayAuthConfig;

@@ -1,3 +1,4 @@
+// extensions/line/src/flex-templates message helpers and runtime behavior.
 import type { messagingApi } from "@line/bot-sdk";
 import type { FlexContainer } from "./types.js";
 

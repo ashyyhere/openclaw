@@ -1,3 +1,4 @@
+// Treemap-style context summaries for workspace file sets.
 import crypto from "node:crypto";
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
@@ -448,6 +449,7 @@ function drawLegend(canvas: PngCanvas, groups: TreemapGroup[], rect: Rect, total
   });
 }
 
+/** Reused helper for render Context Treemap Png behavior in src/auto-reply/reply. */
 export async function renderContextTreemapPng(params: {
   report: SessionSystemPromptReport;
   session: ContextTreemapSessionStats;

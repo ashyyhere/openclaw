@@ -1,3 +1,4 @@
+// ui/src/ui/views agents helpers and runtime behavior.
 import { html, nothing } from "lit";
 import { keyed } from "lit/directives/keyed.js";
 import { t } from "../../i18n/index.ts";
@@ -19,11 +20,13 @@ import {
   renderAgentChannels,
   renderAgentCron,
 } from "./agents-panels-status-files.ts";
+/** Re-exported API for ui/src/ui/views, starting with Agents Panel. */
 export type { AgentsPanel } from "./agents.types.ts";
 import { renderAgentTools, renderAgentSkills } from "./agents-panels-tools-skills.ts";
 import { agentBadgeText, buildAgentContext, normalizeAgentLabel } from "./agents-utils.ts";
 import type { AgentsPanel } from "./agents.types.ts";
 
+/** Shared type for Config State in ui/src/ui/views. */
 export type ConfigState = {
   form: Record<string, unknown> | null;
   loading: boolean;
@@ -31,6 +34,7 @@ export type ConfigState = {
   dirty: boolean;
 };
 
+/** Shared type for Channels State in ui/src/ui/views. */
 export type ChannelsState = {
   snapshot: ChannelsStatusSnapshot | null;
   loading: boolean;
@@ -38,6 +42,7 @@ export type ChannelsState = {
   lastSuccess: number | null;
 };
 
+/** Shared type for Cron State in ui/src/ui/views. */
 export type CronState = {
   status: CronStatus | null;
   jobs: CronJob[];
@@ -45,6 +50,7 @@ export type CronState = {
   error: string | null;
 };
 
+/** Shared type for Agent Files State in ui/src/ui/views. */
 export type AgentFilesState = {
   list: AgentsFilesListResult | null;
   loading: boolean;
@@ -55,6 +61,7 @@ export type AgentFilesState = {
   saving: boolean;
 };
 
+/** Shared type for Agent Skills State in ui/src/ui/views. */
 export type AgentSkillsState = {
   report: SkillStatusReport | null;
   loading: boolean;
@@ -63,18 +70,21 @@ export type AgentSkillsState = {
   filter: string;
 };
 
+/** Shared type for Tools Catalog State in ui/src/ui/views. */
 export type ToolsCatalogState = {
   loading: boolean;
   error: string | null;
   result: ToolsCatalogResult | null;
 };
 
+/** Shared type for Tools Effective State in ui/src/ui/views. */
 export type ToolsEffectiveState = {
   loading: boolean;
   error: string | null;
   result: ToolsEffectiveResult | null;
 };
 
+/** Shared type for Agents Props in ui/src/ui/views. */
 export type AgentsProps = {
   basePath: string;
   loading: boolean;
@@ -120,6 +130,7 @@ export type AgentsProps = {
   onSetDefault: (agentId: string) => void;
 };
 
+/** Reused helper for render Agents behavior in ui/src/ui/views. */
 export function renderAgents(props: AgentsProps) {
   const agents = props.agentsList?.agents ?? [];
   const defaultId = props.agentsList?.defaultId ?? null;

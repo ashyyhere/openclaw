@@ -1,3 +1,4 @@
+// extensions/qa-lab/src runtime tool metadata helpers and runtime behavior.
 import {
   asBoolean as readBoolean,
   isRecord,

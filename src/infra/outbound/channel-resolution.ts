@@ -1,3 +1,4 @@
+// infra/outbound channel resolution helpers and runtime behavior.
 import type { ChannelMessageAdapterShape } from "../../channels/message/types.js";
 import { getChannelPlugin, getLoadedChannelPlugin } from "../../channels/plugins/index.js";
 import { channelPluginHasNativeApprovalPromptUi } from "../../channels/plugins/native-approval-prompt.js";
@@ -32,6 +33,7 @@ import {
 
 type ChannelTargetResolver = NonNullable<ChannelMessagingAdapter["targetResolver"]>;
 
+/** Shared type for Channel Prompt Runtime in src/infra/outbound. */
 export type ChannelPromptRuntime = {
   messageToolHints?: ChannelAgentPromptAdapter["messageToolHints"];
   messageToolCapabilities?: ChannelAgentPromptAdapter["messageToolCapabilities"];
@@ -39,6 +41,7 @@ export type ChannelPromptRuntime = {
   hasNativeApprovalPromptUi?: boolean;
 };
 
+/** Shared type for Outbound Channel Runtime in src/infra/outbound. */
 export type OutboundChannelRuntime = {
   id: string;
   label: string;
@@ -84,10 +87,12 @@ export type OutboundChannelRuntime = {
   blockStreamingCoalesceDefaults?: ChannelStreamingAdapter["blockStreamingCoalesceDefaults"];
 };
 
+/** Reused helper for reset Outbound Channel Resolution State For Test behavior in src/infra/outbound. */
 export function resetOutboundChannelResolutionStateForTest(): void {
   resetOutboundChannelBootstrapStateForTests();
 }
 
+/** Reused helper for normalize Deliverable Outbound Channel behavior in src/infra/outbound. */
 export function normalizeDeliverableOutboundChannel(
   raw?: string | null,
 ): DeliverableMessageChannel | undefined {
@@ -171,6 +176,7 @@ function toOutboundChannelRuntime(plugin: ChannelPlugin): OutboundChannelRuntime
   };
 }
 
+/** Reused helper for resolve Outbound Channel Plugin behavior in src/infra/outbound. */
 export function resolveOutboundChannelPlugin(params: {
   channel: string;
   cfg?: OpenClawConfig;
@@ -205,6 +211,7 @@ export function resolveOutboundChannelPlugin(params: {
   return resolveLoaded() ?? resolveDirectFromActiveRegistry(normalized) ?? resolve();
 }
 
+/** Reused helper for resolve Outbound Channel Message Adapter behavior in src/infra/outbound. */
 export function resolveOutboundChannelMessageAdapter(params: {
   channel: string;
   cfg?: OpenClawConfig;
@@ -213,6 +220,7 @@ export function resolveOutboundChannelMessageAdapter(params: {
   return resolveOutboundChannelPlugin(params)?.message;
 }
 
+/** Reused helper for resolve Outbound Channel Plugin For Read behavior in src/infra/outbound. */
 export function resolveOutboundChannelPluginForRead(params: {
   channel: string;
   cfg?: OpenClawConfig;
@@ -242,6 +250,7 @@ export function resolveOutboundChannelPluginForRead(params: {
   return getChannelPlugin(channelId);
 }
 
+/** Reused helper for resolve Outbound Channel Runtime behavior in src/infra/outbound. */
 export function resolveOutboundChannelRuntime(params: {
   channel: string;
   cfg?: OpenClawConfig;
@@ -250,6 +259,7 @@ export function resolveOutboundChannelRuntime(params: {
   return plugin ? toOutboundChannelRuntime(plugin) : undefined;
 }
 
+/** Reused helper for resolve Loaded Outbound Channel Plugin For Read behavior in src/infra/outbound. */
 export function resolveLoadedOutboundChannelPluginForRead(params: {
   channel: string;
 }): ChannelPlugin | undefined {

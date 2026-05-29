@@ -1,3 +1,4 @@
+/** High-level exec tool implementation and target selection. */
 import { constants as fsConstants } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -69,7 +70,9 @@ import type { AgentToolResult } from "./runtime/index.js";
 import { EXEC_TOOL_DISPLAY_SUMMARY } from "./tool-description-presets.js";
 import { type AgentToolWithMeta, failedTextResult, textResult } from "./tools/common.js";
 
+/** Re-exported API for src/agents, starting with Bash Sandbox Config. */
 export type { BashSandboxConfig } from "./bash-tools.shared.js";
+/** Re-exported API for src/agents. */
 export type {
   ExecElevatedDefaults,
   ExecToolDefaults,
@@ -1235,6 +1238,7 @@ function resolveExecReviewerDefaults(params: { defaults?: ExecToolDefaults; agen
   return agentExec?.reviewer ?? cfg?.tools?.exec?.reviewer;
 }
 
+/** Create the exec agent tool with configured defaults and policies. */
 export function createExecTool(
   defaults?: ExecToolDefaults,
 ): AgentToolWithMeta<typeof execSchema, ExecToolDetails> {
@@ -1813,10 +1817,13 @@ export function createExecTool(
   };
 }
 
+/** Reused constant for exec Tool behavior in src/agents. */
 export const execTool = createExecTool();
 
+/** Reused constant for testing behavior in src/agents. */
 export const testing = {
   parseOpenClawChannelsLoginShellCommand,
   validateScriptFileForShellBleed,
 };
+/** Re-exported API for src/agents, starting with testing. */
 export { testing as __testing };

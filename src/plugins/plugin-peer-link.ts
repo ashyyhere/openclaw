@@ -1,3 +1,4 @@
+// plugins plugin peer link helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { resolveOpenClawPackageRootSync } from "../infra/openclaw-root.js";
@@ -14,6 +15,7 @@ type RelinkManagedNpmRootResult = {
   skipped: number;
 };
 
+/** Shared type for Open Claw Peer Link Audit Issue in src/plugins. */
 export type OpenClawPeerLinkAuditIssue = {
   packageName: string;
   packageDir: string;
@@ -163,6 +165,7 @@ async function auditOpenClawPeerDependency(params: {
   return null;
 }
 
+/** Reused helper for audit Open Claw Peer Dependency Link behavior in src/plugins. */
 export async function auditOpenClawPeerDependencyLink(params: {
   packageDir: string;
   packageName?: string;
@@ -309,6 +312,7 @@ export async function linkOpenClawPeerDependencies(params: {
   return { repaired, skipped };
 }
 
+/** Reused helper for relink Open Claw Peer Dependencies In Managed Npm Root behavior in src/plugins. */
 export async function relinkOpenClawPeerDependenciesInManagedNpmRoot(params: {
   npmRoot: string;
   logger: PluginPeerLinkLogger;
@@ -335,6 +339,7 @@ export async function relinkOpenClawPeerDependenciesInManagedNpmRoot(params: {
   return { checked, attempted, repaired, skipped };
 }
 
+/** Reused helper for audit Open Claw Peer Dependencies In Managed Npm Root behavior in src/plugins. */
 export async function auditOpenClawPeerDependenciesInManagedNpmRoot(params: {
   npmRoot: string;
 }): Promise<AuditManagedNpmRootResult> {

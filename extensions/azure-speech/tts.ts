@@ -1,3 +1,4 @@
+// extensions/azure-speech tts helpers and runtime behavior.
 import { assertOkOrThrowProviderError } from "openclaw/plugin-sdk/provider-http";
 import { readResponseWithLimit } from "openclaw/plugin-sdk/response-limit-runtime";
 import type { SpeechVoiceOption } from "openclaw/plugin-sdk/speech-core";

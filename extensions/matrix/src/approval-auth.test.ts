@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src approval auth test behavior.
 import { describe, expect, it } from "vitest";
 import { matrixApprovalAuth } from "./approval-auth.js";
 

@@ -1,3 +1,4 @@
+// Tests logging diagnostic phase test behavior.
 import { describe, expect, it } from "vitest";
 import {
   getRecentDiagnosticPhases,

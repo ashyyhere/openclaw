@@ -1,3 +1,4 @@
+// Tests configured model entry extraction from source and runtime config snapshots.
 import path from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
 

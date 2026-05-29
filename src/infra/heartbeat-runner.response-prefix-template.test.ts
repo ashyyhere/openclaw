@@ -1,3 +1,4 @@
+// Tests infra heartbeat runner response prefix template test behavior.
 import { describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import { runHeartbeatOnce, type HeartbeatDeps } from "./heartbeat-runner.js";

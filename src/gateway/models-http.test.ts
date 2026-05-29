@@ -1,3 +1,4 @@
+// Tests gateway models http test behavior.
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { getFreePort, installGatewayTestHooks } from "./test-helpers.js";
 

@@ -1,3 +1,4 @@
+/** Runs doctor lint checks without repair side effects. */
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../agents/agent-scope.js";
 import { readConfigFileSnapshot } from "../config/config.js";
 import { registerBundledHealthChecks } from "../flows/bundled-health-checks.js";
@@ -18,6 +19,7 @@ import {
 } from "../flows/health-checks.js";
 import type { RuntimeEnv } from "../runtime.js";
 
+/** Shared type for Doctor Lint Cli Options in src/commands. */
 export interface DoctorLintCliOptions {
   readonly json?: boolean;
   readonly severityMin?: string;
@@ -33,6 +35,7 @@ function detectMode(opts: DoctorLintCliOptions): "human" | "json" {
   return process.stdout.isTTY ? "human" : "json";
 }
 
+/** Reused helper for run Doctor Lint Cli behavior in src/commands. */
 export async function runDoctorLintCli(
   runtime: RuntimeEnv,
   opts: DoctorLintCliOptions,

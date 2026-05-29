@@ -1,3 +1,4 @@
+/** Handles embedded-agent assistant message streaming, replies, and directives. */
 import { resolveSendableOutboundReplyParts } from "openclaw/plugin-sdk/reply-payload";
 import { createInlineCodeState } from "../../packages/markdown-core/src/code-spans.js";
 import {
@@ -241,6 +242,7 @@ function copyPartialBlockState(
   target.pendingTagFragment = source.pendingTagFragment;
 }
 
+/** Resolve fallback visible text for silent reply handling. */
 export function resolveSilentReplyFallbackText(params: {
   text: unknown;
   messagingToolSentTexts: string[];
@@ -272,6 +274,7 @@ function hasReplyMedia(payload: BlockReplyPayload): boolean {
   return (payload.mediaUrls ?? []).some((url) => url.trim().length > 0);
 }
 
+/** Merge pending tool media into a reply payload and clear it from state. */
 export function consumePendingToolMediaIntoReply(
   state: Pick<
     EmbeddedAgentSubscribeState,
@@ -308,6 +311,7 @@ export function consumePendingToolMediaIntoReply(
   return mergedPayload;
 }
 
+/** Consume pending tool-media reply payload from subscription state. */
 export function consumePendingToolMediaReply(
   state: Pick<
     EmbeddedAgentSubscribeState,
@@ -322,6 +326,7 @@ export function consumePendingToolMediaReply(
   return payload;
 }
 
+/** Read pending tool-media reply payload without clearing it. */
 export function readPendingToolMediaReply(
   state: Pick<
     EmbeddedAgentSubscribeState,
@@ -384,6 +389,7 @@ function mergeReplyDirectiveResults(
   };
 }
 
+/** Record reply directives parsed from assistant output for later delivery. */
 export function recordPendingAssistantReplyDirectives(
   state: Pick<EmbeddedAgentSubscribeState, "pendingAssistantReplyDirectives">,
   parsed: ReplyDirectiveParseResult | null | undefined,
@@ -404,6 +410,7 @@ export function recordPendingAssistantReplyDirectives(
   };
 }
 
+/** Apply pending assistant reply directives to an outbound reply payload. */
 export function consumePendingAssistantReplyDirectivesIntoReply(
   state: Pick<EmbeddedAgentSubscribeState, "pendingAssistantReplyDirectives">,
   payload: BlockReplyPayload,
@@ -426,6 +433,7 @@ export function consumePendingAssistantReplyDirectivesIntoReply(
   };
 }
 
+/** Return whether assistant text should produce a visible reply. */
 export function hasAssistantVisibleReply(params: {
   text?: string;
   mediaUrls?: string[];
@@ -435,6 +443,7 @@ export function hasAssistantVisibleReply(params: {
   return resolveSendableOutboundReplyParts(params).hasContent || Boolean(params.audioAsVoice);
 }
 
+/** Build public agent-event stream data for assistant output. */
 export function buildAssistantStreamData(params: {
   text?: string;
   delta?: string;
@@ -459,6 +468,7 @@ export function buildAssistantStreamData(params: {
   };
 }
 
+/** Handle assistant/user message start events from the session stream. */
 export function handleMessageStart(
   ctx: EmbeddedAgentSubscribeContext,
   evt: AgentEvent & { message: AgentMessage },
@@ -478,6 +488,7 @@ export function handleMessageStart(
   void ctx.params.onAssistantMessageStart?.();
 }
 
+/** Handle incremental assistant message updates and partial replies. */
 export function handleMessageUpdate(
   ctx: EmbeddedAgentSubscribeContext,
   evt: AgentEvent & { message: AgentMessage; assistantMessageEvent?: unknown },
@@ -761,6 +772,7 @@ export function handleMessageUpdate(
   }
 }
 
+/** Finalize assistant message output and block replies. */
 export function handleMessageEnd(
   ctx: EmbeddedAgentSubscribeContext,
   evt: AgentEvent & { message: AgentMessage },

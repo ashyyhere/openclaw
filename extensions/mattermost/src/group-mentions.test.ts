@@ -1,3 +1,4 @@
+// Tests extensions/mattermost/src group mentions test behavior.
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../runtime-api.js";
 import { resolveMattermostGroupRequireMention } from "./group-mentions.js";

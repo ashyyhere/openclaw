@@ -1,3 +1,4 @@
+/** Tests agent add command filesystem and config behavior. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

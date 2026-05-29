@@ -1,3 +1,4 @@
+// extensions/brave test api helpers and runtime behavior.
 import {
   mapBraveLlmContextResults,
   normalizeBraveCountry,

@@ -1,10 +1,13 @@
+// config types acp helpers and runtime behavior.
 import type { AcpSessionUpdateTag } from "../acp/runtime/types.js";
 
+/** Shared type for Acp Dispatch Config in src/config. */
 export type AcpDispatchConfig = {
   /** Master switch for ACP turn dispatch in the reply pipeline. */
   enabled?: boolean;
 };
 
+/** Shared type for Acp Stream Config in src/config. */
 export type AcpStreamConfig = {
   /** Coalescer idle flush window in milliseconds for ACP streamed text. */
   coalesceIdleMs?: number;
@@ -27,6 +30,7 @@ export type AcpStreamConfig = {
   tagVisibility?: Partial<Record<AcpSessionUpdateTag, boolean>>;
 };
 
+/** Shared type for Acp Runtime Config in src/config. */
 export type AcpRuntimeConfig = {
   /** Idle runtime TTL in minutes for ACP session workers. */
   ttlMinutes?: number;
@@ -34,6 +38,7 @@ export type AcpRuntimeConfig = {
   installCommand?: string;
 };
 
+/** Shared type for Acp Config in src/config. */
 export type AcpConfig = {
   /** Global ACP runtime gate. */
   enabled?: boolean;

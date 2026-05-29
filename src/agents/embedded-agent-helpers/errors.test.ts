@@ -1,3 +1,4 @@
+/** Regression coverage for embedded-agent failover/error classification. */
 import type { AssistantMessage } from "openclaw/plugin-sdk/llm";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";

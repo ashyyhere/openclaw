@@ -3,6 +3,7 @@ import type { RenderTableOptions, TableColumn } from "../../../packages/terminal
 type HeadingFn = (text: string) => string;
 type TableRenderer = (input: RenderTableOptions) => string;
 
+/** Shared type for Status Report Section in src/commands/status-all. */
 export type StatusReportSection =
   | {
       kind: "lines";
@@ -26,6 +27,7 @@ export type StatusReportSection =
       skipIfEmpty?: boolean;
     };
 
+/** Reused helper for append Status Section Heading behavior in src/commands/status-all. */
 export function appendStatusSectionHeading(params: {
   lines: string[];
   heading: HeadingFn;
@@ -68,6 +70,7 @@ function appendStatusTableSection<Row extends Record<string, string>>(params: {
   );
 }
 
+/** Reused helper for append Status Report Sections behavior in src/commands/status-all. */
 export function appendStatusReportSections(params: {
   lines: string[];
   heading: HeadingFn;

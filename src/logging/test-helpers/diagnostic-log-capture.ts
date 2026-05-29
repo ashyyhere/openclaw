@@ -1,3 +1,4 @@
+// logging/test-helpers diagnostic log capture helpers and runtime behavior.
 import {
   onInternalDiagnosticEvent,
   type DiagnosticEventPayload,

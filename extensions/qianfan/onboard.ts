@@ -1,3 +1,4 @@
+// extensions/qianfan onboard helpers and runtime behavior.
 import {
   createDefaultModelsPresetAppliers,
   type ModelApi,

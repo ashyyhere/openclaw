@@ -1,3 +1,4 @@
+/** Tests billing-error lifecycle handling in embedded-agent subscription. */
 import { describe, expect, it, vi } from "vitest";
 import {
   createSubscribedSessionHarness,

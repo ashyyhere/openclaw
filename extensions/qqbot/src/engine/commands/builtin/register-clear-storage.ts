@@ -1,3 +1,4 @@
+// extensions/qqbot/src/engine/commands/builtin register clear storage helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { getQQBotMediaPath } from "../../utils/platform.js";

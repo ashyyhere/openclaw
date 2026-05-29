@@ -1,3 +1,4 @@
+// Tests plugins provider auth env trust test behavior.
 import { describe, expect, it, vi } from "vitest";
 
 const getProviderEnvVars = vi.hoisted(() => vi.fn(() => ["WHISPERX_API_KEY"]));

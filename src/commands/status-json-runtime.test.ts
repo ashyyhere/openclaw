@@ -1,3 +1,4 @@
+/** Tests status JSON runtime data resolution. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { resolveStatusJsonOutput } from "./status-json-runtime.ts";
 

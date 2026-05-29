@@ -1,3 +1,4 @@
+/** Compatibility tool that exposes subagent/session-spawn guidance. */
 import { Type } from "typebox";
 import { getRuntimeConfig } from "../../config/config.js";
 import { optionalPositiveIntegerSchema, optionalStringEnum } from "../schema/typebox.js";
@@ -19,6 +20,7 @@ const SubagentsToolSchema = Type.Object({
   recentMinutes: optionalPositiveIntegerSchema(),
 });
 
+/** Creates the subagents compatibility AgentTool. */
 export function createSubagentsTool(opts?: { agentSessionKey?: string }): AnyAgentTool {
   return {
     label: "Subagents",

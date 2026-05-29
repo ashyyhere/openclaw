@@ -1,3 +1,4 @@
+/** Tests session write lock acquisition, cleanup, and stale detection. */
 import fsSync from "node:fs";
 import fs from "node:fs/promises";
 import os from "node:os";

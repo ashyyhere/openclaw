@@ -1,7 +1,9 @@
+// plugins interactive state helpers and runtime behavior.
 import { createDedupeCache, resolveGlobalDedupeCache } from "../infra/dedupe.js";
 import type { DedupeCache } from "../infra/dedupe.js";
 import type { PluginInteractiveHandlerRegistration } from "./types.js";
 
+/** Shared type for Registered Interactive Handler in src/plugins. */
 export type RegisteredInteractiveHandler = PluginInteractiveHandlerRegistration & {
   pluginId: string;
   pluginName?: string;
@@ -67,6 +69,7 @@ function getState() {
   return created;
 }
 
+/** Reused helper for get Plugin Interactive Handlers State behavior in src/plugins. */
 export function getPluginInteractiveHandlersState() {
   return getState().interactiveHandlers;
 }
@@ -75,6 +78,7 @@ function getPluginInteractiveCallbackDedupeState() {
   return getState().callbackDedupe;
 }
 
+/** Reused helper for claim Plugin Interactive Callback Dedupe behavior in src/plugins. */
 export function claimPluginInteractiveCallbackDedupe(
   dedupeKey: string | undefined,
   now = Date.now(),
@@ -90,6 +94,7 @@ export function claimPluginInteractiveCallbackDedupe(
   return true;
 }
 
+/** Reused helper for commit Plugin Interactive Callback Dedupe behavior in src/plugins. */
 export function commitPluginInteractiveCallbackDedupe(
   dedupeKey: string | undefined,
   now = Date.now(),
@@ -102,6 +107,7 @@ export function commitPluginInteractiveCallbackDedupe(
   state.callbackDedupe.check(dedupeKey, now);
 }
 
+/** Reused helper for release Plugin Interactive Callback Dedupe behavior in src/plugins. */
 export function releasePluginInteractiveCallbackDedupe(dedupeKey: string | undefined): void {
   if (!dedupeKey) {
     return;
@@ -109,12 +115,14 @@ export function releasePluginInteractiveCallbackDedupe(dedupeKey: string | undef
   getState().inflightCallbackDedupe.delete(dedupeKey);
 }
 
+/** Reused helper for clear Plugin Interactive Handlers State behavior in src/plugins. */
 export function clearPluginInteractiveHandlersState(): void {
   clearPluginInteractiveHandlerRegistrationsState();
   getPluginInteractiveCallbackDedupeState().clear();
   getState().inflightCallbackDedupe.clear();
 }
 
+/** Reused helper for clear Plugin Interactive Handler Registrations State behavior in src/plugins. */
 export function clearPluginInteractiveHandlerRegistrationsState(): void {
   getPluginInteractiveHandlersState().clear();
 }

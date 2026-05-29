@@ -1,3 +1,4 @@
+// Tests media qr terminal test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const { create, toString } = vi.hoisted(() => ({

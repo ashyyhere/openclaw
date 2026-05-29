@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/telegram/src bot message context session runtime behavior.
 export { buildChannelInboundEventContext } from "openclaw/plugin-sdk/channel-inbound";
 export { readSessionUpdatedAt, resolveStorePath } from "openclaw/plugin-sdk/session-store-runtime";
 export { recordInboundSession } from "openclaw/plugin-sdk/conversation-runtime";

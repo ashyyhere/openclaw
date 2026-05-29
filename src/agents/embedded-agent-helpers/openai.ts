@@ -1,3 +1,4 @@
+/** OpenAI Responses replay compatibility helpers for tool calls and reasoning blocks. */
 import { createHash } from "node:crypto";
 import type { AgentMessage } from "../runtime/index.js";
 

@@ -1,3 +1,4 @@
+// cron heartbeat policy helpers and runtime behavior.
 import { hasOutboundReplyContent } from "openclaw/plugin-sdk/reply-payload";
 import { stripHeartbeatToken } from "../auto-reply/heartbeat.js";
 
@@ -10,6 +11,7 @@ type HeartbeatDeliveryPayload = {
   channelData?: unknown;
 };
 
+/** Reused helper for should Skip Heartbeat Only Delivery behavior in src/cron. */
 export function shouldSkipHeartbeatOnlyDelivery(
   payloads: HeartbeatDeliveryPayload[],
   ackMaxChars: number,
@@ -32,6 +34,7 @@ export function shouldSkipHeartbeatOnlyDelivery(
   });
 }
 
+/** Reused helper for should Enqueue Cron Main Summary behavior in src/cron. */
 export function shouldEnqueueCronMainSummary(params: {
   summaryText: string | undefined;
   deliveryRequested: boolean;

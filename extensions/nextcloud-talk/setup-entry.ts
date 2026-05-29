@@ -1,3 +1,4 @@
+// extensions/nextcloud-talk setup entry helpers and runtime behavior.
 import { defineBundledChannelSetupEntry } from "openclaw/plugin-sdk/channel-entry-contract";
 
 export default defineBundledChannelSetupEntry({

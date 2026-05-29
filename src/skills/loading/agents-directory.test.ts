@@ -1,3 +1,4 @@
+/** Regression coverage for agent-local skill directory discovery. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

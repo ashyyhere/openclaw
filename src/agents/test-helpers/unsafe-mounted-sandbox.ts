@@ -1,3 +1,4 @@
+/** Test helper for sandbox contexts mounted directly to host paths. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
@@ -46,6 +47,7 @@ function createUnsafeMountedBridge(params: {
   return createSandboxFsBridgeFromResolver(resolvePath);
 }
 
+/** Creates a sandbox context with host-mounted writable workspace access. */
 export function createUnsafeMountedSandbox(params: {
   sandboxRoot: string;
   agentRoot: string;
@@ -66,6 +68,7 @@ export function createUnsafeMountedSandbox(params: {
   });
 }
 
+/** Runs a callback with a temporary unsafe-mounted sandbox harness. */
 export async function withUnsafeMountedSandboxHarness(
   run: (ctx: { sandboxRoot: string; agentRoot: string; sandbox: SandboxContext }) => Promise<void>,
   options?: { workspaceAccess?: "none" | "ro" | "rw" },

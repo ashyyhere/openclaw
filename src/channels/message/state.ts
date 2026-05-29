@@ -1,5 +1,7 @@
+// Durable message send state records and recovery classification.
 import type { DurableMessageSendIntent, MessageReceipt } from "./types.js";
 
+/** Durable send state persisted for recovery and diagnostics. */
 export type DurableMessageSendState =
   | "pending"
   | "sent"
@@ -7,6 +9,7 @@ export type DurableMessageSendState =
   | "failed"
   | "unknown_after_send";
 
+/** One durable send record with intent, state, receipt, and error metadata. */
 export type DurableMessageStateRecord = {
   intent: DurableMessageSendIntent;
   state: DurableMessageSendState;
@@ -15,6 +18,7 @@ export type DurableMessageStateRecord = {
   errorMessage?: string;
 };
 
+/** Create a durable send state record from an intent and optional result. */
 export function createDurableMessageStateRecord(params: {
   intent: DurableMessageSendIntent;
   state?: DurableMessageSendState;
@@ -31,6 +35,7 @@ export function createDurableMessageStateRecord(params: {
   };
 }
 
+/** Classify recovery state from durable intent/receipt presence. */
 export function classifyDurableSendRecoveryState(params: {
   hasIntent: boolean;
   hasReceipt: boolean;

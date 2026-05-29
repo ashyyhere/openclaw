@@ -1,9 +1,11 @@
+/** Applies harness-specific result classification to attempt results. */
 import type {
   AgentHarness,
   AgentHarnessAttemptParams,
   AgentHarnessAttemptResult,
 } from "./types.js";
 
+/** Overlays harness classification fields onto an attempt result. */
 export function applyAgentHarnessResultClassification(
   harness: Pick<AgentHarness, "id" | "classify">,
   result: AgentHarnessAttemptResult,

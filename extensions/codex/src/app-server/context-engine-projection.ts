@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server context engine projection helpers and runtime behavior.
 import type { AgentMessage } from "openclaw/plugin-sdk/agent-harness-runtime";
 import { redactSensitiveFieldValue, redactToolPayloadText } from "openclaw/plugin-sdk/logging-core";
 

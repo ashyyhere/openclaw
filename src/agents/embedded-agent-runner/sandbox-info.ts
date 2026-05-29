@@ -1,3 +1,4 @@
+/** Builds embedded-agent sandbox metadata exposed to tool runtimes. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { ExecElevatedDefaults, ExecToolDefaults } from "../bash-tools.js";
 import { resolveExecDefaults } from "../exec-defaults.js";
@@ -24,6 +25,7 @@ function execPolicyBlocksFullAccess(params: {
   );
 }
 
+/** Resolves whether embedded-agent elevated execution may use full access. */
 export function resolveEmbeddedFullAccessState(params: {
   execElevated?: ExecElevatedDefaults;
   execPolicy?: EmbeddedFullAccessExecPolicy;
@@ -56,6 +58,7 @@ export function resolveEmbeddedFullAccessState(params: {
   return { available: true };
 }
 
+/** Projects config/default exec policy into the sandbox-info capability shape. */
 export function resolveEmbeddedSandboxInfoExecPolicy(params: {
   config?: OpenClawConfig;
   agentId?: string;
@@ -78,6 +81,7 @@ export function resolveEmbeddedSandboxInfoExecPolicy(params: {
   };
 }
 
+/** Builds the sandbox info payload passed into embedded tool execution. */
 export function buildEmbeddedSandboxInfo(
   sandbox?: Awaited<ReturnType<typeof resolveSandboxContext>>,
   execElevated?: ExecElevatedDefaults,

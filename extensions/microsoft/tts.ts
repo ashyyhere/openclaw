@@ -1,3 +1,4 @@
+// extensions/microsoft tts helpers and runtime behavior.
 import { statSync, writeFileSync } from "node:fs";
 import { mkdir } from "node:fs/promises";
 import path from "node:path";

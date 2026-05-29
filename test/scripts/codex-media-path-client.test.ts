@@ -1,3 +1,4 @@
+// Tests test/scripts codex media path client test behavior.
 import { spawnSync } from "node:child_process";
 import { appendFileSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";

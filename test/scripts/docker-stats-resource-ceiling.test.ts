@@ -1,3 +1,4 @@
+// Tests test/scripts docker stats resource ceiling test behavior.
 import { spawnSync } from "node:child_process";
 import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -16,9 +17,13 @@ function writeStats(contents: string): string {
 }
 
 function runAssert(statsFile: string, maxMemoryMiB = "512", maxCpuPercent = "100") {
-  return spawnSync(process.execPath, [SCRIPT_PATH, statsFile, maxMemoryMiB, maxCpuPercent, "test"], {
-    encoding: "utf8",
-  });
+  return spawnSync(
+    process.execPath,
+    [SCRIPT_PATH, statsFile, maxMemoryMiB, maxCpuPercent, "test"],
+    {
+      encoding: "utf8",
+    },
+  );
 }
 
 afterEach(() => {
@@ -36,7 +41,10 @@ describe("scripts/e2e/lib/docker-stats/assert-resource-ceiling.mjs", () => {
   });
 
   it("rejects invalid resource limits instead of disabling the ceiling", () => {
-    const result = runAssert(writeStats('{"MemUsage":"128MiB / 2GiB","CPUPerc":"25.0%"}\n'), "nope");
+    const result = runAssert(
+      writeStats('{"MemUsage":"128MiB / 2GiB","CPUPerc":"25.0%"}\n'),
+      "nope",
+    );
 
     expect(result.status).not.toBe(0);
     expect(result.stderr).toContain("max memory MiB must be a finite non-negative number");

@@ -1,3 +1,4 @@
+/** Covers workspace bootstrap routing for spawned embedded attempts. */
 import { describe, expect, it, vi } from "vitest";
 import {
   hasBootstrapFileContent,

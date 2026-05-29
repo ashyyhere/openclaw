@@ -1,3 +1,4 @@
+// extensions/qa-lab/src bundled plugin staging helpers and runtime behavior.
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";

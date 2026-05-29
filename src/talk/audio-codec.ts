@@ -1,3 +1,4 @@
+// talk audio codec helpers and runtime behavior.
 const TELEPHONY_SAMPLE_RATE = 8000;
 const RESAMPLE_FILTER_TAPS = 31;
 const RESAMPLE_CUTOFF_GUARD = 0.94;
@@ -145,6 +146,7 @@ function sampleBandlimited(
   return weighted / weightSum;
 }
 
+/** Reused helper for resample Pcm behavior in src/talk. */
 export function resamplePcm(
   input: Buffer,
   inputSampleRate: number,
@@ -190,10 +192,12 @@ export function resamplePcm(
   return output;
 }
 
+/** Reused helper for resample Pcm To8k behavior in src/talk. */
 export function resamplePcmTo8k(input: Buffer, inputSampleRate: number): Buffer {
   return resamplePcm(input, inputSampleRate, TELEPHONY_SAMPLE_RATE);
 }
 
+/** Reused helper for pcm To Mulaw behavior in src/talk. */
 export function pcmToMulaw(pcm: Buffer): Buffer {
   const pcmView = readInt16Samples(pcm);
   const mulaw = Buffer.alloc(pcmView.length);
@@ -205,6 +209,7 @@ export function pcmToMulaw(pcm: Buffer): Buffer {
   return mulaw;
 }
 
+/** Reused helper for mulaw To Pcm behavior in src/talk. */
 export function mulawToPcm(mulaw: Buffer): Buffer {
   const pcm = Buffer.alloc(mulaw.length * 2);
   const pcmView = canUseInt16View(pcm) ? int16View(pcm) : undefined;
@@ -221,6 +226,7 @@ export function mulawToPcm(mulaw: Buffer): Buffer {
   return pcm;
 }
 
+/** Reused helper for convert Pcm To Mulaw8k behavior in src/talk. */
 export function convertPcmToMulaw8k(pcm: Buffer, inputSampleRate: number): Buffer {
   return pcmToMulaw(resamplePcmTo8k(pcm, inputSampleRate));
 }

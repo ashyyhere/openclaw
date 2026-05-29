@@ -1,3 +1,4 @@
+// gateway http endpoint helpers helpers and runtime behavior.
 import type { IncomingMessage, ServerResponse } from "node:http";
 import type { AuthRateLimiter } from "./auth-rate-limit.js";
 import type { ResolvedGatewayAuth } from "./auth.js";
@@ -13,6 +14,7 @@ import {
 } from "./http-utils.js";
 import { authorizeOperatorScopesForMethod } from "./method-scopes.js";
 
+/** Reused helper for handle Gateway Post Json Endpoint behavior in src/gateway. */
 export async function handleGatewayPostJsonEndpoint(
   req: IncomingMessage,
   res: ServerResponse,

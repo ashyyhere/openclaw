@@ -1,3 +1,4 @@
+/** Sanitizes hidden HTML content and invisible Unicode for web tools. */
 import {
   normalizeLowercaseStringOrEmpty,
   normalizeOptionalLowercaseString,
@@ -312,6 +313,7 @@ function removeMarkedElements(html: string): string {
   return output;
 }
 
+/** Removes hidden/invisible HTML before extraction. */
 export async function sanitizeHtml(html: string): Promise<string> {
   return removeMarkedElements(html);
 }
@@ -320,6 +322,7 @@ export async function sanitizeHtml(html: string): Promise<string> {
 const INVISIBLE_UNICODE_RE =
   /[\u200B-\u200F\u202A-\u202E\u2060-\u2064\u206A-\u206F\uFEFF\u{E0000}-\u{E007F}]/gu;
 
+/** Strips invisible Unicode control characters from extracted text. */
 export function stripInvisibleUnicode(text: string): string {
   return text.replace(INVISIBLE_UNICODE_RE, "");
 }

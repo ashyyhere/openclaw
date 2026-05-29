@@ -1,3 +1,4 @@
+// Group id resolution from channel context and plugin metadata.
 import { getLoadedChannelPluginForRead } from "../../channels/plugins/registry-loaded-read.js";
 import type { ChannelMessagingAdapter } from "../../channels/plugins/types.public.js";
 import { normalizeAnyChannelId } from "../../channels/registry.js";
@@ -66,6 +67,7 @@ function extractLegacyParsedGroupTargetId(params: {
   return target || undefined;
 }
 
+/** Reused helper for extract Explicit Group Id behavior in src/auto-reply/reply. */
 export function extractExplicitGroupId(raw: string | undefined | null): string | undefined {
   const trimmed = normalizeOptionalString(raw) ?? "";
   if (!trimmed) {

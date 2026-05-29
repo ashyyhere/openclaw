@@ -1,3 +1,4 @@
+// Tests gateway exec approval manager test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { ExecApprovalManager } from "./exec-approval-manager.js";
 

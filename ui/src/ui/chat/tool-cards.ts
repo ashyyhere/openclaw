@@ -1,3 +1,4 @@
+// ui/src/ui/chat tool cards helpers and runtime behavior.
 import { html, nothing } from "lit";
 import { extractCanvasFromText } from "../../../../src/chat/canvas-render.js";
 import { resolveCanvasIframeUrl } from "../canvas-url.ts";
@@ -10,6 +11,7 @@ import { extractTextCached } from "./message-extract.ts";
 import { isToolResultMessage } from "./role-normalizer.ts";
 import { formatToolOutputForSidebar, getTruncatedPreview } from "./tool-helpers.ts";
 
+/** Shared type for Tool Preview in ui/src/ui/chat. */
 export type ToolPreview = NonNullable<ToolCard["preview"]>;
 
 function resolveCanvasPreviewSandbox(preview: ToolPreview): string {
@@ -78,6 +80,7 @@ function hasToolErrorStatus(value: unknown): boolean {
   return typeof value === "string" && TOOL_ERROR_STATUSES.has(value.trim().toLowerCase());
 }
 
+/** Reused helper for is Tool Error Output behavior in ui/src/ui/chat. */
 export function isToolErrorOutput(outputText: string | undefined): boolean {
   if (!outputText) {
     return false;
@@ -124,6 +127,7 @@ export function isToolErrorOutput(outputText: string | undefined): boolean {
   return hasToolErrorStatus(obj.status);
 }
 
+/** Reused helper for is Tool Card Error behavior in ui/src/ui/chat. */
 export function isToolCardError(card: ToolCard): boolean {
   if (card.isError !== undefined) {
     return card.isError;
@@ -131,6 +135,7 @@ export function isToolCardError(card: ToolCard): boolean {
   return isToolErrorOutput(card.outputText);
 }
 
+/** Reused helper for extract Tool Preview behavior in ui/src/ui/chat. */
 export function extractToolPreview(
   outputText: string | undefined,
   toolName: string | undefined,
@@ -204,6 +209,7 @@ ${text}
 \`\`\``;
 }
 
+/** Reused helper for format Collapsed Tool Summary Text behavior in ui/src/ui/chat. */
 export function formatCollapsedToolSummaryText(value: string | undefined): string | undefined {
   const normalized = value?.trim().replace(/\s+/g, " ");
   if (!normalized) {
@@ -213,6 +219,7 @@ export function formatCollapsedToolSummaryText(value: string | undefined): strin
   return withoutConnector || normalized;
 }
 
+/** Reused helper for format Collapsed Tool Preview Text behavior in ui/src/ui/chat. */
 export function formatCollapsedToolPreviewText(value: string | undefined): string | undefined {
   const normalized = formatCollapsedToolSummaryText(value);
   if (!normalized) {
@@ -234,6 +241,7 @@ function findLatestCard(cards: ToolCard[], id: string, name: string): ToolCard |
   return undefined;
 }
 
+/** Reused helper for extract Tool Cards behavior in ui/src/ui/chat. */
 export function extractToolCards(message: unknown, prefix = "tool"): ToolCard[] {
   const m = message as Record<string, unknown>;
   const content = normalizeContent(m.content);
@@ -309,6 +317,7 @@ export function extractToolCards(message: unknown, prefix = "tool"): ToolCard[] 
   return cards;
 }
 
+/** Reused helper for build Tool Card Sidebar Content behavior in ui/src/ui/chat. */
 export function buildToolCardSidebarContent(card: ToolCard): string {
   const display = resolveToolDisplay({ name: card.name, args: card.args });
   const detail = formatToolDetail(display);
@@ -370,6 +379,7 @@ function renderPreviewFrame(params: {
   `;
 }
 
+/** Reused helper for render Tool Preview behavior in ui/src/ui/chat. */
 export function renderToolPreview(
   preview: ToolPreview | undefined,
   surface: "chat_tool" | "chat_message" | "sidebar",
@@ -414,6 +424,7 @@ export function renderToolPreview(
   `;
 }
 
+/** Reused helper for build Sidebar Content behavior in ui/src/ui/chat. */
 export function buildSidebarContent(
   value: string,
   options?: { rawText?: string | null },
@@ -425,6 +436,7 @@ export function buildSidebarContent(
   };
 }
 
+/** Reused helper for build Preview Sidebar Content behavior in ui/src/ui/chat. */
 export function buildPreviewSidebarContent(
   preview: ToolPreview,
   rawText?: string | null,
@@ -442,6 +454,7 @@ export function buildPreviewSidebarContent(
   };
 }
 
+/** Reused helper for render Raw Output Toggle behavior in ui/src/ui/chat. */
 export function renderRawOutputToggle(text: string) {
   return html`
     <div class="chat-tool-card__raw">
@@ -521,6 +534,7 @@ function renderCollapsedToolSummary(params: {
   `;
 }
 
+/** Reused helper for resolve Collapsed Tool Detail behavior in ui/src/ui/chat. */
 export function resolveCollapsedToolDetail(card: ToolCard, displayDetail: string | undefined) {
   const directDetail = displayDetail?.trim();
   if (directDetail) {
@@ -533,6 +547,7 @@ export function resolveCollapsedToolDetail(card: ToolCard, displayDetail: string
   return formatCollapsedToolPreviewText(inputText);
 }
 
+/** Reused helper for render Tool Card behavior in ui/src/ui/chat. */
 export function renderToolCard(
   card: ToolCard,
   opts: {
@@ -582,6 +597,7 @@ export function renderToolCard(
   `;
 }
 
+/** Reused helper for render Expanded Tool Card Content behavior in ui/src/ui/chat. */
 export function renderExpandedToolCardContent(
   card: ToolCard,
   onOpenSidebar?: (content: SidebarContent) => void,
@@ -660,6 +676,7 @@ export function renderExpandedToolCardContent(
   `;
 }
 
+/** Reused helper for render Tool Card Sidebar behavior in ui/src/ui/chat. */
 export function renderToolCardSidebar(
   card: ToolCard,
   onOpenSidebar?: (content: SidebarContent) => void,

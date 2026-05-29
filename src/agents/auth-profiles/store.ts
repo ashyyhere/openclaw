@@ -1,3 +1,4 @@
+/** Loads, merges, caches, locks, and saves auth profile stores. */
 import fs from "node:fs";
 import path from "node:path";
 import { isDeepStrictEqual } from "node:util";
@@ -693,6 +694,7 @@ function mergeRuntimeExternalProfileState(params: {
   return merged;
 }
 
+/** Updates an auth profile store under the store file lock. */
 export async function updateAuthProfileStoreWithLock(params: {
   agentDir?: string;
   saveOptions?: SaveAuthProfileStoreOptions;
@@ -718,6 +720,7 @@ export async function updateAuthProfileStoreWithLock(params: {
   }
 }
 
+/** Loads the default auth profile store with legacy migration and external overlays. */
 export function loadAuthProfileStore(): AuthProfileStore {
   const asStore = loadPersistedAuthProfileStore();
   if (asStore) {
@@ -824,6 +827,7 @@ function loadAuthProfileStoreForAgent(
   return synced.store;
 }
 
+/** Loads an auth profile store for runtime use, merging main and agent-local stores. */
 export function loadAuthProfileStoreForRuntime(
   agentDir?: string,
   options?: LoadAuthProfileStoreOptions,
@@ -851,6 +855,7 @@ export function loadAuthProfileStoreForRuntime(
   );
 }
 
+/** Loads auth profiles for secret resolution without prompting or writing. */
 export function loadAuthProfileStoreForSecretsRuntime(
   agentDir?: string,
   options?: Pick<
@@ -866,6 +871,7 @@ export function loadAuthProfileStoreForSecretsRuntime(
   });
 }
 
+/** Loads auth profiles without runtime external profile overlays. */
 export function loadAuthProfileStoreWithoutExternalProfiles(
   agentDir?: string,
   loadOptions?: Pick<
@@ -891,6 +897,7 @@ export function loadAuthProfileStoreWithoutExternalProfiles(
   });
 }
 
+/** Ensures an auth profile store exists and overlays any runtime external profiles. */
 export function ensureAuthProfileStore(
   agentDir?: string,
   options?: {
@@ -921,6 +928,7 @@ export function ensureAuthProfileStore(
   });
 }
 
+/** Ensures an auth profile store exists while excluding runtime external profiles. */
 export function ensureAuthProfileStoreWithoutExternalProfiles(
   agentDir?: string,
   options?: {
@@ -955,6 +963,7 @@ export function ensureAuthProfileStoreWithoutExternalProfiles(
   });
 }
 
+/** Finds a persisted profile credential from agent-local then main stores. */
 export function findPersistedAuthProfileCredential(params: {
   agentDir?: string;
   profileId: string;
@@ -974,6 +983,7 @@ export function findPersistedAuthProfileCredential(params: {
   return loadPersistedAuthProfileStore()?.profiles[params.profileId];
 }
 
+/** Resolves which agent directory owns a persisted profile credential. */
 export function resolvePersistedAuthProfileOwnerAgentDir(params: {
   agentDir?: string;
   profileId: string;
@@ -1002,6 +1012,7 @@ export function resolvePersistedAuthProfileOwnerAgentDir(params: {
   return mainStore?.profiles[params.profileId] ? undefined : params.agentDir;
 }
 
+/** Loads merged auth profiles for a local update without syncing external CLI profiles. */
 export function ensureAuthProfileStoreForLocalUpdate(agentDir?: string): AuthProfileStore {
   const options: LoadAuthProfileStoreOptions = { syncExternalCli: false };
   const store = loadAuthProfileStoreForAgent(agentDir, options);
@@ -1020,25 +1031,30 @@ export function ensureAuthProfileStoreForLocalUpdate(agentDir?: string): AuthPro
   });
 }
 
+/** Re-exported API for src/agents/auth-profiles, starting with has Any Auth Profile Store Source. */
 export { hasAnyAuthProfileStoreSource } from "./source-check.js";
 
+/** Reused helper for get Runtime Auth Profile Store Snapshot behavior in src/agents/auth-profiles. */
 export function getRuntimeAuthProfileStoreSnapshot(
   agentDir?: string,
 ): AuthProfileStore | undefined {
   return getRuntimeAuthProfileStoreSnapshotImpl(agentDir);
 }
 
+/** Reused helper for replace Runtime Auth Profile Store Snapshots behavior in src/agents/auth-profiles. */
 export function replaceRuntimeAuthProfileStoreSnapshots(
   entries: Array<{ agentDir?: string; store: AuthProfileStore }>,
 ): void {
   replaceRuntimeAuthProfileStoreSnapshotsImpl(entries);
 }
 
+/** Reused helper for clear Runtime Auth Profile Store Snapshots behavior in src/agents/auth-profiles. */
 export function clearRuntimeAuthProfileStoreSnapshots(): void {
   clearRuntimeAuthProfileStoreSnapshotsImpl();
   clearLoadedAuthStoreCache();
 }
 
+/** Persists auth profile secrets and mutable state sidecars. */
 export function saveAuthProfileStore(
   store: AuthProfileStore,
   agentDir?: string,

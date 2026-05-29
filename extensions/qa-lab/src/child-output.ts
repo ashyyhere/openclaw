@@ -1,3 +1,4 @@
+// extensions/qa-lab/src child output helpers and runtime behavior.
 export const QA_CHILD_STDOUT_MAX_BYTES = 1024 * 1024;
 export const QA_CHILD_STDERR_TAIL_BYTES = 64 * 1024;
 

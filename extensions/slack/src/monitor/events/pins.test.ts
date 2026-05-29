@@ -1,3 +1,4 @@
+// Tests extensions/slack/src/monitor/events pins test behavior.
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 const pinEnqueueMock = vi.hoisted(() => vi.fn());

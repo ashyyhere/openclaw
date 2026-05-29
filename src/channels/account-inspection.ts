@@ -1,3 +1,4 @@
+// Channel account inspection helpers for status/configuration views.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {
   hasConfiguredUnavailableCredentialStatus,
@@ -15,6 +16,7 @@ type AccountInspectionFields = {
   configured?: boolean;
 } | null;
 
+/** Inspect one channel account through the plugin or read-only fallback. */
 export async function inspectChannelAccount(params: {
   plugin: ChannelPlugin;
   cfg: OpenClawConfig;
@@ -30,6 +32,7 @@ export async function inspectChannelAccount(params: {
   );
 }
 
+/** Inspect and normalize account enabled/configured status for display. */
 export async function resolveInspectedChannelAccount(params: {
   plugin: ChannelPlugin;
   cfg: OpenClawConfig;

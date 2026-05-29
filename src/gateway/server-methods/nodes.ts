@@ -1,3 +1,4 @@
+// gateway/server-methods nodes helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import {
   type ConnectParams,
@@ -79,6 +80,7 @@ import {
 import type { GatewayClient, GatewayRequestContext, RespondFn } from "./shared-types.js";
 import type { GatewayRequestHandlers } from "./types.js";
 
+/** Re-exported API for src/gateway/server-methods. */
 export {
   clearNodeWakeState,
   NODE_WAKE_RECONNECT_RETRY_WAIT_MS,
@@ -464,6 +466,7 @@ function emitTalkPttNodeEvent(params: {
   );
 }
 
+/** Reused helper for maybe Wake Node With Apns behavior in src/gateway/server-methods. */
 export async function maybeWakeNodeWithApns(
   nodeId: string,
   opts?: { force?: boolean; wakeReason?: string; cfg?: OpenClawConfig },
@@ -580,6 +583,7 @@ export async function maybeWakeNodeWithApns(
   }
 }
 
+/** Reused helper for maybe Send Node Wake Nudge behavior in src/gateway/server-methods. */
 export async function maybeSendNodeWakeNudge(
   nodeId: string,
   opts?: { cfg?: OpenClawConfig },
@@ -667,6 +671,7 @@ export async function maybeSendNodeWakeNudge(
   }
 }
 
+/** Reused helper for wait For Node Reconnect behavior in src/gateway/server-methods. */
 export async function waitForNodeReconnect(params: {
   nodeId: string;
   context: { nodeRegistry: { get: (nodeId: string) => unknown } };
@@ -686,6 +691,7 @@ export async function waitForNodeReconnect(params: {
   return Boolean(params.context.nodeRegistry.get(params.nodeId));
 }
 
+/** Reused constant for node Handlers behavior in src/gateway/server-methods. */
 export const nodeHandlers: GatewayRequestHandlers = {
   "node.pair.request": async ({ params, respond, context }) => {
     if (!validateNodePairRequestParams(params)) {

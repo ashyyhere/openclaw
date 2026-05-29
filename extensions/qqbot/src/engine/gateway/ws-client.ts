@@ -1,3 +1,4 @@
+// extensions/qqbot/src/engine/gateway ws client helpers and runtime behavior.
 import type { Agent } from "node:http";
 import { resolveAmbientNodeProxyAgent } from "openclaw/plugin-sdk/extension-shared";
 import WebSocket from "ws";

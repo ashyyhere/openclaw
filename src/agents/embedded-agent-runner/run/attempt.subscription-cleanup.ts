@@ -1,7 +1,9 @@
+/** Builds subscription params and cleans up per-attempt session resources. */
 import type { SubscribeEmbeddedAgentSessionParams } from "../../embedded-agent-subscribe.types.js";
 import { log } from "../logger.js";
 import { resolveEmbeddedAbortSettleTimeoutMs } from "./attempt.abort-settle-timeout.js";
 
+/** Reused constant for EMBEDDED ABORT SETTLE TIMEOUT MS behavior in src/agents/embedded-agent-runner. */
 export const EMBEDDED_ABORT_SETTLE_TIMEOUT_MS = resolveEmbeddedAbortSettleTimeoutMs();
 
 type IdleAwareAgent = {
@@ -46,12 +48,14 @@ async function waitForEmbeddedAbortSettle(params: {
   }
 }
 
+/** Projects attempt subscription inputs into SDK subscription params. */
 export function buildEmbeddedSubscriptionParams(
   params: SubscribeEmbeddedAgentSessionParams,
 ): SubscribeEmbeddedAgentSessionParams {
   return params;
 }
 
+/** Unsubscribes, aborts, waits for idle, and clears pending tool results. */
 export async function cleanupEmbeddedAttemptResources(params: {
   removeToolResultContextGuard?: () => void;
   flushPendingToolResultsAfterIdle: (params: {

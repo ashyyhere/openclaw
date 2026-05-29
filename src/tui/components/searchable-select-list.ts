@@ -1,3 +1,4 @@
+// tui/components searchable select list helpers and runtime behavior.
 import {
   type Component,
   Input,
@@ -15,6 +16,7 @@ import { findWordBoundaryIndex, fuzzyFilterLower } from "./fuzzy-filter.js";
 const ANSI_ESCAPE = String.fromCharCode(27);
 const ANSI_SGR_REGEX = new RegExp(`${ANSI_ESCAPE}\\[[0-9;]*m`, "g");
 
+/** Shared type for Searchable Select List Theme in src/tui/components. */
 export interface SearchableSelectListTheme extends SelectListTheme {
   searchPrompt: (text: string) => string;
   searchInput: (text: string) => string;

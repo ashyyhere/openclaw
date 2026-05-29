@@ -1,3 +1,4 @@
+/** Tests long single-line fenced blocks split with reopen markers. */
 import type { AssistantMessage } from "openclaw/plugin-sdk/llm";
 import { describe, expect, it, vi } from "vitest";
 import {

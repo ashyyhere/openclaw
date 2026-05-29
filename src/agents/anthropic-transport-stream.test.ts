@@ -1,3 +1,4 @@
+/** Tests Anthropic Messages transport stream parsing. */
 import type { Model } from "openclaw/plugin-sdk/llm";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { attachModelProviderRequestTransport } from "./provider-request-config.js";

@@ -1,3 +1,4 @@
+/** Tests in-process gateway method dispatch runtime helpers. */
 import { describe, expect, it, vi } from "vitest";
 import { withPluginRuntimeGatewayRequestScope } from "../plugins/runtime/gateway-request-scope.js";
 import { dispatchGatewayMethod } from "./gateway-method-runtime.js";

@@ -1,3 +1,4 @@
+// Tests gateway server hooks test behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { afterEach, describe, expect, test, vi } from "vitest";

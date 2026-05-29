@@ -1,3 +1,4 @@
+// extensions/whatsapp/src auto reply broadcast groups test harness helpers and runtime behavior.
 import { vi } from "vitest";
 import {
   createWebInboundDeliverySpies,

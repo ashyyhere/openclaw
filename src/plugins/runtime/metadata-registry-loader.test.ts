@@ -1,3 +1,4 @@
+// Tests plugins/runtime metadata registry loader test behavior.
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { PluginLoadOptions } from "../loader.js";
 

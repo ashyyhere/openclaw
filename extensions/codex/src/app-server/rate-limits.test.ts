@@ -1,3 +1,4 @@
+// Tests extensions/codex/src/app-server rate limits test behavior.
 import { describe, expect, it } from "vitest";
 import {
   formatCodexUsageLimitErrorMessage,

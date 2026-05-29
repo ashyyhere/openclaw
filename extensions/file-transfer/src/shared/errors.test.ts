@@ -1,3 +1,4 @@
+// Tests extensions/file-transfer/src/shared errors test behavior.
 import { describe, expect, it } from "vitest";
 import { classifyFsError, err, throwFromNodePayload } from "./errors.js";
 

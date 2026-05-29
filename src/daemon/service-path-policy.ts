@@ -1,3 +1,4 @@
+// daemon service path policy helpers and runtime behavior.
 import path from "node:path";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
@@ -5,6 +6,7 @@ function getPathModule(platform: NodeJS.Platform) {
   return platform === "win32" ? path.win32 : path.posix;
 }
 
+/** Reused helper for normalize Service Path Entry behavior in src/daemon. */
 export function normalizeServicePathEntry(entry: string, platform: NodeJS.Platform): string {
   const pathModule = getPathModule(platform);
   const normalized = pathModule.normalize(entry).replaceAll("\\", "/");
@@ -14,6 +16,7 @@ export function normalizeServicePathEntry(entry: string, platform: NodeJS.Platfo
   return normalized;
 }
 
+/** Reused helper for is Non Minimal Service Path Entry behavior in src/daemon. */
 export function isNonMinimalServicePathEntry(entry: string, platform: NodeJS.Platform): boolean {
   if (platform === "win32") {
     return false;

@@ -1,3 +1,4 @@
+/** Parent-session relay for streamed ACP child-session progress. */
 import { mkdir } from "node:fs/promises";
 import path from "node:path";
 import { readAcpSessionEntry } from "../acp/runtime/session-meta.js";
@@ -57,6 +58,7 @@ function resolveAcpStreamLogPathFromSessionFile(sessionFile: string, sessionId: 
   return path.join(baseDir, `${sessionId}.acp-stream.jsonl`);
 }
 
+/** Resolve the JSONL stream log path for a spawned ACP child session. */
 export function resolveAcpSpawnStreamLogPath(params: {
   childSessionKey: string;
 }): string | undefined {
@@ -85,6 +87,7 @@ export function resolveAcpSpawnStreamLogPath(params: {
   }
 }
 
+/** Start relaying ACP child-session progress back to its parent session. */
 export function startAcpSpawnParentStreamRelay(params: {
   runId: string;
   parentSessionKey: string;
@@ -514,6 +517,7 @@ export function startAcpSpawnParentStreamRelay(params: {
   };
 }
 
+/** Shared type for Acp Spawn Parent Relay Handle in src/agents. */
 export type AcpSpawnParentRelayHandle = {
   dispose: () => void;
   notifyStarted: () => void;

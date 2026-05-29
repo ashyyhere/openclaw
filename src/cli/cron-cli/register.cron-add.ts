@@ -1,3 +1,4 @@
+/** Registers the cron add command and request payload construction. */
 import type { Command } from "commander";
 import { theme } from "../../../packages/terminal-core/src/theme.js";
 import type { CronJob } from "../../cron/types.js";
@@ -23,6 +24,7 @@ import {
 } from "./shared.js";
 import { normalizeCronSessionTargetOption, parseCronThreadIdOption } from "./thread-id-shared.js";
 
+/** Reused helper for register Cron Status Command behavior in src/cli/cron-cli. */
 export function registerCronStatusCommand(cron: Command) {
   addGatewayClientOptions(
     cron
@@ -40,6 +42,7 @@ export function registerCronStatusCommand(cron: Command) {
   );
 }
 
+/** Reused helper for register Cron List Command behavior in src/cli/cron-cli. */
 export function registerCronListCommand(cron: Command) {
   addGatewayClientOptions(
     cron
@@ -72,6 +75,7 @@ export function registerCronListCommand(cron: Command) {
   );
 }
 
+/** Reused helper for register Cron Add Command behavior in src/cli/cron-cli. */
 export function registerCronAddCommand(cron: Command) {
   addGatewayClientOptions(
     cron

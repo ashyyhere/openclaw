@@ -14,6 +14,7 @@ function hasLegacyQwenPortalOAuthProfile(store: AuthProfileStore, profileId?: st
   );
 }
 
+/** Reused helper for format Auth Doctor Hint behavior in src/agents/auth-profiles. */
 export async function formatAuthDoctorHint(params: {
   cfg?: OpenClawConfig;
   store: AuthProfileStore;

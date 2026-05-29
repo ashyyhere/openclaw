@@ -1,3 +1,4 @@
+// cron parse helpers and runtime behavior.
 import { parseStrictPositiveInteger } from "../infra/parse-finite-number.js";
 
 const ISO_TZ_RE = /(Z|[+-]\d{2}:?\d{2})$/i;
@@ -17,6 +18,7 @@ function normalizeUtcIso(raw: string) {
   return raw;
 }
 
+/** Reused helper for parse Absolute Time Ms behavior in src/cron. */
 export function parseAbsoluteTimeMs(input: string): number | null {
   const raw = input.trim();
   if (!raw) {

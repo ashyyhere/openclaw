@@ -1,3 +1,4 @@
+// Coverage for finalizable draft preview delivery.
 import { describe, expect, it, vi } from "vitest";
 import { deliverFinalizableDraftPreview } from "./draft-preview-finalizer.js";
 

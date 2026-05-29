@@ -1,3 +1,4 @@
+// extensions/whatsapp/src setup surface helpers and runtime behavior.
 import type { ChannelSetupWizard } from "openclaw/plugin-sdk/setup";
 import {
   DEFAULT_ACCOUNT_ID,

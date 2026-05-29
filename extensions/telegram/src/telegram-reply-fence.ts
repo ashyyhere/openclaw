@@ -1,3 +1,4 @@
+// extensions/telegram/src telegram reply fence helpers and runtime behavior.
 import {
   isExplicitCommandTurn,
   type CommandTurnContext,

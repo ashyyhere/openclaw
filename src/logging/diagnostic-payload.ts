@@ -1,3 +1,4 @@
+// logging diagnostic payload helpers and runtime behavior.
 import { emitInternalDiagnosticEvent as emitDiagnosticEvent } from "../infra/diagnostic-events.js";
 import { parseStrictNonNegativeInteger } from "../infra/parse-finite-number.js";
 
@@ -11,6 +12,7 @@ type LargePayloadBase = {
   reason?: string;
 };
 
+/** Reused helper for log Large Payload behavior in src/logging. */
 export function logLargePayload(
   params: LargePayloadBase & {
     action: "rejected" | "truncated" | "chunked";
@@ -22,6 +24,7 @@ export function logLargePayload(
   });
 }
 
+/** Reused helper for log Rejected Large Payload behavior in src/logging. */
 export function logRejectedLargePayload(params: LargePayloadBase): void {
   logLargePayload({
     action: "rejected",
@@ -29,6 +32,7 @@ export function logRejectedLargePayload(params: LargePayloadBase): void {
   });
 }
 
+/** Reused helper for parse Content Length Header behavior in src/logging. */
 export function parseContentLengthHeader(raw: string | string[] | undefined): number | undefined {
   const value = Array.isArray(raw) ? raw[0] : raw;
   if (typeof value !== "string") {

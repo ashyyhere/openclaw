@@ -1,3 +1,4 @@
+/** Registers the cron command group and shared help. */
 import type { Command } from "commander";
 import { formatDocsLink } from "../../../packages/terminal-core/src/links.js";
 import { theme } from "../../../packages/terminal-core/src/theme.js";
@@ -10,6 +11,7 @@ import {
 import { registerCronEditCommand } from "./register.cron-edit.js";
 import { registerCronSimpleCommands } from "./register.cron-simple.js";
 
+/** Reused helper for register Cron Cli behavior in src/cli/cron-cli. */
 export function registerCronCli(program: Command) {
   const cron = program
     .command("cron")

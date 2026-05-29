@@ -1,3 +1,4 @@
+// Conversation binding context resolution for command targets.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {
   resolveCommandConversationResolution,
@@ -19,6 +20,7 @@ type ResolveConversationBindingContextInput = Omit<
   cfg: OpenClawConfig;
 };
 
+/** Resolve a canonical binding context for a command conversation target. */
 export function resolveConversationBindingContext(
   params: ResolveConversationBindingContextInput,
 ): ConversationBindingContext | null {

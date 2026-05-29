@@ -1,3 +1,4 @@
+// extensions/anthropic cli constants helpers and runtime behavior.
 export const CLAUDE_CLI_BACKEND_ID = "claude-cli";
 export const CLAUDE_CLI_DEFAULT_MODEL_REF = `${CLAUDE_CLI_BACKEND_ID}/claude-opus-4-8`;
 export const CLAUDE_CLI_DEFAULT_ALLOWLIST_REFS = [

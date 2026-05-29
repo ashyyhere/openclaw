@@ -1,7 +1,9 @@
+// gateway node invoke sanitize helpers and runtime behavior.
 import type { ExecApprovalManager } from "./exec-approval-manager.js";
 import { sanitizeSystemRunParamsForForwarding } from "./node-invoke-system-run-approval.js";
 import type { GatewayClient } from "./server-methods/types.js";
 
+/** Reused helper for sanitize Node Invoke Params For Forwarding behavior in src/gateway. */
 export function sanitizeNodeInvokeParamsForForwarding(opts: {
   nodeId: string;
   command: string;

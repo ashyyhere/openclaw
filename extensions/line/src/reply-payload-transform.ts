@@ -1,3 +1,4 @@
+// extensions/line/src reply payload transform helpers and runtime behavior.
 import { parseStrictFiniteNumber } from "openclaw/plugin-sdk/number-runtime";
 import type { ReplyPayload } from "openclaw/plugin-sdk/reply-runtime";
 import {

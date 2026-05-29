@@ -1,3 +1,4 @@
+// Tests cron service jobs top of hour stagger test behavior.
 import crypto from "node:crypto";
 import { describe, expect, it, vi } from "vitest";
 import { computeJobNextRunAtMs } from "./service/jobs.js";

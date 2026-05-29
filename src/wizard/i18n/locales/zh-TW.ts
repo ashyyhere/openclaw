@@ -1,5 +1,7 @@
+// wizard/i18n/locales zh TW helpers and runtime behavior.
 import type { WizardTranslationMap } from "../types.js";
 
+/** Reused constant for zh TW behavior in src/wizard/i18n. */
 export const zh_TW = {
   common: {
     back: "返回",

@@ -1,3 +1,4 @@
+/** Tests agent/subagent/group/provider tool policy resolution. */
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

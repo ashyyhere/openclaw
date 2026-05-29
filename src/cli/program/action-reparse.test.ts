@@ -1,3 +1,4 @@
+/** Tests reparsing lazy command actions through the top-level program. */
 import { Command } from "commander";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { reparseProgramFromActionArgs } from "./action-reparse.js";

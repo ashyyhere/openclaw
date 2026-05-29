@@ -1,3 +1,4 @@
+/** Estimates prompt pressure and routes preemptive compaction/truncation. */
 import type { SessionContextBudgetStatus } from "../../../config/sessions.js";
 import { isRecord } from "../../../shared/record-coerce.js";
 import { estimateStringChars } from "../../../utils/cjk-chars.js";
@@ -10,6 +11,7 @@ import type { AgentMessage } from "../../runtime/index.js";
 import { estimateToolResultReductionPotential } from "../tool-result-truncation.js";
 import type { PreemptiveCompactionRoute } from "./preemptive-compaction.types.js";
 
+/** Reused constant for PREEMPTIVE OVERFLOW ERROR TEXT behavior in src/agents/embedded-agent-runner. */
 export const PREEMPTIVE_OVERFLOW_ERROR_TEXT =
   "Context overflow: prompt too large for the model (precheck).";
 
@@ -21,8 +23,10 @@ const CONTENT_BLOCK_OVERHEAD_TOKENS = 6;
 const IMAGE_BLOCK_TOKENS = 2_000;
 const TRUNCATION_ROUTE_BUFFER_TOKENS = 512;
 
+/** Re-exported API for src/agents/embedded-agent-runner, starting with Preemptive Compaction Route. */
 export type { PreemptiveCompactionRoute } from "./preemptive-compaction.types.js";
 
+/** Shared type for Preemptive Compaction Decision in src/agents/embedded-agent-runner. */
 export type PreemptiveCompactionDecision = {
   route: PreemptiveCompactionRoute;
   shouldCompact: boolean;
@@ -34,6 +38,7 @@ export type PreemptiveCompactionDecision = {
   effectiveReserveTokens: number;
 };
 
+/** Shared type for Llm Boundary Token Pressure in src/agents/embedded-agent-runner. */
 export type LlmBoundaryTokenPressure = {
   estimatedPromptTokens: number;
   source: string;
@@ -184,6 +189,7 @@ function estimateMessageTokenPressure(message: AgentMessage): number {
   return tokens;
 }
 
+/** Estimates tokens that will cross the LLM boundary after message transforms. */
 export function estimateLlmBoundaryTokenPressure(params: {
   messages: AgentMessage[];
   systemPrompt?: string;
@@ -202,6 +208,7 @@ export function estimateLlmBoundaryTokenPressure(params: {
   return Math.max(0, Math.ceil((historyTokens + systemTokens + promptTokens) * SAFETY_MARGIN));
 }
 
+/** Estimates rendered LLM-boundary tokens from pre-rendered message text. */
 export function estimateRenderedLlmBoundaryTokenPressure(params: {
   systemPrompt?: string;
   prompt: string;
@@ -215,6 +222,7 @@ export function estimateRenderedLlmBoundaryTokenPressure(params: {
   return Math.max(0, Math.ceil((systemTokens + promptTokens) * SAFETY_MARGIN));
 }
 
+/** Estimates total tokens before the next provider prompt is submitted. */
 export function estimatePrePromptTokens(params: {
   messages: AgentMessage[];
   systemPrompt?: string;
@@ -239,6 +247,7 @@ function normalizeLlmBoundaryTokenPressure(
   };
 }
 
+/** Decides whether to compact, truncate, or proceed before provider submission. */
 export function shouldPreemptivelyCompactBeforePrompt(params: {
   messages: AgentMessage[];
   unwindowedMessages?: AgentMessage[];
@@ -320,6 +329,7 @@ export function shouldPreemptivelyCompactBeforePrompt(params: {
   };
 }
 
+/** Formats compact diagnostics for pre-prompt pressure decisions. */
 export function formatPrePromptPrecheckLog(params: {
   result: PreemptiveCompactionDecision;
   sessionKey?: string;
@@ -352,6 +362,7 @@ export function formatPrePromptPrecheckLog(params: {
   );
 }
 
+/** Builds a session budget status snapshot for pre-prompt pressure reporting. */
 export function buildPrePromptContextBudgetStatus(params: {
   result: PreemptiveCompactionDecision;
   provider: string;

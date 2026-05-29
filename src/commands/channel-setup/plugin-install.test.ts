@@ -1,3 +1,4 @@
+/** Tests bundled channel plugin install planning for setup. */
 import path from "node:path";
 import { bundledPluginRoot, bundledPluginRootAt } from "openclaw/plugin-sdk/test-fixtures";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";

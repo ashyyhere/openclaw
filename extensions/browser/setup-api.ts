@@ -1,3 +1,4 @@
+// extensions/browser setup api helpers and runtime behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/plugin-entry";
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 import { normalizeOptionalLowercaseString } from "openclaw/plugin-sdk/string-coerce-runtime";

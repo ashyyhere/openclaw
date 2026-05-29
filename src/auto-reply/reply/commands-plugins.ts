@@ -1,3 +1,4 @@
+// Chat command handlers for plugin listing, install, and management.
 import fs from "node:fs";
 import { buildNpmInstallRecordFields } from "../../cli/npm-resolution.js";
 import { resolveOfficialExternalNpmPackageTrust } from "../../cli/plugin-install-plan.js";
@@ -386,6 +387,7 @@ async function loadPluginCommandConfig(): Promise<
   };
 }
 
+/** Reused constant for handle Plugins Command behavior in src/auto-reply/reply. */
 export const handlePluginsCommand: CommandHandler = async (params, allowTextCommands) => {
   if (!allowTextCommands) {
     return null;

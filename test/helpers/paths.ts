@@ -1,3 +1,4 @@
+// test/helpers paths helpers and runtime behavior.
 import path from "node:path";
 
 export function isPathWithinBase(base: string, target: string): boolean {

@@ -1,3 +1,4 @@
+/** Regression coverage for provider-safe tool schema projection. */
 import { describe, expect, it } from "vitest";
 import {
   filterRuntimeCompatibleTools,

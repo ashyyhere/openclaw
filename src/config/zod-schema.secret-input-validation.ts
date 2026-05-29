@@ -1,3 +1,4 @@
+// config zod schema secret input validation helpers and runtime behavior.
 import { z } from "zod";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import { hasConfiguredSecretInput } from "./types.secrets.js";
@@ -41,6 +42,7 @@ function forEachEnabledAccount<T extends { enabled?: unknown }>(
   }
 }
 
+/** Reused helper for validate Telegram Webhook Secret Requirements behavior in src/config. */
 export function validateTelegramWebhookSecretRequirements(
   value: TelegramConfigLike,
   ctx: z.RefinementCtx,
@@ -71,6 +73,7 @@ export function validateTelegramWebhookSecretRequirements(
   });
 }
 
+/** Reused helper for validate Slack Signing Secret Requirements behavior in src/config. */
 export function validateSlackSigningSecretRequirements(
   value: SlackConfigLike,
   ctx: z.RefinementCtx,

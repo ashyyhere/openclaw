@@ -1,3 +1,4 @@
+// extensions/tavily/src config helpers and runtime behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { resolvePositiveTimeoutSeconds } from "openclaw/plugin-sdk/provider-web-search";
 import {

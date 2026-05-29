@@ -1,3 +1,4 @@
+// plugins activation context helpers and runtime behavior.
 import { applyPluginAutoEnable } from "../config/plugin-auto-enable.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {
@@ -13,16 +14,19 @@ import {
 import { getCurrentPluginMetadataSnapshot } from "./current-plugin-metadata-snapshot.js";
 import type { PluginDiscoveryResult } from "./discovery.js";
 
+/** Shared type for Plugin Activation Compat Config in src/plugins. */
 export type PluginActivationCompatConfig = {
   enablementPluginIds?: readonly string[];
   vitestPluginIds?: readonly string[];
 };
 
+/** Shared type for Plugin Activation Bundled Compat Mode in src/plugins. */
 export type PluginActivationBundledCompatMode = {
   enablement?: "always";
   vitest?: boolean;
 };
 
+/** Shared type for Plugin Activation Inputs in src/plugins. */
 export type PluginActivationInputs = {
   rawConfig?: OpenClawConfig;
   config?: OpenClawConfig;
@@ -32,6 +36,7 @@ export type PluginActivationInputs = {
   autoEnabledReasons: Record<string, string[]>;
 };
 
+/** Shared type for Plugin Activation Snapshot in src/plugins. */
 export type PluginActivationSnapshot = Pick<
   PluginActivationInputs,
   | "rawConfig"
@@ -42,10 +47,12 @@ export type PluginActivationSnapshot = Pick<
   | "autoEnabledReasons"
 >;
 
+/** Shared type for Bundled Plugin Compatible Activation Inputs in src/plugins. */
 export type BundledPluginCompatibleActivationInputs = PluginActivationInputs & {
   compatPluginIds: string[];
 };
 
+/** Shared type for Bundled Plugin Compatible Load Values in src/plugins. */
 export type BundledPluginCompatibleLoadValues = Pick<
   BundledPluginCompatibleActivationInputs,
   "rawConfig" | "config" | "activationSourceConfig" | "autoEnabledReasons" | "compatPluginIds"
@@ -69,6 +76,7 @@ type BundledPluginCompatibleActivationParams = {
   discovery?: PluginDiscoveryResult;
 };
 
+/** Reused helper for with Activated Plugin Ids behavior in src/plugins. */
 export function withActivatedPluginIds(params: {
   config?: OpenClawConfig;
   pluginIds: readonly string[];
@@ -113,6 +121,7 @@ export function withActivatedPluginIds(params: {
   };
 }
 
+/** Reused helper for apply Plugin Compatibility Overrides behavior in src/plugins. */
 export function applyPluginCompatibilityOverrides(params: {
   config?: OpenClawConfig;
   compat?: PluginActivationCompatConfig;
@@ -182,6 +191,7 @@ function applyPluginAutoEnableForActivation(params: {
   });
 }
 
+/** Reused helper for resolve Plugin Activation Snapshot behavior in src/plugins. */
 export function resolvePluginActivationSnapshot(params: {
   rawConfig?: OpenClawConfig;
   resolvedConfig?: OpenClawConfig;
@@ -219,6 +229,7 @@ export function resolvePluginActivationSnapshot(params: {
   };
 }
 
+/** Reused helper for resolve Plugin Activation Inputs behavior in src/plugins. */
 export function resolvePluginActivationInputs(params: {
   rawConfig?: OpenClawConfig;
   resolvedConfig?: OpenClawConfig;
@@ -255,6 +266,7 @@ export function resolvePluginActivationInputs(params: {
   };
 }
 
+/** Reused helper for resolve Bundled Plugin Compatible Activation Inputs behavior in src/plugins. */
 export function resolveBundledPluginCompatibleActivationInputs(
   params: BundledPluginCompatibleActivationParams,
 ): BundledPluginCompatibleActivationInputs {
@@ -297,6 +309,7 @@ export function resolveBundledPluginCompatibleActivationInputs(
   };
 }
 
+/** Reused helper for resolve Bundled Plugin Compatible Load Values behavior in src/plugins. */
 export function resolveBundledPluginCompatibleLoadValues(
   params: BundledPluginCompatibleActivationParams,
 ): BundledPluginCompatibleLoadValues {

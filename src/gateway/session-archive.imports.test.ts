@@ -1,3 +1,4 @@
+// Tests gateway session archive imports test behavior.
 import { importFreshModule } from "openclaw/plugin-sdk/test-fixtures";
 import { describe, expect, it, vi } from "vitest";
 

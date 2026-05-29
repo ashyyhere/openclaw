@@ -1,3 +1,4 @@
+/** Tests command-poll backoff, reset, and stale cleanup behavior. */
 import { describe, expect, it } from "vitest";
 import type { SessionState } from "../logging/diagnostic-session-state.js";
 import {

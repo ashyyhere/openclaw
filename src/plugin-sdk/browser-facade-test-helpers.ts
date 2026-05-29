@@ -1,3 +1,4 @@
+/** Test helpers for mocking browser plugin facade modules. */
 import { expect, vi } from "vitest";
 
 type FacadeLoaderMock = ReturnType<typeof vi.fn>;
@@ -14,6 +15,7 @@ const BROWSER_HOST_INSPECTION_ARTIFACT = {
 
 const BROWSER_VERSION = "Google Chrome 144.0.7534.0";
 
+/** Install a mocked browser host-inspection facade into the shared facade loader mock. */
 export function mockBrowserHostInspectionFacade(
   loadBundledPluginPublicSurfaceModuleSync: FacadeLoaderMock,
   executable: ChromeExecutableFixture,
@@ -29,6 +31,7 @@ export function mockBrowserHostInspectionFacade(
   });
 }
 
+/** Assert that host-inspection calls delegate through the bundled browser facade. */
 export function expectBrowserHostInspectionDelegation(params: {
   executable: ChromeExecutableFixture;
   hostInspection: typeof import("./browser-host-inspection.js");
@@ -44,6 +47,7 @@ export function expectBrowserHostInspectionDelegation(params: {
   );
 }
 
+/** Assert that host-inspection facade loading failures propagate to callers. */
 export async function expectBrowserHostInspectionFacadeUnavailable(
   loadBundledPluginPublicSurfaceModuleSync: FacadeLoaderMock,
 ) {

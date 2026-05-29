@@ -188,12 +188,14 @@ export type AgentSessionEvent =
 
 /** Listener function for agent session events */
 export type AgentSessionEventListener = (event: AgentSessionEvent) => void;
+/** Shared type for Agent Session Write Lock Runner in src/agents/sessions. */
 export type AgentSessionWriteLockRunner = <T>(run: () => Promise<T> | T) => Promise<T>;
 
 // ============================================================================
 // Types
 // ============================================================================
 
+/** Shared type for Agent Session Config in src/agents/sessions. */
 export interface AgentSessionConfig {
   agent: Agent;
   sessionManager: SessionManager;
@@ -228,6 +230,7 @@ export interface AgentSessionConfig {
   withSessionWriteLock?: AgentSessionWriteLockRunner;
 }
 
+/** Shared type for Extension Bindings in src/agents/sessions. */
 export interface ExtensionBindings {
   uiContext?: ExtensionUIContext;
   commandContextActions?: ExtensionCommandContextActions;
@@ -307,6 +310,7 @@ const THINKING_LEVELS: ThinkingLevel[] = ["off", "minimal", "low", "medium", "hi
 // AgentSession Class
 // ============================================================================
 
+/** Reused class for Agent Session behavior in src/agents/sessions. */
 export class AgentSession {
   readonly agent: Agent;
   readonly sessionManager: SessionManager;

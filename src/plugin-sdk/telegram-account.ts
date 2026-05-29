@@ -1,3 +1,4 @@
+// plugin-sdk telegram account helpers and runtime behavior.
 import type { OpenClawConfig } from "./config-types.js";
 import { loadBundledPluginPublicSurfaceModuleSync } from "./facade-loader.js";
 

@@ -1,3 +1,4 @@
+/** Model/auth discovery facade for embedded agent runtimes. */
 import path from "node:path";
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -22,6 +23,7 @@ import {
   type ModelRegistry as AgentModelRegistry,
 } from "./sessions/index.js";
 
+/** Re-exported API for src/agents, starting with Auth Storage. */
 export { AuthStorage, ModelRegistry };
 
 type ProviderRuntimeModelLike = Model & {
@@ -40,6 +42,7 @@ type DiscoverModelsOptions = {
   normalizeModels?: boolean;
 };
 
+/** Normalize a discovered provider model through plugin transport/model hooks. */
 export function normalizeDiscoveredAgentModel<T>(value: T, agentDir: string): T {
   if (!isRecord(value)) {
     return value;
@@ -144,6 +147,7 @@ function createOpenClawModelRegistry(
   return registry;
 }
 
+/** Create in-memory auth storage visible to model discovery. */
 export function discoverAuthStorage(
   agentDir: string,
   options?: DiscoverAuthStorageOptions,
@@ -157,6 +161,7 @@ export function discoverAuthStorage(
   return AuthStorage.inMemory(credentials);
 }
 
+/** Create the model registry used for agent model discovery. */
 export function discoverModels(
   authStorage: AgentAuthStorage,
   agentDir: string,
@@ -170,6 +175,7 @@ export function discoverModels(
   );
 }
 
+/** Re-exported API for src/agents. */
 export {
   addEnvBackedAgentCredentials,
   resolveAgentCredentialsForDiscovery,

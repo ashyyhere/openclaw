@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix/monitor ack config helpers and runtime behavior.
 import { resolveAckReaction } from "openclaw/plugin-sdk/channel-feedback";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import type { CoreConfig } from "../../types.js";

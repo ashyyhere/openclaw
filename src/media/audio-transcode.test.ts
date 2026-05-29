@@ -1,3 +1,4 @@
+// Tests media audio transcode test behavior.
 import { existsSync, realpathSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import path from "node:path";

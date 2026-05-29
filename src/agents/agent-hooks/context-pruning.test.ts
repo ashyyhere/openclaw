@@ -1,3 +1,4 @@
+/** Regression coverage for context pruning extension behavior. */
 import type { AgentMessage } from "openclaw/plugin-sdk/agent-core";
 import type { ExtensionAPI, ExtensionContext } from "openclaw/plugin-sdk/agent-sessions";
 import type { ToolResultMessage } from "openclaw/plugin-sdk/llm";

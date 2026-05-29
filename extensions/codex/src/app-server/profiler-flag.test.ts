@@ -1,3 +1,4 @@
+// Tests extensions/codex/src/app-server profiler flag test behavior.
 import { describe, expect, it } from "vitest";
 import { isCodexAppServerProfilerEnabled } from "./profiler-flag.js";
 

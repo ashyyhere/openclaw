@@ -1,3 +1,4 @@
+// Tests extensions/qianfan index test behavior.
 import {
   registerSingleProviderPlugin,
   resolveProviderPluginChoice,

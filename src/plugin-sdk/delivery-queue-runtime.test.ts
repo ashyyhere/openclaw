@@ -1,3 +1,4 @@
+/** Tests outbound delivery queue runtime delegation and lazy delivery loading. */
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({

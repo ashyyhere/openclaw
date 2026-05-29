@@ -1,3 +1,4 @@
+/** Covers cleanup of subscriptions and agents after embedded attempts. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { log } from "../logger.js";
 import {

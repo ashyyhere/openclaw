@@ -1,3 +1,4 @@
+/** Fast-path help renderer for setup/onboard/configure commands. */
 import { Command } from "commander";
 import { VERSION } from "../version.js";
 import { resolveCliArgvInvocation } from "./argv-invocation.js";
@@ -65,6 +66,7 @@ async function registerHelpCommand(
   registerConfigureCommand(program);
 }
 
+/** Reused helper for try Output Setup Onboard Configure Help behavior in src/cli. */
 export async function tryOutputSetupOnboardConfigureHelp(argv: string[]): Promise<boolean> {
   const command = resolveSetupOnboardConfigureHelpCommand(argv);
   if (!command) {

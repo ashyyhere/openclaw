@@ -1,8 +1,11 @@
+// infra heartbeat events helpers and runtime behavior.
 import { resolveGlobalSingleton } from "../shared/global-singleton.js";
 import { notifyListeners, registerListener } from "../shared/listeners.js";
 
+/** Shared type for Heartbeat Indicator Type in src/infra. */
 export type HeartbeatIndicatorType = "ok" | "alert" | "error";
 
+/** Shared type for Heartbeat Event Payload in src/infra. */
 export type HeartbeatEventPayload = {
   ts: number;
   status: "sent" | "ok-empty" | "ok-token" | "skipped" | "failed";
@@ -20,6 +23,7 @@ export type HeartbeatEventPayload = {
   indicatorType?: HeartbeatIndicatorType;
 };
 
+/** Reused helper for resolve Indicator Type behavior in src/infra. */
 export function resolveIndicatorType(
   status: HeartbeatEventPayload["status"],
 ): HeartbeatIndicatorType | undefined {
@@ -49,20 +53,24 @@ const state = resolveGlobalSingleton<HeartbeatEventState>(HEARTBEAT_EVENT_STATE_
   listeners: new Set<(evt: HeartbeatEventPayload) => void>(),
 }));
 
+/** Reused helper for emit Heartbeat Event behavior in src/infra. */
 export function emitHeartbeatEvent(evt: Omit<HeartbeatEventPayload, "ts">) {
   const enriched: HeartbeatEventPayload = { ts: Date.now(), ...evt };
   state.lastHeartbeat = enriched;
   notifyListeners(state.listeners, enriched);
 }
 
+/** Reused helper for on Heartbeat Event behavior in src/infra. */
 export function onHeartbeatEvent(listener: (evt: HeartbeatEventPayload) => void): () => void {
   return registerListener(state.listeners, listener);
 }
 
+/** Reused helper for get Last Heartbeat Event behavior in src/infra. */
 export function getLastHeartbeatEvent(): HeartbeatEventPayload | null {
   return state.lastHeartbeat;
 }
 
+/** Reused helper for reset Heartbeat Events For Test behavior in src/infra. */
 export function resetHeartbeatEventsForTest(): void {
   state.lastHeartbeat = null;
   state.listeners.clear();

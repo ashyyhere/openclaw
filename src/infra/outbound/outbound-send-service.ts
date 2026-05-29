@@ -1,3 +1,4 @@
+// infra/outbound outbound send service helpers and runtime behavior.
 import type { AgentToolResult } from "../../agents/runtime/index.js";
 import type { ReplyPayload } from "../../auto-reply/reply-payload.js";
 import type { InboundEventKind } from "../../channels/inbound-event/kind.js";
@@ -20,6 +21,7 @@ import { sendMessage, sendPoll } from "./message.js";
 import type { OutboundMirror } from "./mirror.js";
 import { extractToolPayload } from "./tool-payload.js";
 
+/** Shared type for Outbound Gateway Context in src/infra/outbound. */
 export type OutboundGatewayContext = {
   url?: string;
   token?: string;
@@ -29,6 +31,7 @@ export type OutboundGatewayContext = {
   mode: GatewayClientMode;
 };
 
+/** Shared type for Outbound Send Context in src/infra/outbound. */
 export type OutboundSendContext = {
   cfg: OpenClawConfig;
   channel: ChannelId;
@@ -234,6 +237,7 @@ async function tryPreparePluginSendPayload(params: {
   );
 }
 
+/** Reused helper for execute Send Action behavior in src/infra/outbound. */
 export async function executeSendAction(params: {
   ctx: OutboundSendContext;
   to: string;
@@ -322,6 +326,7 @@ export async function executeSendAction(params: {
   };
 }
 
+/** Reused helper for execute Poll Action behavior in src/infra/outbound. */
 export async function executePollAction(params: {
   ctx: OutboundSendContext;
   resolveCorePoll: () => {

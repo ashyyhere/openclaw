@@ -1,3 +1,4 @@
+// extensions/zalouser/src security audit helpers and runtime behavior.
 import { isDangerousNameMatchingEnabled } from "openclaw/plugin-sdk/dangerous-name-runtime";
 import type { ResolvedZalouserAccount } from "./accounts.js";
 

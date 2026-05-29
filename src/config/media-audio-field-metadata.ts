@@ -1,3 +1,5 @@
+// config media audio field metadata helpers and runtime behavior.
+/** Reused constant for MEDIA AUDIO FIELD KEYS behavior in src/config. */
 export const MEDIA_AUDIO_FIELD_KEYS = [
   "tools.media.audio.enabled",
   "tools.media.audio.maxBytes",
@@ -27,6 +29,7 @@ export const MEDIA_AUDIO_FIELD_KEYS = [
 
 type MediaAudioFieldKey = (typeof MEDIA_AUDIO_FIELD_KEYS)[number];
 
+/** Reused constant for MEDIA AUDIO FIELD HELP behavior in src/config. */
 export const MEDIA_AUDIO_FIELD_HELP: Record<MediaAudioFieldKey, string> = {
   "tools.media.audio.enabled":
     "Enable audio understanding so voice notes or audio clips can be transcribed/summarized for agent context. Disable when audio ingestion is outside policy or unnecessary for your workflows.",
@@ -78,6 +81,7 @@ export const MEDIA_AUDIO_FIELD_HELP: Record<MediaAudioFieldKey, string> = {
     "Direct TLS client settings for audio provider requests, including custom CA trust, client certs, or SNI overrides for managed gateways and internal endpoints.",
 };
 
+/** Reused constant for MEDIA AUDIO FIELD LABELS behavior in src/config. */
 export const MEDIA_AUDIO_FIELD_LABELS: Record<MediaAudioFieldKey, string> = {
   "tools.media.audio.enabled": "Enable Audio Understanding",
   "tools.media.audio.maxBytes": "Audio Understanding Max Bytes",

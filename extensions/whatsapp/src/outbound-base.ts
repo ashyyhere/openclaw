@@ -1,3 +1,4 @@
+// extensions/whatsapp/src outbound base helpers and runtime behavior.
 import {
   DEFAULT_ACCOUNT_ID,
   listCombinedAccountIds,

@@ -1,3 +1,4 @@
+// extensions/qa-lab/src suite runtime agent tools helpers and runtime behavior.
 import fs from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";

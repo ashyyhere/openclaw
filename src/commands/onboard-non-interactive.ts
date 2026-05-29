@@ -1,3 +1,4 @@
+/** Runs onboarding from flags without interactive prompts. */
 import { formatCliCommand } from "../cli/command-format.js";
 import { replaceConfigFile } from "../config/config.js";
 import { readConfigFileSnapshot } from "../config/io.js";
@@ -52,6 +53,7 @@ async function runNonInteractiveMigrationImport(params: {
   });
 }
 
+/** Reused helper for run Non Interactive Setup behavior in src/commands. */
 export async function runNonInteractiveSetup(
   opts: OnboardOptions,
   runtime: RuntimeEnv = defaultRuntime,

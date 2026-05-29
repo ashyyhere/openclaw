@@ -1,3 +1,4 @@
+// extensions/whatsapp/src/inbound send api helpers and runtime behavior.
 import type {
   AnyMessageContent,
   MiscMessageGenerationOptions,

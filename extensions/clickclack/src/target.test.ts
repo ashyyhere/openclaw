@@ -1,3 +1,4 @@
+// Tests extensions/clickclack/src target test behavior.
 import { describe, expect, it } from "vitest";
 import {
   buildClickClackTarget,

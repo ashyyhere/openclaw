@@ -1,3 +1,4 @@
+// extensions/discord/src runtime config helpers and runtime behavior.
 import {
   getRuntimeConfigSnapshot,
   getRuntimeConfigSourceSnapshot,

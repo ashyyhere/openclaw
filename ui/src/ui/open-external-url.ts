@@ -1,3 +1,4 @@
+// ui/src/ui open external url helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "./string-coerce.ts";
 
 const DATA_URL_PREFIX = "data:";
@@ -23,10 +24,12 @@ function isAllowedDataImageUrl(url: string): boolean {
   return !BLOCKED_DATA_IMAGE_MIME_TYPES.has(mimeType);
 }
 
+/** Shared type for Resolve Safe External Url Options in ui/src/ui. */
 export type ResolveSafeExternalUrlOptions = {
   allowDataImage?: boolean;
 };
 
+/** Reused helper for resolve Safe External Url behavior in ui/src/ui. */
 export function resolveSafeExternalUrl(
   rawUrl: string,
   baseHref: string,
@@ -55,10 +58,12 @@ export function resolveSafeExternalUrl(
   }
 }
 
+/** Shared type for Open External Url Safe Options in ui/src/ui. */
 export type OpenExternalUrlSafeOptions = ResolveSafeExternalUrlOptions & {
   baseHref?: string;
 };
 
+/** Reused helper for open External Url Safe behavior in ui/src/ui. */
 export function openExternalUrlSafe(
   rawUrl: string,
   opts: OpenExternalUrlSafeOptions = {},

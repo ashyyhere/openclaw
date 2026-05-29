@@ -8,8 +8,10 @@
  */
 
 // Anthropic
+/** Re-exported API for src/llm/utils, starting with anthropic OAuth Provider. */
 export { anthropicOAuthProvider, loginAnthropic, refreshAnthropicToken } from "./anthropic.js";
 // GitHub Copilot
+/** Re-exported API for src/llm/utils. */
 export {
   getGitHubCopilotBaseUrl,
   githubCopilotOAuthProvider,
@@ -18,6 +20,7 @@ export {
   refreshGitHubCopilotToken,
 } from "./github-copilot.js";
 // OpenAI Codex (ChatGPT OAuth)
+/** Re-exported API for src/llm/utils. */
 export {
   loginOpenAICodex,
   openaiCodexOAuthProvider,

@@ -1,3 +1,4 @@
+// Full-chain commitment extraction test: hidden extraction -> store -> scoped heartbeat delivery.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import { runHeartbeatOnce } from "../infra/heartbeat-runner.js";

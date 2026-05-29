@@ -1,3 +1,4 @@
+// Tests tts prepare text test behavior.
 import { describe, expect, it } from "vitest";
 import { stripMarkdown } from "../shared/text/strip-markdown.js";
 

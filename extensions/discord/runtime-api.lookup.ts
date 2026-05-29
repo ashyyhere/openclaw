@@ -1,3 +1,4 @@
+// extensions/discord runtime api lookup helpers and runtime behavior.
 export { auditDiscordChannelPermissions, collectDiscordAuditChannelIds } from "./src/audit.js";
 export {
   listDiscordDirectoryGroupsLive,

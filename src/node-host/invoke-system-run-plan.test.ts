@@ -1,3 +1,4 @@
+// Tests node-host invoke system run plan test behavior.
 import { createHash } from "node:crypto";
 import fs from "node:fs";
 import os from "node:os";

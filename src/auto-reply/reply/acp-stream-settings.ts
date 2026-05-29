@@ -1,3 +1,4 @@
+// ACP stream settings that map runtime update tags into chat visibility.
 import type { AcpSessionUpdateTag } from "../../acp/runtime/types.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { clampPositiveInteger, resolveEffectiveBlockStreamingConfig } from "./block-streaming.js";
@@ -24,9 +25,12 @@ const ACP_TAG_VISIBILITY_DEFAULTS: Record<AcpSessionUpdateTag, boolean> = {
   agent_thought_chunk: false,
 };
 
+/** Shared type for Acp Delivery Mode in src/auto-reply/reply. */
 export type AcpDeliveryMode = "live" | "final_only";
+/** Shared type for Acp Hidden Boundary Separator in src/auto-reply/reply. */
 export type AcpHiddenBoundarySeparator = "none" | "space" | "newline" | "paragraph";
 
+/** Shared type for Acp Projection Settings in src/auto-reply/reply. */
 export type AcpProjectionSettings = {
   deliveryMode: AcpDeliveryMode;
   hiddenBoundarySeparator: AcpHiddenBoundarySeparator;
@@ -75,6 +79,7 @@ function resolveAcpStreamMaxChunkChars(cfg: OpenClawConfig): number {
   });
 }
 
+/** Reused helper for resolve Acp Projection Settings behavior in src/auto-reply/reply. */
 export function resolveAcpProjectionSettings(cfg: OpenClawConfig): AcpProjectionSettings {
   const stream = cfg.acp?.stream;
   const deliveryMode = resolveAcpDeliveryMode(stream?.deliveryMode);
@@ -105,6 +110,7 @@ export function resolveAcpProjectionSettings(cfg: OpenClawConfig): AcpProjection
   };
 }
 
+/** Reused helper for resolve Acp Streaming Config behavior in src/auto-reply/reply. */
 export function resolveAcpStreamingConfig(params: {
   cfg: OpenClawConfig;
   provider?: string;
@@ -139,6 +145,7 @@ export function resolveAcpStreamingConfig(params: {
   return resolved;
 }
 
+/** Reused helper for is Acp Tag Visible behavior in src/auto-reply/reply. */
 export function isAcpTagVisible(
   settings: AcpProjectionSettings,
   tag: AcpSessionUpdateTag | undefined,

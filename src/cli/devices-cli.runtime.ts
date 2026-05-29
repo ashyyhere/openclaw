@@ -1,3 +1,4 @@
+/** Runtime implementation for gateway-backed devices CLI commands. */
 import {
   GATEWAY_CLIENT_MODES,
   GATEWAY_CLIENT_NAMES,
@@ -685,6 +686,7 @@ function resolveRequiredDeviceRole(
   return null;
 }
 
+/** Reused helper for run Devices List Command behavior in src/cli. */
 export async function runDevicesListCommand(opts: DevicesRpcOpts): Promise<void> {
   let list: DevicePairingList;
   try {
@@ -772,6 +774,7 @@ export async function runDevicesListCommand(opts: DevicesRpcOpts): Promise<void>
   }
 }
 
+/** Reused helper for run Devices Remove Command behavior in src/cli. */
 export async function runDevicesRemoveCommand(
   deviceId: string,
   opts: DevicesRpcOpts,
@@ -792,6 +795,7 @@ export async function runDevicesRemoveCommand(
   defaultRuntime.log(`${theme.warn("Removed")} ${theme.command(trimmed)}`);
 }
 
+/** Reused helper for run Devices Clear Command behavior in src/cli. */
 export async function runDevicesClearCommand(opts: DevicesRpcOpts): Promise<void> {
   if (!opts.yes) {
     defaultRuntime.error("Refusing to clear pairing table without --yes");
@@ -838,6 +842,7 @@ export async function runDevicesClearCommand(opts: DevicesRpcOpts): Promise<void
   }
 }
 
+/** Reused helper for run Devices Approve Command behavior in src/cli. */
 export async function runDevicesApproveCommand(
   requestId: string | undefined,
   opts: DevicesRpcOpts,
@@ -942,6 +947,7 @@ export async function runDevicesApproveCommand(
   );
 }
 
+/** Reused helper for run Devices Reject Command behavior in src/cli. */
 export async function runDevicesRejectCommand(
   requestId: string,
   opts: DevicesRpcOpts,
@@ -955,6 +961,7 @@ export async function runDevicesRejectCommand(
   defaultRuntime.log(`${theme.warn("Rejected")} ${theme.command(deviceId ?? "ok")}`);
 }
 
+/** Reused helper for run Devices Rotate Command behavior in src/cli. */
 export async function runDevicesRotateCommand(opts: DevicesRpcOpts): Promise<void> {
   const required = resolveRequiredDeviceRole(opts);
   if (!required) {
@@ -968,6 +975,7 @@ export async function runDevicesRotateCommand(opts: DevicesRpcOpts): Promise<voi
   defaultRuntime.writeJson(result);
 }
 
+/** Reused helper for run Devices Revoke Command behavior in src/cli. */
 export async function runDevicesRevokeCommand(opts: DevicesRpcOpts): Promise<void> {
   const required = resolveRequiredDeviceRole(opts);
   if (!required) {

@@ -1,3 +1,4 @@
+// Tests flows doctor core browser residue check test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { CORE_HEALTH_CHECKS } from "./doctor-core-checks.js";

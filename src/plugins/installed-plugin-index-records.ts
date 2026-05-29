@@ -1,3 +1,4 @@
+// plugins installed plugin index records helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { PluginInstallRecord } from "../config/types.plugins.js";
 import {
@@ -15,6 +16,7 @@ import {
 import { type RefreshInstalledPluginIndexParams } from "./installed-plugin-index.js";
 import { recordPluginInstall, type PluginInstallUpdate } from "./installs.js";
 
+/** Re-exported API for src/plugins. */
 export {
   clearLoadInstalledPluginIndexInstallRecordsCache,
   loadInstalledPluginIndexInstallRecords,
@@ -23,8 +25,10 @@ export {
   readPersistedInstalledPluginIndexInstallRecordsSync,
 };
 
+/** Reused constant for PLUGIN INSTALLS CONFIG PATH behavior in src/plugins. */
 export const PLUGIN_INSTALLS_CONFIG_PATH = ["plugins", "installs"] as const;
 
+/** Shared type for Installed Plugin Index Record Store Options in src/plugins. */
 export type InstalledPluginIndexRecordStoreOptions = {
   env?: NodeJS.ProcessEnv;
   stateDir?: string;
@@ -36,12 +40,14 @@ type InstalledPluginIndexRecordRefreshOptions = InstalledPluginIndexRecordStoreO
     now?: () => Date;
   };
 
+/** Reused helper for resolve Installed Plugin Index Records Store Path behavior in src/plugins. */
 export function resolveInstalledPluginIndexRecordsStorePath(
   options: InstalledPluginIndexRecordStoreOptions = {},
 ): string {
   return resolveInstalledPluginIndexStorePath(options);
 }
 
+/** Reused helper for write Persisted Installed Plugin Index Install Records behavior in src/plugins. */
 export async function writePersistedInstalledPluginIndexInstallRecords(
   records: Record<string, PluginInstallRecord>,
   options: InstalledPluginIndexRecordRefreshOptions = {},
@@ -54,6 +60,7 @@ export async function writePersistedInstalledPluginIndexInstallRecords(
   return resolveInstalledPluginIndexRecordsStorePath(options);
 }
 
+/** Reused helper for write Persisted Installed Plugin Index Install Records Sync behavior in src/plugins. */
 export function writePersistedInstalledPluginIndexInstallRecordsSync(
   records: Record<string, PluginInstallRecord>,
   options: InstalledPluginIndexRecordRefreshOptions = {},
@@ -66,6 +73,7 @@ export function writePersistedInstalledPluginIndexInstallRecordsSync(
   return resolveInstalledPluginIndexRecordsStorePath(options);
 }
 
+/** Reused helper for with Plugin Install Records behavior in src/plugins. */
 export function withPluginInstallRecords(
   config: OpenClawConfig,
   records: Record<string, PluginInstallRecord>,
@@ -79,6 +87,7 @@ export function withPluginInstallRecords(
   };
 }
 
+/** Reused helper for without Plugin Install Records behavior in src/plugins. */
 export function withoutPluginInstallRecords(config: OpenClawConfig): OpenClawConfig {
   if (!config.plugins?.installs) {
     return config;
@@ -94,6 +103,7 @@ export function withoutPluginInstallRecords(config: OpenClawConfig): OpenClawCon
   };
 }
 
+/** Reused helper for record Plugin Install In Records behavior in src/plugins. */
 export function recordPluginInstallInRecords(
   records: Record<string, PluginInstallRecord>,
   update: PluginInstallUpdate,
@@ -101,6 +111,7 @@ export function recordPluginInstallInRecords(
   return recordPluginInstall({ plugins: { installs: records } }, update).plugins?.installs ?? {};
 }
 
+/** Reused helper for remove Plugin Install Record From Records behavior in src/plugins. */
 export function removePluginInstallRecordFromRecords(
   records: Record<string, PluginInstallRecord>,
   pluginId: string,

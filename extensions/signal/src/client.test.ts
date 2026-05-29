@@ -1,3 +1,4 @@
+// Tests extensions/signal/src client test behavior.
 import { Buffer } from "node:buffer";
 import { once } from "node:events";
 import http, { type IncomingMessage, type ServerResponse } from "node:http";

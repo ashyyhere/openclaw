@@ -1,3 +1,4 @@
+// Table-driven coverage for trigger handling with usage summary filtering.
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
@@ -50,6 +51,7 @@ function seedUsageSummary(): void {
   });
 }
 
+/** Reused helper for register Trigger Handling Usage Summary Cases behavior in src/auto-reply. */
 export function registerTriggerHandlingUsageSummaryCases(params: {
   getReplyFromConfig: () => GetReplyFromConfig;
 }): void {

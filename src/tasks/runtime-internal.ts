@@ -1,3 +1,5 @@
+// tasks runtime internal helpers and runtime behavior.
+/** Re-exported API for src/tasks. */
 export {
   cancelTaskById,
   createTaskRecord,
@@ -29,4 +31,5 @@ export {
   setTaskRunDeliveryStatusByRunId,
   updateTaskNotifyPolicyById,
 } from "./task-registry.js";
+/** Re-exported API for src/tasks, starting with Task Record. */
 export type { TaskRecord } from "./task-registry.types.js";

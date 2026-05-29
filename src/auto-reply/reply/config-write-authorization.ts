@@ -1,3 +1,4 @@
+// Authorization helpers for config writes initiated from chat.
 import {
   authorizeConfigWrite,
   canBypassConfigWritePolicy,
@@ -6,6 +7,7 @@ import {
 import type { ChannelId } from "../../channels/plugins/types.public.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 
+/** Reused helper for resolve Config Write Denied Text behavior in src/auto-reply/reply. */
 export function resolveConfigWriteDeniedText(params: {
   cfg: OpenClawConfig;
   channel?: string | null;

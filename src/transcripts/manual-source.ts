@@ -1,3 +1,4 @@
+// transcripts manual source helpers and runtime behavior.
 import type { TranscriptSourceProvider } from "./provider-types.js";
 
 function parseSpeakerLine(line: string): { speakerLabel?: string; text: string } {
@@ -8,6 +9,7 @@ function parseSpeakerLine(line: string): { speakerLabel?: string; text: string }
   return { speakerLabel: match[1]?.trim(), text: match[2]?.trim() ?? "" };
 }
 
+/** Reused constant for manual Transcript Source Provider behavior in src/transcripts. */
 export const manualTranscriptSourceProvider: TranscriptSourceProvider = {
   id: "manual-transcript",
   aliases: ["import", "transcript"],

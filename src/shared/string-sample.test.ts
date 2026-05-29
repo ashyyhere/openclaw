@@ -1,3 +1,4 @@
+// Tests shared string sample test behavior.
 import { describe, expect, it } from "vitest";
 import { summarizeStringEntries } from "./string-sample.js";
 

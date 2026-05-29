@@ -1,3 +1,4 @@
+/** Prepares and runs single-turn simple completions for agent helpers. */
 import type { ThinkLevel } from "../auto-reply/thinking.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { formatErrorMessage } from "../infra/errors.js";
@@ -38,6 +39,7 @@ type CompletionRuntimeCredential = {
 
 type AllowedMissingApiKeyMode = ResolvedProviderAuth["mode"];
 
+/** Options forwarded to simple completion calls. */
 export type SimpleCompletionModelOptions = {
   maxTokens?: number;
   temperature?: number;
@@ -45,6 +47,7 @@ export type SimpleCompletionModelOptions = {
   signal?: AbortSignal;
 };
 
+/** Prepared model/auth result or user-facing preparation error. */
 export type PreparedSimpleCompletionModel =
   | {
       model: Model;
@@ -55,6 +58,7 @@ export type PreparedSimpleCompletionModel =
       auth?: ResolvedProviderAuth;
     };
 
+/** Agent model selection resolved for simple completion helpers. */
 export type AgentSimpleCompletionSelection = {
   provider: string;
   modelId: string;
@@ -64,6 +68,7 @@ export type AgentSimpleCompletionSelection = {
   agentDir: string;
 };
 
+/** Prepared agent model/auth result or selection-scoped error. */
 export type PreparedSimpleCompletionModelForAgent =
   | {
       selection: AgentSimpleCompletionSelection;
@@ -76,6 +81,7 @@ export type PreparedSimpleCompletionModelForAgent =
       auth?: ResolvedProviderAuth;
     };
 
+/** Resolve provider/model/profile/agentDir for an agent simple completion. */
 export function resolveSimpleCompletionSelectionForAgent(params: {
   cfg: OpenClawConfig;
   agentId: string;
@@ -188,6 +194,7 @@ function hasMissingApiKeyAllowance(params: {
   return Boolean(params.allowMissingApiKeyModes?.includes(params.mode));
 }
 
+/** Resolve model metadata and auth for a simple completion call. */
 export async function prepareSimpleCompletionModel(params: {
   cfg: OpenClawConfig | undefined;
   provider: string;
@@ -286,6 +293,7 @@ export async function prepareSimpleCompletionModel(params: {
   };
 }
 
+/** Resolve an agent selection and prepare its simple completion model/auth. */
 export async function prepareSimpleCompletionModelForAgent(params: {
   cfg: OpenClawConfig;
   agentId: string;
@@ -333,6 +341,7 @@ export async function prepareSimpleCompletionModelForAgent(params: {
   };
 }
 
+/** Run completeSimple using a previously prepared model/auth pair. */
 export async function completeWithPreparedSimpleCompletionModel(params: {
   model: Model;
   auth: ResolvedProviderAuth;

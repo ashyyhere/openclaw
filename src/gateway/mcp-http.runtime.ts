@@ -1,3 +1,4 @@
+// Runtime boundary for gateway mcp http runtime behavior.
 import type { SourceReplyDeliveryMode } from "../auto-reply/get-reply-options.types.js";
 import type { InboundEventKind } from "../channels/inbound-event/kind.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -19,6 +20,7 @@ type CachedScopedTools = {
   time: number;
 };
 
+/** Reused helper for resolve Mcp Loopback Scoped Tools behavior in src/gateway. */
 export function resolveMcpLoopbackScopedTools(params: {
   cfg: OpenClawConfig;
   sessionKey: string;
@@ -51,6 +53,7 @@ export function resolveMcpLoopbackScopedTools(params: {
   };
 }
 
+/** Reused class for Mcp Loopback Tool Cache behavior in src/gateway. */
 export class McpLoopbackToolCache {
   #entries = new Map<string, CachedScopedTools>();
 

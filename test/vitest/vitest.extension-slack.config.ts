@@ -1,3 +1,4 @@
+// test/vitest vitest extension slack config helpers and runtime behavior.
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
 export function createExtensionSlackVitestConfig(

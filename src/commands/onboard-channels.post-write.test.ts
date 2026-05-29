@@ -1,3 +1,4 @@
+/** Tests post-write hooks for channel onboarding. */
 import { describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import {

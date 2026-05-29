@@ -1,3 +1,4 @@
+// Tests extensions/discord/src proxy request client test behavior.
 import { describe, expect, it, vi } from "vitest";
 import {
   createAbortableFetchMock,

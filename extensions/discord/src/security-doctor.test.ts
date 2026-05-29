@@ -1,3 +1,4 @@
+// Tests extensions/discord/src security doctor test behavior.
 import { describe, expect, it } from "vitest";
 import { isDiscordMutableAllowEntry } from "./security-doctor.js";
 

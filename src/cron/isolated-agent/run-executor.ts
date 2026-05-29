@@ -1,3 +1,4 @@
+// cron/isolated-agent run executor helpers and runtime behavior.
 import { createHash } from "node:crypto";
 import type { BootstrapContextMode } from "../../agents/bootstrap-files.js";
 import { resolveCliRuntimeExecutionProvider } from "../../agents/model-runtime-aliases.js";
@@ -84,6 +85,7 @@ function resolveIsolatedCronPromptCacheKey(params: {
   return `openclaw-cron-${digest}`;
 }
 
+/** Reused helper for is Command Style Cron Message behavior in src/cron/isolated-agent. */
 export function isCommandStyleCronMessage(message: string): boolean {
   const trimmed = message.trim();
   if (!trimmed || trimmed.includes("\n")) {
@@ -104,6 +106,7 @@ function resolveCronBootstrapContextMode(
   return isCommandStyleCronMessage(payload?.message ?? "") ? "lightweight" : undefined;
 }
 
+/** Shared type for Cron Execution Result in src/cron/isolated-agent. */
 export type CronExecutionResult = {
   runResult: CronPromptRunResult;
   fallbackProvider: string;
@@ -113,6 +116,7 @@ export type CronExecutionResult = {
   liveSelection: CronLiveSelection;
 };
 
+/** Reused helper for create Cron Prompt Executor behavior in src/cron/isolated-agent. */
 export function createCronPromptExecutor(params: {
   cfg: OpenClawConfig;
   cfgWithAgentDefaults: OpenClawConfig;
@@ -349,6 +353,7 @@ export function createCronPromptExecutor(params: {
   };
 }
 
+/** Reused helper for execute Cron Run behavior in src/cron/isolated-agent. */
 export async function executeCronRun(params: {
   cfg: OpenClawConfig;
   cfgWithAgentDefaults: OpenClawConfig;

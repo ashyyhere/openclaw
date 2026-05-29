@@ -1,3 +1,4 @@
+// Tests config/sessions delivery info test behavior.
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { setActivePluginRegistry } from "../../plugins/runtime.js";
 import { createSessionConversationTestRegistry } from "../../test-utils/session-conversation-registry.js";

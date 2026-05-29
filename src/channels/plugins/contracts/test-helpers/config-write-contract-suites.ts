@@ -1,3 +1,4 @@
+/** Contract suites for channel plugin config-write policy and targets. */
 import { describe, expect, it } from "vitest";
 import { INTERNAL_MESSAGE_CHANNEL } from "../../../../utils/message-channel.js";
 import {

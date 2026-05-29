@@ -1,3 +1,4 @@
+// extensions/firecrawl/src firecrawl fetch provider shared helpers and runtime behavior.
 import type { WebFetchProviderPlugin } from "openclaw/plugin-sdk/provider-web-fetch-contract";
 
 function ensureRecord(target: Record<string, unknown>, key: string): Record<string, unknown> {

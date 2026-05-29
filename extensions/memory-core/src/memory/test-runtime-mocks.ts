@@ -1,3 +1,4 @@
+// extensions/memory-core/src/memory test runtime mocks helpers and runtime behavior.
 import { vi } from "vitest";
 
 // Unit tests: avoid importing the real chokidar implementation (native fsevents, etc.).

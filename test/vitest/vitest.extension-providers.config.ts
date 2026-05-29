@@ -1,3 +1,4 @@
+// test/vitest vitest extension providers config helpers and runtime behavior.
 import { providerExtensionTestRoots } from "./vitest.extension-provider-paths.mjs";
 import { loadPatternListFromEnv } from "./vitest.pattern-file.ts";
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";

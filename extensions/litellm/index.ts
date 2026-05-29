@@ -1,3 +1,4 @@
+// extensions/litellm index helpers and runtime behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import {
   definePluginEntry,

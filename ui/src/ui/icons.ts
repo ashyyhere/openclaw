@@ -1,8 +1,10 @@
+// ui/src/ui icons helpers and runtime behavior.
 import { html, type TemplateResult } from "lit";
 
 // Lucide-style SVG icons
 // All icons use currentColor for stroke
 
+/** Reused constant for icons behavior in ui/src/ui. */
 export const icons = {
   // Navigation icons
   messageSquare: html`
@@ -476,17 +478,21 @@ export const icons = {
   `,
 } as const;
 
+/** Shared type for Icon Name in ui/src/ui. */
 export type IconName = keyof typeof icons;
 
+/** Reused helper for icon behavior in ui/src/ui. */
 export function icon(name: IconName): TemplateResult {
   return icons[name];
 }
 
+/** Reused helper for render Icon behavior in ui/src/ui. */
 export function renderIcon(name: IconName, className = "nav-item__icon"): TemplateResult {
   return html`<span class=${className} aria-hidden="true">${icons[name]}</span>`;
 }
 
 // Legacy function for compatibility
+/** Reused helper for render Emoji Icon behavior in ui/src/ui. */
 export function renderEmojiIcon(
   iconContent: string | TemplateResult,
   className: string,
@@ -494,6 +500,7 @@ export function renderEmojiIcon(
   return html`<span class=${className} aria-hidden="true">${iconContent}</span>`;
 }
 
+/** Reused helper for set Emoji Icon behavior in ui/src/ui. */
 export function setEmojiIcon(target: HTMLElement | null, icon: string): void {
   if (!target) {
     return;

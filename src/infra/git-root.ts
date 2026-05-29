@@ -1,3 +1,4 @@
+// infra git root helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 
@@ -34,6 +35,7 @@ function hasGitMarker(repoRoot: string): boolean {
   }
 }
 
+/** Reused helper for find Git Root behavior in src/infra. */
 export function findGitRoot(startDir: string, opts: { maxDepth?: number } = {}): string | null {
   // A `.git` file counts as a repo marker even if it is not a valid gitdir pointer.
   return walkUpFrom(startDir, opts, (repoRoot) => (hasGitMarker(repoRoot) ? repoRoot : null));
@@ -60,6 +62,7 @@ function resolveGitDirFromMarker(repoRoot: string): string | null {
   }
 }
 
+/** Reused helper for resolve Git Head Path behavior in src/infra. */
 export function resolveGitHeadPath(
   startDir: string,
   opts: { maxDepth?: number } = {},

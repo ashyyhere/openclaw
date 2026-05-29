@@ -1,3 +1,4 @@
+// Tests infra/net/proxy external proxy e2e test behavior.
 import { execFileSync, spawn } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
 import { createServer, request as httpRequest, type Server } from "node:http";

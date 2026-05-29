@@ -1,3 +1,4 @@
+// extensions/chutes oauth helpers and runtime behavior.
 import { randomBytes } from "node:crypto";
 import { resolveExpiresAtMsFromDurationSeconds } from "openclaw/plugin-sdk/number-runtime";
 import { generatePkceVerifierChallenge, toFormUrlEncoded } from "openclaw/plugin-sdk/provider-auth";

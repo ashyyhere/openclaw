@@ -1,3 +1,4 @@
+// Tests infra provider usage fetch zai test behavior.
 import { describe, expect, it } from "vitest";
 import { createProviderUsageFetch, makeResponse } from "../test-utils/provider-usage-fetch.js";
 import { fetchZaiUsage } from "./provider-usage.fetch.zai.js";

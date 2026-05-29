@@ -1,3 +1,4 @@
+// extensions/line/src channel setup helpers and runtime behavior.
 import { type ChannelPlugin, type ResolvedLineAccount } from "./channel-api.js";
 import { lineChannelPluginCommon } from "./channel-shared.js";
 import { lineSetupAdapter } from "./setup-core.js";

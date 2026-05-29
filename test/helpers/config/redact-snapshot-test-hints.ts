@@ -1,3 +1,4 @@
+// test/helpers/config redact snapshot test hints helpers and runtime behavior.
 import type { ConfigUiHints } from "../../../src/config/schema.js";
 
 // Keep this fixture minimal so redaction tests exercise the hint-matching

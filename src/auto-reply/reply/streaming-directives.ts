@@ -1,3 +1,4 @@
+// Streaming directive helpers for reply payload delivery.
 import { hasOutboundReplyContent } from "openclaw/plugin-sdk/reply-payload";
 import { splitMediaFromOutput } from "../../media/parse.js";
 import { parseInlineDirectives } from "../../utils/directive-tags.js";
@@ -34,6 +35,7 @@ type SplitTrailingDirectiveOptions = {
 // like `MEDIA:<path>` between chunks and cause the first half to be emitted as
 // plain text (e.g. the `MEDIA` token leaking into a channel reply while the
 // matching file path is silently dropped on the next chunk).
+/** Reused constant for split Trailing Directive behavior in src/auto-reply/reply. */
 export const splitTrailingDirective = (
   text: string,
   options: SplitTrailingDirectiveOptions = {},
@@ -144,6 +146,7 @@ const parseChunk = (raw: string, options?: { silentToken?: string }): ParsedChun
 const hasRenderableContent = (parsed: ReplyDirectiveParseResult): boolean =>
   hasOutboundReplyContent(parsed) || Boolean(parsed.audioAsVoice);
 
+/** Reused helper for create Streaming Directive Accumulator behavior in src/auto-reply/reply. */
 export function createStreamingDirectiveAccumulator() {
   let pendingTail = "";
   let pendingReply: PendingReplyState = { sawCurrent: false, hasTag: false };

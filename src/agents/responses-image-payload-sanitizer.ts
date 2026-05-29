@@ -29,6 +29,7 @@ function sanitizeValue(value: unknown): unknown {
   return next;
 }
 
+/** Sanitize inline image data URLs inside Responses input payloads. */
 export function sanitizeResponsesImagePayload<T extends Record<string, unknown>>(params: T): T {
   if (!Array.isArray(params.input)) {
     return params;
@@ -39,10 +40,12 @@ export function sanitizeResponsesImagePayload<T extends Record<string, unknown>>
   };
 }
 
+/** Canonicalize and validate one inline image data URL. */
 export function sanitizeInlineImageDataUrl(imageUrl: string): string | undefined {
   return sanitizeSharedInlineImageDataUrl(imageUrl);
 }
 
+/** Build placeholder text for omitted invalid inline image data. */
 export function invalidInlineImageText(label: string): string {
   return `[${label}] ${IMAGE_OMITTED_TEXT}`;
 }

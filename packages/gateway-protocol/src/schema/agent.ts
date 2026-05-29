@@ -1,3 +1,4 @@
+// packages/gateway-protocol/src/schema agent helpers and runtime behavior.
 import { Type } from "typebox";
 import { InputProvenanceSchema, NonEmptyString, SessionLabelString } from "./primitives.js";
 
@@ -11,6 +12,7 @@ const AGENT_INTERNAL_EVENT_SOURCES = [
 ] as const;
 const AGENT_INTERNAL_EVENT_STATUSES = ["ok", "timeout", "error", "unknown"] as const;
 
+/** Public constant for Agent Generated Attachment Schema behavior in packages/gateway-protocol. */
 export const AgentGeneratedAttachmentSchema = Type.Object(
   {
     type: Type.Optional(Type.String({ enum: ["image", "audio", "video", "file"] })),
@@ -24,6 +26,7 @@ export const AgentGeneratedAttachmentSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Agent Internal Event Schema behavior in packages/gateway-protocol. */
 export const AgentInternalEventSchema = Type.Object(
   {
     type: Type.Literal(AGENT_INTERNAL_EVENT_TYPE_TASK_COMPLETION),
@@ -43,6 +46,7 @@ export const AgentInternalEventSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Agent Event Schema behavior in packages/gateway-protocol. */
 export const AgentEventSchema = Type.Object(
   {
     runId: NonEmptyString,
@@ -56,6 +60,7 @@ export const AgentEventSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Message Action Tool Context Schema behavior in packages/gateway-protocol. */
 export const MessageActionToolContextSchema = Type.Object(
   {
     currentChannelId: Type.Optional(Type.String()),
@@ -84,6 +89,7 @@ export const MessageActionToolContextSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Message Action Params Schema behavior in packages/gateway-protocol. */
 export const MessageActionParamsSchema = Type.Object(
   {
     channel: NonEmptyString,
@@ -106,6 +112,7 @@ export const MessageActionParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Send Params Schema behavior in packages/gateway-protocol. */
 export const SendParamsSchema = Type.Object(
   {
     to: NonEmptyString,
@@ -135,6 +142,7 @@ export const SendParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Poll Params Schema behavior in packages/gateway-protocol. */
 export const PollParamsSchema = Type.Object(
   {
     to: NonEmptyString,
@@ -157,6 +165,7 @@ export const PollParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Agent Params Schema behavior in packages/gateway-protocol. */
 export const AgentParamsSchema = Type.Object(
   {
     message: NonEmptyString,
@@ -212,6 +221,7 @@ export const AgentParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Agent Identity Params Schema behavior in packages/gateway-protocol. */
 export const AgentIdentityParamsSchema = Type.Object(
   {
     agentId: Type.Optional(NonEmptyString),
@@ -220,6 +230,7 @@ export const AgentIdentityParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Agent Identity Result Schema behavior in packages/gateway-protocol. */
 export const AgentIdentityResultSchema = Type.Object(
   {
     agentId: NonEmptyString,
@@ -233,6 +244,7 @@ export const AgentIdentityResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Agent Wait Params Schema behavior in packages/gateway-protocol. */
 export const AgentWaitParamsSchema = Type.Object(
   {
     runId: NonEmptyString,
@@ -241,6 +253,7 @@ export const AgentWaitParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Wake Params Schema behavior in packages/gateway-protocol. */
 export const WakeParamsSchema = Type.Object(
   {
     mode: Type.Union([Type.Literal("now"), Type.Literal("next-heartbeat")]),

@@ -1,3 +1,4 @@
+// Tests infra/outbound deliver test behavior.
 import path from "node:path";
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { chunkText } from "../../auto-reply/chunk.js";

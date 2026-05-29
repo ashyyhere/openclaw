@@ -1,3 +1,4 @@
+// ANSI escape helpers used to clean terminal output before display or storage.
 /*
  * Portions of this file are derived from:
  * - ansi-regex (https://github.com/chalk/ansi-regex)
@@ -43,6 +44,7 @@ function ansiRegex({ onlyFirst = false }: { onlyFirst?: boolean } = {}): RegExp 
 
 const regex = ansiRegex();
 
+/** Remove ANSI control sequences from terminal text. */
 export function stripAnsi(value: string): string {
   if (typeof value !== "string") {
     throw new TypeError(`Expected a \`string\`, got \`${typeof value}\``);

@@ -1,3 +1,4 @@
+// extensions/whatsapp/src approval native helpers and runtime behavior.
 import {
   createChannelApprovalCapability,
   splitChannelApprovalCapability,

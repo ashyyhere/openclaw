@@ -1,3 +1,4 @@
+/** Tests doctor deprecation compatibility records. */
 import fs from "node:fs";
 import { describe, expect, it } from "vitest";
 import {

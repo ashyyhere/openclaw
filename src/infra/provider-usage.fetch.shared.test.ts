@@ -1,3 +1,4 @@
+// Tests infra provider usage fetch shared test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { MAX_TIMER_TIMEOUT_MS } from "../shared/number-coercion.js";
 import { withFetchPreconnect } from "../test-utils/fetch-mock.js";

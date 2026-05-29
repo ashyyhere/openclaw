@@ -1,3 +1,4 @@
+// Tests extensions/ollama/src embedding provider test behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/provider-auth";
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 

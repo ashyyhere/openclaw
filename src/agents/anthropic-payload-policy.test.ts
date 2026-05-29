@@ -1,3 +1,4 @@
+/** Tests Anthropic payload cache-control and service-tier policy. */
 import { describe, expect, it } from "vitest";
 import {
   applyAnthropicPayloadPolicyToParams,

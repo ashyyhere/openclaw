@@ -1,3 +1,4 @@
+// extensions/matrix contract api helpers and runtime behavior.
 export {
   createMatrixThreadBindingManager,
   resetMatrixThreadBindingsForTests,

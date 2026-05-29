@@ -1,3 +1,4 @@
+/** Normalizes model message turn ordering for provider replay constraints. */
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 import type { AgentMessage } from "../runtime/index.js";
 import { extractToolCallsFromAssistant, extractToolResultId } from "../tool-call-id.js";
@@ -349,6 +350,7 @@ export function validateGeminiTurns(messages: AgentMessage[]): AgentMessage[] {
   });
 }
 
+/** Reused helper for merge Consecutive User Turns behavior in src/agents/embedded-agent-helpers. */
 export function mergeConsecutiveUserTurns(
   previous: Extract<AgentMessage, { role: "user" }>,
   current: Extract<AgentMessage, { role: "user" }>,

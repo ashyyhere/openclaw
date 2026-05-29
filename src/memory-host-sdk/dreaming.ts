@@ -1,3 +1,4 @@
+// memory-host-sdk dreaming helpers and runtime behavior.
 import path from "node:path";
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../agents/agent-scope.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -9,63 +10,112 @@ import {
   normalizeStringifiedOptionalString,
 } from "../shared/string-coerce.js";
 
+/** Reused constant for DEFAULT MEMORY DREAMING ENABLED behavior in src/memory-host-sdk. */
 export const DEFAULT_MEMORY_DREAMING_ENABLED = false;
+/** Reused constant for DEFAULT MEMORY DREAMING TIMEZONE behavior in src/memory-host-sdk. */
 export const DEFAULT_MEMORY_DREAMING_TIMEZONE = undefined;
+/** Reused constant for DEFAULT MEMORY DREAMING VERBOSE LOGGING behavior in src/memory-host-sdk. */
 export const DEFAULT_MEMORY_DREAMING_VERBOSE_LOGGING = false;
+/** Reused constant for DEFAULT MEMORY DREAMING STORAGE MODE behavior in src/memory-host-sdk. */
 export const DEFAULT_MEMORY_DREAMING_STORAGE_MODE = "separate";
+/** Reused constant for DEFAULT MEMORY DREAMING SEPARATE REPORTS behavior in src/memory-host-sdk. */
 export const DEFAULT_MEMORY_DREAMING_SEPARATE_REPORTS = false;
+/** Reused constant for DEFAULT MEMORY DREAMING FREQUENCY behavior in src/memory-host-sdk. */
 export const DEFAULT_MEMORY_DREAMING_FREQUENCY = "0 3 * * *";
+/** Reused constant for DEFAULT MEMORY DREAMING PLUGIN ID behavior in src/memory-host-sdk. */
 export const DEFAULT_MEMORY_DREAMING_PLUGIN_ID = "memory-core";
+/** Reused constant for MANAGED MEMORY DREAMING CRON NAME behavior in src/memory-host-sdk. */
 export const MANAGED_MEMORY_DREAMING_CRON_NAME = "Memory Dreaming Promotion";
+/** Reused constant for MANAGED MEMORY DREAMING CRON TAG behavior in src/memory-host-sdk. */
 export const MANAGED_MEMORY_DREAMING_CRON_TAG = "[managed-by=memory-core.short-term-promotion]";
+/** Reused constant for MEMORY DREAMING SYSTEM EVENT TEXT behavior in src/memory-host-sdk. */
 export const MEMORY_DREAMING_SYSTEM_EVENT_TEXT =
   "__openclaw_memory_core_short_term_promotion_dream__";
+/** Reused constant for LEGACY MEMORY LIGHT DREAMING CRON NAME behavior in src/memory-host-sdk. */
 export const LEGACY_MEMORY_LIGHT_DREAMING_CRON_NAME = "Memory Light Dreaming";
+/** Reused constant for LEGACY MEMORY LIGHT DREAMING CRON TAG behavior in src/memory-host-sdk. */
 export const LEGACY_MEMORY_LIGHT_DREAMING_CRON_TAG = "[managed-by=memory-core.dreaming.light]";
+/** Reused constant for LEGACY MEMORY LIGHT DREAMING EVENT TEXT behavior in src/memory-host-sdk. */
 export const LEGACY_MEMORY_LIGHT_DREAMING_EVENT_TEXT = "__openclaw_memory_core_light_sleep__";
+/** Reused constant for LEGACY MEMORY REM DREAMING CRON NAME behavior in src/memory-host-sdk. */
 export const LEGACY_MEMORY_REM_DREAMING_CRON_NAME = "Memory REM Dreaming";
+/** Reused constant for LEGACY MEMORY REM DREAMING CRON TAG behavior in src/memory-host-sdk. */
 export const LEGACY_MEMORY_REM_DREAMING_CRON_TAG = "[managed-by=memory-core.dreaming.rem]";
+/** Reused constant for LEGACY MEMORY REM DREAMING EVENT TEXT behavior in src/memory-host-sdk. */
 export const LEGACY_MEMORY_REM_DREAMING_EVENT_TEXT = "__openclaw_memory_core_rem_sleep__";
 
+/** Reused constant for DEFAULT MEMORY LIGHT DREAMING CRON EXPR behavior in src/memory-host-sdk. */
 export const DEFAULT_MEMORY_LIGHT_DREAMING_CRON_EXPR = "0 */6 * * *";
+/** Reused constant for DEFAULT MEMORY LIGHT DREAMING LOOKBACK DAYS behavior in src/memory-host-sdk. */
 export const DEFAULT_MEMORY_LIGHT_DREAMING_LOOKBACK_DAYS = 2;
+/** Reused constant for DEFAULT MEMORY LIGHT DREAMING LIMIT behavior in src/memory-host-sdk. */
 export const DEFAULT_MEMORY_LIGHT_DREAMING_LIMIT = 100;
+/** Reused constant for DEFAULT MEMORY LIGHT DREAMING DEDUPE SIMILARITY behavior in src/memory-host-sdk. */
 export const DEFAULT_MEMORY_LIGHT_DREAMING_DEDUPE_SIMILARITY = 0.9;
 
+/** Reused constant for DEFAULT MEMORY DEEP DREAMING CRON EXPR behavior in src/memory-host-sdk. */
 export const DEFAULT_MEMORY_DEEP_DREAMING_CRON_EXPR = "0 3 * * *";
+/** Reused constant for DEFAULT MEMORY DEEP DREAMING LIMIT behavior in src/memory-host-sdk. */
 export const DEFAULT_MEMORY_DEEP_DREAMING_LIMIT = 10;
+/** Reused constant for DEFAULT MEMORY DEEP DREAMING MIN SCORE behavior in src/memory-host-sdk. */
 export const DEFAULT_MEMORY_DEEP_DREAMING_MIN_SCORE = 0.8;
+/** Reused constant for DEFAULT MEMORY DEEP DREAMING MIN RECALL COUNT behavior in src/memory-host-sdk. */
 export const DEFAULT_MEMORY_DEEP_DREAMING_MIN_RECALL_COUNT = 3;
+/** Reused constant for DEFAULT MEMORY DEEP DREAMING MIN UNIQUE QUERIES behavior in src/memory-host-sdk. */
 export const DEFAULT_MEMORY_DEEP_DREAMING_MIN_UNIQUE_QUERIES = 3;
+/** Reused constant for DEFAULT MEMORY DEEP DREAMING RECENCY HALF LIFE DAYS behavior in src/memory-host-sdk. */
 export const DEFAULT_MEMORY_DEEP_DREAMING_RECENCY_HALF_LIFE_DAYS = 14;
+/** Reused constant for DEFAULT MEMORY DEEP DREAMING MAX AGE DAYS behavior in src/memory-host-sdk. */
 export const DEFAULT_MEMORY_DEEP_DREAMING_MAX_AGE_DAYS = 30;
+/** Reused constant for DEFAULT MEMORY DEEP DREAMING MAX PROMOTED SNIPPET TOKENS behavior in src/memory-host-sdk. */
 export const DEFAULT_MEMORY_DEEP_DREAMING_MAX_PROMOTED_SNIPPET_TOKENS = 160;
 
+/** Reused constant for DEFAULT MEMORY DEEP DREAMING RECOVERY ENABLED behavior in src/memory-host-sdk. */
 export const DEFAULT_MEMORY_DEEP_DREAMING_RECOVERY_ENABLED = true;
+/** Reused constant for DEFAULT MEMORY DEEP DREAMING RECOVERY TRIGGER BELOW HEALTH behavior in src/memory-host-sdk. */
 export const DEFAULT_MEMORY_DEEP_DREAMING_RECOVERY_TRIGGER_BELOW_HEALTH = 0.35;
+/** Reused constant for DEFAULT MEMORY DEEP DREAMING RECOVERY LOOKBACK DAYS behavior in src/memory-host-sdk. */
 export const DEFAULT_MEMORY_DEEP_DREAMING_RECOVERY_LOOKBACK_DAYS = 30;
+/** Reused constant for DEFAULT MEMORY DEEP DREAMING RECOVERY MAX CANDIDATES behavior in src/memory-host-sdk. */
 export const DEFAULT_MEMORY_DEEP_DREAMING_RECOVERY_MAX_CANDIDATES = 20;
+/** Reused constant for DEFAULT MEMORY DEEP DREAMING RECOVERY MIN CONFIDENCE behavior in src/memory-host-sdk. */
 export const DEFAULT_MEMORY_DEEP_DREAMING_RECOVERY_MIN_CONFIDENCE = 0.9;
+/** Reused constant for DEFAULT MEMORY DEEP DREAMING RECOVERY AUTO WRITE MIN CONFIDENCE behavior in src/memory-host-sdk. */
 export const DEFAULT_MEMORY_DEEP_DREAMING_RECOVERY_AUTO_WRITE_MIN_CONFIDENCE = 0.97;
 
+/** Reused constant for DEFAULT MEMORY REM DREAMING CRON EXPR behavior in src/memory-host-sdk. */
 export const DEFAULT_MEMORY_REM_DREAMING_CRON_EXPR = "0 5 * * 0";
+/** Reused constant for DEFAULT MEMORY REM DREAMING LOOKBACK DAYS behavior in src/memory-host-sdk. */
 export const DEFAULT_MEMORY_REM_DREAMING_LOOKBACK_DAYS = 7;
+/** Reused constant for DEFAULT MEMORY REM DREAMING LIMIT behavior in src/memory-host-sdk. */
 export const DEFAULT_MEMORY_REM_DREAMING_LIMIT = 10;
+/** Reused constant for DEFAULT MEMORY REM DREAMING MIN PATTERN STRENGTH behavior in src/memory-host-sdk. */
 export const DEFAULT_MEMORY_REM_DREAMING_MIN_PATTERN_STRENGTH = 0.75;
 
+/** Reused constant for DEFAULT MEMORY DREAMING SPEED behavior in src/memory-host-sdk. */
 export const DEFAULT_MEMORY_DREAMING_SPEED = "balanced";
+/** Reused constant for DEFAULT MEMORY DREAMING THINKING behavior in src/memory-host-sdk. */
 export const DEFAULT_MEMORY_DREAMING_THINKING = "medium";
+/** Reused constant for DEFAULT MEMORY DREAMING BUDGET behavior in src/memory-host-sdk. */
 export const DEFAULT_MEMORY_DREAMING_BUDGET = "medium";
 
+/** Shared type for Memory Dreaming Speed in src/memory-host-sdk. */
 export type MemoryDreamingSpeed = "fast" | "balanced" | "slow";
+/** Shared type for Memory Dreaming Thinking in src/memory-host-sdk. */
 export type MemoryDreamingThinking = "low" | "medium" | "high";
+/** Shared type for Memory Dreaming Budget in src/memory-host-sdk. */
 export type MemoryDreamingBudget = "cheap" | "medium" | "expensive";
+/** Shared type for Memory Dreaming Storage Mode in src/memory-host-sdk. */
 export type MemoryDreamingStorageMode = "inline" | "separate" | "both";
 
+/** Shared type for Memory Light Dreaming Source in src/memory-host-sdk. */
 export type MemoryLightDreamingSource = "daily" | "sessions" | "recall";
+/** Shared type for Memory Deep Dreaming Source in src/memory-host-sdk. */
 export type MemoryDeepDreamingSource = "daily" | "memory" | "sessions" | "logs" | "recall";
+/** Shared type for Memory Rem Dreaming Source in src/memory-host-sdk. */
 export type MemoryRemDreamingSource = "memory" | "daily" | "deep";
 
+/** Shared type for Memory Dreaming Execution Config in src/memory-host-sdk. */
 export type MemoryDreamingExecutionConfig = {
   speed: MemoryDreamingSpeed;
   thinking: MemoryDreamingThinking;
@@ -76,11 +126,13 @@ export type MemoryDreamingExecutionConfig = {
   timeoutMs?: number;
 };
 
+/** Shared type for Memory Dreaming Storage Config in src/memory-host-sdk. */
 export type MemoryDreamingStorageConfig = {
   mode: MemoryDreamingStorageMode;
   separateReports: boolean;
 };
 
+/** Shared type for Memory Light Dreaming Config in src/memory-host-sdk. */
 export type MemoryLightDreamingConfig = {
   enabled: boolean;
   cron: string;
@@ -91,6 +143,7 @@ export type MemoryLightDreamingConfig = {
   execution: MemoryDreamingExecutionConfig;
 };
 
+/** Shared type for Memory Deep Dreaming Recovery Config in src/memory-host-sdk. */
 export type MemoryDeepDreamingRecoveryConfig = {
   enabled: boolean;
   triggerBelowHealth: number;
@@ -100,6 +153,7 @@ export type MemoryDeepDreamingRecoveryConfig = {
   autoWriteMinConfidence: number;
 };
 
+/** Shared type for Memory Deep Dreaming Config in src/memory-host-sdk. */
 export type MemoryDeepDreamingConfig = {
   enabled: boolean;
   cron: string;
@@ -115,6 +169,7 @@ export type MemoryDeepDreamingConfig = {
   execution: MemoryDreamingExecutionConfig;
 };
 
+/** Shared type for Memory Rem Dreaming Config in src/memory-host-sdk. */
 export type MemoryRemDreamingConfig = {
   enabled: boolean;
   cron: string;
@@ -125,8 +180,10 @@ export type MemoryRemDreamingConfig = {
   execution: MemoryDreamingExecutionConfig;
 };
 
+/** Shared type for Memory Dreaming Phase Name in src/memory-host-sdk. */
 export type MemoryDreamingPhaseName = "light" | "deep" | "rem";
 
+/** Shared type for Memory Dreaming Config in src/memory-host-sdk. */
 export type MemoryDreamingConfig = {
   enabled: boolean;
   frequency: string;
@@ -143,11 +200,13 @@ export type MemoryDreamingConfig = {
   };
 };
 
+/** Shared type for Memory Dreaming Workspace in src/memory-host-sdk. */
 export type MemoryDreamingWorkspace = {
   workspaceDir: string;
   agentIds: string[];
 };
 
+/** Shared type for Memory Dreaming Workspace Options in src/memory-host-sdk. */
 export type MemoryDreamingWorkspaceOptions = {
   primaryWorkspaceDir?: string | null;
   primaryAgentId?: string | null;
@@ -334,6 +393,7 @@ function formatLocalIsoDay(epochMs: number): string {
   return `${year}-${month}-${day}`;
 }
 
+/** Reused helper for resolve Memory Dreaming Plugin Id behavior in src/memory-host-sdk. */
 export function resolveMemoryDreamingPluginId(
   cfg: OpenClawConfig | Record<string, unknown> | undefined,
 ): string {
@@ -347,6 +407,7 @@ export function resolveMemoryDreamingPluginId(
   return DEFAULT_MEMORY_DREAMING_PLUGIN_ID;
 }
 
+/** Reused helper for resolve Memory Dreaming Plugin Config behavior in src/memory-host-sdk. */
 export function resolveMemoryDreamingPluginConfig(
   cfg: OpenClawConfig | Record<string, unknown> | undefined,
 ): Record<string, unknown> | undefined {
@@ -361,6 +422,7 @@ export function resolveMemoryDreamingPluginConfig(
 /** @deprecated Use resolveMemoryDreamingPluginConfig. */
 export const resolveMemoryCorePluginConfig = resolveMemoryDreamingPluginConfig;
 
+/** Reused helper for resolve Memory Dreaming Config behavior in src/memory-host-sdk. */
 export function resolveMemoryDreamingConfig(params: {
   pluginConfig?: Record<string, unknown>;
   cfg?: OpenClawConfig;
@@ -524,6 +586,7 @@ export function resolveMemoryDreamingConfig(params: {
   };
 }
 
+/** Reused helper for resolve Memory Deep Dreaming Config behavior in src/memory-host-sdk. */
 export function resolveMemoryDeepDreamingConfig(params: {
   pluginConfig?: Record<string, unknown>;
   cfg?: OpenClawConfig;
@@ -542,6 +605,7 @@ export function resolveMemoryDeepDreamingConfig(params: {
   };
 }
 
+/** Reused helper for resolve Memory Light Dreaming Config behavior in src/memory-host-sdk. */
 export function resolveMemoryLightDreamingConfig(params: {
   pluginConfig?: Record<string, unknown>;
   cfg?: OpenClawConfig;
@@ -560,6 +624,7 @@ export function resolveMemoryLightDreamingConfig(params: {
   };
 }
 
+/** Reused helper for resolve Memory Rem Dreaming Config behavior in src/memory-host-sdk. */
 export function resolveMemoryRemDreamingConfig(params: {
   pluginConfig?: Record<string, unknown>;
   cfg?: OpenClawConfig;
@@ -578,6 +643,7 @@ export function resolveMemoryRemDreamingConfig(params: {
   };
 }
 
+/** Reused helper for format Memory Dreaming Day behavior in src/memory-host-sdk. */
 export function formatMemoryDreamingDay(epochMs: number, timezone?: string): string {
   if (!timezone) {
     return formatLocalIsoDay(epochMs);
@@ -602,6 +668,7 @@ export function formatMemoryDreamingDay(epochMs: number, timezone?: string): str
   return formatLocalIsoDay(epochMs);
 }
 
+/** Reused helper for is Same Memory Dreaming Day behavior in src/memory-host-sdk. */
 export function isSameMemoryDreamingDay(
   firstEpochMs: number,
   secondEpochMs: number,
@@ -613,6 +680,7 @@ export function isSameMemoryDreamingDay(
   );
 }
 
+/** Reused helper for resolve Memory Dreaming Workspaces behavior in src/memory-host-sdk. */
 export function resolveMemoryDreamingWorkspaces(
   cfg: OpenClawConfig,
   options: MemoryDreamingWorkspaceOptions = {},

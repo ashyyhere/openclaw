@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/exa/src exa web search provider runtime behavior.
 import { parseStrictPositiveInteger } from "openclaw/plugin-sdk/number-runtime";
 import {
   buildSearchCacheKey,

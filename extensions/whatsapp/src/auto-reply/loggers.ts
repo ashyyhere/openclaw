@@ -1,3 +1,4 @@
+// extensions/whatsapp/src/auto-reply loggers helpers and runtime behavior.
 import { createSubsystemLogger } from "openclaw/plugin-sdk/runtime-env";
 
 export const whatsappLog = createSubsystemLogger("gateway/channels/whatsapp");

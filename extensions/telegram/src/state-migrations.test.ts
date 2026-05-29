@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src state migrations test behavior.
 import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

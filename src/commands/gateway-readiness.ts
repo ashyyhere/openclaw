@@ -1,3 +1,4 @@
+/** Ensures the gateway is ready before commands requiring live service access. */
 import type { DaemonStatus } from "../cli/daemon-cli/status.gather.js";
 import { promptYesNo } from "../cli/prompt.js";
 import type { RuntimeEnv } from "../runtime.js";
@@ -13,6 +14,7 @@ const daemonLifecycleModuleLoader = createLazyImportLoader(
   () => import("../cli/daemon-cli/lifecycle.js"),
 );
 
+/** Shared type for Gateway Readiness Result in src/commands. */
 export type GatewayReadinessResult =
   | {
       ready: true;
@@ -33,6 +35,7 @@ type GatewayReadinessDeps = {
   startGateway?: () => Promise<void>;
 };
 
+/** Shared type for Gateway Readiness Options in src/commands. */
 export type GatewayReadinessOptions = {
   runtime: RuntimeEnv;
   operation: string;
@@ -191,6 +194,7 @@ async function waitForGatewayReady(params: {
   return latest;
 }
 
+/** Reused helper for ensure Gateway Ready For Operation behavior in src/commands. */
 export async function ensureGatewayReadyForOperation(
   options: GatewayReadinessOptions,
 ): Promise<GatewayReadinessResult> {

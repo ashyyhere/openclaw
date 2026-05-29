@@ -1,3 +1,4 @@
+// Tests infra backoff test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { computeBackoff, sleepWithAbort, type BackoffPolicy } from "./backoff.js";
 

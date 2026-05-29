@@ -1,3 +1,4 @@
+// Tests extensions/memory-wiki/src markdown test behavior.
 import { createHash } from "node:crypto";
 import { describe, expect, it } from "vitest";
 import {

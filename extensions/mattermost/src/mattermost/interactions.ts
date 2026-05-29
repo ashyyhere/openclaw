@@ -1,3 +1,4 @@
+// extensions/mattermost/src/mattermost interactions helpers and runtime behavior.
 import { createHmac } from "node:crypto";
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { safeEqualSecret } from "openclaw/plugin-sdk/security-runtime";

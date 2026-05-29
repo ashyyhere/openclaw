@@ -1,3 +1,4 @@
+// test/vitest vitest tui config helpers and runtime behavior.
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
 export function createTuiVitestConfig(env?: Record<string, string | undefined>) {

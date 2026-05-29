@@ -1,3 +1,4 @@
+/** Tests gateway exec approval relay mapping into ACP permission requests. */
 import { describe, expect, it } from "vitest";
 import {
   buildAcpPermissionOptions,

@@ -1,3 +1,4 @@
+// Tests test/scripts ci workflow guards test behavior.
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { parse } from "yaml";
@@ -100,7 +101,7 @@ describe("ci workflow guards", () => {
     expect(workflow).not.toContain("$fetchInfo.RedirectStandardOutput = $true");
     expect(workflow).not.toContain("$fetchInfo.RedirectStandardError = $true");
     expect(workflow).toContain(
-      '--no-tags --no-progress --prune --no-recurse-submodules --depth=50',
+      "--no-tags --no-progress --prune --no-recurse-submodules --depth=50",
     );
     expect(workflow).toContain("$fetch = New-Object System.Diagnostics.Process");
     expect(workflow).toContain("$fetch.StartInfo = $fetchInfo");

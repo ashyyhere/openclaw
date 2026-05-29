@@ -1,6 +1,8 @@
+// plugin-sdk outbound media helpers and runtime behavior.
 import { buildOutboundMediaLoadOptions, type OutboundMediaAccess } from "../media/load-options.js";
 import { loadWebMedia } from "./web-media.js";
 
+/** Shared type for Outbound Media Load Options in src/plugin-sdk. */
 export type OutboundMediaLoadOptions = {
   maxBytes?: number;
   mediaAccess?: OutboundMediaAccess;

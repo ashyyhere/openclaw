@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/browser/routes tabs attach only test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import "../../../test-support.js";
 import "../server-context.chrome-test-harness.js";

@@ -1,3 +1,4 @@
+// extensions/telegram config api helpers and runtime behavior.
 export {
   buildChannelConfigSchema,
   TelegramConfigSchema,

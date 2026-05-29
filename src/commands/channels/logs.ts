@@ -1,3 +1,4 @@
+/** Implements channel logs command. */
 import fs from "node:fs/promises";
 import { theme } from "../../../packages/terminal-core/src/theme.js";
 import { normalizeChannelId as normalizeBundledChannelId } from "../../channels/registry.js";
@@ -9,6 +10,7 @@ import { listManifestChannelContributionIds } from "../../plugins/manifest-contr
 import { defaultRuntime, type RuntimeEnv, writeRuntimeJson } from "../../runtime.js";
 import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";
 
+/** Shared type for Channels Logs Options in src/commands/channels. */
 export type ChannelsLogsOptions = {
   channel?: string;
   lines?: string | number;
@@ -104,6 +106,7 @@ async function readTailLines(file: string, limit: number): Promise<string[]> {
   }
 }
 
+/** Reused helper for channels Logs Command behavior in src/commands/channels. */
 export async function channelsLogsCommand(
   opts: ChannelsLogsOptions,
   runtime: RuntimeEnv = defaultRuntime,

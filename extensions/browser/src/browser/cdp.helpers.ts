@@ -1,3 +1,4 @@
+// extensions/browser/src/browser cdp helpers helpers and runtime behavior.
 import { parseBrowserHttpUrl, redactCdpUrl } from "openclaw/plugin-sdk/browser-config";
 import { fetchWithSsrFGuard } from "openclaw/plugin-sdk/ssrf-runtime";
 import WebSocket from "ws";

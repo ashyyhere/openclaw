@@ -1,3 +1,4 @@
+// extensions/oc-path/src/oc-path/yaml emit helpers and runtime behavior.
 import { OcEmitSentinelError, REDACTED_SENTINEL } from "../sentinel.js";
 import type { YamlAst } from "./ast.js";
 

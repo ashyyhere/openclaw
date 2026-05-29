@@ -1,3 +1,4 @@
+// Coverage for secret resolution in reply agent utility helpers.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../../config/config.js";
 

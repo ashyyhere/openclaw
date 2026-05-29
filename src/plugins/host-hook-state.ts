@@ -1,3 +1,4 @@
+// plugins host hook state helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import { loadSessionStore, updateSessionStore, type SessionEntry } from "../config/sessions.js";
 import { resolveAgentMainSessionKey } from "../config/sessions/main-session.js";
@@ -16,6 +17,7 @@ import {
   normalizeLowercaseStringOrEmpty,
   normalizeOptionalString,
 } from "../shared/string-coerce.js";
+/** Re-exported API for src/plugins, starting with clear Plugin Owned Session State. */
 export { clearPluginOwnedSessionState } from "./host-hook-cleanup.js";
 import {
   buildPluginAgentTurnPrepareContext,
@@ -229,6 +231,7 @@ function toPluginNextTurnInjectionRecord(params: {
   };
 }
 
+/** Reused helper for enqueue Plugin Next Turn Injection behavior in src/plugins. */
 export async function enqueuePluginNextTurnInjection(params: {
   cfg: OpenClawConfig;
   pluginId: string;
@@ -325,6 +328,7 @@ export async function enqueuePluginNextTurnInjection(params: {
   return { enqueued, id: resultId, sessionKey: canonicalKey };
 }
 
+/** Reused helper for drain Plugin Next Turn Injections behavior in src/plugins. */
 export async function drainPluginNextTurnInjections(params: {
   cfg: OpenClawConfig;
   sessionKey?: string;
@@ -385,6 +389,7 @@ export async function drainPluginNextTurnInjections(params: {
   });
 }
 
+/** Reused helper for drain Plugin Next Turn Injection Context behavior in src/plugins. */
 export async function drainPluginNextTurnInjectionContext(params: {
   cfg: OpenClawConfig;
   sessionKey?: string;
@@ -398,6 +403,7 @@ export async function drainPluginNextTurnInjectionContext(params: {
 }
 
 // oxlint-disable-next-line typescript/no-unnecessary-type-parameters -- Session-extension JSON reads are caller-typed by namespace.
+/** Reused helper for get Plugin Session Extension Sync behavior in src/plugins. */
 export function getPluginSessionExtensionSync<T extends PluginJsonValue = PluginJsonValue>(params: {
   cfg: OpenClawConfig;
   pluginId: string;
@@ -417,6 +423,7 @@ export function getPluginSessionExtensionSync<T extends PluginJsonValue = Plugin
   return value as T | undefined;
 }
 
+/** Reused helper for get Plugin Session Extension State Sync behavior in src/plugins. */
 export function getPluginSessionExtensionStateSync(params: {
   cfg: OpenClawConfig;
   pluginId: string;
@@ -434,6 +441,7 @@ export function getPluginSessionExtensionStateSync(params: {
   return value ? (copyJsonValue(value) as Record<string, PluginJsonValue>) : undefined;
 }
 
+/** Reused helper for patch Plugin Session Extension behavior in src/plugins. */
 export async function patchPluginSessionExtension(params: {
   cfg: OpenClawConfig;
   sessionKey: string;
@@ -579,6 +587,7 @@ function projectSessionExtensionValueForSlot(params: {
   return copyJsonValue(projected);
 }
 
+/** Reused helper for project Plugin Session Extensions behavior in src/plugins. */
 export async function projectPluginSessionExtensions(params: {
   sessionKey: string;
   entry: SessionEntry;
@@ -669,6 +678,7 @@ function projectSessionExtensionValue(params: {
   }
 }
 
+/** Reused helper for project Plugin Session Extensions Sync behavior in src/plugins. */
 export function projectPluginSessionExtensionsSync(params: {
   sessionKey: string;
   entry: SessionEntry;

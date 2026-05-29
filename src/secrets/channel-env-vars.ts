@@ -1,6 +1,8 @@
+// secrets channel env vars helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { loadPluginMetadataSnapshot } from "../plugins/plugin-metadata-snapshot.js";
 import { uniqueStrings } from "../shared/string-normalization.js";
+/** Re-exported API for src/secrets, starting with is Safe Channel Env Var Trigger Name. */
 export { isSafeChannelEnvVarTriggerName } from "./channel-env-var-names.js";
 
 type ChannelEnvVarLookupParams = {
@@ -30,6 +32,7 @@ function appendUniqueEnvVarCandidates(
   }
 }
 
+/** Reused helper for resolve Channel Env Vars behavior in src/secrets. */
 export function resolveChannelEnvVars(
   params?: ChannelEnvVarLookupParams,
 ): Record<string, readonly string[]> {
@@ -52,12 +55,14 @@ export function resolveChannelEnvVars(
   return candidates;
 }
 
+/** Reused helper for get Channel Env Vars behavior in src/secrets. */
 export function getChannelEnvVars(channelId: string, params?: ChannelEnvVarLookupParams): string[] {
   const channelEnvVars = resolveChannelEnvVars(params);
   const envVars = Object.hasOwn(channelEnvVars, channelId) ? channelEnvVars[channelId] : undefined;
   return Array.isArray(envVars) ? [...envVars] : [];
 }
 
+/** Reused helper for list Known Channel Env Var Names behavior in src/secrets. */
 export function listKnownChannelEnvVarNames(params?: ChannelEnvVarLookupParams): string[] {
   return uniqueStrings(Object.values(resolveChannelEnvVars(params)).flatMap((keys) => keys));
 }

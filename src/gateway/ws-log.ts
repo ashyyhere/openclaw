@@ -1,3 +1,4 @@
+// gateway ws log helpers and runtime behavior.
 import chalk from "chalk";
 import { resolveSendableOutboundReplyParts } from "openclaw/plugin-sdk/reply-payload";
 import { isVerbose } from "../globals.js";
@@ -87,10 +88,12 @@ function logWsInfoLine(params: {
   wsLog.info(tokens.join(" "));
 }
 
+/** Reused helper for should Log Ws behavior in src/gateway. */
 export function shouldLogWs(): boolean {
   return shouldLogSubsystemToConsole("gateway/ws");
 }
 
+/** Reused helper for short Id behavior in src/gateway. */
 export function shortId(value: string): string {
   const s = value.trim();
   if (UUID_RE.test(s)) {
@@ -102,6 +105,7 @@ export function shortId(value: string): string {
   return `${s.slice(0, 12)}…${s.slice(-4)}`;
 }
 
+/** Reused helper for format For Log behavior in src/gateway. */
 export function formatForLog(value: unknown): string {
   try {
     if (value instanceof Error) {
@@ -187,6 +191,7 @@ function compactPreview(input: string, maxLen = 160): string {
   return `${oneLine.slice(0, Math.max(0, maxLen - 1))}…`;
 }
 
+/** Reused helper for summarize Agent Event For Ws Log behavior in src/gateway. */
 export function summarizeAgentEventForWsLog(payload: unknown): Record<string, unknown> {
   if (!payload || typeof payload !== "object") {
     return {};
@@ -279,6 +284,7 @@ export function summarizeAgentEventForWsLog(payload: unknown): Record<string, un
   return extra;
 }
 
+/** Reused helper for log Ws behavior in src/gateway. */
 export function logWs(direction: "in" | "out", kind: string, meta?: Record<string, unknown>) {
   if (!shouldLogSubsystemToConsole("gateway/ws")) {
     return;

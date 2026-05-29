@@ -1,3 +1,4 @@
+// plugins provider auth input helpers and runtime behavior.
 import { resolveEnvApiKey } from "../agents/model-auth-env.js";
 import type { OpenClawConfig } from "../config/types.js";
 import type { SecretInput } from "../config/types.secrets.js";
@@ -14,12 +15,14 @@ import {
 } from "./provider-auth-ref.js";
 import type { SecretInputMode } from "./provider-auth-types.js";
 
+/** Re-exported API for src/plugins. */
 export {
   extractEnvVarFromSourceLabel,
   promptSecretRefForSetup,
   resolveRefFallbackInput,
   type SecretRefSetupPromptCopy,
 } from "./provider-auth-ref.js";
+/** Re-exported API for src/plugins. */
 export {
   resolveSecretInputModeForEnvSelection,
   type SecretInputModePromptCopy,
@@ -27,6 +30,7 @@ export {
 
 const DEFAULT_KEY_PREVIEW = { head: 4, tail: 4 };
 
+/** Reused helper for normalize Api Key Input behavior in src/plugins. */
 export function normalizeApiKeyInput(raw: string): string {
   const trimmed = normalizeStringifiedOptionalString(raw) ?? "";
   if (!trimmed) {
@@ -49,9 +53,11 @@ export function normalizeApiKeyInput(raw: string): string {
   return withoutSemicolon.trim();
 }
 
+/** Reused constant for validate Api Key Input behavior in src/plugins. */
 export const validateApiKeyInput = (value: string) =>
   normalizeApiKeyInput(value).length > 0 ? undefined : "Required";
 
+/** Reused helper for format Api Key Preview behavior in src/plugins. */
 export function formatApiKeyPreview(
   raw: string,
   opts: { head?: number; tail?: number } = {},
@@ -73,12 +79,14 @@ export function formatApiKeyPreview(
   return `${trimmed.slice(0, head)}…${trimmed.slice(-tail)}`;
 }
 
+/** Reused helper for normalize Token Provider Input behavior in src/plugins. */
 export function normalizeTokenProviderInput(
   tokenProvider: string | null | undefined,
 ): string | undefined {
   return normalizeOptionalLowercaseString(tokenProvider);
 }
 
+/** Reused helper for normalize Secret Input Mode Input behavior in src/plugins. */
 export function normalizeSecretInputModeInput(
   secretInputMode: string | null | undefined,
 ): SecretInputMode | undefined {
@@ -89,6 +97,7 @@ export function normalizeSecretInputModeInput(
   return undefined;
 }
 
+/** Reused helper for maybe Apply Api Key From Option behavior in src/plugins. */
 export async function maybeApplyApiKeyFromOption(params: {
   token: string | undefined;
   tokenProvider: string | undefined;
@@ -109,6 +118,7 @@ export async function maybeApplyApiKeyFromOption(params: {
   return apiKey;
 }
 
+/** Reused helper for ensure Api Key From Option Env Or Prompt behavior in src/plugins. */
 export async function ensureApiKeyFromOptionEnvOrPrompt(params: {
   token: string | undefined;
   tokenProvider: string | undefined;
@@ -156,6 +166,7 @@ export async function ensureApiKeyFromOptionEnvOrPrompt(params: {
   });
 }
 
+/** Reused helper for ensure Api Key From Env Or Prompt behavior in src/plugins. */
 export async function ensureApiKeyFromEnvOrPrompt(params: {
   config: OpenClawConfig;
   env?: NodeJS.ProcessEnv;

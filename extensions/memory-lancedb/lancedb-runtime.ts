@@ -1,3 +1,4 @@
+// extensions/memory-lancedb lancedb runtime helpers and runtime behavior.
 type LanceDbModule = typeof import("@lancedb/lancedb");
 
 export type LanceDbRuntimeLogger = {

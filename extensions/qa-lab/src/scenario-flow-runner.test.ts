@@ -1,3 +1,4 @@
+// Tests extensions/qa-lab/src scenario flow runner test behavior.
 import { describe, expect, it } from "vitest";
 import { createQaBusState } from "./bus-state.js";
 import { runScenarioFlow } from "./scenario-flow-runner.js";

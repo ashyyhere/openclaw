@@ -13,6 +13,7 @@ import {
   createBaseWebSearchProviderContractFields,
   type CreateWebSearchProviderContractFieldsOptions,
 } from "./provider-web-search-contract-fields.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   getScopedCredentialValue,
   getTopLevelCredentialValue,
@@ -22,7 +23,9 @@ export {
   setProviderWebSearchPluginConfigValue,
   setTopLevelCredentialValue,
 } from "../agents/tools/web-search-provider-config.js";
+/** Re-exported API for src/plugin-sdk, starting with enable Plugin In Config. */
 export { enablePluginInConfig } from "./provider-enable-config.js";
+/** Re-exported API for src/plugin-sdk. */
 export type {
   WebSearchCredentialResolutionSource,
   WebSearchProviderSetupContext,
@@ -30,6 +33,7 @@ export type {
   WebSearchProviderToolDefinition,
   WebSearchProviderToolExecutionContext,
 };
+/** Re-exported API for src/plugin-sdk. */
 export type {
   CreateWebSearchProviderContractFieldsOptions,
   WebSearchProviderConfiguredCredential,
@@ -41,6 +45,7 @@ type CreateWebSearchProviderSelectionOptions = CreateWebSearchProviderContractFi
   selectionPluginId?: string;
 };
 
+/** Reused helper for create Web Search Provider Contract Fields behavior in src/plugin-sdk. */
 export function createWebSearchProviderContractFields(
   options: CreateWebSearchProviderSelectionOptions,
 ): Pick<

@@ -1,3 +1,4 @@
+/** Public SDK helper for normalizing numeric webhook options. */
 export function resolveWebhookIntegerOption(
   value: number | undefined,
   fallback: number,

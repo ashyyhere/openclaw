@@ -1,3 +1,4 @@
+// Runtime boundary for infra/outbound channel bootstrap runtime behavior.
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../../agents/agent-scope.js";
 import { applyPluginAutoEnable } from "../../config/plugin-auto-enable.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
@@ -11,6 +12,7 @@ import type { DeliverableMessageChannel } from "../../utils/message-channel.js";
 
 const bootstrapAttempts = new Set<string>();
 
+/** Reused helper for reset Outbound Channel Bootstrap State For Tests behavior in src/infra/outbound. */
 export function resetOutboundChannelBootstrapStateForTests(): void {
   bootstrapAttempts.clear();
 }
@@ -19,6 +21,7 @@ function channelEntryCanSend(entry: PluginChannelRegistration | undefined): bool
   return Boolean(entry?.plugin?.outbound?.sendText ?? entry?.plugin?.message?.send?.text);
 }
 
+/** Reused helper for bootstrap Outbound Channel Plugin behavior in src/infra/outbound. */
 export function bootstrapOutboundChannelPlugin(params: {
   channel: DeliverableMessageChannel;
   cfg?: OpenClawConfig;

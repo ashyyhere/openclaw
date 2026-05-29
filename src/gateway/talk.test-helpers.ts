@@ -1,6 +1,8 @@
+// gateway talk test helpers helpers and runtime behavior.
 import { createEmptyPluginRegistry } from "../plugins/registry-empty.js";
 import { getActivePluginRegistry, setActivePluginRegistry } from "../plugins/runtime.js";
 
+/** Shared type for Talk Speak Test Payload in src/gateway. */
 export type TalkSpeakTestPayload = {
   audioBase64?: string;
   provider?: string;
@@ -9,6 +11,7 @@ export type TalkSpeakTestPayload = {
   fileExtension?: string;
 };
 
+/** Reused helper for invoke Talk Speak Direct behavior in src/gateway. */
 export async function invokeTalkSpeakDirect(params: Record<string, unknown>) {
   const { talkHandlers } = await import("./server-methods/talk.js");
   const { getRuntimeConfig } = await import("../config/config.js");
@@ -32,6 +35,7 @@ export async function invokeTalkSpeakDirect(params: Record<string, unknown>) {
   return response;
 }
 
+/** Reused helper for with Speech Providers behavior in src/gateway. */
 export async function withSpeechProviders<T>(
   speechProviders: NonNullable<ReturnType<typeof createEmptyPluginRegistry>["speechProviders"]>,
   run: () => Promise<T>,

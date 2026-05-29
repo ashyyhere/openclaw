@@ -1,3 +1,4 @@
+// Tests cron/isolated-agent delivery dispatch named agent test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { sourceDeliveryTargetsMatch } from "../../infra/outbound/source-delivery-plan.js";
 

@@ -1,3 +1,5 @@
+// extensions/lmstudio/src api helpers and runtime behavior.
+/** Re-exported lmstudio plugin public API. */
 export {
   LMSTUDIO_DEFAULT_API_KEY_ENV_VAR,
   LMSTUDIO_DEFAULT_BASE_URL,
@@ -12,6 +14,7 @@ export {
   LMSTUDIO_PROVIDER_ID,
   LMSTUDIO_PROVIDER_LABEL,
 } from "./defaults.js";
+/** Re-exported lmstudio plugin public API. */
 export {
   buildLmstudioModelName,
   type LmstudioModelBase,
@@ -27,6 +30,7 @@ export {
   resolveLmstudioServerBase,
   resolveLoadedContextWindow,
 } from "./models.js";
+/** Re-exported lmstudio plugin public API. */
 export {
   buildLmstudioAuthHeaders,
   resolveLmstudioConfiguredApiKey,
@@ -34,6 +38,7 @@ export {
   resolveLmstudioRequestContext,
   resolveLmstudioRuntimeApiKey,
 } from "./runtime.js";
+/** Re-exported lmstudio plugin public API. */
 export {
   configureLmstudioNonInteractive,
   discoverLmstudioProvider,

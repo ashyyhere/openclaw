@@ -1,3 +1,4 @@
+// packages/speech-core/src tts helpers and runtime behavior.
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { resolveChannelTtsVoiceDelivery } from "openclaw/plugin-sdk/channel-targets";
@@ -65,6 +66,7 @@ import {
   type VoiceProviderCandidate,
 } from "../voice-models.js";
 
+/** Re-exported public API for packages/speech-core. */
 export type {
   ResolvedTtsConfig,
   ResolvedTtsModelOverrides,
@@ -108,6 +110,7 @@ type TtsUserPrefs = {
   };
 };
 
+/** Public type describing Tts Attempt Reason Code for packages/speech-core. */
 export type TtsAttemptReasonCode =
   | "success"
   | "no_provider_registered"
@@ -117,6 +120,7 @@ export type TtsAttemptReasonCode =
   | "timeout"
   | "provider_error";
 
+/** Public type describing Tts Provider Attempt for packages/speech-core. */
 export type TtsProviderAttempt = {
   provider: string;
   outcome: "success" | "skipped" | "failed";
@@ -127,6 +131,7 @@ export type TtsProviderAttempt = {
   error?: string;
 };
 
+/** Public type describing Tts Result for packages/speech-core. */
 export type TtsResult = {
   success: boolean;
   audioPath?: string;
@@ -143,6 +148,7 @@ export type TtsResult = {
   target?: "audio-file" | "voice-note";
 };
 
+/** Public type describing Tts Synthesis Result for packages/speech-core. */
 export type TtsSynthesisResult = {
   success: boolean;
   audioBuffer?: Buffer;
@@ -161,6 +167,7 @@ export type TtsSynthesisResult = {
   target?: "audio-file" | "voice-note";
 };
 
+/** Public type describing Tts Stream Result for packages/speech-core. */
 export type TtsStreamResult = {
   success: boolean;
   audioStream?: ReadableStream<Uint8Array>;
@@ -180,8 +187,10 @@ export type TtsStreamResult = {
   release?: () => Promise<void>;
 };
 
+/** Public type describing Tts Synthesis Stream Result for packages/speech-core. */
 export type TtsSynthesisStreamResult = TtsStreamResult;
 
+/** Public type describing Tts Telephony Result for packages/speech-core. */
 export type TtsTelephonyResult = {
   success: boolean;
   audioBuffer?: Buffer;
@@ -567,6 +576,7 @@ function collectDirectProviderConfigEntries(raw: TtsConfig): Record<string, Spee
   return entries;
 }
 
+/** Public helper for get Resolved Speech Provider Config behavior in packages/speech-core. */
 export function getResolvedSpeechProviderConfig(
   config: ResolvedTtsConfig,
   providerId: string,
@@ -597,6 +607,7 @@ function getResolvedSpeechProviderConfigForVoiceModel(params: {
   return resolveLazyProviderConfig(params.config, canonical, effectiveCfg, params.voiceModel);
 }
 
+/** Public helper for resolve Tts Config behavior in packages/speech-core. */
 export function resolveTtsConfig(
   cfg: OpenClawConfig,
   contextOrAgentId?: string | TtsConfigResolutionContext,
@@ -629,6 +640,7 @@ export function resolveTtsConfig(
   };
 }
 
+/** Public helper for resolve Tts Prefs Path behavior in packages/speech-core. */
 export function resolveTtsPrefsPath(config: ResolvedTtsConfig): string {
   return resolveTtsPrefsPathValue(config.prefsPath);
 }
@@ -644,6 +656,7 @@ function resolveTtsAutoModeFromPrefs(prefs: TtsUserPrefs): TtsAutoMode | undefin
   return undefined;
 }
 
+/** Public helper for resolve Tts Auto Mode behavior in packages/speech-core. */
 export function resolveTtsAutoMode(params: {
   config: ResolvedTtsConfig;
   prefsPath: string;
@@ -690,6 +703,7 @@ function resolveEffectiveTtsAutoState(params: {
   };
 }
 
+/** Public helper for build Tts System Prompt Hint behavior in packages/speech-core. */
 export function buildTtsSystemPromptHint(
   cfg: OpenClawConfig,
   agentId?: string,
@@ -744,6 +758,7 @@ function updatePrefs(prefsPath: string, update: (prefs: TtsUserPrefs) => void): 
   atomicWriteFileSync(prefsPath, JSON.stringify(prefs, null, 2));
 }
 
+/** Public helper for is Tts Enabled behavior in packages/speech-core. */
 export function isTtsEnabled(
   config: ResolvedTtsConfig,
   prefsPath: string,
@@ -752,6 +767,7 @@ export function isTtsEnabled(
   return resolveTtsAutoMode({ config, prefsPath, sessionAuto }) !== "off";
 }
 
+/** Public helper for set Tts Auto Mode behavior in packages/speech-core. */
 export function setTtsAutoMode(prefsPath: string, mode: TtsAutoMode): void {
   updatePrefs(prefsPath, (prefs) => {
     const next = { ...prefs.tts };
@@ -761,10 +777,12 @@ export function setTtsAutoMode(prefsPath: string, mode: TtsAutoMode): void {
   });
 }
 
+/** Public helper for set Tts Enabled behavior in packages/speech-core. */
 export function setTtsEnabled(prefsPath: string, enabled: boolean): void {
   setTtsAutoMode(prefsPath, enabled ? "always" : "off");
 }
 
+/** Public helper for get Tts Provider behavior in packages/speech-core. */
 export function getTtsProvider(config: ResolvedTtsConfig, prefsPath: string): TtsProvider {
   const prefs = readPrefs(prefsPath);
   const prefsProvider =
@@ -816,6 +834,7 @@ function resolveTtsPersonaFromPrefs(
   return configPersona ? config.personas[configPersona] : undefined;
 }
 
+/** Public helper for get Tts Persona behavior in packages/speech-core. */
 export function getTtsPersona(
   config: ResolvedTtsConfig,
   prefsPath: string,
@@ -823,10 +842,12 @@ export function getTtsPersona(
   return resolveTtsPersonaFromPrefs(config, readPrefs(prefsPath));
 }
 
+/** Public helper for list Tts Personas behavior in packages/speech-core. */
 export function listTtsPersonas(config: ResolvedTtsConfig): ResolvedTtsPersona[] {
   return Object.values(config.personas).toSorted((left, right) => left.id.localeCompare(right.id));
 }
 
+/** Public helper for set Tts Persona behavior in packages/speech-core. */
 export function setTtsPersona(prefsPath: string, persona: string | null | undefined): void {
   updatePrefs(prefsPath, (prefs) => {
     const next = { ...prefs.tts };
@@ -836,12 +857,14 @@ export function setTtsPersona(prefsPath: string, persona: string | null | undefi
   });
 }
 
+/** Public helper for set Tts Provider behavior in packages/speech-core. */
 export function setTtsProvider(prefsPath: string, provider: TtsProvider): void {
   updatePrefs(prefsPath, (prefs) => {
     prefs.tts = { ...prefs.tts, provider: canonicalizeSpeechProviderId(provider) ?? provider };
   });
 }
 
+/** Public helper for resolve Explicit Tts Overrides behavior in packages/speech-core. */
 export function resolveExplicitTtsOverrides(params: {
   cfg: OpenClawConfig;
   prefsPath?: string;
@@ -910,32 +933,38 @@ export function resolveExplicitTtsOverrides(params: {
   };
 }
 
+/** Public helper for get Tts Max Length behavior in packages/speech-core. */
 export function getTtsMaxLength(prefsPath: string): number {
   const prefs = readPrefs(prefsPath);
   return prefs.tts?.maxLength ?? DEFAULT_TTS_MAX_LENGTH;
 }
 
+/** Public helper for set Tts Max Length behavior in packages/speech-core. */
 export function setTtsMaxLength(prefsPath: string, maxLength: number): void {
   updatePrefs(prefsPath, (prefs) => {
     prefs.tts = { ...prefs.tts, maxLength };
   });
 }
 
+/** Public helper for is Summarization Enabled behavior in packages/speech-core. */
 export function isSummarizationEnabled(prefsPath: string): boolean {
   const prefs = readPrefs(prefsPath);
   return prefs.tts?.summarize ?? DEFAULT_TTS_SUMMARIZE;
 }
 
+/** Public helper for set Summarization Enabled behavior in packages/speech-core. */
 export function setSummarizationEnabled(prefsPath: string, enabled: boolean): void {
   updatePrefs(prefsPath, (prefs) => {
     prefs.tts = { ...prefs.tts, summarize: enabled };
   });
 }
 
+/** Public helper for get Last Tts Attempt behavior in packages/speech-core. */
 export function getLastTtsAttempt(): TtsStatusEntry | undefined {
   return lastTtsAttempt;
 }
 
+/** Public helper for set Last Tts Attempt behavior in packages/speech-core. */
 export function setLastTtsAttempt(entry: TtsStatusEntry | undefined): void {
   lastTtsAttempt = entry;
 }
@@ -997,6 +1026,7 @@ function shouldDeliverTtsAsVoice(params: {
   return params.voiceCompatible === true || delivery.transcodesAudio === true;
 }
 
+/** Public helper for resolve Tts Provider Order behavior in packages/speech-core. */
 export function resolveTtsProviderOrder(primary: TtsProvider, cfg?: OpenClawConfig): TtsProvider[] {
   const effectiveCfg = cfg ? resolveTtsRuntimeConfig(cfg) : undefined;
   const normalizedPrimary = canonicalizeSpeechProviderId(primary, effectiveCfg) ?? primary;
@@ -1041,6 +1071,7 @@ function resolvePrimaryTtsProviderCandidate(
   });
 }
 
+/** Public helper for is Tts Provider Configured behavior in packages/speech-core. */
 export function isTtsProviderConfigured(
   config: ResolvedTtsConfig,
   provider: TtsProvider,
@@ -1302,6 +1333,7 @@ function resolveTtsResultVoice(
   );
 }
 
+/** Public helper for text To Speech behavior in packages/speech-core. */
 export async function textToSpeech(params: {
   text: string;
   cfg: OpenClawConfig;
@@ -1414,6 +1446,7 @@ async function maybePreTranscodeForVoiceDelivery(params: {
   };
 }
 
+/** Public helper for synthesize Speech behavior in packages/speech-core. */
 export async function synthesizeSpeech(params: {
   text: string;
   cfg: OpenClawConfig;
@@ -1564,6 +1597,7 @@ export async function synthesizeSpeech(params: {
   return buildTtsFailureResult(errors, attemptedProviders, attempts, persona?.id);
 }
 
+/** Public helper for stream Speech behavior in packages/speech-core. */
 export async function streamSpeech(params: {
   text: string;
   cfg: OpenClawConfig;
@@ -1728,6 +1762,7 @@ export async function streamSpeech(params: {
   return buildTtsFailureResult(errors, attemptedProviders, attempts, persona?.id);
 }
 
+/** Public helper for text To Speech Stream behavior in packages/speech-core. */
 export async function textToSpeechStream(params: {
   text: string;
   cfg: OpenClawConfig;
@@ -1752,6 +1787,7 @@ export async function textToSpeechStream(params: {
   return synthesis;
 }
 
+/** Public helper for text To Speech Telephony behavior in packages/speech-core. */
 export async function textToSpeechTelephony(params: {
   text: string;
   cfg: OpenClawConfig;
@@ -1894,6 +1930,7 @@ export async function textToSpeechTelephony(params: {
   return buildTtsFailureResult(errors, attemptedProviders, attempts, persona?.id);
 }
 
+/** Public helper for list Speech Voices behavior in packages/speech-core. */
 export async function listSpeechVoices(params: {
   provider: string;
   cfg?: OpenClawConfig;
@@ -1925,6 +1962,7 @@ export async function listSpeechVoices(params: {
   });
 }
 
+/** Public helper for maybe Apply Tts To Payload behavior in packages/speech-core. */
 export async function maybeApplyTtsToPayload(params: {
   payload: ReplyPayload;
   cfg: OpenClawConfig;
@@ -2111,6 +2149,7 @@ export async function maybeApplyTtsToPayload(params: {
   return nextPayload;
 }
 
+/** Public constant for test Api behavior in packages/speech-core. */
 export const testApi = {
   parseTtsDirectives,
   resolveModelOverridePolicy,

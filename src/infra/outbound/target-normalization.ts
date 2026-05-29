@@ -1,3 +1,4 @@
+// infra/outbound target normalization helpers and runtime behavior.
 import { getChannelPlugin } from "../../channels/plugins/index.js";
 import { getLoadedChannelPluginForRead } from "../../channels/plugins/registry-loaded-read.js";
 import type { ChannelPlugin } from "../../channels/plugins/types.plugin.js";
@@ -9,6 +10,7 @@ import {
   normalizeOptionalString,
 } from "../../shared/string-coerce.js";
 
+/** Reused helper for normalize Channel Target Input behavior in src/infra/outbound. */
 export function normalizeChannelTargetInput(raw: string): string {
   return raw.trim();
 }
@@ -29,6 +31,7 @@ function resetTargetNormalizerCacheForTests(): void {
   targetNormalizerCacheByChannelId.clear();
 }
 
+/** Reused constant for testing behavior in src/infra/outbound. */
 export const testing = {
   resetTargetNormalizerCacheForTests,
 } as const;
@@ -48,6 +51,7 @@ function resolveTargetNormalizer(channelId: ChannelId): TargetNormalizer {
   return normalizer;
 }
 
+/** Reused helper for normalize Target For Provider behavior in src/infra/outbound. */
 export function normalizeTargetForProvider(provider: string, raw?: string): string | undefined {
   if (!raw) {
     return undefined;
@@ -61,8 +65,10 @@ export function normalizeTargetForProvider(provider: string, raw?: string): stri
   return normalizeOptionalString(normalizer?.(raw) ?? fallback);
 }
 
+/** Shared type for Target Resolve Kind Like in src/infra/outbound. */
 export type TargetResolveKindLike = ChannelDirectoryEntryKind | "channel";
 
+/** Shared type for Resolved Plugin Messaging Target in src/infra/outbound. */
 export type ResolvedPluginMessagingTarget = {
   to: string;
   kind: TargetResolveKindLike;
@@ -70,6 +76,7 @@ export type ResolvedPluginMessagingTarget = {
   source: "normalized" | "directory";
 };
 
+/** Reused helper for resolve Normalized Target Input behavior in src/infra/outbound. */
 export function resolveNormalizedTargetInput(
   provider: string,
   raw?: string,
@@ -84,6 +91,7 @@ export function resolveNormalizedTargetInput(
   };
 }
 
+/** Reused helper for looks Like Target Id behavior in src/infra/outbound. */
 export function looksLikeTargetId(params: {
   channel: ChannelId;
   raw: string;
@@ -111,6 +119,7 @@ export function looksLikeTargetId(params: {
   return /^(conversation|user):/i.test(params.raw);
 }
 
+/** Reused helper for maybe Resolve Plugin Messaging Target behavior in src/infra/outbound. */
 export async function maybeResolvePluginMessagingTarget(params: {
   cfg: OpenClawConfig;
   channel: ChannelId;
@@ -155,6 +164,7 @@ export async function maybeResolvePluginMessagingTarget(params: {
   };
 }
 
+/** Reused helper for build Target Resolver Signature behavior in src/infra/outbound. */
 export function buildTargetResolverSignature(channel: ChannelId): string {
   const plugin = resolveChannelPluginForTargetRead(channel);
   const resolver = plugin?.messaging?.targetResolver;
@@ -171,4 +181,5 @@ function hashSignature(value: string): string {
   }
   return (hash >>> 0).toString(36);
 }
+/** Re-exported API for src/infra/outbound, starting with testing. */
 export { testing as __testing };

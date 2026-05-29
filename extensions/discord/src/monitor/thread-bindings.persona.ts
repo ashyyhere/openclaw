@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor thread bindings persona helpers and runtime behavior.
 import { SYSTEM_MARK } from "openclaw/plugin-sdk/text-chunking";
 import type { ThreadBindingRecord } from "./thread-bindings.types.js";
 

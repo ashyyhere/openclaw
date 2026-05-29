@@ -1,3 +1,4 @@
+// Tests ui/src/ui navigation browser test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { mountApp as mountTestApp, registerAppMountHooks } from "./test-helpers/app-mount.ts";
 

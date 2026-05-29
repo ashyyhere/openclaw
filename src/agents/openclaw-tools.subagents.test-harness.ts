@@ -1,3 +1,4 @@
+/** Shared mocks and config overrides for OpenClaw subagent tool tests. */
 import { vi } from "vitest";
 import { testing as queueCleanupTesting } from "../auto-reply/reply/queue/cleanup.js";
 import type { CallGatewayOptions } from "../gateway/call.js";
@@ -7,6 +8,7 @@ import { testing as subagentControlTesting } from "./subagent-control.js";
 
 type LoadedConfig = ReturnType<(typeof import("../config/config.js"))["getRuntimeConfig"]>;
 
+/** Gateway mock used by subagent tool tests. */
 export const callGatewayMock: MockFn = vi.fn();
 
 const defaultConfig: LoadedConfig = {
@@ -24,10 +26,12 @@ async function callGatewayForTest<T = Record<string, unknown>>(
   return (await callGatewayMock(opts)) as T;
 }
 
+/** Override runtime config for subagent tool tests. */
 export function setSubagentsConfigOverride(next: LoadedConfig) {
   configOverride = next;
 }
 
+/** Reset subagent tool tests to the default runtime config. */
 export function resetSubagentsConfigOverride() {
   configOverride = defaultConfig;
 }

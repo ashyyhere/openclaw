@@ -1,3 +1,4 @@
+// Loads registry-backed model-list data and configured-entry availability.
 import { loadAgentModelRegistry } from "../../agents/model-registry-loader.js";
 import { shouldSuppressBuiltInModel } from "../../agents/model-suppression.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
@@ -7,6 +8,7 @@ import { loadModelRegistry } from "./list.registry.js";
 import type { ConfiguredEntry } from "./list.types.js";
 import { modelKey } from "./shared.js";
 
+/** Reused helper for load List Model Registry behavior in src/commands/models. */
 export async function loadListModelRegistry(
   cfg: OpenClawConfig,
   opts?: {
@@ -45,6 +47,7 @@ function findConfiguredRegistryModel(params: {
   return model;
 }
 
+/** Reused helper for load Configured List Model Registry behavior in src/commands/models. */
 export function loadConfiguredListModelRegistry(
   cfg: OpenClawConfig,
   entries: ConfiguredEntry[],

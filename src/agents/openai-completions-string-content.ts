@@ -1,3 +1,4 @@
+/** Normalizes completion messages for providers that require string content. */
 function flattenStringOnlyCompletionContent(content: unknown): unknown {
   if (!Array.isArray(content)) {
     return content;
@@ -17,6 +18,7 @@ function flattenStringOnlyCompletionContent(content: unknown): unknown {
   return textParts.join("\n");
 }
 
+/** Flatten array-of-text completion content into newline-joined strings. */
 export function flattenCompletionMessagesToStringContent(messages: unknown[]): unknown[] {
   return messages.map((message) => {
     if (!message || typeof message !== "object") {
@@ -34,6 +36,7 @@ export function flattenCompletionMessagesToStringContent(messages: unknown[]): u
   });
 }
 
+/** Strip completion messages to only role/content fields for strict providers. */
 export function stripCompletionMessagesToRoleContent(messages: unknown[]): unknown[] {
   return messages.map((message) => {
     if (!message || typeof message !== "object" || Array.isArray(message)) {

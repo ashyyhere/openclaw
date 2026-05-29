@@ -1,3 +1,4 @@
+// Tests ui/src/ui/views debug test behavior.
 import { render } from "lit";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { i18n } from "../../i18n/index.ts";

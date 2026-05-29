@@ -1,3 +1,4 @@
+// Tests extensions/voice-call/src/webhook stale call reaper test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { startStaleCallReaper } from "./stale-call-reaper.js";
 

@@ -1,3 +1,4 @@
+// extensions/feishu/src sequential key helpers and runtime behavior.
 import {
   isAbortRequestText,
   isBtwRequestText,

@@ -1,3 +1,4 @@
+// extensions/irc/src gateway helpers and runtime behavior.
 import { runStoppablePassiveMonitor } from "openclaw/plugin-sdk/extension-shared";
 import type { ChannelAccountSnapshot } from "openclaw/plugin-sdk/status-helpers";
 import type { ResolvedIrcAccount } from "./accounts.js";

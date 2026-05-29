@@ -1,3 +1,4 @@
+// wizard setup official plugins helpers and runtime behavior.
 import { ensureOnboardingPluginInstalled } from "../commands/onboarding-plugin-install.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { PluginPackageInstall } from "../plugins/manifest.js";
@@ -14,6 +15,7 @@ import type { WizardPrompter } from "./prompts.js";
 
 const SKIP_VALUE = "__skip__";
 
+/** Shared type for Official Plugin Onboarding Install Entry in src/wizard. */
 export type OfficialPluginOnboardingInstallEntry = {
   pluginId: string;
   label: string;
@@ -56,10 +58,12 @@ function formatInstallHint(install: PluginPackageInstall): string {
   return "install source";
 }
 
+/** Reused constant for testing behavior in src/wizard. */
 export const testing = {
   formatInstallHint,
 };
 
+/** Reused helper for resolve Official Plugin Onboarding Install Entries behavior in src/wizard. */
 export function resolveOfficialPluginOnboardingInstallEntries(params: {
   config: OpenClawConfig;
 }): OfficialPluginOnboardingInstallEntry[] {
@@ -84,6 +88,7 @@ export function resolveOfficialPluginOnboardingInstallEntries(params: {
   return entries.toSorted((left, right) => left.label.localeCompare(right.label));
 }
 
+/** Reused helper for setup Official Plugin Installs behavior in src/wizard. */
 export async function setupOfficialPluginInstalls(params: {
   config: OpenClawConfig;
   prompter: WizardPrompter;
@@ -131,4 +136,5 @@ export async function setupOfficialPluginInstalls(params: {
   }
   return next;
 }
+/** Re-exported API for src/wizard, starting with testing. */
 export { testing as __testing };

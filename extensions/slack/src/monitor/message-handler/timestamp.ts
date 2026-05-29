@@ -1,3 +1,4 @@
+// extensions/slack/src/monitor/message-handler timestamp helpers and runtime behavior.
 import { asFiniteNumberInRange, parseStrictFiniteNumber } from "openclaw/plugin-sdk/number-runtime";
 
 const SLACK_TIMESTAMP_RE = /^\d+(?:\.\d+)?$/;

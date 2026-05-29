@@ -1,3 +1,4 @@
+/** Covers update_plan tool result payloads. */
 import { describe, expect, it } from "vitest";
 import { createUpdatePlanTool } from "./update-plan-tool.js";
 

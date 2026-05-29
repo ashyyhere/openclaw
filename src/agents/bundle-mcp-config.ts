@@ -1,3 +1,4 @@
+/** Bundle MCP config merge/adaptation for embedded and CLI backends. */
 import { normalizeConfiguredMcpServers } from "../config/mcp-config-normalize.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {
@@ -44,6 +45,7 @@ export function toCliBundleMcpServerConfig(server: BundleMcpServerConfig): Bundl
   return next as BundleMcpServerConfig;
 }
 
+/** Merge enabled bundle MCP config with owner-managed OpenClaw MCP config. */
 export function loadMergedBundleMcpConfig(params: {
   workspaceDir: string;
   cfg?: OpenClawConfig;

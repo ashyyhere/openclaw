@@ -1,3 +1,4 @@
+// Channel plugin account helper functions.
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import {
   resolveAccountEntry,
@@ -12,6 +13,7 @@ import { normalizeOptionalString } from "../../shared/string-coerce.js";
 import { normalizeUniqueStringEntries } from "../../shared/string-normalization.js";
 import type { ChannelAccountSnapshot } from "./types.core.js";
 
+/** Reused helper for create Account List Helpers behavior in src/channels/plugins. */
 export function createAccountListHelpers(
   channelKey: string,
   options?: {
@@ -93,6 +95,7 @@ export function createAccountListHelpers(
   return { listConfiguredAccountIds, listAccountIds, resolveDefaultAccountId };
 }
 
+/** Reused helper for has Configured Account Value behavior in src/channels/plugins. */
 export function hasConfiguredAccountValue(value: unknown): boolean {
   if (typeof value === "string") {
     return value.trim().length > 0;
@@ -100,6 +103,7 @@ export function hasConfiguredAccountValue(value: unknown): boolean {
   return value !== undefined && value !== null;
 }
 
+/** Reused helper for list Combined Account Ids behavior in src/channels/plugins. */
 export function listCombinedAccountIds(params: {
   configuredAccountIds: Iterable<string>;
   additionalAccountIds?: Iterable<string>;
@@ -128,6 +132,7 @@ export function listCombinedAccountIds(params: {
   return [...ids].toSorted((a, b) => a.localeCompare(b));
 }
 
+/** Reused helper for resolve Listed Default Account Id behavior in src/channels/plugins. */
 export function resolveListedDefaultAccountId(params: {
   accountIds: readonly string[];
   configuredDefaultAccountId?: string | undefined;
@@ -153,6 +158,7 @@ export function resolveListedDefaultAccountId(params: {
   return params.accountIds[0] ?? DEFAULT_ACCOUNT_ID;
 }
 
+/** Reused helper for merge Account Config behavior in src/channels/plugins. */
 export function mergeAccountConfig<TConfig extends Record<string, unknown>>(params: {
   channelConfig: TConfig | undefined;
   accountConfig: Partial<TConfig> | undefined;
@@ -189,6 +195,7 @@ export function mergeAccountConfig<TConfig extends Record<string, unknown>>(para
   return merged;
 }
 
+/** Reused helper for resolve Merged Account Config behavior in src/channels/plugins. */
 export function resolveMergedAccountConfig<TConfig extends Record<string, unknown>>(params: {
   channelConfig: TConfig | undefined;
   accounts: Record<string, Partial<TConfig>> | undefined;
@@ -214,6 +221,7 @@ type AccountSnapshotInput = {
   name?: string | null | undefined;
 };
 
+/** Reused helper for describe Account Snapshot behavior in src/channels/plugins. */
 export function describeAccountSnapshot(params: {
   account: AccountSnapshotInput;
   configured?: boolean | undefined;
@@ -228,6 +236,7 @@ export function describeAccountSnapshot(params: {
   };
 }
 
+/** Reused helper for describe Webhook Account Snapshot behavior in src/channels/plugins. */
 export function describeWebhookAccountSnapshot(params: {
   account: AccountSnapshotInput;
   configured?: boolean | undefined;

@@ -1,7 +1,9 @@
+// daemon arg split helpers and runtime behavior.
 type ArgSplitEscapeMode = "none" | "backslash" | "backslash-quote-only";
 type ArgSplitQuoteChar = '"' | "'";
 type ArgSplitQuoteStart = "anywhere" | "item-start";
 
+/** Reused helper for split Args Preserving Quotes behavior in src/daemon. */
 export function splitArgsPreservingQuotes(
   value: string,
   options?: {

@@ -1,3 +1,4 @@
+// config/sessions delivery info helpers and runtime behavior.
 import {
   resolveSessionStoreAgentId,
   resolveSessionStoreKey,
@@ -18,6 +19,7 @@ import { readSessionStoreSnapshot } from "./store.js";
 import { resolveAllAgentSessionStoreTargetsSync } from "./targets.js";
 import { parseSessionThreadInfo } from "./thread-info.js";
 import type { SessionEntry } from "./types.js";
+/** Re-exported API for src/config/sessions, starting with parse Session Thread Info. */
 export { parseSessionThreadInfo };
 
 function hasRoutableDeliveryContext(context?: {
@@ -34,6 +36,7 @@ function hasRoutableDeliveryContext(context?: {
   return Boolean(context?.channel && context?.to);
 }
 
+/** Reused helper for extract Delivery Info behavior in src/config/sessions. */
 export function extractDeliveryInfo(
   sessionKey: string | undefined,
   options?: { cfg?: OpenClawConfig },

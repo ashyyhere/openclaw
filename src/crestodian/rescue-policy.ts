@@ -1,3 +1,4 @@
+// crestodian rescue policy helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { normalizeAgentId } from "../routing/session-key.js";
 
@@ -63,6 +64,7 @@ function isYoloHostPosture(cfg: OpenClawConfig, agentId?: string): boolean {
   return security === "full" && ask === "off";
 }
 
+/** Reused helper for resolve Crestodian Rescue Policy behavior in src/crestodian. */
 export function resolveCrestodianRescuePolicy(
   input: CrestodianRescuePolicyInput,
 ): CrestodianRescueDecision {

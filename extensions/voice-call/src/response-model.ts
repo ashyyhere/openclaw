@@ -1,3 +1,4 @@
+// extensions/voice-call/src response model helpers and runtime behavior.
 import type { VoiceCallConfig } from "./config.js";
 import type { CoreAgentDeps } from "./core-bridge.js";
 

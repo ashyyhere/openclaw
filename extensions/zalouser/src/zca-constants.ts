@@ -1,3 +1,4 @@
+// extensions/zalouser/src zca constants helpers and runtime behavior.
 export const ThreadType = {
   User: 0,
   Group: 1,

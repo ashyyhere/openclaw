@@ -1,3 +1,4 @@
+// plugins agent event emission helpers and runtime behavior.
 import { emitAgentEvent } from "../infra/agent-events.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import {
@@ -46,6 +47,7 @@ function normalizePluginEventData(params: {
   };
 }
 
+/** Reused helper for emit Plugin Agent Event behavior in src/plugins. */
 export function emitPluginAgentEvent(params: {
   pluginId: string;
   pluginName?: string;

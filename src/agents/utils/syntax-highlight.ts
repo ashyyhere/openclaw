@@ -1,9 +1,13 @@
+// highlight.js adapter that renders themed plain text from highlighted HTML.
 import hljs from "highlight.js";
 import { decodeHtmlEntityAt } from "./html.js";
 
+/** Formatter applied to a syntax-highlighted text segment. */
 export type HighlightFormatter = (text: string) => string;
+/** Mapping from highlight.js scopes to segment formatters. */
 export type HighlightTheme = Partial<Record<string, HighlightFormatter>>;
 
+/** Options for language selection and themed rendering. */
 export interface HighlightOptions {
   language?: string;
   ignoreIllegals?: boolean;
@@ -86,6 +90,7 @@ function isSpanOpenTagStart(html: string, index: number): boolean {
   );
 }
 
+/** Render highlight.js span markup into plain text with optional scope formatters. */
 export function renderHighlightedHtml(html: string, theme: HighlightTheme = {}): string {
   let output = "";
   let textBuffer = "";
@@ -140,6 +145,7 @@ export function renderHighlightedHtml(html: string, theme: HighlightTheme = {}):
   return output;
 }
 
+/** Highlight code with an explicit language or automatic detection. */
 export function highlight(code: string, options: HighlightOptions = {}): string {
   const html = options.language
     ? hljs.highlight(code, {
@@ -150,6 +156,7 @@ export function highlight(code: string, options: HighlightOptions = {}): string 
   return renderHighlightedHtml(html, options.theme);
 }
 
+/** Return whether highlight.js knows the requested language name. */
 export function supportsLanguage(name: string): boolean {
   return hljs.getLanguage(name) !== undefined;
 }

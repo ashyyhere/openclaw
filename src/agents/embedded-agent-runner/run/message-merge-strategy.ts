@@ -1,12 +1,15 @@
+/** Registry for message merge behavior applied before provider submission. */
 import { mergeOrphanedTrailingUserPrompt } from "./attempt.prompt-helpers.js";
 import type { EmbeddedRunAttemptParams } from "./types.js";
 
+/** Shared type for Orphaned Trailing User Prompt Merge Params in src/agents/embedded-agent-runner. */
 export type OrphanedTrailingUserPromptMergeParams = {
   prompt: string;
   trigger: EmbeddedRunAttemptParams["trigger"];
   leafMessage: { content?: unknown };
 };
 
+/** Shared type for Orphaned Trailing User Prompt Merge Result in src/agents/embedded-agent-runner. */
 export type OrphanedTrailingUserPromptMergeResult = {
   prompt: string;
   merged: boolean;
@@ -18,8 +21,10 @@ export type OrphanedTrailingUserPromptMergeResult = {
   removeLeaf: boolean;
 };
 
+/** Shared type for Message Merge Strategy Id in src/agents/embedded-agent-runner. */
 export type MessageMergeStrategyId = "orphan-trailing-user-prompt";
 
+/** Shared type for Message Merge Strategy in src/agents/embedded-agent-runner. */
 export type MessageMergeStrategy = {
   id: MessageMergeStrategyId;
   mergeOrphanedTrailingUserPrompt: (
@@ -27,6 +32,7 @@ export type MessageMergeStrategy = {
   ) => OrphanedTrailingUserPromptMergeResult;
 };
 
+/** Reused constant for DEFAULT MESSAGE MERGE STRATEGY ID behavior in src/agents/embedded-agent-runner. */
 export const DEFAULT_MESSAGE_MERGE_STRATEGY_ID: MessageMergeStrategyId =
   "orphan-trailing-user-prompt";
 
@@ -37,6 +43,7 @@ const defaultMessageMergeStrategy: MessageMergeStrategy = {
 
 let activeMessageMergeStrategy = defaultMessageMergeStrategy;
 
+/** Returns the active message merge strategy. */
 export function resolveMessageMergeStrategy(): MessageMergeStrategy {
   return activeMessageMergeStrategy;
 }
@@ -49,6 +56,7 @@ function registerMessageMergeStrategy(strategy: MessageMergeStrategy): () => voi
   };
 }
 
+/** Temporarily replaces the merge strategy for isolated tests. */
 export function registerMessageMergeStrategyForTest(strategy: MessageMergeStrategy): () => void {
   return registerMessageMergeStrategy(strategy);
 }

@@ -1,3 +1,4 @@
+// extensions/qa-lab/src model selection helpers and runtime behavior.
 import {
   DEFAULT_QA_LIVE_PROVIDER_MODE,
   getQaProvider,

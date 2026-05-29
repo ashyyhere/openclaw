@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor exec approvals helpers and runtime behavior.
 import { ButtonStyle } from "discord-api-types/v10";
 import { resolveApprovalOverGateway } from "openclaw/plugin-sdk/approval-gateway-runtime";
 import type { ExecApprovalDecision } from "openclaw/plugin-sdk/approval-runtime";

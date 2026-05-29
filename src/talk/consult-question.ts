@@ -1,3 +1,4 @@
+// talk consult question helpers and runtime behavior.
 const REALTIME_VOICE_CONSULT_QUESTION_STOPWORDS = new Set([
   "a",
   "an",
@@ -29,17 +30,20 @@ const DEFAULT_REALTIME_VOICE_CONSULT_QUESTION_KEYS = ["question", "prompt", "que
 const DEFAULT_REALTIME_VOICE_SPEAKABLE_RESULT_KEYS = ["text", "result", "output", "error"];
 const DEFAULT_REALTIME_VOICE_SPEAKABLE_RESULT_MAX_CHARS = 1_800;
 
+/** Shared type for Realtime Voice Consult Question Match Options in src/talk. */
 export type RealtimeVoiceConsultQuestionMatchOptions = {
   minTokenOverlapRatio?: number;
   minTokenOverlapCount?: number;
 };
 
+/** Shared type for Realtime Voice Speakable Tool Result Options in src/talk. */
 export type RealtimeVoiceSpeakableToolResultOptions = {
   keys?: readonly string[];
   maxChars?: number;
   stringResult?: boolean;
 };
 
+/** Reused helper for read Realtime Voice Consult Question behavior in src/talk. */
 export function readRealtimeVoiceConsultQuestion(
   args: unknown,
   keys: readonly string[] = DEFAULT_REALTIME_VOICE_CONSULT_QUESTION_KEYS,
@@ -60,6 +64,7 @@ export function readRealtimeVoiceConsultQuestion(
   return undefined;
 }
 
+/** Reused helper for normalize Realtime Voice Consult Question behavior in src/talk. */
 export function normalizeRealtimeVoiceConsultQuestion(
   value: string | undefined,
 ): string | undefined {
@@ -72,6 +77,7 @@ export function normalizeRealtimeVoiceConsultQuestion(
   );
 }
 
+/** Reused helper for match Realtime Voice Consult Questions behavior in src/talk. */
 export function matchRealtimeVoiceConsultQuestions(
   left: string | undefined,
   right: string | undefined,
@@ -108,6 +114,7 @@ export function matchRealtimeVoiceConsultQuestions(
   return overlap / Math.min(leftTokens.size, rightTokens.size) >= minTokenOverlapRatio;
 }
 
+/** Reused helper for read Speakable Realtime Voice Tool Result behavior in src/talk. */
 export function readSpeakableRealtimeVoiceToolResult(
   result: unknown,
   options: RealtimeVoiceSpeakableToolResultOptions = {},

@@ -1,3 +1,4 @@
+// extensions/tlon/src/urbit sse client helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import { Readable } from "node:stream";
 import type { LookupFn, SsrFPolicy } from "openclaw/plugin-sdk/ssrf-runtime";

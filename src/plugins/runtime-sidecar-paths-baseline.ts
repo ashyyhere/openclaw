@@ -1,3 +1,4 @@
+// plugins runtime sidecar paths baseline helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { tryReadJsonSync } from "../infra/json-files.js";
@@ -35,6 +36,7 @@ function collectRootPackageExcludedRuntimeSidecarPluginDirs(rootDir: string): Se
   return excluded;
 }
 
+/** Reused helper for collect Bundled Runtime Sidecar Paths behavior in src/plugins. */
 export function collectBundledRuntimeSidecarPaths(params?: {
   rootDir?: string;
 }): readonly string[] {
@@ -56,6 +58,7 @@ export function collectBundledRuntimeSidecarPaths(params?: {
     .toSorted((left, right) => left.localeCompare(right));
 }
 
+/** Reused helper for write Bundled Runtime Sidecar Path Baseline behavior in src/plugins. */
 export async function writeBundledRuntimeSidecarPathBaseline(params: {
   repoRoot: string;
   check: boolean;

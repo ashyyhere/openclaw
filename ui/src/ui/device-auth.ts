@@ -1,3 +1,4 @@
+// ui/src/ui device auth helpers and runtime behavior.
 import {
   clearDeviceAuthTokenFromStore,
   type DeviceAuthEntry,
@@ -39,6 +40,7 @@ function writeStore(store: DeviceAuthStore) {
   }
 }
 
+/** Reused helper for load Device Auth Token behavior in ui/src/ui. */
 export function loadDeviceAuthToken(params: {
   deviceId: string;
   role: string;
@@ -50,6 +52,7 @@ export function loadDeviceAuthToken(params: {
   });
 }
 
+/** Reused helper for store Device Auth Token behavior in ui/src/ui. */
 export function storeDeviceAuthToken(params: {
   deviceId: string;
   role: string;
@@ -65,6 +68,7 @@ export function storeDeviceAuthToken(params: {
   });
 }
 
+/** Reused helper for clear Device Auth Token behavior in ui/src/ui. */
 export function clearDeviceAuthToken(params: { deviceId: string; role: string }) {
   clearDeviceAuthTokenFromStore({
     adapter: { readStore, writeStore },

@@ -1,3 +1,4 @@
+// extensions/qa-lab/src qa agent workspace helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { buildQaScenarioPlanMarkdown, readQaAgentIdentityMarkdown } from "./qa-agent-bootstrap.js";

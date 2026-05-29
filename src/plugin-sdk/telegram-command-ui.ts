@@ -1,3 +1,4 @@
+/** Public SDK helpers for Telegram command pagination UI payloads. */
 export function buildCommandsPaginationKeyboard(
   currentPage: number,
   totalPages: number,

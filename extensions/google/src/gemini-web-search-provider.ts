@@ -1,3 +1,4 @@
+// extensions/google/src gemini web search provider helpers and runtime behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import {
   createWebSearchProviderContractFields,

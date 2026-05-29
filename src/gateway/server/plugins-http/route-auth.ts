@@ -1,3 +1,4 @@
+// gateway/server/plugins-http route auth helpers and runtime behavior.
 import type { PluginRegistry } from "../../../plugins/registry.js";
 import {
   isProtectedPluginRoutePathFromContext,
@@ -6,12 +7,14 @@ import {
 } from "./path-context.js";
 import { findMatchingPluginHttpRoutes } from "./route-match.js";
 
+/** Reused helper for matched Plugin Routes Require Gateway Auth behavior in src/gateway/server. */
 export function matchedPluginRoutesRequireGatewayAuth(
   routes: readonly Pick<NonNullable<PluginRegistry["httpRoutes"]>[number], "auth">[],
 ): boolean {
   return routes.some((route) => route.auth === "gateway");
 }
 
+/** Reused helper for should Enforce Gateway Auth For Plugin Path behavior in src/gateway/server. */
 export function shouldEnforceGatewayAuthForPluginPath(
   registry: PluginRegistry,
   pathnameOrContext: string | PluginRoutePathContext,

@@ -1,3 +1,4 @@
+/** Resolves agent avatar sources from config and workspace identity files. */
 import fs from "node:fs";
 import path from "node:path";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -17,6 +18,7 @@ import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "./agent-scope.j
 import { loadAgentIdentityFromWorkspace } from "./identity-file.js";
 import { resolveAgentIdentity } from "./identity.js";
 
+/** Resolved avatar source for an agent identity. */
 export type AgentAvatarResolution =
   | { kind: "none"; reason: string; source?: string }
   | { kind: "local"; filePath: string; source: string }
@@ -112,6 +114,7 @@ function isSafeRelativeAvatarSource(source: string): boolean {
   return parts.every((part) => part !== "..");
 }
 
+/** Resolve a public avatar URI or data URL from config/workspace identity. */
 export function resolvePublicAgentAvatarSource(
   resolved: AgentAvatarPublicSourceInput,
 ): string | undefined {
@@ -133,6 +136,7 @@ export function resolvePublicAgentAvatarSource(
   return isSafeRelativeAvatarSource(source) ? source : undefined;
 }
 
+/** Resolve an agent avatar to local, remote, data, or none. */
 export function resolveAgentAvatar(
   cfg: OpenClawConfig,
   agentId: string,

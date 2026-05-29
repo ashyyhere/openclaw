@@ -5,6 +5,7 @@
 
 import { Text } from "@earendil-works/pi-tui";
 
+/** Shared type for Visual Truncate Result in src/agents/modes. */
 export interface VisualTruncateResult {
   /** The visual lines to display */
   visualLines: string[];

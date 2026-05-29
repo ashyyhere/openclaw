@@ -1,3 +1,4 @@
+/** Tests optional Anthropic payload JSONL logging. */
 import crypto from "node:crypto";
 import type { StreamFn } from "openclaw/plugin-sdk/agent-core";
 import { describe, expect, it } from "vitest";

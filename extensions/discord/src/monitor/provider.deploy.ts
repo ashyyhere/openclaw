@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor provider deploy helpers and runtime behavior.
 import { warn, type RuntimeEnv } from "openclaw/plugin-sdk/runtime-env";
 import { formatErrorMessage } from "openclaw/plugin-sdk/ssrf-runtime";
 import { Client, overwriteApplicationCommands, type RequestClient } from "../internal/discord.js";

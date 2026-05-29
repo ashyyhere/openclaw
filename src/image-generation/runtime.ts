@@ -1,3 +1,4 @@
+// image-generation runtime helpers and runtime behavior.
 import { describeFailoverError, isFailoverError } from "../agents/failover-error.js";
 import type { FallbackAttempt } from "../agents/model-fallback.types.js";
 import { resolveAgentModelTimeoutMsValue } from "../config/model-input.js";
@@ -20,6 +21,7 @@ import type { ImageGenerationResult } from "./types.js";
 
 const log = createSubsystemLogger("image-generation");
 
+/** Shared type for Image Generation Runtime Deps in src/image-generation. */
 export type ImageGenerationRuntimeDeps = {
   getProvider?: typeof getImageGenerationProvider;
   listProviders?: typeof listImageGenerationProviders;
@@ -27,6 +29,7 @@ export type ImageGenerationRuntimeDeps = {
   log?: Pick<typeof log, "warn">;
 };
 
+/** Re-exported API for src/image-generation, starting with Generate Image Params. */
 export type { GenerateImageParams, GenerateImageRuntimeResult } from "./runtime-types.js";
 
 function buildNoImageGenerationModelConfiguredMessage(
@@ -42,6 +45,7 @@ function buildNoImageGenerationModelConfiguredMessage(
   });
 }
 
+/** Reused helper for list Runtime Image Generation Providers behavior in src/image-generation. */
 export function listRuntimeImageGenerationProviders(
   params?: { config?: OpenClawConfig },
   deps: ImageGenerationRuntimeDeps = {},
@@ -49,6 +53,7 @@ export function listRuntimeImageGenerationProviders(
   return (deps.listProviders ?? listImageGenerationProviders)(params?.config);
 }
 
+/** Reused helper for generate Image behavior in src/image-generation. */
 export async function generateImage(
   params: GenerateImageParams,
   deps: ImageGenerationRuntimeDeps = {},

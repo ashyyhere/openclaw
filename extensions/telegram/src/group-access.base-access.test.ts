@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src group access base access test behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import type { TelegramAccountConfig } from "openclaw/plugin-sdk/config-contracts";
 import { describe, expect, it } from "vitest";

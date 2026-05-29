@@ -1,3 +1,4 @@
+// extensions/qqbot/src/bridge/setup surface helpers and runtime behavior.
 import {
   createStandardChannelSetupStatus,
   setSetupChannelEnabled,

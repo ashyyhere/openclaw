@@ -1,6 +1,8 @@
+/** Shared filesystem fixtures for skills end-to-end prompt/status tests. */
 import fs from "node:fs/promises";
 import path from "node:path";
 
+/** Writes a single E2E skill fixture with optional frontmatter and body. */
 export async function writeSkill(params: {
   dir: string;
   name: string;
@@ -29,6 +31,7 @@ ${body ?? `# ${name}\n`}
   );
 }
 
+/** Writes a group of workspace E2E skill fixtures under `skills/`. */
 export async function writeWorkspaceSkills(
   workspaceDir: string,
   skills: ReadonlyArray<{

@@ -1,3 +1,4 @@
+// Tests extensions/msteams/src sdk proactive test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { sendMSTeamsActivityWithReference } from "./sdk-proactive.js";
 import type { MSTeamsApp } from "./sdk.js";

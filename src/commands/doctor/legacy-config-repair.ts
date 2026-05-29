@@ -1,3 +1,4 @@
+/** Applies legacy config repairs through doctor config write paths. */
 import { readConfigFileSnapshot, replaceConfigFile } from "../../config/config.js";
 import { INCLUDE_KEY } from "../../config/includes.js";
 import { validateConfigObjectWithPlugins } from "../../config/validation.js";
@@ -16,6 +17,7 @@ function containsAuthoredInclude(value: unknown): boolean {
   return Object.values(value).some((entry) => containsAuthoredInclude(entry));
 }
 
+/** Reused helper for repair Legacy Config For Update Channel behavior in src/commands/doctor. */
 export async function repairLegacyConfigForUpdateChannel(params: {
   configSnapshot: ConfigSnapshot;
   jsonMode: boolean;

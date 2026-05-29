@@ -1,3 +1,4 @@
+// extensions/acpx/src runtime turn helpers and runtime behavior.
 import type {
   AcpRuntime,
   AcpRuntimeEvent,

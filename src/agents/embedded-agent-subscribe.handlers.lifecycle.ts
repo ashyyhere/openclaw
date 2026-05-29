@@ -18,11 +18,13 @@ import type { EmbeddedAgentSubscribeContext } from "./embedded-agent-subscribe.h
 import { isPromiseLike } from "./embedded-agent-subscribe.promise.js";
 import { isAssistantMessage } from "./embedded-agent-utils.js";
 
+/** Re-exported API for src/agents. */
 export {
   handleCompactionEnd,
   handleCompactionStart,
 } from "./embedded-agent-subscribe.handlers.compaction.js";
 
+/** Emit embedded-agent lifecycle start events. */
 export function handleAgentStart(ctx: EmbeddedAgentSubscribeContext) {
   ctx.log.debug(`embedded run agent start: runId=${ctx.params.runId}`);
   emitAgentEvent({
@@ -39,6 +41,7 @@ export function handleAgentStart(ctx: EmbeddedAgentSubscribeContext) {
   });
 }
 
+/** Emit terminal lifecycle state and reconcile final assistant/tool outcomes. */
 export function handleAgentEnd(ctx: EmbeddedAgentSubscribeContext): void | Promise<void> {
   const lastAssistant = ctx.state.lastAssistant;
   const isError = isAssistantMessage(lastAssistant) && lastAssistant.stopReason === "error";

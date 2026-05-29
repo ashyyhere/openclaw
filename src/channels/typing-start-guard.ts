@@ -1,9 +1,11 @@
+/** Guards typing indicator starts so repeated failures stop retry loops. */
 type TypingStartGuard = {
   run: (start: () => Promise<void> | void) => Promise<"started" | "skipped" | "failed" | "tripped">;
   reset: () => void;
   isTripped: () => boolean;
 };
 
+/** Reused helper for create Typing Start Guard behavior in src/channels. */
 export function createTypingStartGuard(params: {
   isSealed: () => boolean;
   shouldBlock?: () => boolean;

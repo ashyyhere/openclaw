@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor auto presence helpers and runtime behavior.
 import {
   clearExpiredCooldowns,
   ensureAuthProfileStore,

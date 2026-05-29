@@ -1,3 +1,4 @@
+// Tests security audit gateway tools http test behavior.
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import { collectGatewayConfigFindings } from "./audit-gateway-config.js";

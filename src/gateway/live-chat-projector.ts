@@ -1,3 +1,4 @@
+// gateway live chat projector helpers and runtime behavior.
 import { stripInternalRuntimeContext } from "../agents/internal-runtime-context.js";
 import {
   SILENT_REPLY_TOKEN,
@@ -11,6 +12,7 @@ import {
   isSuppressedControlReplyText,
 } from "./control-reply-text.js";
 
+/** Reused constant for MAX LIVE CHAT BUFFER CHARS behavior in src/gateway. */
 export const MAX_LIVE_CHAT_BUFFER_CHARS = 500_000;
 
 function capLiveAssistantBuffer(text: string): string {
@@ -20,6 +22,7 @@ function capLiveAssistantBuffer(text: string): string {
   return text.slice(-MAX_LIVE_CHAT_BUFFER_CHARS);
 }
 
+/** Reused helper for resolve Merged Assistant Text behavior in src/gateway. */
 export function resolveMergedAssistantText(params: {
   previousText: string;
   nextText: string;
@@ -43,6 +46,7 @@ export function resolveMergedAssistantText(params: {
   return capLiveAssistantBuffer(previousText);
 }
 
+/** Reused helper for normalize Live Assistant Event Text behavior in src/gateway. */
 export function normalizeLiveAssistantEventText(params: { text: string; delta?: unknown }): {
   text: string;
   delta: string;
@@ -56,6 +60,7 @@ export function normalizeLiveAssistantEventText(params: { text: string; delta?: 
   };
 }
 
+/** Reused helper for project Live Assistant Buffered Text behavior in src/gateway. */
 export function projectLiveAssistantBufferedText(
   rawText: string,
   options?: { suppressLeadFragments?: boolean },
@@ -85,6 +90,7 @@ export function projectLiveAssistantBufferedText(
   return { text, suppress: false, pendingLeadFragment: false };
 }
 
+/** Reused helper for should Suppress Assistant Event For Live Chat behavior in src/gateway. */
 export function shouldSuppressAssistantEventForLiveChat(data: unknown): boolean {
   return resolveAssistantEventPhase(data) === "commentary";
 }

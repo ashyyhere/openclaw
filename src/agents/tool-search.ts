@@ -1,3 +1,4 @@
+/** Searches deferred tool metadata and exposes matching tools to the next model turn. */
 import { spawn } from "node:child_process";
 import os from "node:os";
 import { Type } from "typebox";
@@ -19,9 +20,13 @@ import type { ToolDefinition } from "./sessions/index.js";
 import { asToolParamsRecord, jsonResult, ToolInputError } from "./tools/common.js";
 import type { AnyAgentTool } from "./tools/common.js";
 
+/** Reused constant for TOOL SEARCH CODE MODE TOOL NAME behavior in src/agents. */
 export const TOOL_SEARCH_CODE_MODE_TOOL_NAME = "tool_search_code";
+/** Reused constant for TOOL SEARCH RAW TOOL NAME behavior in src/agents. */
 export const TOOL_SEARCH_RAW_TOOL_NAME = "tool_search";
+/** Reused constant for TOOL DESCRIBE RAW TOOL NAME behavior in src/agents. */
 export const TOOL_DESCRIBE_RAW_TOOL_NAME = "tool_describe";
+/** Reused constant for TOOL CALL RAW TOOL NAME behavior in src/agents. */
 export const TOOL_CALL_RAW_TOOL_NAME = "tool_call";
 
 const TOOL_SEARCH_CONTROL_TOOL_NAMES = new Set([
@@ -45,6 +50,7 @@ type ReusableCatalogSnapshot = {
   fingerprint: string;
 };
 
+/** Shared type for Tool Search Catalog Tool Executor in src/agents. */
 export type ToolSearchCatalogToolExecutor = (params: {
   tool: CatalogTool;
   toolName: string;
@@ -55,6 +61,7 @@ export type ToolSearchCatalogToolExecutor = (params: {
   onUpdate?: AgentToolUpdateCallback;
 }) => Promise<AgentToolResult<unknown>>;
 
+/** Shared type for Tool Search Target Transcript Projection in src/agents. */
 export type ToolSearchTargetTranscriptProjection = {
   parentToolCallId?: string;
   toolCallId: string;
@@ -65,6 +72,7 @@ export type ToolSearchTargetTranscriptProjection = {
   timestamp?: number;
 };
 
+/** Shared type for Tool Search Config in src/agents. */
 export type ToolSearchConfig = {
   enabled: boolean;
   mode: ToolSearchMode;
@@ -73,6 +81,7 @@ export type ToolSearchConfig = {
   maxSearchLimit: number;
 };
 
+/** Shared type for Tool Search Tool Context in src/agents. */
 export type ToolSearchToolContext = {
   config?: OpenClawConfig;
   runtimeConfig?: OpenClawConfig;
@@ -85,6 +94,7 @@ export type ToolSearchToolContext = {
   executeTool?: ToolSearchCatalogToolExecutor;
 };
 
+/** Shared type for Tool Search Catalog Entry in src/agents. */
 export type ToolSearchCatalogEntry = {
   id: string;
   source: CatalogSource;
@@ -96,6 +106,7 @@ export type ToolSearchCatalogEntry = {
   tool: CatalogTool;
 };
 
+/** Shared type for Tool Search Catalog Session in src/agents. */
 export type ToolSearchCatalogSession = {
   entries: ToolSearchCatalogEntry[];
   searchCount: number;
@@ -103,6 +114,7 @@ export type ToolSearchCatalogSession = {
   callCount: number;
 };
 
+/** Shared type for Tool Search Catalog Ref in src/agents. */
 export type ToolSearchCatalogRef = {
   current?: ToolSearchCatalogSession;
 };
@@ -411,6 +423,7 @@ function isToolSearchCodeModeSupported(): boolean {
   return process.allowedNodeEnvironmentFlags.has("--permission");
 }
 
+/** Reused helper for resolve Tool Search Config behavior in src/agents. */
 export function resolveToolSearchConfig(config?: OpenClawConfig): ToolSearchConfig {
   const raw = readToolSearchConfig(config);
   const rawMode = typeof raw.mode === "string" ? raw.mode : "code";
@@ -764,6 +777,7 @@ function buildToolSearchTargetTranscriptMessages(
   ];
 }
 
+/** Reused helper for project Tool Search Target Transcript Messages behavior in src/agents. */
 export function projectToolSearchTargetTranscriptMessages(
   messages: AgentMessage[],
   projections: readonly ToolSearchTargetTranscriptProjection[],
@@ -807,10 +821,12 @@ export function projectToolSearchTargetTranscriptMessages(
   return projected;
 }
 
+/** Reused helper for create Tool Search Catalog Ref behavior in src/agents. */
 export function createToolSearchCatalogRef(): ToolSearchCatalogRef {
   return {};
 }
 
+/** Reused helper for apply Tool Search Catalog behavior in src/agents. */
 export function applyToolSearchCatalog(params: {
   tools: AnyAgentTool[];
   config?: OpenClawConfig;
@@ -837,6 +853,7 @@ export function applyToolSearchCatalog(params: {
   });
 }
 
+/** Reused helper for add Client Tools To Tool Search Catalog behavior in src/agents. */
 export function addClientToolsToToolSearchCatalog(params: {
   tools: ToolDefinition[];
   config?: OpenClawConfig;
@@ -852,6 +869,7 @@ export function addClientToolsToToolSearchCatalog(params: {
   });
 }
 
+/** Reused helper for register Tool Search Catalog behavior in src/agents. */
 export function registerToolSearchCatalog(params: {
   sessionId?: string;
   sessionKey?: string;
@@ -893,6 +911,7 @@ export function registerToolSearchCatalog(params: {
   return next;
 }
 
+/** Reused helper for clear Tool Search Catalog behavior in src/agents. */
 export function clearToolSearchCatalog(params: {
   sessionId?: string;
   sessionKey?: string;
@@ -1070,6 +1089,7 @@ function sanitizeToolCallIdPart(value: string): string {
   return safe || "call";
 }
 
+/** Reused class for Tool Search Runtime behavior in src/agents. */
 export class ToolSearchRuntime {
   private callSequence = 0;
 
@@ -1146,6 +1166,7 @@ export class ToolSearchRuntime {
   }
 }
 
+/** Reused helper for apply Tool Catalog Compaction behavior in src/agents. */
 export function applyToolCatalogCompaction(params: {
   tools: AnyAgentTool[];
   enabled: boolean;
@@ -1269,6 +1290,7 @@ export function applyToolCatalogCompaction(params: {
   };
 }
 
+/** Reused helper for add Client Tools To Tool Catalog behavior in src/agents. */
 export function addClientToolsToToolCatalog(params: {
   tools: ToolDefinition[];
   enabled: boolean;
@@ -1567,6 +1589,7 @@ function readCode(args: unknown): string {
   return code;
 }
 
+/** Reused helper for create Tool Search Tools behavior in src/agents. */
 export function createToolSearchTools(ctx: ToolSearchToolContext): AnyAgentTool[] {
   const config = resolveToolSearchConfig(ctx.runtimeConfig ?? ctx.config);
   const runtime = new ToolSearchRuntime(ctx, config);
@@ -1644,6 +1667,7 @@ export function createToolSearchTools(ctx: ToolSearchToolContext): AnyAgentTool[
   ];
 }
 
+/** Reused constant for testing behavior in src/agents. */
 export const testing = {
   sessionCatalogs,
   reusableCatalogSnapshots,
@@ -1655,4 +1679,5 @@ export const testing = {
   applyToolSearchCatalog,
   addClientToolsToToolSearchCatalog,
 };
+/** Re-exported API for src/agents, starting with testing. */
 export { testing as __testing };

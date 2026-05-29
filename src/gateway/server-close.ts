@@ -1,3 +1,4 @@
+// gateway server close helpers and runtime behavior.
 import type { Server as HttpServer } from "node:http";
 import type { WebSocketServer } from "ws";
 import { disposeAllSessionMcpRuntimes } from "../agents/agent-bundle-mcp-tools.js";
@@ -32,6 +33,7 @@ const RESTART_REPLY_DRAIN_POLL_MS = 100;
 const RESTART_REPLY_POST_ABORT_DRAIN_TIMEOUT_MS = 1_000;
 const RESTART_REPLY_POST_ABORT_DRAIN_POLL_MS = 50;
 
+/** Shared type for Shutdown Result in src/gateway. */
 export type ShutdownResult = {
   durationMs: number;
   warnings: string[];
@@ -324,6 +326,7 @@ async function stopGmailWatcherOnDemand(): Promise<void> {
   await stopGmailWatcher();
 }
 
+/** Reused helper for run Gateway Close Prelude behavior in src/gateway. */
 export async function runGatewayClosePrelude(params: {
   stopDiagnostics?: () => void;
   clearSkillsRefreshTimer?: () => void;
@@ -357,6 +360,7 @@ function isServerNotRunningError(err: unknown): boolean {
   );
 }
 
+/** Reused helper for create Gateway Close Handler behavior in src/gateway. */
 export function createGatewayCloseHandler(params: {
   bonjourStop: (() => Promise<void>) | null;
   tailscaleCleanup: (() => Promise<void>) | null;

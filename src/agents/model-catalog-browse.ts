@@ -1,10 +1,13 @@
+/** Loads model catalog views for picker/browse surfaces with timeout fallback. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { parseFiniteNumber } from "../shared/number-coercion.js";
 import type { ModelCatalogEntry } from "./model-catalog.types.js";
 import { parseConfiguredModelVisibilityEntries } from "./model-selection-shared.js";
 
+/** Default read-only catalog browse timeout before returning partial/empty results. */
 export const DEFAULT_MODEL_CATALOG_BROWSE_TIMEOUT_MS = 750;
 
+/** Model catalog browse view scope. */
 export type ModelCatalogBrowseView = "default" | "configured" | "all";
 
 function resolveModelCatalogBrowseTimeoutMs(value: number | undefined): number {
@@ -14,6 +17,7 @@ function resolveModelCatalogBrowseTimeoutMs(value: number | undefined): number {
   );
 }
 
+/** Load the model catalog appropriate for a browse view. */
 export async function loadModelCatalogForBrowse(params: {
   cfg: OpenClawConfig;
   view?: ModelCatalogBrowseView;

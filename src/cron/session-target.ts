@@ -1,9 +1,12 @@
+// cron session target helpers and runtime behavior.
 const INVALID_CRON_SESSION_TARGET_ID_ERROR = "invalid cron sessionTarget session id";
 
+/** Reused helper for is Invalid Cron Session Target Id Error behavior in src/cron. */
 export function isInvalidCronSessionTargetIdError(error: unknown): boolean {
   return error instanceof Error && error.message === INVALID_CRON_SESSION_TARGET_ID_ERROR;
 }
 
+/** Reused helper for assert Safe Cron Session Target Id behavior in src/cron. */
 export function assertSafeCronSessionTargetId(sessionId: string): string {
   const trimmed = sessionId.trim();
   if (!trimmed) {
@@ -15,6 +18,7 @@ export function assertSafeCronSessionTargetId(sessionId: string): string {
   return trimmed;
 }
 
+/** Reused helper for resolve Cron Session Target Session Key behavior in src/cron. */
 export function resolveCronSessionTargetSessionKey(
   sessionTarget?: string | null,
 ): string | undefined {
@@ -24,6 +28,7 @@ export function resolveCronSessionTargetSessionKey(
   return assertSafeCronSessionTargetId(sessionTarget.slice(8));
 }
 
+/** Reused helper for resolve Cron Current Session Target behavior in src/cron. */
 export function resolveCronCurrentSessionTarget(params: {
   sessionTarget?: string | null;
   sessionKey?: string | null;
@@ -35,6 +40,7 @@ export function resolveCronCurrentSessionTarget(params: {
   return sessionKey ? `session:${assertSafeCronSessionTargetId(sessionKey)}` : "isolated";
 }
 
+/** Reused helper for resolve Cron Delivery Session Key behavior in src/cron. */
 export function resolveCronDeliverySessionKey(job: {
   sessionTarget?: string | null;
   sessionKey?: string | null;
@@ -48,6 +54,7 @@ export function resolveCronDeliverySessionKey(job: {
     : undefined;
 }
 
+/** Reused helper for resolve Cron Notification Session Key behavior in src/cron. */
 export function resolveCronNotificationSessionKey(params: {
   jobId: string;
   sessionKey?: string | null;
@@ -57,6 +64,7 @@ export function resolveCronNotificationSessionKey(params: {
     : `cron:${params.jobId}:failure`;
 }
 
+/** Reused helper for resolve Cron Failure Notification Session Key behavior in src/cron. */
 export function resolveCronFailureNotificationSessionKey(job: {
   id: string;
   sessionTarget?: string | null;

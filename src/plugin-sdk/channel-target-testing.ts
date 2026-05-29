@@ -1,3 +1,4 @@
+/** Public SDK barrel for channel target test helpers. */
 export {
   installCommonResolveTargetErrorCases,
   type ResolveTargetFn,

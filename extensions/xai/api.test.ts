@@ -1,3 +1,4 @@
+// Tests extensions/xai api test behavior.
 import { describe, expect, it } from "vitest";
 import { isXaiModelHint, resolveXaiTransport } from "./api.js";
 

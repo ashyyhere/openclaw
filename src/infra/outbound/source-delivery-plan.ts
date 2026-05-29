@@ -1,7 +1,9 @@
+// infra/outbound source delivery plan helpers and runtime behavior.
 import type { SourceReplyDeliveryMode } from "../../auto-reply/get-reply-options.types.js";
 import { stringifyRouteThreadId } from "../../plugin-sdk/channel-route.js";
 import { normalizeTargetForProvider } from "./target-normalization.js";
 
+/** Shared type for Source Visible Delivery Owner in src/infra/outbound. */
 export type SourceVisibleDeliveryOwner =
   | "automatic_source"
   | "message_tool"
@@ -9,6 +11,7 @@ export type SourceVisibleDeliveryOwner =
   | "direct_fallback"
   | "none";
 
+/** Shared type for Source Delivery Plan Reason in src/infra/outbound. */
 export type SourceDeliveryPlanReason =
   | "config"
   | "room_event"
@@ -18,6 +21,7 @@ export type SourceDeliveryPlanReason =
   | "media_completion"
   | "subagent_completion";
 
+/** Shared type for Source Delivery Target in src/infra/outbound. */
 export type SourceDeliveryTarget = {
   channel?: string;
   to?: string;
@@ -25,6 +29,7 @@ export type SourceDeliveryTarget = {
   threadId?: string | number;
 };
 
+/** Shared type for Source Delivery Message Tool Target in src/infra/outbound. */
 export type SourceDeliveryMessageToolTarget = {
   tool?: string;
   provider?: string;
@@ -37,12 +42,14 @@ export type SourceDeliveryMessageToolTarget = {
   mediaUrls?: string[];
 };
 
+/** Shared type for Source Delivery Visible Delivery in src/infra/outbound. */
 export type SourceDeliveryVisibleDelivery = {
   via: "message_tool";
   target: SourceDeliveryMessageToolTarget;
   verifiedTarget: boolean;
 };
 
+/** Shared type for Source Delivery Outcome in src/infra/outbound. */
 export type SourceDeliveryOutcome = {
   visibleDeliveries: SourceDeliveryVisibleDelivery[];
   verifiedMessageToolDelivery: boolean;
@@ -50,6 +57,7 @@ export type SourceDeliveryOutcome = {
   unverifiedMessageToolDelivery: boolean;
 };
 
+/** Shared type for Source Delivery Plan in src/infra/outbound. */
 export type SourceDeliveryPlan = {
   owner: SourceVisibleDeliveryOwner;
   reason: SourceDeliveryPlanReason;
@@ -122,6 +130,7 @@ function extractTopicThreadId(targetTo: string): string | undefined {
   return targetTo.match(/:topic:(\d+)$/i)?.[1];
 }
 
+/** Reused helper for source Delivery Targets Match behavior in src/infra/outbound. */
 export function sourceDeliveryTargetsMatch(
   target: SourceDeliveryMessageToolTarget,
   delivery: SourceDeliveryTarget,
@@ -154,6 +163,7 @@ export function sourceDeliveryTargetsMatch(
   return deliveryThreadId === targetThreadId;
 }
 
+/** Reused helper for create Source Delivery Plan behavior in src/infra/outbound. */
 export function createSourceDeliveryPlan(params: {
   owner: SourceVisibleDeliveryOwner;
   reason: SourceDeliveryPlanReason;
@@ -216,6 +226,7 @@ function resolveImplicitMessageToolDeliveryTarget(
   };
 }
 
+/** Reused helper for resolve Source Delivery Outcome behavior in src/infra/outbound. */
 export function resolveSourceDeliveryOutcome(
   plan: SourceDeliveryPlan,
   params: {

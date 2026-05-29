@@ -1,3 +1,4 @@
+// extensions/browser/src/browser/routes tabs helpers and runtime behavior.
 import {
   BrowserProfileUnavailableError,
   BrowserTabNotFoundError,

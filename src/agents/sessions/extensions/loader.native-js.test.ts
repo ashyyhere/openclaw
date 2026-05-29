@@ -1,3 +1,4 @@
+/** Covers extension loader handling for native JavaScript files. */
 import { mkdtemp, rm, stat, utimes, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";

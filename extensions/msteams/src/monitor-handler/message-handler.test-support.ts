@@ -1,3 +1,4 @@
+// extensions/msteams/src/monitor-handler message handler test support helpers and runtime behavior.
 import { vi } from "vitest";
 import type { OpenClawConfig, PluginRuntime, RuntimeEnv } from "../../runtime-api.js";
 import type { MSTeamsMessageHandlerDeps } from "../monitor-handler.js";

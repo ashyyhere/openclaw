@@ -1,3 +1,4 @@
+// Tests extensions/qqbot/src/engine/gateway ws client test behavior.
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 const webSocketCtorMock = vi.hoisted(() =>
   vi.fn(function webSocketCtorMockImpl(_url: string, _options?: Record<string, unknown>) {

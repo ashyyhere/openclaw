@@ -1,3 +1,4 @@
+// extensions/device-pair pair command auth helpers and runtime behavior.
 type PairingCommandAuthParams = {
   channel: string;
   gatewayClientScopes?: readonly string[] | null;

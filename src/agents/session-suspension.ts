@@ -1,3 +1,4 @@
+/** Persists session quota/circuit suspension state and lane throttling. */
 import path from "node:path";
 import { resolveAgentMaxConcurrent, resolveSubagentMaxConcurrent } from "../config/agent-limits.js";
 import { resolveCronMaxConcurrentRuns } from "../config/cron-limits.js";
@@ -11,10 +12,12 @@ import type { FailoverReason } from "./embedded-agent-helpers/types.js";
 const log = createSubsystemLogger("session-suspension");
 
 const DEFAULT_CUSTOM_LANE_RESUME_CONCURRENCY = 1;
+/** Default automatic resume TTL for quota suspensions. */
 export const DEFAULT_QUOTA_SUSPENSION_RESUME_MS = 30 * 60 * 1000; // 30 min
 
 const laneResumeTimers = new Map<string, ReturnType<typeof setTimeout>>();
 
+/** Persisted reason for suspending a session/lane after provider failure. */
 export type SessionSuspensionReason = "quota_exhausted" | "manual" | "circuit_open";
 
 function resolveLaneResumeConcurrency(cfg: OpenClawConfig | undefined, laneId: string): number {
@@ -31,6 +34,7 @@ function resolveLaneResumeConcurrency(cfg: OpenClawConfig | undefined, laneId: s
   }
 }
 
+/** Map failover reason to persisted session suspension reason. */
 export function resolveSessionSuspensionReason(reason: FailoverReason): SessionSuspensionReason {
   if (reason === "billing") {
     return "manual";
@@ -61,6 +65,7 @@ function scheduleLaneAutoResume(laneId: string, delayMs: number, resumeConcurren
   laneResumeTimers.set(laneId, timer);
 }
 
+/** Cancel a scheduled auto-resume for a throttled command lane. */
 export function cancelLaneAutoResume(laneId: string) {
   const existing = laneResumeTimers.get(laneId);
   if (existing) {
@@ -69,6 +74,7 @@ export function cancelLaneAutoResume(laneId: string) {
   }
 }
 
+/** Persist session suspension and temporarily throttle the affected lane. */
 export async function suspendSession(params: {
   cfg: OpenClawConfig | undefined;
   agentDir?: string;
@@ -136,8 +142,10 @@ export async function suspendSession(params: {
   }
 }
 
+/** Reused constant for testing behavior in src/agents. */
 export const testing = {
   resolveLaneResumeConcurrency,
   resolveSessionSuspensionReason,
 } as const;
+/** Re-exported API for src/agents, starting with testing. */
 export { testing as __testing };

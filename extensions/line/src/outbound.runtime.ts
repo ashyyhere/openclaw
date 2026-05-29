@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/line/src outbound runtime behavior.
 export { processLineMessage } from "./markdown-to-line.js";
 export {
   createQuickReplyItems,

@@ -1,3 +1,4 @@
+/** Covers provider-owned tool schema normalization diagnostics. */
 import { describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({

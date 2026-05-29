@@ -1,3 +1,4 @@
+// extensions/tlon/src/urbit errors helpers and runtime behavior.
 type UrbitErrorCode =
   | "invalid_url"
   | "http_error"

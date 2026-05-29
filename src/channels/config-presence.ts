@@ -1,3 +1,4 @@
+// Detection of channels configured through config, env, or persisted auth.
 import fs from "node:fs";
 import os from "node:os";
 import {
@@ -29,6 +30,7 @@ type ChannelPresenceOptions = {
   };
 };
 
+/** Source that indicates a channel may be configured. */
 export type ChannelPresenceSignalSource = "config" | "env" | "persisted-auth";
 
 type ChannelPresenceSignal = {
@@ -36,6 +38,7 @@ type ChannelPresenceSignal = {
   source: ChannelPresenceSignalSource;
 };
 
+/** Return true when a config value contains meaningful channel settings. */
 export function hasMeaningfulChannelConfig(value: unknown): boolean {
   if (!isRecord(value)) {
     return false;
@@ -43,6 +46,7 @@ export function hasMeaningfulChannelConfig(value: unknown): boolean {
   return Object.keys(value).some((key) => key !== "enabled");
 }
 
+/** List channels explicitly disabled in config. */
 export function listExplicitlyDisabledChannelIdsForConfig(cfg: OpenClawConfig): string[] {
   const channels = isRecord(cfg.channels) ? cfg.channels : null;
   if (!channels) {
@@ -102,6 +106,7 @@ function hasPersistedAuthState(params: {
   });
 }
 
+/** List channel ids that appear configured from config, env, or persisted auth. */
 export function listPotentialConfiguredChannelIds(
   cfg: OpenClawConfig,
   env: NodeJS.ProcessEnv = process.env,
@@ -114,6 +119,7 @@ export function listPotentialConfiguredChannelIds(
   );
 }
 
+/** List detailed configured-channel presence signals. */
 export function listPotentialConfiguredChannelPresenceSignals(
   cfg: OpenClawConfig,
   env: NodeJS.ProcessEnv = process.env,
@@ -192,6 +198,7 @@ function hasEnvConfiguredChannel(
   );
 }
 
+/** Return true when any channel appears configured. */
 export function hasPotentialConfiguredChannels(
   cfg: OpenClawConfig | null | undefined,
   env: NodeJS.ProcessEnv = process.env,

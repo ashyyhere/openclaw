@@ -1,3 +1,4 @@
+/** Operation adapter contract used by the bash session tool. */
 export interface BashOperations {
   exec: (
     command: string,

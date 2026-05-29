@@ -1,3 +1,4 @@
+/** Tests plugin install planning across registry, local, and bundled specs. */
 import { installedPluginRoot } from "openclaw/plugin-sdk/test-fixtures";
 import { describe, expect, it, vi } from "vitest";
 import { PLUGIN_INSTALL_ERROR_CODE } from "../plugins/install.js";

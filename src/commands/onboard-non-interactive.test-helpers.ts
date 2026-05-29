@@ -1,3 +1,4 @@
+/** Shared runtime helper for non-interactive onboarding tests. */
 import type { RuntimeEnv } from "../runtime.js";
 
 type RuntimeLike = Pick<RuntimeEnv, "log" | "error" | "exit">;
@@ -8,6 +9,7 @@ type NonInteractiveRuntime = {
   exit: RuntimeLike["exit"];
 };
 
+/** Reused helper for create Throwing Runtime behavior in src/commands. */
 export function createThrowingRuntime(): NonInteractiveRuntime {
   return {
     log: () => {},

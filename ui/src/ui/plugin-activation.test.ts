@@ -1,3 +1,4 @@
+// Tests ui/src/ui plugin activation test behavior.
 import { describe, expect, it } from "vitest";
 import { isPluginEnabledInConfigSnapshot } from "./plugin-activation.ts";
 

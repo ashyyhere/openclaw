@@ -1,3 +1,4 @@
+// scripts/e2e/parallels plugin isolation helpers and runtime behavior.
 import { shellQuote } from "./host-command.ts";
 import { providerIdFromModelId } from "./provider-auth.ts";
 

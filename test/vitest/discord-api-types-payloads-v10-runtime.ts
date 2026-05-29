@@ -1,3 +1,4 @@
+// test/vitest discord api types payloads v10 runtime helpers and runtime behavior.
 import { createRequire } from "node:module";
 import type * as DiscordPayloadApiTypes from "discord-api-types/payloads/v10";
 

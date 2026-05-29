@@ -1,5 +1,7 @@
+/** Bootstrap mode decision helper for agent runs. */
 export type BootstrapMode = "full" | "limited" | "none";
 
+/** Resolve whether a run gets full, limited, or no bootstrap handling. */
 export function resolveBootstrapMode(params: {
   bootstrapPending: boolean;
   runKind?: "default" | "heartbeat" | "cron";

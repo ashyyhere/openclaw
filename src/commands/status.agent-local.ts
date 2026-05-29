@@ -1,3 +1,4 @@
+/** Collects local agent session facts for status output. */
 import path from "node:path";
 import { resolveAgentWorkspaceDir } from "../agents/agent-scope.js";
 import { resolveStorePath } from "../config/sessions/paths.js";
@@ -6,6 +7,7 @@ import type { OpenClawConfig } from "../config/types.js";
 import { listGatewayAgentsBasic } from "../gateway/agent-list.js";
 import { pathExists } from "../infra/fs-safe.js";
 
+/** Shared type for Agent Local Status in src/commands. */
 export type AgentLocalStatus = {
   id: string;
   name?: string;
@@ -24,6 +26,7 @@ type AgentLocalStatusesResult = {
   bootstrapPendingCount: number;
 };
 
+/** Reused helper for get Agent Local Statuses behavior in src/commands. */
 export async function getAgentLocalStatuses(
   cfg: OpenClawConfig,
 ): Promise<AgentLocalStatusesResult> {

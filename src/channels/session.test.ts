@@ -1,3 +1,4 @@
+/** Tests inbound session key, metadata, and last-route update helpers. */
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { MsgContext } from "../auto-reply/templating.js";
 

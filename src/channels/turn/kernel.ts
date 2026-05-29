@@ -1,3 +1,4 @@
+/** Core channel turn kernel for history, reply dispatch, and delivery coordination. */
 import type { ReplyPayload } from "../../auto-reply/reply-payload.js";
 import {
   clearHistoryEntriesIfEnabled,
@@ -13,25 +14,33 @@ import {
   isDurableInboundReplyDeliveryHandled,
   throwIfDurableInboundReplyDeliveryFailed,
 } from "./durable-delivery.js";
+/** Re-exported API for src/channels/turn. */
 export {
   buildChannelInboundEventContext,
   filterChannelInboundSupplementalContext,
 } from "../inbound-event/context.js";
+/** Re-exported API for src/channels/turn, starting with Build Channel Inbound Event Context Params. */
 export type { BuildChannelInboundEventContextParams } from "../inbound-event/context.js";
+/** Re-exported API for src/channels/turn. */
 export {
   clearChannelBotPairLoopGuardForTests,
   listTrackedChannelBotPairsForTests,
   recordChannelBotPairLoopAndCheckSuppression,
 } from "./bot-loop-protection.js";
+/** Re-exported API for src/channels/turn, starting with create Channel History Window. */
 export { createChannelHistoryWindow } from "./history-window.js";
+/** Re-exported API for src/channels/turn, starting with Channel History Window. */
 export type { ChannelHistoryWindow } from "./history-window.js";
+/** Re-exported API for src/channels/turn, starting with Channel Bot Loop Protection Facts. */
 export type { ChannelBotLoopProtectionFacts } from "./bot-loop-protection.js";
+/** Re-exported API for src/channels/turn. */
 export {
   deliverDurableInboundReplyPayload,
   deliverInboundReplyWithMessageSendContext,
   isDurableInboundReplyDeliveryHandled,
   throwIfDurableInboundReplyDeliveryFailed,
 } from "./durable-delivery.js";
+/** Re-exported API for src/channels/turn. */
 export type {
   DurableInboundReplyDeliveryOptions,
   DurableInboundReplyDeliveryParams,
@@ -52,7 +61,9 @@ import type {
   PreflightFacts,
   RunChannelTurnParams,
 } from "./types.js";
+/** Re-exported API for src/channels/turn, starting with create Channel Delivery Result From Receipt. */
 export { createChannelDeliveryResultFromReceipt } from "./delivery-result.js";
+/** Re-exported API for src/channels/turn. */
 export {
   EMPTY_CHANNEL_TURN_DISPATCH_COUNTS,
   hasFinalChannelTurnDispatch,
@@ -61,6 +72,7 @@ export {
   type ChannelTurnDispatchResultLike,
   type ChannelTurnVisibleDeliverySignals,
 } from "./dispatch-result.js";
+/** Re-exported API for src/channels/turn. */
 export type {
   AccessFacts,
   AssembledChannelTurn,
@@ -90,6 +102,7 @@ export type {
   SenderFacts,
   SupplementalContextFacts,
 } from "./types.js";
+/** Re-exported API for src/channels/turn, starting with Inbound Media Facts. */
 export type { InboundMediaFacts } from "./types.js";
 
 const DEFAULT_EVENT_CLASS: ChannelEventClass = {
@@ -142,6 +155,7 @@ function emit(params: {
   });
 }
 
+/** Reused helper for create Noop Channel Event Delivery Adapter behavior in src/channels/turn. */
 export function createNoopChannelEventDeliveryAdapter(): ChannelEventDeliveryAdapter {
   return {
     deliver: async () => ({
@@ -185,6 +199,7 @@ function resolveDroppedHistoryBody(input: NormalizedTurnInput, preflight: Prefli
   );
 }
 
+/** Reused helper for record Dropped Channel Turn History behavior in src/channels/turn. */
 export async function recordDroppedChannelTurnHistory(params: {
   input: NormalizedTurnInput;
   preflight: PreflightFacts;
@@ -224,6 +239,7 @@ export async function recordDroppedChannelTurnHistory(params: {
   });
 }
 
+/** Reused constant for record Dropped Channel Inbound History behavior in src/channels/turn. */
 export const recordDroppedChannelInboundHistory = recordDroppedChannelTurnHistory;
 
 function resolveAssembledReplyPipeline(
@@ -345,15 +361,19 @@ type AssembledChannelTurnWithoutBotLoopProtection = Omit<
   botLoopProtection?: undefined;
 };
 
+/** Reused helper for dispatch Assembled Channel Turn behavior in src/channels/turn. */
 export function dispatchAssembledChannelTurn(
   params: AssembledChannelTurnWithBotLoopProtection,
 ): Promise<ChannelTurnResult>;
+/** Reused helper for dispatch Assembled Channel Turn behavior in src/channels/turn. */
 export function dispatchAssembledChannelTurn(
   params: AssembledChannelTurnWithoutBotLoopProtection,
 ): Promise<DispatchedChannelTurnResult>;
+/** Reused helper for dispatch Assembled Channel Turn behavior in src/channels/turn. */
 export function dispatchAssembledChannelTurn(
   params: AssembledChannelTurn,
 ): Promise<ChannelTurnResult>;
+/** Reused helper for dispatch Assembled Channel Turn behavior in src/channels/turn. */
 export async function dispatchAssembledChannelTurn(
   params: AssembledChannelTurn,
 ): Promise<ChannelTurnResult> {
@@ -427,6 +447,7 @@ export async function dispatchAssembledChannelTurn(
   );
 }
 
+/** Reused constant for dispatch Channel Inbound Reply behavior in src/channels/turn. */
 export const dispatchChannelInboundReply = dispatchAssembledChannelTurn;
 
 function isPreparedChannelTurn<TDispatchResult>(
@@ -576,27 +597,33 @@ type PreparedChannelTurnWithoutBotLoopProtection<TDispatchResult> = Omit<
   botLoopProtection?: undefined;
 };
 
+/** Reused helper for run Prepared Channel Turn behavior in src/channels/turn. */
 export function runPreparedChannelTurn<
   TDispatchResult = DispatchedChannelTurnResult["dispatchResult"],
 >(
   params: PreparedChannelTurnWithBotLoopProtection<TDispatchResult>,
 ): Promise<ChannelTurnResult<TDispatchResult>>;
+/** Reused helper for run Prepared Channel Turn behavior in src/channels/turn. */
 export function runPreparedChannelTurn<
   TDispatchResult = DispatchedChannelTurnResult["dispatchResult"],
 >(
   params: PreparedChannelTurnWithoutBotLoopProtection<TDispatchResult>,
 ): Promise<DispatchedChannelTurnResult<TDispatchResult>>;
+/** Reused helper for run Prepared Channel Turn behavior in src/channels/turn. */
 export function runPreparedChannelTurn<
   TDispatchResult = DispatchedChannelTurnResult["dispatchResult"],
 >(params: PreparedChannelTurn<TDispatchResult>): Promise<ChannelTurnResult<TDispatchResult>>;
+/** Reused helper for run Prepared Channel Turn behavior in src/channels/turn. */
 export async function runPreparedChannelTurn<
   TDispatchResult = DispatchedChannelTurnResult["dispatchResult"],
 >(params: PreparedChannelTurn<TDispatchResult>): Promise<ChannelTurnResult<TDispatchResult>> {
   return await runPreparedChannelTurnCore(params, { suppressObserveOnlyDispatch: true });
 }
 
+/** Reused constant for run Prepared Inbound Reply behavior in src/channels/turn. */
 export const runPreparedInboundReply = runPreparedChannelTurn;
 
+/** Reused helper for run Channel Turn behavior in src/channels/turn. */
 export async function runChannelTurn<
   TRaw,
   TDispatchResult = DispatchedChannelTurnResult["dispatchResult"],
@@ -761,4 +788,5 @@ export async function runChannelTurn<
   return result;
 }
 
+/** Reused constant for run Channel Inbound Event behavior in src/channels/turn. */
 export const runChannelInboundEvent = runChannelTurn;

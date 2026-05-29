@@ -1,3 +1,4 @@
+// media-understanding audio preflight helpers and runtime behavior.
 import type { MsgContext } from "../auto-reply/templating.js";
 import type { OpenClawConfig } from "../config/types.js";
 import { logVerbose, shouldLogVerbose } from "../globals.js";

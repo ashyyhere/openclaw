@@ -1,3 +1,4 @@
+/** Path-boundary helpers for workspace and sandbox-relative paths. */
 import path from "node:path";
 import { normalizeWindowsPathForComparison } from "../infra/path-guards.js";
 import { resolveSandboxInputPath } from "./sandbox-paths.js";
@@ -107,6 +108,7 @@ function toRelativeBoundaryPath(params: {
   });
 }
 
+/** Return candidate relative to workspace root or throw if it escapes. */
 export function toRelativeWorkspacePath(
   root: string,
   candidate: string,
@@ -120,6 +122,7 @@ export function toRelativeWorkspacePath(
   });
 }
 
+/** Return candidate relative to sandbox root or throw if it escapes. */
 export function toRelativeSandboxPath(
   root: string,
   candidate: string,
@@ -134,6 +137,7 @@ export function toRelativeSandboxPath(
   });
 }
 
+/** Resolve a tool input path against cwd using sandbox path semantics. */
 export function resolvePathFromInput(filePath: string, cwd: string): string {
   return path.normalize(resolveSandboxInputPath(filePath, cwd));
 }

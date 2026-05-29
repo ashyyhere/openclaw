@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src bot message context require mention test behavior.
 import { getRuntimeConfig } from "openclaw/plugin-sdk/runtime-config-snapshot";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 

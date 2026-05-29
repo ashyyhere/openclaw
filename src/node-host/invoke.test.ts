@@ -1,3 +1,4 @@
+// Tests node-host invoke test behavior.
 import { describe, expect, it, vi } from "vitest";
 import type { GatewayClient } from "../gateway/client.js";
 import type { SkillBinsProvider } from "./invoke-types.js";

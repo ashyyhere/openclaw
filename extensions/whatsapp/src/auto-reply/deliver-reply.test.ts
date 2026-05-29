@@ -1,3 +1,4 @@
+// Tests extensions/whatsapp/src/auto-reply deliver reply test behavior.
 import fsSync from "node:fs";
 import {
   createMessageReceiptFromOutboundResults,

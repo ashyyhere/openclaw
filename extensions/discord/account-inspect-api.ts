@@ -1,3 +1,4 @@
+// extensions/discord account inspect api helpers and runtime behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { inspectDiscordAccount } from "./src/account-inspect.js";
 

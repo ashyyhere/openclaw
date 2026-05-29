@@ -22,6 +22,7 @@ import { isLoopbackAddress, resolveClientIp } from "./net.js";
 // Types
 // ---------------------------------------------------------------------------
 
+/** Shared type for Rate Limit Config in src/gateway. */
 export interface RateLimitConfig {
   /** Maximum failed attempts before blocking.  @default 10 */
   maxAttempts?: number;
@@ -35,9 +36,13 @@ export interface RateLimitConfig {
   pruneIntervalMs?: number;
 }
 
+/** Reused constant for AUTH RATE LIMIT SCOPE DEFAULT behavior in src/gateway. */
 export const AUTH_RATE_LIMIT_SCOPE_DEFAULT = "default";
+/** Reused constant for AUTH RATE LIMIT SCOPE SHARED SECRET behavior in src/gateway. */
 export const AUTH_RATE_LIMIT_SCOPE_SHARED_SECRET = "shared-secret";
+/** Reused constant for AUTH RATE LIMIT SCOPE DEVICE TOKEN behavior in src/gateway. */
 export const AUTH_RATE_LIMIT_SCOPE_DEVICE_TOKEN = "device-token";
+/** Reused constant for AUTH RATE LIMIT SCOPE HOOK AUTH behavior in src/gateway. */
 export const AUTH_RATE_LIMIT_SCOPE_HOOK_AUTH = "hook-auth";
 const BROWSER_ORIGIN_RATE_LIMIT_KEY_PREFIX = "browser-origin:";
 
@@ -48,6 +53,7 @@ interface RateLimitEntry {
   lockedUntil?: number;
 }
 
+/** Shared type for Rate Limit Check Result in src/gateway. */
 export interface RateLimitCheckResult {
   /** Whether the request is allowed to proceed. */
   allowed: boolean;
@@ -57,6 +63,7 @@ export interface RateLimitCheckResult {
   retryAfterMs: number;
 }
 
+/** Shared type for Auth Rate Limiter in src/gateway. */
 export interface AuthRateLimiter {
   /** Check whether `ip` is currently allowed to attempt authentication. */
   check(ip: string | undefined, scope?: string): RateLimitCheckResult;
@@ -96,6 +103,7 @@ export function normalizeRateLimitClientIp(ip: string | undefined): string {
   return resolveClientIp({ remoteAddr: ip }) ?? "unknown";
 }
 
+/** Reused helper for create Auth Rate Limiter behavior in src/gateway. */
 export function createAuthRateLimiter(config?: RateLimitConfig): AuthRateLimiter {
   const maxAttempts = config?.maxAttempts ?? DEFAULT_MAX_ATTEMPTS;
   const windowMs = config?.windowMs ?? DEFAULT_WINDOW_MS;

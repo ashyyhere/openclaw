@@ -1,3 +1,4 @@
+/** Formats compact aggregate values for status overview rows. */
 type AgentStatusLike = {
   bootstrapPendingCount: number;
   totalSessions: number;
@@ -31,6 +32,7 @@ function countActiveStatusAgents(params: {
   ).length;
 }
 
+/** Reused helper for build Status All Agents Value behavior in src/commands. */
 export function buildStatusAllAgentsValue(params: {
   agentStatus: AgentStatusLike;
   activeThresholdMs?: number;
@@ -39,16 +41,19 @@ export function buildStatusAllAgentsValue(params: {
   return `${params.agentStatus.agents.length} total · ${params.agentStatus.bootstrapPendingCount} bootstrapping · ${activeAgents} active · ${params.agentStatus.totalSessions} sessions`;
 }
 
+/** Reused helper for build Status Secrets Value behavior in src/commands. */
 export function buildStatusSecretsValue(count: number) {
   return count > 0 ? `${count} diagnostic${count === 1 ? "" : "s"}` : "none";
 }
 
+/** Reused helper for build Status Events Value behavior in src/commands. */
 export function buildStatusEventsValue(params: { queuedSystemEvents: string[] }) {
   return params.queuedSystemEvents.length > 0
     ? `${params.queuedSystemEvents.length} queued`
     : "none";
 }
 
+/** Reused helper for build Status Probes Value behavior in src/commands. */
 export function buildStatusProbesValue(params: {
   health?: unknown;
   ok: (value: string) => string;
@@ -57,6 +62,7 @@ export function buildStatusProbesValue(params: {
   return params.health ? params.ok("enabled") : params.muted("skipped (use --deep)");
 }
 
+/** Reused helper for build Status Plugin Compatibility Value behavior in src/commands. */
 export function buildStatusPluginCompatibilityValue(params: {
   notices: PluginCompatibilityNoticeLike[];
   ok: (value: string) => string;
@@ -73,6 +79,7 @@ export function buildStatusPluginCompatibilityValue(params: {
   );
 }
 
+/** Reused helper for build Status Sessions Overview Value behavior in src/commands. */
 export function buildStatusSessionsOverviewValue(params: {
   sessions: SummarySessionsLike;
   formatKTokens: (value: number) => string;

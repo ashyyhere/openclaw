@@ -1,3 +1,4 @@
+/** apply_patch tool parser and executor. */
 import syncFs from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -48,6 +49,7 @@ type UpdateFileHunk = {
 
 type Hunk = AddFileHunk | DeleteFileHunk | UpdateFileHunk;
 
+/** Shared type for Apply Patch Summary in src/agents. */
 export type ApplyPatchSummary = {
   added: string[];
   modified: string[];
@@ -82,6 +84,7 @@ const applyPatchSchema = Type.Object({
   }),
 });
 
+/** Create the apply_patch agent tool for a workspace/sandbox context. */
 export function createApplyPatchTool(
   options: { cwd?: string; sandbox?: SandboxApplyPatchConfig; workspaceOnly?: boolean } = {},
 ): AgentTool<typeof applyPatchSchema, ApplyPatchToolDetails> {
@@ -122,6 +125,7 @@ export function createApplyPatchTool(
   };
 }
 
+/** Parse and apply an apply_patch envelope to the filesystem. */
 export async function applyPatch(
   input: string,
   options: ApplyPatchOptions,

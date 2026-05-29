@@ -1,3 +1,4 @@
+// extensions/voice-call/src/manager context helpers and runtime behavior.
 import type { VoiceCallConfig } from "../config.js";
 import type { VoiceCallProvider } from "../providers/base.js";
 import type { CallId, CallRecord } from "../types.js";

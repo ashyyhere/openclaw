@@ -1,3 +1,4 @@
+// secrets storage scan helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { listAgentIds, resolveAgentDir } from "../agents/agent-scope.js";
@@ -8,14 +9,17 @@ import { resolveUserPath } from "../utils.js";
 import { listAuthProfileStorePaths as listAuthProfileStorePathsFromAuthStorePaths } from "./auth-store-paths.js";
 import { parseEnvValue } from "./shared.js";
 
+/** Reused helper for parse Env Assignment Value behavior in src/secrets. */
 export function parseEnvAssignmentValue(raw: string): string {
   return parseEnvValue(raw);
 }
 
+/** Reused helper for list Auth Profile Store Paths behavior in src/secrets. */
 export function listAuthProfileStorePaths(config: OpenClawConfig, stateDir: string): string[] {
   return listAuthProfileStorePathsFromAuthStorePaths(config, stateDir);
 }
 
+/** Reused helper for list Legacy Auth Json Paths behavior in src/secrets. */
 export function listLegacyAuthJsonPaths(stateDir: string): string[] {
   const out: string[] = [];
   const agentsRoot = path.join(resolveUserPath(stateDir), "agents");
@@ -42,6 +46,7 @@ function resolveActiveAgentDir(stateDir: string, env: NodeJS.ProcessEnv = proces
   return path.join(resolveUserPath(stateDir), "agents", "main", "agent");
 }
 
+/** Reused helper for list Agent Models Json Paths behavior in src/secrets. */
 export function listAgentModelsJsonPaths(
   config: OpenClawConfig,
   stateDir: string,
@@ -74,15 +79,18 @@ export function listAgentModelsJsonPaths(
   return [...paths];
 }
 
+/** Shared type for Read Json Object Options in src/secrets. */
 export type ReadJsonObjectOptions = {
   maxBytes?: number;
   requireRegularFile?: boolean;
 };
 
+/** Reused helper for read Json Object If Exists behavior in src/secrets. */
 export function readJsonObjectIfExists(filePath: string): {
   value: Record<string, unknown> | null;
   error?: string;
 };
+/** Reused helper for read Json Object If Exists behavior in src/secrets. */
 export function readJsonObjectIfExists(
   filePath: string,
   options: ReadJsonObjectOptions,
@@ -90,6 +98,7 @@ export function readJsonObjectIfExists(
   value: Record<string, unknown> | null;
   error?: string;
 };
+/** Reused helper for read Json Object If Exists behavior in src/secrets. */
 export function readJsonObjectIfExists(
   filePath: string,
   options: ReadJsonObjectOptions = {},

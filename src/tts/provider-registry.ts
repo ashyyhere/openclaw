@@ -1,3 +1,4 @@
+// tts provider registry helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.js";
 import { getActiveRuntimePluginRegistry } from "../plugins/active-runtime-registry.js";
 import {
@@ -5,6 +6,7 @@ import {
   resolvePluginCapabilityProviders,
 } from "../plugins/capability-provider-runtime.js";
 import type { SpeechProviderPlugin } from "../plugins/types.js";
+/** Re-exported API for src/tts, starting with normalize Speech Provider Id. */
 export { normalizeSpeechProviderId } from "./provider-registry-core.js";
 import {
   createSpeechProviderRegistry,
@@ -47,8 +49,12 @@ const loadedSpeechProviderRegistry = createSpeechProviderRegistry({
   listProviders: () => resolveLoadedSpeechProviderPluginEntries(),
 });
 
+/** Reused constant for list Speech Providers behavior in src/tts. */
 export const listSpeechProviders = defaultSpeechProviderRegistry.listSpeechProviders;
+/** Reused constant for list Loaded Speech Providers behavior in src/tts. */
 export const listLoadedSpeechProviders = loadedSpeechProviderRegistry.listSpeechProviders;
+/** Reused constant for get Speech Provider behavior in src/tts. */
 export const getSpeechProvider = defaultSpeechProviderRegistry.getSpeechProvider;
+/** Reused constant for canonicalize Speech Provider Id behavior in src/tts. */
 export const canonicalizeSpeechProviderId =
   defaultSpeechProviderRegistry.canonicalizeSpeechProviderId;

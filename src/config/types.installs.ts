@@ -1,3 +1,5 @@
+// config types installs helpers and runtime behavior.
+/** Shared type for Install Record Base in src/config. */
 export type InstallRecordBase = {
   source: "npm" | "archive" | "path" | "clawhub" | "git";
   spec?: string;

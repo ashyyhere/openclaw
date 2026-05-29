@@ -1,3 +1,4 @@
+// extensions/acpx/src process reaper helpers and runtime behavior.
 import { execFile } from "node:child_process";
 import { createRequire } from "node:module";
 import path from "node:path";

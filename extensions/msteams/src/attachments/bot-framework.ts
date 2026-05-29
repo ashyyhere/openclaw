@@ -1,3 +1,4 @@
+// extensions/msteams/src/attachments bot framework helpers and runtime behavior.
 import { parseMediaContentLength } from "openclaw/plugin-sdk/media-runtime";
 import { getMSTeamsRuntime } from "../runtime.js";
 import { ensureUserAgentHeader } from "../user-agent.js";

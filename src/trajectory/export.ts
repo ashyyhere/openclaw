@@ -1,3 +1,4 @@
+// trajectory export helpers and runtime behavior.
 import fsp from "node:fs/promises";
 import path from "node:path";
 import { sanitizeDiagnosticPayload } from "../agents/payload-redaction.js";
@@ -855,6 +856,7 @@ function buildPromptsCapture(params: {
   };
 }
 
+/** Reused helper for resolve Default Trajectory Export Dir behavior in src/trajectory. */
 export function resolveDefaultTrajectoryExportDir(params: {
   workspaceDir: string;
   sessionId: string;
@@ -870,6 +872,7 @@ export function resolveDefaultTrajectoryExportDir(params: {
   );
 }
 
+/** Reused helper for export Trajectory Bundle behavior in src/trajectory. */
 export async function exportTrajectoryBundle(params: BuildTrajectoryBundleParams): Promise<{
   manifest: TrajectoryBundleManifest;
   outputDir: string;

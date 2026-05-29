@@ -1,3 +1,4 @@
+// Git source URL normalization for plugin/package install sources.
 import hostedGitInfo from "hosted-git-info";
 
 /**

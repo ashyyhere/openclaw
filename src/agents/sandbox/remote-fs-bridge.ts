@@ -1,3 +1,4 @@
+/** Filesystem bridge implementation for remote shell sandbox backends. */
 import path from "node:path";
 import { parseStrictNonNegativeInteger } from "../../infra/parse-finite-number.js";
 import { isPathInside } from "../../infra/path-guards.js";
@@ -40,12 +41,14 @@ type MountInfo = {
   source: RemoteMountSource;
 };
 
+/** Shared type for Remote Shell Sandbox Handle in src/agents/sandbox. */
 export type RemoteShellSandboxHandle = {
   remoteWorkspaceDir: string;
   remoteAgentWorkspaceDir: string;
   runRemoteShellScript(params: SandboxBackendCommandParams): Promise<SandboxBackendCommandResult>;
 };
 
+/** Creates a filesystem bridge backed by remote shell commands. */
 export function createRemoteShellSandboxFsBridge(params: {
   sandbox: SandboxFsBridgeContext;
   runtime: RemoteShellSandboxHandle;

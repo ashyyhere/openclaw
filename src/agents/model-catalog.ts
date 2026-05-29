@@ -1,3 +1,4 @@
+/** Loads model catalog entries from config, plugin manifests, and discovery. */
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
@@ -42,7 +43,9 @@ import {
 const log = createSubsystemLogger("model-catalog");
 const AGENT_CUSTOM_MODEL_DEFAULT_CONTEXT_WINDOW = 128_000;
 
+/** Re-exported API for src/agents, starting with Model Catalog Entry. */
 export type { ModelCatalogEntry, ModelInputType } from "./model-catalog.types.js";
+/** Re-exported API for src/agents. */
 export {
   findModelCatalogEntry,
   findModelInCatalog,
@@ -91,6 +94,7 @@ function loadProviderApiKeyResolver() {
   return providerApiKeyResolverLoader.load();
 }
 
+/** Reset cached model catalog promise. */
 export function resetModelCatalogCache() {
   modelCatalogPromise = null;
   manifestModelCatalogCache = new WeakMap();
@@ -98,12 +102,14 @@ export function resetModelCatalogCache() {
   hasLoggedReadOnlyStaticCatalogError = false;
 }
 
+/** Reset model catalog cache and test import hooks. */
 export function resetModelCatalogCacheForTest() {
   resetModelCatalogCache();
   importAgentDiscovery = defaultImportAgentDiscovery;
 }
 
 // Test-only escape hatch: allow mocking discovery failures without touching module state.
+/** Override agent discovery import for tests. */
 export function setModelCatalogImportForTest(loader?: () => Promise<AgentDiscoveryModule>) {
   importAgentDiscovery = loader ?? defaultImportAgentDiscovery;
 }
@@ -177,6 +183,7 @@ function mergeConfiguredCatalogEntries(
   }
 }
 
+/** Load model catalog rows contributed by plugin manifests. */
 export function loadManifestModelCatalog(params: {
   config: OpenClawConfig;
   workspaceDir?: string;
@@ -470,6 +477,7 @@ function loadReadOnlyStaticModelCatalog(params?: {
   return sortModelCatalogEntries(models);
 }
 
+/** Load the full model catalog, including configured and discovered entries. */
 export async function loadModelCatalog(params?: {
   config?: OpenClawConfig;
   useCache?: boolean;
@@ -686,6 +694,7 @@ export async function loadModelCatalog(params?: {
 /**
  * Check if a model supports image input based on its catalog entry.
  */
+/** Return whether a model catalog entry supports image input. */
 export function modelSupportsVision(entry: ModelCatalogEntry | undefined): boolean {
   return modelCatalogEntrySupportsInput(entry, "image");
 }
@@ -693,6 +702,7 @@ export function modelSupportsVision(entry: ModelCatalogEntry | undefined): boole
 /**
  * Check if a model supports native document/PDF input based on its catalog entry.
  */
+/** Return whether a model catalog entry supports document input. */
 export function modelSupportsDocument(entry: ModelCatalogEntry | undefined): boolean {
   return modelCatalogEntrySupportsInput(entry, "document");
 }

@@ -1,3 +1,4 @@
+// Tests extensions/whatsapp/src system prompt test behavior.
 import { describe, expect, it } from "vitest";
 import {
   resolveWhatsAppDirectSystemPrompt,

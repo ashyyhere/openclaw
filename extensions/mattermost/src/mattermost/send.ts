@@ -1,3 +1,4 @@
+// extensions/mattermost/src/mattermost send helpers and runtime behavior.
 import {
   createMessageReceiptFromOutboundResults,
   type MessageReceipt,

@@ -1,3 +1,4 @@
+// Tests secrets ref contract test behavior.
 import { describe, expect, it } from "vitest";
 import {
   INVALID_FILE_SECRET_REF_IDS,

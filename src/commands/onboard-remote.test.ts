@@ -1,3 +1,4 @@
+/** Tests remote gateway onboarding discovery and auth config. */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import type { GatewayBonjourBeacon } from "../infra/bonjour-discovery.js";

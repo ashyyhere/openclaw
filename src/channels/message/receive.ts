@@ -1,11 +1,16 @@
+// Message receive context and acknowledgement policy helpers.
 import type { ChannelMessageReceiveAckPolicy } from "./types.js";
 
+/** Ack policy used by a channel message receive adapter. */
 export type MessageAckPolicy = ChannelMessageReceiveAckPolicy;
 
+/** Pipeline stage after which a message may be acknowledged. */
 export type MessageAckStage = "receive_record" | "agent_dispatch" | "durable_send" | "manual";
 
+/** Current acknowledgement state for an inbound message. */
 export type MessageAckState = "pending" | "acked" | "nacked";
 
+/** Runtime receive context passed through channel message ingestion. */
 export type MessageReceiveContext<TMessage = unknown> = {
   id: string;
   channel: string;
@@ -24,6 +29,7 @@ export type MessageReceiveContext<TMessage = unknown> = {
 
 const neverAbortedSignal = new AbortController().signal;
 
+/** Return true when a policy should ack after the given stage. */
 export function shouldAckMessageAfterStage(
   policy: MessageAckPolicy,
   stage: MessageAckStage,
@@ -45,6 +51,7 @@ function normalizeAckErrorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
 }
 
+/** Reused helper for create Message Receive Context behavior in src/channels/message. */
 export function createMessageReceiveContext<TMessage>(params: {
   id: string;
   channel: string;

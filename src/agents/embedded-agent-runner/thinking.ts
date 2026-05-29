@@ -1,3 +1,4 @@
+/** Sanitizes provider thinking blocks and retries incomplete Anthropic streams. */
 import { formatErrorMessage } from "../../infra/errors.js";
 import { createAssistantMessageEventStream } from "../../llm/utils/event-stream.js";
 import type { AgentMessage, StreamFn } from "../runtime/index.js";
@@ -10,8 +11,10 @@ type RecoverySessionMeta = { id: string; recoveredAnthropicThinking?: boolean };
 
 const THINKING_BLOCK_ERROR_PATTERN =
   /(?:thinking|redacted_thinking).*?(?:cannot be modified|signature|invalid|missing|empty|blank)|(?:signature|invalid|missing|empty|blank).*?(?:thinking|redacted_thinking)/i;
+/** Reused constant for OMITTED ASSISTANT REASONING TEXT behavior in src/agents/embedded-agent-runner. */
 export const OMITTED_ASSISTANT_REASONING_TEXT = "[assistant reasoning omitted]";
 
+/** Narrows messages to assistant entries with mutable content blocks. */
 export function isAssistantMessageWithContent(message: AgentMessage): message is AssistantMessage {
   return (
     !!message &&
@@ -114,6 +117,7 @@ function hasReplayableThinkingSignature(block: AssistantContentBlock): boolean {
  * user turn before provider replay can disable that exemption because the
  * stored assistant turn is no longer latest in the outbound request.
  */
+/** Removes stale thinking signatures that providers may reject on replay. */
 export function stripInvalidThinkingSignatures(
   messages: AgentMessage[],
   options: { preserveLatestAssistant?: boolean } = {},
@@ -182,6 +186,7 @@ export function stripInvalidThinkingSignatures(
  * Returns the original array reference when nothing was changed (callers can
  * use reference equality to skip downstream work).
  */
+/** Drops provider-only thinking blocks before contexts that cannot replay them. */
 export function dropThinkingBlocks(messages: AgentMessage[]): AgentMessage[] {
   let latestAssistantIndex = -1;
   for (let i = messages.length - 1; i >= 0; i -= 1) {
@@ -261,6 +266,7 @@ function shouldPreserveCurrentToolTurnReasoning(
   return false;
 }
 
+/** Decides when the newest assistant thinking must remain for provider continuity. */
 export function shouldPreserveLatestAssistantThinking(messages: AgentMessage[]): boolean {
   let latestAssistantIndex = -1;
   for (let index = messages.length - 1; index >= 0; index -= 1) {
@@ -310,6 +316,7 @@ function stripAllThinkingBlocks(messages: AgentMessage[]): AgentMessage[] {
   return touched ? out : messages;
 }
 
+/** Removes reasoning text from history while retaining visible assistant output. */
 export function dropReasoningFromHistory(messages: AgentMessage[]): AgentMessage[] {
   let latestUserIndex = -1;
   for (let index = messages.length - 1; index >= 0; index -= 1) {
@@ -347,6 +354,7 @@ export function dropReasoningFromHistory(messages: AgentMessage[]): AgentMessage
   return touched ? out : messages;
 }
 
+/** Classifies whether the last assistant response is safe to keep or needs recovery. */
 export function assessLastAssistantMessage(message: AgentMessage): RecoveryAssessment {
   if (!isAssistantMessageWithContent(message)) {
     return "valid";
@@ -390,6 +398,7 @@ export function assessLastAssistantMessage(message: AgentMessage): RecoveryAsses
   return "valid";
 }
 
+/** Prepares history for a recovery attempt after incomplete thinking or text. */
 export function sanitizeThinkingForRecovery(messages: AgentMessage[]): {
   messages: AgentMessage[];
   prefill: boolean;
@@ -479,6 +488,7 @@ async function pumpStreamWithRecovery(
   }
 }
 
+/** Wraps Anthropic streaming to retry recoverable incomplete-thinking failures. */
 export function wrapAnthropicStreamWithRecovery(
   innerStreamFn: StreamFn,
   sessionMeta: RecoverySessionMeta,

@@ -1,5 +1,8 @@
+// plugins externalized bundled plugins helpers and runtime behavior.
+/** Shared type for Externalized Bundled Plugin Preferred Source in src/plugins. */
 export type ExternalizedBundledPluginPreferredSource = "npm" | "clawhub";
 
+/** Shared type for Externalized Bundled Plugin Bridge in src/plugins. */
 export type ExternalizedBundledPluginBridge = {
   /** Plugin id used while the plugin was bundled in core. */
   bundledPluginId: string;
@@ -33,6 +36,7 @@ function normalizeOptionalSpec(value: string | undefined): string {
   return value?.trim() ?? "";
 }
 
+/** Reused helper for get Externalized Bundled Plugin Preferred Source behavior in src/plugins. */
 export function getExternalizedBundledPluginPreferredSource(
   bridge: ExternalizedBundledPluginBridge,
 ): ExternalizedBundledPluginPreferredSource {
@@ -47,24 +51,28 @@ export function getExternalizedBundledPluginPreferredSource(
     : "npm";
 }
 
+/** Reused helper for get Externalized Bundled Plugin Npm Spec behavior in src/plugins. */
 export function getExternalizedBundledPluginNpmSpec(
   bridge: ExternalizedBundledPluginBridge,
 ): string {
   return normalizeOptionalSpec(bridge.npmSpec);
 }
 
+/** Reused helper for get Externalized Bundled Plugin Claw Hub Spec behavior in src/plugins. */
 export function getExternalizedBundledPluginClawHubSpec(
   bridge: ExternalizedBundledPluginBridge,
 ): string {
   return normalizeOptionalSpec(bridge.clawhubSpec);
 }
 
+/** Reused helper for get Externalized Bundled Plugin Target Id behavior in src/plugins. */
 export function getExternalizedBundledPluginTargetId(
   bridge: ExternalizedBundledPluginBridge,
 ): string {
   return normalizePluginId(bridge.pluginId) || normalizePluginId(bridge.bundledPluginId);
 }
 
+/** Reused helper for get Externalized Bundled Plugin Lookup Ids behavior in src/plugins. */
 export function getExternalizedBundledPluginLookupIds(
   bridge: ExternalizedBundledPluginBridge,
 ): readonly string[] {
@@ -82,6 +90,7 @@ export function getExternalizedBundledPluginLookupIds(
   );
 }
 
+/** Reused helper for get Externalized Bundled Plugin Legacy Path Suffix behavior in src/plugins. */
 export function getExternalizedBundledPluginLegacyPathSuffix(
   bridge: ExternalizedBundledPluginBridge,
 ): string {

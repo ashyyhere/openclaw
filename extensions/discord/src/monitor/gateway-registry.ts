@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor gateway registry helpers and runtime behavior.
 import type { GatewayPlugin } from "../internal/gateway.js";
 
 /**

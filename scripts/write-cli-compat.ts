@@ -1,3 +1,4 @@
+// scripts write cli compat helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";

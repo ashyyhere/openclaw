@@ -1,3 +1,4 @@
+/** Config fixtures for sandbox-restricted agent tests. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 
 type AgentToolsConfig = NonNullable<NonNullable<OpenClawConfig["agents"]>["list"]>[number]["tools"];
@@ -6,6 +7,7 @@ type SandboxToolsConfig = {
   deny?: string[];
 };
 
+/** Creates an agent config with explicit sandbox tool allow/deny lists. */
 export function createRestrictedAgentSandboxConfig(params: {
   agentTools?: AgentToolsConfig;
   globalSandboxTools?: SandboxToolsConfig;

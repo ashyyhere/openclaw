@@ -1,3 +1,4 @@
+/** Registers subagent sessions that session-store maintenance must preserve. */
 import { registerSessionMaintenancePreserveKeysProvider } from "../config/sessions/store-maintenance-preserve.js";
 import { isDeliverySuspended } from "./subagent-delivery-state.js";
 import { subagentRuns } from "./subagent-registry-memory.js";
@@ -32,6 +33,7 @@ function shouldPreserveForMaintenance(entry: SubagentRunRecord): boolean {
   );
 }
 
+/** Reused helper for list Session Maintenance Protected Subagent Session Keys behavior in src/agents. */
 export function listSessionMaintenanceProtectedSubagentSessionKeys(): string[] {
   const keys = new Set<string>();
   for (const entry of getSubagentRunsSnapshotForRead(subagentRuns).values()) {

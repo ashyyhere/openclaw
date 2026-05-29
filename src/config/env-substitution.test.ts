@@ -1,3 +1,4 @@
+// Tests config env substitution test behavior.
 import { describe, expect, it } from "vitest";
 import {
   type EnvSubstitutionWarning,

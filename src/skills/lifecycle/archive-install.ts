@@ -1,3 +1,4 @@
+/** Installs skill archives into workspace skill directories with slug and scan enforcement. */
 import path from "node:path";
 import type { ArchiveLogger } from "../../infra/archive.js";
 import { formatErrorMessage } from "../../infra/errors.js";
@@ -12,6 +13,7 @@ import {
 
 const VALID_SLUG_PATTERN = /^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i;
 const DEFAULT_SKILL_ARCHIVE_ROOT_MARKERS = ["SKILL.md"] as const;
+/** Root marker candidates accepted for ClawHub skill archives. */
 export const CLAWHUB_SKILL_ARCHIVE_ROOT_MARKERS = [
   "SKILL.md",
   "skill.md",
@@ -36,12 +38,15 @@ type SkillArchiveInstallScan =
       origin: string;
     };
 
+/** Result for archive-backed skill installs, split by operator-fixable failure kind. */
 export type SkillArchiveInstallResult =
   | { ok: true; targetDir: string }
   | { ok: false; error: string; failureKind: SkillArchiveInstallFailureKind };
 
+/** Failure category used by source/ClawHub installers to choose CLI messaging. */
 export type SkillArchiveInstallFailureKind = "invalid-request" | "unavailable";
 
+/** Normalizes a slug already tracked by local metadata, allowing historical casing. */
 export function normalizeTrackedSkillSlug(raw: string): string {
   const slug = raw.trim();
   if (!slug || slug.includes("/") || slug.includes("\\") || slug.includes("..")) {
@@ -50,6 +55,7 @@ export function normalizeTrackedSkillSlug(raw: string): string {
   return slug;
 }
 
+/** Validates a new user-requested skill slug before it becomes a directory name. */
 export function validateRequestedSkillSlug(raw: string): string {
   const slug = normalizeTrackedSkillSlug(raw);
   if (hasNonAscii(slug) || !VALID_SLUG_PATTERN.test(slug)) {
@@ -58,6 +64,7 @@ export function validateRequestedSkillSlug(raw: string): string {
   return slug;
 }
 
+/** Resolves the canonical workspace install directory for a validated skill slug. */
 export function resolveWorkspaceSkillInstallDir(workspaceDir: string, slug: string): string {
   const skillsDir = path.join(path.resolve(workspaceDir), "skills");
   const target = resolveSafeInstallDir({
@@ -122,6 +129,7 @@ function archiveFailureKind(error: string): SkillArchiveInstallFailureKind {
   return "invalid-request";
 }
 
+/** Installs an already-extracted skill root after marker, slug, and optional security checks. */
 export async function installExtractedSkillRoot(params: {
   workspaceDir: string;
   slug: string;
@@ -190,6 +198,7 @@ export async function installExtractedSkillRoot(params: {
   }
 }
 
+/** Extracts a local archive and installs the detected skill root into the workspace. */
 export async function installSkillArchiveFromPath(params: {
   archivePath: string;
   workspaceDir: string;

@@ -1,3 +1,4 @@
+// Tests hooks frontmatter test behavior.
 import { describe, expect, it } from "vitest";
 import {
   parseFrontmatter,

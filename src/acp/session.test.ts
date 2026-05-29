@@ -1,3 +1,4 @@
+/** Tests in-memory ACP session store creation, lookup, cancellation, and eviction. */
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { createInMemorySessionStore } from "./session.js";
 

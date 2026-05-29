@@ -1,5 +1,7 @@
+/** Public SDK provider entrypoint for OpenCode provider auth/catalog helpers. */
 import { createProviderApiKeyAuthMethod, type OpenClawConfig } from "./provider-auth-api-key.js";
 
+/** Re-exported API for src/plugin-sdk, starting with apply Opencode Zen Model Default. */
 export { applyOpencodeZenModelDefault, OPENCODE_ZEN_DEFAULT_MODEL } from "./provider-onboard.js";
 
 const OPENCODE_SHARED_PROFILE_IDS = ["opencode:default", "opencode-go:default"] as const;
@@ -10,6 +12,7 @@ const OPENCODE_SHARED_WIZARD_GROUP = {
   groupHint: OPENCODE_SHARED_HINT,
 } as const;
 
+/** Reused helper for create Opencode Catalog Api Key Auth Method behavior in src/plugin-sdk. */
 export function createOpencodeCatalogApiKeyAuthMethod(params: {
   providerId: string;
   label: string;

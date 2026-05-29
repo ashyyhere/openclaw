@@ -1,3 +1,4 @@
+// Tests tui tui pty local e2e test behavior.
 import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
 import { tmpdir } from "node:os";

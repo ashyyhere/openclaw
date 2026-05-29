@@ -1,3 +1,4 @@
+/** Tests setup wizard proxy helpers for prompt, finalize, and allowlist flows. */
 import {
   promptSetupWizardAllowFrom,
   resolveSetupWizardAllowFromEntries,

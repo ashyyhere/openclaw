@@ -1,3 +1,4 @@
+/** Helpers for spawning ACP clients with sanitized environment and invocation metadata. */
 import * as readline from "node:readline";
 import type { RequestPermissionRequest, RequestPermissionResponse } from "@agentclientprotocol/sdk";
 import { sanitizeTerminalText } from "../../packages/terminal-core/src/safe-text.js";
@@ -100,6 +101,7 @@ function promptUserPermission(toolName: string | undefined, toolTitle?: string):
   });
 }
 
+/** Reused helper for resolve Permission Request behavior in src/acp. */
 export async function resolvePermissionRequest(
   params: RequestPermissionRequest,
   deps: PermissionResolverDeps = {},
@@ -153,6 +155,7 @@ type AcpClientSpawnEnvOptions = {
   stripKeys?: Iterable<string>;
 };
 
+/** Resolve the environment used to spawn an ACP client/server process. */
 export function resolveAcpClientSpawnEnv(
   baseEnv: NodeJS.ProcessEnv = process.env,
   options: AcpClientSpawnEnvOptions = {},
@@ -162,6 +165,7 @@ export function resolveAcpClientSpawnEnv(
   return env;
 }
 
+/** Reused helper for should Strip Provider Auth Env Vars For Acp Server behavior in src/acp. */
 export function shouldStripProviderAuthEnvVarsForAcpServer(
   params: {
     serverCommand?: string;
@@ -186,6 +190,7 @@ export function shouldStripProviderAuthEnvVarsForAcpServer(
   );
 }
 
+/** Build the provider auth env var denylist for ACP child process spawning. */
 export function buildAcpClientStripKeys(params: {
   stripProviderAuthEnvVars?: boolean;
   activeSkillEnvKeys?: Iterable<string>;
@@ -211,6 +216,7 @@ const DEFAULT_ACP_SPAWN_RUNTIME: AcpSpawnRuntime = {
   execPath: process.execPath,
 };
 
+/** Reused helper for resolve Acp Client Spawn Invocation behavior in src/acp. */
 export function resolveAcpClientSpawnInvocation(
   params: { serverCommand: string; serverArgs: string[] },
   runtime: AcpSpawnRuntime = DEFAULT_ACP_SPAWN_RUNTIME,

@@ -1,3 +1,4 @@
+// extensions/voice-call/src/manager outbound helpers and runtime behavior.
 import crypto from "node:crypto";
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";
 import {

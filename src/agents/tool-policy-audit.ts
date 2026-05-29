@@ -1,3 +1,4 @@
+/** Emits diagnostics for tool policy decisions. */
 import { createSubsystemLogger } from "../logging/subsystem.js";
 import type { SandboxConfig } from "./sandbox/types.js";
 import { isToolAllowedByPolicyName } from "./tool-policy-match.js";
@@ -152,6 +153,7 @@ function matchedPolicyRules(params: {
   return [...rules].toSorted();
 }
 
+/** Reused helper for audit Tool Policy Filter behavior in src/agents. */
 export function auditToolPolicyFilter(params: {
   stepLabel: string;
   policy: ToolPolicyLike;
@@ -195,6 +197,7 @@ export function auditToolPolicyFilter(params: {
   }
 }
 
+/** Reused helper for audit Sandbox Tool Policy Block behavior in src/agents. */
 export function auditSandboxToolPolicyBlock(params: {
   toolName: string;
   ruleType: "allow" | "deny";

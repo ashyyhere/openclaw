@@ -1,3 +1,5 @@
+/** Helpers for reading text from multimodal content blocks. */
+/** Collect text block values from an unknown content array. */
 export function collectTextContentBlocks(content: unknown): string[] {
   if (!Array.isArray(content)) {
     return [];

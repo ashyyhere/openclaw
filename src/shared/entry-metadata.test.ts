@@ -1,3 +1,4 @@
+// Tests shared entry metadata test behavior.
 import { describe, expect, it } from "vitest";
 import { resolveEmojiAndHomepage } from "./entry-metadata.js";
 

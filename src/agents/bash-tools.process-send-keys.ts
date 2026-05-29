@@ -1,8 +1,10 @@
+/** send-keys implementation for the process tool. */
 import type { ProcessSession } from "./bash-process-registry.js";
 import { deriveSessionName } from "./bash-tools.shared.js";
 import { encodeKeySequence, hasCursorModeSensitiveKeys } from "./pty-keys.js";
 import type { AgentToolResult } from "./runtime/index.js";
 
+/** Shared type for Writable Stdin in src/agents. */
 export type WritableStdin = {
   write: (data: string, cb?: (err?: Error | null) => void) => void;
   end: () => void;
@@ -36,6 +38,7 @@ async function writeToStdin(stdin: WritableStdin, data: string) {
   });
 }
 
+/** Encode and write key sequences to a running process session. */
 export async function handleProcessSendKeys(params: {
   sessionId: string;
   session: ProcessSession;

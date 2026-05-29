@@ -1,3 +1,4 @@
+// config types imessage helpers and runtime behavior.
 import type {
   BlockStreamingCoalesceConfig,
   ContextVisibilityMode,
@@ -12,6 +13,7 @@ import type {
 import type { DmConfig } from "./types.messages.js";
 import type { GroupToolPolicyBySenderConfig, GroupToolPolicyConfig } from "./types.tools.js";
 
+/** Shared type for IMessage Action Config in src/config. */
 export type IMessageActionConfig = {
   reactions?: boolean;
   edit?: boolean;
@@ -26,8 +28,10 @@ export type IMessageActionConfig = {
   sendAttachment?: boolean;
 };
 
+/** Shared type for IMessage Reaction Notification Mode in src/config. */
 export type IMessageReactionNotificationMode = "off" | "own" | "all";
 
+/** Shared type for IMessage Account Config in src/config. */
 export type IMessageAccountConfig = {
   /** Optional display name for this account (used in CLI/UI lists). */
   name?: string;
@@ -166,6 +170,7 @@ export type IMessageAccountConfig = {
   responsePrefix?: string;
 };
 
+/** Shared type for IMessage Config in src/config. */
 export type IMessageConfig = {
   /** Optional per-account iMessage configuration (multi-account). */
   accounts?: Record<string, IMessageAccountConfig>;

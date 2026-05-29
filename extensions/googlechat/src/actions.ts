@@ -1,3 +1,4 @@
+// extensions/googlechat/src actions helpers and runtime behavior.
 import {
   createActionGate,
   jsonResult,

@@ -1,3 +1,4 @@
+// daemon paths helpers and runtime behavior.
 import path from "node:path";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import { resolveGatewayProfileSuffix } from "./constants.js";
@@ -5,6 +6,7 @@ import { resolveGatewayProfileSuffix } from "./constants.js";
 const windowsAbsolutePath = /^[a-zA-Z]:[\\/]/;
 const windowsUncPath = /^\\\\/;
 
+/** Reused helper for resolve Home Dir behavior in src/daemon. */
 export function resolveHomeDir(env: Record<string, string | undefined>): string {
   const home = normalizeOptionalString(env.HOME) || normalizeOptionalString(env.USERPROFILE);
   if (!home) {
@@ -31,6 +33,7 @@ function resolveUserPathWithHome(input: string, home?: string): string {
   return path.resolve(trimmed);
 }
 
+/** Reused helper for resolve Gateway State Dir behavior in src/daemon. */
 export function resolveGatewayStateDir(env: Record<string, string | undefined>): string {
   const override = normalizeOptionalString(env.OPENCLAW_STATE_DIR);
   if (override) {
@@ -42,6 +45,7 @@ export function resolveGatewayStateDir(env: Record<string, string | undefined>):
   return path.join(home, `.openclaw${suffix}`);
 }
 
+/** Reused helper for resolve Gateway Task Script Path behavior in src/daemon. */
 export function resolveGatewayTaskScriptPath(env: Record<string, string | undefined>): string {
   const override = normalizeOptionalString(env.OPENCLAW_TASK_SCRIPT);
   if (override) {

@@ -1,3 +1,4 @@
+/** Tests gateway secret target resolution for CLI command config loading. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import {

@@ -1,3 +1,4 @@
+// extensions/canvas/src cli helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import type { Command } from "commander";

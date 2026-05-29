@@ -1,3 +1,4 @@
+/** Runs Codex app-server extension hooks for tool-result processing. */
 import { createSubsystemLogger } from "../../logging/subsystem.js";
 import { listCodexAppServerExtensionFactories } from "../../plugins/codex-app-server-extension-factory.js";
 import type {
@@ -12,6 +13,7 @@ const log = createSubsystemLogger("agents/harness");
 
 type CodexToolResultHandler = Parameters<CodexAppServerExtensionRuntime["on"]>[1];
 
+/** Creates a fail-closed runner for registered Codex app-server extensions. */
 export function createCodexAppServerToolResultExtensionRunner(
   ctx: CodexAppServerExtensionContext,
   factories: CodexAppServerExtensionFactory[] = listCodexAppServerExtensionFactories(),

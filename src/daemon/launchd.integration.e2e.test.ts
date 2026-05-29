@@ -1,3 +1,4 @@
+// Tests daemon launchd integration e2e test behavior.
 import { spawnSync } from "node:child_process";
 import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";

@@ -1,3 +1,4 @@
+// gateway server channels helpers and runtime behavior.
 import type { ChannelRuntimeSurface } from "../channels/plugins/channel-runtime-surface.types.js";
 import { resolveChannelDefaultAccountId } from "../channels/plugins/helpers.js";
 import {
@@ -29,6 +30,7 @@ import {
 import type { RuntimeEnv } from "../runtime.js";
 import { runTasksWithConcurrency } from "../utils/run-with-concurrency.js";
 import type { ChannelRuntimeSnapshot } from "./server-channel-runtime.types.js";
+/** Re-exported API for src/gateway, starting with Channel Runtime Snapshot. */
 export type { ChannelRuntimeSnapshot };
 
 const CHANNEL_RESTART_POLICY: BackoffPolicy = {
@@ -219,6 +221,7 @@ async function waitForDeferredAccountStart(
   ]);
 }
 
+/** Shared type for Channel Manager in src/gateway. */
 export type ChannelManager = {
   getRuntimeSnapshot: () => ChannelRuntimeSnapshot;
   startChannels: () => Promise<void>;
@@ -231,6 +234,7 @@ export type ChannelManager = {
 };
 
 // Channel docking: lifecycle hooks (`plugin.gateway`) flow through this manager.
+/** Reused helper for create Channel Manager behavior in src/gateway. */
 export function createChannelManager(opts: ChannelManagerOptions): ChannelManager {
   const {
     getRuntimeConfig,

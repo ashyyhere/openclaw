@@ -1,3 +1,4 @@
+/** Tests Responses inline image payload sanitization. */
 import { describe, expect, it } from "vitest";
 import { sanitizeResponsesImagePayload } from "./responses-image-payload-sanitizer.js";
 

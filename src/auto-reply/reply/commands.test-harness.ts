@@ -1,3 +1,4 @@
+// Shared test harness for command handler suites.
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { configureTaskRegistryRuntime } from "../../tasks/task-registry.store.js";
 import type { MsgContext } from "../templating.js";
@@ -5,12 +6,14 @@ import { buildCommandContext } from "./commands-context.js";
 import type { HandleCommandsParams } from "./commands-types.js";
 import { parseInlineDirectives } from "./directive-handling.parse.js";
 
+/** Reused constant for base Command Test Config behavior in src/auto-reply/reply. */
 export const baseCommandTestConfig = {
   commands: { text: true },
   channels: { whatsapp: { allowFrom: ["*"] } },
   session: { mainKey: "main", scope: "per-sender" },
 } as OpenClawConfig;
 
+/** Reused helper for build Command Test Params behavior in src/auto-reply/reply. */
 export function buildCommandTestParams(
   commandBody: string,
   cfg: OpenClawConfig,
@@ -57,6 +60,7 @@ export function buildCommandTestParams(
   return params;
 }
 
+/** Reused helper for configure In Memory Task Registry Store For Tests behavior in src/auto-reply/reply. */
 export function configureInMemoryTaskRegistryStoreForTests(): void {
   configureTaskRegistryRuntime({
     store: {
@@ -76,6 +80,7 @@ export function configureInMemoryTaskRegistryStoreForTests(): void {
   });
 }
 
+/** Shared type for Config Snapshot Mock in src/auto-reply/reply. */
 export type ConfigSnapshotMock = {
   path?: string;
   hash?: string | null;
@@ -85,6 +90,7 @@ export type ConfigSnapshotMock = {
   runtimeConfig?: OpenClawConfig;
 };
 
+/** Reused helper for build Plugins Command Params behavior in src/auto-reply/reply. */
 export function buildPluginsCommandParams(params: {
   commandBodyNormalized: string;
   cfg?: OpenClawConfig;

@@ -1,3 +1,4 @@
+// Main get-reply orchestration entrypoint.
 import fs from "node:fs/promises";
 import {
   resolveAutoFallbackPrimaryProbe,
@@ -237,6 +238,7 @@ async function applyLinkUnderstandingIfNeeded(params: {
   }
 }
 
+/** Reused helper for get Reply From Config behavior in src/auto-reply/reply. */
 export async function getReplyFromConfig(
   ctx: MsgContext,
   opts?: GetReplyOptions,

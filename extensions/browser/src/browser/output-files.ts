@@ -1,3 +1,4 @@
+// extensions/browser/src/browser output files helpers and runtime behavior.
 import path from "node:path";
 import { writeExternalFileWithinRoot } from "../sdk-security-runtime.js";
 import { ensureOutputDirectory } from "./output-directories.js";

@@ -1,3 +1,4 @@
+// Tests media-understanding image test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const hoisted = vi.hoisted(() => ({

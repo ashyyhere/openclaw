@@ -1,3 +1,4 @@
+// Shared queue types.
 import type { AutoFallbackPrimaryProbe } from "../../../agents/agent-scope.js";
 import type { ExecToolDefaults } from "../../../agents/bash-tools.js";
 import type { CurrentInboundPromptContext } from "../../../agents/embedded-agent-runner/run/params.js";
@@ -17,10 +18,13 @@ import type {
 import type { OriginatingChannelType } from "../../templating.js";
 import type { ElevatedLevel, ReasoningLevel, ThinkLevel, VerboseLevel } from "../directives.js";
 
+/** Shared type for Queue Mode in src/auto-reply/reply. */
 export type QueueMode = "steer" | "followup" | "collect" | "interrupt";
 
+/** Shared type for Queue Drop Policy in src/auto-reply/reply. */
 export type QueueDropPolicy = "old" | "new" | "summarize";
 
+/** Shared type for Queue Settings in src/auto-reply/reply. */
 export type QueueSettings = {
   mode: QueueMode;
   debounceMs?: number;
@@ -28,8 +32,10 @@ export type QueueSettings = {
   dropPolicy?: QueueDropPolicy;
 };
 
+/** Shared type for Queue Dedupe Mode in src/auto-reply/reply. */
 export type QueueDedupeMode = "message-id" | "prompt" | "none";
 
+/** Reused class for Followup Run Deferred Error behavior in src/auto-reply/reply. */
 export class FollowupRunDeferredError extends Error {
   constructor(message = "Follow-up run deferred") {
     super(message);
@@ -37,10 +43,12 @@ export class FollowupRunDeferredError extends Error {
   }
 }
 
+/** Reused helper for is Followup Run Deferred Error behavior in src/auto-reply/reply. */
 export function isFollowupRunDeferredError(error: unknown): error is FollowupRunDeferredError {
   return error instanceof FollowupRunDeferredError;
 }
 
+/** Shared type for Followup Run in src/auto-reply/reply. */
 export type FollowupRun = {
   prompt: string;
   /** User-visible prompt body persisted to transcript; excludes runtime-only prompt context. */
@@ -137,6 +145,7 @@ export type FollowupRun = {
   };
 };
 
+/** Reused helper for is Followup Run Aborted behavior in src/auto-reply/reply. */
 export function isFollowupRunAborted(run: Pick<FollowupRun, "abortSignal">): boolean {
   return run.abortSignal?.aborted === true;
 }
@@ -144,6 +153,7 @@ export function isFollowupRunAborted(run: Pick<FollowupRun, "abortSignal">): boo
 const enqueuedFollowupLifecycles = new WeakSet<QueuedReplyLifecycle>();
 const completedFollowupLifecycles = new WeakSet<QueuedReplyLifecycle>();
 
+/** Reused helper for mark Followup Run Enqueued behavior in src/auto-reply/reply. */
 export function markFollowupRunEnqueued(run: Pick<FollowupRun, "queuedLifecycle">): void {
   const lifecycle = run.queuedLifecycle;
   if (!lifecycle || enqueuedFollowupLifecycles.has(lifecycle)) {
@@ -153,6 +163,7 @@ export function markFollowupRunEnqueued(run: Pick<FollowupRun, "queuedLifecycle"
   lifecycle.onEnqueued?.();
 }
 
+/** Reused helper for complete Followup Run Lifecycle behavior in src/auto-reply/reply. */
 export function completeFollowupRunLifecycle(run: Pick<FollowupRun, "queuedLifecycle">): void {
   const lifecycle = run.queuedLifecycle;
   if (!lifecycle || completedFollowupLifecycles.has(lifecycle)) {
@@ -162,6 +173,7 @@ export function completeFollowupRunLifecycle(run: Pick<FollowupRun, "queuedLifec
   lifecycle.onComplete?.();
 }
 
+/** Shared type for Resolve Queue Settings Params in src/auto-reply/reply. */
 export type ResolveQueueSettingsParams = {
   cfg: OpenClawConfig;
   channel?: string;

@@ -1,3 +1,4 @@
+// Tests config allowed values test behavior.
 import { describe, expect, it } from "vitest";
 import { summarizeAllowedValues } from "./allowed-values.js";
 

@@ -1,3 +1,4 @@
+/** Tests agent command session setup and persistence. */
 import fs from "node:fs";
 import path from "node:path";
 import { withTempHome as withTempHomeBase } from "openclaw/plugin-sdk/test-env";

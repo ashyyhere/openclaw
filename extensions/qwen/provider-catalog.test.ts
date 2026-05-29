@@ -1,3 +1,4 @@
+// Tests extensions/qwen provider catalog test behavior.
 import { describe, expect, it } from "vitest";
 import {
   applyQwenNativeStreamingUsageCompat,

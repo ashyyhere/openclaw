@@ -1,3 +1,4 @@
+/** Resolves account context for channel-oriented CLI commands. */
 import { resolveChannelDefaultAccountId } from "../channels/plugins/helpers.js";
 import type { ChannelPlugin } from "../channels/plugins/types.plugin.js";
 import { inspectReadOnlyChannelAccount } from "../channels/read-only-account-inspect.js";
@@ -39,6 +40,7 @@ function formatContextDiagnostic(params: {
   return `${prefix}channels.${params.pluginId}.accounts.${params.accountId}: ${params.message}`;
 }
 
+/** Reused helper for resolve Default Channel Account Context behavior in src/commands. */
 export async function resolveDefaultChannelAccountContext(
   plugin: ChannelPlugin,
   cfg: OpenClawConfig,

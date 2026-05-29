@@ -1,3 +1,4 @@
+/** Regression coverage for concurrent agents sharing OAuth refresh credentials. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";

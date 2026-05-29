@@ -1,3 +1,4 @@
+// Coverage for verbose directive status behavior without toggling state.
 import "./reply.directive.directive-behavior.e2e-mocks.js";
 import { describe, expect, it } from "vitest";
 import type { ModelAliasIndex } from "../agents/model-selection.js";

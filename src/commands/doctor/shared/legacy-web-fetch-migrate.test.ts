@@ -1,3 +1,4 @@
+/** Tests legacy web fetch migration helpers. */
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../../../config/config.js";
 import {

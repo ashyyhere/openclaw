@@ -1,3 +1,4 @@
+// security audit workspace skills helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { listAgentWorkspaceDirs } from "../../agents/workspace-dirs.js";
@@ -108,6 +109,7 @@ async function listWorkspaceSkillMarkdownFiles(
   return { skillFilePaths: skillFiles, truncated: queue.length > 0 };
 }
 
+/** Reused helper for collect Workspace Skill Symlink Escape Findings behavior in src/security. */
 export async function collectWorkspaceSkillSymlinkEscapeFindings(params: {
   cfg: OpenClawConfig;
   skillScanLimits?: WorkspaceSkillScanLimits;

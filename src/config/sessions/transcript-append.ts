@@ -1,3 +1,4 @@
+// config/sessions transcript append helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -253,14 +254,17 @@ function isTranscriptAgentMessage(value: unknown): value is AgentMessage {
   );
 }
 
+/** Reused helper for append Session Transcript Message behavior in src/config/sessions. */
 export async function appendSessionTranscriptMessage<TMessage>(
   params: AppendSessionTranscriptMessageParams<TMessage> & {
     prepareMessageAfterIdempotencyCheck: (message: TMessage) => TMessage | undefined;
   },
 ): Promise<AppendSessionTranscriptMessageResult<TMessage> | undefined>;
+/** Reused helper for append Session Transcript Message behavior in src/config/sessions. */
 export async function appendSessionTranscriptMessage<TMessage>(
   params: AppendSessionTranscriptMessageParams<TMessage>,
 ): Promise<AppendSessionTranscriptMessageResult<TMessage>>;
+/** Reused helper for append Session Transcript Message behavior in src/config/sessions. */
 export async function appendSessionTranscriptMessage<TMessage>(
   params: AppendSessionTranscriptMessageParams<TMessage>,
 ): Promise<AppendSessionTranscriptMessageResult<TMessage> | undefined> {

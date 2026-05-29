@@ -1,3 +1,4 @@
+// Tests config schema shared test behavior.
 import { describe, expect, it } from "vitest";
 import { findWildcardHintMatch, schemaHasChildren } from "./schema.shared.js";
 

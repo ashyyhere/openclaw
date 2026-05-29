@@ -1,3 +1,4 @@
+// Tests extensions/oc-path/src/oc-path/tests/scenarios perf determinism test behavior.
 import { describe, expect, it } from "vitest";
 import { emitMd } from "../../emit.js";
 import { parseMd } from "../../parse.js";

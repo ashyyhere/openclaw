@@ -14,8 +14,10 @@ import { parseFenceSpans } from "../../packages/markdown-core/src/fences.js";
 import { parseAudioTag } from "./audio-tags.js";
 
 // Allow optional wrapping backticks and punctuation after the token; capture the core token.
+/** Reused constant for MEDIA TOKEN RE behavior in src/media. */
 export const MEDIA_TOKEN_RE = /\bMEDIA:\s*`?([^\n]+)`?/gi;
 
+/** Shared type for Parsed Media Output Segment in src/media. */
 export type ParsedMediaOutputSegment =
   | {
       type: "text";
@@ -26,10 +28,12 @@ export type ParsedMediaOutputSegment =
       url: string;
     };
 
+/** Shared type for Split Media From Output Options in src/media. */
 export type SplitMediaFromOutputOptions = {
   extractMarkdownImages?: boolean;
 };
 
+/** Reused helper for normalize Media Source behavior in src/media. */
 export function normalizeMediaSource(src: string) {
   return src.startsWith("file://") ? src.replace("file://", "") : src;
 }
@@ -475,6 +479,7 @@ function isInsideFence(fenceSpans: Array<{ start: number; end: number }>, offset
   return fenceSpans.some((span) => offset >= span.start && offset < span.end);
 }
 
+/** Reused helper for split Media From Output behavior in src/media. */
 export function splitMediaFromOutput(
   raw: string,
   options: SplitMediaFromOutputOptions = {},

@@ -1,3 +1,4 @@
+// Coverage for reply queue policy decisions.
 import { describe, expect, it } from "vitest";
 import { resolveActiveRunQueueAction } from "./queue-policy.js";
 

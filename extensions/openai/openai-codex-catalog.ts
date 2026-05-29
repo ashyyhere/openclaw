@@ -1,3 +1,4 @@
+// extensions/openai openai codex catalog helpers and runtime behavior.
 import type { ModelProviderConfig } from "openclaw/plugin-sdk/provider-model-shared";
 import { OPENAI_CODEX_RESPONSES_BASE_URL } from "./base-url.js";
 

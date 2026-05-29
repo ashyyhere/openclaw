@@ -1,3 +1,4 @@
+// Tests extensions/minimax minimax live test behavior.
 import {
   registerProviderPlugin,
   requireRegisteredProvider,

@@ -1,19 +1,23 @@
+// sessions session key utils helpers and runtime behavior.
 import {
   normalizeLowercaseStringOrEmpty,
   normalizeOptionalLowercaseString,
   normalizeOptionalString,
 } from "../shared/string-coerce.js";
 
+/** Shared type for Parsed Agent Session Key in src/sessions. */
 export type ParsedAgentSessionKey = {
   agentId: string;
   rest: string;
 };
 
+/** Shared type for Parsed Thread Session Suffix in src/sessions. */
 export type ParsedThreadSessionSuffix = {
   baseSessionKey: string | undefined;
   threadId: string | undefined;
 };
 
+/** Shared type for Raw Session Conversation Ref in src/sessions. */
 export type RawSessionConversationRef = {
   channel: string;
   kind: "group" | "channel";
@@ -69,12 +73,14 @@ function findCasePreservingPeerDescriptor(
   return CASE_PRESERVING_PEERS.find((d) => d.channel === c && d.peerKinds.has(k));
 }
 
+/** Reused helper for requires Folded Session Key Alias Proof behavior in src/sessions. */
 export function requiresFoldedSessionKeyAliasProof(sessionKey: string | undefined | null): boolean {
   const ref = parseRawSessionConversationRef(sessionKey);
   const descriptor = findCasePreservingPeerDescriptor(ref?.channel, ref?.kind);
   return descriptor?.span === "tail";
 }
 
+/** Reused helper for normalize Session Peer Id behavior in src/sessions. */
 export function normalizeSessionPeerId(params: {
   channel: string | undefined | null;
   peerKind?: string | null;
@@ -186,6 +192,7 @@ function collectCasePreservedSpans(raw: string): PreservedSpan[] {
   return spans;
 }
 
+/** Reused helper for normalize Session Key Preserving Opaque Peer Ids behavior in src/sessions. */
 export function normalizeSessionKeyPreservingOpaquePeerIds(
   sessionKey: string | undefined | null,
 ): string {
@@ -250,6 +257,7 @@ export function parseAgentSessionKey(
   return { agentId, rest };
 }
 
+/** Reused helper for is Cron Run Session Key behavior in src/sessions. */
 export function isCronRunSessionKey(sessionKey: string | undefined | null): boolean {
   const parsed = parseAgentSessionKey(sessionKey);
   if (!parsed) {
@@ -258,6 +266,7 @@ export function isCronRunSessionKey(sessionKey: string | undefined | null): bool
   return /^cron:[^:]+:run:[^:]+(?::|$)/.test(parsed.rest);
 }
 
+/** Reused helper for is Cron Session Key behavior in src/sessions. */
 export function isCronSessionKey(sessionKey: string | undefined | null): boolean {
   const parsed = parseAgentSessionKey(sessionKey);
   if (!parsed) {
@@ -266,6 +275,7 @@ export function isCronSessionKey(sessionKey: string | undefined | null): boolean
   return normalizeOptionalLowercaseString(parsed.rest)?.startsWith("cron:") === true;
 }
 
+/** Reused helper for is Subagent Session Key behavior in src/sessions. */
 export function isSubagentSessionKey(sessionKey: string | undefined | null): boolean {
   const raw = normalizeOptionalString(sessionKey);
   if (!raw) {
@@ -278,6 +288,7 @@ export function isSubagentSessionKey(sessionKey: string | undefined | null): boo
   return normalizeOptionalLowercaseString(parsed?.rest)?.startsWith("subagent:") === true;
 }
 
+/** Reused helper for get Subagent Depth behavior in src/sessions. */
 export function getSubagentDepth(sessionKey: string | undefined | null): number {
   const raw = normalizeOptionalLowercaseString(sessionKey);
   if (!raw) {
@@ -286,6 +297,7 @@ export function getSubagentDepth(sessionKey: string | undefined | null): number 
   return raw.split(":subagent:").length - 1;
 }
 
+/** Reused helper for is Acp Session Key behavior in src/sessions. */
 export function isAcpSessionKey(sessionKey: string | undefined | null): boolean {
   const raw = normalizeOptionalString(sessionKey);
   if (!raw) {
@@ -299,6 +311,7 @@ export function isAcpSessionKey(sessionKey: string | undefined | null): boolean 
   return normalizeOptionalLowercaseString(parsed?.rest)?.startsWith("acp:") === true;
 }
 
+/** Reused helper for parse Thread Session Suffix behavior in src/sessions. */
 export function parseThreadSessionSuffix(
   sessionKey: string | undefined | null,
 ): ParsedThreadSessionSuffix {
@@ -320,6 +333,7 @@ export function parseThreadSessionSuffix(
   return { baseSessionKey, threadId };
 }
 
+/** Reused helper for parse Raw Session Conversation Ref behavior in src/sessions. */
 export function parseRawSessionConversationRef(
   sessionKey: string | undefined | null,
 ): RawSessionConversationRef | null {
@@ -351,6 +365,7 @@ export function parseRawSessionConversationRef(
   return { channel, kind, rawId, prefix };
 }
 
+/** Reused helper for resolve Thread Parent Session Key behavior in src/sessions. */
 export function resolveThreadParentSessionKey(
   sessionKey: string | undefined | null,
 ): string | null {

@@ -1,3 +1,4 @@
+// Tests extensions/qa-lab/src/providers/aimock server test behavior.
 import { describe, expect, it } from "vitest";
 import { startQaAimockServer } from "./server.js";
 

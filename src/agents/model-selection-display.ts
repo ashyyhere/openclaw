@@ -1,3 +1,4 @@
+/** Formats model selections for session and UI display. */
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 
 type ModelDisplaySelectionParams = {
@@ -8,6 +9,7 @@ type ModelDisplaySelectionParams = {
   fallbackModel?: unknown;
 };
 
+/** Resolve provider/model display ref from current/default/fallback values. */
 export function resolveModelDisplayRef(params: ModelDisplaySelectionParams): string | undefined {
   const runtimeModel = normalizeOptionalString(params.runtimeModel);
   const runtimeProvider = normalizeOptionalString(params.runtimeProvider);
@@ -43,6 +45,7 @@ export function resolveModelDisplayRef(params: ModelDisplaySelectionParams): str
   return fallbackModel || undefined;
 }
 
+/** Resolve short display model name. */
 export function resolveModelDisplayName(params: ModelDisplaySelectionParams): string {
   const modelRef = resolveModelDisplayRef(params);
   if (!modelRef) {
@@ -66,6 +69,7 @@ type SessionInfoModelSelectionParams = {
   overrideModel?: unknown;
 };
 
+/** Resolve model selection fields for session info display. */
 export function resolveSessionInfoModelSelection(params: SessionInfoModelSelectionParams): {
   modelProvider?: string;
   model?: string;

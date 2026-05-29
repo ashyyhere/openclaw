@@ -1,3 +1,4 @@
+/** Registers CLI commands for managing OpenClaw secret storage. */
 import type { Command } from "commander";
 import { formatDocsLink } from "../../packages/terminal-core/src/links.js";
 import { theme } from "../../packages/terminal-core/src/theme.js";
@@ -60,6 +61,7 @@ async function readPlanFile(pathname: string): Promise<SecretsApplyPlan> {
   return parsed;
 }
 
+/** Reused helper for register Secrets Cli behavior in src/cli. */
 export function registerSecretsCli(program: Command): void {
   const secrets = program
     .command("secrets")

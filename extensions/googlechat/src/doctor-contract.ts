@@ -1,3 +1,4 @@
+// extensions/googlechat/src doctor contract helpers and runtime behavior.
 import type {
   ChannelDoctorConfigMutation,
   ChannelDoctorLegacyConfigRule,

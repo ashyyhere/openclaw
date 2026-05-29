@@ -1,3 +1,4 @@
+// extensions/mattermost/src/mattermost draft stream helpers and runtime behavior.
 import { createFinalizableDraftLifecycle } from "openclaw/plugin-sdk/channel-outbound";
 import { formatChannelProgressDraftLineForEntry } from "openclaw/plugin-sdk/channel-outbound";
 import {

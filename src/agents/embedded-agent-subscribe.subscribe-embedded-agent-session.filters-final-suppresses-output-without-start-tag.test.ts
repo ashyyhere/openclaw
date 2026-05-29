@@ -1,3 +1,4 @@
+/** Tests final-tag filtering suppresses output before start tags. */
 import type { AssistantMessage } from "openclaw/plugin-sdk/llm";
 import { describe, expect, it, vi } from "vitest";
 import {

@@ -1,3 +1,4 @@
+/** Handles embedded-agent compaction lifecycle events and persisted counters. */
 import { emitAgentEvent } from "../infra/agent-events.js";
 import { getGlobalHookRunner } from "../plugins/hook-runner-global.js";
 import type { EmbeddedAgentSubscribeContext } from "./embedded-agent-subscribe.handlers.types.js";
@@ -35,6 +36,7 @@ function compactionLogKind(reason: CompactionReason): string {
   return reason === "manual" ? "manual compaction" : "auto-compaction";
 }
 
+/** Mark compaction in-flight and emit start events/hooks. */
 export function handleCompactionStart(
   ctx: EmbeddedAgentSubscribeContext,
   evt: CompactionStartEvent,
@@ -80,6 +82,7 @@ export function handleCompactionStart(
   }
 }
 
+/** Finalize compaction state, counters, events, and hooks. */
 export function handleCompactionEnd(ctx: EmbeddedAgentSubscribeContext, evt: CompactionEndEvent) {
   const reason = normalizeCompactionReason(evt.reason);
   const kind = compactionLogKind(reason);
@@ -169,6 +172,7 @@ export function handleCompactionEnd(ctx: EmbeddedAgentSubscribeContext, evt: Com
   }
 }
 
+/** Lazy runtime wrapper for updating session-store compaction count. */
 export async function reconcileSessionStoreCompactionCountAfterSuccess(params: {
   sessionKey?: string;
   agentId?: string;

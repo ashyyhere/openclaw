@@ -1,3 +1,4 @@
+// Tests extensions/memory-wiki/src obsidian test behavior.
 import { describe, expect, it } from "vitest";
 import { resolveMemoryWikiConfig } from "./config.js";
 import { runObsidianDaily, runObsidianSearch } from "./obsidian.js";

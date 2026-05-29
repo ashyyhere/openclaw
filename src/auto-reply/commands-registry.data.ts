@@ -1,3 +1,4 @@
+// Built-in chat command registry data access.
 import { listLoadedChannelPlugins } from "../channels/plugins/registry-loaded.js";
 import { getActivePluginChannelRegistryVersionFromState } from "../plugins/runtime-channel-state.js";
 import {
@@ -39,6 +40,7 @@ function buildChatCommands(): ChatCommandDefinition[] {
   return commands;
 }
 
+/** Return the canonical built-in chat command definitions. */
 export function getChatCommands(): ChatCommandDefinition[] {
   const registryVersion = getActivePluginChannelRegistryVersionFromState();
   if (cachedCommands && registryVersion === cachedRegistryVersion) {

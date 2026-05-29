@@ -1,3 +1,4 @@
+// Tests plugins lazy service module test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { withMockedWindowsPlatform } from "../test-utils/vitest-spies.js";
 import { defaultLoadOverrideModule, startLazyPluginServiceModule } from "./lazy-service-module.js";

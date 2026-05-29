@@ -1,3 +1,4 @@
+/** Shared runtime helpers for status command data collection. */
 import { resolveDefaultAgentDir } from "../agents/agent-scope.js";
 import type { OpenClawConfig } from "../config/types.js";
 import type { HeartbeatEventPayload } from "../infra/heartbeat-events.js";
@@ -30,6 +31,7 @@ function loadGatewayCallModule() {
   return gatewayCallModuleLoader.load();
 }
 
+/** Reused helper for resolve Status Security Audit behavior in src/commands. */
 export async function resolveStatusSecurityAudit(params: {
   config: OpenClawConfig;
   sourceConfig: OpenClawConfig;
@@ -61,6 +63,7 @@ type StatusUsageSummaryOptions = {
   agentDir?: string;
 };
 
+/** Reused helper for resolve Status Usage Summary behavior in src/commands. */
 export async function resolveStatusUsageSummary(params: StatusUsageSummaryOptions) {
   const { loadProviderUsageSummary } = await loadProviderUsage();
   return await loadProviderUsageSummary({
@@ -70,10 +73,12 @@ export async function resolveStatusUsageSummary(params: StatusUsageSummaryOption
   });
 }
 
+/** Reused helper for load Status Provider Usage Module behavior in src/commands. */
 export async function loadStatusProviderUsageModule() {
   return await loadProviderUsage();
 }
 
+/** Reused helper for resolve Status Gateway Health behavior in src/commands. */
 export async function resolveStatusGatewayHealth(params: {
   config: OpenClawConfig;
   timeoutMs?: number;
@@ -87,6 +92,7 @@ export async function resolveStatusGatewayHealth(params: {
   });
 }
 
+/** Reused helper for resolve Status Gateway Health Safe behavior in src/commands. */
 export async function resolveStatusGatewayHealthSafe(params: {
   config: OpenClawConfig;
   timeoutMs?: number;
@@ -111,6 +117,7 @@ export async function resolveStatusGatewayHealthSafe(params: {
   }).catch((err) => ({ error: String(err) }));
 }
 
+/** Reused helper for resolve Status Gateway Diagnostics Safe behavior in src/commands. */
 export async function resolveStatusGatewayDiagnosticsSafe(params: {
   config: OpenClawConfig;
   timeoutMs?: number;
@@ -134,6 +141,7 @@ export async function resolveStatusGatewayDiagnosticsSafe(params: {
   }).catch(() => null);
 }
 
+/** Reused helper for resolve Status Last Heartbeat behavior in src/commands. */
 export async function resolveStatusLastHeartbeat(params: {
   config: OpenClawConfig;
   timeoutMs?: number;
@@ -151,6 +159,7 @@ export async function resolveStatusLastHeartbeat(params: {
   }).catch(() => null);
 }
 
+/** Reused helper for resolve Status Service Summaries behavior in src/commands. */
 export async function resolveStatusServiceSummaries() {
   return await Promise.all([getDaemonStatusSummary(), getNodeDaemonStatusSummary()]);
 }
@@ -162,6 +171,7 @@ type StatusGatewayServiceSummary = Awaited<ReturnType<typeof getDaemonStatusSumm
 type StatusNodeServiceSummary = Awaited<ReturnType<typeof getNodeDaemonStatusSummary>>;
 type StatusSecurityAudit = Awaited<ReturnType<typeof resolveStatusSecurityAudit>>;
 
+/** Reused helper for resolve Status Runtime Details behavior in src/commands. */
 export async function resolveStatusRuntimeDetails(params: {
   config: OpenClawConfig;
   timeoutMs?: number;
@@ -218,6 +228,7 @@ export async function resolveStatusRuntimeDetails(params: {
   };
 }
 
+/** Reused helper for resolve Status Runtime Snapshot behavior in src/commands. */
 export async function resolveStatusRuntimeSnapshot(params: {
   config: OpenClawConfig;
   sourceConfig: OpenClawConfig;

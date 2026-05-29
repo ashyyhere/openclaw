@@ -1,3 +1,4 @@
+// Tests ui/src/ui connect error test behavior.
 import { describe, expect, it } from "vitest";
 import { ConnectErrorDetailCodes } from "../../../packages/gateway-protocol/src/connect-error-details.js";
 import { formatConnectError } from "./connect-error.ts";

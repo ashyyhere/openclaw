@@ -1,3 +1,4 @@
+// ui/src/ui/controllers/config form coerce helpers and runtime behavior.
 import { schemaType, type JsonSchema } from "../../views/config-form.shared.ts";
 
 function coerceNumberString(value: string, integer: boolean): number | undefined | string {

@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src exec approval resolver test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const approvalRuntimeHoisted = vi.hoisted(() => ({

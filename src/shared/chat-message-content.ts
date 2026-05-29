@@ -1,5 +1,7 @@
+// shared chat message content helpers and runtime behavior.
 import { readStringValue } from "./string-coerce.js";
 
+/** Reused helper for extract First Text Block behavior in src/shared. */
 export function extractFirstTextBlock(message: unknown): string | undefined {
   if (!message || typeof message !== "object") {
     return undefined;
@@ -19,12 +21,15 @@ export function extractFirstTextBlock(message: unknown): string | undefined {
   return readStringValue((first as { text?: unknown }).text);
 }
 
+/** Shared type for Assistant Phase in src/shared. */
 export type AssistantPhase = "commentary" | "final_answer";
 
+/** Reused helper for normalize Assistant Phase behavior in src/shared. */
 export function normalizeAssistantPhase(value: unknown): AssistantPhase | undefined {
   return value === "commentary" || value === "final_answer" ? value : undefined;
 }
 
+/** Reused helper for parse Assistant Text Signature behavior in src/shared. */
 export function parseAssistantTextSignature(
   value: unknown,
 ): { id?: string; phase?: AssistantPhase } | null {
@@ -50,6 +55,7 @@ export function parseAssistantTextSignature(
   }
 }
 
+/** Reused helper for encode Assistant Text Signature behavior in src/shared. */
 export function encodeAssistantTextSignature(params: {
   id: string;
   phase?: AssistantPhase;
@@ -61,6 +67,7 @@ export function encodeAssistantTextSignature(params: {
   });
 }
 
+/** Reused helper for resolve Assistant Message Phase behavior in src/shared. */
 export function resolveAssistantMessagePhase(message: unknown): AssistantPhase | undefined {
   if (!message || typeof message !== "object") {
     return undefined;
@@ -90,6 +97,7 @@ export function resolveAssistantMessagePhase(message: unknown): AssistantPhase |
   return explicitPhases.size === 1 ? [...explicitPhases][0] : undefined;
 }
 
+/** Reused helper for resolve Assistant Event Phase behavior in src/shared. */
 export function resolveAssistantEventPhase(data: unknown): AssistantPhase | undefined {
   if (!data || typeof data !== "object") {
     return undefined;
@@ -109,6 +117,7 @@ export function resolveAssistantEventPhase(data: unknown): AssistantPhase | unde
   );
 }
 
+/** Reused helper for extract Assistant Text For Phase behavior in src/shared. */
 export function extractAssistantTextForPhase(
   message: unknown,
   options?: {
@@ -198,6 +207,7 @@ export function extractAssistantTextForPhase(
   return normalizeJoinedText(parts.join(joinWith));
 }
 
+/** Reused helper for extract Assistant Visible Text behavior in src/shared. */
 export function extractAssistantVisibleText(message: unknown): string | undefined {
   const finalAnswerText = extractAssistantTextForPhase(message, { phase: "final_answer" });
   if (finalAnswerText) {

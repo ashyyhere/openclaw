@@ -1,3 +1,4 @@
+// Tests extensions/googlechat/src channel test behavior.
 import { verifyChannelMessageAdapterCapabilityProofs } from "openclaw/plugin-sdk/channel-outbound";
 import {
   createDirectoryTestRuntime,

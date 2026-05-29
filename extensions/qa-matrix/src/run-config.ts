@@ -1,3 +1,4 @@
+// extensions/qa-matrix/src run config helpers and runtime behavior.
 export type QaProviderMode = "mock-openai" | "live-frontier";
 export type QaProviderModeInput = QaProviderMode | "live-openai";
 

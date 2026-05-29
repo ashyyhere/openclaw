@@ -1,3 +1,4 @@
+// extensions/tlon/src/monitor authorization helpers and runtime behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import type { TlonSettingsStore } from "../settings.js";
 

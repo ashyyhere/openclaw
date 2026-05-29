@@ -1,5 +1,8 @@
+// Shared types for process/supervisor types behavior.
+/** Shared type for Run State in src/process/supervisor. */
 export type RunState = "starting" | "running" | "exiting" | "exited";
 
+/** Shared type for Termination Reason in src/process/supervisor. */
 export type TerminationReason =
   | "manual-cancel"
   | "overall-timeout"
@@ -8,6 +11,7 @@ export type TerminationReason =
   | "signal"
   | "exit";
 
+/** Shared type for Run Record in src/process/supervisor. */
 export type RunRecord = {
   runId: string;
   sessionId: string;
@@ -25,6 +29,7 @@ export type RunRecord = {
   exitSignal?: NodeJS.Signals | number | null;
 };
 
+/** Shared type for Run Exit in src/process/supervisor. */
 export type RunExit = {
   reason: TerminationReason;
   exitCode: number | null;
@@ -36,6 +41,7 @@ export type RunExit = {
   noOutputTimedOut: boolean;
 };
 
+/** Shared type for Managed Run in src/process/supervisor. */
 export type ManagedRun = {
   runId: string;
   pid?: number;
@@ -45,8 +51,10 @@ export type ManagedRun = {
   cancel: (reason?: TerminationReason) => void;
 };
 
+/** Shared type for Spawn Mode in src/process/supervisor. */
 export type SpawnMode = "child" | "pty";
 
+/** Shared type for Managed Run Stdin in src/process/supervisor. */
 export type ManagedRunStdin = {
   write: (data: string, cb?: (err?: Error | null) => void) => void;
   end: () => void;
@@ -57,6 +65,7 @@ export type ManagedRunStdin = {
   writableFinished?: boolean;
 };
 
+/** Shared type for Spawn Process Adapter in src/process/supervisor. */
 export type SpawnProcessAdapter<WaitSignal = NodeJS.Signals | number | null> = {
   pid?: number;
   stdin?: ManagedRunStdin;
@@ -103,8 +112,10 @@ type SpawnPtyInput = SpawnBaseInput & {
   ptyCommand: string;
 };
 
+/** Shared type for Spawn Input in src/process/supervisor. */
 export type SpawnInput = SpawnChildInput | SpawnPtyInput;
 
+/** Shared type for Process Supervisor in src/process/supervisor. */
 export interface ProcessSupervisor {
   spawn(input: SpawnInput): Promise<ManagedRun>;
   cancel(runId: string, reason?: TerminationReason): void;

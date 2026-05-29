@@ -1,3 +1,4 @@
+// Tests llm/providers google shared test behavior.
 import { FinishReason, type GenerateContentResponse } from "@google/genai";
 import { describe, expect, it } from "vitest";
 import type { AssistantMessage, Model } from "../types.js";

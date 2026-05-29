@@ -1,3 +1,4 @@
+// extensions/whatsapp/src/inbound lifecycle helpers and runtime behavior.
 type Listener = (...args: unknown[]) => void;
 
 type OffCapableEmitter = {

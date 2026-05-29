@@ -1,3 +1,4 @@
+/** Writes bundled MCP configuration files for Gemini CLI runs. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
@@ -54,6 +55,7 @@ function normalizeGeminiServerConfig(
   return next;
 }
 
+/** Reused helper for write Gemini System Settings behavior in src/agents/cli-runner. */
 export async function writeGeminiSystemSettings(
   mergedConfig: BundleMcpConfig,
   inheritedEnv: Record<string, string> | undefined,

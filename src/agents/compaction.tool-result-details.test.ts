@@ -1,3 +1,4 @@
+/** Tests compaction never sends tool-result details to summarization. */
 import type { AgentMessage } from "openclaw/plugin-sdk/agent-core";
 import type { AssistantMessage, ToolResultMessage } from "openclaw/plugin-sdk/llm";
 import { beforeEach, describe, expect, it, vi } from "vitest";

@@ -1,3 +1,4 @@
+// extensions/openai prompt overlay helpers and runtime behavior.
 import {
   GPT5_BEHAVIOR_CONTRACT,
   GPT5_FRIENDLY_CHAT_PROMPT_OVERLAY,

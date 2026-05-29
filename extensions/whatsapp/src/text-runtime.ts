@@ -1,3 +1,4 @@
+// extensions/whatsapp/src text runtime helpers and runtime behavior.
 export {
   convertMarkdownTables,
   sanitizeAssistantVisibleText,

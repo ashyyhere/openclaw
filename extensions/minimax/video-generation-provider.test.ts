@@ -1,3 +1,4 @@
+// Tests extensions/minimax video generation provider test behavior.
 import { expectExplicitVideoGenerationCapabilities } from "openclaw/plugin-sdk/provider-test-contracts";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 import {

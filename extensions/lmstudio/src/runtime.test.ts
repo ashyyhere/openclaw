@@ -1,3 +1,4 @@
+// Tests extensions/lmstudio/src runtime test behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/provider-auth";
 import { CUSTOM_LOCAL_AUTH_MARKER } from "openclaw/plugin-sdk/provider-auth";
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";

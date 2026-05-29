@@ -1,6 +1,8 @@
+// security audit deep probe findings helpers and runtime behavior.
 import { formatCliCommand } from "../cli/command-format.js";
 import type { SecurityAuditFinding, SecurityAuditReport } from "./audit.types.js";
 
+/** Reused helper for collect Deep Probe Findings behavior in src/security. */
 export function collectDeepProbeFindings(params: {
   deep?: SecurityAuditReport["deep"];
   authWarning?: string;

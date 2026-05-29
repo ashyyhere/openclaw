@@ -1,3 +1,4 @@
+// extensions/memory-wiki/src obsidian helpers and runtime behavior.
 import { execFile } from "node:child_process";
 import { constants as fsConstants } from "node:fs";
 import fs from "node:fs/promises";

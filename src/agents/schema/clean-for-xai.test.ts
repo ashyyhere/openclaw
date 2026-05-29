@@ -1,3 +1,4 @@
+/** Covers xAI schema keyword stripping for provider-compatible tools. */
 import { describe, expect, it } from "vitest";
 import { stripUnsupportedSchemaKeywords } from "../../plugin-sdk/provider-tools.js";
 

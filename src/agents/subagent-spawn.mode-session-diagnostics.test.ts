@@ -1,3 +1,4 @@
+/** Regression coverage for diagnostics emitted by session-mode subagent spawns. */
 import os from "node:os";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {

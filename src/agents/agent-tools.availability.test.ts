@@ -1,3 +1,4 @@
+/** Tests default agent tool availability across policies. */
 import { describe, expect, it, vi } from "vitest";
 import "./test-helpers/fast-coding-tools.js";
 import "./test-helpers/fast-openclaw-tools.js";

@@ -1,3 +1,4 @@
+// extensions/discord/src directory cache helpers and runtime behavior.
 import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "openclaw/plugin-sdk/routing";
 import {
   normalizeLowercaseStringOrEmpty,

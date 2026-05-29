@@ -1,3 +1,4 @@
+// extensions/browser/src/browser/routes existing session limits helpers and runtime behavior.
 export const EXISTING_SESSION_LIMITS = {
   act: {
     clickSelector: "existing-session click does not support selector targeting yet; use ref.",

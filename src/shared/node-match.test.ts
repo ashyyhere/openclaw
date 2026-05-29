@@ -1,3 +1,4 @@
+// Tests shared node match test behavior.
 import { describe, expect, it } from "vitest";
 import { normalizeNodeKey, resolveNodeIdFromCandidates, resolveNodeMatches } from "./node-match.js";
 

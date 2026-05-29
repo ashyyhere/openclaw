@@ -1,3 +1,4 @@
+// extensions/qa-channel/src bus client helpers and runtime behavior.
 import http from "node:http";
 import https from "node:https";
 import { fetchWithSsrFGuard } from "openclaw/plugin-sdk/ssrf-runtime";

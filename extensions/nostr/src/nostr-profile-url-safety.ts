@@ -1,3 +1,4 @@
+// extensions/nostr/src nostr profile url safety helpers and runtime behavior.
 import { isBlockedHostnameOrIp } from "openclaw/plugin-sdk/ssrf-runtime";
 
 export function validateUrlSafety(urlStr: string): { ok: true } | { ok: false; error: string } {

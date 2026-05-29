@@ -1,3 +1,4 @@
+// extensions/line/src channel api helpers and runtime behavior.
 export { clearAccountEntryFields } from "openclaw/plugin-sdk/core";
 import { DEFAULT_ACCOUNT_ID } from "openclaw/plugin-sdk/account-id";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/account-resolution";

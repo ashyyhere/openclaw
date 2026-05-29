@@ -1,11 +1,14 @@
+// transcripts provider types helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 
+/** Shared type for Transcript Source Kind in src/transcripts. */
 export type TranscriptSourceKind =
   | "live-audio"
   | "live-caption"
   | "posthoc-transcript"
   | "recording-stt";
 
+/** Shared type for Transcript Source Locator in src/transcripts. */
 export type TranscriptSourceLocator = {
   providerId: string;
   kind?: TranscriptSourceKind;
@@ -18,11 +21,13 @@ export type TranscriptSourceLocator = {
   [key: string]: string | undefined;
 };
 
+/** Shared type for Transcript Participant in src/transcripts. */
 export type TranscriptParticipant = {
   id?: string;
   label: string;
 };
 
+/** Shared type for Transcript Utterance in src/transcripts. */
 export type TranscriptUtterance = {
   id?: string;
   sessionId?: string;
@@ -34,6 +39,7 @@ export type TranscriptUtterance = {
   metadata?: Record<string, unknown>;
 };
 
+/** Shared type for Transcript Session Descriptor in src/transcripts. */
 export type TranscriptSessionDescriptor = {
   sessionId: string;
   title?: string;
@@ -43,6 +49,7 @@ export type TranscriptSessionDescriptor = {
   metadata?: Record<string, unknown>;
 };
 
+/** Shared type for Transcript Start Request in src/transcripts. */
 export type TranscriptStartRequest = {
   cfg?: OpenClawConfig;
   session: TranscriptSessionDescriptor;
@@ -52,6 +59,7 @@ export type TranscriptStartRequest = {
   onStatus?: (status: TranscriptSourceStatus) => void | Promise<void>;
 };
 
+/** Shared type for Transcripts Start Result in src/transcripts. */
 export type TranscriptsStartResult =
   | {
       ok: true;
@@ -62,6 +70,7 @@ export type TranscriptsStartResult =
       error: string;
     };
 
+/** Shared type for Transcript Stop Request in src/transcripts. */
 export type TranscriptStopRequest = {
   cfg?: OpenClawConfig;
   sessionId: string;
@@ -69,6 +78,7 @@ export type TranscriptStopRequest = {
   reason?: string;
 };
 
+/** Shared type for Transcripts Stop Result in src/transcripts. */
 export type TranscriptsStopResult =
   | {
       ok: true;
@@ -80,6 +90,7 @@ export type TranscriptsStopResult =
       error: string;
     };
 
+/** Shared type for Transcript Source Status in src/transcripts. */
 export type TranscriptSourceStatus = {
   sessionId?: string;
   active: boolean;
@@ -87,6 +98,7 @@ export type TranscriptSourceStatus = {
   source?: TranscriptSourceLocator;
 };
 
+/** Shared type for Transcript Import Request in src/transcripts. */
 export type TranscriptImportRequest = {
   cfg?: OpenClawConfig;
   session: TranscriptSessionDescriptor;
@@ -94,6 +106,7 @@ export type TranscriptImportRequest = {
   speakerLabel?: string;
 };
 
+/** Shared type for Transcript Source Provider in src/transcripts. */
 export type TranscriptSourceProvider = {
   id: string;
   aliases?: readonly string[];

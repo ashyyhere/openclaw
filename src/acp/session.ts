@@ -1,7 +1,9 @@
+/** In-memory ACP stdio session store and active-run cancellation tracking. */
 import { randomUUID } from "node:crypto";
 import { resolveIntegerOption } from "./numeric-options.js";
 import type { AcpSession } from "./types.js";
 
+/** Store contract for ACP stdio sessions and active gateway runs. */
 export type AcpSessionStore = {
   createSession: (params: {
     sessionKey: string;
@@ -28,6 +30,7 @@ type AcpSessionStoreOptions = {
 const DEFAULT_MAX_SESSIONS = 5_000;
 const DEFAULT_IDLE_TTL_MS = 24 * 60 * 60 * 1_000;
 
+/** Create a bounded in-memory ACP session store with idle eviction. */
 export function createInMemorySessionStore(options: AcpSessionStoreOptions = {}): AcpSessionStore {
   const maxSessions = resolveIntegerOption(options.maxSessions, DEFAULT_MAX_SESSIONS, { min: 1 });
   const idleTtlMs = resolveIntegerOption(options.idleTtlMs, DEFAULT_IDLE_TTL_MS, { min: 1_000 });
@@ -201,4 +204,5 @@ export function createInMemorySessionStore(options: AcpSessionStoreOptions = {})
   };
 }
 
+/** Reused constant for default Acp Session Store behavior in src/acp. */
 export const defaultAcpSessionStore = createInMemorySessionStore();

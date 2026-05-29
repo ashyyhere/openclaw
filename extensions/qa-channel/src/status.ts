@@ -1,3 +1,4 @@
+// extensions/qa-channel/src status helpers and runtime behavior.
 import { DEFAULT_ACCOUNT_ID } from "./accounts.js";
 import {
   createComputedAccountStatusAdapter,

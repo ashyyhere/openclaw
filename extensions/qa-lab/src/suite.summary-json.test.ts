@@ -1,3 +1,4 @@
+// Tests extensions/qa-lab/src suite summary json test behavior.
 import { describe, expect, it } from "vitest";
 import { buildQaSuiteSummaryJson } from "./suite.js";
 

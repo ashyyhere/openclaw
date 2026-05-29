@@ -1,3 +1,4 @@
+// Queue directive parser.
 import { parseDurationMs } from "../../../cli/parse-duration.js";
 import { parseStrictPositiveInteger } from "../../../infra/parse-finite-number.js";
 import { normalizeOptionalLowercaseString } from "../../../shared/string-coerce.js";
@@ -125,6 +126,7 @@ function parseQueueDirectiveArgs(raw: string): {
   };
 }
 
+/** Reused helper for extract Queue Directive behavior in src/auto-reply/reply. */
 export function extractQueueDirective(body?: string): {
   cleaned: string;
   queueMode?: QueueMode;

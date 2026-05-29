@@ -1,3 +1,4 @@
+// gateway/server health state helpers and runtime behavior.
 import type { Snapshot } from "../../../packages/gateway-protocol/src/index.js";
 import { resolveDefaultAgentId } from "../../agents/agent-scope.js";
 import { getHealthSnapshot, type HealthSummary } from "../../commands/health.js";
@@ -18,6 +19,7 @@ let healthRefresh: Promise<HealthSummary> | null = null;
 let sensitiveHealthRefresh: Promise<HealthSummary> | null = null;
 let broadcastHealthUpdate: ((snap: HealthSummary) => void) | null = null;
 
+/** Reused helper for build Gateway Snapshot behavior in src/gateway/server. */
 export function buildGatewaySnapshot(opts?: { includeSensitive?: boolean }): Snapshot {
   const cfg = getRuntimeConfig();
   const defaultAgentId = resolveDefaultAgentId(cfg);
@@ -52,27 +54,33 @@ export function buildGatewaySnapshot(opts?: { includeSensitive?: boolean }): Sna
   return snapshot;
 }
 
+/** Reused helper for get Health Cache behavior in src/gateway/server. */
 export function getHealthCache(): HealthSummary | null {
   return healthCache;
 }
 
+/** Reused helper for get Health Version behavior in src/gateway/server. */
 export function getHealthVersion(): number {
   return healthVersion;
 }
 
+/** Reused helper for increment Presence Version behavior in src/gateway/server. */
 export function incrementPresenceVersion(): number {
   presenceVersion += 1;
   return presenceVersion;
 }
 
+/** Reused helper for get Presence Version behavior in src/gateway/server. */
 export function getPresenceVersion(): number {
   return presenceVersion;
 }
 
+/** Reused helper for set Broadcast Health Update behavior in src/gateway/server. */
 export function setBroadcastHealthUpdate(fn: ((snap: HealthSummary) => void) | null) {
   broadcastHealthUpdate = fn;
 }
 
+/** Reused helper for refresh Gateway Health Snapshot behavior in src/gateway/server. */
 export async function refreshGatewayHealthSnapshot(opts?: {
   probe?: boolean;
   includeSensitive?: boolean;

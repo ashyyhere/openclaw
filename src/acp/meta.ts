@@ -1,3 +1,4 @@
+/** Typed readers for optional ACP metadata maps. */
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 
 function readMetaValue<T>(
@@ -24,6 +25,7 @@ export function readString(
   return readMetaValue(meta, keys, normalizeOptionalString);
 }
 
+/** Read the first boolean from a metadata record. */
 export function readBool(
   meta: Record<string, unknown> | null | undefined,
   keys: string[],
@@ -31,6 +33,7 @@ export function readBool(
   return readMetaValue(meta, keys, (value) => (typeof value === "boolean" ? value : undefined));
 }
 
+/** Read the first finite number from a metadata record. */
 export function readNumber(
   meta: Record<string, unknown> | null | undefined,
   keys: string[],
@@ -40,6 +43,7 @@ export function readNumber(
   );
 }
 
+/** Read the first safe non-negative integer from a metadata record. */
 export function readNonNegativeInteger(
   meta: Record<string, unknown> | null | undefined,
   keys: string[],

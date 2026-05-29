@@ -1,3 +1,4 @@
+// Tests media sniff mime from base64 test behavior.
 import { describe, expect, it } from "vitest";
 import { sniffMimeFromBase64 } from "./sniff-mime-from-base64.js";
 

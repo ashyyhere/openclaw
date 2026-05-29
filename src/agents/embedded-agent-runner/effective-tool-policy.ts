@@ -1,3 +1,4 @@
+/** Applies final effective tool policy before embedded-agent model calls. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { getPluginToolMeta } from "../../plugins/tools.js";
 import {
@@ -56,6 +57,7 @@ type FinalEffectiveToolPolicyParams = {
   warn: (message: string) => void;
 };
 
+/** Reused helper for apply Final Effective Tool Policy behavior in src/agents/embedded-agent-runner. */
 export function applyFinalEffectiveToolPolicy(
   params: FinalEffectiveToolPolicyParams,
 ): AnyAgentTool[] {

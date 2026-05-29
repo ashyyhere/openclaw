@@ -1,3 +1,4 @@
+// Tests gateway plugin channel reload targets test behavior.
 import { describe, expect, it } from "vitest";
 import {
   listChannelPluginConfigTargetIds,

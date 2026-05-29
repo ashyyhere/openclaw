@@ -1,7 +1,9 @@
+// Canonical chat channel ids and aliases from bundled channel metadata.
 import { GENERATED_BUNDLED_CHANNEL_CONFIG_METADATA } from "../config/bundled-channel-config-metadata.generated.js";
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 import { listBundledChannelCatalogEntries } from "./bundled-channel-catalog-read.js";
 
+/** Canonical chat channel id. */
 export type ChatChannelId = string;
 
 type BundledChatChannelEntry = {
@@ -27,12 +29,15 @@ const BUNDLED_CHAT_CHANNEL_ENTRIES = Object.freeze(listBundledChatChannelEntries
 const CHAT_CHANNEL_ID_SET = new Set(BUNDLED_CHAT_CHANNEL_ENTRIES.map((entry) => entry.id));
 let runtimeBundledChatChannelEntries: BundledChatChannelEntry[] | null = null;
 
+/** Bundled chat channel ids in deterministic display order. */
 export const CHAT_CHANNEL_ORDER = Object.freeze(
   BUNDLED_CHAT_CHANNEL_ENTRIES.map((entry) => entry.id),
 );
 
+/** Legacy alias for CHAT_CHANNEL_ORDER. */
 export const CHANNEL_IDS = CHAT_CHANNEL_ORDER;
 
+/** Alias-to-canonical channel id map for bundled channels. */
 export const CHAT_CHANNEL_ALIASES: Record<string, ChatChannelId> = Object.freeze(
   Object.fromEntries(
     BUNDLED_CHAT_CHANNEL_ENTRIES.flatMap((entry) =>
@@ -41,6 +46,7 @@ export const CHAT_CHANNEL_ALIASES: Record<string, ChatChannelId> = Object.freeze
   ),
 ) as Record<string, ChatChannelId>;
 
+/** List all known channel aliases. */
 export function listChatChannelAliases(): string[] {
   return Object.keys(CHAT_CHANNEL_ALIASES);
 }
@@ -63,6 +69,7 @@ function normalizeRuntimeBundledChatChannelId(normalized: string): ChatChannelId
   return null;
 }
 
+/** Normalize raw channel ids or aliases into canonical chat channel ids. */
 export function normalizeChatChannelId(raw?: string | null): ChatChannelId | null {
   const normalized = normalizeOptionalLowercaseString(raw);
   if (!normalized) {

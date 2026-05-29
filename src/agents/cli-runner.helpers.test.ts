@@ -1,3 +1,4 @@
+/** Tests CLI runner helper behavior and hook message shaping. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import type { ImageContent } from "openclaw/plugin-sdk/llm";

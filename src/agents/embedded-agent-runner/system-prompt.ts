@@ -1,3 +1,4 @@
+/** Builds and applies the system prompt used by embedded-agent sessions. */
 import type { SourceReplyDeliveryMode } from "../../auto-reply/get-reply-options.types.js";
 import type { SubagentDelegationMode } from "../../config/types.agent-defaults.js";
 import type { MemoryCitationsMode } from "../../config/types.memory.js";
@@ -15,6 +16,7 @@ import type { PromptMode, SilentReplyPromptMode } from "../system-prompt.types.j
 import type { EmbeddedSandboxInfo } from "./types.js";
 import type { ReasoningLevel, ThinkLevel } from "./utils.js";
 
+/** Builds the full runtime prompt from config, channel, model, tools, and context. */
 export function buildEmbeddedSystemPrompt(params: {
   config?: OpenClawConfig;
   agentId?: string;
@@ -122,6 +124,7 @@ export function buildEmbeddedSystemPrompt(params: {
   });
 }
 
+/** Applies the canonical trimmed system prompt to the SDK session object. */
 export function applySystemPromptToSession(session: AgentSession, systemPrompt: string) {
   session.setBaseSystemPrompt(systemPrompt.trim());
 }

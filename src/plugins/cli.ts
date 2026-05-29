@@ -1,3 +1,4 @@
+// plugins cli helpers and runtime behavior.
 import type { Command } from "commander";
 import { getRuntimeConfig, readConfigFileSnapshot } from "../config/config.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -74,6 +75,7 @@ function loaderOptionsKey(loaderOptions: PluginCliLoaderOptions | undefined): st
   return String(id);
 }
 
+/** Reused constant for load Validated Config For Plugin Registration behavior in src/plugins. */
 export const loadValidatedConfigForPluginRegistration =
   async (): Promise<OpenClawConfig | null> => {
     const snapshot = await readConfigFileSnapshot();
@@ -83,6 +85,7 @@ export const loadValidatedConfigForPluginRegistration =
     return getRuntimeConfig();
   };
 
+/** Reused helper for get Plugin Cli Command Descriptors behavior in src/plugins. */
 export async function getPluginCliCommandDescriptors(
   cfg?: OpenClawConfig,
   env?: NodeJS.ProcessEnv,
@@ -91,6 +94,7 @@ export async function getPluginCliCommandDescriptors(
   return loadPluginCliDescriptors({ cfg, env, loaderOptions, logger: quietDescriptorLogger });
 }
 
+/** Reused helper for register Plugin Cli Commands behavior in src/plugins. */
 export async function registerPluginCliCommands(
   program: Command,
   cfg?: OpenClawConfig,
@@ -127,6 +131,7 @@ export async function registerPluginCliCommands(
   });
 }
 
+/** Reused helper for register Plugin Cli Commands From Validated Config behavior in src/plugins. */
 export async function registerPluginCliCommandsFromValidatedConfig(
   program: Command,
   env?: NodeJS.ProcessEnv,

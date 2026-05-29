@@ -1,3 +1,4 @@
+// Tests extensions/copilot/src user input bridge test behavior.
 import type { SessionConfig } from "@github/copilot-sdk";
 import { describe, expect, it, vi } from "vitest";
 

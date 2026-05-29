@@ -1,3 +1,4 @@
+/** Tests plugin-runtime model selection normalization. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const normalizeProviderModelIdWithPluginMock = vi.fn();

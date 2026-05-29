@@ -1,3 +1,4 @@
+/** Shared task status helpers for image/video/music generation tasks. */
 import { resolveNonNegativeIntegerOption } from "../shared/number-coercion.js";
 import {
   normalizeLowercaseStringOrEmpty,
@@ -16,6 +17,7 @@ type RecentMediaGenerationTaskStart = {
 const recentMediaGenerationTaskStarts = new Map<string, RecentMediaGenerationTaskStart[]>();
 const RECENT_MEDIA_GENERATION_TASK_START_CACHE_MS = 2 * 60_000;
 
+/** Build a stable duplicate-guard key from media generation request values. */
 export function buildMediaGenerationRequestKey(value: Record<string, unknown>): string {
   return stableStringify(value);
 }
@@ -134,6 +136,7 @@ function findPersistedTaskForRecentMediaGenerationStart(params: {
   });
 }
 
+/** Return whether a task matches an active media-generation task kind. */
 export function isActiveMediaGenerationTask(params: {
   task: TaskRecord;
   taskKind: string;
@@ -146,6 +149,7 @@ export function isActiveMediaGenerationTask(params: {
   );
 }
 
+/** Record a recently started media-generation task for duplicate guarding. */
 export function recordRecentMediaGenerationTaskStartForSession(params: {
   sessionKey?: string;
   taskKind: string;
@@ -207,6 +211,7 @@ export function recordRecentMediaGenerationTaskStartForSession(params: {
   ]);
 }
 
+/** Find a recent started media-generation task for duplicate guarding. */
 export function findRecentStartedMediaGenerationTaskForSession(params: {
   sessionKey?: string;
   taskKind: string;
@@ -276,10 +281,12 @@ export function findRecentStartedMediaGenerationTaskForSession(params: {
   return undefined;
 }
 
+/** Clear duplicate-guard caches between tests. */
 export function resetRecentMediaGenerationDuplicateGuardsForTests() {
   recentMediaGenerationTaskStarts.clear();
 }
 
+/** Extract provider id from a media-generation task source id. */
 export function getMediaGenerationTaskProviderId(
   task: TaskRecord,
   sourcePrefix: string,
@@ -292,6 +299,7 @@ export function getMediaGenerationTaskProviderId(
   return providerId || undefined;
 }
 
+/** Find the first active media-generation task for a session. */
 export function findActiveMediaGenerationTaskForSession(params: {
   sessionKey?: string;
   taskKind: string;
@@ -301,6 +309,7 @@ export function findActiveMediaGenerationTaskForSession(params: {
   return listActiveMediaGenerationTasksForSession(params)[0];
 }
 
+/** List active media-generation tasks for a session. */
 export function listActiveMediaGenerationTasksForSession(params: {
   sessionKey?: string;
   taskKind: string;
@@ -336,6 +345,7 @@ export function listActiveMediaGenerationTasksForSession(params: {
   ];
 }
 
+/** Find an active or recently completed duplicate-guard media-generation task. */
 export function findDuplicateGuardMediaGenerationTaskForSession(params: {
   sessionKey?: string;
   taskKind: string;
@@ -356,6 +366,7 @@ export function findDuplicateGuardMediaGenerationTaskForSession(params: {
   );
 }
 
+/** Build structured status details for one media-generation task. */
 export function buildMediaGenerationTaskStatusDetails(params: {
   task: TaskRecord;
   sourcePrefix: string;
@@ -368,6 +379,7 @@ export function buildMediaGenerationTaskStatusDetails(params: {
   };
 }
 
+/** Build structured status details for several media-generation tasks. */
 export function buildMediaGenerationTaskStatusListDetails(params: {
   tasks: TaskRecord[];
   sourcePrefix: string;
@@ -386,6 +398,7 @@ export function buildMediaGenerationTaskStatusListDetails(params: {
   };
 }
 
+/** Build user-facing status text for one media-generation task. */
 export function buildMediaGenerationTaskStatusText(params: {
   task: TaskRecord;
   sourcePrefix: string;
@@ -413,6 +426,7 @@ export function buildMediaGenerationTaskStatusText(params: {
   return lines.join("\n");
 }
 
+/** Build user-facing status text for several media-generation tasks. */
 export function buildMediaGenerationTaskStatusListText(params: {
   tasks: TaskRecord[];
   sourcePrefix: string;
@@ -435,6 +449,7 @@ export function buildMediaGenerationTaskStatusListText(params: {
   return lines.join("\n");
 }
 
+/** Build prompt context warning about active media-generation work. */
 export function buildActiveMediaGenerationTaskPromptContextForSession(params: {
   sessionKey?: string;
   taskKind: string;

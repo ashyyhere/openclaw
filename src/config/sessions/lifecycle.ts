@@ -1,3 +1,4 @@
+// config/sessions lifecycle helpers and runtime behavior.
 import fs from "node:fs";
 import {
   resolveSessionFilePath,
@@ -46,6 +47,7 @@ function readFirstLine(filePath: string): string | undefined {
   }
 }
 
+/** Reused helper for read Session Header Started At Ms behavior in src/config/sessions. */
 export function readSessionHeaderStartedAtMs(params: {
   entry: SessionLifecycleEntry | undefined;
   agentId?: string;
@@ -90,6 +92,7 @@ export function readSessionHeaderStartedAtMs(params: {
   }
 }
 
+/** Reused helper for resolve Session Lifecycle Timestamps behavior in src/config/sessions. */
 export function resolveSessionLifecycleTimestamps(params: {
   entry: SessionLifecycleEntry | undefined;
   agentId?: string;

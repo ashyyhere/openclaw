@@ -85,6 +85,7 @@ import { buildAgentSessionKey, resolveAgentRoute } from "../../routing/resolve-r
 import { createChannelRuntimeContextRegistry } from "./channel-runtime-contexts.js";
 import type { PluginRuntime } from "./types.js";
 
+/** Reused helper for create Runtime Channel behavior in src/plugins/runtime. */
 export function createRuntimeChannel(): PluginRuntime["channel"] {
   const channelRuntime = {
     text: {

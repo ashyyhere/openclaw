@@ -1,3 +1,4 @@
+// Tests extensions/feishu/src drive test behavior.
 import { createTestPluginApi } from "openclaw/plugin-sdk/plugin-test-api";
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawPluginApi, PluginRuntime } from "../runtime-api.js";

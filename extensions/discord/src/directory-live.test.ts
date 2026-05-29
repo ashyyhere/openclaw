@@ -1,3 +1,4 @@
+// Tests extensions/discord/src directory live test behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import type { DirectoryConfigParams } from "openclaw/plugin-sdk/directory-runtime";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";

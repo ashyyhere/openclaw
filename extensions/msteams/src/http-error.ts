@@ -1,3 +1,4 @@
+// extensions/msteams/src http error helpers and runtime behavior.
 import {
   createProviderHttpError,
   extractProviderErrorDetail,

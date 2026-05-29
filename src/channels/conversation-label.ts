@@ -1,3 +1,4 @@
+// User-visible conversation label resolution for inbound context.
 import type { MsgContext } from "../auto-reply/templating.js";
 import {
   normalizeLowercaseStringOrEmpty,
@@ -24,6 +25,7 @@ function shouldAppendId(id: string): boolean {
   return false;
 }
 
+/** Resolve a readable conversation label from inbound message context. */
 export function resolveConversationLabel(ctx: MsgContext): string | undefined {
   const explicit = normalizeOptionalString(ctx.ConversationLabel);
   if (explicit) {

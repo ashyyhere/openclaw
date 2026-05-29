@@ -1,3 +1,4 @@
+// Tests infra bonjour discovery test behavior.
 import { describe, expect, it, vi } from "vitest";
 import type { runCommandWithTimeout } from "../process/exec.js";
 import {

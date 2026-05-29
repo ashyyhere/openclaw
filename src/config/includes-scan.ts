@@ -1,3 +1,4 @@
+// config includes scan helpers and runtime behavior.
 import * as fs from "node:fs/promises";
 import path from "node:path";
 import { parseJsonWithJson5Fallback } from "../utils/parse-json-compat.js";
@@ -45,6 +46,7 @@ function resolveIncludePath(baseConfigPath: string, includePath: string): string
   );
 }
 
+/** Reused helper for collect Include Paths Recursive behavior in src/config. */
 export async function collectIncludePathsRecursive(params: {
   configPath: string;
   parsed: unknown;

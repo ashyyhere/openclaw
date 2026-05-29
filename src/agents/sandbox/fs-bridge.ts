@@ -1,3 +1,4 @@
+/** Host/container filesystem bridge used by sandboxed tools. */
 import fs from "node:fs";
 import { normalizeOptionalLowercaseString } from "../../shared/string-coerce.js";
 import type {
@@ -29,8 +30,10 @@ type RunCommandOptions = {
   signal?: AbortSignal;
 };
 
+/** Re-exported API for src/agents/sandbox, starting with Sandbox Fs Bridge. */
 export type { SandboxFsBridge, SandboxFsStat, SandboxResolvedPath } from "./fs-bridge.types.js";
 
+/** Creates a filesystem bridge for resolving and mutating sandbox paths. */
 export function createSandboxFsBridge(params: {
   sandbox: SandboxFsBridgeContext;
 }): SandboxFsBridge {

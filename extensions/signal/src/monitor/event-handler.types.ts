@@ -1,3 +1,4 @@
+// Shared types for extensions/signal/src/monitor event handler types behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import type {
   DmPolicy,

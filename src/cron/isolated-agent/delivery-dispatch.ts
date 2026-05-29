@@ -1,3 +1,4 @@
+// cron/isolated-agent delivery dispatch helpers and runtime behavior.
 import { retireSessionMcpRuntime } from "../../agents/agent-bundle-mcp-tools.js";
 import type { ReplyPayload } from "../../auto-reply/reply-payload.js";
 import {
@@ -86,10 +87,12 @@ function normalizeSilentReplyText(text: string | undefined): NormalizedSilentRep
   return { text: next, strippedTrailingSilentToken };
 }
 
+/** Reused helper for resolve Cron Delivery Best Effort behavior in src/cron/isolated-agent. */
 export function resolveCronDeliveryBestEffort(job: CronJob): boolean {
   return job.delivery?.bestEffort === true;
 }
 
+/** Shared type for Successful Delivery Target in src/cron/isolated-agent. */
 export type SuccessfulDeliveryTarget = Extract<DeliveryTargetResolution, { ok: true }>;
 
 type DispatchCronDeliveryParams = {
@@ -124,6 +127,7 @@ type DispatchCronDeliveryParams = {
   ) => RunCronAgentTurnResult;
 };
 
+/** Shared type for Dispatch Cron Delivery State in src/cron/isolated-agent. */
 export type DispatchCronDeliveryState = {
   result?: RunCronAgentTurnResult;
   delivered: boolean;
@@ -241,6 +245,7 @@ async function logCronDeliveryError(message: string): Promise<void> {
   logError(message);
 }
 
+/** Reused helper for cleanup Direct Cron Session behavior in src/cron/isolated-agent. */
 export async function cleanupDirectCronSession(params: {
   job: CronJob;
   agentSessionKey: string;
@@ -680,10 +685,12 @@ async function appendDirectCronDeliveryTranscriptMirror(params: {
   }
 }
 
+/** Reused helper for reset Completed Direct Cron Deliveries For Tests behavior in src/cron/isolated-agent. */
 export function resetCompletedDirectCronDeliveriesForTests() {
   COMPLETED_DIRECT_CRON_DELIVERIES.clear();
 }
 
+/** Reused helper for get Completed Direct Cron Deliveries Count For Tests behavior in src/cron/isolated-agent. */
 export function getCompletedDirectCronDeliveriesCountForTests(): number {
   return COMPLETED_DIRECT_CRON_DELIVERIES.size;
 }
@@ -748,6 +755,7 @@ async function retryTransientDirectCronDelivery<T>(params: {
   }
 }
 
+/** Reused helper for dispatch Cron Delivery behavior in src/cron/isolated-agent. */
 export async function dispatchCronDelivery(
   params: DispatchCronDeliveryParams,
 ): Promise<DispatchCronDeliveryState> {

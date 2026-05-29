@@ -1,3 +1,4 @@
+/** Lookup helpers for config-defined ACP conversation bindings. */
 import {
   resolveConfiguredBindingRecord,
   resolveConfiguredBindingRecordBySessionKey,
@@ -10,6 +11,7 @@ import {
   type ResolvedConfiguredAcpBinding,
 } from "./persistent-bindings.types.js";
 
+/** Resolve a configured ACP binding from channel/account/conversation identity. */
 export function resolveConfiguredAcpBindingRecord(params: {
   cfg: OpenClawConfig;
   channel: string;
@@ -21,6 +23,7 @@ export function resolveConfiguredAcpBindingRecord(params: {
   return resolved ? toResolvedConfiguredAcpBinding(resolved.record) : null;
 }
 
+/** Resolve a configured ACP binding spec from its generated ACP session key. */
 export function resolveConfiguredAcpBindingSpecBySessionKey(params: {
   cfg: OpenClawConfig;
   sessionKey: string;

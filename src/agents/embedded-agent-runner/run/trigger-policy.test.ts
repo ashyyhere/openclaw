@@ -1,3 +1,4 @@
+/** Covers prompt injection policy for embedded run triggers. */
 import { describe, expect, it } from "vitest";
 import { shouldInjectHeartbeatPromptForTrigger } from "./trigger-policy.js";
 

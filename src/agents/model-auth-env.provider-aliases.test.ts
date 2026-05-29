@@ -1,3 +1,4 @@
+/** Tests provider env auth alias lookup behavior. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { resolveEnvApiKey } from "./model-auth-env.js";
 

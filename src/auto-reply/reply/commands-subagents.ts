@@ -1,3 +1,4 @@
+// Chat command handlers for subagent control and inspection.
 import { logVerbose } from "../../globals.js";
 import { createLazyImportLoader } from "../../shared/lazy-promise.js";
 import {
@@ -64,6 +65,7 @@ function loadControlRuntime() {
   return controlRuntimeLoader.load();
 }
 
+/** Reused constant for handle Subagents Command behavior in src/auto-reply/reply. */
 export const handleSubagentsCommand: CommandHandler = async (params, allowTextCommands) => {
   if (!allowTextCommands) {
     return null;

@@ -1,3 +1,4 @@
+// Tests extensions/mistral media understanding provider test behavior.
 import {
   createRequestCaptureJsonFetch,
   installPinnedHostnameTestHooks,

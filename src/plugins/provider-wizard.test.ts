@@ -1,3 +1,4 @@
+// Tests plugins provider wizard test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   buildProviderPluginMethodChoice,

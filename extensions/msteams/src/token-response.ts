@@ -1,3 +1,4 @@
+// extensions/msteams/src token response helpers and runtime behavior.
 export function readAccessToken(value: unknown): string | null {
   if (typeof value === "string") {
     return value;

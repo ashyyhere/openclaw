@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor native command context helpers and runtime behavior.
 import type { CommandArgs } from "openclaw/plugin-sdk/command-auth-native";
 import { finalizeInboundContext } from "openclaw/plugin-sdk/reply-dispatch-runtime";
 import { resolveDiscordConversationIdentity } from "../conversation-identity.js";

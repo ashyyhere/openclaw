@@ -1,3 +1,4 @@
+/** Runs deferred context-engine maintenance after embedded-agent turns. */
 import { randomUUID } from "node:crypto";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { resolveContextEngineOwnerPluginId } from "../../context-engine/registry.js";
@@ -130,6 +131,7 @@ async function disposeDeferredMaintenanceContextEngine(
   }
 }
 
+/** Reused helper for create Deferred Turn Maintenance Abort Signal behavior in src/agents/embedded-agent-runner. */
 export function createDeferredTurnMaintenanceAbortSignal(params?: {
   processLike?: DeferredTurnMaintenanceProcessLike;
 }): {
@@ -195,6 +197,7 @@ export function createDeferredTurnMaintenanceAbortSignal(params?: {
   };
 }
 
+/** Reused helper for reset Deferred Turn Maintenance State For Test behavior in src/agents/embedded-agent-runner. */
 export function resetDeferredTurnMaintenanceStateForTest(): void {
   activeDeferredTurnMaintenanceRuns.clear();
   const processLike = process as DeferredTurnMaintenanceProcessLike;

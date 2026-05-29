@@ -1,6 +1,8 @@
+/** Resolves configured workspace directories for an agent. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "./agent-scope.js";
 
+/** Reused helper for list Agent Workspace Dirs behavior in src/agents. */
 export function listAgentWorkspaceDirs(cfg: OpenClawConfig): string[] {
   const dirs = new Set<string>();
   const list = cfg.agents?.list;

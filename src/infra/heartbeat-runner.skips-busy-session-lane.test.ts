@@ -1,3 +1,4 @@
+// Tests infra heartbeat runner skips busy session lane test behavior.
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { resolveNestedAgentLaneForSession } from "../agents/lanes.js";
 import {

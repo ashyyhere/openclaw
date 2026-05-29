@@ -1,3 +1,4 @@
+/** Low-level Docker CLI helpers for sandbox containers and networks. */
 import { spawn } from "node:child_process";
 import { createSubsystemLogger } from "../../logging/subsystem.js";
 import {
@@ -16,6 +17,7 @@ type ExecDockerRawOptions = {
   signal?: AbortSignal;
 };
 
+/** Shared type for Exec Docker Raw Result in src/agents/sandbox. */
 export type ExecDockerRawResult = {
   stdout: Buffer;
   stderr: Buffer;
@@ -46,6 +48,7 @@ const DEFAULT_DOCKER_SPAWN_RUNTIME: DockerSpawnRuntime = {
   execPath: process.execPath,
 };
 
+/** Resolves the executable and argv used to spawn Docker on this platform. */
 export function resolveDockerSpawnInvocation(
   args: string[],
   runtime: DockerSpawnRuntime = DEFAULT_DOCKER_SPAWN_RUNTIME,
@@ -67,6 +70,7 @@ export function resolveDockerSpawnInvocation(
   };
 }
 
+/** Runs a Docker CLI command and captures stdout/stderr. */
 export function execDockerRaw(
   args: string[],
   opts?: ExecDockerRawOptions,
@@ -190,6 +194,7 @@ const log = createSubsystemLogger("docker");
 
 const HOT_CONTAINER_WINDOW_MS = 5 * 60 * 1000;
 
+/** Shared type for Exec Docker Options in src/agents/sandbox. */
 export type ExecDockerOptions = ExecDockerRawOptions;
 
 function envRecordsEqual(left: Record<string, string>, right: Record<string, string>): boolean {
@@ -208,6 +213,7 @@ function envRecordsEqual(left: Record<string, string>, right: Record<string, str
   });
 }
 
+/** Returns the env-policy epoch when explicit container env is configured. */
 export function resolveDockerEnvPolicyEpoch(env: Record<string, string | undefined> | undefined) {
   const explicitEnv = env ?? {};
   const previousAllowed = sanitizeEnvVars(explicitEnv).allowed;
@@ -217,6 +223,7 @@ export function resolveDockerEnvPolicyEpoch(env: Record<string, string | undefin
     : SANDBOX_DOCKER_EXPLICIT_ENV_POLICY_EPOCH;
 }
 
+/** Runs Docker and throws on non-zero exit unless allowFailure is set. */
 export async function execDocker(args: string[], opts?: ExecDockerOptions) {
   const result = await execDockerRaw(args, opts);
   return {
@@ -226,6 +233,7 @@ export async function execDocker(args: string[], opts?: ExecDockerOptions) {
   };
 }
 
+/** Reused helper for read Docker Container Label behavior in src/agents/sandbox. */
 export async function readDockerContainerLabel(
   containerName: string,
   label: string,
@@ -244,6 +252,7 @@ export async function readDockerContainerLabel(
   return raw;
 }
 
+/** Reused helper for read Docker Container Env Var behavior in src/agents/sandbox. */
 export async function readDockerContainerEnvVar(
   containerName: string,
   envVar: string,
@@ -263,6 +272,7 @@ export async function readDockerContainerEnvVar(
   return null;
 }
 
+/** Reused helper for read Docker Network Driver behavior in src/agents/sandbox. */
 export async function readDockerNetworkDriver(network: string): Promise<string | null> {
   const result = await execDocker(["network", "inspect", "-f", "{{.Driver}}", network], {
     allowFailure: true,
@@ -274,6 +284,7 @@ export async function readDockerNetworkDriver(network: string): Promise<string |
   return driver || null;
 }
 
+/** Reused helper for read Docker Network Gateway behavior in src/agents/sandbox. */
 export async function readDockerNetworkGateway(network: string): Promise<string | null> {
   const result = await execDocker(
     ["network", "inspect", "-f", "{{range .IPAM.Config}}{{println .Gateway}}{{end}}", network],
@@ -294,6 +305,7 @@ export async function readDockerNetworkGateway(network: string): Promise<string 
   return gw || null;
 }
 
+/** Reused helper for read Docker Port behavior in src/agents/sandbox. */
 export async function readDockerPort(containerName: string, port: number) {
   const result = await execDocker(["port", containerName, `${port}/tcp`], {
     allowFailure: true,
@@ -317,10 +329,12 @@ const DOCKER_DAEMON_UNAVAILABLE_MARKERS = [
   "connection refused",
 ];
 
+/** Reused helper for is Docker Daemon Unavailable behavior in src/agents/sandbox. */
 export function isDockerDaemonUnavailable(stderr: string): boolean {
   return DOCKER_DAEMON_UNAVAILABLE_MARKERS.some((marker) => stderr.toLowerCase().includes(marker));
 }
 
+/** Reused helper for format Docker Daemon Unavailable Error behavior in src/agents/sandbox. */
 export function formatDockerDaemonUnavailableError(stderr: string): string {
   const detail = stderr.trim();
   return [
@@ -349,6 +363,7 @@ async function inspectDockerImage(image: string): Promise<"exists" | "missing"> 
   throw new Error(`Failed to inspect sandbox image: ${stderr}`);
 }
 
+/** Ensures the sandbox Docker image is available locally. */
 export async function ensureDockerImage(image: string) {
   const imageState = await inspectDockerImage(image);
   if (imageState === "exists") {
@@ -362,6 +377,7 @@ export async function ensureDockerImage(image: string) {
   throw new Error(`Sandbox image not found: ${image}. Build or pull it first.`);
 }
 
+/** Reads Docker state for a named sandbox container. */
 export async function dockerContainerState(name: string) {
   const result = await execDocker(["inspect", "-f", "{{.State.Running}}", name], {
     allowFailure: true,
@@ -416,6 +432,7 @@ function formatUlimitValue(
   return `${name}=${soft}:${hard}`;
 }
 
+/** Builds `docker create` arguments for a sandbox or browser container. */
 export function buildSandboxCreateArgs(params: {
   name: string;
   cfg: SandboxDockerConfig;
@@ -614,6 +631,7 @@ function formatSandboxRecreateHint(params: { scope: SandboxConfig["scope"]; sess
   return formatCliCommand("openclaw sandbox recreate --all");
 }
 
+/** Creates or reuses the Docker sandbox container for a session. */
 export async function ensureSandboxContainer(params: {
   sessionKey: string;
   workspaceDir: string;

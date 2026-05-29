@@ -1,3 +1,4 @@
+// Tests extensions/tlon/src/monitor media test behavior.
 import {
   readRemoteMediaBuffer,
   MAX_IMAGE_BYTES,

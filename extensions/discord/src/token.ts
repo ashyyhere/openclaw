@@ -1,3 +1,4 @@
+// extensions/discord/src token helpers and runtime behavior.
 import type { BaseTokenResolution } from "openclaw/plugin-sdk/channel-contract";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "openclaw/plugin-sdk/routing";

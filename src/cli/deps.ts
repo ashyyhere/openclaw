@@ -1,3 +1,4 @@
+/** Builds lazy runtime dependencies used by CLI command handlers. */
 import { normalizeChannelId } from "../channels/registry.js";
 import type { OutboundSendDeps } from "../infra/outbound/send-deps.js";
 import { createLazyRuntimeSurface } from "../shared/lazy-runtime.js";
@@ -75,6 +76,7 @@ function createLazySender(
   };
 }
 
+/** Reused helper for create Default Deps behavior in src/cli. */
 export function createDefaultDeps(): CliDeps {
   const deps: CliDeps = {};
   const resolveSender = (channelId: string) =>
@@ -116,6 +118,7 @@ export function createDefaultDeps(): CliDeps {
   });
 }
 
+/** Reused helper for create Outbound Send Deps behavior in src/cli. */
 export function createOutboundSendDeps(deps: CliDeps): OutboundSendDeps {
   return createOutboundSendDepsFromCliSource(deps);
 }

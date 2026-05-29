@@ -1,3 +1,4 @@
+/** Guardrail tests that channel turn modules avoid request-time filesystem scans. */
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";

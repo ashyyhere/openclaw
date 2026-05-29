@@ -1,3 +1,4 @@
+// Tests infra heartbeat runner typing test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { ChannelPlugin } from "../channels/plugins/types.public.js";
 import type { OpenClawConfig } from "../config/config.js";

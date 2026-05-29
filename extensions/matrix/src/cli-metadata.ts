@@ -1,3 +1,4 @@
+// extensions/matrix/src cli metadata helpers and runtime behavior.
 import type { OpenClawPluginApi } from "openclaw/plugin-sdk/channel-plugin-common";
 
 export function registerMatrixCliMetadata(api: OpenClawPluginApi) {

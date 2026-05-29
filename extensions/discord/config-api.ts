@@ -1,3 +1,4 @@
+// extensions/discord config api helpers and runtime behavior.
 export {
   buildChannelConfigSchema,
   DiscordConfigSchema,

@@ -1,3 +1,4 @@
+// Tests daemon runtime hints test behavior.
 import { describe, expect, it } from "vitest";
 import { buildPlatformRuntimeLogHints, buildPlatformServiceStartHints } from "./runtime-hints.js";
 

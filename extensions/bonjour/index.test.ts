@@ -1,3 +1,4 @@
+// Tests extensions/bonjour index test behavior.
 import { createTestPluginApi } from "openclaw/plugin-sdk/plugin-test-api";
 import { afterAll, describe, expect, it, vi } from "vitest";
 

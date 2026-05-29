@@ -1,3 +1,4 @@
+// Tests media read response with limit test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { readResponseTextSnippet, readResponseWithLimit } from "./read-response-with-limit.js";
 

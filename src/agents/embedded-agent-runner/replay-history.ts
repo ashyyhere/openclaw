@@ -1,3 +1,4 @@
+/** Sanitizes session history before replaying it to embedded-agent providers. */
 import { stripInternalMetadataForDisplay } from "../../auto-reply/reply/display-text-sanitize.js";
 import { isSilentReplyPayloadText, SILENT_REPLY_TOKEN } from "../../auto-reply/tokens.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
@@ -335,6 +336,7 @@ function normalizeAssistantReplayBlockContent(message: AgentMessage, replayConte
   return { ...message, content: sanitizedContent } as AgentMessage;
 }
 
+/** Normalizes assistant content blocks before history replay. */
 export function normalizeAssistantReplayContent(messages: AgentMessage[]): AgentMessage[] {
   let touched = false;
   const out: AgentMessage[] = [];
@@ -665,6 +667,7 @@ function isSameModelSnapshot(a: ModelSnapshotEntry, b: ModelSnapshotEntry): bool
  * Applies the generic replay-history cleanup pipeline before provider-owned
  * replay hooks run.
  */
+/** Builds provider-safe replay history from session messages and attachments. */
 export async function sanitizeSessionHistory(params: {
   messages: AgentMessage[];
   modelApi?: string | null;
@@ -838,6 +841,7 @@ export async function sanitizeSessionHistory(params: {
  * Runs provider-owned replay validation before falling back to the remaining
  * generic validator pipeline.
  */
+/** Validates replay turn ordering for the target provider family. */
 export async function validateReplayTurns(params: {
   messages: AgentMessage[];
   modelApi?: string | null;

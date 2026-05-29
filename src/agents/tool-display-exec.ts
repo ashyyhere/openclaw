@@ -1,3 +1,4 @@
+/** Formats exec-family tool calls and results for UI display. */
 import {
   binaryName,
   firstPositional,
@@ -436,8 +437,10 @@ function compactRawCommand(raw: string, maxLength = 120): string {
   return `${oneLine.slice(0, Math.max(0, maxLength - 1))}…`;
 }
 
+/** Shared type for Tool Detail Mode in src/agents. */
 export type ToolDetailMode = "explain" | "raw";
 
+/** Reused helper for resolve Exec Detail behavior in src/agents. */
 export function resolveExecDetail(
   args: unknown,
   options?: { detailMode?: ToolDetailMode },

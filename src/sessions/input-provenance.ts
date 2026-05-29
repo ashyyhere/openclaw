@@ -1,14 +1,18 @@
+// sessions input provenance helpers and runtime behavior.
 import type { AgentMessage } from "../agents/runtime/index.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 
+/** Reused constant for INPUT PROVENANCE KIND VALUES behavior in src/sessions. */
 export const INPUT_PROVENANCE_KIND_VALUES = [
   "external_user",
   "inter_session",
   "internal_system",
 ] as const;
 
+/** Shared type for Input Provenance Kind in src/sessions. */
 export type InputProvenanceKind = (typeof INPUT_PROVENANCE_KIND_VALUES)[number];
 
+/** Shared type for Input Provenance in src/sessions. */
 export type InputProvenance = {
   kind: InputProvenanceKind;
   originSessionId?: string;
@@ -17,7 +21,9 @@ export type InputProvenance = {
   sourceTool?: string;
 };
 
+/** Reused constant for INTER SESSION PROMPT PREFIX BASE behavior in src/sessions. */
 export const INTER_SESSION_PROMPT_PREFIX_BASE = "[Inter-session message]";
+/** Reused constant for AGENT MEDIATED COMPLETION SOURCE TOOLS behavior in src/sessions. */
 export const AGENT_MEDIATED_COMPLETION_SOURCE_TOOLS = [
   "agent_harness_task",
   "image_generate",
@@ -33,6 +39,7 @@ function isInputProvenanceKind(value: unknown): value is InputProvenanceKind {
   );
 }
 
+/** Reused helper for normalize Input Provenance behavior in src/sessions. */
 export function normalizeInputProvenance(value: unknown): InputProvenance | undefined {
   if (!value || typeof value !== "object") {
     return undefined;
@@ -50,6 +57,7 @@ export function normalizeInputProvenance(value: unknown): InputProvenance | unde
   };
 }
 
+/** Reused helper for apply Input Provenance To User Message behavior in src/sessions. */
 export function applyInputProvenanceToUserMessage(
   message: AgentMessage,
   inputProvenance: InputProvenance | undefined,
@@ -70,6 +78,7 @@ export function applyInputProvenanceToUserMessage(
   } as unknown as AgentMessage;
 }
 
+/** Reused helper for is Inter Session Input Provenance behavior in src/sessions. */
 export function isInterSessionInputProvenance(value: unknown): boolean {
   return normalizeInputProvenance(value)?.kind === "inter_session";
 }
@@ -78,6 +87,7 @@ const AGENT_MEDIATED_COMPLETION_SOURCE_TOOL_SET: ReadonlySet<string> = new Set(
   AGENT_MEDIATED_COMPLETION_SOURCE_TOOLS,
 );
 
+/** Reused helper for is Agent Mediated Completion Source Tool behavior in src/sessions. */
 export function isAgentMediatedCompletionSourceTool(value: unknown): boolean {
   const sourceTool = normalizeOptionalString(value)?.toLowerCase();
   return sourceTool ? AGENT_MEDIATED_COMPLETION_SOURCE_TOOL_SET.has(sourceTool) : false;
@@ -89,6 +99,7 @@ const USER_FACING_SESSION_STATE_PRESERVING_SOURCE_TOOLS: ReadonlySet<string> = n
   "subagent_interrupted_resume",
 ]);
 
+/** Reused helper for should Preserve User Facing Session State For Input Provenance behavior in src/sessions. */
 export function shouldPreserveUserFacingSessionStateForInputProvenance(value: unknown): boolean {
   const provenance = normalizeInputProvenance(value);
   if (provenance?.kind !== "inter_session") {
@@ -98,6 +109,7 @@ export function shouldPreserveUserFacingSessionStateForInputProvenance(value: un
   return sourceTool ? USER_FACING_SESSION_STATE_PRESERVING_SOURCE_TOOLS.has(sourceTool) : false;
 }
 
+/** Reused helper for has Inter Session User Provenance behavior in src/sessions. */
 export function hasInterSessionUserProvenance(
   message: { role?: unknown; provenance?: unknown } | undefined,
 ): boolean {
@@ -107,6 +119,7 @@ export function hasInterSessionUserProvenance(
   return isInterSessionInputProvenance(message.provenance);
 }
 
+/** Reused helper for build Inter Session Prompt Prefix behavior in src/sessions. */
 export function buildInterSessionPromptPrefix(
   inputProvenance: InputProvenance | undefined,
 ): string {
@@ -147,6 +160,7 @@ function removeFirstInterSessionPromptPrefix(text: string): string {
     .join("\n");
 }
 
+/** Reused helper for annotate Inter Session Prompt Text behavior in src/sessions. */
 export function annotateInterSessionPromptText(
   text: string,
   inputProvenance: InputProvenance | undefined,

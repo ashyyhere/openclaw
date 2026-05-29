@@ -1,3 +1,4 @@
+// Tests extensions/mattermost/src/mattermost target resolution test behavior.
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 const resolveMattermostAccount = vi.fn();

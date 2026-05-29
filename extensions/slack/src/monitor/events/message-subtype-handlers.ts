@@ -1,3 +1,4 @@
+// extensions/slack/src/monitor/events message subtype handlers helpers and runtime behavior.
 import type { SlackMessageEvent } from "../../types.js";
 import type { SlackMessageChangedEvent, SlackMessageDeletedEvent } from "../types.js";
 

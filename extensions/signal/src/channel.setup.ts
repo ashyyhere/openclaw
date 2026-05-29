@@ -1,3 +1,4 @@
+// extensions/signal/src channel setup helpers and runtime behavior.
 import type { ChannelPlugin } from "openclaw/plugin-sdk/core";
 import { type ResolvedSignalAccount } from "./accounts.js";
 import { signalSetupAdapter } from "./setup-core.js";

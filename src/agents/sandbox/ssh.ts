@@ -1,3 +1,4 @@
+/** SSH command/session helpers for remote sandbox backends. */
 import { spawn } from "node:child_process";
 import fs from "node:fs/promises";
 import os from "node:os";
@@ -9,6 +10,7 @@ import { resolveUserPath } from "../../utils.js";
 import type { SandboxBackendCommandResult } from "./backend-handle.types.js";
 import { sanitizeEnvVars } from "./sanitize-env-vars.js";
 
+/** Shared type for Ssh Sandbox Settings in src/agents/sandbox. */
 export type SshSandboxSettings = {
   command: string;
   target: string;
@@ -22,12 +24,14 @@ export type SshSandboxSettings = {
   knownHostsData?: string;
 };
 
+/** Shared type for Ssh Sandbox Session in src/agents/sandbox. */
 export type SshSandboxSession = {
   command: string;
   configPath: string;
   host: string;
 };
 
+/** Shared type for Run Ssh Sandbox Command Params in src/agents/sandbox. */
 export type RunSshSandboxCommandParams = {
   session: SshSandboxSession;
   remoteCommand: string;
@@ -66,10 +70,12 @@ function buildSshFailureMessage(stderr: string, exitCode?: number): string {
   );
 }
 
+/** Escapes one value for a POSIX remote shell command. */
 export function shellEscape(value: string): string {
   return `'${value.replaceAll("'", `'"'"'`)}'`;
 }
 
+/** Builds a shell command from escaped argv parts. */
 export function buildRemoteCommand(argv: string[]): string {
   return argv.map((entry) => shellEscape(entry)).join(" ");
 }
@@ -262,6 +268,7 @@ function assertValidExecRemoteCommand(command: string): void {
   }
 }
 
+/** Builds the remote command that executes inside a sandbox workspace. */
 export function buildExecRemoteCommand(params: {
   command: string;
   workdir?: string;
@@ -283,6 +290,7 @@ export function buildExecRemoteCommand(params: {
   return buildRemoteCommand(argv);
 }
 
+/** Builds an exec command after validating cwd against the remote workspace. */
 export function buildValidatedExecRemoteCommand(params: {
   command: string;
   workdir?: string;
@@ -476,6 +484,7 @@ function skipShellComment(command: string, index: number): number {
   return newlineIndex === -1 ? command.length : newlineIndex;
 }
 
+/** Builds SSH argv for a remote sandbox command. */
 export function buildSshSandboxArgv(params: {
   session: SshSandboxSession;
   remoteCommand: string;
@@ -493,6 +502,7 @@ export function buildSshSandboxArgv(params: {
   ];
 }
 
+/** Creates an SSH sandbox session from serialized config text. */
 export async function createSshSandboxSessionFromConfigText(params: {
   configText: string;
   host?: string;
@@ -513,6 +523,7 @@ export async function createSshSandboxSessionFromConfigText(params: {
   };
 }
 
+/** Creates an SSH sandbox session from structured settings. */
 export async function createSshSandboxSessionFromSettings(
   settings: SshSandboxSettings,
 ): Promise<SshSandboxSession> {
@@ -583,10 +594,12 @@ export async function createSshSandboxSessionFromSettings(
   }
 }
 
+/** Disposes any temp files associated with an SSH sandbox session. */
 export async function disposeSshSandboxSession(session: SshSandboxSession): Promise<void> {
   await fs.rm(path.dirname(session.configPath), { recursive: true, force: true });
 }
 
+/** Runs one command through an SSH sandbox session. */
 export async function runSshSandboxCommand(
   params: RunSshSandboxCommandParams,
 ): Promise<SandboxBackendCommandResult> {
@@ -633,6 +646,7 @@ export async function runSshSandboxCommand(
   });
 }
 
+/** Uploads a local directory tree to the remote sandbox target. */
 export async function uploadDirectoryToSshTarget(params: {
   session: SshSandboxSession;
   localDir: string;

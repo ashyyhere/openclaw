@@ -1,3 +1,4 @@
+// extensions/memory-lancedb config helpers and runtime behavior.
 import fs from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";

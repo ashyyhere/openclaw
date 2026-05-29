@@ -1,3 +1,4 @@
+// plugins git install helpers and runtime behavior.
 import "../infra/fs-safe-defaults.js";
 import { createHash } from "node:crypto";
 import path from "node:path";
@@ -24,6 +25,7 @@ type PluginInstallLogger = {
   warn?: (message: string) => void;
 };
 
+/** Shared type for Git Plugin Resolution in src/plugins. */
 export type GitPluginResolution = {
   url: string;
   ref?: string;
@@ -31,10 +33,12 @@ export type GitPluginResolution = {
   resolvedAt: string;
 };
 
+/** Shared type for Git Plugin Install Result in src/plugins. */
 export type GitPluginInstallResult =
   | (Extract<InstallPluginResult, { ok: true }> & { git: GitPluginResolution })
   | Extract<InstallPluginResult, { ok: false }>;
 
+/** Shared type for Parsed Git Plugin Spec in src/plugins. */
 export type ParsedGitPluginSpec = {
   input: string;
   url: string;
@@ -141,6 +145,7 @@ function normalizeGitLabel(value: string): string {
   return stripGitSuffix(value);
 }
 
+/** Reused helper for parse Git Plugin Spec behavior in src/plugins. */
 export function parseGitPluginSpec(raw: string): ParsedGitPluginSpec | null {
   const trimmed = raw.trim();
   if (!trimmed.toLowerCase().startsWith(GIT_SPEC_PREFIX)) {
@@ -279,6 +284,7 @@ async function runGitCommand(params: {
   return { ok: true, stdout: result.stdout };
 }
 
+/** Reused helper for install Plugin From Git Spec behavior in src/plugins. */
 export async function installPluginFromGitSpec(
   params: InstallSafetyOverrides & {
     spec: string;

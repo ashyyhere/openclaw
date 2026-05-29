@@ -1,3 +1,4 @@
+/** Regression coverage for subagent registry retry, orphan, and archive helpers. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { defaultRuntime } from "../runtime.js";
 import { logAnnounceGiveUp, reconcileOrphanedRun } from "./subagent-registry-helpers.js";

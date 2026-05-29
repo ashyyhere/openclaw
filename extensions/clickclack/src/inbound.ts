@@ -1,3 +1,4 @@
+// extensions/clickclack/src inbound helpers and runtime behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { resolveClickClackInboundAccess, type ClickClackInboundAccess } from "./access.js";
 import { sendClickClackText } from "./outbound.js";

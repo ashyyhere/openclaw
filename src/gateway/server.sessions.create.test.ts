@@ -1,3 +1,4 @@
+// Tests gateway server sessions create test behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { expect, test, vi } from "vitest";

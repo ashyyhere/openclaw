@@ -1,3 +1,4 @@
+/** Tests node daemon install helper behavior. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({

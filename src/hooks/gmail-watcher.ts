@@ -173,6 +173,7 @@ function settleProcess(proc: ChildProcess): Promise<void> {
   });
 }
 
+/** Shared type for Gmail Watcher Start Result in src/hooks. */
 export type GmailWatcherStartResult = {
   started: boolean;
   reason?: string;

@@ -1,3 +1,4 @@
+// gateway/server-methods tools invoke helpers and runtime behavior.
 import {
   ErrorCodes,
   errorShape,
@@ -29,6 +30,7 @@ function resolveRpcErrorCode(params: {
   return "internal_error";
 }
 
+/** Reused constant for tools Invoke Handlers behavior in src/gateway/server-methods. */
 export const toolsInvokeHandlers: GatewayRequestHandlers = {
   "tools.invoke": async ({ params, respond, context }) => {
     if (!validateToolsInvokeParams(params)) {

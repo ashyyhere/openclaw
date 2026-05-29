@@ -1,3 +1,4 @@
+// extensions/whatsapp/src vcard helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "openclaw/plugin-sdk/string-coerce-runtime";
 
 type ParsedVcard = {

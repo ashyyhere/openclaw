@@ -6,6 +6,7 @@
 export * from "../hooks/fire-and-forget.js";
 export * from "../hooks/internal-hooks.js";
 export * from "../hooks/message-hook-mappers.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   initializeGlobalHookRunner,
   resetGlobalHookRunner,

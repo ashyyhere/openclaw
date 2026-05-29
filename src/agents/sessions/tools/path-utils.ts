@@ -1,3 +1,4 @@
+/** Path expansion and read-path resolution helpers for session tools. */
 import { accessSync, constants } from "node:fs";
 import * as os from "node:os";
 import { isAbsolute, resolve as resolvePath } from "node:path";
@@ -37,6 +38,7 @@ function normalizeAtPrefix(filePath: string): string {
   return filePath.startsWith("@") ? filePath.slice(1) : filePath;
 }
 
+/** Expands file URLs, home directories, unicode spaces, and relative paths. */
 export function expandPath(filePath: string): string {
   const normalized = normalizeUnicodeSpaces(normalizeAtPrefix(filePath));
   if (normalized.startsWith("file://")) {
@@ -59,6 +61,7 @@ export function expandPath(filePath: string): string {
  * Resolve a path relative to the given cwd.
  * Handles ~ expansion and absolute paths.
  */
+/** Resolves a path relative to the current tool workspace. */
 export function resolveToCwd(filePath: string, cwd: string): string {
   const expanded = expandPath(filePath);
   if (isAbsolute(expanded)) {
@@ -67,6 +70,7 @@ export function resolveToCwd(filePath: string, cwd: string): string {
   return resolvePath(cwd, expanded);
 }
 
+/** Resolves a read path, including path-like command output lines. */
 export function resolveReadPath(filePath: string, cwd: string): string {
   const resolved = resolveToCwd(filePath, cwd);
 

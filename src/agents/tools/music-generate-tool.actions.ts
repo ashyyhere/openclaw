@@ -1,3 +1,4 @@
+/** Action result helpers for music generation tool providers. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { listSupportedMusicGenerationModes } from "../../music-generation/capabilities.js";
 import { listRuntimeMusicGenerationProviders } from "../../music-generation/runtime.js";
@@ -56,6 +57,7 @@ function summarizeMusicGenerationCapabilities(
   return capabilities;
 }
 
+/** Builds the music provider/model listing action result. */
 export function createMusicGenerateListActionResult(
   config?: OpenClawConfig,
   options?: { workspaceDir?: string; agentDir?: string; authStore?: AuthProfileStore },
@@ -81,12 +83,14 @@ const musicGenerateTaskStatusActions = createMediaGenerateTaskStatusActions({
   buildStatusDetails: buildMusicGenerationTaskStatusDetails,
 });
 
+/** Builds the music task status action result. */
 export function createMusicGenerateStatusActionResult(
   sessionKey?: string,
 ): MusicGenerateActionResult {
   return musicGenerateTaskStatusActions.createStatusActionResult(sessionKey);
 }
 
+/** Builds the duplicate-task guard result for music generation. */
 export function createMusicGenerateDuplicateGuardResult(
   sessionKey?: string,
   params?: { prompt?: string; requestKey?: string },

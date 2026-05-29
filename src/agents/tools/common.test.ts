@@ -1,3 +1,4 @@
+/** Covers shared tool result helpers. */
 import { describe, expect, test } from "vitest";
 import { imageResult, parseAvailableTags } from "./common.js";
 

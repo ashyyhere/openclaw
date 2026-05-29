@@ -1,3 +1,4 @@
+// ui/src/ui app helpers and runtime behavior.
 import { LitElement } from "lit";
 import { state } from "lit/decorators.js";
 import { i18n, I18nController, isSupportedLocale, t } from "../i18n/index.ts";
@@ -166,6 +167,7 @@ function resolveOnboardingMode(): boolean {
   return normalized === "1" || normalized === "true" || normalized === "yes" || normalized === "on";
 }
 
+/** Reused class for Open Claw App behavior in ui/src/ui. */
 export class OpenClawApp extends LitElement {
   readonly i18nController = new I18nController(this);
   clientInstanceId = generateUUID();

@@ -1,3 +1,4 @@
+/** Creates CLI progress reporters for interactive and noninteractive output. */
 import { spinner } from "@clack/prompts";
 import {
   createOscProgressController,
@@ -23,6 +24,7 @@ type ProgressOptions = {
   fallback?: "spinner" | "line" | "log" | "none";
 };
 
+/** Shared type for Progress Reporter in src/cli. */
 export type ProgressReporter = {
   setLabel: (label: string) => void;
   setPercent: (percent: number) => void;
@@ -30,12 +32,14 @@ export type ProgressReporter = {
   done: () => void;
 };
 
+/** Shared type for Progress Totals Update in src/cli. */
 export type ProgressTotalsUpdate = {
   completed: number;
   total: number;
   label?: string;
 };
 
+/** Reused helper for should Use Interactive Progress Spinner behavior in src/cli. */
 export function shouldUseInteractiveProgressSpinner(params: {
   fallback?: ProgressOptions["fallback"];
   streamIsTty?: boolean;
@@ -52,6 +56,7 @@ const noopReporter: ProgressReporter = {
   done: () => {},
 };
 
+/** Reused helper for create Cli Progress behavior in src/cli. */
 export function createCliProgress(options: ProgressOptions): ProgressReporter {
   if (options.enabled === false) {
     return noopReporter;
@@ -222,6 +227,7 @@ export function createCliProgress(options: ProgressOptions): ProgressReporter {
   return { setLabel, setPercent, tick, done };
 }
 
+/** Reused helper for with Progress behavior in src/cli. */
 export async function withProgress<T>(
   options: ProgressOptions,
   work: (progress: ProgressReporter) => Promise<T>,
@@ -234,6 +240,7 @@ export async function withProgress<T>(
   }
 }
 
+/** Reused helper for with Progress Totals behavior in src/cli. */
 export async function withProgressTotals<T>(
   options: ProgressOptions,
   work: (update: (update: ProgressTotalsUpdate) => void, progress: ProgressReporter) => Promise<T>,

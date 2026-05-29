@@ -1,3 +1,4 @@
+// extensions/kimi-coding provider catalog helpers and runtime behavior.
 import type {
   ModelDefinitionConfig,
   ModelProviderConfig,

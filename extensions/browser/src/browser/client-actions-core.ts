@@ -1,3 +1,4 @@
+// extensions/browser/src/browser client actions core helpers and runtime behavior.
 import type {
   BrowserActionOk,
   BrowserActionPathResult,

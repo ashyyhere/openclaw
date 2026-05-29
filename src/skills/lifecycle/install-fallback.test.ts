@@ -1,3 +1,4 @@
+/** Regression coverage for skill installer fallback behavior when preferred tools are absent. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

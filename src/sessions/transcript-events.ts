@@ -1,6 +1,8 @@
+// sessions transcript events helpers and runtime behavior.
 import { asPositiveSafeInteger } from "../shared/number-coercion.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 
+/** Shared type for Session Transcript Update in src/sessions. */
 export type SessionTranscriptUpdate = {
   sessionFile: string;
   sessionKey?: string;
@@ -14,6 +16,7 @@ type SessionTranscriptListener = (update: SessionTranscriptUpdate) => void;
 
 const SESSION_TRANSCRIPT_LISTENERS = new Set<SessionTranscriptListener>();
 
+/** Reused helper for on Session Transcript Update behavior in src/sessions. */
 export function onSessionTranscriptUpdate(listener: SessionTranscriptListener): () => void {
   SESSION_TRANSCRIPT_LISTENERS.add(listener);
   return () => {
@@ -21,6 +24,7 @@ export function onSessionTranscriptUpdate(listener: SessionTranscriptListener): 
   };
 }
 
+/** Reused helper for emit Session Transcript Update behavior in src/sessions. */
 export function emitSessionTranscriptUpdate(update: string | SessionTranscriptUpdate): void {
   const normalized =
     typeof update === "string"

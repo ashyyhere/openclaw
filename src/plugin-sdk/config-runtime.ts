@@ -13,12 +13,15 @@ import { loadSessionStore as loadSessionStoreImpl } from "../config/sessions/sto
  */
 export const loadSessionStore = loadSessionStoreImpl;
 
+/** Re-exported API for src/plugin-sdk, starting with resolve Default Agent Id. */
 export { resolveDefaultAgentId } from "../agents/agent-scope.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   requireRuntimeConfig,
   resolveLivePluginConfigObject,
   resolvePluginConfigObject,
 } from "./plugin-config-runtime.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   clearConfigCache,
   clearRuntimeConfigSnapshot,
@@ -42,26 +45,36 @@ export {
    */
   writeConfigFile,
 } from "../config/io.js";
+/** Re-exported API for src/plugin-sdk, starting with mutate Config File. */
 export { mutateConfigFile, replaceConfigFile } from "../config/mutate.js";
+/** Re-exported API for src/plugin-sdk, starting with Config Write After Write. */
 export type { ConfigWriteAfterWrite } from "../config/runtime-snapshot.js";
+/** Re-exported API for src/plugin-sdk, starting with log Config Updated. */
 export { logConfigUpdated } from "../config/logging.js";
+/** Re-exported API for src/plugin-sdk, starting with update Config. */
 export { updateConfig } from "../commands/models/shared.js";
+/** Re-exported API for src/plugin-sdk, starting with resolve Channel Model Override. */
 export { resolveChannelModelOverride } from "../channels/model-overrides.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   evaluateSupplementalContextVisibility,
   filterSupplementalContextItems,
 } from "../security/context-visibility.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   resolveChannelContextVisibilityMode,
   resolveDefaultContextVisibility,
 } from "../config/context-visibility.js";
+/** Re-exported API for src/plugin-sdk, starting with resolve Markdown Table Mode. */
 export { resolveMarkdownTableMode } from "../config/markdown-tables.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   resolveChannelGroupPolicy,
   resolveChannelGroupRequireMention,
   resolveToolsBySender,
   type ChannelGroupPolicy,
 } from "../config/group-policy.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   GROUP_POLICY_BLOCKED_LABEL,
   resolveAllowlistProviderRuntimeGroupPolicy,
@@ -69,26 +82,35 @@ export {
   resolveOpenProviderRuntimeGroupPolicy,
   warnMissingProviderGroupPolicyFallbackOnce,
 } from "../config/runtime-group-policy.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   isNativeCommandsExplicitlyDisabled,
   resolveNativeCommandsEnabled,
   resolveNativeSkillsEnabled,
 } from "../config/commands.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   TELEGRAM_COMMAND_NAME_PATTERN,
   normalizeTelegramCommandName,
   resolveTelegramCustomCommands,
 } from "./telegram-command-config.js";
+/** Re-exported API for src/plugin-sdk, starting with resolve Active Talk Provider Config. */
 export { resolveActiveTalkProviderConfig } from "../config/talk.js";
+/** Re-exported API for src/plugin-sdk, starting with resolve Agent Max Concurrent. */
 export { resolveAgentMaxConcurrent } from "../config/agent-limits.js";
+/** Re-exported API for src/plugin-sdk, starting with load Cron Store. */
 export { loadCronStore, resolveCronStorePath, saveCronStore } from "../cron/store.js";
+/** Re-exported API for src/plugin-sdk, starting with apply Model Override To Session Entry. */
 export { applyModelOverrideToSessionEntry } from "../sessions/model-overrides.js";
+/** Re-exported API for src/plugin-sdk, starting with coerce Secret Ref. */
 export { coerceSecretRef } from "../config/types.secrets.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   resolveConfiguredSecretInputString,
   resolveConfiguredSecretInputWithFallback,
   resolveRequiredConfiguredSecretRefInputString,
 } from "../gateway/resolve-configured-secret-input-string.js";
+/** Re-exported API for src/plugin-sdk. */
 export type {
   BlockStreamingCoalesceConfig,
   DiscordAccountConfig,
@@ -139,6 +161,7 @@ export type {
   TtsPersonaPromptConfig,
   TtsProvider,
 } from "../config/types.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   clearSessionStoreCacheForTest,
   getSessionEntry,
@@ -153,12 +176,19 @@ export {
   upsertSessionEntry,
   resolveSessionStoreEntry,
 } from "../config/sessions/store.js";
+/** Re-exported API for src/plugin-sdk, starting with resolve Session Key. */
 export { resolveSessionKey } from "../config/sessions/session-key.js";
+/** Re-exported API for src/plugin-sdk, starting with resolve Store Path. */
 export { resolveStorePath } from "../config/sessions/paths.js";
+/** Re-exported API for src/plugin-sdk, starting with Session Reset Mode. */
 export type { SessionResetMode } from "../config/sessions/reset.js";
+/** Re-exported API for src/plugin-sdk, starting with Session Scope. */
 export type { SessionScope } from "../config/sessions/types.js";
+/** Re-exported API for src/plugin-sdk, starting with resolve Group Session Key. */
 export { resolveGroupSessionKey } from "../config/sessions/group.js";
+/** Re-exported API for src/plugin-sdk, starting with canonicalize Main Session Alias. */
 export { canonicalizeMainSessionAlias } from "../config/sessions/main-session.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   evaluateSessionFreshness,
   resolveChannelResetConfig,
@@ -166,6 +196,7 @@ export {
   resolveSessionResetType,
   resolveThreadFlag,
 } from "../config/sessions/reset.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   isDangerousNameMatchingEnabled,
   resolveDangerousNameMatchingEnabled,

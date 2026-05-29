@@ -1,3 +1,4 @@
+/** Implements message send/action commands across channel plugins and gateway. */
 import {
   GATEWAY_CLIENT_MODES,
   GATEWAY_CLIENT_NAMES,
@@ -51,6 +52,7 @@ function buildMessageCliJson(result: Awaited<ReturnType<typeof runMessageAction>
   };
 }
 
+/** Reused helper for message Command behavior in src/commands. */
 export async function messageCommand(
   opts: Record<string, unknown>,
   deps: CliDeps,

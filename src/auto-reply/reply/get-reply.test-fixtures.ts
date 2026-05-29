@@ -1,6 +1,8 @@
+// Shared fixtures for get-reply tests.
 import { expect, vi, type Mock } from "vitest";
 import type { MsgContext } from "../templating.js";
 
+/** Reused helper for build Get Reply Ctx behavior in src/auto-reply/reply. */
 export function buildGetReplyCtx(overrides: Partial<MsgContext> = {}): MsgContext {
   return {
     Provider: "telegram",
@@ -18,6 +20,7 @@ export function buildGetReplyCtx(overrides: Partial<MsgContext> = {}): MsgContex
   };
 }
 
+/** Reused helper for build Get Reply Group Ctx behavior in src/auto-reply/reply. */
 export function buildGetReplyGroupCtx(overrides: Partial<MsgContext> = {}): MsgContext {
   return {
     Provider: "telegram",
@@ -38,6 +41,7 @@ export function buildGetReplyGroupCtx(overrides: Partial<MsgContext> = {}): MsgC
   };
 }
 
+/** Reused helper for build Native Reset Context behavior in src/auto-reply/reply. */
 export function buildNativeResetContext(): MsgContext {
   return {
     Provider: "telegram",
@@ -55,6 +59,7 @@ export function buildNativeResetContext(): MsgContext {
   };
 }
 
+/** Reused helper for create Get Reply Session State behavior in src/auto-reply/reply. */
 export function createGetReplySessionState(overrides: Record<string, unknown> = {}) {
   return {
     sessionCtx: {},
@@ -77,6 +82,7 @@ export function createGetReplySessionState(overrides: Record<string, unknown> = 
   };
 }
 
+/** Reused helper for create Get Reply Continue Directives Result behavior in src/auto-reply/reply. */
 export function createGetReplyContinueDirectivesResult(params: {
   body: string;
   abortKey: string;
@@ -139,6 +145,7 @@ export function createGetReplyContinueDirectivesResult(params: {
   };
 }
 
+/** Reused helper for register Get Reply Runtime Overrides behavior in src/auto-reply/reply. */
 export function registerGetReplyRuntimeOverrides(handles: {
   resolveReplyDirectives: (...args: unknown[]) => unknown;
   initSessionState: (...args: unknown[]) => unknown;
@@ -156,6 +163,7 @@ export function registerGetReplyRuntimeOverrides(handles: {
   }));
 }
 
+/** Reused helper for expect Resolved Telegram Timezone behavior in src/auto-reply/reply. */
 export function expectResolvedTelegramTimezone(
   resolveReplyDirectives: Mock,
   userTimezone = "America/New_York",

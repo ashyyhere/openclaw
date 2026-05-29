@@ -1,3 +1,4 @@
+// Tests plugins bundle manifest test behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";

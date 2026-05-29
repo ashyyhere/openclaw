@@ -1,3 +1,4 @@
+/** Covers web_search filters, date normalization, and result shaping. */
 import { describe, expect, it } from "vitest";
 import {
   MAX_SEARCH_COUNT,

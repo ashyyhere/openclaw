@@ -1,3 +1,4 @@
+// Coverage for channel message ingress access decisions.
 import { describe, expect, it } from "vitest";
 import {
   decideChannelIngress,

@@ -1,3 +1,4 @@
+/** Covers cache-retention tracking after compaction in attempt threads. */
 import { describe, expect, it, vi } from "vitest";
 import {
   appendAttemptCacheTtlIfNeeded,

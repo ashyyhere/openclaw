@@ -1,3 +1,4 @@
+// extensions/telegram/src bot info cache helpers and runtime behavior.
 import os from "node:os";
 import path from "node:path";
 import { readJsonFileWithFallback } from "openclaw/plugin-sdk/json-store";

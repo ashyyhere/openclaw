@@ -1,3 +1,4 @@
+/** Implements channel target resolution command. */
 import { getChannelPlugin } from "../../channels/plugins/index.js";
 import type {
   ChannelResolveKind,
@@ -24,6 +25,7 @@ import {
 import { normalizeStringEntries } from "../../shared/string-normalization.js";
 import { resolveInstallableChannelPlugin } from "../channel-setup/channel-plugin-resolution.js";
 
+/** Shared type for Channels Resolve Options in src/commands/channels. */
 export type ChannelsResolveOptions = {
   channel?: string;
   account?: string;
@@ -120,6 +122,7 @@ function formatResolveResult(result: ResolveResult): string {
   return `${result.input} -> ${result.id}${name}${note}`;
 }
 
+/** Reused helper for channels Resolve Command behavior in src/commands/channels. */
 export async function channelsResolveCommand(opts: ChannelsResolveOptions, runtime: RuntimeEnv) {
   const sourceSnapshotPromise = readConfigFileSnapshot().catch(() => null);
   const loadedRaw = getRuntimeConfig();

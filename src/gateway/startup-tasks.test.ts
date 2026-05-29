@@ -1,3 +1,4 @@
+// Tests gateway startup tasks test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { runStartupTasks, type StartupTask } from "./startup-tasks.js";
 

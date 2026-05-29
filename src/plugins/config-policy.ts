@@ -1,3 +1,4 @@
+// plugins config policy helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {
   resolveMemorySlotDecisionShared,
@@ -17,11 +18,15 @@ import {
 import type { PluginKind } from "./plugin-kind.types.js";
 import type { PluginOrigin } from "./plugin-origin.types.js";
 
+/** Re-exported API for src/plugins, starting with Plugin Activation Source. */
 export type { PluginActivationSource };
+/** Shared type for Plugin Activation State in src/plugins. */
 export type PluginActivationState = PluginActivationStateLike;
 
+/** Shared type for Normalized Plugins Config in src/plugins. */
 export type NormalizedPluginsConfig = SharedNormalizedPluginsConfig;
 
+/** Reused helper for normalize Plugins Config With Resolver behavior in src/plugins. */
 export function normalizePluginsConfigWithResolver(
   config?: OpenClawConfig["plugins"],
   normalizePluginId: NormalizePluginId = identityNormalizePluginId,
@@ -29,6 +34,7 @@ export function normalizePluginsConfigWithResolver(
   return normalizePluginsConfigWithResolverShared(config, normalizePluginId);
 }
 
+/** Reused helper for resolve Plugin Activation State behavior in src/plugins. */
 export function resolvePluginActivationState(params: {
   id: string;
   origin: PluginOrigin;
@@ -50,8 +56,10 @@ export function resolvePluginActivationState(params: {
     }),
   );
 }
+/** Reused constant for has Explicit Plugin Config behavior in src/plugins. */
 export const hasExplicitPluginConfig = hasExplicitPluginConfigShared;
 
+/** Reused constant for is Bundled Channel Enabled By Channel Config behavior in src/plugins. */
 export const isBundledChannelEnabledByChannelConfig = isBundledChannelEnabledByChannelConfigShared;
 
 type PolicyEffectiveActivationParams = {
@@ -65,12 +73,14 @@ type PolicyEffectiveActivationParams = {
   autoEnabledReason?: string;
 };
 
+/** Reused helper for resolve Effective Plugin Activation State behavior in src/plugins. */
 export function resolveEffectivePluginActivationState(
   params: PolicyEffectiveActivationParams,
 ): PluginActivationState {
   return resolvePluginActivationState(params);
 }
 
+/** Reused helper for resolve Memory Slot Decision behavior in src/plugins. */
 export function resolveMemorySlotDecision(params: {
   id: string;
   kind?: PluginKind | PluginKind[];

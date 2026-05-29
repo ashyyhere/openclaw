@@ -1,3 +1,4 @@
+// Tests infra shell inline command test behavior.
 import { describe, expect, it } from "vitest";
 import {
   POSIX_INLINE_COMMAND_FLAGS,

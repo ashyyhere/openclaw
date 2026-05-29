@@ -1,3 +1,4 @@
+/** Tests onboard command registration. */
 import { Command } from "commander";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { registerOnboardCommand } from "./register.onboard.js";

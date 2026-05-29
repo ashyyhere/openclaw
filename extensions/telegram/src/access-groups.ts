@@ -1,3 +1,4 @@
+// extensions/telegram/src access groups helpers and runtime behavior.
 import type { DmPolicy, OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import {
   expandAllowFromWithAccessGroups,

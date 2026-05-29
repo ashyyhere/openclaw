@@ -1,3 +1,4 @@
+/** Tests legacy runtime model config migrations. */
 import { describe, it, expect } from "vitest";
 import { LEGACY_CONFIG_MIGRATIONS_RUNTIME_MODELS } from "./legacy-config-migrations.runtime.models.js";
 

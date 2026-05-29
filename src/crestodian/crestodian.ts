@@ -1,3 +1,4 @@
+// crestodian crestodian helpers and runtime behavior.
 import { stdin as defaultStdin, stdout as defaultStdout } from "node:process";
 import { withProgress } from "../cli/progress.js";
 import { defaultRuntime, writeRuntimeJson, type RuntimeEnv } from "../runtime.js";
@@ -19,6 +20,7 @@ type CrestodianInteractiveRunner = (
   runtime: RuntimeEnv,
 ) => Promise<void>;
 
+/** Shared type for Run Crestodian Options in src/crestodian. */
 export type RunCrestodianOptions = {
   message?: string;
   yes?: boolean;
@@ -59,6 +61,7 @@ async function runOneShot(
   });
 }
 
+/** Reused helper for run Crestodian behavior in src/crestodian. */
 export async function runCrestodian(
   opts: RunCrestodianOptions = {},
   runtime: RuntimeEnv = defaultRuntime,

@@ -1,3 +1,4 @@
+/** Public SDK builders for channel allowlist adapters that read and edit config-backed lists. */
 import type { ConfigWriteTarget } from "../channels/plugins/config-writes.js";
 import type { ChannelAllowlistAdapter } from "../channels/plugins/types.adapters.js";
 import type { ChannelId } from "../channels/plugins/types.public.js";
@@ -11,7 +12,10 @@ type AllowlistConfigPaths = {
   cleanupPaths?: string[][];
 };
 
+/** Labeled allowlist override block for presenting account-specific channel overrides. */
 export type AllowlistGroupOverride = { label: string; entries: string[] };
+
+/** Result rows from resolving human-entered allowlist names to channel ids. */
 export type AllowlistNameResolution = Array<{
   input: string;
   resolved: boolean;
@@ -43,10 +47,12 @@ const LEGACY_DM_ALLOWLIST_CONFIG_PATHS: AllowlistConfigPaths = {
   cleanupPaths: [["dm", "allowFrom"]],
 };
 
+/** Reused helper for resolve Dm Group Allowlist Config Paths behavior in src/plugin-sdk. */
 export function resolveDmGroupAllowlistConfigPaths(scope: "dm" | "group") {
   return scope === "dm" ? DM_ALLOWLIST_CONFIG_PATHS : GROUP_ALLOWLIST_CONFIG_PATHS;
 }
 
+/** Resolve legacy DM paths that still need cleanup when config edits migrate to allowFrom. */
 export function resolveLegacyDmAllowlistConfigPaths(scope: "dm" | "group") {
   return scope === "dm" ? LEGACY_DM_ALLOWLIST_CONFIG_PATHS : null;
 }
@@ -166,6 +172,8 @@ function resolveAccountScopedWriteTarget(
   const channel = (channels[channelId] ??= {}) as Record<string, unknown>;
   const normalizedAccountId = normalizeAccountId(accountId);
   if (isBlockedObjectKey(normalizedAccountId)) {
+    // Prototype-polluting account ids must never become object keys; write at channel scope
+    // instead of creating unsafe nested config.
     return {
       target: channel,
       pathPrefix: `channels.${channelId}`,
@@ -175,6 +183,8 @@ function resolveAccountScopedWriteTarget(
   const hasAccounts = Boolean(channel.accounts && typeof channel.accounts === "object");
   const useAccount = normalizedAccountId !== DEFAULT_ACCOUNT_ID || hasAccounts;
   if (!useAccount) {
+    // Default accounts historically lived directly on the channel. Keep that shape until an
+    // accounts map already exists, so config edits do not churn existing single-account files.
     return {
       target: channel,
       pathPrefix: `channels.${channelId}`,
@@ -289,6 +299,7 @@ function applyAccountScopedAllowlistConfigEdit(params: {
   const existingNormalized = params.normalize(existing);
   const shouldMatch = (value: string) => normalizedEntry.includes(value);
 
+  // Compare normalized forms, but preserve original stored spelling/order for untouched entries.
   let changed = false;
   let next = existing;
   const configHasEntry = existingNormalized.some((value) => shouldMatch(value));

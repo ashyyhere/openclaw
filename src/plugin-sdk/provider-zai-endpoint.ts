@@ -6,8 +6,10 @@
 
 import { loadBundledPluginPublicSurfaceModuleSync } from "./facade-loader.js";
 
+/** Shared type for Zai Endpoint Id in src/plugin-sdk. */
 export type ZaiEndpointId = "global" | "cn" | "coding-global" | "coding-cn";
 
+/** Shared type for Zai Detected Endpoint in src/plugin-sdk. */
 export type ZaiDetectedEndpoint = {
   endpoint: ZaiEndpointId;
   baseUrl: string;

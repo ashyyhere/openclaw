@@ -1,3 +1,4 @@
+// extensions/canvas/src/host a2ui shared helpers and runtime behavior.
 import { lowercasePreservingWhitespace } from "openclaw/plugin-sdk/string-coerce-runtime";
 
 export const A2UI_PATH = "/__openclaw__/a2ui";

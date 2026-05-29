@@ -1,3 +1,4 @@
+// Tests config config talk validation test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   getRuntimeConfig,

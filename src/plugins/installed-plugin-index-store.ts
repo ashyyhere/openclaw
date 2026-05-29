@@ -1,3 +1,4 @@
+// plugins installed plugin index store helpers and runtime behavior.
 import { z } from "zod";
 import { saveJsonFile } from "../infra/json-file.js";
 import { tryReadJson, tryReadJsonSync, writeJson } from "../infra/json-files.js";
@@ -29,13 +30,16 @@ import {
   type RefreshInstalledPluginIndexParams,
 } from "./installed-plugin-index.js";
 import { clearPluginMetadataLifecycleCaches } from "./plugin-metadata-lifecycle.js";
+/** Re-exported API for src/plugins. */
 export {
   resolveInstalledPluginIndexStorePath,
   type InstalledPluginIndexStoreOptions,
 } from "./installed-plugin-index-store-path.js";
 
+/** Shared type for Installed Plugin Index Store State in src/plugins. */
 export type InstalledPluginIndexStoreState = "missing" | "fresh" | "stale";
 
+/** Shared type for Installed Plugin Index Store Inspection in src/plugins. */
 export type InstalledPluginIndexStoreInspection = {
   state: InstalledPluginIndexStoreState;
   refreshReasons: readonly InstalledPluginIndexRefreshReason[];
@@ -159,6 +163,7 @@ function parseInstalledPluginIndex(value: unknown): InstalledPluginIndex | null 
   };
 }
 
+/** Reused helper for read Persisted Installed Plugin Index behavior in src/plugins. */
 export async function readPersistedInstalledPluginIndex(
   options: InstalledPluginIndexStoreOptions = {},
 ): Promise<InstalledPluginIndex | null> {
@@ -166,6 +171,7 @@ export async function readPersistedInstalledPluginIndex(
   return parseInstalledPluginIndex(parsed);
 }
 
+/** Reused helper for read Persisted Installed Plugin Index Sync behavior in src/plugins. */
 export function readPersistedInstalledPluginIndexSync(
   options: InstalledPluginIndexStoreOptions = {},
 ): InstalledPluginIndex | null {
@@ -173,6 +179,7 @@ export function readPersistedInstalledPluginIndexSync(
   return parseInstalledPluginIndex(parsed);
 }
 
+/** Reused helper for write Persisted Installed Plugin Index behavior in src/plugins. */
 export async function writePersistedInstalledPluginIndex(
   index: InstalledPluginIndex,
   options: InstalledPluginIndexStoreOptions = {},
@@ -192,6 +199,7 @@ export async function writePersistedInstalledPluginIndex(
   return filePath;
 }
 
+/** Reused helper for write Persisted Installed Plugin Index Sync behavior in src/plugins. */
 export function writePersistedInstalledPluginIndexSync(
   index: InstalledPluginIndex,
   options: InstalledPluginIndexStoreOptions = {},
@@ -262,6 +270,7 @@ function refreshPersistedPolicyState(
   };
 }
 
+/** Reused helper for inspect Persisted Installed Plugin Index behavior in src/plugins. */
 export async function inspectPersistedInstalledPluginIndex(
   params: LoadInstalledPluginIndexParams & InstalledPluginIndexStoreOptions = {},
 ): Promise<InstalledPluginIndexStoreInspection> {
@@ -289,6 +298,7 @@ export async function inspectPersistedInstalledPluginIndex(
   };
 }
 
+/** Reused helper for refresh Persisted Installed Plugin Index behavior in src/plugins. */
 export async function refreshPersistedInstalledPluginIndex(
   params: RefreshInstalledPluginIndexParams & InstalledPluginIndexStoreOptions,
 ): Promise<InstalledPluginIndex> {
@@ -310,6 +320,7 @@ export async function refreshPersistedInstalledPluginIndex(
   return index;
 }
 
+/** Reused helper for refresh Persisted Installed Plugin Index Sync behavior in src/plugins. */
 export function refreshPersistedInstalledPluginIndexSync(
   params: RefreshInstalledPluginIndexParams & InstalledPluginIndexStoreOptions,
 ): InstalledPluginIndex {

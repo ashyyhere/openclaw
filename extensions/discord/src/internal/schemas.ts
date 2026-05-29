@@ -1,3 +1,4 @@
+// extensions/discord/src/internal schemas helpers and runtime behavior.
 import { Type } from "typebox";
 import { Check } from "typebox/value";
 

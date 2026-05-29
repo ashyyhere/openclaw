@@ -1,3 +1,4 @@
+/** Tests ACP runtime backend registry lifecycle and lookup behavior. */
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { AcpRuntimeError } from "./errors.js";
 import {

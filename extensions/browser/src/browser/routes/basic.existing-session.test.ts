@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/browser/routes basic existing session test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { createBrowserRouteApp, createBrowserRouteResponse } from "./test-helpers.js";
 

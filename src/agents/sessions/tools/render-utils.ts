@@ -1,3 +1,4 @@
+/** Rendering helpers shared by session tool result UIs. */
 import * as os from "node:os";
 import { getCapabilities, getImageDimensions, imageFallback } from "@earendil-works/pi-tui";
 import type { ImageContent, TextContent } from "../../../llm/types.js";
@@ -5,6 +6,7 @@ import type { Theme } from "../../modes/interactive/theme/theme.js";
 import { stripAnsi } from "../../utils/ansi.js";
 import { sanitizeBinaryOutput } from "../../utils/shell.js";
 
+/** Shortens home-directory paths for display. */
 export function shortenPath(path: unknown): string {
   if (typeof path !== "string") {
     return "";
@@ -16,6 +18,7 @@ export function shortenPath(path: unknown): string {
   return path;
 }
 
+/** Reused helper for str behavior in src/agents/sessions. */
 export function str(value: unknown): string | null {
   if (typeof value === "string") {
     return value;
@@ -26,14 +29,17 @@ export function str(value: unknown): string | null {
   return null;
 }
 
+/** Reused helper for replace Tabs behavior in src/agents/sessions. */
 export function replaceTabs(text: string): string {
   return text.replace(/\t/g, "   ");
 }
 
+/** Reused helper for normalize Display Text behavior in src/agents/sessions. */
 export function normalizeDisplayText(text: string): string {
   return text.replace(/\r/g, "");
 }
 
+/** Extracts displayable text from tool result content blocks. */
 export function getTextOutput(
   result:
     | { content: Array<{ type: string; text?: string; data?: string; mimeType?: string }> }
@@ -69,11 +75,13 @@ export function getTextOutput(
   return output;
 }
 
+/** Shared type for Tool Render Result Like in src/agents/sessions. */
 export type ToolRenderResultLike<TDetails> = {
   content: (TextContent | ImageContent)[];
   details: TDetails;
 };
 
+/** Reused helper for invalid Arg Text behavior in src/agents/sessions. */
 export function invalidArgText(theme: Pick<Theme, "fg">): string {
   return theme.fg("error", "[invalid arg]");
 }

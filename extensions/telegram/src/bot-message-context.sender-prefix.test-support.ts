@@ -1,3 +1,4 @@
+// extensions/telegram/src bot message context sender prefix test support helpers and runtime behavior.
 import { describe, expect, it } from "vitest";
 import { buildTelegramMessageContextForTest } from "./bot-message-context.test-harness.js";
 import {

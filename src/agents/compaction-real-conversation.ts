@@ -1,3 +1,4 @@
+/** Identifies transcript messages that represent real user-visible conversation. */
 import { stripHeartbeatToken } from "../auto-reply/heartbeat.js";
 import { isSilentReplyText } from "../auto-reply/tokens.js";
 import type { AgentMessage } from "./runtime/index.js";
@@ -26,6 +27,7 @@ function hasMeaningfulText(text: string): boolean {
   return true;
 }
 
+/** Return whether a message has content that should count as conversation. */
 export function hasMeaningfulConversationContent(message: AgentMessage): boolean {
   if ((message as { role?: unknown }).role === "custom") {
     const custom = message as { content?: unknown; display?: unknown };
@@ -96,6 +98,7 @@ function isToolResultConversationAnchor(message: AgentMessage): boolean {
   );
 }
 
+/** Return whether a message should be kept as real conversation context. */
 export function isRealConversationMessage(
   message: AgentMessage,
   messages: AgentMessage[],

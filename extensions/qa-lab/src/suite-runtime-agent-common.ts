@@ -1,3 +1,4 @@
+// extensions/qa-lab/src suite runtime agent common helpers and runtime behavior.
 import { resolveQaLiveTurnTimeoutMs } from "./live-timeout.js";
 import type { QaProviderMode } from "./model-selection.js";
 

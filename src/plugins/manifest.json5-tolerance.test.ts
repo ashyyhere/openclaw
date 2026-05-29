@@ -1,3 +1,4 @@
+// Tests plugins manifest json5 tolerance test behavior.
 import fs from "node:fs";
 import path from "node:path";
 import JSON5 from "json5";

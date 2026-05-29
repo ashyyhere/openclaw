@@ -1,3 +1,4 @@
+/** Broad regression coverage for embedded-agent model resolution. */
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

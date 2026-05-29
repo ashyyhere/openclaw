@@ -1,3 +1,4 @@
+/** Builds and sanitizes bootstrap context files for embedded-agent runs. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
@@ -49,6 +50,7 @@ function isBase64Signature(value: string): boolean {
  * Gemini expects thought signatures as base64-encoded bytes, but Claude stores message ids
  * like "msg_abc123...". We only strip "msg_*" to preserve any provider-valid signatures.
  */
+/** Removes provider thought-signature fields before replaying bootstrap messages. */
 export function stripThoughtSignatures<T>(
   content: T,
   options?: ThoughtSignatureSanitizeOptions,
@@ -85,8 +87,11 @@ export function stripThoughtSignatures<T>(
   }) as T;
 }
 
+/** Reused constant for DEFAULT BOOTSTRAP MAX CHARS behavior in src/agents/embedded-agent-helpers. */
 export const DEFAULT_BOOTSTRAP_MAX_CHARS = 12_000;
+/** Reused constant for DEFAULT BOOTSTRAP TOTAL MAX CHARS behavior in src/agents/embedded-agent-helpers. */
 export const DEFAULT_BOOTSTRAP_TOTAL_MAX_CHARS = 60_000;
+/** Reused constant for DEFAULT BOOTSTRAP PROMPT TRUNCATION WARNING MODE behavior in src/agents/embedded-agent-helpers. */
 export const DEFAULT_BOOTSTRAP_PROMPT_TRUNCATION_WARNING_MODE = "always";
 const MIN_BOOTSTRAP_FILE_BUDGET_CHARS = 64;
 // Ratios split `contentBudget` (= maxChars − marker.length − join separators), not `maxChars`.
@@ -114,6 +119,7 @@ type PolicyDigest = {
   omittedLines: number;
 };
 
+/** Resolves per-file bootstrap context character budget. */
 export function resolveBootstrapMaxChars(cfg?: OpenClawConfig, agentId?: string | null): number {
   const raw =
     cfg && agentId
@@ -126,6 +132,7 @@ export function resolveBootstrapMaxChars(cfg?: OpenClawConfig, agentId?: string 
   return DEFAULT_BOOTSTRAP_MAX_CHARS;
 }
 
+/** Resolves total bootstrap context character budget. */
 export function resolveBootstrapTotalMaxChars(
   cfg?: OpenClawConfig,
   agentId?: string | null,
@@ -141,6 +148,7 @@ export function resolveBootstrapTotalMaxChars(
   return DEFAULT_BOOTSTRAP_TOTAL_MAX_CHARS;
 }
 
+/** Resolves how bootstrap truncation warnings should be surfaced. */
 export function resolveBootstrapPromptTruncationWarningMode(
   cfg?: OpenClawConfig,
 ): "off" | "once" | "always" {
@@ -380,6 +388,7 @@ function clampToBudget(content: string, budget: number): string {
   return `${truncateUtf16Safe(content, safe)}…`;
 }
 
+/** Ensures a session file starts with the expected OpenClaw header block. */
 export async function ensureSessionHeader(params: {
   sessionFile: string;
   sessionId: string;
@@ -407,6 +416,7 @@ export async function ensureSessionHeader(params: {
   });
 }
 
+/** Builds ordered bootstrap context file payloads within configured budgets. */
 export function buildBootstrapContextFiles(
   files: WorkspaceBootstrapFile[],
   opts?: { warn?: (message: string) => void; maxChars?: number; totalMaxChars?: number },
@@ -468,6 +478,7 @@ export function buildBootstrapContextFiles(
   return result;
 }
 
+/** Reorders Google turns so replay satisfies provider adjacency constraints. */
 export function sanitizeGoogleTurnOrdering(messages: AgentMessage[]): AgentMessage[] {
   return sanitizeGoogleAssistantFirstOrdering(messages);
 }

@@ -1,3 +1,4 @@
+// Tests plugins http registry test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { registerPluginHttpRoute, withPluginHttpRouteRegistry } from "./http-registry.js";

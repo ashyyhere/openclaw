@@ -1,3 +1,4 @@
+/** Builds plugin install plans from registry, local, and bundled inputs. */
 import { parseRegistryNpmSpec } from "../infra/npm-registry-spec.js";
 import type { BundledPluginSource } from "../plugins/bundled-sources.js";
 import { PLUGIN_INSTALL_ERROR_CODE } from "../plugins/install.js";
@@ -29,6 +30,7 @@ function isBareNpmPackageName(spec: string): boolean {
   return /^[a-z0-9][a-z0-9-._~]*$/.test(trimmed);
 }
 
+/** Reused helper for resolve Bundled Install Plan For Catalog Entry behavior in src/cli. */
 export function resolveBundledInstallPlanForCatalogEntry(params: {
   pluginId: string;
   npmSpec: string;
@@ -62,6 +64,7 @@ export function resolveBundledInstallPlanForCatalogEntry(params: {
   return { bundledSource: bundledById };
 }
 
+/** Reused helper for resolve Bundled Install Plan Before Npm behavior in src/cli. */
 export function resolveBundledInstallPlanBeforeNpm(params: {
   rawSpec: string;
   findBundledSource: BundledLookup;
@@ -106,6 +109,7 @@ export function resolveBundledInstallPlanBeforeNpm(params: {
   };
 }
 
+/** Reused helper for resolve Official External Install Plan Before Npm behavior in src/cli. */
 export function resolveOfficialExternalInstallPlanBeforeNpm(params: {
   rawSpec: string;
   findOfficialExternalPlugin: OfficialExternalPluginLookup;
@@ -125,6 +129,7 @@ export function resolveOfficialExternalInstallPlanBeforeNpm(params: {
   };
 }
 
+/** Reused helper for resolve Official External Npm Package Trust behavior in src/cli. */
 export function resolveOfficialExternalNpmPackageTrust(params: {
   npmSpec: string;
   findOfficialExternalPackage: OfficialExternalPackageLookup;
@@ -155,6 +160,7 @@ export function resolveOfficialExternalNpmPackageTrust(params: {
   };
 }
 
+/** Reused helper for resolve Bundled Install Plan For Npm Failure behavior in src/cli. */
 export function resolveBundledInstallPlanForNpmFailure(params: {
   rawSpec: string;
   code?: string;

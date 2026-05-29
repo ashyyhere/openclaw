@@ -1,3 +1,4 @@
+// extensions/whatsapp/src config schema helpers and runtime behavior.
 import { buildChannelConfigSchema, WhatsAppConfigSchema } from "../config-api.js";
 import { whatsAppChannelConfigUiHints } from "./config-ui-hints.js";
 

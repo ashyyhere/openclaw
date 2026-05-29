@@ -1,3 +1,4 @@
+// media-understanding attachments select helpers and runtime behavior.
 import type { MediaUnderstandingAttachmentsConfig } from "../config/types.tools.js";
 import {
   isAudioAttachment,
@@ -55,6 +56,7 @@ function isAttachmentRecord(value: unknown): value is MediaAttachment {
   return true;
 }
 
+/** Reused helper for select Attachments behavior in src/media-understanding. */
 export function selectAttachments(params: {
   capability: MediaUnderstandingCapability;
   attachments: MediaAttachment[];

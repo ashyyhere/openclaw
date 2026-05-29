@@ -17,7 +17,9 @@ function loadFacadeModule(): FacadeModule {
   });
 }
 
+/** Reused constant for ensure Matrix Sdk Installed behavior in src/plugin-sdk. */
 export const ensureMatrixSdkInstalled: FacadeModule["ensureMatrixSdkInstalled"] = ((...args) =>
   loadFacadeModule().ensureMatrixSdkInstalled(...args)) as FacadeModule["ensureMatrixSdkInstalled"];
+/** Reused constant for is Matrix Sdk Available behavior in src/plugin-sdk. */
 export const isMatrixSdkAvailable: FacadeModule["isMatrixSdkAvailable"] = ((...args) =>
   loadFacadeModule().isMatrixSdkAvailable(...args)) as FacadeModule["isMatrixSdkAvailable"];

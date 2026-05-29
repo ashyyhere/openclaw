@@ -1,17 +1,22 @@
+/** Resolves whether an embedded attempt ended successfully, errored, or stopped. */
 import {
   hasAcceptedSessionSpawn,
   type AcceptedSessionSpawn,
 } from "../../accepted-session-spawn.js";
 
+/** Shared type for Attempt Trajectory Terminal Status in src/agents/embedded-agent-runner. */
 export type AttemptTrajectoryTerminalStatus = "success" | "error" | "interrupted";
 
+/** Reused constant for NON DELIVERABLE TERMINAL TURN REASON behavior in src/agents/embedded-agent-runner. */
 export const NON_DELIVERABLE_TERMINAL_TURN_REASON = "non_deliverable_terminal_turn";
 
+/** Shared type for Attempt Trajectory Terminal in src/agents/embedded-agent-runner. */
 export type AttemptTrajectoryTerminal = {
   status: AttemptTrajectoryTerminalStatus;
   terminalError?: typeof NON_DELIVERABLE_TERMINAL_TURN_REASON;
 };
 
+/** Shared type for Resolve Attempt Trajectory Terminal Params in src/agents/embedded-agent-runner. */
 export type ResolveAttemptTrajectoryTerminalParams = {
   promptError?: unknown;
   aborted: boolean;
@@ -35,6 +40,7 @@ export type ResolveAttemptTrajectoryTerminalParams = {
   lastAssistantStopReason?: string;
 };
 
+/** Extracts final assistant text blocks that are eligible for delivery. */
 export function resolveTerminalAssistantTexts(params: {
   assistantTexts: string[];
   lastAssistantStopReason?: string;
@@ -75,6 +81,7 @@ function hasAsyncStartedToolActivity(toolMetas?: readonly { asyncStarted?: boole
   return (toolMetas ?? []).some((entry) => entry.asyncStarted === true);
 }
 
+/** Converts attempt trajectory facts into final status and terminal reason. */
 export function resolveAttemptTrajectoryTerminal(
   params: ResolveAttemptTrajectoryTerminalParams,
 ): AttemptTrajectoryTerminal {

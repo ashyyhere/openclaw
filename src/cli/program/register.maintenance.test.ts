@@ -1,3 +1,4 @@
+/** Tests maintenance command registration. */
 import { Command } from "commander";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { registerMaintenanceCommands } from "./register.maintenance.js";

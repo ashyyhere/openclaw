@@ -1,3 +1,4 @@
+// gateway server runtime handles helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { HeartbeatRunner } from "../infra/heartbeat-runner.js";
 import type { ChannelHealthMonitor } from "./channel-health-monitor.js";
@@ -7,6 +8,7 @@ type GatewayConfigReloaderHandle = {
   stop: () => Promise<void>;
 };
 
+/** Shared type for Gateway Server Mutable State in src/gateway. */
 export type GatewayServerMutableState = {
   bonjourStop: (() => Promise<void>) | null;
   tickInterval: ReturnType<typeof setInterval>;
@@ -31,6 +33,7 @@ export type GatewayServerMutableState = {
   lifecycleUnsub: (() => void) | null;
 };
 
+/** Reused helper for create Gateway Server Mutable State behavior in src/gateway. */
 export function createGatewayServerMutableState(): GatewayServerMutableState {
   const noopInterval = () => {
     const timer = setInterval(() => {}, 1 << 30);

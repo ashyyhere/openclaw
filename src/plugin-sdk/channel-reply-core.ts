@@ -1,3 +1,4 @@
+/** Public SDK barrel for channel reply chunking, dispatch, and payload helpers. */
 export {
   createChannelReplyPipeline,
   createReplyPrefixContext,
@@ -5,6 +6,7 @@ export {
   createTypingCallbacks,
   resolveChannelSourceReplyDeliveryMode,
 } from "../channels/message/reply-pipeline.js";
+/** Re-exported API for src/plugin-sdk. */
 export type {
   ChannelReplyPipeline,
   CreateChannelReplyPipelineParams,

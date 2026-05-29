@@ -1,3 +1,4 @@
+/** Filters model catalog entries for visible/default/configured views. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { ModelCatalogEntry } from "./model-catalog.js";
 import { createProviderAuthChecker } from "./model-provider-auth.js";
@@ -81,6 +82,7 @@ function dedupeModelCatalogEntries(entries: ModelCatalogEntry[]): ModelCatalogEn
   return next;
 }
 
+/** Resolve catalog entries visible to the current config/auth/view. */
 export async function resolveVisibleModelCatalog(params: {
   cfg: OpenClawConfig;
   catalog: ModelCatalogEntry[];

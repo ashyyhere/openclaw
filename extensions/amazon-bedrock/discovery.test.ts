@@ -1,3 +1,4 @@
+// Tests extensions/amazon-bedrock discovery test behavior.
 import type { BedrockClient } from "@aws-sdk/client-bedrock";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {

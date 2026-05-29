@@ -1,3 +1,4 @@
+// Tests gateway/server-methods push test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ErrorCodes } from "../../../packages/gateway-protocol/src/index.js";
 import { pushHandlers } from "./push.js";

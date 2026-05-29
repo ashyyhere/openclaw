@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+// acp server helpers and runtime behavior.
+/** ACP stdio server that bridges ACP clients to the OpenClaw gateway. */
 import { Readable, Writable } from "node:stream";
 import { fileURLToPath } from "node:url";
 import { AgentSideConnection, ndJsonStream } from "@agentclientprotocol/sdk";
@@ -19,6 +21,7 @@ import { readSecretFromFile } from "./secret-file.js";
 import { AcpGatewayAgent } from "./translator.js";
 import { normalizeAcpProvenanceMode, type AcpServerOptions } from "./types.js";
 
+/** Start the ACP gateway bridge and serve JSON-RPC over stdio. */
 export async function serveAcpGateway(opts: AcpServerOptions = {}): Promise<void> {
   routeLogsToStderr();
   const cfg = getRuntimeConfig();

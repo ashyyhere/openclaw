@@ -1,3 +1,4 @@
+// Coverage for allowlist command behavior and config writes.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

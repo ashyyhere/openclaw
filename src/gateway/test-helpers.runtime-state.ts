@@ -1,3 +1,4 @@
+// gateway test helpers runtime state helpers and runtime behavior.
 import crypto from "node:crypto";
 import os from "node:os";
 import path from "node:path";
@@ -13,6 +14,7 @@ import type { RunCronAgentTurnResult } from "../cron/isolated-agent/run.types.js
 import type { TailscaleWhoisIdentity } from "../infra/tailscale.js";
 import { resolveGlobalSingleton } from "../shared/global-singleton.js";
 
+/** Shared type for Get Reply From Config Fn in src/gateway. */
 export type GetReplyFromConfigFn = (
   ctx: MsgContext,
   opts?: GetReplyOptions,
@@ -21,6 +23,7 @@ export type GetReplyFromConfigFn = (
 type CronIsolatedRunFn = (...args: unknown[]) => Promise<RunCronAgentTurnResult>;
 type AgentCommandFn = (...args: unknown[]) => Promise<void>;
 type SendWhatsAppFn = (...args: unknown[]) => Promise<{ messageId: string; toJid: string }>;
+/** Shared type for Run Btw Side Question Fn in src/gateway. */
 export type RunBtwSideQuestionFn = (...args: unknown[]) => Promise<unknown>;
 type DispatchInboundMessageFn = (...args: unknown[]) => Promise<unknown>;
 type CompactEmbeddedAgentSessionFn = (...args: unknown[]) => Promise<unknown>;
@@ -140,31 +143,48 @@ const gatewayTestHoisted = vi.hoisted(() => {
   return created;
 });
 
+/** Reused helper for get Gateway Test Hoisted State behavior in src/gateway. */
 export function getGatewayTestHoistedState(): GatewayTestHoistedState {
   return gatewayTestHoisted;
 }
 
+/** Reused constant for test Tailnet IPv4 behavior in src/gateway. */
 export const testTailnetIPv4 = gatewayTestHoisted.testTailnetIPv4;
+/** Reused constant for test Tailscale Whois behavior in src/gateway. */
 export const testTailscaleWhois = gatewayTestHoisted.testTailscaleWhois;
+/** Reused constant for agent Discovery Mock behavior in src/gateway. */
 export const agentDiscoveryMock = gatewayTestHoisted.agentDiscoveryMock;
+/** Reused constant for cron Isolated Run behavior in src/gateway. */
 export const cronIsolatedRun = gatewayTestHoisted.cronIsolatedRun;
+/** Reused constant for agent Command behavior in src/gateway. */
 export const agentCommand = gatewayTestHoisted.agentCommand;
+/** Reused constant for run Btw Side Question behavior in src/gateway. */
 export const runBtwSideQuestion = gatewayTestHoisted.runBtwSideQuestion;
+/** Reused constant for dispatch Inbound Message Mock behavior in src/gateway. */
 export const dispatchInboundMessageMock = gatewayTestHoisted.dispatchInboundMessage;
+/** Reused constant for get Reply From Config behavior in src/gateway. */
 export const getReplyFromConfig = gatewayTestHoisted.getReplyFromConfig;
+/** Reused constant for mock Get Reply From Config Once behavior in src/gateway. */
 export const mockGetReplyFromConfigOnce = (impl: GetReplyFromConfigFn) => {
   getReplyFromConfig.mockImplementationOnce(impl);
 };
+/** Reused constant for send Whats App Mock behavior in src/gateway. */
 export const sendWhatsAppMock = gatewayTestHoisted.sendWhatsAppMock;
+/** Reused constant for test State behavior in src/gateway. */
 export const testState = gatewayTestHoisted.testState;
+/** Reused constant for test Is Nix Mode behavior in src/gateway. */
 export const testIsNixMode = gatewayTestHoisted.testIsNixMode;
+/** Reused constant for session Store Save Delay Ms behavior in src/gateway. */
 export const sessionStoreSaveDelayMs = gatewayTestHoisted.sessionStoreSaveDelayMs;
+/** Reused constant for embedded Run Mock behavior in src/gateway. */
 export const embeddedRunMock = gatewayTestHoisted.embeddedRunMock;
 
+/** Reused constant for test Config Root behavior in src/gateway. */
 export const testConfigRoot = resolveGlobalSingleton(GATEWAY_TEST_CONFIG_ROOT_KEY, () => ({
   value: path.join(os.tmpdir(), `openclaw-gateway-test-${process.pid}-${crypto.randomUUID()}`),
 }));
 
+/** Reused helper for set Test Config Root behavior in src/gateway. */
 export function setTestConfigRoot(root: string): void {
   testConfigRoot.value = root;
   process.env.OPENCLAW_CONFIG_PATH = path.join(root, "openclaw.json");

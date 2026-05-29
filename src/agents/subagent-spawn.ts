@@ -1,3 +1,4 @@
+/** Implements direct subagent spawning, session forking, context setup, and registry creation. */
 import crypto from "node:crypto";
 import { promises as fs } from "node:fs";
 import path from "node:path";
@@ -58,6 +59,7 @@ import { resolveSubagentSpawnAcceptedNote } from "./subagent-spawn-accepted-note
 import { resolveSubagentSpawnOwnership } from "./subagent-spawn-ownership.js";
 import { resolveSubagentTargetPolicy } from "./subagent-target-policy.js";
 import { normalizeSubagentTaskName } from "./subagent-task-name.js";
+/** Re-exported API for src/agents. */
 export {
   SUBAGENT_SPAWN_ACCEPTED_NOTE,
   SUBAGENT_SPAWN_SESSION_ACCEPTED_NOTE,
@@ -101,17 +103,20 @@ import {
   type SpawnSubagentSandboxMode,
 } from "./subagent-spawn.types.js";
 
+/** Re-exported API for src/agents. */
 export {
   SUBAGENT_SPAWN_CONTEXT_MODES,
   SUBAGENT_SPAWN_MODES,
   SUBAGENT_SPAWN_SANDBOX_MODES,
 } from "./subagent-spawn.types.js";
+/** Re-exported API for src/agents. */
 export type {
   SpawnSubagentContextMode,
   SpawnSubagentMode,
   SpawnSubagentSandboxMode,
 } from "./subagent-spawn.types.js";
 
+/** Re-exported API for src/agents, starting with decode Strict Base64. */
 export { decodeStrictBase64 };
 
 function resolveConfiguredAgentIds(cfg: OpenClawConfig): string[] {
@@ -145,6 +150,7 @@ const SUBAGENT_CONTROL_GATEWAY_TIMEOUT_MS = 60_000;
 const DEFAULT_SUBAGENT_AGENT_GATEWAY_TIMEOUT_MS = 60_000;
 const MAX_SUBAGENT_AGENT_GATEWAY_TIMEOUT_MS = 300_000;
 
+/** User/tool-facing parameters accepted by direct subagent spawn. */
 export type SpawnSubagentParams = {
   task: string;
   label?: string;
@@ -170,6 +176,7 @@ export type SpawnSubagentParams = {
   attachMountPath?: string;
 };
 
+/** Runtime context inherited from the caller when spawning a child. */
 export type SpawnSubagentContext = {
   agentSessionKey?: string;
   /** Separate key used only for completion routing, not sandbox policy. */
@@ -189,6 +196,7 @@ export type SpawnSubagentContext = {
   inheritedToolDenylist?: string[];
 };
 
+/** Shared type for Spawn Subagent Result in src/agents. */
 export type SpawnSubagentResult = {
   status: "accepted" | "forbidden" | "error";
   childSessionKey?: string;
@@ -210,6 +218,7 @@ export type SpawnSubagentResult = {
   };
 };
 
+/** Re-exported API for src/agents, starting with split Model Ref. */
 export { splitModelRef } from "./subagent-spawn-plan.js";
 
 async function updateSubagentSessionStore(
@@ -972,6 +981,7 @@ function hasRoutableDeliveryOrigin(
   return Boolean(origin?.channel && origin.to);
 }
 
+/** Reused helper for spawn Subagent Direct behavior in src/agents. */
 export async function spawnSubagentDirect(
   params: SpawnSubagentParams,
   ctx: SpawnSubagentContext,
@@ -1649,6 +1659,7 @@ export async function spawnSubagentDirect(
   };
 }
 
+/** Reused constant for testing behavior in src/agents. */
 export const testing = {
   setDepsForTest(overrides?: Partial<SubagentSpawnDeps>) {
     subagentSpawnDeps = overrides
@@ -1659,4 +1670,5 @@ export const testing = {
       : defaultSubagentSpawnDeps;
   },
 };
+/** Re-exported API for src/agents, starting with testing. */
 export { testing as __testing };

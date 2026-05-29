@@ -1,3 +1,4 @@
+// plugins bundled channel config metadata helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import {
@@ -143,6 +144,7 @@ function resolvePackageChannelMeta(
   return channelMeta?.id?.trim() === channelId ? channelMeta : undefined;
 }
 
+/** Reused helper for collect Bundled Channel Configs behavior in src/plugins. */
 export function collectBundledChannelConfigs(params: {
   pluginDir: string;
   manifest: PluginManifest;

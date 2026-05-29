@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix/monitor context summary helpers and runtime behavior.
 import {
   formatMatrixMessageText,
   resolveMatrixMessageAttachment,

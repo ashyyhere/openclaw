@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server managed binary helpers and runtime behavior.
 import { constants as fsConstants, readFileSync } from "node:fs";
 import { access } from "node:fs/promises";
 import { createRequire } from "node:module";

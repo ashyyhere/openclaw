@@ -1,3 +1,4 @@
+// extensions/whatsapp/src monitor inbox streams inbound messages test support helpers and runtime behavior.
 import fsSync from "node:fs";
 import path from "node:path";
 import "./monitor-inbox.test-harness.js";

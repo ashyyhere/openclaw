@@ -1,3 +1,4 @@
+// Tests test/scripts print cli backend live metadata test behavior.
 import { describe, expect, it } from "vitest";
 import { resolveCliBackendLiveMetadata } from "../../scripts/print-cli-backend-live-metadata.js";
 

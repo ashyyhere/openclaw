@@ -1,3 +1,4 @@
+// Tests markdown ir table code test behavior.
 import { describe, expect, it } from "vitest";
 import { markdownToIR } from "./ir.js";
 

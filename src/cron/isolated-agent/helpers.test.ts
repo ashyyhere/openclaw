@@ -1,3 +1,4 @@
+// Tests cron/isolated-agent helpers test behavior.
 import { describe, expect, it } from "vitest";
 import {
   isHeartbeatOnlyResponse,

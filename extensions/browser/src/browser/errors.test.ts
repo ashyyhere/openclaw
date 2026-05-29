@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/browser errors test behavior.
 import { describe, expect, it } from "vitest";
 import { BrowserTabNotFoundError } from "./errors.js";
 

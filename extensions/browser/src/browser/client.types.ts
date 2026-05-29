@@ -1,3 +1,4 @@
+// Shared types for extensions/browser/src/browser client types behavior.
 export type BrowserTransport = "cdp" | "chrome-mcp";
 type BrowserHeadlessSource =
   | "request"

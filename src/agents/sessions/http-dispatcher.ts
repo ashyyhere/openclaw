@@ -1,8 +1,11 @@
+/** Configures global Undici dispatcher idle timeouts for session HTTP calls. */
 import * as undici from "undici";
 import { parseStrictNonNegativeInteger } from "../../infra/parse-finite-number.js";
 
+/** Reused constant for DEFAULT HTTP IDLE TIMEOUT MS behavior in src/agents/sessions. */
 export const DEFAULT_HTTP_IDLE_TIMEOUT_MS = 300_000;
 
+/** Reused constant for HTTP IDLE TIMEOUT CHOICES behavior in src/agents/sessions. */
 export const HTTP_IDLE_TIMEOUT_CHOICES = [
   { label: "30 sec", timeoutMs: 30_000 },
   { label: "1 min", timeoutMs: 60_000 },
@@ -11,6 +14,7 @@ export const HTTP_IDLE_TIMEOUT_CHOICES = [
   { label: "disabled", timeoutMs: 0 },
 ] as const;
 
+/** Parses an HTTP idle timeout override in milliseconds. */
 export function parseHttpIdleTimeoutMs(value: unknown): number | undefined {
   if (typeof value === "string") {
     const trimmed = value.trim();
@@ -29,6 +33,7 @@ export function parseHttpIdleTimeoutMs(value: unknown): number | undefined {
   return Math.floor(value);
 }
 
+/** Formats an idle timeout into compact operator text. */
 export function formatHttpIdleTimeoutMs(timeoutMs: number): string {
   const choice = HTTP_IDLE_TIMEOUT_CHOICES.find((item) => item.timeoutMs === timeoutMs);
   if (choice) {
@@ -37,6 +42,7 @@ export function formatHttpIdleTimeoutMs(timeoutMs: number): string {
   return `${timeoutMs / 1000} sec`;
 }
 
+/** Installs a process-wide Undici dispatcher with the requested idle timeout. */
 export function configureHttpDispatcher(timeoutMs: number = DEFAULT_HTTP_IDLE_TIMEOUT_MS): void {
   const normalizedTimeoutMs = parseHttpIdleTimeoutMs(timeoutMs);
   if (normalizedTimeoutMs === undefined) {

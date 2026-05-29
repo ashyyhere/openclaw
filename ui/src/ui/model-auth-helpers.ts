@@ -1,3 +1,4 @@
+// ui/src/ui model auth helpers helpers and runtime behavior.
 import type { ModelAuthStatusProvider } from "./types.ts";
 
 /**

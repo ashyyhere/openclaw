@@ -1,3 +1,4 @@
+/** Normalizes and diagnoses tools exposed to provider runtimes. */
 import type { TSchema } from "typebox";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { ProviderRuntimePluginHandle } from "../../plugins/provider-hook-runtime.js";
@@ -35,6 +36,7 @@ function runtimePlanToolContext(params: {
   };
 }
 
+/** Normalizes runtime tools through provider-specific schema hooks. */
 export function normalizeAgentRuntimeTools<
   TSchemaType extends TSchema = TSchema,
   TResult = unknown,
@@ -57,6 +59,7 @@ export function normalizeAgentRuntimeTools<
   );
 }
 
+/** Emits provider-specific diagnostics for runtime tool schemas. */
 export function logAgentRuntimeToolDiagnostics(params: AgentRuntimeToolPolicyParams): void {
   const planContext = runtimePlanToolContext(params);
   if (params.runtimePlan) {

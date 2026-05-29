@@ -1,3 +1,4 @@
+// scripts/e2e openai image auth docker client helpers and runtime behavior.
 import http from "node:http";
 import type { AddressInfo } from "node:net";
 

@@ -1,3 +1,4 @@
+// tts provider registry core helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.js";
 import {
   buildCapabilityProviderMaps,
@@ -6,17 +7,20 @@ import {
 import type { SpeechProviderPlugin } from "../plugins/types.js";
 import type { SpeechProviderId } from "./provider-types.js";
 
+/** Shared type for Speech Provider Registry Resolver in src/tts. */
 export type SpeechProviderRegistryResolver = {
   getProvider: (providerId: string, cfg?: OpenClawConfig) => SpeechProviderPlugin | undefined;
   listProviders: (cfg?: OpenClawConfig) => SpeechProviderPlugin[];
 };
 
+/** Reused helper for normalize Speech Provider Id behavior in src/tts. */
 export function normalizeSpeechProviderId(
   providerId: string | undefined,
 ): SpeechProviderId | undefined {
   return normalizeCapabilityProviderId(providerId);
 }
 
+/** Reused helper for create Speech Provider Registry behavior in src/tts. */
 export function createSpeechProviderRegistry(resolver: SpeechProviderRegistryResolver) {
   const buildResolvedProviderMaps = (cfg?: OpenClawConfig) =>
     buildCapabilityProviderMaps(resolver.listProviders(cfg));

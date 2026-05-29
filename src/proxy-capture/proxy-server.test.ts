@@ -1,3 +1,4 @@
+// Tests proxy-capture proxy server test behavior.
 import { describe, expect, it } from "vitest";
 import { parseConnectTarget } from "./proxy-server.js";
 

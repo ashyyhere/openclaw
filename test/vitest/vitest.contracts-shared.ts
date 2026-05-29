@@ -1,3 +1,4 @@
+// test/vitest vitest contracts shared helpers and runtime behavior.
 import path from "node:path";
 import { defineConfig } from "vitest/config";
 import { loadPatternListFromEnv, narrowIncludePatternsForCli } from "./vitest.pattern-file.ts";

@@ -1,6 +1,8 @@
+// Output helpers for non-interactive onboarding JSON and gateway health failures.
 import { type RuntimeEnv, writeRuntimeJson } from "../../../runtime.js";
 import type { OnboardOptions } from "../../onboard-types.js";
 
+/** Shared type for Gateway Health Failure Diagnostics in src/commands/onboard-non-interactive. */
 export type GatewayHealthFailureDiagnostics = {
   service?: {
     label: string;
@@ -16,6 +18,7 @@ export type GatewayHealthFailureDiagnostics = {
   inspectError?: string;
 };
 
+/** Shared type for Gateway Health Failure Classification in src/commands/onboard-non-interactive. */
 export type GatewayHealthFailureClassification =
   | "not-listening"
   | "auth-mismatch"
@@ -24,6 +27,7 @@ export type GatewayHealthFailureClassification =
   | "startup-blocked"
   | "module-missing";
 
+/** Reused helper for log Non Interactive Onboarding Json behavior in src/commands/onboard-non-interactive. */
 export function logNonInteractiveOnboardingJson(params: {
   opts: OnboardOptions;
   runtime: RuntimeEnv;
@@ -151,6 +155,7 @@ function recoveryHintForGatewayHealthFailure(
   }
 }
 
+/** Reused helper for log Non Interactive Onboarding Failure behavior in src/commands/onboard-non-interactive. */
 export function logNonInteractiveOnboardingFailure(params: {
   opts: OnboardOptions;
   runtime: RuntimeEnv;

@@ -1,8 +1,10 @@
+/** Shared interactive prompt helpers for CLI confirmations. */
 import { stdin as input, stdout as output } from "node:process";
 import readline from "node:readline/promises";
 import { isVerbose, isYes } from "../globals.js";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
+/** Reused class for Prompt Input Closed Error behavior in src/cli. */
 export class PromptInputClosedError extends Error {
   constructor() {
     super("Prompt input closed before an answer was received.");
@@ -33,6 +35,7 @@ function questionUntilClose(rl: ReadlineInterface, question: string): Promise<st
   });
 }
 
+/** Reused helper for prompt Yes No behavior in src/cli. */
 export async function promptYesNo(question: string, defaultYes = false): Promise<boolean> {
   // Simple Y/N prompt honoring global --yes and verbosity flags.
   if (isVerbose() && isYes()) {

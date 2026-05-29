@@ -1,8 +1,10 @@
+// ui/src/ui/chat chat queue helpers and runtime behavior.
 import { html, nothing } from "lit";
 import { t } from "../../i18n/index.ts";
 import { icons } from "../icons.ts";
 import type { ChatQueueItem } from "../ui-types.ts";
 
+/** Shared type for Chat Queue Props in ui/src/ui/chat. */
 export type ChatQueueProps = {
   queue: ChatQueueItem[];
   canAbort?: boolean;
@@ -24,6 +26,7 @@ function sendStateLabel(item: ChatQueueItem): string | null {
   }
 }
 
+/** Reused helper for render Chat Queue behavior in ui/src/ui/chat. */
 export function renderChatQueue(props: ChatQueueProps) {
   if (!props.queue.length) {
     return nothing;

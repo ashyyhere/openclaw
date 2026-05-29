@@ -1,3 +1,4 @@
+// extensions/msteams/src/monitor-handler thread session helpers and runtime behavior.
 import { resolveThreadSessionKeys } from "openclaw/plugin-sdk/routing";
 
 // Strip any trailing `:thread:<id>` segments from a session key. Thread ids are

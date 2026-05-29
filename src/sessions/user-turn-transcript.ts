@@ -1,3 +1,4 @@
+// sessions user turn transcript helpers and runtime behavior.
 import path from "node:path";
 import type { AgentMessage } from "../agents/runtime/index.js";
 import { appendSessionTranscriptMessage } from "../config/sessions/transcript-append.js";
@@ -32,8 +33,10 @@ type PersistedUserTurnMediaFields = {
   MediaTypes?: string[];
 };
 
+/** Shared type for Persisted User Turn Message in src/sessions. */
 export type PersistedUserTurnMessage = Extract<AgentMessage, { role: "user" }>;
 
+/** Shared type for User Turn Input in src/sessions. */
 export type UserTurnInput = {
   text?: string | null;
   media?: readonly PersistedUserTurnMediaInput[] | null;
@@ -45,6 +48,7 @@ export type UserTurnInput = {
 
 type UserTurnTranscriptUpdateMode = "inline" | "none";
 
+/** Shared type for User Turn Before Message Write in src/sessions. */
 export type UserTurnBeforeMessageWrite = (params: {
   message: PersistedUserTurnMessage;
   agentId?: string;
@@ -109,6 +113,7 @@ type UserTurnTranscriptTargetResolver =
 
 type UserTurnInputResolver = () => UserTurnInput | undefined | Promise<UserTurnInput | undefined>;
 
+/** Shared type for User Turn Transcript Recorder in src/sessions. */
 export type UserTurnTranscriptRecorder = {
   readonly message: PersistedUserTurnMessage | undefined;
   resolveMessage: () => Promise<PersistedUserTurnMessage | undefined>;
@@ -165,6 +170,7 @@ function normalizeTranscriptText(value: string | null | undefined): string {
 
 const CHANNEL_MEDIA_PLACEHOLDER_PATTERN = /^<media:[a-z0-9_-]+>(?:\s+\([^)]*\))?$/i;
 
+/** Reused helper for resolve Persisted User Turn Text behavior in src/sessions. */
 export function resolvePersistedUserTurnText(
   value: string | null | undefined,
   options: ResolvePersistedUserTurnTextOptions = {},
@@ -228,6 +234,7 @@ function resolveTranscriptMediaType(params: {
   return params.explicitType ?? mimeTypeFromFilePath(params.mediaPath ?? params.mediaUrl);
 }
 
+/** Reused helper for build Persisted User Turn Media Inputs From Fields behavior in src/sessions. */
 export function buildPersistedUserTurnMediaInputsFromFields(
   fields: PersistedUserTurnMediaFieldSource | null | undefined,
 ): PersistedUserTurnMediaInput[] {
@@ -323,6 +330,7 @@ function isBeforeAgentRunBlockedMessage(message: AgentMessage): boolean {
   return marker !== undefined;
 }
 
+/** Reused helper for merge Prepared User Turn Message For Runtime behavior in src/sessions. */
 export function mergePreparedUserTurnMessageForRuntime(params: {
   runtimeMessage: AgentMessage;
   preparedMessage?: PersistedUserTurnMessage;
@@ -375,6 +383,7 @@ function applyBeforeMessageWriteToUserTurn(
     : nextUserMessage;
 }
 
+/** Reused helper for append User Turn Transcript Message behavior in src/sessions. */
 export async function appendUserTurnTranscriptMessage(
   params: AppendUserTurnTranscriptMessageParams,
 ): Promise<
@@ -427,6 +436,7 @@ export async function appendUserTurnTranscriptMessage(
   };
 }
 
+/** Reused helper for persist User Turn Transcript behavior in src/sessions. */
 export async function persistUserTurnTranscript(
   params: PersistUserTurnTranscriptParams,
 ): Promise<UserTurnTranscriptPersistResult | undefined> {
@@ -479,6 +489,7 @@ function isUserTurnTranscriptFileTarget(
   return "transcriptPath" in target;
 }
 
+/** Reused helper for create User Turn Transcript Recorder behavior in src/sessions. */
 export function createUserTurnTranscriptRecorder(
   params: CreateUserTurnTranscriptRecorderParams,
 ): UserTurnTranscriptRecorder {

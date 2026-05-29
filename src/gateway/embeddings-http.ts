@@ -1,3 +1,4 @@
+// gateway embeddings http helpers and runtime behavior.
 import { Buffer } from "node:buffer";
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { resolveAgentDir } from "../agents/agent-scope.js";
@@ -222,6 +223,7 @@ function resolveEmbeddingsTarget(params: {
   return { provider: configuredProvider, model };
 }
 
+/** Reused helper for handle Open Ai Embeddings Http Request behavior in src/gateway. */
 export async function handleOpenAiEmbeddingsHttpRequest(
   req: IncomingMessage,
   res: ServerResponse,

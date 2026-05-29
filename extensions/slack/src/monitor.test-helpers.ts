@@ -1,3 +1,4 @@
+// extensions/slack/src monitor test helpers helpers and runtime behavior.
 import type { ChannelRuntimeSurface } from "openclaw/plugin-sdk/channel-contract";
 import { vi } from "vitest";
 import type { Mock } from "vitest";

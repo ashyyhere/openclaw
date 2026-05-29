@@ -1,3 +1,4 @@
+// Tests extensions/line/src channel sendPayload test behavior.
 import {
   verifyChannelMessageAdapterCapabilityProofs,
   verifyChannelMessageReceiveAckPolicyAdapterProofs,

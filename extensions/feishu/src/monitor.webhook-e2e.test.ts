@@ -1,3 +1,4 @@
+// Tests extensions/feishu/src monitor webhook e2e test behavior.
 import crypto from "node:crypto";
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { createFeishuRuntimeMockModule } from "./monitor.test-mocks.js";

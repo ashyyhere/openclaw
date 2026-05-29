@@ -1,10 +1,13 @@
+// extensions/anthropic-vertex api helpers and runtime behavior.
 import type { StreamFn } from "openclaw/plugin-sdk/agent-core";
 import type { AnthropicVertexStreamDeps } from "./stream-runtime.js";
 
+/** Re-exported anthropic-vertex plugin public API. */
 export {
   ANTHROPIC_VERTEX_DEFAULT_MODEL_ID,
   buildAnthropicVertexProvider,
 } from "./provider-catalog.js";
+/** Re-exported anthropic-vertex plugin public API. */
 export {
   hasAnthropicVertexAvailableAuth,
   hasAnthropicVertexCredentials,
@@ -42,6 +45,7 @@ export function mergeImplicitAnthropicVertexProvider(params: {
   };
 }
 
+/** Public anthropic-vertex plugin helper for resolve Implicit Anthropic Vertex Provider behavior. */
 export function resolveImplicitAnthropicVertexProvider(params?: { env?: NodeJS.ProcessEnv }) {
   const env = params?.env ?? process.env;
   if (!hasAnthropicVertexAvailableAuth(env)) {
@@ -51,6 +55,7 @@ export function resolveImplicitAnthropicVertexProvider(params?: { env?: NodeJS.P
   return buildAnthropicVertexProvider({ env });
 }
 
+/** Public anthropic-vertex plugin helper for create Anthropic Vertex Stream Fn behavior. */
 export function createAnthropicVertexStreamFn(
   projectId: string | undefined,
   region: string,
@@ -66,6 +71,7 @@ export function createAnthropicVertexStreamFn(
   };
 }
 
+/** Public anthropic-vertex plugin helper for create Anthropic Vertex Stream Fn For Model behavior. */
 export function createAnthropicVertexStreamFnForModel(
   model: { baseUrl?: string },
   env: NodeJS.ProcessEnv = process.env,

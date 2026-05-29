@@ -1,3 +1,4 @@
+// Tests gateway session utils telegram recreate test behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";

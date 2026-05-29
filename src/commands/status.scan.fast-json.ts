@@ -1,3 +1,4 @@
+/** Fast status scan path optimized for JSON output. */
 import { GENERATED_BUNDLED_CHANNEL_CONFIG_METADATA } from "../config/bundled-channel-config-metadata.generated.js";
 import type { OpenClawConfig } from "../config/types.js";
 import type { RuntimeEnv } from "../runtime.js";
@@ -76,6 +77,7 @@ function hasPotentialConfiguredChannelsForStatusJson(cfg: OpenClawConfig): boole
   return hasExplicitStatusJsonChannelConfig(cfg) || hasStatusJsonChannelEnvConfig();
 }
 
+/** Reused helper for scan Status Json With Policy behavior in src/commands. */
 export async function scanStatusJsonWithPolicy(
   opts: {
     timeoutMs?: number;
@@ -112,6 +114,7 @@ export async function scanStatusJsonWithPolicy(
   });
 }
 
+/** Reused helper for scan Status Json Fast behavior in src/commands. */
 export async function scanStatusJsonFast(
   opts: {
     timeoutMs?: number;

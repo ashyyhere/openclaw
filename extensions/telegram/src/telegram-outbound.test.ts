@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src telegram outbound test behavior.
 import { describe, expect, it } from "vitest";
 import { markdownToTelegramHtmlChunks, splitTelegramHtmlChunks } from "./format.js";
 import { telegramOutbound } from "./outbound-adapter.js";

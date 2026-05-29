@@ -1,7 +1,9 @@
+/** Evaluates whether stored auth profile credentials are usable. */
 import { coerceSecretRef, normalizeSecretInputString } from "../../config/types.secrets.js";
 import { MAX_DATE_TIMESTAMP_MS } from "../../shared/number-coercion.js";
 import type { AuthProfileCredential, OAuthCredential } from "./types.js";
 
+/** Shared type for Auth Credential Reason Code in src/agents/auth-profiles. */
 export type AuthCredentialReasonCode =
   | "ok"
   | "missing_credential"
@@ -9,10 +11,13 @@ export type AuthCredentialReasonCode =
   | "expired"
   | "unresolved_ref";
 
+/** Reused constant for DEFAULT OAUTH REFRESH MARGIN MS behavior in src/agents/auth-profiles. */
 export const DEFAULT_OAUTH_REFRESH_MARGIN_MS = 5 * 60 * 1000;
 
+/** Shared type for Token Expiry State in src/agents/auth-profiles. */
 export type TokenExpiryState = "missing" | "valid" | "expiring" | "expired" | "invalid_expires";
 
+/** Classifies a token expiry timestamp relative to now and an optional refresh window. */
 export function resolveTokenExpiryState(
   expires: unknown,
   now = Date.now(),
@@ -40,6 +45,7 @@ export function resolveTokenExpiryState(
   return "valid";
 }
 
+/** Returns true when an OAuth access token exists and is not near expiry. */
 export function hasUsableOAuthCredential(
   credential: OAuthCredential | undefined,
   opts?: {
@@ -70,6 +76,7 @@ function hasConfiguredSecretString(value: unknown): boolean {
   return normalizeSecretInputString(value) !== undefined;
 }
 
+/** Checks whether a stored credential has enough material to be selected. */
 export function evaluateStoredCredentialEligibility(params: {
   credential: AuthProfileCredential;
   now?: number;

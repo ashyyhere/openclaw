@@ -1,3 +1,4 @@
+/** Aggregates all legacy config migration rule groups. */
 import { LEGACY_CONFIG_MIGRATIONS_AUDIO } from "./legacy-config-migrations.audio.js";
 import { LEGACY_CONFIG_MIGRATIONS_CHANNELS } from "./legacy-config-migrations.channels.js";
 import { LEGACY_CONFIG_MIGRATIONS_QUEUE } from "./legacy-config-migrations.queue.js";
@@ -12,10 +13,12 @@ const LEGACY_CONFIG_MIGRATION_SPECS = [
   ...LEGACY_CONFIG_MIGRATIONS_WEB_SEARCH,
 ];
 
+/** Reused constant for LEGACY CONFIG MIGRATIONS behavior in src/commands/doctor. */
 export const LEGACY_CONFIG_MIGRATIONS = LEGACY_CONFIG_MIGRATION_SPECS.map(
   ({ legacyRules: _legacyRules, ...migration }) => migration,
 );
 
+/** Reused constant for LEGACY CONFIG MIGRATION RULES behavior in src/commands/doctor. */
 export const LEGACY_CONFIG_MIGRATION_RULES = LEGACY_CONFIG_MIGRATION_SPECS.flatMap(
   (migration) => migration.legacyRules ?? [],
 );

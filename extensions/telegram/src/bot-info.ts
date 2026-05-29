@@ -1,3 +1,4 @@
+// extensions/telegram/src bot info helpers and runtime behavior.
 export type TelegramBotInfo = {
   id: number;
   is_bot: true;

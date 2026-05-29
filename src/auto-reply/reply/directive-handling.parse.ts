@@ -1,3 +1,4 @@
+// Parser for inline reply directives embedded in message text.
 import type { ExecAsk, ExecSecurity, ExecTarget } from "../../infra/exec-approvals.js";
 import { extractModelDirective } from "../model.js";
 import { isSessionDefaultDirectiveValue } from "../thinking.js";
@@ -21,6 +22,7 @@ import {
 import { extractQueueDirective } from "./queue/directive.js";
 import type { QueueDropPolicy, QueueMode } from "./queue/types.js";
 
+/** Shared type for Inline Directives in src/auto-reply/reply. */
 export type InlineDirectives = {
   cleaned: string;
   hasThinkDirective: boolean;
@@ -75,6 +77,7 @@ export type InlineDirectives = {
   hasQueueOptions: boolean;
 };
 
+/** Reused helper for parse Inline Directives behavior in src/auto-reply/reply. */
 export function parseInlineDirectives(
   body: string,
   options?: {

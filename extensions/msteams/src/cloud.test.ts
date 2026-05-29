@@ -1,3 +1,4 @@
+// Tests extensions/msteams/src cloud test behavior.
 import { describe, expect, it } from "vitest";
 import {
   resolveMSTeamsSdkCloudOptions,

@@ -1,3 +1,5 @@
+// extensions/ollama runtime api helpers and runtime behavior.
+/** Re-exported ollama plugin public API. */
 export {
   buildAssistantMessage,
   buildOllamaChatRequest,
@@ -14,6 +16,7 @@ export {
   shouldInjectOllamaCompatNumCtx,
   wrapOllamaCompatNumCtx,
 } from "./src/stream.js";
+/** Re-exported ollama plugin public API. */
 export {
   createOllamaEmbeddingProvider,
   DEFAULT_OLLAMA_EMBEDDING_MODEL,

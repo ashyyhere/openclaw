@@ -1,3 +1,4 @@
+// Tests extensions/qa-lab/src suite planning test behavior.
 import { lstat, mkdir, mkdtemp, rm, symlink } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

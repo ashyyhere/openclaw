@@ -1,3 +1,4 @@
+// gateway/server ws connection helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import type { Socket } from "node:net";
 import type { RawData, WebSocket, WebSocketServer } from "ws";
@@ -135,6 +136,7 @@ function isWsPayloadLimitError(err: unknown): boolean {
   return typeof message === "string" && /max payload size exceeded/i.test(message);
 }
 
+/** Shared type for Gateway Ws Shared Handler Params in src/gateway/server. */
 export type GatewayWsSharedHandlerParams = {
   wss: WebSocketServer;
   clients: Set<GatewayWsClient>;
@@ -157,6 +159,7 @@ export type GatewayWsSharedHandlerParams = {
   refreshHealthSnapshot: GatewayRequestContext["refreshHealthSnapshot"];
 };
 
+/** Shared type for Attach Gateway Ws Connection Handler Params in src/gateway/server. */
 export type AttachGatewayWsConnectionHandlerParams = GatewayWsSharedHandlerParams & {
   logGateway: SubsystemLogger;
   logHealth: SubsystemLogger;
@@ -210,6 +213,7 @@ function attachGatewayWsMessageHandlerOnDemand(params: GatewayWsMessageHandlerPa
     });
 }
 
+/** Reused helper for attach Gateway Ws Connection Handler behavior in src/gateway/server. */
 export function attachGatewayWsConnectionHandler(params: AttachGatewayWsConnectionHandlerParams) {
   const {
     wss,

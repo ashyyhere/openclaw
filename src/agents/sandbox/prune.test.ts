@@ -1,3 +1,4 @@
+/** Covers pruning stale sandbox and browser containers. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { SandboxConfig } from "./types.js";
 

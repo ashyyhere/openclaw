@@ -1,3 +1,4 @@
+// plugins session entry slot keys helpers and runtime behavior.
 import type { SessionEntry } from "../config/sessions/types.js";
 
 const SESSION_ENTRY_RESERVED_SLOT_KEY_LIST = [
@@ -131,6 +132,7 @@ type ReservedSessionEntrySlotKey = Extract<
 >;
 type MissingSessionEntryReservedSlotKeys = Exclude<keyof SessionEntry, ReservedSessionEntrySlotKey>;
 type AssertNever<T extends never> = T;
+/** Shared type for Assert All Session Entry Keys Are Reserved in src/plugins. */
 export type _AssertAllSessionEntryKeysAreReserved =
   AssertNever<MissingSessionEntryReservedSlotKeys>;
 
@@ -142,6 +144,7 @@ const OBJECT_PROTOTYPE_RESERVED_SLOT_KEYS = new Set<string>([
 
 const SESSION_ENTRY_SLOT_KEY_RE = /^[A-Za-z][A-Za-z0-9_]*$/u;
 
+/** Reused helper for normalize Session Entry Slot Key behavior in src/plugins. */
 export function normalizeSessionEntrySlotKey(
   value: unknown,
 ): { ok: true; key: string } | { ok: false; error: string } {

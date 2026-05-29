@@ -1,3 +1,4 @@
+// test/vitest vitest extension provider openai config helpers and runtime behavior.
 import path from "node:path";
 import { providerOpenAiExtensionTestRoots } from "./vitest.extension-provider-paths.mjs";
 import { loadPatternListFromEnv } from "./vitest.pattern-file.ts";

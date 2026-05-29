@@ -1,3 +1,4 @@
+/** Tests parsing trailing auth profile from model refs. */
 import { describe, expect, it } from "vitest";
 import { splitTrailingAuthProfile } from "./model-ref-profile.js";
 

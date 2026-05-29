@@ -1,3 +1,4 @@
+// extensions/mattermost/src/mattermost probe helpers and runtime behavior.
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";
 import {
   fetchWithSsrFGuard,

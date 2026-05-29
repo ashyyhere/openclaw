@@ -1,3 +1,4 @@
+// extensions/vydra video generation provider helpers and runtime behavior.
 import { isProviderApiKeyConfigured } from "openclaw/plugin-sdk/provider-auth";
 import {
   assertOkOrThrowHttpError,

@@ -1,5 +1,7 @@
+// infra errors helpers and runtime behavior.
 import { redactSensitiveText } from "../logging/redact.js";
 
+/** Reused helper for extract Error Code behavior in src/infra. */
 export function extractErrorCode(err: unknown): string | undefined {
   if (!err || typeof err !== "object") {
     return undefined;
@@ -14,6 +16,7 @@ export function extractErrorCode(err: unknown): string | undefined {
   return undefined;
 }
 
+/** Reused helper for read Error Name behavior in src/infra. */
 export function readErrorName(err: unknown): string {
   if (!err || typeof err !== "object") {
     return "";
@@ -22,6 +25,7 @@ export function readErrorName(err: unknown): string {
   return typeof name === "string" ? name : "";
 }
 
+/** Reused helper for collect Error Graph Candidates behavior in src/infra. */
 export function collectErrorGraphCandidates(
   err: unknown,
   resolveNested?: (current: Record<string, unknown>) => Iterable<unknown>,
@@ -65,6 +69,7 @@ export function hasErrnoCode(err: unknown, code: string): boolean {
   return isErrno(err) && err.code === code;
 }
 
+/** Reused helper for format Error Message behavior in src/infra. */
 export function formatErrorMessage(err: unknown): string {
   let formatted: string;
   if (err instanceof Error) {
@@ -129,6 +134,7 @@ export function stringifyNonErrorCause(value: unknown): string {
   }
 }
 
+/** Reused helper for format Uncaught Error behavior in src/infra. */
 export function formatUncaughtError(err: unknown): string {
   if (extractErrorCode(err) === "INVALID_CONFIG") {
     return formatErrorMessage(err);
@@ -140,8 +146,10 @@ export function formatUncaughtError(err: unknown): string {
   return formatErrorMessage(err);
 }
 
+/** Shared type for Error Kind in src/infra. */
 export type ErrorKind = "refusal" | "timeout" | "rate_limit" | "context_length" | "unknown";
 
+/** Reused helper for detect Error Kind behavior in src/infra. */
 export function detectErrorKind(err: unknown): ErrorKind | undefined {
   if (err === undefined) {
     return undefined;

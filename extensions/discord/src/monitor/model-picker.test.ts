@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/monitor model picker test behavior.
 import { ComponentType } from "discord-api-types/v10";
 import { describe, expect, it, vi } from "vitest";
 import { serializePayload } from "../internal/discord.js";

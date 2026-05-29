@@ -1,6 +1,8 @@
+// ui/src/ui/views config form shared helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "../string-coerce.ts";
 import type { ConfigUiHint, ConfigUiHints } from "../types.ts";
 
+/** Shared type for Json Schema in ui/src/ui/views. */
 export type JsonSchema = {
   type?: string | string[];
   title?: string;
@@ -21,6 +23,7 @@ export type JsonSchema = {
   nullable?: boolean;
 };
 
+/** Reused helper for schema Type behavior in ui/src/ui/views. */
 export function schemaType(schema: JsonSchema): string | undefined {
   if (!schema) {
     return undefined;
@@ -31,6 +34,7 @@ export function schemaType(schema: JsonSchema): string | undefined {
   return schema.type;
 }
 
+/** Reused helper for default Value behavior in ui/src/ui/views. */
 export function defaultValue(schema?: JsonSchema): unknown {
   if (!schema) {
     return "";
@@ -56,10 +60,12 @@ export function defaultValue(schema?: JsonSchema): unknown {
   }
 }
 
+/** Reused helper for path Key behavior in ui/src/ui/views. */
 export function pathKey(path: Array<string | number>): string {
   return path.filter((segment) => typeof segment === "string").join(".");
 }
 
+/** Reused helper for hint For Path behavior in ui/src/ui/views. */
 export function hintForPath(path: Array<string | number>, hints: ConfigUiHints) {
   const key = pathKey(path);
   const direct = hints[key];
@@ -89,6 +95,7 @@ export function hintForPath(path: Array<string | number>, hints: ConfigUiHints) 
   return undefined;
 }
 
+/** Reused helper for humanize behavior in ui/src/ui/views. */
 export function humanize(raw: string) {
   return raw
     .replace(/_/g, " ")
@@ -120,6 +127,7 @@ const SENSITIVE_PATTERNS = [
 
 const ENV_VAR_PLACEHOLDER_PATTERN = /^\$\{[^}]*\}$/;
 
+/** Reused constant for REDACTED PLACEHOLDER behavior in ui/src/ui/views. */
 export const REDACTED_PLACEHOLDER = "[redacted - click reveal to view]";
 
 const MAX_SENSITIVE_SCAN_DEPTH = 64;
@@ -148,6 +156,7 @@ function isEnvVarPlaceholder(value: string): boolean {
   return ENV_VAR_PLACEHOLDER_PATTERN.test(value.trim());
 }
 
+/** Reused helper for is Sensitive Config Path behavior in ui/src/ui/views. */
 export function isSensitiveConfigPath(path: string): boolean {
   const lowerPath = normalizeLowercaseStringOrEmpty(path);
   const whitelisted = SENSITIVE_KEY_WHITELIST_SUFFIXES.some((suffix) => lowerPath.endsWith(suffix));
@@ -165,6 +174,7 @@ function isHintSensitive(hint: ConfigUiHint | undefined): boolean {
   return hint?.sensitive ?? false;
 }
 
+/** Reused helper for has Sensitive Config Data behavior in ui/src/ui/views. */
 export function hasSensitiveConfigData(
   value: unknown,
   path: Array<string | number>,
@@ -207,6 +217,7 @@ function hasSensitiveConfigDataInner(
   return false;
 }
 
+/** Reused helper for count Sensitive Config Values behavior in ui/src/ui/views. */
 export function countSensitiveConfigValues(
   value: unknown,
   path: Array<string | number>,

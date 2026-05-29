@@ -1,3 +1,4 @@
+// gateway gateway cli backend live probe helpers helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import { renderCatFacePngBase64 } from "../../test/helpers/live-image-probe.js";
 import { isTruthyEnvValue } from "../infra/env.js";
@@ -264,6 +265,7 @@ async function readBoundedResponseText(response: Response, byteLimit: number): P
   return Buffer.concat(chunks, totalBytes).toString("utf8");
 }
 
+/** Reused helper for verify Cli Cron Mcp Loopback Preflight behavior in src/gateway. */
 export async function verifyCliCronMcpLoopbackPreflight(params: {
   sessionKey: string;
   port: number;
@@ -385,6 +387,7 @@ function getCliBackendProbeThinking(providerId: string): "low" | undefined {
   return normalizeLowercaseStringOrEmpty(providerId) === "codex-cli" ? "low" : undefined;
 }
 
+/** Reused helper for verify Cli Backend Image Probe behavior in src/gateway. */
 export async function verifyCliBackendImageProbe(params: {
   client: GatewayClient;
   providerId: string;
@@ -423,6 +426,7 @@ export async function verifyCliBackendImageProbe(params: {
   assertLiveImageProbeReply(extractPayloadText(imageProbe?.result));
 }
 
+/** Reused helper for verify Cli Cron Mcp Probe behavior in src/gateway. */
 export async function verifyCliCronMcpProbe(params: {
   client: GatewayClient;
   providerId: string;

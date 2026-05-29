@@ -1,11 +1,14 @@
+// ui/src/ui theme transition helpers and runtime behavior.
 import type { ResolvedTheme } from "./theme.ts";
 
+/** Shared type for Theme Transition Context in ui/src/ui. */
 export type ThemeTransitionContext = {
   element?: HTMLElement | null;
   pointerClientX?: number;
   pointerClientY?: number;
 };
 
+/** Shared type for Theme Transition Options in ui/src/ui. */
 export type ThemeTransitionOptions = {
   nextTheme: ResolvedTheme;
   applyTheme: () => void;
@@ -21,6 +24,7 @@ const cleanupThemeTransition = (root: HTMLElement) => {
   root.style.removeProperty("--theme-switch-y");
 };
 
+/** Reused constant for start Theme Transition behavior in ui/src/ui. */
 export const startThemeTransition = ({
   nextTheme,
   applyTheme,

@@ -1,3 +1,4 @@
+// secrets channel secret basic runtime helpers and runtime behavior.
 import { coerceSecretRef } from "../config/types.secrets.js";
 import {
   collectSecretInputAssignment,
@@ -9,20 +10,24 @@ import {
 } from "./runtime-shared.js";
 import { isRecord } from "./shared.js";
 
+/** Shared type for Channel Account Entry in src/secrets. */
 export type ChannelAccountEntry = {
   accountId: string;
   account: Record<string, unknown>;
   enabled: boolean;
 };
 
+/** Shared type for Channel Account Surface in src/secrets. */
 export type ChannelAccountSurface = {
   hasExplicitAccounts: boolean;
   channelEnabled: boolean;
   accounts: ChannelAccountEntry[];
 };
 
+/** Shared type for Channel Account Predicate in src/secrets. */
 export type ChannelAccountPredicate = (entry: ChannelAccountEntry) => boolean;
 
+/** Reused helper for get Channel Record behavior in src/secrets. */
 export function getChannelRecord(
   config: { channels?: Record<string, unknown> },
   channelKey: string,
@@ -35,6 +40,7 @@ export function getChannelRecord(
   return isRecord(channel) ? channel : undefined;
 }
 
+/** Reused helper for get Channel Surface behavior in src/secrets. */
 export function getChannelSurface(
   config: { channels?: Record<string, unknown> },
   channelKey: string,
@@ -49,6 +55,7 @@ export function getChannelSurface(
   };
 }
 
+/** Reused helper for resolve Channel Account Surface behavior in src/secrets. */
 export function resolveChannelAccountSurface(
   channel: Record<string, unknown>,
 ): ChannelAccountSurface {
@@ -79,6 +86,7 @@ export function resolveChannelAccountSurface(
   };
 }
 
+/** Reused helper for is Base Field Active For Channel Surface behavior in src/secrets. */
 export function isBaseFieldActiveForChannelSurface(
   surface: ChannelAccountSurface,
   rootKey: string,
@@ -94,10 +102,12 @@ export function isBaseFieldActiveForChannelSurface(
   );
 }
 
+/** Reused helper for normalize Secret String Value behavior in src/secrets. */
 export function normalizeSecretStringValue(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
 }
 
+/** Reused helper for has Configured Secret Input Value behavior in src/secrets. */
 export function hasConfiguredSecretInputValue(
   value: unknown,
   defaults: SecretDefaults | undefined,
@@ -105,6 +115,7 @@ export function hasConfiguredSecretInputValue(
   return normalizeSecretStringValue(value).length > 0 || coerceSecretRef(value, defaults) !== null;
 }
 
+/** Reused helper for collect Simple Channel Field Assignments behavior in src/secrets. */
 export function collectSimpleChannelFieldAssignments(params: {
   channelKey: string;
   field: string;
@@ -163,6 +174,7 @@ function isConditionalTopLevelFieldActive(params: {
   return params.surface.accounts.some(params.inheritedAccountActive);
 }
 
+/** Reused helper for collect Conditional Channel Field Assignments behavior in src/secrets. */
 export function collectConditionalChannelFieldAssignments(params: {
   channelKey: string;
   field: string;
@@ -217,6 +229,7 @@ export function collectConditionalChannelFieldAssignments(params: {
   }
 }
 
+/** Reused helper for collect Nested Channel Field Assignments behavior in src/secrets. */
 export function collectNestedChannelFieldAssignments(params: {
   channelKey: string;
   nestedKey: string;

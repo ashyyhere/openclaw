@@ -1,3 +1,4 @@
+// extensions/slack/src targets helpers and runtime behavior.
 export {
   looksLikeSlackTargetId,
   normalizeSlackMessagingTarget,

@@ -1,3 +1,4 @@
+// extensions/alibaba index helpers and runtime behavior.
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 import { buildAlibabaVideoGenerationProvider } from "./video-generation-provider.js";
 

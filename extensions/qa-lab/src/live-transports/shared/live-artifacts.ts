@@ -1,3 +1,4 @@
+// extensions/qa-lab/src/live-transports/shared live artifacts helpers and runtime behavior.
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";
 
 export function appendQaLiveLaneIssue(issues: string[], label: string, error: unknown) {

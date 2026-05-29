@@ -1,3 +1,4 @@
+// Tests shared agent run status test behavior.
 import { describe, expect, it } from "vitest";
 import { isNonTerminalAgentRunStatus } from "./agent-run-status.js";
 

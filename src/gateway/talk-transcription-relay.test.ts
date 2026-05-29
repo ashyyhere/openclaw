@@ -1,3 +1,4 @@
+// Tests gateway talk transcription relay test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { RealtimeTranscriptionProviderPlugin } from "../plugins/types.js";
 import type { RealtimeTranscriptionSessionCreateRequest } from "../realtime-transcription/provider-types.js";

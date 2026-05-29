@@ -1,8 +1,10 @@
+// plugins public surface runtime helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { resolveUserPath } from "../utils.js";
 import { areBundledPluginsDisabled, resolveBundledPluginsDir } from "./bundled-dir.js";
 
+/** Reused constant for PUBLIC SURFACE SOURCE EXTENSIONS behavior in src/plugins. */
 export const PUBLIC_SURFACE_SOURCE_EXTENSIONS = [
   ".ts",
   ".mts",
@@ -12,6 +14,7 @@ export const PUBLIC_SURFACE_SOURCE_EXTENSIONS = [
   ".cjs",
 ] as const;
 
+/** Reused helper for normalize Bundled Plugin Artifact Subpath behavior in src/plugins. */
 export function normalizeBundledPluginArtifactSubpath(artifactBasename: string): string {
   if (
     path.posix.isAbsolute(artifactBasename) ||
@@ -39,6 +42,7 @@ export function normalizeBundledPluginArtifactSubpath(artifactBasename: string):
   return normalized;
 }
 
+/** Reused helper for normalize Bundled Plugin Dir Name behavior in src/plugins. */
 export function normalizeBundledPluginDirName(dirName: string): string {
   const normalized = dirName.trim();
   if (
@@ -54,6 +58,7 @@ export function normalizeBundledPluginDirName(dirName: string): string {
   return normalized;
 }
 
+/** Reused helper for resolve Bundled Plugin Source Public Surface Path behavior in src/plugins. */
 export function resolveBundledPluginSourcePublicSurfacePath(params: {
   sourceRoot: string;
   dirName: string;
@@ -153,6 +158,7 @@ function resolvePublicSurfaceFromBundledDir(params: {
   );
 }
 
+/** Reused helper for resolve Bundled Plugin Public Surface Path behavior in src/plugins. */
 export function resolveBundledPluginPublicSurfacePath(params: {
   rootDir: string;
   dirName: string;

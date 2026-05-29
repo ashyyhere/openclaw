@@ -1,3 +1,4 @@
+// Tests plugins/contracts plugin sdk index test behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";

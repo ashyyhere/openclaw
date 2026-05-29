@@ -1,6 +1,8 @@
+// packages/gateway-protocol/src/schema snapshot helpers and runtime behavior.
 import { Type } from "typebox";
 import { NonEmptyString } from "./primitives.js";
 
+/** Public constant for Presence Entry Schema behavior in packages/gateway-protocol. */
 export const PresenceEntrySchema = Type.Object(
   {
     host: Type.Optional(NonEmptyString),
@@ -23,8 +25,10 @@ export const PresenceEntrySchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Health Snapshot Schema behavior in packages/gateway-protocol. */
 export const HealthSnapshotSchema = Type.Any();
 
+/** Public constant for Session Defaults Schema behavior in packages/gateway-protocol. */
 export const SessionDefaultsSchema = Type.Object(
   {
     defaultAgentId: NonEmptyString,
@@ -35,6 +39,7 @@ export const SessionDefaultsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for State Version Schema behavior in packages/gateway-protocol. */
 export const StateVersionSchema = Type.Object(
   {
     presence: Type.Integer({ minimum: 0 }),
@@ -43,6 +48,7 @@ export const StateVersionSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Snapshot Schema behavior in packages/gateway-protocol. */
 export const SnapshotSchema = Type.Object(
   {
     presence: Type.Array(PresenceEntrySchema),

@@ -1,3 +1,4 @@
+// infra session cost usage helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import readline from "node:readline";
@@ -54,6 +55,7 @@ import type {
   UsageCacheStatus,
 } from "./session-cost-usage.types.js";
 
+/** Re-exported API for src/infra. */
 export type {
   CostUsageSummary,
   CostUsageTotals,
@@ -1209,6 +1211,7 @@ async function scanUsageFile(params: {
   });
 }
 
+/** Reused helper for resolve Existing Usage Session File behavior in src/infra. */
 export function resolveExistingUsageSessionFile(params: {
   sessionId?: string;
   sessionEntry?: SessionEntry;
@@ -1272,6 +1275,7 @@ export function resolveExistingUsageSessionFile(params: {
   }
 }
 
+/** Reused helper for load Cost Usage Summary behavior in src/infra. */
 export async function loadCostUsageSummary(params?: {
   startMs?: number;
   endMs?: number;
@@ -1570,6 +1574,7 @@ async function refreshCostUsageCacheForPath(params?: {
   }
 }
 
+/** Reused helper for refresh Cost Usage Cache behavior in src/infra. */
 export async function refreshCostUsageCache(params?: {
   config?: OpenClawConfig;
   agentId?: string;
@@ -1580,6 +1585,7 @@ export async function refreshCostUsageCache(params?: {
   return await refreshCostUsageCacheForPath(params);
 }
 
+/** Reused helper for load Cost Usage Summary From Cache behavior in src/infra. */
 export async function loadCostUsageSummaryFromCache(params: {
   startMs: number;
   endMs: number;
@@ -1640,6 +1646,7 @@ export async function loadCostUsageSummaryFromCache(params: {
   });
 }
 
+/** Reused helper for load Session Cost Summary From Cache behavior in src/infra. */
 export async function loadSessionCostSummaryFromCache(params: {
   sessionId?: string;
   sessionEntry?: SessionEntry;
@@ -1769,6 +1776,7 @@ export async function loadSessionCostSummaryFromCache(params: {
   };
 }
 
+/** Reused helper for request Cost Usage Cache Refresh behavior in src/infra. */
 export function requestCostUsageCacheRefresh(params?: {
   config?: OpenClawConfig;
   agentId?: string;
@@ -1972,6 +1980,7 @@ export async function discoverAllSessions(params?: {
   return Array.from(discovered.values()).toSorted((a, b) => b.mtime - a.mtime);
 }
 
+/** Reused helper for load Session Cost Summary behavior in src/infra. */
 export async function loadSessionCostSummary(params: {
   sessionId?: string;
   sessionEntry?: SessionEntry;
@@ -2285,6 +2294,7 @@ export async function loadSessionCostSummary(params: {
   };
 }
 
+/** Reused helper for load Session Usage Time Series behavior in src/infra. */
 export async function loadSessionUsageTimeSeries(params: {
   sessionId?: string;
   sessionEntry?: SessionEntry;
@@ -2393,6 +2403,7 @@ export async function loadSessionUsageTimeSeries(params: {
   return { sessionId: params.sessionId, points: sortedPoints };
 }
 
+/** Reused helper for load Session Logs behavior in src/infra. */
 export async function loadSessionLogs(params: {
   sessionId?: string;
   sessionEntry?: SessionEntry;

@@ -1,3 +1,4 @@
+/** Tests command secret target module import boundaries. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 describe("command secret targets module import", () => {

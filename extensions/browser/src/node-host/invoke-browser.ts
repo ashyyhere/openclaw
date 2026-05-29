@@ -1,3 +1,4 @@
+// extensions/browser/src/node-host invoke browser helpers and runtime behavior.
 import fsPromises from "node:fs/promises";
 import { resolveTimerTimeoutMs } from "openclaw/plugin-sdk/number-runtime";
 import { normalizeStringEntries } from "openclaw/plugin-sdk/string-coerce-runtime";

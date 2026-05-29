@@ -1,3 +1,4 @@
+// extensions/browser/src/browser chrome profile decoration helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { loadJsonFile, saveJsonFile } from "openclaw/plugin-sdk/json-store";

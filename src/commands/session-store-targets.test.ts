@@ -1,3 +1,4 @@
+/** Tests session store target resolution. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { resolveSessionStoreTargets } from "./session-store-targets.js";
 

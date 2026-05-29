@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor provider cleanup helpers and runtime behavior.
 import { danger, type RuntimeEnv } from "openclaw/plugin-sdk/runtime-env";
 import type { MutableDiscordGateway } from "./gateway-handle.js";
 import type { DiscordMonitorStatusSink } from "./status.js";

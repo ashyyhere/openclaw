@@ -1,3 +1,4 @@
+// Tests test/scripts verify docker attestations test behavior.
 import { describe, expect, it } from "vitest";
 import {
   collectDockerAttestationErrors,

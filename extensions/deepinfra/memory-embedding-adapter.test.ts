@@ -1,3 +1,4 @@
+// Tests extensions/deepinfra memory embedding adapter test behavior.
 import { isMissingEmbeddingApiKeyError } from "openclaw/plugin-sdk/memory-core-host-engine-embeddings";
 import { describe, expect, it } from "vitest";
 import { DEFAULT_DEEPINFRA_EMBEDDING_MODEL } from "./embedding-provider.js";

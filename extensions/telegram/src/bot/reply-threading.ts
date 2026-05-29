@@ -1,3 +1,4 @@
+// extensions/telegram/src/bot reply threading helpers and runtime behavior.
 import type { ReplyToMode } from "openclaw/plugin-sdk/config-contracts";
 
 export type DeliveryProgress = {

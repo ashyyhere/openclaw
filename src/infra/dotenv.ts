@@ -1,3 +1,4 @@
+// infra dotenv helpers and runtime behavior.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -281,6 +282,7 @@ function readDotEnvFile(params: {
   return { filePath: params.filePath, entries };
 }
 
+/** Reused helper for load Workspace Dot Env File behavior in src/infra. */
 export function loadWorkspaceDotEnvFile(filePath: string, opts?: { quiet?: boolean }) {
   let providerAuthBlockedKeys: ReadonlySet<string> | undefined;
   const getProviderAuthBlockedKeys = () => {
@@ -349,6 +351,7 @@ function loadParsedDotEnvFiles(files: LoadedDotEnvFile[]) {
   }
 }
 
+/** Reused helper for load Global Runtime Dot Env Files behavior in src/infra. */
 export function loadGlobalRuntimeDotEnvFiles(opts?: { quiet?: boolean; stateEnvPath?: string }) {
   const quiet = opts?.quiet ?? true;
   const stateEnvPath = opts?.stateEnvPath ?? path.join(resolveConfigDir(process.env), ".env");
@@ -385,6 +388,7 @@ export function loadGlobalRuntimeDotEnvFiles(opts?: { quiet?: boolean; stateEnvP
   loadParsedDotEnvFiles(parsed);
 }
 
+/** Reused helper for load Dot Env behavior in src/infra. */
 export function loadDotEnv(opts?: { quiet?: boolean }) {
   const quiet = opts?.quiet ?? true;
   const cwdEnvPath = path.join(process.cwd(), ".env");

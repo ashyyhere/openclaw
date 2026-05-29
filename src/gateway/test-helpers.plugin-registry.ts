@@ -1,3 +1,4 @@
+// gateway test helpers plugin registry helpers and runtime behavior.
 import type { PluginRegistry } from "../plugins/registry.js";
 import { setActivePluginRegistry } from "../plugins/runtime.js";
 import { resolveGlobalSingleton } from "../shared/global-singleton.js";
@@ -60,16 +61,19 @@ const pluginRegistryState = resolveGlobalSingleton(GATEWAY_TEST_PLUGIN_REGISTRY_
 
 setActivePluginRegistry(pluginRegistryState.registry);
 
+/** Reused helper for set Test Plugin Registry behavior in src/gateway. */
 export function setTestPluginRegistry(registry: PluginRegistry): void {
   pluginRegistryState.registry = registry;
   setActivePluginRegistry(registry);
 }
 
+/** Reused helper for reset Test Plugin Registry behavior in src/gateway. */
 export function resetTestPluginRegistry(): void {
   pluginRegistryState.registry = createStubPluginRegistry();
   setActivePluginRegistry(pluginRegistryState.registry);
 }
 
+/** Reused helper for get Test Plugin Registry behavior in src/gateway. */
 export function getTestPluginRegistry(): PluginRegistry {
   return pluginRegistryState.registry;
 }

@@ -1,5 +1,7 @@
+/** Injects bundled MCP config arguments for Claude CLI runs. */
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 
+/** Reused helper for find Claude Mcp Config Path behavior in src/agents/cli-runner. */
 export function findClaudeMcpConfigPath(args?: string[]): string | undefined {
   if (!args?.length) {
     return undefined;
@@ -16,6 +18,7 @@ export function findClaudeMcpConfigPath(args?: string[]): string | undefined {
   return undefined;
 }
 
+/** Reused helper for inject Claude Mcp Config Args behavior in src/agents/cli-runner. */
 export function injectClaudeMcpConfigArgs(
   args: string[] | undefined,
   mcpConfigPath: string,

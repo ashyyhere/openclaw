@@ -1,3 +1,4 @@
+// Tests extensions/voice-call/src manager closed loop test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { createManagerHarness, FakeProvider, markCallAnswered } from "./manager.test-harness.js";
 

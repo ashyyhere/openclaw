@@ -1,3 +1,4 @@
+// extensions/kimi-coding onboard helpers and runtime behavior.
 import {
   createDefaultModelPresetAppliers,
   type OpenClawConfig,

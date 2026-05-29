@@ -1,3 +1,4 @@
+/** Live tests for Google Gemini model switching behavior. */
 import { completeSimple, type Model } from "openclaw/plugin-sdk/llm";
 import { Type } from "typebox";
 import { describe, expect, it } from "vitest";

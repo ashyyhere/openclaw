@@ -1,3 +1,4 @@
+// ui/src/ui user identity helpers and runtime behavior.
 import { coerceIdentityValue } from "../../../src/shared/assistant-identity-values.js";
 import { normalizeOptionalString } from "./string-coerce.ts";
 import {
@@ -9,6 +10,7 @@ const MAX_LOCAL_USER_NAME = 50;
 const MAX_LOCAL_USER_TEXT_AVATAR = 16;
 const MAX_LOCAL_USER_IMAGE_AVATAR = 2_000_000;
 
+/** Shared type for Local User Identity in ui/src/ui. */
 export type LocalUserIdentity = {
   name: string | null;
   avatar: string | null;
@@ -28,6 +30,7 @@ function normalizeAvatar(value?: string | null): string | null {
   return trimmed.length <= MAX_LOCAL_USER_TEXT_AVATAR ? trimmed : null;
 }
 
+/** Reused helper for normalize Local User Identity behavior in ui/src/ui. */
 export function normalizeLocalUserIdentity(
   input?: Partial<LocalUserIdentity> | null,
 ): LocalUserIdentity {
@@ -41,10 +44,12 @@ export function normalizeLocalUserIdentity(
   };
 }
 
+/** Reused helper for has Local User Identity behavior in ui/src/ui. */
 export function hasLocalUserIdentity(identity: LocalUserIdentity): boolean {
   return Boolean(identity.name || identity.avatar);
 }
 
+/** Reused helper for resolve Local User Name behavior in ui/src/ui. */
 export function resolveLocalUserName(
   input?: Partial<LocalUserIdentity> | null,
   fallback = "You",
@@ -52,6 +57,7 @@ export function resolveLocalUserName(
   return normalizeLocalUserIdentity(input).name ?? fallback;
 }
 
+/** Reused helper for resolve Local User Avatar Url behavior in ui/src/ui. */
 export function resolveLocalUserAvatarUrl(
   input?: Partial<LocalUserIdentity> | null,
 ): string | null {
@@ -63,6 +69,7 @@ export function resolveLocalUserAvatarUrl(
   });
 }
 
+/** Reused helper for resolve Local User Avatar Text behavior in ui/src/ui. */
 export function resolveLocalUserAvatarText(
   input?: Partial<LocalUserIdentity> | null,
 ): string | null {

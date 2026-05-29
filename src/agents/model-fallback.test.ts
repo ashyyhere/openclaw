@@ -1,3 +1,4 @@
+/** Tests model fallback candidate chains and run behavior. */
 import crypto from "node:crypto";
 import path from "node:path";
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";

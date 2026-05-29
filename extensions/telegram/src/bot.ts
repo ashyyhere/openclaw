@@ -1,3 +1,4 @@
+// extensions/telegram/src bot helpers and runtime behavior.
 import {
   createTelegramBotCore,
   getTelegramSequentialKey,

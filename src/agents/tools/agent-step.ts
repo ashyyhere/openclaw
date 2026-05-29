@@ -1,3 +1,4 @@
+/** Tool helper for sending a prompt to another agent session. */
 import crypto from "node:crypto";
 import { callGateway } from "../../gateway/call.js";
 import { annotateInterSessionPromptText } from "../../sessions/input-provenance.js";
@@ -6,6 +7,7 @@ import { retireSessionMcpRuntimeForSessionKey } from "../agent-bundle-mcp-tools.
 import { resolveNestedAgentLaneForSession } from "../lanes.js";
 import { waitForAgentRunAndReadUpdatedAssistantReply } from "../run-wait.js";
 
+/** Re-exported API for src/agents/tools, starting with read Latest Assistant Reply. */
 export { readLatestAssistantReply } from "../run-wait.js";
 
 type GatewayCaller = typeof callGateway;
@@ -41,6 +43,7 @@ function extractAgentCommandReply(result: unknown): string | undefined {
   return texts.length > 0 ? texts.join("\n\n") : undefined;
 }
 
+/** Sends one inter-session agent step and waits for the latest reply. */
 export async function runAgentStep(params: {
   sessionKey: string;
   message: string;
@@ -116,6 +119,7 @@ export async function runAgentStep(params: {
   return result.replyText;
 }
 
+/** Reused constant for testing behavior in src/agents/tools. */
 export const testing = {
   setDepsForTest(
     overrides?: Partial<{
@@ -131,4 +135,5 @@ export const testing = {
       : defaultAgentStepDeps;
   },
 };
+/** Re-exported API for src/agents/tools, starting with testing. */
 export { testing as __testing };

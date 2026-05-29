@@ -1,3 +1,4 @@
+// extensions/nvidia index helpers and runtime behavior.
 import { defineSingleProviderPluginEntry } from "openclaw/plugin-sdk/provider-entry";
 import { applyNvidiaConfig, NVIDIA_DEFAULT_MODEL_REF } from "./onboard.js";
 import {

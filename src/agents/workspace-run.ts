@@ -1,3 +1,4 @@
+/** Resolves workspace directory and metadata for one agent run. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { logWarn } from "../logger.js";
 import { redactIdentifier } from "../logging/redact-identifier.js";
@@ -67,10 +68,12 @@ function resolveRunAgentId(params: {
   };
 }
 
+/** Reused helper for redact Run Identifier behavior in src/agents. */
 export function redactRunIdentifier(value: string | undefined): string {
   return redactIdentifier(value, { len: 12 });
 }
 
+/** Reused helper for resolve Run Workspace Dir behavior in src/agents. */
 export function resolveRunWorkspaceDir(params: {
   workspaceDir: unknown;
   sessionKey?: string;

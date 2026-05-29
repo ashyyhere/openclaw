@@ -1,3 +1,4 @@
+// extensions/discord/src/internal components modal helpers and runtime behavior.
 import { ComponentType, TextInputStyle, type APITextInputComponent } from "discord-api-types/v10";
 import { BaseModalComponent, clean, parseCustomId, type ComponentData } from "./components.base.js";
 import { AnySelectMenu, TextDisplay } from "./components.message.js";

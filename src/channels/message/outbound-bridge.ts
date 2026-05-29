@@ -1,3 +1,4 @@
+// Bridge from legacy outbound channel hooks to channel message adapters.
 import { createMessageReceiptFromOutboundResults } from "./receipt.js";
 import type {
   ChannelMessageAdapterShape,
@@ -19,11 +20,13 @@ const defaultManualReceiveAdapter = {
   supportedAckPolicies: ["manual"],
 } as const satisfies ChannelMessageReceiveAdapterShape;
 
+/** Result shape accepted from legacy outbound send hooks. */
 export type ChannelMessageOutboundBridgeResult = MessageReceiptSourceResult & {
   receipt?: MessageReceipt;
   messageId?: string;
 };
 
+/** Legacy outbound adapter shape used to build a channel message adapter. */
 export type ChannelMessageOutboundBridgeAdapter<TConfig = unknown> = {
   deliveryCapabilities?: {
     durableFinal?: DurableFinalDeliveryRequirementMap;
@@ -42,6 +45,7 @@ export type ChannelMessageOutboundBridgeAdapter<TConfig = unknown> = {
   ) => Promise<ChannelMessageOutboundBridgeResult>;
 };
 
+/** Parameters for creating a message adapter from legacy outbound hooks. */
 export type CreateChannelMessageAdapterFromOutboundParams<TConfig = unknown> = {
   id?: string;
   outbound: ChannelMessageOutboundBridgeAdapter<TConfig>;
@@ -117,6 +121,7 @@ function resolvePayloadReceiptKind(
   return "unknown";
 }
 
+/** Create a channel message adapter from legacy outbound send functions. */
 export function createChannelMessageAdapterFromOutbound<TConfig = unknown>(
   params: CreateChannelMessageAdapterFromOutboundParams<TConfig>,
 ): ChannelMessageAdapterShape<TConfig> {

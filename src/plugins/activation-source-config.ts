@@ -1,9 +1,11 @@
+// plugins activation source config helpers and runtime behavior.
 import {
   getRuntimeConfigSnapshot,
   getRuntimeConfigSourceSnapshot,
 } from "../config/runtime-snapshot.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 
+/** Reused helper for resolve Plugin Activation Source Config behavior in src/plugins. */
 export function resolvePluginActivationSourceConfig(params: {
   config?: OpenClawConfig;
   activationSourceConfig?: OpenClawConfig;

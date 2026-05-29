@@ -1,3 +1,4 @@
+// ui/src/ui session display helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty, normalizeOptionalString } from "./string-coerce.ts";
 import type { SessionsListResult } from "./types.ts";
 
@@ -77,6 +78,7 @@ export function parseSessionKey(key: string): SessionKeyInfo {
   return { prefix: "", fallbackName: key };
 }
 
+/** Reused helper for resolve Session Display Name behavior in ui/src/ui. */
 export function resolveSessionDisplayName(
   key: string,
   row?: SessionsListResult["sessions"][number],
@@ -102,6 +104,7 @@ export function resolveSessionDisplayName(
   return fallbackName;
 }
 
+/** Reused helper for is Cron Session Key behavior in ui/src/ui. */
 export function isCronSessionKey(key: string): boolean {
   const normalized = normalizeLowercaseStringOrEmpty(key);
   if (!normalized) {

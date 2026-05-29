@@ -1,9 +1,12 @@
+// infra ssh config helpers and runtime behavior.
 import { spawn } from "node:child_process";
 import { parseStrictPositiveInteger } from "./parse-finite-number.js";
 import type { SshParsedTarget } from "./ssh-tunnel.js";
 
+/** Reused constant for SSH CONFIG OUTPUT MAX CHARS behavior in src/infra. */
 export const SSH_CONFIG_OUTPUT_MAX_CHARS = 64 * 1024;
 
+/** Shared type for Ssh Resolved Config in src/infra. */
 export type SshResolvedConfig = {
   user?: string;
   host?: string;
@@ -24,6 +27,7 @@ function parsePort(value: string | undefined): number | undefined {
   return parsed;
 }
 
+/** Reused helper for parse Ssh Config Output behavior in src/infra. */
 export function parseSshConfigOutput(output: string): SshResolvedConfig {
   const result: SshResolvedConfig = { identityFiles: [] };
   const lines = output.split("\n");
@@ -59,6 +63,7 @@ export function parseSshConfigOutput(output: string): SshResolvedConfig {
   return result;
 }
 
+/** Reused helper for append Ssh Config Output behavior in src/infra. */
 export function appendSshConfigOutput(
   current: string,
   chunk: unknown,
@@ -71,6 +76,7 @@ export function appendSshConfigOutput(
   return { ok: true, value: next };
 }
 
+/** Reused helper for resolve Ssh Config behavior in src/infra. */
 export async function resolveSshConfig(
   target: SshParsedTarget,
   opts: { identity?: string; timeoutMs?: number } = {},

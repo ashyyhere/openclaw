@@ -1,3 +1,5 @@
+// gateway session preview test helpers helpers and runtime behavior.
+/** Reused helper for create Tool Summary Preview Transcript Lines behavior in src/gateway. */
 export function createToolSummaryPreviewTranscriptLines(sessionId: string): string[] {
   return [
     JSON.stringify({ type: "session", version: 1, id: sessionId }),

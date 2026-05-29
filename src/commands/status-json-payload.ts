@@ -1,9 +1,11 @@
+/** Builds machine-readable status JSON payloads. */
 import { resolveStatusUpdateChannelInfo } from "./status-all/format.js";
 import {
   buildStatusGatewayJsonPayloadFromSurface,
   type StatusOverviewSurface,
 } from "./status-overview-surface.ts";
 
+/** Reused helper for build Status Json Payload behavior in src/commands. */
 export function buildStatusJsonPayload(params: {
   summary: Record<string, unknown>;
   surface: StatusOverviewSurface;

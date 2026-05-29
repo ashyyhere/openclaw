@@ -1,3 +1,4 @@
+/** Coordinates transcript write locks and ownership during embedded attempts. */
 import { AsyncLocalStorage } from "node:async_hooks";
 import { statSync } from "node:fs";
 import fs from "node:fs/promises";
@@ -350,11 +351,13 @@ const sessionFileOwnerState = resolveGlobalSingleton(
   }),
 );
 
+/** Shared type for Embedded Attempt Session File Owner in src/agents/embedded-agent-runner. */
 export type EmbeddedAttemptSessionFileOwner = {
   sessionFileKey: string;
   release(): void;
 };
 
+/** Reused class for Embedded Attempt Session File Owner Timeout Error behavior in src/agents/embedded-agent-runner. */
 export class EmbeddedAttemptSessionFileOwnerTimeoutError extends Error {
   constructor(sessionFile: string, timeoutMs: number) {
     super(`timed out waiting for embedded session file owner after ${timeoutMs}ms: ${sessionFile}`);
@@ -426,6 +429,7 @@ function waitForSessionFileOwnerRelease(params: {
   });
 }
 
+/** Acquires process-local ownership for a session file while an attempt writes it. */
 export async function acquireEmbeddedAttemptSessionFileOwner(params: {
   sessionFile: string;
   timeoutMs?: number;
@@ -466,6 +470,7 @@ export async function acquireEmbeddedAttemptSessionFileOwner(params: {
   }
 }
 
+/** Clears process-local session ownership state for isolated tests. */
 export function resetEmbeddedAttemptSessionFileOwnersForTest(): void {
   for (const entry of sessionFileOwnerState.owners.values()) {
     for (const waiter of entry.waiters) {
@@ -559,6 +564,7 @@ function readSessionFileFingerprintSync(sessionFile: string): SessionFileFingerp
 
 async function waitForSessionEventQueue(_session: unknown): Promise<void> {}
 
+/** Reused class for Embedded Attempt Session Takeover Error behavior in src/agents/embedded-agent-runner. */
 export class EmbeddedAttemptSessionTakeoverError extends Error {
   constructor(sessionFile: string) {
     super(`session file changed while embedded prompt lock was released: ${sessionFile}`);
@@ -566,6 +572,7 @@ export class EmbeddedAttemptSessionTakeoverError extends Error {
   }
 }
 
+/** Shared type for Embedded Attempt Session Lock Controller in src/agents/embedded-agent-runner. */
 export type EmbeddedAttemptSessionLockController = {
   releaseForPrompt(): Promise<void>;
   releaseHeldLockForAbort(): Promise<void>;
@@ -581,6 +588,7 @@ export type EmbeddedAttemptSessionLockController = {
   dispose(): Promise<void>;
 };
 
+/** Creates the lock controller used to publish one embedded-attempt transcript. */
 export async function createEmbeddedAttemptSessionLockController(params: {
   acquireSessionWriteLock: AcquireSessionWriteLock;
   lockOptions: LockOptions;
@@ -1000,6 +1008,7 @@ export async function createEmbeddedAttemptSessionLockController(params: {
   };
 }
 
+/** Releases prompt-submission lock state once provider submission has crossed. */
 export function installPromptSubmissionLockRelease(params: {
   session: unknown;
   waitForSessionEvents: (session: unknown) => Promise<void>;

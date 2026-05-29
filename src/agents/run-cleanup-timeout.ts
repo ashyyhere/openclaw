@@ -1,9 +1,14 @@
+/** Bounds agent cleanup steps so hung cleanup cannot stall runs. */
 import { formatErrorMessage } from "../infra/errors.js";
 import { parseStrictPositiveInteger } from "../infra/parse-finite-number.js";
 
+/** Default cleanup step timeout. */
 export const AGENT_CLEANUP_STEP_TIMEOUT_MS = 10_000;
+/** Env override for generic cleanup step timeout. */
 export const AGENT_CLEANUP_STEP_TIMEOUT_ENV = "OPENCLAW_AGENT_CLEANUP_TIMEOUT_MS";
+/** Env override for trajectory flush cleanup timeout. */
 export const TRAJECTORY_FLUSH_TIMEOUT_ENV = "OPENCLAW_TRAJECTORY_FLUSH_TIMEOUT_MS";
+/** Maximum diagnostic detail length emitted on cleanup timeout. */
 export const CLEANUP_TIMEOUT_DETAILS_MAX_CHARS = 512;
 
 const CLEANUP_TIMEOUT_DETAILS_TRUNCATED_SUFFIX = "...[truncated]";
@@ -49,6 +54,7 @@ function truncateCleanupTimeoutDetails(value: string): string {
   return `${value.slice(0, prefixLength)}${CLEANUP_TIMEOUT_DETAILS_TRUNCATED_SUFFIX}`;
 }
 
+/** Resolve cleanup timeout from explicit value, env, or default. */
 export function resolveAgentCleanupStepTimeoutMs(params: {
   step: string;
   timeoutMs?: number;
@@ -70,6 +76,7 @@ export function resolveAgentCleanupStepTimeoutMs(params: {
   return parseTimeoutEnvValue(env[AGENT_CLEANUP_STEP_TIMEOUT_ENV]) ?? AGENT_CLEANUP_STEP_TIMEOUT_MS;
 }
 
+/** Run one cleanup step and log instead of blocking forever on stalls. */
 export async function runAgentCleanupStep(params: {
   runId: string;
   sessionId: string;

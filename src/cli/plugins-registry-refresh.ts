@@ -1,3 +1,4 @@
+/** Refreshes installed plugin registry records after CLI install/update flows. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { formatErrorMessage } from "../infra/errors.js";
 import { loadInstalledPluginIndexInstallRecords } from "../plugins/installed-plugin-index-records.js";
@@ -5,10 +6,12 @@ import type { InstalledPluginIndexRefreshReason } from "../plugins/installed-plu
 import { tracePluginLifecyclePhaseAsync } from "../plugins/plugin-lifecycle-trace.js";
 import { refreshPluginRegistry } from "../plugins/plugin-registry.js";
 
+/** Shared type for Plugin Registry Refresh Logger in src/cli. */
 export type PluginRegistryRefreshLogger = {
   warn?: (message: string) => void;
 };
 
+/** Reused helper for refresh Plugin Registry After Config Mutation behavior in src/cli. */
 export async function refreshPluginRegistryAfterConfigMutation(params: {
   config: OpenClawConfig;
   reason: InstalledPluginIndexRefreshReason;

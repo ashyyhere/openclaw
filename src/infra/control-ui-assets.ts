@@ -1,3 +1,4 @@
+// infra control ui assets helpers and runtime behavior.
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { runCommandWithTimeout } from "../process/exec.js";
@@ -8,15 +9,18 @@ import { resolveOpenClawPackageRoot, resolveOpenClawPackageRootSync } from "./op
 
 const CONTROL_UI_DIST_PATH_SEGMENTS = ["dist", "control-ui", "index.html"] as const;
 
+/** Reused helper for resolve Control Ui Dist Index Path For Root behavior in src/infra. */
 export function resolveControlUiDistIndexPathForRoot(root: string): string {
   return path.join(root, ...CONTROL_UI_DIST_PATH_SEGMENTS);
 }
 
+/** Shared type for Control Ui Dist Index Health in src/infra. */
 export type ControlUiDistIndexHealth = {
   indexPath: string | null;
   exists: boolean;
 };
 
+/** Reused helper for resolve Control Ui Dist Index Health behavior in src/infra. */
 export async function resolveControlUiDistIndexHealth(
   opts: {
     root?: string;
@@ -36,6 +40,7 @@ export async function resolveControlUiDistIndexHealth(
   };
 }
 
+/** Reused helper for resolve Control Ui Repo Root behavior in src/infra. */
 export function resolveControlUiRepoRoot(
   argv1: string | undefined = process.argv[1],
 ): string | null {
@@ -70,6 +75,7 @@ export function resolveControlUiRepoRoot(
   return null;
 }
 
+/** Reused helper for resolve Control Ui Dist Index Path behavior in src/infra. */
 export async function resolveControlUiDistIndexPath(
   argv1OrOpts?: string | { argv1?: string; moduleUrl?: string },
 ): Promise<string | null> {
@@ -139,6 +145,7 @@ export async function resolveControlUiDistIndexPath(
   return null;
 }
 
+/** Shared type for Control Ui Root Resolve Options in src/infra. */
 export type ControlUiRootResolveOptions = {
   argv1?: string;
   moduleUrl?: string;
@@ -169,6 +176,7 @@ function addCandidate(candidates: Set<string>, value: string | null) {
   candidates.add(path.resolve(value));
 }
 
+/** Reused helper for resolve Control Ui Root Override Sync behavior in src/infra. */
 export function resolveControlUiRootOverrideSync(rootOverride: string): string | null {
   const resolved = path.resolve(rootOverride);
   try {
@@ -186,6 +194,7 @@ export function resolveControlUiRootOverrideSync(rootOverride: string): string |
   return null;
 }
 
+/** Reused helper for resolve Control Ui Root Sync behavior in src/infra. */
 export function resolveControlUiRootSync(opts: ControlUiRootResolveOptions = {}): string | null {
   const candidates = new Set<string>();
   const argv1 = opts.argv1 ?? process.argv[1];
@@ -251,6 +260,7 @@ export function resolveControlUiRootSync(opts: ControlUiRootResolveOptions = {})
   return null;
 }
 
+/** Reused helper for is Package Proven Control Ui Root Sync behavior in src/infra. */
 export function isPackageProvenControlUiRootSync(
   root: string,
   opts: ControlUiRootResolveOptions = {},
@@ -269,6 +279,7 @@ export function isPackageProvenControlUiRootSync(
   return pathsMatchByRealpathOrResolve(root, packageDistRoot);
 }
 
+/** Shared type for Ensure Control Ui Assets Result in src/infra. */
 export type EnsureControlUiAssetsResult = {
   ok: boolean;
   built: boolean;
@@ -287,6 +298,7 @@ function summarizeCommandOutput(text: string): string | undefined {
   return last.length > 240 ? `${last.slice(0, 239)}…` : last;
 }
 
+/** Reused helper for ensure Control Ui Assets Built behavior in src/infra. */
 export async function ensureControlUiAssetsBuilt(
   runtime: RuntimeEnv = defaultRuntime,
   opts?: { timeoutMs?: number },

@@ -1,3 +1,4 @@
+// Tests extensions/imessage/src/monitor reaction system event test behavior.
 import type { RuntimeEnv } from "openclaw/plugin-sdk/runtime-env";
 import { enqueueSystemEvent } from "openclaw/plugin-sdk/system-event-runtime";
 import { describe, expect, it, vi } from "vitest";

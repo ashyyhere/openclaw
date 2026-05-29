@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor reply delivery helpers and runtime behavior.
 import { resolveAgentAvatar } from "openclaw/plugin-sdk/agent-runtime";
 import {
   buildOutboundSessionContext,

@@ -1,6 +1,8 @@
+// Shared types for tasks task flow registry types behavior.
 import type { DeliveryContext } from "../utils/delivery-context.types.js";
 import type { TaskNotifyPolicy } from "./task-registry.types.js";
 
+/** Shared type for Json Value in src/tasks. */
 export type JsonValue =
   | null
   | boolean
@@ -9,8 +11,10 @@ export type JsonValue =
   | JsonValue[]
   | { [key: string]: JsonValue };
 
+/** Shared type for Task Flow Sync Mode in src/tasks. */
 export type TaskFlowSyncMode = "task_mirrored" | "managed";
 
+/** Shared type for Task Flow Status in src/tasks. */
 export type TaskFlowStatus =
   | "queued"
   | "running"

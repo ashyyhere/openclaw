@@ -1,9 +1,11 @@
+/** HTTP MCP launch config normalization and descriptions. */
 import {
   redactSensitiveUrl,
   redactSensitiveUrlLikeString,
 } from "@openclaw/net-policy/redact-sensitive-url";
 import { isMcpConfigRecord, toMcpStringRecord } from "./mcp-config-shared.js";
 
+/** Supported HTTP MCP transport variants. */
 export type HttpMcpTransportType = "sse" | "streamable-http";
 
 type HttpMcpServerLaunchConfig = {
@@ -16,6 +18,7 @@ type HttpMcpServerLaunchResult =
   | { ok: true; config: HttpMcpServerLaunchConfig }
   | { ok: false; reason: string };
 
+/** Resolve launch config for an HTTP MCP server. */
 export function resolveHttpMcpServerLaunchConfig(
   raw: unknown,
   options?: {
@@ -68,6 +71,7 @@ export function resolveHttpMcpServerLaunchConfig(
   };
 }
 
+/** Format a compact description of an HTTP MCP launch config. */
 export function describeHttpMcpServerLaunchConfig(config: HttpMcpServerLaunchConfig): string {
   return redactSensitiveUrl(config.url);
 }

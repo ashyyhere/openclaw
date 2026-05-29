@@ -1,8 +1,10 @@
+/** Resolves npm install specs into package metadata for plugin commands. */
 import {
   buildNpmResolutionFields,
   type NpmSpecResolution as NpmResolutionMetadata,
 } from "../infra/install-source-utils.js";
 
+/** Reused helper for resolve Pinned Npm Spec behavior in src/cli. */
 export function resolvePinnedNpmSpec(params: {
   rawSpec: string;
   pin: boolean;
@@ -24,6 +26,7 @@ export function resolvePinnedNpmSpec(params: {
   };
 }
 
+/** Reused helper for map Npm Resolution Metadata behavior in src/cli. */
 export function mapNpmResolutionMetadata(resolution?: NpmResolutionMetadata): {
   resolvedName?: string;
   resolvedVersion?: string;
@@ -35,6 +38,7 @@ export function mapNpmResolutionMetadata(resolution?: NpmResolutionMetadata): {
   return buildNpmResolutionFields(resolution);
 }
 
+/** Reused helper for build Npm Install Record Fields behavior in src/cli. */
 export function buildNpmInstallRecordFields(params: {
   spec: string;
   installPath: string;
@@ -61,6 +65,7 @@ export function buildNpmInstallRecordFields(params: {
   };
 }
 
+/** Reused helper for resolve Pinned Npm Install Record behavior in src/cli. */
 export function resolvePinnedNpmInstallRecord(params: {
   rawSpec: string;
   pin: boolean;
@@ -84,6 +89,7 @@ export function resolvePinnedNpmInstallRecord(params: {
   });
 }
 
+/** Reused helper for resolve Pinned Npm Install Record For Cli behavior in src/cli. */
 export function resolvePinnedNpmInstallRecordForCli(
   rawSpec: string,
   pin: boolean,
@@ -104,6 +110,7 @@ export function resolvePinnedNpmInstallRecordForCli(
   });
 }
 
+/** Reused helper for log Pinned Npm Spec Messages behavior in src/cli. */
 export function logPinnedNpmSpecMessages(
   pinInfo: { pinWarning?: string; pinNotice?: string },
   log: (message: string) => void,

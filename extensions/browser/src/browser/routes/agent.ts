@@ -1,3 +1,4 @@
+// extensions/browser/src/browser/routes agent helpers and runtime behavior.
 import type { BrowserRouteContext } from "../server-context.js";
 import { registerBrowserAgentActRoutes } from "./agent.act.js";
 import { registerBrowserAgentDebugRoutes } from "./agent.debug.js";

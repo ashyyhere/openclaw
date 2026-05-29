@@ -1,3 +1,4 @@
+// plugin-sdk/test-helpers provider replay policy helpers and runtime behavior.
 import { expect } from "vitest";
 import { registerSingleProviderPlugin } from "../plugin-test-runtime.js";
 

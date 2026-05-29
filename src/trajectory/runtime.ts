@@ -1,3 +1,4 @@
+// trajectory runtime helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { sanitizeDiagnosticPayload } from "../agents/payload-redaction.js";
@@ -21,6 +22,7 @@ import {
 } from "./paths.js";
 import type { TrajectoryEvent, TrajectoryToolDefinition } from "./types.js";
 
+/** Re-exported API for src/trajectory. */
 export {
   TRAJECTORY_RUNTIME_CAPTURE_MAX_BYTES,
   TRAJECTORY_RUNTIME_EVENT_MAX_BYTES,
@@ -454,6 +456,7 @@ function getTrajectoryWindowWriter(
   return writer;
 }
 
+/** Reused helper for to Trajectory Tool Definitions behavior in src/trajectory. */
 export function toTrajectoryToolDefinitions(
   tools: ReadonlyArray<{ name?: string; description?: string; parameters?: unknown }>,
 ): TrajectoryToolDefinition[] {
@@ -474,6 +477,7 @@ export function toTrajectoryToolDefinitions(
     .toSorted((left, right) => left.name.localeCompare(right.name));
 }
 
+/** Reused helper for create Trajectory Runtime Recorder behavior in src/trajectory. */
 export function createTrajectoryRuntimeRecorder(
   params: TrajectoryRuntimeInit,
 ): TrajectoryRuntimeRecorder | null {

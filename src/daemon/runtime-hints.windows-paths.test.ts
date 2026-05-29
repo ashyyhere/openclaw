@@ -1,3 +1,4 @@
+// Tests daemon runtime hints windows paths test behavior.
 import { beforeAll, describe, expect, it, vi } from "vitest";
 
 const resolveGatewayLogPathsMock = vi.fn(() => ({

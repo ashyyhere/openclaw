@@ -1,3 +1,4 @@
+// extensions/inworld index helpers and runtime behavior.
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 import { buildInworldSpeechProvider } from "./speech-provider.js";
 

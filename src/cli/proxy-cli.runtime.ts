@@ -1,3 +1,4 @@
+/** Runtime implementation for local proxy CLI process orchestration. */
 import { spawn } from "node:child_process";
 import { randomUUID } from "node:crypto";
 import process from "node:process";
@@ -21,6 +22,7 @@ import {
 } from "../proxy-capture/store.sqlite.js";
 import type { CaptureQueryPreset } from "../proxy-capture/types.js";
 
+/** Reused helper for run Debug Proxy Start Command behavior in src/cli. */
 export async function runDebugProxyStartCommand(opts: { host?: string; port?: number }) {
   const settings = resolveDebugProxySettings();
   const store = getDebugProxyCaptureStore(settings.dbPath, settings.blobDir);
@@ -65,6 +67,7 @@ export async function runDebugProxyStartCommand(opts: { host?: string; port?: nu
   await new Promise(() => undefined);
 }
 
+/** Reused helper for run Debug Proxy Run Command behavior in src/cli. */
 export async function runDebugProxyRunCommand(opts: {
   host?: string;
   port?: number;
@@ -256,6 +259,7 @@ function formatProxyValidationText(result: ProxyValidationResult): string {
   return `${lines.join("\n")}\n`;
 }
 
+/** Reused helper for run Proxy Validate Command behavior in src/cli. */
 export async function runProxyValidateCommand(opts: {
   json?: boolean;
   proxyUrl?: string;
@@ -289,6 +293,7 @@ export async function runProxyValidateCommand(opts: {
   }
 }
 
+/** Reused helper for run Debug Proxy Sessions Command behavior in src/cli. */
 export async function runDebugProxySessionsCommand(opts: { limit?: number }) {
   const settings = resolveDebugProxySettings();
   const sessions = getDebugProxyCaptureStore(settings.dbPath, settings.blobDir).listSessions(
@@ -298,6 +303,7 @@ export async function runDebugProxySessionsCommand(opts: { limit?: number }) {
   closeDebugProxyCaptureStore();
 }
 
+/** Reused helper for run Debug Proxy Query Command behavior in src/cli. */
 export async function runDebugProxyQueryCommand(opts: {
   preset: CaptureQueryPreset;
   sessionId?: string;
@@ -311,11 +317,13 @@ export async function runDebugProxyQueryCommand(opts: {
   closeDebugProxyCaptureStore();
 }
 
+/** Reused helper for run Debug Proxy Coverage Command behavior in src/cli. */
 export async function runDebugProxyCoverageCommand() {
   process.stdout.write(`${JSON.stringify(buildDebugProxyCoverageReport(), null, 2)}\n`);
   closeDebugProxyCaptureStore();
 }
 
+/** Reused helper for run Debug Proxy Purge Command behavior in src/cli. */
 export async function runDebugProxyPurgeCommand() {
   const settings = resolveDebugProxySettings();
   const result = getDebugProxyCaptureStore(settings.dbPath, settings.blobDir).purgeAll();
@@ -323,6 +331,7 @@ export async function runDebugProxyPurgeCommand() {
   closeDebugProxyCaptureStore();
 }
 
+/** Reused helper for read Debug Proxy Blob Command behavior in src/cli. */
 export async function readDebugProxyBlobCommand(opts: { blobId: string }) {
   const settings = resolveDebugProxySettings();
   const content = getDebugProxyCaptureStore(settings.dbPath, settings.blobDir).readBlob(

@@ -1,3 +1,4 @@
+/** Tests bundled plugin load path repair helpers. */
 import path from "node:path";
 import { bundledDistPluginRootAt, bundledPluginRootAt } from "openclaw/plugin-sdk/test-fixtures";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";

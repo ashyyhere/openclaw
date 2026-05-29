@@ -1,3 +1,4 @@
+/** Implements the Chutes OAuth browser callback command flow. */
 import { randomBytes } from "node:crypto";
 import { createServer } from "node:http";
 import type { ChutesOAuthAppConfig } from "../agents/chutes-oauth.js";
@@ -154,6 +155,7 @@ async function waitForLocalCallback(params: {
   });
 }
 
+/** Reused helper for login Chutes behavior in src/commands. */
 export async function loginChutes(params: {
   app: ChutesOAuthAppConfig;
   manual?: boolean;

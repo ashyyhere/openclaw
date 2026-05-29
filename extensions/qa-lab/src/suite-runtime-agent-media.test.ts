@@ -1,3 +1,4 @@
+// Tests extensions/qa-lab/src suite runtime agent media test behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";

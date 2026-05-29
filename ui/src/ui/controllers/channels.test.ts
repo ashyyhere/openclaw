@@ -1,3 +1,4 @@
+// Tests ui/src/ui/controllers channels test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { ChannelsStatusSnapshot } from "../types.ts";
 import { loadChannels, waitWhatsAppLogin, type ChannelsState } from "./channels.ts";

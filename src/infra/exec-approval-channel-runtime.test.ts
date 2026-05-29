@@ -1,3 +1,4 @@
+// Tests infra exec approval channel runtime test behavior.
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { GatewayClient } from "../gateway/client.js";
 import type { ExecApprovalRequest } from "./exec-approvals.js";

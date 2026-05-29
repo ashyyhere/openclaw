@@ -1,3 +1,4 @@
+// secrets runtime web tools helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveSecretInputRef } from "../config/types.secrets.js";
 import { loadInstalledPluginIndexInstallRecordsSync } from "../plugins/installed-plugin-index-records.js";
@@ -37,6 +38,7 @@ import type {
   RuntimeWebToolsMetadata,
 } from "./runtime-web-tools.types.js";
 
+/** Re-exported API for src/secrets. */
 export type {
   RuntimeWebDiagnostic,
   RuntimeWebDiagnosticCode,
@@ -509,6 +511,7 @@ function inactivePathsForFetchProvider(provider: PluginWebFetchProviderEntry): s
     : [provider.credentialPath];
 }
 
+/** Reused helper for resolve Runtime Web Tools behavior in src/secrets. */
 export async function resolveRuntimeWebTools(params: {
   sourceConfig: OpenClawConfig;
   resolvedConfig: OpenClawConfig;

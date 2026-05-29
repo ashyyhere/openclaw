@@ -1,3 +1,4 @@
+/** Covers bootstrap budget warnings inserted into attempt prompts. */
 import { describe, expect, it } from "vitest";
 import {
   analyzeBootstrapBudget,

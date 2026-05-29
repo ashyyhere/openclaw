@@ -1,4 +1,6 @@
+/** Public SDK barrel for channel feedback and acknowledgement reaction helpers. */
 export { resolveAckReaction } from "../agents/identity.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   createAckReactionHandle,
   removeAckReactionHandleAfterReply,
@@ -10,8 +12,11 @@ export {
   type AckReactionScope,
   type WhatsAppAckReactionMode,
 } from "../channels/ack-reactions.js";
+/** Re-exported API for src/plugin-sdk, starting with log Ack Failure. */
 export { logAckFailure, logTypingFailure, type LogFn } from "../channels/logging.js";
+/** Re-exported API for src/plugin-sdk, starting with missing Target Error. */
 export { missingTargetError } from "../infra/outbound/target-errors.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   BUILD_TOOL_TOKENS,
   CODING_TOOL_TOKENS,

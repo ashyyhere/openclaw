@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor agent components helpers helpers and runtime behavior.
 export const AGENT_BUTTON_KEY = "agent";
 export const AGENT_SELECT_KEY = "agentsel";
 

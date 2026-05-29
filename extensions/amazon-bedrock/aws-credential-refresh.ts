@@ -1,3 +1,4 @@
+// extensions/amazon-bedrock aws credential refresh helpers and runtime behavior.
 type SharedIniFileLoader = {
   loadSharedConfigFiles(init?: { ignoreCache?: boolean }): Promise<unknown>;
 };

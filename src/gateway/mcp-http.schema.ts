@@ -1,9 +1,12 @@
+// gateway mcp http schema helpers and runtime behavior.
 import { logWarn } from "../logger.js";
 import { uniqueValues } from "../shared/string-normalization.js";
 import { resolveGatewayScopedTools } from "./tool-resolution.js";
 
+/** Shared type for Mcp Loopback Tool in src/gateway. */
 export type McpLoopbackTool = ReturnType<typeof resolveGatewayScopedTools>["tools"][number];
 
+/** Shared type for Mcp Tool Schema Entry in src/gateway. */
 export type McpToolSchemaEntry = {
   name: string;
   description: string | undefined;
@@ -60,6 +63,7 @@ function flattenUnionSchema(raw: Record<string, unknown>): Record<string, unknow
   return { ...rest, type: "object", properties: mergedProps, required };
 }
 
+/** Reused helper for build Mcp Tool Schema behavior in src/gateway. */
 export function buildMcpToolSchema(tools: McpLoopbackTool[]): McpToolSchemaEntry[] {
   return tools.map((tool) => {
     let raw =

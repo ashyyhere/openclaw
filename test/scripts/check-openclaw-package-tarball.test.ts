@@ -1,3 +1,4 @@
+// Tests test/scripts check openclaw package tarball test behavior.
 import { spawnSync } from "node:child_process";
 import { mkdtempSync, rmSync, mkdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";

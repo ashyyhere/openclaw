@@ -1,3 +1,4 @@
+// Tests extensions/whatsapp/src status issues test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { collectWhatsAppStatusIssues } from "./status-issues.js";
 

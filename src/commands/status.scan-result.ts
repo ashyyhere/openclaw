@@ -1,3 +1,4 @@
+/** Builds full status scan results from config, runtime, and probe data. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { collectChannelStatusIssues as collectChannelStatusIssuesFn } from "../infra/channels-status-issues.js";
 import { resolveOsSummary } from "../infra/os-summary.js";
@@ -13,6 +14,7 @@ import type {
 } from "./status.scan.shared.js";
 import type { getStatusSummary as getStatusSummaryFn } from "./status.summary.js";
 
+/** Shared type for Status Scan Result in src/commands. */
 export type StatusScanResult = {
   cfg: OpenClawConfig;
   sourceConfig: OpenClawConfig;
@@ -42,6 +44,7 @@ export type StatusScanResult = {
   pluginCompatibility: PluginCompatibilityNotice[];
 };
 
+/** Reused helper for build Status Scan Result behavior in src/commands. */
 export function buildStatusScanResult(params: {
   cfg: OpenClawConfig;
   sourceConfig: OpenClawConfig;

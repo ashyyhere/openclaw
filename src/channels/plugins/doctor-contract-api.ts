@@ -1,3 +1,4 @@
+// Doctor contract API exposed to channel plugins.
 import type { LegacyConfigRule } from "../../config/legacy.shared.js";
 import type { OpenClawConfig } from "../../config/types.js";
 import { loadBundledPluginPublicArtifactModuleSync } from "../../plugins/public-surface-loader.js";
@@ -36,6 +37,7 @@ function loadBundledChannelPublicArtifact(
   return undefined;
 }
 
+/** Reused helper for load Bundled Channel Doctor Contract Api behavior in src/channels/plugins. */
 export function loadBundledChannelDoctorContractApi(
   channelId: string,
 ): BundledChannelDoctorContractApi | undefined {

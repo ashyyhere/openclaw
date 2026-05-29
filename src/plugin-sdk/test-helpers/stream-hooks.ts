@@ -1,3 +1,4 @@
+// plugin-sdk/test-helpers stream hooks helpers and runtime behavior.
 import type { StreamFn } from "../../agents/runtime/index.js";
 
 export function createCapturedThinkingConfigStream() {

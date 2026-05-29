@@ -1,3 +1,4 @@
+// tui tui local shell helpers and runtime behavior.
 import { spawn } from "node:child_process";
 import type { Component, SelectItem } from "@earendil-works/pi-tui";
 import { createSearchableSelectList } from "./components/selectors.js";
@@ -24,6 +25,7 @@ type LocalShellDeps = {
   maxOutputChars?: number;
 };
 
+/** Reused helper for create Local Shell Runner behavior in src/tui. */
 export function createLocalShellRunner(deps: LocalShellDeps) {
   let localExecAsked = false;
   let localExecAllowed = false;

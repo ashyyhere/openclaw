@@ -1,3 +1,4 @@
+// ui/src/ui/components modal dialog helpers and runtime behavior.
 import { LitElement, css, html, nothing } from "lit";
 import { property, query } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
@@ -12,6 +13,7 @@ const FOCUSABLE_SELECTOR = [
   "[tabindex]:not([tabindex='-1'])",
 ].join(",");
 
+/** Reused class for Open Claw Modal Dialog behavior in ui/src/ui/components. */
 export class OpenClawModalDialog extends LitElement {
   @property() label = "";
   @property() description = "";

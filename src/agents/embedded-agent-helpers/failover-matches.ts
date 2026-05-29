@@ -1,3 +1,4 @@
+/** String pattern matchers for provider failover categories. */
 import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";
 
 type ErrorPattern = RegExp | string;
@@ -255,22 +256,27 @@ function matchesErrorPatternGroups(
   return groups.some((patterns) => matchesErrorPatterns(raw, patterns));
 }
 
+/** Reused helper for matches Format Error Pattern behavior in src/agents/embedded-agent-helpers. */
 export function matchesFormatErrorPattern(raw: string): boolean {
   return matchesErrorPatterns(raw, ERROR_PATTERNS.format);
 }
 
+/** Reused helper for is Rate Limit Error Message behavior in src/agents/embedded-agent-helpers. */
 export function isRateLimitErrorMessage(raw: string): boolean {
   return matchesErrorPatterns(raw, ERROR_PATTERNS.rateLimit);
 }
 
+/** Reused helper for is Timeout Error Message behavior in src/agents/embedded-agent-helpers. */
 export function isTimeoutErrorMessage(raw: string): boolean {
   return matchesErrorPatterns(raw, ERROR_PATTERNS.timeout);
 }
 
+/** Reused helper for is Periodic Usage Limit Error Message behavior in src/agents/embedded-agent-helpers. */
 export function isPeriodicUsageLimitErrorMessage(raw: string): boolean {
   return PERIODIC_USAGE_LIMIT_RE.test(raw);
 }
 
+/** Reused helper for is Billing Error Message behavior in src/agents/embedded-agent-helpers. */
 export function isBillingErrorMessage(raw: string): boolean {
   const value = normalizeLowercaseStringOrEmpty(raw);
   if (!value) {
@@ -296,10 +302,12 @@ export function isBillingErrorMessage(raw: string): boolean {
   );
 }
 
+/** Reused helper for is Auth Permanent Error Message behavior in src/agents/embedded-agent-helpers. */
 export function isAuthPermanentErrorMessage(raw: string): boolean {
   return matchesErrorPatternGroups(raw, [HIGH_CONFIDENCE_AUTH_PERMANENT_PATTERNS]);
 }
 
+/** Reused helper for is Auth Error Message behavior in src/agents/embedded-agent-helpers. */
 export function isAuthErrorMessage(raw: string): boolean {
   return matchesErrorPatternGroups(raw, [
     AMBIGUOUS_AUTH_ERROR_PATTERNS,
@@ -309,10 +317,12 @@ export function isAuthErrorMessage(raw: string): boolean {
   ]);
 }
 
+/** Reused helper for is Overloaded Error Message behavior in src/agents/embedded-agent-helpers. */
 export function isOverloadedErrorMessage(raw: string): boolean {
   return matchesErrorPatterns(raw, ERROR_PATTERNS.overloaded);
 }
 
+/** Reused helper for is Server Error Message behavior in src/agents/embedded-agent-helpers. */
 export function isServerErrorMessage(raw: string): boolean {
   const value = normalizeLowercaseStringOrEmpty(raw);
   if (!value) {

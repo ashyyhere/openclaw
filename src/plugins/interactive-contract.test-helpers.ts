@@ -1,3 +1,4 @@
+// plugins interactive contract test helpers helpers and runtime behavior.
 type ConversationBindingHelpers = {
   requestConversationBinding: (...args: unknown[]) => unknown;
   detachConversationBinding: (...args: unknown[]) => unknown;
@@ -23,6 +24,7 @@ type BaseInteractiveContext<TChannel extends string> = ConversationBindingHelper
   auth?: unknown;
 };
 
+/** Shared type for Telegram Interactive Handler Context in src/plugins. */
 export type TelegramInteractiveHandlerContext = BaseInteractiveContext<"telegram"> & {
   callbackId: string;
   senderUsername?: string;
@@ -40,6 +42,7 @@ export type TelegramInteractiveHandlerContext = BaseInteractiveContext<"telegram
   respond: Record<string, (...args: unknown[]) => unknown>;
 };
 
+/** Shared type for Discord Interactive Handler Context in src/plugins. */
 export type DiscordInteractiveHandlerContext = BaseInteractiveContext<"discord"> & {
   interactionId: string;
   guildId?: string;
@@ -52,6 +55,7 @@ export type DiscordInteractiveHandlerContext = BaseInteractiveContext<"discord">
   respond: Record<string, (...args: unknown[]) => unknown>;
 };
 
+/** Shared type for Slack Interactive Handler Context in src/plugins. */
 export type SlackInteractiveHandlerContext = BaseInteractiveContext<"slack"> & {
   interactionId: string;
   threadId?: string;
@@ -64,14 +68,17 @@ export type SlackInteractiveHandlerContext = BaseInteractiveContext<"slack"> & {
   respond: Record<string, (...args: unknown[]) => unknown>;
 };
 
+/** Shared type for Telegram Interactive Handler Registration in src/plugins. */
 export type TelegramInteractiveHandlerRegistration = InteractiveHandlerRegistration<
   "telegram",
   TelegramInteractiveHandlerContext
 >;
+/** Shared type for Discord Interactive Handler Registration in src/plugins. */
 export type DiscordInteractiveHandlerRegistration = InteractiveHandlerRegistration<
   "discord",
   DiscordInteractiveHandlerContext
 >;
+/** Shared type for Slack Interactive Handler Registration in src/plugins. */
 export type SlackInteractiveHandlerRegistration = InteractiveHandlerRegistration<
   "slack",
   SlackInteractiveHandlerContext

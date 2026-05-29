@@ -1,11 +1,14 @@
+// infra package dist inventory helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { isLocalBuildMetadataDistPath } from "../../scripts/lib/local-build-metadata-paths.mjs";
 import { sortUniqueStrings } from "../shared/string-normalization.js";
 import { readJsonIfExists, writeJson } from "./json-files.js";
 
+/** Re-exported API for src/infra, starting with LOCAL BUILD METADATA DIST PATHS. */
 export { LOCAL_BUILD_METADATA_DIST_PATHS } from "../../scripts/lib/local-build-metadata-paths.mjs";
 
+/** Reused constant for PACKAGE DIST INVENTORY RELATIVE PATH behavior in src/infra. */
 export const PACKAGE_DIST_INVENTORY_RELATIVE_PATH = "dist/postinstall-inventory.json";
 const PACKAGE_DIST_INVENTORY_SCAN_CONCURRENCY = 32;
 const LEGACY_QA_CHANNEL_DIR = ["qa", "channel"].join("-");
@@ -147,6 +150,7 @@ function isLegacyPluginDependencyDirPath(relativePath: string): boolean {
   return pluginDependencyDir.toLowerCase() === "node_modules";
 }
 
+/** Reused helper for is Legacy Plugin Dependency Install Stage Path behavior in src/infra. */
 export function isLegacyPluginDependencyInstallStagePath(relativePath: string): boolean {
   const parts = splitRelativePath(relativePath);
   return (
@@ -377,6 +381,7 @@ async function collectRelativeFiles(
   }
 }
 
+/** Reused helper for collect Package Dist Inventory behavior in src/infra. */
 export async function collectPackageDistInventory(packageRoot: string): Promise<string[]> {
   const rules = await collectPackageDistInventoryRulesForRoot(packageRoot);
   const scanContext = createPackageDistInventoryScanContext();
@@ -388,6 +393,7 @@ export async function collectPackageDistInventory(packageRoot: string): Promise<
   );
 }
 
+/** Reused helper for collect Legacy Plugin Dependency Staging Debris Paths behavior in src/infra. */
 export async function collectLegacyPluginDependencyStagingDebrisPaths(
   packageRoot: string,
 ): Promise<string[]> {
@@ -463,6 +469,7 @@ export async function collectLegacyPluginDependencyStagingDebrisPaths(
   return debris.toSorted((left, right) => left.localeCompare(right));
 }
 
+/** Reused helper for assert No Legacy Plugin Dependency Staging Debris behavior in src/infra. */
 export async function assertNoLegacyPluginDependencyStagingDebris(
   packageRoot: string,
 ): Promise<void> {
@@ -475,6 +482,7 @@ export async function assertNoLegacyPluginDependencyStagingDebris(
   );
 }
 
+/** Reused helper for write Package Dist Inventory behavior in src/infra. */
 export async function writePackageDistInventory(packageRoot: string): Promise<string[]> {
   await assertNoLegacyPluginDependencyStagingDebris(packageRoot);
   const inventory = sortUniqueStrings(await collectPackageDistInventory(packageRoot));
@@ -495,12 +503,14 @@ async function readPackageDistInventoryOptional(packageRoot: string): Promise<st
   return sortUniqueStrings(parsed.map(normalizeRelativePath));
 }
 
+/** Reused helper for read Package Dist Inventory If Present behavior in src/infra. */
 export async function readPackageDistInventoryIfPresent(
   packageRoot: string,
 ): Promise<string[] | null> {
   return await readPackageDistInventoryOptional(packageRoot);
 }
 
+/** Reused helper for collect Package Dist Inventory Errors behavior in src/infra. */
 export async function collectPackageDistInventoryErrors(packageRoot: string): Promise<string[]> {
   const expectedFiles = await readPackageDistInventoryIfPresent(packageRoot);
   if (expectedFiles === null) {

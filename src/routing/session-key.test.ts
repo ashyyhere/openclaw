@@ -1,3 +1,4 @@
+// Tests routing session key test behavior.
 import { describe, expect, it } from "vitest";
 import { deriveSessionChatTypeFromKey } from "../sessions/session-chat-type-shared.js";
 import {

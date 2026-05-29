@@ -1,3 +1,4 @@
+// Tests extensions/whatsapp/src channel actions test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   describeWhatsAppMessageActions,

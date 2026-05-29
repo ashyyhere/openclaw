@@ -1,3 +1,4 @@
+/** Covers assistant text extraction by phase across history/session helpers. */
 import { describe, expect, it } from "vitest";
 import { extractAssistantText as extractChatHistoryAssistantText } from "./chat-history-text.js";
 import { extractAssistantText as extractSessionAssistantText } from "./session-message-text.js";

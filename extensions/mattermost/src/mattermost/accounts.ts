@@ -1,3 +1,4 @@
+// extensions/mattermost/src/mattermost accounts helpers and runtime behavior.
 import {
   createAccountListHelpers,
   hasConfiguredAccountValue,

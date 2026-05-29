@@ -1,3 +1,4 @@
+/** Covers provider auth checks for tool model config. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../../config/config.js";
 import { hasProviderAuthForTool } from "./model-config.helpers.js";

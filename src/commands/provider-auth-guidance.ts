@@ -1,3 +1,4 @@
+/** Formats provider auth setup guidance for CLI and doctor flows. */
 import { normalizeProviderId } from "../agents/model-selection.js";
 import { resolveProviderAuthAliasMap } from "../agents/provider-auth-aliases.js";
 import { formatCliCommand } from "../cli/command-format.js";
@@ -41,6 +42,7 @@ function resolveProviderAuthLoginCommand(params: {
   return formatCliCommand(`openclaw models auth login --provider ${providerId}`);
 }
 
+/** Reused helper for build Provider Auth Recovery Hint behavior in src/commands. */
 export function buildProviderAuthRecoveryHint(params: {
   provider: string;
   config?: OpenClawConfig;

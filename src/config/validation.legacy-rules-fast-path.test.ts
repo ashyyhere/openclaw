@@ -1,3 +1,4 @@
+// Tests config validation legacy rules fast path test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { LegacyConfigRule } from "./legacy.shared.js";
 

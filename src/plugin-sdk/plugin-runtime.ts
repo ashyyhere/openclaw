@@ -11,5 +11,7 @@ export * from "../plugins/interactive-binding-helpers.js";
 export * from "../plugins/interactive.js";
 export * from "../plugins/lazy-service-module.js";
 export * from "../plugins/types.js";
+/** Re-exported API for src/plugin-sdk, starting with get Plugin Runtime Gateway Request Scope. */
 export { getPluginRuntimeGatewayRequestScope } from "../plugins/runtime/gateway-request-scope.js";
+/** Re-exported API for src/plugin-sdk, starting with Plugin Runtime. */
 export type { PluginRuntime, RuntimeLogger } from "../plugins/runtime/types.js";

@@ -1,3 +1,4 @@
+// extensions/telegram/src network errors helpers and runtime behavior.
 import {
   collectErrorGraphCandidates,
   extractErrorCode,

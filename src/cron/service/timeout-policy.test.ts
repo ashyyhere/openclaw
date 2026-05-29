@@ -1,3 +1,4 @@
+// Tests cron/service timeout policy test behavior.
 import { describe, expect, it } from "vitest";
 import { MAX_TIMER_TIMEOUT_MS } from "../../shared/number-coercion.js";
 import type { CronJob } from "../types.js";

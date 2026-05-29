@@ -1,3 +1,4 @@
+// extensions/slack/src/monitor allow list helpers and runtime behavior.
 import {
   compileAllowlist,
   resolveCompiledAllowlistMatch,

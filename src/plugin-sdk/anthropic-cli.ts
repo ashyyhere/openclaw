@@ -12,7 +12,9 @@ function loadFacadeModule(): FacadeModule {
     artifactBasename: "api.js",
   });
 }
+/** Reused constant for CLAUDE CLI BACKEND ID behavior in src/plugin-sdk. */
 export const CLAUDE_CLI_BACKEND_ID: FacadeModule["CLAUDE_CLI_BACKEND_ID"] =
   loadFacadeModule()["CLAUDE_CLI_BACKEND_ID"];
+/** Reused constant for is Claude Cli Provider behavior in src/plugin-sdk. */
 export const isClaudeCliProvider: FacadeModule["isClaudeCliProvider"] = ((...args) =>
   loadFacadeModule()["isClaudeCliProvider"](...args)) as FacadeModule["isClaudeCliProvider"];

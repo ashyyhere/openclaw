@@ -1,3 +1,4 @@
+// plugins install helpers and runtime behavior.
 import { createHash } from "node:crypto";
 import type { Dirent } from "node:fs";
 import fs from "node:fs/promises";
@@ -68,6 +69,7 @@ import {
   relinkOpenClawPeerDependenciesInManagedNpmRoot,
 } from "./plugin-peer-link.js";
 
+/** Re-exported API for src/plugins, starting with resolve Plugin Install Dir. */
 export { resolvePluginInstallDir } from "./install-paths.js";
 
 const pluginInstallRuntimeLoader = createLazyImportLoader(() => import("./install.runtime.js"));
@@ -107,6 +109,7 @@ const PLUGIN_ARCHIVE_ROOT_MARKERS = [
 ];
 const MANAGED_NPM_PACK_ARCHIVE_DIR = "_openclaw-pack-archives";
 
+/** Reused constant for PLUGIN INSTALL ERROR CODE behavior in src/plugins. */
 export const PLUGIN_INSTALL_ERROR_CODE = {
   INVALID_NPM_SPEC: "invalid_npm_spec",
   INVALID_MIN_HOST_VERSION: "invalid_min_host_version",
@@ -124,9 +127,11 @@ export const PLUGIN_INSTALL_ERROR_CODE = {
   SECURITY_SCAN_FAILED: "security_scan_failed",
 } as const;
 
+/** Shared type for Plugin Install Error Code in src/plugins. */
 export type PluginInstallErrorCode =
   (typeof PLUGIN_INSTALL_ERROR_CODE)[keyof typeof PLUGIN_INSTALL_ERROR_CODE];
 
+/** Shared type for Install Plugin Result in src/plugins. */
 export type InstallPluginResult =
   | {
       ok: true;
@@ -225,6 +230,7 @@ async function readOptionalPackageManifest(params: {
   }
 }
 
+/** Shared type for Plugin Npm Integrity Drift Params in src/plugins. */
 export type PluginNpmIntegrityDriftParams = {
   spec: string;
   expectedIntegrity: string;
@@ -1718,6 +1724,7 @@ async function scanAndLinkInstalledPackage(params: {
   return null;
 }
 
+/** Reused helper for install Plugin From Installed Package Dir behavior in src/plugins. */
 export async function installPluginFromInstalledPackageDir(
   params: {
     additionalDependencyPackageDirs?: string[];
@@ -1852,6 +1859,7 @@ async function installPluginFromPackageDir(
   });
 }
 
+/** Reused helper for install Plugin From Archive behavior in src/plugins. */
 export async function installPluginFromArchive(
   params: {
     archivePath: string;
@@ -1896,6 +1904,7 @@ export async function installPluginFromArchive(
   });
 }
 
+/** Reused helper for install Plugin From Dir behavior in src/plugins. */
 export async function installPluginFromDir(
   params: {
     dirPath: string;
@@ -1924,6 +1933,7 @@ export async function installPluginFromDir(
   });
 }
 
+/** Reused helper for install Plugin From File behavior in src/plugins. */
 export async function installPluginFromFile(params: {
   filePath: string;
   dangerouslyForceUnsafeInstall?: boolean;
@@ -2009,6 +2019,7 @@ export async function installPluginFromFile(params: {
   return buildFileInstallResult(pluginId, preparedTarget.targetPath);
 }
 
+/** Reused helper for install Plugin From Npm Spec behavior in src/plugins. */
 export async function installPluginFromNpmSpec(
   params: InstallSafetyOverrides & {
     spec: string;
@@ -2159,6 +2170,7 @@ export async function installPluginFromNpmSpec(
   });
 }
 
+/** Reused helper for install Plugin From Npm Pack Archive behavior in src/plugins. */
 export async function installPluginFromNpmPackArchive(
   params: InstallSafetyOverrides & {
     archivePath: string;
@@ -2257,6 +2269,7 @@ export async function installPluginFromNpmPackArchive(
   };
 }
 
+/** Reused helper for install Plugin From Path behavior in src/plugins. */
 export async function installPluginFromPath(
   params: {
     path: string;

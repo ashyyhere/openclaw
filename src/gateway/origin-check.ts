@@ -1,3 +1,4 @@
+// gateway origin check helpers and runtime behavior.
 import net from "node:net";
 import { isPrivateOrLoopbackIpAddress } from "@openclaw/net-policy/ip";
 import {
@@ -32,6 +33,7 @@ function parseOrigin(
   }
 }
 
+/** Reused helper for check Browser Origin behavior in src/gateway. */
 export function checkBrowserOrigin(params: {
   requestHost?: string;
   origin?: string;

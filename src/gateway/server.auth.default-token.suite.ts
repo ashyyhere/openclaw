@@ -1,3 +1,4 @@
+// gateway server auth default token suite helpers and runtime behavior.
 import { afterAll, beforeAll, describe, expect, test, vi } from "vitest";
 import { WebSocket } from "ws";
 import {
@@ -25,6 +26,7 @@ import {
   withRuntimeVersionEnv,
 } from "./server.auth.shared.js";
 
+/** Reused helper for register Default Auth Token Suite behavior in src/gateway. */
 export function registerDefaultAuthTokenSuite(): void {
   describe("default auth (token)", () => {
     let server: Awaited<ReturnType<typeof startGatewayServer>> | undefined;

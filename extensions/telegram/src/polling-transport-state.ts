@@ -1,3 +1,4 @@
+// extensions/telegram/src polling transport state helpers and runtime behavior.
 import type { TelegramTransport } from "./fetch.js";
 
 type TelegramPollingTransportStateOpts = {

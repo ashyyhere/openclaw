@@ -1,3 +1,4 @@
+/** Tests MCP stdio transport process behavior. */
 import type { SpawnOptions } from "node:child_process";
 import { EventEmitter } from "node:events";
 import { PassThrough } from "node:stream";

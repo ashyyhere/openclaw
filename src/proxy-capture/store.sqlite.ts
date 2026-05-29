@@ -1,3 +1,4 @@
+// proxy-capture store sqlite helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import type { DatabaseSync } from "node:sqlite";
@@ -95,6 +96,7 @@ function sortObservedCounts(counts: Map<string, number>): CaptureObservedDimensi
     .toSorted((left, right) => right.count - left.count || left.value.localeCompare(right.value));
 }
 
+/** Reused class for Debug Proxy Capture Store behavior in src/proxy-capture. */
 export class DebugProxyCaptureStore {
   readonly db: DatabaseSync;
   private readonly walMaintenance: SqliteWalMaintenance;
@@ -467,6 +469,7 @@ let cachedStore: DebugProxyCaptureStore | null = null;
 let cachedKey = "";
 let cachedStoreLeases = 0;
 
+/** Reused helper for get Debug Proxy Capture Store behavior in src/proxy-capture. */
 export function getDebugProxyCaptureStore(dbPath: string, blobDir: string): DebugProxyCaptureStore {
   const key = `${dbPath}:${blobDir}`;
   if (!cachedStore || cachedStore.isClosed || cachedKey !== key) {
@@ -477,6 +480,7 @@ export function getDebugProxyCaptureStore(dbPath: string, blobDir: string): Debu
   return cachedStore;
 }
 
+/** Reused helper for close Debug Proxy Capture Store behavior in src/proxy-capture. */
 export function closeDebugProxyCaptureStore(): void {
   if (!cachedStore) {
     return;
@@ -487,6 +491,7 @@ export function closeDebugProxyCaptureStore(): void {
   cachedStoreLeases = 0;
 }
 
+/** Reused helper for acquire Debug Proxy Capture Store behavior in src/proxy-capture. */
 export function acquireDebugProxyCaptureStore(
   dbPath: string,
   blobDir: string,
@@ -510,6 +515,7 @@ export function acquireDebugProxyCaptureStore(
   };
 }
 
+/** Reused helper for persist Event Payload behavior in src/proxy-capture. */
 export function persistEventPayload(
   store: DebugProxyCaptureStore,
   params: { data?: Buffer | string | null; contentType?: string; previewLimit?: number },
@@ -527,6 +533,7 @@ export function persistEventPayload(
   };
 }
 
+/** Reused helper for safe Json String behavior in src/proxy-capture. */
 export function safeJsonString(value: unknown): string | undefined {
   const raw = serializeJson(value);
   return raw ?? undefined;

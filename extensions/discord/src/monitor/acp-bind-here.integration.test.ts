@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/monitor acp bind here integration test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ChannelType } from "../internal/discord.js";
 

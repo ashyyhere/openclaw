@@ -1,3 +1,4 @@
+/** Tests shared extension helper behavior for status, config issues, and secrets. */
 import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";

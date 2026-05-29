@@ -1,3 +1,4 @@
+// Tests extensions/memory-core/src/memory manager source state test behavior.
 import { describe, expect, it } from "vitest";
 import {
   loadMemorySourceFileState,

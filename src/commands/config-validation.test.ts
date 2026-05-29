@@ -1,3 +1,4 @@
+/** Tests config validation output and compatibility notice handling. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { PluginCompatibilityNotice } from "../plugins/status.js";
 import { createCompatibilityNotice } from "../plugins/status.test-helpers.js";

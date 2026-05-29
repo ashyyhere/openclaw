@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/qa-lab/src suite launch runtime behavior.
 import type { QaSuiteRunParams } from "./suite.js";
 
 async function loadQaLabServerRuntime() {

@@ -1,3 +1,4 @@
+// Tests extensions/codex/src/app-server context engine projection test behavior.
 import type { AgentMessage } from "openclaw/plugin-sdk/agent-core";
 import { describe, expect, it } from "vitest";
 import {

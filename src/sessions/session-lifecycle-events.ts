@@ -1,3 +1,5 @@
+// sessions session lifecycle events helpers and runtime behavior.
+/** Shared type for Session Lifecycle Event in src/sessions. */
 export type SessionLifecycleEvent = {
   sessionKey: string;
   reason: string;
@@ -10,6 +12,7 @@ type SessionLifecycleListener = (event: SessionLifecycleEvent) => void;
 
 const SESSION_LIFECYCLE_LISTENERS = new Set<SessionLifecycleListener>();
 
+/** Reused helper for on Session Lifecycle Event behavior in src/sessions. */
 export function onSessionLifecycleEvent(listener: SessionLifecycleListener): () => void {
   SESSION_LIFECYCLE_LISTENERS.add(listener);
   return () => {
@@ -17,6 +20,7 @@ export function onSessionLifecycleEvent(listener: SessionLifecycleListener): () 
   };
 }
 
+/** Reused helper for emit Session Lifecycle Event behavior in src/sessions. */
 export function emitSessionLifecycleEvent(event: SessionLifecycleEvent): void {
   for (const listener of SESSION_LIFECYCLE_LISTENERS) {
     try {

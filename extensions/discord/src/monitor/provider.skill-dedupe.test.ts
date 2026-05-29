@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/monitor provider skill dedupe test behavior.
 import { beforeAll, describe, expect, it } from "vitest";
 
 let testing: typeof import("./provider.js").testing;

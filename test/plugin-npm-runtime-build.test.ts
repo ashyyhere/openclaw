@@ -1,3 +1,4 @@
+// Tests test plugin npm runtime build test behavior.
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import {

@@ -1,3 +1,4 @@
+// qa/convex-credential-broker/convex schema helpers and runtime behavior.
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 

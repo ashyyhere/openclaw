@@ -1,3 +1,4 @@
+// Tests extensions/openai openai codex oauth flow runtime test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 const ssrfMocks = vi.hoisted(() => ({

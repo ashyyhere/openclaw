@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/imessage/src channel runtime behavior.
 import { resolveOutboundSendDep } from "openclaw/plugin-sdk/channel-outbound";
 import { resolveIMessageDuplicateSourceOwner, type ResolvedIMessageAccount } from "./accounts.js";
 import { PAIRING_APPROVED_MESSAGE, resolveChannelMediaMaxBytes } from "./channel-api.js";

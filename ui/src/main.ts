@@ -1,3 +1,4 @@
+// ui/src main helpers and runtime behavior.
 import "./styles.css";
 import "./ui/app.ts";
 

@@ -1,3 +1,4 @@
+// Tests extensions/voice-call/src deep merge test behavior.
 import { describe, expect, it } from "vitest";
 import { deepMergeDefined } from "./deep-merge.js";
 

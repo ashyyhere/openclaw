@@ -1,3 +1,4 @@
+/** Covers output accumulation with spill-to-temp-file behavior. */
 import { rm, stat } from "node:fs/promises";
 import { describe, expect, it } from "vitest";
 import { OutputAccumulator } from "./output-accumulator.js";

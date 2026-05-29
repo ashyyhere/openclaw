@@ -1,3 +1,4 @@
+// Tests config io meta test behavior.
 import { describe, expect, it } from "vitest";
 import { AUTO_MANAGED_CONFIG_META_PATHS, stampConfigWriteMetadata } from "./io.meta.js";
 

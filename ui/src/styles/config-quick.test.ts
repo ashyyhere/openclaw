@@ -1,3 +1,4 @@
+// Tests ui/src/styles config quick test behavior.
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";

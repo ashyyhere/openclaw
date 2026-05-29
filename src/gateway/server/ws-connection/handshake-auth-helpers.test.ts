@@ -1,3 +1,4 @@
+// Tests gateway/server/ws-connection handshake auth helpers test behavior.
 import { describe, expect, it } from "vitest";
 import {
   GATEWAY_CLIENT_IDS,

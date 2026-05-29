@@ -1,3 +1,4 @@
+// tts tts config helpers and runtime behavior.
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import type { OpenClawConfig } from "../config/types.js";
@@ -10,10 +11,12 @@ import {
 } from "../shared/string-coerce.js";
 import { resolveConfigDir, resolveUserPath } from "../utils.js";
 import { normalizeTtsAutoMode } from "./tts-auto-mode.js";
+/** Re-exported API for src/tts, starting with normalize Tts Auto Mode. */
 export { normalizeTtsAutoMode } from "./tts-auto-mode.js";
 
 const BLOCKED_MERGE_KEYS = new Set(["__proto__", "prototype", "constructor"]);
 
+/** Shared type for Tts Config Resolution Context in src/tts. */
 export type TtsConfigResolutionContext = {
   agentId?: string;
   channelId?: string;
@@ -118,6 +121,7 @@ function resolveAccountTtsOverride(
   return asTtsConfig(asObjectRecord(accountConfig)?.tts);
 }
 
+/** Reused helper for resolve Effective Tts Config behavior in src/tts. */
 export function resolveEffectiveTtsConfig(
   cfg: OpenClawConfig,
   contextOrAgentId?: string | TtsConfigResolutionContext,
@@ -134,6 +138,7 @@ export function resolveEffectiveTtsConfig(
   return merged as TtsConfig;
 }
 
+/** Reused helper for resolve Configured Tts Mode behavior in src/tts. */
 export function resolveConfiguredTtsMode(
   cfg: OpenClawConfig,
   contextOrAgentId?: string | TtsConfigResolutionContext,
@@ -173,6 +178,7 @@ function readTtsPrefsAutoMode(prefsPath: string): TtsAutoMode | undefined {
   return undefined;
 }
 
+/** Reused helper for should Attempt Tts Payload behavior in src/tts. */
 export function shouldAttemptTtsPayload(params: {
   cfg: OpenClawConfig;
   ttsAuto?: string;
@@ -198,6 +204,7 @@ export function shouldAttemptTtsPayload(params: {
   return raw?.enabled === true;
 }
 
+/** Reused helper for should Clean Tts Directive Text behavior in src/tts. */
 export function shouldCleanTtsDirectiveText(params: {
   cfg: OpenClawConfig;
   ttsAuto?: string;

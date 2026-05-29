@@ -1,3 +1,4 @@
+/** Rewrites CLI invocations to run inside a configured container target. */
 import { spawnSync } from "node:child_process";
 import { isIP } from "node:net";
 import { consumeRootOptionToken, FLAG_TERMINATOR } from "../infra/cli-root-options.js";
@@ -29,6 +30,7 @@ type ContainerRuntimeExec = {
 
 const CONTAINER_ALLOW_LOOPBACK_PROXY_URL_ENV = "OPENCLAW_CONTAINER_ALLOW_LOOPBACK_PROXY_URL";
 
+/** Reused helper for parse Cli Container Args behavior in src/cli. */
 export function parseCliContainerArgs(argv: string[]): CliContainerParseResult {
   let container: string | null = null;
 
@@ -52,6 +54,7 @@ export function parseCliContainerArgs(argv: string[]): CliContainerParseResult {
   return { ok: true, container, argv: scanned.argv };
 }
 
+/** Reused helper for resolve Cli Container Target behavior in src/cli. */
 export function resolveCliContainerTarget(
   argv: string[],
   env: NodeJS.ProcessEnv = process.env,
@@ -253,6 +256,7 @@ function isBlockedContainerCommand(argv: string[]): boolean {
   return false;
 }
 
+/** Reused helper for maybe Run Cli In Container behavior in src/cli. */
 export function maybeRunCliInContainer(
   argv: string[],
   deps?: Partial<ContainerTargetDeps>,

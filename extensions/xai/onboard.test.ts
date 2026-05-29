@@ -1,3 +1,4 @@
+// Tests extensions/xai onboard test behavior.
 import {
   resolveAgentModelFallbackValues,
   resolveAgentModelPrimaryValue,

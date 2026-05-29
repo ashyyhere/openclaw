@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/monitor message handler hydration test behavior.
 import { describe, expect, it } from "vitest";
 import { Message } from "../internal/discord.js";
 import {

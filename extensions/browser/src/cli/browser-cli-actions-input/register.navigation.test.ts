@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/cli/browser-cli-actions-input register navigation test behavior.
 import { Command } from "commander";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import * as browserCliResizeModule from "../browser-cli-resize.js";

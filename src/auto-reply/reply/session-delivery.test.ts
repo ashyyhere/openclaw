@@ -1,3 +1,4 @@
+// Coverage for session delivery helpers.
 import { describe, expect, it } from "vitest";
 import { resolveLastChannelRaw, resolveLastToRaw } from "./session-delivery.js";
 

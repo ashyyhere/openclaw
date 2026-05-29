@@ -1,3 +1,4 @@
+// extensions/file-transfer/src/node-host dir list helpers and runtime behavior.
 import path from "node:path";
 import { parseStrictNonNegativeInteger } from "openclaw/plugin-sdk/number-runtime";
 import { root } from "openclaw/plugin-sdk/security-runtime";

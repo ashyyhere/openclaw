@@ -1,3 +1,4 @@
+/** Tests shell completion generation and write-state behavior. */
 import { spawnSync } from "node:child_process";
 import fs from "node:fs/promises";
 import os from "node:os";

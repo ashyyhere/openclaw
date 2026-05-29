@@ -1,3 +1,4 @@
+// ui/src/ui/controllers control ui bootstrap helpers and runtime behavior.
 import {
   CONTROL_UI_BOOTSTRAP_CONFIG_PATH,
   type ControlUiBootstrapConfig,
@@ -10,6 +11,7 @@ import { normalizeAgentId, parseAgentSessionKey } from "../session-key.ts";
 import { loadLocalAssistantIdentity } from "../storage.ts";
 import { normalizeOptionalString } from "../string-coerce.ts";
 
+/** Shared type for Control Ui Bootstrap State in ui/src/ui/controllers. */
 export type ControlUiBootstrapState = {
   basePath: string;
   assistantName: string;
@@ -54,6 +56,7 @@ function applyLocalAssistantAvatarOverride(state: ControlUiBootstrapState) {
   state.assistantAvatarReason = null;
 }
 
+/** Reused helper for load Control Ui Bootstrap Config behavior in ui/src/ui/controllers. */
 export async function loadControlUiBootstrapConfig(
   state: ControlUiBootstrapState,
   opts?: { applyIdentity?: boolean },

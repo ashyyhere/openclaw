@@ -1,6 +1,8 @@
+// infra exec safe bin policy profiles helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import { sortUniqueStrings } from "../shared/string-normalization.js";
 
+/** Shared type for Safe Bin Profile in src/infra. */
 export type SafeBinProfile = {
   minPositional?: number;
   maxPositional?: number;
@@ -12,6 +14,7 @@ export type SafeBinProfile = {
   longFlagPrefixMap?: ReadonlyMap<string, string | null>;
 };
 
+/** Shared type for Safe Bin Profile Fixture in src/infra. */
 export type SafeBinProfileFixture = {
   minPositional?: number;
   maxPositional?: number;
@@ -19,10 +22,12 @@ export type SafeBinProfileFixture = {
   deniedFlags?: readonly string[];
 };
 
+/** Shared type for Safe Bin Profile Fixtures in src/infra. */
 export type SafeBinProfileFixtures = Readonly<Record<string, SafeBinProfileFixture>>;
 
 const NO_FLAGS: ReadonlySet<string> = new Set();
 
+/** Reused constant for DEFAULT SAFE BINS behavior in src/infra. */
 export const DEFAULT_SAFE_BINS = ["cut", "uniq", "head", "tail", "tr", "wc"] as const;
 
 const toFlagSet = (flags?: readonly string[]): ReadonlySet<string> => {
@@ -32,6 +37,7 @@ const toFlagSet = (flags?: readonly string[]): ReadonlySet<string> => {
   return new Set(flags);
 };
 
+/** Reused helper for collect Known Long Flags behavior in src/infra. */
 export function collectKnownLongFlags(
   allowedValueFlags: ReadonlySet<string>,
   deniedFlags: ReadonlySet<string>,
@@ -50,6 +56,7 @@ export function collectKnownLongFlags(
   return Array.from(known);
 }
 
+/** Reused helper for build Long Flag Prefix Map behavior in src/infra. */
 export function buildLongFlagPrefixMap(
   knownLongFlags: readonly string[],
 ): ReadonlyMap<string, string | null> {
@@ -96,6 +103,7 @@ function compileSafeBinProfiles(
   ) as Record<string, SafeBinProfile>;
 }
 
+/** Reused constant for SAFE BIN PROFILE FIXTURES behavior in src/infra. */
 export const SAFE_BIN_PROFILE_FIXTURES: Record<string, SafeBinProfileFixture> = {
   jq: {
     maxPositional: 1,
@@ -221,6 +229,7 @@ export const SAFE_BIN_PROFILE_FIXTURES: Record<string, SafeBinProfileFixture> = 
   },
 };
 
+/** Reused constant for SAFE BIN PROFILES behavior in src/infra. */
 export const SAFE_BIN_PROFILES: Record<string, SafeBinProfile> =
   compileSafeBinProfiles(SAFE_BIN_PROFILE_FIXTURES);
 
@@ -266,6 +275,7 @@ function normalizeSafeBinProfileFixture(fixture: SafeBinProfileFixture): SafeBin
   };
 }
 
+/** Reused helper for normalize Safe Bin Profile Fixtures behavior in src/infra. */
 export function normalizeSafeBinProfileFixtures(
   fixtures?: SafeBinProfileFixtures | null,
 ): Record<string, SafeBinProfileFixture> {
@@ -283,6 +293,7 @@ export function normalizeSafeBinProfileFixtures(
   return normalized;
 }
 
+/** Reused helper for resolve Safe Bin Profiles behavior in src/infra. */
 export function resolveSafeBinProfiles(
   fixtures?: SafeBinProfileFixtures | null,
 ): Record<string, SafeBinProfile> {
@@ -309,6 +320,7 @@ function resolveSafeBinDeniedFlags(
   return out;
 }
 
+/** Reused helper for render Safe Bin Denied Flags Doc Bullets behavior in src/infra. */
 export function renderSafeBinDeniedFlagsDocBullets(
   fixtures: Readonly<Record<string, SafeBinProfileFixture>> = SAFE_BIN_PROFILE_FIXTURES,
 ): string {
@@ -319,6 +331,7 @@ export function renderSafeBinDeniedFlagsDocBullets(
     .join("\n");
 }
 
+/** Reused helper for render Default Safe Bins Doc Text behavior in src/infra. */
 export function renderDefaultSafeBinsDocText(
   defaults: readonly string[] = DEFAULT_SAFE_BINS,
 ): string {

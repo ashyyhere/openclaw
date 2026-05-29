@@ -1,3 +1,4 @@
+// extensions/whatsapp/src session route helpers and runtime behavior.
 import {
   buildChannelOutboundSessionRoute,
   type ChannelOutboundSessionRouteParams,

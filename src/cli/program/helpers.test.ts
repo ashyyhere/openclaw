@@ -1,3 +1,4 @@
+/** Tests shared Commander argument and option helpers. */
 import { Command } from "commander";
 import { describe, expect, it } from "vitest";
 import {

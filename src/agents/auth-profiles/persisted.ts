@@ -1,3 +1,4 @@
+/** Coerces, merges, migrates, and serializes persisted auth profile stores. */
 import { createHash } from "node:crypto";
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
 import { resolveOAuthPath } from "../../config/paths.js";
@@ -35,6 +36,7 @@ import type {
   ProfileUsageStats,
 } from "./types.js";
 
+/** Shared type for Legacy Auth Store in src/agents/auth-profiles. */
 export type LegacyAuthStore = Record<string, AuthProfileCredential>;
 
 type LoadPersistedAuthProfileStoreOptions = {
@@ -303,12 +305,14 @@ function resolveLegacyOAuthSidecarCredential(params: {
   return credential;
 }
 
+/** Reused helper for is Runtime Legacy OAuth Sidecar Credential behavior in src/agents/auth-profiles. */
 export function isRuntimeLegacyOAuthSidecarCredential(
   credential: AuthProfileCredential | undefined,
 ): boolean {
   return credential?.type === "oauth" && runtimeLegacyOAuthSidecarCredentials.has(credential);
 }
 
+/** Reused helper for matches Runtime Legacy OAuth Sidecar Material behavior in src/agents/auth-profiles. */
 export function matchesRuntimeLegacyOAuthSidecarMaterial(params: {
   authPath?: string;
   profileId: string;
@@ -354,6 +358,7 @@ function coerceLegacyAuthStore(raw: unknown): LegacyAuthStore | null {
   return Object.keys(entries).length > 0 ? entries : null;
 }
 
+/** Reused helper for coerce Persisted Auth Profile Store behavior in src/agents/auth-profiles. */
 export function coercePersistedAuthProfileStore(
   raw: unknown,
   options?: LoadPersistedAuthProfileStoreOptions,
@@ -713,6 +718,7 @@ function reconcileMainStoreOAuthProfileDrift(params: {
   });
 }
 
+/** Reused helper for merge Auth Profile Stores behavior in src/agents/auth-profiles. */
 export function mergeAuthProfileStores(
   base: AuthProfileStore,
   override: AuthProfileStore,
@@ -808,6 +814,7 @@ export function mergeAuthProfileStores(
   });
 }
 
+/** Reused helper for build Persisted Auth Profile Secrets Store behavior in src/agents/auth-profiles. */
 export function buildPersistedAuthProfileSecretsStore(
   store: AuthProfileStore,
   shouldPersistProfile?: (params: {
@@ -927,6 +934,7 @@ function isSameLegacyOAuthSecretMaterial(
   );
 }
 
+/** Reused helper for apply Legacy Auth Store behavior in src/agents/auth-profiles. */
 export function applyLegacyAuthStore(store: AuthProfileStore, legacy: LegacyAuthStore): void {
   for (const [provider, cred] of Object.entries(legacy)) {
     const profileId = `${provider}:default`;
@@ -964,6 +972,7 @@ export function applyLegacyAuthStore(store: AuthProfileStore, legacy: LegacyAuth
   }
 }
 
+/** Reused helper for merge OAuth File Into Store behavior in src/agents/auth-profiles. */
 export function mergeOAuthFileIntoStore(store: AuthProfileStore): boolean {
   const oauthPath = resolveOAuthPath();
   const oauthRaw = loadJsonFile(oauthPath);
@@ -990,6 +999,7 @@ export function mergeOAuthFileIntoStore(store: AuthProfileStore): boolean {
   return mutated;
 }
 
+/** Reused helper for load Persisted Auth Profile Store behavior in src/agents/auth-profiles. */
 export function loadPersistedAuthProfileStore(
   agentDir?: string,
   options?: LoadPersistedAuthProfileStoreOptions,
@@ -1007,6 +1017,7 @@ export function loadPersistedAuthProfileStore(
   return merged;
 }
 
+/** Reused helper for load Legacy Auth Profile Store behavior in src/agents/auth-profiles. */
 export function loadLegacyAuthProfileStore(agentDir?: string): LegacyAuthStore | null {
   return coerceLegacyAuthStore(loadJsonFile(resolveLegacyAuthStorePath(agentDir)));
 }

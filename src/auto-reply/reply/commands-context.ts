@@ -1,3 +1,4 @@
+// Chat command handlers for viewing and managing context.
 import { normalizeAnyChannelId } from "../../channels/registry.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import {
@@ -10,6 +11,7 @@ import type { MsgContext } from "../templating.js";
 import type { CommandContext } from "./commands-types.js";
 import { stripMentions } from "./mentions.js";
 
+/** Reused helper for build Command Context behavior in src/auto-reply/reply. */
 export function buildCommandContext(params: {
   ctx: MsgContext;
   cfg: OpenClawConfig;

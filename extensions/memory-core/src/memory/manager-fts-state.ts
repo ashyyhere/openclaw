@@ -1,3 +1,4 @@
+// extensions/memory-core/src/memory manager fts state helpers and runtime behavior.
 import type { DatabaseSync } from "node:sqlite";
 import type { MemorySource } from "openclaw/plugin-sdk/memory-core-host-engine-storage";
 

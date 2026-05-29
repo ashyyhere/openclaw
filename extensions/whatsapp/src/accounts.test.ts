@@ -1,3 +1,4 @@
+// Tests extensions/whatsapp/src accounts test behavior.
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import {

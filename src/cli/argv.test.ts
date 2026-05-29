@@ -1,3 +1,4 @@
+/** Tests root option parsing and command path extraction from argv. */
 import { describe, expect, it } from "vitest";
 import {
   buildParseArgv,

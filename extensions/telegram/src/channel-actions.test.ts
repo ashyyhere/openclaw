@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src channel actions test behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { telegramMessageActions, telegramMessageActionRuntime } from "./channel-actions.js";

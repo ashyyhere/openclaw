@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/telegram/src media understanding runtime behavior.
 import {
   describeImageWithModel as describeImageWithModelImpl,
   transcribeFirstAudio as transcribeFirstAudioImpl,

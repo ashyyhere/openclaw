@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix thread bindings shared helpers and runtime behavior.
 import type {
   BindingTargetKind,
   SessionBindingRecord,

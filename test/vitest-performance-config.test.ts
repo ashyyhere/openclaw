@@ -1,3 +1,4 @@
+// Tests test vitest performance config test behavior.
 import { describe, expect, it } from "vitest";
 import { loadVitestExperimentalConfig } from "./vitest/vitest.performance-config.ts";
 

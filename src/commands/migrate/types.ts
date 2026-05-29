@@ -1,8 +1,11 @@
+// Shared migrate command option shapes for CLI and embedded onboarding flows.
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { MigrationPlan } from "../../plugins/types.js";
 
+/** Shared type for Migration Config Patch Mode in src/commands/migrate. */
 export type MigrationConfigPatchMode = "return";
 
+/** Shared type for Migrate Common Options in src/commands/migrate. */
 export type MigrateCommonOptions = {
   provider?: string;
   source?: string;
@@ -26,6 +29,7 @@ export type MigrateCommonOptions = {
   configPatchMode?: MigrationConfigPatchMode;
 };
 
+/** Shared type for Migrate Apply Options in src/commands/migrate. */
 export type MigrateApplyOptions = MigrateCommonOptions & {
   yes?: boolean;
   noBackup?: boolean;
@@ -34,6 +38,7 @@ export type MigrateApplyOptions = MigrateCommonOptions & {
   preflightPlan?: MigrationPlan;
 };
 
+/** Shared type for Migrate Default Options in src/commands/migrate. */
 export type MigrateDefaultOptions = MigrateApplyOptions & {
   dryRun?: boolean;
 };

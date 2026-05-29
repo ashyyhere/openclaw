@@ -1,3 +1,4 @@
+// Tests extensions/feishu/src probe test behavior.
 import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { clearProbeCache, FEISHU_PROBE_REQUEST_TIMEOUT_MS, probeFeishu } from "./probe.js";
 

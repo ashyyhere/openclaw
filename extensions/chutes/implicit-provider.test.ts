@@ -1,3 +1,4 @@
+// Tests extensions/chutes implicit provider test behavior.
 import { registerSingleProviderPlugin } from "openclaw/plugin-sdk/plugin-test-runtime";
 import { resolveOAuthApiKeyMarker } from "openclaw/plugin-sdk/provider-auth";
 import { afterEach, describe, expect, it, vi } from "vitest";

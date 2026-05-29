@@ -1,3 +1,4 @@
+// test/vitest vitest cli config helpers and runtime behavior.
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
 export function createCliVitestConfig(env?: Record<string, string | undefined>) {

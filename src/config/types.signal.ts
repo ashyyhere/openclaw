@@ -1,10 +1,15 @@
+// config types signal helpers and runtime behavior.
 import type { CommonChannelMessagingConfig } from "./types.channel-messaging-common.js";
 import type { GroupToolPolicyBySenderConfig, GroupToolPolicyConfig } from "./types.tools.js";
 
+/** Shared type for Signal Reaction Notification Mode in src/config. */
 export type SignalReactionNotificationMode = "off" | "own" | "all" | "allowlist";
+/** Shared type for Signal Reaction Level in src/config. */
 export type SignalReactionLevel = "off" | "ack" | "minimal" | "extensive";
+/** Shared type for Signal Api Mode in src/config. */
 export type SignalApiMode = "auto" | "native" | "container";
 
+/** Shared type for Signal Group Config in src/config. */
 export type SignalGroupConfig = {
   requireMention?: boolean;
   /** Emit internal message hooks for mention-skipped group messages. */
@@ -13,6 +18,7 @@ export type SignalGroupConfig = {
   toolsBySender?: GroupToolPolicyBySenderConfig;
 };
 
+/** Shared type for Signal Account Config in src/config. */
 export type SignalAccountConfig = CommonChannelMessagingConfig & {
   /** Optional explicit E.164 account for signal-cli. */
   account?: string;
@@ -59,6 +65,7 @@ export type SignalAccountConfig = CommonChannelMessagingConfig & {
   reactionLevel?: SignalReactionLevel;
 };
 
+/** Shared type for Signal Config in src/config. */
 export type SignalConfig = {
   /**
    * Signal API mode (channel-global):

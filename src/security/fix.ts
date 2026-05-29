@@ -1,3 +1,4 @@
+// security fix helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { resolveDefaultAgentId } from "../agents/agent-scope.js";
@@ -10,6 +11,7 @@ import { runExec } from "../process/exec.js";
 import { normalizeAgentId } from "../routing/session-key.js";
 import { createIcaclsResetCommand, formatIcaclsResetCommand, type ExecFn } from "./windows-acl.js";
 
+/** Shared type for Security Fix Chmod Action in src/security. */
 export type SecurityFixChmodAction = {
   kind: "chmod";
   path: string;
@@ -19,6 +21,7 @@ export type SecurityFixChmodAction = {
   error?: string;
 };
 
+/** Shared type for Security Fix Icacls Action in src/security. */
 export type SecurityFixIcaclsAction = {
   kind: "icacls";
   path: string;
@@ -28,8 +31,10 @@ export type SecurityFixIcaclsAction = {
   error?: string;
 };
 
+/** Shared type for Security Fix Action in src/security. */
 export type SecurityFixAction = SecurityFixChmodAction | SecurityFixIcaclsAction;
 
+/** Shared type for Security Fix Result in src/security. */
 export type SecurityFixResult = {
   ok: boolean;
   stateDir: string;
@@ -40,6 +45,7 @@ export type SecurityFixResult = {
   errors: string[];
 };
 
+/** Shared type for Security Permission Target in src/security. */
 export type SecurityPermissionTarget = {
   path: string;
   mode: number;
@@ -250,6 +256,7 @@ function applyConfigFixes(params: { cfg: OpenClawConfig; env: NodeJS.ProcessEnv 
   return { cfg: next, changes };
 }
 
+/** Reused helper for apply Security Fix Config Mutations behavior in src/security. */
 export async function applySecurityFixConfigMutations(params: {
   cfg: OpenClawConfig;
   env: NodeJS.ProcessEnv;
@@ -308,6 +315,7 @@ async function collectChannelSecurityConfigFixMutation(params: {
   return { cfg: nextCfg, changes };
 }
 
+/** Reused helper for collect Security Permission Targets behavior in src/security. */
 export async function collectSecurityPermissionTargets(params: {
   env: NodeJS.ProcessEnv;
   stateDir: string;
@@ -386,6 +394,7 @@ export async function collectSecurityPermissionTargets(params: {
   return targets;
 }
 
+/** Reused helper for fix Security Footguns behavior in src/security. */
 export async function fixSecurityFootguns(opts?: {
   env?: NodeJS.ProcessEnv;
   stateDir?: string;

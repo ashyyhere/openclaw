@@ -1,3 +1,4 @@
+// plugins bundle manifest helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import JSON5 from "json5";
@@ -17,10 +18,14 @@ import {
   PLUGIN_MANIFEST_FILENAME,
 } from "./manifest.js";
 
+/** Reused constant for CODEX BUNDLE MANIFEST RELATIVE PATH behavior in src/plugins. */
 export const CODEX_BUNDLE_MANIFEST_RELATIVE_PATH = ".codex-plugin/plugin.json";
+/** Reused constant for CLAUDE BUNDLE MANIFEST RELATIVE PATH behavior in src/plugins. */
 export const CLAUDE_BUNDLE_MANIFEST_RELATIVE_PATH = ".claude-plugin/plugin.json";
+/** Reused constant for CURSOR BUNDLE MANIFEST RELATIVE PATH behavior in src/plugins. */
 export const CURSOR_BUNDLE_MANIFEST_RELATIVE_PATH = ".cursor-plugin/plugin.json";
 
+/** Shared type for Bundle Plugin Manifest in src/plugins. */
 export type BundlePluginManifest = {
   id: string;
   name?: string;
@@ -35,6 +40,7 @@ export type BundlePluginManifest = {
   capabilities: string[];
 };
 
+/** Shared type for Bundle Manifest Load Result in src/plugins. */
 export type BundleManifestLoadResult =
   | { ok: true; manifest: BundlePluginManifest; manifestPath: string }
   | { ok: false; error: string; manifestPath: string };
@@ -43,10 +49,12 @@ type BundleManifestFileLoadResult =
   | { ok: true; raw: Record<string, unknown>; manifestPath: string }
   | { ok: false; error: string; manifestPath: string };
 
+/** Reused helper for normalize Bundle Path List behavior in src/plugins. */
 export function normalizeBundlePathList(value: unknown): string[] {
   return normalizeUniqueSingleOrTrimmedStringList(value);
 }
 
+/** Reused helper for merge Bundle Path Lists behavior in src/plugins. */
 export function mergeBundlePathLists(...groups: string[][]): string[] {
   const merged: string[] = [];
   const seen = new Set<string>();
@@ -320,6 +328,7 @@ function buildCursorCapabilities(raw: Record<string, unknown>, rootDir: string):
   return capabilities;
 }
 
+/** Reused helper for load Bundle Manifest behavior in src/plugins. */
 export function loadBundleManifest(params: {
   rootDir: string;
   rootRealPath?: string;
@@ -411,6 +420,7 @@ export function loadBundleManifest(params: {
   };
 }
 
+/** Reused helper for detect Bundle Manifest Format behavior in src/plugins. */
 export function detectBundleManifestFormat(rootDir: string): PluginBundleFormat | null {
   if (fs.existsSync(path.join(rootDir, CODEX_BUNDLE_MANIFEST_RELATIVE_PATH))) {
     return "codex";

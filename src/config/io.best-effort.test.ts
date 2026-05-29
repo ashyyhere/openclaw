@@ -1,3 +1,4 @@
+// Tests config io best effort test behavior.
 import fs from "node:fs/promises";
 import { describe, expect, it } from "vitest";
 import {

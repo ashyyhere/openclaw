@@ -1,12 +1,16 @@
+// OpenClaw globals helpers and runtime behavior.
+/** Re-exported API for src, starting with is Verbose. */
 export { isVerbose, isYes, setVerbose, setYes } from "./global-state.js";
 import { theme } from "../packages/terminal-core/src/theme.js";
 import { isVerbose } from "./global-state.js";
 import { getLogger, isFileLogLevelEnabled } from "./logging/logger.js";
 
+/** Reused helper for should Log Verbose behavior in src. */
 export function shouldLogVerbose() {
   return isVerbose() || isFileLogLevelEnabled("debug");
 }
 
+/** Reused helper for log Verbose behavior in src. */
 export function logVerbose(message: string) {
   if (!shouldLogVerbose()) {
     return;
@@ -22,6 +26,7 @@ export function logVerbose(message: string) {
   console.log(theme.muted(message));
 }
 
+/** Reused helper for log Verbose Console behavior in src. */
 export function logVerboseConsole(message: string) {
   if (!isVerbose()) {
     return;
@@ -31,7 +36,11 @@ export function logVerboseConsole(message: string) {
 
 type ThemeFormatter = (value: string) => string;
 
+/** Reused constant for success behavior in src. */
 export const success: ThemeFormatter = theme.success;
+/** Reused constant for warn behavior in src. */
 export const warn: ThemeFormatter = theme.warn;
+/** Reused constant for info behavior in src. */
 export const info: ThemeFormatter = theme.info;
+/** Reused constant for danger behavior in src. */
 export const danger: ThemeFormatter = theme.error;

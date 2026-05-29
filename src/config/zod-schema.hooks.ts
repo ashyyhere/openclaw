@@ -1,3 +1,4 @@
+// config zod schema hooks helpers and runtime behavior.
 import path from "node:path";
 import { z } from "zod";
 import { InstallRecordShape } from "./zod-schema.installs.js";
@@ -31,6 +32,7 @@ const SafeRelativeModulePathSchema = z
   .string()
   .refine(isSafeRelativeModulePath, "module must be a safe relative path (no absolute paths)");
 
+/** Reused constant for Hook Mapping Schema behavior in src/config. */
 export const HookMappingSchema = z
   .object({
     id: z.string().optional(),
@@ -93,6 +95,7 @@ const HookInstallRecordSchema = z
   })
   .strict();
 
+/** Reused constant for Internal Hooks Schema behavior in src/config. */
 export const InternalHooksSchema = z
   .object({
     enabled: z.boolean().optional(),
@@ -109,6 +112,7 @@ export const InternalHooksSchema = z
   .strict()
   .optional();
 
+/** Reused constant for Hooks Gmail Schema behavior in src/config. */
 export const HooksGmailSchema = z
   .object({
     account: z.string().optional(),

@@ -1,3 +1,4 @@
+// Tests test/scripts dependency ownership surface report test behavior.
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";

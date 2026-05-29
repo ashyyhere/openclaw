@@ -1,7 +1,9 @@
+// plugins install channel specs helpers and runtime behavior.
 import { parseClawHubPluginSpec } from "../infra/clawhub-spec.js";
 import { parseRegistryNpmSpec } from "../infra/npm-registry-spec.js";
 import type { UpdateChannel } from "../infra/update-channels.js";
 
+/** Shared type for Channel Install Specs in src/plugins. */
 export type ChannelInstallSpecs = {
   installSpec: string;
   recordSpec: string;
@@ -34,6 +36,7 @@ function isDefaultClawHubSpecForBetaChannel(spec: string): { name: string } | nu
   return null;
 }
 
+/** Reused helper for resolve Npm Install Specs For Update Channel behavior in src/plugins. */
 export function resolveNpmInstallSpecsForUpdateChannel(params: {
   spec: string;
   updateChannel?: UpdateChannel;
@@ -60,6 +63,7 @@ export function resolveNpmInstallSpecsForUpdateChannel(params: {
   };
 }
 
+/** Reused helper for resolve Claw Hub Install Specs For Update Channel behavior in src/plugins. */
 export function resolveClawHubInstallSpecsForUpdateChannel(params: {
   spec: string;
   updateChannel?: UpdateChannel;

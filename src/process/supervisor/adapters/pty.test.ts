@@ -1,3 +1,4 @@
+// Tests process/supervisor/adapters pty test behavior.
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   expectRealExitWinsOverSigkillFallback,

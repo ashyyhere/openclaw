@@ -1,7 +1,10 @@
+/** Runtime SDK helpers for reading plugin config from runtime snapshots. */
 import type { OpenClawConfig } from "../config/types.js";
 
+/** Re-exported API for src/plugin-sdk, starting with normalize Plugins Config. */
 export { normalizePluginsConfig, resolveEffectiveEnableState } from "../plugins/config-state.js";
 
+/** Require runtime config and throw a context-labeled error when unavailable. */
 export function requireRuntimeConfig(config: OpenClawConfig, context: string): OpenClawConfig {
   if (config) {
     return config;
@@ -11,6 +14,7 @@ export function requireRuntimeConfig(config: OpenClawConfig, context: string): O
   );
 }
 
+/** Read a plugin's config object from an explicit OpenClaw config. */
 export function resolvePluginConfigObject(
   config: OpenClawConfig | undefined,
   pluginId: string,
@@ -33,6 +37,7 @@ export function resolvePluginConfigObject(
     : undefined;
 }
 
+/** Read a plugin's config object from the current runtime config snapshot. */
 export function resolveLivePluginConfigObject(
   runtimeConfigLoader: (() => OpenClawConfig | undefined) | undefined,
   pluginId: string,

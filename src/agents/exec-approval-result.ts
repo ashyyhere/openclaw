@@ -1,3 +1,4 @@
+/** Parses exec approval wrapper results and denied-user messages. */
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
 type ExecApprovalResult =
@@ -92,6 +93,7 @@ function parseExecApprovalResultWithMetadata(
   };
 }
 
+/** Parse gateway-generated exec approval result text. */
 export function parseExecApprovalResultText(resultText: string): ExecApprovalResult {
   const raw = resultText.trim();
   if (!raw) {
@@ -130,10 +132,12 @@ export function parseExecApprovalResultText(resultText: string): ExecApprovalRes
   return { kind: "other", raw };
 }
 
+/** Return whether result text is a trusted exec-denied wrapper. */
 export function isExecDeniedResultText(resultText: string): boolean {
   return parseExecApprovalResultText(resultText).kind === "denied";
 }
 
+/** Format a user-facing message for trusted exec denial output. */
 export function formatExecDeniedUserMessage(resultText: string): string | null {
   const parsed = parseExecApprovalResultText(resultText);
   if (parsed.kind !== "denied") {

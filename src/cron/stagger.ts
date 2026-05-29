@@ -1,12 +1,15 @@
+// cron stagger helpers and runtime behavior.
 import { parseStrictNonNegativeInteger } from "../infra/parse-finite-number.js";
 import type { CronSchedule } from "./types.js";
 
+/** Reused constant for DEFAULT TOP OF HOUR STAGGER MS behavior in src/cron. */
 export const DEFAULT_TOP_OF_HOUR_STAGGER_MS = 5 * 60 * 1000;
 
 function parseCronFields(expr: string) {
   return expr.trim().split(/\s+/).filter(Boolean);
 }
 
+/** Reused helper for is Recurring Top Of Hour Cron Expr behavior in src/cron. */
 export function isRecurringTopOfHourCronExpr(expr: string) {
   const fields = parseCronFields(expr);
   if (fields.length === 5) {
@@ -20,6 +23,7 @@ export function isRecurringTopOfHourCronExpr(expr: string) {
   return false;
 }
 
+/** Reused helper for normalize Cron Stagger Ms behavior in src/cron. */
 export function normalizeCronStaggerMs(raw: unknown): number | undefined {
   const numeric =
     typeof raw === "number"
@@ -33,10 +37,12 @@ export function normalizeCronStaggerMs(raw: unknown): number | undefined {
   return Math.max(0, Math.floor(numeric));
 }
 
+/** Reused helper for resolve Default Cron Stagger Ms behavior in src/cron. */
 export function resolveDefaultCronStaggerMs(expr: string): number | undefined {
   return isRecurringTopOfHourCronExpr(expr) ? DEFAULT_TOP_OF_HOUR_STAGGER_MS : undefined;
 }
 
+/** Reused helper for resolve Cron Stagger Ms behavior in src/cron. */
 export function resolveCronStaggerMs(schedule: Extract<CronSchedule, { kind: "cron" }>): number {
   const explicit = normalizeCronStaggerMs(schedule.staggerMs);
   if (explicit !== undefined) {

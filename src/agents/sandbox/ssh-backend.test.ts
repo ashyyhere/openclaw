@@ -1,3 +1,4 @@
+/** Covers SSH sandbox backend manager and handle creation. */
 import os from "node:os";
 import path from "node:path";
 import {

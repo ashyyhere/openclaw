@@ -1,3 +1,4 @@
+// Tests extensions/mattermost/src approval auth test behavior.
 import { describe, expect, it } from "vitest";
 import { mattermostApprovalAuth } from "./approval-auth.js";
 

@@ -1,3 +1,4 @@
+/** Regression coverage for auth profile display labels. */
 import { describe, expect, it } from "vitest";
 import { resolveAuthProfileDisplayLabel } from "./display.js";
 

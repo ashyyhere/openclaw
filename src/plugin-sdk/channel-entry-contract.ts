@@ -1,3 +1,4 @@
+/** Public SDK contract for defining and loading bundled channel entry modules. */
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -30,6 +31,7 @@ import type {
 import { toSafeImportPath } from "../shared/import-specifier.js";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
+/** Re-exported API for src/plugin-sdk. */
 export type {
   AnyAgentTool,
   OpenClawPluginApi,
@@ -74,15 +76,18 @@ type DefineBundledChannelSetupEntryOptions = {
   features?: BundledChannelSetupEntryFeatures;
 };
 
+/** Feature flags advertised by a bundled setup-only channel entry. */
 export type BundledChannelSetupEntryFeatures = {
   legacyStateMigrations?: boolean;
   legacySessionSurfaces?: boolean;
 };
 
+/** Feature flags advertised by a bundled runtime channel entry. */
 export type BundledChannelEntryFeatures = {
   accountInspect?: boolean;
 };
 
+/** Optional legacy session-key canonicalization hooks exposed by older bundled channels. */
 export type BundledChannelLegacySessionSurface = {
   isLegacyGroupSessionKey?: (key: string) => boolean;
   canonicalizeLegacySessionKey?: (params: {
@@ -91,6 +96,7 @@ export type BundledChannelLegacySessionSurface = {
   }) => string | null | undefined;
 };
 
+/** Detector for channel-owned legacy state that setup/doctor can migrate. */
 export type BundledChannelLegacyStateMigrationDetector = (params: {
   cfg: OpenClawConfig;
   env: NodeJS.ProcessEnv;
@@ -102,6 +108,7 @@ export type BundledChannelLegacyStateMigrationDetector = (params: {
   | null
   | undefined;
 
+/** Runtime entry contract used by core to register and lazily load a bundled channel. */
 export type BundledChannelEntryContract<TPlugin = ChannelPlugin> = {
   kind: "bundled-channel-entry";
   id: string;
@@ -123,6 +130,7 @@ export type BundledChannelEntryContract<TPlugin = ChannelPlugin> = {
   setChannelRuntime?: (runtime: PluginRuntime) => void;
 };
 
+/** Setup entry contract kept separate from full runtime loading. */
 export type BundledChannelSetupEntryContract<TPlugin = ChannelPlugin> = {
   kind: "bundled-channel-setup-entry";
   loadSetupPlugin: (options?: BundledEntryModuleLoadOptions) => TPlugin;
@@ -140,6 +148,7 @@ export type BundledChannelSetupEntryContract<TPlugin = ChannelPlugin> = {
   features?: BundledChannelSetupEntryFeatures;
 };
 
+/** Test seam for overriding how bundled entry source modules are loaded. */
 export type BundledEntryModuleLoadOptions = {
   createLoaderForTest?: PluginModuleLoaderFactory;
 };
@@ -236,6 +245,8 @@ function resolveBundledEntryModuleCandidates(
 
   const sourceRelativeSpecifier = specifier.replace(/^\.\/src\//u, "./");
   if (sourceRelativeSpecifier !== specifier) {
+    // Built bundles sometimes preserve old `./src/...` specifiers; try the package-root-relative
+    // source shape too so dist artifacts can still resolve during local development.
     addBundledEntryCandidates(
       candidates,
       path.resolve(importerDir, sourceRelativeSpecifier),
@@ -261,6 +272,8 @@ function resolveBundledEntryModuleCandidates(
     return candidates;
   }
 
+  // When running from built dist, permit source fallback under the matching bundled plugin root.
+  // Boundary checks below still enforce that candidates stay inside that plugin.
   addBundledEntryCandidates(
     candidates,
     path.resolve(sourcePluginRoot, specifier),
@@ -457,6 +470,7 @@ function loadBundledEntryModuleSync(
 }
 
 // oxlint-disable-next-line typescript/no-unnecessary-type-parameters -- Dynamic entry export loaders use caller-supplied export types.
+/** Load one export from a bundled channel entry module while enforcing plugin-root boundaries. */
 export function loadBundledEntryExportSync<T>(
   importMetaUrl: string,
   reference: BundledEntryModuleRef,
@@ -479,6 +493,7 @@ export function loadBundledEntryExportSync<T>(
   return record[reference.exportName] as T;
 }
 
+/** Define the full runtime entry contract for a bundled channel plugin. */
 export function defineBundledChannelEntry<TPlugin = ChannelPlugin>({
   id,
   name,
@@ -577,6 +592,7 @@ export function defineBundledChannelEntry<TPlugin = ChannelPlugin>({
   };
 }
 
+/** Define the lightweight setup entry contract for a bundled channel plugin. */
 export function defineBundledChannelSetupEntry<TPlugin = ChannelPlugin>({
   importMetaUrl,
   plugin,

@@ -1,3 +1,4 @@
+// extensions/minimax/src minimax web search provider helpers and runtime behavior.
 import {
   createWebSearchProviderContractFields,
   type WebSearchProviderPlugin,

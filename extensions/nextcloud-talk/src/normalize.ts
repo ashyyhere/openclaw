@@ -1,3 +1,4 @@
+// extensions/nextcloud-talk/src normalize helpers and runtime behavior.
 export function stripNextcloudTalkTargetPrefix(raw: string): string | undefined {
   const trimmed = raw.trim();
   if (!trimmed) {

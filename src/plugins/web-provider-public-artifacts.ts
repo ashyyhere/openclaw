@@ -1,3 +1,4 @@
+// plugins web provider public artifacts helpers and runtime behavior.
 import path from "node:path";
 import { normalizeUniqueStringEntries } from "../shared/string-normalization.js";
 import { normalizePluginId } from "./config-state.js";
@@ -102,6 +103,7 @@ function resolveBundledManifestRecordsByPluginId(params: {
   );
 }
 
+/** Reused helper for resolve Bundled Web Search Providers From Public Artifacts behavior in src/plugins. */
 export function resolveBundledWebSearchProvidersFromPublicArtifacts(
   params: BundledWebProviderPublicArtifactParams,
 ): PluginWebSearchProviderEntry[] | null {
@@ -147,6 +149,7 @@ export function resolveBundledWebSearchProvidersFromPublicArtifacts(
   return providers;
 }
 
+/** Reused helper for resolve Bundled Web Fetch Providers From Public Artifacts behavior in src/plugins. */
 export function resolveBundledWebFetchProvidersFromPublicArtifacts(
   params: BundledWebProviderPublicArtifactParams,
 ): PluginWebFetchProviderEntry[] | null {

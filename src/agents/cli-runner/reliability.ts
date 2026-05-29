@@ -1,3 +1,4 @@
+/** Reliability timeouts and supervisor scope keys for CLI backend runs. */
 import path from "node:path";
 import type { CliBackendConfig } from "../../config/types.js";
 import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";
@@ -62,6 +63,7 @@ function pickWatchdogProfile(
   };
 }
 
+/** Reused helper for resolve Cli No Output Timeout Ms behavior in src/agents/cli-runner. */
 export function resolveCliNoOutputTimeoutMs(params: {
   backend: CliBackendConfig;
   timeoutMs: number;
@@ -79,6 +81,7 @@ export function resolveCliNoOutputTimeoutMs(params: {
   return Math.min(bounded, cap);
 }
 
+/** Reused helper for build Cli Supervisor Scope Key behavior in src/agents/cli-runner. */
 export function buildCliSupervisorScopeKey(params: {
   backend: CliBackendConfig;
   backendId: string;

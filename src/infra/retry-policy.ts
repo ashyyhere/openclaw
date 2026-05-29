@@ -1,9 +1,12 @@
+// infra retry policy helpers and runtime behavior.
 import { createSubsystemLogger } from "../logging/subsystem.js";
 import { formatErrorMessage } from "./errors.js";
 import { type RetryConfig, resolveRetryConfig, retryAsync } from "./retry.js";
 
+/** Shared type for Retry Runner in src/infra. */
 export type RetryRunner = <T>(fn: () => Promise<T>, label?: string) => Promise<T>;
 
+/** Reused constant for CHANNEL API RETRY DEFAULTS behavior in src/infra. */
 export const CHANNEL_API_RETRY_DEFAULTS = {
   attempts: 3,
   minDelayMs: 400,
@@ -51,6 +54,7 @@ function getChannelApiRetryAfterMs(err: unknown): number | undefined {
   return typeof candidate === "number" && Number.isFinite(candidate) ? candidate * 1000 : undefined;
 }
 
+/** Reused helper for create Rate Limit Retry Runner behavior in src/infra. */
 export function createRateLimitRetryRunner(params: {
   retry?: RetryConfig;
   configRetry?: RetryConfig;
@@ -82,6 +86,7 @@ export function createRateLimitRetryRunner(params: {
     });
 }
 
+/** Reused helper for create Channel Api Retry Runner behavior in src/infra. */
 export function createChannelApiRetryRunner(params: {
   retry?: RetryConfig;
   configRetry?: RetryConfig;

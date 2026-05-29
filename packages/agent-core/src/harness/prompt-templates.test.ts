@@ -1,3 +1,4 @@
+// Tests packages/agent-core/src/harness prompt templates test behavior.
 import { describe, expect, it } from "vitest";
 import { parseCommandArgs, substituteArgs } from "./prompt-templates.js";
 

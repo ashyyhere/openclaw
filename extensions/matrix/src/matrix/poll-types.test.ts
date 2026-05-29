@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src/matrix poll types test behavior.
 import { describe, expect, it } from "vitest";
 import {
   buildPollResultsSummary,

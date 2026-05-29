@@ -1,3 +1,4 @@
+// Tests ui/src/ui session run state test behavior.
 import { describe, expect, it } from "vitest";
 import { isSessionRunActive } from "./session-run-state.ts";
 

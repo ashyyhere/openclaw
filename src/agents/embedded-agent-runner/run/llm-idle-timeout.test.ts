@@ -1,3 +1,4 @@
+/** Covers LLM idle timeout configuration and stream wrapping. */
 import type { AssistantMessageEventStream } from "openclaw/plugin-sdk/llm";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../../../config/config.js";

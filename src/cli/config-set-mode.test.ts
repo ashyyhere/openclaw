@@ -1,3 +1,4 @@
+/** Tests config set mode detection from command arguments. */
 import { describe, expect, it } from "vitest";
 import { resolveConfigSetMode } from "./config-set-parser.js";
 

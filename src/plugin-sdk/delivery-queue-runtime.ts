@@ -1,3 +1,4 @@
+/** Runtime SDK helper for draining outbound deliveries without eagerly loading delivery runtime. */
 import {
   drainPendingDeliveries as coreDrainPendingDeliveries,
   type DeliverFn,
@@ -18,6 +19,7 @@ async function loadOutboundDeliverRuntime(): Promise<OutboundDeliverRuntimeModul
   return await outboundDeliverRuntimePromise;
 }
 
+/** Drain queued outbound deliveries, using an injected deliver function when tests/plugins provide one. */
 export async function drainPendingDeliveries(opts: DrainPendingDeliveriesOptions): Promise<void> {
   const deliver =
     opts.deliver ?? (await loadOutboundDeliverRuntime()).deliverOutboundPayloadsInternal;

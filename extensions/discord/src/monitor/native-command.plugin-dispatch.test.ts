@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/monitor native command plugin dispatch test behavior.
 import { ChannelType } from "discord-api-types/v10";
 import type { NativeCommandSpec } from "openclaw/plugin-sdk/command-auth-native";
 import { resolveDirectStatusReplyForSession } from "openclaw/plugin-sdk/command-status-runtime";

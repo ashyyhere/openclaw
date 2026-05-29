@@ -1,3 +1,4 @@
+// extensions/browser browser profiles helpers and runtime behavior.
 export {
   DEFAULT_AI_SNAPSHOT_MAX_CHARS,
   DEFAULT_BROWSER_ACTION_TIMEOUT_MS,

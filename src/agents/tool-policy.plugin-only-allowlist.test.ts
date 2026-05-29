@@ -1,3 +1,4 @@
+/** Regression coverage for plugin-only tool allowlists. */
 import { describe, expect, it } from "vitest";
 import {
   analyzeAllowlistByToolType,

@@ -1,3 +1,4 @@
+// Tests extensions/whatsapp/src/auto-reply/monitor group members test behavior.
 import { describe, expect, it } from "vitest";
 import { formatGroupMembers, noteGroupMember } from "./group-members.js";
 

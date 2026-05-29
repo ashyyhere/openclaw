@@ -1,3 +1,4 @@
+// Coverage for reset model override behavior.
 import { describe, expect, it } from "vitest";
 import type { ModelCatalogEntry } from "../../agents/model-catalog.js";
 import type { OpenClawConfig } from "../../config/config.js";

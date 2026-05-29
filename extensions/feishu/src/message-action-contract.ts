@@ -1,3 +1,4 @@
+// extensions/feishu/src message action contract helpers and runtime behavior.
 import type { ChannelMessageActionName } from "openclaw/plugin-sdk/channel-contract";
 
 type MessageActionTargetAliasSpec = {

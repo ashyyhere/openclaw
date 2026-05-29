@@ -1,9 +1,14 @@
+// config types tts helpers and runtime behavior.
+/** Shared type for Tts Provider in src/config. */
 export type TtsProvider = string;
 
+/** Shared type for Tts Mode in src/config. */
 export type TtsMode = "final" | "all";
 
+/** Shared type for Tts Auto Mode in src/config. */
 export type TtsAutoMode = "off" | "always" | "inbound" | "tagged";
 
+/** Shared type for Tts Model Override Config in src/config. */
 export type TtsModelOverrideConfig = {
   /** Enable model-provided overrides for TTS. */
   enabled?: boolean;
@@ -23,10 +28,13 @@ export type TtsModelOverrideConfig = {
   allowSeed?: boolean;
 };
 
+/** Shared type for Tts Provider Config Map in src/config. */
 export type TtsProviderConfigMap = Record<string, Record<string, unknown>>;
 
+/** Shared type for Tts Persona Fallback Policy in src/config. */
 export type TtsPersonaFallbackPolicy = "preserve-persona" | "provider-defaults" | "fail";
 
+/** Shared type for Tts Persona Prompt Config in src/config. */
 export type TtsPersonaPromptConfig = {
   profile?: string;
   scene?: string;
@@ -37,6 +45,7 @@ export type TtsPersonaPromptConfig = {
   constraints?: string[];
 };
 
+/** Shared type for Tts Persona Config in src/config. */
 export type TtsPersonaConfig = {
   label?: string;
   description?: string;
@@ -48,10 +57,12 @@ export type TtsPersonaConfig = {
   providers?: TtsProviderConfigMap;
 };
 
+/** Shared type for Resolved Tts Persona in src/config. */
 export type ResolvedTtsPersona = TtsPersonaConfig & {
   id: string;
 };
 
+/** Shared type for Tts Config in src/config. */
 export type TtsConfig = {
   /** Auto-TTS mode (preferred). */
   auto?: TtsAutoMode;

@@ -1,3 +1,4 @@
+// extensions/pixverse video generation provider helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import { extensionForMime } from "openclaw/plugin-sdk/media-mime";
 import { isProviderApiKeyConfigured } from "openclaw/plugin-sdk/provider-auth";

@@ -1,3 +1,4 @@
+// Tests extensions/xai web search test behavior.
 import { createTestWizardPrompter } from "openclaw/plugin-sdk/plugin-test-runtime";
 import { NON_ENV_SECRETREF_MARKER } from "openclaw/plugin-sdk/provider-auth-runtime";
 import { createNonExitingRuntime } from "openclaw/plugin-sdk/runtime-env";

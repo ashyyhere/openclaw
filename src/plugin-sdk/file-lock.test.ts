@@ -1,3 +1,4 @@
+/** Tests file lock acquisition, stale lock recovery, and normalized lock errors. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

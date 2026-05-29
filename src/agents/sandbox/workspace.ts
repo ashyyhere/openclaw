@@ -1,3 +1,4 @@
+/** Prepares host workspace directories and bootstrap files for sandboxes. */
 import syncFs from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -15,6 +16,7 @@ import {
   ensureAgentWorkspace,
 } from "../workspace.js";
 
+/** Ensures a sandbox workspace exists with copied bootstrap context files. */
 export async function ensureSandboxWorkspace(
   workspaceDir: string,
   seedFrom?: string,

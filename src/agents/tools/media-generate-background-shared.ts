@@ -1,3 +1,4 @@
+/** Shared lifecycle helpers for background media generation tasks. */
 import crypto from "node:crypto";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { clearAgentRunContext, registerAgentRunContext } from "../../infra/agent-events.js";
@@ -35,6 +36,7 @@ const MEDIA_DIRECT_FALLBACK_DELIVERY_REASONS = new Set<SubagentAnnounceDeliveryF
   "visible_reply_missing",
 ]);
 
+/** Shared type for Media Generation Task Handle in src/agents/tools. */
 export type MediaGenerationTaskHandle = {
   taskId: string;
   runId: string;
@@ -43,10 +45,13 @@ export type MediaGenerationTaskHandle = {
   taskLabel: string;
 };
 
+/** Shared type for Media Generate Background Scheduler in src/agents/tools. */
 export type MediaGenerateBackgroundScheduler = (work: () => Promise<void>) => void;
 
+/** Shared type for Media Generate Async Start Callback in src/agents/tools. */
 export type MediaGenerateAsyncStartCallback = (message: string) => Promise<void> | void;
 
+/** Shared type for Media Generation Execution Result in src/agents/tools. */
 export type MediaGenerationExecutionResult = {
   provider: string;
   model: string;
@@ -183,6 +188,7 @@ function recordMediaGenerationTaskProgress(params: {
   });
 }
 
+/** Runs work while periodically updating media generation task progress. */
 export async function withMediaGenerationTaskKeepalive<T>(params: {
   handle: MediaGenerationTaskHandle | null;
   progressSummary: string;
@@ -283,6 +289,7 @@ function buildMediaGenerationReplyInstruction(params: {
   ].join(" ");
 }
 
+/** Creates the default background scheduler for media generation tasks. */
 export function createDefaultMediaGenerateBackgroundScheduler(params: {
   toolName: string;
   onCrash: (message: string, meta?: Record<string, unknown>) => void;
@@ -296,6 +303,7 @@ export function createDefaultMediaGenerateBackgroundScheduler(params: {
   };
 }
 
+/** Builds the immediate tool result for an async media generation start. */
 export function buildMediaGenerationStartedToolResult(params: {
   toolName: string;
   generationLabel: string;
@@ -335,6 +343,7 @@ export function buildMediaGenerationStartedToolResult(params: {
   };
 }
 
+/** Notifies the channel that an async media generation task started. */
 export async function notifyMediaGenerationAsyncTaskStarted(params: {
   callback?: MediaGenerateAsyncStartCallback;
   message: string;
@@ -357,6 +366,7 @@ export async function notifyMediaGenerationAsyncTaskStarted(params: {
   }
 }
 
+/** Schedules background completion handling for a media generation task. */
 export function scheduleMediaGenerationTaskCompletion<
   T extends MediaGenerationExecutionResult,
 >(params: {
@@ -649,6 +659,7 @@ async function tryDeliverMediaGenerationDirect(params: {
   }
 }
 
+/** Creates task lifecycle helpers for one media generation kind. */
 export function createMediaGenerationTaskLifecycle(params: {
   toolName: string;
   taskKind: string;

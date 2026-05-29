@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server attempt diagnostics helpers and runtime behavior.
 import { createHash } from "node:crypto";
 import {
   emitTrustedDiagnosticEventWithPrivateData,

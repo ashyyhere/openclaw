@@ -1,3 +1,4 @@
+/** Tests provider transport stream selection and API aliasing. */
 import type { Api, Model } from "openclaw/plugin-sdk/llm";
 import { describe, expect, it } from "vitest";
 import { attachModelProviderLocalService } from "./provider-local-service.js";

@@ -1,3 +1,4 @@
+/** Regression coverage for duplicate user-message removal during compaction. */
 import { describe, expect, it } from "vitest";
 import {
   collectDuplicateUserMessageEntryIdsForCompaction,

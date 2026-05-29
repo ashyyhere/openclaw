@@ -1,3 +1,4 @@
+// extensions/webhooks index helpers and runtime behavior.
 import { definePluginEntry, type OpenClawPluginApi } from "./api.js";
 import { resolveWebhooksPluginConfig } from "./src/config.js";
 import { createTaskFlowWebhookRequestHandler, type TaskFlowWebhookTarget } from "./src/http.js";

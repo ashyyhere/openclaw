@@ -1,3 +1,4 @@
+// Tests infra network interfaces test behavior.
 import { describe, expect, it } from "vitest";
 import { makeNetworkInterfacesSnapshot } from "../test-helpers/network-interfaces.js";
 import {

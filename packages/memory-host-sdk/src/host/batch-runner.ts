@@ -1,6 +1,8 @@
+// packages/memory-host-sdk/src/host batch runner helpers and runtime behavior.
 import { splitBatchRequests } from "./batch-utils.js";
 import { runWithConcurrency } from "./internal.js";
 
+/** Public type describing Embedding Batch Execution Params for packages/memory-host-sdk. */
 export type EmbeddingBatchExecutionParams = {
   wait: boolean;
   pollIntervalMs: number;
@@ -9,6 +11,7 @@ export type EmbeddingBatchExecutionParams = {
   debug?: (message: string, data?: Record<string, unknown>) => void;
 };
 
+/** Public helper for run Embedding Batch Groups behavior in packages/memory-host-sdk. */
 export async function runEmbeddingBatchGroups<TRequest>(params: {
   requests: TRequest[];
   maxRequests: number;
@@ -47,6 +50,7 @@ export async function runEmbeddingBatchGroups<TRequest>(params: {
   return byCustomId;
 }
 
+/** Public helper for build Embedding Batch Group Options behavior in packages/memory-host-sdk. */
 export function buildEmbeddingBatchGroupOptions<TRequest>(
   params: { requests: TRequest[] } & EmbeddingBatchExecutionParams,
   options: { maxRequests: number; debugLabel: string },

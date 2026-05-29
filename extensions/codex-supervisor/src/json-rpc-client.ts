@@ -1,3 +1,4 @@
+// extensions/codex-supervisor/src json rpc client helpers and runtime behavior.
 import { spawn, type ChildProcessWithoutNullStreams } from "node:child_process";
 import { randomUUID } from "node:crypto";
 import * as net from "node:net";

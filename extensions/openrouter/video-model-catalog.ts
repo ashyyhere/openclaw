@@ -1,3 +1,4 @@
+// extensions/openrouter video model catalog helpers and runtime behavior.
 import {
   type UnifiedModelCatalogEntry,
   type UnifiedModelCatalogProviderContext,

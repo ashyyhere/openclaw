@@ -1,3 +1,4 @@
+// Tests gateway/server/ws-connection message handler post connect health test behavior.
 import type { IncomingMessage } from "node:http";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { WebSocket } from "ws";

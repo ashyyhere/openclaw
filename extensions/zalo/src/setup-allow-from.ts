@@ -1,3 +1,4 @@
+// extensions/zalo/src setup allow from helpers and runtime behavior.
 import {
   DEFAULT_ACCOUNT_ID,
   createSetupTranslator,

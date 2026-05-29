@@ -1,3 +1,4 @@
+/** Regression coverage for resolving the skill prompt used by a run. */
 import { describe, expect, it } from "vitest";
 import { createCanonicalFixtureSkill } from "../test-support/test-helpers.js";
 import type { SkillEntry } from "../types.js";

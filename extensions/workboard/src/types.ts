@@ -1,3 +1,4 @@
+// Shared types for extensions/workboard/src types behavior.
 export const WORKBOARD_STATUSES = [
   "triage",
   "backlog",

@@ -1,3 +1,4 @@
+// Tests extensions/oc-path/src/oc-path/tests/scenarios append multi agent test behavior.
 import { describe, expect, it } from "vitest";
 import type { JsoncValue } from "../../jsonc/ast.js";
 import { appendJsonlOcPath } from "../../jsonl/edit.js";

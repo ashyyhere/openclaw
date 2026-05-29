@@ -1,3 +1,4 @@
+// extensions/whatsapp/src setup core helpers and runtime behavior.
 import {
   applyAccountNameToChannelSection,
   type ChannelSetupAdapter,

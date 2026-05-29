@@ -1,7 +1,9 @@
+// infra/net runtime fetch helpers and runtime behavior.
 import type { Dispatcher } from "undici";
 import { normalizeHeadersInitForFetch } from "../fetch-headers.js";
 import { loadUndiciRuntimeDeps, type UndiciRuntimeDeps } from "./undici-runtime.js";
 
+/** Shared type for Dispatcher Aware Request Init in src/infra/net. */
 export type DispatcherAwareRequestInit = RequestInit & { dispatcher?: Dispatcher };
 
 type FetchLike = (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
@@ -76,6 +78,7 @@ function normalizeRuntimeRequestInit(
   };
 }
 
+/** Reused helper for is Mocked Fetch behavior in src/infra/net. */
 export function isMockedFetch(fetchImpl: FetchLike | undefined): boolean {
   if (typeof fetchImpl !== "function") {
     return false;
@@ -83,6 +86,7 @@ export function isMockedFetch(fetchImpl: FetchLike | undefined): boolean {
   return typeof (fetchImpl as FetchLike & { mock?: unknown }).mock === "object";
 }
 
+/** Reused helper for fetch With Runtime Dispatcher behavior in src/infra/net. */
 export async function fetchWithRuntimeDispatcher(
   input: RequestInfo | URL,
   init?: DispatcherAwareRequestInit,
@@ -98,6 +102,7 @@ export async function fetchWithRuntimeDispatcher(
   )) as Response;
 }
 
+/** Reused helper for fetch With Runtime Dispatcher Or Mocked Global behavior in src/infra/net. */
 export async function fetchWithRuntimeDispatcherOrMockedGlobal(
   input: RequestInfo | URL,
   init?: DispatcherAwareRequestInit,

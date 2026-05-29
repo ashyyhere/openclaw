@@ -1,3 +1,4 @@
+/** Runs before/after compaction hooks and side effects. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { createInternalHookEvent, triggerInternalHook } from "../../hooks/internal-hooks.js";
 import { formatErrorMessage } from "../../infra/errors.js";
@@ -83,6 +84,7 @@ function syncPostCompactionSessionMemory(params: {
   return Promise.resolve();
 }
 
+/** Reused helper for run Post Compaction Side Effects behavior in src/agents/embedded-agent-runner. */
 export async function runPostCompactionSideEffects(params: {
   config?: OpenClawConfig;
   sessionKey?: string;
@@ -107,6 +109,7 @@ export async function runPostCompactionSideEffects(params: {
   });
 }
 
+/** Shared type for Compaction Hook Runner in src/agents/embedded-agent-runner. */
 export type CompactionHookRunner = {
   hasHooks?: (hookName?: string) => boolean;
   runBeforeCompaction?: (
@@ -136,6 +139,7 @@ export type CompactionHookRunner = {
   ) => Promise<void> | void;
 };
 
+/** Reused helper for as Compaction Hook Runner behavior in src/agents/embedded-agent-runner. */
 export function asCompactionHookRunner(
   hookRunner: ReturnType<typeof getGlobalHookRunner> | null | undefined,
 ): CompactionHookRunner | null {
@@ -164,6 +168,7 @@ function estimateTokenCountSafe(
   }
 }
 
+/** Reused helper for build Before Compaction Hook Metrics behavior in src/agents/embedded-agent-runner. */
 export function buildBeforeCompactionHookMetrics(params: {
   originalMessages: AgentMessage[];
   currentMessages: AgentMessage[];
@@ -180,6 +185,7 @@ export function buildBeforeCompactionHookMetrics(params: {
   };
 }
 
+/** Reused helper for run Before Compaction Hooks behavior in src/agents/embedded-agent-runner. */
 export async function runBeforeCompactionHooks(params: {
   hookRunner?: CompactionHookRunner | null;
   sessionId: string;
@@ -249,6 +255,7 @@ export async function runBeforeCompactionHooks(params: {
   };
 }
 
+/** Reused helper for estimate Tokens After Compaction behavior in src/agents/embedded-agent-runner. */
 export function estimateTokensAfterCompaction(params: {
   messagesAfter: AgentMessage[];
   observedTokenCount?: number;
@@ -270,6 +277,7 @@ export function estimateTokensAfterCompaction(params: {
   return tokensAfter;
 }
 
+/** Reused helper for run After Compaction Hooks behavior in src/agents/embedded-agent-runner. */
 export async function runAfterCompactionHooks(params: {
   hookRunner?: CompactionHookRunner | null;
   sessionId: string;

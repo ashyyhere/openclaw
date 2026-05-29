@@ -1,14 +1,17 @@
+/** Shared type contracts for bundled session MCP runtime/catalog tools. */
 import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import type { TSchema } from "typebox";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { AnyAgentTool } from "./tools/common.js";
 
+/** Materialized MCP tools plus diagnostics and cleanup for one agent run. */
 export type BundleMcpToolRuntime = {
   tools: AnyAgentTool[];
   diagnostics?: readonly McpToolCatalogDiagnostic[];
   dispose: () => Promise<void>;
 };
 
+/** Catalog entry for one configured MCP server. */
 export type McpServerCatalog = {
   serverName: string;
   safeServerName?: string;
@@ -30,6 +33,7 @@ export type McpServerCatalog = {
   };
 };
 
+/** Catalog entry for one MCP tool after provider-safe naming context is known. */
 export type McpCatalogTool = {
   serverName: string;
   safeServerName: string;
@@ -40,6 +44,7 @@ export type McpCatalogTool = {
   fallbackDescription: string;
 };
 
+/** Full listed MCP catalog for a session runtime. */
 export type McpToolCatalog = {
   version: number;
   generatedAt: number;
@@ -48,6 +53,7 @@ export type McpToolCatalog = {
   diagnostics?: readonly McpToolCatalogDiagnostic[];
 };
 
+/** Non-fatal MCP server/tool listing diagnostic. */
 export type McpToolCatalogDiagnostic = {
   serverName: string;
   safeServerName: string;
@@ -55,6 +61,7 @@ export type McpToolCatalogDiagnostic = {
   message: string;
 };
 
+/** Session-owned MCP runtime with lazy cataloging and tool execution. */
 export type SessionMcpRuntime = {
   sessionId: string;
   sessionKey?: string;
@@ -77,6 +84,7 @@ export type SessionMcpRuntime = {
   dispose: () => Promise<void>;
 };
 
+/** Process manager for session-scoped MCP runtimes. */
 export type SessionMcpRuntimeManager = {
   getOrCreate: (params: {
     sessionId: string;

@@ -1,3 +1,4 @@
+/** Tests CLI command registry installation and lazy command behavior. */
 import { Command } from "commander";
 import { describe, expect, it, vi } from "vitest";
 import type { ProgramContext } from "./context.js";

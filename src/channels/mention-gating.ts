@@ -1,3 +1,4 @@
+// Group mention gating policy for deciding whether an inbound turn should run.
 /** @deprecated Prefer `resolveInboundMentionDecision({ facts, policy })`. */
 export type MentionGateParams = {
   requireMention: boolean;
@@ -31,12 +32,14 @@ export type MentionGateWithBypassResult = MentionGateResult & {
   shouldBypassMention: boolean;
 };
 
+/** Shared type for Inbound Implicit Mention Kind in src/channels. */
 export type InboundImplicitMentionKind =
   | "reply_to_bot"
   | "quoted_bot"
   | "bot_thread_participant"
   | "native";
 
+/** Shared type for Inbound Mention Facts in src/channels. */
 export type InboundMentionFacts = {
   canDetectMention: boolean;
   wasMentioned: boolean;
@@ -44,6 +47,7 @@ export type InboundMentionFacts = {
   implicitMentionKinds?: readonly InboundImplicitMentionKind[];
 };
 
+/** Shared type for Inbound Mention Policy in src/channels. */
 export type InboundMentionPolicy = {
   isGroup: boolean;
   requireMention: boolean;
@@ -56,21 +60,25 @@ export type InboundMentionPolicy = {
 /** @deprecated Prefer the nested `{ facts, policy }` call shape for new code. */
 export type ResolveInboundMentionDecisionFlatParams = InboundMentionFacts & InboundMentionPolicy;
 
+/** Shared type for Resolve Inbound Mention Decision Nested Params in src/channels. */
 export type ResolveInboundMentionDecisionNestedParams = {
   facts: InboundMentionFacts;
   policy: InboundMentionPolicy;
 };
 
+/** Shared type for Resolve Inbound Mention Decision Params in src/channels. */
 export type ResolveInboundMentionDecisionParams =
   | ResolveInboundMentionDecisionFlatParams
   | ResolveInboundMentionDecisionNestedParams;
 
+/** Shared type for Inbound Mention Decision in src/channels. */
 export type InboundMentionDecision = MentionGateResult & {
   implicitMention: boolean;
   matchedImplicitMentionKinds: InboundImplicitMentionKind[];
   shouldBypassMention: boolean;
 };
 
+/** Reused helper for implicit Mention Kind When behavior in src/channels. */
 export function implicitMentionKindWhen(
   kind: InboundImplicitMentionKind,
   enabled: boolean,
@@ -168,6 +176,7 @@ function normalizeMentionDecisionParams(
   };
 }
 
+/** Reused helper for resolve Inbound Mention Decision behavior in src/channels. */
 export function resolveInboundMentionDecision(
   params: ResolveInboundMentionDecisionParams,
 ): InboundMentionDecision {

@@ -1,3 +1,4 @@
+// extensions/qa-lab/src lab server helpers and runtime behavior.
 import fs from "node:fs";
 import { createServer } from "node:http";
 import path from "node:path";

@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/browser server context remote profile tab ops fallback test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { withBrowserFetchPreconnect } from "../../test-fetch.js";
 import {

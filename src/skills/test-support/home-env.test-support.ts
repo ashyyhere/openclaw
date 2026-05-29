@@ -1,12 +1,15 @@
+/** Test helpers for temporarily overriding skill home environment paths. */
 import os from "node:os";
 import { vi } from "vitest";
 
+/** Shared type for Skills Home Env Snapshot in src/agents/skills. */
 export type SkillsHomeEnvSnapshot = {
   previousHome: string | undefined;
   previousOpenClawHome: string | undefined;
   previousUserProfile: string | undefined;
 };
 
+/** Sets HOME and OPENCLAW_HOME to an isolated fake home for tests. */
 export function setMockSkillsHomeEnv(fakeHome: string): SkillsHomeEnvSnapshot {
   const snapshot: SkillsHomeEnvSnapshot = {
     previousHome: process.env.HOME,
@@ -20,6 +23,7 @@ export function setMockSkillsHomeEnv(fakeHome: string): SkillsHomeEnvSnapshot {
   return snapshot;
 }
 
+/** Restores HOME and OPENCLAW_HOME after a test. */
 export async function restoreMockSkillsHomeEnv(
   snapshot: SkillsHomeEnvSnapshot,
   cleanup?: () => Promise<void> | void,

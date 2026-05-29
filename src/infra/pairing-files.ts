@@ -1,8 +1,11 @@
+// infra pairing files helpers and runtime behavior.
 import path from "node:path";
 import { resolveStateDir } from "../config/paths.js";
 
+/** Re-exported API for src/infra, starting with create Async Lock. */
 export { createAsyncLock, readJsonIfExists, tryReadJson, writeJson } from "./json-files.js";
 
+/** Reused helper for resolve Pairing Paths behavior in src/infra. */
 export function resolvePairingPaths(baseDir: string | undefined, subdir: string) {
   const root = baseDir ?? resolveStateDir();
   const dir = path.join(root, subdir);
@@ -13,6 +16,7 @@ export function resolvePairingPaths(baseDir: string | undefined, subdir: string)
   };
 }
 
+/** Reused helper for coerce Pairing State Record behavior in src/infra. */
 export function coercePairingStateRecord<T>(value: unknown): Record<string, T> {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
     return {};
@@ -20,6 +24,7 @@ export function coercePairingStateRecord<T>(value: unknown): Record<string, T> {
   return value as Record<string, T>;
 }
 
+/** Reused helper for prune Expired Pending behavior in src/infra. */
 export function pruneExpiredPending<T extends { ts: number }>(
   pendingById: Record<string, T>,
   nowMs: number,
@@ -32,12 +37,14 @@ export function pruneExpiredPending<T extends { ts: number }>(
   }
 }
 
+/** Shared type for Pending Pairing Request Result in src/infra. */
 export type PendingPairingRequestResult<TPending> = {
   status: "pending";
   request: TPending;
   created: boolean;
 };
 
+/** Reused helper for reconcile Pending Pairing Requests behavior in src/infra. */
 export async function reconcilePendingPairingRequests<
   TPending extends { requestId: string },
   TIncoming,

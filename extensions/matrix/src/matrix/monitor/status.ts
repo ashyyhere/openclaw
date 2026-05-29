@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix/monitor status helpers and runtime behavior.
 import type { ChannelAccountSnapshot } from "openclaw/plugin-sdk/channel-contract";
 import {
   createConnectedChannelStatusPatch,

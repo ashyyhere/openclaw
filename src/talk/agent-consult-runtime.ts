@@ -1,3 +1,4 @@
+// talk agent consult runtime helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import path from "node:path";
 import type { RunEmbeddedAgentParams } from "../agents/embedded-agent-runner/run/params.js";
@@ -21,9 +22,13 @@ import {
   type RealtimeVoiceAgentConsultTranscriptEntry,
 } from "./agent-consult-tool.js";
 
+/** Shared type for Realtime Voice Agent Consult Runtime in src/talk. */
 export type RealtimeVoiceAgentConsultRuntime = PluginRuntimeCore["agent"];
+/** Shared type for Realtime Voice Agent Consult Result in src/talk. */
 export type RealtimeVoiceAgentConsultResult = { text: string };
+/** Shared type for Realtime Voice Agent Consult Context Mode in src/talk. */
 export type RealtimeVoiceAgentConsultContextMode = "isolated" | "fork";
+/** Re-exported API for src/talk. */
 export {
   resolveRealtimeVoiceAgentConsultTools,
   resolveRealtimeVoiceAgentConsultToolsAllow,
@@ -43,6 +48,7 @@ const defaultRealtimeVoiceAgentConsultDeps: RealtimeVoiceAgentConsultDeps = {
 
 let realtimeVoiceAgentConsultDeps = defaultRealtimeVoiceAgentConsultDeps;
 
+/** Reused helper for set Realtime Voice Agent Consult Deps For Test behavior in src/talk. */
 export function setRealtimeVoiceAgentConsultDepsForTest(
   deps: Partial<RealtimeVoiceAgentConsultDeps> | null,
 ): void {
@@ -190,6 +196,7 @@ async function resolveRealtimeVoiceAgentConsultSessionEntry(params: {
   throw new Error("realtime voice agent consult session could not be initialized");
 }
 
+/** Reused helper for consult Realtime Voice Agent behavior in src/talk. */
 export async function consultRealtimeVoiceAgent(params: {
   cfg: OpenClawConfig;
   agentRuntime: RealtimeVoiceAgentConsultRuntime;

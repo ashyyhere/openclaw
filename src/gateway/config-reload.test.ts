@@ -1,3 +1,4 @@
+// Tests gateway config reload test behavior.
 import chokidar from "chokidar";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { listChannelPlugins } from "../channels/plugins/index.js";

@@ -1,3 +1,4 @@
+// packages/sdk/src transport helpers and runtime behavior.
 import { GatewayClient } from "@openclaw/gateway-client";
 import { EventHub } from "./event-hub.js";
 import type {
@@ -18,6 +19,7 @@ type GatewayClientLike = {
 
 const RAW_EVENT_REPLAY_LIMIT = 1000;
 
+/** Public type describing Gateway Client Transport Options for packages/sdk. */
 export type GatewayClientTransportOptions = {
   url?: string;
   connectChallengeTimeoutMs?: number;
@@ -66,6 +68,7 @@ function toGatewayEvent(event: unknown): GatewayEvent {
   };
 }
 
+/** Public class implementing Gateway Client Transport behavior for packages/sdk. */
 export class GatewayClientTransport implements ConnectableOpenClawTransport {
   private readonly eventsHub = new EventHub<GatewayEvent>({
     replayLimit: RAW_EVENT_REPLAY_LIMIT,
@@ -147,6 +150,7 @@ export class GatewayClientTransport implements ConnectableOpenClawTransport {
   }
 }
 
+/** Public helper for is Connectable Transport behavior in packages/sdk. */
 export function isConnectableTransport(
   transport: OpenClawTransport,
 ): transport is ConnectableOpenClawTransport {

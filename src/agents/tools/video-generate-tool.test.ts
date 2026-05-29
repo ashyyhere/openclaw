@@ -1,3 +1,4 @@
+/** Covers video generation tool provider routing and actions. */
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../../config/config.js";
 import { MAX_VIDEO_BYTES } from "../../media/constants.js";

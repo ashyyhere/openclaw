@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix client helpers and runtime behavior.
 export type { MatrixAuth } from "./client/types.js";
 export { isBunRuntime } from "./client/runtime.js";
 export { getMatrixScopedEnvVarNames } from "../env-vars.js";

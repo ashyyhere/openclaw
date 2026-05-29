@@ -1,6 +1,8 @@
+// shared config eval helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 
+/** Reused helper for is Truthy behavior in src/shared. */
 export function isTruthy(value: unknown): boolean {
   if (value === undefined || value === null) {
     return false;
@@ -17,6 +19,7 @@ export function isTruthy(value: unknown): boolean {
   return true;
 }
 
+/** Reused helper for resolve Config Path behavior in src/shared. */
 export function resolveConfigPath(config: unknown, pathStr: string): unknown {
   const parts = pathStr.split(".").filter(Boolean);
   let current: unknown = config;
@@ -29,6 +32,7 @@ export function resolveConfigPath(config: unknown, pathStr: string): unknown {
   return current;
 }
 
+/** Reused helper for is Config Path Truthy With Defaults behavior in src/shared. */
 export function isConfigPathTruthyWithDefaults(
   config: unknown,
   pathStr: string,
@@ -41,6 +45,7 @@ export function isConfigPathTruthyWithDefaults(
   return isTruthy(value);
 }
 
+/** Shared type for Runtime Requires in src/shared. */
 export type RuntimeRequires = {
   bins?: string[];
   anyBins?: string[];
@@ -57,6 +62,7 @@ type RuntimeRequirementEvalParams = {
   isConfigPathTruthy: (pathStr: string) => boolean;
 };
 
+/** Reused helper for evaluate Runtime Requires behavior in src/shared. */
 export function evaluateRuntimeRequires(params: RuntimeRequirementEvalParams): boolean {
   const requires = params.requires;
   if (!requires) {
@@ -105,6 +111,7 @@ export function evaluateRuntimeRequires(params: RuntimeRequirementEvalParams): b
   return true;
 }
 
+/** Reused helper for evaluate Runtime Eligibility behavior in src/shared. */
 export function evaluateRuntimeEligibility(
   params: {
     os?: string[];
@@ -134,6 +141,7 @@ export function evaluateRuntimeEligibility(
   });
 }
 
+/** Reused helper for resolve Runtime Platform behavior in src/shared. */
 export function resolveRuntimePlatform(): string {
   return process.platform;
 }
@@ -149,6 +157,7 @@ let cachedHasBinaryPath: string | undefined;
 let cachedHasBinaryPathExt: string | undefined;
 const hasBinaryCache = new Map<string, boolean>();
 
+/** Reused helper for has Binary behavior in src/shared. */
 export function hasBinary(bin: string): boolean {
   const pathEnv = process.env.PATH ?? "";
   const pathExt = process.platform === "win32" ? (process.env.PATHEXT ?? "") : "";

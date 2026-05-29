@@ -1,10 +1,13 @@
+// markdown code spans helpers and runtime behavior.
 import { scanFenceSpans, type FenceScanState, type FenceSpan } from "./fences.js";
 
+/** Shared type for Inline Code State in src/markdown. */
 export type InlineCodeState = {
   open: boolean;
   ticks: number;
 };
 
+/** Reused helper for create Inline Code State behavior in src/markdown. */
 export function createInlineCodeState(): InlineCodeState {
   return { open: false, ticks: 0 };
 }
@@ -20,6 +23,7 @@ type CodeSpanIndex = {
   isInside: (index: number) => boolean;
 };
 
+/** Reused helper for build Code Span Index behavior in src/markdown. */
 export function buildCodeSpanIndex(
   text: string,
   inlineState?: InlineCodeState,

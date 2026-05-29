@@ -1,3 +1,4 @@
+// Tests extensions/vydra provider test helpers test behavior.
 import * as providerAuth from "openclaw/plugin-sdk/provider-auth-runtime";
 import { vi } from "vitest";
 

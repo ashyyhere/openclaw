@@ -1,3 +1,4 @@
+/** Branch summarization wrappers around agent-core compaction helpers. */
 import type { Model } from "../../../llm/types.js";
 import {
   collectEntriesForBranchSummaryFromBranches,
@@ -10,14 +11,18 @@ import {
 } from "../../runtime/index.js";
 import type { SessionEntry, ReadonlySessionManager } from "../session-manager.js";
 
+/** Re-exported API for src/agents/sessions, starting with Branch Preparation. */
 export type { BranchPreparation, BranchSummaryDetails, FileOperations };
+/** Re-exported API for src/agents/sessions, starting with prepare Branch Entries. */
 export { prepareBranchEntries };
 
+/** Shared type for Collect Entries Result in src/agents/sessions. */
 export interface CollectEntriesResult {
   entries: SessionEntry[];
   commonAncestorId: string | null;
 }
 
+/** Shared type for Branch Summary Result in src/agents/sessions. */
 export interface BranchSummaryResult {
   summary?: string;
   readFiles?: string[];
@@ -26,6 +31,7 @@ export interface BranchSummaryResult {
   error?: string;
 }
 
+/** Shared type for Generate Branch Summary Options in src/agents/sessions. */
 export interface GenerateBranchSummaryOptions {
   model: Model;
   apiKey: string;
@@ -36,6 +42,7 @@ export interface GenerateBranchSummaryOptions {
   reserveTokens?: number;
 }
 
+/** Collects transcript entries needed to summarize a branch. */
 export function collectEntriesForBranchSummary(
   session: ReadonlySessionManager,
   oldLeafId: string | null,
@@ -50,6 +57,7 @@ export function collectEntriesForBranchSummary(
   return collectEntriesForBranchSummaryFromBranches(oldBranch, targetPath);
 }
 
+/** Generates a branch summary with the OpenClaw agent-core runtime. */
 export async function generateBranchSummary(
   entries: SessionEntry[],
   options: GenerateBranchSummaryOptions,

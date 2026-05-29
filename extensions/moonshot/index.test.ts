@@ -1,3 +1,4 @@
+// Tests extensions/moonshot index test behavior.
 import fs from "node:fs";
 import type { Context, Model } from "openclaw/plugin-sdk/llm";
 import { registerSingleProviderPlugin } from "openclaw/plugin-sdk/plugin-test-runtime";

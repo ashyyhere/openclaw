@@ -1,3 +1,4 @@
+// Tests test/scripts channel contract test plan test behavior.
 import { describe, expect, it } from "vitest";
 import { createChannelContractTestShards } from "../../scripts/lib/channel-contract-test-plan.mjs";
 import { expectNoNodeFsScans } from "../../src/test-utils/fs-scan-assertions.js";

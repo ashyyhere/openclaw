@@ -1,5 +1,7 @@
+// ui/src/ui thinking helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "./string-coerce.ts";
 
+/** Shared type for Thinking Catalog Entry in ui/src/ui. */
 export type ThinkingCatalogEntry = {
   provider: string;
   id: string;
@@ -8,6 +10,7 @@ export type ThinkingCatalogEntry = {
 
 const BASE_THINKING_LEVELS = ["off", "minimal", "low", "medium", "high"] as const;
 
+/** Reused helper for normalize Thinking Provider Id behavior in ui/src/ui. */
 export function normalizeThinkingProviderId(provider?: string | null): string {
   if (!provider) {
     return "";
@@ -22,11 +25,13 @@ export function normalizeThinkingProviderId(provider?: string | null): string {
   return normalized;
 }
 
+/** Reused helper for is Binary Thinking Provider behavior in ui/src/ui. */
 export function isBinaryThinkingProvider(provider?: string | null): boolean {
   void provider;
   return false;
 }
 
+/** Reused helper for normalize Think Level behavior in ui/src/ui. */
 export function normalizeThinkLevel(raw?: string | null): string | undefined {
   if (!raw) {
     return undefined;
@@ -66,6 +71,7 @@ export function normalizeThinkLevel(raw?: string | null): string | undefined {
   return undefined;
 }
 
+/** Reused helper for list Thinking Level Labels behavior in ui/src/ui. */
 export function listThinkingLevelLabels(
   provider?: string | null,
   model?: string | null,
@@ -75,10 +81,12 @@ export function listThinkingLevelLabels(
   return BASE_THINKING_LEVELS;
 }
 
+/** Reused helper for format Thinking Levels behavior in ui/src/ui. */
 export function formatThinkingLevels(provider?: string | null, model?: string | null): string {
   return listThinkingLevelLabels(provider, model).join(", ");
 }
 
+/** Reused helper for resolve Thinking Default For Model behavior in ui/src/ui. */
 export function resolveThinkingDefaultForModel(params: {
   provider: string;
   model: string;

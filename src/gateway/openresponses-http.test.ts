@@ -1,3 +1,4 @@
+// Tests gateway openresponses http test behavior.
 import fs from "node:fs/promises";
 import http from "node:http";
 import path from "node:path";

@@ -1,3 +1,4 @@
+// extensions/openrouter provider contract api helpers and runtime behavior.
 import type { ProviderPlugin } from "openclaw/plugin-sdk/provider-model-shared";
 
 export function createOpenrouterProvider(): ProviderPlugin {

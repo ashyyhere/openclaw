@@ -1,3 +1,4 @@
+// Tests extensions/imessage/src/monitor group allowlist warnings test behavior.
 import { beforeEach, describe, expect, it } from "vitest";
 import {
   resetGroupAllowlistWarningsForTesting,

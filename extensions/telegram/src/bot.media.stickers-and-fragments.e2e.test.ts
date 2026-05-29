@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src bot media stickers and fragments e2e test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { telegramBotDepsForTest } from "./bot.media.e2e-harness.js";
 import {

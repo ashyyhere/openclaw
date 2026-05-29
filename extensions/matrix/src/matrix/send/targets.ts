@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix/send targets helpers and runtime behavior.
 import {
   normalizeLowercaseStringOrEmpty,
   normalizeOptionalStringifiedId,

@@ -1,5 +1,7 @@
+// shared/text formatted reasoning message helpers and runtime behavior.
 import { stripReasoningTagsFromText } from "./reasoning-tags.js";
 
+/** Reused helper for strip Formatted Reasoning Message behavior in src/shared/text. */
 export function stripFormattedReasoningMessage(text: string): string {
   const stripped = stripReasoningTagsFromText(text);
   const lines = stripped.split(/\r?\n/u);

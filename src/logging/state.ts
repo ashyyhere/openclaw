@@ -1,3 +1,5 @@
+// logging state helpers and runtime behavior.
+/** Reused constant for logging State behavior in src/logging. */
 export const loggingState = {
   cachedLogger: null as unknown,
   cachedSettings: null as unknown,

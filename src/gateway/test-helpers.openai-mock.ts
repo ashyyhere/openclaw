@@ -1,3 +1,4 @@
+// gateway test helpers openai mock helpers and runtime behavior.
 type OpenAIResponsesParams = {
   input?: unknown[];
 };
@@ -172,6 +173,7 @@ async function buildOpenAIResponsesSse(params: OpenAIResponsesParams): Promise<R
   return buildSseResponse(events);
 }
 
+/** Reused helper for install Open Ai Responses Mock behavior in src/gateway. */
 export function installOpenAiResponsesMock(params?: { baseUrl?: string }) {
   const originalFetch = globalThis.fetch;
   const baseUrl = params?.baseUrl ?? "https://api.openai.com/v1";

@@ -1,3 +1,4 @@
+// Tests extensions/codex doctor contract api test behavior.
 import { describe, expect, it } from "vitest";
 import { legacyConfigRules, normalizeCompatibilityConfig } from "./doctor-contract-api.js";
 

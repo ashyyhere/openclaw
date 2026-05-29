@@ -1,3 +1,4 @@
+// ui/src/ui assistant identity helpers and runtime behavior.
 import { coerceIdentityValue } from "../../../src/shared/assistant-identity-values.js";
 
 const MAX_ASSISTANT_NAME = 50;
@@ -15,8 +16,10 @@ const MAX_ASSISTANT_AVATAR_REASON = 200;
 const RENDERABLE_AVATAR_URL_RE = /^(data:image\/|\/(?!\/))/i;
 
 const DEFAULT_ASSISTANT_NAME = "Assistant";
+/** Reused constant for DEFAULT ASSISTANT AVATAR behavior in ui/src/ui. */
 export const DEFAULT_ASSISTANT_AVATAR = "A";
 
+/** Shared type for Assistant Identity in ui/src/ui. */
 export type AssistantIdentity = {
   agentId?: string | null;
   name: string;
@@ -40,6 +43,7 @@ function normalizeAssistantAvatar(value: string | null | undefined): string | nu
   return trimmed.length <= MAX_ASSISTANT_TEXT_AVATAR ? trimmed : null;
 }
 
+/** Reused helper for normalize Assistant Identity behavior in ui/src/ui. */
 export function normalizeAssistantIdentity(
   input?: Partial<AssistantIdentity> | null,
 ): AssistantIdentity {

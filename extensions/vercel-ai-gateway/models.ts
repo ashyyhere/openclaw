@@ -1,3 +1,4 @@
+// extensions/vercel-ai-gateway models helpers and runtime behavior.
 import { parseStrictFiniteNumber } from "openclaw/plugin-sdk/number-runtime";
 import { readProviderJsonArrayFieldResponse } from "openclaw/plugin-sdk/provider-http";
 import type { ModelDefinitionConfig } from "openclaw/plugin-sdk/provider-model-shared";

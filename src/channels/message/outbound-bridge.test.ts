@@ -1,3 +1,4 @@
+// Coverage for outbound channel adapter bridge.
 import { describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { createChannelMessageAdapterFromOutbound } from "./outbound-bridge.js";

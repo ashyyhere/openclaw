@@ -1,3 +1,4 @@
+/** Tests doctor config mutation state application. */
 import { describe, expect, it } from "vitest";
 import { applyDoctorConfigMutation } from "./config-mutation-state.js";
 import type { DoctorConfigMutationState } from "./config-mutation-state.js";

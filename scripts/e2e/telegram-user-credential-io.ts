@@ -1,3 +1,4 @@
+// scripts/e2e telegram user credential io helpers and runtime behavior.
 import { spawn } from "node:child_process";
 import { readBoundedResponseText } from "../lib/bounded-response.ts";
 

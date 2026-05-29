@@ -1,3 +1,4 @@
+// extensions/browser/src/browser act policy helpers and runtime behavior.
 export const ACT_MAX_BATCH_ACTIONS = 100;
 export const ACT_MAX_BATCH_DEPTH = 5;
 export const ACT_MAX_CLICK_DELAY_MS = 5_000;

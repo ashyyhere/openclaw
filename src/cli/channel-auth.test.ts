@@ -1,3 +1,4 @@
+/** Tests channel login and logout command flows. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { runChannelLogin, runChannelLogout } from "./channel-auth.js";
 

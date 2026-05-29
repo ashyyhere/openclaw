@@ -1,3 +1,4 @@
+// Tests infra/outbound cfg threading guard test behavior.
 import { spawnSync } from "node:child_process";
 import fs, { existsSync, readFileSync } from "node:fs";
 import path from "node:path";

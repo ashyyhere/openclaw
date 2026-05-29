@@ -1,16 +1,21 @@
+/** Prompts and normalizes group access policy for channel setup wizards. */
 import { normalizeStringEntries } from "../../shared/string-normalization.js";
 import type { WizardPrompter } from "../../wizard/prompts.js";
 
+/** Shared type for Channel Access Policy in src/channels/plugins. */
 export type ChannelAccessPolicy = "allowlist" | "open" | "disabled";
 
+/** Reused helper for parse Allowlist Entries behavior in src/channels/plugins. */
 export function parseAllowlistEntries(raw: string): string[] {
   return normalizeStringEntries(raw.split(/[\n,;]+/g));
 }
 
+/** Reused helper for format Allowlist Entries behavior in src/channels/plugins. */
 export function formatAllowlistEntries(entries: string[]): string {
   return normalizeStringEntries(entries).join(", ");
 }
 
+/** Reused helper for prompt Channel Access Policy behavior in src/channels/plugins. */
 export async function promptChannelAccessPolicy(params: {
   prompter: WizardPrompter;
   label: string;
@@ -35,6 +40,7 @@ export async function promptChannelAccessPolicy(params: {
   });
 }
 
+/** Reused helper for prompt Channel Allowlist behavior in src/channels/plugins. */
 export async function promptChannelAllowlist(params: {
   prompter: WizardPrompter;
   label: string;
@@ -53,6 +59,7 @@ export async function promptChannelAllowlist(params: {
   return parseAllowlistEntries(raw);
 }
 
+/** Reused helper for prompt Channel Access Config behavior in src/channels/plugins. */
 export async function promptChannelAccessConfig(params: {
   prompter: WizardPrompter;
   label: string;

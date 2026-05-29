@@ -1,3 +1,4 @@
+// Tests test/scripts resolve openclaw package candidate ip bypass test behavior.
 import { mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";

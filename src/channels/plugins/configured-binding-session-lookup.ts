@@ -1,3 +1,4 @@
+// Session lookup helpers for configured binding records.
 import type { ConfiguredBindingRecordResolution } from "./binding-types.js";
 import type { CompiledConfiguredBindingRegistry } from "./configured-binding-compiler.js";
 import { listConfiguredBindingConsumers } from "./configured-binding-consumers.js";
@@ -7,6 +8,7 @@ import {
   resolveCompiledBindingChannel,
 } from "./configured-binding-match.js";
 
+/** Reused helper for resolve Configured Binding Record By Session Key From Registry behavior in src/channels/plugins. */
 export function resolveConfiguredBindingRecordBySessionKeyFromRegistry(params: {
   registry: CompiledConfiguredBindingRegistry;
   sessionKey: string;

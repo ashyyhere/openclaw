@@ -1,3 +1,4 @@
+// Coverage for ACP stream visibility and update tag settings.
 import { describe, expect, it } from "vitest";
 import {
   isAcpTagVisible,

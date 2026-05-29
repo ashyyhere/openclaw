@@ -1,3 +1,4 @@
+// Tests extensions/slack/src scopes test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const createSlackWebClientMock = vi.hoisted(() => vi.fn());

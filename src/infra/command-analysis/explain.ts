@@ -1,9 +1,11 @@
+// infra/command-analysis explain helpers and runtime behavior.
 import { uniqueStrings } from "../../shared/string-normalization.js";
 import type { CommandExplanation, CommandRisk } from "../command-explainer/types.js";
 import type { ExecCommandSegment } from "../exec-approvals-analysis.js";
 import { analyzeCommandForPolicy } from "./policy.js";
 import { detectCommandCarrierArgv, detectInlineEvalInSegments } from "./risks.js";
 
+/** Shared type for Command Explanation Summary in src/infra/command-analysis. */
 export type CommandExplanationSummary = {
   commandCount: number;
   nestedCommandCount: number;
@@ -30,6 +32,7 @@ function riskLabel(risk: CommandRisk): string {
   }
 }
 
+/** Reused helper for summarize Command Explanation behavior in src/infra/command-analysis. */
 export function summarizeCommandExplanation(
   explanation: CommandExplanation,
 ): CommandExplanationSummary {
@@ -46,6 +49,7 @@ export function summarizeCommandExplanation(
   };
 }
 
+/** Reused helper for summarize Command Segments For Display behavior in src/infra/command-analysis. */
 export function summarizeCommandSegmentsForDisplay(
   segments: readonly ExecCommandSegment[],
 ): CommandExplanationSummary {
@@ -77,6 +81,7 @@ export function summarizeCommandSegmentsForDisplay(
   };
 }
 
+/** Reused helper for resolve Command Analysis Summary For Display behavior in src/infra/command-analysis. */
 export function resolveCommandAnalysisSummaryForDisplay(params: {
   host?: string | null;
   commandText: string;
@@ -114,6 +119,7 @@ export function resolveCommandAnalysisSummaryForDisplay(params: {
   };
 }
 
+/** Reused helper for explain Command For Display behavior in src/infra/command-analysis. */
 export async function explainCommandForDisplay(
   command: string,
 ): Promise<{ explanation: CommandExplanation; summary: CommandExplanationSummary } | null> {

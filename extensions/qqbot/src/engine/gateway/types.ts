@@ -1,3 +1,4 @@
+// Shared types for extensions/qqbot/src/engine/gateway types behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/core";
 import type { EngineLogger } from "../types.js";
 export type { EngineLogger };

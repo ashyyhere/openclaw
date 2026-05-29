@@ -1,3 +1,4 @@
+// Context report builder for sessions and agent workspaces.
 import { resolveSessionAgentIds } from "../../agents/agent-scope.js";
 import { analyzeBootstrapBudget } from "../../agents/bootstrap-budget.js";
 import {
@@ -93,6 +94,7 @@ async function resolveContextReport(
   });
 }
 
+/** Reused helper for build Context Reply behavior in src/auto-reply/reply. */
 export async function buildContextReply(params: HandleCommandsParams): Promise<ReplyPayload> {
   const targetSessionEntry = params.sessionStore?.[params.sessionKey] ?? params.sessionEntry;
   const args = parseContextArgs(params.command.commandBodyNormalized);

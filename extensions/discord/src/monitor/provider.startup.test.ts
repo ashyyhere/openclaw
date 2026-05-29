@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/monitor provider startup test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { Client, Plugin } from "../internal/discord.js";
 

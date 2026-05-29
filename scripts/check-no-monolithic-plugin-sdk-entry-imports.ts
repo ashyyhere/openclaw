@@ -1,3 +1,4 @@
+// scripts check no monolithic plugin sdk entry imports helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { discoverOpenClawPlugins } from "../src/plugins/discovery.js";

@@ -1,3 +1,4 @@
+// cron isolated agent turn test helpers helpers and runtime behavior.
 import "./isolated-agent.mocks.js";
 import fs from "node:fs/promises";
 import { expect, vi } from "vitest";
@@ -12,8 +13,10 @@ import {
 } from "./isolated-agent.test-harness.js";
 import type { CronJob } from "./types.js";
 
+/** Re-exported API for src/cron, starting with with Temp Home. */
 export { withTempHome };
 
+/** Reused helper for make Deps behavior in src/cron. */
 export function makeDeps(): CliDeps {
   return {
     sendMessageSlack: vi.fn(),
@@ -39,10 +42,12 @@ function mockEmbeddedTexts(texts: string[]) {
   mockEmbeddedPayloads(texts.map((text) => ({ text })));
 }
 
+/** Reused helper for mock Embedded Ok behavior in src/cron. */
 export function mockEmbeddedOk() {
   mockEmbeddedTexts(["ok"]);
 }
 
+/** Reused helper for expect Embedded Provider Model behavior in src/cron. */
 export function expectEmbeddedProviderModel(expected: { provider: string; model: string }) {
   const call = vi.mocked(runEmbeddedAgent).mock.calls.at(-1)?.[0] as {
     provider?: string;
@@ -58,6 +63,7 @@ export function expectEmbeddedProviderModel(expected: { provider: string; model:
   };
 }
 
+/** Reused helper for read Session Entry behavior in src/cron. */
 export async function readSessionEntry(storePath: string, key: string) {
   const raw = await fs.readFile(storePath, "utf-8");
   const store = JSON.parse(raw) as Record<
@@ -67,12 +73,15 @@ export async function readSessionEntry(storePath: string, key: string) {
   return store[key];
 }
 
+/** Reused constant for DEFAULT MESSAGE behavior in src/cron. */
 export const DEFAULT_MESSAGE = "do it";
 const DEFAULT_SESSION_KEY = "cron:job-1";
+/** Reused constant for DEFAULT AGENT TURN PAYLOAD behavior in src/cron. */
 export const DEFAULT_AGENT_TURN_PAYLOAD: CronJob["payload"] = {
   kind: "agentTurn",
   message: DEFAULT_MESSAGE,
 };
+/** Reused constant for GMAIL MODEL behavior in src/cron. */
 export const GMAIL_MODEL = "openrouter/meta-llama/llama-3.3-70b:free";
 
 type RunCronTurnOptions = {
@@ -87,6 +96,7 @@ type RunCronTurnOptions = {
   storePath?: string;
 };
 
+/** Reused helper for run Cron Turn behavior in src/cron. */
 export async function runCronTurn(home: string, options: RunCronTurnOptions = {}) {
   const storePath =
     options.storePath ??
@@ -123,6 +133,7 @@ export async function runCronTurn(home: string, options: RunCronTurnOptions = {}
   return { deps, res, storePath };
 }
 
+/** Reused helper for run Gmail Hook Turn behavior in src/cron. */
 export async function runGmailHookTurn(
   home: string,
   storeEntries?: Record<string, Record<string, unknown>>,
@@ -141,6 +152,7 @@ export async function runGmailHookTurn(
   });
 }
 
+/** Reused helper for run Turn With Stored Model Override behavior in src/cron. */
 export async function runTurnWithStoredModelOverride(
   home: string,
   jobPayload: CronJob["payload"],

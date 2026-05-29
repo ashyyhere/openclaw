@@ -1,3 +1,4 @@
+// Tests test extension import boundaries test behavior.
 import { describe, expect, it } from "vitest";
 import { main as extensionPluginSdkMain } from "../scripts/check-extension-plugin-sdk-boundary.mjs";
 import { main as sdkPackageMain } from "../scripts/check-sdk-package-extension-import-boundary.mjs";

@@ -1,3 +1,4 @@
+// Body text helpers for reply prompt and command handling.
 import type { SessionEntry } from "../../config/sessions/types.js";
 import { createLazyImportLoader } from "../../shared/lazy-promise.js";
 import { setAbortMemory } from "./abort-primitives.js";
@@ -10,6 +11,7 @@ function loadSessionStoreRuntime() {
   return sessionStoreRuntimeLoader.load();
 }
 
+/** Reused helper for apply Session Hints behavior in src/auto-reply/reply. */
 export async function applySessionHints(params: {
   baseBody: string;
   abortedLastRun: boolean;

@@ -1,3 +1,5 @@
+// config config helpers and runtime behavior.
+/** Re-exported API for src/config. */
 export {
   clearConfigCache,
   ConfigRuntimeRefreshError,
@@ -29,22 +31,26 @@ export {
   setRuntimeConfigSnapshot,
   writeConfigFile,
 } from "./io.js";
+/** Re-exported API for src/config. */
 export {
   hashRuntimeConfigValue,
   resolveConfigWriteAfterWrite,
   resolveConfigWriteFollowUp,
 } from "./runtime-snapshot.js";
+/** Re-exported API for src/config. */
 export type {
   ConfigWriteAfterWrite,
   ConfigWriteFollowUp,
   RuntimeConfigSnapshotMetadata,
 } from "./runtime-snapshot.js";
+/** Re-exported API for src/config. */
 export type {
   ConfigSnapshotReadOptions,
   ConfigWriteNotification,
   ConfigWriteResult,
   ReadConfigFileSnapshotWithPluginMetadataResult,
 } from "./io.js";
+/** Re-exported API for src/config. */
 export {
   ConfigMutationConflictError,
   mutateConfigFile,
@@ -53,6 +59,7 @@ export {
   transformConfigFile,
   transformConfigFileWithRetry,
 } from "./mutate.js";
+/** Re-exported API for src/config. */
 export type {
   ConfigMutationCommit,
   ConfigMutationCommitParams,
@@ -65,6 +72,7 @@ export type {
   TransformConfigFileParams,
   TransformConfigFileWithRetryParams,
 } from "./mutate.js";
+/** Re-exported API for src/config. */
 export {
   assertConfigWriteAllowedInCurrentMode,
   NixModeConfigMutationError,
@@ -73,6 +81,7 @@ export * from "./paths.js";
 export * from "./recovery-policy.js";
 export * from "./runtime-overrides.js";
 export * from "./types.js";
+/** Re-exported API for src/config. */
 export {
   validateConfigObject,
   validateConfigObjectRaw,

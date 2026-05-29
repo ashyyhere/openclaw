@@ -1,3 +1,4 @@
+// extensions/nextcloud-talk/src api credentials helpers and runtime behavior.
 import { readFileSync } from "node:fs";
 import { normalizeResolvedSecretInputString } from "./secret-input.js";
 

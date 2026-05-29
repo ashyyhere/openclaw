@@ -1,3 +1,4 @@
+// infra disk space helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 
@@ -31,6 +32,7 @@ function findExistingDiskSpacePath(targetPath: string): string | null {
   }
 }
 
+/** Reused helper for try Read Disk Space behavior in src/infra. */
 export function tryReadDiskSpace(targetPath: string): DiskSpaceSnapshot | null {
   if (typeof fs.statfsSync !== "function") {
     return null;
@@ -58,6 +60,7 @@ export function tryReadDiskSpace(targetPath: string): DiskSpaceSnapshot | null {
   }
 }
 
+/** Reused helper for format Disk Space Bytes behavior in src/infra. */
 export function formatDiskSpaceBytes(bytes: number): string {
   const mib = bytes / (1024 * 1024);
   if (mib < 1024) {
@@ -67,6 +70,7 @@ export function formatDiskSpaceBytes(bytes: number): string {
   return `${gib.toFixed(gib < 10 ? 1 : 0)} GiB`;
 }
 
+/** Reused helper for create Low Disk Space Warning behavior in src/infra. */
 export function createLowDiskSpaceWarning(params: {
   targetPath: string;
   purpose: string;

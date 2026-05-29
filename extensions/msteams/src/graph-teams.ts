@@ -1,3 +1,4 @@
+// extensions/msteams/src graph teams helpers and runtime behavior.
 import type { OpenClawConfig } from "../runtime-api.js";
 import { type GraphResponse, fetchGraphJson, resolveGraphToken } from "./graph.js";
 

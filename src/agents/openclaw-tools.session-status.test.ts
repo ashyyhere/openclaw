@@ -1,3 +1,4 @@
+/** Tests session_status OpenClaw tool behavior. */
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { SessionEntry } from "../config/sessions.js";
 import {

@@ -1,3 +1,4 @@
+// media-understanding scope helpers and runtime behavior.
 import { normalizeChatType } from "../channels/chat-type.js";
 import type { MediaUnderstandingScopeConfig } from "../config/types.tools.js";
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
@@ -15,10 +16,12 @@ function normalizeDecision(value?: string | null): MediaUnderstandingScopeDecisi
   return undefined;
 }
 
+/** Reused helper for normalize Media Understanding Chat Type behavior in src/media-understanding. */
 export function normalizeMediaUnderstandingChatType(raw?: string | null): string | undefined {
   return normalizeChatType(raw ?? undefined);
 }
 
+/** Reused helper for resolve Media Understanding Scope behavior in src/media-understanding. */
 export function resolveMediaUnderstandingScope(params: {
   scope?: MediaUnderstandingScopeConfig;
   sessionKey?: string;

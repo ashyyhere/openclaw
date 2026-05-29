@@ -1,3 +1,4 @@
+/** Builds gateway daemon install plans and service environment files. */
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -50,6 +51,7 @@ import {
 import type { DaemonInstallWarnFn } from "./daemon-install-runtime-warning.js";
 import type { GatewayDaemonRuntime } from "./daemon-runtime.js";
 
+/** Re-exported API for src/commands, starting with resolve Gateway Dev Mode. */
 export { resolveGatewayDevMode } from "./daemon-install-plan.shared.js";
 
 type GatewayInstallPlan = {
@@ -587,6 +589,7 @@ async function buildGatewayInstallEnvironment(params: {
   };
 }
 
+/** Reused helper for build Gateway Install Plan behavior in src/commands. */
 export async function buildGatewayInstallPlan(params: {
   env: Record<string, string | undefined>;
   port: number;
@@ -713,6 +716,7 @@ function omitEnvKey(
   return next;
 }
 
+/** Reused helper for gateway Install Error Hint behavior in src/commands. */
 export function gatewayInstallErrorHint(platform = process.platform): string {
   return platform === "win32"
     ? "Tip: native Windows now falls back to a per-user Startup-folder login item when Scheduled Task creation is denied; if install still fails, rerun from an elevated PowerShell or skip service install."

@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src/matrix device health test behavior.
 import { describe, expect, it } from "vitest";
 import { isOpenClawManagedMatrixDevice, summarizeMatrixDeviceHealth } from "./device-health.js";
 

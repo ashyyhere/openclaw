@@ -1,3 +1,4 @@
+/** Covers heartbeat response tool schema and result shaping. */
 import { describe, expect, it } from "vitest";
 import { HEARTBEAT_RESPONSE_TOOL_NAME } from "../../auto-reply/heartbeat-tool-response.js";
 import { createHeartbeatResponseTool } from "./heartbeat-response-tool.js";

@@ -13,6 +13,7 @@ import type { CronFormState } from "../ui-types.ts";
 
 // ── Types ──
 
+/** Shared type for Cron Quick Create Props in ui/src/ui/views. */
 export type CronQuickCreateProps = {
   open: boolean;
   step: CronQuickCreateStep;
@@ -24,8 +25,10 @@ export type CronQuickCreateProps = {
   onAdvancedCreate?: () => void;
 };
 
+/** Shared type for Cron Quick Create Step in ui/src/ui/views. */
 export type CronQuickCreateStep = "what" | "when" | "how";
 
+/** Shared type for Cron Quick Create Draft in ui/src/ui/views. */
 export type CronQuickCreateDraft = {
   prompt: string;
   name: string;
@@ -117,6 +120,7 @@ const DELIVERY_PRESETS: DeliveryPreset[] = [
 
 // ── Default draft ──
 
+/** Reused helper for create Default Draft behavior in ui/src/ui/views. */
 export function createDefaultDraft(): CronQuickCreateDraft {
   return {
     prompt: "",
@@ -139,6 +143,7 @@ function buildDefaultScheduleAt(now = new Date()): string {
 
 // ── Convert draft to CronFormState patch ──
 
+/** Reused helper for draft To Cron Form Patch behavior in ui/src/ui/views. */
 export function draftToCronFormPatch(draft: CronQuickCreateDraft): Partial<CronFormState> {
   const patch: Partial<CronFormState> = {
     name: draft.name || t("cron.quickCreate.defaultName"),
@@ -360,6 +365,7 @@ function renderHowStep(props: CronQuickCreateProps) {
 
 // ── Main render ──
 
+/** Reused helper for render Cron Quick Create behavior in ui/src/ui/views. */
 export function renderCronQuickCreate(props: CronQuickCreateProps) {
   if (!props.open) {
     return nothing;

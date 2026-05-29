@@ -1,3 +1,4 @@
+/** Tests routed command lookup and dispatch selection. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { defaultRuntime } from "../../runtime.js";
 import { findRoutedCommand } from "./routes.js";

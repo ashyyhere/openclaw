@@ -1,5 +1,7 @@
+// llm/providers/stream-wrappers stream payload utils helpers and runtime behavior.
 import type { StreamFn } from "../../../agents/runtime/index.js";
 
+/** Reused helper for stream With Payload Patch behavior in src/llm/providers. */
 export function streamWithPayloadPatch(
   underlying: StreamFn,
   model: Parameters<StreamFn>[0],

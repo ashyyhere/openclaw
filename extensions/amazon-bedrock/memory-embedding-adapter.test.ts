@@ -1,3 +1,4 @@
+// Tests extensions/amazon-bedrock memory embedding adapter test behavior.
 import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const hasAwsCredentialsMock = vi.hoisted(() => vi.fn());

@@ -1,3 +1,4 @@
+// extensions/qqbot/src/engine/commands/builtin register logs helpers and runtime behavior.
 import type { SlashCommandRegistry } from "../slash-commands.js";
 import { buildBotLogsResult } from "./log-helpers.js";
 

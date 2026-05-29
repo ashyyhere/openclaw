@@ -1,3 +1,4 @@
+// extensions/slack/src doctor helpers and runtime behavior.
 import { type ChannelDoctorAdapter } from "openclaw/plugin-sdk/channel-contract";
 import { createDangerousNameMatchingMutableAllowlistWarningCollector } from "openclaw/plugin-sdk/channel-policy";
 import {

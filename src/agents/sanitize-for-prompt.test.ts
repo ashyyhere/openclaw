@@ -1,3 +1,4 @@
+/** Tests prompt sanitization behavior. */
 import { describe, expect, it } from "vitest";
 import {
   sanitizeForPromptLiteral,

@@ -1,3 +1,4 @@
+/** Implements agents bind and unbind commands. */
 import { listAgentEntries, resolveDefaultAgentId } from "../agents/agent-scope.js";
 import { formatCliCommand } from "../cli/command-format.js";
 import { isRouteBinding, listRouteBindings } from "../config/bindings.js";
@@ -173,6 +174,7 @@ async function resolveConfigAndTargetAgentIdOrExit(params: {
   return { cfg, agentId, baseHash: configSnapshot.hash };
 }
 
+/** Reused helper for agents Bindings Command behavior in src/commands. */
 export async function agentsBindingsCommand(
   opts: AgentsBindingsListOptions,
   runtime: RuntimeEnv = defaultRuntime,
@@ -228,6 +230,7 @@ export async function agentsBindingsCommand(
   );
 }
 
+/** Reused helper for agents Bind Command behavior in src/commands. */
 export async function agentsBindCommand(
   opts: AgentsBindOptions,
   runtime: RuntimeEnv = defaultRuntime,
@@ -309,6 +312,7 @@ export async function agentsBindCommand(
   }
 }
 
+/** Reused helper for agents Unbind Command behavior in src/commands. */
 export async function agentsUnbindCommand(
   opts: AgentsUnbindOptions,
   runtime: RuntimeEnv = defaultRuntime,

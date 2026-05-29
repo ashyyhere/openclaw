@@ -1,3 +1,4 @@
+/** Tests target parsing and comparison behavior exposed through plugin channels. */
 import { beforeEach, describe, expect, it } from "vitest";
 import {
   channelRouteTargetsMatchExact,

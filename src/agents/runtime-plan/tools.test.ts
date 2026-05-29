@@ -1,3 +1,4 @@
+/** Covers runtime tool schema normalization and diagnostics. */
 import type { AgentTool } from "openclaw/plugin-sdk/agent-core";
 import {
   createNativeOpenAIResponsesModel,

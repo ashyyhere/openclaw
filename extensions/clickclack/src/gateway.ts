@@ -1,3 +1,4 @@
+// extensions/clickclack/src gateway helpers and runtime behavior.
 import type { ChannelGatewayContext } from "openclaw/plugin-sdk/channel-contract";
 import type { RawData } from "ws";
 import { resolveClickClackInboundAccess } from "./access.js";

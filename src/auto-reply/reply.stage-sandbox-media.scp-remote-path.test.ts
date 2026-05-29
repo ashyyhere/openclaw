@@ -1,3 +1,4 @@
+// Regression coverage for staging remote media paths into sandbox workspaces.
 import fs from "node:fs/promises";
 import { basename, join } from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";

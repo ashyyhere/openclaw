@@ -1,3 +1,4 @@
+// Tests ui/src/ui/views exec approval browser test behavior.
 import { html, render } from "lit";
 import { expect, test } from "vitest";
 import { i18n } from "../../i18n/index.ts";

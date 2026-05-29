@@ -1,3 +1,4 @@
+// Tests config/sessions store writer test behavior.
 import { afterEach, describe, expect, it } from "vitest";
 import {
   clearSessionStoreCacheForTest,

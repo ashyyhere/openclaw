@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/browser pw tools core snapshot navigate guard test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { SsrFBlockedError } from "../infra/net/ssrf.js";
 import "../test-support/browser-security.mock.js";

@@ -3,6 +3,7 @@ import { theme } from "../../packages/terminal-core/src/theme.js";
 import type { PluginRecord } from "../plugins/registry.js";
 import { shortenHomeInString } from "../utils.js";
 
+/** Reused helper for format Plugin Line behavior in src/cli. */
 export function formatPluginLine(plugin: PluginRecord, verbose = false): string {
   const status =
     plugin.status === "error"

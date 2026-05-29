@@ -1,3 +1,4 @@
+// Tests infra abort pattern test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { bindAbortRelay } from "../utils/fetch-timeout.js";
 

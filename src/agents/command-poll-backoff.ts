@@ -1,3 +1,4 @@
+/** Tracks command-poll backoff so repeated empty polls slow down predictably. */
 import type { SessionState } from "../logging/diagnostic-session-state.js";
 
 // Exponential backoff schedule for command polling

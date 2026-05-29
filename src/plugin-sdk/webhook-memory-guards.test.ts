@@ -1,3 +1,4 @@
+/** Tests webhook memory guard limiters. */
 import { describe, expect, it } from "vitest";
 import {
   createBoundedCounter,

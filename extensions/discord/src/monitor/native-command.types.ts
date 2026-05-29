@@ -1,3 +1,4 @@
+// Shared types for extensions/discord/src/monitor native command types behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import type { CommandArgValues } from "openclaw/plugin-sdk/native-command-registry";
 

@@ -1,3 +1,4 @@
+// Direct-DM inbound dispatch compatibility facade.
 import type { DispatchReplyWithBufferedBlockDispatcher } from "../auto-reply/reply/provider-dispatcher.types.js";
 import type { FinalizedMsgContext } from "../auto-reply/templating.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -8,6 +9,7 @@ import {
 } from "../plugin-sdk/reply-payload.js";
 import { createChannelReplyPipeline } from "./message/reply-pipeline.js";
 import { runPreparedInboundReply } from "./turn/kernel.js";
+/** Re-exported API for src/channels. */
 export {
   createPreCryptoDirectDmAuthorizer,
   resolveInboundDirectDmAccessWithRuntime,
@@ -15,6 +17,7 @@ export {
   type DirectDmCommandAuthorizationRuntime,
   type ResolvedInboundDirectDmAccess,
 } from "./direct-dm-access.js";
+/** Re-exported API for src/channels. */
 export {
   createDirectDmPreCryptoGuardPolicy,
   type DirectDmPreCryptoGuardPolicy,
@@ -62,6 +65,7 @@ type DirectDmRuntime = {
 };
 
 /** Route, envelope, record, and dispatch one direct-DM turn through the standard pipeline. */
+/** Dispatch an inbound direct-message turn using explicit runtime hooks. */
 export async function dispatchInboundDirectDmWithRuntime(params: {
   cfg: OpenClawConfig;
   runtime: DirectDmRuntime;

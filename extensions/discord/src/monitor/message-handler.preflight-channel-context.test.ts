@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/monitor message handler preflight channel context test behavior.
 import { describe, expect, it } from "vitest";
 import { resolveDiscordPreflightChannelContext } from "./message-handler.preflight-channel-context.js";
 

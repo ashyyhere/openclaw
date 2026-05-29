@@ -1,3 +1,4 @@
+// Tests plugins/contracts run context lifecycle contract test behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import {

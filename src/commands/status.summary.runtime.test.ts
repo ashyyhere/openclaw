@@ -1,3 +1,4 @@
+/** Tests status summary runtime model metadata helpers. */
 import { describe, expect, it } from "vitest";
 import { statusSummaryRuntime } from "./status.summary.runtime.js";
 

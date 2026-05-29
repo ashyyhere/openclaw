@@ -20,6 +20,7 @@ import type { HookSource } from "./types.js";
  */
 const IMMUTABLE_SOURCES: ReadonlySet<HookSource> = new Set(["openclaw-bundled"]);
 
+/** Reused helper for build Import Url behavior in src/hooks. */
 export function buildImportUrl(handlerPath: string, source: HookSource): string {
   const base = pathToFileURL(handlerPath).href;
 

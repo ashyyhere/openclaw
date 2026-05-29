@@ -1,3 +1,4 @@
+// extensions/diffs/src viewer client helpers and runtime behavior.
 import { FileDiff, preloadHighlighter } from "@pierre/diffs";
 import type {
   FileContents,

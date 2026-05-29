@@ -1,3 +1,4 @@
+// node-host invoke system run allowlist helpers and runtime behavior.
 import {
   analyzeArgvCommand,
   buildSafeBinsShellCommand,
@@ -34,6 +35,7 @@ type SystemRunAllowlistAnalysis = {
   segmentSatisfiedBy: ExecSegmentSatisfiedBy[];
 };
 
+/** Reused helper for evaluate System Run Allowlist behavior in src/node-host. */
 export function evaluateSystemRunAllowlist(params: {
   shellCommand: string | null;
   argv: string[];
@@ -95,6 +97,7 @@ export function evaluateSystemRunAllowlist(params: {
   };
 }
 
+/** Reused helper for resolve Planned Allowlist Argv behavior in src/node-host. */
 export function resolvePlannedAllowlistArgv(params: {
   security: ExecSecurity;
   shellCommand: string | null;
@@ -119,6 +122,7 @@ export function resolvePlannedAllowlistArgv(params: {
   return plannedAllowlistArgv && plannedAllowlistArgv.length > 0 ? plannedAllowlistArgv : null;
 }
 
+/** Reused helper for resolve System Run Exec Argv behavior in src/node-host. */
 export function resolveSystemRunExecArgv(params: {
   plannedAllowlistArgv: string[] | undefined;
   argv: string[];
@@ -271,6 +275,7 @@ function replacePosixShellInlineCommand(params: {
   return null;
 }
 
+/** Reused helper for apply Output Truncation behavior in src/node-host. */
 export function applyOutputTruncation(result: RunResult): void {
   if (!result.truncated) {
     return;

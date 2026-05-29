@@ -1,3 +1,4 @@
+// infra/outbound session binding service helpers and runtime behavior.
 import { resolveGlobalMap } from "../../shared/global-singleton.js";
 import { uniqueValues } from "../../shared/string-normalization.js";
 import {
@@ -23,6 +24,7 @@ import type {
   SessionBindingUnbindInput,
 } from "./session-binding.types.js";
 
+/** Re-exported API for src/infra/outbound. */
 export type {
   BindingStatus,
   BindingTargetKind,
@@ -35,6 +37,7 @@ export type {
   SessionBindingUnbindInput,
 } from "./session-binding.types.js";
 
+/** Reused class for Session Binding Error behavior in src/infra/outbound. */
 export class SessionBindingError extends Error {
   constructor(
     public readonly code: SessionBindingErrorCode,
@@ -50,10 +53,12 @@ export class SessionBindingError extends Error {
   }
 }
 
+/** Reused helper for is Session Binding Error behavior in src/infra/outbound. */
 export function isSessionBindingError(error: unknown): error is SessionBindingError {
   return error instanceof SessionBindingError;
 }
 
+/** Shared type for Session Binding Service in src/infra/outbound. */
 export type SessionBindingService = {
   bind: (input: SessionBindingBindInput) => Promise<SessionBindingRecord>;
   getCapabilities: (params: { channel: string; accountId: string }) => SessionBindingCapabilities;
@@ -63,12 +68,14 @@ export type SessionBindingService = {
   unbind: (input: SessionBindingUnbindInput) => Promise<SessionBindingRecord[]>;
 };
 
+/** Shared type for Session Binding Adapter Capabilities in src/infra/outbound. */
 export type SessionBindingAdapterCapabilities = {
   placements?: SessionBindingPlacement[];
   bindSupported?: boolean;
   unbindSupported?: boolean;
 };
 
+/** Shared type for Session Binding Adapter in src/infra/outbound. */
 export type SessionBindingAdapter = {
   channel: string;
   accountId: string;
@@ -139,6 +146,7 @@ function getActiveAdapterForKey(key: string): SessionBindingAdapter | null {
   return registrations?.at(-1)?.normalizedAdapter ?? null;
 }
 
+/** Reused helper for register Session Binding Adapter behavior in src/infra/outbound. */
 export function registerSessionBindingAdapter(adapter: SessionBindingAdapter): void {
   const normalizedAdapter = {
     ...adapter,
@@ -161,6 +169,7 @@ export function registerSessionBindingAdapter(adapter: SessionBindingAdapter): v
   ADAPTERS_BY_CHANNEL_ACCOUNT.set(key, registrations);
 }
 
+/** Reused helper for unregister Session Binding Adapter behavior in src/infra/outbound. */
 export function unregisterSessionBindingAdapter(params: {
   channel: string;
   accountId: string;
@@ -391,10 +400,12 @@ function createDefaultSessionBindingService(): SessionBindingService {
 
 const DEFAULT_SESSION_BINDING_SERVICE = createDefaultSessionBindingService();
 
+/** Reused helper for get Session Binding Service behavior in src/infra/outbound. */
 export function getSessionBindingService(): SessionBindingService {
   return DEFAULT_SESSION_BINDING_SERVICE;
 }
 
+/** Reused constant for testing behavior in src/infra/outbound. */
 export const testing = {
   resetSessionBindingAdaptersForTests() {
     ADAPTERS_BY_CHANNEL_ACCOUNT.clear();
@@ -406,4 +417,5 @@ export const testing = {
     return [...ADAPTERS_BY_CHANNEL_ACCOUNT.keys()];
   },
 };
+/** Re-exported API for src/infra/outbound, starting with testing. */
 export { testing as __testing };

@@ -1,3 +1,4 @@
+// Tests infra parse finite number test behavior.
 import { describe, expect, it } from "vitest";
 import {
   parseFiniteNumber,

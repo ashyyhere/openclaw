@@ -1,3 +1,4 @@
+// extensions/clickclack/src access helpers and runtime behavior.
 import {
   resolveStableChannelMessageIngress,
   type StableChannelIngressIdentityParams,

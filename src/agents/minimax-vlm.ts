@@ -1,3 +1,4 @@
+/** MiniMax VLM image-understanding helper for providers without native image input. */
 import { ensureGlobalUndiciEnvProxyDispatcher } from "../infra/net/undici-global-dispatcher.js";
 import { isRecord } from "../utils.js";
 import { normalizeSecretInput } from "../utils/normalize-secret-input.js";
@@ -62,6 +63,7 @@ async function readErrorBodySnippet(res: Response): Promise<string> {
   }
 }
 
+/** Return whether a provider id can use MiniMax VLM fallback. */
 export function isMinimaxVlmProvider(provider: string): boolean {
   const normalized = provider.trim().toLowerCase();
   return (
@@ -72,6 +74,7 @@ export function isMinimaxVlmProvider(provider: string): boolean {
   );
 }
 
+/** Return whether a provider/model pair is the MiniMax VLM model. */
 export function isMinimaxVlmModel(provider: string, modelId: string): boolean {
   return isMinimaxVlmProvider(provider) && modelId.trim() === "MiniMax-VL-01";
 }
@@ -119,6 +122,7 @@ function pickString(rec: Record<string, unknown>, key: string): string {
   return typeof v === "string" ? v : "";
 }
 
+/** Ask MiniMax VLM to summarize an image for text-only model flows. */
 export async function minimaxUnderstandImage(params: {
   apiKey: string;
   prompt: string;

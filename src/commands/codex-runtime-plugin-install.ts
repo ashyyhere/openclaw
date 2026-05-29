@@ -5,6 +5,7 @@ import {
   type RuntimePluginInstallResult,
 } from "./runtime-plugin-install.js";
 
+/** Reused constant for CODEX RUNTIME PLUGIN ID behavior in src/commands. */
 export const CODEX_RUNTIME_PLUGIN_ID = "codex";
 const CODEX_RUNTIME_PLUGIN_LABEL = "Codex";
 const CODEX_RUNTIME_PLUGIN_NPM_SPEC = "@openclaw/codex";

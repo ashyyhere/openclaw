@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server startup binding helpers and runtime behavior.
 import type { Dirent } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";

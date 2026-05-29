@@ -22,6 +22,7 @@ import type {
   VideoGenerationTransformCapabilities as CoreVideoGenerationTransformCapabilities,
 } from "../video-generation/types.js";
 
+/** Shared type for Generated Video Asset in src/plugin-sdk. */
 export type GeneratedVideoAsset = {
   /** Raw video bytes. Either buffer or url must be present. */
   buffer?: Buffer;
@@ -34,6 +35,7 @@ export type GeneratedVideoAsset = {
   metadata?: Record<string, unknown>;
 };
 
+/** Shared type for Video Generation Resolution in src/plugin-sdk. */
 export type VideoGenerationResolution =
   | "360P"
   | "480P"
@@ -55,6 +57,7 @@ export type VideoGenerationAssetRole =
   | "reference_video"
   | "reference_audio";
 
+/** Shared type for Video Generation Source Asset in src/plugin-sdk. */
 export type VideoGenerationSourceAsset = {
   url?: string;
   buffer?: Buffer;
@@ -69,11 +72,13 @@ export type VideoGenerationSourceAsset = {
   metadata?: Record<string, unknown>;
 };
 
+/** Shared type for Video Generation Provider Configured Context in src/plugin-sdk. */
 export type VideoGenerationProviderConfiguredContext = {
   cfg?: OpenClawConfig;
   agentDir?: string;
 };
 
+/** Shared type for Video Generation Model Capabilities Context in src/plugin-sdk. */
 export type VideoGenerationModelCapabilitiesContext = {
   provider: string;
   model: string;
@@ -83,6 +88,7 @@ export type VideoGenerationModelCapabilitiesContext = {
   timeoutMs?: number;
 };
 
+/** Shared type for Video Generation Request in src/plugin-sdk. */
 export type VideoGenerationRequest = {
   provider: string;
   model: string;
@@ -105,12 +111,14 @@ export type VideoGenerationRequest = {
   providerOptions?: Record<string, unknown>;
 };
 
+/** Shared type for Video Generation Result in src/plugin-sdk. */
 export type VideoGenerationResult = {
   videos: GeneratedVideoAsset[];
   model?: string;
   metadata?: Record<string, unknown>;
 };
 
+/** Shared type for Video Generation Mode in src/plugin-sdk. */
 export type VideoGenerationMode = "generate" | "imageToVideo" | "videoToVideo";
 
 /**
@@ -120,6 +128,7 @@ export type VideoGenerationMode = "generate" | "imageToVideo" | "videoToVideo";
  */
 export type VideoGenerationProviderOptionType = "number" | "boolean" | "string";
 
+/** Shared type for Video Generation Mode Capabilities in src/plugin-sdk. */
 export type VideoGenerationModeCapabilities = {
   maxVideos?: number;
   maxInputImages?: number;
@@ -150,16 +159,19 @@ export type VideoGenerationModeCapabilities = {
   providerOptions?: Readonly<Record<string, VideoGenerationProviderOptionType>>;
 };
 
+/** Shared type for Video Generation Transform Capabilities in src/plugin-sdk. */
 export type VideoGenerationTransformCapabilities = VideoGenerationModeCapabilities & {
   enabled: boolean;
 };
 
+/** Shared type for Video Generation Provider Capabilities in src/plugin-sdk. */
 export type VideoGenerationProviderCapabilities = VideoGenerationModeCapabilities & {
   generate?: VideoGenerationModeCapabilities;
   imageToVideo?: VideoGenerationTransformCapabilities;
   videoToVideo?: VideoGenerationTransformCapabilities;
 };
 
+/** Shared type for Video Generation Provider in src/plugin-sdk. */
 export type VideoGenerationProvider = {
   id: string;
   aliases?: string[];
@@ -224,6 +236,7 @@ const videoGenerationSdkCompat: [
 ] = [] as never;
 void videoGenerationSdkCompat;
 
+/** Re-exported API for src/plugin-sdk. */
 export {
   DASHSCOPE_WAN_VIDEO_CAPABILITIES,
   DASHSCOPE_WAN_VIDEO_MODELS,
@@ -240,4 +253,5 @@ export {
   runDashscopeVideoGenerationTask,
 } from "../video-generation/dashscope-compatible.js";
 
+/** Re-exported API for src/plugin-sdk, starting with Dashscope Video Generation Response. */
 export type { DashscopeVideoGenerationResponse } from "../video-generation/dashscope-compatible.js";

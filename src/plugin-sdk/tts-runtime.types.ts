@@ -1,3 +1,4 @@
+/** Runtime SDK types for text-to-speech provider configuration. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { ResolvedTtsPersona, TtsAutoMode, TtsProvider } from "../config/types.tts.js";
 import type {
@@ -10,10 +11,14 @@ import type { TtsConfigResolutionContext } from "../tts/tts-config.js";
 import type { ResolvedTtsConfig, ResolvedTtsModelOverrides } from "../tts/tts-types.js";
 import type { ReplyPayload } from "./reply-payload.js";
 
+/** Re-exported API for src/plugin-sdk, starting with Resolved Tts Config. */
 export type { ResolvedTtsConfig, ResolvedTtsModelOverrides };
+/** Re-exported API for src/plugin-sdk, starting with Tts Config Resolution Context. */
 export type { TtsConfigResolutionContext };
+/** Re-exported API for src/plugin-sdk, starting with Tts Directive Overrides. */
 export type { TtsDirectiveOverrides, TtsDirectiveParseResult };
 
+/** Shared type for Tts Attempt Reason Code in src/plugin-sdk. */
 export type TtsAttemptReasonCode =
   | "success"
   | "no_provider_registered"
@@ -23,6 +28,7 @@ export type TtsAttemptReasonCode =
   | "timeout"
   | "provider_error";
 
+/** Shared type for Tts Provider Attempt in src/plugin-sdk. */
 export type TtsProviderAttempt = {
   provider: string;
   outcome: "success" | "skipped" | "failed";
@@ -33,6 +39,7 @@ export type TtsProviderAttempt = {
   error?: string;
 };
 
+/** Shared type for Tts Status Entry in src/plugin-sdk. */
 export type TtsStatusEntry = {
   timestamp: number;
   success: boolean;
@@ -47,8 +54,10 @@ export type TtsStatusEntry = {
   error?: string;
 };
 
+/** Shared type for Tts Speech Target in src/plugin-sdk. */
 export type TtsSpeechTarget = "audio-file" | "voice-note";
 
+/** Shared type for Summarize Result in src/plugin-sdk. */
 export type SummarizeResult = {
   summary: string;
   latencyMs: number;
@@ -56,12 +65,14 @@ export type SummarizeResult = {
   outputLength: number;
 };
 
+/** Shared type for Resolve Tts Auto Mode Params in src/plugin-sdk. */
 export type ResolveTtsAutoModeParams = {
   config: ResolvedTtsConfig;
   prefsPath: string;
   sessionAuto?: string;
 };
 
+/** Shared type for Resolve Explicit Tts Overrides Params in src/plugin-sdk. */
 export type ResolveExplicitTtsOverridesParams = {
   cfg: OpenClawConfig;
   prefsPath?: string;
@@ -73,6 +84,7 @@ export type ResolveExplicitTtsOverridesParams = {
   accountId?: string;
 };
 
+/** Shared type for Tts Request Params in src/plugin-sdk. */
 export type TtsRequestParams = {
   text: string;
   cfg: OpenClawConfig;
@@ -85,6 +97,7 @@ export type TtsRequestParams = {
   accountId?: string;
 };
 
+/** Shared type for Tts Telephony Request Params in src/plugin-sdk. */
 export type TtsTelephonyRequestParams = {
   text: string;
   cfg: OpenClawConfig;
@@ -92,6 +105,7 @@ export type TtsTelephonyRequestParams = {
   overrides?: TtsDirectiveOverrides;
 };
 
+/** Shared type for List Speech Voices Params in src/plugin-sdk. */
 export type ListSpeechVoicesParams = {
   provider: string;
   cfg?: OpenClawConfig;
@@ -100,6 +114,7 @@ export type ListSpeechVoicesParams = {
   baseUrl?: string;
 };
 
+/** Shared type for Maybe Apply Tts To Payload Params in src/plugin-sdk. */
 export type MaybeApplyTtsToPayloadParams = {
   payload: ReplyPayload;
   cfg: OpenClawConfig;
@@ -111,6 +126,7 @@ export type MaybeApplyTtsToPayloadParams = {
   accountId?: string;
 };
 
+/** Shared type for Tts Test Facade in src/plugin-sdk. */
 export type TtsTestFacade = {
   parseTtsDirectives: (...args: unknown[]) => TtsDirectiveParseResult;
   resolveModelOverridePolicy: (...args: unknown[]) => ResolvedTtsModelOverrides;
@@ -133,6 +149,7 @@ export type TtsTestFacade = {
   sanitizeTtsErrorForLog: (err: unknown) => string;
 };
 
+/** Shared type for Tts Result in src/plugin-sdk. */
 export type TtsResult = {
   success: boolean;
   audioPath?: string;
@@ -149,6 +166,7 @@ export type TtsResult = {
   target?: TtsSpeechTarget;
 };
 
+/** Shared type for Tts Synthesis Result in src/plugin-sdk. */
 export type TtsSynthesisResult = {
   success: boolean;
   audioBuffer?: Buffer;
@@ -167,6 +185,7 @@ export type TtsSynthesisResult = {
   target?: TtsSpeechTarget;
 };
 
+/** Shared type for Tts Stream Result in src/plugin-sdk. */
 export type TtsStreamResult = {
   success: boolean;
   audioStream?: ReadableStream<Uint8Array>;
@@ -184,8 +203,10 @@ export type TtsStreamResult = {
   release?: () => Promise<void>;
 };
 
+/** Shared type for Tts Synthesis Stream Result in src/plugin-sdk. */
 export type TtsSynthesisStreamResult = TtsStreamResult;
 
+/** Shared type for Tts Telephony Result in src/plugin-sdk. */
 export type TtsTelephonyResult = {
   success: boolean;
   audioBuffer?: Buffer;
@@ -202,13 +223,18 @@ export type TtsTelephonyResult = {
   sampleRate?: number;
 };
 
+/** Shared type for Text To Speech in src/plugin-sdk. */
 export type TextToSpeech = (params: TtsRequestParams) => Promise<TtsResult>;
+/** Shared type for Text To Speech Stream in src/plugin-sdk. */
 export type TextToSpeechStream = (params: TtsRequestParams) => Promise<TtsStreamResult>;
+/** Shared type for Text To Speech Telephony in src/plugin-sdk. */
 export type TextToSpeechTelephony = (
   params: TtsTelephonyRequestParams,
 ) => Promise<TtsTelephonyResult>;
+/** Shared type for List Speech Voices in src/plugin-sdk. */
 export type ListSpeechVoices = (params: ListSpeechVoicesParams) => Promise<SpeechVoiceOption[]>;
 
+/** Shared type for Tts Runtime Facade in src/plugin-sdk. */
 export type TtsRuntimeFacade = {
   /** @deprecated Use `testApi`. */
   _test: TtsTestFacade;

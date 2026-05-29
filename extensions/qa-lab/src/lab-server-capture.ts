@@ -1,3 +1,4 @@
+// extensions/qa-lab/src lab server capture helpers and runtime behavior.
 import net from "node:net";
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";
 

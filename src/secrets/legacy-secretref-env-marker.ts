@@ -1,3 +1,4 @@
+// secrets legacy secretref env marker helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {
   LEGACY_SECRETREF_ENV_MARKER_PREFIX,
@@ -10,6 +11,7 @@ import {
   type DiscoveredConfigSecretTarget,
 } from "./target-registry.js";
 
+/** Shared type for Legacy Secret Ref Env Marker Candidate in src/secrets. */
 export type LegacySecretRefEnvMarkerCandidate = {
   path: string;
   pathSegments: string[];
@@ -36,6 +38,7 @@ function toCandidate(
   };
 }
 
+/** Reused helper for collect Legacy Secret Ref Env Marker Candidates behavior in src/secrets. */
 export function collectLegacySecretRefEnvMarkerCandidates(
   config: OpenClawConfig,
 ): LegacySecretRefEnvMarkerCandidate[] {
@@ -45,6 +48,7 @@ export function collectLegacySecretRefEnvMarkerCandidates(
     .filter((candidate): candidate is LegacySecretRefEnvMarkerCandidate => candidate !== null);
 }
 
+/** Reused helper for migrate Legacy Secret Ref Env Markers behavior in src/secrets. */
 export function migrateLegacySecretRefEnvMarkers(config: OpenClawConfig): {
   config: OpenClawConfig;
   changes: string[];

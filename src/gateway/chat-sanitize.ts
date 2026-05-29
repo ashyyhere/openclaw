@@ -1,3 +1,4 @@
+// gateway chat sanitize helpers and runtime behavior.
 import {
   stripInternalMetadataForDisplay,
   stripUserEnvelopeForDisplay,
@@ -6,6 +7,7 @@ import { extractInboundSenderLabel } from "../auto-reply/reply/strip-inbound-met
 import { stripEnvelope } from "../shared/chat-envelope.js";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
+/** Re-exported API for src/gateway, starting with strip Envelope. */
 export { stripEnvelope };
 
 function extractMessageSenderLabel(entry: Record<string, unknown>): string | null {
@@ -64,6 +66,7 @@ function stripEnvelopeFromContentWithRole(
   return { content: next, changed };
 }
 
+/** Reused helper for strip Envelope From Message behavior in src/gateway. */
 export function stripEnvelopeFromMessage(message: unknown): unknown {
   if (!message || typeof message !== "object") {
     return message;
@@ -107,6 +110,7 @@ export function stripEnvelopeFromMessage(message: unknown): unknown {
   return changed ? next : message;
 }
 
+/** Reused helper for strip Envelope From Messages behavior in src/gateway. */
 export function stripEnvelopeFromMessages(messages: unknown[]): unknown[] {
   if (messages.length === 0) {
     return messages;

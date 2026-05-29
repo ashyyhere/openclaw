@@ -1,3 +1,4 @@
+// Tests plugins/contracts scheduled turns contract test behavior.
 import {
   createPluginRegistryFixture,
   registerTestPlugin,

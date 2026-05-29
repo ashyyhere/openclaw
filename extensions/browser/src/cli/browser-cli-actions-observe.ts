@@ -1,3 +1,4 @@
+// extensions/browser/src/cli browser cli actions observe helpers and runtime behavior.
 import type { Command } from "commander";
 import { normalizeOptionalString } from "openclaw/plugin-sdk/string-coerce-runtime";
 import { runCommandWithRuntime } from "../core-api.js";

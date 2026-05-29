@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src/matrix/monitor startup test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { CoreConfig } from "../../types.js";
 import type { MatrixAccountPatch } from "../config-update.js";

@@ -1,3 +1,4 @@
+// Script for test/scripts ios version test support behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { afterEach } from "vitest";

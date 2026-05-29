@@ -1,3 +1,4 @@
+/** Enforces auth profile policy constraints from config. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { coerceSecretRef, resolveSecretInputRef } from "../../config/types.secrets.js";
 import type { AuthProfileCredential, AuthProfileStore } from "./types.js";
@@ -124,6 +125,7 @@ function collectOAuthSecretRefPolicyViolations(params: {
   return violations;
 }
 
+/** Reused helper for assert No OAuth Secret Ref Policy Violations behavior in src/agents/auth-profiles. */
 export function assertNoOAuthSecretRefPolicyViolations(params: {
   store: AuthProfileStore;
   cfg?: OpenClawConfig;

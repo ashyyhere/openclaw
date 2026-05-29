@@ -1,3 +1,4 @@
+// Tests gateway gateway codex harness live test behavior.
 import { randomBytes, randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import { createServer } from "node:net";

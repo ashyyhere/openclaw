@@ -1,3 +1,4 @@
+/** Live tests for Anthropic setup token handling. */
 import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import os from "node:os";

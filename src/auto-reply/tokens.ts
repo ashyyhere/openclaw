@@ -1,6 +1,9 @@
+// Token estimation helpers for text and message payloads.
 import { escapeRegExp } from "../shared/regexp.js";
 
+/** Reused constant for HEARTBEAT TOKEN behavior in src/auto-reply. */
 export const HEARTBEAT_TOKEN = "HEARTBEAT_OK";
+/** Reused constant for SILENT REPLY TOKEN behavior in src/auto-reply. */
 export const SILENT_REPLY_TOKEN = "NO_REPLY";
 
 const silentExactRegexByToken = new Map<string, RegExp>();
@@ -29,6 +32,7 @@ function getSilentTrailingRegex(token: string): RegExp {
   return regex;
 }
 
+/** Reused helper for is Silent Reply Text behavior in src/auto-reply. */
 export function isSilentReplyText(
   text: string | undefined,
   token: string = SILENT_REPLY_TOKEN,
@@ -171,6 +175,7 @@ function isReasoningPrefixedSilentReplyText(
   );
 }
 
+/** Reused helper for is Silent Reply Payload Text behavior in src/auto-reply. */
 export function isSilentReplyPayloadText(
   text: string | undefined,
   token: string = SILENT_REPLY_TOKEN,
@@ -243,6 +248,7 @@ export function startsWithSilentToken(
   return getSilentLeadingAttachedRegex(token).test(text);
 }
 
+/** Reused helper for is Silent Reply Prefix Text behavior in src/auto-reply. */
 export function isSilentReplyPrefixText(
   text: string | undefined,
   token: string = SILENT_REPLY_TOKEN,

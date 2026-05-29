@@ -1,3 +1,4 @@
+// scripts/e2e/parallels parallels vm helpers and runtime behavior.
 import { die, run, say, warn } from "./host-command.ts";
 
 interface PrlctlVmListItem {

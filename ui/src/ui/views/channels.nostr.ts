@@ -1,3 +1,4 @@
+// ui/src/ui/views channels nostr helpers and runtime behavior.
 import { html, nothing } from "lit";
 import { t } from "../../i18n/index.ts";
 import { formatRelativeTimestamp } from "../format.ts";
@@ -23,6 +24,7 @@ function truncatePubkey(pubkey: string | null | undefined): string {
   return `${pubkey.slice(0, 8)}...${pubkey.slice(-8)}`;
 }
 
+/** Reused helper for render Nostr Card behavior in ui/src/ui/views. */
 export function renderNostrCard(params: {
   props: ChannelsProps;
   nostr?: NostrStatus | null;

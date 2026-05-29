@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor gateway handle helpers and runtime behavior.
 import type { EventEmitter } from "node:events";
 import type { GatewayPlugin } from "../internal/gateway.js";
 

@@ -1,3 +1,4 @@
+/** Tests gateway status output rendering. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { GatewayProbeResult } from "../../gateway/probe.js";
 import type { RuntimeEnv } from "../../runtime.js";

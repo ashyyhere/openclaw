@@ -1,3 +1,4 @@
+// extensions/opencode-go provider catalog helpers and runtime behavior.
 import type { ModelCatalogEntry } from "openclaw/plugin-sdk/agent-runtime";
 import type { ProviderRuntimeModel } from "openclaw/plugin-sdk/plugin-entry";
 import { normalizeModelCompat } from "openclaw/plugin-sdk/provider-model-shared";

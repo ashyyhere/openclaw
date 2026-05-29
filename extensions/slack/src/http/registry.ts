@@ -1,3 +1,4 @@
+// extensions/slack/src/http registry helpers and runtime behavior.
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { normalizeSlackWebhookPath } from "./paths.js";
 

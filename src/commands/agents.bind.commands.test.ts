@@ -1,3 +1,4 @@
+/** Tests agent binding command flows and prompts. */
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { ChannelId, ChannelPlugin } from "../channels/plugins/types.public.js";
 import {

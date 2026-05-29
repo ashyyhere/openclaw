@@ -1,3 +1,4 @@
+/** Doctor-facing channel capability resolver. */
 import { getBundledChannelPlugin } from "../../channels/plugins/bundled.js";
 import { getChannelPlugin } from "../../channels/plugins/index.js";
 import { normalizeAnyChannelId } from "../../channels/registry.js";
@@ -5,8 +6,10 @@ import { findBundledPackageChannelMetadata } from "../../plugins/bundled-package
 import type { PluginPackageChannelDoctorCapabilities } from "../../plugins/manifest.js";
 import type { AllowFromMode } from "./shared/allow-from-mode.types.js";
 
+/** Shared type for Doctor Group Model in src/commands/doctor. */
 export type DoctorGroupModel = "sender" | "route" | "hybrid";
 
+/** Shared type for Doctor Channel Capabilities in src/commands/doctor. */
 export type DoctorChannelCapabilities = {
   dmAllowFromMode: AllowFromMode;
   groupModel: DoctorGroupModel;
@@ -43,6 +46,7 @@ function getManifestDoctorCapabilities(
   return findBundledPackageChannelMetadata(channelId)?.doctorCapabilities;
 }
 
+/** Reused helper for get Doctor Channel Capabilities behavior in src/commands/doctor. */
 export function getDoctorChannelCapabilities(channelName?: string): DoctorChannelCapabilities {
   if (!channelName) {
     return DEFAULT_DOCTOR_CHANNEL_CAPABILITIES;

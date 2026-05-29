@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor agent components handlers helpers and runtime behavior.
 import { logError } from "openclaw/plugin-sdk/logging-core";
 import {
   resolveDiscordComponentEntryWithPersistence,

@@ -1,3 +1,4 @@
+// packages/memory-host-sdk/src/host embeddings worker child helpers and runtime behavior.
 import { createLocalEmbeddingProviderInProcess } from "./embeddings.js";
 import type { EmbeddingProvider, EmbeddingProviderOptions } from "./embeddings.types.js";
 

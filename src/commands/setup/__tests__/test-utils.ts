@@ -1,7 +1,9 @@
+// Shared setup-command test factories for runtimes and wizard prompters.
 import { vi } from "vitest";
 import type { RuntimeEnv } from "../../../runtime.js";
 import type { WizardPrompter } from "../../../wizard/prompts.js";
 
+/** Reused constant for make Runtime behavior in src/commands/setup. */
 export const makeRuntime = (overrides: Partial<RuntimeEnv> = {}): RuntimeEnv => ({
   log: vi.fn(),
   error: vi.fn(),
@@ -11,6 +13,7 @@ export const makeRuntime = (overrides: Partial<RuntimeEnv> = {}): RuntimeEnv => 
   ...overrides,
 });
 
+/** Reused constant for make Prompter behavior in src/commands/setup. */
 export const makePrompter = (overrides: Partial<WizardPrompter> = {}): WizardPrompter => ({
   intro: vi.fn(async () => {}),
   outro: vi.fn(async () => {}),

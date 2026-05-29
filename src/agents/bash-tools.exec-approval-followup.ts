@@ -1,3 +1,4 @@
+/** Follow-up delivery for async exec approval results. */
 import {
   resolveExternalBestEffortDeliveryTarget,
   type ExternalBestEffortDeliveryTarget,
@@ -61,6 +62,7 @@ function formatUnknownError(error: unknown): string {
   }
 }
 
+/** Build the agent prompt used to continue after an approved async command finishes. */
 export function buildExecApprovalFollowupPrompt(resultText: string): string {
   const trimmed = resultText.trim();
   if (isExecDeniedResultText(trimmed)) {
@@ -270,6 +272,7 @@ async function sendDirectFollowupFallback(params: {
   return true;
 }
 
+/** Reused helper for send Exec Approval Followup behavior in src/agents. */
 export async function sendExecApprovalFollowup(
   params: ExecApprovalFollowupParams,
 ): Promise<boolean> {

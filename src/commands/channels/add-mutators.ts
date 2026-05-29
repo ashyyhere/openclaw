@@ -1,3 +1,4 @@
+/** Config mutators shared by channel add command flows. */
 import { getChannelPlugin } from "../../channels/plugins/index.js";
 import type { ChannelPlugin } from "../../channels/plugins/types.plugin.js";
 import type { ChannelId, ChannelSetupInput } from "../../channels/plugins/types.public.js";
@@ -6,6 +7,7 @@ import { normalizeAccountId } from "../../routing/session-key.js";
 
 type ChatChannel = ChannelId;
 
+/** Reused helper for apply Account Name behavior in src/commands/channels. */
 export function applyAccountName(params: {
   cfg: OpenClawConfig;
   channel: ChatChannel;
@@ -19,6 +21,7 @@ export function applyAccountName(params: {
   return apply ? apply({ cfg: params.cfg, accountId, name: params.name }) : params.cfg;
 }
 
+/** Reused helper for apply Channel Account Config behavior in src/commands/channels. */
 export function applyChannelAccountConfig(params: {
   cfg: OpenClawConfig;
   channel: ChatChannel;

@@ -1,3 +1,4 @@
+// gateway channel health policy helpers and runtime behavior.
 import type { ChannelId } from "../channels/plugins/types.public.js";
 
 type ChannelHealthSnapshot = {
@@ -27,11 +28,13 @@ type ChannelHealthEvaluationReason =
   | "disconnected"
   | "stale-socket";
 
+/** Shared type for Channel Health Evaluation in src/gateway. */
 export type ChannelHealthEvaluation = {
   healthy: boolean;
   reason: ChannelHealthEvaluationReason;
 };
 
+/** Shared type for Channel Health Policy in src/gateway. */
 export type ChannelHealthPolicy = {
   channelId: ChannelId;
   now: number;
@@ -48,9 +51,12 @@ function isManagedAccount(snapshot: ChannelHealthSnapshot): boolean {
 const BUSY_ACTIVITY_STALE_THRESHOLD_MS = 25 * 60_000;
 // Keep these shared between the background health monitor and on-demand readiness
 // probes so both surfaces evaluate channel lifecycle windows consistently.
+/** Reused constant for DEFAULT CHANNEL STALE EVENT THRESHOLD MS behavior in src/gateway. */
 export const DEFAULT_CHANNEL_STALE_EVENT_THRESHOLD_MS = 30 * 60_000;
+/** Reused constant for DEFAULT CHANNEL CONNECT GRACE MS behavior in src/gateway. */
 export const DEFAULT_CHANNEL_CONNECT_GRACE_MS = 120_000;
 
+/** Reused helper for evaluate Channel Health behavior in src/gateway. */
 export function evaluateChannelHealth(
   snapshot: ChannelHealthSnapshot,
   policy: ChannelHealthPolicy,
@@ -127,6 +133,7 @@ export function evaluateChannelHealth(
   return { healthy: true, reason: "healthy" };
 }
 
+/** Reused helper for resolve Channel Restart Reason behavior in src/gateway. */
 export function resolveChannelRestartReason(
   snapshot: ChannelHealthSnapshot,
   evaluation: ChannelHealthEvaluation,

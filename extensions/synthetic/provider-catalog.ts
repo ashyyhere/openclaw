@@ -1,3 +1,4 @@
+// extensions/synthetic provider catalog helpers and runtime behavior.
 import type { ModelProviderConfig } from "openclaw/plugin-sdk/provider-model-shared";
 import {
   buildSyntheticModelDefinition,

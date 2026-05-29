@@ -1,3 +1,4 @@
+// Tests extensions/signal/src format test behavior.
 import { describe, expect, it } from "vitest";
 import { markdownToSignalText } from "./format.js";
 

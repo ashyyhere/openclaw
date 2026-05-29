@@ -1,3 +1,4 @@
+// Tests extensions/vydra speech provider test behavior.
 import { installPinnedHostnameTestHooks } from "openclaw/plugin-sdk/test-env";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { buildVydraSpeechProvider } from "./speech-provider.js";

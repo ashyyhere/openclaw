@@ -1,3 +1,5 @@
+// extensions/zalo/src runtime api helpers and runtime behavior.
+/** Re-exported zalo plugin public API. */
 export {
   type BaseProbeResult,
   type BaseTokenResolution,

@@ -1,3 +1,4 @@
+// plugins bundle lsp helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { applyMergePatch } from "../config/merge-patch.js";
@@ -16,12 +17,15 @@ import {
 } from "./bundle-manifest.js";
 import type { PluginBundleFormat } from "./manifest-types.js";
 
+/** Shared type for Bundle Lsp Server Config in src/plugins. */
 export type BundleLspServerConfig = Record<string, unknown>;
 
+/** Shared type for Bundle Lsp Config in src/plugins. */
 export type BundleLspConfig = {
   lspServers: Record<string, BundleLspServerConfig>;
 };
 
+/** Shared type for Bundle Lsp Runtime Support in src/plugins. */
 export type BundleLspRuntimeSupport = {
   hasStdioServer: boolean;
   supportedServerNames: string[];
@@ -124,6 +128,7 @@ function loadBundleLspConfig(params: {
   return { config: merged, diagnostics };
 }
 
+/** Reused helper for inspect Bundle Lsp Runtime Support behavior in src/plugins. */
 export function inspectBundleLspRuntimeSupport(params: {
   pluginId: string;
   rootDir: string;
@@ -141,6 +146,7 @@ export function inspectBundleLspRuntimeSupport(params: {
   };
 }
 
+/** Reused helper for load Enabled Bundle Lsp Config behavior in src/plugins. */
 export function loadEnabledBundleLspConfig(params: {
   workspaceDir: string;
   cfg?: OpenClawConfig;

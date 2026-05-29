@@ -1,3 +1,4 @@
+/** Tests port probing and force-free behavior for local CLI services. */
 import { EventEmitter } from "node:events";
 import net from "node:net";
 import { describe, expect, it, vi } from "vitest";

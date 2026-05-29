@@ -1,3 +1,4 @@
+/** Shared registry-backed session binding contract suite. */
 import { afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { clearRuntimeConfigSnapshot, setRuntimeConfigSnapshot } from "../../../../config/config.js";
 import {

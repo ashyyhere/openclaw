@@ -1,3 +1,4 @@
+// Tests cron/service state test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { createCronServiceState } from "./state.js";
 

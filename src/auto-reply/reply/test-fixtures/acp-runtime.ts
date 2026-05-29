@@ -1,6 +1,8 @@
+// Test fixtures for ACP runtime metadata.
 import type { SessionAcpMeta } from "../../../config/sessions/types.js";
 import type { OpenClawConfig } from "../../../config/types.openclaw.js";
 
+/** Reused helper for create Acp Test Config behavior in src/auto-reply/reply. */
 export function createAcpTestConfig(overrides?: Partial<OpenClawConfig>): OpenClawConfig {
   return {
     acp: {
@@ -14,6 +16,7 @@ export function createAcpTestConfig(overrides?: Partial<OpenClawConfig>): OpenCl
   } as OpenClawConfig;
 }
 
+/** Reused helper for create Acp Session Meta behavior in src/auto-reply/reply. */
 export function createAcpSessionMeta(overrides?: Partial<SessionAcpMeta>): SessionAcpMeta {
   return {
     backend: "acpx",

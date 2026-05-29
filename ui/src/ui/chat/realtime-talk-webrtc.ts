@@ -1,3 +1,4 @@
+// ui/src/ui/chat realtime talk webrtc helpers and runtime behavior.
 import type { RealtimeTalkWebRtcSdpSessionResult } from "./realtime-talk-shared.ts";
 import {
   REALTIME_VOICE_AGENT_CONSULT_TOOL_NAME,
@@ -32,6 +33,7 @@ type ToolBuffer = {
   args: string;
 };
 
+/** Reused class for Web Rtc Sdp Realtime Talk Transport behavior in ui/src/ui/chat. */
 export class WebRtcSdpRealtimeTalkTransport implements RealtimeTalkTransport {
   private peer: RTCPeerConnection | null = null;
   private channel: RTCDataChannel | null = null;

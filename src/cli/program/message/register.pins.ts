@@ -1,6 +1,8 @@
+/** Registers message pin commands. */
 import type { Command } from "commander";
 import type { MessageCliHelpers } from "./helpers.js";
 
+/** Reused helper for register Message Pin Commands behavior in src/cli/program. */
 export function registerMessagePinCommands(message: Command, helpers: MessageCliHelpers) {
   const pins = [
     helpers

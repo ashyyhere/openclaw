@@ -1,3 +1,4 @@
+// Tests media image ops rastermill adapter test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 describe("image ops Rastermill adapter", () => {

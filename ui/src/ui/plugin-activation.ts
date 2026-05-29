@@ -1,9 +1,11 @@
+// ui/src/ui plugin activation helpers and runtime behavior.
 import type { ConfigSnapshot } from "./types.ts";
 
 type PluginActivationOptions = {
   enabledByDefault?: boolean;
 };
 
+/** Reused helper for is Plugin Enabled In Config Snapshot behavior in ui/src/ui. */
 export function isPluginEnabledInConfigSnapshot(
   configSnapshot: ConfigSnapshot | null | undefined,
   pluginId: string,

@@ -1,3 +1,4 @@
+// Tests pairing setup code test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { SecretInput } from "../config/types.secrets.js";
 

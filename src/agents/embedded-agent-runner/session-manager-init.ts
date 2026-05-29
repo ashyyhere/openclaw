@@ -1,3 +1,4 @@
+/** Normalizes SessionManager state before the embedded run writes messages. */
 import fs from "node:fs/promises";
 import { serializeJsonlLine, writeJsonlLines } from "../../config/sessions/transcript-jsonl.js";
 
@@ -14,6 +15,7 @@ type SessionMessageEntry = { type: "message"; message?: { role?: string } };
  * This normalizes the file/session state so the first user prompt is persisted before the first
  * assistant entry, even for pre-created session files.
  */
+/** Prepares transcript/session metadata so the first reply flushes coherently. */
 export async function prepareSessionManagerForRun(params: {
   sessionManager: unknown;
   sessionFile: string;

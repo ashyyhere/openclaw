@@ -1,3 +1,4 @@
+// logging log tail helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { getResolvedLoggerSettings } from "../logging.js";
@@ -10,6 +11,7 @@ const MAX_LIMIT = 5000;
 const MAX_BYTES = 1_000_000;
 const ROLLING_LOG_RE = /^openclaw-\d{4}-\d{2}-\d{2}\.log$/;
 
+/** Shared type for Log Tail Payload in src/logging. */
 export type LogTailPayload = {
   file: string;
   cursor: number;
@@ -23,6 +25,7 @@ function isRollingLogFile(file: string): boolean {
   return ROLLING_LOG_RE.test(path.basename(file));
 }
 
+/** Reused helper for resolve Log File behavior in src/logging. */
 export async function resolveLogFile(file: string): Promise<string> {
   const stat = await fs.stat(file).catch(() => null);
   if (stat) {
@@ -147,6 +150,7 @@ async function readLogSlice(params: {
   }
 }
 
+/** Reused helper for read Configured Log Tail behavior in src/logging. */
 export async function readConfiguredLogTail(params?: {
   cursor?: number;
   limit?: number;

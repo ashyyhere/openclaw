@@ -1,3 +1,4 @@
+// media-understanding openai compatible audio helpers and runtime behavior.
 import {
   assertOkOrThrowHttpError,
   buildAudioTranscriptionFormData,
@@ -19,6 +20,7 @@ function resolveModel(model: string | undefined, fallback: string): string {
   return trimmed || fallback;
 }
 
+/** Reused helper for transcribe Open Ai Compatible Audio behavior in src/media-understanding. */
 export async function transcribeOpenAiCompatibleAudio(
   params: OpenAiCompatibleAudioParams,
 ): Promise<AudioTranscriptionResult> {

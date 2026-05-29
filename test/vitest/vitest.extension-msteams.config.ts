@@ -1,3 +1,4 @@
+// test/vitest vitest extension msteams config helpers and runtime behavior.
 import { msTeamsExtensionTestRoots } from "./vitest.extension-msteams-paths.mjs";
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 

@@ -1,3 +1,4 @@
+// plugins bundled plugin metadata helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -37,6 +38,7 @@ type BundledPluginPathPair = {
   built: string;
 };
 
+/** Shared type for Bundled Plugin Metadata in src/plugins. */
 export type BundledPluginMetadata = {
   dirName: string;
   idHint: string;
@@ -168,6 +170,7 @@ function collectBundledPluginMetadata(
   return entries;
 }
 
+/** Reused helper for list Bundled Plugin Metadata behavior in src/plugins. */
 export function listBundledPluginMetadata(params?: {
   rootDir?: string;
   scanDir?: string;
@@ -190,6 +193,7 @@ export function listBundledPluginMetadata(params?: {
   return metadata;
 }
 
+/** Reused helper for find Bundled Plugin Metadata By Id behavior in src/plugins. */
 export function findBundledPluginMetadataById(
   pluginId: string,
   params?: {
@@ -202,6 +206,7 @@ export function findBundledPluginMetadataById(
   return listBundledPluginMetadata(params).find((entry) => entry.manifest.id === pluginId);
 }
 
+/** Reused helper for resolve Bundled Plugin Workspace Source Path behavior in src/plugins. */
 export function resolveBundledPluginWorkspaceSourcePath(params: {
   rootDir: string;
   scanDir?: string;
@@ -296,6 +301,7 @@ function listBundledPluginEntrySearchPaths(
   return uniqueStrings(paths);
 }
 
+/** Reused helper for resolve Bundled Plugin Generated Path behavior in src/plugins. */
 export function resolveBundledPluginGeneratedPath(
   rootDir: string,
   entry: BundledPluginPathPair | undefined,
@@ -345,6 +351,7 @@ function resolveBundledPluginEntryCandidate(baseDir: string, entryPath: string):
   return candidate;
 }
 
+/** Reused helper for resolve Bundled Plugin Repo Entry Path behavior in src/plugins. */
 export function resolveBundledPluginRepoEntryPath(params: {
   rootDir: string;
   pluginId: string;

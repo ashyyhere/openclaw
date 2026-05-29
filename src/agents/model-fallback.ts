@@ -77,6 +77,7 @@ type FailoverAttribution = {
  * exhausted. Carries per-attempt details so callers can build informative
  * user-facing messages (e.g. "rate-limited, retry in 30 s").
  */
+/** Error carrying all failed fallback attempts after chain exhaustion. */
 export class FallbackSummaryError extends Error {
   readonly attempts: FallbackAttempt[];
   readonly soonestCooldownExpiry: number | null;
@@ -99,10 +100,12 @@ export class FallbackSummaryError extends Error {
   }
 }
 
+/** Return whether an unknown error is a fallback summary error. */
 export function isFallbackSummaryError(err: unknown): err is FallbackSummaryError {
   return err instanceof FallbackSummaryError;
 }
 
+/** Options controlling one model fallback execution. */
 export type ModelFallbackRunOptions = {
   allowTransientCooldownProbe?: boolean;
 };
@@ -201,6 +204,7 @@ type ModelFallbackErrorHandler = (attempt: {
 
 type ModelFallbackStepHandler = (step: ModelFallbackStepFields) => void | Promise<void>;
 
+/** Classification of a fallback run result. */
 export type ModelFallbackResultClassification =
   | {
       message: string;
@@ -613,6 +617,7 @@ function resolveFallbackSoonestCooldownExpiry(params: {
   return soonest;
 }
 
+/** Resolve image-capable fallback candidates for a provider/model. */
 export function resolveImageFallbackCandidates(
   params: {
     cfg: OpenClawConfig | undefined;
@@ -670,6 +675,7 @@ export function resolveImageFallbackCandidates(
   return candidates;
 }
 
+/** Resolve default provider used for image fallback. */
 export function resolveImageFallbackDefaultProvider(cfg: OpenClawConfig | undefined): string {
   const configuredPrimary = resolveAgentModelPrimaryValue(cfg?.agents?.defaults?.imageModel);
   if (configuredPrimary?.trim()) {
@@ -689,6 +695,7 @@ export function resolveImageFallbackDefaultProvider(cfg: OpenClawConfig | undefi
   return DEFAULT_PROVIDER;
 }
 
+/** Test hooks for model fallback internals. */
 export const testing = {
   resolveFallbackCandidates: resolveModelCandidateChain,
   resolveImageFallbackCandidates,
@@ -696,6 +703,7 @@ export const testing = {
   resolveSessionSuspensionReason,
 } as const;
 
+/** Resolve ordered primary/fallback model candidates. */
 export function resolveModelCandidateChain(
   params: {
     cfg: OpenClawConfig | undefined;
@@ -1011,6 +1019,7 @@ function shouldProbePrimaryDuringCooldown(params: {
 }
 
 /** @internal – exposed for unit tests only */
+/** Test hooks for probe throttling internals. */
 export const probeThrottleInternals = {
   lastProbeAttempt,
   MIN_PROBE_INTERVAL_MS,
@@ -1115,6 +1124,7 @@ function resolveCooldownDecision(params: {
   };
 }
 
+/** Run an operation across a model fallback chain until success or exhaustion. */
 export async function runWithModelFallback<T>(
   params: {
     cfg: OpenClawConfig | undefined;
@@ -1547,6 +1557,7 @@ export async function runWithModelFallback<T>(
   });
 }
 
+/** Run an operation with image-specific fallback candidates. */
 export async function runWithImageModelFallback<T>(params: {
   cfg: OpenClawConfig | undefined;
   modelOverride?: string;
@@ -1606,4 +1617,5 @@ export async function runWithImageModelFallback<T>(params: {
     cfg: params.cfg,
   });
 }
+/** Re-exported API for src/agents, starting with testing. */
 export { testing as __testing };

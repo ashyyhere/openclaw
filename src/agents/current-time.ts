@@ -6,6 +6,7 @@ import {
   resolveUserTimezone,
 } from "./date-time.js";
 
+/** Resolved current-time prompt fields for cron-style messages. */
 export type CronStyleNow = {
   userTimezone: string;
   formattedTime: string;
@@ -21,6 +22,7 @@ type TimeConfigLike = {
   };
 };
 
+/** Resolve localized current-time and reference UTC lines. */
 export function resolveCronStyleNow(cfg: TimeConfigLike, nowMs: number): CronStyleNow {
   const userTimezone = resolveUserTimezone(cfg.agents?.defaults?.userTimezone);
   const userTimeFormat = resolveUserTimeFormat(cfg.agents?.defaults?.timeFormat);
@@ -32,6 +34,7 @@ export function resolveCronStyleNow(cfg: TimeConfigLike, nowMs: number): CronSty
   return { userTimezone, formattedTime, timeLine };
 }
 
+/** Append current-time lines unless the prompt already contains them. */
 export function appendCronStyleCurrentTimeLine(text: string, cfg: TimeConfigLike, nowMs: number) {
   const base = text.trimEnd();
   if (!base || base.includes("Current time:")) {

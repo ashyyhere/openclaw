@@ -1,3 +1,4 @@
+// Tests extensions/codex/src/app-server transcript mirror test behavior.
 import { createHash } from "node:crypto";
 import fs from "node:fs/promises";
 import os from "node:os";

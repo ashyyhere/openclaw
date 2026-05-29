@@ -1,3 +1,4 @@
+// plugins migration provider runtime helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { getLoadedRuntimePluginRegistry } from "./active-runtime-registry.js";
 import {
@@ -49,6 +50,7 @@ function mergeMigrationProviders(
   return [...merged.values()].toSorted((a, b) => a.id.localeCompare(b.id));
 }
 
+/** Reused helper for ensure Standalone Migration Provider Registry Loaded behavior in src/plugins. */
 export function ensureStandaloneMigrationProviderRegistryLoaded(
   params: {
     cfg?: OpenClawConfig;
@@ -76,6 +78,7 @@ export function ensureStandaloneMigrationProviderRegistryLoaded(
   });
 }
 
+/** Reused helper for resolve Plugin Migration Provider behavior in src/plugins. */
 export function resolvePluginMigrationProvider(params: {
   providerId: string;
   cfg?: OpenClawConfig;
@@ -104,6 +107,7 @@ export function resolvePluginMigrationProvider(params: {
   return findMigrationProviderById(registry?.migrationProviders ?? [], params.providerId);
 }
 
+/** Reused helper for resolve Plugin Migration Providers behavior in src/plugins. */
 export function resolvePluginMigrationProviders(
   params: {
     cfg?: OpenClawConfig;

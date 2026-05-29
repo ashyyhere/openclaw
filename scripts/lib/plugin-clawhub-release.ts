@@ -1,3 +1,4 @@
+// scripts/lib plugin clawhub release helpers and runtime behavior.
 import { execFileSync } from "node:child_process";
 import { resolve } from "node:path";
 import { validateExternalCodePluginPackageJson } from "../../packages/plugin-package-contract/src/index.ts";

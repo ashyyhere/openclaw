@@ -1,3 +1,4 @@
+/** Regression coverage for cache-TTL context pruning decisions. */
 import type { AgentMessage } from "openclaw/plugin-sdk/agent-core";
 import type { ExtensionContext } from "openclaw/plugin-sdk/agent-sessions";
 import { describe, expect, it } from "vitest";

@@ -1,3 +1,4 @@
+// scripts/lib/ts-topology analyze helpers and runtime behavior.
 import path from "node:path";
 import ts from "typescript";
 import {

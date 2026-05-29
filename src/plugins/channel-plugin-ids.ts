@@ -1,3 +1,5 @@
+// plugins channel plugin ids helpers and runtime behavior.
+/** Re-exported API for src/plugins. */
 export {
   hasConfiguredChannelsForReadOnlyScope,
   hasExplicitChannelConfig,
@@ -12,6 +14,7 @@ export {
   type ConfiguredChannelPresenceSource,
 } from "./channel-presence-policy.js";
 
+/** Re-exported API for src/plugins. */
 export {
   resolveChannelPluginIds,
   resolveChannelPluginIdsFromRegistry,

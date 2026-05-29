@@ -1,6 +1,8 @@
+/** Computes restart hashes for sandbox Docker and browser configs. */
 import { hashTextSha256 } from "./hash.js";
 import type { SandboxBrowserConfig, SandboxDockerConfig, SandboxWorkspaceAccess } from "./types.js";
 
+/** Reused constant for SANDBOX DOCKER EXPLICIT ENV POLICY EPOCH behavior in src/agents/sandbox. */
 export const SANDBOX_DOCKER_EXPLICIT_ENV_POLICY_EPOCH = "explicit-config-env-v1";
 
 type SandboxHashInput = {
@@ -55,10 +57,12 @@ function normalizeForHash(value: unknown): unknown {
   return value;
 }
 
+/** Hashes sandbox config fields that require container recreation when changed. */
 export function computeSandboxConfigHash(input: SandboxHashInput): string {
   return computeHash(input);
 }
 
+/** Hashes browser config fields that require browser container recreation. */
 export function computeSandboxBrowserConfigHash(input: SandboxBrowserHashInput): string {
   return computeHash(input);
 }

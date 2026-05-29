@@ -1,3 +1,4 @@
+// Follow-up delivery helpers for message tool sends.
 import type { MessagingToolSend } from "../../agents/embedded-agent-messaging.types.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { stripHeartbeatToken } from "../heartbeat.js";
@@ -23,6 +24,7 @@ function hasReplyPayloadMedia(payload: ReplyPayload): boolean {
   return Array.isArray(payload.mediaUrls) && payload.mediaUrls.some((url) => url.trim().length > 0);
 }
 
+/** Reused helper for resolve Followup Delivery Payloads behavior in src/auto-reply/reply. */
 export function resolveFollowupDeliveryPayloads(params: {
   cfg: OpenClawConfig;
   payloads: ReplyPayload[];

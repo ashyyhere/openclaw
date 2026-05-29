@@ -1,3 +1,4 @@
+// Tests extensions/memory-lancedb config test behavior.
 import fs from "node:fs";
 import {
   type JsonSchemaObject,

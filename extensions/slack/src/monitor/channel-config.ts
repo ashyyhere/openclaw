@@ -1,3 +1,4 @@
+// extensions/slack/src/monitor channel config helpers and runtime behavior.
 import {
   applyChannelMatchMeta,
   buildChannelKeyCandidates,

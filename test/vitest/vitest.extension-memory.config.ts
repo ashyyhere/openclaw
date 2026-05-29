@@ -1,3 +1,4 @@
+// test/vitest vitest extension memory config helpers and runtime behavior.
 import { memoryExtensionTestRoots } from "./vitest.extension-memory-paths.mjs";
 import { loadPatternListFromEnv } from "./vitest.pattern-file.ts";
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";

@@ -1,3 +1,4 @@
+/** Loads thread metadata from active channel plugin session conversation handlers. */
 import {
   parseRawSessionConversationRef,
   parseThreadSessionSuffix,
@@ -38,6 +39,7 @@ function resolveLoadedSessionConversationThreadInfo(
   };
 }
 
+/** Reused helper for resolve Loaded Session Thread Info behavior in src/channels/plugins. */
 export function resolveLoadedSessionThreadInfo(
   sessionKey: string | undefined | null,
 ): ParsedThreadSessionSuffix {

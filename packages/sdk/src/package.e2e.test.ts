@@ -1,3 +1,4 @@
+// Tests packages/sdk/src package e2e test behavior.
 import { spawn } from "node:child_process";
 import { createReadStream } from "node:fs";
 import fs from "node:fs/promises";

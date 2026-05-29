@@ -1,3 +1,4 @@
+// extensions/amazon-bedrock-mantle index helpers and runtime behavior.
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 import { registerBedrockMantlePlugin } from "./register.sync.runtime.js";
 

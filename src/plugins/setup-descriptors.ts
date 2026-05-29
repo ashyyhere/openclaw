@@ -6,6 +6,7 @@ type SetupDescriptorRecord = Pick<
   "providers" | "cliBackends" | "providerAuthAliases" | "setup"
 >;
 
+/** Reused helper for list Setup Provider Ids behavior in src/plugins. */
 export function listSetupProviderIds(record: SetupDescriptorRecord): readonly string[] {
   const providerIds = record.setup?.providers?.map((entry) => entry.id) ?? record.providers;
   const normalizedProviderIds = new Set(providerIds.map(normalizeProviderId));
@@ -15,6 +16,7 @@ export function listSetupProviderIds(record: SetupDescriptorRecord): readonly st
   return [...providerIds, ...aliases];
 }
 
+/** Reused helper for list Setup Cli Backend Ids behavior in src/plugins. */
 export function listSetupCliBackendIds(record: SetupDescriptorRecord): readonly string[] {
   return record.setup?.cliBackends ?? record.cliBackends;
 }

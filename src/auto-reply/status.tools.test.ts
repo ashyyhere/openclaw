@@ -1,3 +1,4 @@
+// Coverage for status output that includes tool metadata.
 import { describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import { buildCommandsMessage, buildHelpMessage, buildToolsMessage } from "./status.js";

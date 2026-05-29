@@ -1,3 +1,4 @@
+// Tests gateway/server-methods restart test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { restartHandlers } from "./restart.js";
 

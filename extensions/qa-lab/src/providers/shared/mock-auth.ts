@@ -1,3 +1,4 @@
+// extensions/qa-lab/src/providers/shared mock auth helpers and runtime behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { applyAuthProfileConfig } from "openclaw/plugin-sdk/provider-auth-api-key";
 import { uniqueStrings } from "openclaw/plugin-sdk/string-coerce-runtime";

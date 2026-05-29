@@ -1,3 +1,4 @@
+// Tests extensions/github-copilot connection bound ids test behavior.
 import { describe, expect, it } from "vitest";
 import {
   rewriteCopilotConnectionBoundResponseIds,

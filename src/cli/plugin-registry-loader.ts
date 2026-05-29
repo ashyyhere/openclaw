@@ -1,3 +1,4 @@
+/** Lazy loader for plugin registry state used by CLI commands. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { loggingState } from "../logging/state.js";
 import { createLazyImportLoader } from "../shared/lazy-promise.js";
@@ -9,10 +10,12 @@ function loadPluginRegistryModule() {
   return pluginRegistryModuleLoader.load();
 }
 
+/** Shared type for Cli Plugin Registry Load Policy in src/cli. */
 export type CliPluginRegistryLoadPolicy = {
   scope: CliPluginRegistryScope;
 };
 
+/** Reused helper for ensure Cli Plugin Registry Loaded behavior in src/cli. */
 export async function ensureCliPluginRegistryLoaded(params: {
   scope: CliPluginRegistryScope;
   routeLogsToStderr?: boolean;

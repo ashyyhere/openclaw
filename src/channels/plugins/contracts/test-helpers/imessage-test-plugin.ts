@@ -1,3 +1,4 @@
+/** Test plugin factory for iMessage channel contract coverage. */
 import type { ChannelOutboundAdapter } from "openclaw/plugin-sdk/channel-contract";
 import type { ChannelPlugin } from "openclaw/plugin-sdk/channel-plugin-common";
 import { loadBundledPluginTestApiSync } from "../../../../test-utils/bundled-plugin-public-surface.js";

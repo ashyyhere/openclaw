@@ -1,3 +1,4 @@
+// Tests extensions/synology-chat/src approval auth test behavior.
 import { describe, expect, it } from "vitest";
 import { synologyChatApprovalAuth } from "./approval-auth.js";
 

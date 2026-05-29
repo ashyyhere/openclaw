@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/monitor monitor threading utils test behavior.
 import type { GatewayPresenceUpdate } from "discord-api-types/v10";
 import { buildAgentSessionKey } from "openclaw/plugin-sdk/routing";
 import { beforeEach, describe, expect, it } from "vitest";

@@ -1,3 +1,4 @@
+/** Repairs stale OAuth profile shadow files. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import {
@@ -126,6 +127,7 @@ function shouldRemoveLocalOAuthShadow(params: {
   return mainExpires >= localExpires;
 }
 
+/** Reused helper for scan Stale OAuth Profile Shadows behavior in src/commands/doctor. */
 export async function scanStaleOAuthProfileShadows(params: {
   cfg: OpenClawConfig;
   env?: NodeJS.ProcessEnv;
@@ -259,6 +261,7 @@ async function repairStaleOAuthProfilesForAgent(params: {
   );
 }
 
+/** Reused helper for collect Stale OAuth Profile Shadow Warnings behavior in src/commands/doctor. */
 export function collectStaleOAuthProfileShadowWarnings(params: {
   hits: StaleOAuthProfileShadow[];
   doctorFixCommand: string;
@@ -269,6 +272,7 @@ export function collectStaleOAuthProfileShadowWarnings(params: {
   );
 }
 
+/** Reused helper for repair Stale OAuth Profile Shadows behavior in src/commands/doctor. */
 export async function repairStaleOAuthProfileShadows(params: {
   cfg: OpenClawConfig;
   env?: NodeJS.ProcessEnv;
@@ -316,9 +320,11 @@ export async function repairStaleOAuthProfileShadows(params: {
   return { changes, warnings };
 }
 
+/** Reused constant for testing behavior in src/commands/doctor. */
 export const testing = {
   removeStaleProfilesFromStore,
   repairStaleOAuthProfilesForAgent,
   shouldRemoveLocalOAuthShadow,
 };
+/** Re-exported API for src/commands/doctor, starting with testing. */
 export { testing as __testing };

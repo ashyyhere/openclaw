@@ -6,8 +6,10 @@ import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { normalizeAgentId } from "../routing/session-key.js";
 import { listAgentEntries, resolveSessionAgentIds } from "./agent-scope.js";
 
+/** Config source that supplied model runtime policy. */
 export type ModelRuntimePolicySource = "model" | "provider";
 
+/** Resolved model runtime policy with source attribution. */
 export type ResolvedModelRuntimePolicy = {
   policy?: AgentRuntimePolicyConfig;
   source?: ModelRuntimePolicySource;
@@ -219,6 +221,7 @@ function resolveModelConfig(params: {
   );
 }
 
+/** Resolve model runtime policy from model/provider config. */
 export function resolveModelRuntimePolicy(params: {
   config?: OpenClawConfig;
   provider?: string;

@@ -1,9 +1,11 @@
+// shared node match helpers and runtime behavior.
 import {
   normalizeLowercaseStringOrEmpty,
   normalizeOptionalLowercaseString,
   normalizeOptionalString,
 } from "./string-coerce.js";
 
+/** Shared type for Node Match Candidate in src/shared. */
 export type NodeMatchCandidate = {
   nodeId: string;
   displayName?: string;
@@ -18,6 +20,7 @@ type ScoredNodeMatch = {
   selectionScore: number;
 };
 
+/** Reused helper for normalize Node Key behavior in src/shared. */
 export function normalizeNodeKey(value: string) {
   return normalizeLowercaseStringOrEmpty(value)
     .replace(/[^a-z0-9]+/g, "-")
@@ -121,6 +124,7 @@ function resolveScoredMatches(nodes: NodeMatchCandidate[], query: string): Score
     .filter((entry): entry is ScoredNodeMatch => entry !== null);
 }
 
+/** Reused helper for resolve Node Matches behavior in src/shared. */
 export function resolveNodeMatches(
   nodes: NodeMatchCandidate[],
   query: string,
@@ -128,6 +132,7 @@ export function resolveNodeMatches(
   return resolveScoredMatches(nodes, query).map((entry) => entry.node);
 }
 
+/** Reused helper for resolve Node Id From Candidates behavior in src/shared. */
 export function resolveNodeIdFromCandidates(nodes: NodeMatchCandidate[], query: string): string {
   const q = query.trim();
   if (!q) {

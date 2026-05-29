@@ -1,3 +1,4 @@
+// Tests extensions/imessage/src/monitor reflection guard test behavior.
 import { describe, expect, it } from "vitest";
 import { detectReflectedContent } from "./reflection-guard.js";
 

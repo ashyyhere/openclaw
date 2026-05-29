@@ -1,3 +1,4 @@
+// Tests extensions/opencode provider policy api test behavior.
 import { describe, expect, it } from "vitest";
 import { resolveThinkingProfile } from "./provider-policy-api.js";
 

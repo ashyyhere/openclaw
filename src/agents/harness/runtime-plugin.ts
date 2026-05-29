@@ -1,3 +1,4 @@
+/** Ensures provider-owner plugins are active for selected agent harnesses. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { withActivatedPluginIds } from "../../plugins/activation-context.js";
 import {
@@ -93,6 +94,7 @@ function withRuntimePluginIdsAllowed(params: {
   };
 }
 
+/** Activates plugins needed by the runtime/provider selected for a harness run. */
 export async function ensureSelectedAgentHarnessPlugin(params: {
   provider: string;
   modelId: string;

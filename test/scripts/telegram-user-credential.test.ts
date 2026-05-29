@@ -1,3 +1,4 @@
+// Tests test/scripts telegram user credential test behavior.
 import { existsSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { tmpdir } from "node:os";

@@ -1,3 +1,4 @@
+// extensions/irc/src normalize helpers and runtime behavior.
 import {
   normalizeLowercaseStringOrEmpty,
   normalizeOptionalLowercaseString,

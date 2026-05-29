@@ -1,3 +1,4 @@
+// Tests extensions/qa-lab/src model selection runtime test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const { resolveEnvApiKey, loadAuthProfileStoreForRuntime, listProfilesForProvider } = vi.hoisted(

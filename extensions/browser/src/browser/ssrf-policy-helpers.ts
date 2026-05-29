@@ -1,3 +1,4 @@
+// extensions/browser/src/browser ssrf policy helpers helpers and runtime behavior.
 import { uniqueStrings } from "openclaw/plugin-sdk/string-coerce-runtime";
 import type { SsrFPolicy } from "../infra/net/ssrf.js";
 

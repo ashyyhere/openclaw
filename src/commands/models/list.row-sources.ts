@@ -1,3 +1,4 @@
+// Orchestrates all model-list row sources in source-plan order.
 import type { ModelRegistry } from "../../llm/model-registry.js";
 import {
   appendCatalogSupplementRows,
@@ -26,6 +27,7 @@ type AppendAllModelRowSourcesResult = {
   requiresRegistryFallback: boolean;
 };
 
+/** Reused helper for append All Model Row Sources behavior in src/commands/models. */
 export async function appendAllModelRowSources(
   params: AllModelRowSources,
 ): Promise<AppendAllModelRowSourcesResult> {
@@ -167,6 +169,7 @@ export async function appendAllModelRowSources(
   return { requiresRegistryFallback: false };
 }
 
+/** Reused helper for append Configured Model Row Sources behavior in src/commands/models. */
 export async function appendConfiguredModelRowSources(params: {
   rows: ModelRow[];
   entries: ConfiguredEntry[];

@@ -1,5 +1,8 @@
+// ui/src/ui/chat realtime talk conversation helpers and runtime behavior.
+/** Shared type for Realtime Talk Conversation Role in ui/src/ui/chat. */
 export type RealtimeTalkConversationRole = "user" | "assistant";
 
+/** Shared type for Realtime Talk Conversation Entry in ui/src/ui/chat. */
 export type RealtimeTalkConversationEntry = {
   id: string;
   role: RealtimeTalkConversationRole;
@@ -7,6 +10,7 @@ export type RealtimeTalkConversationEntry = {
   isStreaming: boolean;
 };
 
+/** Shared type for Realtime Talk Conversation State in ui/src/ui/chat. */
 export type RealtimeTalkConversationState = {
   entries: RealtimeTalkConversationEntry[];
   nextEntryId: number;
@@ -16,6 +20,7 @@ export type RealtimeTalkConversationState = {
   assistantEntryId: string | null;
 };
 
+/** Shared type for Realtime Talk Transcript Update in ui/src/ui/chat. */
 export type RealtimeTalkTranscriptUpdate = {
   role: RealtimeTalkConversationRole;
   text: string;
@@ -26,6 +31,7 @@ export type RealtimeTalkTranscriptUpdate = {
 const MAX_CONVERSATION_ENTRIES = 60;
 const USER_FINAL_REWRITE_GRACE_MS = 1_500;
 
+/** Reused helper for create Realtime Talk Conversation State behavior in ui/src/ui/chat. */
 export function createRealtimeTalkConversationState(): RealtimeTalkConversationState {
   return {
     entries: [],
@@ -37,6 +43,7 @@ export function createRealtimeTalkConversationState(): RealtimeTalkConversationS
   };
 }
 
+/** Reused helper for update Realtime Talk Conversation behavior in ui/src/ui/chat. */
 export function updateRealtimeTalkConversation(
   state: RealtimeTalkConversationState,
   update: RealtimeTalkTranscriptUpdate,
@@ -141,6 +148,7 @@ function rememberRealtimeConversationEntry(
   return { ...state, assistantEntryId: isFinal ? null : entryId };
 }
 
+/** Reused helper for finish Realtime Conversation Entry behavior in ui/src/ui/chat. */
 export function finishRealtimeConversationEntry(
   state: RealtimeTalkConversationState,
   role: RealtimeTalkConversationRole,
@@ -200,6 +208,7 @@ function shouldStartNewRealtimeUserEntry(
   return true;
 }
 
+/** Reused helper for merge Realtime Transcript Text behavior in ui/src/ui/chat. */
 export function mergeRealtimeTranscriptText(
   existing: string,
   incoming: string,

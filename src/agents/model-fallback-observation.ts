@@ -6,6 +6,7 @@ import type { FallbackAttempt, ModelCandidate } from "./model-fallback.types.js"
 
 const decisionLog = createSubsystemLogger("model-fallback").child("decision");
 
+/** Return whether model fallback decision logging is enabled. */
 export function isModelFallbackDecisionLogEnabled(): boolean {
   return decisionLog.isEnabled("warn");
 }
@@ -33,6 +34,7 @@ function buildErrorObservationFields(error?: string): {
 
 type FallbackStepOutcome = "next_fallback" | "succeeded" | "chain_exhausted";
 
+/** Log fields describing one fallback chain step. */
 export type ModelFallbackStepFields = {
   fallbackStepType: "fallback_step";
   fallbackStepFromModel: string;
@@ -43,6 +45,7 @@ export type ModelFallbackStepFields = {
   fallbackStepFinalOutcome: FallbackStepOutcome;
 };
 
+/** Params used to log one fallback decision. */
 export type ModelFallbackDecisionParams = {
   decision:
     | "skip_candidate"
@@ -120,6 +123,7 @@ function buildFallbackStepFields(params: {
   };
 }
 
+/** Emit a structured model fallback decision log line. */
 export function logModelFallbackDecision(
   params: ModelFallbackDecisionParams,
 ): ModelFallbackStepFields | undefined {

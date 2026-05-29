@@ -1,3 +1,4 @@
+/** Public SDK helpers for parsing and redacting browser CDP/control URLs. */
 import { redactSensitiveText } from "../logging/redact.js";
 
 function hasRawExplicitPort(raw: string): boolean {
@@ -13,6 +14,7 @@ function hasRawExplicitPort(raw: string): boolean {
   return /:\d+$/.test(hostPort);
 }
 
+/** Parse browser HTTP/WebSocket URLs while preserving explicit default ports for downstream CDP. */
 export function parseBrowserHttpUrl(raw: string, label: string) {
   const trimmed = raw.trim();
   const parsed = new URL(trimmed);
@@ -38,6 +40,8 @@ export function parseBrowserHttpUrl(raw: string, label: string) {
   const normalized = parsed.toString().replace(/\/$/, "");
   let normalizedWithPort: string;
   if (hasExplicitPort && !parsed.port) {
+    // URL normalizes away explicit default ports, but CDP targets may need the exact authority
+    // shape users configured; reinsert the port after validation.
     const proto = parsed.protocol + "//";
     const rest = normalized.slice(proto.length);
     const atIdx = rest.indexOf("@");
@@ -64,6 +68,7 @@ export function parseBrowserHttpUrl(raw: string, label: string) {
   };
 }
 
+/** Redact credentials and known sensitive tokens from a CDP/control URL before logging. */
 export function redactCdpUrl(cdpUrl: string | null | undefined): string | null | undefined {
   if (typeof cdpUrl !== "string") {
     return cdpUrl;

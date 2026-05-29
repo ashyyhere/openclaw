@@ -1,3 +1,4 @@
+// Coverage for info command output.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { resolveSessionAgentId } from "../../agents/agent-scope.js";
 import type { OpenClawConfig } from "../../config/config.js";

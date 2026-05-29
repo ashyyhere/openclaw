@@ -1,5 +1,7 @@
+// media video dimensions helpers and runtime behavior.
 import { runFfprobe } from "./ffmpeg-exec.js";
 
+/** Shared type for Video Dimensions in src/media. */
 export type VideoDimensions = {
   width: number;
   height: number;
@@ -12,6 +14,7 @@ function parsePositiveDimension(value: unknown): number | undefined {
   return value;
 }
 
+/** Reused helper for parse Ffprobe Video Dimensions behavior in src/media. */
 export function parseFfprobeVideoDimensions(stdout: string): VideoDimensions | undefined {
   const parsed = JSON.parse(stdout) as { streams?: Array<{ width?: unknown; height?: unknown }> };
   const stream = parsed.streams?.[0];
@@ -20,6 +23,7 @@ export function parseFfprobeVideoDimensions(stdout: string): VideoDimensions | u
   return width && height ? { width, height } : undefined;
 }
 
+/** Reused helper for probe Video Dimensions behavior in src/media. */
 export async function probeVideoDimensions(buffer: Buffer): Promise<VideoDimensions | undefined> {
   try {
     const stdout = await runFfprobe(

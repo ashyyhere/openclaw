@@ -1,3 +1,4 @@
+// talk fast context runtime helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { formatErrorMessage } from "../infra/errors.js";
 import { getActiveMemorySearchManager } from "../plugins/memory-runtime.js";
@@ -18,6 +19,7 @@ type MemorySearchHit = {
   score: number;
 };
 
+/** Shared type for Realtime Voice Fast Context Config in src/talk. */
 export type RealtimeVoiceFastContextConfig = {
   enabled: boolean;
   maxResults: number;
@@ -26,6 +28,7 @@ export type RealtimeVoiceFastContextConfig = {
   fallbackToConsult: boolean;
 };
 
+/** Shared type for Realtime Voice Fast Context Labels in src/talk. */
 export type RealtimeVoiceFastContextLabels = {
   audienceLabel: string;
   contextName: string;
@@ -35,6 +38,7 @@ type FastContextLookupResult =
   | { status: "unavailable"; error?: string }
   | { status: "hits"; hits: MemorySearchHit[] };
 
+/** Shared type for Realtime Voice Fast Context Consult Result in src/talk. */
 export type RealtimeVoiceFastContextConsultResult =
   | { handled: false }
   | { handled: true; result: RealtimeVoiceAgentConsultResult };
@@ -142,6 +146,7 @@ async function lookupFastContext(params: {
   return { status: "hits", hits };
 }
 
+/** Reused helper for resolve Realtime Voice Fast Context Consult behavior in src/talk. */
 export async function resolveRealtimeVoiceFastContextConsult(params: {
   cfg: OpenClawConfig;
   agentId: string;

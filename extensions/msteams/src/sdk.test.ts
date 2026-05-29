@@ -1,3 +1,4 @@
+// Tests extensions/msteams/src sdk test behavior.
 import * as fs from "node:fs";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { createMSTeamsApp, createMSTeamsTokenProvider } from "./sdk.js";

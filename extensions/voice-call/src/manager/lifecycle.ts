@@ -1,3 +1,4 @@
+// extensions/voice-call/src/manager lifecycle helpers and runtime behavior.
 import type { CallRecord, EndReason } from "../types.js";
 import type { CallManagerContext } from "./context.js";
 import { transitionState } from "./state.js";

@@ -1,3 +1,4 @@
+/** Doctor checks and repairs for cron job state. */
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { note } from "../../packages/terminal-core/src/note.js";
@@ -332,6 +333,7 @@ function findLegacyWhatsAppHealthCrontabLines(crontab: unknown): string[] {
     .filter((line) => LEGACY_WHATSAPP_HEALTH_SCRIPT_RE.test(line));
 }
 
+/** Reused helper for collect Legacy Whats App Crontab Health Warning behavior in src/commands. */
 export async function collectLegacyWhatsAppCrontabHealthWarning(
   params: {
     platform?: NodeJS.Platform;
@@ -362,6 +364,7 @@ export async function collectLegacyWhatsAppCrontabHealthWarning(
   ].join("\n");
 }
 
+/** Reused helper for note Legacy Whats App Crontab Health Check behavior in src/commands. */
 export async function noteLegacyWhatsAppCrontabHealthCheck(
   params: {
     platform?: NodeJS.Platform;
@@ -374,6 +377,7 @@ export async function noteLegacyWhatsAppCrontabHealthCheck(
   }
 }
 
+/** Reused helper for maybe Repair Legacy Cron Store behavior in src/commands. */
 export async function maybeRepairLegacyCronStore(params: {
   cfg: OpenClawConfig;
   options: DoctorOptions;

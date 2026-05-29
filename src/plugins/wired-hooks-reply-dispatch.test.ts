@@ -1,3 +1,4 @@
+// Tests plugins wired hooks reply dispatch test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { buildTestCtx } from "../auto-reply/reply/test-ctx.js";
 import { createHookRunnerWithRegistry } from "./hooks.test-helpers.js";

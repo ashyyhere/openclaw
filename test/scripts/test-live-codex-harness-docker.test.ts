@@ -1,3 +1,4 @@
+// Tests test/scripts test live codex harness docker test behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";

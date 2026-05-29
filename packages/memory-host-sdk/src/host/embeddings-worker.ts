@@ -1,3 +1,4 @@
+// packages/memory-host-sdk/src/host embeddings worker helpers and runtime behavior.
 import { fork, type ChildProcess } from "node:child_process";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -319,6 +320,7 @@ class LocalEmbeddingWorkerClient {
   }
 }
 
+/** Public helper for create Local Embedding Worker Provider behavior in packages/memory-host-sdk. */
 export async function createLocalEmbeddingWorkerProvider(
   options: EmbeddingProviderOptions,
   runtimeOptions?: LocalEmbeddingProviderRuntimeOptions,

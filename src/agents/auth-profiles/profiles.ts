@@ -12,6 +12,7 @@ import {
   updateAuthProfileStoreWithLock,
 } from "./store.js";
 import type { AuthProfileCredential, AuthProfileStore, ProfileUsageStats } from "./types.js";
+/** Re-exported API for src/agents/auth-profiles, starting with dedupe Profile Ids. */
 export { dedupeProfileIds, listProfilesForProvider } from "./profile-list.js";
 
 function findProviderAuthStateKey(
@@ -57,6 +58,7 @@ function updateSuccessfulUsageStatsEntry(
   store.usageStats[profileId] = resetSuccessfulUsageStats(store.usageStats[profileId], lastUsed);
 }
 
+/** Reused helper for set Auth Profile Order behavior in src/agents/auth-profiles. */
 export async function setAuthProfileOrder(params: {
   agentDir?: string;
   provider: string;
@@ -87,6 +89,7 @@ export async function setAuthProfileOrder(params: {
   });
 }
 
+/** Reused helper for promote Auth Profile In Order behavior in src/agents/auth-profiles. */
 export async function promoteAuthProfileInOrder(params: {
   agentDir?: string;
   provider: string;
@@ -147,6 +150,7 @@ function normalizeAuthProfileCredential(credential: AuthProfileCredential): Auth
   return credential;
 }
 
+/** Reused helper for upsert Auth Profile behavior in src/agents/auth-profiles. */
 export function upsertAuthProfile(params: {
   profileId: string;
   credential: AuthProfileCredential;
@@ -161,6 +165,7 @@ export function upsertAuthProfile(params: {
   });
 }
 
+/** Reused helper for upsert Auth Profile With Lock behavior in src/agents/auth-profiles. */
 export async function upsertAuthProfileWithLock(params: {
   profileId: string;
   credential: AuthProfileCredential;
@@ -180,6 +185,7 @@ export async function upsertAuthProfileWithLock(params: {
   });
 }
 
+/** Reused helper for remove Provider Auth Profiles With Lock behavior in src/agents/auth-profiles. */
 export async function removeProviderAuthProfilesWithLock(params: {
   provider: string;
   agentDir?: string;
@@ -223,6 +229,7 @@ export async function removeProviderAuthProfilesWithLock(params: {
   });
 }
 
+/** Reused helper for clear Last Good Profile With Lock behavior in src/agents/auth-profiles. */
 export async function clearLastGoodProfileWithLock(params: {
   provider: string;
   profileId: string;
@@ -245,6 +252,7 @@ export async function clearLastGoodProfileWithLock(params: {
   });
 }
 
+/** Reused helper for mark Auth Profile Success behavior in src/agents/auth-profiles. */
 export async function markAuthProfileSuccess(params: {
   store: AuthProfileStore;
   provider: string;

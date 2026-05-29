@@ -1,3 +1,4 @@
+/** Creates OpenClaw backup archives from config, sessions, and state. */
 import {
   createBackupArchive,
   formatBackupCreateSummary,
@@ -6,6 +7,7 @@ import {
 } from "../infra/backup-create.js";
 import { type RuntimeEnv, writeRuntimeJson } from "../runtime.js";
 import { createLazyImportLoader } from "../shared/lazy-promise.js";
+/** Re-exported API for src/commands, starting with Backup Create Options. */
 export type { BackupCreateOptions, BackupCreateResult } from "../infra/backup-create.js";
 
 type BackupVerifyRuntime = typeof import("./backup-verify.js");
@@ -18,6 +20,7 @@ function loadBackupVerifyRuntime(): Promise<BackupVerifyRuntime> {
   return backupVerifyRuntimeLoader.load();
 }
 
+/** Reused helper for backup Create Command behavior in src/commands. */
 export async function backupCreateCommand(
   runtime: RuntimeEnv,
   opts: BackupCreateOptions = {},

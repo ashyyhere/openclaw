@@ -1,3 +1,4 @@
+/** Tests helpers for normalizing node media response payloads. */
 import { describe, expect, it } from "vitest";
 import {
   asBoolean,

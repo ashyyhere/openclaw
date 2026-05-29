@@ -1,3 +1,4 @@
+// extensions/telegram/src bot message dispatch helpers and runtime behavior.
 import path from "node:path";
 import type { Bot } from "grammy";
 import {

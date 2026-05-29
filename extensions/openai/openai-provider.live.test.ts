@@ -1,3 +1,4 @@
+// Tests extensions/openai openai provider live test behavior.
 import OpenAI from "openai";
 import type { Api } from "openclaw/plugin-sdk/llm";
 import type { ProviderRuntimeModel } from "openclaw/plugin-sdk/plugin-entry";

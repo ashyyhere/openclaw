@@ -1,3 +1,4 @@
+// Coverage for reply run registry behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   getDiagnosticSessionActivitySnapshot,

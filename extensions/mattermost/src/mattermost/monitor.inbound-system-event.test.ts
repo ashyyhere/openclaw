@@ -1,3 +1,4 @@
+// Tests extensions/mattermost/src/mattermost monitor inbound system event test behavior.
 import { createInboundDebouncer } from "openclaw/plugin-sdk/channel-inbound-debounce";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { monitorMattermostProvider } from "./monitor.js";

@@ -1,3 +1,4 @@
+/** Tests compaction chunking, pruning, and summarization helpers. */
 import type { AgentMessage } from "openclaw/plugin-sdk/agent-core";
 import type { AssistantMessage, ToolResultMessage } from "openclaw/plugin-sdk/llm";
 import { beforeAll, describe, expect, it, vi } from "vitest";

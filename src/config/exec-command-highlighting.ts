@@ -1,6 +1,8 @@
+// config exec command highlighting helpers and runtime behavior.
 import { normalizeAgentId } from "../routing/session-key.js";
 import type { OpenClawConfig } from "./types.openclaw.js";
 
+/** Reused helper for resolve Exec Command Highlighting behavior in src/config. */
 export function resolveExecCommandHighlighting(params: {
   config?: OpenClawConfig | null;
   agentId?: string | null;

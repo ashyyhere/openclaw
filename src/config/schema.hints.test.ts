@@ -1,3 +1,4 @@
+// Tests config schema hints test behavior.
 import { isSensitiveUrlConfigPath } from "@openclaw/net-policy/redact-sensitive-url";
 import { describe, expect, it } from "vitest";
 import { z } from "zod";

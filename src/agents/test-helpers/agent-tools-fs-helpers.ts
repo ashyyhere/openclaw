@@ -1,7 +1,9 @@
+/** Assertions shared by agent filesystem tool tests. */
 import { expect } from "vitest";
 
 type TextResultBlock = { type: string; text?: string };
 
+/** Extracts the first text block from a tool result. */
 export function getTextContent(result?: { content?: TextResultBlock[] }) {
   const textBlock = result?.content?.find((block) => block.type === "text");
   return textBlock?.text ?? "";
@@ -15,6 +17,7 @@ function expectTool<T extends { name: string }>(tools: T[], name: string): T {
   return tool;
 }
 
+/** Asserts a tool list contains read, write, and edit tools. */
 export function expectReadWriteEditTools<T extends { name: string }>(tools: T[]) {
   const names = tools.map((tool) => tool.name);
   expect(names).toContain("read");
@@ -27,6 +30,7 @@ export function expectReadWriteEditTools<T extends { name: string }>(tools: T[])
   };
 }
 
+/** Asserts a tool list contains read and write tools. */
 export function expectReadWriteTools<T extends { name: string }>(tools: T[]) {
   const names = tools.map((tool) => tool.name);
   expect(names).toContain("read");

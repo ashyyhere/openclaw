@@ -1,3 +1,4 @@
+// Subagent command action for clearing focus.
 import { normalizeConversationRef } from "../../../infra/outbound/session-binding-normalization.js";
 import { getSessionBindingService } from "../../../infra/outbound/session-binding-service.js";
 import { normalizeOptionalString } from "../../../shared/string-coerce.js";
@@ -5,6 +6,7 @@ import type { CommandHandlerResult } from "../commands-types.js";
 import { resolveConversationBindingContextFromAcpCommand } from "../conversation-binding-input.js";
 import { type SubagentsCommandContext, stopWithText } from "./shared.js";
 
+/** Reused helper for handle Subagents Unfocus Action behavior in src/auto-reply/reply. */
 export async function handleSubagentsUnfocusAction(
   ctx: SubagentsCommandContext,
 ): Promise<CommandHandlerResult> {

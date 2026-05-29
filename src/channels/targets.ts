@@ -1,10 +1,15 @@
+/** Shared channel target builders and validators for messaging destinations. */
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
+/** Re-exported API for src/channels, starting with Directory Config Params. */
 export type { DirectoryConfigParams } from "./plugins/directory-types.js";
+/** Re-exported API for src/channels, starting with Channel Directory Entry. */
 export type { ChannelDirectoryEntry } from "./plugins/types.public.js";
 
+/** Shared type for Messaging Target Kind in src/channels. */
 export type MessagingTargetKind = "user" | "channel";
 
+/** Shared type for Messaging Target in src/channels. */
 export type MessagingTarget = {
   kind: MessagingTargetKind;
   id: string;
@@ -12,15 +17,18 @@ export type MessagingTarget = {
   normalized: string;
 };
 
+/** Shared type for Messaging Target Parse Options in src/channels. */
 export type MessagingTargetParseOptions = {
   defaultKind?: MessagingTargetKind;
   ambiguousMessage?: string;
 };
 
+/** Reused helper for normalize Target Id behavior in src/channels. */
 export function normalizeTargetId(kind: MessagingTargetKind, id: string): string {
   return normalizeLowercaseStringOrEmpty(`${kind}:${id}`);
 }
 
+/** Reused helper for build Messaging Target behavior in src/channels. */
 export function buildMessagingTarget(
   kind: MessagingTargetKind,
   id: string,
@@ -34,6 +42,7 @@ export function buildMessagingTarget(
   };
 }
 
+/** Reused helper for ensure Target Id behavior in src/channels. */
 export function ensureTargetId(params: {
   candidate: string;
   pattern: RegExp;
@@ -45,6 +54,7 @@ export function ensureTargetId(params: {
   return params.candidate;
 }
 
+/** Reused helper for parse Target Mention behavior in src/channels. */
 export function parseTargetMention(params: {
   raw: string;
   mentionPattern: RegExp;
@@ -57,6 +67,7 @@ export function parseTargetMention(params: {
   return buildMessagingTarget(params.kind, match[1], params.raw);
 }
 
+/** Reused helper for parse Target Prefix behavior in src/channels. */
 export function parseTargetPrefix(params: {
   raw: string;
   prefix: string;
@@ -69,6 +80,7 @@ export function parseTargetPrefix(params: {
   return id ? buildMessagingTarget(params.kind, id, params.raw) : undefined;
 }
 
+/** Reused helper for parse Target Prefixes behavior in src/channels. */
 export function parseTargetPrefixes(params: {
   raw: string;
   prefixes: Array<{ prefix: string; kind: MessagingTargetKind }>;
@@ -86,6 +98,7 @@ export function parseTargetPrefixes(params: {
   return undefined;
 }
 
+/** Reused helper for parse At User Target behavior in src/channels. */
 export function parseAtUserTarget(params: {
   raw: string;
   pattern: RegExp;
@@ -103,6 +116,7 @@ export function parseAtUserTarget(params: {
   return buildMessagingTarget("user", id, params.raw);
 }
 
+/** Reused helper for parse Mention Prefix Or At User Target behavior in src/channels. */
 export function parseMentionPrefixOrAtUserTarget(params: {
   raw: string;
   mentionPattern: RegExp;
@@ -132,6 +146,7 @@ export function parseMentionPrefixOrAtUserTarget(params: {
   });
 }
 
+/** Reused helper for require Target Kind behavior in src/channels. */
 export function requireTargetKind(params: {
   platform: string;
   target: MessagingTarget | undefined;

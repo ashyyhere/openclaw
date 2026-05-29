@@ -1,3 +1,4 @@
+// test/helpers/agents transport params runtime contract helpers and runtime behavior.
 export const OPENAI_GPT5_TRANSPORT_DEFAULTS = {
   parallel_tool_calls: true,
   text_verbosity: "low",

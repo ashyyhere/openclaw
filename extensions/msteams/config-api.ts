@@ -1,3 +1,4 @@
+// extensions/msteams config api helpers and runtime behavior.
 export {
   buildChannelConfigSchema,
   MSTeamsConfigSchema,

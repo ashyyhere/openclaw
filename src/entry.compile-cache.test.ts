@@ -1,3 +1,4 @@
+// Tests OpenClaw entry compile cache test behavior.
 import type { ChildProcess } from "node:child_process";
 import { EventEmitter } from "node:events";
 import fs from "node:fs/promises";

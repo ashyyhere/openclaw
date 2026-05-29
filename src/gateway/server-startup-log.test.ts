@@ -1,3 +1,4 @@
+// Tests gateway server startup log test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { stripAnsi } from "../../packages/terminal-core/src/ansi.js";
 import { formatAgentModelStartupDetails, logGatewayStartup } from "./server-startup-log.js";

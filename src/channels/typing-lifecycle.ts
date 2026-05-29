@@ -1,3 +1,4 @@
+/** Keepalive loop for channel typing indicators during long replies. */
 type AsyncTick = () => Promise<void> | void;
 
 type TypingKeepaliveLoop = {
@@ -7,6 +8,7 @@ type TypingKeepaliveLoop = {
   isRunning: () => boolean;
 };
 
+/** Reused helper for create Typing Keepalive Loop behavior in src/channels. */
 export function createTypingKeepaliveLoop(params: {
   intervalMs: number;
   onTick: AsyncTick;

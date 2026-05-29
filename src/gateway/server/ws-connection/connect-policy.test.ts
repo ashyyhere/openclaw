@@ -1,3 +1,4 @@
+// Tests gateway/server/ws-connection connect policy test behavior.
 import { describe, expect, test } from "vitest";
 import {
   evaluateMissingDeviceIdentity,

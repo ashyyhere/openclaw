@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor inbound dedupe helpers and runtime behavior.
 import { createClaimableDedupe, type ClaimableDedupe } from "openclaw/plugin-sdk/persistent-dedupe";
 import type { DiscordMessageEvent } from "./listeners.js";
 import { resolveDiscordMessageChannelId } from "./message-utils.js";

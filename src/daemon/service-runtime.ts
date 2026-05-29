@@ -1,5 +1,7 @@
+// daemon service runtime helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
+/** Shared type for Gateway Service Systemd Runtime in src/daemon. */
 export type GatewayServiceSystemdRuntime = {
   unit?: string;
   killMode?: string;
@@ -7,6 +9,7 @@ export type GatewayServiceSystemdRuntime = {
   memoryCurrent?: number;
 };
 
+/** Shared type for Gateway Service Runtime in src/daemon. */
 export type GatewayServiceRuntime = {
   status?: string;
   state?: string;
@@ -23,9 +26,12 @@ export type GatewayServiceRuntime = {
   systemd?: GatewayServiceSystemdRuntime;
 };
 
+/** Reused constant for SYSTEMD TASKS CURRENT WARNING THRESHOLD behavior in src/daemon. */
 export const SYSTEMD_TASKS_CURRENT_WARNING_THRESHOLD = 200;
+/** Reused constant for SYSTEMD MEMORY CURRENT WARNING BYTES behavior in src/daemon. */
 export const SYSTEMD_MEMORY_CURRENT_WARNING_BYTES = 2 * 1024 * 1024 * 1024;
 
+/** Reused helper for is Risky Systemd Kill Mode behavior in src/daemon. */
 export function isRiskySystemdKillMode(value: string | undefined): boolean {
   const normalized = normalizeLowercaseStringOrEmpty(value);
   return normalized === "process" || normalized === "none";
@@ -63,6 +69,7 @@ function describeSystemdCgroupLoadWarnings(runtime?: GatewayServiceSystemdRuntim
   return details;
 }
 
+/** Reused helper for get Systemd Cgroup Hygiene Summary behavior in src/daemon. */
 export function getSystemdCgroupHygieneSummary(
   runtime?: GatewayServiceSystemdRuntime,
 ): string | null {
@@ -76,6 +83,7 @@ export function getSystemdCgroupHygieneSummary(
   return `cgroup hygiene: KillMode=${runtime.killMode}, ${details.join(", ")}`;
 }
 
+/** Reused helper for is Systemd Cgroup Hygiene Risk behavior in src/daemon. */
 export function isSystemdCgroupHygieneRisk(runtime?: GatewayServiceSystemdRuntime): boolean {
   return getSystemdCgroupHygieneSummary(runtime) !== null;
 }

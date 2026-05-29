@@ -1,3 +1,4 @@
+// Shared channel ingress access graph and redacted diagnostic types.
 import type { AccessGroupConfig } from "../../config/types.access-groups.js";
 import type { ChatChannelId } from "../ids.js";
 import type { InboundImplicitMentionKind, InboundMentionFacts } from "../mention-gating.js";

@@ -1,3 +1,4 @@
+/** Doctor checks and repairs for model/provider authentication state. */
 import fs from "node:fs";
 import path from "node:path";
 import { note } from "../../packages/terminal-core/src/note.js";
@@ -110,6 +111,7 @@ function buildCodexProviderOverrideWarning(providerOverride: unknown): string {
   return lines.join("\n");
 }
 
+/** Reused helper for note Legacy Codex Provider Override behavior in src/commands. */
 export function noteLegacyCodexProviderOverride(cfg: OpenClawConfig): void {
   const providerOverride = cfg.models?.providers?.[CODEX_PROVIDER_ID];
   if (!providerOverride) {
@@ -175,6 +177,7 @@ function listAuthProfileHealthTargets(cfg: OpenClawConfig): AuthProfileHealthTar
   return [...targets.values()];
 }
 
+/** Reused helper for resolve Unusable Profile Hint behavior in src/commands. */
 export function resolveUnusableProfileHint(params: {
   kind: "cooldown" | "disabled";
   reason?: string;
@@ -207,6 +210,7 @@ function formatOAuthRefreshFailureReason(reason: OAuthRefreshFailureReason | nul
   }
 }
 
+/** Reused helper for format OAuth Refresh Failure Doctor Line behavior in src/commands. */
 export function formatOAuthRefreshFailureDoctorLine(params: {
   profileId: string;
   provider: string;
@@ -380,6 +384,7 @@ async function noteAuthProfileHealthForTarget(params: {
   }
 }
 
+/** Reused helper for note Auth Profile Health behavior in src/commands. */
 export async function noteAuthProfileHealth(params: {
   cfg: OpenClawConfig;
   prompter: DoctorPrompter;

@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/msteams/src channel runtime behavior.
 import {
   listMSTeamsDirectoryGroupsLive as listMSTeamsDirectoryGroupsLiveImpl,
   listMSTeamsDirectoryPeersLive as listMSTeamsDirectoryPeersLiveImpl,

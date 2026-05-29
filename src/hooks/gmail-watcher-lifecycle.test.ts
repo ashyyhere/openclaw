@@ -1,3 +1,4 @@
+// Tests hooks gmail watcher lifecycle test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const { startGmailWatcherMock } = vi.hoisted(() => ({

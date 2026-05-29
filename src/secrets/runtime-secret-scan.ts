@@ -1,3 +1,4 @@
+// secrets runtime secret scan helpers and runtime behavior.
 import { coerceSecretRef } from "../config/types.secrets.js";
 import type { SecretDefaults } from "./runtime-shared.js";
 
@@ -30,6 +31,7 @@ function hasRecursiveSecretValue(params: {
   });
 }
 
+/** Reused helper for has Secret Ref Candidate behavior in src/secrets. */
 export function hasSecretRefCandidate(
   value: unknown,
   defaults: SecretDefaults | undefined,
@@ -38,6 +40,7 @@ export function hasSecretRefCandidate(
   return hasRecursiveSecretValue({ value, defaults, seen });
 }
 
+/** Reused helper for has Credential Bearing Object Value behavior in src/secrets. */
 export function hasCredentialBearingObjectValue(
   value: unknown,
   defaults: SecretDefaults | undefined,

@@ -1,3 +1,4 @@
+// extensions/qa-matrix index helpers and runtime behavior.
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 
 export default definePluginEntry({

@@ -1,3 +1,4 @@
+// extensions/memory-core/src/memory manager sync ops helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import fsSync from "node:fs";
 import fs from "node:fs/promises";

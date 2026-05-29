@@ -1,3 +1,4 @@
+// Tests gateway tools invoke http cron regression test behavior.
 import { createServer } from "node:http";
 import type { AddressInfo } from "node:net";
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";

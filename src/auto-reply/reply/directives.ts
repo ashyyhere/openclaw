@@ -1,3 +1,4 @@
+// Inline directive extractors for reply control tokens.
 import { escapeRegExp } from "../../utils.js";
 import type { NoticeLevel, ReasoningLevel, TraceLevel } from "../thinking.js";
 import {
@@ -98,6 +99,7 @@ const extractSimpleDirective = (
   };
 };
 
+/** Reused helper for extract Think Directive behavior in src/auto-reply/reply. */
 export function extractThinkDirective(body?: string): {
   cleaned: string;
   thinkLevel?: ThinkLevel;
@@ -116,6 +118,7 @@ export function extractThinkDirective(body?: string): {
   };
 }
 
+/** Reused helper for extract Verbose Directive behavior in src/auto-reply/reply. */
 export function extractVerboseDirective(body?: string): {
   cleaned: string;
   verboseLevel?: VerboseLevel;
@@ -134,6 +137,7 @@ export function extractVerboseDirective(body?: string): {
   };
 }
 
+/** Reused helper for extract Trace Directive behavior in src/auto-reply/reply. */
 export function extractTraceDirective(body?: string): {
   cleaned: string;
   traceLevel?: TraceLevel;
@@ -152,6 +156,7 @@ export function extractTraceDirective(body?: string): {
   };
 }
 
+/** Reused helper for extract Fast Directive behavior in src/auto-reply/reply. */
 export function extractFastDirective(body?: string): {
   cleaned: string;
   fastMode?: boolean;
@@ -170,6 +175,7 @@ export function extractFastDirective(body?: string): {
   };
 }
 
+/** Reused helper for extract Elevated Directive behavior in src/auto-reply/reply. */
 export function extractElevatedDirective(body?: string): {
   cleaned: string;
   elevatedLevel?: ElevatedLevel;
@@ -188,6 +194,7 @@ export function extractElevatedDirective(body?: string): {
   };
 }
 
+/** Reused helper for extract Reasoning Directive behavior in src/auto-reply/reply. */
 export function extractReasoningDirective(body?: string): {
   cleaned: string;
   reasoningLevel?: ReasoningLevel;
@@ -210,6 +217,7 @@ export function extractReasoningDirective(body?: string): {
   };
 }
 
+/** Reused helper for extract Status Directive behavior in src/auto-reply/reply. */
 export function extractStatusDirective(body?: string): {
   cleaned: string;
   hasDirective: boolean;
@@ -220,5 +228,7 @@ export function extractStatusDirective(body?: string): {
   return extractSimpleDirective(body, STATUS_DIRECTIVE_PATTERN);
 }
 
+/** Re-exported API for src/auto-reply/reply, starting with Elevated Level. */
 export type { ElevatedLevel, NoticeLevel, ReasoningLevel, ThinkLevel, TraceLevel, VerboseLevel };
+/** Re-exported API for src/auto-reply/reply, starting with extract Exec Directive. */
 export { extractExecDirective } from "./exec/directive.js";

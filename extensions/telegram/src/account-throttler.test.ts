@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src account throttler test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   clearAccountThrottlersForTest,

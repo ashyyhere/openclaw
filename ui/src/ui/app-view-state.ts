@@ -1,3 +1,4 @@
+// ui/src/ui app view state helpers and runtime behavior.
 import type { ActivityEntry, ActivityStatus } from "./activity-model.ts";
 import type { ChatAbortOptions, ChatSendOptions } from "./app-chat.ts";
 import type { EventLogEntry } from "./app-events.ts";
@@ -53,6 +54,7 @@ import type { ChatAttachment, ChatQueueItem } from "./ui-types.ts";
 import type { NostrProfileFormState } from "./views/channels.nostr-profile-form.ts";
 import type { SessionLogEntry } from "./views/usage.ts";
 
+/** Shared type for App View State in ui/src/ui. */
 export type AppViewState = {
   settings: UiSettings;
   password: string;

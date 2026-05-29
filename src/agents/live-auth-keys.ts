@@ -1,3 +1,4 @@
+/** Collects live-test API keys and classifies live provider rate-limit errors. */
 import { getProviderEnvVars } from "../secrets/provider-env-vars.js";
 import {
   normalizeLowercaseStringOrEmpty,
@@ -105,6 +106,7 @@ function resolveProviderApiKeyConfig(provider: string): ProviderApiKeyConfig {
   };
 }
 
+/** Collect API keys for a provider from live-test and normal env vars. */
 export function collectProviderApiKeys(
   provider: string,
   options: CollectProviderApiKeysOptions = {},
@@ -161,14 +163,17 @@ export function collectProviderApiKeys(
   return Array.from(seen);
 }
 
+/** Collect Anthropic API keys for live tests. */
 export function collectAnthropicApiKeys(): string[] {
   return collectProviderApiKeys("anthropic");
 }
 
+/** Collect Gemini API keys for live tests. */
 export function collectGeminiApiKeys(): string[] {
   return collectProviderApiKeys("google");
 }
 
+/** Return whether an error message looks like a generic API-key rate limit. */
 export function isApiKeyRateLimitError(message: string): boolean {
   const lower = normalizeLowercaseStringOrEmpty(message);
   if (lower.includes("rate_limit")) {
@@ -192,10 +197,12 @@ export function isApiKeyRateLimitError(message: string): boolean {
   return false;
 }
 
+/** Return whether an error message is Anthropic rate limiting. */
 export function isAnthropicRateLimitError(message: string): boolean {
   return isApiKeyRateLimitError(message);
 }
 
+/** Return whether an error message is Anthropic billing exhaustion. */
 export function isAnthropicBillingError(message: string): boolean {
   const lower = normalizeLowercaseStringOrEmpty(message);
   if (lower.includes("credit balance")) {

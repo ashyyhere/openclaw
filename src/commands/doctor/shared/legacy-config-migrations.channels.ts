@@ -1,3 +1,4 @@
+/** Legacy config migrations for channel settings. */
 import {
   defineLegacyConfigMigration,
   ensureRecord,
@@ -460,6 +461,7 @@ const FEISHU_ACCOUNT_RULES: LegacyConfigRule[] = [
   },
 ];
 
+/** Reused constant for LEGACY CONFIG MIGRATIONS CHANNELS behavior in src/commands/doctor. */
 export const LEGACY_CONFIG_MIGRATIONS_CHANNELS: LegacyConfigMigrationSpec[] = [
   defineLegacyConfigMigration({
     id: "legacy-group-routing->channel-groups",

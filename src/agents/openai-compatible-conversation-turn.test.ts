@@ -1,3 +1,4 @@
+/** Tests OpenAI-compatible conversation turn detection. */
 import { describe, expect, it } from "vitest";
 import { hasOpenAICompatibleConversationTurn } from "./openai-compatible-conversation-turn.js";
 

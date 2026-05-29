@@ -1,6 +1,8 @@
+/** Test harness helpers for web_fetch unit tests. */
 import type { LookupFn } from "../../infra/net/ssrf.js";
 import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";
 
+/** Creates a minimal Headers-like object for fetch mocks. */
 export function makeFetchHeaders(map: Record<string, string>): {
   get: (key: string) => string | null;
 } {
@@ -9,6 +11,7 @@ export function makeFetchHeaders(map: Record<string, string>): {
   };
 }
 
+/** Creates default web_fetch tool config for tests. */
 export function createBaseWebFetchToolConfig(opts?: {
   maxResponseBytes?: number;
   lookupFn?: LookupFn;

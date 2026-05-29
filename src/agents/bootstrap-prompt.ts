@@ -1,3 +1,4 @@
+/** Prompt line builders for full and limited bootstrap runs. */
 export function buildFullBootstrapPromptLines(params: {
   readLine: string;
   firstReplyLine: string;
@@ -12,6 +13,7 @@ export function buildFullBootstrapPromptLines(params: {
   ];
 }
 
+/** Build prompt guidance for limited bootstrap runs. */
 export function buildLimitedBootstrapPromptLines(params: {
   introLine: string;
   nextStepLine: string;

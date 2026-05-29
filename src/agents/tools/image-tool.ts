@@ -1,3 +1,4 @@
+/** Agent tool for asking vision models about images. */
 import { resolve, isAbsolute } from "node:path";
 import { Type } from "typebox";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
@@ -161,6 +162,7 @@ function isCanonicalCandidateShadowedByExecutionAlias(
   );
 }
 
+/** Reused constant for testing behavior in src/agents/tools. */
 export const testing = {
   decodeDataUrl,
   coerceImageAssistantText,
@@ -220,6 +222,7 @@ function resolveImageToolMaxTokens(modelMaxTokens: number | undefined, requested
  *   - same provider (best effort)
  *   - fall back to OpenAI/Anthropic when available
  */
+/** Resolves model config used by image understanding tool calls. */
 export function resolveImageModelConfigForTool(params: {
   cfg?: OpenClawConfig;
   agentDir: string;
@@ -695,6 +698,7 @@ async function runImagePrompt(params: {
   };
 }
 
+/** Creates the image understanding AgentTool. */
 export function createImageTool(options?: {
   config?: OpenClawConfig;
   agentDir?: string;
@@ -1029,4 +1033,5 @@ export function createImageTool(options?: {
     },
   };
 }
+/** Re-exported API for src/agents/tools, starting with testing. */
 export { testing as __testing };

@@ -1,3 +1,4 @@
+// extensions/zalo/src/test-support lifecycle test support helpers and runtime behavior.
 import { request as httpRequest } from "node:http";
 import { createPluginRuntimeMediaMock } from "openclaw/plugin-sdk/channel-test-helpers";
 import { expect, vi } from "vitest";

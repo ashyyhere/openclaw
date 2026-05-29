@@ -1,3 +1,4 @@
+// gateway/server-methods update managed service handoff helpers and runtime behavior.
 import { spawn } from "node:child_process";
 import fs from "node:fs/promises";
 import os from "node:os";
@@ -250,6 +251,7 @@ function markUpdateSentinelFailureIfPending(reason) {
 });
 `;
 
+/** Shared type for Managed Service Update Handoff Result in src/gateway/server-methods. */
 export type ManagedServiceUpdateHandoffResult = {
   status: "started";
   pid?: number;
@@ -286,6 +288,7 @@ function resolveUpdateCliArgv(params: {
   return ["openclaw", ...updateArgs];
 }
 
+/** Reused helper for format Managed Service Update Command behavior in src/gateway/server-methods. */
 export function formatManagedServiceUpdateCommand(timeoutMs?: number): string {
   const args = ["openclaw", "update", "--yes"];
   if (typeof timeoutMs === "number" && Number.isFinite(timeoutMs)) {
@@ -294,6 +297,7 @@ export function formatManagedServiceUpdateCommand(timeoutMs?: number): string {
   return args.join(" ");
 }
 
+/** Reused helper for strip Supervisor Hint Env behavior in src/gateway/server-methods. */
 export function stripSupervisorHintEnv(env: NodeJS.ProcessEnv): NodeJS.ProcessEnv {
   const next = { ...env };
   for (const key of SUPERVISOR_HINT_ENV_VARS) {
@@ -405,6 +409,7 @@ async function resolveHandoffSpawn(params: {
   };
 }
 
+/** Reused helper for start Managed Service Update Handoff behavior in src/gateway/server-methods. */
 export async function startManagedServiceUpdateHandoff(params: {
   root: string;
   timeoutMs?: number;
@@ -479,6 +484,7 @@ export async function startManagedServiceUpdateHandoff(params: {
   };
 }
 
+/** Reused helper for build Managed Service Handoff Unavailable Message behavior in src/gateway/server-methods. */
 export function buildManagedServiceHandoffUnavailableMessage(command: string): string {
   return [
     "Package updates cannot safely run inside the live gateway process.",

@@ -1,3 +1,4 @@
+/** Tests shared update command runner and timeout parsing. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { defaultRuntime } from "../../runtime.js";
 import { createGlobalCommandRunner, parseTimeoutMsOrExit } from "./shared.js";

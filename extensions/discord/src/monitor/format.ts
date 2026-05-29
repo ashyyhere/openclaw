@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor format helpers and runtime behavior.
 import type { Guild, User } from "../internal/discord.js";
 
 export function resolveDiscordSystemLocation(params: {

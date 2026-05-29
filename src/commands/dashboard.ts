@@ -1,3 +1,4 @@
+/** Opens or prints dashboard URLs for the configured gateway. */
 import { readConfigFileSnapshot, resolveGatewayPort } from "../config/config.js";
 import { resolveGatewayAuthToken } from "../gateway/auth-token-resolution.js";
 import { copyToClipboard } from "../infra/clipboard.js";
@@ -57,6 +58,7 @@ async function resolveDashboardTarget() {
   };
 }
 
+/** Reused helper for dashboard Command behavior in src/commands. */
 export async function dashboardCommand(
   runtime: RuntimeEnv = defaultRuntime,
   options: DashboardOptions = {},

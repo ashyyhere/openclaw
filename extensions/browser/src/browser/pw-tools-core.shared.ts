@@ -1,3 +1,4 @@
+// extensions/browser/src/browser pw tools core shared helpers and runtime behavior.
 import { parseFiniteNumber } from "openclaw/plugin-sdk/number-runtime";
 import { normalizeOptionalString } from "openclaw/plugin-sdk/string-coerce-runtime";
 import { formatErrorMessage } from "../infra/errors.js";

@@ -1,3 +1,4 @@
+// test/helpers/config heartbeat config honor inventory helpers and runtime behavior.
 import type { ConfigHonorInventoryRow } from "./config-honor-audit.js";
 
 export const HEARTBEAT_CONFIG_PREFIXES = [

@@ -1,3 +1,4 @@
+// infra diagnostic trace context helpers and runtime behavior.
 import { AsyncLocalStorage } from "node:async_hooks";
 import { randomBytes } from "node:crypto";
 
@@ -10,6 +11,7 @@ const TRACE_FLAGS_RE = /^[0-9a-f]{2}$/;
 const TRACEPARENT_VERSION_RE = /^[0-9a-f]{2}$/;
 const DIAGNOSTIC_TRACE_SCOPE_STATE_KEY = Symbol.for("openclaw.diagnosticTraceScope.state.v1");
 
+/** Shared type for Diagnostic Trace Context in src/infra. */
 export type DiagnosticTraceContext = {
   /** W3C trace id, 32 lowercase hex chars. */
   readonly traceId: string;
@@ -88,14 +90,17 @@ function getDiagnosticTraceScopeState(): DiagnosticTraceScopeState {
   return state;
 }
 
+/** Reused helper for is Valid Diagnostic Trace Id behavior in src/infra. */
 export function isValidDiagnosticTraceId(value: unknown): value is string {
   return typeof value === "string" && TRACE_ID_RE.test(value) && isNonZeroHex(value);
 }
 
+/** Reused helper for is Valid Diagnostic Span Id behavior in src/infra. */
 export function isValidDiagnosticSpanId(value: unknown): value is string {
   return typeof value === "string" && SPAN_ID_RE.test(value) && isNonZeroHex(value);
 }
 
+/** Reused helper for is Valid Diagnostic Trace Flags behavior in src/infra. */
 export function isValidDiagnosticTraceFlags(value: unknown): value is string {
   return typeof value === "string" && TRACE_FLAGS_RE.test(value);
 }
@@ -124,6 +129,7 @@ function normalizeTraceFlags(value: unknown): string | undefined {
   return isValidDiagnosticTraceFlags(normalized) ? normalized : undefined;
 }
 
+/** Reused helper for parse Diagnostic Traceparent behavior in src/infra. */
 export function parseDiagnosticTraceparent(
   traceparent: string | undefined,
 ): DiagnosticTraceContext | undefined {
@@ -155,6 +161,7 @@ export function parseDiagnosticTraceparent(
   };
 }
 
+/** Reused helper for format Diagnostic Traceparent behavior in src/infra. */
 export function formatDiagnosticTraceparent(
   context: DiagnosticTraceContext | undefined,
 ): string | undefined {
@@ -170,6 +177,7 @@ export function formatDiagnosticTraceparent(
   return `${TRACEPARENT_VERSION}-${traceId}-${spanId}-${traceFlags}`;
 }
 
+/** Reused helper for create Diagnostic Trace Context behavior in src/infra. */
 export function createDiagnosticTraceContext(
   input: DiagnosticTraceContextInput = {},
 ): DiagnosticTraceContext {
@@ -185,6 +193,7 @@ export function createDiagnosticTraceContext(
   };
 }
 
+/** Reused helper for create Child Diagnostic Trace Context behavior in src/infra. */
 export function createChildDiagnosticTraceContext(
   parent: DiagnosticTraceContext,
   input: Omit<DiagnosticTraceContextInput, "traceId" | "traceparent"> = {},
@@ -198,6 +207,7 @@ export function createChildDiagnosticTraceContext(
   });
 }
 
+/** Reused helper for create Diagnostic Trace Context From Active Scope behavior in src/infra. */
 export function createDiagnosticTraceContextFromActiveScope(
   input: Omit<DiagnosticTraceContextInput, "traceId" | "traceparent"> = {},
 ): DiagnosticTraceContext {
@@ -208,6 +218,7 @@ export function createDiagnosticTraceContextFromActiveScope(
   return createChildDiagnosticTraceContext(active, input);
 }
 
+/** Reused helper for freeze Diagnostic Trace Context behavior in src/infra. */
 export function freezeDiagnosticTraceContext(
   context: DiagnosticTraceContext,
 ): DiagnosticTraceContext {
@@ -219,10 +230,12 @@ export function freezeDiagnosticTraceContext(
   });
 }
 
+/** Reused helper for get Active Diagnostic Trace Context behavior in src/infra. */
 export function getActiveDiagnosticTraceContext(): DiagnosticTraceContext | undefined {
   return getDiagnosticTraceScopeState().storage.getStore();
 }
 
+/** Reused helper for run With Diagnostic Trace Context behavior in src/infra. */
 export function runWithDiagnosticTraceContext<T>(
   trace: DiagnosticTraceContext,
   callback: () => T,
@@ -230,6 +243,7 @@ export function runWithDiagnosticTraceContext<T>(
   return getDiagnosticTraceScopeState().storage.run(freezeDiagnosticTraceContext(trace), callback);
 }
 
+/** Reused helper for reset Diagnostic Trace Context For Test behavior in src/infra. */
 export function resetDiagnosticTraceContextForTest(): void {
   getDiagnosticTraceScopeState().storage.disable();
 }

@@ -1,3 +1,4 @@
+/** Projects bundled MCP catalog/runtime tools into agent tool definitions. */
 import crypto from "node:crypto";
 import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -321,6 +322,7 @@ export function buildBundleMcpToolsFromCatalog(params: {
   return tools;
 }
 
+/** Materialize executable bundled MCP tools for one agent run. */
 export async function materializeBundleMcpToolsForRun(params: {
   runtime: SessionMcpRuntime;
   reservedToolNames?: Iterable<string>;
@@ -410,6 +412,7 @@ export async function materializeBundleMcpToolsForRun(params: {
   };
 }
 
+/** Reused helper for create Bundle Mcp Tool Runtime behavior in src/agents. */
 export async function createBundleMcpToolRuntime(params: {
   workspaceDir: string;
   cfg?: OpenClawConfig;

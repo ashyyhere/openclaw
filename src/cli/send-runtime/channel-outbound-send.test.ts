@@ -1,3 +1,4 @@
+/** Tests outbound channel send dependency construction for CLI commands. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({

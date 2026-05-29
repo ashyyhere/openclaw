@@ -1,3 +1,4 @@
+// Coverage for BTW command parsing and delivery behavior.
 import { describe, expect, it, vi, beforeEach } from "vitest";
 import type { OpenClawConfig } from "../../config/config.js";
 import {

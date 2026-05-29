@@ -1,8 +1,10 @@
+// packages/memory-host-sdk/src/host qmd process helpers and runtime behavior.
 import { spawn } from "node:child_process";
 import { statSync } from "node:fs";
 import { resolveSafeTimeoutDelayMs } from "../../../gateway-client/src/timeouts.js";
 import { materializeWindowsSpawnProgram, resolveWindowsSpawnProgram } from "./windows-spawn.js";
 
+/** Public type describing Cli Spawn Invocation for packages/memory-host-sdk. */
 export type CliSpawnInvocation = {
   command: string;
   argv: string[];
@@ -10,8 +12,10 @@ export type CliSpawnInvocation = {
   windowsHide?: boolean;
 };
 
+/** Public type describing Qmd Binary Unavailable Reason for packages/memory-host-sdk. */
 export type QmdBinaryUnavailableReason = "binary" | "workspace-cwd";
 
+/** Public type describing Qmd Binary Unavailable for packages/memory-host-sdk. */
 export type QmdBinaryUnavailable = {
   available: false;
   /**
@@ -22,14 +26,17 @@ export type QmdBinaryUnavailable = {
   error: string;
 };
 
+/** Public type describing Qmd Binary Availability for packages/memory-host-sdk. */
 export type QmdBinaryAvailability = { available: true } | QmdBinaryUnavailable;
 
+/** Public helper for resolve Qmd Binary Unavailable Reason behavior in packages/memory-host-sdk. */
 export function resolveQmdBinaryUnavailableReason(
   result: QmdBinaryUnavailable,
 ): QmdBinaryUnavailableReason {
   return result.reason ?? "binary";
 }
 
+/** Public helper for resolve Cli Spawn Invocation behavior in packages/memory-host-sdk. */
 export function resolveCliSpawnInvocation(params: {
   command: string;
   args: string[];
@@ -47,6 +54,7 @@ export function resolveCliSpawnInvocation(params: {
   return materializeWindowsSpawnProgram(program, params.args);
 }
 
+/** Public helper for check Qmd Binary Availability behavior in packages/memory-host-sdk. */
 export async function checkQmdBinaryAvailability(params: {
   command: string;
   env: NodeJS.ProcessEnv;
@@ -146,6 +154,7 @@ function validateQmdProbeCwd(cwd: string): QmdBinaryAvailability | null {
   }
 }
 
+/** Public helper for run Cli Command behavior in packages/memory-host-sdk. */
 export async function runCliCommand(params: {
   commandSummary: string;
   spawnInvocation: CliSpawnInvocation;

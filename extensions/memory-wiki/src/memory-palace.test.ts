@@ -1,3 +1,4 @@
+// Tests extensions/memory-wiki/src memory palace test behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { describe, expect, it } from "vitest";

@@ -1,5 +1,7 @@
+// tasks task registry process state helpers and runtime behavior.
 import type { TaskDeliveryState, TaskRecord } from "./task-registry.types.js";
 
+/** Shared type for Task Registry Process State in src/tasks. */
 export type TaskRegistryProcessState = {
   tasks: Map<string, TaskRecord>;
   taskDeliveryStates: Map<string, TaskDeliveryState>;
@@ -12,6 +14,7 @@ export type TaskRegistryProcessState = {
 
 const TASK_REGISTRY_PROCESS_STATE_KEY = Symbol.for("openclaw.taskRegistry.state");
 
+/** Reused helper for get Task Registry Process State behavior in src/tasks. */
 export function getTaskRegistryProcessState(): TaskRegistryProcessState {
   const globalState = globalThis as typeof globalThis & {
     [TASK_REGISTRY_PROCESS_STATE_KEY]?: TaskRegistryProcessState;

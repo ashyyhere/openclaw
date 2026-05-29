@@ -1,3 +1,4 @@
+/** Contract suites for channel plugin catalog entries and path resolution. */
 import fs from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";

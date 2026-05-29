@@ -1,3 +1,4 @@
+// Tests extensions/feishu/src monitor bot menu test behavior.
 import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { ClawdbotConfig, RuntimeEnv } from "../runtime-api.js";
 import { expectFirstSentCardUsesFillWidthOnly } from "./card-test-helpers.js";

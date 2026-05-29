@@ -1,3 +1,5 @@
+// process/supervisor/adapters env helpers and runtime behavior.
+/** Reused helper for to String Env behavior in src/process/supervisor. */
 export function toStringEnv(env?: NodeJS.ProcessEnv): Record<string, string> {
   if (!env) {
     return {};

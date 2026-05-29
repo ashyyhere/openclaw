@@ -1,3 +1,4 @@
+// extensions/feishu/src monitor acp init failure lifecycle test support helpers and runtime behavior.
 import "./lifecycle.test-support.js";
 import { createRuntimeEnv } from "openclaw/plugin-sdk/plugin-test-runtime";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";

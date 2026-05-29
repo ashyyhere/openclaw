@@ -1,3 +1,4 @@
+// Tests plugins plugin scope test behavior.
 import { describe, expect, it } from "vitest";
 import { normalizePluginIdScope } from "./plugin-scope.js";
 

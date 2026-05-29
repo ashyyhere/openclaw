@@ -9,7 +9,9 @@ export * from "./delivery-queue-runtime.js";
 export * from "../infra/backoff.js";
 export * from "../infra/channel-activity.js";
 export * from "../infra/dedupe.js";
+/** Shared type for this surface in src/plugin-sdk. */
 export type * from "../infra/diagnostic-events.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   areDiagnosticsEnabledForProcess,
   emitDiagnosticEvent,
@@ -41,6 +43,7 @@ export * from "../infra/json-files.js";
 export * from "../infra/local-file-access.js";
 export * from "../infra/map-size.js";
 export * from "../infra/net/hostname.ts";
+/** Re-exported API for src/plugin-sdk. */
 export {
   fetchWithRuntimeDispatcher,
   fetchWithSsrFGuard,
@@ -73,5 +76,6 @@ export * from "../infra/transport-ready.js";
 export * from "../infra/wsl.ts";
 export * from "../utils/fetch-timeout.js";
 export * from "../utils/run-with-concurrency.js";
+/** Re-exported API for src/plugin-sdk, starting with create Runtime Outbound Delegates. */
 export { createRuntimeOutboundDelegates } from "../channels/plugins/runtime-forwarders.js";
 export * from "./ssrf-policy.js";

@@ -1,3 +1,4 @@
+/** Tests doctor checks for plugin manifest validity. */
 import fs from "node:fs";
 import path from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";

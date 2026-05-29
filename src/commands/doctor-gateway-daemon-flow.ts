@@ -147,6 +147,7 @@ async function maybeReportEstablishedGatewayClients(params: {
   }
 }
 
+/** Reused helper for maybe Repair Gateway Daemon behavior in src/commands. */
 export async function maybeRepairGatewayDaemon(params: {
   cfg: OpenClawConfig;
   runtime: RuntimeEnv;

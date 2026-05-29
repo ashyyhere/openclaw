@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src/matrix/client logging test behavior.
 import { logger as matrixJsSdkRootLogger } from "matrix-js-sdk/lib/logger.js";
 import { describe, expect, it, vi } from "vitest";
 import { ensureMatrixSdkLoggingConfigured, setMatrixSdkLogMode } from "./logging.js";

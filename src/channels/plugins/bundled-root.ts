@@ -1,3 +1,4 @@
+// Bundled channel package root resolution.
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { resolveOpenClawPackageRootSync } from "../../infra/openclaw-root.js";
@@ -13,6 +14,7 @@ const OPENCLAW_PACKAGE_ROOT =
     ? path.resolve(fileURLToPath(new URL("../../..", import.meta.url)))
     : process.cwd());
 
+/** Shared type for Bundled Channel Root Scope in src/channels/plugins. */
 export type BundledChannelRootScope = {
   packageRoot: string;
   cacheKey: string;
@@ -28,6 +30,7 @@ function derivePackageRootFromExtensionsDir(extensionsDir: string): string {
   return parentDir;
 }
 
+/** Reused helper for resolve Bundled Channel Root Scope behavior in src/channels/plugins. */
 export function resolveBundledChannelRootScope(
   env: NodeJS.ProcessEnv = process.env,
 ): BundledChannelRootScope {

@@ -1,3 +1,4 @@
+// Tests config io clobber snapshot test behavior.
 import fs from "node:fs";
 import fsp from "node:fs/promises";
 import os from "node:os";

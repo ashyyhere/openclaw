@@ -1,3 +1,4 @@
+// extensions/discord/src/voice config helpers and runtime behavior.
 import type { DiscordAccountConfig } from "openclaw/plugin-sdk/config-contracts";
 
 export function resolveDiscordVoiceEnabled(voice: DiscordAccountConfig["voice"]): boolean {

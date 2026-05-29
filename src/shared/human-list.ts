@@ -1,3 +1,5 @@
+// shared human list helpers and runtime behavior.
+/** Reused helper for format Human List behavior in src/shared. */
 export function formatHumanList(values: readonly string[]): string {
   if (values.length === 0) {
     return "";

@@ -1,3 +1,4 @@
+/** Tests ACP translator event-ledger recording and load-session replay. */
 import type {
   LoadSessionRequest,
   NewSessionRequest,

@@ -1,3 +1,4 @@
+// extensions/opencode media understanding provider helpers and runtime behavior.
 import type { ProviderStreamOptions } from "openclaw/plugin-sdk/llm";
 import {
   describeImageWithModelPayloadTransform,

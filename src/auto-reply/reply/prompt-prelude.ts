@@ -1,3 +1,4 @@
+// Prompt prelude construction for current inbound reply context.
 import type { CurrentInboundPromptContext } from "../../agents/embedded-agent-runner/run/params.js";
 import type { InboundEventKind } from "../../channels/inbound-event/kind.js";
 import { annotateInterSessionPromptText } from "../../sessions/input-provenance.js";
@@ -17,6 +18,7 @@ const RESUMABLE_ROOM_CONTEXT_OMITTED_PREFIXES = [
   "Chat history since last reply (untrusted, for context):",
 ];
 
+/** Reused helper for build Reply Prompt Bodies behavior in src/auto-reply/reply. */
 export function buildReplyPromptBodies(params: {
   ctx: MsgContext;
   sessionCtx: TemplateContext;
@@ -75,8 +77,10 @@ export function buildReplyPromptBodies(params: {
   };
 }
 
+/** Shared type for Reply Prompt Envelope Startup Action in src/auto-reply/reply. */
 export type ReplyPromptEnvelopeStartupAction = "new" | "reset";
 
+/** Shared type for Reply Prompt Envelope in src/auto-reply/reply. */
 export type ReplyPromptEnvelope = ReturnType<typeof buildReplyPromptBodies> & {
   /** Model-visible body before media, thread context, and inter-session annotation are applied. */
   effectiveBaseBody: string;
@@ -86,6 +90,7 @@ export type ReplyPromptEnvelope = ReturnType<typeof buildReplyPromptBodies> & {
   currentInboundContext?: CurrentInboundPromptContext;
 };
 
+/** Shared type for Reply Prompt Envelope Base in src/auto-reply/reply. */
 export type ReplyPromptEnvelopeBase = {
   /** Model-visible body before media, thread context, and inter-session annotation are applied. */
   effectiveBaseBody: string;
@@ -217,6 +222,7 @@ export function buildReplyPromptEnvelopeBase(
   };
 }
 
+/** Reused helper for build Reply Prompt Envelope behavior in src/auto-reply/reply. */
 export function buildReplyPromptEnvelope(
   params: ReplyPromptEnvelopeBaseParams & {
     prefixedBody?: string;

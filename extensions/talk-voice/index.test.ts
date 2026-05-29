@@ -1,3 +1,4 @@
+// Tests extensions/talk-voice index test behavior.
 import type { OpenClawPluginCommandDefinition } from "openclaw/plugin-sdk/core";
 import { describe, expect, it, vi } from "vitest";
 import type { PluginRuntime } from "./api.js";

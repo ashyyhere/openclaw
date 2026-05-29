@@ -1,3 +1,4 @@
+// Tests infra event session routing test behavior.
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import {

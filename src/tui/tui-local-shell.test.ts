@@ -1,3 +1,4 @@
+// Tests tui tui local shell test behavior.
 import { EventEmitter } from "node:events";
 import { describe, expect, it, vi } from "vitest";
 import { createLocalShellRunner } from "./tui-local-shell.js";

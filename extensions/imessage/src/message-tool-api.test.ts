@@ -1,3 +1,4 @@
+// Tests extensions/imessage/src message tool api test behavior.
 import { beforeEach, describe, expect, it } from "vitest";
 import { describeMessageTool } from "../message-tool-api.js";
 import {

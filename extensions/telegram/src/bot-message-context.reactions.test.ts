@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src bot message context reactions test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { BuildTelegramMessageContextParams } from "./bot-message-context.types.js";
 

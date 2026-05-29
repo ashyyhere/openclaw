@@ -1,3 +1,4 @@
+// extensions/matrix/src env vars helpers and runtime behavior.
 import { normalizeAccountId, normalizeOptionalAccountId } from "openclaw/plugin-sdk/account-id";
 
 const MATRIX_SCOPED_ENV_SUFFIXES = [

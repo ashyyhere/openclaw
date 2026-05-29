@@ -1,3 +1,4 @@
+// extensions/qa-lab/src runtime parity helpers and runtime behavior.
 import { createHash } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";

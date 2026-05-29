@@ -1,3 +1,4 @@
+// Tests extensions/whatsapp/src outbound adapter sendpayload test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { whatsappOutbound } from "./outbound-adapter.js";
 

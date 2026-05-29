@@ -1,9 +1,11 @@
+// trajectory command export helpers and runtime behavior.
 import fsp from "node:fs/promises";
 import path from "node:path";
 import { pathExists } from "../infra/fs-safe.js";
 import { isPathInside } from "../infra/path-guards.js";
 import { exportTrajectoryBundle, resolveDefaultTrajectoryExportDir } from "./export.js";
 
+/** Shared type for Trajectory Command Export Summary in src/trajectory. */
 export type TrajectoryCommandExportSummary = {
   outputDir: string;
   displayPath: string;
@@ -66,6 +68,7 @@ async function resolveTrajectoryExportBaseDir(workspaceDir: string): Promise<{
   return { baseDir: path.resolve(baseDir), realBase };
 }
 
+/** Reused helper for resolve Trajectory Command Output Dir behavior in src/trajectory. */
 export async function resolveTrajectoryCommandOutputDir(params: {
   outputPath?: string;
   workspaceDir: string;
@@ -104,6 +107,7 @@ export async function resolveTrajectoryCommandOutputDir(params: {
   return outputDir;
 }
 
+/** Reused helper for export Trajectory For Command behavior in src/trajectory. */
 export async function exportTrajectoryForCommand(params: {
   outputDir?: string;
   outputPath?: string;
@@ -147,6 +151,7 @@ export async function exportTrajectoryForCommand(params: {
   };
 }
 
+/** Reused helper for format Trajectory Command Export Summary behavior in src/trajectory. */
 export function formatTrajectoryCommandExportSummary(
   summary: TrajectoryCommandExportSummary,
 ): string {

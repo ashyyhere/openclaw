@@ -1,3 +1,4 @@
+// Tests extensions/kilocode onboard test behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { resolveEnvApiKey } from "openclaw/plugin-sdk/provider-auth-runtime";
 import { resolveAgentModelPrimaryValue } from "openclaw/plugin-sdk/provider-onboard";

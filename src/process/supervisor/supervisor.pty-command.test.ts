@@ -1,3 +1,4 @@
+// Tests process/supervisor supervisor pty command test behavior.
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 const { createPtyAdapterMock } = vi.hoisted(() => ({

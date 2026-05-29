@@ -1,3 +1,4 @@
+/** Tests PTY exec behavior. */
 import { afterEach, expect, test } from "vitest";
 import { markBackgrounded, resetProcessRegistryForTests } from "./bash-process-registry.js";
 import { runExecProcess } from "./bash-tools.exec-runtime.js";

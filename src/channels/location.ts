@@ -1,5 +1,8 @@
+// Location attachment formatting helpers for channel inbound context.
+/** Source category for a normalized location payload. */
 export type LocationSource = "pin" | "place" | "live";
 
+/** Normalized location payload shared by channel adapters. */
 export type NormalizedLocation = {
   latitude: number;
   longitude: number;
@@ -35,6 +38,7 @@ function formatCoords(latitude: number, longitude: number): string {
   return `${latitude.toFixed(6)}, ${longitude.toFixed(6)}`;
 }
 
+/** Format a location payload as readable text. */
 export function formatLocationText(location: NormalizedLocation): string {
   const resolved = resolveLocation(location);
   const coords = formatCoords(resolved.latitude, resolved.longitude);
@@ -47,6 +51,7 @@ export function formatLocationText(location: NormalizedLocation): string {
   return `📍 ${coords}${accuracy}`;
 }
 
+/** Convert a normalized location into structured model-visible context. */
 export function toLocationContext(location: NormalizedLocation): {
   LocationLat: number;
   LocationLon: number;

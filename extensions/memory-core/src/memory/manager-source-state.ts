@@ -1,3 +1,4 @@
+// extensions/memory-core/src/memory manager source state helpers and runtime behavior.
 import type { SQLInputValue } from "node:sqlite";
 import type { MemorySource } from "openclaw/plugin-sdk/memory-core-host-engine-storage";
 

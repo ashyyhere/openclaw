@@ -1,3 +1,4 @@
+// extensions/browser/src/browser proxy files helpers and runtime behavior.
 import { saveMediaBuffer } from "../media/store.js";
 
 type BrowserProxyFile = {

@@ -1,3 +1,4 @@
+/** Tests sessions command default-agent store selection. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { RuntimeEnv } from "../runtime.js";
 

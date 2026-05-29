@@ -1,3 +1,4 @@
+// Tests extensions/memory-core/src/memory qmd compat test behavior.
 import { describe, expect, it } from "vitest";
 import { resolveQmdCollectionPatternFlags } from "./qmd-compat.js";
 

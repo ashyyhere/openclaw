@@ -1,3 +1,4 @@
+// extensions/browser/src/browser server context test harness helpers and runtime behavior.
 import type { ChildProcessWithoutNullStreams } from "node:child_process";
 import { EventEmitter } from "node:events";
 import type { RunningChrome } from "./chrome.js";

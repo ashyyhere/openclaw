@@ -1,3 +1,4 @@
+/** Resolves sender-scoped tool policy from config and trusted sender state. */
 import { resolveToolsBySender } from "../config/group-policy.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveAgentConfig } from "./agent-scope.js";
@@ -14,6 +15,7 @@ type SenderToolPolicyParams = {
   senderE164?: string | null;
 };
 
+/** Resolve effective tool allow/deny policy for one sender context. */
 export function resolveSenderToolPolicy(
   params: SenderToolPolicyParams,
 ): SandboxToolPolicy | undefined {

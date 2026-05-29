@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/monitor dm command decision test behavior.
 import type { ResolvedChannelMessageIngress } from "openclaw/plugin-sdk/channel-ingress-runtime";
 import { describe, expect, it, vi } from "vitest";
 import { handleDiscordDmCommandDecision } from "./dm-command-decision.js";

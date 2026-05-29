@@ -1,3 +1,4 @@
+/** Regression coverage for inline attachment handling during subagent spawn. */
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

@@ -1,3 +1,4 @@
+// extensions/telegram/src bot native command menu helpers and runtime behavior.
 import { createHash } from "node:crypto";
 import type { Bot } from "grammy";
 import type { LanguageCode } from "grammy/types";

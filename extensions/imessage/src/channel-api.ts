@@ -1,3 +1,4 @@
+// extensions/imessage/src channel api helpers and runtime behavior.
 import { formatTrimmedAllowFromEntries } from "openclaw/plugin-sdk/channel-config-helpers";
 import { PAIRING_APPROVED_MESSAGE } from "openclaw/plugin-sdk/channel-status";
 import {

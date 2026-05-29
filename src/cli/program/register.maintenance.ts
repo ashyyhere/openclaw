@@ -1,9 +1,11 @@
+/** Registers maintenance and diagnostic commands. */
 import type { Command } from "commander";
 import { formatDocsLink } from "../../../packages/terminal-core/src/links.js";
 import { theme } from "../../../packages/terminal-core/src/theme.js";
 import { defaultRuntime } from "../../runtime.js";
 import { runCommandWithRuntime } from "../cli-utils.js";
 
+/** Reused helper for register Maintenance Commands behavior in src/cli/program. */
 export function registerMaintenanceCommands(program: Command) {
   program
     .command("doctor")

@@ -1,3 +1,4 @@
+// gateway/server plugins http helpers and runtime behavior.
 import type { IncomingMessage, ServerResponse } from "node:http";
 import type { Duplex } from "node:stream";
 import {
@@ -18,15 +19,18 @@ import {
 import { matchedPluginRoutesRequireGatewayAuth } from "./plugins-http/route-auth.js";
 import { findMatchingPluginHttpRoutes } from "./plugins-http/route-match.js";
 
+/** Re-exported API for src/gateway/server. */
 export {
   isProtectedPluginRoutePathFromContext,
   resolvePluginRoutePathContext,
   type PluginRoutePathContext,
 } from "./plugins-http/path-context.js";
+/** Re-exported API for src/gateway/server. */
 export {
   findRegisteredPluginHttpRoute,
   isRegisteredPluginHttpRoutePath,
 } from "./plugins-http/route-match.js";
+/** Re-exported API for src/gateway/server, starting with should Enforce Gateway Auth For Plugin Path. */
 export { shouldEnforceGatewayAuthForPluginPath } from "./plugins-http/route-auth.js";
 
 type SubsystemLogger = ReturnType<typeof createSubsystemLogger>;
@@ -115,12 +119,14 @@ function createPluginRouteRuntimeScope(params: {
   };
 }
 
+/** Shared type for Plugin Route Dispatch Context in src/gateway/server. */
 export type PluginRouteDispatchContext = {
   gatewayAuthSatisfied?: boolean;
   gatewayRequestAuth?: AuthorizedGatewayHttpRequest;
   gatewayRequestOperatorScopes?: readonly string[];
 };
 
+/** Shared type for Plugin Http Request Handler in src/gateway/server. */
 export type PluginHttpRequestHandler = (
   req: IncomingMessage,
   res: ServerResponse,
@@ -128,6 +134,7 @@ export type PluginHttpRequestHandler = (
   dispatchContext?: PluginRouteDispatchContext,
 ) => Promise<boolean>;
 
+/** Shared type for Plugin Http Upgrade Handler in src/gateway/server. */
 export type PluginHttpUpgradeHandler = (
   req: IncomingMessage,
   socket: Duplex,
@@ -136,6 +143,7 @@ export type PluginHttpUpgradeHandler = (
   dispatchContext?: PluginRouteDispatchContext,
 ) => Promise<boolean>;
 
+/** Reused helper for create Gateway Plugin Request Handler behavior in src/gateway/server. */
 export function createGatewayPluginRequestHandler(params: {
   registry: PluginRegistry;
   getRouteRegistry?: () => PluginRegistry;
@@ -208,6 +216,7 @@ export function createGatewayPluginRequestHandler(params: {
   };
 }
 
+/** Reused helper for create Gateway Plugin Upgrade Handler behavior in src/gateway/server. */
 export function createGatewayPluginUpgradeHandler(params: {
   registry: PluginRegistry;
   getRouteRegistry?: () => PluginRegistry;

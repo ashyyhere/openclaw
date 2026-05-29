@@ -1,3 +1,4 @@
+// Tests extensions/discord/src mentions test behavior.
 import { beforeEach, describe, expect, it } from "vitest";
 import {
   resetDiscordDirectoryCacheForTest,

@@ -1,3 +1,4 @@
+// extensions/openai realtime provider shared helpers and runtime behavior.
 import {
   createProviderHttpError,
   resolveProviderRequestHeaders,

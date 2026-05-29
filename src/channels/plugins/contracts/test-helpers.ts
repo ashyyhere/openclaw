@@ -1,3 +1,4 @@
+/** Shared assertions and fixtures for channel plugin contract suites. */
 import { expect, type Mock } from "vitest";
 import type { DispatchFromConfigResult } from "../../../auto-reply/reply/dispatch-from-config.types.js";
 import type { MsgContext } from "../../../auto-reply/templating.js";
@@ -12,6 +13,7 @@ import {
 } from "../../turn/dispatch-result.js";
 
 // oxlint-disable-next-line typescript/no-unnecessary-type-parameters -- Test helper preserves channel send mock arg types.
+/** Reused helper for prime Channel Outbound Send Mock behavior in src/channels/plugins. */
 export function primeChannelOutboundSendMock<TArgs extends unknown[]>(
   sendMock: Mock<(...args: TArgs) => Promise<unknown>>,
   fallbackResult: Record<string, unknown>,
@@ -27,6 +29,7 @@ export function primeChannelOutboundSendMock<TArgs extends unknown[]>(
   }
 }
 
+/** Reused helper for expect Channel Inbound Context Contract behavior in src/channels/plugins. */
 export function expectChannelInboundContextContract(ctx: MsgContext) {
   expect(validateSenderIdentity(ctx)).toEqual([]);
 
@@ -41,6 +44,7 @@ export function expectChannelInboundContextContract(ctx: MsgContext) {
   }
 }
 
+/** Reused helper for expect Channel Turn Dispatch Result Contract behavior in src/channels/plugins. */
 export function expectChannelTurnDispatchResultContract(
   result: ChannelTurnDispatchResultLike,
   expected: {

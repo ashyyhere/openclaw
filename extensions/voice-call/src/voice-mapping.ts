@@ -1,3 +1,4 @@
+// extensions/voice-call/src voice mapping helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "openclaw/plugin-sdk/string-coerce-runtime";
 
 /**

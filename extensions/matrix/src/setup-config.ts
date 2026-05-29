@@ -1,3 +1,4 @@
+// extensions/matrix/src setup config helpers and runtime behavior.
 import {
   applyAccountNameToChannelSection,
   DEFAULT_ACCOUNT_ID,

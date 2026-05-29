@@ -1,3 +1,4 @@
+/** Parses schedule-related options for cron CLI commands. */
 import type { CronSchedule } from "../../cron/types.js";
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 import { parseAt, parseCronStaggerMs, parseDurationMs } from "./shared.js";
@@ -23,11 +24,13 @@ type NormalizedScheduleOptions = {
   tz: string | undefined;
 };
 
+/** Shared type for Cron Edit Schedule Request in src/cli/cron-cli. */
 export type CronEditScheduleRequest =
   | { kind: "direct"; schedule: CronSchedule }
   | { kind: "patch-existing-cron"; staggerMs: number | undefined; tz: string | undefined }
   | { kind: "none" };
 
+/** Reused helper for resolve Cron Create Schedule behavior in src/cli/cron-cli. */
 export function resolveCronCreateSchedule(options: ScheduleOptionInput): CronSchedule {
   const normalized = normalizeScheduleOptions(options);
   const chosen = countChosenSchedules(normalized);
@@ -41,6 +44,7 @@ export function resolveCronCreateSchedule(options: ScheduleOptionInput): CronSch
   return schedule;
 }
 
+/** Reused helper for resolve Cron Create Schedule From Args behavior in src/cli/cron-cli. */
 export function resolveCronCreateScheduleFromArgs(
   options: ScheduleOptionInput & PositionalScheduleInput,
 ): CronSchedule {
@@ -65,6 +69,7 @@ export function resolveCronCreateScheduleFromArgs(
   });
 }
 
+/** Reused helper for resolve Cron Edit Schedule Request behavior in src/cli/cron-cli. */
 export function resolveCronEditScheduleRequest(
   options: ScheduleOptionInput,
 ): CronEditScheduleRequest {
@@ -87,6 +92,7 @@ export function resolveCronEditScheduleRequest(
   return { kind: "none" };
 }
 
+/** Reused helper for apply Existing Cron Schedule Patch behavior in src/cli/cron-cli. */
 export function applyExistingCronSchedulePatch(
   existingSchedule: CronSchedule,
   request: Extract<CronEditScheduleRequest, { kind: "patch-existing-cron" }>,

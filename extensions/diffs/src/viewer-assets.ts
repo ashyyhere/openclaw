@@ -1,3 +1,4 @@
+// extensions/diffs/src viewer assets helpers and runtime behavior.
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import { fileURLToPath } from "node:url";

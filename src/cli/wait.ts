@@ -1,3 +1,4 @@
+/** Keeps CLI helper processes alive when waiting for external shutdown. */
 export function waitForever() {
   // Keep the event loop alive with a ref'd interval. A pending Promise is not
   // an active handle on its own, so without the interval, Node exits the

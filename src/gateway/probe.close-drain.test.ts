@@ -1,3 +1,4 @@
+// Tests gateway probe close drain test behavior.
 import fs from "node:fs/promises";
 import { type AddressInfo, Socket } from "node:net";
 import { tmpdir } from "node:os";

@@ -1,3 +1,4 @@
+/** Helper process that restarts OpenClaw after update command replacement. */
 import { spawn } from "node:child_process";
 import fs from "node:fs/promises";
 import os from "node:os";

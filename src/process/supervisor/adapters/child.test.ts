@@ -1,3 +1,4 @@
+// Tests process/supervisor/adapters child test behavior.
 import type { ChildProcess } from "node:child_process";
 import { EventEmitter } from "node:events";
 import { PassThrough } from "node:stream";

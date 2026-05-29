@@ -1,3 +1,4 @@
+// Tests gateway/server-methods models auth status test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { AuthHealthSummary } from "../../agents/auth-health.js";
 import type { AuthProfileStore } from "../../agents/auth-profiles.js";

@@ -1,3 +1,4 @@
+// Tests test/scripts mcp connect timeout test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { connectMcpWithTimeout } from "../../scripts/e2e/mcp-connect-timeout.ts";
 

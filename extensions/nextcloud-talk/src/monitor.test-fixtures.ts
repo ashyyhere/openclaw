@@ -1,3 +1,4 @@
+// extensions/nextcloud-talk/src monitor test fixtures helpers and runtime behavior.
 import { generateNextcloudTalkSignature } from "./signature.js";
 
 export function createSignedCreateMessageRequest(params?: { backend?: string }) {

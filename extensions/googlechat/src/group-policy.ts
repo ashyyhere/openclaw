@@ -1,3 +1,4 @@
+// extensions/googlechat/src group policy helpers and runtime behavior.
 import { resolveChannelGroupRequireMention } from "openclaw/plugin-sdk/channel-policy";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/core";
 

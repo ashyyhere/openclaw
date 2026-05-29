@@ -1,3 +1,4 @@
+// extensions/googlechat/src monitor access helpers and runtime behavior.
 import {
   channelIngressRoutes,
   createChannelIngressResolver,

@@ -1,3 +1,4 @@
+// Coverage for queued directive validation.
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../../config/config.js";
 import { parseInlineDirectives } from "./directive-handling.parse.js";

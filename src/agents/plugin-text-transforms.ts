@@ -1,9 +1,11 @@
+/** Applies plugin-defined text replacements to stream input and output. */
 import type { AssistantMessageEvent } from "../llm/types.js";
 import type { PluginTextReplacement, PluginTextTransforms } from "../plugins/cli-backend.types.js";
 import type { StreamFn } from "./runtime/index.js";
 import type { MutableAssistantMessageEventStream } from "./stream-compat.js";
 import { createStreamIteratorWrapper } from "./stream-iterator-wrapper.js";
 
+/** Merge multiple plugin text-transform definitions. */
 export function mergePluginTextTransforms(
   ...transforms: Array<PluginTextTransforms | undefined>
 ): PluginTextTransforms | undefined {
@@ -18,6 +20,7 @@ export function mergePluginTextTransforms(
   };
 }
 
+/** Apply ordered replacement rules to one text string. */
 export function applyPluginTextReplacements(
   text: string,
   replacements?: PluginTextReplacement[],
@@ -70,6 +73,7 @@ function transformMessageText(message: unknown, replacements?: PluginTextReplace
   return next;
 }
 
+/** Apply input replacements to stream context system prompt and messages. */
 export function transformStreamContextText(
   context: Parameters<StreamFn>[1],
   replacements?: PluginTextReplacement[],
@@ -146,6 +150,7 @@ function wrapStreamTextTransforms(
   return stream;
 }
 
+/** Wrap a stream function with plugin input/output text replacements. */
 export function wrapStreamFnTextTransforms(params: {
   streamFn: StreamFn;
   input?: PluginTextReplacement[];

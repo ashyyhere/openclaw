@@ -1,3 +1,4 @@
+/** Tests shared message command helper option builders and dispatch. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const messageCommandMock = vi.fn(async () => {});

@@ -1,3 +1,4 @@
+// Tests plugins/contracts session actions contract test behavior.
 import {
   createPluginRegistryFixture,
   registerTestPlugin,

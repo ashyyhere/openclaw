@@ -1,3 +1,4 @@
+// plugin-sdk/test-helpers public surface loader helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";

@@ -1,3 +1,4 @@
+// Tests extensions/discord/src probe parse token test behavior.
 import { describe, expect, it } from "vitest";
 import { parseApplicationIdFromToken } from "./probe.js";
 

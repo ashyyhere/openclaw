@@ -31,6 +31,7 @@ export interface BranchSummaryDetails {
   modifiedFiles: string[];
 }
 
+/** Re-exported public API for packages/agent-core, starting with File Operations. */
 export type { FileOperations } from "./utils.js";
 
 /** Prepared branch content for summarization. */
@@ -51,11 +52,13 @@ export interface CollectEntriesResult {
   commonAncestorId: string | null;
 }
 
+/** Public type describing Branch Path Entry for packages/agent-core. */
 export interface BranchPathEntry {
   id: string;
   parentId: string | null;
 }
 
+/** Public type describing Collect Branch Path Entries Result for packages/agent-core. */
 export interface CollectBranchPathEntriesResult<TEntry extends BranchPathEntry> {
   /** Entries to summarize in chronological order. */
   entries: TEntry[];

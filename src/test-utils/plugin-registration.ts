@@ -1,3 +1,4 @@
+// test-utils plugin registration helpers and runtime behavior.
 import { createCapturedPluginRegistration } from "../plugins/captured-registration.js";
 import type {
   ImageGenerationProviderPlugin,
@@ -11,12 +12,14 @@ import type {
   VideoGenerationProviderPlugin,
 } from "../plugins/types.js";
 
+/** Re-exported API for src/test-utils, starting with create Captured Plugin Registration. */
 export { createCapturedPluginRegistration };
 
 type RegistrablePlugin = {
   register(api: OpenClawPluginApi): void;
 };
 
+/** Shared type for Registered Provider Collections in src/test-utils. */
 export type RegisteredProviderCollections = {
   providers: ProviderPlugin[];
   realtimeTranscriptionProviders: RealtimeTranscriptionProviderPlugin[];
@@ -28,6 +31,7 @@ export type RegisteredProviderCollections = {
   modelCatalogProviders: UnifiedModelCatalogProviderPlugin[];
 };
 
+/** Reused helper for register Single Provider Plugin behavior in src/test-utils. */
 export async function registerSingleProviderPlugin(params: {
   register(api: OpenClawPluginApi): void;
 }): Promise<ProviderPlugin> {
@@ -40,6 +44,7 @@ export async function registerSingleProviderPlugin(params: {
   return provider;
 }
 
+/** Reused helper for register Provider Plugin behavior in src/test-utils. */
 export async function registerProviderPlugin(params: {
   plugin: RegistrablePlugin;
   id: string;
@@ -63,6 +68,7 @@ export async function registerProviderPlugin(params: {
   };
 }
 
+/** Reused helper for register Provider Plugins behavior in src/test-utils. */
 export async function registerProviderPlugins(
   ...plugins: RegistrablePlugin[]
 ): Promise<ProviderPlugin[]> {

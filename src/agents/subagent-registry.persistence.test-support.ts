@@ -1,3 +1,4 @@
+/** Shared persistence fixtures for subagent registry tests. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { vi } from "vitest";
@@ -8,6 +9,7 @@ function resolveSubagentSessionStorePath(stateDir: string, agentId: string): str
   return path.join(stateDir, "agents", agentId, "sessions", "sessions.json");
 }
 
+/** Reused helper for read Subagent Session Store behavior in src/agents. */
 export async function readSubagentSessionStore(storePath: string): Promise<SessionStore> {
   try {
     const raw = await fs.readFile(storePath, "utf8");
@@ -21,6 +23,7 @@ export async function readSubagentSessionStore(storePath: string): Promise<Sessi
   return {};
 }
 
+/** Reused helper for write Subagent Session Entry behavior in src/agents. */
 export async function writeSubagentSessionEntry(params: {
   stateDir: string;
   sessionKey: string;
@@ -45,6 +48,7 @@ export async function writeSubagentSessionEntry(params: {
   return storePath;
 }
 
+/** Reused helper for remove Subagent Session Entry behavior in src/agents. */
 export async function removeSubagentSessionEntry(params: {
   stateDir: string;
   sessionKey: string;
@@ -58,6 +62,7 @@ export async function removeSubagentSessionEntry(params: {
   return storePath;
 }
 
+/** Reused helper for create Subagent Registry Test Deps behavior in src/agents. */
 export function createSubagentRegistryTestDeps(
   extra: Record<string, unknown> = {},
 ): Record<string, unknown> {

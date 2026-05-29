@@ -1,18 +1,21 @@
+/** Accumulates streaming command output with truncation and private spill files. */
 import type { WriteStream } from "node:fs";
+import { createPrivateTempWriteStream } from "./private-temp-file.js";
 import {
   DEFAULT_MAX_BYTES,
   DEFAULT_MAX_LINES,
   type TruncationResult,
   truncateTail,
 } from "./truncate.js";
-import { createPrivateTempWriteStream } from "./private-temp-file.js";
 
+/** Shared type for Output Accumulator Options in src/agents/sessions. */
 export interface OutputAccumulatorOptions {
   maxLines?: number;
   maxBytes?: number;
   tempFilePrefix?: string;
 }
 
+/** Shared type for Output Snapshot in src/agents/sessions. */
 export interface OutputSnapshot {
   content: string;
   truncation: TruncationResult;

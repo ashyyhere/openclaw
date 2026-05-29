@@ -1,3 +1,4 @@
+/** Tests memory-search config resolution. */
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import {

@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor agent components system controls helpers and runtime behavior.
 import type { APIStringSelectComponent } from "discord-api-types/v10";
 import { ButtonStyle } from "discord-api-types/v10";
 import { logDebug, logError } from "openclaw/plugin-sdk/logging-core";

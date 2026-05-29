@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src/matrix/monitor location test behavior.
 import { describe, expect, it } from "vitest";
 import { resolveMatrixLocation } from "./location.js";
 import { EventType } from "./types.js";

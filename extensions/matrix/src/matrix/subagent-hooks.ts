@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix subagent hooks helpers and runtime behavior.
 import { DEFAULT_ACCOUNT_ID } from "openclaw/plugin-sdk/account-id";
 import {
   getSessionBindingService,

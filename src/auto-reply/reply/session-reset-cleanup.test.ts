@@ -1,3 +1,4 @@
+// Coverage for session reset cleanup.
 import { afterEach, describe, expect, it } from "vitest";
 import {
   enqueueSystemEvent,

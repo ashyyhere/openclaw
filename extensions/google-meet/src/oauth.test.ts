@@ -1,3 +1,4 @@
+// Tests extensions/google-meet/src oauth test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   buildGoogleMeetAuthUrl,

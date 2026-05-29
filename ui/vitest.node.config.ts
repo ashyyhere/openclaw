@@ -1,3 +1,4 @@
+// ui vitest node config helpers and runtime behavior.
 import { defineConfig } from "vitest/config";
 import { resolveDefaultVitestPool } from "../test/vitest/vitest.shared.config.ts";
 

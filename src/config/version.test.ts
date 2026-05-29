@@ -1,3 +1,4 @@
+// Tests config version test behavior.
 import { describe, expect, it } from "vitest";
 import {
   compareOpenClawVersions,

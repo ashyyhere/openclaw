@@ -1,3 +1,4 @@
+// Tests extensions/msteams/src monitor handler adaptive card test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig, RuntimeEnv } from "../runtime-api.js";
 import type { MSTeamsConversationStore } from "./conversation-store.js";

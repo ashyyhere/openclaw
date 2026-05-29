@@ -1,3 +1,4 @@
+// extensions/twitch/src probe helpers and runtime behavior.
 import { StaticAuthProvider } from "@twurple/auth";
 import { ChatClient } from "@twurple/chat";
 import type { BaseProbeResult } from "openclaw/plugin-sdk/channel-contract";

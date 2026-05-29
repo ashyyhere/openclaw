@@ -1,3 +1,4 @@
+/** Tests local-model lean tool filtering. */
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import type { AnyAgentTool } from "./agent-tools.types.js";

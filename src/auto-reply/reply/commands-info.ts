@@ -1,3 +1,4 @@
+// Chat command handler for session and runtime info.
 import { resolveSessionAgentId } from "../../agents/agent-scope.js";
 import { resolveEffectiveToolInventory } from "../../agents/tools-effective-inventory.js";
 import { getChannelPlugin } from "../../channels/plugins/index.js";
@@ -21,7 +22,9 @@ import { buildStatusReply } from "./commands-status.js";
 import type { CommandHandler, HandleCommandsParams } from "./commands-types.js";
 import { extractExplicitGroupId } from "./group-id.js";
 import { resolveReplyToMode } from "./reply-threading.js";
+/** Re-exported API for src/auto-reply/reply, starting with handle Context Command. */
 export { handleContextCommand } from "./commands-context-command.js";
+/** Re-exported API for src/auto-reply/reply, starting with handle Whoami Command. */
 export { handleWhoamiCommand } from "./commands-whoami.js";
 
 async function resolveSkillCommands(params: HandleCommandsParams) {
@@ -40,6 +43,7 @@ async function resolveSkillCommands(params: HandleCommandsParams) {
   });
 }
 
+/** Reused constant for handle Help Command behavior in src/auto-reply/reply. */
 export const handleHelpCommand: CommandHandler = async (params, allowTextCommands) => {
   if (!allowTextCommands) {
     return null;
@@ -59,6 +63,7 @@ export const handleHelpCommand: CommandHandler = async (params, allowTextCommand
   };
 };
 
+/** Reused constant for handle Commands List Command behavior in src/auto-reply/reply. */
 export const handleCommandsListCommand: CommandHandler = async (params, allowTextCommands) => {
   if (!allowTextCommands) {
     return null;
@@ -119,6 +124,7 @@ function buildSkillCommandUsage(skillCommands: NonNullable<HandleCommandsParams[
   return lines.join("\n");
 }
 
+/** Reused constant for handle Skill Command Usage behavior in src/auto-reply/reply. */
 export const handleSkillCommandUsage: CommandHandler = async (params, allowTextCommands) => {
   if (!allowTextCommands) {
     return null;
@@ -151,6 +157,7 @@ export const handleSkillCommandUsage: CommandHandler = async (params, allowTextC
   };
 };
 
+/** Reused constant for handle Tools Command behavior in src/auto-reply/reply. */
 export const handleToolsCommand: CommandHandler = async (params, allowTextCommands) => {
   if (!allowTextCommands) {
     return null;
@@ -237,6 +244,7 @@ export const handleToolsCommand: CommandHandler = async (params, allowTextComman
   }
 };
 
+/** Reused constant for handle Status Command behavior in src/auto-reply/reply. */
 export const handleStatusCommand: CommandHandler = async (params, allowTextCommands) => {
   if (!allowTextCommands) {
     return null;
@@ -278,6 +286,7 @@ export const handleStatusCommand: CommandHandler = async (params, allowTextComma
   return { shouldContinue: false, reply };
 };
 
+/** Reused constant for handle Export Session Command behavior in src/auto-reply/reply. */
 export const handleExportSessionCommand: CommandHandler = async (params, allowTextCommands) => {
   if (!allowTextCommands) {
     return null;
@@ -300,6 +309,7 @@ export const handleExportSessionCommand: CommandHandler = async (params, allowTe
   return { shouldContinue: false, reply: await buildExportSessionReply(params) };
 };
 
+/** Reused constant for handle Export Trajectory Command behavior in src/auto-reply/reply. */
 export const handleExportTrajectoryCommand: CommandHandler = async (params, allowTextCommands) => {
   if (!allowTextCommands) {
     return null;

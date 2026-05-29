@@ -1,3 +1,4 @@
+// extensions/voice-call/src/providers/shared guarded json api helpers and runtime behavior.
 import { fetchWithSsrFGuard } from "../../../api.js";
 
 type GuardedJsonApiRequestParams = {

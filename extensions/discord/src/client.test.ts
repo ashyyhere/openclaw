@@ -1,3 +1,4 @@
+// Tests extensions/discord/src client test behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { createDiscordRestClient } from "./client.js";

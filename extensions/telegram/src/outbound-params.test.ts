@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src outbound params test behavior.
 import { describe, expect, it } from "vitest";
 import {
   parseTelegramMessageThreadId,

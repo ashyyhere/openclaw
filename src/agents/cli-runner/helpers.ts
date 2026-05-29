@@ -1,3 +1,4 @@
+/** Shared prompt, queue, argument, and image helpers for CLI backend runs. */
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import os from "node:os";
@@ -31,6 +32,7 @@ import { buildSystemPromptParams } from "../system-prompt-params.js";
 import type { SilentReplyPromptMode } from "../system-prompt.types.js";
 import { sanitizeImageBlocks } from "../tool-images.js";
 import { formatTomlConfigOverride } from "./toml-inline.js";
+/** Re-exported API for src/agents/cli-runner, starting with build Cli Supervisor Scope Key. */
 export { buildCliSupervisorScopeKey, resolveCliNoOutputTimeoutMs } from "./reliability.js";
 
 const CLI_RUN_QUEUE = new KeyedAsyncQueue();
@@ -39,10 +41,12 @@ function isClaudeCliProvider(providerId: string): boolean {
   return normalizeOptionalLowercaseString(providerId) === "claude-cli";
 }
 
+/** Reused helper for enqueue Cli Run behavior in src/agents/cli-runner. */
 export function enqueueCliRun<T>(key: string, task: () => Promise<T>): Promise<T> {
   return CLI_RUN_QUEUE.enqueue(key, task);
 }
 
+/** Reused helper for resolve Cli Run Queue Key behavior in src/agents/cli-runner. */
 export function resolveCliRunQueueKey(params: {
   backendId: string;
   serialize?: boolean;
@@ -66,6 +70,7 @@ export function resolveCliRunQueueKey(params: {
   return params.backendId;
 }
 
+/** Reused helper for build Cli Agent System Prompt behavior in src/agents/cli-runner. */
 export function buildCliAgentSystemPrompt(params: {
   workspaceDir: string;
   cwd?: string;
@@ -133,8 +138,10 @@ export function buildCliAgentSystemPrompt(params: {
   });
 }
 
+/** Reused constant for build System Prompt behavior in src/agents/cli-runner. */
 export const buildSystemPrompt = buildCliAgentSystemPrompt;
 
+/** Reused helper for normalize Cli Model behavior in src/agents/cli-runner. */
 export function normalizeCliModel(modelId: string, backend: CliBackendConfig): string {
   const trimmed = modelId.trim();
   if (!trimmed) {
@@ -152,6 +159,7 @@ export function normalizeCliModel(modelId: string, backend: CliBackendConfig): s
   return trimmed;
 }
 
+/** Reused helper for resolve System Prompt Usage behavior in src/agents/cli-runner. */
 export function resolveSystemPromptUsage(params: {
   backend: CliBackendConfig;
   isNewSession: boolean;
@@ -178,6 +186,7 @@ export function resolveSystemPromptUsage(params: {
   return systemPrompt;
 }
 
+/** Reused helper for resolve Session Id To Send behavior in src/agents/cli-runner. */
 export function resolveSessionIdToSend(params: {
   backend: CliBackendConfig;
   cliSessionId?: string;
@@ -196,6 +205,7 @@ export function resolveSessionIdToSend(params: {
   return { sessionId: crypto.randomUUID(), isNew: true };
 }
 
+/** Reused helper for resolve Prompt Input behavior in src/agents/cli-runner. */
 export function resolvePromptInput(params: { backend: CliBackendConfig; prompt: string }): {
   argsPrompt?: string;
   stdin?: string;
@@ -237,6 +247,7 @@ function appendImagePathsToPrompt(prompt: string, paths: string[], prefix = ""):
   return `${trimmed}${separator}${paths.map((entry) => `${prefix}${entry}`).join("\n")}`;
 }
 
+/** Reused helper for load Prompt Ref Images behavior in src/agents/cli-runner. */
 export async function loadPromptRefImages(params: {
   prompt: string;
   workspaceDir: string;
@@ -274,6 +285,7 @@ export async function loadPromptRefImages(params: {
   return sanitizedImages;
 }
 
+/** Reused helper for write Cli Images behavior in src/agents/cli-runner. */
 export async function writeCliImages(params: {
   backend: CliBackendConfig;
   workspaceDir: string;
@@ -299,6 +311,7 @@ export async function writeCliImages(params: {
   return { paths, cleanup };
 }
 
+/** Reused helper for write Cli System Prompt File behavior in src/agents/cli-runner. */
 export async function writeCliSystemPromptFile(params: {
   backend: CliBackendConfig;
   systemPrompt: string;
@@ -323,6 +336,7 @@ export async function writeCliSystemPromptFile(params: {
   };
 }
 
+/** Reused helper for prepare Cli Prompt Image Payload behavior in src/agents/cli-runner. */
 export async function prepareCliPromptImagePayload(params: {
   backend: CliBackendConfig;
   prompt: string;
@@ -365,6 +379,7 @@ export async function prepareCliPromptImagePayload(params: {
   };
 }
 
+/** Reused helper for build Cli Args behavior in src/agents/cli-runner. */
 export function buildCliArgs(params: {
   backend: CliBackendConfig;
   baseArgs: string[];

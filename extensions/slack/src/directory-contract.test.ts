@@ -1,3 +1,4 @@
+// Tests extensions/slack/src directory contract test behavior.
 import type { BaseProbeResult } from "openclaw/plugin-sdk/channel-contract";
 import { expectDirectoryIds } from "openclaw/plugin-sdk/channel-test-helpers";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";

@@ -1,3 +1,4 @@
+// test/vitest vitest extension irc config helpers and runtime behavior.
 import { ircExtensionTestRoots } from "./vitest.extension-irc-paths.mjs";
 import { loadPatternListFromEnv } from "./vitest.pattern-file.ts";
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";

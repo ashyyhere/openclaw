@@ -1,3 +1,4 @@
+/** Tests gateway service command registration. */
 import { Command } from "commander";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { addGatewayServiceCommands } from "./register-service-commands.js";

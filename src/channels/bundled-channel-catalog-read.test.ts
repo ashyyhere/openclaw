@@ -1,3 +1,4 @@
+// Coverage for bundled channel catalog discovery.
 import fs from "node:fs";
 import path from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";

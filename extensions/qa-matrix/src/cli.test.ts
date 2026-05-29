@@ -1,3 +1,4 @@
+// Tests extensions/qa-matrix/src cli test behavior.
 import { Command } from "commander";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 

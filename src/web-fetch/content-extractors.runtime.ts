@@ -1,3 +1,4 @@
+// Runtime boundary for web-fetch content extractors runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { createConfigScopedPromiseLoader } from "../plugins/plugin-cache-primitives.js";
 import type {
@@ -10,6 +11,7 @@ const webContentExtractorLoader = createConfigScopedPromiseLoader((config?: Open
   resolvePluginWebContentExtractors(config ? { config } : undefined),
 );
 
+/** Reused helper for extract Readable Content behavior in src/web-fetch. */
 export async function extractReadableContent(params: {
   html: string;
   url: string;

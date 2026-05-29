@@ -1,3 +1,4 @@
+// Tests extensions/vercel-ai-gateway provider catalog test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 const { fetchWithSsrFGuardMock } = vi.hoisted(() => ({

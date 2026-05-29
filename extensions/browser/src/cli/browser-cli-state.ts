@@ -1,3 +1,4 @@
+// extensions/browser/src/cli browser cli state helpers and runtime behavior.
 import type { Command } from "commander";
 import {
   normalizeOptionalLowercaseString,

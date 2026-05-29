@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src/matrix/send targets test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { MatrixClient } from "../sdk.js";
 import { EventType } from "./types.js";

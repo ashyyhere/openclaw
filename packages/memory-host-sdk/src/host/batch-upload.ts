@@ -1,3 +1,4 @@
+// packages/memory-host-sdk/src/host batch upload helpers and runtime behavior.
 import {
   buildBatchHeaders,
   normalizeBatchBaseUrl,
@@ -7,6 +8,7 @@ import { hashText } from "./hash.js";
 import { withRemoteHttpResponse } from "./remote-http.js";
 import { readResponseJsonWithLimit, readResponseTextSnippet } from "./response-snippet.js";
 
+/** Public helper for upload Batch Jsonl File behavior in packages/memory-host-sdk. */
 export async function uploadBatchJsonlFile(params: {
   client: BatchHttpClientConfig;
   requests: unknown[];

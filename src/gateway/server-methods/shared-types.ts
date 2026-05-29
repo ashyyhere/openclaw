@@ -1,3 +1,4 @@
+// gateway/server-methods shared types helpers and runtime behavior.
 import type {
   ConnectParams,
   ErrorShape,
@@ -24,6 +25,7 @@ import type { GatewayEventLoopHealth } from "../server/event-loop-health.js";
 
 type SubsystemLogger = ReturnType<typeof createSubsystemLogger>;
 
+/** Shared type for Gateway Client in src/gateway/server-methods. */
 export type GatewayClient = {
   connect: ConnectParams;
   connId?: string;
@@ -39,6 +41,7 @@ export type GatewayClient = {
   };
 };
 
+/** Shared type for Respond Fn in src/gateway/server-methods. */
 export type RespondFn = (
   ok: boolean,
   payload?: unknown,
@@ -46,6 +49,7 @@ export type RespondFn = (
   meta?: Record<string, unknown>,
 ) => void;
 
+/** Shared type for Gateway Request Context in src/gateway/server-methods. */
 export type GatewayRequestContext = {
   deps: CliDeps;
   cron: CronServiceContract;
@@ -142,6 +146,7 @@ export type GatewayRequestContext = {
   unavailableGatewayMethods?: ReadonlySet<string>;
 };
 
+/** Shared type for Gateway Request Options in src/gateway/server-methods. */
 export type GatewayRequestOptions = {
   req: RequestFrame;
   client: GatewayClient | null;
@@ -151,6 +156,7 @@ export type GatewayRequestOptions = {
   methodRegistry?: GatewayMethodRegistryView;
 };
 
+/** Shared type for Gateway Request Handler Options in src/gateway/server-methods. */
 export type GatewayRequestHandlerOptions = {
   req: RequestFrame;
   params: Record<string, unknown>;
@@ -160,6 +166,8 @@ export type GatewayRequestHandlerOptions = {
   context: GatewayRequestContext;
 };
 
+/** Shared type for Gateway Request Handler in src/gateway/server-methods. */
 export type GatewayRequestHandler = (opts: GatewayRequestHandlerOptions) => Promise<void> | void;
 
+/** Shared type for Gateway Request Handlers in src/gateway/server-methods. */
 export type GatewayRequestHandlers = Record<string, GatewayRequestHandler>;

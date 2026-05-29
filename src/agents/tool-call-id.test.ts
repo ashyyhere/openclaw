@@ -1,3 +1,4 @@
+/** Regression coverage for stable tool call id generation. */
 import type { AgentMessage } from "openclaw/plugin-sdk/agent-core";
 import { describe, expect, it } from "vitest";
 import { castAgentMessages } from "./test-helpers/agent-message-fixtures.js";

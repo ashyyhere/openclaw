@@ -1,3 +1,4 @@
+// extensions/browser/src/browser request policy helpers and runtime behavior.
 import { normalizeOptionalString } from "openclaw/plugin-sdk/string-coerce-runtime";
 
 type BrowserRequestProfileParams = {

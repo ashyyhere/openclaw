@@ -1,3 +1,4 @@
+/** Agent tool for reporting current session status and runtime settings. */
 import { Type } from "typebox";
 import type {
   ElevatedLevel,
@@ -335,6 +336,7 @@ async function resolveModelOverride(params: {
   };
 }
 
+/** Creates the session status AgentTool. */
 export function createSessionStatusTool(opts?: {
   agentSessionKey?: string;
   /**

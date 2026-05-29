@@ -1,3 +1,4 @@
+// test/vitest vitest contracts channel registry config helpers and runtime behavior.
 import {
   channelRegistryContractPatterns,
   createContractsVitestConfig,

@@ -1,3 +1,4 @@
+// extensions/telegram/src sent message cache helpers and runtime behavior.
 import fs from "node:fs";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { logVerbose } from "openclaw/plugin-sdk/runtime-env";

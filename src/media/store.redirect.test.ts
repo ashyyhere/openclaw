@@ -1,3 +1,4 @@
+// Tests media store redirect test behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { PassThrough } from "node:stream";

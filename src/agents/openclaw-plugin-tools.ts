@@ -1,3 +1,4 @@
+/** Resolves plugin-provided tools and runtime context for OpenClaw tool sets. */
 import { selectApplicableRuntimeConfig } from "../config/config.js";
 import {
   getRuntimeConfigSnapshot,
@@ -54,6 +55,7 @@ function resolveApplicablePluginRuntimeConfig(
   });
 }
 
+/** Resolve plugin tools that are allowed and not shadowed by core tools. */
 export function resolveOpenClawPluginToolsForOptions(params: {
   options?: ResolveOpenClawPluginToolsOptions;
   resolvedConfig?: OpenClawConfig;

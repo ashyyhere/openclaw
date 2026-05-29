@@ -1,3 +1,4 @@
+/** Registers provider-runtime or OpenClaw transport stream functions for models. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { Api, Model } from "../llm/types.js";
 import { resolveProviderStreamFn } from "../plugins/provider-runtime.js";
@@ -5,6 +6,7 @@ import { ensureCustomApiRegistered } from "./custom-api-registry.js";
 import { createTransportAwareStreamFnForModel } from "./provider-transport-stream.js";
 import type { StreamFn } from "./runtime/index.js";
 
+/** Resolve and register the stream function for a provider model API. */
 export function registerProviderStreamForModel<TApi extends Api>(params: {
   model: Model<TApi>;
   cfg?: OpenClawConfig;

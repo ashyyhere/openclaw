@@ -1,3 +1,4 @@
+/** Shared context builders for sessions-send agent-to-agent delivery. */
 import {
   getChannelPlugin,
   normalizeChannelId as normalizeAnyChannelId,
@@ -6,6 +7,7 @@ import { resolveSessionConversationRef } from "../../channels/plugins/session-co
 import { normalizeChannelId as normalizeChatChannelId } from "../../channels/registry.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { ANNOUNCE_SKIP_TOKEN, REPLY_SKIP_TOKEN } from "./sessions-send-tokens.js";
+/** Re-exported API for src/agents/tools. */
 export {
   isAnnounceSkip,
   isNonDeliverableSessionsReply,
@@ -15,6 +17,7 @@ export {
 const DEFAULT_AGENTNG_PONG_TURNS = 5;
 const MAX_PING_PONG_TURNS = 20;
 
+/** Shared type for Announce Target in src/agents/tools. */
 export type AnnounceTarget = {
   channel: string;
   to: string;
@@ -22,6 +25,7 @@ export type AnnounceTarget = {
   threadId?: string; // Forum topic/thread ID
 };
 
+/** Resolves announce target metadata from a session key. */
 export function resolveAnnounceTargetFromKey(sessionKey: string): AnnounceTarget | null {
   const parsed = resolveSessionConversationRef(sessionKey);
   if (!parsed) {
@@ -63,6 +67,7 @@ function buildAgentSessionLines(params: {
   ].filter((line): line is string => Boolean(line));
 }
 
+/** Builds context text for an agent-to-agent message. */
 export function buildAgentToAgentMessageContext(params: {
   requesterSessionKey?: string;
   requesterChannel?: string;
@@ -74,6 +79,7 @@ export function buildAgentToAgentMessageContext(params: {
   return lines.join("\n");
 }
 
+/** Builds context text for an agent-to-agent reply. */
 export function buildAgentToAgentReplyContext(params: {
   requesterSessionKey?: string;
   requesterChannel?: string;
@@ -95,6 +101,7 @@ export function buildAgentToAgentReplyContext(params: {
   return lines.join("\n");
 }
 
+/** Builds context text for an agent-to-agent announcement. */
 export function buildAgentToAgentAnnounceContext(params: {
   requesterSessionKey?: string;
   requesterChannel?: string;
@@ -119,6 +126,7 @@ export function buildAgentToAgentAnnounceContext(params: {
   return lines.join("\n");
 }
 
+/** Resolves configured ping-pong guard turn count. */
 export function resolvePingPongTurns(cfg?: OpenClawConfig) {
   const raw = cfg?.session?.agentToAgent?.maxPingPongTurns;
   const fallback = DEFAULT_AGENTNG_PONG_TURNS;

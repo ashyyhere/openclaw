@@ -1,3 +1,4 @@
+/** Fast OpenClaw tool stubs for session/subagent tool tests. */
 import { vi } from "vitest";
 import { normalizeOptionalLowercaseString } from "../../shared/string-coerce.js";
 import { stubTool } from "./fast-tool-stubs.js";

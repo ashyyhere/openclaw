@@ -1,3 +1,4 @@
+/** Normalizes inherited tool allow/deny lists and ACP compatibility errors. */
 import { uniqueStrings } from "../shared/string-normalization.js";
 import { isToolAllowedByPolicyName } from "./tool-policy-match.js";
 import { normalizeToolName } from "./tool-policy-shared.js";
@@ -28,6 +29,7 @@ const ACP_REQUIRED_INHERITED_TOOL_ALLOW = [
   "write",
 ] as const;
 
+/** Normalize inherited tool denylist names. */
 export function normalizeInheritedToolDenylist(value: unknown): string[] {
   if (!Array.isArray(value)) {
     return [];
@@ -40,20 +42,24 @@ export function normalizeInheritedToolDenylist(value: unknown): string[] {
   );
 }
 
+/** Build a config patch for inherited tool denylist values. */
 export function inheritedToolDenyPatch(value: unknown): { inheritedToolDeny?: string[] } {
   const inheritedToolDeny = normalizeInheritedToolDenylist(value);
   return inheritedToolDeny.length > 0 ? { inheritedToolDeny } : {};
 }
 
+/** Normalize inherited tool allowlist names. */
 export function normalizeInheritedToolAllowlist(value: unknown): string[] {
   return normalizeInheritedToolDenylist(value);
 }
 
+/** Build a config patch for inherited tool allowlist values. */
 export function inheritedToolAllowPatch(value: unknown): { inheritedToolAllow?: string[] } {
   const inheritedToolAllow = normalizeInheritedToolAllowlist(value);
   return inheritedToolAllow.length > 0 ? { inheritedToolAllow } : {};
 }
 
+/** Find an inherited deny entry that makes ACP runtime unsupported. */
 export function findAcpUnsupportedInheritedToolDeny(value: unknown): string | undefined {
   const inheritedToolDeny = normalizeInheritedToolDenylist(value);
   if (inheritedToolDeny.length === 0) {
@@ -64,6 +70,7 @@ export function findAcpUnsupportedInheritedToolDeny(value: unknown): string | un
   );
 }
 
+/** Find a required ACP tool missing from inherited allowlist. */
 export function findAcpUnsupportedInheritedToolAllow(value: unknown): string | undefined {
   const inheritedToolAllow = normalizeInheritedToolAllowlist(value);
   if (inheritedToolAllow.length === 0) {
@@ -74,10 +81,12 @@ export function findAcpUnsupportedInheritedToolAllow(value: unknown): string | u
   );
 }
 
+/** Format ACP unsupported-runtime error for inherited denylist. */
 export function formatAcpInheritedToolDenyError(toolName: string): string {
   return `runtime="acp" is unavailable because the requester denies ${toolName}. Use runtime="subagent".`;
 }
 
+/** Format ACP unsupported-runtime error for inherited allowlist. */
 export function formatAcpInheritedToolAllowError(toolName: string): string {
   return `runtime="acp" is unavailable because the requester does not allow ${toolName}. Use runtime="subagent".`;
 }

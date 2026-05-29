@@ -1,3 +1,4 @@
+/** Tests bundled thread binding API loading and placement normalization. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const { loadBundledPluginPublicArtifactModuleSyncMock } = vi.hoisted(() => ({

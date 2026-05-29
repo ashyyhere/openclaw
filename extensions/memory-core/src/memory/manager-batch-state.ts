@@ -1,3 +1,4 @@
+// extensions/memory-core/src/memory manager batch state helpers and runtime behavior.
 export const MEMORY_BATCH_FAILURE_LIMIT = 2;
 
 type MemoryBatchFailureState = {

@@ -1,3 +1,4 @@
+/** Tests doctor checks for Claude CLI runtime availability. */
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

@@ -1,3 +1,4 @@
+// Tests extensions/zalo/src channel startup test behavior.
 import {
   expectLifecyclePatch,
   expectPendingUntilAbort,

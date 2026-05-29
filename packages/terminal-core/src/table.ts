@@ -3,6 +3,7 @@ import { displayString } from "./display-string.js";
 
 type Align = "left" | "right" | "center";
 
+/** Shared type for Table Column in src/terminal. */
 export type TableColumn = {
   key: string;
   header: string;
@@ -12,6 +13,7 @@ export type TableColumn = {
   flex?: boolean;
 };
 
+/** Shared type for Render Table Options in src/terminal. */
 export type RenderTableOptions = {
   columns: TableColumn[];
   rows: Array<Record<string, string>>;
@@ -415,10 +417,12 @@ function normalizeWidth(n: number | undefined): number | undefined {
   return Math.floor(n);
 }
 
+/** Reused helper for get Terminal Table Width behavior in src/terminal. */
 export function getTerminalTableWidth(minWidth = 60, fallbackWidth = 120): number {
   return Math.max(minWidth, process.stdout.columns ?? fallbackWidth);
 }
 
+/** Reused helper for render Table behavior in src/terminal. */
 export function renderTable(opts: RenderTableOptions): string {
   const rows = opts.rows.map((row) => {
     const next: Record<string, string> = {};

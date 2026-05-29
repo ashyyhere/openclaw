@@ -1,3 +1,4 @@
+// Tests infra npm registry spec test behavior.
 import { describe, expect, it } from "vitest";
 import {
   compareOpenClawReleaseVersions,

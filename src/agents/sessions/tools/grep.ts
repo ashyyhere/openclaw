@@ -1,3 +1,4 @@
+/** Grep tool definition for searching text under a workspace. */
 import { spawn } from "node:child_process";
 import { readFileSync, statSync } from "node:fs";
 import path from "node:path";
@@ -46,6 +47,7 @@ const grepSchema = Type.Object({
     Type.Number({ description: "Maximum number of matches to return (default: 100)" }),
   ),
 });
+/** Re-exported API for src/agents/sessions, starting with Grep Tool Details. */
 export type { GrepToolDetails, GrepToolInput } from "./tool-contracts.js";
 const DEFAULT_LIMIT = 100;
 
@@ -65,6 +67,7 @@ const defaultGrepOperations: GrepOperations = {
   readFile: (p) => readFileSync(p, "utf-8"),
 };
 
+/** Shared type for Grep Tool Options in src/agents/sessions. */
 export interface GrepToolOptions {
   /** Custom operations for grep. Default: local filesystem plus ripgrep */
   operations?: GrepOperations;
@@ -135,6 +138,7 @@ function formatGrepResult(
   return text;
 }
 
+/** Creates the SDK tool definition for text search. */
 export function createGrepToolDefinition(
   cwd: string,
   options?: GrepToolOptions,
@@ -431,6 +435,7 @@ export function createGrepToolDefinition(
   };
 }
 
+/** Creates the runtime AgentTool wrapper for text search. */
 export function createGrepTool(
   cwd: string,
   options?: GrepToolOptions,

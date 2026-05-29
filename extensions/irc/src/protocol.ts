@@ -1,3 +1,4 @@
+// extensions/irc/src protocol helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import { hasIrcControlChars, stripIrcControlChars } from "./control-chars.js";
 

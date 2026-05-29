@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src/matrix accounts test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { getMatrixScopedEnvVarNames } from "../env-vars.js";
 import type { CoreConfig } from "../types.js";

@@ -1,3 +1,4 @@
+// plugins loader helpers and runtime behavior.
 import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
@@ -172,9 +173,12 @@ import type {
   PluginRegistrationMode,
 } from "./types.js";
 
+/** Shared type for Plugin Load Result in src/plugins. */
 export type PluginLoadResult = PluginRegistry;
+/** Re-exported API for src/plugins, starting with Plugin Load Reentry Error. */
 export { PluginLoadReentryError } from "./loader-cache-state.js";
 
+/** Shared type for Plugin Load Options in src/plugins. */
 export type PluginLoadOptions = {
   config?: OpenClawConfig;
   activationSourceConfig?: OpenClawConfig;
@@ -257,6 +261,7 @@ function resolveDreamingSidecarEngineId(params: {
   return dreamingConfig.enabled ? DEFAULT_MEMORY_DREAMING_PLUGIN_ID : null;
 }
 
+/** Reused class for Plugin Load Failure Error behavior in src/plugins. */
 export class PluginLoadFailureError extends Error {
   readonly pluginIds: string[];
   readonly registry: PluginRegistry;
@@ -330,12 +335,14 @@ function createPluginCandidatesFromManifestRegistry(
   }));
 }
 
+/** Reused helper for clear Plugin Loader Cache behavior in src/plugins. */
 export function clearPluginLoaderCache(): void {
   pluginLoaderCacheState.clear();
   fullWorkspacePluginLoaderCacheState.clear();
   clearActivatedPluginRuntimeState();
 }
 
+/** Reused helper for clear Activated Plugin Runtime State behavior in src/plugins. */
 export function clearActivatedPluginRuntimeState(): void {
   clearAgentHarnesses();
   clearPluginCommands();
@@ -347,6 +354,7 @@ export function clearActivatedPluginRuntimeState(): void {
   clearMemoryPluginState();
 }
 
+/** Reused helper for clear Plugin Registry Load Cache behavior in src/plugins. */
 export function clearPluginRegistryLoadCache(): void {
   pluginLoaderCacheState.clearCachedRegistries();
   fullWorkspacePluginLoaderCacheState.clearCachedRegistries();
@@ -725,6 +733,7 @@ function formatPluginRuntimeModuleResolutionError(params: {
   ].join("; ");
 }
 
+/** Reused constant for testing behavior in src/plugins. */
 export const testing = {
   buildPluginLoaderJitiOptions,
   buildPluginLoaderAliasMap,
@@ -1487,6 +1496,7 @@ function getCompatibleActivePluginRegistry(
   return undefined;
 }
 
+/** Reused helper for resolve Runtime Plugin Registry behavior in src/plugins. */
 export function resolveRuntimePluginRegistry(
   options?: PluginLoadOptions,
 ): PluginRegistry | undefined {
@@ -1506,20 +1516,24 @@ export function resolveRuntimePluginRegistry(
   return loadOpenClawPlugins(options);
 }
 
+/** Reused helper for get Runtime Plugin Registry For Load Options behavior in src/plugins. */
 export function getRuntimePluginRegistryForLoadOptions(
   options?: PluginLoadOptions,
 ): PluginRegistry | undefined {
   return resolveRuntimePluginRegistry(options);
 }
 
+/** Reused helper for resolve Plugin Registry Load Cache Key behavior in src/plugins. */
 export function resolvePluginRegistryLoadCacheKey(options: PluginLoadOptions = {}): string {
   return resolvePluginLoadCacheContext(options).cacheKey;
 }
 
+/** Reused helper for is Plugin Registry Load In Flight behavior in src/plugins. */
 export function isPluginRegistryLoadInFlight(options: PluginLoadOptions = {}): boolean {
   return pluginLoaderCacheState.isLoadInFlight(resolvePluginRegistryLoadCacheKey(options));
 }
 
+/** Reused helper for resolve Compatible Runtime Plugin Registry behavior in src/plugins. */
 export function resolveCompatibleRuntimePluginRegistry(
   options?: PluginLoadOptions,
 ): PluginRegistry | undefined {
@@ -1683,6 +1697,7 @@ function activatePluginRegistry(
   }
 }
 
+/** Reused helper for load Open Claw Plugins behavior in src/plugins. */
 export function loadOpenClawPlugins(options: PluginLoadOptions = {}): PluginRegistry {
   const requestedOnlyPluginIds = normalizePluginIdScope(options.onlyPluginIds);
   const requestedOnlyPluginIdSet = createPluginIdScopeSet(requestedOnlyPluginIds);
@@ -2760,6 +2775,7 @@ export function loadOpenClawPlugins(options: PluginLoadOptions = {}): PluginRegi
   }
 }
 
+/** Reused helper for load Open Claw Plugin Cli Registry behavior in src/plugins. */
 export async function loadOpenClawPluginCliRegistry(
   options: PluginLoadOptions = {},
 ): Promise<PluginRegistry> {
@@ -3159,4 +3175,5 @@ function resolveCliMetadataEntrySource(rootDir: string): string | null {
   }
   return null;
 }
+/** Re-exported API for src/plugins, starting with testing. */
 export { testing as __testing };

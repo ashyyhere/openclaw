@@ -1,3 +1,4 @@
+// extensions/qa-lab/src suite runtime agent media helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { buildQaImageGenerationConfigPatch } from "./providers/image-generation.js";

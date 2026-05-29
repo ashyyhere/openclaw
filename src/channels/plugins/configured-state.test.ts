@@ -1,3 +1,4 @@
+// Coverage for configured channel plugin state helpers.
 import { createRequire } from "node:module";
 import { describe, expect, it } from "vitest";
 import {

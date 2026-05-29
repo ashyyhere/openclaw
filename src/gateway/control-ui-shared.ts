@@ -1,3 +1,4 @@
+// gateway control ui shared helpers and runtime behavior.
 import {
   isAvatarHttpUrl,
   isAvatarImageDataUrl,
@@ -6,6 +7,7 @@ import {
 
 const CONTROL_UI_AVATAR_PREFIX = "/avatar";
 
+/** Reused helper for normalize Control Ui Base Path behavior in src/gateway. */
 export function normalizeControlUiBasePath(basePath?: string): string {
   if (!basePath) {
     return "";
@@ -26,12 +28,14 @@ export function normalizeControlUiBasePath(basePath?: string): string {
   return normalized;
 }
 
+/** Reused helper for build Control Ui Avatar Url behavior in src/gateway. */
 export function buildControlUiAvatarUrl(basePath: string, agentId: string): string {
   return basePath
     ? `${basePath}${CONTROL_UI_AVATAR_PREFIX}/${agentId}`
     : `${CONTROL_UI_AVATAR_PREFIX}/${agentId}`;
 }
 
+/** Reused helper for resolve Assistant Avatar Url behavior in src/gateway. */
 export function resolveAssistantAvatarUrl(params: {
   avatar?: string | null;
   agentId?: string | null;
@@ -65,4 +69,5 @@ export function resolveAssistantAvatarUrl(params: {
   return avatar;
 }
 
+/** Re-exported API for src/gateway, starting with CONTROL UI AVATAR PREFIX. */
 export { CONTROL_UI_AVATAR_PREFIX };

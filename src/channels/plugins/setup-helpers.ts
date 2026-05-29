@@ -1,3 +1,4 @@
+/** Shared setup wizard helpers for config edits, account selection, and secret input. */
 import { z, type ZodType } from "zod";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "../../routing/session-key.js";
@@ -51,6 +52,7 @@ function shouldStoreNameInAccounts(params: {
   return channelHasAccounts(params.cfg, params.channelKey);
 }
 
+/** Reused helper for apply Account Name To Channel Section behavior in src/channels/plugins. */
 export function applyAccountNameToChannelSection(params: {
   cfg: OpenClawConfig;
   channelKey: string;
@@ -110,6 +112,7 @@ export function applyAccountNameToChannelSection(params: {
   } as OpenClawConfig;
 }
 
+/** Reused helper for migrate Base Name To Default Account behavior in src/channels/plugins. */
 export function migrateBaseNameToDefaultAccount(params: {
   cfg: OpenClawConfig;
   channelKey: string;
@@ -144,6 +147,7 @@ export function migrateBaseNameToDefaultAccount(params: {
   } as OpenClawConfig;
 }
 
+/** Reused helper for prepare Scoped Setup Config behavior in src/channels/plugins. */
 export function prepareScopedSetupConfig(params: {
   cfg: OpenClawConfig;
   channelKey: string;
@@ -169,6 +173,7 @@ export function prepareScopedSetupConfig(params: {
   });
 }
 
+/** Reused helper for apply Setup Account Config Patch behavior in src/channels/plugins. */
 export function applySetupAccountConfigPatch(params: {
   cfg: OpenClawConfig;
   channelKey: string;
@@ -183,6 +188,7 @@ export function applySetupAccountConfigPatch(params: {
   });
 }
 
+/** Reused helper for create Patched Account Setup Adapter behavior in src/channels/plugins. */
 export function createPatchedAccountSetupAdapter(params: {
   channelKey: string;
   alwaysUseAccounts?: boolean;
@@ -226,6 +232,7 @@ export function createPatchedAccountSetupAdapter(params: {
   };
 }
 
+/** Reused helper for create Zod Setup Input Validator behavior in src/channels/plugins. */
 export function createZodSetupInputValidator<T extends ChannelSetupInput>(params: {
   schema: ZodType<T>;
   validate?: (params: { cfg: OpenClawConfig; accountId: string; input: T }) => string | null;
@@ -262,6 +269,7 @@ function hasPresentSetupValue(value: unknown): boolean {
   return value !== undefined && value !== null;
 }
 
+/** Reused helper for create Setup Input Presence Validator behavior in src/channels/plugins. */
 export function createSetupInputPresenceValidator(params: {
   defaultAccountOnlyEnvError?: string;
   whenNotUseEnv?: SetupInputPresenceRequirement[];
@@ -295,6 +303,7 @@ export function createSetupInputPresenceValidator(params: {
   });
 }
 
+/** Reused helper for create Env Patched Account Setup Adapter behavior in src/channels/plugins. */
 export function createEnvPatchedAccountSetupAdapter(params: {
   channelKey: string;
   alwaysUseAccounts?: boolean;
@@ -324,6 +333,7 @@ export function createEnvPatchedAccountSetupAdapter(params: {
   });
 }
 
+/** Reused helper for patch Scoped Account Config behavior in src/channels/plugins. */
 export function patchScopedAccountConfig(params: {
   cfg: OpenClawConfig;
   channelKey: string;
@@ -478,6 +488,7 @@ function resolveSingleAccountPromotionTarget(params: { channel: ChannelSectionBa
 // When promoting a single-account channel config to multi-account,
 // move top-level account settings into accounts.default so the original
 // account keeps working without duplicate account values at channel root.
+/** Reused helper for move Single Account Channel Section To Default Account behavior in src/channels/plugins. */
 export function moveSingleAccountChannelSectionToDefaultAccount(params: {
   cfg: OpenClawConfig;
   channelKey: string;

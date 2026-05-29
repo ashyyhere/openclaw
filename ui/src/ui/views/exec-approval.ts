@@ -1,3 +1,4 @@
+// ui/src/ui/views exec approval helpers and runtime behavior.
 import { html, nothing } from "lit";
 import { formatApprovalDisplayPath } from "../../../../src/infra/approval-display-paths.ts";
 import { t } from "../../i18n/index.ts";
@@ -157,6 +158,7 @@ function renderUnavailableDecisionWarning(
     : html`<div class="exec-approval-warning">${t("execApproval.allowAlwaysUnavailable")}</div>`;
 }
 
+/** Reused helper for render Exec Approval Prompt behavior in ui/src/ui/views. */
 export function renderExecApprovalPrompt(state: AppViewState) {
   const active = state.execApprovalQueue[0];
   if (!active) {

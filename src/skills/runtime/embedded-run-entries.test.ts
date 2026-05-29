@@ -1,3 +1,4 @@
+/** Unit coverage for embedded-agent skill runtime config resolution. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   clearRuntimeConfigSnapshot,

@@ -1,3 +1,4 @@
+// Tests extensions/discord/src subagent hooks test behavior.
 import {
   getRequiredHookHandler,
   registerHookHandlersForTest,

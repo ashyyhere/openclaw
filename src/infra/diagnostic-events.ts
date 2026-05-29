@@ -1,3 +1,4 @@
+// infra diagnostic events helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { TalkBrain, TalkEventType, TalkMode, TalkTransport } from "../talk/talk-events.js";
 import {
@@ -7,6 +8,7 @@ import {
 } from "./diagnostic-trace-context.js";
 import { isBlockedObjectKey } from "./prototype-keys.js";
 
+/** Shared type for Diagnostic Session State in src/infra. */
 export type DiagnosticSessionState = "idle" | "processing" | "waiting";
 
 type DiagnosticBaseEvent = {
@@ -15,6 +17,7 @@ type DiagnosticBaseEvent = {
   trace?: DiagnosticTraceContext;
 };
 
+/** Shared type for Diagnostic Usage Event in src/infra. */
 export type DiagnosticUsageEvent = DiagnosticBaseEvent & {
   type: "model.usage";
   sessionKey?: string;
@@ -46,6 +49,7 @@ export type DiagnosticUsageEvent = DiagnosticBaseEvent & {
   durationMs?: number;
 };
 
+/** Shared type for Diagnostic Failover Event in src/infra. */
 export type DiagnosticFailoverEvent = DiagnosticBaseEvent & {
   type: "model.failover";
   sessionId?: string;
@@ -60,6 +64,7 @@ export type DiagnosticFailoverEvent = DiagnosticBaseEvent & {
   suspended?: boolean;
 };
 
+/** Shared type for Diagnostic Webhook Received Event in src/infra. */
 export type DiagnosticWebhookReceivedEvent = DiagnosticBaseEvent & {
   type: "webhook.received";
   channel: string;
@@ -67,6 +72,7 @@ export type DiagnosticWebhookReceivedEvent = DiagnosticBaseEvent & {
   chatId?: number | string;
 };
 
+/** Shared type for Diagnostic Webhook Processed Event in src/infra. */
 export type DiagnosticWebhookProcessedEvent = DiagnosticBaseEvent & {
   type: "webhook.processed";
   channel: string;
@@ -75,6 +81,7 @@ export type DiagnosticWebhookProcessedEvent = DiagnosticBaseEvent & {
   durationMs?: number;
 };
 
+/** Shared type for Diagnostic Webhook Error Event in src/infra. */
 export type DiagnosticWebhookErrorEvent = DiagnosticBaseEvent & {
   type: "webhook.error";
   channel: string;
@@ -83,6 +90,7 @@ export type DiagnosticWebhookErrorEvent = DiagnosticBaseEvent & {
   error: string;
 };
 
+/** Shared type for Diagnostic Message Queued Event in src/infra. */
 export type DiagnosticMessageQueuedEvent = DiagnosticBaseEvent & {
   type: "message.queued";
   sessionKey?: string;
@@ -92,6 +100,7 @@ export type DiagnosticMessageQueuedEvent = DiagnosticBaseEvent & {
   queueDepth?: number;
 };
 
+/** Shared type for Diagnostic Message Received Event in src/infra. */
 export type DiagnosticMessageReceivedEvent = DiagnosticBaseEvent & {
   type: "message.received";
   sessionKey?: string;
@@ -102,6 +111,7 @@ export type DiagnosticMessageReceivedEvent = DiagnosticBaseEvent & {
   source: string;
 };
 
+/** Shared type for Diagnostic Message Dispatch Started Event in src/infra. */
 export type DiagnosticMessageDispatchStartedEvent = DiagnosticBaseEvent & {
   type: "message.dispatch.started";
   sessionKey?: string;
@@ -110,6 +120,7 @@ export type DiagnosticMessageDispatchStartedEvent = DiagnosticBaseEvent & {
   source: string;
 };
 
+/** Shared type for Diagnostic Message Dispatch Completed Event in src/infra. */
 export type DiagnosticMessageDispatchCompletedEvent = DiagnosticBaseEvent & {
   type: "message.dispatch.completed";
   sessionKey?: string;
@@ -122,6 +133,7 @@ export type DiagnosticMessageDispatchCompletedEvent = DiagnosticBaseEvent & {
   error?: string;
 };
 
+/** Shared type for Diagnostic Message Processed Event in src/infra. */
 export type DiagnosticMessageProcessedEvent = DiagnosticBaseEvent & {
   type: "message.processed";
   channel: string;
@@ -135,6 +147,7 @@ export type DiagnosticMessageProcessedEvent = DiagnosticBaseEvent & {
   error?: string;
 };
 
+/** Shared type for Diagnostic Message Delivery Kind in src/infra. */
 export type DiagnosticMessageDeliveryKind = "text" | "media" | "edit" | "reaction" | "other";
 
 type DiagnosticMessageDeliveryBaseEvent = DiagnosticBaseEvent & {
@@ -143,22 +156,26 @@ type DiagnosticMessageDeliveryBaseEvent = DiagnosticBaseEvent & {
   deliveryKind: DiagnosticMessageDeliveryKind;
 };
 
+/** Shared type for Diagnostic Message Delivery Started Event in src/infra. */
 export type DiagnosticMessageDeliveryStartedEvent = DiagnosticMessageDeliveryBaseEvent & {
   type: "message.delivery.started";
 };
 
+/** Shared type for Diagnostic Message Delivery Completed Event in src/infra. */
 export type DiagnosticMessageDeliveryCompletedEvent = DiagnosticMessageDeliveryBaseEvent & {
   type: "message.delivery.completed";
   durationMs: number;
   resultCount: number;
 };
 
+/** Shared type for Diagnostic Message Delivery Error Event in src/infra. */
 export type DiagnosticMessageDeliveryErrorEvent = DiagnosticMessageDeliveryBaseEvent & {
   type: "message.delivery.error";
   durationMs: number;
   errorCategory: string;
 };
 
+/** Shared type for Diagnostic Talk Event in src/infra. */
 export type DiagnosticTalkEvent = DiagnosticBaseEvent & {
   type: "talk.event";
   sessionId?: string;
@@ -174,6 +191,7 @@ export type DiagnosticTalkEvent = DiagnosticBaseEvent & {
   byteLength?: number;
 };
 
+/** Shared type for Diagnostic Session State Event in src/infra. */
 export type DiagnosticSessionStateEvent = DiagnosticBaseEvent & {
   type: "session.state";
   sessionKey?: string;
@@ -184,8 +202,10 @@ export type DiagnosticSessionStateEvent = DiagnosticBaseEvent & {
   queueDepth?: number;
 };
 
+/** Shared type for Diagnostic Session Active Work Kind in src/infra. */
 export type DiagnosticSessionActiveWorkKind = "embedded_run" | "model_call" | "tool_call";
 
+/** Shared type for Diagnostic Session Attention Classification in src/infra. */
 export type DiagnosticSessionAttentionClassification =
   | "long_running"
   | "blocked_tool_call"
@@ -209,21 +229,25 @@ type DiagnosticSessionAttentionBaseEvent = DiagnosticBaseEvent & {
   terminalProgressStale?: boolean;
 };
 
+/** Shared type for Diagnostic Session Long Running Event in src/infra. */
 export type DiagnosticSessionLongRunningEvent = DiagnosticSessionAttentionBaseEvent & {
   type: "session.long_running";
   classification: "long_running";
 };
 
+/** Shared type for Diagnostic Session Stalled Event in src/infra. */
 export type DiagnosticSessionStalledEvent = DiagnosticSessionAttentionBaseEvent & {
   type: "session.stalled";
   classification: "blocked_tool_call" | "stalled_agent_run";
 };
 
+/** Shared type for Diagnostic Session Stuck Event in src/infra. */
 export type DiagnosticSessionStuckEvent = DiagnosticSessionAttentionBaseEvent & {
   type: "session.stuck";
   classification: "stale_session_state";
 };
 
+/** Shared type for Diagnostic Session Recovery Status in src/infra. */
 export type DiagnosticSessionRecoveryStatus =
   | "aborted"
   | "released"
@@ -243,10 +267,12 @@ type DiagnosticSessionRecoveryBaseEvent = DiagnosticBaseEvent & {
   allowActiveAbort?: boolean;
 };
 
+/** Shared type for Diagnostic Session Recovery Requested Event in src/infra. */
 export type DiagnosticSessionRecoveryRequestedEvent = DiagnosticSessionRecoveryBaseEvent & {
   type: "session.recovery.requested";
 };
 
+/** Shared type for Diagnostic Session Recovery Completed Event in src/infra. */
 export type DiagnosticSessionRecoveryCompletedEvent = DiagnosticSessionRecoveryBaseEvent & {
   type: "session.recovery.completed";
   status: DiagnosticSessionRecoveryStatus;
@@ -256,6 +282,7 @@ export type DiagnosticSessionRecoveryCompletedEvent = DiagnosticSessionRecoveryB
   stale?: boolean;
 };
 
+/** Shared type for Diagnostic Session Turn Created Event in src/infra. */
 export type DiagnosticSessionTurnCreatedEvent = DiagnosticBaseEvent & {
   type: "session.turn.created";
   runId: string;
@@ -266,12 +293,14 @@ export type DiagnosticSessionTurnCreatedEvent = DiagnosticBaseEvent & {
   trigger: "user" | "heartbeat";
 };
 
+/** Shared type for Diagnostic Lane Enqueue Event in src/infra. */
 export type DiagnosticLaneEnqueueEvent = DiagnosticBaseEvent & {
   type: "queue.lane.enqueue";
   lane: string;
   queueSize: number;
 };
 
+/** Shared type for Diagnostic Lane Dequeue Event in src/infra. */
 export type DiagnosticLaneDequeueEvent = DiagnosticBaseEvent & {
   type: "queue.lane.dequeue";
   lane: string;
@@ -279,6 +308,7 @@ export type DiagnosticLaneDequeueEvent = DiagnosticBaseEvent & {
   waitMs: number;
 };
 
+/** Shared type for Diagnostic Run Attempt Event in src/infra. */
 export type DiagnosticRunAttemptEvent = DiagnosticBaseEvent & {
   type: "run.attempt";
   sessionKey?: string;
@@ -287,6 +317,7 @@ export type DiagnosticRunAttemptEvent = DiagnosticBaseEvent & {
   attempt: number;
 };
 
+/** Shared type for Diagnostic Run Progress Event in src/infra. */
 export type DiagnosticRunProgressEvent = DiagnosticBaseEvent & {
   type: "run.progress";
   sessionKey?: string;
@@ -295,6 +326,7 @@ export type DiagnosticRunProgressEvent = DiagnosticBaseEvent & {
   reason: string;
 };
 
+/** Shared type for Diagnostic Heartbeat Event in src/infra. */
 export type DiagnosticHeartbeatEvent = DiagnosticBaseEvent & {
   type: "diagnostic.heartbeat";
   webhooks: {
@@ -307,10 +339,13 @@ export type DiagnosticHeartbeatEvent = DiagnosticBaseEvent & {
   queued: number;
 };
 
+/** Shared type for Diagnostic Liveness Warning Reason in src/infra. */
 export type DiagnosticLivenessWarningReason = "event_loop_delay" | "event_loop_utilization" | "cpu";
 
+/** Shared type for Diagnostic Phase Details in src/infra. */
 export type DiagnosticPhaseDetails = Record<string, string | number | boolean>;
 
+/** Shared type for Diagnostic Phase Snapshot in src/infra. */
 export type DiagnosticPhaseSnapshot = {
   name: string;
   startedAt: number;
@@ -323,6 +358,7 @@ export type DiagnosticPhaseSnapshot = {
   details?: DiagnosticPhaseDetails;
 };
 
+/** Shared type for Diagnostic Liveness Warning Event in src/infra. */
 export type DiagnosticLivenessWarningEvent = DiagnosticBaseEvent & {
   type: "diagnostic.liveness.warning";
   reasons: DiagnosticLivenessWarningReason[];
@@ -344,11 +380,13 @@ export type DiagnosticLivenessWarningEvent = DiagnosticBaseEvent & {
   queuedWorkLabels?: string[];
 };
 
+/** Shared type for Diagnostic Phase Completed Event in src/infra. */
 export type DiagnosticPhaseCompletedEvent = DiagnosticBaseEvent &
   DiagnosticPhaseSnapshot & {
     type: "diagnostic.phase.completed";
   };
 
+/** Shared type for Diagnostic Tool Loop Event in src/infra. */
 export type DiagnosticToolLoopEvent = DiagnosticBaseEvent & {
   type: "tool.loop";
   sessionKey?: string;
@@ -367,12 +405,14 @@ export type DiagnosticToolLoopEvent = DiagnosticBaseEvent & {
   pairedToolName?: string;
 };
 
+/** Shared type for Diagnostic Tool Params Summary in src/infra. */
 export type DiagnosticToolParamsSummary =
   | { kind: "object" }
   | { kind: "array"; length: number }
   | { kind: "string"; length: number }
   | { kind: "number" | "boolean" | "null" | "undefined" | "other" };
 
+/** Shared type for Diagnostic Tool Source in src/infra. */
 export type DiagnosticToolSource = "channel" | "core" | "mcp" | "plugin";
 
 type DiagnosticToolExecutionBaseEvent = DiagnosticBaseEvent & {
@@ -386,15 +426,18 @@ type DiagnosticToolExecutionBaseEvent = DiagnosticBaseEvent & {
   paramsSummary?: DiagnosticToolParamsSummary;
 };
 
+/** Shared type for Diagnostic Tool Execution Started Event in src/infra. */
 export type DiagnosticToolExecutionStartedEvent = DiagnosticToolExecutionBaseEvent & {
   type: "tool.execution.started";
 };
 
+/** Shared type for Diagnostic Tool Execution Completed Event in src/infra. */
 export type DiagnosticToolExecutionCompletedEvent = DiagnosticToolExecutionBaseEvent & {
   type: "tool.execution.completed";
   durationMs: number;
 };
 
+/** Shared type for Diagnostic Tool Execution Error Event in src/infra. */
 export type DiagnosticToolExecutionErrorEvent = DiagnosticToolExecutionBaseEvent & {
   type: "tool.execution.error";
   durationMs: number;
@@ -402,15 +445,19 @@ export type DiagnosticToolExecutionErrorEvent = DiagnosticToolExecutionBaseEvent
   errorCode?: string;
 };
 
+/** Shared type for Diagnostic Tool Execution Blocked Event in src/infra. */
 export type DiagnosticToolExecutionBlockedEvent = DiagnosticToolExecutionBaseEvent & {
   type: "tool.execution.blocked";
   deniedReason: string;
   reason: string;
 };
 
+/** Shared type for Diagnostic Skill Telemetry Source in src/infra. */
 export type DiagnosticSkillTelemetrySource = "bundled" | "unknown" | "workspace";
+/** Shared type for Diagnostic Skill Activation in src/infra. */
 export type DiagnosticSkillActivation = "command" | "read";
 
+/** Shared type for Diagnostic Skill Used Event in src/infra. */
 export type DiagnosticSkillUsedEvent = DiagnosticBaseEvent & {
   type: "skill.used";
   runId?: string;
@@ -424,6 +471,7 @@ export type DiagnosticSkillUsedEvent = DiagnosticBaseEvent & {
   toolCallId?: string;
 };
 
+/** Shared type for Diagnostic Exec Process Completed Event in src/infra. */
 export type DiagnosticExecProcessCompletedEvent = DiagnosticBaseEvent & {
   type: "exec.process.completed";
   sessionKey?: string;
@@ -455,10 +503,12 @@ type DiagnosticRunBaseEvent = DiagnosticBaseEvent & {
   channel?: string;
 };
 
+/** Shared type for Diagnostic Run Started Event in src/infra. */
 export type DiagnosticRunStartedEvent = DiagnosticRunBaseEvent & {
   type: "run.started";
 };
 
+/** Shared type for Diagnostic Run Completed Event in src/infra. */
 export type DiagnosticRunCompletedEvent = DiagnosticRunBaseEvent & {
   type: "run.completed";
   durationMs: number;
@@ -467,7 +517,9 @@ export type DiagnosticRunCompletedEvent = DiagnosticRunBaseEvent & {
   blockedBy?: string;
 };
 
+/** Shared type for Diagnostic Harness Run Phase in src/infra. */
 export type DiagnosticHarnessRunPhase = "prepare" | "start" | "send" | "resolve" | "cleanup";
+/** Shared type for Diagnostic Harness Run Outcome in src/infra. */
 export type DiagnosticHarnessRunOutcome = "completed" | "aborted" | "timed_out" | "error";
 
 type DiagnosticHarnessRunBaseEvent = DiagnosticBaseEvent & {
@@ -483,10 +535,12 @@ type DiagnosticHarnessRunBaseEvent = DiagnosticBaseEvent & {
   pluginId?: string;
 };
 
+/** Shared type for Diagnostic Harness Run Started Event in src/infra. */
 export type DiagnosticHarnessRunStartedEvent = DiagnosticHarnessRunBaseEvent & {
   type: "harness.run.started";
 };
 
+/** Shared type for Diagnostic Harness Run Completed Event in src/infra. */
 export type DiagnosticHarnessRunCompletedEvent = DiagnosticHarnessRunBaseEvent & {
   type: "harness.run.completed";
   durationMs: number;
@@ -500,6 +554,7 @@ export type DiagnosticHarnessRunCompletedEvent = DiagnosticHarnessRunBaseEvent &
   };
 };
 
+/** Shared type for Diagnostic Harness Run Error Event in src/infra. */
 export type DiagnosticHarnessRunErrorEvent = DiagnosticHarnessRunBaseEvent & {
   type: "harness.run.error";
   durationMs: number;
@@ -524,10 +579,12 @@ type DiagnosticModelCallBaseEvent = DiagnosticBaseEvent & {
   upstreamRequestIdHash?: string;
 };
 
+/** Shared type for Diagnostic Model Call Started Event in src/infra. */
 export type DiagnosticModelCallStartedEvent = DiagnosticModelCallBaseEvent & {
   type: "model.call.started";
 };
 
+/** Shared type for Diagnostic Model Call Completed Event in src/infra. */
 export type DiagnosticModelCallCompletedEvent = DiagnosticModelCallBaseEvent & {
   type: "model.call.completed";
   durationMs: number;
@@ -536,6 +593,7 @@ export type DiagnosticModelCallCompletedEvent = DiagnosticModelCallBaseEvent & {
   timeToFirstByteMs?: number;
 };
 
+/** Shared type for Diagnostic Model Call Error Event in src/infra. */
 export type DiagnosticModelCallErrorEvent = DiagnosticModelCallBaseEvent & {
   type: "model.call.error";
   durationMs: number;
@@ -547,6 +605,7 @@ export type DiagnosticModelCallErrorEvent = DiagnosticModelCallBaseEvent & {
   timeToFirstByteMs?: number;
 };
 
+/** Shared type for Diagnostic Context Assembled Event in src/infra. */
 export type DiagnosticContextAssembledEvent = DiagnosticBaseEvent & {
   type: "context.assembled";
   runId: string;
@@ -567,6 +626,7 @@ export type DiagnosticContextAssembledEvent = DiagnosticBaseEvent & {
   reserveTokens?: number;
 };
 
+/** Shared type for Diagnostic Memory Usage in src/infra. */
 export type DiagnosticMemoryUsage = {
   rssBytes: number;
   heapTotalBytes: number;
@@ -575,12 +635,14 @@ export type DiagnosticMemoryUsage = {
   arrayBuffersBytes: number;
 };
 
+/** Shared type for Diagnostic Memory Sample Event in src/infra. */
 export type DiagnosticMemorySampleEvent = DiagnosticBaseEvent & {
   type: "diagnostic.memory.sample";
   memory: DiagnosticMemoryUsage;
   uptimeMs?: number;
 };
 
+/** Shared type for Diagnostic Memory Pressure Event in src/infra. */
 export type DiagnosticMemoryPressureEvent = DiagnosticBaseEvent & {
   type: "diagnostic.memory.pressure";
   level: "warning" | "critical";
@@ -591,6 +653,7 @@ export type DiagnosticMemoryPressureEvent = DiagnosticBaseEvent & {
   windowMs?: number;
 };
 
+/** Shared type for Diagnostic Payload Large Event in src/infra. */
 export type DiagnosticPayloadLargeEvent = DiagnosticBaseEvent & {
   type: "payload.large";
   surface: string;
@@ -603,6 +666,7 @@ export type DiagnosticPayloadLargeEvent = DiagnosticBaseEvent & {
   reason?: string;
 };
 
+/** Shared type for Diagnostic Log Record Event in src/infra. */
 export type DiagnosticLogRecordEvent = DiagnosticBaseEvent & {
   type: "log.record";
   level: string;
@@ -616,6 +680,7 @@ export type DiagnosticLogRecordEvent = DiagnosticBaseEvent & {
   };
 };
 
+/** Shared type for Diagnostic Telemetry Exporter Event in src/infra. */
 export type DiagnosticTelemetryExporterEvent = DiagnosticBaseEvent & {
   type: "telemetry.exporter";
   exporter: string;
@@ -632,6 +697,7 @@ export type DiagnosticTelemetryExporterEvent = DiagnosticBaseEvent & {
   errorCategory?: string;
 };
 
+/** Shared type for Diagnostic Async Queue Dropped Event in src/infra. */
 export type DiagnosticAsyncQueueDroppedEvent = DiagnosticBaseEvent & {
   type: "diagnostic.async_queue.dropped";
   droppedEvents: number;
@@ -643,6 +709,7 @@ export type DiagnosticAsyncQueueDroppedEvent = DiagnosticBaseEvent & {
   drainBatchSize: number;
 };
 
+/** Shared type for Diagnostic Event Payload in src/infra. */
 export type DiagnosticEventPayload =
   | DiagnosticUsageEvent
   | DiagnosticWebhookReceivedEvent
@@ -695,17 +762,20 @@ export type DiagnosticEventPayload =
   | DiagnosticAsyncQueueDroppedEvent
   | DiagnosticFailoverEvent;
 
+/** Shared type for Diagnostic Event Input in src/infra. */
 export type DiagnosticEventInput = DiagnosticEventPayload extends infer Event
   ? Event extends DiagnosticEventPayload
     ? Omit<Event, "seq" | "ts">
     : never
   : never;
 
+/** Shared type for Diagnostic Event Metadata in src/infra. */
 export type DiagnosticEventMetadata = Readonly<{
   internal?: boolean;
   trusted: boolean;
 }>;
 
+/** Shared type for Diagnostic Model Call Content in src/infra. */
 export type DiagnosticModelCallContent = Readonly<{
   inputMessages?: unknown;
   outputMessages?: unknown;
@@ -713,6 +783,7 @@ export type DiagnosticModelCallContent = Readonly<{
   toolDefinitions?: unknown;
 }>;
 
+/** Shared type for Diagnostic Event Private Data in src/infra. */
 export type DiagnosticEventPrivateData = Readonly<{
   modelContent?: DiagnosticModelCallContent;
 }>;
@@ -835,14 +906,17 @@ function getDiagnosticEventsState(): DiagnosticEventsGlobalState {
   return state;
 }
 
+/** Reused helper for is Diagnostics Enabled behavior in src/infra. */
 export function isDiagnosticsEnabled(config?: OpenClawConfig): boolean {
   return config?.diagnostics?.enabled !== false;
 }
 
+/** Reused helper for set Diagnostics Enabled For Process behavior in src/infra. */
 export function setDiagnosticsEnabledForProcess(enabled: boolean): void {
   getDiagnosticEventsState().enabled = enabled;
 }
 
+/** Reused helper for are Diagnostics Enabled For Process behavior in src/infra. */
 export function areDiagnosticsEnabledForProcess(): boolean {
   return getDiagnosticEventsState().enabled;
 }
@@ -1024,6 +1098,7 @@ function dispatchAsyncDiagnosticDropSummary(state: DiagnosticEventsGlobalState):
   dispatchDiagnosticEvent(state, event, createInternalDiagnosticMetadata(false));
 }
 
+/** Reused helper for wait For Diagnostic Events Drained behavior in src/infra. */
 export async function waitForDiagnosticEventsDrained(): Promise<void> {
   const state = getDiagnosticEventsState();
   while (state.asyncDrainScheduled || state.asyncQueue.length > 0) {
@@ -1091,18 +1166,22 @@ function emitDiagnosticEventWithTrust(
   dispatchDiagnosticEvent(state, enriched, metadata, privateData);
 }
 
+/** Reused helper for emit Diagnostic Event behavior in src/infra. */
 export function emitDiagnosticEvent(event: DiagnosticEventInput) {
   emitDiagnosticEventWithTrust(event, false);
 }
 
+/** Reused helper for emit Internal Diagnostic Event behavior in src/infra. */
 export function emitInternalDiagnosticEvent(event: DiagnosticEventInput) {
   emitDiagnosticEventWithTrust(event, false, { internal: true });
 }
 
+/** Reused helper for emit Trusted Diagnostic Event behavior in src/infra. */
 export function emitTrustedDiagnosticEvent(event: DiagnosticEventInput) {
   emitDiagnosticEventWithTrust(event, true);
 }
 
+/** Reused helper for emit Trusted Diagnostic Event With Private Data behavior in src/infra. */
 export function emitTrustedDiagnosticEventWithPrivateData(
   event: DiagnosticEventInput,
   privateData?: DiagnosticEventPrivateData,
@@ -1110,6 +1189,7 @@ export function emitTrustedDiagnosticEventWithPrivateData(
   emitDiagnosticEventWithTrust(event, true, { privateData });
 }
 
+/** Reused helper for emit Failover Event behavior in src/infra. */
 export function emitFailoverEvent(event: Omit<DiagnosticFailoverEvent, "seq" | "ts" | "type">) {
   emitTrustedDiagnosticEvent({
     type: "model.failover",
@@ -1117,6 +1197,7 @@ export function emitFailoverEvent(event: Omit<DiagnosticFailoverEvent, "seq" | "
   });
 }
 
+/** Reused helper for on Internal Diagnostic Event behavior in src/infra. */
 export function onInternalDiagnosticEvent(listener: DiagnosticEventListener): () => void {
   const state = getDiagnosticEventsState();
   state.listeners.add(listener);
@@ -1125,6 +1206,7 @@ export function onInternalDiagnosticEvent(listener: DiagnosticEventListener): ()
   };
 }
 
+/** Reused helper for on Trusted Internal Diagnostic Event behavior in src/infra. */
 export function onTrustedInternalDiagnosticEvent(
   listener: TrustedDiagnosticEventListener,
 ): () => void {
@@ -1135,6 +1217,7 @@ export function onTrustedInternalDiagnosticEvent(
   };
 }
 
+/** Reused helper for has Pending Internal Diagnostic Event behavior in src/infra. */
 export function hasPendingInternalDiagnosticEvent(
   predicate: (event: DiagnosticEventPayload, metadata: DiagnosticEventMetadata) => boolean,
 ): boolean {
@@ -1153,6 +1236,7 @@ export function hasPendingInternalDiagnosticEvent(
   return false;
 }
 
+/** Reused helper for on Diagnostic Event behavior in src/infra. */
 export function onDiagnosticEvent(listener: (evt: DiagnosticEventPayload) => void): () => void {
   return onInternalDiagnosticEvent((event, metadata) => {
     if (metadata.trusted || event.type === "log.record") {
@@ -1162,6 +1246,7 @@ export function onDiagnosticEvent(listener: (evt: DiagnosticEventPayload) => voi
   });
 }
 
+/** Reused helper for format Diagnostic Traceparent For Propagation behavior in src/infra. */
 export function formatDiagnosticTraceparentForPropagation(
   event: { trace?: DiagnosticTraceContext },
   metadata: DiagnosticEventMetadata,
@@ -1172,10 +1257,12 @@ export function formatDiagnosticTraceparentForPropagation(
   return formatDiagnosticTraceparent(event.trace);
 }
 
+/** Reused helper for is Internal Diagnostic Event Metadata behavior in src/infra. */
 export function isInternalDiagnosticEventMetadata(metadata: DiagnosticEventMetadata): boolean {
   return metadata.internal === true;
 }
 
+/** Reused helper for reset Diagnostic Events For Test behavior in src/infra. */
 export function resetDiagnosticEventsForTest(): void {
   const state = getDiagnosticEventsState();
   state.enabled = true;

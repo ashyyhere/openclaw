@@ -1,3 +1,4 @@
+// Tests infra/outbound bound delivery router test behavior.
 import { beforeEach, describe, expect, it } from "vitest";
 import { createBoundDeliveryRouter } from "./bound-delivery-router.js";
 import {

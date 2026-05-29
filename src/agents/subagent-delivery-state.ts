@@ -1,3 +1,4 @@
+/** Normalizes legacy subagent completion/delivery fields into current nested state. */
 import type {
   PendingFinalDeliveryPayload,
   SubagentCompletionDeliveryState,
@@ -6,6 +7,7 @@ import type {
   SubagentRunRecord,
 } from "./subagent-registry.types.js";
 
+/** Legacy flat delivery fields read from older persisted subagent run records. */
 export type LegacySubagentRunRecord = SubagentRunRecord & {
   announceRetryCount?: number;
   lastAnnounceRetryAt?: number;
@@ -31,6 +33,7 @@ export type LegacySubagentRunRecord = SubagentRunRecord & {
   lastAnnounceDropReason?: SubagentCompletionDeliveryState["lastDropReason"];
 };
 
+/** Migrates one subagent run record in place to the current execution/completion/delivery shape. */
 export function normalizeSubagentRunState(entry: SubagentRunRecord): SubagentRunRecord {
   const legacy = entry as LegacySubagentRunRecord;
   entry.execution = mergeExecutionState(entry.execution, buildExecutionState(entry));
@@ -220,6 +223,7 @@ function buildDeliveryState(
   };
 }
 
+/** Ensures the completion state object exists on a mutable run record. */
 export function ensureCompletionState(entry: SubagentRunRecord): SubagentCompletionState {
   entry.completion ??= {
     required: entry.expectsCompletionMessage === true,
@@ -227,6 +231,7 @@ export function ensureCompletionState(entry: SubagentRunRecord): SubagentComplet
   return entry.completion;
 }
 
+/** Ensures the delivery state object exists on a mutable run record. */
 export function ensureDeliveryState(entry: SubagentRunRecord): SubagentCompletionDeliveryState {
   entry.delivery ??= {
     status: entry.expectsCompletionMessage === false ? "not_required" : "pending",
@@ -234,24 +239,29 @@ export function ensureDeliveryState(entry: SubagentRunRecord): SubagentCompletio
   return entry.delivery;
 }
 
+/** Resets delivery state while preserving whether completion delivery is required. */
 export function clearDeliveryState(entry: SubagentRunRecord): void {
   entry.delivery = {
     status: entry.expectsCompletionMessage === false ? "not_required" : "pending",
   };
 }
 
+/** Returns true when delivery has been explicitly suspended with a timestamp. */
 export function isDeliverySuspended(entry: SubagentRunRecord): boolean {
   return entry.delivery?.status === "suspended" && typeof entry.delivery.suspendedAt === "number";
 }
 
+/** Reads the delivery attempt count with a stable zero default. */
 export function getDeliveryAttemptCount(entry: SubagentRunRecord): number {
   return entry.delivery?.attemptCount ?? 0;
 }
 
+/** Reads the last delivery attempt timestamp. */
 export function getDeliveryLastAttemptAt(entry: SubagentRunRecord): number | undefined {
   return entry.delivery?.lastAttemptAt;
 }
 
+/** Reads a non-empty last delivery error if one is recorded. */
 export function getDeliveryLastError(entry: SubagentRunRecord): string | undefined {
   const error = entry.delivery?.lastError;
   return typeof error === "string" && error.trim() ? error : undefined;

@@ -1,3 +1,4 @@
+/** Tests message command registration. */
 import { Command } from "commander";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { ProgramContext } from "./context.js";

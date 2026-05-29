@@ -1,3 +1,4 @@
+// Tests extensions/zalo/src outbound payload contract test behavior.
 import {
   installChannelOutboundPayloadContractSuite,
   primeChannelOutboundSendMock,

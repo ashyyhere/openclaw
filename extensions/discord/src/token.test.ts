@@ -1,3 +1,4 @@
+// Tests extensions/discord/src token test behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import {
   clearRuntimeConfigSnapshot,

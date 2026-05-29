@@ -1,3 +1,4 @@
+// Tests plugins web content extractors runtime test behavior.
 import { describe, expect, it } from "vitest";
 import { resolvePluginWebContentExtractors } from "./web-content-extractors.runtime.js";
 

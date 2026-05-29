@@ -1,3 +1,4 @@
+// extensions/qa-lab/src/providers/live-frontier auth helpers and runtime behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import {
   applyAuthProfileConfig,

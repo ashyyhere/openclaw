@@ -1,3 +1,4 @@
+// gateway server cron lazy helpers and runtime behavior.
 import type { CliDeps } from "../cli/deps.types.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { CronServiceContract } from "../cron/service-contract.js";
@@ -15,6 +16,7 @@ type LoadedGatewayCronState = {
   started: boolean;
 };
 
+/** Reused helper for create Lazy Gateway Cron State behavior in src/gateway. */
 export function createLazyGatewayCronState(params: LazyGatewayCronParams): GatewayCronState {
   const storePath = resolveCronStorePath(params.cfg.cron?.store);
   const cronEnabled = process.env.OPENCLAW_SKIP_CRON !== "1" && params.cfg.cron?.enabled !== false;

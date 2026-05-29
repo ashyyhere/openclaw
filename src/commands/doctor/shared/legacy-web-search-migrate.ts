@@ -1,3 +1,4 @@
+/** Migrates legacy web search config into current provider config. */
 import { mergeMissing } from "../../../config/legacy.shared.js";
 import {
   cloneRecord,
@@ -148,6 +149,7 @@ function migratePluginWebSearchConfig(params: {
   params.changes.push(`Removed ${params.legacyPath} (${params.targetPath} already set).`);
 }
 
+/** Reused helper for list Legacy Web Search Config Paths behavior in src/commands/doctor. */
 export function listLegacyWebSearchConfigPaths(raw: unknown): string[] {
   const owners = getBundledLegacyWebSearchOwners();
   const search = resolveLegacySearchConfig(raw);
@@ -170,6 +172,7 @@ export function listLegacyWebSearchConfigPaths(raw: unknown): string[] {
   return paths;
 }
 
+/** Reused helper for migrate Legacy Web Search Config behavior in src/commands/doctor. */
 export function migrateLegacyWebSearchConfig<T>(raw: T): { config: T; changes: string[] } {
   if (!isRecord(raw)) {
     return { config: raw, changes: [] };

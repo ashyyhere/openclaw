@@ -1,3 +1,4 @@
+// extensions/file-transfer index helpers and runtime behavior.
 import {
   definePluginEntry,
   type AnyAgentTool,

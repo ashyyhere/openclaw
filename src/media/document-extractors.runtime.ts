@@ -1,3 +1,4 @@
+// Runtime boundary for media document extractors runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type {
   DocumentExtractionRequest,
@@ -11,6 +12,7 @@ const documentExtractorLoader = createConfigScopedPromiseLoader((config?: OpenCl
   resolvePluginDocumentExtractors(config ? { config } : undefined),
 );
 
+/** Reused helper for extract Document Content behavior in src/media. */
 export async function extractDocumentContent(
   params: DocumentExtractionRequest & {
     config?: OpenClawConfig;

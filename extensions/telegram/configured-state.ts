@@ -1,3 +1,4 @@
+// extensions/telegram configured state helpers and runtime behavior.
 export function hasTelegramConfiguredState(params: { env?: NodeJS.ProcessEnv }): boolean {
   return (
     typeof params.env?.TELEGRAM_BOT_TOKEN === "string" &&

@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src bot message context thread binding test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { telegramRouteTestSessionRuntime } from "./bot-message-context.route-test-support.js";
 import { buildTelegramMessageContextForTest } from "./bot-message-context.test-harness.js";

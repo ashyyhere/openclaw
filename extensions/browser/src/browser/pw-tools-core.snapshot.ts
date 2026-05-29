@@ -1,3 +1,4 @@
+// extensions/browser/src/browser pw tools core snapshot helpers and runtime behavior.
 import { parseFiniteNumber, resolveIntegerOption } from "openclaw/plugin-sdk/number-runtime";
 import {
   normalizeLowercaseStringOrEmpty,

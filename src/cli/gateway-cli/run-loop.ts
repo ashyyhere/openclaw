@@ -1,3 +1,4 @@
+/** Long-running gateway server loop and restart handoff logic. */
 import { randomUUID } from "node:crypto";
 import net from "node:net";
 import { clearRuntimeConfigSnapshot } from "../../config/runtime-snapshot.js";
@@ -96,6 +97,7 @@ async function waitForHealthyGatewayChild(
   return false;
 }
 
+/** Reused helper for run Gateway Loop behavior in src/cli/gateway-cli. */
 export async function runGatewayLoop(params: {
   start: (params?: {
     startupStartedAt?: number;

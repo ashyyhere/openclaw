@@ -1,3 +1,4 @@
+// extensions/feishu/src config schema helpers and runtime behavior.
 import { normalizeAccountId } from "openclaw/plugin-sdk/account-id";
 import { z } from "zod";
 export { z };

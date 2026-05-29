@@ -1,3 +1,4 @@
+// plugin-sdk/test-helpers provider wizard contract suites helpers and runtime behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { ProviderAuthMethod } from "../plugin-entry.js";
 import type { ProviderPlugin } from "../provider-model-shared.js";

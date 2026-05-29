@@ -1,3 +1,4 @@
+// Tests gateway hosted plugin surface url test behavior.
 import { describe, expect, it } from "vitest";
 import { resolveHostedPluginSurfaceUrl } from "./hosted-plugin-surface-url.js";
 

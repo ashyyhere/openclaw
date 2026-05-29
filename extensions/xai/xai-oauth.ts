@@ -1,3 +1,4 @@
+// extensions/xai xai oauth helpers and runtime behavior.
 import { randomBytes } from "node:crypto";
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";
 import {

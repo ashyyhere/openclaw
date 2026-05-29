@@ -1,3 +1,4 @@
+// test/vitest vitest performance config helpers and runtime behavior.
 type EnvMap = Record<string, string | undefined>;
 
 const isEnabled = (value: string | undefined): boolean => {

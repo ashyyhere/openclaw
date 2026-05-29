@@ -1,13 +1,16 @@
+// hooks gmail watcher lifecycle helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { isTruthyEnvValue } from "../infra/env.js";
 import { startGmailWatcher } from "./gmail-watcher.js";
 
+/** Shared type for GMail Watcher Log in src/hooks. */
 export type GMailWatcherLog = {
   info: (msg: string) => void;
   warn: (msg: string) => void;
   error: (msg: string) => void;
 };
 
+/** Reused helper for start Gmail Watcher With Logs behavior in src/hooks. */
 export async function startGmailWatcherWithLogs(params: {
   cfg: OpenClawConfig;
   log: GMailWatcherLog;

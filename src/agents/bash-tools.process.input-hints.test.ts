@@ -1,3 +1,4 @@
+/** Tests process tool input-wait hints. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   addSession,

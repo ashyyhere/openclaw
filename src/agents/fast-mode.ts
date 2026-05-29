@@ -1,3 +1,4 @@
+/** Resolves fast-mode enablement and prompt adjustments. */
 import { normalizeFastMode } from "../auto-reply/thinking.shared.js";
 import type { SessionEntry } from "../config/sessions.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -19,6 +20,7 @@ function resolveConfiguredFastModeRaw(params: {
   return modelConfig?.params?.fastMode ?? modelConfig?.params?.fast_mode;
 }
 
+/** Resolve whether fast mode is active for the current agent/session. */
 export function resolveFastModeState(params: {
   cfg: OpenClawConfig | undefined;
   provider: string;

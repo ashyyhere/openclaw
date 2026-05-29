@@ -1,3 +1,4 @@
+// ui/src/ui/views dreaming helpers and runtime behavior.
 import { html, nothing } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { t } from "../../i18n/index.ts";
@@ -92,6 +93,7 @@ type DreamingPhaseInfo = {
   nextRunAtMs?: number;
 };
 
+/** Shared type for Dreaming Props in ui/src/ui/views. */
 export type DreamingProps = {
   active: boolean;
   shortTermCount: number;
@@ -197,14 +199,17 @@ let wikiPreviewTotalLines: number | null = null;
 let wikiPreviewTruncated = false;
 let wikiPreviewError: string | null = null;
 
+/** Reused helper for set Dream Sub Tab behavior in ui/src/ui/views. */
 export function setDreamSubTab(tab: DreamSubTab): void {
   activeSubTab = tab;
 }
 
+/** Reused helper for set Dream Advanced Waiting Sort behavior in ui/src/ui/views. */
 export function setDreamAdvancedWaitingSort(sort: AdvancedWaitingSort): void {
   advancedWaitingSort = sort;
 }
 
+/** Reused helper for set Dream Diary Sub Tab behavior in ui/src/ui/views. */
 export function setDreamDiarySubTab(tab: DreamDiarySubTab): void {
   activeDiarySubTab = tab;
 }
@@ -285,6 +290,7 @@ const sleepingLobster = html`
   </svg>
 `;
 
+/** Reused helper for render Dreaming behavior in ui/src/ui/views. */
 export function renderDreaming(props: DreamingProps) {
   const idle = !props.active;
   const dreamText = props.dreamingOf ?? currentDreamPhrase();

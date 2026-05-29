@@ -1,3 +1,4 @@
+// ui/src/ui app lifecycle helpers and runtime behavior.
 import { connectGateway } from "./app-gateway.ts";
 import {
   startLogsPolling,
@@ -70,6 +71,7 @@ type LifecycleHost = {
   topbarObserver: ResizeObserver | null;
 };
 
+/** Reused helper for handle Connected behavior in ui/src/ui. */
 export function handleConnected(host: LifecycleHost) {
   const connectGeneration = ++host.connectGeneration;
   host.basePath = inferBasePath();
@@ -98,6 +100,7 @@ export function handleConnected(host: LifecycleHost) {
   );
 }
 
+/** Reused helper for handle First Updated behavior in ui/src/ui. */
 export function handleFirstUpdated(host: LifecycleHost) {
   observeTopbar(host as unknown as Parameters<typeof observeTopbar>[0]);
 }
@@ -122,6 +125,7 @@ function clearHostGlobalTimeout(
   }
 }
 
+/** Reused helper for handle Disconnected behavior in ui/src/ui. */
 export function handleDisconnected(host: LifecycleHost) {
   host.connectGeneration += 1;
   host.controlUiTabPaintSeq = (host.controlUiTabPaintSeq ?? 0) + 1;
@@ -156,6 +160,7 @@ export function handleDisconnected(host: LifecycleHost) {
   host.controlUiResponsivenessObserver = null;
 }
 
+/** Reused helper for handle Updated behavior in ui/src/ui. */
 export function handleUpdated(host: LifecycleHost, changed: Map<PropertyKey, unknown>) {
   if (host.tab === "chat" && host.chatManualRefreshInFlight) {
     return;

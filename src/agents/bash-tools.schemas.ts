@@ -1,8 +1,10 @@
+/** TypeBox schemas for exec and process tools. */
 import { Type } from "typebox";
 import { optionalStringEnum } from "./schema/typebox.js";
 
 const EXEC_TOOL_HOST_VALUES = ["auto", "sandbox", "gateway", "node"] as const;
 
+/** Reused constant for exec Schema behavior in src/agents. */
 export const execSchema = Type.Object({
   command: Type.String({ description: "Shell command to execute" }),
   workdir: Type.Optional(Type.String({ description: "Working directory (defaults to cwd)" })),
@@ -50,6 +52,7 @@ export const execSchema = Type.Object({
   ),
 });
 
+/** Reused constant for process Schema behavior in src/agents. */
 export const processSchema = Type.Object({
   action: Type.String({
     description: "Process action (list|poll|log|write|send-keys|submit|paste|kill|clear|remove)",

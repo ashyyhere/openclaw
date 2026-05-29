@@ -1,3 +1,4 @@
+// test/vitest vitest tooling config helpers and runtime behavior.
 import { loadPatternListFromEnv } from "./vitest.pattern-file.ts";
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 import { boundaryTestFiles } from "./vitest.unit-paths.mjs";

@@ -1,3 +1,4 @@
+/** Compatibility barrel for plugin registry loader helpers. */
 export {
   testing,
   ensurePluginRegistryLoaded,

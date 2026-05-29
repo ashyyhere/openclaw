@@ -1,3 +1,4 @@
+// Tests Codex app inventory cache refresh, expiry, error, and invalidation behavior.
 import { MAX_DATE_TIMESTAMP_MS } from "openclaw/plugin-sdk/number-runtime";
 import { describe, expect, it, vi } from "vitest";
 import {

@@ -1,8 +1,10 @@
+/** Parses and merges workspace identity markdown files. */
 import fs from "node:fs";
 import path from "node:path";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import { DEFAULT_IDENTITY_FILENAME } from "./workspace.js";
 
+/** Agent identity fields loaded from workspace markdown. */
 export type AgentIdentityFile = {
   name?: string;
   emoji?: string;
@@ -48,6 +50,7 @@ function isIdentityPlaceholder(value: string): boolean {
   return IDENTITY_PLACEHOLDER_VALUES.has(normalized);
 }
 
+/** Parse an identity markdown file into identity fields. */
 export function parseIdentityMarkdown(content: string): AgentIdentityFile {
   const identity: AgentIdentityFile = {};
   const lines = content.split(/\r?\n/);
@@ -90,6 +93,7 @@ export function parseIdentityMarkdown(content: string): AgentIdentityFile {
   return identity;
 }
 
+/** Return whether parsed identity contains any configured value. */
 export function identityHasValues(identity: AgentIdentityFile): boolean {
   return Boolean(
     identity.name ||
@@ -153,6 +157,7 @@ function resolveIdentityInsertIndex(lines: string[]): number {
   return insertIndex;
 }
 
+/** Merge writable identity fields into existing markdown content. */
 export function mergeIdentityMarkdownContent(
   content: string | undefined,
   identity: Pick<AgentIdentityFile, "name" | "theme" | "emoji" | "avatar">,
@@ -202,6 +207,7 @@ function loadIdentityFromFile(identityPath: string): AgentIdentityFile | null {
   }
 }
 
+/** Load agent identity from a workspace identity file when present. */
 export function loadAgentIdentityFromWorkspace(workspace: string): AgentIdentityFile | null {
   const identityPath = path.join(workspace, DEFAULT_IDENTITY_FILENAME);
   return loadIdentityFromFile(identityPath);

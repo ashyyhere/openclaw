@@ -1,3 +1,4 @@
+// gateway session compaction checkpoints helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -21,9 +22,12 @@ import { resolveGatewaySessionStoreTarget } from "./session-utils.js";
 
 const log = createSubsystemLogger("gateway/session-compaction-checkpoints");
 const MAX_COMPACTION_CHECKPOINTS_PER_SESSION = 25;
+/** Reused constant for MAX COMPACTION CHECKPOINT LEAF SCAN BYTES behavior in src/gateway. */
 export const MAX_COMPACTION_CHECKPOINT_LEAF_SCAN_BYTES = 64 * 1024 * 1024;
+/** Reused constant for MAX COMPACTION CHECKPOINT RETAINED BYTES PER SESSION behavior in src/gateway. */
 export const MAX_COMPACTION_CHECKPOINT_RETAINED_BYTES_PER_SESSION = 128 * 1024 * 1024;
 
+/** Shared type for Captured Compaction Checkpoint Snapshot in src/gateway. */
 export type CapturedCompactionCheckpointSnapshot = {
   sessionId: string;
   sessionFile?: string;
@@ -117,6 +121,7 @@ async function statCheckpointSnapshotBytes(
   return bytesByPath;
 }
 
+/** Reused helper for resolve Session Compaction Checkpoint Reason behavior in src/gateway. */
 export function resolveSessionCompactionCheckpointReason(params: {
   trigger?: "budget" | "overflow" | "manual";
   timedOut?: boolean;
@@ -268,6 +273,7 @@ function trimTranscriptEntriesThroughLeaf(
   return entries.slice(0, leafIndex + 1);
 }
 
+/** Reused helper for read Session Leaf Id From Transcript Async behavior in src/gateway. */
 export async function readSessionLeafIdFromTranscriptAsync(
   sessionFile: string,
   maxBytes = MAX_COMPACTION_CHECKPOINT_LEAF_SCAN_BYTES,
@@ -327,6 +333,7 @@ export async function readSessionLeafIdFromTranscriptAsync(
   return null;
 }
 
+/** Reused helper for fork Compaction Checkpoint Transcript Async behavior in src/gateway. */
 export async function forkCompactionCheckpointTranscriptAsync(params: {
   sourceFile: string;
   sourceLeafId?: string;
@@ -423,6 +430,7 @@ export async function captureCompactionCheckpointSnapshotAsync(params: {
   };
 }
 
+/** Reused helper for cleanup Compaction Checkpoint Snapshot behavior in src/gateway. */
 export async function cleanupCompactionCheckpointSnapshot(
   snapshot: CapturedCompactionCheckpointSnapshot | null | undefined,
 ): Promise<void> {
@@ -470,6 +478,7 @@ async function cleanupTrimmedCompactionCheckpointFiles(params: {
   }
 }
 
+/** Reused helper for persist Session Compaction Checkpoint behavior in src/gateway. */
 export async function persistSessionCompactionCheckpoint(params: {
   cfg: OpenClawConfig;
   sessionKey: string;
@@ -566,12 +575,14 @@ export async function persistSessionCompactionCheckpoint(params: {
   return checkpoint;
 }
 
+/** Reused helper for list Session Compaction Checkpoints behavior in src/gateway. */
 export function listSessionCompactionCheckpoints(
   entry: Pick<SessionEntry, "compactionCheckpoints"> | undefined,
 ): SessionCompactionCheckpoint[] {
   return sessionStoreCheckpoints(entry).toSorted((a, b) => b.createdAt - a.createdAt);
 }
 
+/** Reused helper for get Session Compaction Checkpoint behavior in src/gateway. */
 export function getSessionCompactionCheckpoint(params: {
   entry: Pick<SessionEntry, "compactionCheckpoints"> | undefined;
   checkpointId: string;

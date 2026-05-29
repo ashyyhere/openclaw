@@ -1,3 +1,4 @@
+// Tests ui/src/ui/controllers chat test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   registerChatAttachmentPayload,

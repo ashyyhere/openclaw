@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/qa-matrix/src/shared live transport cli runtime behavior.
 import path from "node:path";
 import { resolveRepoRelativeOutputDir } from "../cli-paths.js";
 import type { QaProviderMode } from "../run-config.js";

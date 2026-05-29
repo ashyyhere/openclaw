@@ -1,3 +1,4 @@
+/** Builds grouped auth choices from providers, plugins, and config state. */
 import type { AuthProfileStore } from "../agents/auth-profiles/types.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveProviderSetupFlowContributions } from "../flows/provider-flow.js";
@@ -31,6 +32,7 @@ function compareLabelsCaseInsensitive(a: string, b: string): number {
   return a.localeCompare(b, undefined, { sensitivity: "base" });
 }
 
+/** Reused helper for compare Auth Choice Groups behavior in src/commands. */
 export function compareAuthChoiceGroups(a: AuthChoiceGroup, b: AuthChoiceGroup): number {
   const priorityA = FEATURED_AUTH_GROUP_ORDER.get(a.value) ?? Number.POSITIVE_INFINITY;
   const priorityB = FEATURED_AUTH_GROUP_ORDER.get(b.value) ?? Number.POSITIVE_INFINITY;
@@ -74,6 +76,7 @@ function resolveProviderChoiceOptions(params?: {
   );
 }
 
+/** Reused helper for format Auth Choice Choices For Cli behavior in src/commands. */
 export function formatAuthChoiceChoicesForCli(params?: {
   includeSkip?: boolean;
   includeLegacyAliases?: boolean;
@@ -92,6 +95,7 @@ export function formatAuthChoiceChoicesForCli(params?: {
   return uniqueStrings(values).join("|");
 }
 
+/** Reused helper for build Auth Choice Options behavior in src/commands. */
 export function buildAuthChoiceOptions(params: {
   store: AuthProfileStore;
   includeSkip: boolean;
@@ -126,6 +130,7 @@ export function buildAuthChoiceOptions(params: {
   return options;
 }
 
+/** Reused helper for build Auth Choice Groups behavior in src/commands. */
 export function buildAuthChoiceGroups(params: {
   store: AuthProfileStore;
   includeSkip: boolean;

@@ -1,3 +1,4 @@
+// extensions/slack configured state helpers and runtime behavior.
 const SLACK_CONFIGURED_ENV_KEYS = ["SLACK_APP_TOKEN", "SLACK_BOT_TOKEN", "SLACK_USER_TOKEN"];
 
 export function hasSlackConfiguredState(params: { env?: NodeJS.ProcessEnv }): boolean {

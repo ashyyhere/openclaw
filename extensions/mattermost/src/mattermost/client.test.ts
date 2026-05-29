@@ -1,3 +1,4 @@
+// Tests extensions/mattermost/src/mattermost client test behavior.
 import { describe, expect, it, vi } from "vitest";
 import {
   createMattermostClient,

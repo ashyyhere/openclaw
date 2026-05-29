@@ -1,3 +1,4 @@
+// extensions/signal/src config ui hints helpers and runtime behavior.
 import type { ChannelConfigUiHint } from "openclaw/plugin-sdk/core";
 
 export const signalChannelConfigUiHints = {

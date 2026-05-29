@@ -1,3 +1,4 @@
+// Tests media-generation runtime shared test behavior.
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/types.js";
 import { MAX_TIMER_TIMEOUT_MS } from "../shared/number-coercion.js";

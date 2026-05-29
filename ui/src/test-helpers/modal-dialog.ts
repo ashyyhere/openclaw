@@ -1,3 +1,4 @@
+// ui/src/test-helpers modal dialog helpers and runtime behavior.
 import { expect } from "vitest";
 import type { OpenClawModalDialog } from "../ui/components/modal-dialog.ts";
 

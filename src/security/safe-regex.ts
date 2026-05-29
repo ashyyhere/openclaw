@@ -1,3 +1,4 @@
+// security safe regex helpers and runtime behavior.
 type QuantifierRead = {
   consumed: number;
   minRepeat: number;
@@ -30,8 +31,10 @@ type PatternToken =
 
 const SAFE_REGEX_CACHE_MAX = 256;
 const SAFE_REGEX_TEST_WINDOW = 2048;
+/** Shared type for Safe Regex Reject Reason in src/security. */
 export type SafeRegexRejectReason = "empty" | "unsafe-nested-repetition" | "invalid-regex";
 
+/** Shared type for Safe Regex Compile Result in src/security. */
 export type SafeRegexCompileResult =
   | {
       regex: RegExp;
@@ -298,6 +301,7 @@ function testRegexFromStart(regex: RegExp, value: string): boolean {
   return regex.test(value);
 }
 
+/** Reused helper for test Regex With Bounded Input behavior in src/security. */
 export function testRegexWithBoundedInput(
   regex: RegExp,
   input: string,
@@ -316,12 +320,14 @@ export function testRegexWithBoundedInput(
   return testRegexFromStart(regex, input.slice(-maxWindow));
 }
 
+/** Reused helper for has Nested Repetition behavior in src/security. */
 export function hasNestedRepetition(source: string): boolean {
   // Conservative parser: tokenize first, then check if repeated tokens/groups are repeated again.
   // Non-goal: complete regex AST support; keep strict enough for config safety checks.
   return analyzeTokensForNestedRepetition(tokenizePattern(source));
 }
 
+/** Reused helper for compile Safe Regex Detailed behavior in src/security. */
 export function compileSafeRegexDetailed(source: string, flags = ""): SafeRegexCompileResult {
   const trimmed = source.trim();
   if (!trimmed) {
@@ -360,6 +366,7 @@ export function compileSafeRegexDetailed(source: string, flags = ""): SafeRegexC
   return result;
 }
 
+/** Reused helper for compile Safe Regex behavior in src/security. */
 export function compileSafeRegex(source: string, flags = ""): RegExp | null {
   return compileSafeRegexDetailed(source, flags).regex;
 }

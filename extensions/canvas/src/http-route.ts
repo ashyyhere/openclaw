@@ -1,3 +1,4 @@
+// extensions/canvas/src http route helpers and runtime behavior.
 import type { IncomingMessage, ServerResponse } from "node:http";
 import type { Duplex } from "node:stream";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";

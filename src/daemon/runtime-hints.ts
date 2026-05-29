@@ -1,3 +1,4 @@
+// daemon runtime hints helpers and runtime behavior.
 import { toPosixPath } from "./output.js";
 import { resolveGatewayRestartLogPath, resolveGatewaySupervisorLogPaths } from "./restart-logs.js";
 
@@ -5,6 +6,7 @@ function toDarwinDisplayPath(value: string): string {
   return toPosixPath(value).replace(/^[A-Za-z]:/, "");
 }
 
+/** Reused helper for build Platform Runtime Log Hints behavior in src/daemon. */
 export function buildPlatformRuntimeLogHints(params: {
   platform?: NodeJS.Platform;
   env?: NodeJS.ProcessEnv;
@@ -36,6 +38,7 @@ export function buildPlatformRuntimeLogHints(params: {
   return [];
 }
 
+/** Reused helper for build Platform Service Start Hints behavior in src/daemon. */
 export function buildPlatformServiceStartHints(params: {
   platform?: NodeJS.Platform;
   installCommand: string;

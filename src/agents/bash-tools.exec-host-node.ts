@@ -1,3 +1,4 @@
+/** Node-host exec orchestration with approval and direct invocation paths. */
 import { randomUUID } from "node:crypto";
 import { APPROVALS_SCOPE, WRITE_SCOPE } from "../gateway/operator-scopes.js";
 import type { InterpreterInlineEvalHit } from "../infra/command-analysis/inline-eval.js";
@@ -32,6 +33,7 @@ import type { ExecToolDetails } from "./bash-tools.exec-types.js";
 import type { AgentToolResult } from "./runtime/index.js";
 import { callGatewayTool } from "./tools/gateway.js";
 
+/** Re-exported API for src/agents, starting with Execute Node Host Command Params. */
 export type { ExecuteNodeHostCommandParams } from "./bash-tools.exec-host-node.types.js";
 
 const APPROVED_NODE_INVOKE_SCOPES = [WRITE_SCOPE, APPROVALS_SCOPE];
@@ -82,6 +84,7 @@ function nodePolicyBlocksAutoReview(params: {
   );
 }
 
+/** Execute a command through a paired node host. */
 export async function executeNodeHostCommand(
   params: ExecuteNodeHostCommandParams,
 ): Promise<AgentToolResult<ExecToolDetails>> {

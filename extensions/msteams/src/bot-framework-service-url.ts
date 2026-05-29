@@ -1,3 +1,4 @@
+// extensions/msteams/src bot framework service url helpers and runtime behavior.
 import {
   buildHostnameAllowlistPolicyFromSuffixAllowlist,
   isHttpsUrlAllowedByHostnameSuffixAllowlist,

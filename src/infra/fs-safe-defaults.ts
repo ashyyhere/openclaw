@@ -1,3 +1,4 @@
+// infra fs safe defaults helpers and runtime behavior.
 import { configureFsSafePython } from "@openclaw/fs-safe/config";
 
 const hasPythonModeOverride =

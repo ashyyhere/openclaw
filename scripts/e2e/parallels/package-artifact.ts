@@ -1,3 +1,4 @@
+// scripts/e2e/parallels package artifact helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import { copyFile, mkdir, readFile, rm, stat, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";

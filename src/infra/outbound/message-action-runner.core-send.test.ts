@@ -1,3 +1,4 @@
+// Tests infra/outbound message action runner core send test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../../config/config.js";
 import { setActivePluginRegistry } from "../../plugins/runtime.js";

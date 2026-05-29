@@ -1,3 +1,4 @@
+// extensions/googlechat secret contract api helpers and runtime behavior.
 export {
   channelSecrets,
   collectRuntimeConfigAssignments,

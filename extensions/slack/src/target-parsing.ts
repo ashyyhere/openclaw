@@ -1,3 +1,4 @@
+// extensions/slack/src target parsing helpers and runtime behavior.
 import {
   buildMessagingTarget,
   ensureTargetId,

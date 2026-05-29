@@ -2,6 +2,7 @@ import { theme } from "../../packages/terminal-core/src/theme.js";
 import type { SessionEntry } from "../config/sessions.js";
 import { formatTimeAgo } from "../infra/format-time/format-relative.ts";
 
+/** Shared type for Session Display Row in src/commands. */
 export type SessionDisplayRow = {
   key: string;
   updatedAt: number | null;
@@ -28,10 +29,14 @@ export type SessionDisplayRow = {
   runtimePolicySessionKey?: string;
 };
 
+/** Reused constant for SESSION KEY PAD behavior in src/commands. */
 export const SESSION_KEY_PAD = 26;
+/** Reused constant for SESSION AGE PAD behavior in src/commands. */
 export const SESSION_AGE_PAD = 9;
+/** Reused constant for SESSION MODEL PAD behavior in src/commands. */
 export const SESSION_MODEL_PAD = 14;
 
+/** Reused helper for to Session Display Row behavior in src/commands. */
 export function toSessionDisplayRow(key: string, entry: SessionEntry): SessionDisplayRow {
   const updatedAt = entry?.updatedAt ?? null;
   return {
@@ -60,6 +65,7 @@ export function toSessionDisplayRow(key: string, entry: SessionEntry): SessionDi
   };
 }
 
+/** Reused helper for to Session Display Rows behavior in src/commands. */
 export function toSessionDisplayRows(store: Record<string, SessionEntry>): SessionDisplayRow[] {
   return Object.entries(store)
     .map(([key, entry]) => toSessionDisplayRow(key, entry))
@@ -74,22 +80,26 @@ function truncateSessionKey(key: string): string {
   return `${key.slice(0, head)}...${key.slice(-6)}`;
 }
 
+/** Reused helper for format Session Key Cell behavior in src/commands. */
 export function formatSessionKeyCell(key: string, rich: boolean): string {
   const label = truncateSessionKey(key).padEnd(SESSION_KEY_PAD);
   return rich ? theme.accent(label) : label;
 }
 
+/** Reused helper for format Session Age Cell behavior in src/commands. */
 export function formatSessionAgeCell(updatedAt: number | null | undefined, rich: boolean): string {
   const ageLabel = updatedAt ? formatTimeAgo(Date.now() - updatedAt) : "unknown";
   const padded = ageLabel.padEnd(SESSION_AGE_PAD);
   return rich ? theme.muted(padded) : padded;
 }
 
+/** Reused helper for format Session Model Cell behavior in src/commands. */
 export function formatSessionModelCell(model: string | null | undefined, rich: boolean): string {
   const label = (model ?? "unknown").padEnd(SESSION_MODEL_PAD);
   return rich ? theme.info(label) : label;
 }
 
+/** Reused helper for format Session Flags Cell behavior in src/commands. */
 export function formatSessionFlagsCell(
   row: Pick<
     SessionDisplayRow,

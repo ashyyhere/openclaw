@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/monitor agent components wildcard test behavior.
 import { beforeAll, describe, expect, it } from "vitest";
 
 let buildDiscordComponentCustomId: typeof import("../components.js").buildDiscordComponentCustomId;

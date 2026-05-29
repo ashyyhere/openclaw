@@ -1,6 +1,8 @@
+// talk turn context tracker helpers and runtime behavior.
 const DEFAULT_REALTIME_VOICE_TURN_CONTEXT_LIMIT = 32;
 const DEFAULT_REALTIME_VOICE_IGNORED_CONTEXT_TTL_MS = 10_000;
 
+/** Shared type for Realtime Voice Turn Context Tracker Options in src/talk. */
 export type RealtimeVoiceTurnContextTrackerOptions = {
   limit?: number;
   ignoredContextTtlMs?: number;
@@ -8,6 +10,7 @@ export type RealtimeVoiceTurnContextTrackerOptions = {
   deferUntilAudio?: boolean;
 };
 
+/** Shared type for Realtime Voice Turn Context Handle in src/talk. */
 export type RealtimeVoiceTurnContextHandle<
   TContext,
   TExtra extends object = Record<never, never>,
@@ -24,6 +27,7 @@ type RealtimeVoiceTurnContextOpenArgs<TExtra extends object> = keyof TExtra exte
   ? [extra?: TExtra]
   : [extra: TExtra];
 
+/** Shared type for Realtime Voice Turn Context Tracker in src/talk. */
 export type RealtimeVoiceTurnContextTracker<
   TContext,
   TExtra extends object = Record<never, never>,
@@ -55,6 +59,7 @@ function normalizeNonNegativeInteger(value: number | undefined, fallback: number
   return Math.max(0, Math.floor(value));
 }
 
+/** Reused helper for create Realtime Voice Turn Context Tracker behavior in src/talk. */
 export function createRealtimeVoiceTurnContextTracker<
   TContext,
   TExtra extends object = Record<never, never>,

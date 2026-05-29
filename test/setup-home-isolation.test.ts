@@ -1,3 +1,4 @@
+// Tests test setup home isolation test behavior.
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { createConfigIO } from "../src/config/config.js";

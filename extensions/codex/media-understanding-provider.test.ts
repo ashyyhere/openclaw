@@ -1,3 +1,4 @@
+// Tests extensions/codex media understanding provider test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { buildCodexMediaUnderstandingProvider } from "./media-understanding-provider.js";
 import type { CodexAppServerClient } from "./src/app-server/client.js";

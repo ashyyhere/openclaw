@@ -1,3 +1,4 @@
+// extensions/google-meet/src voice call gateway helpers and runtime behavior.
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";
 import {
   GatewayClient,

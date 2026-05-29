@@ -1,3 +1,4 @@
+// config zod schema providers whatsapp helpers and runtime behavior.
 import { z } from "zod";
 import { resolveAccountEntry } from "../routing/account-lookup.js";
 import { normalizeStringEntries } from "../shared/string-normalization.js";
@@ -161,6 +162,7 @@ const WhatsAppAccountObjectSchema = z
   })
   .strict();
 
+/** Reused constant for Whats App Account Schema behavior in src/config. */
 export const WhatsAppAccountSchema = z.preprocess(
   stripDeprecatedWhatsAppNoopKeys,
   WhatsAppAccountObjectSchema,
@@ -232,6 +234,7 @@ const WhatsAppConfigObjectSchema = z
     }
   });
 
+/** Reused constant for Whats App Config Schema behavior in src/config. */
 export const WhatsAppConfigSchema = z.preprocess(
   stripDeprecatedWhatsAppNoopKeys,
   WhatsAppConfigObjectSchema,

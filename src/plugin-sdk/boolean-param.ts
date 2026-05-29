@@ -1,3 +1,4 @@
+// plugin-sdk boolean param helpers and runtime behavior.
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 
 /** Read loose boolean params from tool input that may arrive as booleans or "true"/"false" strings. */

@@ -1,3 +1,4 @@
+/** SSRF-guarded fetch wrappers for web tools. */
 import {
   fetchWithSsrFGuard,
   type GuardedFetchOptions,
@@ -45,6 +46,7 @@ function resolveTimeoutMs(params: {
   return undefined;
 }
 
+/** Fetches a URL under the configured web tools network guard mode. */
 export async function fetchWithWebToolsNetworkGuard(
   params: WebToolGuardedFetchOptions,
 ): Promise<GuardedFetchResult> {
@@ -72,6 +74,7 @@ async function withWebToolsNetworkGuard<T>(
   }
 }
 
+/** Runs work with the trusted remote web tools endpoint guard. */
 export async function withTrustedWebToolsEndpoint<T>(
   params: WebToolEndpointFetchOptions,
   run: (result: { response: Response; finalUrl: string }) => Promise<T>,
@@ -87,6 +90,7 @@ export async function withTrustedWebToolsEndpoint<T>(
   );
 }
 
+/** Runs work with the self-hosted web tools endpoint guard. */
 export async function withSelfHostedWebToolsEndpoint<T>(
   params: WebToolEndpointFetchOptions,
   run: (result: { response: Response; finalUrl: string }) => Promise<T>,
@@ -101,6 +105,7 @@ export async function withSelfHostedWebToolsEndpoint<T>(
   );
 }
 
+/** Runs work with strict web tools endpoint guard rules. */
 export async function withStrictWebToolsEndpoint<T>(
   params: WebToolEndpointFetchOptions,
   run: (result: { response: Response; finalUrl: string }) => Promise<T>,

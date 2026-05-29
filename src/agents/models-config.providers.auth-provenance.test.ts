@@ -1,3 +1,4 @@
+/** Tests auth source provenance recorded for generated providers. */
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { captureEnv } from "../test-utils/env.js";
 

@@ -1,3 +1,4 @@
+/** Tests CLI runtime alias equivalence and provider resolution. */
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { testing as cliBackendsTesting } from "./cli-backends.js";

@@ -1,3 +1,5 @@
+// gateway server aux methods helpers and runtime behavior.
+/** Reused constant for GATEWAY AUX METHODS behavior in src/gateway. */
 export const GATEWAY_AUX_METHODS = [
   "exec.approval.get",
   "exec.approval.list",

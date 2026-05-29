@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/qa-lab/src/live-transports/shared live transport cli runtime behavior.
 import path from "node:path";
 import { resolveRepoRelativeOutputDir } from "../../cli-paths.js";
 import { DEFAULT_QA_LIVE_PROVIDER_MODE } from "../../providers/index.js";

@@ -1,3 +1,4 @@
+// config plugin web search config helpers and runtime behavior.
 import { isRecord } from "../shared/record-coerce.js";
 
 type PluginWebSearchConfigCarrier = {
@@ -11,6 +12,7 @@ type PluginWebSearchConfigCarrier = {
   };
 };
 
+/** Reused helper for resolve Plugin Web Search Config behavior in src/config. */
 export function resolvePluginWebSearchConfig(
   config: PluginWebSearchConfigCarrier | undefined,
   pluginId: string,

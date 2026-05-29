@@ -1,3 +1,4 @@
+// Tests gateway chat sanitize test behavior.
 import { describe, expect, test } from "vitest";
 import { stripEnvelopeFromMessage } from "./chat-sanitize.js";
 

@@ -1,3 +1,4 @@
+// extensions/deepseek onboard helpers and runtime behavior.
 import {
   applyAgentDefaultModelPrimary,
   applyProviderConfigWithModelCatalog,

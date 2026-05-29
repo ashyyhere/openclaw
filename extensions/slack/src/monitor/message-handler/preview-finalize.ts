@@ -1,3 +1,4 @@
+// extensions/slack/src/monitor/message-handler preview finalize helpers and runtime behavior.
 import type { Block, KnownBlock, WebClient } from "@slack/web-api";
 import { logVerbose } from "openclaw/plugin-sdk/runtime-env";
 import { editSlackMessage } from "../../actions.js";

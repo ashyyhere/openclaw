@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src/matrix direct room test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { inspectMatrixDirectRoomEvidence } from "./direct-room.js";
 import type { MatrixClient } from "./sdk.js";

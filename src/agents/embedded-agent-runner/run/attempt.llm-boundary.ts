@@ -1,3 +1,4 @@
+/** Normalizes embedded-attempt messages before they cross the LLM boundary. */
 import { stripInboundMetadata } from "../../../auto-reply/reply/strip-inbound-meta.js";
 import { stripHistoricalRuntimeContextCustomMessages } from "../../internal-runtime-context.js";
 import type { AgentMessage } from "../../runtime/index.js";
@@ -6,6 +7,7 @@ import { normalizeAssistantReplayContent } from "../replay-history.js";
 import { markTranscriptPromptText } from "../tool-result-context-guard.js";
 import type { RuntimeContextCustomMessage } from "./runtime-context-prompt.js";
 
+/** Removes transcript-only details from messages sent to provider runtimes. */
 export function normalizeMessagesForLlmBoundary(messages: AgentMessage[]): AgentMessage[] {
   const normalized = stripUnsafeBlockedRunMetadata(
     stripToolResultDetails(normalizeAssistantReplayContent(messages)),
@@ -15,6 +17,7 @@ export function normalizeMessagesForLlmBoundary(messages: AgentMessage[]): Agent
   return stripHistoricalRuntimeContextCustomMessages(withoutHistoricalInboundMetadata);
 }
 
+/** Normalizes only the current prompt messages while preserving prior state. */
 export function normalizeMessagesForCurrentPromptBoundary(params: {
   messages: AgentMessage[];
   prompt: string;
@@ -27,6 +30,7 @@ export function normalizeMessagesForCurrentPromptBoundary(params: {
   return normalizeMessagesForLlmBoundary([...params.messages, promptMessage]).slice(0, -1);
 }
 
+/** Installs runtime context text beside the current prompt when needed. */
 export function installRuntimeContextMessageForPrompt(params: {
   session: {
     messages: AgentMessage[];
@@ -86,6 +90,7 @@ function appendRuntimeContextMessageForPrompt(params: {
   return [...params.messages, params.message];
 }
 
+/** Inserts runtime context messages in the safest position for provider replay. */
 export function insertRuntimeContextMessageForPrompt(params: {
   message: RuntimeContextCustomMessage;
   messages: AgentMessage[];
@@ -174,6 +179,7 @@ function composeModelPromptContext(params: {
     .join("\n\n");
 }
 
+/** Applies model/provider prompt transforms to the outbound message list. */
 export function installModelPromptTransform(params: {
   session: {
     agent: {

@@ -1,3 +1,4 @@
+// Tests extensions/slack/src threading tool context test behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { describe, expect, it } from "vitest";
 import { buildSlackThreadingToolContext } from "./threading-tool-context.js";

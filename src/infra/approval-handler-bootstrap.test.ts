@@ -1,3 +1,4 @@
+// Tests infra approval handler bootstrap test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createRuntimeChannel } from "../plugins/runtime/runtime-channel.js";
 import { startChannelApprovalHandlerBootstrap } from "./approval-handler-bootstrap.js";

@@ -1,9 +1,12 @@
+// config/sessions store maintenance preserve helpers and runtime behavior.
 import { normalizeStoreSessionKey } from "./store-entry.js";
 
+/** Shared type for Session Maintenance Preserve Keys Provider in src/config/sessions. */
 export type SessionMaintenancePreserveKeysProvider = () => Iterable<string> | undefined;
 
 const preserveKeysProviders = new Set<SessionMaintenancePreserveKeysProvider>();
 
+/** Reused helper for register Session Maintenance Preserve Keys Provider behavior in src/config/sessions. */
 export function registerSessionMaintenancePreserveKeysProvider(
   provider: SessionMaintenancePreserveKeysProvider,
 ): () => void {
@@ -32,6 +35,7 @@ function addSessionMaintenancePreserveKeys(
   }
 }
 
+/** Reused helper for collect Session Maintenance Preserve Keys behavior in src/config/sessions. */
 export function collectSessionMaintenancePreserveKeys(
   baseKeys?: Iterable<string | undefined>,
 ): Set<string> | undefined {

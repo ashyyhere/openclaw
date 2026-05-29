@@ -1,3 +1,4 @@
+/** Resolves whether subagent session cleanup can run now or must defer. */
 import { getDeliveryAttemptCount } from "./subagent-delivery-state.js";
 import {
   SUBAGENT_ENDED_REASON_COMPLETE,
@@ -21,6 +22,7 @@ type DeferredCleanupDecision =
       resumeDelayMs?: number;
     };
 
+/** Reused helper for resolve Cleanup Completion Reason behavior in src/agents. */
 export function resolveCleanupCompletionReason(
   entry: SubagentRunRecord,
 ): SubagentLifecycleEndedReason {
@@ -31,6 +33,7 @@ function resolveEndedAgoMs(entry: SubagentRunRecord, now: number): number {
   return typeof entry.endedAt === "number" ? now - entry.endedAt : 0;
 }
 
+/** Reused helper for resolve Deferred Cleanup Decision behavior in src/agents. */
 export function resolveDeferredCleanupDecision(params: {
   entry: SubagentRunRecord;
   now: number;

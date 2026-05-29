@@ -1,5 +1,7 @@
+/** Serializes ACP operations per actor/session key. */
 import { KeyedAsyncQueue } from "openclaw/plugin-sdk/keyed-async-queue";
 
+/** Per-actor async queue used to keep ACP session operations ordered. */
 export class SessionActorQueue {
   private readonly queue = new KeyedAsyncQueue();
   private readonly pendingBySession = new Map<string, number>();

@@ -1,3 +1,4 @@
+// Tests extensions/canvas/src/host file resolver test behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { resolvePreferredOpenClawTmpDir, withTempWorkspace } from "openclaw/plugin-sdk/temp-path";

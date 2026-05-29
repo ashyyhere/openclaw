@@ -1,3 +1,4 @@
+/** Test support for background media generation task assertions. */
 import { expect, vi } from "vitest";
 
 type MockWithReset = {
@@ -5,6 +6,7 @@ type MockWithReset = {
   mockResolvedValue?(value: unknown): void;
 };
 
+/** Reused constant for task Executor Mocks behavior in src/agents/tools. */
 export const taskExecutorMocks = {
   createRunningTaskRun: vi.fn(),
   recordTaskRunProgressByRunId: vi.fn(),
@@ -12,10 +14,12 @@ export const taskExecutorMocks = {
   failTaskRunByRunId: vi.fn(),
 };
 
+/** Reused constant for announce Delivery Mocks behavior in src/agents/tools. */
 export const announceDeliveryMocks = {
   deliverSubagentAnnouncement: vi.fn(),
 };
 
+/** Reused constant for task Delivery Runtime Mocks behavior in src/agents/tools. */
 export const taskDeliveryRuntimeMocks = {
   sendMessage: vi.fn(),
 };
@@ -101,6 +105,7 @@ function requireRecordArray(value: unknown, label: string): Record<string, unkno
   return value.map((entry, index) => requireRecord(entry, `${label}[${index}]`));
 }
 
+/** Creates a media generation completion fixture. */
 export function createMediaCompletionFixture({
   directSend,
   mediaUrls,
@@ -130,6 +135,7 @@ export function createMediaCompletionFixture({
   };
 }
 
+/** Resets background media generation mocks. */
 export function resetMediaBackgroundMocks({
   taskExecutorMocks,
   taskDeliveryRuntimeMocks,
@@ -150,6 +156,7 @@ export function resetMediaBackgroundMocks({
   announceDeliveryMocks.deliverSubagentAnnouncement.mockReset();
 }
 
+/** Asserts that a task run was queued. */
 export function expectQueuedTaskRun({
   taskExecutorMocks,
   taskKind,
@@ -165,6 +172,7 @@ export function expectQueuedTaskRun({
   expect(params.progressSummary).toBe(progressSummary);
 }
 
+/** Reused helper for expect Recorded Task Progress behavior in src/agents/tools. */
 export function expectRecordedTaskProgress({
   taskExecutorMocks,
   runId,
@@ -178,6 +186,7 @@ export function expectRecordedTaskProgress({
   expect(params.progressSummary).toBe(progressSummary);
 }
 
+/** Reused helper for expect Direct Media Send behavior in src/agents/tools. */
 export function expectDirectMediaSend({
   sendMessageMock,
   channel,
@@ -194,6 +203,7 @@ export function expectDirectMediaSend({
   expect(params.mediaUrls).toEqual(mediaUrls);
 }
 
+/** Reused helper for expect Fallback Media Announcement behavior in src/agents/tools. */
 export function expectFallbackMediaAnnouncement({
   deliverAnnouncementMock,
   requesterSessionKey,

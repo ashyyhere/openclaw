@@ -1,5 +1,7 @@
+// packages/gateway-client/src event loop ready helpers and runtime behavior.
 import { resolveFiniteTimeoutDelayMs } from "./timeouts.js";
 
+/** Public type describing Event Loop Ready Result for packages/gateway-client. */
 export type EventLoopReadyResult = {
   ready: boolean;
   elapsedMs: number;
@@ -8,6 +10,7 @@ export type EventLoopReadyResult = {
   aborted: boolean;
 };
 
+/** Public type describing Event Loop Ready Options for packages/gateway-client. */
 export type EventLoopReadyOptions = {
   maxWaitMs?: number;
   intervalMs?: number;
@@ -25,6 +28,7 @@ function resolvePositiveInteger(value: number | undefined, fallback: number): nu
   return Number.isFinite(value) && value !== undefined ? Math.max(1, Math.floor(value)) : fallback;
 }
 
+/** Public helper for wait For Event Loop Ready behavior in packages/gateway-client. */
 export async function waitForEventLoopReady(
   options: EventLoopReadyOptions = {},
 ): Promise<EventLoopReadyResult> {

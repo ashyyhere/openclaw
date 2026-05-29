@@ -53,6 +53,7 @@ function resolveTools(config: OpenClawConfig): AnyAgentTool[] {
   });
 }
 
+/** Reused helper for create Plugin Tools Mcp Server behavior in src/mcp. */
 export function createPluginToolsMcpServer(
   params: {
     config?: OpenClawConfig;
@@ -64,6 +65,7 @@ export function createPluginToolsMcpServer(
   return createToolsMcpServer({ name: "openclaw-plugin-tools", tools });
 }
 
+/** Reused helper for serve Plugin Tools Mcp behavior in src/mcp. */
 export async function servePluginToolsMcp(): Promise<void> {
   // MCP stdio requires stdout to stay protocol-only, including during plugin
   // tool discovery before the transport is connected.

@@ -1,3 +1,4 @@
+// llm/providers openai completions helpers and runtime behavior.
 import OpenAI from "openai";
 import type {
   ChatCompletionAssistantMessageParam,
@@ -75,6 +76,7 @@ function isImageContentBlock(block: { type: string }): block is ImageContent {
   return block.type === "image";
 }
 
+/** Shared type for Open AICompletions Options in src/llm/providers. */
 export interface OpenAICompletionsOptions extends StreamOptions {
   toolChoice?: "auto" | "none" | "required" | { type: "function"; function: { name: string } };
   reasoningEffort?: "minimal" | "low" | "medium" | "high" | "xhigh";
@@ -114,6 +116,7 @@ function resolveCacheRetention(cacheRetention?: CacheRetention): CacheRetention 
   return "short";
 }
 
+/** Reused constant for stream Open AICompletions behavior in src/llm/providers. */
 export const streamOpenAICompletions: StreamFunction<
   "openai-completions",
   OpenAICompletionsOptions
@@ -454,6 +457,7 @@ export const streamOpenAICompletions: StreamFunction<
   return stream;
 };
 
+/** Reused constant for stream Simple Open AICompletions behavior in src/llm/providers. */
 export const streamSimpleOpenAICompletions: StreamFunction<
   "openai-completions",
   SimpleStreamOptions
@@ -810,6 +814,7 @@ function addCacheControlToTextContent(
   return false;
 }
 
+/** Reused helper for convert Messages behavior in src/llm/providers. */
 export function convertMessages(
   model: Model<"openai-completions">,
   context: Context,

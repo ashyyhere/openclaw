@@ -1,3 +1,4 @@
+// Inline action handling for get-reply results.
 import { collectTextContentBlocks } from "../../agents/content-blocks.js";
 import type { BlockReplyChunking } from "../../agents/embedded-agent-block-chunker.js";
 import { getChannelPlugin } from "../../channels/plugins/index.js";
@@ -120,6 +121,7 @@ function isMentionOnlyResidualText(text: string, wasMentioned: boolean | undefin
   return /^(?:<@[!&]?[A-Za-z0-9._:-]+>|<!(?:here|channel|everyone)>|[:,.!?-]|\s)+$/u.test(trimmed);
 }
 
+/** Shared type for Inline Action Result in src/auto-reply/reply. */
 export type InlineActionResult =
   | { kind: "reply"; reply: ReplyPayload | ReplyPayload[] | undefined }
   | {
@@ -177,6 +179,7 @@ function extractBlockedToolReason(result: unknown): string | null {
   return typeof reason === "string" && reason.trim() ? reason.trim() : null;
 }
 
+/** Reused helper for handle Inline Actions behavior in src/auto-reply/reply. */
 export async function handleInlineActions(params: {
   ctx: MsgContext;
   sessionCtx: TemplateContext;

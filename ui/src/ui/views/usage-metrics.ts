@@ -1,3 +1,4 @@
+// ui/src/ui/views usage metrics helpers and runtime behavior.
 import { html } from "lit";
 import {
   buildUsageAggregateTail,
@@ -749,7 +750,9 @@ const buildUsageInsightStats = (
   };
 };
 
+/** Re-exported API for ui/src/ui/views, starting with Usage Insight Stats. */
 export type { UsageInsightStats };
+/** Re-exported API for ui/src/ui/views. */
 export {
   buildAggregatesFromSessions,
   buildPeakErrorHours,

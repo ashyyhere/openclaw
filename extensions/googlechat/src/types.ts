@@ -1,3 +1,4 @@
+// Shared types for extensions/googlechat/src types behavior.
 export type GoogleChatSpace = {
   name?: string;
   displayName?: string;

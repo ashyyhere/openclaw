@@ -1,3 +1,5 @@
+// config legacy shared helpers and runtime behavior.
+/** Shared type for Legacy Config Rule in src/config. */
 export type LegacyConfigRule = {
   path: string[];
   message: string;
@@ -13,6 +15,7 @@ type LegacyConfigMigration = {
   apply: (raw: Record<string, unknown>, changes: string[]) => void;
 };
 
+/** Shared type for Legacy Config Migration Spec in src/config. */
 export type LegacyConfigMigrationSpec = LegacyConfigMigration & {
   legacyRules?: LegacyConfigRule[];
 };
@@ -21,9 +24,11 @@ import { isSafeExecutableValue } from "../infra/exec-safety.js";
 import { isRecord } from "../utils.js";
 import { isBlockedObjectKey } from "./prototype-keys.js";
 
+/** Reused constant for get Record behavior in src/config. */
 export const getRecord = (value: unknown): Record<string, unknown> | null =>
   isRecord(value) ? value : null;
 
+/** Reused constant for ensure Record behavior in src/config. */
 export const ensureRecord = (
   root: Record<string, unknown>,
   key: string,
@@ -37,6 +42,7 @@ export const ensureRecord = (
   return next;
 };
 
+/** Reused constant for merge Missing behavior in src/config. */
 export const mergeMissing = (target: Record<string, unknown>, source: Record<string, unknown>) => {
   for (const [key, value] of Object.entries(source)) {
     if (value === undefined || isBlockedObjectKey(key)) {
@@ -53,6 +59,7 @@ export const mergeMissing = (target: Record<string, unknown>, source: Record<str
   }
 };
 
+/** Reused constant for map Legacy Audio Transcription behavior in src/config. */
 export const mapLegacyAudioTranscription = (value: unknown): Record<string, unknown> | null => {
   const transcriber = getRecord(value);
   const command = Array.isArray(transcriber?.command) ? transcriber?.command : null;
@@ -87,6 +94,7 @@ export const mapLegacyAudioTranscription = (value: unknown): Record<string, unkn
   return result;
 };
 
+/** Reused constant for define Legacy Config Migration behavior in src/config. */
 export const defineLegacyConfigMigration = (
   migration: LegacyConfigMigrationSpec,
 ): LegacyConfigMigrationSpec => migration;

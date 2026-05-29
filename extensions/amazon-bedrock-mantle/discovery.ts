@@ -1,3 +1,4 @@
+// extensions/amazon-bedrock-mantle discovery helpers and runtime behavior.
 import { createSubsystemLogger } from "openclaw/plugin-sdk/core";
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";
 import {

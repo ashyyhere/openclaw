@@ -1,3 +1,4 @@
+// Tests daemon systemd unit test behavior.
 import { describe, expect, it } from "vitest";
 import { buildSystemdUnit } from "./systemd-unit.js";
 

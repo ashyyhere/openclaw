@@ -1,3 +1,4 @@
+// extensions/imessage/src config schema helpers and runtime behavior.
 import { buildChannelConfigSchema, IMessageConfigSchema } from "../config-api.js";
 import { iMessageChannelConfigUiHints } from "./config-ui-hints.js";
 

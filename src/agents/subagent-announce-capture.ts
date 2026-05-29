@@ -1,3 +1,5 @@
+/** Small retry helpers for capturing latest subagent output after completion. */
+/** Repeatedly reads subagent output until non-empty text appears or the wait budget expires. */
 export async function readLatestSubagentOutputWithRetryUsing<Outcome = unknown>(params: {
   sessionKey: string;
   maxWaitMs: number;
@@ -24,6 +26,7 @@ export async function readLatestSubagentOutputWithRetryUsing<Outcome = unknown>(
   return result;
 }
 
+/** Reads an immediate or briefly delayed subagent completion reply. */
 export async function captureSubagentCompletionReplyUsing(params: {
   sessionKey: string;
   waitForReply?: boolean;

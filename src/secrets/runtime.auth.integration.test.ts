@@ -1,3 +1,4 @@
+// Tests secrets runtime auth integration test behavior.
 import { readFileSync } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";

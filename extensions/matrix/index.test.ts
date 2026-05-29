@@ -1,3 +1,4 @@
+// Tests extensions/matrix index test behavior.
 import { createTestPluginApi } from "openclaw/plugin-sdk/plugin-test-api";
 import { describe, expect, it, vi } from "vitest";
 import { registerMatrixCliMetadata } from "./cli-metadata.js";

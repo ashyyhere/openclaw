@@ -1,3 +1,4 @@
+/** Adapts OpenClaw agent tools to embedded runtime and client tool definitions. */
 import { createHash } from "node:crypto";
 import { logDebug, logError } from "../logger.js";
 import { redactToolDetail } from "../logging/redact.js";
@@ -47,6 +48,7 @@ const TOOL_ERROR_EXEC_COMMAND_HASH_CHARS = 16;
 const SENSITIVE_EXEC_ENV_VALUE = "[omitted exec env value]";
 const EXEC_COMMAND_PARAM_KEYS = new Set(["command", "cmd"]);
 
+/** Shared type for Client Tool Call Recorder in src/agents. */
 export type ClientToolCallRecorder =
   | ((toolName: string, params: Record<string, unknown>) => void)
   | {
@@ -269,8 +271,10 @@ function splitToolExecuteArgs(args: ToolExecuteArgsAny): {
   };
 }
 
+/** Reused constant for CLIENT TOOL NAME CONFLICT PREFIX behavior in src/agents. */
 export const CLIENT_TOOL_NAME_CONFLICT_PREFIX = "client tool name conflict:";
 
+/** Find tool-name collisions between host/client tools before merging them. */
 export function findClientToolNameConflicts(params: {
   tools: ClientToolDefinition[];
   existingToolNames?: Iterable<string>;
@@ -305,14 +309,17 @@ export function findClientToolNameConflicts(params: {
   return Array.from(conflicts);
 }
 
+/** Create a stable error for client tool name conflicts. */
 export function createClientToolNameConflictError(conflicts: string[]): Error {
   return new Error(`${CLIENT_TOOL_NAME_CONFLICT_PREFIX} ${conflicts.join(", ")}`);
 }
 
+/** Return whether an error came from client tool name conflict detection. */
 export function isClientToolNameConflictError(err: unknown): err is Error {
   return err instanceof Error && err.message.startsWith(CLIENT_TOOL_NAME_CONFLICT_PREFIX);
 }
 
+/** Convert OpenClaw agent tools into embedded runtime tool definitions. */
 export function toToolDefinitions(
   tools: AnyAgentTool[],
   hookContext?: HookContext,
@@ -428,6 +435,7 @@ function coerceParamsRecord(value: unknown): Record<string, unknown> {
 
 // Convert client tools (OpenResponses hosted tools) to ToolDefinition format
 // These tools are intercepted to return a "pending" result instead of executing
+/** Convert client-provided tools into embedded runtime tool definitions. */
 export function toClientToolDefinitions(
   tools: ClientToolDefinition[],
   onClientToolCall?: ClientToolCallRecorder,

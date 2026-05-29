@@ -1,3 +1,4 @@
+// extensions/qa-lab/src temp dir test helper helpers and runtime behavior.
 import {
   tempWorkspace,
   resolvePreferredOpenClawTmpDir,

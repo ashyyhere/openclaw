@@ -1,3 +1,4 @@
+/** Covers Docker user fallback resolution for sandbox contexts. */
 import { describe, expect, it } from "vitest";
 import { resolveSandboxDockerUser } from "./context.js";
 import type { SandboxDockerConfig } from "./types.js";

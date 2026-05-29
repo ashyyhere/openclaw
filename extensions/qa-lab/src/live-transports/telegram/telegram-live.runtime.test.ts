@@ -1,3 +1,4 @@
+// Tests extensions/qa-lab/src/live-transports/telegram telegram live runtime test behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { MAX_TIMER_TIMEOUT_MS } from "openclaw/plugin-sdk/number-runtime";
 import { afterEach, describe, expect, it, vi } from "vitest";

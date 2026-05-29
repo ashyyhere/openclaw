@@ -1,3 +1,4 @@
+// infra shell wrapper resolution helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import {
   MAX_DISPATCH_WRAPPER_DEPTH,
@@ -29,7 +30,9 @@ function withWindowsExeAliases(names: readonly string[]): string[] {
   return Array.from(expanded);
 }
 
+/** Reused constant for POSIX SHELL WRAPPERS behavior in src/infra. */
 export const POSIX_SHELL_WRAPPERS = new Set(POSIX_SHELL_WRAPPER_NAMES);
+/** Reused constant for POWERSHELL WRAPPERS behavior in src/infra. */
 export const POWERSHELL_WRAPPERS = new Set(withWindowsExeAliases(POWERSHELL_WRAPPER_NAMES));
 
 const POSIX_SHELL_WRAPPER_CANONICAL = new Set<string>(POSIX_SHELL_WRAPPER_NAMES);
@@ -136,6 +139,7 @@ function isWithinDispatchClassificationDepth(depth: number): boolean {
   return depth <= MAX_DISPATCH_WRAPPER_DEPTH;
 }
 
+/** Reused helper for is Shell Wrapper Executable behavior in src/infra. */
 export function isShellWrapperExecutable(token: string): boolean {
   return SHELL_WRAPPER_CANONICAL.has(normalizeExecutableToken(token));
 }
@@ -145,6 +149,7 @@ function isShellWrapperInvocationInternal(argv: string[], depth: number): boolea
   return candidate ? isShellWrapperExecutable(candidate.token0) : false;
 }
 
+/** Reused helper for is Shell Wrapper Invocation behavior in src/infra. */
 export function isShellWrapperInvocation(argv: string[]): boolean {
   return isShellWrapperInvocationInternal(argv, 0);
 }
@@ -168,6 +173,7 @@ type ShellMultiplexerUnwrapResult =
   | { kind: "blocked"; wrapper: string }
   | { kind: "unwrapped"; wrapper: string; argv: string[] };
 
+/** Reused helper for unwrap Known Shell Multiplexer Invocation behavior in src/infra. */
 export function unwrapKnownShellMultiplexerInvocation(
   argv: string[],
 ): ShellMultiplexerUnwrapResult {
@@ -309,6 +315,7 @@ function hasEnvManipulationBeforeShellWrapperInternal(
   return candidate.state;
 }
 
+/** Reused helper for has Env Manipulation Before Shell Wrapper behavior in src/infra. */
 export function hasEnvManipulationBeforeShellWrapper(argv: string[]): boolean {
   return hasEnvManipulationBeforeShellWrapperInternal(argv, 0, false);
 }
@@ -366,14 +373,17 @@ function extractShellWrapperCommandInternal(
   };
 }
 
+/** Reused helper for resolve Shell Wrapper Transport Argv behavior in src/infra. */
 export function resolveShellWrapperTransportArgv(argv: string[]): string[] | null {
   return resolveShellWrapperSpecAndArgvInternal(argv, 0)?.argv ?? null;
 }
 
+/** Reused helper for extract Shell Wrapper Inline Command behavior in src/infra. */
 export function extractShellWrapperInlineCommand(argv: string[]): string | null {
   return resolveShellWrapperSpecAndArgvInternal(argv, 0)?.payload ?? null;
 }
 
+/** Reused helper for extract Bindable Shell Wrapper Inline Command behavior in src/infra. */
 export function extractBindableShellWrapperInlineCommand(
   argv: string[],
   rawCommand?: string | null,
@@ -381,6 +391,7 @@ export function extractBindableShellWrapperInlineCommand(
   return extractShellWrapperCommandInternal(argv, normalizeRawCommand(rawCommand), 0).command;
 }
 
+/** Reused helper for extract Shell Wrapper Command behavior in src/infra. */
 export function extractShellWrapperCommand(
   argv: string[],
   rawCommand?: string | null,
@@ -388,6 +399,7 @@ export function extractShellWrapperCommand(
   return extractShellWrapperCommandInternal(argv, normalizeRawCommand(rawCommand), 0);
 }
 
+/** Reused helper for is Blocked Shell Wrapper Command behavior in src/infra. */
 export function isBlockedShellWrapperCommand(argv: string[], rawCommand?: string | null): boolean {
   const extracted = extractShellWrapperCommandInternal(argv, normalizeRawCommand(rawCommand), 0);
   return extracted.isWrapper && extracted.command === null;

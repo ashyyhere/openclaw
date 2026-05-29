@@ -1,3 +1,4 @@
+/** Covers remote-shell filesystem bridge mutation helpers. */
 import { spawnSync } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";

@@ -1,3 +1,4 @@
+// ui/src/ui/views nodes helpers and runtime behavior.
 import { html, nothing } from "lit";
 import {
   resolvePendingDeviceApprovalState,
@@ -10,9 +11,11 @@ import { formatRelativeTimestamp, formatList } from "../format.ts";
 import { normalizeOptionalString } from "../string-coerce.ts";
 import { renderExecApprovals, resolveExecApprovalsState } from "./nodes-exec-approvals.ts";
 import { resolveConfigAgents, resolveNodeTargets, type NodeTargetOption } from "./nodes-shared.ts";
+/** Re-exported API for ui/src/ui/views, starting with Nodes Props. */
 export type { NodesProps } from "./nodes.types.ts";
 import type { NodesProps } from "./nodes.types.ts";
 
+/** Reused helper for render Nodes behavior in ui/src/ui/views. */
 export function renderNodes(props: NodesProps) {
   const bindingState = resolveBindingsState(props);
   const approvalsState = resolveExecApprovalsState(props);

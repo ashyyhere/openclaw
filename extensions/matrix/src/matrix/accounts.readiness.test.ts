@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src/matrix accounts readiness test behavior.
 import { describe, expect, it } from "vitest";
 import { installMatrixTestRuntime } from "../test-runtime.js";
 import type { CoreConfig } from "../types.js";

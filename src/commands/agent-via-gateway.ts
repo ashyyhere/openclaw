@@ -1,3 +1,4 @@
+/** Runs agent commands through gateway sessions and outbound delivery. */
 import { randomUUID } from "node:crypto";
 import { resolveSendableOutboundReplyParts } from "openclaw/plugin-sdk/reply-payload";
 import {
@@ -119,6 +120,7 @@ function loadAgentSessionModule(): Promise<AgentSessionModule> {
   return agentSessionModulePromise;
 }
 
+/** Reused constant for agent Via Gateway Testing behavior in src/commands. */
 export const agentViaGatewayTesting = {
   resetLazyImportsForTests(): void {
     embeddedAgentCommandPromise = undefined;
@@ -745,6 +747,7 @@ async function agentViaGatewayCommandWithTransientRetries(
   throw new Error("Gateway agent retry loop exhausted unexpectedly.");
 }
 
+/** Reused helper for agent Cli Command behavior in src/commands. */
 export async function agentCliCommand(
   opts: AgentCliOpts,
   runtime: RuntimeEnv,

@@ -1,3 +1,4 @@
+// extensions/browser/src/browser errors helpers and runtime behavior.
 export const BROWSER_ENDPOINT_BLOCKED_MESSAGE = "browser endpoint blocked by policy";
 export const BROWSER_NAVIGATION_BLOCKED_MESSAGE = "browser navigation blocked by policy";
 

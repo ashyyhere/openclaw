@@ -1,3 +1,4 @@
+// utils delivery context shared helpers and runtime behavior.
 import {
   channelRouteCompactKey,
   channelRouteThreadId,
@@ -14,8 +15,10 @@ import {
 } from "./message-channel-constants.js";
 import { normalizeMessageChannel } from "./message-channel-core.js";
 import { isDeliverableMessageChannel } from "./message-channel-normalize.js";
+/** Re-exported API for src/utils, starting with Delivery Context. */
 export type { DeliveryContext, DeliveryContextSessionSource } from "./delivery-context.types.js";
 
+/** Reused helper for normalize Delivery Context behavior in src/utils. */
 export function normalizeDeliveryContext(context?: DeliveryContext): DeliveryContext | undefined {
   if (!context) {
     return undefined;
@@ -44,6 +47,7 @@ export function normalizeDeliveryContext(context?: DeliveryContext): DeliveryCon
   return normalized;
 }
 
+/** Reused helper for normalize Delivery Channel Route behavior in src/utils. */
 export function normalizeDeliveryChannelRoute(route?: unknown): ChannelRouteRef | undefined {
   if (!route || typeof route !== "object" || Array.isArray(route)) {
     return undefined;
@@ -61,6 +65,7 @@ export function normalizeDeliveryChannelRoute(route?: unknown): ChannelRouteRef 
   });
 }
 
+/** Reused helper for delivery Context From Channel Route behavior in src/utils. */
 export function deliveryContextFromChannelRoute(
   route?: ChannelRouteRef,
 ): DeliveryContext | undefined {
@@ -73,6 +78,7 @@ export function deliveryContextFromChannelRoute(
   });
 }
 
+/** Reused helper for channel Route From Delivery Context behavior in src/utils. */
 export function channelRouteFromDeliveryContext(
   context?: DeliveryContext,
 ): ChannelRouteRef | undefined {
@@ -122,6 +128,7 @@ function mergeExternalDeliveryContextOverInternalRoute(
   });
 }
 
+/** Reused helper for normalize Session Delivery Fields behavior in src/utils. */
 export function normalizeSessionDeliveryFields(source?: DeliveryContextSessionSource): {
   route?: ChannelRouteRef;
   deliveryContext?: DeliveryContext;
@@ -185,6 +192,7 @@ export function normalizeSessionDeliveryFields(source?: DeliveryContextSessionSo
   };
 }
 
+/** Reused helper for delivery Context From Session behavior in src/utils. */
 export function deliveryContextFromSession(
   entry?: DeliveryContextSessionSource,
 ): DeliveryContext | undefined {
@@ -204,6 +212,7 @@ export function deliveryContextFromSession(
   return normalizeSessionDeliveryFields(source).deliveryContext;
 }
 
+/** Reused helper for merge Delivery Context behavior in src/utils. */
 export function mergeDeliveryContext(
   primary?: DeliveryContext,
   fallback?: DeliveryContext,
@@ -233,6 +242,7 @@ export function mergeDeliveryContext(
   });
 }
 
+/** Reused helper for delivery Context Key behavior in src/utils. */
 export function deliveryContextKey(context?: DeliveryContext): string | undefined {
   return channelRouteCompactKey(normalizeDeliveryContext(context));
 }

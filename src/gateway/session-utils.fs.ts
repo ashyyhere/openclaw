@@ -1,3 +1,4 @@
+// gateway session utils fs helpers and runtime behavior.
 import fs from "node:fs";
 import { StringDecoder } from "node:string_decoder";
 import { deriveSessionTotalTokens, hasNonzeroUsage, normalizeUsage } from "../agents/usage.js";
@@ -119,6 +120,7 @@ async function yieldTranscriptScan(): Promise<void> {
   await new Promise<void>((resolve) => setImmediate(resolve));
 }
 
+/** Reused helper for attach Open Claw Transcript Meta behavior in src/gateway. */
 export function attachOpenClawTranscriptMeta(
   message: unknown,
   meta: Record<string, unknown>,
@@ -142,6 +144,7 @@ export function attachOpenClawTranscriptMeta(
   };
 }
 
+/** Reused helper for read Session Messages behavior in src/gateway. */
 export function readSessionMessages(
   sessionId: string,
   storePath: string | undefined,
@@ -157,12 +160,14 @@ export function readSessionMessages(
   return transcriptRecordsToMessages(readSelectedTranscriptRecords(filePath));
 }
 
+/** Shared type for Read Recent Session Messages Options in src/gateway. */
 export type ReadRecentSessionMessagesOptions = {
   maxMessages: number;
   maxBytes?: number;
   maxLines?: number;
 };
 
+/** Shared type for Read Session Messages Async Options in src/gateway. */
 export type ReadSessionMessagesAsyncOptions =
   | {
       mode: "full";
@@ -196,6 +201,7 @@ function normalizeRecentSessionReadOptions(opts?: Partial<ReadRecentSessionMessa
   return { maxMessages, maxBytes, maxLines };
 }
 
+/** Reused helper for read Recent Session Messages behavior in src/gateway. */
 export function readRecentSessionMessages(
   sessionId: string,
   storePath: string | undefined,
@@ -526,6 +532,7 @@ async function visitTranscriptLinesAsync(
   }
 }
 
+/** Reused helper for visit Session Messages behavior in src/gateway. */
 export function visitSessionMessages(
   sessionId: string,
   storePath: string | undefined,
@@ -544,6 +551,7 @@ export function visitSessionMessages(
   return messages.length;
 }
 
+/** Reused helper for read Session Message Count behavior in src/gateway. */
 export function readSessionMessageCount(
   sessionId: string,
   storePath: string | undefined,
@@ -570,6 +578,7 @@ export function readSessionMessageCount(
   return count;
 }
 
+/** Reused helper for read Session Messages Async behavior in src/gateway. */
 export async function readSessionMessagesAsync(
   sessionId: string,
   storePath: string | undefined,
@@ -588,6 +597,7 @@ export async function readSessionMessagesAsync(
   return index?.entries.flatMap((entry) => indexedTranscriptEntryToMessages(entry)) ?? [];
 }
 
+/** Reused helper for visit Session Messages Async behavior in src/gateway. */
 export async function visitSessionMessagesAsync(
   sessionId: string,
   storePath: string | undefined,
@@ -612,6 +622,7 @@ export async function visitSessionMessagesAsync(
   return index.entries.length;
 }
 
+/** Reused helper for read Session Message Count Async behavior in src/gateway. */
 export async function readSessionMessageCountAsync(
   sessionId: string,
   storePath: string | undefined,
@@ -639,6 +650,7 @@ export async function readSessionMessageCountAsync(
   return count;
 }
 
+/** Reused helper for read Recent Session Messages With Stats behavior in src/gateway. */
 export function readRecentSessionMessagesWithStats(
   sessionId: string,
   storePath: string | undefined,
@@ -654,6 +666,7 @@ export function readRecentSessionMessagesWithStats(
   return { messages: messagesWithSeq, totalMessages };
 }
 
+/** Reused helper for read Recent Session Messages Async behavior in src/gateway. */
 export async function readRecentSessionMessagesAsync(
   sessionId: string,
   storePath: string | undefined,
@@ -686,6 +699,7 @@ export async function readRecentSessionMessagesAsync(
   return parseRecentTranscriptTailMessages(lines, maxMessages);
 }
 
+/** Reused helper for read Recent Session Messages With Stats Async behavior in src/gateway. */
 export async function readRecentSessionMessagesWithStatsAsync(
   sessionId: string,
   storePath: string | undefined,
@@ -701,6 +715,7 @@ export async function readRecentSessionMessagesWithStatsAsync(
   return { messages: messagesWithSeq, totalMessages };
 }
 
+/** Reused helper for read Recent Session Transcript Lines behavior in src/gateway. */
 export function readRecentSessionTranscriptLines(params: {
   sessionId: string;
   storePath: string | undefined;
@@ -784,6 +799,7 @@ function indexedTranscriptEntryToMessages(entry: IndexedTranscriptEntry): unknow
   return message ? [message] : [];
 }
 
+/** Re-exported API for src/gateway. */
 export {
   archiveFileOnDisk,
   archiveSessionTranscripts,
@@ -791,6 +807,7 @@ export {
   resolveSessionTranscriptCandidates,
 } from "./session-transcript-files.fs.js";
 
+/** Reused helper for cap Array By Json Bytes behavior in src/gateway. */
 export function capArrayByJsonBytes<T>(
   items: T[],
   maxBytes: number,
@@ -817,6 +834,7 @@ type TranscriptMessage = {
   provenance?: unknown;
 };
 
+/** Reused helper for read Session Title Fields From Transcript behavior in src/gateway. */
 export function readSessionTitleFieldsFromTranscript(
   sessionId: string,
   storePath: string | undefined,
@@ -889,6 +907,7 @@ export function readSessionTitleFieldsFromTranscript(
   }
 }
 
+/** Reused helper for read Session Title Fields From Transcript Async behavior in src/gateway. */
 export async function readSessionTitleFieldsFromTranscriptAsync(
   sessionId: string,
   storePath: string | undefined,
@@ -1052,6 +1071,7 @@ function withOpenTranscriptFd<T>(filePath: string, read: (fd: number) => T | nul
   return null;
 }
 
+/** Reused helper for read First User Message From Transcript behavior in src/gateway. */
 export function readFirstUserMessageFromTranscript(
   sessionId: string,
   storePath: string | undefined,
@@ -1450,6 +1470,7 @@ function extractAggregateUsageFromTranscriptChunk(
   );
 }
 
+/** Reused helper for read Latest Session Usage From Transcript behavior in src/gateway. */
 export function readLatestSessionUsageFromTranscript(
   sessionId: string,
   storePath: string | undefined,
@@ -1471,6 +1492,7 @@ export function readLatestSessionUsageFromTranscript(
   });
 }
 
+/** Reused helper for read Latest Session Usage From Transcript Async behavior in src/gateway. */
 export async function readLatestSessionUsageFromTranscriptAsync(
   sessionId: string,
   storePath: string | undefined,
@@ -1499,6 +1521,7 @@ export async function readLatestSessionUsageFromTranscriptAsync(
   }
 }
 
+/** Reused helper for read Recent Session Usage From Transcript Async behavior in src/gateway. */
 export async function readRecentSessionUsageFromTranscriptAsync(
   sessionId: string,
   storePath: string | undefined,
@@ -1527,6 +1550,7 @@ export async function readRecentSessionUsageFromTranscriptAsync(
   }
 }
 
+/** Reused helper for read Latest Recent Session Usage From Transcript Async behavior in src/gateway. */
 export async function readLatestRecentSessionUsageFromTranscriptAsync(
   sessionId: string,
   storePath: string | undefined,
@@ -1555,6 +1579,7 @@ export async function readLatestRecentSessionUsageFromTranscriptAsync(
   }
 }
 
+/** Reused helper for read Recent Session Usage From Transcript behavior in src/gateway. */
 export function readRecentSessionUsageFromTranscript(
   sessionId: string,
   storePath: string | undefined,
@@ -1779,6 +1804,7 @@ function readRecentMessagesFromTranscript(
   }
 }
 
+/** Reused helper for read Session Preview Items From Transcript behavior in src/gateway. */
 export function readSessionPreviewItemsFromTranscript(
   sessionId: string,
   storePath: string | undefined,

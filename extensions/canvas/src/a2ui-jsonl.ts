@@ -1,3 +1,4 @@
+// extensions/canvas/src a2ui jsonl helpers and runtime behavior.
 const A2UI_ACTION_KEYS = [
   "beginRendering",
   "surfaceUpdate",

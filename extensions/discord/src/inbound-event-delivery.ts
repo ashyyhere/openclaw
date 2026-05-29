@@ -1,3 +1,4 @@
+// extensions/discord/src inbound event delivery helpers and runtime behavior.
 import type { ReplyPayload } from "openclaw/plugin-sdk/reply-payload";
 import {
   asOptionalRecord as readRecord,

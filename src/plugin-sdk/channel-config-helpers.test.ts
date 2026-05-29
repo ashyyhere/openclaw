@@ -1,3 +1,4 @@
+/** Tests channel config adapter builders, write policy, allowlists, and DM security access. */
 import { describe, expect, it } from "vitest";
 import { formatPairingApproveHint } from "../channels/plugins/helpers.js";
 import { DEFAULT_ACCOUNT_ID } from "../routing/session-key.js";

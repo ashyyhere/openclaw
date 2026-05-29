@@ -1,3 +1,4 @@
+// extensions/discord/src/internal api commands helpers and runtime behavior.
 import { Routes, type APIApplicationCommand } from "discord-api-types/v10";
 import type { RequestClient } from "./rest.js";
 

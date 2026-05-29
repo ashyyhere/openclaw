@@ -1,7 +1,9 @@
+// gateway shared auth test helpers helpers and runtime behavior.
 import { expect } from "vitest";
 import { WebSocket } from "ws";
 import { connectOk, rpcReq, trackConnectChallengeNonce } from "./test-helpers.js";
 
+/** Reused helper for open Authenticated Gateway Ws behavior in src/gateway. */
 export async function openAuthenticatedGatewayWs(
   port: number,
   token: string,
@@ -42,6 +44,7 @@ export async function openAuthenticatedGatewayWs(
   return ws;
 }
 
+/** Reused helper for wait For Gateway Ws Close behavior in src/gateway. */
 export async function waitForGatewayWsClose(
   ws: WebSocket,
   timeoutMs = 10_000,
@@ -62,6 +65,7 @@ export async function waitForGatewayWsClose(
   });
 }
 
+/** Reused helper for load Gateway Config behavior in src/gateway. */
 export async function loadGatewayConfig(ws: WebSocket): Promise<{
   hash: string;
   config: Record<string, unknown>;

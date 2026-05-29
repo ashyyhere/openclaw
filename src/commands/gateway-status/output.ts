@@ -12,6 +12,7 @@ import {
 } from "./helpers.js";
 import type { GatewayStatusProbedTarget } from "./probe-run.js";
 
+/** Shared type for Gateway Status Warning in src/commands/gateway-status. */
 export type GatewayStatusWarning = {
   code: string;
   message: string;
@@ -38,6 +39,7 @@ function readModelPricingDegradedDetail(health: unknown): string | null {
     : "pricing bootstrap or refresh failed";
 }
 
+/** Reused helper for pick Primary Probed Target behavior in src/commands/gateway-status. */
 export function pickPrimaryProbedTarget(probed: GatewayStatusProbedTarget[]) {
   const reachable = probed.filter((entry) => isProbeReachable(entry.probe));
   return (
@@ -49,6 +51,7 @@ export function pickPrimaryProbedTarget(probed: GatewayStatusProbedTarget[]) {
   );
 }
 
+/** Reused helper for build Gateway Status Warnings behavior in src/commands/gateway-status. */
 export function buildGatewayStatusWarnings(params: {
   probed: GatewayStatusProbedTarget[];
   sshTarget: string | null;
@@ -137,6 +140,7 @@ export function buildGatewayStatusWarnings(params: {
   return warnings;
 }
 
+/** Reused helper for write Gateway Status Json behavior in src/commands/gateway-status. */
 export function writeGatewayStatusJson(params: {
   runtime: RuntimeEnv;
   startedAt: number;
@@ -193,6 +197,7 @@ export function writeGatewayStatusJson(params: {
   }
 }
 
+/** Reused helper for write Gateway Status Text behavior in src/commands/gateway-status. */
 export function writeGatewayStatusText(params: {
   runtime: RuntimeEnv;
   rich: boolean;

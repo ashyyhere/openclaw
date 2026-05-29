@@ -1,3 +1,4 @@
+// Tests tasks task executor test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { resetAgentEventsForTest, resetAgentRunContextForTest } from "../infra/agent-events.js";
 import { resetHeartbeatWakeStateForTests } from "../infra/heartbeat-wake.js";

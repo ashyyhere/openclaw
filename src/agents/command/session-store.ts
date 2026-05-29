@@ -1,3 +1,4 @@
+/** Updates session-store entries after agent command runs and CLI compaction. */
 import path from "node:path";
 import {
   canonicalizeAbsoluteSessionFilePath,
@@ -52,6 +53,7 @@ function removeLifecycleStateFromMetadataPatch(entry: SessionEntry): SessionEntr
   return next;
 }
 
+/** Applies model/session/result metadata after a visible agent run. */
 export async function updateSessionStoreAfterAgentRun(params: {
   cfg: OpenClawConfig;
   contextTokensOverride?: number;
@@ -310,6 +312,7 @@ export async function updateSessionStoreAfterAgentRun(params: {
   }
 }
 
+/** Clears stored CLI session reuse metadata for a session. */
 export async function clearCliSessionInStore(params: {
   provider: string;
   sessionKey: string;
@@ -335,6 +338,7 @@ export async function clearCliSessionInStore(params: {
   return persisted;
 }
 
+/** Records CLI compaction metadata in the session store. */
 export async function recordCliCompactionInStore(params: {
   provider: string;
   sessionKey: string;

@@ -1,3 +1,4 @@
+// Tests config zod schema session maintenance extensions test behavior.
 import { describe, expect, it } from "vitest";
 import { SessionSchema } from "./zod-schema.session.js";
 

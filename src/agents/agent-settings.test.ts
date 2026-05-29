@@ -1,3 +1,4 @@
+/** Tests agent settings compaction and provider guard behavior. */
 import { describe, expect, it, vi } from "vitest";
 import { MIN_PROMPT_BUDGET_RATIO, MIN_PROMPT_BUDGET_TOKENS } from "./agent-compaction-constants.js";
 import {

@@ -1,10 +1,13 @@
+// ui/src/ui/views nodes shared helpers and runtime behavior.
 import { normalizeOptionalString } from "../string-coerce.ts";
 
+/** Shared type for Node Target Option in ui/src/ui/views. */
 export type NodeTargetOption = {
   id: string;
   label: string;
 };
 
+/** Shared type for Config Agent Option in ui/src/ui/views. */
 export type ConfigAgentOption = {
   id: string;
   name?: string;
@@ -13,6 +16,7 @@ export type ConfigAgentOption = {
   record: Record<string, unknown>;
 };
 
+/** Reused helper for resolve Config Agents behavior in ui/src/ui/views. */
 export function resolveConfigAgents(config: Record<string, unknown> | null): ConfigAgentOption[] {
   const agentsNode = (config?.agents ?? {}) as Record<string, unknown>;
   const list = Array.isArray(agentsNode.list) ? agentsNode.list : [];
@@ -35,6 +39,7 @@ export function resolveConfigAgents(config: Record<string, unknown> | null): Con
   return agents;
 }
 
+/** Reused helper for resolve Node Targets behavior in ui/src/ui/views. */
 export function resolveNodeTargets(
   nodes: Array<Record<string, unknown>>,
   requiredCommands: string[],

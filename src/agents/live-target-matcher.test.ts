@@ -1,3 +1,4 @@
+/** Tests live provider/model target matching. */
 import { describe, expect, it, vi } from "vitest";
 import { createLiveTargetMatcher } from "./live-target-matcher.js";
 

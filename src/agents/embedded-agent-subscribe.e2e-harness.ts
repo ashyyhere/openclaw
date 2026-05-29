@@ -1,3 +1,4 @@
+/** Shared harness for embedded-agent subscription E2E-style tests. */
 import { expect } from "vitest";
 import type { AssistantMessage } from "../llm/types.js";
 import { subscribeEmbeddedAgentSession } from "./embedded-agent-subscribe.js";
@@ -8,6 +9,7 @@ type EmbeddedAgentSession = Parameters<SubscribeEmbeddedAgentSession>[0]["sessio
 type OnBlockReply = NonNullable<SubscribeEmbeddedAgentSessionParams["onBlockReply"]>;
 type BlockReplyChunking = NonNullable<SubscribeEmbeddedAgentSessionParams["blockReplyChunking"]>;
 
+/** Thinking tag variants used by subscription streaming tests. */
 export const THINKING_TAG_CASES = [
   { tag: "think", open: "<think>", close: "</think>" },
   { tag: "thinking", open: "<thinking>", close: "</thinking>" },
@@ -16,6 +18,7 @@ export const THINKING_TAG_CASES = [
   { tag: "antml:thinking", open: "<antml:thinking>", close: "</antml:thinking>" },
 ] as const;
 
+/** Create a bare session/event harness for subscription tests. */
 export function createStubSessionHarness(): {
   session: EmbeddedAgentSession;
   emit: (evt: unknown) => void;
@@ -31,6 +34,7 @@ export function createStubSessionHarness(): {
   return { session, emit: (evt: unknown) => handler?.(evt) };
 }
 
+/** Create a stub session with subscribeEmbeddedAgentSession attached. */
 export function createSubscribedSessionHarness(
   params: Omit<Parameters<SubscribeEmbeddedAgentSession>[0], "session"> & {
     sessionExtras?: Partial<EmbeddedAgentSession>;
@@ -52,6 +56,7 @@ export function createSubscribedSessionHarness(
   return { emit, session: mergedSession, subscription };
 }
 
+/** Create a subscription harness configured for paragraph chunking. */
 export function createParagraphChunkedBlockReplyHarness(params: {
   chunking: { minChars: number; maxChars: number };
   onBlockReply?: OnBlockReply;
@@ -74,6 +79,7 @@ export function createParagraphChunkedBlockReplyHarness(params: {
   return { emit, onBlockReply, subscription };
 }
 
+/** Create a subscription harness that flushes block replies on text-end. */
 export function createTextEndBlockReplyHarness(params?: {
   onBlockReply?: OnBlockReply;
   runId?: string;
@@ -93,6 +99,7 @@ export function createTextEndBlockReplyHarness(params?: {
   return { emit, onBlockReply, subscription };
 }
 
+/** Extract agent-event payload records from mock calls. */
 export function extractAgentEventPayloads(calls: Array<unknown[]>): Array<Record<string, unknown>> {
   return calls
     .map((call) => {
@@ -103,6 +110,7 @@ export function extractAgentEventPayloads(calls: Array<unknown[]>): Array<Record
     .filter((value): value is Record<string, unknown> => Boolean(value));
 }
 
+/** Extract text fields from block-reply mock calls. */
 export function extractTextPayloads(calls: Array<unknown[]>): string[] {
   return calls
     .map((call) => {
@@ -112,6 +120,7 @@ export function extractTextPayloads(calls: Array<unknown[]>): string[] {
     .filter((text): text is string => Boolean(text));
 }
 
+/** Emit assistant message start/end events with a fixed text body. */
 export function emitMessageStartAndEndForAssistantText(params: {
   emit: (evt: unknown) => void;
   text: string;
@@ -124,6 +133,7 @@ export function emitMessageStartAndEndForAssistantText(params: {
   params.emit({ type: "message_end", message: assistantMessage });
 }
 
+/** Emit an assistant text delta followed by text-end and message-end events. */
 export function emitAssistantTextDeltaAndEnd(params: {
   emit: (evt: unknown) => void;
   text: string;
@@ -143,6 +153,7 @@ export function emitAssistantTextDeltaAndEnd(params: {
   params.emit({ type: "message_end", message: assistantMessage });
 }
 
+/** Emit one assistant text delta event. */
 export function emitAssistantTextDelta(params: {
   emit: (evt: unknown) => void;
   delta: string;
@@ -154,6 +165,7 @@ export function emitAssistantTextDelta(params: {
   });
 }
 
+/** Emit text-end and message-end events for assistant text. */
 export function emitAssistantTextEnd(params: {
   emit: (evt: unknown) => void;
   content?: string;
@@ -168,6 +180,7 @@ export function emitAssistantTextEnd(params: {
   });
 }
 
+/** Emit an assistant lifecycle error and terminal message-end event. */
 export function emitAssistantLifecycleErrorAndEnd(params: {
   emit: (evt: unknown) => void;
   errorMessage: string;
@@ -185,6 +198,7 @@ export function emitAssistantLifecycleErrorAndEnd(params: {
   params.emit({ type: "agent_end" });
 }
 
+/** Build a message containing reasoning plus final-answer content. */
 export function createReasoningFinalAnswerMessage(): AssistantMessage {
   return {
     role: "assistant",
@@ -203,6 +217,7 @@ type LifecycleErrorAgentEvent = {
   };
 };
 
+/** Find the lifecycle error event in captured agent-event calls. */
 export function findLifecycleErrorAgentEvent(
   calls: Array<unknown[]>,
 ): LifecycleErrorAgentEvent | undefined {
@@ -215,6 +230,7 @@ export function findLifecycleErrorAgentEvent(
   return undefined;
 }
 
+/** Assert block-reply calls match expected fenced chunk behavior. */
 export function expectFencedChunks(calls: Array<unknown[]>, expectedPrefix: string): void {
   expect(calls.length).toBeGreaterThan(1);
   for (const call of calls) {
@@ -225,6 +241,7 @@ export function expectFencedChunks(calls: Array<unknown[]>, expectedPrefix: stri
   }
 }
 
+/** Assert exactly one agent-event text payload was emitted. */
 export function expectSingleAgentEventText(calls: Array<unknown[]>, text: string): void {
   const payloads = extractAgentEventPayloads(calls);
   expect(payloads).toHaveLength(1);

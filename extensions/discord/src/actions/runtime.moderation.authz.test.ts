@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/actions runtime moderation authz test behavior.
 import { PermissionFlagsBits } from "discord-api-types/v10";
 import type { DiscordActionConfig } from "openclaw/plugin-sdk/config-contracts";
 import { beforeEach, describe, expect, it, vi } from "vitest";

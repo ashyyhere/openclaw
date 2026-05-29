@@ -1,3 +1,5 @@
+// config types commitments helpers and runtime behavior.
+/** Shared type for Commitments Config in src/config. */
 export type CommitmentsConfig = {
   /** Enable inferred follow-up extraction, storage, and heartbeat delivery. Default: false. */
   enabled?: boolean;

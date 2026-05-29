@@ -1,7 +1,9 @@
+// Abort cutoff helpers for ignoring stale events after a stop request.
 import type { SessionEntry } from "../../config/sessions/types.js";
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 import type { MsgContext } from "../templating.js";
 
+/** Shared type for Abort Cutoff in src/auto-reply/reply. */
 export type AbortCutoff = {
   messageSid?: string;
   timestamp?: number;
@@ -9,6 +11,7 @@ export type AbortCutoff = {
 
 type SessionAbortCutoffEntry = Pick<SessionEntry, "abortCutoffMessageSid" | "abortCutoffTimestamp">;
 
+/** Reused helper for resolve Abort Cutoff From Context behavior in src/auto-reply/reply. */
 export function resolveAbortCutoffFromContext(ctx: MsgContext): AbortCutoff | undefined {
   const messageSid =
     normalizeOptionalString(ctx.MessageSidFull) ?? normalizeOptionalString(ctx.MessageSid);
@@ -20,6 +23,7 @@ export function resolveAbortCutoffFromContext(ctx: MsgContext): AbortCutoff | un
   return { messageSid, timestamp };
 }
 
+/** Reused helper for read Abort Cutoff From Session Entry behavior in src/auto-reply/reply. */
 export function readAbortCutoffFromSessionEntry(
   entry: SessionAbortCutoffEntry | undefined,
 ): AbortCutoff | undefined {
@@ -37,10 +41,12 @@ export function readAbortCutoffFromSessionEntry(
   return { messageSid, timestamp };
 }
 
+/** Reused helper for has Abort Cutoff behavior in src/auto-reply/reply. */
 export function hasAbortCutoff(entry: SessionAbortCutoffEntry | undefined): boolean {
   return readAbortCutoffFromSessionEntry(entry) !== undefined;
 }
 
+/** Reused helper for apply Abort Cutoff To Session Entry behavior in src/auto-reply/reply. */
 export function applyAbortCutoffToSessionEntry(
   entry: SessionAbortCutoffEntry,
   cutoff: AbortCutoff | undefined,
@@ -61,6 +67,7 @@ function toNumericMessageSid(value: string | undefined): bigint | undefined {
   }
 }
 
+/** Reused helper for should Skip Message By Abort Cutoff behavior in src/auto-reply/reply. */
 export function shouldSkipMessageByAbortCutoff(params: {
   cutoffMessageSid?: string;
   cutoffTimestamp?: number;
@@ -90,6 +97,7 @@ export function shouldSkipMessageByAbortCutoff(params: {
   return false;
 }
 
+/** Reused helper for should Persist Abort Cutoff behavior in src/auto-reply/reply. */
 export function shouldPersistAbortCutoff(params: {
   commandSessionKey?: string;
   targetSessionKey?: string;

@@ -1,3 +1,4 @@
+// extensions/slack/src file reference helpers and runtime behavior.
 import { normalizeOptionalString } from "openclaw/plugin-sdk/string-coerce-runtime";
 import type { SlackFile } from "./types.js";
 

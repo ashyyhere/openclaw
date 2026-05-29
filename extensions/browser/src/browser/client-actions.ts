@@ -1,3 +1,4 @@
+// extensions/browser/src/browser client actions helpers and runtime behavior.
 export {
   browserAct,
   browserArmDialog,

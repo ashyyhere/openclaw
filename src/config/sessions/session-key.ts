@@ -1,3 +1,4 @@
+// config/sessions session key helpers and runtime behavior.
 import type { MsgContext } from "../../auto-reply/templating.js";
 import {
   buildAgentMainSessionKey,
@@ -11,6 +12,7 @@ import { resolveGroupSessionKey } from "./group.js";
 import type { SessionScope } from "./types.js";
 
 // Decide which session bucket to use (per-sender vs global).
+/** Reused helper for derive Session Key behavior in src/config/sessions. */
 export function deriveSessionKey(scope: SessionScope, ctx: MsgContext) {
   if (scope === "global") {
     return "global";

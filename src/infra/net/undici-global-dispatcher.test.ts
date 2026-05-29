@@ -1,3 +1,4 @@
+// Tests infra/net undici global dispatcher test behavior.
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";

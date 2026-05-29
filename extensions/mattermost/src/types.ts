@@ -1,3 +1,4 @@
+// Shared types for extensions/mattermost/src types behavior.
 import type {
   ChannelPreviewStreamingConfig,
   StreamingMode,

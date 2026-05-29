@@ -1,3 +1,4 @@
+// Tests extensions/discord/src send webhook activity test behavior.
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 const recordChannelActivityMock = vi.hoisted(() => vi.fn());

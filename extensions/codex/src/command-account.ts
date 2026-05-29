@@ -1,3 +1,4 @@
+// extensions/codex/src command account helpers and runtime behavior.
 import {
   ensureAuthProfileStore,
   findNormalizedProviderValue,

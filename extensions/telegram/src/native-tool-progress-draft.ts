@@ -1,3 +1,4 @@
+// extensions/telegram/src native tool progress draft helpers and runtime behavior.
 import type { Bot } from "grammy";
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";
 import { buildTelegramThreadParams, type TelegramThreadSpec } from "./bot/helpers.js";

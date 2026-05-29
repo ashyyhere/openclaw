@@ -1,3 +1,4 @@
+/** Discovers user/project/package resources for session loading. */
 import { createHash } from "node:crypto";
 import { existsSync, readdirSync, readFileSync, realpathSync, statSync } from "node:fs";
 import { homedir, tmpdir } from "node:os";
@@ -10,6 +11,7 @@ import { type GitSource, parseGitUrl } from "../utils/git.js";
 import { canonicalizePath, isLocalPath } from "../utils/paths.js";
 import type { PackageSource, SettingsManager } from "./settings-manager.js";
 
+/** Shared type for Path Metadata in src/agents/sessions. */
 export interface PathMetadata {
   source: string;
   scope: SourceScope;
@@ -17,12 +19,14 @@ export interface PathMetadata {
   baseDir?: string;
 }
 
+/** Shared type for Resolved Resource in src/agents/sessions. */
 export interface ResolvedResource {
   path: string;
   enabled: boolean;
   metadata: PathMetadata;
 }
 
+/** Shared type for Resolved Paths in src/agents/sessions. */
 export interface ResolvedPaths {
   extensions: ResolvedResource[];
   skills: ResolvedResource[];
@@ -30,8 +34,10 @@ export interface ResolvedPaths {
   themes: ResolvedResource[];
 }
 
+/** Shared type for Missing Source Action in src/agents/sessions. */
 export type MissingSourceAction = "skip" | "error";
 
+/** Shared type for Package Manager in src/agents/sessions. */
 export interface PackageManager {
   resolve(onMissing?: (source: string) => Promise<MissingSourceAction>): Promise<ResolvedPaths>;
   resolveExtensionSources(
@@ -784,6 +790,7 @@ function applyPatterns(allPaths: string[], patterns: string[], baseDir: string):
   return new Set(result);
 }
 
+/** Reused class for Default Package Manager behavior in src/agents/sessions. */
 export class DefaultPackageManager implements PackageManager {
   private cwd: string;
   private agentDir: string;

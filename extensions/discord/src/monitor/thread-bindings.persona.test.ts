@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/monitor thread bindings persona test behavior.
 import { describe, expect, it } from "vitest";
 import {
   resolveThreadBindingPersona,

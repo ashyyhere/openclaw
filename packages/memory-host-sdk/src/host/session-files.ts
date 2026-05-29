@@ -1,3 +1,4 @@
+// packages/memory-host-sdk/src/host session files helpers and runtime behavior.
 import fsSync from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -30,6 +31,7 @@ const SESSION_EXPORT_CONTENT_WRAP_CHARS = 800;
 const SESSION_ENTRY_PARSE_YIELD_LINES = 250;
 const DIRECT_CRON_PROMPT_RE = /^\[cron:[^\]]+\]\s*/;
 
+/** Public type describing Session File Entry for packages/memory-host-sdk. */
 export type SessionFileEntry = {
   path: string;
   absPath: string;
@@ -47,6 +49,7 @@ export type SessionFileEntry = {
   generatedByCronRun?: boolean;
 };
 
+/** Public type describing Build Session Entry Options for packages/memory-host-sdk. */
 export type BuildSessionEntryOptions = {
   /** Optional preclassification from a caller-managed dreaming transcript lookup. */
   generatedByDreamingNarrative?: boolean;
@@ -56,6 +59,7 @@ export type BuildSessionEntryOptions = {
   parseYieldEveryLines?: number;
 };
 
+/** Public type describing Session Transcript Classification for packages/memory-host-sdk. */
 export type SessionTranscriptClassification = {
   dreamingNarrativeTranscriptPaths: ReadonlySet<string>;
   cronRunTranscriptPaths: ReadonlySet<string>;
@@ -193,6 +197,7 @@ function normalizeComparablePath(pathname: string): string {
   return process.platform === "win32" ? resolved.toLowerCase() : resolved;
 }
 
+/** Public helper for normalize Session Transcript Path For Comparison behavior in packages/memory-host-sdk. */
 export function normalizeSessionTranscriptPathForComparison(pathname: string): string {
   return normalizeComparablePath(pathname);
 }
@@ -214,6 +219,7 @@ function resolveSessionStoreTranscriptPath(
   return null;
 }
 
+/** Public helper for load Dreaming Narrative Transcript Path Set For Sessions Dir behavior in packages/memory-host-sdk. */
 export function loadDreamingNarrativeTranscriptPathSetForSessionsDir(
   sessionsDir: string,
 ): ReadonlySet<string> {
@@ -221,6 +227,7 @@ export function loadDreamingNarrativeTranscriptPathSetForSessionsDir(
     .dreamingNarrativeTranscriptPaths;
 }
 
+/** Public helper for load Session Transcript Classification For Sessions Dir behavior in packages/memory-host-sdk. */
 export function loadSessionTranscriptClassificationForSessionsDir(
   sessionsDir: string,
 ): SessionTranscriptClassification {
@@ -260,12 +267,14 @@ function readSessionTranscriptClassificationStore(
   }
 }
 
+/** Public helper for load Dreaming Narrative Transcript Path Set For Agent behavior in packages/memory-host-sdk. */
 export function loadDreamingNarrativeTranscriptPathSetForAgent(
   agentId: string,
 ): ReadonlySet<string> {
   return loadSessionTranscriptClassificationForAgent(agentId).dreamingNarrativeTranscriptPaths;
 }
 
+/** Public helper for load Session Transcript Classification For Agent behavior in packages/memory-host-sdk. */
 export function loadSessionTranscriptClassificationForAgent(
   agentId: string,
 ): SessionTranscriptClassification {
@@ -297,6 +306,7 @@ function classifySessionTranscriptFromSessionStore(absPath: string): {
   };
 }
 
+/** Public helper for list Session Files For Agent behavior in packages/memory-host-sdk. */
 export async function listSessionFilesForAgent(agentId: string): Promise<string[]> {
   const dir = resolveSessionTranscriptsDirForAgent(agentId);
   try {
@@ -320,6 +330,7 @@ function extractAgentIdFromSessionPath(absPath: string): string | null {
   return parts[sessionsIndex - 1] || null;
 }
 
+/** Public helper for session Path For File behavior in packages/memory-host-sdk. */
 export function sessionPathForFile(absPath: string): string {
   const agentId = extractAgentIdFromSessionPath(absPath);
   return path
@@ -490,6 +501,7 @@ function sanitizeSessionText(text: string, role: "user" | "assistant"): string |
   return normalized;
 }
 
+/** Public helper for extract Session Text behavior in packages/memory-host-sdk. */
 export function extractSessionText(
   content: unknown,
   role: "user" | "assistant" = "assistant",
@@ -542,6 +554,7 @@ async function yieldSessionEntryParseIfNeeded(
   }
 }
 
+/** Public helper for build Session Entry behavior in packages/memory-host-sdk. */
 export async function buildSessionEntry(
   absPath: string,
   opts: BuildSessionEntryOptions = {},

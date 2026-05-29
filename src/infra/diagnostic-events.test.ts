@@ -1,3 +1,4 @@
+// Tests infra diagnostic events test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   emitDiagnosticEvent,

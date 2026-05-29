@@ -1,3 +1,4 @@
+// shared chat envelope helpers and runtime behavior.
 const ENVELOPE_PREFIX = /^\[([^\]]+)\]\s*/;
 const ENVELOPE_CHANNELS = [
   "WebChat",
@@ -26,6 +27,7 @@ function looksLikeEnvelopeHeader(header: string): boolean {
   return ENVELOPE_CHANNELS.some((label) => header.startsWith(`${label} `));
 }
 
+/** Reused helper for strip Envelope behavior in src/shared. */
 export function stripEnvelope(text: string): string {
   const match = text.match(ENVELOPE_PREFIX);
   if (!match) {
@@ -38,6 +40,7 @@ export function stripEnvelope(text: string): string {
   return text.slice(match[0].length);
 }
 
+/** Reused helper for strip Message Id Hints behavior in src/shared. */
 export function stripMessageIdHints(text: string): string {
   if (!/\[message_id:/i.test(text)) {
     return text;

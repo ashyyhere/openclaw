@@ -1,3 +1,4 @@
+/** Public SDK barrel for transcript contracts. */
 export type {
   TranscriptImportRequest,
   TranscriptParticipant,
@@ -12,6 +13,7 @@ export type {
   TranscriptsStopResult,
   TranscriptUtterance,
 } from "../transcripts/provider-types.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   getTranscriptSourceProvider,
   listTranscriptSourceProviders,

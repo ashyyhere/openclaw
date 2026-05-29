@@ -1,3 +1,4 @@
+// Tests extensions/mattermost/src/mattermost slash http test behavior.
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { PassThrough } from "node:stream";
 import { beforeEach, describe, expect, it, vi } from "vitest";

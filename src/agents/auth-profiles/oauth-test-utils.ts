@@ -1,11 +1,14 @@
+/** Shared filesystem fixtures for OAuth auth-profile tests. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import type { resolveApiKeyForProfile } from "./oauth.js";
 import type { AuthProfileStore, OAuthCredential } from "./types.js";
 
+/** Reused constant for OAUTH AGENT ENV KEYS behavior in src/agents/auth-profiles. */
 export const OAUTH_AGENT_ENV_KEYS = ["OPENCLAW_STATE_DIR", "OPENCLAW_AGENT_DIR"];
 
+/** Reused helper for resolve Api Key For Profile In Test behavior in src/agents/auth-profiles. */
 export function resolveApiKeyForProfileInTest(
   resolver: typeof resolveApiKeyForProfile,
   params: Omit<Parameters<typeof resolveApiKeyForProfile>[0], "cfg">,
@@ -13,6 +16,7 @@ export function resolveApiKeyForProfileInTest(
   return resolver({ cfg: {}, ...params });
 }
 
+/** Reused helper for oauth Cred behavior in src/agents/auth-profiles. */
 export function oauthCred(params: {
   provider: string;
   access: string;
@@ -24,10 +28,12 @@ export function oauthCred(params: {
   return { type: "oauth", ...params };
 }
 
+/** Reused helper for store With behavior in src/agents/auth-profiles. */
 export function storeWith(profileId: string, cred: OAuthCredential): AuthProfileStore {
   return { version: 1, profiles: { [profileId]: cred } };
 }
 
+/** Reused helper for create Expired Oauth Store behavior in src/agents/auth-profiles. */
 export function createExpiredOauthStore(params: {
   profileId: string;
   provider: string;
@@ -52,10 +58,12 @@ export function createExpiredOauthStore(params: {
   };
 }
 
+/** Reused helper for create OAuth Test Temp Root behavior in src/agents/auth-profiles. */
 export async function createOAuthTestTempRoot(prefix: string): Promise<string> {
   return fs.mkdtemp(path.join(os.tmpdir(), prefix));
 }
 
+/** Reused helper for create OAuth Main Agent Dir behavior in src/agents/auth-profiles. */
 export async function createOAuthMainAgentDir(stateDir: string): Promise<string> {
   const agentDir = path.join(stateDir, "agents", "main", "agent");
   process.env.OPENCLAW_STATE_DIR = stateDir;
@@ -64,6 +72,7 @@ export async function createOAuthMainAgentDir(stateDir: string): Promise<string>
   return agentDir;
 }
 
+/** Reused helper for remove OAuth Test Temp Root behavior in src/agents/auth-profiles. */
 export async function removeOAuthTestTempRoot(tempRoot: string): Promise<void> {
   if (tempRoot) {
     await fs.rm(tempRoot, { recursive: true, force: true });
@@ -82,6 +91,7 @@ type ReturnValueMock = ResettableMock & {
   mockReturnValue(value: unknown): unknown;
 };
 
+/** Reused helper for reset OAuth Provider Runtime Mocks behavior in src/agents/auth-profiles. */
 export function resetOAuthProviderRuntimeMocks(mocks: {
   refreshProviderOAuthCredentialWithPluginMock: ResolvedValueMock;
   formatProviderAuthProfileApiKeyWithPluginMock: ReturnValueMock;
@@ -92,6 +102,7 @@ export function resetOAuthProviderRuntimeMocks(mocks: {
   mocks.formatProviderAuthProfileApiKeyWithPluginMock.mockReturnValue(undefined);
 }
 
+/** Reused helper for make Seeded Random behavior in src/agents/auth-profiles. */
 export function makeSeededRandom(seed: number): () => number {
   let state = seed >>> 0;
   return () => {
@@ -103,6 +114,7 @@ export function makeSeededRandom(seed: number): () => number {
   };
 }
 
+/** Reused helper for random Ascii String behavior in src/agents/auth-profiles. */
 export function randomAsciiString(rng: () => number, maxLen: number): string {
   const len = Math.floor(rng() * maxLen);
   const chars: string[] = [];
@@ -112,10 +124,12 @@ export function randomAsciiString(rng: () => number, maxLen: number): string {
   return chars.join("");
 }
 
+/** Reused helper for maybe behavior in src/agents/auth-profiles. */
 export function maybe<T>(rng: () => number, value: T): T | undefined {
   return rng() < 0.5 ? value : undefined;
 }
 
+/** Reused helper for randomly Cased behavior in src/agents/auth-profiles. */
 export function randomlyCased(value: string, rng: () => number): string {
   return value
     .split("")

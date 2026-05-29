@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/telegram/src bot message dispatch runtime behavior.
 export {
   loadSessionStore,
   readLatestAssistantTextFromSessionTranscript,

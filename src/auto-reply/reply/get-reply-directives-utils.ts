@@ -1,3 +1,4 @@
+// Utility helpers for get-reply directive handling.
 import type { InlineDirectives } from "./directive-handling.js";
 
 const CLEARED_EXEC_FIELDS = {
@@ -17,6 +18,7 @@ const CLEARED_EXEC_FIELDS = {
   invalidExecNode: false,
 } satisfies Partial<InlineDirectives>;
 
+/** Reused helper for clear Inline Directives behavior in src/auto-reply/reply. */
 export function clearInlineDirectives(cleaned: string): InlineDirectives {
   return {
     cleaned,
@@ -58,6 +60,7 @@ export function clearInlineDirectives(cleaned: string): InlineDirectives {
   };
 }
 
+/** Reused helper for clear Exec Inline Directives behavior in src/auto-reply/reply. */
 export function clearExecInlineDirectives(directives: InlineDirectives): InlineDirectives {
   return {
     ...directives,

@@ -1,3 +1,4 @@
+// Tests infra/net proxy env test behavior.
 import { describe, expect, it } from "vitest";
 import {
   hasEnvHttpProxyConfigured,

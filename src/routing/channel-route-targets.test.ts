@@ -1,3 +1,4 @@
+// Tests routing channel route targets test behavior.
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { collectChannelRouteTargets } from "./channel-route-targets.js";

@@ -1,3 +1,4 @@
+/** Covers native PDF provider capability checks. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import * as pdfNativeProviders from "./pdf-native-providers.js";
 

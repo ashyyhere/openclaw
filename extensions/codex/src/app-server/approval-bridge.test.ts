@@ -1,3 +1,4 @@
+// Tests extensions/codex/src/app-server approval bridge test behavior.
 import {
   callGatewayTool,
   hasNativeHookRelayInvocation,

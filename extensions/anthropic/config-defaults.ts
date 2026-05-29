@@ -1,3 +1,4 @@
+// extensions/anthropic config defaults helpers and runtime behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/plugin-entry";
 import {
   isRecord,

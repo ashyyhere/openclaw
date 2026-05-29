@@ -1,3 +1,4 @@
+// infra device auth store helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { z } from "zod";
@@ -73,6 +74,7 @@ function writeStore(filePath: string, store: DeviceAuthStore): void {
   }
 }
 
+/** Reused helper for load Device Auth Token behavior in src/infra. */
 export function loadDeviceAuthToken(params: {
   deviceId: string;
   role: string;
@@ -86,6 +88,7 @@ export function loadDeviceAuthToken(params: {
   });
 }
 
+/** Reused helper for store Device Auth Token behavior in src/infra. */
 export function storeDeviceAuthToken(params: {
   deviceId: string;
   role: string;
@@ -106,6 +109,7 @@ export function storeDeviceAuthToken(params: {
   });
 }
 
+/** Reused helper for clear Device Auth Token behavior in src/infra. */
 export function clearDeviceAuthToken(params: {
   deviceId: string;
   role: string;

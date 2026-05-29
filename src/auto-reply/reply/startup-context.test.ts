@@ -1,3 +1,4 @@
+// Coverage for startup context loading.
 import fsCore from "node:fs";
 import fs from "node:fs/promises";
 import os from "node:os";

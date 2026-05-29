@@ -1,3 +1,4 @@
+// Tests gateway/server plugin route runtime scopes test behavior.
 import type { IncomingMessage } from "node:http";
 import { describe, expect, it } from "vitest";
 import { resolvePluginRouteRuntimeOperatorScopes } from "./plugin-route-runtime-scopes.js";

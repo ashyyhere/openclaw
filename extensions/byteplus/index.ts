@@ -1,3 +1,4 @@
+// extensions/byteplus index helpers and runtime behavior.
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 import { createProviderApiKeyAuthMethod } from "openclaw/plugin-sdk/provider-auth-api-key";
 import { ensureModelAllowlistEntry } from "openclaw/plugin-sdk/provider-onboard";

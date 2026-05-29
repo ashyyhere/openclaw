@@ -1,3 +1,4 @@
+// config types discord helpers and runtime behavior.
 import type {
   ChannelPreviewStreamingConfig,
   ChannelStreamingProgressConfig,
@@ -17,22 +18,28 @@ import type { SecretInput } from "./types.secrets.js";
 import type { GroupToolPolicyBySenderConfig, GroupToolPolicyConfig } from "./types.tools.js";
 import type { TtsConfig } from "./types.tts.js";
 
+/** Shared type for Discord Stream Mode in src/config. */
 export type DiscordStreamMode = "off" | "partial" | "block" | "progress";
+/** Shared type for Discord Streaming Progress Config in src/config. */
 export type DiscordStreamingProgressConfig = ChannelStreamingProgressConfig & {
   /** Include assistant commentary/preamble text in the progress draft. Default: false. */
   commentary?: boolean;
 };
+/** Shared type for Discord Channel Streaming Config in src/config. */
 export type DiscordChannelStreamingConfig = Omit<ChannelPreviewStreamingConfig, "progress"> & {
   progress?: DiscordStreamingProgressConfig;
 };
 
+/** Shared type for Discord Plural Kit Config in src/config. */
 export type DiscordPluralKitConfig = {
   enabled?: boolean;
   token?: string;
 };
 
+/** Shared type for Discord Mention Aliases Config in src/config. */
 export type DiscordMentionAliasesConfig = Record<string, string>;
 
+/** Shared type for Discord Dm Config in src/config. */
 export type DiscordDmConfig = {
   /** If false, ignore all incoming Discord DMs. Default: true. */
   enabled?: boolean;
@@ -46,6 +53,7 @@ export type DiscordDmConfig = {
   groupChannels?: string[];
 };
 
+/** Shared type for Discord Guild Channel Config in src/config. */
 export type DiscordGuildChannelConfig = {
   requireMention?: boolean;
   /**
@@ -76,8 +84,10 @@ export type DiscordGuildChannelConfig = {
   autoThreadName?: "message" | "generated";
 };
 
+/** Shared type for Discord Reaction Notification Mode in src/config. */
 export type DiscordReactionNotificationMode = "off" | "own" | "all" | "allowlist";
 
+/** Shared type for Discord Guild Entry in src/config. */
 export type DiscordGuildEntry = {
   slug?: string;
   requireMention?: boolean;
@@ -98,6 +108,7 @@ export type DiscordGuildEntry = {
   channels?: Record<string, DiscordGuildChannelConfig>;
 };
 
+/** Shared type for Discord Action Config in src/config. */
 export type DiscordActionConfig = {
   reactions?: boolean;
   stickers?: boolean;
@@ -121,6 +132,7 @@ export type DiscordActionConfig = {
   presence?: boolean;
 };
 
+/** Shared type for Discord Intents Config in src/config. */
 export type DiscordIntentsConfig = {
   /** Enable Guild Presences privileged intent (requires Portal opt-in). Default: false. */
   presence?: boolean;
@@ -130,6 +142,7 @@ export type DiscordIntentsConfig = {
   voiceStates?: boolean;
 };
 
+/** Shared type for Discord Voice Auto Join Config in src/config. */
 export type DiscordVoiceAutoJoinConfig = {
   /** Guild ID that owns the voice channel. */
   guildId: string;
@@ -137,6 +150,7 @@ export type DiscordVoiceAutoJoinConfig = {
   channelId: string;
 };
 
+/** Shared type for Discord Voice Allowed Channel Config in src/config. */
 export type DiscordVoiceAllowedChannelConfig = {
   /** Guild ID that owns the voice channel. */
   guildId: string;
@@ -144,14 +158,19 @@ export type DiscordVoiceAllowedChannelConfig = {
   channelId: string;
 };
 
+/** Shared type for Discord Voice Mode in src/config. */
 export type DiscordVoiceMode = "stt-tts" | "agent-proxy" | "bidi";
 
+/** Shared type for Discord Voice Realtime Consult Policy in src/config. */
 export type DiscordVoiceRealtimeConsultPolicy = "auto" | "always";
 
+/** Shared type for Discord Voice Realtime Tool Policy in src/config. */
 export type DiscordVoiceRealtimeToolPolicy = "safe-read-only" | "owner" | "none";
 
+/** Shared type for Discord Voice Realtime Bootstrap Context File in src/config. */
 export type DiscordVoiceRealtimeBootstrapContextFile = "IDENTITY.md" | "USER.md" | "SOUL.md";
 
+/** Shared type for Discord Voice Realtime Config in src/config. */
 export type DiscordVoiceRealtimeConfig = {
   /** Realtime voice provider id, for example "openai". */
   provider?: string;
@@ -185,6 +204,7 @@ export type DiscordVoiceRealtimeConfig = {
   providers?: Record<string, Record<string, unknown> | undefined>;
 };
 
+/** Shared type for Discord Voice Agent Session Config in src/config. */
 export type DiscordVoiceAgentSessionConfig = {
   /** Which OpenClaw conversation should receive voice turns. Default: "voice". */
   mode?: "voice" | "target";
@@ -192,6 +212,7 @@ export type DiscordVoiceAgentSessionConfig = {
   target?: string;
 };
 
+/** Shared type for Discord Voice Config in src/config. */
 export type DiscordVoiceConfig = {
   /** Enable Discord voice channel conversations (default: true). */
   enabled?: boolean;
@@ -225,6 +246,7 @@ export type DiscordVoiceConfig = {
   tts?: TtsConfig;
 };
 
+/** Shared type for Discord Exec Approval Config in src/config. */
 export type DiscordExecApprovalConfig = {
   /** Enable mode for Discord exec approvals on this account. Default: auto when approvers can be resolved; false disables. */
   enabled?: import("./types.approvals.js").NativeExecApprovalEnableMode;
@@ -242,6 +264,7 @@ export type DiscordExecApprovalConfig = {
   target?: "dm" | "channel" | "both";
 };
 
+/** Shared type for Discord Agent Components Config in src/config. */
 export type DiscordAgentComponentsConfig = {
   /** Enable agent-controlled interactive components (buttons, select menus). Default: true. */
   enabled?: boolean;
@@ -249,15 +272,18 @@ export type DiscordAgentComponentsConfig = {
   ttlMs?: number;
 };
 
+/** Shared type for Discord Ui Components Config in src/config. */
 export type DiscordUiComponentsConfig = {
   /** Accent color used by Discord component containers (hex). */
   accentColor?: string;
 };
 
+/** Shared type for Discord Ui Config in src/config. */
 export type DiscordUiConfig = {
   components?: DiscordUiComponentsConfig;
 };
 
+/** Shared type for Discord Thread Bindings Config in src/config. */
 export type DiscordThreadBindingsConfig = {
   /**
    * Enable Discord thread binding features (/focus, thread-bound delivery, and
@@ -295,16 +321,19 @@ export type DiscordThreadBindingsConfig = {
   spawnAcpSessions?: boolean;
 };
 
+/** Shared type for Discord Slash Command Config in src/config. */
 export type DiscordSlashCommandConfig = {
   /** Reply ephemerally (default: true). */
   ephemeral?: boolean;
 };
 
+/** Shared type for Discord Thread Config in src/config. */
 export type DiscordThreadConfig = {
   /** If true, Discord thread sessions inherit the parent channel transcript. Default: false. */
   inheritParent?: boolean;
 };
 
+/** Shared type for Discord Auto Presence Config in src/config. */
 export type DiscordAutoPresenceConfig = {
   /** Enable automatic runtime/quota-based Discord presence updates. Default: false. */
   enabled?: boolean;
@@ -320,6 +349,7 @@ export type DiscordAutoPresenceConfig = {
   exhaustedText?: string;
 };
 
+/** Shared type for Discord Account Config in src/config. */
 export type DiscordAccountConfig = {
   /** Optional display name for this account (used in CLI/UI lists). */
   name?: string;
@@ -488,6 +518,7 @@ export type DiscordAccountConfig = {
   };
 };
 
+/** Shared type for Discord Config in src/config. */
 export type DiscordConfig = {
   /** Optional per-account Discord configuration (multi-account). */
   accounts?: Record<string, DiscordAccountConfig>;

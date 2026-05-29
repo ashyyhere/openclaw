@@ -32,6 +32,7 @@ type AssistantFailoverOutcome =
       error: FailoverError;
     };
 
+/** Classifies assistant failures, records auth state, and chooses retry/fallback. */
 export async function handleAssistantFailover(params: {
   initialDecision: AssistantFailoverDecision;
   aborted: boolean;

@@ -1,6 +1,8 @@
+// gateway config diff helpers and runtime behavior.
 import { isDeepStrictEqual } from "node:util";
 import { isPlainObject } from "../utils.js";
 
+/** Reused helper for diff Config Paths behavior in src/gateway. */
 export function diffConfigPaths(prev: unknown, next: unknown, prefix = ""): string[] {
   if (prev === next) {
     return [];

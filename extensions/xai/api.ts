@@ -1,3 +1,4 @@
+// extensions/xai api helpers and runtime behavior.
 import { normalizeProviderId } from "openclaw/plugin-sdk/provider-model-shared";
 import {
   normalizeOptionalLowercaseString,
@@ -10,9 +11,13 @@ import {
   XAI_TOOL_SCHEMA_PROFILE,
 } from "./model-compat.js";
 
+/** Re-exported xai plugin public API, starting with build Xai Provider. */
 export { buildXaiProvider } from "./provider-catalog.js";
+/** Re-exported xai plugin public API, starting with apply Xai Config. */
 export { applyXaiConfig, applyXaiProviderConfig } from "./onboard.js";
+/** Re-exported xai plugin public API, starting with build Xai Image Generation Provider. */
 export { buildXaiImageGenerationProvider } from "./image-generation-provider.js";
+/** Re-exported xai plugin public API. */
 export {
   buildXaiCatalogModels,
   buildXaiModelDefinition,
@@ -25,8 +30,11 @@ export {
   XAI_DEFAULT_MAX_TOKENS,
   XAI_IMAGE_MODELS,
 } from "./model-definitions.js";
+/** Re-exported xai plugin public API, starting with is Modern Xai Model. */
 export { isModernXaiModel, resolveXaiForwardCompatModel } from "./provider-models.js";
+/** Re-exported xai plugin public API, starting with apply Xai Runtime Model Compat. */
 export { applyXaiRuntimeModelCompat } from "./runtime-model-compat.js";
+/** Re-exported xai plugin public API, starting with apply Xai Model Compat. */
 export { applyXaiModelCompat, HTML_ENTITY_TOOL_CALL_ARGUMENTS_ENCODING, XAI_TOOL_SCHEMA_PROFILE };
 
 const XAI_NATIVE_ENDPOINT_HOSTS = new Set(["api.x.ai"]);
@@ -45,10 +53,12 @@ function isXaiNativeEndpoint(baseUrl: unknown): boolean {
   );
 }
 
+/** Public xai plugin helper for is Xai Model Hint behavior. */
 export function isXaiModelHint(modelId: string): boolean {
   return getModelProviderHint(modelId) === "x-ai";
 }
 
+/** Re-exported xai plugin public API, starting with normalize Native Xai Model Id. */
 export { normalizeNativeXaiModelId as normalizeXaiModelId };
 
 function getModelProviderHint(modelId: string): string | null {
@@ -77,6 +87,7 @@ function shouldUseXaiResponsesTransport(params: {
   return normalizeProviderId(params.provider) === "xai" && !params.baseUrl;
 }
 
+/** Public xai plugin helper for resolve Xai Transport behavior. */
 export function resolveXaiTransport(params: {
   provider: string;
   api?: unknown;
@@ -91,6 +102,7 @@ export function resolveXaiTransport(params: {
   };
 }
 
+/** Public xai plugin helper for resolve Xai Base Url behavior. */
 export function resolveXaiBaseUrl(baseUrlOrConfig?: unknown): string {
   let candidate = baseUrlOrConfig;
   if (

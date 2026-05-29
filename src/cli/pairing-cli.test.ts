@@ -1,3 +1,4 @@
+/** Tests pairing CLI command output and approval notification flow. */
 import { Command } from "commander";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { theme } from "../../packages/terminal-core/src/theme.js";

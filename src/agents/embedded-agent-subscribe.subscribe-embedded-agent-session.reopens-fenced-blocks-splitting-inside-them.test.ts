@@ -1,3 +1,4 @@
+/** Tests split fenced blocks are closed and reopened safely. */
 import { describe, expect, it, vi } from "vitest";
 import {
   createParagraphChunkedBlockReplyHarness,

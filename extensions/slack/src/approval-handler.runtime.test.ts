@@ -1,3 +1,4 @@
+// Tests extensions/slack/src approval handler runtime test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { slackApprovalNativeRuntime } from "./approval-handler.runtime.js";
 

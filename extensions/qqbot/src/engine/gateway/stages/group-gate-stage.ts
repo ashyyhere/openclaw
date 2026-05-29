@@ -1,3 +1,4 @@
+// extensions/qqbot/src/engine/gateway/stages group gate stage helpers and runtime behavior.
 import type { HistoryPort } from "../../adapter/history.port.js";
 import type { QQBotInboundAccess } from "../../adapter/index.js";
 import type { MentionGatePort } from "../../adapter/mention-gate.port.js";

@@ -1,3 +1,4 @@
+// Outbound channel plugin type aliases.
 import type { ReplyPayload } from "../../auto-reply/reply-payload.js";
 import type { ReplyToMode } from "../../config/types.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
@@ -13,6 +14,7 @@ import type {
   ChannelPollResult,
 } from "./types.core.js";
 
+/** Shared type for Channel Outbound Context in src/channels/plugins. */
 export type ChannelOutboundContext = {
   cfg: OpenClawConfig;
   to: string;
@@ -37,10 +39,12 @@ export type ChannelOutboundContext = {
   gatewayClientScopes?: readonly string[];
 };
 
+/** Shared type for Channel Outbound Payload Context in src/channels/plugins. */
 export type ChannelOutboundPayloadContext = ChannelOutboundContext & {
   payload: ReplyPayload;
 };
 
+/** Shared type for Channel Presentation Capabilities in src/channels/plugins. */
 export type ChannelPresentationCapabilities = {
   /** Whether the channel accepts structured presentation payloads at all. */
   supported?: boolean;
@@ -93,6 +97,7 @@ export type ChannelPresentationCapabilities = {
   };
 };
 
+/** Shared type for Channel Delivery Capabilities in src/channels/plugins. */
 export type ChannelDeliveryCapabilities = {
   pin?: boolean;
   durableFinal?: {
@@ -112,6 +117,7 @@ export type ChannelDeliveryCapabilities = {
   };
 };
 
+/** Shared type for Channel Outbound Payload Hint in src/channels/plugins. */
 export type ChannelOutboundPayloadHint =
   | {
       kind: "approval-pending";
@@ -120,6 +126,7 @@ export type ChannelOutboundPayloadHint =
     }
   | { kind: "approval-resolved"; approvalKind: "exec" | "plugin" };
 
+/** Shared type for Channel Outbound Target Ref in src/channels/plugins. */
 export type ChannelOutboundTargetRef = {
   channel: string;
   to: string;
@@ -127,20 +134,24 @@ export type ChannelOutboundTargetRef = {
   threadId?: string | number | null;
 };
 
+/** Shared type for Channel Outbound Formatted Context in src/channels/plugins. */
 export type ChannelOutboundFormattedContext = ChannelOutboundContext & {
   abortSignal?: AbortSignal;
 };
 
+/** Shared type for Channel Outbound Chunk Context in src/channels/plugins. */
 export type ChannelOutboundChunkContext = {
   formatting?: OutboundDeliveryFormattingOptions;
 };
 
+/** Shared type for Channel Outbound Normalize Payload Params in src/channels/plugins. */
 export type ChannelOutboundNormalizePayloadParams = {
   payload: ReplyPayload;
   cfg: OpenClawConfig;
   accountId?: string | null;
 };
 
+/** Shared type for Channel Outbound Adapter in src/channels/plugins. */
 export type ChannelOutboundAdapter = {
   deliveryMode: "direct" | "gateway" | "hybrid";
   chunker?: ((text: string, limit: number, ctx?: ChannelOutboundChunkContext) => string[]) | null;

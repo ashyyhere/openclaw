@@ -1,3 +1,4 @@
+// plugins loader channel setup helpers and runtime behavior.
 import type { ChannelPlugin } from "../channels/plugins/types.plugin.js";
 import { isChannelConfigured } from "../config/channel-configured.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -30,6 +31,7 @@ function mergeChannelPluginSection<T>(
   return overrideValue ?? baseValue;
 }
 
+/** Reused helper for merge Setup Runtime Channel Plugin behavior in src/plugins. */
 export function mergeSetupRuntimeChannelPlugin(
   runtimePlugin: ChannelPlugin,
   setupPlugin: ChannelPlugin,
@@ -50,6 +52,7 @@ export function mergeSetupRuntimeChannelPlugin(
   } as ChannelPlugin;
 }
 
+/** Shared type for Bundled Runtime Channel Registration in src/plugins. */
 export type BundledRuntimeChannelRegistration = {
   id?: string;
   loadChannelPlugin?: () => ChannelPlugin;
@@ -57,6 +60,7 @@ export type BundledRuntimeChannelRegistration = {
   setChannelRuntime?: (runtime: PluginRuntime) => void;
 };
 
+/** Reused helper for resolve Bundled Runtime Channel Registration behavior in src/plugins. */
 export function resolveBundledRuntimeChannelRegistration(
   moduleExport: unknown,
 ): BundledRuntimeChannelRegistration {
@@ -96,6 +100,7 @@ export function resolveBundledRuntimeChannelRegistration(
   };
 }
 
+/** Reused helper for load Bundled Runtime Channel Plugin behavior in src/plugins. */
 export function loadBundledRuntimeChannelPlugin(params: {
   registration: BundledRuntimeChannelRegistration;
 }): {
@@ -123,6 +128,7 @@ export function loadBundledRuntimeChannelPlugin(params: {
   }
 }
 
+/** Reused helper for resolve Setup Channel Registration behavior in src/plugins. */
 export function resolveSetupChannelRegistration(moduleExport: unknown): {
   plugin?: ChannelPlugin;
   setChannelRuntime?: (runtime: PluginRuntime) => void;
@@ -199,6 +205,7 @@ export function resolveSetupChannelRegistration(moduleExport: unknown): {
   };
 }
 
+/** Reused helper for should Load Channel Plugin In Setup Runtime behavior in src/plugins. */
 export function shouldLoadChannelPluginInSetupRuntime(params: {
   manifestChannels: string[];
   setupSource?: string;
@@ -221,6 +228,7 @@ export function shouldLoadChannelPluginInSetupRuntime(params: {
   );
 }
 
+/** Reused helper for should Defer Configured Channel Full Runtime Merge behavior in src/plugins. */
 export function shouldDeferConfiguredChannelFullRuntimeMerge(params: {
   manifestChannels: string[];
   startupDeferConfiguredChannelFullLoadUntilAfterListen?: boolean;
@@ -237,6 +245,7 @@ export function shouldDeferConfiguredChannelFullRuntimeMerge(params: {
   );
 }
 
+/** Reused helper for channel Plugin Id Belongs To Manifest behavior in src/plugins. */
 export function channelPluginIdBelongsToManifest(params: {
   channelId: string | undefined;
   pluginId: string;

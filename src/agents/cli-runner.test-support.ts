@@ -1,3 +1,4 @@
+/** Shared mocks and helpers for CLI runner tests. */
 import type { Mock } from "vitest";
 import { beforeEach, vi } from "vitest";
 import type { requestHeartbeat } from "../infra/heartbeat-wake.js";
@@ -19,8 +20,11 @@ type BootstrapContext = {
 };
 type ResolveBootstrapContextForRunMock = Mock<() => Promise<BootstrapContext>>;
 
+/** Mock process supervisor spawn hook for CLI runner tests. */
 export const supervisorSpawnMock: UnknownMock = vi.fn();
+/** Mock system-event enqueue hook for CLI runner tests. */
 export const enqueueSystemEventMock: UnknownMock = vi.fn();
+/** Mock heartbeat wake hook for CLI runner tests. */
 export const requestHeartbeatMock: UnknownMock = vi.fn();
 
 const hoisted = vi.hoisted(
@@ -121,6 +125,7 @@ type ManagedRunMock = {
   cancel: Mock<() => void>;
 };
 
+/** Build a supervisor managed-run fixture with a controlled exit result. */
 export function createManagedRun(
   exit: MockRunExit,
   pid = 1234,
@@ -135,6 +140,7 @@ export function createManagedRun(
   };
 }
 
+/** Queue a successful one-shot CLI process result. */
 export function mockSuccessfulCliRun() {
   supervisorSpawnMock.mockResolvedValueOnce(
     createManagedRun({
@@ -150,6 +156,7 @@ export function mockSuccessfulCliRun() {
   );
 }
 
+/** Restore prepare-time CLI runner test dependencies after per-test overrides. */
 export function restoreCliRunnerPrepareTestDeps() {
   setCliRunnerPrepareTestDeps({
     makeBootstrapWarn: () => () => {},

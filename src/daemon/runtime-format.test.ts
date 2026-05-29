@@ -1,3 +1,4 @@
+// Tests daemon runtime format test behavior.
 import { describe, expect, it } from "vitest";
 import { formatRuntimeStatus } from "./runtime-format.js";
 

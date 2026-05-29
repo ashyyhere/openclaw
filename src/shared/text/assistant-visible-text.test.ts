@@ -1,3 +1,4 @@
+// Tests shared/text assistant visible text test behavior.
 import { describe, expect, it } from "vitest";
 import {
   sanitizeAssistantVisibleText,

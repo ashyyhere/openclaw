@@ -1,3 +1,4 @@
+// Tests config zod schema cron retention test behavior.
 import { describe, expect, it } from "vitest";
 import { OpenClawSchema } from "./zod-schema.js";
 

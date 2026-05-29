@@ -1,3 +1,4 @@
+// Tests ui/src/ui/chat build chat items test behavior.
 import { describe, expect, it } from "vitest";
 import type { MessageGroup } from "../types/chat-types.ts";
 import { buildChatItems, type BuildChatItemsProps } from "./build-chat-items.ts";

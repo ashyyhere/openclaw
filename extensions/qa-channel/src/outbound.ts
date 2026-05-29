@@ -1,3 +1,4 @@
+// extensions/qa-channel/src outbound helpers and runtime behavior.
 import { resolveQaChannelAccount } from "./accounts.js";
 import { buildQaTarget, parseQaTarget, sendQaBusMessage } from "./bus-client.js";
 import type { CoreConfig } from "./types.js";

@@ -1,3 +1,4 @@
+// Tests gateway session transcript files fs archive events test behavior.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

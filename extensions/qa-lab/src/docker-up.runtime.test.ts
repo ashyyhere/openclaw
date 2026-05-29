@@ -1,3 +1,4 @@
+// Tests extensions/qa-lab/src docker up runtime test behavior.
 import { mkdtemp, readFile, rm } from "node:fs/promises";
 import { createServer } from "node:net";
 import os from "node:os";

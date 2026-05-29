@@ -1,3 +1,4 @@
+// Tests ui/src/ui app render helpers browser test behavior.
 import { render } from "lit";
 import { describe, expect, it, vi } from "vitest";
 import { t } from "../i18n/index.ts";

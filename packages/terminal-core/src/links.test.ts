@@ -1,3 +1,4 @@
+// Tests terminal links test behavior.
 import { describe, expect, it } from "vitest";
 import { formatDocsLink } from "./links.js";
 

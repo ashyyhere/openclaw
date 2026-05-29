@@ -1,3 +1,4 @@
+// extensions/telegram/src allowed updates helpers and runtime behavior.
 import { API_CONSTANTS } from "grammy";
 
 export type TelegramUpdateType = (typeof API_CONSTANTS.ALL_UPDATE_TYPES)[number];

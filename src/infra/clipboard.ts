@@ -1,5 +1,7 @@
+// infra clipboard helpers and runtime behavior.
 import { runCommandWithTimeout } from "../process/exec.js";
 
+/** Reused helper for copy To Clipboard behavior in src/infra. */
 export async function copyToClipboard(value: string): Promise<boolean> {
   const attempts: Array<{ argv: string[] }> = [
     { argv: ["pbcopy"] },

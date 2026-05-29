@@ -1,3 +1,4 @@
+// Tests infra ws test behavior.
 import { Buffer } from "node:buffer";
 import { describe, expect, it } from "vitest";
 import { rawDataToString } from "./ws.js";

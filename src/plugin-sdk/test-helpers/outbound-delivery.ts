@@ -1,3 +1,4 @@
+// plugin-sdk/test-helpers outbound delivery helpers and runtime behavior.
 export {
   addTestHook,
   createEmptyPluginRegistry,

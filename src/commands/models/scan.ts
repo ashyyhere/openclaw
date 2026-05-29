@@ -1,3 +1,4 @@
+// Scans OpenRouter model metadata/probes and optionally imports selected models into config.
 import { cancel, multiselect as clackMultiselect, isCancel } from "@clack/prompts";
 import {
   stylePromptHint,
@@ -190,6 +191,7 @@ function parsePositiveIntegerOption(raw: unknown, label: string, fallback: numbe
   return parsed;
 }
 
+/** Reused helper for models Scan Command behavior in src/commands/models. */
 export async function modelsScanCommand(
   opts: {
     minParams?: string;

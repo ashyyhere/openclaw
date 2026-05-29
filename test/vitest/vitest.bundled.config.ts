@@ -1,3 +1,4 @@
+// test/vitest vitest bundled config helpers and runtime behavior.
 import path from "node:path";
 import {
   bundledPluginDependentUnitTestFiles,

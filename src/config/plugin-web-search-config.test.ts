@@ -1,3 +1,4 @@
+// Tests config plugin web search config test behavior.
 import { describe, expect, it } from "vitest";
 import { resolvePluginWebSearchConfig } from "./plugin-web-search-config.js";
 

@@ -1,3 +1,4 @@
+// extensions/msteams/src/attachments graph helpers and runtime behavior.
 import { fetchWithSsrFGuard, type SsrFPolicy } from "openclaw/plugin-sdk/ssrf-runtime";
 import {
   normalizeLowercaseStringOrEmpty,

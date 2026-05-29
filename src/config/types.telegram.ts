@@ -1,3 +1,4 @@
+// config types telegram helpers and runtime behavior.
 import type {
   ChannelPreviewStreamingConfig,
   ChannelStreamingPreviewConfig,
@@ -16,6 +17,7 @@ import type {
 import type { DmConfig, ProviderCommandsConfig } from "./types.messages.js";
 import type { GroupToolPolicyBySenderConfig, GroupToolPolicyConfig } from "./types.tools.js";
 
+/** Shared type for Telegram Action Config in src/config. */
 export type TelegramActionConfig = {
   reactions?: boolean;
   sendMessage?: boolean;
@@ -31,6 +33,7 @@ export type TelegramActionConfig = {
   editForumTopic?: boolean;
 };
 
+/** Shared type for Telegram Thread Bindings Config in src/config. */
 export type TelegramThreadBindingsConfig = SessionThreadBindingsConfig & {
   /**
    * @deprecated Use spawnSessions instead.
@@ -42,6 +45,7 @@ export type TelegramThreadBindingsConfig = SessionThreadBindingsConfig & {
   spawnAcpSessions?: boolean;
 };
 
+/** Shared type for Telegram Network Config in src/config. */
 export type TelegramNetworkConfig = {
   /** Override Node's autoSelectFamily behavior (true = enable, false = disable). */
   autoSelectFamily?: boolean;
@@ -59,10 +63,14 @@ export type TelegramNetworkConfig = {
   dangerouslyAllowPrivateNetwork?: boolean;
 };
 
+/** Shared type for Telegram Inline Buttons Scope in src/config. */
 export type TelegramInlineButtonsScope = "off" | "dm" | "group" | "all" | "allowlist";
+/** Shared type for Telegram Streaming Mode in src/config. */
 export type TelegramStreamingMode = "off" | "partial" | "block" | "progress";
+/** Shared type for Telegram Exec Approval Target in src/config. */
 export type TelegramExecApprovalTarget = "dm" | "channel" | "both";
 
+/** Shared type for Telegram Streaming Preview Config in src/config. */
 export type TelegramStreamingPreviewConfig = ChannelStreamingPreviewConfig & {
   /** Use Telegram-native ephemeral draft UI for DM preview tool progress. */
   nativeToolProgress?: boolean;
@@ -70,10 +78,12 @@ export type TelegramStreamingPreviewConfig = ChannelStreamingPreviewConfig & {
   nativeToolProgressAllowFrom?: Array<string | number>;
 };
 
+/** Shared type for Telegram Preview Streaming Config in src/config. */
 export type TelegramPreviewStreamingConfig = Omit<ChannelPreviewStreamingConfig, "preview"> & {
   preview?: TelegramStreamingPreviewConfig;
 };
 
+/** Shared type for Telegram Exec Approval Config in src/config. */
 export type TelegramExecApprovalConfig = {
   /** Enable mode for Telegram exec approvals on this account. Default: auto when approvers can be resolved; false disables. */
   enabled?: import("./types.approvals.js").NativeExecApprovalEnableMode;
@@ -87,6 +97,7 @@ export type TelegramExecApprovalConfig = {
   target?: TelegramExecApprovalTarget;
 };
 
+/** Shared type for Telegram Capabilities Config in src/config. */
 export type TelegramCapabilitiesConfig =
   | string[]
   | {
@@ -101,6 +112,7 @@ export type TelegramCustomCommand = {
   description: string;
 };
 
+/** Shared type for Telegram Account Config in src/config. */
 export type TelegramAccountConfig = {
   /** Optional display name for this account (used in CLI/UI lists). */
   name?: string;
@@ -252,6 +264,7 @@ export type TelegramDmConfig = {
   threadReplies?: TelegramDmThreadReplies;
 };
 
+/** Shared type for Telegram Topic Config in src/config. */
 export type TelegramTopicConfig = {
   requireMention?: boolean;
   /** Emit internal message hooks for mention-skipped topic messages. */
@@ -276,6 +289,7 @@ export type TelegramTopicConfig = {
   errorCooldownMs?: number;
 };
 
+/** Shared type for Telegram Group Config in src/config. */
 export type TelegramGroupConfig = {
   requireMention?: boolean;
   /** Emit internal message hooks for mention-skipped group messages. */
@@ -312,6 +326,7 @@ export type AutoTopicLabelConfig =
       prompt?: string;
     };
 
+/** Shared type for Telegram Direct Config in src/config. */
 export type TelegramDirectConfig = {
   /** Per-DM override for DM message policy (open|disabled|allowlist). */
   dmPolicy?: DmPolicy;
@@ -340,6 +355,7 @@ export type TelegramDirectConfig = {
   autoTopicLabel?: AutoTopicLabelConfig;
 };
 
+/** Shared type for Telegram Config in src/config. */
 export type TelegramConfig = {
   /** Optional per-account Telegram configuration (multi-account). */
   accounts?: Record<string, TelegramAccountConfig>;

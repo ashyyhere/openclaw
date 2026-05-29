@@ -1,3 +1,4 @@
+// security audit helpers and runtime behavior.
 import path from "node:path";
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../agents/agent-scope.js";
@@ -57,6 +58,7 @@ type ClaudePermissionModeHit = {
   mode: string;
 };
 
+/** Re-exported API for src/security. */
 export type {
   SecurityAuditFinding,
   SecurityAuditReport,
@@ -64,6 +66,7 @@ export type {
   SecurityAuditSummary,
 } from "./audit.types.js";
 
+/** Shared type for Security Audit Options in src/security. */
 export type SecurityAuditOptions = {
   config: OpenClawConfig;
   sourceConfig?: OpenClawConfig;
@@ -100,6 +103,7 @@ export type SecurityAuditOptions = {
   probeGatewayFn?: ProbeGatewayFn;
 };
 
+/** Shared type for Audit Execution Context in src/security. */
 export type AuditExecutionContext = {
   cfg: OpenClawConfig;
   sourceConfig: OpenClawConfig;
@@ -254,6 +258,7 @@ function buildSecurityAuditSuppressionsActiveFinding(params: {
   };
 }
 
+/** Reused helper for apply Security Audit Suppressions behavior in src/security. */
 export function applySecurityAuditSuppressions(
   findings: SecurityAuditFinding[],
   suppressions: SecurityAuditSuppression[] | undefined,
@@ -287,6 +292,7 @@ function normalizeAllowFromList(list: Array<string | number> | undefined | null)
   return normalizeStringEntries(list);
 }
 
+/** Reused helper for collect Filesystem Findings behavior in src/security. */
 export async function collectFilesystemFindings(params: {
   stateDir: string;
   configPath: string;
@@ -418,6 +424,7 @@ export async function collectFilesystemFindings(params: {
   return findings;
 }
 
+/** Reused helper for collect Gateway Config Findings behavior in src/security. */
 export function collectGatewayConfigFindings(
   cfg: OpenClawConfig,
   sourceConfig: OpenClawConfig,
@@ -430,6 +437,7 @@ export function collectGatewayConfigFindings(
   });
 }
 
+/** Reused helper for collect Plugin Security Audit Findings behavior in src/security. */
 export async function collectPluginSecurityAuditFindings(
   context: AuditExecutionContext,
 ): Promise<SecurityAuditFinding[]> {
@@ -522,6 +530,7 @@ export async function collectPluginSecurityAuditFindings(
   return collectorResults.flat();
 }
 
+/** Reused helper for collect Logging Findings behavior in src/security. */
 export function collectLoggingFindings(cfg: OpenClawConfig): SecurityAuditFinding[] {
   const redact = cfg.logging?.redactSensitive;
   if (redact !== "off") {
@@ -538,6 +547,7 @@ export function collectLoggingFindings(cfg: OpenClawConfig): SecurityAuditFindin
   ];
 }
 
+/** Reused helper for collect Elevated Findings behavior in src/security. */
 export function collectElevatedFindings(cfg: OpenClawConfig): SecurityAuditFinding[] {
   const findings: SecurityAuditFinding[] = [];
   const enabled = cfg.tools?.elevated?.enabled;
@@ -688,6 +698,7 @@ function collectYoloExecScopeIds(cfg: OpenClawConfig, approvals: ExecApprovalsFi
     .map((entry) => entry.id);
 }
 
+/** Reused helper for collect Exec Runtime Findings behavior in src/security. */
 export function collectExecRuntimeFindings(cfg: OpenClawConfig): SecurityAuditFinding[] {
   const findings: SecurityAuditFinding[] = [];
   const globalExecHost = cfg.tools?.exec?.host;
@@ -1192,6 +1203,7 @@ async function createAuditExecutionContext(
   };
 }
 
+/** Reused helper for run Security Audit behavior in src/security. */
 export async function runSecurityAudit(opts: SecurityAuditOptions): Promise<SecurityAuditReport> {
   const findings: SecurityAuditFinding[] = [];
   const context = await createAuditExecutionContext(opts);

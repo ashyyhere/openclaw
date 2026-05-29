@@ -1,3 +1,4 @@
+// extensions/signal/src/monitor access policy helpers and runtime behavior.
 import {
   createChannelIngressResolver,
   defineStableChannelIngressIdentity,

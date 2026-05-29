@@ -1,3 +1,4 @@
+// Tests packages/memory-host-sdk/src/host backend config test behavior.
 import syncFs from "node:fs";
 import type { Dirent } from "node:fs";
 import fs from "node:fs/promises";

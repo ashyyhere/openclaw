@@ -1,3 +1,4 @@
+/** Assistant message text/thinking extraction helpers for embedded-agent streams. */
 import type { AssistantMessage } from "../llm/types.js";
 import { extractTextFromChatContent } from "../shared/chat-content.js";
 import {
@@ -11,12 +12,15 @@ import { sanitizeUserFacingText } from "./embedded-agent-helpers/sanitize-user-f
 import type { AgentMessage } from "./runtime/index.js";
 import { formatToolDetail, resolveToolDisplay } from "./tool-display.js";
 
+/** Re-exported API for src/agents. */
 export {
   stripDowngradedToolCallText,
   stripMinimaxToolCallXml,
 } from "../shared/text/assistant-visible-text.js";
+/** Re-exported API for src/agents, starting with strip Model Special Tokens. */
 export { stripModelSpecialTokens } from "../shared/text/model-special-tokens.js";
 
+/** Return whether a session message is an assistant message. */
 export function isAssistantMessage(msg: AgentMessage | undefined): msg is AssistantMessage {
   return msg?.role === "assistant";
 }
@@ -113,6 +117,7 @@ function extractAssistantTextForPhase(
   };
 }
 
+/** Extract visible assistant text, excluding reasoning-only phases. */
 export function extractAssistantVisibleText(msg: AssistantMessage): string {
   const finalAnswerExtraction = extractAssistantTextForPhase(msg, "final_answer");
   if (finalAnswerExtraction.hadRequestedPhase) {
@@ -122,6 +127,7 @@ export function extractAssistantVisibleText(msg: AssistantMessage): string {
   return extractAssistantTextForPhase(msg).text;
 }
 
+/** Extract final-answer assistant text. */
 export function extractAssistantText(msg: AssistantMessage): string {
   const extracted =
     extractTextFromChatContent(msg.content, {
@@ -136,6 +142,7 @@ export function extractAssistantText(msg: AssistantMessage): string {
   return finalizeAssistantExtraction(msg, extracted);
 }
 
+/** Extract reasoning/thinking text from an assistant message. */
 export function extractAssistantThinking(msg: AssistantMessage): string {
   if (!Array.isArray(msg.content)) {
     return "";
@@ -161,6 +168,7 @@ export function extractAssistantThinking(msg: AssistantMessage): string {
   return blocks.join("\n").trim();
 }
 
+/** Format reasoning text for separate reasoning stream delivery. */
 export function formatReasoningMessage(text: string): string {
   const trimmed = text.trim();
   if (!trimmed) {
@@ -195,11 +203,13 @@ const THINKING_TAG_CLOSE_GLOBAL_RE = new RegExp(
   String.raw`<\s*\/\s*${THINKING_TAG_NAME_PATTERN}\s*>`,
   "gi",
 );
+/** Fast scan regex for thinking/reasoning tag markers. */
 export const THINKING_TAG_SCAN_RE = new RegExp(
   String.raw`<\s*(\/?)\s*${THINKING_TAG_NAME_PATTERN}\s*>`,
   "gi",
 );
 
+/** Split text into thinking/final blocks when reasoning tags are present. */
 export function splitThinkingTaggedText(text: string): ThinkTaggedSplitBlock[] | null {
   const trimmedStart = text.trimStart();
   // Avoid false positives: only treat it as structured thinking when it begins
@@ -264,6 +274,7 @@ export function splitThinkingTaggedText(text: string): ThinkTaggedSplitBlock[] |
   return blocks;
 }
 
+/** Promote tagged thinking text into structured message blocks in-place. */
 export function promoteThinkingTagsToBlocks(message: AssistantMessage): void {
   if (!Array.isArray(message.content)) {
     return;
@@ -311,6 +322,7 @@ export function promoteThinkingTagsToBlocks(message: AssistantMessage): void {
   message.content = next;
 }
 
+/** Extract thinking text from fully tagged text. */
 export function extractThinkingFromTaggedText(text: string): string {
   if (!text) {
     return "";
@@ -330,6 +342,7 @@ export function extractThinkingFromTaggedText(text: string): string {
   return result.trim();
 }
 
+/** Extract thinking text from a possibly partial tagged stream. */
 export function extractThinkingFromTaggedStream(text: string): string {
   if (!text) {
     return "";
@@ -353,6 +366,7 @@ export function extractThinkingFromTaggedStream(text: string): string {
   return text.slice(start).trim();
 }
 
+/** Infer concise tool metadata from tool arguments for progress display. */
 export function inferToolMetaFromArgs(
   toolName: string,
   args: unknown,

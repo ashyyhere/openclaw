@@ -1,3 +1,4 @@
+// Tests infra diagnostics timeline test behavior.
 import { mkdtemp, readFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";

@@ -1,3 +1,4 @@
+// Tests extensions/discord/src pluralkit test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { fetchPluralKitMessageInfo } from "./pluralkit.js";
 

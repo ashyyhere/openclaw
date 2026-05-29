@@ -1,3 +1,4 @@
+// extensions/copilot harness helpers and runtime behavior.
 import type { CopilotClient } from "@github/copilot-sdk";
 import type {
   AgentHarness,

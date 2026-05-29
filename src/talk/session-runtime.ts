@@ -1,3 +1,4 @@
+// talk session runtime helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { RealtimeVoiceProviderPlugin } from "../plugins/types.js";
 import type {
@@ -13,6 +14,7 @@ import type {
   RealtimeVoiceToolResultOptions,
 } from "./provider-types.js";
 
+/** Shared type for Realtime Voice Audio Sink in src/talk. */
 export type RealtimeVoiceAudioSink = {
   isOpen?: () => boolean;
   sendAudio: (audio: Buffer) => void;
@@ -20,8 +22,10 @@ export type RealtimeVoiceAudioSink = {
   sendMark?: (markName: string) => void;
 };
 
+/** Shared type for Realtime Voice Mark Strategy in src/talk. */
 export type RealtimeVoiceMarkStrategy = "transport" | "ack-immediately" | "ignore";
 
+/** Shared type for Realtime Voice Bridge Session in src/talk. */
 export type RealtimeVoiceBridgeSession = {
   bridge: RealtimeVoiceBridge;
   acknowledgeMark(): void;
@@ -35,6 +39,7 @@ export type RealtimeVoiceBridgeSession = {
   triggerGreeting(instructions?: string): void;
 };
 
+/** Shared type for Realtime Voice Bridge Session Params in src/talk. */
 export type RealtimeVoiceBridgeSessionParams = {
   provider: RealtimeVoiceProviderPlugin;
   cfg?: OpenClawConfig;
@@ -56,6 +61,7 @@ export type RealtimeVoiceBridgeSessionParams = {
   onClose?: (reason: RealtimeVoiceCloseReason) => void;
 };
 
+/** Reused helper for create Realtime Voice Bridge Session behavior in src/talk. */
 export function createRealtimeVoiceBridgeSession(
   params: RealtimeVoiceBridgeSessionParams,
 ): RealtimeVoiceBridgeSession {

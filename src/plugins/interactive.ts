@@ -1,3 +1,4 @@
+// plugins interactive helpers and runtime behavior.
 import { resolvePluginInteractiveNamespaceMatch } from "./interactive-registry.js";
 import {
   claimPluginInteractiveCallbackDedupe,
@@ -15,19 +16,23 @@ type PluginInteractiveDispatchRegistration = {
   namespace: string;
 };
 
+/** Shared type for Plugin Interactive Match in src/plugins. */
 export type PluginInteractiveMatch<TRegistration extends PluginInteractiveDispatchRegistration> = {
   registration: RegisteredInteractiveHandler & TRegistration;
   namespace: string;
   payload: string;
 };
 
+/** Re-exported API for src/plugins. */
 export {
   clearPluginInteractiveHandlers,
   clearPluginInteractiveHandlersForPlugin,
   registerPluginInteractiveHandler,
 } from "./interactive-registry.js";
+/** Re-exported API for src/plugins, starting with Interactive Registration Result. */
 export type { InteractiveRegistrationResult } from "./interactive-registry.js";
 
+/** Reused helper for dispatch Plugin Interactive Handler behavior in src/plugins. */
 export async function dispatchPluginInteractiveHandler<
   TRegistration extends PluginInteractiveDispatchRegistration,
   TResult extends { handled?: boolean } | void = { handled?: boolean } | void,

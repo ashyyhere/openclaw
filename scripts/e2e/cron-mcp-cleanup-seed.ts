@@ -1,3 +1,4 @@
+// scripts/e2e cron mcp cleanup seed helpers and runtime behavior.
 import fs from "node:fs/promises";
 import { createRequire } from "node:module";
 import os from "node:os";

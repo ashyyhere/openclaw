@@ -1,3 +1,4 @@
+/** Tests Windows spawn helper behavior. */
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import { describe, expect, it } from "vitest";

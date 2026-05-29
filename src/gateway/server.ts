@@ -1,4 +1,7 @@
+// gateway server helpers and runtime behavior.
+/** Re-exported API for src/gateway, starting with truncate Close Reason. */
 export { truncateCloseReason } from "./server/close-reason.js";
+/** Re-exported API for src/gateway, starting with Gateway Server. */
 export type { GatewayServer, GatewayServerOptions } from "./server.impl.js";
 
 function emitStartupTrace(name: string, durationMs: number, totalMs: number): void {
@@ -21,6 +24,7 @@ async function loadServerImpl() {
   }
 }
 
+/** Reused helper for start Gateway Server behavior in src/gateway. */
 export async function startGatewayServer(
   ...args: Parameters<typeof import("./server.impl.js").startGatewayServer>
 ): ReturnType<typeof import("./server.impl.js").startGatewayServer> {
@@ -28,6 +32,7 @@ export async function startGatewayServer(
   return await mod.startGatewayServer(...args);
 }
 
+/** Reused helper for reset Model Catalog Cache For Test behavior in src/gateway. */
 export async function resetModelCatalogCacheForTest(): Promise<void> {
   const mod = await loadServerImpl();
   await mod.resetModelCatalogCacheForTest();

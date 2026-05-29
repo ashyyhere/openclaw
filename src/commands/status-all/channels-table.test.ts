@@ -1,3 +1,4 @@
+// Tests compact status-all channel table row adaptation and issue overlays.
 import { describe, expect, it } from "vitest";
 import { buildStatusChannelsTableRows } from "./channels-table.js";
 

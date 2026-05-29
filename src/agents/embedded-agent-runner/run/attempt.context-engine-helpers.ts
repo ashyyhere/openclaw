@@ -1,3 +1,4 @@
+/** Bridges context-engine bootstrap, cache, and assistant-result helpers. */
 import type { ContextEngine } from "../../../context-engine/types.js";
 import type { AssistantMessage } from "../../../llm/types.js";
 import type { BootstrapMode } from "../../bootstrap-mode.js";
@@ -5,19 +6,23 @@ import type { AgentMessage } from "../../runtime/index.js";
 import { normalizeUsage, type NormalizedUsage } from "../../usage.js";
 import type { PromptCacheChange } from "../prompt-cache-observability.js";
 import type { EmbeddedRunAttemptResult } from "./types.js";
+/** Re-exported API for src/agents/embedded-agent-runner. */
 export {
   assembleHarnessContextEngine as assembleAttemptContextEngine,
   bootstrapHarnessContextEngine as runAttemptContextEngineBootstrap,
   finalizeHarnessContextEngineTurn as finalizeAttemptContextEngineTurn,
 } from "../../harness/context-engine-lifecycle.js";
 
+/** Shared type for Attempt Context Engine in src/agents/embedded-agent-runner. */
 export type AttemptContextEngine = ContextEngine;
 
+/** Shared type for Attempt Bootstrap Context in src/agents/embedded-agent-runner. */
 export type AttemptBootstrapContext<TBootstrapFile = unknown, TContextFile = unknown> = {
   bootstrapFiles: TBootstrapFile[];
   contextFiles: TContextFile[];
 };
 
+/** Resolves bootstrap files and injected context for a single attempt. */
 export async function resolveAttemptBootstrapContext<TBootstrapFile, TContextFile>(params: {
   contextInjectionMode: "always" | "continuation-skip" | "never";
   bootstrapContextMode?: string;
@@ -58,6 +63,7 @@ export async function resolveAttemptBootstrapContext<TBootstrapFile, TContextFil
   };
 }
 
+/** Builds prompt-cache metadata passed through context-engine runtime state. */
 export function buildContextEnginePromptCacheInfo(params: {
   retention?: "none" | "short" | "long";
   lastCallUsage?: NormalizedUsage;
@@ -103,6 +109,7 @@ export function buildContextEnginePromptCacheInfo(params: {
   return Object.keys(promptCache).length > 0 ? promptCache : undefined;
 }
 
+/** Finds the assistant message produced by the current attempt when available. */
 export function findCurrentAttemptAssistantMessage(params: {
   messagesSnapshot: AgentMessage[];
   prePromptMessageCount: number;
@@ -127,6 +134,7 @@ function parsePromptCacheTouchTimestamp(value: unknown): number | null {
 }
 
 /** Resolve the effective prompt-cache touch timestamp for the current assistant turn. */
+/** Chooses the timestamp used to mark prompt-cache-affecting changes. */
 export function resolvePromptCacheTouchTimestamp(params: {
   lastCallUsage?: NormalizedUsage;
   assistantTimestamp?: unknown;
@@ -145,6 +153,7 @@ export function resolvePromptCacheTouchTimestamp(params: {
   );
 }
 
+/** Builds cache-change metadata for the next context-engine loop iteration. */
 export function buildLoopPromptCacheInfo(params: {
   messagesSnapshot: AgentMessage[];
   prePromptMessageCount: number;

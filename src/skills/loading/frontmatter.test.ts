@@ -1,3 +1,4 @@
+/** Covers skill frontmatter metadata and invocation policy parsing. */
 import { describe, expect, it } from "vitest";
 import { resolveOpenClawMetadata, resolveSkillInvocationPolicy } from "./frontmatter.js";
 

@@ -1,3 +1,4 @@
+// Tests extensions/feishu/src subagent hooks test behavior.
 import {
   getRequiredHookHandler,
   registerHookHandlersForTest,

@@ -1,3 +1,4 @@
+// extensions/google gemini auth helpers and runtime behavior.
 import { parseGoogleOauthApiKey } from "./oauth-token-shared.js";
 
 export function parseGeminiAuth(apiKey: string): { headers: Record<string, string> } {

@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix direct management helpers and runtime behavior.
 import { KeyedAsyncQueue } from "openclaw/plugin-sdk/keyed-async-queue";
 import { normalizeOptionalString } from "openclaw/plugin-sdk/string-coerce-runtime";
 import { inspectMatrixDirectRoomEvidence } from "./direct-room.js";

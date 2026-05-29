@@ -1,3 +1,4 @@
+/** Tests provider turn-order validation helpers. */
 import type { AgentMessage } from "openclaw/plugin-sdk/agent-core";
 import { describe, expect, it } from "vitest";
 import {

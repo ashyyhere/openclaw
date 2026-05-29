@@ -1,3 +1,4 @@
+// extensions/discord/src/internal components message helpers and runtime behavior.
 import {
   ButtonStyle,
   ComponentType,

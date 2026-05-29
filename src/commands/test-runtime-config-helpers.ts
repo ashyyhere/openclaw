@@ -1,7 +1,9 @@
+/** Shared runtime/config mocks for command tests. */
 import { vi } from "vitest";
 import type { RuntimeEnv } from "../runtime.js";
 import type { MockFn } from "../test-utils/vitest-mock-fn.js";
 
+/** Reused constant for base Config Snapshot behavior in src/commands. */
 export const baseConfigSnapshot = {
   path: "/tmp/openclaw.json",
   exists: true,
@@ -25,6 +27,7 @@ type CapturingTestRuntime = {
   errors: string[];
 };
 
+/** Reused helper for create Test Runtime behavior in src/commands. */
 export function createTestRuntime(): TestRuntime {
   const log = vi.fn() as MockFn<RuntimeEnv["log"]>;
   const error = vi.fn() as MockFn<RuntimeEnv["error"]>;
@@ -36,6 +39,7 @@ export function createTestRuntime(): TestRuntime {
   };
 }
 
+/** Reused helper for create Capturing Test Runtime behavior in src/commands. */
 export function createCapturingTestRuntime(): CapturingTestRuntime {
   const logs: string[] = [];
   const errors: string[] = [];
@@ -47,6 +51,7 @@ export function createCapturingTestRuntime(): CapturingTestRuntime {
   return { runtime, logs, errors };
 }
 
+/** Reused helper for create Throwing Test Runtime behavior in src/commands. */
 export function createThrowingTestRuntime(): RuntimeEnv {
   return {
     log: vi.fn(),

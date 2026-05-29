@@ -1,3 +1,4 @@
+// extensions/whatsapp/src system prompt helpers and runtime behavior.
 export function resolveWhatsAppGroupSystemPrompt(params: {
   accountConfig?: { groups?: Record<string, { systemPrompt?: string | null }> } | null;
   groupId?: string | null;

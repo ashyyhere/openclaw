@@ -1,3 +1,4 @@
+/** Covers sandbox security validation for binds, network, and privileges. */
 import { mkdirSync, mkdtempSync, symlinkSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";

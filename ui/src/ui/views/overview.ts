@@ -1,3 +1,4 @@
+// ui/src/ui/views overview helpers and runtime behavior.
 import { html, nothing } from "lit";
 import { t, i18n, SUPPORTED_LOCALES, type Locale, isSupportedLocale } from "../../i18n/index.ts";
 import type { EventLogEntry } from "../app-events.ts";
@@ -28,6 +29,7 @@ import {
 } from "./overview-hints.ts";
 import { renderOverviewLogTail } from "./overview-log-tail.ts";
 
+/** Shared type for Overview Props in ui/src/ui/views. */
 export type OverviewProps = {
   connected: boolean;
   hello: GatewayHelloOk | null;
@@ -89,6 +91,7 @@ const PAIRING_HINT_COPY: Record<
   },
 };
 
+/** Reused helper for render Overview behavior in ui/src/ui/views. */
 export function renderOverview(props: OverviewProps) {
   const snapshot = props.hello?.snapshot as
     | {

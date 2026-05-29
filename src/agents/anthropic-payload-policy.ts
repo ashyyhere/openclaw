@@ -1,3 +1,4 @@
+/** Anthropic-compatible payload policy for cache control and service tier fields. */
 import { resolveProviderRequestCapabilities } from "./provider-attribution.js";
 import {
   splitSystemPromptCacheBoundary,
@@ -180,6 +181,7 @@ function applyAnthropicCacheControlToMessages(
 }
 
 /** @deprecated Anthropic-family provider payload helper; do not use from third-party plugins. */
+/** Resolve cache-control and service-tier policy for an Anthropic-compatible request. */
 export function resolveAnthropicPayloadPolicy(
   input: AnthropicPayloadPolicyInput,
 ): AnthropicPayloadPolicy {
@@ -202,6 +204,7 @@ export function resolveAnthropicPayloadPolicy(
 }
 
 /** @deprecated Anthropic-family provider payload helper; do not use from third-party plugins. */
+/** Mutate Anthropic request params with cache-control/service-tier policy fields. */
 export function applyAnthropicPayloadPolicyToParams(
   payloadObj: Record<string, unknown>,
   policy: AnthropicPayloadPolicy,
@@ -229,6 +232,7 @@ export function applyAnthropicPayloadPolicyToParams(
 }
 
 /** @deprecated Anthropic-family provider payload helper; do not use from third-party plugins. */
+/** Apply explicit Anthropic ephemeral cache-control markers to request params. */
 export function applyAnthropicEphemeralCacheControlMarkers(
   payloadObj: Record<string, unknown>,
 ): void {

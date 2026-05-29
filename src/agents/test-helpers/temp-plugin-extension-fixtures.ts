@@ -1,3 +1,4 @@
+/** Temporary plugin registry fixtures for extension tests. */
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -7,6 +8,7 @@ import { setActivePluginRegistry } from "../../plugins/runtime.js";
 
 const EMPTY_PLUGIN_SCHEMA = { type: "object", additionalProperties: false, properties: {} };
 
+/** Creates a temporary plugin directory. */
 export function createTempPluginDir(
   tempDirs: string[],
   prefix: string,
@@ -19,6 +21,7 @@ export function createTempPluginDir(
   return dir;
 }
 
+/** Writes a temporary plugin manifest and optional entry file. */
 export function writeTempPlugin(params: {
   dir: string;
   id: string;
@@ -46,6 +49,7 @@ export function writeTempPlugin(params: {
   return file;
 }
 
+/** Cleans temporary plugin directories and restores registry state. */
 export function cleanupTempPluginTestEnvironment(
   tempDirs: string[],
   originalBundledPluginsDir: string | undefined,
@@ -68,6 +72,7 @@ export function cleanupTempPluginTestEnvironment(
   }
 }
 
+/** Resets active plugin registry state for tests. */
 export function resetActivePluginRegistryForTest() {
   setActivePluginRegistry(createEmptyPluginRegistry());
 }

@@ -1,3 +1,4 @@
+// extensions/qa-lab/src/providers/live-frontier index helpers and runtime behavior.
 import type { QaProviderDefinition } from "../shared/types.js";
 
 function isOpenAiModel(modelRef: string) {

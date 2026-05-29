@@ -1,3 +1,4 @@
+// Shared types for extensions/voice-call/src/providers twilio types behavior.
 import type { WebhookSecurityConfig } from "../config.js";
 
 /**

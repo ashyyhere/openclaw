@@ -1,3 +1,4 @@
+// infra update package manager helpers and runtime behavior.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
@@ -8,12 +9,14 @@ type BuildManager = "pnpm" | "bun" | "npm";
 
 type UpdatePackageManagerRequirement = "allow-fallback" | "require-preferred";
 
+/** Shared type for Update Package Manager Failure Reason in src/infra. */
 export type UpdatePackageManagerFailureReason =
   | "preferred-manager-unavailable"
   | "pnpm-corepack-enable-failed"
   | "pnpm-corepack-missing"
   | "pnpm-npm-bootstrap-failed";
 
+/** Shared type for Package Manager Command Runner in src/infra. */
 export type PackageManagerCommandRunner = (
   argv: string[],
   options: { timeoutMs: number; env?: NodeJS.ProcessEnv },
@@ -149,6 +152,7 @@ async function bootstrapPnpmViaNpm(params: {
   }
 }
 
+/** Reused helper for resolve Update Build Manager behavior in src/infra. */
 export async function resolveUpdateBuildManager(
   runCommand: PackageManagerCommandRunner,
   root: string,
@@ -213,6 +217,7 @@ export async function resolveUpdateBuildManager(
   return { kind: "resolved", manager: "npm", preferred, fallback: preferred !== "npm" };
 }
 
+/** Reused helper for manager Script Args behavior in src/infra. */
 export function managerScriptArgs(manager: BuildManager, script: string, args: string[] = []) {
   if (manager === "pnpm") {
     return ["pnpm", script, ...args];
@@ -226,6 +231,7 @@ export function managerScriptArgs(manager: BuildManager, script: string, args: s
   return ["npm", "run", script];
 }
 
+/** Reused helper for manager Install Args behavior in src/infra. */
 export function managerInstallArgs(manager: BuildManager, opts?: { compatFallback?: boolean }) {
   if (manager === "pnpm") {
     return ["pnpm", "install"];
@@ -239,6 +245,7 @@ export function managerInstallArgs(manager: BuildManager, opts?: { compatFallbac
   return ["npm", "install"];
 }
 
+/** Reused helper for manager Install Ignore Scripts Args behavior in src/infra. */
 export function managerInstallIgnoreScriptsArgs(manager: BuildManager): string[] | null {
   if (manager === "pnpm") {
     return ["pnpm", "install", "--ignore-scripts"];

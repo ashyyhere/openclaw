@@ -1,3 +1,4 @@
+// Chat command handlers for MCP server controls.
 import {
   listConfiguredMcpServers,
   setConfiguredMcpServer,
@@ -15,6 +16,7 @@ function renderJsonBlock(label: string, value: unknown): string {
   return `${label}\n\`\`\`json\n${JSON.stringify(value, null, 2)}\n\`\`\``;
 }
 
+/** Reused constant for handle Mcp Command behavior in src/auto-reply/reply. */
 export const handleMcpCommand: CommandHandler = async (params, allowTextCommands) => {
   if (!allowTextCommands) {
     return null;

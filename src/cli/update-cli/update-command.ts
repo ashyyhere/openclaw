@@ -1,3 +1,4 @@
+/** Implements the self-update command and package-manager execution flow. */
 import { execFile, spawn, type ChildProcess } from "node:child_process";
 import { existsSync } from "node:fs";
 import fs from "node:fs/promises";
@@ -450,6 +451,7 @@ function resolveRestoredAuthoredChannels(params: {
   return changed ? restoredChannels : undefined;
 }
 
+/** Reused helper for collect Missing Plugin Install Payloads behavior in src/cli/update-cli. */
 export async function collectMissingPluginInstallPayloads(params: {
   records: Record<string, PluginInstallRecord>;
   config?: OpenClawConfig;
@@ -606,6 +608,7 @@ export function buildInvalidConfigPostCoreUpdateResult(): {
   };
 }
 
+/** Reused helper for should Prepare Updated Install Restart behavior in src/cli/update-cli. */
 export function shouldPrepareUpdatedInstallRestart(params: {
   updateMode: UpdateRunResult["mode"];
   serviceInstalled: boolean;
@@ -617,6 +620,7 @@ export function shouldPrepareUpdatedInstallRestart(params: {
   return params.serviceLoaded;
 }
 
+/** Reused helper for should Use Legacy Process Restart After Update behavior in src/cli/update-cli. */
 export function shouldUseLegacyProcessRestartAfterUpdate(params: {
   updateMode: UpdateRunResult["mode"];
 }): boolean {
@@ -634,6 +638,7 @@ type PostUpdateLaunchAgentRecoveryDeps = {
   recover?: typeof recoverInstalledLaunchAgent;
 };
 
+/** Reused helper for recover Installed Launch Agent After Update behavior in src/cli/update-cli. */
 export async function recoverInstalledLaunchAgentAfterUpdate(params: {
   service?: GatewayService;
   env?: NodeJS.ProcessEnv;
@@ -679,6 +684,7 @@ type PostUpdateGatewayHealthRecoveryDeps = {
   waitForHealthy?: typeof waitForGatewayHealthyRestart;
 };
 
+/** Reused helper for recover Launch Agent And Recheck Gateway Health behavior in src/cli/update-cli. */
 export async function recoverLaunchAgentAndRecheckGatewayHealth(params: {
   health: GatewayRestartSnapshot;
   service: GatewayService;
@@ -736,6 +742,7 @@ function formatPostUpdateGatewayRecoveryLine(platform: NodeJS.Platform): string 
   return `Recovery: run \`${restartCommand}\`; if the local service manager reports the gateway service is missing, stale, or not running, run \`${installCommand}\` from the same user account, then rerun \`${statusCommand}\`.`;
 }
 
+/** Reused helper for format Post Update Gateway Recovery Instructions behavior in src/cli/update-cli. */
 export function formatPostUpdateGatewayRecoveryInstructions(
   result: UpdateRunResult,
   platform: NodeJS.Platform = process.platform,
@@ -1083,6 +1090,7 @@ function resolveUpdatedInstallCommandEnv(
   return disableUpdatedPackageCompileCacheEnv(resolveServiceRefreshEnv(env, invocationCwd));
 }
 
+/** Reused helper for resolve Post Install Doctor Env behavior in src/cli/update-cli. */
 export function resolvePostInstallDoctorEnv(params?: {
   baseEnv?: NodeJS.ProcessEnv;
   serviceEnv?: NodeJS.ProcessEnv;
@@ -1103,6 +1111,7 @@ export function resolvePostInstallDoctorEnv(params?: {
   return resolvedEnv;
 }
 
+/** Reused helper for resolve Updated Gateway Restart Port behavior in src/cli/update-cli. */
 export function resolveUpdatedGatewayRestartPort(params: {
   config?: OpenClawConfig;
   processEnv?: NodeJS.ProcessEnv;
@@ -1111,6 +1120,7 @@ export function resolveUpdatedGatewayRestartPort(params: {
   return resolveGatewayPort(params.config, params.serviceEnv ?? params.processEnv ?? process.env);
 }
 
+/** Reused helper for resolve Post Update Service State Read Env behavior in src/cli/update-cli. */
 export function resolvePostUpdateServiceStateReadEnv(params: {
   updateMode: UpdateRunResult["mode"];
   processEnv?: NodeJS.ProcessEnv;
@@ -1611,6 +1621,7 @@ async function runGitUpdate(params: {
   };
 }
 
+/** Reused helper for update Plugins After Core Update behavior in src/cli/update-cli. */
 export async function updatePluginsAfterCoreUpdate(params: {
   root: string;
   channel: "stable" | "beta" | "dev";
@@ -2279,6 +2290,7 @@ function withUpdateFinalizationEnv<T>(run: () => Promise<T>): Promise<T> {
   });
 }
 
+/** Reused helper for update Finalize Command behavior in src/cli/update-cli. */
 export async function updateFinalizeCommand(opts: UpdateFinalizeOptions): Promise<void> {
   suppressDeprecations();
   const timeoutMs = parseTimeoutMsOrExit(opts.timeout);
@@ -2925,6 +2937,7 @@ async function withUpdateInProgressEnv<T>(run: () => Promise<T>): Promise<T> {
   });
 }
 
+/** Reused helper for update Command behavior in src/cli/update-cli. */
 export async function updateCommand(opts: UpdateCommandOptions): Promise<void> {
   return await withUpdateInProgressEnv(async () => {
     await updateCommandInternal(opts);

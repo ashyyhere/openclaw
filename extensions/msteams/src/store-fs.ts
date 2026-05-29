@@ -1,3 +1,4 @@
+// extensions/msteams/src store fs helpers and runtime behavior.
 import { withFileLock as withPathLock } from "openclaw/plugin-sdk/file-lock";
 import { readJsonFileWithFallback, writeJsonFileAtomically } from "openclaw/plugin-sdk/json-store";
 import { pathExists } from "openclaw/plugin-sdk/security-runtime";

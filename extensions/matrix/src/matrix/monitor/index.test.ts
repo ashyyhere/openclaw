@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src/matrix/monitor index test behavior.
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { z } from "zod";
 import type { MatrixConfig, MatrixStreamingMode } from "../../types.js";

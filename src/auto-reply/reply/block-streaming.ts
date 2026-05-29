@@ -1,3 +1,4 @@
+// Block streaming policy for channels that support structured assistant output.
 import { getChannelPlugin, normalizeChannelId } from "../../channels/plugins/index.js";
 import { resolveChannelStreamingBlockCoalesce } from "../../channels/streaming.js";
 import type { BlockStreamingCoalesceConfig } from "../../config/types.js";
@@ -62,6 +63,7 @@ function resolveProviderBlockStreamingCoalesce(params: {
   );
 }
 
+/** Shared type for Block Streaming Coalescing in src/auto-reply/reply. */
 export type BlockStreamingCoalescing = {
   minChars: number;
   maxChars: number;
@@ -71,6 +73,7 @@ export type BlockStreamingCoalescing = {
   flushOnEnqueue?: boolean;
 };
 
+/** Shared type for Block Streaming Chunking in src/auto-reply/reply. */
 export type BlockStreamingChunking = {
   minChars: number;
   maxChars: number;
@@ -78,6 +81,7 @@ export type BlockStreamingChunking = {
   flushOnParagraph?: boolean;
 };
 
+/** Reused helper for clamp Positive Integer behavior in src/auto-reply/reply. */
 export function clampPositiveInteger(
   value: unknown,
   fallback: number,
@@ -96,6 +100,7 @@ export function clampPositiveInteger(
   return rounded;
 }
 
+/** Reused helper for resolve Effective Block Streaming Config behavior in src/auto-reply/reply. */
 export function resolveEffectiveBlockStreamingConfig(params: {
   cfg: OpenClawConfig | undefined;
   provider?: string;
@@ -154,6 +159,7 @@ export function resolveEffectiveBlockStreamingConfig(params: {
   return { chunking, coalescing };
 }
 
+/** Reused helper for resolve Block Streaming Chunking behavior in src/auto-reply/reply. */
 export function resolveBlockStreamingChunking(
   cfg: OpenClawConfig | undefined,
   provider?: string,

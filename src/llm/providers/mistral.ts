@@ -1,3 +1,4 @@
+// llm/providers mistral helpers and runtime behavior.
 import { Mistral } from "@mistralai/mistralai";
 import type {
   ChatCompletionStreamRequest,
@@ -37,6 +38,7 @@ const MAX_MISTRAL_ERROR_BODY_CHARS = 4000;
  */
 type MistralReasoningEffort = "none" | "high";
 
+/** Shared type for Mistral Options in src/llm/providers. */
 export interface MistralOptions extends StreamOptions {
   toolChoice?:
     | "auto"

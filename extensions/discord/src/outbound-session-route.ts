@@ -1,3 +1,4 @@
+// extensions/discord/src outbound session route helpers and runtime behavior.
 import { buildThreadAwareOutboundSessionRoute } from "openclaw/plugin-sdk/channel-core";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { buildOutboundBaseSessionKey, type RoutePeer } from "openclaw/plugin-sdk/routing";

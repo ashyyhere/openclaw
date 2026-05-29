@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src/matrix/actions messages test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { setMatrixRuntime } from "../../runtime.js";
 import type { MatrixClient } from "../sdk.js";

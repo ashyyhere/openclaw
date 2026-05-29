@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src inline buttons test behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-types";
 import { describe, expect, it } from "vitest";
 import { buildTelegramInteractiveButtons } from "./button-types.js";

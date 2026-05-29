@@ -1,3 +1,4 @@
+// scripts check no deprecated channel access helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { collectFilesSync, isCodeFile, relativeToCwd } from "./check-file-utils.js";

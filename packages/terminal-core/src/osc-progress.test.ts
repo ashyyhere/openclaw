@@ -1,3 +1,4 @@
+// Tests terminal osc progress test behavior.
 import { describe, expect, it } from "vitest";
 import { createOscProgressController, supportsOscProgress } from "./osc-progress.js";
 

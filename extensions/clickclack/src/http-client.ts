@@ -1,3 +1,4 @@
+// extensions/clickclack/src http client helpers and runtime behavior.
 import { WebSocket } from "ws";
 import type {
   ClickClackChannel,

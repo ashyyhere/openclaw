@@ -1,3 +1,4 @@
+// extensions/discord/src send guild helpers and runtime behavior.
 import type {
   APIGuild,
   APIGuildMember,

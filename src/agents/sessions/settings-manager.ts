@@ -1,3 +1,4 @@
+/** Loads and persists user/project session settings. */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { dirname, join } from "node:path";
@@ -6,23 +7,27 @@ import type { Transport } from "../../llm/types.js";
 import { CONFIG_DIR_NAME, getAgentDir } from "../config.js";
 import { DEFAULT_HTTP_IDLE_TIMEOUT_MS, parseHttpIdleTimeoutMs } from "./http-dispatcher.js";
 
+/** Shared type for Compaction Settings in src/agents/sessions. */
 export interface CompactionSettings {
   enabled?: boolean; // default: true
   reserveTokens?: number; // default: 16384
   keepRecentTokens?: number; // default: 20000
 }
 
+/** Shared type for Branch Summary Settings in src/agents/sessions. */
 export interface BranchSummarySettings {
   reserveTokens?: number; // default: 16384 (tokens reserved for prompt + LLM response)
   skipPrompt?: boolean; // default: false - when true, skips "Summarize branch?" prompt and defaults to no summary
 }
 
+/** Shared type for Provider Retry Settings in src/agents/sessions. */
 export interface ProviderRetrySettings {
   timeoutMs?: number; // SDK/provider request timeout in milliseconds
   maxRetries?: number; // SDK/provider retry attempts
   maxRetryDelayMs?: number; // default: 60000 (max server-requested delay before failing)
 }
 
+/** Shared type for Retry Settings in src/agents/sessions. */
 export interface RetrySettings {
   enabled?: boolean; // default: true
   maxRetries?: number; // default: 3
@@ -30,6 +35,7 @@ export interface RetrySettings {
   provider?: ProviderRetrySettings;
 }
 
+/** Shared type for Terminal Settings in src/agents/sessions. */
 export interface TerminalSettings {
   showImages?: boolean; // default: true (only relevant if terminal supports images)
   imageWidthCells?: number; // default: 60 (preferred inline image width in terminal cells)
@@ -37,11 +43,13 @@ export interface TerminalSettings {
   showTerminalProgress?: boolean; // default: false (OSC 9;4 terminal progress indicators)
 }
 
+/** Shared type for Image Settings in src/agents/sessions. */
 export interface ImageSettings {
   autoResize?: boolean; // default: true (resize images to 2000x2000 max for better model compatibility)
   blockImages?: boolean; // default: false - when true, prevents all images from being sent to LLM providers
 }
 
+/** Shared type for Thinking Budgets Settings in src/agents/sessions. */
 export interface ThinkingBudgetsSettings {
   minimal?: number;
   low?: number;
@@ -50,14 +58,17 @@ export interface ThinkingBudgetsSettings {
   max?: number;
 }
 
+/** Shared type for Markdown Settings in src/agents/sessions. */
 export interface MarkdownSettings {
   codeBlockIndent?: string; // default: "  "
 }
 
+/** Shared type for Warning Settings in src/agents/sessions. */
 export interface WarningSettings {
   anthropicExtraUsage?: boolean; // default: true
 }
 
+/** Shared type for Transport Setting in src/agents/sessions. */
 export type TransportSetting = Transport;
 
 /**
@@ -75,6 +86,7 @@ export type PackageSource =
       themes?: string[];
     };
 
+/** Shared type for Settings in src/agents/sessions. */
 export interface Settings {
   lastChangelogVersion?: string;
   defaultProvider?: string;
@@ -146,17 +158,21 @@ function deepMergeSettings(base: Settings, overrides: Settings): Settings {
   return result;
 }
 
+/** Shared type for Settings Scope in src/agents/sessions. */
 export type SettingsScope = "global" | "project";
 
+/** Shared type for Settings Storage in src/agents/sessions. */
 export interface SettingsStorage {
   withLock(scope: SettingsScope, fn: (current: string | undefined) => string | undefined): void;
 }
 
+/** Shared type for Settings Error in src/agents/sessions. */
 export interface SettingsError {
   scope: SettingsScope;
   error: Error;
 }
 
+/** Reused class for File Settings Storage behavior in src/agents/sessions. */
 export class FileSettingsStorage implements SettingsStorage {
   private globalSettingsPath: string;
   private projectSettingsPath: string;
@@ -224,6 +240,7 @@ export class FileSettingsStorage implements SettingsStorage {
   }
 }
 
+/** Reused class for In Memory Settings Storage behavior in src/agents/sessions. */
 export class InMemorySettingsStorage implements SettingsStorage {
   private global: string | undefined;
   private project: string | undefined;
@@ -241,6 +258,7 @@ export class InMemorySettingsStorage implements SettingsStorage {
   }
 }
 
+/** Reused class for Settings Manager behavior in src/agents/sessions. */
 export class SettingsManager {
   private storage: SettingsStorage;
   private globalSettings: Settings;

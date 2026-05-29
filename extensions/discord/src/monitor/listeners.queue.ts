@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor listeners queue helpers and runtime behavior.
 import { createSubsystemLogger, formatDurationSeconds } from "openclaw/plugin-sdk/runtime-env";
 
 export type DiscordListenerLogger = ReturnType<

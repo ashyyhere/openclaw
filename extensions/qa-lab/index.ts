@@ -1,3 +1,4 @@
+// extensions/qa-lab index helpers and runtime behavior.
 import { definePluginEntry } from "./runtime-api.js";
 import { registerQaLabCli } from "./src/cli.js";
 

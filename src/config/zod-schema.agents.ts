@@ -1,9 +1,11 @@
+// config zod schema agents helpers and runtime behavior.
 import { z } from "zod";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import { AgentDefaultsSchema } from "./zod-schema.agent-defaults.js";
 import { AgentEntrySchema } from "./zod-schema.agent-runtime.js";
 import { TranscribeAudioSchema } from "./zod-schema.core.js";
 
+/** Reused constant for Agents Schema behavior in src/config. */
 export const AgentsSchema = z
   .object({
     defaults: z.lazy(() => AgentDefaultsSchema).optional(),
@@ -87,10 +89,13 @@ const AcpBindingSchema = z
     }
   });
 
+/** Reused constant for Bindings Schema behavior in src/config. */
 export const BindingsSchema = z.array(z.union([RouteBindingSchema, AcpBindingSchema])).optional();
 
+/** Reused constant for Broadcast Strategy Schema behavior in src/config. */
 export const BroadcastStrategySchema = z.enum(["parallel", "sequential"]);
 
+/** Reused constant for Broadcast Schema behavior in src/config. */
 export const BroadcastSchema = z
   .object({
     strategy: BroadcastStrategySchema.optional(),
@@ -98,6 +103,7 @@ export const BroadcastSchema = z
   .catchall(z.array(z.string()))
   .optional();
 
+/** Reused constant for Audio Schema behavior in src/config. */
 export const AudioSchema = z
   .object({
     transcription: TranscribeAudioSchema,

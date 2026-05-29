@@ -1,3 +1,4 @@
+// Tests gateway/server-methods skills search detail test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const searchSkillsFromClawHubMock = vi.fn();

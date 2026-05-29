@@ -1,9 +1,11 @@
+// plugins plugin config trust helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 import type { PluginManifestRecord } from "./manifest-registry.js";
 
 type PluginEntriesConfig = NonNullable<NonNullable<OpenClawConfig["plugins"]>["entries"]>;
 
+/** Reused helper for normalize Plugin Config Id behavior in src/plugins. */
 export function normalizePluginConfigId(id: unknown): string {
   return normalizeOptionalLowercaseString(id) ?? "";
 }
@@ -30,6 +32,7 @@ function findPluginConfigEntry(
   return undefined;
 }
 
+/** Reused helper for is Workspace Plugin Allowed By Config behavior in src/plugins. */
 export function isWorkspacePluginAllowedByConfig(params: {
   config: OpenClawConfig | undefined;
   isImplicitlyAllowed?: (pluginId: string) => boolean;

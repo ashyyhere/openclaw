@@ -1,3 +1,4 @@
+// node-host runner helpers and runtime behavior.
 import fs from "node:fs";
 import {
   GATEWAY_CLIENT_MODES,
@@ -27,6 +28,7 @@ import {
   listRegisteredNodeHostCapsAndCommands,
 } from "./plugin-node-host.js";
 
+/** Re-exported API for src/node-host, starting with build Node Invoke Result Params. */
 export { buildNodeInvokeResultParams };
 
 type NodeHostRunOptions = {
@@ -40,6 +42,7 @@ type NodeHostRunOptions = {
 
 const DEFAULT_NODE_PATH = "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin";
 
+/** Reused helper for resolve Node Host Gateway Platform behavior in src/node-host. */
 export function resolveNodeHostGatewayPlatform(platform: NodeJS.Platform): string {
   switch (platform) {
     case "darwin":
@@ -53,6 +56,7 @@ export function resolveNodeHostGatewayPlatform(platform: NodeJS.Platform): strin
   }
 }
 
+/** Reused helper for resolve Node Host Gateway Device Family behavior in src/node-host. */
 export function resolveNodeHostGatewayDeviceFamily(platform: NodeJS.Platform): string | undefined {
   switch (platform) {
     case "darwin":
@@ -84,6 +88,7 @@ type NodeHostReconnectPausedDeps = {
   exit?: (code: number) => never;
 };
 
+/** Reused helper for should Exit Node Host On Reconnect Paused behavior in src/node-host. */
 export function shouldExitNodeHostOnReconnectPaused(detailCode: string | null): boolean {
   return detailCode !== null && NODE_HOST_EXIT_ON_RECONNECT_PAUSE_CODES.has(detailCode);
 }
@@ -98,6 +103,7 @@ function formatNodeHostReconnectPausedMessage(
   return `node host gateway reconnect paused after close (${info.code}): ${reason}${detail}; ${action}`;
 }
 
+/** Reused helper for handle Node Host Reconnect Paused behavior in src/node-host. */
 export function handleNodeHostReconnectPaused(
   info: GatewayReconnectPausedInfo,
   deps: NodeHostReconnectPausedDeps = {},
@@ -198,6 +204,7 @@ function ensureNodePathEnv(): string {
   return DEFAULT_NODE_PATH;
 }
 
+/** Reused helper for resolve Node Host Gateway Credentials behavior in src/node-host. */
 export async function resolveNodeHostGatewayCredentials(params: {
   config: OpenClawConfig;
   env?: NodeJS.ProcessEnv;
@@ -229,6 +236,7 @@ function buildNodeHostLocalAuthConfig(config: OpenClawConfig): OpenClawConfig {
   return nextConfig;
 }
 
+/** Reused helper for run Node Host behavior in src/node-host. */
 export async function runNodeHost(opts: NodeHostRunOptions): Promise<void> {
   const config = await ensureNodeHostConfig();
   const nodeId = opts.nodeId?.trim() || config.nodeId;

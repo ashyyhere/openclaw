@@ -1,3 +1,4 @@
+// plugins config state helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {
   normalizeOptionalLowercaseString,
@@ -23,14 +24,18 @@ import {
 import type { PluginOrigin } from "./plugin-origin.types.js";
 import { defaultSlotIdForKey } from "./slots.js";
 
+/** Re-exported API for src/plugins, starting with Plugin Activation Source. */
 export type { PluginActivationSource };
+/** Shared type for Plugin Activation State in src/plugins. */
 export type PluginActivationState = PluginActivationStateLike;
 
+/** Shared type for Plugin Activation Config Source in src/plugins. */
 export type PluginActivationConfigSource = {
   plugins: NormalizedPluginsConfig;
   rootConfig?: OpenClawConfig;
 } & PluginActivationConfigSourceLike<OpenClawConfig>;
 
+/** Shared type for Normalized Plugins Config in src/plugins. */
 export type NormalizedPluginsConfig = SharedNormalizedPluginsConfig;
 
 const BUILT_IN_PLUGIN_ALIAS_FALLBACKS: ReadonlyArray<readonly [alias: string, pluginId: string]> = [
@@ -74,16 +79,19 @@ function createScopedPluginIdNormalizer(): NormalizePluginId {
     });
 }
 
+/** Reused helper for normalize Plugin Id behavior in src/plugins. */
 export function normalizePluginId(id: string): string {
   return normalizePluginIdWithLookup(id, getBundledPluginAliasLookup);
 }
 
+/** Reused constant for normalize Plugins Config behavior in src/plugins. */
 export const normalizePluginsConfig = (
   config?: OpenClawConfig["plugins"],
 ): NormalizedPluginsConfig => {
   return normalizePluginsConfigWithResolver(config, createScopedPluginIdNormalizer());
 };
 
+/** Reused helper for create Plugin Activation Source behavior in src/plugins. */
 export function createPluginActivationSource(params: {
   config?: OpenClawConfig;
   plugins?: NormalizedPluginsConfig;
@@ -103,9 +111,11 @@ const hasExplicitMemoryEntry = (plugins?: OpenClawConfig["plugins"]) =>
     Object.prototype.hasOwnProperty.call(plugins.entries, defaultSlotIdForKey("memory")),
   );
 
+/** Reused constant for has Explicit Plugin Config behavior in src/plugins. */
 export const hasExplicitPluginConfig = (plugins?: OpenClawConfig["plugins"]) =>
   hasExplicitPluginConfigShared(plugins);
 
+/** Reused helper for apply Test Plugin Defaults behavior in src/plugins. */
 export function applyTestPluginDefaults(
   cfg: OpenClawConfig,
   env: NodeJS.ProcessEnv = process.env,
@@ -144,6 +154,7 @@ export function applyTestPluginDefaults(
   };
 }
 
+/** Reused helper for is Test Default Memory Slot Disabled behavior in src/plugins. */
 export function isTestDefaultMemorySlotDisabled(
   cfg: OpenClawConfig,
   env: NodeJS.ProcessEnv = process.env,
@@ -158,6 +169,7 @@ export function isTestDefaultMemorySlotDisabled(
   return true;
 }
 
+/** Reused helper for resolve Plugin Activation State behavior in src/plugins. */
 export function resolvePluginActivationState(params: {
   id: string;
   origin: PluginOrigin;
@@ -182,11 +194,13 @@ export function resolvePluginActivationState(params: {
   );
 }
 
+/** Reused constant for resolve Enable State behavior in src/plugins. */
 export const resolveEnableState = createPluginEnableStateResolver<
   NormalizedPluginsConfig,
   PluginOrigin
 >(resolvePluginActivationState);
 
+/** Reused constant for is Bundled Channel Enabled By Channel Config behavior in src/plugins. */
 export const isBundledChannelEnabledByChannelConfig = isBundledChannelEnabledByChannelConfigShared;
 
 type EffectiveActivationParams = {
@@ -198,11 +212,13 @@ type EffectiveActivationParams = {
   activationSource?: PluginActivationConfigSource;
 };
 
+/** Reused constant for resolve Effective Enable State behavior in src/plugins. */
 export const resolveEffectiveEnableState =
   createEffectiveEnableStateResolver<EffectiveActivationParams>(
     resolveEffectivePluginActivationState,
   );
 
+/** Reused helper for resolve Effective Plugin Activation State behavior in src/plugins. */
 export function resolveEffectivePluginActivationState(params: {
   id: EffectiveActivationParams["id"];
   origin: EffectiveActivationParams["origin"];
@@ -215,6 +231,7 @@ export function resolveEffectivePluginActivationState(params: {
   return resolvePluginActivationState(params);
 }
 
+/** Reused helper for resolve Memory Slot Decision behavior in src/plugins. */
 export function resolveMemorySlotDecision(params: {
   id: string;
   kind?: string | string[];

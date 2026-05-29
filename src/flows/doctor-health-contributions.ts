@@ -1,3 +1,4 @@
+// flows doctor health contributions helpers and runtime behavior.
 import fs from "node:fs";
 import type { probeGatewayMemoryStatus } from "../commands/doctor-gateway-health.js";
 import type { DoctorOptions, DoctorPrompter } from "../commands/doctor-prompter.js";
@@ -10,6 +11,7 @@ import type { buildGatewayConnectionDetails } from "../gateway/call.js";
 import type { RuntimeEnv } from "../runtime.js";
 import type { HealthFinding } from "./health-checks.js";
 import type { FlowContribution } from "./types.js";
+/** Re-exported API for src/flows. */
 export {
   doctorHealthConversionRules,
   type DoctorHealthConversionKind,
@@ -85,6 +87,7 @@ function isTruthyEnvValue(value: string | undefined): boolean {
   return normalized !== "" && normalized !== "0" && normalized !== "false" && normalized !== "no";
 }
 
+/** Reused helper for should Skip Legacy Update Doctor Config Write behavior in src/flows. */
 export function shouldSkipLegacyUpdateDoctorConfigWrite(params: {
   env: NodeJS.ProcessEnv;
 }): boolean {
@@ -965,6 +968,7 @@ async function runRuntimeToolSchemasHealth(ctx: DoctorHealthFlowContext): Promis
   note(formatRuntimeToolSchemaFindings(findings), "Doctor warnings");
 }
 
+/** Reused helper for resolve Doctor Health Contributions behavior in src/flows. */
 export function resolveDoctorHealthContributions(): DoctorHealthContribution[] {
   return [
     createDoctorHealthContribution({
@@ -1187,6 +1191,7 @@ export function resolveDoctorHealthContributions(): DoctorHealthContribution[] {
   ];
 }
 
+/** Reused helper for run Doctor Health Contributions behavior in src/flows. */
 export async function runDoctorHealthContributions(ctx: DoctorHealthFlowContext): Promise<void> {
   for (const contribution of resolveDoctorHealthContributions()) {
     await contribution.run(ctx);

@@ -1,3 +1,4 @@
+/** Runs status scans and reports progress for status commands. */
 import { withProgress } from "../cli/progress.js";
 import { hasConfiguredChannelsForReadOnlyScope } from "../plugins/channel-plugin-ids.js";
 import { buildPluginCompatibilitySnapshotNotices } from "../plugins/status.js";
@@ -8,6 +9,7 @@ import { collectStatusScanOverview } from "./status.scan-overview.ts";
 import type { StatusScanResult } from "./status.scan-result.ts";
 import { scanStatusJsonWithPolicy } from "./status.scan.fast-json.js";
 
+/** Reused helper for scan Status behavior in src/commands. */
 export async function scanStatus(
   opts: {
     json?: boolean;

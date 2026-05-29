@@ -1,3 +1,4 @@
+/** Probes gateway status for daemon CLI output and health checks. */
 import type { OpenClawConfig } from "../../config/types.js";
 import type { GatewayProbeResult } from "../../gateway/probe.js";
 import { formatErrorMessage } from "../../infra/errors.js";
@@ -44,6 +45,7 @@ function readRuntimeVersionFromStatusPayload(payload: unknown): string | null {
     : null;
 }
 
+/** Reused helper for probe Gateway Status behavior in src/cli/daemon-cli. */
 export async function probeGatewayStatus(opts: {
   url: string;
   token?: string;

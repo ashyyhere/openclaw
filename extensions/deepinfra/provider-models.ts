@@ -1,3 +1,4 @@
+// extensions/deepinfra provider models helpers and runtime behavior.
 import { isProviderApiKeyConfigured } from "openclaw/plugin-sdk/provider-auth";
 import { buildManifestModelProviderConfig } from "openclaw/plugin-sdk/provider-catalog-shared";
 import { fetchWithTimeout } from "openclaw/plugin-sdk/provider-http";

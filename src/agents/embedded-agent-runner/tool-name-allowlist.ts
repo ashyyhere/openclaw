@@ -1,3 +1,4 @@
+/** Builds the session tool allowlist for embedded-agent runtime tools. */
 import type { AgentTool } from "../runtime/index.js";
 import type { ClientToolDefinition } from "./run/params.js";
 
@@ -17,6 +18,7 @@ function addName(names: Set<string>, value: unknown): void {
   }
 }
 
+/** Collects every tool name that a session is allowed to call. */
 export function collectAllowedToolNames(params: {
   tools: AgentTool[];
   clientTools?: ClientToolDefinition[];
@@ -34,6 +36,7 @@ export function collectAllowedToolNames(params: {
 /**
  * Collect the exact tool names registered with the embedded agent for this session.
  */
+/** Extracts valid registered tool names from SDK tool definitions. */
 export function collectRegisteredToolNames(tools: Array<{ name?: string }>): Set<string> {
   const names = new Set<string>();
   for (const tool of tools) {
@@ -42,6 +45,7 @@ export function collectRegisteredToolNames(tools: Array<{ name?: string }>): Set
   return names;
 }
 
+/** Keeps only built-in tool names that are present in the current runtime. */
 export function collectCoreBuiltinToolNames(
   tools: Array<{ name?: string }>,
   options?: { isPluginTool?: (tool: { name?: string }) => boolean },
@@ -56,6 +60,7 @@ export function collectCoreBuiltinToolNames(
   return names;
 }
 
+/** Serializes the allowlist into stable sorted names for SessionManager config. */
 export function toSessionToolAllowlist(allowedToolNames: Iterable<string>): string[] {
   return [...new Set(allowedToolNames)].toSorted((a, b) => a.localeCompare(b));
 }

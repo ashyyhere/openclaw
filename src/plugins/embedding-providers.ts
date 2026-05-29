@@ -1,9 +1,11 @@
+// plugins embedding providers helpers and runtime behavior.
 import type {
   EmbeddingProviderAdapter,
   RegisteredEmbeddingProvider,
 } from "./embedding-provider-types.js";
 import { openAICompatibleEmbeddingProviderAdapter } from "./openai-compatible-embedding-provider.js";
 
+/** Re-exported API for src/plugins. */
 export type {
   EmbeddingInput,
   EmbeddingProvider,
@@ -34,6 +36,7 @@ function getEmbeddingProviders(): Map<string, RegisteredEmbeddingProvider> {
   return created;
 }
 
+/** Reused helper for register Embedding Provider behavior in src/plugins. */
 export function registerEmbeddingProvider(
   adapter: EmbeddingProviderAdapter,
   options?: { ownerPluginId?: string },
@@ -44,6 +47,7 @@ export function registerEmbeddingProvider(
   });
 }
 
+/** Reused helper for get Registered Embedding Provider behavior in src/plugins. */
 export function getRegisteredEmbeddingProvider(
   id: string,
 ): RegisteredEmbeddingProvider | undefined {
@@ -53,10 +57,12 @@ export function getRegisteredEmbeddingProvider(
   );
 }
 
+/** Reused helper for get Embedding Provider behavior in src/plugins. */
 export function getEmbeddingProvider(id: string): EmbeddingProviderAdapter | undefined {
   return getRegisteredEmbeddingProvider(id)?.adapter;
 }
 
+/** Reused helper for list Registered Embedding Providers behavior in src/plugins. */
 export function listRegisteredEmbeddingProviders(): RegisteredEmbeddingProvider[] {
   const merged = new Map<string, RegisteredEmbeddingProvider>(
     CORE_EMBEDDING_PROVIDERS.map((entry) => [entry.adapter.id, entry]),
@@ -67,10 +73,12 @@ export function listRegisteredEmbeddingProviders(): RegisteredEmbeddingProvider[
   return Array.from(merged.values());
 }
 
+/** Reused helper for list Embedding Providers behavior in src/plugins. */
 export function listEmbeddingProviders(): EmbeddingProviderAdapter[] {
   return listRegisteredEmbeddingProviders().map((entry) => entry.adapter);
 }
 
+/** Reused helper for restore Embedding Providers behavior in src/plugins. */
 export function restoreEmbeddingProviders(adapters: EmbeddingProviderAdapter[]): void {
   getEmbeddingProviders().clear();
   for (const adapter of adapters) {
@@ -78,6 +86,7 @@ export function restoreEmbeddingProviders(adapters: EmbeddingProviderAdapter[]):
   }
 }
 
+/** Reused helper for restore Registered Embedding Providers behavior in src/plugins. */
 export function restoreRegisteredEmbeddingProviders(entries: RegisteredEmbeddingProvider[]): void {
   getEmbeddingProviders().clear();
   for (const entry of entries) {
@@ -87,8 +96,10 @@ export function restoreRegisteredEmbeddingProviders(entries: RegisteredEmbedding
   }
 }
 
+/** Reused helper for clear Embedding Providers behavior in src/plugins. */
 export function clearEmbeddingProviders(): void {
   getEmbeddingProviders().clear();
 }
 
+/** Reused constant for reset Embedding Providers behavior in src/plugins. */
 export const resetEmbeddingProviders = clearEmbeddingProviders;

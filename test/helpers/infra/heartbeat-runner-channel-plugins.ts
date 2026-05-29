@@ -1,3 +1,4 @@
+// test/helpers/infra heartbeat runner channel plugins helpers and runtime behavior.
 import type {
   ChannelId,
   ChannelMessagingAdapter,

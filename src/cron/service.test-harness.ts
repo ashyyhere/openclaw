@@ -1,3 +1,4 @@
+// cron service test harness helpers and runtime behavior.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
@@ -16,6 +17,7 @@ type NoopLogger = {
   error: MockFn;
 };
 
+/** Reused helper for create Noop Logger behavior in src/cron. */
 export function createNoopLogger(): NoopLogger {
   return {
     debug: vi.fn(),
@@ -25,6 +27,7 @@ export function createNoopLogger(): NoopLogger {
   };
 }
 
+/** Reused helper for create Cron Store Harness behavior in src/cron. */
 export function createCronStoreHarness(options?: { prefix?: string }) {
   let fixtureRoot = "";
   let caseId = 0;
@@ -52,6 +55,7 @@ export function createCronStoreHarness(options?: { prefix?: string }) {
   return { makeStorePath };
 }
 
+/** Reused helper for write Cron Store Snapshot behavior in src/cron. */
 export async function writeCronStoreSnapshot(params: { storePath: string; jobs: CronJob[] }) {
   await saveCronStore(params.storePath, {
     version: 1,
@@ -59,6 +63,7 @@ export async function writeCronStoreSnapshot(params: { storePath: string; jobs: 
   });
 }
 
+/** Reused helper for install Cron Test Hooks behavior in src/cron. */
 export function installCronTestHooks(options: {
   logger: ReturnType<typeof createNoopLogger>;
   baseTimeIso?: string;
@@ -82,6 +87,7 @@ export function installCronTestHooks(options: {
   });
 }
 
+/** Reused helper for setup Cron Service Suite behavior in src/cron. */
 export function setupCronServiceSuite(options?: { prefix?: string; baseTimeIso?: string }) {
   const logger = createNoopLogger();
   const { makeStorePath } = createCronStoreHarness({ prefix: options?.prefix });
@@ -92,6 +98,7 @@ export function setupCronServiceSuite(options?: { prefix?: string; baseTimeIso?:
   return { logger, makeStorePath };
 }
 
+/** Reused helper for create Finished Barrier behavior in src/cron. */
 export function createFinishedBarrier() {
   const resolvers = new Map<string, (evt: CronEvent) => void>();
   return {
@@ -113,6 +120,7 @@ export function createFinishedBarrier() {
   };
 }
 
+/** Reused helper for create Started Cron Service With Finished Barrier behavior in src/cron. */
 export function createStartedCronServiceWithFinishedBarrier(params: {
   storePath: string;
   logger: ReturnType<typeof createNoopLogger>;
@@ -137,6 +145,7 @@ export function createStartedCronServiceWithFinishedBarrier(params: {
   return { cron, enqueueSystemEvent, requestHeartbeat, finished };
 }
 
+/** Reused helper for with Cron Service For Test behavior in src/cron. */
 export async function withCronServiceForTest(
   params: {
     makeStorePath: () => Promise<{ storePath: string; cleanup: () => Promise<void> }>;
@@ -173,6 +182,7 @@ export async function withCronServiceForTest(
   }
 }
 
+/** Reused helper for create Running Cron Service State behavior in src/cron. */
 export function createRunningCronServiceState(params: {
   storePath: string;
   log: ReturnType<typeof createNoopLogger>;
@@ -203,6 +213,7 @@ function disposeCronServiceState(state: { timer: NodeJS.Timeout | null }): void 
   }
 }
 
+/** Reused helper for with Cron Service State For Test behavior in src/cron. */
 export async function withCronServiceStateForTest<T>(
   state: { timer: NodeJS.Timeout | null },
   run: () => Promise<T>,
@@ -214,6 +225,7 @@ export async function withCronServiceStateForTest<T>(
   }
 }
 
+/** Reused helper for create Deferred behavior in src/cron. */
 export function createDeferred<T>() {
   let resolve!: (value: T) => void;
   let reject!: (reason?: unknown) => void;
@@ -224,6 +236,7 @@ export function createDeferred<T>() {
   return { promise, resolve, reject };
 }
 
+/** Reused helper for create Mock Cron State For Jobs behavior in src/cron. */
 export function createMockCronStateForJobs(params: {
   jobs: CronJob[];
   nowMs?: number;

@@ -35,21 +35,30 @@ if (shouldWarnCompatImport) {
   );
 }
 
+/** Re-exported API for src/plugin-sdk, starting with empty Plugin Config Schema. */
 export { emptyPluginConfigSchema } from "../plugins/config-schema.js";
+/** Re-exported API for src/plugin-sdk. */
 export type {
   MemoryPluginCapability,
   MemoryPluginPublicArtifact,
   MemoryPluginPublicArtifactsProvider,
 } from "../plugins/memory-state.js";
+/** Re-exported API for src/plugin-sdk, starting with resolve Control Command Gate. */
 export { resolveControlCommandGate } from "../channels/command-gating.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   buildMemorySystemPromptAddition,
   delegateCompactionToRuntime,
 } from "../context-engine/delegate.js";
+/** Re-exported API for src/plugin-sdk, starting with register Context Engine. */
 export { registerContextEngine } from "../context-engine/registry.js";
+/** Re-exported API for src/plugin-sdk, starting with Diagnostic Event Payload. */
 export type { DiagnosticEventPayload } from "../infra/diagnostic-events.js";
+/** Re-exported API for src/plugin-sdk, starting with on Diagnostic Event. */
 export { onDiagnosticEvent } from "../infra/diagnostic-events.js";
+/** Re-exported API for src/plugin-sdk, starting with optional String Enum. */
 export { optionalStringEnum, stringEnum } from "../agents/schema/typebox.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   applyAuthProfileConfig,
   buildApiKeyCredential,
@@ -59,12 +68,18 @@ export {
   type WriteOAuthCredentialsOptions,
 } from "../plugins/provider-auth-helpers.js";
 
+/** Re-exported API for src/plugin-sdk, starting with create Account Status Sink. */
 export { createAccountStatusSink } from "./channel-lifecycle.core.js";
+/** Re-exported API for src/plugin-sdk, starting with create Plugin Runtime Store. */
 export { createPluginRuntimeStore } from "./runtime-store.js";
+/** Re-exported API for src/plugin-sdk, starting with Keyed Async Queue. */
 export { KeyedAsyncQueue } from "./keyed-async-queue.js";
+/** Re-exported API for src/plugin-sdk, starting with normalize Account Id. */
 export { normalizeAccountId } from "./account-id.js";
+/** Re-exported API for src/plugin-sdk, starting with resolve Preferred Open Claw Tmp Dir. */
 export { resolvePreferredOpenClawTmpDir } from "./temp-path.js";
 
+/** Re-exported API for src/plugin-sdk. */
 export {
   createHybridChannelConfigAdapter,
   createHybridChannelConfigBase,
@@ -76,12 +91,15 @@ export {
   createTopLevelChannelConfigBase,
   mapAllowFromEntries,
 } from "./channel-config-helpers.js";
+/** Re-exported API for src/plugin-sdk, starting with format Allow From Lowercase. */
 export { formatAllowFromLowercase, formatNormalizedAllowFromEntries } from "./allow-from.js";
 export * from "./channel-config-schema.js";
 export * from "./channel-policy.js";
+/** Re-exported API for src/plugin-sdk, starting with collect Open Group Policy Configured Route Warnings. */
 export { collectOpenGroupPolicyConfiguredRouteWarnings } from "./channel-policy.js";
 export * from "./reply-history.js";
 export * from "./directory-runtime.js";
+/** Re-exported API for src/plugin-sdk, starting with map Allowlist Resolution Inputs. */
 export { mapAllowlistResolutionInputs } from "./allow-from.js";
 
 /** @deprecated Use `openclaw/plugin-sdk/channel-outbound`. */

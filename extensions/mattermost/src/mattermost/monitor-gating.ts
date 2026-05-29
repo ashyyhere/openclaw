@@ -1,3 +1,4 @@
+// extensions/mattermost/src/mattermost monitor gating helpers and runtime behavior.
 import type { ChatType, OpenClawConfig } from "./runtime-api.js";
 
 export function mapMattermostChannelTypeToChatType(channelType?: string | null): ChatType {

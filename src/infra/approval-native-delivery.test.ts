@@ -1,3 +1,4 @@
+// Tests infra approval native delivery test behavior.
 import { describe, expect, it } from "vitest";
 import type { ChannelApprovalNativeAdapter } from "../channels/plugins/types.adapters.js";
 import { resolveChannelNativeApprovalDeliveryPlan } from "./approval-native-delivery.js";

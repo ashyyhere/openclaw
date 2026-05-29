@@ -1,3 +1,4 @@
+/** Regression coverage for tool policy filtering and matching. */
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import { pickSandboxToolPolicy } from "./sandbox-tool-policy.js";

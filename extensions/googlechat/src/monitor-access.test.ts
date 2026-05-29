@@ -1,3 +1,4 @@
+// Tests extensions/googlechat/src monitor access test behavior.
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 
 const createChannelPairingController = vi.hoisted(() => vi.fn());

@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor sender identity helpers and runtime behavior.
 import { normalizeOptionalString } from "openclaw/plugin-sdk/string-coerce-runtime";
 import type { User } from "../internal/discord.js";
 import type { PluralKitMessageInfo } from "../pluralkit.js";

@@ -1,3 +1,4 @@
+/** Public SDK helpers for channel approval authorization adapters. */
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import type { OpenClawConfig } from "./config-runtime.js";
 
@@ -10,6 +11,7 @@ const IMPLICIT_SAME_CHAT_APPROVAL_AUTHORIZATION = Symbol(
   "openclaw.implicitSameChatApprovalAuthorization",
 );
 
+/** Mark an authorization result as the implicit same-chat fallback path. */
 export function markImplicitSameChatApprovalAuthorization(
   result: ApprovalAuthorizationResult,
 ): ApprovalAuthorizationResult {
@@ -24,6 +26,7 @@ export function markImplicitSameChatApprovalAuthorization(
   return result;
 }
 
+/** Check whether an authorization result used the implicit same-chat fallback marker. */
 export function isImplicitSameChatApprovalAuthorization(
   result: ApprovalAuthorizationResult | null | undefined,
 ): boolean {
@@ -37,6 +40,7 @@ export function isImplicitSameChatApprovalAuthorization(
   );
 }
 
+/** Build an approval auth adapter from a channel-specific approver resolver. */
 export function createResolvedApproverActionAuthAdapter(params: {
   channelLabel: string;
   resolveApprovers: (params: { cfg: OpenClawConfig; accountId?: string | null }) => string[];

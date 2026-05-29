@@ -1,3 +1,4 @@
+/** Session-scoped cache for workspace bootstrap files. */
 import { loadWorkspaceBootstrapFiles, type WorkspaceBootstrapFile } from "./workspace.js";
 
 type BootstrapSnapshot = {
@@ -27,6 +28,7 @@ function bootstrapFilesEqual(
   });
 }
 
+/** Load bootstrap files for a session, reusing unchanged snapshots. */
 export async function getOrLoadBootstrapFiles(params: {
   workspaceDir: string;
   sessionKey: string;
@@ -47,10 +49,12 @@ export async function getOrLoadBootstrapFiles(params: {
   return files;
 }
 
+/** Clear one session bootstrap snapshot. */
 export function clearBootstrapSnapshot(sessionKey: string): void {
   cache.delete(sessionKey);
 }
 
+/** Clear cached bootstrap files when a session id rolls over. */
 export function clearBootstrapSnapshotOnSessionRollover(params: {
   sessionKey?: string;
   previousSessionId?: string;
@@ -62,6 +66,7 @@ export function clearBootstrapSnapshotOnSessionRollover(params: {
   clearBootstrapSnapshot(params.sessionKey);
 }
 
+/** Clear all cached bootstrap file snapshots. */
 export function clearAllBootstrapSnapshots(): void {
   cache.clear();
 }

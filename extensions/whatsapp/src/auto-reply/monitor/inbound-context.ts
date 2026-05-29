@@ -1,3 +1,4 @@
+// extensions/whatsapp/src/auto-reply/monitor inbound context helpers and runtime behavior.
 import { filterChannelInboundQuoteContext } from "openclaw/plugin-sdk/channel-inbound";
 import { filterSupplementalContextItems } from "openclaw/plugin-sdk/security-runtime";
 import {

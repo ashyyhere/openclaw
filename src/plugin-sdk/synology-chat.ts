@@ -21,6 +21,7 @@ function loadFacadeModule(): FacadeModule {
   });
 }
 
+/** Reused constant for collect Synology Chat Security Audit Findings behavior in src/plugin-sdk. */
 export const collectSynologyChatSecurityAuditFindings: FacadeModule["collectSynologyChatSecurityAuditFindings"] =
   ((...args) =>
     loadFacadeModule().collectSynologyChatSecurityAuditFindings(

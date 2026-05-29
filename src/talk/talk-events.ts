@@ -1,3 +1,5 @@
+// talk talk events helpers and runtime behavior.
+/** Reused constant for TALK EVENT TYPES behavior in src/talk. */
 export const TALK_EVENT_TYPES = [
   "session.started",
   "session.ready",
@@ -29,14 +31,19 @@ export const TALK_EVENT_TYPES = [
   "health.changed",
 ] as const;
 
+/** Shared type for Talk Event Type in src/talk. */
 export type TalkEventType = (typeof TALK_EVENT_TYPES)[number];
 
+/** Shared type for Talk Mode in src/talk. */
 export type TalkMode = "realtime" | "stt-tts" | "transcription";
 
+/** Shared type for Talk Transport in src/talk. */
 export type TalkTransport = "webrtc" | "provider-websocket" | "gateway-relay" | "managed-room";
 
+/** Shared type for Talk Brain in src/talk. */
 export type TalkBrain = "agent-consult" | "direct-tools" | "none";
 
+/** Shared type for Talk Event Context in src/talk. */
 export type TalkEventContext = {
   sessionId: string;
   mode: TalkMode;
@@ -45,6 +52,7 @@ export type TalkEventContext = {
   provider?: string;
 };
 
+/** Shared type for Talk Event in src/talk. */
 export type TalkEvent<TPayload = unknown> = TalkEventContext & {
   id: string;
   type: TalkEventType;
@@ -59,6 +67,7 @@ export type TalkEvent<TPayload = unknown> = TalkEventContext & {
   payload: TPayload;
 };
 
+/** Shared type for Talk Event Input in src/talk. */
 export type TalkEventInput<TPayload = unknown> = {
   type: TalkEventType;
   payload: TPayload;
@@ -71,6 +80,7 @@ export type TalkEventInput<TPayload = unknown> = {
   parentId?: string;
 };
 
+/** Shared type for Talk Event Sequencer in src/talk. */
 export type TalkEventSequencer = {
   next<TPayload>(input: TalkEventInput<TPayload>): TalkEvent<TPayload>;
 };
@@ -110,6 +120,7 @@ function assertTalkEventCorrelation(input: TalkEventInput): void {
   }
 }
 
+/** Reused helper for create Talk Event Sequencer behavior in src/talk. */
 export function createTalkEventSequencer(
   context: TalkEventContext,
   options: { now?: () => Date | string } = {},

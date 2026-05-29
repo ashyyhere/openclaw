@@ -1,3 +1,4 @@
+// packages/agent-core/src/harness/utils shell output helpers and runtime behavior.
 import {
   type ExecutionEnv,
   type ExecutionEnvExecOptions,
@@ -9,6 +10,7 @@ import {
 } from "../types.js";
 import { DEFAULT_MAX_BYTES, truncateTail } from "./truncate.js";
 
+/** Public type describing Shell Capture Options for packages/agent-core. */
 export interface ShellCaptureOptions extends Omit<
   ExecutionEnvExecOptions,
   "onStdout" | "onStderr"
@@ -16,6 +18,7 @@ export interface ShellCaptureOptions extends Omit<
   onChunk?: (chunk: string) => void;
 }
 
+/** Public type describing Shell Capture Result for packages/agent-core. */
 export interface ShellCaptureResult {
   output: string;
   exitCode: number | undefined;
@@ -32,6 +35,7 @@ function toExecutionError(error: unknown): ExecutionError {
   return new ExecutionError("unknown", cause.message, cause);
 }
 
+/** Public helper for sanitize Binary Output behavior in packages/agent-core. */
 export function sanitizeBinaryOutput(str: string): string {
   return Array.from(str)
     .filter((char) => {
@@ -53,6 +57,7 @@ export function sanitizeBinaryOutput(str: string): string {
     .join("");
 }
 
+/** Public helper for execute Shell With Capture behavior in packages/agent-core. */
 export async function executeShellWithCapture(
   env: ExecutionEnv,
   command: string,

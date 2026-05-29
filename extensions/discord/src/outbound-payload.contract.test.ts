@@ -1,3 +1,4 @@
+// Tests extensions/discord/src outbound payload contract test behavior.
 import {
   installChannelOutboundPayloadContractSuite,
   primeChannelOutboundSendMock,

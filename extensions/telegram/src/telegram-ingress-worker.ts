@@ -1,3 +1,4 @@
+// extensions/telegram/src telegram ingress worker helpers and runtime behavior.
 import { Worker } from "node:worker_threads";
 import type { TelegramNetworkConfig } from "openclaw/plugin-sdk/config-contracts";
 

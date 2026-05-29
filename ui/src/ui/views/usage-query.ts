@@ -259,7 +259,9 @@ const setQueryTokensForKey = (query: string, key: string, values: string[]): str
   return next.length ? `${next.join(" ")} ` : "";
 };
 
+/** Re-exported API for ui/src/ui/views, starting with Query Suggestion. */
 export type { QuerySuggestion };
+/** Re-exported API for ui/src/ui/views. */
 export {
   addQueryToken,
   applySuggestionToQuery,

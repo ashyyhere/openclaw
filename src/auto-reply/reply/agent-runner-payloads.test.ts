@@ -1,3 +1,4 @@
+// Coverage for converting agent results into reply payloads.
 import { beforeEach, describe, expect, it } from "vitest";
 import { resetPluginRuntimeStateForTest, setActivePluginRegistry } from "../../plugins/runtime.js";
 import { createTestRegistry } from "../../test-utils/channel-plugins.js";

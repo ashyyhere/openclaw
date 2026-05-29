@@ -1,3 +1,4 @@
+// extensions/qa-lab/src model switch eval helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "openclaw/plugin-sdk/string-coerce-runtime";
 
 export function hasModelSwitchContinuitySignal(text: string) {

@@ -1,3 +1,4 @@
+/** Tool used by agents to report heartbeat outcome and priority. */
 import { Type } from "typebox";
 import {
   HEARTBEAT_RESPONSE_TOOL_NAME,
@@ -32,6 +33,7 @@ function readRequiredBoolean(params: Record<string, unknown>, key: string): bool
   return raw;
 }
 
+/** Creates the heartbeat response AgentTool. */
 export function createHeartbeatResponseTool(): AnyAgentTool {
   let recorded = false;
   return {

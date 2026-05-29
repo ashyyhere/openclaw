@@ -1,3 +1,4 @@
+// extensions/qqbot/src/engine/commands slash command test support helpers and runtime behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import type { CommandsPort } from "../adapter/commands.port.js";
 import { initCommands } from "./slash-commands-impl.js";

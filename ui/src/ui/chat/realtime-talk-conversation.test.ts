@@ -1,3 +1,4 @@
+// Tests ui/src/ui/chat realtime talk conversation test behavior.
 import { describe, expect, it } from "vitest";
 import {
   createRealtimeTalkConversationState,

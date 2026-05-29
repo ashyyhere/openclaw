@@ -1,3 +1,4 @@
+/** Scans all channel accounts for empty allowlist policy warnings. */
 import type { ChannelDoctorEmptyAllowlistAccountContext } from "../../../channels/plugins/types.adapters.js";
 import type { OpenClawConfig } from "../../../config/types.openclaw.js";
 import type { DoctorAccountRecord, DoctorAllowFromList } from "../types.js";
@@ -19,6 +20,7 @@ function isDisabledRecord(value: unknown): boolean {
   );
 }
 
+/** Reused helper for scan Empty Allowlist Policy Warnings behavior in src/commands/doctor. */
 export function scanEmptyAllowlistPolicyWarnings(
   cfg: OpenClawConfig,
   params: ScanEmptyAllowlistPolicyWarningsParams,

@@ -1,3 +1,4 @@
+/** Tests run-main exit-code handling for Commander and uncaught failures. */
 import process from "node:process";
 import { CommanderError } from "commander";
 import { beforeEach, describe, expect, it, vi } from "vitest";

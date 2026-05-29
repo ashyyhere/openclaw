@@ -1,3 +1,4 @@
+// extensions/slack/src truncate helpers and runtime behavior.
 export function truncateSlackText(value: string, max: number): string {
   const trimmed = value.trim();
   if (trimmed.length <= max) {

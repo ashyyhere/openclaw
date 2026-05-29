@@ -1,3 +1,4 @@
+// extensions/memory-core/src dreaming shared helpers and runtime behavior.
 export { asNullableRecord as asRecord } from "openclaw/plugin-sdk/string-coerce-runtime";
 export { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";
 

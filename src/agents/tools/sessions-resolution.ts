@@ -1,3 +1,4 @@
+/** Resolves user-facing session references into internal session keys. */
 import {
   GATEWAY_CLIENT_IDS,
   normalizeGatewayClientId,
@@ -33,6 +34,7 @@ let sessionsResolutionDeps: {
   callGateway: GatewayCaller;
 } = defaultSessionsResolutionDeps;
 
+/** Resolves the alias used for the main session. */
 export function resolveMainSessionAlias(cfg: OpenClawConfig) {
   const mainKey = normalizeMainKey(cfg.session?.mainKey);
   const scope = cfg.session?.scope ?? "per-sender";
@@ -40,6 +42,7 @@ export function resolveMainSessionAlias(cfg: OpenClawConfig) {
   return { mainKey, alias, scope };
 }
 
+/** Converts an internal key into the display key shown to users. */
 export function resolveDisplaySessionKey(params: { key: string; alias: string; mainKey: string }) {
   if (params.key === params.alias) {
     return "main";
@@ -50,6 +53,7 @@ export function resolveDisplaySessionKey(params: { key: string; alias: string; m
   return params.key;
 }
 
+/** Reused helper for resolve Internal Session Key behavior in src/agents/tools. */
 export function resolveInternalSessionKey(params: {
   key: string;
   alias: string;
@@ -65,6 +69,7 @@ export function resolveInternalSessionKey(params: {
   return params.key;
 }
 
+/** Reused helper for resolve Current Session Client Alias behavior in src/agents/tools. */
 export function resolveCurrentSessionClientAlias(params: {
   key: string;
   requesterInternalKey?: string;
@@ -82,8 +87,10 @@ export function resolveCurrentSessionClientAlias(params: {
   return requesterKey;
 }
 
+/** Re-exported API for src/agents/tools, starting with list Spawned Session Keys. */
 export { listSpawnedSessionKeys };
 
+/** Reused helper for is Requester Spawned Session Visible behavior in src/agents/tools. */
 export async function isRequesterSpawnedSessionVisible(params: {
   requesterSessionKey: string;
   targetSessionKey: string;
@@ -113,6 +120,7 @@ export async function isRequesterSpawnedSessionVisible(params: {
   return keys.has(params.targetSessionKey);
 }
 
+/** Reused helper for should Verify Requester Spawned Session Visibility behavior in src/agents/tools. */
 export function shouldVerifyRequesterSpawnedSessionVisibility(params: {
   requesterSessionKey: string;
   targetSessionKey: string;
@@ -126,6 +134,7 @@ export function shouldVerifyRequesterSpawnedSessionVisibility(params: {
   );
 }
 
+/** Reused helper for is Resolved Session Visible To Requester behavior in src/agents/tools. */
 export async function isResolvedSessionVisibleToRequester(params: {
   requesterSessionKey: string;
   targetSessionKey: string;
@@ -150,8 +159,10 @@ export async function isResolvedSessionVisibleToRequester(params: {
   });
 }
 
+/** Re-exported API for src/agents/tools, starting with looks Like Session Id. */
 export { looksLikeSessionId };
 
+/** Reused helper for looks Like Session Key behavior in src/agents/tools. */
 export function looksLikeSessionKey(value: string): boolean {
   const raw = normalizeOptionalString(value) ?? "";
   if (!raw) {
@@ -179,11 +190,13 @@ export function looksLikeSessionKey(value: string): boolean {
   return false;
 }
 
+/** Reused helper for should Resolve Session Id Input behavior in src/agents/tools. */
 export function shouldResolveSessionIdInput(value: string): boolean {
   // Treat anything that doesn't look like a well-formed key as a sessionId candidate.
   return looksLikeSessionId(value) || !looksLikeSessionKey(value);
 }
 
+/** Shared type for Session Reference Resolution in src/agents/tools. */
 export type SessionReferenceResolution =
   | {
       ok: true;
@@ -193,6 +206,7 @@ export type SessionReferenceResolution =
     }
   | { ok: false; status: "error" | "forbidden"; error: string };
 
+/** Shared type for Visible Session Reference Resolution in src/agents/tools. */
 export type VisibleSessionReferenceResolution =
   | {
       ok: true;
@@ -385,6 +399,7 @@ async function resolveSessionReferenceByKeyOrSessionId(params: {
   });
 }
 
+/** Resolves a session id/key/alias into an internal session reference. */
 export async function resolveSessionReference(params: {
   sessionKey: string;
   alias: string;
@@ -442,6 +457,7 @@ export async function resolveSessionReference(params: {
   return { ok: true, key: resolvedKey, displayKey, resolvedViaSessionId: false };
 }
 
+/** Resolves a session reference and enforces requester visibility. */
 export async function resolveVisibleSessionReference(params: {
   resolvedSession: Extract<SessionReferenceResolution, { ok: true }>;
   requesterSessionKey: string;
@@ -467,8 +483,10 @@ export async function resolveVisibleSessionReference(params: {
   return { ok: true, key: resolvedKey, displayKey };
 }
 
+/** Reused constant for normalize Optional Key behavior in src/agents/tools. */
 export const normalizeOptionalKey: (value?: string) => string | undefined = normalizeOptionalString;
 
+/** Reused constant for testing behavior in src/agents/tools. */
 export const testing = {
   setDepsForTest(overrides?: Partial<{ callGateway: GatewayCaller }>) {
     sessionsResolutionDeps = overrides
@@ -482,4 +500,5 @@ export const testing = {
     );
   },
 };
+/** Re-exported API for src/agents/tools, starting with testing. */
 export { testing as __testing };

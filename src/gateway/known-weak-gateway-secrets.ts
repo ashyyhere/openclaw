@@ -1,10 +1,13 @@
+// gateway known weak gateway secrets helpers and runtime behavior.
 import type { ResolvedGatewayAuth } from "./auth.js";
 
+/** Reused constant for KNOWN WEAK GATEWAY TOKEN PLACEHOLDERS behavior in src/gateway. */
 export const KNOWN_WEAK_GATEWAY_TOKEN_PLACEHOLDERS = [
   "change-me-to-a-long-random-token",
   "change-me-now",
 ] as const;
 
+/** Reused constant for KNOWN WEAK GATEWAY PASSWORD PLACEHOLDERS behavior in src/gateway. */
 export const KNOWN_WEAK_GATEWAY_PASSWORD_PLACEHOLDERS = ["change-me-to-a-strong-password"] as const;
 
 /**
@@ -23,6 +26,7 @@ const KNOWN_WEAK_GATEWAY_PASSWORDS: ReadonlySet<string> = new Set(
   KNOWN_WEAK_GATEWAY_PASSWORD_PLACEHOLDERS,
 );
 
+/** Reused helper for assert Gateway Auth Not Known Weak behavior in src/gateway. */
 export function assertGatewayAuthNotKnownWeak(auth: ResolvedGatewayAuth): void {
   if (auth.mode === "token") {
     const token = auth.token?.trim() ?? "";

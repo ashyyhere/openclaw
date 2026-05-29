@@ -1,3 +1,4 @@
+// infra diagnostics timeline helpers and runtime behavior.
 import { AsyncLocalStorage } from "node:async_hooks";
 import { randomUUID } from "node:crypto";
 import { mkdirSync } from "node:fs";
@@ -62,6 +63,7 @@ type DiagnosticsTimelineOptions = {
   env?: NodeJS.ProcessEnv;
 };
 
+/** Shared type for Active Diagnostics Timeline Span in src/infra. */
 export type ActiveDiagnosticsTimelineSpan = {
   name: string;
   phase?: string;
@@ -90,6 +92,7 @@ function resolveDiagnosticsTimelineOptions(
   };
 }
 
+/** Reused helper for is Diagnostics Timeline Enabled behavior in src/infra. */
 export function isDiagnosticsTimelineEnabled(options: DiagnosticsTimelineOptions = {}): boolean {
   const { config, env } = resolveDiagnosticsTimelineOptions(options);
   return (
@@ -167,6 +170,7 @@ function serializeTimelineEvent(event: DiagnosticsTimelineEvent, env: NodeJS.Pro
   return `${JSON.stringify(normalized)}\n`;
 }
 
+/** Reused helper for emit Diagnostics Timeline Event behavior in src/infra. */
 export function emitDiagnosticsTimelineEvent(
   event: DiagnosticsTimelineEvent,
   options: DiagnosticsTimelineOptions = {},
@@ -195,6 +199,7 @@ export function emitDiagnosticsTimelineEvent(
   }
 }
 
+/** Reused helper for get Active Diagnostics Timeline Span behavior in src/infra. */
 export function getActiveDiagnosticsTimelineSpan(): ActiveDiagnosticsTimelineSpan | undefined {
   return activeDiagnosticsTimelineSpan.getStore();
 }
@@ -304,6 +309,7 @@ export async function measureDiagnosticsTimelineSpan<T>(
   }
 }
 
+/** Reused helper for measure Diagnostics Timeline Span Sync behavior in src/infra. */
 export function measureDiagnosticsTimelineSpanSync<T>(
   name: string,
   run: () => T,
@@ -323,6 +329,7 @@ export function measureDiagnosticsTimelineSpanSync<T>(
   }
 }
 
+/** Reused helper for flush Diagnostics Timeline For Test behavior in src/infra. */
 export async function flushDiagnosticsTimelineForTest(): Promise<void> {
   await Promise.resolve();
 }

@@ -1,3 +1,4 @@
+/** Tests runtime outcome fallback contract classification. */
 import {
   createContractRunResult,
   OUTCOME_FALLBACK_RUNTIME_CONTRACT,

@@ -1,6 +1,8 @@
+// security audit channel test helpers helpers and runtime behavior.
 import type { ChannelPlugin } from "../channels/plugins/types.js";
 import type { OpenClawConfig } from "../config/config.js";
 
+/** Reused helper for stub Audit Channel Plugin behavior in src/security. */
 export function stubAuditChannelPlugin(params: {
   id: string;
   label: string;

@@ -1,3 +1,4 @@
+// Tests extensions/line/src accounts test behavior.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

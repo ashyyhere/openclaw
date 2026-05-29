@@ -1,3 +1,4 @@
+// extensions/feishu/src monitor comment notice handler helpers and runtime behavior.
 import type { ClawdbotConfig, RuntimeEnv } from "../runtime-api.js";
 import { handleFeishuCommentEvent } from "./comment-handler.js";
 import {

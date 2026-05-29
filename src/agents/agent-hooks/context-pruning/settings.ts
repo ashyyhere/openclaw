@@ -1,11 +1,15 @@
+/** Parses and normalizes context-pruning configuration. */
 import { parseDurationMs } from "../../../cli/parse-duration.js";
 
+/** Tool allow/deny match spec used by context pruning. */
 export type ContextPruningToolMatch = {
   allow?: string[];
   deny?: string[];
 };
+/** Context pruning strategy selected for a session. */
 export type ContextPruningMode = "off" | "cache-ttl";
 
+/** Raw user config for context pruning. */
 export type ContextPruningConfig = {
   mode?: ContextPruningMode;
   /** TTL to consider cache expired (duration string, default unit: minutes). */
@@ -26,6 +30,7 @@ export type ContextPruningConfig = {
   };
 };
 
+/** Fully normalized context-pruning settings used by the pruner. */
 export type EffectiveContextPruningSettings = {
   mode: Exclude<ContextPruningMode, "off">;
   ttlMs: number;
@@ -45,6 +50,7 @@ export type EffectiveContextPruningSettings = {
   };
 };
 
+/** Default cache-TTL pruning settings when config enables the feature. */
 export const DEFAULT_CONTEXT_PRUNING_SETTINGS: EffectiveContextPruningSettings = {
   mode: "cache-ttl",
   ttlMs: 5 * 60 * 1000,
@@ -64,6 +70,7 @@ export const DEFAULT_CONTEXT_PRUNING_SETTINGS: EffectiveContextPruningSettings =
   },
 };
 
+/** Computes effective pruning settings, returning null when pruning is disabled. */
 export function computeEffectiveSettings(raw: unknown): EffectiveContextPruningSettings | null {
   if (!raw || typeof raw !== "object") {
     return null;

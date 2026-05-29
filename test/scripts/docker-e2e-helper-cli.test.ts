@@ -1,3 +1,4 @@
+// Tests test/scripts docker e2e helper cli test behavior.
 import { spawnSync } from "node:child_process";
 import { describe, expect, it } from "vitest";
 

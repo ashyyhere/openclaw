@@ -1,3 +1,4 @@
+// Tests extensions/feishu/src reasoning preview test behavior.
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { ClawdbotConfig } from "./bot-runtime-api.js";
 import { resolveFeishuReasoningPreviewEnabled } from "./reasoning-preview.js";

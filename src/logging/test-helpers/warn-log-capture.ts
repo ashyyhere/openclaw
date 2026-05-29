@@ -1,3 +1,4 @@
+// logging/test-helpers warn log capture helpers and runtime behavior.
 import path from "node:path";
 import { resolvePreferredOpenClawTmpDir } from "../../infra/tmp-openclaw-dir.js";
 import { resetLogger, setLoggerOverride } from "../logger.js";

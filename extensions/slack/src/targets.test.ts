@@ -1,3 +1,4 @@
+// Tests extensions/slack/src targets test behavior.
 import { describe, expect, it } from "vitest";
 import {
   normalizeSlackMessagingTarget,

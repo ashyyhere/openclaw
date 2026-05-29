@@ -1,3 +1,4 @@
+/** E2E regression coverage for nested subagent registry behavior. */
 import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import "./subagent-registry.mocks.shared.js";
 

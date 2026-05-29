@@ -1,3 +1,4 @@
+// extensions/elevenlabs shared helpers and runtime behavior.
 export const DEFAULT_ELEVENLABS_BASE_URL = "https://api.elevenlabs.io";
 
 export function isValidElevenLabsVoiceId(voiceId: string): boolean {

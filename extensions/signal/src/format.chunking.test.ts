@@ -1,3 +1,4 @@
+// Tests extensions/signal/src format chunking test behavior.
 import { describe, expect, it } from "vitest";
 import { markdownToSignalTextChunks } from "./format.js";
 

@@ -1,3 +1,4 @@
+// extensions/pixverse constants helpers and runtime behavior.
 export const PIXVERSE_PROVIDER_ID = "pixverse";
 
 export const PIXVERSE_BASE_URL_BY_REGION = {

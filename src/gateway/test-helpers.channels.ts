@@ -1,3 +1,4 @@
+// gateway test helpers channels helpers and runtime behavior.
 import type { ChannelOutboundAdapter } from "../channels/plugins/types.adapters.js";
 import type { ChannelPlugin } from "../channels/plugins/types.plugin.js";
 import { DEFAULT_ACCOUNT_ID } from "../routing/session-key.js";
@@ -54,6 +55,7 @@ const createStubChannelPlugin = (params: StubChannelOptions): ChannelPlugin => (
   },
 });
 
+/** Reused helper for create Default Gateway Test Channels behavior in src/gateway. */
 export function createDefaultGatewayTestChannels() {
   return [
     {

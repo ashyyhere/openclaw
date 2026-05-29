@@ -1,3 +1,4 @@
+/** Write tool definition for replacing or creating files. */
 import {
   mkdir as fsMkdir,
   readFile as fsReadFile,
@@ -26,6 +27,7 @@ const writeSchema = Type.Object({
   path: Type.String({ description: "Path to the file to write (relative or absolute)" }),
   content: Type.String({ description: "Content to write to the file" }),
 });
+/** Re-exported API for src/agents/sessions, starting with Write Tool Input. */
 export type { WriteToolInput } from "./tool-contracts.js";
 
 /**
@@ -69,6 +71,7 @@ const defaultWriteOperations: WriteOperations = {
   },
 };
 
+/** Shared type for Write Tool Options in src/agents/sessions. */
 export interface WriteToolOptions {
   /** Custom operations for file writing. Default: local filesystem */
   operations?: WriteOperations;
@@ -361,6 +364,7 @@ async function recoverSuccessfulWrite(params: {
   };
 }
 
+/** Creates the SDK tool definition for writing files. */
 export function createWriteToolDefinition(
   cwd: string,
   options?: WriteToolOptions,
@@ -467,6 +471,7 @@ export function createWriteToolDefinition(
   };
 }
 
+/** Creates the runtime AgentTool wrapper for writing files. */
 export function createWriteTool(
   cwd: string,
   options?: WriteToolOptions,

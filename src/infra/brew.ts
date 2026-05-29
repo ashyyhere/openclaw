@@ -1,3 +1,4 @@
+// infra brew helpers and runtime behavior.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -34,6 +35,7 @@ function resolveBrewFromPath(pathEnv = process.env.PATH): string | undefined {
   return undefined;
 }
 
+/** Reused helper for resolve Brew Path Dirs behavior in src/infra. */
 export function resolveBrewPathDirs(opts?: BrewResolutionOptions): string[] {
   const homeDir = opts?.homeDir ?? os.homedir();
 
@@ -50,6 +52,7 @@ export function resolveBrewPathDirs(opts?: BrewResolutionOptions): string[] {
   return dirs;
 }
 
+/** Reused helper for resolve Brew Executable behavior in src/infra. */
 export function resolveBrewExecutable(opts?: BrewResolutionOptions): string | undefined {
   const homeDir = opts?.homeDir ?? os.homedir();
 

@@ -1,5 +1,7 @@
+/** Tracks deprecation compatibility metadata for doctor warnings. */
 export type DoctorDeprecationCompatStatus = "active" | "deprecated" | "removal-pending" | "removed";
 
+/** Shared type for Doctor Deprecation Compat Owner in src/commands/doctor. */
 export type DoctorDeprecationCompatOwner =
   | "agent-runtime"
   | "audio"
@@ -12,6 +14,7 @@ export type DoctorDeprecationCompatOwner =
   | "tools"
   | "tts";
 
+/** Shared type for Doctor Deprecation Compat Record in src/commands/doctor. */
 export type DoctorDeprecationCompatRecord<Code extends string = string> = {
   code: Code;
   status: DoctorDeprecationCompatStatus;
@@ -319,8 +322,10 @@ const DOCTOR_DEPRECATION_COMPAT_RECORDS = [
   }),
 ] as const satisfies readonly DoctorDeprecationCompatRecord[];
 
+/** Shared type for Doctor Deprecation Compat Code in src/commands/doctor. */
 export type DoctorDeprecationCompatCode =
   (typeof DOCTOR_DEPRECATION_COMPAT_RECORDS)[number]["code"];
+/** Shared type for Known Doctor Deprecation Compat Record in src/commands/doctor. */
 export type KnownDoctorDeprecationCompatRecord = DoctorDeprecationCompatRecord;
 
 const doctorDeprecationCompatRecordByCode = new Map<
@@ -328,20 +333,24 @@ const doctorDeprecationCompatRecordByCode = new Map<
   KnownDoctorDeprecationCompatRecord
 >(DOCTOR_DEPRECATION_COMPAT_RECORDS.map((record) => [record.code, record]));
 
+/** Reused helper for list Doctor Deprecation Compat Records behavior in src/commands/doctor. */
 export function listDoctorDeprecationCompatRecords(): readonly KnownDoctorDeprecationCompatRecord[] {
   return DOCTOR_DEPRECATION_COMPAT_RECORDS;
 }
 
+/** Reused helper for list Deprecated Doctor Deprecation Compat Records behavior in src/commands/doctor. */
 export function listDeprecatedDoctorDeprecationCompatRecords(): readonly KnownDoctorDeprecationCompatRecord[] {
   return DOCTOR_DEPRECATION_COMPAT_RECORDS.filter((record) =>
     (["deprecated", "removal-pending"] as readonly string[]).includes(record.status),
   );
 }
 
+/** Reused helper for is Doctor Deprecation Compat Code behavior in src/commands/doctor. */
 export function isDoctorDeprecationCompatCode(code: string): code is DoctorDeprecationCompatCode {
   return doctorDeprecationCompatRecordByCode.has(code);
 }
 
+/** Reused helper for get Doctor Deprecation Compat Record behavior in src/commands/doctor. */
 export function getDoctorDeprecationCompatRecord(
   code: DoctorDeprecationCompatCode,
 ): KnownDoctorDeprecationCompatRecord {

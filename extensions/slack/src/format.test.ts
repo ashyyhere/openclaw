@@ -1,3 +1,4 @@
+// Tests extensions/slack/src format test behavior.
 import { describe, expect, it } from "vitest";
 import {
   markdownToSlackMrkdwn,

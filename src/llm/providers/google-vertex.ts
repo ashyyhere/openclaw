@@ -1,3 +1,4 @@
+// llm/providers google vertex helpers and runtime behavior.
 import {
   type GenerateContentParameters,
   GoogleGenAI,
@@ -18,6 +19,7 @@ import {
 } from "./google-shared.js";
 import { buildBaseOptions } from "./simple-options.js";
 
+/** Shared type for Google Vertex Options in src/llm/providers. */
 export interface GoogleVertexOptions extends GoogleProviderOptions {
   project?: string;
   location?: string;
@@ -37,6 +39,7 @@ const THINKING_LEVEL_MAP: Record<GoogleThinkingLevel, VertexThinkingLevel> = {
 // Counter for generating unique tool call IDs
 let toolCallCounter = 0;
 
+/** Reused constant for stream Google Vertex behavior in src/llm/providers. */
 export const streamGoogleVertex: StreamFunction<"google-vertex", GoogleVertexOptions> = (
   model: Model<"google-vertex">,
   context: Context,
@@ -64,6 +67,7 @@ export const streamGoogleVertex: StreamFunction<"google-vertex", GoogleVertexOpt
   return stream;
 };
 
+/** Reused constant for stream Simple Google Vertex behavior in src/llm/providers. */
 export const streamSimpleGoogleVertex: StreamFunction<"google-vertex", SimpleStreamOptions> = (
   model: Model<"google-vertex">,
   context: Context,

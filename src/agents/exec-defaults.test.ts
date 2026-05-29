@@ -1,3 +1,4 @@
+/** Tests effective exec defaults from config, session, and sandbox state. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { SessionEntry } from "../config/sessions.js";
 import * as execApprovals from "../infra/exec-approvals.js";

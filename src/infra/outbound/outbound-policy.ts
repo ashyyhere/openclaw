@@ -1,3 +1,4 @@
+// infra/outbound outbound policy helpers and runtime behavior.
 import { getChannelPlugin } from "../../channels/plugins/index.js";
 import type {
   ChannelId,
@@ -11,8 +12,10 @@ import { normalizeUniqueStringEntries } from "../../shared/string-normalization.
 import { normalizeTargetForProvider } from "./target-normalization.js";
 import { formatTargetDisplay, lookupDirectoryDisplay } from "./target-resolver.js";
 
+/** Shared type for Cross Context Presentation Builder in src/infra/outbound. */
 export type CrossContextPresentationBuilder = (message: string) => MessagePresentation;
 
+/** Shared type for Cross Context Decoration in src/infra/outbound. */
 export type CrossContextDecoration = {
   prefix: string;
   suffix: string;
@@ -138,6 +141,7 @@ function resolveAgentMessageToolsConfig(
   };
 }
 
+/** Reused helper for resolve Effective Message Tools Config behavior in src/infra/outbound. */
 export function resolveEffectiveMessageToolsConfig(params: {
   cfg: OpenClawConfig;
   agentId?: string | null;
@@ -145,6 +149,7 @@ export function resolveEffectiveMessageToolsConfig(params: {
   return resolveAgentMessageToolsConfig(params.cfg, params.agentId);
 }
 
+/** Reused helper for resolve Allowed Message Actions behavior in src/infra/outbound. */
 export function resolveAllowedMessageActions(params: {
   cfg: OpenClawConfig;
   agentId?: string | null;
@@ -157,6 +162,7 @@ export function resolveAllowedMessageActions(params: {
   return normalized.length > 0 ? normalized : undefined;
 }
 
+/** Reused helper for enforce Message Action Allowlist behavior in src/infra/outbound. */
 export function enforceMessageActionAllowlist(params: {
   cfg: OpenClawConfig;
   agentId?: string | null;
@@ -169,6 +175,7 @@ export function enforceMessageActionAllowlist(params: {
   throw new Error(`Message action "${params.action}" is disabled for this agent.`);
 }
 
+/** Reused helper for enforce Cross Context Policy behavior in src/infra/outbound. */
 export function enforceCrossContextPolicy(params: {
   channel: ChannelId;
   action: ChannelMessageActionName;
@@ -224,6 +231,7 @@ export function enforceCrossContextPolicy(params: {
   );
 }
 
+/** Reused helper for build Cross Context Decoration behavior in src/infra/outbound. */
 export async function buildCrossContextDecoration(params: {
   cfg: OpenClawConfig;
   channel: ChannelId;
@@ -284,10 +292,12 @@ export async function buildCrossContextDecoration(params: {
   return { prefix, suffix, presentationBuilder };
 }
 
+/** Reused helper for should Apply Cross Context Marker behavior in src/infra/outbound. */
 export function shouldApplyCrossContextMarker(action: ChannelMessageActionName): boolean {
   return CONTEXT_MARKER_ACTIONS.has(action);
 }
 
+/** Reused helper for apply Cross Context Decoration behavior in src/infra/outbound. */
 export function applyCrossContextDecoration(params: {
   message: string;
   decoration: CrossContextDecoration;

@@ -1,17 +1,21 @@
+// gateway server chat state helpers and runtime behavior.
 import type { AgentEventPayload } from "../infra/agent-events.js";
 
+/** Shared type for Chat Run Entry in src/gateway. */
 export type ChatRunEntry = {
   sessionKey: string;
   agentId?: string;
   clientRunId: string;
 };
 
+/** Shared type for Buffered Agent Event in src/gateway. */
 export type BufferedAgentEvent = {
   sessionKey?: string;
   agentId?: string;
   payload: AgentEventPayload & { spawnedBy?: string };
 };
 
+/** Shared type for Chat Run Registry in src/gateway. */
 export type ChatRunRegistry = {
   add: (sessionId: string, entry: ChatRunEntry) => void;
   peek: (sessionId: string) => ChatRunEntry | undefined;
@@ -20,6 +24,7 @@ export type ChatRunRegistry = {
   clear: () => void;
 };
 
+/** Reused helper for create Chat Run Registry behavior in src/gateway. */
 export function createChatRunRegistry(): ChatRunRegistry {
   const chatRunSessions = new Map<string, ChatRunEntry[]>();
 
@@ -72,6 +77,7 @@ export function createChatRunRegistry(): ChatRunRegistry {
   return { add, peek, shift, remove, clear };
 }
 
+/** Shared type for Chat Run State in src/gateway. */
 export type ChatRunState = {
   registry: ChatRunRegistry;
   rawBuffers: Map<string, string>;
@@ -89,6 +95,7 @@ export type ChatRunState = {
   clear: () => void;
 };
 
+/** Reused helper for create Chat Run State behavior in src/gateway. */
 export function createChatRunState(): ChatRunState {
   const registry = createChatRunRegistry();
   const rawBuffers = new Map<string, string>();
@@ -143,12 +150,14 @@ export function createChatRunState(): ChatRunState {
   };
 }
 
+/** Shared type for Tool Event Recipient Registry in src/gateway. */
 export type ToolEventRecipientRegistry = {
   add: (runId: string, connId: string) => void;
   get: (runId: string) => ReadonlySet<string> | undefined;
   markFinal: (runId: string) => void;
 };
 
+/** Shared type for Session Event Subscriber Registry in src/gateway. */
 export type SessionEventSubscriberRegistry = {
   subscribe: (connId: string) => void;
   unsubscribe: (connId: string) => void;
@@ -156,6 +165,7 @@ export type SessionEventSubscriberRegistry = {
   clear: () => void;
 };
 
+/** Shared type for Session Message Subscriber Registry in src/gateway. */
 export type SessionMessageSubscriberRegistry = {
   subscribe: (connId: string, sessionKey: string) => void;
   unsubscribe: (connId: string, sessionKey: string) => void;
@@ -173,6 +183,7 @@ type ToolRecipientEntry = {
 const TOOL_EVENT_RECIPIENT_TTL_MS = 10 * 60 * 1000;
 const TOOL_EVENT_RECIPIENT_FINAL_GRACE_MS = 30 * 1000;
 
+/** Reused helper for create Session Event Subscriber Registry behavior in src/gateway. */
 export function createSessionEventSubscriberRegistry(): SessionEventSubscriberRegistry {
   const connIds = new Set<string>();
   const empty = new Set<string>();
@@ -199,6 +210,7 @@ export function createSessionEventSubscriberRegistry(): SessionEventSubscriberRe
   };
 }
 
+/** Reused helper for create Session Message Subscriber Registry behavior in src/gateway. */
 export function createSessionMessageSubscriberRegistry(): SessionMessageSubscriberRegistry {
   const sessionToConnIds = new Map<string, Set<string>>();
   const connToSessionKeys = new Map<string, Set<string>>();
@@ -277,6 +289,7 @@ export function createSessionMessageSubscriberRegistry(): SessionMessageSubscrib
   };
 }
 
+/** Reused helper for create Tool Event Recipient Registry behavior in src/gateway. */
 export function createToolEventRecipientRegistry(): ToolEventRecipientRegistry {
   const recipients = new Map<string, ToolRecipientEntry>();
 

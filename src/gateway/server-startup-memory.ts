@@ -1,3 +1,4 @@
+// gateway server startup memory helpers and runtime behavior.
 import { listAgentEntries, listAgentIds, resolveDefaultAgentId } from "../agents/agent-scope.js";
 import { resolveMemorySearchConfig } from "../agents/memory-search.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -35,6 +36,7 @@ function shouldEagerlyStartAgentMemory(params: {
   return hasExplicitAgentMemorySearchConfig(params.cfg, params.agentId);
 }
 
+/** Reused helper for start Gateway Memory Backend behavior in src/gateway. */
 export async function startGatewayMemoryBackend(params: {
   cfg: OpenClawConfig;
   log: { info?: (msg: string) => void; warn: (msg: string) => void };

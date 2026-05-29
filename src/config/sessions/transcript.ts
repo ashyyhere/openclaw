@@ -1,3 +1,4 @@
+// config/sessions transcript helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import type { AgentMessage } from "../../agents/runtime/index.js";
@@ -40,12 +41,15 @@ async function ensureSessionHeader(params: {
   await writeJsonlEntry(params.sessionFile, header, { mode: 0o600 });
 }
 
+/** Shared type for Session Transcript Append Result in src/config/sessions. */
 export type SessionTranscriptAppendResult =
   | { ok: true; sessionFile: string; messageId: string }
   | { ok: false; reason: string };
 
+/** Shared type for Session Transcript Update Mode in src/config/sessions. */
 export type SessionTranscriptUpdateMode = "inline" | "file-only" | "none";
 
+/** Shared type for Session Transcript Assistant Message in src/config/sessions. */
 export type SessionTranscriptAssistantMessage = Parameters<SessionManager["appendMessage"]>[0] & {
   role: "assistant";
 };
@@ -56,7 +60,9 @@ type AssistantTranscriptText = {
   timestamp?: number;
 };
 
+/** Shared type for Latest Assistant Transcript Text in src/config/sessions. */
 export type LatestAssistantTranscriptText = AssistantTranscriptText;
+/** Shared type for Tail Assistant Transcript Text in src/config/sessions. */
 export type TailAssistantTranscriptText = AssistantTranscriptText;
 
 function parseAssistantTranscriptText(
@@ -102,6 +108,7 @@ function isTranscriptOnlyOpenClawAssistantMessage(message: {
   );
 }
 
+/** Reused helper for resolve Session Transcript File behavior in src/config/sessions. */
 export async function resolveSessionTranscriptFile(params: {
   sessionId: string;
   sessionKey: string;
@@ -147,6 +154,7 @@ export async function resolveSessionTranscriptFile(params: {
   };
 }
 
+/** Reused helper for read Latest Assistant Text From Session Transcript behavior in src/config/sessions. */
 export async function readLatestAssistantTextFromSessionTranscript(
   sessionFile: string | undefined,
 ): Promise<LatestAssistantTranscriptText | undefined> {
@@ -169,6 +177,7 @@ export async function readLatestAssistantTextFromSessionTranscript(
   return undefined;
 }
 
+/** Reused helper for read Tail Assistant Text From Session Transcript behavior in src/config/sessions. */
 export async function readTailAssistantTextFromSessionTranscript(
   sessionFile: string | undefined,
 ): Promise<TailAssistantTranscriptText | undefined> {
@@ -196,6 +205,7 @@ export async function readTailAssistantTextFromSessionTranscript(
   return undefined;
 }
 
+/** Reused helper for append Assistant Message To Session Transcript behavior in src/config/sessions. */
 export async function appendAssistantMessageToSessionTranscript(params: {
   agentId?: string;
   sessionKey: string;
@@ -253,6 +263,7 @@ export async function appendAssistantMessageToSessionTranscript(params: {
   });
 }
 
+/** Reused helper for append Exact Assistant Message To Session Transcript behavior in src/config/sessions. */
 export async function appendExactAssistantMessageToSessionTranscript(params: {
   agentId?: string;
   sessionKey: string;

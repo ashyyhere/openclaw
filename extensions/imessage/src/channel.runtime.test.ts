@@ -1,3 +1,4 @@
+// Tests extensions/imessage/src channel runtime test behavior.
 import { describe, expect, it, vi } from "vitest";
 
 const monitorMock = vi.hoisted(() => vi.fn(async () => undefined));

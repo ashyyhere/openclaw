@@ -1,3 +1,4 @@
+// Tests extensions/codex/src/app-server app server policy test behavior.
 import { describe, expect, it } from "vitest";
 import { resolveCodexAppServerForOpenClawToolPolicy } from "./app-server-policy.js";
 import { readCodexPluginConfig, resolveCodexAppServerRuntimeOptions } from "./config.js";

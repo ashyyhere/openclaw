@@ -1,3 +1,4 @@
+// extensions/feishu/src thread bindings helpers and runtime behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import {
   resolveThreadBindingIdleTimeoutMsForChannel,

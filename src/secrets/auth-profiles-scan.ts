@@ -1,6 +1,8 @@
+// secrets auth profiles scan helpers and runtime behavior.
 import { isNonEmptyString, isRecord } from "./shared.js";
 import { listAuthProfileSecretTargetEntries } from "./target-registry.js";
 
+/** Shared type for Auth Profile Credential Type in src/secrets. */
 export type AuthProfileCredentialType = "api_key" | "token";
 
 type AuthProfileFieldSpec = {
@@ -39,6 +41,7 @@ type OauthCredentialVisit = {
   hasRefresh: boolean;
 };
 
+/** Shared type for Auth Profile Credential Visit in src/secrets. */
 export type AuthProfileCredentialVisit =
   | ApiKeyCredentialVisit
   | TokenCredentialVisit
@@ -69,6 +72,7 @@ const AUTH_PROFILE_FIELD_SPEC_BY_TYPE = (() => {
   return defaults;
 })();
 
+/** Reused helper for get Auth Profile Field Spec behavior in src/secrets. */
 export function getAuthProfileFieldSpec(type: AuthProfileCredentialType): AuthProfileFieldSpec {
   return AUTH_PROFILE_FIELD_SPEC_BY_TYPE[type];
 }
@@ -92,6 +96,7 @@ function toSecretCredentialVisit(params: {
   };
 }
 
+/** Reused helper for this surface behavior in src/secrets. */
 export function* iterateAuthProfileCredentials(
   profiles: Record<string, unknown>,
 ): Iterable<AuthProfileCredentialVisit> {

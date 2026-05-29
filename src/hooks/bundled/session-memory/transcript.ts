@@ -1,3 +1,4 @@
+// hooks/bundled/session-memory transcript helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { hasInterSessionUserProvenance } from "../../../sessions/input-provenance.js";
@@ -21,6 +22,7 @@ function extractTextMessageContent(content: unknown): string | undefined {
   return undefined;
 }
 
+/** Reused helper for get Recent Session Content behavior in src/hooks/bundled. */
 export async function getRecentSessionContent(
   sessionFilePath: string,
   messageCount: number = 15,
@@ -61,6 +63,7 @@ export async function getRecentSessionContent(
   }
 }
 
+/** Reused helper for get Recent Session Content With Reset Fallback behavior in src/hooks/bundled. */
 export async function getRecentSessionContentWithResetFallback(
   sessionFilePath: string,
   messageCount: number = 15,
@@ -93,6 +96,7 @@ function stripResetSuffix(fileName: string): string {
   return resetIndex === -1 ? fileName : fileName.slice(0, resetIndex);
 }
 
+/** Reused helper for find Previous Session File behavior in src/hooks/bundled. */
 export async function findPreviousSessionFile(params: {
   sessionsDir: string;
   currentSessionFile?: string;

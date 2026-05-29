@@ -1,3 +1,4 @@
+// extensions/telegram/src dm access helpers and runtime behavior.
 import type { Bot } from "grammy";
 import type { Message } from "grammy/types";
 import { createChannelPairingChallengeIssuer } from "openclaw/plugin-sdk/channel-pairing";

@@ -1,3 +1,4 @@
+// infra channels status issues helpers and runtime behavior.
 import { listChannelPlugins } from "../channels/plugins/index.js";
 import type {
   ChannelAccountSnapshot,
@@ -80,6 +81,7 @@ function collectGenericRuntimeStatusIssues(
   return issues;
 }
 
+/** Reused helper for collect Channel Status Issues behavior in src/infra. */
 export function collectChannelStatusIssues(payload: Record<string, unknown>): ChannelStatusIssue[] {
   const issues: ChannelStatusIssue[] = [];
   const accountsByChannel = payload.channelAccounts as Record<string, unknown> | undefined;

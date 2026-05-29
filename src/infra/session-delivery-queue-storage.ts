@@ -1,3 +1,4 @@
+// infra session delivery queue storage helpers and runtime behavior.
 import { createHash } from "node:crypto";
 import path from "node:path";
 import {
@@ -31,6 +32,7 @@ type SessionDeliveryRetryPolicy = {
   maxRetries?: number;
 };
 
+/** Shared type for Session Delivery Route in src/infra. */
 export type SessionDeliveryRoute = {
   channel: string;
   to: string;
@@ -40,6 +42,7 @@ export type SessionDeliveryRoute = {
   chatType: ChatType;
 };
 
+/** Shared type for Queued Session Delivery Payload in src/infra. */
 export type QueuedSessionDeliveryPayload =
   | ({
       kind: "systemEvent";
@@ -59,6 +62,7 @@ export type QueuedSessionDeliveryPayload =
       idempotencyKey?: string;
     } & SessionDeliveryRetryPolicy);
 
+/** Shared type for Queued Session Delivery in src/infra. */
 export type QueuedSessionDelivery = QueuedSessionDeliveryPayload & {
   id: string;
   enqueuedAt: number;
@@ -86,6 +90,7 @@ async function readQueueEntry(filePath: string): Promise<QueuedSessionDelivery> 
   return await readJsonDurableQueueEntry<QueuedSessionDelivery>(filePath);
 }
 
+/** Reused helper for resolve Session Delivery Queue Dir behavior in src/infra. */
 export function resolveSessionDeliveryQueueDir(stateDir?: string): string {
   const base = stateDir ?? resolveStateDir();
   return path.join(base, QUEUE_DIRNAME);
@@ -114,6 +119,7 @@ async function ensureSessionDeliveryQueueDir(stateDir?: string): Promise<string>
   return queueDir;
 }
 
+/** Reused helper for enqueue Session Delivery behavior in src/infra. */
 export async function enqueueSessionDelivery(
   params: QueuedSessionDeliveryPayload,
   stateDir?: string,
@@ -137,10 +143,12 @@ export async function enqueueSessionDelivery(
   return id;
 }
 
+/** Reused helper for ack Session Delivery behavior in src/infra. */
 export async function ackSessionDelivery(id: string, stateDir?: string): Promise<void> {
   await ackJsonDurableQueueEntry(resolveQueueEntryPaths(id, stateDir));
 }
 
+/** Reused helper for fail Session Delivery behavior in src/infra. */
 export async function failSessionDelivery(
   id: string,
   error: string,
@@ -154,6 +162,7 @@ export async function failSessionDelivery(
   await writeQueueEntry(filePath, entry);
 }
 
+/** Reused helper for load Pending Session Delivery behavior in src/infra. */
 export async function loadPendingSessionDelivery(
   id: string,
   stateDir?: string,
@@ -164,6 +173,7 @@ export async function loadPendingSessionDelivery(
   });
 }
 
+/** Reused helper for load Pending Session Deliveries behavior in src/infra. */
 export async function loadPendingSessionDeliveries(
   stateDir?: string,
 ): Promise<QueuedSessionDelivery[]> {
@@ -174,6 +184,7 @@ export async function loadPendingSessionDeliveries(
   });
 }
 
+/** Reused helper for move Session Delivery To Failed behavior in src/infra. */
 export async function moveSessionDeliveryToFailed(id: string, stateDir?: string): Promise<void> {
   await moveJsonDurableQueueEntryToFailed({
     queueDir: resolveSessionDeliveryQueueDir(stateDir),

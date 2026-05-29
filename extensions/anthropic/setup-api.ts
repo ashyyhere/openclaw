@@ -1,3 +1,4 @@
+// extensions/anthropic setup api helpers and runtime behavior.
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 import { buildAnthropicCliBackend } from "./cli-backend.js";
 

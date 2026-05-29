@@ -1,3 +1,4 @@
+// config schema base helpers and runtime behavior.
 import { isSensitiveUrlConfigPath } from "@openclaw/net-policy/redact-sensitive-url";
 import { VERSION } from "../version.js";
 import { FIELD_HELP } from "./schema.help.js";
@@ -145,6 +146,7 @@ function applyNodeDocumentation(
   }
 }
 
+/** Shared type for Base Config Schema Response in src/config. */
 export type BaseConfigSchemaResponse = {
   schema: ConfigSchema;
   uiHints: ConfigUiHints;
@@ -260,6 +262,7 @@ function computeBaseConfigSchemaStablePayload(): BaseConfigSchemaStablePayload {
   };
 }
 
+/** Reused helper for compute Base Config Schema Response behavior in src/config. */
 export function computeBaseConfigSchemaResponse(params?: {
   generatedAt?: string;
 }): BaseConfigSchemaResponse {

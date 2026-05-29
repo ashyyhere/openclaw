@@ -1,3 +1,4 @@
+/** Tests sanitized doctor note emission. */
 import { describe, expect, it, vi } from "vitest";
 import { emitDoctorNotes } from "./emit-notes.js";
 

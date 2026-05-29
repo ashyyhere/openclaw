@@ -1,3 +1,4 @@
+// Configured binding consumer for ACP channel targets.
 import {
   buildConfiguredAcpSessionKey,
   normalizeBindingConfig,
@@ -144,6 +145,7 @@ function buildAcpTargetFactory(params: {
   };
 }
 
+/** Reused constant for acp Configured Binding Consumer behavior in src/channels/plugins. */
 export const acpConfiguredBindingConsumer: ConfiguredBindingConsumer = {
   id: "acp",
   supports: (binding) => binding.type === "acp",

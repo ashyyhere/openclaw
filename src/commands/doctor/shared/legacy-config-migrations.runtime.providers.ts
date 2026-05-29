@@ -1,3 +1,4 @@
+/** Legacy runtime config migrations for provider settings. */
 import {
   defineLegacyConfigMigration,
   type LegacyConfigMigrationSpec,
@@ -26,6 +27,7 @@ const X_SEARCH_RULE: LegacyConfigRule = {
     'tools.web.x_search.apiKey moved to the xAI plugin; use plugins.entries.xai.config.webSearch.apiKey instead. Run "openclaw doctor --fix".',
 };
 
+/** Reused constant for LEGACY CONFIG MIGRATIONS RUNTIME PROVIDERS behavior in src/commands/doctor. */
 export const LEGACY_CONFIG_MIGRATIONS_RUNTIME_PROVIDERS: LegacyConfigMigrationSpec[] = [
   defineLegacyConfigMigration({
     id: "plugins.allow->plugins.bundledDiscovery.compat",

@@ -1,3 +1,4 @@
+/** Shared ACP server/session option types and agent metadata. */
 import type { SessionId } from "@agentclientprotocol/sdk";
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 import { VERSION } from "../version.js";
@@ -6,6 +7,7 @@ const ACP_PROVENANCE_MODE_VALUES = ["off", "meta", "meta+receipt"] as const;
 
 type AcpProvenanceMode = (typeof ACP_PROVENANCE_MODE_VALUES)[number];
 
+/** Normalize ACP provenance mode from CLI/config text. */
 export function normalizeAcpProvenanceMode(
   value: string | undefined,
 ): AcpProvenanceMode | undefined {
@@ -18,6 +20,7 @@ export function normalizeAcpProvenanceMode(
     : undefined;
 }
 
+/** Live ACP stdio session state tracked by the server bridge. */
 export type AcpSession = {
   sessionId: SessionId;
   sessionKey: string;
@@ -29,6 +32,7 @@ export type AcpSession = {
   activeRunId: string | null;
 };
 
+/** CLI/options accepted by the ACP gateway server. */
 export type AcpServerOptions = {
   gatewayUrl?: string;
   gatewayToken?: string;
@@ -46,6 +50,7 @@ export type AcpServerOptions = {
   verbose?: boolean;
 };
 
+/** Reused constant for ACP AGENT INFO behavior in src/acp. */
 export const ACP_AGENT_INFO = {
   name: "openclaw-acp",
   title: "OpenClaw ACP Gateway",

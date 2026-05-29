@@ -1,3 +1,4 @@
+// Tests infra heartbeat schedule test behavior.
 import { describe, expect, it } from "vitest";
 import {
   computeNextHeartbeatPhaseDueMs,

@@ -1,3 +1,4 @@
+// extensions/voice-call/src test fixtures helpers and runtime behavior.
 import type { VoiceCallConfig } from "./config.js";
 import { DEFAULT_VOICE_CALL_REALTIME_INSTRUCTIONS } from "./realtime-defaults.js";
 

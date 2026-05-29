@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor provider config log helpers and runtime behavior.
 import { logVerbose } from "openclaw/plugin-sdk/runtime-env";
 import { summarizeStringEntries } from "openclaw/plugin-sdk/string-coerce-runtime";
 import { formatThreadBindingDurationLabel } from "./thread-bindings.messages.js";

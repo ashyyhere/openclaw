@@ -1,3 +1,4 @@
+// plugin-sdk oauth utils helpers and runtime behavior.
 import { createHash, randomBytes } from "node:crypto";
 
 /**

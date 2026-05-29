@@ -1,3 +1,4 @@
+// test/vitest vitest cron config helpers and runtime behavior.
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
 export function createCronVitestConfig(env?: Record<string, string | undefined>) {

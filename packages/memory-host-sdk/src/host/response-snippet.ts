@@ -1,3 +1,4 @@
+// packages/memory-host-sdk/src/host response snippet helpers and runtime behavior.
 const DEFAULT_ERROR_BODY_MAX_BYTES = 8 * 1024;
 const DEFAULT_ERROR_BODY_MAX_CHARS = 1_000;
 const DEFAULT_JSON_BODY_MAX_BYTES = 64 * 1024 * 1024;
@@ -19,6 +20,7 @@ type ResponsePrefix = {
   truncated: boolean;
 };
 
+/** Public helper for read Response Text Snippet behavior in packages/memory-host-sdk. */
 export async function readResponseTextSnippet(
   res: Response,
   options: ResponseTextSnippetOptions = {},
@@ -41,6 +43,7 @@ export async function readResponseTextSnippet(
   return collapsed;
 }
 
+/** Public helper for read Response Json With Limit behavior in packages/memory-host-sdk. */
 export async function readResponseJsonWithLimit(
   res: Response,
   options: ResponseJsonOptions,

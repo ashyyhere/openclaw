@@ -1,3 +1,4 @@
+/** Resolves effective skill filters and prompt limits for agents. */
 import type { OpenClawConfig } from "../../config/types.js";
 import { normalizeAgentId } from "../../routing/session-key.js";
 import { normalizeSkillFilter } from "./filter.js";
@@ -21,6 +22,7 @@ function resolveAgentEntry(
  * Explicit per-agent skills win when present; otherwise fall back to shared defaults.
  * Unknown agent ids also fall back to defaults so legacy/unresolved callers do not widen access.
  */
+/** Merges global and agent-specific skill filters for a run. */
 export function resolveEffectiveAgentSkillFilter(
   cfg: OpenClawConfig | undefined,
   agentId: string | undefined,
@@ -35,6 +37,7 @@ export function resolveEffectiveAgentSkillFilter(
   return normalizeSkillFilter(cfg.agents?.defaults?.skills);
 }
 
+/** Resolves agent-specific skill prompt limits. */
 export function resolveEffectiveAgentSkillsLimits(
   cfg: OpenClawConfig | undefined,
   agentId: string | undefined,

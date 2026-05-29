@@ -1,3 +1,4 @@
+// Tests gateway server auth default token test behavior.
 import { describe } from "vitest";
 import { registerDefaultAuthTokenSuite } from "./server.auth.default-token.suite.js";
 import { installGatewayTestHooks } from "./server.auth.shared.js";

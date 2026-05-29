@@ -1,3 +1,4 @@
+// Tests extensions/qa-lab/src suite merge patch test behavior.
 import { describe, expect, it } from "vitest";
 import { applyQaMergePatch } from "./suite-merge-patch.js";
 

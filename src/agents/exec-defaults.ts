@@ -1,3 +1,4 @@
+/** Resolves effective exec host, mode, security, and approval defaults. */
 import type { SessionEntry } from "../config/sessions.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {
@@ -133,6 +134,7 @@ function resolveExecSandboxAvailability(params: {
   );
 }
 
+/** Return whether requested exec node selection is allowed. */
 export function canExecRequestNode(params: {
   cfg?: OpenClawConfig;
   sessionEntry?: SessionEntry;
@@ -153,6 +155,7 @@ export function canExecRequestNode(params: {
   });
 }
 
+/** Resolve the effective exec defaults for one session/agent. */
 export function resolveExecDefaults(params: {
   cfg?: OpenClawConfig;
   sessionEntry?: SessionEntry;

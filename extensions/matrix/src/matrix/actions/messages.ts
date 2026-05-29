@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix/actions messages helpers and runtime behavior.
 import { normalizeOptionalString } from "openclaw/plugin-sdk/string-coerce-runtime";
 import { fetchMatrixPollMessageSummary, resolveMatrixPollRootEventId } from "../poll-summary.js";
 import { isPollEventType } from "../poll-types.js";

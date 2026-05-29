@@ -1,3 +1,4 @@
+// Startup context loading for reply sessions.
 import fs from "node:fs";
 import path from "node:path";
 import { formatDateStamp, resolveUserTimezone } from "../../agents/date-time.js";
@@ -15,6 +16,7 @@ const STARTUP_MEMORY_TOTAL_MAX_CHARS_CAP = 50_000;
 const STARTUP_MEMORY_DAILY_DAYS_CAP = 14;
 const STARTUP_MEMORY_MAX_SLUGGED_FILES_PER_DAY = 4;
 
+/** Reused helper for should Apply Startup Context behavior in src/auto-reply/reply. */
 export function shouldApplyStartupContext(params: {
   cfg?: OpenClawConfig;
   action: "new" | "reset";
@@ -288,6 +290,7 @@ async function listStartupMemoryPathsByDate(params: {
   }
 }
 
+/** Reused helper for build Session Startup Context Prelude behavior in src/auto-reply/reply. */
 export async function buildSessionStartupContextPrelude(params: {
   workspaceDir: string;
   cfg?: OpenClawConfig;

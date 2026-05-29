@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src doctor test behavior.
 import fs from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";

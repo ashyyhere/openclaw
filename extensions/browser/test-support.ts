@@ -1,3 +1,4 @@
+// extensions/browser test support helpers and runtime behavior.
 export {
   createCliRuntimeCapture,
   expectGeneratedTokenPersistedToGatewayAuth,

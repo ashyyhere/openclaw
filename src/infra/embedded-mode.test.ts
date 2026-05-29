@@ -1,3 +1,4 @@
+// Tests infra embedded mode test behavior.
 import { afterEach, describe, expect, it } from "vitest";
 import { isEmbeddedMode, setEmbeddedMode } from "./embedded-mode.js";
 

@@ -1,3 +1,4 @@
+// extensions/matrix/src setup bootstrap helpers and runtime behavior.
 import { hasExplicitMatrixAccountConfig } from "./matrix/account-config.js";
 import { resolveMatrixAccountConfig } from "./matrix/accounts.js";
 import { bootstrapMatrixVerification } from "./matrix/actions/verification.js";

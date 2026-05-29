@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/googlechat/src channel runtime behavior.
 import {
   probeGoogleChat as probeGoogleChatImpl,
   sendGoogleChatMessage as sendGoogleChatMessageImpl,

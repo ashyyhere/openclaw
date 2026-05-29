@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/monitor native command context test behavior.
 import { describe, expect, it } from "vitest";
 import { buildDiscordNativeCommandContext } from "./native-command-context.js";
 

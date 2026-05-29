@@ -1,3 +1,4 @@
+// ui/src/ui/chat chat sidebar raw helpers and runtime behavior.
 import type { SidebarContent } from "../sidebar-content.ts";
 
 function toPlainTextCodeFence(value: string, language = ""): string {
@@ -5,6 +6,7 @@ function toPlainTextCodeFence(value: string, language = ""): string {
   return `${fenceHeader}\n${value}\n\`\`\``;
 }
 
+/** Reused helper for build Raw Sidebar Content behavior in ui/src/ui/chat. */
 export function buildRawSidebarContent(
   content: SidebarContent | null | undefined,
 ): SidebarContent | null {

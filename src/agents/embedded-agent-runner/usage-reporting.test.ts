@@ -1,3 +1,4 @@
+/** Verifies usage reporting across retries, compaction, and final replies. */
 import type { AssistantMessage } from "openclaw/plugin-sdk/llm";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { makeAttemptResult } from "./run.overflow-compaction.fixture.js";

@@ -1,3 +1,4 @@
+// extensions/zalouser/src monitor send mocks helpers and runtime behavior.
 import { vi } from "vitest";
 
 const sendMocks = vi.hoisted(() => ({

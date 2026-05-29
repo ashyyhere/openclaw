@@ -1,3 +1,4 @@
+// Tests extensions/imessage/src approval reaction poller test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { pollPendingIMessageApprovalReactions } from "./approval-reaction-poller.js";
 import {

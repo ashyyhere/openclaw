@@ -1,3 +1,4 @@
+/** Installs the gateway daemon service for the current platform. */
 import { resolveNodeStartupTlsEnvironment } from "../../bootstrap/node-startup-env.js";
 import { buildGatewayInstallPlan } from "../../commands/daemon-install-helpers.js";
 import {
@@ -33,6 +34,7 @@ import {
 } from "./shared.js";
 import type { DaemonInstallOptions } from "./types.js";
 
+/** Reused helper for merge Install Invocation Env behavior in src/cli/daemon-cli. */
 export function mergeInstallInvocationEnv(params: {
   env: NodeJS.ProcessEnv;
   existingServiceEnv?: Record<string, string>;
@@ -77,6 +79,7 @@ export function mergeInstallInvocationEnv(params: {
   };
 }
 
+/** Reused helper for run Daemon Install behavior in src/cli/daemon-cli. */
 export async function runDaemonInstall(opts: DaemonInstallOptions) {
   const { json, stdout, warnings, emit, fail } = createDaemonInstallActionContext(opts.json);
   if (failIfNixDaemonInstallMode(fail)) {

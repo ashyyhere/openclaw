@@ -1,3 +1,4 @@
+// extensions/synology-chat/src test http utils helpers and runtime behavior.
 import { EventEmitter } from "node:events";
 import type { IncomingMessage, ServerResponse } from "node:http";
 

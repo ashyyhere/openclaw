@@ -1,3 +1,4 @@
+// Tests packages/memory-host-sdk/src/host embedding chunk limits test behavior.
 import { describe, expect, it } from "vitest";
 import { enforceEmbeddingMaxInputTokens } from "./embedding-chunk-limits.js";
 import { estimateUtf8Bytes } from "./embedding-input-limits.js";

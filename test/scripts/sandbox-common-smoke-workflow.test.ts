@@ -1,3 +1,4 @@
+// Tests test/scripts sandbox common smoke workflow test behavior.
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
@@ -15,7 +16,7 @@ describe("sandbox common smoke workflow", () => {
     );
     expect(workflow).not.toMatch(/(^|\n)\s+docker build -t openclaw-sandbox-smoke-base/u);
     expect(workflow).not.toContain(
-      "u=\"$(docker run --rm openclaw-sandbox-common-smoke:bookworm-slim",
+      'u="$(docker run --rm openclaw-sandbox-common-smoke:bookworm-slim',
     );
   });
 });

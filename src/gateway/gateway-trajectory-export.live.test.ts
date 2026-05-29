@@ -1,3 +1,4 @@
+// Tests gateway gateway trajectory export live test behavior.
 import { randomBytes, randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";

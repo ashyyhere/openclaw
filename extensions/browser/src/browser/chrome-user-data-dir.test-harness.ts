@@ -1,3 +1,4 @@
+// extensions/browser/src/browser chrome user data dir test harness helpers and runtime behavior.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

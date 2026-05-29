@@ -1,3 +1,4 @@
+// Tests infra/net fetch guard ssrf test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   fetchConfiguredLocalOriginWithSsrFGuard,

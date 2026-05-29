@@ -1,3 +1,4 @@
+// ui/src/ui/chat realtime talk gateway relay helpers and runtime behavior.
 import { bytesToBase64, floatToPcm16 } from "./realtime-talk-audio.ts";
 import { RealtimeTalkPcmOutputQueue } from "./realtime-talk-pcm-output.ts";
 import {
@@ -41,6 +42,7 @@ const BARGE_IN_RMS_THRESHOLD = 0.02;
 const BARGE_IN_PEAK_THRESHOLD = 0.08;
 const BARGE_IN_CONSECUTIVE_SPEECH_FRAMES = 2;
 
+/** Reused class for Gateway Relay Realtime Talk Transport behavior in ui/src/ui/chat. */
 export class GatewayRelayRealtimeTalkTransport implements RealtimeTalkTransport {
   private media: MediaStream | null = null;
   private inputContext: AudioContext | null = null;

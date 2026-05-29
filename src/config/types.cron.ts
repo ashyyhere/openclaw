@@ -1,8 +1,10 @@
+// config types cron helpers and runtime behavior.
 import type { SecretInput } from "./types.secrets.js";
 
 /** Error types that can trigger retries for one-shot jobs. */
 export type CronRetryOn = "rate_limit" | "overloaded" | "network" | "timeout" | "server_error";
 
+/** Shared type for Cron Retry Config in src/config. */
 export type CronRetryConfig = {
   /** Max retries for transient errors before permanent disable (default: 3). */
   maxAttempts?: number;
@@ -12,6 +14,7 @@ export type CronRetryConfig = {
   retryOn?: CronRetryOn[];
 };
 
+/** Shared type for Cron Failure Alert Config in src/config. */
 export type CronFailureAlertConfig = {
   enabled?: boolean;
   after?: number;
@@ -21,6 +24,7 @@ export type CronFailureAlertConfig = {
   accountId?: string;
 };
 
+/** Shared type for Cron Failure Destination Config in src/config. */
 export type CronFailureDestinationConfig = {
   channel?: string;
   to?: string;
@@ -28,6 +32,7 @@ export type CronFailureDestinationConfig = {
   mode?: "announce" | "webhook";
 };
 
+/** Shared type for Cron Config in src/config. */
 export type CronConfig = {
   enabled?: boolean;
   store?: string;

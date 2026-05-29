@@ -1,3 +1,4 @@
+// music-generation normalization helpers and runtime behavior.
 import {
   hasMediaNormalizationEntry,
   normalizeDurationToClosestMax,
@@ -28,6 +29,7 @@ function resolveModelBooleanSupport(
   return supportByModel?.[model] ?? defaultSupport === true;
 }
 
+/** Reused helper for resolve Music Generation Overrides behavior in src/music-generation. */
 export function resolveMusicGenerationOverrides(params: {
   provider: MusicGenerationProvider;
   model: string;

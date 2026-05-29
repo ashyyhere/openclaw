@@ -1,8 +1,11 @@
+/** Resolves local docs/source checkout paths and public reference URLs. */
 import fs from "node:fs";
 import path from "node:path";
 import { resolveOpenClawPackageRoot } from "../infra/openclaw-root.js";
 
+/** Public OpenClaw docs URL used when no local docs path is available. */
 export const OPENCLAW_DOCS_URL = "https://docs.openclaw.ai";
+/** Public OpenClaw source URL used when no local source checkout is available. */
 export const OPENCLAW_SOURCE_URL = "https://github.com/openclaw/openclaw";
 
 type ResolveOpenClawReferencePathParams = {
@@ -20,6 +23,7 @@ function isGitCheckout(rootDir: string): boolean {
   return fs.existsSync(path.join(rootDir, ".git"));
 }
 
+/** Resolve a local OpenClaw docs directory if one is available. */
 export async function resolveOpenClawDocsPath(params: {
   workspaceDir?: string;
   argv1?: string;
@@ -47,6 +51,7 @@ export async function resolveOpenClawDocsPath(params: {
   return isUsableDocsDir(packageDocs) ? packageDocs : null;
 }
 
+/** Resolve a local OpenClaw git checkout root if one is available. */
 export async function resolveOpenClawSourcePath(
   params: ResolveOpenClawReferencePathParams,
 ): Promise<string | null> {
@@ -61,6 +66,7 @@ export async function resolveOpenClawSourcePath(
   return packageRoot;
 }
 
+/** Resolve local docs and source reference paths in parallel. */
 export async function resolveOpenClawReferencePaths(
   params: ResolveOpenClawReferencePathParams,
 ): Promise<{

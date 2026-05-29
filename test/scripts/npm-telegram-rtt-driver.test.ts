@@ -1,3 +1,4 @@
+// Tests test/scripts npm telegram rtt driver test behavior.
 import { spawn, spawnSync, type ChildProcessWithoutNullStreams } from "node:child_process";
 import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";

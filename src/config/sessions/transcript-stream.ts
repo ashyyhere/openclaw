@@ -1,3 +1,4 @@
+// config/sessions transcript stream helpers and runtime behavior.
 import fs from "node:fs";
 import readline from "node:readline";
 
@@ -15,10 +16,12 @@ const DEFAULT_REVERSE_CHUNK_BYTES = 64 * 1024;
 const MAX_REVERSE_CHUNK_BYTES = 1024 * 1024;
 const MIN_REVERSE_CHUNK_BYTES = 1024;
 
+/** Shared type for Transcript Stream Options in src/config/sessions. */
 export type TranscriptStreamOptions = {
   signal?: AbortSignal;
 };
 
+/** Shared type for Transcript Reverse Stream Options in src/config/sessions. */
 export type TranscriptReverseStreamOptions = TranscriptStreamOptions & {
   /** Bytes read per reverse scan chunk. Clamped to [1KiB, 1MiB]. */
   chunkBytes?: number;

@@ -1,3 +1,4 @@
+// Tests video-generation live test helpers test behavior.
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/types.js";
 import {

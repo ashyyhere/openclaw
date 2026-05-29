@@ -1,3 +1,4 @@
+// plugins web provider types helpers and runtime behavior.
 import type { TSchema } from "typebox";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { RuntimeEnv } from "../runtime.js";
@@ -8,9 +9,12 @@ import type {
 import type { WizardPrompter } from "../wizard/prompts.js";
 import type { SecretInputMode } from "./provider-auth-types.js";
 
+/** Shared type for Web Search Provider Id in src/plugins. */
 export type WebSearchProviderId = string;
+/** Shared type for Web Fetch Provider Id in src/plugins. */
 export type WebFetchProviderId = string;
 
+/** Shared type for Web Search Provider Tool Definition in src/plugins. */
 export type WebSearchProviderToolDefinition = {
   description: string;
   parameters: TSchema;
@@ -20,12 +24,14 @@ export type WebSearchProviderToolDefinition = {
   ) => Promise<Record<string, unknown>>;
 };
 
+/** Shared type for Web Fetch Provider Tool Definition in src/plugins. */
 export type WebFetchProviderToolDefinition = {
   description: string;
   parameters: TSchema;
   execute: (args: Record<string, unknown>) => Promise<Record<string, unknown>>;
 };
 
+/** Shared type for Web Search Provider Context in src/plugins. */
 export type WebSearchProviderContext = {
   config?: OpenClawConfig;
   searchConfig?: Record<string, unknown>;
@@ -33,28 +39,34 @@ export type WebSearchProviderContext = {
   agentDir?: string;
 };
 
+/** Shared type for Web Search Provider Tool Execution Context in src/plugins. */
 export type WebSearchProviderToolExecutionContext = {
   signal?: AbortSignal;
 };
 
+/** Shared type for Web Fetch Provider Context in src/plugins. */
 export type WebFetchProviderContext = {
   config?: OpenClawConfig;
   fetchConfig?: Record<string, unknown>;
   runtimeMetadata?: RuntimeWebFetchMetadata;
 };
 
+/** Shared type for Web Search Credential Resolution Source in src/plugins. */
 export type WebSearchCredentialResolutionSource = "config" | "secretRef" | "env" | "missing";
 
+/** Shared type for Web Search Provider Configured Credential Fallback in src/plugins. */
 export type WebSearchProviderConfiguredCredentialFallback = {
   path: string;
   value: unknown;
 };
 
+/** Shared type for Web Fetch Provider Configured Credential Fallback in src/plugins. */
 export type WebFetchProviderConfiguredCredentialFallback = {
   path: string;
   value: unknown;
 };
 
+/** Shared type for Web Search Runtime Metadata Context in src/plugins. */
 export type WebSearchRuntimeMetadataContext = {
   config?: OpenClawConfig;
   searchConfig?: Record<string, unknown>;
@@ -66,6 +78,7 @@ export type WebSearchRuntimeMetadataContext = {
   };
 };
 
+/** Shared type for Web Search Provider Setup Context in src/plugins. */
 export type WebSearchProviderSetupContext = {
   config: OpenClawConfig;
   runtime: RuntimeEnv;
@@ -74,8 +87,10 @@ export type WebSearchProviderSetupContext = {
   secretInputMode?: SecretInputMode;
 };
 
+/** Shared type for Web Fetch Credential Resolution Source in src/plugins. */
 export type WebFetchCredentialResolutionSource = "config" | "secretRef" | "env" | "missing";
 
+/** Shared type for Web Fetch Runtime Metadata Context in src/plugins. */
 export type WebFetchRuntimeMetadataContext = {
   config?: OpenClawConfig;
   fetchConfig?: Record<string, unknown>;
@@ -87,6 +102,7 @@ export type WebFetchRuntimeMetadataContext = {
   };
 };
 
+/** Shared type for Web Search Provider Plugin in src/plugins. */
 export type WebSearchProviderPlugin = {
   id: WebSearchProviderId;
   label: string;
@@ -120,10 +136,12 @@ export type WebSearchProviderPlugin = {
   createTool: (ctx: WebSearchProviderContext) => WebSearchProviderToolDefinition | null;
 };
 
+/** Shared type for Plugin Web Search Provider Entry in src/plugins. */
 export type PluginWebSearchProviderEntry = WebSearchProviderPlugin & {
   pluginId: string;
 };
 
+/** Shared type for Web Fetch Provider Plugin in src/plugins. */
 export type WebFetchProviderPlugin = {
   id: WebFetchProviderId;
   label: string;
@@ -151,6 +169,7 @@ export type WebFetchProviderPlugin = {
   createTool: (ctx: WebFetchProviderContext) => WebFetchProviderToolDefinition | null;
 };
 
+/** Shared type for Plugin Web Fetch Provider Entry in src/plugins. */
 export type PluginWebFetchProviderEntry = WebFetchProviderPlugin & {
   pluginId: string;
 };

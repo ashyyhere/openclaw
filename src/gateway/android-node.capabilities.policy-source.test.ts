@@ -1,3 +1,4 @@
+// Tests gateway android node capabilities policy source test behavior.
 import { describe, expect, it } from "vitest";
 import { shouldFetchRemotePolicyConfig } from "../../test/helpers/gateway/android-node-capabilities-policy-source.js";
 import type { GatewayConnectionDetails } from "./call.js";

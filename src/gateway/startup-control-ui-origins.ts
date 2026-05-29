@@ -1,3 +1,4 @@
+// gateway startup control ui origins helpers and runtime behavior.
 import {
   ensureControlUiAllowedOriginsForNonLoopbackBind,
   type GatewayNonLoopbackBindMode,
@@ -5,6 +6,7 @@ import {
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { isContainerEnvironment } from "./net.js";
 
+/** Reused helper for maybe Seed Control Ui Allowed Origins At Startup behavior in src/gateway. */
 export async function maybeSeedControlUiAllowedOriginsAtStartup(params: {
   config: OpenClawConfig;
   log: { info: (msg: string) => void; warn: (msg: string) => void };

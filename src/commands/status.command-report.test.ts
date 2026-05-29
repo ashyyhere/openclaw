@@ -1,3 +1,4 @@
+/** Tests human status report line rendering. */
 import { describe, expect, it } from "vitest";
 import { buildStatusCommandReportLines } from "./status.command-report.ts";
 

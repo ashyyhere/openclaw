@@ -1,3 +1,4 @@
+// extensions/discord/src monitor gateway helpers and runtime behavior.
 import type { DiscordGatewayHandle } from "./monitor/gateway-handle.js";
 import { DiscordGatewayLifecycleError } from "./monitor/gateway-supervisor.js";
 import type {

@@ -1,3 +1,4 @@
+// extensions/slack/src account inspect helpers and runtime behavior.
 import {
   DEFAULT_ACCOUNT_ID,
   normalizeAccountId,

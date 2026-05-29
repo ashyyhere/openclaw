@@ -1,3 +1,4 @@
+// extensions/telegram/src lane delivery helpers and runtime behavior.
 export {
   isPotentialTruncatedFinal,
   selectLongerFinalText,

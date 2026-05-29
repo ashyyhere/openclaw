@@ -210,6 +210,7 @@ async function logoutViaGatewayRuntime(params: {
   }
 }
 
+/** Reused helper for run Channel Login behavior in src/cli. */
 export async function runChannelLogin(
   opts: ChannelAuthOptions,
   runtime: RuntimeEnv = defaultRuntime,
@@ -259,6 +260,7 @@ export async function runChannelLogin(
   });
 }
 
+/** Reused helper for run Channel Logout behavior in src/cli. */
 export async function runChannelLogout(
   opts: ChannelAuthOptions,
   runtime: RuntimeEnv = defaultRuntime,

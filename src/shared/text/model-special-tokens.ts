@@ -30,6 +30,7 @@ function shouldInsertSeparator(before: string | undefined, after: string | undef
   return Boolean(before && after && !/\s/.test(before) && !/\s/.test(after));
 }
 
+/** Reused helper for strip Model Special Tokens behavior in src/shared/text. */
 export function stripModelSpecialTokens(text: string): string {
   if (!text) {
     return text;

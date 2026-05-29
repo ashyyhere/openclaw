@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/browser pw tools core browser ssrf guard test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const pageState = vi.hoisted(() => ({

@@ -1,3 +1,4 @@
+/** Public SDK barrel for shared action/tool parameter readers. */
 export {
   readFiniteNumberParam,
   readNonNegativeIntegerParam,

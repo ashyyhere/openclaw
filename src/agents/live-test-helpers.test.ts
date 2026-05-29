@@ -1,3 +1,4 @@
+/** Tests shared live-test helper behavior. */
 import { describe, expect, it } from "vitest";
 import {
   isLiveProfileKeyModeEnabled,

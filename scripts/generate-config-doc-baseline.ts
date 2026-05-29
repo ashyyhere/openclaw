@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// scripts generate config doc baseline helpers and runtime behavior.
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { writeConfigDocBaselineArtifacts } from "../src/config/doc-baseline.js";

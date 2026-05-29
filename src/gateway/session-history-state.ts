@@ -1,3 +1,4 @@
+// gateway session history state helpers and runtime behavior.
 import { asPositiveSafeInteger } from "../shared/number-coercion.js";
 import {
   DEFAULT_CHAT_HISTORY_TEXT_MAX_CHARS,
@@ -47,6 +48,7 @@ type SessionHistoryRawSnapshot = {
   totalRawMessages?: number;
 };
 
+/** Reused helper for resolve Session History Tail Read Options behavior in src/gateway. */
 export function resolveSessionHistoryTailReadOptions(limit: number): {
   maxMessages: number;
   maxLines: number;
@@ -128,6 +130,7 @@ function paginateSessionMessages(
   });
 }
 
+/** Reused helper for build Session History Snapshot behavior in src/gateway. */
 export function buildSessionHistorySnapshot(params: {
   rawMessages: unknown[];
   maxChars?: number;
@@ -164,6 +167,7 @@ export function buildSessionHistorySnapshot(params: {
   };
 }
 
+/** Reused class for Session History Sse State behavior in src/gateway. */
 export class SessionHistorySseState {
   private readonly target: SessionHistoryTranscriptTarget;
   private readonly maxChars: number;

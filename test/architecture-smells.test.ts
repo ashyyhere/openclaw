@@ -1,3 +1,4 @@
+// Tests test architecture smells test behavior.
 import { describe, expect, it } from "vitest";
 import { collectArchitectureSmells, main } from "../scripts/check-architecture-smells.mjs";
 import { createCapturedIo } from "./helpers/captured-io.js";

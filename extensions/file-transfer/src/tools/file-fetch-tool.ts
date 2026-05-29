@@ -1,3 +1,4 @@
+// extensions/file-transfer/src/tools file fetch tool helpers and runtime behavior.
 import crypto from "node:crypto";
 import { type AnyAgentTool } from "openclaw/plugin-sdk/agent-harness-runtime";
 import { saveMediaBuffer } from "openclaw/plugin-sdk/media-store";

@@ -1,3 +1,4 @@
+// plugin-sdk/test-helpers directory ids helpers and runtime behavior.
 import { expect } from "vitest";
 import type { ChannelDirectoryEntry } from "../channel-contract.js";
 import type { OpenClawConfig } from "../config-types.js";

@@ -1,15 +1,18 @@
+/** Shared OpenClaw core-tool registration and update_plan gating helpers. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { uniqueStrings } from "../shared/string-normalization.js";
 import { isStrictAgenticExecutionContractActive } from "./execution-contract.js";
 import { isToolAllowedByPolicyName } from "./tool-policy-match.js";
 import type { AnyAgentTool } from "./tools/common.js";
 
+/** Filter nullable tool factory results into a concrete tool list. */
 export function collectPresentOpenClawTools(
   candidates: readonly (AnyAgentTool | null | undefined)[],
 ): AnyAgentTool[] {
   return candidates.filter((tool): tool is AnyAgentTool => tool !== null && tool !== undefined);
 }
 
+/** Return whether update_plan is enabled by config or execution contract. */
 export function isUpdatePlanToolEnabledForOpenClawTools(params: {
   config?: OpenClawConfig;
   agentSessionKey?: string;
@@ -49,6 +52,7 @@ function isToolExplicitlyAllowedByOpenClawToolPolicy(params: {
   });
 }
 
+/** Return whether the OpenClaw tool set should include update_plan. */
 export function shouldIncludeUpdatePlanToolForOpenClawTools(params: {
   config?: OpenClawConfig;
   agentSessionKey?: string;

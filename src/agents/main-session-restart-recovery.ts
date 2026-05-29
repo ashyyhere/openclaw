@@ -99,6 +99,7 @@ function resolveEntryTranscriptLockPaths(params: {
   return [...paths];
 }
 
+/** Reused helper for mark Restart Aborted Main Sessions behavior in src/agents. */
 export async function markRestartAbortedMainSessions(params: {
   cfg?: OpenClawConfig;
   additionalCfgs?: Iterable<OpenClawConfig | undefined>;
@@ -459,6 +460,7 @@ async function resumeMainSession(params: {
   }
 }
 
+/** Reused helper for mark Restart Aborted Main Sessions From Locks behavior in src/agents. */
 export async function markRestartAbortedMainSessionsFromLocks(params: {
   sessionsDir: string;
   cleanedLocks: SessionLockInspection[];
@@ -605,6 +607,7 @@ async function resolveRestartRecoveryStorePaths(params: {
   return [...storePaths].toSorted((a, b) => a.localeCompare(b));
 }
 
+/** Reused helper for recover Restart Aborted Main Sessions behavior in src/agents. */
 export async function recoverRestartAbortedMainSessions(
   params: {
     cfg?: OpenClawConfig;
@@ -634,6 +637,7 @@ export async function recoverRestartAbortedMainSessions(
   return result;
 }
 
+/** Reused helper for schedule Restart Aborted Main Session Recovery behavior in src/agents. */
 export function scheduleRestartAbortedMainSessionRecovery(
   params: {
     cfg?: OpenClawConfig;

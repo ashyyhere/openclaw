@@ -1,3 +1,4 @@
+// Tests plugins/contracts loader contract test behavior.
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { uniqueSortedStrings } from "../../plugin-sdk/test-helpers/string-utils.js";
 import { resolveManifestContractPluginIds } from "../plugin-registry.js";

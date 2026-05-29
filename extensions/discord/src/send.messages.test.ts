@@ -1,3 +1,4 @@
+// Tests extensions/discord/src send messages test behavior.
 import { describe, expect, it, vi } from "vitest";
 
 const restMock = {

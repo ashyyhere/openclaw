@@ -1,3 +1,4 @@
+// extensions/brave/src brave web search provider helpers and runtime behavior.
 import { isDiagnosticFlagEnabled } from "openclaw/plugin-sdk/diagnostic-runtime";
 import type {
   SearchConfigRecord,

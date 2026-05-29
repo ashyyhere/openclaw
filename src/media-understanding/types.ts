@@ -1,10 +1,13 @@
+// Shared types for media-understanding types behavior.
 import type { AuthProfileStore } from "../agents/auth-profiles/types.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 
 type MediaUnderstandingKind = "audio.transcription" | "video.description" | "image.description";
 
+/** Shared type for Media Understanding Capability in src/media-understanding. */
 export type MediaUnderstandingCapability = "image" | "audio" | "video";
 
+/** Shared type for Media Understanding Capability Registry in src/media-understanding. */
 export type MediaUnderstandingCapabilityRegistry = Map<
   string,
   {
@@ -12,6 +15,7 @@ export type MediaUnderstandingCapabilityRegistry = Map<
   }
 >;
 
+/** Shared type for Media Attachment in src/media-understanding. */
 export type MediaAttachment = {
   path?: string;
   url?: string;
@@ -20,6 +24,7 @@ export type MediaAttachment = {
   alreadyTranscribed?: boolean;
 };
 
+/** Shared type for Media Understanding Output in src/media-understanding. */
 export type MediaUnderstandingOutput = {
   kind: MediaUnderstandingKind;
   attachmentIndex: number;
@@ -36,6 +41,7 @@ type MediaUnderstandingDecisionOutcome =
   | "no-attachment"
   | "scope-deny";
 
+/** Shared type for Media Understanding Model Decision in src/media-understanding. */
 export type MediaUnderstandingModelDecision = {
   provider?: string;
   model?: string;
@@ -50,6 +56,7 @@ type MediaUnderstandingAttachmentDecision = {
   chosen?: MediaUnderstandingModelDecision;
 };
 
+/** Shared type for Media Understanding Decision in src/media-understanding. */
 export type MediaUnderstandingDecision = {
   capability: MediaUnderstandingCapability;
   outcome: MediaUnderstandingDecisionOutcome;
@@ -83,6 +90,7 @@ type MediaUnderstandingProviderRequestTransportOverrides = {
   allowPrivateNetwork?: boolean;
 };
 
+/** Shared type for Audio Transcription Request in src/media-understanding. */
 export type AudioTranscriptionRequest = {
   buffer: Buffer;
   fileName: string;
@@ -99,11 +107,13 @@ export type AudioTranscriptionRequest = {
   fetchFn?: typeof fetch;
 };
 
+/** Shared type for Audio Transcription Result in src/media-understanding. */
 export type AudioTranscriptionResult = {
   text: string;
   model?: string;
 };
 
+/** Shared type for Video Description Request in src/media-understanding. */
 export type VideoDescriptionRequest = {
   buffer: Buffer;
   fileName: string;
@@ -118,11 +128,13 @@ export type VideoDescriptionRequest = {
   fetchFn?: typeof fetch;
 };
 
+/** Shared type for Video Description Result in src/media-understanding. */
 export type VideoDescriptionResult = {
   text: string;
   model?: string;
 };
 
+/** Shared type for Image Description Request in src/media-understanding. */
 export type ImageDescriptionRequest = {
   buffer: Buffer;
   fileName: string;
@@ -140,12 +152,14 @@ export type ImageDescriptionRequest = {
   provider: string;
 };
 
+/** Shared type for Images Description Input in src/media-understanding. */
 export type ImagesDescriptionInput = {
   buffer: Buffer;
   fileName: string;
   mime?: string;
 };
 
+/** Shared type for Images Description Request in src/media-understanding. */
 export type ImagesDescriptionRequest = {
   images: ImagesDescriptionInput[];
   model: string;
@@ -161,21 +175,25 @@ export type ImagesDescriptionRequest = {
   cfg: OpenClawConfig;
 };
 
+/** Shared type for Image Description Result in src/media-understanding. */
 export type ImageDescriptionResult = {
   text: string;
   model?: string;
 };
 
+/** Shared type for Images Description Result in src/media-understanding. */
 export type ImagesDescriptionResult = {
   text: string;
   model?: string;
 };
 
+/** Shared type for Structured Extraction Text Input in src/media-understanding. */
 export type StructuredExtractionTextInput = {
   type: "text";
   text: string;
 };
 
+/** Shared type for Structured Extraction Image Input in src/media-understanding. */
 export type StructuredExtractionImageInput = {
   type: "image";
   buffer: Buffer;
@@ -183,10 +201,12 @@ export type StructuredExtractionImageInput = {
   mime?: string;
 };
 
+/** Shared type for Structured Extraction Input in src/media-understanding. */
 export type StructuredExtractionInput =
   | StructuredExtractionTextInput
   | StructuredExtractionImageInput;
 
+/** Shared type for Structured Extraction Request in src/media-understanding. */
 export type StructuredExtractionRequest = {
   /** Image-first extraction input; callers must include at least one image. */
   input: StructuredExtractionInput[];
@@ -204,6 +224,7 @@ export type StructuredExtractionRequest = {
   provider: string;
 };
 
+/** Shared type for Structured Extraction Result in src/media-understanding. */
 export type StructuredExtractionResult = {
   text: string;
   parsed?: unknown;
@@ -212,11 +233,13 @@ export type StructuredExtractionResult = {
   contentType?: "json" | "text";
 };
 
+/** Shared type for Media Understanding Document Model Defaults in src/media-understanding. */
 export type MediaUnderstandingDocumentModelDefaults = {
   textExtraction?: string;
   image?: string | false;
 };
 
+/** Shared type for Media Understanding Provider in src/media-understanding. */
 export type MediaUnderstandingProvider = {
   id: string;
   capabilities?: MediaUnderstandingCapability[];

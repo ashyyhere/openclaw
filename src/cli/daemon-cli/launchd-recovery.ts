@@ -1,3 +1,4 @@
+/** Attempts launchd repair for installed but unloaded gateway services. */
 import { launchAgentPlistExists, repairLaunchAgentBootstrap } from "../../daemon/launchd.js";
 
 const LAUNCH_AGENT_RECOVERY_MESSAGE =
@@ -11,6 +12,7 @@ type LaunchAgentRecoveryResult = {
   message: string;
 };
 
+/** Reused helper for recover Installed Launch Agent behavior in src/cli/daemon-cli. */
 export async function recoverInstalledLaunchAgent(params: {
   result: LaunchAgentRecoveryAction;
   env?: Record<string, string | undefined>;
@@ -37,4 +39,5 @@ export async function recoverInstalledLaunchAgent(params: {
   };
 }
 
+/** Re-exported API for src/cli/daemon-cli, starting with LAUNCH AGENT RECOVERY MESSAGE. */
 export { LAUNCH_AGENT_RECOVERY_MESSAGE };

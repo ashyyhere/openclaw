@@ -1,3 +1,4 @@
+// gateway control plane rate limit helpers and runtime behavior.
 import type { GatewayClient } from "./server-methods/types.js";
 
 const CONTROL_PLANE_RATE_LIMIT_MAX_REQUESTS = 3;
@@ -21,6 +22,7 @@ function normalizePart(value: unknown, fallback: string): string {
   return normalized.length > 0 ? normalized : fallback;
 }
 
+/** Reused helper for resolve Control Plane Rate Limit Key behavior in src/gateway. */
 export function resolveControlPlaneRateLimitKey(client: GatewayClient | null): string {
   const deviceId = normalizePart(client?.connect?.device?.id, "unknown-device");
   const clientIp = normalizePart(client?.clientIp, "unknown-ip");
@@ -34,6 +36,7 @@ export function resolveControlPlaneRateLimitKey(client: GatewayClient | null): s
   return `${deviceId}|${clientIp}`;
 }
 
+/** Reused helper for consume Control Plane Write Budget behavior in src/gateway. */
 export function consumeControlPlaneWriteBudget(params: {
   client: GatewayClient | null;
   nowMs?: number;
@@ -109,6 +112,7 @@ export function pruneStaleControlPlaneBuckets(nowMs = Date.now()): number {
   return pruned;
 }
 
+/** Reused constant for testing behavior in src/gateway. */
 export const testing = {
   getControlPlaneRateLimitBucketCount() {
     return controlPlaneBuckets.size;
@@ -117,4 +121,5 @@ export const testing = {
     controlPlaneBuckets.clear();
   },
 };
+/** Re-exported API for src/gateway, starting with testing. */
 export { testing as __testing };

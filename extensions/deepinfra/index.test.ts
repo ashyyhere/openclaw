@@ -1,3 +1,4 @@
+// Tests extensions/deepinfra index test behavior.
 import {
   createCapturedPluginRegistration,
   registerSingleProviderPlugin,

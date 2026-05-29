@@ -1,3 +1,4 @@
+/** Shared temp-home, env, and fixture helpers for models-config tests. */
 import { afterEach, beforeEach } from "vitest";
 import { clearConfigCache, clearRuntimeConfigSnapshot } from "../config/config.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -5,6 +6,7 @@ import { withTempHome as withTempHomeBase } from "../plugin-sdk/test-helpers/tem
 import { resetPluginLoaderTestStateForTest } from "../plugins/loader.test-fixtures.js";
 import { resetModelsJsonReadyCacheForTest } from "./models-config-state.js";
 
+/** Run a models-config test inside an isolated temp HOME. */
 export function withModelsTempHome<T>(fn: (home: string) => Promise<T>): Promise<T> {
   // Models-config tests do not exercise session persistence; skip draining
   // unrelated session lock state during temp-home teardown.
@@ -14,6 +16,7 @@ export function withModelsTempHome<T>(fn: (home: string) => Promise<T>): Promise
   });
 }
 
+/** Install before/after hooks that reset config, env, fetch, and model caches. */
 export function installModelsConfigTestHooks(opts?: {
   restoreFetch?: boolean;
   resetPluginLoaderState?: boolean;
@@ -54,6 +57,7 @@ export function installModelsConfigTestHooks(opts?: {
   });
 }
 
+/** Temporarily preserve and restore named environment variables. */
 export async function withTempEnv<T>(vars: string[], fn: () => Promise<T>): Promise<T> {
   const previous: Record<string, string | undefined> = {};
   for (const envVar of vars) {
@@ -74,12 +78,14 @@ export async function withTempEnv<T>(vars: string[], fn: () => Promise<T>): Prom
   }
 }
 
+/** Remove named environment variables for a test case. */
 export function unsetEnv(vars: string[]) {
   for (const envVar of vars) {
     delete process.env[envVar];
   }
 }
 
+/** Env vars commonly consulted by implicit provider discovery tests. */
 export const MODELS_CONFIG_IMPLICIT_ENV_VARS = [
   "OPENCLAW_TEST_ONLY_PROVIDER_PLUGIN_IDS",
   "VITEST",
@@ -138,6 +144,7 @@ export const MODELS_CONFIG_IMPLICIT_ENV_VARS = [
   "AWS_SHARED_CREDENTIALS_FILE",
 ];
 
+/** Fixture config for a custom OpenAI-compatible proxy provider. */
 export const CUSTOM_PROXY_MODELS_CONFIG: OpenClawConfig = {
   models: {
     providers: {

@@ -1,3 +1,4 @@
+// gateway mcp http helpers and runtime behavior.
 import crypto from "node:crypto";
 import {
   createServer as createHttpServer,
@@ -22,6 +23,7 @@ import {
 } from "./mcp-http.request.js";
 import { McpLoopbackToolCache } from "./mcp-http.runtime.js";
 
+/** Re-exported API for src/gateway. */
 export {
   createMcpLoopbackServerConfig,
   getActiveMcpLoopbackRuntime,
@@ -81,6 +83,7 @@ function createRequestAbortSignal(req: IncomingMessage, res: ServerResponse) {
   };
 }
 
+/** Reused helper for start Mcp Loopback Server behavior in src/gateway. */
 export async function startMcpLoopbackServer(port = 0): Promise<{
   port: number;
   close: () => Promise<void>;
@@ -217,6 +220,7 @@ export async function startMcpLoopbackServer(port = 0): Promise<{
   return server;
 }
 
+/** Reused helper for ensure Mcp Loopback Server behavior in src/gateway. */
 export async function ensureMcpLoopbackServer(port = 0): Promise<McpLoopbackServer> {
   if (activeMcpLoopbackServer) {
     return activeMcpLoopbackServer;
@@ -234,6 +238,7 @@ export async function ensureMcpLoopbackServer(port = 0): Promise<McpLoopbackServ
   return activeMcpLoopbackServerPromise;
 }
 
+/** Reused helper for close Mcp Loopback Server behavior in src/gateway. */
 export async function closeMcpLoopbackServer(): Promise<void> {
   const server =
     activeMcpLoopbackServer ??

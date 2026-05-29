@@ -1,3 +1,4 @@
+// test/helpers captured io helpers and runtime behavior.
 export function createCapturedIo() {
   let stdout = "";
   let stderr = "";

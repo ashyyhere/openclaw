@@ -1,3 +1,4 @@
+// wizard setup gateway config helpers and runtime behavior.
 import { validateIPv4AddressInput } from "@openclaw/net-policy/ipv4";
 import { formatPortRangeHint } from "../cli/error-format.js";
 import {
@@ -68,6 +69,7 @@ function validateGatewayPortInput(value: unknown): string | undefined {
   return undefined;
 }
 
+/** Reused helper for configure Gateway For Setup behavior in src/wizard. */
 export async function configureGatewayForSetup(
   opts: ConfigureGatewayOptions,
 ): Promise<ConfigureGatewayResult> {

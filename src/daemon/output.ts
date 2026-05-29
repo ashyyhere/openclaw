@@ -1,12 +1,15 @@
 import { colorize, isRich, theme } from "../../packages/terminal-core/src/theme.js";
 
+/** Reused constant for to Posix Path behavior in src/daemon. */
 export const toPosixPath = (value: string) => value.replace(/\\/g, "/");
 
+/** Reused helper for format Line behavior in src/daemon. */
 export function formatLine(label: string, value: string): string {
   const rich = isRich();
   return `${colorize(rich, theme.muted, `${label}:`)} ${colorize(rich, theme.command, value)}`;
 }
 
+/** Reused helper for write Formatted Lines behavior in src/daemon. */
 export function writeFormattedLines(
   stdout: NodeJS.WritableStream,
   lines: Array<{ label: string; value: string }>,

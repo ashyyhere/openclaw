@@ -1,8 +1,10 @@
+// tui tui status summary helpers and runtime behavior.
 import { formatTimeAgo } from "../infra/format-time/format-relative.ts";
 import { formatTokenCount } from "../utils/usage-format.js";
 import { formatContextUsageLine } from "./tui-formatters.js";
 import type { GatewayStatusSummary } from "./tui-types.js";
 
+/** Reused helper for format Status Summary behavior in src/tui. */
 export function formatStatusSummary(summary: GatewayStatusSummary) {
   const lines: string[] = [];
   lines.push("Gateway status");

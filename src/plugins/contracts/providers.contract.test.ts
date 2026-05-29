@@ -1,3 +1,4 @@
+// Tests plugins/contracts providers contract test behavior.
 import { describeProviderContracts } from "../../plugin-sdk/test-helpers/provider-contract.js";
 import { describeWebSearchProviderContracts } from "../../plugin-sdk/test-helpers/web-search-provider-contract.js";
 

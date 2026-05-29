@@ -1,3 +1,4 @@
+// Coverage for inline reply directive parsing.
 import { describe, expect, it } from "vitest";
 import { parseInlineDirectives } from "./reply/directive-handling.parse.js";
 import {

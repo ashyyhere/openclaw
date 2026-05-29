@@ -1,8 +1,10 @@
+/** Resolves model, thinking, and timeout choices for subagent spawns. */
 import { formatThinkingLevels } from "../auto-reply/thinking.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveSubagentSpawnModelSelection } from "./model-selection.js";
 import { resolveSubagentThinkingOverride } from "./subagent-spawn-thinking.js";
 
+/** Reused helper for split Model Ref behavior in src/agents. */
 export function splitModelRef(ref?: string) {
   if (!ref) {
     return { provider: undefined, model: undefined };
@@ -25,6 +27,7 @@ export function splitModelRef(ref?: string) {
   return { provider: undefined, model: trimmed };
 }
 
+/** Reused helper for resolve Configured Subagent Run Timeout Seconds behavior in src/agents. */
 export function resolveConfiguredSubagentRunTimeoutSeconds(params: {
   cfg: OpenClawConfig;
   runTimeoutSeconds?: number;
@@ -39,6 +42,7 @@ export function resolveConfiguredSubagentRunTimeoutSeconds(params: {
     : cfgSubagentTimeout;
 }
 
+/** Reused helper for resolve Subagent Model And Thinking Plan behavior in src/agents. */
 export function resolveSubagentModelAndThinkingPlan(params: {
   cfg: OpenClawConfig;
   targetAgentId: string;

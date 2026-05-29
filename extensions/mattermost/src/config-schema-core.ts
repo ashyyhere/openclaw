@@ -1,3 +1,4 @@
+// extensions/mattermost/src config schema core helpers and runtime behavior.
 import {
   BlockStreamingCoalesceSchema,
   DmPolicySchema,

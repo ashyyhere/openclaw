@@ -1,13 +1,18 @@
+// packages/speech-core voice models helpers and runtime behavior.
+/** Public type describing Voice Model Capability for packages/speech-core. */
 export type VoiceModelCapability = "tts" | "realtime_transcription" | "realtime_voice";
 
+/** Public type describing Voice Model Capabilities for packages/speech-core. */
 export type VoiceModelCapabilities = Partial<Record<VoiceModelCapability, true>>;
 
+/** Public type describing Voice Model Ref for packages/speech-core. */
 export type VoiceModelRef = {
   provider: string;
   model: string;
   timeoutMs?: number;
 };
 
+/** Public type describing Voice Model Provider for packages/speech-core. */
 export type VoiceModelProvider = {
   id: string;
   aliases?: readonly string[];
@@ -16,6 +21,7 @@ export type VoiceModelProvider = {
   models?: readonly string[];
 };
 
+/** Public type describing Voice Model Catalog Entry for packages/speech-core. */
 export type VoiceModelCatalogEntry = {
   kind: "voice";
   provider: string;
@@ -27,6 +33,7 @@ export type VoiceModelCatalogEntry = {
   modes?: readonly string[];
 };
 
+/** Public type describing Voice Provider Candidate for packages/speech-core. */
 export type VoiceProviderCandidate = {
   provider: string;
   voiceModel?: VoiceModelRef;
@@ -73,6 +80,7 @@ function sameProvider(left: string | undefined, right: string | undefined): bool
   return Boolean(normalizedLeft && normalizedLeft === normalizeLowercaseString(right));
 }
 
+/** Public helper for provider Matches Id behavior in packages/speech-core. */
 export function providerMatchesId(provider: VoiceModelProvider, providerId?: string): boolean {
   return (
     sameProvider(provider.id, providerId) ||
@@ -80,6 +88,7 @@ export function providerMatchesId(provider: VoiceModelProvider, providerId?: str
   );
 }
 
+/** Public helper for find Voice Model Provider behavior in packages/speech-core. */
 export function findVoiceModelProvider<T extends VoiceModelProvider>(params: {
   providers: readonly T[];
   providerId?: string;
@@ -87,6 +96,7 @@ export function findVoiceModelProvider<T extends VoiceModelProvider>(params: {
   return params.providers.find((provider) => providerMatchesId(provider, params.providerId));
 }
 
+/** Public helper for voice Provider Supports Model behavior in packages/speech-core. */
 export function voiceProviderSupportsModel(
   provider: VoiceModelProvider | undefined,
   model: unknown,
@@ -100,6 +110,7 @@ export function voiceProviderSupportsModel(
   );
 }
 
+/** Public helper for resolve Voice Model Refs behavior in packages/speech-core. */
 export function resolveVoiceModelRefs(config: unknown): VoiceModelRef[] {
   const voiceModel = config as VoiceModelConfig | undefined;
   if (typeof voiceModel === "string") {
@@ -126,6 +137,7 @@ export function resolveVoiceModelRefs(config: unknown): VoiceModelRef[] {
   return refs;
 }
 
+/** Public helper for resolve Supported Voice Model Refs behavior in packages/speech-core. */
 export function resolveSupportedVoiceModelRefs(params: {
   config: unknown;
   providers: readonly VoiceModelProvider[];
@@ -145,6 +157,7 @@ export function resolveSupportedVoiceModelRefs(params: {
   });
 }
 
+/** Public helper for resolve Voice Provider Candidates behavior in packages/speech-core. */
 export function resolveVoiceProviderCandidates(params: {
   primaryProvider: string;
   providers: readonly VoiceModelProvider[];
@@ -183,6 +196,7 @@ export function resolveVoiceProviderCandidates(params: {
   return candidates;
 }
 
+/** Public helper for resolve Primary Voice Provider Candidate behavior in packages/speech-core. */
 export function resolvePrimaryVoiceProviderCandidate(params: {
   primaryProvider: string;
   providers: readonly VoiceModelProvider[];
@@ -199,6 +213,7 @@ export function resolvePrimaryVoiceProviderCandidate(params: {
   return voiceModel ? { provider, voiceModel } : { provider };
 }
 
+/** Public helper for get Voice Provider Config behavior in packages/speech-core. */
 export function getVoiceProviderConfig<TConfig extends Record<string, unknown>>(params: {
   providerConfigs: Record<string, TConfig | undefined>;
   provider: VoiceModelProvider;
@@ -225,6 +240,7 @@ export function getVoiceProviderConfig<TConfig extends Record<string, unknown>>(
   return {} as TConfig;
 }
 
+/** Public helper for synthesize Voice Model Catalog Entries behavior in packages/speech-core. */
 export function synthesizeVoiceModelCatalogEntries(params: {
   provider: VoiceModelProvider;
   capabilities: VoiceModelCapabilities;

@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor provider acp helpers and runtime behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { formatErrorMessage } from "openclaw/plugin-sdk/ssrf-runtime";
 import { raceWithTimeout } from "./timeouts.js";

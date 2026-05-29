@@ -1,3 +1,4 @@
+/** Tests channel messaging target id and kind validation helpers. */
 import { describe, expect, it } from "vitest";
 import { buildMessagingTarget, ensureTargetId, requireTargetKind } from "./targets.js";
 

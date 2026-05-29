@@ -1,3 +1,4 @@
+/** Tests ACP server startup, readiness, and shutdown behavior. */
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 type GatewayClientCallbacks = {

@@ -1,7 +1,10 @@
+// llm session resources helpers and runtime behavior.
+/** Shared type for Session Resource Cleanup in src/llm. */
 export type SessionResourceCleanup = (sessionId?: string) => void;
 
 const sessionResourceCleanups = new Set<SessionResourceCleanup>();
 
+/** Reused helper for register Session Resource Cleanup behavior in src/llm. */
 export function registerSessionResourceCleanup(cleanup: SessionResourceCleanup): () => void {
   sessionResourceCleanups.add(cleanup);
   return () => {
@@ -9,6 +12,7 @@ export function registerSessionResourceCleanup(cleanup: SessionResourceCleanup):
   };
 }
 
+/** Reused helper for cleanup Session Resources behavior in src/llm. */
 export function cleanupSessionResources(sessionId?: string): void {
   const errors: unknown[] = [];
   for (const cleanup of sessionResourceCleanups) {

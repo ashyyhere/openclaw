@@ -1,3 +1,4 @@
+// Tests packages/memory-host-sdk/src/host batch upload test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { uploadBatchJsonlFile } from "./batch-upload.js";
 import { withRemoteHttpResponse } from "./remote-http.js";

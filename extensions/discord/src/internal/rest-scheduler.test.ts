@@ -1,3 +1,4 @@
+// Tests Discord REST scheduler defaults, retry limits, and rate-limit deadlines.
 import { MAX_DATE_TIMESTAMP_MS } from "openclaw/plugin-sdk/number-runtime";
 import { describe, expect, it, vi } from "vitest";
 import { RateLimitError } from "./rest-errors.js";

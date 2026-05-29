@@ -1,3 +1,4 @@
+// Tests extensions/discord/src monitor gateway test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { waitForDiscordGatewayStop } from "./monitor.gateway.js";
 import type { DiscordGatewayEvent } from "./monitor/gateway-supervisor.js";

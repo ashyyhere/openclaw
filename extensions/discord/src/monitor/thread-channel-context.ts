@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor thread channel context helpers and runtime behavior.
 import { ChannelType } from "../internal/discord.js";
 import { normalizeDiscordSlug } from "./allow-list.js";
 import {

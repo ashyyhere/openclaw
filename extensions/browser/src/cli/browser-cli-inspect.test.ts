@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/cli browser cli inspect test behavior.
 import { Command } from "commander";
 import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { createCliRuntimeCapture } from "../../test-support.js";

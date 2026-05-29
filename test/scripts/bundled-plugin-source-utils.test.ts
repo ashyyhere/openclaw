@@ -1,3 +1,4 @@
+// Tests test/scripts bundled plugin source utils test behavior.
 import { describe, expect, it } from "vitest";
 import { collectBundledPluginSources } from "../../scripts/lib/bundled-plugin-source-utils.mjs";
 import { expectNoNodeFsScans } from "../../src/test-utils/fs-scan-assertions.js";

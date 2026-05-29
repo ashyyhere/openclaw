@@ -1,3 +1,4 @@
+// Tests extensions/qqbot/src/bridge/commands framework registration test behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import type {
   OpenClawPluginApi,

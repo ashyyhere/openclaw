@@ -1,3 +1,4 @@
+// test-helpers resolve target error cases helpers and runtime behavior.
 import { expect, it } from "vitest";
 
 export type ResolveTargetMode = "explicit" | "implicit" | "heartbeat";

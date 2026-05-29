@@ -1,3 +1,4 @@
+// Tests extensions/msteams/src graph group management test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../runtime-api.js";
 import {

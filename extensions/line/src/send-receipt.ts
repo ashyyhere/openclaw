@@ -1,3 +1,4 @@
+// extensions/line/src send receipt helpers and runtime behavior.
 import {
   createMessageReceiptFromOutboundResults,
   type MessageReceipt,

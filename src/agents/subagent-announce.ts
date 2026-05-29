@@ -1,3 +1,4 @@
+/** Orchestrates subagent completion announcement capture, delivery, and cleanup. */
 import {
   isSilentReplyText,
   SILENT_REPLY_TOKEN,
@@ -73,10 +74,14 @@ function loadSubagentRegistryRuntime() {
   return subagentRegistryRuntimeLoader.load();
 }
 
+/** Re-exported API for src/agents, starting with build Subagent System Prompt. */
 export { buildSubagentSystemPrompt } from "./subagent-system-prompt.js";
+/** Re-exported API for src/agents, starting with capture Subagent Completion Reply. */
 export { captureSubagentCompletionReply } from "./subagent-announce-output.js";
+/** Re-exported API for src/agents, starting with Subagent Run Outcome. */
 export type { SubagentRunOutcome } from "./subagent-announce-output.js";
 
+/** Human-readable source kind used in parent announcement prompts. */
 export type SubagentAnnounceType = "subagent task" | "cron job";
 
 function buildAnnounceReplyInstruction(params: {
@@ -225,6 +230,7 @@ async function wakeSubagentRunAfterDescendants(params: {
   });
 }
 
+/** Runs the full announce flow for a completed child run or cron job. */
 export async function runSubagentAnnounceFlow(params: {
   childSessionKey: string;
   childRunId: string;
@@ -607,6 +613,7 @@ export async function runSubagentAnnounceFlow(params: {
   return didAnnounce;
 }
 
+/** Test-only override hook for subagent announcement orchestration dependencies. */
 export const testing = {
   setDepsForTest(
     overrides?: Partial<SubagentAnnounceDeps> & {
@@ -636,4 +643,5 @@ export const testing = {
       : defaultSubagentAnnounceDeps;
   },
 };
+/** Re-exported API for src/agents, starting with testing. */
 export { testing as __testing };

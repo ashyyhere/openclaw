@@ -1,3 +1,4 @@
+// Tests extensions/llm-task/src llm task tool test behavior.
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("../api.js", async () => {

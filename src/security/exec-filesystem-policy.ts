@@ -1,3 +1,4 @@
+// security exec filesystem policy helpers and runtime behavior.
 import { pickSandboxToolPolicy } from "../agents/sandbox-tool-policy.js";
 import { resolveSandboxConfigForAgent } from "../agents/sandbox/config.js";
 import { resolveSandboxToolPolicyForAgent } from "../agents/sandbox/tool-policy.js";
@@ -10,6 +11,7 @@ import type { AgentToolsConfig, ExecToolConfig } from "../config/types.tools.js"
 const MUTATING_FS_TOOLS = ["write", "edit", "apply_patch"] as const;
 const RUNTIME_TOOLS = ["exec", "process"] as const;
 
+/** Shared type for Exec Filesystem Policy Drift Hit in src/security. */
 export type ExecFilesystemPolicyDriftHit = {
   scopeLabel: string;
   runtimeTools: string[];
@@ -70,6 +72,7 @@ function isExecFilesystemConstrained(params: {
   return params.sandboxWorkspaceAccess !== "rw";
 }
 
+/** Reused helper for collect Exec Filesystem Policy Drift Hits behavior in src/security. */
 export function collectExecFilesystemPolicyDriftHits(
   cfg: OpenClawConfig,
 ): ExecFilesystemPolicyDriftHit[] {

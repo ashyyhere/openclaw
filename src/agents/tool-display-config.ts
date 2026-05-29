@@ -1,3 +1,4 @@
+/** Config-level types for custom tool display specifications. */
 import type { ToolDisplaySpec as ToolDisplaySpecBase } from "./tool-display-common.js";
 
 type ToolDisplaySpec = ToolDisplaySpecBase & {
@@ -10,6 +11,7 @@ type ToolDisplayConfig = {
   tools: Record<string, ToolDisplaySpec>;
 };
 
+/** Reused constant for TOOL DISPLAY CONFIG behavior in src/agents. */
 export const TOOL_DISPLAY_CONFIG: ToolDisplayConfig = {
   version: 1,
   fallback: {

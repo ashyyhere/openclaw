@@ -1,29 +1,35 @@
+/** Registers grouped command descriptors onto the root program. */
 import type { Command } from "commander";
 import { uniqueStrings } from "../../shared/string-normalization.js";
 import { removeCommandByName } from "./command-tree.js";
 import { registerLazyCommand } from "./register-lazy-command.js";
 
+/** Shared type for Command Group Placeholder in src/cli/program. */
 export type CommandGroupPlaceholder = {
   name: string;
   description: string;
   options?: readonly CommandGroupPlaceholderOption[];
 };
 
+/** Shared type for Command Group Placeholder Option in src/cli/program. */
 export type CommandGroupPlaceholderOption = {
   flags: string;
   description: string;
 };
 
+/** Shared type for Command Group Entry in src/cli/program. */
 export type CommandGroupEntry = {
   placeholders: readonly CommandGroupPlaceholder[];
   names?: readonly string[];
   register: (program: Command) => Promise<void> | void;
 };
 
+/** Reused helper for get Command Group Names behavior in src/cli/program. */
 export function getCommandGroupNames(entry: CommandGroupEntry): readonly string[] {
   return entry.names ?? entry.placeholders.map((placeholder) => placeholder.name);
 }
 
+/** Reused helper for find Command Group Entry behavior in src/cli/program. */
 export function findCommandGroupEntry(
   entries: readonly CommandGroupEntry[],
   name: string,
@@ -31,12 +37,14 @@ export function findCommandGroupEntry(
   return entries.find((entry) => getCommandGroupNames(entry).includes(name));
 }
 
+/** Reused helper for remove Command Group Names behavior in src/cli/program. */
 export function removeCommandGroupNames(program: Command, entry: CommandGroupEntry) {
   for (const name of new Set(getCommandGroupNames(entry))) {
     removeCommandByName(program, name);
   }
 }
 
+/** Reused helper for register Command Group By Name behavior in src/cli/program. */
 export async function registerCommandGroupByName(
   program: Command,
   entries: readonly CommandGroupEntry[],
@@ -51,6 +59,7 @@ export async function registerCommandGroupByName(
   return true;
 }
 
+/** Reused helper for register Lazy Command Group behavior in src/cli/program. */
 export function registerLazyCommandGroup(
   program: Command,
   entry: CommandGroupEntry,
@@ -68,6 +77,7 @@ export function registerLazyCommandGroup(
   });
 }
 
+/** Reused helper for register Command Groups behavior in src/cli/program. */
 export function registerCommandGroups(
   program: Command,
   entries: readonly CommandGroupEntry[],

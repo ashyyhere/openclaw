@@ -1,3 +1,4 @@
+// Runtime helper for dispatching skill tool calls.
 import {
   resolveEffectiveToolPolicy,
   resolveGroupToolPolicy,

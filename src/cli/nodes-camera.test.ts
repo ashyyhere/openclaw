@@ -1,3 +1,4 @@
+/** Tests node camera capture request helpers and media file writes. */
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";

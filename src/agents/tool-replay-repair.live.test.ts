@@ -1,3 +1,4 @@
+/** Live-gated regression coverage for repairing tool replay transcripts. */
 import type { AgentMessage } from "openclaw/plugin-sdk/agent-core";
 import { SessionManager } from "openclaw/plugin-sdk/agent-sessions";
 import type { Api, Context, Model } from "openclaw/plugin-sdk/llm";

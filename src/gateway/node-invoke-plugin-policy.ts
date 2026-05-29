@@ -1,3 +1,4 @@
+// gateway node invoke plugin policy helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import type { PluginApprovalRequestPayload } from "../infra/plugin-approvals.js";
 import { DEFAULT_PLUGIN_APPROVAL_TIMEOUT_MS } from "../infra/plugin-approvals.js";
@@ -113,6 +114,7 @@ function createApprovalRuntime(params: {
   };
 }
 
+/** Reused helper for apply Plugin Node Invoke Policy behavior in src/gateway. */
 export async function applyPluginNodeInvokePolicy(params: {
   context: GatewayRequestContext;
   client: GatewayClient | null;

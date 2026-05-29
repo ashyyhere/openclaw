@@ -1,3 +1,4 @@
+// utils usage format helpers and runtime behavior.
 import path from "node:path";
 import { resolveDefaultAgentDir } from "../agents/agent-scope-config.js";
 import { modelKey, normalizeModelRef, normalizeProviderId } from "../agents/model-selection.js";
@@ -34,6 +35,7 @@ type RawPricingTier = {
   range: [number, number] | [number];
 };
 
+/** Shared type for Model Cost Config in src/utils. */
 export type ModelCostConfig = {
   input: number;
   output: number;
@@ -46,6 +48,7 @@ export type ModelCostConfig = {
   tieredPricing?: PricingTier[];
 };
 
+/** Shared type for Usage Totals in src/utils. */
 export type UsageTotals = {
   input?: number;
   output?: number;
@@ -94,6 +97,7 @@ let providerCostIndexByConfig = new WeakMap<
 let modelKeyCache = new Map<string, string | null>();
 let sortedPricingTiersByInput = new WeakMap<PricingTier[], PricingTier[]>();
 
+/** Reused helper for format Token Count behavior in src/utils. */
 export function formatTokenCount(value?: number): string {
   if (value === undefined || !Number.isFinite(value)) {
     return "0";
@@ -113,6 +117,7 @@ export function formatTokenCount(value?: number): string {
   return String(Math.round(safe));
 }
 
+/** Reused helper for format Usd behavior in src/utils. */
 export function formatUsd(value?: number): string | undefined {
   if (value === undefined || !Number.isFinite(value)) {
     return undefined;
@@ -586,6 +591,7 @@ function serializeCostIndex(
   return Array.from(entries.entries()).toSorted(([a], [b]) => a.localeCompare(b));
 }
 
+/** Reused helper for resolve Model Cost Config Fingerprint behavior in src/utils. */
 export function resolveModelCostConfigFingerprint(config?: OpenClawConfig): string {
   return stableCostFingerprintValue({
     configuredRaw: serializeCostIndex(
@@ -598,6 +604,7 @@ export function resolveModelCostConfigFingerprint(config?: OpenClawConfig): stri
   });
 }
 
+/** Reused helper for resolve Model Cost Config behavior in src/utils. */
 export function resolveModelCostConfig(params: {
   provider?: string;
   model?: string;
@@ -707,6 +714,7 @@ function computeTieredCost(
   );
 }
 
+/** Reused helper for estimate Usage Cost behavior in src/utils. */
 export function estimateUsageCost(params: {
   usage?: NormalizedUsage | UsageTotals | null;
   cost?: ModelCostConfig;
@@ -738,6 +746,7 @@ export function estimateUsageCost(params: {
   return total / 1_000_000;
 }
 
+/** Reused helper for reset Usage Format Caches For Test behavior in src/utils. */
 export function resetUsageFormatCachesForTest(): void {
   modelsJsonCostCache = null;
   providerCostIndexByConfig = new WeakMap();

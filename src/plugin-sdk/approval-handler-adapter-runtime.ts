@@ -1,3 +1,4 @@
+/** Runtime SDK barrel for lazy approval native runtime adapter wiring. */
 export {
   CHANNEL_APPROVAL_NATIVE_RUNTIME_CONTEXT_CAPABILITY,
   createLazyChannelApprovalNativeRuntimeAdapter,

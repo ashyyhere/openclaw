@@ -1,3 +1,4 @@
+// Tests extensions/zalouser/src text styles test behavior.
 import { describe, expect, it } from "vitest";
 import { parseZalouserTextStyles } from "./text-styles.js";
 import { TextStyle } from "./zca-constants.js";

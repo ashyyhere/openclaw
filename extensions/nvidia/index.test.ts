@@ -1,3 +1,4 @@
+// Tests extensions/nvidia index test behavior.
 import fs from "node:fs";
 import { createTestPluginApi } from "openclaw/plugin-sdk/plugin-test-api";
 import {

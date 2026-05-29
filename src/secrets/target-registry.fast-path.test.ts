@@ -1,3 +1,4 @@
+// Tests secrets target registry fast path test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const { loadPluginManifestRegistryMock } = vi.hoisted(() => ({

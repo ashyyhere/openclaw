@@ -1,8 +1,10 @@
+// infra/net undici family policy helpers and runtime behavior.
 import * as net from "node:net";
 import { isWSL2Sync } from "../wsl.js";
 
 const AUTO_SELECT_FAMILY_ATTEMPT_TIMEOUT_MS = 300;
 
+/** Reused helper for resolve Undici Auto Select Family behavior in src/infra/net. */
 export function resolveUndiciAutoSelectFamily(): boolean | undefined {
   if (typeof net.getDefaultAutoSelectFamily !== "function") {
     return undefined;
@@ -20,6 +22,7 @@ export function resolveUndiciAutoSelectFamily(): boolean | undefined {
   }
 }
 
+/** Reused helper for create Undici Auto Select Family Connect Options behavior in src/infra/net. */
 export function createUndiciAutoSelectFamilyConnectOptions(
   autoSelectFamily: boolean | undefined,
 ): { autoSelectFamily: boolean; autoSelectFamilyAttemptTimeout: number } | undefined {
@@ -32,12 +35,14 @@ export function createUndiciAutoSelectFamilyConnectOptions(
   };
 }
 
+/** Reused helper for resolve Undici Auto Select Family Connect Options behavior in src/infra/net. */
 export function resolveUndiciAutoSelectFamilyConnectOptions():
   | { autoSelectFamily: boolean; autoSelectFamilyAttemptTimeout: number }
   | undefined {
   return createUndiciAutoSelectFamilyConnectOptions(resolveUndiciAutoSelectFamily());
 }
 
+/** Reused helper for with Temporary Undici Auto Select Family behavior in src/infra/net. */
 export function withTemporaryUndiciAutoSelectFamily<T>(
   autoSelectFamily: boolean | undefined,
   run: () => T,

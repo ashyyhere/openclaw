@@ -1,4 +1,5 @@
 #!/usr/bin/env -S node --import tsx
+// scripts release check helpers and runtime behavior.
 
 import { execFileSync } from "node:child_process";
 import {

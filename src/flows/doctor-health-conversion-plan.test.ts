@@ -1,3 +1,4 @@
+// Tests flows doctor health conversion plan test behavior.
 import { describe, expect, it } from "vitest";
 import { CORE_HEALTH_CHECKS } from "./doctor-core-checks.js";
 import { resolveDoctorHealthContributions } from "./doctor-health-contributions.js";

@@ -1,3 +1,4 @@
+// extensions/qa-lab/src run config helpers and runtime behavior.
 import path from "node:path";
 import { uniqueStrings } from "openclaw/plugin-sdk/string-coerce-runtime";
 import { defaultQaModelForMode as defaultStaticQaModelForMode } from "./model-selection.js";

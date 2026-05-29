@@ -1,3 +1,4 @@
+// Sender gate builders for channel ingress access graphs.
 import {
   allowlistFailureReason,
   applyMutableIdentifierPolicy,
@@ -34,6 +35,7 @@ function senderGate(params: {
   };
 }
 
+/** Build the direct-message sender gate for an ingress graph. */
 export function senderGateForDirect(params: {
   state: ChannelIngressState;
   policy: ChannelIngressPolicyInput;
@@ -103,6 +105,7 @@ export function senderGateForDirect(params: {
   return block(reasonCode);
 }
 
+/** Build the group sender gate for an ingress graph. */
 export function senderGateForGroup(params: {
   state: ChannelIngressState;
   policy: ChannelIngressPolicyInput;
@@ -146,6 +149,7 @@ export function senderGateForGroup(params: {
   return block(allowlistFailureReason(group) ?? "group_policy_not_allowlisted");
 }
 
+/** Apply event auth mode to an existing sender gate. */
 export function applyEventAuthModeToSenderGate(params: {
   state: ChannelIngressState;
   senderGate: AccessGraphGate;

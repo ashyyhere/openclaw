@@ -1,9 +1,11 @@
+/** Shared harness for embedded-agent session-history sanitization tests. */
 import { expect, vi } from "vitest";
 import type { AgentMessage } from "./runtime/index.js";
 import type { SessionManager } from "./sessions/index.js";
 import type { TranscriptPolicy } from "./transcript-policy.js";
 
 type SessionEntry = { type: string; customType: string; data: unknown };
+/** Shared type for Sanitize Session History Fn in src/agents. */
 export type SanitizeSessionHistoryFn = (params: {
   messages: AgentMessage[];
   modelApi: string;
@@ -16,12 +18,15 @@ export type SanitizeSessionHistoryFn = (params: {
   preserveLatestAssistantThinking?: boolean;
 }) => Promise<AgentMessage[]>;
 type SanitizeSessionHistoryMockedHelpers = typeof import("./embedded-agent-helpers.js");
+/** Shared type for Sanitize Session History Harness in src/agents. */
 export type SanitizeSessionHistoryHarness = {
   sanitizeSessionHistory: SanitizeSessionHistoryFn;
   mockedHelpers: SanitizeSessionHistoryMockedHelpers;
 };
+/** Reused constant for TEST SESSION ID behavior in src/agents. */
 export const TEST_SESSION_ID = "test-session";
 
+/** Reused helper for make Model Snapshot Entry behavior in src/agents. */
 export function makeModelSnapshotEntry(data: {
   timestamp?: number;
   provider: string;
@@ -40,6 +45,7 @@ export function makeModelSnapshotEntry(data: {
   };
 }
 
+/** Reused helper for make In Memory Session Manager behavior in src/agents. */
 export function makeInMemorySessionManager(entries: SessionEntry[]): SessionManager {
   return {
     getEntries: vi.fn(() => entries),
@@ -49,6 +55,7 @@ export function makeInMemorySessionManager(entries: SessionEntry[]): SessionMana
   } as unknown as SessionManager;
 }
 
+/** Reused helper for make Mock Session Manager behavior in src/agents. */
 export function makeMockSessionManager(): SessionManager {
   return {
     getEntries: vi.fn().mockReturnValue([]),
@@ -56,11 +63,13 @@ export function makeMockSessionManager(): SessionManager {
   } as unknown as SessionManager;
 }
 
+/** Reused helper for make Simple User Messages behavior in src/agents. */
 export function makeSimpleUserMessages(): AgentMessage[] {
   const messages = [{ role: "user", content: "hello" }];
   return messages as unknown as AgentMessage[];
 }
 
+/** Reused helper for create Sanitize Session History Helpers Mock behavior in src/agents. */
 export async function createSanitizeSessionHistoryHelpersMock(extra: Record<string, unknown> = {}) {
   return {
     ...(await vi.importActual("./embedded-agent-helpers.js")),
@@ -69,6 +78,7 @@ export async function createSanitizeSessionHistoryHelpersMock(extra: Record<stri
   };
 }
 
+/** Reused helper for create Sanitize Session History Provider Runtime Mock behavior in src/agents. */
 export async function createSanitizeSessionHistoryProviderRuntimeMock(
   extra: Record<string, unknown> = {},
 ) {
@@ -84,6 +94,7 @@ export async function createSanitizeSessionHistoryProviderRuntimeMock(
   };
 }
 
+/** Reused helper for create Sanitize Session History Provider Hook Runtime Mock behavior in src/agents. */
 export async function createSanitizeSessionHistoryProviderHookRuntimeMock(
   extra: Record<string, unknown> = {},
 ) {
@@ -104,6 +115,7 @@ export async function createSanitizeSessionHistoryProviderHookRuntimeMock(
   };
 }
 
+/** Reused helper for load Sanitize Session History With Clean Mocks behavior in src/agents. */
 export async function loadSanitizeSessionHistoryWithCleanMocks(): Promise<SanitizeSessionHistoryHarness> {
   vi.resetModules();
   vi.resetAllMocks();
@@ -116,6 +128,7 @@ export async function loadSanitizeSessionHistoryWithCleanMocks(): Promise<Saniti
   };
 }
 
+/** Reused helper for make Reasoning Assistant Messages behavior in src/agents. */
 export function makeReasoningAssistantMessages(opts?: {
   thinkingSignature?: "object" | "json";
   includeText?: boolean;
@@ -147,6 +160,7 @@ export function makeReasoningAssistantMessages(opts?: {
   return messages as unknown as AgentMessage[];
 }
 
+/** Reused helper for sanitize With Open AIResponses behavior in src/agents. */
 export async function sanitizeWithOpenAIResponses(params: {
   sanitizeSessionHistory: SanitizeSessionHistoryFn;
   messages: AgentMessage[];
@@ -163,6 +177,7 @@ export async function sanitizeWithOpenAIResponses(params: {
   });
 }
 
+/** Reused helper for expect Open AIResponses Strict Sanitize Call behavior in src/agents. */
 export function expectOpenAIResponsesStrictSanitizeCall(
   sanitizeSessionMessagesImagesMock: unknown,
   messages: AgentMessage[],
@@ -193,6 +208,7 @@ function makeSnapshotChangedOpenAIReasoningScenario() {
   };
 }
 
+/** Reused helper for sanitize Snapshot Changed Open AIReasoning behavior in src/agents. */
 export async function sanitizeSnapshotChangedOpenAIReasoning(params: {
   sanitizeSessionHistory: SanitizeSessionHistoryFn;
 }) {

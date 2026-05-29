@@ -1,3 +1,4 @@
+/** Tests subscription chunking around inline code spans. */
 import { describe, expect, it, vi } from "vitest";
 import {
   createStubSessionHarness,

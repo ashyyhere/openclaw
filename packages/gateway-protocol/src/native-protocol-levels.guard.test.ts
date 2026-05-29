@@ -1,3 +1,4 @@
+// Tests packages/gateway-protocol/src native protocol levels guard test behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { describe, it } from "vitest";

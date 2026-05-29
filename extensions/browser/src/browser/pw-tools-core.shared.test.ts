@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/browser pw tools core shared test behavior.
 import { describe, expect, it } from "vitest";
 import { normalizeTimeoutMs } from "./pw-tools-core.shared.js";
 

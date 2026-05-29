@@ -1,3 +1,4 @@
+// extensions/telegram/src bot message context route test support helpers and runtime behavior.
 import { buildChannelInboundEventContext } from "openclaw/plugin-sdk/channel-inbound";
 import {
   clearRuntimeConfigSnapshot,

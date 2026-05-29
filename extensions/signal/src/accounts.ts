@@ -1,3 +1,4 @@
+// extensions/signal/src accounts helpers and runtime behavior.
 import {
   createAccountListHelpers,
   normalizeAccountId,

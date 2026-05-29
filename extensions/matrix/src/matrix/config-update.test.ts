@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src/matrix config update test behavior.
 import { describe, expect, it } from "vitest";
 import type { CoreConfig } from "../types.js";
 import { resolveMatrixConfigFieldPath, updateMatrixAccountConfig } from "./config-update.js";

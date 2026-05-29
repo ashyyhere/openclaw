@@ -1,3 +1,4 @@
+// Tests infra heartbeat visibility test behavior.
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import { resolveHeartbeatVisibility } from "./heartbeat-visibility.js";

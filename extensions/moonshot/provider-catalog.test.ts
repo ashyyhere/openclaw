@@ -1,3 +1,4 @@
+// Tests extensions/moonshot provider catalog test behavior.
 import { describe, expect, it } from "vitest";
 import {
   applyMoonshotNativeStreamingUsageCompat,

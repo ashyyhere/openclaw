@@ -1,12 +1,16 @@
+// config gateway control ui origins helpers and runtime behavior.
 import { DEFAULT_GATEWAY_PORT } from "./paths.js";
 import type { OpenClawConfig } from "./types.openclaw.js";
 
+/** Shared type for Gateway Non Loopback Bind Mode in src/config. */
 export type GatewayNonLoopbackBindMode = "lan" | "tailnet" | "custom" | "auto";
 
+/** Reused helper for is Gateway Non Loopback Bind Mode behavior in src/config. */
 export function isGatewayNonLoopbackBindMode(bind: unknown): bind is GatewayNonLoopbackBindMode {
   return bind === "lan" || bind === "tailnet" || bind === "custom" || bind === "auto";
 }
 
+/** Reused helper for has Configured Control Ui Allowed Origins behavior in src/config. */
 export function hasConfiguredControlUiAllowedOrigins(params: {
   allowedOrigins: unknown;
   dangerouslyAllowHostHeaderOriginFallback: unknown;
@@ -20,6 +24,7 @@ export function hasConfiguredControlUiAllowedOrigins(params: {
   );
 }
 
+/** Reused helper for resolve Gateway Port With Default behavior in src/config. */
 export function resolveGatewayPortWithDefault(
   port: unknown,
   fallback = DEFAULT_GATEWAY_PORT,
@@ -27,6 +32,7 @@ export function resolveGatewayPortWithDefault(
   return typeof port === "number" && port > 0 ? port : fallback;
 }
 
+/** Reused helper for build Default Control Ui Allowed Origins behavior in src/config. */
 export function buildDefaultControlUiAllowedOrigins(params: {
   port: number;
   bind: unknown;
@@ -43,6 +49,7 @@ export function buildDefaultControlUiAllowedOrigins(params: {
   return [...origins];
 }
 
+/** Reused helper for ensure Control Ui Allowed Origins For Non Loopback Bind behavior in src/config. */
 export function ensureControlUiAllowedOriginsForNonLoopbackBind(
   config: OpenClawConfig,
   opts?: {

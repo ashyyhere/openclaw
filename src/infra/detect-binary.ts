@@ -1,9 +1,11 @@
+// infra detect binary helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { runCommandWithTimeout } from "../process/exec.js";
 import { resolveUserPath } from "../utils.js";
 import { isSafeExecutableValue } from "./exec-safety.js";
 
+/** Reused helper for detect Binary behavior in src/infra. */
 export async function detectBinary(name: string): Promise<boolean> {
   if (!name?.trim()) {
     return false;

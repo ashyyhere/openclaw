@@ -1,3 +1,4 @@
+// Tests core non-interactive auth choice handling and persisted profile writes.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../../../config/config.js";
 import { resolveAgentModelPrimaryValue } from "../../../config/model-input.js";

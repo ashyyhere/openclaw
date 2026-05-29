@@ -1,3 +1,4 @@
+// extensions/irc/src channel api helpers and runtime behavior.
 export { createAccountStatusSink } from "openclaw/plugin-sdk/channel-outbound";
 export { DEFAULT_ACCOUNT_ID } from "openclaw/plugin-sdk/account-id";
 export type { ChannelPlugin } from "openclaw/plugin-sdk/channel-core";

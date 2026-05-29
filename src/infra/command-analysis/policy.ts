@@ -1,3 +1,4 @@
+// infra/command-analysis policy helpers and runtime behavior.
 import {
   analyzeArgvCommand,
   analyzeShellCommand,
@@ -6,6 +7,7 @@ import {
 } from "../exec-approvals-analysis.js";
 import { detectInlineEvalInSegments } from "./risks.js";
 
+/** Shared type for Command Policy Analysis in src/infra/command-analysis. */
 export type CommandPolicyAnalysis =
   | {
       ok: true;
@@ -21,6 +23,7 @@ export type CommandPolicyAnalysis =
       segments: [];
     };
 
+/** Reused helper for analyze Command For Policy behavior in src/infra/command-analysis. */
 export function analyzeCommandForPolicy(
   params:
     | {
@@ -63,6 +66,7 @@ export function analyzeCommandForPolicy(
   };
 }
 
+/** Reused helper for detect Policy Inline Eval behavior in src/infra/command-analysis. */
 export function detectPolicyInlineEval(segments: readonly ExecCommandSegment[]) {
   return detectInlineEvalInSegments(segments);
 }

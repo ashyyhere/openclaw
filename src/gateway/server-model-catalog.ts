@@ -1,5 +1,7 @@
+// gateway server model catalog helpers and runtime behavior.
 import { getRuntimeConfig } from "../config/io.js";
 
+/** Shared type for Gateway Model Choice in src/gateway. */
 export type GatewayModelChoice = import("../agents/model-catalog.js").ModelCatalogEntry;
 
 type GatewayModelCatalogConfig = ReturnType<typeof getRuntimeConfig>;
@@ -88,6 +90,7 @@ function startGatewayModelCatalogRefresh(
   return refresh;
 }
 
+/** Reused helper for mark Gateway Model Catalog Stale For Reload behavior in src/gateway. */
 export function markGatewayModelCatalogStaleForReload(): void {
   readOnlyModelCatalogCache.staleGeneration += 1;
   fullModelCatalogCache.staleGeneration += 1;
@@ -96,12 +99,14 @@ export function markGatewayModelCatalogStaleForReload(): void {
 // Test-only escape hatch: model catalog is cached at module scope for the
 // process lifetime, which is fine for the real gateway daemon, but makes
 // isolated unit tests harder. Keep this intentionally obscure.
+/** Reused helper for reset Model Catalog Cache For Test behavior in src/gateway. */
 export async function resetModelCatalogCacheForTest(): Promise<void> {
   resetGatewayModelCatalogState();
   const { resetModelCatalogCacheForTest } = await loadModelCatalogModule();
   resetModelCatalogCacheForTest();
 }
 
+/** Reused helper for load Gateway Model Catalog behavior in src/gateway. */
 export async function loadGatewayModelCatalog(
   params?: LoadGatewayModelCatalogParams,
 ): Promise<GatewayModelChoice[]> {

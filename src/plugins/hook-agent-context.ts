@@ -1,3 +1,4 @@
+// plugins hook agent context helpers and runtime behavior.
 import { parseRawSessionConversationRef } from "../sessions/session-key-utils.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import type { PluginHookAgentContext } from "./hook-types.js";
@@ -36,6 +37,7 @@ function stripConversationPrefix(
   return text;
 }
 
+/** Reused helper for resolve Agent Hook Channel Id behavior in src/plugins. */
 export function resolveAgentHookChannelId(params: {
   sessionKey?: string | null;
   messageChannel?: string | null;
@@ -68,6 +70,7 @@ export function resolveAgentHookChannelId(params: {
   return messageChannel ?? provider;
 }
 
+/** Reused helper for build Agent Hook Context Channel Fields behavior in src/plugins. */
 export function buildAgentHookContextChannelFields(params: {
   sessionKey?: string | null;
   messageChannel?: string | null;

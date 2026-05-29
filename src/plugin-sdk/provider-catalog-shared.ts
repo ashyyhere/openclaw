@@ -21,14 +21,17 @@ import {
 } from "../shared/number-coercion.js";
 import type { ModelProviderConfig } from "./provider-model-shared.js";
 
+/** Re-exported API for src/plugin-sdk, starting with Provider Catalog Context. */
 export type { ProviderCatalogContext, ProviderCatalogResult } from "../plugins/types.js";
 
+/** Re-exported API for src/plugin-sdk. */
 export {
   buildPairedProviderApiKeyCatalog,
   buildSingleProviderApiKeyCatalog,
   findCatalogTemplate,
 } from "../plugins/provider-catalog.js";
 
+/** Shared type for Configured Provider Catalog Entry in src/plugin-sdk. */
 export type ConfiguredProviderCatalogEntry = {
   id: string;
   name: string;
@@ -49,6 +52,7 @@ function buildLiveCatalogCacheKey(parts: readonly unknown[]): string {
   return createHash("sha256").update(JSON.stringify(parts)).digest("hex");
 }
 
+/** Reused helper for get Cached Live Catalog Value behavior in src/plugin-sdk. */
 export async function getCachedLiveCatalogValue<T>(params: {
   keyParts: readonly unknown[];
   load: () => Promise<T>;
@@ -81,6 +85,7 @@ export async function getCachedLiveCatalogValue<T>(params: {
   }
 }
 
+/** Reused helper for clear Live Catalog Cache For Tests behavior in src/plugin-sdk. */
 export function clearLiveCatalogCacheForTests(): void {
   liveCatalogCache.clear();
 }
@@ -155,6 +160,7 @@ function buildManifestCatalogModel(
   };
 }
 
+/** Reused helper for build Manifest Model Provider Config behavior in src/plugin-sdk. */
 export function buildManifestModelProviderConfig(params: {
   providerId: string;
   catalog: unknown;
@@ -217,6 +223,7 @@ function resolveConfiguredProviderModels(
   return Array.isArray(providerConfig.models) ? providerConfig.models : [];
 }
 
+/** Reused helper for read Configured Provider Catalog Entries behavior in src/plugin-sdk. */
 export function readConfiguredProviderCatalogEntries(params: {
   config?: OpenClawConfig;
   providerId: string;
@@ -277,6 +284,7 @@ function withStreamingUsageCompat(provider: ModelProviderConfig): ModelProviderC
   return changed ? { ...provider, models } : provider;
 }
 
+/** Reused helper for supports Native Streaming Usage Compat behavior in src/plugin-sdk. */
 export function supportsNativeStreamingUsageCompat(params: {
   providerId: string;
   baseUrl: string | undefined;
@@ -290,6 +298,7 @@ export function supportsNativeStreamingUsageCompat(params: {
   }).supportsNativeStreamingUsageCompat;
 }
 
+/** Reused helper for apply Provider Native Streaming Usage Compat behavior in src/plugin-sdk. */
 export function applyProviderNativeStreamingUsageCompat(params: {
   providerId: string;
   providerConfig: ModelProviderConfig;

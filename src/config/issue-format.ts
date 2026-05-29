@@ -1,6 +1,7 @@
 import { sanitizeTerminalText } from "../../packages/terminal-core/src/safe-text.js";
 import type { ConfigValidationIssue } from "./types.js";
 
+/** Shared type for Config Issue Line Input in src/config. */
 export type ConfigIssueLineInput = {
   path?: string | null;
   message: string;
@@ -14,6 +15,7 @@ type ConfigIssueSummaryOptions = ConfigIssueFormatOptions & {
   maxIssues?: number;
 };
 
+/** Reused helper for normalize Config Issue Path behavior in src/config. */
 export function normalizeConfigIssuePath(path: string | null | undefined): string {
   if (typeof path !== "string") {
     return "<root>";
@@ -22,6 +24,7 @@ export function normalizeConfigIssuePath(path: string | null | undefined): strin
   return trimmed ? trimmed : "<root>";
 }
 
+/** Reused helper for normalize Config Issue behavior in src/config. */
 export function normalizeConfigIssue(issue: ConfigValidationIssue): ConfigValidationIssue {
   const hasAllowedValues = Array.isArray(issue.allowedValues) && issue.allowedValues.length > 0;
   return {
@@ -36,6 +39,7 @@ export function normalizeConfigIssue(issue: ConfigValidationIssue): ConfigValida
   };
 }
 
+/** Reused helper for normalize Config Issues behavior in src/config. */
 export function normalizeConfigIssues(
   issues: ReadonlyArray<ConfigValidationIssue>,
 ): ConfigValidationIssue[] {
@@ -52,6 +56,7 @@ function resolveIssuePathForLine(
   return typeof path === "string" ? path : "";
 }
 
+/** Reused helper for format Config Issue Line behavior in src/config. */
 export function formatConfigIssueLine(
   issue: ConfigIssueLineInput,
   marker = "-",
@@ -63,6 +68,7 @@ export function formatConfigIssueLine(
   return `${prefix}${path}: ${message}`;
 }
 
+/** Reused helper for format Config Issue Lines behavior in src/config. */
 export function formatConfigIssueLines(
   issues: ReadonlyArray<ConfigIssueLineInput>,
   marker = "-",
@@ -71,6 +77,7 @@ export function formatConfigIssueLines(
   return issues.map((issue) => formatConfigIssueLine(issue, marker, opts));
 }
 
+/** Reused helper for format Config Issue Summary behavior in src/config. */
 export function formatConfigIssueSummary(
   issues: ReadonlyArray<ConfigIssueLineInput>,
   opts: ConfigIssueSummaryOptions = {},

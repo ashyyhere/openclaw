@@ -1,3 +1,4 @@
+/** Regression coverage for system prompt config normalization. */
 import { describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {

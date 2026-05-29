@@ -1,3 +1,4 @@
+// Tests cron cron protocol schema test behavior.
 import { describe, expect, it } from "vitest";
 import { CronJobStateSchema } from "../../packages/gateway-protocol/src/schema.js";
 

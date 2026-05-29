@@ -1,3 +1,4 @@
+/** Tracks retry/wedged state for orphaned subagent recovery attempts. */
 import type { SessionEntry } from "../config/sessions.js";
 
 const SUBAGENT_RECOVERY_MAX_AUTOMATIC_ATTEMPTS = 2;
@@ -23,6 +24,7 @@ function isRecentRecoveryAttempt(entry: SessionEntry, now: number): boolean {
   );
 }
 
+/** Reused helper for is Subagent Recovery Wedged Entry behavior in src/agents. */
 export function isSubagentRecoveryWedgedEntry(entry: unknown): boolean {
   if (!entry || typeof entry !== "object") {
     return false;
@@ -35,6 +37,7 @@ export function isSubagentRecoveryWedgedEntry(entry: unknown): boolean {
   );
 }
 
+/** Reused helper for format Subagent Recovery Wedged Reason behavior in src/agents. */
 export function formatSubagentRecoveryWedgedReason(entry: SessionEntry): string {
   return (
     entry.subagentRecovery?.wedgedReason?.trim() ||
@@ -42,6 +45,7 @@ export function formatSubagentRecoveryWedgedReason(entry: SessionEntry): string 
   );
 }
 
+/** Reused helper for evaluate Subagent Recovery Gate behavior in src/agents. */
 export function evaluateSubagentRecoveryGate(
   entry: SessionEntry,
   now: number,
@@ -73,6 +77,7 @@ export function evaluateSubagentRecoveryGate(
   };
 }
 
+/** Reused helper for mark Subagent Recovery Attempt behavior in src/agents. */
 export function markSubagentRecoveryAttempt(params: {
   entry: SessionEntry;
   now: number;
@@ -86,6 +91,7 @@ export function markSubagentRecoveryAttempt(params: {
   };
 }
 
+/** Reused helper for mark Subagent Recovery Wedged behavior in src/agents. */
 export function markSubagentRecoveryWedged(params: {
   entry: SessionEntry;
   now: number;
@@ -107,6 +113,7 @@ export function markSubagentRecoveryWedged(params: {
   params.entry.updatedAt = params.now;
 }
 
+/** Reused helper for clear Wedged Subagent Recovery Abort behavior in src/agents. */
 export function clearWedgedSubagentRecoveryAbort(entry: SessionEntry, now: number): boolean {
   if (!isSubagentRecoveryWedgedEntry(entry) || entry.abortedLastRun !== true) {
     return false;

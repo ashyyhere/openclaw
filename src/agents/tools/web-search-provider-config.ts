@@ -1,11 +1,14 @@
+/** Reads and writes scoped provider config for web_search plugins. */
 import { resolvePluginWebSearchConfig } from "../../config/plugin-web-search-config.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { isLegacyWebSearchProviderConfigKey } from "../../config/web-search-legacy-provider-keys.js";
 
+/** Reads top-level credential value from legacy search config. */
 export function getTopLevelCredentialValue(searchConfig?: Record<string, unknown>): unknown {
   return searchConfig?.apiKey;
 }
 
+/** Reused helper for set Top Level Credential Value behavior in src/agents/tools. */
 export function setTopLevelCredentialValue(
   searchConfigTarget: Record<string, unknown>,
   value: unknown,
@@ -13,6 +16,7 @@ export function setTopLevelCredentialValue(
   searchConfigTarget.apiKey = value;
 }
 
+/** Reused helper for get Scoped Credential Value behavior in src/agents/tools. */
 export function getScopedCredentialValue(
   searchConfig: Record<string, unknown> | undefined,
   key: string,
@@ -24,6 +28,7 @@ export function getScopedCredentialValue(
   return (scoped as Record<string, unknown>).apiKey;
 }
 
+/** Reused helper for set Scoped Credential Value behavior in src/agents/tools. */
 export function setScopedCredentialValue(
   searchConfigTarget: Record<string, unknown>,
   key: string,
@@ -37,6 +42,7 @@ export function setScopedCredentialValue(
   (scoped as Record<string, unknown>).apiKey = value;
 }
 
+/** Merges top-level and provider-scoped web search config. */
 export function mergeScopedSearchConfig(
   searchConfig: Record<string, unknown> | undefined,
   key: string,
@@ -77,6 +83,7 @@ export function mergeScopedSearchConfig(
   return next;
 }
 
+/** Resolves plugin-owned web search config for a provider id. */
 export function resolveProviderWebSearchPluginConfig(
   config: OpenClawConfig | undefined,
   pluginId: string,
@@ -94,6 +101,7 @@ function ensureObject(target: Record<string, unknown>, key: string): Record<stri
   return next;
 }
 
+/** Reused helper for set Provider Web Search Plugin Config Value behavior in src/agents/tools. */
 export function setProviderWebSearchPluginConfigValue(
   configTarget: OpenClawConfig,
   pluginId: string,

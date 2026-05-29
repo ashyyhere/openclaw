@@ -1,9 +1,12 @@
+// infra json file helpers and runtime behavior.
 import "./fs-safe-defaults.js";
 import fs from "node:fs";
 import path from "node:path";
 import { tryReadJsonSync, tryReadJson, writeJsonSync } from "@openclaw/fs-safe/json";
 
+/** Re-exported API for src/infra, starting with try Read Json. */
 export { tryReadJson, tryReadJsonSync, writeJsonSync };
+/** Reused constant for read Json File behavior in src/infra. */
 export const readJsonFile = tryReadJson;
 
 function resolveJsonSymlinkTarget(pathname: string): string | undefined {
@@ -32,6 +35,7 @@ function resolveJsonSaveTarget(pathname: string): string {
   return target;
 }
 
+/** Reused helper for save Json File behavior in src/infra. */
 export function saveJsonFile(pathname: string, data: unknown): void {
   writeJsonSync(resolveJsonSaveTarget(pathname), data);
 }
@@ -62,6 +66,7 @@ export function repairJsonFilePermissions(pathname: string): void {
 }
 
 // oxlint-disable-next-line typescript-eslint/no-unnecessary-type-parameters -- legacy typed JSON loader alias.
+/** Reused helper for load Json File behavior in src/infra. */
 export function loadJsonFile<T = unknown>(pathname: string): T | undefined {
   const direct = tryReadJsonSync<T>(pathname);
   if (direct !== null) {

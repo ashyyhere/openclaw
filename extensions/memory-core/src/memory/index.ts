@@ -1,3 +1,4 @@
+// extensions/memory-core/src/memory index helpers and runtime behavior.
 export { MemoryIndexManager } from "./manager.js";
 export type {
   MemoryEmbeddingProbeResult,

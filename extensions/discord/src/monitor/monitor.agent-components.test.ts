@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/monitor monitor agent components test behavior.
 import { ChannelType } from "discord-api-types/v10";
 import { expectPairingReplyText } from "openclaw/plugin-sdk/channel-test-helpers";
 import type { DiscordAccountConfig, OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";

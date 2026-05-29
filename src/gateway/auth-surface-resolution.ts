@@ -1,3 +1,4 @@
+// gateway auth surface resolution helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.js";
 import { hasConfiguredSecretInput } from "../config/types.secrets.js";
 import { trimToUndefined, type ExplicitGatewayAuth } from "./credentials.js";
@@ -43,6 +44,7 @@ function withDiagnostics<T extends object>(params: {
     : params.result;
 }
 
+/** Reused helper for resolve Gateway Probe Surface Auth behavior in src/gateway. */
 export async function resolveGatewayProbeSurfaceAuth(params: {
   config: OpenClawConfig;
   env?: NodeJS.ProcessEnv;
@@ -141,6 +143,7 @@ export async function resolveGatewayProbeSurfaceAuth(params: {
   });
 }
 
+/** Reused helper for resolve Gateway Interactive Surface Auth behavior in src/gateway. */
 export async function resolveGatewayInteractiveSurfaceAuth(params: {
   config: OpenClawConfig;
   env?: NodeJS.ProcessEnv;

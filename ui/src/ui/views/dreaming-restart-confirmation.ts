@@ -1,3 +1,4 @@
+// ui/src/ui/views dreaming restart confirmation helpers and runtime behavior.
 import { html, nothing } from "lit";
 import { t } from "../../i18n/index.ts";
 import "../components/modal-dialog.ts";
@@ -10,6 +11,7 @@ type DreamingRestartConfirmationProps = {
   hasError: boolean;
 };
 
+/** Reused helper for render Dreaming Restart Confirmation behavior in ui/src/ui/views. */
 export function renderDreamingRestartConfirmation(props: DreamingRestartConfirmationProps) {
   if (!props.open) {
     return nothing;

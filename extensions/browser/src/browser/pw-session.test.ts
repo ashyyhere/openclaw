@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/browser pw session test behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import type { Page } from "playwright-core";

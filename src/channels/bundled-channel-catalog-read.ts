@@ -1,3 +1,4 @@
+// Bundled channel catalog reader from generated and package metadata.
 import fs from "node:fs";
 import path from "node:path";
 import { tryReadJsonSync } from "../infra/json-files.js";
@@ -119,6 +120,7 @@ function toBundledChannelEntry(
   };
 }
 
+/** List channel catalog entries bundled with the current OpenClaw package. */
 export function listBundledChannelCatalogEntries(): BundledChannelCatalogEntry[] {
   const entries = new Map<string, BundledChannelCatalogEntry>();
   for (const entry of readBundledExtensionCatalogEntriesSync()) {

@@ -1,3 +1,4 @@
+// extensions/file-transfer/src/node-host path errors helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { FsSafeError, resolveAbsolutePathForRead } from "openclaw/plugin-sdk/security-runtime";

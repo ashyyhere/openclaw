@@ -1,3 +1,4 @@
+/** Public subscription parameters for embedded-agent session streaming. */
 import type {
   PartialReplyPayload,
   SourceReplyDeliveryMode,
@@ -16,12 +17,14 @@ import type {
 } from "./embedded-agent-subscribe.shared-types.js";
 import type { AgentInternalEvent } from "./internal-events.js";
 import type { AgentSession } from "./sessions/index.js";
+/** Re-exported API for src/agents. */
 export type {
   BlockReplyChunking,
   ToolProgressDetailMode,
   ToolResultFormat,
 } from "./embedded-agent-subscribe.shared-types.js";
 
+/** Callbacks and display settings used when subscribing to an embedded-agent run. */
 export type SubscribeEmbeddedAgentSessionParams = {
   session: AgentSession;
   runId: string;

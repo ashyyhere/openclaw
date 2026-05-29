@@ -1,3 +1,4 @@
+// Tests extensions/msteams/src channel directory test behavior.
 import {
   createDirectoryTestRuntime,
   expectDirectorySurface,

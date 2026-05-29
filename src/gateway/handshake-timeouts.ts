@@ -1,3 +1,5 @@
+// gateway handshake timeouts helpers and runtime behavior.
+/** Re-exported API for src/gateway. */
 export {
   clampConnectChallengeTimeoutMs,
   DEFAULT_PREAUTH_HANDSHAKE_TIMEOUT_MS,

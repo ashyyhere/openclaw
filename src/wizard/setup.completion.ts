@@ -1,3 +1,4 @@
+// wizard setup completion helpers and runtime behavior.
 import os from "node:os";
 import path from "node:path";
 import { resolveCliName } from "../cli/cli-name.js";
@@ -47,6 +48,7 @@ function formatReloadHint(shell: ShellCompletionStatus["shell"], profileHint: st
   return t("wizard.completion.reloadShell", { profile: profileHint });
 }
 
+/** Reused helper for setup Wizard Shell Completion behavior in src/wizard. */
 export async function setupWizardShellCompletion(params: {
   flow: WizardFlow;
   prompter: Pick<WizardPrompter, "confirm" | "note">;

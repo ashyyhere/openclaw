@@ -1,3 +1,4 @@
+// Tests tui/theme theme test behavior.
 import { importFreshModule } from "openclaw/plugin-sdk/test-fixtures";
 import { afterEach, describe, expect, it } from "vitest";
 

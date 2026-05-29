@@ -1,3 +1,4 @@
+/** Prunes stale sandbox and browser containers from registries. */
 import { getRuntimeConfig } from "../../config/config.js";
 import { stopBrowserBridgeServer } from "../../plugin-sdk/browser-bridge.js";
 import { defaultRuntime } from "../../runtime.js";
@@ -118,6 +119,7 @@ async function pruneSandboxBrowsers(cfg: SandboxConfig) {
   });
 }
 
+/** Prunes sandboxes when configured idle/max-age thresholds are exceeded. */
 export async function maybePruneSandboxes(cfg: SandboxConfig) {
   const now = Date.now();
   if (now - lastPruneAtMs < 5 * 60 * 1000) {

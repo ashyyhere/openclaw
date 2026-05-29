@@ -1,8 +1,10 @@
+// infra install target helpers and runtime behavior.
 import fs from "node:fs/promises";
 import { formatErrorMessage } from "./errors.js";
 import { pathExists } from "./fs-safe.js";
 import { assertCanonicalPathWithinBase, resolveSafeInstallDir } from "./install-safe-path.js";
 
+/** Reused helper for resolve Canonical Install Target behavior in src/infra. */
 export async function resolveCanonicalInstallTarget(params: {
   baseDir: string;
   id: string;
@@ -32,6 +34,7 @@ export async function resolveCanonicalInstallTarget(params: {
   return { ok: true, targetDir: targetDirResult.path };
 }
 
+/** Reused helper for ensure Install Target Available behavior in src/infra. */
 export async function ensureInstallTargetAvailable(params: {
   mode: "install" | "update";
   targetDir: string;

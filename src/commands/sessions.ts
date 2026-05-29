@@ -295,6 +295,7 @@ function resolveDisplayRuntimePolicySessionKey(params: {
     : undefined;
 }
 
+/** Reused helper for sessions Command behavior in src/commands. */
 export async function sessionsCommand(
   opts: {
     json?: boolean;
@@ -511,7 +512,9 @@ export async function sessionsCommand(
   }
 }
 
+/** Reused constant for testing behavior in src/commands. */
 export const testing = {
   parseSessionsLimit,
 } as const;
+/** Re-exported API for src/commands, starting with testing. */
 export { testing as __testing };

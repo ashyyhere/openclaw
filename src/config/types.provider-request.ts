@@ -1,5 +1,7 @@
+// config types provider request helpers and runtime behavior.
 import type { SecretInput } from "./types.secrets.js";
 
+/** Shared type for Configured Provider Request Auth in src/config. */
 export type ConfiguredProviderRequestAuth =
   | {
       mode: "provider-default";
@@ -15,6 +17,7 @@ export type ConfiguredProviderRequestAuth =
       prefix?: string;
     };
 
+/** Shared type for Configured Provider Request Tls in src/config. */
 export type ConfiguredProviderRequestTls = {
   ca?: SecretInput;
   cert?: SecretInput;
@@ -24,6 +27,7 @@ export type ConfiguredProviderRequestTls = {
   insecureSkipVerify?: boolean;
 };
 
+/** Shared type for Configured Provider Request Proxy in src/config. */
 export type ConfiguredProviderRequestProxy =
   | {
       mode: "env-proxy";
@@ -35,6 +39,7 @@ export type ConfiguredProviderRequestProxy =
       tls?: ConfiguredProviderRequestTls;
     };
 
+/** Shared type for Configured Provider Request in src/config. */
 export type ConfiguredProviderRequest = {
   headers?: Record<string, SecretInput>;
   auth?: ConfiguredProviderRequestAuth;
@@ -42,6 +47,7 @@ export type ConfiguredProviderRequest = {
   tls?: ConfiguredProviderRequestTls;
 };
 
+/** Shared type for Configured Model Provider Request in src/config. */
 export type ConfiguredModelProviderRequest = ConfiguredProviderRequest & {
   allowPrivateNetwork?: boolean;
 };

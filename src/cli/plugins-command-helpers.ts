@@ -10,6 +10,7 @@ import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
 type HookInternalEntryLike = Record<string, unknown> & { enabled?: boolean };
 
+/** Reused constant for quiet Plugin Json Logger behavior in src/cli. */
 export const quietPluginJsonLogger: PluginLogger = {
   debug: () => undefined,
   info: () => undefined,
@@ -69,6 +70,7 @@ function buildSlotSelectionRegistry(
   };
 }
 
+/** Reused helper for resolve File Npm Spec To Local Path behavior in src/cli. */
 export function resolveFileNpmSpecToLocalPath(
   raw: string,
 ): { ok: true; path: string } | { ok: false; error: string } | null {
@@ -95,6 +97,7 @@ export function resolveFileNpmSpecToLocalPath(
   return { ok: true, path: rest };
 }
 
+/** Reused helper for apply Slot Selection For Plugin behavior in src/cli. */
 export function applySlotSelectionForPlugin(
   config: OpenClawConfig,
   pluginId: string,
@@ -126,6 +129,7 @@ export function applySlotSelectionForPlugin(
   return { config: result.config, warnings: result.warnings };
 }
 
+/** Reused helper for create Plugin Install Logger behavior in src/cli. */
 export function createPluginInstallLogger(runtime: RuntimeEnv = defaultRuntime): {
   info: (msg: string) => void;
   warn: (msg: string) => void;
@@ -136,6 +140,7 @@ export function createPluginInstallLogger(runtime: RuntimeEnv = defaultRuntime):
   };
 }
 
+/** Reused helper for create Hook Pack Install Logger behavior in src/cli. */
 export function createHookPackInstallLogger(runtime: RuntimeEnv = defaultRuntime): {
   info: (msg: string) => void;
   warn: (msg: string) => void;
@@ -146,6 +151,7 @@ export function createHookPackInstallLogger(runtime: RuntimeEnv = defaultRuntime
   };
 }
 
+/** Reused helper for enable Internal Hook Entries behavior in src/cli. */
 export function enableInternalHookEntries(
   config: OpenClawConfig,
   hookNames: string[],
@@ -172,6 +178,7 @@ export function enableInternalHookEntries(
   };
 }
 
+/** Reused helper for format Plugin Install With Hook Fallback Error behavior in src/cli. */
 export function formatPluginInstallWithHookFallbackError(
   pluginError: string,
   hookError: string,
@@ -208,10 +215,12 @@ function isMissingGitForNpmDependencyError(error: string): boolean {
   return /\bspawn\s+git\b/u.test(normalized) && /\benoent\b/u.test(normalized);
 }
 
+/** Reused helper for log Hook Pack Restart Hint behavior in src/cli. */
 export function logHookPackRestartHint(runtime: RuntimeEnv = defaultRuntime) {
   runtime.log("Restart the gateway to load hooks.");
 }
 
+/** Reused helper for log Slot Warnings behavior in src/cli. */
 export function logSlotWarnings(warnings: string[], runtime: RuntimeEnv = defaultRuntime) {
   if (warnings.length === 0) {
     return;
@@ -221,6 +230,7 @@ export function logSlotWarnings(warnings: string[], runtime: RuntimeEnv = defaul
   }
 }
 
+/** Reused helper for parse Npm Prefix Spec behavior in src/cli. */
 export function parseNpmPrefixSpec(raw: string): string | null {
   const trimmed = raw.trim();
   if (!normalizeLowercaseStringOrEmpty(trimmed).startsWith("npm:")) {
@@ -229,6 +239,7 @@ export function parseNpmPrefixSpec(raw: string): string | null {
   return trimmed.slice("npm:".length).trim();
 }
 
+/** Reused helper for parse Npm Pack Prefix Path behavior in src/cli. */
 export function parseNpmPackPrefixPath(raw: string): string | null {
   const trimmed = raw.trim();
   if (!normalizeLowercaseStringOrEmpty(trimmed).startsWith("npm-pack:")) {

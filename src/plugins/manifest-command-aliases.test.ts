@@ -1,3 +1,4 @@
+// Tests plugins manifest command aliases test behavior.
 import { describe, expect, it } from "vitest";
 import {
   normalizeManifestCommandAliases,

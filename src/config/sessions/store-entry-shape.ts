@@ -1,3 +1,4 @@
+// config/sessions store entry shape helpers and runtime behavior.
 import { isRecord } from "../../shared/record-coerce.js";
 import { validateSessionId } from "./paths.js";
 import type { SessionEntry } from "./types.js";
@@ -31,6 +32,7 @@ function normalizeOptionalTimestamp(value: unknown): number | undefined {
   return typeof value === "number" && Number.isFinite(value) && value >= 0 ? value : 0;
 }
 
+/** Reused helper for normalize Persisted Session Entry Shape behavior in src/config/sessions. */
 export function normalizePersistedSessionEntryShape(value: unknown): SessionEntry | undefined {
   if (!isRecord(value)) {
     return undefined;

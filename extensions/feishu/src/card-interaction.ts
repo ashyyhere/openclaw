@@ -1,3 +1,4 @@
+// extensions/feishu/src card interaction helpers and runtime behavior.
 import { isRecord } from "./comment-shared.js";
 
 export const FEISHU_CARD_INTERACTION_VERSION = "ocf1";

@@ -1144,6 +1144,7 @@ function addProfileConfiguredSectionGrantsWithConfiguredGrants(
   }
 }
 
+/** Reused constant for LEGACY CONFIG MIGRATIONS RUNTIME AGENTS behavior in src/commands/doctor. */
 export const LEGACY_CONFIG_MIGRATIONS_RUNTIME_AGENTS: LegacyConfigMigrationSpec[] = [
   defineLegacyConfigMigration({
     id: "tools.profile-configured-sections-alsoAllow",

@@ -1,3 +1,4 @@
+/** Registers backup create and verify commands. */
 import type { Command } from "commander";
 import { formatDocsLink } from "../../../packages/terminal-core/src/links.js";
 import { theme } from "../../../packages/terminal-core/src/theme.js";
@@ -7,6 +8,7 @@ import { defaultRuntime } from "../../runtime.js";
 import { runCommandWithRuntime } from "../cli-utils.js";
 import { formatHelpExamples } from "../help-format.js";
 
+/** Reused helper for register Backup Command behavior in src/cli/program. */
 export function registerBackupCommand(program: Command) {
   const backup = program
     .command("backup")

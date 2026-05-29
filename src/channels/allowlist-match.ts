@@ -1,8 +1,10 @@
+// Generic allowlist matching helpers for channel sender identifiers.
 import {
   normalizeLowercaseStringOrEmpty,
   normalizeOptionalLowercaseString,
 } from "../shared/string-coerce.js";
 
+/** Source field describing which candidate matched an allowlist entry. */
 export type AllowlistMatchSource =
   | "wildcard"
   | "id"
@@ -15,23 +17,27 @@ export type AllowlistMatchSource =
   | "slug"
   | "localpart";
 
+/** Result of matching a sender candidate against an allowlist. */
 export type AllowlistMatch<TSource extends string = AllowlistMatchSource> = {
   allowed: boolean;
   matchKey?: string;
   matchSource?: TSource;
 };
 
+/** Precompiled allowlist for repeated candidate checks. */
 export type CompiledAllowlist = {
   set: ReadonlySet<string>;
   wildcard: boolean;
 };
 
+/** Format allowlist match metadata for logs and tests. */
 export function formatAllowlistMatchMeta(
   match?: { matchKey?: string; matchSource?: string } | null,
 ): string {
   return `matchKey=${match?.matchKey ?? "none"} matchSource=${match?.matchSource ?? "none"}`;
 }
 
+/** Compile raw entries into a set plus wildcard flag. */
 export function compileAllowlist(entries: ReadonlyArray<string>): CompiledAllowlist {
   const set = new Set(entries.filter(Boolean));
   return {
@@ -48,6 +54,7 @@ function compileSimpleAllowlist(entries: ReadonlyArray<string | number>): Compil
   );
 }
 
+/** Resolve candidate strings and their source metadata for an allowlist match. */
 export function resolveAllowlistCandidates<TSource extends string>(params: {
   compiledAllowlist: CompiledAllowlist;
   candidates: Array<{ value?: string; source: TSource }>;
@@ -67,6 +74,7 @@ export function resolveAllowlistCandidates<TSource extends string>(params: {
   return { allowed: false };
 }
 
+/** Match candidate entries against a compiled allowlist. */
 export function resolveCompiledAllowlistMatch<TSource extends string>(params: {
   compiledAllowlist: CompiledAllowlist;
   candidates: Array<{ value?: string; source: TSource }>;
@@ -80,6 +88,7 @@ export function resolveCompiledAllowlistMatch<TSource extends string>(params: {
   return resolveAllowlistCandidates(params);
 }
 
+/** Compile and match an allowlist against candidate entries. */
 export function resolveAllowlistMatchByCandidates<TSource extends string>(params: {
   allowList: ReadonlyArray<string>;
   candidates: Array<{ value?: string; source: TSource }>;
@@ -90,6 +99,7 @@ export function resolveAllowlistMatchByCandidates<TSource extends string>(params
   });
 }
 
+/** Convenience allowlist matcher for bare string candidates. */
 export function resolveAllowlistMatchSimple(params: {
   allowFrom: ReadonlyArray<string | number>;
   senderId: string;

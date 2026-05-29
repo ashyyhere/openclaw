@@ -1,3 +1,4 @@
+// plugins provider contract public artifacts helpers and runtime behavior.
 import { isRecord } from "../shared/record-coerce.js";
 import { sortUniqueStrings } from "../shared/string-normalization.js";
 import { loadBundledPluginPublicArtifactModuleSync } from "./public-surface-loader.js";
@@ -58,6 +59,7 @@ function collectProviderContractEntries(params: {
   return providers;
 }
 
+/** Reused helper for resolve Bundled Explicit Provider Contracts From Public Artifacts behavior in src/plugins. */
 export function resolveBundledExplicitProviderContractsFromPublicArtifacts(params: {
   onlyPluginIds: readonly string[];
 }): ProviderContractEntry[] | null {

@@ -1,3 +1,4 @@
+// Tests extensions/codex/src/app-server attempt diagnostics test behavior.
 import { describe, expect, it } from "vitest";
 import { buildCodexPluginThreadConfigEligibilityLogData } from "./attempt-diagnostics.js";
 import { resolveCodexPluginsPolicy } from "./config.js";

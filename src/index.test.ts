@@ -1,3 +1,4 @@
+// Tests OpenClaw index test behavior.
 import fs from "node:fs";
 import { describe, expect, it, vi } from "vitest";
 import { applyTemplate, runLegacyCliEntry } from "./index.js";

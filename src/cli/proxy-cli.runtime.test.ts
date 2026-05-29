@@ -1,3 +1,4 @@
+/** Tests proxy CLI runtime process management and capture behavior. */
 import { EventEmitter } from "node:events";
 import { mkdtempSync, rmSync } from "node:fs";
 import os from "node:os";

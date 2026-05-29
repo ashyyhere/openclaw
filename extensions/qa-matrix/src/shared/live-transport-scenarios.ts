@@ -1,3 +1,4 @@
+// extensions/qa-matrix/src/shared live transport scenarios helpers and runtime behavior.
 export {
   LIVE_TRANSPORT_BASELINE_STANDARD_SCENARIO_IDS,
   collectLiveTransportStandardScenarioCoverage,

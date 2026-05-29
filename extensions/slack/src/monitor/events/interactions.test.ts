@@ -1,3 +1,4 @@
+// Tests extensions/slack/src/monitor/events interactions test behavior.
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 const enqueueSystemEventMock = vi.hoisted(() => vi.fn());

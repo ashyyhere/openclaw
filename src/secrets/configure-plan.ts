@@ -1,3 +1,4 @@
+// secrets configure plan helpers and runtime behavior.
 import { isDeepStrictEqual } from "node:util";
 import type { AuthProfileStore } from "../agents/auth-profiles/types.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -14,6 +15,7 @@ import {
   discoverConfigSecretTargets,
 } from "./target-registry.js";
 
+/** Shared type for Configure Candidate in src/secrets. */
 export type ConfigureCandidate = {
   type: string;
   path: string;
@@ -29,10 +31,12 @@ export type ConfigureCandidate = {
   authProfileProvider?: string;
 };
 
+/** Shared type for Configure Selected Target in src/secrets. */
 export type ConfigureSelectedTarget = ConfigureCandidate & {
   ref: SecretRef;
 };
 
+/** Shared type for Configure Provider Changes in src/secrets. */
 export type ConfigureProviderChanges = {
   upserts: Record<string, SecretProviderConfig>;
   deletes: string[];
@@ -45,6 +49,7 @@ function getSecretProviders(config: OpenClawConfig): Record<string, SecretProvid
   return config.secrets.providers;
 }
 
+/** Reused helper for build Configure Candidates behavior in src/secrets. */
 export function buildConfigureCandidates(config: OpenClawConfig): ConfigureCandidate[] {
   return buildConfigureCandidatesForScope({ config });
 }
@@ -73,6 +78,7 @@ function resolveAuthProfileProvider(
   return provider.length > 0 ? provider : undefined;
 }
 
+/** Reused helper for build Configure Candidates For Scope behavior in src/secrets. */
 export function buildConfigureCandidatesForScope(params: {
   config: OpenClawConfig;
   authoredOpenClawConfig?: OpenClawConfig;
@@ -185,6 +191,7 @@ function hasPath(root: unknown, segments: string[]): boolean {
   return false;
 }
 
+/** Reused helper for collect Configure Provider Changes behavior in src/secrets. */
 export function collectConfigureProviderChanges(params: {
   original: OpenClawConfig;
   next: OpenClawConfig;
@@ -215,6 +222,7 @@ export function collectConfigureProviderChanges(params: {
   };
 }
 
+/** Reused helper for has Configure Plan Changes behavior in src/secrets. */
 export function hasConfigurePlanChanges(params: {
   selectedTargets: ReadonlyMap<string, ConfigureSelectedTarget>;
   providerChanges: ConfigureProviderChanges;
@@ -226,6 +234,7 @@ export function hasConfigurePlanChanges(params: {
   );
 }
 
+/** Reused helper for build Secrets Configure Plan behavior in src/secrets. */
 export function buildSecretsConfigurePlan(params: {
   selectedTargets: ReadonlyMap<string, ConfigureSelectedTarget>;
   providerChanges: ConfigureProviderChanges;

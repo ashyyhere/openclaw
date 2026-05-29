@@ -1,3 +1,4 @@
+// extensions/elevenlabs media understanding provider helpers and runtime behavior.
 import type {
   AudioTranscriptionRequest,
   AudioTranscriptionResult,

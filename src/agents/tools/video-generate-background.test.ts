@@ -1,3 +1,4 @@
+/** Covers background video generation task lifecycle behavior. */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { getAgentRunContext, resetAgentRunContextForTest } from "../../infra/agent-events.js";
 import { VIDEO_GENERATION_TASK_KIND } from "../video-generation-task-status.js";

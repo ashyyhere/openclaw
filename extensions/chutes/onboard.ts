@@ -1,3 +1,4 @@
+// extensions/chutes onboard helpers and runtime behavior.
 import {
   applyAgentDefaultModelPrimary,
   applyProviderConfigWithModelCatalogPreset,

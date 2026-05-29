@@ -1,9 +1,11 @@
+// Fast-lane directive helpers that can return immediate reply payloads.
 import type { ReplyPayload } from "../types.js";
 import { isDirectiveOnly } from "./directive-handling.directive-only.js";
 import { handleDirectiveOnly } from "./directive-handling.impl.js";
 import { resolveCurrentDirectiveLevels } from "./directive-handling.levels.js";
 import type { ApplyInlineDirectivesFastLaneParams } from "./directive-handling.params.js";
 
+/** Reused helper for apply Inline Directives Fast Lane behavior in src/auto-reply/reply. */
 export async function applyInlineDirectivesFastLane(
   params: ApplyInlineDirectivesFastLaneParams,
 ): Promise<{ directiveAck?: ReplyPayload; provider: string; model: string }> {

@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src config schema test behavior.
 import { describe, expect, it } from "vitest";
 import { MatrixConfigSchema } from "./config-schema.js";
 

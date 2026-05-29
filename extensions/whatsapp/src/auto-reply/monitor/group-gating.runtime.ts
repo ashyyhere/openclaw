@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/whatsapp/src/auto-reply/monitor group gating runtime behavior.
 export {
   implicitMentionKindWhen,
   resolveInboundMentionDecision,

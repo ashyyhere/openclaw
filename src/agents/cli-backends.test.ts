@@ -1,3 +1,4 @@
+/** Tests CLI backend registry resolution and live-test gating. */
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import type { CliBackendConfig } from "../config/types.js";

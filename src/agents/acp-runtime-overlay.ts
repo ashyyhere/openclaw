@@ -1,3 +1,4 @@
+/** ACP runtime metadata overlay for sessions identified by ACP session keys. */
 import { isAcpSessionKey } from "../routing/session-key.js";
 
 /**

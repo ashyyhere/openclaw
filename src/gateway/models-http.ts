@@ -1,3 +1,4 @@
+// gateway models http helpers and runtime behavior.
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { listAgentIds, resolveDefaultAgentId } from "../agents/agent-scope.js";
 import { getRuntimeConfig } from "../config/io.js";
@@ -74,6 +75,7 @@ function resolveRequestPath(req: IncomingMessage): string {
   return new URL(req.url ?? "/", "http://localhost").pathname;
 }
 
+/** Reused helper for handle Open Ai Models Http Request behavior in src/gateway. */
 export async function handleOpenAiModelsHttpRequest(
   req: IncomingMessage,
   res: ServerResponse,

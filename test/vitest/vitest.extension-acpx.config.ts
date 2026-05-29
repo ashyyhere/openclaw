@@ -1,3 +1,4 @@
+// test/vitest vitest extension acpx config helpers and runtime behavior.
 import { acpxExtensionTestRoots } from "./vitest.extension-acpx-paths.mjs";
 import { loadPatternListFromEnv } from "./vitest.pattern-file.ts";
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";

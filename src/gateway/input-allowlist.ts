@@ -1,3 +1,4 @@
+// gateway input allowlist helpers and runtime behavior.
 import { normalizeTrimmedStringList } from "../shared/string-normalization.js";
 
 /**

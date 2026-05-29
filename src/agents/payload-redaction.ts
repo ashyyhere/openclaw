@@ -1,3 +1,4 @@
+/** Redacts diagnostic payloads before logging or persistence. */
 import crypto from "node:crypto";
 import { estimateBase64DecodedBytes } from "../media/base64.js";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";

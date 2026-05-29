@@ -1,3 +1,4 @@
+// gateway/server plugin node capability auth helpers and runtime behavior.
 import type { IncomingMessage } from "node:http";
 import type { AuthRateLimiter } from "../auth-rate-limit.js";
 import {
@@ -12,6 +13,7 @@ import {
 } from "../plugin-node-capability.js";
 import type { GatewayWsClient } from "./ws-types.js";
 
+/** Reused helper for authorize Plugin Node Capability Request behavior in src/gateway/server. */
 export async function authorizePluginNodeCapabilityRequest(params: {
   req: IncomingMessage;
   auth: ResolvedGatewayAuth;

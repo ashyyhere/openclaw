@@ -1,3 +1,4 @@
+// Tests config zod schema models test behavior.
 import { describe, expect, it } from "vitest";
 import { ModelsConfigSchema } from "./zod-schema.core.js";
 

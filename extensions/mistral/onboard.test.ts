@@ -1,3 +1,4 @@
+// Tests extensions/mistral onboard test behavior.
 import {
   expectProviderOnboardMergedLegacyConfig,
   expectProviderOnboardPrimaryAndFallbacks,

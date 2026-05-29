@@ -1,3 +1,4 @@
+// extensions/file-transfer/src/tools node tool invoke helpers and runtime behavior.
 import crypto from "node:crypto";
 import {
   callGatewayTool,

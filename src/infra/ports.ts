@@ -1,3 +1,4 @@
+// infra ports helpers and runtime behavior.
 import { danger, info, shouldLogVerbose, warn } from "../globals.js";
 import { logDebug } from "../logger.js";
 import type { RuntimeEnv } from "../runtime.js";
@@ -27,6 +28,7 @@ class PortInUseError extends Error {
   }
 }
 
+/** Reused helper for describe Port Owner behavior in src/infra. */
 export async function describePortOwner(port: number): Promise<string | undefined> {
   const diagnostics = await inspectPortUsage(port);
   if (diagnostics.listeners.length === 0) {
@@ -35,6 +37,7 @@ export async function describePortOwner(port: number): Promise<string | undefine
   return formatPortDiagnostics(diagnostics).join("\n");
 }
 
+/** Reused helper for ensure Port Available behavior in src/infra. */
 export async function ensurePortAvailable(port: number): Promise<void> {
   // Detect EADDRINUSE early with a friendly message.
   try {
@@ -47,6 +50,7 @@ export async function ensurePortAvailable(port: number): Promise<void> {
   }
 }
 
+/** Reused helper for handle Port Error behavior in src/infra. */
 export async function handlePortError(
   err: unknown,
   port: number,
@@ -91,7 +95,9 @@ export async function handlePortError(
   throw new Error("unreachable");
 }
 
+/** Re-exported API for src/infra, starting with Port In Use Error. */
 export { PortInUseError };
+/** Re-exported API for src/infra. */
 export type {
   PortConnection,
   PortConnections,
@@ -100,6 +106,7 @@ export type {
   PortUsage,
   PortUsageStatus,
 };
+/** Re-exported API for src/infra. */
 export {
   buildPortHints,
   classifyPortListener,
@@ -108,4 +115,5 @@ export {
   isExpectedGatewayListeners,
   isSingleExpectedGatewayListener,
 } from "./ports-format.js";
+/** Re-exported API for src/infra, starting with inspect Port Connections. */
 export { inspectPortConnections, inspectPortUsage } from "./ports-inspect.js";

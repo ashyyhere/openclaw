@@ -1,3 +1,4 @@
+/** E2E-format regression coverage for subagent announcement output text. */
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { SILENT_REPLY_TOKEN } from "../auto-reply/tokens.js";
 import {

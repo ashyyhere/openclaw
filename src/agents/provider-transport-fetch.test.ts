@@ -1,3 +1,4 @@
+/** Tests guarded provider fetch behavior and SSRF/proxy policy. */
 import { Stream } from "openai/streaming";
 import type { Model } from "openclaw/plugin-sdk/llm";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";

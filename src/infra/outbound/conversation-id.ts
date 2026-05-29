@@ -1,3 +1,4 @@
+// infra/outbound conversation id helpers and runtime behavior.
 import { stringifyRouteThreadId } from "../../plugin-sdk/channel-route.js";
 import {
   normalizeLowercaseStringOrEmpty,
@@ -13,6 +14,7 @@ function resolveExplicitConversationTargetId(target: string): string | undefined
   return undefined;
 }
 
+/** Reused helper for resolve Conversation Id From Targets behavior in src/infra/outbound. */
 export function resolveConversationIdFromTargets(params: {
   threadId?: string | number;
   targets: Array<string | undefined | null>;

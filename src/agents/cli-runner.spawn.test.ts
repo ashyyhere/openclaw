@@ -1,3 +1,4 @@
+/** Tests CLI runner process spawning and streamed output handling. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

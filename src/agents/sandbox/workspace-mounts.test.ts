@@ -1,3 +1,4 @@
+/** Covers Docker mount args for sandbox workspaces and readonly skills. */
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

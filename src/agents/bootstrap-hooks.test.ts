@@ -1,3 +1,4 @@
+/** Tests internal hook overrides for bootstrap file resolution. */
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import {
   clearInternalHooks,

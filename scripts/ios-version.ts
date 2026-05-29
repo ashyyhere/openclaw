@@ -1,3 +1,4 @@
+// scripts ios version helpers and runtime behavior.
 import path from "node:path";
 import { resolveIosVersion } from "./lib/ios-version.ts";
 

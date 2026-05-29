@@ -1,3 +1,4 @@
+/** Tests ACP runtime option validation, merge, and signature helpers. */
 import { describe, expect, it } from "vitest";
 import { buildRuntimeConfigOptionPairs } from "./runtime-options.js";
 

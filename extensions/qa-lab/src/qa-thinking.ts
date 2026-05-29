@@ -1,3 +1,4 @@
+// extensions/qa-lab/src qa thinking helpers and runtime behavior.
 export type QaThinkingLevel =
   | "off"
   | "minimal"

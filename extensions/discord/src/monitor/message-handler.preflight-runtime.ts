@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor message handler preflight runtime helpers and runtime behavior.
 let pluralkitRuntimePromise: Promise<typeof import("../pluralkit.js")> | undefined;
 let preflightAudioRuntimePromise: Promise<typeof import("./preflight-audio.js")> | undefined;
 let systemEventsRuntimePromise: Promise<typeof import("./system-events.js")> | undefined;

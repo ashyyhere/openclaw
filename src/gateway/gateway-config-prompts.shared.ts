@@ -1,8 +1,10 @@
+// gateway gateway config prompts shared helpers and runtime behavior.
 import { isIpv6Address, parseCanonicalIpAddress } from "@openclaw/net-policy/ip";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { getTailnetHostname } from "../infra/tailscale.js";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
+/** Reused constant for TAILSCALE EXPOSURE OPTIONS behavior in src/gateway. */
 export const TAILSCALE_EXPOSURE_OPTIONS = [
   { value: "off", label: "Off", hint: "No Tailscale exposure" },
   {
@@ -17,6 +19,7 @@ export const TAILSCALE_EXPOSURE_OPTIONS = [
   },
 ] as const;
 
+/** Reused constant for TAILSCALE MISSING BIN NOTE LINES behavior in src/gateway. */
 export const TAILSCALE_MISSING_BIN_NOTE_LINES = [
   "Tailscale binary not found in PATH or /Applications.",
   "Ensure Tailscale is installed from:",
@@ -25,6 +28,7 @@ export const TAILSCALE_MISSING_BIN_NOTE_LINES = [
   "You can continue setup, but serve/funnel will fail at runtime.",
 ] as const;
 
+/** Reused constant for TAILSCALE DOCS LINES behavior in src/gateway. */
 export const TAILSCALE_DOCS_LINES = [
   "Docs:",
   "https://docs.openclaw.ai/gateway/tailscale",
@@ -64,6 +68,7 @@ function appendAllowedOrigin(existing: string[] | undefined, origin: string): st
   return [...current, origin];
 }
 
+/** Reused helper for maybe Add Tailnet Origin To Control Ui Allowed Origins behavior in src/gateway. */
 export async function maybeAddTailnetOriginToControlUiAllowedOrigins(params: {
   config: OpenClawConfig;
   tailscaleMode: string;

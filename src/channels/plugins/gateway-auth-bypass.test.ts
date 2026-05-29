@@ -1,3 +1,4 @@
+// Coverage for gateway auth bypass resolution.
 import { describe, expect, it, vi } from "vitest";
 
 const { loadBundledPluginPublicArtifactModuleSyncMock } = vi.hoisted(() => ({

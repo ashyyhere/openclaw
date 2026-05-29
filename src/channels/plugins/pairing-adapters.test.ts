@@ -1,3 +1,4 @@
+/** Tests pairing adapter prefix stripping and approval notification helpers. */
 import { describe, expect, it, vi } from "vitest";
 import {
   createLoggedPairingApprovalNotifier,

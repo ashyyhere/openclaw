@@ -1,3 +1,4 @@
+/** Shared fixtures and assertions for sandbox filesystem bridge tests. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
@@ -62,6 +63,7 @@ async function loadFreshFsBridgeModuleForTest() {
   ({ createSandboxFsBridge: createSandboxFsBridgeImpl } = await import("./fs-bridge.js"));
 }
 
+/** Creates a bridge bound to mocked Docker execution for tests. */
 export function createSandboxFsBridge(
   ...args: Parameters<typeof import("./fs-bridge.js").createSandboxFsBridge>
 ) {
@@ -71,37 +73,46 @@ export function createSandboxFsBridge(
   return createSandboxFsBridgeImpl(...args);
 }
 
+/** Reused constant for mocked Exec Docker Raw behavior in src/agents/sandbox. */
 export const mockedExecDockerRaw: ExecDockerRawMock = hoisted.execDockerRaw;
+/** Reused constant for mocked Open Root File behavior in src/agents/sandbox. */
 export const mockedOpenRootFile: OpenRootFileMock = hoisted.openRootFile;
 const DOCKER_SCRIPT_INDEX = 5;
 const DOCKER_FIRST_SCRIPT_ARG_INDEX = 7;
 
+/** Extracts the shell script argument from mocked Docker argv. */
 export function getDockerScript(args: string[]): string {
   return args[DOCKER_SCRIPT_INDEX] ?? "";
 }
 
+/** Reused helper for get Docker Arg behavior in src/agents/sandbox. */
 export function getDockerArg(args: string[], position: number): string {
   return args[DOCKER_FIRST_SCRIPT_ARG_INDEX + position - 1] ?? "";
 }
 
+/** Reused helper for get Scripts From Calls behavior in src/agents/sandbox. */
 export function getScriptsFromCalls(): string[] {
   return mockedExecDockerRaw.mock.calls.map(([args]) => getDockerScript(args));
 }
 
+/** Reused helper for find Call By Script Fragment behavior in src/agents/sandbox. */
 export function findCallByScriptFragment(fragment: string) {
   return mockedExecDockerRaw.mock.calls.find(([args]) => getDockerScript(args).includes(fragment));
 }
 
+/** Reused helper for find Call By Docker Arg behavior in src/agents/sandbox. */
 export function findCallByDockerArg(position: number, value: string) {
   return mockedExecDockerRaw.mock.calls.find(([args]) => getDockerArg(args, position) === value);
 }
 
+/** Reused helper for find Calls By Script Fragment behavior in src/agents/sandbox. */
 export function findCallsByScriptFragment(fragment: string) {
   return mockedExecDockerRaw.mock.calls.filter(([args]) =>
     getDockerScript(args).includes(fragment),
   );
 }
 
+/** Reused helper for docker Exec Result behavior in src/agents/sandbox. */
 export function dockerExecResult(stdout: string) {
   return {
     stdout: Buffer.from(stdout),
@@ -110,6 +121,7 @@ export function dockerExecResult(stdout: string) {
   };
 }
 
+/** Creates a default sandbox context for bridge tests. */
 export function createSandbox(overrides?: Partial<SandboxContext>): SandboxContext {
   return createSandboxTestContext({
     overrides: {
@@ -123,6 +135,7 @@ export function createSandbox(overrides?: Partial<SandboxContext>): SandboxConte
   });
 }
 
+/** Creates a temp workspace and seeded filesystem bridge for tests. */
 export async function createSeededSandboxFsBridge(
   stateDir: string,
   params?: {
@@ -153,6 +166,7 @@ export async function createSeededSandboxFsBridge(
   return { workspaceDir, bridge };
 }
 
+/** Runs a test callback inside a cleaned-up temporary directory. */
 export async function withTempDir<T>(
   prefix: string,
   run: (stateDir: string) => Promise<T>,
@@ -185,6 +199,7 @@ function installDockerReadMock(params?: { canonicalPath?: string }) {
   });
 }
 
+/** Creates paths used to verify bridge host-escape protections. */
 export async function createHostEscapeFixture(stateDir: string) {
   const workspaceDir = path.join(stateDir, "workspace");
   const outsideDir = path.join(stateDir, "outside");
@@ -195,6 +210,7 @@ export async function createHostEscapeFixture(stateDir: string) {
   return { workspaceDir, outsideFile };
 }
 
+/** Reused helper for expect Mkdirp Allows Existing Directory behavior in src/agents/sandbox. */
 export async function expectMkdirpAllowsExistingDirectory(params?: {
   forceBoundaryIoFallback?: boolean;
 }) {
@@ -235,6 +251,7 @@ export async function expectMkdirpAllowsExistingDirectory(params?: {
   });
 }
 
+/** Installs common fs-bridge mocks and cleanup hooks for tests. */
 export function installFsBridgeTestHarness() {
   beforeEach(async () => {
     await loadFreshFsBridgeModuleForTest();

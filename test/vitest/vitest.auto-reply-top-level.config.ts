@@ -1,3 +1,4 @@
+// test/vitest vitest auto reply top level config helpers and runtime behavior.
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 import { autoReplyTopLevelReplyTestInclude } from "./vitest.test-shards.mjs";
 

@@ -1,3 +1,4 @@
+// extensions/codex test api helpers and runtime behavior.
 import type {
   AnyAgentTool,
   EmbeddedRunAttemptParams,

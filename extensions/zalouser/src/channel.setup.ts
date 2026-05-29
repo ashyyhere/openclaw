@@ -1,3 +1,4 @@
+// extensions/zalouser/src channel setup helpers and runtime behavior.
 import type { ResolvedZalouserAccount } from "./accounts.js";
 import type { ChannelPlugin } from "./channel-api.js";
 import { zalouserSetupAdapter } from "./setup-core.js";

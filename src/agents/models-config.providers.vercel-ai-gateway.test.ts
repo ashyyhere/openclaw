@@ -1,3 +1,4 @@
+/** Tests Vercel AI Gateway provider auth resolution. */
 import { beforeAll, describe, expect, it, vi } from "vitest";
 
 let NON_ENV_SECRETREF_MARKER: typeof import("./model-auth-markers.js").NON_ENV_SECRETREF_MARKER;

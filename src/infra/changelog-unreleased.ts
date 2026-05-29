@@ -1,3 +1,4 @@
+// infra changelog unreleased helpers and runtime behavior.
 type UnreleasedSection = "Breaking" | "Changes" | "Fixes";
 
 function findSectionRange(
@@ -44,6 +45,7 @@ function findSectionRange(
   return { start: sectionIndex, insertAt };
 }
 
+/** Reused helper for append Unreleased Changelog Entry behavior in src/infra. */
 export function appendUnreleasedChangelogEntry(
   content: string,
   params: {

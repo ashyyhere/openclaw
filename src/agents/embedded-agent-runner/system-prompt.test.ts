@@ -1,3 +1,4 @@
+/** Covers embedded-agent system prompt assembly and session application. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { clearMemoryPluginState, registerMemoryPromptSection } from "../../plugins/memory-state.js";
 import type { AgentSession } from "../sessions/index.js";

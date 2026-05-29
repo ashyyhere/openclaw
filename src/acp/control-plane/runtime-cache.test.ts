@@ -1,3 +1,4 @@
+/** Tests ACP runtime cache reuse, expiry, and snapshot behavior. */
 import { describe, expect, it } from "vitest";
 import type { AcpRuntime } from "../runtime/types.js";
 import type { AcpRuntimeHandle } from "../runtime/types.js";

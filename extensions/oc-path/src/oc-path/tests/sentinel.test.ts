@@ -1,3 +1,4 @@
+// Tests extensions/oc-path/src/oc-path/tests sentinel test behavior.
 import { describe, expect, it } from "vitest";
 import { OcEmitSentinelError, REDACTED_SENTINEL, guardSentinel } from "../sentinel.js";
 

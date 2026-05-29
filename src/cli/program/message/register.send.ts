@@ -1,6 +1,8 @@
+/** Registers basic message send command. */
 import type { Command } from "commander";
 import type { MessageCliHelpers } from "./helpers.js";
 
+/** Reused helper for register Message Send Command behavior in src/cli/program. */
 export function registerMessageSendCommand(message: Command, helpers: MessageCliHelpers) {
   helpers
     .withMessageBase(

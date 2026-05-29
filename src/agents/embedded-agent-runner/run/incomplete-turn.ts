@@ -1,3 +1,4 @@
+/** Classifies incomplete assistant turns and builds retry instructions. */
 import {
   isSilentReplyPayloadText,
   isSilentReplyText,
@@ -91,6 +92,7 @@ const REPLAY_UNSAFE_FALLBACK_METADATA: EmbeddedRunAttemptResult["replayMetadata"
   replaySafe: false,
 };
 
+/** Detects terminal assistant turns that need replay or recovery. */
 export function isIncompleteTerminalAssistantTurn(params: {
   hasAssistantVisibleText: boolean;
   lastAssistant?: { stopReason?: string } | null;
@@ -153,7 +155,9 @@ const DEFAULT_PLANNING_ONLY_RETRY_LIMIT = 1;
 const STRICT_AGENTIC_PLANNING_ONLY_RETRY_LIMIT = 2;
 // Allow one immediate continuation plus one follow-up continuation before
 // surfacing the existing incomplete-turn error path.
+/** Reused constant for DEFAULT REASONING ONLY RETRY LIMIT behavior in src/agents/embedded-agent-runner. */
 export const DEFAULT_REASONING_ONLY_RETRY_LIMIT = 2;
+/** Reused constant for DEFAULT EMPTY RESPONSE RETRY LIMIT behavior in src/agents/embedded-agent-runner. */
 export const DEFAULT_EMPTY_RESPONSE_RETRY_LIMIT = 1;
 const ACK_EXECUTION_NORMALIZED_SET = new Set([
   "ok",
@@ -201,22 +205,29 @@ const ACTIONABLE_PROMPT_DIRECTIVE_RE =
 const ACTIONABLE_PROMPT_REQUEST_RE =
   /\b(?:can|could|would|will)\s+you\b|\b(?:please|pls)\b|\b(?:help|explain|summari(?:s|z)e|analy(?:s|z)e|review|investigate|debug|fix|check|look(?:\s+into|\s+at)?|read|write|edit|update|run|search|find|implement|add|remove|refactor|show|tell me|walk me through)\b/i;
 
+/** Reused constant for PLANNING ONLY RETRY INSTRUCTION behavior in src/agents/embedded-agent-runner. */
 export const PLANNING_ONLY_RETRY_INSTRUCTION =
   "The previous assistant turn only described the plan. Do not restate the plan. Act now: take the first concrete tool action you can. If a real blocker prevents action, reply with the exact blocker in one sentence.";
+/** Reused constant for REASONING ONLY RETRY INSTRUCTION behavior in src/agents/embedded-agent-runner. */
 export const REASONING_ONLY_RETRY_INSTRUCTION =
   "The previous assistant turn recorded reasoning but did not produce a user-visible answer. Continue from that partial turn and produce the visible answer now. Do not restate the reasoning or restart from scratch.";
+/** Reused constant for EMPTY RESPONSE RETRY INSTRUCTION behavior in src/agents/embedded-agent-runner. */
 export const EMPTY_RESPONSE_RETRY_INSTRUCTION =
   "The previous attempt did not produce a user-visible answer. Continue from the current state and produce the visible answer now. Do not restart from scratch.";
+/** Reused constant for ACK EXECUTION FAST PATH INSTRUCTION behavior in src/agents/embedded-agent-runner. */
 export const ACK_EXECUTION_FAST_PATH_INSTRUCTION =
   "The latest user message is a short approval to proceed. Do not recap or restate the plan. Start with the first concrete tool action immediately. Keep any user-facing follow-up brief and natural.";
+/** Reused constant for STRICT AGENTIC BLOCKED TEXT behavior in src/agents/embedded-agent-runner. */
 export const STRICT_AGENTIC_BLOCKED_TEXT =
   "Agent stopped after repeated plan-only turns without taking a concrete action. No concrete tool action or external side effect advanced the task.";
 
+/** Shared type for Planning Only Plan Details in src/agents/embedded-agent-runner. */
 export type PlanningOnlyPlanDetails = {
   explanation: string;
   steps: string[];
 };
 
+/** Builds metadata describing why an attempt history is being replayed. */
 export function buildAttemptReplayMetadata(
   params: ReplayMetadataAttempt,
 ): EmbeddedRunAttemptResult["replayMetadata"] {
@@ -234,12 +245,14 @@ export function buildAttemptReplayMetadata(
   };
 }
 
+/** Reads replay metadata from an attempt result when present. */
 export function resolveAttemptReplayMetadata(attempt: {
   replayMetadata?: EmbeddedRunAttemptResult["replayMetadata"] | null;
 }): EmbeddedRunAttemptResult["replayMetadata"] {
   return attempt.replayMetadata ?? REPLAY_UNSAFE_FALLBACK_METADATA;
 }
 
+/** Builds the user-facing payload for incomplete-turn outcomes. */
 export function resolveIncompleteTurnPayloadText(params: {
   payloadCount: number;
   aborted: boolean;
@@ -307,6 +320,7 @@ export function resolveIncompleteTurnPayloadText(params: {
     : "⚠️ Agent couldn't generate a response. Please try again.";
 }
 
+/** Decides whether a missing/empty assistant turn should get another attempt. */
 export function shouldRetryMissingAssistantTurn(params: {
   payloadCount: number;
   aborted: boolean;
@@ -423,6 +437,7 @@ function hasTrailingSilentToolResult(messages: readonly AgentMessage[]): boolean
   return false;
 }
 
+/** Returns a silent reply payload when tool-only work should not be echoed. */
 export function resolveSilentToolResultReplyPayload(params: {
   isCronTrigger: boolean;
   payloadCount: number;
@@ -450,6 +465,7 @@ export function resolveSilentToolResultReplyPayload(params: {
     : null;
 }
 
+/** Determines whether replayed history should be marked invalid for diagnostics. */
 export function resolveReplayInvalidFlag(params: {
   attempt: RunLivenessAttempt;
   incompleteTurnText?: string | null;
@@ -462,6 +478,7 @@ export function resolveReplayInvalidFlag(params: {
   );
 }
 
+/** Resolves the run liveness state from terminal and retry conditions. */
 export function resolveRunLivenessState(params: {
   payloadCount: number;
   aborted: boolean;
@@ -574,6 +591,7 @@ function shouldSkipPlanningOnlyRetry(params: {
   );
 }
 
+/** Checks whether an empty assistant reply is an intentional silent outcome. */
 export function shouldTreatEmptyAssistantReplyAsSilent(params: {
   allowEmptyAssistantReplyAsSilent?: boolean;
   payloadCount: number;
@@ -593,6 +611,7 @@ export function shouldTreatEmptyAssistantReplyAsSilent(params: {
   });
 }
 
+/** Builds retry guidance for reasoning-only assistant turns. */
 export function resolveReasoningOnlyRetryInstruction(params: {
   provider?: string;
   modelId?: string;
@@ -631,6 +650,7 @@ export function resolveReasoningOnlyRetryInstruction(params: {
   return REASONING_ONLY_RETRY_INSTRUCTION;
 }
 
+/** Builds retry guidance for empty assistant responses. */
 export function resolveEmptyResponseRetryInstruction(params: {
   provider?: string;
   modelId?: string;
@@ -747,6 +767,7 @@ function normalizeAckPrompt(text: string): string {
   return normalizeLowercaseStringOrEmpty(normalized);
 }
 
+/** Detects prompts that only ask the agent to acknowledge execution. */
 export function isLikelyExecutionAckPrompt(text: string): boolean {
   const trimmed = text.trim();
   if (!trimmed || trimmed.length > 80 || trimmed.includes("\n") || trimmed.includes("?")) {
@@ -766,6 +787,7 @@ function isLikelyActionableUserPrompt(text: string): boolean {
   return ACTIONABLE_PROMPT_DIRECTIVE_RE.test(trimmed) || ACTIONABLE_PROMPT_REQUEST_RE.test(trimmed);
 }
 
+/** Builds a fast-path instruction for execution acknowledgement prompts. */
 export function resolveAckExecutionFastPathInstruction(params: {
   provider?: string;
   modelId?: string;
@@ -805,6 +827,7 @@ function hasStructuredPlanningOnlyFormat(text: string): boolean {
   return (hasPlanningHeading && hasPlanningCueLine) || (bulletLineCount >= 2 && hasPlanningCueLine);
 }
 
+/** Extracts plan-only details from assistant text when no action was taken. */
 export function extractPlanningOnlyPlanDetails(text: string): PlanningOnlyPlanDetails | null {
   const trimmed = text.trim();
   if (!trimmed) {
@@ -874,6 +897,7 @@ function isSingleActionThenNarrativePattern(params: {
   );
 }
 
+/** Resolves retry budget for planning-only assistant turns. */
 export function resolvePlanningOnlyRetryLimit(
   executionContract?: EmbeddedAgentExecutionContract,
 ): number {
@@ -882,6 +906,7 @@ export function resolvePlanningOnlyRetryLimit(
     : DEFAULT_PLANNING_ONLY_RETRY_LIMIT;
 }
 
+/** Builds retry guidance when the assistant only planned but did not act. */
 export function resolvePlanningOnlyRetryInstruction(params: {
   provider?: string;
   modelId?: string;

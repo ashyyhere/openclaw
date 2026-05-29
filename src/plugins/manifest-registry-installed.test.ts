@@ -1,3 +1,4 @@
+// Tests plugins manifest registry installed test behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";

@@ -1,3 +1,4 @@
+// Tests packages/memory-host-sdk/src/host read file test behavior.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

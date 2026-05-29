@@ -1,3 +1,4 @@
+/** Regression coverage for subagent announce timeout handling. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { clampTimerTimeoutMs } from "../shared/number-coercion.js";
 import { createSubagentAnnounceDeliveryRuntimeMock } from "./subagent-announce.test-support.js";

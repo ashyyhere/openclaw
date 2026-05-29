@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/monitor thread bindings shared state test behavior.
 import { beforeEach, describe, expect, it } from "vitest";
 import { EMPTY_DISCORD_TEST_CONFIG } from "../test-support/config.js";
 import {

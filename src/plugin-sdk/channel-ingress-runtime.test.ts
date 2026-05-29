@@ -1,3 +1,4 @@
+/** Tests channel ingress runtime SDK behavior and decision mapping. */
 import { describe, expect, expectTypeOf, it, vi } from "vitest";
 import type { AccessFacts } from "../channels/turn/types.js";
 import {

@@ -1,7 +1,9 @@
+// infra/outbound envelope helpers and runtime behavior.
 import type { ReplyPayload } from "../../auto-reply/types.js";
 import type { OutboundDeliveryJson } from "./format.js";
 import { normalizeOutboundPayloadsForJson, type OutboundPayloadJson } from "./payloads.js";
 
+/** Shared type for Outbound Result Envelope in src/infra/outbound. */
 export type OutboundResultEnvelope = {
   payloads?: OutboundPayloadJson[];
   meta?: unknown;
@@ -19,6 +21,7 @@ const isOutboundPayloadJson = (
   payload: ReplyPayload | OutboundPayloadJson,
 ): payload is OutboundPayloadJson => "mediaUrl" in payload;
 
+/** Reused helper for build Outbound Result Envelope behavior in src/infra/outbound. */
 export function buildOutboundResultEnvelope(
   params: BuildEnvelopeParams,
 ): OutboundResultEnvelope | OutboundDeliveryJson {

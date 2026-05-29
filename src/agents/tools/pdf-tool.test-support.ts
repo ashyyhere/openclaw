@@ -1,8 +1,10 @@
+/** Test support for PDF tool auth and temp agent dirs. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { vi } from "vitest";
 
+/** Runs a callback with a temporary PDF tool agent dir. */
 export async function withTempPdfAgentDir<T>(run: (agentDir: string) => Promise<T>): Promise<T> {
   const agentDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-pdf-"));
   try {
@@ -12,6 +14,7 @@ export async function withTempPdfAgentDir<T>(run: (agentDir: string) => Promise<
   }
 }
 
+/** Clears PDF tool auth-related environment variables for tests. */
 export function resetPdfToolAuthEnv(): void {
   vi.stubEnv("OPENAI_API_KEY", "");
   vi.stubEnv("ANTHROPIC_API_KEY", "");

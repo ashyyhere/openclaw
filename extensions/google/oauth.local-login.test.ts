@@ -1,3 +1,4 @@
+// Tests extensions/google oauth local login test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth?state=state-123";

@@ -1,3 +1,4 @@
+// extensions/discord/src/internal rest helpers and runtime behavior.
 import { randomBytes } from "node:crypto";
 import { inspect } from "node:util";
 import { parseFiniteNumber } from "openclaw/plugin-sdk/number-runtime";

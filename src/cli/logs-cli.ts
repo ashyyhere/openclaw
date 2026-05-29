@@ -1,3 +1,4 @@
+/** Registers logs CLI commands with lazy runtime log streaming. */
 import { setTimeout as delay } from "node:timers/promises";
 import type { Command } from "commander";
 import {
@@ -349,6 +350,7 @@ function isTransientFollowError(error: unknown): boolean {
   return isPlainGatewayRequestCloseError(message) || isPlainGatewayRequestTimeoutError(message);
 }
 
+/** Reused helper for format Log Timestamp behavior in src/cli. */
 export function formatLogTimestamp(
   value?: string,
   mode: "pretty" | "plain" = "plain",
@@ -477,6 +479,7 @@ async function emitGatewayError(
   errorLine(colorize(rich, theme.muted, hint));
 }
 
+/** Reused helper for register Logs Cli behavior in src/cli. */
 export function registerLogsCli(program: Command) {
   const logs = program
     .command("logs")

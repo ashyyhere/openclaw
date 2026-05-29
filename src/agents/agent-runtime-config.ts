@@ -1,3 +1,4 @@
+/** Resolves runtime config for agent runs, including command-scoped secret refs. */
 import { getAgentRuntimeCommandSecretTargetIds } from "../cli/command-secret-targets.js";
 import { getRuntimeConfig, readConfigFileSnapshotForWrite } from "../config/io.js";
 import { setRuntimeConfigSnapshot } from "../config/runtime-snapshot.js";
@@ -5,6 +6,7 @@ import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { isSecretRef } from "../config/types.secrets.js";
 import type { RuntimeEnv } from "../runtime.js";
 
+/** Resolve agent runtime config and source snapshot, hydrating needed secret refs. */
 export async function resolveAgentRuntimeConfig(
   runtime: RuntimeEnv,
   params?: { runtimeTargetsChannelSecrets?: boolean },

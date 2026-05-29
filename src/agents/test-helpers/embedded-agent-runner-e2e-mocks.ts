@@ -1,3 +1,4 @@
+/** Shared Vitest mocks for embedded-agent-runner E2E tests. */
 import { vi } from "vitest";
 
 type EmbeddedRunnerFastRunMockOptions = {
@@ -16,6 +17,7 @@ type EmbeddedRunnerBackoffMockOptions = {
   sleepWithAbort: (ms: number, abortSignal?: AbortSignal) => unknown;
 };
 
+/** Installs baseline mocks for embedded-runner E2E tests. */
 export function installEmbeddedRunnerBaseE2eMocks(options?: {
   hookRunner?: "minimal" | "full";
 }): void {
@@ -50,6 +52,7 @@ export function installEmbeddedRunnerBaseE2eMocks(options?: {
   }));
 }
 
+/** Installs fast-run mocks for embedded-runner E2E tests. */
 export function installEmbeddedRunnerFastRunE2eMocks(
   options: EmbeddedRunnerFastRunMockOptions,
 ): void {
@@ -170,6 +173,7 @@ function resolveMockHarnessId(params: {
     : "openclaw";
 }
 
+/** Installs deterministic backoff mocks for embedded-runner E2E tests. */
 export function installEmbeddedRunnerBackoffE2eMocks(
   options: EmbeddedRunnerBackoffMockOptions,
 ): void {

@@ -1,3 +1,4 @@
+// extensions/slack/src token helpers and runtime behavior.
 import { normalizeResolvedSecretInputString } from "openclaw/plugin-sdk/secret-input";
 
 export function resolveSlackBotToken(

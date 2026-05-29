@@ -1,3 +1,4 @@
+// extensions/diffs/src plugin helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { resolveLivePluginConfigObject } from "openclaw/plugin-sdk/plugin-config-runtime";

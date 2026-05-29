@@ -1,3 +1,4 @@
+/** Live-gated coverage for Gemini bundled MCP config behavior. */
 import { execFile } from "node:child_process";
 import http from "node:http";
 import { promisify } from "node:util";

@@ -1,3 +1,4 @@
+// Post-compaction context loading for resumed sessions.
 import fs from "node:fs";
 import path from "node:path";
 import { resolveAgentContextLimits } from "../../agents/agent-scope.js";
@@ -52,6 +53,7 @@ export type PostCompactionContextOptions = {
   nowMs?: number;
 };
 
+/** Reused helper for read Post Compaction Context behavior in src/auto-reply/reply. */
 export async function readPostCompactionContext(
   workspaceDir: string,
   options?: PostCompactionContextOptions,

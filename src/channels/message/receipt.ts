@@ -1,3 +1,4 @@
+// Message receipt construction and id extraction helpers.
 import { normalizeUniqueStringEntries } from "../../shared/string-normalization.js";
 import type {
   MessageReceipt,
@@ -37,6 +38,7 @@ function appendUnique(values: string[], value: string | undefined): void {
   }
 }
 
+/** Create a normalized message receipt from one or more outbound send results. */
 export function createMessageReceiptFromOutboundResults(params: {
   results: readonly MessageReceiptInputResult[];
   kind?: MessageReceiptPartKind;
@@ -108,10 +110,12 @@ export function createMessageReceiptFromOutboundResults(params: {
   };
 }
 
+/** List all known platform ids from a message receipt. */
 export function listMessageReceiptPlatformIds(receipt: MessageReceipt): string[] {
   return normalizeUniqueStringEntries(receipt.platformMessageIds);
 }
 
+/** Resolve the primary platform message id from a receipt. */
 export function resolveMessageReceiptPrimaryId(receipt: MessageReceipt): string | undefined {
   const primary = receipt.primaryPlatformMessageId?.trim();
   if (primary) {

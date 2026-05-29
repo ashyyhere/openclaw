@@ -1,3 +1,4 @@
+// config plugin auto enable apply helpers and runtime behavior.
 import type { PluginDiscoveryResult } from "../plugins/discovery.js";
 import type { PluginManifestRegistry } from "../plugins/manifest-registry.js";
 import { detectPluginAutoEnableCandidates } from "./plugin-auto-enable.detect.js";
@@ -11,6 +12,7 @@ import type {
 } from "./plugin-auto-enable.types.js";
 import type { OpenClawConfig } from "./types.openclaw.js";
 
+/** Reused helper for materialize Plugin Auto Enable Candidates behavior in src/config. */
 export function materializePluginAutoEnableCandidates(params: {
   config?: OpenClawConfig;
   candidates: readonly PluginAutoEnableCandidate[];
@@ -41,6 +43,7 @@ export function materializePluginAutoEnableCandidates(params: {
   });
 }
 
+/** Reused helper for apply Plugin Auto Enable behavior in src/config. */
 export function applyPluginAutoEnable(params: {
   config?: OpenClawConfig;
   env?: NodeJS.ProcessEnv;

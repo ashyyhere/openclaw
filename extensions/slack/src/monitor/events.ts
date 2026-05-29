@@ -1,3 +1,4 @@
+// extensions/slack/src/monitor events helpers and runtime behavior.
 import type { ResolvedSlackAccount } from "../accounts.js";
 import type { SlackMonitorContext } from "./context.js";
 import { registerSlackAssistantEvents } from "./events/assistant.js";

@@ -1,3 +1,4 @@
+/** Regression coverage for spawned run metadata and workspace inheritance. */
 import { describe, expect, it } from "vitest";
 import {
   mapToolContextToSpawnedRunMetadata,

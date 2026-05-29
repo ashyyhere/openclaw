@@ -1,3 +1,4 @@
+// extensions/imessage/src setup surface helpers and runtime behavior.
 import {
   createDetectedBinaryStatus,
   setSetupChannelEnabled,

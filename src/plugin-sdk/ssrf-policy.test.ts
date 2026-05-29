@@ -1,3 +1,4 @@
+/** Tests SSRF policy SDK helpers. */
 import { describe, expect, it, vi } from "vitest";
 import type { LookupFn } from "../infra/net/ssrf.js";
 import {

@@ -1,3 +1,4 @@
+// Tests secrets runtime zalo token activity test behavior.
 import { describe, expect, it } from "vitest";
 import "./runtime-zalo.test-support.ts";
 import {

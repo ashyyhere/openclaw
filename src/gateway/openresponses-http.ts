@@ -198,6 +198,7 @@ function lookupResponseSession(
   return entry.sessionKey;
 }
 
+/** Reused constant for testing behavior in src/gateway. */
 export const testing = {
   resetResponseSessionState() {
     responseSessionMap.clear();
@@ -314,6 +315,7 @@ function applyToolChoice(params: {
   return { tools };
 }
 
+/** Re-exported API for src/gateway, starting with build Agent Prompt. */
 export { buildAgentPrompt } from "./openresponses-prompt.js";
 
 function createEmptyUsage(): Usage {
@@ -423,6 +425,7 @@ async function runResponsesAgentCommand(params: {
   );
 }
 
+/** Reused helper for handle Open Responses Http Request behavior in src/gateway. */
 export async function handleOpenResponsesHttpRequest(
   req: IncomingMessage,
   res: ServerResponse,
@@ -1214,4 +1217,5 @@ export async function handleOpenResponsesHttpRequest(
 
   return true;
 }
+/** Re-exported API for src/gateway, starting with testing. */
 export { testing as __testing };

@@ -1,9 +1,12 @@
+/** Serializes bounded append writes to diagnostic/session files. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { appendRegularFile, resolveRegularFileAppendFlags } from "../infra/fs-safe.js";
 
+/** Result of enqueueing a file write. */
 export type QueuedFileWriteResult = "queued" | "dropped";
 
+/** Queue and active-write diagnostics for a queued file writer. */
 export type QueuedFileWriterDiagnostics = {
   pendingWrites: number;
   queuedBytes: number;
@@ -14,6 +17,7 @@ export type QueuedFileWriterDiagnostics = {
   yieldBeforeWrite: boolean;
 };
 
+/** Per-file queued writer interface. */
 export type QueuedFileWriter = {
   filePath: string;
   write: (line: string) => unknown;
@@ -27,6 +31,7 @@ type QueuedFileWriterOptions = {
   yieldBeforeWrite?: boolean;
 };
 
+/** Expose append flags for callers that need matching safe-file semantics. */
 export const resolveQueuedFileAppendFlags = resolveRegularFileAppendFlags;
 
 async function safeAppendFile(
@@ -48,6 +53,7 @@ function waitForImmediate(): Promise<void> {
   });
 }
 
+/** Get or create a per-path queued writer with bounded queue/file size. */
 export function getQueuedFileWriter(
   writers: Map<string, QueuedFileWriter>,
   filePath: string,

@@ -1,3 +1,4 @@
+// cron isolated agent test setup helpers and runtime behavior.
 import { vi } from "vitest";
 import { runEmbeddedAgent } from "../agents/embedded-agent.js";
 import { loadModelCatalog } from "../agents/model-catalog.js";
@@ -149,6 +150,7 @@ telegramOutboundForTest.sendMedia = async ({
     }),
   );
 
+/** Reused helper for setup Isolated Agent Turn Mocks behavior in src/cron. */
 export function setupIsolatedAgentTurnMocks(params?: { fast?: boolean }): void {
   if (params?.fast) {
     vi.stubEnv("OPENCLAW_TEST_FAST", "1");

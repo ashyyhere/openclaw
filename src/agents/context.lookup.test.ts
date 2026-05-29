@@ -1,3 +1,4 @@
+/** Tests model context-window lookup and cache behavior. */
 import path from "node:path";
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 

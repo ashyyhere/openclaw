@@ -1,3 +1,4 @@
+// Tests tools availability test behavior.
 import { describe, expect, it } from "vitest";
 import { evaluateToolAvailability } from "./availability.js";
 import type { ToolDescriptor } from "./types.js";

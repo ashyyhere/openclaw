@@ -1,3 +1,4 @@
+// extensions/voice-call/src telephony audio helpers and runtime behavior.
 export { convertPcmToMulaw8k, resamplePcmTo8k } from "openclaw/plugin-sdk/realtime-voice";
 
 /**

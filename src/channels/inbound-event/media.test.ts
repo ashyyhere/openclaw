@@ -1,3 +1,4 @@
+// Coverage for inbound event media helpers.
 import { describe, expect, it } from "vitest";
 import { normalizeAttachments } from "../../media-understanding/attachments.normalize.js";
 import {

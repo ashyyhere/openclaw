@@ -1,3 +1,4 @@
+// extensions/discord/src outbound payload helpers and runtime behavior.
 import {
   attachChannelToResult,
   type ChannelOutboundAdapter,

@@ -1,3 +1,4 @@
+/** Tests compaction fallback summaries for oversized or failing histories. */
 import type { AgentMessage } from "openclaw/plugin-sdk/agent-core";
 import type { ExtensionContext } from "openclaw/plugin-sdk/agent-sessions";
 import type { UserMessage } from "openclaw/plugin-sdk/llm";

@@ -1,3 +1,4 @@
+/** JSON parser helpers that preserve unsafe integer literals as strings. */
 const MAX_SAFE_INTEGER_ABS_STR = String(Number.MAX_SAFE_INTEGER);
 
 function isAsciiDigit(ch: string | undefined): boolean {
@@ -70,6 +71,7 @@ function isUnsafeIntegerLiteral(token: string): boolean {
   return digits > MAX_SAFE_INTEGER_ABS_STR;
 }
 
+/** Quote unsafe integer literals before JSON.parse can lose precision. */
 export function quoteUnsafeIntegerLiterals(input: string): string {
   let out = "";
   let inString = false;
@@ -118,10 +120,12 @@ export function quoteUnsafeIntegerLiterals(input: string): string {
   return out;
 }
 
+/** Parse JSON while preserving unsafe integer literals as strings. */
 export function parseJsonPreservingUnsafeIntegers(input: string): unknown {
   return JSON.parse(quoteUnsafeIntegerLiterals(input)) as unknown;
 }
 
+/** Parse a JSON object while preserving unsafe integer literals as strings. */
 export function parseJsonObjectPreservingUnsafeIntegers(
   value: unknown,
 ): Record<string, unknown> | null {

@@ -1,3 +1,4 @@
+// plugins host hook attachments helpers and runtime behavior.
 import * as fsPromises from "node:fs/promises";
 import { lstat } from "node:fs/promises";
 import { resolveAgentWorkspaceDir } from "../agents/agent-scope.js";
@@ -19,6 +20,7 @@ import type {
 import type { PluginOrigin } from "./plugin-origin.types.js";
 
 const DEFAULT_ATTACHMENT_MAX_BYTES = 25 * 1024 * 1024;
+/** Reused constant for attachment Probe Fs behavior in src/plugins. */
 export const attachmentProbeFs = {
   open: (...args: Parameters<typeof fsPromises.open>) => fsPromises.open(...args),
 };
@@ -91,6 +93,7 @@ async function readMimeSniffBuffer(
   }
 }
 
+/** Reused helper for resolve Attachment Delivery behavior in src/plugins. */
 export function resolveAttachmentDelivery(params: {
   channel: string;
   captionFormat?: PluginSessionAttachmentCaptionFormat;
@@ -214,6 +217,7 @@ function normalizeOptionalThreadId(value: unknown): string | number | undefined 
   return normalizeOptionalString(value);
 }
 
+/** Reused helper for resolve Session Attachment Thread Id behavior in src/plugins. */
 export function resolveSessionAttachmentThreadId(params: {
   deliveryThreadId?: unknown;
   explicitThreadId?: unknown;
@@ -228,6 +232,7 @@ export function resolveSessionAttachmentThreadId(params: {
   );
 }
 
+/** Reused helper for send Plugin Session Attachment behavior in src/plugins. */
 export async function sendPluginSessionAttachment(
   params: PluginSessionAttachmentParams & { config?: OpenClawConfig; origin?: PluginOrigin },
 ): Promise<PluginSessionAttachmentResult> {

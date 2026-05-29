@@ -1,3 +1,4 @@
+// scripts/e2e/parallels npm update scripts helpers and runtime behavior.
 import { posixAgentWorkspaceScript, windowsAgentWorkspaceScript } from "./agent-workspace.ts";
 import { shellQuote } from "./host-command.ts";
 import { posixProviderOnlyPluginIsolationScript } from "./plugin-isolation.ts";

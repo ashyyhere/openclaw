@@ -1,3 +1,4 @@
+/** Matches tool names against exact and glob allow/deny policy entries. */
 import { compileGlobPatterns, matchesAnyGlobPattern } from "./glob-pattern.js";
 import type { SandboxToolPolicy } from "./sandbox/types.js";
 import { expandToolGroups, normalizeToolName } from "./tool-policy.js";
@@ -29,6 +30,7 @@ function makeToolPolicyMatcher(policy: SandboxToolPolicy) {
   };
 }
 
+/** Reused helper for is Tool Allowed By Policy Name behavior in src/agents. */
 export function isToolAllowedByPolicyName(name: string, policy?: SandboxToolPolicy): boolean {
   if (!policy) {
     return true;
@@ -36,6 +38,7 @@ export function isToolAllowedByPolicyName(name: string, policy?: SandboxToolPoli
   return makeToolPolicyMatcher(policy)(name);
 }
 
+/** Reused helper for is Tool Allowed By Policies behavior in src/agents. */
 export function isToolAllowedByPolicies(
   name: string,
   policies: Array<SandboxToolPolicy | undefined>,

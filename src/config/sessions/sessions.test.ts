@@ -1,3 +1,4 @@
+// Tests config/sessions sessions test behavior.
 import fs from "node:fs";
 import fsPromises from "node:fs/promises";
 import path from "node:path";

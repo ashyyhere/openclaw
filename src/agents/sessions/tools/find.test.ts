@@ -1,3 +1,4 @@
+/** Covers find tool command construction and result parsing. */
 import { describe, expect, it } from "vitest";
 import { createFindToolDefinition, type FindOperations } from "./find.js";
 

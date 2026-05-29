@@ -1,3 +1,4 @@
+// gateway test helpers agent results helpers and runtime behavior.
 type AgentDeltaEvent = {
   runId: string;
   stream: "assistant";
@@ -51,6 +52,7 @@ function extractCliStreamJsonText(text: string): string | null {
   return resultText ?? assistantText;
 }
 
+/** Reused helper for extract Payload Text behavior in src/gateway. */
 export function extractPayloadText(result: unknown): string {
   const record = result as Record<string, unknown>;
   const payloads = Array.isArray(record.payloads) ? record.payloads : [];
@@ -64,6 +66,7 @@ export function extractPayloadText(result: unknown): string {
   return extractCliStreamJsonText(joined) ?? joined;
 }
 
+/** Reused helper for build Assistant Delta Result behavior in src/gateway. */
 export function buildAssistantDeltaResult(params: {
   opts: unknown;
   emit: (event: AgentDeltaEvent) => void;

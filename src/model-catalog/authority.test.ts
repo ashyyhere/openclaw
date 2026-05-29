@@ -1,3 +1,4 @@
+// Tests model-catalog authority test behavior.
 import { describe, expect, it } from "vitest";
 import { mergeModelCatalogRowsByAuthority } from "./index.js";
 import type { ModelCatalogSource, NormalizedModelCatalogRow } from "./index.js";

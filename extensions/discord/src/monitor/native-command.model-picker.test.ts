@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/monitor native command model picker test behavior.
 import { mkdtemp, rm } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

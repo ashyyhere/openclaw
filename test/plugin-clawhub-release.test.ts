@@ -1,3 +1,4 @@
+// Tests test plugin clawhub release test behavior.
 import { execFileSync } from "node:child_process";
 import { chmodSync, mkdirSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
 import { delimiter, join } from "node:path";

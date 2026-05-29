@@ -1,3 +1,4 @@
+// Tests extensions/imessage/src config accessors test behavior.
 import { describe, expect, it } from "vitest";
 import {
   resolveIMessageConfigAllowFrom,

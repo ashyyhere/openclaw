@@ -1,3 +1,4 @@
+// secrets runtime web tools shared helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveSecretInputRef } from "../config/types.secrets.js";
 import { createLazyRuntimeNamedExport } from "../shared/lazy-runtime.js";
@@ -10,6 +11,7 @@ import type {
 } from "./runtime-shared.js";
 import { pushInactiveSurfaceWarning, pushWarning } from "./runtime-shared.js";
 import type { RuntimeWebDiagnostic, RuntimeWebDiagnosticCode } from "./runtime-web-tools.types.js";
+/** Re-exported API for src/secrets, starting with is Record. */
 export { isRecord } from "./shared.js";
 import { isRecord } from "./shared.js";
 
@@ -19,6 +21,7 @@ const loadResolveManifestContractOwnerPluginId = createLazyRuntimeNamedExport(
 );
 
 type RuntimeWebWarningCode = Extract<RuntimeWebDiagnosticCode, SecretResolverWarningCode>;
+/** Shared type for Secret Resolution Result in src/secrets. */
 export type SecretResolutionResult<TSource extends string> = {
   value?: string;
   source: TSource;
@@ -28,6 +31,7 @@ export type SecretResolutionResult<TSource extends string> = {
   fallbackUsedAfterRefFailure: boolean;
 };
 
+/** Shared type for Runtime Web Provider Metadata Base in src/secrets. */
 export type RuntimeWebProviderMetadataBase<TSource extends string> = {
   providerConfigured?: string;
   providerSource: "configured" | "auto-detect" | "none";
@@ -36,6 +40,7 @@ export type RuntimeWebProviderMetadataBase<TSource extends string> = {
   diagnostics: RuntimeWebDiagnostic[];
 };
 
+/** Shared type for Runtime Web Provider Selection Params in src/secrets. */
 export type RuntimeWebProviderSelectionParams<
   TProvider extends {
     id: string;
@@ -122,6 +127,7 @@ function pushInactiveProviderCredentialWarnings<
   }
 }
 
+/** Reused helper for ensure Object behavior in src/secrets. */
 export function ensureObject(
   target: Record<string, unknown>,
   key: string,
@@ -149,6 +155,7 @@ function normalizeKnownProvider(
   return undefined;
 }
 
+/** Reused helper for has Configured Secret Ref behavior in src/secrets. */
 export function hasConfiguredSecretRef(
   value: unknown,
   defaults: SecretDefaults | undefined,
@@ -188,6 +195,7 @@ function setResolvedCredentialPath(params: {
   }
 }
 
+/** Shared type for Runtime Web Provider Surface in src/secrets. */
 export type RuntimeWebProviderSurface<TProvider extends { id: string }> = {
   providers: TProvider[];
   configuredProvider?: string;
@@ -195,6 +203,7 @@ export type RuntimeWebProviderSurface<TProvider extends { id: string }> = {
   hasConfiguredSurface: boolean;
 };
 
+/** Shared type for Resolve Runtime Web Provider Surface Params in src/secrets. */
 export type ResolveRuntimeWebProviderSurfaceParams<
   TProvider extends {
     id: string;
@@ -229,6 +238,7 @@ export type ResolveRuntimeWebProviderSurfaceParams<
   normalizeConfiguredProviderAgainstActiveProviders?: boolean;
 };
 
+/** Reused helper for resolve Runtime Web Provider Surface behavior in src/secrets. */
 export async function resolveRuntimeWebProviderSurface<
   TProvider extends {
     id: string;
@@ -334,6 +344,7 @@ export async function resolveRuntimeWebProviderSurface<
   };
 }
 
+/** Reused helper for resolve Runtime Web Provider Selection behavior in src/secrets. */
 export async function resolveRuntimeWebProviderSelection<
   TProvider extends {
     id: string;

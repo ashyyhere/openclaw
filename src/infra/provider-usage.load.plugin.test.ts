@@ -1,3 +1,4 @@
+// Tests infra provider usage load plugin test behavior.
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { createProviderUsageFetch } from "../test-utils/provider-usage-fetch.js";
 

@@ -1,3 +1,4 @@
+// infra git commit helpers and runtime behavior.
 import fs from "node:fs";
 import { createRequire } from "node:module";
 import path from "node:path";
@@ -23,6 +24,7 @@ const formatCommit = (value?: string | null) => {
 
 const cachedGitCommitBySearchDir = new Map<string, string | null>();
 
+/** Shared type for Commit Metadata Readers in src/infra. */
 export type CommitMetadataReaders = {
   readGitCommit?: (searchDir: string, packageRoot: string | null) => string | null | undefined;
   readBuildInfoCommit?: () => string | null;
@@ -210,6 +212,7 @@ const readCommitFromBuildInfo = () => {
   }
 };
 
+/** Reused constant for resolve Commit Hash behavior in src/infra. */
 export const resolveCommitHash = (
   options: {
     cwd?: string;
@@ -257,7 +260,9 @@ export const resolveCommitHash = (
   }
 };
 
+/** Reused constant for testing behavior in src/infra. */
 export const testing = {
   clearCachedGitCommits,
 };
+/** Re-exported API for src/infra, starting with testing. */
 export { testing as __testing };

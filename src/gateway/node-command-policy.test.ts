@@ -1,3 +1,4 @@
+// Tests gateway node command policy test behavior.
 import { afterEach, describe, expect, it } from "vitest";
 import {
   GATEWAY_CLIENT_IDS,

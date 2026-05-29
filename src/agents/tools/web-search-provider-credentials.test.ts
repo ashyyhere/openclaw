@@ -1,3 +1,4 @@
+/** Covers web search provider credential resolution. */
 import { describe, expect, it } from "vitest";
 import { withEnv } from "../../test-utils/env.js";
 import { resolveWebSearchProviderCredential } from "./web-search-provider-credentials.js";

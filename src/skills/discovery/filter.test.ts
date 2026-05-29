@@ -1,3 +1,4 @@
+/** Covers skill filter normalization and matching. */
 import { describe, expect, it } from "vitest";
 import {
   matchesSkillFilter,

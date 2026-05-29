@@ -1,3 +1,5 @@
+// packages/speech-core api helpers and runtime behavior.
+/** Re-exported public API for packages/speech-core. */
 export {
   asBoolean,
   asFiniteNumber,
@@ -26,6 +28,7 @@ export {
   truncateErrorDetail,
   TTS_AUTO_MODES,
 } from "openclaw/plugin-sdk/speech-core";
+/** Re-exported public API for packages/speech-core. */
 export type {
   ResolvedTtsConfig,
   ResolvedTtsModelOverrides,

@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix/send formatting helpers and runtime behavior.
 import { getMatrixRuntime } from "../../runtime.js";
 import {
   markdownToMatrixHtml,

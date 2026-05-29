@@ -1,3 +1,4 @@
+// ui/src/test-helpers storage helpers and runtime behavior.
 export function createStorageMock(): Storage {
   const store = new Map<string, string>();
   return {

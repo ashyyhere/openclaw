@@ -1,3 +1,4 @@
+// Main inline directive application pipeline for reply handling.
 import { resolveAgentDir, resolveSessionAgentId } from "../../agents/agent-scope.js";
 import { renderExecTargetLabel } from "../../agents/bash-tools.exec-runtime.js";
 import { resolveExecDefaults } from "../../agents/exec-defaults.js";
@@ -34,6 +35,7 @@ import type { ElevatedLevel, ReasoningLevel, ThinkLevel } from "./directives.js"
 import { refreshQueuedFollowupSession } from "./queue.js";
 import { resolveRuntimePolicySessionKey } from "./runtime-policy-session-key.js";
 
+/** Reused helper for handle Directive Only behavior in src/auto-reply/reply. */
 export async function handleDirectiveOnly(
   params: HandleDirectiveOnlyParams,
 ): Promise<ReplyPayload | undefined> {

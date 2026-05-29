@@ -1,3 +1,4 @@
+/** Type-level compatibility checks for runtime plan public contracts. */
 import { describe, expectTypeOf, it } from "vitest";
 import type { ReplyPayload } from "../../auto-reply/reply-payload.js";
 import type { ThinkLevel } from "../../auto-reply/thinking.js";

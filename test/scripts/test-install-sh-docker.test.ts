@@ -1,3 +1,4 @@
+// Tests test/scripts test install sh docker test behavior.
 import { spawnSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { runInNewContext } from "node:vm";

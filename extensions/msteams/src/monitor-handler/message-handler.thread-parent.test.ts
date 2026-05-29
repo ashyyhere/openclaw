@@ -1,3 +1,4 @@
+// Tests extensions/msteams/src/monitor-handler message handler thread parent test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../../runtime-api.js";
 import { resetThreadParentContextCachesForTest } from "../thread-parent-context.js";

@@ -1,3 +1,4 @@
+/** Tests gateway RPC runtime request dispatch and timeout handling. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const callGatewayMock = vi.fn(async () => ({ ok: true }));

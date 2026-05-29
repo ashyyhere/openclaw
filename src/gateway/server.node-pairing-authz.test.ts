@@ -1,3 +1,4 @@
+// Tests gateway server node pairing authz test behavior.
 import { afterAll, beforeAll, describe, expect, test, vi } from "vitest";
 import { WebSocket } from "ws";
 import {

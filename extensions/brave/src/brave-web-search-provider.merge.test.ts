@@ -1,3 +1,4 @@
+// Tests extensions/brave/src brave web search provider merge test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { createBraveWebSearchProvider } from "./brave-web-search-provider.js";
 

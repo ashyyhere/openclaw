@@ -1,3 +1,4 @@
+// scripts/e2e mcp connect timeout helpers and runtime behavior.
 type McpConnectTransport = {
   close?(): Promise<void> | void;
 };

@@ -1,3 +1,4 @@
+/** Loads and formats CLI session history for reseeding and context engines. */
 import fsp from "node:fs/promises";
 import path from "node:path";
 import {
@@ -14,9 +15,13 @@ import {
 import type { AgentMessage } from "../runtime/index.js";
 import { migrateSessionEntries, parseSessionEntries } from "../sessions/index.js";
 
+/** Reused constant for MAX CLI SESSION HISTORY FILE BYTES behavior in src/agents/cli-runner. */
 export const MAX_CLI_SESSION_HISTORY_FILE_BYTES = 5 * 1024 * 1024;
+/** Reused constant for MAX CLI SESSION HISTORY MESSAGES behavior in src/agents/cli-runner. */
 export const MAX_CLI_SESSION_HISTORY_MESSAGES = MAX_AGENT_HOOK_HISTORY_MESSAGES;
+/** Reused constant for MAX CLI SESSION RESEED HISTORY CHARS behavior in src/agents/cli-runner. */
 export const MAX_CLI_SESSION_RESEED_HISTORY_CHARS = 12 * 1024;
+/** Reused constant for MAX AUTO CLI SESSION RESEED HISTORY CHARS behavior in src/agents/cli-runner. */
 export const MAX_AUTO_CLI_SESSION_RESEED_HISTORY_CHARS = 256 * 1024;
 const CLI_SESSION_RESEED_HISTORY_CONTEXT_SHARE = 0.08;
 const CHARS_PER_TOKEN_ESTIMATE = 4;
@@ -60,6 +65,7 @@ const RAW_TRANSCRIPT_RESEED_ALLOWED_REASONS = new Set<RawTranscriptReseedReason>
   "session-expired",
 ]);
 
+/** Reused helper for resolve Auto Cli Session Reseed History Chars behavior in src/agents/cli-runner. */
 export function resolveAutoCliSessionReseedHistoryChars(contextWindowTokens: number): number {
   if (!Number.isFinite(contextWindowTokens) || contextWindowTokens <= 0) {
     return MAX_CLI_SESSION_RESEED_HISTORY_CHARS;
@@ -157,6 +163,7 @@ function renderHistoryMessage(message: unknown): string | undefined {
   return text ? `${role}: ${text}` : undefined;
 }
 
+/** Reused helper for build Cli Session History Prompt behavior in src/agents/cli-runner. */
 export function buildCliSessionHistoryPrompt(params: {
   messages: unknown[];
   prompt: string;
@@ -325,6 +332,7 @@ async function loadCliSessionEntries(params: {
   }
 }
 
+/** Reused helper for has Cli Session Transcript behavior in src/agents/cli-runner. */
 export async function hasCliSessionTranscript(params: {
   sessionId: string;
   sessionFile: string;
@@ -354,6 +362,7 @@ export async function hasCliSessionTranscript(params: {
   }
 }
 
+/** Reused helper for load Cli Session History Messages behavior in src/agents/cli-runner. */
 export async function loadCliSessionHistoryMessages(params: {
   sessionId: string;
   sessionFile: string;
@@ -368,6 +377,7 @@ export async function loadCliSessionHistoryMessages(params: {
   return limitAgentHookHistoryMessages(history, MAX_CLI_SESSION_HISTORY_MESSAGES);
 }
 
+/** Reused helper for load Cli Session Context Engine Messages behavior in src/agents/cli-runner. */
 export async function loadCliSessionContextEngineMessages(params: {
   sessionId: string;
   sessionFile: string;
@@ -411,6 +421,7 @@ export async function loadCliSessionContextEngineMessages(params: {
   ];
 }
 
+/** Reused helper for load Cli Session Reseed Messages behavior in src/agents/cli-runner. */
 export async function loadCliSessionReseedMessages(params: {
   sessionId: string;
   sessionFile: string;

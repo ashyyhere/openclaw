@@ -1,3 +1,4 @@
+// Tests extensions/codex/src/app-server thread lifecycle user mcp servers test behavior.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

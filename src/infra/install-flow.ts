@@ -1,3 +1,4 @@
+// infra install flow helpers and runtime behavior.
 import type { Stats } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -17,6 +18,7 @@ type ExistingInstallPathResult =
       error: string;
     };
 
+/** Reused helper for resolve Existing Install Path behavior in src/infra. */
 export async function resolveExistingInstallPath(
   inputPath: string,
 ): Promise<ExistingInstallPathResult> {
@@ -28,6 +30,7 @@ export async function resolveExistingInstallPath(
   return { ok: true, resolvedPath, stat };
 }
 
+/** Reused helper for with Extracted Archive Root behavior in src/infra. */
 export async function withExtractedArchiveRoot<TResult extends { ok: boolean }>(params: {
   archivePath: string;
   tempDirPrefix: string;

@@ -1,3 +1,4 @@
+// infra runtime guard helpers and runtime behavior.
 import process from "node:process";
 import { defaultRuntime, type RuntimeEnv } from "../runtime.js";
 
@@ -12,6 +13,7 @@ type Semver = {
 const MIN_NODE: Semver = { major: 22, minor: 19, patch: 0 };
 const MINIMUM_ENGINE_RE = /^\s*>=\s*v?(\d+\.\d+\.\d+)\s*$/i;
 
+/** Shared type for Runtime Details in src/infra. */
 export type RuntimeDetails = {
   kind: RuntimeKind;
   version: string | null;
@@ -21,6 +23,7 @@ export type RuntimeDetails = {
 
 const SEMVER_RE = /(\d+)\.(\d+)\.(\d+)/;
 
+/** Reused helper for parse Semver behavior in src/infra. */
 export function parseSemver(version: string | null): Semver | null {
   if (!version) {
     return null;
@@ -37,6 +40,7 @@ export function parseSemver(version: string | null): Semver | null {
   };
 }
 
+/** Reused helper for is At Least behavior in src/infra. */
 export function isAtLeast(version: Semver | null, minimum: Semver): boolean {
   if (!version) {
     return false;
@@ -50,6 +54,7 @@ export function isAtLeast(version: Semver | null, minimum: Semver): boolean {
   return version.patch >= minimum.patch;
 }
 
+/** Reused helper for detect Runtime behavior in src/infra. */
 export function detectRuntime(): RuntimeDetails {
   const kind: RuntimeKind = process.versions?.node ? "node" : "unknown";
   const version = process.versions?.node ?? null;
@@ -62,6 +67,7 @@ export function detectRuntime(): RuntimeDetails {
   };
 }
 
+/** Reused helper for runtime Satisfies behavior in src/infra. */
 export function runtimeSatisfies(details: RuntimeDetails): boolean {
   const parsed = parseSemver(details.version);
   if (details.kind === "node") {
@@ -70,10 +76,12 @@ export function runtimeSatisfies(details: RuntimeDetails): boolean {
   return false;
 }
 
+/** Reused helper for is Supported Node Version behavior in src/infra. */
 export function isSupportedNodeVersion(version: string | null): boolean {
   return isAtLeast(parseSemver(version), MIN_NODE);
 }
 
+/** Reused helper for parse Minimum Node Engine behavior in src/infra. */
 export function parseMinimumNodeEngine(engine: string | null): Semver | null {
   if (!engine) {
     return null;
@@ -85,6 +93,7 @@ export function parseMinimumNodeEngine(engine: string | null): Semver | null {
   return parseSemver(match[1] ?? null);
 }
 
+/** Reused helper for node Version Satisfies Engine behavior in src/infra. */
 export function nodeVersionSatisfiesEngine(
   version: string | null,
   engine: string | null,
@@ -96,6 +105,7 @@ export function nodeVersionSatisfiesEngine(
   return isAtLeast(parseSemver(version), minimum);
 }
 
+/** Reused helper for assert Supported Runtime behavior in src/infra. */
 export function assertSupportedRuntime(
   runtime: RuntimeEnv = defaultRuntime,
   details: RuntimeDetails = detectRuntime(),

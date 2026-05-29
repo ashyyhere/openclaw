@@ -1,3 +1,4 @@
+// extensions/brave/src brave web search provider shared helpers and runtime behavior.
 import {
   normalizeLowercaseStringOrEmpty,
   normalizeOptionalString,

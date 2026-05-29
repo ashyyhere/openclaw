@@ -1,3 +1,4 @@
+// Microsoft Teams credential and Graph delegated-auth probe helpers.
 import { isFutureDateTimestampMs } from "openclaw/plugin-sdk/number-runtime";
 import {
   normalizeStringEntries,

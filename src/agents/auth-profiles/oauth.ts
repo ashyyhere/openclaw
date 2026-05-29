@@ -1,3 +1,4 @@
+/** Runtime OAuth refresh and API-key resolution entry points. */
 import { getRuntimeConfig } from "../../config/config.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { coerceSecretRef } from "../../config/types.secrets.js";
@@ -39,6 +40,7 @@ import {
 } from "./store.js";
 import type { AuthProfileCredential, AuthProfileStore, OAuthCredential } from "./types.js";
 
+/** Re-exported API for src/agents/auth-profiles. */
 export {
   isSafeToCopyOAuthIdentity,
   isSameOAuthIdentity,
@@ -46,6 +48,7 @@ export {
   normalizeAuthIdentityToken,
   shouldMirrorRefreshedOAuthCredential,
 } from "./oauth-identity.js";
+/** Re-exported API for src/agents/auth-profiles, starting with OAuth Mirror Decision. */
 export type { OAuthMirrorDecision, OAuthMirrorDecisionReason } from "./oauth-identity.js";
 
 function listOAuthProviderIds(): string[] {
@@ -157,6 +160,7 @@ function extractErrorMessage(error: unknown): string {
   return formatErrorMessage(error);
 }
 
+/** Reused helper for is Refresh Token Reused Error behavior in src/agents/auth-profiles. */
 export function isRefreshTokenReusedError(error: unknown): boolean {
   const message = normalizeLowercaseStringOrEmpty(extractErrorMessage(error));
   return (
@@ -201,6 +205,7 @@ async function refreshOAuthCredential(
   return result?.newCredentials ?? null;
 }
 
+/** Reused helper for refresh OAuth Credential For Runtime behavior in src/agents/auth-profiles. */
 export async function refreshOAuthCredentialForRuntime(params: {
   credential: OAuthCredential;
 }): Promise<OAuthCredential | null> {
@@ -233,6 +238,7 @@ const oauthManager = createOAuthManager({
   isRefreshTokenReusedError,
 });
 
+/** Reused helper for reset OAuth Refresh Queues For Test behavior in src/agents/auth-profiles. */
 export function resetOAuthRefreshQueuesForTest(): void {
   oauthManager.resetRefreshQueuesForTest();
 }
@@ -327,6 +333,7 @@ async function resolveProfileSecretString(params: {
   return normalizeOptionalSecretInput(resolvedValue);
 }
 
+/** Reused helper for resolve Api Key For Profile behavior in src/agents/auth-profiles. */
 export async function resolveApiKeyForProfile(
   params: ResolveApiKeyForProfileParams,
 ): Promise<ResolveApiKeyForProfileResult | null> {

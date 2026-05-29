@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix/actions pins helpers and runtime behavior.
 import { withResolvedRoomAction } from "./client.js";
 import { fetchEventSummary, readPinnedEvents } from "./summary.js";
 import {

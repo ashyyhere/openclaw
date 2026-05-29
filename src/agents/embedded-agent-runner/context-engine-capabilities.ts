@@ -1,8 +1,10 @@
+/** Resolves context-engine capability flags for embedded-agent runtime choices. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { ContextEngineRuntimeContext } from "../../context-engine/types.js";
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 import { resolveBoundAgentIdForSession } from "../session-agent-binding.js";
 
+/** Shared type for Resolve Context Engine Capabilities Params in src/agents/embedded-agent-runner. */
 export type ResolveContextEngineCapabilitiesParams = {
   config?: OpenClawConfig;
   sessionKey?: string;

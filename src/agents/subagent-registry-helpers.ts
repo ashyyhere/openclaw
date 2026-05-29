@@ -1,3 +1,4 @@
+/** Shared retry, orphan reconciliation, persistence, and attachment cleanup helpers. */
 import fsSync, { promises as fs } from "node:fs";
 import path from "node:path";
 import { DEFAULT_SUBAGENT_ARCHIVE_AFTER_MINUTES } from "../config/agent-limits.js";
@@ -24,22 +25,28 @@ import {
   resolveSubagentSessionStatus,
 } from "./subagent-session-metrics.js";
 
+/** Re-exported API for src/agents. */
 export {
   getSubagentSessionRuntimeMs,
   getSubagentSessionStartedAt,
   resolveSubagentSessionStatus,
 } from "./subagent-session-metrics.js";
 
+/** Reused constant for MIN ANNOUNCE RETRY DELAY MS behavior in src/agents. */
 export const MIN_ANNOUNCE_RETRY_DELAY_MS = 1_000;
 const MAX_ANNOUNCE_RETRY_DELAY_MS = 8_000;
+/** Reused constant for MAX ANNOUNCE RETRY COUNT behavior in src/agents. */
 export const MAX_ANNOUNCE_RETRY_COUNT = 3;
+/** Reused constant for ANNOUNCE EXPIRY MS behavior in src/agents. */
 export const ANNOUNCE_EXPIRY_MS = 5 * 60_000;
+/** Reused constant for ANNOUNCE COMPLETION HARD EXPIRY MS behavior in src/agents. */
 export const ANNOUNCE_COMPLETION_HARD_EXPIRY_MS = 30 * 60_000;
 
 const FROZEN_RESULT_TEXT_MAX_BYTES = 100 * 1024;
 
 type SubagentRunOrphanReason = "missing-session-entry" | "missing-session-id" | "stale-unended-run";
 
+/** Reused helper for cap Frozen Result Text behavior in src/agents. */
 export function capFrozenResultText(resultText: string): string {
   const trimmed = resultText.trim();
   if (!trimmed) {
@@ -58,6 +65,7 @@ export function capFrozenResultText(resultText: string): string {
   return `${payload}${notice}`;
 }
 
+/** Reused helper for resolve Announce Retry Delay Ms behavior in src/agents. */
 export function resolveAnnounceRetryDelayMs(retryCount: number) {
   const boundedRetryCount = Math.max(0, Math.min(retryCount, 10));
   // retryCount is "attempts already made", so retry #1 waits 1s, then 2s, 4s...
@@ -71,6 +79,7 @@ function formatAnnounceGiveUpLogField(value: string): string {
   return JSON.stringify(normalized.length > 2_000 ? `${normalized.slice(0, 2_000)}…` : normalized);
 }
 
+/** Reused helper for log Announce Give Up behavior in src/agents. */
 export function logAnnounceGiveUp(entry: SubagentRunRecord, reason: "retry-limit" | "expiry") {
   const retryCount = getDeliveryAttemptCount(entry);
   const endedAgoMs =
@@ -99,6 +108,7 @@ function findSessionEntryByKey(store: Record<string, SessionEntry>, sessionKey: 
   return undefined;
 }
 
+/** Reused helper for persist Subagent Session Timing behavior in src/agents. */
 export async function persistSubagentSessionTiming(entry: SubagentRunRecord) {
   const childSessionKey = entry.childSessionKey?.trim();
   if (!childSessionKey) {
@@ -149,6 +159,7 @@ export async function persistSubagentSessionTiming(entry: SubagentRunRecord) {
   });
 }
 
+/** Reused helper for resolve Subagent Run Orphan Reason behavior in src/agents. */
 export function resolveSubagentRunOrphanReason(params: {
   entry: SubagentRunRecord;
   storeCache?: Map<string, Record<string, SessionEntry>>;
@@ -196,6 +207,7 @@ function isResolvedChildPath(params: { childPath: string; rootPath: string }) {
   return params.childPath.startsWith(rootWithSep);
 }
 
+/** Reused helper for safe Remove Attachments Dir behavior in src/agents. */
 export async function safeRemoveAttachmentsDir(entry: SubagentRunRecord): Promise<void> {
   if (!entry.attachmentsDir || !entry.attachmentsRootDir) {
     return;
@@ -265,6 +277,7 @@ function safeRemoveAttachmentsDirSync(entry: SubagentRunRecord): void {
   }
 }
 
+/** Reused helper for reconcile Orphaned Run behavior in src/agents. */
 export function reconcileOrphanedRun(params: {
   runId: string;
   entry: SubagentRunRecord;
@@ -321,6 +334,7 @@ export function reconcileOrphanedRun(params: {
   return true;
 }
 
+/** Reused helper for reconcile Orphaned Restored Runs behavior in src/agents. */
 export function reconcileOrphanedRestoredRuns(params: {
   runs: Map<string, SubagentRunRecord>;
   resumedRuns: Set<string>;
@@ -354,6 +368,7 @@ export function reconcileOrphanedRestoredRuns(params: {
   return changed;
 }
 
+/** Reused helper for resolve Archive After Ms behavior in src/agents. */
 export function resolveArchiveAfterMs(cfg?: OpenClawConfig) {
   const config = cfg ?? getRuntimeConfig();
   const minutes =

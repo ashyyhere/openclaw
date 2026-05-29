@@ -1,3 +1,4 @@
+// Tests gateway server lazy test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const lazyState = vi.hoisted(() => ({

@@ -1,3 +1,4 @@
+/** Resolves gateway auth tokens for daemon drift checks. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { resolveGatewayAuthToken } from "../../gateway/auth-token-resolution.js";
 import { createGatewayCredentialPlan } from "../../gateway/credential-planner.js";
@@ -21,6 +22,7 @@ function isPasswordFallbackActive(params: {
   return plan.passwordCanWin && !plan.tokenCanWin;
 }
 
+/** Reused helper for resolve Gateway Token For Drift Check behavior in src/cli/daemon-cli. */
 export async function resolveGatewayTokenForDriftCheck(params: {
   cfg: OpenClawConfig;
   env?: NodeJS.ProcessEnv;

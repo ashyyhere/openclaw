@@ -1,3 +1,4 @@
+// extensions/xiaomi thinking helpers and runtime behavior.
 import type { ProviderThinkingProfile } from "openclaw/plugin-sdk/plugin-entry";
 import { XIAOMI_PROVIDER_ID, XIAOMI_TOKEN_PLAN_PROVIDER_ID } from "./provider-catalog.js";
 

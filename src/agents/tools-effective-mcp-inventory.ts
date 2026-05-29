@@ -1,3 +1,4 @@
+/** Builds effective MCP tool inventory rows. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { ProviderRuntimeModel } from "../plugins/provider-runtime-model.types.js";
 import {
@@ -69,18 +70,22 @@ function buildMcpToolInventoryEntries(
 ): EffectiveToolInventoryEntry[] {
   return disambiguateLabels(
     tools
-      .map((tool) => ({
-        id: tool.name,
-        label: resolveMcpToolLabel(tool),
-        description: summarizeToolDescription(tool),
-        rawDescription: resolveRawToolDescription(tool) || summarizeToolDescription(tool),
-        source: "mcp",
-        pluginId: BUNDLE_MCP_PLUGIN_ID,
-      }) satisfies EffectiveToolInventoryEntry)
+      .map(
+        (tool) =>
+          ({
+            id: tool.name,
+            label: resolveMcpToolLabel(tool),
+            description: summarizeToolDescription(tool),
+            rawDescription: resolveRawToolDescription(tool) || summarizeToolDescription(tool),
+            source: "mcp",
+            pluginId: BUNDLE_MCP_PLUGIN_ID,
+          }) satisfies EffectiveToolInventoryEntry,
+      )
       .toSorted((a, b) => a.label.localeCompare(b.label)),
   );
 }
 
+/** Reused helper for build Runtime Compatible Mcp Tool Inventory behavior in src/agents. */
 export function buildRuntimeCompatibleMcpToolInventory(params: {
   tools: readonly AnyAgentTool[];
   cfg: OpenClawConfig;

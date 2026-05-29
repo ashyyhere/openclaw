@@ -1,3 +1,4 @@
+// Coverage for directive model picker behavior.
 import { describe, expect, it } from "vitest";
 import {
   buildModelPickerItems,

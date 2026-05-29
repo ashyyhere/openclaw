@@ -1,8 +1,10 @@
+// plugins api builder helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { attachPluginApiFacades, type OpenClawPluginApiWithoutFacades } from "./api-facades.js";
 import type { PluginRuntime } from "./runtime/types.js";
 import type { OpenClawPluginApi, PluginLogger } from "./types.js";
 
+/** Shared type for Build Plugin Api Params in src/plugins. */
 export type BuildPluginApiParams = {
   id: string;
   name: string;
@@ -179,6 +181,7 @@ const noopRegisterMemoryEmbeddingProvider: OpenClawPluginApi["registerMemoryEmbe
   () => {};
 const noopOn: OpenClawPluginApi["on"] = () => {};
 
+/** Reused helper for build Plugin Api behavior in src/plugins. */
 export function buildPluginApi(params: BuildPluginApiParams): OpenClawPluginApi {
   const handlers = params.handlers ?? {};
   const registerCli = handlers.registerCli ?? noopRegisterCli;

@@ -1,3 +1,4 @@
+// Coverage for fuzzy model directive selection when aliases are ambiguous.
 import { describe, expect, it } from "vitest";
 import type { ModelAliasIndex } from "../agents/model-selection-shared.js";
 import { resolveModelDirectiveSelection } from "./reply/model-selection-directive.js";

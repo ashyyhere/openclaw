@@ -1,3 +1,4 @@
+// logging diagnostic phase helpers and runtime behavior.
 import { performance } from "node:perf_hooks";
 import {
   areDiagnosticsEnabledForProcess,
@@ -34,6 +35,7 @@ function pushRecentPhase(snapshot: DiagnosticPhaseSnapshot): void {
   }
 }
 
+/** Reused helper for get Current Diagnostic Phase behavior in src/logging. */
 export function getCurrentDiagnosticPhase(): string | undefined {
   return activePhaseStack.at(-1)?.name;
 }
@@ -45,6 +47,7 @@ function resolveRecentPhaseLimit(limit: number): number | null {
   return Math.floor(limit);
 }
 
+/** Reused helper for get Recent Diagnostic Phases behavior in src/logging. */
 export function getRecentDiagnosticPhases(limit = 8): DiagnosticPhaseSnapshot[] {
   const resolved = resolveRecentPhaseLimit(limit);
   if (resolved === null) {
@@ -53,6 +56,7 @@ export function getRecentDiagnosticPhases(limit = 8): DiagnosticPhaseSnapshot[] 
   return recentPhases.slice(-resolved).map((phase) => Object.assign({}, phase));
 }
 
+/** Reused helper for record Diagnostic Phase behavior in src/logging. */
 export function recordDiagnosticPhase(snapshot: DiagnosticPhaseSnapshot): void {
   pushRecentPhase(snapshot);
   if (!areDiagnosticsEnabledForProcess()) {
@@ -64,6 +68,7 @@ export function recordDiagnosticPhase(snapshot: DiagnosticPhaseSnapshot): void {
   });
 }
 
+/** Reused helper for with Diagnostic Phase behavior in src/logging. */
 export async function withDiagnosticPhase<T>(
   name: string,
   run: () => Promise<T> | T,
@@ -101,6 +106,7 @@ export async function withDiagnosticPhase<T>(
   }
 }
 
+/** Reused helper for reset Diagnostic Phases For Test behavior in src/logging. */
 export function resetDiagnosticPhasesForTest(): void {
   activePhaseStack = [];
   recentPhases = [];

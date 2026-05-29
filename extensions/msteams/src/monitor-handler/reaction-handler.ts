@@ -1,3 +1,4 @@
+// extensions/msteams/src/monitor-handler reaction handler helpers and runtime behavior.
 import { normalizeMSTeamsConversationId } from "../inbound.js";
 import type { MSTeamsMessageHandlerDeps } from "../monitor-handler.types.js";
 import { getMSTeamsRuntime } from "../runtime.js";

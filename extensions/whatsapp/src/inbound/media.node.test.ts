@@ -1,3 +1,4 @@
+// Tests extensions/whatsapp/src/inbound media node test behavior.
 import { Readable } from "node:stream";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { mockNormalizeMessageContent } from "../../../../test/mocks/baileys.js";

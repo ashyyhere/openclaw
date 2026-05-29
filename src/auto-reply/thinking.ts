@@ -6,6 +6,7 @@ import {
   THINKING_LEVEL_RANKS,
 } from "./thinking.shared.js";
 import type { ThinkLevel, ThinkingCatalogEntry } from "./thinking.shared.js";
+/** Re-exported API for src/auto-reply. */
 export {
   formatXHighModelHint,
   isSessionDefaultDirectiveValue,
@@ -20,6 +21,7 @@ export {
   resolveResponseUsageMode,
   resolveElevatedMode,
 } from "./thinking.shared.js";
+/** Re-exported API for src/auto-reply. */
 export type {
   ElevatedLevel,
   ElevatedMode,
@@ -43,6 +45,7 @@ import {
   normalizeOptionalString,
 } from "../shared/string-coerce.js";
 
+/** Shared type for Thinking Level Option in src/auto-reply. */
 export type ThinkingLevelOption = {
   id: ThinkLevel;
   label: string;
@@ -172,6 +175,7 @@ function appendProfileLevel(profile: ResolvedThinkingProfile, id: ThinkLevel) {
   profile.levels = profile.levels.toSorted((a, b) => a.rank - b.rank);
 }
 
+/** Reused helper for resolve Thinking Profile behavior in src/auto-reply. */
 export function resolveThinkingProfile(params: {
   provider?: string | null;
   model?: string | null;
@@ -238,6 +242,7 @@ export function resolveThinkingProfile(params: {
   return profile;
 }
 
+/** Reused helper for is Binary Thinking Provider behavior in src/auto-reply. */
 export function isBinaryThinkingProvider(provider?: string | null, model?: string | null): boolean {
   const profile = resolveThinkingProfile({ provider, model });
   return profile.levels.length === 2 && profile.levels.some((level) => level.label === "on");
@@ -254,10 +259,12 @@ function supportsThinkingLevel(
   );
 }
 
+/** Reused helper for supports XHigh Thinking behavior in src/auto-reply. */
 export function supportsXHighThinking(provider?: string | null, model?: string | null): boolean {
   return supportsThinkingLevel(provider, model, "xhigh");
 }
 
+/** Reused helper for list Thinking Levels behavior in src/auto-reply. */
 export function listThinkingLevels(
   provider?: string | null,
   model?: string | null,
@@ -267,6 +274,7 @@ export function listThinkingLevels(
   return profile.levels.map((level) => level.id);
 }
 
+/** Reused helper for list Thinking Level Options behavior in src/auto-reply. */
 export function listThinkingLevelOptions(
   provider?: string | null,
   model?: string | null,
@@ -276,6 +284,7 @@ export function listThinkingLevelOptions(
   return profile.levels.map(({ id, label }) => ({ id, label }));
 }
 
+/** Reused helper for list Thinking Level Labels behavior in src/auto-reply. */
 export function listThinkingLevelLabels(
   provider?: string | null,
   model?: string | null,
@@ -284,6 +293,7 @@ export function listThinkingLevelLabels(
   return listThinkingLevelOptions(provider, model, catalog).map((level) => level.label);
 }
 
+/** Reused helper for format Thinking Levels behavior in src/auto-reply. */
 export function formatThinkingLevels(
   provider?: string | null,
   model?: string | null,
@@ -294,6 +304,7 @@ export function formatThinkingLevels(
   return profile.levels.map(({ label }) => label).join(separator);
 }
 
+/** Reused helper for resolve Thinking Default For Model behavior in src/auto-reply. */
 export function resolveThinkingDefaultForModel(params: {
   provider: string;
   model: string;
@@ -314,6 +325,7 @@ export function resolveThinkingDefaultForModel(params: {
   return resolveSupportedThinkingLevelFromProfile(profile, "medium");
 }
 
+/** Reused helper for resolve Largest Supported Thinking Level behavior in src/auto-reply. */
 export function resolveLargestSupportedThinkingLevel(
   provider?: string | null,
   model?: string | null,
@@ -331,6 +343,7 @@ export function resolveLargestSupportedThinkingLevel(
   return bestLevel?.id ?? "off";
 }
 
+/** Reused helper for is Thinking Level Supported behavior in src/auto-reply. */
 export function isThinkingLevelSupported(params: {
   provider?: string | null;
   model?: string | null;
@@ -356,6 +369,7 @@ function resolveSupportedThinkingLevelFromProfile(
   );
 }
 
+/** Reused helper for resolve Supported Thinking Level behavior in src/auto-reply. */
 export function resolveSupportedThinkingLevel(params: {
   provider?: string | null;
   model?: string | null;

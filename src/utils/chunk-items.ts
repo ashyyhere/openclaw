@@ -1,3 +1,5 @@
+// utils chunk items helpers and runtime behavior.
+/** Reused helper for chunk Items behavior in src/utils. */
 export function chunkItems<T>(items: readonly T[], size: number): T[][] {
   if (size <= 0) {
     return [Array.from(items)];

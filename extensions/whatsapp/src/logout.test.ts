@@ -1,3 +1,4 @@
+// Tests extensions/whatsapp/src logout test behavior.
 import fs from "node:fs";
 import fsPromises from "node:fs/promises";
 import os from "node:os";

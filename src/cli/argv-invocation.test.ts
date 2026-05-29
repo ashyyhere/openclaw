@@ -1,3 +1,4 @@
+/** Tests resolution of CLI command path and root option invocation metadata. */
 import { describe, expect, it } from "vitest";
 import { resolveCliArgvInvocation } from "./argv-invocation.js";
 

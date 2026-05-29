@@ -1,3 +1,4 @@
+// extensions/firecrawl/src firecrawl search provider helpers and runtime behavior.
 import { readPositiveIntegerParam } from "openclaw/plugin-sdk/param-readers";
 import { type WebSearchProviderPlugin } from "openclaw/plugin-sdk/provider-web-search-contract";
 import { buildFirecrawlWebSearchProviderBase } from "../web-search-shared.js";

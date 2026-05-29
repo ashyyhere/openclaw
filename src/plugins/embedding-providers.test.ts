@@ -1,3 +1,4 @@
+// Tests plugins embedding providers test behavior.
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import {
   clearEmbeddingProviders,

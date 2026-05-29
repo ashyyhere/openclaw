@@ -1,6 +1,8 @@
+// Chat status message facade and verbose tool descriptions.
 import { describeToolForVerbose } from "../agents/tool-description-summary.js";
 import { normalizeToolName } from "../agents/tool-policy-shared.js";
 import type { EffectiveToolInventoryResult } from "../agents/tools-effective-inventory.types.js";
+/** Re-exported API for src/auto-reply. */
 export {
   buildCommandsMessage,
   buildCommandsMessagePaginated,
@@ -8,6 +10,7 @@ export {
   type CommandsMessageOptions,
   type CommandsMessageResult,
 } from "./command-status-builders.js";
+/** Re-exported API for src/auto-reply. */
 export {
   buildStatusMessage,
   formatContextUsageShort,
@@ -46,6 +49,7 @@ function formatVerboseToolDescription(tool: ToolsMessageItem): string {
   });
 }
 
+/** Reused helper for build Tools Message behavior in src/auto-reply. */
 export function buildToolsMessage(
   result: EffectiveToolInventoryResult,
   options?: { verbose?: boolean },

@@ -1,3 +1,4 @@
+// extensions/exa index helpers and runtime behavior.
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 import { createExaWebSearchProvider } from "./src/exa-web-search-provider.js";
 

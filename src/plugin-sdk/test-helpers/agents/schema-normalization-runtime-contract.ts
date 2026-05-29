@@ -1,3 +1,4 @@
+// plugin-sdk/test-helpers/agents schema normalization runtime contract helpers and runtime behavior.
 export function createParameterFreeTool(name = "ping") {
   return {
     name,

@@ -1,3 +1,5 @@
+// security audit fs helpers and runtime behavior.
+/** Re-exported API for src/security. */
 export {
   formatPermissionDetail,
   formatPermissionRemediation,

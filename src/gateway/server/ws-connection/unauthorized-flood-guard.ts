@@ -1,11 +1,14 @@
+// gateway/server/ws-connection unauthorized flood guard helpers and runtime behavior.
 import { ErrorCodes, type ErrorShape } from "../../../../packages/gateway-protocol/src/index.js";
 import { resolveIntegerOption } from "../../../shared/number-coercion.js";
 
+/** Shared type for Unauthorized Flood Guard Options in src/gateway/server. */
 export type UnauthorizedFloodGuardOptions = {
   closeAfter?: number;
   logEvery?: number;
 };
 
+/** Shared type for Unauthorized Flood Decision in src/gateway/server. */
 export type UnauthorizedFloodDecision = {
   shouldClose: boolean;
   shouldLog: boolean;
@@ -16,6 +19,7 @@ export type UnauthorizedFloodDecision = {
 const DEFAULT_CLOSE_AFTER = 10;
 const DEFAULT_LOG_EVERY = 100;
 
+/** Reused class for Unauthorized Flood Guard behavior in src/gateway/server. */
 export class UnauthorizedFloodGuard {
   private readonly closeAfter: number;
   private readonly logEvery: number;
@@ -58,6 +62,7 @@ export class UnauthorizedFloodGuard {
   }
 }
 
+/** Reused helper for is Unauthorized Role Error behavior in src/gateway/server. */
 export function isUnauthorizedRoleError(error?: ErrorShape): boolean {
   if (!error) {
     return false;

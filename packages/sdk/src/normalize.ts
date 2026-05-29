@@ -1,3 +1,4 @@
+// packages/sdk/src normalize helpers and runtime behavior.
 import type { GatewayEvent, JsonObject, OpenClawEvent, OpenClawEventType } from "./types.js";
 
 function asRecord(value: unknown): JsonObject {
@@ -152,6 +153,7 @@ function normalizeNamedEventType(event: GatewayEvent): OpenClawEventType {
   }
 }
 
+/** Public helper for normalize Gateway Event behavior in packages/sdk. */
 export function normalizeGatewayEvent(event: GatewayEvent): OpenClawEvent {
   const payload = asRecord(event.payload);
   const runId = readString(payload.runId);

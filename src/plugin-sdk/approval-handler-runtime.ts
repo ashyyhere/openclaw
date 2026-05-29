@@ -1,3 +1,4 @@
+/** Runtime SDK barrel for approval handler and native runtime adapter contracts. */
 export {
   createChannelApprovalHandler,
   createChannelApprovalNativeRuntimeAdapter,
@@ -28,6 +29,7 @@ export {
   type PluginApprovalResolvedView,
   type ResolvedApprovalView,
 } from "../infra/approval-handler-runtime.js";
+/** Re-exported API for src/plugin-sdk, starting with resolve Approval Over Gateway. */
 export { resolveApprovalOverGateway } from "./approval-gateway-runtime.js";
 import type {
   ExpiredApprovalView,
@@ -46,6 +48,7 @@ import { buildApprovalResolvedReplyPayload } from "./approval-renderers.js";
 type ApprovalRequest = ExecApprovalRequest | PluginApprovalRequest;
 type ApprovalResolved = ExecApprovalResolved | PluginApprovalResolved;
 
+/** Reused helper for build Channel Approval Resolved Text behavior in src/plugin-sdk. */
 export function buildChannelApprovalResolvedText(params: {
   request: ApprovalRequest;
   resolved: ApprovalResolved;
@@ -65,6 +68,7 @@ export function buildChannelApprovalResolvedText(params: {
   return payload.text ?? "";
 }
 
+/** Reused helper for build Channel Approval Expired Text behavior in src/plugin-sdk. */
 export function buildChannelApprovalExpiredText(params: {
   request: ApprovalRequest;
   view: ExpiredApprovalView;
@@ -75,16 +79,19 @@ export function buildChannelApprovalExpiredText(params: {
   return `⏱️ Exec approval expired. ID: ${params.request.id}`;
 }
 
+/** Reused helper for resolve Prepared Approval Account Id behavior in src/plugin-sdk. */
 export function resolvePreparedApprovalAccountId(params: {
   plannedAccountId?: string | null;
   contextAccountId?: string | null;
   fallbackAccountId: string;
 }): string;
+/** Reused helper for resolve Prepared Approval Account Id behavior in src/plugin-sdk. */
 export function resolvePreparedApprovalAccountId(params: {
   plannedAccountId?: string | null;
   contextAccountId?: string | null;
   fallbackAccountId?: string | null;
 }): string | undefined;
+/** Reused helper for resolve Prepared Approval Account Id behavior in src/plugin-sdk. */
 export function resolvePreparedApprovalAccountId(params: {
   plannedAccountId?: string | null;
   contextAccountId?: string | null;

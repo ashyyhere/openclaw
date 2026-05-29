@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src setup surface test behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { DEFAULT_ACCOUNT_ID } from "openclaw/plugin-sdk/setup";
 import { describe, expect, it, vi } from "vitest";

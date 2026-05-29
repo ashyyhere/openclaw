@@ -1,3 +1,4 @@
+// Tests extensions/synology-chat/src webhook handler test behavior.
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { makeFormBody, makeReq, makeRes, makeStalledReq } from "./test-http-utils.js";
 import type { ResolvedSynologyChatAccount } from "./types.js";

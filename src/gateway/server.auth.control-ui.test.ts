@@ -1,3 +1,4 @@
+// Tests gateway server auth control ui test behavior.
 import { describe } from "vitest";
 import { registerControlUiAndPairingSuite } from "./server.auth.control-ui.suite.js";
 import { installGatewayTestHooks } from "./server.auth.shared.js";

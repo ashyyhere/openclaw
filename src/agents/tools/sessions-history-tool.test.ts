@@ -1,3 +1,4 @@
+/** Covers sessions history tool filtering and output shaping. */
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

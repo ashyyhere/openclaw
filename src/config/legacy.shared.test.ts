@@ -1,3 +1,4 @@
+// Tests config legacy shared test behavior.
 import { afterEach, describe, expect, it } from "vitest";
 import { mergeMissing } from "./legacy.shared.js";
 

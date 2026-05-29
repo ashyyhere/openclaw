@@ -1,3 +1,4 @@
+// plugins memory embedding provider runtime helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {
   getRuntimeEmbeddingProviderAdapter,
@@ -11,11 +12,14 @@ import {
   type MemoryEmbeddingProviderAdapter,
 } from "./memory-embedding-providers.js";
 
+/** Re-exported API for src/plugins, starting with list Registered Memory Embedding Providers. */
 export { listRegisteredMemoryEmbeddingProviders };
 
+/** Reused helper for list Registered Memory Embedding Provider Adapters behavior in src/plugins. */
 export function listRegisteredMemoryEmbeddingProviderAdapters(): MemoryEmbeddingProviderAdapter[] {
   return listRegisteredMemoryEmbeddingProviders().map((entry) => entry.adapter);
 }
+/** Reused helper for list Memory Embedding Providers behavior in src/plugins. */
 export function listMemoryEmbeddingProviders(
   cfg?: OpenClawConfig,
 ): MemoryEmbeddingProviderAdapter[] {
@@ -41,6 +45,7 @@ function resolveMemoryEmbeddingProviderLookupIds(id: string, cfg?: OpenClawConfi
   });
 }
 
+/** Reused helper for get Memory Embedding Provider behavior in src/plugins. */
 export function getMemoryEmbeddingProvider(
   id: string,
   cfg?: OpenClawConfig,

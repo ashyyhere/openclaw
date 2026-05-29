@@ -1,3 +1,4 @@
+// Tests utils transcript tools test behavior.
 import { describe, expect, it } from "vitest";
 import { countToolResults, extractToolCallNames, hasToolCall } from "./transcript-tools.js";
 

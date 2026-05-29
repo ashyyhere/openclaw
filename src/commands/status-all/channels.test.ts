@@ -1,3 +1,4 @@
+// Tests channel status aggregation across plugin metadata, config inspection, and live gateway state.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { buildChannelsTable } from "./channels.js";
 

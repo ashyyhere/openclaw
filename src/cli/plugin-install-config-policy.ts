@@ -1,3 +1,4 @@
+/** Enforces config-write policy for plugin install and update commands. */
 import fs from "node:fs";
 import path from "node:path";
 import type { Command } from "commander";
@@ -15,6 +16,7 @@ import { parseNpmPrefixSpec, resolveFileNpmSpecToLocalPath } from "./plugins-com
 
 type PluginInstallInvalidConfigPolicy = "deny" | "allow-plugin-recovery";
 
+/** Shared type for Plugin Install Request Context in src/cli. */
 export type PluginInstallRequestContext = {
   rawSpec: string;
   normalizedSpec: string;
@@ -180,6 +182,7 @@ function resolvePluginInstallArgvRequest(commandPath: string[], argv: string[]) 
   return rawSpec ? { rawSpec, marketplace } : null;
 }
 
+/** Reused helper for resolve Plugin Install Request Context behavior in src/cli. */
 export function resolvePluginInstallRequestContext(params: {
   rawSpec: string;
   marketplace?: string;
@@ -231,6 +234,7 @@ export function resolvePluginInstallRequestContext(params: {
   };
 }
 
+/** Reused helper for resolve Plugin Install Preaction Request behavior in src/cli. */
 export function resolvePluginInstallPreactionRequest(params: {
   actionCommand: Command;
   commandPath: string[];
@@ -256,6 +260,7 @@ export function resolvePluginInstallPreactionRequest(params: {
   return request.ok ? request.request : null;
 }
 
+/** Reused helper for resolve Plugin Install Invalid Config Policy behavior in src/cli. */
 export function resolvePluginInstallInvalidConfigPolicy(
   request: PluginInstallRequestContext | null,
 ): PluginInstallInvalidConfigPolicy {

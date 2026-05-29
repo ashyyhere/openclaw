@@ -1,3 +1,4 @@
+// Tests node-host invoke sanitize env test behavior.
 import { describe, expect, it } from "vitest";
 import { parseWindowsCodePage } from "../infra/windows-encoding.js";
 import { withEnv } from "../test-utils/env.js";

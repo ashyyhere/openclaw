@@ -1,3 +1,4 @@
+/** Shared harness utilities for spawned-workspace embedded attempt tests. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
@@ -95,6 +96,7 @@ type AttemptSpawnWorkspaceHoisted = {
   sessionManager: SessionManagerMocks;
 };
 
+/** Creates a controllable session subscription mock for attempt tests. */
 export function createSubscriptionMock(): SubscriptionMock {
   return {
     assistantTexts: [] as string[],
@@ -236,6 +238,7 @@ const hoisted = vi.hoisted((): AttemptSpawnWorkspaceHoisted => {
   };
 });
 
+/** Returns hoisted module mocks used by spawned-workspace attempt tests. */
 export function getHoisted(): AttemptSpawnWorkspaceHoisted {
   return hoisted;
 }
@@ -840,6 +843,7 @@ vi.mock("./history-image-prune.js", () => ({
   pruneProcessedHistoryImages: () => null,
 }));
 
+/** Shared type for Mutable Session in src/agents/embedded-agent-runner. */
 export type MutableSession = {
   sessionId: string;
   messages: unknown[];
@@ -909,6 +913,7 @@ async function loadRunEmbeddedAttempt() {
   return await runEmbeddedAttemptPromise;
 }
 
+/** Resets all spawned-workspace attempt mocks to a coherent default state. */
 export function resetEmbeddedAttemptHarness(
   params: {
     includeSpawnSubagent?: boolean;
@@ -1008,6 +1013,7 @@ export function resetEmbeddedAttemptHarness(
   }
 }
 
+/** Removes temporary directories created by spawned-workspace tests. */
 export async function cleanupTempPaths(tempPaths: string[]) {
   while (tempPaths.length > 0) {
     const target = tempPaths.pop();
@@ -1017,6 +1023,7 @@ export async function cleanupTempPaths(tempPaths: string[]) {
   }
 }
 
+/** Creates a default fake embedded session for attempt harness tests. */
 export function createDefaultEmbeddedSession(params?: {
   initialMessages?: unknown[];
   prompt?: (
@@ -1105,6 +1112,7 @@ export function createDefaultEmbeddedSession(params?: {
   return session;
 }
 
+/** Creates paired bootstrap/assemble mocks for context-engine attempt tests. */
 export function createContextEngineBootstrapAndAssemble() {
   return {
     bootstrap: vi.fn(async (_params: { sessionKey?: string }) => ({ bootstrapped: true })),
@@ -1117,10 +1125,12 @@ export function createContextEngineBootstrapAndAssemble() {
   };
 }
 
+/** Asserts a hoisted mock received the expected session key. */
 export function expectCalledWithSessionKey(mock: ReturnType<typeof vi.fn>, sessionKey: string) {
   expect(mock).toHaveBeenCalledWith(expect.objectContaining({ sessionKey }));
 }
 
+/** Reused constant for test Model behavior in src/agents/embedded-agent-runner. */
 export const testModel = {
   api: "openai-completions",
   provider: "openai",
@@ -1133,6 +1143,7 @@ const testAuthStorage = {
   getApiKey: async () => undefined,
 };
 
+/** Builds a reusable runner around the context-engine attempt harness. */
 export async function createContextEngineAttemptRunner(params: {
   contextEngine: {
     bootstrap?: (params: {

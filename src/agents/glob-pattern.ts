@@ -1,3 +1,4 @@
+/** Tiny glob compiler for agent matching policies. */
 type CompiledGlobPattern =
   | { kind: "all" }
   | { kind: "exact"; value: string }
@@ -28,6 +29,7 @@ function compileGlobPattern(params: {
   };
 }
 
+/** Compile glob patterns into reusable regular expressions. */
 export function compileGlobPatterns(params: {
   raw?: string[] | undefined;
   normalize: (value: string) => string;
@@ -40,6 +42,7 @@ export function compileGlobPatterns(params: {
     .filter((pattern) => pattern.kind !== "exact" || pattern.value);
 }
 
+/** Return whether a value matches any compiled glob pattern. */
 export function matchesAnyGlobPattern(value: string, patterns: CompiledGlobPattern[]): boolean {
   for (const pattern of patterns) {
     if (pattern.kind === "all") {

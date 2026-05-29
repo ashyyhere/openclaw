@@ -1,3 +1,4 @@
+// Tests extensions/feishu/src security audit test behavior.
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../runtime-api.js";
 import { collectFeishuSecurityAuditFindings } from "./security-audit.js";

@@ -1,3 +1,4 @@
+// extensions/google image generation provider helpers and runtime behavior.
 import {
   generatedImageAssetFromBase64,
   type GeneratedImageAsset,

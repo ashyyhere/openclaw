@@ -1,5 +1,6 @@
 // Lobster palette tokens for CLI/UI theming. Use this palette for all CLI color output.
 // Keep in sync with docs/cli/index.md (CLI palette section).
+/** Reused constant for LOBSTER PALETTE behavior in src/terminal. */
 export const LOBSTER_PALETTE = {
   accent: "#FF5A2D",
   accentBright: "#FF7A3D",

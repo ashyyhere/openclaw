@@ -1,3 +1,4 @@
+// cron/isolated-agent subagent followup helpers and runtime behavior.
 import { readLatestAssistantReply, waitForAgentRunsToDrain } from "../../agents/run-wait.js";
 import { listDescendantRunsForRequester } from "../../agents/subagent-registry-read.js";
 import { SILENT_REPLY_TOKEN } from "../../auto-reply/tokens.js";
@@ -12,6 +13,7 @@ function resolveCronSubagentTimings() {
   };
 }
 
+/** Reused helper for read Descendant Subagent Fallback Reply behavior in src/cron/isolated-agent. */
 export async function readDescendantSubagentFallbackReply(params: {
   sessionKey: string;
   runStartedAt: number;

@@ -1,3 +1,4 @@
+/** Parses config set command arguments into mutation modes. */
 type ConfigSetMode = "value" | "json" | "ref_builder" | "provider_builder" | "batch";
 
 type ConfigSetModeResolution =
@@ -10,6 +11,7 @@ type ConfigSetModeResolution =
       error: string;
     };
 
+/** Reused helper for resolve Config Set Mode behavior in src/cli. */
 export function resolveConfigSetMode(params: {
   hasBatchMode: boolean;
   hasRefBuilderOptions: boolean;

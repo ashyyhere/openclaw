@@ -1,3 +1,4 @@
+// infra process respawn helpers and runtime behavior.
 import { spawn, type ChildProcess } from "node:child_process";
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 import { isContainerEnvironment } from "./container-environment.js";

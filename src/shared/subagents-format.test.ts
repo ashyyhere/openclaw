@@ -1,3 +1,4 @@
+// Tests shared subagents format test behavior.
 import { describe, expect, it } from "vitest";
 import {
   formatDurationCompact,

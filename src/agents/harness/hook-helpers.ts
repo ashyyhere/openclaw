@@ -1,3 +1,4 @@
+/** Runs per-tool and per-message hooks around agent harness execution. */
 import { createSubsystemLogger } from "../../logging/subsystem.js";
 import { getGlobalHookRunner } from "../../plugins/hook-runner-global.js";
 import { consumeAdjustedParamsForToolCall } from "../agent-tools.before-tool-call.js";
@@ -5,6 +6,7 @@ import type { AgentMessage } from "../runtime/index.js";
 
 const log = createSubsystemLogger("agents/harness");
 
+/** Runs after-tool-call hooks and applies any adjusted tool result. */
 export async function runAgentHarnessAfterToolCallHook(params: {
   toolName: string;
   toolCallId: string;
@@ -53,6 +55,7 @@ export async function runAgentHarnessAfterToolCallHook(params: {
   }
 }
 
+/** Runs before-message-write hooks without delaying harness execution. */
 export function runAgentHarnessBeforeMessageWriteHook(params: {
   message: AgentMessage;
   agentId?: string;

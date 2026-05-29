@@ -1,3 +1,4 @@
+// infra heartbeat typing helpers and runtime behavior.
 import type { ChannelHeartbeatDeps, ChannelPlugin } from "../channels/plugins/types.public.js";
 import { createTypingCallbacks, type TypingCallbacks } from "../channels/typing.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -15,6 +16,7 @@ type HeartbeatTypingTarget = {
   threadId?: string | number | null;
 };
 
+/** Reused helper for create Heartbeat Typing Callbacks behavior in src/infra. */
 export function createHeartbeatTypingCallbacks(params: {
   cfg: OpenClawConfig;
   target: HeartbeatTypingTarget;

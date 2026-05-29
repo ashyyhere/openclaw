@@ -1,3 +1,4 @@
+// Tests extensions/slack/src resolve channels test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { resolveSlackChannelAllowlist } from "./resolve-channels.js";
 

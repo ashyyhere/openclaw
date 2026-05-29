@@ -1,3 +1,4 @@
+// Tests extensions/canvas/src config test behavior.
 import { afterEach, describe, expect, it } from "vitest";
 import {
   isCanvasHostEnabled,

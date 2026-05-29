@@ -1,3 +1,5 @@
+// gateway talk session registry helpers and runtime behavior.
+/** Shared type for Unified Talk Session Record in src/gateway. */
 export type UnifiedTalkSessionRecord =
   | {
       kind: "realtime-relay";
@@ -18,6 +20,7 @@ export type UnifiedTalkSessionRecord =
 
 const unifiedTalkSessions = new Map<string, UnifiedTalkSessionRecord>();
 
+/** Reused helper for remember Unified Talk Session behavior in src/gateway. */
 export function rememberUnifiedTalkSession(
   sessionId: string,
   session: UnifiedTalkSessionRecord,
@@ -25,6 +28,7 @@ export function rememberUnifiedTalkSession(
   unifiedTalkSessions.set(sessionId, session);
 }
 
+/** Reused helper for get Unified Talk Session behavior in src/gateway. */
 export function getUnifiedTalkSession(sessionId: string): UnifiedTalkSessionRecord {
   const session = unifiedTalkSessions.get(sessionId);
   if (!session) {
@@ -33,10 +37,12 @@ export function getUnifiedTalkSession(sessionId: string): UnifiedTalkSessionReco
   return session;
 }
 
+/** Reused helper for forget Unified Talk Session behavior in src/gateway. */
 export function forgetUnifiedTalkSession(sessionId: string): void {
   unifiedTalkSessions.delete(sessionId);
 }
 
+/** Reused helper for require Unified Talk Session Conn behavior in src/gateway. */
 export function requireUnifiedTalkSessionConn(
   session: Extract<UnifiedTalkSessionRecord, { connId: string }>,
   connId: string | undefined,
@@ -47,6 +53,7 @@ export function requireUnifiedTalkSessionConn(
   return connId;
 }
 
+/** Reused helper for clear Unified Talk Sessions For Test behavior in src/gateway. */
 export function clearUnifiedTalkSessionsForTest(): void {
   unifiedTalkSessions.clear();
 }

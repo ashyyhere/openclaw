@@ -1,3 +1,4 @@
+// extensions/slack/src sent thread cache helpers and runtime behavior.
 import { resolveGlobalDedupeCache } from "openclaw/plugin-sdk/dedupe-runtime";
 import { getOptionalSlackRuntime } from "./runtime.js";
 

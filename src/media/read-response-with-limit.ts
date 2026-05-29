@@ -1,3 +1,4 @@
+// media read response with limit helpers and runtime behavior.
 async function readChunkWithIdleTimeout(
   reader: ReadableStreamDefaultReader<Uint8Array>,
   chunkTimeoutMs: number,
@@ -120,6 +121,7 @@ async function readResponsePrefix(
   };
 }
 
+/** Reused helper for read Response With Limit behavior in src/media. */
 export async function readResponseWithLimit(
   res: Response,
   maxBytes: number,
@@ -143,6 +145,7 @@ export async function readResponseWithLimit(
   return prefix.buffer;
 }
 
+/** Reused helper for read Response Text Snippet behavior in src/media. */
 export async function readResponseTextSnippet(
   res: Response,
   opts?: {

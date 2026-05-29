@@ -1,3 +1,4 @@
+// scripts/lib/ts-topology scope helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { BUNDLED_PLUGIN_PATH_PREFIX } from "../bundled-plugin-paths.mjs";

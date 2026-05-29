@@ -1,29 +1,37 @@
+// Shared directive formatting and parsing helpers.
 import { formatCliCommand } from "../../cli/command-format.js";
 import { SYSTEM_MARK, prefixSystemMessage } from "../../infra/system-message.js";
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 import { isInternalMessageChannel } from "../../utils/message-channel.js";
 import type { ElevatedLevel, ReasoningLevel } from "./directives.js";
 
+/** Reused constant for format Directive Ack behavior in src/auto-reply/reply. */
 export const formatDirectiveAck = (text: string): string => {
   return prefixSystemMessage(text);
 };
 
 const formatOptionsLine = (options: string) => `Options: ${options}.`;
+/** Reused constant for with Options behavior in src/auto-reply/reply. */
 export const withOptions = (line: string, options: string) =>
   `${line}\n${formatOptionsLine(options)}`;
 
+/** Reused constant for format Elevated Runtime Hint behavior in src/auto-reply/reply. */
 export const formatElevatedRuntimeHint = () =>
   `${SYSTEM_MARK} Runtime is direct; sandboxing does not apply.`;
 
+/** Reused constant for format Internal Exec Persistence Denied Text behavior in src/auto-reply/reply. */
 export const formatInternalExecPersistenceDeniedText = () =>
   "Exec defaults require operator.admin for gateway callers; skipped persistence.";
 
+/** Reused constant for format Internal Verbose Persistence Denied Text behavior in src/auto-reply/reply. */
 export const formatInternalVerbosePersistenceDeniedText = () =>
   "Verbose defaults require operator.admin for gateway callers; skipped persistence.";
 
+/** Reused constant for format Internal Verbose Current Reply Only Text behavior in src/auto-reply/reply. */
 export const formatInternalVerboseCurrentReplyOnlyText = () =>
   "Verbose logging set for the current reply only.";
 
+/** Reused helper for can Persist Session Directive Defaults behavior in src/auto-reply/reply. */
 export function canPersistSessionDirectiveDefaults(params: {
   messageProvider?: string;
   surface?: string;
@@ -66,6 +74,7 @@ const formatReasoningEvent = (level: ReasoningLevel) => {
   return "Reasoning OFF - hide <think>.";
 };
 
+/** Reused helper for enqueue Mode Switch Events behavior in src/auto-reply/reply. */
 export function enqueueModeSwitchEvents(params: {
   enqueueSystemEvent: (text: string, meta: { sessionKey: string; contextKey: string }) => void;
   sessionEntry: { elevatedLevel?: string | null; reasoningLevel?: string | null };
@@ -89,6 +98,7 @@ export function enqueueModeSwitchEvents(params: {
   }
 }
 
+/** Reused helper for format Elevated Unavailable Text behavior in src/auto-reply/reply. */
 export function formatElevatedUnavailableText(params: {
   runtimeSandboxed: boolean;
   failures?: Array<{ gate: string; key: string }>;

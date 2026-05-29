@@ -1,3 +1,4 @@
+// Tests ui/src/ui control ui performance test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { EventLogEntry } from "./app-events.ts";
 import {

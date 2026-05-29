@@ -1,6 +1,8 @@
+/** Shell detection and sanitization helpers for command execution. */
 import fs from "node:fs";
 import path from "node:path";
 
+/** Resolve a usable PowerShell executable on Windows. */
 export function resolvePowerShellPath(): string {
   // Prefer PowerShell 7 when available; PS 5.1 lacks "&&" support.
   const programFiles = process.env.ProgramFiles || process.env.PROGRAMFILES || "C:\\Program Files";
@@ -64,6 +66,7 @@ function getPosixShellArgs(shellPath: string): string[] {
   }
 }
 
+/** Resolve shell executable and non-interactive args for command execution. */
 export function getShellConfig(): { shell: string; args: string[] } {
   if (process.platform === "win32") {
     // Use PowerShell instead of cmd.exe on Windows.
@@ -100,6 +103,7 @@ export function getShellConfig(): { shell: string; args: string[] } {
   return { shell, args: getPosixShellArgs(shell) };
 }
 
+/** Find an executable shell by name on PATH. */
 export function resolveShellFromPath(name: string): string | undefined {
   const envPath = process.env.PATH ?? "";
   if (!envPath) {
@@ -129,6 +133,7 @@ function normalizeShellName(value: string): string {
     .replace(/[^a-zA-Z0-9_-]/g, "");
 }
 
+/** Detect the current runtime shell family for diagnostics and prompts. */
 export function detectRuntimeShell(): string | undefined {
   const overrideShell = process.env.OPENCLAW_SHELL?.trim();
   if (overrideShell) {
@@ -175,6 +180,7 @@ export function detectRuntimeShell(): string | undefined {
   return undefined;
 }
 
+/** Strip control/surrogate characters from binary-ish command output. */
 export function sanitizeBinaryOutput(text: string): string {
   const scrubbed = text.replace(/[\p{Format}\p{Surrogate}]/gu, "");
   if (!scrubbed) {

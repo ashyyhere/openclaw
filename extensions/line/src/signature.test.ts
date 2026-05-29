@@ -1,3 +1,4 @@
+// Tests extensions/line/src signature test behavior.
 import crypto from "node:crypto";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { validateLineSignature } from "./signature.js";

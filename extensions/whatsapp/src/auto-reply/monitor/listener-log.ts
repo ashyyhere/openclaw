@@ -1,3 +1,4 @@
+// extensions/whatsapp/src/auto-reply/monitor listener log helpers and runtime behavior.
 export function formatWhatsAppInboundListeningLog(account: {
   groups?: Record<string, unknown>;
   groupPolicy: "open" | "allowlist" | "disabled";

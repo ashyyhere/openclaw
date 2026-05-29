@@ -1,3 +1,4 @@
+// Tests config types secrets resolution test behavior.
 import { describe, expect, it } from "vitest";
 import {
   normalizeResolvedSecretInputString,

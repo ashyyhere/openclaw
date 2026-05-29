@@ -1,3 +1,4 @@
+/** Builds sanitized embedded-agent settings snapshots from global, plugin, and project config. */
 import path from "node:path";
 import { applyMergePatch } from "../config/merge-patch.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -19,11 +20,14 @@ import type { SettingsManager } from "./sessions/index.js";
 
 const log = createSubsystemLogger("embedded-agent-settings");
 
+/** Reused constant for DEFAULT EMBEDDED AGENT PROJECT SETTINGS POLICY behavior in src/agents. */
 export const DEFAULT_EMBEDDED_AGENT_PROJECT_SETTINGS_POLICY = "sanitize";
 const SANITIZED_PROJECT_AGENT_KEYS = ["shellPath", "shellCommandPrefix"] as const;
 
+/** Shared type for Embedded Agent Project Settings Policy in src/agents. */
 export type EmbeddedAgentProjectSettingsPolicy = "trusted" | "sanitize" | "ignore";
 
+/** Shared type for Agent Settings Snapshot in src/agents. */
 export type AgentSettingsSnapshot = ReturnType<SettingsManager["getGlobalSettings"]> & {
   mcpServers?: Record<string, BundleMcpServerConfig>;
 };
@@ -83,6 +87,7 @@ function loadBundleSettingsFile(params: {
   return sanitizeAgentSettingsSnapshot(result.value as AgentSettingsSnapshot);
 }
 
+/** Load enabled bundle/plugin settings that should affect embedded agent runtime. */
 export function loadEnabledBundleAgentSettingsSnapshot(params: {
   cwd: string;
   cfg?: OpenClawConfig;
@@ -174,6 +179,7 @@ export function loadEnabledBundleAgentSettingsSnapshot(params: {
   return snapshot;
 }
 
+/** Resolve project-settings trust policy for embedded agent runtime. */
 export function resolveEmbeddedAgentProjectSettingsPolicy(
   cfg?: OpenClawConfig,
 ): EmbeddedAgentProjectSettingsPolicy {
@@ -184,6 +190,7 @@ export function resolveEmbeddedAgentProjectSettingsPolicy(
   return DEFAULT_EMBEDDED_AGENT_PROJECT_SETTINGS_POLICY;
 }
 
+/** Merge global, plugin, and project settings according to project trust policy. */
 export function buildEmbeddedAgentSettingsSnapshot(params: {
   globalSettings: AgentSettingsSnapshot;
   pluginSettings?: AgentSettingsSnapshot;

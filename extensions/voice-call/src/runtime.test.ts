@@ -1,3 +1,4 @@
+// Tests extensions/voice-call/src runtime test behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/core";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { VoiceCallConfig } from "./config.js";

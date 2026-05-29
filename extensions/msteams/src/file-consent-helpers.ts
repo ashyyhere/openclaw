@@ -1,3 +1,4 @@
+// extensions/msteams/src file consent helpers helpers and runtime behavior.
 import { normalizeOptionalLowercaseString } from "openclaw/plugin-sdk/string-coerce-runtime";
 import { buildFileConsentCard } from "./file-consent.js";
 import { storePendingUploadFs } from "./pending-uploads-fs.js";

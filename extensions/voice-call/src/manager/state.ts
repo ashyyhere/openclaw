@@ -1,3 +1,4 @@
+// extensions/voice-call/src/manager state helpers and runtime behavior.
 import { TerminalStates, type CallRecord, type CallState, type TranscriptEntry } from "../types.js";
 
 const ConversationStates = new Set<CallState>(["speaking", "listening"]);

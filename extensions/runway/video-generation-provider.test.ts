@@ -1,3 +1,4 @@
+// Tests extensions/runway video generation provider test behavior.
 import {
   getProviderHttpMocks,
   installProviderHttpMockCleanup,

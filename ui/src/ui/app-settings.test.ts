@@ -1,3 +1,4 @@
+// Tests ui/src/ui app settings test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createImportedCustomThemeFixture } from "../test-helpers/custom-theme.ts";
 import { createStorageMock } from "../test-helpers/storage.ts";

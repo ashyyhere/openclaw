@@ -1,3 +1,4 @@
+/** Covers abort settle timeout environment overrides. */
 import { describe, expect, it } from "vitest";
 import { resolveEmbeddedAbortSettleTimeoutMs } from "./attempt.abort-settle-timeout.js";
 

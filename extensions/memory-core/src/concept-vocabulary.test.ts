@@ -1,3 +1,4 @@
+// Tests extensions/memory-core/src concept vocabulary test behavior.
 import { describe, expect, it } from "vitest";
 import {
   classifyConceptTagScript,

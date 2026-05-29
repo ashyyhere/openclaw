@@ -1,3 +1,4 @@
+// Shared types for extensions/openshell/src backend types behavior.
 import type { RemoteShellSandboxHandle, SandboxBackendHandle } from "openclaw/plugin-sdk/sandbox";
 
 export type OpenShellFsBridgeContext = Parameters<

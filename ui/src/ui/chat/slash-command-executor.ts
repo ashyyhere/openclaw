@@ -30,6 +30,7 @@ import type {
 import { generateUUID } from "../uuid.ts";
 import { SLASH_COMMANDS } from "./slash-commands.ts";
 
+/** Shared type for Slash Command Result in ui/src/ui/chat. */
 export type SlashCommandResult = {
   /** Markdown-formatted result to display in chat. */
   content: string;
@@ -53,6 +54,7 @@ export type SlashCommandResult = {
   pendingCurrentRun?: boolean;
 };
 
+/** Shared type for Slash Command Context in ui/src/ui/chat. */
 export type SlashCommandContext = {
   chatModelCatalog?: ModelCatalogEntry[];
   modelCatalog?: ModelCatalogEntry[];
@@ -85,6 +87,7 @@ function isSessionDefaultDirectiveValue(raw?: string | null): boolean {
   return ["default", "inherit", "inherited", "clear", "reset", "unpin"].includes(key);
 }
 
+/** Reused helper for execute Slash Command behavior in ui/src/ui/chat. */
 export async function executeSlashCommand(
   client: GatewayBrowserClient,
   sessionKey: string,

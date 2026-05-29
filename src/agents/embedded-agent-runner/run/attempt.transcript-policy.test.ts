@@ -1,3 +1,4 @@
+/** Covers transcript policy resolution for embedded attempts. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { ProviderRuntimeModel } from "../../../plugins/provider-runtime-model.types.js";
 import type { AgentRuntimePlan } from "../../runtime-plan/types.js";

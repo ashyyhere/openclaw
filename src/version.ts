@@ -1,3 +1,4 @@
+// OpenClaw version helpers and runtime behavior.
 import { createRequire } from "node:module";
 import { normalizeOptionalString } from "./shared/string-coerce.js";
 
@@ -60,16 +61,19 @@ function readInjectedVersion(): string | undefined {
   return typeof __OPENCLAW_VERSION__ === "string" ? __OPENCLAW_VERSION__ : undefined;
 }
 
+/** Reused helper for read Version From Package Json For Module Url behavior in src. */
 export function readVersionFromPackageJsonForModuleUrl(moduleUrl: string): string | null {
   return readVersionFromJsonCandidates(moduleUrl, PACKAGE_JSON_CANDIDATES, {
     requirePackageName: true,
   });
 }
 
+/** Reused helper for read Version From Build Info For Module Url behavior in src. */
 export function readVersionFromBuildInfoForModuleUrl(moduleUrl: string): string | null {
   return readVersionFromJsonCandidates(moduleUrl, BUILD_INFO_CANDIDATES);
 }
 
+/** Reused helper for resolve Version From Module Url behavior in src. */
 export function resolveVersionFromModuleUrl(moduleUrl: string): string | null {
   return (
     readVersionFromPackageJsonForModuleUrl(moduleUrl) ||
@@ -77,6 +81,7 @@ export function resolveVersionFromModuleUrl(moduleUrl: string): string | null {
   );
 }
 
+/** Reused helper for resolve Binary Version behavior in src. */
 export function resolveBinaryVersion(params: {
   moduleUrl: string;
   injectedVersion?: string;
@@ -92,13 +97,16 @@ export function resolveBinaryVersion(params: {
   );
 }
 
+/** Shared type for Runtime Version Env in src. */
 export type RuntimeVersionEnv = {
   [key: string]: string | undefined;
 };
 
+/** Reused constant for RUNTIME SERVICE VERSION FALLBACK behavior in src. */
 export const RUNTIME_SERVICE_VERSION_FALLBACK = "unknown";
 type RuntimeVersionPreference = "env-first" | "runtime-first";
 
+/** Reused helper for resolve Usable Runtime Version behavior in src. */
 export function resolveUsableRuntimeVersion(version: string | undefined): string | undefined {
   const trimmed = normalizeOptionalString(version);
   // "0.0.0" is the resolver's hard fallback when module metadata cannot be read.
@@ -128,6 +136,7 @@ function resolveVersionFromRuntimeSources(params: {
   );
 }
 
+/** Reused helper for resolve Runtime Service Version behavior in src. */
 export function resolveRuntimeServiceVersion(
   env: RuntimeVersionEnv = process.env as RuntimeVersionEnv,
   fallback = RUNTIME_SERVICE_VERSION_FALLBACK,
@@ -140,6 +149,7 @@ export function resolveRuntimeServiceVersion(
   });
 }
 
+/** Reused helper for resolve Compatibility Host Version behavior in src. */
 export function resolveCompatibilityHostVersion(
   env: RuntimeVersionEnv = process.env as RuntimeVersionEnv,
   fallback = RUNTIME_SERVICE_VERSION_FALLBACK,
@@ -159,6 +169,7 @@ export function resolveCompatibilityHostVersion(
 // Single source of truth for the current OpenClaw version.
 // - Embedded/bundled builds: injected define or env var.
 // - Dev/npm builds: package.json.
+/** Reused constant for VERSION behavior in src. */
 export const VERSION = resolveBinaryVersion({
   moduleUrl: import.meta.url,
   injectedVersion: readInjectedVersion(),

@@ -1,3 +1,4 @@
+// extensions/browser/src/browser/routes agent snapshot plan helpers and runtime behavior.
 import {
   parseStrictNonNegativeInteger,
   parseStrictPositiveInteger,

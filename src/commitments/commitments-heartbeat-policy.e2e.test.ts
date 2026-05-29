@@ -1,3 +1,4 @@
+// E2E heartbeat policy tests for due commitment delivery and suppression.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import { runHeartbeatOnce } from "../infra/heartbeat-runner.js";

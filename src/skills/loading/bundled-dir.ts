@@ -1,3 +1,4 @@
+/** Resolves the installed bundled skills directory. */
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -26,6 +27,7 @@ function looksLikeSkillsDir(dir: string): boolean {
   return false;
 }
 
+/** Shared type for Bundled Skills Resolve Options in src/agents/skills. */
 export type BundledSkillsResolveOptions = {
   argv1?: string;
   moduleUrl?: string;
@@ -33,6 +35,7 @@ export type BundledSkillsResolveOptions = {
   execPath?: string;
 };
 
+/** Finds the bundled skills directory from env or package-root candidates. */
 export function resolveBundledSkillsDir(
   opts: BundledSkillsResolveOptions = {},
 ): string | undefined {

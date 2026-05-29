@@ -1,3 +1,4 @@
+/** Tests compaction identifier preservation policy handling. */
 import { describe, expect, it } from "vitest";
 import { buildCompactionSummarizationInstructions } from "./compaction.js";
 

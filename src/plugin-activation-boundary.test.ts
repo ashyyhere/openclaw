@@ -1,3 +1,4 @@
+// Tests OpenClaw plugin activation boundary test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { normalizeModelRef } from "./agents/model-selection-normalize.js";
 import { isStaticallyChannelConfigured } from "./config/channel-configured-shared.js";

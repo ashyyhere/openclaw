@@ -1,3 +1,4 @@
+// extensions/voice-call/src http headers helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "openclaw/plugin-sdk/string-coerce-runtime";
 
 type HttpHeaderMap = Record<string, string | string[] | undefined>;

@@ -1,3 +1,4 @@
+/** Builds the configured Commander program for OpenClaw CLI execution. */
 import process from "node:process";
 import { Command } from "commander";
 import { registerProgramCommands } from "./command-registry.js";
@@ -6,6 +7,7 @@ import { configureProgramHelp } from "./help.js";
 import { registerPreActionHooks } from "./preaction.js";
 import { setProgramContext } from "./program-context.js";
 
+/** Reused helper for build Program behavior in src/cli/program. */
 export function buildProgram() {
   const program = new Command();
   program.enablePositionalOptions();

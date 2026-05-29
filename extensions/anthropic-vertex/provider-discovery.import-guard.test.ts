@@ -1,3 +1,4 @@
+// Tests extensions/anthropic-vertex provider discovery import guard test behavior.
 import { describe, expect, it } from "vitest";
 
 describe("anthropic-vertex provider discovery entry", () => {

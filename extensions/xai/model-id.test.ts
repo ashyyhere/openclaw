@@ -1,3 +1,4 @@
+// Tests extensions/xai model id test behavior.
 import { describe, expect, it } from "vitest";
 import { normalizeXaiModelId } from "./api.js";
 

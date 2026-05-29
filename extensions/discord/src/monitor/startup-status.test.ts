@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/monitor startup status test behavior.
 import { describe, expect, it } from "vitest";
 import { formatDiscordStartupStatusMessage } from "./startup-status.js";
 

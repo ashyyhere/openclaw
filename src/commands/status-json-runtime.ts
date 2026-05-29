@@ -1,3 +1,4 @@
+/** Resolves runtime data needed for status JSON output. */
 import type { OpenClawConfig } from "../config/types.js";
 import type { UpdateCheckResult } from "../infra/update-check.js";
 import { buildStatusJsonPayload } from "./status-json-payload.ts";
@@ -48,6 +49,7 @@ type StatusJsonScanLike = {
   pluginCompatibility?: Array<Record<string, unknown>> | null | undefined;
 };
 
+/** Reused helper for resolve Status Json Output behavior in src/commands. */
 export async function resolveStatusJsonOutput(params: {
   scan: StatusJsonScanLike;
   opts: {

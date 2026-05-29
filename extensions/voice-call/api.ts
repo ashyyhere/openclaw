@@ -1,3 +1,5 @@
+// extensions/voice-call api helpers and runtime behavior.
+/** Re-exported voice-call plugin public API. */
 export {
   definePluginEntry,
   fetchWithSsrFGuard,

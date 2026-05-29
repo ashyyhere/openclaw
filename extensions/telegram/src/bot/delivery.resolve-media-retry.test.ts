@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src/bot delivery resolve media retry test behavior.
 import type { Message } from "grammy/types";
 import { retryAsync } from "openclaw/plugin-sdk/retry-runtime";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";

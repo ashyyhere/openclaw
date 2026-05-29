@@ -1,3 +1,4 @@
+// Managed binary discovery and on-demand installer for bundled CLI helpers.
 import { type SpawnSyncReturns, spawnSync } from "node:child_process";
 import { randomUUID } from "node:crypto";
 import {
@@ -94,7 +95,7 @@ function commandExists(cmd: string): boolean {
   }
 }
 
-// Get the path to a tool (system-wide or in our tools dir)
+/** Return a managed or system PATH command for a supported helper tool. */
 export function getToolPath(tool: "fd" | "rg"): string | null {
   const config = TOOLS[tool];
   if (!config) {
@@ -374,8 +375,7 @@ const TERMUX_PACKAGES: Record<string, string> = {
   rg: "ripgrep",
 };
 
-// Ensure a tool is available, downloading if necessary
-// Returns the path to the tool, or null if unavailable
+/** Ensure a helper tool is available, downloading when allowed by platform and offline mode. */
 export async function ensureTool(
   tool: "fd" | "rg",
   silent: boolean = false,

@@ -1,9 +1,11 @@
+// terminal links helpers and runtime behavior.
 import { formatTerminalLink } from "./terminal-link.js";
 
 function resolveDocsRoot(): string {
   return "https://docs.openclaw.ai";
 }
 
+/** Reused helper for format Docs Link behavior in src/terminal. */
 export function formatDocsLink(
   path: string | undefined | null,
   label?: string,

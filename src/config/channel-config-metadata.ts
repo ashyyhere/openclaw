@@ -1,3 +1,4 @@
+// config channel config metadata helpers and runtime behavior.
 import type { PluginManifestRegistry } from "../plugins/manifest-registry.js";
 import type { PluginOrigin } from "../plugins/plugin-origin.types.js";
 import type { ChannelUiMetadata, PluginUiMetadata } from "./schema.js";
@@ -13,6 +14,7 @@ const PLUGIN_ORIGIN_RANK: Readonly<Record<PluginOrigin, number>> = {
   bundled: 3,
 };
 
+/** Reused helper for collect Plugin Schema Metadata behavior in src/config. */
 export function collectPluginSchemaMetadata(registry: PluginManifestRegistry): PluginUiMetadata[] {
   const deduped = new Map<
     string,
@@ -42,6 +44,7 @@ export function collectPluginSchemaMetadata(registry: PluginManifestRegistry): P
     .map(({ originRank: _originRank, ...record }) => record);
 }
 
+/** Reused helper for collect Channel Schema Metadata behavior in src/config. */
 export function collectChannelSchemaMetadata(
   registry: PluginManifestRegistry,
 ): ChannelUiMetadata[] {

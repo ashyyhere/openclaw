@@ -1,3 +1,4 @@
+/** GitHub Copilot token helpers re-exported from provider auth. */
 export {
   DEFAULT_COPILOT_API_BASE_URL,
   deriveCopilotApiBaseUrlFromToken,

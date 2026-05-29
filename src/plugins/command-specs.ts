@@ -1,3 +1,4 @@
+// plugins command specs helpers and runtime behavior.
 import { getLoadedChannelPlugin } from "../channels/plugins/index.js";
 import { resolveReadOnlyChannelCommandDefaults } from "../channels/plugins/read-only-command-defaults.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -22,6 +23,7 @@ function resolvePluginNativeName(
   return command.name;
 }
 
+/** Reused helper for get Plugin Command Specs behavior in src/plugins. */
 export function getPluginCommandSpecs(
   provider?: string,
   options: {

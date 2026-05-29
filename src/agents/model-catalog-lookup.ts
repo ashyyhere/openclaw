@@ -5,6 +5,7 @@ import {
 } from "../shared/string-coerce.js";
 import type { ModelCatalogEntry, ModelInputType } from "./model-catalog.types.js";
 
+/** Return whether a catalog entry supports an input type. */
 export function modelSupportsInput(
   entry: ModelCatalogEntry | undefined,
   input: ModelInputType,
@@ -12,6 +13,7 @@ export function modelSupportsInput(
   return entry?.input?.includes(input) ?? false;
 }
 
+/** Find a provider/model pair in a catalog. */
 export function findModelInCatalog(
   catalog: ModelCatalogEntry[],
   provider: string,
@@ -26,6 +28,7 @@ export function findModelInCatalog(
   );
 }
 
+/** Find a catalog entry by optional provider and model id. */
 export function findModelCatalogEntry(
   catalog: ModelCatalogEntry[],
   params: { provider?: string; modelId: string },

@@ -1,3 +1,4 @@
+// Tests extensions/zalouser/src zca client test behavior.
 import { describe, expect, it, vi } from "vitest";
 
 describe("zca-client runtime loading", () => {

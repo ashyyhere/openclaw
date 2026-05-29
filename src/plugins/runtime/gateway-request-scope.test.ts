@@ -1,3 +1,4 @@
+// Tests plugins/runtime gateway request scope test behavior.
 import { describe, expect, it, vi } from "vitest";
 import type { PluginRuntimeGatewayRequestScope } from "./gateway-request-scope.js";
 

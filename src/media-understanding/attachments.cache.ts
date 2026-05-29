@@ -1,3 +1,4 @@
+// media-understanding attachments cache helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { logVerbose, shouldLogVerbose } from "../globals.js";
@@ -67,6 +68,7 @@ function getDefaultLocalPathRoots(): readonly string[] {
   return defaultLocalPathRoots;
 }
 
+/** Shared type for Media Attachment Cache Options in src/media-understanding. */
 export type MediaAttachmentCacheOptions = {
   localPathRoots?: readonly string[];
   includeDefaultLocalPathRoots?: boolean;
@@ -74,6 +76,7 @@ export type MediaAttachmentCacheOptions = {
   workspaceDir?: string;
 };
 
+/** Reused class for Media Attachment Cache behavior in src/media-understanding. */
 export class MediaAttachmentCache {
   private readonly entries = new Map<number, AttachmentCacheEntry>();
   private readonly attachments: MediaAttachment[];

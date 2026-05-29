@@ -1,3 +1,4 @@
+/** Regression coverage for compaction instruction composition. */
 import { describe, expect, it } from "vitest";
 import {
   DEFAULT_COMPACTION_INSTRUCTIONS,

@@ -1,3 +1,4 @@
+/** Regression coverage for shared OAuth credential comparison and overlay helpers. */
 import { describe, expect, it, vi } from "vitest";
 import { overlayRuntimeExternalOAuthProfiles } from "./oauth-shared.js";
 import type { AuthProfileStore } from "./types.js";

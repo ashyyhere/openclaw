@@ -1,3 +1,4 @@
+// tui/components chat log helpers and runtime behavior.
 import type { Component } from "@earendil-works/pi-tui";
 import { Container, Spacer, Text } from "@earendil-works/pi-tui";
 import { theme } from "../theme/theme.js";
@@ -15,6 +16,7 @@ type RepeatableSystemMessage = {
   count: number;
 };
 
+/** Reused class for Chat Log behavior in src/tui/components. */
 export class ChatLog extends Container {
   private readonly maxComponents: number;
   private toolById = new Map<string, ToolExecutionComponent>();

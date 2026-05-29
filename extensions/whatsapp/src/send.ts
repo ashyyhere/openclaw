@@ -1,3 +1,4 @@
+// extensions/whatsapp/src send helpers and runtime behavior.
 import { formatCliCommand } from "openclaw/plugin-sdk/cli-runtime";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { generateSecureUuid } from "openclaw/plugin-sdk/core";

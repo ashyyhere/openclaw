@@ -1,3 +1,4 @@
+// Tests extensions/brave/src brave web search provider test behavior.
 import fs from "node:fs";
 import { validateJsonSchemaValue } from "openclaw/plugin-sdk/json-schema-runtime";
 import { afterAll, afterEach, describe, expect, it, vi } from "vitest";

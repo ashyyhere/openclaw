@@ -1,3 +1,4 @@
+// extensions/discord/src retry after helpers and runtime behavior.
 import {
   asFiniteNumberInRange,
   parseStrictFiniteNumber,

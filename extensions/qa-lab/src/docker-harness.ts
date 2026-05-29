@@ -1,3 +1,4 @@
+// extensions/qa-lab/src docker harness helpers and runtime behavior.
 import { execFile } from "node:child_process";
 import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";

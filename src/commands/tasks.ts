@@ -1,3 +1,4 @@
+/** Implements task listing, inspection, cleanup, and audit commands. */
 import fs from "node:fs";
 import { isRich, theme } from "../../packages/terminal-core/src/theme.js";
 import { formatCliCommand } from "../cli/command-format.js";
@@ -360,6 +361,7 @@ function toSystemAuditFindings(params: {
   });
 }
 
+/** Reused helper for tasks List Command behavior in src/commands. */
 export async function tasksListCommand(
   opts: { json?: boolean; runtime?: string; status?: string },
   runtime: RuntimeEnv,
@@ -412,6 +414,7 @@ export async function tasksListCommand(
   }
 }
 
+/** Reused helper for tasks Show Command behavior in src/commands. */
 export async function tasksShowCommand(
   opts: { json?: boolean; lookup: string },
   runtime: RuntimeEnv,
@@ -458,6 +461,7 @@ export async function tasksShowCommand(
   }
 }
 
+/** Reused helper for tasks Notify Command behavior in src/commands. */
 export async function tasksNotifyCommand(
   opts: { lookup: string; notify: TaskNotifyPolicy },
   runtime: RuntimeEnv,
@@ -480,6 +484,7 @@ export async function tasksNotifyCommand(
   runtime.log(`Updated ${updated.taskId} notify policy to ${updated.notifyPolicy}.`);
 }
 
+/** Reused helper for tasks Cancel Command behavior in src/commands. */
 export async function tasksCancelCommand(opts: { lookup: string }, runtime: RuntimeEnv) {
   const task = reconcileTaskLookupToken(opts.lookup);
   if (!task) {
@@ -507,6 +512,7 @@ export async function tasksCancelCommand(opts: { lookup: string }, runtime: Runt
   );
 }
 
+/** Reused helper for tasks Audit Command behavior in src/commands. */
 export async function tasksAuditCommand(
   opts: {
     json?: boolean;
@@ -587,6 +593,7 @@ export async function tasksAuditCommand(
   }
 }
 
+/** Reused helper for tasks Maintenance Command behavior in src/commands. */
 export async function tasksMaintenanceCommand(
   opts: { json?: boolean; apply?: boolean },
   runtime: RuntimeEnv,

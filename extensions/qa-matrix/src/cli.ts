@@ -1,3 +1,4 @@
+// extensions/qa-matrix/src cli helpers and runtime behavior.
 import type { Command } from "commander";
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";
 import {

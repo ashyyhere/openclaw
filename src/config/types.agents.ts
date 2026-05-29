@@ -1,3 +1,4 @@
+// config types agents helpers and runtime behavior.
 import type { ChatType } from "../channels/chat-type.js";
 import type {
   AgentContextLimitsConfig,
@@ -13,6 +14,7 @@ import type { SkillsLimitsConfig } from "./types.skills.js";
 import type { AgentToolsConfig, MemorySearchConfig } from "./types.tools.js";
 import type { TtsConfig } from "./types.tts.js";
 
+/** Shared type for Agent Runtime Acp Config in src/config. */
 export type AgentRuntimeAcpConfig = {
   /** ACP harness adapter id (for example codex, claude). */
   agent?: string;
@@ -24,6 +26,7 @@ export type AgentRuntimeAcpConfig = {
   cwd?: string;
 };
 
+/** Shared type for Agent Runtime Config in src/config. */
 export type AgentRuntimeConfig =
   | {
       type: "embedded";
@@ -33,6 +36,7 @@ export type AgentRuntimeConfig =
       acp?: AgentRuntimeAcpConfig;
     };
 
+/** Shared type for Agent Binding Match in src/config. */
 export type AgentBindingMatch = {
   channel: string;
   /**
@@ -49,6 +53,7 @@ export type AgentBindingMatch = {
   roles?: string[];
 };
 
+/** Shared type for Agent Route Binding in src/config. */
 export type AgentRouteBinding = {
   /** Missing type is interpreted as route for backward compatibility. */
   type?: "route";
@@ -61,6 +66,7 @@ export type AgentRouteBinding = {
   };
 };
 
+/** Shared type for Agent Acp Binding in src/config. */
 export type AgentAcpBinding = {
   type: "acp";
   agentId: string;
@@ -74,8 +80,10 @@ export type AgentAcpBinding = {
   };
 };
 
+/** Shared type for Agent Binding in src/config. */
 export type AgentBinding = AgentRouteBinding | AgentAcpBinding;
 
+/** Shared type for Agent Config in src/config. */
 export type AgentConfig = {
   id: string;
   default?: boolean;
@@ -154,6 +162,7 @@ export type AgentConfig = {
   runtime?: AgentRuntimeConfig;
 };
 
+/** Shared type for Agents Config in src/config. */
 export type AgentsConfig = {
   defaults?: AgentDefaultsConfig;
   list?: AgentConfig[];

@@ -1,3 +1,4 @@
+// extensions/browser/src server helpers and runtime behavior.
 import type { Server } from "node:http";
 import express from "express";
 import {

@@ -1,3 +1,4 @@
+// Tests test official channel catalog test behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { bundledPluginRoot } from "openclaw/plugin-sdk/test-fixtures";

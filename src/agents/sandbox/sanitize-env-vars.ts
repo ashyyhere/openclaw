@@ -1,3 +1,4 @@
+/** Sanitizes explicit environment variables before passing them to sandboxes. */
 const BLOCKED_ENV_VAR_PATTERNS: ReadonlyArray<RegExp> = [
   /^ANTHROPIC_API_KEY$/i,
   /^OPENAI_API_KEY$/i,
@@ -30,18 +31,21 @@ const ALLOWED_ENV_VAR_PATTERNS: ReadonlyArray<RegExp> = [
   /^NODE_ENV$/i,
 ];
 
+/** Shared type for Env Var Sanitization Result in src/agents/sandbox. */
 export type EnvVarSanitizationResult = {
   allowed: Record<string, string>;
   blocked: string[];
   warnings: string[];
 };
 
+/** Shared type for Env Sanitization Options in src/agents/sandbox. */
 export type EnvSanitizationOptions = {
   strictMode?: boolean;
   customBlockedPatterns?: ReadonlyArray<RegExp>;
   customAllowedPatterns?: ReadonlyArray<RegExp>;
 };
 
+/** Returns an error message when an env var value is unsafe for sandbox config. */
 export function validateEnvVarValue(value: string): string | undefined {
   if (value.includes("\0")) {
     return "Contains null bytes";
@@ -59,6 +63,7 @@ function matchesAnyPattern(value: string, patterns: readonly RegExp[]): boolean 
   return patterns.some((pattern) => pattern.test(value));
 }
 
+/** Filters blocked env var names and invalid values from a map. */
 export function sanitizeEnvVars(
   envVars: Record<string, string | undefined>,
   options: EnvSanitizationOptions = {},
@@ -101,6 +106,7 @@ export function sanitizeEnvVars(
   return { allowed, blocked, warnings };
 }
 
+/** Sanitizes only explicitly configured sandbox env vars. */
 export function sanitizeExplicitSandboxEnvVars(
   envVars: Record<string, string | undefined>,
 ): EnvVarSanitizationResult {

@@ -1,3 +1,4 @@
+// Tests media-understanding runner cli audio test behavior.
 import fs from "node:fs/promises";
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/types.js";

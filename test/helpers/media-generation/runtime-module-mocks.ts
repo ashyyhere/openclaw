@@ -1,3 +1,4 @@
+// test/helpers/media-generation runtime module mocks helpers and runtime behavior.
 import { vi } from "vitest";
 import type { OpenClawConfig } from "../../../src/config/config.js";
 import type { ImageGenerationProvider } from "../../../src/image-generation/types.js";

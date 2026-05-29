@@ -1,9 +1,11 @@
+// plugins installed plugin index invalidation helpers and runtime behavior.
 import { hashJson } from "./installed-plugin-index-hash.js";
 import type {
   InstalledPluginIndex,
   InstalledPluginIndexRefreshReason,
 } from "./installed-plugin-index-types.js";
 
+/** Reused helper for diff Installed Plugin Index Invalidation Reasons behavior in src/plugins. */
 export function diffInstalledPluginIndexInvalidationReasons(
   previous: InstalledPluginIndex,
   current: InstalledPluginIndex,

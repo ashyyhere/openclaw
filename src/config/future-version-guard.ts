@@ -1,10 +1,13 @@
+// config future version guard helpers and runtime behavior.
 import { VERSION } from "../version.js";
 import type { ConfigFileSnapshot, OpenClawConfig } from "./types.js";
 import { shouldWarnOnTouchedVersion } from "./version.js";
 
+/** Reused constant for ALLOW OLDER BINARY DESTRUCTIVE ACTIONS ENV behavior in src/config. */
 export const ALLOW_OLDER_BINARY_DESTRUCTIVE_ACTIONS_ENV =
   "OPENCLAW_ALLOW_OLDER_BINARY_DESTRUCTIVE_ACTIONS";
 
+/** Shared type for Future Config Action Block in src/config. */
 export type FutureConfigActionBlock = {
   action: string;
   currentVersion: string;
@@ -35,6 +38,7 @@ function resolveTouchedVersion(params: FutureConfigGuardParams): string | null {
   );
 }
 
+/** Reused helper for resolve Future Config Action Block behavior in src/config. */
 export function resolveFutureConfigActionBlock(
   params: FutureConfigGuardParams,
 ): FutureConfigActionBlock | null {
@@ -61,6 +65,7 @@ export function resolveFutureConfigActionBlock(
   };
 }
 
+/** Reused helper for format Future Config Action Block behavior in src/config. */
 export function formatFutureConfigActionBlock(block: FutureConfigActionBlock): string {
   return [block.message, ...block.hints].join("\n");
 }

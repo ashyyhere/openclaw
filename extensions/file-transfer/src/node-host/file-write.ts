@@ -1,3 +1,4 @@
+// extensions/file-transfer/src/node-host file write helpers and runtime behavior.
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";

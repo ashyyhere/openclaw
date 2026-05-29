@@ -1,3 +1,4 @@
+// extensions/qa-channel/src gateway helpers and runtime behavior.
 import { pollQaBus } from "./bus-client.js";
 import { handleQaInbound } from "./inbound.js";
 import type { ChannelGatewayContext } from "./runtime-api.js";

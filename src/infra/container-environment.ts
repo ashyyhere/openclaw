@@ -1,3 +1,4 @@
+// infra container environment helpers and runtime behavior.
 import fs from "node:fs";
 
 /**
@@ -13,6 +14,7 @@ import fs from "node:fs";
  */
 let containerEnvironmentCache: boolean | undefined;
 
+/** Reused helper for is Container Environment behavior in src/infra. */
 export function isContainerEnvironment(): boolean {
   if (containerEnvironmentCache !== undefined) {
     return containerEnvironmentCache;

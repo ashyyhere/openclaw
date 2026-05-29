@@ -1,3 +1,4 @@
+// Tests extensions/mattermost/src gateway auth bypass test behavior.
 import { describe, expect, it } from "vitest";
 import {
   collectMattermostSlashCallbackPaths,

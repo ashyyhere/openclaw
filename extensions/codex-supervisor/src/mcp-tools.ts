@@ -1,3 +1,4 @@
+// extensions/codex-supervisor/src mcp tools helpers and runtime behavior.
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import type { CodexSupervisor } from "./supervisor.js";

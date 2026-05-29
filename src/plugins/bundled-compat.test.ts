@@ -1,3 +1,4 @@
+// Tests plugins bundled compat test behavior.
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import { withBundledPluginEnablementCompat } from "./bundled-compat.js";

@@ -1,3 +1,4 @@
+// extensions/stepfun onboard helpers and runtime behavior.
 import {
   createModelCatalogPresetAppliers,
   type ModelProviderConfig,

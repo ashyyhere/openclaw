@@ -1,3 +1,4 @@
+// Tests extensions/ollama index test behavior.
 import {
   describeImageWithModel,
   describeImagesWithModel,

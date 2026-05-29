@@ -1,3 +1,5 @@
+// packages/memory-host-sdk/src/host openclaw runtime config helpers and runtime behavior.
+/** Re-exported public API for packages/memory-host-sdk. */
 export {
   getRuntimeConfig,
   hasConfiguredSecretInput,
@@ -8,6 +10,7 @@ export {
   resolveSessionTranscriptsDirForAgent,
   resolveStateDir,
 } from "./openclaw-runtime.js";
+/** Re-exported public API for packages/memory-host-sdk. */
 export type {
   MemoryBackend,
   MemoryCitationsMode,

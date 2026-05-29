@@ -1,3 +1,4 @@
+// Tests config normalize paths test behavior.
 import path from "node:path";
 import { withTempHome } from "openclaw/plugin-sdk/test-env";
 import { describe, expect, it } from "vitest";

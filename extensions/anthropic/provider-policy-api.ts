@@ -1,3 +1,4 @@
+// extensions/anthropic provider policy api helpers and runtime behavior.
 import { resolveClaudeThinkingProfile } from "openclaw/plugin-sdk/provider-model-shared";
 import type { ModelProviderConfig } from "openclaw/plugin-sdk/provider-model-types";
 import {

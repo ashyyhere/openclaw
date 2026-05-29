@@ -1,3 +1,4 @@
+// Tests non-interactive API key resolution precedence and secret-ref safety.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { resolveNonInteractiveApiKey } from "./api-keys.js";
 

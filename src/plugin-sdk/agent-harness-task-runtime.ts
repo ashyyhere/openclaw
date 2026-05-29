@@ -1,3 +1,4 @@
+/** Public SDK runtime for scoped agent harness task records and completion announcements. */
 import { buildAnnounceIdempotencyKey } from "../agents/announce-idempotency.js";
 import {
   AGENT_INTERNAL_EVENT_TYPE_TASK_COMPLETION,
@@ -28,7 +29,9 @@ import {
 import { listTaskRecords, type TaskRecord } from "../tasks/runtime-internal.js";
 import { INTERNAL_MESSAGE_CHANNEL } from "../utils/message-channel.js";
 
+/** Re-exported API for src/plugin-sdk, starting with Task Record. */
 export type { TaskRecord as AgentHarnessTaskRecord };
+/** Re-exported API for src/plugin-sdk, starting with Agent Harness Task Runtime Scope. */
 export type { AgentHarnessTaskRuntimeScope };
 
 type AgentHarnessTaskRuntimeId = Parameters<typeof createRunningTaskRun>[0]["runtime"];
@@ -37,6 +40,7 @@ type RecordTaskRunProgressParams = Parameters<typeof recordTaskRunProgressByRunI
 type FinalizeTaskRunParams = Parameters<typeof finalizeTaskRunByRunId>[0];
 type SetDeliveryStatusParams = Parameters<typeof setDetachedTaskDeliveryStatusByRunId>[0];
 
+/** Scope and task identity used to bind task records to one requester session. */
 export type AgentHarnessTaskRuntimeScopeParams = {
   runtime: AgentHarnessTaskRuntimeId;
   scope: AgentHarnessTaskRuntimeScope;
@@ -44,6 +48,7 @@ export type AgentHarnessTaskRuntimeScopeParams = {
   runIdPrefix?: string;
 };
 
+/** Shared type for Agent Harness Scoped Create Running Task Run Params in src/plugin-sdk. */
 export type AgentHarnessScopedCreateRunningTaskRunParams = Omit<
   CreateRunningTaskRunParams,
   "runtime" | "taskKind" | "requesterSessionKey" | "ownerKey" | "scopeKind"
@@ -51,21 +56,25 @@ export type AgentHarnessScopedCreateRunningTaskRunParams = Omit<
   runId: string;
 };
 
+/** Shared type for Agent Harness Scoped Record Task Run Progress Params in src/plugin-sdk. */
 export type AgentHarnessScopedRecordTaskRunProgressParams = Omit<
   RecordTaskRunProgressParams,
   "runtime" | "sessionKey"
 >;
 
+/** Shared type for Agent Harness Scoped Finalize Task Run Params in src/plugin-sdk. */
 export type AgentHarnessScopedFinalizeTaskRunParams = Omit<
   FinalizeTaskRunParams,
   "runtime" | "sessionKey"
 >;
 
+/** Shared type for Agent Harness Scoped Set Delivery Status Params in src/plugin-sdk. */
 export type AgentHarnessScopedSetDeliveryStatusParams = Omit<
   SetDeliveryStatusParams,
   "runtime" | "sessionKey"
 >;
 
+/** Session-scoped task runtime that prevents callers from touching records outside the scope. */
 export type AgentHarnessTaskRuntime = {
   createRunningTaskRun(params: AgentHarnessScopedCreateRunningTaskRunParams): TaskRecord;
   recordTaskRunProgressByRunId(params: AgentHarnessScopedRecordTaskRunProgressParams): TaskRecord[];
@@ -76,14 +85,17 @@ export type AgentHarnessTaskRuntime = {
   listTaskRecords(): TaskRecord[];
 };
 
+/** External completion state labels accepted by harness task announcers. */
 export type AgentHarnessCompletionStatus = "succeeded" | "failed" | "cancelled";
 
+/** Shared type for Agent Harness Completion Delivery in src/plugin-sdk. */
 export type AgentHarnessCompletionDelivery = Awaited<
   ReturnType<typeof deliverSubagentAnnouncement>
 >;
 
 const AGENT_HARNESS_COMPLETION_SOURCE_TOOL = "agent_harness_task";
 
+/** Create a task runtime whose run ids and session ownership are constrained by the provided scope. */
 export function createAgentHarnessTaskRuntime(
   params: AgentHarnessTaskRuntimeScopeParams,
 ): AgentHarnessTaskRuntime {
@@ -142,6 +154,7 @@ export function createAgentHarnessTaskRuntime(
   };
 }
 
+/** Deliver a task completion as an internal event plus best-effort requester announcement. */
 export async function deliverAgentHarnessTaskCompletion(params: {
   scope: AgentHarnessTaskRuntimeScope;
   childSessionKey: string;
@@ -180,6 +193,8 @@ export async function deliverAgentHarnessTaskCompletion(params: {
           spawnMode: "run",
           expectsCompletionMessage: true,
         });
+  // Preserve internal-event structure for prompt consumers while also steering the requester; the
+  // direct origin may differ when the child task completed under a nested subagent route.
   const internalEvents: AgentInternalEvent[] = [
     {
       type: AGENT_INTERNAL_EVENT_TYPE_TASK_COMPLETION,
@@ -229,6 +244,7 @@ function mapHarnessCompletionStatus(
   return "error";
 }
 
+/** Return whether completion delivery reached a durable direct/steered requester path. */
 export function isDurableAgentHarnessCompletionDelivery(
   delivery: AgentHarnessCompletionDelivery,
 ): boolean {

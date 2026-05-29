@@ -1,3 +1,4 @@
+// Tests config validation channel metadata test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { PluginManifestRecord, PluginManifestRegistry } from "../plugins/manifest-registry.js";
 import {

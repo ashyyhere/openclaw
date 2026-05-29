@@ -1,3 +1,4 @@
+// Tests extensions/qqbot/src/engine/utils media tags test behavior.
 import { describe, it, expect } from "vitest";
 import { FUZZY_MEDIA_TAG_REGEX, SELF_CLOSING_TAG_REGEX } from "./media-tags.js";
 

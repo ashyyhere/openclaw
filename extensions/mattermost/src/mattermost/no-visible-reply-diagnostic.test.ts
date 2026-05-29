@@ -1,3 +1,4 @@
+// Tests extensions/mattermost/src/mattermost no visible reply diagnostic test behavior.
 import { describe, expect, it } from "vitest";
 import {
   evaluateMattermostNoVisibleReply,

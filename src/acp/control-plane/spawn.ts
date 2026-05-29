@@ -1,9 +1,11 @@
+/** ACP runtime spawn helpers and close-handle contract. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { callGateway } from "../../gateway/call.js";
 import { logVerbose } from "../../globals.js";
 import { getSessionBindingService } from "../../infra/outbound/session-binding-service.js";
 import { getAcpSessionManager } from "./manager.js";
 
+/** Close handle returned by ACP runtime spawn helpers. */
 export type AcpSpawnRuntimeCloseHandle = {
   runtime: {
     close: (params: {
@@ -14,6 +16,7 @@ export type AcpSpawnRuntimeCloseHandle = {
   handle: { sessionKey: string; backend: string; runtimeSessionName: string };
 };
 
+/** Reused helper for cleanup Failed Acp Spawn behavior in src/acp/control-plane. */
 export async function cleanupFailedAcpSpawn(params: {
   cfg: OpenClawConfig;
   sessionKey: string;

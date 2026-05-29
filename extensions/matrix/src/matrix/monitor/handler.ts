@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix/monitor handler helpers and runtime behavior.
 import {
   buildChannelInboundEventContext,
   toInboundMediaFacts,

@@ -1,3 +1,4 @@
+// extensions/slack/src/monitor/events interactions block actions helpers and runtime behavior.
 import type { SlackActionMiddlewareArgs } from "@slack/bolt";
 import type { Block, KnownBlock } from "@slack/web-api";
 import { resolveApprovalOverGateway } from "openclaw/plugin-sdk/approval-gateway-runtime";

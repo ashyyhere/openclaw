@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server usage limit error helpers and runtime behavior.
 import {
   embeddedAgentLog,
   formatErrorMessage,

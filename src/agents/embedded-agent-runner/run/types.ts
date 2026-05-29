@@ -1,3 +1,4 @@
+/** Attempt parameter and result types for embedded-agent execution. */
 import type { HeartbeatToolResponse } from "../../../auto-reply/heartbeat-tool-response.js";
 import type { ThinkLevel } from "../../../auto-reply/thinking.js";
 import type {
@@ -32,12 +33,14 @@ type EmbeddedRunAttemptBase = Omit<
   "provider" | "model" | "authProfileId" | "authProfileIdSource" | "thinkLevel" | "lane" | "enqueue"
 >;
 
+/** Shared type for Embedded Run Context Window Info in src/agents/embedded-agent-runner. */
 export type EmbeddedRunContextWindowInfo = {
   tokens: number;
   referenceTokens?: number;
   source: "model" | "modelsConfig" | "agentContextTokens" | "default";
 };
 
+/** Shared type for Embedded Run Attempt Params in src/agents/embedded-agent-runner. */
 export type EmbeddedRunAttemptParams = EmbeddedRunAttemptBase & {
   initialReplayState?: EmbeddedRunReplayState;
   /** Pluggable context engine for ingest/assemble/compact lifecycle. */
@@ -76,6 +79,7 @@ export type EmbeddedRunAttemptParams = EmbeddedRunAttemptBase & {
   beforeAgentStartResult?: PluginHookBeforeAgentStartResult;
 };
 
+/** Shared type for Embedded Run Attempt Result in src/agents/embedded-agent-runner. */
 export type EmbeddedRunAttemptResult = {
   aborted: boolean;
   /** True when the abort originated from the caller-provided abortSignal. */

@@ -1,3 +1,4 @@
+// Tests extensions/zalo/src setup status test behavior.
 import { createPluginSetupWizardStatus } from "openclaw/plugin-sdk/plugin-test-runtime";
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../runtime-api.js";

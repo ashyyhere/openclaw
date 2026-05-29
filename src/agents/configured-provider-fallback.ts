@@ -1,3 +1,4 @@
+/** Chooses a configured provider/model when the default provider is unavailable. */
 import type { OpenClawConfig } from "../config/types.js";
 
 type ProviderModelRef = {
@@ -5,6 +6,7 @@ type ProviderModelRef = {
   model: string;
 };
 
+/** Resolve the first configured provider/model fallback for default model selection. */
 export function resolveConfiguredProviderFallback(params: {
   cfg: Pick<OpenClawConfig, "models">;
   defaultProvider: string;

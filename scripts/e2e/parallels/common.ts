@@ -1,3 +1,4 @@
+// scripts/e2e/parallels common helpers and runtime behavior.
 export * from "./filesystem.ts";
 export * from "./env-limits.ts";
 export * from "./host-command.ts";

@@ -1,3 +1,4 @@
+/** Shared status command fixtures and sample report data. */
 import type { HeartbeatEventPayload } from "../infra/heartbeat-events.js";
 import { isBetaTag } from "../infra/update-channels.js";
 import type { Tone } from "../memory-host-sdk/status.js";
@@ -13,11 +14,13 @@ import type { StatusSummary } from "./status.types.js";
 type StatusCommandOverviewRowsParams = Parameters<typeof buildStatusCommandOverviewRows>[0];
 type StatusCommandReportDataParams = Parameters<typeof buildStatusCommandReportData>[0];
 
+/** Reused constant for base Status Cfg behavior in src/commands. */
 export const baseStatusCfg = {
   update: { channel: "stable" },
   gateway: { bind: "loopback" },
 } as const;
 
+/** Reused constant for base Status Update behavior in src/commands. */
 export const baseStatusUpdate = {
   installKind: "git",
   git: {
@@ -32,6 +35,7 @@ export const baseStatusUpdate = {
   registry: { latestVersion: "2026.4.10" },
 } as never;
 
+/** Reused constant for base Status Expected Update Channel Info behavior in src/commands. */
 export const baseStatusExpectedUpdateChannelInfo = isBetaTag(VERSION)
   ? {
       channel: "beta",
@@ -44,8 +48,10 @@ export const baseStatusExpectedUpdateChannelInfo = isBetaTag(VERSION)
       label: "stable (config)",
     };
 
+/** Reused constant for base Status Expected Update Channel Label behavior in src/commands. */
 export const baseStatusExpectedUpdateChannelLabel = baseStatusExpectedUpdateChannelInfo.label;
 
+/** Reused constant for base Status Gateway Snapshot behavior in src/commands. */
 export const baseStatusGatewaySnapshot = {
   gatewayMode: "remote",
   remoteUrlMissing: false,
@@ -61,6 +67,7 @@ export const baseStatusGatewaySnapshot = {
   gatewaySelf: { host: "gateway", version: "1.2.3" },
 } as const;
 
+/** Reused constant for base Status Overview Scan Fields behavior in src/commands. */
 export const baseStatusOverviewScanFields = {
   cfg: baseStatusCfg,
   update: baseStatusUpdate,
@@ -85,12 +92,14 @@ const baseStatusNodeService = {
   runtime: { status: "running", pid: 42 },
 };
 
+/** Reused constant for base Status Services behavior in src/commands. */
 export const baseStatusServices = {
   gatewayService: baseStatusGatewayService,
   nodeService: baseStatusNodeService,
   nodeOnlyGateway: null,
 };
 
+/** Reused constant for base Status Overview Surface behavior in src/commands. */
 export const baseStatusOverviewSurface = {
   ...baseStatusOverviewScanFields,
   ...baseStatusServices,
@@ -217,6 +226,7 @@ const statusTestTheme = {
   error: (value: string) => `error(${value})`,
 };
 
+/** Reused helper for create Status Command Overview Rows Params behavior in src/commands. */
 export function createStatusCommandOverviewRowsParams(
   overrides: Partial<StatusCommandOverviewRowsParams> = {},
 ): StatusCommandOverviewRowsParams {
@@ -239,6 +249,7 @@ export function createStatusCommandOverviewRowsParams(
   };
 }
 
+/** Reused helper for create Status Command Report Data Params behavior in src/commands. */
 export function createStatusCommandReportDataParams(
   overrides: Partial<StatusCommandReportDataParams> = {},
 ): StatusCommandReportDataParams {

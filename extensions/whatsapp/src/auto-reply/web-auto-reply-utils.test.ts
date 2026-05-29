@@ -1,3 +1,4 @@
+// Tests extensions/whatsapp/src/auto-reply web auto reply utils test behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";

@@ -1,3 +1,4 @@
+/** Provider API-key collection and retry/rotation helpers. */
 import { sleepWithAbort } from "../infra/backoff.js";
 import { formatErrorMessage } from "../infra/errors.js";
 import {
@@ -29,6 +30,7 @@ function dedupeApiKeys(raw: string[]): string[] {
   return normalizeUniqueStringEntries(raw);
 }
 
+/** Collect primary plus configured provider API keys for execution. */
 export function collectProviderApiKeysForExecution(params: {
   provider: string;
   primaryApiKey?: string;
@@ -37,6 +39,7 @@ export function collectProviderApiKeysForExecution(params: {
   return dedupeApiKeys([primaryApiKey?.trim() ?? "", ...collectProviderApiKeys(provider)]);
 }
 
+/** Execute an operation with provider API-key rotation and transient retries. */
 export async function executeWithApiKeyRotation<T>(
   params: ExecuteWithApiKeyRotationOptions<T>,
 ): Promise<T> {

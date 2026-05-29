@@ -1,3 +1,4 @@
+/** Tests workspace guard wrapping for the OpenClaw nodes tool. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { applyNodesToolWorkspaceGuard } from "./openclaw-tools.nodes-workspace-guard.js";
 import type { AnyAgentTool } from "./tools/common.js";

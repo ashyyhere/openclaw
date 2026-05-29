@@ -1,3 +1,4 @@
+/** Regression coverage for model forward-compat errors and overrides. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { ModelProviderConfig } from "../../config/config.js";
 import { discoverModels } from "../agent-model-discovery.js";

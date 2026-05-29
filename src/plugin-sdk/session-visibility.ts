@@ -1,3 +1,4 @@
+// plugin-sdk session visibility helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { callGateway as defaultCallGateway } from "../gateway/call.js";
 import { resolveAgentIdFromSessionKey } from "../routing/session-key.js";
@@ -18,20 +19,25 @@ export const sessionVisibilityGatewayTesting = {
   },
 };
 
+/** Shared type for Session Tools Visibility in src/plugin-sdk. */
 export type SessionToolsVisibility = "self" | "tree" | "agent" | "all";
 
+/** Shared type for Agent To Agent Policy in src/plugin-sdk. */
 export type AgentToAgentPolicy = {
   enabled: boolean;
   matchesAllow: (agentId: string) => boolean;
   isAllowed: (requesterAgentId: string, targetAgentId: string) => boolean;
 };
 
+/** Shared type for Session Access Action in src/plugin-sdk. */
 export type SessionAccessAction = "history" | "send" | "list" | "status";
 
+/** Shared type for Session Access Result in src/plugin-sdk. */
 export type SessionAccessResult =
   | { allowed: true }
   | { allowed: false; error: string; status: "forbidden" };
 
+/** Shared type for Session Visibility Row in src/plugin-sdk. */
 export type SessionVisibilityRow = {
   key: string;
   agentId?: string;
@@ -40,6 +46,7 @@ export type SessionVisibilityRow = {
   parentSessionKey?: string;
 };
 
+/** Reused helper for list Spawned Session Keys behavior in src/plugin-sdk. */
 export async function listSpawnedSessionKeys(params: {
   requesterSessionKey: string;
   limit?: number;
@@ -66,6 +73,7 @@ export async function listSpawnedSessionKeys(params: {
   }
 }
 
+/** Reused helper for resolve Session Tools Visibility behavior in src/plugin-sdk. */
 export function resolveSessionToolsVisibility(cfg: OpenClawConfig): SessionToolsVisibility {
   const raw = (cfg.tools as { sessions?: { visibility?: unknown } } | undefined)?.sessions
     ?.visibility;
@@ -76,6 +84,7 @@ export function resolveSessionToolsVisibility(cfg: OpenClawConfig): SessionTools
   return "tree";
 }
 
+/** Reused helper for resolve Effective Session Tools Visibility behavior in src/plugin-sdk. */
 export function resolveEffectiveSessionToolsVisibility(params: {
   cfg: OpenClawConfig;
   sandboxed: boolean;
@@ -91,6 +100,7 @@ export function resolveEffectiveSessionToolsVisibility(params: {
   return visibility;
 }
 
+/** Reused helper for resolve Sandbox Session Tools Visibility behavior in src/plugin-sdk. */
 export function resolveSandboxSessionToolsVisibility(cfg: OpenClawConfig): "spawned" | "all" {
   return cfg.agents?.defaults?.sandbox?.sessionToolsVisibility ?? "spawned";
 }
@@ -159,6 +169,7 @@ function matchesCompiledWildcard(
   return true;
 }
 
+/** Reused helper for create Agent To Agent Policy behavior in src/plugin-sdk. */
 export function createAgentToAgentPolicy(cfg: OpenClawConfig): AgentToAgentPolicy {
   const routingA2A = cfg.tools?.agentToAgent;
   const enabled = routingA2A?.enabled === true;
@@ -255,6 +266,7 @@ function treeVisibilityMessage(action: SessionAccessAction): string {
   return `${actionPrefix(action)} visibility is restricted to the current session tree (tools.sessions.visibility=tree).`;
 }
 
+/** Reused helper for create Session Visibility Checker behavior in src/plugin-sdk. */
 export function createSessionVisibilityChecker(params: {
   action: SessionAccessAction;
   requesterSessionKey: string;
@@ -289,6 +301,7 @@ function rowOwnedByRequester(row: SessionVisibilityRow, requesterSessionKey: str
   );
 }
 
+/** Reused helper for create Session Visibility Row Checker behavior in src/plugin-sdk. */
 export function createSessionVisibilityRowChecker(params: {
   action: SessionAccessAction;
   requesterSessionKey: string;
@@ -360,6 +373,7 @@ export function createSessionVisibilityRowChecker(params: {
   return { check };
 }
 
+/** Reused helper for create Session Visibility Guard behavior in src/plugin-sdk. */
 export async function createSessionVisibilityGuard(params: {
   action: SessionAccessAction;
   requesterSessionKey: string;

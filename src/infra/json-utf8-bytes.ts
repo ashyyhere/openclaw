@@ -1,3 +1,5 @@
+// infra json utf8 bytes helpers and runtime behavior.
+/** Reused helper for json Utf8 Bytes behavior in src/infra. */
 export function jsonUtf8Bytes(value: unknown): number {
   try {
     return Buffer.byteLength(JSON.stringify(value), "utf8");
@@ -6,11 +8,13 @@ export function jsonUtf8Bytes(value: unknown): number {
   }
 }
 
+/** Shared type for Bounded Json Utf8 Bytes in src/infra. */
 export type BoundedJsonUtf8Bytes = {
   bytes: number;
   complete: boolean;
 };
 
+/** Reused helper for json Utf8 Bytes Or Infinity behavior in src/infra. */
 export function jsonUtf8BytesOrInfinity(value: unknown): number {
   try {
     const serialized = JSON.stringify(value);
@@ -38,6 +42,7 @@ function* enumerableOwnEntries(value: object): Generator<[string, unknown]> {
   }
 }
 
+/** Reused helper for first Enumerable Own Keys behavior in src/infra. */
 export function firstEnumerableOwnKeys(value: object, maxKeys: number): string[] {
   const keys: string[] = [];
   for (const key in value as Record<string, unknown>) {
@@ -52,6 +57,7 @@ export function firstEnumerableOwnKeys(value: object, maxKeys: number): string[]
   return keys;
 }
 
+/** Reused helper for bounded Json Utf8 Bytes behavior in src/infra. */
 export function boundedJsonUtf8Bytes(value: unknown, maxBytes: number): BoundedJsonUtf8Bytes {
   let bytes = 0;
   const seen = new WeakSet<object>();

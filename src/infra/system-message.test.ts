@@ -1,3 +1,4 @@
+// Tests infra system message test behavior.
 import { describe, expect, it } from "vitest";
 import { SYSTEM_MARK, hasSystemMark, prefixSystemMessage } from "./system-message.js";
 

@@ -1,3 +1,4 @@
+// Tests extensions/msteams/src sent message cache test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { setMSTeamsRuntime } from "./runtime.js";
 import {

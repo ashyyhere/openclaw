@@ -1,3 +1,4 @@
+// Tests infra/outbound envelope test behavior.
 import { describe, expect, it } from "vitest";
 import type { ReplyPayload } from "../../auto-reply/types.js";
 import { buildOutboundResultEnvelope } from "./envelope.js";

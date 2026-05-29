@@ -1,3 +1,4 @@
+// Shared types for extensions/codex-supervisor/src types behavior.
 export type CodexSupervisorEndpoint =
   | {
       id: string;

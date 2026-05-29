@@ -1,3 +1,4 @@
+// Tests infra exec allowlist pattern test behavior.
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { matchesExecAllowlistPattern } from "./exec-allowlist-pattern.js";

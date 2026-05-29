@@ -1,6 +1,8 @@
+// gateway server utils helpers and runtime behavior.
 import { defaultVoiceWakeTriggers } from "../infra/voicewake.js";
 import { normalizeTrimmedStringList } from "../shared/string-normalization.js";
 
+/** Reused helper for normalize Voice Wake Triggers behavior in src/gateway. */
 export function normalizeVoiceWakeTriggers(input: unknown): string[] {
   const cleaned = normalizeTrimmedStringList(input)
     .slice(0, 32)
@@ -8,6 +10,7 @@ export function normalizeVoiceWakeTriggers(input: unknown): string[] {
   return cleaned.length > 0 ? cleaned : defaultVoiceWakeTriggers();
 }
 
+/** Reused helper for format Error behavior in src/gateway. */
 export function formatError(err: unknown): string {
   if (err instanceof Error) {
     return err.message;

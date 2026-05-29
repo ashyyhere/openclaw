@@ -1,3 +1,4 @@
+// infra heartbeat summary helpers and runtime behavior.
 import { resolveAgentConfig, resolveDefaultAgentId } from "../agents/agent-scope.js";
 import {
   DEFAULT_HEARTBEAT_ACK_MAX_CHARS,
@@ -12,6 +13,7 @@ import { normalizeOptionalString } from "../shared/string-coerce.js";
 
 type HeartbeatConfig = AgentDefaultsConfig["heartbeat"];
 
+/** Shared type for Heartbeat Summary in src/infra. */
 export type HeartbeatSummary = {
   enabled: boolean;
   every: string;
@@ -29,6 +31,7 @@ function hasExplicitHeartbeatAgents(cfg: OpenClawConfig) {
   return list.some((entry) => Boolean(entry?.heartbeat));
 }
 
+/** Reused helper for is Heartbeat Enabled For Agent behavior in src/infra. */
 export function isHeartbeatEnabledForAgent(cfg: OpenClawConfig, agentId?: string): boolean {
   const resolvedAgentId = normalizeAgentId(agentId ?? resolveDefaultAgentId(cfg));
   const list = cfg.agents?.list ?? [];
@@ -44,6 +47,7 @@ export function isHeartbeatEnabledForAgent(cfg: OpenClawConfig, agentId?: string
   return resolvedAgentId === resolveDefaultAgentId(cfg);
 }
 
+/** Reused helper for resolve Heartbeat Interval Ms behavior in src/infra. */
 export function resolveHeartbeatIntervalMs(
   cfg: OpenClawConfig,
   overrideEvery?: string,
@@ -73,6 +77,7 @@ export function resolveHeartbeatIntervalMs(
   return ms;
 }
 
+/** Reused helper for resolve Heartbeat Summary For Agent behavior in src/infra. */
 export function resolveHeartbeatSummaryForAgent(
   cfg: OpenClawConfig,
   agentId?: string,

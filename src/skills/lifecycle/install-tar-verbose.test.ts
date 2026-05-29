@@ -1,3 +1,4 @@
+/** Unit coverage for parsing portable `tar tvf` metadata formats. */
 import { describe, expect, it } from "vitest";
 import { parseTarVerboseMetadata } from "./install-tar-verbose.js";
 

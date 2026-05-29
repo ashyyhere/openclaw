@@ -1,7 +1,9 @@
+// config/sessions session file rotation helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 
+/** Reused helper for rewrite Session File For New Session Id behavior in src/config/sessions. */
 export function rewriteSessionFileForNewSessionId(params: {
   sessionFile?: string;
   previousSessionId: string;
@@ -34,6 +36,7 @@ export function rewriteSessionFileForNewSessionId(params: {
   return undefined;
 }
 
+/** Reused helper for canonicalize Absolute Session File Path behavior in src/config/sessions. */
 export function canonicalizeAbsoluteSessionFilePath(filePath: string): string {
   const resolved = path.resolve(filePath);
   const missingSegments: string[] = [];

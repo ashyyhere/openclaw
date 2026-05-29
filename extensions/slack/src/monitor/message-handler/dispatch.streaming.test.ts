@@ -1,3 +1,4 @@
+// Tests extensions/slack/src/monitor/message-handler dispatch streaming test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   createSlackEventDeliveryTracker,

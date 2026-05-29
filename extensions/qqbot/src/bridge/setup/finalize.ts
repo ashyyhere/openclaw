@@ -1,3 +1,4 @@
+// extensions/qqbot/src/bridge/setup finalize helpers and runtime behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import type { ChannelSetupWizard } from "openclaw/plugin-sdk/setup";
 import { DEFAULT_ACCOUNT_ID } from "openclaw/plugin-sdk/setup";

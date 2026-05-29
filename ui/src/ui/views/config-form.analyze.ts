@@ -1,5 +1,7 @@
+// ui/src/ui/views config form analyze helpers and runtime behavior.
 import { pathKey, schemaType, type JsonSchema } from "./config-form.shared.ts";
 
+/** Shared type for Config Schema Analysis in ui/src/ui/views. */
 export type ConfigSchemaAnalysis = {
   schema: JsonSchema | null;
   unsupportedPaths: string[];
@@ -36,6 +38,7 @@ function uniqueValues(values: unknown[]): unknown[] {
   return unique;
 }
 
+/** Reused helper for analyze Config Schema behavior in ui/src/ui/views. */
 export function analyzeConfigSchema(raw: unknown): ConfigSchemaAnalysis {
   if (!raw || typeof raw !== "object") {
     return { schema: null, unsupportedPaths: ["<root>"] };

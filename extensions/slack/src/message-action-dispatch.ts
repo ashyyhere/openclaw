@@ -1,3 +1,4 @@
+// extensions/slack/src message action dispatch helpers and runtime behavior.
 import type { AgentToolResult } from "openclaw/plugin-sdk/agent-core";
 import { readBooleanParam } from "openclaw/plugin-sdk/boolean-param";
 import type { ChannelMessageActionContext } from "openclaw/plugin-sdk/channel-contract";

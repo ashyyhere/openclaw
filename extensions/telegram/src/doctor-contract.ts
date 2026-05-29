@@ -1,3 +1,4 @@
+// extensions/telegram/src doctor contract helpers and runtime behavior.
 import type {
   ChannelDoctorConfigMutation,
   ChannelDoctorLegacyConfigRule,

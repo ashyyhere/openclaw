@@ -1,7 +1,9 @@
+// infra/outbound delivery commit hooks helpers and runtime behavior.
 import { createSubsystemLogger } from "../../logging/subsystem.js";
 import { formatErrorMessage } from "../errors.js";
 import type { OutboundDeliveryResult } from "./deliver-types.js";
 
+/** Shared type for Outbound Delivery Commit Hook in src/infra/outbound. */
 export type OutboundDeliveryCommitHook = () => Promise<void>;
 
 const log = createSubsystemLogger("outbound/deliver");
@@ -10,6 +12,7 @@ const outboundDeliveryCommitHooks = new WeakMap<
   OutboundDeliveryCommitHook[]
 >();
 
+/** Reused helper for attach Outbound Delivery Commit Hook behavior in src/infra/outbound. */
 export function attachOutboundDeliveryCommitHook<T extends OutboundDeliveryResult>(
   result: T,
   hook?: OutboundDeliveryCommitHook,
@@ -23,6 +26,7 @@ export function attachOutboundDeliveryCommitHook<T extends OutboundDeliveryResul
   return result;
 }
 
+/** Reused helper for run Outbound Delivery Commit Hooks behavior in src/infra/outbound. */
 export async function runOutboundDeliveryCommitHooks(
   results: readonly OutboundDeliveryResult[],
 ): Promise<void> {
@@ -41,6 +45,7 @@ export async function runOutboundDeliveryCommitHooks(
   }
 }
 
+/** Reused helper for is Outbound Delivery Result Array behavior in src/infra/outbound. */
 export function isOutboundDeliveryResultArray(value: unknown): value is OutboundDeliveryResult[] {
   return Array.isArray(value);
 }

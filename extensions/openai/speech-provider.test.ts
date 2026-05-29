@@ -1,3 +1,4 @@
+// Tests extensions/openai speech provider test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { buildOpenAISpeechProvider } from "./speech-provider.js";
 

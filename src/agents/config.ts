@@ -1,3 +1,4 @@
+/** Package, install, path, and self-update configuration helpers. */
 import { accessSync, constants, existsSync, readFileSync, realpathSync } from "node:fs";
 import { homedir } from "node:os";
 import { basename, dirname, join, resolve, sep, win32 } from "node:path";
@@ -27,6 +28,7 @@ export const isBunRuntime = !!process.versions.bun;
 // Install Method Detection
 // =============================================================================
 
+/** Supported installation source detected for self-update guidance. */
 export type InstallMethod = "bun-binary" | "npm" | "pnpm" | "yarn" | "bun" | "unknown";
 
 interface SelfUpdateCommandStep {
@@ -35,6 +37,7 @@ interface SelfUpdateCommandStep {
   display: string;
 }
 
+/** Structured self-update command, optionally with uninstall/install steps. */
 export interface SelfUpdateCommand extends SelfUpdateCommandStep {
   steps?: SelfUpdateCommandStep[];
 }
@@ -61,6 +64,7 @@ function makeSelfUpdateCommandStep(command: string, args: string[]): SelfUpdateC
   };
 }
 
+/** Detect how OpenClaw appears to be installed on disk. */
 export function detectInstallMethod(): InstallMethod {
   if (isBunBinary) {
     return "bun-binary";
@@ -313,6 +317,7 @@ function isManagedByGlobalPackageManager(
   });
 }
 
+/** Reused helper for get Self Update Command behavior in src/agents. */
 export function getSelfUpdateCommand(
   packageName: string,
   npmCommand?: string[],
@@ -330,6 +335,7 @@ export function getSelfUpdateCommand(
   return command;
 }
 
+/** Reused helper for get Self Update Unavailable Instruction behavior in src/agents. */
 export function getSelfUpdateUnavailableInstruction(
   packageName: string,
   npmCommand?: string[],
@@ -352,6 +358,7 @@ export function getSelfUpdateUnavailableInstruction(
   return `Update ${updatePackageName} using the package manager, wrapper, or source checkout that provides this installation.`;
 }
 
+/** Reused helper for get Update Instruction behavior in src/agents. */
 export function getUpdateInstruction(packageName: string): string {
   const method = detectInstallMethod();
   const command = getSelfUpdateCommandForMethod(method, packageName);
@@ -478,15 +485,23 @@ interface PackageJson {
 const pkg = JSON.parse(readFileSync(getPackageJsonPath(), "utf-8")) as PackageJson;
 
 const openClawConfigName: string | undefined = pkg.openclawConfig?.name;
+/** Reused constant for PACKAGE NAME behavior in src/agents. */
 export const PACKAGE_NAME: string = pkg.name || "openclaw/plugin-sdk/agent-sessions";
+/** Reused constant for APP NAME behavior in src/agents. */
 export const APP_NAME: string = openClawConfigName || "openclaw";
+/** Reused constant for APP TITLE behavior in src/agents. */
 export const APP_TITLE: string = openClawConfigName ? APP_NAME : "OpenClaw";
+/** Reused constant for CONFIG DIR NAME behavior in src/agents. */
 export const CONFIG_DIR_NAME: string = pkg.openclawConfig?.configDir || ".openclaw";
+/** Reused constant for VERSION behavior in src/agents. */
 export const VERSION: string = pkg.version || "0.0.0";
 
+/** Reused constant for ENV AGENT DIR behavior in src/agents. */
 export const ENV_AGENT_DIR = `${APP_NAME.toUpperCase()}_AGENT_DIR`;
+/** Reused constant for ENV SESSION DIR behavior in src/agents. */
 export const ENV_SESSION_DIR = `${APP_NAME.toUpperCase()}_AGENT_SESSION_DIR`;
 
+/** Reused helper for expand Tilde Path behavior in src/agents. */
 export function expandTildePath(path: string): string {
   if (path === "~") {
     return homedir();

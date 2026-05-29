@@ -1,3 +1,4 @@
+// scripts/e2e/parallels snapshots helpers and runtime behavior.
 import { die, run } from "./host-command.ts";
 import type { SnapshotInfo } from "./types.ts";
 

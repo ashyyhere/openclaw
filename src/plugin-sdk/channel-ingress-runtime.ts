@@ -14,6 +14,7 @@ export {
   resolveChannelMessageIngress,
   resolveStableChannelMessageIngress,
 } from "../channels/message-access/index.js";
+/** Re-exported API for src/plugin-sdk. */
 export type {
   AccessGroupMembershipFact,
   ChannelIngressDecision,

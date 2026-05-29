@@ -1,6 +1,8 @@
+// crestodian probes helpers and runtime behavior.
 import { spawn } from "node:child_process";
 import { resolveTimerTimeoutMs } from "../shared/number-coercion.js";
 
+/** Shared type for Local Command Probe in src/crestodian. */
 export type LocalCommandProbe = {
   command: string;
   found: boolean;
@@ -16,6 +18,7 @@ function appendBounded(previous: string, chunk: string, limit: number): string {
   return next.length > limit ? next.slice(-limit) : next;
 }
 
+/** Reused helper for probe Local Command behavior in src/crestodian. */
 export async function probeLocalCommand(
   command: string,
   args: string[] = ["--version"],
@@ -95,6 +98,7 @@ export async function probeLocalCommand(
   });
 }
 
+/** Reused helper for probe Gateway Url behavior in src/crestodian. */
 export async function probeGatewayUrl(
   url: string,
   opts: { timeoutMs?: number } = {},

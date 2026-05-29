@@ -1,3 +1,4 @@
+// extensions/qqbot/src exec approvals helpers and runtime behavior.
 import {
   markImplicitSameChatApprovalAuthorization,
   resolveApprovalApprovers,

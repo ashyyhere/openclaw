@@ -1,3 +1,4 @@
+/** Action result helpers for image generation tool providers. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { listRuntimeImageGenerationProviders } from "../../image-generation/runtime.js";
 import type { ImageGenerationProvider } from "../../image-generation/types.js";
@@ -17,8 +18,10 @@ import {
   type MediaGenerateActionResult,
 } from "./media-generate-tool-actions-shared.js";
 
+/** Shared type for Image Generate Action Result in src/agents/tools. */
 export type ImageGenerateActionResult = MediaGenerateActionResult;
 
+/** Formats provider auth hints for image generation status output. */
 export function formatImageGenerationAuthHint(provider: {
   id: string;
   authEnvVars: readonly string[];
@@ -32,10 +35,12 @@ export function formatImageGenerationAuthHint(provider: {
   return `set ${provider.authEnvVars.join(" / ")} to use ${provider.id}/*`;
 }
 
+/** Reused helper for list Supported Image Generation Modes behavior in src/agents/tools. */
 export function listSupportedImageGenerationModes(provider: ImageGenerationProvider): string[] {
   return ["generate", ...(provider.capabilities.edit.enabled ? ["edit"] : [])];
 }
 
+/** Reused helper for summarize Image Generation Capabilities behavior in src/agents/tools. */
 export function summarizeImageGenerationCapabilities(provider: ImageGenerationProvider): string {
   const caps: string[] = [];
   if (provider.capabilities.edit.enabled) {
@@ -62,6 +67,7 @@ export function summarizeImageGenerationCapabilities(provider: ImageGenerationPr
   return caps.join("; ");
 }
 
+/** Builds the image provider/model listing action result. */
 export function createImageGenerateListActionResult(params: {
   cfg?: OpenClawConfig;
   workspaceDir?: string;
@@ -90,6 +96,7 @@ const imageGenerateTaskStatusActions = createMediaGenerateTaskStatusActions({
   buildStatusDetails: buildImageGenerationTaskStatusDetails,
 });
 
+/** Builds the image task status action result. */
 export function createImageGenerateStatusActionResult(
   sessionKey?: string,
 ): ImageGenerateActionResult {
@@ -106,6 +113,7 @@ export function createImageGenerateStatusActionResult(
   return imageGenerateTaskStatusActions.createStatusActionResult(sessionKey);
 }
 
+/** Builds the duplicate-task guard result for image generation. */
 export function createImageGenerateDuplicateGuardResult(
   sessionKey?: string,
   params?: { prompt?: string; requestKey?: string },

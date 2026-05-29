@@ -1,3 +1,4 @@
+// extensions/discord/src chunk helpers and runtime behavior.
 import { resolveIntegerOption } from "openclaw/plugin-sdk/number-runtime";
 import { chunkMarkdownTextWithMode, type ChunkMode } from "openclaw/plugin-sdk/reply-chunking";
 

@@ -1,9 +1,11 @@
+// Shared types for cron types behavior.
 import type { FailoverReason } from "../agents/embedded-agent-helpers/types.js";
 import type { EmbeddedAgentExecutionPhase } from "../agents/embedded-agent-runner/execution-phase.js";
 import type { ChannelId } from "../channels/plugins/types.public.js";
 import type { HookExternalContentSource } from "../security/external-content.js";
 import type { CronJobBase } from "./types-shared.js";
 
+/** Shared type for Cron Schedule in src/cron. */
 export type CronSchedule =
   | { kind: "at"; at: string }
   | { kind: "every"; everyMs: number; anchorMs?: number }
@@ -15,13 +17,18 @@ export type CronSchedule =
       staggerMs?: number;
     };
 
+/** Shared type for Cron Session Target in src/cron. */
 export type CronSessionTarget = "main" | "isolated" | "current" | `session:${string}`;
+/** Shared type for Cron Wake Mode in src/cron. */
 export type CronWakeMode = "next-heartbeat" | "now";
 
+/** Shared type for Cron Message Channel in src/cron. */
 export type CronMessageChannel = ChannelId;
 
+/** Shared type for Cron Delivery Mode in src/cron. */
 export type CronDeliveryMode = "none" | "announce" | "webhook";
 
+/** Shared type for Cron Delivery in src/cron. */
 export type CronDelivery = {
   mode: CronDeliveryMode;
   channel?: CronMessageChannel;
@@ -35,6 +42,7 @@ export type CronDelivery = {
   failureDestination?: CronFailureDestination;
 };
 
+/** Shared type for Cron Failure Destination in src/cron. */
 export type CronFailureDestination = {
   channel?: CronMessageChannel;
   to?: string;
@@ -42,11 +50,15 @@ export type CronFailureDestination = {
   mode?: "announce" | "webhook";
 };
 
+/** Shared type for Cron Delivery Patch in src/cron. */
 export type CronDeliveryPatch = Partial<CronDelivery>;
 
+/** Shared type for Cron Run Status in src/cron. */
 export type CronRunStatus = "ok" | "error" | "skipped";
+/** Shared type for Cron Delivery Status in src/cron. */
 export type CronDeliveryStatus = "delivered" | "not-delivered" | "unknown" | "not-requested";
 
+/** Shared type for Cron Delivery Trace Target in src/cron. */
 export type CronDeliveryTraceTarget = {
   channel?: string;
   to?: string | null;
@@ -55,6 +67,7 @@ export type CronDeliveryTraceTarget = {
   source?: "explicit" | "last";
 };
 
+/** Shared type for Cron Delivery Trace Message Target in src/cron. */
 export type CronDeliveryTraceMessageTarget = {
   channel: string;
   to?: string;
@@ -62,6 +75,7 @@ export type CronDeliveryTraceMessageTarget = {
   threadId?: string;
 };
 
+/** Shared type for Cron Delivery Trace in src/cron. */
 export type CronDeliveryTrace = {
   intended?: CronDeliveryTraceTarget;
   resolved?: CronDeliveryTraceTarget & { ok: boolean; error?: string };
@@ -70,6 +84,7 @@ export type CronDeliveryTrace = {
   delivered?: boolean;
 };
 
+/** Shared type for Cron Failure Notification Delivery in src/cron. */
 export type CronFailureNotificationDelivery = {
   /** Whether the last failed run's failure notification reached the target channel. */
   delivered?: boolean;
@@ -77,11 +92,13 @@ export type CronFailureNotificationDelivery = {
   error?: string;
 };
 
+/** Shared type for Cron Delivery Preview in src/cron. */
 export type CronDeliveryPreview = {
   label: string;
   detail: string;
 };
 
+/** Shared type for Cron Usage Summary in src/cron. */
 export type CronUsageSummary = {
   input_tokens?: number;
   output_tokens?: number;
@@ -90,14 +107,17 @@ export type CronUsageSummary = {
   cache_write_tokens?: number;
 };
 
+/** Shared type for Cron Run Telemetry in src/cron. */
 export type CronRunTelemetry = {
   model?: string;
   provider?: string;
   usage?: CronUsageSummary;
 };
 
+/** Shared type for Cron Run Diagnostic Severity in src/cron. */
 export type CronRunDiagnosticSeverity = "info" | "warn" | "error";
 
+/** Shared type for Cron Run Diagnostic Source in src/cron. */
 export type CronRunDiagnosticSource =
   | "cron-preflight"
   | "cron-setup"
@@ -107,6 +127,7 @@ export type CronRunDiagnosticSource =
   | "exec"
   | "delivery";
 
+/** Shared type for Cron Run Diagnostic in src/cron. */
 export type CronRunDiagnostic = {
   ts: number;
   source: CronRunDiagnosticSource;
@@ -117,11 +138,13 @@ export type CronRunDiagnostic = {
   truncated?: boolean;
 };
 
+/** Shared type for Cron Run Diagnostics in src/cron. */
 export type CronRunDiagnostics = {
   summary?: string;
   entries: CronRunDiagnostic[];
 };
 
+/** Shared type for Cron Run Outcome in src/cron. */
 export type CronRunOutcome = {
   status: CronRunStatus;
   error?: string;
@@ -133,8 +156,10 @@ export type CronRunOutcome = {
   diagnostics?: CronRunDiagnostics;
 };
 
+/** Shared type for Cron Agent Execution Phase in src/cron. */
 export type CronAgentExecutionPhase = EmbeddedAgentExecutionPhase;
 
+/** Shared type for Cron Agent Execution Started in src/cron. */
 export type CronAgentExecutionStarted = {
   jobId: string;
   agentId?: string;
@@ -152,10 +177,12 @@ export type CronAgentExecutionStarted = {
   firstModelCallStarted?: boolean;
 };
 
+/** Shared type for Cron Agent Execution Phase Update in src/cron. */
 export type CronAgentExecutionPhaseUpdate = CronAgentExecutionStarted & {
   phase: CronAgentExecutionPhase;
 };
 
+/** Shared type for Cron Failure Alert in src/cron. */
 export type CronFailureAlert = {
   after?: number;
   channel?: CronMessageChannel;
@@ -169,8 +196,10 @@ export type CronFailureAlert = {
   accountId?: string;
 };
 
+/** Shared type for Cron Payload in src/cron. */
 export type CronPayload = { kind: "systemEvent"; text: string } | CronAgentTurnPayload;
 
+/** Shared type for Cron Payload Patch in src/cron. */
 export type CronPayloadPatch = { kind: "systemEvent"; text?: string } | CronAgentTurnPayloadPatch;
 
 type CronAgentTurnPayloadFields = {
@@ -199,6 +228,7 @@ type CronAgentTurnPayloadPatch = {
 } & Partial<Omit<CronAgentTurnPayloadFields, "toolsAllow">> & {
     toolsAllow?: string[] | null;
   };
+/** Shared type for Cron Job State in src/cron. */
 export type CronJobState = {
   nextRunAtMs?: number;
   runningAtMs?: number;
@@ -235,6 +265,7 @@ export type CronJobState = {
   lastFailureNotificationDeliveryError?: string;
 };
 
+/** Shared type for Cron Job in src/cron. */
 export type CronJob = CronJobBase<
   CronSchedule,
   CronSessionTarget,
@@ -246,15 +277,18 @@ export type CronJob = CronJobBase<
   state: CronJobState;
 };
 
+/** Shared type for Cron Store File in src/cron. */
 export type CronStoreFile = {
   version: 1;
   jobs: CronJob[];
 };
 
+/** Shared type for Cron Job Create in src/cron. */
 export type CronJobCreate = Omit<CronJob, "id" | "createdAtMs" | "updatedAtMs" | "state"> & {
   state?: Partial<CronJobState>;
 };
 
+/** Shared type for Cron Job Patch in src/cron. */
 export type CronJobPatch = Partial<Omit<CronJob, "id" | "createdAtMs" | "state" | "payload">> & {
   payload?: CronPayloadPatch;
   delivery?: CronDeliveryPatch;

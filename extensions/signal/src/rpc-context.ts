@@ -1,3 +1,4 @@
+// extensions/signal/src rpc context helpers and runtime behavior.
 import { normalizeOptionalString } from "openclaw/plugin-sdk/string-coerce-runtime";
 import { resolveSignalAccount } from "./accounts.js";
 

@@ -1,21 +1,26 @@
+// config runtime snapshot helpers and runtime behavior.
 import { createHash } from "node:crypto";
 import type { OpenClawConfig } from "./types.js";
 
+/** Shared type for Runtime Config Snapshot Refresh Options in src/config. */
 export type RuntimeConfigSnapshotRefreshOptions = {
   includeAuthStoreRefs?: boolean;
 };
 
+/** Shared type for Runtime Config Snapshot Refresh Params in src/config. */
 export type RuntimeConfigSnapshotRefreshParams = RuntimeConfigSnapshotRefreshOptions & {
   sourceConfig: OpenClawConfig;
   preflightResult?: unknown;
 };
 type MaybePromise<T> = T | Promise<T>;
 
+/** Shared type for Config Write After Write in src/config. */
 export type ConfigWriteAfterWrite =
   | { mode: "auto" }
   | { mode: "restart"; reason: string }
   | { mode: "none"; reason: string };
 
+/** Shared type for Config Write Follow Up in src/config. */
 export type ConfigWriteFollowUp =
   | {
       mode: "auto";
@@ -32,12 +37,14 @@ export type ConfigWriteFollowUp =
       requiresRestart: true;
     };
 
+/** Reused helper for resolve Config Write After Write behavior in src/config. */
 export function resolveConfigWriteAfterWrite(
   afterWrite?: ConfigWriteAfterWrite,
 ): ConfigWriteAfterWrite {
   return afterWrite ?? { mode: "auto" };
 }
 
+/** Reused helper for resolve Config Write Follow Up behavior in src/config. */
 export function resolveConfigWriteFollowUp(
   afterWrite?: ConfigWriteAfterWrite,
 ): ConfigWriteFollowUp {
@@ -62,12 +69,14 @@ export function resolveConfigWriteFollowUp(
   };
 }
 
+/** Shared type for Runtime Config Snapshot Refresh Handler in src/config. */
 export type RuntimeConfigSnapshotRefreshHandler = {
   preflight?: (params: RuntimeConfigSnapshotRefreshParams) => MaybePromise<unknown>;
   refresh: (params: RuntimeConfigSnapshotRefreshParams) => boolean | Promise<boolean>;
   clearOnRefreshFailure?: () => void;
 };
 
+/** Shared type for Runtime Config Write Notification in src/config. */
 export type RuntimeConfigWriteNotification = {
   configPath: string;
   sourceConfig: OpenClawConfig;
@@ -80,6 +89,7 @@ export type RuntimeConfigWriteNotification = {
   afterWrite?: ConfigWriteAfterWrite;
 };
 
+/** Shared type for Runtime Config Snapshot Metadata in src/config. */
 export type RuntimeConfigSnapshotMetadata = {
   revision: number;
   fingerprint: string;
@@ -119,6 +129,7 @@ function configSnapshotsMatch(left: OpenClawConfig, right: OpenClawConfig): bool
   }
 }
 
+/** Reused helper for hash Runtime Config Value behavior in src/config. */
 export function hashRuntimeConfigValue(value: OpenClawConfig): string {
   return createHash("sha256").update(stableConfigStringify(value)).digest("base64url");
 }
@@ -136,6 +147,7 @@ function createRuntimeConfigSnapshotMetadata(
   };
 }
 
+/** Reused helper for set Runtime Config Snapshot behavior in src/config. */
 export function setRuntimeConfigSnapshot(
   config: OpenClawConfig,
   sourceConfig?: OpenClawConfig,
@@ -145,6 +157,7 @@ export function setRuntimeConfigSnapshot(
   runtimeConfigSnapshotMetadata = createRuntimeConfigSnapshotMetadata(config, sourceConfig);
 }
 
+/** Reused helper for reset Config Runtime State behavior in src/config. */
 export function resetConfigRuntimeState(): void {
   runtimeConfigSnapshot = null;
   runtimeConfigSourceSnapshot = null;
@@ -152,22 +165,27 @@ export function resetConfigRuntimeState(): void {
   runtimeConfigSnapshotRevision = 0;
 }
 
+/** Reused helper for clear Runtime Config Snapshot behavior in src/config. */
 export function clearRuntimeConfigSnapshot(): void {
   resetConfigRuntimeState();
 }
 
+/** Reused helper for get Runtime Config Snapshot behavior in src/config. */
 export function getRuntimeConfigSnapshot(): OpenClawConfig | null {
   return runtimeConfigSnapshot;
 }
 
+/** Reused helper for get Runtime Config Source Snapshot behavior in src/config. */
 export function getRuntimeConfigSourceSnapshot(): OpenClawConfig | null {
   return runtimeConfigSourceSnapshot;
 }
 
+/** Reused helper for get Runtime Config Snapshot Metadata behavior in src/config. */
 export function getRuntimeConfigSnapshotMetadata(): RuntimeConfigSnapshotMetadata | null {
   return runtimeConfigSnapshotMetadata;
 }
 
+/** Reused helper for resolve Runtime Config Cache Key behavior in src/config. */
 export function resolveRuntimeConfigCacheKey(config: OpenClawConfig): string {
   const metadata = runtimeConfigSnapshotMetadata;
   if (metadata && config === runtimeConfigSnapshot) {
@@ -176,6 +194,7 @@ export function resolveRuntimeConfigCacheKey(config: OpenClawConfig): string {
   return `config:${hashRuntimeConfigValue(config)}`;
 }
 
+/** Reused helper for create Runtime Config Write Notification behavior in src/config. */
 export function createRuntimeConfigWriteNotification(params: {
   configPath: string;
   sourceConfig: OpenClawConfig;
@@ -206,6 +225,7 @@ export function createRuntimeConfigWriteNotification(params: {
   };
 }
 
+/** Reused helper for select Applicable Runtime Config behavior in src/config. */
 export function selectApplicableRuntimeConfig(params: {
   inputConfig?: OpenClawConfig;
   runtimeConfig?: OpenClawConfig | null;
@@ -232,16 +252,19 @@ export function selectApplicableRuntimeConfig(params: {
   return inputConfig;
 }
 
+/** Reused helper for set Runtime Config Snapshot Refresh Handler behavior in src/config. */
 export function setRuntimeConfigSnapshotRefreshHandler(
   refreshHandler: RuntimeConfigSnapshotRefreshHandler | null,
 ): void {
   runtimeConfigSnapshotRefreshHandler = refreshHandler;
 }
 
+/** Reused helper for get Runtime Config Snapshot Refresh Handler behavior in src/config. */
 export function getRuntimeConfigSnapshotRefreshHandler(): RuntimeConfigSnapshotRefreshHandler | null {
   return runtimeConfigSnapshotRefreshHandler;
 }
 
+/** Reused helper for register Runtime Config Write Listener behavior in src/config. */
 export function registerRuntimeConfigWriteListener(
   listener: (event: RuntimeConfigWriteNotification) => void,
 ): () => void {
@@ -251,6 +274,7 @@ export function registerRuntimeConfigWriteListener(
   };
 }
 
+/** Reused helper for notify Runtime Config Write Listeners behavior in src/config. */
 export function notifyRuntimeConfigWriteListeners(event: RuntimeConfigWriteNotification): void {
   for (const listener of runtimeConfigWriteListeners) {
     try {
@@ -261,6 +285,7 @@ export function notifyRuntimeConfigWriteListeners(event: RuntimeConfigWriteNotif
   }
 }
 
+/** Reused helper for load Pinned Runtime Config behavior in src/config. */
 export function loadPinnedRuntimeConfig(loadFresh: () => OpenClawConfig): OpenClawConfig {
   if (runtimeConfigSnapshot) {
     return runtimeConfigSnapshot;
@@ -270,6 +295,7 @@ export function loadPinnedRuntimeConfig(loadFresh: () => OpenClawConfig): OpenCl
   return getRuntimeConfigSnapshot() ?? config;
 }
 
+/** Reused helper for preflight Runtime Snapshot Write behavior in src/config. */
 export async function preflightRuntimeSnapshotWrite(params: {
   nextSourceConfig: OpenClawConfig;
   refreshOptions?: RuntimeConfigSnapshotRefreshOptions;
@@ -290,6 +316,7 @@ export async function preflightRuntimeSnapshotWrite(params: {
   }
 }
 
+/** Reused helper for finalize Runtime Snapshot Write behavior in src/config. */
 export async function finalizeRuntimeSnapshotWrite(params: {
   nextSourceConfig: OpenClawConfig;
   refreshOptions?: RuntimeConfigSnapshotRefreshOptions;

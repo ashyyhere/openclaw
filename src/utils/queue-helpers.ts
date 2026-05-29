@@ -1,21 +1,27 @@
+// utils queue helpers helpers and runtime behavior.
+/** Shared type for Queue Summary State in src/utils. */
 export type QueueSummaryState = {
   dropPolicy: "summarize" | "old" | "new";
   droppedCount: number;
   summaryLines: string[];
 };
 
+/** Shared type for Queue Drop Policy in src/utils. */
 export type QueueDropPolicy = QueueSummaryState["dropPolicy"];
 
+/** Shared type for Queue State in src/utils. */
 export type QueueState<T> = QueueSummaryState & {
   items: T[];
   cap: number;
 };
 
+/** Reused helper for clear Queue Summary State behavior in src/utils. */
 export function clearQueueSummaryState(state: QueueSummaryState): void {
   state.droppedCount = 0;
   state.summaryLines = [];
 }
 
+/** Reused helper for preview Queue Summary Prompt behavior in src/utils. */
 export function previewQueueSummaryPrompt(params: {
   state: QueueSummaryState;
   noun: string;
@@ -32,6 +38,7 @@ export function previewQueueSummaryPrompt(params: {
   });
 }
 
+/** Reused helper for apply Queue Runtime Settings behavior in src/utils. */
 export function applyQueueRuntimeSettings<TMode extends string>(params: {
   target: {
     mode: TMode;
@@ -58,6 +65,7 @@ export function applyQueueRuntimeSettings<TMode extends string>(params: {
   params.target.dropPolicy = params.settings.dropPolicy ?? params.target.dropPolicy;
 }
 
+/** Reused helper for elide Queue Text behavior in src/utils. */
 export function elideQueueText(text: string, limit = 140): string {
   if (text.length <= limit) {
     return text;
@@ -65,11 +73,13 @@ export function elideQueueText(text: string, limit = 140): string {
   return `${text.slice(0, Math.max(0, limit - 1)).trimEnd()}…`;
 }
 
+/** Reused helper for build Queue Summary Line behavior in src/utils. */
 export function buildQueueSummaryLine(text: string, limit = 160): string {
   const cleaned = text.replace(/\s+/g, " ").trim();
   return elideQueueText(cleaned, limit);
 }
 
+/** Reused helper for should Skip Queue Item behavior in src/utils. */
 export function shouldSkipQueueItem<T>(params: {
   item: T;
   items: T[];
@@ -81,6 +91,7 @@ export function shouldSkipQueueItem<T>(params: {
   return params.dedupe(params.item, params.items);
 }
 
+/** Reused helper for apply Queue Drop Policy behavior in src/utils. */
 export function applyQueueDropPolicy<T>(params: {
   queue: QueueState<T>;
   summarize: (item: T) => string;
@@ -110,6 +121,7 @@ export function applyQueueDropPolicy<T>(params: {
   return true;
 }
 
+/** Reused helper for wait For Queue Debounce behavior in src/utils. */
 export function waitForQueueDebounce(queue: {
   debounceMs: number;
   lastEnqueuedAt: number;
@@ -134,6 +146,7 @@ export function waitForQueueDebounce(queue: {
   });
 }
 
+/** Reused helper for begin Queue Drain behavior in src/utils. */
 export function beginQueueDrain<T extends { draining: boolean }>(
   map: Map<string, T>,
   key: string,
@@ -146,6 +159,7 @@ export function beginQueueDrain<T extends { draining: boolean }>(
   return queue;
 }
 
+/** Reused helper for drain Next Queue Item behavior in src/utils. */
 export async function drainNextQueueItem<T>(
   items: T[],
   run: (item: T) => Promise<void>,
@@ -159,6 +173,7 @@ export async function drainNextQueueItem<T>(
   return true;
 }
 
+/** Reused helper for drain Collect Item If Needed behavior in src/utils. */
 export async function drainCollectItemIfNeeded<T>(params: {
   forceIndividualCollect: boolean;
   isCrossChannel: boolean;
@@ -176,6 +191,7 @@ export async function drainCollectItemIfNeeded<T>(params: {
   return drained ? "drained" : "empty";
 }
 
+/** Reused helper for drain Collect Queue Step behavior in src/utils. */
 export async function drainCollectQueueStep<T>(params: {
   collectState: { forceIndividualCollect: boolean };
   isCrossChannel: boolean;
@@ -193,6 +209,7 @@ export async function drainCollectQueueStep<T>(params: {
   });
 }
 
+/** Reused helper for build Queue Summary Prompt behavior in src/utils. */
 export function buildQueueSummaryPrompt(params: {
   state: QueueSummaryState;
   noun: string;
@@ -216,6 +233,7 @@ export function buildQueueSummaryPrompt(params: {
   return lines.join("\n");
 }
 
+/** Reused helper for build Collect Prompt behavior in src/utils. */
 export function buildCollectPrompt<T>(params: {
   title: string;
   items: T[];
@@ -232,6 +250,7 @@ export function buildCollectPrompt<T>(params: {
   return blocks.join("\n\n");
 }
 
+/** Reused helper for has Cross Channel Items behavior in src/utils. */
 export function hasCrossChannelItems<T>(
   items: T[],
   resolveKey: (item: T) => { key?: string; cross?: boolean },

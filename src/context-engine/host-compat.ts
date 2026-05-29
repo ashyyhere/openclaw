@@ -1,3 +1,4 @@
+// context-engine host compat helpers and runtime behavior.
 import type {
   ContextEngine,
   ContextEngineHostCapability,
@@ -6,18 +7,21 @@ import type {
   ContextEngineOperation,
 } from "./types.js";
 
+/** Shared type for Context Engine Host Support in src/context-engine. */
 export type ContextEngineHostSupport = {
   id: string;
   label: string;
   capabilities: readonly ContextEngineHostCapability[];
 };
 
+/** Reused constant for GENERIC CLI CONTEXT ENGINE HOST CAPABILITIES behavior in src/context-engine. */
 export const GENERIC_CLI_CONTEXT_ENGINE_HOST_CAPABILITIES = [
   "bootstrap",
   "after-turn",
   "maintain",
 ] as const satisfies readonly ContextEngineHostCapability[];
 
+/** Reused constant for OPENCLAW EMBEDDED CONTEXT ENGINE HOST behavior in src/context-engine. */
 export const OPENCLAW_EMBEDDED_CONTEXT_ENGINE_HOST = {
   id: "openclaw-embedded",
   label: "OpenClaw embedded runner",
@@ -31,6 +35,7 @@ export const OPENCLAW_EMBEDDED_CONTEXT_ENGINE_HOST = {
   ],
 } as const satisfies ContextEngineHostSupport;
 
+/** Reused constant for CODEX APP SERVER CONTEXT ENGINE HOST behavior in src/context-engine. */
 export const CODEX_APP_SERVER_CONTEXT_ENGINE_HOST = {
   id: "codex-app-server",
   label: "Codex app-server harness",
@@ -45,6 +50,7 @@ export const CODEX_APP_SERVER_CONTEXT_ENGINE_HOST = {
   ],
 } as const satisfies ContextEngineHostSupport;
 
+/** Shared type for Context Engine Host Support Evaluation in src/context-engine. */
 export type ContextEngineHostSupportEvaluation =
   | {
       ok: true;

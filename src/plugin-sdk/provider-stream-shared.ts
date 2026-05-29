@@ -1,3 +1,4 @@
+/** Shared provider stream wrapper utilities for thinking, tool, and payload compatibility. */
 import { randomUUID } from "node:crypto";
 import type { StreamFn } from "../agents/runtime/index.js";
 import { streamWithPayloadPatch } from "../llm/providers/stream-wrappers/stream-payload-utils.js";
@@ -7,12 +8,14 @@ import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import type { ProviderWrapStreamFnContext } from "./plugin-entry.js";
 import { parseStandalonePlainTextToolCallBlocks } from "./tool-payload.js";
 
+/** Shared type for Provider Stream Wrapper Factory in src/plugin-sdk. */
 export type ProviderStreamWrapperFactory =
   | ((streamFn: StreamFn | undefined) => StreamFn | undefined)
   | null
   | undefined
   | false;
 
+/** Reused helper for compose Provider Stream Wrappers behavior in src/plugin-sdk. */
 export function composeProviderStreamWrappers(
   baseStreamFn: StreamFn | undefined,
   ...wrappers: ProviderStreamWrapperFactory[]
@@ -420,6 +423,7 @@ export function defaultToolStreamExtraParams(
   };
 }
 
+/** Reused helper for create Payload Patch Stream Wrapper behavior in src/plugin-sdk. */
 export function createPayloadPatchStreamWrapper(
   baseStreamFn: StreamFn | undefined,
   patchPayload: (params: {
@@ -1068,16 +1072,21 @@ export function createGoogleThinkingStreamWrapper(
   return createGoogleThinkingPayloadWrapper(ctx.streamFn, ctx.thinkingLevel);
 }
 
+/** Re-exported API for src/plugin-sdk. */
 export {
   applyAnthropicPayloadPolicyToParams,
   resolveAnthropicPayloadPolicy,
 } from "../agents/anthropic-payload-policy.js";
+/** Re-exported API for src/plugin-sdk, starting with apply Anthropic Ephemeral Cache Control Markers. */
 export { applyAnthropicEphemeralCacheControlMarkers } from "../llm/providers/stream-wrappers/anthropic-cache-control-payload.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   createMoonshotThinkingWrapper,
   resolveMoonshotThinkingType,
 } from "../llm/providers/stream-wrappers/moonshot-thinking.js";
+/** Re-exported API for src/plugin-sdk, starting with stream With Payload Patch. */
 export { streamWithPayloadPatch };
+/** Re-exported API for src/plugin-sdk. */
 export {
   createToolStreamWrapper,
   createZaiToolStreamWrapper,

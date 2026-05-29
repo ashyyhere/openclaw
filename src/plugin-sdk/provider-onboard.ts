@@ -17,12 +17,15 @@ import type {
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolvePrimaryStringValue } from "../shared/string-coerce.js";
 
+/** Re-exported API for src/plugin-sdk, starting with Open Claw Config. */
 export type { OpenClawConfig, ModelApi, ModelDefinitionConfig, ModelProviderConfig };
+/** Re-exported API for src/plugin-sdk. */
 export {
   resolveAgentModelFallbackValues,
   resolveAgentModelPrimaryValue,
 } from "../config/model-input.js";
 
+/** Shared type for Agent Model Alias Entry in src/plugin-sdk. */
 export type AgentModelAliasEntry =
   | string
   | {
@@ -35,8 +38,10 @@ const LEGACY_OPENCODE_ZEN_DEFAULT_MODELS = new Set([
   "opencode-zen/claude-opus-4-5",
 ]);
 
+/** Reused constant for OPENCODE ZEN DEFAULT MODEL behavior in src/plugin-sdk. */
 export const OPENCODE_ZEN_DEFAULT_MODEL = "opencode/claude-opus-4-6";
 
+/** Shared type for Provider Onboard Preset Appliers in src/plugin-sdk. */
 export type ProviderOnboardPresetAppliers<TArgs extends unknown[]> = {
   applyProviderConfig: (cfg: OpenClawConfig, ...args: TArgs) => OpenClawConfig;
   applyConfig: (cfg: OpenClawConfig, ...args: TArgs) => OpenClawConfig;
@@ -235,6 +240,7 @@ function createProviderPresetAppliers<
   };
 }
 
+/** Reused helper for with Agent Model Aliases behavior in src/plugin-sdk. */
 export function withAgentModelAliases(
   existing: Record<string, AgentModelEntryConfig> | undefined,
   aliases: readonly AgentModelAliasEntry[],
@@ -251,6 +257,7 @@ export function withAgentModelAliases(
   return next;
 }
 
+/** Reused helper for apply Onboard Auth Agent Models And Providers behavior in src/plugin-sdk. */
 export function applyOnboardAuthAgentModelsAndProviders(
   cfg: OpenClawConfig,
   params: {
@@ -278,6 +285,7 @@ export function applyOnboardAuthAgentModelsAndProviders(
   };
 }
 
+/** Reused helper for apply Agent Default Model Primary behavior in src/plugin-sdk. */
 export function applyAgentDefaultModelPrimary(
   cfg: OpenClawConfig,
   primary: string,
@@ -314,6 +322,7 @@ export function applyAgentDefaultModelPrimary(
   };
 }
 
+/** Reused helper for apply Opencode Zen Model Default behavior in src/plugin-sdk. */
 export function applyOpencodeZenModelDefault(cfg: OpenClawConfig): {
   next: OpenClawConfig;
   changed: boolean;
@@ -332,6 +341,7 @@ export function applyOpencodeZenModelDefault(cfg: OpenClawConfig): {
   };
 }
 
+/** Reused helper for apply Provider Config With Default Models behavior in src/plugin-sdk. */
 export function applyProviderConfigWithDefaultModels(
   cfg: OpenClawConfig,
   params: {
@@ -366,6 +376,7 @@ export function applyProviderConfigWithDefaultModels(
   });
 }
 
+/** Reused helper for apply Provider Config With Default Model behavior in src/plugin-sdk. */
 export function applyProviderConfigWithDefaultModel(
   cfg: OpenClawConfig,
   params: {
@@ -387,6 +398,7 @@ export function applyProviderConfigWithDefaultModel(
   });
 }
 
+/** Reused helper for apply Provider Config With Default Model Preset behavior in src/plugin-sdk. */
 export function applyProviderConfigWithDefaultModelPreset(
   cfg: OpenClawConfig,
   params: {
@@ -414,6 +426,7 @@ export function applyProviderConfigWithDefaultModelPreset(
     : next;
 }
 
+/** Reused helper for create Default Model Preset Appliers behavior in src/plugin-sdk. */
 export function createDefaultModelPresetAppliers<TArgs extends unknown[]>(params: {
   resolveParams: (
     cfg: OpenClawConfig,
@@ -431,6 +444,7 @@ export function createDefaultModelPresetAppliers<TArgs extends unknown[]>(params
   });
 }
 
+/** Reused helper for apply Provider Config With Default Models Preset behavior in src/plugin-sdk. */
 export function applyProviderConfigWithDefaultModelsPreset(
   cfg: OpenClawConfig,
   params: {
@@ -458,6 +472,7 @@ export function applyProviderConfigWithDefaultModelsPreset(
     : next;
 }
 
+/** Reused helper for create Default Models Preset Appliers behavior in src/plugin-sdk. */
 export function createDefaultModelsPresetAppliers<TArgs extends unknown[]>(params: {
   resolveParams: (
     cfg: OpenClawConfig,
@@ -475,6 +490,7 @@ export function createDefaultModelsPresetAppliers<TArgs extends unknown[]>(param
   });
 }
 
+/** Reused helper for apply Provider Config With Model Catalog behavior in src/plugin-sdk. */
 export function applyProviderConfigWithModelCatalog(
   cfg: OpenClawConfig,
   params: {
@@ -507,6 +523,7 @@ export function applyProviderConfigWithModelCatalog(
   });
 }
 
+/** Reused helper for apply Provider Config With Model Catalog Preset behavior in src/plugin-sdk. */
 export function applyProviderConfigWithModelCatalogPreset(
   cfg: OpenClawConfig,
   params: {
@@ -532,6 +549,7 @@ export function applyProviderConfigWithModelCatalogPreset(
     : next;
 }
 
+/** Reused helper for create Model Catalog Preset Appliers behavior in src/plugin-sdk. */
 export function createModelCatalogPresetAppliers<TArgs extends unknown[]>(params: {
   resolveParams: (
     cfg: OpenClawConfig,
@@ -549,6 +567,7 @@ export function createModelCatalogPresetAppliers<TArgs extends unknown[]>(params
   });
 }
 
+/** Reused helper for ensure Model Allowlist Entry behavior in src/plugin-sdk. */
 export function ensureModelAllowlistEntry(params: {
   cfg: OpenClawConfig;
   modelRef: string;

@@ -1,7 +1,9 @@
+// gateway agent prompt helpers and runtime behavior.
 import { STREAM_ERROR_FALLBACK_TEXT } from "../agents/stream-message-shared.js";
 import { buildHistoryContextFromEntries, type HistoryEntry } from "../auto-reply/reply/history.js";
 import { extractTextFromChatContent } from "../shared/chat-content.js";
 
+/** Shared type for Conversation Entry in src/gateway. */
 export type ConversationEntry = {
   role: "user" | "assistant" | "tool";
   entry: HistoryEntry;
@@ -32,6 +34,7 @@ function toPromptEntry(entry: ConversationEntry): HistoryEntry | null {
   };
 }
 
+/** Reused helper for build Agent Message From Conversation Entries behavior in src/gateway. */
 export function buildAgentMessageFromConversationEntries(entries: ConversationEntry[]): string {
   if (entries.length === 0) {
     return "";

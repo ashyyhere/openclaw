@@ -31,6 +31,7 @@ async function ensureCommitmentsStoreDir(storePath: string): Promise<void> {
   await fs.mkdir(path.dirname(storePath), { recursive: true });
 }
 
+/** Reused helper for run Exclusive Commitments Store Write behavior in src/commitments. */
 export async function runExclusiveCommitmentsStoreWrite<T>(
   storePath: string,
   fn: () => Promise<T>,
@@ -46,6 +47,7 @@ export async function runExclusiveCommitmentsStoreWrite<T>(
   });
 }
 
+/** Reused helper for clear Commitments Store Writer Queues For Test behavior in src/commitments. */
 export function clearCommitmentsStoreWriterQueuesForTest(): void {
   clearStoreWriterQueuesForTest(WRITER_QUEUES, "commitments store writer queue cleared for test");
 }

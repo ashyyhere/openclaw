@@ -1,3 +1,4 @@
+// ui/src/ui/chat context notice helpers and runtime behavior.
 import { html, nothing } from "lit";
 import { icons } from "../icons.ts";
 import type { GatewaySessionRow } from "../types.ts";
@@ -5,6 +6,7 @@ import type { GatewaySessionRow } from "../types.ts";
 const CONTEXT_NOTICE_RATIO = 0.85;
 const CONTEXT_COMPACT_RATIO = 0.9;
 
+/** Shared type for Context Notice Options in ui/src/ui/chat. */
 export type ContextNoticeOptions = {
   compactBusy?: boolean;
   compactDisabled?: boolean;
@@ -47,10 +49,12 @@ function getThemeNoticeColors() {
   return cachedThemeNoticeColors;
 }
 
+/** Reused helper for reset Context Notice Theme Cache For Test behavior in ui/src/ui/chat. */
 export function resetContextNoticeThemeCacheForTest(): void {
   cachedThemeNoticeColors = null;
 }
 
+/** Reused helper for get Context Notice View Model behavior in ui/src/ui/chat. */
 export function getContextNoticeViewModel(
   session: GatewaySessionRow | undefined,
   defaultContextTokens: number | null,
@@ -104,6 +108,7 @@ export function getContextNoticeViewModel(
   };
 }
 
+/** Reused helper for render Context Notice behavior in ui/src/ui/chat. */
 export function renderContextNotice(
   session: GatewaySessionRow | undefined,
   defaultContextTokens: number | null,

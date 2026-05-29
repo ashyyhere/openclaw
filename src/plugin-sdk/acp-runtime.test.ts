@@ -1,3 +1,4 @@
+/** Tests ACP runtime SDK helpers and facade integration behavior. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { buildTestCtx } from "../auto-reply/reply/test-ctx.js";
 

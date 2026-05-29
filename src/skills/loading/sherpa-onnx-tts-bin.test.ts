@@ -1,3 +1,4 @@
+/** Regression coverage for bundled Sherpa ONNX TTS binary skill metadata. */
 import { spawnSync } from "node:child_process";
 import path from "node:path";
 import { describe, expect, it } from "vitest";

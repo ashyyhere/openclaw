@@ -1,3 +1,4 @@
+// plugins host tool param parsers helpers and runtime behavior.
 import {
   extractApplyPatchTargetPaths,
   type ApplyPatchPathExtractionOptions,
@@ -18,6 +19,7 @@ export type HostToolDerivedParams = {
   derivedPaths?: readonly string[];
 };
 
+/** Shared type for Host Tool Derivation Options in src/plugins. */
 export type HostToolDerivationOptions = ApplyPatchPathExtractionOptions;
 
 /**

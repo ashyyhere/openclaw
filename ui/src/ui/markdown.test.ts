@@ -1,3 +1,4 @@
+// Tests ui/src/ui markdown test behavior.
 import { render } from "lit";
 import { describe, expect, it, vi } from "vitest";
 import { i18n } from "../i18n/index.ts";

@@ -1,3 +1,4 @@
+/** Startup reconciliation for ACP session identity metadata and legacy projections. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { logVerbose } from "../../globals.js";
 import { withAcpRuntimeErrorBoundary } from "../runtime/errors.js";
@@ -13,6 +14,7 @@ import type { AcpRuntime, AcpRuntimeHandle, AcpRuntimeStatus } from "../runtime/
 import type { SessionAcpMeta, SessionEntry } from "./manager.types.js";
 import { hasLegacyAcpIdentityProjection } from "./manager.utils.js";
 
+/** Reused helper for reconcile Manager Runtime Session Identifiers behavior in src/acp/control-plane. */
 export async function reconcileManagerRuntimeSessionIdentifiers(params: {
   cfg: OpenClawConfig;
   sessionKey: string;

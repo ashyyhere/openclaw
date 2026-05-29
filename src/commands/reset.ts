@@ -1,3 +1,4 @@
+/** Resets OpenClaw local state with confirmation and cleanup planning. */
 import { cancel, confirm, isCancel } from "@clack/prompts";
 import { selectStyled } from "../../packages/terminal-core/src/prompt-select-styled.js";
 import {
@@ -16,8 +17,10 @@ import {
   removeWorkspaceDirs,
 } from "./cleanup-utils.js";
 
+/** Shared type for Reset Scope in src/commands. */
 export type ResetScope = "config" | "config+creds+sessions" | "full";
 
+/** Shared type for Reset Options in src/commands. */
 export type ResetOptions = {
   scope?: ResetScope;
   yes?: boolean;
@@ -51,6 +54,7 @@ function logBackupRecommendation(runtime: RuntimeEnv) {
   runtime.log(`Recommended first: ${formatCliCommand("openclaw backup create")}`);
 }
 
+/** Reused helper for reset Command behavior in src/commands. */
 export async function resetCommand(runtime: RuntimeEnv, opts: ResetOptions) {
   const interactive = !opts.nonInteractive;
   if (!interactive && !opts.yes) {

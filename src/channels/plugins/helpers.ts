@@ -1,3 +1,4 @@
+// General helper utilities for channel plugin setup and status.
 import { formatCliCommand } from "../../cli/command-format.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { DEFAULT_ACCOUNT_ID } from "../../routing/session-key.js";
@@ -6,6 +7,7 @@ import type { ChannelSecurityDmPolicy } from "./types.core.js";
 import type { ChannelPlugin } from "./types.plugin.js";
 
 // Channel docking helper: use this when selecting the default account for a plugin.
+/** Reused helper for resolve Channel Default Account Id behavior in src/channels/plugins. */
 export function resolveChannelDefaultAccountId<ResolvedAccount>(params: {
   plugin: ChannelPlugin<ResolvedAccount>;
   cfg: OpenClawConfig;
@@ -15,12 +17,14 @@ export function resolveChannelDefaultAccountId<ResolvedAccount>(params: {
   return params.plugin.config.defaultAccountId?.(params.cfg) ?? accountIds[0] ?? DEFAULT_ACCOUNT_ID;
 }
 
+/** Reused helper for format Pairing Approve Hint behavior in src/channels/plugins. */
 export function formatPairingApproveHint(channelId: string): string {
   const listCmd = formatCliCommand(`openclaw pairing list ${channelId}`);
   const approveCmd = formatCliCommand(`openclaw pairing approve ${channelId} <code>`);
   return `Approve via: ${listCmd} / ${approveCmd}`;
 }
 
+/** Reused helper for parse Optional Delimited Entries behavior in src/channels/plugins. */
 export function parseOptionalDelimitedEntries(value?: string): string[] | undefined {
   if (!value?.trim()) {
     return undefined;
@@ -29,6 +33,7 @@ export function parseOptionalDelimitedEntries(value?: string): string[] | undefi
   return parsed.length > 0 ? parsed : undefined;
 }
 
+/** Reused helper for build Account Scoped Dm Security Policy behavior in src/channels/plugins. */
 export function buildAccountScopedDmSecurityPolicy(params: {
   cfg: OpenClawConfig;
   channelKey: string;

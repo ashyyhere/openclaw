@@ -1,3 +1,4 @@
+// Tests extensions/xai stt test behavior.
 import { describe, expect, it, vi } from "vitest";
 import {
   buildXaiMediaUnderstandingProvider,

@@ -1,3 +1,4 @@
+// gateway server runtime subscriptions helpers and runtime behavior.
 import { clearAgentRunContext, onAgentEvent } from "../infra/agent-events.js";
 import { onHeartbeatEvent } from "../infra/heartbeat-events.js";
 import { onSessionLifecycleEvent } from "../sessions/session-lifecycle-events.js";
@@ -10,6 +11,7 @@ import type {
   ToolEventRecipientRegistry,
 } from "./server-chat-state.js";
 
+/** Reused helper for start Gateway Event Subscriptions behavior in src/gateway. */
 export function startGatewayEventSubscriptions(params: {
   broadcast: (event: string, payload: unknown, opts?: { dropIfSlow?: boolean }) => void;
   broadcastToConnIds: (

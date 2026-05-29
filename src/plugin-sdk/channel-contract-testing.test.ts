@@ -1,3 +1,4 @@
+/** Tests channel contract test helpers exposed through the plugin SDK. */
 import { expectChannelTurnDispatchResultContract } from "openclaw/plugin-sdk/channel-contract-testing";
 import { describe, it } from "vitest";
 

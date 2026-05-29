@@ -1,3 +1,4 @@
+/** Covers configured model fallback detection for embedded runs. */
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../../../config/types.openclaw.js";
 import { hasEmbeddedRunConfiguredModelFallbacks } from "./fallbacks.js";

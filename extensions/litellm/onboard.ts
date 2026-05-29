@@ -1,3 +1,4 @@
+// extensions/litellm onboard helpers and runtime behavior.
 import {
   createDefaultModelPresetAppliers,
   type ModelDefinitionConfig,

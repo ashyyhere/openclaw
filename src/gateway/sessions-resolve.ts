@@ -1,3 +1,4 @@
+// gateway sessions resolve helpers and runtime behavior.
 import {
   ErrorCodes,
   type ErrorShape,
@@ -18,6 +19,7 @@ import {
   resolveGatewaySessionStoreTarget,
 } from "./session-utils.js";
 
+/** Shared type for Sessions Resolve Result in src/gateway. */
 export type SessionsResolveResult = { ok: true; key: string } | { ok: false; error: ErrorShape };
 
 function resolveSessionVisibilityFilterOptions(p: SessionsResolveParams) {
@@ -90,6 +92,7 @@ function findVisibleSessionIdMatches(params: {
   );
 }
 
+/** Reused helper for resolve Session Key From Resolve Params behavior in src/gateway. */
 export async function resolveSessionKeyFromResolveParams(params: {
   cfg: OpenClawConfig;
   p: SessionsResolveParams;

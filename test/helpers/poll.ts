@@ -1,3 +1,4 @@
+// test/helpers poll helpers and runtime behavior.
 import { sleep } from "../../src/utils.js";
 
 export type PollOptions = {

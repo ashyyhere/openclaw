@@ -1,3 +1,4 @@
+// Tests tasks task registry maintenance issue 60299 test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { AcpSessionStoreEntry } from "../acp/runtime/session-meta.js";
 import type { SessionEntry } from "../config/sessions.js";

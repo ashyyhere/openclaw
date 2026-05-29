@@ -1,3 +1,4 @@
+/** Tests deferred-followup guidance in shell tool descriptions. */
 import { describe, expect, it } from "vitest";
 import { applyDeferredFollowupToolDescriptions } from "./agent-tools.deferred-followup.js";
 import type { AnyAgentTool } from "./agent-tools.types.js";

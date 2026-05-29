@@ -4,6 +4,7 @@
 import type { TSchema } from "typebox";
 
 // Keywords that Cloud Code Assist API rejects (not compliant with their JSON Schema subset)
+/** Reused constant for GEMINI UNSUPPORTED SCHEMA KEYWORDS behavior in src/agents/schema. */
 export const GEMINI_UNSUPPORTED_SCHEMA_KEYWORDS = new Set([
   "patternProperties",
   "additionalProperties",
@@ -445,6 +446,7 @@ function flattenUnionFallback(
   return merged;
 }
 
+/** Reused helper for clean Schema For Gemini behavior in src/agents/schema. */
 export function cleanSchemaForGemini(schema: unknown): TSchema {
   if (!schema || typeof schema !== "object") {
     return schema as TSchema;

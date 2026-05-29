@@ -1,3 +1,4 @@
+/** Tests exec approval follow-up prompt and delivery behavior. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("./tools/gateway.js", () => ({

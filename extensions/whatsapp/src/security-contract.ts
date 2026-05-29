@@ -1,3 +1,4 @@
+// extensions/whatsapp/src security contract helpers and runtime behavior.
 import { isRecord } from "openclaw/plugin-sdk/string-coerce-runtime";
 
 type UnsupportedSecretRefConfigCandidate = {

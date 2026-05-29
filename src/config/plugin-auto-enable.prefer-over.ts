@@ -1,3 +1,4 @@
+// config plugin auto enable prefer over helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { getChatChannelMeta, normalizeChatChannelId } from "../channels/registry.js";
@@ -126,6 +127,7 @@ function getPluginAutoEnableCandidateCacheKey(candidate: PluginAutoEnableCandida
   return `${candidate.pluginId}:${candidate.kind === "channel-configured" ? candidate.channelId : candidate.pluginId}`;
 }
 
+/** Reused helper for should Skip Preferred Plugin Auto Enable behavior in src/config. */
 export function shouldSkipPreferredPluginAutoEnable(params: {
   config: OpenClawConfig;
   entry: PluginAutoEnableCandidate;

@@ -1,3 +1,4 @@
+/** Reconciles subagent registry records with durable session-store state. */
 import { getRuntimeConfig } from "../config/config.js";
 import {
   loadSessionStore,
@@ -15,8 +16,10 @@ import {
   type SubagentLifecycleEndedReason,
 } from "./subagent-lifecycle-events.js";
 
+/** Shared type for Subagent Session Store Cache in src/agents. */
 export type SubagentSessionStoreCache = Map<string, Record<string, SessionEntry>>;
 
+/** Shared type for Subagent Session Completion in src/agents. */
 export type SubagentSessionCompletion = {
   startedAt?: number;
   endedAt: number;
@@ -68,6 +71,7 @@ function findSessionEntryByKey(store: Record<string, SessionEntry>, sessionKey: 
   return undefined;
 }
 
+/** Reused helper for load Subagent Session Entry behavior in src/agents. */
 export function loadSubagentSessionEntry(params: {
   childSessionKey: string;
   storeCache?: SubagentSessionStoreCache;
@@ -88,6 +92,7 @@ export function loadSubagentSessionEntry(params: {
   return findSessionEntryByKey(store, key);
 }
 
+/** Reused helper for resolve Completion From Session Entry behavior in src/agents. */
 export function resolveCompletionFromSessionEntry(
   sessionEntry: SessionEntry | undefined,
   fallbackEndedAt: number,
@@ -158,6 +163,7 @@ export function resolveCompletionFromSessionEntry(
   return null;
 }
 
+/** Reused helper for resolve Subagent Session Completion behavior in src/agents. */
 export function resolveSubagentSessionCompletion(params: {
   childSessionKey: string;
   fallbackEndedAt: number;
@@ -176,6 +182,7 @@ export function resolveSubagentSessionCompletion(params: {
   );
 }
 
+/** Reused helper for resolve Subagent Session Started At behavior in src/agents. */
 export function resolveSubagentSessionStartedAt(params: {
   childSessionKey: string;
   notBeforeMs?: number;

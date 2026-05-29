@@ -1,10 +1,13 @@
+// plugins provider oauth flow helpers and runtime behavior.
 import type { RuntimeEnv } from "../runtime.js";
 import type { WizardPrompter } from "../wizard/prompts.js";
 
+/** Shared type for OAuth Prompt in src/plugins. */
 export type OAuthPrompt = { message: string; placeholder?: string };
 
 const validateRequiredInput = (value: string) => (value.trim().length > 0 ? undefined : "Required");
 
+/** Reused helper for create Vps Aware OAuth Handlers behavior in src/plugins. */
 export function createVpsAwareOAuthHandlers(params: {
   isRemote: boolean;
   prompter: WizardPrompter;

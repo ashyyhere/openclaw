@@ -1,12 +1,15 @@
+// Channel approval adapter capability helpers.
 import type { ChannelApprovalAdapter, ChannelApprovalCapability } from "./types.adapters.js";
 import type { ChannelPlugin } from "./types.plugin.js";
 
+/** Reused helper for resolve Channel Approval Capability behavior in src/channels/plugins. */
 export function resolveChannelApprovalCapability(
   plugin?: Pick<ChannelPlugin, "approvalCapability"> | null,
 ): ChannelApprovalCapability | undefined {
   return plugin?.approvalCapability;
 }
 
+/** Reused helper for resolve Channel Approval Adapter behavior in src/channels/plugins. */
 export function resolveChannelApprovalAdapter(
   plugin?: Pick<ChannelPlugin, "approvalCapability"> | null,
 ): ChannelApprovalAdapter | undefined {

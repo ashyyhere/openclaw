@@ -1,3 +1,4 @@
+// Tests cron delivery failure notify test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({

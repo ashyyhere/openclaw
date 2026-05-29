@@ -1,3 +1,4 @@
+// extensions/qa-lab/src coverage report helpers and runtime behavior.
 import { normalizeStringEntriesLower } from "openclaw/plugin-sdk/string-coerce-runtime";
 import {
   buildLiveTransportCoverageLaneSummaries,

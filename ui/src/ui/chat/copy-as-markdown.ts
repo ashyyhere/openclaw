@@ -1,3 +1,4 @@
+// ui/src/ui/chat copy as markdown helpers and runtime behavior.
 import { html, type TemplateResult } from "lit";
 import { icons } from "../icons.ts";
 
@@ -92,10 +93,12 @@ function createCopyButton(options: CopyButtonOptions): TemplateResult {
   `;
 }
 
+/** Reused helper for render Copy Button behavior in ui/src/ui/chat. */
 export function renderCopyButton(text: string, label = COPY_LABEL): TemplateResult {
   return createCopyButton({ text: () => text, label });
 }
 
+/** Reused helper for render Copy As Markdown Button behavior in ui/src/ui/chat. */
 export function renderCopyAsMarkdownButton(markdown: string): TemplateResult {
   return renderCopyButton(markdown, COPY_LABEL);
 }

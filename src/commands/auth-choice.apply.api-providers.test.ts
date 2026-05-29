@@ -1,3 +1,4 @@
+/** Tests API-key provider auth choice normalization. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { ProviderPlugin } from "../plugins/types.js";
 import { normalizeApiKeyTokenProviderAuthChoice } from "./auth-choice.apply.api-providers.js";

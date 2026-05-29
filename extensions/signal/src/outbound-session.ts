@@ -1,3 +1,4 @@
+// extensions/signal/src outbound session helpers and runtime behavior.
 import { type RoutePeer } from "openclaw/plugin-sdk/routing";
 import { normalizeLowercaseStringOrEmpty } from "openclaw/plugin-sdk/string-coerce-runtime";
 import { resolveSignalPeerId, resolveSignalRecipient, resolveSignalSender } from "./identity.js";

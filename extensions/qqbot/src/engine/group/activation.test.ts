@@ -1,3 +1,4 @@
+// Tests extensions/qqbot/src/engine/group activation test behavior.
 import { describe, expect, it } from "vitest";
 import { resolveGroupActivation, type SessionStoreReader } from "./activation.js";
 

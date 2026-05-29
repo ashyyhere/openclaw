@@ -1,3 +1,4 @@
+// gateway talk transcription relay helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import type { RealtimeTranscriptionProviderPlugin } from "../plugins/types.js";
 import type { RealtimeTranscriptionProviderConfig } from "../realtime-transcription/provider-types.js";
@@ -213,6 +214,7 @@ function enforceTranscriptionSessionLimits(connId: string): void {
   }
 }
 
+/** Reused helper for create Talk Transcription Relay Session behavior in src/gateway. */
 export function createTalkTranscriptionRelaySession(
   params: CreateTalkTranscriptionRelaySessionParams,
 ): TalkTranscriptionRelaySessionResult {
@@ -375,6 +377,7 @@ function getTranscriptionSession(
   return session;
 }
 
+/** Reused helper for send Talk Transcription Relay Audio behavior in src/gateway. */
 export function sendTalkTranscriptionRelayAudio(params: {
   transcriptionSessionId: string;
   connId: string;
@@ -399,6 +402,7 @@ export function sendTalkTranscriptionRelayAudio(params: {
   });
 }
 
+/** Reused helper for stop Talk Transcription Relay Session behavior in src/gateway. */
 export function stopTalkTranscriptionRelaySession(params: {
   transcriptionSessionId: string;
   connId: string;
@@ -421,6 +425,7 @@ export function stopTalkTranscriptionRelaySession(params: {
   closeTranscriptionSession(session, "completed");
 }
 
+/** Reused helper for cancel Talk Transcription Relay Turn behavior in src/gateway. */
 export function cancelTalkTranscriptionRelayTurn(params: {
   transcriptionSessionId: string;
   connId: string;
@@ -442,6 +447,7 @@ export function cancelTalkTranscriptionRelayTurn(params: {
   closeTranscriptionSession(session, "completed");
 }
 
+/** Reused helper for clear Talk Transcription Relay Sessions For Test behavior in src/gateway. */
 export function clearTalkTranscriptionRelaySessionsForTest(): void {
   for (const session of transcriptionSessions.values()) {
     clearTimeout(session.cleanupTimer);

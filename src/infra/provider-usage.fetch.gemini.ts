@@ -1,3 +1,4 @@
+// infra provider usage fetch gemini helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import {
   buildUsageHttpErrorSnapshot,
@@ -15,6 +16,7 @@ type GeminiUsageResponse = {
   buckets?: Array<{ modelId?: string; remainingFraction?: number }>;
 };
 
+/** Reused helper for fetch Gemini Usage behavior in src/infra. */
 export async function fetchGeminiUsage(
   token: string,
   timeoutMs: number,

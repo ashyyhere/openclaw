@@ -1,3 +1,4 @@
+// extensions/imessage/src send helpers and runtime behavior.
 import { spawn } from "node:child_process";
 import { constants, accessSync, readFileSync } from "node:fs";
 import { createRequire } from "node:module";

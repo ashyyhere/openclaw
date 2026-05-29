@@ -1,3 +1,4 @@
+/** Tests top-level CLI program construction and parse behavior. */
 import process from "node:process";
 import { Command, CommanderError } from "commander";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";

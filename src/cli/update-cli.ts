@@ -1,3 +1,4 @@
+/** Registers CLI self-update commands. */
 import type { Command } from "commander";
 import { formatDocsLink } from "../../packages/terminal-core/src/links.js";
 import { theme } from "../../packages/terminal-core/src/theme.js";
@@ -14,7 +15,9 @@ import { updateStatusCommand } from "./update-cli/status.js";
 import { updateCommand, updateFinalizeCommand } from "./update-cli/update-command.js";
 import { updateWizardCommand } from "./update-cli/wizard.js";
 
+/** Re-exported API for src/cli, starting with update Command. */
 export { updateCommand, updateFinalizeCommand, updateStatusCommand, updateWizardCommand };
+/** Re-exported API for src/cli. */
 export type {
   UpdateCommandOptions,
   UpdateFinalizeOptions,
@@ -37,6 +40,7 @@ function inheritedUpdateTimeout(
   return inheritOptionFromParent<string>(command, "timeout");
 }
 
+/** Reused helper for register Update Cli behavior in src/cli. */
 export function registerUpdateCli(program: Command) {
   program.enablePositionalOptions();
   const update = program

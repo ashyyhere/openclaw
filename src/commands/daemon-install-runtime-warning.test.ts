@@ -1,3 +1,4 @@
+/** Tests daemon install runtime warning formatting. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({

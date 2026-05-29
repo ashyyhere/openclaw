@@ -1,3 +1,4 @@
+/** Tests sandbox config merge behavior. */
 import { describe, expect, it } from "vitest";
 import {
   resolveSandboxBrowserConfig,

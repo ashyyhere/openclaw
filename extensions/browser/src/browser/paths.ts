@@ -1,3 +1,4 @@
+// extensions/browser/src/browser paths helpers and runtime behavior.
 import path from "node:path";
 import { resolvePreferredOpenClawTmpDir } from "../infra/tmp-openclaw-dir.js";
 export {

@@ -1,3 +1,4 @@
+// extensions/slack/src/monitor context helpers and runtime behavior.
 import type { App } from "@slack/bolt";
 import { resolveDefaultAgentId } from "openclaw/plugin-sdk/agent-runtime";
 import { formatAllowlistMatchMeta } from "openclaw/plugin-sdk/allow-from";

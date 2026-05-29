@@ -1,3 +1,4 @@
+/** Tests custom provider onboarding config mutations. */
 import { describe, expect, it } from "vitest";
 import { CONTEXT_WINDOW_HARD_MIN_TOKENS } from "../agents/context-window-guard.js";
 import type { OpenClawConfig } from "../config/config.js";

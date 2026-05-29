@@ -1,3 +1,4 @@
+// extensions/slack/src/monitor/message-handler prepare thread context root helpers and runtime behavior.
 export type SlackBotAuthorIdentity = {
   botUserId?: string;
   botId?: string;

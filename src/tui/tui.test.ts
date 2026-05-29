@@ -1,3 +1,4 @@
+// Tests tui tui test behavior.
 import { EventEmitter } from "node:events";
 import { describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";

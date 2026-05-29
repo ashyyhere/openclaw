@@ -1,3 +1,4 @@
+// Tests extensions/slack/src/monitor/message-handler subteam mentions test behavior.
 import type { WebClient } from "@slack/web-api";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {

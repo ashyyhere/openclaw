@@ -1,3 +1,4 @@
+/** Verifies cross-provider fallback preserves useful error context. */
 import { beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { makeAssistantMessageFixture } from "../test-helpers/assistant-message-fixtures.js";
 import { makeModelFallbackCfg } from "../test-helpers/model-fallback-config-fixture.js";

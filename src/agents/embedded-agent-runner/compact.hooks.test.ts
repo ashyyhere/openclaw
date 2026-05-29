@@ -1,3 +1,4 @@
+/** Regression coverage for embedded-agent compaction hooks. */
 import type { AgentMessage } from "openclaw/plugin-sdk/agent-core";
 import { beforeAll, beforeEach, describe, expect, it, vi, type Mock } from "vitest";
 import {

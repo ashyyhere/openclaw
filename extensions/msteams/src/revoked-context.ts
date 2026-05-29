@@ -1,3 +1,4 @@
+// extensions/msteams/src revoked context helpers and runtime behavior.
 import { isRevokedProxyError } from "./errors.js";
 
 export async function withRevokedProxyFallback<T>(params: {

@@ -1,9 +1,13 @@
+// config/sessions reset policy helpers and runtime behavior.
 import type { SessionConfig, SessionResetConfig } from "../types.base.js";
 import { DEFAULT_IDLE_MINUTES } from "./types.js";
 
+/** Shared type for Session Reset Mode in src/config/sessions. */
 export type SessionResetMode = "daily" | "idle";
+/** Shared type for Session Reset Type in src/config/sessions. */
 export type SessionResetType = "direct" | "group" | "thread";
 
+/** Shared type for Session Reset Policy in src/config/sessions. */
 export type SessionResetPolicy = {
   mode: SessionResetMode;
   atHour: number;
@@ -11,6 +15,7 @@ export type SessionResetPolicy = {
   configured?: boolean;
 };
 
+/** Shared type for Session Freshness in src/config/sessions. */
 export type SessionFreshness = {
   fresh: boolean;
   dailyResetAt?: number;
@@ -18,9 +23,12 @@ export type SessionFreshness = {
   staleReason?: SessionResetMode;
 };
 
+/** Reused constant for DEFAULT RESET MODE behavior in src/config/sessions. */
 export const DEFAULT_RESET_MODE: SessionResetMode = "daily";
+/** Reused constant for DEFAULT RESET AT HOUR behavior in src/config/sessions. */
 export const DEFAULT_RESET_AT_HOUR = 4;
 
+/** Reused helper for resolve Daily Reset At Ms behavior in src/config/sessions. */
 export function resolveDailyResetAtMs(now: number, atHour: number): number {
   const normalizedAtHour = normalizeResetAtHour(atHour);
   const resetAt = new Date(now);
@@ -31,6 +39,7 @@ export function resolveDailyResetAtMs(now: number, atHour: number): number {
   return resetAt.getTime();
 }
 
+/** Reused helper for resolve Session Reset Policy behavior in src/config/sessions. */
 export function resolveSessionResetPolicy(params: {
   sessionCfg?: SessionConfig;
   resetType: SessionResetType;
@@ -70,6 +79,7 @@ export function resolveSessionResetPolicy(params: {
   return { mode, atHour, idleMinutes, configured };
 }
 
+/** Reused helper for evaluate Session Freshness behavior in src/config/sessions. */
 export function evaluateSessionFreshness(params: {
   updatedAt: number;
   sessionStartedAt?: number;

@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/monitor native command commands allowfrom test behavior.
 import { ChannelType } from "discord-api-types/v10";
 import type { NativeCommandSpec } from "openclaw/plugin-sdk/command-auth-native";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";

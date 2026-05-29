@@ -1,3 +1,4 @@
+// Tests cron session target test behavior.
 import { describe, expect, it } from "vitest";
 import {
   resolveCronCurrentSessionTarget,

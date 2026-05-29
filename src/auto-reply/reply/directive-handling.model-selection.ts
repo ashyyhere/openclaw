@@ -1,3 +1,4 @@
+// Model selection helpers for inline directive handling.
 import { ensureAuthProfileStore } from "../../agents/auth-profiles.js";
 import { isModelKeyAllowedBySet } from "../../agents/model-selection-shared.js";
 import {
@@ -44,6 +45,7 @@ function resolveStoredNumericProfileModelDirective(params: { raw: string; agentD
   return { modelRaw, profileId, profileProvider: profile.provider };
 }
 
+/** Reused helper for resolve Model Selection From Directive behavior in src/auto-reply/reply. */
 export function resolveModelSelectionFromDirective(params: {
   directives: InlineDirectives;
   cfg: OpenClawConfig;

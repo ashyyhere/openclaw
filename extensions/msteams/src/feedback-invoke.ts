@@ -1,3 +1,4 @@
+// extensions/msteams/src feedback invoke helpers and runtime behavior.
 import path from "node:path";
 import { resolveThreadSessionKeys } from "openclaw/plugin-sdk/routing";
 import { appendRegularFile } from "openclaw/plugin-sdk/security-runtime";

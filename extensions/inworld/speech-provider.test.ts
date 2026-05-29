@@ -1,3 +1,4 @@
+// Tests extensions/inworld speech provider test behavior.
 import { afterAll, afterEach, describe, expect, it, vi } from "vitest";
 
 const { inworldTTSMock, listInworldVoicesMock } = vi.hoisted(() => ({

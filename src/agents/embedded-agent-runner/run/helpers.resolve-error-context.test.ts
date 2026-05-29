@@ -1,3 +1,4 @@
+/** Covers active provider/model error context resolution. */
 import { describe, expect, it } from "vitest";
 import { resolveActiveErrorContext } from "./helpers.js";
 

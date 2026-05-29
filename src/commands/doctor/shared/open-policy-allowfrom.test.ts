@@ -1,3 +1,4 @@
+/** Tests open policy allowFrom warnings and repairs. */
 import { describe, expect, it, vi } from "vitest";
 import {
   collectOpenPolicyAllowFromWarnings,

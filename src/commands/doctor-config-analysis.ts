@@ -1,3 +1,4 @@
+/** Analyzes config validation issues into doctor-friendly findings. */
 import path from "node:path";
 import type { ZodIssue } from "zod";
 import { note } from "../../packages/terminal-core/src/note.js";
@@ -21,6 +22,7 @@ function isUnrecognizedKeysIssue(issue: ZodIssue): issue is UnrecognizedKeysIssu
   return issue.code === "unrecognized_keys";
 }
 
+/** Reused helper for format Config Path behavior in src/commands. */
 export function formatConfigPath(parts: Array<string | number>): string {
   if (parts.length === 0) {
     return "<root>";
@@ -36,6 +38,7 @@ export function formatConfigPath(parts: Array<string | number>): string {
   return out || "<root>";
 }
 
+/** Reused helper for resolve Config Path Target behavior in src/commands. */
 export function resolveConfigPathTarget(root: unknown, path: Array<string | number>): unknown {
   let current: unknown = root;
   for (const part of path) {
@@ -71,6 +74,7 @@ const STRIP_PROTECTED_KEYS: Record<string, Set<string>> = {
   plugins: new Set(["installs"]),
 };
 
+/** Reused helper for strip Unknown Config Keys behavior in src/commands. */
 export function stripUnknownConfigKeys(config: OpenClawConfig): {
   config: OpenClawConfig;
   removed: string[];
@@ -119,6 +123,7 @@ export function stripUnknownConfigKeys(config: OpenClawConfig): {
   return { config: next, removed };
 }
 
+/** Reused helper for note Opencode Provider Overrides behavior in src/commands. */
 export function noteOpencodeProviderOverrides(cfg: OpenClawConfig): void {
   const providers = cfg.models?.providers;
   if (!providers) {
@@ -174,6 +179,7 @@ function isImplicitFallbackClobber(model: unknown): boolean {
   return false;
 }
 
+/** Reused helper for collect Implicit Fallback Clobber Warnings behavior in src/commands. */
 export function collectImplicitFallbackClobberWarnings(cfg: OpenClawConfig): string[] {
   const defaultFallbacks = resolveAgentModelFallbackValues(cfg.agents?.defaults?.model);
   if (defaultFallbacks.length === 0) {
@@ -204,6 +210,7 @@ export function collectImplicitFallbackClobberWarnings(cfg: OpenClawConfig): str
   return warnings;
 }
 
+/** Reused helper for note Implicit Fallback Clobber Warnings behavior in src/commands. */
 export function noteImplicitFallbackClobberWarnings(cfg: OpenClawConfig): void {
   const warnings = collectImplicitFallbackClobberWarnings(cfg);
   if (warnings.length === 0) {
@@ -212,6 +219,7 @@ export function noteImplicitFallbackClobberWarnings(cfg: OpenClawConfig): void {
   note(warnings.join("\n"), "Doctor warnings");
 }
 
+/** Reused helper for note Include Confinement Warning behavior in src/commands. */
 export function noteIncludeConfinementWarning(snapshot: {
   path?: string | null;
   issues?: Array<{ message: string }>;

@@ -1,3 +1,4 @@
+// extensions/synology-chat/src inbound context helpers and runtime behavior.
 export type SynologyInboundMessage = {
   body: string;
   from: string;

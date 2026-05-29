@@ -1,3 +1,4 @@
+// Tests tui tui session actions test behavior.
 import { describe, expect, it, vi } from "vitest";
 import type { TuiBackend } from "./tui-backend.js";
 import { createSessionActions } from "./tui-session-actions.js";

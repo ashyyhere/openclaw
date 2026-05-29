@@ -1,6 +1,8 @@
+/** Shared helpers for embedded-agent subscription compaction tests. */
 import fs from "node:fs/promises";
 import path from "node:path";
 
+/** Seed a session-store entry for compaction handler tests. */
 export async function seedSessionStore(params: {
   storePath: string;
   sessionKey: string;
@@ -25,6 +27,7 @@ export async function seedSessionStore(params: {
   );
 }
 
+/** Read a session's persisted compaction count from a test store. */
 export async function readCompactionCount(storePath: string, sessionKey: string): Promise<number> {
   const store = JSON.parse(await fs.readFile(storePath, "utf-8")) as Record<
     string,
@@ -33,6 +36,7 @@ export async function readCompactionCount(storePath: string, sessionKey: string)
   return store[sessionKey]?.compactionCount ?? 0;
 }
 
+/** Poll until a test session store reaches the expected compaction count. */
 export async function waitForCompactionCount(params: {
   storePath: string;
   sessionKey: string;

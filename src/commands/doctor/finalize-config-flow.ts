@@ -1,5 +1,7 @@
+/** Finalizes doctor config flow after repairs and persistence. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 
+/** Reused helper for finalize Doctor Config Flow behavior in src/commands/doctor. */
 export async function finalizeDoctorConfigFlow(params: {
   cfg: OpenClawConfig;
   candidate: OpenClawConfig;

@@ -1,3 +1,4 @@
+// scripts readability basic compare helpers and runtime behavior.
 import { createWebFetchTool } from "../src/agents/tools/web-tools.js";
 
 const DEFAULT_URLS = [

@@ -1,5 +1,7 @@
+// Detects local model provider base URLs for model-list tags.
 import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";
 
+/** Reused constant for is Local Base Url behavior in src/commands/models. */
 export const isLocalBaseUrl = (baseUrl: string) => {
   try {
     const url = new URL(baseUrl);

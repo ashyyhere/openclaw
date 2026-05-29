@@ -1,3 +1,4 @@
+/** Tests channel status surfaces runtime errors from plugin health signals. */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { collectStatusIssuesFromLastError } from "../plugin-sdk/status-helpers.js";
 import { setActivePluginRegistry } from "../plugins/runtime.js";

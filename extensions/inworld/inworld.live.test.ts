@@ -1,3 +1,4 @@
+// Tests extensions/inworld inworld live test behavior.
 import {
   registerProviderPlugin,
   requireRegisteredProvider,

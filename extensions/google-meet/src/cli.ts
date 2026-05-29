@@ -1,3 +1,4 @@
+// extensions/google-meet/src cli helpers and runtime behavior.
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { createInterface } from "node:readline/promises";

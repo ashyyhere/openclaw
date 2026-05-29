@@ -1,3 +1,4 @@
+// Tests security audit plugin readonly scope test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const applyPluginAutoEnableMock = vi.hoisted(() => vi.fn());

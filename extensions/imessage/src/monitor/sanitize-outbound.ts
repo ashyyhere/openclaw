@@ -1,3 +1,4 @@
+// extensions/imessage/src/monitor sanitize outbound helpers and runtime behavior.
 import { stripAssistantInternalScaffolding } from "openclaw/plugin-sdk/text-chunking";
 
 /**

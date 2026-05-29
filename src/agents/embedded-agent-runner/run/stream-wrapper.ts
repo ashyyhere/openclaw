@@ -1,6 +1,8 @@
+/** Wraps mutable assistant stream object events with observer callbacks. */
 import type { MutableAssistantMessageEventStream } from "../../stream-compat.js";
 import { createStreamIteratorWrapper } from "../../stream-iterator-wrapper.js";
 
+/** Calls an observer for each object event yielded by an assistant stream. */
 export function wrapStreamObjectEvents(
   stream: MutableAssistantMessageEventStream,
   onEvent: (event: Record<string, unknown>) => void | Promise<void>,

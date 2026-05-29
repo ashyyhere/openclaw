@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor message handler test helpers helpers and runtime behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { vi } from "vitest";
 import type { createDiscordMessageHandler } from "./message-handler.js";

@@ -1,3 +1,4 @@
+// Coverage for reply model selection helpers.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { MODEL_CONTEXT_TOKEN_CACHE } from "../../agents/context-cache.js";
 import { loadManifestModelCatalog, loadModelCatalog } from "../../agents/model-catalog.runtime.js";

@@ -1,3 +1,4 @@
+/** Derives skill runtime config after auth secret normalization. */
 import { getRuntimeConfigSnapshot } from "../../config/runtime-snapshot.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { coerceSecretRef } from "../../config/types.secrets.js";
@@ -18,6 +19,7 @@ function hasConfiguredSkillApiKeyRef(config?: OpenClawConfig): boolean {
   return false;
 }
 
+/** Resolves config used while loading or running skills. */
 export function resolveSkillRuntimeConfig(config?: OpenClawConfig): OpenClawConfig | undefined {
   const runtimeConfig = getRuntimeConfigSnapshot();
   if (!runtimeConfig) {

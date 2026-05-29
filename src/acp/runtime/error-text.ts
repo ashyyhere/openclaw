@@ -1,3 +1,4 @@
+/** Human-readable ACP runtime error rendering with operator next steps. */
 import { type AcpRuntimeErrorCode, AcpRuntimeError, toAcpRuntimeError } from "./errors.js";
 
 function resolveAcpRuntimeErrorNextStep(error: AcpRuntimeError): string | undefined {
@@ -22,6 +23,7 @@ function resolveAcpRuntimeErrorNextStep(error: AcpRuntimeError): string | undefi
   return undefined;
 }
 
+/** Format a typed ACP runtime error for CLI/chat surfaces. */
 export function formatAcpRuntimeErrorText(error: AcpRuntimeError): string {
   const next = resolveAcpRuntimeErrorNextStep(error);
   if (!next) {
@@ -30,6 +32,7 @@ export function formatAcpRuntimeErrorText(error: AcpRuntimeError): string {
   return `ACP error (${error.code}): ${error.message}\nnext: ${next}`;
 }
 
+/** Convert any thrown value into formatted ACP runtime error text. */
 export function toAcpRuntimeErrorText(params: {
   error: unknown;
   fallbackCode: AcpRuntimeErrorCode;

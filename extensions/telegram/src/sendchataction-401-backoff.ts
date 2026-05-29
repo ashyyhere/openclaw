@@ -1,3 +1,4 @@
+// extensions/telegram/src sendchataction 401 backoff helpers and runtime behavior.
 import type { Bot } from "grammy";
 import {
   computeBackoff,

@@ -1,3 +1,4 @@
+// extensions/slack/src/monitor media helpers and runtime behavior.
 import fs from "node:fs/promises";
 import type { WebClient as SlackWebClient } from "@slack/web-api";
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";

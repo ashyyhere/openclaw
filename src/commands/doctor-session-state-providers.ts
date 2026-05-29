@@ -58,6 +58,7 @@ function resolveSessionAgentId(cfg: OpenClawConfig, sessionKey: string): string 
   return parseAgentSessionKey(sessionKey)?.agentId ?? resolveDefaultAgentId(cfg);
 }
 
+/** Reused helper for resolve Configured Doctor Session State Route behavior in src/commands. */
 export function resolveConfiguredDoctorSessionStateRoute(params: {
   cfg: OpenClawConfig;
   sessionKey: string;
@@ -121,18 +122,21 @@ function entryMayContainPluginSessionRouteState(entry: SessionEntry): boolean {
   );
 }
 
+/** Reused helper for store May Contain Plugin Session Route State behavior in src/commands. */
 export function storeMayContainPluginSessionRouteState(
   store: Record<string, SessionEntry>,
 ): boolean {
   return Object.values(store).some((entry) => entryMayContainPluginSessionRouteState(entry));
 }
 
+/** Shared type for Doctor Session Route State in src/commands. */
 export type DoctorSessionRouteState = {
   defaultProvider: string;
   configuredModelRefs: string[];
   runtime?: string;
 };
 
+/** Shared type for Doctor Session Route State Repair in src/commands. */
 export type DoctorSessionRouteStateRepair = {
   key: string;
   ownerId: string;
@@ -142,12 +146,14 @@ export type DoctorSessionRouteStateRepair = {
   cliSessionKeys: string[];
 };
 
+/** Shared type for Doctor Session Route State Manual Review in src/commands. */
 export type DoctorSessionRouteStateManualReview = {
   key: string;
   ownerLabel: string;
   message: string;
 };
 
+/** Shared type for Doctor Session Route State Scan in src/commands. */
 export type DoctorSessionRouteStateScan = {
   repairs: DoctorSessionRouteStateRepair[];
   manualReview: DoctorSessionRouteStateManualReview[];
@@ -328,6 +334,7 @@ function scanEntryForOwner(params: {
   };
 }
 
+/** Reused helper for scan Session Route State Owners behavior in src/commands. */
 export function scanSessionRouteStateOwners(params: {
   owners: readonly DoctorSessionRouteStateOwner[];
   store: Record<string, Record<string, unknown>>;
@@ -386,6 +393,7 @@ function clearRecordKeys(
   return true;
 }
 
+/** Reused helper for apply Session Route State Repair behavior in src/commands. */
 export function applySessionRouteStateRepair(params: {
   entry: Record<string, unknown>;
   repair: DoctorSessionRouteStateRepair;
@@ -443,6 +451,7 @@ function groupRepairsByOwner(
   return grouped;
 }
 
+/** Reused helper for run Plugin Session State Doctor Repairs behavior in src/commands. */
 export async function runPluginSessionStateDoctorRepairs(params: {
   cfg: OpenClawConfig;
   store: Record<string, SessionEntry>;

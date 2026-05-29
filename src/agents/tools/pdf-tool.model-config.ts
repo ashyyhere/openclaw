@@ -1,3 +1,4 @@
+/** Resolves model config used by PDF tool calls. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import {
   providerSupportsNativePdfDocument,
@@ -185,6 +186,7 @@ function resolveTextExtractionCandidateRefs(params: {
   return candidates;
 }
 
+/** Resolves provider/model/fallback settings for the PDF tool. */
 export function resolvePdfModelConfigForTool(params: {
   cfg?: OpenClawConfig;
   agentDir: string;

@@ -1,3 +1,4 @@
+/** Tests external CLI auth-profile sync behavior. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { AuthProfileStore, OAuthCredential } from "./auth-profiles/types.js";
 import type { ClaudeCliCredential } from "./cli-credentials.js";

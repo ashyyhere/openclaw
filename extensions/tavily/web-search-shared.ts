@@ -1,3 +1,4 @@
+// extensions/tavily web search shared helpers and runtime behavior.
 import {
   createWebSearchProviderContractFields,
   type WebSearchProviderPlugin,

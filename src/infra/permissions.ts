@@ -1,4 +1,6 @@
+// infra permissions helpers and runtime behavior.
 import "./fs-safe-defaults.js";
+/** Re-exported API for src/infra. */
 export {
   formatPermissionDetail,
   formatPermissionRemediation,
@@ -7,6 +9,7 @@ export {
   type PermissionCheck,
   type PermissionCheckOptions,
 } from "@openclaw/fs-safe/permissions";
+/** Re-exported API for src/infra. */
 export {
   createIcaclsResetCommand,
   formatIcaclsResetCommand,

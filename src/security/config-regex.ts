@@ -1,11 +1,14 @@
+// security config regex helpers and runtime behavior.
 import {
   compileSafeRegexDetailed,
   type SafeRegexCompileResult,
   type SafeRegexRejectReason,
 } from "./safe-regex.js";
 
+/** Shared type for Config Regex Reject Reason in src/security. */
 export type ConfigRegexRejectReason = Exclude<SafeRegexRejectReason, "empty">;
 
+/** Shared type for Compiled Config Regex in src/security. */
 export type CompiledConfigRegex =
   | {
       regex: RegExp;
@@ -27,6 +30,7 @@ function normalizeRejectReason(result: SafeRegexCompileResult): ConfigRegexRejec
   return result.reason;
 }
 
+/** Reused helper for compile Config Regex behavior in src/security. */
 export function compileConfigRegex(pattern: string, flags = ""): CompiledConfigRegex | null {
   const result = compileSafeRegexDetailed(pattern, flags);
   if (result.reason === "empty") {
@@ -40,6 +44,7 @@ export function compileConfigRegex(pattern: string, flags = ""): CompiledConfigR
   } as CompiledConfigRegex;
 }
 
+/** Reused helper for compile Config Regexes behavior in src/security. */
 export function compileConfigRegexes(
   patterns: string[],
   flags = "",

@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/actions runtime test behavior.
 import { ChannelType, PermissionFlagsBits } from "discord-api-types/v10";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import type { DiscordActionConfig } from "openclaw/plugin-sdk/config-contracts";

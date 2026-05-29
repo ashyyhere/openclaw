@@ -1,3 +1,4 @@
+// gateway auth token resolution helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveSecretInputRef } from "../config/types.secrets.js";
 import { trimToUndefined } from "./credentials.js";
@@ -9,6 +10,7 @@ import {
 type GatewayAuthTokenResolutionSource = "explicit" | "config" | "secretRef" | "env";
 type GatewayAuthTokenEnvFallback = "never" | "no-secret-ref" | "always";
 
+/** Reused helper for resolve Gateway Auth Token behavior in src/gateway. */
 export async function resolveGatewayAuthToken(params: {
   cfg: OpenClawConfig;
   env: NodeJS.ProcessEnv;

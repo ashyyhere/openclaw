@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src/matrix/sdk idb persistence test behavior.
 import "fake-indexeddb/auto";
 import fs from "node:fs";
 import os from "node:os";

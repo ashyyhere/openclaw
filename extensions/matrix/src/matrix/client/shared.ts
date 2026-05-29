@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix/client shared helpers and runtime behavior.
 import { normalizeOptionalAccountId } from "openclaw/plugin-sdk/account-id";
 import type { CoreConfig } from "../../types.js";
 import type { MatrixClient } from "../sdk.js";

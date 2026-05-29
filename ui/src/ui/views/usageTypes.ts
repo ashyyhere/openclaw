@@ -1,3 +1,4 @@
+// ui/src/ui/views usageTypes helpers and runtime behavior.
 import type {
   CostUsageDailyEntry,
   SessionsUsageEntry,
@@ -6,11 +7,16 @@ import type {
   SessionUsageTimePoint,
 } from "../usage-types.ts";
 
+/** Shared type for Usage Session Entry in ui/src/ui/views. */
 export type UsageSessionEntry = SessionsUsageEntry;
+/** Shared type for Usage Totals in ui/src/ui/views. */
 export type UsageTotals = SessionsUsageTotals;
+/** Shared type for Cost Daily Entry in ui/src/ui/views. */
 export type CostDailyEntry = CostUsageDailyEntry;
+/** Shared type for Usage Aggregates in ui/src/ui/views. */
 export type UsageAggregates = SessionsUsageResult["aggregates"];
 
+/** Shared type for Usage Column Id in ui/src/ui/views. */
 export type UsageColumnId =
   | "channel"
   | "agent"
@@ -21,8 +27,10 @@ export type UsageColumnId =
   | "errors"
   | "duration";
 
+/** Shared type for Time Series Point in ui/src/ui/views. */
 export type TimeSeriesPoint = SessionUsageTimePoint;
 
+/** Shared type for Usage Data State in ui/src/ui/views. */
 export type UsageDataState = {
   loading: boolean;
   error: string | null;
@@ -35,6 +43,7 @@ export type UsageDataState = {
   cacheStatus: SessionsUsageResult["cacheStatus"];
 };
 
+/** Shared type for Usage Filter State in ui/src/ui/views. */
 export type UsageFilterState = {
   startDate: string;
   endDate: string;
@@ -48,6 +57,7 @@ export type UsageFilterState = {
   timeZone: "local" | "utc";
 };
 
+/** Shared type for Usage Display State in ui/src/ui/views. */
 export type UsageDisplayState = {
   chartMode: "tokens" | "cost";
   dailyChartMode: "total" | "by-type";
@@ -60,6 +70,7 @@ export type UsageDisplayState = {
   headerPinned: boolean;
 };
 
+/** Shared type for Usage Detail State in ui/src/ui/views. */
 export type UsageDetailState = {
   timeSeriesMode: "cumulative" | "per-turn";
   timeSeriesBreakdownMode: "total" | "by-type";
@@ -78,6 +89,7 @@ export type UsageDetailState = {
   };
 };
 
+/** Shared type for Usage Callbacks in ui/src/ui/views. */
 export type UsageCallbacks = {
   filters: {
     onStartDateChange: (date: string) => void;
@@ -120,6 +132,7 @@ export type UsageCallbacks = {
   };
 };
 
+/** Shared type for Usage Props in ui/src/ui/views. */
 export type UsageProps = {
   data: UsageDataState;
   filters: UsageFilterState;
@@ -128,6 +141,7 @@ export type UsageProps = {
   callbacks: UsageCallbacks;
 };
 
+/** Shared type for Session Log Entry in ui/src/ui/views. */
 export type SessionLogEntry = {
   timestamp: number;
   role: "user" | "assistant" | "tool" | "toolResult";
@@ -136,4 +150,5 @@ export type SessionLogEntry = {
   cost?: number;
 };
 
+/** Shared type for Session Log Role in ui/src/ui/views. */
 export type SessionLogRole = SessionLogEntry["role"];

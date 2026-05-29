@@ -1,3 +1,4 @@
+/** Tests doctor auth hint formatting. */
 import { describe, expect, it } from "vitest";
 import { formatOAuthRefreshFailureDoctorLine, resolveUnusableProfileHint } from "./doctor-auth.js";
 

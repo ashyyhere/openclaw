@@ -1,3 +1,4 @@
+/** Regression coverage for model startup retry behavior. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const discoverAuthStorageMock = vi.fn<(agentDir?: string) => { mocked: true }>(() => ({

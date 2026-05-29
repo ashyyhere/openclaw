@@ -1,3 +1,4 @@
+// tui tui launch helpers and runtime behavior.
 import { spawn } from "node:child_process";
 import path from "node:path";
 import { formatErrorMessage } from "../infra/errors.js";
@@ -77,6 +78,7 @@ function buildTuiCliArgs(opts: TuiOptions): string[] {
   return args;
 }
 
+/** Reused helper for launch Tui Cli behavior in src/tui. */
 export async function launchTuiCli(
   opts: TuiOptions,
   launchOptions: TuiLaunchOptions = {},

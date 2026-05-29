@@ -1,3 +1,4 @@
+// Tests infra approval handler runtime test behavior.
 import { describe, expect, it, vi } from "vitest";
 import {
   createChannelApprovalHandlerFromCapability,

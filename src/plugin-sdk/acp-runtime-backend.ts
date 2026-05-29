@@ -7,14 +7,18 @@ import type {
 } from "../plugins/types.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 
+/** Re-exported API for src/plugin-sdk, starting with Acp Runtime Error. */
 export { AcpRuntimeError, isAcpRuntimeError } from "../acp/runtime/errors.js";
+/** Re-exported API for src/plugin-sdk, starting with Acp Runtime Error Code. */
 export type { AcpRuntimeErrorCode } from "../acp/runtime/errors.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   getAcpRuntimeBackend,
   registerAcpRuntimeBackend,
   requireAcpRuntimeBackend,
   unregisterAcpRuntimeBackend,
 } from "../acp/runtime/registry.js";
+/** Re-exported API for src/plugin-sdk. */
 export type {
   AcpRuntime,
   AcpRuntimeCapabilities,
@@ -54,6 +58,7 @@ function hasExplicitCommandCandidate(ctx: PluginHookReplyDispatchEvent["ctx"]): 
   return normalized.startsWith("!") || normalized.startsWith("/");
 }
 
+/** Reused helper for try Dispatch Acp Reply Hook behavior in src/plugin-sdk. */
 export async function tryDispatchAcpReplyHook(
   event: PluginHookReplyDispatchEvent,
   ctx: PluginHookReplyDispatchContext,

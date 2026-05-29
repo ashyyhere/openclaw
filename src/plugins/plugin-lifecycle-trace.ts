@@ -1,3 +1,4 @@
+// plugins plugin lifecycle trace helpers and runtime behavior.
 type TraceDetails = Record<string, boolean | number | string | undefined>;
 
 function isPluginLifecycleTraceEnabled(): boolean {
@@ -29,6 +30,7 @@ function emitPluginLifecycleTrace(params: {
   );
 }
 
+/** Reused helper for trace Plugin Lifecycle Phase behavior in src/plugins. */
 export function tracePluginLifecyclePhase<T>(
   phase: string,
   fn: () => T,
@@ -48,6 +50,7 @@ export function tracePluginLifecyclePhase<T>(
   }
 }
 
+/** Reused helper for trace Plugin Lifecycle Phase Async behavior in src/plugins. */
 export async function tracePluginLifecyclePhaseAsync<T>(
   phase: string,
   fn: () => Promise<T>,

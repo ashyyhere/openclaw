@@ -1,3 +1,4 @@
+/** Builds prompt-time context, hook results, and after-turn runtime metadata. */
 import type { OpenClawConfig } from "../../../config/types.openclaw.js";
 import type {
   ContextEnginePromptCacheInfo,
@@ -30,6 +31,7 @@ import { log } from "../logger.js";
 import { shouldInjectHeartbeatPromptForTrigger } from "./trigger-policy.js";
 import type { EmbeddedRunAttemptParams } from "./types.js";
 
+/** Shared type for Prompt Build Hook Runner in src/agents/embedded-agent-runner. */
 export type PromptBuildHookRunner = {
   hasHooks: (
     hookName:
@@ -87,12 +89,14 @@ function rememberDrainedInjections(
  * Releases the per-run drained-injection cache. Call when a run terminates so
  * the cap stays headroom for active runs.
  */
+/** Clears cached prompt-build hook drains for one run id. */
 export function forgetPromptBuildDrainCacheForRun(runId: string | undefined): void {
   if (runId) {
     promptBuildDrainCache.delete(runId);
   }
 }
 
+/** Runs prompt-build hooks once and caches drain context per attempt run. */
 export async function resolvePromptBuildHookResult(params: {
   config: OpenClawConfig;
   prompt: string;
@@ -208,6 +212,7 @@ export async function resolvePromptBuildHookResult(params: {
   };
 }
 
+/** Chooses minimal prompts for subagent/ACP sessions and full prompts otherwise. */
 export function resolvePromptModeForSession(sessionKey?: string): "minimal" | "full" {
   if (!sessionKey) {
     return "full";
@@ -215,6 +220,7 @@ export function resolvePromptModeForSession(sessionKey?: string): "minimal" | "f
   return isSubagentSessionKey(sessionKey) || isCronSessionKey(sessionKey) ? "minimal" : "full";
 }
 
+/** Decides whether heartbeat instructions should be injected into this attempt. */
 export function shouldInjectHeartbeatPrompt(params: {
   config?: OpenClawConfig;
   agentId?: string;
@@ -235,14 +241,17 @@ export function shouldInjectHeartbeatPrompt(params: {
   );
 }
 
+/** Decides whether repaired orphaned user prompts need a diagnostic warning. */
 export function shouldWarnOnOrphanedUserRepair(
   trigger: EmbeddedRunAttemptParams["trigger"],
 ): boolean {
   return trigger === "user" || trigger === "manual";
 }
 
+/** Shared type for Prompt Submission Skip Reason in src/agents/embedded-agent-runner. */
 export type PromptSubmissionSkipReason = "blank_user_prompt" | "empty_prompt_history_images";
 
+/** Returns why the current prompt should be skipped before provider submission. */
 export function resolvePromptSubmissionSkipReason(params: {
   prompt: string;
   messages: readonly unknown[];
@@ -463,6 +472,7 @@ function promptAlreadyIncludesQueuedUserMessage(prompt: string, orphanText: stri
   );
 }
 
+/** Reattaches a trailing user prompt that was orphaned by context assembly. */
 export function mergeOrphanedTrailingUserPrompt(params: {
   prompt: string;
   trigger: EmbeddedRunAttemptParams["trigger"];
@@ -483,6 +493,7 @@ export function mergeOrphanedTrailingUserPrompt(params: {
   };
 }
 
+/** Decides whether this attempt should expose only the filesystem workspace. */
 export function resolveAttemptFsWorkspaceOnly(params: {
   config?: OpenClawConfig;
   sessionAgentId: string;
@@ -493,6 +504,7 @@ export function resolveAttemptFsWorkspaceOnly(params: {
   });
 }
 
+/** Prepends provider/context additions ahead of the configured system prompt. */
 export function prependSystemPromptAddition(params: {
   systemPrompt: string;
   systemPromptAddition?: string;
@@ -500,6 +512,7 @@ export function prependSystemPromptAddition(params: {
   return prependSystemPromptAdditionAfterCacheBoundary(params);
 }
 
+/** Resolves system-context additions that must precede normal prompt text. */
 export function resolveAttemptPrependSystemContext(params: {
   sessionKey?: string;
   trigger?: EmbeddedRunAttemptParams["trigger"];
@@ -546,6 +559,7 @@ type AfterTurnRuntimeContextAttempt = Pick<
 };
 
 /** Build runtime context passed into context-engine afterTurn hooks. */
+/** Builds runtime context persisted after an embedded attempt turn. */
 export function buildAfterTurnRuntimeContext(params: {
   attempt: AfterTurnRuntimeContextAttempt;
   workspaceDir: string;
@@ -611,6 +625,7 @@ export function buildAfterTurnRuntimeContext(params: {
   };
 }
 
+/** Builds after-turn context using normalized provider usage details. */
 export function buildAfterTurnRuntimeContextFromUsage(
   params: Omit<Parameters<typeof buildAfterTurnRuntimeContext>[0], "currentTokenCount"> & {
     lastCallUsage?: NormalizedUsage;

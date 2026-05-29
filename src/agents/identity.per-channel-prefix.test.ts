@@ -1,3 +1,4 @@
+/** Tests per-channel identity prefix resolution. */
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import { resolveResponsePrefix, resolveEffectiveMessagesConfig } from "./identity.js";

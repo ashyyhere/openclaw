@@ -1,3 +1,4 @@
+/** Formats internal child-task events for runtime prompt context. */
 import {
   formatGeneratedAttachmentLines,
   type AgentGeneratedAttachment,
@@ -30,8 +31,10 @@ type AgentTaskCompletionInternalEvent = {
   replyInstruction: string;
 };
 
+/** Internal event payloads passed between child and parent agent runs. */
 export type AgentInternalEvent = AgentTaskCompletionInternalEvent;
 
+/** Re-exported API for src/agents, starting with INTERNAL RUNTIME CONTEXT BEGIN. */
 export { INTERNAL_RUNTIME_CONTEXT_BEGIN, INTERNAL_RUNTIME_CONTEXT_END };
 
 function sanitizeSingleLineField(value: string, fallback: string): string {
@@ -114,6 +117,7 @@ function formatTaskCompletionEventForPlainPrompt(event: AgentTaskCompletionInter
   return lines.join("\n");
 }
 
+/** Format internal events as delimited runtime-context prompt text. */
 export function formatAgentInternalEventsForPrompt(events?: AgentInternalEvent[]): string {
   if (!events || events.length === 0) {
     return "";
@@ -139,6 +143,7 @@ export function formatAgentInternalEventsForPrompt(events?: AgentInternalEvent[]
   ].join("\n");
 }
 
+/** Format internal events as plain prompt text without runtime delimiters. */
 export function formatAgentInternalEventsForPlainPrompt(events?: AgentInternalEvent[]): string {
   if (!events || events.length === 0) {
     return "";

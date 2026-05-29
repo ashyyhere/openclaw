@@ -1,3 +1,4 @@
+// Tests plugins/runtime load context test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const loadConfigMock = vi.fn<typeof import("../../config/config.js").loadConfig>();

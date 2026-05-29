@@ -1,3 +1,4 @@
+/** Tests profile command parsing and env export behavior. */
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { formatCliCommand } from "./command-format.js";

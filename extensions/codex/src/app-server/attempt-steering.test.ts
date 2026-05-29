@@ -1,3 +1,4 @@
+// Tests extensions/codex/src/app-server attempt steering test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { createCodexSteeringQueue } from "./attempt-steering.js";
 

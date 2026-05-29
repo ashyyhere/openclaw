@@ -1,3 +1,4 @@
+/** Tests native approval route matching, fallback suppression, and target resolvers. */
 import { describe, expect, it } from "vitest";
 import {
   createChannelApproverDmTargetResolver,

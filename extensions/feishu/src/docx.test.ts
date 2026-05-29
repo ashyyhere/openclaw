@@ -1,3 +1,4 @@
+// Tests extensions/feishu/src docx test behavior.
 import { mkdirSync, rmSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";

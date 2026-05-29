@@ -1,3 +1,4 @@
+// extensions/device-pair qr image helpers and runtime behavior.
 export {
   renderQrPngBase64,
   renderQrPngDataUrl,

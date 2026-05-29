@@ -1,3 +1,4 @@
+// Inbound message deduplication cache.
 import { logVerbose, shouldLogVerbose } from "../../globals.js";
 import { resolveGlobalDedupeCache, type DedupeCache } from "../../infra/dedupe.js";
 import { channelRouteDedupeKey } from "../../plugin-sdk/channel-route.js";
@@ -29,6 +30,7 @@ const inboundDedupeInFlight = resolveGlobalSingleton(
   () => new Set<string>(),
 );
 
+/** Shared type for Inbound Dedupe Claim Result in src/auto-reply/reply. */
 export type InboundDedupeClaimResult =
   | { status: "invalid" }
   | { status: "duplicate"; key: string }
@@ -53,6 +55,7 @@ function resolveInboundDedupeSessionScope(ctx: MsgContext): string {
   return `agent:${parsed.agentId}`;
 }
 
+/** Reused helper for build Inbound Dedupe Key behavior in src/auto-reply/reply. */
 export function buildInboundDedupeKey(ctx: MsgContext): string | null {
   const provider =
     normalizeOptionalLowercaseString(ctx.OriginatingChannel ?? ctx.Provider ?? ctx.Surface) || "";
@@ -75,6 +78,7 @@ export function buildInboundDedupeKey(ctx: MsgContext): string | null {
   return JSON.stringify([sessionScope, routeKey, messageId]);
 }
 
+/** Reused helper for should Skip Duplicate Inbound behavior in src/auto-reply/reply. */
 export function shouldSkipDuplicateInbound(
   ctx: MsgContext,
   opts?: { cache?: DedupeCache; now?: number },
@@ -91,6 +95,7 @@ export function shouldSkipDuplicateInbound(
   return skipped;
 }
 
+/** Reused helper for claim Inbound Dedupe behavior in src/auto-reply/reply. */
 export function claimInboundDedupe(
   ctx: MsgContext,
   opts?: { cache?: DedupeCache; now?: number; inFlight?: Set<string> },
@@ -111,6 +116,7 @@ export function claimInboundDedupe(
   return { status: "claimed", key };
 }
 
+/** Reused helper for commit Inbound Dedupe behavior in src/auto-reply/reply. */
 export function commitInboundDedupe(
   key: string,
   opts?: { cache?: DedupeCache; now?: number; inFlight?: Set<string> },
@@ -121,11 +127,13 @@ export function commitInboundDedupe(
   inFlight.delete(key);
 }
 
+/** Reused helper for release Inbound Dedupe behavior in src/auto-reply/reply. */
 export function releaseInboundDedupe(key: string, opts?: { inFlight?: Set<string> }): void {
   const inFlight = opts?.inFlight ?? inboundDedupeInFlight;
   inFlight.delete(key);
 }
 
+/** Reused helper for reset Inbound Dedupe behavior in src/auto-reply/reply. */
 export function resetInboundDedupe(): void {
   inboundDedupeCache.clear();
   inboundDedupeInFlight.clear();

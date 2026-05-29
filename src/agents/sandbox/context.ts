@@ -1,3 +1,4 @@
+/** Resolves sandbox runtime context and workspace setup for sessions. */
 import fs from "node:fs/promises";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import {
@@ -86,6 +87,7 @@ async function ensureSandboxWorkspaceLayout(params: {
   return { agentWorkspaceDir, scopeKey, sandboxWorkspaceDir, workspaceDir };
 }
 
+/** Resolves the Docker user used inside a sandbox container. */
 export async function resolveSandboxDockerUser(params: {
   docker: SandboxDockerConfig;
   workspaceDir: string;
@@ -127,6 +129,7 @@ function resolveSandboxSession(params: { config?: OpenClawConfig; sessionKey?: s
   return { rawSessionKey, runtime, cfg };
 }
 
+/** Builds the sandbox context consumed by embedded-agent tool execution. */
 export async function resolveSandboxContext(params: {
   config?: OpenClawConfig;
   sessionKey?: string;
@@ -241,6 +244,7 @@ export async function resolveSandboxContext(params: {
   return sandboxContext;
 }
 
+/** Ensures the sandbox workspace and backend handle exist for a session. */
 export async function ensureSandboxWorkspaceForSession(params: {
   config?: OpenClawConfig;
   sessionKey?: string;

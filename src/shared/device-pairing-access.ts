@@ -1,16 +1,20 @@
+// shared device pairing access helpers and runtime behavior.
 import { normalizeDeviceAuthScopes } from "./device-auth.js";
 
+/** Shared type for Device Pairing Access Summary in src/shared. */
 export type DevicePairingAccessSummary = {
   roles: string[];
   scopes: string[];
 };
 
+/** Shared type for Pending Device Approval Kind in src/shared. */
 export type PendingDeviceApprovalKind =
   | "new-pairing"
   | "role-upgrade"
   | "scope-upgrade"
   | "re-approval";
 
+/** Shared type for Pending Device Approval State in src/shared. */
 export type PendingDeviceApprovalState = {
   kind: PendingDeviceApprovalKind;
   requested: DevicePairingAccessSummary;
@@ -69,6 +73,7 @@ function includesAll(allowed: readonly string[], requested: readonly string[]): 
   return requested.every((value) => allowedSet.has(value));
 }
 
+/** Reused helper for summarize Pending Device Access behavior in src/shared. */
 export function summarizePendingDeviceAccess(request: PendingLike): DevicePairingAccessSummary {
   return {
     roles: normalizeRoleList(request.roles, request.role),
@@ -76,6 +81,7 @@ export function summarizePendingDeviceAccess(request: PendingLike): DevicePairin
   };
 }
 
+/** Reused helper for summarize Approved Device Access behavior in src/shared. */
 export function summarizeApprovedDeviceAccess(device: PairedLike): DevicePairingAccessSummary {
   const approvedRoles = normalizeRoleList(device.roles, device.role);
   const tokenList = Array.isArray(device.tokens)
@@ -95,6 +101,7 @@ export function summarizeApprovedDeviceAccess(device: PairedLike): DevicePairing
   };
 }
 
+/** Reused helper for resolve Pending Device Approval State behavior in src/shared. */
 export function resolvePendingDeviceApprovalState(
   request: PendingLike,
   paired?: PairedLike,

@@ -1,3 +1,4 @@
+// Tests extensions/acpx/src claude agent acp completion test behavior.
 import { ClaudeAcpAgent } from "@agentclientprotocol/claude-agent-acp";
 import { describe, expect, it, vi } from "vitest";
 

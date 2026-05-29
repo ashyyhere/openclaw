@@ -1,3 +1,4 @@
+/** Persists sandbox and browser container registry state. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { z } from "zod";
@@ -12,6 +13,7 @@ import {
 } from "./constants.js";
 import { hashTextSha256 } from "./hash.js";
 
+/** Shared type for Sandbox Registry Entry in src/agents/sandbox. */
 export type SandboxRegistryEntry = {
   containerName: string;
   backendId?: string;
@@ -28,6 +30,7 @@ type SandboxRegistry = {
   entries: SandboxRegistryEntry[];
 };
 
+/** Shared type for Sandbox Browser Registry Entry in src/agents/sandbox. */
 export type SandboxBrowserRegistryEntry = {
   containerName: string;
   sessionKey: string;
@@ -61,12 +64,14 @@ type LegacyRegistryTarget = {
   shardedDir: string;
 };
 
+/** Shared type for Legacy Sandbox Registry Inspection in src/agents/sandbox. */
 export type LegacySandboxRegistryInspection = LegacyRegistryTarget & {
   exists: boolean;
   valid: boolean;
   entries: number;
 };
 
+/** Shared type for Legacy Sandbox Registry Migration Result in src/agents/sandbox. */
 export type LegacySandboxRegistryMigrationResult = LegacyRegistryTarget & {
   status: "missing" | "migrated" | "removed-empty" | "quarantined-invalid";
   entries: number;
@@ -122,6 +127,7 @@ async function readLegacyRegistryFile(registryPath: string): Promise<RegistryFil
   }
 }
 
+/** Reads sandbox container registry state from disk. */
 export async function readRegistry(): Promise<SandboxRegistry> {
   const entries = await readShardedEntries<SandboxRegistryEntry>(SANDBOX_CONTAINERS_DIR);
   return {
@@ -280,6 +286,7 @@ function legacyRegistryTargets(): LegacyRegistryTarget[] {
   ];
 }
 
+/** Inspects old registry locations before migration. */
 export async function inspectLegacySandboxRegistryFiles(): Promise<
   LegacySandboxRegistryInspection[]
 > {
@@ -307,6 +314,7 @@ export async function inspectLegacySandboxRegistryFiles(): Promise<
   return inspections;
 }
 
+/** Migrates old registry files into the current registry location. */
 export async function migrateLegacySandboxRegistryFiles(): Promise<
   LegacySandboxRegistryMigrationResult[]
 > {
@@ -317,6 +325,7 @@ export async function migrateLegacySandboxRegistryFiles(): Promise<
   return results;
 }
 
+/** Reused helper for read Registry Entry behavior in src/agents/sandbox. */
 export async function readRegistryEntry(
   containerName: string,
 ): Promise<SandboxRegistryEntry | null> {
@@ -324,6 +333,7 @@ export async function readRegistryEntry(
   return entry ? normalizeSandboxRegistryEntry(entry) : null;
 }
 
+/** Upserts one sandbox container registry entry. */
 export async function updateRegistry(entry: SandboxRegistryEntry) {
   await withEntryLock(SANDBOX_CONTAINERS_DIR, entry.containerName, async () => {
     const existing = await readShardedEntry<SandboxRegistryEntry>(
@@ -342,16 +352,19 @@ export async function updateRegistry(entry: SandboxRegistryEntry) {
   });
 }
 
+/** Removes one sandbox container registry entry. */
 export async function removeRegistryEntry(containerName: string) {
   await withEntryLock(SANDBOX_CONTAINERS_DIR, containerName, async () => {
     await removeShardedEntry(SANDBOX_CONTAINERS_DIR, containerName);
   });
 }
 
+/** Reads browser container registry state from disk. */
 export async function readBrowserRegistry(): Promise<SandboxBrowserRegistry> {
   return { entries: await readShardedEntries<SandboxBrowserRegistryEntry>(SANDBOX_BROWSERS_DIR) };
 }
 
+/** Upserts one browser container registry entry. */
 export async function updateBrowserRegistry(entry: SandboxBrowserRegistryEntry) {
   await withEntryLock(SANDBOX_BROWSERS_DIR, entry.containerName, async () => {
     const existing = await readShardedEntry<SandboxBrowserRegistryEntry>(
@@ -367,6 +380,7 @@ export async function updateBrowserRegistry(entry: SandboxBrowserRegistryEntry) 
   });
 }
 
+/** Removes one browser container registry entry. */
 export async function removeBrowserRegistryEntry(containerName: string) {
   await withEntryLock(SANDBOX_BROWSERS_DIR, containerName, async () => {
     await removeShardedEntry(SANDBOX_BROWSERS_DIR, containerName);

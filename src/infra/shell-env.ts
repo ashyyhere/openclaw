@@ -1,3 +1,4 @@
+// infra shell env helpers and runtime behavior.
 import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
@@ -224,6 +225,7 @@ function hasExplicitEnvBinding(env: NodeJS.ProcessEnv, key: string): boolean {
   return Object.prototype.hasOwnProperty.call(env, key);
 }
 
+/** Reused helper for load Shell Env Fallback behavior in src/infra. */
 export function loadShellEnvFallback(opts: ShellEnvFallbackOptions): ShellEnvFallbackResult {
   const logger = opts.logger ?? console;
 
@@ -266,14 +268,17 @@ export function loadShellEnvFallback(opts: ShellEnvFallbackOptions): ShellEnvFal
   return { ok: true, applied };
 }
 
+/** Reused helper for should Enable Shell Env Fallback behavior in src/infra. */
 export function shouldEnableShellEnvFallback(env: NodeJS.ProcessEnv): boolean {
   return isTruthyEnvValue(env.OPENCLAW_LOAD_SHELL_ENV);
 }
 
+/** Reused helper for should Defer Shell Env Fallback behavior in src/infra. */
 export function shouldDeferShellEnvFallback(env: NodeJS.ProcessEnv): boolean {
   return isTruthyEnvValue(env.OPENCLAW_DEFER_SHELL_ENV_FALLBACK);
 }
 
+/** Reused helper for resolve Shell Env Fallback Timeout Ms behavior in src/infra. */
 export function resolveShellEnvFallbackTimeoutMs(env: NodeJS.ProcessEnv): number {
   const raw = env.OPENCLAW_SHELL_ENV_TIMEOUT_MS?.trim();
   if (!raw) {
@@ -286,6 +291,7 @@ export function resolveShellEnvFallbackTimeoutMs(env: NodeJS.ProcessEnv): number
   return resolveTimeoutMs(parsed);
 }
 
+/** Reused helper for get Shell Path From Login Shell behavior in src/infra. */
 export function getShellPathFromLoginShell(opts: {
   env: NodeJS.ProcessEnv;
   timeoutMs?: number;
@@ -317,6 +323,7 @@ export function getShellPathFromLoginShell(opts: {
   return cachedShellPath;
 }
 
+/** Reused helper for reset Shell Path Cache For Tests behavior in src/infra. */
 export function resetShellPathCacheForTests(): void {
   cachedShellPath = undefined;
   cachedEtcShells = undefined;
@@ -324,6 +331,7 @@ export function resetShellPathCacheForTests(): void {
   nextExecCacheId = 1;
 }
 
+/** Reused helper for get Shell Env Applied Keys behavior in src/infra. */
 export function getShellEnvAppliedKeys(): string[] {
   return [...lastAppliedKeys];
 }

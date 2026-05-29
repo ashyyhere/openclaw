@@ -1,3 +1,4 @@
+// ui/src/ui app scroll helpers and runtime behavior.
 import { normalizeChatAutoScrollMode, type ChatAutoScrollMode } from "./storage.ts";
 
 /** Distance (px) from the bottom within which we consider the user "near bottom". */
@@ -38,6 +39,7 @@ type ChatScrollOptions = {
   source?: "auto" | "manual";
 };
 
+/** Reused helper for schedule Chat Scroll behavior in ui/src/ui. */
 export function scheduleChatScroll(
   host: ScrollHost,
   force = false,
@@ -146,6 +148,7 @@ export function scheduleChatScroll(
   });
 }
 
+/** Reused helper for schedule Logs Scroll behavior in ui/src/ui. */
 export function scheduleLogsScroll(host: ScrollHost, force = false) {
   if (host.logsScrollFrame) {
     cancelAnimationFrame(host.logsScrollFrame);
@@ -168,6 +171,7 @@ export function scheduleLogsScroll(host: ScrollHost, force = false) {
   });
 }
 
+/** Reused helper for schedule Activity Scroll behavior in ui/src/ui. */
 export function scheduleActivityScroll(host: ScrollHost, force = false) {
   if (host.activityScrollFrame) {
     cancelAnimationFrame(host.activityScrollFrame);
@@ -194,6 +198,7 @@ export function scheduleActivityScroll(host: ScrollHost, force = false) {
   });
 }
 
+/** Reused helper for handle Chat Scroll behavior in ui/src/ui. */
 export function handleChatScroll(host: ScrollHost, event: Event) {
   const container = event.currentTarget as HTMLElement | null;
   if (!container) {
@@ -233,6 +238,7 @@ export function handleChatScroll(host: ScrollHost, event: Event) {
   }
 }
 
+/** Reused helper for handle Logs Scroll behavior in ui/src/ui. */
 export function handleLogsScroll(host: ScrollHost, event: Event) {
   const container = event.currentTarget as HTMLElement | null;
   if (!container) {
@@ -242,6 +248,7 @@ export function handleLogsScroll(host: ScrollHost, event: Event) {
   host.logsAtBottom = distanceFromBottom < 80;
 }
 
+/** Reused helper for handle Activity Scroll behavior in ui/src/ui. */
 export function handleActivityScroll(host: ScrollHost, event: Event) {
   const container = event.currentTarget as HTMLElement | null;
   if (!container) {
@@ -251,6 +258,7 @@ export function handleActivityScroll(host: ScrollHost, event: Event) {
   host.activityAtBottom = distanceFromBottom < 120;
 }
 
+/** Reused helper for reset Chat Scroll behavior in ui/src/ui. */
 export function resetChatScroll(host: ScrollHost) {
   host.chatHasAutoScrolled = false;
   host.chatUserNearBottom = true;
@@ -261,6 +269,7 @@ export function resetChatScroll(host: ScrollHost) {
   host.chatProgrammaticScrollTarget = 0;
 }
 
+/** Reused helper for export Logs behavior in ui/src/ui. */
 export function exportLogs(lines: string[], label: string) {
   if (lines.length === 0) {
     return;
@@ -275,6 +284,7 @@ export function exportLogs(lines: string[], label: string) {
   URL.revokeObjectURL(url);
 }
 
+/** Reused helper for observe Topbar behavior in ui/src/ui. */
 export function observeTopbar(host: ScrollHost) {
   if (typeof ResizeObserver === "undefined") {
     return;

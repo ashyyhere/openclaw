@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/whatsapp/src channel runtime behavior.
 import {
   startWebLoginWithQr as startWebLoginWithQrImpl,
   waitForWebLogin as waitForWebLoginImpl,

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// scripts analyze plugin sdk usage helpers and runtime behavior.
 import { main } from "./ts-topology.ts";
 
 const forwardedArgs = process.argv.slice(2);

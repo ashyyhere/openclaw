@@ -1,3 +1,4 @@
+// Applies core non-interactive auth choices for built-in and custom model providers.
 import type { ApiKeyCredential } from "../../../agents/auth-profiles/types.js";
 import { formatCliCommand } from "../../../cli/command-format.js";
 import type { OpenClawConfig } from "../../../config/types.openclaw.js";
@@ -27,6 +28,7 @@ type ResolvedNonInteractiveApiKey = NonNullable<
   Awaited<ReturnType<typeof resolveNonInteractiveApiKey>>
 >;
 
+/** Reused helper for apply Non Interactive Auth Choice behavior in src/commands/onboard-non-interactive. */
 export async function applyNonInteractiveAuthChoice(params: {
   nextConfig: OpenClawConfig;
   authChoice: AuthChoice;

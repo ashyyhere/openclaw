@@ -1,3 +1,4 @@
+/** Covers pruning already-processed images from replayed history. */
 import type { AgentMessage } from "openclaw/plugin-sdk/agent-core";
 import type { ImageContent } from "openclaw/plugin-sdk/llm";
 import { describe, expect, it } from "vitest";

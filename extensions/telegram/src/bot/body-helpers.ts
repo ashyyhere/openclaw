@@ -1,3 +1,4 @@
+// extensions/telegram/src/bot body helpers helpers and runtime behavior.
 import type { Chat, Message, MessageOrigin, User } from "grammy/types";
 import type { NormalizedLocation } from "openclaw/plugin-sdk/channel-inbound";
 import {

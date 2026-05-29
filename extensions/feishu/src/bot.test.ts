@@ -1,3 +1,4 @@
+// Tests extensions/feishu/src bot test behavior.
 import type * as ConversationRuntime from "openclaw/plugin-sdk/conversation-runtime";
 import { createRuntimeEnv } from "openclaw/plugin-sdk/plugin-test-runtime";
 import type { ResolvedAgentRoute } from "openclaw/plugin-sdk/routing";

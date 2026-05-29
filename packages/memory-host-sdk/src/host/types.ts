@@ -1,5 +1,8 @@
+// Shared types for packages/memory-host-sdk/src/host types behavior.
+/** Public type describing Memory Source for packages/memory-host-sdk. */
 export type MemorySource = "memory" | "sessions";
 
+/** Public type describing Memory Search Result for packages/memory-host-sdk. */
 export type MemorySearchResult = {
   path: string;
   startLine: number;
@@ -12,6 +15,7 @@ export type MemorySearchResult = {
   citation?: string;
 };
 
+/** Public type describing Memory Embedding Probe Result for packages/memory-host-sdk. */
 export type MemoryEmbeddingProbeResult = {
   ok: boolean;
   error?: string;
@@ -21,12 +25,14 @@ export type MemoryEmbeddingProbeResult = {
   cacheExpiresAtMs?: number;
 };
 
+/** Public type describing Memory Sync Progress Update for packages/memory-host-sdk. */
 export type MemorySyncProgressUpdate = {
   completed: number;
   total: number;
   label?: string;
 };
 
+/** Public type describing Memory Search Runtime Debug for packages/memory-host-sdk. */
 export type MemorySearchRuntimeDebug = {
   backend: "builtin" | "qmd";
   configuredMode?: string;
@@ -34,6 +40,7 @@ export type MemorySearchRuntimeDebug = {
   fallback?: string;
 };
 
+/** Public type describing Memory Read Result for packages/memory-host-sdk. */
 export type MemoryReadResult = {
   text: string;
   path: string;
@@ -43,6 +50,7 @@ export type MemoryReadResult = {
   nextFrom?: number;
 };
 
+/** Public type describing Memory Provider Status for packages/memory-host-sdk. */
 export type MemoryProviderStatus = {
   backend: "builtin" | "qmd";
   provider: string;
@@ -82,6 +90,7 @@ export type MemoryProviderStatus = {
   custom?: Record<string, unknown>;
 };
 
+/** Public type describing Memory Search Manager for packages/memory-host-sdk. */
 export interface MemorySearchManager {
   search(
     query: string,

@@ -1,3 +1,4 @@
+// gateway server startup post attach helpers and runtime behavior.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -91,6 +92,7 @@ export type GatewayPostReadySidecarHandle = {
   stop: () => Awaitable<void>;
 };
 
+/** Reused helper for stop Post Ready Sidecars After Close Started behavior in src/gateway. */
 export function stopPostReadySidecarsAfterCloseStarted(params: {
   postReadySidecars: readonly GatewayPostReadySidecarHandle[];
   closeStarted: boolean;
@@ -667,6 +669,7 @@ function schedulePrimaryModelPrewarm(
   });
 }
 
+/** Reused helper for start Gateway Sidecars behavior in src/gateway. */
 export async function startGatewaySidecars(params: {
   cfg: OpenClawConfig;
   pluginRegistry: ReturnType<typeof loadOpenClawPlugins>;
@@ -1054,6 +1057,7 @@ function createDeferredGatewayUpdateCheck(params: {
   return { start, stop };
 }
 
+/** Reused helper for start Gateway Post Attach Runtime behavior in src/gateway. */
 export async function startGatewayPostAttachRuntime(
   params: {
     minimalTestGateway: boolean;
@@ -1352,6 +1356,7 @@ export async function startGatewayPostAttachRuntime(
   };
 }
 
+/** Reused constant for testing behavior in src/gateway. */
 export const testing = {
   hasRestartSentinelFileFast,
   prewarmConfiguredPrimaryModel,
@@ -1364,4 +1369,5 @@ export const testing = {
   shouldSkipStartupModelPrewarm,
   stopPostReadySidecarsAfterCloseStarted,
 };
+/** Re-exported API for src/gateway, starting with testing. */
 export { testing as __testing };

@@ -1,3 +1,4 @@
+// Tests extensions/zalouser/src reaction test behavior.
 import { describe, expect, it } from "vitest";
 import { normalizeZaloReactionIcon } from "./reaction.js";
 

@@ -1,3 +1,4 @@
+// Tests infra map size test behavior.
 import { describe, expect, it } from "vitest";
 import { pruneMapToMaxSize } from "./map-size.js";
 

@@ -1,3 +1,4 @@
+// Tests extensions/codex/src/app-server managed binary test behavior.
 import { mkdir, mkdtemp, realpath, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

@@ -1,3 +1,4 @@
+// llm/providers transform messages helpers and runtime behavior.
 import type {
   Api,
   AssistantMessage,

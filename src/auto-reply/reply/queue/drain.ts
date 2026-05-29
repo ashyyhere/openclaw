@@ -1,3 +1,4 @@
+// Queue drain helpers for delayed reply runs.
 import { channelRouteCompactKey } from "../../../plugin-sdk/channel-route.js";
 import { defaultRuntime } from "../../../runtime.js";
 import { resolveGlobalMap } from "../../../shared/global-singleton.js";
@@ -28,6 +29,7 @@ const FOLLOWUP_RUN_CALLBACKS = resolveGlobalMap<string, (run: FollowupRun) => Pr
   FOLLOWUP_DRAIN_CALLBACKS_KEY,
 );
 
+/** Reused helper for remember Followup Drain Callback behavior in src/auto-reply/reply. */
 export function rememberFollowupDrainCallback(
   key: string,
   runFollowup: (run: FollowupRun) => Promise<void>,
@@ -35,6 +37,7 @@ export function rememberFollowupDrainCallback(
   FOLLOWUP_RUN_CALLBACKS.set(key, runFollowup);
 }
 
+/** Reused helper for clear Followup Drain Callback behavior in src/auto-reply/reply. */
 export function clearFollowupDrainCallback(key: string): void {
   FOLLOWUP_RUN_CALLBACKS.delete(key);
 }
@@ -91,6 +94,7 @@ function resolveOriginRoutingMetadata(items: FollowupRun[]): OriginRoutingMetada
 // Fields like authProfileId, elevatedLevel, ownerNumbers, and config are
 // intentionally excluded because they are session-level or not consulted in
 // per-message authorization checks.
+/** Reused helper for resolve Followup Authorization Key behavior in src/auto-reply/reply. */
 export function resolveFollowupAuthorizationKey(run: FollowupRun["run"]): string {
   return JSON.stringify([
     run.senderId ?? "",
@@ -351,6 +355,7 @@ function resolveCrossChannelKey(item: FollowupRun): { cross?: true; key?: string
   return key ? { key } : { cross: true };
 }
 
+/** Reused helper for schedule Followup Drain behavior in src/auto-reply/reply. */
 export function scheduleFollowupDrain(
   key: string,
   runFollowup: (run: FollowupRun) => Promise<void>,

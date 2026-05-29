@@ -1,3 +1,4 @@
+// extensions/irc/src outbound base helpers and runtime behavior.
 import { sanitizeForPlainText } from "openclaw/plugin-sdk/channel-outbound";
 import { chunkTextForOutbound } from "./channel-api.js";
 

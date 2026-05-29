@@ -1,3 +1,4 @@
+// extensions/twitch/src test fixtures helpers and runtime behavior.
 import { afterEach, beforeEach, vi } from "vitest";
 import type { OpenClawConfig } from "../runtime-api.js";
 

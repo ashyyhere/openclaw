@@ -1,3 +1,4 @@
+// scripts sync codex app server protocol helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import {

@@ -23,6 +23,7 @@ function formatContextLabel(row: ModelRow): string {
   return formatTokenK(row.contextWindow);
 }
 
+/** Reused helper for print Model Table behavior in src/commands/models. */
 export function printModelTable(
   rows: ModelRow[],
   runtime: RuntimeEnv,

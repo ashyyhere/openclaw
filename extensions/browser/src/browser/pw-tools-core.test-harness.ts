@@ -1,3 +1,4 @@
+// extensions/browser/src/browser pw tools core test harness helpers and runtime behavior.
 import { beforeEach, vi } from "vitest";
 
 let currentPage: Record<string, unknown> | null = null;

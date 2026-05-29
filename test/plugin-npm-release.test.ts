@@ -1,3 +1,4 @@
+// Tests test plugin npm release test behavior.
 import { mkdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { bundledPluginFile, bundledPluginRoot } from "openclaw/plugin-sdk/test-fixtures";

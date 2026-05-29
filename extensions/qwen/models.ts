@@ -1,3 +1,4 @@
+// extensions/qwen models helpers and runtime behavior.
 import {
   applyProviderNativeStreamingUsageCompat,
   supportsNativeStreamingUsageCompat,

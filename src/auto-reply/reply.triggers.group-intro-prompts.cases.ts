@@ -1,3 +1,4 @@
+// Table-driven coverage for group intro prompt trigger behavior.
 import { describe, expect, it } from "vitest";
 import { makeCfg } from "../../test/helpers/auto-reply/trigger-handling-test-harness.js";
 import { buildGroupChatContext, buildGroupIntro } from "./reply/groups.js";
@@ -5,6 +6,7 @@ import { buildGroupChatContext, buildGroupIntro } from "./reply/groups.js";
 type GetReplyFromConfig = typeof import("./reply.js").getReplyFromConfig;
 type InboundMessage = Parameters<GetReplyFromConfig>[0];
 
+/** Reused helper for register Group Intro Prompt Cases behavior in src/auto-reply. */
 export function registerGroupIntroPromptCases(): void {
   describe("group intro prompts", () => {
     type GroupIntroCase = {

@@ -1,3 +1,4 @@
+// test/vitest vitest boundary config helpers and runtime behavior.
 import { defineProject } from "vitest/config";
 import { loadPatternListFromEnv, narrowIncludePatternsForCli } from "./vitest.pattern-file.ts";
 import { resolveVitestIsolation } from "./vitest.scoped-config.ts";

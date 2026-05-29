@@ -1,3 +1,4 @@
+// extensions/irc configured state helpers and runtime behavior.
 export function hasIrcConfiguredState(params: { env?: NodeJS.ProcessEnv }): boolean {
   return (
     typeof params.env?.IRC_HOST === "string" &&

@@ -1,3 +1,4 @@
+/** Projects OpenClaw bundle MCP configuration into Codex thread config patches. */
 import crypto from "node:crypto";
 import {
   loadEnabledBundleMcpConfig,
@@ -18,6 +19,7 @@ import type {
 } from "./codex-mcp-config.types.js";
 import { shouldCreateBundleMcpRuntimeForAttempt } from "./embedded-agent-runner/run/attempt-tool-construction-plan.js";
 
+/** Re-exported API for src/agents. */
 export type {
   CodexBundleMcpThreadConfig,
   CodexMcpServersConfig,
@@ -61,6 +63,7 @@ function resolveCodexDefaultToolsApprovalMode(
   );
 }
 
+/** Normalize one bundle MCP server into Codex MCP config syntax. */
 export function normalizeCodexMcpServerConfig(
   name: string,
   server: BundleMcpServerConfig,
@@ -99,6 +102,7 @@ export function normalizeCodexMcpServerConfig(
   return next;
 }
 
+/** Build the Codex `mcp_servers` map from enabled bundle MCP config. */
 export function buildCodexMcpServersConfig(config: BundleMcpConfig): CodexMcpServersConfig {
   return Object.fromEntries(
     Object.entries(config.mcpServers).map(([name, server]) => [
@@ -129,6 +133,7 @@ function fingerprintCodexMcpServersConfig(config: CodexMcpServersConfig): string
     .digest("hex");
 }
 
+/** Load the Codex thread patch and diagnostics for bundle MCP. */
 export function loadCodexBundleMcpThreadConfig(
   params: LoadCodexBundleMcpThreadConfigParams,
 ): CodexBundleMcpThreadConfig {

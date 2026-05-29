@@ -1,3 +1,4 @@
+// Coverage for reset mode normalization.
 import { describe, expect, it } from "vitest";
 import { parseSoftResetCommand } from "./commands-reset-mode.js";
 

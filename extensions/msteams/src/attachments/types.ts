@@ -1,3 +1,4 @@
+// Shared types for extensions/msteams/src/attachments types behavior.
 export type MSTeamsAttachmentLike = {
   contentType?: string | null;
   contentUrl?: string | null;

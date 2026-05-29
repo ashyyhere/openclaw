@@ -1,3 +1,4 @@
+// Tests hooks policy test behavior.
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import { resolveHookEnableState, resolveHookEntries } from "./policy.js";

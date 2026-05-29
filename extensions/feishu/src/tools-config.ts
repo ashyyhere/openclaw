@@ -1,3 +1,4 @@
+// extensions/feishu/src tools config helpers and runtime behavior.
 import type { FeishuToolsConfig } from "./types.js";
 
 /**

@@ -1,3 +1,4 @@
+/** Shared test harness helpers for ACP translator prompt scenarios. */
 import type { PromptRequest } from "@agentclientprotocol/sdk";
 import { expect, vi } from "vitest";
 import type { EventFrame } from "../../packages/gateway-protocol/src/index.js";
@@ -13,9 +14,11 @@ type PendingPromptHarness = {
 };
 
 const DEFAULT_SESSION_ID = "session-1";
+/** Reused constant for DEFAULT SESSION KEY behavior in src/acp. */
 export const DEFAULT_SESSION_KEY = "agent:main:main";
 const DEFAULT_PROMPT_TEXT = "hello";
 
+/** Reused helper for create Session Agent Harness behavior in src/acp. */
 export function createSessionAgentHarness(
   request: GatewayClient["request"],
   options: { sessionId?: string; sessionKey?: string; cwd?: string } = {},
@@ -40,6 +43,7 @@ export function createSessionAgentHarness(
   };
 }
 
+/** Reused helper for prompt Agent behavior in src/acp. */
 export function promptAgent(
   agent: AcpGatewayAgent,
   sessionId = DEFAULT_SESSION_ID,
@@ -52,6 +56,7 @@ export function promptAgent(
   } as unknown as PromptRequest);
 }
 
+/** Reused helper for observe Settlement behavior in src/acp. */
 export function observeSettlement(promise: ReturnType<AcpGatewayAgent["prompt"]>) {
   const settleSpy = vi.fn();
   void promise.then(
@@ -61,6 +66,7 @@ export function observeSettlement(promise: ReturnType<AcpGatewayAgent["prompt"]>
   return settleSpy;
 }
 
+/** Reused helper for create Pending Prompt Harness behavior in src/acp. */
 export async function createPendingPromptHarness(): Promise<PendingPromptHarness> {
   let runId: string | undefined;
   const request = vi.fn(async (method: string, params?: Record<string, unknown>) => {
@@ -85,6 +91,7 @@ export async function createPendingPromptHarness(): Promise<PendingPromptHarness
   };
 }
 
+/** Reused helper for create Chat Event behavior in src/acp. */
 export function createChatEvent(payload: Record<string, unknown>): EventFrame {
   return {
     type: "event",

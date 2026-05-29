@@ -1,3 +1,4 @@
+// Tests extensions/imessage/src targets test behavior.
 import { describe, expect, it } from "vitest";
 import {
   resolveIMessageGroupRequireMention,

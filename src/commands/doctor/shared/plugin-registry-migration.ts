@@ -1,3 +1,4 @@
+/** Migrates legacy plugin records into installed plugin registry state. */
 import fs from "node:fs";
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
 import {
@@ -23,14 +24,18 @@ import {
 import { loadPluginManifestRegistryForInstalledIndex } from "../../../plugins/manifest-registry-installed.js";
 import type { PluginManifestRecord } from "../../../plugins/manifest-registry.js";
 
+/** Reused constant for DISABLE PLUGIN REGISTRY MIGRATION ENV behavior in src/commands/doctor. */
 export const DISABLE_PLUGIN_REGISTRY_MIGRATION_ENV = "OPENCLAW_DISABLE_PLUGIN_REGISTRY_MIGRATION";
+/** Reused constant for FORCE PLUGIN REGISTRY MIGRATION ENV behavior in src/commands/doctor. */
 export const FORCE_PLUGIN_REGISTRY_MIGRATION_ENV = "OPENCLAW_FORCE_PLUGIN_REGISTRY_MIGRATION";
 
+/** Shared type for Plugin Registry Install Migration Preflight Action in src/commands/doctor. */
 export type PluginRegistryInstallMigrationPreflightAction =
   | "disabled"
   | "skip-existing"
   | "migrate";
 
+/** Shared type for Plugin Registry Install Migration Preflight in src/commands/doctor. */
 export type PluginRegistryInstallMigrationPreflight = {
   action: PluginRegistryInstallMigrationPreflightAction;
   filePath: string;
@@ -38,6 +43,7 @@ export type PluginRegistryInstallMigrationPreflight = {
   deprecationWarnings: readonly string[];
 };
 
+/** Shared type for Plugin Registry Install Migration Result in src/commands/doctor. */
 export type PluginRegistryInstallMigrationResult =
   | {
       status: "disabled" | "skip-existing" | "dry-run";
@@ -52,6 +58,7 @@ export type PluginRegistryInstallMigrationResult =
       current: InstalledPluginIndex;
     };
 
+/** Shared type for Plugin Registry Install Migration Params in src/commands/doctor. */
 export type PluginRegistryInstallMigrationParams = LoadInstalledPluginIndexParams &
   InstalledPluginIndexStoreOptions & {
     dryRun?: boolean;
@@ -68,6 +75,7 @@ function forceDeprecationWarning(): string {
   return `${FORCE_PLUGIN_REGISTRY_MIGRATION_ENV} is deprecated and will be removed after the plugin registry migration rollout; use doctor registry repair once available.`;
 }
 
+/** Reused helper for preflight Plugin Registry Install Migration behavior in src/commands/doctor. */
 export function preflightPluginRegistryInstallMigration(
   params: PluginRegistryInstallMigrationParams = {},
 ): PluginRegistryInstallMigrationPreflight {
@@ -277,6 +285,7 @@ function listMigrationRelevantPluginRecords(params: {
   });
 }
 
+/** Reused helper for migrate Plugin Registry For Install behavior in src/commands/doctor. */
 export async function migratePluginRegistryForInstall(
   params: PluginRegistryInstallMigrationParams = {},
 ): Promise<PluginRegistryInstallMigrationResult> {

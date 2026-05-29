@@ -1,3 +1,4 @@
+// Session abort helpers shared by stop and session commands.
 import type { SessionEntry } from "../../config/sessions.js";
 import { logVerbose } from "../../globals.js";
 import { createInternalHookEvent, triggerInternalHook } from "../../hooks/internal-hooks.js";
@@ -117,6 +118,7 @@ function buildAbortTargetApplyParams(
   };
 }
 
+/** Reused constant for handle Stop Command behavior in src/auto-reply/reply. */
 export const handleStopCommand: CommandHandler = async (params, allowTextCommands) => {
   if (!allowTextCommands) {
     return null;
@@ -164,6 +166,7 @@ export const handleStopCommand: CommandHandler = async (params, allowTextCommand
   return { shouldContinue: false, reply: { text: formatAbortReplyText(stopped) } };
 };
 
+/** Reused constant for handle Abort Trigger behavior in src/auto-reply/reply. */
 export const handleAbortTrigger: CommandHandler = async (params, allowTextCommands) => {
   if (!allowTextCommands) {
     return null;

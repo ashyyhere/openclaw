@@ -1,3 +1,4 @@
+// extensions/discord/src component custom id helpers and runtime behavior.
 import { parseCustomId, type ComponentParserResult } from "./internal/discord.js";
 
 export const DISCORD_COMPONENT_CUSTOM_ID_KEY = "occomp";

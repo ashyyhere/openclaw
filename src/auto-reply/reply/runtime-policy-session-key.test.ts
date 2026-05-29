@@ -1,3 +1,4 @@
+// Coverage for runtime policy session key generation.
 import { describe, expect, it } from "vitest";
 import { resolveSandboxRuntimeStatus } from "../../agents/sandbox/runtime-status.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";

@@ -1,3 +1,4 @@
+// gateway agent command test helpers helpers and runtime behavior.
 import { vi } from "vitest";
 import { agentCommand } from "./test-helpers.runtime-state.js";
 
@@ -9,6 +10,7 @@ function agentCommandCalls(): Array<[AgentCommandCall]> {
 
 const sleep = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
 
+/** Reused helper for wait For Agent Command Call behavior in src/gateway. */
 export async function waitForAgentCommandCall(runId: string): Promise<AgentCommandCall> {
   for (let elapsed = 0; elapsed <= 2_000; elapsed += 5) {
     const call = agentCommandCalls()
@@ -22,6 +24,7 @@ export async function waitForAgentCommandCall(runId: string): Promise<AgentComma
   throw new Error(`expected agentCommand to be called for ${runId}`);
 }
 
+/** Reused helper for read Agent Command Call behavior in src/gateway. */
 export async function readAgentCommandCall(
   params: { runId?: string; fromEnd?: number } = {},
 ): Promise<AgentCommandCall> {

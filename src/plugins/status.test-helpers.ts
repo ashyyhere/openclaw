@@ -1,15 +1,20 @@
+// plugins status test helpers helpers and runtime behavior.
 import type { PluginLoadResult } from "./loader.js";
 import type { PluginRecord } from "./registry.js";
 import type { PluginCompatibilityNotice } from "./status.js";
 import type { PluginHookName } from "./types.js";
 
+/** Reused constant for LEGACY BEFORE AGENT START MESSAGE behavior in src/plugins. */
 export const LEGACY_BEFORE_AGENT_START_MESSAGE =
   "still uses legacy before_agent_start; keep regression coverage on this plugin, and prefer before_model_resolve/before_prompt_build for new work.";
+/** Reused constant for HOOK ONLY MESSAGE behavior in src/plugins. */
 export const HOOK_ONLY_MESSAGE =
   "is hook-only. This remains a supported compatibility path, but it has not migrated to explicit capability registration yet.";
+/** Reused constant for DEPRECATED MEMORY EMBEDDING PROVIDER API MESSAGE behavior in src/plugins. */
 export const DEPRECATED_MEMORY_EMBEDDING_PROVIDER_API_MESSAGE =
   "uses deprecated memory-specific embedding provider API; use api.registerEmbeddingProvider and contracts.embeddingProviders for new embedding providers.";
 
+/** Reused helper for create Compatibility Notice behavior in src/plugins. */
 export function createCompatibilityNotice(
   params: Pick<PluginCompatibilityNotice, "pluginId" | "code">,
 ): PluginCompatibilityNotice {
@@ -44,6 +49,7 @@ export function createCompatibilityNotice(
   throw new Error("unsupported compatibility notice code");
 }
 
+/** Reused helper for create Plugin Record behavior in src/plugins. */
 export function createPluginRecord(
   overrides: Partial<PluginRecord> & Pick<PluginRecord, "id">,
 ): PluginRecord {
@@ -92,6 +98,7 @@ export function createPluginRecord(
   };
 }
 
+/** Reused helper for create Typed Hook behavior in src/plugins. */
 export function createTypedHook(params: {
   pluginId: string;
   hookName: PluginHookName;
@@ -105,6 +112,7 @@ export function createTypedHook(params: {
   };
 }
 
+/** Reused helper for create Custom Hook behavior in src/plugins. */
 export function createCustomHook(params: {
   pluginId: string;
   events: string[];
@@ -130,6 +138,7 @@ export function createCustomHook(params: {
   };
 }
 
+/** Reused helper for create Plugin Load Result behavior in src/plugins. */
 export function createPluginLoadResult(
   overrides: Partial<PluginLoadResult> & Pick<PluginLoadResult, "plugins"> = { plugins: [] },
 ): PluginLoadResult {

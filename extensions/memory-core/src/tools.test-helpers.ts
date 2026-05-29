@@ -1,3 +1,4 @@
+// extensions/memory-core/src tools test helpers helpers and runtime behavior.
 import { expect } from "vitest";
 import type { OpenClawConfig } from "../api.js";
 import { createMemoryGetTool, createMemorySearchTool } from "./tools.js";

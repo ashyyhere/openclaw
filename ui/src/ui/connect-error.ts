@@ -1,3 +1,4 @@
+// ui/src/ui connect error helpers and runtime behavior.
 import {
   ConnectErrorDetailCodes,
   describePairingConnectRequirement,
@@ -92,6 +93,7 @@ function formatErrorFromMessageAndDetails(error: ErrorWithMessageAndDetails): st
   return message;
 }
 
+/** Reused helper for format Connect Error behavior in ui/src/ui. */
 export function formatConnectError(error: unknown): string {
   if (error && typeof error === "object") {
     return formatErrorFromMessageAndDetails(error as ErrorWithMessageAndDetails);

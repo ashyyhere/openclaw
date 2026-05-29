@@ -1,3 +1,4 @@
+// extensions/telegram/src targets helpers and runtime behavior.
 import { parseStrictNonNegativeInteger } from "openclaw/plugin-sdk/number-runtime";
 
 export type TelegramTarget = {

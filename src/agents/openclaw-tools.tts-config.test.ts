@@ -1,3 +1,4 @@
+/** Tests text-to-speech config passed through OpenClaw tools. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { testing, createOpenClawTools } from "./openclaw-tools.js";

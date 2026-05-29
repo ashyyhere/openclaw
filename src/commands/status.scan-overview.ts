@@ -1,3 +1,4 @@
+/** Collects fast overview data for status commands. */
 import type { OpenClawConfig } from "../config/types.js";
 import type { collectChannelStatusIssues as collectChannelStatusIssuesFn } from "../infra/channels-status-issues.js";
 import { resolveOsSummary } from "../infra/os-summary.js";
@@ -101,6 +102,7 @@ async function resolveStatusChannelsStatus(params: {
   }).catch(() => null);
 }
 
+/** Shared type for Status Scan Overview Result in src/commands. */
 export type StatusScanOverviewResult = {
   coldStart: boolean;
   hasConfiguredChannels: boolean;
@@ -131,6 +133,7 @@ export type StatusScanOverviewResult = {
   agentStatus: Awaited<ReturnType<typeof getAgentLocalStatusesFn>>;
 };
 
+/** Reused helper for collect Status Scan Overview behavior in src/commands. */
 export async function collectStatusScanOverview(params: {
   commandName: string;
   opts: { timeoutMs?: number; all?: boolean };
@@ -323,6 +326,7 @@ export async function collectStatusScanOverview(params: {
   };
 }
 
+/** Reused helper for resolve Status Summary From Overview behavior in src/commands. */
 export async function resolveStatusSummaryFromOverview(params: {
   overview: Pick<StatusScanOverviewResult, "skipColdStartNetworkChecks" | "cfg" | "sourceConfig">;
   includeChannelSummary?: boolean;

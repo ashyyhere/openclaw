@@ -1,3 +1,4 @@
+// Shared types for extensions/qa-lab/src/providers/shared types behavior.
 import type { ModelProviderConfig } from "openclaw/plugin-sdk/provider-model-shared";
 import type { QaThinkingLevel } from "../../qa-thinking.js";
 

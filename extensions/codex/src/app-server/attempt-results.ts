@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server attempt results helpers and runtime behavior.
 import type {
   AgentMessage,
   EmbeddedRunAttemptParams,

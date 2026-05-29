@@ -1,3 +1,4 @@
+// Tests config io write config test behavior.
 import fsNode from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -769,9 +770,7 @@ describe("config io write", () => {
         gateway: { mode: "local", port: 18790 },
       });
 
-      expect(warn.mock.calls).toContainEqual([
-        expect.stringContaining("Config write anomaly:"),
-      ]);
+      expect(warn.mock.calls).toContainEqual([expect.stringContaining("Config write anomaly:")]);
       expect(warn.mock.calls).toContainEqual([
         expect.stringContaining("missing-meta-before-write"),
       ]);

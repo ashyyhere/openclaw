@@ -1,3 +1,4 @@
+// extensions/slack/src/monitor policy helpers and runtime behavior.
 export function isSlackChannelAllowedByPolicy(params: {
   groupPolicy: "open" | "disabled" | "allowlist";
   channelAllowlistConfigured: boolean;

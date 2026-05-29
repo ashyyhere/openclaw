@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server side question helpers and runtime behavior.
 import {
   buildAgentHookContextChannelFields,
   embeddedAgentLog,

@@ -1,3 +1,4 @@
+/** Builds GitHub Copilot request headers from message and vision state. */
 import type { Context } from "../llm/types.js";
 
 /** @deprecated GitHub Copilot provider-owned helper; do not use from third-party plugins. */
@@ -48,6 +49,7 @@ function containsCopilotContentType(value: unknown, type: string): boolean {
   return entry.type === type || containsCopilotContentType(entry.content, type);
 }
 
+/** Return whether Copilot request messages include image content. */
 export function hasCopilotVisionInput(messages: Context["messages"]): boolean {
   return messages.some((message) => {
     if (message.role === "user" && Array.isArray(message.content)) {
@@ -60,6 +62,7 @@ export function hasCopilotVisionInput(messages: Context["messages"]): boolean {
   });
 }
 
+/** Build Copilot headers for initiator and vision request routing. */
 export function buildCopilotDynamicHeaders(params: {
   messages: Context["messages"];
   hasImages: boolean;

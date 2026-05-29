@@ -1,3 +1,4 @@
+/** Regression coverage for prompt cache observability events. */
 import { beforeEach, describe, expect, it } from "vitest";
 import {
   beginPromptCacheObservation,

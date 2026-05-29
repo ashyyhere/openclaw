@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor agent components wildcard controls helpers and runtime behavior.
 import { ButtonStyle, ComponentType } from "discord-api-types/v10";
 import { parseDiscordComponentCustomIdForInteraction } from "../component-custom-id.js";
 import {

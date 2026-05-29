@@ -1,3 +1,4 @@
+// Current-turn image extraction helpers for model input.
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { logVerbose } from "../../globals.js";
 import { formatErrorMessage } from "../../infra/errors.js";
@@ -86,6 +87,7 @@ function createUndescribedImageContext(
   };
 }
 
+/** Reused helper for resolve Current Turn Images behavior in src/auto-reply/reply. */
 export async function resolveCurrentTurnImages(params: {
   ctx: MsgContext;
   cfg: OpenClawConfig;

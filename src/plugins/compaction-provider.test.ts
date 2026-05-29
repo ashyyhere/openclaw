@@ -1,3 +1,4 @@
+// Tests plugins compaction provider test behavior.
 import { afterEach, describe, expect, it } from "vitest";
 import {
   clearCompactionProviders,

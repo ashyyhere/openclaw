@@ -1,3 +1,4 @@
+// infra heartbeat schedule helpers and runtime behavior.
 import { createHash } from "node:crypto";
 import { resolveIntegerOption } from "./numeric-options.js";
 
@@ -9,6 +10,7 @@ function normalizeModulo(value: number, divisor: number) {
   return ((value % divisor) + divisor) % divisor;
 }
 
+/** Reused helper for resolve Heartbeat Phase Ms behavior in src/infra. */
 export function resolveHeartbeatPhaseMs(params: {
   schedulerSeed: string;
   agentId: string;
@@ -19,6 +21,7 @@ export function resolveHeartbeatPhaseMs(params: {
   return digest.readUInt32BE(0) % intervalMs;
 }
 
+/** Reused helper for compute Next Heartbeat Phase Due Ms behavior in src/infra. */
 export function computeNextHeartbeatPhaseDueMs(params: {
   nowMs: number;
   intervalMs: number;
@@ -38,6 +41,7 @@ export function computeNextHeartbeatPhaseDueMs(params: {
   return nowMs + deltaMs;
 }
 
+/** Reused helper for resolve Next Heartbeat Due Ms behavior in src/infra. */
 export function resolveNextHeartbeatDueMs(params: {
   nowMs: number;
   intervalMs: number;
@@ -82,6 +86,7 @@ const MAX_SEEK_HORIZON_MS = 7 * 24 * 60 * 60_000;
 // Prevent pathological sub-minute intervals from blocking the event loop.
 const MAX_SEEK_ITERATIONS = 10_080; // 7 days at 1-minute steps
 
+/** Reused helper for seek Next Active Phase Due Ms behavior in src/infra. */
 export function seekNextActivePhaseDueMs(params: {
   startMs: number;
   intervalMs: number;

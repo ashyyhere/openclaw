@@ -1,3 +1,4 @@
+// Tests test/scripts ci node test plan test behavior.
 import { existsSync, readdirSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 import fg from "fast-glob";

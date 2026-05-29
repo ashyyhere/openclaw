@@ -1,3 +1,4 @@
+/** Tests compaction safety timeout handling in embedded-agent runner. */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { CompactResult, ContextEngine } from "../context-engine/types.js";
 import {

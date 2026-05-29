@@ -1,8 +1,10 @@
+// plugins bundle mcp test support helpers and runtime behavior.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { captureEnv } from "../test-utils/env.js";
 
+/** Reused helper for create Bundle Mcp Temp Harness behavior in src/plugins. */
 export function createBundleMcpTempHarness() {
   const tempDirs: string[] = [];
 
@@ -24,6 +26,7 @@ function resolveBundlePluginRoot(homeDir: string, pluginId: string) {
   return path.join(homeDir, ".openclaw", "extensions", pluginId);
 }
 
+/** Reused helper for write Claude Bundle Manifest behavior in src/plugins. */
 export async function writeClaudeBundleManifest(params: {
   homeDir: string;
   pluginId: string;
@@ -39,10 +42,12 @@ export async function writeClaudeBundleManifest(params: {
   return pluginRoot;
 }
 
+/** Reused helper for create Enabled Plugin Entries behavior in src/plugins. */
 export function createEnabledPluginEntries(pluginIds: readonly string[]) {
   return Object.fromEntries(pluginIds.map((pluginId) => [pluginId, { enabled: true }]));
 }
 
+/** Reused helper for create Bundle Probe Plugin behavior in src/plugins. */
 export async function createBundleProbePlugin(homeDir: string) {
   const pluginRoot = resolveBundlePluginRoot(homeDir, "bundle-probe");
   const serverPath = path.join(pluginRoot, "servers", "probe.mjs");
@@ -72,6 +77,7 @@ export async function createBundleProbePlugin(homeDir: string) {
   return { pluginRoot, serverPath };
 }
 
+/** Reused helper for with Bundle Home Env behavior in src/plugins. */
 export async function withBundleHomeEnv<T>(
   tempHarness: { createTempDir: (prefix: string) => Promise<string> },
   prefix: string,

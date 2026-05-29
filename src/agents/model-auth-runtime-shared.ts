@@ -1,3 +1,4 @@
+/** Shared runtime auth helpers for provider API key resolution. */
 import { normalizeSecretInput } from "../utils/normalize-secret-input.js";
 
 const AWS_BEARER_ENV = "AWS_BEARER_TOKEN_BEDROCK";
@@ -5,6 +6,7 @@ const AWS_ACCESS_KEY_ENV = "AWS_ACCESS_KEY_ID";
 const AWS_SECRET_KEY_ENV = "AWS_SECRET_ACCESS_KEY";
 const AWS_PROFILE_ENV = "AWS_PROFILE";
 
+/** Resolved provider auth credentials or marker state. */
 export type ResolvedProviderAuth = {
   apiKey?: string;
   profileId?: string;
@@ -12,6 +14,7 @@ export type ResolvedProviderAuth = {
   mode: "api-key" | "oauth" | "token" | "aws-sdk";
 };
 
+/** Resolve the AWS SDK env var that proves Bedrock auth is available. */
 export function resolveAwsSdkEnvVarName(env: NodeJS.ProcessEnv = process.env): string | undefined {
   if (env[AWS_BEARER_ENV]?.trim()) {
     return AWS_BEARER_ENV;
@@ -25,10 +28,12 @@ export function resolveAwsSdkEnvVarName(env: NodeJS.ProcessEnv = process.env): s
   return undefined;
 }
 
+/** Format a missing-auth error with checked source details. */
 export function formatMissingAuthError(auth: ResolvedProviderAuth, provider: string): string {
   return `No API key resolved for provider "${provider}" (auth mode: ${auth.mode}, checked: ${auth.source}).`;
 }
 
+/** Return resolved API key or throw a missing-auth error. */
 export function requireApiKey(auth: ResolvedProviderAuth, provider: string): string {
   const key = normalizeSecretInput(auth.apiKey);
   if (key) {

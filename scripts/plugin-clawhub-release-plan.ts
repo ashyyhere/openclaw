@@ -1,4 +1,5 @@
 #!/usr/bin/env -S node --import tsx
+// scripts plugin clawhub release plan helpers and runtime behavior.
 
 import { pathToFileURL } from "node:url";
 import {

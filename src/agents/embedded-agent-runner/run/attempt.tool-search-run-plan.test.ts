@@ -1,3 +1,4 @@
+/** Covers tool-search run planning and allowlist control names. */
 import { describe, expect, it } from "vitest";
 import {
   buildAutoAddedToolSearchControlNamesForAllowlistCheck,

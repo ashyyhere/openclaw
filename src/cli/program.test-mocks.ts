@@ -1,3 +1,4 @@
+/** Shared Vitest mock helpers for CLI program tests. */
 import { vi, type Mock } from "vitest";
 
 type AnyMock = Mock<(...args: unknown[]) => unknown>;
@@ -37,14 +38,22 @@ const programMocks = vi.hoisted(() => {
   };
 });
 
+/** Reused constant for configure Command behavior in src/cli. */
 export const configureCommand = programMocks.configureCommand as AnyMock;
+/** Reused constant for setup Command behavior in src/cli. */
 export const setupCommand = programMocks.setupCommand as AnyMock;
+/** Reused constant for setup Wizard Command behavior in src/cli. */
 export const setupWizardCommand = programMocks.setupWizardCommand as AnyMock;
+/** Reused constant for call Gateway behavior in src/cli. */
 export const callGateway = programMocks.callGateway as AnyMock;
+/** Reused constant for run Tui behavior in src/cli. */
 export const runTui = programMocks.runTui as AnyMock;
+/** Reused constant for run Crestodian behavior in src/cli. */
 export const runCrestodian = programMocks.runCrestodian as AnyMock;
+/** Reused constant for ensure Config Ready behavior in src/cli. */
 export const ensureConfigReady = programMocks.ensureConfigReady as AnyMock;
 
+/** Reused constant for runtime behavior in src/cli. */
 export const runtime = programMocks.runtime as {
   log: Mock<(...args: unknown[]) => void>;
   error: Mock<(...args: unknown[]) => void>;
@@ -110,6 +119,8 @@ vi.mock("./program/config-guard.js", () => ({
 }));
 vi.mock("./preaction.js", () => ({ registerPreActionHooks: () => {} }));
 
+/** Reused helper for install Base Program Mocks behavior in src/cli. */
 export function installBaseProgramMocks() {}
 
+/** Reused helper for install Smoke Program Mocks behavior in src/cli. */
 export function installSmokeProgramMocks() {}

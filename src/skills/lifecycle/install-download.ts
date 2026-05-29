@@ -1,3 +1,4 @@
+/** Downloads skill-owned tool artifacts and optionally extracts them inside the skill tools root. */
 import { randomUUID } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
@@ -122,6 +123,7 @@ async function downloadFile(params: {
   }
 }
 
+/** Executes a `download` install spec while confining all writes to the skill tools directory. */
 export async function installDownloadSpec(params: {
   entry: SkillEntry;
   spec: SkillInstallSpec;

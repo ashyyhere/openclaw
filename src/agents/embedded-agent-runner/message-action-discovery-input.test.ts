@@ -1,3 +1,4 @@
+/** Regression coverage for message-action discovery input generation. */
 import { describe, expect, it } from "vitest";
 import { buildEmbeddedMessageActionDiscoveryInput } from "./message-action-discovery-input.js";
 

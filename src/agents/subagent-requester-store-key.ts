@@ -1,3 +1,4 @@
+/** Resolves session-store keys used for subagent requester bookkeeping. */
 import {
   resolveAgentIdFromSessionKey,
   resolveMainSessionKey,
@@ -9,6 +10,7 @@ type RequesterStoreKeyConfig = {
   agents?: { list?: Array<{ id?: string; default?: boolean }> };
 };
 
+/** Reused helper for resolve Requester Store Key behavior in src/agents. */
 export function resolveRequesterStoreKey(
   cfg: RequesterStoreKeyConfig | undefined,
   requesterSessionKey: string,

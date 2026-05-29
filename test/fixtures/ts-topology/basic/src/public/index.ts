@@ -1,3 +1,4 @@
+// test/fixtures/ts-topology/basic/src/public index helpers and runtime behavior.
 export {
   aliasedThing,
   sharedThing,

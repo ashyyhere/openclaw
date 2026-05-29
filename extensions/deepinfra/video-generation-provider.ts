@@ -1,3 +1,4 @@
+// extensions/deepinfra video generation provider helpers and runtime behavior.
 import { extensionForMime } from "openclaw/plugin-sdk/media-mime";
 import { canonicalizeBase64 } from "openclaw/plugin-sdk/media-runtime";
 import { isProviderApiKeyConfigured } from "openclaw/plugin-sdk/provider-auth";

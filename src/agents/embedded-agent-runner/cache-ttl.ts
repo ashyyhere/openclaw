@@ -1,3 +1,4 @@
+/** Reads and evaluates provider cache-TTL metadata from session history. */
 import {
   isAnthropicFamilyCacheTtlEligible,
   isAnthropicModelRef,
@@ -13,6 +14,7 @@ type CustomEntryLike = { type?: unknown; customType?: unknown; data?: unknown };
 
 const CACHE_TTL_CUSTOM_TYPE = "openclaw.cache-ttl";
 
+/** Shared type for Cache Ttl Entry Data in src/agents/embedded-agent-runner. */
 export type CacheTtlEntryData = {
   timestamp: number;
   provider?: string;
@@ -24,6 +26,7 @@ type CacheTtlContext = {
   modelId?: string;
 };
 
+/** Reused helper for is Cache Ttl Eligible Provider behavior in src/agents/embedded-agent-runner. */
 export function isCacheTtlEligibleProvider(
   provider: string,
   modelId: string,
@@ -75,6 +78,7 @@ function matchesCacheTtlContext(
   return true;
 }
 
+/** Reused helper for read Last Cache Ttl Timestamp behavior in src/agents/embedded-agent-runner. */
 export function readLastCacheTtlTimestamp(
   sessionManager: unknown,
   context?: CacheTtlContext,

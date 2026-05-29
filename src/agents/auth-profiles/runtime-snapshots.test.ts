@@ -1,3 +1,4 @@
+/** Regression coverage for runtime auth profile store snapshots. */
 import { describe, expect, it, vi } from "vitest";
 import {
   clearRuntimeAuthProfileStoreSnapshots,

@@ -1,3 +1,4 @@
+/** Public SDK schema builder for secret input strings and refs. */
 import { z } from "zod";
 import { ENV_SECRET_REF_ID_RE } from "../config/types.secrets.js";
 import { sensitive } from "../config/zod-schema.sensitive.js";
@@ -8,6 +9,7 @@ import {
   SECRET_PROVIDER_ALIAS_PATTERN,
 } from "../secrets/ref-contract.js";
 
+/** Reused helper for build Secret Input Schema behavior in src/plugin-sdk. */
 export function buildSecretInputSchema() {
   return secretInputSchema;
 }

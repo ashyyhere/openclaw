@@ -1,3 +1,4 @@
+// gateway tools invoke http helpers and runtime behavior.
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import { normalizeMessageChannel } from "../utils/message-channel.js";
@@ -14,6 +15,7 @@ import { invokeGatewayTool, type ToolsInvokeInput } from "./tools-invoke-shared.
 
 const DEFAULT_BODY_BYTES = 2 * 1024 * 1024;
 
+/** Reused helper for handle Tools Invoke Http Request behavior in src/gateway. */
 export async function handleToolsInvokeHttpRequest(
   req: IncomingMessage,
   res: ServerResponse,

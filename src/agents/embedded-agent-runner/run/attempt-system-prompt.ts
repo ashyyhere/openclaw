@@ -1,3 +1,4 @@
+/** Builds an attempt prompt and applies provider runtime transforms. */
 import type { OpenClawConfig } from "../../../config/types.openclaw.js";
 import type { ProviderTransformSystemPromptContext } from "../../../plugins/types.js";
 import { buildEmbeddedSystemPrompt } from "../system-prompt.js";
@@ -10,6 +11,7 @@ type ProviderSystemPromptTransform = (params: {
   context: ProviderTransformSystemPromptContext;
 }) => string;
 
+/** Shared type for Build Attempt System Prompt Params in src/agents/embedded-agent-runner. */
 export type BuildAttemptSystemPromptParams = {
   isRawModelRun: boolean;
   embeddedSystemPrompt: EmbeddedSystemPromptParams;
@@ -22,11 +24,13 @@ export type BuildAttemptSystemPromptParams = {
   };
 };
 
+/** Shared type for Attempt System Prompt in src/agents/embedded-agent-runner. */
 export type AttemptSystemPrompt = {
   baseSystemPrompt: string;
   systemPrompt: string;
 };
 
+/** Returns the final system prompt plus provider transform metadata for one attempt. */
 export function buildAttemptSystemPrompt(
   params: BuildAttemptSystemPromptParams,
 ): AttemptSystemPrompt {

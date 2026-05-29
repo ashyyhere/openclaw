@@ -1,3 +1,4 @@
+/** Tests nodes invoke approval transport timeout parsing. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { DEFAULT_EXEC_APPROVAL_TIMEOUT_MS } from "../../infra/exec-approvals.js";
 import { parseTimeoutMs } from "../parse-timeout.js";

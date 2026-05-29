@@ -1,3 +1,4 @@
+/** Tests configured channel plugin blocker scanning. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import * as manifestRegistry from "../../../plugins/manifest-registry.js";
 import { scanConfiguredChannelPluginBlockers } from "./channel-plugin-blockers.js";

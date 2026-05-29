@@ -1,3 +1,4 @@
+// Shared types for extensions/codex/src/app-server/sandbox-exec-server types behavior.
 import type { ChildProcessWithoutNullStreams } from "node:child_process";
 import type { SandboxContext } from "openclaw/plugin-sdk/sandbox";
 import type { WebSocketServer } from "ws";

@@ -1,3 +1,4 @@
+/** Shared naming helpers for sandbox sessions, scopes, and workspaces. */
 import path from "node:path";
 import { normalizeAgentId } from "../../routing/session-key.js";
 import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";
@@ -5,6 +6,7 @@ import { resolveUserPath } from "../../utils.js";
 import { resolveAgentIdFromSessionKey } from "../agent-scope.js";
 import { hashTextSha256 } from "./hash.js";
 
+/** Converts a session key into a filesystem/container-safe slug. */
 export function slugifySessionKey(value: string) {
   const trimmed = value.trim() || "session";
   const hash = hashTextSha256(trimmed).slice(0, 8);
@@ -15,12 +17,14 @@ export function slugifySessionKey(value: string) {
   return `${base}-${hash}`;
 }
 
+/** Resolves the host workspace directory for a sandbox session key. */
 export function resolveSandboxWorkspaceDir(root: string, sessionKey: string) {
   const resolvedRoot = resolveUserPath(root);
   const slug = slugifySessionKey(sessionKey);
   return path.join(resolvedRoot, slug);
 }
 
+/** Resolves the scope key used to group sandbox container ownership. */
 export function resolveSandboxScopeKey(scope: "session" | "agent" | "shared", sessionKey: string) {
   const trimmed = sessionKey.trim() || "main";
   if (scope === "shared") {
@@ -33,6 +37,7 @@ export function resolveSandboxScopeKey(scope: "session" | "agent" | "shared", se
   return `agent:${agentId}`;
 }
 
+/** Extracts an agent id from an agent-scoped sandbox key when present. */
 export function resolveSandboxAgentId(scopeKey: string): string | undefined {
   const trimmed = scopeKey.trim();
   if (!trimmed || trimmed === "shared") {

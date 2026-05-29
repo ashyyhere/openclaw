@@ -1,3 +1,4 @@
+// extensions/line/src monitor durable helpers and runtime behavior.
 import { resolveSendableOutboundReplyParts } from "openclaw/plugin-sdk/reply-payload";
 import type { ReplyPayload } from "openclaw/plugin-sdk/reply-runtime";
 import type { LineChannelData } from "./types.js";

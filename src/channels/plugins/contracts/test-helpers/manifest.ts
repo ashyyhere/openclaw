@@ -1,3 +1,4 @@
+/** Canonical channel plugin surfaces and contract-participating bundled plugins. */
 export const channelPluginSurfaceKeys = [
   "actions",
   "setup",

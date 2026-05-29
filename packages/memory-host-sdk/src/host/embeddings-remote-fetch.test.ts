@@ -1,3 +1,4 @@
+// Tests packages/memory-host-sdk/src/host embeddings remote fetch test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { fetchRemoteEmbeddingVectors } from "./embeddings-remote-fetch.js";
 

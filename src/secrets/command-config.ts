@@ -1,25 +1,30 @@
+// secrets command config helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { coerceSecretRef, resolveSecretInputRef } from "../config/types.secrets.js";
 import { getPath } from "./path-utils.js";
 import { isExpectedResolvedSecretValue } from "./secret-value.js";
 import { discoverConfigSecretTargetsByIds } from "./target-registry.js";
 
+/** Shared type for Command Secret Assignment in src/secrets. */
 export type CommandSecretAssignment = {
   path: string;
   pathSegments: string[];
   value: unknown;
 };
 
+/** Shared type for Resolve Assignments From Snapshot Result in src/secrets. */
 export type ResolveAssignmentsFromSnapshotResult = {
   assignments: CommandSecretAssignment[];
   diagnostics: string[];
 };
 
+/** Shared type for Unresolved Command Secret Assignment in src/secrets. */
 export type UnresolvedCommandSecretAssignment = {
   path: string;
   pathSegments: string[];
 };
 
+/** Shared type for Analyze Assignments From Snapshot Result in src/secrets. */
 export type AnalyzeAssignmentsFromSnapshotResult = {
   assignments: CommandSecretAssignment[];
   diagnostics: string[];
@@ -27,6 +32,7 @@ export type AnalyzeAssignmentsFromSnapshotResult = {
   inactive: UnresolvedCommandSecretAssignment[];
 };
 
+/** Reused helper for analyze Command Secret Assignments From Snapshot behavior in src/secrets. */
 export function analyzeCommandSecretAssignmentsFromSnapshot(params: {
   sourceConfig: OpenClawConfig;
   resolvedConfig: OpenClawConfig;
@@ -91,6 +97,7 @@ export function analyzeCommandSecretAssignmentsFromSnapshot(params: {
   return { assignments, diagnostics, unresolved, inactive };
 }
 
+/** Reused helper for collect Command Secret Assignments From Snapshot behavior in src/secrets. */
 export function collectCommandSecretAssignmentsFromSnapshot(params: {
   sourceConfig: OpenClawConfig;
   resolvedConfig: OpenClawConfig;

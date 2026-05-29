@@ -1,3 +1,4 @@
+// extensions/feishu/src/test-support lifecycle test support helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import { createPluginRuntimeMock } from "openclaw/plugin-sdk/channel-test-helpers";
 import { expect, vi, type Mock } from "vitest";

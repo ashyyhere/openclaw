@@ -1,3 +1,4 @@
+// Script for test/scripts bench gateway child test support behavior.
 import { EventEmitter } from "node:events";
 import { expect, it, vi } from "vitest";
 

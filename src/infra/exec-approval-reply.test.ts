@@ -1,3 +1,4 @@
+// Tests infra exec approval reply test behavior.
 import { describe, expect, it, vi } from "vitest";
 import type { ReplyPayload } from "../auto-reply/types.js";
 

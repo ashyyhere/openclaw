@@ -1,3 +1,4 @@
+// Tests extensions/google api test behavior.
 import { describe, expect, it } from "vitest";
 import {
   isGoogleGenerativeAiApi,

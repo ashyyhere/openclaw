@@ -1,3 +1,4 @@
+// Tests cron retry hint test behavior.
 import { describe, expect, it } from "vitest";
 import { resolveCronExecutionRetryHint } from "./retry-hint.js";
 

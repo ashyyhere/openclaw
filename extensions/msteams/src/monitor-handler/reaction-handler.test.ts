@@ -1,3 +1,4 @@
+// Tests extensions/msteams/src/monitor-handler reaction handler test behavior.
 import { describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig, PluginRuntime } from "../../runtime-api.js";
 import type { MSTeamsMessageHandlerDeps } from "../monitor-handler.js";

@@ -1,3 +1,4 @@
+/** Tests model runtime policy resolution. */
 import { afterEach, describe, expect, it } from "vitest";
 import type { ModelDefinitionConfig } from "../config/types.models.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";

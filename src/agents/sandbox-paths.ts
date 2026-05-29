@@ -1,3 +1,4 @@
+/** Resolves and validates sandbox-local paths and media sources. */
 import os from "node:os";
 import path from "node:path";
 import { URL } from "node:url";
@@ -54,10 +55,12 @@ function resolveToCwd(filePath: string, cwd: string): string {
   return path.resolve(cwd, expanded);
 }
 
+/** Resolve a sandbox input path against cwd after user/path normalization. */
 export function resolveSandboxInputPath(filePath: string, cwd: string): string {
   return resolveToCwd(filePath, cwd);
 }
 
+/** Resolve a path and return its relative path under the sandbox root. */
 export function resolveSandboxPath(params: { filePath: string; cwd: string; root: string }): {
   resolved: string;
   relative: string;
@@ -80,6 +83,7 @@ export function resolveSandboxPath(params: { filePath: string; cwd: string; root
   return { resolved, relative };
 }
 
+/** Assert that a path remains inside sandbox root without alias escapes. */
 export async function assertSandboxPath(params: {
   filePath: string;
   cwd: string;
@@ -101,6 +105,7 @@ export async function assertSandboxPath(params: {
   return resolved;
 }
 
+/** Reject data URLs where sandbox media paths are required. */
 export function assertMediaNotDataUrl(media: string): void {
   const raw = media.trim();
   if (DATA_URL_RE.test(raw)) {
@@ -127,6 +132,7 @@ function isManagedMediaPathUnderRoot(candidate: string): boolean {
   return MANAGED_MEDIA_SUBDIRS.has(firstSegment) || firstSegment.startsWith("tool-");
 }
 
+/** Resolve managed OpenClaw media paths that are safe to pass into a sandbox. */
 export async function resolveAllowedManagedMediaPath(
   candidate: string,
 ): Promise<string | undefined> {
@@ -143,6 +149,7 @@ export async function resolveAllowedManagedMediaPath(
   return resolved;
 }
 
+/** Resolve media source for sandbox use, preserving remote URLs and mapping local paths. */
 export async function resolveSandboxedMediaSource(params: {
   media: string;
   sandboxRoot: string;

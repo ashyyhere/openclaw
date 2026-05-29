@@ -1,3 +1,4 @@
+// Tests packages/gateway-protocol/src connect error details test behavior.
 import { describe, expect, it } from "vitest";
 import {
   buildPairingConnectCloseReason,

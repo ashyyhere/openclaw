@@ -1,3 +1,4 @@
+// Tests secrets target registry data current snapshot test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const metadataMocks = vi.hoisted(() => ({

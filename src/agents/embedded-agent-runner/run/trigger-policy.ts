@@ -1,3 +1,4 @@
+/** Encodes prompt policy differences between embedded run triggers. */
 import type { EmbeddedRunTrigger } from "./params.js";
 
 type EmbeddedRunTriggerPolicy = {
@@ -14,6 +15,7 @@ const EMBEDDED_RUN_TRIGGER_POLICY: Partial<Record<EmbeddedRunTrigger, EmbeddedRu
   },
 };
 
+/** Returns whether a trigger should inject heartbeat prompt guidance. */
 export function shouldInjectHeartbeatPromptForTrigger(trigger?: EmbeddedRunTrigger): boolean {
   return (
     (trigger ? EMBEDDED_RUN_TRIGGER_POLICY[trigger] : undefined)?.injectHeartbeatPrompt ??

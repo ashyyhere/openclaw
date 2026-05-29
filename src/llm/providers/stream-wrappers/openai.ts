@@ -1,3 +1,4 @@
+// llm/providers/stream-wrappers openai helpers and runtime behavior.
 import {
   patchCodexNativeWebSearchPayload,
   resolveCodexNativeSearchActivation,
@@ -37,6 +38,7 @@ type OpenAIServiceTier = "auto" | "default" | "flex" | "priority";
 type OpenClawSimpleStreamOptions = SimpleStreamOptions & {
   openclawCodeModeToolSurface?: boolean;
 };
+/** Re-exported API for src/llm/providers, starting with resolve Open AIText Verbosity. */
 export { resolveOpenAITextVerbosity };
 
 function resolveOpenAITextVerbosityForModel(

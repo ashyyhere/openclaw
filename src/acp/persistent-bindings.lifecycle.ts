@@ -1,3 +1,4 @@
+/** Lifecycle helpers for config-defined ACP session bindings. */
 import type { SessionAcpMeta } from "../config/sessions/types.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { logVerbose } from "../globals.js";
@@ -53,6 +54,7 @@ function sessionMatchesConfiguredBinding(params: {
   return true;
 }
 
+/** Ensure a configured channel/conversation binding has a matching ACP session. */
 export async function ensureConfiguredAcpBindingSession(params: {
   cfg: OpenClawConfig;
   spec: ConfiguredAcpBindingSpec;
@@ -115,6 +117,7 @@ export async function ensureConfiguredAcpBindingSession(params: {
   }
 }
 
+/** Ensure a resolved configured ACP binding is ready before dispatch. */
 export async function ensureConfiguredAcpBindingReady(params: {
   cfg: OpenClawConfig;
   configuredBinding: ResolvedConfiguredAcpBinding | null;
@@ -135,6 +138,7 @@ export async function ensureConfiguredAcpBindingReady(params: {
   };
 }
 
+/** Close/reset an ACP session while preserving configured binding behavior. */
 export async function resetAcpSessionInPlace(params: {
   cfg: OpenClawConfig;
   sessionKey: string;

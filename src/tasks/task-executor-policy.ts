@@ -1,6 +1,8 @@
+// tasks task executor policy helpers and runtime behavior.
 import type { TaskEventRecord, TaskRecord, TaskStatus } from "./task-registry.types.js";
 import { formatTaskStatusTitleText, sanitizeTaskStatusText } from "./task-status.js";
 
+/** Reused helper for is Terminal Task Status behavior in src/tasks. */
 export function isTerminalTaskStatus(status: TaskStatus): boolean {
   return (
     status === "succeeded" ||
@@ -26,6 +28,7 @@ function resolveTaskRunLabel(task: TaskRecord): string {
   return task.runId ? ` (run ${task.runId.slice(0, 8)})` : "";
 }
 
+/** Reused helper for format Task Terminal Message behavior in src/tasks. */
 export function formatTaskTerminalMessage(
   task: TaskRecord,
   options: { surface?: "direct" | "parent_session" } = {},
@@ -71,6 +74,7 @@ export function formatTaskTerminalMessage(
       : `Background task failed: ${title}${runLabel}.`;
 }
 
+/** Reused helper for should Use Parent Review Task Terminal Message behavior in src/tasks. */
 export function shouldUseParentReviewTaskTerminalMessage(task: TaskRecord): boolean {
   return (
     task.runtime === "acp" &&
@@ -80,6 +84,7 @@ export function shouldUseParentReviewTaskTerminalMessage(task: TaskRecord): bool
   );
 }
 
+/** Reused helper for format Task Blocked Followup Message behavior in src/tasks. */
 export function formatTaskBlockedFollowupMessage(task: TaskRecord): string | null {
   if (task.status !== "succeeded" || task.terminalOutcome !== "blocked") {
     return null;
@@ -92,6 +97,7 @@ export function formatTaskBlockedFollowupMessage(task: TaskRecord): string | nul
   return `Task needs follow-up: ${title}${runLabel}. ${summary}`;
 }
 
+/** Reused helper for format Task State Change Message behavior in src/tasks. */
 export function formatTaskStateChangeMessage(
   task: TaskRecord,
   event: TaskEventRecord,
@@ -107,6 +113,7 @@ export function formatTaskStateChangeMessage(
   return null;
 }
 
+/** Reused helper for should Auto Deliver Task Terminal Update behavior in src/tasks. */
 export function shouldAutoDeliverTaskTerminalUpdate(task: TaskRecord): boolean {
   if (task.notifyPolicy === "silent") {
     return false;
@@ -120,6 +127,7 @@ export function shouldAutoDeliverTaskTerminalUpdate(task: TaskRecord): boolean {
   return task.deliveryStatus === "pending";
 }
 
+/** Reused helper for should Auto Deliver Task State Change behavior in src/tasks. */
 export function shouldAutoDeliverTaskStateChange(task: TaskRecord): boolean {
   return (
     task.notifyPolicy === "state_changes" &&
@@ -128,6 +136,7 @@ export function shouldAutoDeliverTaskStateChange(task: TaskRecord): boolean {
   );
 }
 
+/** Reused helper for should Suppress Duplicate Terminal Delivery behavior in src/tasks. */
 export function shouldSuppressDuplicateTerminalDelivery(params: {
   task: TaskRecord;
   preferredTaskId?: string;

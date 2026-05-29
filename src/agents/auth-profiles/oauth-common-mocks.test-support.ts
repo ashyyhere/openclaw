@@ -1,3 +1,4 @@
+/** Shared mocks for OAuth auth-profile tests. */
 import { vi } from "vitest";
 import type { OAuthCredential } from "./types.js";
 
@@ -8,6 +9,7 @@ const oauthProviderRuntimeMocks = vi.hoisted(() => ({
   formatProviderAuthProfileApiKeyWithPluginMock: vi.fn(() => undefined),
 }));
 
+/** Reused helper for get OAuth Provider Runtime Mocks behavior in src/agents/auth-profiles. */
 export function getOAuthProviderRuntimeMocks() {
   return oauthProviderRuntimeMocks;
 }

@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/monitor threading starter test behavior.
 import { StickerFormatType } from "discord-api-types/v10";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ChannelType, type Client } from "../internal/discord.js";

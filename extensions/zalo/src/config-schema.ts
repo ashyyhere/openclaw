@@ -1,3 +1,4 @@
+// extensions/zalo/src config schema helpers and runtime behavior.
 import {
   AllowFromListSchema,
   buildCatchallMultiAccountChannelSchema,

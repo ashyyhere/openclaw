@@ -1,3 +1,4 @@
+// extensions/qa-lab/src/providers/mock-openai server helpers and runtime behavior.
 import { createHash } from "node:crypto";
 import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
 import { setTimeout as sleep } from "node:timers/promises";

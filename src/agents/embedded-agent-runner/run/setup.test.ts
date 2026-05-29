@@ -1,3 +1,4 @@
+/** Covers hook model selection and effective runtime model setup. */
 import { describe, expect, it, vi } from "vitest";
 import type { ModelDefinitionConfig } from "../../../config/types.models.js";
 import type { OpenClawConfig } from "../../../config/types.openclaw.js";

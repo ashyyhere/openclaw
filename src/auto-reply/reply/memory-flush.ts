@@ -1,3 +1,4 @@
+// Memory flush policy for reply agent runs.
 import { resolveContextTokensForModel } from "../../agents/context.js";
 import { DEFAULT_CONTEXT_TOKENS } from "../../agents/defaults.js";
 import { legacyModelKey, modelKey } from "../../agents/model-selection-normalize.js";
@@ -5,6 +6,7 @@ import { parseNonNegativeByteSize } from "../../config/byte-size.js";
 import { resolveFreshSessionTotalTokens, type SessionEntry } from "../../config/sessions.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 
+/** Reused helper for resolve Memory Flush Context Window Tokens behavior in src/auto-reply/reply. */
 export function resolveMemoryFlushContextWindowTokens(params: {
   modelId?: string;
   agentCfgContextTokens?: number;
@@ -22,6 +24,7 @@ export function resolveMemoryFlushContextWindowTokens(params: {
   );
 }
 
+/** Reused helper for resolve Max Active Transcript Bytes behavior in src/auto-reply/reply. */
 export function resolveMaxActiveTranscriptBytes(cfg?: OpenClawConfig): number | undefined {
   const compaction = cfg?.agents?.defaults?.compaction;
   if (compaction?.truncateAfterCompaction !== true) {
@@ -66,6 +69,7 @@ function resolvePositiveIntegerParam(
   return undefined;
 }
 
+/** Reused helper for resolve Responses Server Compaction Threshold behavior in src/auto-reply/reply. */
 export function resolveResponsesServerCompactionThreshold(params: {
   cfg?: OpenClawConfig;
   provider?: string;
@@ -132,6 +136,7 @@ function resolveMemoryFlushGateState<
   return { entry: params.entry, totalTokens, threshold };
 }
 
+/** Reused helper for should Run Memory Flush behavior in src/auto-reply/reply. */
 export function shouldRunMemoryFlush(params: {
   entry?: Pick<
     SessionEntry,
@@ -159,6 +164,7 @@ export function shouldRunMemoryFlush(params: {
   return true;
 }
 
+/** Reused helper for should Run Preflight Compaction behavior in src/auto-reply/reply. */
 export function shouldRunPreflightCompaction(params: {
   entry?: Pick<SessionEntry, "totalTokens" | "totalTokensFresh">;
   /**

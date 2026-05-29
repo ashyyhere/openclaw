@@ -1,3 +1,4 @@
+// media qr image helpers and runtime behavior.
 import path from "node:path";
 import { tempWorkspace } from "../infra/private-temp-workspace.js";
 import { loadQrCodeRuntime, normalizeQrText } from "./qr-runtime.ts";
@@ -54,6 +55,7 @@ function resolveQrTempPathSegment(name: string, value: string): string {
   return value;
 }
 
+/** Reused helper for render Qr Png Base64 behavior in src/media. */
 export async function renderQrPngBase64(
   input: string,
   opts: QrPngRenderOptions = {},
@@ -84,10 +86,12 @@ export async function renderQrPngBase64(
   return dataUrl.slice(QR_PNG_DATA_URL_PREFIX.length);
 }
 
+/** Reused helper for format Qr Png Data Url behavior in src/media. */
 export function formatQrPngDataUrl(base64: string): string {
   return `${QR_PNG_DATA_URL_PREFIX}${base64}`;
 }
 
+/** Reused helper for render Qr Png Data Url behavior in src/media. */
 export async function renderQrPngDataUrl(
   input: string,
   opts: QrPngRenderOptions = {},
@@ -95,6 +99,7 @@ export async function renderQrPngDataUrl(
   return formatQrPngDataUrl(await renderQrPngBase64(input, opts));
 }
 
+/** Reused helper for write Qr Png Temp File behavior in src/media. */
 export async function writeQrPngTempFile(
   input: string,
   opts: QrPngTempFileOptions,

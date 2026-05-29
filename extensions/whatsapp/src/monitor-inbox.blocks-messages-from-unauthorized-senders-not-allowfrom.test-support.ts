@@ -1,3 +1,4 @@
+// extensions/whatsapp/src monitor inbox blocks messages from unauthorized senders not allowfrom test support helpers and runtime behavior.
 import "./monitor-inbox.test-harness.js";
 import { describe, expect, it, vi } from "vitest";
 import {

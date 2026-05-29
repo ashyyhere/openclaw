@@ -1,3 +1,4 @@
+// extensions/whatsapp/src/inbound dedupe helpers and runtime behavior.
 import { createClaimableDedupe } from "openclaw/plugin-sdk/persistent-dedupe";
 
 const RECENT_WEB_MESSAGE_TTL_MS = 20 * 60_000;

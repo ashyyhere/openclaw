@@ -1,3 +1,4 @@
+// logging config helpers and runtime behavior.
 import fs from "node:fs";
 import JSON5 from "json5";
 import { getCommandPathWithRootOptions } from "../cli/argv.js";
@@ -14,11 +15,13 @@ let cachedLoggingConfig:
     }
   | undefined;
 
+/** Reused helper for should Skip Mutating Logging Config Read behavior in src/logging. */
 export function shouldSkipMutatingLoggingConfigRead(argv: string[] = process.argv): boolean {
   const [primary, secondary] = getCommandPathWithRootOptions(argv, 2);
   return primary === "config" && (secondary === "schema" || secondary === "validate");
 }
 
+/** Reused helper for read Logging Config behavior in src/logging. */
 export function readLoggingConfig(): LoggingConfig | undefined {
   if (shouldSkipMutatingLoggingConfigRead()) {
     return undefined;

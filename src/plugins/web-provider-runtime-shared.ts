@@ -1,3 +1,4 @@
+// plugins web provider runtime shared helpers and runtime behavior.
 import { withActivatedPluginIds } from "./activation-context.js";
 import { getLoadedRuntimePluginRegistry } from "./active-runtime-registry.js";
 import { isPluginRegistryLoadInFlight, loadOpenClawPlugins } from "./loader.js";
@@ -11,6 +12,7 @@ import {
   createPluginRuntimeLoaderLogger,
 } from "./runtime/load-context.js";
 
+/** Shared type for Resolve Plugin Web Providers Params in src/plugins. */
 export type ResolvePluginWebProvidersParams = {
   config?: PluginLoadOptions["config"];
   workspaceDir?: string;
@@ -144,6 +146,7 @@ function resolveRuntimeRegistryWebProviders<TEntry>(params: {
   };
 }
 
+/** Reused helper for resolve Plugin Web Providers behavior in src/plugins. */
 export function resolvePluginWebProviders<TEntry>(
   params: ResolvePluginWebProvidersParams,
   deps: ResolveWebProviderRuntimeDeps<TEntry>,
@@ -236,6 +239,7 @@ export function resolvePluginWebProviders<TEntry>(
   });
 }
 
+/** Reused helper for resolve Runtime Web Providers behavior in src/plugins. */
 export function resolveRuntimeWebProviders<TEntry>(
   params: Omit<ResolvePluginWebProvidersParams, "activate" | "cache" | "mode">,
   deps: ResolveWebProviderRuntimeDeps<TEntry>,

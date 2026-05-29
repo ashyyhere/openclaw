@@ -1,3 +1,4 @@
+// Tests extensions/codex/src command plugins management test behavior.
 import type { PluginCommandContext } from "openclaw/plugin-sdk/plugin-entry";
 import { describe, expect, it } from "vitest";
 import {

@@ -1,3 +1,4 @@
+// infra fetch headers helpers and runtime behavior.
 type HeadersLike = {
   entries: () => IterableIterator<[string, string]>;
   get: (name: string) => string | null;
@@ -16,6 +17,7 @@ function isHeadersLike(value: object): value is HeadersLike {
   );
 }
 
+/** Reused helper for normalize Headers Init For Fetch behavior in src/infra. */
 export function normalizeHeadersInitForFetch(
   headers: HeadersInit | undefined,
 ): HeadersInit | undefined {
@@ -35,6 +37,7 @@ export function normalizeHeadersInitForFetch(
   return normalized;
 }
 
+/** Reused helper for normalize Request Init Headers For Fetch behavior in src/infra. */
 export function normalizeRequestInitHeadersForFetch<T extends { headers?: HeadersInit }>(
   init: T | undefined,
 ): T | undefined {

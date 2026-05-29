@@ -1,3 +1,4 @@
+// extensions/googlechat/src monitor types helpers and runtime behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/core";
 import type { ResolvedGoogleChatAccount } from "./accounts.js";
 import type { GoogleChatAudienceType } from "./auth.js";

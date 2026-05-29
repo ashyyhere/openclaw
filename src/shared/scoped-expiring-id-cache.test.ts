@@ -1,3 +1,4 @@
+// Tests shared scoped expiring id cache test behavior.
 import { describe, expect, it } from "vitest";
 import { createScopedExpiringIdCache } from "./scoped-expiring-id-cache.js";
 

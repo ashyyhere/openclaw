@@ -75,6 +75,7 @@ export function hasGlobalHooks(hookName: Parameters<HookRunner["hasHooks"]>[0]):
   return getState().hookRunner?.hasHooks(hookName) ?? false;
 }
 
+/** Reused helper for run Global Gateway Stop Safely behavior in src/plugins. */
 export async function runGlobalGatewayStopSafely(params: {
   event: PluginHookGatewayStopEvent;
   ctx: PluginHookGatewayContext;

@@ -1,3 +1,4 @@
+/** Regression coverage for active subagent prompt context injection. */
 import { beforeEach, describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { buildActiveSubagentSystemPromptAddition } from "./subagent-active-context.js";

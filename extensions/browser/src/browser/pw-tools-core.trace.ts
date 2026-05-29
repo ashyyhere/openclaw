@@ -1,3 +1,4 @@
+// extensions/browser/src/browser pw tools core trace helpers and runtime behavior.
 import { writeViaSiblingTempPath } from "./output-atomic.js";
 import { DEFAULT_TRACE_DIR } from "./paths.js";
 import { ensureContextState, getPageForTargetId } from "./pw-session.js";

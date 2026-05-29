@@ -1,3 +1,4 @@
+/** Implements channel add command setup and config writes. */
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../../agents/agent-scope.js";
 import { getBundledChannelSetupPlugin } from "../../channels/plugins/bundled.js";
 import { parseOptionalDelimitedEntries } from "../../channels/plugins/helpers.js";
@@ -45,6 +46,7 @@ function loadOnboardChannels(): Promise<OnboardChannelsModule> {
   return onboardChannelsLoader.load();
 }
 
+/** Shared type for Channels Add Options in src/commands/channels. */
 export type ChannelsAddOptions = {
   channel?: string;
   account?: string;
@@ -124,6 +126,7 @@ function buildChannelSetupInput(opts: ChannelsAddOptions): ChannelSetupInput {
   return input as ChannelSetupInput;
 }
 
+/** Reused helper for channels Add Command behavior in src/commands/channels. */
 export async function channelsAddCommand(
   opts: ChannelsAddOptions,
   runtime: RuntimeEnv = defaultRuntime,

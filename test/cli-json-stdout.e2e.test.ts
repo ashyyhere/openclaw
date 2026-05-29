@@ -1,3 +1,4 @@
+// Tests test cli json stdout e2e test behavior.
 import { spawnSync } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";

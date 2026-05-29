@@ -1,3 +1,4 @@
+// crestodian operations helpers and runtime behavior.
 import { DEFAULT_MODEL, DEFAULT_PROVIDER } from "../agents/defaults.js";
 import type { ConfigSetOptions } from "../cli/config-set-input.js";
 import type { DoctorOptions } from "../commands/doctor.types.js";
@@ -51,6 +52,7 @@ export type CrestodianOperation =
   | { kind: "open-tui"; agentId?: string; workspace?: string }
   | { kind: "set-default-model"; model: string };
 
+/** Shared type for Crestodian Operation Result in src/crestodian. */
 export type CrestodianOperationResult = {
   applied: boolean;
   exitsInteractive?: boolean;
@@ -58,6 +60,7 @@ export type CrestodianOperationResult = {
   nextInput?: string;
 };
 
+/** Shared type for Crestodian Command Deps in src/crestodian. */
 export type CrestodianCommandDeps = {
   formatOverview?: CrestodianOverviewFormatter;
   loadOverview?: CrestodianOverviewLoader;
@@ -120,6 +123,7 @@ const ANTHROPIC_API_DEFAULT_MODEL_REF = "anthropic/claude-opus-4-8";
 const CLAUDE_CLI_DEFAULT_MODEL_REF = "claude-cli/claude-opus-4-8";
 const CODEX_APP_SERVER_DEFAULT_MODEL_REF = "openai/gpt-5.5";
 
+/** Reused helper for parse Crestodian Operation behavior in src/crestodian. */
 export function parseCrestodianOperation(input: string): CrestodianOperation {
   const trimmed = input.trim();
   const lower = trimmed.toLowerCase();
@@ -300,6 +304,7 @@ function validateCrestodianPluginInstallSpec(spec: string): string | null {
   return null;
 }
 
+/** Reused helper for is Persistent Crestodian Operation behavior in src/crestodian. */
 export function isPersistentCrestodianOperation(operation: CrestodianOperation): boolean {
   return (
     operation.kind === "set-default-model" ||
@@ -316,6 +321,7 @@ export function isPersistentCrestodianOperation(operation: CrestodianOperation):
   );
 }
 
+/** Reused helper for describe Crestodian Persistent Operation behavior in src/crestodian. */
 export function describeCrestodianPersistentOperation(operation: CrestodianOperation): string {
   switch (operation.kind) {
     case "set-default-model":
@@ -345,6 +351,7 @@ export function describeCrestodianPersistentOperation(operation: CrestodianOpera
   }
 }
 
+/** Reused helper for format Crestodian Persistent Plan behavior in src/crestodian. */
 export function formatCrestodianPersistentPlan(operation: CrestodianOperation): string {
   return `Plan: ${describeCrestodianPersistentOperation(operation)}. Say yes to apply.`;
 }
@@ -514,6 +521,7 @@ async function resolveTuiAgentId(params: {
   return match?.id ?? requested;
 }
 
+/** Reused helper for execute Crestodian Operation behavior in src/crestodian. */
 export async function executeCrestodianOperation(
   operation: CrestodianOperation,
   runtime: RuntimeEnv,

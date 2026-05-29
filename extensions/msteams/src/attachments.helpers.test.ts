@@ -1,3 +1,4 @@
+// Tests extensions/msteams/src attachments helpers test behavior.
 import { beforeEach, describe, expect, it } from "vitest";
 import type { PluginRuntime } from "../runtime-api.js";
 import {

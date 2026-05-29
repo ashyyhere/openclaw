@@ -1,5 +1,7 @@
+// ui/src/ui push subscription helpers and runtime behavior.
 import type { GatewayBrowserClient } from "./gateway.ts";
 
+/** Shared type for Web Push State in ui/src/ui. */
 export type WebPushState = {
   supported: boolean;
   permission: NotificationPermission | "unsupported";

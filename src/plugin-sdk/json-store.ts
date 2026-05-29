@@ -1,9 +1,11 @@
+// plugin-sdk json store helpers and runtime behavior.
 import "../infra/fs-safe-defaults.js";
 import { pathExists } from "../infra/fs-safe.js";
 import { tryReadJson, tryReadJsonSync, writeJson, writeJsonSync } from "../infra/json-files.js";
 
 /** Read small JSON blobs synchronously for token/state caches. */
 // oxlint-disable-next-line typescript-eslint/no-unnecessary-type-parameters -- public SDK compatibility helper.
+/** Reused helper for load Json File behavior in src/plugin-sdk. */
 export function loadJsonFile<T = unknown>(filePath: string): T | undefined {
   return tryReadJsonSync<T>(filePath) ?? undefined;
 }

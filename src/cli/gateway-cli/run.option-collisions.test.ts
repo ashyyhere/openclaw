@@ -1,3 +1,4 @@
+/** Tests gateway run option registration and service runtime flags. */
 import path from "node:path";
 import { Command } from "commander";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";

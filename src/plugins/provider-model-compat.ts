@@ -1,8 +1,10 @@
+// plugins provider model compat helpers and runtime behavior.
 import { detectOpenAICompletionsCompat } from "../agents/openai-completions-compat.js";
 import type { ModelCompatConfig } from "../config/types.models.js";
 import type { Model } from "../llm/types.js";
 import { normalizeStringEntries } from "../shared/string-normalization.js";
 
+/** Reused helper for extract Model Compat behavior in src/plugins. */
 export function extractModelCompat(
   modelOrCompat: { compat?: unknown } | ModelCompatConfig | undefined,
 ): ModelCompatConfig | undefined {
@@ -35,6 +37,7 @@ export function applyModelCompatPatch<T extends { compat?: ModelCompatConfig }>(
   };
 }
 
+/** Reused helper for has Tool Schema Profile behavior in src/plugins. */
 export function hasToolSchemaProfile(
   modelOrCompat: { compat?: unknown } | ModelCompatConfig | undefined,
   profile: string,
@@ -42,18 +45,21 @@ export function hasToolSchemaProfile(
   return extractModelCompat(modelOrCompat)?.toolSchemaProfile === profile;
 }
 
+/** Reused helper for has Native Web Search Tool behavior in src/plugins. */
 export function hasNativeWebSearchTool(
   modelOrCompat: { compat?: unknown } | ModelCompatConfig | undefined,
 ): boolean {
   return extractModelCompat(modelOrCompat)?.nativeWebSearchTool === true;
 }
 
+/** Reused helper for resolve Tool Call Arguments Encoding behavior in src/plugins. */
 export function resolveToolCallArgumentsEncoding(
   modelOrCompat: { compat?: unknown } | ModelCompatConfig | undefined,
 ): ModelCompatConfig["toolCallArgumentsEncoding"] | undefined {
   return extractModelCompat(modelOrCompat)?.toolCallArgumentsEncoding;
 }
 
+/** Reused helper for resolve Unsupported Tool Schema Keywords behavior in src/plugins. */
 export function resolveUnsupportedToolSchemaKeywords(
   modelOrCompat: { compat?: unknown } | ModelCompatConfig | undefined,
 ): ReadonlySet<string> {
@@ -65,6 +71,7 @@ export function resolveUnsupportedToolSchemaKeywords(
   );
 }
 
+/** Reused helper for should Omit Empty Array Items behavior in src/plugins. */
 export function shouldOmitEmptyArrayItems(
   modelOrCompat: { compat?: unknown } | ModelCompatConfig | undefined,
 ): boolean {
@@ -86,6 +93,7 @@ function normalizeAnthropicBaseUrl(baseUrl: string): string {
   return baseUrl.replace(/\/v1\/?$/, "");
 }
 
+/** Reused helper for normalize Model Compat behavior in src/plugins. */
 export function normalizeModelCompat(model: Model): Model {
   const baseUrl = model.baseUrl ?? "";
 

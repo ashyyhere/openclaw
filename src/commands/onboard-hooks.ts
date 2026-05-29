@@ -1,3 +1,4 @@
+/** Onboarding section for hook status and install checks. */
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../agents/agent-scope.js";
 import { formatCliCommand } from "../cli/command-format.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -6,6 +7,7 @@ import type { RuntimeEnv } from "../runtime.js";
 import { t } from "../wizard/i18n/index.js";
 import type { WizardPrompter } from "../wizard/prompts.js";
 
+/** Reused helper for setup Internal Hooks behavior in src/commands. */
 export async function setupInternalHooks(
   cfg: OpenClawConfig,
   _runtime: RuntimeEnv,

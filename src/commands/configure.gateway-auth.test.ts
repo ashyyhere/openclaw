@@ -1,3 +1,4 @@
+/** Tests gateway auth config builder defaults and token generation. */
 import { describe, expect, it } from "vitest";
 import { buildGatewayAuthConfig } from "./configure.js";
 

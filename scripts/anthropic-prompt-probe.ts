@@ -1,3 +1,4 @@
+// scripts anthropic prompt probe helpers and runtime behavior.
 import { spawn } from "node:child_process";
 // Live prompt probe for Anthropic setup-token and Claude CLI prompt-path debugging.
 // Usage:

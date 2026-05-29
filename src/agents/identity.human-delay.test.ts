@@ -1,3 +1,4 @@
+/** Tests human-delay identity config resolution. */
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import { resolveHumanDelayConfig } from "./identity.js";

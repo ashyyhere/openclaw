@@ -1,3 +1,4 @@
+// link-understanding apply helpers and runtime behavior.
 import { finalizeInboundContext } from "../auto-reply/reply/inbound-context.js";
 import type { MsgContext } from "../auto-reply/templating.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -9,6 +10,7 @@ type ApplyLinkUnderstandingResult = {
   urls: string[];
 };
 
+/** Reused helper for apply Link Understanding behavior in src/link-understanding. */
 export async function applyLinkUnderstanding(params: {
   ctx: MsgContext;
   cfg: OpenClawConfig;

@@ -1,3 +1,4 @@
+// extensions/file-transfer/src/node-host dir fetch helpers and runtime behavior.
 import { spawn } from "node:child_process";
 import crypto from "node:crypto";
 import path from "node:path";

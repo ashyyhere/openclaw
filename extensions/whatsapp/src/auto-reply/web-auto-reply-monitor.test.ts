@@ -1,3 +1,4 @@
+// Tests extensions/whatsapp/src/auto-reply web auto reply monitor test behavior.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

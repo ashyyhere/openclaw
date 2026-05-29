@@ -1,3 +1,4 @@
+/** Applies subagent-specific thinking-level overrides. */
 import { normalizeThinkLevel } from "../auto-reply/thinking.shared.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { asOptionalObjectRecord } from "../shared/record-coerce.js";
@@ -7,6 +8,7 @@ function readString(value: Record<string, unknown>, key: string): string | undef
   return typeof raw === "string" && raw.trim() ? raw.trim() : undefined;
 }
 
+/** Reused helper for resolve Subagent Thinking Override behavior in src/agents. */
 export function resolveSubagentThinkingOverride(params: {
   cfg: OpenClawConfig;
   targetAgentConfig?: unknown;

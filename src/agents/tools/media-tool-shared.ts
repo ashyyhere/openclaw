@@ -70,6 +70,7 @@ type TaskRunDetailHandle = {
   runId: string;
 };
 
+/** Applies image-understanding model defaults. */
 export function applyImageModelConfigDefaults(
   cfg: OpenClawConfig | undefined,
   imageModelConfig: ImageModelConfig,
@@ -77,6 +78,7 @@ export function applyImageModelConfigDefaults(
   return applyAgentDefaultModelConfig(cfg, "imageModel", imageModelConfig);
 }
 
+/** Applies image-generation model defaults. */
 export function applyImageGenerationModelConfigDefaults(
   cfg: OpenClawConfig | undefined,
   imageGenerationModelConfig: ToolModelConfig,
@@ -84,6 +86,7 @@ export function applyImageGenerationModelConfigDefaults(
   return applyAgentDefaultModelConfig(cfg, "imageGenerationModel", imageGenerationModelConfig);
 }
 
+/** Applies video-generation model defaults. */
 export function applyVideoGenerationModelConfigDefaults(
   cfg: OpenClawConfig | undefined,
   videoGenerationModelConfig: ToolModelConfig,
@@ -91,6 +94,7 @@ export function applyVideoGenerationModelConfigDefaults(
   return applyAgentDefaultModelConfig(cfg, "videoGenerationModel", videoGenerationModelConfig);
 }
 
+/** Applies music-generation model defaults. */
 export function applyMusicGenerationModelConfigDefaults(
   cfg: OpenClawConfig | undefined,
   musicGenerationModelConfig: ToolModelConfig,
@@ -98,12 +102,14 @@ export function applyMusicGenerationModelConfigDefaults(
   return applyAgentDefaultModelConfig(cfg, "musicGenerationModel", musicGenerationModelConfig);
 }
 
+/** Reused helper for read Generation Timeout Ms behavior in src/agents/tools. */
 export function readGenerationTimeoutMs(args: Record<string, unknown>): number | undefined {
   return readPositiveIntegerParam(args, "timeoutMs", {
     message: "timeoutMs must be a positive integer in milliseconds.",
   });
 }
 
+/** Reused helper for resolve Remote Media Ssrf Policy behavior in src/agents/tools. */
 export function resolveRemoteMediaSsrfPolicy(
   cfg: OpenClawConfig | undefined,
 ): SsrFPolicy | undefined {
@@ -158,6 +164,7 @@ function parseCapabilityModelRefForProviders(params: {
   });
 }
 
+/** Reused helper for is Capability Provider Configured behavior in src/agents/tools. */
 export function isCapabilityProviderConfigured<T extends CapabilityProvider>(params: {
   providers: T[];
   provider?: T;
@@ -200,6 +207,7 @@ export function isCapabilityProviderConfigured<T extends CapabilityProvider>(par
   });
 }
 
+/** Selects a provider from explicit args, config, and available providers. */
 export function resolveSelectedCapabilityProvider<T extends CapabilityProvider>(params: {
   providers: T[];
   modelConfig: ToolModelConfig;
@@ -287,6 +295,7 @@ function resolveCapabilityModelCandidatesForTool(params: {
   return orderedRefs;
 }
 
+/** Resolves model config for a capability-backed tool. */
 export function resolveCapabilityModelConfigForTool(params: {
   cfg?: OpenClawConfig;
   workspaceDir?: string;
@@ -330,6 +339,7 @@ export function resolveCapabilityModelConfigForTool(params: {
   });
 }
 
+/** Checks whether any provider/model makes a generation tool available. */
 export function hasGenerationToolAvailability(params: {
   cfg?: OpenClawConfig;
   agentDir?: string;
@@ -405,6 +415,7 @@ function formatQuotedList(values: readonly string[]): string {
     .join(", ")}, or "${values[values.length - 1]}"`;
 }
 
+/** Reads a requested generate-tool action with default fallback. */
 export function resolveGenerateAction<TAction extends string>(params: {
   args: Record<string, unknown>;
   allowed: readonly TAction[];
@@ -421,6 +432,7 @@ export function resolveGenerateAction<TAction extends string>(params: {
   throw new ToolInputError(`action must be ${formatQuotedList(params.allowed)}`);
 }
 
+/** Reused helper for read Boolean Tool Param behavior in src/agents/tools. */
 export function readBooleanToolParam(
   params: Record<string, unknown>,
   key: string,
@@ -441,6 +453,7 @@ export function readBooleanToolParam(
   return undefined;
 }
 
+/** Normalizes local/remote media reference inputs for media tools. */
 export function normalizeMediaReferenceInputs(params: {
   args: Record<string, unknown>;
   singularKey: string;
@@ -470,6 +483,7 @@ export function normalizeMediaReferenceInputs(params: {
   return deduped;
 }
 
+/** Builds details metadata for resolved media references. */
 export function buildMediaReferenceDetails<T extends MediaReferenceDetailEntry>(params: {
   entries: readonly T[];
   singleKey: string;
@@ -499,6 +513,7 @@ export function buildMediaReferenceDetails<T extends MediaReferenceDetailEntry>(
   return {};
 }
 
+/** Reused helper for build Task Run Details behavior in src/agents/tools. */
 export function buildTaskRunDetails(
   handle: TaskRunDetailHandle | null | undefined,
 ): Record<string, unknown> {
@@ -512,6 +527,7 @@ export function buildTaskRunDetails(
     : {};
 }
 
+/** Resolves local roots allowed for media input reads. */
 export function resolveMediaToolLocalRoots(
   workspaceDirRaw: string | undefined,
   options?: {
@@ -530,6 +546,7 @@ export function resolveMediaToolLocalRoots(
   return uniqueStrings([...roots, ...(workspaceDir ? [workspaceDir] : [])]);
 }
 
+/** Reused helper for resolve Media Tool Inbound Roots behavior in src/agents/tools. */
 export function resolveMediaToolInboundRoots(options?: {
   workspaceOnly?: boolean;
   cfg?: OpenClawConfig;
@@ -548,6 +565,7 @@ export function resolveMediaToolInboundRoots(options?: {
   );
 }
 
+/** Resolves prompt text and optional model override from tool args. */
 export function resolvePromptAndModelOverride(
   args: Record<string, unknown>,
   defaultPrompt: string,
@@ -560,6 +578,7 @@ export function resolvePromptAndModelOverride(
   return { prompt, modelOverride };
 }
 
+/** Reused helper for build Text Tool Result behavior in src/agents/tools. */
 export function buildTextToolResult(
   result: TextToolResult,
   extraDetails: Record<string, unknown>,
@@ -577,6 +596,7 @@ export function buildTextToolResult(
   };
 }
 
+/** Reused helper for resolve Model From Registry behavior in src/agents/tools. */
 export function resolveModelFromRegistry(params: {
   modelRegistry: { find: (provider: string, modelId: string) => unknown };
   provider: string;
@@ -598,6 +618,7 @@ export function resolveModelFromRegistry(params: {
   return model;
 }
 
+/** Resolves provider API key for model runtime calls. */
 export async function resolveModelRuntimeApiKey(params: {
   model: Model;
   cfg: OpenClawConfig | undefined;

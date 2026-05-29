@@ -1,5 +1,7 @@
+/** Forwards consumed root options into child command argv arrays. */
 import { consumeRootOptionToken } from "../infra/cli-root-options.js";
 
+/** Reused helper for forward Consumed Cli Root Option behavior in src/cli. */
 export function forwardConsumedCliRootOption(
   args: readonly string[],
   index: number,

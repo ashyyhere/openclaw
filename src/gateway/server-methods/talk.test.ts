@@ -1,3 +1,4 @@
+// Tests gateway/server-methods talk test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ErrorCodes } from "../../../packages/gateway-protocol/src/index.js";
 import type { OpenClawConfig } from "../../config/config.js";

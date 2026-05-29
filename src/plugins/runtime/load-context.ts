@@ -1,3 +1,4 @@
+// plugins/runtime load context helpers and runtime behavior.
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../../agents/agent-scope.js";
 import { getRuntimeConfig } from "../../config/config.js";
 import { applyPluginAutoEnable } from "../../config/plugin-auto-enable.js";
@@ -18,6 +19,7 @@ import type { PluginLogger } from "../types.js";
 
 const log = createSubsystemLogger("plugins");
 
+/** Shared type for Plugin Runtime Load Context in src/plugins/runtime. */
 export type PluginRuntimeLoadContext = {
   rawConfig: OpenClawConfig;
   config: OpenClawConfig;
@@ -30,6 +32,7 @@ export type PluginRuntimeLoadContext = {
   installRecords?: Record<string, PluginInstallRecord>;
 };
 
+/** Shared type for Plugin Runtime Resolved Load Values in src/plugins/runtime. */
 export type PluginRuntimeResolvedLoadValues = Pick<
   PluginLoadOptions,
   | "config"
@@ -42,6 +45,7 @@ export type PluginRuntimeResolvedLoadValues = Pick<
   | "installRecords"
 >;
 
+/** Shared type for Plugin Runtime Load Context Options in src/plugins/runtime. */
 export type PluginRuntimeLoadContextOptions = {
   config?: OpenClawConfig;
   activationSourceConfig?: OpenClawConfig;
@@ -51,6 +55,7 @@ export type PluginRuntimeLoadContextOptions = {
   manifestRegistry?: PluginManifestRegistry;
 };
 
+/** Reused helper for create Plugin Runtime Loader Logger behavior in src/plugins/runtime. */
 export function createPluginRuntimeLoaderLogger(): PluginLogger {
   return {
     info: (message) => log.info(message),
@@ -60,6 +65,7 @@ export function createPluginRuntimeLoaderLogger(): PluginLogger {
   };
 }
 
+/** Reused helper for resolve Plugin Runtime Load Context behavior in src/plugins/runtime. */
 export function resolvePluginRuntimeLoadContext(
   options?: PluginRuntimeLoadContextOptions,
 ): PluginRuntimeLoadContext {
@@ -117,6 +123,7 @@ export function resolvePluginRuntimeLoadContext(
   };
 }
 
+/** Reused helper for build Plugin Runtime Load Options behavior in src/plugins/runtime. */
 export function buildPluginRuntimeLoadOptions(
   context: PluginRuntimeLoadContext,
   overrides?: Partial<PluginLoadOptions>,
@@ -124,6 +131,7 @@ export function buildPluginRuntimeLoadOptions(
   return buildPluginRuntimeLoadOptionsFromValues(context, overrides);
 }
 
+/** Reused helper for build Plugin Runtime Load Options From Values behavior in src/plugins/runtime. */
 export function buildPluginRuntimeLoadOptionsFromValues(
   values: PluginRuntimeResolvedLoadValues,
   overrides?: Partial<PluginLoadOptions>,

@@ -1,3 +1,4 @@
+// Tests shared usage aggregates test behavior.
 import { describe, expect, it } from "vitest";
 import {
   buildUsageAggregateTail,

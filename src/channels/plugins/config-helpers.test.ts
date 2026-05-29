@@ -1,3 +1,4 @@
+// Coverage for channel plugin config helpers.
 import { describe, expect, it } from "vitest";
 import { clearAccountEntryFields } from "./config-helpers.js";
 

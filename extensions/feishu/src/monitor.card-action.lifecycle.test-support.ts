@@ -1,3 +1,4 @@
+// extensions/feishu/src monitor card action lifecycle test support helpers and runtime behavior.
 import { createRuntimeEnv } from "openclaw/plugin-sdk/plugin-test-runtime";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "./lifecycle.test-support.js";

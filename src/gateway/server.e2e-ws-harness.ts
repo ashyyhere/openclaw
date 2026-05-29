@@ -1,3 +1,4 @@
+// gateway server e2e ws harness helpers and runtime behavior.
 import { WebSocket } from "ws";
 import { captureEnv } from "../test-utils/env.js";
 import {
@@ -7,11 +8,13 @@ import {
   trackConnectChallengeNonce,
 } from "./test-helpers.js";
 
+/** Shared type for Gateway Ws Client in src/gateway. */
 export type GatewayWsClient = {
   ws: WebSocket;
   hello: unknown;
 };
 
+/** Shared type for Gateway Server Harness in src/gateway. */
 export type GatewayServerHarness = {
   port: number;
   server: Awaited<ReturnType<typeof startGatewayServer>>;
@@ -19,6 +22,7 @@ export type GatewayServerHarness = {
   close: () => Promise<void>;
 };
 
+/** Reused helper for start Gateway Server Harness behavior in src/gateway. */
 export async function startGatewayServerHarness(): Promise<GatewayServerHarness> {
   const envSnapshot = captureEnv(["OPENCLAW_GATEWAY_TOKEN"]);
   delete process.env.OPENCLAW_GATEWAY_TOKEN;

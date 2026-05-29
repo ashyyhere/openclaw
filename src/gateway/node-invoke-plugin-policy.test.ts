@@ -1,3 +1,4 @@
+// Tests gateway node invoke plugin policy test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { PluginApprovalRequestPayload } from "../infra/plugin-approvals.js";
 import type { PluginRegistry } from "../plugins/registry-types.js";

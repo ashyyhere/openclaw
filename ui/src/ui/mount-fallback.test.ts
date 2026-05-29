@@ -1,3 +1,4 @@
+// Tests ui/src/ui mount fallback test behavior.
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";

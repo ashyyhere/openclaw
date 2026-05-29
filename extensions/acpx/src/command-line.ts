@@ -1,3 +1,4 @@
+// extensions/acpx/src command line helpers and runtime behavior.
 export function quoteCommandPart(value: string): string {
   return JSON.stringify(value);
 }

@@ -1,14 +1,20 @@
+// daemon launchd plist helpers and runtime behavior.
 import fs from "node:fs/promises";
 import type { GatewayServiceEnvironmentValueSource } from "./service-types.js";
 
 // launchd defaults to a 10s spawn throttle. Keep that default explicitly so
 // crash loops back off instead of respawning every second while still allowing
 // explicit kickstart restarts to take effect.
+/** Reused constant for LAUNCH AGENT THROTTLE INTERVAL SECONDS behavior in src/daemon. */
 export const LAUNCH_AGENT_THROTTLE_INTERVAL_SECONDS = 10;
+/** Reused constant for LAUNCH AGENT EXIT TIMEOUT SECONDS behavior in src/daemon. */
 export const LAUNCH_AGENT_EXIT_TIMEOUT_SECONDS = 20;
 // launchd stores plist integer values in decimal; 0o077 renders as 63 (owner-only files).
+/** Reused constant for LAUNCH AGENT UMASK DECIMAL behavior in src/daemon. */
 export const LAUNCH_AGENT_UMASK_DECIMAL = 0o077;
+/** Reused constant for LAUNCH AGENT PROCESS TYPE behavior in src/daemon. */
 export const LAUNCH_AGENT_PROCESS_TYPE = "Interactive";
+/** Reused constant for LAUNCH AGENT STDIN PATH behavior in src/daemon. */
 export const LAUNCH_AGENT_STDIN_PATH = "/dev/null";
 
 const plistEscape = (value: string): string =>
@@ -179,6 +185,7 @@ const renderEnvDict = (env: Record<string, string | undefined> | undefined): str
   return `\n    <key>EnvironmentVariables</key>\n    <dict>${items}\n    </dict>`;
 };
 
+/** Reused helper for read Launch Agent Program Arguments From File behavior in src/daemon. */
 export async function readLaunchAgentProgramArgumentsFromFile(plistPath: string): Promise<{
   programArguments: string[];
   workingDirectory?: string;
@@ -186,6 +193,7 @@ export async function readLaunchAgentProgramArgumentsFromFile(plistPath: string)
   environmentValueSources?: Record<string, GatewayServiceEnvironmentValueSource>;
   sourcePath?: string;
 } | null>;
+/** Reused helper for read Launch Agent Program Arguments From File behavior in src/daemon. */
 export async function readLaunchAgentProgramArgumentsFromFile(
   plistPath: string,
   options: ReadLaunchAgentProgramArgumentsOptions,
@@ -196,6 +204,7 @@ export async function readLaunchAgentProgramArgumentsFromFile(
   environmentValueSources?: Record<string, GatewayServiceEnvironmentValueSource>;
   sourcePath?: string;
 } | null>;
+/** Reused helper for read Launch Agent Program Arguments From File behavior in src/daemon. */
 export async function readLaunchAgentProgramArgumentsFromFile(
   plistPath: string,
   options?: ReadLaunchAgentProgramArgumentsOptions,
@@ -259,6 +268,7 @@ export async function readLaunchAgentProgramArgumentsFromFile(
   }
 }
 
+/** Reused helper for build Launch Agent Plist behavior in src/daemon. */
 export function buildLaunchAgentPlist({
   label,
   comment,

@@ -1,4 +1,7 @@
+// extensions/kilocode api helpers and runtime behavior.
+/** Re-exported kilocode plugin public API, starting with build Kilocode Provider. */
 export { buildKilocodeProvider, buildKilocodeProviderWithDiscovery } from "./provider-catalog.js";
+/** Re-exported kilocode plugin public API. */
 export {
   buildKilocodeModelDefinition,
   KILOCODE_BASE_URL,

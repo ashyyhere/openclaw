@@ -1,7 +1,9 @@
+// plugins enable helpers and runtime behavior.
 import { normalizeChatChannelId } from "../channels/ids.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { setPluginEnabledInConfig } from "./toggle-config.js";
 
+/** Shared type for Plugin Enable Result in src/plugins. */
 export type PluginEnableResult = {
   config: OpenClawConfig;
   enabled: boolean;
@@ -9,6 +11,7 @@ export type PluginEnableResult = {
   reason?: string;
 };
 
+/** Reused helper for enable Plugin In Config behavior in src/plugins. */
 export function enablePluginInConfig(
   cfg: OpenClawConfig,
   pluginId: string,

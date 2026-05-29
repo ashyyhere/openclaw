@@ -1,3 +1,4 @@
+// extensions/matrix/src approval reaction auth helpers and runtime behavior.
 import { resolveApprovalApprovers } from "openclaw/plugin-sdk/approval-auth-runtime";
 import { normalizeMatrixApproverId } from "./approval-ids.js";
 import { resolveMatrixAccount } from "./matrix/accounts.js";

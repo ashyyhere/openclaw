@@ -1,3 +1,4 @@
+// Subagent command action for run details.
 import { subagentRuns } from "../../../agents/subagent-registry-memory.js";
 import { countPendingDescendantRunsFromRuns } from "../../../agents/subagent-registry-queries.js";
 import { getSubagentRunsSnapshotForRead } from "../../../agents/subagent-registry-state.js";
@@ -50,6 +51,7 @@ function loadSubagentSessionEntry(params: SubagentsCommandContext["params"], chi
   return { entry: store[childKey] };
 }
 
+/** Reused helper for handle Subagents Info Action behavior in src/auto-reply/reply. */
 export function handleSubagentsInfoAction(ctx: SubagentsCommandContext): CommandHandlerResult {
   const { params, requesterKey, runs, restTokens } = ctx;
   const target = restTokens[0];

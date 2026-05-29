@@ -1,3 +1,4 @@
+/** Memory host SDK barrel for engine storage helpers. */
 export {
   buildFileEntry,
   buildMemoryReadResult,
@@ -25,8 +26,10 @@ export {
   statRegularFile,
 } from "../../packages/memory-host-sdk/src/engine-storage.js";
 
+/** Shared type for Memory Source in src/plugin-sdk. */
 export type MemorySource = "memory" | "sessions";
 
+/** Shared type for Memory Search Result in src/plugin-sdk. */
 export type MemorySearchResult = {
   path: string;
   startLine: number;
@@ -39,6 +42,7 @@ export type MemorySearchResult = {
   citation?: string;
 };
 
+/** Shared type for Memory Embedding Probe Result in src/plugin-sdk. */
 export type MemoryEmbeddingProbeResult = {
   ok: boolean;
   error?: string;
@@ -48,6 +52,7 @@ export type MemoryEmbeddingProbeResult = {
   cacheExpiresAtMs?: number;
 };
 
+/** Re-exported API for src/plugin-sdk. */
 export type {
   MemoryChunk,
   MemoryFileEntry,

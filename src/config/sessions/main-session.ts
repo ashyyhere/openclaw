@@ -1,3 +1,4 @@
+// config/sessions main session helpers and runtime behavior.
 import {
   normalizeAgentId,
   normalizeMainKey,
@@ -11,6 +12,7 @@ function buildMainSessionKey(agentId: string, mainKey?: string): string {
   return `agent:${normalizeAgentId(agentId)}:${normalizeMainKey(mainKey)}`;
 }
 
+/** Reused helper for resolve Main Session Key behavior in src/config/sessions. */
 export function resolveMainSessionKey(cfg?: {
   session?: { scope?: SessionScope; mainKey?: string };
   agents?: { list?: Array<{ id?: string; default?: boolean }> };
@@ -24,8 +26,10 @@ export function resolveMainSessionKey(cfg?: {
   return buildMainSessionKey(defaultAgentId, cfg?.session?.mainKey);
 }
 
+/** Re-exported API for src/config/sessions, starting with resolve Agent Id From Session Key. */
 export { resolveAgentIdFromSessionKey };
 
+/** Reused helper for resolve Agent Main Session Key behavior in src/config/sessions. */
 export function resolveAgentMainSessionKey(params: {
   cfg?: { session?: { mainKey?: string } };
   agentId: string;
@@ -33,6 +37,7 @@ export function resolveAgentMainSessionKey(params: {
   return buildMainSessionKey(params.agentId, params.cfg?.session?.mainKey);
 }
 
+/** Reused helper for resolve Explicit Agent Session Key behavior in src/config/sessions. */
 export function resolveExplicitAgentSessionKey(params: {
   cfg?: { session?: { scope?: SessionScope; mainKey?: string } };
   agentId?: string | null;
@@ -44,6 +49,7 @@ export function resolveExplicitAgentSessionKey(params: {
   return resolveAgentMainSessionKey({ cfg: params.cfg, agentId });
 }
 
+/** Reused helper for canonicalize Main Session Alias behavior in src/config/sessions. */
 export function canonicalizeMainSessionAlias(params: {
   cfg?: { session?: { scope?: SessionScope; mainKey?: string } };
   agentId: string;

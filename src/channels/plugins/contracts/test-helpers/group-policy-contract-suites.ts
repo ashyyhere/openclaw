@@ -1,3 +1,4 @@
+/** Contract suites for channel runtime group policy fallback behavior. */
 import { expect, it } from "vitest";
 import { resolveOpenProviderRuntimeGroupPolicy } from "../../../../config/runtime-group-policy.js";
 

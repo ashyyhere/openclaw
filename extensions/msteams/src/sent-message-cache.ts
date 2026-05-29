@@ -1,3 +1,4 @@
+// extensions/msteams/src sent message cache helpers and runtime behavior.
 import { getOptionalMSTeamsRuntime } from "./runtime.js";
 
 const TTL_MS = 24 * 60 * 60 * 1000;

@@ -12,6 +12,7 @@ import { TOOL_GROUPS } from "./tool-policy.js";
 // Tool name aliases are intentionally not exported from tool-policy today.
 // Keep the conformance snapshot focused on exported policy constants.
 
+/** Reused constant for TOOL POLICY CONFORMANCE behavior in src/agents. */
 export const TOOL_POLICY_CONFORMANCE = {
   toolGroups: TOOL_GROUPS,
 } as const;

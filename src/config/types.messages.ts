@@ -1,6 +1,8 @@
+// config types messages helpers and runtime behavior.
 import type { QueueDropPolicy, QueueMode, QueueModeByProvider } from "./types.queue.js";
 import type { TtsConfig } from "./types.tts.js";
 
+/** Shared type for Group Chat Config in src/config. */
 export type GroupChatConfig = {
   mentionPatterns?: string[];
   historyLimit?: number;
@@ -18,10 +20,12 @@ export type GroupChatConfig = {
   visibleReplies?: "automatic" | "message_tool";
 };
 
+/** Shared type for Dm Config in src/config. */
 export type DmConfig = {
   historyLimit?: number;
 };
 
+/** Shared type for Queue Config in src/config. */
 export type QueueConfig = {
   mode?: QueueMode;
   byChannel?: QueueModeByProvider;
@@ -32,15 +36,19 @@ export type QueueConfig = {
   drop?: QueueDropPolicy;
 };
 
+/** Shared type for Inbound Debounce By Provider in src/config. */
 export type InboundDebounceByProvider = Record<string, number>;
 
+/** Shared type for Inbound Debounce Config in src/config. */
 export type InboundDebounceConfig = {
   debounceMs?: number;
   byChannel?: InboundDebounceByProvider;
 };
 
+/** Shared type for Broadcast Strategy in src/config. */
 export type BroadcastStrategy = "parallel" | "sequential";
 
+/** Shared type for Broadcast Config in src/config. */
 export type BroadcastConfig = {
   /** Default processing strategy for broadcast peers. */
   strategy?: BroadcastStrategy;
@@ -52,6 +60,7 @@ export type BroadcastConfig = {
   [peerId: string]: string[] | BroadcastStrategy | undefined;
 };
 
+/** Shared type for Audio Config in src/config. */
 export type AudioConfig = {
   /** @deprecated Use tools.media.audio.models instead. */
   transcription?: {
@@ -61,6 +70,7 @@ export type AudioConfig = {
   };
 };
 
+/** Shared type for Status Reactions Emoji Config in src/config. */
 export type StatusReactionsEmojiConfig = {
   thinking?: string;
   tool?: string;
@@ -76,6 +86,7 @@ export type StatusReactionsEmojiConfig = {
   compacting?: string;
 };
 
+/** Shared type for Status Reactions Timing Config in src/config. */
 export type StatusReactionsTimingConfig = {
   /** Debounce interval for intermediate states (ms). Default: 700. */
   debounceMs?: number;
@@ -89,6 +100,7 @@ export type StatusReactionsTimingConfig = {
   errorHoldMs?: number;
 };
 
+/** Shared type for Status Reactions Config in src/config. */
 export type StatusReactionsConfig = {
   /** Enable lifecycle status reactions (default: false). */
   enabled?: boolean;
@@ -98,6 +110,7 @@ export type StatusReactionsConfig = {
   timing?: StatusReactionsTimingConfig;
 };
 
+/** Shared type for Messages Config in src/config. */
 export type MessagesConfig = {
   /** @deprecated Use `whatsapp.messagePrefix` (WhatsApp-only inbound prefix). */
   messagePrefix?: string;
@@ -148,8 +161,10 @@ export type MessagesConfig = {
   tts?: TtsConfig;
 };
 
+/** Shared type for Native Commands Setting in src/config. */
 export type NativeCommandsSetting = boolean | "auto";
 
+/** Shared type for Command Owner Display in src/config. */
 export type CommandOwnerDisplay = "raw" | "hash";
 
 /**
@@ -159,6 +174,7 @@ export type CommandOwnerDisplay = "raw" | "hash";
  */
 export type CommandAllowFrom = Record<string, Array<string | number>>;
 
+/** Shared type for Commands Config in src/config. */
 export type CommandsConfig = {
   /** Enable native command registration when supported (default: "auto"). */
   native?: NativeCommandsSetting;
@@ -197,6 +213,7 @@ export type CommandsConfig = {
   allowFrom?: CommandAllowFrom;
 };
 
+/** Shared type for Provider Commands Config in src/config. */
 export type ProviderCommandsConfig = {
   /** Override native command registration for this provider (bool or "auto"). */
   native?: NativeCommandsSetting;

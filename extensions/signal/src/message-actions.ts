@@ -1,3 +1,4 @@
+// extensions/signal/src message actions helpers and runtime behavior.
 import { resolveReactionMessageId } from "openclaw/plugin-sdk/channel-actions";
 import { createActionGate, jsonResult, readStringParam } from "openclaw/plugin-sdk/channel-actions";
 import type {

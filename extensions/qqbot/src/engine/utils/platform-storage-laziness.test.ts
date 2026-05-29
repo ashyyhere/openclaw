@@ -1,3 +1,4 @@
+// Tests extensions/qqbot/src/engine/utils platform storage laziness test behavior.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

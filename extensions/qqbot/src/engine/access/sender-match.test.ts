@@ -1,3 +1,4 @@
+// Tests extensions/qqbot/src/engine/access sender match test behavior.
 import { describe, expect, it } from "vitest";
 import {
   createQQBotSenderMatcher,

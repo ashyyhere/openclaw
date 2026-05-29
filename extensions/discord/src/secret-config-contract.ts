@@ -1,3 +1,4 @@
+// extensions/discord/src secret config contract helpers and runtime behavior.
 import {
   collectNestedChannelFieldAssignments,
   collectSimpleChannelFieldAssignments,

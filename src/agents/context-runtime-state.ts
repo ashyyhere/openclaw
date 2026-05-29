@@ -1,3 +1,4 @@
+/** Global runtime state for context-window discovery and cache resets. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { createLazyImportLoader, type LazyPromiseLoader } from "../shared/lazy-promise.js";
 import { MODEL_CONTEXT_TOKEN_CACHE } from "./context-cache.js";
@@ -12,6 +13,7 @@ type ContextWindowRuntimeState = {
   modelsConfigRuntimeLoader: LazyPromiseLoader<typeof import("./models-config.runtime.js")>;
 };
 
+/** Shared process-wide context-window loader and failure state. */
 export const CONTEXT_WINDOW_RUNTIME_STATE = (() => {
   const globalState = globalThis as typeof globalThis & {
     [CONTEXT_WINDOW_RUNTIME_STATE_KEY]?: ContextWindowRuntimeState;
@@ -28,6 +30,7 @@ export const CONTEXT_WINDOW_RUNTIME_STATE = (() => {
   return globalState[CONTEXT_WINDOW_RUNTIME_STATE_KEY];
 })();
 
+/** Reset context-window runtime caches between tests. */
 export function resetContextWindowCacheForTest(): void {
   CONTEXT_WINDOW_RUNTIME_STATE.loadPromise = null;
   CONTEXT_WINDOW_RUNTIME_STATE.configuredConfig = undefined;

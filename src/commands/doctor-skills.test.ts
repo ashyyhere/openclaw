@@ -1,3 +1,4 @@
+/** Tests doctor checks for agent skill installation status. */
 import { describe, expect, it } from "vitest";
 import { createEmptyInstallChecks } from "../cli/requirements-test-fixtures.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";

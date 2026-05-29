@@ -1,3 +1,4 @@
+/** Resolves provider-runtime lookup keys for provider-specific policy hooks. */
 import { MODEL_APIS } from "../config/types.models.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import type { ProviderConfig } from "./models-config.providers.secrets.js";
@@ -9,6 +10,7 @@ const GENERIC_PROVIDER_APIS = new Set<string>([
   "google-generative-ai",
 ]);
 
+/** Map a configured provider row to the plugin/provider policy owner key. */
 export function resolveProviderPluginLookupKey(
   providerKey: string,
   provider?: ProviderConfig,

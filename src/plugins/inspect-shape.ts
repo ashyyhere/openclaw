@@ -1,6 +1,8 @@
+// plugins inspect shape helpers and runtime behavior.
 import type { PluginRegistry } from "./registry.js";
 import { hasKind } from "./slots.js";
 
+/** Shared type for Plugin Capability Kind in src/plugins. */
 export type PluginCapabilityKind =
   | "cli-backend"
   | "text-inference"
@@ -18,17 +20,20 @@ export type PluginCapabilityKind =
   | "context-engine"
   | "channel";
 
+/** Shared type for Plugin Inspect Shape in src/plugins. */
 export type PluginInspectShape =
   | "hook-only"
   | "plain-capability"
   | "hybrid-capability"
   | "non-capability";
 
+/** Shared type for Plugin Capability Entry in src/plugins. */
 export type PluginCapabilityEntry = {
   kind: PluginCapabilityKind;
   ids: string[];
 };
 
+/** Shared type for Plugin Shape Summary in src/plugins. */
 export type PluginShapeSummary = {
   shape: PluginInspectShape;
   capabilityMode: "none" | "plain" | "hybrid";
@@ -98,6 +103,7 @@ function derivePluginInspectShape(params: {
   return "non-capability";
 }
 
+/** Reused helper for build Plugin Shape Summary behavior in src/plugins. */
 export function buildPluginShapeSummary(params: {
   plugin: PluginRegistry["plugins"][number];
   report: Pick<PluginRegistry, "hooks" | "typedHooks" | "tools" | "gatewayMethodDescriptors">;

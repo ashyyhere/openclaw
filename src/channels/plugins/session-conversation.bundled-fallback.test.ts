@@ -1,3 +1,4 @@
+/** Tests bundled fallback parsing for session conversation references. */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { clearRuntimeConfigSnapshot, setRuntimeConfigSnapshot } from "../../config/io.js";
 import { resetPluginRuntimeStateForTest } from "../../plugins/runtime.js";

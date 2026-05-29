@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix/send media helpers and runtime behavior.
 import { parseBuffer, type IFileInfo } from "music-metadata";
 import { getMatrixRuntime } from "../../runtime.js";
 import type {

@@ -1,3 +1,4 @@
+/** Tests node CLI command registration. */
 import { Command } from "commander";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { registerNodeCli } from "./register.js";

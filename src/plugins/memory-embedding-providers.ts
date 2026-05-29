@@ -1,12 +1,15 @@
+// plugins memory embedding providers helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { SecretInput } from "../config/types.secrets.js";
 import type { EmbeddingInput } from "../memory-host-sdk/host/embedding-inputs.js";
 
+/** Shared type for Memory Embedding Batch Chunk in src/plugins. */
 export type MemoryEmbeddingBatchChunk = {
   text: string;
   embeddingInput?: EmbeddingInput;
 };
 
+/** Shared type for Memory Embedding Batch Options in src/plugins. */
 export type MemoryEmbeddingBatchOptions = {
   agentId: string;
   chunks: MemoryEmbeddingBatchChunk[];
@@ -17,10 +20,12 @@ export type MemoryEmbeddingBatchOptions = {
   debug: (message: string, data?: Record<string, unknown>) => void;
 };
 
+/** Shared type for Memory Embedding Provider Call Options in src/plugins. */
 export type MemoryEmbeddingProviderCallOptions = {
   signal?: AbortSignal;
 };
 
+/** Shared type for Memory Embedding Provider Runtime in src/plugins. */
 export type MemoryEmbeddingProviderRuntime = {
   id: string;
   cacheKeyData?: Record<string, unknown>;
@@ -29,6 +34,7 @@ export type MemoryEmbeddingProviderRuntime = {
   batchEmbed?: (options: MemoryEmbeddingBatchOptions) => Promise<number[][] | null>;
 };
 
+/** Shared type for Memory Embedding Provider in src/plugins. */
 export type MemoryEmbeddingProvider = {
   id: string;
   model: string;
@@ -45,6 +51,7 @@ export type MemoryEmbeddingProvider = {
   close?: () => Promise<void> | void;
 };
 
+/** Shared type for Memory Embedding Provider Create Options in src/plugins. */
 export type MemoryEmbeddingProviderCreateOptions = {
   config: OpenClawConfig;
   agentDir?: string;
@@ -75,11 +82,13 @@ export type MemoryEmbeddingProviderCreateOptions = {
     | "FACT_VERIFICATION";
 };
 
+/** Shared type for Memory Embedding Provider Create Result in src/plugins. */
 export type MemoryEmbeddingProviderCreateResult = {
   provider: MemoryEmbeddingProvider | null;
   runtime?: MemoryEmbeddingProviderRuntime;
 };
 
+/** Shared type for Memory Embedding Provider Adapter in src/plugins. */
 export type MemoryEmbeddingProviderAdapter = {
   id: string;
   defaultModel?: string;
@@ -95,6 +104,7 @@ export type MemoryEmbeddingProviderAdapter = {
   shouldContinueAutoSelection?: (err: unknown) => boolean;
 };
 
+/** Shared type for Registered Memory Embedding Provider in src/plugins. */
 export type RegisteredMemoryEmbeddingProvider = {
   adapter: MemoryEmbeddingProviderAdapter;
   ownerPluginId?: string;
@@ -113,6 +123,7 @@ function getMemoryEmbeddingProviders(): Map<string, RegisteredMemoryEmbeddingPro
   return created;
 }
 
+/** Reused helper for register Memory Embedding Provider behavior in src/plugins. */
 export function registerMemoryEmbeddingProvider(
   adapter: MemoryEmbeddingProviderAdapter,
   options?: { ownerPluginId?: string },
@@ -123,24 +134,29 @@ export function registerMemoryEmbeddingProvider(
   });
 }
 
+/** Reused helper for get Registered Memory Embedding Provider behavior in src/plugins. */
 export function getRegisteredMemoryEmbeddingProvider(
   id: string,
 ): RegisteredMemoryEmbeddingProvider | undefined {
   return getMemoryEmbeddingProviders().get(id);
 }
 
+/** Reused helper for get Memory Embedding Provider behavior in src/plugins. */
 export function getMemoryEmbeddingProvider(id: string): MemoryEmbeddingProviderAdapter | undefined {
   return getMemoryEmbeddingProviders().get(id)?.adapter;
 }
 
+/** Reused helper for list Registered Memory Embedding Providers behavior in src/plugins. */
 export function listRegisteredMemoryEmbeddingProviders(): RegisteredMemoryEmbeddingProvider[] {
   return Array.from(getMemoryEmbeddingProviders().values());
 }
 
+/** Reused helper for list Memory Embedding Providers behavior in src/plugins. */
 export function listMemoryEmbeddingProviders(): MemoryEmbeddingProviderAdapter[] {
   return listRegisteredMemoryEmbeddingProviders().map((entry) => entry.adapter);
 }
 
+/** Reused helper for restore Memory Embedding Providers behavior in src/plugins. */
 export function restoreMemoryEmbeddingProviders(adapters: MemoryEmbeddingProviderAdapter[]): void {
   getMemoryEmbeddingProviders().clear();
   for (const adapter of adapters) {
@@ -148,6 +164,7 @@ export function restoreMemoryEmbeddingProviders(adapters: MemoryEmbeddingProvide
   }
 }
 
+/** Reused helper for restore Registered Memory Embedding Providers behavior in src/plugins. */
 export function restoreRegisteredMemoryEmbeddingProviders(
   entries: RegisteredMemoryEmbeddingProvider[],
 ): void {
@@ -159,8 +176,10 @@ export function restoreRegisteredMemoryEmbeddingProviders(
   }
 }
 
+/** Reused helper for clear Memory Embedding Providers behavior in src/plugins. */
 export function clearMemoryEmbeddingProviders(): void {
   getMemoryEmbeddingProviders().clear();
 }
 
+/** Reused constant for reset Memory Embedding Providers behavior in src/plugins. */
 export const resetMemoryEmbeddingProviders = clearMemoryEmbeddingProviders;

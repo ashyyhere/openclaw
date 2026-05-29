@@ -1,3 +1,4 @@
+// extensions/feishu/src perm helpers and runtime behavior.
 import type * as Lark from "@larksuiteoapi/node-sdk";
 import type { OpenClawPluginApi } from "../runtime-api.js";
 import { listEnabledFeishuAccounts } from "./accounts.js";

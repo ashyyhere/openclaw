@@ -1,3 +1,4 @@
+// Tests extensions/qqbot/src/bridge/tools remind test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { RemindCronAction } from "../../engine/tools/remind-logic.js";
 

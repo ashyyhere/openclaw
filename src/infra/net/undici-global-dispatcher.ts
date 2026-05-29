@@ -1,3 +1,4 @@
+// infra/net undici global dispatcher helpers and runtime behavior.
 import { isProxylineDispatcher } from "@openclaw/proxyline/dispatcher-brand";
 import { hasEnvHttpProxyAgentConfigured, resolveEnvHttpProxyAgentOptions } from "./proxy-env.js";
 import { addActiveManagedProxyTlsOptions } from "./proxy/managed-proxy-undici.js";
@@ -13,6 +14,7 @@ import {
   type UndiciGlobalDispatcherDeps,
 } from "./undici-runtime.js";
 
+/** Reused constant for DEFAULT UNDICI STREAM TIMEOUT MS behavior in src/infra/net. */
 export const DEFAULT_UNDICI_STREAM_TIMEOUT_MS = 30 * 60 * 1000;
 const HTTP1_ONLY_DISPATCHER_OPTIONS = Object.freeze({
   allowH2: false as const,
@@ -204,6 +206,7 @@ function resolveCurrentDispatcherInfo(
   };
 }
 
+/** Reused helper for ensure Global Undici Env Proxy Dispatcher behavior in src/infra/net. */
 export function ensureGlobalUndiciEnvProxyDispatcher(): void {
   const shouldUseEnvProxy = hasEnvHttpProxyAgentConfigured();
   if (!shouldUseEnvProxy) {
@@ -279,6 +282,7 @@ function applyGlobalDispatcherStreamTimeouts(params: {
   }
 }
 
+/** Reused helper for ensure Global Undici Stream Timeouts behavior in src/infra/net. */
 export function ensureGlobalUndiciStreamTimeouts(opts?: { timeoutMs?: number }): void {
   const timeoutMs = resolveStreamTimeoutMs(opts);
   if (timeoutMs === null) {
@@ -306,6 +310,7 @@ export function ensureGlobalUndiciStreamTimeouts(opts?: { timeoutMs?: number }):
   });
 }
 
+/** Reused helper for ensure Global Undici Dispatcher Stream Timeouts behavior in src/infra/net. */
 export function ensureGlobalUndiciDispatcherStreamTimeouts(opts?: { timeoutMs?: number }): void {
   const timeoutMs = resolveStreamTimeoutMs(opts);
   if (timeoutMs === null) {
@@ -325,6 +330,7 @@ export function ensureGlobalUndiciDispatcherStreamTimeouts(opts?: { timeoutMs?: 
   });
 }
 
+/** Reused helper for reset Global Undici Stream Timeouts For Tests behavior in src/infra/net. */
 export function resetGlobalUndiciStreamTimeoutsForTests(): void {
   lastAppliedTimeoutKey = null;
   lastAppliedProxyBootstrapKey = null;

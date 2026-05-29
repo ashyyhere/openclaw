@@ -1,3 +1,4 @@
+/** Runs gateway status probes against selected targets. */
 import type { OpenClawConfig } from "../../config/types.js";
 import { probeGateway } from "../../gateway/probe.js";
 import {
@@ -16,6 +17,7 @@ import {
   type GatewayStatusTarget,
 } from "./helpers.js";
 
+/** Shared type for Gateway Status Probed Target in src/commands/gateway-status. */
 export type GatewayStatusProbedTarget = {
   target: GatewayStatusTarget;
   probe: Awaited<ReturnType<typeof probeGateway>>;
@@ -24,6 +26,7 @@ export type GatewayStatusProbedTarget = {
   authDiagnostics: string[];
 };
 
+/** Reused helper for run Gateway Status Probe Pass behavior in src/commands/gateway-status. */
 export async function runGatewayStatusProbePass(params: {
   cfg: OpenClawConfig;
   opts: {

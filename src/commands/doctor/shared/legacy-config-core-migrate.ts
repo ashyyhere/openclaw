@@ -1,3 +1,4 @@
+/** Core legacy config migration runner used by doctor repair. */
 import type { OpenClawConfig } from "../../../config/types.openclaw.js";
 import { runPluginSetupConfigMigrations } from "../../../plugins/setup-registry.js";
 import { normalizeAgentId } from "../../../routing/session-key.js";
@@ -42,6 +43,7 @@ function pruneBindingsForMissingAgents(cfg: OpenClawConfig, changes: string[]): 
   };
 }
 
+/** Reused helper for normalize Compatibility Config Values behavior in src/commands/doctor. */
 export function normalizeCompatibilityConfigValues(cfg: OpenClawConfig): {
   config: OpenClawConfig;
   changes: string[];

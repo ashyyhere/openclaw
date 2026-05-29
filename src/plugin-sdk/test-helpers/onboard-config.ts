@@ -1,3 +1,4 @@
+// plugin-sdk/test-helpers onboard config helpers and runtime behavior.
 import type { ModelApi } from "../provider-model-shared.js";
 import type { OpenClawConfig } from "../testing.js";
 

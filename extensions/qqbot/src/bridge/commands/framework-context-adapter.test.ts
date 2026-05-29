@@ -1,3 +1,4 @@
+// Tests extensions/qqbot/src/bridge/commands framework context adapter test behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import type { PluginCommandContext } from "openclaw/plugin-sdk/plugin-entry";
 import { describe, expect, it } from "vitest";

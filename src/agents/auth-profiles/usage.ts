@@ -23,6 +23,7 @@ import {
   isAuthCooldownBypassedForProvider,
   resolveProfileUnusableUntil,
 } from "./usage-state.js";
+/** Re-exported API for src/agents/auth-profiles. */
 export {
   clearExpiredCooldowns,
   getSoonestCooldownExpiry,
@@ -40,10 +41,12 @@ const authProfileUsageDeps = {
 // against the real auth state.
 let onAuthProfileFailureHook: (() => void) | undefined;
 
+/** Reused helper for set Auth Profile Failure Hook behavior in src/agents/auth-profiles. */
 export function setAuthProfileFailureHook(hook: (() => void) | undefined): void {
   onAuthProfileFailureHook = hook;
 }
 
+/** Reused constant for testing behavior in src/agents/auth-profiles. */
 export const testing = {
   setDepsForTest(
     overrides: Partial<{
@@ -381,6 +384,7 @@ export function resolveProfilesUnavailableReason(params: {
   return best;
 }
 
+/** Reused helper for calculate Auth Profile Cooldown Ms behavior in src/agents/auth-profiles. */
 export function calculateAuthProfileCooldownMs(errorCount: number): number {
   const normalized = Math.max(1, errorCount);
   if (normalized <= 1) {
@@ -506,6 +510,7 @@ function resolveDisabledFailureBackoffMs(params: {
   });
 }
 
+/** Reused helper for resolve Profile Unusable Until For Display behavior in src/agents/auth-profiles. */
 export function resolveProfileUnusableUntilForDisplay(
   store: AuthProfileStore,
   profileId: string,
@@ -805,6 +810,7 @@ export async function markAuthProfileFailure(params: {
   }
 }
 
+/** Reused helper for mark Auth Profile Blocked Until behavior in src/agents/auth-profiles. */
 export async function markAuthProfileBlockedUntil(params: {
   store: AuthProfileStore;
   profileId: string;
@@ -965,4 +971,5 @@ export async function clearAuthProfileCooldown(params: {
   updateUsageStatsEntry(store, profileId, (existing) => resetUsageStats(existing));
   authProfileUsageDeps.saveAuthProfileStore(store, agentDir);
 }
+/** Re-exported API for src/agents/auth-profiles, starting with testing. */
 export { testing as __testing };

@@ -1,3 +1,4 @@
+// extensions/tavily/src tavily search provider helpers and runtime behavior.
 import { readPositiveIntegerParam } from "openclaw/plugin-sdk/param-readers";
 import { type WebSearchProviderPlugin } from "openclaw/plugin-sdk/provider-web-search-contract";
 import { buildTavilyWebSearchProviderBase } from "../web-search-shared.js";

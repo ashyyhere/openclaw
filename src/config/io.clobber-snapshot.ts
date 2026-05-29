@@ -1,5 +1,7 @@
+// config io clobber snapshot helpers and runtime behavior.
 import path from "node:path";
 
+/** Reused constant for CONFIG CLOBBER SNAPSHOT LIMIT behavior in src/config. */
 export const CONFIG_CLOBBER_SNAPSHOT_LIMIT = 32;
 
 const CONFIG_CLOBBER_LOCK_STALE_MS = 30_000;
@@ -32,6 +34,7 @@ type ConfigClobberSnapshotFs = {
   ): unknown;
 };
 
+/** Shared type for Config Clobber Snapshot Deps in src/config. */
 export type ConfigClobberSnapshotDeps = {
   fs: ConfigClobberSnapshotFs;
   logger: Pick<typeof console, "warn">;
@@ -259,6 +262,7 @@ function buildClobberedTargetPath(configPath: string, observedAt: string, attemp
   return attempt === 0 ? basePath : `${basePath}-${String(attempt).padStart(2, "0")}`;
 }
 
+/** Reused helper for persist Bounded Clobbered Config Snapshot behavior in src/config. */
 export async function persistBoundedClobberedConfigSnapshot(params: {
   deps: ConfigClobberSnapshotDeps;
   configPath: string;
@@ -300,6 +304,7 @@ export async function persistBoundedClobberedConfigSnapshot(params: {
   }
 }
 
+/** Reused helper for persist Bounded Clobbered Config Snapshot Sync behavior in src/config. */
 export function persistBoundedClobberedConfigSnapshotSync(params: {
   deps: ConfigClobberSnapshotDeps;
   configPath: string;

@@ -1,11 +1,14 @@
 // Focused public test contracts for native agent-runtime adapters.
 
+/** Re-exported API for src/plugin-sdk. */
 export {
   AUTH_PROFILE_RUNTIME_CONTRACT,
   createAuthAliasManifestRegistry,
   expectedForwardedAuthProfile,
 } from "./test-helpers/agents/auth-profile-runtime-contract.js";
+/** Re-exported API for src/plugin-sdk, starting with DELIVERY NO REPLY RUNTIME CONTRACT. */
 export { DELIVERY_NO_REPLY_RUNTIME_CONTRACT } from "./test-helpers/agents/delivery-no-reply-runtime-contract.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   installCodexToolResultMiddleware,
   installOpenClawOwnedToolHooks,
@@ -13,11 +16,13 @@ export {
   resetOpenClawOwnedToolHooks,
   textToolResult,
 } from "./test-helpers/agents/openclaw-owned-tool-runtime-contract.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   createContractFallbackConfig,
   createContractRunResult,
   OUTCOME_FALLBACK_RUNTIME_CONTRACT,
 } from "./test-helpers/agents/outcome-fallback-runtime-contract.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   CODEX_CONTRACT_PROVIDER_ID,
   codexPromptOverlayContext,
@@ -30,6 +35,7 @@ export {
   openAiPluginPersonalityConfig,
   sharedGpt5PersonalityConfig,
 } from "./test-helpers/agents/prompt-overlay-runtime-contract.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   createNativeOpenAICodexResponsesModel,
   createNativeOpenAIResponsesModel,
@@ -39,6 +45,7 @@ export {
   createStrictCompatibleTool,
   normalizedParameterFreeSchema,
 } from "./test-helpers/agents/schema-normalization-runtime-contract.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   assistantHistoryMessage,
   currentPromptHistoryMessage,

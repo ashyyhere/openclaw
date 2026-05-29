@@ -1,3 +1,4 @@
+// ui/src/ui/views nodes exec approvals helpers and runtime behavior.
 import { html, nothing } from "lit";
 import { t } from "../../i18n/index.ts";
 import type {
@@ -146,6 +147,7 @@ function resolveExecApprovalsScope(
   return EXEC_APPROVALS_DEFAULT_SCOPE;
 }
 
+/** Reused helper for resolve Exec Approvals State behavior in ui/src/ui/views. */
 export function resolveExecApprovalsState(props: NodesProps): ExecApprovalsState {
   const form = props.execApprovalsForm ?? props.execApprovalsSnapshot?.file ?? null;
   const ready = Boolean(form);
@@ -190,6 +192,7 @@ export function resolveExecApprovalsState(props: NodesProps): ExecApprovalsState
   };
 }
 
+/** Reused helper for render Exec Approvals behavior in ui/src/ui/views. */
 export function renderExecApprovals(state: ExecApprovalsState) {
   const ready = state.ready;
   const targetReady = state.target !== "node" || Boolean(state.targetNodeId);

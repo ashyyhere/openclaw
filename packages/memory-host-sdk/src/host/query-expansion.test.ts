@@ -1,3 +1,4 @@
+// Tests packages/memory-host-sdk/src/host query expansion test behavior.
 import { describe, expect, it } from "vitest";
 import { expandQueryForFts, extractKeywords } from "./query-expansion.js";
 

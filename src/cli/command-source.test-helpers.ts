@@ -1,3 +1,4 @@
+/** Test helpers for reading CLI command source during coverage checks. */
 import fs from "node:fs/promises";
 import path from "node:path";
 
@@ -42,6 +43,7 @@ async function readModuleSource(modulePath: string, seen: Set<string>): Promise<
   return nestedSources.length > 0 ? [source, ...nestedSources].join("\n") : source;
 }
 
+/** Reused helper for read Command Source behavior in src/cli. */
 export async function readCommandSource(
   relativePath: string,
   cwd = process.cwd(),

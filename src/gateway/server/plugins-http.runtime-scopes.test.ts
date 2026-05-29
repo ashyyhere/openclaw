@@ -1,3 +1,4 @@
+// Tests gateway/server plugins http runtime scopes test behavior.
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { SubsystemLogger } from "../../logging/subsystem.js";

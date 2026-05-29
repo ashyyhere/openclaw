@@ -1,3 +1,4 @@
+// Tests extensions/mattermost/src config schema test behavior.
 import { describe, expect, it } from "vitest";
 import { MattermostConfigSchema } from "./config-schema-core.js";
 

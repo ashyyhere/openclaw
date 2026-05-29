@@ -1,3 +1,4 @@
+// Tests logging diagnostic session context test behavior.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

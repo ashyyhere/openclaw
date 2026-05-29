@@ -1,3 +1,4 @@
+// Tests extensions/imessage/src/monitor strip imsg length prefixed text test behavior.
 import { describe, expect, it } from "vitest";
 import {
   stripImessageLengthPrefixedUtf8Text,

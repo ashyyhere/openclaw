@@ -1,3 +1,5 @@
+// plugin-sdk keyed async queue helpers and runtime behavior.
+/** Shared type for Keyed Async Queue Hooks in src/plugin-sdk. */
 export type KeyedAsyncQueueHooks = {
   onEnqueue?: () => void;
   onSettle?: () => void;
@@ -32,6 +34,7 @@ export function enqueueKeyedTask<T>(params: {
   return current;
 }
 
+/** Reused class for Keyed Async Queue behavior in src/plugin-sdk. */
 export class KeyedAsyncQueue {
   private readonly tails = new Map<string, Promise<void>>();
 

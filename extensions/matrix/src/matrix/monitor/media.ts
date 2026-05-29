@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix/monitor media helpers and runtime behavior.
 import { getMatrixRuntime } from "../../runtime.js";
 import { MatrixMediaSizeLimitError, isMatrixMediaSizeLimitError } from "../media-errors.js";
 import type { MatrixClient } from "../sdk.js";

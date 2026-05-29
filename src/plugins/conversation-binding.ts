@@ -1,3 +1,4 @@
+// plugins conversation binding helpers and runtime behavior.
 import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
@@ -447,6 +448,7 @@ function buildBindingMetadata(params: {
   };
 }
 
+/** Reused helper for is Plugin Owned Binding Metadata behavior in src/plugins. */
 export function isPluginOwnedBindingMetadata(metadata: unknown): metadata is PluginBindingMetadata {
   if (!metadata || typeof metadata !== "object") {
     return false;
@@ -459,6 +461,7 @@ export function isPluginOwnedBindingMetadata(metadata: unknown): metadata is Plu
   );
 }
 
+/** Reused helper for is Plugin Owned Session Binding Record behavior in src/plugins. */
 export function isPluginOwnedSessionBindingRecord(
   record:
     | {
@@ -470,6 +473,7 @@ export function isPluginOwnedSessionBindingRecord(
   return isPluginOwnedBindingMetadata(record?.metadata);
 }
 
+/** Reused helper for to Plugin Conversation Binding behavior in src/plugins. */
 export function toPluginConversationBinding(
   record:
     | {
@@ -650,18 +654,22 @@ function buildDetachHintSuffix(detachHint?: string): string {
   return trimmed ? ` To detach this conversation, use ${trimmed}.` : "";
 }
 
+/** Reused helper for build Plugin Binding Unavailable Text behavior in src/plugins. */
 export function buildPluginBindingUnavailableText(binding: PluginConversationBinding): string {
   return `The bound plugin ${resolvePluginBindingDisplayName(binding)} is not currently loaded. Routing this message to OpenClaw instead. If this started after an update, run "openclaw doctor --fix"; otherwise reinstall or enable the plugin.${buildDetachHintSuffix(binding.detachHint)}`;
 }
 
+/** Reused helper for build Plugin Binding Declined Text behavior in src/plugins. */
 export function buildPluginBindingDeclinedText(binding: PluginConversationBinding): string {
   return `The bound plugin ${resolvePluginBindingDisplayName(binding)} did not handle this message. This conversation is still bound to that plugin.${buildDetachHintSuffix(binding.detachHint)}`;
 }
 
+/** Reused helper for build Plugin Binding Error Text behavior in src/plugins. */
 export function buildPluginBindingErrorText(binding: PluginConversationBinding): string {
   return `The bound plugin ${resolvePluginBindingDisplayName(binding)} hit an error handling this message. This conversation is still bound to that plugin.${buildDetachHintSuffix(binding.detachHint)}`;
 }
 
+/** Reused helper for has Shown Plugin Binding Fallback Notice behavior in src/plugins. */
 export function hasShownPluginBindingFallbackNotice(bindingId: string): boolean {
   const normalized = bindingId.trim();
   if (!normalized) {
@@ -670,6 +678,7 @@ export function hasShownPluginBindingFallbackNotice(bindingId: string): boolean 
   return getPluginBindingGlobalState().fallbackNoticeBindingIds.has(normalized);
 }
 
+/** Reused helper for mark Plugin Binding Fallback Notice Shown behavior in src/plugins. */
 export function markPluginBindingFallbackNoticeShown(bindingId: string): void {
   const normalized = bindingId.trim();
   if (!normalized) {
@@ -697,6 +706,7 @@ function decodeCustomIdValue(value: string): string {
   }
 }
 
+/** Reused helper for build Plugin Binding Approval Custom Id behavior in src/plugins. */
 export function buildPluginBindingApprovalCustomId(
   approvalId: string,
   decision: PluginBindingApprovalDecision,
@@ -705,6 +715,7 @@ export function buildPluginBindingApprovalCustomId(
   return `${PLUGIN_BINDING_CUSTOM_ID_PREFIX}:${encodeCustomIdValue(approvalId)}:${decisionCode}`;
 }
 
+/** Reused helper for parse Plugin Binding Approval Custom Id behavior in src/plugins. */
 export function parsePluginBindingApprovalCustomId(
   value: string,
 ): PluginBindingApprovalAction | null {
@@ -739,6 +750,7 @@ export function parsePluginBindingApprovalCustomId(
   };
 }
 
+/** Reused helper for request Plugin Conversation Binding behavior in src/plugins. */
 export async function requestPluginConversationBinding(params: {
   pluginId: string;
   pluginName?: string;
@@ -848,6 +860,7 @@ export async function requestPluginConversationBinding(params: {
   };
 }
 
+/** Reused helper for get Current Plugin Conversation Binding behavior in src/plugins. */
 export async function getCurrentPluginConversationBinding(params: {
   pluginRoot: string;
   conversation: PluginBindingConversation;
@@ -855,6 +868,7 @@ export async function getCurrentPluginConversationBinding(params: {
   return resolveOwnedPluginConversationBinding(params);
 }
 
+/** Reused helper for detach Plugin Conversation Binding behavior in src/plugins. */
 export async function detachPluginConversationBinding(params: {
   pluginRoot: string;
   conversation: PluginBindingConversation;
@@ -878,6 +892,7 @@ export async function detachPluginConversationBinding(params: {
   return { removed: true };
 }
 
+/** Reused helper for resolve Plugin Conversation Binding Approval behavior in src/plugins. */
 export async function resolvePluginConversationBindingApproval(params: {
   approvalId: string;
   decision: PluginBindingApprovalDecision;
@@ -989,6 +1004,7 @@ async function notifyPluginConversationBindingResolved(params: {
   }
 }
 
+/** Reused helper for build Plugin Binding Resolved Text behavior in src/plugins. */
 export function buildPluginBindingResolvedText(params: PluginBindingResolveResult): string {
   if (params.status === "expired") {
     return "That plugin bind approval expired. Retry the bind command.";
@@ -1003,6 +1019,7 @@ export function buildPluginBindingResolvedText(params: PluginBindingResolveResul
   return `Allowed ${params.request.pluginName ?? params.request.pluginId} to bind this conversation once.${summarySuffix}`;
 }
 
+/** Reused constant for testing behavior in src/plugins. */
 export const testing = {
   reset() {
     pendingRequests.clear();
@@ -1012,4 +1029,5 @@ export const testing = {
     state.fallbackNoticeBindingIds.clear();
   },
 };
+/** Re-exported API for src/plugins, starting with testing. */
 export { testing as __testing };

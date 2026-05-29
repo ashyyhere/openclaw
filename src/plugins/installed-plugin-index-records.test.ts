@@ -1,3 +1,4 @@
+// Tests plugins installed plugin index records test behavior.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

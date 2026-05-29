@@ -1,3 +1,4 @@
+// extensions/feishu/src presentation card helpers and runtime behavior.
 import {
   normalizeMessagePresentation,
   renderMessagePresentationFallbackText,

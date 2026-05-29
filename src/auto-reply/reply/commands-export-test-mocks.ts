@@ -1,7 +1,9 @@
+// Shared mocks for command export tests.
 import type { vi } from "vitest";
 
 type ViLike = Pick<typeof vi, "fn">;
 
+/** Reused helper for create Export Command Session Mocks behavior in src/auto-reply/reply. */
 export function createExportCommandSessionMocks(viInstance: ViLike) {
   return {
     resolveDefaultSessionStorePathMock: viInstance.fn(() => "/tmp/target-store/sessions.json"),

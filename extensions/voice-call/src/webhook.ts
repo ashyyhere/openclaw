@@ -1,3 +1,4 @@
+// extensions/voice-call/src webhook helpers and runtime behavior.
 import http from "node:http";
 import { URL } from "node:url";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";

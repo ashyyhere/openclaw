@@ -1,3 +1,4 @@
+// scripts label open issues helpers and runtime behavior.
 import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";

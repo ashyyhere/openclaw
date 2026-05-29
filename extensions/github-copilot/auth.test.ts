@@ -1,3 +1,4 @@
+// Tests extensions/github-copilot auth test behavior.
 import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const ensureAuthProfileStoreMock = vi.hoisted(() => vi.fn());

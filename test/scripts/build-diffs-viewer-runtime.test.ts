@@ -1,3 +1,4 @@
+// Tests test/scripts build diffs viewer runtime test behavior.
 import { describe, expect, it } from "vitest";
 import { createPierreDiffsSideEffectImportPlugin } from "../../scripts/build-diffs-viewer-runtime.mjs";
 

@@ -1,3 +1,4 @@
+/** Builds reusable services needed to construct AgentSession instances. */
 import { join } from "node:path";
 import type { Model } from "../../llm/types.js";
 import { getAgentDir } from "../config.js";
@@ -137,6 +138,7 @@ function applyExtensionFlagValues(
  *
  * Returns services plus diagnostics. It does not create an AgentSession.
  */
+/** Creates model registry, settings, auth, and resource services for a session. */
 export async function createAgentSessionServices(
   options: CreateAgentSessionServicesOptions,
 ): Promise<AgentSessionServices> {
@@ -189,6 +191,7 @@ export async function createAgentSessionServices(
  * resolve model, thinking, tools, and other session inputs against the target
  * cwd before constructing the session.
  */
+/** Creates an AgentSession from already-prepared services. */
 export async function createAgentSessionFromServices(
   options: CreateAgentSessionFromServicesOptions,
 ): Promise<CreateAgentSessionResult> {

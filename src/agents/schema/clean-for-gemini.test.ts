@@ -1,3 +1,4 @@
+/** Covers Gemini schema cleanup for provider-compatible tool schemas. */
 import { describe, expect, it } from "vitest";
 import { cleanSchemaForGemini } from "./clean-for-gemini.js";
 

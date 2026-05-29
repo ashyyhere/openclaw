@@ -1,3 +1,4 @@
+// extensions/telegram/src outbound adapter helpers and runtime behavior.
 import type { OutboundDeliveryFormattingOptions } from "openclaw/plugin-sdk/channel-outbound";
 import {
   resolveOutboundSendDep,

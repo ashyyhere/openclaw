@@ -1,3 +1,4 @@
+// Tests extensions/qa-matrix/src/shared live transport cli runtime test behavior.
 import { mkdir, mkdtemp, readFile, rm } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

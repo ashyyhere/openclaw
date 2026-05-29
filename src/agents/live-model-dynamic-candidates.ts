@@ -47,6 +47,7 @@ function liveModelKey(provider: string, id: string): string | null {
   return normalizedProvider && normalizedId ? `${normalizedProvider}/${normalizedId}` : null;
 }
 
+/** Resolve and append prioritized dynamic live models that are not already listed. */
 export async function appendPrioritizedDynamicLiveModels(params: {
   models: Model[];
   config?: OpenClawConfig;

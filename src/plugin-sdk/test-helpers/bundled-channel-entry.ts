@@ -1,3 +1,4 @@
+// plugin-sdk/test-helpers bundled channel entry helpers and runtime behavior.
 import { expect, it } from "vitest";
 
 type BundledChannelEntry = {

@@ -1,3 +1,4 @@
+/** Agent-to-agent send flow used by sessions-send. */
 import crypto from "node:crypto";
 import type { CallGatewayOptions } from "../../gateway/call.js";
 import { formatErrorMessage } from "../../infra/errors.js";
@@ -34,6 +35,7 @@ let sessionsSendA2ADeps: {
   callGateway: GatewayCaller;
 } = defaultSessionsSendA2ADeps;
 
+/** Runs an agent-to-agent send and waits for the target reply when needed. */
 export async function runSessionsSendA2AFlow(params: {
   targetSessionKey: string;
   displayKey: string;
@@ -182,6 +184,7 @@ export async function runSessionsSendA2AFlow(params: {
   }
 }
 
+/** Reused constant for testing behavior in src/agents/tools. */
 export const testing = {
   setDepsForTest(overrides?: Partial<{ callGateway: GatewayCaller }>) {
     sessionsSendA2ADeps = overrides
@@ -192,4 +195,5 @@ export const testing = {
       : defaultSessionsSendA2ADeps;
   },
 };
+/** Re-exported API for src/agents/tools, starting with testing. */
 export { testing as __testing };

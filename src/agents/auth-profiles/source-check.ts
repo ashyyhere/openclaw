@@ -1,3 +1,4 @@
+/** Detects whether an auth profile source exists for an agent. */
 import fs from "node:fs";
 import {
   resolveAuthStatePath,
@@ -14,6 +15,7 @@ function hasStoredAuthProfileFiles(agentDir?: string): boolean {
   );
 }
 
+/** Reused helper for has Any Auth Profile Store Source behavior in src/agents/auth-profiles. */
 export function hasAnyAuthProfileStoreSource(agentDir?: string): boolean {
   if (hasAnyRuntimeAuthProfileStoreSource(agentDir)) {
     return true;

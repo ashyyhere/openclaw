@@ -1,3 +1,4 @@
+/** Resolves bootstrap context files and mode-specific bootstrap prompts for agent runs. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import type { AgentContextInjection } from "../config/types.agent-defaults.js";
@@ -24,11 +25,13 @@ import {
   type WorkspaceBootstrapFile,
 } from "./workspace.js";
 
+/** Shared type for Bootstrap Context Mode in src/agents. */
 export type BootstrapContextMode = "full" | "lightweight";
 type BootstrapContextRunKind = "default" | "heartbeat" | "cron";
 
 const CONTINUATION_SCAN_MAX_TAIL_BYTES = 256 * 1024;
 const CONTINUATION_SCAN_MAX_RECORDS = 500;
+/** Reused constant for FULL BOOTSTRAP COMPLETED CUSTOM TYPE behavior in src/agents. */
 export const FULL_BOOTSTRAP_COMPLETED_CUSTOM_TYPE = "openclaw:bootstrap-context:full";
 const BOOTSTRAP_WARNING_DEDUPE_LIMIT = 1024;
 const seenBootstrapWarnings = new Set<string>();
@@ -49,11 +52,13 @@ function rememberBootstrapWarning(key: string): boolean {
   return true;
 }
 
+/** Reset bootstrap warning dedupe state between tests. */
 export function resetBootstrapWarningCacheForTest(): void {
   seenBootstrapWarnings.clear();
   bootstrapWarningOrder.length = 0;
 }
 
+/** Resolve context injection mode from agent/default config. */
 export function resolveContextInjectionMode(
   config?: OpenClawConfig,
   agentId?: string | null,
@@ -66,6 +71,7 @@ export function resolveContextInjectionMode(
   return config?.agents?.defaults?.contextInjection ?? "always";
 }
 
+/** Return whether a session transcript contains a completed full-bootstrap marker. */
 export async function hasCompletedBootstrapTurn(sessionFile: string): Promise<boolean> {
   try {
     const stat = await fs.lstat(sessionFile);
@@ -137,6 +143,7 @@ export async function hasCompletedBootstrapTurn(sessionFile: string): Promise<bo
   }
 }
 
+/** Build a deduped warning callback for bootstrap resolution. */
 export function makeBootstrapWarn(params: {
   sessionLabel: string;
   workspaceDir?: string;
@@ -274,6 +281,7 @@ async function isWorkspaceSetupCompletedForContext(workspaceDir: string): Promis
   }
 }
 
+/** Resolve bootstrap files that should be considered for one run. */
 export async function resolveBootstrapFilesForRun(params: {
   workspaceDir: string;
   config?: OpenClawConfig;
@@ -323,6 +331,7 @@ export async function resolveBootstrapFilesForRun(params: {
   );
 }
 
+/** Resolve injected bootstrap context and metadata for one agent run. */
 export async function resolveBootstrapContextForRun(params: {
   workspaceDir: string;
   config?: OpenClawConfig;
@@ -341,6 +350,7 @@ export async function resolveBootstrapContextForRun(params: {
   return { bootstrapFiles, contextFiles };
 }
 
+/** Build embedded context files from already-resolved bootstrap files. */
 export function buildBootstrapContextForFiles(
   bootstrapFiles: WorkspaceBootstrapFile[],
   params: {
@@ -357,4 +367,5 @@ export function buildBootstrapContextForFiles(
   return contextFiles;
 }
 
+/** Re-exported API for src/agents, starting with is Workspace Bootstrap Pending. */
 export { isWorkspaceBootstrapPending };

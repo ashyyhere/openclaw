@@ -1,3 +1,4 @@
+// ui/src/ui canvas url helpers and runtime behavior.
 const A2UI_PATH = "/__openclaw__/a2ui";
 const CANVAS_HOST_PATH = "/__openclaw__/canvas";
 const CANVAS_CAPABILITY_PATH_PREFIX = "/__openclaw__/cap";
@@ -36,6 +37,7 @@ function sanitizeCanvasEntryUrl(
   }
 }
 
+/** Reused helper for resolve Canvas Iframe Url behavior in ui/src/ui. */
 export function resolveCanvasIframeUrl(
   entryUrl: string | undefined,
   canvasPluginSurfaceUrl?: string | null,

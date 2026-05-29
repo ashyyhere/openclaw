@@ -1,3 +1,4 @@
+// Shared types for scripts/lib/ts-topology types behavior.
 import type ts from "typescript";
 
 export type UsageBucket = "internal" | "production" | "test";

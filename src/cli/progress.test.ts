@@ -1,3 +1,4 @@
+/** Tests CLI progress spinner and OSC progress selection. */
 import { describe, expect, it, vi } from "vitest";
 import { createCliProgress, shouldUseInteractiveProgressSpinner } from "./progress.js";
 

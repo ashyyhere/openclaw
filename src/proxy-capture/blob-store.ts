@@ -1,3 +1,4 @@
+// proxy-capture blob store helpers and runtime behavior.
 import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
@@ -8,6 +9,7 @@ function ensureDir(dir: string) {
   fs.mkdirSync(dir, { recursive: true });
 }
 
+/** Reused helper for write Capture Blob behavior in src/proxy-capture. */
 export function writeCaptureBlob(params: {
   blobDir: string;
   data: Buffer;
@@ -30,6 +32,7 @@ export function writeCaptureBlob(params: {
   };
 }
 
+/** Reused helper for read Capture Blob Text behavior in src/proxy-capture. */
 export function readCaptureBlobText(blobPath: string): string {
   return gunzipSync(fs.readFileSync(blobPath)).toString("utf8");
 }

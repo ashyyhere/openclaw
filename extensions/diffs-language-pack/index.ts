@@ -1,3 +1,4 @@
+// extensions/diffs-language-pack index helpers and runtime behavior.
 import { definePluginEntry } from "./api.js";
 import { registerDiffsLanguagePackPlugin } from "./src/plugin.js";
 

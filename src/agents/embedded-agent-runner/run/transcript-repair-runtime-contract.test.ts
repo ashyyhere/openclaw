@@ -1,3 +1,4 @@
+/** Verifies transcript repair stays aligned with runtime contract fixtures. */
 import {
   inlineDataUriOrphanLeaf,
   QUEUED_USER_MESSAGE_MARKER,

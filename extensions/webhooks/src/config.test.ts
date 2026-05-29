@@ -1,3 +1,4 @@
+// Tests extensions/webhooks/src config test behavior.
 import { describe, expect, it } from "vitest";
 import { resolveWebhooksPluginConfig } from "./config.js";
 

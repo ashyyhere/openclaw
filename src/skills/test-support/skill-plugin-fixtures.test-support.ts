@@ -1,6 +1,8 @@
+/** Test helpers for writing temporary plugins with skills. */
 import fs from "node:fs/promises";
 import path from "node:path";
 
+/** Writes a plugin manifest and one bundled skill file. */
 export async function writePluginWithSkill(params: {
   pluginRoot: string;
   pluginId: string;

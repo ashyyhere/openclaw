@@ -1,3 +1,4 @@
+// extensions/mattermost/src/mattermost monitor helpers and runtime behavior.
 import {
   defineFinalizableLivePreviewAdapter,
   deliverWithFinalizableLivePreviewAdapter,

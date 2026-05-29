@@ -1,3 +1,4 @@
+// cron/isolated-agent session helpers and runtime behavior.
 import crypto from "node:crypto";
 import { clearBootstrapSnapshotOnSessionRollover } from "../../agents/bootstrap-cache.js";
 import { resolveSessionLifecycleTimestamps } from "../../config/sessions/lifecycle.js";
@@ -103,6 +104,7 @@ function sanitizeFreshCronSessionEntry(
   return next;
 }
 
+/** Reused helper for resolve Cron Session behavior in src/cron/isolated-agent. */
 export function resolveCronSession(params: {
   cfg: OpenClawConfig;
   sessionKey: string;

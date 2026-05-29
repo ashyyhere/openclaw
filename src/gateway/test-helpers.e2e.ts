@@ -1,3 +1,4 @@
+// gateway test helpers e2e helpers and runtime behavior.
 import { writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

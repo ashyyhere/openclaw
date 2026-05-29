@@ -1,3 +1,4 @@
+// Tests test/scripts release beta smoke test behavior.
 import { describe, expect, it } from "vitest";
 import {
   mergeTelegramProofIntoReleaseBody,

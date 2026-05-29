@@ -1,3 +1,4 @@
+// scripts bench gateway startup helpers and runtime behavior.
 import { spawn, spawnSync } from "node:child_process";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { request } from "node:http";

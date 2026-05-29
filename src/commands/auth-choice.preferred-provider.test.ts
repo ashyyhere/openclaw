@@ -1,3 +1,4 @@
+/** Tests preferred provider selection for auth choices. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { resolvePluginProviders as resolvePluginProvidersFn } from "../plugins/providers.runtime.js";
 

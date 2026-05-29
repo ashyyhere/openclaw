@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix session store metadata helpers and runtime behavior.
 import { normalizeAccountId } from "openclaw/plugin-sdk/account-id";
 import { resolveMatrixDirectUserId, resolveMatrixTargetIdentity } from "./target-ids.js";
 

@@ -1,3 +1,4 @@
+/** Resolves OpenAI text verbosity extra params for Responses requests. */
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 import { log } from "./embedded-agent-runner/logger.js";
 

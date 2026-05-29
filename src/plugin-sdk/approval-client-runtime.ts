@@ -1,3 +1,4 @@
+/** Runtime SDK barrel for channel approval client helpers. */
 export {
   createChannelExecApprovalProfile,
   getExecApprovalReplyMetadata,

@@ -1,8 +1,10 @@
+// media-understanding manifest metadata helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.js";
 import { loadManifestMetadataSnapshot } from "../plugins/manifest-contract-eligibility.js";
 import { normalizeMediaProviderId } from "./provider-id.js";
 import type { MediaUnderstandingProvider } from "./types.js";
 
+/** Reused helper for build Media Understanding Manifest Metadata Registry behavior in src/media-understanding. */
 export function buildMediaUnderstandingManifestMetadataRegistry(
   cfg?: OpenClawConfig,
   workspaceDir?: string,

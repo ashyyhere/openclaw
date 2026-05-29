@@ -1,3 +1,4 @@
+// realtime-transcription provider registry helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {
   resolvePluginCapabilityProvider,
@@ -10,6 +11,7 @@ import {
 import type { RealtimeTranscriptionProviderPlugin } from "../plugins/types.js";
 import type { RealtimeTranscriptionProviderId } from "./provider-types.js";
 
+/** Reused helper for normalize Realtime Transcription Provider Id behavior in src/realtime-transcription. */
 export function normalizeRealtimeTranscriptionProviderId(
   providerId: string | undefined,
 ): RealtimeTranscriptionProviderId | undefined {
@@ -32,12 +34,14 @@ function buildProviderMaps(cfg?: OpenClawConfig): {
   return buildCapabilityProviderMaps(resolveRealtimeTranscriptionProviderEntries(cfg));
 }
 
+/** Reused helper for list Realtime Transcription Providers behavior in src/realtime-transcription. */
 export function listRealtimeTranscriptionProviders(
   cfg?: OpenClawConfig,
 ): RealtimeTranscriptionProviderPlugin[] {
   return [...buildProviderMaps(cfg).canonical.values()];
 }
 
+/** Reused helper for get Realtime Transcription Provider behavior in src/realtime-transcription. */
 export function getRealtimeTranscriptionProvider(
   providerId: string | undefined,
   cfg?: OpenClawConfig,
@@ -57,6 +61,7 @@ export function getRealtimeTranscriptionProvider(
   return buildProviderMaps(cfg).aliases.get(normalized);
 }
 
+/** Reused helper for canonicalize Realtime Transcription Provider Id behavior in src/realtime-transcription. */
 export function canonicalizeRealtimeTranscriptionProviderId(
   providerId: string | undefined,
   cfg?: OpenClawConfig,

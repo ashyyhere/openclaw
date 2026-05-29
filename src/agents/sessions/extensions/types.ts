@@ -74,11 +74,16 @@ import type {
   WriteToolInput,
 } from "../tools/tool-contracts.js";
 
+/** Re-exported API for src/agents/sessions, starting with Exec Options. */
 export type { ExecOptions, ExecResult } from "../exec.js";
+/** Re-exported API for src/agents/sessions, starting with Build System Prompt Options. */
 export type { BuildSystemPromptOptions } from "../system-prompt.js";
+/** Re-exported API for src/agents/sessions, starting with Agent Tool Result. */
 export type { AgentToolResult, AgentToolUpdateCallback, ToolExecutionMode };
+/** Re-exported API for src/agents/sessions, starting with App Keybinding. */
 export type { AppKeybinding, KeybindingsManager } from "../keybindings.js";
 
+/** Shared type for OAuth Credentials in src/agents/sessions. */
 export type OAuthCredentials = {
   refresh: string;
   access: string;
@@ -86,27 +91,32 @@ export type OAuthCredentials = {
   [key: string]: unknown;
 };
 
+/** Shared type for OAuth Prompt in src/agents/sessions. */
 export type OAuthPrompt = {
   message: string;
   placeholder?: string;
   allowEmpty?: boolean;
 };
 
+/** Shared type for OAuth Auth Info in src/agents/sessions. */
 export type OAuthAuthInfo = {
   url: string;
   instructions?: string;
 };
 
+/** Shared type for OAuth Select Option in src/agents/sessions. */
 export type OAuthSelectOption = {
   id: string;
   label: string;
 };
 
+/** Shared type for OAuth Select Prompt in src/agents/sessions. */
 export type OAuthSelectPrompt = {
   message: string;
   options: OAuthSelectOption[];
 };
 
+/** Shared type for OAuth Login Callbacks in src/agents/sessions. */
 export interface OAuthLoginCallbacks {
   onAuth: (info: OAuthAuthInfo) => void;
   onPrompt: (prompt: OAuthPrompt) => Promise<string>;
@@ -153,6 +163,7 @@ export interface WorkingIndicatorOptions {
 
 /** Wrap the current autocomplete provider with additional behavior. */
 export type AutocompleteProviderFactory = (current: AutocompleteProvider) => AutocompleteProvider;
+/** Shared type for Editor Factory in src/agents/sessions. */
 export type EditorFactory = (
   tui: TUI,
   theme: EditorTheme,
@@ -334,6 +345,7 @@ export interface ExtensionUIContext {
 // Extension Context
 // ============================================================================
 
+/** Shared type for Context Usage in src/agents/sessions. */
 export interface ContextUsage {
   /** Estimated context tokens, or null if any (e.g. right after compaction, before next LLM response). */
   tokens: number | null;
@@ -342,6 +354,7 @@ export interface ContextUsage {
   percent: number | null;
 }
 
+/** Shared type for Compact Options in src/agents/sessions. */
 export interface CompactOptions {
   customInstructions?: string;
   onComplete?: (result: CompactionResult) => void;
@@ -665,6 +678,7 @@ export interface SessionTreeEvent {
   fromExtension?: boolean;
 }
 
+/** Shared type for Session Event in src/agents/sessions. */
 export type SessionEvent =
   | SessionStartEvent
   | SessionBeforeSwitchEvent
@@ -786,6 +800,7 @@ export interface ToolExecutionEndEvent {
 // Model Events
 // ============================================================================
 
+/** Shared type for Model Select Source in src/agents/sessions. */
 export type ModelSelectSource = "set" | "cycle" | "restore";
 
 /** Fired when a new model is selected */
@@ -851,41 +866,49 @@ interface ToolCallEventBase {
   toolCallId: string;
 }
 
+/** Shared type for Bash Tool Call Event in src/agents/sessions. */
 export interface BashToolCallEvent extends ToolCallEventBase {
   toolName: "bash";
   input: BashToolInput;
 }
 
+/** Shared type for Read Tool Call Event in src/agents/sessions. */
 export interface ReadToolCallEvent extends ToolCallEventBase {
   toolName: "read";
   input: ReadToolInput;
 }
 
+/** Shared type for Edit Tool Call Event in src/agents/sessions. */
 export interface EditToolCallEvent extends ToolCallEventBase {
   toolName: "edit";
   input: EditToolInput;
 }
 
+/** Shared type for Write Tool Call Event in src/agents/sessions. */
 export interface WriteToolCallEvent extends ToolCallEventBase {
   toolName: "write";
   input: WriteToolInput;
 }
 
+/** Shared type for Grep Tool Call Event in src/agents/sessions. */
 export interface GrepToolCallEvent extends ToolCallEventBase {
   toolName: "grep";
   input: GrepToolInput;
 }
 
+/** Shared type for Find Tool Call Event in src/agents/sessions. */
 export interface FindToolCallEvent extends ToolCallEventBase {
   toolName: "find";
   input: FindToolInput;
 }
 
+/** Shared type for Ls Tool Call Event in src/agents/sessions. */
 export interface LsToolCallEvent extends ToolCallEventBase {
   toolName: "ls";
   input: LsToolInput;
 }
 
+/** Shared type for Custom Tool Call Event in src/agents/sessions. */
 export interface CustomToolCallEvent extends ToolCallEventBase {
   toolName: string;
   input: Record<string, unknown>;
@@ -915,41 +938,49 @@ interface ToolResultEventBase {
   isError: boolean;
 }
 
+/** Shared type for Bash Tool Result Event in src/agents/sessions. */
 export interface BashToolResultEvent extends ToolResultEventBase {
   toolName: "bash";
   details: BashToolDetails | undefined;
 }
 
+/** Shared type for Read Tool Result Event in src/agents/sessions. */
 export interface ReadToolResultEvent extends ToolResultEventBase {
   toolName: "read";
   details: ReadToolDetails | undefined;
 }
 
+/** Shared type for Edit Tool Result Event in src/agents/sessions. */
 export interface EditToolResultEvent extends ToolResultEventBase {
   toolName: "edit";
   details: EditToolDetails | undefined;
 }
 
+/** Shared type for Write Tool Result Event in src/agents/sessions. */
 export interface WriteToolResultEvent extends ToolResultEventBase {
   toolName: "write";
   details: undefined;
 }
 
+/** Shared type for Grep Tool Result Event in src/agents/sessions. */
 export interface GrepToolResultEvent extends ToolResultEventBase {
   toolName: "grep";
   details: GrepToolDetails | undefined;
 }
 
+/** Shared type for Find Tool Result Event in src/agents/sessions. */
 export interface FindToolResultEvent extends ToolResultEventBase {
   toolName: "find";
   details: FindToolDetails | undefined;
 }
 
+/** Shared type for Ls Tool Result Event in src/agents/sessions. */
 export interface LsToolResultEvent extends ToolResultEventBase {
   toolName: "ls";
   details: LsToolDetails | undefined;
 }
 
+/** Shared type for Custom Tool Result Event in src/agents/sessions. */
 export interface CustomToolResultEvent extends ToolResultEventBase {
   toolName: string;
   details: unknown;
@@ -967,24 +998,31 @@ export type ToolResultEvent =
   | CustomToolResultEvent;
 
 // Type guards for ToolResultEvent
+/** Reused helper for is Bash Tool Result behavior in src/agents/sessions. */
 export function isBashToolResult(e: ToolResultEvent): e is BashToolResultEvent {
   return e.toolName === "bash";
 }
+/** Reused helper for is Read Tool Result behavior in src/agents/sessions. */
 export function isReadToolResult(e: ToolResultEvent): e is ReadToolResultEvent {
   return e.toolName === "read";
 }
+/** Reused helper for is Edit Tool Result behavior in src/agents/sessions. */
 export function isEditToolResult(e: ToolResultEvent): e is EditToolResultEvent {
   return e.toolName === "edit";
 }
+/** Reused helper for is Write Tool Result behavior in src/agents/sessions. */
 export function isWriteToolResult(e: ToolResultEvent): e is WriteToolResultEvent {
   return e.toolName === "write";
 }
+/** Reused helper for is Grep Tool Result behavior in src/agents/sessions. */
 export function isGrepToolResult(e: ToolResultEvent): e is GrepToolResultEvent {
   return e.toolName === "grep";
 }
+/** Reused helper for is Find Tool Result behavior in src/agents/sessions. */
 export function isFindToolResult(e: ToolResultEvent): e is FindToolResultEvent {
   return e.toolName === "find";
 }
+/** Reused helper for is Ls Tool Result behavior in src/agents/sessions. */
 export function isLsToolResult(e: ToolResultEvent): e is LsToolResultEvent {
   return e.toolName === "ls";
 }
@@ -1013,31 +1051,39 @@ export function isToolCallEventType(
   toolName: "bash",
   event: ToolCallEvent,
 ): event is BashToolCallEvent;
+/** Reused helper for is Tool Call Event Type behavior in src/agents/sessions. */
 export function isToolCallEventType(
   toolName: "read",
   event: ToolCallEvent,
 ): event is ReadToolCallEvent;
+/** Reused helper for is Tool Call Event Type behavior in src/agents/sessions. */
 export function isToolCallEventType(
   toolName: "edit",
   event: ToolCallEvent,
 ): event is EditToolCallEvent;
+/** Reused helper for is Tool Call Event Type behavior in src/agents/sessions. */
 export function isToolCallEventType(
   toolName: "write",
   event: ToolCallEvent,
 ): event is WriteToolCallEvent;
+/** Reused helper for is Tool Call Event Type behavior in src/agents/sessions. */
 export function isToolCallEventType(
   toolName: "grep",
   event: ToolCallEvent,
 ): event is GrepToolCallEvent;
+/** Reused helper for is Tool Call Event Type behavior in src/agents/sessions. */
 export function isToolCallEventType(
   toolName: "find",
   event: ToolCallEvent,
 ): event is FindToolCallEvent;
+/** Reused helper for is Tool Call Event Type behavior in src/agents/sessions. */
 export function isToolCallEventType(toolName: "ls", event: ToolCallEvent): event is LsToolCallEvent;
+/** Reused helper for is Tool Call Event Type behavior in src/agents/sessions. */
 export function isToolCallEventType<TName extends string, TInput extends Record<string, unknown>>(
   toolName: TName,
   event: ToolCallEvent,
 ): event is ToolCallEvent & { toolName: TName; input: TInput };
+/** Reused helper for is Tool Call Event Type behavior in src/agents/sessions. */
 export function isToolCallEventType(toolName: string, event: ToolCallEvent): boolean {
   return event.toolName === toolName;
 }
@@ -1071,12 +1117,15 @@ export type ExtensionEvent =
 // Event Results
 // ============================================================================
 
+/** Shared type for Context Event Result in src/agents/sessions. */
 export interface ContextEventResult {
   messages?: AgentMessage[];
 }
 
+/** Shared type for Before Provider Request Event Result in src/agents/sessions. */
 export type BeforeProviderRequestEventResult = unknown;
 
+/** Shared type for Tool Call Event Result in src/agents/sessions. */
 export interface ToolCallEventResult {
   /** Block tool execution. To modify arguments, mutate `event.input` in place instead. */
   block?: boolean;
@@ -1091,37 +1140,44 @@ export interface UserBashEventResult {
   result?: BashResult;
 }
 
+/** Shared type for Tool Result Event Result in src/agents/sessions. */
 export interface ToolResultEventResult {
   content?: (TextContent | ImageContent)[];
   details?: unknown;
   isError?: boolean;
 }
 
+/** Shared type for Message End Event Result in src/agents/sessions. */
 export interface MessageEndEventResult {
   /** Replace the finalized message. The replacement must keep the original message role. */
   message?: AgentMessage;
 }
 
+/** Shared type for Before Agent Start Event Result in src/agents/sessions. */
 export interface BeforeAgentStartEventResult {
   message?: Pick<CustomMessage, "customType" | "content" | "display" | "details">;
   /** Replace the system prompt for this turn. If multiple extensions return this, they are chained. */
   systemPrompt?: string;
 }
 
+/** Shared type for Session Before Switch Result in src/agents/sessions. */
 export interface SessionBeforeSwitchResult {
   cancel?: boolean;
 }
 
+/** Shared type for Session Before Fork Result in src/agents/sessions. */
 export interface SessionBeforeForkResult {
   cancel?: boolean;
   skipConversationRestore?: boolean;
 }
 
+/** Shared type for Session Before Compact Result in src/agents/sessions. */
 export interface SessionBeforeCompactResult {
   cancel?: boolean;
   compaction?: CompactionResult;
 }
 
+/** Shared type for Session Before Tree Result in src/agents/sessions. */
 export interface SessionBeforeTreeResult {
   cancel?: boolean;
   summary?: {
@@ -1140,10 +1196,12 @@ export interface SessionBeforeTreeResult {
 // Message Rendering
 // ============================================================================
 
+/** Shared type for Message Render Options in src/agents/sessions. */
 export interface MessageRenderOptions {
   expanded: boolean;
 }
 
+/** Shared type for Message Renderer in src/agents/sessions. */
 export type MessageRenderer<T = unknown> = (
   message: CustomMessage<T>,
   options: MessageRenderOptions,
@@ -1154,6 +1212,7 @@ export type MessageRenderer<T = unknown> = (
 // Command Registration
 // ============================================================================
 
+/** Shared type for Registered Command in src/agents/sessions. */
 export interface RegisteredCommand {
   name: string;
   sourceInfo: SourceInfo;
@@ -1164,6 +1223,7 @@ export interface RegisteredCommand {
   handler: (args: string, ctx: ExtensionCommandContext) => Promise<void>;
 }
 
+/** Shared type for Resolved Command in src/agents/sessions. */
 export interface ResolvedCommand extends RegisteredCommand {
   invocationName: string;
 }
@@ -1174,6 +1234,7 @@ export interface ResolvedCommand extends RegisteredCommand {
 
 /** Handler function type for events */
 // biome-ignore lint/suspicious/noConfusingVoidType: void allows bare return statements
+/** Shared type for Extension Handler in src/agents/sessions. */
 export type ExtensionHandler<E, R = undefined> = (
   event: E,
   ctx: ExtensionContext,
@@ -1497,11 +1558,13 @@ export type ExtensionFactory = (api: ExtensionAPI) => void | Promise<void>;
 // Loaded Extension Types
 // ============================================================================
 
+/** Shared type for Registered Tool in src/agents/sessions. */
 export interface RegisteredTool {
   definition: ToolDefinition;
   sourceInfo: SourceInfo;
 }
 
+/** Shared type for Extension Flag in src/agents/sessions. */
 export interface ExtensionFlag {
   name: string;
   description?: string;
@@ -1510,6 +1573,7 @@ export interface ExtensionFlag {
   extensionPath: string;
 }
 
+/** Shared type for Extension Shortcut in src/agents/sessions. */
 export interface ExtensionShortcut {
   shortcut: KeyId;
   description?: string;
@@ -1519,22 +1583,28 @@ export interface ExtensionShortcut {
 
 type HandlerFn = (...args: unknown[]) => Promise<unknown>;
 
+/** Shared type for Send Message Handler in src/agents/sessions. */
 export type SendMessageHandler = <T = unknown>(
   message: Pick<CustomMessage<T>, "customType" | "content" | "display" | "details">,
   options?: { triggerTurn?: boolean; deliverAs?: "steer" | "followUp" | "nextTurn" },
 ) => void;
 
+/** Shared type for Send User Message Handler in src/agents/sessions. */
 export type SendUserMessageHandler = (
   content: string | (TextContent | ImageContent)[],
   options?: { deliverAs?: "steer" | "followUp" },
 ) => void;
 
+/** Shared type for Append Entry Handler in src/agents/sessions. */
 export type AppendEntryHandler = (customType: string, data?: unknown) => void;
 
+/** Shared type for Set Session Name Handler in src/agents/sessions. */
 export type SetSessionNameHandler = (name: string) => void;
 
+/** Shared type for Get Session Name Handler in src/agents/sessions. */
 export type GetSessionNameHandler = () => string | undefined;
 
+/** Shared type for Get Active Tools Handler in src/agents/sessions. */
 export type GetActiveToolsHandler = () => string[];
 
 /** Tool info with name, description, parameter schema, and source metadata */
@@ -1542,20 +1612,28 @@ export type ToolInfo = Pick<ToolDefinition, "name" | "description" | "parameters
   sourceInfo: SourceInfo;
 };
 
+/** Shared type for Get All Tools Handler in src/agents/sessions. */
 export type GetAllToolsHandler = () => ToolInfo[];
 
+/** Shared type for Get Commands Handler in src/agents/sessions. */
 export type GetCommandsHandler = () => SlashCommandInfo[];
 
+/** Shared type for Set Active Tools Handler in src/agents/sessions. */
 export type SetActiveToolsHandler = (toolNames: string[]) => void;
 
+/** Shared type for Refresh Tools Handler in src/agents/sessions. */
 export type RefreshToolsHandler = () => void;
 
+/** Shared type for Set Model Handler in src/agents/sessions. */
 export type SetModelHandler = (model: Model) => Promise<boolean>;
 
+/** Shared type for Get Thinking Level Handler in src/agents/sessions. */
 export type GetThinkingLevelHandler = () => ThinkingLevel;
 
+/** Shared type for Set Thinking Level Handler in src/agents/sessions. */
 export type SetThinkingLevelHandler = (level: ThinkingLevel) => void;
 
+/** Shared type for Set Label Handler in src/agents/sessions. */
 export type SetLabelHandler = (entryId: string, label: string | undefined) => void;
 
 /**
@@ -1686,6 +1764,7 @@ export interface LoadExtensionsResult {
 // Extension Error
 // ============================================================================
 
+/** Shared type for Extension Error in src/agents/sessions. */
 export interface ExtensionError {
   extensionPath: string;
   event: string;

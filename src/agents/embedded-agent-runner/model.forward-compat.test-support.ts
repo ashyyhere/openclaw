@@ -1,5 +1,7 @@
+/** Shared expectations for model forward-compat tests. */
 import { expect } from "vitest";
 
+/** Reused helper for build Forward Compat Template behavior in src/agents/embedded-agent-runner. */
 export function buildForwardCompatTemplate(params: {
   id: string;
   name: string;
@@ -26,6 +28,7 @@ export function buildForwardCompatTemplate(params: {
   };
 }
 
+/** Reused helper for expect Resolved Forward Compat Fallback Result behavior in src/agents/embedded-agent-runner. */
 export function expectResolvedForwardCompatFallbackResult(params: {
   result: {
     error?: string;
@@ -37,6 +40,7 @@ export function expectResolvedForwardCompatFallbackResult(params: {
   expectModelFields(params.result.model, params.expectedModel);
 }
 
+/** Reused helper for expect Resolved Forward Compat Fallback With Registry Result behavior in src/agents/embedded-agent-runner. */
 export function expectResolvedForwardCompatFallbackWithRegistryResult(params: {
   result: unknown;
   expectedModel: Record<string, unknown>;
@@ -52,6 +56,7 @@ function expectModelFields(actual: unknown, expected: Record<string, unknown>) {
   }
 }
 
+/** Reused helper for expect Unknown Model Error Result behavior in src/agents/embedded-agent-runner. */
 export function expectUnknownModelErrorResult(
   result: {
     error?: string;

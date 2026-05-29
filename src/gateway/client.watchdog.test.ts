@@ -1,3 +1,4 @@
+// Tests gateway client watchdog test behavior.
 import { describe, expect, test, vi } from "vitest";
 import { WebSocketServer } from "ws";
 import { GatewayClient } from "./client.js";

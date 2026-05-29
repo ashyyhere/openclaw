@@ -1,3 +1,4 @@
+// test/helpers/agents happy path prompt snapshots helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import type { Api, Model } from "openclaw/plugin-sdk/llm";

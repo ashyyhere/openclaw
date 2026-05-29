@@ -1,3 +1,4 @@
+// mcp plugin tools handlers helpers and runtime behavior.
 import {
   isToolWrappedWithBeforeToolCallHook,
   rewrapToolWithBeforeToolCallHook,
@@ -20,6 +21,7 @@ function resolveJsonSchemaForTool(tool: AnyAgentTool): Record<string, unknown> {
   return { type: "object", properties: {} };
 }
 
+/** Reused helper for create Plugin Tools Mcp Handlers behavior in src/mcp. */
 export function createPluginToolsMcpHandlers(tools: AnyAgentTool[]) {
   const wrappedTools = tools.map((tool) => {
     if (isToolWrappedWithBeforeToolCallHook(tool)) {

@@ -1,8 +1,10 @@
+/** Normalizes metadata and workspace inheritance for spawned agent runs. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { normalizeAgentId, parseAgentSessionKey } from "../routing/session-key.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import { resolveAgentWorkspaceDir } from "./agent-scope.js";
 
+/** Persisted run metadata copied from a parent/orchestrator spawn. */
 export type SpawnedRunMetadata = {
   spawnedBy?: string | null;
   groupId?: string | null;
@@ -11,6 +13,7 @@ export type SpawnedRunMetadata = {
   workspaceDir?: string | null;
 };
 
+/** Tool-call context fields that can be inherited by a spawned run. */
 export type SpawnedToolContext = {
   agentGroupId?: string | null;
   agentGroupChannel?: string | null;
@@ -29,6 +32,7 @@ type NormalizedSpawnedRunMetadata = {
   workspaceDir?: string;
 };
 
+/** Coerces nullable spawned metadata into trimmed optional strings. */
 export function normalizeSpawnedRunMetadata(
   value?: SpawnedRunMetadata | null,
 ): NormalizedSpawnedRunMetadata {
@@ -41,6 +45,7 @@ export function normalizeSpawnedRunMetadata(
   };
 }
 
+/** Converts tool context fields into the persisted spawned-run metadata shape. */
 export function mapToolContextToSpawnedRunMetadata(
   value?: SpawnedToolContext | null,
 ): Pick<NormalizedSpawnedRunMetadata, "groupId" | "groupChannel" | "groupSpace" | "workspaceDir"> {
@@ -52,6 +57,7 @@ export function mapToolContextToSpawnedRunMetadata(
   };
 }
 
+/** Chooses the workspace a spawned run should inherit from explicit or target-agent context. */
 export function resolveSpawnedWorkspaceInheritance(params: {
   config: OpenClawConfig;
   targetAgentId?: string;
@@ -71,6 +77,7 @@ export function resolveSpawnedWorkspaceInheritance(params: {
   return agentId ? resolveAgentWorkspaceDir(params.config, normalizeAgentId(agentId)) : undefined;
 }
 
+/** Returns the workspace override only for runs known to have been spawned. */
 export function resolveIngressWorkspaceOverrideForSpawnedRun(
   metadata?: Pick<SpawnedRunMetadata, "spawnedBy" | "workspaceDir"> | null,
 ): string | undefined {

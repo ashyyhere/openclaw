@@ -1,3 +1,4 @@
+// extensions/browser/src/browser pw session mock setup helpers and runtime behavior.
 import { vi } from "vitest";
 import type { MockFn } from "../test-utils/vitest-mock-fn.js";
 

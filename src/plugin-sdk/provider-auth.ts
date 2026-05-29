@@ -29,31 +29,44 @@ import {
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import { resolveProviderEndpoint } from "./provider-model-shared.js";
 
+/** Re-exported API for src/plugin-sdk, starting with Open Claw Config. */
 export type { OpenClawConfig } from "../config/config.js";
+/** Re-exported API for src/plugin-sdk, starting with Secret Input. */
 export type { SecretInput } from "../config/types.secrets.js";
+/** Re-exported API for src/plugin-sdk, starting with Secret Input Mode. */
 export type { SecretInputMode } from "../plugins/provider-auth-types.js";
+/** Re-exported API for src/plugin-sdk, starting with Provider Auth Result. */
 export type { ProviderAuthResult } from "../plugins/types.js";
+/** Re-exported API for src/plugin-sdk, starting with Provider Auth Context. */
 export type { ProviderAuthContext } from "../plugins/types.js";
+/** Re-exported API for src/plugin-sdk, starting with Auth Profile Store. */
 export type { AuthProfileStore, OAuthCredential } from "../agents/auth-profiles/types.js";
 
+/** Re-exported API for src/plugin-sdk, starting with CLAUDE CLI PROFILE ID. */
 export { CLAUDE_CLI_PROFILE_ID, CODEX_CLI_PROFILE_ID } from "../agents/auth-profiles/constants.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   ensureAuthProfileStore,
   ensureAuthProfileStoreForLocalUpdate,
   updateAuthProfileStoreWithLock,
 } from "../agents/auth-profiles/store.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   listProfilesForProvider,
   removeProviderAuthProfilesWithLock,
   upsertAuthProfile,
   upsertAuthProfileWithLock,
 } from "../agents/auth-profiles/profiles.js";
+/** Re-exported API for src/plugin-sdk, starting with resolve Env Api Key. */
 export { resolveEnvApiKey } from "../agents/model-auth-env.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   readClaudeCliCredentialsCached,
   readCodexCliCredentialsCached,
 } from "../agents/cli-credentials.js";
+/** Re-exported API for src/plugin-sdk, starting with suggest OAuth Profile Id For Legacy Default. */
 export { suggestOAuthProfileIdForLegacyDefault } from "../agents/auth-profiles/repair.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   CUSTOM_LOCAL_AUTH_MARKER,
   MINIMAX_OAUTH_MARKER,
@@ -62,11 +75,13 @@ export {
   resolveOAuthApiKeyMarker,
   resolveNonEnvSecretRefApiKeyMarker,
 } from "../agents/model-auth-markers.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   formatApiKeyPreview,
   normalizeApiKeyInput,
   validateApiKeyInput,
 } from "../plugins/provider-auth-input.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   ensureApiKeyFromEnvOrPrompt,
   ensureApiKeyFromOptionEnvOrPrompt,
@@ -74,11 +89,14 @@ export {
   promptSecretRefForSetup,
   resolveSecretInputModeForEnvSelection,
 } from "../plugins/provider-auth-input.js";
+/** Re-exported API for src/plugin-sdk, starting with normalize Api Key Config. */
 export { normalizeApiKeyConfig } from "../agents/models-config.providers.secrets.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   buildTokenProfileId,
   validateAnthropicSetupToken,
 } from "../plugins/provider-auth-token.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   applyAuthProfileConfig,
   buildApiKeyCredential,
@@ -87,20 +105,29 @@ export {
   type ApiKeyStorageOptions,
   type WriteOAuthCredentialsOptions,
 } from "../plugins/provider-auth-helpers.js";
+/** Re-exported API for src/plugin-sdk, starting with create Provider Api Key Auth Method. */
 export { createProviderApiKeyAuthMethod } from "../plugins/provider-api-key-auth.js";
+/** Re-exported API for src/plugin-sdk, starting with coerce Secret Ref. */
 export { coerceSecretRef, hasConfiguredSecretInput } from "../config/types.secrets.js";
+/** Re-exported API for src/plugin-sdk, starting with resolve Default Secret Provider Alias. */
 export { resolveDefaultSecretProviderAlias } from "../secrets/ref-contract.js";
+/** Re-exported API for src/plugin-sdk, starting with resolve Required Home Dir. */
 export { resolveRequiredHomeDir } from "../infra/home-dir.js";
+/** Re-exported API for src/plugin-sdk, starting with resolve Open Claw Agent Dir. */
 export { resolveOpenClawAgentDir } from "./agent-dir-compat.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   normalizeOptionalSecretInput,
   normalizeSecretInput,
 } from "../utils/normalize-secret-input.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   listKnownProviderAuthEnvVarNames,
   omitEnvKeysCaseInsensitive,
 } from "../secrets/provider-env-vars.js";
+/** Re-exported API for src/plugin-sdk, starting with build Oauth Provider Auth Result. */
 export { buildOauthProviderAuthResult } from "./provider-auth-result.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   buildOpenAICodexCredentialExtra,
   decodeOpenAICodexJwtPayload,
@@ -114,10 +141,12 @@ export {
   generatePkceVerifierChallenge,
   toFormUrlEncoded,
 } from "./oauth-utils.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   DEFAULT_OAUTH_REFRESH_MARGIN_MS,
   hasUsableOAuthCredential,
 } from "../agents/auth-profiles/credential-state.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   COPILOT_EDITOR_PLUGIN_VERSION,
   COPILOT_EDITOR_VERSION,
@@ -300,6 +329,7 @@ export async function resolveCopilotApiToken(params: {
   };
 }
 
+/** Reused helper for is Provider Api Key Configured behavior in src/plugin-sdk. */
 export function isProviderApiKeyConfigured(params: {
   provider: string;
   agentDir?: string;
@@ -326,6 +356,7 @@ export function isProviderApiKeyConfigured(params: {
   });
 }
 
+/** Reused helper for list Usable Provider Auth Profile Ids behavior in src/plugin-sdk. */
 export function listUsableProviderAuthProfileIds(params: {
   provider: string;
   cfg?: OpenClawConfig;
@@ -341,6 +372,7 @@ export function listUsableProviderAuthProfileIds(params: {
   }
 }
 
+/** Reused helper for is Provider Auth Profile Configured behavior in src/plugin-sdk. */
 export function isProviderAuthProfileConfigured(params: {
   provider: string;
   cfg?: OpenClawConfig;
@@ -351,6 +383,7 @@ export function isProviderAuthProfileConfigured(params: {
   return listUsableProviderAuthProfileIds(params).profileIds.length > 0;
 }
 
+/** Reused helper for resolve Provider Auth Profile Api Key behavior in src/plugin-sdk. */
 export async function resolveProviderAuthProfileApiKey(params: {
   provider: string;
   cfg?: OpenClawConfig;

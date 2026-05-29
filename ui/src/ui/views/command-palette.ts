@@ -1,3 +1,4 @@
+// ui/src/ui/views command palette helpers and runtime behavior.
 import { html, nothing } from "lit";
 import { ref } from "lit/directives/ref.js";
 import { t } from "../../i18n/index.ts";
@@ -92,10 +93,12 @@ function getPaletteItemsInternal(): PaletteItem[] {
   return [...buildSlashPaletteItems(), ...getPaletteBaseItems()];
 }
 
+/** Reused helper for get Palette Items behavior in ui/src/ui/views. */
 export function getPaletteItems(): readonly PaletteItem[] {
   return getPaletteItemsInternal();
 }
 
+/** Shared type for Command Palette Props in ui/src/ui/views. */
 export type CommandPaletteProps = {
   open: boolean;
   query: string;
@@ -120,6 +123,7 @@ function filteredItems(query: string): PaletteItem[] {
   );
 }
 
+/** Reused helper for get Filtered Palette Items behavior in ui/src/ui/views. */
 export function getFilteredPaletteItems(query: string): readonly PaletteItem[] {
   return filteredItems(query);
 }
@@ -314,6 +318,7 @@ function focusInput(el: Element | undefined) {
   }
 }
 
+/** Reused helper for render Command Palette behavior in ui/src/ui/views. */
 export function renderCommandPalette(props: CommandPaletteProps) {
   if (!props.open) {
     return nothing;

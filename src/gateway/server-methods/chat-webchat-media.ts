@@ -1,3 +1,4 @@
+// gateway/server-methods chat webchat media helpers and runtime behavior.
 import path from "node:path";
 import type { ReplyPayload } from "../../auto-reply/reply-payload.js";
 import { openLocalFileSafely } from "../../infra/fs-safe.js";
@@ -229,6 +230,7 @@ export async function buildWebchatAudioContentBlocksFromReplyPayloads(
   return blocks;
 }
 
+/** Reused helper for build Webchat Assistant Message From Reply Payloads behavior in src/gateway/server-methods. */
 export async function buildWebchatAssistantMessageFromReplyPayloads(
   payloads: ReplyPayload[],
   options?: WebchatAssistantMediaOptions,

@@ -1,3 +1,4 @@
+// ui/src/ui app gateway helpers and runtime behavior.
 import { ConnectErrorDetailCodes } from "../../../packages/gateway-protocol/src/connect-error-details.js";
 import {
   GATEWAY_EVENT_UPDATE_AVAILABLE,
@@ -307,6 +308,7 @@ async function verifyPendingUpdateVersion(
   }
 }
 
+/** Reused helper for resolve Control Ui Client Version behavior in ui/src/ui. */
 export function resolveControlUiClientVersion(params: {
   gatewayUrl: string;
   serverVersion: string | null;
@@ -578,6 +580,7 @@ async function loadAgentsThenRefreshActiveTab(host: GatewayHost) {
   }
 }
 
+/** Reused helper for connect Gateway behavior in ui/src/ui. */
 export function connectGateway(host: GatewayHost, options?: ConnectGatewayOptions) {
   const shutdownHost = host as GatewayHostWithShutdownMessage;
   const reconnectReason = options?.reason ?? "initial";
@@ -764,6 +767,7 @@ export function connectGateway(host: GatewayHost, options?: ConnectGatewayOption
   client.start();
 }
 
+/** Reused helper for handle Gateway Event behavior in ui/src/ui. */
 export function handleGatewayEvent(host: GatewayHost, evt: GatewayEventFrame) {
   try {
     handleGatewayEventUnsafe(host, evt);
@@ -1188,6 +1192,7 @@ function handleGatewayEventUnsafe(host: GatewayHost, evt: GatewayEventFrame) {
   }
 }
 
+/** Reused helper for apply Snapshot behavior in ui/src/ui. */
 export function applySnapshot(host: GatewayHost, hello: GatewayHelloOk) {
   const snapshot = hello.snapshot as
     | {

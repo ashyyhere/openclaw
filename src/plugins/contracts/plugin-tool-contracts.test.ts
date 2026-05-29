@@ -1,3 +1,4 @@
+// Tests plugins/contracts plugin tool contracts test behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { beforeAll, describe, expect, it } from "vitest";

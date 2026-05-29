@@ -1,3 +1,4 @@
+/** E2E tests for models list command behavior. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

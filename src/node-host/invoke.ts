@@ -1,3 +1,4 @@
+// node-host invoke helpers and runtime behavior.
 import { spawn } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
@@ -74,6 +75,7 @@ type NodeInvokeRequestPayload = {
   idempotencyKey?: string | null;
 };
 
+/** Re-exported API for src/node-host, starting with Skill Bins Provider. */
 export type { SkillBinsProvider } from "./invoke-types.js";
 
 function resolveExecSecurity(value?: string): ExecSecurity {
@@ -93,6 +95,7 @@ function resolveExecAsk(value?: string): ExecAsk {
   return value === "off" || value === "on-miss" || value === "always" ? value : "on-miss";
 }
 
+/** Reused helper for sanitize Env behavior in src/node-host. */
 export function sanitizeEnv(overrides?: Record<string, string> | null): Record<string, string> {
   return sanitizeHostExecEnv({ overrides, blockPathOverrides: true });
 }
@@ -104,6 +107,7 @@ function truncateOutput(raw: string, maxChars: number): { text: string; truncate
   return { text: `... (truncated) ${raw.slice(raw.length - maxChars)}`, truncated: true };
 }
 
+/** Reused helper for decode Captured Output Buffer behavior in src/node-host. */
 export function decodeCapturedOutputBuffer(params: {
   buffer: Buffer;
   platform?: NodeJS.Platform;
@@ -364,6 +368,7 @@ async function sendInvalidRequestResult(
   await sendErrorResult(client, frame, "INVALID_REQUEST", String(err));
 }
 
+/** Reused helper for handle Invoke behavior in src/node-host. */
 export async function handleInvoke(
   frame: NodeInvokeRequestPayload,
   client: GatewayClient,
@@ -532,6 +537,7 @@ function decodeParams<T>(raw?: string | null): T {
   }
 }
 
+/** Reused helper for coerce Node Invoke Payload behavior in src/node-host. */
 export function coerceNodeInvokePayload(payload: unknown): NodeInvokeRequestPayload | null {
   if (!payload || typeof payload !== "object") {
     return null;
@@ -578,6 +584,7 @@ async function sendInvokeResult(
   }
 }
 
+/** Reused helper for build Node Invoke Result Params behavior in src/node-host. */
 export function buildNodeInvokeResultParams(
   frame: NodeInvokeRequestPayload,
   result: {

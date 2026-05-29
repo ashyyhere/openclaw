@@ -1,3 +1,4 @@
+// Tests extensions/discord/src normalize test behavior.
 import { describe, expect, it } from "vitest";
 import {
   looksLikeDiscordTargetId,

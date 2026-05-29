@@ -1,3 +1,4 @@
+// extensions/qqbot/src/engine/group mention helpers and runtime behavior.
 export interface RawMention {
   is_you?: boolean;
   bot?: boolean;

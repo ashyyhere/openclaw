@@ -1,6 +1,8 @@
+// Shared types for plugins hook message types behavior.
 import type { DiagnosticTraceContext } from "../infra/diagnostic-trace-context.js";
 import type { PluginConversationBinding } from "./conversation-binding.types.js";
 
+/** Shared type for Plugin Hook Message Context in src/plugins. */
 export type PluginHookMessageContext = {
   channelId: string;
   accountId?: string;
@@ -51,6 +53,7 @@ export type PluginHookMessageContext = {
   callDepth?: number;
 };
 
+/** Shared type for Plugin Hook Inbound Claim Context in src/plugins. */
 export type PluginHookInboundClaimContext = PluginHookMessageContext & {
   parentConversationId?: string;
   senderId?: string;
@@ -58,6 +61,7 @@ export type PluginHookInboundClaimContext = PluginHookMessageContext & {
   pluginBinding?: PluginConversationBinding;
 };
 
+/** Shared type for Plugin Hook Inbound Claim Event in src/plugins. */
 export type PluginHookInboundClaimEvent = {
   content: string;
   body?: string;
@@ -85,6 +89,7 @@ export type PluginHookInboundClaimEvent = {
   metadata?: Record<string, unknown>;
 };
 
+/** Shared type for Plugin Hook Message Received Event in src/plugins. */
 export type PluginHookMessageReceivedEvent = {
   from: string;
   content: string;
@@ -101,6 +106,7 @@ export type PluginHookMessageReceivedEvent = {
   metadata?: Record<string, unknown>;
 };
 
+/** Shared type for Plugin Hook Message Sending Event in src/plugins. */
 export type PluginHookMessageSendingEvent = {
   to: string;
   content: string;
@@ -109,6 +115,7 @@ export type PluginHookMessageSendingEvent = {
   metadata?: Record<string, unknown>;
 };
 
+/** Shared type for Plugin Hook Message Sending Result in src/plugins. */
 export type PluginHookMessageSendingResult = {
   content?: string;
   cancel?: boolean;
@@ -116,6 +123,7 @@ export type PluginHookMessageSendingResult = {
   metadata?: Record<string, unknown>;
 };
 
+/** Shared type for Plugin Hook Message Sent Event in src/plugins. */
 export type PluginHookMessageSentEvent = {
   to: string;
   content: string;

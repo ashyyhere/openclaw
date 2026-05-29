@@ -1,3 +1,4 @@
+// wizard setup plugin config helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { PluginManifestRecord } from "../plugins/manifest-registry.js";
 import type { PluginConfigUiHint } from "../plugins/types.js";

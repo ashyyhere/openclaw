@@ -1,3 +1,4 @@
+// Tests extensions/line/src setup surface test behavior.
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { createStartAccountContext } from "openclaw/plugin-sdk/channel-test-helpers";

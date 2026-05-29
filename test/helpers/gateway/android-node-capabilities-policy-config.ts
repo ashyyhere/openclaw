@@ -1,3 +1,4 @@
+// test/helpers/gateway android node capabilities policy config helpers and runtime behavior.
 import type { OpenClawConfig } from "../../../src/config/config.js";
 
 function asRecord(value: unknown): Record<string, unknown> {

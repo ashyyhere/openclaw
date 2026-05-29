@@ -1,3 +1,4 @@
+// Coverage for heartbeat behavior without session reset.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";

@@ -1,3 +1,4 @@
+// extensions/github-copilot usage helpers and runtime behavior.
 import { buildCopilotIdeHeaders } from "openclaw/plugin-sdk/provider-auth";
 import {
   buildUsageHttpErrorSnapshot,

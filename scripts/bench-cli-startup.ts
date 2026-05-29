@@ -1,3 +1,4 @@
+// scripts bench cli startup helpers and runtime behavior.
 import { spawn } from "node:child_process";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import os from "node:os";

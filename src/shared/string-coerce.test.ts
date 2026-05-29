@@ -1,3 +1,4 @@
+// Tests shared string coerce test behavior.
 import { describe, expect, it } from "vitest";
 import { normalizeStringifiedEntries } from "./string-coerce.js";
 

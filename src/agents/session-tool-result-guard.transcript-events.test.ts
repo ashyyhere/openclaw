@@ -1,3 +1,4 @@
+/** Tests transcript events emitted by the tool-result guard. */
 import type { AgentMessage } from "openclaw/plugin-sdk/agent-core";
 import { SessionManager } from "openclaw/plugin-sdk/agent-sessions";
 import { afterEach, describe, expect, it, vi } from "vitest";

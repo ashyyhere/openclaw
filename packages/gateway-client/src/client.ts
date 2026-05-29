@@ -1,3 +1,4 @@
+// packages/gateway-client/src client helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import {
   type ConnectParams,
@@ -30,12 +31,14 @@ import { WebSocket, type ClientOptions, type CertMeta } from "ws";
 import { buildDeviceAuthPayloadV3 } from "./device-auth.js";
 import { resolveConnectChallengeTimeoutMs, resolveSafeTimeoutDelayMs } from "./timeouts.js";
 
+/** Public type describing Device Identity for packages/gateway-client. */
 export type DeviceIdentity = {
   deviceId: string;
   privateKeyPem: string;
   publicKeyPem: string;
 };
 
+/** Public type describing Device Auth Token Record for packages/gateway-client. */
 export type DeviceAuthTokenRecord = {
   token?: string;
   scopes?: string[];
@@ -43,6 +46,7 @@ export type DeviceAuthTokenRecord = {
 
 // The package stays reusable by depending on host callbacks for OpenClaw-owned
 // state: device keys, token storage, proxy routing, logging, and TLS formatting.
+/** Public type describing Gateway Client Host Deps for packages/gateway-client. */
 export type GatewayClientHostDeps = {
   loadOrCreateDeviceIdentity?: () => DeviceIdentity | undefined;
   signDevicePayload?: (privateKeyPem: string, payload: string) => string;
@@ -251,6 +255,7 @@ type Pending = {
   acceptedNotified?: boolean;
 };
 
+/** Public type describing Gateway Client Request Options for packages/gateway-client. */
 export type GatewayClientRequestOptions = {
   expectFinal?: boolean;
   timeoutMs?: number | null;
@@ -300,12 +305,14 @@ type FingerprintCheckingClientOptions = Omit<ClientOptions, "checkServerIdentity
 const DEFAULT_GATEWAY_CLIENT_URL = "ws://127.0.0.1:18789";
 const DEFAULT_CLIENT_VERSION = "0.0.0";
 
+/** Public type describing Gateway Reconnect Paused Info for packages/gateway-client. */
 export type GatewayReconnectPausedInfo = {
   code: number;
   reason: string;
   detailCode: string | null;
 };
 
+/** Public class implementing Gateway Client Request Error behavior for packages/gateway-client. */
 export class GatewayClientRequestError extends Error {
   readonly gatewayCode: string;
   readonly details?: unknown;
@@ -336,6 +343,7 @@ function markGatewayConnectAssemblyError(error: Error): Error {
   return error;
 }
 
+/** Public helper for is Gateway Connect Assembly Error behavior in packages/gateway-client. */
 export function isGatewayConnectAssemblyError(value: unknown): value is Error {
   return (
     value instanceof Error &&
@@ -343,6 +351,7 @@ export function isGatewayConnectAssemblyError(value: unknown): value is Error {
   );
 }
 
+/** Public type describing Gateway Client Options for packages/gateway-client. */
 export type GatewayClientOptions = {
   url?: string; // ws://127.0.0.1:18789
   connectChallengeTimeoutMs?: number;
@@ -388,6 +397,7 @@ export type GatewayClientOptions = {
   onGap?: (info: { expected: number; received: number }) => void;
 };
 
+/** Public constant for GATEWAY CLOSE CODE HINTS behavior in packages/gateway-client. */
 export const GATEWAY_CLOSE_CODE_HINTS: Readonly<Record<number, string>> = {
   1000: "normal closure",
   1006: "abnormal closure (no close frame)",
@@ -396,6 +406,7 @@ export const GATEWAY_CLOSE_CODE_HINTS: Readonly<Record<number, string>> = {
   1013: "try again later",
 };
 
+/** Public helper for describe Gateway Close Code behavior in packages/gateway-client. */
 export function describeGatewayCloseCode(code: number): string | undefined {
   return GATEWAY_CLOSE_CODE_HINTS[code];
 }
@@ -430,6 +441,7 @@ function formatGatewayClientErrorForLog(err: unknown): string {
   return redactedUrlLikeString;
 }
 
+/** Public helper for resolve Gateway Client Connect Challenge Timeout Ms behavior in packages/gateway-client. */
 export function resolveGatewayClientConnectChallengeTimeoutMs(
   opts: Pick<
     GatewayClientOptions,
@@ -450,6 +462,7 @@ type PendingStop = {
   resolve: () => void;
 };
 
+/** Public class implementing Gateway Client behavior for packages/gateway-client. */
 export class GatewayClient {
   private ws: WebSocket | null = null;
   private opts: GatewayClientOptions;

@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/browser server context tab selection state test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { withBrowserFetchPreconnect } from "../../test-fetch.js";
 import "../test-support/browser-security.mock.js";

@@ -1,3 +1,4 @@
+// extensions/telegram/src preview streaming helpers and runtime behavior.
 import {
   resolveChannelPreviewStreamMode,
   type StreamingMode,

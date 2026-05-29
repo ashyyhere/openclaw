@@ -1,3 +1,4 @@
+/** Broad regression coverage for workspace skill discovery and prompt rendering. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest";

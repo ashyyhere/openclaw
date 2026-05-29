@@ -1,3 +1,4 @@
+/** Prepares CLI backend context, auth, MCP, prompt, history, and workspace state. */
 import { getRuntimeConfig } from "../../config/config.js";
 import {
   assertContextEngineHostSupport,
@@ -109,10 +110,12 @@ function resolveClaudeCliContextModelId(modelId: string): string {
   return CLAUDE_CLI_CONTEXT_MODEL_ALIASES[lower] ?? trimmed;
 }
 
+/** Overrides prepare-time dependencies for tests. */
 export function setCliRunnerPrepareTestDeps(overrides: Partial<typeof prepareDeps>): void {
   Object.assign(prepareDeps, overrides);
 }
 
+/** Returns true when backend-prepared auth already scopes the credential epoch. */
 export function shouldSkipLocalCliCredentialEpoch(params: {
   authEpochMode?: CliBackendAuthEpochMode;
   authProfileId?: string;
@@ -127,6 +130,7 @@ export function shouldSkipLocalCliCredentialEpoch(params: {
   );
 }
 
+/** Builds the prepared context consumed by CLI execution. */
 export async function prepareCliRunContext(
   params: RunCliAgentParams,
 ): Promise<PreparedCliRunContext> {

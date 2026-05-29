@@ -1,3 +1,4 @@
+/** Helpers for remote node camera capture and returned media persistence. */
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
 import { fetchWithSsrFGuard } from "../infra/net/fetch-guard.js";
@@ -15,8 +16,10 @@ import {
 const MAX_CAMERA_URL_DOWNLOAD_BYTES = 250 * 1024 * 1024;
 const MAX_CAMERA_BASE64_BYTES = MAX_CAMERA_URL_DOWNLOAD_BYTES;
 
+/** Shared type for Camera Facing in src/cli. */
 export type CameraFacing = "front" | "back";
 
+/** Shared type for Camera Snap Payload in src/cli. */
 export type CameraSnapPayload = {
   format: string;
   base64?: string;
@@ -25,6 +28,7 @@ export type CameraSnapPayload = {
   height: number;
 };
 
+/** Shared type for Camera Clip Payload in src/cli. */
 export type CameraClipPayload = {
   format: string;
   base64?: string;
@@ -33,6 +37,7 @@ export type CameraClipPayload = {
   hasAudio: boolean;
 };
 
+/** Reused helper for parse Camera Snap Payload behavior in src/cli. */
 export function parseCameraSnapPayload(value: unknown): CameraSnapPayload {
   const obj = asRecord(value);
   const format = asString(obj.format);
@@ -46,6 +51,7 @@ export function parseCameraSnapPayload(value: unknown): CameraSnapPayload {
   return { format, ...(base64 ? { base64 } : {}), ...(url ? { url } : {}), width, height };
 }
 
+/** Reused helper for parse Camera Clip Payload behavior in src/cli. */
 export function parseCameraClipPayload(value: unknown): CameraClipPayload {
   const obj = asRecord(value);
   const format = asString(obj.format);
@@ -59,6 +65,7 @@ export function parseCameraClipPayload(value: unknown): CameraClipPayload {
   return { format, ...(base64 ? { base64 } : {}), ...(url ? { url } : {}), durationMs, hasAudio };
 }
 
+/** Reused helper for camera Temp Path behavior in src/cli. */
 export function cameraTempPath(opts: {
   kind: "snap" | "clip";
   facing?: CameraFacing;
@@ -76,6 +83,7 @@ export function cameraTempPath(opts: {
   return path.join(tmpDir, `${cliName}-camera-${opts.kind}${facingPart}-${id}${ext}`);
 }
 
+/** Reused helper for write Url To File behavior in src/cli. */
 export async function writeUrlToFile(
   filePath: string,
   url: string,
@@ -184,6 +192,7 @@ function estimateDecodedBase64Bytes(base64: string): number {
   return Math.floor((normalized.length * 3) / 4) - padding;
 }
 
+/** Reused helper for write Base64 To File behavior in src/cli. */
 export async function writeBase64ToFile(
   filePath: string,
   base64: string,
@@ -201,6 +210,7 @@ export async function writeBase64ToFile(
   return { path: filePath, bytes: buf.length };
 }
 
+/** Reused helper for require Node Remote Ip behavior in src/cli. */
 export function requireNodeRemoteIp(remoteIp?: string): string {
   const normalized = remoteIp?.trim();
   if (!normalized) {
@@ -209,6 +219,7 @@ export function requireNodeRemoteIp(remoteIp?: string): string {
   return normalized;
 }
 
+/** Reused helper for write Camera Payload To File behavior in src/cli. */
 export async function writeCameraPayloadToFile(params: {
   filePath: string;
   payload: { url?: string; base64?: string };
@@ -228,6 +239,7 @@ export async function writeCameraPayloadToFile(params: {
   throw new Error(params.invalidPayloadMessage ?? "invalid camera payload");
 }
 
+/** Reused helper for write Camera Clip Payload To File behavior in src/cli. */
 export async function writeCameraClipPayloadToFile(params: {
   payload: CameraClipPayload;
   facing: CameraFacing;

@@ -1,3 +1,4 @@
+// packages/agent-core/src/harness/session repo utils helpers and runtime behavior.
 import {
   type FileError,
   type Result,
@@ -9,20 +10,24 @@ import {
 import { Session } from "./session.js";
 import { uuidv7 } from "./uuid.js";
 
+/** Public helper for create Session Id behavior in packages/agent-core. */
 export function createSessionId(): string {
   return uuidv7();
 }
 
+/** Public helper for create Timestamp behavior in packages/agent-core. */
 export function createTimestamp(): string {
   return new Date().toISOString();
 }
 
+/** Public helper for to Session behavior in packages/agent-core. */
 export function toSession<TMetadata extends SessionMetadata>(
   storage: SessionStorage<TMetadata>,
 ): Session<TMetadata> {
   return new Session(storage);
 }
 
+/** Public helper for get File System Result Or Throw behavior in packages/agent-core. */
 export function getFileSystemResultOrThrow<TValue>(
   result: Result<TValue, FileError>,
   message: string,
@@ -34,6 +39,7 @@ export function getFileSystemResultOrThrow<TValue>(
   return result.value;
 }
 
+/** Public helper for get Entries To Fork behavior in packages/agent-core. */
 export async function getEntriesToFork(
   storage: SessionStorage,
   options: { entryId?: string; position?: "before" | "at" },

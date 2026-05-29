@@ -1,3 +1,4 @@
+// Tests secrets channel env vars dynamic test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 type MockManifestRegistry = {

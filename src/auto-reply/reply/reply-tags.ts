@@ -1,5 +1,7 @@
+// Reply tag parsing helpers.
 import { parseInlineDirectives } from "../../utils/directive-tags.js";
 
+/** Reused helper for extract Reply To Tag behavior in src/auto-reply/reply. */
 export function extractReplyToTag(
   text?: string,
   currentMessageId?: string,

@@ -1,3 +1,4 @@
+// extensions/vydra onboard helpers and runtime behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/provider-onboard";
 
 export const VYDRA_DEFAULT_IMAGE_MODEL_REF = "vydra/grok-imagine";

@@ -1,3 +1,4 @@
+/** Tests live-session model switch persistence and dispatch. */
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 const state = vi.hoisted(() => ({

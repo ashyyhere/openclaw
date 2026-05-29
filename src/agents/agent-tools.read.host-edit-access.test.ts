@@ -1,3 +1,4 @@
+/** Tests host edit access checks in read/write/edit tools. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

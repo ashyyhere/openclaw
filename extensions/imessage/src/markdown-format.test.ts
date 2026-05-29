@@ -1,3 +1,4 @@
+// Tests extensions/imessage/src markdown format test behavior.
 import { describe, expect, it } from "vitest";
 import { extractMarkdownFormatRuns } from "./markdown-format.js";
 

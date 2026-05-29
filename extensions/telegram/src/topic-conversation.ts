@@ -1,3 +1,4 @@
+// extensions/telegram/src topic conversation helpers and runtime behavior.
 export type ParsedTelegramTopicConversation = {
   chatId: string;
   topicId: string;

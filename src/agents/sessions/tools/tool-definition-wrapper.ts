@@ -1,3 +1,4 @@
+/** Converts extension tool definitions to agent-core tool objects. */
 import type { TSchema } from "typebox";
 import type { AgentTool } from "../../runtime/index.js";
 import type { ExtensionContext, ToolDefinition } from "../extensions/types.js";
@@ -24,6 +25,7 @@ export function wrapToolDefinition<
 }
 
 /** Wrap multiple ToolDefinitions into AgentTools for the core runtime. */
+/** Wraps multiple extension tool definitions for the core runtime. */
 export function wrapToolDefinitions(
   definitions: ToolDefinition[],
   ctxFactory?: () => ExtensionContext,
@@ -37,6 +39,7 @@ export function wrapToolDefinitions(
  * This keeps AgentSession's internal registry definition-first even when a caller
  * provides plain AgentTool overrides that do not include prompt metadata or renderers.
  */
+/** Converts an AgentTool back into a session ToolDefinition. */
 export function createToolDefinitionFromAgentTool(tool: AgentTool): ToolDefinition {
   return {
     name: tool.name,

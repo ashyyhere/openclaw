@@ -1,3 +1,4 @@
+/** Wraps live runtime directory and outbound methods behind stable adapter contracts. */
 import type { ChannelDirectoryAdapter, ChannelOutboundAdapter } from "./types.adapters.js";
 
 type MaybePromise<T> = T | Promise<T>;
@@ -31,6 +32,7 @@ async function resolveForwardedMethod<Runtime, Fn>(params: {
   throw new Error(params.unavailableMessage ?? "Runtime method is unavailable");
 }
 
+/** Reused helper for create Runtime Directory Live Adapter behavior in src/channels/plugins. */
 export function createRuntimeDirectoryLiveAdapter<Runtime>(params: {
   getRuntime: () => MaybePromise<Runtime>;
   self?: (runtime: Runtime) => ChannelDirectoryAdapter["self"] | null | undefined;
@@ -82,6 +84,7 @@ export function createRuntimeDirectoryLiveAdapter<Runtime>(params: {
   return adapter;
 }
 
+/** Reused helper for create Runtime Outbound Delegates behavior in src/channels/plugins. */
 export function createRuntimeOutboundDelegates<Runtime>(params: {
   getRuntime: () => MaybePromise<Runtime>;
   renderPresentation?: {

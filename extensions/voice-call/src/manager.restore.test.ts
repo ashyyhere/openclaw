@@ -1,3 +1,4 @@
+// Tests extensions/voice-call/src manager restore test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { VoiceCallConfigSchema } from "./config.js";
 import { CallManager } from "./manager.js";

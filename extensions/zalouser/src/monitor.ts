@@ -1,3 +1,4 @@
+// extensions/zalouser/src monitor helpers and runtime behavior.
 import { mergeAllowlist, summarizeMapping } from "openclaw/plugin-sdk/allow-from";
 import {
   implicitMentionKindWhen,

@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src bot handlers runtime test behavior.
 import { describe, expect, it } from "vitest";
 import {
   buildTelegramInboundDebounceConversationKey,

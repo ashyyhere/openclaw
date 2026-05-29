@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src reasoning lane coordinator test behavior.
 import { describe, expect, it } from "vitest";
 import { splitTelegramReasoningText } from "./reasoning-lane-coordinator.js";
 

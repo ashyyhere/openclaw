@@ -1,9 +1,11 @@
+// infra/outbound session binding normalization helpers and runtime behavior.
 import { normalizeAccountId } from "../../routing/session-key.js";
 import {
   normalizeLowercaseStringOrEmpty,
   normalizeOptionalString,
 } from "../../shared/string-coerce.js";
 
+/** Shared type for Conversation Ref Shape in src/infra/outbound. */
 export type ConversationRefShape = {
   channel: string;
   accountId: string;
@@ -16,6 +18,7 @@ type ConversationTargetRefShape = {
   parentConversationId?: string | null;
 };
 
+/** Reused helper for normalize Conversation Target Ref behavior in src/infra/outbound. */
 export function normalizeConversationTargetRef<T extends ConversationTargetRefShape>(ref: T): T {
   const conversationId = normalizeOptionalString(ref.conversationId) ?? "";
   const parentConversationId = normalizeOptionalString(ref.parentConversationId);
@@ -29,6 +32,7 @@ export function normalizeConversationTargetRef<T extends ConversationTargetRefSh
   } as T;
 }
 
+/** Reused helper for normalize Conversation Ref behavior in src/infra/outbound. */
 export function normalizeConversationRef<T extends ConversationRefShape>(ref: T): T {
   const normalizedTarget = normalizeConversationTargetRef(ref);
   return {
@@ -38,6 +42,7 @@ export function normalizeConversationRef<T extends ConversationRefShape>(ref: T)
   };
 }
 
+/** Reused helper for build Channel Account Key behavior in src/infra/outbound. */
 export function buildChannelAccountKey(params: { channel: string; accountId: string }): string {
   return `${normalizeLowercaseStringOrEmpty(params.channel)}:${normalizeAccountId(params.accountId)}`;
 }

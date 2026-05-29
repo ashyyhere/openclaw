@@ -1,3 +1,4 @@
+/** Tests dashboard command URL generation for gateway settings. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { GatewayBindMode } from "../config/types.gateway.js";
 import { dashboardCommand } from "./dashboard.js";

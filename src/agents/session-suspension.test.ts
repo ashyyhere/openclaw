@@ -1,3 +1,4 @@
+/** Tests session suspension persistence and lane throttling. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { DEFAULT_CRON_MAX_CONCURRENT_RUNS } from "../config/cron-limits.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";

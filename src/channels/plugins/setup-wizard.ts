@@ -1,3 +1,4 @@
+/** Runs channel setup wizards and merges their config updates. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { DEFAULT_ACCOUNT_ID } from "../../routing/session-key.js";
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
@@ -19,6 +20,7 @@ import type {
 } from "./setup-wizard-types.js";
 import type { ChannelSetupInput } from "./types.core.js";
 
+/** Re-exported API for src/channels/plugins. */
 export type {
   ChannelSetupWizard,
   ChannelSetupWizardAllowFrom,
@@ -156,6 +158,7 @@ async function applyWizardTextInputValue(params: {
       }).cfg;
 }
 
+/** Reused helper for build Channel Setup Wizard Adapter From Setup Wizard behavior in src/channels/plugins. */
 export function buildChannelSetupWizardAdapterFromSetupWizard(params: {
   plugin: ChannelSetupWizardPlugin;
   wizard: ChannelSetupWizard;

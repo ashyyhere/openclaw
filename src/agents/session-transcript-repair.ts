@@ -1,3 +1,4 @@
+/** Repairs transcript tool-call/result pairing and unsafe tool-call inputs. */
 import {
   hasNonEmptyString as hasNonEmptyStringField,
   normalizeOptionalString,
@@ -209,6 +210,7 @@ function normalizeLegacyToolResultId(
   return { ...message, toolCallId: toolCall.id, isError: true };
 }
 
+/** Re-exported API for src/agents, starting with make Missing Tool Result. */
 export { makeMissingToolResult };
 
 type ToolCallInputRepairReport = {
@@ -229,6 +231,7 @@ type ToolUseResultPairingOptions = {
   missingToolResultText?: string;
 };
 
+/** Remove verbose toolResult details from transcript messages. */
 export function stripToolResultDetails(messages: AgentMessage[]): AgentMessage[] {
   let touched = false;
   const out: AgentMessage[] = [];
@@ -412,6 +415,7 @@ function repairToolCallInputs(
   };
 }
 
+/** Drop unsafe or malformed assistant tool-call input blocks. */
 export function sanitizeToolCallInputs(
   messages: AgentMessage[],
   options?: ToolCallInputRepairOptions,
@@ -419,6 +423,7 @@ export function sanitizeToolCallInputs(
   return repairToolCallInputs(messages, options).messages;
 }
 
+/** Repair only the message list shape for tool-use/result pairing. */
 export function sanitizeToolUseResultPairing(
   messages: AgentMessage[],
   options?: ToolUseResultPairingOptions,
@@ -445,6 +450,7 @@ function assistantHasToolCalls(message: AgentMessage): boolean {
   return extractToolCallsFromAssistant(message).length > 0;
 }
 
+/** Repair tool-use/result ordering, missing results, duplicates, and orphans. */
 export function repairToolUseResultPairing(
   messages: AgentMessage[],
   options?: ToolUseResultPairingOptions,

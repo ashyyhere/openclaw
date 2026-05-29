@@ -1,3 +1,4 @@
+// Tests cron service heartbeat ok summary suppressed test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { CronService } from "./service.js";
 import { setupCronServiceSuite, writeCronStoreSnapshot } from "./service.test-harness.js";

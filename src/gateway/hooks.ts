@@ -1,3 +1,4 @@
+// gateway hooks helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import type { IncomingMessage } from "node:http";
 import { listAgentIds, resolveDefaultAgentId } from "../agents/agent-scope-config.js";
@@ -23,6 +24,7 @@ const DEFAULT_HOOKS_PATH = "/hooks";
 const DEFAULT_HOOKS_MAX_BODY_BYTES = 256 * 1024;
 const MAX_HOOK_IDEMPOTENCY_KEY_LENGTH = 256;
 
+/** Shared type for Hooks Config Resolved in src/gateway. */
 export type HooksConfigResolved = {
   basePath: string;
   token: string;
@@ -46,6 +48,7 @@ type HookSessionPolicyResolved = {
 
 type HookSessionKeySource = "request" | "mapping-static" | "mapping-templated";
 
+/** Reused helper for resolve Hooks Config behavior in src/gateway. */
 export function resolveHooksConfig(cfg: OpenClawConfig): HooksConfigResolved | null {
   if (cfg.hooks?.enabled !== true) {
     return null;
@@ -141,6 +144,7 @@ function resolveAllowedSessionKeyPrefixes(raw: string[] | undefined): string[] |
   return set.size > 0 ? Array.from(set) : undefined;
 }
 
+/** Reused helper for is Session Key Allowed By Prefix behavior in src/gateway. */
 export function isSessionKeyAllowedByPrefix(sessionKey: string, prefixes: string[]): boolean {
   const normalized = normalizeLowercaseStringOrEmpty(sessionKey);
   if (!normalized) {
@@ -149,6 +153,7 @@ export function isSessionKeyAllowedByPrefix(sessionKey: string, prefixes: string
   return prefixes.some((prefix) => normalized.startsWith(prefix));
 }
 
+/** Reused helper for extract Hook Token behavior in src/gateway. */
 export function extractHookToken(req: IncomingMessage): string | undefined {
   const auth = normalizeOptionalString(req.headers.authorization) ?? "";
   if (normalizeLowercaseStringOrEmpty(auth).startsWith("bearer ")) {
@@ -164,6 +169,7 @@ export function extractHookToken(req: IncomingMessage): string | undefined {
   return undefined;
 }
 
+/** Reused helper for read Json Body behavior in src/gateway. */
 export async function readJsonBody(
   req: IncomingMessage,
   maxBytes: number,
@@ -184,6 +190,7 @@ export async function readJsonBody(
   return { ok: false, error: result.error };
 }
 
+/** Reused helper for normalize Hook Headers behavior in src/gateway. */
 export function normalizeHookHeaders(req: IncomingMessage) {
   const headers: Record<string, string> = {};
   for (const [key, value] of Object.entries(req.headers)) {
@@ -197,6 +204,7 @@ export function normalizeHookHeaders(req: IncomingMessage) {
   return headers;
 }
 
+/** Reused helper for normalize Wake Payload behavior in src/gateway. */
 export function normalizeWakePayload(
   payload: Record<string, unknown>,
 ):
@@ -225,6 +233,7 @@ type HookAgentPayload = {
   timeoutSeconds?: number;
 };
 
+/** Shared type for Hook Agent Dispatch Payload in src/gateway. */
 export type HookAgentDispatchPayload = Omit<HookAgentPayload, "sessionKey"> & {
   sessionKey: string;
   sourcePath: string;
@@ -234,11 +243,14 @@ export type HookAgentDispatchPayload = Omit<HookAgentPayload, "sessionKey"> & {
 
 const listHookChannelValues = () => ["last", ...listChannelPlugins().map((plugin) => plugin.id)];
 
+/** Re-exported API for src/gateway, starting with Hook Message Channel. */
 export type { HookMessageChannel } from "./hooks.types.js";
 
 const getHookChannelSet = () => new Set<string>(listHookChannelValues());
+/** Reused constant for get Hook Channel Error behavior in src/gateway. */
 export const getHookChannelError = () => `channel must be ${listHookChannelValues().join("|")}`;
 
+/** Reused helper for resolve Hook Channel behavior in src/gateway. */
 export function resolveHookChannel(raw: unknown): HookMessageChannel | null {
   if (raw === undefined) {
     return "last";
@@ -253,6 +265,7 @@ export function resolveHookChannel(raw: unknown): HookMessageChannel | null {
   return normalized as HookMessageChannel;
 }
 
+/** Reused helper for resolve Hook Deliver behavior in src/gateway. */
 export function resolveHookDeliver(raw: unknown): boolean {
   return raw !== false;
 }
@@ -268,6 +281,7 @@ function resolveOptionalHookIdempotencyKey(raw: unknown): string | undefined {
   return trimmed;
 }
 
+/** Reused helper for resolve Hook Idempotency Key behavior in src/gateway. */
 export function resolveHookIdempotencyKey(params: {
   payload: Record<string, unknown>;
   headers?: Record<string, string>;
@@ -279,6 +293,7 @@ export function resolveHookIdempotencyKey(params: {
   );
 }
 
+/** Reused helper for resolve Hook Target Agent Id behavior in src/gateway. */
 export function resolveHookTargetAgentId(
   hooksConfig: HooksConfigResolved,
   agentId: string | undefined,
@@ -294,6 +309,7 @@ export function resolveHookTargetAgentId(
   return hooksConfig.agentPolicy.defaultAgentId;
 }
 
+/** Reused helper for resolve Effective Hook Target Agent Id behavior in src/gateway. */
 export function resolveEffectiveHookTargetAgentId(
   hooksConfig: HooksConfigResolved,
   agentId: string | undefined,
@@ -301,6 +317,7 @@ export function resolveEffectiveHookTargetAgentId(
   return resolveHookTargetAgentId(hooksConfig, agentId) ?? hooksConfig.agentPolicy.defaultAgentId;
 }
 
+/** Reused helper for is Hook Agent Allowed behavior in src/gateway. */
 export function isHookAgentAllowed(
   hooksConfig: HooksConfigResolved,
   agentId: string | undefined,
@@ -314,12 +331,15 @@ export function isHookAgentAllowed(
   return allowed.has(resolveEffectiveHookTargetAgentId(hooksConfig, agentId));
 }
 
+/** Reused constant for get Hook Agent Policy Error behavior in src/gateway. */
 export const getHookAgentPolicyError = () => "agentId is not allowed by hooks.allowedAgentIds";
 const getHookSessionKeyRequestPolicyError = () =>
   "sessionKey is disabled for externally supplied hook payload values; set hooks.allowRequestSessionKey=true to enable";
+/** Reused constant for get Hook Session Key Prefix Error behavior in src/gateway. */
 export const getHookSessionKeyPrefixError = (prefixes: string[]) =>
   `sessionKey must start with one of: ${prefixes.join(", ")}`;
 
+/** Reused helper for resolve Hook Session Key behavior in src/gateway. */
 export function resolveHookSessionKey(params: {
   hooksConfig: HooksConfigResolved;
   source: HookSessionKeySource;
@@ -384,6 +404,7 @@ function isHookMappingShadowed(
   });
 }
 
+/** Reused helper for normalize Hook Dispatch Session Key behavior in src/gateway. */
 export function normalizeHookDispatchSessionKey(params: {
   sessionKey: string;
   targetAgentId: string | undefined;
@@ -400,6 +421,7 @@ export function normalizeHookDispatchSessionKey(params: {
   return `agent:${targetAgentId}:${parsed.rest}`;
 }
 
+/** Reused helper for normalize Agent Payload behavior in src/gateway. */
 export function normalizeAgentPayload(payload: Record<string, unknown>):
   | {
       ok: true;

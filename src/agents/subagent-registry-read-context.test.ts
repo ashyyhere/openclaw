@@ -1,3 +1,4 @@
+/** Regression coverage for registry reads scoped to current agent run context. */
 import { describe, expect, it } from "vitest";
 import {
   buildSubagentRunReadIndexFromRuns,

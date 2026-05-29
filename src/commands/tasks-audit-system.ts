@@ -1,3 +1,4 @@
+/** Built-in task audit findings for system-level task checks. */
 import type {
   TaskFlowAuditCode,
   TaskFlowAuditFinding,
@@ -14,9 +15,12 @@ import { summarizeTaskAuditFindings } from "../tasks/task-registry.audit.js";
 import { compareTaskAuditFindingSortKeys } from "../tasks/task-registry.audit.shared.js";
 import type { TaskRecord } from "../tasks/task-registry.types.js";
 
+/** Shared type for Task System Audit Code in src/commands. */
 export type TaskSystemAuditCode = TaskAuditCode | TaskFlowAuditCode;
+/** Shared type for Task System Audit Severity in src/commands. */
 export type TaskSystemAuditSeverity = TaskAuditSeverity | TaskFlowAuditSeverity;
 
+/** Shared type for Task System Audit Finding in src/commands. */
 export type TaskSystemAuditFinding = {
   kind: "task" | "task_flow";
   severity: TaskSystemAuditSeverity;
@@ -44,6 +48,7 @@ function compareSystemAuditFindings(left: TaskSystemAuditFinding, right: TaskSys
   );
 }
 
+/** Reused helper for build Task System Audit Findings behavior in src/commands. */
 export function buildTaskSystemAuditFindings(params: {
   taskFindings: TaskAuditFinding[];
   flowFindings: TaskFlowAuditFinding[];

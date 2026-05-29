@@ -1,3 +1,4 @@
+// infra exec safe bin policy validator helpers and runtime behavior.
 import { parseExecArgvToken } from "./exec-command-resolution.js";
 import {
   buildLongFlagPrefixMap,
@@ -213,6 +214,7 @@ function collectPositionalTokens(args: string[], profile: SafeBinProfile): strin
   return positional;
 }
 
+/** Reused helper for validate Safe Bin Argv behavior in src/infra. */
 export function validateSafeBinArgv(
   args: string[],
   profile: SafeBinProfile,

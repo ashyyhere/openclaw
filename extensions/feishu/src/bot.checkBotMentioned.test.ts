@@ -1,3 +1,4 @@
+// Tests extensions/feishu/src bot checkBotMentioned test behavior.
 import { describe, it, expect } from "vitest";
 import { parseFeishuMessageEvent, type FeishuMessageEvent } from "./bot.js";
 

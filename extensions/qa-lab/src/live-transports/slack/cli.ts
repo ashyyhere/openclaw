@@ -1,3 +1,4 @@
+// extensions/qa-lab/src/live-transports/slack cli helpers and runtime behavior.
 import {
   createLazyCliRuntimeLoader,
   createLiveTransportQaCliRegistration,

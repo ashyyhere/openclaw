@@ -1,3 +1,4 @@
+// Tests extensions/minimax index test behavior.
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import type { StreamFn } from "openclaw/plugin-sdk/agent-core";

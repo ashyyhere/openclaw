@@ -1,3 +1,4 @@
+/** Tests sender label candidate ordering and final label selection. */
 import { describe, expect, it } from "vitest";
 import { listSenderLabelCandidates, resolveSenderLabel } from "./sender-label.js";
 

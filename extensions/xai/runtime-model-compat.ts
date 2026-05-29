@@ -1,3 +1,4 @@
+// extensions/xai runtime model compat helpers and runtime behavior.
 import { applyXaiModelCompat } from "./model-compat.js";
 
 type XaiRuntimeModelCompat = {

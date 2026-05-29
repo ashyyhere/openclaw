@@ -1,3 +1,4 @@
+/** Tests dashboard link output and clipboard behavior. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { dashboardCommand } from "./dashboard.js";
 

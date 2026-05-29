@@ -1,3 +1,4 @@
+// extensions/memory-core/src/memory manager cache helpers and runtime behavior.
 import { resolveGlobalSingleton } from "openclaw/plugin-sdk/memory-core-host-engine-foundation";
 
 type Closable = {

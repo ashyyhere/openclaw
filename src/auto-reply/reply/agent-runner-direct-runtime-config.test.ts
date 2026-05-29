@@ -1,3 +1,4 @@
+// Coverage for direct runtime config passed to reply agent runs.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { getReplyPayloadMetadata } from "../reply-payload.js";
 import type { TemplateContext } from "../templating.js";

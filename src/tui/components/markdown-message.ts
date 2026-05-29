@@ -1,9 +1,11 @@
+// tui/components markdown message helpers and runtime behavior.
 import { Container, Spacer } from "@earendil-works/pi-tui";
 import { markdownTheme } from "../theme/theme.js";
 import { HyperlinkMarkdown } from "./hyperlink-markdown.js";
 
 type MarkdownOptions = ConstructorParameters<typeof HyperlinkMarkdown>[4];
 
+/** Reused class for Markdown Message Component behavior in src/tui/components. */
 export class MarkdownMessageComponent extends Container {
   private body: HyperlinkMarkdown;
 

@@ -1,3 +1,4 @@
+// extensions/nextcloud-talk/src replay guard helpers and runtime behavior.
 import path from "node:path";
 import { createClaimableDedupe } from "openclaw/plugin-sdk/persistent-dedupe";
 

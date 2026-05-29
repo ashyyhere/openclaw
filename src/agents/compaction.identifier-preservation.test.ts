@@ -1,3 +1,4 @@
+/** Tests identifier preservation in generated compaction summaries. */
 import type { AgentMessage } from "openclaw/plugin-sdk/agent-core";
 import type { ExtensionContext } from "openclaw/plugin-sdk/agent-sessions";
 import { beforeEach, describe, expect, it, vi } from "vitest";

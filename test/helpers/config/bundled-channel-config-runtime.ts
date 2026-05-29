@@ -1,3 +1,4 @@
+// test/helpers/config bundled channel config runtime helpers and runtime behavior.
 import * as bundledChannelModule from "../../../src/channels/plugins/bundled.js";
 import type {
   ChannelConfigRuntimeSchema,

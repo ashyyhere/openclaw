@@ -1,3 +1,4 @@
+// Tests extensions/zalo/src monitor pairing lifecycle test behavior.
 import { withServer } from "openclaw/plugin-sdk/test-env";
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 import {

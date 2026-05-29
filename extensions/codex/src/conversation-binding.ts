@@ -1,3 +1,4 @@
+// extensions/codex/src conversation binding helpers and runtime behavior.
 import {
   formatErrorMessage,
   resolveSandboxContext,

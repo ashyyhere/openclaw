@@ -1,3 +1,4 @@
+// Shared types for extensions/browser/src/browser server context types behavior.
 import type { Server } from "node:http";
 import type { RunningChrome } from "./chrome.js";
 import type { BrowserTab, BrowserTransport } from "./client.types.js";

@@ -1,3 +1,4 @@
+/** Resolves and optionally persists gateway install auth tokens. */
 import { formatCliCommand } from "../cli/command-format.js";
 import type { ConfigWriteOptions } from "../config/io.js";
 import type { OpenClawConfig } from "../config/types.js";
@@ -111,6 +112,7 @@ function formatAmbiguousGatewayAuthModeReason(): string {
   ].join(" ");
 }
 
+/** Reused helper for resolve Gateway Install Token behavior in src/commands. */
 export async function resolveGatewayInstallToken(
   options: GatewayInstallTokenOptions,
 ): Promise<GatewayInstallTokenResolution> {

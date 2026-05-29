@@ -1,9 +1,11 @@
+// plugins api facades helpers and runtime behavior.
 import type { OpenClawPluginApi } from "./types.js";
 
 type PluginApiFacadeFields = Pick<
   OpenClawPluginApi,
   "agent" | "lifecycle" | "runContext" | "session"
 >;
+/** Shared type for Open Claw Plugin Api Without Facades in src/plugins. */
 export type OpenClawPluginApiWithoutFacades = Omit<OpenClawPluginApi, keyof PluginApiFacadeFields>;
 type PluginApiFacadeSource = Pick<
   OpenClawPluginApi,
@@ -23,6 +25,7 @@ type PluginApiFacadeSource = Pick<
   | "unscheduleSessionTurnsByTag"
 >;
 
+/** Reused helper for attach Plugin Api Facades behavior in src/plugins. */
 export function attachPluginApiFacades<T extends object>(
   api: T & PluginApiFacadeSource & Partial<PluginApiFacadeFields>,
 ): T & PluginApiFacadeFields {

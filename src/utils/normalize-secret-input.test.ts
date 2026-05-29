@@ -1,3 +1,4 @@
+// Tests utils normalize secret input test behavior.
 import { describe, expect, it } from "vitest";
 import { normalizeOptionalSecretInput, normalizeSecretInput } from "./normalize-secret-input.js";
 

@@ -1,3 +1,4 @@
+// Tests gateway credentials test behavior.
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import {

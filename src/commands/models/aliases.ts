@@ -1,3 +1,4 @@
+// Implements `openclaw models aliases` list/add/remove commands.
 import { formatCliCommand } from "../../cli/command-format.js";
 import { logConfigUpdated } from "../../config/logging.js";
 import { type RuntimeEnv, writeRuntimeJson } from "../../runtime.js";
@@ -9,6 +10,7 @@ import {
   updateConfig,
 } from "./shared.js";
 
+/** Reused helper for models Aliases List Command behavior in src/commands/models. */
 export async function modelsAliasesListCommand(
   opts: { json?: boolean; plain?: boolean },
   runtime: RuntimeEnv,
@@ -48,6 +50,7 @@ export async function modelsAliasesListCommand(
   }
 }
 
+/** Reused helper for models Aliases Add Command behavior in src/commands/models. */
 export async function modelsAliasesAddCommand(
   aliasRaw: string,
   modelRaw: string,
@@ -83,6 +86,7 @@ export async function modelsAliasesAddCommand(
   runtime.log(`Alias ${alias} -> ${resolved.provider}/${resolved.model}`);
 }
 
+/** Reused helper for models Aliases Remove Command behavior in src/commands/models. */
 export async function modelsAliasesRemoveCommand(aliasRaw: string, runtime: RuntimeEnv) {
   const alias = normalizeAlias(aliasRaw);
   const updated = await updateConfig((cfg) => {

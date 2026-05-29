@@ -1,6 +1,8 @@
+// daemon service env plan helpers and runtime behavior.
 import { normalizeEnvVarKey } from "../infra/host-env-security.js";
 import type { GatewayServiceEnvironmentValueSource } from "./service-types.js";
 
+/** Shared type for Service Env Source in src/daemon. */
 export type ServiceEnvSource =
   | "state-dotenv"
   | "config-env"
@@ -10,6 +12,7 @@ export type ServiceEnvSource =
   | "existing-preserved"
   | "service-generated";
 
+/** Shared type for Service Env Plan Entry in src/daemon. */
 export type ServiceEnvPlanEntry = {
   rawKey: string;
   normalizedKey: string;
@@ -17,12 +20,14 @@ export type ServiceEnvPlanEntry = {
   source: ServiceEnvSource;
 };
 
+/** Shared type for Mutable Service Env Plan in src/daemon. */
 export type MutableServiceEnvPlan = {
   environment: Record<string, string | undefined>;
   environmentValueSources: Record<string, GatewayServiceEnvironmentValueSource | undefined>;
   entriesByNormalizedKey: Map<string, ServiceEnvPlanEntry>;
 };
 
+/** Reused helper for create Mutable Service Env Plan behavior in src/daemon. */
 export function createMutableServiceEnvPlan(): MutableServiceEnvPlan {
   return {
     environment: {},
@@ -31,10 +36,12 @@ export function createMutableServiceEnvPlan(): MutableServiceEnvPlan {
   };
 }
 
+/** Reused helper for normalize Service Env Plan Key behavior in src/daemon. */
 export function normalizeServiceEnvPlanKey(rawKey: string): string | undefined {
   return normalizeEnvVarKey(rawKey, { portable: true })?.toUpperCase();
 }
 
+/** Reused helper for add Service Env Plan Entries behavior in src/daemon. */
 export function addServiceEnvPlanEntries(
   plan: MutableServiceEnvPlan,
   entries: Record<string, string | undefined>,
@@ -77,6 +84,7 @@ export function addServiceEnvPlanEntries(
   }
 }
 
+/** Reused helper for compact Service Env Plan Value Sources behavior in src/daemon. */
 export function compactServiceEnvPlanValueSources(plan: MutableServiceEnvPlan): void {
   for (const key of Object.keys(plan.environmentValueSources)) {
     if (!Object.hasOwn(plan.environment, key)) {

@@ -1,3 +1,4 @@
+// gateway auth token source conflict helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { normalizeSecretInputString, resolveSecretInputRef } from "../config/types.secrets.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
@@ -5,6 +6,7 @@ import { normalizeOptionalString } from "../shared/string-coerce.js";
 const GATEWAY_ENV_TOKEN = "OPENCLAW_GATEWAY_TOKEN";
 const GATEWAY_SERVICE_KIND = "gateway";
 
+/** Shared type for Gateway Auth Token Source Conflict in src/gateway. */
 export type GatewayAuthTokenSourceConflict = {
   checkId: "gateway.env_token_overrides_config";
   title: string;
@@ -14,6 +16,7 @@ export type GatewayAuthTokenSourceConflict = {
   diagnostic: string;
 };
 
+/** Reused helper for resolve Gateway Auth Token Source Conflict behavior in src/gateway. */
 export function resolveGatewayAuthTokenSourceConflict(params: {
   cfg: OpenClawConfig;
   env: NodeJS.ProcessEnv;

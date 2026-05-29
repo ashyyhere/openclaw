@@ -1,3 +1,4 @@
+// extensions/msteams/src conversation store memory helpers and runtime behavior.
 import {
   findPreferredDmConversationByUserId,
   mergeStoredConversationReference,

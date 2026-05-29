@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server transport websocket helpers and runtime behavior.
 import { EventEmitter } from "node:events";
 import { PassThrough, Writable } from "node:stream";
 import WebSocket, { type RawData } from "ws";

@@ -1,3 +1,4 @@
+/** Tests browser bridge SDK facade delegation and activated runtime loading. */
 import type { Server } from "node:http";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 

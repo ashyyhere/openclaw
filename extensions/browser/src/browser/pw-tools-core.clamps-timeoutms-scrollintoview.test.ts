@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/browser pw tools core clamps timeoutms scrollintoview test behavior.
 import { describe, expect, it, vi } from "vitest";
 import {
   installPwToolsCoreTestHooks,

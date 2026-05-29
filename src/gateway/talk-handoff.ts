@@ -1,3 +1,4 @@
+// gateway talk handoff helpers and runtime behavior.
 import { createHash, randomBytes, randomUUID } from "node:crypto";
 import {
   asDateTimestampMs,
@@ -20,6 +21,7 @@ import {
 const DEFAULT_TALK_HANDOFF_TTL_MS = 10 * 60 * 1000;
 const MAX_TALK_HANDOFF_TTL_MS = 60 * 60 * 1000;
 
+/** Shared type for Talk Handoff Create Params in src/gateway. */
 export type TalkHandoffCreateParams = {
   sessionKey: string;
   sessionId?: string;
@@ -34,6 +36,7 @@ export type TalkHandoffCreateParams = {
   ttlMs?: number;
 };
 
+/** Shared type for Talk Handoff Record in src/gateway. */
 export type TalkHandoffRecord = {
   id: string;
   roomId: string;
@@ -54,6 +57,7 @@ export type TalkHandoffRecord = {
   room: TalkHandoffRoomState;
 };
 
+/** Shared type for Talk Handoff Public Record in src/gateway. */
 export type TalkHandoffPublicRecord = Omit<TalkHandoffRecord, "tokenHash" | "room"> & {
   room: {
     activeClientId?: string;
@@ -62,10 +66,12 @@ export type TalkHandoffPublicRecord = Omit<TalkHandoffRecord, "tokenHash" | "roo
   };
 };
 
+/** Shared type for Talk Handoff Create Result in src/gateway. */
 export type TalkHandoffCreateResult = TalkHandoffPublicRecord & {
   token: string;
 };
 
+/** Shared type for Talk Handoff Join Result in src/gateway. */
 export type TalkHandoffJoinResult =
   | {
       ok: true;
@@ -77,6 +83,7 @@ export type TalkHandoffJoinResult =
     }
   | { ok: false; reason: "not_found" | "expired" | "invalid_token" };
 
+/** Shared type for Talk Handoff Revoke Result in src/gateway. */
 export type TalkHandoffRevokeResult = {
   revoked: boolean;
   roomId?: string;
@@ -84,6 +91,7 @@ export type TalkHandoffRevokeResult = {
   events: TalkEvent[];
 };
 
+/** Shared type for Talk Handoff Turn Result in src/gateway. */
 export type TalkHandoffTurnResult =
   | {
       ok: true;
@@ -103,6 +111,7 @@ type TalkHandoffRoomState = {
 
 const handoffs = new Map<string, TalkHandoffRecord>();
 
+/** Reused helper for create Talk Handoff behavior in src/gateway. */
 export function createTalkHandoff(params: TalkHandoffCreateParams): TalkHandoffCreateResult {
   pruneExpiredTalkHandoffs();
   const rawCreatedAt = Date.now();
@@ -146,11 +155,13 @@ export function createTalkHandoff(params: TalkHandoffCreateParams): TalkHandoffC
   return { ...toPublicTalkHandoffRecord(record), token };
 }
 
+/** Reused helper for get Talk Handoff behavior in src/gateway. */
 export function getTalkHandoff(id: string): TalkHandoffRecord | undefined {
   pruneExpiredTalkHandoffs();
   return handoffs.get(id);
 }
 
+/** Reused helper for join Talk Handoff behavior in src/gateway. */
 export function joinTalkHandoff(
   id: string,
   token: string,
@@ -181,6 +192,7 @@ export function joinTalkHandoff(
   };
 }
 
+/** Reused helper for start Talk Handoff Turn behavior in src/gateway. */
 export function startTalkHandoffTurn(
   id: string,
   token: string,
@@ -207,6 +219,7 @@ export function startTalkHandoffTurn(
   };
 }
 
+/** Reused helper for end Talk Handoff Turn behavior in src/gateway. */
 export function endTalkHandoffTurn(
   id: string,
   token: string,
@@ -232,6 +245,7 @@ export function endTalkHandoffTurn(
   };
 }
 
+/** Reused helper for cancel Talk Handoff Turn behavior in src/gateway. */
 export function cancelTalkHandoffTurn(
   id: string,
   token: string,
@@ -257,6 +271,7 @@ export function cancelTalkHandoffTurn(
   };
 }
 
+/** Reused helper for revoke Talk Handoff behavior in src/gateway. */
 export function revokeTalkHandoff(id: string): TalkHandoffRevokeResult {
   pruneExpiredTalkHandoffs();
   const record = handoffs.get(id);
@@ -277,10 +292,12 @@ export function revokeTalkHandoff(id: string): TalkHandoffRevokeResult {
   };
 }
 
+/** Reused helper for verify Talk Handoff Token behavior in src/gateway. */
 export function verifyTalkHandoffToken(record: TalkHandoffRecord, token: string): boolean {
   return record.tokenHash === hashTalkHandoffToken(token);
 }
 
+/** Reused helper for clear Talk Handoffs For Test behavior in src/gateway. */
 export function clearTalkHandoffsForTest(): void {
   handoffs.clear();
 }

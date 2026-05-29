@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/browser/routes tabs test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createBrowserRouteApp, createBrowserRouteResponse } from "./test-helpers.js";
 

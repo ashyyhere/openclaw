@@ -1,3 +1,4 @@
+// extensions/feishu/src comment handler helpers and runtime behavior.
 import { resolveChannelConfigWrites } from "openclaw/plugin-sdk/channel-config-writes";
 import { parseStrictNonNegativeInteger } from "openclaw/plugin-sdk/number-runtime";
 import type { ResolvedAgentRoute } from "openclaw/plugin-sdk/routing";

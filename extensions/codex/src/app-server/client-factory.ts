@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server client factory helpers and runtime behavior.
 import type { resolveCodexAppServerAuthProfileIdForAgent } from "./auth-bridge.js";
 import type { CodexAppServerClient } from "./client.js";
 import type { CodexAppServerStartOptions } from "./config.js";

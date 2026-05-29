@@ -1,3 +1,4 @@
+// Tests extensions/voice-call/src/providers/shared guarded json api test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const { fetchWithSsrFGuardMock } = vi.hoisted(() => ({

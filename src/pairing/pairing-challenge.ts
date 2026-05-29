@@ -1,7 +1,9 @@
+// pairing pairing challenge helpers and runtime behavior.
 import { buildPairingReply } from "./pairing-messages.js";
 
 type PairingMeta = Record<string, string | undefined>;
 
+/** Shared type for Pairing Challenge Params in src/pairing. */
 export type PairingChallengeParams = {
   channel: string;
   senderId: string;

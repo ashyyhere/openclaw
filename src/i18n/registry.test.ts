@@ -1,3 +1,4 @@
+// Tests i18n registry test behavior.
 import fs from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";

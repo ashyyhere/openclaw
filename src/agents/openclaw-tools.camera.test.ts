@@ -1,3 +1,4 @@
+/** Tests camera/photo paths through the OpenClaw nodes tool. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   readFileUtf8AndCleanup,

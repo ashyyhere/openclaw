@@ -1,3 +1,4 @@
+/** Preflight tests for Anthropic Vertex auth-presence checks without credential leakage. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 const { existsSyncMock, readFileSyncMock } = vi.hoisted(() => ({

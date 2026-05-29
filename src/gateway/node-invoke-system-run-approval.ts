@@ -1,3 +1,4 @@
+// gateway node invoke system run approval helpers and runtime behavior.
 import {
   GATEWAY_CLIENT_MODES,
   GATEWAY_CLIENT_NAMES,

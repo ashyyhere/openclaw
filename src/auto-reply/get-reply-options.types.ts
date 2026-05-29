@@ -1,9 +1,11 @@
+// Shared option types for get-reply orchestration and queued delivery.
 import type { ImageContent } from "../llm/types.js";
 import type { PromptImageOrderEntry } from "../media/prompt-image-order.js";
 import type { UserTurnTranscriptRecorder } from "../sessions/user-turn-transcript.js";
 import type { ReplyPayload } from "./reply-payload.js";
 import type { TypingController } from "./reply/typing.js";
 
+/** Shared type for Block Reply Context in src/auto-reply. */
 export type BlockReplyContext = {
   abortSignal?: AbortSignal;
   timeoutMs?: number;
@@ -18,6 +20,7 @@ export type ModelSelectedContext = {
   thinkLevel: string | undefined;
 };
 
+/** Shared type for Typing Policy in src/auto-reply. */
 export type TypingPolicy =
   | "auto"
   | "user_message"
@@ -25,27 +28,33 @@ export type TypingPolicy =
   | "internal_webchat"
   | "heartbeat";
 
+/** Shared type for Reply Threading Policy in src/auto-reply. */
 export type ReplyThreadingPolicy = {
   /** Override implicit reply-to-current behavior for the current turn. */
   implicitCurrentMessage?: "default" | "allow" | "deny";
 };
 
+/** Shared type for Source Reply Delivery Mode in src/auto-reply. */
 export type SourceReplyDeliveryMode = "automatic" | "message_tool_only";
 
+/** Shared type for Queued Reply Delivery Correlation in src/auto-reply. */
 export type QueuedReplyDeliveryCorrelation = {
   begin: () => (() => void) | void;
 };
 
+/** Shared type for Queued Reply Lifecycle in src/auto-reply. */
 export type QueuedReplyLifecycle = {
   onEnqueued?: () => void;
   onComplete?: () => void;
 };
 
+/** Shared type for Partial Reply Payload in src/auto-reply. */
 export type PartialReplyPayload = Pick<ReplyPayload, "text" | "mediaUrls"> & {
   delta?: string;
   replace?: true;
 };
 
+/** Shared type for Get Reply Options in src/auto-reply. */
 export type GetReplyOptions = {
   /** Override run id for agent events (defaults to random UUID). */
   runId?: string;

@@ -1,3 +1,4 @@
+// Tests test/scripts live docker auth test behavior.
 import { spawnSync } from "node:child_process";
 import { chmodSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -77,14 +78,9 @@ describe("scripts/lib/live-docker-auth.sh", () => {
     const binDir = makeTempBin("openclaw-live-docker-auth-plain-");
     writeExecutable(
       path.join(binDir, "timeout"),
-      [
-        "#!/bin/sh",
-        'if [ "$1" = "--kill-after=1s" ]; then',
-        "  exit 1",
-        "fi",
-        "exit 0",
-        "",
-      ].join("\n"),
+      ["#!/bin/sh", 'if [ "$1" = "--kill-after=1s" ]; then', "  exit 1", "fi", "exit 0", ""].join(
+        "\n",
+      ),
     );
 
     expect(resolveDockerRunArgs(binDir)).toEqual(["timeout", "42s", "docker", "run"]);

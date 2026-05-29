@@ -1,3 +1,4 @@
+// plugins http route overlap helpers and runtime behavior.
 import { canonicalizePathVariant } from "../gateway/security-path.js";
 import type { OpenClawPluginHttpRouteMatch } from "./types.js";
 
@@ -34,6 +35,7 @@ function doPluginHttpRoutesOverlap(
   );
 }
 
+/** Reused helper for find Overlapping Plugin Http Route behavior in src/plugins. */
 export function findOverlappingPluginHttpRoute<
   T extends {
     path: string;

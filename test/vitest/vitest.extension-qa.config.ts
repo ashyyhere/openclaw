@@ -1,3 +1,4 @@
+// test/vitest vitest extension qa config helpers and runtime behavior.
 import { qaExtensionTestRoots } from "./vitest.extension-qa-paths.mjs";
 import { loadPatternListFromEnv } from "./vitest.pattern-file.ts";
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";

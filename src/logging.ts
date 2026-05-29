@@ -1,3 +1,4 @@
+// OpenClaw logging helpers and runtime behavior.
 import type { ConsoleLoggerSettings, ConsoleStyle } from "./logging/console.js";
 import {
   enableConsoleCapture,
@@ -32,6 +33,7 @@ import {
   stripRedundantSubsystemPrefixForConsole,
 } from "./logging/subsystem.js";
 
+/** Re-exported API for src. */
 export {
   enableConsoleCapture,
   getConsoleSettings,
@@ -60,6 +62,7 @@ export {
   stripRedundantSubsystemPrefixForConsole,
 };
 
+/** Re-exported API for src. */
 export type {
   ConsoleLoggerSettings,
   ConsoleStyle,

@@ -1,3 +1,4 @@
+/** Tests channel turn history-window recording and cleanup behavior. */
 import { describe, expect, it } from "vitest";
 import type { HistoryEntry } from "../../auto-reply/reply/history.types.js";
 import { createChannelHistoryWindow } from "./history-window.js";

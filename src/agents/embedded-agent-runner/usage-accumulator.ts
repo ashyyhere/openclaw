@@ -1,5 +1,7 @@
+/** Accumulates usage across embedded-agent attempts and provider calls. */
 import { normalizeUsage, type NormalizedUsage, type UsageLike } from "../usage.js";
 
+/** Shared type for Usage Accumulator in src/agents/embedded-agent-runner. */
 export type UsageAccumulator = {
   input: number;
   output: number;
@@ -16,6 +18,7 @@ export type UsageAccumulator = {
   lastTotal: number;
 };
 
+/** Creates an empty usage accumulator with no last-call snapshot. */
 export const createUsageAccumulator = (): UsageAccumulator => ({
   input: 0,
   output: 0,
@@ -44,6 +47,7 @@ const hasUsageValues = (usage: MaybeUsage): usage is NormalizedUsage =>
     usage.total,
   ].some((value) => typeof value === "number" && Number.isFinite(value) && value > 0);
 
+/** Adds one provider usage payload into the running accumulator. */
 export const mergeUsageIntoAccumulator = (target: UsageAccumulator, usage: MaybeUsage) => {
   if (!hasUsageValues(usage)) {
     return;
@@ -65,6 +69,7 @@ export const mergeUsageIntoAccumulator = (target: UsageAccumulator, usage: Maybe
   target.lastTotal = callTotal;
 };
 
+/** Converts accumulated usage into the normalized reporting shape. */
 export const toNormalizedUsage = (usage: UsageAccumulator): NormalizedUsage | undefined => {
   const hasUsage =
     usage.input > 0 ||
@@ -86,6 +91,7 @@ export const toNormalizedUsage = (usage: UsageAccumulator): NormalizedUsage | un
   };
 };
 
+/** Returns normalized usage from only the most recent provider call. */
 export const toLastCallUsage = (usage: UsageAccumulator): NormalizedUsage | undefined => {
   const hasUsage =
     usage.lastInput > 0 ||
@@ -107,6 +113,7 @@ export const toLastCallUsage = (usage: UsageAccumulator): NormalizedUsage | unde
   };
 };
 
+/** Chooses explicit last-call usage before falling back to accumulated totals. */
 export const resolveLastCallUsage = (
   rawUsage: UsageLike | null | undefined,
   usageAccumulator: UsageAccumulator,

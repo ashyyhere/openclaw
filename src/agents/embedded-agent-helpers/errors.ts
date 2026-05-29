@@ -1,3 +1,4 @@
+/** Classifies provider/runtime errors for retry, failover, and user-facing copy. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { AssistantMessage } from "../../llm/types.js";
 import { createSubsystemLogger } from "../../logging/subsystem.js";
@@ -11,6 +12,7 @@ import {
   normalizeLowercaseStringOrEmpty,
   normalizeOptionalLowercaseString,
 } from "../../shared/string-coerce.js";
+/** Re-exported API for src/agents/embedded-agent-helpers. */
 export {
   extractLeadingHttpStatus,
   formatRawAssistantErrorForUi,
@@ -49,6 +51,7 @@ import {
 } from "./sanitize-user-facing-text.js";
 import type { FailoverReason } from "./types.js";
 
+/** Re-exported API for src/agents/embedded-agent-helpers. */
 export {
   BILLING_ERROR_USER_MESSAGE,
   formatBillingErrorMessage,
@@ -58,6 +61,7 @@ export {
   sanitizeUserFacingText,
 } from "./sanitize-user-facing-text.js";
 
+/** Re-exported API for src/agents/embedded-agent-helpers. */
 export {
   isAuthErrorMessage,
   isAuthPermanentErrorMessage,
@@ -71,6 +75,7 @@ export {
 const log = createSubsystemLogger("errors");
 const sandboxToolPolicyAuditMessages = new WeakSet<AssistantMessage>();
 
+/** Reused helper for is Reasoning Constraint Error Message behavior in src/agents/embedded-agent-helpers. */
 export function isReasoningConstraintErrorMessage(raw: string): boolean {
   if (!raw) {
     return false;
@@ -89,6 +94,7 @@ function hasRateLimitTpmHint(raw: string): boolean {
   return /\btpm\b/i.test(lower) || lower.includes("tokens per minute");
 }
 
+/** Reused helper for is Context Overflow Error behavior in src/agents/embedded-agent-helpers. */
 export function isContextOverflowError(errorMessage?: string): boolean {
   if (!errorMessage) {
     return false;
@@ -150,6 +156,7 @@ const CONTEXT_OVERFLOW_HINT_RE =
 const RATE_LIMIT_HINT_RE =
   /rate limit|too many requests|requests per (?:minute|hour|day)|quota|throttl|429\b|tokens per day/i;
 
+/** Reused helper for is Likely Context Overflow Error behavior in src/agents/embedded-agent-helpers. */
 export function isLikelyContextOverflowError(errorMessage?: string): boolean {
   if (!errorMessage) {
     return false;
@@ -189,6 +196,7 @@ export function isLikelyContextOverflowError(errorMessage?: string): boolean {
   return CONTEXT_OVERFLOW_HINT_RE.test(errorMessage);
 }
 
+/** Reused helper for is Compaction Failure Error behavior in src/agents/embedded-agent-helpers. */
 export function isCompactionFailureError(errorMessage?: string): boolean {
   if (!errorMessage) {
     return false;
@@ -223,6 +231,7 @@ const OBSERVED_OVERFLOW_TOKEN_SUM_PATTERNS = [
   /input length(?:\s+and\s+max_tokens)?\s+exceed\s+context(?:\s+limit|\s+window)?\s*\(i\.e\s*([\d,]+)\s*\+\s*([\d,]+)\s*>\s*[\d,]+\)/i,
 ];
 
+/** Reused helper for extract Observed Overflow Token Count behavior in src/agents/embedded-agent-helpers. */
 export function extractObservedOverflowTokenCount(errorMessage?: string): number | undefined {
   if (!errorMessage) {
     return undefined;
@@ -261,6 +270,7 @@ const TRANSIENT_HTTP_ERROR_CODES = new Set([499, 500, 502, 503, 504, 521, 522, 5
 
 type PaymentRequiredFailoverReason = Extract<FailoverReason, "billing" | "rate_limit">;
 
+/** Shared type for Failover Signal in src/agents/embedded-agent-helpers. */
 export type FailoverSignal = {
   status?: number;
   code?: string;
@@ -268,6 +278,7 @@ export type FailoverSignal = {
   provider?: string;
 };
 
+/** Shared type for Failover Classification in src/agents/embedded-agent-helpers. */
 export type FailoverClassification =
   | {
       kind: "reason";
@@ -277,6 +288,7 @@ export type FailoverClassification =
       kind: "context_overflow";
     };
 
+/** Shared type for Provider Runtime Failure Kind in src/agents/embedded-agent-helpers. */
 export type ProviderRuntimeFailureKind =
   | "auth_scope"
   | "auth_refresh"
@@ -363,6 +375,7 @@ function stripErrorPrefix(raw: string): string {
   return raw.replace(/^error:\s*/i, "").trim();
 }
 
+/** Reused helper for infer Signal Status behavior in src/agents/embedded-agent-helpers. */
 export function inferSignalStatus(signal: FailoverSignal): number | undefined {
   if (typeof signal.status === "number" && Number.isFinite(signal.status)) {
     return signal.status;
@@ -386,6 +399,7 @@ function isExplicitNoBodyHttpMessage(raw: string | undefined, status?: number): 
   return NO_BODY_HTTP_WRAPPER_RE.test(candidate);
 }
 
+/** Reused helper for is Unclassified No Body Http Signal behavior in src/agents/embedded-agent-helpers. */
 export function isUnclassifiedNoBodyHttpSignal(signal: FailoverSignal): boolean {
   const status = inferSignalStatus(signal);
   if (status !== 400 && status !== 422) {
@@ -616,6 +630,7 @@ function failoverReasonFromClassification(
   return classification?.kind === "reason" ? classification.reason : null;
 }
 
+/** Reused helper for is Transient Http Error behavior in src/agents/embedded-agent-helpers. */
 export function isTransientHttpError(raw: string): boolean {
   const trimmed = raw.trim();
   if (!trimmed) {
@@ -628,6 +643,7 @@ export function isTransientHttpError(raw: string): boolean {
   return TRANSIENT_HTTP_ERROR_CODES.has(status.code);
 }
 
+/** Reused helper for classify Failover Reason From Http Status behavior in src/agents/embedded-agent-helpers. */
 export function classifyFailoverReasonFromHttpStatus(
   status: number | undefined,
   message?: string,
@@ -967,6 +983,7 @@ function classifyFailoverClassificationFromMessage(
   return null;
 }
 
+/** Classifies a structured failure signal into a normalized failover decision. */
 export function classifyFailoverSignal(signal: FailoverSignal): FailoverClassification | null {
   const inferredStatus = inferSignalStatus(signal);
   if (
@@ -999,6 +1016,7 @@ export function classifyFailoverSignal(signal: FailoverSignal): FailoverClassifi
   return messageClassification;
 }
 
+/** Reused helper for classify Provider Runtime Failure Kind behavior in src/agents/embedded-agent-helpers. */
 export function classifyProviderRuntimeFailureKind(
   signal: FailoverSignal | string,
 ): ProviderRuntimeFailureKind {
@@ -1071,6 +1089,7 @@ export function classifyProviderRuntimeFailureKind(
   return "unclassified";
 }
 
+/** Reused helper for format Assistant Error Text behavior in src/agents/embedded-agent-helpers. */
 export function formatAssistantErrorText(
   msg: AssistantMessage,
   opts?: { cfg?: OpenClawConfig; sessionKey?: string; provider?: string; model?: string },
@@ -1273,6 +1292,7 @@ export function formatAssistantErrorText(
   return raw.length > 600 ? `${raw.slice(0, 600)}…` : raw;
 }
 
+/** Reused helper for is Rate Limit Assistant Error behavior in src/agents/embedded-agent-helpers. */
 export function isRateLimitAssistantError(msg: AssistantMessage | undefined): boolean {
   if (!msg || msg.stopReason !== "error") {
     return false;
@@ -1290,6 +1310,7 @@ const IMAGE_DIMENSION_ERROR_RE =
 const IMAGE_DIMENSION_PATH_RE = /messages\.(\d+)\.content\.(\d+)\.image/i;
 const IMAGE_SIZE_ERROR_RE = /image exceeds\s*(\d+(?:\.\d+)?)\s*mb/i;
 
+/** Reused helper for is Missing Tool Call Input Error behavior in src/agents/embedded-agent-helpers. */
 export function isMissingToolCallInputError(raw: string): boolean {
   if (!raw) {
     return false;
@@ -1297,6 +1318,7 @@ export function isMissingToolCallInputError(raw: string): boolean {
   return TOOL_CALL_INPUT_MISSING_RE.test(raw) || TOOL_CALL_INPUT_PATH_RE.test(raw);
 }
 
+/** Reused helper for is Billing Assistant Error behavior in src/agents/embedded-agent-helpers. */
 export function isBillingAssistantError(msg: AssistantMessage | undefined): boolean {
   if (!msg || msg.stopReason !== "error") {
     return false;
@@ -1342,6 +1364,7 @@ function isStructuredServerErrorMessage(raw: string): boolean {
   return value.includes('"type":"server_error"') || value.includes('"code":"server_error"');
 }
 
+/** Reused helper for parse Image Dimension Error behavior in src/agents/embedded-agent-helpers. */
 export function parseImageDimensionError(raw: string): {
   maxDimensionPx?: number;
   messageIndex?: number;
@@ -1365,10 +1388,12 @@ export function parseImageDimensionError(raw: string): {
   };
 }
 
+/** Reused helper for is Image Dimension Error Message behavior in src/agents/embedded-agent-helpers. */
 export function isImageDimensionErrorMessage(raw: string): boolean {
   return Boolean(parseImageDimensionError(raw));
 }
 
+/** Reused helper for parse Image Size Error behavior in src/agents/embedded-agent-helpers. */
 export function parseImageSizeError(raw: string): {
   maxMb?: number;
   raw: string;
@@ -1387,6 +1412,7 @@ export function parseImageSizeError(raw: string): {
   };
 }
 
+/** Reused helper for is Image Size Error behavior in src/agents/embedded-agent-helpers. */
 export function isImageSizeError(errorMessage?: string): boolean {
   if (!errorMessage) {
     return false;
@@ -1394,10 +1420,12 @@ export function isImageSizeError(errorMessage?: string): boolean {
   return Boolean(parseImageSizeError(errorMessage));
 }
 
+/** Reused helper for is Cloud Code Assist Format Error behavior in src/agents/embedded-agent-helpers. */
 export function isCloudCodeAssistFormatError(raw: string): boolean {
   return !isImageDimensionErrorMessage(raw) && matchesFormatErrorPattern(raw);
 }
 
+/** Reused helper for is Auth Assistant Error behavior in src/agents/embedded-agent-helpers. */
 export function isAuthAssistantError(msg: AssistantMessage | undefined): boolean {
   if (!msg || msg.stopReason !== "error") {
     return false;
@@ -1405,6 +1433,7 @@ export function isAuthAssistantError(msg: AssistantMessage | undefined): boolean
   return isAuthErrorMessage(msg.errorMessage ?? "");
 }
 
+/** Re-exported API for src/agents/embedded-agent-helpers, starting with is Model Not Found Error Message. */
 export { isModelNotFoundErrorMessage };
 
 function isCliSessionExpiredErrorMessage(raw: string): boolean {
@@ -1429,6 +1458,7 @@ function isCliSessionExpiredErrorMessage(raw: string): boolean {
   );
 }
 
+/** Classifies raw error text into a high-level failover reason. */
 export function classifyFailoverReason(
   raw: string,
   opts?: { provider?: string },
@@ -1441,10 +1471,12 @@ export function classifyFailoverReason(
   );
 }
 
+/** Reused helper for is Failover Error Message behavior in src/agents/embedded-agent-helpers. */
 export function isFailoverErrorMessage(raw: string, opts?: { provider?: string }): boolean {
   return classifyFailoverReason(raw, opts) !== null;
 }
 
+/** Reused helper for is Failover Assistant Error behavior in src/agents/embedded-agent-helpers. */
 export function isFailoverAssistantError(msg: AssistantMessage | undefined): boolean {
   if (!msg || msg.stopReason !== "error") {
     return false;

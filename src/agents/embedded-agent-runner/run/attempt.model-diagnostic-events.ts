@@ -1,3 +1,4 @@
+/** Emits diagnostic lifecycle events for embedded-attempt model calls. */
 import { fireAndForgetBoundedHook } from "../../../hooks/fire-and-forget.js";
 import {
   diagnosticErrorCategory,
@@ -29,6 +30,7 @@ import type {
 } from "../../../plugins/hook-types.js";
 import type { StreamFn } from "../../runtime/index.js";
 
+/** Re-exported API for src/agents/embedded-agent-runner, starting with diagnostic Error Category. */
 export { diagnosticErrorCategory };
 
 type ModelCallDiagnosticContext = {
@@ -589,6 +591,7 @@ function observeModelCallResult(
   return result;
 }
 
+/** Wraps a stream function with diagnostic start/end/error model-call events. */
 export function wrapStreamFnWithDiagnosticModelCallEvents(
   streamFn: StreamFn,
   ctx: ModelCallDiagnosticContext,

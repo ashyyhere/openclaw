@@ -1,3 +1,4 @@
+// config types googlechat helpers and runtime behavior.
 import type {
   BlockStreamingCoalesceConfig,
   DmPolicy,
@@ -9,6 +10,7 @@ import type { ChannelHealthMonitorConfig } from "./types.channel-health.js";
 import type { DmConfig } from "./types.messages.js";
 import type { SecretRef } from "./types.secrets.js";
 
+/** Shared type for Google Chat Dm Config in src/config. */
 export type GoogleChatDmConfig = {
   /** If false, ignore all incoming Google Chat DMs. Default: true. */
   enabled?: boolean;
@@ -18,6 +20,7 @@ export type GoogleChatDmConfig = {
   allowFrom?: Array<string | number>;
 };
 
+/** Shared type for Google Chat Group Config in src/config. */
 export type GoogleChatGroupConfig = {
   /** If false, disable the bot in this space. */
   enabled?: boolean;
@@ -31,10 +34,12 @@ export type GoogleChatGroupConfig = {
   systemPrompt?: string;
 };
 
+/** Shared type for Google Chat Action Config in src/config. */
 export type GoogleChatActionConfig = {
   reactions?: boolean;
 };
 
+/** Shared type for Google Chat Account Config in src/config. */
 export type GoogleChatAccountConfig = {
   /** Optional display name for this account (used in CLI/UI lists). */
   name?: string;
@@ -120,6 +125,7 @@ export type GoogleChatAccountConfig = {
   responsePrefix?: string;
 };
 
+/** Shared type for Google Chat Config in src/config. */
 export type GoogleChatConfig = {
   /** Optional per-account Google Chat configuration (multi-account). */
   accounts?: Record<string, GoogleChatAccountConfig>;

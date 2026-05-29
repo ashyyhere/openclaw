@@ -1,3 +1,4 @@
+// Queued follow-up run orchestration.
 import crypto from "node:crypto";
 import { hasOutboundReplyContent } from "openclaw/plugin-sdk/reply-payload";
 import {
@@ -229,6 +230,7 @@ async function forwardFollowupProgressEvent(params: {
   }
 }
 
+/** Reused helper for create Followup Runner behavior in src/auto-reply/reply. */
 export function createFollowupRunner(params: {
   opts?: GetReplyOptions;
   typing: TypingController;

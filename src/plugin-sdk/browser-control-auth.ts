@@ -1,6 +1,8 @@
+/** Public SDK facade for browser control auth resolution and token generation. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { loadBundledPluginPublicSurfaceModuleSync } from "./facade-loader.js";
 
+/** Browser control credentials safe to pass between config, bridge, and UI surfaces. */
 export type BrowserControlAuth = {
   token?: string;
   password?: string;
@@ -27,6 +29,8 @@ type BrowserControlAuthSurface = {
 let cachedBrowserControlAuthSurface: BrowserControlAuthSurface | undefined;
 
 function loadBrowserControlAuthSurface(): BrowserControlAuthSurface {
+  // Auth policy lives with the browser plugin; cache the facade because plugin metadata is
+  // process-stable until explicit reload/install flows.
   cachedBrowserControlAuthSurface ??=
     loadBundledPluginPublicSurfaceModuleSync<BrowserControlAuthSurface>({
       dirName: "browser",
@@ -35,6 +39,7 @@ function loadBrowserControlAuthSurface(): BrowserControlAuthSurface {
   return cachedBrowserControlAuthSurface;
 }
 
+/** Resolve configured browser control auth without generating missing credentials. */
 export function resolveBrowserControlAuth(
   cfg?: OpenClawConfig,
   env: NodeJS.ProcessEnv = process.env,
@@ -42,10 +47,12 @@ export function resolveBrowserControlAuth(
   return loadBrowserControlAuthSurface().resolveBrowserControlAuth(cfg, env);
 }
 
+/** Return whether this environment should auto-generate browser control credentials. */
 export function shouldAutoGenerateBrowserAuth(env: NodeJS.ProcessEnv): boolean {
   return loadBrowserControlAuthSurface().shouldAutoGenerateBrowserAuth(env);
 }
 
+/** Resolve browser control auth, generating credentials when browser policy permits it. */
 export async function ensureBrowserControlAuth(
   params: EnsureBrowserControlAuthParams,
 ): Promise<EnsureBrowserControlAuthResult> {

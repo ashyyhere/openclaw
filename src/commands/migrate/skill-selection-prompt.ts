@@ -1,3 +1,4 @@
+// Custom Clack multiselect wrapper for migration skill selection shortcuts.
 import { styleText } from "node:util";
 import { MultiSelectPrompt, settings, wrapTextWithPrefix } from "@clack/core";
 import {
@@ -24,6 +25,7 @@ type MigrationSkillSelectionOption = {
   disabled?: boolean;
 };
 
+/** Shared type for Migration Skill Selection Prompt Options in src/commands/migrate. */
 export type MigrationSkillSelectionPromptOptions = {
   message: string;
   options: MigrationSkillSelectionOption[];
@@ -72,6 +74,7 @@ function formatOption(
   return withHint;
 }
 
+/** Reused helper for prompt Migration Skill Selection Values behavior in src/commands/migrate. */
 export function promptMigrationSkillSelectionValues(
   opts: MigrationSkillSelectionPromptOptions,
 ): Promise<string[] | symbol | undefined> {
@@ -251,4 +254,5 @@ export function promptMigrationSkillSelectionValues(
   return prompt.prompt();
 }
 
+/** Reused constant for prompt Migration Selection Values behavior in src/commands/migrate. */
 export const promptMigrationSelectionValues = promptMigrationSkillSelectionValues;

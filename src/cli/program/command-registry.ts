@@ -1,3 +1,4 @@
+/** Registers all top-level CLI command descriptors into a Commander program. */
 import type { Command } from "commander";
 import {
   getCoreCliCommandDescriptors,
@@ -10,6 +11,7 @@ import {
 import type { ProgramContext } from "./context.js";
 import { registerSubCliCommands } from "./register.subclis.js";
 
+/** Re-exported API for src/cli/program. */
 export {
   getCoreCliCommandDescriptors,
   getCoreCliCommandNames,
@@ -17,8 +19,10 @@ export {
   registerCoreCliByName,
   registerCoreCliCommands,
 };
+/** Re-exported API for src/cli/program, starting with Command Registration. */
 export type { CommandRegistration };
 
+/** Reused helper for register Program Commands behavior in src/cli/program. */
 export function registerProgramCommands(
   program: Command,
   ctx: ProgramContext,

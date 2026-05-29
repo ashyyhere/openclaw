@@ -1,3 +1,4 @@
+// Shared provider dispatcher types.
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { GetReplyOptions } from "../get-reply-options.types.js";
 import type { FinalizedMsgContext, MsgContext } from "../templating.js";
@@ -11,6 +12,7 @@ import type {
 type DispatchReplyContext = MsgContext | FinalizedMsgContext;
 type DispatchReplyOptions = Omit<GetReplyOptions, "onBlockReply">;
 
+/** Shared type for Dispatch Reply With Buffered Block Dispatcher in src/auto-reply/reply. */
 export type DispatchReplyWithBufferedBlockDispatcher = (params: {
   ctx: DispatchReplyContext;
   cfg: OpenClawConfig;
@@ -19,6 +21,7 @@ export type DispatchReplyWithBufferedBlockDispatcher = (params: {
   replyResolver?: GetReplyFromConfig;
 }) => Promise<DispatchFromConfigResult>;
 
+/** Shared type for Dispatch Reply With Dispatcher in src/auto-reply/reply. */
 export type DispatchReplyWithDispatcher = (params: {
   ctx: DispatchReplyContext;
   cfg: OpenClawConfig;

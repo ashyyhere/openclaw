@@ -1,3 +1,4 @@
+// Tests gateway server reload handlers test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { ConfigWriteNotification } from "../config/config.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";

@@ -1,3 +1,4 @@
+/** Tests safe-bin policy integration in agent tools. */
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

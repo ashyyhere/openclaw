@@ -1,3 +1,4 @@
+/** Decodes HTML entities that appear inside provider-emitted tool call arguments. */
 import { streamSimple } from "../../llm/stream.js";
 import { visitObjectContentBlocks } from "../../shared/message-content-blocks.js";
 import type { StreamFn } from "../runtime/index.js";
@@ -24,6 +25,7 @@ function decodeHtmlEntities(value: string): string {
     .replace(/&#(\d+);/gi, (_, dec: string) => decodeNumericEntity(dec, 10));
 }
 
+/** Recursively decodes supported HTML entities without changing non-string values. */
 export function decodeHtmlEntitiesInObject(value: unknown): unknown {
   if (typeof value === "string") {
     return HTML_ENTITY_RE.test(value) ? decodeHtmlEntities(value) : value;
@@ -89,6 +91,7 @@ function wrapStreamMessageObjects(
   return stream;
 }
 
+/** Wraps a stream function so outgoing tool-call arguments are entity-decoded. */
 export function createHtmlEntityToolCallArgumentDecodingWrapper(
   baseStreamFn: StreamFn | undefined,
 ): StreamFn {

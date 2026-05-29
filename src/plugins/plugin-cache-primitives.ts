@@ -1,7 +1,10 @@
+// plugins plugin cache primitives helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 
+/** Shared type for Plugin Lru Cache Result in src/plugins. */
 export type PluginLruCacheResult<T> = { hit: true; value: T } | { hit: false };
 
+/** Reused class for Plugin Lru Cache behavior in src/plugins. */
 export class PluginLruCache<T> {
   readonly #defaultMaxEntries: number;
   #maxEntries: number;
@@ -66,13 +69,16 @@ export class PluginLruCache<T> {
   }
 }
 
+/** Shared type for Config Scoped Runtime Cache in src/plugins. */
 export type ConfigScopedRuntimeCache<T> = WeakMap<OpenClawConfig, Map<string, T>>;
 
+/** Shared type for Config Scoped Promise Loader in src/plugins. */
 export type ConfigScopedPromiseLoader<T> = {
   load(config?: OpenClawConfig): Promise<T>;
   clear(): void;
 };
 
+/** Reused helper for resolve Config Scoped Runtime Cache Value behavior in src/plugins. */
 export function resolveConfigScopedRuntimeCacheValue<T>(params: {
   cache: ConfigScopedRuntimeCache<T>;
   config?: OpenClawConfig;
@@ -95,10 +101,12 @@ export function resolveConfigScopedRuntimeCacheValue<T>(params: {
   return loaded;
 }
 
+/** Reused helper for create Plugin Cache Key behavior in src/plugins. */
 export function createPluginCacheKey(parts: readonly unknown[]): string {
   return JSON.stringify(parts);
 }
 
+/** Reused helper for create Config Scoped Promise Loader behavior in src/plugins. */
 export function createConfigScopedPromiseLoader<T>(
   load: (config?: OpenClawConfig) => T | Promise<T>,
 ): ConfigScopedPromiseLoader<T> {

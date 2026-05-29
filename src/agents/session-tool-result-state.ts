@@ -1,3 +1,4 @@
+/** Tracks pending assistant tool calls that still need tool results. */
 type PendingToolCall = { id: string; name?: string };
 
 type PendingToolCallState = {
@@ -13,6 +14,7 @@ type PendingToolCallState = {
   shouldFlushBeforeNewToolCalls: (toolCallCount: number) => boolean;
 };
 
+/** Create in-memory pending tool-call state for transcript guards. */
 export function createPendingToolCallState(): PendingToolCallState {
   const pending = new Map<string, string | undefined>();
 

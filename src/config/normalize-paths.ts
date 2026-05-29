@@ -1,3 +1,4 @@
+// config normalize paths helpers and runtime behavior.
 import { isPlainObject, resolveUserPath } from "../utils.js";
 import type { OpenClawConfig } from "./types.js";
 

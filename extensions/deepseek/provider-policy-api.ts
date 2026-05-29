@@ -1,3 +1,4 @@
+// extensions/deepseek provider policy api helpers and runtime behavior.
 import type { ModelDefinitionConfig } from "openclaw/plugin-sdk/provider-model-shared";
 import type { ModelProviderConfig } from "openclaw/plugin-sdk/provider-model-types";
 import { DEEPSEEK_MODEL_CATALOG } from "./models.js";

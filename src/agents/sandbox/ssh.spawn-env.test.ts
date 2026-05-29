@@ -1,3 +1,4 @@
+/** Covers SSH spawn environment and identity-file handling. */
 import type { ChildProcess, SpawnOptions } from "node:child_process";
 import { EventEmitter } from "node:events";
 import fs from "node:fs/promises";

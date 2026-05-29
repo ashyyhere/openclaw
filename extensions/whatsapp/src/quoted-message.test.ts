@@ -1,3 +1,4 @@
+// Tests extensions/whatsapp/src quoted message test behavior.
 import { describe, expect, it } from "vitest";
 import {
   cacheInboundMessageMeta,

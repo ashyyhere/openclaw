@@ -1,6 +1,8 @@
+// config/sessions reset preserved selection helpers and runtime behavior.
 import { hasSessionAutoModelFallbackProvenance } from "./model-override-provenance.js";
 import type { SessionEntry } from "./types.js";
 
+/** Shared type for Reset Preserved Selection State in src/config/sessions. */
 export type ResetPreservedSelectionState = Pick<
   SessionEntry,
   | "providerOverride"

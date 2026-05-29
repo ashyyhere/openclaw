@@ -1,3 +1,4 @@
+// extensions/msteams/src feedback reflection prompt helpers and runtime behavior.
 import { normalizeOptionalLowercaseString } from "openclaw/plugin-sdk/string-coerce-runtime";
 
 /** Max chars of the thumbed-down response to include in the reflection prompt. */

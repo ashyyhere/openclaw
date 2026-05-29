@@ -1,3 +1,4 @@
+// extensions/discord/src/internal rest scheduler helpers and runtime behavior.
 import { resolveIntegerOption } from "openclaw/plugin-sdk/number-runtime";
 import { RateLimitError, readRetryAfter } from "./rest-errors.js";
 import {

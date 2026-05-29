@@ -1,3 +1,4 @@
+// extensions/canvas/src/host a2ui helpers and runtime behavior.
 import fs from "node:fs/promises";
 import type { IncomingMessage, ServerResponse } from "node:http";
 import path from "node:path";

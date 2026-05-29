@@ -1,3 +1,4 @@
+/** Session binding helpers for CLI-backed providers. */
 import crypto from "node:crypto";
 import type { CliSessionBinding, SessionEntry } from "../config/sessions.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
@@ -5,6 +6,7 @@ import { normalizeProviderId } from "./model-selection.js";
 
 const CLAUDE_CLI_BACKEND_ID = "claude-cli";
 
+/** Hash session-affecting text before storing it in session metadata. */
 export function hashCliSessionText(value: string | undefined): string | undefined {
   const trimmed = normalizeOptionalString(value);
   if (!trimmed) {
@@ -13,6 +15,7 @@ export function hashCliSessionText(value: string | undefined): string | undefine
   return crypto.createHash("sha256").update(trimmed).digest("hex");
 }
 
+/** Read a provider-specific CLI session binding, including legacy Claude storage. */
 export function getCliSessionBinding(
   entry: SessionEntry | undefined,
   provider: string,
@@ -51,6 +54,7 @@ export function getCliSessionBinding(
   return undefined;
 }
 
+/** Read just the CLI session id for a provider. */
 export function getCliSessionId(
   entry: SessionEntry | undefined,
   provider: string,
@@ -58,10 +62,12 @@ export function getCliSessionId(
   return getCliSessionBinding(entry, provider)?.sessionId;
 }
 
+/** Store a basic CLI session id for a provider. */
 export function setCliSessionId(entry: SessionEntry, provider: string, sessionId: string): void {
   setCliSessionBinding(entry, provider, { sessionId });
 }
 
+/** Store a full CLI session binding and keep legacy mirrors in sync. */
 export function setCliSessionBinding(
   entry: SessionEntry,
   provider: string,
@@ -109,6 +115,7 @@ export function setCliSessionBinding(
   }
 }
 
+/** Remove one provider's CLI session binding from a session entry. */
 export function clearCliSession(entry: SessionEntry, provider: string): void {
   const normalized = normalizeProviderId(provider);
   if (entry.cliSessionBindings?.[normalized] !== undefined) {
@@ -126,12 +133,14 @@ export function clearCliSession(entry: SessionEntry, provider: string): void {
   }
 }
 
+/** Remove all CLI session bindings from a session entry. */
 export function clearAllCliSessions(entry: SessionEntry): void {
   entry.cliSessionBindings = undefined;
   entry.cliSessionIds = undefined;
   entry.claudeCliSessionId = undefined;
 }
 
+/** Decide whether a stored CLI session can be reused for the current run shape. */
 export function resolveCliSessionReuse(params: {
   binding?: CliSessionBinding;
   authProfileId?: string;

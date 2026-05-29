@@ -1,5 +1,7 @@
+/** Normalizes prompt sections and capability ids for cache-stable prompts. */
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
+/** Normalize prompt text for deterministic comparison/cache keys. */
 export function normalizeStructuredPromptSection(text: string): string {
   return text
     .replace(/\r\n?/g, "\n")
@@ -7,6 +9,7 @@ export function normalizeStructuredPromptSection(text: string): string {
     .trim();
 }
 
+/** Normalize, dedupe, and sort prompt capability ids. */
 export function normalizePromptCapabilityIds(capabilities: ReadonlyArray<string>): string[] {
   const seen = new Set<string>();
   const normalized: string[] = [];

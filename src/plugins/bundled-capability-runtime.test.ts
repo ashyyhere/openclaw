@@ -1,3 +1,4 @@
+// Tests plugins bundled capability runtime test behavior.
 import { describe, expect, it } from "vitest";
 import { buildVitestCapabilityShimAliasMap } from "./bundled-capability-runtime.js";
 

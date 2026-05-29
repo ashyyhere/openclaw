@@ -1,3 +1,4 @@
+// Coverage for default thinking-level status display.
 import { beforeAll, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../../config/config.js";
 

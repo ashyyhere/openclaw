@@ -1,3 +1,4 @@
+// infra npm registry spec helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
 const EXACT_SEMVER_VERSION_RE =
@@ -19,6 +20,7 @@ type OpenClawReleaseVersion = {
   correctionNumber?: number;
 };
 
+/** Shared type for Parsed Registry Npm Spec in src/infra. */
 export type ParsedRegistryNpmSpec = {
   name: string;
   raw: string;
@@ -112,21 +114,25 @@ function parseRegistryNpmSpecInternal(
   };
 }
 
+/** Reused helper for parse Registry Npm Spec behavior in src/infra. */
 export function parseRegistryNpmSpec(rawSpec: string): ParsedRegistryNpmSpec | null {
   const parsed = parseRegistryNpmSpecInternal(rawSpec);
   return parsed.ok ? parsed.parsed : null;
 }
 
+/** Reused helper for is Open Claw Org Npm Spec behavior in src/infra. */
 export function isOpenClawOrgNpmSpec(rawSpec: string | undefined): boolean {
   const parsed = rawSpec ? parseRegistryNpmSpec(rawSpec) : null;
   return parsed?.name.startsWith("@openclaw/") === true;
 }
 
+/** Reused helper for validate Registry Npm Spec behavior in src/infra. */
 export function validateRegistryNpmSpec(rawSpec: string): string | null {
   const parsed = parseRegistryNpmSpecInternal(rawSpec);
   return parsed.ok ? null : parsed.error;
 }
 
+/** Reused helper for is Exact Semver Version behavior in src/infra. */
 export function isExactSemverVersion(value: string): boolean {
   return EXACT_SEMVER_VERSION_RE.test(value.trim());
 }
@@ -181,11 +187,13 @@ function parseOpenClawReleaseVersion(value: string): OpenClawReleaseVersion | nu
   };
 }
 
+/** Reused helper for is Open Claw Stable Correction Version behavior in src/infra. */
 export function isOpenClawStableCorrectionVersion(value: string): boolean {
   const parsed = parseOpenClawReleaseVersion(value);
   return parsed?.channel === "stable" && parsed.correctionNumber !== undefined;
 }
 
+/** Reused helper for compare Open Claw Release Versions behavior in src/infra. */
 export function compareOpenClawReleaseVersions(left: string, right: string): number | null {
   const parsedLeft = parseOpenClawReleaseVersion(left);
   const parsedRight = parseOpenClawReleaseVersion(right);
@@ -208,12 +216,14 @@ export function compareOpenClawReleaseVersions(left: string, right: string): num
   return Math.sign((parsedLeft.correctionNumber ?? 0) - (parsedRight.correctionNumber ?? 0));
 }
 
+/** Reused helper for is Prerelease Semver Version behavior in src/infra. */
 export function isPrereleaseSemverVersion(value: string): boolean {
   const trimmed = value.trim();
   const match = EXACT_SEMVER_VERSION_RE.exec(trimmed);
   return Boolean(match?.[4]) && !isOpenClawStableCorrectionVersion(trimmed);
 }
 
+/** Reused helper for is Prerelease Resolution Allowed behavior in src/infra. */
 export function isPrereleaseResolutionAllowed(params: {
   spec: ParsedRegistryNpmSpec;
   resolvedVersion?: string;
@@ -230,6 +240,7 @@ export function isPrereleaseResolutionAllowed(params: {
   return normalizeLowercaseStringOrEmpty(params.spec.selector) !== "latest";
 }
 
+/** Reused helper for format Prerelease Resolution Error behavior in src/infra. */
 export function formatPrereleaseResolutionError(params: {
   spec: ParsedRegistryNpmSpec;
   resolvedVersion: string;

@@ -1,3 +1,4 @@
+// scripts ios sync versioning helpers and runtime behavior.
 import path from "node:path";
 import { syncIosVersioning } from "./lib/ios-version.ts";
 

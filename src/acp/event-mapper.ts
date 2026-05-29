@@ -1,3 +1,4 @@
+/** Maps OpenClaw gateway content and tool events into ACP protocol updates. */
 import type {
   ContentBlock,
   ImageContent,
@@ -242,6 +243,7 @@ function collectToolLocations(
   }
 }
 
+/** Extract text prompt content from ACP blocks with optional byte limit enforcement. */
 export function extractTextFromPrompt(prompt: ContentBlock[], maxBytes?: number): string {
   const parts: string[] = [];
   // Track accumulated byte count per block to catch oversized prompts before full concatenation
@@ -275,6 +277,7 @@ export function extractTextFromPrompt(prompt: ContentBlock[], maxBytes?: number)
   return parts.join("\n");
 }
 
+/** Extract gateway image attachments from ACP prompt content blocks. */
 export function extractAttachmentsFromPrompt(prompt: ContentBlock[]): GatewayAttachment[] {
   const attachments: GatewayAttachment[] = [];
   for (const block of prompt) {
@@ -294,6 +297,7 @@ export function extractAttachmentsFromPrompt(prompt: ContentBlock[]): GatewayAtt
   return attachments;
 }
 
+/** Format a compact ACP tool title from a gateway tool name and arguments. */
 export function formatToolTitle(
   name: string | undefined,
   args: Record<string, unknown> | undefined,
@@ -312,6 +316,7 @@ export function formatToolTitle(
   return escapeInlineControlChars(`${base}: ${parts.join(", ")}`);
 }
 
+/** Infer the closest ACP tool kind from a gateway tool name. */
 export function inferToolKind(name?: string): ToolKind {
   if (!name) {
     return "other";
@@ -341,6 +346,7 @@ export function inferToolKind(name?: string): ToolKind {
   return "other";
 }
 
+/** Extract ACP tool-call content blocks from gateway tool output. */
 export function extractToolCallContent(value: unknown): ToolCallContent[] | undefined {
   if (hasNonEmptyString(value)) {
     return value.trim()
@@ -400,6 +406,7 @@ export function extractToolCallContent(value: unknown): ToolCallContent[] | unde
   ];
 }
 
+/** Extract bounded ACP tool-call file locations from raw tool metadata. */
 export function extractToolCallLocations(...values: unknown[]): ToolCallLocation[] | undefined {
   const locations = new Map<string, ToolCallLocation>();
   for (const value of values) {

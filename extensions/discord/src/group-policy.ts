@@ -1,3 +1,4 @@
+// extensions/discord/src group policy helpers and runtime behavior.
 import type { ChannelGroupContext } from "openclaw/plugin-sdk/channel-contract";
 import {
   resolveToolsBySender,

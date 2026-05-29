@@ -1,3 +1,4 @@
+// extensions/browser/src/browser server middleware helpers and runtime behavior.
 import type { Express, Request } from "express";
 import express from "express";
 import { browserMutationGuardMiddleware } from "./csrf.js";

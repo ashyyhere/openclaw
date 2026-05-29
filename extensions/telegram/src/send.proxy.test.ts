@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src send proxy test behavior.
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 const { botApi, botCtorSpy } = vi.hoisted(() => ({

@@ -1,7 +1,9 @@
+/** Applies prompted channel access policy choices to OpenClaw config. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { WizardPrompter } from "../../wizard/prompts.js";
 import { promptChannelAccessConfig, type ChannelAccessPolicy } from "./setup-group-access.js";
 
+/** Reused helper for configure Channel Access With Allowlist behavior in src/channels/plugins. */
 export async function configureChannelAccessWithAllowlist<TResolved>(params: {
   cfg: OpenClawConfig;
   prompter: WizardPrompter;

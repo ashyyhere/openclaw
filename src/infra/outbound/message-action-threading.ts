@@ -1,3 +1,4 @@
+// infra/outbound message action threading helpers and runtime behavior.
 import { readStringParam } from "../../agents/tools/common.js";
 import type {
   ChannelId,
@@ -17,6 +18,7 @@ function suppressesImplicitThreading(actionParams: Record<string, unknown>): boo
   return actionParams.topLevel === true || actionParams.threadId === null;
 }
 
+/** Reused helper for resolve And Apply Outbound Thread Id behavior in src/infra/outbound. */
 export function resolveAndApplyOutboundThreadId(
   actionParams: Record<string, unknown>,
   context: {
@@ -69,6 +71,7 @@ function isSameConversationTarget(
   return explicitTarget.trim() === currentChannelId;
 }
 
+/** Reused helper for resolve And Apply Outbound Reply To Id behavior in src/infra/outbound. */
 export function resolveAndApplyOutboundReplyToId(
   actionParams: Record<string, unknown>,
   context: {
@@ -122,6 +125,7 @@ export function resolveAndApplyOutboundReplyToId(
   return resolvedReplyToId;
 }
 
+/** Reused helper for prepare Outbound Mirror Route behavior in src/infra/outbound. */
 export async function prepareOutboundMirrorRoute(params: {
   cfg: OpenClawConfig;
   channel: ChannelId;

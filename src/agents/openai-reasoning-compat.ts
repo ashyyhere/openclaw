@@ -1,3 +1,4 @@
+/** Maps OpenAI reasoning effort names for model-specific compatibility. */
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import { resolveOpenAIReasoningEffortForModel } from "./openai-reasoning-effort.js";
 
@@ -25,6 +26,7 @@ function readCompatReasoningEffortMap(compat: unknown): Record<string, string> {
   );
 }
 
+/** Resolve built-in and compat-config reasoning effort aliases for a model. */
 export function resolveOpenAIReasoningEffortMap(
   model: OpenAIReasoningCompatModel,
   fallbackMap: Record<string, string> = {},
@@ -42,6 +44,7 @@ export function resolveOpenAIReasoningEffortMap(
   };
 }
 
+/** Map a requested reasoning effort to a supported provider value. */
 export function mapOpenAIReasoningEffortForModel(params: {
   model: OpenAIReasoningCompatModel;
   effort?: string;

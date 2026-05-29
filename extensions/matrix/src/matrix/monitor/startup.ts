@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix/monitor startup helpers and runtime behavior.
 import type { RuntimeLogger } from "../../runtime-api.js";
 import type { CoreConfig, MatrixConfig } from "../../types.js";
 import type { MatrixAuth } from "../client.js";

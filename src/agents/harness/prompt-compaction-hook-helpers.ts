@@ -1,3 +1,4 @@
+/** Runs prompt-build and compaction hooks for agent harnesses. */
 import { createSubsystemLogger } from "../../logging/subsystem.js";
 import { getGlobalHookRunner } from "../../plugins/hook-runner-global.js";
 import type {
@@ -11,11 +12,13 @@ import { buildAgentHookContext, type AgentHarnessHookContext } from "./hook-cont
 
 const log = createSubsystemLogger("agents/harness");
 
+/** Shared type for Agent Harness Prompt Build Result in src/agents/harness. */
 export type AgentHarnessPromptBuildResult = {
   prompt: string;
   developerInstructions: string;
 };
 
+/** Runs before-prompt-build hooks and normalizes their result. */
 export async function resolveAgentHarnessBeforePromptBuildResult(params: {
   prompt: string;
   developerInstructions: string;
@@ -85,6 +88,7 @@ function resolvePromptBuildSystemPrompt(params: {
   return params.developerInstructions;
 }
 
+/** Runs hooks before a harness starts compaction. */
 export async function runAgentHarnessBeforeCompactionHook(params: {
   sessionFile: string;
   messages: AgentMessage[];
@@ -108,6 +112,7 @@ export async function runAgentHarnessBeforeCompactionHook(params: {
   }
 }
 
+/** Runs hooks after a harness finishes compaction. */
 export async function runAgentHarnessAfterCompactionHook(params: {
   sessionFile: string;
   messages: AgentMessage[];

@@ -1,3 +1,4 @@
+// plugins command registry state helpers and runtime behavior.
 import { resolveGlobalSingleton } from "../shared/global-singleton.js";
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 import { normalizeAgentPromptSurfaceKind } from "./agent-prompt-surface-kind.js";
@@ -7,6 +8,7 @@ import type {
   OpenClawPluginCommandDefinition,
 } from "./types.js";
 
+/** Shared type for Registered Plugin Command in src/plugins. */
 export type RegisteredPluginCommand = OpenClawPluginCommandDefinition & {
   pluginId: string;
   pluginName?: string;
@@ -29,6 +31,7 @@ const getState = () =>
 
 const getPluginCommandMap = () => getState().pluginCommands;
 
+/** Reused constant for plugin Commands behavior in src/plugins. */
 export const pluginCommands = new Proxy(new Map<string, RegisteredPluginCommand>(), {
   get(_target, property) {
     const value = Reflect.get(getPluginCommandMap(), property, getPluginCommandMap());
@@ -36,18 +39,22 @@ export const pluginCommands = new Proxy(new Map<string, RegisteredPluginCommand>
   },
 });
 
+/** Reused helper for is Plugin Command Registry Locked behavior in src/plugins. */
 export function isPluginCommandRegistryLocked(): boolean {
   return getState().registryLocked;
 }
 
+/** Reused helper for set Plugin Command Registry Locked behavior in src/plugins. */
 export function setPluginCommandRegistryLocked(locked: boolean): void {
   getState().registryLocked = locked;
 }
 
+/** Reused helper for clear Plugin Commands behavior in src/plugins. */
 export function clearPluginCommands(): void {
   pluginCommands.clear();
 }
 
+/** Reused helper for clear Plugin Commands For Plugin behavior in src/plugins. */
 export function clearPluginCommandsForPlugin(pluginId: string): void {
   for (const [key, cmd] of pluginCommands.entries()) {
     if (cmd.pluginId === pluginId) {
@@ -56,10 +63,12 @@ export function clearPluginCommandsForPlugin(pluginId: string): void {
   }
 }
 
+/** Reused helper for is Trusted Reserved Command Owner behavior in src/plugins. */
 export function isTrustedReservedCommandOwner(command: RegisteredPluginCommand): boolean {
   return command.ownership === "reserved";
 }
 
+/** Reused helper for can Expose Sender Is Owner behavior in src/plugins. */
 export function canExposeSenderIsOwner(command: RegisteredPluginCommand): boolean {
   return (
     (Array.isArray(command.requiredScopes) && command.requiredScopes.length > 0) ||
@@ -67,10 +76,12 @@ export function canExposeSenderIsOwner(command: RegisteredPluginCommand): boolea
   );
 }
 
+/** Reused helper for list Registered Plugin Commands behavior in src/plugins. */
 export function listRegisteredPluginCommands(): RegisteredPluginCommand[] {
   return Array.from(pluginCommands.values());
 }
 
+/** Reused helper for list Registered Plugin Agent Prompt Guidance behavior in src/plugins. */
 export function listRegisteredPluginAgentPromptGuidance(params?: {
   surface?: AgentPromptSurfaceKind;
   includeLegacyGlobalGuidance?: boolean;
@@ -113,6 +124,7 @@ function resolveAgentPromptGuidanceTextForSurface(
   return entry.surfaces.includes(params.surface) ? text : undefined;
 }
 
+/** Reused helper for restore Plugin Commands behavior in src/plugins. */
 export function restorePluginCommands(commands: readonly RegisteredPluginCommand[]): void {
   pluginCommands.clear();
   for (const command of commands) {

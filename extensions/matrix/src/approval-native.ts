@@ -1,3 +1,4 @@
+// extensions/matrix/src approval native helpers and runtime behavior.
 import {
   createChannelApprovalCapability,
   createApproverRestrictedNativeApprovalCapability,

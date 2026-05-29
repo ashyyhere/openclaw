@@ -1,3 +1,4 @@
+// test/vitest vitest extension diffs config helpers and runtime behavior.
 import { diffsExtensionTestRoots } from "./vitest.extension-diffs-paths.mjs";
 import { loadPatternListFromEnv } from "./vitest.pattern-file.ts";
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";

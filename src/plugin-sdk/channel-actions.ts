@@ -1,12 +1,16 @@
+/** Public SDK helpers for channel action tools, schemas, gates, and parameter readers. */
 import { Type } from "typebox";
 import type { TSchema } from "typebox";
 import { stringEnum as createStringEnum } from "../agents/schema/typebox.js";
 
+/** Re-exported API for src/plugin-sdk. */
 export {
   createUnionActionGate,
   listTokenSourcedAccounts,
 } from "../channels/plugins/actions/shared.js";
+/** Re-exported API for src/plugin-sdk, starting with resolve Reaction Message Id. */
 export { resolveReactionMessageId } from "../channels/plugins/actions/reaction-message-id.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   createActionGate,
   imageResultFromFile,
@@ -21,10 +25,15 @@ export {
   readStringParam,
   ToolAuthorizationError,
 } from "../agents/tools/common.js";
+/** Re-exported API for src/plugin-sdk, starting with Action Gate. */
 export type { ActionGate } from "../agents/tools/common.js";
+/** Re-exported API for src/plugin-sdk, starting with with Normalized Timestamp. */
 export { withNormalizedTimestamp } from "../agents/date-time.js";
+/** Re-exported API for src/plugin-sdk, starting with assert Media Not Data Url. */
 export { assertMediaNotDataUrl } from "../agents/sandbox-paths.js";
+/** Re-exported API for src/plugin-sdk, starting with resolve Poll Max Selections. */
 export { resolvePollMaxSelections } from "../polls.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   optionalFiniteNumberSchema,
   optionalNonNegativeIntegerSchema,

@@ -1,3 +1,4 @@
+/** Rebuilds argv and reparses the program when lazy command actions load. */
 import type { Command } from "commander";
 import { buildParseArgv } from "../argv.js";
 import { resolveActionArgs, resolveCommandOptionArgs } from "./helpers.js";
@@ -11,6 +12,7 @@ function buildFallbackArgv(program: Command, actionCommand: Command | undefined)
     : [...parentOptionArgs, ...actionArgsList];
 }
 
+/** Reused helper for reparse Program From Action Args behavior in src/cli/program. */
 export async function reparseProgramFromActionArgs(
   program: Command,
   actionArgs: unknown[],

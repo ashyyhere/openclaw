@@ -1,3 +1,4 @@
+/** Tests provider auth runtime SDK contracts and helper exports. */
 import { createServer } from "node:net";
 import { describe, expect, it } from "vitest";
 import * as providerAuthRuntime from "./provider-auth-runtime.js";

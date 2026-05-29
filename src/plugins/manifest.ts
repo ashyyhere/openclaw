@@ -1,3 +1,4 @@
+// plugins manifest helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { normalizeModelCatalog } from "@openclaw/model-catalog-core/model-catalog-normalize";
@@ -32,8 +33,11 @@ import type { PluginConfigUiHint } from "./manifest-types.js";
 import { createPluginCacheKey, PluginLruCache } from "./plugin-cache-primitives.js";
 import type { PluginKind } from "./plugin-kind.types.js";
 
+/** Reused constant for PLUGIN MANIFEST FILENAME behavior in src/plugins. */
 export const PLUGIN_MANIFEST_FILENAME = "openclaw.plugin.json";
+/** Reused constant for PLUGIN MANIFEST FILENAMES behavior in src/plugins. */
 export const PLUGIN_MANIFEST_FILENAMES = [PLUGIN_MANIFEST_FILENAME] as const;
+/** Reused constant for MAX PLUGIN MANIFEST BYTES behavior in src/plugins. */
 export const MAX_PLUGIN_MANIFEST_BYTES = 256 * 1024;
 const MAX_PLUGIN_MANIFEST_LOAD_CACHE_ENTRIES = 512;
 const MAX_SECRET_PROVIDER_EXEC_ARGS = 128;
@@ -54,10 +58,12 @@ const pluginManifestLoadCache = new PluginLruCache<PluginManifestLoadCacheEntry>
   MAX_PLUGIN_MANIFEST_LOAD_CACHE_ENTRIES,
 );
 
+/** Reused helper for clear Plugin Manifest Load Cache behavior in src/plugins. */
 export function clearPluginManifestLoadCache(): void {
   pluginManifestLoadCache.clear();
 }
 
+/** Shared type for Plugin Manifest Channel Config in src/plugins. */
 export type PluginManifestChannelConfig = {
   schema: JsonSchemaObject;
   uiHints?: Record<string, PluginConfigUiHint>;
@@ -68,11 +74,13 @@ export type PluginManifestChannelConfig = {
   commands?: PluginManifestChannelCommandDefaults;
 };
 
+/** Shared type for Plugin Manifest Channel Command Defaults in src/plugins. */
 export type PluginManifestChannelCommandDefaults = {
   nativeCommandsAutoEnabled?: boolean;
   nativeSkillsAutoEnabled?: boolean;
 };
 
+/** Shared type for Plugin Manifest Model Support in src/plugins. */
 export type PluginManifestModelSupport = {
   /**
    * Cheap manifest-owned model-id prefixes for transparent provider activation
@@ -86,40 +94,56 @@ export type PluginManifestModelSupport = {
   modelPatterns?: string[];
 };
 
+/** Shared type for Plugin Manifest Model Catalog Input in src/plugins. */
 export type PluginManifestModelCatalogInput = ModelCatalogInput;
+/** Shared type for Plugin Manifest Model Catalog Discovery in src/plugins. */
 export type PluginManifestModelCatalogDiscovery = ModelCatalogDiscovery;
+/** Shared type for Plugin Manifest Model Catalog Status in src/plugins. */
 export type PluginManifestModelCatalogStatus = ModelCatalogStatus;
+/** Shared type for Plugin Manifest Model Catalog Tiered Cost in src/plugins. */
 export type PluginManifestModelCatalogTieredCost = ModelCatalogTieredCost;
+/** Shared type for Plugin Manifest Model Catalog Cost in src/plugins. */
 export type PluginManifestModelCatalogCost = ModelCatalogCost;
+/** Shared type for Plugin Manifest Model Catalog Model in src/plugins. */
 export type PluginManifestModelCatalogModel = ModelCatalogModel;
+/** Shared type for Plugin Manifest Model Catalog Provider in src/plugins. */
 export type PluginManifestModelCatalogProvider = ModelCatalogProvider;
+/** Shared type for Plugin Manifest Model Catalog Alias in src/plugins. */
 export type PluginManifestModelCatalogAlias = ModelCatalogAlias;
+/** Shared type for Plugin Manifest Model Catalog Suppression in src/plugins. */
 export type PluginManifestModelCatalogSuppression = ModelCatalogSuppression;
+/** Shared type for Plugin Manifest Model Catalog in src/plugins. */
 export type PluginManifestModelCatalog = ModelCatalog;
 
+/** Shared type for Plugin Manifest Model Pricing Model Id Transform in src/plugins. */
 export type PluginManifestModelPricingModelIdTransform = "version-dots";
 
+/** Shared type for Plugin Manifest Model Pricing Source in src/plugins. */
 export type PluginManifestModelPricingSource = {
   provider?: string;
   passthroughProviderModel?: boolean;
   modelIdTransforms?: PluginManifestModelPricingModelIdTransform[];
 };
 
+/** Shared type for Plugin Manifest Model Pricing Provider in src/plugins. */
 export type PluginManifestModelPricingProvider = {
   external?: boolean;
   openRouter?: PluginManifestModelPricingSource | false;
   liteLLM?: PluginManifestModelPricingSource | false;
 };
 
+/** Shared type for Plugin Manifest Model Pricing in src/plugins. */
 export type PluginManifestModelPricing = {
   providers?: Record<string, PluginManifestModelPricingProvider>;
 };
 
+/** Shared type for Plugin Manifest Model Id Prefix Rule in src/plugins. */
 export type PluginManifestModelIdPrefixRule = {
   modelPrefix: string;
   prefix: string;
 };
 
+/** Shared type for Plugin Manifest Model Id Normalization Provider in src/plugins. */
 export type PluginManifestModelIdNormalizationProvider = {
   aliases?: Record<string, string>;
   stripPrefixes?: string[];
@@ -127,10 +151,12 @@ export type PluginManifestModelIdNormalizationProvider = {
   prefixWhenBareAfterAliasStartsWith?: PluginManifestModelIdPrefixRule[];
 };
 
+/** Shared type for Plugin Manifest Model Id Normalization in src/plugins. */
 export type PluginManifestModelIdNormalization = {
   providers?: Record<string, PluginManifestModelIdNormalizationProvider>;
 };
 
+/** Shared type for Plugin Manifest Provider Endpoint in src/plugins. */
 export type PluginManifestProviderEndpoint = {
   /**
    * Core endpoint class this plugin-owned endpoint should map to. Core must
@@ -149,6 +175,7 @@ export type PluginManifestProviderEndpoint = {
   googleVertexRegionHostSuffix?: string;
 };
 
+/** Shared type for Plugin Manifest Provider Request Provider in src/plugins. */
 export type PluginManifestProviderRequestProvider = {
   family?: string;
   compatibilityFamily?: "moonshot";
@@ -157,6 +184,7 @@ export type PluginManifestProviderRequestProvider = {
   };
 };
 
+/** Shared type for Plugin Manifest Provider Request in src/plugins. */
 export type PluginManifestProviderRequest = {
   providers?: Record<string, PluginManifestProviderRequestProvider>;
 };
@@ -179,6 +207,7 @@ export type PluginManifestSecretProviderIntegration = {
 
 export type PluginManifestActivationCapability = "provider" | "channel" | "tool" | "hook";
 
+/** Shared type for Plugin Manifest Activation in src/plugins. */
 export type PluginManifestActivation = {
   /**
    * Explicit Gateway startup activation. Set true when the plugin must be
@@ -205,8 +234,10 @@ export type PluginManifestActivation = {
   onCapabilities?: PluginManifestActivationCapability[];
 };
 
+/** Shared type for Plugin Manifest Default Platform in src/plugins. */
 export type PluginManifestDefaultPlatform = NodeJS.Platform;
 
+/** Shared type for Plugin Manifest Setup Provider in src/plugins. */
 export type PluginManifestSetupProvider = {
   /** Provider id surfaced during setup/onboarding. */
   id: string;
@@ -222,6 +253,7 @@ export type PluginManifestSetupProvider = {
   authEvidence?: PluginManifestSetupProviderAuthEvidence[];
 };
 
+/** Shared type for Plugin Manifest Setup Provider Auth Evidence in src/plugins. */
 export type PluginManifestSetupProviderAuthEvidence = {
   /** Generic local file evidence gated by required environment metadata. */
   type: "local-file-with-env";
@@ -239,6 +271,7 @@ export type PluginManifestSetupProviderAuthEvidence = {
   source?: string;
 };
 
+/** Shared type for Plugin Manifest Setup in src/plugins. */
 export type PluginManifestSetup = {
   /** Cheap provider setup metadata exposed before runtime loads. */
   providers?: PluginManifestSetupProvider[];
@@ -253,6 +286,7 @@ export type PluginManifestSetup = {
   requiresRuntime?: boolean;
 };
 
+/** Shared type for Plugin Manifest Qa Runner in src/plugins. */
 export type PluginManifestQaRunner = {
   /** Subcommand mounted beneath `openclaw qa`, for example `matrix`. */
   commandName: string;
@@ -260,8 +294,10 @@ export type PluginManifestQaRunner = {
   description?: string;
 };
 
+/** Shared type for Plugin Manifest Config Literal in src/plugins. */
 export type PluginManifestConfigLiteral = string | number | boolean | null;
 
+/** Shared type for Plugin Manifest Dangerous Config Flag in src/plugins. */
 export type PluginManifestDangerousConfigFlag = {
   /**
    * Dot-separated config path relative to `plugins.entries.<id>.config`.
@@ -272,6 +308,7 @@ export type PluginManifestDangerousConfigFlag = {
   equals: PluginManifestConfigLiteral;
 };
 
+/** Shared type for Plugin Manifest Secret Input Path in src/plugins. */
 export type PluginManifestSecretInputPath = {
   /**
    * Dot-separated config path relative to `plugins.entries.<id>.config`.
@@ -282,6 +319,7 @@ export type PluginManifestSecretInputPath = {
   expected?: "string";
 };
 
+/** Shared type for Plugin Manifest Secret Input Contracts in src/plugins. */
 export type PluginManifestSecretInputContracts = {
   /**
    * Override bundled-plugin default enablement when deciding whether this
@@ -292,6 +330,7 @@ export type PluginManifestSecretInputContracts = {
   paths: PluginManifestSecretInputPath[];
 };
 
+/** Shared type for Plugin Manifest Config Contracts in src/plugins. */
 export type PluginManifestConfigContracts = {
   /**
    * Root-relative config paths that indicate this plugin's setup-time
@@ -311,6 +350,7 @@ export type PluginManifestConfigContracts = {
   secretInputs?: PluginManifestSecretInputContracts;
 };
 
+/** Shared type for Plugin Manifest in src/plugins. */
 export type PluginManifest = {
   id: string;
   configSchema: JsonSchemaObject;
@@ -418,6 +458,7 @@ export type PluginManifest = {
   channelConfigs?: Record<string, PluginManifestChannelConfig>;
 };
 
+/** Shared type for Plugin Manifest Contracts in src/plugins. */
 export type PluginManifestContracts = {
   embeddedExtensionFactories?: string[];
   agentToolResultMiddleware?: string[];
@@ -446,8 +487,10 @@ export type PluginManifestContracts = {
   tools?: string[];
 };
 
+/** Shared type for Plugin Manifest Media Understanding Capability in src/plugins. */
 export type PluginManifestMediaUnderstandingCapability = "image" | "audio" | "video";
 
+/** Shared type for Plugin Manifest Media Understanding Provider Metadata in src/plugins. */
 export type PluginManifestMediaUnderstandingProviderMetadata = {
   capabilities?: PluginManifestMediaUnderstandingCapability[];
   defaultModels?: Partial<Record<PluginManifestMediaUnderstandingCapability, string>>;
@@ -464,17 +507,20 @@ export type PluginManifestMediaUnderstandingProviderMetadata = {
   >;
 };
 
+/** Shared type for Plugin Manifest Provider Base Url Guard in src/plugins. */
 export type PluginManifestProviderBaseUrlGuard = {
   provider: string;
   defaultBaseUrl?: string;
   allowedBaseUrls: string[];
 };
 
+/** Shared type for Plugin Manifest Capability Provider Auth Signal in src/plugins. */
 export type PluginManifestCapabilityProviderAuthSignal = {
   provider: string;
   providerBaseUrl?: PluginManifestProviderBaseUrlGuard;
 };
 
+/** Shared type for Plugin Manifest Capability Provider Mode Config Signal in src/plugins. */
 export type PluginManifestCapabilityProviderModeConfigSignal = {
   path?: string;
   default?: string;
@@ -482,6 +528,7 @@ export type PluginManifestCapabilityProviderModeConfigSignal = {
   disallowed?: string[];
 };
 
+/** Shared type for Plugin Manifest Capability Provider Config Signal in src/plugins. */
 export type PluginManifestCapabilityProviderConfigSignal = {
   rootPath: string;
   overlayPath?: string;
@@ -490,6 +537,7 @@ export type PluginManifestCapabilityProviderConfigSignal = {
   mode?: PluginManifestCapabilityProviderModeConfigSignal;
 };
 
+/** Shared type for Plugin Manifest Capability Provider Metadata in src/plugins. */
 export type PluginManifestCapabilityProviderMetadata = {
   aliases?: string[];
   authProviders?: string[];
@@ -498,10 +546,12 @@ export type PluginManifestCapabilityProviderMetadata = {
   referenceAudioInputs?: boolean;
 };
 
+/** Shared type for Plugin Manifest Tool Metadata in src/plugins. */
 export type PluginManifestToolMetadata = PluginManifestCapabilityProviderMetadata & {
   optional?: boolean;
 };
 
+/** Shared type for Plugin Manifest Provider Auth Choice in src/plugins. */
 export type PluginManifestProviderAuthChoice = {
   /** Provider id owned by this manifest entry. */
   provider: string;
@@ -539,11 +589,13 @@ export type PluginManifestProviderAuthChoice = {
   onboardingScopes?: PluginManifestOnboardingScope[];
 };
 
+/** Shared type for Plugin Manifest Onboarding Scope in src/plugins. */
 export type PluginManifestOnboardingScope =
   | "text-inference"
   | "image-generation"
   | "music-generation";
 
+/** Shared type for Plugin Manifest Load Result in src/plugins. */
 export type PluginManifestLoadResult =
   | { ok: true; manifest: PluginManifest; manifestPath: string }
   | { ok: false; error: string; manifestPath: string };
@@ -1623,6 +1675,7 @@ function normalizeManifestChannelCommandDefaults(
     : undefined;
 }
 
+/** Reused helper for resolve Plugin Manifest Path behavior in src/plugins. */
 export function resolvePluginManifestPath(rootDir: string): string {
   for (const filename of PLUGIN_MANIFEST_FILENAMES) {
     const candidate = path.join(rootDir, filename);
@@ -1692,6 +1745,7 @@ function parsePluginKind(raw: unknown): PluginKind | PluginKind[] | undefined {
   return undefined;
 }
 
+/** Reused helper for load Plugin Manifest behavior in src/plugins. */
 export function loadPluginManifest(
   rootDir: string,
   rejectHardlinks = true,
@@ -1880,6 +1934,7 @@ export function loadPluginManifest(
 }
 
 // package.json "openclaw" metadata (used for setup/catalog)
+/** Shared type for Plugin Package Channel in src/plugins. */
 export type PluginPackageChannel = {
   id?: string;
   label?: string;
@@ -1923,6 +1978,7 @@ export type PluginPackageChannel = {
   cliAddOptions?: readonly PluginPackageChannelCliOption[];
 };
 
+/** Shared type for Plugin Package Channel Doctor Capabilities in src/plugins. */
 export type PluginPackageChannelDoctorCapabilities = {
   dmAllowFromMode?: "topOnly" | "topOrNested" | "nestedOnly";
   groupModel?: "sender" | "route" | "hybrid";
@@ -1930,12 +1986,14 @@ export type PluginPackageChannelDoctorCapabilities = {
   warnOnEmptyGroupSenderAllowlist?: boolean;
 };
 
+/** Shared type for Plugin Package Channel Cli Option in src/plugins. */
 export type PluginPackageChannelCliOption = {
   flags: string;
   description: string;
   defaultValue?: boolean | string;
 };
 
+/** Shared type for Plugin Package Install in src/plugins. */
 export type PluginPackageInstall = {
   clawhubSpec?: string;
   npmSpec?: string;
@@ -1946,6 +2004,7 @@ export type PluginPackageInstall = {
   allowInvalidConfigRecovery?: boolean;
 };
 
+/** Shared type for Open Claw Package Startup in src/plugins. */
 export type OpenClawPackageStartup = {
   /**
    * Opt-in for channel plugins whose `setupEntry` fully covers the gateway
@@ -1954,16 +2013,19 @@ export type OpenClawPackageStartup = {
   deferConfiguredChannelFullLoadUntilAfterListen?: boolean;
 };
 
+/** Shared type for Open Claw Package Setup Features in src/plugins. */
 export type OpenClawPackageSetupFeatures = {
   configPromotion?: boolean;
   legacyStateMigrations?: boolean;
   legacySessionSurfaces?: boolean;
 };
 
+/** Shared type for Open Claw Package Compat in src/plugins. */
 export type OpenClawPackageCompat = {
   pluginApi?: string;
 };
 
+/** Shared type for Open Claw Package Manifest in src/plugins. */
 export type OpenClawPackageManifest = {
   extensions?: string[];
   runtimeExtensions?: string[];
@@ -1980,6 +2042,7 @@ export type OpenClawPackageManifest = {
   startup?: OpenClawPackageStartup;
 };
 
+/** Reused constant for DEFAULT PLUGIN ENTRY CANDIDATES behavior in src/plugins. */
 export const DEFAULT_PLUGIN_ENTRY_CANDIDATES = [
   "index.ts",
   "index.js",
@@ -1987,14 +2050,17 @@ export const DEFAULT_PLUGIN_ENTRY_CANDIDATES = [
   "index.cjs",
 ] as const;
 
+/** Shared type for Package Extension Resolution in src/plugins. */
 export type PackageExtensionResolution =
   | { status: "ok"; entries: string[] }
   | { status: "missing"; entries: [] }
   | { status: "empty"; entries: [] }
   | { status: "invalid"; entries: []; error: string };
 
+/** Shared type for Manifest Key in src/plugins. */
 export type ManifestKey = typeof MANIFEST_KEY;
 
+/** Shared type for Package Manifest in src/plugins. */
 export type PackageManifest = {
   name?: string;
   version?: string;
@@ -2003,6 +2069,7 @@ export type PackageManifest = {
   optionalDependencies?: Record<string, string>;
 } & Partial<Record<ManifestKey, OpenClawPackageManifest>>;
 
+/** Reused helper for get Package Manifest Metadata behavior in src/plugins. */
 export function getPackageManifestMetadata(
   manifest: PackageManifest | undefined,
 ): OpenClawPackageManifest | undefined {
@@ -2012,6 +2079,7 @@ export function getPackageManifestMetadata(
   return manifest[MANIFEST_KEY];
 }
 
+/** Reused helper for resolve Package Extension Entries behavior in src/plugins. */
 export function resolvePackageExtensionEntries(
   manifest: PackageManifest | undefined,
 ): PackageExtensionResolution {

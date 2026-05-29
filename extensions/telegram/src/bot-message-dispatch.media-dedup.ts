@@ -1,3 +1,4 @@
+// extensions/telegram/src bot message dispatch media dedup helpers and runtime behavior.
 export function deduplicateBlockSentMedia<
   T extends { mediaUrl?: string; mediaUrls?: string[]; text?: string },
 >(payload: T, sentBlockMediaUrls: ReadonlySet<string>): T | undefined {

@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src thread binding api test behavior.
 import { describe, expect, it } from "vitest";
 import {
   defaultTopLevelPlacement,

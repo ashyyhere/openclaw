@@ -1,3 +1,4 @@
+// talk agent run control helpers and runtime behavior.
 import type { EmbeddedAgentQueueMessageOutcome } from "../agents/embedded-agent-runner/runs.js";
 import {
   abortEmbeddedAgentRun,
@@ -16,6 +17,7 @@ import {
 } from "./agent-run-control-shared.js";
 import type { TalkEvent } from "./talk-events.js";
 
+/** Re-exported API for src/talk. */
 export {
   buildRealtimeVoiceAgentCancelProviderResult,
   buildRealtimeVoiceAgentControlSpeechMessage,
@@ -55,6 +57,7 @@ const defaultDeps: RealtimeVoiceAgentControlDeps = {
   resolveActiveEmbeddedRunSessionId,
 };
 
+/** Reused helper for control Realtime Voice Agent Run behavior in src/talk. */
 export async function controlRealtimeVoiceAgentRun(
   params: {
     sessionKey: string;

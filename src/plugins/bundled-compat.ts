@@ -1,8 +1,10 @@
+// plugins bundled compat helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { PluginEntryConfig } from "../config/types.plugins.js";
 import { hasExplicitPluginConfig } from "./config-policy.js";
 import { normalizePluginId } from "./config-state.js";
 
+/** Reused helper for with Bundled Plugin Enablement Compat behavior in src/plugins. */
 export function withBundledPluginEnablementCompat(params: {
   config: OpenClawConfig | undefined;
   pluginIds: readonly string[];
@@ -57,6 +59,7 @@ export function withBundledPluginEnablementCompat(params: {
   };
 }
 
+/** Reused helper for with Bundled Plugin Vitest Compat behavior in src/plugins. */
 export function withBundledPluginVitestCompat(params: {
   config: OpenClawConfig | undefined;
   pluginIds: readonly string[];

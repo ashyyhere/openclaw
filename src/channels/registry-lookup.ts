@@ -1,3 +1,4 @@
+/** Low-level lookup helpers for active plugin channel registry snapshots. */
 import type {
   ActivePluginChannelRegistration,
   ActivePluginChannelRegistry,
@@ -5,6 +6,7 @@ import type {
 import { getActivePluginChannelRegistrySnapshotFromState } from "../plugins/runtime-channel-state.js";
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 
+/** Shared type for Registered Channel Plugin Entry in src/channels. */
 export type RegisteredChannelPluginEntry = ActivePluginChannelRegistration & {
   plugin: ActivePluginChannelRegistration["plugin"] & {
     id?: string | null;
@@ -74,16 +76,19 @@ function buildRegisteredChannelPluginLookup(): RegisteredChannelPluginLookup {
   return registeredChannelPluginLookup;
 }
 
+/** Reused helper for list Registered Channel Plugin Entries behavior in src/channels. */
 export function listRegisteredChannelPluginEntries(): RegisteredChannelPluginEntry[] {
   return buildRegisteredChannelPluginLookup().entries;
 }
 
+/** Reused helper for find Registered Channel Plugin Entry behavior in src/channels. */
 export function findRegisteredChannelPluginEntry(
   normalizedKey: string,
 ): RegisteredChannelPluginEntry | undefined {
   return buildRegisteredChannelPluginLookup().byKey.get(normalizedKey);
 }
 
+/** Reused helper for find Registered Channel Plugin Entry By Id behavior in src/channels. */
 export function findRegisteredChannelPluginEntryById(
   id: string,
 ): RegisteredChannelPluginEntry | undefined {

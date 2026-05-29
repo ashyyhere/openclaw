@@ -1,3 +1,4 @@
+// secrets runtime state helpers and runtime behavior.
 import {
   clearRuntimeAuthProfileStoreSnapshots,
   getRuntimeAuthProfileStoreSnapshot,
@@ -21,6 +22,7 @@ import {
 } from "./runtime-web-tools-state.js";
 import type { RuntimeWebToolsMetadata } from "./runtime-web-tools.types.js";
 
+/** Shared type for Prepared Secrets Runtime Snapshot in src/secrets. */
 export type PreparedSecretsRuntimeSnapshot = {
   sourceConfig: OpenClawConfig;
   config: OpenClawConfig;
@@ -29,6 +31,7 @@ export type PreparedSecretsRuntimeSnapshot = {
   webTools: RuntimeWebToolsMetadata;
 };
 
+/** Shared type for Secrets Runtime Refresh Context in src/secrets. */
 export type SecretsRuntimeRefreshContext = {
   env: Record<string, string | undefined>;
   explicitAgentDirs: string[] | null;
@@ -46,6 +49,7 @@ const preparedSnapshotRefreshContext = new WeakMap<
   SecretsRuntimeRefreshContext
 >();
 
+/** Reused helper for clone Secrets Runtime Refresh Context behavior in src/secrets. */
 export function cloneSecretsRuntimeRefreshContext(
   context: SecretsRuntimeRefreshContext,
 ): SecretsRuntimeRefreshContext {
@@ -77,6 +81,7 @@ function cloneSnapshot(snapshot: PreparedSecretsRuntimeSnapshot): PreparedSecret
   };
 }
 
+/** Reused helper for set Prepared Secrets Runtime Snapshot Refresh Context behavior in src/secrets. */
 export function setPreparedSecretsRuntimeSnapshotRefreshContext(
   snapshot: PreparedSecretsRuntimeSnapshot,
   context: SecretsRuntimeRefreshContext,
@@ -84,6 +89,7 @@ export function setPreparedSecretsRuntimeSnapshotRefreshContext(
   preparedSnapshotRefreshContext.set(snapshot, cloneSecretsRuntimeRefreshContext(context));
 }
 
+/** Reused helper for get Prepared Secrets Runtime Snapshot Refresh Context behavior in src/secrets. */
 export function getPreparedSecretsRuntimeSnapshotRefreshContext(
   snapshot: PreparedSecretsRuntimeSnapshot,
 ): SecretsRuntimeRefreshContext | null {
@@ -91,20 +97,24 @@ export function getPreparedSecretsRuntimeSnapshotRefreshContext(
   return context ? cloneSecretsRuntimeRefreshContext(context) : null;
 }
 
+/** Reused helper for get Active Secrets Runtime Refresh Context behavior in src/secrets. */
 export function getActiveSecretsRuntimeRefreshContext(): SecretsRuntimeRefreshContext | null {
   return activeRefreshContext ? cloneSecretsRuntimeRefreshContext(activeRefreshContext) : null;
 }
 
+/** Reused helper for get Active Secrets Runtime Env behavior in src/secrets. */
 export function getActiveSecretsRuntimeEnv(): NodeJS.ProcessEnv {
   return {
     ...(activeRefreshContext?.env ?? process.env),
   } as NodeJS.ProcessEnv;
 }
 
+/** Reused helper for register Secrets Runtime State Clear Hook behavior in src/secrets. */
 export function registerSecretsRuntimeStateClearHook(clearHook: () => void): void {
   clearHooks.add(clearHook);
 }
 
+/** Reused helper for activate Secrets Runtime Snapshot State behavior in src/secrets. */
 export function activateSecretsRuntimeSnapshotState(params: {
   snapshot: PreparedSecretsRuntimeSnapshot;
   refreshContext: SecretsRuntimeRefreshContext | null;
@@ -125,6 +135,7 @@ export function activateSecretsRuntimeSnapshotState(params: {
   setRuntimeConfigSnapshotRefreshHandler(params.refreshHandler);
 }
 
+/** Reused helper for get Active Secrets Runtime Snapshot behavior in src/secrets. */
 export function getActiveSecretsRuntimeSnapshot(): PreparedSecretsRuntimeSnapshot | null {
   if (!activeSnapshot) {
     return null;
@@ -165,6 +176,7 @@ export function getLiveSecretsRuntimeAuthStores(): PreparedSecretsRuntimeSnapsho
   }));
 }
 
+/** Reused helper for clear Secrets Runtime Snapshot behavior in src/secrets. */
 export function clearSecretsRuntimeSnapshot(): void {
   activeSnapshot = null;
   activeRefreshContext = null;

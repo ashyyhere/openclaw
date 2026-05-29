@@ -1,3 +1,4 @@
+// Tests extensions/whatsapp/src send test behavior.
 import crypto from "node:crypto";
 import fsSync from "node:fs";
 import os from "node:os";

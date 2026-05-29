@@ -1,3 +1,4 @@
+// gateway auth helpers and runtime behavior.
 import type { IncomingMessage } from "node:http";
 import type { GatewayAuthConfig, GatewayTrustedProxyConfig } from "../config/types.gateway.js";
 import { readTailscaleWhoisIdentity, type TailscaleWhoisIdentity } from "../infra/tailscale.js";
@@ -21,6 +22,7 @@ import {
 } from "./net.js";
 import { checkBrowserOrigin } from "./origin-check.js";
 import { withSerializedRateLimitAttempt } from "./rate-limit-attempt-serialization.js";
+/** Re-exported API for src/gateway. */
 export {
   resolveEffectiveSharedGatewayAuth,
   resolveGatewayAuth,
@@ -33,6 +35,7 @@ export {
 const LEGACY_OPENCLAW_ENV_NOTE =
   " Legacy CLAWDBOT_* and MOLTBOT_* environment variables are ignored; use OPENCLAW_* names.";
 
+/** Shared type for Gateway Auth Result in src/gateway. */
 export type GatewayAuthResult = {
   ok: boolean;
   method?:
@@ -56,8 +59,10 @@ type ConnectAuth = {
   password?: string;
 };
 
+/** Shared type for Gateway Auth Surface in src/gateway. */
 export type GatewayAuthSurface = "http" | "ws-control-ui";
 
+/** Shared type for Authorize Gateway Connect Params in src/gateway. */
 export type AuthorizeGatewayConnectParams = {
   auth: ResolvedGatewayAuth;
   connectAuth?: ConnectAuth | null;
@@ -121,6 +126,7 @@ function resolveTailscaleClientIp(req?: IncomingMessage): string | undefined {
   });
 }
 
+/** Reused helper for has Forwarded Request Headers behavior in src/gateway. */
 export function hasForwardedRequestHeaders(req?: IncomingMessage): boolean {
   if (!req) {
     return false;
@@ -136,6 +142,7 @@ export function hasForwardedRequestHeaders(req?: IncomingMessage): boolean {
   );
 }
 
+/** Reused helper for is Local Direct Request behavior in src/gateway. */
 export function isLocalDirectRequest(
   req?: IncomingMessage,
   _trustedProxies?: string[],
@@ -219,6 +226,7 @@ async function resolveVerifiedTailscaleUser(params: {
   };
 }
 
+/** Reused helper for assert Gateway Auth Configured behavior in src/gateway. */
 export function assertGatewayAuthConfigured(
   auth: ResolvedGatewayAuth,
   rawAuthConfig?: GatewayAuthConfig | null,
@@ -397,6 +405,7 @@ function authorizePasswordAuth(params: {
   return { ok: true, method: "password" };
 }
 
+/** Reused helper for authorize Gateway Connect behavior in src/gateway. */
 export async function authorizeGatewayConnect(
   params: AuthorizeGatewayConnectParams,
 ): Promise<GatewayAuthResult> {
@@ -561,6 +570,7 @@ async function authorizeGatewayConnectCore(
   return { ok: false, reason: "unauthorized" };
 }
 
+/** Reused helper for authorize Http Gateway Connect behavior in src/gateway. */
 export async function authorizeHttpGatewayConnect(
   params: Omit<AuthorizeGatewayConnectParams, "authSurface">,
 ): Promise<GatewayAuthResult> {
@@ -570,6 +580,7 @@ export async function authorizeHttpGatewayConnect(
   });
 }
 
+/** Reused helper for authorize Ws Control Ui Gateway Connect behavior in src/gateway. */
 export async function authorizeWsControlUiGatewayConnect(
   params: Omit<AuthorizeGatewayConnectParams, "authSurface">,
 ): Promise<GatewayAuthResult> {

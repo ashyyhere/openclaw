@@ -1,9 +1,11 @@
+/** Public embedded-agent entrypoint and lifecycle barrel. */
 export type {
   EmbeddedAgentCompactResult,
   EmbeddedAgentMeta,
   EmbeddedAgentRunMeta,
   EmbeddedAgentRunResult,
 } from "./embedded-agent-runner.js";
+/** Re-exported API for src/agents. */
 export {
   abortAndDrainEmbeddedAgentRun,
   abortEmbeddedAgentRun,

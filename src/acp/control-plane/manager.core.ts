@@ -1,3 +1,4 @@
+/** ACP session manager core: session lifecycle, runtime ownership, and turn orchestration. */
 import { resolveAgentTimeoutMs } from "../../agents/timeout.js";
 import { resolveRuntimeConfigCacheKey } from "../../config/runtime-snapshot.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
@@ -168,6 +169,7 @@ type BackgroundTaskContext = {
   task: string;
 };
 
+/** Reused class for Acp Session Manager behavior in src/acp/control-plane. */
 export class AcpSessionManager {
   private readonly actorQueue = new SessionActorQueue();
   private readonly runtimeCache = new RuntimeCache();

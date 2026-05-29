@@ -1,3 +1,4 @@
+// Tests gateway server device pair approve supersede test behavior.
 import { describe, expect, test } from "vitest";
 import {
   approveDevicePairing,

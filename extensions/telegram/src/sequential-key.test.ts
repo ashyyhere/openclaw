@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src sequential key test behavior.
 import type { Chat, Message } from "grammy/types";
 import { describe, expect, it } from "vitest";
 import { getTelegramSequentialKey } from "./sequential-key.js";

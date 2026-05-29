@@ -1,3 +1,4 @@
+// gateway/server readiness helpers and runtime behavior.
 import type { ChannelAccountSnapshot } from "../../channels/plugins/types.public.js";
 import {
   DEFAULT_CHANNEL_CONNECT_GRACE_MS,
@@ -9,6 +10,7 @@ import {
 import type { ChannelManager } from "../server-channels.js";
 import type { GatewayEventLoopHealth } from "./event-loop-health.js";
 
+/** Shared type for Readiness Result in src/gateway/server. */
 export type ReadinessResult = {
   ready: boolean;
   failing: string[];
@@ -16,6 +18,7 @@ export type ReadinessResult = {
   eventLoop?: GatewayEventLoopHealth;
 };
 
+/** Shared type for Readiness Checker in src/gateway/server. */
 export type ReadinessChecker = () => ReadinessResult;
 
 const DEFAULT_READINESS_CACHE_TTL_MS = 1_000;
@@ -33,6 +36,7 @@ function shouldIgnoreReadinessFailure(
   return health.reason === "not-running" && accountSnapshot.restartPending === true;
 }
 
+/** Reused helper for create Readiness Checker behavior in src/gateway/server. */
 export function createReadinessChecker(deps: {
   channelManager: ChannelManager;
   startedAt: number;

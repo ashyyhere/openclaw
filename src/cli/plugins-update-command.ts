@@ -22,6 +22,7 @@ import {
 } from "./plugins-update-selection.js";
 import { promptYesNo } from "./prompt.js";
 
+/** Reused helper for run Plugin Update Command behavior in src/cli. */
 export async function runPluginUpdateCommand(params: {
   id?: string;
   opts: { all?: boolean; dryRun?: boolean; dangerouslyForceUnsafeInstall?: boolean };

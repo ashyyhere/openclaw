@@ -1,3 +1,4 @@
+// Tests extensions/codex-supervisor index test behavior.
 import { createCapturedPluginRegistration } from "openclaw/plugin-sdk/plugin-test-runtime";
 import { describe, expect, it } from "vitest";
 import entry from "./index.js";

@@ -1,3 +1,4 @@
+// infra approval handler adapter runtime helpers and runtime behavior.
 import { createLazyRuntimeModule } from "../shared/lazy-runtime.js";
 import type {
   ChannelApprovalNativeAvailabilityAdapter,
@@ -5,8 +6,10 @@ import type {
 } from "./approval-handler-runtime-types.js";
 import type { ExecApprovalChannelRuntimeEventKind } from "./exec-approval-channel-runtime.types.js";
 
+/** Reused constant for CHANNEL APPROVAL NATIVE RUNTIME CONTEXT CAPABILITY behavior in src/infra. */
 export const CHANNEL_APPROVAL_NATIVE_RUNTIME_CONTEXT_CAPABILITY = "approval.native";
 
+/** Reused helper for create Lazy Channel Approval Native Runtime Adapter behavior in src/infra. */
 export function createLazyChannelApprovalNativeRuntimeAdapter<
   TPendingPayload = unknown,
   TPreparedTarget = unknown,

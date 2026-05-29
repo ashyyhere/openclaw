@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor message handler batch gate helpers and runtime behavior.
 import type { ReplyToMode } from "openclaw/plugin-sdk/config-contracts";
 import type { ReplyThreadingPolicy } from "openclaw/plugin-sdk/reply-reference";
 import { resolveBatchedReplyThreadingPolicy } from "openclaw/plugin-sdk/reply-reference";

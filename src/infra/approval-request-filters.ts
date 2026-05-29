@@ -1,12 +1,15 @@
+// infra approval request filters helpers and runtime behavior.
 import { parseAgentSessionKey } from "../routing/session-key.js";
 import { compileSafeRegex, testRegexWithBoundedInput } from "../security/safe-regex.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 
+/** Shared type for Approval Request Filter Input in src/infra. */
 export type ApprovalRequestFilterInput = {
   agentId?: string | null;
   sessionKey?: string | null;
 };
 
+/** Reused helper for matches Approval Request Session Filter behavior in src/infra. */
 export function matchesApprovalRequestSessionFilter(
   sessionKey: string,
   patterns: string[],
@@ -20,6 +23,7 @@ export function matchesApprovalRequestSessionFilter(
   });
 }
 
+/** Reused helper for matches Approval Request Filters behavior in src/infra. */
 export function matchesApprovalRequestFilters(params: {
   request: ApprovalRequestFilterInput;
   agentFilter?: string[];

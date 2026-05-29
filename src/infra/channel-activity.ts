@@ -1,4 +1,6 @@
+// infra channel activity helpers and runtime behavior.
 import type { ChannelId } from "../channels/plugins/channel-id.types.js";
+/** Shared type for Channel Direction in src/infra. */
 export type ChannelDirection = "inbound" | "outbound";
 
 type ActivityEntry = {
@@ -23,6 +25,7 @@ function ensureEntry(channel: ChannelId, accountId: string): ActivityEntry {
   return created;
 }
 
+/** Reused helper for record Channel Activity behavior in src/infra. */
 export function recordChannelActivity(params: {
   channel: ChannelId;
   accountId?: string | null;
@@ -40,6 +43,7 @@ export function recordChannelActivity(params: {
   }
 }
 
+/** Reused helper for get Channel Activity behavior in src/infra. */
 export function getChannelActivity(params: {
   channel: ChannelId;
   accountId?: string | null;
@@ -53,6 +57,7 @@ export function getChannelActivity(params: {
   );
 }
 
+/** Reused helper for reset Channel Activity For Test behavior in src/infra. */
 export function resetChannelActivityForTest() {
   activity.clear();
 }

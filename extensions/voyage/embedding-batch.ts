@@ -1,3 +1,4 @@
+// extensions/voyage embedding batch helpers and runtime behavior.
 import { createInterface } from "node:readline";
 import { Readable } from "node:stream";
 import {

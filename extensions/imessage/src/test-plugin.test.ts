@@ -1,3 +1,4 @@
+// Tests extensions/imessage/src test plugin test behavior.
 import {
   createMessageReceiptFromOutboundResults,
   verifyChannelMessageAdapterCapabilityProofs,

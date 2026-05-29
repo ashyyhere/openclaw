@@ -1,3 +1,4 @@
+/** Tests sandbox list and recreate command behavior. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { SandboxBrowserInfo, SandboxContainerInfo } from "../agents/sandbox.js";
 

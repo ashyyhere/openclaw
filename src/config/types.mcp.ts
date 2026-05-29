@@ -1,5 +1,8 @@
+/** MCP config types for server transports, tool filters, and Codex projection. */
+/** Codex MCP tool approval mode values emitted to Codex config. */
 export type McpCodexToolApprovalMode = "auto" | "prompt" | "approve";
 
+/** Codex-specific projection controls for one MCP server. */
 export type McpServerCodexConfig = {
   /** OpenClaw agent ids that should receive this server in Codex app-server threads. */
   agents?: string[];
@@ -9,6 +12,7 @@ export type McpServerCodexConfig = {
   default_tools_approval_mode?: McpCodexToolApprovalMode;
 };
 
+/** Include/exclude filter for tools exposed from one MCP server. */
 export type McpServerToolFilterConfig = {
   /**
    * Exact MCP tool names or simple "*" globs to expose from this server.
@@ -20,6 +24,7 @@ export type McpServerToolFilterConfig = {
   exclude?: string[];
 };
 
+/** Config contract for one MCP server entry. */
 export type McpServerConfig = {
   /** Stdio transport: command to spawn. */
   command?: string;
@@ -46,6 +51,7 @@ export type McpServerConfig = {
   [key: string]: unknown;
 };
 
+/** Root MCP config section. */
 export type McpConfig = {
   /** Named MCP server definitions managed by OpenClaw. */
   servers?: Record<string, McpServerConfig>;

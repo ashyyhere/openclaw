@@ -1,7 +1,9 @@
+/** Implements plugin list CLI output and JSON serialization. */
 import { getRuntimeConfig } from "../config/config.js";
 import type { PluginLogger } from "../plugins/types.js";
 import { defaultRuntime, writeRuntimeJson, type RuntimeEnv } from "../runtime.js";
 
+/** Shared type for Plugins List Options in src/cli. */
 export type PluginsListOptions = {
   json?: boolean;
   enabled?: boolean;

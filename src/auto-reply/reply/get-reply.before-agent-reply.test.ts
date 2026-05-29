@@ -1,3 +1,4 @@
+// Coverage for before-agent-reply hook behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { HookRunner } from "../../plugins/hooks.js";
 import { SILENT_REPLY_TOKEN } from "../tokens.js";

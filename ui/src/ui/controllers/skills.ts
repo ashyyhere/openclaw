@@ -1,6 +1,8 @@
+// ui/src/ui/controllers skills helpers and runtime behavior.
 import type { GatewayBrowserClient } from "../gateway.ts";
 import type { SkillClawHubLink, SkillStatusEntry, SkillStatusReport } from "../types.ts";
 
+/** Shared type for Claw Hub Search Result in ui/src/ui/controllers. */
 export type ClawHubSearchResult = {
   score: number;
   slug: string;
@@ -10,6 +12,7 @@ export type ClawHubSearchResult = {
   updatedAt?: number;
 };
 
+/** Shared type for Claw Hub Skill Detail in ui/src/ui/controllers. */
 export type ClawHubSkillDetail = {
   skill: {
     slug: string;
@@ -35,6 +38,7 @@ export type ClawHubSkillDetail = {
   } | null;
 };
 
+/** Shared type for Claw Hub Skill Security Verdict in ui/src/ui/controllers. */
 export type ClawHubSkillSecurityVerdict = {
   registry: string;
   ok: boolean;
@@ -59,6 +63,7 @@ export type ClawHubSkillSecurityVerdict = {
   };
 };
 
+/** Shared type for Skills State in ui/src/ui/controllers. */
 export type SkillsState = {
   client: GatewayBrowserClient | null;
   connected: boolean;
@@ -87,11 +92,13 @@ export type SkillsState = {
   skillCardErrors: Record<string, string>;
 };
 
+/** Shared type for Skill Message in ui/src/ui/controllers. */
 export type SkillMessage = {
   kind: "success" | "error";
   message: string;
 };
 
+/** Shared type for Skill Message Map in ui/src/ui/controllers. */
 export type SkillMessageMap = Record<string, SkillMessage>;
 
 function setSkillMessage(state: SkillsState, key: string, message: SkillMessage) {
@@ -103,6 +110,7 @@ function setSkillMessage(state: SkillsState, key: string, message: SkillMessage)
 
 const getErrorMessage = (err: unknown) => (err instanceof Error ? err.message : String(err));
 
+/** Reused helper for clawhub Verdict Key behavior in ui/src/ui/controllers. */
 export function clawhubVerdictKey(target: {
   registry: string;
   slug: string;
@@ -157,6 +165,7 @@ async function runStaleAwareRequest<T>(
   onFinally();
 }
 
+/** Reused helper for set Claw Hub Search Query behavior in ui/src/ui/controllers. */
 export function setClawHubSearchQuery(state: SkillsState, query: string) {
   state.clawhubSearchQuery = query;
   state.clawhubInstallMessage = null;
@@ -165,6 +174,7 @@ export function setClawHubSearchQuery(state: SkillsState, query: string) {
   state.clawhubSearchLoading = false;
 }
 
+/** Reused helper for load Skills behavior in ui/src/ui/controllers. */
 export async function loadSkills(state: SkillsState, options?: { clearMessages?: boolean }) {
   if (options?.clearMessages && Object.keys(state.skillMessages).length > 0) {
     state.skillMessages = {};
@@ -212,6 +222,7 @@ function pruneSkillCardState(state: SkillsState, report: SkillStatusReport) {
   }
 }
 
+/** Reused helper for load Skill Card behavior in ui/src/ui/controllers. */
 export async function loadSkillCard(state: SkillsState, skillKey: string) {
   if (
     !state.client ||
@@ -287,6 +298,7 @@ async function loadClawHubSecurityVerdicts(state: SkillsState, report: SkillStat
   }
 }
 
+/** Reused helper for update Skill Edit behavior in ui/src/ui/controllers. */
 export function updateSkillEdit(state: SkillsState, skillKey: string, value: string) {
   state.skillEdits = { ...state.skillEdits, [skillKey]: value };
 }
@@ -318,6 +330,7 @@ async function runSkillMutation(
   }
 }
 
+/** Reused helper for update Skill Enabled behavior in ui/src/ui/controllers. */
 export async function updateSkillEnabled(state: SkillsState, skillKey: string, enabled: boolean) {
   await runSkillMutation(state, skillKey, async (client) => {
     await client.request("skills.update", { skillKey, enabled });
@@ -328,6 +341,7 @@ export async function updateSkillEnabled(state: SkillsState, skillKey: string, e
   });
 }
 
+/** Reused helper for save Skill Api Key behavior in ui/src/ui/controllers. */
 export async function saveSkillApiKey(state: SkillsState, skillKey: string) {
   await runSkillMutation(state, skillKey, async (client) => {
     const apiKey = state.skillEdits[skillKey] ?? "";
@@ -339,6 +353,7 @@ export async function saveSkillApiKey(state: SkillsState, skillKey: string) {
   });
 }
 
+/** Reused helper for install Skill behavior in ui/src/ui/controllers. */
 export async function installSkill(
   state: SkillsState,
   skillKey: string,
@@ -360,6 +375,7 @@ export async function installSkill(
   });
 }
 
+/** Reused helper for search Claw Hub behavior in ui/src/ui/controllers. */
 export async function searchClawHub(state: SkillsState, query: string) {
   if (!state.client || !state.connected) {
     return;
@@ -395,6 +411,7 @@ export async function searchClawHub(state: SkillsState, query: string) {
   );
 }
 
+/** Reused helper for load Claw Hub Detail behavior in ui/src/ui/controllers. */
 export async function loadClawHubDetail(state: SkillsState, slug: string) {
   if (!state.client || !state.connected) {
     return;
@@ -419,6 +436,7 @@ export async function loadClawHubDetail(state: SkillsState, slug: string) {
   );
 }
 
+/** Reused helper for close Claw Hub Detail behavior in ui/src/ui/controllers. */
 export function closeClawHubDetail(state: SkillsState) {
   state.clawhubDetailSlug = null;
   state.clawhubDetail = null;
@@ -426,6 +444,7 @@ export function closeClawHubDetail(state: SkillsState) {
   state.clawhubDetailLoading = false;
 }
 
+/** Reused helper for install From Claw Hub behavior in ui/src/ui/controllers. */
 export async function installFromClawHub(state: SkillsState, slug: string) {
   if (!state.client || !state.connected) {
     return;

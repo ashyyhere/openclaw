@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/amazon-bedrock register sync runtime behavior.
 import type { StreamFn } from "openclaw/plugin-sdk/agent-core";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { registerApiProvider, streamSimple } from "openclaw/plugin-sdk/llm";

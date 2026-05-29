@@ -1,3 +1,4 @@
+// packages/gateway-protocol/src/schema protocol schemas helpers and runtime behavior.
 import type { TSchema } from "typebox";
 import {
   AgentEventSchema,
@@ -289,6 +290,7 @@ import {
   WizardStepSchema,
 } from "./wizard.js";
 
+/** Public constant for Protocol Schemas behavior in packages/gateway-protocol. */
 export const ProtocolSchemas = {
   ConnectParams: ConnectParamsSchema,
   HelloOk: HelloOkSchema,
@@ -546,6 +548,7 @@ export const ProtocolSchemas = {
   ShutdownEvent: ShutdownEventSchema,
 } satisfies Record<string, TSchema>;
 
+/** Re-exported public API for packages/gateway-protocol. */
 export {
   MIN_CLIENT_PROTOCOL_VERSION,
   MIN_PROBE_PROTOCOL_VERSION,

@@ -1,3 +1,4 @@
+// Tests extensions/codex/src/app-server elicitation bridge test behavior.
 import {
   callGatewayTool,
   embeddedAgentLog,

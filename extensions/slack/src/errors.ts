@@ -1,3 +1,4 @@
+// extensions/slack/src errors helpers and runtime behavior.
 import { redactSensitiveText } from "openclaw/plugin-sdk/logging-core";
 import { isRecord } from "openclaw/plugin-sdk/string-coerce-runtime";
 

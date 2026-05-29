@@ -1,3 +1,4 @@
+// Tests plugins/runtime runtime registry loader test behavior.
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { createEmptyPluginRegistry } from "../registry.js";
 

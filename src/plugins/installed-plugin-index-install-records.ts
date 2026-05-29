@@ -1,3 +1,4 @@
+// plugins installed plugin index install records helpers and runtime behavior.
 import type { PluginInstallRecord } from "../config/types.plugins.js";
 import type {
   InstalledPluginIndex,
@@ -79,6 +80,7 @@ function restoreInstallRecord(
   return structuredClone(record) as PluginInstallRecord;
 }
 
+/** Reused helper for normalize Install Record Map behavior in src/plugins. */
 export function normalizeInstallRecordMap(
   records: Record<string, PluginInstallRecord> | undefined,
 ): Record<string, InstalledPluginInstallRecordInfo> {
@@ -109,6 +111,7 @@ function restoreInstallRecordMap(
   return restored;
 }
 
+/** Reused helper for extract Plugin Install Records From Installed Plugin Index behavior in src/plugins. */
 export function extractPluginInstallRecordsFromInstalledPluginIndex(
   index: InstalledPluginIndex | null | undefined,
 ): Record<string, PluginInstallRecord> {

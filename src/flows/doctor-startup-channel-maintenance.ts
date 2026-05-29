@@ -1,3 +1,4 @@
+// flows doctor startup channel maintenance helpers and runtime behavior.
 import { runChannelPluginStartupMaintenance } from "../channels/plugins/lifecycle-startup.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 
@@ -8,6 +9,7 @@ type DoctorStartupMaintenanceRuntime = {
 
 type ChannelPluginStartupMaintenanceRunner = typeof runChannelPluginStartupMaintenance;
 
+/** Reused helper for maybe Run Doctor Startup Channel Maintenance behavior in src/flows. */
 export async function maybeRunDoctorStartupChannelMaintenance(params: {
   cfg: OpenClawConfig;
   env?: NodeJS.ProcessEnv;

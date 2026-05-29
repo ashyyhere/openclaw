@@ -1,3 +1,4 @@
+// Tests test/scripts claude auth status test behavior.
 import { spawnSync } from "node:child_process";
 import { chmodSync, mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";

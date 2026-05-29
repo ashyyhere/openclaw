@@ -1,3 +1,4 @@
+// Tests plugins web provider public artifacts explicit fast path test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const { loadPluginManifestRegistryMock } = vi.hoisted(() => ({

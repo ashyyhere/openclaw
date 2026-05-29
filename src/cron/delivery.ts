@@ -1,3 +1,4 @@
+// cron delivery helpers and runtime behavior.
 import { sendDurableMessageBatch } from "../channels/message/runtime.js";
 import type { CliDeps } from "../cli/deps.types.js";
 import { createOutboundSendDeps } from "../cli/outbound-send-deps.js";
@@ -20,6 +21,7 @@ import {
 import { resolveCronNotificationSessionKey } from "./session-target.js";
 import type { CronMessageChannel } from "./types.js";
 
+/** Re-exported API for src/cron. */
 export {
   resolveCronDeliveryPlan,
   resolveFailureDestination,
@@ -31,6 +33,7 @@ export {
 const FAILURE_NOTIFICATION_TIMEOUT_MS = 30_000;
 const cronDeliveryLogger = getChildLogger({ subsystem: "cron-delivery" });
 
+/** Shared type for Cron Announce Target in src/cron. */
 export type CronAnnounceTarget = {
   channel?: string;
   to?: string;
@@ -112,6 +115,7 @@ async function deliverCronAnnouncePayload(params: {
   }
 }
 
+/** Reused helper for send Cron Announce Payload Strict behavior in src/cron. */
 export async function sendCronAnnouncePayloadStrict(params: {
   deps: CliDeps;
   cfg: OpenClawConfig;
@@ -134,6 +138,7 @@ export async function sendCronAnnouncePayloadStrict(params: {
   });
 }
 
+/** Reused helper for send Failure Notification Announce behavior in src/cron. */
 export async function sendFailureNotificationAnnounce(
   deps: CliDeps,
   cfg: OpenClawConfig,

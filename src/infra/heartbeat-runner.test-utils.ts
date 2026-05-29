@@ -1,3 +1,4 @@
+// infra heartbeat runner test utils helpers and runtime behavior.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
@@ -27,6 +28,7 @@ type HeartbeatSessionSeed = {
 };
 
 type HeartbeatReplyFn = NonNullable<HeartbeatDeps["getReplyFromConfig"]>;
+/** Shared type for Heartbeat Reply Spy in src/infra. */
 export type HeartbeatReplySpy = ReturnType<typeof vi.fn<HeartbeatReplyFn>>;
 
 function createHeartbeatReplySpy(): HeartbeatReplySpy {
@@ -35,6 +37,7 @@ function createHeartbeatReplySpy(): HeartbeatReplySpy {
   return replySpy;
 }
 
+/** Reused helper for seed Session Store behavior in src/infra. */
 export async function seedSessionStore(
   storePath: string,
   sessionKey: string,
@@ -59,6 +62,7 @@ export async function seedSessionStore(
   );
 }
 
+/** Reused helper for seed Main Session Store behavior in src/infra. */
 export async function seedMainSessionStore(
   storePath: string,
   cfg: OpenClawConfig,
@@ -69,6 +73,7 @@ export async function seedMainSessionStore(
   return sessionKey;
 }
 
+/** Reused helper for with Temp Heartbeat Sandbox behavior in src/infra. */
 export async function withTempHeartbeatSandbox<T>(
   fn: (ctx: { tmpDir: string; storePath: string; replySpy: HeartbeatReplySpy }) => Promise<T>,
   options?: {
@@ -100,6 +105,7 @@ export async function withTempHeartbeatSandbox<T>(
   }
 }
 
+/** Reused helper for with Temp Telegram Heartbeat Sandbox behavior in src/infra. */
 export async function withTempTelegramHeartbeatSandbox<T>(
   fn: (ctx: { tmpDir: string; storePath: string; replySpy: HeartbeatReplySpy }) => Promise<T>,
   options?: {
@@ -112,6 +118,7 @@ export async function withTempTelegramHeartbeatSandbox<T>(
   });
 }
 
+/** Reused helper for setup Telegram Heartbeat Plugin Runtime For Tests behavior in src/infra. */
 export function setupTelegramHeartbeatPluginRuntimeForTests() {
   setActivePluginRegistry(
     createTestRegistry([

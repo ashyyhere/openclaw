@@ -1,3 +1,4 @@
+// Tests gateway/server-methods secrets test behavior.
 import { describe, expect, it, vi } from "vitest";
 import {
   TALK_TEST_PROVIDER_API_KEY_PATH,

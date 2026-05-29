@@ -1,3 +1,4 @@
+/** Writes status JSON output to the runtime. */
 import { type RuntimeEnv, writeRuntimeJson } from "../runtime.js";
 import { resolveStatusJsonOutput } from "./status-json-runtime.ts";
 
@@ -8,6 +9,7 @@ type StatusJsonCommandOptions = {
   all?: boolean;
 };
 
+/** Reused helper for run Status Json Command behavior in src/commands. */
 export async function runStatusJsonCommand(params: {
   opts: StatusJsonCommandOptions;
   runtime: RuntimeEnv;

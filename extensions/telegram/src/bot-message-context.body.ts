@@ -1,3 +1,4 @@
+// extensions/telegram/src bot message context body helpers and runtime behavior.
 import {
   buildMentionRegexes,
   formatLocationText,

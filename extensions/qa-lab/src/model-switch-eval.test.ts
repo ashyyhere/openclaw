@@ -1,3 +1,4 @@
+// Tests extensions/qa-lab/src model switch eval test behavior.
 import { describe, expect, it } from "vitest";
 import { hasModelSwitchContinuitySignal } from "./model-switch-eval.js";
 

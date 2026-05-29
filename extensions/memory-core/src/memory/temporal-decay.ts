@@ -1,3 +1,4 @@
+// extensions/memory-core/src/memory temporal decay helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 

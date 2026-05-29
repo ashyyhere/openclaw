@@ -1,3 +1,4 @@
+/** Section builders for human status command output. */
 import {
   buildPairingConnectRecoveryTitle,
   describePairingConnectRequirement,
@@ -26,6 +27,7 @@ type MemoryPluginLike = MemoryPluginStatus;
 type SessionsRecentLike = SessionStatus;
 type EventLoopHealthLike = NonNullable<HealthSummary["eventLoop"]>;
 
+/** Shared type for Status Memory State Resolvers in src/commands. */
 export type StatusMemoryStateResolvers = {
   resolveMemoryVectorState: (value: NonNullable<MemoryStatusSnapshot["vector"]>) => {
     state: string;
@@ -51,12 +53,14 @@ type PairingRecoveryLike = {
   remediationHint?: string | null;
 };
 
+/** Reused constant for status Health Columns behavior in src/commands. */
 export const statusHealthColumns: TableColumn[] = [
   { key: "Item", header: "Item", minWidth: 10 },
   { key: "Status", header: "Status", minWidth: 8 },
   { key: "Detail", header: "Detail", flex: true, minWidth: 28 },
 ];
 
+/** Reused helper for build Status Agents Value behavior in src/commands. */
 export function buildStatusAgentsValue(params: {
   agentStatus: AgentStatusLike;
   formatTimeAgo: (ageMs: number) => string;
@@ -72,6 +76,7 @@ export function buildStatusAgentsValue(params: {
   return `${params.agentStatus.agents.length} · ${pending} · sessions ${params.agentStatus.totalSessions}${defSuffix}`;
 }
 
+/** Reused helper for build Status Tasks Value behavior in src/commands. */
 export function buildStatusTasksValue(params: {
   summary: Pick<SummaryLike, "tasks" | "taskAudit">;
   warn: (value: string) => string;
@@ -100,6 +105,7 @@ export function buildStatusTasksValue(params: {
   ].join(" · ");
 }
 
+/** Reused helper for build Status Heartbeat Value behavior in src/commands. */
 export function buildStatusHeartbeatValue(params: { summary: Pick<SummaryLike, "heartbeat"> }) {
   const parts = params.summary.heartbeat.agents
     .map((agent) => {
@@ -112,6 +118,7 @@ export function buildStatusHeartbeatValue(params: { summary: Pick<SummaryLike, "
   return parts.length > 0 ? parts.join(", ") : "disabled";
 }
 
+/** Reused helper for build Status Last Heartbeat Value behavior in src/commands. */
 export function buildStatusLastHeartbeatValue(params: {
   deep?: boolean;
   gatewayReachable: boolean;
@@ -139,6 +146,7 @@ export function buildStatusLastHeartbeatValue(params: {
     .join(" · ");
 }
 
+/** Reused helper for build Status Memory Value behavior in src/commands. */
 export function buildStatusMemoryValue(
   params: {
     memory: MemoryLike;
@@ -190,6 +198,7 @@ export function buildStatusMemoryValue(
   return parts.join(" · ");
 }
 
+/** Reused helper for build Status Security Audit Lines behavior in src/commands. */
 export function buildStatusSecurityAuditLines(params: {
   securityAudit: {
     summary: { critical: number; warn: number; info: number };
@@ -253,6 +262,7 @@ export function buildStatusSecurityAuditLines(params: {
   return lines;
 }
 
+/** Reused helper for build Status Health Rows behavior in src/commands. */
 export function buildStatusHealthRows(params: {
   health: HealthSummary;
   formatHealthChannelLines: (summary: HealthSummary, opts: { accountMode: "all" }) => string[];
@@ -309,6 +319,7 @@ export function buildStatusHealthRows(params: {
   return rows;
 }
 
+/** Reused helper for format Event Loop Health Detail behavior in src/commands. */
 export function formatEventLoopHealthDetail(eventLoop: EventLoopHealthLike): string {
   const parts = [
     eventLoop.reasons.length > 0 ? `reasons ${eventLoop.reasons.join(",")}` : "healthy",
@@ -320,6 +331,7 @@ export function formatEventLoopHealthDetail(eventLoop: EventLoopHealthLike): str
   return parts.join(" · ");
 }
 
+/** Reused helper for build Status Sessions Rows behavior in src/commands. */
 export function buildStatusSessionsRows(params: {
   recent: SessionsRecentLike[];
   verbose?: boolean;
@@ -345,6 +357,7 @@ export function buildStatusSessionsRows(params: {
   }));
 }
 
+/** Reused helper for build Status Model Selection Lines behavior in src/commands. */
 export function buildStatusModelSelectionLines(params: {
   recent: SessionsRecentLike[];
   limit?: number;
@@ -388,6 +401,7 @@ export function buildStatusModelSelectionLines(params: {
   return lines;
 }
 
+/** Reused helper for build Status Footer Lines behavior in src/commands. */
 export function buildStatusFooterLines(params: {
   updateHint: string | null;
   warn: (value: string) => string;
@@ -410,6 +424,7 @@ export function buildStatusFooterLines(params: {
   ];
 }
 
+/** Reused helper for build Status Plugin Compatibility Lines behavior in src/commands. */
 export function buildStatusPluginCompatibilityLines<
   TNotice extends PluginCompatibilityNoticeLike,
 >(params: {
@@ -434,6 +449,7 @@ export function buildStatusPluginCompatibilityLines<
   ];
 }
 
+/** Reused helper for build Status Pairing Recovery Lines behavior in src/commands. */
 export function buildStatusPairingRecoveryLines(params: {
   pairingRecovery: PairingRecoveryLike | null;
   warn: (value: string) => string;
@@ -467,6 +483,7 @@ export function buildStatusPairingRecoveryLines(params: {
   ];
 }
 
+/** Reused helper for build Status System Events Rows behavior in src/commands. */
 export function buildStatusSystemEventsRows(params: {
   queuedSystemEvents: string[];
   limit?: number;
@@ -478,6 +495,7 @@ export function buildStatusSystemEventsRows(params: {
   return params.queuedSystemEvents.slice(0, limit).map((event) => ({ Event: event }));
 }
 
+/** Reused helper for build Status System Events Trailer behavior in src/commands. */
 export function buildStatusSystemEventsTrailer(params: {
   queuedSystemEvents: string[];
   limit?: number;

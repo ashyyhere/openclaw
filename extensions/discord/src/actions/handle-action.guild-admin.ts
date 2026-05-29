@@ -1,3 +1,4 @@
+// extensions/discord/src/actions handle action guild admin helpers and runtime behavior.
 import type { AgentToolResult } from "openclaw/plugin-sdk/agent-core";
 import {
   readNonNegativeIntegerParam,

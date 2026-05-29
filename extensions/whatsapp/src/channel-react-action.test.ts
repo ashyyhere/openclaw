@@ -1,3 +1,4 @@
+// Tests extensions/whatsapp/src channel react action test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { handleWhatsAppReactAction } from "./channel-react-action.js";
 import type { OpenClawConfig } from "./runtime-api.js";

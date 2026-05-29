@@ -1,9 +1,12 @@
+// gateway live tool probe utils helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
+/** Reused helper for has Expected Tool Nonce behavior in src/gateway. */
 export function hasExpectedToolNonce(text: string, nonceA: string, nonceB: string): boolean {
   return text.includes(nonceA) && text.includes(nonceB);
 }
 
+/** Reused helper for has Expected Single Nonce behavior in src/gateway. */
 export function hasExpectedSingleNonce(text: string, nonce: string): boolean {
   return text.includes(nonce);
 }
@@ -44,6 +47,7 @@ const PROBE_REFUSAL_MARKERS = [
   "authorizing me to run",
 ];
 
+/** Reused helper for is Likely Tool Nonce Refusal behavior in src/gateway. */
 export function isLikelyToolNonceRefusal(text: string): boolean {
   const lower = normalizeLowercaseStringOrEmpty(text);
   if (PROBE_REFUSAL_MARKERS.some((marker) => lower.includes(marker))) {
@@ -83,6 +87,7 @@ function hasMalformedToolOutput(text: string): boolean {
   return false;
 }
 
+/** Reused helper for should Retry Tool Read Probe behavior in src/gateway. */
 export function shouldRetryToolReadProbe(params: {
   text: string;
   nonceA: string;
@@ -110,6 +115,7 @@ export function shouldRetryToolReadProbe(params: {
   return false;
 }
 
+/** Reused helper for should Retry Exec Read Probe behavior in src/gateway. */
 export function shouldRetryExecReadProbe(params: {
   text: string;
   nonce: string;

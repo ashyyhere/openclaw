@@ -1,3 +1,4 @@
+/** Tests approval delivery capability composition and approver-restricted native adapters. */
 import { describe, expect, it, vi } from "vitest";
 import {
   createApproverRestrictedNativeApprovalAdapter,

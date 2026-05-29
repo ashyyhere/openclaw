@@ -1,3 +1,4 @@
+// logging diagnostic support log redaction helpers and runtime behavior.
 import { isBlockedObjectKey } from "../infra/prototype-keys.js";
 import { asOptionalRecord } from "../shared/record-coerce.js";
 import {
@@ -30,6 +31,7 @@ function createLogRecord(): Record<string, unknown> {
   return Object.create(null) as Record<string, unknown>;
 }
 
+/** Reused helper for sanitize Support Log Record behavior in src/logging. */
 export function sanitizeSupportLogRecord(
   line: string,
   redaction: SupportRedactionContext,

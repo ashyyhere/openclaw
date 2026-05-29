@@ -1,3 +1,4 @@
+// extensions/qa-lab/web vite config helpers and runtime behavior.
 import path from "node:path";
 import { defineConfig } from "vite";
 

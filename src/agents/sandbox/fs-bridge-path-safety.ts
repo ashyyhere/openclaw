@@ -1,3 +1,4 @@
+/** Anchors sandbox filesystem operations to approved host roots. */
 import fs from "node:fs";
 import path from "node:path";
 import type { PathAliasPolicy } from "../../infra/path-alias-guards.js";
@@ -11,6 +12,7 @@ import {
 
 type BoundaryAllowedType = "file" | "directory";
 
+/** Shared type for Path Safety Options in src/agents/sandbox. */
 export type PathSafetyOptions = {
   action: string;
   aliasPolicy?: PathAliasPolicy;
@@ -18,22 +20,26 @@ export type PathSafetyOptions = {
   allowedType?: BoundaryAllowedType;
 };
 
+/** Shared type for Path Safety Check in src/agents/sandbox. */
 export type PathSafetyCheck = {
   target: SandboxResolvedFsPath;
   options: PathSafetyOptions;
 };
 
+/** Shared type for Pinned Sandbox Entry in src/agents/sandbox. */
 export type PinnedSandboxEntry = {
   mountRootPath: string;
   relativeParentPath: string;
   basename: string;
 };
 
+/** Shared type for Anchored Sandbox Entry in src/agents/sandbox. */
 export type AnchoredSandboxEntry = {
   canonicalParentPath: string;
   basename: string;
 };
 
+/** Shared type for Pinned Sandbox Directory Entry in src/agents/sandbox. */
 export type PinnedSandboxDirectoryEntry = {
   mountRootPath: string;
   relativePath: string;
@@ -49,6 +55,7 @@ type RunCommand = (
   },
 ) => Promise<{ stdout: Buffer }>;
 
+/** Reused class for Sandbox Fs Path Guard behavior in src/agents/sandbox. */
 export class SandboxFsPathGuard {
   private readonly mountsByContainer: SandboxFsMount[];
   private readonly runCommand: RunCommand;

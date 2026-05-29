@@ -1,3 +1,4 @@
+// extensions/venice provider catalog helpers and runtime behavior.
 import type { ModelProviderConfig } from "openclaw/plugin-sdk/provider-model-shared";
 import { discoverVeniceModels, VENICE_BASE_URL } from "./models.js";
 

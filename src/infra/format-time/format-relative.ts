@@ -51,6 +51,7 @@ export function formatTimeAgo(
   return suffix ? `${days}d ago` : `${days}d`;
 }
 
+/** Shared type for Format Relative Timestamp Options in src/infra/format-time. */
 export type FormatRelativeTimestampOptions = {
   /** If true, fall back to short date (e.g. "Oct 5") for timestamps >7 days. Default: false */
   dateFallback?: boolean;

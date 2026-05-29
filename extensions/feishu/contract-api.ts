@@ -1,3 +1,4 @@
+// extensions/feishu contract api helpers and runtime behavior.
 export { createFeishuThreadBindingManager } from "./src/thread-bindings.js";
 export { testing as feishuThreadBindingTesting } from "./src/thread-bindings.js";
 export {

@@ -1,3 +1,4 @@
+// extensions/imessage/src/monitor reaction context helpers and runtime behavior.
 import type { IMessagePayload } from "./types.js";
 
 export type IMessageReactionContext = {

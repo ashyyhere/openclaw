@@ -1,3 +1,4 @@
+// extensions/lmstudio/src models helpers and runtime behavior.
 import type {
   ModelDefinitionConfig,
   ModelProviderConfig,

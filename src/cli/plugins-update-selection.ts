@@ -1,3 +1,4 @@
+/** Selects plugin and hook install records eligible for updates. */
 import type { HookInstallRecord } from "../config/types.hooks.js";
 import type { PluginInstallRecord } from "../config/types.plugins.js";
 import { parseRegistryNpmSpec } from "../infra/npm-registry-spec.js";
@@ -6,6 +7,7 @@ import {
   extractInstalledNpmPackageName,
 } from "./plugins-install-records.js";
 
+/** Reused helper for resolve Plugin Update Selection behavior in src/cli. */
 export function resolvePluginUpdateSelection(params: {
   installs: Record<string, PluginInstallRecord>;
   rawId?: string;
@@ -53,6 +55,7 @@ export function resolvePluginUpdateSelection(params: {
   };
 }
 
+/** Reused helper for resolve Hook Pack Update Selection behavior in src/cli. */
 export function resolveHookPackUpdateSelection(params: {
   installs: Record<string, HookInstallRecord>;
   rawId?: string;

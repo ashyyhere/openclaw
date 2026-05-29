@@ -1,3 +1,4 @@
+/** Low-level argv parsing helpers shared by CLI startup and command routing. */
 import { isBunRuntime, isNodeRuntime } from "../daemon/runtime-binary.js";
 import {
   consumeRootOptionToken,
@@ -21,12 +22,14 @@ const ROOT_COMMANDS_WITH_SUBCOMMANDS: ReadonlySet<string> = new Set(
   ),
 );
 
+/** Reused helper for has Help Or Version behavior in src/cli. */
 export function hasHelpOrVersion(argv: string[]): boolean {
   return (
     argv.some((arg) => HELP_FLAGS.has(arg) || VERSION_FLAGS.has(arg)) || hasRootVersionAlias(argv)
   );
 }
 
+/** Reused helper for is Help Or Version Invocation behavior in src/cli. */
 export function isHelpOrVersionInvocation(argv: string[]): boolean {
   if (hasRootVersionAlias(argv)) {
     return true;
@@ -80,6 +83,7 @@ function parsePositiveInt(value: string): number | undefined {
   return parseStrictPositiveInteger(value);
 }
 
+/** Reused helper for has Flag behavior in src/cli. */
 export function hasFlag(argv: string[], name: string): boolean {
   const args = argv.slice(2);
   for (const arg of args) {
@@ -93,6 +97,7 @@ export function hasFlag(argv: string[], name: string): boolean {
   return false;
 }
 
+/** Reused helper for has Root Version Alias behavior in src/cli. */
 export function hasRootVersionAlias(argv: string[]): boolean {
   const args = argv.slice(2);
   let hasAlias = false;
@@ -121,6 +126,7 @@ export function hasRootVersionAlias(argv: string[]): boolean {
   return hasAlias;
 }
 
+/** Reused helper for is Root Version Invocation behavior in src/cli. */
 export function isRootVersionInvocation(argv: string[]): boolean {
   return isRootInvocationForFlags(argv, VERSION_FLAGS, { includeVersionAlias: true });
 }
@@ -158,6 +164,7 @@ function isRootInvocationForFlags(
   return hasTarget;
 }
 
+/** Reused helper for is Root Help Invocation behavior in src/cli. */
 export function isRootHelpInvocation(argv: string[]): boolean {
   return isRootInvocationForFlags(argv, HELP_FLAGS);
 }
@@ -202,6 +209,7 @@ function scanHelpNormalizationArgv(argv: string[]): HelpNormalizationScanResult 
   return { ok: true, positionals, rootOptions, helpFlagIndex };
 }
 
+/** Reused helper for normalize Generated Help Command Argv behavior in src/cli. */
 export function normalizeGeneratedHelpCommandArgv(argv: string[]): string[] {
   const scan = scanHelpNormalizationArgv(argv);
   if (!scan.ok) {
@@ -232,6 +240,7 @@ export function normalizeGeneratedHelpCommandArgv(argv: string[]): string[] {
   return [argv[0], argv[1], ...rootOptions, primary.value, target.value, "--help"];
 }
 
+/** Reused helper for normalize Root Help Target Argv behavior in src/cli. */
 export function normalizeRootHelpTargetArgv(argv: string[]): string[] {
   const scan = scanHelpNormalizationArgv(argv);
   if (!scan.ok) {
@@ -252,6 +261,7 @@ export function normalizeRootHelpTargetArgv(argv: string[]): string[] {
   return [argv[0], argv[1], ...rootOptions, ...targetPath, "--help"];
 }
 
+/** Reused helper for get Flag Value behavior in src/cli. */
 export function getFlagValue(argv: string[], name: string): string | null | undefined {
   const args = argv.slice(2);
   for (let i = 0; i < args.length; i += 1) {
@@ -271,6 +281,7 @@ export function getFlagValue(argv: string[], name: string): string | null | unde
   return undefined;
 }
 
+/** Reused helper for get Verbose Flag behavior in src/cli. */
 export function getVerboseFlag(argv: string[], options?: { includeDebug?: boolean }): boolean {
   if (hasFlag(argv, "--verbose")) {
     return true;
@@ -281,6 +292,7 @@ export function getVerboseFlag(argv: string[], options?: { includeDebug?: boolea
   return false;
 }
 
+/** Reused helper for get Positive Int Flag Value behavior in src/cli. */
 export function getPositiveIntFlagValue(argv: string[], name: string): number | null | undefined {
   const raw = getFlagValue(argv, name);
   if (raw === null || raw === undefined) {
@@ -289,10 +301,12 @@ export function getPositiveIntFlagValue(argv: string[], name: string): number | 
   return parsePositiveInt(raw);
 }
 
+/** Reused helper for get Command Path behavior in src/cli. */
 export function getCommandPath(argv: string[], depth = 2): string[] {
   return getCommandPathInternal(argv, depth, { skipRootOptions: false });
 }
 
+/** Reused helper for get Command Path With Root Options behavior in src/cli. */
 export function getCommandPathWithRootOptions(argv: string[], depth = 2): string[] {
   return getCommandPathInternal(argv, depth, { skipRootOptions: true });
 }
@@ -330,6 +344,7 @@ function getCommandPathInternal(
   return path;
 }
 
+/** Reused helper for get Primary Command behavior in src/cli. */
 export function getPrimaryCommand(argv: string[]): string | null {
   const [primary] = getCommandPathWithRootOptions(argv, 1);
   return primary ?? null;
@@ -371,6 +386,7 @@ function consumeKnownOptionToken(
   return isValueToken(args[index + 1]) ? 2 : 0;
 }
 
+/** Reused helper for get Command Positionals With Root Options behavior in src/cli. */
 export function getCommandPositionalsWithRootOptions(
   argv: string[],
   options: CommandPositionalsParseOptions,
@@ -420,6 +436,7 @@ export function getCommandPositionalsWithRootOptions(
   return positionals;
 }
 
+/** Reused helper for build Parse Argv behavior in src/cli. */
 export function buildParseArgv(params: {
   programName?: string;
   rawArgs?: string[];
@@ -447,6 +464,7 @@ export function buildParseArgv(params: {
   return ["node", programName || "openclaw", ...normalizedArgv];
 }
 
+/** Reused helper for should Migrate State From Path behavior in src/cli. */
 export function shouldMigrateStateFromPath(path: string[]): boolean {
   if (path.length === 0) {
     return true;
@@ -470,6 +488,7 @@ export function shouldMigrateStateFromPath(path: string[]): boolean {
   return true;
 }
 
+/** Reused helper for should Migrate State behavior in src/cli. */
 export function shouldMigrateState(argv: string[]): boolean {
   return shouldMigrateStateFromPath(getCommandPathWithRootOptions(argv, 2));
 }

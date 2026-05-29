@@ -1,3 +1,5 @@
+// markdown fences helpers and runtime behavior.
+/** Shared type for Fence Span in src/markdown. */
 export type FenceSpan = {
   start: number;
   end: number;
@@ -6,6 +8,7 @@ export type FenceSpan = {
   indent: string;
 };
 
+/** Shared type for Fence Scan State in src/markdown. */
 export type FenceScanState = {
   atLineStart?: boolean;
   open?: {
@@ -17,6 +20,7 @@ export type FenceScanState = {
   };
 };
 
+/** Reused helper for scan Fence Spans behavior in src/markdown. */
 export function scanFenceSpans(
   buffer: string,
   state?: FenceScanState,
@@ -102,10 +106,12 @@ export function scanFenceSpans(
   return { spans, state: nextState };
 }
 
+/** Reused helper for parse Fence Spans behavior in src/markdown. */
 export function parseFenceSpans(buffer: string): FenceSpan[] {
   return scanFenceSpans(buffer).spans;
 }
 
+/** Reused helper for find Fence Span At behavior in src/markdown. */
 export function findFenceSpanAt(spans: FenceSpan[], index: number): FenceSpan | undefined {
   let low = 0;
   let high = spans.length - 1;
@@ -130,6 +136,7 @@ export function findFenceSpanAt(spans: FenceSpan[], index: number): FenceSpan | 
   return undefined;
 }
 
+/** Reused helper for is Safe Fence Break behavior in src/markdown. */
 export function isSafeFenceBreak(spans: FenceSpan[], index: number): boolean {
   return !findFenceSpanAt(spans, index);
 }

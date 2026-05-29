@@ -1,3 +1,4 @@
+// extensions/matrix/src directory live helpers and runtime behavior.
 import {
   normalizeLowercaseStringOrEmpty,
   normalizeOptionalString,

@@ -1,3 +1,4 @@
+// Coverage for bash command alias parsing.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../../config/config.js";
 import { handleBashCommand } from "./commands-bash.js";

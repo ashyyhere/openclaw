@@ -1,3 +1,4 @@
+// context-engine init helpers and runtime behavior.
 import { registerLegacyContextEngine } from "./legacy.registration.js";
 
 /**
@@ -12,6 +13,7 @@ import { registerLegacyContextEngine } from "./legacy.registration.js";
  */
 let initialized = false;
 
+/** Reused helper for ensure Context Engines Initialized behavior in src/context-engine. */
 export function ensureContextEnginesInitialized(): void {
   if (initialized) {
     return;

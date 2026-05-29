@@ -1,3 +1,4 @@
+// extensions/tavily index helpers and runtime behavior.
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 import { createTavilyExtractTool } from "./src/tavily-extract-tool.js";
 import { createTavilyWebSearchProvider } from "./src/tavily-search-provider.js";

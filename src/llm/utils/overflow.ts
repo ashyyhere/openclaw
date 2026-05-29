@@ -1,3 +1,4 @@
+// llm/utils overflow helpers and runtime behavior.
 import type { AssistantMessage } from "../types.js";
 
 /**

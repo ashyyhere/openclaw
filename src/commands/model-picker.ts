@@ -1,3 +1,4 @@
+/** Public barrel for model picker config mutation helpers. */
 export {
   applyModelAllowlist,
   applyModelFallbacksFromSelection,
@@ -5,6 +6,7 @@ export {
   promptDefaultModel,
   promptModelAllowlist,
 } from "../flows/model-picker.js";
+/** Re-exported API for src/commands. */
 export type {
   PromptDefaultModelParams,
   PromptDefaultModelResult,

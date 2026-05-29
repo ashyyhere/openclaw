@@ -1,3 +1,4 @@
+// hooks gmail ops helpers and runtime behavior.
 import { spawn } from "node:child_process";
 import { formatCliCommand } from "../cli/command-format.js";
 import {
@@ -65,6 +66,7 @@ type GmailCommonOptions = {
   tailscaleTarget?: string;
 };
 
+/** Shared type for Gmail Setup Options in src/hooks. */
 export type GmailSetupOptions = GmailCommonOptions & {
   account: string;
   project?: string;
@@ -72,12 +74,14 @@ export type GmailSetupOptions = GmailCommonOptions & {
   json?: boolean;
 };
 
+/** Shared type for Gmail Run Options in src/hooks. */
 export type GmailRunOptions = GmailCommonOptions & {
   account?: string;
 };
 
 const DEFAULT_GMAIL_TOPIC_IAM_MEMBER = "serviceAccount:gmail-api-push@system.gserviceaccount.com";
 
+/** Reused helper for run Gmail Setup behavior in src/hooks. */
 export async function runGmailSetup(opts: GmailSetupOptions) {
   await ensureDependency("gcloud", ["--cask", "gcloud-cli"]);
   await ensureDependency("gog", ["gogcli"]);
@@ -274,6 +278,7 @@ export async function runGmailSetup(opts: GmailSetupOptions) {
   defaultRuntime.log(`Next: ${formatCliCommand("openclaw webhooks gmail run")}`);
 }
 
+/** Reused helper for run Gmail Service behavior in src/hooks. */
 export async function runGmailService(opts: GmailRunOptions) {
   await ensureDependency("gog", ["gogcli"]);
   const config = getRuntimeConfig();

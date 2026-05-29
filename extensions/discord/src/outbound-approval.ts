@@ -1,3 +1,4 @@
+// extensions/discord/src outbound approval helpers and runtime behavior.
 function hasApprovalChannelData(payload: { channelData?: unknown }): boolean {
   const channelData = payload.channelData;
   if (!channelData || typeof channelData !== "object" || Array.isArray(channelData)) {

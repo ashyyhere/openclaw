@@ -1,3 +1,4 @@
+// llm/providers/stream-wrappers anthropic family cache semantics helpers and runtime behavior.
 import {
   normalizeLowercaseStringOrEmpty,
   normalizeOptionalLowercaseString,
@@ -8,6 +9,7 @@ type AnthropicCacheRetentionFamily =
   | "anthropic-bedrock"
   | "custom-anthropic-api";
 
+/** Reused helper for is Anthropic Model Ref behavior in src/llm/providers. */
 export function isAnthropicModelRef(modelId: string): boolean {
   return normalizeLowercaseStringOrEmpty(modelId).startsWith("anthropic/");
 }
@@ -15,6 +17,7 @@ export function isAnthropicModelRef(modelId: string): boolean {
 /** Matches Application Inference Profile ARNs across all AWS partitions with Bedrock. */
 const BEDROCK_APP_INFERENCE_PROFILE_ARN_RE = /^arn:aws(-cn|-us-gov)?:bedrock:/;
 
+/** Reused helper for is Anthropic Bedrock Model behavior in src/llm/providers. */
 export function isAnthropicBedrockModel(modelId: string): boolean {
   const normalized = normalizeLowercaseStringOrEmpty(modelId);
 
@@ -45,12 +48,14 @@ export function isAnthropicBedrockModel(modelId: string): boolean {
   return false;
 }
 
+/** Reused helper for is Open Router Anthropic Model Ref behavior in src/llm/providers. */
 export function isOpenRouterAnthropicModelRef(provider: string, modelId: string): boolean {
   return (
     normalizeOptionalLowercaseString(provider) === "openrouter" && isAnthropicModelRef(modelId)
   );
 }
 
+/** Reused helper for is Anthropic Family Cache Ttl Eligible behavior in src/llm/providers. */
 export function isAnthropicFamilyCacheTtlEligible(params: {
   provider: string;
   modelApi?: string;
@@ -66,6 +71,7 @@ export function isAnthropicFamilyCacheTtlEligible(params: {
   return params.modelApi === "anthropic-messages";
 }
 
+/** Reused helper for resolve Anthropic Cache Retention Family behavior in src/llm/providers. */
 export function resolveAnthropicCacheRetentionFamily(params: {
   provider: string;
   modelApi?: string;

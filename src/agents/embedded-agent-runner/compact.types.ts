@@ -1,3 +1,4 @@
+/** Shared input and metrics types for embedded-agent compaction. */
 import type { SourceReplyDeliveryMode } from "../../auto-reply/get-reply-options.types.js";
 import type { ReasoningLevel, ThinkLevel } from "../../auto-reply/thinking.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
@@ -7,6 +8,7 @@ import type { SkillSnapshot } from "../../skills/types.js";
 import type { ExecElevatedDefaults, ExecToolDefaults } from "../bash-tools.exec-types.js";
 import type { AgentRuntimePlan } from "../runtime-plan/types.js";
 
+/** Shared type for Compact Embedded Agent Session Params in src/agents/embedded-agent-runner. */
 export type CompactEmbeddedAgentSessionParams = {
   sessionId: string;
   runId?: string;
@@ -91,6 +93,7 @@ export type CompactEmbeddedAgentSessionParams = {
   allowGatewaySubagentBinding?: boolean;
 };
 
+/** Shared type for Compaction Message Metrics in src/agents/embedded-agent-runner. */
 export type CompactionMessageMetrics = {
   messages: number;
   historyTextChars: number;

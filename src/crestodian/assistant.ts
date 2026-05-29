@@ -1,3 +1,4 @@
+// crestodian assistant helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import os from "node:os";
@@ -20,12 +21,14 @@ import {
 } from "./assistant-prompts.js";
 import type { CrestodianOverview } from "./overview.js";
 
+/** Re-exported API for src/crestodian. */
 export {
   buildCrestodianAssistantUserPrompt,
   parseCrestodianAssistantPlanText,
   type CrestodianAssistantPlan,
 } from "./assistant-prompts.js";
 
+/** Shared type for Crestodian Assistant Planner in src/crestodian. */
 export type CrestodianAssistantPlanner = (params: {
   input: string;
   overview: CrestodianOverview;
@@ -37,12 +40,14 @@ type ReadConfigFileSnapshotFn = typeof readConfigFileSnapshot;
 type PrepareSimpleCompletionModelForAgentFn = typeof prepareSimpleCompletionModelForAgent;
 type CompleteWithPreparedSimpleCompletionModelFn = typeof completeWithPreparedSimpleCompletionModel;
 
+/** Shared type for Crestodian Configured Model Planner Deps in src/crestodian. */
 export type CrestodianConfiguredModelPlannerDeps = {
   readConfigFileSnapshot?: ReadConfigFileSnapshotFn;
   prepareSimpleCompletionModelForAgent?: PrepareSimpleCompletionModelForAgentFn;
   completeWithPreparedSimpleCompletionModel?: CompleteWithPreparedSimpleCompletionModelFn;
 };
 
+/** Shared type for Crestodian Local Runtime Planner Deps in src/crestodian. */
 export type CrestodianLocalRuntimePlannerDeps = {
   runCliAgent?: RunCliAgentFn;
   runEmbeddedAgent?: RunEmbeddedAgentFn;
@@ -50,9 +55,11 @@ export type CrestodianLocalRuntimePlannerDeps = {
   removeTempDir?: (dir: string) => Promise<void>;
 };
 
+/** Shared type for Crestodian Planner Deps in src/crestodian. */
 export type CrestodianPlannerDeps = CrestodianConfiguredModelPlannerDeps &
   CrestodianLocalRuntimePlannerDeps;
 
+/** Reused helper for plan Crestodian Command behavior in src/crestodian. */
 export async function planCrestodianCommand(params: {
   input: string;
   overview: CrestodianOverview;
@@ -65,6 +72,7 @@ export async function planCrestodianCommand(params: {
   return await planCrestodianCommandWithLocalRuntime(params);
 }
 
+/** Reused helper for plan Crestodian Command With Configured Model behavior in src/crestodian. */
 export async function planCrestodianCommandWithConfiguredModel(params: {
   input: string;
   overview: CrestodianOverview;
@@ -133,6 +141,7 @@ export async function planCrestodianCommandWithConfiguredModel(params: {
   }
 }
 
+/** Reused helper for plan Crestodian Command With Local Runtime behavior in src/crestodian. */
 export async function planCrestodianCommandWithLocalRuntime(params: {
   input: string;
   overview: CrestodianOverview;

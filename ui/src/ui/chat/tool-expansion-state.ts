@@ -1,3 +1,4 @@
+// ui/src/ui/chat tool expansion state helpers and runtime behavior.
 import type { ChatItem, MessageGroup } from "../types/chat-types.ts";
 import { isToolResultMessage, normalizeRoleForGrouping } from "./role-normalizer.ts";
 import { getOrCreateSessionCacheValue } from "./session-cache.ts";
@@ -7,6 +8,7 @@ const expandedToolCardsBySession = new Map<string, Map<string, boolean>>();
 const initializedToolCardsBySession = new Map<string, Set<string>>();
 const lastAutoExpandPrefBySession = new Map<string, boolean>();
 
+/** Reused helper for get Expanded Tool Cards behavior in ui/src/ui/chat. */
 export function getExpandedToolCards(sessionKey: string): Map<string, boolean> {
   return getOrCreateSessionCacheValue(expandedToolCardsBySession, sessionKey, () => new Map());
 }
@@ -15,12 +17,14 @@ function getInitializedToolCards(sessionKey: string): Set<string> {
   return getOrCreateSessionCacheValue(initializedToolCardsBySession, sessionKey, () => new Set());
 }
 
+/** Reused helper for reset Tool Expansion State For Test behavior in ui/src/ui/chat. */
 export function resetToolExpansionStateForTest() {
   expandedToolCardsBySession.clear();
   initializedToolCardsBySession.clear();
   lastAutoExpandPrefBySession.clear();
 }
 
+/** Reused helper for sync Tool Card Expansion State behavior in ui/src/ui/chat. */
 export function syncToolCardExpansionState(
   sessionKey: string,
   items: Array<ChatItem | MessageGroup>,

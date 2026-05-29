@@ -1,3 +1,5 @@
+// plugins/runtime native deps helpers and runtime behavior.
+/** Shared type for Native Dependency Hint Params in src/plugins/runtime. */
 export type NativeDependencyHintParams = {
   packageName: string;
   manager?: "pnpm" | "npm" | "yarn";
@@ -6,6 +8,7 @@ export type NativeDependencyHintParams = {
   downloadCommand?: string;
 };
 
+/** Reused helper for format Native Dependency Hint behavior in src/plugins/runtime. */
 export function formatNativeDependencyHint(params: NativeDependencyHintParams): string {
   const manager = params.manager ?? "pnpm";
   const rebuildCommand =

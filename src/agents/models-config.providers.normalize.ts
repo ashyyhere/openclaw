@@ -1,3 +1,4 @@
+/** Normalizes provider config secrets, model ids, and provider-specific defaults. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { PluginManifestRecord } from "../plugins/manifest-registry.js";
 import { ensureAuthProfileStore } from "./auth-profiles/store.js";
@@ -91,6 +92,7 @@ function normalizeProviderModelsForConfig(
     : { provider, mutated };
 }
 
+/** Normalize and dedupe configured provider model ids using manifest rules. */
 export function normalizeProviderCatalogModelsForConfig(
   providers: ModelsConfig["providers"],
   options: ProviderModelNormalizationOptions = {},
@@ -112,6 +114,7 @@ export function normalizeProviderCatalogModelsForConfig(
   return mutated ? next : providers;
 }
 
+/** Normalize generated provider configs before writing models.json. */
 export function normalizeProviders(params: {
   providers: ModelsConfig["providers"];
   agentDir: string;

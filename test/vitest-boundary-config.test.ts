@@ -1,3 +1,4 @@
+// Tests test vitest boundary config test behavior.
 import { describe, expect, it } from "vitest";
 import { normalizeConfigPath, normalizeConfigPaths } from "./helpers/vitest-config-paths.js";
 import {

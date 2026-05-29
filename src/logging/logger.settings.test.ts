@@ -1,3 +1,4 @@
+// Tests logging logger settings test behavior.
 import { describe, expect, it } from "vitest";
 import { testApi } from "./logger.js";
 

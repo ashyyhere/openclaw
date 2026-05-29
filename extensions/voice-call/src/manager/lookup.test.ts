@@ -1,3 +1,4 @@
+// Tests extensions/voice-call/src/manager lookup test behavior.
 import { describe, expect, it } from "vitest";
 import { findCall, getCallByProviderCallId } from "./lookup.js";
 

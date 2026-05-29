@@ -1,3 +1,4 @@
+/** Tests shared provider stream wrapper and payload compatibility helpers. */
 import type { StreamFn } from "openclaw/plugin-sdk/agent-core";
 import { describe, expect, it } from "vitest";
 import {

@@ -1,9 +1,12 @@
+// plugins installs helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { PluginInstallRecord } from "../config/types.plugins.js";
 import { buildNpmResolutionFields, type NpmSpecResolution } from "../infra/install-source-utils.js";
 
+/** Shared type for Plugin Install Update in src/plugins. */
 export type PluginInstallUpdate = PluginInstallRecord & { pluginId: string };
 
+/** Reused helper for build Npm Resolution Install Fields behavior in src/plugins. */
 export function buildNpmResolutionInstallFields(
   resolution?: NpmSpecResolution,
 ): Pick<
@@ -13,6 +16,7 @@ export function buildNpmResolutionInstallFields(
   return buildNpmResolutionFields(resolution);
 }
 
+/** Reused helper for record Plugin Install behavior in src/plugins. */
 export function recordPluginInstall(
   cfg: OpenClawConfig,
   update: PluginInstallUpdate,

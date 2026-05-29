@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix send helpers and runtime behavior.
 import {
   createMessageReceiptFromOutboundResults,
   type MessageReceiptPartKind,

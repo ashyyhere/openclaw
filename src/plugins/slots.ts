@@ -1,7 +1,9 @@
+// plugins slots helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.js";
 import type { PluginSlotsConfig } from "../config/types.plugins.js";
 import type { PluginKind } from "./plugin-kind.types.js";
 
+/** Shared type for Plugin Slot Key in src/plugins. */
 export type PluginSlotKey = keyof PluginSlotsConfig;
 
 type SlotPluginRecord = {
@@ -52,16 +54,19 @@ export function slotKeysForPluginKind(kind?: PluginKind | PluginKind[]): PluginS
     .filter((k): k is PluginSlotKey => k != null);
 }
 
+/** Reused helper for default Slot Id For Key behavior in src/plugins. */
 export function defaultSlotIdForKey(slotKey: PluginSlotKey): string {
   return DEFAULT_SLOT_BY_KEY[slotKey];
 }
 
+/** Shared type for Slot Selection Result in src/plugins. */
 export type SlotSelectionResult = {
   config: OpenClawConfig;
   warnings: string[];
   changed: boolean;
 };
 
+/** Reused helper for apply Exclusive Slot Selection behavior in src/plugins. */
 export function applyExclusiveSlotSelection(params: {
   config: OpenClawConfig;
   selectedId: string;

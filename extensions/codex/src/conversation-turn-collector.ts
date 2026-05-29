@@ -1,3 +1,4 @@
+// extensions/codex/src conversation turn collector helpers and runtime behavior.
 import { asOptionalRecord as readRecord } from "openclaw/plugin-sdk/string-coerce-runtime";
 import {
   readCodexNotificationThreadId,

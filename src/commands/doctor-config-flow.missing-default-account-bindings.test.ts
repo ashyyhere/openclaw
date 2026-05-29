@@ -1,3 +1,4 @@
+/** Tests missing default account binding warning collection. */
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import { collectMissingDefaultAccountBindingWarnings } from "./doctor/shared/default-account-warnings.js";

@@ -1,3 +1,4 @@
+// Tests plugins web fetch providers runtime test behavior.
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { createEmptyPluginRegistry } from "./registry-empty.js";
 

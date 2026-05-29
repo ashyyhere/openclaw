@@ -1,6 +1,8 @@
+// ui/src/ui/controllers debug helpers and runtime behavior.
 import type { GatewayBrowserClient } from "../gateway.ts";
 import type { HealthSnapshot, StatusSummary } from "../types.ts";
 
+/** Shared type for Debug State in ui/src/ui/controllers. */
 export type DebugState = {
   client: GatewayBrowserClient | null;
   connected: boolean;
@@ -15,6 +17,7 @@ export type DebugState = {
   debugCallError: string | null;
 };
 
+/** Reused helper for load Debug behavior in ui/src/ui/controllers. */
 export async function loadDebug(state: DebugState) {
   if (!state.client || !state.connected) {
     return;
@@ -42,6 +45,7 @@ export async function loadDebug(state: DebugState) {
   }
 }
 
+/** Reused helper for call Debug Method behavior in ui/src/ui/controllers. */
 export async function callDebugMethod(state: DebugState) {
   if (!state.client || !state.connected) {
     return;

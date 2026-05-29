@@ -1,3 +1,4 @@
+// extensions/line/src quick reply fallback helpers and runtime behavior.
 import { normalizeStringEntries } from "openclaw/plugin-sdk/string-coerce-runtime";
 
 export function buildLineQuickReplyFallbackText(labels: readonly string[] | undefined): string {

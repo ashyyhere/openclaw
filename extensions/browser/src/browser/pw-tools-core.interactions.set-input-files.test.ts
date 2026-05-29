@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/browser pw tools core interactions set input files test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 let page: Record<string, unknown> | null = null;

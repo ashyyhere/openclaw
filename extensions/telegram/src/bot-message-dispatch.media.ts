@@ -1,3 +1,4 @@
+// extensions/telegram/src bot message dispatch media helpers and runtime behavior.
 type TelegramMediaContextPayload = {
   MediaPath?: string;
   MediaUrl?: string;

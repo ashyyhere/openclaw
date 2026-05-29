@@ -1,3 +1,4 @@
+// extensions/feishu/src bot runtime api helpers and runtime behavior.
 export {
   buildAgentMediaPayload,
   resolveChannelContextVisibilityMode,

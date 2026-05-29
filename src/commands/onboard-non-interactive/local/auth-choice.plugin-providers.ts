@@ -1,3 +1,4 @@
+// Applies non-interactive auth choices owned by provider plugins and their setup hooks.
 import {
   resolveAgentDir,
   resolveDefaultAgentId,
@@ -36,6 +37,7 @@ const loadAuthChoicePluginProvidersRuntime = createLazyRuntimeSurface(
   ({ authChoicePluginProvidersRuntime }) => authChoicePluginProvidersRuntime,
 );
 
+/** Reused helper for apply Non Interactive Plugin Provider Choice behavior in src/commands/onboard-non-interactive. */
 export async function applyNonInteractivePluginProviderChoice(params: {
   nextConfig: OpenClawConfig;
   authChoice: string;

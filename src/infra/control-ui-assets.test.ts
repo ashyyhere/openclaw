@@ -1,3 +1,4 @@
+// Tests infra control ui assets test behavior.
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";

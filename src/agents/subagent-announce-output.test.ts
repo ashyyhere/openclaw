@@ -1,3 +1,4 @@
+/** Regression coverage for subagent output capture, findings, and stats formatting. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   testing,

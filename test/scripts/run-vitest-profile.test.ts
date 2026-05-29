@@ -1,3 +1,4 @@
+// Tests test/scripts run vitest profile test behavior.
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";

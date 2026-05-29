@@ -1,3 +1,4 @@
+/** Resolves setup adapters from active plugin runtime registration state. */
 import {
   getActivePluginChannelRegistry,
   requireActivePluginRegistry,
@@ -58,15 +59,18 @@ function resolveChannelSetupPlugins(): ChannelSetupPluginView {
   };
 }
 
+/** Reused helper for list Channel Setup Plugins behavior in src/channels/plugins. */
 export function listChannelSetupPlugins(): ChannelPlugin[] {
   return resolveChannelSetupPlugins().sorted.slice();
 }
 
+/** Reused helper for list Active Channel Setup Plugins behavior in src/channels/plugins. */
 export function listActiveChannelSetupPlugins(): ChannelPlugin[] {
   const registry = getActivePluginChannelRegistry();
   return sortChannelSetupPlugins((registry?.channelSetups ?? []).map((entry) => entry.plugin));
 }
 
+/** Reused helper for get Channel Setup Plugin behavior in src/channels/plugins. */
 export function getChannelSetupPlugin(id: ChannelId): ChannelPlugin | undefined {
   const resolvedId = normalizeOptionalString(id) ?? "";
   if (!resolvedId) {

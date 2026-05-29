@@ -1,3 +1,4 @@
+// daemon service managed env helpers and runtime behavior.
 import { normalizeEnvVarKey } from "../infra/host-env-security.js";
 import { sortUniqueStrings } from "../shared/string-normalization.js";
 import type { GatewayServiceEnvironmentValueSource } from "./service-types.js";
@@ -13,18 +14,21 @@ function normalizeServiceEnvKey(key: string): string | null {
   return normalizeEnvVarKey(key, { portable: true })?.toUpperCase() ?? null;
 }
 
+/** Reused helper for has Inline Environment Source behavior in src/daemon. */
 export function hasInlineEnvironmentSource(
   source: GatewayServiceEnvironmentValueSource | undefined,
 ): boolean {
   return source === undefined || source === "inline" || source === "inline-and-file";
 }
 
+/** Reused helper for is Environment File Only Source behavior in src/daemon. */
 export function isEnvironmentFileOnlySource(
   source: GatewayServiceEnvironmentValueSource | undefined,
 ): boolean {
   return source === "file";
 }
 
+/** Reused helper for has Environment File Source behavior in src/daemon. */
 export function hasEnvironmentFileSource(
   source: GatewayServiceEnvironmentValueSource | undefined,
 ): boolean {
@@ -42,6 +46,7 @@ function parseManagedServiceEnvKeys(value: string | undefined): Set<string> {
   return keys;
 }
 
+/** Reused helper for format Managed Service Env Keys behavior in src/daemon. */
 export function formatManagedServiceEnvKeys(
   managedEnvironment: Record<string, string | undefined>,
   options?: { omitKeys?: Iterable<string> },
@@ -64,6 +69,7 @@ export function formatManagedServiceEnvKeys(
   return keys.length > 0 ? keys.join(",") : undefined;
 }
 
+/** Reused helper for read Managed Service Env Keys From Environment behavior in src/daemon. */
 export function readManagedServiceEnvKeysFromEnvironment(
   environment: Record<string, string | undefined> | undefined,
 ): Set<string> {
@@ -99,6 +105,7 @@ function deleteManagedServiceEnvKeys(
   }
 }
 
+/** Reused helper for write Managed Service Env Keys To Environment behavior in src/daemon. */
 export function writeManagedServiceEnvKeysToEnvironment(
   environment: Record<string, string | undefined>,
   value: string | undefined,
@@ -122,6 +129,7 @@ function readEnvironmentValueSource(
   return undefined;
 }
 
+/** Reused helper for collect Inline Managed Service Env Keys behavior in src/daemon. */
 export function collectInlineManagedServiceEnvKeys(
   command: ServiceEnvCommand,
   expectedManagedKeys?: Iterable<string>,

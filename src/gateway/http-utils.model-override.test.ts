@@ -1,3 +1,4 @@
+// Tests gateway http utils model override test behavior.
 import type { IncomingMessage } from "node:http";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";

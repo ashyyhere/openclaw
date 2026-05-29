@@ -1,3 +1,4 @@
+/** Tests outbound media helper behavior and payload conversion. */
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 const loadWebMediaMock = vi.hoisted(() => vi.fn());

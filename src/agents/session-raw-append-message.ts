@@ -1,3 +1,4 @@
+/** Stores access to unguarded SessionManager.appendMessage implementations. */
 import type { SessionManager } from "./sessions/index.js";
 
 const RAW_APPEND_MESSAGE = Symbol("openclaw.session.rawAppendMessage");
@@ -16,6 +17,7 @@ export function getRawSessionAppendMessage(
   return rawAppend ?? sessionManager.appendMessage.bind(sessionManager);
 }
 
+/** Attach the original appendMessage implementation before guard wrapping. */
 export function setRawSessionAppendMessage(
   sessionManager: SessionManager,
   appendMessage: SessionManager["appendMessage"],

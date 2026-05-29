@@ -1,3 +1,4 @@
+// media web media helpers and runtime behavior.
 import { lstat, realpath } from "node:fs/promises";
 import path from "node:path";
 import { logVerbose, shouldLogVerbose } from "../globals.js";
@@ -33,9 +34,12 @@ import {
   normalizeMimeType,
 } from "./mime.js";
 
+/** Re-exported API for src/media, starting with get Default Local Roots. */
 export { getDefaultLocalRoots, LocalMediaAccessError };
+/** Re-exported API for src/media, starting with Local Media Access Error Code. */
 export type { LocalMediaAccessErrorCode };
 
+/** Shared type for Web Media Result in src/media. */
 export type WebMediaResult = {
   buffer: Buffer;
   contentType?: string;
@@ -65,8 +69,10 @@ type WebMediaOptions = {
   hostReadCapability?: boolean;
 };
 
+/** Shared type for Image Quality Preference in src/media. */
 export type ImageQualityPreference = "auto" | "efficient" | "balanced" | "high";
 
+/** Shared type for Image Compression Model Policy in src/media. */
 export type ImageCompressionModelPolicy = {
   maxBytes?: number;
   maxPixels?: number;
@@ -74,6 +80,7 @@ export type ImageCompressionModelPolicy = {
   preferredSidePx?: number;
 };
 
+/** Shared type for Image Compression Policy in src/media. */
 export type ImageCompressionPolicy = {
   quality?: ImageQualityPreference;
   models?: ImageCompressionModelPolicy[];
@@ -628,6 +635,7 @@ function isPreservableImageMime(
   );
 }
 
+/** Reused helper for effective Image Bytes Cap behavior in src/media. */
 export function effectiveImageBytesCap(
   baseCap: number | undefined,
   policy?: ImageCompressionPolicy,
@@ -658,6 +666,7 @@ function buildDescendingLadder(maxSide: number, values: readonly number[]): numb
   return uniqueValues(fallbackLadder.filter((value) => value > 0)).toSorted((a, b) => b - a);
 }
 
+/** Reused helper for resolve Image Compression Grid behavior in src/media. */
 export function resolveImageCompressionGrid(policy?: ImageCompressionPolicy): {
   sides: number[];
   qualities: number[];
@@ -740,6 +749,7 @@ async function optimizeImageWithFallback(params: {
   };
 }
 
+/** Reused helper for optimize Image Buffer For Web Media behavior in src/media. */
 export async function optimizeImageBufferForWebMedia(params: {
   buffer: Buffer;
   contentType?: string;
@@ -1051,6 +1061,7 @@ async function loadWebMediaInternal(
   });
 }
 
+/** Reused helper for load Web Media behavior in src/media. */
 export async function loadWebMedia(
   mediaUrl: string,
   maxBytesOrOptions?: number | WebMediaOptions,
@@ -1062,6 +1073,7 @@ export async function loadWebMedia(
   );
 }
 
+/** Reused helper for load Web Media Raw behavior in src/media. */
 export async function loadWebMediaRaw(
   mediaUrl: string,
   maxBytesOrOptions?: number | WebMediaOptions,
@@ -1073,6 +1085,7 @@ export async function loadWebMediaRaw(
   );
 }
 
+/** Reused helper for optimize Image To Jpeg behavior in src/media. */
 export async function optimizeImageToJpeg(
   buffer: Buffer,
   maxBytes: number,
@@ -1106,4 +1119,5 @@ export async function optimizeImageToJpeg(
   };
 }
 
+/** Re-exported API for src/media, starting with optimize Image To Png. */
 export { optimizeImageToPng } from "./media-services.js";

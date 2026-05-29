@@ -1,3 +1,4 @@
+// extensions/qa-matrix/src/substrate client helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import { setTimeout as sleep } from "node:timers/promises";
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";

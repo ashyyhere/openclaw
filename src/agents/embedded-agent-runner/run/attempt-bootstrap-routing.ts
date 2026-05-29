@@ -1,7 +1,9 @@
+/** Resolves which bootstrap context files should feed an embedded attempt. */
 import type { BootstrapMode } from "../../bootstrap-mode.js";
 import { resolveBootstrapMode } from "../../bootstrap-mode.js";
 import { DEFAULT_BOOTSTRAP_FILENAME, type WorkspaceBootstrapFile } from "../../workspace.js";
 
+/** Shared type for Attempt Bootstrap Routing Input in src/agents/embedded-agent-runner. */
 export type AttemptBootstrapRoutingInput = {
   workspaceBootstrapPending: boolean;
   bootstrapContextRunKind?: "default" | "heartbeat" | "cron";
@@ -14,12 +16,14 @@ export type AttemptBootstrapRoutingInput = {
   hasBootstrapFileAccess: boolean;
 };
 
+/** Shared type for Attempt Bootstrap Routing in src/agents/embedded-agent-runner. */
 export type AttemptBootstrapRouting = {
   bootstrapMode: BootstrapMode;
   includeBootstrapInSystemContext: boolean;
   includeBootstrapInRuntimeContext: boolean;
 };
 
+/** Shared type for Attempt Workspace Bootstrap Routing Input in src/agents/embedded-agent-runner. */
 export type AttemptWorkspaceBootstrapRoutingInput = Omit<
   AttemptBootstrapRoutingInput,
   "workspaceBootstrapPending"
@@ -28,6 +32,7 @@ export type AttemptWorkspaceBootstrapRoutingInput = Omit<
   bootstrapFiles?: readonly WorkspaceBootstrapFile[];
 };
 
+/** Selects bootstrap injection targets for default, heartbeat, and cron attempts. */
 export function resolveBootstrapContextTargets(params: {
   bootstrapMode: BootstrapMode;
 }): Pick<
@@ -60,6 +65,7 @@ function resolveAttemptBootstrapRouting(
   };
 }
 
+/** Checks whether any bootstrap file has content worth injecting. */
 export function hasBootstrapFileContent(files?: readonly WorkspaceBootstrapFile[]): boolean {
   return (
     files?.some(
@@ -72,6 +78,7 @@ export function hasBootstrapFileContent(files?: readonly WorkspaceBootstrapFile[
   );
 }
 
+/** Resolves workspace bootstrap routing after pending-file content is loaded. */
 export async function resolveAttemptWorkspaceBootstrapRouting(
   params: AttemptWorkspaceBootstrapRoutingInput,
 ): Promise<AttemptBootstrapRouting> {

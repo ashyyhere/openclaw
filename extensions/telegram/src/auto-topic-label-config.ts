@@ -1,3 +1,4 @@
+// extensions/telegram/src auto topic label config helpers and runtime behavior.
 import type {
   TelegramAccountConfig,
   TelegramDirectConfig,

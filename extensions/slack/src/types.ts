@@ -1,3 +1,4 @@
+// Shared types for extensions/slack/src types behavior.
 export type SlackFile = {
   id?: string;
   name?: string;

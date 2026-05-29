@@ -1,3 +1,5 @@
+// shared thread binding lifecycle helpers and runtime behavior.
+/** Shared type for Thread Binding Lifecycle Record in src/shared. */
 export type ThreadBindingLifecycleRecord = {
   boundAt: number;
   lastActivityAt: number;
@@ -5,6 +7,7 @@ export type ThreadBindingLifecycleRecord = {
   maxAgeMs?: number;
 };
 
+/** Reused helper for resolve Thread Binding Lifecycle behavior in src/shared. */
 export function resolveThreadBindingLifecycle(params: {
   record: ThreadBindingLifecycleRecord;
   defaultIdleTimeoutMs: number;

@@ -1,9 +1,11 @@
+/** Resolves per-skill tool installation directories. */
 import path from "node:path";
 import { safePathSegmentHashed } from "../../infra/install-safe-path.js";
 import { resolveConfigDir } from "../../utils.js";
 import { resolveSkillKey } from "../loading/frontmatter.js";
 import type { SkillEntry } from "../types.js";
 
+/** Resolves the tools root directory for a skill entry. */
 export function resolveSkillToolsRootDir(entry: SkillEntry): string {
   const key = resolveSkillKey(entry.skill, entry);
   const safeKey = safePathSegmentHashed(key);

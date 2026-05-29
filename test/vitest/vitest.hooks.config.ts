@@ -1,3 +1,4 @@
+// test/vitest vitest hooks config helpers and runtime behavior.
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
 export function createHooksVitestConfig(env?: Record<string, string | undefined>) {

@@ -1,3 +1,4 @@
+// Tests extensions/anthropic-vertex api test behavior.
 import { createAssistantMessageEventStream, type Model } from "openclaw/plugin-sdk/llm";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 import type { AnthropicVertexStreamDeps } from "./stream-runtime.js";

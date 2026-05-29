@@ -1,8 +1,10 @@
+// plugins bundled sources helpers and runtime behavior.
 import { isRecord } from "../shared/record-coerce.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import { discoverOpenClawPlugins, type PluginDiscoveryResult } from "./discovery.js";
 import { loadPluginManifest } from "./manifest.js";
 
+/** Shared type for Bundled Plugin Source in src/plugins. */
 export type BundledPluginSource = {
   pluginId: string;
   localPath: string;
@@ -12,10 +14,12 @@ export type BundledPluginSource = {
   requiresConfig?: boolean;
 };
 
+/** Shared type for Bundled Plugin Lookup in src/plugins. */
 export type BundledPluginLookup =
   | { kind: "npmSpec"; value: string }
   | { kind: "pluginId"; value: string };
 
+/** Reused helper for find Bundled Plugin Source In Map behavior in src/plugins. */
 export function findBundledPluginSourceInMap(params: {
   bundled: ReadonlyMap<string, BundledPluginSource>;
   lookup: BundledPluginLookup;
@@ -35,6 +39,7 @@ export function findBundledPluginSourceInMap(params: {
   return undefined;
 }
 
+/** Reused helper for resolve Bundled Plugin Sources behavior in src/plugins. */
 export function resolveBundledPluginSources(params: {
   workspaceDir?: string;
   /** Use an explicit env when bundled roots should resolve independently from process.env. */
@@ -92,6 +97,7 @@ function pluginConfigSchemaHasRequiredFields(schema: unknown): boolean {
   return Array.isArray(required) && required.some((entry) => typeof entry === "string");
 }
 
+/** Reused helper for find Bundled Plugin Source behavior in src/plugins. */
 export function findBundledPluginSource(params: {
   lookup: BundledPluginLookup;
   workspaceDir?: string;
@@ -108,6 +114,7 @@ export function findBundledPluginSource(params: {
   });
 }
 
+/** Reused helper for resolve Bundled Plugin Install Command Hint behavior in src/plugins. */
 export function resolveBundledPluginInstallCommandHint(params: {
   pluginId: string;
   workspaceDir?: string;

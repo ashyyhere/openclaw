@@ -1,3 +1,4 @@
+// Tests gateway credential precedence parity test behavior.
 import { describe, expect, it } from "vitest";
 import { resolveGatewayProbeAuth as resolveStatusGatewayProbeAuth } from "../commands/status.gateway-probe.js";
 import type { OpenClawConfig } from "../config/config.js";

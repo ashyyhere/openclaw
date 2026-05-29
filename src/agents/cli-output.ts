@@ -1,3 +1,4 @@
+/** Parsers for CLI JSON, JSONL streams, token usage, and error text. */
 import type { CliBackendConfig } from "../config/types.js";
 import { extractBalancedJsonFragments } from "../shared/balanced-json.js";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
@@ -12,6 +13,7 @@ type CliUsage = {
   total?: number;
 };
 
+/** Normalized final output from a CLI backend. */
 export type CliOutput = {
   text: string;
   rawText?: string;
@@ -20,6 +22,7 @@ export type CliOutput = {
   finalPromptText?: string;
 };
 
+/** Streaming text delta emitted while parsing CLI output. */
 export type CliStreamingDelta = {
   text: string;
   delta: string;
@@ -27,12 +30,14 @@ export type CliStreamingDelta = {
   usage?: CliUsage;
 };
 
+/** Tool-call start event decoded from CLI stream output. */
 export type CliToolUseStartDelta = {
   toolCallId: string;
   name: string;
   args: Record<string, unknown>;
 };
 
+/** Tool result event decoded from CLI stream output. */
 export type CliToolResultDelta = {
   toolCallId: string;
   name: string;
@@ -304,6 +309,7 @@ function shouldUnwrapNestedCliResultText(params: {
   return !Object.hasOwn(params.parsed, "type") || params.parsed.type === "result";
 }
 
+/** Parse final JSON output from a CLI backend into the shared output shape. */
 export function parseCliJson(
   raw: string,
   backend: CliBackendConfig,
@@ -610,6 +616,7 @@ function dispatchClaudeCliStreamingToolEvent(params: {
   }
 }
 
+/** Create an incremental JSONL parser for streaming CLI assistant/tool events. */
 export function createCliJsonlStreamingParser(params: {
   backend: CliBackendConfig;
   providerId: string;
@@ -736,6 +743,7 @@ export function createCliJsonlStreamingParser(params: {
   };
 }
 
+/** Parse complete JSONL output from a CLI backend. */
 export function parseCliJsonl(
   raw: string,
   backend: CliBackendConfig,
@@ -787,6 +795,7 @@ export function parseCliJsonl(
   return { text, sessionId, usage };
 }
 
+/** Parse CLI output according to the backend output mode, with text fallback. */
 export function parseCliOutput(params: {
   raw: string;
   backend: CliBackendConfig;
@@ -814,6 +823,7 @@ export function parseCliOutput(params: {
   );
 }
 
+/** Extract the most specific structured error message from CLI output. */
 export function extractCliErrorMessage(raw: string): string | null {
   const parsedRecords = parseJsonRecordCandidates(raw);
   if (parsedRecords.length === 0) {

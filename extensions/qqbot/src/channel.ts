@@ -1,3 +1,4 @@
+// extensions/qqbot/src channel helpers and runtime behavior.
 import { getExecApprovalReplyMetadata } from "openclaw/plugin-sdk/approval-runtime";
 import {
   createMessageReceiptFromOutboundResults,

@@ -1,3 +1,4 @@
+/** Tests structured CLI command path matching rules. */
 import { describe, expect, it } from "vitest";
 import {
   matchesAnyCommandPath,

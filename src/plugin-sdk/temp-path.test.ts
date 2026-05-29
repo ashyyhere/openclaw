@@ -1,3 +1,4 @@
+/** Tests temp path helper behavior and cleanup. */
 import fsSync from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";

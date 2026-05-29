@@ -1,3 +1,4 @@
+// Tests gateway node pending work queueing, expiry, and acknowledgement behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   acknowledgeNodePendingWork,

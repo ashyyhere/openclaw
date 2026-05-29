@@ -1,3 +1,4 @@
+// extensions/voice-call/src/webhook realtime audio pacer helpers and runtime behavior.
 const TELEPHONY_SAMPLE_RATE = 8_000;
 const TELEPHONY_CHUNK_BYTES = 160;
 const TELEPHONY_CHUNK_MS = 20;

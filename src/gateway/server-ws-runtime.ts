@@ -1,3 +1,4 @@
+// gateway server ws runtime helpers and runtime behavior.
 import type { createSubsystemLogger } from "../logging/subsystem.js";
 import type { GatewayMethodRegistry } from "./methods/registry.js";
 import type { GatewayRequestContext, GatewayRequestHandlers } from "./server-methods/types.js";
@@ -23,6 +24,7 @@ type GatewayWsRuntimeParams = Omit<GatewayWsSharedHandlerParams, "refreshHealthS
   context: GatewayRequestContext;
 };
 
+/** Reused helper for attach Gateway Ws Handlers behavior in src/gateway. */
 export function attachGatewayWsHandlers(params: GatewayWsRuntimeParams) {
   attachGatewayWsConnectionHandler({
     wss: params.wss,

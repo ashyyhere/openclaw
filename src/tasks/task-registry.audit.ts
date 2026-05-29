@@ -1,3 +1,4 @@
+// tasks task registry audit helpers and runtime behavior.
 import {
   compareTaskAuditFindingSortKeys,
   createEmptyTaskAuditSummary,
@@ -9,6 +10,7 @@ import {
 import type { TaskRecord } from "./task-registry.types.js";
 import { resolveEffectiveTaskCleanupAfter } from "./task-retention.js";
 
+/** Shared type for Task Audit Options in src/tasks. */
 export type TaskAuditOptions = {
   now?: number;
   tasks?: TaskRecord[];
@@ -16,6 +18,7 @@ export type TaskAuditOptions = {
   staleRunningMs?: number;
 };
 
+/** Shared type for Retained Lost Task Audit Summary in src/tasks. */
 export type RetainedLostTaskAuditSummary = {
   count: number;
   nextCleanupAfter?: number;
@@ -23,11 +26,14 @@ export type RetainedLostTaskAuditSummary = {
 
 const DEFAULT_STALE_QUEUED_MS = 10 * 60_000;
 const DEFAULT_STALE_RUNNING_MS = 30 * 60_000;
+/** Re-exported API for src/tasks, starting with create Empty Task Audit Summary. */
 export { createEmptyTaskAuditSummary };
+/** Re-exported API for src/tasks, starting with Task Audit Code. */
 export type { TaskAuditCode, TaskAuditFinding, TaskAuditSeverity, TaskAuditSummary };
 
 let taskAuditTaskProvider: () => TaskRecord[] = () => [];
 
+/** Reused helper for configure Task Audit Task Provider behavior in src/tasks. */
 export function configureTaskAuditTaskProvider(provider: () => TaskRecord[]): void {
   taskAuditTaskProvider = provider;
 }
@@ -95,6 +101,7 @@ function compareFindings(left: TaskAuditFinding, right: TaskAuditFinding): numbe
   );
 }
 
+/** Reused helper for list Task Audit Findings behavior in src/tasks. */
 export function listTaskAuditFindings(options: TaskAuditOptions = {}): TaskAuditFinding[] {
   const tasks = options.tasks ?? taskAuditTaskProvider();
   const now = options.now ?? Date.now();
@@ -185,6 +192,7 @@ export function listTaskAuditFindings(options: TaskAuditOptions = {}): TaskAudit
   return findings.toSorted(compareFindings);
 }
 
+/** Reused helper for is Retained Lost Task Audit Finding behavior in src/tasks. */
 export function isRetainedLostTaskAuditFinding(
   finding: TaskAuditFinding,
   now = Date.now(),
@@ -198,6 +206,7 @@ export function isRetainedLostTaskAuditFinding(
   );
 }
 
+/** Reused helper for summarize Task Audit Findings behavior in src/tasks. */
 export function summarizeTaskAuditFindings(findings: Iterable<TaskAuditFinding>): TaskAuditSummary {
   const summary = createEmptyTaskAuditSummary();
   for (const finding of findings) {
@@ -212,6 +221,7 @@ export function summarizeTaskAuditFindings(findings: Iterable<TaskAuditFinding>)
   return summary;
 }
 
+/** Reused helper for summarize Actionable Task Audit Findings behavior in src/tasks. */
 export function summarizeActionableTaskAuditFindings(
   findings: Iterable<TaskAuditFinding>,
   options: { now?: number } = {},
@@ -222,6 +232,7 @@ export function summarizeActionableTaskAuditFindings(
   );
 }
 
+/** Reused helper for summarize Retained Lost Task Audit Findings behavior in src/tasks. */
 export function summarizeRetainedLostTaskAuditFindings(
   findings: Iterable<TaskAuditFinding>,
   options: { now?: number } = {},

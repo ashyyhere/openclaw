@@ -1,3 +1,4 @@
+// Coverage for inbound message normalization and routing into reply handling.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

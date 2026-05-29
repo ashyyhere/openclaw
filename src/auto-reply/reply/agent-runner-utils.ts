@@ -1,3 +1,4 @@
+// Utility helpers for reply agent setup, routing, and payload preparation.
 import { getChannelPlugin } from "../../channels/plugins/index.js";
 import type {
   ChannelId,
@@ -26,17 +27,20 @@ import {
   resolveProviderScopedAuthProfile,
   resolveRunAuthProfile,
 } from "./agent-runner-auth-profile.js";
+/** Re-exported API for src/auto-reply/reply, starting with resolve Provider Scoped Auth Profile. */
 export { resolveProviderScopedAuthProfile, resolveRunAuthProfile };
 import {
   buildEmbeddedRunBaseParams as buildEmbeddedRunBaseParamsCore,
   resolveEnforceFinalTagWithResolver,
 } from "./agent-runner-run-params.js";
+/** Re-exported API for src/auto-reply/reply, starting with resolve Model Fallback Options. */
 export { resolveModelFallbackOptions } from "./agent-runner-run-params.js";
 import { resolveOriginMessageProvider, resolveOriginMessageTo } from "./origin-routing.js";
 import type { FollowupRun } from "./queue.js";
 
 const BUN_FETCH_SOCKET_ERROR_RE = /socket connection was closed unexpectedly/i;
 
+/** Reused helper for resolve Queued Reply Runtime Config behavior in src/auto-reply/reply. */
 export function resolveQueuedReplyRuntimeConfig(config: OpenClawConfig): OpenClawConfig {
   const runtimeConfig =
     typeof getRuntimeConfigSnapshot === "function" ? getRuntimeConfigSnapshot() : null;
@@ -51,6 +55,7 @@ export function resolveQueuedReplyRuntimeConfig(config: OpenClawConfig): OpenCla
   );
 }
 
+/** Reused helper for resolve Queued Reply Execution Config behavior in src/auto-reply/reply. */
 export async function resolveQueuedReplyExecutionConfig(
   config: OpenClawConfig,
   params?: {
@@ -166,9 +171,11 @@ export function buildThreadingToolContext(params: {
   };
 }
 
+/** Reused constant for is Bun Fetch Socket Error behavior in src/auto-reply/reply. */
 export const isBunFetchSocketError = (message?: string) =>
   message ? BUN_FETCH_SOCKET_ERROR_RE.test(message) : false;
 
+/** Reused constant for format Bun Fetch Socket Error behavior in src/auto-reply/reply. */
 export const formatBunFetchSocketError = (message: string) => {
   const trimmed = message.trim();
   return [
@@ -179,12 +186,14 @@ export const formatBunFetchSocketError = (message: string) => {
   ].join("\n");
 };
 
+/** Reused constant for resolve Enforce Final Tag behavior in src/auto-reply/reply. */
 export const resolveEnforceFinalTag = (
   run: FollowupRun["run"],
   provider: string,
   model = run.model,
 ) => resolveEnforceFinalTagWithResolver(run, provider, model, isReasoningTagProvider);
 
+/** Reused helper for build Embedded Run Base Params behavior in src/auto-reply/reply. */
 export function buildEmbeddedRunBaseParams(
   params: Parameters<typeof buildEmbeddedRunBaseParamsCore>[0],
 ) {
@@ -243,6 +252,7 @@ function buildTemplateSenderContext(sessionCtx: TemplateContext) {
   };
 }
 
+/** Reused helper for build Embedded Run Contexts behavior in src/auto-reply/reply. */
 export function buildEmbeddedRunContexts(params: {
   run: FollowupRun["run"];
   sessionCtx: TemplateContext;
@@ -260,6 +270,7 @@ export function buildEmbeddedRunContexts(params: {
   };
 }
 
+/** Reused helper for build Embedded Run Execution Params behavior in src/auto-reply/reply. */
 export function buildEmbeddedRunExecutionParams(params: {
   run: FollowupRun["run"];
   sessionCtx: TemplateContext;

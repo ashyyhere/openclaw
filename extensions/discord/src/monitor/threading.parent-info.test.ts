@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/monitor threading parent info test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ChannelType } from "../internal/discord.js";
 import { createPartialDiscordChannelWithThrowingGetters } from "../test-support/partial-channel.js";

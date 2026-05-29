@@ -1,3 +1,4 @@
+/** Exports session trajectories from stored conversation state. */
 import path from "node:path";
 import { formatCliCommand } from "../cli/command-format.js";
 import {
@@ -93,6 +94,7 @@ function resolveExportTrajectoryOptions(
   };
 }
 
+/** Reused helper for export Trajectory Command behavior in src/commands. */
 export async function exportTrajectoryCommand(
   opts: ExportTrajectoryCommandOptions,
   runtime: RuntimeEnv,

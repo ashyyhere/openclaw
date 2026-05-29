@@ -1,3 +1,4 @@
+// ui/src/ui/views skills helpers and runtime behavior.
 import { html, nothing } from "lit";
 import { ref } from "lit/directives/ref.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
@@ -43,9 +44,12 @@ function showDialogWhenClosed(el?: Element) {
   }
 }
 
+/** Shared type for Skills Status Filter in ui/src/ui/views. */
 export type SkillsStatusFilter = "all" | "ready" | "needs-setup" | "disabled";
+/** Shared type for Skill Detail Tab in ui/src/ui/views. */
 export type SkillDetailTab = "overview" | "card";
 
+/** Shared type for Skills Props in ui/src/ui/views. */
 export type SkillsProps = {
   connected: boolean;
   loading: boolean;
@@ -167,6 +171,7 @@ function verdictChipClass(verdict: ClawHubSkillSecurityVerdict | null | undefine
   return status === "pending" || status === "not-run" ? "chip" : "chip-warn";
 }
 
+/** Reused helper for render Skills behavior in ui/src/ui/views. */
 export function renderSkills(props: SkillsProps) {
   const skills = props.report?.skills ?? [];
 

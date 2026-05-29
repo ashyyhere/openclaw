@@ -1,3 +1,4 @@
+// extensions/qa-lab/web/src capture saved view helpers and runtime behavior.
 import type { CaptureSavedView } from "./ui-render.js";
 
 const MAX_SAVED_VIEWS = 12;

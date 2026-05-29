@@ -1,3 +1,4 @@
+// Tests plugins wired hooks after tool call e2e test behavior.
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 /**
  * Test: after_tool_call hook wiring (embedded-agent-subscribe.handlers.tools.ts)

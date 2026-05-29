@@ -1,3 +1,4 @@
+// extensions/slack/src/monitor/message-handler prepare dm history helpers and runtime behavior.
 import { formatInboundEnvelope } from "openclaw/plugin-sdk/channel-inbound";
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";
 import { logVerbose } from "openclaw/plugin-sdk/runtime-env";

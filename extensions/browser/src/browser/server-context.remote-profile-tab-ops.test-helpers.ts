@@ -1,3 +1,4 @@
+// extensions/browser/src/browser server context remote profile tab ops test helpers helpers and runtime behavior.
 import { afterEach, beforeEach, vi } from "vitest";
 
 export type RemoteProfileTestDeps = {

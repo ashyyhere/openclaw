@@ -19,11 +19,13 @@ type ChannelDetailLike = {
   rows: Array<Record<string, string>>;
 };
 
+/** Reused constant for status Overview Table Columns behavior in src/commands/status-all. */
 export const statusOverviewTableColumns = [
   { key: "Item", header: "Item", minWidth: 10 },
   { key: "Value", header: "Value", flex: true, minWidth: 24 },
 ] as const;
 
+/** Reused constant for status Agents Table Columns behavior in src/commands/status-all. */
 export const statusAgentsTableColumns = [
   { key: "Agent", header: "Agent", minWidth: 12 },
   { key: "BootstrapFile", header: "Bootstrap file", minWidth: 14 },
@@ -32,6 +34,7 @@ export const statusAgentsTableColumns = [
   { key: "Store", header: "Store", flex: true, minWidth: 34 },
 ] as const;
 
+/** Reused helper for build Status Agent Table Rows behavior in src/commands/status-all. */
 export function buildStatusAgentTableRows(params: {
   agentStatus: AgentStatusLike;
   ok: (text: string) => string;
@@ -51,6 +54,7 @@ export function buildStatusAgentTableRows(params: {
   }));
 }
 
+/** Reused helper for build Status Channel Detail Sections behavior in src/commands/status-all. */
 export function buildStatusChannelDetailSections(params: {
   details: ChannelDetailLike[];
   width: number;

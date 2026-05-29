@@ -1,7 +1,10 @@
+// Reply history entry formatting for prompt context.
 import type { HistoryEntry, HistoryMediaEntry } from "./history.types.js";
 import { CURRENT_MESSAGE_MARKER } from "./mentions.js";
 
+/** Reused constant for HISTORY CONTEXT MARKER behavior in src/auto-reply/reply. */
 export const HISTORY_CONTEXT_MARKER = "[Chat messages since your last reply - for context]";
+/** Reused constant for DEFAULT GROUP HISTORY LIMIT behavior in src/auto-reply/reply. */
 export const DEFAULT_GROUP_HISTORY_LIMIT = 50;
 
 /** Maximum number of group history keys to retain (LRU eviction when exceeded). */
@@ -28,8 +31,10 @@ export function evictOldHistoryKeys<T>(
   }
 }
 
+/** Re-exported API for src/auto-reply/reply, starting with History Entry. */
 export type { HistoryEntry, HistoryMediaEntry } from "./history.types.js";
 
+/** Reused helper for build History Context behavior in src/auto-reply/reply. */
 export function buildHistoryContext(params: {
   historyText: string;
   currentMessage: string;
@@ -45,6 +50,7 @@ export function buildHistoryContext(params: {
   );
 }
 
+/** Reused helper for append History Entry behavior in src/auto-reply/reply. */
 export function appendHistoryEntry<T extends HistoryEntry>(params: {
   historyMap: Map<string, T[]>;
   historyKey: string;
@@ -124,6 +130,7 @@ function isImageHistoryMediaEntry(entry: HistoryMediaEntry): boolean {
   return entry.kind === "image" || contentType?.startsWith("image/") === true;
 }
 
+/** Reused helper for normalize History Media Entries behavior in src/auto-reply/reply. */
 export function normalizeHistoryMediaEntries(params: {
   media?: readonly HistoryMediaEntry[] | null;
   limit?: number;
@@ -272,6 +279,7 @@ export function buildInboundHistoryFromMap<T extends HistoryEntry>(params: {
   });
 }
 
+/** Reused helper for build Inbound History From Entries behavior in src/auto-reply/reply. */
 export function buildInboundHistoryFromEntries(params: {
   entries: readonly HistoryEntry[];
   limit: number;
@@ -359,6 +367,7 @@ export function clearHistoryEntriesIfEnabled(params: {
   clearHistoryEntries({ historyMap: params.historyMap, historyKey: params.historyKey });
 }
 
+/** Reused helper for build History Context From Entries behavior in src/auto-reply/reply. */
 export function buildHistoryContextFromEntries(params: {
   entries: HistoryEntry[];
   currentMessage: string;

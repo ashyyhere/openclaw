@@ -1,3 +1,4 @@
+// Tests plugins wired hooks llm test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { createHookRunnerWithRegistry } from "./hooks.test-helpers.js";
 

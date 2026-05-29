@@ -1,3 +1,4 @@
+/** Covers web tools fetch behavior through proxy and SSRF config. */
 import { EnvHttpProxyAgent } from "undici";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { LookupFn } from "../../infra/net/ssrf.js";

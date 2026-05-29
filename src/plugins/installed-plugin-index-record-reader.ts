@@ -1,3 +1,4 @@
+// plugins installed plugin index record reader helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import type { PluginInstallRecord } from "../config/types.plugins.js";
@@ -228,6 +229,7 @@ function extractPluginInstallRecordsFromPersistedInstalledPluginIndex(
   return records;
 }
 
+/** Reused helper for read Persisted Installed Plugin Index Install Records behavior in src/plugins. */
 export async function readPersistedInstalledPluginIndexInstallRecords(
   options: InstalledPluginIndexStoreOptions = {},
 ): Promise<Record<string, PluginInstallRecord> | null> {
@@ -235,6 +237,7 @@ export async function readPersistedInstalledPluginIndexInstallRecords(
   return extractPluginInstallRecordsFromPersistedInstalledPluginIndex(parsed);
 }
 
+/** Reused helper for read Persisted Installed Plugin Index Install Records Sync behavior in src/plugins. */
 export function readPersistedInstalledPluginIndexInstallRecordsSync(
   options: InstalledPluginIndexStoreOptions = {},
 ): Record<string, PluginInstallRecord> | null {
@@ -256,11 +259,13 @@ function resolveInstallRecordsCacheKey(options: InstalledPluginIndexStoreOptions
   ].join("\0");
 }
 
+/** Reused helper for clear Load Installed Plugin Index Install Records Cache behavior in src/plugins. */
 export function clearLoadInstalledPluginIndexInstallRecordsCache(): void {
   installRecordsCacheGeneration += 1;
   installRecordsCache.clear();
 }
 
+/** Reused helper for load Installed Plugin Index Install Records behavior in src/plugins. */
 export async function loadInstalledPluginIndexInstallRecords(
   params: InstalledPluginIndexStoreOptions = {},
 ): Promise<Record<string, PluginInstallRecord>> {
@@ -283,6 +288,7 @@ export async function loadInstalledPluginIndexInstallRecords(
   return cloneInstallRecords(records);
 }
 
+/** Reused helper for load Installed Plugin Index Install Records Sync behavior in src/plugins. */
 export function loadInstalledPluginIndexInstallRecordsSync(
   params: InstalledPluginIndexStoreOptions = {},
 ): Record<string, PluginInstallRecord> {

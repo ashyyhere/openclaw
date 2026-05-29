@@ -1,3 +1,4 @@
+// test/vitest vitest full core unit ui config helpers and runtime behavior.
 import { createProjectShardVitestConfig } from "./vitest.project-shard-config.ts";
 import { fullSuiteVitestShards } from "./vitest.test-shards.mjs";
 

@@ -1,3 +1,4 @@
+// Tests web-fetch runtime test behavior.
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/types.js";
 import type { PluginWebFetchProviderEntry } from "../plugins/types.js";

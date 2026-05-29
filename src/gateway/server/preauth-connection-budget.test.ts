@@ -1,3 +1,4 @@
+// Tests gateway/server preauth connection budget test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { createPreauthConnectionBudget } from "./preauth-connection-budget.js";
 

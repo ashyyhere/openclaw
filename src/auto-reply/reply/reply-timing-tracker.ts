@@ -1,3 +1,4 @@
+// Timing tracker for reply generation and delivery phases.
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { isDiagnosticFlagEnabled } from "../../infra/diagnostic-flags.js";
 
@@ -31,6 +32,7 @@ type ReplyTimingTracker = {
 const DEFAULT_TIMING_WARN_TOTAL_MS = 1_000;
 const DEFAULT_TIMING_WARN_STAGE_MS = 500;
 
+/** Reused helper for is Reply Profiler Enabled behavior in src/auto-reply/reply. */
 export function isReplyProfilerEnabled(params?: {
   config?: OpenClawConfig;
   env?: NodeJS.ProcessEnv;
@@ -43,6 +45,7 @@ export function isReplyProfilerEnabled(params?: {
   );
 }
 
+/** Reused helper for create Reply Timing Tracker behavior in src/auto-reply/reply. */
 export function createReplyTimingTracker(params: {
   log: ReplyTimingLogger;
   config?: OpenClawConfig;

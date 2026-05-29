@@ -1,3 +1,4 @@
+/** Agent tool for generating videos through configured providers. */
 import { Type, type TSchema } from "typebox";
 import { getRuntimeConfig } from "../../config/config.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
@@ -221,6 +222,7 @@ function createVideoGenerateToolSchema(params: { includeAudioReferences: boolean
   return Type.Object(properties);
 }
 
+/** Resolves model config used by video generation tool calls. */
 export function resolveVideoGenerationModelConfigForTool(params: {
   cfg?: OpenClawConfig;
   workspaceDir?: string;
@@ -917,6 +919,7 @@ async function executeVideoGenerationJob(params: {
   };
 }
 
+/** Creates the video generation AgentTool. */
 export function createVideoGenerateTool(options?: {
   config?: OpenClawConfig;
   agentDir?: string;

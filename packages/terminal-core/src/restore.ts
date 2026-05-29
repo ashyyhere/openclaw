@@ -1,3 +1,4 @@
+// terminal restore helpers and runtime behavior.
 import { clearActiveProgressLine } from "./progress-line.js";
 
 const RESET_SEQUENCE =
@@ -30,6 +31,7 @@ function reportRestoreFailure(scope: string, err: unknown, reason?: string): voi
   }
 }
 
+/** Reused helper for restore Terminal State behavior in src/terminal. */
 export function restoreTerminalState(
   reason?: string,
   options: RestoreTerminalStateOptions = {},

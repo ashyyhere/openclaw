@@ -1,7 +1,9 @@
+// tui/components assistant message helpers and runtime behavior.
 import { Container, Spacer } from "@earendil-works/pi-tui";
 import { markdownTheme, theme } from "../theme/theme.js";
 import { HyperlinkMarkdown } from "./hyperlink-markdown.js";
 
+/** Reused class for Assistant Message Component behavior in src/tui/components. */
 export class AssistantMessageComponent extends Container {
   private body: HyperlinkMarkdown;
 

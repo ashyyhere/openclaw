@@ -1,7 +1,9 @@
+// security test temp cases helpers and runtime behavior.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 
+/** Reused class for Async Temp Case Factory behavior in src/security. */
 export class AsyncTempCaseFactory {
   private caseId = 0;
   private fixtureRoot = "";

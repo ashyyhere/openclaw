@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix/sdk transport runtime api helpers and runtime behavior.
 import { fetchWithRuntimeDispatcherOrMockedGlobal } from "openclaw/plugin-sdk/runtime-fetch";
 import {
   closeDispatcher,

@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor message media helpers and runtime behavior.
 import { StickerFormatType, type APIAttachment, type APIStickerItem } from "discord-api-types/v10";
 import { getFileExtension } from "openclaw/plugin-sdk/media-mime";
 import { saveRemoteMedia, type FetchLike } from "openclaw/plugin-sdk/media-runtime";

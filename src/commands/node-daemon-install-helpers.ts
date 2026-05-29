@@ -1,3 +1,4 @@
+/** Builds install plans for node host daemon services. */
 import { formatNodeServiceDescription } from "../daemon/constants.js";
 import { resolveNodeProgramArguments } from "../daemon/program-args.js";
 import { buildNodeServiceEnvironment } from "../daemon/service-env.js";
@@ -27,6 +28,7 @@ function buildNodeInstallEnvironmentValueSources(): Record<
   };
 }
 
+/** Reused helper for build Node Install Plan behavior in src/commands. */
 export async function buildNodeInstallPlan(params: {
   env: Record<string, string | undefined>;
   host: string;

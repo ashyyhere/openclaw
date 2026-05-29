@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server config helpers and runtime behavior.
 import { createHmac, randomBytes } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { hostname as readHostName } from "node:os";

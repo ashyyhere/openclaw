@@ -1,3 +1,4 @@
+/** Repairs configured plugin installs after core update convergence. */
 import { repairMissingConfiguredPluginInstalls } from "../../commands/doctor/shared/missing-configured-plugin-install.js";
 import { UPDATE_POST_CORE_CONVERGENCE_ENV } from "../../commands/doctor/shared/update-phase.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
@@ -17,6 +18,7 @@ import {
   type PluginPayloadSmokeFailure,
 } from "./plugin-payload-validation.js";
 
+/** Shared type for Post Core Convergence Warning in src/cli/update-cli. */
 export type PostCoreConvergenceWarning = {
   pluginId?: string;
   reason: string;
@@ -24,6 +26,7 @@ export type PostCoreConvergenceWarning = {
   guidance: string[];
 };
 
+/** Shared type for Post Core Convergence Result in src/cli/update-cli. */
 export type PostCoreConvergenceResult = {
   changes: string[];
   warnings: PostCoreConvergenceWarning[];

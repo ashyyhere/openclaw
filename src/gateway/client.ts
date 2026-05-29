@@ -1,3 +1,4 @@
+// gateway client helpers and runtime behavior.
 import {
   GatewayClient as BaseGatewayClient,
   GATEWAY_CLOSE_CODE_HINTS as BASE_GATEWAY_CLOSE_CODE_HINTS,
@@ -31,11 +32,13 @@ import { logDebug, logError } from "../logger.js";
 import { redactToolPayloadText } from "../logging/redact.js";
 import { VERSION } from "../version.js";
 
+/** Shared type for Device Auth Token Record in src/gateway. */
 export type DeviceAuthTokenRecord = {
   token?: string;
   scopes?: string[];
 };
 
+/** Shared type for Gateway Client Host Deps in src/gateway. */
 export type GatewayClientHostDeps = {
   loadOrCreateDeviceIdentity?: () => DeviceIdentity | undefined;
   signDevicePayload?: (privateKeyPem: string, payload: string) => string;
@@ -65,6 +68,7 @@ export type GatewayClientHostDeps = {
   normalizeTlsFingerprint?: (fingerprint: string | undefined) => string;
 };
 
+/** Shared type for Gateway Client Request Options in src/gateway. */
 export type GatewayClientRequestOptions = {
   expectFinal?: boolean;
   timeoutMs?: number | null;
@@ -72,6 +76,7 @@ export type GatewayClientRequestOptions = {
   onAccepted?: (payload: unknown) => void;
 };
 
+/** Shared type for Gateway Reconnect Paused Info in src/gateway. */
 export type GatewayReconnectPausedInfo = {
   code: number;
   reason: string;
@@ -86,9 +91,11 @@ type GatewayClientErrorShape = {
   retryAfterMs?: number;
 };
 
+/** Reused constant for GATEWAY CLOSE CODE HINTS behavior in src/gateway. */
 export const GATEWAY_CLOSE_CODE_HINTS: Readonly<Record<number, string>> =
   BASE_GATEWAY_CLOSE_CODE_HINTS;
 
+/** Reused constant for Gateway Client Request Error behavior in src/gateway. */
 export const GatewayClientRequestError = BaseGatewayClientRequestError as unknown as {
   new (error: GatewayClientErrorShape): Error & {
     readonly gatewayCode: string;
@@ -98,16 +105,20 @@ export const GatewayClientRequestError = BaseGatewayClientRequestError as unknow
   };
 };
 
+/** Shared type for Gateway Client Request Error in src/gateway. */
 export type GatewayClientRequestError = InstanceType<typeof GatewayClientRequestError>;
 
+/** Reused helper for describe Gateway Close Code behavior in src/gateway. */
 export function describeGatewayCloseCode(code: number): string | undefined {
   return baseDescribeGatewayCloseCode(code);
 }
 
+/** Reused helper for is Gateway Connect Assembly Error behavior in src/gateway. */
 export function isGatewayConnectAssemblyError(value: unknown): value is Error {
   return baseIsGatewayConnectAssemblyError(value);
 }
 
+/** Shared type for Gateway Client Options in src/gateway. */
 export type GatewayClientOptions = {
   url?: string;
   connectChallengeTimeoutMs?: number;
@@ -149,6 +160,7 @@ export type GatewayClientOptions = {
   onGap?: (info: { expected: number; received: number }) => void;
 };
 
+/** Shared type for Gateway Client Connection Metadata in src/gateway. */
 export type GatewayClientConnectionMetadata = {
   clientName?: GatewayClientName;
   hasDeviceIdentity: boolean;
@@ -178,6 +190,7 @@ function createOpenClawGatewayClientHostDeps(
   };
 }
 
+/** Reused helper for resolve Gateway Client Connect Challenge Timeout Ms behavior in src/gateway. */
 export function resolveGatewayClientConnectChallengeTimeoutMs(
   opts: Pick<
     GatewayClientOptions,
@@ -187,6 +200,7 @@ export function resolveGatewayClientConnectChallengeTimeoutMs(
   return baseResolveGatewayClientConnectChallengeTimeoutMs(opts);
 }
 
+/** Reused class for Gateway Client behavior in src/gateway. */
 export class GatewayClient {
   #client: BaseGatewayClient;
 
@@ -229,4 +243,5 @@ export class GatewayClient {
   }
 }
 
+/** Re-exported API for src/gateway, starting with Device Identity. */
 export type { DeviceIdentity };

@@ -1,3 +1,4 @@
+// Tests generic text-report section assembly used by status-all.
 import { describe, expect, it } from "vitest";
 import { appendStatusReportSections } from "./text-report.js";
 

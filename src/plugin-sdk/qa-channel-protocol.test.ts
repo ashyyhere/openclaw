@@ -1,3 +1,4 @@
+/** Tests QA channel protocol parsing and serialization helpers. */
 import { describe, expect, it } from "vitest";
 import { sanitizeQaBusToolCalls } from "./qa-channel-protocol.js";
 

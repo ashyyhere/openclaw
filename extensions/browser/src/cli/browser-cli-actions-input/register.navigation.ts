@@ -1,3 +1,4 @@
+// extensions/browser/src/cli/browser-cli-actions-input register navigation helpers and runtime behavior.
 import type { Command } from "commander";
 import { normalizeOptionalString } from "openclaw/plugin-sdk/string-coerce-runtime";
 import { ACT_MAX_VIEWPORT_DIMENSION } from "../../browser/act-policy.js";

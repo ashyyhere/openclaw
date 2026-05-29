@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/matrix/src/matrix credentials write runtime behavior.
 import type {
   saveBackfilledMatrixDeviceId as saveBackfilledMatrixDeviceIdType,
   saveMatrixCredentials as saveMatrixCredentialsType,

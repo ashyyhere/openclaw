@@ -1,3 +1,4 @@
+// extensions/discord/src setup runtime helpers helpers and runtime behavior.
 export {
   createAccountScopedAllowFromSection,
   createAccountScopedGroupAccessSection,

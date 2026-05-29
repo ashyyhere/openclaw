@@ -1,3 +1,4 @@
+// extensions/deepgram audio helpers and runtime behavior.
 import type {
   AudioTranscriptionRequest,
   AudioTranscriptionResult,

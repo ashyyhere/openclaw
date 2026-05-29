@@ -1,3 +1,4 @@
+// extensions/slack/src/monitor/message-handler subteam mentions helpers and runtime behavior.
 import type { WebClient } from "@slack/web-api";
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";
 import {

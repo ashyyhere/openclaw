@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/browser server agent contract form layout act commands test behavior.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

@@ -1,6 +1,9 @@
+/** Removes image payloads from history after the model has already seen them. */
 import type { AgentMessage } from "../../runtime/index.js";
 
+/** Reused constant for PRUNED HISTORY IMAGE MARKER behavior in src/agents/embedded-agent-runner. */
 export const PRUNED_HISTORY_IMAGE_MARKER = "[image data removed - already processed by model]";
+/** Reused constant for PRUNED HISTORY MEDIA REFERENCE MARKER behavior in src/agents/embedded-agent-runner. */
 export const PRUNED_HISTORY_MEDIA_REFERENCE_MARKER =
   "[media reference removed - already processed by model]";
 
@@ -80,6 +83,7 @@ function cloneMessageWithContent(
  * same boundary because detectAndLoadPromptImages treats them as fresh prompt
  * image references when old history is replayed into a later prompt.
  */
+/** Returns a copy with historical image data replaced by stable markers. */
 export function pruneProcessedHistoryImages(messages: AgentMessage[]): AgentMessage[] | null {
   const pruneBeforeIndex = resolvePruneBeforeIndex(messages);
   if (pruneBeforeIndex < 0) {
@@ -148,6 +152,7 @@ export function pruneProcessedHistoryImages(messages: AgentMessage[]): AgentMess
   return prunedMessages;
 }
 
+/** Installs a context transform that prunes old image payloads before replay. */
 export function installHistoryImagePruneContextTransform(agent: PrunableContextAgent): () => void {
   const originalTransformContext = agent.transformContext;
   agent.transformContext = async (messages: AgentMessage[], signal?: AbortSignal) => {

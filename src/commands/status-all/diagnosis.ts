@@ -1,3 +1,4 @@
+// Appends deeper status-all diagnosis for config, gateway, Tailscale, skills, and plugin health.
 import type { ProgressReporter } from "../../cli/progress.js";
 import { formatConfigIssueLine } from "../../config/issue-format.js";
 import {
@@ -129,6 +130,7 @@ function latestDeliveryEventAgeMs(snapshot: DeliveryDiagnosticsLike): number | n
   return latestTs > 0 ? Date.now() - latestTs : null;
 }
 
+/** Reused helper for append Status All Diagnosis behavior in src/commands/status-all. */
 export async function appendStatusAllDiagnosis(params: {
   lines: string[];
   progress: ProgressReporter;

@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/monitor preflight audio test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const transcribeFirstAudioMock = vi.hoisted(() => vi.fn());

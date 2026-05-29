@@ -1,3 +1,4 @@
+// Tests extensions/feishu/src sequential key test behavior.
 import { describe, expect, it } from "vitest";
 import type { FeishuMessageEvent } from "./bot.js";
 import { getFeishuSequentialKey } from "./sequential-key.js";

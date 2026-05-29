@@ -1,3 +1,4 @@
+// Tests gateway node registry test behavior.
 import { EventEmitter } from "node:events";
 import { describe, expect, it, vi } from "vitest";
 import { onDiagnosticEvent, resetDiagnosticEventsForTest } from "../infra/diagnostic-events.js";

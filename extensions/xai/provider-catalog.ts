@@ -1,3 +1,4 @@
+// extensions/xai provider catalog helpers and runtime behavior.
 import type { ModelProviderConfig } from "openclaw/plugin-sdk/provider-model-shared";
 import { buildXaiCatalogModels, XAI_BASE_URL } from "./model-definitions.js";
 

@@ -1,6 +1,8 @@
+// ui/src/ui/views skills shared helpers and runtime behavior.
 import { html, nothing } from "lit";
 import type { SkillStatusEntry } from "../types.ts";
 
+/** Reused helper for compute Skill Missing behavior in ui/src/ui/views. */
 export function computeSkillMissing(skill: SkillStatusEntry): string[] {
   return [
     ...skill.missing.bins.map((b) => `bin:${b}`),
@@ -10,6 +12,7 @@ export function computeSkillMissing(skill: SkillStatusEntry): string[] {
   ];
 }
 
+/** Reused helper for compute Skill Reasons behavior in ui/src/ui/views. */
 export function computeSkillReasons(skill: SkillStatusEntry): string[] {
   const reasons: string[] = [];
   if (skill.disabled) {
@@ -21,6 +24,7 @@ export function computeSkillReasons(skill: SkillStatusEntry): string[] {
   return reasons;
 }
 
+/** Reused helper for render Skill Status Chips behavior in ui/src/ui/views. */
 export function renderSkillStatusChips(params: {
   skill: SkillStatusEntry;
   showBundledBadge?: boolean;

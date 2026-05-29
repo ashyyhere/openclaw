@@ -1,4 +1,5 @@
 #!/usr/bin/env -S node --import tsx
+// scripts test live media helpers and runtime behavior.
 
 import type { ChildProcess } from "node:child_process";
 import { createRequire } from "node:module";

@@ -1,3 +1,4 @@
+// Tests extensions/discord/src resolve allowlist common test behavior.
 import { describe, expect, it } from "vitest";
 import {
   buildDiscordUnresolvedResults,

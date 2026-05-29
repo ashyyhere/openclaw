@@ -1,3 +1,4 @@
+/** Shared configure wizard section types, prompts, and output helpers. */
 import {
   confirm as clackConfirm,
   intro as clackIntro,
@@ -12,6 +13,7 @@ import {
 } from "../../packages/terminal-core/src/prompt-style.js";
 import { normalizeStringEntries } from "../shared/string-normalization.js";
 
+/** Reused constant for CONFIGURE WIZARD SECTIONS behavior in src/commands. */
 export const CONFIGURE_WIZARD_SECTIONS = [
   "workspace",
   "model",
@@ -24,8 +26,10 @@ export const CONFIGURE_WIZARD_SECTIONS = [
   "health",
 ] as const;
 
+/** Shared type for Wizard Section in src/commands. */
 export type WizardSection = (typeof CONFIGURE_WIZARD_SECTIONS)[number];
 
+/** Reused helper for parse Configure Wizard Sections behavior in src/commands. */
 export function parseConfigureWizardSections(raw: unknown): {
   sections: WizardSection[];
   invalid: string[];
@@ -42,13 +46,16 @@ export function parseConfigureWizardSections(raw: unknown): {
   return { sections, invalid };
 }
 
+/** Shared type for Channels Wizard Mode in src/commands. */
 export type ChannelsWizardMode = "configure" | "remove";
 
+/** Shared type for Configure Wizard Params in src/commands. */
 export type ConfigureWizardParams = {
   command: "configure" | "update";
   sections?: WizardSection[];
 };
 
+/** Reused constant for CONFIGURE SECTION OPTIONS behavior in src/commands. */
 export const CONFIGURE_SECTION_OPTIONS: Array<{
   value: WizardSection;
   label: string;
@@ -77,18 +84,23 @@ export const CONFIGURE_SECTION_OPTIONS: Array<{
   },
 ];
 
+/** Reused constant for intro behavior in src/commands. */
 export const intro = (message: string) => clackIntro(stylePromptTitle(message) ?? message);
+/** Reused constant for outro behavior in src/commands. */
 export const outro = (message: string) => clackOutro(stylePromptTitle(message) ?? message);
+/** Reused constant for text behavior in src/commands. */
 export const text = (params: Parameters<typeof clackText>[0]) =>
   clackText({
     ...params,
     message: stylePromptMessage(params.message),
   });
+/** Reused constant for confirm behavior in src/commands. */
 export const confirm = (params: Parameters<typeof clackConfirm>[0]) =>
   clackConfirm({
     ...params,
     message: stylePromptMessage(params.message),
   });
+/** Reused constant for select behavior in src/commands. */
 export const select = <T>(params: Parameters<typeof clackSelect<T>>[0]) =>
   clackSelect({
     ...params,

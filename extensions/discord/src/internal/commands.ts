@@ -1,3 +1,4 @@
+// extensions/discord/src/internal commands helpers and runtime behavior.
 import {
   ApplicationCommandOptionType,
   ApplicationCommandType,

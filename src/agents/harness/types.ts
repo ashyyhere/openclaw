@@ -1,17 +1,22 @@
+/** Public contracts implemented by agent harness integrations. */
 export type AgentHarnessSupportContext = {
   provider: string;
   modelId?: string;
   requestedRuntime: import("../agent-runtime-id.js").EmbeddedAgentRuntime;
 };
 
+/** Shared type for Agent Harness Support in src/agents/harness. */
 export type AgentHarnessSupport =
   | { supported: true; priority?: number; reason?: string }
   | { supported: false; reason?: string };
 
+/** Shared type for Agent Harness Attempt Params in src/agents/harness. */
 export type AgentHarnessAttemptParams =
   import("../embedded-agent-runner/run/types.js").EmbeddedRunAttemptParams;
+/** Shared type for Agent Harness Attempt Result in src/agents/harness. */
 export type AgentHarnessAttemptResult =
   import("../embedded-agent-runner/run/types.js").EmbeddedRunAttemptResult;
+/** Shared type for Agent Harness Side Question Params in src/agents/harness. */
 export type AgentHarnessSideQuestionParams = {
   cfg: import("../../config/types.openclaw.js").OpenClawConfig;
   agentDir: string;
@@ -39,13 +44,17 @@ export type AgentHarnessSideQuestionParams = {
   authProfileId?: string;
   authProfileIdSource?: "auto" | "user";
 };
+/** Shared type for Agent Harness Side Question Result in src/agents/harness. */
 export type AgentHarnessSideQuestionResult = {
   text: string;
 };
+/** Shared type for Agent Harness Compact Params in src/agents/harness. */
 export type AgentHarnessCompactParams =
   import("../embedded-agent-runner/compact.types.js").CompactEmbeddedAgentSessionParams;
+/** Shared type for Agent Harness Compact Result in src/agents/harness. */
 export type AgentHarnessCompactResult =
   import("../embedded-agent-runner/types.js").EmbeddedAgentCompactResult;
+/** Shared type for Agent Harness Reset Params in src/agents/harness. */
 export type AgentHarnessResetParams = {
   sessionId?: string;
   sessionKey?: string;
@@ -53,10 +62,12 @@ export type AgentHarnessResetParams = {
   reason?: "new" | "reset" | "idle" | "daily" | "compaction" | "deleted" | "unknown";
 };
 
+/** Shared type for Agent Harness Result Classification in src/agents/harness. */
 export type AgentHarnessResultClassification =
   | "ok"
   | NonNullable<AgentHarnessAttemptResult["agentHarnessResultClassification"]>;
 
+/** Shared type for Agent Harness Delivery Defaults in src/agents/harness. */
 export type AgentHarnessDeliveryDefaults = {
   /**
    * @deprecated Prefer `messages.visibleReplies` / `messages.groupChat.visibleReplies`
@@ -65,6 +76,7 @@ export type AgentHarnessDeliveryDefaults = {
   sourceVisibleReplies?: "automatic" | "message_tool";
 };
 
+/** Shared type for Agent Harness in src/agents/harness. */
 export type AgentHarness = {
   id: string;
   label: string;
@@ -88,6 +100,7 @@ export type AgentHarness = {
   dispose?(): Promise<void> | void;
 };
 
+/** Shared type for Registered Agent Harness in src/agents/harness. */
 export type RegisteredAgentHarness = {
   harness: AgentHarness;
   ownerPluginId?: string;

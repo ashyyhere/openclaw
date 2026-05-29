@@ -1,3 +1,4 @@
+// Tests extensions/file-transfer/src/shared mime test behavior.
 import { describe, expect, it } from "vitest";
 import {
   IMAGE_MIME_INLINE_SET,

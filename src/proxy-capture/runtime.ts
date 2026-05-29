@@ -1,3 +1,4 @@
+// proxy-capture runtime helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import { URL } from "node:url";
 import { normalizeRequestInitHeadersForFetch } from "../infra/fetch-headers.js";
@@ -53,6 +54,7 @@ type DebugProxyCaptureStoreLike = Pick<
   "upsertSession" | "endSession" | "recordEvent"
 >;
 
+/** Shared type for Debug Proxy Capture Runtime Deps in src/proxy-capture. */
 export type DebugProxyCaptureRuntimeDeps = {
   getStore?: (dbPath: string, blobDir: string) => DebugProxyCaptureStoreLike;
   closeStore?: typeof closeDebugProxyCaptureStore;
@@ -257,10 +259,12 @@ function uninstallDebugProxyGlobalFetchPatch(deps: DebugProxyCaptureRuntimeDeps 
   delete fetchTarget[DEBUG_PROXY_FETCH_PATCH_KEY];
 }
 
+/** Reused helper for is Debug Proxy Global Fetch Patch Installed behavior in src/proxy-capture. */
 export function isDebugProxyGlobalFetchPatchInstalled(): boolean {
   return Boolean((globalThis as GlobalFetchPatchTarget)[DEBUG_PROXY_FETCH_PATCH_KEY]);
 }
 
+/** Reused helper for initialize Debug Proxy Capture behavior in src/proxy-capture. */
 export function initializeDebugProxyCapture(
   mode: string,
   resolved?: DebugProxySettings,
@@ -283,6 +287,7 @@ export function initializeDebugProxyCapture(
   installDebugProxyGlobalFetchPatch(settings, deps);
 }
 
+/** Reused helper for finalize Debug Proxy Capture behavior in src/proxy-capture. */
 export function finalizeDebugProxyCapture(
   resolved?: DebugProxySettings,
   deps: DebugProxyCaptureRuntimeDeps = {},
@@ -297,6 +302,7 @@ export function finalizeDebugProxyCapture(
   runtime.closeStore();
 }
 
+/** Reused helper for capture Http Exchange behavior in src/proxy-capture. */
 export function captureHttpExchange(
   params: {
     url: string;
@@ -421,6 +427,7 @@ export function captureHttpExchange(
     });
 }
 
+/** Reused helper for capture Ws Event behavior in src/proxy-capture. */
 export function captureWsEvent(params: {
   url: string;
   direction: "outbound" | "inbound" | "local";

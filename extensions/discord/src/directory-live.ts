@@ -1,3 +1,4 @@
+// extensions/discord/src directory live helpers and runtime behavior.
 import type {
   ChannelDirectoryEntry,
   DirectoryConfigParams,

@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor provider commands helpers and runtime behavior.
 import {
   listNativeCommandSpecsForConfig,
   listSkillCommandsForAgents,

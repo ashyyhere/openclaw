@@ -1,3 +1,4 @@
+// Tests extensions/whatsapp/src inbound test behavior.
 import { describe, expect, it } from "vitest";
 import {
   extractContactContext,

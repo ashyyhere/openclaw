@@ -1,3 +1,4 @@
+// security audit plugins trust helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { listReadOnlyChannelPluginsForConfig } from "../channels/plugins/read-only.js";
@@ -274,6 +275,7 @@ function isPinnedRegistrySpec(spec: string): boolean {
   return /^v?\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/.test(version);
 }
 
+/** Reused helper for collect Plugins Trust Findings behavior in src/security. */
 export async function collectPluginsTrustFindings(params: {
   cfg: OpenClawConfig;
   stateDir: string;

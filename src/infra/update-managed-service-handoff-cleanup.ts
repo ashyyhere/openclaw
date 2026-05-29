@@ -1,10 +1,14 @@
+// infra update managed service handoff cleanup helpers and runtime behavior.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 
+/** Reused constant for MANAGED SERVICE UPDATE HANDOFF TEMP PREFIX behavior in src/infra. */
 export const MANAGED_SERVICE_UPDATE_HANDOFF_TEMP_PREFIX = "openclaw-update-run-handoff-";
+/** Reused constant for MANAGED SERVICE UPDATE HANDOFF STALE TTL MS behavior in src/infra. */
 export const MANAGED_SERVICE_UPDATE_HANDOFF_STALE_TTL_MS = 24 * 60 * 60_000;
 
+/** Reused helper for cleanup Stale Managed Service Update Handoffs behavior in src/infra. */
 export async function cleanupStaleManagedServiceUpdateHandoffs(params?: {
   tmpDir?: string;
   nowMs?: number;

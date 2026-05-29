@@ -1,3 +1,4 @@
+// extensions/google thinking api helpers and runtime behavior.
 export {
   createGoogleThinkingPayloadWrapper,
   createGoogleThinkingStreamWrapper,

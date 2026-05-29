@@ -1,3 +1,4 @@
+// extensions/telegram/src client fetch helpers and runtime behavior.
 import type { ApiClientOptions } from "grammy";
 import { normalizeOptionalLowercaseString } from "openclaw/plugin-sdk/string-coerce-runtime";
 import type { TelegramTransport } from "./fetch.js";

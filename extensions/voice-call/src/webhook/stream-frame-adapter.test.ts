@@ -1,3 +1,4 @@
+// Tests extensions/voice-call/src/webhook stream frame adapter test behavior.
 import { describe, expect, it } from "vitest";
 import { TelnyxStreamFrameAdapter, TwilioStreamFrameAdapter } from "./stream-frame-adapter.js";
 

@@ -1,3 +1,4 @@
+/** Configure wizard section for gateway auth mode and credentials. */
 import { ensureAuthProfileStore } from "../agents/auth-profiles.js";
 import { resolveDefaultAgentWorkspaceDir } from "../agents/workspace.js";
 import { formatCliCommand } from "../cli/command-format.js";
@@ -137,6 +138,7 @@ function resolveConfiguredProviderFromAuthChange(params: {
   );
 }
 
+/** Reused helper for build Gateway Auth Config behavior in src/commands. */
 export function buildGatewayAuthConfig(params: {
   existing?: GatewayAuthConfig;
   mode: GatewayAuthChoice;
@@ -177,6 +179,7 @@ export function buildGatewayAuthConfig(params: {
   return base;
 }
 
+/** Reused helper for prompt Auth Config behavior in src/commands. */
 export async function promptAuthConfig(
   cfg: OpenClawConfig,
   runtime: RuntimeEnv,

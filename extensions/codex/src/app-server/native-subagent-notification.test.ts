@@ -1,3 +1,4 @@
+// Tests extensions/codex/src/app-server native subagent notification test behavior.
 import { describe, expect, it } from "vitest";
 import {
   extractCodexNativeSubagentCompletions,

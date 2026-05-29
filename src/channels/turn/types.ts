@@ -1,3 +1,4 @@
+/** Shared contracts for channel turn kernel dependencies and results. */
 import type { CommandTurnKind } from "../../auto-reply/command-turn-context.js";
 import type { GetReplyOptions } from "../../auto-reply/get-reply-options.types.js";
 import type { ReplyPayload } from "../../auto-reply/reply-payload.js";
@@ -21,20 +22,24 @@ import type { MessageReceipt } from "../message/types.js";
 import type { InboundLastRouteUpdate, RecordInboundSession } from "../session.types.js";
 import type { ChannelBotLoopProtectionFacts } from "./bot-loop-protection.js";
 
+/** Re-exported API for src/channels/turn, starting with Inbound Event Kind. */
 export type { InboundEventKind } from "../inbound-event/kind.js";
 
+/** Shared type for Channel Turn Admission in src/channels/turn. */
 export type ChannelTurnAdmission =
   | { kind: "dispatch"; reason?: string }
   | { kind: "observeOnly"; reason: string }
   | { kind: "handled"; reason: string }
   | { kind: "drop"; reason: string; recordHistory?: boolean };
 
+/** Shared type for Channel Event Class in src/channels/turn. */
 export type ChannelEventClass = {
   kind: "message" | "command" | "interaction" | "reaction" | "lifecycle" | "unknown";
   canStartAgentTurn: boolean;
   requiresImmediateAck?: boolean;
 };
 
+/** Shared type for Normalized Turn Input in src/channels/turn. */
 export type NormalizedTurnInput = {
   id: string;
   timestamp?: number;
@@ -44,6 +49,7 @@ export type NormalizedTurnInput = {
   raw?: unknown;
 };
 
+/** Shared type for Sender Facts in src/channels/turn. */
 export type SenderFacts = {
   id?: string;
   name?: string;
@@ -55,6 +61,7 @@ export type SenderFacts = {
   displayLabel?: string;
 };
 
+/** Shared type for Conversation Facts in src/channels/turn. */
 export type ConversationFacts = {
   kind: "direct" | "group" | "channel";
   id: string;
@@ -69,6 +76,7 @@ export type ConversationFacts = {
   };
 };
 
+/** Shared type for Route Facts in src/channels/turn. */
 export type RouteFacts = {
   agentId: string;
   accountId?: string;
@@ -81,6 +89,7 @@ export type RouteFacts = {
   createIfMissing?: boolean;
 };
 
+/** Shared type for Reply Plan Facts in src/channels/turn. */
 export type ReplyPlanFacts = {
   to: string;
   originatingTo?: string;
@@ -94,6 +103,7 @@ export type ReplyPlanFacts = {
   sourceReplyDeliveryMode?: "thread" | "reply" | "channel" | "direct" | "none";
 };
 
+/** Shared type for Projected Allowlist Access Facts in src/channels/turn. */
 export type ProjectedAllowlistAccessFacts = {
   configured: boolean;
   matched: boolean;
@@ -110,6 +120,7 @@ export type ProjectedAllowlistAccessFacts = {
   };
 };
 
+/** Shared type for Projected Event Access Facts in src/channels/turn. */
 export type ProjectedEventAccessFacts = {
   kind:
     | "message"
@@ -127,6 +138,7 @@ export type ProjectedEventAccessFacts = {
   originSubjectMatched: boolean;
 };
 
+/** Shared type for Access Facts in src/channels/turn. */
 export type AccessFacts = {
   dm?: {
     decision: "allow" | "pairing" | "deny";
@@ -177,6 +189,7 @@ export type AccessFacts = {
   };
 };
 
+/** Shared type for Message Facts in src/channels/turn. */
 export type MessageFacts = {
   inboundEventKind?: InboundEventKind;
   body?: string;
@@ -189,6 +202,7 @@ export type MessageFacts = {
   inboundHistory?: HistoryEntry[];
 };
 
+/** Shared type for Command Facts in src/channels/turn. */
 export type CommandFacts = {
   kind: CommandTurnKind;
   body?: string;
@@ -196,6 +210,7 @@ export type CommandFacts = {
   authorized?: boolean;
 };
 
+/** Shared type for Supplemental Context Facts in src/channels/turn. */
 export type SupplementalContextFacts = {
   quote?: {
     id?: string;
@@ -228,6 +243,7 @@ export type SupplementalContextFacts = {
   untrustedGroupSystemPrompt?: string;
 };
 
+/** Shared type for Inbound Media Facts in src/channels/turn. */
 export type InboundMediaFacts = {
   path?: string;
   url?: string;
@@ -239,6 +255,7 @@ export type InboundMediaFacts = {
 
 type MaybePromise<T> = T | Promise<T>;
 
+/** Shared type for Preflight Facts in src/channels/turn. */
 export type PreflightFacts = {
   admission?: ChannelTurnAdmission;
   command?: CommandFacts;
@@ -252,16 +269,19 @@ export type PreflightFacts = {
   history?: ChannelTurnDroppedHistoryOptions;
 };
 
+/** Shared type for Channel Delivery Info in src/channels/turn. */
 export type ChannelDeliveryInfo = {
   kind: ReplyDispatchKind;
 };
 
+/** Shared type for Channel Delivery Intent in src/channels/turn. */
 export type ChannelDeliveryIntent = {
   id: string;
   kind: "outbound_queue";
   queuePolicy: OutboundDeliveryQueuePolicy;
 };
 
+/** Shared type for Channel Delivery Result in src/channels/turn. */
 export type ChannelDeliveryResult = {
   messageIds?: string[];
   receipt?: MessageReceipt;
@@ -271,6 +291,7 @@ export type ChannelDeliveryResult = {
   deliveryIntent?: ChannelDeliveryIntent;
 };
 
+/** Shared type for Channel Turn Durable Delivery Options in src/channels/turn. */
 export type ChannelTurnDurableDeliveryOptions = Pick<
   DeliverOutboundPayloadsParams,
   "deps" | "formatting" | "identity" | "mediaAccess" | "replyToMode" | "silent" | "threadId"
@@ -280,6 +301,7 @@ export type ChannelTurnDurableDeliveryOptions = Pick<
   requiredCapabilities?: DurableFinalDeliveryRequirements;
 };
 
+/** Shared type for Channel Event Delivery Adapter in src/channels/turn. */
 export type ChannelEventDeliveryAdapter = {
   preparePayload?: (
     payload: ReplyPayload,
@@ -307,6 +329,7 @@ export type ChannelEventDeliveryAdapter = {
   onError?: (err: unknown, info: { kind: string }) => void;
 };
 
+/** Shared type for Channel Turn Record Options in src/channels/turn. */
 export type ChannelTurnRecordOptions = {
   groupResolution?: GroupKeyResolution | null;
   createIfMissing?: boolean;
@@ -315,6 +338,7 @@ export type ChannelTurnRecordOptions = {
   trackSessionMetaTask?: (task: Promise<unknown>) => void;
 };
 
+/** Shared type for Channel Turn History Finalize Options in src/channels/turn. */
 export type ChannelTurnHistoryFinalizeOptions = {
   isGroup?: boolean;
   historyKey?: string;
@@ -322,6 +346,7 @@ export type ChannelTurnHistoryFinalizeOptions = {
   limit?: number;
 };
 
+/** Shared type for Channel Turn Dropped History Options in src/channels/turn. */
 export type ChannelTurnDroppedHistoryOptions = {
   key: string;
   limit: number;
@@ -331,16 +356,19 @@ export type ChannelTurnDroppedHistoryOptions = {
   shouldRecord?: () => boolean;
 };
 
+/** Shared type for Channel Turn Dispatcher Options in src/channels/turn. */
 export type ChannelTurnDispatcherOptions = Omit<
   ReplyDispatcherWithTypingOptions,
   "deliver" | "onError"
 >;
 
+/** Shared type for Channel Turn Reply Pipeline Options in src/channels/turn. */
 export type ChannelTurnReplyPipelineOptions = Omit<
   CreateChannelReplyPipelineParams,
   "cfg" | "agentId" | "channel" | "accountId"
 >;
 
+/** Shared type for Assembled Channel Turn in src/channels/turn. */
 export type AssembledChannelTurn = {
   cfg: OpenClawConfig;
   channel: string;
@@ -364,6 +392,7 @@ export type AssembledChannelTurn = {
   messageId?: string;
 };
 
+/** Shared type for Prepared Channel Turn in src/channels/turn. */
 export type PreparedChannelTurn<TDispatchResult = DispatchFromConfigResult> = {
   channel: string;
   accountId?: string;
@@ -382,6 +411,7 @@ export type PreparedChannelTurn<TDispatchResult = DispatchFromConfigResult> = {
   messageId?: string;
 };
 
+/** Shared type for Channel Turn Resolved in src/channels/turn. */
 export type ChannelTurnResolved<TDispatchResult = DispatchFromConfigResult> =
   | (AssembledChannelTurn & {
       admission?: Extract<ChannelTurnAdmission, { kind: "dispatch" | "observeOnly" }>;
@@ -390,6 +420,7 @@ export type ChannelTurnResolved<TDispatchResult = DispatchFromConfigResult> =
       admission?: Extract<ChannelTurnAdmission, { kind: "dispatch" | "observeOnly" }>;
     });
 
+/** Shared type for Channel Turn Stage in src/channels/turn. */
 export type ChannelTurnStage =
   | "ingest"
   | "classify"
@@ -401,6 +432,7 @@ export type ChannelTurnStage =
   | "dispatch"
   | "finalize";
 
+/** Shared type for Channel Turn Log Event in src/channels/turn. */
 export type ChannelTurnLogEvent = {
   stage: ChannelTurnStage;
   event: "start" | "done" | "drop" | "handled" | "error";
@@ -413,6 +445,7 @@ export type ChannelTurnLogEvent = {
   error?: unknown;
 };
 
+/** Shared type for Channel Turn Result in src/channels/turn. */
 export type ChannelTurnResult<TDispatchResult = DispatchFromConfigResult> =
   | DispatchedChannelTurnResult<TDispatchResult>
   | {
@@ -422,6 +455,7 @@ export type ChannelTurnResult<TDispatchResult = DispatchFromConfigResult> =
       routeSessionKey?: string;
     };
 
+/** Shared type for Dispatched Channel Turn Result in src/channels/turn. */
 export type DispatchedChannelTurnResult<TDispatchResult = DispatchFromConfigResult> = {
   admission: Extract<ChannelTurnAdmission, { kind: "dispatch" | "observeOnly" }>;
   dispatched: true;
@@ -430,6 +464,7 @@ export type DispatchedChannelTurnResult<TDispatchResult = DispatchFromConfigResu
   dispatchResult: TDispatchResult;
 };
 
+/** Shared type for Channel Turn Adapter in src/channels/turn. */
 export type ChannelTurnAdapter<TRaw, TDispatchResult = DispatchFromConfigResult> = {
   ingest: (raw: TRaw) => Promise<NormalizedTurnInput | null> | NormalizedTurnInput | null;
   classify?: (input: NormalizedTurnInput) => Promise<ChannelEventClass> | ChannelEventClass;
@@ -450,6 +485,7 @@ export type ChannelTurnAdapter<TRaw, TDispatchResult = DispatchFromConfigResult>
   onFinalize?: (result: ChannelTurnResult<TDispatchResult>) => Promise<void> | void;
 };
 
+/** Shared type for Run Channel Turn Params in src/channels/turn. */
 export type RunChannelTurnParams<TRaw, TDispatchResult = DispatchFromConfigResult> = {
   channel: string;
   accountId?: string;

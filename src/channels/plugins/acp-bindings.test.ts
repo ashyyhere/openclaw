@@ -1,3 +1,4 @@
+// Coverage for ACP configured binding integration.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { buildConfiguredAcpSessionKey } from "../../acp/persistent-bindings.types.js";
 import { ensureConfiguredBindingBuiltinsRegistered } from "./configured-binding-builtins.js";

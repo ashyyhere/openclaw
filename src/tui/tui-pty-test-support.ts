@@ -1,3 +1,4 @@
+// tui tui pty test support helpers and runtime behavior.
 import { appendFileSync } from "node:fs";
 import * as nodePty from "@lydell/node-pty";
 import type { PtyExitEvent, PtyHandle } from "@lydell/node-pty";
@@ -10,6 +11,7 @@ type KillablePtyHandle = PtyHandle & {
   kill?: (signal?: string) => void;
 };
 
+/** Shared type for Pty Run in src/tui. */
 export type PtyRun = {
   output: () => string;
   write: (data: string, opts?: { delay?: boolean }) => Promise<void>;
@@ -18,6 +20,7 @@ export type PtyRun = {
   dispose: () => void;
 };
 
+/** Reused helper for wait For behavior in src/tui. */
 export function waitFor<T>(params: {
   timeoutMs: number;
   read: () => T | null;
@@ -47,6 +50,7 @@ export function waitFor<T>(params: {
   });
 }
 
+/** Reused helper for sleep behavior in src/tui. */
 export function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -100,6 +104,7 @@ function mirrorPtyOutput(data: string) {
   appendFileSync(mirrorPath, data, "utf8");
 }
 
+/** Reused helper for start Pty behavior in src/tui. */
 export function startPty(
   command: string,
   args: string[],

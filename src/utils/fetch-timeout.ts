@@ -1,3 +1,4 @@
+// utils fetch timeout helpers and runtime behavior.
 import { createSubsystemLogger } from "../logging/subsystem.js";
 import { resolveSafeTimeoutDelayMs } from "./timer-delay.js";
 
@@ -93,6 +94,7 @@ function abortDueToTimeout(
   controller.abort(error);
 }
 
+/** Reused helper for build Timeout Abort Signal behavior in src/utils. */
 export function buildTimeoutAbortSignal(params: TimeoutAbortSignalParams): {
   signal?: AbortSignal;
   cleanup: () => void;

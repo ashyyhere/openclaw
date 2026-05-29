@@ -1,5 +1,7 @@
+// ui/src/ui/chat session cache helpers and runtime behavior.
 const MAX_CACHED_CHAT_SESSIONS = 20;
 
+/** Reused helper for get Or Create Session Cache Value behavior in ui/src/ui/chat. */
 export function getOrCreateSessionCacheValue<T>(
   map: Map<string, T>,
   sessionKey: string,

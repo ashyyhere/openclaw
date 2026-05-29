@@ -1,3 +1,4 @@
+// Tests auth-choice inference from core and plugin-owned non-interactive flags.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OnboardOptions } from "../../onboard-types.js";
 import { inferAuthChoiceFromFlags } from "./auth-choice-inference.js";

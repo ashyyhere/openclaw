@@ -1,3 +1,4 @@
+// Tests extensions/nextcloud-talk/src channel status test behavior.
 import { describe, expect, it } from "vitest";
 import { nextcloudTalkPlugin } from "./channel.js";
 

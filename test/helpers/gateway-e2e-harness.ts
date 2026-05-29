@@ -1,3 +1,4 @@
+// test/helpers gateway e2e harness helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import { request as httpRequest } from "node:http";
 import path from "node:path";

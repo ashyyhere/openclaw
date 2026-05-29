@@ -1,3 +1,4 @@
+/** Public SDK helpers for channel ingress decisions, diagnostics, and access projections. */
 import {
   decideChannelIngress,
   resolveChannelIngressState as resolveChannelIngressStateInternal,
@@ -25,7 +26,9 @@ import type {
 } from "../security/dm-policy-shared.js";
 import { normalizeStringEntries } from "../shared/string-normalization.js";
 
+/** Re-exported API for src/plugin-sdk, starting with decide Channel Ingress. */
 export { decideChannelIngress };
+/** Re-exported API for src/plugin-sdk. */
 export type {
   AccessGraph,
   AccessGraphGate,
@@ -55,24 +58,33 @@ export type {
   RouteSenderPolicy,
 } from "../channels/message-access/index.js";
 
+/** Normalized identifier that can match a channel ingress allowlist entry. */
 export type ChannelIngressSubjectIdentifier = InternalMatchMaterial;
+/** Shared type for Channel Ingress Subject in src/plugin-sdk. */
 export type ChannelIngressSubject = InternalChannelIngressSubject;
+/** Shared type for Channel Ingress Adapter Entry in src/plugin-sdk. */
 export type ChannelIngressAdapterEntry = InternalNormalizedEntry;
+/** Shared type for Channel Ingress Adapter Normalize Result in src/plugin-sdk. */
 export type ChannelIngressAdapterNormalizeResult = InternalChannelIngressNormalizeResult;
+/** Shared type for Channel Ingress Adapter in src/plugin-sdk. */
 export type ChannelIngressAdapter = InternalChannelIngressAdapter;
+/** Shared type for Channel Ingress State Input in src/plugin-sdk. */
 export type ChannelIngressStateInput = MessageAccessChannelIngressStateInput;
 
 declare const CHANNEL_INGRESS_PLUGIN_ID: unique symbol;
 
+/** Branded plugin id used when building channel ingress state. */
 export type ChannelIngressPluginId = string & {
   readonly [CHANNEL_INGRESS_PLUGIN_ID]: true;
 };
 
+/** Shared type for Channel Ingress Gate Selector in src/plugin-sdk. */
 export type ChannelIngressGateSelector = {
   phase: IngressGatePhase;
   kind: IngressGateKind;
 };
 
+/** Four standard ingress decisions for DM/group and normal/command policy evaluation. */
 export type ChannelIngressDecisionBundle = {
   dm: ChannelIngressDecision;
   group: ChannelIngressDecision;
@@ -80,6 +92,7 @@ export type ChannelIngressDecisionBundle = {
   groupCommand: ChannelIngressDecision;
 };
 
+/** Side effect outcome used to map ingress decisions into turn admission. */
 export type ChannelIngressSideEffectResult =
   | { kind: "none" }
   | { kind: "pairing-reply-sent" }
@@ -89,11 +102,13 @@ export type ChannelIngressSideEffectResult =
   | { kind: "pending-history-recorded" }
   | { kind: "local-event-handled" };
 
+/** Shared type for Redacted Ingress Diagnostics in src/plugin-sdk. */
 export type RedactedIngressDiagnostics = {
   decisiveGateId?: string;
   reasonCode: IngressReasonCode;
 };
 
+/** Standard gate selectors for pulling typed facts out of ingress decision graphs. */
 export const CHANNEL_INGRESS_GATE_SELECTORS = {
   command: { phase: "command", kind: "command" },
   activation: { phase: "activation", kind: "mention" },
@@ -102,6 +117,7 @@ export const CHANNEL_INGRESS_GATE_SELECTORS = {
   event: { phase: "event", kind: "event" },
 } as const satisfies Record<string, ChannelIngressGateSelector>;
 
+/** Shared type for Channel Ingress Subject Identifier Input in src/plugin-sdk. */
 export type ChannelIngressSubjectIdentifierInput = {
   value: string;
   opaqueId?: string;
@@ -110,6 +126,7 @@ export type ChannelIngressSubjectIdentifierInput = {
   sensitivity?: "normal" | "pii";
 };
 
+/** Shared type for Create Channel Ingress String Adapter Params in src/plugin-sdk. */
 export type CreateChannelIngressStringAdapterParams = {
   kind?: ChannelIngressIdentifierKind;
   normalizeEntry?: (value: string) => string | null | undefined;
@@ -120,6 +137,7 @@ export type CreateChannelIngressStringAdapterParams = {
   sensitivity?: "normal" | "pii";
 };
 
+/** Shared type for Create Channel Ingress Multi Identifier Adapter Params in src/plugin-sdk. */
 export type CreateChannelIngressMultiIdentifierAdapterParams = {
   normalizeEntry: (entry: string, index: number) => readonly ChannelIngressAdapterEntry[];
   getEntryMatchKey?: (entry: ChannelIngressAdapterEntry) => string | null | undefined;
@@ -129,12 +147,14 @@ export type CreateChannelIngressMultiIdentifierAdapterParams = {
   isWildcardEntry?: (entry: ChannelIngressAdapterEntry) => boolean;
 };
 
+/** Shared type for Channel Ingress Dm Group Access Projection in src/plugin-sdk. */
 export type ChannelIngressDmGroupAccessProjection = {
   decision: DmGroupAccessDecision;
   reasonCode: DmGroupAccessReasonCode;
   reason: string;
 };
 
+/** Shared type for Channel Ingress Sender Group Access Projection in src/plugin-sdk. */
 export type ChannelIngressSenderGroupAccessProjection = {
   allowed: boolean;
   groupPolicy: ChannelIngressPolicyInput["groupPolicy"];
@@ -189,6 +209,7 @@ function defaultIngressMatchKey(params: {
   return `${params.kind}:${params.value}`;
 }
 
+/** Find a specific gate from an ingress decision graph. */
 export function findChannelIngressGate(
   decision: ChannelIngressDecision,
   selector: ChannelIngressGateSelector,
@@ -198,6 +219,7 @@ export function findChannelIngressGate(
   );
 }
 
+/** Reused helper for find Channel Ingress Sender Gate behavior in src/plugin-sdk. */
 export function findChannelIngressSenderGate(
   decision: ChannelIngressDecision,
   params: { isGroup: boolean },
@@ -210,12 +232,14 @@ export function findChannelIngressSenderGate(
   );
 }
 
+/** Reused helper for find Channel Ingress Command Gate behavior in src/plugin-sdk. */
 export function findChannelIngressCommandGate(
   decision: ChannelIngressDecision,
 ): AccessGraphGate | undefined {
   return findChannelIngressGate(decision, CHANNEL_INGRESS_GATE_SELECTORS.command);
 }
 
+/** Evaluate the standard DM/group and command/non-command ingress decision bundle. */
 export function decideChannelIngressBundle(params: {
   directState: ChannelIngressState;
   groupState: ChannelIngressState;
@@ -268,6 +292,7 @@ function projectDmDecision(
   return decision.admission === "drop" ? "deny" : "allow";
 }
 
+/** Project detailed ingress graph gates into the legacy access-facts shape. */
 export function projectIngressAccessFacts(decision: ChannelIngressDecision): AccessFacts {
   const command = findChannelIngressGate(decision, CHANNEL_INGRESS_GATE_SELECTORS.command);
   const activation = findChannelIngressGate(decision, CHANNEL_INGRESS_GATE_SELECTORS.activation);
@@ -313,6 +338,7 @@ export function projectIngressAccessFacts(decision: ChannelIngressDecision): Acc
   };
 }
 
+/** Convert an ingress decision and side-effect result into the reply pipeline admission value. */
 export function mapChannelIngressDecisionToTurnAdmission(
   decision: ChannelIngressDecision,
   sideEffect: ChannelIngressSideEffectResult,
@@ -340,6 +366,7 @@ export function mapChannelIngressDecisionToTurnAdmission(
     : { kind: "drop", reason: decision.reasonCode };
 }
 
+/** Create a branded non-empty channel ingress plugin id. */
 export function createChannelIngressPluginId(id: string): ChannelIngressPluginId {
   const trimmed = id.trim();
   if (!trimmed) {
@@ -348,6 +375,7 @@ export function createChannelIngressPluginId(id: string): ChannelIngressPluginId
   return trimmed as ChannelIngressPluginId;
 }
 
+/** Create an ingress subject with stable opaque ids for each identifier. */
 export function createChannelIngressSubject(
   input:
     | ChannelIngressSubjectIdentifierInput
@@ -365,6 +393,7 @@ export function createChannelIngressSubject(
   };
 }
 
+/** Build a simple single-identifier ingress adapter for string allowlists. */
 export function createChannelIngressStringAdapter(
   params: CreateChannelIngressStringAdapterParams = {},
 ): ChannelIngressAdapter {
@@ -416,6 +445,7 @@ export function createChannelIngressStringAdapter(
   };
 }
 
+/** Build an ingress adapter that can match entries and subjects through multiple identifiers. */
 export function createChannelIngressMultiIdentifierAdapter(
   params: CreateChannelIngressMultiIdentifierAdapterParams,
 ): ChannelIngressAdapter {
@@ -455,6 +485,7 @@ export function createChannelIngressMultiIdentifierAdapter(
   };
 }
 
+/** Exhaustiveness guard for ingress reason-code switches. */
 export function assertNeverChannelIngressReason(reasonCode: never): never {
   throw new Error(`Unhandled channel ingress reason code: ${String(reasonCode)}`);
 }
@@ -582,6 +613,7 @@ export function projectChannelIngressDmGroupAccess(params: {
   };
 }
 
+/** Resolve normalized channel ingress state before applying policy decisions. */
 export async function resolveChannelIngressState(
   input: ChannelIngressStateInput,
 ): Promise<ChannelIngressState> {

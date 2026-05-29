@@ -1,3 +1,4 @@
+// Tests extensions/mattermost/src/mattermost monitor onchar test behavior.
 import { describe, expect, it } from "vitest";
 import { resolveOncharPrefixes, stripOncharPrefix } from "./monitor-onchar.js";
 

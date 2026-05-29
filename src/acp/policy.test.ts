@@ -1,3 +1,4 @@
+/** Tests ACP enablement and agent allowlist policy helpers. */
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import {

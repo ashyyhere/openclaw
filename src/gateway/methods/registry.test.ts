@@ -1,3 +1,4 @@
+// Tests gateway/methods registry test behavior.
 import { describe, expect, it } from "vitest";
 import { ADMIN_SCOPE, READ_SCOPE, WRITE_SCOPE } from "../operator-scopes.js";
 import type { GatewayRequestHandler } from "../server-methods/types.js";

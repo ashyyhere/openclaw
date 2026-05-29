@@ -1,3 +1,4 @@
+/** Runtime SDK barrel for time/date formatting helpers. */
 export {
   formatUtcTimestamp,
   formatZonedTimestamp,

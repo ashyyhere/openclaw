@@ -1,3 +1,4 @@
+/** Repairs daemon startup state when service start detects stale install data. */
 import { buildGatewayInstallPlan } from "../../commands/daemon-install-helpers.js";
 import { DEFAULT_GATEWAY_DAEMON_RUNTIME } from "../../commands/daemon-runtime.js";
 import { resolveGatewayInstallToken } from "../../commands/gateway-install-token.js";
@@ -14,6 +15,7 @@ import { formatGatewayServiceStartRepairIssues } from "../../daemon/service.js";
 import { defaultRuntime } from "../../runtime.js";
 import { mergeInstallInvocationEnv } from "./install.js";
 
+/** Reused helper for repair Loaded Gateway Service For Start behavior in src/cli/daemon-cli. */
 export async function repairLoadedGatewayServiceForStart(params: {
   service: GatewayService;
   state: GatewayServiceState;

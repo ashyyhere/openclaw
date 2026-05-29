@@ -1,4 +1,5 @@
 #!/usr/bin/env -S node --import tsx
+// scripts release verify beta helpers and runtime behavior.
 
 import { parseReleaseVerifyBetaArgs, verifyBetaRelease } from "./lib/release-beta-verifier.ts";
 

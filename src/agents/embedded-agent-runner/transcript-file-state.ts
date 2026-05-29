@@ -1,3 +1,4 @@
+/** Reads and writes embedded-agent transcript JSONL state safely. */
 import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -430,6 +431,7 @@ function fileEntryOrMigrationSlot(value: unknown, index: number): FileEntry {
   } as unknown as FileEntry;
 }
 
+/** Reused class for Transcript File State behavior in src/agents/embedded-agent-runner. */
 export class TranscriptFileState {
   readonly header: SessionHeader | null;
   readonly entries: SessionEntry[];
@@ -663,6 +665,7 @@ export class TranscriptFileState {
   }
 }
 
+/** Reads a transcript file into structured entries plus recovery metadata. */
 export async function readTranscriptFileState(sessionFile: string): Promise<TranscriptFileState> {
   const raw = await fs.readFile(sessionFile, "utf-8");
   const fileEntries = (parseSessionEntries(raw) as unknown[]).map(fileEntryOrMigrationSlot);
@@ -677,6 +680,7 @@ export async function readTranscriptFileState(sessionFile: string): Promise<Tran
   return new TranscriptFileState({ header, entries, migrated });
 }
 
+/** Rewrites a transcript file atomically with private file permissions. */
 export async function writeTranscriptFileAtomic(
   filePath: string,
   entries: Array<SessionHeader | SessionEntry>,
@@ -687,6 +691,7 @@ export async function writeTranscriptFileAtomic(
   );
 }
 
+/** Persists a caller-mutated transcript state and emits update notifications. */
 export async function persistTranscriptStateMutation(params: {
   sessionFile: string;
   state: TranscriptFileState;

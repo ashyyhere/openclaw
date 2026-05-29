@@ -1,3 +1,4 @@
+// extensions/voice-call/src config compat helpers and runtime behavior.
 import { asOptionalRecord, readStringField } from "openclaw/plugin-sdk/string-coerce-runtime";
 import type { VoiceCallConfig } from "./config.js";
 import { VoiceCallConfigSchema } from "./config.js";

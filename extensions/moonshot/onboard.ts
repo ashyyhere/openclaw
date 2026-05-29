@@ -1,3 +1,4 @@
+// extensions/moonshot onboard helpers and runtime behavior.
 import {
   createDefaultModelPresetAppliers,
   type OpenClawConfig,

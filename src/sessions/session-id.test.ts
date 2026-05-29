@@ -1,3 +1,4 @@
+// Tests sessions session id test behavior.
 import { describe, expect, it } from "vitest";
 import { SESSION_ID_RE, looksLikeSessionId } from "./session-id.js";
 

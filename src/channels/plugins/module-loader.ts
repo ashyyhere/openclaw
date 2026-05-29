@@ -1,3 +1,4 @@
+// Channel plugin module loader.
 import fs from "node:fs";
 import { createRequire } from "node:module";
 import path from "node:path";
@@ -14,6 +15,7 @@ const SOURCE_MODULE_EXTENSIONS = new Set([".ts", ".tsx", ".mts", ".cts"]);
 const jitiLoaders: PluginModuleLoaderCache = new Map();
 let channelPluginModuleLoaderFactoryForTest: PluginModuleLoaderFactory | undefined;
 
+/** Reused helper for set Channel Plugin Module Loader Factory For Test behavior in src/channels/plugins. */
 export function setChannelPluginModuleLoaderFactoryForTest(
   factory?: PluginModuleLoaderFactory,
 ): void {
@@ -85,6 +87,7 @@ function resolvePluginModuleCandidates(rootDir: string, specifier: string): stri
   ];
 }
 
+/** Reused helper for resolve Existing Plugin Module Path behavior in src/channels/plugins. */
 export function resolveExistingPluginModulePath(rootDir: string, specifier: string): string {
   for (const candidate of resolvePluginModuleCandidates(rootDir, specifier)) {
     if (fs.existsSync(candidate)) {
@@ -94,6 +97,7 @@ export function resolveExistingPluginModulePath(rootDir: string, specifier: stri
   return path.resolve(rootDir, specifier);
 }
 
+/** Reused helper for load Channel Plugin Module behavior in src/channels/plugins. */
 export function loadChannelPluginModule(params: {
   modulePath: string;
   rootDir: string;

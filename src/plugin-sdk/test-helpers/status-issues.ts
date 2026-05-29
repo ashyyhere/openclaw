@@ -1,3 +1,4 @@
+// plugin-sdk/test-helpers status issues helpers and runtime behavior.
 import { expect } from "vitest";
 
 export function expectOpenDmPolicyConfigIssue<TAccount>(params: {

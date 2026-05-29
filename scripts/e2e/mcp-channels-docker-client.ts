@@ -1,3 +1,4 @@
+// scripts/e2e mcp channels docker client helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import {
   assert,

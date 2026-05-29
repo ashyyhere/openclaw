@@ -1,3 +1,4 @@
+/** Registers webhook management CLI commands. */
 import type { Command } from "commander";
 import { formatDocsLink } from "../../packages/terminal-core/src/links.js";
 import { theme } from "../../packages/terminal-core/src/theme.js";
@@ -23,6 +24,7 @@ import { defaultRuntime } from "../runtime.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import { formatCliCommand } from "./command-format.js";
 
+/** Reused helper for register Webhooks Cli behavior in src/cli. */
 export function registerWebhooksCli(program: Command) {
   const webhooks = program
     .command("webhooks")

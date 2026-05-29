@@ -1,3 +1,4 @@
+// Tests gateway server minimal channel pin test behavior.
 import { afterEach, expect, test } from "vitest";
 import { getChannelPlugin } from "../channels/plugins/index.js";
 import {

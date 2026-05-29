@@ -1,3 +1,4 @@
+// hooks config helpers and runtime behavior.
 import type { OpenClawConfig, HookConfig } from "../config/config.js";
 import {
   evaluateRuntimeEligibility,
@@ -13,12 +14,15 @@ const DEFAULT_CONFIG_VALUES: Record<string, boolean> = {
   "workspace.dir": true,
 };
 
+/** Re-exported API for src/hooks, starting with has Binary. */
 export { hasBinary };
 
+/** Reused helper for is Config Path Truthy behavior in src/hooks. */
 export function isConfigPathTruthy(config: OpenClawConfig | undefined, pathStr: string): boolean {
   return isConfigPathTruthyWithDefaults(config, pathStr, DEFAULT_CONFIG_VALUES);
 }
 
+/** Re-exported API for src/hooks, starting with resolve Hook Config. */
 export { resolveHookConfig };
 
 function evaluateHookRuntimeEligibility(params: {
@@ -45,6 +49,7 @@ function evaluateHookRuntimeEligibility(params: {
   });
 }
 
+/** Reused helper for should Include Hook behavior in src/hooks. */
 export function shouldIncludeHook(params: {
   entry: HookEntry;
   config?: OpenClawConfig;

@@ -1,3 +1,4 @@
+// Shared types for extensions/zalouser/src types behavior.
 import type { MessageReceipt } from "openclaw/plugin-sdk/channel-outbound";
 import type { Style } from "./zca-constants.js";
 

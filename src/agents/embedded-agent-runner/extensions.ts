@@ -1,3 +1,4 @@
+/** Builds session-manager extensions used by embedded-agent runs. */
 import { randomUUID } from "node:crypto";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { ProviderRuntimeModel } from "../../plugins/provider-runtime-model.types.js";
@@ -141,6 +142,7 @@ function buildContextPruningFactory(params: {
   return contextPruningExtension;
 }
 
+/** Creates extension factories for context pruning, tool history, and runtime behaviors. */
 export function buildEmbeddedExtensionFactories(params: {
   cfg: OpenClawConfig | undefined;
   sessionManager: SessionManager;
@@ -185,4 +187,5 @@ export function buildEmbeddedExtensionFactories(params: {
   return factories;
 }
 
+/** Re-exported API for src/agents/embedded-agent-runner, starting with ensure Agent Compaction Reserve Tokens. */
 export { ensureAgentCompactionReserveTokens };

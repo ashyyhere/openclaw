@@ -1,3 +1,4 @@
+// test-utils plugin runtime env helpers and runtime behavior.
 import type { OutputRuntimeEnv, RuntimeEnv } from "openclaw/plugin-sdk/runtime";
 import { vi } from "vitest";
 
@@ -5,6 +6,7 @@ type RuntimeEnvOptions = {
   throwOnExit?: boolean;
 };
 
+/** Reused helper for create Runtime Env behavior in src/test-utils. */
 export function createRuntimeEnv(options?: RuntimeEnvOptions): OutputRuntimeEnv {
   const throwOnExit = options?.throwOnExit ?? true;
   return {
@@ -20,6 +22,7 @@ export function createRuntimeEnv(options?: RuntimeEnvOptions): OutputRuntimeEnv 
   };
 }
 
+/** Reused helper for create Typed Runtime Env behavior in src/test-utils. */
 export function createTypedRuntimeEnv<TRuntime extends RuntimeEnv = OutputRuntimeEnv>(
   options?: RuntimeEnvOptions,
   _runtimeShape?: (runtime: TRuntime) => void,
@@ -27,10 +30,12 @@ export function createTypedRuntimeEnv<TRuntime extends RuntimeEnv = OutputRuntim
   return createRuntimeEnv(options) as unknown as TRuntime;
 }
 
+/** Reused helper for create Non Exiting Runtime Env behavior in src/test-utils. */
 export function createNonExitingRuntimeEnv(): OutputRuntimeEnv {
   return createRuntimeEnv({ throwOnExit: false });
 }
 
+/** Reused helper for create Non Exiting Typed Runtime Env behavior in src/test-utils. */
 export function createNonExitingTypedRuntimeEnv<TRuntime extends RuntimeEnv = OutputRuntimeEnv>(
   runtimeShape?: (runtime: TRuntime) => void,
 ): TRuntime {

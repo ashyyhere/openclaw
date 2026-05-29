@@ -1,3 +1,4 @@
+// Shared types for extensions/matrix/src/matrix/actions types behavior.
 import type { CoreConfig } from "../../types.js";
 import { MATRIX_REACTION_EVENT_TYPE } from "../reaction-common.js";
 import type { MatrixClient, MessageEventContent } from "../sdk.js";

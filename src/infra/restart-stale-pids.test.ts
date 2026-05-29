@@ -1,3 +1,4 @@
+// Tests infra restart stale pids test behavior.
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 // This file primarily tests lsof-based Unix port polling. On Windows,

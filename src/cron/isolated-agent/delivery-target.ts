@@ -1,3 +1,4 @@
+// cron/isolated-agent delivery target helpers and runtime behavior.
 import { resolveExplicitDeliveryTargetCompat } from "../../channels/plugins/target-parsing-loaded.js";
 import type { ChannelId } from "../../channels/plugins/types.public.js";
 import { resolveAgentMainSessionKey } from "../../config/sessions/main-session.js";
@@ -19,6 +20,7 @@ import { uniqueStrings } from "../../shared/string-normalization.js";
 import { resolveCronStoredDeliveryContext } from "../delivery-context.js";
 import { resolveCronAgentSessionKey } from "./session-key.js";
 
+/** Shared type for Delivery Target Resolution in src/cron/isolated-agent. */
 export type DeliveryTargetResolution =
   | {
       ok: true;
@@ -122,6 +124,7 @@ function stripSelectedProviderPrefix(params: {
   const stripped = stripTargetProviderPrefix(trimmed, params.channel).trim();
   return stripped || undefined;
 }
+/** Reused helper for resolve Delivery Target behavior in src/cron/isolated-agent. */
 export async function resolveDeliveryTarget(
   cfg: OpenClawConfig,
   agentId: string,

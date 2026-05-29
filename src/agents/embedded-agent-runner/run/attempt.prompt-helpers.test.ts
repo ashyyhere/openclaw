@@ -1,3 +1,4 @@
+/** Covers prompt helper decisions for embedded-agent attempts. */
 import { describe, expect, it, vi } from "vitest";
 
 const musicGenerationTaskStatusMocks = vi.hoisted(() => ({

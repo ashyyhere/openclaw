@@ -1,9 +1,11 @@
+// ui/src/ui/views overview attention helpers and runtime behavior.
 import { html, nothing } from "lit";
 import { t } from "../../i18n/index.ts";
 import { buildExternalLinkRel, EXTERNAL_LINK_TARGET } from "../external-link.ts";
 import { icons, type IconName } from "../icons.ts";
 import type { AttentionItem } from "../types.ts";
 
+/** Shared type for Overview Attention Props in ui/src/ui/views. */
 export type OverviewAttentionProps = {
   items: AttentionItem[];
 };
@@ -25,6 +27,7 @@ function attentionIcon(name: string) {
   return icons.radio;
 }
 
+/** Reused helper for render Overview Attention behavior in ui/src/ui/views. */
 export function renderOverviewAttention(props: OverviewAttentionProps) {
   if (props.items.length === 0) {
     return nothing;

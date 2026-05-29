@@ -1,9 +1,11 @@
 // before_model_resolve hook
+/** Shared type for Plugin Hook Before Model Resolve Attachment in src/plugins. */
 export type PluginHookBeforeModelResolveAttachment = {
   kind: "image" | "video" | "audio" | "document" | "other";
   mimeType?: string;
 };
 
+/** Shared type for Plugin Hook Before Model Resolve Event in src/plugins. */
 export type PluginHookBeforeModelResolveEvent = {
   /** User prompt for this run. No session messages are available yet in this phase. */
   prompt: string;
@@ -11,6 +13,7 @@ export type PluginHookBeforeModelResolveEvent = {
   attachments?: PluginHookBeforeModelResolveAttachment[];
 };
 
+/** Shared type for Plugin Hook Before Model Resolve Result in src/plugins. */
 export type PluginHookBeforeModelResolveResult = {
   /** Override the model for this agent run. E.g. "llama3.3:8b" */
   modelOverride?: string;
@@ -19,12 +22,14 @@ export type PluginHookBeforeModelResolveResult = {
 };
 
 // before_prompt_build hook
+/** Shared type for Plugin Hook Before Prompt Build Event in src/plugins. */
 export type PluginHookBeforePromptBuildEvent = {
   prompt: string;
   /** Session messages prepared for this run. */
   messages: unknown[];
 };
 
+/** Shared type for Plugin Hook Before Prompt Build Result in src/plugins. */
 export type PluginHookBeforePromptBuildResult = {
   systemPrompt?: string;
   prependContext?: string;
@@ -41,6 +46,7 @@ export type PluginHookBeforePromptBuildResult = {
   appendSystemContext?: string;
 };
 
+/** Reused constant for PLUGIN PROMPT MUTATION RESULT FIELDS behavior in src/plugins. */
 export const PLUGIN_PROMPT_MUTATION_RESULT_FIELDS = [
   "systemPrompt",
   "prependContext",
@@ -80,6 +86,7 @@ export type PluginHookBeforeAgentStartOverrideResult = Omit<
   keyof PluginHookBeforePromptBuildResult
 >;
 
+/** Reused constant for strip Prompt Mutation Fields From Legacy Hook Result behavior in src/plugins. */
 export const stripPromptMutationFieldsFromLegacyHookResult = (
   result: PluginHookBeforeAgentStartResult | void,
 ): PluginHookBeforeAgentStartOverrideResult | void => {

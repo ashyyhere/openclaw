@@ -1,3 +1,4 @@
+/** Shared persistence and prompt helpers used by embedded, CLI, and ACP attempts. */
 import { updateSessionStore } from "../../config/sessions/store.js";
 import { mergeSessionEntry, type SessionEntry } from "../../config/sessions/types.js";
 import {
@@ -10,6 +11,7 @@ import {
 } from "../internal-runtime-context.js";
 import type { AgentCommandOpts } from "./types.js";
 
+/** Shared type for Persist Session Entry Params in src/agents/command. */
 export type PersistSessionEntryParams = {
   sessionStore: Record<string, SessionEntry>;
   sessionKey: string;
@@ -19,6 +21,7 @@ export type PersistSessionEntryParams = {
   shouldPersist?: (entry: SessionEntry | undefined) => boolean;
 };
 
+/** Persists one session entry update and emits transcript refresh metadata. */
 export async function persistSessionEntry(
   params: PersistSessionEntryParams,
 ): Promise<SessionEntry | undefined> {
@@ -52,6 +55,7 @@ export async function persistSessionEntry(
   return persisted;
 }
 
+/** Prepends internal-event context to a model prompt without touching transcript body. */
 export function prependInternalEventContext(
   body: string,
   events: AgentCommandOpts["internalEvents"],
@@ -78,6 +82,7 @@ function resolvePlainInternalEventBody(
   return [renderedEvents, visibleBody].filter(Boolean).join("\n\n") || body;
 }
 
+/** Builds ACP prompt text from internal context plus visible prompt body. */
 export function resolveAcpPromptBody(
   body: string,
   events: AgentCommandOpts["internalEvents"],
@@ -85,6 +90,7 @@ export function resolveAcpPromptBody(
   return events?.length ? resolvePlainInternalEventBody(body, events) : body;
 }
 
+/** Builds the transcript-visible representation for internal event context. */
 export function resolveInternalEventTranscriptBody(
   body: string,
   events: AgentCommandOpts["internalEvents"],

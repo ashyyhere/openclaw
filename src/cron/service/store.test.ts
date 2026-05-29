@@ -1,3 +1,4 @@
+// Tests cron/service store test behavior.
 import fs from "node:fs/promises";
 import { describe, expect, it, vi } from "vitest";
 import { setupCronServiceSuite } from "../service.test-harness.js";

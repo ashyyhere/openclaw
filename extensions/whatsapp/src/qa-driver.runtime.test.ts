@@ -1,3 +1,4 @@
+// Tests extensions/whatsapp/src qa driver runtime test behavior.
 import { EventEmitter } from "node:events";
 import type { WAMessage } from "baileys";
 import { afterEach, describe, expect, it, vi } from "vitest";

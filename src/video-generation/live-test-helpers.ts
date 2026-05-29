@@ -1,3 +1,4 @@
+// video-generation live test helpers helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.js";
 import {
   parseLiveCsvFilter,
@@ -8,8 +9,10 @@ import {
 } from "../media-generation/live-test-helpers.js";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
+/** Re-exported API for src/video-generation, starting with parse Provider Model Map. */
 export { parseProviderModelMap, redactLiveApiKey };
 
+/** Reused constant for DEFAULT LIVE VIDEO MODELS behavior in src/video-generation. */
 export const DEFAULT_LIVE_VIDEO_MODELS: Record<string, string> = {
   alibaba: "alibaba/wan2.6-t2v",
   byteplus: "byteplus/seedance-1-0-lite-t2v-250428",
@@ -31,6 +34,7 @@ const REMOTE_URL_VIDEO_TO_VIDEO_PROVIDERS = new Set(["alibaba", "google", "opena
 const BUFFER_BACKED_IMAGE_TO_VIDEO_UNSUPPORTED_PROVIDERS = new Set(["vydra"]);
 const TOGETHER_BUFFER_BACKED_IMAGE_TO_VIDEO_MODEL = "Wan-AI/Wan2.2-I2V-A14B";
 
+/** Reused helper for resolve Live Video Resolution behavior in src/video-generation. */
 export function resolveLiveVideoResolution(params: {
   providerId: string;
   modelRef: string;
@@ -48,14 +52,17 @@ export function resolveLiveVideoResolution(params: {
   return "480P";
 }
 
+/** Reused helper for parse Csv Filter behavior in src/video-generation. */
 export function parseCsvFilter(raw?: string): Set<string> | null {
   return parseLiveCsvFilter(raw);
 }
 
+/** Reused helper for resolve Configured Live Video Models behavior in src/video-generation. */
 export function resolveConfiguredLiveVideoModels(cfg: OpenClawConfig): Map<string, string> {
   return resolveConfiguredLiveProviderModels(cfg.agents?.defaults?.videoGenerationModel);
 }
 
+/** Reused helper for can Run Buffer Backed Video To Video Live Lane behavior in src/video-generation. */
 export function canRunBufferBackedVideoToVideoLiveLane(params: {
   providerId: string;
   modelRef: string;
@@ -78,6 +85,7 @@ export function canRunBufferBackedVideoToVideoLiveLane(params: {
   return model === "gen4_aleph";
 }
 
+/** Reused helper for can Run Buffer Backed Image To Video Live Lane behavior in src/video-generation. */
 export function canRunBufferBackedImageToVideoLiveLane(params: {
   providerId: string;
   modelRef: string;
@@ -92,6 +100,7 @@ export function canRunBufferBackedImageToVideoLiveLane(params: {
   return true;
 }
 
+/** Reused helper for resolve Live Video Auth Store behavior in src/video-generation. */
 export function resolveLiveVideoAuthStore(params: {
   requireProfileKeys: boolean;
   hasLiveKeys: boolean;

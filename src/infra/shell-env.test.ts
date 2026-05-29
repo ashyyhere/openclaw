@@ -1,3 +1,4 @@
+// Tests infra shell env test behavior.
 import fs from "node:fs";
 import os from "node:os";
 import { describe, expect, it, vi } from "vitest";

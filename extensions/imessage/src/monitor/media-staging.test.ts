@@ -1,3 +1,4 @@
+// Tests extensions/imessage/src/monitor media staging test behavior.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

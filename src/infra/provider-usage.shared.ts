@@ -1,8 +1,10 @@
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
 import type { UsageProviderId } from "./provider-usage.types.js";
 
+/** Reused constant for DEFAULT TIMEOUT MS behavior in src/infra. */
 export const DEFAULT_TIMEOUT_MS = 5000;
 
+/** Reused constant for PROVIDER LABELS behavior in src/infra. */
 export const PROVIDER_LABELS: Record<UsageProviderId, string> = {
   anthropic: "Claude",
   "github-copilot": "Copilot",
@@ -14,6 +16,7 @@ export const PROVIDER_LABELS: Record<UsageProviderId, string> = {
   zai: "z.ai",
 };
 
+/** Reused constant for usage Providers behavior in src/infra. */
 export const usageProviders: UsageProviderId[] = [
   "anthropic",
   "github-copilot",
@@ -51,6 +54,7 @@ export function resolveUsageProviderId(
     : undefined;
 }
 
+/** Reused constant for ignored Errors behavior in src/infra. */
 export const ignoredErrors = new Set([
   "No credentials",
   "No token",
@@ -59,9 +63,11 @@ export const ignoredErrors = new Set([
   "No auth",
 ]);
 
+/** Reused constant for clamp Percent behavior in src/infra. */
 export const clampPercent = (value: number) =>
   Math.max(0, Math.min(100, Number.isFinite(value) ? value : 0));
 
+/** Reused constant for with Timeout behavior in src/infra. */
 export const withTimeout = async <T>(work: Promise<T>, ms: number, fallback: T): Promise<T> => {
   let timeout: NodeJS.Timeout | undefined;
   try {

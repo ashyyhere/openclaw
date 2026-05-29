@@ -1,3 +1,4 @@
+// Tests gateway server plugin http auth test behavior.
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { describe, expect, test, vi } from "vitest";
 import { getPluginRuntimeGatewayRequestScope } from "../plugins/runtime/gateway-request-scope.js";

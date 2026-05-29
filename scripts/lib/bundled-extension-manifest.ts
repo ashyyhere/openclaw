@@ -1,3 +1,4 @@
+// scripts/lib bundled extension manifest helpers and runtime behavior.
 import { validateMinHostVersion } from "../../src/plugins/min-host-version.ts";
 import { isRecord } from "../../src/utils.js";
 

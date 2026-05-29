@@ -1,3 +1,4 @@
+/** Tests runtime timeout behavior for gateway-backed devices CLI calls. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const callGatewayMock = vi.fn(async () => ({ pending: [], paired: [] }));

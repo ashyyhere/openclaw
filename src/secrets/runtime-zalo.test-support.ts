@@ -1,3 +1,4 @@
+// secrets runtime zalo test support helpers and runtime behavior.
 import { vi } from "vitest";
 import { loadBundledChannelSecretContractApi } from "./channel-contract-api.js";
 

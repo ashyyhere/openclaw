@@ -1,3 +1,4 @@
+// extensions/deepinfra media models helpers and runtime behavior.
 import { normalizeOptionalString } from "openclaw/plugin-sdk/string-coerce-runtime";
 import { DEEPINFRA_BASE_URL } from "./provider-models.js";
 

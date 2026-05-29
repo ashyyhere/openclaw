@@ -1,3 +1,4 @@
+/** Loads and expands slash prompt templates for sessions. */
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { homedir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
@@ -103,6 +104,7 @@ function loadTemplatesFromDir(
   return templates;
 }
 
+/** Shared type for Load Prompt Templates Options in src/agents/sessions. */
 export interface LoadPromptTemplatesOptions {
   /** Working directory for project-local templates. */
   cwd: string;
@@ -139,6 +141,7 @@ function resolvePromptPath(p: string, cwd: string): string {
  * 2. Project: cwd/{CONFIG_DIR_NAME}/prompts/
  * 3. Explicit prompt paths
  */
+/** Loads prompt templates from configured resource roots. */
 export function loadPromptTemplates(options: LoadPromptTemplatesOptions): PromptTemplate[] {
   const resolvedCwd = options.cwd;
   const resolvedAgentDir = options.agentDir;
@@ -214,6 +217,7 @@ export function loadPromptTemplates(options: LoadPromptTemplatesOptions): Prompt
  * Expand a prompt template if it matches a template name.
  * Returns the expanded content or the original text if not a template.
  */
+/** Expands a slash prompt invocation against loaded templates. */
 export function expandPromptTemplate(text: string, templates: PromptTemplate[]): string {
   if (!text.startsWith("/")) {
     return text;

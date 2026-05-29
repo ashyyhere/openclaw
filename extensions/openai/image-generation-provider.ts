@@ -1,3 +1,4 @@
+// extensions/openai image generation provider helpers and runtime behavior.
 import path from "node:path";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import type {

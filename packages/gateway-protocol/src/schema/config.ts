@@ -1,3 +1,4 @@
+// packages/gateway-protocol/src/schema config helpers and runtime behavior.
 import { Type } from "typebox";
 import { NonEmptyString } from "./primitives.js";
 
@@ -17,8 +18,10 @@ const ConfigDeliveryContextSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Config Get Params Schema behavior in packages/gateway-protocol. */
 export const ConfigGetParamsSchema = Type.Object({}, { additionalProperties: false });
 
+/** Public constant for Config Set Params Schema behavior in packages/gateway-protocol. */
 export const ConfigSetParamsSchema = Type.Object(
   {
     raw: NonEmptyString,
@@ -39,11 +42,15 @@ const ConfigApplyLikeParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Config Apply Params Schema behavior in packages/gateway-protocol. */
 export const ConfigApplyParamsSchema = ConfigApplyLikeParamsSchema;
+/** Public constant for Config Patch Params Schema behavior in packages/gateway-protocol. */
 export const ConfigPatchParamsSchema = ConfigApplyLikeParamsSchema;
 
+/** Public constant for Config Schema Params Schema behavior in packages/gateway-protocol. */
 export const ConfigSchemaParamsSchema = Type.Object({}, { additionalProperties: false });
 
+/** Public constant for Config Schema Lookup Params Schema behavior in packages/gateway-protocol. */
 export const ConfigSchemaLookupParamsSchema = Type.Object(
   {
     path: ConfigSchemaLookupPathString,
@@ -51,8 +58,10 @@ export const ConfigSchemaLookupParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Update Status Params Schema behavior in packages/gateway-protocol. */
 export const UpdateStatusParamsSchema = Type.Object({}, { additionalProperties: false });
 
+/** Public constant for Update Run Params Schema behavior in packages/gateway-protocol. */
 export const UpdateRunParamsSchema = Type.Object(
   {
     sessionKey: Type.Optional(Type.String()),
@@ -65,6 +74,7 @@ export const UpdateRunParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Config Ui Hint Schema behavior in packages/gateway-protocol. */
 export const ConfigUiHintSchema = Type.Object(
   {
     label: Type.Optional(Type.String()),
@@ -80,6 +90,7 @@ export const ConfigUiHintSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Config Schema Response Schema behavior in packages/gateway-protocol. */
 export const ConfigSchemaResponseSchema = Type.Object(
   {
     schema: Type.Unknown(),
@@ -90,6 +101,7 @@ export const ConfigSchemaResponseSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Config Schema Lookup Child Schema behavior in packages/gateway-protocol. */
 export const ConfigSchemaLookupChildSchema = Type.Object(
   {
     key: NonEmptyString,
@@ -106,6 +118,7 @@ export const ConfigSchemaLookupChildSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Config Schema Lookup Result Schema behavior in packages/gateway-protocol. */
 export const ConfigSchemaLookupResultSchema = Type.Object(
   {
     path: NonEmptyString,

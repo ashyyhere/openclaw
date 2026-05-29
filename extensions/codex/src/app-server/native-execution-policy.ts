@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server native execution policy helpers and runtime behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { resolveSandboxRuntimeStatus } from "openclaw/plugin-sdk/sandbox";
 import { getSessionEntry, type SessionEntry } from "openclaw/plugin-sdk/session-store-runtime";

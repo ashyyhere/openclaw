@@ -1,3 +1,4 @@
+/** Runs harness tool-result middleware before results enter transcripts. */
 import { createSubsystemLogger } from "../../logging/subsystem.js";
 import type {
   AgentToolResultMiddleware,
@@ -404,6 +405,7 @@ function buildMiddlewareFailureResult(): OpenClawAgentToolResult {
   };
 }
 
+/** Creates a middleware runner bound to a harness/runtime context. */
 export function createAgentToolResultMiddlewareRunner(
   ctx: AgentToolResultMiddlewareContext,
   handlers?: AgentToolResultMiddleware[],

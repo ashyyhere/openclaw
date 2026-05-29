@@ -1,3 +1,4 @@
+/** Regression coverage for prompt cache boundary section normalization. */
 import { describe, expect, it } from "vitest";
 import {
   prependSystemPromptAdditionAfterCacheBoundary,

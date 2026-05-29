@@ -1,9 +1,12 @@
+// infra node pairing surface helpers and runtime behavior.
 import { normalizeArrayBackedTrimmedStringList } from "../shared/string-normalization.js";
 
+/** Reused helper for normalize Node Approval Surface List behavior in src/infra. */
 export function normalizeNodeApprovalSurfaceList(value: readonly string[] | undefined): string[] {
   return normalizeArrayBackedTrimmedStringList(value) ?? [];
 }
 
+/** Reused helper for same Node Approval Surface Set behavior in src/infra. */
 export function sameNodeApprovalSurfaceSet(
   left: readonly string[] | undefined,
   right: readonly string[] | undefined,
@@ -21,6 +24,7 @@ export function sameNodeApprovalSurfaceSet(
   return true;
 }
 
+/** Reused helper for same Node Permission Surface behavior in src/infra. */
 export function sameNodePermissionSurface(
   left: Record<string, boolean> | undefined,
   right: Record<string, boolean> | undefined,

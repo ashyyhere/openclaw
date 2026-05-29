@@ -1,5 +1,6 @@
 // Public image-generation helpers and types for provider plugins.
 
+/** Re-exported API for src/plugin-sdk. */
 export {
   createOpenAiCompatibleImageGenerationProvider,
   type OpenAiCompatibleImageProviderOptions,
@@ -8,6 +9,7 @@ export {
   type OpenAiCompatibleImageRequestMode,
 } from "../image-generation/openai-compatible-image-provider.js";
 
+/** Re-exported API for src/plugin-sdk. */
 export {
   generatedImageAssetFromBase64,
   generatedImageAssetFromDataUrl,
@@ -23,6 +25,7 @@ export {
   type OpenAiCompatibleImageResponsePayload,
 } from "../image-generation/image-assets.js";
 
+/** Re-exported API for src/plugin-sdk. */
 export type {
   GeneratedImageAsset,
   ImageGenerationBackground,

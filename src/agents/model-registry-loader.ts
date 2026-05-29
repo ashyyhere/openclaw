@@ -1,9 +1,11 @@
+/** Loads model registries from configured/plugin sources. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { discoverAuthStorage, discoverModels } from "./agent-model-discovery.js";
 import { resolveDefaultAgentDir } from "./agent-scope.js";
 import { resolveModelPluginMetadataSnapshot } from "./model-discovery-context.js";
 import type { ModelRegistry } from "./sessions/index.js";
 
+/** Options for loading the agent model registry. */
 export type LoadAgentModelRegistryOptions = {
   providerFilter?: string;
   normalizeModels?: boolean;
@@ -12,6 +14,7 @@ export type LoadAgentModelRegistryOptions = {
   workspaceDir?: string;
 };
 
+/** Load model registry entries for current config/workspace. */
 export function loadAgentModelRegistry(
   config: OpenClawConfig,
   options: LoadAgentModelRegistryOptions = {},

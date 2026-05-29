@@ -1,3 +1,4 @@
+/** Runtime SDK facade loader that enforces bundled-plugin activation before loading surfaces. */
 import { createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -18,12 +19,14 @@ import {
   resolveBundledFacadeModuleLocation,
   resolveRegistryPluginModuleLocationFromRecords,
 } from "./facade-resolution-shared.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   createLazyFacadeArrayValue,
   createLazyFacadeObjectValue,
   listImportedBundledPluginFacadeIds,
 } from "./facade-loader.js";
 
+/** Bind one facade property so callers can keep lazy runtime boundaries at exported constants. */
 export function createLazyFacadeValue<TFacade extends object, K extends keyof TFacade>(
   loadFacadeModule: () => TFacade,
   key: K,
@@ -188,6 +191,7 @@ function buildFacadeActivationCheckParams(
 }
 
 // oxlint-disable-next-line typescript/no-unnecessary-type-parameters -- Dynamic facade loaders use caller-supplied module surface types.
+/** Reused helper for load Bundled Plugin Public Surface Module Sync behavior in src/plugin-sdk. */
 export function loadBundledPluginPublicSurfaceModuleSync<T extends object>(
   params: BundledPluginPublicSurfaceParams,
 ): T {
@@ -212,6 +216,7 @@ export function loadBundledPluginPublicSurfaceModuleSync<T extends object>(
   });
 }
 
+/** Return whether the current install/activation state permits loading a bundled plugin facade. */
 export function canLoadActivatedBundledPluginPublicSurface(params: {
   dirName: string;
   artifactBasename: string;
@@ -223,6 +228,7 @@ export function canLoadActivatedBundledPluginPublicSurface(params: {
 }
 
 // oxlint-disable-next-line typescript/no-unnecessary-type-parameters -- Dynamic facade loaders use caller-supplied module surface types.
+/** Load a bundled plugin facade only after activation policy allows it. */
 export function loadActivatedBundledPluginPublicSurfaceModuleSync<T extends object>(params: {
   dirName: string;
   artifactBasename: string;
@@ -235,6 +241,7 @@ export function loadActivatedBundledPluginPublicSurfaceModuleSync<T extends obje
 }
 
 // oxlint-disable-next-line typescript/no-unnecessary-type-parameters -- Dynamic facade loaders use caller-supplied module surface types.
+/** Try to load an activated bundled plugin facade, returning null instead of throwing on denial. */
 export function tryLoadActivatedBundledPluginPublicSurfaceModuleSync<T extends object>(params: {
   dirName: string;
   artifactBasename: string;
@@ -249,12 +256,14 @@ export function tryLoadActivatedBundledPluginPublicSurfaceModuleSync<T extends o
   return loadBundledPluginPublicSurfaceModuleSync<T>(params);
 }
 
+/** Reused helper for reset Facade Runtime State For Test behavior in src/plugin-sdk. */
 export function resetFacadeRuntimeStateForTest(): void {
   resetFacadeLoaderStateForTest();
   facadeActivationCheckRuntimeModule = undefined;
   facadeActivationCheckRuntimeLoaders.clear();
 }
 
+/** Reused constant for testing behavior in src/plugin-sdk. */
 export const testing = {
   setFacadeActivationCheckRuntimeForTest,
   loadFacadeModuleAtLocationSync,
@@ -299,4 +308,5 @@ export const testing = {
       buildFacadeActivationCheckParams(params),
     )) as (params: BundledPluginPublicSurfaceParams) => string,
 };
+/** Re-exported API for src/plugin-sdk, starting with testing. */
 export { testing as __testing };

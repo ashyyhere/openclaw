@@ -1,3 +1,4 @@
+// infra windows task restart helpers and runtime behavior.
 import { spawn } from "node:child_process";
 import { randomUUID } from "node:crypto";
 import fs from "node:fs";
@@ -70,6 +71,7 @@ function buildScheduledTaskRestartScript(params: {
   return lines.join("\r\n");
 }
 
+/** Reused helper for relaunch Gateway Scheduled Task behavior in src/infra. */
 export function relaunchGatewayScheduledTask(env: NodeJS.ProcessEnv = process.env): RestartAttempt {
   const taskName = resolveWindowsTaskName(env);
   const taskScriptPath = resolveTaskScriptPath(env);

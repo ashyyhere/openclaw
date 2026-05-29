@@ -1,3 +1,4 @@
+// Coverage for command authorization, detection, activation, and registry controls.
 import { describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import { setActivePluginRegistry } from "../plugins/runtime.js";

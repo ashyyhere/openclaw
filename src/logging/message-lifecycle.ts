@@ -1,3 +1,4 @@
+// logging message lifecycle helpers and runtime behavior.
 import { logMessageProcessed, logMessageQueued, logSessionStateChange } from "./diagnostic.js";
 
 type MessageLifecycleRef = {
@@ -13,6 +14,7 @@ type MessageLifecycleProcessedOptions = MessageLifecycleRef & {
   error?: string;
 };
 
+/** Reused helper for create Diagnostic Message Lifecycle behavior in src/logging. */
 export function createDiagnosticMessageLifecycle(
   params: MessageLifecycleRef & {
     enabled: boolean;

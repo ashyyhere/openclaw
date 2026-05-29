@@ -1,3 +1,4 @@
+// extensions/voice-call/src/manager lookup helpers and runtime behavior.
 import type { CallId, CallRecord } from "../types.js";
 
 export function getCallByProviderCallId(params: {

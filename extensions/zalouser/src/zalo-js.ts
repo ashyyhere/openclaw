@@ -1,3 +1,4 @@
+// extensions/zalouser/src zalo js helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import fs from "node:fs";
 import os from "node:os";

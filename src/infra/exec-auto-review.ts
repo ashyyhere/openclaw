@@ -1,5 +1,8 @@
+// infra exec auto review helpers and runtime behavior.
+/** Shared type for Exec Auto Review Risk in src/infra. */
 export type ExecAutoReviewRisk = "unknown" | "low" | "medium" | "high";
 
+/** Shared type for Exec Auto Review Decision in src/infra. */
 export type ExecAutoReviewDecision =
   | {
       decision: "allow-once";
@@ -12,8 +15,10 @@ export type ExecAutoReviewDecision =
       risk: ExecAutoReviewRisk;
     };
 
+/** Shared type for Exec Auto Review Host in src/infra. */
 export type ExecAutoReviewHost = "gateway" | "node";
 
+/** Shared type for Exec Auto Review Input in src/infra. */
 export type ExecAutoReviewInput = {
   command: string;
   argv?: readonly string[];
@@ -41,6 +46,7 @@ export type ExecAutoReviewInput = {
   };
 };
 
+/** Shared type for Exec Auto Reviewer in src/infra. */
 export type ExecAutoReviewer = (
   input: ExecAutoReviewInput,
 ) => Promise<ExecAutoReviewDecision> | ExecAutoReviewDecision;

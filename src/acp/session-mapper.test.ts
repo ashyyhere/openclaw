@@ -1,3 +1,4 @@
+/** Tests ACP request metadata to gateway session resolution. */
 import { describe, expect, it, vi } from "vitest";
 import type { GatewayClient } from "../gateway/client.js";
 import { parseSessionMeta, resolveSessionKey } from "./session-mapper.js";

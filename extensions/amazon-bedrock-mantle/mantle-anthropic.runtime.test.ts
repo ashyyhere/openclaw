@@ -1,3 +1,4 @@
+// Tests extensions/amazon-bedrock-mantle mantle anthropic runtime test behavior.
 import type { Api, Model } from "openclaw/plugin-sdk/llm";
 import { describe, expect, it, vi } from "vitest";
 import {

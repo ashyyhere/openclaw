@@ -1,3 +1,4 @@
+/** Builds diagnostic reports for generated system prompt content. */
 import { createHash } from "node:crypto";
 import type { SessionSystemPromptReport } from "../config/sessions/types.js";
 import { buildBootstrapInjectionStats } from "./bootstrap-budget.js";
@@ -94,6 +95,7 @@ function measureRenderedProjectContextChars(systemPrompt: string): number {
   return extractBetween(systemPrompt, "\n# Project Context\n", "\n## Silent Replies\n").length;
 }
 
+/** Reused helper for build System Prompt Report behavior in src/agents. */
 export function buildSystemPromptReport(params: {
   source: SessionSystemPromptReport["source"];
   generatedAt: number;

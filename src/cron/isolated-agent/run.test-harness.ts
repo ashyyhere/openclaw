@@ -1,3 +1,4 @@
+// cron/isolated-agent run test harness helpers and runtime behavior.
 import { vi, type Mock } from "vitest";
 import { resolveFastModeState as resolveFastModeStateImpl } from "../../agents/fast-mode.js";
 import { LiveSessionModelSwitchError } from "../../agents/live-model-switch-error.js";
@@ -38,47 +39,84 @@ function normalizeModelSelectionForTest(value: unknown): string | undefined {
   return normalizeOptionalString((value as { primary?: unknown }).primary);
 }
 
+/** Reused constant for build Workspace Skill Snapshot Mock behavior in src/cron/isolated-agent. */
 export const buildWorkspaceSkillSnapshotMock = createMock();
+/** Reused constant for resolve Agent Config Mock behavior in src/cron/isolated-agent. */
 export const resolveAgentConfigMock = createMock();
+/** Reused constant for resolve Effective Model Fallbacks Mock behavior in src/cron/isolated-agent. */
 export const resolveEffectiveModelFallbacksMock = createMock();
+/** Reused constant for resolve Subagent Model Fallbacks Override Mock behavior in src/cron/isolated-agent. */
 export const resolveSubagentModelFallbacksOverrideMock = createMock();
+/** Reused constant for resolve Agent Model Fallbacks Override Mock behavior in src/cron/isolated-agent. */
 export const resolveAgentModelFallbacksOverrideMock = createMock();
+/** Reused constant for resolve Agent Skills Filter Mock behavior in src/cron/isolated-agent. */
 export const resolveAgentSkillsFilterMock = createMock();
+/** Reused constant for get Model Ref Status Mock behavior in src/cron/isolated-agent. */
 export const getModelRefStatusMock = createMock();
+/** Reused constant for is Cli Provider Mock behavior in src/cron/isolated-agent. */
 export const isCliProviderMock = createMock();
+/** Reused constant for resolve Cli Runtime Execution Provider Mock behavior in src/cron/isolated-agent. */
 export const resolveCliRuntimeExecutionProviderMock = createMock();
+/** Reused constant for resolve Allowed Model Ref Mock behavior in src/cron/isolated-agent. */
 export const resolveAllowedModelRefMock = createMock();
+/** Reused constant for resolve Configured Model Ref Mock behavior in src/cron/isolated-agent. */
 export const resolveConfiguredModelRefMock = createMock();
+/** Reused constant for resolve Hooks Gmail Model Mock behavior in src/cron/isolated-agent. */
 export const resolveHooksGmailModelMock = createMock();
+/** Reused constant for resolve Thinking Default Mock behavior in src/cron/isolated-agent. */
 export const resolveThinkingDefaultMock = createMock();
+/** Reused constant for run With Model Fallback Mock behavior in src/cron/isolated-agent. */
 export const runWithModelFallbackMock = createMock();
+/** Reused constant for run Embedded Agent Mock behavior in src/cron/isolated-agent. */
 export const runEmbeddedAgentMock = createMock();
+/** Reused constant for run Cli Agent Mock behavior in src/cron/isolated-agent. */
 export const runCliAgentMock = createMock();
+/** Reused constant for lookup Context Tokens Mock behavior in src/cron/isolated-agent. */
 export const lookupContextTokensMock = createMock();
+/** Reused constant for get Cli Session Id Mock behavior in src/cron/isolated-agent. */
 export const getCliSessionIdMock = createMock();
 export const clearCliSessionMock = createMock();
 export const updateSessionStoreMock = createMock();
+/** Reused constant for resolve Cron Session Mock behavior in src/cron/isolated-agent. */
 export const resolveCronSessionMock = createMock();
+/** Reused constant for log Warn Mock behavior in src/cron/isolated-agent. */
 export const logWarnMock = createMock();
+/** Reused constant for count Active Descendant Runs Mock behavior in src/cron/isolated-agent. */
 export const countActiveDescendantRunsMock = createMock();
+/** Reused constant for list Descendant Runs For Requester Mock behavior in src/cron/isolated-agent. */
 export const listDescendantRunsForRequesterMock = createMock();
+/** Reused constant for pick Last Non Empty Text From Payloads Mock behavior in src/cron/isolated-agent. */
 export const pickLastNonEmptyTextFromPayloadsMock = createMock();
+/** Reused constant for resolve Cron Payload Outcome Mock behavior in src/cron/isolated-agent. */
 export const resolveCronPayloadOutcomeMock = createMock();
+/** Reused constant for resolve Cron Delivery Plan Mock behavior in src/cron/isolated-agent. */
 export const resolveCronDeliveryPlanMock = createMock();
+/** Reused constant for resolve Delivery Target Mock behavior in src/cron/isolated-agent. */
 export const resolveDeliveryTargetMock = createMock();
+/** Reused constant for dispatch Cron Delivery Mock behavior in src/cron/isolated-agent. */
 export const dispatchCronDeliveryMock = createMock();
+/** Reused constant for cleanup Direct Cron Session Mock behavior in src/cron/isolated-agent. */
 export const cleanupDirectCronSessionMock = createMock();
+/** Reused constant for preflight Cron Model Provider Mock behavior in src/cron/isolated-agent. */
 export const preflightCronModelProviderMock = createMock();
+/** Reused constant for is Heartbeat Only Response Mock behavior in src/cron/isolated-agent. */
 export const isHeartbeatOnlyResponseMock = createMock();
+/** Reused constant for resolve Heartbeat Ack Max Chars Mock behavior in src/cron/isolated-agent. */
 export const resolveHeartbeatAckMaxCharsMock = createMock();
+/** Reused constant for resolve Session Auth Profile Override Mock behavior in src/cron/isolated-agent. */
 export const resolveSessionAuthProfileOverrideMock = createMock();
+/** Reused constant for resolve Fast Mode State Mock behavior in src/cron/isolated-agent. */
 export const resolveFastModeStateMock = createMock();
+/** Reused constant for get Channel Plugin Mock behavior in src/cron/isolated-agent. */
 export const getChannelPluginMock = createMock();
+/** Reused constant for retire Session Mcp Runtime Mock behavior in src/cron/isolated-agent. */
 export const retireSessionMcpRuntimeMock = createMock();
+/** Reused constant for ensure Runtime Plugins Loaded Mock behavior in src/cron/isolated-agent. */
 export const ensureRuntimePluginsLoadedMock = createMock();
 
 const resolveBootstrapWarningSignaturesSeenMock = createMock();
 const resolveCronStyleNowMock = createMock();
+/** Reused constant for resolve Cron Agent Lane Mock behavior in src/cron/isolated-agent. */
 export const resolveCronAgentLaneMock = createMock();
 const resolveAgentTimeoutMsMock = createMock();
 const deriveSessionTotalTokensMock = createMock();
@@ -86,7 +124,9 @@ const hasNonzeroUsageMock = createMock();
 const ensureAgentWorkspaceMock = createMock();
 const normalizeThinkLevelMock = createMock();
 const normalizeVerboseLevelMock = createMock();
+/** Reused constant for is Thinking Level Supported Mock behavior in src/cron/isolated-agent. */
 export const isThinkingLevelSupportedMock = createMock();
+/** Reused constant for resolve Supported Thinking Level Mock behavior in src/cron/isolated-agent. */
 export const resolveSupportedThinkingLevelMock = createMock();
 const supportsXHighThinkingMock = createMock();
 const resolveSessionTranscriptPathMock = createMock();
@@ -98,6 +138,7 @@ const mapHookExternalContentSourceMock = createMock();
 const isExternalHookSessionMock = createMock();
 const resolveHookExternalContentSourceMock = createMock();
 const getSkillsSnapshotVersionMock = createMock();
+/** Reused constant for load Model Catalog Mock behavior in src/cron/isolated-agent. */
 export const loadModelCatalogMock = createMock();
 const getRemoteSkillEligibilityMock = createMock();
 
@@ -335,6 +376,7 @@ vi.mock("./session.js", () => ({
   resolveCronSession: resolveCronSessionMock,
 }));
 
+/** Reused helper for make Cron Session Entry behavior in src/cron/isolated-agent. */
 export function makeCronSessionEntry(overrides?: Record<string, unknown>): CronSessionEntry {
   return {
     sessionId: "test-session-id",
@@ -345,6 +387,7 @@ export function makeCronSessionEntry(overrides?: Record<string, unknown>): CronS
   };
 }
 
+/** Reused helper for make Cron Session behavior in src/cron/isolated-agent. */
 export function makeCronSession(overrides?: Record<string, unknown>): CronSession {
   return {
     storePath: "/tmp/store.json",
@@ -374,6 +417,7 @@ function makeDefaultEmbeddedResult() {
   };
 }
 
+/** Reused helper for mock Run Cron Fallback Passthrough behavior in src/cron/isolated-agent. */
 export function mockRunCronFallbackPassthrough(): void {
   runWithModelFallbackMock.mockImplementation(async ({ provider, model, run }) => {
     const result = await run(provider, model);
@@ -639,6 +683,7 @@ function resetRunSessionMocks(): void {
   retireSessionMcpRuntimeMock.mockResolvedValue(true);
 }
 
+/** Reused helper for reset Run Cron Isolated Agent Turn Harness behavior in src/cron/isolated-agent. */
 export function resetRunCronIsolatedAgentTurnHarness(): void {
   vi.clearAllMocks();
   resetRunConfigMocks();
@@ -650,12 +695,14 @@ export function resetRunCronIsolatedAgentTurnHarness(): void {
   ensureRuntimePluginsLoadedMock.mockReset();
 }
 
+/** Reused helper for clear Fast Test Env behavior in src/cron/isolated-agent. */
 export function clearFastTestEnv(): string | undefined {
   const previousFastTestEnv = process.env.OPENCLAW_TEST_FAST;
   delete process.env.OPENCLAW_TEST_FAST;
   return previousFastTestEnv;
 }
 
+/** Reused helper for restore Fast Test Env behavior in src/cron/isolated-agent. */
 export function restoreFastTestEnv(previousFastTestEnv: string | undefined): void {
   if (previousFastTestEnv == null) {
     delete process.env.OPENCLAW_TEST_FAST;
@@ -664,6 +711,7 @@ export function restoreFastTestEnv(previousFastTestEnv: string | undefined): voi
   process.env.OPENCLAW_TEST_FAST = previousFastTestEnv;
 }
 
+/** Reused helper for load Run Cron Isolated Agent Turn behavior in src/cron/isolated-agent. */
 export async function loadRunCronIsolatedAgentTurn() {
   const { runCronIsolatedAgentTurn } = await import("./run.js");
   return runCronIsolatedAgentTurn;

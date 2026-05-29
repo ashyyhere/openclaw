@@ -1,3 +1,4 @@
+// media-understanding entry capabilities helpers and runtime behavior.
 import type { MediaUnderstandingModelConfig } from "../config/types.tools.js";
 import { normalizeMediaProviderId } from "./provider-id.js";
 import type {
@@ -15,6 +16,7 @@ function resolveEntryType(entry: MediaUnderstandingModelConfig): "provider" | "c
   return entry.type ?? (entry.command ? "cli" : "provider");
 }
 
+/** Reused helper for resolve Configured Media Entry Capabilities behavior in src/media-understanding. */
 export function resolveConfiguredMediaEntryCapabilities(
   entry: MediaUnderstandingModelConfig,
 ): MediaUnderstandingCapability[] | undefined {
@@ -25,6 +27,7 @@ export function resolveConfiguredMediaEntryCapabilities(
   return capabilities.length > 0 ? capabilities : undefined;
 }
 
+/** Reused helper for resolve Effective Media Entry Capabilities behavior in src/media-understanding. */
 export function resolveEffectiveMediaEntryCapabilities(params: {
   entry: MediaUnderstandingModelConfig;
   source: "shared" | "capability";
@@ -47,6 +50,7 @@ export function resolveEffectiveMediaEntryCapabilities(params: {
   return params.providerRegistry.get(providerId)?.capabilities;
 }
 
+/** Reused helper for matches Media Entry Capability behavior in src/media-understanding. */
 export function matchesMediaEntryCapability(params: {
   entry: MediaUnderstandingModelConfig;
   source: "shared" | "capability";

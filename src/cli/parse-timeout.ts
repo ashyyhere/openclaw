@@ -1,5 +1,7 @@
+/** Parses CLI timeout values as positive millisecond integers. */
 import { parseStrictPositiveInteger } from "../infra/parse-finite-number.js";
 
+/** Reused helper for parse Timeout Ms behavior in src/cli. */
 export function parseTimeoutMs(raw: unknown): number | undefined {
   if (raw === undefined || raw === null) {
     return undefined;
@@ -26,6 +28,7 @@ function invalidTimeout(value?: string): Error {
   );
 }
 
+/** Reused helper for parse Timeout Ms With Fallback behavior in src/cli. */
 export function parseTimeoutMsWithFallback(
   raw: unknown,
   fallbackMs: number,

@@ -1,3 +1,4 @@
+/** Registers sandbox inspection and recreation CLI commands. */
 import type { Command } from "commander";
 import { formatDocsLink } from "../../packages/terminal-core/src/links.js";
 import { theme } from "../../packages/terminal-core/src/theme.js";
@@ -56,6 +57,7 @@ function createRunner(
 
 // --- Registration ---
 
+/** Reused helper for register Sandbox Cli behavior in src/cli. */
 export function registerSandboxCli(program: Command) {
   const sandbox = program
     .command("sandbox")

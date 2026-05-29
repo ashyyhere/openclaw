@@ -1,3 +1,4 @@
+// Tests extensions/codex/src/app-server computer use test behavior.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

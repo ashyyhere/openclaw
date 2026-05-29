@@ -1,3 +1,4 @@
+/** Scrubs sensitive values from config audit logs. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import { note } from "../../packages/terminal-core/src/note.js";
@@ -9,6 +10,7 @@ function formatEntryCount(count: number): string {
   return `${count} ${count === 1 ? "entry" : "entries"}`;
 }
 
+/** Reused helper for maybe Scrub Config Audit Log behavior in src/commands. */
 export async function maybeScrubConfigAuditLog(params: {
   shouldRepair: boolean;
   env?: NodeJS.ProcessEnv;

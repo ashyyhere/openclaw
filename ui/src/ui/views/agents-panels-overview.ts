@@ -1,3 +1,4 @@
+// ui/src/ui/views agents panels overview helpers and runtime behavior.
 import { html, nothing } from "lit";
 import { t } from "../../i18n/index.ts";
 import type {
@@ -18,6 +19,7 @@ import {
 } from "./agents-utils.ts";
 import type { AgentsPanel } from "./agents.types.ts";
 
+/** Reused helper for render Agent Overview behavior in ui/src/ui/views. */
 export function renderAgentOverview(params: {
   agent: AgentsListResult["agents"][number];
   basePath: string;

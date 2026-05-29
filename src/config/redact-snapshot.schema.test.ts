@@ -1,3 +1,4 @@
+// Tests config redact snapshot schema test behavior.
 import { describe, expect, it } from "vitest";
 import { redactSnapshotTestHints as mainSchemaHints } from "../../test/helpers/config/redact-snapshot-test-hints.js";
 import { REDACTED_SENTINEL, redactConfigSnapshot } from "./redact-snapshot.js";

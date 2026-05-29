@@ -1,3 +1,4 @@
+// Tests extensions/openai image generation provider test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { buildOpenAIImageGenerationProvider } from "./image-generation-provider.js";
 

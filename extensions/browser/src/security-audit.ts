@@ -1,3 +1,4 @@
+// extensions/browser/src security audit helpers and runtime behavior.
 import type { OpenClawPluginSecurityAuditContext } from "openclaw/plugin-sdk/plugin-entry";
 import { hasConfiguredSecretInput } from "openclaw/plugin-sdk/secret-input";
 import { formatCliCommand } from "openclaw/plugin-sdk/setup-tools";

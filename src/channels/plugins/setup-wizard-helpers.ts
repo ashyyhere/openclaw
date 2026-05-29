@@ -1,3 +1,4 @@
+/** Public helper functions exposed to channel setup wizard implementations. */
 import type { DmPolicy, GroupPolicy } from "../../config/types.base.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { SecretInput } from "../../config/types.secrets.js";
@@ -29,6 +30,7 @@ function loadProviderAuthInput() {
   return providerAuthInputPromise;
 }
 
+/** Reused constant for prompt Account Id behavior in src/channels/plugins. */
 export const promptAccountId: PromptAccountId = async (params: PromptAccountIdParams) => {
   const existingIds = params.listAccountIds(params.cfg);
   const initial = params.currentId?.trim() || params.defaultAccountId || DEFAULT_ACCOUNT_ID;
@@ -62,6 +64,7 @@ export const promptAccountId: PromptAccountId = async (params: PromptAccountIdPa
   return normalized;
 };
 
+/** Reused helper for add Wildcard Allow From behavior in src/channels/plugins. */
 export function addWildcardAllowFrom(allowFrom?: ReadonlyArray<string | number> | null): string[] {
   const next = normalizeStringEntries(allowFrom ?? []);
   if (!next.includes("*")) {
@@ -70,6 +73,7 @@ export function addWildcardAllowFrom(allowFrom?: ReadonlyArray<string | number> 
   return next;
 }
 
+/** Reused helper for merge Allow From Entries behavior in src/channels/plugins. */
 export function mergeAllowFromEntries(
   current: Array<string | number> | null | undefined,
   additions: Array<string | number>,
@@ -78,12 +82,14 @@ export function mergeAllowFromEntries(
   return uniqueStrings(merged);
 }
 
+/** Reused helper for split Setup Entries behavior in src/channels/plugins. */
 export function splitSetupEntries(raw: string): string[] {
   return normalizeStringEntries(raw.split(/[\n,;]+/g));
 }
 
 type ParsedSetupEntry = { value: string } | { error: string };
 
+/** Reused helper for parse Setup Entries With Parser behavior in src/channels/plugins. */
 export function parseSetupEntriesWithParser(
   raw: string,
   parseEntry: (entry: string) => ParsedSetupEntry,
@@ -100,6 +106,7 @@ export function parseSetupEntriesWithParser(
   return { entries: normalizeAllowFromEntries(entries) };
 }
 
+/** Reused helper for parse Setup Entries Allowing Wildcard behavior in src/channels/plugins. */
 export function parseSetupEntriesAllowingWildcard(
   raw: string,
   parseEntry: (entry: string) => ParsedSetupEntry,
@@ -112,6 +119,7 @@ export function parseSetupEntriesAllowingWildcard(
   });
 }
 
+/** Reused helper for parse Mention Or Prefixed Id behavior in src/channels/plugins. */
 export function parseMentionOrPrefixedId(params: {
   value: string;
   mentionPattern: RegExp;
@@ -137,6 +145,7 @@ export function parseMentionOrPrefixedId(params: {
   return params.normalizeId ? params.normalizeId(stripped) : stripped;
 }
 
+/** Reused helper for normalize Allow From Entries behavior in src/channels/plugins. */
 export function normalizeAllowFromEntries(
   entries: Array<string | number>,
   normalizeEntry?: (value: string) => string | null | undefined,
@@ -155,6 +164,7 @@ export function normalizeAllowFromEntries(
   return uniqueStrings(normalized);
 }
 
+/** Reused helper for create Standard Channel Setup Status behavior in src/channels/plugins. */
 export function createStandardChannelSetupStatus(params: {
   channelLabel: string;
   configuredLabel: string;
@@ -201,6 +211,7 @@ export function createStandardChannelSetupStatus(params: {
   return status;
 }
 
+/** Reused helper for resolve Setup Account Id behavior in src/channels/plugins. */
 export function resolveSetupAccountId(params: {
   accountId?: string;
   defaultAccountId: string;
@@ -208,6 +219,7 @@ export function resolveSetupAccountId(params: {
   return params.accountId?.trim() ? normalizeAccountId(params.accountId) : params.defaultAccountId;
 }
 
+/** Reused helper for resolve Account Id For Configure behavior in src/channels/plugins. */
 export async function resolveAccountIdForConfigure(params: {
   cfg: OpenClawConfig;
   prompter: WizardPrompter;
@@ -232,6 +244,7 @@ export async function resolveAccountIdForConfigure(params: {
   return accountId;
 }
 
+/** Reused helper for set Account Allow From For Channel behavior in src/channels/plugins. */
 export function setAccountAllowFromForChannel(params: {
   cfg: OpenClawConfig;
   channel: string;
@@ -248,6 +261,7 @@ export function setAccountAllowFromForChannel(params: {
   });
 }
 
+/** Reused helper for patch Top Level Channel Config Section behavior in src/channels/plugins. */
 export function patchTopLevelChannelConfigSection(params: {
   cfg: OpenClawConfig;
   channel: string;
@@ -274,6 +288,7 @@ export function patchTopLevelChannelConfigSection(params: {
   };
 }
 
+/** Reused helper for patch Nested Channel Config Section behavior in src/channels/plugins. */
 export function patchNestedChannelConfigSection(params: {
   cfg: OpenClawConfig;
   channel: string;
@@ -307,6 +322,7 @@ export function patchNestedChannelConfigSection(params: {
   };
 }
 
+/** Reused helper for set Top Level Channel Allow From behavior in src/channels/plugins. */
 export function setTopLevelChannelAllowFrom(params: {
   cfg: OpenClawConfig;
   channel: string;
@@ -321,6 +337,7 @@ export function setTopLevelChannelAllowFrom(params: {
   });
 }
 
+/** Reused helper for set Nested Channel Allow From behavior in src/channels/plugins. */
 export function setNestedChannelAllowFrom(params: {
   cfg: OpenClawConfig;
   channel: string;
@@ -337,6 +354,7 @@ export function setNestedChannelAllowFrom(params: {
   });
 }
 
+/** Reused helper for set Top Level Channel Dm Policy With Allow From behavior in src/channels/plugins. */
 export function setTopLevelChannelDmPolicyWithAllowFrom(params: {
   cfg: OpenClawConfig;
   channel: string;
@@ -361,6 +379,7 @@ export function setTopLevelChannelDmPolicyWithAllowFrom(params: {
   });
 }
 
+/** Reused helper for set Nested Channel Dm Policy With Allow From behavior in src/channels/plugins. */
 export function setNestedChannelDmPolicyWithAllowFrom(params: {
   cfg: OpenClawConfig;
   channel: string;
@@ -391,6 +410,7 @@ export function setNestedChannelDmPolicyWithAllowFrom(params: {
   });
 }
 
+/** Reused helper for set Top Level Channel Group Policy behavior in src/channels/plugins. */
 export function setTopLevelChannelGroupPolicy(params: {
   cfg: OpenClawConfig;
   channel: string;
@@ -405,6 +425,7 @@ export function setTopLevelChannelGroupPolicy(params: {
   });
 }
 
+/** Reused helper for create Top Level Channel Dm Policy behavior in src/channels/plugins. */
 export function createTopLevelChannelDmPolicy(params: {
   label: string;
   channel: string;
@@ -429,6 +450,7 @@ export function createTopLevelChannelDmPolicy(params: {
   };
 }
 
+/** Reused helper for create Nested Channel Dm Policy behavior in src/channels/plugins. */
 export function createNestedChannelDmPolicy(params: {
   label: string;
   channel: string;
@@ -457,6 +479,7 @@ export function createNestedChannelDmPolicy(params: {
   };
 }
 
+/** Reused helper for create Top Level Channel Dm Policy Setter behavior in src/channels/plugins. */
 export function createTopLevelChannelDmPolicySetter(params: {
   channel: string;
   getAllowFrom?: (cfg: OpenClawConfig) => Array<string | number> | undefined;
@@ -470,6 +493,7 @@ export function createTopLevelChannelDmPolicySetter(params: {
     });
 }
 
+/** Reused helper for create Nested Channel Dm Policy Setter behavior in src/channels/plugins. */
 export function createNestedChannelDmPolicySetter(params: {
   channel: string;
   section: string;
@@ -487,6 +511,7 @@ export function createNestedChannelDmPolicySetter(params: {
     });
 }
 
+/** Reused helper for create Top Level Channel Allow From Setter behavior in src/channels/plugins. */
 export function createTopLevelChannelAllowFromSetter(params: {
   channel: string;
   enabled?: boolean;
@@ -500,6 +525,7 @@ export function createTopLevelChannelAllowFromSetter(params: {
     });
 }
 
+/** Reused helper for create Nested Channel Allow From Setter behavior in src/channels/plugins. */
 export function createNestedChannelAllowFromSetter(params: {
   channel: string;
   section: string;
@@ -515,6 +541,7 @@ export function createNestedChannelAllowFromSetter(params: {
     });
 }
 
+/** Reused helper for create Top Level Channel Group Policy Setter behavior in src/channels/plugins. */
 export function createTopLevelChannelGroupPolicySetter(params: {
   channel: string;
   enabled?: boolean;
@@ -528,6 +555,7 @@ export function createTopLevelChannelGroupPolicySetter(params: {
     });
 }
 
+/** Reused helper for set Channel Dm Policy With Allow From behavior in src/channels/plugins. */
 export function setChannelDmPolicyWithAllowFrom(params: {
   cfg: OpenClawConfig;
   channel: string;
@@ -549,6 +577,7 @@ export function setChannelDmPolicyWithAllowFrom(params: {
   };
 }
 
+/** Reused helper for set Compat Channel Dm Policy With Allow From behavior in src/channels/plugins. */
 export function setCompatChannelDmPolicyWithAllowFrom(params: {
   cfg: OpenClawConfig;
   channel: string;
@@ -578,6 +607,7 @@ export function setCompatChannelDmPolicyWithAllowFrom(params: {
   });
 }
 
+/** Reused helper for set Compat Channel Allow From behavior in src/channels/plugins. */
 export function setCompatChannelAllowFrom(params: {
   cfg: OpenClawConfig;
   channel: string;
@@ -590,6 +620,7 @@ export function setCompatChannelAllowFrom(params: {
   });
 }
 
+/** Reused helper for set Account Group Policy For Channel behavior in src/channels/plugins. */
 export function setAccountGroupPolicyForChannel(params: {
   cfg: OpenClawConfig;
   channel: string;
@@ -604,6 +635,7 @@ export function setAccountGroupPolicyForChannel(params: {
   });
 }
 
+/** Reused helper for set Account Dm Allow From For Channel behavior in src/channels/plugins. */
 export function setAccountDmAllowFromForChannel(params: {
   cfg: OpenClawConfig;
   channel: string;
@@ -618,6 +650,7 @@ export function setAccountDmAllowFromForChannel(params: {
   });
 }
 
+/** Reused helper for create Compat Channel Dm Policy behavior in src/channels/plugins. */
 export function createCompatChannelDmPolicy(params: {
   label: string;
   channel: string;
@@ -694,6 +727,7 @@ export function createCompatChannelDmPolicy(params: {
   };
 }
 
+/** Reused helper for resolve Group Allowlist With Lookup Notes behavior in src/channels/plugins. */
 export async function resolveGroupAllowlistWithLookupNotes<TResolved>(params: {
   label: string;
   prompter: Pick<WizardPrompter, "note">;
@@ -719,6 +753,7 @@ export async function resolveGroupAllowlistWithLookupNotes<TResolved>(params: {
   }
 }
 
+/** Reused helper for create Account Scoped Allow From Section behavior in src/channels/plugins. */
 export function createAccountScopedAllowFromSection(params: {
   channel: string;
   credentialInputKey?: NonNullable<ChannelSetupWizard["allowFrom"]>["credentialInputKey"];
@@ -749,6 +784,7 @@ export function createAccountScopedAllowFromSection(params: {
   };
 }
 
+/** Reused helper for create Account Scoped Group Access Section behavior in src/channels/plugins. */
 export function createAccountScopedGroupAccessSection<TResolved>(params: {
   channel: string;
   label: string;
@@ -816,6 +852,7 @@ export function createAccountScopedGroupAccessSection<TResolved>(params: {
 type AccountScopedChannel = string;
 type CompatDmChannel = string;
 
+/** Reused helper for patch Compat Dm Channel Config behavior in src/channels/plugins. */
 export function patchCompatDmChannelConfig(params: {
   cfg: OpenClawConfig;
   channel: string;
@@ -840,6 +877,7 @@ export function patchCompatDmChannelConfig(params: {
   };
 }
 
+/** Reused helper for set Setup Channel Enabled behavior in src/channels/plugins. */
 export function setSetupChannelEnabled(
   cfg: OpenClawConfig,
   channel: string,
@@ -889,6 +927,7 @@ function patchConfigForScopedAccount(params: {
   });
 }
 
+/** Reused helper for patch Channel Config For Account behavior in src/channels/plugins. */
 export function patchChannelConfigForAccount(params: {
   cfg: OpenClawConfig;
   channel: AccountScopedChannel;
@@ -901,6 +940,7 @@ export function patchChannelConfigForAccount(params: {
   });
 }
 
+/** Reused helper for apply Single Token Prompt Result behavior in src/channels/plugins. */
 export function applySingleTokenPromptResult(params: {
   cfg: OpenClawConfig;
   channel: string;
@@ -931,6 +971,7 @@ export function applySingleTokenPromptResult(params: {
   return next;
 }
 
+/** Reused helper for build Single Channel Secret Prompt State behavior in src/channels/plugins. */
 export function buildSingleChannelSecretPromptState(params: {
   accountConfigured: boolean;
   hasConfigToken: boolean;
@@ -948,6 +989,7 @@ export function buildSingleChannelSecretPromptState(params: {
   };
 }
 
+/** Reused helper for prompt Single Channel Token behavior in src/channels/plugins. */
 export async function promptSingleChannelToken(params: {
   prompter: Pick<WizardPrompter, "confirm" | "text">;
   accountConfigured: boolean;
@@ -989,11 +1031,13 @@ export async function promptSingleChannelToken(params: {
   return { useEnv: false, token: await promptToken() };
 }
 
+/** Shared type for Single Channel Secret Input Prompt Result in src/channels/plugins. */
 export type SingleChannelSecretInputPromptResult =
   | { action: "keep" }
   | { action: "use-env" }
   | { action: "set"; value: SecretInput; resolvedValue: string };
 
+/** Reused helper for run Single Channel Secret Step behavior in src/channels/plugins. */
 export async function runSingleChannelSecretStep(params: {
   cfg: OpenClawConfig;
   prompter: Pick<WizardPrompter, "confirm" | "text" | "select" | "note">;
@@ -1070,6 +1114,7 @@ export async function runSingleChannelSecretStep(params: {
   };
 }
 
+/** Reused helper for prompt Single Channel Secret Input behavior in src/channels/plugins. */
 export async function promptSingleChannelSecretInput(params: {
   cfg: OpenClawConfig;
   prompter: Pick<WizardPrompter, "confirm" | "text" | "select" | "note">;
@@ -1149,6 +1194,7 @@ export async function promptSingleChannelSecretInput(params: {
 
 type ParsedAllowFromResult = { entries: string[]; error?: string };
 
+/** Reused helper for prompt Parsed Allow From For Account behavior in src/channels/plugins. */
 export async function promptParsedAllowFromForAccount<TConfig extends OpenClawConfig>(params: {
   cfg: TConfig;
   accountId?: string;
@@ -1203,6 +1249,7 @@ export async function promptParsedAllowFromForAccount<TConfig extends OpenClawCo
   });
 }
 
+/** Reused helper for create Prompt Parsed Allow From For Account behavior in src/channels/plugins. */
 export function createPromptParsedAllowFromForAccount<TConfig extends OpenClawConfig>(params: {
   defaultAccountId: string | ((cfg: TConfig) => string);
   noteTitle?: string;
@@ -1238,6 +1285,7 @@ export function createPromptParsedAllowFromForAccount<TConfig extends OpenClawCo
     });
 }
 
+/** Reused helper for prompt Parsed Allow From For Scoped Channel behavior in src/channels/plugins. */
 export async function promptParsedAllowFromForScopedChannel(params: {
   cfg: OpenClawConfig;
   channel: string;
@@ -1275,6 +1323,7 @@ export async function promptParsedAllowFromForScopedChannel(params: {
   });
 }
 
+/** Reused helper for create Top Level Channel Parsed Allow From Prompt behavior in src/channels/plugins. */
 export function createTopLevelChannelParsedAllowFromPrompt(params: {
   channel: string;
   defaultAccountId: string | ((cfg: OpenClawConfig) => string);
@@ -1321,6 +1370,7 @@ export function createTopLevelChannelParsedAllowFromPrompt(params: {
   });
 }
 
+/** Reused helper for create Nested Channel Parsed Allow From Prompt behavior in src/channels/plugins. */
 export function createNestedChannelParsedAllowFromPrompt(params: {
   channel: string;
   section: string;
@@ -1372,6 +1422,7 @@ export function createNestedChannelParsedAllowFromPrompt(params: {
   });
 }
 
+/** Reused helper for resolve Parsed Allow From Entries behavior in src/channels/plugins. */
 export function resolveParsedAllowFromEntries(params: {
   entries: string[];
   parseId: (raw: string) => string | null;
@@ -1386,6 +1437,7 @@ export function resolveParsedAllowFromEntries(params: {
   });
 }
 
+/** Reused helper for create Allow From Section behavior in src/channels/plugins. */
 export function createAllowFromSection(params: {
   helpTitle?: string;
   helpLines?: string[];
@@ -1414,6 +1466,7 @@ export function createAllowFromSection(params: {
   };
 }
 
+/** Reused helper for note Channel Lookup Summary behavior in src/channels/plugins. */
 export async function noteChannelLookupSummary(params: {
   prompter: Pick<WizardPrompter, "note">;
   label: string;
@@ -1435,6 +1488,7 @@ export async function noteChannelLookupSummary(params: {
   }
 }
 
+/** Reused helper for note Channel Lookup Failure behavior in src/channels/plugins. */
 export async function noteChannelLookupFailure(params: {
   prompter: Pick<WizardPrompter, "note">;
   label: string;
@@ -1452,6 +1506,7 @@ type AllowFromResolution = {
   id?: string | null;
 };
 
+/** Reused helper for resolve Entries With Optional Token behavior in src/channels/plugins. */
 export async function resolveEntriesWithOptionalToken<TResult>(params: {
   token?: string | null;
   entries: string[];
@@ -1468,6 +1523,7 @@ export async function resolveEntriesWithOptionalToken<TResult>(params: {
   });
 }
 
+/** Reused helper for prompt Resolved Allow From behavior in src/channels/plugins. */
 export async function promptResolvedAllowFrom(params: {
   prompter: WizardPrompter;
   existing: Array<string | number>;
@@ -1520,6 +1576,7 @@ export async function promptResolvedAllowFrom(params: {
   }
 }
 
+/** Reused helper for prompt Legacy Channel Allow From behavior in src/channels/plugins. */
 export async function promptLegacyChannelAllowFrom(params: {
   cfg: OpenClawConfig;
   channel: CompatDmChannel;
@@ -1554,6 +1611,7 @@ export async function promptLegacyChannelAllowFrom(params: {
   });
 }
 
+/** Reused helper for prompt Legacy Channel Allow From For Account behavior in src/channels/plugins. */
 export async function promptLegacyChannelAllowFromForAccount<TAccount>(params: {
   cfg: OpenClawConfig;
   channel: CompatDmChannel;
@@ -1593,7 +1651,11 @@ export async function promptLegacyChannelAllowFromForAccount<TAccount>(params: {
 }
 
 // Backwards-compatible aliases for existing setup SDK consumers.
+/** Reused constant for patch Legacy Dm Channel Config behavior in src/channels/plugins. */
 export const patchLegacyDmChannelConfig = patchCompatDmChannelConfig;
+/** Reused constant for set Legacy Channel Dm Policy With Allow From behavior in src/channels/plugins. */
 export const setLegacyChannelDmPolicyWithAllowFrom = setCompatChannelDmPolicyWithAllowFrom;
+/** Reused constant for set Legacy Channel Allow From behavior in src/channels/plugins. */
 export const setLegacyChannelAllowFrom = setCompatChannelAllowFrom;
+/** Reused constant for create Legacy Compat Channel Dm Policy behavior in src/channels/plugins. */
 export const createLegacyCompatChannelDmPolicy = createCompatChannelDmPolicy;

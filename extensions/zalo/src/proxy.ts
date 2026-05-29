@@ -1,3 +1,4 @@
+// extensions/zalo/src proxy helpers and runtime behavior.
 import { makeProxyFetch } from "openclaw/plugin-sdk/fetch-runtime";
 import type { ZaloFetch } from "./api.js";
 

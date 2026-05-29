@@ -1,7 +1,9 @@
+/** Installs missing doctor-managed support files and reports setup status. */
 import fs from "node:fs";
 import path from "node:path";
 import { note } from "../../packages/terminal-core/src/note.js";
 
+/** Reused helper for note Source Install Issues behavior in src/commands. */
 export function noteSourceInstallIssues(root: string | null) {
   if (!root) {
     return;

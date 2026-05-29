@@ -1,3 +1,4 @@
+/** Filters tool surfaces for lean local-model runs. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { normalizeAgentId, parseAgentSessionKey } from "../routing/session-key.js";
 import { resolveAgentConfig, resolveDefaultAgentId } from "./agent-scope-config.js";
@@ -24,6 +25,7 @@ function resolveLocalModelLeanAgentId(params: {
   return params.config ? resolveDefaultAgentId(params.config) : undefined;
 }
 
+/** Return whether local-model lean mode is enabled for a model. */
 export function isLocalModelLeanEnabled(params: {
   config?: OpenClawConfig;
   agentId?: string;
@@ -38,6 +40,7 @@ export function isLocalModelLeanEnabled(params: {
   return resolvedExperimental?.localModelLean ?? false;
 }
 
+/** Filter low-value tools when local-model lean mode is active. */
 export function filterLocalModelLeanTools(params: {
   tools: AnyAgentTool[];
   config?: OpenClawConfig;

@@ -1,3 +1,4 @@
+// extensions/tencent onboard helpers and runtime behavior.
 import {
   applyAgentDefaultModelPrimary,
   applyProviderConfigWithModelCatalog,

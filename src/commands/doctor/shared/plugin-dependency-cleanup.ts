@@ -1,3 +1,4 @@
+/** Cleans stale plugin dependency folders from state directories. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { resolveStateDir } from "../../../config/paths.js";
@@ -384,6 +385,7 @@ async function collectLegacyPluginDependencyTargets(
   );
 }
 
+/** Reused helper for cleanup Legacy Plugin Dependency State behavior in src/commands/doctor. */
 export async function cleanupLegacyPluginDependencyState(params: {
   env?: NodeJS.ProcessEnv;
   packageRoot?: string | null;
@@ -423,7 +425,9 @@ export async function cleanupLegacyPluginDependencyState(params: {
   return { changes, warnings };
 }
 
+/** Reused constant for testing behavior in src/commands/doctor. */
 export const testing = {
   collectLegacyPluginDependencyTargets,
 };
+/** Re-exported API for src/commands/doctor, starting with testing. */
 export { testing as __testing };

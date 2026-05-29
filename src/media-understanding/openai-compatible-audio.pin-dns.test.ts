@@ -1,3 +1,4 @@
+// Tests media-understanding openai compatible audio pin dns test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 const { postTranscriptionRequestMock } = vi.hoisted(() => ({

@@ -1,3 +1,4 @@
+// extensions/google provider policy api helpers and runtime behavior.
 import type { ProviderDefaultThinkingPolicyContext } from "openclaw/plugin-sdk/core";
 import type { ModelProviderConfig } from "openclaw/plugin-sdk/provider-model-types";
 import { normalizeGoogleProviderConfig, resolveGoogleThinkingProfile } from "./provider-policy.js";

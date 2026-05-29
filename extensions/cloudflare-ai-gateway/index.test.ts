@@ -1,3 +1,4 @@
+// Tests extensions/cloudflare-ai-gateway index test behavior.
 import type { StreamFn } from "openclaw/plugin-sdk/agent-core";
 import { capturePluginRegistration } from "openclaw/plugin-sdk/plugin-test-runtime";
 import { describe, expect, it } from "vitest";

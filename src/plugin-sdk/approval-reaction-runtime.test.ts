@@ -1,3 +1,4 @@
+/** Tests reaction-based approval prompts, emoji normalization, and target storage. */
 import { describe, expect, it } from "vitest";
 import type { ExecApprovalRequest } from "../infra/exec-approvals.js";
 import type { PluginApprovalRequest } from "../infra/plugin-approvals.js";

@@ -1,3 +1,4 @@
+// ui/src/ui app polling helpers and runtime behavior.
 import type { DebugState } from "./controllers/debug.ts";
 import { loadDebug } from "./controllers/debug.ts";
 import type { LogsState } from "./controllers/logs.ts";
@@ -12,8 +13,10 @@ type PollingHost = {
   tab: string;
 };
 
+/** Reused constant for NODES ACTIVE POLL INTERVAL MS behavior in ui/src/ui. */
 export const NODES_ACTIVE_POLL_INTERVAL_MS = 30_000;
 
+/** Reused helper for start Nodes Polling behavior in ui/src/ui. */
 export function startNodesPolling(host: PollingHost) {
   if (host.nodesPollInterval != null) {
     return;
@@ -26,6 +29,7 @@ export function startNodesPolling(host: PollingHost) {
   }, NODES_ACTIVE_POLL_INTERVAL_MS);
 }
 
+/** Reused helper for stop Nodes Polling behavior in ui/src/ui. */
 export function stopNodesPolling(host: PollingHost) {
   if (host.nodesPollInterval == null) {
     return;
@@ -34,6 +38,7 @@ export function stopNodesPolling(host: PollingHost) {
   host.nodesPollInterval = null;
 }
 
+/** Reused helper for start Logs Polling behavior in ui/src/ui. */
 export function startLogsPolling(host: PollingHost) {
   if (host.logsPollInterval != null) {
     return;
@@ -46,6 +51,7 @@ export function startLogsPolling(host: PollingHost) {
   }, 2000);
 }
 
+/** Reused helper for stop Logs Polling behavior in ui/src/ui. */
 export function stopLogsPolling(host: PollingHost) {
   if (host.logsPollInterval == null) {
     return;
@@ -54,6 +60,7 @@ export function stopLogsPolling(host: PollingHost) {
   host.logsPollInterval = null;
 }
 
+/** Reused helper for start Debug Polling behavior in ui/src/ui. */
 export function startDebugPolling(host: PollingHost) {
   if (host.debugPollInterval != null) {
     return;
@@ -66,6 +73,7 @@ export function startDebugPolling(host: PollingHost) {
   }, 3000);
 }
 
+/** Reused helper for stop Debug Polling behavior in ui/src/ui. */
 export function stopDebugPolling(host: PollingHost) {
   if (host.debugPollInterval == null) {
     return;

@@ -1,3 +1,4 @@
+// Tests extensions/qa-lab/src qa agent workspace test behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";

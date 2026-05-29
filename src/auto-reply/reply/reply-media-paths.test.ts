@@ -1,3 +1,4 @@
+// Coverage for reply media path normalization.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

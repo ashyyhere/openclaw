@@ -1,5 +1,7 @@
+// Handoff message builders for reinforcing current session hierarchy.
 import type { AgentMessage } from "../agents/runtime/index.js";
 
+/** Shared type for Handoff Snapshot in src/auto-reply. */
 export interface HandoffSnapshot {
   summary: string;
   activeSubagents: Array<{

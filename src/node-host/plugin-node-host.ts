@@ -1,3 +1,4 @@
+// node-host plugin node host helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { getActivePluginRegistry } from "../plugins/runtime.js";
 
@@ -10,6 +11,7 @@ async function loadPluginRegistryLoaderModule() {
   return await pluginRegistryLoaderModulePromise;
 }
 
+/** Reused helper for ensure Node Host Plugin Registry behavior in src/node-host. */
 export async function ensureNodeHostPluginRegistry(params: {
   config: OpenClawConfig;
   env?: NodeJS.ProcessEnv;
@@ -22,6 +24,7 @@ export async function ensureNodeHostPluginRegistry(params: {
   });
 }
 
+/** Reused helper for list Registered Node Host Caps And Commands behavior in src/node-host. */
 export function listRegisteredNodeHostCapsAndCommands(): {
   caps: string[];
   commands: string[];
@@ -41,6 +44,7 @@ export function listRegisteredNodeHostCapsAndCommands(): {
   };
 }
 
+/** Reused helper for invoke Registered Node Host Command behavior in src/node-host. */
 export async function invokeRegisteredNodeHostCommand(
   command: string,
   paramsJSON?: string | null,

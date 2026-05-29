@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server sandbox exec server helpers and runtime behavior.
 import { createHash, randomUUID } from "node:crypto";
 import { once } from "node:events";
 import type { IncomingMessage } from "node:http";

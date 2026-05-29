@@ -1,3 +1,4 @@
+// extensions/line/src signature helpers and runtime behavior.
 import crypto from "node:crypto";
 
 export function validateLineSignature(

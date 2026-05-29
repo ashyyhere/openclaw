@@ -1,3 +1,4 @@
+// logging/test-helpers console snapshot helpers and runtime behavior.
 export type ConsoleSnapshot = {
   log: typeof console.log;
   info: typeof console.info;

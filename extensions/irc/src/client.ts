@@ -1,3 +1,4 @@
+// extensions/irc/src client helpers and runtime behavior.
 import net from "node:net";
 import tls from "node:tls";
 import { withTimeout } from "openclaw/plugin-sdk/security-runtime";

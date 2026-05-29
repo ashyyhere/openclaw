@@ -1,5 +1,7 @@
+// config types sandbox helpers and runtime behavior.
 import type { SecretInput } from "./types.secrets.js";
 
+/** Shared type for Sandbox Docker Settings in src/config. */
 export type SandboxDockerSettings = {
   /** Docker image to use for sandbox containers. */
   image?: string;
@@ -63,6 +65,7 @@ export type SandboxDockerSettings = {
   dangerouslyAllowContainerNamespaceJoin?: boolean;
 };
 
+/** Shared type for Sandbox Browser Settings in src/config. */
 export type SandboxBrowserSettings = {
   enabled?: boolean;
   image?: string;
@@ -92,6 +95,7 @@ export type SandboxBrowserSettings = {
   binds?: string[];
 };
 
+/** Shared type for Sandbox Prune Settings in src/config. */
 export type SandboxPruneSettings = {
   /** Prune if idle for more than N hours (0 disables). */
   idleHours?: number;
@@ -99,6 +103,7 @@ export type SandboxPruneSettings = {
   maxAgeDays?: number;
 };
 
+/** Shared type for Sandbox Ssh Settings in src/config. */
 export type SandboxSshSettings = {
   /** SSH target in user@host[:port] form. */
   target?: string;

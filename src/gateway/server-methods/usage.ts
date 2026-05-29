@@ -1,3 +1,4 @@
+// gateway/server-methods usage helpers and runtime behavior.
 import fs from "node:fs";
 import {
   ErrorCodes,
@@ -893,6 +894,7 @@ function mergeUsageCacheStatus(
 }
 
 // Exposed for unit tests (kept as a single export to avoid widening the public API surface).
+/** Reused constant for test Api behavior in src/gateway/server-methods. */
 export const testApi = {
   parseDateParts,
   parseUtcOffsetToMinutes,
@@ -905,10 +907,13 @@ export const testApi = {
   loadCostUsageSummaryCached,
   costUsageCache,
 };
+/** Re-exported API for src/gateway/server-methods, starting with test Api. */
 export { testApi as __test };
 
+/** Re-exported API for src/gateway/server-methods, starting with Session Usage Entry. */
 export type { SessionUsageEntry, SessionsUsageAggregates, SessionsUsageResult };
 
+/** Reused constant for usage Handlers behavior in src/gateway/server-methods. */
 export const usageHandlers: GatewayRequestHandlers = {
   "usage.status": async ({ respond }) => {
     const summary = await loadProviderUsageSummary();

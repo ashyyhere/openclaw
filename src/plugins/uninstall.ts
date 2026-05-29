@@ -1,3 +1,4 @@
+// plugins uninstall helpers and runtime behavior.
 import { realpathSync } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -19,6 +20,7 @@ import {
 import { relinkOpenClawPeerDependenciesInManagedNpmRoot } from "./plugin-peer-link.js";
 import { defaultSlotIdForKey } from "./slots.js";
 
+/** Shared type for Uninstall Actions in src/plugins. */
 export type UninstallActions = {
   entry: boolean;
   install: boolean;
@@ -31,6 +33,7 @@ export type UninstallActions = {
   directory: boolean;
 };
 
+/** Reused constant for UNINSTALL ACTION LABELS behavior in src/plugins. */
 export const UNINSTALL_ACTION_LABELS = {
   entry: "config entry",
   install: "install record",
@@ -55,6 +58,7 @@ const UNINSTALL_ACTION_ORDER = [
   "directory",
 ] as const satisfies ReadonlyArray<keyof UninstallActions>;
 
+/** Reused helper for create Empty Uninstall Actions behavior in src/plugins. */
 export function createEmptyUninstallActions(
   overrides: Partial<UninstallActions> = {},
 ): UninstallActions {
@@ -77,6 +81,7 @@ function createEmptyConfigUninstallActions(): Omit<UninstallActions, "directory"
   return actions;
 }
 
+/** Reused helper for format Uninstall Action Labels behavior in src/plugins. */
 export function formatUninstallActionLabels(actions: UninstallActions): string[] {
   return UNINSTALL_ACTION_ORDER.flatMap((key) =>
     actions[key] ? [UNINSTALL_ACTION_LABELS[key]] : [],
@@ -87,11 +92,13 @@ function hasUninstallAction(actions: Omit<UninstallActions, "directory">): boole
   return Object.values(actions).some(Boolean);
 }
 
+/** Reused helper for format Uninstall Slot Reset Preview behavior in src/plugins. */
 export function formatUninstallSlotResetPreview(slotKey: "memory" | "contextEngine"): string {
   const actionKey = slotKey === "memory" ? "memorySlot" : "contextEngineSlot";
   return `${UNINSTALL_ACTION_LABELS[actionKey]} (will reset to "${defaultSlotIdForKey(slotKey)}")`;
 }
 
+/** Shared type for Uninstall Plugin Result in src/plugins. */
 export type UninstallPluginResult =
   | {
       ok: true;
@@ -102,6 +109,7 @@ export type UninstallPluginResult =
     }
   | { ok: false; error: string };
 
+/** Shared type for Plugin Uninstall Directory Removal in src/plugins. */
 export type PluginUninstallDirectoryRemoval = {
   target: string;
   cleanup?:
@@ -116,6 +124,7 @@ export type PluginUninstallDirectoryRemoval = {
       };
 };
 
+/** Shared type for Plugin Uninstall Plan Result in src/plugins. */
 export type PluginUninstallPlanResult =
   | {
       ok: true;
@@ -126,6 +135,7 @@ export type PluginUninstallPlanResult =
     }
   | { ok: false; error: string };
 
+/** Reused helper for resolve Uninstall Directory Target behavior in src/plugins. */
 export function resolveUninstallDirectoryTarget(params: {
   pluginId: string;
   hasInstall: boolean;
@@ -522,6 +532,7 @@ export function removePluginFromConfig(
   return { config, actions };
 }
 
+/** Shared type for Uninstall Plugin Params in src/plugins. */
 export type UninstallPluginParams = {
   config: OpenClawConfig;
   pluginId: string;
@@ -611,6 +622,7 @@ export function planPluginUninstall(params: UninstallPluginParams): PluginUninst
   };
 }
 
+/** Reused helper for apply Plugin Uninstall Directory Removal behavior in src/plugins. */
 export async function applyPluginUninstallDirectoryRemoval(
   removal: PluginUninstallDirectoryRemoval | null,
 ): Promise<{ directoryRemoved: boolean; warnings: string[] }> {
@@ -756,6 +768,7 @@ export async function applyPluginUninstallDirectoryRemoval(
   }
 }
 
+/** Reused helper for uninstall Plugin behavior in src/plugins. */
 export async function uninstallPlugin(
   params: UninstallPluginParams,
 ): Promise<UninstallPluginResult> {

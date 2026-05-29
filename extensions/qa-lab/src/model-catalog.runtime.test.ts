@@ -1,3 +1,4 @@
+// Tests extensions/qa-lab/src model catalog runtime test behavior.
 import { describe, expect, it } from "vitest";
 import {
   parseQaRunnerModelOptionsOutput,

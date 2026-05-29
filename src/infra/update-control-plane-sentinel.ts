@@ -1,3 +1,4 @@
+// infra update control plane sentinel helpers and runtime behavior.
 import fs from "node:fs/promises";
 import { isRecord } from "../shared/record-coerce.js";
 import {
@@ -11,8 +12,11 @@ import {
 } from "./update-restart-sentinel-payload.js";
 import type { UpdateRunResult } from "./update-runner.js";
 
+/** Reused constant for CONTROL PLANE UPDATE SENTINEL META ENV behavior in src/infra. */
 export const CONTROL_PLANE_UPDATE_SENTINEL_META_ENV = "OPENCLAW_CONTROL_PLANE_UPDATE_SENTINEL_META";
+/** Reused constant for CONTROL PLANE UPDATE HANDOFF STARTED REASON behavior in src/infra. */
 export const CONTROL_PLANE_UPDATE_HANDOFF_STARTED_REASON = "managed-service-handoff-started";
+/** Reused constant for CONTROL PLANE UPDATE RESTART HEALTH PENDING REASON behavior in src/infra. */
 export const CONTROL_PLANE_UPDATE_RESTART_HEALTH_PENDING_REASON = "restart-health-pending";
 
 const CONTROL_PLANE_UPDATE_PENDING_REASONS = new Set<string>([
@@ -20,11 +24,13 @@ const CONTROL_PLANE_UPDATE_PENDING_REASONS = new Set<string>([
   CONTROL_PLANE_UPDATE_RESTART_HEALTH_PENDING_REASON,
 ]);
 
+/** Shared type for Control Plane Update Sentinel Meta File in src/infra. */
 export type ControlPlaneUpdateSentinelMetaFile = {
   version: 1;
   meta: UpdateRestartSentinelMeta;
 };
 
+/** Reused helper for build Control Plane Update Restart Health Pending Result behavior in src/infra. */
 export function buildControlPlaneUpdateRestartHealthPendingResult(
   result: UpdateRunResult,
 ): UpdateRunResult {
@@ -40,6 +46,7 @@ export function buildControlPlaneUpdateRestartHealthPendingResult(
   };
 }
 
+/** Reused helper for is Pending Control Plane Update Restart Sentinel behavior in src/infra. */
 export function isPendingControlPlaneUpdateRestartSentinel(
   payload: RestartSentinelPayload,
 ): boolean {
@@ -89,6 +96,7 @@ function normalizeMeta(value: unknown): UpdateRestartSentinelMeta | null {
   };
 }
 
+/** Reused helper for read Control Plane Update Sentinel Meta behavior in src/infra. */
 export async function readControlPlaneUpdateSentinelMeta(
   env: NodeJS.ProcessEnv = process.env,
 ): Promise<UpdateRestartSentinelMeta | null> {
@@ -108,6 +116,7 @@ export async function readControlPlaneUpdateSentinelMeta(
   }
 }
 
+/** Reused helper for write Control Plane Update Restart Sentinel behavior in src/infra. */
 export async function writeControlPlaneUpdateRestartSentinel(params: {
   result: UpdateRunResult;
   meta: UpdateRestartSentinelMeta;
@@ -120,6 +129,7 @@ export async function writeControlPlaneUpdateRestartSentinel(params: {
   );
 }
 
+/** Reused helper for mark Control Plane Update Restart Sentinel Failure behavior in src/infra. */
 export async function markControlPlaneUpdateRestartSentinelFailure(
   reason: string,
 ): Promise<RestartSentinelPayload | null> {

@@ -1,9 +1,13 @@
+// plugins host hook json helpers and runtime behavior.
+/** Shared type for Plugin Json Primitive in src/plugins. */
 export type PluginJsonPrimitive = string | number | boolean | null;
+/** Shared type for Plugin Json Value in src/plugins. */
 export type PluginJsonValue =
   | PluginJsonPrimitive
   | PluginJsonValue[]
   | { [key: string]: PluginJsonValue };
 
+/** Shared type for Plugin Json Value Limits in src/plugins. */
 export type PluginJsonValueLimits = {
   maxDepth: number;
   maxNodes: number;
@@ -12,6 +16,7 @@ export type PluginJsonValueLimits = {
   maxSerializedBytes: number;
 };
 
+/** Reused constant for PLUGIN JSON VALUE LIMITS behavior in src/plugins. */
 export const PLUGIN_JSON_VALUE_LIMITS: PluginJsonValueLimits = {
   maxDepth: 32,
   maxNodes: 4096,
@@ -64,6 +69,7 @@ function isPluginJsonValueWithinLimits(
   return ok;
 }
 
+/** Reused helper for is Plugin Json Value behavior in src/plugins. */
 export function isPluginJsonValue(value: unknown): value is PluginJsonValue {
   if (!isPluginJsonValueWithinLimits(value, PLUGIN_JSON_VALUE_LIMITS, { depth: 0, nodes: 0 })) {
     return false;

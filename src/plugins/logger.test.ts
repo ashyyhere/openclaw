@@ -1,3 +1,4 @@
+// Tests plugins logger test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { createPluginLoaderLogger } from "./logger.js";
 

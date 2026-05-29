@@ -1,3 +1,5 @@
+// plugins module export helpers and runtime behavior.
+/** Reused helper for unwrap Default Module Export behavior in src/plugins. */
 export function unwrapDefaultModuleExport(moduleExport: unknown): unknown {
   let resolved = moduleExport;
   const seen = new Set<unknown>();

@@ -1,5 +1,7 @@
+// config/sessions store migrations helpers and runtime behavior.
 import type { SessionEntry } from "./types.js";
 
+/** Reused helper for apply Session Store Migrations behavior in src/config/sessions. */
 export function applySessionStoreMigrations(store: Record<string, SessionEntry>): boolean {
   let changed = false;
   // Best-effort migration: message provider → channel naming.

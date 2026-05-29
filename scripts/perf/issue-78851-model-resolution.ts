@@ -1,3 +1,4 @@
+// scripts/perf issue 78851 model resolution helpers and runtime behavior.
 import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import * as inspector from "node:inspector";
 import { tmpdir } from "node:os";

@@ -1,11 +1,15 @@
+/** Helpers for plugin-owned generated model catalog files. */
 import { existsSync, readdirSync } from "node:fs";
 import path from "node:path";
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
 import type { PluginMetadataSnapshot } from "../plugins/plugin-metadata-snapshot.types.js";
 
+/** File name for plugin-owned generated model catalogs under an agent dir. */
 export const PLUGIN_MODEL_CATALOG_FILE = "catalog.json";
+/** Marker stored in generated plugin catalog JSON files. */
 export const PLUGIN_MODEL_CATALOG_GENERATED_BY = "openclaw-plugin-model-catalog-v1";
 
+/** Metadata subset needed to map provider ids back to owner plugins. */
 export type PluginModelCatalogMetadataSnapshot = Pick<PluginMetadataSnapshot, "owners"> & {
   index?: {
     plugins: ReadonlyArray<{
@@ -16,16 +20,19 @@ export type PluginModelCatalogMetadataSnapshot = Pick<PluginMetadataSnapshot, "o
   normalizePluginId?: (pluginId: string) => string;
 };
 
+/** Discovered plugin catalog file path plus decoded plugin id. */
 export type PluginModelCatalogFile = {
   path: string;
   pluginId: string;
   relativePath: string;
 };
 
+/** Encode a plugin id into its generated catalog relative path. */
 export function encodePluginModelCatalogRelativePath(pluginId: string): string {
   return `plugins/${encodeURIComponent(pluginId)}/${PLUGIN_MODEL_CATALOG_FILE}`;
 }
 
+/** Return whether a relative path points at a plugin model catalog. */
 export function isPluginModelCatalogRelativePath(relativePath: string): boolean {
   const parts = relativePath.split(/[\\/]/);
   return (
@@ -39,6 +46,7 @@ export function isPluginModelCatalogRelativePath(relativePath: string): boolean 
   );
 }
 
+/** Decode the plugin id embedded in a plugin catalog relative path. */
 export function decodePluginModelCatalogRelativePathPluginId(
   relativePath: string,
 ): string | undefined {
@@ -53,6 +61,7 @@ export function decodePluginModelCatalogRelativePathPluginId(
   }
 }
 
+/** List plugin model catalog relative paths under an agent directory. */
 export function listPluginModelCatalogRelativePaths(agentDir: string): string[] {
   const pluginsDir = path.join(agentDir, "plugins");
   let pluginDirs: Array<import("node:fs").Dirent>;
@@ -68,6 +77,7 @@ export function listPluginModelCatalogRelativePaths(agentDir: string): string[] 
     .toSorted((left, right) => left.localeCompare(right));
 }
 
+/** List existing plugin model catalog files under an agent directory. */
 export function listPluginModelCatalogFiles(agentDir: string): PluginModelCatalogFile[] {
   return listPluginModelCatalogRelativePaths(agentDir)
     .map((relativePath) => {
@@ -84,6 +94,7 @@ export function listPluginModelCatalogFiles(agentDir: string): PluginModelCatalo
     .filter((entry) => existsSync(entry.path));
 }
 
+/** Return whether parsed JSON is an OpenClaw-generated plugin catalog. */
 export function isGeneratedPluginModelCatalog(value: unknown): boolean {
   return (
     typeof value === "object" &&
@@ -93,6 +104,7 @@ export function isGeneratedPluginModelCatalog(value: unknown): boolean {
   );
 }
 
+/** Resolve the enabled plugin that owns a model-catalog provider id. */
 export function resolvePluginModelCatalogOwnerPluginId(params: {
   providerId: string;
   pluginMetadataSnapshot?: PluginModelCatalogMetadataSnapshot;
@@ -123,6 +135,7 @@ export function resolvePluginModelCatalogOwnerPluginId(params: {
     : undefined;
 }
 
+/** Keep only providers owned by the plugin catalog being merged/read. */
 export function filterGeneratedPluginModelCatalogProviders<T>(params: {
   catalogPluginId?: string;
   parsedCatalog?: unknown;

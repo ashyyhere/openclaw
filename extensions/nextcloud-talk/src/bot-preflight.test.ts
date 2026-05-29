@@ -1,3 +1,4 @@
+// Tests extensions/nextcloud-talk/src bot preflight test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { ResolvedNextcloudTalkAccount } from "./accounts.js";
 

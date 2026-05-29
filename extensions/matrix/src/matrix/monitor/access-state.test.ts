@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src/matrix/monitor access state test behavior.
 import { describe, expect, it } from "vitest";
 import {
   resolveMatrixMonitorAccessState,

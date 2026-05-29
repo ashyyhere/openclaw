@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor provider startup helpers and runtime behavior.
 import path from "node:path";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { isDangerousNameMatchingEnabled } from "openclaw/plugin-sdk/dangerous-name-runtime";

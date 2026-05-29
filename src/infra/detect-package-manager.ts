@@ -1,8 +1,10 @@
+// infra detect package manager helpers and runtime behavior.
 import fs from "node:fs/promises";
 import { readPackageManagerSpec } from "./package-json.js";
 
 type DetectedPackageManager = "pnpm" | "bun" | "npm";
 
+/** Reused helper for detect Package Manager behavior in src/infra. */
 export async function detectPackageManager(root: string): Promise<DetectedPackageManager | null> {
   const pm = (await readPackageManagerSpec(root))?.split("@")[0]?.trim();
   if (pm === "pnpm" || pm === "bun" || pm === "npm") {

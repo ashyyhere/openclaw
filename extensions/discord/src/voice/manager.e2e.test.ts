@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/voice manager e2e test behavior.
 import { PassThrough, type Readable } from "node:stream";
 import type { RealtimeVoiceAgentControlResult } from "openclaw/plugin-sdk/realtime-voice";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";

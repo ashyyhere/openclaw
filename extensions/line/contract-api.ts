@@ -1,3 +1,4 @@
+// extensions/line contract api helpers and runtime behavior.
 export {
   listLineAccountIds,
   resolveDefaultLineAccountId,

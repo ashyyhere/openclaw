@@ -1,3 +1,4 @@
+// extensions/qqbot/src/engine/adapter index helpers and runtime behavior.
 import type { ResolvedChannelMessageIngress } from "openclaw/plugin-sdk/channel-ingress-runtime";
 import type { EffectivePolicyInput } from "../access/resolve-policy.js";
 import type { FetchMediaOptions, FetchMediaResult, SecretInputRef } from "./types.js";

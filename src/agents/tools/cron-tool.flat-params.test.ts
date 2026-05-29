@@ -1,3 +1,4 @@
+/** Covers flat parameter compatibility for cron tool actions. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const { callGatewayToolMock } = vi.hoisted(() => ({

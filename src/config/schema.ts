@@ -1,3 +1,4 @@
+// config schema helpers and runtime behavior.
 import crypto from "node:crypto";
 import { CHANNEL_IDS } from "../channels/ids.js";
 import { parseConfigPathArrayIndex } from "../shared/path-array-index.js";
@@ -14,8 +15,10 @@ import {
 } from "./schema.shared.js";
 import { applyDerivedTags } from "./schema.tags.js";
 
+/** Re-exported API for src/config, starting with Config Ui Hint. */
 export type { ConfigUiHint, ConfigUiHints } from "./schema.hints.js";
 
+/** Shared type for Config Schema in src/config. */
 export type ConfigSchema = Record<string, unknown>;
 
 type JsonSchemaNode = Record<string, unknown>;
@@ -100,6 +103,7 @@ function mergeObjectSchema(base: JsonSchemaObject, extension: JsonSchemaObject):
   return merged;
 }
 
+/** Shared type for Config Schema Response in src/config. */
 export type ConfigSchemaResponse = {
   schema: ConfigSchema;
   uiHints: ConfigUiHints;
@@ -107,6 +111,7 @@ export type ConfigSchemaResponse = {
   generatedAt: string;
 };
 
+/** Shared type for Config Schema Lookup Child in src/config. */
 export type ConfigSchemaLookupChild = {
   key: string;
   path: string;
@@ -118,16 +123,20 @@ export type ConfigSchemaLookupChild = {
   hintPath?: string;
 };
 
+/** Shared type for Config Schema Reload Kind in src/config. */
 export type ConfigSchemaReloadKind = "restart" | "hot" | "none";
 
+/** Shared type for Config Schema Reload Metadata in src/config. */
 export type ConfigSchemaReloadMetadata = {
   kind: ConfigSchemaReloadKind;
 };
 
+/** Shared type for Config Schema Reload Metadata Resolver in src/config. */
 export type ConfigSchemaReloadMetadataResolver = (
   path: string,
 ) => ConfigSchemaReloadMetadata | null | undefined;
 
+/** Shared type for Config Schema Lookup Result in src/config. */
 export type ConfigSchemaLookupResult = {
   path: string;
   schema: JsonSchemaNode;
@@ -137,6 +146,7 @@ export type ConfigSchemaLookupResult = {
   children: ConfigSchemaLookupChild[];
 };
 
+/** Shared type for Plugin Ui Metadata in src/config. */
 export type PluginUiMetadata = {
   id: string;
   name?: string;
@@ -148,6 +158,7 @@ export type PluginUiMetadata = {
   configSchema?: JsonSchemaNode;
 };
 
+/** Shared type for Channel Ui Metadata in src/config. */
 export type ChannelUiMetadata = {
   id: string;
   label?: string;
@@ -564,6 +575,7 @@ function buildBaseConfigSchema(): ConfigSchemaResponse {
   return next;
 }
 
+/** Reused helper for build Config Schema behavior in src/config. */
 export function buildConfigSchema(params?: {
   plugins?: PluginUiMetadata[];
   channels?: ChannelUiMetadata[];
@@ -801,6 +813,7 @@ function buildLookupChildren(
   return children;
 }
 
+/** Reused helper for lookup Config Schema behavior in src/config. */
 export function lookupConfigSchema(
   response: ConfigSchemaResponse,
   path: string,

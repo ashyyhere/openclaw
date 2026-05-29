@@ -1,3 +1,4 @@
+// extensions/migrate-hermes targets helpers and runtime behavior.
 import path from "node:path";
 import {
   resolveAgentConfig,

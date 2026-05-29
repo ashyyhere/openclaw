@@ -1,3 +1,4 @@
+/** Regression coverage for deterministic stringify ordering and special values. */
 import { describe, expect, it } from "vitest";
 import { stableStringify } from "./stable-stringify.js";
 

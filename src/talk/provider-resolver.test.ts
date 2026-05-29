@@ -1,3 +1,4 @@
+// Tests talk provider resolver test behavior.
 import { describe, expect, it } from "vitest";
 import type { RealtimeVoiceProviderPlugin } from "../plugins/types.js";
 import { resolveConfiguredRealtimeVoiceProvider } from "./provider-resolver.js";

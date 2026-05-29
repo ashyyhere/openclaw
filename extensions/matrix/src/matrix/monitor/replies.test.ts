@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src/matrix/monitor replies test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { PluginRuntime, RuntimeEnv } from "../../../runtime-api.js";
 import type { MatrixClient } from "../sdk.js";

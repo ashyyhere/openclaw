@@ -1,3 +1,4 @@
+// Tests infra/net ssrf test behavior.
 import { describe, expect, it } from "vitest";
 import { blockedIpv6MulticastLiterals } from "../../../packages/net-policy/src/ip-test-fixtures.js";
 import {

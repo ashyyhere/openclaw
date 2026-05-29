@@ -1,7 +1,10 @@
+// config types gateway helpers and runtime behavior.
 import type { SecretInput } from "./types.secrets.js";
 
+/** Shared type for Gateway Bind Mode in src/config. */
 export type GatewayBindMode = "auto" | "lan" | "loopback" | "custom" | "tailnet";
 
+/** Shared type for Gateway Tls Config in src/config. */
 export type GatewayTlsConfig = {
   /** Enable TLS for the gateway server. */
   enabled?: boolean;
@@ -15,14 +18,17 @@ export type GatewayTlsConfig = {
   caPath?: string;
 };
 
+/** Shared type for Wide Area Discovery Config in src/config. */
 export type WideAreaDiscoveryConfig = {
   enabled?: boolean;
   /** Optional unicast DNS-SD domain (e.g. "openclaw.internal"). */
   domain?: string;
 };
 
+/** Shared type for Mdns Discovery Mode in src/config. */
 export type MdnsDiscoveryMode = "off" | "minimal" | "full";
 
+/** Shared type for Mdns Discovery Config in src/config. */
 export type MdnsDiscoveryConfig = {
   /**
    * mDNS/Bonjour discovery broadcast mode (default: minimal).
@@ -33,11 +39,13 @@ export type MdnsDiscoveryConfig = {
   mode?: MdnsDiscoveryMode;
 };
 
+/** Shared type for Discovery Config in src/config. */
 export type DiscoveryConfig = {
   wideArea?: WideAreaDiscoveryConfig;
   mdns?: MdnsDiscoveryConfig;
 };
 
+/** Shared type for Talk Provider Config in src/config. */
 export type TalkProviderConfig = {
   /** Provider API key (optional; provider-specific env fallback may apply). */
   apiKey?: SecretInput;
@@ -45,6 +53,7 @@ export type TalkProviderConfig = {
   [key: string]: unknown;
 };
 
+/** Shared type for Talk Realtime Config in src/config. */
 export type TalkRealtimeConfig = {
   /** Active realtime voice provider. */
   provider?: string;
@@ -70,6 +79,7 @@ export type TalkRealtimeConfig = {
   consultRouting?: "provider-direct" | "force-agent-consult";
 };
 
+/** Shared type for Resolved Talk Config in src/config. */
 export type ResolvedTalkConfig = {
   /** Active Talk TTS provider resolved from the current config payload. */
   provider: string;
@@ -77,6 +87,7 @@ export type ResolvedTalkConfig = {
   config: TalkProviderConfig;
 };
 
+/** Shared type for Talk Config in src/config. */
 export type TalkConfig = {
   /** Active Talk TTS provider (for example "acme-speech"). */
   provider?: string;
@@ -104,11 +115,13 @@ export type TalkConfig = {
   silenceTimeoutMs?: number;
 };
 
+/** Shared type for Talk Config Response in src/config. */
 export type TalkConfigResponse = TalkConfig & {
   /** Canonical active Talk payload for clients. */
   resolved?: ResolvedTalkConfig;
 };
 
+/** Shared type for Gateway Control Ui Config in src/config. */
 export type GatewayControlUiConfig = {
   /** If false, the Gateway will not serve the Control UI (default /). */
   enabled?: boolean;
@@ -147,6 +160,7 @@ export type GatewayControlUiConfig = {
   dangerouslyDisableDeviceAuth?: boolean;
 };
 
+/** Shared type for Gateway Auth Mode in src/config. */
 export type GatewayAuthMode = "none" | "token" | "password" | "trusted-proxy";
 
 /**
@@ -180,6 +194,7 @@ export type GatewayTrustedProxyConfig = {
   allowLoopback?: boolean;
 };
 
+/** Shared type for Gateway Auth Config in src/config. */
 export type GatewayAuthConfig = {
   /** Authentication mode for Gateway connections. Defaults to token when unset. */
   mode?: GatewayAuthMode;
@@ -198,6 +213,7 @@ export type GatewayAuthConfig = {
   trustedProxy?: GatewayTrustedProxyConfig;
 };
 
+/** Shared type for Gateway Auth Rate Limit Config in src/config. */
 export type GatewayAuthRateLimitConfig = {
   /** Maximum failed attempts per IP before blocking.  @default 10 */
   maxAttempts?: number;
@@ -209,8 +225,10 @@ export type GatewayAuthRateLimitConfig = {
   exemptLoopback?: boolean;
 };
 
+/** Shared type for Gateway Tailscale Mode in src/config. */
 export type GatewayTailscaleMode = "off" | "serve" | "funnel";
 
+/** Shared type for Gateway Tailscale Config in src/config. */
 export type GatewayTailscaleConfig = {
   /** Tailscale exposure mode for the Gateway control UI. */
   mode?: GatewayTailscaleMode;
@@ -225,6 +243,7 @@ export type GatewayTailscaleConfig = {
   preserveFunnel?: boolean;
 };
 
+/** Shared type for Gateway Remote Config in src/config. */
 export type GatewayRemoteConfig = {
   /** Whether remote gateway surfaces are enabled. Default: true when absent. */
   enabled?: boolean;
@@ -246,8 +265,10 @@ export type GatewayRemoteConfig = {
   sshIdentity?: string;
 };
 
+/** Shared type for Gateway Reload Mode in src/config. */
 export type GatewayReloadMode = "off" | "restart" | "hot" | "hybrid";
 
+/** Shared type for Gateway Reload Config in src/config. */
 export type GatewayReloadConfig = {
   /** Reload strategy for config changes (default: hybrid). */
   mode?: GatewayReloadMode;
@@ -263,6 +284,7 @@ export type GatewayReloadConfig = {
   deferralTimeoutMs?: number;
 };
 
+/** Shared type for Gateway Http Chat Completions Config in src/config. */
 export type GatewayHttpChatCompletionsConfig = {
   /**
    * If false, the Gateway will not serve `POST /v1/chat/completions`.
@@ -288,6 +310,7 @@ export type GatewayHttpChatCompletionsConfig = {
   images?: GatewayHttpChatCompletionsImagesConfig;
 };
 
+/** Shared type for Gateway Http Chat Completions Images Config in src/config. */
 export type GatewayHttpChatCompletionsImagesConfig = {
   /** Allow URL fetches for `image_url` parts. Default: false. */
   allowUrl?: boolean;
@@ -306,6 +329,7 @@ export type GatewayHttpChatCompletionsImagesConfig = {
   timeoutMs?: number;
 };
 
+/** Shared type for Gateway Http Responses Config in src/config. */
 export type GatewayHttpResponsesConfig = {
   /**
    * If false, the Gateway will not serve `POST /v1/responses` (OpenResponses API).
@@ -328,6 +352,7 @@ export type GatewayHttpResponsesConfig = {
   images?: GatewayHttpResponsesImagesConfig;
 };
 
+/** Shared type for Gateway Http Responses Files Config in src/config. */
 export type GatewayHttpResponsesFilesConfig = {
   /** Allow URL fetches for input_file. Default: true. */
   allowUrl?: boolean;
@@ -350,6 +375,7 @@ export type GatewayHttpResponsesFilesConfig = {
   pdf?: GatewayHttpResponsesPdfConfig;
 };
 
+/** Shared type for Gateway Http Responses Pdf Config in src/config. */
 export type GatewayHttpResponsesPdfConfig = {
   /** Max pages to parse/render. Default: 4. */
   maxPages?: number;
@@ -359,6 +385,7 @@ export type GatewayHttpResponsesPdfConfig = {
   minTextChars?: number;
 };
 
+/** Shared type for Gateway Http Responses Images Config in src/config. */
 export type GatewayHttpResponsesImagesConfig = {
   /** Allow URL fetches for input_image. Default: true. */
   allowUrl?: boolean;
@@ -377,11 +404,13 @@ export type GatewayHttpResponsesImagesConfig = {
   timeoutMs?: number;
 };
 
+/** Shared type for Gateway Http Endpoints Config in src/config. */
 export type GatewayHttpEndpointsConfig = {
   chatCompletions?: GatewayHttpChatCompletionsConfig;
   responses?: GatewayHttpResponsesConfig;
 };
 
+/** Shared type for Gateway Http Security Headers Config in src/config. */
 export type GatewayHttpSecurityHeadersConfig = {
   /**
    * Value for the Strict-Transport-Security response header.
@@ -392,11 +421,13 @@ export type GatewayHttpSecurityHeadersConfig = {
   strictTransportSecurity?: string | false;
 };
 
+/** Shared type for Gateway Http Config in src/config. */
 export type GatewayHttpConfig = {
   endpoints?: GatewayHttpEndpointsConfig;
   securityHeaders?: GatewayHttpSecurityHeadersConfig;
 };
 
+/** Shared type for Gateway Push Apns Relay Config in src/config. */
 export type GatewayPushApnsRelayConfig = {
   /** Base HTTPS URL for the external iOS APNs relay service. */
   baseUrl?: string;
@@ -404,14 +435,17 @@ export type GatewayPushApnsRelayConfig = {
   timeoutMs?: number;
 };
 
+/** Shared type for Gateway Push Apns Config in src/config. */
 export type GatewayPushApnsConfig = {
   relay?: GatewayPushApnsRelayConfig;
 };
 
+/** Shared type for Gateway Push Config in src/config. */
 export type GatewayPushConfig = {
   apns?: GatewayPushApnsConfig;
 };
 
+/** Shared type for Gateway Node Pairing Config in src/config. */
 export type GatewayNodePairingConfig = {
   /**
    * Opt-in CIDR/IP allowlist for auto-approving first-time node-role pairing.
@@ -421,6 +455,7 @@ export type GatewayNodePairingConfig = {
   autoApproveCidrs?: string[];
 };
 
+/** Shared type for Gateway Nodes Config in src/config. */
 export type GatewayNodesConfig = {
   /** Browser routing policy for node-hosted browser proxies. */
   browser?: {
@@ -437,6 +472,7 @@ export type GatewayNodesConfig = {
   denyCommands?: string[];
 };
 
+/** Shared type for Gateway Tools Config in src/config. */
 export type GatewayToolsConfig = {
   /** Tools to deny via gateway HTTP /tools/invoke (extends defaults). */
   deny?: string[];
@@ -444,11 +480,13 @@ export type GatewayToolsConfig = {
   allow?: string[];
 };
 
+/** Shared type for Gateway Webchat Config in src/config. */
 export type GatewayWebchatConfig = {
   /** Max characters per text field in chat.history responses before truncation (default: 12000). */
   chatHistoryMaxChars?: number;
 };
 
+/** Shared type for Gateway Config in src/config. */
 export type GatewayConfig = {
   /** Single multiplexed port for Gateway WS + HTTP (default: 18789). */
   port?: number;

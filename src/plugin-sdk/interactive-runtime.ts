@@ -1,9 +1,11 @@
+/** Runtime SDK barrel for interactive prompt/session helpers. */
 export {
   adaptMessagePresentationForChannel,
   applyPresentationActionLimits,
   presentationPageSize,
   reduceInteractiveReply,
 } from "../channels/plugins/outbound/interactive.js";
+/** Re-exported API for src/plugin-sdk. */
 export type {
   InteractiveButtonStyle,
   InteractiveReply,
@@ -27,6 +29,7 @@ export type {
   ReplyPayloadDelivery,
   ReplyPayloadDeliveryPin,
 } from "../interactive/payload.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   hasInteractiveReplyBlocks,
   hasMessagePresentationBlocks,

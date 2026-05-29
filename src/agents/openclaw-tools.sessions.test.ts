@@ -1,3 +1,4 @@
+/** Tests OpenClaw session list/history/send/yield tools. */
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

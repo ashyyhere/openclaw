@@ -1,3 +1,4 @@
+// ui/src/ui/chat heartbeat display helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "../string-coerce.ts";
 
 const HEARTBEAT_TOKEN = "HEARTBEAT_OK";
@@ -7,6 +8,7 @@ function escapeRegExp(value: string): string {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
+/** Reused helper for strip Heartbeat Token For Display behavior in ui/src/ui/chat. */
 export function stripHeartbeatTokenForDisplay(
   raw: string,
   maxAckChars = DEFAULT_HEARTBEAT_ACK_MAX_CHARS,
@@ -91,6 +93,7 @@ function resolveDisplayContent(content: unknown): {
   return { text, hasVisibleNonTextContent };
 }
 
+/** Reused helper for is Assistant Heartbeat Ack For Display behavior in ui/src/ui/chat. */
 export function isAssistantHeartbeatAckForDisplay(message: unknown): boolean {
   if (!message || typeof message !== "object") {
     return false;

@@ -1,3 +1,4 @@
+/** Tests gateway install token resolution and persistence. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/types.js";
 import { resolveGatewayInstallToken } from "./gateway-install-token.js";

@@ -1,3 +1,4 @@
+// plugins/contracts/test-helpers bundled plugin roots helpers and runtime behavior.
 import { relative, resolve } from "node:path";
 import { loadPluginManifestRegistry } from "../../manifest-registry.js";
 

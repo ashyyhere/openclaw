@@ -1,3 +1,4 @@
+// extensions/vllm thinking policy helpers and runtime behavior.
 import type {
   ProviderDefaultThinkingPolicyContext,
   ProviderThinkingProfile,

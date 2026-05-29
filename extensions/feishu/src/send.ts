@@ -1,3 +1,4 @@
+// extensions/feishu/src send helpers and runtime behavior.
 import { resolveMarkdownTableMode } from "openclaw/plugin-sdk/markdown-table-runtime";
 import { parseStrictNonNegativeInteger } from "openclaw/plugin-sdk/number-runtime";
 import {

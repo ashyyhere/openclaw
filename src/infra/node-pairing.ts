@@ -1,3 +1,4 @@
+// infra node pairing helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import { resolveMissingRequestedScope } from "../shared/operator-scope-compat.js";
 import { normalizeArrayBackedTrimmedStringList } from "../shared/string-normalization.js";
@@ -34,18 +35,22 @@ type NodeDeclaredSurface = {
 
 type NodeApprovedSurface = NodeDeclaredSurface;
 
+/** Shared type for Node Pairing Request Input in src/infra. */
 export type NodePairingRequestInput = NodeDeclaredSurface & {
   silent?: boolean;
 };
 
+/** Shared type for Node Pairing Pending Request in src/infra. */
 export type NodePairingPendingRequest = NodePairingRequestInput & {
   requestId: string;
   silent?: boolean;
   ts: number;
 };
 
+/** Shared type for Node Pairing Superseded Request in src/infra. */
 export type NodePairingSupersededRequest = Pick<NodePairingPendingRequest, "requestId" | "nodeId">;
 
+/** Shared type for Request Node Pairing Result in src/infra. */
 export type RequestNodePairingResult = {
   status: "pending";
   request: NodePairingPendingRequest;
@@ -57,6 +62,7 @@ type NodePairingPendingEntry = NodePairingPendingRequest & {
   requiredApproveScopes: NodeApprovalScope[];
 };
 
+/** Shared type for Node Pairing Paired Node in src/infra. */
 export type NodePairingPairedNode = NodeApprovedSurface & {
   token: string;
   bins?: string[];
@@ -221,6 +227,7 @@ function newToken() {
   return generatePairingToken();
 }
 
+/** Reused helper for list Node Pairing behavior in src/infra. */
 export async function listNodePairing(baseDir?: string): Promise<NodePairingList> {
   const state = await loadState(baseDir);
   const pending = Object.values(state.pendingById)
@@ -232,6 +239,7 @@ export async function listNodePairing(baseDir?: string): Promise<NodePairingList
   return { pending, paired };
 }
 
+/** Reused helper for get Paired Node behavior in src/infra. */
 export async function getPairedNode(
   nodeId: string,
   baseDir?: string,
@@ -240,6 +248,7 @@ export async function getPairedNode(
   return state.pairedByNodeId[normalizeNodeId(nodeId)] ?? null;
 }
 
+/** Reused helper for request Node Pairing behavior in src/infra. */
 export async function requestNodePairing(
   req: NodePairingRequestInput,
   baseDir?: string,
@@ -277,6 +286,7 @@ export async function requestNodePairing(
   });
 }
 
+/** Reused helper for approve Node Pairing behavior in src/infra. */
 export async function approveNodePairing(
   requestId: string,
   options: { callerScopes?: readonly string[] },
@@ -327,6 +337,7 @@ export async function approveNodePairing(
   });
 }
 
+/** Reused helper for reject Node Pairing behavior in src/infra. */
 export async function rejectNodePairing(
   requestId: string,
   baseDir?: string,
@@ -346,6 +357,7 @@ export async function rejectNodePairing(
   });
 }
 
+/** Reused helper for remove Paired Node behavior in src/infra. */
 export async function removePairedNode(
   nodeId: string,
   baseDir?: string,
@@ -362,6 +374,7 @@ export async function removePairedNode(
   });
 }
 
+/** Reused helper for verify Node Token behavior in src/infra. */
 export async function verifyNodeToken(
   nodeId: string,
   token: string,
@@ -376,6 +389,7 @@ export async function verifyNodeToken(
   return verifyPairingToken(token, node.token) ? { ok: true, node } : { ok: false };
 }
 
+/** Reused helper for update Paired Node Metadata behavior in src/infra. */
 export async function updatePairedNodeMetadata(
   nodeId: string,
   patch: Partial<Omit<NodePairingPairedNode, "nodeId" | "token" | "createdAtMs" | "approvedAtMs">>,
@@ -416,6 +430,7 @@ export async function updatePairedNodeMetadata(
   });
 }
 
+/** Reused helper for rename Paired Node behavior in src/infra. */
 export async function renamePairedNode(
   nodeId: string,
   displayName: string,

@@ -1,3 +1,4 @@
+// extensions/zalouser/src send helpers and runtime behavior.
 import { createZalouserSendReceipt } from "./send-receipt.js";
 import { parseZalouserTextStyles } from "./text-styles.js";
 import type { ZaloEventMessage, ZaloSendOptions, ZaloSendResult } from "./types.js";

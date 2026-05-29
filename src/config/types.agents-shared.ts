@@ -1,3 +1,4 @@
+// config types agents shared helpers and runtime behavior.
 import type {
   SandboxBrowserSettings,
   SandboxDockerSettings,
@@ -5,6 +6,7 @@ import type {
   SandboxSshSettings,
 } from "./types.sandbox.js";
 
+/** Shared type for Agent Model Config in src/config. */
 export type AgentModelConfig =
   | string
   | {
@@ -14,6 +16,7 @@ export type AgentModelConfig =
       fallbacks?: string[];
     };
 
+/** Shared type for Agent Tool Model Config in src/config. */
 export type AgentToolModelConfig =
   | string
   | {
@@ -25,16 +28,19 @@ export type AgentToolModelConfig =
       timeoutMs?: number;
     };
 
+/** Shared type for Agent Embedded Harness Config in src/config. */
 export type AgentEmbeddedHarnessConfig = {
   /** Agent runtime id. Omitted uses "openclaw"; "auto" opts into plugin harness auto-selection. */
   runtime?: string;
 };
 
+/** Shared type for Agent Runtime Policy Config in src/config. */
 export type AgentRuntimePolicyConfig = {
   /** Agent runtime id. Omitted uses "openclaw"; "auto" opts into plugin harness auto-selection. */
   id?: string;
 };
 
+/** Shared type for Agent Sandbox Config in src/config. */
 export type AgentSandboxConfig = {
   mode?: "off" | "non-main" | "all";
   /** Sandbox runtime backend id. Default: "docker". */

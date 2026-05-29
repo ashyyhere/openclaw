@@ -1,5 +1,7 @@
+// plugins/contracts host hook fixture helpers and runtime behavior.
 import type { OpenClawPluginApi } from "../types.js";
 
+/** Reused helper for register Host Hook Fixture behavior in src/plugins/contracts. */
 export function registerHostHookFixture(api: OpenClawPluginApi) {
   api.session.state.registerSessionExtension({
     namespace: "workflow",
@@ -59,6 +61,7 @@ export function registerHostHookFixture(api: OpenClawPluginApi) {
   }));
 }
 
+/** Reused helper for register Trusted Host Hook Fixture behavior in src/plugins/contracts. */
 export function registerTrustedHostHookFixture(api: OpenClawPluginApi) {
   registerHostHookFixture(api);
   api.registerTrustedToolPolicy({

@@ -1,3 +1,4 @@
+// Tests extensions/imessage/src/monitor parse notification test behavior.
 import { describe, expect, it } from "vitest";
 import { parseIMessageNotification } from "./parse-notification.js";
 

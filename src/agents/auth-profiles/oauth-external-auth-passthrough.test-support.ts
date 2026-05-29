@@ -1,3 +1,4 @@
+/** Passthrough mocks for external auth overlay tests. */
 import { vi } from "vitest";
 
 vi.mock("./external-auth.js", () => ({

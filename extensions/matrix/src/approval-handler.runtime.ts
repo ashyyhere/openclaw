@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/matrix/src approval handler runtime behavior.
 import { setTimeout as sleep } from "node:timers/promises";
 import type {
   ChannelApprovalCapabilityHandlerContext,

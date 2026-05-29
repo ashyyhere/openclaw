@@ -1,3 +1,4 @@
+/** Tests node-only status mode helpers. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({

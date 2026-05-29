@@ -1,3 +1,4 @@
+/** Resolves Claude CLI skill-plugin arguments when available. */
 import { accessSync } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -31,6 +32,7 @@ function sanitizeSkillDirName(name: string, used: Set<string>): string {
   return candidate;
 }
 
+/** Reused helper for is Claude Cli Skill File Accessible behavior in src/agents/cli-runner. */
 export function isClaudeCliSkillFileAccessible(skillFilePath: string): boolean {
   try {
     accessSync(skillFilePath);
@@ -83,6 +85,7 @@ async function linkOrCopySkillDir(params: { sourceDir: string; targetDir: string
   }
 }
 
+/** Reused helper for prepare Claude Cli Skills Plugin behavior in src/agents/cli-runner. */
 export async function prepareClaudeCliSkillsPlugin(params: {
   backendId: string;
   skillsSnapshot?: SkillSnapshot;

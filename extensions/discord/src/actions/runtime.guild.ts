@@ -1,3 +1,4 @@
+// extensions/discord/src/actions runtime guild helpers and runtime behavior.
 import { ChannelType, PermissionFlagsBits } from "discord-api-types/v10";
 import type { AgentToolResult } from "openclaw/plugin-sdk/agent-core";
 import { resolveDefaultDiscordAccountId } from "../accounts.js";

@@ -1,3 +1,4 @@
+/** Tests plugin enabled-state config mutations. */
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import { setPluginEnabledInConfig } from "./plugins-config.js";

@@ -57,10 +57,12 @@ const LEGACY_ALIAS_BY_PROVIDER = new Map(
   ]),
 );
 
+/** Reused helper for list Legacy Runtime Model Provider Aliases behavior in src/commands/doctor. */
 export function listLegacyRuntimeModelProviderAliases(): readonly LegacyRuntimeModelProviderAlias[] {
   return LEGACY_RUNTIME_MODEL_PROVIDER_ALIASES;
 }
 
+/** Reused helper for legacy Runtime Model Alias Requires Runtime Policy behavior in src/commands/doctor. */
 export function legacyRuntimeModelAliasRequiresRuntimePolicy(provider: string): boolean {
   return (
     LEGACY_ALIAS_BY_PROVIDER.get(normalizeLegacyRuntimeProviderId(provider))
@@ -74,6 +76,7 @@ function resolveLegacyRuntimeModelProviderAlias(
   return LEGACY_ALIAS_BY_PROVIDER.get(normalizeLegacyRuntimeProviderId(provider));
 }
 
+/** Reused helper for migrate Legacy Runtime Model Ref behavior in src/commands/doctor. */
 export function migrateLegacyRuntimeModelRef(raw: string): {
   ref: string;
   legacyProvider: string;

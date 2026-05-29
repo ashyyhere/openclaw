@@ -1,3 +1,4 @@
+// media local media access helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { assertNoWindowsNetworkPath } from "../infra/local-file-access.js";
@@ -6,6 +7,7 @@ import { isInboundPathAllowed } from "./inbound-path-policy.js";
 import { getDefaultMediaLocalRoots } from "./local-roots.js";
 import { resolveInboundMediaReference } from "./media-reference.js";
 
+/** Shared type for Local Media Access Error Code in src/media. */
 export type LocalMediaAccessErrorCode =
   | "path-not-allowed"
   | "invalid-root"
@@ -16,6 +18,7 @@ export type LocalMediaAccessErrorCode =
   | "invalid-path"
   | "not-file";
 
+/** Reused class for Local Media Access Error behavior in src/media. */
 export class LocalMediaAccessError extends Error {
   code: LocalMediaAccessErrorCode;
 
@@ -26,10 +29,12 @@ export class LocalMediaAccessError extends Error {
   }
 }
 
+/** Reused helper for get Default Local Roots behavior in src/media. */
 export function getDefaultLocalRoots(): readonly string[] {
   return getDefaultMediaLocalRoots();
 }
 
+/** Reused helper for assert Local Media Allowed behavior in src/media. */
 export async function assertLocalMediaAllowed(
   mediaPath: string,
   localRoots: readonly string[] | "any" | undefined,

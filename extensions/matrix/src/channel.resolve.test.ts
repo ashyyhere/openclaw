@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src channel resolve test behavior.
 import { createNonExitingRuntimeEnv } from "openclaw/plugin-sdk/plugin-test-runtime";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 

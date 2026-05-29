@@ -1,3 +1,4 @@
+// Tests gateway control ui routing test behavior.
 import { describe, expect, it } from "vitest";
 import { classifyControlUiRequest } from "./control-ui-routing.js";
 

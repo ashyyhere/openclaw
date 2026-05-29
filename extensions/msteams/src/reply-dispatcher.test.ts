@@ -1,3 +1,4 @@
+// Tests extensions/msteams/src reply dispatcher test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const createChannelMessageReplyPipelineMock = vi.hoisted(() => vi.fn());

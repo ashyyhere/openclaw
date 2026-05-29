@@ -1,3 +1,4 @@
+/** Shared gateway client helpers for agent tools. */
 import {
   GATEWAY_CLIENT_MODES,
   GATEWAY_CLIENT_NAMES,
@@ -18,8 +19,10 @@ import {
 } from "../../shared/string-coerce.js";
 import { readPositiveIntegerParam, readStringParam } from "./common.js";
 
+/** Reused constant for DEFAULT GATEWAY URL behavior in src/agents/tools. */
 export const DEFAULT_GATEWAY_URL = "ws://127.0.0.1:18789";
 
+/** Shared type for Gateway Call Options in src/agents/tools. */
 export type GatewayCallOptions = {
   gatewayUrl?: string;
   gatewayToken?: string;
@@ -28,6 +31,7 @@ export type GatewayCallOptions = {
 
 type GatewayOverrideTarget = "local" | "remote";
 
+/** Reads gateway call options from tool params. */
 export function readGatewayCallOptions(params: Record<string, unknown>): GatewayCallOptions {
   return {
     gatewayUrl: readStringParam(params, "gatewayUrl", { trim: false }),
@@ -125,6 +129,7 @@ function resolveGatewayOverrideToken(params: {
   }).token;
 }
 
+/** Resolves effective gateway URL/client metadata for a call. */
 export function resolveGatewayOptions(opts?: GatewayCallOptions) {
   const cfg = getRuntimeConfig();
   const validatedOverride =
@@ -170,6 +175,7 @@ function resolveApprovalRuntimeTokenForGatewayTool(params: {
   return getOperatorApprovalRuntimeToken();
 }
 
+/** Calls a gateway protocol method from a tool. */
 export async function callGatewayTool<T = Record<string, unknown>>(
   method: string,
   opts: GatewayCallOptions,

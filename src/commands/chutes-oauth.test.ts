@@ -1,3 +1,4 @@
+/** Tests Chutes OAuth local callback and token exchange flow. */
 import net from "node:net";
 import { describe, expect, it, vi } from "vitest";
 import { CHUTES_TOKEN_ENDPOINT, CHUTES_USERINFO_ENDPOINT } from "../agents/chutes-oauth.js";

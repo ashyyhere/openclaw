@@ -1,3 +1,4 @@
+// config zod schema providers core helpers and runtime behavior.
 import { z } from "zod";
 import { isSafeScpRemoteHost } from "../infra/scp-host.js";
 import { isValidInboundPathRootPattern } from "../media/inbound-path-policy.js";
@@ -151,6 +152,7 @@ const TelegramCustomCommandConfig = {
   pattern: TelegramCommandNamePattern,
   patternDescription: "use a-z, 0-9, underscore; max 32 chars",
 } as const;
+/** Reused constant for Telegram Topic Schema behavior in src/config. */
 export const TelegramTopicSchema = z
   .object({
     requireMention: z.boolean().optional(),
@@ -167,6 +169,7 @@ export const TelegramTopicSchema = z
   })
   .strict();
 
+/** Reused constant for Telegram Group Schema behavior in src/config. */
 export const TelegramGroupSchema = z
   .object({
     requireMention: z.boolean().optional(),
@@ -197,6 +200,7 @@ const AutoTopicLabelSchema = z
   ])
   .optional();
 
+/** Reused constant for Telegram Direct Schema behavior in src/config. */
 export const TelegramDirectSchema = z
   .object({
     dmPolicy: DmPolicySchema.optional(),
@@ -243,6 +247,7 @@ const validateTelegramCustomCommands = (
   }
 };
 
+/** Reused constant for Telegram Account Schema Base behavior in src/config. */
 export const TelegramAccountSchemaBase = z
   .object({
     name: z.string().optional(),
@@ -388,6 +393,7 @@ export const TelegramAccountSchemaBase = z
   })
   .strict();
 
+/** Reused constant for Telegram Account Schema behavior in src/config. */
 export const TelegramAccountSchema = TelegramAccountSchemaBase.superRefine((value, ctx) => {
   // Account-level schemas skip allowFrom validation because accounts inherit
   // allowFrom from the parent channel config at runtime (resolveTelegramAccount
@@ -396,6 +402,7 @@ export const TelegramAccountSchema = TelegramAccountSchemaBase.superRefine((valu
   validateTelegramCustomCommands(value, ctx);
 });
 
+/** Reused constant for Telegram Config Schema behavior in src/config. */
 export const TelegramConfigSchema = TelegramAccountSchemaBase.extend({
   accounts: z.record(z.string(), TelegramAccountSchema.optional()).optional(),
   defaultAccount: z.string().optional(),
@@ -479,6 +486,7 @@ export const TelegramConfigSchema = TelegramAccountSchemaBase.extend({
   validateTelegramWebhookSecretRequirements(value, ctx);
 });
 
+/** Reused constant for Discord Dm Schema behavior in src/config. */
 export const DiscordDmSchema = z
   .object({
     enabled: z.boolean().optional(),
@@ -489,12 +497,14 @@ export const DiscordDmSchema = z
   })
   .strict();
 
+/** Reused constant for Discord Thread Schema behavior in src/config. */
 export const DiscordThreadSchema = z
   .object({
     inheritParent: z.boolean().optional(),
   })
   .strict();
 
+/** Reused constant for Discord Guild Channel Schema behavior in src/config. */
 export const DiscordGuildChannelSchema = z
   .object({
     requireMention: z.boolean().optional(),
@@ -523,6 +533,7 @@ export const DiscordGuildChannelSchema = z
   })
   .strict();
 
+/** Reused constant for Discord Guild Schema behavior in src/config. */
 export const DiscordGuildSchema = z
   .object({
     slug: z.string().optional(),
@@ -633,6 +644,7 @@ const DiscordVoiceSchema = z
   .strict()
   .optional();
 
+/** Reused constant for Discord Account Schema behavior in src/config. */
 export const DiscordAccountSchema = z
   .object({
     name: z.string().optional(),
@@ -843,6 +855,7 @@ export const DiscordAccountSchema = z
     // can inherit top-level allowFrom via runtime shallow merge.
   });
 
+/** Reused constant for Discord Config Schema behavior in src/config. */
 export const DiscordConfigSchema = DiscordAccountSchema.extend({
   accounts: z.record(z.string(), DiscordAccountSchema.optional()).optional(),
   defaultAccount: z.string().optional(),
@@ -898,6 +911,7 @@ export const DiscordConfigSchema = DiscordAccountSchema.extend({
   }
 });
 
+/** Reused constant for Slack Dm Schema behavior in src/config. */
 export const SlackDmSchema = z
   .object({
     enabled: z.boolean().optional(),
@@ -909,6 +923,7 @@ export const SlackDmSchema = z
   })
   .strict();
 
+/** Reused constant for Slack Channel Schema behavior in src/config. */
 export const SlackChannelSchema = z
   .object({
     enabled: z.boolean().optional(),
@@ -923,6 +938,7 @@ export const SlackChannelSchema = z
   })
   .strict();
 
+/** Reused constant for Slack Thread Schema behavior in src/config. */
 export const SlackThreadSchema = z
   .object({
     historyScope: z.enum(["thread", "channel"]).optional(),
@@ -940,6 +956,7 @@ const SlackReplyToModeByChatTypeSchema = z
   })
   .strict();
 
+/** Reused constant for Slack Socket Mode Schema behavior in src/config. */
 export const SlackSocketModeSchema = z
   .object({
     clientPingTimeout: z.number().int().positive().optional(),
@@ -948,6 +965,7 @@ export const SlackSocketModeSchema = z
   })
   .strict();
 
+/** Reused constant for Slack Account Schema behavior in src/config. */
 export const SlackAccountSchema = z
   .object({
     name: z.string().optional(),
@@ -1034,6 +1052,7 @@ export const SlackAccountSchema = z
     // can inherit top-level allowFrom via runtime shallow merge.
   });
 
+/** Reused constant for Slack Config Schema behavior in src/config. */
 export const SlackConfigSchema = SlackAccountSchema.safeExtend({
   mode: z.enum(["socket", "http"]).optional().default("socket"),
   signingSecret: SecretInputSchema.optional().register(sensitive),
@@ -1115,6 +1134,7 @@ const SignalGroupEntrySchema = z
 
 const SignalGroupsSchema = z.record(z.string(), SignalGroupEntrySchema.optional()).optional();
 
+/** Reused constant for Signal Account Schema Base behavior in src/config. */
 export const SignalAccountSchemaBase = z
   .object({
     name: z.string().optional(),
@@ -1168,8 +1188,10 @@ export const SignalAccountSchemaBase = z
 // Account-level schemas skip allowFrom validation because accounts inherit
 // allowFrom from the parent channel config at runtime.
 // Validation is enforced at the top-level SignalConfigSchema instead.
+/** Reused constant for Signal Account Schema behavior in src/config. */
 export const SignalAccountSchema = SignalAccountSchemaBase;
 
+/** Reused constant for Signal Config Schema behavior in src/config. */
 export const SignalConfigSchema = SignalAccountSchemaBase.extend({
   apiMode: z.enum(["auto", "native", "container"]).optional(),
   accounts: z.record(z.string(), SignalAccountSchema.optional()).optional(),
@@ -1219,6 +1241,7 @@ export const SignalConfigSchema = SignalAccountSchemaBase.extend({
   }
 });
 
+/** Reused constant for Irc Group Schema behavior in src/config. */
 export const IrcGroupSchema = z
   .object({
     requireMention: z.boolean().optional(),
@@ -1231,6 +1254,7 @@ export const IrcGroupSchema = z
   })
   .strict();
 
+/** Reused constant for Irc Nick Serv Schema behavior in src/config. */
 export const IrcNickServSchema = z
   .object({
     enabled: z.boolean().optional(),
@@ -1242,6 +1266,7 @@ export const IrcNickServSchema = z
   })
   .strict();
 
+/** Reused constant for Irc Account Schema Base behavior in src/config. */
 export const IrcAccountSchemaBase = z
   .object({
     name: z.string().optional(),
@@ -1311,6 +1336,7 @@ function refineIrcAllowFromAndNickserv(value: IrcBaseConfig, ctx: z.RefinementCt
 // Account-level schemas skip allowFrom validation because accounts inherit
 // allowFrom from the parent channel config at runtime.
 // Validation is enforced at the top-level IrcConfigSchema instead.
+/** Reused constant for Irc Account Schema behavior in src/config. */
 export const IrcAccountSchema = IrcAccountSchemaBase.superRefine((value, ctx) => {
   // Only validate nickserv at account level, not allowFrom (inherited from parent).
   if (value.nickserv?.register && !value.nickserv.registerEmail?.trim()) {
@@ -1322,6 +1348,7 @@ export const IrcAccountSchema = IrcAccountSchemaBase.superRefine((value, ctx) =>
   }
 });
 
+/** Reused constant for Irc Config Schema behavior in src/config. */
 export const IrcConfigSchema = IrcAccountSchemaBase.extend({
   accounts: z.record(z.string(), IrcAccountSchema.optional()).optional(),
   defaultAccount: z.string().optional(),
@@ -1372,6 +1399,7 @@ const IMessageActionSchema = z
   .strict()
   .optional();
 
+/** Reused constant for IMessage Account Schema Base behavior in src/config. */
 export const IMessageAccountSchemaBase = z
   .object({
     name: z.string().optional(),
@@ -1446,8 +1474,10 @@ export const IMessageAccountSchemaBase = z
 // Account-level schemas skip allowFrom validation because accounts inherit
 // allowFrom from the parent channel config at runtime.
 // Validation is enforced at the top-level IMessageConfigSchema instead.
+/** Reused constant for IMessage Account Schema behavior in src/config. */
 export const IMessageAccountSchema = IMessageAccountSchemaBase;
 
+/** Reused constant for IMessage Config Schema behavior in src/config. */
 export const IMessageConfigSchema = IMessageAccountSchemaBase.extend({
   accounts: z.record(z.string(), IMessageAccountSchema.optional()).optional(),
   defaultAccount: z.string().optional(),
@@ -1497,6 +1527,7 @@ export const IMessageConfigSchema = IMessageAccountSchemaBase.extend({
   }
 });
 
+/** Reused constant for MSTeams Channel Schema behavior in src/config. */
 export const MSTeamsChannelSchema = z
   .object({
     requireMention: z.boolean().optional(),
@@ -1506,6 +1537,7 @@ export const MSTeamsChannelSchema = z
   })
   .strict();
 
+/** Reused constant for MSTeams Team Schema behavior in src/config. */
 export const MSTeamsTeamSchema = z
   .object({
     requireMention: z.boolean().optional(),
@@ -1552,6 +1584,7 @@ function isAzureChinaBotFrameworkServiceUrl(value: string): boolean {
   }
 }
 
+/** Reused constant for MSTeams Config Schema behavior in src/config. */
 export const MSTeamsConfigSchema = z
   .object({
     enabled: z.boolean().optional(),

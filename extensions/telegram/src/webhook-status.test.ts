@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src webhook status test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { createTelegramWebhookStatusPublisher } from "./webhook-status.js";
 

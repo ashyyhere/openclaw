@@ -1,3 +1,4 @@
+// test-utils exec assertions helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { expect } from "vitest";
@@ -17,6 +18,7 @@ function canonicalizeComparableDir(dirPath: string): string {
   }
 }
 
+/** Reused helper for expect Single Npm Install Ignore Scripts Call behavior in src/test-utils. */
 export function expectSingleNpmInstallIgnoreScriptsCall(params: {
   calls: Array<[unknown, { cwd?: string } | undefined]>;
   expectedTargetDir: string;
@@ -38,6 +40,7 @@ export function expectSingleNpmInstallIgnoreScriptsCall(params: {
   expect(path.basename(cwd)).toMatch(/^\.openclaw-install-stage-/);
 }
 
+/** Reused helper for expect Single Npm Pack Ignore Scripts Call behavior in src/test-utils. */
 export function expectSingleNpmPackIgnoreScriptsCall(params: {
   calls: Array<[unknown, unknown]>;
   expectedSpec: string;

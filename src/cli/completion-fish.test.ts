@@ -1,3 +1,4 @@
+/** Tests Fish shell completion escaping and option line generation. */
 import { describe, expect, it } from "vitest";
 import {
   buildFishOptionCompletionLine,

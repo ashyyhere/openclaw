@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix/actions devices helpers and runtime behavior.
 import { summarizeMatrixDeviceHealth } from "../device-health.js";
 import { withResolvedActionClient } from "./client.js";
 import type { MatrixActionClientOpts } from "./types.js";

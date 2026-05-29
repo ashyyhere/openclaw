@@ -1,3 +1,4 @@
+/** Regression coverage for Codex user MCP config patching. */
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { buildCodexUserMcpServersThreadConfigPatch } from "./bundle-mcp-codex.js";

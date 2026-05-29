@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/slack/src/monitor media runtime behavior.
 export { fetchWithRuntimeDispatcher } from "openclaw/plugin-sdk/runtime-fetch";
 export type { FetchLike, SavedMedia } from "openclaw/plugin-sdk/media-runtime";
 export {

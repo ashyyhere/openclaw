@@ -6,11 +6,13 @@ import {
   type MarkdownStyleSpan,
 } from "./ir.js";
 
+/** Shared type for Rendered Markdown Chunk in src/markdown. */
 export type RenderedMarkdownChunk<TRendered> = {
   rendered: TRendered;
   source: MarkdownIR;
 };
 
+/** Shared type for Render Markdown IRChunks Within Limit Options in src/markdown. */
 export type RenderMarkdownIRChunksWithinLimitOptions<TRendered> = {
   ir: MarkdownIR;
   limit: number;

@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/browser browser utils test behavior.
 import { describe, expect, it, vi } from "vitest";
 import {
   appendCdpPath,

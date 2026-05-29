@@ -1,3 +1,4 @@
+// extensions/telegram/src/bot delivery replies helpers and runtime behavior.
 import { type Bot, GrammyError, InputFile } from "grammy";
 import {
   createOutboundPayloadPlan,

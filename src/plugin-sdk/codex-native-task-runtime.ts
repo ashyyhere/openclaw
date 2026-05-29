@@ -3,6 +3,7 @@
 // task registry without promoting detached task mutation helpers to the public
 // plugin SDK.
 
+/** Re-exported API for src/plugin-sdk. */
 export {
   CODEX_NATIVE_SUBAGENT_RUN_ID_PREFIX,
   CODEX_NATIVE_SUBAGENT_RUNTIME,
@@ -10,6 +11,7 @@ export {
   CODEX_NATIVE_SUBAGENT_TASK_KIND,
 } from "../tasks/codex-native-subagent-task.js";
 
+/** Re-exported API for src/plugin-sdk. */
 export {
   createRunningTaskRun,
   finalizeTaskRunByRunId,

@@ -1,3 +1,4 @@
+/** Registers built-in stateful binding target drivers once per process. */
 import { registerStatefulBindingTargetDriver } from "./stateful-target-drivers.js";
 
 type AcpStatefulTargetDriverModule = typeof import("./acp-stateful-target-driver.js");
@@ -10,10 +11,12 @@ function loadAcpStatefulTargetDriverModule(): Promise<AcpStatefulTargetDriverMod
   return acpDriverModulePromise;
 }
 
+/** Reused helper for is Stateful Target Builtin Driver Id behavior in src/channels/plugins. */
 export function isStatefulTargetBuiltinDriverId(id: string): boolean {
   return id.trim() === "acp";
 }
 
+/** Reused helper for ensure Stateful Target Builtins Registered behavior in src/channels/plugins. */
 export async function ensureStatefulTargetBuiltinsRegistered(): Promise<void> {
   if (builtinsRegisteredPromise) {
     await builtinsRegisteredPromise;

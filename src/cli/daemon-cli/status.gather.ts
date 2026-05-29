@@ -1,3 +1,4 @@
+/** Gathers daemon status facts before rendering CLI output. */
 import fs from "node:fs/promises";
 import JSON5 from "json5";
 import {
@@ -261,6 +262,7 @@ function appendProbeNote(
   }
   return uniqueStrings(values).join(" ");
 }
+/** Shared type for Daemon Status in src/cli/daemon-cli. */
 export type DaemonStatus = {
   cli?: CliStatusSummary;
   logFile?: string;
@@ -490,6 +492,7 @@ async function inspectEstablishedGatewayClients(params: {
   };
 }
 
+/** Reused helper for gather Daemon Status behavior in src/cli/daemon-cli. */
 export async function gatherDaemonStatus(
   opts: {
     rpc: GatewayRpcOpts;
@@ -688,6 +691,7 @@ export async function gatherDaemonStatus(
   };
 }
 
+/** Reused helper for render Port Diagnostics For Cli behavior in src/cli/daemon-cli. */
 export function renderPortDiagnosticsForCli(status: DaemonStatus, rpcOk?: boolean): string[] {
   if (!status.port || !shouldReportPortUsage(status.port.status, rpcOk)) {
     return [];
@@ -700,6 +704,7 @@ export function renderPortDiagnosticsForCli(status: DaemonStatus, rpcOk?: boolea
   });
 }
 
+/** Reused helper for resolve Port Listening Addresses behavior in src/cli/daemon-cli. */
 export function resolvePortListeningAddresses(status: DaemonStatus): string[] {
   const addrs = Array.from(
     new Set(

@@ -1,3 +1,4 @@
+// Tests extensions/voice-call/src config test behavior.
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import {
   VoiceCallConfigSchema,

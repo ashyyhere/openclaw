@@ -1,3 +1,4 @@
+// Tests plugins/contracts extension runtime dependencies contract test behavior.
 import fs from "node:fs";
 import { builtinModules } from "node:module";
 import path from "node:path";

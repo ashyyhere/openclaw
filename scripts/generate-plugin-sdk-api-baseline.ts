@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// scripts generate plugin sdk api baseline helpers and runtime behavior.
 import path from "node:path";
 import { writePluginSdkApiBaselineStatefile } from "../src/plugin-sdk/api-baseline.ts";
 

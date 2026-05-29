@@ -1,3 +1,4 @@
+// Tests link-understanding detect test behavior.
 import { describe, expect, it } from "vitest";
 import { extractLinksFromMessage } from "./detect.js";
 

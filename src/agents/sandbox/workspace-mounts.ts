@@ -1,3 +1,4 @@
+/** Builds Docker mount args for sandbox workspaces and readonly skills. */
 import fs from "node:fs";
 import path from "node:path";
 import { isPathInside } from "../../infra/path-guards.js";
@@ -5,8 +6,10 @@ import { SANDBOX_AGENT_WORKSPACE_MOUNT } from "./constants.js";
 import { resolveSandboxHostPathViaExistingAncestor } from "./host-paths.js";
 import type { SandboxWorkspaceAccess } from "./types.js";
 
+/** Reused constant for SANDBOX MOUNT FORMAT VERSION behavior in src/agents/sandbox. */
 export const SANDBOX_MOUNT_FORMAT_VERSION = 3;
 
+/** Shared type for Read Only Workspace Skill Mount in src/agents/sandbox. */
 export type ReadOnlyWorkspaceSkillMount = {
   hostPath: string;
   containerPath: string;
@@ -29,6 +32,7 @@ function containerJoin(root: string, ...parts: string[]): string {
   return suffix ? `${normalizedRoot}/${suffix}` : normalizedRoot;
 }
 
+/** Checks whether a skill mount source exists and can be mounted. */
 export function isExistingWorkspaceSkillMountSource(params: {
   agentWorkspaceDir: string;
   hostPath: string;
@@ -48,6 +52,7 @@ export function isExistingWorkspaceSkillMountSource(params: {
   return isPathInside(agentRoot, canonicalSource);
 }
 
+/** Resolves readonly skill mounts from configured workspace skills. */
 export function resolveReadOnlyWorkspaceSkillMounts(params: {
   workspaceDir: string;
   agentWorkspaceDir: string;
@@ -77,12 +82,14 @@ export function resolveReadOnlyWorkspaceSkillMounts(params: {
   );
 }
 
+/** Formats readonly skill mount state for config hashing. */
 export function formatReadOnlyWorkspaceSkillMountHashState(
   mounts: readonly ReadOnlyWorkspaceSkillMount[],
 ): string[] {
   return mounts.map((mount) => `${mount.hostPath}:${mount.containerPath}:ro`);
 }
 
+/** Appends readonly skill mount flags to Docker create args. */
 export function appendReadOnlyWorkspaceSkillMountArgs(params: {
   args: string[];
   readOnlyWorkspaceSkillMounts: readonly ReadOnlyWorkspaceSkillMount[];
@@ -99,6 +106,7 @@ export function appendReadOnlyWorkspaceSkillMountArgs(params: {
   }
 }
 
+/** Appends workspace and agent-workspace mount flags to Docker create args. */
 export function appendWorkspaceMountArgs(params: {
   args: string[];
   workspaceDir: string;

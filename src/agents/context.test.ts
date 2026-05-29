@@ -1,3 +1,4 @@
+/** Tests context-window discovery and runtime fallback behavior. */
 import { describe, expect, it, vi } from "vitest";
 import { createSessionManagerRuntimeRegistry } from "./agent-hooks/session-manager-runtime-registry.js";
 import {

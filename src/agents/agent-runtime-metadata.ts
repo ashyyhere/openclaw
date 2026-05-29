@@ -1,10 +1,13 @@
+/** Runtime metadata resolvers for agent sessions and model-backed harnesses. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { applyAcpRuntimeOverlay, type AgentRuntimeMetadata } from "./acp-runtime-overlay.js";
 import { resolveAgentHarnessPolicy } from "./harness/policy.js";
 import { resolveDefaultModelForAgent } from "./model-selection.js";
 
+/** Re-exported API for src/agents, starting with Agent Runtime Metadata. */
 export type { AgentRuntimeMetadata };
 
+/** Resolve baseline runtime metadata when only agent/config context is known. */
 export function resolveAgentRuntimeMetadata(
   _cfg: OpenClawConfig,
   _agentId: string,
@@ -16,6 +19,7 @@ export function resolveAgentRuntimeMetadata(
   };
 }
 
+/** Resolve runtime metadata from selected provider/model and ACP session overlay. */
 export function resolveModelAgentRuntimeMetadata(params: {
   cfg: OpenClawConfig;
   agentId: string;

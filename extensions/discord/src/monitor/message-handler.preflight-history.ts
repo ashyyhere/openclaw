@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor message handler preflight history helpers and runtime behavior.
 import type { HistoryEntry } from "openclaw/plugin-sdk/reply-history";
 import { resolveTimestampMs } from "./format.js";
 import type { DiscordMessagePreflightContext } from "./message-handler.preflight.types.js";

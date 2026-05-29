@@ -1,4 +1,5 @@
 #!/usr/bin/env -S node --import tsx
+// scripts prepare codex ci auth helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 

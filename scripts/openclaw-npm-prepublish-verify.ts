@@ -1,4 +1,5 @@
 #!/usr/bin/env -S node --import tsx
+// scripts openclaw npm prepublish verify helpers and runtime behavior.
 
 import { mkdtempSync, readFileSync, realpathSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";

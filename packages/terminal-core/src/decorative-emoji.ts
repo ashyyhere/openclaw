@@ -1,5 +1,7 @@
+// terminal decorative emoji helpers and runtime behavior.
 import { splitGraphemes } from "./ansi.js";
 
+/** Shared type for Decorative Emoji Options in src/terminal. */
 export type DecorativeEmojiOptions = {
   env?: NodeJS.ProcessEnv;
   isTty?: boolean;
@@ -34,6 +36,7 @@ function hasUtf8Locale(env: NodeJS.ProcessEnv): boolean {
   return /utf-?8/i.test(locale);
 }
 
+/** Reused helper for supports Decorative Emoji behavior in src/terminal. */
 export function supportsDecorativeEmoji(options: DecorativeEmojiOptions = {}): boolean {
   const env = options.env ?? process.env;
   const platform = options.platform ?? process.platform;
@@ -57,10 +60,12 @@ export function supportsDecorativeEmoji(options: DecorativeEmojiOptions = {}): b
   return false;
 }
 
+/** Reused helper for decorative Emoji behavior in src/terminal. */
 export function decorativeEmoji(emoji: string, options: DecorativeEmojiOptions = {}): string {
   return supportsDecorativeEmoji(options) ? emoji : "";
 }
 
+/** Reused helper for decorative Prefix behavior in src/terminal. */
 export function decorativePrefix(
   emoji: string,
   text: string,
@@ -70,6 +75,7 @@ export function decorativePrefix(
   return prefix ? `${prefix} ${text}` : text;
 }
 
+/** Reused helper for strip Decorative Emoji For Terminal behavior in src/terminal. */
 export function stripDecorativeEmojiForTerminal(
   text: string,
   options: DecorativeEmojiOptions = {},

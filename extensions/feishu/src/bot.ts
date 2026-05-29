@@ -1,3 +1,4 @@
+// extensions/feishu/src bot helpers and runtime behavior.
 import { resolveChannelConfigWrites } from "openclaw/plugin-sdk/channel-config-writes";
 import {
   buildChannelInboundEventContext,

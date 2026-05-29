@@ -1,3 +1,4 @@
+/** Covers small embedded-runner normalization helpers. */
 import { describe, expect, it } from "vitest";
 import { mapThinkingLevel } from "./utils.js";
 

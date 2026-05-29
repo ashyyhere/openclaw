@@ -1,3 +1,4 @@
+// extensions/qa-lab/src self check runner helpers and runtime behavior.
 import { startQaLabServer } from "./lab-server.js";
 
 export async function runQaLabSelfCheck(params?: { repoRoot?: string; outputPath?: string }) {

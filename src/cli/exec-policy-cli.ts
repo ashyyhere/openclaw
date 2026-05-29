@@ -1,3 +1,4 @@
+/** Registers CLI commands for trusted exec command policy management. */
 import crypto from "node:crypto";
 import type { Command } from "commander";
 import { formatDocsLink } from "../../packages/terminal-core/src/links.js";
@@ -362,6 +363,7 @@ async function applyLocalExecPolicy(policy: ExecPolicyResolved): Promise<ExecPol
   return await buildLocalExecPolicyShowPayload();
 }
 
+/** Reused helper for register Exec Policy Cli behavior in src/cli. */
 export function registerExecPolicyCli(program: Command) {
   const execPolicy = program
     .command("exec-policy")

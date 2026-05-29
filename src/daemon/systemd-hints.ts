@@ -1,3 +1,4 @@
+// daemon systemd hints helpers and runtime behavior.
 import { formatCliCommand } from "../cli/command-format.js";
 import {
   classifySystemdUnavailableDetail,
@@ -10,6 +11,7 @@ type SystemdUnavailableHintOptions = {
   container?: boolean;
 };
 
+/** Reused helper for is Systemd Unavailable Detail behavior in src/daemon. */
 export function isSystemdUnavailableDetail(detail?: string): boolean {
   return classifySystemdUnavailableDetail(detail) !== null;
 }
@@ -21,6 +23,7 @@ function renderSystemdHeadlessServerHints(): string[] {
   ];
 }
 
+/** Reused helper for render Systemd Unavailable Hints behavior in src/daemon. */
 export function renderSystemdUnavailableHints(
   options: SystemdUnavailableHintOptions = {},
 ): string[] {

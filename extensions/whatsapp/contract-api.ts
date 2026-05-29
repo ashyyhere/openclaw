@@ -1,3 +1,4 @@
+// extensions/whatsapp contract api helpers and runtime behavior.
 import { whatsappCommandPolicy as whatsappCommandPolicyImpl } from "./src/command-policy.js";
 import { resolveLegacyGroupSessionKey as resolveLegacyGroupSessionKeyImpl } from "./src/group-session-contract.js";
 import { testing as whatsappAccessControlTestingImpl } from "./src/inbound/access-control.js";

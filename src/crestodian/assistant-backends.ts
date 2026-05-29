@@ -1,3 +1,4 @@
+// crestodian assistant backends helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { CrestodianOverview } from "./overview.js";
 
@@ -32,6 +33,7 @@ const CODEX_APP_SERVER_BACKEND: CrestodianLocalPlannerBackend = {
   buildConfig: buildCodexAppServerPlannerConfig,
 };
 
+/** Reused helper for select Crestodian Local Planner Backends behavior in src/crestodian. */
 export function selectCrestodianLocalPlannerBackends(
   overview: CrestodianOverview,
 ): CrestodianLocalPlannerBackend[] {

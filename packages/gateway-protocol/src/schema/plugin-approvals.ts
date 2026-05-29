@@ -1,3 +1,4 @@
+// packages/gateway-protocol/src/schema plugin approvals helpers and runtime behavior.
 import { Type } from "typebox";
 import { NonEmptyString } from "./primitives.js";
 
@@ -5,6 +6,7 @@ const MAX_PLUGIN_APPROVAL_TIMEOUT_MS = 600_000;
 const PLUGIN_APPROVAL_TITLE_MAX_LENGTH = 80;
 const PLUGIN_APPROVAL_DESCRIPTION_MAX_LENGTH = 256;
 
+/** Public constant for Plugin Approval Request Params Schema behavior in packages/gateway-protocol. */
 export const PluginApprovalRequestParamsSchema = Type.Object(
   {
     pluginId: Type.Optional(NonEmptyString),
@@ -31,6 +33,7 @@ export const PluginApprovalRequestParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Plugin Approval Resolve Params Schema behavior in packages/gateway-protocol. */
 export const PluginApprovalResolveParamsSchema = Type.Object(
   {
     id: NonEmptyString,

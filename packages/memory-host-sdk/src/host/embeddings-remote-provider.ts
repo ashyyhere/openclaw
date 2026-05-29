@@ -1,3 +1,4 @@
+// packages/memory-host-sdk/src/host embeddings remote provider helpers and runtime behavior.
 import {
   resolveRemoteEmbeddingBearerClient,
   type RemoteEmbeddingProviderId,
@@ -6,6 +7,7 @@ import { fetchRemoteEmbeddingVectors } from "./embeddings-remote-fetch.js";
 import type { EmbeddingProvider, EmbeddingProviderOptions } from "./embeddings.types.js";
 import type { SsrFPolicy } from "./ssrf-policy.js";
 
+/** Public type describing Remote Embedding Client for packages/memory-host-sdk. */
 export type RemoteEmbeddingClient = {
   baseUrl: string;
   headers: Record<string, string>;
@@ -14,6 +16,7 @@ export type RemoteEmbeddingClient = {
   model: string;
 };
 
+/** Public helper for create Remote Embedding Provider behavior in packages/memory-host-sdk. */
 export function createRemoteEmbeddingProvider(params: {
   id: string;
   client: RemoteEmbeddingClient;
@@ -50,6 +53,7 @@ export function createRemoteEmbeddingProvider(params: {
   };
 }
 
+/** Public helper for resolve Remote Embedding Client behavior in packages/memory-host-sdk. */
 export async function resolveRemoteEmbeddingClient(params: {
   provider: RemoteEmbeddingProviderId;
   options: EmbeddingProviderOptions;

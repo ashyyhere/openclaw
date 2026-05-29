@@ -1,3 +1,4 @@
+/** Resolves provider/session stream functions for embedded-agent attempts. */
 import { getApiProvider } from "../../llm/api-registry.js";
 import { streamSimple } from "../../llm/stream.js";
 import { createAnthropicVertexStreamFnForModel } from "../anthropic-vertex-stream.js";
@@ -14,6 +15,7 @@ type EmbeddedStreamOptions = Parameters<StreamFn>[2] & {
   promptCacheKey?: string;
 };
 
+/** Returns the original session stream function before per-attempt wrapping. */
 export function resolveEmbeddedAgentBaseStreamFn(params: {
   session: { agent: { streamFn?: StreamFn } };
 }): StreamFn | undefined {
@@ -26,6 +28,7 @@ export function resolveEmbeddedAgentBaseStreamFn(params: {
   return baseStreamFn;
 }
 
+/** Clears cached base stream functions for isolated tests. */
 export function resetEmbeddedAgentBaseStreamFnCacheForTest(): void {
   embeddedAgentBaseStreamFnCache = new WeakMap<object, StreamFn | undefined>();
 }
@@ -66,6 +69,7 @@ function resolveOpenClawNativeCodexResponsesStreamFn(params: {
   return openClawNativeCodexResponsesStreamFnForTest ?? params.currentStreamFn ?? streamSimple;
 }
 
+/** Describes the stream route used for diagnostics and prompt-cache tracking. */
 export function describeEmbeddedAgentStreamStrategy(params: {
   currentStreamFn: StreamFn | undefined;
   providerStreamFn?: StreamFn;
@@ -100,6 +104,7 @@ export function describeEmbeddedAgentStreamStrategy(params: {
   return "session-custom";
 }
 
+/** Resolves the API key used by wrapper transports without forcing auth lookup. */
 export async function resolveEmbeddedAgentApiKey(params: {
   provider: string;
   resolvedApiKey?: string;
@@ -112,6 +117,7 @@ export async function resolveEmbeddedAgentApiKey(params: {
   return params.authStorage ? await params.authStorage.getApiKey(params.provider) : undefined;
 }
 
+/** Builds the concrete stream function for one embedded-agent model attempt. */
 export function resolveEmbeddedAgentStreamFn(params: {
   currentStreamFn: StreamFn | undefined;
   providerStreamFn?: StreamFn;
@@ -209,6 +215,7 @@ export function resolveEmbeddedAgentStreamFn(params: {
   });
 }
 
+/** Reused constant for testing behavior in src/agents/embedded-agent-runner. */
 export const testing = {
   setOpenClawNativeCodexResponsesStreamFnForTest(streamFn: StreamFn | undefined): void {
     openClawNativeCodexResponsesStreamFnForTest = streamFn;
@@ -265,4 +272,5 @@ function wrapEmbeddedAgentStreamFn(
     });
   };
 }
+/** Re-exported API for src/agents/embedded-agent-runner, starting with testing. */
 export { testing as __testing };

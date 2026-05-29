@@ -1,3 +1,4 @@
+// Tests extensions/openai openai codex auth identity test behavior.
 import { describe, expect, it } from "vitest";
 import { resolveCodexAuthIdentity } from "./openai-codex-auth-identity.js";
 

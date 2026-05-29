@@ -1,3 +1,4 @@
+/** Holds process-wide models.json write/cache state shared by ESM module reloads. */
 const MODELS_JSON_STATE_KEY = Symbol.for("openclaw.modelsJsonState");
 
 type ModelsJsonState = {
@@ -8,6 +9,7 @@ type ModelsJsonState = {
   >;
 };
 
+/** Global write-lock and ready-cache store for generated models.json files. */
 export const MODELS_JSON_STATE = (() => {
   const globalState = globalThis as typeof globalThis & {
     [MODELS_JSON_STATE_KEY]?: ModelsJsonState;
@@ -24,6 +26,7 @@ export const MODELS_JSON_STATE = (() => {
   return globalState[MODELS_JSON_STATE_KEY];
 })();
 
+/** Clear generated models.json locks/caches between tests. */
 export function resetModelsJsonReadyCacheForTest(): void {
   MODELS_JSON_STATE.writeLocks.clear();
   MODELS_JSON_STATE.readyCache.clear();

@@ -1,3 +1,4 @@
+// extensions/qa-lab/src process tree cpu helpers and runtime behavior.
 import { spawnSync } from "node:child_process";
 import { parseStrictFiniteNumber, parseStrictInteger } from "openclaw/plugin-sdk/number-runtime";
 

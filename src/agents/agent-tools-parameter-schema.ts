@@ -1,3 +1,4 @@
+/** Provider-compatible normalization for agent tool parameter schemas. */
 import type { TSchema } from "typebox";
 import type { ModelCompatConfig } from "../config/types.models.js";
 import {
@@ -10,6 +11,7 @@ import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import { uniqueValues } from "../shared/string-normalization.js";
 import { cleanSchemaForGemini } from "./schema/clean-for-gemini.js";
 
+/** Shared type for Tool Parameter Schema Options in src/agents. */
 export type ToolParameterSchemaOptions = {
   modelProvider?: string;
   modelId?: string;
@@ -589,6 +591,7 @@ function inlineLocalSchemaRefsWithDefs(
   return result;
 }
 
+/** Inline local JSON-schema refs used inside tool parameter schemas. */
 export function inlineLocalToolSchemaRefs(schema: unknown): TSchema {
   if (!schema || typeof schema !== "object") {
     return schema as TSchema;
@@ -881,6 +884,7 @@ function normalizeToolParameterSchemaUncached(
   return applyProviderCleaning(flattenedSchema);
 }
 
+/** Normalize a tool parameter schema for provider/model compatibility. */
 export function normalizeToolParameterSchema(
   schema: unknown,
   options?: ToolParameterSchemaOptions,

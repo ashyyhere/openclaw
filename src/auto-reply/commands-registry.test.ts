@@ -1,3 +1,4 @@
+// Coverage for command registry validation, routing, and menu metadata.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   pinActivePluginChannelRegistry,

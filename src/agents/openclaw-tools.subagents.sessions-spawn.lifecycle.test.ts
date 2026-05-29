@@ -1,3 +1,4 @@
+/** Tests sessions_spawn subagent lifecycle hooks. */
 import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { AgentRouteBinding } from "../config/types.agents.js";
 import { emitAgentEvent } from "../infra/agent-events.js";

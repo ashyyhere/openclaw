@@ -1,14 +1,18 @@
+/** Runtime implementation for model catalog CLI commands. */
 import type { Command } from "commander";
 import { defaultRuntime } from "../runtime.js";
 import { resolveOptionFromCommand, runCommandWithRuntime } from "./cli-utils.js";
 import { formatCliCommand } from "./command-format.js";
 
+/** Re-exported API for src/cli, starting with default Runtime. */
 export { defaultRuntime };
 
+/** Reused helper for run Models Command behavior in src/cli. */
 export function runModelsCommand(action: () => Promise<void>) {
   return runCommandWithRuntime(defaultRuntime, action);
 }
 
+/** Reused helper for resolve Model Agent Option behavior in src/cli. */
 export function resolveModelAgentOption(
   command: Command | undefined,
   opts?: { agent?: unknown },
@@ -19,6 +23,7 @@ export function resolveModelAgentOption(
   );
 }
 
+/** Reused helper for reject Agent Scoped Model Write behavior in src/cli. */
 export function rejectAgentScopedModelWrite(
   command: Command,
   commandName: "set" | "set-image",

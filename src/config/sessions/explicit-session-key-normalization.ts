@@ -1,3 +1,4 @@
+// config/sessions explicit session key normalization helpers and runtime behavior.
 import type { MsgContext } from "../../auto-reply/templating.js";
 import { getLoadedChannelPlugin, listChannelPlugins } from "../../channels/plugins/index.js";
 import { normalizeSessionKeyPreservingOpaquePeerIds } from "../../sessions/session-key-utils.js";
@@ -36,6 +37,7 @@ function resolveExplicitSessionKeyNormalizerCandidates(
   return [...candidates];
 }
 
+/** Reused helper for normalize Explicit Session Key behavior in src/config/sessions. */
 export function normalizeExplicitSessionKey(sessionKey: string, ctx: MsgContext): string {
   const normalized = normalizeSessionKeyPreservingOpaquePeerIds(sessionKey);
   for (const channelId of resolveExplicitSessionKeyNormalizerCandidates(normalized, ctx)) {

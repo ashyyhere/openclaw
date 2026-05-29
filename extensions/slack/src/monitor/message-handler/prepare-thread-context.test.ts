@@ -1,3 +1,4 @@
+// Tests extensions/slack/src/monitor/message-handler prepare thread context test behavior.
 import type { App } from "@slack/bolt";
 import { resolveEnvelopeFormatOptions } from "openclaw/plugin-sdk/channel-inbound";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";

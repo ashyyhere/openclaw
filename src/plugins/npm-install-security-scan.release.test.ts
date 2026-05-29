@@ -1,3 +1,4 @@
+// Tests plugins npm install security scan release test behavior.
 import { execFile, spawnSync } from "node:child_process";
 import fs, { copyFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";

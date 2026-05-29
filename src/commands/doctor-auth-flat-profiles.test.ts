@@ -1,3 +1,4 @@
+/** Tests doctor checks for flat auth profile stores. */
 import fs from "node:fs";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { clearRuntimeAuthProfileStoreSnapshots } from "../agents/auth-profiles/store.js";

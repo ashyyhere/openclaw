@@ -1,3 +1,4 @@
+// extensions/msteams/src monitor handler test helpers helpers and runtime behavior.
 import type { PreparedInboundReply } from "openclaw/plugin-sdk/channel-inbound";
 import { vi } from "vitest";
 import type { OpenClawConfig, PluginRuntime, RuntimeEnv } from "../runtime-api.js";

@@ -1,3 +1,4 @@
+// extensions/discord/src outbound adapter helpers and runtime behavior.
 import type { OutboundIdentity } from "openclaw/plugin-sdk/channel-outbound";
 import { resolveOutboundSendDep } from "openclaw/plugin-sdk/channel-outbound";
 import {

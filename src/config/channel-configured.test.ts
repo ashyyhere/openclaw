@@ -1,3 +1,4 @@
+// Tests config channel configured test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { isChannelConfigured } from "./channel-configured.js";
 

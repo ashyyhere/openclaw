@@ -1,3 +1,4 @@
+/** Registers nodes notification command. */
 import type { Command } from "commander";
 import { randomIdempotencyKey } from "../../gateway/call.js";
 import { defaultRuntime } from "../../runtime.js";
@@ -11,6 +12,7 @@ import {
 } from "./rpc.js";
 import type { NodesRpcOpts } from "./types.js";
 
+/** Reused helper for register Nodes Notify Command behavior in src/cli/nodes-cli. */
 export function registerNodesNotifyCommand(nodes: Command) {
   nodesCallOpts(
     nodes

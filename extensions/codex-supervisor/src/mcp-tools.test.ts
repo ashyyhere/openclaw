@@ -1,3 +1,4 @@
+// Tests extensions/codex-supervisor/src mcp tools test behavior.
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { describe, expect, it } from "vitest";
 import {

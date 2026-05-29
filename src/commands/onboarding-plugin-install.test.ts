@@ -1,3 +1,4 @@
+/** Tests bundled plugin install during onboarding. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { beforeEach, describe, expect, it, vi } from "vitest";

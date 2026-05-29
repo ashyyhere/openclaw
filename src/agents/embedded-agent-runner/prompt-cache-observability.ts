@@ -1,6 +1,8 @@
+/** Tracks prompt-cache relevant changes between embedded-agent attempts. */
 import crypto from "node:crypto";
 import type { NormalizedUsage } from "../usage.js";
 
+/** Shared type for Prompt Cache Change Code in src/agents/embedded-agent-runner. */
 export type PromptCacheChangeCode =
   | "cacheRetention"
   | "model"
@@ -9,11 +11,13 @@ export type PromptCacheChangeCode =
   | "tools"
   | "transport";
 
+/** Shared type for Prompt Cache Change in src/agents/embedded-agent-runner. */
 export type PromptCacheChange = {
   code: PromptCacheChangeCode;
   detail: string;
 };
 
+/** Shared type for Prompt Cache Snapshot in src/agents/embedded-agent-runner. */
 export type PromptCacheSnapshot = {
   provider: string;
   modelId: string;
@@ -27,12 +31,14 @@ export type PromptCacheSnapshot = {
   toolNames: string[];
 };
 
+/** Shared type for Prompt Cache Observation Start in src/agents/embedded-agent-runner. */
 export type PromptCacheObservationStart = {
   snapshot: PromptCacheSnapshot;
   changes: PromptCacheChange[] | null;
   previousCacheRead: number | null;
 };
 
+/** Shared type for Prompt Cache Break in src/agents/embedded-agent-runner. */
 export type PromptCacheBreak = {
   previousCacheRead: number;
   cacheRead: number;
@@ -137,10 +143,12 @@ function diffSnapshots(
   return changes.length > 0 ? changes : null;
 }
 
+/** Reused helper for collect Prompt Cache Tool Names behavior in src/agents/embedded-agent-runner. */
 export function collectPromptCacheToolNames(tools: Array<{ name?: string }>): string[] {
   return tools.map((tool) => tool.name?.trim()).filter((name): name is string => Boolean(name));
 }
 
+/** Captures a prompt-cache baseline before model call construction. */
 export function beginPromptCacheObservation(params: {
   sessionId: string;
   promptCacheKey?: string;
@@ -181,6 +189,7 @@ export function beginPromptCacheObservation(params: {
   };
 }
 
+/** Compares final prompt/tool state against the baseline and records changes. */
 export function completePromptCacheObservation(params: {
   sessionId: string;
   promptCacheKey?: string;
@@ -221,6 +230,7 @@ export function completePromptCacheObservation(params: {
   return result;
 }
 
+/** Reused helper for reset Prompt Cache Observability For Test behavior in src/agents/embedded-agent-runner. */
 export function resetPromptCacheObservabilityForTest(): void {
   trackers.clear();
 }

@@ -1,3 +1,4 @@
+// Tests ui/src/ui/views agents utils test behavior.
 import { describe, expect, it } from "vitest";
 import {
   agentLogoUrl,

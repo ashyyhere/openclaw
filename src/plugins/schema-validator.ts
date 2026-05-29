@@ -1,3 +1,4 @@
+// plugins schema validator helpers and runtime behavior.
 import { Compile, type Validator as TypeBoxValidator } from "typebox/compile";
 import { Format } from "typebox/format";
 import { sanitizeTerminalText } from "../../packages/terminal-core/src/safe-text.js";
@@ -25,6 +26,7 @@ type CachedValidator = {
   schemaFingerprint: string;
 };
 
+/** Shared type for Json Schema Value in src/plugins. */
 export type JsonSchemaValue = JsonSchemaObject | boolean;
 
 const schemaCache = new PluginLruCache<CachedValidator>(512);
@@ -152,6 +154,7 @@ function isDefaultActivatedConditionalFailure(params: {
   return checkSchema(originalValidator, params.originalValue) === null;
 }
 
+/** Shared type for Json Schema Validation Error in src/plugins. */
 export type JsonSchemaValidationError = {
   path: string;
   message: string;
@@ -317,6 +320,7 @@ function formatValidationErrors(
   });
 }
 
+/** Reused helper for validate Json Schema Value behavior in src/plugins. */
 export function validateJsonSchemaValue(params: {
   schema: JsonSchemaValue;
   cacheKey: string;

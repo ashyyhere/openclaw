@@ -1,3 +1,4 @@
+// extensions/whatsapp/src heartbeat helpers and runtime behavior.
 import { resolveWhatsAppAccount } from "./accounts.js";
 import { readWebAuthExistsForDecision, WHATSAPP_AUTH_UNSTABLE_CODE } from "./auth-store.js";
 import type { OpenClawConfig } from "./runtime-api.js";

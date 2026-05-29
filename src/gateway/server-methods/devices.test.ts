@@ -1,3 +1,4 @@
+// Tests gateway/server-methods devices test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { deviceHandlers } from "./devices.js";
 import type { GatewayRequestHandlerOptions } from "./types.js";

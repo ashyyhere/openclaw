@@ -1,3 +1,4 @@
+/** Prompts users to choose provider authentication during setup. */
 import type { AuthProfileStore } from "../agents/auth-profiles/types.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { WizardPrompter, WizardSelectOption } from "../wizard/prompts.js";
@@ -18,6 +19,7 @@ function groupToOption(group: AuthChoiceGroup): WizardSelectOption {
   return { value: group.value, label: group.label, hint: group.hint };
 }
 
+/** Reused helper for prompt Auth Choice Grouped behavior in src/commands. */
 export async function promptAuthChoiceGrouped(params: {
   prompter: WizardPrompter;
   store: AuthProfileStore;

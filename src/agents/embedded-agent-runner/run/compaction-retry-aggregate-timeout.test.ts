@@ -1,3 +1,4 @@
+/** Covers aggregate timeout behavior while waiting for compaction retry. */
 import { describe, expect, it, vi } from "vitest";
 import { MAX_TIMER_TIMEOUT_MS } from "../../../shared/number-coercion.js";
 import { waitForCompactionRetryWithAggregateTimeout } from "./compaction-retry-aggregate-timeout.js";

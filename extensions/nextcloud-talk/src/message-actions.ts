@@ -1,3 +1,4 @@
+// extensions/nextcloud-talk/src message actions helpers and runtime behavior.
 import {
   jsonResult,
   readStringParam,

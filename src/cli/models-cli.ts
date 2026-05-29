@@ -1,3 +1,4 @@
+/** Registers model catalog CLI commands with lazy runtime loading. */
 import type { Command } from "commander";
 import { formatDocsLink } from "../../packages/terminal-core/src/links.js";
 import { theme } from "../../packages/terminal-core/src/theme.js";
@@ -34,6 +35,7 @@ async function withModelsRuntime(
   return runtime.runModelsCommand(() => action(runtime));
 }
 
+/** Reused helper for register Models Cli behavior in src/cli. */
 export function registerModelsCli(program: Command) {
   const models = program
     .command("models")

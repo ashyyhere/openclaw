@@ -1,3 +1,4 @@
+/** Registers cron edit, pause, resume, delete, and run commands. */
 import type { Command } from "commander";
 import type { CronJob } from "../../cron/types.js";
 import { danger } from "../../globals.js";
@@ -61,6 +62,7 @@ async function loadCronJobForEditSchedulePatch(
   throw new Error("cron.list pagination exceeded maximum pages while looking up cron job");
 }
 
+/** Reused helper for register Cron Edit Command behavior in src/cli/cron-cli. */
 export function registerCronEditCommand(cron: Command) {
   addGatewayClientOptions(
     cron

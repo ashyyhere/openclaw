@@ -1,7 +1,9 @@
+// Runtime helper for persisting abort cutoff updates to session state.
 import { updateSessionStore } from "../../config/sessions/store.js";
 import type { SessionEntry } from "../../config/sessions/types.js";
 import { applyAbortCutoffToSessionEntry, hasAbortCutoff } from "./abort-cutoff.js";
 
+/** Reused helper for clear Abort Cutoff In Session Runtime behavior in src/auto-reply/reply. */
 export async function clearAbortCutoffInSessionRuntime(params: {
   sessionEntry?: SessionEntry;
   sessionStore?: Record<string, SessionEntry>;

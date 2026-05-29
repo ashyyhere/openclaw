@@ -1,3 +1,4 @@
+// ui/src/ui/views channels googlechat helpers and runtime behavior.
 import { html, nothing } from "lit";
 import { t } from "../../i18n/index.ts";
 import { formatRelativeTimestamp } from "../format.ts";
@@ -10,6 +11,7 @@ import {
 } from "./channels.shared.ts";
 import type { ChannelsProps } from "./channels.types.ts";
 
+/** Reused helper for render Google Chat Card behavior in ui/src/ui/views. */
 export function renderGoogleChatCard(params: {
   props: ChannelsProps;
   googleChat?: GoogleChatStatus | null;

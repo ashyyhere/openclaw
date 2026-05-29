@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/browser chrome version test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 const execFileSyncMock = vi.hoisted(() => vi.fn());

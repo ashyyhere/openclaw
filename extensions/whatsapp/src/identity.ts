@@ -1,3 +1,4 @@
+// extensions/whatsapp/src identity helpers and runtime behavior.
 import { jidToE164, normalizeE164 } from "./text-runtime.js";
 
 const WHATSAPP_LID_RE = /@(lid|hosted\.lid)$/i;

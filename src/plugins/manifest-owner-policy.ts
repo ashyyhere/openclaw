@@ -1,3 +1,4 @@
+// plugins manifest owner policy helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { normalizePluginsConfig, resolveEffectivePluginActivationState } from "./config-state.js";
 import { isPluginEnabledByDefaultForPlatform } from "./default-enablement.js";
@@ -10,16 +11,19 @@ type OwnerPlugin = Pick<
 
 type NormalizedPluginsConfig = ReturnType<typeof normalizePluginsConfig>;
 
+/** Shared type for Manifest Owner Base Policy Block Reason in src/plugins. */
 export type ManifestOwnerBasePolicyBlockReason =
   | "plugins-disabled"
   | "blocked-by-denylist"
   | "plugin-disabled"
   | "not-in-allowlist";
 
+/** Reused helper for is Bundled Manifest Owner behavior in src/plugins. */
 export function isBundledManifestOwner(plugin: Pick<PluginManifestRecord, "origin">): boolean {
   return plugin.origin === "bundled";
 }
 
+/** Reused helper for has Explicit Manifest Owner Trust behavior in src/plugins. */
 export function hasExplicitManifestOwnerTrust(params: {
   plugin: Pick<PluginManifestRecord, "id">;
   normalizedConfig: NormalizedPluginsConfig;
@@ -30,6 +34,7 @@ export function hasExplicitManifestOwnerTrust(params: {
   );
 }
 
+/** Reused helper for passes Manifest Owner Base Policy behavior in src/plugins. */
 export function passesManifestOwnerBasePolicy(params: {
   plugin: Pick<PluginManifestRecord, "id">;
   normalizedConfig: NormalizedPluginsConfig;
@@ -39,6 +44,7 @@ export function passesManifestOwnerBasePolicy(params: {
   return resolveManifestOwnerBasePolicyBlock(params) === null;
 }
 
+/** Reused helper for resolve Manifest Owner Base Policy Block behavior in src/plugins. */
 export function resolveManifestOwnerBasePolicyBlock(params: {
   plugin: Pick<PluginManifestRecord, "id">;
   normalizedConfig: NormalizedPluginsConfig;
@@ -67,6 +73,7 @@ export function resolveManifestOwnerBasePolicyBlock(params: {
   return null;
 }
 
+/** Reused helper for is Activated Manifest Owner behavior in src/plugins. */
 export function isActivatedManifestOwner(params: {
   plugin: OwnerPlugin;
   normalizedConfig: NormalizedPluginsConfig;

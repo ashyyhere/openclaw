@@ -1,3 +1,4 @@
+// extensions/slack/src security helpers and runtime behavior.
 import { createScopedDmSecurityResolver } from "openclaw/plugin-sdk/channel-config-helpers";
 import { createOpenProviderConfiguredRouteWarningCollector } from "openclaw/plugin-sdk/channel-policy";
 import { createLazyRuntimeModule } from "openclaw/plugin-sdk/lazy-runtime";

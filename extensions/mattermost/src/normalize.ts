@@ -1,3 +1,4 @@
+// extensions/mattermost/src normalize helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "openclaw/plugin-sdk/string-coerce-runtime";
 
 export function normalizeMattermostMessagingTarget(raw: string): string | undefined {

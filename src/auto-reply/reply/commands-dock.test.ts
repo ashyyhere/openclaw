@@ -1,3 +1,4 @@
+// Coverage for dock command registration and routing.
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { setActivePluginRegistry } from "../../plugins/runtime.js";
 import {

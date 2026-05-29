@@ -1,3 +1,4 @@
+// Tests extensions/mistral realtime transcription provider test behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {

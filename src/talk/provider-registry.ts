@@ -1,3 +1,4 @@
+// talk provider registry helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {
   resolvePluginCapabilityProvider,
@@ -10,6 +11,7 @@ import {
 import type { RealtimeVoiceProviderPlugin } from "../plugins/types.js";
 import type { RealtimeVoiceProviderId } from "./provider-types.js";
 
+/** Reused helper for normalize Realtime Voice Provider Id behavior in src/talk. */
 export function normalizeRealtimeVoiceProviderId(
   providerId: string | undefined,
 ): RealtimeVoiceProviderId | undefined {
@@ -30,10 +32,12 @@ function buildProviderMaps(cfg?: OpenClawConfig): {
   return buildCapabilityProviderMaps(resolveRealtimeVoiceProviderEntries(cfg));
 }
 
+/** Reused helper for list Realtime Voice Providers behavior in src/talk. */
 export function listRealtimeVoiceProviders(cfg?: OpenClawConfig): RealtimeVoiceProviderPlugin[] {
   return [...buildProviderMaps(cfg).canonical.values()];
 }
 
+/** Reused helper for get Realtime Voice Provider behavior in src/talk. */
 export function getRealtimeVoiceProvider(
   providerId: string | undefined,
   cfg?: OpenClawConfig,
@@ -53,6 +57,7 @@ export function getRealtimeVoiceProvider(
   return buildProviderMaps(cfg).aliases.get(normalized);
 }
 
+/** Reused helper for canonicalize Realtime Voice Provider Id behavior in src/talk. */
 export function canonicalizeRealtimeVoiceProviderId(
   providerId: string | undefined,
   cfg?: OpenClawConfig,

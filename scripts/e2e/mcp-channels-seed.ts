@@ -1,3 +1,4 @@
+// scripts/e2e mcp channels seed helpers and runtime behavior.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

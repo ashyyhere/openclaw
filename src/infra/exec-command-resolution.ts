@@ -1,3 +1,4 @@
+// infra exec command resolution helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
@@ -9,6 +10,7 @@ import {
   resolveExecutablePathCandidate,
 } from "./executable-path.js";
 
+/** Shared type for Executable Resolution in src/infra. */
 export type ExecutableResolution = {
   rawExecutable: string;
   resolvedPath?: string;
@@ -16,6 +18,7 @@ export type ExecutableResolution = {
   executableName: string;
 };
 
+/** Shared type for Command Resolution in src/infra. */
 export type CommandResolution = {
   execution: ExecutableResolution;
   policy: ExecutableResolution;
@@ -122,6 +125,7 @@ function buildCommandResolution(params: {
   });
 }
 
+/** Reused helper for resolve Command Resolution behavior in src/infra. */
 export function resolveCommandResolution(
   command: string,
   cwd?: string,
@@ -141,6 +145,7 @@ export function resolveCommandResolution(
   });
 }
 
+/** Reused helper for resolve Command Resolution From Argv behavior in src/infra. */
 export function resolveCommandResolutionFromArgv(
   argv: string[],
   cwd?: string,
@@ -185,6 +190,7 @@ function resolveExecutableCandidatePathFromResolution(
   });
 }
 
+/** Reused helper for resolve Executable Trust Path behavior in src/infra. */
 export function resolveExecutableTrustPath(
   resolution: ExecutableResolution | null | undefined,
   cwd?: string,
@@ -197,6 +203,7 @@ export function resolveExecutableTrustPath(
   return tryResolveRealpath(candidatePath) ?? candidatePath;
 }
 
+/** Reused helper for resolve Execution Target Resolution behavior in src/infra. */
 export function resolveExecutionTargetResolution(
   resolution: CommandResolution | ExecutableResolution | null,
 ): ExecutableResolution | null {
@@ -206,6 +213,7 @@ export function resolveExecutionTargetResolution(
   return isCommandResolution(resolution) ? resolution.execution : resolution;
 }
 
+/** Reused helper for resolve Policy Target Resolution behavior in src/infra. */
 export function resolvePolicyTargetResolution(
   resolution: CommandResolution | ExecutableResolution | null,
 ): ExecutableResolution | null {
@@ -215,6 +223,7 @@ export function resolvePolicyTargetResolution(
   return isCommandResolution(resolution) ? resolution.policy : resolution;
 }
 
+/** Reused helper for resolve Execution Target Candidate Path behavior in src/infra. */
 export function resolveExecutionTargetCandidatePath(
   resolution: CommandResolution | ExecutableResolution | null,
   cwd?: string,
@@ -225,6 +234,7 @@ export function resolveExecutionTargetCandidatePath(
   );
 }
 
+/** Reused helper for resolve Execution Target Trust Path behavior in src/infra. */
 export function resolveExecutionTargetTrustPath(
   resolution: CommandResolution | ExecutableResolution | null,
   cwd?: string,
@@ -235,6 +245,7 @@ export function resolveExecutionTargetTrustPath(
   );
 }
 
+/** Reused helper for resolve Policy Target Candidate Path behavior in src/infra. */
 export function resolvePolicyTargetCandidatePath(
   resolution: CommandResolution | ExecutableResolution | null,
   cwd?: string,
@@ -245,6 +256,7 @@ export function resolvePolicyTargetCandidatePath(
   );
 }
 
+/** Reused helper for resolve Policy Target Trust Path behavior in src/infra. */
 export function resolvePolicyTargetTrustPath(
   resolution: CommandResolution | ExecutableResolution | null,
   cwd?: string,
@@ -255,6 +267,7 @@ export function resolvePolicyTargetTrustPath(
   );
 }
 
+/** Reused helper for resolve Approval Audit Candidate Path behavior in src/infra. */
 export function resolveApprovalAuditCandidatePath(
   resolution: CommandResolution | null,
   cwd?: string,
@@ -262,6 +275,7 @@ export function resolveApprovalAuditCandidatePath(
   return resolvePolicyTargetCandidatePath(resolution, cwd);
 }
 
+/** Reused helper for resolve Approval Audit Trust Path behavior in src/infra. */
 export function resolveApprovalAuditTrustPath(
   resolution: CommandResolution | null,
   cwd?: string,
@@ -277,6 +291,7 @@ export function resolveAllowlistCandidatePath(
   return resolveExecutionTargetCandidatePath(resolution, cwd);
 }
 
+/** Reused helper for resolve Policy Allowlist Candidate Path behavior in src/infra. */
 export function resolvePolicyAllowlistCandidatePath(
   resolution: CommandResolution | ExecutableResolution | null,
   cwd?: string,
@@ -379,6 +394,7 @@ function matchesExecutableBasenamePattern(
   return [...candidates].some((candidate) => matchesExecAllowlistPattern(pattern, candidate));
 }
 
+/** Reused helper for match Allowlist behavior in src/infra. */
 export function matchAllowlist(
   entries: ExecAllowlistEntry[],
   resolution: ExecutableResolution | null,
@@ -428,6 +444,7 @@ export function matchAllowlist(
   return pathOnlyMatch;
 }
 
+/** Shared type for Exec Argv Token in src/infra. */
 export type ExecArgvToken =
   | {
       kind: "empty";

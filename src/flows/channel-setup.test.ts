@@ -1,3 +1,4 @@
+// Tests flows channel setup test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   makeCatalogEntry,

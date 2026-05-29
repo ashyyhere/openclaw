@@ -1,3 +1,4 @@
+/** Shared base fields attached to agent trace events. */
 type AgentTraceBase = {
   runId?: string;
   sessionId?: string;
@@ -8,6 +9,7 @@ type AgentTraceBase = {
   workspaceDir?: string;
 };
 
+/** Reused helper for build Agent Trace Base behavior in src/agents. */
 export function buildAgentTraceBase(params: AgentTraceBase): AgentTraceBase {
   return {
     runId: params.runId,

@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/actions handle action test behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 

@@ -1,3 +1,4 @@
+// scripts changelog add unreleased helpers and runtime behavior.
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { appendUnreleasedChangelogEntry } from "../src/infra/changelog-unreleased.js";

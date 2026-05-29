@@ -1,13 +1,17 @@
+// talk output activity tracker helpers and runtime behavior.
+/** Shared type for Realtime Voice Output Activity Tracker Options in src/talk. */
 export type RealtimeVoiceOutputActivityTrackerOptions = {
   now?: () => number;
 };
 
+/** Shared type for Realtime Voice Output Activity Delta in src/talk. */
 export type RealtimeVoiceOutputActivityDelta = {
   audioMs?: number;
   sourceAudioBytes?: number;
   sinkAudioBytes?: number;
 };
 
+/** Shared type for Realtime Voice Output Activity Snapshot in src/talk. */
 export type RealtimeVoiceOutputActivitySnapshot = {
   audioMs: number;
   chunks: number;
@@ -19,6 +23,7 @@ export type RealtimeVoiceOutputActivitySnapshot = {
   playbackStartedAt?: number;
 };
 
+/** Shared type for Realtime Voice Output Activity Tracker in src/talk. */
 export type RealtimeVoiceOutputActivityTracker = {
   markStreamOpened(): void;
   markStreamEnding(): void;
@@ -32,6 +37,7 @@ export type RealtimeVoiceOutputActivityTracker = {
   snapshot(): RealtimeVoiceOutputActivitySnapshot;
 };
 
+/** Reused helper for create Realtime Voice Output Activity Tracker behavior in src/talk. */
 export function createRealtimeVoiceOutputActivityTracker(
   options: RealtimeVoiceOutputActivityTrackerOptions = {},
 ): RealtimeVoiceOutputActivityTracker {

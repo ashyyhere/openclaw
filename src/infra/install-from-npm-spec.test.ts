@@ -1,3 +1,4 @@
+// Tests infra install from npm spec test behavior.
 import { describe, expect, it, vi } from "vitest";
 
 const validateRegistryNpmSpecMock = vi.hoisted(() => vi.fn());

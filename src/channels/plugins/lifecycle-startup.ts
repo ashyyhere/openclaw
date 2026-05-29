@@ -1,3 +1,4 @@
+// Channel plugin startup lifecycle runner.
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { listChannelPlugins } from "./registry.js";
 
@@ -6,6 +7,7 @@ type ChannelStartupLogger = {
   warn?: (message: string) => void;
 };
 
+/** Reused helper for run Channel Plugin Startup Maintenance behavior in src/channels/plugins. */
 export async function runChannelPluginStartupMaintenance(params: {
   cfg: OpenClawConfig;
   env?: NodeJS.ProcessEnv;

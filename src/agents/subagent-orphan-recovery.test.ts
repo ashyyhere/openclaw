@@ -1,3 +1,4 @@
+/** Regression coverage for orphaned subagent session recovery. */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import * as sessions from "../config/sessions.js";
 import * as gateway from "../gateway/call.js";

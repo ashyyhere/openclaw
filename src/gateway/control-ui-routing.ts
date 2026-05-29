@@ -1,3 +1,4 @@
+// gateway control ui routing helpers and runtime behavior.
 import { isReadHttpMethod } from "./control-ui-http-utils.js";
 
 type ControlUiRequestClassification =
@@ -8,6 +9,7 @@ type ControlUiRequestClassification =
 
 const ROOT_MOUNTED_GATEWAY_PROBE_PATHS = new Set(["/health", "/healthz", "/ready", "/readyz"]);
 
+/** Reused helper for classify Control Ui Request behavior in src/gateway. */
 export function classifyControlUiRequest(params: {
   basePath: string;
   pathname: string;

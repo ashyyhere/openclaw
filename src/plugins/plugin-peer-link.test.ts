@@ -1,3 +1,4 @@
+// Tests plugins plugin peer link test behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";

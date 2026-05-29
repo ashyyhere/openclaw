@@ -1,3 +1,4 @@
+// extensions/voice-call index helpers and runtime behavior.
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";
 import { ErrorCodes, errorShape } from "openclaw/plugin-sdk/gateway-runtime";
 import { timestampMsToIsoString } from "openclaw/plugin-sdk/number-runtime";

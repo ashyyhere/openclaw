@@ -1,3 +1,4 @@
+// extensions/qa-lab/src live timeout helpers and runtime behavior.
 import type { QaProviderMode } from "./model-selection.js";
 import { getQaProvider } from "./providers/index.js";
 

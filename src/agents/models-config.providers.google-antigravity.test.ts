@@ -1,3 +1,4 @@
+/** Tests Google Antigravity provider config generation. */
 import { describe, expect, it, vi } from "vitest";
 import { normalizeProviderSpecificConfig } from "./models-config.providers.policy.js";
 import type { ProviderConfig } from "./models-config.providers.secrets.js";

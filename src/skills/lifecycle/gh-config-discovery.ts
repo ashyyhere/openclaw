@@ -1,3 +1,4 @@
+/** Detects mismatches between host and sandbox GitHub CLI config dirs. */
 import { posix as posixPath, win32 as win32Path } from "node:path";
 
 function pathFor(platform: NodeJS.Platform) {
@@ -11,6 +12,7 @@ function pathFor(platform: NodeJS.Platform) {
 // "not logged in", even though the operator HOME has a valid hosts.yml.
 // See https://github.com/openclaw/openclaw/issues/78063.
 
+/** Shared type for Gh Config Discovery Env in src/agents/skills. */
 export type GhConfigDiscoveryEnv = {
   HOME?: string;
   XDG_CONFIG_HOME?: string;
@@ -21,6 +23,7 @@ export type GhConfigDiscoveryEnv = {
   USERPROFILE?: string;
 };
 
+/** Shared type for Gh Config Discovery Input in src/agents/skills. */
 export type GhConfigDiscoveryInput = {
   platform: NodeJS.Platform;
   env: GhConfigDiscoveryEnv;
@@ -31,6 +34,7 @@ export type GhConfigDiscoveryInput = {
   candidateOperatorHomes?: readonly string[];
 };
 
+/** Shared type for Gh Config Dir Mismatch in src/agents/skills. */
 export type GhConfigDirMismatch = {
   // The directory `gh` would actually consult given the current process env.
   effectiveConfigDir: string;
@@ -45,6 +49,7 @@ export type GhConfigDirMismatch = {
   suggestedEnvValue: string;
 };
 
+/** Shared type for Gh Config Discovery Result in src/agents/skills. */
 export type GhConfigDiscoveryResult =
   | { kind: "no-gh-binary" }
   | { kind: "explicit-gh-config-dir-set"; ghConfigDir: string }
@@ -125,6 +130,7 @@ function ghConfigDirForHome(home: string, platform: NodeJS.Platform): string {
   return pathFor(platform).join(home, ".config", "gh");
 }
 
+/** Detects when GH_CONFIG_DIR differs from the expected mounted config path. */
 export function detectGhConfigDirMismatch(input: GhConfigDiscoveryInput): GhConfigDiscoveryResult {
   const env = input.env;
   if (env.GH_CONFIG_DIR && env.GH_CONFIG_DIR.trim()) {
@@ -159,6 +165,7 @@ export function detectGhConfigDirMismatch(input: GhConfigDiscoveryInput): GhConf
   return { kind: "no-known-auth", effectiveConfigDir: effective };
 }
 
+/** Formats actionable hints for GH_CONFIG_DIR mismatch warnings. */
 export function formatGhConfigDirMismatchHint(mismatch: GhConfigDirMismatch): string[] {
   const lines: string[] = [
     "GitHub CLI auth was found at a different HOME than the one this OpenClaw process uses.",

@@ -1,3 +1,4 @@
+// extensions/qqbot/src/engine/gateway/stages stub contexts helpers and runtime behavior.
 import type { QQBotInboundAccess } from "../../adapter/index.js";
 import type { InboundContext, InboundGroupInfo } from "../inbound-context.js";
 import type { QueuedMessage } from "../message-queue.js";

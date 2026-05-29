@@ -1,3 +1,4 @@
+// Lazy runtime imports for ACP dispatch.
 import { createLazyImportLoader } from "../../shared/lazy-promise.js";
 
 type ShouldBypassAcpDispatchForCommand =
@@ -17,6 +18,7 @@ function loadDispatchAcpCommandBypass() {
   return dispatchAcpCommandBypassLoader.load();
 }
 
+/** Reused helper for should Bypass Acp Dispatch For Command behavior in src/auto-reply/reply. */
 export async function shouldBypassAcpDispatchForCommand(
   ...args: Parameters<ShouldBypassAcpDispatchForCommand>
 ): Promise<Awaited<ReturnType<ShouldBypassAcpDispatchForCommand>>> {
@@ -24,6 +26,7 @@ export async function shouldBypassAcpDispatchForCommand(
   return mod.shouldBypassAcpDispatchForCommand(...args);
 }
 
+/** Reused helper for try Dispatch Acp Reply behavior in src/auto-reply/reply. */
 export async function tryDispatchAcpReply(
   ...args: Parameters<TryDispatchAcpReply>
 ): Promise<Awaited<ReturnType<TryDispatchAcpReply>>> {

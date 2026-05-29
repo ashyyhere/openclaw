@@ -1,3 +1,4 @@
+// Shared types for extensions/whatsapp/src/auto-reply types behavior.
 import type { ChannelRuntimeSurface } from "openclaw/plugin-sdk/channel-contract";
 import type { WebInboundMessage } from "../inbound/types.js";
 import type { ReconnectPolicy } from "../reconnect.js";

@@ -1,3 +1,4 @@
+// extensions/memory-core/src/memory manager local worker errors helpers and runtime behavior.
 export const LOCAL_EMBEDDING_WORKER_ERROR_CODES = {
   exited: "LOCAL_EMBEDDING_WORKER_EXITED",
   processError: "LOCAL_EMBEDDING_WORKER_PROCESS_ERROR",

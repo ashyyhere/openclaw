@@ -1,3 +1,4 @@
+/** Tests run-main policy and command alias handling. */
 import { describe, expect, it } from "vitest";
 import type { PluginManifestCommandAliasRegistry } from "../plugins/manifest-command-aliases.js";
 import {

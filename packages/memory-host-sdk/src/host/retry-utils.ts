@@ -7,6 +7,7 @@ export type RetryConfig = {
   jitter?: number;
 };
 
+/** Public type describing Retry Info for packages/memory-host-sdk. */
 export type RetryInfo = {
   attempt: number;
   maxAttempts: number;
@@ -15,6 +16,7 @@ export type RetryInfo = {
   label?: string;
 };
 
+/** Public type describing Retry Options for packages/memory-host-sdk. */
 export type RetryOptions = RetryConfig & {
   label?: string;
   shouldRetry?: (err: unknown, attempt: number) => boolean;
@@ -57,6 +59,7 @@ function resolveAttempts(value: unknown, fallback: number): number {
   return Math.max(1, value);
 }
 
+/** Public helper for resolve Retry Config behavior in packages/memory-host-sdk. */
 export function resolveRetryConfig(
   defaults: Required<RetryConfig> = DEFAULT_RETRY_CONFIG,
   overrides?: RetryConfig,
@@ -85,6 +88,7 @@ function applyJitter(delayMs: number, jitter: number): number {
   return Math.max(0, Math.round(delayMs * (1 + offset)));
 }
 
+/** Public helper for retry Async behavior in packages/memory-host-sdk. */
 export async function retryAsync<T>(
   fn: () => Promise<T>,
   attemptsOrOptions: number | RetryOptions = 3,

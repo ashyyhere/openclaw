@@ -1,3 +1,4 @@
+// extensions/whatsapp/src status issues helpers and runtime behavior.
 import type {
   ChannelAccountSnapshot,
   ChannelStatusIssue,

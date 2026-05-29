@@ -1,6 +1,8 @@
+/** Builds model alias lines for system prompt/context display. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 
+/** Format configured model aliases as prompt lines. */
 export function buildModelAliasLines(cfg?: OpenClawConfig) {
   const models = cfg?.agents?.defaults?.models ?? {};
   const entries: Array<{ alias: string; model: string }> = [];

@@ -33,6 +33,7 @@ import type { AssistantMessageEventStream } from "../utils/event-stream.js";
 import { sanitizeSurrogates } from "../utils/sanitize-unicode.js";
 import { transformMessages } from "./transform-messages.js";
 
+/** Shared type for Google Api Type in src/llm/providers. */
 export type GoogleApiType = "google-generative-ai" | "google-vertex";
 
 /**
@@ -46,14 +47,17 @@ export type GoogleThinkingLevel =
   | "MEDIUM"
   | "HIGH";
 
+/** Shared type for Google Tool Choice in src/llm/providers. */
 export type GoogleToolChoice = "auto" | "none" | "any";
 
+/** Shared type for Google Thinking Options in src/llm/providers. */
 export type GoogleThinkingOptions = {
   enabled: boolean;
   budgetTokens?: number;
   level?: GoogleThinkingLevel;
 };
 
+/** Shared type for Google Provider Options in src/llm/providers. */
 export type GoogleProviderOptions = StreamOptions & {
   toolChoice?: GoogleToolChoice;
   thinking?: GoogleThinkingOptions;
@@ -400,6 +404,7 @@ export function mapToolChoice(choice: string): FunctionCallingConfigMode {
   }
 }
 
+/** Reused helper for create Google Assistant Output behavior in src/llm/providers. */
 export function createGoogleAssistantOutput<T extends GoogleApiType>(
   model: Model<T>,
   api: Api = model.api,
@@ -423,6 +428,7 @@ export function createGoogleAssistantOutput<T extends GoogleApiType>(
   };
 }
 
+/** Reused helper for run Google Generate Content Lifecycle behavior in src/llm/providers. */
 export async function runGoogleGenerateContentLifecycle<T extends GoogleApiType>(params: {
   stream: AssistantMessageEventStream;
   model: Model<T>;
@@ -463,6 +469,7 @@ export async function runGoogleGenerateContentLifecycle<T extends GoogleApiType>
   }
 }
 
+/** Reused helper for build Google Generate Content Params behavior in src/llm/providers. */
 export function buildGoogleGenerateContentParams<T extends GoogleApiType>(
   model: Model<T>,
   context: Context,
@@ -531,6 +538,7 @@ export function buildGoogleGenerateContentParams<T extends GoogleApiType>(
   };
 }
 
+/** Reused helper for build Google Simple Thinking behavior in src/llm/providers. */
 export function buildGoogleSimpleThinking<T extends GoogleApiType>(
   model: Model<T>,
   options: SimpleStreamOptions | undefined,
@@ -569,6 +577,7 @@ export function buildGoogleSimpleThinking<T extends GoogleApiType>(
   };
 }
 
+/** Reused helper for get Disabled Google Thinking Config behavior in src/llm/providers. */
 export function getDisabledGoogleThinkingConfig<T extends GoogleApiType>(
   model: Model<T>,
   config?: {
@@ -598,14 +607,17 @@ export function getDisabledGoogleThinkingConfig<T extends GoogleApiType>(
   return { thinkingBudget: 0 };
 }
 
+/** Reused helper for is Gemma4 Model behavior in src/llm/providers. */
 export function isGemma4Model<T extends GoogleApiType>(model: Model<T>): boolean {
   return /gemma-?4/.test(model.id.toLowerCase());
 }
 
+/** Reused helper for is Gemini3 Pro Model behavior in src/llm/providers. */
 export function isGemini3ProModel<T extends GoogleApiType>(model: Model<T>): boolean {
   return /gemini-3(?:\.\d+)?-pro/.test(model.id.toLowerCase());
 }
 
+/** Reused helper for is Gemini3 Flash Model behavior in src/llm/providers. */
 export function isGemini3FlashModel<T extends GoogleApiType>(model: Model<T>): boolean {
   return /gemini-3(?:\.\d+)?-flash/.test(model.id.toLowerCase());
 }
@@ -723,6 +735,7 @@ export function mapStopReason(reason: FinishReason): StopReason {
   }
 }
 
+/** Reused helper for consume Google Generate Content Stream behavior in src/llm/providers. */
 export async function consumeGoogleGenerateContentStream<T extends GoogleApiType>(params: {
   chunks: AsyncIterable<GenerateContentResponse>;
   model: Model<T>;

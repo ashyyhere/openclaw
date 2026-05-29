@@ -1,3 +1,4 @@
+// Tests extensions/qa-channel/src channel test behavior.
 import path from "node:path";
 import { verifyChannelMessageAdapterCapabilityProofs } from "openclaw/plugin-sdk/channel-outbound";
 import {

@@ -1,3 +1,4 @@
+// Tests utils cjk chars test behavior.
 import { describe, expect, it } from "vitest";
 import {
   CHARS_PER_TOKEN_ESTIMATE,

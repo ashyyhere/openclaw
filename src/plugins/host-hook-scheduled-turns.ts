@@ -1,3 +1,4 @@
+// plugins host hook scheduled turns helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import type { CronServiceContract } from "../cron/service-contract.js";
 import type { CronJob, CronJobCreate } from "../cron/types.js";
@@ -138,6 +139,7 @@ function resolvePluginSessionTurnTag(value: unknown): {
   return { tag, invalid: false };
 }
 
+/** Reused helper for build Plugin Scheduler Cron Name behavior in src/plugins. */
 export function buildPluginSchedulerCronName(params: {
   pluginId: string;
   sessionKey: string;
@@ -197,6 +199,7 @@ async function listAllCronJobsForPluginTagCleanup(
   }
 }
 
+/** Reused helper for schedule Plugin Session Turn behavior in src/plugins. */
 export async function schedulePluginSessionTurn(params: {
   pluginId: string;
   pluginName?: string;
@@ -352,6 +355,7 @@ export async function schedulePluginSessionTurn(params: {
   return handle;
 }
 
+/** Reused helper for unschedule Plugin Session Turns By Tag behavior in src/plugins. */
 export async function unschedulePluginSessionTurnsByTag(params: {
   pluginId: string;
   origin?: PluginOrigin;

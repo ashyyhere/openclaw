@@ -1,15 +1,23 @@
+// packages/gateway-protocol/src startup unavailable helpers and runtime behavior.
+/** Public constant for GATEWAY STARTUP UNAVAILABLE REASON behavior in packages/gateway-protocol. */
 export const GATEWAY_STARTUP_UNAVAILABLE_REASON = "startup-sidecars";
+/** Public constant for GATEWAY STARTUP PENDING CLOSE CAUSE behavior in packages/gateway-protocol. */
 export const GATEWAY_STARTUP_PENDING_CLOSE_CAUSE = "startup-sidecars-pending";
+/** Public constant for GATEWAY STARTUP CLOSE CODE behavior in packages/gateway-protocol. */
 export const GATEWAY_STARTUP_CLOSE_CODE = 1013;
+/** Public constant for GATEWAY STARTUP CLOSE REASON behavior in packages/gateway-protocol. */
 export const GATEWAY_STARTUP_CLOSE_REASON = "gateway starting";
+/** Public constant for GATEWAY STARTUP RETRY AFTER MS behavior in packages/gateway-protocol. */
 export const GATEWAY_STARTUP_RETRY_AFTER_MS = 500;
 const GATEWAY_STARTUP_RETRY_MIN_MS = 100;
 const GATEWAY_STARTUP_RETRY_MAX_MS = 2_000;
 
+/** Public type describing Gateway Startup Unavailable Details for packages/gateway-protocol. */
 export type GatewayStartupUnavailableDetails = {
   reason: typeof GATEWAY_STARTUP_UNAVAILABLE_REASON;
 };
 
+/** Public helper for gateway Startup Unavailable Details behavior in packages/gateway-protocol. */
 export function gatewayStartupUnavailableDetails(): GatewayStartupUnavailableDetails {
   return { reason: GATEWAY_STARTUP_UNAVAILABLE_REASON };
 }
@@ -24,6 +32,7 @@ function isGatewayStartupUnavailableDetails(
   );
 }
 
+/** Public helper for is Retryable Gateway Startup Unavailable Error behavior in packages/gateway-protocol. */
 export function isRetryableGatewayStartupUnavailableError(error: unknown): boolean {
   if (!error || typeof error !== "object") {
     return false;
@@ -42,6 +51,7 @@ export function isRetryableGatewayStartupUnavailableError(error: unknown): boole
   );
 }
 
+/** Public helper for resolve Gateway Startup Retry After Ms behavior in packages/gateway-protocol. */
 export function resolveGatewayStartupRetryAfterMs(error: unknown): number | null {
   if (!isRetryableGatewayStartupUnavailableError(error)) {
     return null;

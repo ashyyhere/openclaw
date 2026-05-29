@@ -1,3 +1,4 @@
+// extensions/codex-supervisor/src supervisor helpers and runtime behavior.
 import { connectCodexAppServerEndpoint } from "./json-rpc-client.js";
 import type {
   CodexJsonRpcConnection,

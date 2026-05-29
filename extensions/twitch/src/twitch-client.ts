@@ -1,3 +1,4 @@
+// extensions/twitch/src twitch client helpers and runtime behavior.
 import { RefreshingAuthProvider, StaticAuthProvider } from "@twurple/auth";
 import { ChatClient, LogLevel } from "@twurple/chat";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";

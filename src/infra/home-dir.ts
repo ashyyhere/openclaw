@@ -1,3 +1,4 @@
+// infra home dir helpers and runtime behavior.
 import os from "node:os";
 import path from "node:path";
 
@@ -49,6 +50,7 @@ function resolveRawHomeDir(env: NodeJS.ProcessEnv, homedir: () => string): strin
   return explicitHome;
 }
 
+/** Reused helper for resolve Effective Home Dir behavior in src/infra. */
 export function resolveEffectiveHomeDir(
   env: NodeJS.ProcessEnv = process.env,
   homedir: () => string = os.homedir,
@@ -57,6 +59,7 @@ export function resolveEffectiveHomeDir(
   return raw ? path.resolve(raw) : undefined;
 }
 
+/** Reused helper for resolve Os Home Dir behavior in src/infra. */
 export function resolveOsHomeDir(
   env: NodeJS.ProcessEnv = process.env,
   homedir: () => string = os.homedir,
@@ -64,6 +67,7 @@ export function resolveOsHomeDir(
   const raw = resolveRawOsHomeDir(env, homedir);
   return raw ? path.resolve(raw) : undefined;
 }
+/** Reused helper for resolve Required Home Dir behavior in src/infra. */
 export function resolveRequiredHomeDir(
   env: NodeJS.ProcessEnv = process.env,
   homedir: () => string = os.homedir,
@@ -71,6 +75,7 @@ export function resolveRequiredHomeDir(
   return resolveEffectiveHomeDir(env, homedir) ?? path.resolve(process.cwd());
 }
 
+/** Reused helper for resolve Required Os Home Dir behavior in src/infra. */
 export function resolveRequiredOsHomeDir(
   env: NodeJS.ProcessEnv = process.env,
   homedir: () => string = os.homedir,
@@ -78,6 +83,7 @@ export function resolveRequiredOsHomeDir(
   return resolveOsHomeDir(env, homedir) ?? path.resolve(process.cwd());
 }
 
+/** Reused helper for expand Home Prefix behavior in src/infra. */
 export function expandHomePrefix(
   input: string,
   opts?: {
@@ -98,6 +104,7 @@ export function expandHomePrefix(
   return input.replace(/^~(?=$|[\\/])/, home);
 }
 
+/** Reused helper for resolve Home Relative Path behavior in src/infra. */
 export function resolveHomeRelativePath(
   input: string,
   opts?: {
@@ -120,6 +127,7 @@ export function resolveHomeRelativePath(
   return path.resolve(trimmed);
 }
 
+/** Reused helper for resolve User Path behavior in src/infra. */
 export function resolveUserPath(
   input: string,
   env: NodeJS.ProcessEnv = process.env,
@@ -128,6 +136,7 @@ export function resolveUserPath(
   return resolveHomeRelativePath(input, { env, homedir });
 }
 
+/** Reused helper for resolve Os Home Relative Path behavior in src/infra. */
 export function resolveOsHomeRelativePath(
   input: string,
   opts?: {

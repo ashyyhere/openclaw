@@ -1,7 +1,9 @@
+// infra agent events helpers and runtime behavior.
 import type { VerboseLevel } from "../auto-reply/thinking.js";
 import { resolveGlobalSingleton } from "../shared/global-singleton.js";
 import { notifyListeners, registerListener } from "../shared/listeners.js";
 
+/** Shared type for Agent Event Stream in src/infra. */
 export type AgentEventStream =
   | "lifecycle"
   | "tool"
@@ -16,8 +18,11 @@ export type AgentEventStream =
   | "thinking"
   | (string & {});
 
+/** Shared type for Agent Item Event Phase in src/infra. */
 export type AgentItemEventPhase = "start" | "update" | "end";
+/** Shared type for Agent Item Event Status in src/infra. */
 export type AgentItemEventStatus = "running" | "completed" | "failed" | "blocked";
+/** Shared type for Agent Item Event Kind in src/infra. */
 export type AgentItemEventKind =
   | "tool"
   | "command"
@@ -26,6 +31,7 @@ export type AgentItemEventKind =
   | "analysis"
   | (string & {});
 
+/** Shared type for Agent Item Event Data in src/infra. */
 export type AgentItemEventData = {
   itemId: string;
   phase: AgentItemEventPhase;
@@ -46,6 +52,7 @@ export type AgentItemEventData = {
   approvalSlug?: string;
 };
 
+/** Shared type for Agent Plan Event Data in src/infra. */
 export type AgentPlanEventData = {
   phase: "update";
   title: string;
@@ -54,10 +61,14 @@ export type AgentPlanEventData = {
   source?: string;
 };
 
+/** Shared type for Agent Approval Event Phase in src/infra. */
 export type AgentApprovalEventPhase = "requested" | "resolved";
+/** Shared type for Agent Approval Event Status in src/infra. */
 export type AgentApprovalEventStatus = "pending" | "unavailable" | "approved" | "denied" | "failed";
+/** Shared type for Agent Approval Event Kind in src/infra. */
 export type AgentApprovalEventKind = "exec" | "plugin" | "unknown";
 
+/** Shared type for Agent Approval Event Data in src/infra. */
 export type AgentApprovalEventData = {
   phase: AgentApprovalEventPhase;
   kind: AgentApprovalEventKind;
@@ -74,6 +85,7 @@ export type AgentApprovalEventData = {
   message?: string;
 };
 
+/** Shared type for Agent Command Output Event Data in src/infra. */
 export type AgentCommandOutputEventData = {
   itemId: string;
   phase: "delta" | "end";
@@ -87,6 +99,7 @@ export type AgentCommandOutputEventData = {
   cwd?: string;
 };
 
+/** Shared type for Agent Patch Summary Event Data in src/infra. */
 export type AgentPatchSummaryEventData = {
   itemId: string;
   phase: "end";
@@ -99,6 +112,7 @@ export type AgentPatchSummaryEventData = {
   summary: string;
 };
 
+/** Shared type for Agent Event Payload in src/infra. */
 export type AgentEventPayload = {
   runId: string;
   seq: number;
@@ -109,6 +123,7 @@ export type AgentEventPayload = {
   agentId?: string;
 };
 
+/** Shared type for Agent Run Context in src/infra. */
 export type AgentRunContext = {
   sessionKey?: string;
   verboseLevel?: VerboseLevel;
@@ -137,6 +152,7 @@ function getAgentEventState(): AgentEventState {
   }));
 }
 
+/** Reused helper for register Agent Run Context behavior in src/infra. */
 export function registerAgentRunContext(runId: string, context: AgentRunContext) {
   if (!runId) {
     return;
@@ -170,10 +186,12 @@ export function registerAgentRunContext(runId: string, context: AgentRunContext)
   }
 }
 
+/** Reused helper for get Agent Run Context behavior in src/infra. */
 export function getAgentRunContext(runId: string) {
   return getAgentEventState().runContextById.get(runId);
 }
 
+/** Reused helper for clear Agent Run Context behavior in src/infra. */
 export function clearAgentRunContext(runId: string) {
   const state = getAgentEventState();
   state.runContextById.delete(runId);
@@ -202,11 +220,13 @@ export function sweepStaleRunContexts(maxAgeMs = 30 * 60 * 1000): number {
   return swept;
 }
 
+/** Reused helper for reset Agent Run Context For Test behavior in src/infra. */
 export function resetAgentRunContextForTest() {
   getAgentEventState().runContextById.clear();
   getAgentEventState().seqByRun.clear();
 }
 
+/** Reused helper for emit Agent Event behavior in src/infra. */
 export function emitAgentEvent(event: Omit<AgentEventPayload, "seq" | "ts">) {
   const state = getAgentEventState();
   const nextSeq = (state.seqByRun.get(event.runId) ?? 0) + 1;
@@ -235,6 +255,7 @@ export function emitAgentEvent(event: Omit<AgentEventPayload, "seq" | "ts">) {
   notifyListeners(state.listeners, enriched);
 }
 
+/** Reused helper for emit Agent Item Event behavior in src/infra. */
 export function emitAgentItemEvent(params: {
   runId: string;
   data: AgentItemEventData;
@@ -248,6 +269,7 @@ export function emitAgentItemEvent(params: {
   });
 }
 
+/** Reused helper for emit Agent Plan Event behavior in src/infra. */
 export function emitAgentPlanEvent(params: {
   runId: string;
   data: AgentPlanEventData;
@@ -261,6 +283,7 @@ export function emitAgentPlanEvent(params: {
   });
 }
 
+/** Reused helper for emit Agent Approval Event behavior in src/infra. */
 export function emitAgentApprovalEvent(params: {
   runId: string;
   data: AgentApprovalEventData;
@@ -274,6 +297,7 @@ export function emitAgentApprovalEvent(params: {
   });
 }
 
+/** Reused helper for emit Agent Command Output Event behavior in src/infra. */
 export function emitAgentCommandOutputEvent(params: {
   runId: string;
   data: AgentCommandOutputEventData;
@@ -287,6 +311,7 @@ export function emitAgentCommandOutputEvent(params: {
   });
 }
 
+/** Reused helper for emit Agent Patch Summary Event behavior in src/infra. */
 export function emitAgentPatchSummaryEvent(params: {
   runId: string;
   data: AgentPatchSummaryEventData;
@@ -300,11 +325,13 @@ export function emitAgentPatchSummaryEvent(params: {
   });
 }
 
+/** Reused helper for on Agent Event behavior in src/infra. */
 export function onAgentEvent(listener: (evt: AgentEventPayload) => void) {
   const state = getAgentEventState();
   return registerListener(state.listeners, listener);
 }
 
+/** Reused helper for reset Agent Events For Test behavior in src/infra. */
 export function resetAgentEventsForTest() {
   const state = getAgentEventState();
   state.seqByRun.clear();

@@ -1,5 +1,7 @@
+// tools execution helpers and runtime behavior.
 import type { ToolExecutorRef } from "./types.js";
 
+/** Reused helper for format Tool Executor Ref behavior in src/tools. */
 export function formatToolExecutorRef(ref: ToolExecutorRef): string {
   switch (ref.kind) {
     case "core":

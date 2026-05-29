@@ -1,3 +1,4 @@
+/** Checks plugin manifest capability availability for built-in tools. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { getCurrentPluginMetadataSnapshot } from "../../plugins/current-plugin-metadata-snapshot.js";
 import { isManifestPluginAvailableForControlPlane } from "../../plugins/manifest-contract-eligibility.js";
@@ -14,6 +15,7 @@ import { getActivePluginRegistryWorkspaceDirFromState } from "../../plugins/runt
 import { listProfilesForProvider } from "../auth-profiles/profile-list.js";
 import type { AuthProfileStore } from "../auth-profiles/types.js";
 
+/** Shared type for Capability Contract Key in src/agents/tools. */
 export type CapabilityContractKey =
   | "imageGenerationProviders"
   | "videoGenerationProviders"
@@ -161,6 +163,7 @@ export function getCurrentCapabilityMetadataSnapshot(params: {
   });
 }
 
+/** Loads a metadata snapshot from config or current plugin state. */
 export function loadCapabilityMetadataSnapshot(params: {
   config?: OpenClawConfig;
   workspaceDir?: string;
@@ -174,6 +177,7 @@ export function loadCapabilityMetadataSnapshot(params: {
   });
 }
 
+/** Checks whether a capability contract is available in a snapshot. */
 export function hasSnapshotCapabilityAvailability(params: {
   snapshot: CapabilityMetadataSnapshot;
   key: CapabilityContractKey;
@@ -193,6 +197,7 @@ export function hasSnapshotCapabilityAvailability(params: {
   );
 }
 
+/** Checks whether provider env requirements are satisfied in a snapshot. */
 export function hasSnapshotProviderEnvAvailability(params: {
   snapshot: CapabilityMetadataSnapshot;
   providerId: string;
@@ -206,6 +211,7 @@ export function hasSnapshotProviderEnvAvailability(params: {
   );
 }
 
+/** Checks whether a provider is available for a capability family. */
 export function hasSnapshotCapabilityProviderAvailability(params: {
   snapshot: CapabilityMetadataSnapshot;
   key: CapabilityContractKey;

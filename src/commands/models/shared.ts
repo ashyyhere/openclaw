@@ -1,3 +1,4 @@
+// Shared model command helpers for config mutation, model refs, aliases, and display formatting.
 import { listAgentIds } from "../../agents/agent-scope.js";
 import { DEFAULT_MODEL, DEFAULT_PROVIDER } from "../../agents/defaults.js";
 import {
@@ -19,15 +20,19 @@ import type { AgentModelEntryConfig } from "../../config/types.agent-defaults.js
 import type { AgentModelConfig } from "../../config/types.agents-shared.js";
 import { normalizeAgentId } from "../../routing/session-key.js";
 import { canonicalizeModelCatalogProviderRef } from "./provider-aliases.js";
+/** Re-exported API for src/commands/models, starting with normalize Alias. */
 export { normalizeAlias } from "./alias-name.js";
+/** Re-exported API for src/commands/models, starting with is Local Base Url. */
 export { isLocalBaseUrl } from "./list.local-url.js";
 
+/** Reused constant for ensure Flag Compatibility behavior in src/commands/models. */
 export const ensureFlagCompatibility = (opts: { json?: boolean; plain?: boolean }) => {
   if (opts.json && opts.plain) {
     throw new Error("Choose either --json or --plain, not both.");
   }
 };
 
+/** Reused constant for format Token K behavior in src/commands/models. */
 export const formatTokenK = (value?: number | null) => {
   if (!value || !Number.isFinite(value)) {
     return "-";
@@ -38,6 +43,7 @@ export const formatTokenK = (value?: number | null) => {
   return `${Math.round(value / 1024)}k`;
 };
 
+/** Reused constant for format Ms behavior in src/commands/models. */
 export const formatMs = (value?: number | null) => {
   if (value === null || value === undefined) {
     return "-";
@@ -51,6 +57,7 @@ export const formatMs = (value?: number | null) => {
   return `${Math.round(value / 100) / 10}s`;
 };
 
+/** Reused helper for load Valid Config Or Throw behavior in src/commands/models. */
 export async function loadValidConfigOrThrow(): Promise<OpenClawConfig> {
   const snapshot = await readConfigFileSnapshot();
   if (!snapshot.valid) {
@@ -60,10 +67,12 @@ export async function loadValidConfigOrThrow(): Promise<OpenClawConfig> {
   return snapshot.runtimeConfig ?? snapshot.config;
 }
 
+/** Shared type for Update Config Context in src/commands/models. */
 export type UpdateConfigContext = {
   runtimeConfig: OpenClawConfig;
 };
 
+/** Reused helper for update Config behavior in src/commands/models. */
 export async function updateConfig(
   mutator: (cfg: OpenClawConfig, context: UpdateConfigContext) => OpenClawConfig,
 ): Promise<OpenClawConfig> {
@@ -82,6 +91,7 @@ export async function updateConfig(
   return next;
 }
 
+/** Reused helper for resolve Model Target behavior in src/commands/models. */
 export function resolveModelTarget(params: { raw: string; cfg: OpenClawConfig }): {
   provider: string;
   model: string;
@@ -117,6 +127,7 @@ function resolveAuthoredModelAliasTarget(params: {
   return resolved?.alias ? resolved.ref : undefined;
 }
 
+/** Reused helper for resolve Model Keys From Entries behavior in src/commands/models. */
 export function resolveModelKeysFromEntries(params: {
   cfg: OpenClawConfig;
   entries: readonly string[];
@@ -137,6 +148,7 @@ export function resolveModelKeysFromEntries(params: {
     .map((entry) => modelKey(entry.ref.provider, entry.ref.model));
 }
 
+/** Reused helper for build Allowlist Set behavior in src/commands/models. */
 export function buildAllowlistSet(cfg: OpenClawConfig): Set<string> {
   const allowed = new Set<string>();
   const models = cfg.agents?.defaults?.models ?? {};
@@ -150,6 +162,7 @@ export function buildAllowlistSet(cfg: OpenClawConfig): Set<string> {
   return allowed;
 }
 
+/** Reused helper for resolve Known Agent Id behavior in src/commands/models. */
 export function resolveKnownAgentId(params: {
   cfg: OpenClawConfig;
   rawAgentId?: string | null;
@@ -168,8 +181,10 @@ export function resolveKnownAgentId(params: {
   return agentId;
 }
 
+/** Shared type for Primary Fallback Config in src/commands/models. */
 export type PrimaryFallbackConfig = { primary?: string; fallbacks?: string[] };
 
+/** Reused helper for upsert Canonical Model Config Entry behavior in src/commands/models. */
 export function upsertCanonicalModelConfigEntry(
   models: Record<string, AgentModelEntryConfig>,
   params: { provider: string; model: string },
@@ -213,6 +228,7 @@ export function upsertCanonicalModelConfigEntry(
   return key;
 }
 
+/** Reused helper for merge Primary Fallback Config behavior in src/commands/models. */
 export function mergePrimaryFallbackConfig(
   existing: PrimaryFallbackConfig | undefined,
   patch: { primary?: string; fallbacks?: string[] },
@@ -230,6 +246,7 @@ export function mergePrimaryFallbackConfig(
   return next;
 }
 
+/** Reused helper for apply Default Model Primary Update behavior in src/commands/models. */
 export function applyDefaultModelPrimaryUpdate(params: {
   cfg: OpenClawConfig;
   resolveCfg?: OpenClawConfig;
@@ -273,7 +290,9 @@ export function applyDefaultModelPrimaryUpdate(params: {
   };
 }
 
+/** Re-exported API for src/commands/models, starting with model Key. */
 export { modelKey };
+/** Re-exported API for src/commands/models, starting with DEFAULT MODEL. */
 export { DEFAULT_MODEL, DEFAULT_PROVIDER };
 
 /**

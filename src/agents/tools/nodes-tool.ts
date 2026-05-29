@@ -1,3 +1,4 @@
+/** Agent tool for listing, pairing, and controlling connected nodes. */
 import crypto from "node:crypto";
 import { Type } from "typebox";
 import { readConnectPairingRequiredMessage } from "../../../packages/gateway-protocol/src/connect-error-details.js";
@@ -122,6 +123,7 @@ const NodesToolSchema = Type.Object({
   invokeTimeoutMs: optionalPositiveIntegerSchema(),
 });
 
+/** Creates the nodes management AgentTool. */
 export function createNodesTool(options?: {
   agentSessionKey?: string;
   agentChannel?: GatewayMessageChannel;

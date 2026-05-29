@@ -1,3 +1,4 @@
+// ui/src/ui/chat grouped render helpers and runtime behavior.
 import { html, nothing } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { until } from "lit/directives/until.js";
@@ -17,6 +18,7 @@ import type {
   ToolCard,
 } from "../types/chat-types.ts";
 import { resolveLocalUserName } from "../user-identity.ts";
+/** Re-exported API for ui/src/ui/chat, starting with resolve Assistant Text Avatar. */
 export { resolveAssistantTextAvatar } from "../views/agents-utils.ts";
 import { renderChatAvatar } from "./chat-avatar.ts";
 import { renderCopyAsMarkdownButton } from "./copy-as-markdown.ts";
@@ -45,12 +47,14 @@ const assistantAttachmentRefreshTimers = new Map<string, ReturnType<typeof setTi
 const ASSISTANT_ATTACHMENT_UNAVAILABLE_RETRY_MS = 5_000;
 const ASSISTANT_ATTACHMENT_MEDIA_TICKET_REFRESH_SKEW_MS = 30_000;
 
+/** Shared type for Chat Timestamp Display in ui/src/ui/chat. */
 export type ChatTimestampDisplay = {
   label: string;
   title: string;
   dateTime: string;
 };
 
+/** Reused helper for format Chat Timestamp For Display behavior in ui/src/ui/chat. */
 export function formatChatTimestampForDisplay(timestamp: number): ChatTimestampDisplay {
   const date = new Date(timestamp);
   if (!Number.isFinite(date.getTime())) {
@@ -92,6 +96,7 @@ function renderChatTimestamp(timestamp: number) {
   `;
 }
 
+/** Reused helper for reset Assistant Attachment Availability Cache For Test behavior in ui/src/ui/chat. */
 export function resetAssistantAttachmentAvailabilityCacheForTest() {
   assistantAttachmentAvailabilityCache.clear();
   for (const timer of assistantAttachmentRefreshTimers.values()) {
@@ -325,6 +330,7 @@ function extractTranscriptAttachments(message: unknown): AttachmentItem[] {
   return attachments;
 }
 
+/** Reused helper for render Reading Indicator Group behavior in ui/src/ui/chat. */
 export function renderReadingIndicatorGroup(
   assistant?: AssistantIdentity,
   basePath?: string,
@@ -344,6 +350,7 @@ export function renderReadingIndicatorGroup(
   `;
 }
 
+/** Reused helper for render Streaming Group behavior in ui/src/ui/chat. */
 export function renderStreamingGroup(
   text: string,
   startedAt: number,
@@ -378,6 +385,7 @@ export function renderStreamingGroup(
   `;
 }
 
+/** Reused helper for render Message Group behavior in ui/src/ui/chat. */
 export function renderMessageGroup(
   group: MessageGroup,
   opts: {

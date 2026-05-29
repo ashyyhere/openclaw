@@ -1,3 +1,4 @@
+// Tests gateway sessions resolve store test behavior.
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { ErrorCodes } from "../../packages/gateway-protocol/src/index.js";

@@ -1,6 +1,8 @@
+// packages/gateway-protocol/src/schema channels helpers and runtime behavior.
 import { Type } from "typebox";
 import { NonEmptyString, SecretInputSchema } from "./primitives.js";
 
+/** Public constant for Talk Mode Params Schema behavior in packages/gateway-protocol. */
 export const TalkModeParamsSchema = Type.Object(
   {
     enabled: Type.Boolean(),
@@ -9,6 +11,7 @@ export const TalkModeParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Talk Config Params Schema behavior in packages/gateway-protocol. */
 export const TalkConfigParamsSchema = Type.Object(
   {
     includeSecrets: Type.Optional(Type.Boolean()),
@@ -16,6 +19,7 @@ export const TalkConfigParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Talk Speak Params Schema behavior in packages/gateway-protocol. */
 export const TalkSpeakParamsSchema = Type.Object(
   {
     text: NonEmptyString,
@@ -124,6 +128,7 @@ function requireJsonSchemaProperties(properties: string[]): Record<string, { req
   return Object.fromEntries([[conditionalRequirementKey, { required: properties }]]);
 }
 
+/** Public constant for Talk Event Schema behavior in packages/gateway-protocol. */
 export const TalkEventSchema = Type.Object(
   {
     id: NonEmptyString,
@@ -164,6 +169,7 @@ export const TalkEventSchema = Type.Object(
   },
 );
 
+/** Public constant for Talk Client Create Params Schema behavior in packages/gateway-protocol. */
 export const TalkClientCreateParamsSchema = Type.Object(
   {
     sessionKey: Type.Optional(Type.String()),
@@ -181,6 +187,7 @@ export const TalkClientCreateParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Talk Client Tool Call Params Schema behavior in packages/gateway-protocol. */
 export const TalkClientToolCallParamsSchema = Type.Object(
   {
     sessionKey: NonEmptyString,
@@ -192,6 +199,7 @@ export const TalkClientToolCallParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Talk Client Tool Call Result Schema behavior in packages/gateway-protocol. */
 export const TalkClientToolCallResultSchema = Type.Object(
   {
     runId: NonEmptyString,
@@ -200,6 +208,7 @@ export const TalkClientToolCallResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Talk Client Steer Params Schema behavior in packages/gateway-protocol. */
 export const TalkClientSteerParamsSchema = Type.Object(
   {
     sessionKey: NonEmptyString,
@@ -209,6 +218,7 @@ export const TalkClientSteerParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Talk Agent Control Result Schema behavior in packages/gateway-protocol. */
 export const TalkAgentControlResultSchema = Type.Object(
   {
     ok: Type.Boolean(),
@@ -239,6 +249,7 @@ export const TalkAgentControlResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Talk Session Join Params Schema behavior in packages/gateway-protocol. */
 export const TalkSessionJoinParamsSchema = Type.Object(
   {
     sessionId: NonEmptyString,
@@ -247,6 +258,7 @@ export const TalkSessionJoinParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Talk Session Create Params Schema behavior in packages/gateway-protocol. */
 export const TalkSessionCreateParamsSchema = Type.Object(
   {
     sessionKey: Type.Optional(Type.String()),
@@ -266,6 +278,7 @@ export const TalkSessionCreateParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Talk Session Append Audio Params Schema behavior in packages/gateway-protocol. */
 export const TalkSessionAppendAudioParamsSchema = Type.Object(
   {
     sessionId: NonEmptyString,
@@ -275,6 +288,7 @@ export const TalkSessionAppendAudioParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Talk Session Turn Params Schema behavior in packages/gateway-protocol. */
 export const TalkSessionTurnParamsSchema = Type.Object(
   {
     sessionId: NonEmptyString,
@@ -283,6 +297,7 @@ export const TalkSessionTurnParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Talk Session Cancel Turn Params Schema behavior in packages/gateway-protocol. */
 export const TalkSessionCancelTurnParamsSchema = Type.Object(
   {
     sessionId: NonEmptyString,
@@ -292,6 +307,7 @@ export const TalkSessionCancelTurnParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Talk Session Cancel Output Params Schema behavior in packages/gateway-protocol. */
 export const TalkSessionCancelOutputParamsSchema = Type.Object(
   {
     sessionId: NonEmptyString,
@@ -301,6 +317,7 @@ export const TalkSessionCancelOutputParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Talk Session Submit Tool Result Params Schema behavior in packages/gateway-protocol. */
 export const TalkSessionSubmitToolResultParamsSchema = Type.Object(
   {
     sessionId: NonEmptyString,
@@ -319,6 +336,7 @@ export const TalkSessionSubmitToolResultParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Talk Session Steer Params Schema behavior in packages/gateway-protocol. */
 export const TalkSessionSteerParamsSchema = Type.Object(
   {
     sessionId: NonEmptyString,
@@ -329,6 +347,7 @@ export const TalkSessionSteerParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Talk Session Close Params Schema behavior in packages/gateway-protocol. */
 export const TalkSessionCloseParamsSchema = Type.Object(
   {
     sessionId: NonEmptyString,
@@ -367,6 +386,7 @@ const TalkSessionManagedRoomRecordSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Talk Catalog Params Schema behavior in packages/gateway-protocol. */
 export const TalkCatalogParamsSchema = Type.Object({}, { additionalProperties: false });
 
 const TalkCatalogProviderSchema = Type.Object(
@@ -421,6 +441,7 @@ const TalkCatalogProviderGroupSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Talk Catalog Result Schema behavior in packages/gateway-protocol. */
 export const TalkCatalogResultSchema = Type.Object(
   {
     modes: Type.Array(TalkModeSchema),
@@ -443,6 +464,7 @@ const BrowserRealtimeAudioContractSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Talk Session Create Result Schema behavior in packages/gateway-protocol. */
 export const TalkSessionCreateResultSchema = Type.Object(
   {
     sessionId: NonEmptyString,
@@ -464,6 +486,7 @@ export const TalkSessionCreateResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Talk Session Turn Result Schema behavior in packages/gateway-protocol. */
 export const TalkSessionTurnResultSchema = Type.Object(
   {
     ok: Type.Boolean(),
@@ -473,8 +496,10 @@ export const TalkSessionTurnResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Talk Session Join Result Schema behavior in packages/gateway-protocol. */
 export const TalkSessionJoinResultSchema = TalkSessionManagedRoomRecordSchema;
 
+/** Public constant for Talk Session Ok Result Schema behavior in packages/gateway-protocol. */
 export const TalkSessionOkResultSchema = Type.Object(
   {
     ok: Type.Boolean(),
@@ -538,6 +563,7 @@ const BrowserRealtimeManagedRoomSessionSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Talk Client Create Result Schema behavior in packages/gateway-protocol. */
 export const TalkClientCreateResultSchema = Type.Union([
   BrowserRealtimeWebRtcSdpSessionSchema,
   BrowserRealtimeJsonPcmWebSocketSessionSchema,
@@ -592,6 +618,7 @@ const TalkConfigSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Talk Config Result Schema behavior in packages/gateway-protocol. */
 export const TalkConfigResultSchema = Type.Object(
   {
     config: Type.Object(
@@ -620,6 +647,7 @@ export const TalkConfigResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Talk Speak Result Schema behavior in packages/gateway-protocol. */
 export const TalkSpeakResultSchema = Type.Object(
   {
     audioBase64: NonEmptyString,
@@ -632,6 +660,7 @@ export const TalkSpeakResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Channels Status Params Schema behavior in packages/gateway-protocol. */
 export const ChannelsStatusParamsSchema = Type.Object(
   {
     probe: Type.Optional(Type.Boolean()),
@@ -643,6 +672,7 @@ export const ChannelsStatusParamsSchema = Type.Object(
 
 // Channel docking: channels.status is intentionally schema-light so new
 // channels can ship without protocol updates.
+/** Public constant for Channel Account Snapshot Schema behavior in packages/gateway-protocol. */
 export const ChannelAccountSnapshotSchema = Type.Object(
   {
     accountId: NonEmptyString,
@@ -683,6 +713,7 @@ export const ChannelAccountSnapshotSchema = Type.Object(
   { additionalProperties: true },
 );
 
+/** Public constant for Channel Ui Meta Schema behavior in packages/gateway-protocol. */
 export const ChannelUiMetaSchema = Type.Object(
   {
     id: NonEmptyString,
@@ -693,6 +724,7 @@ export const ChannelUiMetaSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Channel Event Loop Health Schema behavior in packages/gateway-protocol. */
 export const ChannelEventLoopHealthSchema = Type.Object(
   {
     degraded: Type.Boolean(),
@@ -712,6 +744,7 @@ export const ChannelEventLoopHealthSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Channels Status Result Schema behavior in packages/gateway-protocol. */
 export const ChannelsStatusResultSchema = Type.Object(
   {
     ts: Type.Integer({ minimum: 0 }),
@@ -730,6 +763,7 @@ export const ChannelsStatusResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Channels Logout Params Schema behavior in packages/gateway-protocol. */
 export const ChannelsLogoutParamsSchema = Type.Object(
   {
     channel: NonEmptyString,
@@ -738,6 +772,7 @@ export const ChannelsLogoutParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Channels Stop Params Schema behavior in packages/gateway-protocol. */
 export const ChannelsStopParamsSchema = Type.Object(
   {
     channel: NonEmptyString,
@@ -746,6 +781,7 @@ export const ChannelsStopParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Channels Start Params Schema behavior in packages/gateway-protocol. */
 export const ChannelsStartParamsSchema = Type.Object(
   {
     channel: NonEmptyString,
@@ -754,6 +790,7 @@ export const ChannelsStartParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Web Login Start Params Schema behavior in packages/gateway-protocol. */
 export const WebLoginStartParamsSchema = Type.Object(
   {
     force: Type.Optional(Type.Boolean()),
@@ -769,6 +806,7 @@ const QrDataUrlSchema = Type.String({
   pattern: "^data:image/png;base64,",
 });
 
+/** Public constant for Web Login Wait Params Schema behavior in packages/gateway-protocol. */
 export const WebLoginWaitParamsSchema = Type.Object(
   {
     timeoutMs: Type.Optional(Type.Integer({ minimum: 0 })),

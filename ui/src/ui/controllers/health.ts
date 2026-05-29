@@ -1,3 +1,4 @@
+// ui/src/ui/controllers health helpers and runtime behavior.
 import type { GatewayBrowserClient } from "../gateway.ts";
 import type { HealthSummary } from "../types.ts";
 

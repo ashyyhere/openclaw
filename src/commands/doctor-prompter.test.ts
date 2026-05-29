@@ -1,3 +1,4 @@
+/** Tests doctor prompter confirmation and selection behavior. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { createDoctorPrompter } from "./doctor-prompter.js";
 

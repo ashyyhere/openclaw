@@ -1,5 +1,7 @@
+// In-memory durable inbound receive journal primitive.
 import type { PluginStateKeyedStore } from "../../plugin-state/plugin-state-store.types.js";
 
+/** Shared type for Durable Inbound Receive Pending Record in src/channels/message. */
 export type DurableInboundReceivePendingRecord<TPayload, TMetadata = unknown> = {
   id: string;
   payload: TPayload;
@@ -11,12 +13,14 @@ export type DurableInboundReceivePendingRecord<TPayload, TMetadata = unknown> = 
   lastError?: string;
 };
 
+/** Shared type for Durable Inbound Receive Completed Record in src/channels/message. */
 export type DurableInboundReceiveCompletedRecord<TMetadata = unknown> = {
   id: string;
   completedAt: number;
   metadata?: TMetadata;
 };
 
+/** Shared type for Durable Inbound Receive Accept Result in src/channels/message. */
 export type DurableInboundReceiveAcceptResult<TPayload, TMetadata, TCompletedMetadata> =
   | {
       kind: "accepted";
@@ -34,6 +38,7 @@ export type DurableInboundReceiveAcceptResult<TPayload, TMetadata, TCompletedMet
       record: DurableInboundReceiveCompletedRecord<TCompletedMetadata>;
     };
 
+/** Shared type for Durable Inbound Receive Journal Options in src/channels/message. */
 export type DurableInboundReceiveJournalOptions<TPayload, TMetadata, TCompletedMetadata> = {
   pendingStore: PluginStateKeyedStore<DurableInboundReceivePendingRecord<TPayload, TMetadata>>;
   completedStore: PluginStateKeyedStore<DurableInboundReceiveCompletedRecord<TCompletedMetadata>>;
@@ -42,21 +47,25 @@ export type DurableInboundReceiveJournalOptions<TPayload, TMetadata, TCompletedM
   completedTtlMs?: number;
 };
 
+/** Shared type for Durable Inbound Receive Accept Options in src/channels/message. */
 export type DurableInboundReceiveAcceptOptions<TMetadata> = {
   metadata?: TMetadata;
   receivedAt?: number;
 };
 
+/** Shared type for Durable Inbound Receive Complete Options in src/channels/message. */
 export type DurableInboundReceiveCompleteOptions<TCompletedMetadata> = {
   metadata?: TCompletedMetadata;
   completedAt?: number;
 };
 
+/** Shared type for Durable Inbound Receive Release Options in src/channels/message. */
 export type DurableInboundReceiveReleaseOptions = {
   lastError?: string;
   releasedAt?: number;
 };
 
+/** Shared type for Durable Inbound Receive Journal in src/channels/message. */
 export type DurableInboundReceiveJournal<TPayload, TMetadata, TCompletedMetadata> = {
   accept(
     id: string,
@@ -86,6 +95,7 @@ function sortPendingRecords<TPayload, TMetadata>(
   return records.toSorted((a, b) => a.receivedAt - b.receivedAt || a.id.localeCompare(b.id));
 }
 
+/** Reused helper for create Durable Inbound Receive Journal behavior in src/channels/message. */
 export function createDurableInboundReceiveJournal<
   TPayload,
   TMetadata = unknown,

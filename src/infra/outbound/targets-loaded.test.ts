@@ -1,3 +1,4 @@
+// Tests infra/outbound targets loaded test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../../config/config.js";
 import { tryResolveLoadedOutboundTarget } from "./targets-loaded.js";

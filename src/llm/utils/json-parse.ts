@@ -1,3 +1,4 @@
+// llm/utils json parse helpers and runtime behavior.
 import { parse as partialParse } from "partial-json";
 
 const VALID_JSON_ESCAPES = new Set(['"', "\\", "/", "b", "f", "n", "r", "t", "u"]);
@@ -88,6 +89,7 @@ export function repairJson(json: string): string {
   return repaired;
 }
 
+/** Reused helper for parse Json With Repair behavior in src/llm/utils. */
 export function parseJsonWithRepair(json: string): unknown {
   try {
     return JSON.parse(json) as unknown;

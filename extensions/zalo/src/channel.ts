@@ -1,3 +1,4 @@
+// extensions/zalo/src channel helpers and runtime behavior.
 import { describeWebhookAccountSnapshot } from "openclaw/plugin-sdk/account-helpers";
 import { DEFAULT_ACCOUNT_ID } from "openclaw/plugin-sdk/account-id";
 import { formatAllowFromLowercase } from "openclaw/plugin-sdk/allow-from";

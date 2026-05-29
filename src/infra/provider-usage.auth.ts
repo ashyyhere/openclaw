@@ -1,3 +1,4 @@
+// infra provider usage auth helpers and runtime behavior.
 import {
   dedupeProfileIds,
   ensureAuthProfileStore,
@@ -25,6 +26,7 @@ import { normalizeUniqueStringEntries } from "../shared/string-normalization.js"
 import { normalizeSecretInput } from "../utils/normalize-secret-input.js";
 import type { UsageProviderId } from "./provider-usage.types.js";
 
+/** Shared type for Provider Auth in src/infra. */
 export type ProviderAuth = {
   provider: UsageProviderId;
   token: string;
@@ -348,6 +350,7 @@ function hasAuthProfileCredentialSource(params: {
   return false;
 }
 
+/** Reused helper for resolve Provider Auths behavior in src/infra. */
 export async function resolveProviderAuths(params: {
   providers: UsageProviderId[];
   auth?: ProviderAuth[];

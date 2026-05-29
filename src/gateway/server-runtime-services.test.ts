@@ -1,3 +1,4 @@
+// Tests gateway server runtime services test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const hoisted = vi.hoisted(() => {

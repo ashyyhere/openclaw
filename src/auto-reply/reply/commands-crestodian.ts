@@ -1,6 +1,8 @@
+// Chat command handler for Crestodian integration controls.
 import { logVerbose } from "../../globals.js";
 import type { CommandHandler } from "./commands-types.js";
 
+/** Reused constant for handle Crestodian Command behavior in src/auto-reply/reply. */
 export const handleCrestodianCommand: CommandHandler = async (params, allowTextCommands) => {
   if (!allowTextCommands) {
     return null;

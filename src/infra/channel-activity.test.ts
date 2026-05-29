@@ -1,3 +1,4 @@
+// Tests infra channel activity test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   getChannelActivity,

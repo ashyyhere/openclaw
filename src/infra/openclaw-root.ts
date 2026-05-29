@@ -1,3 +1,4 @@
+// infra openclaw root helpers and runtime behavior.
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { openClawRootFs, openClawRootFsSync } from "./openclaw-root.fs.runtime.js";
@@ -106,6 +107,7 @@ function candidateDirsFromArgv1(argv1: string): string[] {
   return [...deduped];
 }
 
+/** Reused helper for resolve Open Claw Package Root behavior in src/infra. */
 export async function resolveOpenClawPackageRoot(opts: {
   cwd?: string;
   argv1?: string;
@@ -128,6 +130,7 @@ export async function resolveOpenClawPackageRoot(opts: {
   return null;
 }
 
+/** Reused helper for resolve Open Claw Package Root Sync behavior in src/infra. */
 export function resolveOpenClawPackageRootSync(opts: {
   cwd?: string;
   argv1?: string;
@@ -188,6 +191,7 @@ function createPackageRootCacheKey(candidates: readonly string[]): string {
   return candidates.join("\0");
 }
 
+/** Reused constant for testing behavior in src/infra. */
 export const testing = {
   clearOpenClawPackageRootCaches(): void {
     packageNameCache.clear();
@@ -195,4 +199,5 @@ export const testing = {
     argv1CandidateCache.clear();
   },
 };
+/** Re-exported API for src/infra, starting with testing. */
 export { testing as __testing };

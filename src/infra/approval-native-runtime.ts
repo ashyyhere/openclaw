@@ -1,3 +1,4 @@
+// infra approval native runtime helpers and runtime behavior.
 import type { ChannelApprovalNativeAdapter } from "../channels/plugins/approval-native.types.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {
@@ -26,6 +27,7 @@ import type { PluginApprovalRequest } from "./plugin-approvals.js";
 type ApprovalRequest = ExecApprovalRequest | PluginApprovalRequest;
 type ApprovalResolved = ExecApprovalResolved | PluginApprovalResolved;
 
+/** Re-exported API for src/infra, starting with Prepared Channel Native Approval Target. */
 export type { PreparedChannelNativeApprovalTarget } from "./approval-native-runtime-types.js";
 
 type ChannelNativeApprovalPlanDeliveryResult<TPendingEntry> = {
@@ -34,6 +36,7 @@ type ChannelNativeApprovalPlanDeliveryResult<TPendingEntry> = {
   deliveredTargets: ChannelApprovalNativePlannedTarget[];
 };
 
+/** Reused helper for deliver Approval Request Via Channel Native Plan behavior in src/infra. */
 export async function deliverApprovalRequestViaChannelNativePlan<
   TPreparedTarget,
   TPendingEntry,
@@ -170,6 +173,7 @@ type ChannelNativeApprovalRuntimeAdapter<
     onStopped?: () => Promise<void> | void;
   };
 
+/** Reused helper for create Channel Native Approval Runtime behavior in src/infra. */
 export function createChannelNativeApprovalRuntime<
   TPendingEntry,
   TPreparedTarget,

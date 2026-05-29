@@ -1,3 +1,4 @@
+// Coverage for reply origin routing helpers.
 import { describe, expect, it } from "vitest";
 import {
   resolveOriginAccountId,

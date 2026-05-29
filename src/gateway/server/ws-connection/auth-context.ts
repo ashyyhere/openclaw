@@ -1,3 +1,4 @@
+// gateway/server/ws-connection auth context helpers and runtime behavior.
 import type { IncomingMessage } from "node:http";
 import { normalizeOptionalString } from "../../../shared/string-coerce.js";
 import {
@@ -20,8 +21,10 @@ type HandshakeConnectAuth = {
   approvalRuntimeToken?: string;
 };
 
+/** Shared type for Device Token Candidate Source in src/gateway/server. */
 export type DeviceTokenCandidateSource = "explicit-device-token" | "shared-token-fallback";
 
+/** Shared type for Connect Auth State in src/gateway/server. */
 export type ConnectAuthState = {
   authResult: GatewayAuthResult;
   authOk: boolean;
@@ -45,6 +48,7 @@ type VerifyDeviceTokenResult = {
 };
 type VerifyBootstrapTokenResult = { ok: boolean; reason?: string };
 
+/** Shared type for Connect Auth Decision in src/gateway/server. */
 export type ConnectAuthDecision = {
   authResult: GatewayAuthResult;
   authOk: boolean;
@@ -95,6 +99,7 @@ function resolveDeviceTokenCandidate(connectAuth: HandshakeConnectAuth | null | 
   return { token: fallbackToken, source: "shared-token-fallback" };
 }
 
+/** Reused helper for resolve Connect Auth State behavior in src/gateway/server. */
 export async function resolveConnectAuthState(params: {
   resolvedAuth: ResolvedGatewayAuth;
   connectAuth: HandshakeConnectAuth | null | undefined;
@@ -157,6 +162,7 @@ export async function resolveConnectAuthState(params: {
   };
 }
 
+/** Reused helper for resolve Connect Auth Decision behavior in src/gateway/server. */
 export async function resolveConnectAuthDecision(params: {
   state: ConnectAuthState;
   hasDeviceIdentity: boolean;

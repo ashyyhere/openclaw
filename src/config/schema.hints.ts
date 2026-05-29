@@ -1,3 +1,4 @@
+// config schema hints helpers and runtime behavior.
 import {
   isSensitiveUrlConfigPath,
   SENSITIVE_URL_HINT_TAG,
@@ -20,6 +21,7 @@ function getLog(): ReturnType<typeof createSubsystemLogger> {
   return log;
 }
 
+/** Re-exported API for src/config, starting with Config Ui Hint. */
 export type { ConfigUiHint, ConfigUiHints } from "../shared/config-ui-hints-types.js";
 
 const GROUP_LABELS: Record<string, string> = {
@@ -104,6 +106,7 @@ function isKernelOwnedChannelHintPath(path: string): boolean {
   );
 }
 
+/** Reused helper for is Plugin Owned Channel Hint Path behavior in src/config. */
 export function isPluginOwnedChannelHintPath(path: string): boolean {
   if (!path.startsWith(CHANNEL_NAMESPACE_PREFIX)) {
     return false;
@@ -111,8 +114,10 @@ export function isPluginOwnedChannelHintPath(path: string): boolean {
   return !isKernelOwnedChannelHintPath(path);
 }
 
+/** Re-exported API for src/config, starting with is Sensitive Config Path. */
 export { isSensitiveConfigPath };
 
+/** Reused helper for build Base Hints behavior in src/config. */
 export function buildBaseHints(): ConfigUiHints {
   const hints: ConfigUiHints = {};
   for (const [group, label] of Object.entries(GROUP_LABELS)) {
@@ -146,6 +151,7 @@ export function buildBaseHints(): ConfigUiHints {
   return applyDerivedTags(hints);
 }
 
+/** Reused helper for apply Sensitive Hints behavior in src/config. */
 export function applySensitiveHints(
   hints: ConfigUiHints,
   allowedKeys?: ReadonlySet<string>,
@@ -164,6 +170,7 @@ export function applySensitiveHints(
   return next;
 }
 
+/** Reused helper for apply Sensitive Url Hints behavior in src/config. */
 export function applySensitiveUrlHints(
   hints: ConfigUiHints,
   allowedKeys?: ReadonlySet<string>,
@@ -185,6 +192,7 @@ export function applySensitiveUrlHints(
   return next;
 }
 
+/** Reused helper for collect Matching Schema Paths behavior in src/config. */
 export function collectMatchingSchemaPaths(
   schema: z.ZodType,
   path: string,
@@ -254,6 +262,7 @@ function isUnwrappable(object: unknown): object is ZodDummy {
   );
 }
 
+/** Reused helper for map Sensitive Paths behavior in src/config. */
 export function mapSensitivePaths(
   schema: z.ZodType,
   path: string,
@@ -311,4 +320,5 @@ export const testApi = {
   collectMatchingSchemaPaths,
   mapSensitivePaths,
 };
+/** Re-exported API for src/config, starting with test Api. */
 export { testApi as __test__ };

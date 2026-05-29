@@ -1,3 +1,4 @@
+// Tests extensions/qa-lab/src suite runtime agent tools test behavior.
 import fs from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";

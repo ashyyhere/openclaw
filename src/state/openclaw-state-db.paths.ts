@@ -1,3 +1,4 @@
+// tasks task registry paths helpers and runtime behavior.
 import os from "node:os";
 import path from "node:path";
 import { isMainThread, threadId } from "node:worker_threads";

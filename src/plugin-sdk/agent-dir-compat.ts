@@ -1,3 +1,4 @@
+// plugin-sdk agent dir compat helpers and runtime behavior.
 import { resolveDefaultAgentDir } from "../agents/agent-scope-config.js";
 import { resolveUserPath } from "../utils.js";
 

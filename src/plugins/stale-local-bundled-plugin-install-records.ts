@@ -1,9 +1,11 @@
+// plugins stale local bundled plugin install records helpers and runtime behavior.
 import path from "node:path";
 import type { PluginInstallRecord } from "../config/types.plugins.js";
 import { resolveUserPath } from "../utils.js";
 import { normalizeBundledLookupPath } from "./bundled-load-path-aliases.js";
 import { resolveBundledPluginSources, type BundledPluginSource } from "./bundled-sources.js";
 
+/** Shared type for Stale Local Bundled Plugin Install Record in src/plugins. */
 export type StaleLocalBundledPluginInstallRecord = {
   pluginId: string;
   record: PluginInstallRecord;
@@ -49,6 +51,7 @@ function hasStaleBundledVersion(
   return Boolean(recordVersion && bundledVersion && recordVersion !== bundledVersion);
 }
 
+/** Reused helper for list Stale Local Bundled Plugin Install Records behavior in src/plugins. */
 export function listStaleLocalBundledPluginInstallRecords(params: {
   installRecords: Record<string, PluginInstallRecord>;
   workspaceDir?: string;
@@ -100,6 +103,7 @@ export function listStaleLocalBundledPluginInstallRecords(params: {
   return stale;
 }
 
+/** Reused helper for prune Stale Local Bundled Plugin Install Records behavior in src/plugins. */
 export function pruneStaleLocalBundledPluginInstallRecords(params: {
   installRecords: Record<string, PluginInstallRecord>;
   workspaceDir?: string;

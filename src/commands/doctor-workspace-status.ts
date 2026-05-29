@@ -52,6 +52,7 @@ function noteFlowRecoveryHints() {
   );
 }
 
+/** Reused helper for note Workspace Status behavior in src/commands. */
 export function noteWorkspaceStatus(cfg: OpenClawConfig) {
   const workspaceDir = resolveAgentWorkspaceDir(cfg, resolveDefaultAgentId(cfg));
   const legacyWorkspace = detectLegacyWorkspaceDirs({ workspaceDir });

@@ -1,3 +1,4 @@
+// config knip config helpers and runtime behavior.
 const BUNDLED_PLUGIN_ROOT_DIR = "extensions";
 
 function bundledPluginFile(pluginId: string, relativePath: string, suffix = ""): string {

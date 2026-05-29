@@ -189,6 +189,7 @@ async function maybeRunGatewayCleanup(
   }
 }
 
+/** Reused helper for sessions Cleanup Command behavior in src/commands. */
 export async function sessionsCleanupCommand(opts: SessionsCleanupOptions, runtime: RuntimeEnv) {
   const gatewayResult = await maybeRunGatewayCleanup(opts);
   if (gatewayResult) {

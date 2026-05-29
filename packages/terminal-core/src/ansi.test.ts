@@ -1,3 +1,4 @@
+// Tests terminal ansi test behavior.
 import { describe, expect, it } from "vitest";
 import { sanitizeForLog, splitGraphemes, stripAnsi, visibleWidth } from "./ansi.js";
 

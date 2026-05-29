@@ -1,3 +1,4 @@
+/** Tests plugin tool allowlist warning collection. */
 import { describe, expect, it } from "vitest";
 import type { PluginManifestRegistry } from "../../../plugins/manifest-registry.js";
 import { collectPluginToolAllowlistWarnings } from "./plugin-tool-allowlist-warnings.js";

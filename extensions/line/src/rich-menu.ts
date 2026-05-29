@@ -1,3 +1,4 @@
+// extensions/line/src rich menu helpers and runtime behavior.
 import { messagingApi } from "@line/bot-sdk";
 import { getAgentScopedMediaLocalRoots } from "openclaw/plugin-sdk/agent-media-payload";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";

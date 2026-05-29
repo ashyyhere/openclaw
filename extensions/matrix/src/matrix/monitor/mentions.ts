@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix/monitor mentions helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "openclaw/plugin-sdk/string-coerce-runtime";
 import { escapeRegExp } from "openclaw/plugin-sdk/text-utility-runtime";
 import { getMatrixRuntime } from "../../runtime.js";

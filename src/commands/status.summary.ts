@@ -1,3 +1,4 @@
+/** Builds compact status summaries for CLI and gateway surfaces. */
 import { DEFAULT_CONTEXT_TOKENS, DEFAULT_MODEL, DEFAULT_PROVIDER } from "../agents/defaults.js";
 import { areRuntimeModelRefsEquivalent } from "../agents/model-runtime-aliases.js";
 import { getRuntimeConfig } from "../config/config.js";
@@ -139,6 +140,7 @@ function listSessionCandidates(store: Record<string, SessionEntry | undefined>) 
     .toSorted(compareSessionCandidatesByUpdatedAt);
 }
 
+/** Reused helper for redact Sensitive Status Summary behavior in src/commands. */
 export function redactSensitiveStatusSummary(summary: StatusSummary): StatusSummary {
   return {
     ...summary,
@@ -159,6 +161,7 @@ export function redactSensitiveStatusSummary(summary: StatusSummary): StatusSumm
   };
 }
 
+/** Reused helper for get Status Summary behavior in src/commands. */
 export async function getStatusSummary(
   options: {
     includeSensitive?: boolean;

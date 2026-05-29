@@ -1,14 +1,25 @@
+/** Reusable short descriptions for built-in tool display summaries. */
 export const EXEC_TOOL_DISPLAY_SUMMARY = "Run shell now.";
+/** Reused constant for PROCESS TOOL DISPLAY SUMMARY behavior in src/agents. */
 export const PROCESS_TOOL_DISPLAY_SUMMARY = "Inspect/control exec sessions.";
+/** Reused constant for CRON TOOL DISPLAY SUMMARY behavior in src/agents. */
 export const CRON_TOOL_DISPLAY_SUMMARY = "Schedule reminders, cron, wake events.";
+/** Reused constant for SESSIONS LIST TOOL DISPLAY SUMMARY behavior in src/agents. */
 export const SESSIONS_LIST_TOOL_DISPLAY_SUMMARY = "List visible sessions; filters/previews.";
+/** Reused constant for SESSIONS HISTORY TOOL DISPLAY SUMMARY behavior in src/agents. */
 export const SESSIONS_HISTORY_TOOL_DISPLAY_SUMMARY = "Read sanitized session history.";
+/** Reused constant for SESSIONS SEND TOOL DISPLAY SUMMARY behavior in src/agents. */
 export const SESSIONS_SEND_TOOL_DISPLAY_SUMMARY = "Message session or configured agent.";
+/** Reused constant for SESSIONS SPAWN TOOL DISPLAY SUMMARY behavior in src/agents. */
 export const SESSIONS_SPAWN_TOOL_DISPLAY_SUMMARY = "Spawn subagent or ACP session.";
+/** Reused constant for SESSIONS SPAWN SUBAGENT TOOL DISPLAY SUMMARY behavior in src/agents. */
 export const SESSIONS_SPAWN_SUBAGENT_TOOL_DISPLAY_SUMMARY = "Spawn subagent session.";
+/** Reused constant for SESSION STATUS TOOL DISPLAY SUMMARY behavior in src/agents. */
 export const SESSION_STATUS_TOOL_DISPLAY_SUMMARY = "Show session status/model/usage.";
+/** Reused constant for UPDATE PLAN TOOL DISPLAY SUMMARY behavior in src/agents. */
 export const UPDATE_PLAN_TOOL_DISPLAY_SUMMARY = "Track short work plan.";
 
+/** Reused helper for describe Sessions List Tool behavior in src/agents. */
 export function describeSessionsListTool(): string {
   return [
     "List visible sessions; filter by kind, label, agentId, search, activity.",
@@ -16,6 +27,7 @@ export function describeSessionsListTool(): string {
   ].join(" ");
 }
 
+/** Reused helper for describe Sessions History Tool behavior in src/agents. */
 export function describeSessionsHistoryTool(): string {
   return [
     "Fetch sanitized history for visible session.",
@@ -23,6 +35,7 @@ export function describeSessionsHistoryTool(): string {
   ].join(" ");
 }
 
+/** Reused helper for describe Sessions Send Tool behavior in src/agents. */
 export function describeSessionsSendTool(): string {
   return [
     "Send message to visible session by sessionKey/label, or configured agent by agentId.",
@@ -31,6 +44,7 @@ export function describeSessionsSendTool(): string {
   ].join(" ");
 }
 
+/** Reused helper for describe Sessions Spawn Tool behavior in src/agents. */
 export function describeSessionsSpawnTool(options?: {
   acpAvailable?: boolean;
   threadAvailable?: boolean;
@@ -59,6 +73,7 @@ export function describeSessionsSpawnTool(options?: {
   ].join(" ");
 }
 
+/** Reused helper for describe Session Status Tool behavior in src/agents. */
 export function describeSessionStatusTool(): string {
   return [
     "Show /status-like card for current/visible session: model, usage, time, cost, tasks.",
@@ -68,6 +83,7 @@ export function describeSessionStatusTool(): string {
   ].join(" ");
 }
 
+/** Reused helper for describe Update Plan Tool behavior in src/agents. */
 export function describeUpdatePlanTool(): string {
   return [
     "Update current run plan.",

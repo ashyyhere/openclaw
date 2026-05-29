@@ -1,3 +1,4 @@
+// infra approval handler runtime types helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { ChannelApprovalNativePlannedTarget } from "./approval-native-delivery.js";
 import type { PreparedChannelNativeApprovalTarget } from "./approval-native-runtime.js";
@@ -11,11 +12,15 @@ import type { ExecApprovalChannelRuntimeEventKind } from "./exec-approval-channe
 import type { ExecApprovalRequest, ExecApprovalResolved } from "./exec-approvals.js";
 import type { PluginApprovalRequest, PluginApprovalResolved } from "./plugin-approvals.js";
 
+/** Re-exported API for src/infra, starting with Channel Approval Kind. */
 export type { ChannelApprovalKind } from "./approval-types.js";
 
+/** Shared type for Approval Request in src/infra. */
 export type ApprovalRequest = ExecApprovalRequest | PluginApprovalRequest;
+/** Shared type for Approval Resolved in src/infra. */
 export type ApprovalResolved = ExecApprovalResolved | PluginApprovalResolved;
 
+/** Shared type for Channel Approval Capability Handler Context in src/infra. */
 export type ChannelApprovalCapabilityHandlerContext = {
   cfg: OpenClawConfig;
   accountId?: string | null;
@@ -23,12 +28,14 @@ export type ChannelApprovalCapabilityHandlerContext = {
   context?: unknown;
 };
 
+/** Shared type for Channel Approval Native Final Action in src/infra. */
 export type ChannelApprovalNativeFinalAction<TPayload> =
   | { kind: "update"; payload: TPayload }
   | { kind: "delete" }
   | { kind: "clear-actions" }
   | { kind: "leave" };
 
+/** Shared type for Channel Approval Native Availability Adapter in src/infra. */
 export type ChannelApprovalNativeAvailabilityAdapter = {
   isConfigured: (params: ChannelApprovalCapabilityHandlerContext) => boolean;
   shouldHandle: (
@@ -36,6 +43,7 @@ export type ChannelApprovalNativeAvailabilityAdapter = {
   ) => boolean;
 };
 
+/** Shared type for Channel Approval Native Presentation Adapter in src/infra. */
 export type ChannelApprovalNativePresentationAdapter<
   TPendingPayload = unknown,
   TFinalPayload = unknown,
@@ -113,6 +121,7 @@ type ChannelApprovalNativeTransportAdapterForView<
   ) => Promise<void>;
 };
 
+/** Shared type for Channel Approval Native Transport Adapter in src/infra. */
 export type ChannelApprovalNativeTransportAdapter<
   TPreparedTarget = unknown,
   TPendingEntry = unknown,
@@ -163,6 +172,7 @@ type ChannelApprovalNativeInteractionAdapterForView<
   ) => Promise<void> | void;
 };
 
+/** Shared type for Channel Approval Native Interaction Adapter in src/infra. */
 export type ChannelApprovalNativeInteractionAdapter<
   TPendingEntry = unknown,
   TBinding = unknown,
@@ -207,12 +217,14 @@ type ChannelApprovalNativeObserveAdapterForView<
   ) => void;
 };
 
+/** Shared type for Channel Approval Native Observe Adapter in src/infra. */
 export type ChannelApprovalNativeObserveAdapter<
   TPreparedTarget = unknown,
   TPendingPayload = unknown,
   TPendingEntry = unknown,
 > = ChannelApprovalNativeObserveAdapterForView<TPreparedTarget, TPendingPayload, TPendingEntry>;
 
+/** Shared type for Channel Approval Native Runtime Adapter in src/infra. */
 export type ChannelApprovalNativeRuntimeAdapter<
   TPendingPayload = unknown,
   TPreparedTarget = unknown,
@@ -234,6 +246,7 @@ export type ChannelApprovalNativeRuntimeAdapter<
   observe?: ChannelApprovalNativeObserveAdapter;
 };
 
+/** Shared type for Channel Approval Native Runtime Spec in src/infra. */
 export type ChannelApprovalNativeRuntimeSpec<
   TPendingPayload,
   TPreparedTarget,

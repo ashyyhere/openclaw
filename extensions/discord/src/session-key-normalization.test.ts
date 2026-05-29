@@ -1,3 +1,4 @@
+// Tests extensions/discord/src session key normalization test behavior.
 import { describe, expect, it } from "vitest";
 import { normalizeExplicitDiscordSessionKey } from "./session-key-normalization.js";
 

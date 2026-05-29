@@ -1,5 +1,7 @@
+// gateway/server/ws-connection handshake auth log limiter helpers and runtime behavior.
 import { resolveIntegerOption } from "../../../shared/number-coercion.js";
 
+/** Shared type for Handshake Auth Log Decision in src/gateway/server. */
 export type HandshakeAuthLogDecision = {
   shouldLog: boolean;
   suppressedSinceLastLog: number;
@@ -10,6 +12,7 @@ type HandshakeAuthLogState = {
   suppressedSinceLastLog: number;
 };
 
+/** Reused class for Handshake Auth Log Limiter behavior in src/gateway/server. */
 export class HandshakeAuthLogLimiter {
   private readonly intervalMs: number;
   private readonly maxEntries: number;
@@ -53,6 +56,7 @@ export class HandshakeAuthLogLimiter {
   }
 }
 
+/** Reused helper for build Handshake Auth Log Key behavior in src/gateway/server. */
 export function buildHandshakeAuthLogKey(params: {
   reason?: string;
   remoteAddr?: string;
@@ -69,6 +73,7 @@ export function buildHandshakeAuthLogKey(params: {
   ].join("|");
 }
 
+/** Reused helper for should Limit Missing Credential Auth Log behavior in src/gateway/server. */
 export function shouldLimitMissingCredentialAuthLog(params: {
   reason?: string;
   authProvided?: string;

@@ -1,3 +1,4 @@
+// Tests routing account lookup test behavior.
 import { describe, expect, it } from "vitest";
 import { resolveAccountEntry, resolveNormalizedAccountEntry } from "./account-lookup.js";
 

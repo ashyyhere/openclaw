@@ -1,3 +1,4 @@
+/** Tests failover cooldown probe policy. */
 import { describe, expect, it } from "vitest";
 import type { FailoverReason } from "./embedded-agent-helpers.js";
 import {

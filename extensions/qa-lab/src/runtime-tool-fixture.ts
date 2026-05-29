@@ -1,3 +1,4 @@
+// extensions/qa-lab/src runtime tool fixture helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { readRuntimeToolCoverageMetadata } from "./runtime-tool-metadata.js";

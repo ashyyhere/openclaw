@@ -1,3 +1,4 @@
+// extensions/qa-lab/src scenario helpers and runtime behavior.
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";
 import type { QaTransportActionName, QaTransportState } from "./qa-transport.js";
 

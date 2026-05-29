@@ -9,11 +9,13 @@ import {
   resolveCustomCommands,
 } from "../shared/custom-command-config.js";
 
+/** Shared type for Telegram Custom Command Input in src/plugin-sdk. */
 export type TelegramCustomCommandInput = {
   command?: string | null;
   description?: string | null;
 };
 
+/** Shared type for Telegram Custom Command Issue in src/plugin-sdk. */
 export type TelegramCustomCommandIssue = {
   index: number;
   field: "command" | "description";
@@ -49,20 +51,25 @@ function resolveTelegramCustomCommandsImpl(params: {
   });
 }
 
+/** Reused helper for get Telegram Command Name Pattern behavior in src/plugin-sdk. */
 export function getTelegramCommandNamePattern(): RegExp {
   return TELEGRAM_COMMAND_NAME_PATTERN_VALUE;
 }
 
+/** Reused constant for TELEGRAM COMMAND NAME PATTERN behavior in src/plugin-sdk. */
 export const TELEGRAM_COMMAND_NAME_PATTERN = TELEGRAM_COMMAND_NAME_PATTERN_VALUE;
 
+/** Reused helper for normalize Telegram Command Name behavior in src/plugin-sdk. */
 export function normalizeTelegramCommandName(value: string): string {
   return normalizeTelegramCommandNameImpl(value);
 }
 
+/** Reused helper for normalize Telegram Command Description behavior in src/plugin-sdk. */
 export function normalizeTelegramCommandDescription(value: string): string {
   return normalizeTelegramCommandDescriptionImpl(value);
 }
 
+/** Reused helper for resolve Telegram Custom Commands behavior in src/plugin-sdk. */
 export function resolveTelegramCustomCommands(params: {
   commands?: TelegramCustomCommandInput[] | null;
   reservedCommands?: Set<string>;

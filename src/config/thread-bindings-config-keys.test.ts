@@ -1,3 +1,4 @@
+// Tests config thread bindings config keys test behavior.
 import { describe, expect, it } from "vitest";
 import { validateConfigObjectRaw } from "./validation.js";
 

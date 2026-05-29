@@ -1,3 +1,4 @@
+// Tests packages/gateway-protocol/src exec approvals validators test behavior.
 import { describe, expect, it } from "vitest";
 import {
   validateExecApprovalRequestParams,

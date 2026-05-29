@@ -1,3 +1,4 @@
+// Tests extensions/qa-lab/src qa channel transport test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { createQaBusState } from "./bus-state.js";
 import { createQaChannelTransport } from "./qa-channel-transport.js";

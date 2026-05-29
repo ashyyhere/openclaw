@@ -1,3 +1,4 @@
+/** Covers PDF tool input loading, model routing, and responses. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

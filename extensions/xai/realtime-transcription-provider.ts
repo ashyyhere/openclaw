@@ -1,3 +1,4 @@
+// extensions/xai realtime transcription provider helpers and runtime behavior.
 import {
   isProviderAuthProfileConfigured,
   type OpenClawConfig,

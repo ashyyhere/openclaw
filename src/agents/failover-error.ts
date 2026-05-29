@@ -1,3 +1,4 @@
+/** Failover error type, classification, and coercion helpers. */
 import { readErrorName } from "../infra/errors.js";
 import { parseStrictNonNegativeInteger } from "../shared/number-coercion.js";
 import {
@@ -14,6 +15,7 @@ import { isSessionWriteLockTimeoutError } from "./session-write-lock-error.js";
 const ABORT_TIMEOUT_RE = /request was aborted|request aborted/i;
 const MAX_FAILOVER_CAUSE_DEPTH = 25;
 
+/** Error wrapper carrying provider failover reason and attribution. */
 export class FailoverError extends Error {
   readonly reason: FailoverReason;
   readonly provider?: string;
@@ -61,6 +63,7 @@ export class FailoverError extends Error {
   }
 }
 
+/** Return whether an unknown error is a failover error. */
 export function isFailoverError(err: unknown): err is FailoverError {
   if (err instanceof FailoverError) {
     return true;
@@ -73,6 +76,7 @@ export function isFailoverError(err: unknown): err is FailoverError {
   );
 }
 
+/** Map failover reasons to HTTP-like status codes when available. */
 export function resolveFailoverStatus(reason: FailoverReason): number | undefined {
   switch (reason) {
     case "billing":
@@ -273,6 +277,7 @@ function hasEmbeddedAttemptSessionTakeover(err: unknown, seen: Set<object> = new
  * candidate slots — retrying any model would hit the same local condition.
  * See #83510.
  */
+/** Return whether an error is a runtime coordination failure, not provider output. */
 export function isNonProviderRuntimeCoordinationError(err: unknown): boolean {
   if (!hasSessionWriteLockTimeout(err) && !hasEmbeddedAttemptSessionTakeover(err)) {
     return false;
@@ -300,6 +305,7 @@ function hasTimeoutHint(err: unknown): boolean {
   return Boolean(message && isTimeoutErrorMessage(message));
 }
 
+/** Return whether an error should be treated as timeout. */
 export function isTimeoutError(err: unknown): boolean {
   if (hasTimeoutHint(err)) {
     return true;
@@ -484,6 +490,7 @@ function resolveFailoverClassificationFromError(
   return resolveFailoverClassificationFromErrorInternal(err, new Set<object>(), 0, providerHint);
 }
 
+/** Resolve failover reason from an unknown error. */
 export function resolveFailoverReasonFromError(
   err: unknown,
   providerHint?: string,
@@ -493,6 +500,7 @@ export function resolveFailoverReasonFromError(
   );
 }
 
+/** Describe failover details for logs and result metadata. */
 export function describeFailoverError(err: unknown): {
   message: string;
   rawError?: string;
@@ -530,6 +538,7 @@ export function describeFailoverError(err: unknown): {
   };
 }
 
+/** Convert an unknown error into a FailoverError when possible. */
 export function coerceToFailoverError(
   err: unknown,
   context?: {

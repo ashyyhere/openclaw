@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/anthropic register runtime behavior.
 import { formatCliCommand, parseDurationMs } from "openclaw/plugin-sdk/cli-runtime";
 import { resolveExpiresAtMsFromDurationMs } from "openclaw/plugin-sdk/number-runtime";
 import type {

@@ -1,6 +1,8 @@
+// infra/command-analysis inline eval helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";
 import { normalizeExecutableToken } from "../exec-wrapper-resolution.js";
 
+/** Shared type for Interpreter Inline Eval Hit in src/infra/command-analysis. */
 export type InterpreterInlineEvalHit = {
   executable: string;
   normalizedExecutable: string;
@@ -185,6 +187,7 @@ function createInlineEvalHit(
   };
 }
 
+/** Reused helper for detect Interpreter Inline Eval Argv behavior in src/infra/command-analysis. */
 export function detectInterpreterInlineEvalArgv(
   argv: string[] | undefined | null,
 ): InterpreterInlineEvalHit | null {
@@ -281,6 +284,7 @@ export function detectInterpreterInlineEvalArgv(
   return null;
 }
 
+/** Reused helper for describe Interpreter Inline Eval behavior in src/infra/command-analysis. */
 export function describeInterpreterInlineEval(hit: InterpreterInlineEvalHit): string {
   if (hit.flag === "<command>") {
     return `${hit.normalizedExecutable} inline command`;
@@ -291,6 +295,7 @@ export function describeInterpreterInlineEval(hit: InterpreterInlineEvalHit): st
   return `${hit.normalizedExecutable} ${hit.flag}`;
 }
 
+/** Reused helper for is Interpreter Like Allowlist Pattern behavior in src/infra/command-analysis. */
 export function isInterpreterLikeAllowlistPattern(pattern: string | undefined | null): boolean {
   const trimmed = normalizeLowercaseStringOrEmpty(pattern);
   if (!trimmed) {

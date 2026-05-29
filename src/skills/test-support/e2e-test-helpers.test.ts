@@ -1,3 +1,4 @@
+/** Unit coverage for shared skills E2E fixture helpers. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

@@ -1,6 +1,8 @@
+// ui/src/i18n/lib lit controller helpers and runtime behavior.
 import type { ReactiveController, ReactiveControllerHost } from "lit";
 import { i18n } from "./translate.ts";
 
+/** Reused class for I18n Controller behavior in ui/src/i18n/lib. */
 export class I18nController implements ReactiveController {
   private host: ReactiveControllerHost;
   private unsubscribe?: () => void;

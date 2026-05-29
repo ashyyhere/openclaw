@@ -1,3 +1,4 @@
+/** Agent tool and auto-start service for transcript search/read workflows. */
 import { randomUUID } from "node:crypto";
 import path from "node:path";
 import { Type } from "typebox";
@@ -393,6 +394,7 @@ async function statusTranscripts(ctx: TranscriptsRuntimeContext) {
   );
 }
 
+/** Creates the transcripts AgentTool. */
 export function createTranscriptsTool(options?: {
   config?: OpenClawConfig;
   stateDir?: string;
@@ -435,6 +437,7 @@ export function createTranscriptsTool(options?: {
   };
 }
 
+/** Creates the transcript service auto-start hook for runtime setup. */
 export function createTranscriptsAutoStartService(ctx: TranscriptsRuntimeContext): {
   start: () => void;
   stop: () => Promise<void>;

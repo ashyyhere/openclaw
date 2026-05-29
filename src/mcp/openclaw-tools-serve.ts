@@ -11,6 +11,7 @@ import { createCronTool } from "../agents/tools/cron-tool.js";
 import { formatErrorMessage } from "../infra/errors.js";
 import { connectToolsMcpServerToStdio, createToolsMcpServer } from "./tools-stdio-server.js";
 
+/** Reused helper for resolve Open Claw Tools For Mcp behavior in src/mcp. */
 export function resolveOpenClawToolsForMcp(): AnyAgentTool[] {
   return [createCronTool()];
 }

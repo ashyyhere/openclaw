@@ -1,3 +1,4 @@
+/** Covers sandbox backend registry lookup and replacement. */
 import { describe, expect, it } from "vitest";
 import {
   getSandboxBackendFactory,

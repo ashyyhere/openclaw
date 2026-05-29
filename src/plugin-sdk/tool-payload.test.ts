@@ -1,3 +1,4 @@
+/** Tests tool payload normalization helpers. */
 import { describe, expect, it } from "vitest";
 import {
   extractToolPayload,

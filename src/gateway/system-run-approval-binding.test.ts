@@ -1,3 +1,4 @@
+// Tests gateway system run approval binding test behavior.
 import { describe, expect, test } from "vitest";
 import { toSystemRunApprovalMismatchError } from "../infra/system-run-approval-binding.js";
 

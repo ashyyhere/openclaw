@@ -1,3 +1,4 @@
+/** Tests live-provider discovery filtering for generated models config. */
 import { describe, expect, it } from "vitest";
 import type { PluginMetadataSnapshotOwnerMaps } from "../plugins/plugin-metadata-snapshot.js";
 import {

@@ -1,3 +1,4 @@
+// config/sessions cleanup service helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { resolveDefaultAgentId } from "../../agents/agent-scope.js";
@@ -37,6 +38,7 @@ import {
 } from "./targets.js";
 import type { SessionEntry } from "./types.js";
 
+/** Shared type for Sessions Cleanup Options in src/config/sessions. */
 export type SessionsCleanupOptions = SessionStoreSelectionOptions & {
   dryRun?: boolean;
   enforce?: boolean;
@@ -46,6 +48,7 @@ export type SessionsCleanupOptions = SessionStoreSelectionOptions & {
   fixDmScope?: boolean;
 };
 
+/** Shared type for Session Cleanup Action in src/config/sessions. */
 export type SessionCleanupAction =
   | "keep"
   | "prune-missing"
@@ -54,6 +57,7 @@ export type SessionCleanupAction =
   | "evict-budget"
   | "retire-dm-scope";
 
+/** Shared type for Session Cleanup Summary in src/config/sessions. */
 export type SessionCleanupSummary = {
   agentId: string;
   storePath: string;
@@ -72,6 +76,7 @@ export type SessionCleanupSummary = {
   appliedCount?: number;
 };
 
+/** Shared type for Sessions Cleanup Result in src/config/sessions. */
 export type SessionsCleanupResult =
   | SessionCleanupSummary
   | {
@@ -81,6 +86,7 @@ export type SessionsCleanupResult =
       stores: SessionCleanupSummary[];
     };
 
+/** Shared type for Sessions Cleanup Run Result in src/config/sessions. */
 export type SessionsCleanupRunResult = {
   mode: ResolvedSessionMaintenanceConfig["mode"];
   previewResults: Array<{
@@ -162,6 +168,7 @@ function transcriptHasNoMessageRecords(transcriptPath: string): boolean {
   return true;
 }
 
+/** Reused helper for resolve Session Cleanup Action behavior in src/config/sessions. */
 export function resolveSessionCleanupAction(params: {
   key: string;
   missingKeys: Set<string>;
@@ -246,6 +253,7 @@ function retireMainScopeDirectSessionEntries(params: {
   return retired;
 }
 
+/** Reused helper for serialize Session Cleanup Result behavior in src/config/sessions. */
 export function serializeSessionCleanupResult(params: {
   mode: ResolvedSessionMaintenanceConfig["mode"];
   dryRun: boolean;
@@ -458,6 +466,7 @@ async function previewStoreCleanup(params: {
   };
 }
 
+/** Reused helper for run Sessions Cleanup behavior in src/config/sessions. */
 export async function runSessionsCleanup(params: {
   cfg: OpenClawConfig;
   opts: SessionsCleanupOptions;

@@ -1,3 +1,4 @@
+// infra provider usage plugin runtime test mocks helpers and runtime behavior.
 import { vi } from "vitest";
 
 const resolveProviderUsageSnapshotWithPluginMock = vi.hoisted(() =>
@@ -20,11 +21,13 @@ vi.mock("../plugins/provider-runtime.js", async () => {
   };
 });
 
+/** Reused helper for reset Provider Usage Snapshot With Plugin Mock behavior in src/infra. */
 export function resetProviderUsageSnapshotWithPluginMock() {
   resolveProviderUsageSnapshotWithPluginMock.mockReset();
   resolveProviderUsageSnapshotWithPluginMock.mockResolvedValue(null);
 }
 
+/** Reused helper for get Provider Usage Snapshot With Plugin Mock behavior in src/infra. */
 export function getProviderUsageSnapshotWithPluginMock() {
   return resolveProviderUsageSnapshotWithPluginMock;
 }

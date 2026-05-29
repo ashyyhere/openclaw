@@ -1,3 +1,4 @@
+// test/helpers openclaw test instance helpers and runtime behavior.
 import { type ChildProcessWithoutNullStreams, spawn } from "node:child_process";
 import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";

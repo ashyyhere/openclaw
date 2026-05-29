@@ -1,3 +1,4 @@
+/** Installs runtime hooks that keep tool results within context limits. */
 import type { ContextEngine, ContextEngineRuntimeContext } from "../../context-engine/types.js";
 import type { AgentMessage } from "../runtime/index.js";
 import {
@@ -22,6 +23,7 @@ import {
 const SINGLE_TOOL_RESULT_CONTEXT_SHARE = 0.5;
 const PREEMPTIVE_OVERFLOW_RATIO = 0.9;
 
+/** Reused constant for PREEMPTIVE CONTEXT OVERFLOW MESSAGE behavior in src/agents/embedded-agent-runner. */
 export const PREEMPTIVE_CONTEXT_OVERFLOW_MESSAGE =
   "Context overflow: estimated context size exceeds safe threshold during tool loop.";
 const TOOL_RESULT_ESTIMATE_TO_TEXT_RATIO = 4 / TOOL_RESULT_CHARS_PER_TOKEN_ESTIMATE;
@@ -48,8 +50,10 @@ type MidTurnPrecheckOptions = {
   onMidTurnPrecheck?: (request: MidTurnPrecheckRequest) => void;
 };
 
+/** Re-exported API for src/agents/embedded-agent-runner, starting with CONTEXT LIMIT TRUNCATION NOTICE. */
 export { CONTEXT_LIMIT_TRUNCATION_NOTICE, formatContextLimitTruncationNotice };
 
+/** Records prompt-visible transcript text for later context-size accounting. */
 export function markTranscriptPromptText(message: AgentMessage, text: string): void {
   Object.defineProperty(message, TRANSCRIPT_PROMPT_TEXT_KEY, {
     configurable: true,
@@ -316,6 +320,7 @@ function toMidTurnPrecheckRequest(
  * the context engine owns compaction. Lets the engine compact inside
  * a long tool loop instead of only at end of attempt.
  */
+/** Adds a context-engine loop hook that can preempt before overflow repeats. */
 export function installContextEngineLoopHook(params: {
   agent: GuardableAgent;
   contextEngine: ContextEngine;
@@ -450,6 +455,7 @@ export function installContextEngineLoopHook(params: {
   };
 }
 
+/** Installs prechecks that compact or truncate oversized tool-result turns. */
 export function installToolResultContextGuard(params: {
   agent: GuardableAgent;
   contextWindowTokens: number;

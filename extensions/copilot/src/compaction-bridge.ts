@@ -1,3 +1,4 @@
+// extensions/copilot/src compaction bridge helpers and runtime behavior.
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import type { SessionConfig } from "@github/copilot-sdk";

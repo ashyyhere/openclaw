@@ -1,3 +1,4 @@
+// extensions/feishu/src card ux shared helpers and runtime behavior.
 import type { FeishuCardInteractionEnvelope } from "./card-interaction.js";
 
 export function buildFeishuCardButton(params: {

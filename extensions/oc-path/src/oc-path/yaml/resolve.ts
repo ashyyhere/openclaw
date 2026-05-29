@@ -1,3 +1,4 @@
+// extensions/oc-path/src/oc-path/yaml resolve helpers and runtime behavior.
 import { isMap, isScalar, isSeq, type Node, type Pair } from "yaml";
 import type { OcPath } from "../oc-path.js";
 import {

@@ -1,3 +1,4 @@
+// Tests extensions/qqbot/src/engine/utils log test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { debugLog, sanitizeDebugLogValue } from "./log.js";
 

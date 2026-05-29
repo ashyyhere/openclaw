@@ -1,3 +1,4 @@
+// extensions/nostr/src channel setup helpers and runtime behavior.
 import { describeAccountSnapshot } from "openclaw/plugin-sdk/account-helpers";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import {

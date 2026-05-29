@@ -1,3 +1,4 @@
+// plugins web search credential presence helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { loadManifestMetadataSnapshot } from "./manifest-contract-eligibility.js";
 import type { PluginManifestRecord } from "./manifest-registry.js";
@@ -60,6 +61,7 @@ function hasManifestWebSearchEnvCredentialCandidate(params: {
   });
 }
 
+/** Reused helper for has Configured Web Search Credential behavior in src/plugins. */
 export function hasConfiguredWebSearchCredential(params: {
   config: OpenClawConfig;
   env?: NodeJS.ProcessEnv;

@@ -1,8 +1,11 @@
+// Channel directory adapter composition helpers.
 import type { ChannelDirectoryAdapter } from "./types.adapters.js";
 
+/** Reused constant for null Channel Directory Self behavior in src/channels/plugins. */
 export const nullChannelDirectorySelf: NonNullable<ChannelDirectoryAdapter["self"]> = async () =>
   null;
 
+/** Reused constant for empty Channel Directory List behavior in src/channels/plugins. */
 export const emptyChannelDirectoryList: NonNullable<
   ChannelDirectoryAdapter["listPeers"]
 > = async () => [];

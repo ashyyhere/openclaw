@@ -1,3 +1,5 @@
+// packages/memory-host-sdk/src/host batch output helpers and runtime behavior.
+/** Public type describing Embedding Batch Output Line for packages/memory-host-sdk. */
 export type EmbeddingBatchOutputLine = {
   custom_id?: string;
   error?: { message?: string };
@@ -14,6 +16,7 @@ export type EmbeddingBatchOutputLine = {
   };
 };
 
+/** Public helper for apply Embedding Batch Output Line behavior in packages/memory-host-sdk. */
 export function applyEmbeddingBatchOutputLine(params: {
   line: EmbeddingBatchOutputLine;
   remaining: Set<string>;

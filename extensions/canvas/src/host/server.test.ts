@@ -1,3 +1,4 @@
+// Tests extensions/canvas/src/host server test behavior.
 import fs from "node:fs/promises";
 import type { IncomingMessage } from "node:http";
 import os from "node:os";

@@ -1,3 +1,4 @@
+// gateway/server-methods sessions helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
@@ -1105,6 +1106,7 @@ async function handleSessionSend(params: {
     });
   }
 }
+/** Reused constant for sessions Handlers behavior in src/gateway/server-methods. */
 export const sessionsHandlers: GatewayRequestHandlers = {
   "sessions.list": async ({ params, respond, context }) => {
     if (!assertValidParams(params, validateSessionsListParams, "sessions.list", respond)) {

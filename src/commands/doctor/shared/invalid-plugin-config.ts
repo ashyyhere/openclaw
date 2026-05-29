@@ -35,6 +35,7 @@ function scanInvalidPluginConfig(cfg: OpenClawConfig): InvalidPluginConfigHit[] 
   return hits;
 }
 
+/** Reused helper for maybe Repair Invalid Plugin Config behavior in src/commands/doctor. */
 export function maybeRepairInvalidPluginConfig(cfg: OpenClawConfig): {
   config: OpenClawConfig;
   changes: string[];

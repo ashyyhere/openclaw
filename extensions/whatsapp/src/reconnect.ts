@@ -1,3 +1,4 @@
+// extensions/whatsapp/src reconnect helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import {

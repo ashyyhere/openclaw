@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/qa-lab/src/live-transports/whatsapp whatsapp live runtime behavior.
 import { execFile } from "node:child_process";
 import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";

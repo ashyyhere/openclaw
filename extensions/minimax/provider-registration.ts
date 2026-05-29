@@ -1,3 +1,4 @@
+// extensions/minimax provider registration helpers and runtime behavior.
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";
 import type {
   OpenClawPluginApi,

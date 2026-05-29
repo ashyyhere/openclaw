@@ -1,3 +1,4 @@
+// secrets channel env var names helpers and runtime behavior.
 const UNSAFE_CHANNEL_ENV_VAR_TRIGGER_NAMES = new Set([
   "CI",
   "HOME",
@@ -18,6 +19,7 @@ const UNSAFE_CHANNEL_ENV_VAR_TRIGGER_NAMES = new Set([
   "USER",
 ]);
 
+/** Reused helper for is Safe Channel Env Var Trigger Name behavior in src/secrets. */
 export function isSafeChannelEnvVarTriggerName(key: string): boolean {
   const normalized = key.trim().toUpperCase();
   return (

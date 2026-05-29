@@ -1,3 +1,4 @@
+// Stateful ACP target driver for channel plugin routing.
 import {
   ensureConfiguredAcpBindingReady,
   ensureConfiguredAcpBindingSession,
@@ -128,6 +129,7 @@ async function resetAcpTargetInPlace(params: {
   };
 }
 
+/** Reused constant for acp Stateful Binding Target Driver behavior in src/channels/plugins. */
 export const acpStatefulBindingTargetDriver: StatefulBindingTargetDriver = {
   id: "acp",
   ensureReady: ensureAcpTargetReady,

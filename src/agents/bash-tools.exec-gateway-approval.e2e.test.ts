@@ -1,3 +1,4 @@
+/** E2E tests for gateway-host exec approval flow. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

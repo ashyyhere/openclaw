@@ -1,8 +1,10 @@
+// config/sessions test helpers helpers and runtime behavior.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { afterEach, beforeEach } from "vitest";
 
+/** Reused helper for use Temp Sessions Fixture behavior in src/config/sessions. */
 export function useTempSessionsFixture(prefix: string) {
   let tempDir = "";
   let storePath = "";

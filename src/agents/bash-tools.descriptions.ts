@@ -1,3 +1,4 @@
+/** Human-facing descriptions for exec/process tools. */
 import path from "node:path";
 import { loadExecApprovals, resolveExecApprovalsFromFile } from "../infra/exec-approvals.js";
 
@@ -13,6 +14,7 @@ function deriveExecShortName(fullPath: string): string {
   return base.replace(/\.exe$/i, "") || base;
 }
 
+/** Build the exec tool description for the current platform and approvals. */
 export function describeExecTool(params?: { agentId?: string; hasCronTool?: boolean }): string {
   const base = [
     "Execute shell commands with background continuation for work that starts now.",
@@ -63,6 +65,7 @@ export function describeExecTool(params?: { agentId?: string; hasCronTool?: bool
   return lines.join("\n");
 }
 
+/** Build the process tool description for running exec sessions. */
 export function describeProcessTool(params?: { hasCronTool?: boolean }): string {
   return [
     "Manage running exec sessions for commands already started: list, poll, log, write, send-keys, submit, paste, kill.",

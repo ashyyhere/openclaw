@@ -1,3 +1,4 @@
+// extensions/qa-lab/src gateway log sentinel helpers and runtime behavior.
 import {
   isRecord,
   normalizeOptionalString as readNonEmptyString,

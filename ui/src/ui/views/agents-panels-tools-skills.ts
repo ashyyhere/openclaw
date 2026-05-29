@@ -1,3 +1,4 @@
+// ui/src/ui/views agents panels tools skills helpers and runtime behavior.
 import { html, nothing } from "lit";
 import { normalizeToolName } from "../../../../src/agents/tool-policy-shared.js";
 import { t } from "../../i18n/index.ts";
@@ -217,6 +218,7 @@ function renderEffectiveToolBadge(tool: {
   return t("agentTools.builtIn");
 }
 
+/** Reused helper for render Agent Tools behavior in ui/src/ui/views. */
 export function renderAgentTools(params: {
   agentId: string;
   configForm: Record<string, unknown> | null;
@@ -687,6 +689,7 @@ export function renderAgentTools(params: {
   `;
 }
 
+/** Reused helper for render Agent Skills behavior in ui/src/ui/views. */
 export function renderAgentSkills(params: {
   agentId: string;
   report: SkillStatusReport | null;

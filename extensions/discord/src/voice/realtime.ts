@@ -1,3 +1,4 @@
+// extensions/discord/src/voice realtime helpers and runtime behavior.
 import { PassThrough } from "node:stream";
 import type { DiscordAccountConfig, OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import {

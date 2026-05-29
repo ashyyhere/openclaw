@@ -311,6 +311,7 @@ function addAgentRunWaiter(runId: string): () => void {
   };
 }
 
+/** Reused helper for wait For Agent Job behavior in src/gateway/server-methods. */
 export async function waitForAgentJob(params: {
   runId: string;
   timeoutMs: number;
@@ -488,6 +489,7 @@ export async function waitForAgentJob(params: {
 
 ensureAgentRunListener();
 
+/** Reused constant for testing behavior in src/gateway/server-methods. */
 export const testing = {
   getWaiterCount(runId?: string): number {
     if (runId) {
@@ -503,4 +505,5 @@ export const testing = {
     agentRunWaiterCounts.clear();
   },
 };
+/** Re-exported API for src/gateway/server-methods, starting with testing. */
 export { testing as __testing };

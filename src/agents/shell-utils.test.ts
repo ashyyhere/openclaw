@@ -1,3 +1,4 @@
+/** Tests shell detection and output sanitization helpers. */
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

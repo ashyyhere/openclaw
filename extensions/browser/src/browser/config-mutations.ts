@@ -1,3 +1,4 @@
+// extensions/browser/src/browser config mutations helpers and runtime behavior.
 import { mutateConfigFile } from "../config/config.js";
 import type { BrowserProfileConfig } from "../config/config.js";
 import { deriveDefaultBrowserCdpPortRange } from "../config/port-defaults.js";

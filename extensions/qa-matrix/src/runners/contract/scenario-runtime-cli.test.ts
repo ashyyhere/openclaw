@@ -1,3 +1,4 @@
+// Tests extensions/qa-matrix/src/runners/contract scenario runtime cli test behavior.
 import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { setTimeout as sleep } from "node:timers/promises";

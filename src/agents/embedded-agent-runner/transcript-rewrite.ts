@@ -1,3 +1,4 @@
+/** Applies context-engine transcript rewrite requests to session state. */
 import type {
   TranscriptRewriteReplacement,
   TranscriptRewriteRequest,
@@ -149,6 +150,7 @@ function appendTranscriptStateBranchEntry(params: {
  * Safely rewrites transcript message entries on the active branch by branching
  * from the first rewritten message's parent and re-appending the suffix.
  */
+/** Rewrites transcript entries already loaded into a SessionManager instance. */
 export function rewriteTranscriptEntriesInSessionManager(params: {
   sessionManager: SessionManagerLike;
   replacements: TranscriptRewriteReplacement[];
@@ -249,6 +251,7 @@ export function rewriteTranscriptEntriesInSessionManager(params: {
   };
 }
 
+/** Applies rewrite requests to parsed transcript file state. */
 export function rewriteTranscriptEntriesInState(params: {
   state: TranscriptFileState;
   replacements: TranscriptRewriteReplacement[];
@@ -372,6 +375,7 @@ export function rewriteTranscriptEntriesInState(params: {
  * Open a transcript file, rewrite message entries on the active branch, and
  * emit a transcript update when the active branch changed.
  */
+/** Rewrites a session transcript file and emits the resulting transcript event. */
 export async function rewriteTranscriptEntriesInSessionFile(params: {
   sessionFile: string;
   sessionId?: string;

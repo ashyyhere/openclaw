@@ -1,5 +1,7 @@
+// infra npm integrity helpers and runtime behavior.
 import type { NpmIntegrityDrift, NpmSpecResolution } from "./install-source-utils.js";
 
+/** Shared type for Npm Integrity Drift Payload in src/infra. */
 export type NpmIntegrityDriftPayload = {
   spec: string;
   expectedIntegrity: string;
@@ -32,6 +34,7 @@ function normalizeIntegrity(value: string | undefined): string | undefined {
   return normalized ? normalized : undefined;
 }
 
+/** Reused helper for resolve Npm Integrity Drift behavior in src/infra. */
 export async function resolveNpmIntegrityDrift<TPayload>(
   params: ResolveNpmIntegrityDriftParams<TPayload>,
 ): Promise<ResolveNpmIntegrityDriftResult<TPayload>> {
@@ -73,6 +76,7 @@ type ResolveNpmIntegrityDriftWithDefaultMessageParams = {
   warn?: (message: string) => void;
 };
 
+/** Reused helper for resolve Npm Integrity Drift With Default Message behavior in src/infra. */
 export async function resolveNpmIntegrityDriftWithDefaultMessage(
   params: ResolveNpmIntegrityDriftWithDefaultMessageParams,
 ): Promise<{ integrityDrift?: NpmIntegrityDrift; error?: string }> {

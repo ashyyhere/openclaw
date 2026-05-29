@@ -1,3 +1,4 @@
+// Tests test openclaw npm postpublish verify test behavior.
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";

@@ -1,3 +1,4 @@
+/** Resolves secret scopes for message-channel CLI commands. */
 import { normalizeAccountId } from "../routing/session-key.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import { isDeliverableMessageChannel, normalizeMessageChannel } from "../utils/message-channel.js";
@@ -50,6 +51,7 @@ function resolveScopedAccountId(value: unknown): string | undefined {
   return normalizeAccountId(trimmed);
 }
 
+/** Reused helper for resolve Message Secret Scope behavior in src/cli. */
 export function resolveMessageSecretScope(params: {
   channel?: unknown;
   target?: unknown;

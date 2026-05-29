@@ -1,3 +1,4 @@
+// extensions/test-support provider model test helpers helpers and runtime behavior.
 import type { ModelRegistry } from "openclaw/plugin-sdk/agent-sessions";
 import type {
   ProviderCatalogContext,

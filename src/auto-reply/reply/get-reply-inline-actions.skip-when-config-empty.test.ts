@@ -1,3 +1,4 @@
+// Coverage for inline action handling with empty config.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

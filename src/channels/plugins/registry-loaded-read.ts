@@ -1,3 +1,4 @@
+/** Reads channel plugin entries from the active loaded runtime registry. */
 import type { ActiveChannelPluginRuntimeShape } from "../../plugins/channel-registry-state.types.js";
 import { getActivePluginChannelRegistryFromState } from "../../plugins/runtime-channel-state.js";
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
@@ -17,6 +18,7 @@ function coerceLoadedChannelPlugin(
   return plugin as ChannelPlugin;
 }
 
+/** Reused helper for get Loaded Channel Plugin For Read behavior in src/channels/plugins. */
 export function getLoadedChannelPluginForRead(id: ChannelId): ChannelPlugin | undefined {
   const resolvedId = normalizeOptionalString(id) ?? "";
   if (!resolvedId) {

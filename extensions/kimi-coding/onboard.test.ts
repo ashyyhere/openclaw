@@ -1,3 +1,4 @@
+// Tests extensions/kimi-coding onboard test behavior.
 import { resolveAgentModelPrimaryValue } from "openclaw/plugin-sdk/provider-onboard";
 import { describe, expect, it } from "vitest";
 import {

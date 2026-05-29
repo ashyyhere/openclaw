@@ -1,3 +1,4 @@
+/** Public SDK core lifecycle helpers for channel queues, passive tasks, and server lifetimes. */
 import type { ChannelAccountSnapshot } from "../channels/plugins/types.core.js";
 import { createRunStateMachine, type RunStateStatusSink } from "../channels/run-state-machine.js";
 import { KeyedAsyncQueue } from "./keyed-async-queue.js";
@@ -13,15 +14,18 @@ type PassiveAccountLifecycleParams<Handle> = {
   onStop?: () => void | Promise<void>;
 };
 
+/** Context passed to queued channel work so tasks can observe lifecycle aborts. */
 export type ChannelRunQueueTaskContext = {
   lifecycleSignal?: AbortSignal;
 };
 
+/** Per-key serialized channel work queue with lifecycle deactivation. */
 export type ChannelRunQueue = {
   enqueue: (key: string, task: (context: ChannelRunQueueTaskContext) => Promise<void>) => void;
   deactivate: () => void;
 };
 
+/** Dependencies for channel run queue status and error reporting. */
 export type ChannelRunQueueParams = {
   setStatus?: RunStateStatusSink;
   abortSignal?: AbortSignal;

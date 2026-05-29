@@ -1,3 +1,4 @@
+/** Tests channel status command flow and account selection. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { DEFAULT_ACCOUNT_ID } from "../routing/session-key.js";
 import { channelsStatusCommand } from "./channels/status.js";

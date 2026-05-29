@@ -1,3 +1,4 @@
+// Tests extensions/slack/src/monitor/message-handler dispatch preview fallback test behavior.
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 const FINAL_REPLY_TEXT = "final answer";

@@ -1,5 +1,6 @@
 import { seedPluginStateDatabaseEntriesForTests } from "./plugin-state-store.sqlite.js";
 
+/** Shared type for Plugin State Seed Entry in src/plugin-state. */
 export type PluginStateSeedEntry = {
   pluginId: string;
   namespace: string;
@@ -9,6 +10,7 @@ export type PluginStateSeedEntry = {
   expiresAt?: number | null;
 };
 
+/** Reused helper for seed Plugin State Entries For Tests behavior in src/plugin-state. */
 export function seedPluginStateEntriesForTests(entries: PluginStateSeedEntry[]): void {
   if (entries.length === 0) {
     return;

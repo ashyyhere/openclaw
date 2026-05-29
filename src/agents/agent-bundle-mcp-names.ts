@@ -1,9 +1,11 @@
+/** Provider-safe name builders for bundled MCP servers and tools. */
 import {
   normalizeLowercaseStringOrEmpty,
   normalizeOptionalLowercaseString,
 } from "../shared/string-coerce.js";
 
 const TOOL_NAME_SAFE_RE = /[^A-Za-z0-9_-]/g;
+/** Reused constant for TOOL NAME SEPARATOR behavior in src/agents. */
 export const TOOL_NAME_SEPARATOR = "__";
 const TOOL_NAME_MAX_PREFIX = 30;
 const TOOL_NAME_MAX_TOTAL = 64;
@@ -18,6 +20,7 @@ function sanitizeToolFragment(raw: string, fallback: string, maxChars?: number):
   return providerSafe.length > maxChars ? providerSafe.slice(0, maxChars) : providerSafe;
 }
 
+/** Sanitize and uniquify an MCP server name for provider tool names. */
 export function sanitizeServerName(raw: string, usedNames: Set<string>): string {
   const base = sanitizeToolFragment(raw, "mcp", TOOL_NAME_MAX_PREFIX);
   let candidate = base;
@@ -35,6 +38,7 @@ function sanitizeToolName(raw: string): string {
   return sanitizeToolFragment(raw, "tool");
 }
 
+/** Normalize already-reserved provider tool names for collision checks. */
 export function normalizeReservedToolNames(names?: Iterable<string>): Set<string> {
   return new Set(
     Array.from(names ?? [], (name) => normalizeOptionalLowercaseString(name)).filter(
@@ -43,6 +47,7 @@ export function normalizeReservedToolNames(names?: Iterable<string>): Set<string
   );
 }
 
+/** Build a provider-safe MCP tool name with deterministic collision suffixing. */
 export function buildSafeToolName(params: {
   serverName: string;
   toolName: string;

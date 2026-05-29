@@ -1,3 +1,4 @@
+// security audit extra summary helpers and runtime behavior.
 import { resolveProviderToolPolicy } from "../agents/agent-tools.policy.js";
 import { parseModelRef } from "../agents/model-selection-normalize.js";
 import { resolveSandboxConfigForAgent } from "../agents/sandbox/config.js";
@@ -13,6 +14,7 @@ import { inferParamBFromIdOrName } from "../shared/model-param-b.js";
 import { collectAuditModelRefs } from "./audit-model-refs.js";
 import { pickSandboxToolPolicy } from "./audit-tool-policy.js";
 
+/** Shared type for Security Audit Finding in src/security. */
 export type SecurityAuditFinding = {
   checkId: string;
   severity: "info" | "warn" | "critical";
@@ -138,6 +140,7 @@ function isBrowserEnabled(cfg: OpenClawConfig): boolean {
   return cfg.browser?.enabled !== false;
 }
 
+/** Reused helper for collect Attack Surface Summary Findings behavior in src/security. */
 export function collectAttackSurfaceSummaryFindings(cfg: OpenClawConfig): SecurityAuditFinding[] {
   const group = summarizeGroupPolicy(cfg);
   const elevated = cfg.tools?.elevated?.enabled !== false;
@@ -168,6 +171,7 @@ export function collectAttackSurfaceSummaryFindings(cfg: OpenClawConfig): Securi
   ];
 }
 
+/** Reused helper for collect Small Model Risk Findings behavior in src/security. */
 export function collectSmallModelRiskFindings(params: {
   cfg: OpenClawConfig;
   env: NodeJS.ProcessEnv;

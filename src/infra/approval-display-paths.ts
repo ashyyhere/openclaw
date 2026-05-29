@@ -1,3 +1,5 @@
+// infra approval display paths helpers and runtime behavior.
+/** Reused helper for format Approval Display Path behavior in src/infra. */
 export function formatApprovalDisplayPath(value: string): string {
   const normalized = value.trim();
   if (!normalized || hasRelativePathSegment(normalized)) {

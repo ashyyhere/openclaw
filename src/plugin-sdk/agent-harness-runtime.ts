@@ -22,9 +22,12 @@ import { redactToolDetail } from "../logging/redact.js";
 import type { PromptImageOrderEntry } from "../media/prompt-image-order.js";
 import { truncateUtf16Safe } from "../utils.js";
 
+/** Reused constant for TOOL PROGRESS OUTPUT MAX CHARS behavior in src/plugin-sdk. */
 export const TOOL_PROGRESS_OUTPUT_MAX_CHARS = 8_000;
 
+/** Re-exported API for src/plugin-sdk, starting with Agent Message. */
 export type { AgentMessage } from "../agents/runtime/index.js";
+/** Re-exported API for src/plugin-sdk. */
 export type {
   AgentHarness,
   AgentHarnessAttemptParams,
@@ -39,35 +42,46 @@ export type {
   AgentHarnessSupport,
   AgentHarnessSupportContext,
 } from "../agents/harness/types.js";
+/** Re-exported API for src/plugin-sdk. */
 export type {
   EmbeddedRunAttemptParams,
   EmbeddedRunAttemptResult,
 } from "../agents/embedded-agent-runner/run/types.js";
+/** Re-exported API for src/plugin-sdk. */
 export type {
   ContextEngine as HarnessContextEngine,
   ContextEngineHostCapability,
   ContextEngineOperation,
   ContextEngineProjection,
 } from "../context-engine/types.js";
+/** Re-exported API for src/plugin-sdk. */
 export type {
   CompactEmbeddedAgentSessionParams,
   /** @deprecated Use CompactEmbeddedAgentSessionParams. */
   CompactEmbeddedAgentSessionParams as CompactEmbeddedPiSessionParams,
 } from "../agents/embedded-agent-runner/compact.js";
+/** Re-exported API for src/plugin-sdk. */
 export type {
   EmbeddedAgentCompactResult,
   /** @deprecated Use EmbeddedAgentCompactResult. */
   EmbeddedAgentCompactResult as EmbeddedPiCompactResult,
 } from "../agents/embedded-agent-runner/types.js";
+/** Re-exported API for src/plugin-sdk, starting with Any Agent Tool. */
 export type { AnyAgentTool } from "../agents/tools/common.js";
+/** Re-exported API for src/plugin-sdk. */
 export type {
   MessagingToolSend,
   MessagingToolSourceReplyPayload,
 } from "../agents/embedded-agent-messaging.types.js";
+/** Re-exported API for src/plugin-sdk, starting with Heartbeat Tool Response. */
 export type { HeartbeatToolResponse } from "../auto-reply/heartbeat-tool-response.js";
+/** Re-exported API for src/plugin-sdk, starting with Agent Approval Event Data. */
 export type { AgentApprovalEventData, AgentEventPayload } from "../infra/agent-events.js";
+/** Re-exported API for src/plugin-sdk, starting with Exec Approval Decision. */
 export type { ExecApprovalDecision } from "../infra/exec-approvals.js";
+/** Re-exported API for src/plugin-sdk, starting with Normalized Usage. */
 export type { NormalizedUsage } from "../agents/usage.js";
+/** Re-exported API for src/plugin-sdk. */
 export type {
   AgentToolResultMiddleware,
   AgentToolResultMiddlewareContext,
@@ -78,6 +92,7 @@ export type {
   AgentToolResultMiddlewareRuntime,
   OpenClawAgentToolResult,
 } from "../plugins/agent-tool-result-middleware-types.js";
+/** Re-exported API for src/plugin-sdk. */
 export type {
   CodexAppServerExtensionContext,
   CodexAppServerExtensionFactory,
@@ -85,6 +100,7 @@ export type {
   CodexAppServerToolResultEvent,
   CodexAppServerToolResultHandlerResult,
 } from "../plugins/codex-app-server-extension-types.js";
+/** Re-exported API for src/plugin-sdk. */
 export type {
   NativeHookRelayEvent,
   NativeHookRelayProcessResponse,
@@ -92,55 +108,84 @@ export type {
   NativeHookRelayRegistrationHandle,
 } from "../agents/harness/native-hook-relay.js";
 
+/** Re-exported API for src/plugin-sdk, starting with VERSION. */
 export { VERSION as OPENCLAW_VERSION } from "../version.js";
+/** Re-exported API for src/plugin-sdk, starting with format Error Message. */
 export { formatErrorMessage } from "../infra/errors.js";
+/** Re-exported API for src/plugin-sdk, starting with format Approval Display Path. */
 export { formatApprovalDisplayPath } from "../infra/approval-display-paths.js";
+/** Re-exported API for src/plugin-sdk, starting with build Agent Hook Context Channel Fields. */
 export { buildAgentHookContextChannelFields } from "../plugins/hook-agent-context.js";
+/** Re-exported API for src/plugin-sdk, starting with emit Agent Event. */
 export { emitAgentEvent, onAgentEvent, resetAgentEventsForTest } from "../infra/agent-events.js";
+/** Re-exported API for src/plugin-sdk, starting with run Agent Cleanup Step. */
 export { runAgentCleanupStep } from "../agents/run-cleanup-timeout.js";
+/** Re-exported API for src/plugin-sdk, starting with log. */
 export { log as embeddedAgentLog } from "../agents/embedded-agent-runner/logger.js";
+/** Re-exported API for src/plugin-sdk, starting with build Agent Runtime Plan. */
 export { buildAgentRuntimePlan } from "../agents/runtime-plan/build.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   classifyEmbeddedAgentRunResultForModelFallback,
   /** @deprecated Use classifyEmbeddedAgentRunResultForModelFallback. */
   classifyEmbeddedAgentRunResultForModelFallback as classifyEmbeddedPiRunResultForModelFallback,
 } from "../agents/embedded-agent-runner/result-fallback-classifier.js";
+/** Re-exported API for src/plugin-sdk, starting with resolve Embedded Agent Runtime. */
 export { resolveEmbeddedAgentRuntime } from "../agents/agent-runtime-id.js";
+/** Re-exported API for src/plugin-sdk, starting with resolve User Path. */
 export { resolveUserPath } from "../utils.js";
+/** Re-exported API for src/plugin-sdk, starting with call Gateway Tool. */
 export { callGatewayTool } from "../agents/tools/gateway.js";
+/** Re-exported API for src/plugin-sdk, starting with Node List Node. */
 export type { NodeListNode } from "../agents/tools/nodes-utils.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   listNodes,
   resolveNodeIdFromList,
   selectDefaultNodeFromList,
 } from "../agents/tools/nodes-utils.js";
+/** Re-exported API for src/plugin-sdk, starting with format Tool Aggregate. */
 export { formatToolAggregate } from "../auto-reply/tool-meta.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   HEARTBEAT_RESPONSE_TOOL_NAME,
   normalizeHeartbeatToolResponse,
 } from "../auto-reply/heartbeat-tool-response.js";
+/** Re-exported API for src/plugin-sdk, starting with is Messaging Tool. */
 export { isMessagingTool, isMessagingToolSendAction } from "../agents/embedded-agent-messaging.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   extractToolResultMediaArtifact,
   filterToolResultMediaUrls,
 } from "../agents/embedded-agent-subscribe.tools.js";
+/** Re-exported API for src/plugin-sdk, starting with normalize Usage. */
 export { normalizeUsage } from "../agents/usage.js";
+/** Re-exported API for src/plugin-sdk, starting with resolve Open Claw Agent Dir. */
 export { resolveOpenClawAgentDir } from "./agent-dir-compat.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   resolveAgentDir,
   resolveDefaultAgentDir,
   resolveSessionAgentIds,
 } from "../agents/agent-scope.js";
+/** Re-exported API for src/plugin-sdk, starting with resolve Model Auth Mode. */
 export { resolveModelAuthMode } from "../agents/model-auth.js";
+/** Re-exported API for src/plugin-sdk, starting with supports Model Tools. */
 export { supportsModelTools } from "../agents/model-tool-support.js";
+/** Re-exported API for src/plugin-sdk, starting with resolve Attempt Fs Workspace Only. */
 export { resolveAttemptFsWorkspaceOnly } from "../agents/embedded-agent-runner/run/attempt.prompt-helpers.js";
+/** Re-exported API for src/plugin-sdk, starting with resolve Attempt Spawn Workspace Dir. */
 export { resolveAttemptSpawnWorkspaceDir } from "../agents/embedded-agent-runner/run/attempt.thread-helpers.js";
+/** Re-exported API for src/plugin-sdk, starting with build Embedded Attempt Tool Run Context. */
 export { buildEmbeddedAttemptToolRunContext } from "../agents/embedded-agent-runner/run/attempt.tool-run-context.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   applyEmbeddedAttemptToolsAllow,
   resolveEmbeddedAttemptToolConstructionPlan,
 } from "../agents/embedded-agent-runner/run/attempt-tool-construction-plan.js";
+/** Re-exported API for src/plugin-sdk, starting with get Plugin Tool Meta. */
 export { getPluginToolMeta } from "../plugins/tools.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   abortEmbeddedAgentRun as abortAgentHarnessRun,
   clearActiveEmbeddedRun,
@@ -161,11 +206,14 @@ export function queueAgentHarnessMessage(
 ): boolean {
   return queueEmbeddedAgentMessageWithOutcome(sessionId, text, options).queued;
 }
+/** Re-exported API for src/plugin-sdk, starting with dispose Registered Agent Harnesses. */
 export { disposeRegisteredAgentHarnesses } from "../agents/harness/registry.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   logAgentRuntimeToolDiagnostics,
   normalizeAgentRuntimeTools,
 } from "../agents/runtime-plan/tools.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   inspectRuntimeToolInputSchemas,
   projectRuntimeToolInputSchema,
@@ -173,12 +221,15 @@ export {
   type RuntimeToolInputSchemaProjection,
   type RuntimeToolSchemaDiagnostic,
 } from "../agents/tool-schema-projection.js";
+/** Re-exported API for src/plugin-sdk. */
 export type {
   CodexBundleMcpThreadConfig,
   LoadCodexBundleMcpThreadConfigParams,
 } from "../agents/codex-mcp-config.types.js";
+/** Re-exported API for src/plugin-sdk, starting with normalize Provider Tool Schemas. */
 export { normalizeProviderToolSchemas } from "../agents/embedded-agent-runner/tool-schema-runtime.js";
 
+/** Reused helper for detect And Load Agent Harness Prompt Images behavior in src/plugin-sdk. */
 export async function detectAndLoadAgentHarnessPromptImages(params: {
   prompt: string;
   workspaceDir: string;
@@ -216,34 +267,45 @@ export async function detectAndLoadAgentHarnessPromptImages(params: {
   });
 }
 
+/** Reused helper for load Codex Bundle Mcp Thread Config behavior in src/plugin-sdk. */
 export async function loadCodexBundleMcpThreadConfig(
   params: LoadCodexBundleMcpThreadConfigParams,
 ): Promise<CodexBundleMcpThreadConfig> {
   const { loadCodexBundleMcpThreadConfig: load } = await import("../agents/codex-mcp-config.js");
   return load(params);
 }
+/** Re-exported API for src/plugin-sdk, starting with resolve Sandbox Context. */
 export { resolveSandboxContext } from "../agents/sandbox.js";
+/** Re-exported API for src/plugin-sdk, starting with Sandbox Context. */
 export type { SandboxContext, SandboxWorkspaceAccess } from "../agents/sandbox.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   hasSandboxBindContainerPathAliases,
   hasSandboxBindReadonlyHostShadows,
   resolveWritableSandboxBindHostRoots,
 } from "../agents/sandbox/fs-paths.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   buildBootstrapContextForFiles,
   resolveBootstrapContextForRun,
   resolveBootstrapFilesForRun,
 } from "../agents/bootstrap-files.js";
+/** Re-exported API for src/plugin-sdk, starting with Embedded Context File. */
 export type { EmbeddedContextFile } from "../agents/embedded-agent-helpers/types.js";
+/** Re-exported API for src/plugin-sdk, starting with is Subagent Session Key. */
 export { isSubagentSessionKey } from "../routing/session-key.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   acquireSessionWriteLock,
   resolveSessionWriteLockAcquireTimeoutMs,
   resolveSessionWriteLockOptions,
   type SessionWriteLockAcquireTimeoutConfig,
 } from "../agents/session-write-lock.js";
+/** Re-exported API for src/plugin-sdk, starting with append Session Transcript Message. */
 export { appendSessionTranscriptMessage } from "../config/sessions/transcript-append.js";
+/** Re-exported API for src/plugin-sdk, starting with emit Session Transcript Update. */
 export { emitSessionTranscriptUpdate } from "../sessions/transcript-events.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   getBeforeToolCallPolicyDiagnosticState,
   hasBeforeToolCallPolicy,
@@ -255,17 +317,22 @@ export {
   type BeforeToolCallPolicyDiagnosticState,
   type DeferredPluginToolApproval,
 } from "../agents/agent-tools.before-tool-call.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   resolveAgentHarnessBeforePromptBuildResult,
   runAgentHarnessAfterCompactionHook,
   runAgentHarnessBeforeCompactionHook,
 } from "../agents/harness/prompt-compaction-hook-helpers.js";
+/** Re-exported API for src/plugin-sdk, starting with create Codex App Server Tool Result Extension Runner. */
 export { createCodexAppServerToolResultExtensionRunner } from "../agents/harness/codex-app-server-extensions.js";
+/** Re-exported API for src/plugin-sdk, starting with create Agent Tool Result Middleware Runner. */
 export { createAgentToolResultMiddlewareRunner } from "../agents/harness/tool-result-middleware.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   assertContextEngineHostSupport,
   CODEX_APP_SERVER_CONTEXT_ENGINE_HOST,
 } from "../context-engine/host-compat.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   assembleHarnessContextEngine,
   bootstrapHarnessContextEngine,
@@ -280,10 +347,12 @@ export {
 // own `ContextEngine.compact()` calls with the exact same finite, host-resolved
 // timeout the built-in embedded-agent runner uses — one shared implementation, no
 // copy-pasted watchdog.
+/** Re-exported API for src/plugin-sdk. */
 export {
   compactContextEngineWithSafetyTimeout,
   resolveCompactionTimeoutMs,
 } from "../agents/embedded-agent-runner/compaction-safety-timeout.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   estimateRenderedLlmBoundaryTokenPressure,
   formatPrePromptPrecheckLog,
@@ -292,11 +361,14 @@ export {
   type LlmBoundaryTokenPressure,
   type PreemptiveCompactionDecision,
 } from "../agents/embedded-agent-runner/run/preemptive-compaction.js";
+/** Re-exported API for src/plugin-sdk, starting with resolve Context Engine Owner Plugin Id. */
 export { resolveContextEngineOwnerPluginId } from "../context-engine/registry.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   runAgentHarnessAfterToolCallHook,
   runAgentHarnessBeforeMessageWriteHook,
 } from "../agents/harness/hook-helpers.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   awaitAgentHarnessAgentEndHook,
   getAgentHarnessHookRunner,
@@ -305,6 +377,7 @@ export {
   runAgentHarnessLlmInputHook,
   runAgentHarnessLlmOutputHook,
 } from "../agents/harness/lifecycle-hook-helpers.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   buildNativeHookRelayCommand,
   hasNativeHookRelayInvocation,
@@ -319,6 +392,7 @@ export {
  */
 export type ToolProgressDetailMode = "explain" | "raw";
 
+/** Reused helper for infer Tool Meta From Args behavior in src/plugin-sdk. */
 export function inferToolMetaFromArgs(
   toolName: string,
   args: unknown,
@@ -347,6 +421,7 @@ export function formatToolProgressOutput(
   return `${truncateUtf16Safe(redacted, maxChars)}\n...(truncated)...`;
 }
 
+/** Shared type for Agent Harness Terminal Outcome Input in src/plugin-sdk. */
 export type AgentHarnessTerminalOutcomeInput = {
   assistantTexts: readonly string[];
   reasoningText?: string | null;
@@ -355,6 +430,7 @@ export type AgentHarnessTerminalOutcomeInput = {
   turnCompleted: boolean;
 };
 
+/** Shared type for Agent Harness Terminal Outcome Classification in src/plugin-sdk. */
 export type AgentHarnessTerminalOutcomeClassification = NonNullable<
   EmbeddedRunAttemptResult["agentHarnessResultClassification"]
 >;

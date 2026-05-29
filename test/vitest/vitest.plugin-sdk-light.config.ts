@@ -1,3 +1,4 @@
+// test/vitest vitest plugin sdk light config helpers and runtime behavior.
 import { pluginSdkLightTestFiles } from "./vitest.plugin-sdk-paths.mjs";
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 import { getUnitFastTestFiles } from "./vitest.unit-fast-paths.mjs";

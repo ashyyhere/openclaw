@@ -1,3 +1,4 @@
+// gateway/server-methods nodes pending helpers and runtime behavior.
 import {
   ErrorCodes,
   errorShape,
@@ -28,6 +29,7 @@ function resolveClientNodeId(
   return trimmed.length > 0 ? trimmed : null;
 }
 
+/** Reused constant for node Pending Handlers behavior in src/gateway/server-methods. */
 export const nodePendingHandlers: GatewayRequestHandlers = {
   "node.pending.drain": async ({ params, respond, client }) => {
     if (!validateNodePendingDrainParams(params)) {

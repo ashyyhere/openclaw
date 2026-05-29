@@ -1,3 +1,4 @@
+// Tests extensions/qa-lab/src reply failure test behavior.
 import { describe, expect, it } from "vitest";
 import { extractQaFailureReplyText, extractQaVisibleReplyLeakText } from "./reply-failure.js";
 

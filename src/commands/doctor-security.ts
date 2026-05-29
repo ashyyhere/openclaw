@@ -235,6 +235,7 @@ function collectPlaintextConfigSecretWarnings(cfg: OpenClawConfig): string[] {
   ];
 }
 
+/** Reused helper for collect Security Warnings behavior in src/commands. */
 export async function collectSecurityWarnings(
   cfg: OpenClawConfig,
   env: NodeJS.ProcessEnv = process.env,
@@ -438,6 +439,7 @@ export async function collectSecurityWarnings(
   return warnings;
 }
 
+/** Reused helper for note Security Warnings behavior in src/commands. */
 export async function noteSecurityWarnings(cfg: OpenClawConfig) {
   const warnings = await collectSecurityWarnings(cfg);
   const auditHint = `- Run: ${formatCliCommand("openclaw security audit --deep")}`;

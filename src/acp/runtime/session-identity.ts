@@ -1,3 +1,4 @@
+/** Normalize, merge, and derive ACP session identity metadata. */
 import type {
   SessionAcpIdentity,
   SessionAcpIdentitySource,
@@ -81,6 +82,7 @@ function buildSessionIdentity(params: {
   };
 }
 
+/** Resolve normalized ACP session identity from persisted session metadata. */
 export function resolveSessionIdentityFromMeta(
   meta: SessionAcpMeta | undefined,
 ): SessionAcpIdentity | undefined {
@@ -90,10 +92,12 @@ export function resolveSessionIdentityFromMeta(
   return normalizeIdentity(meta.identity);
 }
 
+/** Return whether an identity has a stable backend or agent session id. */
 export function identityHasStableSessionId(identity: SessionAcpIdentity | undefined): boolean {
   return Boolean(identity?.acpxSessionId || identity?.agentSessionId);
 }
 
+/** Resolve the best runtime resume id from normalized ACP identity metadata. */
 export function resolveRuntimeResumeSessionId(
   identity: SessionAcpIdentity | undefined,
 ): string | undefined {
@@ -103,6 +107,7 @@ export function resolveRuntimeResumeSessionId(
   return normalizeText(identity.agentSessionId) ?? normalizeText(identity.acpxSessionId);
 }
 
+/** Return whether identity resolution is still pending. */
 export function isSessionIdentityPending(identity: SessionAcpIdentity | undefined): boolean {
   if (!identity) {
     return true;
@@ -110,6 +115,7 @@ export function isSessionIdentityPending(identity: SessionAcpIdentity | undefine
   return identity.state === "pending";
 }
 
+/** Compare ACP identities while ignoring last-updated timestamps. */
 export function identityEquals(
   left: SessionAcpIdentity | undefined,
   right: SessionAcpIdentity | undefined,
@@ -131,6 +137,7 @@ export function identityEquals(
   );
 }
 
+/** Merge incoming ACP identity without downgrading already resolved ids. */
 export function mergeSessionIdentity(params: {
   current: SessionAcpIdentity | undefined;
   incoming: SessionAcpIdentity | undefined;
@@ -178,6 +185,7 @@ export function mergeSessionIdentity(params: {
   return next;
 }
 
+/** Reused helper for create Identity From Ensure behavior in src/acp/runtime. */
 export function createIdentityFromEnsure(params: {
   handle: AcpRuntimeHandle;
   now: number;
@@ -190,6 +198,7 @@ export function createIdentityFromEnsure(params: {
   });
 }
 
+/** Reused helper for create Identity From Handle Event behavior in src/acp/runtime. */
 export function createIdentityFromHandleEvent(params: {
   handle: AcpRuntimeHandle;
   now: number;
@@ -203,6 +212,7 @@ export function createIdentityFromHandleEvent(params: {
   });
 }
 
+/** Reused helper for create Identity From Status behavior in src/acp/runtime. */
 export function createIdentityFromStatus(params: {
   status: AcpRuntimeStatus | undefined;
   now: number;
@@ -234,6 +244,7 @@ export function createIdentityFromStatus(params: {
   };
 }
 
+/** Reused helper for resolve Runtime Handle Identifiers From Identity behavior in src/acp/runtime. */
 export function resolveRuntimeHandleIdentifiersFromIdentity(
   identity: SessionAcpIdentity | undefined,
 ): { backendSessionId?: string; agentSessionId?: string } {

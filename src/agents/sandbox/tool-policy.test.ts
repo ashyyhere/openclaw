@@ -1,3 +1,4 @@
+/** Covers sandbox tool policy allow/deny behavior and runtime status text. */
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../../config/config.js";
 import { resolveSandboxConfigForAgent } from "./config.js";

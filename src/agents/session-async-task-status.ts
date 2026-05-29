@@ -1,9 +1,11 @@
+/** Finds active async media/task state for session status details. */
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import { listTasksForOwnerKey } from "../tasks/runtime-internal.js";
 import type { TaskRecord, TaskRuntime, TaskStatus } from "../tasks/task-registry.types.js";
 
 const DEFAULT_ACTIVE_STATUSES = new Set<TaskStatus>(["queued", "running"]);
 
+/** Find the active queued/running task matching a session and filters. */
 export function findActiveSessionTask(params: {
   sessionKey?: string;
   runtime?: TaskRuntime;
@@ -53,6 +55,7 @@ export function findActiveSessionTask(params: {
   return matches.find((task) => task.status === "running") ?? matches[0];
 }
 
+/** Build session_status details for an active async task. */
 export function buildSessionAsyncTaskStatusDetails(task: TaskRecord): Record<string, unknown> {
   return {
     async: true,

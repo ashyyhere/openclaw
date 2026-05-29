@@ -1,3 +1,4 @@
+/** Tests thread message command registration and channel capability gating. */
 import { Command } from "commander";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { setActivePluginRegistry } from "../../../plugins/runtime.js";

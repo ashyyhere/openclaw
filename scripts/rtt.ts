@@ -1,4 +1,5 @@
 #!/usr/bin/env -S node --import tsx
+// scripts rtt helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import {

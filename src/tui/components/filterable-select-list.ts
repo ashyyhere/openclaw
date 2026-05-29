@@ -1,3 +1,4 @@
+// tui/components filterable select list helpers and runtime behavior.
 import type { Component } from "@earendil-works/pi-tui";
 import {
   Input,
@@ -10,6 +11,7 @@ import chalk from "chalk";
 import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";
 import { fuzzyFilterLower, prepareSearchItems } from "./fuzzy-filter.js";
 
+/** Shared type for Filterable Select Item in src/tui/components. */
 export interface FilterableSelectItem extends SelectItem {
   /** Additional searchable fields beyond label */
   searchText?: string;
@@ -17,6 +19,7 @@ export interface FilterableSelectItem extends SelectItem {
   searchTextLower?: string;
 }
 
+/** Shared type for Filterable Select List Theme in src/tui/components. */
 export interface FilterableSelectListTheme extends SelectListTheme {
   filterLabel: (text: string) => string;
 }

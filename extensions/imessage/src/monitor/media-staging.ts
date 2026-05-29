@@ -1,3 +1,4 @@
+// extensions/imessage/src/monitor media staging helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { isInboundPathAllowed } from "openclaw/plugin-sdk/media-runtime";

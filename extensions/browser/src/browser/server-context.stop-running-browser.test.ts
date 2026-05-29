@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/browser server context stop running browser test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { createBrowserRouteContext } from "./server-context.js";
 import { makeBrowserProfile, makeBrowserServerState } from "./server-context.test-harness.js";

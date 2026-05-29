@@ -1,3 +1,4 @@
+// gateway/server-methods exec approvals helpers and runtime behavior.
 import {
   ErrorCodes,
   errorShape,
@@ -95,6 +96,7 @@ function resolveNodeIdOrRespond(nodeId: string, respond: RespondFn): string | nu
   return id;
 }
 
+/** Reused constant for exec Approvals Handlers behavior in src/gateway/server-methods. */
 export const execApprovalsHandlers: GatewayRequestHandlers = {
   "exec.approvals.get": ({ params, respond }) => {
     if (!assertValidParams(params, validateExecApprovalsGetParams, "exec.approvals.get", respond)) {

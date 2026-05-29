@@ -1,5 +1,8 @@
+// Shared types for security audit types behavior.
+/** Shared type for Security Audit Severity in src/security. */
 export type SecurityAuditSeverity = "info" | "warn" | "critical";
 
+/** Shared type for Security Audit Finding in src/security. */
 export type SecurityAuditFinding = {
   checkId: string;
   severity: SecurityAuditSeverity;
@@ -8,18 +11,21 @@ export type SecurityAuditFinding = {
   remediation?: string;
 };
 
+/** Shared type for Security Audit Suppressed Finding in src/security. */
 export type SecurityAuditSuppressedFinding = SecurityAuditFinding & {
   suppression: {
     reason?: string;
   };
 };
 
+/** Shared type for Security Audit Summary in src/security. */
 export type SecurityAuditSummary = {
   critical: number;
   warn: number;
   info: number;
 };
 
+/** Shared type for Security Audit Report in src/security. */
 export type SecurityAuditReport = {
   ts: number;
   summary: SecurityAuditSummary;

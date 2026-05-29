@@ -1,3 +1,4 @@
+// Coverage for session reset prompt generation.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { describe, it, expect } from "vitest";

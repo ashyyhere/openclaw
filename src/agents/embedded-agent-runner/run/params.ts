@@ -1,3 +1,4 @@
+/** Parameter types for embedded-agent run and attempt execution. */
 import type {
   PartialReplyPayload,
   SourceReplyDeliveryMode,
@@ -27,16 +28,20 @@ import type { SilentReplyPromptMode } from "../../system-prompt.types.js";
 import type { PromptMode } from "../../system-prompt.types.js";
 import type { EmbeddedAgentExecutionPhase } from "../execution-phase.js";
 import type { AuthProfileFailurePolicy } from "./auth-profile-failure-policy.types.js";
+/** Re-exported API for src/agents/embedded-agent-runner, starting with Client Tool Definition. */
 export type { ClientToolDefinition } from "../../command/shared-types.js";
 
+/** Shared type for Embedded Run Trigger in src/agents/embedded-agent-runner. */
 export type EmbeddedRunTrigger = "cron" | "heartbeat" | "manual" | "memory" | "overflow" | "user";
 
+/** Shared type for Current Inbound Prompt Context in src/agents/embedded-agent-runner. */
 export type CurrentInboundPromptContext = {
   text: string;
   resumableText?: string;
   promptJoiner?: "\n\n" | "\n" | " ";
 };
 
+/** Shared type for Run Embedded Agent Params in src/agents/embedded-agent-runner. */
 export type RunEmbeddedAgentParams = {
   sessionId: string;
   sessionKey?: string;

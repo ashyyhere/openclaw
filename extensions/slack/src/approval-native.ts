@@ -1,3 +1,4 @@
+// extensions/slack/src approval native helpers and runtime behavior.
 import {
   createApproverRestrictedNativeApprovalCapability,
   splitChannelApprovalCapability,

@@ -1,3 +1,4 @@
+// Tests extensions/qqbot/src/engine/gateway active cfg test behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { describe, expect, it, vi } from "vitest";
 import { createActiveCfgProvider, resolveActiveCfg, type GatewayCfgLoader } from "./active-cfg.js";

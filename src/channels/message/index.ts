@@ -1,7 +1,13 @@
+// Public channel message adapter and delivery facade.
+/** Re-exported API for src/channels/message, starting with derive Durable Final Delivery Requirements. */
 export { deriveDurableFinalDeliveryRequirements } from "./capabilities.js";
+/** Re-exported API for src/channels/message, starting with define Channel Message Adapter. */
 export { defineChannelMessageAdapter } from "./adapter.js";
+/** Re-exported API for src/channels/message, starting with create Channel Message Adapter From Outbound. */
 export { createChannelMessageAdapterFromOutbound } from "./outbound-bridge.js";
+/** Re-exported API for src/channels/message, starting with create Durable Inbound Receive Journal. */
 export { createDurableInboundReceiveJournal } from "./durable-receive.js";
+/** Re-exported API for src/channels/message. */
 export {
   listDeclaredChannelMessageLiveCapabilities,
   listDeclaredDurableFinalCapabilities,
@@ -16,6 +22,7 @@ export {
   verifyDurableFinalCapabilityProofs,
   verifyLivePreviewFinalizerCapabilityProofs,
 } from "./contracts.js";
+/** Re-exported API for src/channels/message. */
 export {
   createLiveMessageState,
   createPreviewMessageReceipt,
@@ -26,12 +33,15 @@ export {
   markLiveMessageFinalized,
   markLiveMessagePreviewUpdated,
 } from "./live.js";
+/** Re-exported API for src/channels/message. */
 export {
   createMessageReceiptFromOutboundResults,
   listMessageReceiptPlatformIds,
   resolveMessageReceiptPrimaryId,
 } from "./receipt.js";
+/** Re-exported API for src/channels/message, starting with create Message Receive Context. */
 export { createMessageReceiveContext, shouldAckMessageAfterStage } from "./receive.js";
+/** Re-exported API for src/channels/message. */
 export {
   createChannelReplyPipeline,
   createReplyPrefixContext,
@@ -39,7 +49,9 @@ export {
   createTypingCallbacks,
   resolveChannelSourceReplyDeliveryMode,
 } from "./reply-pipeline.js";
+/** Re-exported API for src/channels/message, starting with classify Durable Send Recovery State. */
 export { classifyDurableSendRecoveryState, createDurableMessageStateRecord } from "./state.js";
+/** Re-exported API for src/channels/message. */
 export type {
   DurableInboundReceiveAcceptOptions,
   DurableInboundReceiveAcceptResult,
@@ -50,11 +62,13 @@ export type {
   DurableInboundReceivePendingRecord,
   DurableInboundReceiveReleaseOptions,
 } from "./durable-receive.js";
+/** Re-exported API for src/channels/message. */
 export type {
   ChannelMessageOutboundBridgeAdapter,
   ChannelMessageOutboundBridgeResult,
   CreateChannelMessageAdapterFromOutboundParams,
 } from "./outbound-bridge.js";
+/** Re-exported API for src/channels/message. */
 export type {
   ChannelMessageLiveCapabilityProof,
   ChannelMessageLiveCapabilityProofMap,
@@ -69,6 +83,7 @@ export type {
   LivePreviewFinalizerCapabilityProofMap,
   LivePreviewFinalizerCapabilityProofResult,
 } from "./contracts.js";
+/** Re-exported API for src/channels/message. */
 export type {
   ChannelReplyPipeline,
   CreateChannelReplyPipelineParams,
@@ -79,19 +94,23 @@ export type {
   SourceReplyDeliveryMode,
   TypingCallbacks,
 } from "./reply-pipeline.js";
+/** Re-exported API for src/channels/message. */
 export type {
   MessageAckPolicy,
   MessageAckStage,
   MessageAckState,
   MessageReceiveContext,
 } from "./receive.js";
+/** Re-exported API for src/channels/message. */
 export type {
   LivePreviewFinalizerDraft,
   FinalizableLivePreviewAdapter,
   LivePreviewFinalizerResult,
   LivePreviewFinalizerResultKind,
 } from "./live.js";
+/** Re-exported API for src/channels/message, starting with Durable Message Send State. */
 export type { DurableMessageSendState, DurableMessageStateRecord } from "./state.js";
+/** Re-exported API for src/channels/message. */
 export type {
   ChannelMessageAdapter,
   ChannelMessageAdapterShape,

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// OpenClaw entry helpers and runtime behavior.
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 import { getCommandPathWithRootOptions, hasFlag, isRootHelpInvocation } from "./cli/argv.js";
@@ -160,6 +161,7 @@ if (
   }
 }
 
+/** Reused helper for try Handle Root Help Fast Path behavior in src. */
 export async function tryHandleRootHelpFastPath(
   argv: string[],
   deps: {
@@ -225,6 +227,7 @@ function resolvePrecomputedCommandHelpName(argv: string[]): PrecomputedCommandHe
   return null;
 }
 
+/** Reused helper for try Handle Precomputed Command Help Fast Path behavior in src. */
 export async function tryHandlePrecomputedCommandHelpFastPath(
   argv: string[],
   deps: {

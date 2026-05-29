@@ -1,3 +1,4 @@
+/** Tests abort behavior for background exec sessions. */
 import { afterEach, beforeAll, beforeEach, expect, test, vi } from "vitest";
 import { killProcessTree } from "../process/kill-tree.js";
 

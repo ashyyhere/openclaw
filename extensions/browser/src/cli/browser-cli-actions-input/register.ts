@@ -1,3 +1,4 @@
+// extensions/browser/src/cli/browser-cli-actions-input register helpers and runtime behavior.
 import type { Command } from "commander";
 import type { BrowserParentOpts } from "../browser-cli-shared.js";
 import { registerBrowserElementCommands } from "./register.element.js";

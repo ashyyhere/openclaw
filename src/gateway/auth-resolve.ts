@@ -1,3 +1,4 @@
+// gateway auth resolve helpers and runtime behavior.
 import type {
   GatewayAuthConfig,
   GatewayTailscaleMode,
@@ -6,7 +7,9 @@ import type {
 import { resolveSecretInputRef } from "../config/types.secrets.js";
 import { resolveGatewayCredentialsFromValues } from "./credentials.js";
 
+/** Shared type for Resolved Gateway Auth Mode in src/gateway. */
 export type ResolvedGatewayAuthMode = "none" | "token" | "password" | "trusted-proxy";
+/** Shared type for Resolved Gateway Auth Mode Source in src/gateway. */
 export type ResolvedGatewayAuthModeSource =
   | "override"
   | "config"
@@ -14,6 +17,7 @@ export type ResolvedGatewayAuthModeSource =
   | "token"
   | "default";
 
+/** Shared type for Resolved Gateway Auth in src/gateway. */
 export type ResolvedGatewayAuth = {
   mode: ResolvedGatewayAuthMode;
   modeSource?: ResolvedGatewayAuthModeSource;
@@ -23,11 +27,13 @@ export type ResolvedGatewayAuth = {
   trustedProxy?: GatewayTrustedProxyConfig;
 };
 
+/** Shared type for Effective Shared Gateway Auth in src/gateway. */
 export type EffectiveSharedGatewayAuth = {
   mode: "token" | "password";
   secret: string | undefined;
 };
 
+/** Reused helper for resolve Gateway Auth behavior in src/gateway. */
 export function resolveGatewayAuth(params: {
   authConfig?: GatewayAuthConfig | null;
   authOverride?: GatewayAuthConfig | null;
@@ -104,6 +110,7 @@ export function resolveGatewayAuth(params: {
   };
 }
 
+/** Reused helper for resolve Effective Shared Gateway Auth behavior in src/gateway. */
 export function resolveEffectiveSharedGatewayAuth(params: {
   authConfig?: GatewayAuthConfig | null;
   authOverride?: GatewayAuthConfig | null;

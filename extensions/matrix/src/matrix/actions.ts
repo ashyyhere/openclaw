@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix actions helpers and runtime behavior.
 export type {
   MatrixActionClientOpts,
   MatrixMessageSummary,

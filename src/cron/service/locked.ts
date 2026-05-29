@@ -1,3 +1,4 @@
+// cron/service locked helpers and runtime behavior.
 import type { CronServiceState } from "./state.js";
 
 const storeLocks = new Map<string, Promise<void>>();
@@ -8,6 +9,7 @@ const resolveChain = (promise: Promise<unknown>) =>
     () => undefined,
   );
 
+/** Reused helper for locked behavior in src/cron/service. */
 export async function locked<T>(state: CronServiceState, fn: () => Promise<T>): Promise<T> {
   const storePath = state.deps.storePath;
   const storeOp = storeLocks.get(storePath) ?? Promise.resolve();

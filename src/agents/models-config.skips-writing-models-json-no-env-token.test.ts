@@ -1,3 +1,4 @@
+/** Tests generated models.json skips unwritable env-token providers. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";

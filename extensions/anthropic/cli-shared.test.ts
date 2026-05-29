@@ -1,3 +1,4 @@
+// Tests extensions/anthropic cli shared test behavior.
 import { describe, expect, it } from "vitest";
 import { buildAnthropicCliBackend } from "./cli-backend.js";
 import {

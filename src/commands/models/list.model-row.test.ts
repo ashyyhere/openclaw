@@ -1,3 +1,4 @@
+// Tests conversion from registry/catalog models into rendered list rows.
 import { describe, expect, it } from "vitest";
 import { toModelRow } from "./list.model-row.js";
 

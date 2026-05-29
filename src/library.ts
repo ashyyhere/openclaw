@@ -1,3 +1,4 @@
+// OpenClaw library helpers and runtime behavior.
 import type { getReplyFromConfig as getReplyFromConfigRuntime } from "./auto-reply/reply.runtime.js";
 import { applyTemplate } from "./auto-reply/templating.js";
 import { createDefaultDeps } from "./cli/deps.js";
@@ -61,18 +62,25 @@ function loadWebChannelRuntime() {
   return webChannelRuntimePromise;
 }
 
+/** Reused constant for get Reply From Config behavior in src. */
 export const getReplyFromConfig: GetReplyFromConfig = async (...args) =>
   (await loadReplyRuntime()).getReplyFromConfig(...args);
+/** Reused constant for prompt Yes No behavior in src. */
 export const promptYesNo: PromptYesNo = async (...args) =>
   (await loadPromptRuntime()).promptYesNo(...args);
+/** Reused constant for ensure Binary behavior in src. */
 export const ensureBinary: EnsureBinary = async (...args) =>
   (await loadBinariesRuntime()).ensureBinary(...args);
+/** Reused constant for run Exec behavior in src. */
 export const runExec: RunExec = async (...args) => (await loadExecRuntime()).runExec(...args);
+/** Reused constant for run Command With Timeout behavior in src. */
 export const runCommandWithTimeout: RunCommandWithTimeout = async (...args) =>
   (await loadExecRuntime()).runCommandWithTimeout(...args);
+/** Reused constant for monitor Web Channel behavior in src. */
 export const monitorWebChannel: MonitorWebChannel = async (...args) =>
   (await loadWebChannelRuntime()).monitorWebChannel(...args);
 
+/** Re-exported API for src. */
 export {
   applyTemplate,
   createDefaultDeps,

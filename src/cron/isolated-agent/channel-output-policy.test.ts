@@ -1,3 +1,4 @@
+// Tests cron/isolated-agent channel output policy test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   resolveCronChannelOutputPolicy,

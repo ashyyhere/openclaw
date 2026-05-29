@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor thread bindings manager helpers and runtime behavior.
 import {
   registerSessionBindingAdapter,
   unregisterSessionBindingAdapter,

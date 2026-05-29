@@ -1,3 +1,4 @@
+// Tests extensions/discord/src channel actions contract test behavior.
 import { installChannelActionsContractSuite } from "openclaw/plugin-sdk/channel-test-helpers";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { describe } from "vitest";

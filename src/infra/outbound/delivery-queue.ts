@@ -1,3 +1,5 @@
+// infra/outbound delivery queue helpers and runtime behavior.
+/** Re-exported API for src/infra/outbound. */
 export {
   ackDelivery,
   enqueueDelivery,
@@ -9,12 +11,14 @@ export {
   markDeliveryPlatformSendAttemptStarted,
   moveToFailed,
 } from "./delivery-queue-storage.js";
+/** Re-exported API for src/infra/outbound. */
 export type {
   QueuedDelivery,
   QueuedDeliveryPayload,
   QueuedReplyPayloadSendingHook,
   QueuedRenderedMessageBatchPlan,
 } from "./delivery-queue-storage.js";
+/** Re-exported API for src/infra/outbound. */
 export {
   computeBackoffMs,
   drainPendingDeliveries,
@@ -24,6 +28,7 @@ export {
   recoverPendingDeliveries,
   withActiveDeliveryClaim,
 } from "./delivery-queue-recovery.js";
+/** Re-exported API for src/infra/outbound. */
 export type {
   ActiveDeliveryClaimResult,
   DeliverFn,

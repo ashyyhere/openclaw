@@ -1,3 +1,4 @@
+// gateway credentials secret inputs helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveSecretInputRef } from "../config/types.secrets.js";
 import { resolveSecretInputString } from "../secrets/resolve-secret-input-string.js";
@@ -186,6 +187,7 @@ function canGatewaySecretInputPathWin(params: {
   }
 }
 
+/** Reused helper for gateway Secret Input Path Can Win behavior in src/gateway. */
 export function gatewaySecretInputPathCanWin(
   params: GatewayCredentialSecretInputOptions & { path: SupportedGatewaySecretInputPath },
 ): boolean {
@@ -299,6 +301,7 @@ async function resolveGatewayCredentialsFromConfigWithSecretInputs(params: {
   }
 }
 
+/** Reused helper for resolve Gateway Credentials With Secret Inputs behavior in src/gateway. */
 export async function resolveGatewayCredentialsWithSecretInputs(
   params: GatewayCredentialSecretInputOptions,
 ): Promise<{ token?: string; password?: string }> {

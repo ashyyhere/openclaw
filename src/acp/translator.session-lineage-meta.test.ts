@@ -1,3 +1,4 @@
+/** Tests ACP translator session list/load lineage metadata. */
 import type { ListSessionsRequest, LoadSessionRequest } from "@agentclientprotocol/sdk";
 import { describe, expect, it, vi } from "vitest";
 import type { GatewayClient } from "../gateway/client.js";

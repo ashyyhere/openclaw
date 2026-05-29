@@ -1,3 +1,4 @@
+/** Tests text-end content is not appended redundantly to block replies. */
 import { describe, expect, it, vi } from "vitest";
 import {
   createTextEndBlockReplyHarness,

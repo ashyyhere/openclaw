@@ -1,3 +1,4 @@
+/** Exec approval request registration, wait, and command-span helpers. */
 import type {
   ExecApprovalCommandSpan,
   ExecAsk,
@@ -33,6 +34,7 @@ function loadExecApprovalCommandSpansRuntime(): Promise<ExecApprovalCommandSpans
   return execApprovalCommandSpansRuntimePromise;
 }
 
+/** Shared type for Request Exec Approval Decision Params in src/agents. */
 export type RequestExecApprovalDecisionParams = {
   id: string;
   command?: string;
@@ -115,12 +117,14 @@ function resolveDefaultExecApprovalExpiresAtMs(): number {
   return resolveExpiresAtMsFromDurationMs(DEFAULT_APPROVAL_TIMEOUT_MS) ?? 0;
 }
 
+/** Shared type for Exec Approval Registration in src/agents. */
 export type ExecApprovalRegistration = {
   id: string;
   expiresAtMs: number;
   finalDecision?: string | null;
 };
 
+/** Register an exec approval request with the gateway. */
 export async function registerExecApprovalRequest(
   params: RequestExecApprovalDecisionParams,
 ): Promise<ExecApprovalRegistration> {
@@ -142,6 +146,7 @@ export async function registerExecApprovalRequest(
   return { id, expiresAtMs };
 }
 
+/** Wait for a gateway exec approval decision. */
 export async function waitForExecApprovalDecision(id: string): Promise<string | null> {
   try {
     const decisionResult = await callGatewayTool<{ decision: string }>(
@@ -160,6 +165,7 @@ export async function waitForExecApprovalDecision(id: string): Promise<string | 
   }
 }
 
+/** Resolve a pre-resolved or gateway-waited exec approval decision. */
 export async function resolveRegisteredExecApprovalDecision(params: {
   approvalId: string;
   preResolvedDecision: string | null | undefined;
@@ -170,6 +176,7 @@ export async function resolveRegisteredExecApprovalDecision(params: {
   return await waitForExecApprovalDecision(params.approvalId);
 }
 
+/** Register and wait for an exec approval decision. */
 export async function requestExecApprovalDecision(
   params: RequestExecApprovalDecisionParams,
 ): Promise<string | null> {
@@ -210,6 +217,7 @@ type ExecApprovalRequesterContext = {
   sessionKey?: string;
 };
 
+/** Reused helper for build Exec Approval Requester Context behavior in src/agents. */
 export function buildExecApprovalRequesterContext(params: ExecApprovalRequesterContext): {
   agentId?: string;
   sessionKey?: string;
@@ -227,6 +235,7 @@ type ExecApprovalTurnSourceContext = {
   turnSourceThreadId?: string | number;
 };
 
+/** Reused helper for build Exec Approval Turn Source Context behavior in src/agents. */
 export function buildExecApprovalTurnSourceContext(
   params: ExecApprovalTurnSourceContext,
 ): ExecApprovalTurnSourceContext {
@@ -310,18 +319,21 @@ async function buildHostApprovalDecisionParams(
   };
 }
 
+/** Reused helper for request Exec Approval Decision For Host behavior in src/agents. */
 export async function requestExecApprovalDecisionForHost(
   params: HostExecApprovalParams,
 ): Promise<string | null> {
   return await requestExecApprovalDecision(await buildHostApprovalDecisionParams(params));
 }
 
+/** Reused helper for register Exec Approval Request For Host behavior in src/agents. */
 export async function registerExecApprovalRequestForHost(
   params: HostExecApprovalParams,
 ): Promise<ExecApprovalRegistration> {
   return await registerExecApprovalRequest(await buildHostApprovalDecisionParams(params));
 }
 
+/** Reused helper for register Exec Approval Request For Host Or Throw behavior in src/agents. */
 export async function registerExecApprovalRequestForHostOrThrow(
   params: HostExecApprovalParams,
 ): Promise<ExecApprovalRegistration> {

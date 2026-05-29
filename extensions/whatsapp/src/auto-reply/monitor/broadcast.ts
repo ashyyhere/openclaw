@@ -1,3 +1,4 @@
+// extensions/whatsapp/src/auto-reply/monitor broadcast helpers and runtime behavior.
 import type { AckReactionHandle } from "openclaw/plugin-sdk/channel-feedback";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import type { resolveAgentRoute } from "openclaw/plugin-sdk/routing";

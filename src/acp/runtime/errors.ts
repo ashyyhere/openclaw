@@ -1,6 +1,8 @@
+/** ACP runtime error type, coercion, and chain formatting helpers. */
 import { stringifyNonErrorCause } from "../../infra/errors.js";
 import { redactSensitiveText } from "../../logging/redact.js";
 
+/** Reused constant for ACP ERROR CODES behavior in src/acp/runtime. */
 export const ACP_ERROR_CODES = [
   "ACP_BACKEND_MISSING",
   "ACP_BACKEND_UNAVAILABLE",
@@ -11,9 +13,11 @@ export const ACP_ERROR_CODES = [
   "ACP_TURN_FAILED",
 ] as const;
 
+/** Shared type for Acp Runtime Error Code in src/acp/runtime. */
 export type AcpRuntimeErrorCode = (typeof ACP_ERROR_CODES)[number];
 const ACP_ERROR_CODE_SET = new Set<AcpRuntimeErrorCode>(ACP_ERROR_CODES);
 
+/** Error class carrying closed ACP runtime error codes across boundaries. */
 export class AcpRuntimeError extends Error {
   readonly code: AcpRuntimeErrorCode;
   override readonly cause?: unknown;
@@ -68,10 +72,12 @@ function messageWithAcpRequestErrorDetails(error: Error): string {
   return `${error.message}: ${details}`;
 }
 
+/** Return whether a value is a local or foreign ACP runtime error. */
 export function isAcpRuntimeError(value: unknown): value is AcpRuntimeError {
   return value instanceof AcpRuntimeError || getForeignAcpRuntimeError(value) !== null;
 }
 
+/** Convert unknown thrown values into a typed ACP runtime error. */
 export function toAcpRuntimeError(params: {
   error: unknown;
   fallbackCode: AcpRuntimeErrorCode;
@@ -136,6 +142,7 @@ function renderSingleError(error: Error): string {
   return `${error.name}${codeSuffix}: ${error.message}`;
 }
 
+/** Wrap async runtime work and rethrow failures as ACP runtime errors. */
 export async function withAcpRuntimeErrorBoundary<T>(params: {
   run: () => Promise<T>;
   fallbackCode: AcpRuntimeErrorCode;

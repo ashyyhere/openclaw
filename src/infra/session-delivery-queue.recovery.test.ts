@@ -1,3 +1,4 @@
+// Tests infra session delivery queue recovery test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { MAX_DATE_TIMESTAMP_MS } from "../shared/number-coercion.js";
 import { withTempDir } from "../test-helpers/temp-dir.js";

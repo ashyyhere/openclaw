@@ -1,3 +1,4 @@
+// Tests infra changelog unreleased test behavior.
 import { describe, expect, it } from "vitest";
 import { appendUnreleasedChangelogEntry } from "./changelog-unreleased.js";
 

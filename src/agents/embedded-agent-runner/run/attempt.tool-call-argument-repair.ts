@@ -1,3 +1,4 @@
+/** Repairs provider-emitted malformed tool-call arguments during streaming. */
 import { extractBalancedJsonPrefix } from "../../../shared/balanced-json.js";
 import { normalizeProviderId } from "../../model-selection.js";
 import type { StreamFn } from "../../runtime/index.js";
@@ -769,6 +770,7 @@ function wrapStreamRepairMalformedToolCallArguments(
   return stream;
 }
 
+/** Wraps streams with malformed JSON argument repair for supported providers. */
 export function wrapStreamFnRepairMalformedToolCallArguments(baseFn: StreamFn): StreamFn {
   return (model, context, options) => {
     const maybeStream = baseFn(model, context, options);
@@ -781,6 +783,7 @@ export function wrapStreamFnRepairMalformedToolCallArguments(baseFn: StreamFn): 
   };
 }
 
+/** Decides whether a provider/model pair needs argument repair behavior. */
 export function shouldRepairMalformedToolCallArguments(params: {
   provider?: string;
   modelApi?: string | null;
@@ -793,8 +796,10 @@ export function shouldRepairMalformedToolCallArguments(params: {
   );
 }
 
+/** Wraps xAI streams to decode HTML entities inside tool-call arguments. */
 export function wrapStreamFnDecodeXaiToolCallArguments(baseFn: StreamFn): StreamFn {
   return createHtmlEntityToolCallArgumentDecodingWrapper(baseFn);
 }
 
+/** Re-exported API for src/agents/embedded-agent-runner, starting with decode Html Entities In Object. */
 export { decodeHtmlEntitiesInObject };

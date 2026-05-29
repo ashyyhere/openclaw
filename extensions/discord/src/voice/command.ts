@@ -1,3 +1,4 @@
+// extensions/discord/src/voice command helpers and runtime behavior.
 import {
   ApplicationCommandOptionType,
   ChannelType as DiscordChannelType,

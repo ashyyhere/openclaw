@@ -1,3 +1,4 @@
+/** Transforms agent messages into provider transport message payloads. */
 import type { Api, Context, Model } from "../llm/types.js";
 import { repairToolUseResultPairing } from "./session-transcript-repair.js";
 
@@ -37,6 +38,7 @@ function isFailedAssistantTurn(message: Context["messages"][number]): boolean {
   return message.stopReason === "error" || message.stopReason === "aborted";
 }
 
+/** Reused helper for transform Transport Messages behavior in src/agents. */
 export function transformTransportMessages(
   messages: Context["messages"],
   model: Model,

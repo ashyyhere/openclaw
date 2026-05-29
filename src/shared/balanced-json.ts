@@ -1,5 +1,8 @@
+// shared balanced json helpers and runtime behavior.
+/** Shared type for Json Opening Delimiter in src/shared. */
 export type JsonOpeningDelimiter = "{" | "[";
 
+/** Shared type for Balanced Json Fragment in src/shared. */
 export type BalancedJsonFragment = {
   json: string;
   startIndex: number;
@@ -18,6 +21,7 @@ function isJsonOpeningDelimiter(
   return char === "{" ? openers.includes("{") : char === "[" && openers.includes("[");
 }
 
+/** Reused helper for extract Balanced Json Prefix behavior in src/shared. */
 export function extractBalancedJsonPrefix(
   raw: string,
   opts: { openers?: readonly JsonOpeningDelimiter[] } = {},
@@ -68,6 +72,7 @@ export function extractBalancedJsonPrefix(
   return null;
 }
 
+/** Reused helper for extract Balanced Json Fragments behavior in src/shared. */
 export function extractBalancedJsonFragments(
   raw: string,
   opts: { openers?: readonly JsonOpeningDelimiter[] } = {},

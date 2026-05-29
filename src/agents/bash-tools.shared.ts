@@ -1,3 +1,4 @@
+/** Shared helpers for bash exec/process tools and sandbox execution. */
 import { existsSync, statSync } from "node:fs";
 import fs from "node:fs/promises";
 import { homedir } from "node:os";
@@ -9,6 +10,7 @@ import type { SandboxBackendExecSpec } from "./sandbox/backend-handle.types.js";
 
 const CHUNK_LIMIT = 8 * 1024;
 
+/** Shared type for Bash Sandbox Config in src/agents. */
 export type BashSandboxConfig = {
   containerName: string;
   workspaceDir: string;
@@ -28,6 +30,7 @@ export type BashSandboxConfig = {
   }) => Promise<void>;
 };
 
+/** Build the environment used inside sandbox exec. */
 export function buildSandboxEnv(params: {
   defaultPath: string;
   paramsEnv?: Record<string, string>;
@@ -47,6 +50,7 @@ export function buildSandboxEnv(params: {
   return env;
 }
 
+/** Coerce process/env-like objects to a string-only env record. */
 export function coerceEnv(env?: NodeJS.ProcessEnv | Record<string, string>) {
   const record: Record<string, string> = {};
   if (!env) {
@@ -60,6 +64,7 @@ export function coerceEnv(env?: NodeJS.ProcessEnv | Record<string, string>) {
   return record;
 }
 
+/** Build docker exec argv for sandbox command execution. */
 export function buildDockerExecArgs(params: {
   containerName: string;
   command: string;
@@ -100,6 +105,7 @@ export function buildDockerExecArgs(params: {
   return args;
 }
 
+/** Resolve and map sandbox workdir to host/container paths. */
 export async function resolveSandboxWorkdir(params: {
   workdir: string;
   sandbox: BashSandboxConfig;
@@ -169,6 +175,7 @@ function normalizeContainerPath(input: string): string {
   return path.posix.normalize(normalized);
 }
 
+/** Resolve a host workdir, warning and falling back on failure. */
 export function resolveWorkdir(workdir: string, warnings: string[]) {
   const current = safeCwd();
   const fallback = current ?? homedir();
@@ -196,6 +203,7 @@ function safeCwd() {
 /**
  * Clamp a number within min/max bounds, using defaultValue if undefined or NaN.
  */
+/** Clamp an optional number with default/min/max bounds. */
 export function clampWithDefault(
   value: number | undefined,
   defaultValue: number,
@@ -208,11 +216,13 @@ export function clampWithDefault(
   return Math.min(Math.max(value, min), max);
 }
 
+/** Read an integer env var, optionally falling back to a legacy name. */
 export function readEnvInt(key: string, legacyKey?: string) {
   const raw = process.env[key] || (legacyKey ? process.env[legacyKey] : undefined);
   return parseStrictInteger(raw);
 }
 
+/** Split a string into bounded chunks. */
 export function chunkString(input: string, limit = CHUNK_LIMIT) {
   const chunks: string[] = [];
   for (let i = 0; i < input.length; i += limit) {
@@ -221,6 +231,7 @@ export function chunkString(input: string, limit = CHUNK_LIMIT) {
   return chunks;
 }
 
+/** Truncate a string in the middle for compact display. */
 export function truncateMiddle(str: string, max: number) {
   if (str.length <= max) {
     return str;
@@ -229,6 +240,7 @@ export function truncateMiddle(str: string, max: number) {
   return `${sliceUtf16Safe(str, 0, half)}...${sliceUtf16Safe(str, -half)}`;
 }
 
+/** Slice log lines by offset/limit while preserving total count metadata. */
 export function sliceLogLines(
   text: string,
   offset?: number,
@@ -257,6 +269,7 @@ export function sliceLogLines(
   return { slice: lines.slice(start, end).join("\n"), totalLines, totalChars };
 }
 
+/** Derive a compact session name from a shell command. */
 export function deriveSessionName(command: string): string | undefined {
   const tokens = tokenizeCommand(command);
   if (tokens.length === 0) {
@@ -290,6 +303,7 @@ function stripQuotes(value: string): string {
   return trimmed;
 }
 
+/** Pad a display string to a minimum width. */
 export function pad(str: string, width: number) {
   if (str.length >= width) {
     return str;

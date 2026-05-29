@@ -1,3 +1,4 @@
+// test/vitest vitest wizard config helpers and runtime behavior.
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
 export function createWizardVitestConfig(env?: Record<string, string | undefined>) {

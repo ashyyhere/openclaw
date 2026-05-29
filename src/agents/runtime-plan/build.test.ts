@@ -1,3 +1,4 @@
+/** Covers construction of agent runtime plans from config and provider hooks. */
 import { createParameterFreeTool } from "openclaw/plugin-sdk/agent-runtime-test-contracts";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { resetConfigRuntimeState, setRuntimeConfigSnapshot } from "../../config/config.js";

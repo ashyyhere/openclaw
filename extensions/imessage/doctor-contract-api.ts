@@ -1,3 +1,4 @@
+// extensions/imessage doctor contract api helpers and runtime behavior.
 import type { ChannelDoctorLegacyConfigRule } from "openclaw/plugin-sdk/channel-contract";
 
 // iMessage does not expose doctor legacy rules today. Keep that empty answer on

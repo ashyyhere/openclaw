@@ -1,3 +1,4 @@
+// extensions/voice-call/src/providers/twilio api helpers and runtime behavior.
 import { fetchWithSsrFGuard } from "../../../api.js";
 
 type ParsedTwilioApiError = {
@@ -23,6 +24,7 @@ function parseTwilioApiError(text: string): ParsedTwilioApiError {
   }
 }
 
+/** Public voice-call plugin class for Twilio Api Error behavior. */
 export class TwilioApiError extends Error {
   readonly httpStatus: number;
   readonly responseText: string;
@@ -39,6 +41,7 @@ export class TwilioApiError extends Error {
   }
 }
 
+/** Public voice-call plugin helper for twilio Api Request behavior. */
 export async function twilioApiRequest<T = unknown>(params: {
   baseUrl: string;
   accountSid: string;

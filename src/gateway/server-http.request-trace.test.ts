@@ -1,3 +1,4 @@
+// Tests gateway server http request trace test behavior.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

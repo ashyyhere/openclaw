@@ -1,4 +1,5 @@
 #!/usr/bin/env bun
+// Script for apps/android/scripts build release aab behavior.
 
 import { $ } from "bun";
 import { dirname, join } from "node:path";

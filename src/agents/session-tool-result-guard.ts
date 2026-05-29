@@ -1,3 +1,4 @@
+/** Guards session transcripts so assistant tool calls have matching results. */
 import {
   boundedJsonUtf8Bytes,
   firstEnumerableOwnKeys,
@@ -514,8 +515,10 @@ function isTranscriptOnlyOpenClawAssistantMessage(message: AgentMessage): boolea
   return provider === "openclaw" && (model === "delivery-mirror" || model === "gateway-injected");
 }
 
+/** Re-exported API for src/agents, starting with get Raw Session Append Message. */
 export { getRawSessionAppendMessage };
 
+/** Install transcript tool-result guard on a SessionManager instance. */
 export function installSessionToolResultGuard(
   sessionManager: SessionManager,
   opts?: {

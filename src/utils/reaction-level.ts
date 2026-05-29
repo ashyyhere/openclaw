@@ -1,5 +1,8 @@
+// utils reaction level helpers and runtime behavior.
+/** Shared type for Reaction Level in src/utils. */
 export type ReactionLevel = "off" | "ack" | "minimal" | "extensive";
 
+/** Shared type for Resolved Reaction Level in src/utils. */
 export type ResolvedReactionLevel = {
   level: ReactionLevel;
   /** Whether ACK reactions (e.g., 👀 when processing) are enabled. */
@@ -31,6 +34,7 @@ function parseLevel(
   return { kind: "invalid" };
 }
 
+/** Reused helper for resolve Reaction Level behavior in src/utils. */
 export function resolveReactionLevel(params: {
   value: unknown;
   defaultLevel: ReactionLevel;

@@ -1,3 +1,4 @@
+/** Public SDK helpers for SSRF policy construction and URL validation. */
 import {
   isBlockedHostnameOrIp,
   isPrivateIpAddress,
@@ -15,9 +16,12 @@ import type {
 } from "./channel-contract.js";
 import type { OpenClawConfig } from "./config-runtime.js";
 
+/** Re-exported API for src/plugin-sdk, starting with is Private Ip Address. */
 export { isPrivateIpAddress, mergeSsrFPolicies };
+/** Re-exported API for src/plugin-sdk, starting with Ssr FPolicy. */
 export type { SsrFPolicy };
 
+/** Shared type for Private Network Opt In Input in src/plugin-sdk. */
 export type PrivateNetworkOptInInput =
   | boolean
   | null
@@ -33,6 +37,7 @@ export type PrivateNetworkOptInInput =
         | undefined;
     };
 
+/** Reused helper for is Private Network Opt In Enabled behavior in src/plugin-sdk. */
 export function isPrivateNetworkOptInEnabled(input: PrivateNetworkOptInInput): boolean {
   if (input === true) {
     return true;
@@ -50,23 +55,27 @@ export function isPrivateNetworkOptInEnabled(input: PrivateNetworkOptInInput): b
   );
 }
 
+/** Reused helper for ssrf Policy From Private Network Opt In behavior in src/plugin-sdk. */
 export function ssrfPolicyFromPrivateNetworkOptIn(
   input: PrivateNetworkOptInInput,
 ): SsrFPolicy | undefined {
   return isPrivateNetworkOptInEnabled(input) ? { allowPrivateNetwork: true } : undefined;
 }
 
+/** Reused helper for ssrf Policy From Dangerously Allow Private Network behavior in src/plugin-sdk. */
 export function ssrfPolicyFromDangerouslyAllowPrivateNetwork(
   dangerouslyAllowPrivateNetwork: boolean | null | undefined,
 ): SsrFPolicy | undefined {
   return ssrfPolicyFromPrivateNetworkOptIn(dangerouslyAllowPrivateNetwork);
 }
 
+/** Reused helper for has Legacy Flat Allow Private Network Alias behavior in src/plugin-sdk. */
 export function hasLegacyFlatAllowPrivateNetworkAlias(value: unknown): boolean {
   const entry = asNullableRecord(value);
   return Boolean(entry && Object.prototype.hasOwnProperty.call(entry, "allowPrivateNetwork"));
 }
 
+/** Reused helper for migrate Legacy Flat Allow Private Network Alias behavior in src/plugin-sdk. */
 export function migrateLegacyFlatAllowPrivateNetworkAlias(params: {
   entry: Record<string, unknown>;
   pathPrefix: string;
@@ -120,6 +129,7 @@ function hasLegacyAllowPrivateNetworkInAccounts(value: unknown): boolean {
   );
 }
 
+/** Reused helper for create Legacy Private Network Doctor Contract behavior in src/plugin-sdk. */
 export function createLegacyPrivateNetworkDoctorContract(params: { channelKey: string }): {
   legacyConfigRules: ChannelDoctorLegacyConfigRule[];
   normalizeCompatibilityConfig: (params: { cfg: OpenClawConfig }) => ChannelDoctorConfigMutation;
@@ -201,12 +211,14 @@ export function createLegacyPrivateNetworkDoctorContract(params: { channelKey: s
   };
 }
 
+/** Reused helper for ssrf Policy From Allow Private Network behavior in src/plugin-sdk. */
 export function ssrfPolicyFromAllowPrivateNetwork(
   allowPrivateNetwork: boolean | null | undefined,
 ): SsrFPolicy | undefined {
   return ssrfPolicyFromDangerouslyAllowPrivateNetwork(allowPrivateNetwork);
 }
 
+/** Reused helper for assert Http Url Targets Private Network behavior in src/plugin-sdk. */
 export async function assertHttpUrlTargetsPrivateNetwork(
   url: string,
   params: {

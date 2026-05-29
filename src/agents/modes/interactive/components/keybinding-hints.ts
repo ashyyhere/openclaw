@@ -5,6 +5,7 @@
 import { getKeybindings, type Keybinding, type KeyId } from "@earendil-works/pi-tui";
 import { theme } from "../theme/theme.js";
 
+/** Shared type for Key Text Format Options in src/agents/modes. */
 export interface KeyTextFormatOptions {
   capitalize?: boolean;
 }
@@ -17,6 +18,7 @@ function formatKeyPart(part: string, options: KeyTextFormatOptions): string {
     : displayPart;
 }
 
+/** Reused helper for format Key Text behavior in src/agents/modes. */
 export function formatKeyText(key: string, options: KeyTextFormatOptions = {}): string {
   return key
     .split("/")
@@ -36,18 +38,22 @@ function formatKeys(keys: KeyId[], options: KeyTextFormatOptions = {}): string {
   return formatKeyText(keys.join("/"), options);
 }
 
+/** Reused helper for key Text behavior in src/agents/modes. */
 export function keyText(keybinding: Keybinding): string {
   return formatKeys(getKeybindings().getKeys(keybinding));
 }
 
+/** Reused helper for key Display Text behavior in src/agents/modes. */
 export function keyDisplayText(keybinding: Keybinding): string {
   return formatKeys(getKeybindings().getKeys(keybinding), { capitalize: true });
 }
 
+/** Reused helper for key Hint behavior in src/agents/modes. */
 export function keyHint(keybinding: Keybinding, description: string): string {
   return theme.fg("dim", keyText(keybinding)) + theme.fg("muted", ` ${description}`);
 }
 
+/** Reused helper for raw Key Hint behavior in src/agents/modes. */
 export function rawKeyHint(key: string, description: string): string {
   return theme.fg("dim", formatKeyText(key)) + theme.fg("muted", ` ${description}`);
 }

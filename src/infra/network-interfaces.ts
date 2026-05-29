@@ -1,5 +1,7 @@
+// infra network interfaces helpers and runtime behavior.
 import os from "node:os";
 
+/** Shared type for Network Interfaces Snapshot in src/infra. */
 export type NetworkInterfacesSnapshot = ReturnType<typeof os.networkInterfaces>;
 type NetworkInterfaceFamily = "IPv4" | "IPv6";
 type ExternalNetworkInterfaceAddress = {
@@ -20,12 +22,14 @@ function normalizeNetworkInterfaceFamily(
   return undefined;
 }
 
+/** Reused helper for read Network Interfaces behavior in src/infra. */
 export function readNetworkInterfaces(
   networkInterfaces: () => NetworkInterfacesSnapshot = os.networkInterfaces,
 ): NetworkInterfacesSnapshot {
   return networkInterfaces();
 }
 
+/** Reused helper for safe Network Interfaces behavior in src/infra. */
 export function safeNetworkInterfaces(
   networkInterfaces: () => NetworkInterfacesSnapshot = os.networkInterfaces,
 ): NetworkInterfacesSnapshot | undefined {
@@ -36,6 +40,7 @@ export function safeNetworkInterfaces(
   }
 }
 
+/** Reused helper for list External Interface Addresses behavior in src/infra. */
 export function listExternalInterfaceAddresses(
   snapshot: NetworkInterfacesSnapshot | undefined,
   family?: NetworkInterfaceFamily,
@@ -68,6 +73,7 @@ export function listExternalInterfaceAddresses(
   return addresses;
 }
 
+/** Reused helper for pick Matching External Interface Address behavior in src/infra. */
 export function pickMatchingExternalInterfaceAddress(
   snapshot: NetworkInterfacesSnapshot | undefined,
   params: {

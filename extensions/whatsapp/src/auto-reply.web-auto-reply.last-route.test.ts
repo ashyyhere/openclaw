@@ -1,3 +1,4 @@
+// Tests extensions/whatsapp/src auto reply web auto reply last route test behavior.
 import "./test-helpers.js";
 import { formatInboundEnvelope } from "openclaw/plugin-sdk/channel-inbound";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";

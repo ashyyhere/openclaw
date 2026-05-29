@@ -1,3 +1,4 @@
+// Tests extensions/line/src reply chunks test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { sendLineReplyChunks } from "./reply-chunks.js";
 

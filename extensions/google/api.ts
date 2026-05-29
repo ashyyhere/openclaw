@@ -1,15 +1,20 @@
+// extensions/google api helpers and runtime behavior.
 import {
   resolveProviderHttpRequestConfig,
   type ProviderRequestTransportOverrides,
 } from "openclaw/plugin-sdk/provider-http";
 import { parseGeminiAuth } from "./gemini-auth.js";
+/** Re-exported google plugin public API, starting with parse Gemini Auth. */
 export { parseGeminiAuth };
+/** Re-exported google plugin public API, starting with apply Google Gemini Model Default. */
 export { applyGoogleGeminiModelDefault, GOOGLE_GEMINI_DEFAULT_MODEL } from "./onboard.js";
 import {
   DEFAULT_GOOGLE_API_BASE_URL,
   normalizeGoogleGenerativeAiBaseUrl,
 } from "./provider-policy.js";
+/** Re-exported google plugin public API, starting with normalize Antigravity Model Id. */
 export { normalizeAntigravityModelId, normalizeGoogleModelId } from "./model-id.js";
+/** Re-exported google plugin public API. */
 export {
   createGoogleThinkingPayloadWrapper,
   createGoogleThinkingStreamWrapper,
@@ -23,10 +28,12 @@ export {
   type GoogleThinkingInputLevel,
   type GoogleThinkingLevel,
 } from "./thinking-api.js";
+/** Re-exported google plugin public API. */
 export {
   buildGoogleGenerativeAiParams,
   createGoogleGenerativeAiTransportStreamFn,
 } from "./transport-stream.js";
+/** Re-exported google plugin public API. */
 export {
   DEFAULT_GOOGLE_API_BASE_URL,
   isGoogleGenerativeAiApi,
@@ -38,7 +45,9 @@ export {
   shouldNormalizeGoogleGenerativeAiProviderConfig,
   shouldNormalizeGoogleProviderConfig,
 } from "./provider-policy.js";
+/** Re-exported google plugin public API, starting with build Google Gemini Cli Provider. */
 export { buildGoogleGeminiCliProvider } from "./gemini-cli-provider.js";
+/** Re-exported google plugin public API, starting with build Google Provider. */
 export { buildGoogleProvider } from "./provider-registration.js";
 
 type GoogleGenerativeAiRequestOverrides = ProviderRequestTransportOverrides & {
@@ -68,6 +77,7 @@ function resolveTrustedGoogleGenerativeAiBaseUrl(baseUrl?: string): string {
   return normalized;
 }
 
+/** Public google plugin helper for resolve Google Generative Ai Http Request Config behavior. */
 export function resolveGoogleGenerativeAiHttpRequestConfig(params: {
   apiKey: string;
   baseUrl?: string;

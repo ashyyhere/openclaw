@@ -1,3 +1,4 @@
+// Tests extensions/discord/src setup account state test behavior.
 import { describe, expect, it } from "vitest";
 import {
   inspectDiscordSetupAccount,

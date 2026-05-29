@@ -1,3 +1,4 @@
+// infra exec safe bin runtime policy helpers and runtime behavior.
 import { resolveSafeBins } from "./exec-approvals-allowlist.js";
 import {
   normalizeSafeBinProfileFixtures,
@@ -66,6 +67,7 @@ const INTERPRETER_LIKE_PATTERNS = [
   /^node\d+(?:\.\d+)?$/,
 ];
 
+/** Reused helper for is Interpreter Like Safe Bin behavior in src/infra. */
 export function isInterpreterLikeSafeBin(raw: string): boolean {
   const normalized = normalizeSafeBinName(raw);
   if (!normalized) {
@@ -77,6 +79,7 @@ export function isInterpreterLikeSafeBin(raw: string): boolean {
   return INTERPRETER_LIKE_PATTERNS.some((pattern) => pattern.test(normalized));
 }
 
+/** Reused helper for list Interpreter Like Safe Bins behavior in src/infra. */
 export function listInterpreterLikeSafeBins(entries: Iterable<string>): string[] {
   return Array.from(entries)
     .map((entry) => normalizeSafeBinName(entry))
@@ -84,6 +87,7 @@ export function listInterpreterLikeSafeBins(entries: Iterable<string>): string[]
     .toSorted();
 }
 
+/** Reused helper for resolve Merged Safe Bin Profile Fixtures behavior in src/infra. */
 export function resolveMergedSafeBinProfileFixtures(params: {
   global?: ExecSafeBinConfigScope | null;
   local?: ExecSafeBinConfigScope | null;
@@ -99,6 +103,7 @@ export function resolveMergedSafeBinProfileFixtures(params: {
   };
 }
 
+/** Reused helper for resolve Exec Safe Bin Runtime Policy behavior in src/infra. */
 export function resolveExecSafeBinRuntimePolicy(params: {
   global?: ExecSafeBinConfigScope | null;
   local?: ExecSafeBinConfigScope | null;

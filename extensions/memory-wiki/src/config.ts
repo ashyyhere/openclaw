@@ -1,3 +1,4 @@
+// extensions/memory-wiki/src config helpers and runtime behavior.
 import os from "node:os";
 import path from "node:path";
 import { mapPluginConfigIssues } from "openclaw/plugin-sdk/extension-shared";

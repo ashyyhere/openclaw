@@ -1,3 +1,4 @@
+// Tests extensions/comfy video generation provider test behavior.
 import { expectExplicitVideoGenerationCapabilities } from "openclaw/plugin-sdk/provider-test-contracts";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {

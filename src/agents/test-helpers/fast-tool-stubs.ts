@@ -1,3 +1,4 @@
+/** Minimal reusable tool stubs for Vitest module mocks. */
 import { vi } from "vitest";
 
 export type StubTool = {

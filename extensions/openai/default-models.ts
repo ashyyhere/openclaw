@@ -1,3 +1,4 @@
+// extensions/openai default models helpers and runtime behavior.
 import { ensureModelAllowlistEntry } from "openclaw/plugin-sdk/provider-onboard";
 import {
   applyAgentDefaultModelPrimary,

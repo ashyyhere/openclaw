@@ -1,3 +1,4 @@
+// gateway boot helpers and runtime behavior.
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -35,6 +36,7 @@ type SessionMappingSnapshot = {
 const log = createSubsystemLogger("gateway/boot");
 const BOOT_FILENAME = "BOOT.md";
 
+/** Shared type for Boot Run Result in src/gateway. */
 export type BootRunResult =
   | { status: "skipped"; reason: "missing" | "empty" }
   | { status: "ran" }
@@ -141,6 +143,7 @@ async function restoreSessionMapping(
   }
 }
 
+/** Reused helper for run Boot Once behavior in src/gateway. */
 export async function runBootOnce(params: {
   cfg: OpenClawConfig;
   deps: CliDeps;

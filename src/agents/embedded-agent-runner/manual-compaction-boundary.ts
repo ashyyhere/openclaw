@@ -1,3 +1,4 @@
+/** Hardens manual compaction boundaries by snapshotting nearby transcript context. */
 import type { AgentMessage } from "../runtime/index.js";
 import type { SessionEntry } from "../sessions/index.js";
 import {
@@ -8,6 +9,7 @@ import {
 
 type CompactionEntry = Extract<SessionEntry, { type: "compaction" }>;
 
+/** Shared type for Hardened Manual Compaction Boundary in src/agents/embedded-agent-runner. */
 export type HardenedManualCompactionBoundary = {
   applied: boolean;
   firstKeptEntryId?: string;
@@ -69,6 +71,7 @@ function hasMessagesToSummarizeBeforeKeptTail(params: {
     .some((entry) => entryCreatesCompactionInputMessage(entry));
 }
 
+/** Reused helper for harden Manual Compaction Boundary behavior in src/agents/embedded-agent-runner. */
 export async function hardenManualCompactionBoundary(params: {
   sessionFile: string;
   preserveRecentTail?: boolean;

@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix/monitor allowlist helpers and runtime behavior.
 import {
   resolveAllowlistMatchByCandidates,
   type AllowlistMatch,

@@ -1,3 +1,5 @@
+// Runtime boundary for gateway/server-methods sessions runtime behavior.
+/** Re-exported API for src/gateway/server-methods. */
 export {
   archiveSessionTranscriptsForSessionDetailed,
   cleanupSessionBeforeMutation,

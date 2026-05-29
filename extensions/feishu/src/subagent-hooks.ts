@@ -1,3 +1,4 @@
+// extensions/feishu/src subagent hooks helpers and runtime behavior.
 import {
   normalizeOptionalLowercaseString,
   normalizeOptionalString,

@@ -1,3 +1,4 @@
+// extensions/slack/src/monitor provider helpers and runtime behavior.
 import type { IncomingMessage, ServerResponse } from "node:http";
 import {
   addAllowlistUserEntriesFromConfigEntry,

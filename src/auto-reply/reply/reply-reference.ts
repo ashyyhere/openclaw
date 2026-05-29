@@ -1,6 +1,8 @@
+// Reply reference helpers for reply-to routing.
 import type { ReplyToMode } from "../../config/types.js";
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 
+/** Shared type for Reply Reference Planner in src/auto-reply/reply. */
 export type ReplyReferencePlanner = {
   /** Returns the effective reply/thread id for the next send without updating state. */
   peek(): string | undefined;
@@ -12,10 +14,12 @@ export type ReplyReferencePlanner = {
   hasReplied(): boolean;
 };
 
+/** Reused helper for is Single Use Reply To Mode behavior in src/auto-reply/reply. */
 export function isSingleUseReplyToMode(mode: ReplyToMode): boolean {
   return mode === "first" || mode === "batched";
 }
 
+/** Reused helper for create Reply Reference Planner behavior in src/auto-reply/reply. */
 export function createReplyReferencePlanner(options: {
   replyToMode: ReplyToMode;
   /** Existing thread/reference id (preferred when allowed by replyToMode). */

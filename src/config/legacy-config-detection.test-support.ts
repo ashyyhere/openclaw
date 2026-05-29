@@ -1,9 +1,11 @@
+// config legacy config detection test support helpers and runtime behavior.
 import { expect } from "vitest";
 
 type SchemaParseResult<TData = unknown> =
   | { success: true; data: TData }
   | { success: false; error: { issues: Array<{ path: PropertyKey[]; message?: string }> } };
 
+/** Reused helper for expect Schema Config Value behavior in src/config. */
 export function expectSchemaConfigValue(params: {
   schema: { safeParse: (value: unknown) => SchemaParseResult };
   config: unknown;
@@ -18,6 +20,7 @@ export function expectSchemaConfigValue(params: {
   expect(params.readValue(res.data)).toBe(params.expectedValue);
 }
 
+/** Reused helper for expect Schema Valid behavior in src/config. */
 export function expectSchemaValid(
   schema: { safeParse: (value: unknown) => SchemaParseResult },
   config: unknown,

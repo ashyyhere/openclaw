@@ -1,9 +1,12 @@
+// wizard prompts helpers and runtime behavior.
+/** Shared type for Wizard Select Option in src/wizard. */
 export type WizardSelectOption<T = string> = {
   value: T;
   label: string;
   hint?: string;
 };
 
+/** Shared type for Wizard Select Params in src/wizard. */
 export type WizardSelectParams<T = string> = {
   message: string;
   options: Array<WizardSelectOption<T>>;
@@ -11,6 +14,7 @@ export type WizardSelectParams<T = string> = {
   searchable?: boolean;
 };
 
+/** Shared type for Wizard Multi Select Params in src/wizard. */
 export type WizardMultiSelectParams<T = string> = {
   message: string;
   options: Array<WizardSelectOption<T>>;
@@ -18,6 +22,7 @@ export type WizardMultiSelectParams<T = string> = {
   searchable?: boolean;
 };
 
+/** Shared type for Wizard Text Params in src/wizard. */
 export type WizardTextParams = {
   message: string;
   initialValue?: string;
@@ -28,16 +33,19 @@ export type WizardTextParams = {
   sensitive?: boolean;
 };
 
+/** Shared type for Wizard Confirm Params in src/wizard. */
 export type WizardConfirmParams = {
   message: string;
   initialValue?: boolean;
 };
 
+/** Shared type for Wizard Progress in src/wizard. */
 export type WizardProgress = {
   update: (message: string) => void;
   stop: (message?: string) => void;
 };
 
+/** Shared type for Wizard Prompter in src/wizard. */
 export type WizardPrompter = {
   intro: (title: string) => Promise<void>;
   outro: (message: string) => Promise<void>;
@@ -50,6 +58,7 @@ export type WizardPrompter = {
   progress: (label: string) => WizardProgress;
 };
 
+/** Reused class for Wizard Cancelled Error behavior in src/wizard. */
 export class WizardCancelledError extends Error {
   constructor(message = "wizard cancelled") {
     super(message);

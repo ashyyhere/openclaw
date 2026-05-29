@@ -1,3 +1,4 @@
+/** Tests macOS launchd recovery when installed services are not bootstrapped. */
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 const launchAgentPlistExists = vi.hoisted(() => vi.fn());

@@ -1,3 +1,4 @@
+/** Tests channel status helper behavior. */
 import { describe, expect, it } from "vitest";
 import {
   createAsyncComputedAccountStatusAdapter,

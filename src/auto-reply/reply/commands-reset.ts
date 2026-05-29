@@ -1,3 +1,4 @@
+// Chat command handlers for resetting agent sessions.
 import { clearBootstrapSnapshot } from "../../agents/bootstrap-cache.js";
 import { clearAllCliSessions } from "../../agents/cli-session.js";
 import { resetConfiguredBindingTargetInPlace } from "../../channels/plugins/binding-targets.js";
@@ -29,6 +30,7 @@ function isResetAuthorized(params: HandleCommandsParams): boolean {
   });
 }
 
+/** Reused helper for maybe Handle Reset Command behavior in src/auto-reply/reply. */
 export async function maybeHandleResetCommand(
   params: HandleCommandsParams,
 ): Promise<CommandHandlerResult | null> {

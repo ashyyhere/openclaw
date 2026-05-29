@@ -1,3 +1,4 @@
+/** Shared helpers and re-exports for session-related tools. */
 export {
   createAgentToAgentPolicy,
   createSessionVisibilityGuard,
@@ -6,6 +7,7 @@ export {
   resolveSandboxedSessionToolContext,
 } from "./sessions-access.js";
 import { resolveSandboxedSessionToolContext } from "./sessions-access.js";
+/** Re-exported API for src/agents/tools. */
 export {
   resolveCurrentSessionClientAlias,
   resolveDisplaySessionKey,
@@ -15,6 +17,7 @@ export {
   resolveVisibleSessionReference,
   shouldResolveSessionIdInput,
 } from "./sessions-resolution.js";
+/** Re-exported API for src/agents/tools. */
 export {
   extractAssistantText,
   sanitizeTextContent,
@@ -24,8 +27,10 @@ import { getRuntimeConfig } from "../../config/config.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 
+/** Shared type for Session Kind in src/agents/tools. */
 export type SessionKind = "main" | "group" | "cron" | "hook" | "node" | "other";
 
+/** Shared type for Session List Delivery Context in src/agents/tools. */
 export type SessionListDeliveryContext = {
   channel?: string;
   to?: string;
@@ -33,8 +38,10 @@ export type SessionListDeliveryContext = {
   threadId?: string | number;
 };
 
+/** Shared type for Session Run Status in src/agents/tools. */
 export type SessionRunStatus = "running" | "done" | "failed" | "killed" | "timeout";
 
+/** Shared type for Session List Row in src/agents/tools. */
 export type SessionListRow = {
   key: string;
   agentId?: string;
@@ -79,6 +86,7 @@ export type SessionListRow = {
   messages?: unknown[];
 };
 
+/** Resolves caller/session context for session tool operations. */
 export function resolveSessionToolContext(opts?: {
   agentSessionKey?: string;
   sandboxed?: boolean;
@@ -95,6 +103,7 @@ export function resolveSessionToolContext(opts?: {
   };
 }
 
+/** Classifies a session row for display. */
 export function classifySessionKind(params: {
   key: string;
   gatewayKind?: string | null;
@@ -123,6 +132,7 @@ export function classifySessionKind(params: {
   return "other";
 }
 
+/** Derives the display channel label for a session row. */
 export function deriveChannel(params: {
   key: string;
   kind: SessionKind;

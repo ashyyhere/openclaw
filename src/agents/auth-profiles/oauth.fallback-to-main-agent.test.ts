@@ -1,3 +1,4 @@
+/** Regression coverage for falling back to main-agent OAuth profiles. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

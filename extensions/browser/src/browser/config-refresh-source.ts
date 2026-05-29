@@ -1,3 +1,4 @@
+// extensions/browser/src/browser config refresh source helpers and runtime behavior.
 import {
   getRuntimeConfig,
   getRuntimeConfigSourceSnapshot,

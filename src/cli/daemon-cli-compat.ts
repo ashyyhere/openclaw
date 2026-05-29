@@ -1,3 +1,4 @@
+/** Lists legacy daemon CLI exports kept for internal compatibility checks. */
 export const LEGACY_DAEMON_CLI_EXPORTS = [
   "registerDaemonCli",
   "runDaemonInstall",
@@ -10,6 +11,7 @@ export const LEGACY_DAEMON_CLI_EXPORTS = [
 
 type LegacyDaemonCliExport = (typeof LEGACY_DAEMON_CLI_EXPORTS)[number];
 type LegacyDaemonCliRunnerExport = Exclude<LegacyDaemonCliExport, "registerDaemonCli">;
+/** Shared type for Legacy Daemon Cli Accessors in src/cli. */
 export type LegacyDaemonCliAccessors = {
   registerDaemonCli: string;
   runDaemonRestart: string;
@@ -53,6 +55,7 @@ function findRegisterContainerSymbol(bundleSource: string): string | null {
   return bundleSource.match(REGISTER_CONTAINER_RE)?.[1] ?? null;
 }
 
+/** Reused helper for resolve Legacy Daemon Cli Register Accessor behavior in src/cli. */
 export function resolveLegacyDaemonCliRegisterAccessor(bundleSource: string): string | null {
   const aliases = parseExportAliases(bundleSource);
   if (!aliases) {
@@ -67,6 +70,7 @@ export function resolveLegacyDaemonCliRegisterAccessor(bundleSource: string): st
     : (registerDirectAlias ?? null);
 }
 
+/** Reused helper for resolve Legacy Daemon Cli Runner Accessors behavior in src/cli. */
 export function resolveLegacyDaemonCliRunnerAccessors(
   bundleSource: string,
 ): Partial<Record<LegacyDaemonCliRunnerExport, string>> | null {
@@ -102,6 +106,7 @@ export function resolveLegacyDaemonCliRunnerAccessors(
   };
 }
 
+/** Reused helper for resolve Legacy Daemon Cli Accessors behavior in src/cli. */
 export function resolveLegacyDaemonCliAccessors(
   bundleSource: string,
 ): LegacyDaemonCliAccessors | null {

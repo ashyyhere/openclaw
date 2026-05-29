@@ -1,3 +1,4 @@
+/** Regression coverage for mutating auth profile order and profile records. */
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

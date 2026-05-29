@@ -218,6 +218,7 @@ async function restartGatewayWithoutServiceManager(
   };
 }
 
+/** Reused helper for run Daemon Uninstall behavior in src/cli/daemon-cli. */
 export async function runDaemonUninstall(opts: DaemonLifecycleOptions = {}) {
   return await runServiceUninstall({
     serviceNoun: "Gateway",
@@ -228,6 +229,7 @@ export async function runDaemonUninstall(opts: DaemonLifecycleOptions = {}) {
   });
 }
 
+/** Reused helper for run Daemon Start behavior in src/cli/daemon-cli. */
 export async function runDaemonStart(opts: DaemonLifecycleOptions = {}) {
   const service = resolveGatewayService();
   return await runServiceStart({
@@ -250,6 +252,7 @@ export async function runDaemonStart(opts: DaemonLifecycleOptions = {}) {
   });
 }
 
+/** Reused helper for run Daemon Stop behavior in src/cli/daemon-cli. */
 export async function runDaemonStop(opts: DaemonLifecycleOptions = {}) {
   const service = resolveGatewayService();
   let gatewayPortPromise: Promise<number> | undefined;

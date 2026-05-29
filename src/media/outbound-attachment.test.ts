@@ -1,3 +1,4 @@
+// Tests media outbound attachment test behavior.
 import { describe, expect, it, vi } from "vitest";
 
 const loadWebMedia = vi.hoisted(() => vi.fn());

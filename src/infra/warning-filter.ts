@@ -1,7 +1,9 @@
+// infra warning filter helpers and runtime behavior.
 import { resolveGlobalSingleton } from "../shared/global-singleton.js";
 
 const warningFilterKey = Symbol.for("openclaw.warning-filter");
 
+/** Shared type for Process Warning in src/infra. */
 export type ProcessWarning = {
   code?: string;
   name?: string;
@@ -12,6 +14,7 @@ type ProcessWarningInstallState = {
   installed: boolean;
 };
 
+/** Reused helper for should Ignore Warning behavior in src/infra. */
 export function shouldIgnoreWarning(warning: ProcessWarning): boolean {
   if (warning.code === "DEP0040" && warning.message?.includes("punycode")) {
     return true;
@@ -64,6 +67,7 @@ function normalizeWarningArgs(args: unknown[]): ProcessWarning {
   return { name, code, message };
 }
 
+/** Reused helper for install Process Warning Filter behavior in src/infra. */
 export function installProcessWarningFilter(): void {
   const state = resolveGlobalSingleton<ProcessWarningInstallState>(warningFilterKey, () => ({
     installed: false,

@@ -1,3 +1,4 @@
+/** Runtime provider flow re-exports for model picker commands. */
 import {
   resolveProviderModelPickerFlowContributions,
   resolveProviderModelPickerFlowEntries,
@@ -9,6 +10,7 @@ import {
 } from "../plugins/provider-wizard.js";
 import { resolvePluginProviders } from "../plugins/providers.runtime.js";
 
+/** Reused constant for model Picker Runtime behavior in src/commands. */
 export const modelPickerRuntime = {
   resolveProviderModelPickerContributions: resolveProviderModelPickerFlowContributions,
   resolveProviderModelPickerEntries: resolveProviderModelPickerFlowEntries,

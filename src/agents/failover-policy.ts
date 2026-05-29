@@ -1,5 +1,7 @@
+/** Cooldown probe policy for provider failover reasons. */
 import type { FailoverReason } from "./embedded-agent-helpers.js";
 
+/** Return whether a failover reason is eligible for cooldown probing. */
 export function shouldAllowCooldownProbeForReason(
   reason: FailoverReason | null | undefined,
 ): boolean {
@@ -15,6 +17,7 @@ export function shouldAllowCooldownProbeForReason(
   );
 }
 
+/** Return whether a failover reason should consume a transient probe slot. */
 export function shouldUseTransientCooldownProbeSlot(
   reason: FailoverReason | null | undefined,
 ): boolean {
@@ -29,6 +32,7 @@ export function shouldUseTransientCooldownProbeSlot(
   );
 }
 
+/** Return whether a transient probe slot should be preserved after a result. */
 export function shouldPreserveTransientCooldownProbeSlot(
   reason: FailoverReason | null | undefined,
 ): boolean {

@@ -1,3 +1,4 @@
+// Tests plugins/runtime runtime channel test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { createRuntimeChannel } from "./runtime-channel.js";
 

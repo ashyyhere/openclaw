@@ -1,3 +1,4 @@
+/** Normalizes tool schemas for OpenAI strict JSON-schema requirements. */
 import type { ModelCompatConfig } from "../config/types.models.js";
 import { shouldOmitEmptyArrayItems } from "../plugins/provider-model-compat.js";
 import { normalizeToolParameterSchema } from "./agent-tools-parameter-schema.js";
@@ -141,6 +142,7 @@ function normalizeStrictOpenAIJsonSchemaRecursive(schema: unknown, depth: number
   return changed ? normalized : schema;
 }
 
+/** Normalize tool parameters according to the strict-mode flag. */
 export function normalizeOpenAIStrictToolParameters<T>(
   schema: T,
   strict: boolean,
@@ -153,6 +155,7 @@ export function normalizeOpenAIStrictToolParameters<T>(
   return normalizeStrictOpenAIJsonSchema(schema, toolSchemaCompat) as T;
 }
 
+/** Return whether a schema already satisfies OpenAI strict-mode constraints. */
 export function isStrictOpenAIJsonSchemaCompatible(schema: unknown): boolean {
   return isStrictOpenAIJsonSchemaCompatibleRecursive(normalizeStrictOpenAIJsonSchema(schema));
 }
@@ -163,6 +166,7 @@ type OpenAIStrictToolSchemaDiagnostic = {
   violations: string[];
 };
 
+/** Collect strict-schema violation paths for tool inventories. */
 export function findOpenAIStrictToolSchemaDiagnostics(
   tools: readonly ToolWithParameters[],
 ): OpenAIStrictToolSchemaDiagnostic[] {
@@ -297,6 +301,7 @@ function findStrictOpenAIJsonSchemaViolations(schema: unknown, path: string): st
   return violations;
 }
 
+/** Resolve whether an inventory can safely opt into OpenAI strict tools. */
 export function resolveOpenAIStrictToolFlagForInventory(
   tools: readonly ToolWithParameters[],
   strict: boolean | null | undefined,

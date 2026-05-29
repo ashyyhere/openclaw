@@ -1,3 +1,4 @@
+// extensions/whatsapp/src account config helpers and runtime behavior.
 import {
   DEFAULT_ACCOUNT_ID,
   mergeAccountConfig,

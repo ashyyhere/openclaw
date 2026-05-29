@@ -1,4 +1,5 @@
 #!/usr/bin/env -S node --import tsx
+// scripts/e2e telegram user credential helpers and runtime behavior.
 
 import { createHash } from "node:crypto";
 import { copyFile, mkdir, mkdtemp, readFile, rm, unlink, writeFile } from "node:fs/promises";

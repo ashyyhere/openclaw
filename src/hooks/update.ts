@@ -1,3 +1,4 @@
+// hooks update helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { buildNpmResolutionFields } from "../infra/install-source-utils.js";
 import {
@@ -11,13 +12,16 @@ import {
 } from "./install.js";
 import { recordHookInstall } from "./installs.js";
 
+/** Shared type for Hook Pack Update Logger in src/hooks. */
 export type HookPackUpdateLogger = {
   info?: (message: string) => void;
   warn?: (message: string) => void;
 };
 
+/** Shared type for Hook Pack Update Status in src/hooks. */
 export type HookPackUpdateStatus = "updated" | "unchanged" | "skipped" | "error";
 
+/** Shared type for Hook Pack Update Outcome in src/hooks. */
 export type HookPackUpdateOutcome = {
   hookId: string;
   status: HookPackUpdateStatus;
@@ -26,12 +30,14 @@ export type HookPackUpdateOutcome = {
   nextVersion?: string;
 };
 
+/** Shared type for Hook Pack Update Summary in src/hooks. */
 export type HookPackUpdateSummary = {
   config: OpenClawConfig;
   changed: boolean;
   outcomes: HookPackUpdateOutcome[];
 };
 
+/** Shared type for Hook Pack Update Integrity Drift Params in src/hooks. */
 export type HookPackUpdateIntegrityDriftParams = HookNpmIntegrityDriftParams & {
   hookId: string;
   resolvedSpec?: string;
@@ -66,6 +72,7 @@ function createHookPackUpdateIntegrityDriftHandler(params: {
   };
 }
 
+/** Reused helper for update Npm Installed Hook Packs behavior in src/hooks. */
 export async function updateNpmInstalledHookPacks(params: {
   config: OpenClawConfig;
   logger?: HookPackUpdateLogger;

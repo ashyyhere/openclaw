@@ -1,3 +1,4 @@
+// extensions/telegram/src bot update tracker helpers and runtime behavior.
 import {
   createMessageReceiveContext,
   type MessageAckPolicy,

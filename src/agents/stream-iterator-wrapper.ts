@@ -1,3 +1,4 @@
+/** Wraps async iterators so stream adapters can intercept next/return/throw lifecycle events. */
 type StreamIterator<T> = AsyncIterator<T, unknown, unknown>;
 
 type IteratorHandler<T> = (
@@ -5,6 +6,7 @@ type IteratorHandler<T> = (
   value?: unknown,
 ) => IteratorResult<T, unknown> | Promise<IteratorResult<T, unknown>>;
 
+/** Creates an async iterable iterator facade with optional cleanup/error hooks. */
 export function createStreamIteratorWrapper<T>(params: {
   iterator: StreamIterator<T>;
   next: (iterator: StreamIterator<T>) => Promise<IteratorResult<T, unknown>>;

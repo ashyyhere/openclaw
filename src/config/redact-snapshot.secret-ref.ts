@@ -1,9 +1,12 @@
+// config redact snapshot secret ref helpers and runtime behavior.
+/** Reused helper for is Secret Ref Shape behavior in src/config. */
 export function isSecretRefShape(
   value: Record<string, unknown>,
 ): value is Record<string, unknown> & { source: string; id: string } {
   return typeof value.source === "string" && typeof value.id === "string";
 }
 
+/** Reused helper for redact Secret Ref Id behavior in src/config. */
 export function redactSecretRefId(params: {
   value: Record<string, unknown> & { source: string; id: string };
   values: string[];

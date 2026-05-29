@@ -1,3 +1,4 @@
+// extensions/diffs/src browser helpers and runtime behavior.
 import { constants as fsConstants } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";

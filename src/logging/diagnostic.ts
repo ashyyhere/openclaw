@@ -1,3 +1,4 @@
+// logging diagnostic helpers and runtime behavior.
 import { monitorEventLoopDelay, performance } from "node:perf_hooks";
 import { getRuntimeConfig } from "../config/config.js";
 import { resolveAllAgentSessionStoreTargetsSync } from "../config/sessions/targets.js";
@@ -63,6 +64,7 @@ import {
   startDiagnosticStabilityRecorder,
   stopDiagnosticStabilityRecorder,
 } from "./diagnostic-stability.js";
+/** Re-exported API for src/logging, starting with diagnostic Logger. */
 export { diagnosticLogger, logLaneDequeue, logLaneEnqueue } from "./diagnostic-runtime.js";
 
 const webhookStats = {
@@ -442,6 +444,7 @@ function formatDiagnosticWorkLabels(work: DiagnosticWorkSnapshot): string {
   return parts.join(" ");
 }
 
+/** Reused helper for resolve Stuck Session Warn Ms behavior in src/logging. */
 export function resolveStuckSessionWarnMs(config?: OpenClawConfig): number {
   const raw = config?.diagnostics?.stuckSessionWarnMs;
   if (typeof raw !== "number" || !Number.isFinite(raw)) {
@@ -454,6 +457,7 @@ export function resolveStuckSessionWarnMs(config?: OpenClawConfig): number {
   return rounded;
 }
 
+/** Reused helper for resolve Stuck Session Abort Ms behavior in src/logging. */
 export function resolveStuckSessionAbortMs(
   config: OpenClawConfig | undefined,
   stuckSessionWarnMs: number,
@@ -562,6 +566,7 @@ function isIdleQueuedRecoverableSessionStall(params: {
   );
 }
 
+/** Reused helper for log Webhook Received behavior in src/logging. */
 export function logWebhookReceived(params: {
   channel: string;
   updateType?: string;
@@ -588,6 +593,7 @@ export function logWebhookReceived(params: {
   markActivity();
 }
 
+/** Reused helper for log Webhook Processed behavior in src/logging. */
 export function logWebhookProcessed(params: {
   channel: string;
   updateType?: string;
@@ -617,6 +623,7 @@ export function logWebhookProcessed(params: {
   markActivity();
 }
 
+/** Reused helper for log Webhook Error behavior in src/logging. */
 export function logWebhookError(params: {
   channel: string;
   updateType?: string;
@@ -642,6 +649,7 @@ export function logWebhookError(params: {
   markActivity();
 }
 
+/** Reused helper for log Message Queued behavior in src/logging. */
 export function logMessageQueued(params: {
   sessionId?: string;
   sessionKey?: string;
@@ -675,6 +683,7 @@ export function logMessageQueued(params: {
   markActivity();
 }
 
+/** Reused helper for log Message Received behavior in src/logging. */
 export function logMessageReceived(params: {
   sessionId?: string;
   sessionKey?: string;
@@ -707,6 +716,7 @@ export function logMessageReceived(params: {
   markActivity();
 }
 
+/** Reused helper for log Message Dispatch Started behavior in src/logging. */
 export function logMessageDispatchStarted(params: {
   sessionId?: string;
   sessionKey?: string;
@@ -733,6 +743,7 @@ export function logMessageDispatchStarted(params: {
   markActivity();
 }
 
+/** Reused helper for log Message Dispatch Completed behavior in src/logging. */
 export function logMessageDispatchCompleted(params: {
   sessionId?: string;
   sessionKey?: string;
@@ -774,6 +785,7 @@ export function logMessageDispatchCompleted(params: {
   markActivity();
 }
 
+/** Reused helper for log Message Processed behavior in src/logging. */
 export function logMessageProcessed(params: {
   channel: string;
   messageId?: number | string;
@@ -820,6 +832,7 @@ export function logMessageProcessed(params: {
   markActivity();
 }
 
+/** Reused helper for log Session Turn Created behavior in src/logging. */
 export function logSessionTurnCreated(params: {
   runId: string;
   sessionId?: string;
@@ -852,6 +865,7 @@ export function logSessionTurnCreated(params: {
   markActivity();
 }
 
+/** Reused helper for log Session State Change behavior in src/logging. */
 export function logSessionStateChange(
   params: SessionRef & {
     state: SessionStateValue;
@@ -897,6 +911,7 @@ export function logSessionStateChange(
   markActivity();
 }
 
+/** Reused helper for update Diagnostic Session File behavior in src/logging. */
 export function updateDiagnosticSessionFile(params: SessionRef) {
   if (!areDiagnosticsEnabledForProcess()) {
     return;
@@ -906,6 +921,7 @@ export function updateDiagnosticSessionFile(params: SessionRef) {
   markActivity();
 }
 
+/** Reused helper for mark Diagnostic Session Progress behavior in src/logging. */
 export function markDiagnosticSessionProgress(params: SessionRef) {
   if (!areDiagnosticsEnabledForProcess()) {
     return;
@@ -969,6 +985,7 @@ function formatSessionActivityLogFields(activity: DiagnosticSessionActivitySnaps
   return fields.join(" ");
 }
 
+/** Reused helper for log Session Attention behavior in src/logging. */
 export function logSessionAttention(
   params: SessionRef & {
     state: SessionStateValue;
@@ -1078,6 +1095,7 @@ export function logSessionAttention(
   return classification;
 }
 
+/** Reused helper for log Run Attempt behavior in src/logging. */
 export function logRunAttempt(params: SessionRef & { runId: string; attempt: number }) {
   if (!areDiagnosticsEnabledForProcess()) {
     return;
@@ -1097,6 +1115,7 @@ export function logRunAttempt(params: SessionRef & { runId: string; attempt: num
   markActivity();
 }
 
+/** Reused helper for log Tool Loop Action behavior in src/logging. */
 export function logToolLoopAction(
   params: SessionRef & {
     toolName: string;
@@ -1141,6 +1160,7 @@ export function logToolLoopAction(
   markActivity();
 }
 
+/** Reused helper for log Active Runs behavior in src/logging. */
 export function logActiveRuns() {
   if (!areDiagnosticsEnabledForProcess()) {
     return;
@@ -1155,6 +1175,7 @@ export function logActiveRuns() {
 
 let heartbeatInterval: NodeJS.Timeout | null = null;
 
+/** Reused helper for start Diagnostic Heartbeat behavior in src/logging. */
 export function startDiagnosticHeartbeat(
   config?: OpenClawConfig,
   opts?: StartDiagnosticHeartbeatOptions,
@@ -1309,6 +1330,7 @@ export function startDiagnosticHeartbeat(
   heartbeatInterval.unref?.();
 }
 
+/** Reused helper for stop Diagnostic Heartbeat behavior in src/logging. */
 export function stopDiagnosticHeartbeat() {
   if (heartbeatInterval) {
     clearInterval(heartbeatInterval);
@@ -1319,10 +1341,12 @@ export function stopDiagnosticHeartbeat() {
   uninstallDiagnosticStabilityFatalHook();
 }
 
+/** Reused helper for get Diagnostic Session State Count For Test behavior in src/logging. */
 export function getDiagnosticSessionStateCountForTest(): number {
   return getDiagnosticSessionStateCountForTestImpl();
 }
 
+/** Reused helper for reset Diagnostic State For Test behavior in src/logging. */
 export function resetDiagnosticStateForTest(): void {
   resetDiagnosticSessionRecoveryCoordinatorForTest();
   resetDiagnosticSessionStateForTest();

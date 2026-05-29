@@ -1,3 +1,4 @@
+// tts tts types helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type {
   ResolvedTtsPersona,
@@ -8,8 +9,10 @@ import type {
 } from "../config/types.tts.js";
 import type { SpeechModelOverridePolicy, SpeechProviderConfig } from "./provider-types.js";
 
+/** Shared type for Resolved Tts Model Overrides in src/tts. */
 export type ResolvedTtsModelOverrides = SpeechModelOverridePolicy;
 
+/** Shared type for Resolved Tts Config in src/tts. */
 export type ResolvedTtsConfig = {
   auto: TtsAutoMode;
   mode: TtsMode;

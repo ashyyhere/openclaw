@@ -1,3 +1,4 @@
+/** Runs selected configure wizard sections from CLI input. */
 import { formatCliCommand } from "../cli/command-format.js";
 import type { RuntimeEnv } from "../runtime.js";
 import { defaultRuntime } from "../runtime.js";
@@ -16,6 +17,7 @@ async function configureCommandWithSections(
   await runConfigureWizard({ command: "configure", sections }, runtime);
 }
 
+/** Reused helper for configure Command From Sections Arg behavior in src/commands. */
 export async function configureCommandFromSectionsArg(
   rawSections: unknown,
   runtime: RuntimeEnv = defaultRuntime,

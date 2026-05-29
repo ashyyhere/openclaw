@@ -1,3 +1,4 @@
+/** Applies custom provider config during onboarding. */
 import { CONTEXT_WINDOW_HARD_MIN_TOKENS } from "../agents/context-window-guard.js";
 import { DEFAULT_PROVIDER } from "../agents/defaults.js";
 import { buildModelAliasIndex, modelKey } from "../agents/model-selection.js";
@@ -25,6 +26,7 @@ const DEFAULT_MAX_TOKENS = 4096;
 const AZURE_DEFAULT_CONTEXT_WINDOW = 400_000;
 const AZURE_DEFAULT_MAX_TOKENS = 16_384;
 type CustomModelInput = "text" | "image";
+/** Shared type for Custom Model Image Input Inference in src/commands. */
 export type CustomModelImageInputInference = {
   supportsImageInput: boolean;
   confidence: "known" | "unknown";
@@ -44,6 +46,7 @@ function customModelInputs(supportsImageInput: boolean): CustomModelInput[] {
   return supportsImageInput ? ["text", "image"] : ["text"];
 }
 
+/** Reused helper for resolve Custom Model Image Input Inference behavior in src/commands. */
 export function resolveCustomModelImageInputInference(
   modelId: string,
 ): CustomModelImageInputInference {
@@ -73,6 +76,7 @@ export function resolveCustomModelImageInputInference(
   return { supportsImageInput: false, confidence: "unknown" };
 }
 
+/** Reused helper for infer Custom Model Supports Image Input behavior in src/commands. */
 export function inferCustomModelSupportsImageInput(modelId: string): boolean {
   return resolveCustomModelImageInputInference(modelId).supportsImageInput;
 }
@@ -167,7 +171,9 @@ function hasSameHost(a: string, b: string): boolean {
   }
 }
 
+/** Shared type for Custom Api Compatibility in src/commands. */
 export type CustomApiCompatibility = "openai" | "anthropic";
+/** Shared type for Custom Api Result in src/commands. */
 export type CustomApiResult = {
   config: OpenClawConfig;
   providerId?: string;
@@ -175,6 +181,7 @@ export type CustomApiResult = {
   providerIdRenamedFrom?: string;
 };
 
+/** Shared type for Apply Custom Api Config Params in src/commands. */
 export type ApplyCustomApiConfigParams = {
   config: OpenClawConfig;
   baseUrl: string;
@@ -186,6 +193,7 @@ export type ApplyCustomApiConfigParams = {
   supportsImageInput?: boolean;
 };
 
+/** Shared type for Parse Non Interactive Custom Api Flags Params in src/commands. */
 export type ParseNonInteractiveCustomApiFlagsParams = {
   baseUrl?: string;
   modelId?: string;
@@ -195,6 +203,7 @@ export type ParseNonInteractiveCustomApiFlagsParams = {
   supportsImageInput?: boolean;
 };
 
+/** Shared type for Parsed Non Interactive Custom Api Flags in src/commands. */
 export type ParsedNonInteractiveCustomApiFlags = {
   baseUrl: string;
   modelId: string;
@@ -204,6 +213,7 @@ export type ParsedNonInteractiveCustomApiFlags = {
   supportsImageInput?: boolean;
 };
 
+/** Shared type for Custom Api Error Code in src/commands. */
 export type CustomApiErrorCode =
   | "missing_required"
   | "invalid_compatibility"
@@ -212,6 +222,7 @@ export type CustomApiErrorCode =
   | "invalid_provider_id"
   | "invalid_alias";
 
+/** Reused class for Custom Api Error behavior in src/commands. */
 export class CustomApiError extends Error {
   readonly code: CustomApiErrorCode;
 
@@ -222,17 +233,20 @@ export class CustomApiError extends Error {
   }
 }
 
+/** Shared type for Resolve Custom Provider Id Params in src/commands. */
 export type ResolveCustomProviderIdParams = {
   config: OpenClawConfig;
   baseUrl: string;
   providerId?: string;
 };
 
+/** Shared type for Resolved Custom Provider Id in src/commands. */
 export type ResolvedCustomProviderId = {
   providerId: string;
   providerIdRenamedFrom?: string;
 };
 
+/** Reused helper for normalize Endpoint Id behavior in src/commands. */
 export function normalizeEndpointId(raw: string): string {
   const trimmed = normalizeOptionalLowercaseString(raw);
   if (!trimmed) {
@@ -241,6 +255,7 @@ export function normalizeEndpointId(raw: string): string {
   return trimmed.replace(/[^a-z0-9-]+/g, "-").replace(/^-+|-+$/g, "");
 }
 
+/** Reused helper for build Endpoint Id From Url behavior in src/commands. */
 export function buildEndpointIdFromUrl(baseUrl: string): string {
   try {
     const url = new URL(baseUrl);
@@ -276,6 +291,7 @@ function resolveUniqueEndpointId(params: {
   return { providerId: candidate, renamed: true };
 }
 
+/** Reused helper for resolve Custom Model Alias Error behavior in src/commands. */
 export function resolveCustomModelAliasError(params: {
   raw: string;
   cfg: OpenClawConfig;
@@ -339,6 +355,7 @@ type VerificationRequest = {
   body: Record<string, unknown>;
 };
 
+/** Reused helper for normalize Optional Provider Api Key behavior in src/commands. */
 export function normalizeOptionalProviderApiKey(value: unknown): SecretInput | undefined {
   if (isSecretRef(value)) {
     return value;
@@ -364,6 +381,7 @@ function resolveVerificationEndpoint(params: {
   return endpointUrl.href;
 }
 
+/** Reused helper for build Open Ai Verification Probe Request behavior in src/commands. */
 export function buildOpenAiVerificationProbeRequest(params: {
   baseUrl: string;
   apiKey: string;
@@ -407,6 +425,7 @@ export function buildOpenAiVerificationProbeRequest(params: {
   };
 }
 
+/** Reused helper for build Anthropic Verification Probe Request behavior in src/commands. */
 export function buildAnthropicVerificationProbeRequest(params: {
   baseUrl: string;
   apiKey: string;
@@ -455,6 +474,7 @@ function parseCustomApiCompatibility(raw?: string): CustomApiCompatibility {
   return compatibilityRaw;
 }
 
+/** Reused helper for resolve Custom Provider Id behavior in src/commands. */
 export function resolveCustomProviderId(
   params: ResolveCustomProviderIdParams,
 ): ResolvedCustomProviderId {
@@ -484,6 +504,7 @@ export function resolveCustomProviderId(
   };
 }
 
+/** Reused helper for parse Non Interactive Custom Api Flags behavior in src/commands. */
 export function parseNonInteractiveCustomApiFlags(
   params: ParseNonInteractiveCustomApiFlagsParams,
 ): ParsedNonInteractiveCustomApiFlags {
@@ -519,6 +540,7 @@ export function parseNonInteractiveCustomApiFlags(
   };
 }
 
+/** Reused helper for apply Custom Api Config behavior in src/commands. */
 export function applyCustomApiConfig(params: ApplyCustomApiConfigParams): CustomApiResult {
   const baseUrl = normalizeOptionalString(params.baseUrl) ?? "";
   if (!URL.canParse(baseUrl)) {

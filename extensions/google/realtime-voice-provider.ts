@@ -1,3 +1,4 @@
+// extensions/google realtime voice provider helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import type {
   ActivityHandling,

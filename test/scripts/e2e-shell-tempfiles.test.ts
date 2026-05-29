@@ -1,3 +1,4 @@
+// Tests test/scripts e2e shell tempfiles test behavior.
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { describe, expect, it } from "vitest";

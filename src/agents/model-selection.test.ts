@@ -1,3 +1,4 @@
+/** Tests high-level model selection helpers. */
 import { describe, it, expect, vi } from "vitest";
 import type { OpenClawConfig } from "../config/types.js";
 import { resetLogger, setLoggerOverride } from "../logging/logger.js";

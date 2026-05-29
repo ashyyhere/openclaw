@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server test support helpers and runtime behavior.
 import { EventEmitter } from "node:events";
 import { PassThrough, Writable } from "node:stream";
 import type { Api, Model } from "openclaw/plugin-sdk/llm";

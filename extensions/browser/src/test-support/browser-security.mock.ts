@@ -1,3 +1,4 @@
+// extensions/browser/src/test-support browser security mock helpers and runtime behavior.
 import { vi } from "vitest";
 
 const lookupFn = vi.hoisted(() => async (_hostname: string, options?: { all?: boolean }) => {

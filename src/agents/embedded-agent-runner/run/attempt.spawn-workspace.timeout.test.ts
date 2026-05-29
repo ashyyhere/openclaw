@@ -1,3 +1,4 @@
+/** Covers HTTP timeout setup for spawned embedded attempts. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({

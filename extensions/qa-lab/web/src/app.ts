@@ -1,3 +1,4 @@
+// extensions/qa-lab/web/src app helpers and runtime behavior.
 import { defaultQaModelForMode, isQaFastModeEnabled } from "../../model-selection.js";
 import { normalizeCaptureSavedView, normalizeCaptureSavedViews } from "./capture-saved-view.js";
 import { formatErrorMessage } from "./errors.js";

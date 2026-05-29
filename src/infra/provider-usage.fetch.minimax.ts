@@ -1,3 +1,4 @@
+// infra provider usage fetch minimax helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import { isRecord } from "../utils.js";
 import {
@@ -391,6 +392,7 @@ function resolveMinimaxUsageUrl(baseUrl?: string): string {
   return `${DEFAULT_MINIMAX_USAGE_ORIGIN}${MINIMAX_USAGE_PATH}`;
 }
 
+/** Reused helper for fetch Minimax Usage behavior in src/infra. */
 export async function fetchMinimaxUsage(
   apiKey: string,
   timeoutMs: number,

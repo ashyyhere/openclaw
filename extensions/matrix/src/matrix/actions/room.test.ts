@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src/matrix/actions room test behavior.
 import { describe, expect, it, vi } from "vitest";
 import type { MatrixClient } from "../sdk.js";
 import { getMatrixMemberInfo, getMatrixRoomInfo } from "./room.js";

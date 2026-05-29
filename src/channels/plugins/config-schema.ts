@@ -1,3 +1,4 @@
+// Zod schema helpers for channel plugin config sections.
 import { z, type ZodRawShape, type ZodTypeAny } from "zod";
 import { DmPolicySchema } from "../../config/zod-schema.core.js";
 import { validateJsonSchemaValue } from "../../plugins/schema-validator.js";
@@ -18,9 +19,12 @@ type ExtendableZodObject = ZodTypeAny & {
   extend: (shape: Record<string, ZodTypeAny>) => ZodTypeAny;
 };
 
+/** Reused constant for Allow From Entry Schema behavior in src/channels/plugins. */
 export const AllowFromEntrySchema = z.union([z.string(), z.number()]);
+/** Reused constant for Allow From List Schema behavior in src/channels/plugins. */
 export const AllowFromListSchema = z.array(AllowFromEntrySchema).optional();
 
+/** Reused helper for build Nested Dm Config Schema behavior in src/channels/plugins. */
 export function buildNestedDmConfigSchema(extraShape?: ZodRawShape) {
   const baseShape = {
     enabled: z.boolean().optional(),
@@ -30,6 +34,7 @@ export function buildNestedDmConfigSchema(extraShape?: ZodRawShape) {
   return z.object(extraShape ? { ...baseShape, ...extraShape } : baseShape).optional();
 }
 
+/** Reused helper for build Catchall Multi Account Channel Schema behavior in src/channels/plugins. */
 export function buildCatchallMultiAccountChannelSchema<T extends ExtendableZodObject>(
   accountSchema: T,
 ): T {
@@ -112,6 +117,7 @@ function safeParseJsonSchema(
   };
 }
 
+/** Reused helper for build Json Channel Config Schema behavior in src/channels/plugins. */
 export function buildJsonChannelConfigSchema(
   schema: JsonSchemaObject,
   options?: BuildJsonChannelConfigSchemaOptions,
@@ -126,6 +132,7 @@ export function buildJsonChannelConfigSchema(
   };
 }
 
+/** Reused helper for build Channel Config Schema behavior in src/channels/plugins. */
 export function buildChannelConfigSchema(
   schema: ZodTypeAny,
   options?: BuildChannelConfigSchemaOptions,
@@ -158,6 +165,7 @@ export function buildChannelConfigSchema(
   };
 }
 
+/** Reused helper for empty Channel Config Schema behavior in src/channels/plugins. */
 export function emptyChannelConfigSchema(): ChannelConfigSchema {
   return {
     schema: {

@@ -1,9 +1,11 @@
+// media-understanding attachments normalize helpers and runtime behavior.
 import type { MsgContext } from "../auto-reply/templating.js";
 import { assertNoWindowsNetworkPath, safeFileURLToPath } from "../infra/local-file-access.js";
 import { getFileExtension, isAudioFileName, kindFromMime } from "../media/mime.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import type { MediaAttachment } from "./types.js";
 
+/** Reused helper for normalize Attachment Path behavior in src/media-understanding. */
 export function normalizeAttachmentPath(raw?: string | null): string | undefined {
   const value = normalizeOptionalString(raw);
   if (!value) {
@@ -24,6 +26,7 @@ export function normalizeAttachmentPath(raw?: string | null): string | undefined
   return value;
 }
 
+/** Reused helper for normalize Attachments behavior in src/media-understanding. */
 export function normalizeAttachments(ctx: MsgContext): MediaAttachment[] {
   const pathsFromArray = Array.isArray(ctx.MediaPaths) ? ctx.MediaPaths : undefined;
   const urlsFromArray = Array.isArray(ctx.MediaUrls) ? ctx.MediaUrls : undefined;
@@ -84,6 +87,7 @@ export function normalizeAttachments(ctx: MsgContext): MediaAttachment[] {
   ];
 }
 
+/** Reused helper for resolve Attachment Kind behavior in src/media-understanding. */
 export function resolveAttachmentKind(
   attachment: MediaAttachment,
 ): "image" | "audio" | "video" | "document" | "unknown" {
@@ -108,14 +112,17 @@ export function resolveAttachmentKind(
   return "unknown";
 }
 
+/** Reused helper for is Video Attachment behavior in src/media-understanding. */
 export function isVideoAttachment(attachment: MediaAttachment): boolean {
   return resolveAttachmentKind(attachment) === "video";
 }
 
+/** Reused helper for is Audio Attachment behavior in src/media-understanding. */
 export function isAudioAttachment(attachment: MediaAttachment): boolean {
   return resolveAttachmentKind(attachment) === "audio";
 }
 
+/** Reused helper for is Image Attachment behavior in src/media-understanding. */
 export function isImageAttachment(attachment: MediaAttachment): boolean {
   return resolveAttachmentKind(attachment) === "image";
 }

@@ -1,3 +1,4 @@
+// extensions/matrix/src session route helpers and runtime behavior.
 import { normalizeAccountId } from "openclaw/plugin-sdk/account-id";
 import {
   buildChannelOutboundSessionRoute,

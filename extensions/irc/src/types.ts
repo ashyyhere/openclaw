@@ -1,3 +1,4 @@
+// Shared types for extensions/irc/src types behavior.
 import type {
   BlockStreamingCoalesceConfig,
   DmConfig,

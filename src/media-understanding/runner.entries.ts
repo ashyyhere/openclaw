@@ -1,3 +1,4 @@
+// media-understanding runner entries helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import {
@@ -51,6 +52,7 @@ import type {
 } from "./types.js";
 import { estimateBase64Size, resolveVideoMaxBase64Bytes } from "./video.js";
 
+/** Shared type for Provider Registry in src/media-understanding. */
 export type ProviderRegistry = Map<string, MediaUnderstandingProvider>;
 type ResolveApiKeyForProvider = typeof import("../agents/model-auth.js").resolveApiKeyForProvider;
 type RequireApiKey = typeof import("../agents/model-auth.js").requireApiKey;
@@ -361,6 +363,7 @@ function resolveProviderQuery(params: {
   return Object.keys(query).length > 0 ? query : undefined;
 }
 
+/** Reused helper for build Model Decision behavior in src/media-understanding. */
 export function buildModelDecision(params: {
   entry: MediaUnderstandingModelConfig;
   entryType: "provider" | "cli";
@@ -493,6 +496,7 @@ async function resolveProviderExecutionContext(params: {
   return { apiKeys, baseUrl, headers, request };
 }
 
+/** Reused helper for format Decision Summary behavior in src/media-understanding. */
 export function formatDecisionSummary(decision: MediaUnderstandingDecision): string {
   const attachments = Array.isArray(decision.attachments) ? decision.attachments : [];
   const total = attachments.length;
@@ -509,6 +513,7 @@ export function formatDecisionSummary(decision: MediaUnderstandingDecision): str
   return `${decision.capability}: ${decision.outcome}${countLabel}${viaLabel}${reasonLabel}`;
 }
 
+/** Reused helper for find Decision Reason behavior in src/media-understanding. */
 export function findDecisionReason(
   decision: MediaUnderstandingDecision,
   outcome?: MediaUnderstandingModelDecision["outcome"],
@@ -529,6 +534,7 @@ export function findDecisionReason(
   return undefined;
 }
 
+/** Reused helper for normalize Decision Reason behavior in src/media-understanding. */
 export function normalizeDecisionReason(reason?: string): string | undefined {
   const trimmed = typeof reason === "string" ? reason.trim() : "";
   if (!trimmed) {
@@ -538,6 +544,7 @@ export function normalizeDecisionReason(reason?: string): string | undefined {
   return normalized || undefined;
 }
 
+/** Reused helper for summarize Decision Reason behavior in src/media-understanding. */
 export function summarizeDecisionReason(reason?: string): string | undefined {
   const normalized = normalizeDecisionReason(reason);
   if (!normalized) {
@@ -556,6 +563,7 @@ function assertMinAudioSize(params: { size: number; attachmentIndex: number }): 
   );
 }
 
+/** Reused helper for run Provider Entry behavior in src/media-understanding. */
 export async function runProviderEntry(params: {
   capability: MediaUnderstandingCapability;
   entry: MediaUnderstandingModelConfig;
@@ -758,6 +766,7 @@ export async function runProviderEntry(params: {
   };
 }
 
+/** Reused helper for run Cli Entry behavior in src/media-understanding. */
 export async function runCliEntry(params: {
   capability: MediaUnderstandingCapability;
   entry: MediaUnderstandingModelConfig;

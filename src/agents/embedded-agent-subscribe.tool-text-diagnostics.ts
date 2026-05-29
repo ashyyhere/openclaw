@@ -1,3 +1,4 @@
+/** Warns when assistant text looks like an unstructured tool invocation. */
 import type { AssistantMessage } from "../llm/types.js";
 import { extractTextFromChatContent } from "../shared/chat-content.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
@@ -54,6 +55,7 @@ function isRegisteredToolName(
   return false;
 }
 
+/** Log a diagnostic if an assistant emitted tool-shaped text instead of a tool call. */
 export function warnIfAssistantEmittedToolText(
   ctx: EmbeddedAgentSubscribeContext,
   assistantMessage: AssistantMessage,

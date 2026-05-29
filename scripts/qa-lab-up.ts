@@ -1,3 +1,4 @@
+// scripts qa lab up helpers and runtime behavior.
 import { parseArgs } from "node:util";
 
 const { values } = parseArgs({

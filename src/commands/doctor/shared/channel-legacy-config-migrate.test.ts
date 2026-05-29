@@ -1,3 +1,4 @@
+/** Tests channel legacy config doctor migrations. */
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 const { applyPluginDoctorCompatibilityMigrations, collectRelevantDoctorPluginIds } = vi.hoisted(

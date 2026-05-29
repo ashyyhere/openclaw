@@ -1,3 +1,4 @@
+/** Loads legacy provider OAuth sidecar files during auth profile migration. */
 import * as childProcess from "node:child_process";
 import { createCipheriv, createDecipheriv, hash } from "node:crypto";
 import fs from "node:fs";
@@ -19,12 +20,14 @@ const LEGACY_OAUTH_SECRET_KEYCHAIN_SERVICE = "OpenClaw Auth Profile Secrets";
 const LEGACY_OAUTH_SECRET_KEYCHAIN_ACCOUNT = "oauth-profile-master-key";
 const LEGACY_OAUTH_SECRET_KEY_FILE_NAME = "auth-profile-secret-key";
 
+/** Shared type for Legacy OAuth Ref in src/agents/auth-profiles. */
 export type LegacyOAuthRef = {
   source: typeof LEGACY_OAUTH_REF_SOURCE;
   provider: typeof LEGACY_OAUTH_REF_PROVIDER;
   id: string;
 };
 
+/** Shared type for Legacy OAuth Secret Material in src/agents/auth-profiles. */
 export type LegacyOAuthSecretMaterial = {
   access?: string;
   refresh?: string;
@@ -42,6 +45,7 @@ function readNonEmptyString(value: unknown): string | undefined {
   return typeof value === "string" && value.trim() ? value : undefined;
 }
 
+/** Reused helper for is Legacy OAuth Ref behavior in src/agents/auth-profiles. */
 export function isLegacyOAuthRef(value: unknown): value is LegacyOAuthRef {
   if (!isRecord(value)) {
     return false;
@@ -54,6 +58,7 @@ export function isLegacyOAuthRef(value: unknown): value is LegacyOAuthRef {
   );
 }
 
+/** Reused helper for resolve Legacy OAuth Sidecar Path behavior in src/agents/auth-profiles. */
 export function resolveLegacyOAuthSidecarPath(
   ref: LegacyOAuthRef,
   env: NodeJS.ProcessEnv = process.env,
@@ -90,6 +95,7 @@ function coerceLegacyOAuthEncryptedPayload(raw: unknown): LegacyOAuthEncryptedPa
     : null;
 }
 
+/** Reused helper for is Legacy OAuth Sidecar Payload behavior in src/agents/auth-profiles. */
 export function isLegacyOAuthSidecarPayload(raw: unknown): boolean {
   if (!isRecord(raw)) {
     return false;
@@ -357,12 +363,14 @@ function emitKeychainOnlyMigrationHintOnce(profileId: string): void {
   );
 }
 
+/** Reused constant for legacy OAuth Sidecar Internal Test Utils behavior in src/agents/auth-profiles. */
 export const legacyOAuthSidecarInternalTestUtils = {
   resetKeychainOnlyMigrationHint(): void {
     keychainOnlyMigrationHintEmitted = false;
   },
 };
 
+/** Reused helper for load Legacy OAuth Sidecar Material behavior in src/agents/auth-profiles. */
 export function loadLegacyOAuthSidecarMaterial(params: {
   ref: LegacyOAuthRef;
   profileId: string;
@@ -396,6 +404,7 @@ export function loadLegacyOAuthSidecarMaterial(params: {
   return normalizeLegacyOAuthSecretMaterial(raw);
 }
 
+/** Reused constant for legacy OAuth Sidecar Test Utils behavior in src/agents/auth-profiles. */
 export const legacyOAuthSidecarTestUtils = {
   buildLegacyOAuthSecretAad,
   buildLegacyOAuthSecretKey,

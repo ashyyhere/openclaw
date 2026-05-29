@@ -1,3 +1,4 @@
+// ui/src/ui lazy view helpers and runtime behavior.
 import { html } from "lit";
 import { t } from "../i18n/index.ts";
 
@@ -8,6 +9,7 @@ type LazyState<T> = {
   hasError: boolean;
 };
 
+/** Shared type for Lazy View in ui/src/ui. */
 export type LazyView<T> = {
   read: () => T | null;
   retry: () => void;
@@ -16,6 +18,7 @@ export type LazyView<T> = {
   pending: () => boolean;
 };
 
+/** Reused helper for create Lazy View behavior in ui/src/ui. */
 export function createLazyView<T>(loader: () => Promise<T>, onChange?: () => void): LazyView<T> {
   const state: LazyState<T> = { mod: null, promise: null, error: undefined, hasError: false };
 
@@ -74,6 +77,7 @@ function formatLazyViewError(error: unknown): string {
   return t("lazyView.unknownError");
 }
 
+/** Reused helper for render Lazy View behavior in ui/src/ui. */
 export function renderLazyView<M>(view: LazyView<M>, render: (mod: M) => unknown) {
   const mod = view.read();
   if (mod !== null) {

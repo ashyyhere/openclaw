@@ -1,3 +1,4 @@
+// Tests extensions/qa-matrix/src/substrate artifacts test behavior.
 import { describe, expect, it } from "vitest";
 import { buildMatrixQaObservedEventsArtifact } from "./artifacts.js";
 

@@ -1,3 +1,4 @@
+// extensions/qa-matrix/src cli paths helpers and runtime behavior.
 import path from "node:path";
 
 export function resolveRepoRelativeOutputDir(repoRoot: string, outputDir?: string) {

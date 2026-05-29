@@ -1,9 +1,11 @@
+/** Resolves agent identity, prefixes, reactions, and human-delay config. */
 import type { HumanDelayConfig, IdentityConfig } from "../config/types.base.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveAgentConfig } from "./agent-scope.js";
 
 const DEFAULT_ACK_REACTION = "👀";
 
+/** Resolve identity config for an agent. */
 export function resolveAgentIdentity(
   cfg: OpenClawConfig,
   agentId: string,
@@ -11,6 +13,7 @@ export function resolveAgentIdentity(
   return resolveAgentConfig(cfg, agentId)?.identity;
 }
 
+/** Resolve acknowledgement reaction from account, channel, agent, or defaults. */
 export function resolveAckReaction(
   cfg: OpenClawConfig,
   agentId: string,
@@ -46,6 +49,7 @@ export function resolveAckReaction(
   return emoji || DEFAULT_ACK_REACTION;
 }
 
+/** Resolve a message prefix from an agent identity name. */
 export function resolveIdentityNamePrefix(
   cfg: OpenClawConfig,
   agentId: string,
@@ -57,6 +61,7 @@ export function resolveIdentityNamePrefix(
   return `[${name}]`;
 }
 
+/** Resolve outbound message prefix for a channel/session. */
 export function resolveMessagePrefix(
   cfg: OpenClawConfig,
   agentId: string,
@@ -87,6 +92,7 @@ function getChannelConfig(
     : undefined;
 }
 
+/** Resolve response prefix for a channel/session. */
 export function resolveResponsePrefix(
   cfg: OpenClawConfig,
   agentId: string,
@@ -128,6 +134,7 @@ export function resolveResponsePrefix(
   return undefined;
 }
 
+/** Resolve effective message prefix config for an agent/channel. */
 export function resolveEffectiveMessagesConfig(
   cfg: OpenClawConfig,
   agentId: string,
@@ -150,6 +157,7 @@ export function resolveEffectiveMessagesConfig(
   };
 }
 
+/** Resolve human-delay config for an agent. */
 export function resolveHumanDelayConfig(
   cfg: OpenClawConfig,
   agentId: string,

@@ -1,3 +1,4 @@
+// daemon inspect helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
@@ -12,6 +13,7 @@ import { resolveHomeDir } from "./paths.js";
 import { execSchtasks } from "./schtasks-exec.js";
 import { parseSystemdExecStart } from "./systemd-unit.js";
 
+/** Shared type for Extra Gateway Service in src/daemon. */
 export type ExtraGatewayService = {
   platform: "darwin" | "linux" | "win32";
   label: string;
@@ -21,6 +23,7 @@ export type ExtraGatewayService = {
   legacy?: boolean;
 };
 
+/** Shared type for Find Extra Gateway Services Options in src/daemon. */
 export type FindExtraGatewayServicesOptions = {
   deep?: boolean;
 };
@@ -40,6 +43,7 @@ const SYSTEMD_REFERENCE_ONLY_KEYS = new Set([
   "wants",
 ]);
 
+/** Reused helper for render Gateway Service Cleanup Hints behavior in src/daemon. */
 export function renderGatewayServiceCleanupHints(
   env: Record<string, string | undefined> = process.env as Record<string, string | undefined>,
 ): string[] {
@@ -74,6 +78,7 @@ function hasGatewaySubcommandArg(args: string[]): boolean {
   });
 }
 
+/** Reused helper for detect Marker Line With Gateway behavior in src/daemon. */
 export function detectMarkerLineWithGateway(contents: string): Marker | null {
   // Join line continuations (trailing backslash) into single lines
   const lower = normalizeLowercaseStringOrEmpty(contents.replace(/\\\r?\n\s*/g, " "));
@@ -354,6 +359,7 @@ async function scanSystemdDir(params: {
   return results;
 }
 
+/** Reused helper for find System Gateway Services behavior in src/daemon. */
 export async function findSystemGatewayServices(): Promise<ExtraGatewayService[]> {
   if (process.platform !== "linux") {
     return [];
@@ -425,6 +431,7 @@ function parseSchtasksList(output: string): ScheduledTaskInfo[] {
   return tasks;
 }
 
+/** Reused helper for find Extra Gateway Services behavior in src/daemon. */
 export async function findExtraGatewayServices(
   env: Record<string, string | undefined>,
   opts: FindExtraGatewayServicesOptions = {},

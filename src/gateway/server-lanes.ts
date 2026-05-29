@@ -1,9 +1,11 @@
+// gateway server lanes helpers and runtime behavior.
 import { resolveAgentMaxConcurrent, resolveSubagentMaxConcurrent } from "../config/agent-limits.js";
 import { resolveCronMaxConcurrentRuns } from "../config/cron-limits.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { setCommandLaneConcurrency } from "../process/command-queue.js";
 import { CommandLane } from "../process/lanes.js";
 
+/** Reused helper for apply Gateway Lane Concurrency behavior in src/gateway. */
 export function applyGatewayLaneConcurrency(cfg: OpenClawConfig) {
   const cronMaxConcurrentRuns = resolveCronMaxConcurrentRuns(cfg.cron);
   setCommandLaneConcurrency(CommandLane.Cron, cronMaxConcurrentRuns);

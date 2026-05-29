@@ -1,3 +1,4 @@
+// extensions/microsoft speech provider helpers and runtime behavior.
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import {

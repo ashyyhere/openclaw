@@ -1,3 +1,4 @@
+/** User-facing system messages for thread binding lifecycle changes. */
 import { prefixSystemMessage } from "../infra/system-message.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 
@@ -15,6 +16,7 @@ function normalizeThreadBindingDurationMs(raw: unknown): number {
   return durationMs;
 }
 
+/** Reused helper for format Thread Binding Duration Label behavior in src/channels. */
 export function formatThreadBindingDurationLabel(durationMs: number): string {
   if (durationMs <= 0) {
     return "disabled";
@@ -29,6 +31,7 @@ export function formatThreadBindingDurationLabel(durationMs: number): string {
   return `${totalMinutes}m`;
 }
 
+/** Reused helper for resolve Thread Binding Thread Name behavior in src/channels. */
 export function resolveThreadBindingThreadName(params: {
   agentId?: string;
   label?: string;
@@ -39,6 +42,7 @@ export function resolveThreadBindingThreadName(params: {
   return raw.slice(0, 100);
 }
 
+/** Reused helper for resolve Thread Binding Intro Text behavior in src/channels. */
 export function resolveThreadBindingIntroText(params: {
   agentId?: string;
   label?: string;
@@ -81,6 +85,7 @@ export function resolveThreadBindingIntroText(params: {
   return prefixSystemMessage(`${intro}\n${details.join("\n")}`);
 }
 
+/** Reused helper for resolve Thread Binding Farewell Text behavior in src/channels. */
 export function resolveThreadBindingFarewellText(params: {
   reason?: string;
   farewellText?: string;

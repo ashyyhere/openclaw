@@ -1,3 +1,4 @@
+// Tests extensions/codex-supervisor/src supervisor test behavior.
 import * as fs from "node:fs/promises";
 import * as os from "node:os";
 import * as path from "node:path";

@@ -1,3 +1,4 @@
+// Tests security audit model hygiene test behavior.
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import { collectModelHygieneFindings } from "./audit-extra.sync.js";

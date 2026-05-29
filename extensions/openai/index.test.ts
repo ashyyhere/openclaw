@@ -1,3 +1,4 @@
+// Tests extensions/openai index test behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { createTestPluginApi } from "openclaw/plugin-sdk/plugin-test-api";
 import {

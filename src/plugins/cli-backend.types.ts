@@ -1,12 +1,15 @@
+// Shared types for plugins cli backend types behavior.
 import type { CliBackendConfig } from "../config/types.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { ContextEngineHostCapability } from "../context-engine/types.js";
 
+/** Shared type for Plugin Text Replacement in src/plugins. */
 export type PluginTextReplacement = {
   from: string | RegExp;
   to: string;
 };
 
+/** Shared type for Plugin Text Transforms in src/plugins. */
 export type PluginTextTransforms = {
   /** Rewrites applied to outbound prompt text before provider/CLI transport. */
   input?: PluginTextReplacement[];
@@ -14,11 +17,13 @@ export type PluginTextTransforms = {
   output?: PluginTextReplacement[];
 };
 
+/** Shared type for Cli Bundle Mcp Mode in src/plugins. */
 export type CliBundleMcpMode =
   | "claude-config-file"
   | "codex-config-overrides"
   | "gemini-system-settings";
 
+/** Shared type for Cli Backend Prepare Execution Context in src/plugins. */
 export type CliBackendPrepareExecutionContext = {
   config?: OpenClawConfig;
   workspaceDir: string;
@@ -28,12 +33,14 @@ export type CliBackendPrepareExecutionContext = {
   authProfileId?: string;
 };
 
+/** Shared type for Cli Backend Prepared Execution in src/plugins. */
 export type CliBackendPreparedExecution = {
   env?: Record<string, string>;
   clearEnv?: string[];
   cleanup?: () => Promise<void>;
 };
 
+/** Shared type for Cli Backend Thinking Level in src/plugins. */
 export type CliBackendThinkingLevel =
   | "off"
   | "minimal"
@@ -44,6 +51,7 @@ export type CliBackendThinkingLevel =
   | "adaptive"
   | "max";
 
+/** Shared type for Cli Backend Resolve Execution Args Context in src/plugins. */
 export type CliBackendResolveExecutionArgsContext = {
   config?: OpenClawConfig;
   workspaceDir: string;
@@ -55,14 +63,18 @@ export type CliBackendResolveExecutionArgsContext = {
   baseArgs: readonly string[];
 };
 
+/** Shared type for Cli Backend Resolve Execution Args in src/plugins. */
 export type CliBackendResolveExecutionArgs = (
   ctx: CliBackendResolveExecutionArgsContext,
 ) => readonly string[] | null | undefined;
 
+/** Shared type for Cli Backend Auth Epoch Mode in src/plugins. */
 export type CliBackendAuthEpochMode = "combined" | "profile-only";
 
+/** Shared type for Cli Backend Native Tool Mode in src/plugins. */
 export type CliBackendNativeToolMode = "none" | "always-on";
 
+/** Shared type for Cli Backend Normalize Config Context in src/plugins. */
 export type CliBackendNormalizeConfigContext = {
   config?: OpenClawConfig;
   backendId: string;

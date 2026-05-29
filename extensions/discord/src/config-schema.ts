@@ -1,3 +1,4 @@
+// extensions/discord/src config schema helpers and runtime behavior.
 import { buildChannelConfigSchema, DiscordConfigSchema } from "../config-api.js";
 import { discordChannelConfigUiHints } from "./config-ui-hints.js";
 

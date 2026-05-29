@@ -1,3 +1,4 @@
+/** Implements plugin uninstall CLI workflow and config cleanup. */
 import os from "node:os";
 import path from "node:path";
 import { theme } from "../../packages/terminal-core/src/theme.js";
@@ -11,6 +12,7 @@ import {
 import { defaultRuntime, type RuntimeEnv } from "../runtime.js";
 import { shortenHomePath } from "../utils.js";
 
+/** Shared type for Plugin Uninstall Options in src/cli. */
 export type PluginUninstallOptions = {
   keepFiles?: boolean;
   /** @deprecated Use keepFiles. */
@@ -26,6 +28,7 @@ function isPromptInputClosedError(
   return error instanceof PromptInputClosedError;
 }
 
+/** Reused helper for run Plugin Uninstall Command behavior in src/cli. */
 export async function runPluginUninstallCommand(
   id: string,
   opts: PluginUninstallOptions = {},

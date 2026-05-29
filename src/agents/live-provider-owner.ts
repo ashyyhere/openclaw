@@ -29,6 +29,7 @@ function resolveCachedOwningPluginIdsForProvider(
   return owners;
 }
 
+/** Return whether two provider ids are owned by the same plugin. */
 export function liveProvidersShareOwningPlugin(
   left: string,
   right: string,

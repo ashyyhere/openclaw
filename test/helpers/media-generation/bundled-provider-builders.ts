@@ -1,3 +1,4 @@
+// test/helpers/media-generation bundled provider builders helpers and runtime behavior.
 import type { OpenClawPluginApi } from "../../../src/plugins/types.js";
 import { loadBundledPluginPublicSurfaceSync } from "../../../src/test-utils/bundled-plugin-public-surface.js";
 

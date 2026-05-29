@@ -1,8 +1,10 @@
+/** Process-wide registry for ACP runtime backends contributed by plugins. */
 import { resolveGlobalSingleton } from "../../shared/global-singleton.js";
 import { normalizeOptionalLowercaseString } from "../../shared/string-coerce.js";
 import { AcpRuntimeError } from "./errors.js";
 import type { AcpRuntime } from "./types.js";
 
+/** Shared type for Acp Runtime Backend in src/acp/runtime. */
 export type AcpRuntimeBackend = {
   id: string;
   runtime: AcpRuntime;
@@ -47,6 +49,7 @@ function isBackendHealthy(backend: AcpRuntimeBackend): boolean {
   }
 }
 
+/** Register or replace an ACP runtime backend by normalized id. */
 export function registerAcpRuntimeBackend(backend: AcpRuntimeBackend): void {
   const id = normalizeOptionalLowercaseString(backend.id) || "";
   if (!id) {
@@ -61,6 +64,7 @@ export function registerAcpRuntimeBackend(backend: AcpRuntimeBackend): void {
   });
 }
 
+/** Remove a registered ACP runtime backend by normalized id. */
 export function unregisterAcpRuntimeBackend(id: string): void {
   const normalized = normalizeOptionalLowercaseString(id) || "";
   if (!normalized) {
@@ -69,6 +73,7 @@ export function unregisterAcpRuntimeBackend(id: string): void {
   ACP_BACKENDS_BY_ID.delete(normalized);
 }
 
+/** Resolve a requested backend, or the first healthy registered backend. */
 export function getAcpRuntimeBackend(id?: string): AcpRuntimeBackend | null {
   const normalized = normalizeOptionalLowercaseString(id) || "";
   if (normalized) {
@@ -85,6 +90,7 @@ export function getAcpRuntimeBackend(id?: string): AcpRuntimeBackend | null {
   return ACP_BACKENDS_BY_ID.values().next().value ?? null;
 }
 
+/** Resolve a healthy ACP runtime backend or throw a typed runtime error. */
 export function requireAcpRuntimeBackend(id?: string): AcpRuntimeBackend {
   const normalized = normalizeOptionalLowercaseString(id) || "";
   const backend = getAcpRuntimeBackend(normalized || undefined);
@@ -109,6 +115,7 @@ export function requireAcpRuntimeBackend(id?: string): AcpRuntimeBackend {
   return backend;
 }
 
+/** Reused constant for testing behavior in src/acp/runtime. */
 export const testing = {
   resetAcpRuntimeBackendsForTests() {
     ACP_BACKENDS_BY_ID.clear();
@@ -117,4 +124,5 @@ export const testing = {
     return resolveAcpRuntimeRegistryGlobalState();
   },
 };
+/** Re-exported API for src/acp/runtime, starting with testing. */
 export { testing as __testing };

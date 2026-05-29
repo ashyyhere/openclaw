@@ -1,3 +1,4 @@
+/** Tests shared daemon install runtime input resolution. */
 import { describe, expect, it } from "vitest";
 import {
   resolveDaemonInstallRuntimeInputs,

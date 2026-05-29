@@ -1,3 +1,4 @@
+// extensions/qa-lab/src/providers/live-frontier character eval helpers and runtime behavior.
 import type { QaThinkingLevel } from "../../qa-thinking.js";
 
 type QaFrontierCharacterModelOptions = {

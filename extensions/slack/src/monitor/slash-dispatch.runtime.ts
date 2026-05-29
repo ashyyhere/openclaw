@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/slack/src/monitor slash dispatch runtime behavior.
 import {
   recordInboundSessionMetaSafe as recordInboundSessionMetaSafeImpl,
   resolveConversationLabel as resolveConversationLabelImpl,

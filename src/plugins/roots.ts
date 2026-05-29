@@ -1,19 +1,23 @@
+// plugins roots helpers and runtime behavior.
 import path from "node:path";
 import { normalizeStringEntries } from "../shared/string-normalization.js";
 import { resolveConfigDir, resolveUserPath } from "../utils.js";
 import { resolveBundledPluginsDir } from "./bundled-dir.js";
 
+/** Shared type for Plugin Source Roots in src/plugins. */
 export type PluginSourceRoots = {
   stock?: string;
   global: string;
   workspace?: string;
 };
 
+/** Shared type for Plugin Cache Inputs in src/plugins. */
 export type PluginCacheInputs = {
   roots: PluginSourceRoots;
   loadPaths: string[];
 };
 
+/** Reused helper for resolve Plugin Source Roots behavior in src/plugins. */
 export function resolvePluginSourceRoots(params: {
   workspaceDir?: string;
   env?: NodeJS.ProcessEnv;
@@ -27,6 +31,7 @@ export function resolvePluginSourceRoots(params: {
 }
 
 // Shared env-aware key inputs for plugin loader registry reuse.
+/** Reused helper for resolve Plugin Cache Inputs behavior in src/plugins. */
 export function resolvePluginCacheInputs(params: {
   workspaceDir?: string;
   loadPaths?: string[];

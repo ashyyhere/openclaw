@@ -1,3 +1,4 @@
+/** Tests Cloudflare AI Gateway provider config generation. */
 import { describe, expect, it } from "vitest";
 import { captureEnv } from "../test-utils/env.js";
 import type { ApiKeyCredential } from "./auth-profiles/types.js";

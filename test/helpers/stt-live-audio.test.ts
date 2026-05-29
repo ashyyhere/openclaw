@@ -1,3 +1,4 @@
+// Tests test/helpers stt live audio test behavior.
 import {
   expectOpenClawLiveTranscriptMarker,
   normalizeTranscriptForMatch,

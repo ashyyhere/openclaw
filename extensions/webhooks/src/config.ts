@@ -1,3 +1,4 @@
+// extensions/webhooks/src config helpers and runtime behavior.
 import { z } from "zod";
 import { normalizeWebhookPath } from "../runtime-api.js";
 

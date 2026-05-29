@@ -1,3 +1,4 @@
+// secrets target registry data helpers and runtime behavior.
 import type { PluginManifestRecord } from "../plugins/manifest-registry.js";
 import { resolvePluginMetadataSnapshot } from "../plugins/plugin-metadata-snapshot.js";
 import { loadChannelSecretContractApiForRecord } from "./channel-contract-api.js";
@@ -483,10 +484,12 @@ function loadSecretTargetRegistryFromPluginMetadata(params: {
   ];
 }
 
+/** Reused helper for get Core Secret Target Registry behavior in src/secrets. */
 export function getCoreSecretTargetRegistry(): SecretTargetRegistryEntry[] {
   return CORE_SECRET_TARGET_REGISTRY;
 }
 
+/** Reused helper for get Secret Target Registry behavior in src/secrets. */
 export function getSecretTargetRegistry(): SecretTargetRegistryEntry[] {
   if (cachedSecretTargetRegistry) {
     return cachedSecretTargetRegistry;
@@ -497,6 +500,7 @@ export function getSecretTargetRegistry(): SecretTargetRegistryEntry[] {
   return cachedSecretTargetRegistry;
 }
 
+/** Reused helper for get Source Secret Target Registry behavior in src/secrets. */
 export function getSourceSecretTargetRegistry(): SecretTargetRegistryEntry[] {
   return loadSecretTargetRegistryFromPluginMetadata({
     env: {

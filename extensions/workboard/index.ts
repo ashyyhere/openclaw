@@ -1,3 +1,4 @@
+// extensions/workboard index helpers and runtime behavior.
 import { definePluginEntry } from "./api.js";
 import { registerWorkboardGatewayMethods } from "./runtime-api.js";
 import { WorkboardStore } from "./src/store.js";

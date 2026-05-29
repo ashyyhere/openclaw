@@ -1,3 +1,4 @@
+// infra system presence helpers and runtime behavior.
 import { spawnSync } from "node:child_process";
 import os from "node:os";
 import {
@@ -8,6 +9,7 @@ import {
 import { resolveRuntimeServiceVersion } from "../version.js";
 import { pickBestEffortPrimaryLanIPv4 } from "./network-discovery-display.js";
 
+/** Shared type for System Presence in src/infra. */
 export type SystemPresence = {
   host?: string;
   ip?: string;
@@ -188,6 +190,7 @@ function mergeStringList(...values: Array<string[] | undefined>): string[] | und
   return out.size > 0 ? [...out] : undefined;
 }
 
+/** Reused helper for update System Presence behavior in src/infra. */
 export function updateSystemPresence(payload: SystemPresencePayload): SystemPresenceUpdate {
   ensureSelfPresence();
   const parsed = parsePresence(payload.text);
@@ -243,6 +246,7 @@ export function updateSystemPresence(payload: SystemPresencePayload): SystemPres
   } satisfies SystemPresenceUpdate;
 }
 
+/** Reused helper for upsert Presence behavior in src/infra. */
 export function upsertPresence(key: string, presence: Partial<SystemPresence>) {
   ensureSelfPresence();
   const normalizedKey = normalizePresenceKey(key) ?? normalizeLowercaseStringOrEmpty(os.hostname());
@@ -265,6 +269,7 @@ export function upsertPresence(key: string, presence: Partial<SystemPresence>) {
   entries.set(normalizedKey, merged);
 }
 
+/** Reused helper for list System Presence behavior in src/infra. */
 export function listSystemPresence(): SystemPresence[] {
   ensureSelfPresence();
   // prune expired

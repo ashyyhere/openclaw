@@ -1,3 +1,4 @@
+/** Public SDK auth-presence probe for Anthropic Vertex ADC without exposing credential values. */
 import { readFileSync } from "node:fs";
 import { homedir, platform } from "node:os";
 import { join } from "node:path";
@@ -40,6 +41,8 @@ function resolveAnthropicVertexAdcCredentialsPathCandidate(
     return explicit;
   }
   if (env !== process.env) {
+    // Synthetic env objects cannot prove the user's default ADC file exists; only inspect the
+    // filesystem for the real process env to keep tests deterministic.
     return undefined;
   }
   return resolveAnthropicVertexDefaultAdcPath(env);
@@ -58,6 +61,7 @@ function canReadAnthropicVertexAdc(env: NodeJS.ProcessEnv = process.env): boolea
   }
 }
 
+/** Return whether Anthropic Vertex can likely authenticate via metadata or ADC files. */
 export function hasAnthropicVertexAvailableAuth(env: NodeJS.ProcessEnv = process.env): boolean {
   return hasAnthropicVertexMetadataServerAdc(env) || canReadAnthropicVertexAdc(env);
 }

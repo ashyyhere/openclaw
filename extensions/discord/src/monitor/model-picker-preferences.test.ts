@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/monitor model picker preferences test behavior.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

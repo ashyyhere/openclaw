@@ -1,3 +1,4 @@
+// extensions/zalouser/src message sid helpers and runtime behavior.
 function toMessageSidPart(value?: string | number | null): string {
   if (typeof value === "string") {
     return value.trim();

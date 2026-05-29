@@ -1,3 +1,4 @@
+// extensions/discord/src draft chunking helpers and runtime behavior.
 import { resolveChannelStreamingPreviewChunk } from "openclaw/plugin-sdk/channel-outbound";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { resolveTextChunkLimit } from "openclaw/plugin-sdk/reply-chunking";

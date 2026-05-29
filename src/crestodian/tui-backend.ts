@@ -1,3 +1,4 @@
+// crestodian tui backend helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import type {
   SessionsPatchParams,
@@ -26,6 +27,7 @@ import { formatCrestodianStartupMessage, loadCrestodianOverview } from "./overvi
 
 type RunTui = typeof defaultRunTui;
 
+/** Shared type for Crestodian Tui Options in src/crestodian. */
 export type CrestodianTuiOptions = {
   yes?: boolean;
   deps?: CrestodianCommandDeps;
@@ -323,6 +325,7 @@ class CrestodianTuiBackend implements TuiBackend {
   }
 }
 
+/** Reused helper for run Crestodian Tui behavior in src/crestodian. */
 export async function runCrestodianTui(
   opts: CrestodianTuiOptions,
   runtime: RuntimeEnv,

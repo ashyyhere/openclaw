@@ -1,3 +1,5 @@
+// shared config ui hints types helpers and runtime behavior.
+/** Shared type for Config Ui Hint in src/shared. */
 export type ConfigUiHint = {
   label?: string;
   help?: string;
@@ -10,4 +12,5 @@ export type ConfigUiHint = {
   itemTemplate?: unknown;
 };
 
+/** Shared type for Config Ui Hints in src/shared. */
 export type ConfigUiHints = Record<string, ConfigUiHint>;

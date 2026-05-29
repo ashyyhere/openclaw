@@ -1,3 +1,4 @@
+// extensions/browser/src/browser/routes agent act errors helpers and runtime behavior.
 import type { BrowserResponse } from "./types.js";
 
 export const ACT_ERROR_CODES = {

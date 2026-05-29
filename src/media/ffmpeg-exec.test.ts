@@ -1,3 +1,4 @@
+// Tests media ffmpeg exec test behavior.
 import type { ChildProcess, ExecFileOptions } from "node:child_process";
 import { EventEmitter } from "node:events";
 import { PassThrough } from "node:stream";

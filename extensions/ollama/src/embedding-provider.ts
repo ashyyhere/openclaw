@@ -1,3 +1,4 @@
+// extensions/ollama/src embedding provider helpers and runtime behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/provider-auth";
 import {
   isKnownEnvApiKeyMarker,

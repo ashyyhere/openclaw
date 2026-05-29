@@ -1,3 +1,4 @@
+// test/helpers/auto-reply trigger handling test harness helpers and runtime behavior.
 import { rmSync } from "node:fs";
 import fs from "node:fs/promises";
 import os from "node:os";

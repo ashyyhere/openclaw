@@ -1,3 +1,4 @@
+/** Loads and manages interactive terminal themes for agent mode. */
 import * as fs from "node:fs";
 import * as path from "node:path";
 import {
@@ -104,6 +105,7 @@ type ThemeJson = Static<typeof ThemeJsonSchema>;
 
 const validateThemeJson = Compile(ThemeJsonSchema);
 
+/** Shared type for Theme Color in src/agents/modes. */
 export type ThemeColor =
   | "accent"
   | "border"
@@ -151,6 +153,7 @@ export type ThemeColor =
   | "thinkingXhigh"
   | "bashMode";
 
+/** Shared type for Theme Bg in src/agents/modes. */
 export type ThemeBg =
   | "selectedBg"
   | "userMessageBg"
@@ -333,6 +336,7 @@ function resolveThemeColors<T extends Record<string, ColorValue>>(
 // Theme Class
 // ============================================================================
 
+/** Reused class for Theme behavior in src/agents/modes. */
 export class Theme {
   readonly name?: string;
   readonly sourcePath?: string;
@@ -463,6 +467,7 @@ function getBuiltinThemes(): Record<string, ThemeJson> {
   return BUILTIN_THEMES;
 }
 
+/** Lists built-in and registered theme names. */
 export function getAvailableThemes(): string[] {
   const themes = new Set<string>(Object.keys(getBuiltinThemes()));
   const customThemesDir = getCustomThemesDir();
@@ -480,11 +485,13 @@ export function getAvailableThemes(): string[] {
   return Array.from(themes).toSorted();
 }
 
+/** Shared type for Theme Info in src/agents/modes. */
 export interface ThemeInfo {
   name: string;
   path: string | undefined;
 }
 
+/** Lists available themes with their source file paths when known. */
 export function getAvailableThemesWithPaths(): ThemeInfo[] {
   const themesDir = getThemesDir();
   const customThemesDir = getCustomThemesDir();
@@ -615,6 +622,7 @@ function createTheme(themeJson: ThemeJson, mode?: ColorMode, sourcePath?: string
   });
 }
 
+/** Loads a theme JSON file and resolves its color mode. */
 export function loadThemeFromPath(themePath: string, mode?: ColorMode): Theme {
   const content = fs.readFileSync(themePath, "utf-8");
   const themeJson = parseThemeJsonContent(themePath, content);
@@ -630,6 +638,7 @@ function loadTheme(name: string, mode?: ColorMode): Theme {
   return createTheme(themeJson, mode);
 }
 
+/** Resolves a theme by name from registered or built-in themes. */
 export function getThemeByName(name: string): Theme | undefined {
   try {
     return loadTheme(name);
@@ -638,14 +647,17 @@ export function getThemeByName(name: string): Theme | undefined {
   }
 }
 
+/** Shared type for Terminal Theme in src/agents/modes. */
 export type TerminalTheme = "dark" | "light";
 
+/** Shared type for Rgb Color in src/agents/modes. */
 export interface RgbColor {
   r: number;
   g: number;
   b: number;
 }
 
+/** Shared type for Terminal Theme Detection in src/agents/modes. */
 export interface TerminalThemeDetection {
   theme: TerminalTheme;
   source: "terminal background" | "COLORFGBG" | "fallback";
@@ -653,6 +665,7 @@ export interface TerminalThemeDetection {
   confidence: "high" | "low";
 }
 
+/** Shared type for Terminal Theme Detection Options in src/agents/modes. */
 export interface TerminalThemeDetectionOptions {
   env?: NodeJS.ProcessEnv;
 }
@@ -680,6 +693,7 @@ function getAnsiColorLuminance(index: number): number {
   return getRgbColorLuminance(hexToRgb(ansi256ToHex(index)));
 }
 
+/** Reused helper for get Theme For Rgb Color behavior in src/agents/modes. */
 export function getThemeForRgbColor(rgb: RgbColor): TerminalTheme {
   return getRgbColorLuminance(rgb) >= 0.5 ? "light" : "dark";
 }
@@ -695,6 +709,7 @@ function parseOscHexChannel(channel: string): number | undefined {
   return Math.round((Number.parseInt(channel, 16) / max) * 255);
 }
 
+/** Reused helper for parse Osc11 Background Color behavior in src/agents/modes. */
 export function parseOsc11BackgroundColor(data: string): RgbColor | undefined {
   const prefix = "\u001B]11;";
   const belSuffix = "\u0007";
@@ -741,6 +756,7 @@ export function parseOsc11BackgroundColor(data: string): RgbColor | undefined {
   return r !== undefined && g !== undefined && b !== undefined ? { r, g, b } : undefined;
 }
 
+/** Detects terminal background color using OSC 11 when supported. */
 export function detectTerminalBackground(
   options: TerminalThemeDetectionOptions = {},
 ): TerminalThemeDetection {
@@ -764,6 +780,7 @@ export function detectTerminalBackground(
   };
 }
 
+/** Reused helper for get Default Theme behavior in src/agents/modes. */
 export function getDefaultTheme(): string {
   return detectTerminalBackground().theme;
 }
@@ -777,6 +794,7 @@ const THEME_KEY = Symbol.for("openclaw:agent-theme");
 
 // Export theme as a getter that reads from globalThis
 // This ensures all module instances (tsx, jiti) see the same theme
+/** Reused constant for theme behavior in src/agents/modes. */
 export const theme: Theme = new Proxy({} as Theme, {
   get(_target, prop) {
     const t = (globalThis as Record<symbol, Theme>)[THEME_KEY];
@@ -797,6 +815,7 @@ let themeReloadTimer: NodeJS.Timeout | undefined;
 let onThemeChangeCallback: (() => void) | undefined;
 const registeredThemes = new Map<string, Theme>();
 
+/** Reused helper for set Registered Themes behavior in src/agents/modes. */
 export function setRegisteredThemes(themes: Theme[]): void {
   registeredThemes.clear();
   for (const theme of themes) {
@@ -806,6 +825,7 @@ export function setRegisteredThemes(themes: Theme[]): void {
   }
 }
 
+/** Initializes the active interactive theme and optional file watcher. */
 export function initTheme(themeName?: string, enableWatcher: boolean = false): void {
   const name = themeName ?? getDefaultTheme();
   currentThemeName = name;
@@ -822,6 +842,7 @@ export function initTheme(themeName?: string, enableWatcher: boolean = false): v
   }
 }
 
+/** Sets the active theme by name, path, or registered instance. */
 export function setTheme(
   name: string,
   enableWatcher: boolean = false,
@@ -848,6 +869,7 @@ export function setTheme(
   }
 }
 
+/** Reused helper for set Theme Instance behavior in src/agents/modes. */
 export function setThemeInstance(themeInstance: Theme): void {
   setGlobalTheme(themeInstance);
   currentThemeName = "<in-memory>";
@@ -857,6 +879,7 @@ export function setThemeInstance(themeInstance: Theme): void {
   }
 }
 
+/** Registers a callback for active theme changes. */
 export function onThemeChange(callback: () => void): void {
   onThemeChangeCallback = callback;
 }
@@ -934,6 +957,7 @@ function startThemeWatcher(): void {
     ) ?? undefined;
 }
 
+/** Stops the active theme file watcher, if any. */
 export function stopThemeWatcher(): void {
   if (themeReloadTimer) {
     clearTimeout(themeReloadTimer);
@@ -1205,6 +1229,7 @@ export function getLanguageFromPath(filePath: string): string | undefined {
   return extToLang[ext];
 }
 
+/** Reused helper for get Markdown Theme behavior in src/agents/modes. */
 export function getMarkdownTheme(): MarkdownTheme {
   return {
     heading: (text: string) => theme.fg("mdHeading", text),
@@ -1244,6 +1269,7 @@ export function getMarkdownTheme(): MarkdownTheme {
   };
 }
 
+/** Reused helper for get Select List Theme behavior in src/agents/modes. */
 export function getSelectListTheme(): SelectListTheme {
   return {
     selectedPrefix: (text: string) => theme.fg("accent", text),
@@ -1254,6 +1280,7 @@ export function getSelectListTheme(): SelectListTheme {
   };
 }
 
+/** Reused helper for get Editor Theme behavior in src/agents/modes. */
 export function getEditorTheme(): EditorTheme {
   return {
     borderColor: (text: string) => theme.fg("borderMuted", text),
@@ -1261,6 +1288,7 @@ export function getEditorTheme(): EditorTheme {
   };
 }
 
+/** Reused helper for get Settings List Theme behavior in src/agents/modes. */
 export function getSettingsListTheme(): SettingsListTheme {
   return {
     label: (text: string, selected: boolean) => (selected ? theme.fg("accent", text) : text),

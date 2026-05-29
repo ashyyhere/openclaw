@@ -1,3 +1,4 @@
+/** Live tests for embedded-agent runner extra-params provider behavior. */
 import type { Model } from "openclaw/plugin-sdk/llm";
 import { streamSimple } from "openclaw/plugin-sdk/llm";
 import { describe, expect, it } from "vitest";

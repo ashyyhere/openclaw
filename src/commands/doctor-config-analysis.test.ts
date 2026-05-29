@@ -1,3 +1,4 @@
+/** Tests doctor config issue analysis and model fallback warnings. */
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { resolveAgentModelFallbackValues } from "../config/model-input.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";

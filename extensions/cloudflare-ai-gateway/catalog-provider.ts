@@ -1,3 +1,4 @@
+// extensions/cloudflare-ai-gateway catalog provider helpers and runtime behavior.
 import {
   coerceSecretRef,
   resolveNonEnvSecretRefApiKeyMarker,

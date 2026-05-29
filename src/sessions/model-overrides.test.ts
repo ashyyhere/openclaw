@@ -1,3 +1,4 @@
+// Tests sessions model overrides test behavior.
 import { describe, expect, it } from "vitest";
 import type { SessionEntry } from "../config/sessions.js";
 import {

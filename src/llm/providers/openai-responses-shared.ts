@@ -1,3 +1,4 @@
+// llm/providers openai responses shared helpers and runtime behavior.
 import type OpenAI from "openai";
 import type {
   ResponseCreateParamsStreaming,
@@ -75,6 +76,7 @@ function parseTextSignature(
   return { id: signature };
 }
 
+/** Shared type for Open AIResponses Stream Options in src/llm/providers. */
 export interface OpenAIResponsesStreamOptions {
   serviceTier?: ResponseCreateParamsStreaming["service_tier"];
   resolveServiceTier?: (
@@ -87,10 +89,13 @@ export interface OpenAIResponsesStreamOptions {
   ) => void;
 }
 
+/** Shared type for Convert Responses Messages Options in src/llm/providers. */
 export interface ConvertResponsesMessagesOptions {
   includeSystemPrompt?: boolean;
 }
+/** Re-exported API for src/llm/providers, starting with convert Responses Tools. */
 export { convertResponsesTools };
+/** Re-exported API for src/llm/providers, starting with Convert Responses Tools Options. */
 export type { ConvertResponsesToolsOptions } from "./openai-responses-tools.js";
 
 type ResponsesRequestOptions = {
@@ -120,7 +125,9 @@ type ResponsesLifecycleStreamOptions = Pick<
   "signal" | "timeoutMs" | "maxRetries" | "onPayload" | "onResponse"
 >;
 
+/** Shared type for Responses Reasoning Effort in src/llm/providers. */
 export type ResponsesReasoningEffort = "minimal" | "low" | "medium" | "high" | "xhigh";
+/** Shared type for Responses Reasoning Summary in src/llm/providers. */
 export type ResponsesReasoningSummary = "auto" | "detailed" | "concise" | null;
 
 type ResponsesCommonParamsOptions = Pick<StreamOptions, "maxTokens" | "temperature"> & {
@@ -132,6 +139,7 @@ type ResponsesCommonParamsOptions = Pick<StreamOptions, "maxTokens" | "temperatu
 // Message conversion
 // =============================================================================
 
+/** Reused helper for convert Responses Messages behavior in src/llm/providers. */
 export function convertResponsesMessages<TApi extends Api>(
   model: Model<TApi>,
   context: Context,
@@ -336,6 +344,7 @@ export function convertResponsesMessages<TApi extends Api>(
 // Stream lifecycle
 // =============================================================================
 
+/** Reused helper for create Responses Assistant Output behavior in src/llm/providers. */
 export function createResponsesAssistantOutput<TApi extends Api>(
   model: Model<TApi>,
   api: Api = model.api,
@@ -359,6 +368,7 @@ export function createResponsesAssistantOutput<TApi extends Api>(
   };
 }
 
+/** Reused helper for resolve Responses Reasoning Effort behavior in src/llm/providers. */
 export function resolveResponsesReasoningEffort<TApi extends Api>(
   model: Model<TApi>,
   reasoning: SimpleStreamOptions["reasoning"] | undefined,
@@ -370,6 +380,7 @@ export function resolveResponsesReasoningEffort<TApi extends Api>(
   return clampedReasoning === "max" ? "xhigh" : clampedReasoning;
 }
 
+/** Reused helper for apply Common Responses Params behavior in src/llm/providers. */
 export function applyCommonResponsesParams<TApi extends Api>(
   params: ResponseCreateParamsStreaming,
   model: Model<TApi>,
@@ -429,6 +440,7 @@ function cleanStreamingScratchBuffers(output: AssistantMessage): void {
   }
 }
 
+/** Reused helper for run Responses Stream Lifecycle behavior in src/llm/providers. */
 export async function runResponsesStreamLifecycle<TApi extends Api>(params: {
   stream: AssistantMessageEventStream;
   model: Model<TApi>;
@@ -483,6 +495,7 @@ export async function runResponsesStreamLifecycle<TApi extends Api>(params: {
 // Stream processing
 // =============================================================================
 
+/** Reused helper for process Responses Stream behavior in src/llm/providers. */
 export async function processResponsesStream<TApi extends Api>(
   openaiStream: AsyncIterable<ResponseStreamEvent>,
   output: AssistantMessage,

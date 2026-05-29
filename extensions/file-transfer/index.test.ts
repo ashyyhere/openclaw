@@ -1,3 +1,4 @@
+// Tests extensions/file-transfer index test behavior.
 import { afterAll, describe, expect, it, vi } from "vitest";
 import pluginEntry from "./index.js";
 

@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src/matrix/monitor handler thread root media test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { installMatrixMonitorTestRuntime } from "../../test-runtime.js";
 import {

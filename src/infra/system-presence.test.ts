@@ -1,3 +1,4 @@
+// Tests infra system presence test behavior.
 import { randomUUID } from "node:crypto";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { listSystemPresence, updateSystemPresence, upsertPresence } from "./system-presence.js";

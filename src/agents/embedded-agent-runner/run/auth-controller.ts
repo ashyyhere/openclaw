@@ -1,3 +1,4 @@
+/** Coordinates auth profile selection and provider runtime auth prep. */
 import type { ThinkLevel } from "../../../auto-reply/thinking.js";
 import { formatErrorMessage } from "../../../infra/errors.js";
 import type { Model } from "../../../llm/types.js";
@@ -44,6 +45,7 @@ type LogLike = {
   warn(message: string): void;
 };
 
+/** Creates the per-run auth controller used across model/profile attempts. */
 export function createEmbeddedRunAuthController(params: {
   config: RunEmbeddedAgentParams["config"];
   agentDir: string;

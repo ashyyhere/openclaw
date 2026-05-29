@@ -30,6 +30,7 @@ export function resolvePluginMetadataControlPlaneFingerprint(
   });
 }
 
+/** Reused helper for is Reusable Current Plugin Metadata Snapshot behavior in src/plugins. */
 export function isReusableCurrentPluginMetadataSnapshot(
   _snapshot: PluginMetadataSnapshot,
 ): boolean {
@@ -38,6 +39,7 @@ export function isReusableCurrentPluginMetadataSnapshot(
 
 // Single-slot Gateway-owned handoff. Replace or clear it at lifecycle boundaries;
 // never accumulate historical metadata snapshots here.
+/** Reused helper for set Current Plugin Metadata Snapshot behavior in src/plugins. */
 export function setCurrentPluginMetadataSnapshot(
   snapshot: PluginMetadataSnapshot | undefined,
   options: {
@@ -112,16 +114,19 @@ export function setCurrentPluginMetadataSnapshot(
   }
 }
 
+/** Reused helper for clear Current Plugin Metadata Snapshot behavior in src/plugins. */
 export function clearCurrentPluginMetadataSnapshot(): void {
   currentPluginMetadataConfigIdentityCache = new WeakSet();
   setCurrentManifestModelIdNormalizationRecords(undefined);
   clearCurrentPluginMetadataSnapshotState();
 }
 
+/** Reused helper for capture Current Plugin Metadata Snapshot State behavior in src/plugins. */
 export function captureCurrentPluginMetadataSnapshotState(): CurrentPluginMetadataSnapshotState {
   return getCurrentPluginMetadataSnapshotState();
 }
 
+/** Reused helper for restore Current Plugin Metadata Snapshot State behavior in src/plugins. */
 export function restoreCurrentPluginMetadataSnapshotState(
   state: CurrentPluginMetadataSnapshotState,
 ): void {
@@ -154,6 +159,7 @@ export function restoreCurrentPluginMetadataSnapshotState(
   );
 }
 
+/** Reused helper for get Current Plugin Metadata Snapshot behavior in src/plugins. */
 export function getCurrentPluginMetadataSnapshot(
   params: {
     config?: OpenClawConfig;

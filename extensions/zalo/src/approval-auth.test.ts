@@ -1,3 +1,4 @@
+// Tests extensions/zalo/src approval auth test behavior.
 import { describe, expect, it } from "vitest";
 import { zaloApprovalAuth } from "./approval-auth.js";
 

@@ -1,3 +1,4 @@
+/** Tests embedded-agent subscription tool handlers. */
 import type { AgentEvent } from "openclaw/plugin-sdk/agent-core";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {

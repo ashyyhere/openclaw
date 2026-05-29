@@ -1,3 +1,4 @@
+/** Covers HTTP dispatcher idle timeout parsing and formatting. */
 import { describe, expect, it } from "vitest";
 import { parseHttpIdleTimeoutMs } from "./http-dispatcher.js";
 

@@ -1,3 +1,4 @@
+/** Tracks active embedded-agent runs and routes live follow-up messages. */
 import {
   abortActiveReplyRuns,
   abortReplyRunBySessionId,
@@ -39,6 +40,7 @@ import {
 } from "./run-state.js";
 import { resolveEmbeddedSessionFileKey } from "./session-file-key.js";
 
+/** Re-exported API for src/agents/embedded-agent-runner. */
 export {
   getActiveEmbeddedRunCount,
   listActiveEmbeddedRunSessionIds,
@@ -49,6 +51,7 @@ export {
   type EmbeddedRunModelSwitchRequest,
 } from "./run-state.js";
 
+/** Shared type for Embedded Agent Queue Failure Reason in src/agents/embedded-agent-runner. */
 export type EmbeddedAgentQueueFailureReason =
   | "no_active_run"
   | "not_streaming"
@@ -57,6 +60,7 @@ export type EmbeddedAgentQueueFailureReason =
   | "transcript_commit_wait_unsupported"
   | "runtime_rejected";
 
+/** Shared type for Embedded Agent Queue Message Outcome in src/agents/embedded-agent-runner. */
 export type EmbeddedAgentQueueMessageOutcome =
   | {
       queued: true;
@@ -98,6 +102,7 @@ function createQueueFailureOutcome(
   };
 }
 
+/** Formats a queue rejection into operator-facing diagnostic text. */
 export function formatEmbeddedAgentQueueFailureSummary(
   outcome: EmbeddedAgentQueueMessageOutcome,
 ): string | undefined {
@@ -185,6 +190,7 @@ function clearEmbeddedRunAbandonmentBySessionFile(sessionFile: string | undefine
   }
 }
 
+/** Clears abandonment markers once a session is safely active again. */
 export function clearEmbeddedRunAbandonment(params: {
   sessionId?: string;
   sessionKey?: string;
@@ -198,6 +204,7 @@ export function clearEmbeddedRunAbandonment(params: {
   clearEmbeddedRunAbandonmentBySessionFile(params.sessionFile);
 }
 
+/** Records a run as abandoned so late streaming events are ignored. */
 export function markEmbeddedRunAbandoned(params: {
   sessionId: string;
   sessionKey?: string;
@@ -232,6 +239,7 @@ export function markEmbeddedRunAbandoned(params: {
   }
 }
 
+/** Moves an active run into abandoned state without leaving live queue handles. */
 export function markActiveEmbeddedRunAbandoned(params: {
   sessionId: string;
   handle: EmbeddedAgentQueueHandle;
@@ -247,6 +255,7 @@ export function markActiveEmbeddedRunAbandoned(params: {
   return true;
 }
 
+/** Checks whether a session key, session id, or session file is abandoned. */
 export function isEmbeddedRunAbandoned(params: {
   sessionId?: string;
   sessionKey?: string;
@@ -289,6 +298,7 @@ function clearActiveRunSessionFiles(sessionId: string, sessionFile?: string): vo
  * This boolean helper only reports immediate queue eligibility; it cannot surface
  * async runtime rejection from the active run.
  */
+/** Queues a follow-up message for an active embedded run when possible. */
 export function queueEmbeddedAgentMessage(
   sessionId: string,
   text: string,
@@ -302,6 +312,7 @@ export function queueEmbeddedAgentMessage(
  * know whether steering was accepted. This sync helper is fire-and-forget after
  * initial eligibility and only logs later runtime rejection.
  */
+/** Queues a follow-up and returns the exact sync rejection reason on failure. */
 export function queueEmbeddedAgentMessageWithOutcome(
   sessionId: string,
   text: string,
@@ -332,6 +343,7 @@ function formatQueueError(err: unknown): string {
   return err instanceof Error ? err.message : String(err);
 }
 
+/** Queues a follow-up through async runtime paths that may wait for readiness. */
 export async function queueEmbeddedAgentMessageWithOutcomeAsync(
   sessionId: string,
   text: string,
@@ -433,10 +445,12 @@ function prepareEmbeddedAgentQueueMessage(
  * - With no sessionId, supports targeted abort modes (for example, compacting runs only).
  */
 export function abortEmbeddedAgentRun(sessionId: string): boolean;
+/** Reused helper for abort Embedded Agent Run behavior in src/agents/embedded-agent-runner. */
 export function abortEmbeddedAgentRun(
   sessionId: undefined,
   opts: { mode: "all" | "compacting" },
 ): boolean;
+/** Reused helper for abort Embedded Agent Run behavior in src/agents/embedded-agent-runner. */
 export function abortEmbeddedAgentRun(
   sessionId?: string,
   opts?: { mode?: "all" | "compacting" },
@@ -500,6 +514,7 @@ export function abortEmbeddedAgentRun(
   return false;
 }
 
+/** Reused helper for is Embedded Agent Run Active behavior in src/agents/embedded-agent-runner. */
 export function isEmbeddedAgentRunActive(sessionId: string): boolean {
   const active = ACTIVE_EMBEDDED_RUNS.has(sessionId) || isReplyRunActiveForSessionId(sessionId);
   if (active) {
@@ -508,6 +523,7 @@ export function isEmbeddedAgentRunActive(sessionId: string): boolean {
   return active;
 }
 
+/** Reused helper for is Embedded Agent Run Handle Active behavior in src/agents/embedded-agent-runner. */
 export function isEmbeddedAgentRunHandleActive(sessionId: string): boolean {
   const active = ACTIVE_EMBEDDED_RUNS.has(sessionId);
   if (active) {
@@ -516,6 +532,7 @@ export function isEmbeddedAgentRunHandleActive(sessionId: string): boolean {
   return active;
 }
 
+/** Reused helper for is Embedded Agent Run Streaming behavior in src/agents/embedded-agent-runner. */
 export function isEmbeddedAgentRunStreaming(sessionId: string): boolean {
   const handle = ACTIVE_EMBEDDED_RUNS.get(sessionId);
   if (!handle) {
@@ -524,6 +541,7 @@ export function isEmbeddedAgentRunStreaming(sessionId: string): boolean {
   return handle.isStreaming();
 }
 
+/** Reused helper for resolve Active Embedded Run Handle Session Id behavior in src/agents/embedded-agent-runner. */
 export function resolveActiveEmbeddedRunHandleSessionId(sessionKey: string): string | undefined {
   const normalizedSessionKey = sessionKey.trim();
   if (!normalizedSessionKey) {
@@ -532,6 +550,7 @@ export function resolveActiveEmbeddedRunHandleSessionId(sessionKey: string): str
   return ACTIVE_EMBEDDED_RUN_SESSION_IDS_BY_KEY.get(normalizedSessionKey);
 }
 
+/** Reused helper for resolve Active Embedded Run Handle Session Id By Session File behavior in src/agents/embedded-agent-runner. */
 export function resolveActiveEmbeddedRunHandleSessionIdBySessionFile(
   sessionFile: string,
 ): string | undefined {
@@ -544,6 +563,7 @@ export function resolveActiveEmbeddedRunHandleSessionIdBySessionFile(
   );
 }
 
+/** Reused helper for resolve Active Embedded Run Session Id behavior in src/agents/embedded-agent-runner. */
 export function resolveActiveEmbeddedRunSessionId(sessionKey: string): string | undefined {
   const normalizedSessionKey = sessionKey.trim();
   if (!normalizedSessionKey) {
@@ -555,18 +575,21 @@ export function resolveActiveEmbeddedRunSessionId(sessionKey: string): string | 
   );
 }
 
+/** Reused helper for resolve Active Embedded Run Session Id By Session File behavior in src/agents/embedded-agent-runner. */
 export function resolveActiveEmbeddedRunSessionIdBySessionFile(
   sessionFile: string,
 ): string | undefined {
   return resolveActiveEmbeddedRunHandleSessionIdBySessionFile(sessionFile);
 }
 
+/** Reused helper for get Active Embedded Run Snapshot behavior in src/agents/embedded-agent-runner. */
 export function getActiveEmbeddedRunSnapshot(
   sessionId: string,
 ): ActiveEmbeddedRunSnapshot | undefined {
   return ACTIVE_EMBEDDED_RUN_SNAPSHOTS.get(sessionId);
 }
 
+/** Reused helper for request Embedded Run Model Switch behavior in src/agents/embedded-agent-runner. */
 export function requestEmbeddedRunModelSwitch(
   sessionId: string,
   request: EmbeddedRunModelSwitchRequest,
@@ -591,6 +614,7 @@ export function requestEmbeddedRunModelSwitch(
   return true;
 }
 
+/** Reused helper for consume Embedded Run Model Switch behavior in src/agents/embedded-agent-runner. */
 export function consumeEmbeddedRunModelSwitch(
   sessionId: string,
 ): EmbeddedRunModelSwitchRequest | undefined {
@@ -641,6 +665,7 @@ export async function waitForActiveEmbeddedRuns(
   }
 }
 
+/** Reused helper for wait For Embedded Agent Run End behavior in src/agents/embedded-agent-runner. */
 export function waitForEmbeddedAgentRunEnd(
   sessionId: string,
   timeoutMs = 15_000,
@@ -681,12 +706,14 @@ export function waitForEmbeddedAgentRunEnd(
   });
 }
 
+/** Shared type for Abort And Drain Embedded Agent Run Result in src/agents/embedded-agent-runner. */
 export type AbortAndDrainEmbeddedAgentRunResult = {
   aborted: boolean;
   drained: boolean;
   forceCleared: boolean;
 };
 
+/** Reused helper for abort And Drain Embedded Agent Run behavior in src/agents/embedded-agent-runner. */
 export async function abortAndDrainEmbeddedAgentRun(params: {
   sessionId: string;
   sessionKey?: string;
@@ -717,6 +744,7 @@ function notifyEmbeddedRunEnded(sessionId: string) {
   }
 }
 
+/** Reused helper for set Active Embedded Run behavior in src/agents/embedded-agent-runner. */
 export function setActiveEmbeddedRun(
   sessionId: string,
   handle: EmbeddedAgentQueueHandle,
@@ -742,6 +770,7 @@ export function setActiveEmbeddedRun(
   }
 }
 
+/** Reused helper for update Active Embedded Run Snapshot behavior in src/agents/embedded-agent-runner. */
 export function updateActiveEmbeddedRunSnapshot(
   sessionId: string,
   snapshot: ActiveEmbeddedRunSnapshot,
@@ -752,6 +781,7 @@ export function updateActiveEmbeddedRunSnapshot(
   ACTIVE_EMBEDDED_RUN_SNAPSHOTS.set(sessionId, snapshot);
 }
 
+/** Reused helper for update Active Embedded Run Session File behavior in src/agents/embedded-agent-runner. */
 export function updateActiveEmbeddedRunSessionFile(
   sessionId: string,
   sessionFile: string | undefined,
@@ -764,6 +794,7 @@ export function updateActiveEmbeddedRunSessionFile(
   updateDiagnosticSessionFile({ sessionId, sessionFile });
 }
 
+/** Reused helper for clear Active Embedded Run behavior in src/agents/embedded-agent-runner. */
 export function clearActiveEmbeddedRun(
   sessionId: string,
   handle: EmbeddedAgentQueueHandle,
@@ -797,6 +828,7 @@ export function clearActiveEmbeddedRun(
   }
 }
 
+/** Reused helper for force Clear Embedded Agent Run behavior in src/agents/embedded-agent-runner. */
 export function forceClearEmbeddedAgentRun(
   sessionId: string,
   sessionKey?: string,
@@ -818,6 +850,7 @@ export function forceClearEmbeddedAgentRun(
   return forceClearReplyRunBySessionId(sessionId, cause) || cleared;
 }
 
+/** Reused constant for testing behavior in src/agents/embedded-agent-runner. */
 export const testing = {
   resetActiveEmbeddedRuns() {
     for (const waiters of EMBEDDED_RUN_WAITERS.values()) {
@@ -837,4 +870,5 @@ export const testing = {
     EMBEDDED_RUN_MODEL_SWITCH_REQUESTS.clear();
   },
 };
+/** Re-exported API for src/agents/embedded-agent-runner, starting with testing. */
 export { testing as __testing };

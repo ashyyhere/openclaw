@@ -1,5 +1,7 @@
+// infra ports probe helpers and runtime behavior.
 import net from "node:net";
 
+/** Reused helper for try Listen On Port behavior in src/infra. */
 export async function tryListenOnPort(params: {
   port: number;
   host?: string;

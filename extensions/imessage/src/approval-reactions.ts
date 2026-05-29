@@ -1,3 +1,4 @@
+// extensions/imessage/src approval reactions helpers and runtime behavior.
 import {
   buildApprovalReactionHint,
   createApprovalReactionTargetStore,

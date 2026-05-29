@@ -1,3 +1,4 @@
+// extensions/qa-lab/src/providers/shared mock model config helpers and runtime behavior.
 import type { ModelProviderConfig } from "openclaw/plugin-sdk/provider-model-shared";
 
 const ZERO_COST = Object.freeze({

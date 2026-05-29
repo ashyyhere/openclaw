@@ -1,3 +1,4 @@
+// extensions/discord/src/internal event queue helpers and runtime behavior.
 export type DiscordEventQueueOptions = {
   maxQueueSize?: number;
   maxConcurrency?: number;

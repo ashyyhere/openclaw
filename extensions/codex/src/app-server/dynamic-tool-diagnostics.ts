@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server dynamic tool diagnostics helpers and runtime behavior.
 import { emitTrustedDiagnosticEvent } from "openclaw/plugin-sdk/diagnostic-runtime";
 import type { CodexDynamicToolCallParams, CodexDynamicToolCallResponse } from "./protocol.js";
 

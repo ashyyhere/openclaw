@@ -1,3 +1,5 @@
+// shared string sample helpers and runtime behavior.
+/** Reused helper for summarize String Entries behavior in src/shared. */
 export function summarizeStringEntries(params: {
   entries?: ReadonlyArray<string> | null;
   limit?: number;

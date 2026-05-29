@@ -1,3 +1,4 @@
+// extensions/memory-core/src/memory provider adapter registration helpers and runtime behavior.
 type AdapterLike = {
   id: string;
 };

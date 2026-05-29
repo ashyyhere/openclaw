@@ -1,3 +1,4 @@
+// Tests extensions/twitch/src plugin lifecycle test behavior.
 import {
   createStartAccountContext,
   expectStopPendingUntilAbort,

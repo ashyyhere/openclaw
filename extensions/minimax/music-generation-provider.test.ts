@@ -1,3 +1,4 @@
+// Tests extensions/minimax music generation provider test behavior.
 import { expectExplicitMusicGenerationCapabilities } from "openclaw/plugin-sdk/provider-test-contracts";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 import {

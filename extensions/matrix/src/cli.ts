@@ -1,3 +1,4 @@
+// extensions/matrix/src cli helpers and runtime behavior.
 import type { Command } from "commander";
 import { normalizeAccountId } from "openclaw/plugin-sdk/account-id";
 import { parseStrictInteger, timestampMsToIsoString } from "openclaw/plugin-sdk/number-runtime";

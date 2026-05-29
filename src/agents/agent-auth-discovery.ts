@@ -1,3 +1,4 @@
+/** Agent auth discovery facade combining profile, env, and synthetic credentials. */
 import { resolveProviderSyntheticAuthWithPlugin } from "../plugins/provider-runtime.js";
 import { resolveRuntimeSyntheticAuthProviderRefs } from "../plugins/synthetic-auth.runtime.js";
 import {
@@ -17,6 +18,7 @@ import {
   loadAuthProfileStoreForSecretsRuntime,
 } from "./auth-profiles/store.js";
 
+/** Shared type for Discover Auth Storage Options in src/agents. */
 export type DiscoverAuthStorageOptions = {
   externalCli?: ExternalCliAuthDiscovery;
   readOnly?: boolean;
@@ -25,6 +27,7 @@ export type DiscoverAuthStorageOptions = {
   syntheticAuthProviderRefs?: Iterable<string>;
 } & AgentDiscoveryAuthLookupOptions;
 
+/** Resolve all credentials visible to model/provider discovery for one agent dir. */
 export function resolveAgentCredentialsForDiscovery(
   agentDir: string,
   options?: DiscoverAuthStorageOptions,
@@ -82,6 +85,7 @@ export function resolveAgentCredentialsForDiscovery(
   return credentials;
 }
 
+/** Re-exported API for src/agents. */
 export {
   addEnvBackedAgentCredentials,
   scrubLegacyStaticAuthJsonEntriesForDiscovery,

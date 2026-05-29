@@ -1,3 +1,4 @@
+// packages/gateway-protocol/src/schema nodes helpers and runtime behavior.
 import { Type } from "typebox";
 import { NonEmptyString } from "./primitives.js";
 
@@ -9,6 +10,7 @@ const NodePendingWorkPrioritySchema = Type.String({
   enum: ["normal", "high"],
 });
 
+/** Public constant for Node Presence Alive Reason Schema behavior in packages/gateway-protocol. */
 export const NodePresenceAliveReasonSchema = Type.String({
   enum: [
     "background",
@@ -20,6 +22,7 @@ export const NodePresenceAliveReasonSchema = Type.String({
   ],
 });
 
+/** Public constant for Node Presence Alive Payload Schema behavior in packages/gateway-protocol. */
 export const NodePresenceAlivePayloadSchema = Type.Object(
   {
     trigger: NodePresenceAliveReasonSchema,
@@ -34,6 +37,7 @@ export const NodePresenceAlivePayloadSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Node Event Result Schema behavior in packages/gateway-protocol. */
 export const NodeEventResultSchema = Type.Object(
   {
     ok: Type.Boolean(),
@@ -44,6 +48,7 @@ export const NodeEventResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Node Pair Request Params Schema behavior in packages/gateway-protocol. */
 export const NodePairRequestParamsSchema = Type.Object(
   {
     nodeId: NonEmptyString,
@@ -63,35 +68,43 @@ export const NodePairRequestParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Node Pair List Params Schema behavior in packages/gateway-protocol. */
 export const NodePairListParamsSchema = Type.Object({}, { additionalProperties: false });
 
+/** Public constant for Node Pair Approve Params Schema behavior in packages/gateway-protocol. */
 export const NodePairApproveParamsSchema = Type.Object(
   { requestId: NonEmptyString },
   { additionalProperties: false },
 );
 
+/** Public constant for Node Pair Reject Params Schema behavior in packages/gateway-protocol. */
 export const NodePairRejectParamsSchema = Type.Object(
   { requestId: NonEmptyString },
   { additionalProperties: false },
 );
 
+/** Public constant for Node Pair Remove Params Schema behavior in packages/gateway-protocol. */
 export const NodePairRemoveParamsSchema = Type.Object(
   { nodeId: NonEmptyString },
   { additionalProperties: false },
 );
 
+/** Public constant for Node Pair Verify Params Schema behavior in packages/gateway-protocol. */
 export const NodePairVerifyParamsSchema = Type.Object(
   { nodeId: NonEmptyString, token: NonEmptyString },
   { additionalProperties: false },
 );
 
+/** Public constant for Node Rename Params Schema behavior in packages/gateway-protocol. */
 export const NodeRenameParamsSchema = Type.Object(
   { nodeId: NonEmptyString, displayName: NonEmptyString },
   { additionalProperties: false },
 );
 
+/** Public constant for Node List Params Schema behavior in packages/gateway-protocol. */
 export const NodeListParamsSchema = Type.Object({}, { additionalProperties: false });
 
+/** Public constant for Node Pending Ack Params Schema behavior in packages/gateway-protocol. */
 export const NodePendingAckParamsSchema = Type.Object(
   {
     ids: Type.Array(NonEmptyString, { minItems: 1 }),
@@ -99,11 +112,13 @@ export const NodePendingAckParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Node Describe Params Schema behavior in packages/gateway-protocol. */
 export const NodeDescribeParamsSchema = Type.Object(
   { nodeId: NonEmptyString },
   { additionalProperties: false },
 );
 
+/** Public constant for Node Invoke Params Schema behavior in packages/gateway-protocol. */
 export const NodeInvokeParamsSchema = Type.Object(
   {
     nodeId: NonEmptyString,
@@ -115,6 +130,7 @@ export const NodeInvokeParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Node Invoke Result Params Schema behavior in packages/gateway-protocol. */
 export const NodeInvokeResultParamsSchema = Type.Object(
   {
     id: NonEmptyString,
@@ -135,6 +151,7 @@ export const NodeInvokeResultParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Node Event Params Schema behavior in packages/gateway-protocol. */
 export const NodeEventParamsSchema = Type.Object(
   {
     event: NonEmptyString,
@@ -144,6 +161,7 @@ export const NodeEventParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Node Pending Drain Params Schema behavior in packages/gateway-protocol. */
 export const NodePendingDrainParamsSchema = Type.Object(
   {
     maxItems: Type.Optional(Type.Integer({ minimum: 1, maximum: 10 })),
@@ -151,6 +169,7 @@ export const NodePendingDrainParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Node Pending Drain Item Schema behavior in packages/gateway-protocol. */
 export const NodePendingDrainItemSchema = Type.Object(
   {
     id: NonEmptyString,
@@ -163,6 +182,7 @@ export const NodePendingDrainItemSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Node Pending Drain Result Schema behavior in packages/gateway-protocol. */
 export const NodePendingDrainResultSchema = Type.Object(
   {
     nodeId: NonEmptyString,
@@ -173,6 +193,7 @@ export const NodePendingDrainResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Node Pending Enqueue Params Schema behavior in packages/gateway-protocol. */
 export const NodePendingEnqueueParamsSchema = Type.Object(
   {
     nodeId: NonEmptyString,
@@ -184,6 +205,7 @@ export const NodePendingEnqueueParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Node Pending Enqueue Result Schema behavior in packages/gateway-protocol. */
 export const NodePendingEnqueueResultSchema = Type.Object(
   {
     nodeId: NonEmptyString,
@@ -194,6 +216,7 @@ export const NodePendingEnqueueResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Node Invoke Request Event Schema behavior in packages/gateway-protocol. */
 export const NodeInvokeRequestEventSchema = Type.Object(
   {
     id: NonEmptyString,

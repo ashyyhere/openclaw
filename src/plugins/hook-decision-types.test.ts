@@ -1,3 +1,4 @@
+// Tests plugins hook decision types test behavior.
 import { describe, expect, it } from "vitest";
 import {
   BLOCK_MESSAGE_PREFIX,

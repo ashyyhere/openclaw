@@ -1,3 +1,4 @@
+// test/vitest vitest agents support config helpers and runtime behavior.
 import { agentsSupportExcludePatterns, agentsSupportTestPatterns } from "./vitest.agents-paths.mjs";
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 

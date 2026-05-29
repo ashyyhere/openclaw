@@ -32,6 +32,7 @@ function formatGitStatusLine(params: {
   return parts.join(" · ");
 }
 
+/** Reused helper for update Status Command behavior in src/cli/update-cli. */
 export async function updateStatusCommand(opts: UpdateStatusOptions): Promise<void> {
   const timeoutMs = parseTimeoutMsOrExit(opts.timeout);
   if (timeoutMs === null) {

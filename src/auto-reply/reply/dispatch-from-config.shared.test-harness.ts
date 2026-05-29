@@ -1,3 +1,4 @@
+// Shared test harness for dispatch-from-config suites.
 import { vi } from "vitest";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { SessionBindingRecord } from "../../infra/outbound/session-binding-service.js";
@@ -144,6 +145,7 @@ const threadInfoMocks = vi.hoisted(() => ({
   >(),
 }));
 
+/** Re-exported API for src/auto-reply/reply. */
 export {
   acpManagerRuntimeMocks,
   acpMocks,
@@ -358,9 +360,12 @@ vi.mock("../../tts/tts-config.js", () => ({
   shouldAttemptTtsPayload: () => true,
 }));
 
+/** Reused constant for no Abort Result behavior in src/auto-reply/reply. */
 export const noAbortResult = { handled: false, aborted: false } as const;
+/** Reused constant for empty Config behavior in src/auto-reply/reply. */
 export const emptyConfig = {} as OpenClawConfig;
 
+/** Reused helper for create Dispatcher behavior in src/auto-reply/reply. */
 export function createDispatcher(): ReplyDispatcher {
   const acceptReply = () => true;
   const emptyCounts = () => ({ tool: 0, block: 0, final: 0 });
@@ -375,6 +380,7 @@ export function createDispatcher(): ReplyDispatcher {
   };
 }
 
+/** Reused helper for reset Plugin Tts And Thread Mocks behavior in src/auto-reply/reply. */
 export function resetPluginTtsAndThreadMocks() {
   pluginConversationBindingMocks.shownFallbackNoticeBindingIds.clear();
   ttsMocks.maybeApplyTtsToPayload.mockReset().mockImplementation(async (paramsUnknown: unknown) => {
@@ -393,6 +399,7 @@ export function resetPluginTtsAndThreadMocks() {
     .mockImplementation(parseGenericThreadSessionInfo);
 }
 
+/** Reused helper for set Discord Test Registry behavior in src/auto-reply/reply. */
 export function setDiscordTestRegistry() {
   const discordTestPlugin = {
     ...createChannelTestPluginBase({
@@ -409,6 +416,7 @@ export function setDiscordTestRegistry() {
   );
 }
 
+/** Reused helper for create Hook Ctx behavior in src/auto-reply/reply. */
 export function createHookCtx() {
   return buildTestCtx({
     Body: "hello",

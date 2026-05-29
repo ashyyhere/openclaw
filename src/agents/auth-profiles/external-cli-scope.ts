@@ -6,6 +6,7 @@ import {
 import type { AgentModelConfig } from "../../config/types.agents-shared.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 
+/** Shared type for External Cli Auth Scope in src/agents/auth-profiles. */
 export type ExternalCliAuthScope = {
   providerIds: string[];
   profileIds: string[];
@@ -67,6 +68,7 @@ function addExternalCliRuntimeScopeFromModelMap(
   }
 }
 
+/** Reused helper for resolve External Cli Auth Scope From Config behavior in src/agents/auth-profiles. */
 export function resolveExternalCliAuthScopeFromConfig(
   cfg: OpenClawConfig,
 ): ExternalCliAuthScope | undefined {

@@ -1,3 +1,4 @@
+// Tests infra sqlite wal test behavior.
 import type { DatabaseSync } from "node:sqlite";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {

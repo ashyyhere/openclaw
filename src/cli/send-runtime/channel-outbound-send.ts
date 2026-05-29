@@ -1,3 +1,4 @@
+/** Builds outbound send functions from channel plugin adapters for CLI use. */
 import { loadChannelOutboundAdapter } from "../../channels/plugins/outbound/load.js";
 import type { ChannelId } from "../../channels/plugins/types.public.js";
 import { getRuntimeConfig } from "../../config/config.js";
@@ -36,6 +37,7 @@ function resolveRuntimeReplyToId(opts: RuntimeSendOpts): string | undefined {
   return raw == null ? undefined : normalizeOptionalString(String(raw));
 }
 
+/** Reused helper for create Channel Outbound Runtime Send behavior in src/cli/send-runtime. */
 export function createChannelOutboundRuntimeSend(params: {
   channelId: ChannelId;
   unavailableMessage: string;

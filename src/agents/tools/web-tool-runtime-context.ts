@@ -1,3 +1,4 @@
+/** Resolves plugin/secret runtime context for web tools. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { resolveManifestContractOwnerPluginId } from "../../plugins/plugin-registry.js";
 import { getActiveSecretsRuntimeConfigSnapshot } from "../../secrets/runtime-state.js";
@@ -80,6 +81,7 @@ function resolveWebToolRuntimeContext<TMetadata extends WebProviderRuntimeMetada
   };
 }
 
+/** Reused helper for resolve Web Search Tool Runtime Context behavior in src/agents/tools. */
 export function resolveWebSearchToolRuntimeContext(params: {
   config?: OpenClawConfig;
   lateBindRuntimeConfig?: boolean;
@@ -101,6 +103,7 @@ export function resolveWebSearchToolRuntimeContext(params: {
   };
 }
 
+/** Reused helper for resolve Web Fetch Tool Runtime Context behavior in src/agents/tools. */
 export function resolveWebFetchToolRuntimeContext(params: {
   config?: OpenClawConfig;
   lateBindRuntimeConfig?: boolean;

@@ -1,3 +1,4 @@
+/** Wraps SessionManager persistence with tool-result and redaction guards. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { getGlobalHookRunner } from "../plugins/hook-runner-global.js";
 import {

@@ -1,3 +1,4 @@
+/** Resolves auth profile, legacy auth, state, and OAuth lock paths. */
 import { createHash } from "node:crypto";
 import path from "node:path";
 import { resolveStateDir } from "../../config/paths.js";
@@ -9,26 +10,31 @@ import {
   LEGACY_AUTH_FILENAME,
 } from "./path-constants.js";
 
+/** Resolves the auth profile store path for an agent directory. */
 export function resolveAuthStorePath(agentDir?: string): string {
   const resolved = resolveUserPath(agentDir ?? resolveDefaultAgentDir({}));
   return path.join(resolved, AUTH_PROFILE_FILENAME);
 }
 
+/** Resolves the legacy auth.json path for migration. */
 export function resolveLegacyAuthStorePath(agentDir?: string): string {
   const resolved = resolveUserPath(agentDir ?? resolveDefaultAgentDir({}));
   return path.join(resolved, LEGACY_AUTH_FILENAME);
 }
 
+/** Resolves the auth state sidecar path for mutable usage/order state. */
 export function resolveAuthStatePath(agentDir?: string): string {
   const resolved = resolveUserPath(agentDir ?? resolveDefaultAgentDir({}));
   return path.join(resolved, AUTH_STATE_FILENAME);
 }
 
+/** Reused helper for resolve Auth Store Path For Display behavior in src/agents/auth-profiles. */
 export function resolveAuthStorePathForDisplay(agentDir?: string): string {
   const pathname = resolveAuthStorePath(agentDir);
   return pathname.startsWith("~") ? pathname : resolveUserPath(pathname);
 }
 
+/** Reused helper for resolve Auth State Path For Display behavior in src/agents/auth-profiles. */
 export function resolveAuthStatePathForDisplay(agentDir?: string): string {
   const pathname = resolveAuthStatePath(agentDir);
   return pathname.startsWith("~") ? pathname : resolveUserPath(pathname);

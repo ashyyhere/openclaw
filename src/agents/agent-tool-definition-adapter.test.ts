@@ -1,3 +1,4 @@
+/** Tests agent/client tool definition adaptation behavior. */
 import type { AgentTool } from "openclaw/plugin-sdk/agent-core";
 import { Type } from "typebox";
 import { describe, expect, it } from "vitest";

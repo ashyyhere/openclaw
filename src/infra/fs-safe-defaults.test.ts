@@ -1,3 +1,4 @@
+// Tests infra fs safe defaults test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 const { configureFsSafePython } = vi.hoisted(() => ({

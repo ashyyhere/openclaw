@@ -1,3 +1,4 @@
+// Tests extensions/file-transfer/src/shared lazy node invoke policy test behavior.
 import type {
   OpenClawPluginNodeInvokePolicy,
   OpenClawPluginNodeInvokePolicyContext,

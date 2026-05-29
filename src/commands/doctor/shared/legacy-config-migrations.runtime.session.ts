@@ -1,3 +1,4 @@
+/** Legacy runtime config migrations for session settings. */
 import {
   defineLegacyConfigMigration,
   getRecord,
@@ -29,6 +30,7 @@ const LEGACY_SESSION_PARENT_FORK_MAX_TOKENS_RULE: LegacyConfigRule = {
   match: hasLegacyParentForkMaxTokens,
 };
 
+/** Reused constant for LEGACY CONFIG MIGRATIONS RUNTIME SESSION behavior in src/commands/doctor. */
 export const LEGACY_CONFIG_MIGRATIONS_RUNTIME_SESSION: LegacyConfigMigrationSpec[] = [
   defineLegacyConfigMigration({
     id: "session.maintenance.rotateBytes",

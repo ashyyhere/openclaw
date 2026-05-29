@@ -1,3 +1,4 @@
+/** Tests restart helper process handoff and marker-file behavior. */
 import { execFile, spawn, type ChildProcess } from "node:child_process";
 import fs from "node:fs/promises";
 import os from "node:os";

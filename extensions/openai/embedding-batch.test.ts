@@ -1,3 +1,4 @@
+// Tests extensions/openai embedding batch test behavior.
 import { describe, expect, it } from "vitest";
 import { parseOpenAiBatchOutput } from "./embedding-batch.js";
 

@@ -1,3 +1,4 @@
+// Tests infra/outbound reply policy test behavior.
 import { describe, expect, it } from "vitest";
 import { createReplyToFanout } from "./reply-policy.js";
 

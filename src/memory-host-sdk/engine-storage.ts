@@ -1,3 +1,5 @@
+// memory-host-sdk engine storage helpers and runtime behavior.
+/** Re-exported API for src/memory-host-sdk. */
 export {
   resolveMemoryBackendConfig,
   type MemoryProviderStatus,

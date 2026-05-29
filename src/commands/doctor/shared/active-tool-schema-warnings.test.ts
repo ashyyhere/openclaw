@@ -1,3 +1,4 @@
+/** Tests doctor warnings for active tool schema mismatches. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { createOpenClawCodingTools } from "../../../agents/agent-tools.js";
 import type { AnyAgentTool } from "../../../agents/tools/common.js";

@@ -1,6 +1,8 @@
+/** Normalizes and validates individual workspace directory paths. */
 import path from "node:path";
 import { resolveUserPath } from "../utils.js";
 
+/** Reused helper for normalize Workspace Dir behavior in src/agents. */
 export function normalizeWorkspaceDir(workspaceDir?: string): string | null {
   const trimmed = workspaceDir?.trim();
   if (!trimmed) {
@@ -15,6 +17,7 @@ export function normalizeWorkspaceDir(workspaceDir?: string): string | null {
   return resolved;
 }
 
+/** Reused helper for resolve Workspace Root behavior in src/agents. */
 export function resolveWorkspaceRoot(workspaceDir?: string): string {
   return normalizeWorkspaceDir(workspaceDir) ?? process.cwd();
 }

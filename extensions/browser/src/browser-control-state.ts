@@ -1,3 +1,4 @@
+// extensions/browser/src browser control state helpers and runtime behavior.
 import type { Server } from "node:http";
 import { createBrowserRuntimeState, stopBrowserRuntime } from "./browser/runtime-lifecycle.js";
 import { type BrowserServerState, createBrowserRouteContext } from "./browser/server-context.js";

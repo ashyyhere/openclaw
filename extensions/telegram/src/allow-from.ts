@@ -1,3 +1,4 @@
+// extensions/telegram/src allow from helpers and runtime behavior.
 export function normalizeTelegramAllowFromEntry(raw: unknown): string {
   const base = typeof raw === "string" ? raw : typeof raw === "number" ? String(raw) : "";
   return base

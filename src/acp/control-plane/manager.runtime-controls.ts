@@ -1,3 +1,4 @@
+/** Runtime control parsing and application for active ACP sessions. */
 import { asNullableRecord } from "../../shared/record-coerce.js";
 import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";
 import { AcpRuntimeError, withAcpRuntimeErrorBoundary } from "../runtime/errors.js";
@@ -67,6 +68,7 @@ function isUnsupportedOptionalTimeoutConfigRejection(key: string, error: unknown
   );
 }
 
+/** Reused helper for resolve Manager Runtime Capabilities behavior in src/acp/control-plane. */
 export async function resolveManagerRuntimeCapabilities(params: {
   runtime: AcpRuntime;
   handle: AcpRuntimeHandle;
@@ -117,6 +119,7 @@ export async function resolveManagerRuntimeCapabilities(params: {
   };
 }
 
+/** Reused helper for apply Manager Runtime Controls behavior in src/acp/control-plane. */
 export async function applyManagerRuntimeControls(params: {
   sessionKey: string;
   runtime: AcpRuntime;

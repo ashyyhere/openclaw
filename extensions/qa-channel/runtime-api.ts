@@ -1,3 +1,5 @@
+// extensions/qa-channel runtime api helpers and runtime behavior.
+/** Re-exported qa-channel plugin public API. */
 export {
   buildChannelConfigSchema,
   buildChannelOutboundSessionRoute,
@@ -17,4 +19,5 @@ export {
   readStringParam,
   type RuntimeEnv,
 } from "./src/runtime-api.js";
+/** Re-exported qa-channel plugin public API, starting with get Qa Channel Runtime. */
 export { getQaChannelRuntime, setQaChannelRuntime } from "./src/runtime.js";

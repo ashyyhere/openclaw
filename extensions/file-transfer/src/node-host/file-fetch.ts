@@ -1,3 +1,4 @@
+// extensions/file-transfer/src/node-host file fetch helpers and runtime behavior.
 import crypto from "node:crypto";
 import path from "node:path";
 import { detectMime } from "openclaw/plugin-sdk/media-mime";

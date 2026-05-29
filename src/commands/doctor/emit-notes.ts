@@ -1,5 +1,6 @@
 import { sanitizeForLog } from "../../../packages/terminal-core/src/ansi.js";
 
+/** Reused helper for sanitize Doctor Note behavior in src/commands/doctor. */
 export function sanitizeDoctorNote(note: string): string {
   return note
     .split("\n")
@@ -7,6 +8,7 @@ export function sanitizeDoctorNote(note: string): string {
     .join("\n");
 }
 
+/** Reused helper for emit Doctor Notes behavior in src/commands/doctor. */
 export function emitDoctorNotes(params: {
   note: (message: string, title?: string) => void;
   changeNotes?: string[];

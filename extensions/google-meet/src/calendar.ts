@@ -1,3 +1,4 @@
+// extensions/google-meet/src calendar helpers and runtime behavior.
 import { fetchWithSsrFGuard } from "openclaw/plugin-sdk/ssrf-runtime";
 import { googleApiError } from "./google-api-errors.js";
 

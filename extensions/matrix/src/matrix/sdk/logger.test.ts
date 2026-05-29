@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src/matrix/sdk logger test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { ConsoleLogger, setMatrixConsoleLogging } from "./logger.js";
 

@@ -1,3 +1,4 @@
+/** Runtime SDK barrel for text-to-speech provider helpers. */
 export {
   TtsAutoSchema,
   TtsConfigSchema,
@@ -5,8 +6,10 @@ export {
   TtsProviderSchema,
 } from "../config/zod-schema.core.js";
 
+/** Reused helper for prewarm Tts Runtime Facade behavior in src/plugin-sdk. */
 export function prewarmTtsRuntimeFacade(): void {}
 
+/** Re-exported API for src/plugin-sdk. */
 export {
   buildTtsSystemPromptHint,
   getLastTtsAttempt,

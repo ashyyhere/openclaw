@@ -1,3 +1,4 @@
+// Tests extensions/oc-path/src/oc-path/tests/yaml yaml kind test behavior.
 import { describe, expect, it } from "vitest";
 import { inferKind } from "../../dispatch.js";
 import { parseOcPath } from "../../oc-path.js";

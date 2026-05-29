@@ -1,3 +1,4 @@
+// ui/src/ui/chat input history helpers and runtime behavior.
 import { CHAT_HISTORY_RENDER_LIMIT } from "./history-limits.ts";
 import { extractText } from "./message-extract.ts";
 
@@ -6,6 +7,7 @@ type ChatLocalInputHistoryEntry = {
   ts: number;
 };
 
+/** Shared type for Chat Input History State in ui/src/ui/chat. */
 export type ChatInputHistoryState = {
   sessionKey: string;
   chatLoading: boolean;
@@ -18,6 +20,7 @@ export type ChatInputHistoryState = {
   chatDraftBeforeHistory: string | null;
 };
 
+/** Shared type for Chat Input History Key Input in ui/src/ui/chat. */
 export type ChatInputHistoryKeyInput = {
   key: "ArrowUp" | "ArrowDown";
   selectionStart: number;
@@ -31,6 +34,7 @@ export type ChatInputHistoryKeyInput = {
   keyCode: number;
 };
 
+/** Shared type for Chat Input History Key Result in ui/src/ui/chat. */
 export type ChatInputHistoryKeyResult = {
   handled: boolean;
   preventDefault: boolean;
@@ -96,6 +100,7 @@ function collectUserInputHistory(
   return items;
 }
 
+/** Reused helper for record Non Transcript Input History behavior in ui/src/ui/chat. */
 export function recordNonTranscriptInputHistory(state: ChatInputHistoryState, text: string) {
   const trimmed = text.trim();
   if (!trimmed) {
@@ -111,6 +116,7 @@ export function recordNonTranscriptInputHistory(state: ChatInputHistoryState, te
   ].slice(0, CHAT_HISTORY_RENDER_LIMIT);
 }
 
+/** Reused helper for reset Chat Input History Navigation behavior in ui/src/ui/chat. */
 export function resetChatInputHistoryNavigation(state: ChatInputHistoryState) {
   state.chatInputHistorySessionKey = null;
   state.chatInputHistoryItems = null;
@@ -118,6 +124,7 @@ export function resetChatInputHistoryNavigation(state: ChatInputHistoryState) {
   state.chatDraftBeforeHistory = null;
 }
 
+/** Reused helper for handle Chat Draft Change behavior in ui/src/ui/chat. */
 export function handleChatDraftChange(state: ChatInputHistoryState, next: string) {
   state.chatMessage = next;
   resetChatInputHistoryNavigation(state);
@@ -156,6 +163,7 @@ function ensureChatInputHistorySnapshot(state: ChatInputHistoryState): string[] 
   return items;
 }
 
+/** Reused helper for navigate Chat Input History behavior in ui/src/ui/chat. */
 export function navigateChatInputHistory(
   state: ChatInputHistoryState,
   direction: "up" | "down",
@@ -187,6 +195,7 @@ export function navigateChatInputHistory(
   return true;
 }
 
+/** Reused helper for handle Chat Input History Key behavior in ui/src/ui/chat. */
 export function handleChatInputHistoryKey(
   state: ChatInputHistoryState,
   input: ChatInputHistoryKeyInput,

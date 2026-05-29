@@ -1,3 +1,4 @@
+/** Tests CLI channel option resolution and startup metadata formatting. */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { testing, formatCliChannelOptions, resolveCliChannelOptions } from "./channel-options.js";
 import { testing as startupMetadataTesting } from "./startup-metadata.js";

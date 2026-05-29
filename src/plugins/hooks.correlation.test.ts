@@ -1,3 +1,4 @@
+// Tests plugins hooks correlation test behavior.
 import { spawnSync } from "node:child_process";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createHookRunner } from "./hooks.js";

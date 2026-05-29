@@ -1,6 +1,8 @@
+// plugins provider auth mode helpers and runtime behavior.
 import type { WizardPrompter } from "../wizard/prompts.js";
 import type { SecretInputMode } from "./provider-auth-types.js";
 
+/** Shared type for Secret Input Mode Prompt Copy in src/plugins. */
 export type SecretInputModePromptCopy = {
   modeMessage?: string;
   plaintextLabel?: string;
@@ -9,6 +11,7 @@ export type SecretInputModePromptCopy = {
   refHint?: string;
 };
 
+/** Reused helper for resolve Secret Input Mode For Env Selection behavior in src/plugins. */
 export async function resolveSecretInputModeForEnvSelection(params: {
   prompter: Pick<WizardPrompter, "select">;
   explicitMode?: SecretInputMode;

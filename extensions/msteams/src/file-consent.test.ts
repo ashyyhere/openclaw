@@ -1,3 +1,4 @@
+// Tests extensions/msteams/src file consent test behavior.
 import { describe, expect, it, vi } from "vitest";
 import {
   CONSENT_UPLOAD_HOST_ALLOWLIST,

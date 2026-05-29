@@ -1,3 +1,4 @@
+/** Executes full status scan work after fast overview collection. */
 import type { PluginCompatibilityNotice } from "../plugins/status.js";
 import type { RuntimeEnv } from "../runtime.js";
 import type { StatusScanOverviewResult } from "./status.scan-overview.ts";
@@ -9,6 +10,7 @@ import {
   type MemoryStatusSnapshot,
 } from "./status.scan.shared.js";
 
+/** Reused helper for execute Status Scan From Overview behavior in src/commands. */
 export async function executeStatusScanFromOverview(params: {
   overview: StatusScanOverviewResult;
   runtime?: RuntimeEnv;

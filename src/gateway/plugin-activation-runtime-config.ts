@@ -1,3 +1,4 @@
+// gateway plugin activation runtime config helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { isRecord } from "../utils.js";
 
@@ -94,6 +95,7 @@ function mergePluginActivationSections(params: {
   };
 }
 
+/** Reused helper for merge Activation Sections Into Runtime Config behavior in src/gateway. */
 export function mergeActivationSectionsIntoRuntimeConfig(params: {
   runtimeConfig: OpenClawConfig;
   activationConfig: OpenClawConfig;

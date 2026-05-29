@@ -1,3 +1,4 @@
+// gateway probe helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import path from "node:path";
 import {
@@ -13,17 +14,20 @@ import { startGatewayClientWhenEventLoopReady } from "./client-start-readiness.j
 import { GatewayClient, GatewayClientRequestError } from "./client.js";
 import { READ_SCOPE } from "./method-scopes.js";
 
+/** Shared type for Gateway Probe Auth in src/gateway. */
 export type GatewayProbeAuth = {
   token?: string;
   password?: string;
 };
 
+/** Shared type for Gateway Probe Close in src/gateway. */
 export type GatewayProbeClose = {
   code: number;
   reason: string;
   hint?: string;
 };
 
+/** Shared type for Gateway Probe Capability in src/gateway. */
 export type GatewayProbeCapability =
   | "unknown"
   | "pairing_pending"
@@ -32,17 +36,20 @@ export type GatewayProbeCapability =
   | "write_capable"
   | "admin_capable";
 
+/** Shared type for Gateway Probe Auth Summary in src/gateway. */
 export type GatewayProbeAuthSummary = {
   role: string | null;
   scopes: string[];
   capability: GatewayProbeCapability;
 };
 
+/** Shared type for Gateway Probe Server Summary in src/gateway. */
 export type GatewayProbeServerSummary = {
   version: string | null;
   connId: string | null;
 };
 
+/** Shared type for Gateway Probe Result in src/gateway. */
 export type GatewayProbeResult = {
   ok: boolean;
   url: string;
@@ -58,7 +65,9 @@ export type GatewayProbeResult = {
   configSnapshot: unknown;
 };
 
+/** Reused constant for MIN PROBE TIMEOUT MS behavior in src/gateway. */
 export const MIN_PROBE_TIMEOUT_MS = 250;
+/** Reused constant for MAX TIMER DELAY MS behavior in src/gateway. */
 export const MAX_TIMER_DELAY_MS = MAX_SAFE_TIMEOUT_DELAY_MS;
 const PAIRING_REQUIRED_PATTERN = /\bpairing required\b/i;
 const OPERATOR_READ_SCOPE = "operator.read";
@@ -77,6 +86,7 @@ type DeviceRequiredProbeCacheEntry = {
 
 const deviceRequiredProbeCache = new Map<string, DeviceRequiredProbeCacheEntry>();
 
+/** Reused helper for clamp Probe Timeout Ms behavior in src/gateway. */
 export function clampProbeTimeoutMs(timeoutMs: number): number {
   return resolveSafeTimeoutDelayMs(timeoutMs, { minMs: MIN_PROBE_TIMEOUT_MS });
 }
@@ -189,6 +199,7 @@ function resolveProbeAuthSummary(params: {
   };
 }
 
+/** Reused helper for is Pairing Pending Probe Failure behavior in src/gateway. */
 export function isPairingPendingProbeFailure(params: {
   error?: string | null;
   close?: GatewayProbeClose | null;
@@ -196,6 +207,7 @@ export function isPairingPendingProbeFailure(params: {
   return PAIRING_REQUIRED_PATTERN.test(params.close?.reason ?? params.error ?? "");
 }
 
+/** Reused helper for resolve Gateway Probe Capability behavior in src/gateway. */
 export function resolveGatewayProbeCapability(params: {
   auth?: Pick<GatewayProbeAuthSummary, "scopes"> | null;
   authMetadataPresent?: boolean;
@@ -223,6 +235,7 @@ export function resolveGatewayProbeCapability(params: {
   return "unknown";
 }
 
+/** Reused helper for probe Gateway behavior in src/gateway. */
 export async function probeGateway(opts: {
   url: string;
   auth?: GatewayProbeAuth;

@@ -1,3 +1,4 @@
+// infra machine name helpers and runtime behavior.
 import { execFile } from "node:child_process";
 import os from "node:os";
 import { promisify } from "node:util";
@@ -25,6 +26,7 @@ function fallbackHostName() {
   return trimmed.replace(/\.local$/i, "") || "openclaw";
 }
 
+/** Reused helper for get Machine Display Name behavior in src/infra. */
 export async function getMachineDisplayName(): Promise<string> {
   if (cachedPromise) {
     return cachedPromise;

@@ -1,3 +1,4 @@
+/** Doctor checks for memory search engine availability and configuration. */
 import fsSync from "node:fs";
 import {
   findNormalizedProviderValue,
@@ -248,6 +249,7 @@ function buildDreamingArtifactIssueNote(audit: DreamingArtifactsAuditSummary): s
   ].join("\n");
 }
 
+/** Reused helper for note Memory Recall Health behavior in src/commands. */
 export async function noteMemoryRecallHealth(cfg: OpenClawConfig): Promise<void> {
   try {
     const context = await resolveRuntimeMemoryAuditContext(cfg);
@@ -279,6 +281,7 @@ export async function noteMemoryRecallHealth(cfg: OpenClawConfig): Promise<void>
   }
 }
 
+/** Reused helper for maybe Repair Memory Recall Health behavior in src/commands. */
 export async function maybeRepairMemoryRecallHealth(params: {
   cfg: OpenClawConfig;
   prompter: DoctorPrompter;

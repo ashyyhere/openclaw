@@ -1,3 +1,4 @@
+// Tests gateway drain active sessions for shutdown test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 

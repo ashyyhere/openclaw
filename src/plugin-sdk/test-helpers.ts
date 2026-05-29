@@ -1,9 +1,11 @@
+/** Public SDK barrel for shared plugin test helper utilities. */
 import { mkdirSync, type RmOptions } from "node:fs";
 import { mkdir, mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { afterAll, beforeAll } from "vitest";
 
+/** Reused helper for create Plugin Sdk Test Harness behavior in src/plugin-sdk. */
 export function createPluginSdkTestHarness(options?: { cleanup?: RmOptions }) {
   let fixtureRoot = "";
   let caseId = 0;

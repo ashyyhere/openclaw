@@ -1,3 +1,4 @@
+// extensions/irc secret contract api helpers and runtime behavior.
 export {
   channelSecrets,
   collectRuntimeConfigAssignments,

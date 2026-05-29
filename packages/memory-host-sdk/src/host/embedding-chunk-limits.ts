@@ -1,3 +1,4 @@
+// packages/memory-host-sdk/src/host embedding chunk limits helpers and runtime behavior.
 import { estimateUtf8Bytes, splitTextToUtf8ByteLimit } from "./embedding-input-limits.js";
 import { hasNonTextEmbeddingParts } from "./embedding-inputs.js";
 import { resolveEmbeddingMaxInputTokens } from "./embedding-model-limits.js";
@@ -5,6 +6,7 @@ import type { EmbeddingProvider } from "./embeddings.js";
 import { hashText } from "./hash.js";
 import type { MemoryChunk } from "./internal.js";
 
+/** Public helper for enforce Embedding Max Input Tokens behavior in packages/memory-host-sdk. */
 export function enforceEmbeddingMaxInputTokens(
   provider: EmbeddingProvider,
   chunks: MemoryChunk[],

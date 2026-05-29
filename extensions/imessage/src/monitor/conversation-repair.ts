@@ -1,3 +1,4 @@
+// extensions/imessage/src/monitor conversation repair helpers and runtime behavior.
 import type { IMessageRpcClient } from "../client.js";
 import type { IMessagePayload } from "./types.js";
 

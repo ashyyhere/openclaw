@@ -1,3 +1,4 @@
+// extensions/line/src probe helpers and runtime behavior.
 import { messagingApi } from "@line/bot-sdk";
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";
 import { withTimeout } from "openclaw/plugin-sdk/text-utility-runtime";

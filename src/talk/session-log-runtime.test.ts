@@ -1,3 +1,4 @@
+// Tests talk session log runtime test behavior.
 import { describe, expect, it } from "vitest";
 import {
   extendRealtimeVoiceOutputEchoSuppression,

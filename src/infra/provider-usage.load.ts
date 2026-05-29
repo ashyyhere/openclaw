@@ -1,3 +1,4 @@
+// infra provider usage load helpers and runtime behavior.
 import { getRuntimeConfig, type OpenClawConfig } from "../config/config.js";
 import { resolveProviderUsageSnapshotWithPlugin } from "../plugins/provider-runtime.js";
 import { resolveFetch } from "./fetch.js";
@@ -79,6 +80,7 @@ async function fetchProviderUsageSnapshot(params: {
   });
 }
 
+/** Reused helper for load Provider Usage Summary behavior in src/infra. */
 export async function loadProviderUsageSummary(
   opts: UsageSummaryOptions = {},
 ): Promise<UsageSummary> {

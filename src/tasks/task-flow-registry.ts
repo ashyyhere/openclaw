@@ -1,3 +1,4 @@
+// tasks task flow registry helpers and runtime behavior.
 import crypto from "node:crypto";
 import { formatErrorMessage } from "../infra/errors.js";
 import { createSubsystemLogger } from "../logging/subsystem.js";
@@ -75,12 +76,14 @@ type FlowRecordCreateFields = {
   endedAt?: number | null;
 };
 
+/** Shared type for Create Flow Record Params in src/tasks. */
 export type CreateFlowRecordParams = FlowRecordCreateFields & {
   syncMode?: TaskFlowSyncMode;
   controllerId?: string | null;
   revision?: number;
 };
 
+/** Shared type for Task Flow Update Result in src/tasks. */
 export type TaskFlowUpdateResult =
   | {
       applied: true;
@@ -190,6 +193,7 @@ function resolveFlowBlockedSummary(
   );
 }
 
+/** Reused helper for derive Task Flow Status From Task behavior in src/tasks. */
 export function deriveTaskFlowStatusFromTask(
   task: Pick<TaskRecord, "status" | "terminalOutcome">,
 ): TaskFlowStatus {
@@ -256,6 +260,7 @@ function ensureFlowRegistryReady() {
   }));
 }
 
+/** Reused helper for get Task Flow Registry Restore Failure behavior in src/tasks. */
 export function getTaskFlowRegistryRestoreFailure(): string | null {
   ensureFlowRegistryReady();
   return restoreFailureMessage;
@@ -367,12 +372,14 @@ function writeFlowRecord(next: TaskFlowRecord, previous?: TaskFlowRecord): TaskF
   return cloneFlowRecord(next);
 }
 
+/** Reused helper for create Flow Record behavior in src/tasks. */
 export function createFlowRecord(params: CreateFlowRecordParams): TaskFlowRecord {
   ensureFlowRegistryReady();
   const record = buildFlowRecord(params);
   return writeFlowRecord(record);
 }
 
+/** Reused helper for create Managed Task Flow behavior in src/tasks. */
 export function createManagedTaskFlow(
   params: FlowRecordCreateFields & {
     controllerId: string;
@@ -385,6 +392,7 @@ export function createManagedTaskFlow(
   });
 }
 
+/** Reused helper for create Task Flow For Task behavior in src/tasks. */
 export function createTaskFlowForTask(params: {
   task: Pick<
     TaskRecord,
@@ -437,6 +445,7 @@ function updateFlowRecordByIdUnchecked(
   return writeFlowRecord(applyFlowPatch(current, patch), current);
 }
 
+/** Reused helper for update Flow Record By Id Expected Revision behavior in src/tasks. */
 export function updateFlowRecordByIdExpectedRevision(params: {
   flowId: string;
   expectedRevision: number;
@@ -463,6 +472,7 @@ export function updateFlowRecordByIdExpectedRevision(params: {
   };
 }
 
+/** Reused helper for set Flow Waiting behavior in src/tasks. */
 export function setFlowWaiting(params: {
   flowId: string;
   expectedRevision: number;
@@ -493,6 +503,7 @@ export function setFlowWaiting(params: {
   });
 }
 
+/** Reused helper for resume Flow behavior in src/tasks. */
 export function resumeFlow(params: {
   flowId: string;
   expectedRevision: number;
@@ -517,6 +528,7 @@ export function resumeFlow(params: {
   });
 }
 
+/** Reused helper for finish Flow behavior in src/tasks. */
 export function finishFlow(params: {
   flowId: string;
   expectedRevision: number;
@@ -542,6 +554,7 @@ export function finishFlow(params: {
   });
 }
 
+/** Reused helper for fail Flow behavior in src/tasks. */
 export function failFlow(params: {
   flowId: string;
   expectedRevision: number;
@@ -569,6 +582,7 @@ export function failFlow(params: {
   });
 }
 
+/** Reused helper for request Flow Cancel behavior in src/tasks. */
 export function requestFlowCancel(params: {
   flowId: string;
   expectedRevision: number;
@@ -585,6 +599,7 @@ export function requestFlowCancel(params: {
   });
 }
 
+/** Reused helper for sync Flow From Task behavior in src/tasks. */
 export function syncFlowFromTask(
   task: Pick<
     TaskRecord,
@@ -639,12 +654,14 @@ export function syncFlowFromTask(
   });
 }
 
+/** Reused helper for get Task Flow By Id behavior in src/tasks. */
 export function getTaskFlowById(flowId: string): TaskFlowRecord | undefined {
   ensureFlowRegistryReady();
   const flow = flows.get(flowId);
   return flow ? cloneFlowRecord(flow) : undefined;
 }
 
+/** Reused helper for list Task Flows For Owner Key behavior in src/tasks. */
 export function listTaskFlowsForOwnerKey(ownerKey: string): TaskFlowRecord[] {
   ensureFlowRegistryReady();
   const normalizedOwnerKey = ownerKey.trim();
@@ -657,11 +674,13 @@ export function listTaskFlowsForOwnerKey(ownerKey: string): TaskFlowRecord[] {
     .toSorted((left, right) => right.createdAt - left.createdAt);
 }
 
+/** Reused helper for find Latest Task Flow For Owner Key behavior in src/tasks. */
 export function findLatestTaskFlowForOwnerKey(ownerKey: string): TaskFlowRecord | undefined {
   const flow = listTaskFlowsForOwnerKey(ownerKey)[0];
   return flow ? cloneFlowRecord(flow) : undefined;
 }
 
+/** Reused helper for resolve Task Flow For Lookup Token behavior in src/tasks. */
 export function resolveTaskFlowForLookupToken(token: string): TaskFlowRecord | undefined {
   const lookup = token.trim();
   if (!lookup) {
@@ -670,6 +689,7 @@ export function resolveTaskFlowForLookupToken(token: string): TaskFlowRecord | u
   return getTaskFlowById(lookup) ?? findLatestTaskFlowForOwnerKey(lookup);
 }
 
+/** Reused helper for list Task Flow Records behavior in src/tasks. */
 export function listTaskFlowRecords(): TaskFlowRecord[] {
   ensureFlowRegistryReady();
   return [...flows.values()]
@@ -677,6 +697,7 @@ export function listTaskFlowRecords(): TaskFlowRecord[] {
     .toSorted((left, right) => right.createdAt - left.createdAt);
 }
 
+/** Reused helper for delete Task Flow Record By Id behavior in src/tasks. */
 export function deleteTaskFlowRecordById(flowId: string): boolean {
   ensureFlowRegistryReady();
   const current = flows.get(flowId);
@@ -693,6 +714,7 @@ export function deleteTaskFlowRecordById(flowId: string): boolean {
   return true;
 }
 
+/** Reused helper for reset Task Flow Registry For Tests behavior in src/tasks. */
 export function resetTaskFlowRegistryForTests(opts?: { persist?: boolean }) {
   flows.clear();
   restoreAttempted = false;

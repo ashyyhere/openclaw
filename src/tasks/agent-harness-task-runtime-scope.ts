@@ -1,3 +1,4 @@
+// tasks agent harness task runtime scope helpers and runtime behavior.
 import { normalizeDeliveryContext } from "../utils/delivery-context.shared.js";
 import type { DeliveryContext } from "../utils/delivery-context.types.js";
 
@@ -19,11 +20,13 @@ function getScopeRegistry(): ScopeRegistry {
   return globalState[scopeRegistryKey];
 }
 
+/** Shared type for Agent Harness Task Runtime Scope in src/tasks. */
 export type AgentHarnessTaskRuntimeScope = {
   readonly requesterSessionKey: string;
   readonly requesterOrigin?: DeliveryContext;
 };
 
+/** Reused helper for create Agent Harness Task Runtime Scope behavior in src/tasks. */
 export function createAgentHarnessTaskRuntimeScope(params: {
   requesterSessionKey: string;
   requesterOrigin?: DeliveryContext;
@@ -41,6 +44,7 @@ export function createAgentHarnessTaskRuntimeScope(params: {
   return scope;
 }
 
+/** Reused helper for assert Agent Harness Task Runtime Scope behavior in src/tasks. */
 export function assertAgentHarnessTaskRuntimeScope(
   scope: AgentHarnessTaskRuntimeScope,
 ): AgentHarnessTaskRuntimeScope {

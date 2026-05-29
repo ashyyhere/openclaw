@@ -1,3 +1,4 @@
+// extensions/google-meet/src google api errors helpers and runtime behavior.
 const REAUTH_HINT = "Re-run `openclaw googlemeet auth login` and store the refreshed oauth block.";
 
 function scopeText(scopes: readonly string[]): string {

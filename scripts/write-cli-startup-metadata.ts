@@ -1,3 +1,4 @@
+// scripts write cli startup metadata helpers and runtime behavior.
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";

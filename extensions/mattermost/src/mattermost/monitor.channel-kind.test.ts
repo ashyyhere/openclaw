@@ -1,3 +1,4 @@
+// Tests extensions/mattermost/src/mattermost monitor channel kind test behavior.
 import { describe, expect, it } from "vitest";
 import { mapMattermostChannelTypeToChatType } from "./monitor.js";
 

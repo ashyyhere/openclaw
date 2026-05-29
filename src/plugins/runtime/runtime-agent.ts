@@ -1,3 +1,4 @@
+// plugins/runtime runtime agent helpers and runtime behavior.
 import { resolveAgentDir, resolveAgentWorkspaceDir } from "../../agents/agent-scope.js";
 import { DEFAULT_MODEL, DEFAULT_PROVIDER } from "../../agents/defaults.js";
 import { resolveAgentIdentity } from "../../agents/identity.js";
@@ -38,6 +39,7 @@ function resolveRuntimeThinkingCatalog(
   return configuredCatalog.length > 0 ? configuredCatalog : undefined;
 }
 
+/** Reused helper for create Runtime Agent behavior in src/plugins/runtime. */
 export function createRuntimeAgent(): PluginRuntime["agent"] {
   const agentRuntime = {
     defaults: {

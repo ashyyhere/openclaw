@@ -1,3 +1,4 @@
+// Tests config dangerous name matching test behavior.
 import { describe, expect, it } from "vitest";
 import { resolveDangerousNameMatchingEnabled } from "./dangerous-name-matching.js";
 

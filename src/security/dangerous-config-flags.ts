@@ -1,3 +1,4 @@
+// security dangerous config flags helpers and runtime behavior.
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../agents/agent-scope.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { collectPluginConfigContractMatches } from "../plugins/config-contract-matches.js";
@@ -6,6 +7,7 @@ import { isRecord } from "../utils.js";
 import { collectEnabledInsecureOrDangerousFlagsFromContracts } from "./dangerous-config-flags-core.js";
 import { collectEnabledInsecureOrDangerousFlagsFromCurrentSnapshot } from "./dangerous-config-flags-current.js";
 
+/** Reused helper for collect Enabled Insecure Or Dangerous Flags behavior in src/security. */
 export function collectEnabledInsecureOrDangerousFlags(
   cfg: OpenClawConfig,
   options: { preferCurrentPluginMetadataSnapshot?: boolean } = {},

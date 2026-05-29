@@ -1,3 +1,4 @@
+/** Tests transcript repair with attachment-bearing tool calls. */
 import type { AgentMessage } from "openclaw/plugin-sdk/agent-core";
 import { describe, it, expect } from "vitest";
 import { sanitizeToolCallInputs } from "./session-transcript-repair.js";

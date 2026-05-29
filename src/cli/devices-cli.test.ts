@@ -1,3 +1,4 @@
+/** Tests devices CLI command output and gateway status handling. */
 import { Command } from "commander";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { stripAnsi } from "../../packages/terminal-core/src/ansi.js";

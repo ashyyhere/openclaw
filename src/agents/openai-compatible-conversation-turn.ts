@@ -1,3 +1,4 @@
+/** Detects whether OpenAI-compatible message arrays contain a billable turn. */
 function hasNonEmptyString(value: unknown): boolean {
   return typeof value === "string" && value.trim().length > 0;
 }
@@ -33,6 +34,7 @@ function hasAssistantToolCall(message: Record<string, unknown>): boolean {
   );
 }
 
+/** Return whether messages include non-empty user/assistant content or tool calls. */
 export function hasOpenAICompatibleConversationTurn(messages: unknown): boolean {
   if (!Array.isArray(messages)) {
     return false;

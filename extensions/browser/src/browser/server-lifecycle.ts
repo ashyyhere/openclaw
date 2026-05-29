@@ -1,3 +1,4 @@
+// extensions/browser/src/browser server lifecycle helpers and runtime behavior.
 import { stopOpenClawChrome } from "./chrome.js";
 import type { ResolvedBrowserConfig } from "./config.js";
 import {

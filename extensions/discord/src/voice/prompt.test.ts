@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/voice prompt test behavior.
 import { describe, expect, it } from "vitest";
 import { DISCORD_VOICE_SPOKEN_OUTPUT_CONTRACT, formatVoiceIngressPrompt } from "./prompt.js";
 

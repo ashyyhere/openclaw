@@ -1,3 +1,4 @@
+// extensions/voice-call/src bounded child output helpers and runtime behavior.
 const DEFAULT_MAX_OUTPUT_CHARS = 16_384;
 
 export type BoundedChildOutput = {

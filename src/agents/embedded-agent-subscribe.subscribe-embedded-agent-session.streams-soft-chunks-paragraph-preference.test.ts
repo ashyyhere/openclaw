@@ -1,3 +1,4 @@
+/** Tests soft chunk streaming prefers paragraph boundaries. */
 import { describe, expect, it, vi } from "vitest";
 import {
   createParagraphChunkedBlockReplyHarness,

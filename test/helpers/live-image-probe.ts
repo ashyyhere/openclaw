@@ -1,3 +1,4 @@
+// test/helpers live image probe helpers and runtime behavior.
 import { encodePngRgba, fillPixel } from "../../src/media/png-encode.js";
 
 const GLYPH_ROWS_5X7: Record<string, number[]> = {

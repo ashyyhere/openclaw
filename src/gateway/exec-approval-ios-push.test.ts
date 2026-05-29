@@ -1,3 +1,4 @@
+// Tests gateway exec approval ios push test behavior.
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 const listDevicePairingMock = vi.fn();

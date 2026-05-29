@@ -1,3 +1,4 @@
+// infra gateway processes helpers and runtime behavior.
 import { spawnSync } from "node:child_process";
 import fsSync from "node:fs";
 import { uniqueValues } from "../shared/string-normalization.js";
@@ -8,6 +9,7 @@ import {
   readWindowsProcessArgsSync,
 } from "./windows-port-pids.js";
 
+/** Reused helper for read Gateway Process Args Sync behavior in src/infra. */
 export function readGatewayProcessArgsSync(pid: number): string[] | null {
   if (process.platform === "linux") {
     try {
@@ -33,6 +35,7 @@ export function readGatewayProcessArgsSync(pid: number): string[] | null {
   return null;
 }
 
+/** Reused helper for signal Verified Gateway Pid Sync behavior in src/infra. */
 export function signalVerifiedGatewayPidSync(pid: number, signal: "SIGTERM" | "SIGUSR1"): void {
   const args = readGatewayProcessArgsSync(pid);
   if (!args || !isGatewayArgv(args, { allowGatewayBinary: true })) {
@@ -41,6 +44,7 @@ export function signalVerifiedGatewayPidSync(pid: number, signal: "SIGTERM" | "S
   process.kill(pid, signal);
 }
 
+/** Reused helper for find Verified Gateway Listener Pids On Port Sync behavior in src/infra. */
 export function findVerifiedGatewayListenerPidsOnPortSync(port: number): number[] {
   const rawPids =
     process.platform === "win32"
@@ -55,6 +59,7 @@ export function findVerifiedGatewayListenerPidsOnPortSync(port: number): number[
     });
 }
 
+/** Reused helper for format Gateway Pid List behavior in src/infra. */
 export function formatGatewayPidList(pids: number[]): string {
   return pids.join(", ");
 }

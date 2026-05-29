@@ -1,3 +1,5 @@
+// infra parse finite number helpers and runtime behavior.
+/** Re-exported API for src/infra. */
 export {
   parseFiniteNumber,
   parseStrictFiniteNumber,

@@ -1,3 +1,4 @@
+// Runtime helpers for forking reply sessions.
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -65,6 +66,7 @@ async function estimateParentTranscriptTokensFromBytes(params: {
   }
 }
 
+/** Reused helper for resolve Parent Fork Token Count Runtime behavior in src/auto-reply/reply. */
 export async function resolveParentForkTokenCountRuntime(params: {
   parentEntry: StoreSessionEntry;
   storePath: string;
@@ -282,6 +284,7 @@ async function writeBranchedSession(params: {
   return { sessionId, sessionFile };
 }
 
+/** Reused helper for fork Session From Parent Runtime behavior in src/auto-reply/reply. */
 export async function forkSessionFromParentRuntime(params: {
   parentEntry: StoreSessionEntry;
   agentId: string;

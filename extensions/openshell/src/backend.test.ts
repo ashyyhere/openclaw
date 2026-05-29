@@ -1,3 +1,4 @@
+// Tests extensions/openshell/src backend test behavior.
 import { afterEach, describe, expect, it } from "vitest";
 import { buildOpenShellSandboxName, buildOpenShellSshExecEnv } from "./backend.js";
 

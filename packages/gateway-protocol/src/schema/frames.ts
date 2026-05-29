@@ -1,7 +1,9 @@
+// packages/gateway-protocol/src/schema frames helpers and runtime behavior.
 import { Type } from "typebox";
 import { GatewayClientIdSchema, GatewayClientModeSchema, NonEmptyString } from "./primitives.js";
 import { SnapshotSchema, StateVersionSchema } from "./snapshot.js";
 
+/** Public constant for Tick Event Schema behavior in packages/gateway-protocol. */
 export const TickEventSchema = Type.Object(
   {
     ts: Type.Integer({ minimum: 0 }),
@@ -9,6 +11,7 @@ export const TickEventSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Shutdown Event Schema behavior in packages/gateway-protocol. */
 export const ShutdownEventSchema = Type.Object(
   {
     reason: NonEmptyString,
@@ -17,6 +20,7 @@ export const ShutdownEventSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Connect Params Schema behavior in packages/gateway-protocol. */
 export const ConnectParamsSchema = Type.Object(
   {
     minProtocol: Type.Integer({ minimum: 1 }),
@@ -70,6 +74,7 @@ export const ConnectParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Hello Ok Schema behavior in packages/gateway-protocol. */
 export const HelloOkSchema = Type.Object(
   {
     type: Type.Literal("hello-ok"),
@@ -124,6 +129,7 @@ export const HelloOkSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Error Shape Schema behavior in packages/gateway-protocol. */
 export const ErrorShapeSchema = Type.Object(
   {
     code: NonEmptyString,
@@ -135,6 +141,7 @@ export const ErrorShapeSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Request Frame Schema behavior in packages/gateway-protocol. */
 export const RequestFrameSchema = Type.Object(
   {
     type: Type.Literal("req"),
@@ -145,6 +152,7 @@ export const RequestFrameSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Response Frame Schema behavior in packages/gateway-protocol. */
 export const ResponseFrameSchema = Type.Object(
   {
     type: Type.Literal("res"),
@@ -156,6 +164,7 @@ export const ResponseFrameSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/** Public constant for Event Frame Schema behavior in packages/gateway-protocol. */
 export const EventFrameSchema = Type.Object(
   {
     type: Type.Literal("event"),
@@ -170,6 +179,7 @@ export const EventFrameSchema = Type.Object(
 // Discriminated union of all top-level frames. Using a discriminator makes
 // downstream codegen (quicktype) produce tighter types instead of all-optional
 // blobs.
+/** Public constant for Gateway Frame Schema behavior in packages/gateway-protocol. */
 export const GatewayFrameSchema = Type.Union(
   [RequestFrameSchema, ResponseFrameSchema, EventFrameSchema],
   { discriminator: "type" },

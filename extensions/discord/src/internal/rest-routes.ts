@@ -1,8 +1,8 @@
+// Builds Discord REST route keys and parses rate-limit reset headers.
 import {
   asDateTimestampMs,
   resolveExpiresAtMsFromDurationMs,
 } from "openclaw/plugin-sdk/number-runtime";
-
 type QueryValue = string | number | boolean;
 
 const RATE_LIMIT_HEADER_NUMBER_RE = /^\d+(?:\.\d+)?$/;

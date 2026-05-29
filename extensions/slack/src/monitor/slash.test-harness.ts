@@ -1,3 +1,4 @@
+// extensions/slack/src/monitor slash test harness helpers and runtime behavior.
 import { vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({

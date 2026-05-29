@@ -1,3 +1,4 @@
+// Shared types for extensions/qa-channel/src types behavior.
 type QaChannelActionConfig = {
   messages?: boolean;
   reactions?: boolean;

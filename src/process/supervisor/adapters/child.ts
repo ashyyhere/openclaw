@@ -1,3 +1,4 @@
+// process/supervisor/adapters child helpers and runtime behavior.
 import type { ChildProcessWithoutNullStreams, SpawnOptions } from "node:child_process";
 import { createWindowsOutputDecoder } from "../../../infra/windows-encoding.js";
 import { signalProcessTree } from "../../kill-tree.js";
@@ -17,12 +18,14 @@ function resolveCommand(command: string): string {
   });
 }
 
+/** Shared type for Child Adapter in src/process/supervisor. */
 export type ChildAdapter = SpawnProcessAdapter<NodeJS.Signals | null>;
 
 function isServiceManagedRuntime(): boolean {
   return Boolean(process.env.OPENCLAW_SERVICE_MARKER?.trim());
 }
 
+/** Reused helper for create Child Adapter behavior in src/process/supervisor. */
 export async function createChildAdapter(params: {
   argv: string[];
   cwd?: string;

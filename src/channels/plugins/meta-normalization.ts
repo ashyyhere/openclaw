@@ -1,3 +1,4 @@
+// Channel metadata normalization helpers.
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 import type { ChannelMeta } from "./types.public.js";
 
@@ -13,6 +14,7 @@ function stripRequiredChannelMeta(meta?: Partial<ChannelMeta> | null) {
   return rest;
 }
 
+/** Reused helper for normalize Channel Meta behavior in src/channels/plugins. */
 export function normalizeChannelMeta<TId extends string>(params: {
   id: TId;
   meta?: Partial<ChannelMeta> | null;

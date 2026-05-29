@@ -1,3 +1,4 @@
+// Tests shared assistant identity values test behavior.
 import { describe, expect, it } from "vitest";
 import { coerceIdentityValue } from "./assistant-identity-values.js";
 

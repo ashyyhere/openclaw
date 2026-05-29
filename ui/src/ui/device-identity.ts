@@ -1,3 +1,4 @@
+// ui/src/ui device identity helpers and runtime behavior.
 import { getPublicKeyAsync, signAsync, utils } from "@noble/ed25519";
 import { getSafeLocalStorage } from "../local-storage.ts";
 
@@ -9,6 +10,7 @@ type StoredIdentity = {
   createdAtMs: number;
 };
 
+/** Shared type for Device Identity in ui/src/ui. */
 export type DeviceIdentity = {
   deviceId: string;
   publicKey: string;
@@ -58,6 +60,7 @@ async function generateIdentity(): Promise<DeviceIdentity> {
   };
 }
 
+/** Reused helper for load Or Create Device Identity behavior in ui/src/ui. */
 export async function loadOrCreateDeviceIdentity(): Promise<DeviceIdentity> {
   const storage = getSafeLocalStorage();
   try {
@@ -106,6 +109,7 @@ export async function loadOrCreateDeviceIdentity(): Promise<DeviceIdentity> {
   return identity;
 }
 
+/** Reused helper for sign Device Payload behavior in ui/src/ui. */
 export async function signDevicePayload(privateKeyBase64Url: string, payload: string) {
   const key = base64UrlDecode(privateKeyBase64Url);
   const data = new TextEncoder().encode(payload);

@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/browser/src browser tool runtime behavior.
 import { getRuntimeConfig } from "./sdk-config.js";
 
 export { getRuntimeConfig };

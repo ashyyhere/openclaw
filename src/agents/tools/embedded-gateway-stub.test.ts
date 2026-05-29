@@ -1,3 +1,4 @@
+/** Covers embedded gateway stub routing for session tools. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createEmbeddedCallGateway } from "./embedded-gateway-stub.js";
 

@@ -1,3 +1,4 @@
+/** Public SDK helpers for secret input refs, schemas, and normalized strings. */
 import { z } from "zod";
 import {
   hasConfiguredSecretInput,
@@ -10,11 +11,13 @@ import {
 import { normalizeSecretInput } from "../utils/normalize-secret-input.js";
 import { buildSecretInputSchema } from "./secret-input-schema.js";
 
+/** Re-exported API for src/plugin-sdk. */
 export type {
   SecretInput,
   SecretInputStringResolution,
   SecretInputStringResolutionMode,
 } from "../config/types.secrets.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   buildSecretInputSchema,
   coerceSecretRef,

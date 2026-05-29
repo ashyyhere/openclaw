@@ -1,3 +1,4 @@
+// Coverage for group policy warning helpers.
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import {

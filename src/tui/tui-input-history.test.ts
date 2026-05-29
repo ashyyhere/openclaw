@@ -1,3 +1,4 @@
+// Tests tui tui input history test behavior.
 import { describe, expect, it } from "vitest";
 import { createSubmitHarness } from "./tui-submit-test-helpers.js";
 

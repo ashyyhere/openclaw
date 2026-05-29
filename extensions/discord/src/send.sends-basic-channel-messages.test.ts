@@ -1,3 +1,4 @@
+// Tests extensions/discord/src send sends basic channel messages test behavior.
 import { ChannelType, MessageFlags, PermissionFlagsBits, Routes } from "discord-api-types/v10";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { discordWebMediaMockFactory, makeDiscordRest } from "./send.test-harness.js";

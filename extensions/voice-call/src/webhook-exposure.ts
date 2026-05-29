@@ -1,3 +1,4 @@
+// extensions/voice-call/src webhook exposure helpers and runtime behavior.
 import { isBlockedHostnameOrIp } from "../api.js";
 
 type VoiceCallWebhookExposureConfig = {

@@ -1,3 +1,4 @@
+// config types whatsapp helpers and runtime behavior.
 import type { ReactionLevel } from "../utils/reaction-level.js";
 import type {
   BlockStreamingCoalesceConfig,
@@ -14,14 +15,17 @@ import type {
 import type { DmConfig } from "./types.messages.js";
 import type { GroupToolPolicyBySenderConfig, GroupToolPolicyConfig } from "./types.tools.js";
 
+/** Shared type for Whats App Action Config in src/config. */
 export type WhatsAppActionConfig = {
   reactions?: boolean;
   sendMessage?: boolean;
   polls?: boolean;
 };
 
+/** Shared type for Whats App Reaction Level in src/config. */
 export type WhatsAppReactionLevel = ReactionLevel;
 
+/** Shared type for Whats App Group Config in src/config. */
 export type WhatsAppGroupConfig = {
   requireMention?: boolean;
   tools?: GroupToolPolicyConfig;
@@ -30,11 +34,13 @@ export type WhatsAppGroupConfig = {
   systemPrompt?: string;
 };
 
+/** Shared type for Whats App Direct Config in src/config. */
 export type WhatsAppDirectConfig = {
   /** Optional system prompt for this direct chat. */
   systemPrompt?: string;
 };
 
+/** Shared type for Whats App Ack Reaction Config in src/config. */
 export type WhatsAppAckReactionConfig = {
   /** Emoji to use for acknowledgment (e.g., "👀"). Empty = disabled. */
   emoji?: string;
@@ -126,6 +132,7 @@ type WhatsAppConfigCore = {
   responsePrefix?: string;
 };
 
+/** Shared type for Whats App Config in src/config. */
 export type WhatsAppConfig = WhatsAppConfigCore &
   WhatsAppSharedConfig & {
     /** Optional per-account WhatsApp configuration (multi-account). */
@@ -141,6 +148,7 @@ export type WhatsAppConfig = WhatsAppConfigCore &
     };
   };
 
+/** Shared type for Whats App Account Config in src/config. */
 export type WhatsAppAccountConfig = WhatsAppConfigCore &
   WhatsAppSharedConfig & {
     /** Optional display name for this account (used in CLI/UI lists). */

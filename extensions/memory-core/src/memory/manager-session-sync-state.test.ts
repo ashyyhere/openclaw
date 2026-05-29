@@ -1,3 +1,4 @@
+// Tests extensions/memory-core/src/memory manager session sync state test behavior.
 import { describe, expect, it } from "vitest";
 import {
   resolveMemorySessionStartupDirtyFiles,

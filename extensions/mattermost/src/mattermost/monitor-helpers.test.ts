@@ -1,3 +1,4 @@
+// Tests extensions/mattermost/src/mattermost monitor helpers test behavior.
 import { describe, expect, it } from "vitest";
 import { normalizeMention } from "./monitor-helpers.js";
 

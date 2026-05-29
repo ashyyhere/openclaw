@@ -1,3 +1,4 @@
+// routing channel route targets helpers and runtime behavior.
 import { normalizeChatChannelId } from "../channels/ids.js";
 import { listRouteBindings } from "../config/bindings.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -6,6 +7,7 @@ import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import { resolveAgentRoute } from "./resolve-route.js";
 import { DEFAULT_ACCOUNT_ID, normalizeAccountId, normalizeAgentId } from "./session-key.js";
 
+/** Shared type for Channel Route Target in src/routing. */
 export type ChannelRouteTarget = {
   agentId: string;
   channels: string[];
@@ -65,6 +67,7 @@ function addTarget(byAgent: Map<string, Set<string>>, agentId: string, channel: 
   byAgent.set(normalizedAgentId, channels);
 }
 
+/** Reused helper for collect Channel Route Targets behavior in src/routing. */
 export function collectChannelRouteTargets(cfg: OpenClawConfig): ChannelRouteTarget[] {
   const byAgent = new Map<string, Set<string>>();
 

@@ -1,3 +1,5 @@
+// shared requirements helpers and runtime behavior.
+/** Shared type for Requirements in src/shared. */
 export type Requirements = {
   bins: string[];
   anyBins: string[];
@@ -6,16 +8,19 @@ export type Requirements = {
   os: string[];
 };
 
+/** Shared type for Requirement Config Check in src/shared. */
 export type RequirementConfigCheck = {
   path: string;
   satisfied: boolean;
 };
 
+/** Shared type for Requirements Metadata in src/shared. */
 export type RequirementsMetadata = {
   requires?: Partial<Pick<Requirements, "bins" | "anyBins" | "env" | "config">>;
   os?: string[];
 };
 
+/** Shared type for Requirement Remote in src/shared. */
 export type RequirementRemote = {
   hasBin?: (bin: string) => boolean;
   hasAnyBin?: (bins: string[]) => boolean;
@@ -36,6 +41,7 @@ type RequirementsEvaluationRemoteContext = {
   remotePlatforms?: string[];
 };
 
+/** Reused helper for resolve Missing Bins behavior in src/shared. */
 export function resolveMissingBins(params: {
   required: string[];
   hasLocalBin: (bin: string) => boolean;
@@ -53,6 +59,7 @@ export function resolveMissingBins(params: {
   });
 }
 
+/** Reused helper for resolve Missing Any Bins behavior in src/shared. */
 export function resolveMissingAnyBins(params: {
   required: string[];
   hasLocalBin: (bin: string) => boolean;
@@ -70,6 +77,7 @@ export function resolveMissingAnyBins(params: {
   return params.required;
 }
 
+/** Reused helper for resolve Missing Os behavior in src/shared. */
 export function resolveMissingOs(params: {
   required: string[];
   localPlatform: string;
@@ -100,6 +108,7 @@ function normalizeOsRequirementPlatform(platform: string): string {
   return normalized === "macos" ? "darwin" : normalized;
 }
 
+/** Reused helper for resolve Missing Env behavior in src/shared. */
 export function resolveMissingEnv(params: {
   required: string[];
   isSatisfied: (envName: string) => boolean;
@@ -114,6 +123,7 @@ export function resolveMissingEnv(params: {
   return missing;
 }
 
+/** Reused helper for build Config Checks behavior in src/shared. */
 export function buildConfigChecks(params: {
   required: string[];
   isSatisfied: (pathStr: string) => boolean;
@@ -124,6 +134,7 @@ export function buildConfigChecks(params: {
   });
 }
 
+/** Reused helper for evaluate Requirements behavior in src/shared. */
 export function evaluateRequirements(
   params: RequirementsEvaluationContext &
     RequirementsEvaluationRemoteContext & {
@@ -176,6 +187,7 @@ export function evaluateRequirements(
   return { missing, eligible, configChecks };
 }
 
+/** Reused helper for evaluate Requirements From Metadata behavior in src/shared. */
 export function evaluateRequirementsFromMetadata(
   params: RequirementsEvaluationContext &
     RequirementsEvaluationRemoteContext & {
@@ -209,6 +221,7 @@ export function evaluateRequirementsFromMetadata(
   return { required, ...result };
 }
 
+/** Reused helper for evaluate Requirements From Metadata With Remote behavior in src/shared. */
 export function evaluateRequirementsFromMetadataWithRemote(
   params: RequirementsEvaluationContext & {
     metadata?: RequirementsMetadata;

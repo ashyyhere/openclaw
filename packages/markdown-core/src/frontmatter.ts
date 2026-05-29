@@ -1,3 +1,4 @@
+// markdown frontmatter helpers and runtime behavior.
 import YAML from "yaml";
 
 type ParsedFrontmatter = Record<string, string>;
@@ -195,6 +196,7 @@ function extractFrontmatterBlock(content: string): string | undefined {
   return normalized.slice(4, endIndex);
 }
 
+/** Reused helper for parse Frontmatter Block behavior in src/markdown. */
 export function parseFrontmatterBlock(content: string): ParsedFrontmatter {
   const block = extractFrontmatterBlock(content);
   if (!block) {

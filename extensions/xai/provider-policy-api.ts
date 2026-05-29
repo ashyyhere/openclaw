@@ -1,3 +1,4 @@
+// extensions/xai provider policy api helpers and runtime behavior.
 import type {
   ProviderDefaultThinkingPolicyContext,
   ProviderThinkingProfile,

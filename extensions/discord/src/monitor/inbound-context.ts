@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor inbound context helpers and runtime behavior.
 import type { MsgContext } from "openclaw/plugin-sdk/reply-runtime";
 import {
   resolveDiscordMemberAllowed,

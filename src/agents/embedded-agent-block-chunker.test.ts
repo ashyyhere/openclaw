@@ -1,3 +1,4 @@
+/** Tests embedded block reply chunking around fences and text boundaries. */
 import { describe, expect, it, vi } from "vitest";
 import * as fences from "../../packages/markdown-core/src/fences.js";
 import { EmbeddedBlockChunker } from "./embedded-agent-block-chunker.js";

@@ -1,3 +1,4 @@
+// extensions/openrouter video http helpers and runtime behavior.
 import { fetchWithTimeoutGuarded } from "openclaw/plugin-sdk/provider-http";
 
 type GuardedFetchResult = Awaited<ReturnType<typeof fetchWithTimeoutGuarded>>;

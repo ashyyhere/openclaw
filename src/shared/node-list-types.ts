@@ -1,3 +1,5 @@
+// shared node list types helpers and runtime behavior.
+/** Shared type for Node List Node in src/shared. */
 export type NodeListNode = {
   nodeId: string;
   displayName?: string;
@@ -22,6 +24,7 @@ export type NodeListNode = {
   approvedAtMs?: number;
 };
 
+/** Shared type for Pending Request in src/shared. */
 export type PendingRequest = {
   requestId: string;
   nodeId: string;
@@ -36,6 +39,7 @@ export type PendingRequest = {
   requiredApproveScopes?: Array<"operator.pairing" | "operator.write" | "operator.admin">;
 };
 
+/** Shared type for Paired Node in src/shared. */
 export type PairedNode = {
   nodeId: string;
   token?: string;
@@ -53,6 +57,7 @@ export type PairedNode = {
   lastSeenReason?: string;
 };
 
+/** Shared type for Pairing List in src/shared. */
 export type PairingList = {
   pending: PendingRequest[];
   paired: PairedNode[];

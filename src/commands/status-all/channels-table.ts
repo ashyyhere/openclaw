@@ -1,3 +1,4 @@
+// Converts channel status rows and gateway issue overlays into terminal-table records.
 import { groupChannelIssuesByChannel } from "./channel-issues.js";
 
 type ChannelTableRowInput = {
@@ -13,6 +14,7 @@ type ChannelIssueLike = {
   message: string;
 };
 
+/** Reused constant for status Channels Table Columns behavior in src/commands/status-all. */
 export const statusChannelsTableColumns = [
   { key: "Channel", header: "Channel", minWidth: 10 },
   { key: "Enabled", header: "Enabled", minWidth: 7 },
@@ -20,6 +22,7 @@ export const statusChannelsTableColumns = [
   { key: "Detail", header: "Detail", flex: true, minWidth: 24 },
 ] as const;
 
+/** Reused helper for build Status Channels Table Rows behavior in src/commands/status-all. */
 export function buildStatusChannelsTableRows(params: {
   rows: readonly ChannelTableRowInput[];
   channelIssues: readonly ChannelIssueLike[];

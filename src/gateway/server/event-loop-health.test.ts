@@ -1,3 +1,4 @@
+// Tests gateway/server event loop health test behavior.
 import type { monitorEventLoopDelay, performance } from "node:perf_hooks";
 import { describe, expect, it, vi } from "vitest";
 import {

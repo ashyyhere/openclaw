@@ -1,3 +1,4 @@
+// Coverage for bash command cancellation and stop behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../../config/config.js";
 import type { MsgContext } from "../templating.js";

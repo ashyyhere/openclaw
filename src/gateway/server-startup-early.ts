@@ -1,3 +1,4 @@
+// gateway server startup early helpers and runtime behavior.
 import type { GatewayTailscaleMode } from "../config/types.gateway.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveCronStorePath } from "../cron/store.js";
@@ -23,6 +24,7 @@ async function measureStartup<T>(
   return startupTrace ? startupTrace.measure(name, run) : await run();
 }
 
+/** Reused helper for start Gateway Plugin Discovery behavior in src/gateway. */
 export async function startGatewayPluginDiscovery(params: {
   minimalTestGateway: boolean;
   cfgAtStart: OpenClawConfig;
@@ -65,6 +67,7 @@ export async function startGatewayPluginDiscovery(params: {
   });
 }
 
+/** Reused helper for start Gateway Early Runtime behavior in src/gateway. */
 export async function startGatewayEarlyRuntime(params: {
   minimalTestGateway: boolean;
   cfgAtStart: OpenClawConfig;

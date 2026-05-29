@@ -1,3 +1,4 @@
+// extensions/fireworks onboard helpers and runtime behavior.
 import {
   createDefaultModelsPresetAppliers,
   type OpenClawConfig,

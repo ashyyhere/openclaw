@@ -1,3 +1,4 @@
+// extensions/feishu/src send target helpers and runtime behavior.
 import type { ClawdbotConfig } from "../runtime-api.js";
 import { resolveFeishuRuntimeAccount } from "./accounts.js";
 import { createFeishuClient } from "./client.js";

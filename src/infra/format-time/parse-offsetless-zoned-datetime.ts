@@ -1,3 +1,4 @@
+// infra/format-time parse offsetless zoned datetime helpers and runtime behavior.
 const OFFSETLESS_ISO_DATETIME_RE = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?(\.\d+)?$/;
 const OFFSETLESS_ISO_DATETIME_PARTS_RE =
   /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d+))?)?$/;
@@ -12,10 +13,12 @@ type OffsetlessIsoDateTimeParts = {
   millisecond: number;
 };
 
+/** Reused helper for is Offsetless Iso Date Time behavior in src/infra/format-time. */
 export function isOffsetlessIsoDateTime(raw: string): boolean {
   return OFFSETLESS_ISO_DATETIME_RE.test(raw);
 }
 
+/** Reused helper for parse Offsetless Iso Date Time In Time Zone behavior in src/infra/format-time. */
 export function parseOffsetlessIsoDateTimeInTimeZone(raw: string, timeZone: string): string | null {
   const expectedParts = parseOffsetlessIsoDateTimeParts(raw);
   if (!expectedParts) {

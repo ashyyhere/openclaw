@@ -1,3 +1,4 @@
+/** Find tool definition for locating files under a workspace. */
 import { spawn } from "node:child_process";
 import { existsSync } from "node:fs";
 import path from "node:path";
@@ -28,6 +29,7 @@ const findSchema = Type.Object({
   ),
   limit: Type.Optional(Type.Number({ description: "Maximum number of results (default: 1000)" })),
 });
+/** Re-exported API for src/agents/sessions, starting with Find Tool Details. */
 export type { FindToolDetails, FindToolInput } from "./tool-contracts.js";
 
 const DEFAULT_LIMIT = 1000;
@@ -53,6 +55,7 @@ const defaultFindOperations: FindOperations = {
   glob: () => [],
 };
 
+/** Shared type for Find Tool Options in src/agents/sessions. */
 export interface FindToolOptions {
   /** Custom operations for find. Default: local filesystem plus fd */
   operations?: FindOperations;
@@ -383,6 +386,7 @@ export function createFindToolDefinition(
   };
 }
 
+/** Creates the runtime AgentTool wrapper for file discovery. */
 export function createFindTool(
   cwd: string,
   options?: FindToolOptions,

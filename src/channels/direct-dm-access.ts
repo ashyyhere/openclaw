@@ -1,3 +1,4 @@
+// Legacy direct-message access bridge for pre-ingress compatibility.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {
   expandAllowFromWithAccessGroups,
@@ -12,8 +13,10 @@ import {
   resolveDmGroupAccessWithLists,
 } from "../plugin-sdk/channel-access-compat.js";
 import type { ChannelId } from "./plugins/types.public.js";
+/** Re-exported API for src/channels, starting with Access Group Membership Resolver. */
 export type { AccessGroupMembershipResolver } from "../plugin-sdk/access-groups.js";
 
+/** Runtime hooks needed to compute legacy direct-DM command authorization. */
 export type DirectDmCommandAuthorizationRuntime = {
   shouldComputeCommandAuthorized: (rawBody: string, cfg: OpenClawConfig) => boolean;
   /** @deprecated Command authorization is resolved by channel ingress. Kept for runtime injection compatibility. */
@@ -51,6 +54,7 @@ function toLegacyDmReasonCode(reasonCode: string): DmGroupAccessReasonCode {
 }
 
 /** @deprecated Use `resolveChannelMessageIngress` from `openclaw/plugin-sdk/channel-ingress-runtime`. */
+/** Resolve legacy direct-DM access using explicit runtime dependencies. */
 export async function resolveInboundDirectDmAccessWithRuntime(params: {
   cfg: OpenClawConfig;
   channel: ChannelId;
@@ -139,6 +143,7 @@ export async function resolveInboundDirectDmAccessWithRuntime(params: {
 }
 
 /** @deprecated Use `resolveChannelMessageIngress` from `openclaw/plugin-sdk/channel-ingress-runtime`. */
+/** Create a pre-crypto direct-DM authorizer from an OpenClaw config. */
 export function createPreCryptoDirectDmAuthorizer(params: {
   resolveAccess: (
     senderId: string,

@@ -1,3 +1,4 @@
+// Tests infra runtime guard test behavior.
 import { describe, expect, it, vi } from "vitest";
 import {
   assertSupportedRuntime,

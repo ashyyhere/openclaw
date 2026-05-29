@@ -1,3 +1,4 @@
+/** Orchestrates configure wizard sections and writes resulting config. */
 import fsPromises from "node:fs/promises";
 import nodePath from "node:path";
 import { isDeepStrictEqual } from "node:util";
@@ -371,6 +372,7 @@ async function promptWebToolsConfig(
   };
 }
 
+/** Reused helper for run Configure Wizard behavior in src/commands. */
 export async function runConfigureWizard(
   opts: ConfigureWizardParams,
   runtime: RuntimeEnv = defaultRuntime,

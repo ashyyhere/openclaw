@@ -1,3 +1,4 @@
+// extensions/mistral embedding provider helpers and runtime behavior.
 import {
   createRemoteEmbeddingProvider,
   normalizeEmbeddingModelWithPrefixes,

@@ -1,3 +1,4 @@
+// Tests talk diagnostics test behavior.
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import {
   onInternalDiagnosticEvent,

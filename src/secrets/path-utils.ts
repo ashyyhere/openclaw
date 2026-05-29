@@ -1,3 +1,4 @@
+// secrets path utils helpers and runtime behavior.
 import { isDeepStrictEqual } from "node:util";
 import { parseConfigPathArrayIndex } from "../shared/path-array-index.js";
 import { isRecord } from "./shared.js";
@@ -71,6 +72,7 @@ function traverseToLeafParent(params: {
   return cursor;
 }
 
+/** Reused helper for get Path behavior in src/secrets. */
 export function getPath(root: unknown, segments: string[]): unknown {
   if (segments.length === 0) {
     return undefined;
@@ -93,6 +95,7 @@ export function getPath(root: unknown, segments: string[]): unknown {
   return cursor;
 }
 
+/** Reused helper for set Path Create Strict behavior in src/secrets. */
 export function setPathCreateStrict(
   root: Record<string, unknown>,
   segments: string[],
@@ -154,6 +157,7 @@ export function setPathCreateStrict(
   return changed;
 }
 
+/** Reused helper for set Path Existing Strict behavior in src/secrets. */
 export function setPathExistingStrict(
   root: Record<string, unknown>,
   segments: string[],
@@ -186,6 +190,7 @@ export function setPathExistingStrict(
   return false;
 }
 
+/** Reused helper for delete Path Strict behavior in src/secrets. */
 export function deletePathStrict(root: Record<string, unknown>, segments: string[]): boolean {
   const cursor = traverseToLeafParent({ root, segments, requireExistingSegment: false });
 

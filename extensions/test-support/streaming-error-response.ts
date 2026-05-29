@@ -1,3 +1,4 @@
+// extensions/test-support streaming error response helpers and runtime behavior.
 export function createStreamingErrorResponse(params: {
   status: number;
   chunkCount: number;

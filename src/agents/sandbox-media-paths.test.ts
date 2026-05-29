@@ -1,3 +1,4 @@
+/** Tests sandbox media path bridge resolution. */
 import { describe, expect, it, vi } from "vitest";
 import {
   createSandboxBridgeReadFile,

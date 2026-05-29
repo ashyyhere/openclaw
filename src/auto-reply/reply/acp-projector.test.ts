@@ -1,3 +1,4 @@
+// Coverage for ACP event projection into reply payloads.
 import { describe, expect, it, vi } from "vitest";
 import { prefixSystemMessage } from "../../infra/system-message.js";
 import { createAcpReplyProjector } from "./acp-projector.js";

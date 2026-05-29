@@ -1,6 +1,8 @@
+// infra ws helpers and runtime behavior.
 import { Buffer } from "node:buffer";
 import type WebSocket from "ws";
 
+/** Reused helper for raw Data To String behavior in src/infra. */
 export function rawDataToString(
   data: WebSocket.RawData,
   encoding: BufferEncoding = "utf8",

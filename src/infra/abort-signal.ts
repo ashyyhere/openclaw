@@ -1,3 +1,5 @@
+// infra abort signal helpers and runtime behavior.
+/** Reused helper for wait For Abort Signal behavior in src/infra. */
 export async function waitForAbortSignal(signal?: AbortSignal): Promise<void> {
   if (!signal || signal.aborted) {
     return;

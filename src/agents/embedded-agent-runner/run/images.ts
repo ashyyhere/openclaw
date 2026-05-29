@@ -1,3 +1,4 @@
+/** Detects, validates, and loads prompt image references for embedded attempts. */
 import path from "node:path";
 import { formatErrorMessage } from "../../../infra/errors.js";
 import { assertNoWindowsNetworkPath, safeFileURLToPath } from "../../../infra/local-file-access.js";
@@ -113,6 +114,7 @@ function isOpenClawCliImageCachePath(filePath: string): boolean {
   });
 }
 
+/** Merges prompt-discovered images with explicit attachment images in prompt order. */
 export function mergePromptAttachmentImages(params: {
   imageOrder?: PromptImageOrderEntry[];
   existingImages?: ImageContent[];
@@ -242,6 +244,7 @@ function extractTrailingAttachmentMediaUris(prompt: string, count: number): stri
   return uris;
 }
 
+/** Splits prompt text into cleaned text plus ordered image reference entries. */
 export function splitPromptAndAttachmentRefs(params: {
   prompt: string;
   refs: DetectedImageRef[];
@@ -310,6 +313,7 @@ async function sanitizeImagesWithLog(
  * @param prompt The user prompt text to scan
  * @returns Array of detected image references
  */
+/** Detects local, file URL, and media-reference image mentions in prompt text. */
 export function detectImageReferences(prompt: string): DetectedImageRef[] {
   const refs: DetectedImageRef[] = [];
   const seen = new Set<string>();
@@ -442,6 +446,7 @@ export function detectImageReferences(prompt: string): DetectedImageRef[] {
  * @param options Optional settings for sandbox and size limits
  * @returns The loaded image content, or null if loading failed
  */
+/** Loads one detected image reference into provider-ready image content. */
 export async function loadImageFromRef(
   ref: DetectedImageRef,
   workspaceDir: string,
@@ -520,6 +525,7 @@ export async function loadImageFromRef(
  * @param model The model object with input capability array
  * @returns True if the model supports image input
  */
+/** Checks whether the selected model advertises image input support. */
 export function modelSupportsImages(model: { input?: string[] }): boolean {
   return model.input?.includes("image") ?? false;
 }
@@ -534,6 +540,7 @@ export function modelSupportsImages(model: { input?: string[] }): boolean {
  * @param params Configuration for image detection and loading
  * @returns Object with loaded images for current prompt only
  */
+/** Detects prompt images and loads the subset supported by the current model. */
 export async function detectAndLoadPromptImages(params: {
   prompt: string;
   workspaceDir: string;

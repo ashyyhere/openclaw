@@ -31,6 +31,7 @@ import type { ProviderAuthMethod, ProviderAuthOptionBag, ProviderPlugin } from "
 
 type UpsertAuthProfileParams = Parameters<typeof upsertAuthProfileWithLock>[0];
 
+/** Shared type for Apply Provider Auth Choice Params in src/plugins. */
 export type ApplyProviderAuthChoiceParams = {
   authChoice: string;
   config: OpenClawConfig;
@@ -44,12 +45,14 @@ export type ApplyProviderAuthChoiceParams = {
   opts?: Partial<ProviderAuthOptionBag>;
 };
 
+/** Shared type for Apply Provider Auth Choice Result in src/plugins. */
 export type ApplyProviderAuthChoiceResult = {
   config: OpenClawConfig;
   agentModelOverride?: string;
   retrySelection?: boolean;
 };
 
+/** Shared type for Plugin Provider Auth Choice Options in src/plugins. */
 export type PluginProviderAuthChoiceOptions = {
   authChoice: string;
   pluginId: string;
@@ -241,6 +244,7 @@ function withProviderPluginId(provider: ProviderPlugin, pluginId: string): Provi
   return provider.pluginId === pluginId ? provider : { ...provider, pluginId };
 }
 
+/** Reused constant for testing behavior in src/plugins. */
 export const testing = {
   resetDepsForTest(): void {
     providerAuthChoiceDeps = defaultProviderAuthChoiceDeps;
@@ -253,6 +257,7 @@ export const testing = {
   },
 } as const;
 
+/** Reused helper for run Provider Plugin Auth Method behavior in src/plugins. */
 export async function runProviderPluginAuthMethod(params: {
   config: OpenClawConfig;
   env?: NodeJS.ProcessEnv;
@@ -334,6 +339,7 @@ export async function runProviderPluginAuthMethod(params: {
   };
 }
 
+/** Reused helper for apply Auth Choice Loaded Plugin Provider behavior in src/plugins. */
 export async function applyAuthChoiceLoadedPluginProvider(
   params: ApplyProviderAuthChoiceParams,
 ): Promise<ApplyProviderAuthChoiceResult | null> {
@@ -497,6 +503,7 @@ export async function applyAuthChoiceLoadedPluginProvider(
   return { config: nextConfig, agentModelOverride };
 }
 
+/** Reused helper for apply Auth Choice Plugin Provider behavior in src/plugins. */
 export async function applyAuthChoicePluginProvider(
   params: ApplyProviderAuthChoiceParams,
   options: PluginProviderAuthChoiceOptions,
@@ -608,4 +615,5 @@ async function upsertAuthProfileWithLockOrThrow(params: UpsertAuthProfileParams)
     );
   }
 }
+/** Re-exported API for src/plugins, starting with testing. */
 export { testing as __testing };

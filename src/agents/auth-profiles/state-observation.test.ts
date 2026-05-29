@@ -1,3 +1,4 @@
+/** Regression coverage for logging auth profile failure state changes. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { resetLogger, setLoggerOverride } from "../../logging/logger.js";
 import { logAuthProfileFailureStateChange } from "./state-observation.js";

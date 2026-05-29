@@ -1,3 +1,4 @@
+// Tests config web search codex config test behavior.
 import { importFreshModule } from "openclaw/plugin-sdk/test-fixtures";
 import { describe, expect, it } from "vitest";
 import { mergeScopedSearchConfig } from "../agents/tools/web-search-provider-config.js";

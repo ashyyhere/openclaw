@@ -1,3 +1,4 @@
+/** Discovers skills contributed by installed plugins. */
 import fs from "node:fs";
 import path from "node:path";
 import { isAcpRuntimeSpawnAvailable } from "../../acp/runtime/availability.js";
@@ -18,6 +19,7 @@ const log = createSubsystemLogger("skills");
 
 type PluginSkillLinkType = "dir" | "junction";
 
+/** Resolves skill directories exposed by eligible plugins. */
 export function resolvePluginSkillDirs(params: {
   workspaceDir: string | undefined;
   config?: OpenClawConfig;
@@ -286,9 +288,11 @@ function isNotFoundError(err: unknown): boolean {
   return code === "ENOENT" || code === "ENOTDIR";
 }
 
+/** Reused constant for testing behavior in src/agents/skills. */
 export const testing = {
   isGeneratedPluginSkillEntry,
   publishPluginSkills,
   resolvePluginSkillLinkType,
 };
+/** Re-exported API for src/agents/skills, starting with testing. */
 export { testing as __testing };

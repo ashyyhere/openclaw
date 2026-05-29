@@ -1,3 +1,4 @@
+// Tests media-understanding runner proxy test behavior.
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/types.js";
 import { withAudioFixture, withVideoFixture } from "./runner.test-utils.js";

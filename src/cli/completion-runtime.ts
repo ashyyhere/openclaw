@@ -1,3 +1,4 @@
+/** Runtime helpers for installing and updating shell completion scripts. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
@@ -8,10 +9,14 @@ import {
 } from "../shared/string-coerce.js";
 import { pathExists } from "../utils.js";
 
+/** Reused constant for COMPLETION SHELLS behavior in src/cli. */
 export const COMPLETION_SHELLS = ["zsh", "bash", "powershell", "fish"] as const;
+/** Shared type for Completion Shell in src/cli. */
 export type CompletionShell = (typeof COMPLETION_SHELLS)[number];
+/** Reused constant for COMPLETION SKIP PLUGIN COMMANDS ENV behavior in src/cli. */
 export const COMPLETION_SKIP_PLUGIN_COMMANDS_ENV = "OPENCLAW_COMPLETION_SKIP_PLUGIN_COMMANDS";
 
+/** Reused helper for is Completion Shell behavior in src/cli. */
 export function isCompletionShell(value: string): value is CompletionShell {
   return COMPLETION_SHELLS.includes(value as CompletionShell);
 }
@@ -27,6 +32,7 @@ function resolveShellBasename(
   return normalizeLowercaseStringOrEmpty(basename.replace(/\.(?:exe|cmd|bat)$/i, ""));
 }
 
+/** Reused helper for resolve Shell From Env behavior in src/cli. */
 export function resolveShellFromEnv(env: NodeJS.ProcessEnv = process.env): CompletionShell {
   const shellPath = normalizeOptionalString(env.SHELL) ?? "";
   const shellName = shellPath ? resolveShellBasename(shellPath) : "";
@@ -58,6 +64,7 @@ function resolveCompletionCacheDir(env: NodeJS.ProcessEnv = process.env): string
   return path.join(stateDir, "completions");
 }
 
+/** Reused helper for resolve Completion Cache Path behavior in src/cli. */
 export function resolveCompletionCachePath(shell: CompletionShell, binName: string): string {
   const basename = sanitizeCompletionBasename(binName);
   const extension =
@@ -78,6 +85,7 @@ function escapePowerShellSingleQuotedString(value: string): string {
   return value.replace(/'/g, "''");
 }
 
+/** Reused helper for format Completion Source Line behavior in src/cli. */
 export function formatCompletionSourceLine(
   shell: CompletionShell,
   _binName: string,
@@ -92,6 +100,7 @@ export function formatCompletionSourceLine(
   return `[ -f "${cachePath}" ] && source "${cachePath}"`;
 }
 
+/** Reused helper for format Completion Reload Command behavior in src/cli. */
 export function formatCompletionReloadCommand(shell: CompletionShell, profilePath: string): string {
   if (shell === "powershell") {
     return `. '${escapePowerShellSingleQuotedString(profilePath)}'`;
@@ -151,6 +160,7 @@ function updateCompletionProfile(
   return { next, changed: next !== content, hadExisting };
 }
 
+/** Reused helper for resolve Completion Profile Path behavior in src/cli. */
 export function resolveCompletionProfilePath(
   shell: CompletionShell,
   options: {
@@ -186,6 +196,7 @@ export function resolveCompletionProfilePath(
   return path.join(home, ".config", "powershell", "Microsoft.PowerShell_profile.ps1");
 }
 
+/** Reused helper for is Completion Installed behavior in src/cli. */
 export async function isCompletionInstalled(
   shell: CompletionShell,
   binName = "openclaw",
@@ -230,6 +241,7 @@ export async function usesSlowDynamicCompletion(
   return false;
 }
 
+/** Reused helper for install Completion behavior in src/cli. */
 export async function installCompletion(shell: string, yes: boolean, binName = "openclaw") {
   const isShellSupported = isCompletionShell(shell);
   if (!isShellSupported) {

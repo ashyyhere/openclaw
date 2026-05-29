@@ -1,3 +1,4 @@
+// extensions/telegram/src network config helpers and runtime behavior.
 import * as dns from "node:dns";
 import process from "node:process";
 import type { TelegramNetworkConfig } from "openclaw/plugin-sdk/config-contracts";

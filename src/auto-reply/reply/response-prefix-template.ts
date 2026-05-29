@@ -1,3 +1,4 @@
+// Response prefix template parsing and formatting.
 import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";
 
 /**

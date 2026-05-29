@@ -1,3 +1,4 @@
+// extensions/line/src setup surface helpers and runtime behavior.
 import {
   createAllowFromSection,
   createStandardChannelSetupStatus,

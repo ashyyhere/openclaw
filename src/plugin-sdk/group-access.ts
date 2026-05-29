@@ -6,37 +6,45 @@
 import { resolveOpenProviderRuntimeGroupPolicy } from "../config/runtime-group-policy.js";
 import type { GroupPolicy } from "../config/types.base.js";
 
+/** Re-exported API for src/plugin-sdk, starting with resolve Open Provider Runtime Group Policy. */
 export { resolveOpenProviderRuntimeGroupPolicy };
+/** Re-exported API for src/plugin-sdk, starting with Group Policy. */
 export type { GroupPolicy };
 
+/** Shared type for Sender Group Access Reason in src/plugin-sdk. */
 export type SenderGroupAccessReason =
   | "allowed"
   | "disabled"
   | "empty_allowlist"
   | "sender_not_allowlisted";
+/** Shared type for Sender Group Access Decision in src/plugin-sdk. */
 export type SenderGroupAccessDecision = {
   allowed: boolean;
   groupPolicy: GroupPolicy;
   providerMissingFallbackApplied: boolean;
   reason: SenderGroupAccessReason;
 };
+/** Shared type for Group Route Access Reason in src/plugin-sdk. */
 export type GroupRouteAccessReason =
   | "allowed"
   | "disabled"
   | "empty_allowlist"
   | "route_not_allowlisted"
   | "route_disabled";
+/** Shared type for Group Route Access Decision in src/plugin-sdk. */
 export type GroupRouteAccessDecision = {
   allowed: boolean;
   groupPolicy: GroupPolicy;
   reason: GroupRouteAccessReason;
 };
+/** Shared type for Matched Group Access Reason in src/plugin-sdk. */
 export type MatchedGroupAccessReason =
   | "allowed"
   | "disabled"
   | "missing_match_input"
   | "empty_allowlist"
   | "not_allowlisted";
+/** Shared type for Matched Group Access Decision in src/plugin-sdk. */
 export type MatchedGroupAccessDecision = {
   allowed: boolean;
   groupPolicy: GroupPolicy;

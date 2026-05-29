@@ -1,3 +1,4 @@
+// gateway http common helpers and runtime behavior.
 import type { IncomingMessage, ServerResponse } from "node:http";
 import {
   logRejectedLargePayload,
@@ -25,29 +26,34 @@ export function setDefaultSecurityHeaders(
   }
 }
 
+/** Reused helper for send Json behavior in src/gateway. */
 export function sendJson(res: ServerResponse, status: number, body: unknown) {
   res.statusCode = status;
   res.setHeader("Content-Type", "application/json; charset=utf-8");
   res.end(JSON.stringify(body));
 }
 
+/** Reused helper for send Text behavior in src/gateway. */
 export function sendText(res: ServerResponse, status: number, body: string) {
   res.statusCode = status;
   res.setHeader("Content-Type", "text/plain; charset=utf-8");
   res.end(body);
 }
 
+/** Reused helper for send Method Not Allowed behavior in src/gateway. */
 export function sendMethodNotAllowed(res: ServerResponse, allow = "POST") {
   res.setHeader("Allow", allow);
   sendText(res, 405, "Method Not Allowed");
 }
 
+/** Reused helper for send Unauthorized behavior in src/gateway. */
 export function sendUnauthorized(res: ServerResponse) {
   sendJson(res, 401, {
     error: { message: "Unauthorized", type: "unauthorized" },
   });
 }
 
+/** Reused helper for send Rate Limited behavior in src/gateway. */
 export function sendRateLimited(res: ServerResponse, retryAfterMs?: number) {
   if (retryAfterMs && retryAfterMs > 0) {
     res.setHeader("Retry-After", String(Math.ceil(retryAfterMs / 1000)));
@@ -60,6 +66,7 @@ export function sendRateLimited(res: ServerResponse, retryAfterMs?: number) {
   });
 }
 
+/** Reused helper for send Gateway Auth Failure behavior in src/gateway. */
 export function sendGatewayAuthFailure(res: ServerResponse, authResult: GatewayAuthResult) {
   if (authResult.rateLimited) {
     sendRateLimited(res, authResult.retryAfterMs);
@@ -68,12 +75,14 @@ export function sendGatewayAuthFailure(res: ServerResponse, authResult: GatewayA
   sendUnauthorized(res);
 }
 
+/** Reused helper for send Invalid Request behavior in src/gateway. */
 export function sendInvalidRequest(res: ServerResponse, message: string) {
   sendJson(res, 400, {
     error: { message, type: "invalid_request_error" },
   });
 }
 
+/** Reused helper for build Missing Scope Forbidden Body behavior in src/gateway. */
 export function buildMissingScopeForbiddenBody(missingScope: string | undefined) {
   return {
     ok: false,
@@ -84,10 +93,12 @@ export function buildMissingScopeForbiddenBody(missingScope: string | undefined)
   };
 }
 
+/** Reused helper for send Missing Scope Forbidden behavior in src/gateway. */
 export function sendMissingScopeForbidden(res: ServerResponse, missingScope: string | undefined) {
   sendJson(res, 403, buildMissingScopeForbiddenBody(missingScope));
 }
 
+/** Reused helper for read Json Body Or Error behavior in src/gateway. */
 export async function readJsonBodyOrError(
   req: IncomingMessage,
   res: ServerResponse,
@@ -120,10 +131,12 @@ export async function readJsonBodyOrError(
   return body.value;
 }
 
+/** Reused helper for write Done behavior in src/gateway. */
 export function writeDone(res: ServerResponse) {
   res.write("data: [DONE]\n\n");
 }
 
+/** Reused helper for set Sse Headers behavior in src/gateway. */
 export function setSseHeaders(res: ServerResponse) {
   res.statusCode = 200;
   res.setHeader("Content-Type", "text/event-stream; charset=utf-8");
@@ -132,6 +145,7 @@ export function setSseHeaders(res: ServerResponse) {
   res.flushHeaders?.();
 }
 
+/** Reused helper for watch Client Disconnect behavior in src/gateway. */
 export function watchClientDisconnect(
   req: IncomingMessage,
   res: ServerResponse,

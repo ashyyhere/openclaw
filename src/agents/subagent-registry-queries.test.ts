@@ -1,3 +1,4 @@
+/** Regression coverage for pure subagent registry query selectors. */
 import { describe, expect, it } from "vitest";
 import {
   countActiveRunsForSessionFromRuns,

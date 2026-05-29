@@ -1,3 +1,4 @@
+// extensions/xai speech provider helpers and runtime behavior.
 import {
   isProviderAuthProfileConfigured,
   type OpenClawConfig,

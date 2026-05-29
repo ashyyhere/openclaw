@@ -1,9 +1,11 @@
+// infra device identity helpers and runtime behavior.
 import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { resolveStateDir } from "../config/paths.js";
 import { privateFileStoreSync } from "./private-file-store.js";
 
+/** Shared type for Device Identity in src/infra. */
 export type DeviceIdentity = {
   deviceId: string;
   publicKeyPem: string;
@@ -216,6 +218,7 @@ function identityFileExists(filePath: string): boolean {
   }
 }
 
+/** Reused helper for load Or Create Device Identity behavior in src/infra. */
 export function loadOrCreateDeviceIdentity(
   filePath: string = resolveDefaultIdentityPath(),
 ): DeviceIdentity {
@@ -258,6 +261,7 @@ export function loadOrCreateDeviceIdentity(
   return identity;
 }
 
+/** Reused helper for load Device Identity If Present behavior in src/infra. */
 export function loadDeviceIdentityIfPresent(
   filePath: string = resolveDefaultIdentityPath(),
 ): DeviceIdentity | null {
@@ -275,12 +279,14 @@ export function loadDeviceIdentityIfPresent(
   }
 }
 
+/** Reused helper for sign Device Payload behavior in src/infra. */
 export function signDevicePayload(privateKeyPem: string, payload: string): string {
   const key = crypto.createPrivateKey(privateKeyPem);
   const sig = crypto.sign(null, Buffer.from(payload, "utf8"), key);
   return base64UrlEncode(sig);
 }
 
+/** Reused helper for normalize Device Public Key Base64 Url behavior in src/infra. */
 export function normalizeDevicePublicKeyBase64Url(publicKey: string): string | null {
   try {
     if (publicKey.includes("BEGIN")) {
@@ -296,6 +302,7 @@ export function normalizeDevicePublicKeyBase64Url(publicKey: string): string | n
   }
 }
 
+/** Reused helper for derive Device Id From Public Key behavior in src/infra. */
 export function deriveDeviceIdFromPublicKey(publicKey: string): string | null {
   try {
     const raw = publicKey.includes("BEGIN")
@@ -310,10 +317,12 @@ export function deriveDeviceIdFromPublicKey(publicKey: string): string | null {
   }
 }
 
+/** Reused helper for public Key Raw Base64 Url From Pem behavior in src/infra. */
 export function publicKeyRawBase64UrlFromPem(publicKeyPem: string): string {
   return base64UrlEncode(derivePublicKeyRaw(publicKeyPem));
 }
 
+/** Reused helper for verify Device Signature behavior in src/infra. */
 export function verifyDeviceSignature(
   publicKey: string,
   payload: string,

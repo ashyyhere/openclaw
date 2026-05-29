@@ -1,3 +1,4 @@
+/** Public SDK helpers for channel-side exec approval client profiles. */
 import type { ExecApprovalForwardTarget } from "../config/types.approvals.js";
 import { matchesApprovalRequestFilters } from "../infra/approval-request-filters.js";
 import { getExecApprovalReplyMetadata } from "../infra/exec-approval-reply.js";
@@ -35,8 +36,10 @@ function isApprovalTargetsMode(cfg: OpenClawConfig): boolean {
   return execApprovals.mode === "targets" || execApprovals.mode === "both";
 }
 
+/** Re-exported API for src/plugin-sdk, starting with get Exec Approval Reply Metadata. */
 export { getExecApprovalReplyMetadata, matchesApprovalRequestFilters };
 
+/** Return whether a channel approval client should activate for its config and approver count. */
 export function isChannelExecApprovalClientEnabledFromConfig(params: {
   enabled?: ChannelExecApprovalEnableMode;
   approverCount: number;
@@ -47,6 +50,7 @@ export function isChannelExecApprovalClientEnabledFromConfig(params: {
   return params.enabled === true || params.enabled === "auto";
 }
 
+/** Match a sender against global approval forwarding targets for one channel/account. */
 export function isChannelExecApprovalTargetRecipient(params: {
   cfg: OpenClawConfig;
   senderId?: string | null;
@@ -89,6 +93,7 @@ export function isChannelExecApprovalTargetRecipient(params: {
   });
 }
 
+/** Build the reusable exec approval profile used by channel transports and reply suppression. */
 export function createChannelExecApprovalProfile(params: {
   resolveConfig: (params: ApprovalProfileParams) => ChannelApprovalConfig | undefined;
   resolveApprovers: (params: ApprovalProfileParams) => string[];
@@ -157,6 +162,8 @@ export function createChannelExecApprovalProfile(params: {
     if (params.requireClientEnabledForLocalPromptSuppression !== false && !isClientEnabled(input)) {
       return false;
     }
+    // Suppress only payloads that already carry exec-approval metadata, so ordinary replies keep
+    // local prompting even when approval transport is enabled.
     return getExecApprovalReplyMetadata(input.payload) !== null;
   };
 

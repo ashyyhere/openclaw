@@ -1,3 +1,4 @@
+/** Prompt regression covering bundled allowlist behavior without hiding workspace skills. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

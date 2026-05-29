@@ -1,3 +1,4 @@
+// Tests extensions/memory-core/src/memory manager sync yield test behavior.
 import os from "node:os";
 import path from "node:path";
 import type { DatabaseSync } from "node:sqlite";

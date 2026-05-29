@@ -111,6 +111,7 @@ function buildGatewaySessionSnapshot(params: {
   };
 }
 
+/** Reused helper for create Transcript Update Broadcast Handler behavior in src/gateway. */
 export function createTranscriptUpdateBroadcastHandler(params: {
   broadcastToConnIds: GatewayBroadcastToConnIdsFn;
   sessionEventSubscribers: SessionEventSubscribers;
@@ -215,6 +216,7 @@ async function handleTranscriptUpdateBroadcast(
   );
 }
 
+/** Reused helper for create Lifecycle Event Broadcast Handler behavior in src/gateway. */
 export function createLifecycleEventBroadcastHandler(params: {
   broadcastToConnIds: GatewayBroadcastToConnIdsFn;
   sessionEventSubscribers: SessionEventSubscribers;

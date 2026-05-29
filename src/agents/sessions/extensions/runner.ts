@@ -160,14 +160,17 @@ type RunnerEmitResult<TEvent extends RunnerEmitEvent> = TEvent extends {
         ? SessionBeforeTreeResult | undefined
         : undefined;
 
+/** Shared type for Extension Error Listener in src/agents/sessions. */
 export type ExtensionErrorListener = (error: ExtensionError) => void;
 
+/** Shared type for New Session Handler in src/agents/sessions. */
 export type NewSessionHandler = (options?: {
   parentSession?: string;
   setup?: (sessionManager: SessionManager) => Promise<void>;
   withSession?: (ctx: ReplacedSessionContext) => Promise<void>;
 }) => Promise<{ cancelled: boolean }>;
 
+/** Shared type for Fork Handler in src/agents/sessions. */
 export type ForkHandler = (
   entryId: string,
   options?: {
@@ -176,6 +179,7 @@ export type ForkHandler = (
   },
 ) => Promise<{ cancelled: boolean }>;
 
+/** Shared type for Navigate Tree Handler in src/agents/sessions. */
 export type NavigateTreeHandler = (
   targetId: string,
   options?: {
@@ -186,13 +190,16 @@ export type NavigateTreeHandler = (
   },
 ) => Promise<{ cancelled: boolean }>;
 
+/** Shared type for Switch Session Handler in src/agents/sessions. */
 export type SwitchSessionHandler = (
   sessionPath: string,
   options?: { withSession?: (ctx: ReplacedSessionContext) => Promise<void> },
 ) => Promise<{ cancelled: boolean }>;
 
+/** Shared type for Reload Handler in src/agents/sessions. */
 export type ReloadHandler = () => Promise<void>;
 
+/** Shared type for Shutdown Handler in src/agents/sessions. */
 export type ShutdownHandler = () => void;
 
 /**
@@ -246,6 +253,7 @@ const noOpUIContext: ExtensionUIContext = {
   setToolsExpanded: () => {},
 };
 
+/** Reused class for Extension Runner behavior in src/agents/sessions. */
 export class ExtensionRunner {
   private extensions: Extension[];
   private runtime: ExtensionRuntime;

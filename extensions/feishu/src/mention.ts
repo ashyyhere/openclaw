@@ -1,3 +1,4 @@
+// extensions/feishu/src mention helpers and runtime behavior.
 import type { FeishuMessageEvent } from "./event-types.js";
 import type { MentionTarget } from "./mention-target.types.js";
 import { isFeishuGroupChatType } from "./types.js";

@@ -1,3 +1,4 @@
+/** Integration coverage for skill loading in embedded-agent runtime startup. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

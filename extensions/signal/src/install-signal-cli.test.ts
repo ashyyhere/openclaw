@@ -1,3 +1,4 @@
+// Tests extensions/signal/src install signal cli test behavior.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

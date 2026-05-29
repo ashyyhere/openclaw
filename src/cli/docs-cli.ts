@@ -1,3 +1,4 @@
+/** Registers documentation search commands. */
 import type { Command } from "commander";
 import { formatDocsLink } from "../../packages/terminal-core/src/links.js";
 import { theme } from "../../packages/terminal-core/src/theme.js";
@@ -5,6 +6,7 @@ import { docsSearchCommand } from "../commands/docs.js";
 import { defaultRuntime } from "../runtime.js";
 import { runCommandWithRuntime } from "./cli-utils.js";
 
+/** Reused helper for register Docs Cli behavior in src/cli. */
 export function registerDocsCli(program: Command) {
   program
     .command("docs")

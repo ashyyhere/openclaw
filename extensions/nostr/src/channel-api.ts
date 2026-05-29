@@ -1,3 +1,4 @@
+// extensions/nostr/src channel api helpers and runtime behavior.
 export {
   buildChannelConfigSchema,
   DEFAULT_ACCOUNT_ID,

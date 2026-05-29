@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server/sandbox-exec-server runtime helpers and runtime behavior.
 import type { SandboxContext } from "openclaw/plugin-sdk/sandbox";
 import type { OpenClawExecServer } from "./types.js";
 

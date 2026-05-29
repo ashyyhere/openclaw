@@ -1,3 +1,4 @@
+// Tests config group policy test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "./config.js";
 import {

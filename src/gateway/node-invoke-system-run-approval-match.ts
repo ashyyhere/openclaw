@@ -1,3 +1,4 @@
+// gateway node invoke system run approval match helpers and runtime behavior.
 import type { ExecApprovalRequestPayload } from "../infra/exec-approvals.js";
 import {
   buildSystemRunApprovalBinding,
@@ -21,8 +22,10 @@ function requestMismatch(): SystemRunApprovalMatchResult {
   };
 }
 
+/** Re-exported API for src/gateway, starting with to System Run Approval Mismatch Error. */
 export { toSystemRunApprovalMismatchError } from "../infra/system-run-approval-binding.js";
 
+/** Reused helper for evaluate System Run Approval Match behavior in src/gateway. */
 export function evaluateSystemRunApprovalMatch(params: {
   argv: string[];
   request: ExecApprovalRequestPayload;

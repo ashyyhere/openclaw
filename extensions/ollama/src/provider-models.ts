@@ -1,3 +1,4 @@
+// extensions/ollama/src provider models helpers and runtime behavior.
 import type { ModelProviderConfig } from "openclaw/plugin-sdk/provider-model-shared";
 import type { ModelDefinitionConfig } from "openclaw/plugin-sdk/provider-onboard";
 import { fetchWithSsrFGuard } from "openclaw/plugin-sdk/ssrf-runtime";

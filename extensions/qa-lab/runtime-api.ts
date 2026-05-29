@@ -1,3 +1,5 @@
+// extensions/qa-lab runtime api helpers and runtime behavior.
+/** Re-exported qa-lab plugin public API. */
 export {
   buildQaTarget,
   callGatewayFromCli,
@@ -38,4 +40,5 @@ export {
   sendQaBusMessage,
   setQaChannelRuntime,
 } from "./src/runtime-api.js";
+/** Re-exported qa-lab plugin public API, starting with start Qa Live Lane Gateway. */
 export { startQaLiveLaneGateway } from "./src/live-transports/shared/live-gateway.runtime.js";

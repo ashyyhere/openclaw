@@ -1,3 +1,4 @@
+// extensions/browser/src/browser chrome mcp snapshot helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "openclaw/plugin-sdk/string-coerce-runtime";
 import { normalizeString } from "../record-shared.js";
 import type { SnapshotAriaNode } from "./client.types.js";

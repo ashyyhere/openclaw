@@ -1,3 +1,4 @@
+/** Tests plugin list CLI formatting and filtering. */
 import { beforeEach, describe, expect, it } from "vitest";
 import { createPluginRecord } from "../plugins/status.test-helpers.js";
 import {

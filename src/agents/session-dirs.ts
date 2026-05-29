@@ -1,3 +1,4 @@
+/** Discovers per-agent session directories under state roots. */
 import fsSync, { type Dirent } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -9,6 +10,7 @@ function mapAgentSessionDirs(agentsDir: string, entries: Dirent[]): string[] {
     .toSorted((a, b) => a.localeCompare(b));
 }
 
+/** Resolve session directories from an agents directory asynchronously. */
 export async function resolveAgentSessionDirsFromAgentsDir(agentsDir: string): Promise<string[]> {
   let entries: Dirent[] = [];
   try {
@@ -24,6 +26,7 @@ export async function resolveAgentSessionDirsFromAgentsDir(agentsDir: string): P
   return mapAgentSessionDirs(agentsDir, entries);
 }
 
+/** Resolve session directories from an agents directory synchronously. */
 export function resolveAgentSessionDirsFromAgentsDirSync(agentsDir: string): string[] {
   let entries: Dirent[] = [];
   try {
@@ -39,6 +42,7 @@ export function resolveAgentSessionDirsFromAgentsDirSync(agentsDir: string): str
   return mapAgentSessionDirs(agentsDir, entries);
 }
 
+/** Resolve all agent session directories under a state directory. */
 export async function resolveAgentSessionDirs(stateDir: string): Promise<string[]> {
   return await resolveAgentSessionDirsFromAgentsDir(path.join(stateDir, "agents"));
 }

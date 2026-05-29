@@ -1,3 +1,4 @@
+/** Tests PTY key and paste sequence encoding. */
 import { expect, test } from "vitest";
 import { buildCursorPositionResponse, stripDsrRequests } from "./pty-dsr.js";
 import {

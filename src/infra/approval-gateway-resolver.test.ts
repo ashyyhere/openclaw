@@ -1,3 +1,4 @@
+// Tests infra approval gateway resolver test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { resolveApprovalOverGateway } from "./approval-gateway-resolver.js";
 

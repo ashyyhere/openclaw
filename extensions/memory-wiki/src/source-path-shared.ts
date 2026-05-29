@@ -1,3 +1,4 @@
+// extensions/memory-wiki/src source path shared helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { lowercasePreservingWhitespace } from "openclaw/plugin-sdk/string-coerce-runtime";

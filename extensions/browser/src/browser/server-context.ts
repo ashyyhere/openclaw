@@ -1,3 +1,4 @@
+// extensions/browser/src/browser server context helpers and runtime behavior.
 import {
   resolveCdpControlPolicy,
   resolveCdpReachabilityPolicy,

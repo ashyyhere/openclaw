@@ -1,3 +1,4 @@
+/** E2E regression coverage for lifecycle retry grace periods. */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { testing as subagentAnnounceDeliveryTesting } from "./subagent-announce-delivery.js";
 import { testing as subagentAnnounceOutputTesting } from "./subagent-announce-output.js";

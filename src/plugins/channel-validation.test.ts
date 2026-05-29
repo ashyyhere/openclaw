@@ -1,3 +1,4 @@
+// Tests plugins channel validation test behavior.
 import { describe, expect, it } from "vitest";
 import { getChatChannelMeta } from "../channels/chat-meta.js";
 import type { ChannelPlugin } from "../channels/plugins/types.public.js";

@@ -1,3 +1,4 @@
+/** End-to-end tests for auth-profile rotation during embedded-agent runs. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor message handler preflight channel access helpers and runtime behavior.
 import { logDebug } from "openclaw/plugin-sdk/logging-core";
 import { logVerbose } from "openclaw/plugin-sdk/runtime-env";
 import {

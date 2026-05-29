@@ -1,3 +1,4 @@
+// extensions/telegram/src bot message context session recreate test support helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import {

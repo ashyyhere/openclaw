@@ -1,3 +1,4 @@
+// extensions/discord/src/internal gateway dispatch helpers and runtime behavior.
 import { GatewayDispatchEvents, type APIMessage, type APIUser } from "discord-api-types/v10";
 import type { Client } from "./client.js";
 import { Guild, Message, User } from "./structures.js";

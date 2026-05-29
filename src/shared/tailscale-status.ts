@@ -1,11 +1,14 @@
+// shared tailscale status helpers and runtime behavior.
 import { z } from "zod";
 import { safeParseJsonWithSchema } from "../utils/zod-parse.js";
 
+/** Shared type for Tailscale Status Command Result in src/shared. */
 export type TailscaleStatusCommandResult = {
   code: number | null;
   stdout: string;
 };
 
+/** Shared type for Tailscale Status Command Runner in src/shared. */
 export type TailscaleStatusCommandRunner = (
   argv: string[],
   opts: { timeoutMs: number },
@@ -44,6 +47,7 @@ function extractTailnetHostFromStatusJson(raw: string): string | null {
   return ips.length > 0 ? (ips[0] ?? null) : null;
 }
 
+/** Reused helper for resolve Tailnet Host With Runner behavior in src/shared. */
 export async function resolveTailnetHostWithRunner(
   runCommandWithTimeout?: TailscaleStatusCommandRunner,
 ): Promise<string | null> {

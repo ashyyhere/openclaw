@@ -1,3 +1,4 @@
+// plugins manifest contribution ids helpers and runtime behavior.
 import {
   listPluginContributionIds,
   loadPluginRegistrySnapshot,
@@ -6,12 +7,14 @@ import {
   type PluginRegistrySnapshot,
 } from "./plugin-registry.js";
 
+/** Shared type for List Manifest Contribution Ids Params in src/plugins. */
 export type ListManifestContributionIdsParams = LoadPluginRegistryParams & {
   contribution: PluginRegistryContributionKey;
   index?: PluginRegistrySnapshot;
   includeDisabled?: boolean;
 };
 
+/** Reused helper for list Manifest Contribution Ids behavior in src/plugins. */
 export function listManifestContributionIds(
   params: ListManifestContributionIdsParams,
 ): readonly string[] {
@@ -35,6 +38,7 @@ export function listManifestContributionIds(
   });
 }
 
+/** Reused helper for list Manifest Channel Contribution Ids behavior in src/plugins. */
 export function listManifestChannelContributionIds(
   params: Omit<ListManifestContributionIdsParams, "contribution"> = {},
 ): readonly string[] {
@@ -44,6 +48,7 @@ export function listManifestChannelContributionIds(
   });
 }
 
+/** Reused helper for list Manifest Provider Contribution Ids behavior in src/plugins. */
 export function listManifestProviderContributionIds(
   params: Omit<ListManifestContributionIdsParams, "contribution"> = {},
 ): readonly string[] {

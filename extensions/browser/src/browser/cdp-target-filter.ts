@@ -1,3 +1,4 @@
+// extensions/browser/src/browser cdp target filter helpers and runtime behavior.
 const BROWSER_INTERNAL_TARGET_URL_PREFIXES = [
   "chrome://",
   "chrome-untrusted://",

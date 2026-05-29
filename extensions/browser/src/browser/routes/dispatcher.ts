@@ -1,3 +1,4 @@
+// extensions/browser/src/browser/routes dispatcher helpers and runtime behavior.
 import { escapeRegExp } from "../../utils.js";
 import type { BrowserRouteContext } from "../server-context.js";
 import { registerBrowserRoutes } from "./index.js";

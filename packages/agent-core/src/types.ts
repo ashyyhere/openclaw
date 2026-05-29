@@ -1,3 +1,4 @@
+// Shared types for packages/agent-core/src types behavior.
 import type { Static, TSchema } from "typebox";
 import type {
   AssistantMessage,
@@ -128,8 +129,10 @@ export interface AgentLoopTurnUpdate {
   thinkingLevel?: ThinkingLevel;
 }
 
+/** Public type describing Prepare Next Turn Context for packages/agent-core. */
 export interface PrepareNextTurnContext extends ShouldStopAfterTurnContext {}
 
+/** Public type describing Agent Loop Config for packages/agent-core. */
 export interface AgentLoopConfig extends SimpleStreamOptions {
   model: Model;
 

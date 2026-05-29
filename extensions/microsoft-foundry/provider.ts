@@ -1,3 +1,4 @@
+// extensions/microsoft-foundry provider helpers and runtime behavior.
 import type { ProviderNormalizeResolvedModelContext } from "openclaw/plugin-sdk/core";
 import type {
   ModelProviderConfig,

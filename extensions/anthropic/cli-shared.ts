@@ -1,3 +1,4 @@
+// extensions/anthropic cli shared helpers and runtime behavior.
 import type {
   CliBackendConfig,
   CliBackendNormalizeConfigContext,

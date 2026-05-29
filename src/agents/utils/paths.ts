@@ -1,3 +1,4 @@
+// Path normalization helpers shared by agent filesystem-facing code.
 import { realpathSync } from "node:fs";
 import { isAbsolute, relative, resolve as resolvePath, sep } from "node:path";
 import { spawnProcessSync } from "./child-process.js";
@@ -41,6 +42,7 @@ function resolveAgainstCwd(filePath: string, cwd: string): string {
   return isAbsolute(filePath) ? resolvePath(filePath) : resolvePath(cwd, filePath);
 }
 
+/** Return a cwd-relative path only when filePath resolves inside cwd. */
 export function getCwdRelativePath(filePath: string, cwd: string): string | undefined {
   const resolvedCwd = resolvePath(cwd);
   const resolvedPath = resolveAgainstCwd(filePath, resolvedCwd);
@@ -52,11 +54,13 @@ export function getCwdRelativePath(filePath: string, cwd: string): string | unde
   return isInsideCwd ? relativePath || "." : undefined;
 }
 
+/** Format local paths as cwd-relative slash paths when possible, else absolute. */
 export function formatPathRelativeToCwdOrAbsolute(filePath: string, cwd: string): string {
   const absolutePath = resolveAgainstCwd(filePath, cwd);
   return (getCwdRelativePath(absolutePath, cwd) ?? absolutePath).split(sep).join("/");
 }
 
+/** Mark local cache/tool paths as ignored by common cloud sync providers. */
 export function markPathIgnoredByCloudSync(path: string): void {
   const attrs =
     process.platform === "darwin"

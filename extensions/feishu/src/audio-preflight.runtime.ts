@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/feishu/src audio preflight runtime behavior.
 import { transcribeFirstAudio as transcribeFirstAudioImpl } from "openclaw/plugin-sdk/media-runtime";
 
 type TranscribeFirstAudio = typeof import("openclaw/plugin-sdk/media-runtime").transcribeFirstAudio;

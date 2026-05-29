@@ -1,3 +1,4 @@
+// Tests cron run diagnostics test behavior.
 import { describe, expect, it } from "vitest";
 import { setReplyPayloadMetadata } from "../auto-reply/reply-payload.js";
 import {

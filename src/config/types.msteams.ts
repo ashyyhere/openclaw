@@ -1,3 +1,4 @@
+// config types msteams helpers and runtime behavior.
 import type {
   BlockStreamingCoalesceConfig,
   ChannelPreviewStreamingConfig,
@@ -14,6 +15,7 @@ import type { DmConfig } from "./types.messages.js";
 import type { SecretInput } from "./types.secrets.js";
 import type { GroupToolPolicyBySenderConfig, GroupToolPolicyConfig } from "./types.tools.js";
 
+/** Shared type for MSTeams Webhook Config in src/config. */
 export type MSTeamsWebhookConfig = {
   /** Port for the webhook server. Default: 3978. */
   port?: number;
@@ -78,6 +80,7 @@ export type MSTeamsTeamConfig = {
   channels?: Record<string, MSTeamsChannelConfig>;
 };
 
+/** Shared type for MSTeams Config in src/config. */
 export type MSTeamsConfig = {
   /** If false, do not start the MS Teams provider. Default: true. */
   enabled?: boolean;

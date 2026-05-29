@@ -1,3 +1,4 @@
+// Tests extensions/mattermost/src/mattermost slash commands test behavior.
 import { describe, expect, it, vi } from "vitest";
 import type { MattermostClient } from "./client.js";
 import {

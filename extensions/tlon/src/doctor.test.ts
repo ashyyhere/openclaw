@@ -1,3 +1,4 @@
+// Tests extensions/tlon/src doctor test behavior.
 import { describe, expect, it } from "vitest";
 import { tlonDoctor } from "./doctor.js";
 

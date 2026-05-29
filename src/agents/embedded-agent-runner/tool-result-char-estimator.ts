@@ -1,9 +1,13 @@
+/** Estimates message size for context-budget and tool-result guards. */
 import type { AgentMessage } from "../runtime/index.js";
 
+/** Reused constant for CHARS PER TOKEN ESTIMATE behavior in src/agents/embedded-agent-runner. */
 export const CHARS_PER_TOKEN_ESTIMATE = 4;
+/** Reused constant for TOOL RESULT CHARS PER TOKEN ESTIMATE behavior in src/agents/embedded-agent-runner. */
 export const TOOL_RESULT_CHARS_PER_TOKEN_ESTIMATE = 2;
 const IMAGE_CHAR_ESTIMATE = 8_000;
 
+/** Shared type for Message Char Estimate Cache in src/agents/embedded-agent-runner. */
 export type MessageCharEstimateCache = WeakMap<AgentMessage, number>;
 
 function isTextBlock(block: unknown): block is { type: "text"; text: string } {
@@ -34,6 +38,7 @@ function estimateUnknownChars(value: unknown): number {
   }
 }
 
+/** Identifies tool-result messages across SDK and provider-compatible shapes. */
 export function isToolResultMessage(msg: AgentMessage): boolean {
   const role = (msg as { role?: unknown }).role;
   const type = (msg as { type?: unknown }).type;
@@ -65,6 +70,7 @@ function estimateContentBlockChars(content: unknown[]): number {
   return chars;
 }
 
+/** Extracts plain text from a tool-result message for size accounting. */
 export function getToolResultText(msg: AgentMessage): string {
   const content = getToolResultContent(msg);
   const chunks: string[] = [];
@@ -137,10 +143,12 @@ function estimateMessageChars(msg: AgentMessage): number {
   return 256;
 }
 
+/** Creates a weak cache keyed by message object identity. */
 export function createMessageCharEstimateCache(): MessageCharEstimateCache {
   return new WeakMap<AgentMessage, number>();
 }
 
+/** Estimates message characters and reuses cached values for unchanged objects. */
 export function estimateMessageCharsCached(
   msg: AgentMessage,
   cache: MessageCharEstimateCache,
@@ -154,6 +162,7 @@ export function estimateMessageCharsCached(
   return estimated;
 }
 
+/** Sums cached estimates across a context message list. */
 export function estimateContextChars(
   messages: AgentMessage[],
   cache: MessageCharEstimateCache,
@@ -161,6 +170,7 @@ export function estimateContextChars(
   return messages.reduce((sum, msg) => sum + estimateMessageCharsCached(msg, cache), 0);
 }
 
+/** Clears one cached estimate after mutating a message in place. */
 export function invalidateMessageCharsCacheEntry(
   cache: MessageCharEstimateCache,
   msg: AgentMessage,

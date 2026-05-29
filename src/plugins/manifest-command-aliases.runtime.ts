@@ -1,3 +1,4 @@
+// Runtime boundary for plugins manifest command aliases runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 import { resolveManifestActivationPluginIds } from "./activation-planner.js";
@@ -15,6 +16,7 @@ import {
 } from "./manifest-contract-eligibility.js";
 import { hasManifestToolAvailability } from "./manifest-tool-availability.js";
 
+/** Reused helper for resolve Manifest Command Alias Owner behavior in src/plugins. */
 export function resolveManifestCommandAliasOwner(params: {
   command: string | undefined;
   config?: OpenClawConfig;
@@ -35,6 +37,7 @@ export function resolveManifestCommandAliasOwner(params: {
   });
 }
 
+/** Reused helper for resolve Manifest Cli Command Surface Owner behavior in src/plugins. */
 export function resolveManifestCliCommandSurfaceOwner(params: {
   command: string | undefined;
   config?: OpenClawConfig;

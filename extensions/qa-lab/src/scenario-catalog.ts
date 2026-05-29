@@ -1,3 +1,4 @@
+// extensions/qa-lab/src scenario catalog helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import YAML from "yaml";

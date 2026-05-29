@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server native subagent task mirror helpers and runtime behavior.
 import type { AgentHarnessTaskRuntime } from "openclaw/plugin-sdk/agent-harness-task-runtime";
 import { CODEX_NATIVE_SUBAGENT_RUN_ID_PREFIX } from "./native-subagent-task-ids.js";
 import type {

@@ -1,3 +1,4 @@
+// Tests plugins install path test behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";

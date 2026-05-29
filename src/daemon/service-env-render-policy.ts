@@ -1,3 +1,4 @@
+// daemon service env render policy helpers and runtime behavior.
 import type { MutableServiceEnvPlan } from "./service-env-plan.js";
 import {
   readManagedServiceEnvKeysFromEnvironment,
@@ -14,6 +15,7 @@ function isLaunchAgentServiceEnvironment(params: {
   );
 }
 
+/** Reused helper for apply Managed Service Env Render Policy behavior in src/daemon. */
 export function applyManagedServiceEnvRenderPolicy(params: {
   plan: MutableServiceEnvPlan;
   managedServiceEnvKeys: string | undefined;

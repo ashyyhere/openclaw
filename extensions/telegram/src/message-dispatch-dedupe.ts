@@ -1,3 +1,4 @@
+// extensions/telegram/src message dispatch dedupe helpers and runtime behavior.
 import path from "node:path";
 import type { Message } from "grammy/types";
 import { createClaimableDedupe, type ClaimableDedupe } from "openclaw/plugin-sdk/persistent-dedupe";

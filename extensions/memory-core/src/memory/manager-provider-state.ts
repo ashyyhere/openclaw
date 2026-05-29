@@ -1,3 +1,4 @@
+// extensions/memory-core/src/memory manager provider state helpers and runtime behavior.
 import type {
   OpenClawConfig,
   ResolvedMemorySearchConfig,

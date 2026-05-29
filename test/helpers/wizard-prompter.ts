@@ -1,3 +1,4 @@
+// test/helpers wizard prompter helpers and runtime behavior.
 import { vi } from "vitest";
 import type { WizardPrompter } from "../../src/wizard/prompts.js";
 

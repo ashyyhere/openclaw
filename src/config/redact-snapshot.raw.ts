@@ -1,7 +1,9 @@
+// config redact snapshot raw helpers and runtime behavior.
 import { isDeepStrictEqual } from "node:util";
 import JSON5 from "json5";
 import { uniqueStrings } from "../shared/string-normalization.js";
 
+/** Reused helper for replace Sensitive Values In Raw behavior in src/config. */
 export function replaceSensitiveValuesInRaw(params: {
   raw: string;
   sensitiveValues: string[];
@@ -19,6 +21,7 @@ export function replaceSensitiveValuesInRaw(params: {
   return result;
 }
 
+/** Reused helper for should Fallback To Structured Raw Redaction behavior in src/config. */
 export function shouldFallbackToStructuredRawRedaction(params: {
   redactedRaw: string;
   originalConfig: unknown;

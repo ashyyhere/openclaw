@@ -1,3 +1,4 @@
+// Tests extensions/codex/src/app-server auth profile runtime contract test behavior.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

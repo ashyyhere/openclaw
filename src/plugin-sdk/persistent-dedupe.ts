@@ -1,3 +1,4 @@
+/** Public SDK helper for process-persistent dedupe caches. */
 import { createDedupeCache } from "../infra/dedupe.js";
 import { resolveNonNegativeIntegerOption } from "../infra/numeric-options.js";
 import type { FileLockOptions } from "./file-lock.js";
@@ -6,6 +7,7 @@ import { readJsonFileWithFallback, writeJsonFileAtomically } from "./json-store.
 
 type PersistentDedupeData = Record<string, number>;
 
+/** Shared type for Persistent Dedupe Options in src/plugin-sdk. */
 export type PersistentDedupeOptions = {
   ttlMs: number;
   memoryMaxSize: number;
@@ -15,12 +17,14 @@ export type PersistentDedupeOptions = {
   onDiskError?: (error: unknown) => void;
 };
 
+/** Shared type for Persistent Dedupe Check Options in src/plugin-sdk. */
 export type PersistentDedupeCheckOptions = {
   namespace?: string;
   now?: number;
   onDiskError?: (error: unknown) => void;
 };
 
+/** Shared type for Persistent Dedupe in src/plugin-sdk. */
 export type PersistentDedupe = {
   checkAndRecord: (key: string, options?: PersistentDedupeCheckOptions) => Promise<boolean>;
   hasRecent: (key: string, options?: PersistentDedupeCheckOptions) => Promise<boolean>;
@@ -29,11 +33,13 @@ export type PersistentDedupe = {
   memorySize: () => number;
 };
 
+/** Shared type for Claimable Dedupe Claim Result in src/plugin-sdk. */
 export type ClaimableDedupeClaimResult =
   | { kind: "claimed" }
   | { kind: "duplicate" }
   | { kind: "inflight"; pending: Promise<boolean> };
 
+/** Shared type for Claimable Dedupe Options in src/plugin-sdk. */
 export type ClaimableDedupeOptions =
   | {
       ttlMs: number;
@@ -52,6 +58,7 @@ export type ClaimableDedupeOptions =
       onDiskError?: undefined;
     };
 
+/** Shared type for Claimable Dedupe in src/plugin-sdk. */
 export type ClaimableDedupe = {
   claim: (
     key: string,

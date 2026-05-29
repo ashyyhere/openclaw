@@ -1,3 +1,4 @@
+// extensions/xai/src code execution shared helpers and runtime behavior.
 import { readProviderJsonObjectResponse } from "openclaw/plugin-sdk/provider-http";
 import { postTrustedWebToolsJson } from "openclaw/plugin-sdk/provider-web-search";
 import {

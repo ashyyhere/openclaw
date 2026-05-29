@@ -1,3 +1,4 @@
+// ui/src/ui/views channels helpers and runtime behavior.
 import { html, nothing } from "lit";
 import { t } from "../../i18n/index.ts";
 import { formatRelativeTimestamp } from "../format.ts";
@@ -32,6 +33,7 @@ import { renderTelegramCard } from "./channels.telegram.ts";
 import type { ChannelKey, ChannelsChannelData, ChannelsProps } from "./channels.types.ts";
 import { renderWhatsAppCard } from "./channels.whatsapp.ts";
 
+/** Reused helper for render Channels behavior in ui/src/ui/views. */
 export function renderChannels(props: ChannelsProps) {
   const channels = props.snapshot?.channels as Record<string, unknown> | null;
   const whatsapp = (channels?.whatsapp ?? undefined) as WhatsAppStatus | undefined;

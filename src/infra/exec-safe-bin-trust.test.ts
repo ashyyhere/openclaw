@@ -1,3 +1,4 @@
+// Tests infra exec safe bin trust test behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { describe, expect, it } from "vitest";

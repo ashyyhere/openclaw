@@ -1,3 +1,4 @@
+// plugins web provider public artifacts explicit helpers and runtime behavior.
 import { isRecord } from "../shared/record-coerce.js";
 import { sortUniqueStrings } from "../shared/string-normalization.js";
 import {
@@ -130,6 +131,7 @@ function loadBundledProviderEntriesFromDir<TProvider extends object>(params: {
   return providers.map((provider) => Object.assign({}, provider, { pluginId: params.pluginId }));
 }
 
+/** Reused helper for load Bundled Web Search Provider Entries From Dir behavior in src/plugins. */
 export function loadBundledWebSearchProviderEntriesFromDir(params: {
   dirName: string;
   pluginId: string;
@@ -156,6 +158,7 @@ function loadBundledRuntimeWebSearchProviderEntriesFromDir(params: {
   });
 }
 
+/** Reused helper for load Bundled Web Fetch Provider Entries From Dir behavior in src/plugins. */
 export function loadBundledWebFetchProviderEntriesFromDir(params: {
   dirName: string;
   pluginId: string;
@@ -169,6 +172,7 @@ export function loadBundledWebFetchProviderEntriesFromDir(params: {
   });
 }
 
+/** Reused helper for resolve Bundled Explicit Web Search Providers From Public Artifacts behavior in src/plugins. */
 export function resolveBundledExplicitWebSearchProvidersFromPublicArtifacts(params: {
   onlyPluginIds: readonly string[];
 }): PluginWebSearchProviderEntry[] | null {
@@ -186,6 +190,7 @@ export function resolveBundledExplicitWebSearchProvidersFromPublicArtifacts(para
   return providers;
 }
 
+/** Reused helper for resolve Bundled Explicit Runtime Web Search Providers From Public Artifacts behavior in src/plugins. */
 export function resolveBundledExplicitRuntimeWebSearchProvidersFromPublicArtifacts(params: {
   onlyPluginIds: readonly string[];
 }): PluginWebSearchProviderEntry[] | null {
@@ -203,6 +208,7 @@ export function resolveBundledExplicitRuntimeWebSearchProvidersFromPublicArtifac
   return providers;
 }
 
+/** Reused helper for resolve Bundled Explicit Web Fetch Providers From Public Artifacts behavior in src/plugins. */
 export function resolveBundledExplicitWebFetchProvidersFromPublicArtifacts(params: {
   onlyPluginIds: readonly string[];
 }): PluginWebFetchProviderEntry[] | null {
@@ -229,6 +235,7 @@ function hasBundledPublicArtifactCandidate(params: {
   );
 }
 
+/** Reused helper for has Bundled Web Search Provider Public Artifact behavior in src/plugins. */
 export function hasBundledWebSearchProviderPublicArtifact(pluginId: string): boolean {
   return hasBundledPublicArtifactCandidate({
     dirName: pluginId,
@@ -236,6 +243,7 @@ export function hasBundledWebSearchProviderPublicArtifact(pluginId: string): boo
   });
 }
 
+/** Reused helper for has Bundled Web Fetch Provider Public Artifact behavior in src/plugins. */
 export function hasBundledWebFetchProviderPublicArtifact(pluginId: string): boolean {
   return hasBundledPublicArtifactCandidate({
     dirName: pluginId,

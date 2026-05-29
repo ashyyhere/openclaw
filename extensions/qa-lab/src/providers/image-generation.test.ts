@@ -1,3 +1,4 @@
+// Tests extensions/qa-lab/src/providers image generation test behavior.
 import { describe, expect, it } from "vitest";
 import { buildQaImageGenerationConfigPatch } from "./image-generation.js";
 

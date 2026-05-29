@@ -1,4 +1,5 @@
 #!/usr/bin/env -S node --import tsx
+// scripts openclaw prepack helpers and runtime behavior.
 
 import { spawnSync, type SpawnSyncOptions } from "node:child_process";
 import { existsSync, readdirSync } from "node:fs";

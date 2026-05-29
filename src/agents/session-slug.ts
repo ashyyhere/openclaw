@@ -1,3 +1,4 @@
+/** Generates short human-readable session slugs. */
 import { generateSecureInt } from "../infra/secure-random.js";
 
 const SLUG_ADJECTIVES = [
@@ -143,6 +144,7 @@ function createAvailableSlug(
   return undefined;
 }
 
+/** Create an available session slug, falling back to random suffixes on collisions. */
 export function createSessionSlug(isTaken?: (id: string) => boolean): string {
   const isIdTaken = isTaken ?? (() => false);
   const twoWord = createAvailableSlug(2, isIdTaken);

@@ -1,3 +1,4 @@
+/** ClawHub skill registry install, update, lockfile, and local card status helpers. */
 import fsSync from "node:fs";
 import path from "node:path";
 import {
@@ -26,6 +27,7 @@ const SKILL_ORIGIN_RELATIVE_PATH = path.join(DOT_DIR, "origin.json");
 const LOCAL_SKILL_CARD_FILENAME = "skill-card.md";
 const LOCAL_SKILL_CARD_MAX_BYTES = 256 * 1024;
 
+/** Per-skill origin metadata written next to installed ClawHub skills. */
 export type ClawHubSkillOrigin = {
   version: 1;
   registry: string;
@@ -34,6 +36,7 @@ export type ClawHubSkillOrigin = {
   installedAt: number;
 };
 
+/** Workspace lockfile tracking ClawHub skill slugs and installed versions. */
 export type ClawHubSkillsLockfile = {
   version: 1;
   skills: Record<
@@ -46,11 +49,13 @@ export type ClawHubSkillsLockfile = {
   >;
 };
 
+/** Strict lockfile read state used by status UIs without throwing on malformed files. */
 export type ClawHubSkillsLockfileStatusRead =
   | { kind: "found"; lock: ClawHubSkillsLockfile; path: string }
   | { kind: "missing" }
   | { kind: "malformed"; path: string; error: string };
 
+/** Linkage state between an installed skill, origin metadata, and workspace lockfile. */
 export type ClawHubSkillStatusLink =
   | {
       status: "linked";
@@ -74,6 +79,7 @@ export type ClawHubSkillStatusLink =
       lockPath?: string;
     };
 
+/** Local `skill-card.md` presence and size metadata for skill status displays. */
 export type LocalSkillCardStatus = {
   present: true;
   path: string;
@@ -84,6 +90,7 @@ type LocalSkillCardRead = LocalSkillCardStatus & {
   content?: string;
 };
 
+/** Result for installing one skill from ClawHub. */
 export type InstallClawHubSkillResult =
   | {
       ok: true;
@@ -94,6 +101,7 @@ export type InstallClawHubSkillResult =
     }
   | { ok: false; error: string };
 
+/** Result for updating one tracked ClawHub skill. */
 export type UpdateClawHubSkillResult =
   | {
       ok: true;
@@ -145,9 +153,12 @@ type TrackedUpdateTarget =
       error: string;
     };
 
+/** Source used to resolve a ClawHub verification target. */
 export type ClawHubSkillVerificationResolutionSource = "installed" | "registry";
+/** Selector flavor used for ClawHub verification commands. */
 export type ClawHubSkillVerificationSelector = "installed-version" | "version" | "tag" | "latest";
 
+/** Resolved ClawHub target for verification and provenance-sensitive commands. */
 export type ClawHubSkillVerificationTargetResult =
   | {
       ok: true;
@@ -168,6 +179,7 @@ export type ClawHubSkillVerificationTargetResult =
       error: string;
     };
 
+/** Reads the workspace ClawHub lockfile, accepting legacy directory names for migration. */
 export async function readClawHubSkillsLockfile(
   workspaceDir: string,
 ): Promise<ClawHubSkillsLockfile> {
@@ -225,6 +237,7 @@ function readRealPathSync(candidate: string): string | undefined {
   }
 }
 
+/** Synchronously reads lockfile status for CLI/status rendering without async discovery. */
 export function readClawHubSkillsLockfileStatusSync(
   workspaceDir: string,
 ): ClawHubSkillsLockfileStatusRead {
@@ -384,6 +397,7 @@ async function readClawHubSkillOriginStrict(skillDir: string): Promise<StrictOri
   return { kind: "missing" };
 }
 
+/** Resolves whether a skill directory is correctly linked to ClawHub lock/origin metadata. */
 export function resolveClawHubSkillStatusLinkSync(params: {
   workspaceDir: string;
   skillDir: string;
@@ -530,6 +544,7 @@ export function resolveClawHubSkillStatusLinkSync(params: {
   };
 }
 
+/** Returns bounded local skill-card metadata when the card is a regular in-tree file. */
 export function resolveLocalSkillCardStatusSync(
   skillDir: string,
 ): LocalSkillCardStatus | undefined {
@@ -596,6 +611,7 @@ function readLocalSkillCardSync(
   }
 }
 
+/** Reads bounded local skill-card content for detail views after symlink/path checks. */
 export function readLocalSkillCardContentSync(skillDir: string): string | undefined {
   return readLocalSkillCardSync(skillDir, true)?.content;
 }
@@ -608,6 +624,7 @@ async function writeClawHubSkillOrigin(
   await writeJson(targetPath, origin, { trailingNewline: true });
 }
 
+/** Searches ClawHub skill registry with the default wildcard query for empty input. */
 export async function searchSkillsFromClawHub(params: {
   query?: string;
   limit?: number;
@@ -620,6 +637,7 @@ export async function searchSkillsFromClawHub(params: {
   });
 }
 
+/** Resolves installed or registry-backed ClawHub verification target metadata. */
 export async function resolveClawHubSkillVerificationTarget(params: {
   workspaceDir: string;
   slug: string;
@@ -885,6 +903,7 @@ async function resolveTrackedUpdateTarget(params: {
   };
 }
 
+/** Installs a requested ClawHub skill version into the workspace. */
 export async function installSkillFromClawHub(params: {
   workspaceDir: string;
   slug: string;
@@ -896,6 +915,7 @@ export async function installSkillFromClawHub(params: {
   return await installRequestedSkillFromClawHub(params);
 }
 
+/** Updates one tracked ClawHub skill or every tracked skill from its recorded registry. */
 export async function updateSkillsFromClawHub(params: {
   workspaceDir: string;
   slug?: string;
@@ -950,11 +970,13 @@ export async function updateSkillsFromClawHub(params: {
   return results;
 }
 
+/** Returns tracked ClawHub skill slugs in deterministic order. */
 export async function readTrackedClawHubSkillSlugs(workspaceDir: string): Promise<string[]> {
   const lock = await readClawHubSkillsLockfile(workspaceDir);
   return Object.keys(lock.skills).toSorted();
 }
 
+/** Removes a slug from the workspace ClawHub lockfile after source/path replacement. */
 export async function untrackClawHubSkill(workspaceDir: string, slug: string): Promise<void> {
   const trackedSlug = normalizeTrackedSkillSlug(slug);
   const lock = await readClawHubSkillsLockfile(workspaceDir);

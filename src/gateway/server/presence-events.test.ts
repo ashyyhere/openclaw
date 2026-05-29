@@ -1,3 +1,4 @@
+// Tests gateway/server presence events test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { broadcastPresenceSnapshot } from "./presence-events.js";
 

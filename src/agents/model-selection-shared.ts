@@ -38,6 +38,7 @@ function getLog(): ReturnType<typeof createSubsystemLogger> {
 const OPENROUTER_COMPAT_FREE_ALIAS = "openrouter:free";
 type ModelManifestPlugins = ModelManifestNormalizationContext["manifestPlugins"];
 
+/** Alias lookup tables for model selection. */
 export type ModelAliasIndex = {
   byAlias: Map<string, { alias: string; ref: ModelRef }>;
   byKey: Map<string, string[]>;
@@ -104,6 +105,8 @@ function createModelManifestPluginContext(params: {
   let resolved =
     params.allowManifestNormalization === false || params.manifestPlugins !== undefined;
   return {
+    // Keep common OpenAI-only paths cheap; plugin manifests are loaded only if a
+    // non-default provider or compatibility alias actually needs normalization.
     peek: () => manifestPlugins,
     get: () => {
       if (!resolved) {
@@ -173,6 +176,7 @@ function mergeModelCatalogEntries(params: {
   return merged;
 }
 
+/** Infer a provider when configured model rows uniquely identify one. */
 export function inferUniqueProviderFromConfiguredModels(
   params: {
     cfg: OpenClawConfig;
@@ -252,6 +256,7 @@ export function inferUniqueProviderFromConfiguredModels(
   return providers.values().next().value;
 }
 
+/** Infer a provider from catalog entries matching a bare model id. */
 export function inferUniqueProviderFromCatalog(params: {
   catalog: readonly ModelCatalogEntry[];
   model: string;
@@ -281,6 +286,7 @@ export function inferUniqueProviderFromCatalog(params: {
   return providers.size === 1 ? providers.values().next().value : undefined;
 }
 
+/** Resolve default provider for a bare model ref. */
 export function resolveBareModelDefaultProvider(
   params: {
     cfg: OpenClawConfig;
@@ -346,6 +352,7 @@ function resolveConfiguredOpenRouterCompatFreeRef(
   return null;
 }
 
+/** Resolve configured OpenRouter compatibility aliases. */
 export function resolveConfiguredOpenRouterCompatAlias(
   params: {
     cfg?: OpenClawConfig;
@@ -467,6 +474,7 @@ function resolveExactConfiguredProviderRef(
   return normalizeExactConfiguredProviderRef(exactConfigured, params);
 }
 
+/** Resolve an allowlist key for a provider/model ref. */
 export function resolveAllowlistModelKey(
   params: {
     cfg?: OpenClawConfig;
@@ -490,6 +498,7 @@ export function resolveAllowlistModelKey(
   return modelKey(parsed.provider, parsed.model);
 }
 
+/** Build configured allowlist keys including aliases and fallbacks. */
 export function buildConfiguredAllowlistKeys(
   params: {
     cfg: OpenClawConfig | undefined;
@@ -559,6 +568,7 @@ function buildModelAliasIndexWithManifestContext(
   return { byAlias, byKey };
 }
 
+/** Build model alias lookup tables from config. */
 export function buildModelAliasIndex(params: BuildModelAliasIndexParams): ModelAliasIndex {
   return buildModelAliasIndexWithManifestContext({
     cfg: params.cfg,
@@ -674,6 +684,7 @@ function buildSyntheticAllowedCatalogEntry(params: {
   };
 }
 
+/** Resolve provider/model from a raw string model ref. */
 export function resolveModelRefFromString(
   params: {
     cfg?: OpenClawConfig;
@@ -707,6 +718,7 @@ export function resolveModelRefFromString(
   return { ref: parsed };
 }
 
+/** Resolve provider/model from configured model value. */
 export function resolveConfiguredModelRef(
   params: {
     cfg: OpenClawConfig;
@@ -871,6 +883,7 @@ export function resolveConfiguredModelRef(
   return { provider: params.defaultProvider, model: params.defaultModel };
 }
 
+/** Build allowed model keys including fallback model values. */
 export function buildAllowedModelSetWithFallbacks(
   params: {
     cfg: OpenClawConfig;
@@ -947,6 +960,8 @@ export function buildAllowedModelSetWithFallbacks(
   for (const provider of visibility.providerWildcards) {
     allowedKeys.add(providerWildcardModelKey(provider));
   }
+  // Allowed refs can include configured values absent from provider catalogs;
+  // synthesize picker rows so explicit config never disappears from the UI.
   const addAllowedCatalogRef = (ref: ModelRef) => {
     if (
       !allowedRefs.some(
@@ -1047,6 +1062,7 @@ export function buildAllowedModelSetWithFallbacks(
   return { allowAny: false, allowedCatalog, allowedKeys };
 }
 
+/** Visibility/allowlist status for a model ref. */
 export type ModelRefStatus = {
   key: string;
   inCatalog: boolean;
@@ -1054,6 +1070,7 @@ export type ModelRefStatus = {
   allowed: boolean;
 };
 
+/** Result of resolving a raw model ref against allowlist/catalog state. */
 export type ResolveAllowedModelRefResult =
   | { ref: ModelRef; key: string }
   | {
@@ -1082,6 +1099,7 @@ function getModelRefStatusFromAllowedSet(params: {
   };
 }
 
+/** Resolve model ref status with fallback model values included. */
 export function getModelRefStatusWithFallbackModels(
   params: {
     cfg: OpenClawConfig;
@@ -1107,6 +1125,7 @@ export function getModelRefStatusWithFallbackModels(
   });
 }
 
+/** Resolve an allowed model ref using a precomputed alias index. */
 export function resolveAllowedModelRefFromAliasIndex(
   params: {
     cfg: OpenClawConfig;
@@ -1148,6 +1167,7 @@ export function resolveAllowedModelRefFromAliasIndex(
   return { ref: resolved.ref, key: status.key };
 }
 
+/** Return whether config contains provider model rows. */
 export function hasConfiguredProviderModelRows(cfg: OpenClawConfig): boolean {
   const providers = cfg.models?.providers;
   if (!providers || typeof providers !== "object") {
@@ -1227,6 +1247,7 @@ function resolveConfiguredModelManifestPlugins(params: {
   }).plugins;
 }
 
+/** Build catalog entries from configured provider model rows. */
 export function buildConfiguredModelCatalog(params: {
   cfg: OpenClawConfig;
   workspaceDir?: string;
@@ -1296,6 +1317,7 @@ function isVllmQwenThinkingCompat(
   );
 }
 
+/** Resolve the Gmail hook model from config. */
 export function resolveHooksGmailModel(
   params: {
     cfg: OpenClawConfig;
@@ -1324,6 +1346,7 @@ export function resolveHooksGmailModel(
   return resolved?.ref ?? null;
 }
 
+/** Normalize an unknown configured model selection. */
 export function normalizeModelSelection(value: unknown): string | undefined {
   if (typeof value === "string") {
     const trimmed = value.trim();
@@ -1347,6 +1370,7 @@ function parseProviderWildcardModelRef(raw: string): string | null {
   return normalizeProviderId(trimmed.slice(0, -2)) || null;
 }
 
+/** Parse configured model/provider visibility entries. */
 export function parseConfiguredModelVisibilityEntries(params: { cfg?: OpenClawConfig }): {
   exactModelRefs: string[];
   providerWildcards: Set<string>;
@@ -1376,10 +1400,12 @@ export function parseConfiguredModelVisibilityEntries(params: { cfg?: OpenClawCo
   };
 }
 
+/** Build provider wildcard allowlist key. */
 export function providerWildcardModelKey(provider: string): string {
   return modelKey(normalizeProviderId(provider), "*");
 }
 
+/** Return whether an allowed-key set permits a model key. */
 export function isModelKeyAllowedBySet(allowedKeys: ReadonlySet<string>, key: string): boolean {
   if (allowedKeys.has(key)) {
     return true;
@@ -1391,6 +1417,7 @@ export function isModelKeyAllowedBySet(allowedKeys: ReadonlySet<string>, key: st
   return allowedKeys.has(providerWildcardModelKey(key.slice(0, separator)));
 }
 
+/** Resolve a configured model selection against allowed keys. */
 export function resolveAllowedModelSelection(
   params: {
     provider: string;
@@ -1424,6 +1451,7 @@ export function resolveAllowedModelSelection(
   });
 }
 
+/** Predicate set used to decide visible provider/model refs. */
 export type ModelVisibilityPolicy = {
   allowAny: boolean;
   allowedCatalog: ModelCatalogEntry[];
@@ -1456,6 +1484,7 @@ function dedupeModelCatalogEntries(entries: readonly ModelCatalogEntry[]): Model
   return next;
 }
 
+/** Build model visibility policy including fallback models. */
 export function createModelVisibilityPolicyWithFallbacks(
   params: {
     cfg: OpenClawConfig;

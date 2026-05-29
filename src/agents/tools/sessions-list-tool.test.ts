@@ -1,3 +1,4 @@
+/** Covers sessions list tool gateway and local rows. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createSessionsListTool } from "./sessions-list-tool.js";
 

@@ -1,9 +1,12 @@
+// packages/speech-core speaker helpers and runtime behavior.
+/** Public type describing Speaker Selection Config for packages/speech-core. */
 export type SpeakerSelectionConfig = Record<string, unknown>;
 
 function readString(value: unknown): string | undefined {
   return typeof value === "string" && value.trim() ? value.trim() : undefined;
 }
 
+/** Public helper for with Speaker Selection Compat behavior in packages/speech-core. */
 export function withSpeakerSelectionCompat(
   config: SpeakerSelectionConfig | undefined,
 ): SpeakerSelectionConfig {
@@ -27,6 +30,7 @@ export function withSpeakerSelectionCompat(
   return next;
 }
 
+/** Public helper for with Speaker Selection Fallback Compat behavior in packages/speech-core. */
 export function withSpeakerSelectionFallbackCompat(
   config: SpeakerSelectionConfig | undefined,
 ): SpeakerSelectionConfig {

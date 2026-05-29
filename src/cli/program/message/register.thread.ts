@@ -1,3 +1,4 @@
+/** Registers thread lifecycle message commands. */
 import type { Command } from "commander";
 import { getChannelPlugin } from "../../../channels/plugins/index.js";
 import type { ChannelMessageActionName } from "../../../channels/plugins/types.public.js";
@@ -24,6 +25,7 @@ function resolveThreadCreateRequest(opts: Record<string, unknown>) {
   };
 }
 
+/** Reused helper for register Message Thread Commands behavior in src/cli/program. */
 export function registerMessageThreadCommands(message: Command, helpers: MessageCliHelpers) {
   const thread = message.command("thread").description("Thread actions");
 

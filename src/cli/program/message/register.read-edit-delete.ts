@@ -1,6 +1,8 @@
+/** Registers read, edit, and delete message commands. */
 import type { Command } from "commander";
 import type { MessageCliHelpers } from "./helpers.js";
 
+/** Reused helper for register Message Read Edit Delete Commands behavior in src/cli/program. */
 export function registerMessageReadEditDeleteCommands(
   message: Command,
   helpers: MessageCliHelpers,

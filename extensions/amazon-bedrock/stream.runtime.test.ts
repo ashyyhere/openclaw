@@ -1,3 +1,4 @@
+// Tests extensions/amazon-bedrock stream runtime test behavior.
 import { describe, expect, it } from "vitest";
 import { testing } from "./stream.runtime.js";
 

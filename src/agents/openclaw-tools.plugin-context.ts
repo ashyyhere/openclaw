@@ -1,3 +1,4 @@
+/** Builds plugin tool execution context from OpenClaw tool construction options. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { normalizeDeliveryContext } from "../utils/delivery-context.js";
 import type { GatewayMessageChannel } from "../utils/message-channel.js";
@@ -6,6 +7,7 @@ import { modelKey } from "./model-ref-shared.js";
 import type { ToolFsPolicy } from "./tool-fs-policy.js";
 import { resolveWorkspaceRoot } from "./workspace-dir.js";
 
+/** Shared option bag accepted by core and plugin tool factories. */
 export type OpenClawPluginToolOptions = {
   agentSessionKey?: string;
   agentChannel?: GatewayMessageChannel;
@@ -27,6 +29,7 @@ export type OpenClawPluginToolOptions = {
   allowGatewaySubagentBinding?: boolean;
 };
 
+/** Resolve plugin tool context, workspace, active model, and delivery metadata. */
 export function resolveOpenClawPluginToolInputs(params: {
   options?: OpenClawPluginToolOptions;
   resolvedConfig?: OpenClawConfig;

@@ -1,3 +1,4 @@
+// Tests plugins registry provider like test behavior.
 import { describe, expect, it } from "vitest";
 import { createPluginRecord } from "./loader-records.js";
 import { createPluginRegistry } from "./registry.js";

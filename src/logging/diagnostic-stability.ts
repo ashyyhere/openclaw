@@ -1,3 +1,4 @@
+// logging diagnostic stability helpers and runtime behavior.
 import {
   onDiagnosticEvent,
   type DiagnosticEventPayload,
@@ -6,11 +7,13 @@ import {
 
 const DEFAULT_DIAGNOSTIC_STABILITY_CAPACITY = 1000;
 const DEFAULT_DIAGNOSTIC_STABILITY_LIMIT = 50;
+/** Reused constant for MAX DIAGNOSTIC STABILITY LIMIT behavior in src/logging. */
 export const MAX_DIAGNOSTIC_STABILITY_LIMIT = DEFAULT_DIAGNOSTIC_STABILITY_CAPACITY;
 const LIVENESS_EVENT_LOOP_DELAY_WARN_MS = 1_000;
 
 const SAFE_REASON_CODE = /^[A-Za-z0-9_.:-]{1,120}$/u;
 
+/** Shared type for Diagnostic Stability Event Record in src/logging. */
 export type DiagnosticStabilityEventRecord = {
   seq: number;
   ts: number;
@@ -91,6 +94,7 @@ export type DiagnosticStabilityEventRecord = {
   };
 };
 
+/** Shared type for Diagnostic Stability Snapshot in src/logging. */
 export type DiagnosticStabilitySnapshot = {
   generatedAt: string;
   capacity: number;
@@ -688,6 +692,7 @@ function normalizeLimit(limit: unknown, defaultLimit = DEFAULT_DIAGNOSTIC_STABIL
   return parsed;
 }
 
+/** Reused helper for normalize Diagnostic Stability Query behavior in src/logging. */
 export function normalizeDiagnosticStabilityQuery(
   input: DiagnosticStabilityQueryInput = {},
   options?: { defaultLimit?: number },
@@ -699,6 +704,7 @@ export function normalizeDiagnosticStabilityQuery(
   };
 }
 
+/** Reused helper for start Diagnostic Stability Recorder behavior in src/logging. */
 export function startDiagnosticStabilityRecorder(): void {
   const state = getDiagnosticStabilityState();
   if (state.unsubscribe) {
@@ -709,12 +715,14 @@ export function startDiagnosticStabilityRecorder(): void {
   });
 }
 
+/** Reused helper for stop Diagnostic Stability Recorder behavior in src/logging. */
 export function stopDiagnosticStabilityRecorder(): void {
   const state = getDiagnosticStabilityState();
   state.unsubscribe?.();
   state.unsubscribe = null;
 }
 
+/** Reused helper for get Diagnostic Stability Snapshot behavior in src/logging. */
 export function getDiagnosticStabilitySnapshot(options?: {
   limit?: number;
   type?: string;
@@ -734,6 +742,7 @@ export function getDiagnosticStabilitySnapshot(options?: {
   };
 }
 
+/** Reused helper for select Diagnostic Stability Snapshot behavior in src/logging. */
 export function selectDiagnosticStabilitySnapshot(
   snapshot: DiagnosticStabilitySnapshot,
   options?: {
@@ -753,6 +762,7 @@ export function selectDiagnosticStabilitySnapshot(
   };
 }
 
+/** Reused helper for reset Diagnostic Stability Recorder For Test behavior in src/logging. */
 export function resetDiagnosticStabilityRecorderForTest(): void {
   const state = getDiagnosticStabilityState();
   state.unsubscribe?.();

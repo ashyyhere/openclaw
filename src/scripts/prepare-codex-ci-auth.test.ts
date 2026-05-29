@@ -1,3 +1,4 @@
+// Tests scripts prepare codex ci auth test behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { describe, expect, it } from "vitest";

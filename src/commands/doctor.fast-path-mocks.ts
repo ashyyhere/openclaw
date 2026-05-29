@@ -1,3 +1,4 @@
+/** Shared mocks for fast-path doctor command tests. */
 import { vi } from "vitest";
 
 vi.mock("./doctor-completion.js", () => ({

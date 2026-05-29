@@ -1,3 +1,4 @@
+// extensions/msteams/src token helpers and runtime behavior.
 import { readFileSync } from "node:fs";
 import { basename, dirname } from "node:path";
 import { isFutureDateTimestampMs } from "openclaw/plugin-sdk/number-runtime";

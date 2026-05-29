@@ -1,3 +1,4 @@
+/** Covers transcript rewrite operations across memory and file-backed sessions. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

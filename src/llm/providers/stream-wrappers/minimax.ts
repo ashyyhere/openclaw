@@ -1,3 +1,4 @@
+// llm/providers/stream-wrappers minimax helpers and runtime behavior.
 import type { StreamFn } from "../../../agents/runtime/index.js";
 import { streamSimple } from "../../stream.js";
 

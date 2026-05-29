@@ -1,3 +1,4 @@
+// Tests plugins import specifier test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { toSafeImportPath } from "./import-specifier.js";
 

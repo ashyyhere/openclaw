@@ -1,3 +1,4 @@
+/** Tests sessions command listing, filtering, and cleanup output. */
 import fs from "node:fs";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {

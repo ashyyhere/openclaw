@@ -1,3 +1,4 @@
+// extensions/perplexity/src perplexity web search provider shared helpers and runtime behavior.
 import {
   createWebSearchProviderContractFields,
   mergeScopedSearchConfig,

@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/browser server context loopback direct ws test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { withBrowserFetchPreconnect } from "../../test-fetch.js";
 import * as cdpModule from "./cdp.js";

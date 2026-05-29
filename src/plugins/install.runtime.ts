@@ -1,3 +1,4 @@
+// Runtime boundary for plugins install runtime behavior.
 import { resolveArchiveKind } from "../infra/archive.js";
 import { pathExists, root } from "../infra/fs-safe.js";
 import { resolveExistingInstallPath, withExtractedArchiveRoot } from "../infra/install-flow.js";
@@ -37,8 +38,10 @@ import {
 import { checkMinHostVersion } from "./min-host-version.js";
 import { isPathInside } from "./path-safety.js";
 
+/** Re-exported API for src/plugins, starting with Npm Integrity Drift. */
 export type { NpmIntegrityDrift, NpmSpecResolution };
 
+/** Re-exported API for src/plugins. */
 export {
   checkMinHostVersion,
   root,

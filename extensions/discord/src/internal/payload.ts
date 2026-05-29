@@ -1,3 +1,4 @@
+// extensions/discord/src/internal payload helpers and runtime behavior.
 import { MessageFlags, type APIEmbed } from "discord-api-types/v10";
 import { Embed } from "./embeds.js";
 

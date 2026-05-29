@@ -78,6 +78,7 @@ function collectPluginRegistryState(
   };
 }
 
+/** Reused helper for is Stale Plugin Auto Repair Blocked behavior in src/commands/doctor. */
 export function isStalePluginAutoRepairBlocked(
   cfg: OpenClawConfig,
   env?: NodeJS.ProcessEnv,
@@ -88,6 +89,7 @@ export function isStalePluginAutoRepairBlocked(
   return collectPluginRegistryState(cfg, env).hasDiscoveryErrors;
 }
 
+/** Reused helper for scan Stale Plugin Config behavior in src/commands/doctor. */
 export function scanStalePluginConfig(
   cfg: OpenClawConfig,
   env?: NodeJS.ProcessEnv,
@@ -301,6 +303,7 @@ function formatStalePluginHitWarning(hit: StalePluginConfigHit): string {
   return `- ${hit.pathLabel}: model override references missing channel plugin "${hit.pluginId}".`;
 }
 
+/** Reused helper for collect Stale Plugin Config Warnings behavior in src/commands/doctor. */
 export function collectStalePluginConfigWarnings(params: {
   hits: StalePluginConfigHit[];
   doctorFixCommand: string;
@@ -322,6 +325,7 @@ export function collectStalePluginConfigWarnings(params: {
   return lines.map((line) => sanitizeForLog(line));
 }
 
+/** Reused helper for maybe Repair Stale Plugin Config behavior in src/commands/doctor. */
 export function maybeRepairStalePluginConfig(
   cfg: OpenClawConfig,
   env?: NodeJS.ProcessEnv,

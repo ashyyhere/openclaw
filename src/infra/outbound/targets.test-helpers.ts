@@ -1,3 +1,4 @@
+// infra/outbound targets test helpers helpers and runtime behavior.
 import type {
   ChannelMessagingAdapter,
   ChannelOutboundAdapter,
@@ -17,6 +18,7 @@ function stripTestPrefix(raw: string, channelId: string): string {
   return raw.replace(new RegExp(`^${channelId}:`, "i"), "").trim();
 }
 
+/** Reused helper for parse Forum Target For Test behavior in src/infra/outbound. */
 export function parseForumTargetForTest(raw: string): {
   roomId: string;
   threadId?: number;
@@ -55,6 +57,7 @@ function createGenericResolveTarget(
   };
 }
 
+/** Reused helper for parse Telegram Target For Test behavior in src/infra/outbound. */
 export function parseTelegramTargetForTest(raw: string): {
   chatId: string;
   messageThreadId?: number;
@@ -80,6 +83,7 @@ export function parseTelegramTargetForTest(raw: string): {
   return { chatId, messageThreadId, chatType };
 }
 
+/** Reused constant for telegram Messaging For Test behavior in src/infra/outbound. */
 export const telegramMessagingForTest: ChannelMessagingAdapter = {
   targetPrefixes: ["telegram", "tg"],
   inferTargetChatType: ({ to }) => {
@@ -113,6 +117,7 @@ export const telegramMessagingForTest: ChannelMessagingAdapter = {
   },
 };
 
+/** Reused constant for forum Messaging For Test behavior in src/infra/outbound. */
 export const forumMessagingForTest: ChannelMessagingAdapter = {
   targetPrefixes: ["forum"],
   inferTargetChatType: ({ to }) => {
@@ -144,6 +149,7 @@ export const forumMessagingForTest: ChannelMessagingAdapter = {
   preserveHeartbeatThreadIdForGroupRoute: true,
 };
 
+/** Reused helper for create Test Channel Plugin behavior in src/infra/outbound. */
 export function createTestChannelPlugin(params: {
   id: ChannelPlugin["id"];
   label?: string;
@@ -175,6 +181,7 @@ export function createTestChannelPlugin(params: {
   };
 }
 
+/** Reused helper for create Generic Target Test Plugin behavior in src/infra/outbound. */
 export function createGenericTargetTestPlugin(
   id: ChannelPlugin["id"],
   label = String(id),
@@ -194,6 +201,7 @@ export function createGenericTargetTestPlugin(
   });
 }
 
+/** Reused helper for create Forum Target Test Plugin behavior in src/infra/outbound. */
 export function createForumTargetTestPlugin(): ChannelPlugin {
   return createTestChannelPlugin({
     id: "forum",
@@ -208,6 +216,7 @@ export function createForumTargetTestPlugin(): ChannelPlugin {
   });
 }
 
+/** Reused helper for create Targets Test Registry behavior in src/infra/outbound. */
 export function createTargetsTestRegistry(
   plugins: ChannelPlugin[] = [
     createGenericTargetTestPlugin("alpha", "Alpha"),

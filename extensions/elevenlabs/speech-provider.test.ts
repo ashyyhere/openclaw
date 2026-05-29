@@ -1,3 +1,4 @@
+// Tests extensions/elevenlabs speech provider test behavior.
 import { afterAll, afterEach, describe, expect, it, vi } from "vitest";
 import { buildElevenLabsSpeechProvider, isValidVoiceId } from "./speech-provider.js";
 

@@ -1,3 +1,4 @@
+/** Tests gateway-host exec allowlist and approval behavior. */
 import { beforeAll, beforeEach, describe, expect, it, vi, type Mock } from "vitest";
 import type { ExecApprovalFollowupTarget } from "./bash-tools.exec-host-shared.js";
 import type { ExecApprovalFollowupFactory } from "./bash-tools.exec-types.js";

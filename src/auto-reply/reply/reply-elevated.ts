@@ -1,3 +1,4 @@
+// Elevated permission helpers for reply handling.
 import { resolveAgentConfig } from "../../agents/agent-scope.js";
 import { getChannelPlugin, normalizeChannelId } from "../../channels/plugins/index.js";
 import type { AgentElevatedAllowFromConfig, OpenClawConfig } from "../../config/config.js";
@@ -14,6 +15,7 @@ import {
   parseExplicitElevatedAllowEntry,
   stripSenderPrefix,
 } from "./elevated-allowlist-matcher.js";
+/** Re-exported API for src/auto-reply/reply, starting with format Elevated Unavailable Message. */
 export { formatElevatedUnavailableMessage } from "./elevated-unavailable.js";
 
 function resolveElevatedAllowList(
@@ -166,6 +168,7 @@ function isApprovedElevatedSender(params: {
   return false;
 }
 
+/** Reused helper for resolve Elevated Permissions behavior in src/auto-reply/reply. */
 export function resolveElevatedPermissions(params: {
   cfg: OpenClawConfig;
   agentId: string;

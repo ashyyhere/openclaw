@@ -1,3 +1,4 @@
+/** Doctor checks and repairs for bundled browser plugin state. */
 import fs from "node:fs";
 import path from "node:path";
 import { note } from "../../packages/terminal-core/src/note.js";
@@ -20,6 +21,7 @@ type BrowserDoctorDeps = {
   pathExists?: (targetPath: string) => boolean;
 };
 
+/** Shared type for Browser Doctor Repair Deps in src/commands. */
 export type BrowserDoctorRepairDeps = {
   env?: NodeJS.ProcessEnv;
   configDir?: string;
@@ -27,6 +29,7 @@ export type BrowserDoctorRepairDeps = {
   movePathToTrash?: (targetPath: string) => Promise<string>;
 };
 
+/** Shared type for Legacy Clawd Browser Profile Residue in src/commands. */
 export type LegacyClawdBrowserProfileResidue = {
   legacyProfileDir: string;
   legacyUserDataDir: string;
@@ -64,6 +67,7 @@ function mayHaveLegacyClawdBrowserProfileResidue(deps?: BrowserDoctorRepairDeps)
   }
 }
 
+/** Reused helper for note Chrome Mcp Browser Readiness behavior in src/commands. */
 export async function noteChromeMcpBrowserReadiness(cfg: OpenClawConfig, deps?: BrowserDoctorDeps) {
   try {
     await loadBrowserDoctorSurface().noteChromeMcpBrowserReadiness(cfg, deps);
@@ -74,6 +78,7 @@ export async function noteChromeMcpBrowserReadiness(cfg: OpenClawConfig, deps?: 
   }
 }
 
+/** Reused helper for detect Legacy Clawd Browser Profile Residue behavior in src/commands. */
 export async function detectLegacyClawdBrowserProfileResidue(
   cfg: OpenClawConfig,
   deps?: BrowserDoctorRepairDeps,
@@ -88,6 +93,7 @@ export async function detectLegacyClawdBrowserProfileResidue(
   return detect(cfg, deps);
 }
 
+/** Reused helper for maybe Archive Legacy Clawd Browser Profile Residue behavior in src/commands. */
 export async function maybeArchiveLegacyClawdBrowserProfileResidue(
   cfg: OpenClawConfig,
   deps?: BrowserDoctorRepairDeps,

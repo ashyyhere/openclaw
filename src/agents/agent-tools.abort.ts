@@ -1,3 +1,4 @@
+/** Abort-signal wrapper for agent tool execution. */
 import { copyPluginToolMeta } from "../plugins/tools.js";
 import { bindAbortRelay } from "../utils/fetch-timeout.js";
 import { copyBeforeToolCallHookMarker } from "./agent-tools.before-tool-call.js";
@@ -46,6 +47,7 @@ function combineAbortSignals(a?: AbortSignal, b?: AbortSignal): AbortSignal | un
   return controller.signal;
 }
 
+/** Wrap a tool so caller and run abort signals are combined for execution. */
 export function wrapToolWithAbortSignal(
   tool: AnyAgentTool,
   abortSignal?: AbortSignal,

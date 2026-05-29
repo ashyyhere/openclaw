@@ -1,3 +1,4 @@
+// gateway/server-methods tools catalog helpers and runtime behavior.
 import {
   ErrorCodes,
   errorShape,
@@ -202,6 +203,7 @@ function buildPluginGroups(params: {
     .toSorted((a, b) => a.label.localeCompare(b.label));
 }
 
+/** Reused helper for build Tools Catalog Result behavior in src/gateway/server-methods. */
 export function buildToolsCatalogResult(params: {
   cfg: OpenClawConfig;
   agentId?: string;
@@ -229,6 +231,7 @@ export function buildToolsCatalogResult(params: {
   };
 }
 
+/** Reused constant for tools Catalog Handlers behavior in src/gateway/server-methods. */
 export const toolsCatalogHandlers: GatewayRequestHandlers = {
   "tools.catalog": ({ params, respond, context }) => {
     if (!validateToolsCatalogParams(params)) {

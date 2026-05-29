@@ -1,3 +1,4 @@
+// Tests extensions/clickclack/src gateway test behavior.
 import { EventEmitter } from "node:events";
 import type { ChannelGatewayContext } from "openclaw/plugin-sdk/channel-contract";
 import { beforeEach, describe, expect, it, vi } from "vitest";

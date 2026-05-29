@@ -1,3 +1,4 @@
+// Tests secrets json pointer test behavior.
 import { describe, expect, it } from "vitest";
 import { readJsonPointer } from "./json-pointer.js";
 

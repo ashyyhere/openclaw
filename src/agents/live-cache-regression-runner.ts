@@ -1,3 +1,4 @@
+/** Runs live prompt-cache regression probes across providers and cache lanes. */
 import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import { Type } from "typebox";
@@ -696,6 +697,7 @@ async function runAnthropicDisabledCacheLane(params: {
   }
 }
 
+/** Test hooks for live cache regression internals. */
 export const testing = {
   assertAgainstBaseline,
   evaluateAgainstBaseline,
@@ -706,6 +708,7 @@ export const testing = {
   shouldRetryBaselineFindings,
 };
 
+/** Run all configured live cache regression lanes and collect findings. */
 export async function runLiveCacheRegression(): Promise<LiveCacheRegressionResult> {
   const pngBase64 = (await fs.readFile(LIVE_TEST_PNG_URL)).toString("base64");
   const runToken = randomUUID().slice(0, 13);
@@ -807,4 +810,5 @@ export async function runLiveCacheRegression(): Promise<LiveCacheRegressionResul
   }
   return { regressions, summary, warnings };
 }
+/** Re-exported API for src/agents, starting with testing. */
 export { testing as __testing };

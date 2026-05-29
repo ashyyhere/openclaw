@@ -1,3 +1,4 @@
+// Shared types for extensions/line/src types behavior.
 import type { BaseProbeResult } from "openclaw/plugin-sdk/channel-contract";
 import type { MessageReceipt } from "openclaw/plugin-sdk/channel-outbound";
 

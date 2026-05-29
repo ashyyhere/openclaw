@@ -1,3 +1,4 @@
+/** Builds cleanup plans for stale OpenClaw config, auth, and cache state. */
 import {
   getRuntimeConfig,
   resolveConfigPath,
@@ -7,6 +8,7 @@ import {
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { buildCleanupPlan } from "./cleanup-utils.js";
 
+/** Reused helper for resolve Cleanup Plan From Disk behavior in src/commands. */
 export function resolveCleanupPlanFromDisk(): {
   cfg: OpenClawConfig;
   stateDir: string;

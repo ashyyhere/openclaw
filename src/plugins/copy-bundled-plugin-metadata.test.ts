@@ -1,3 +1,4 @@
+// Tests plugins copy bundled plugin metadata test behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";

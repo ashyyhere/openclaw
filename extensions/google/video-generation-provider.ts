@@ -1,3 +1,4 @@
+// extensions/google video generation provider helpers and runtime behavior.
 import { resolveApiKeyForProvider } from "openclaw/plugin-sdk/provider-auth-runtime";
 import {
   createProviderOperationDeadline,

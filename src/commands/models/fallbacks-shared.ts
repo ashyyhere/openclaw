@@ -1,3 +1,4 @@
+// Shared implementation for text and image model fallback list/add/remove commands.
 import { buildModelAliasIndex, resolveModelRefFromString } from "../../agents/model-selection.js";
 import { formatCliCommand } from "../../cli/command-format.js";
 import { logConfigUpdated } from "../../config/logging.js";
@@ -47,6 +48,7 @@ function patchDefaultsFallbacks(
   };
 }
 
+/** Reused helper for list Fallbacks Command behavior in src/commands/models. */
 export async function listFallbacksCommand(
   params: { label: string; key: DefaultsFallbackKey },
   opts: { json?: boolean; plain?: boolean },
@@ -77,6 +79,7 @@ export async function listFallbacksCommand(
   }
 }
 
+/** Reused helper for add Fallback Command behavior in src/commands/models. */
 export async function addFallbackCommand(
   params: {
     label: string;
@@ -109,6 +112,7 @@ export async function addFallbackCommand(
   runtime.log(`${params.logPrefix}: ${getFallbacks(updated, params.key).join(", ")}`);
 }
 
+/** Reused helper for remove Fallback Command behavior in src/commands/models. */
 export async function removeFallbackCommand(
   params: {
     label: string;
@@ -152,6 +156,7 @@ export async function removeFallbackCommand(
   runtime.log(`${params.logPrefix}: ${getFallbacks(updated, params.key).join(", ")}`);
 }
 
+/** Reused helper for clear Fallbacks Command behavior in src/commands/models. */
 export async function clearFallbacksCommand(
   params: { key: DefaultsFallbackKey; clearedMessage: string },
   runtime: RuntimeEnv,

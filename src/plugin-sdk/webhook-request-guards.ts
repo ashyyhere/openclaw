@@ -1,3 +1,4 @@
+/** Public SDK request guards for webhook HTTP handlers. */
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { formatErrorMessage } from "../infra/errors.js";
 import {
@@ -11,8 +12,10 @@ import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 import type { FixedWindowRateLimiter } from "./webhook-memory-guards.js";
 import { resolveWebhookIntegerOption } from "./webhook-numeric-options.js";
 
+/** Shared type for Webhook Body Read Profile in src/plugin-sdk. */
 export type WebhookBodyReadProfile = "pre-auth" | "post-auth";
 
+/** Re-exported API for src/plugin-sdk. */
 export {
   installRequestBodyLimitGuard,
   isRequestBodyLimitError,
@@ -21,6 +24,7 @@ export {
   requestBodyErrorToText,
 } from "../infra/http-body.js";
 
+/** Reused constant for WEBHOOK BODY READ DEFAULTS behavior in src/plugin-sdk. */
 export const WEBHOOK_BODY_READ_DEFAULTS = Object.freeze({
   preAuth: {
     maxBytes: 64 * 1024,
@@ -32,11 +36,13 @@ export const WEBHOOK_BODY_READ_DEFAULTS = Object.freeze({
   },
 });
 
+/** Reused constant for WEBHOOK IN FLIGHT DEFAULTS behavior in src/plugin-sdk. */
 export const WEBHOOK_IN_FLIGHT_DEFAULTS = Object.freeze({
   maxInFlightPerKey: 8,
   maxTrackedKeys: 4_096,
 });
 
+/** Shared type for Webhook In Flight Limiter in src/plugin-sdk. */
 export type WebhookInFlightLimiter = {
   tryAcquire: (key: string) => boolean;
   release: (key: string) => void;

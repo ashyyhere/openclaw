@@ -1,3 +1,4 @@
+/** Tests provider auth aliases during generated provider secret resolution. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 let createProviderAuthResolver: typeof import("./models-config.providers.secrets.js").createProviderAuthResolver;

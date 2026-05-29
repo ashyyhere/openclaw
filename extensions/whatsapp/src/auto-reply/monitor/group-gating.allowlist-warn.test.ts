@@ -1,3 +1,4 @@
+// Tests extensions/whatsapp/src/auto-reply/monitor group gating allowlist warn test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("./group-activation.js", () => ({

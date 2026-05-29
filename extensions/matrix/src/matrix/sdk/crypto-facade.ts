@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix/sdk crypto facade helpers and runtime behavior.
 import { ensureMatrixCryptoRuntime } from "../deps.js";
 import type { MatrixRecoveryKeyStore } from "./recovery-key-store.js";
 import type { EncryptedFile } from "./types.js";

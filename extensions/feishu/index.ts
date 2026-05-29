@@ -1,3 +1,4 @@
+// extensions/feishu index helpers and runtime behavior.
 import {
   defineBundledChannelEntry,
   loadBundledEntryExportSync,

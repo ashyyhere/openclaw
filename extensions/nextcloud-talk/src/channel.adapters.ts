@@ -1,3 +1,4 @@
+// extensions/nextcloud-talk/src channel adapters helpers and runtime behavior.
 import { formatAllowFromLowercase } from "openclaw/plugin-sdk/allow-from";
 import {
   adaptScopedAccountAccessor,

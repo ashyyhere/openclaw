@@ -1,3 +1,4 @@
+// Tests packages/gateway-client/src client watchdog test behavior.
 import { createServer as createHttpsServer } from "node:https";
 import { createServer } from "node:net";
 import { afterEach, describe, expect, test, vi } from "vitest";

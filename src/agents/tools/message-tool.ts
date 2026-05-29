@@ -1,3 +1,4 @@
+/** Agent tool for sending, editing, reacting to, and deleting channel messages. */
 import { Type, type TSchema } from "typebox";
 import {
   GATEWAY_CLIENT_IDS,
@@ -895,6 +896,7 @@ function appendMessageToolReadHint(
   return description;
 }
 
+/** Creates the channel message AgentTool. */
 export function createMessageTool(options?: MessageToolOptions): AnyAgentTool {
   const loadConfigForTool = options?.getRuntimeConfig ?? getRuntimeConfig;
   const getScopedSecretTargetsForTool =

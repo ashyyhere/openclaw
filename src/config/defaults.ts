@@ -82,6 +82,7 @@ function resolveModelCost(
   };
 }
 
+/** Reused helper for resolve Normalized Provider Model Max Tokens behavior in src/config. */
 export function resolveNormalizedProviderModelMaxTokens(params: {
   providerId: string;
   modelId: string;
@@ -105,6 +106,7 @@ type SessionDefaultsOptions = {
   warnState?: WarnState;
 };
 
+/** Reused helper for apply Message Defaults behavior in src/config. */
 export function applyMessageDefaults(cfg: OpenClawConfig): OpenClawConfig {
   const messages = cfg.messages;
   const hasAckScope = messages?.ackReactionScope !== undefined;
@@ -120,6 +122,7 @@ export function applyMessageDefaults(cfg: OpenClawConfig): OpenClawConfig {
   };
 }
 
+/** Reused helper for apply Session Defaults behavior in src/config. */
 export function applySessionDefaults(
   cfg: OpenClawConfig,
   options: SessionDefaultsOptions = {},
@@ -146,10 +149,12 @@ export function applySessionDefaults(
   return next;
 }
 
+/** Reused helper for apply Talk Config Normalization behavior in src/config. */
 export function applyTalkConfigNormalization(config: OpenClawConfig): OpenClawConfig {
   return normalizeTalkConfig(config);
 }
 
+/** Reused helper for apply Model Defaults behavior in src/config. */
 export function applyModelDefaults(
   cfg: OpenClawConfig,
   options: ProviderPolicyDefaultsOptions = {},
@@ -400,6 +405,7 @@ function normalizeAgentModelConfigForDefaults(value: unknown): unknown {
   return mutated ? next : value;
 }
 
+/** Reused helper for apply Agent Defaults behavior in src/config. */
 export function applyAgentDefaults(cfg: OpenClawConfig): OpenClawConfig {
   const agents = cfg.agents;
   const defaults = agents?.defaults;
@@ -448,6 +454,7 @@ export function applyAgentDefaults(cfg: OpenClawConfig): OpenClawConfig {
   };
 }
 
+/** Reused helper for apply Cron Defaults behavior in src/config. */
 export function applyCronDefaults(cfg: OpenClawConfig): OpenClawConfig {
   const raw = cfg.cron?.maxConcurrentRuns;
   if (typeof raw === "number" && Number.isFinite(raw)) {
@@ -462,6 +469,7 @@ export function applyCronDefaults(cfg: OpenClawConfig): OpenClawConfig {
   };
 }
 
+/** Reused helper for apply Logging Defaults behavior in src/config. */
 export function applyLoggingDefaults(cfg: OpenClawConfig): OpenClawConfig {
   const logging = cfg.logging;
   if (!logging) {
@@ -505,6 +513,7 @@ function hasAnthropicDefaultSignal(cfg: OpenClawConfig, env: NodeJS.ProcessEnv):
   });
 }
 
+/** Reused helper for apply Context Pruning Defaults behavior in src/config. */
 export function applyContextPruningDefaults(
   cfg: OpenClawConfig,
   options: ProviderPolicyDefaultsOptions = {},
@@ -525,6 +534,7 @@ export function applyContextPruningDefaults(
   );
 }
 
+/** Reused helper for apply Compaction Defaults behavior in src/config. */
 export function applyCompactionDefaults(cfg: OpenClawConfig): OpenClawConfig {
   const defaults = cfg.agents?.defaults;
   if (!defaults) {

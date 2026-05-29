@@ -1,5 +1,7 @@
+// cron persisted shape helpers and runtime behavior.
 import { parseAbsoluteTimeMs } from "./parse.js";
 
+/** Shared type for Invalid Persisted Cron Job Reason in src/cron. */
 export type InvalidPersistedCronJobReason =
   | "missing-id"
   | "missing-schedule"
@@ -7,6 +9,7 @@ export type InvalidPersistedCronJobReason =
   | "missing-payload"
   | "invalid-payload";
 
+/** Reused helper for get Invalid Persisted Cron Job Reason behavior in src/cron. */
 export function getInvalidPersistedCronJobReason(
   candidate: Record<string, unknown>,
 ): InvalidPersistedCronJobReason | null {

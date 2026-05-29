@@ -1,3 +1,4 @@
+/** Implements subagent list, kill, steer, and message control operations. */
 import crypto from "node:crypto";
 import type { ClearSessionQueueResult } from "../auto-reply/reply/queue.js";
 import {
@@ -39,8 +40,11 @@ import {
 import type { SubagentRunRecord } from "./subagent-registry.types.js";
 import { resolveInternalSessionKey, resolveMainSessionAlias } from "./tools/sessions-helpers.js";
 
+/** Default lookback window used by subagent list/control commands. */
 export const DEFAULT_RECENT_MINUTES = 30;
+/** Hard cap for recent-run lookback windows. */
 export const MAX_RECENT_MINUTES = 24 * 60;
+/** Maximum steer/message payload accepted by subagent control tools. */
 export const MAX_STEER_MESSAGE_CHARS = 4_000;
 const STEER_RATE_LIMIT_MS = 2_000;
 const STEER_ABORT_SETTLE_TIMEOUT_MS = 5_000;
@@ -91,12 +95,14 @@ async function resolveSubagentControlRuntime(): Promise<{
   };
 }
 
+/** Normalized controller identity and authorization scope for subagent operations. */
 export type ResolvedSubagentController = {
   controllerSessionKey: string;
   callerSessionKey: string;
   callerIsSubagent: boolean;
   controlScope: "children" | "none";
 };
+/** Resolves the caller session and its control scope for subagent operations. */
 export function resolveSubagentController(params: {
   cfg: OpenClawConfig;
   agentSessionKey?: string;
@@ -127,6 +133,7 @@ export function resolveSubagentController(params: {
   };
 }
 
+/** Lists latest child runs currently controlled by one controller session. */
 export function listControlledSubagentRuns(controllerSessionKey: string): SubagentRunRecord[] {
   const key = controllerSessionKey.trim();
   if (!key) {
@@ -154,15 +161,8 @@ function ensureControllerOwnsRun(params: {
   return "Subagents can only control runs spawned from their own session.";
 }
 
-function isFinishedForSteerControl(
-  entry: SubagentRunRecord,
-  hasPendingDescendants: boolean,
-) {
-  return (
-    Boolean(entry.endedAt) &&
-    entry.pauseReason !== "sessions_yield" &&
-    !hasPendingDescendants
-  );
+function isFinishedForSteerControl(entry: SubagentRunRecord, hasPendingDescendants: boolean) {
+  return Boolean(entry.endedAt) && entry.pauseReason !== "sessions_yield" && !hasPendingDescendants;
 }
 
 async function killSubagentRun(params: {
@@ -278,6 +278,7 @@ async function cascadeKillChildren(params: {
   return { killed, labels };
 }
 
+/** Kills all currently controlled child runs, cascading to descendants. */
 export async function killAllControlledSubagentRuns(params: {
   cfg: OpenClawConfig;
   controller: ResolvedSubagentController;
@@ -326,6 +327,7 @@ export async function killAllControlledSubagentRuns(params: {
   return { status: "ok" as const, killed, labels: killedLabels };
 }
 
+/** Kills one controlled child run after ownership and capability checks. */
 export async function killControlledSubagentRun(params: {
   cfg: OpenClawConfig;
   controller: ResolvedSubagentController;
@@ -402,6 +404,7 @@ export async function killControlledSubagentRun(params: {
   };
 }
 
+/** Admin path for killing a child session by key without controller ownership checks. */
 export async function killSubagentRunAdmin(params: { cfg: OpenClawConfig; sessionKey: string }) {
   const targetSessionKey = params.sessionKey.trim();
   if (!targetSessionKey) {
@@ -436,6 +439,7 @@ export async function killSubagentRunAdmin(params: { cfg: OpenClawConfig; sessio
   };
 }
 
+/** Steers a running subagent by aborting/restarting it with an appended message. */
 export async function steerControlledSubagentRun(params: {
   cfg: OpenClawConfig;
   controller: ResolvedSubagentController;
@@ -626,6 +630,7 @@ export async function steerControlledSubagentRun(params: {
   };
 }
 
+/** Sends a follow-up message into a controlled subagent session and waits for its reply. */
 export async function sendControlledSubagentMessage(params: {
   cfg: OpenClawConfig;
   controller: ResolvedSubagentController;
@@ -717,6 +722,7 @@ export async function sendControlledSubagentMessage(params: {
   }
 }
 
+/** Resolves a user target token to one controlled subagent run. */
 export function resolveControlledSubagentTarget(
   runs: SubagentRunRecord[],
   token: string | undefined,
@@ -741,6 +747,7 @@ export function resolveControlledSubagentTarget(
   });
 }
 
+/** Test-only override hook for gateway/session-control dependencies. */
 export const testing = {
   setDepsForTest(
     overrides?: Partial<{
@@ -758,4 +765,5 @@ export const testing = {
       : defaultSubagentControlDeps;
   },
 };
+/** Re-exported API for src/agents, starting with testing. */
 export { testing as __testing };

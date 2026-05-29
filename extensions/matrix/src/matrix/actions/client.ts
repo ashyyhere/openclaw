@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix/actions client helpers and runtime behavior.
 import { withResolvedRuntimeMatrixClient } from "../client-bootstrap.js";
 import { resolveMatrixRoomId } from "../send.js";
 import type { MatrixActionClient, MatrixActionClientOpts } from "./types.js";

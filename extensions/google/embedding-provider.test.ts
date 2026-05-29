@@ -1,3 +1,4 @@
+// Tests extensions/google embedding provider test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("openclaw/plugin-sdk/memory-core-host-engine-embeddings", async (importOriginal) => {

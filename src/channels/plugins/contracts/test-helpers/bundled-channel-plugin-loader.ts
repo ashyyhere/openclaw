@@ -1,3 +1,4 @@
+/** Loads bundled channel plugin public surfaces for contract suites. */
 import { loadBundledPluginPublicSurface } from "../../../../test-utils/bundled-plugin-public-surface.js";
 import { listBundledChannelPluginIds as listCatalogBundledChannelPluginIds } from "../../bundled-ids.js";
 import type { ChannelId } from "../../channel-id.types.js";

@@ -1,3 +1,4 @@
+// Tests tui/components filterable select list test behavior.
 import { describe, expect, it } from "vitest";
 import {
   FilterableSelectList,

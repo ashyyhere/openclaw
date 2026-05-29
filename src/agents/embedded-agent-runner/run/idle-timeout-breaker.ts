@@ -15,20 +15,24 @@
  */
 export const MAX_CONSECUTIVE_IDLE_TIMEOUTS_BEFORE_OUTPUT = 5;
 
+/** Shared type for Idle Timeout Breaker State in src/agents/embedded-agent-runner. */
 export type IdleTimeoutBreakerState = {
   consecutiveIdleTimeoutsBeforeOutput: number;
 };
 
+/** Reused helper for create Idle Timeout Breaker State behavior in src/agents/embedded-agent-runner. */
 export function createIdleTimeoutBreakerState(): IdleTimeoutBreakerState {
   return { consecutiveIdleTimeoutsBeforeOutput: 0 };
 }
 
+/** Shared type for Idle Timeout Breaker Input in src/agents/embedded-agent-runner. */
 export type IdleTimeoutBreakerInput = {
   idleTimedOut: boolean;
   completedModelProgress: boolean;
   outputTokens?: number;
 };
 
+/** Shared type for Idle Timeout Breaker Step in src/agents/embedded-agent-runner. */
 export type IdleTimeoutBreakerStep = {
   consecutive: number;
   tripped: boolean;

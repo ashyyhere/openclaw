@@ -1,3 +1,4 @@
+// talk agent run control shared helpers and runtime behavior.
 import {
   normalizeOptionalLowercaseString,
   normalizeOptionalString,
@@ -5,6 +6,7 @@ import {
 import type { RealtimeVoiceTool } from "./provider-types.js";
 import type { TalkEvent } from "./talk-events.js";
 
+/** Reused constant for REALTIME VOICE AGENT CONTROL MODES behavior in src/talk. */
 export const REALTIME_VOICE_AGENT_CONTROL_MODES = [
   "status",
   "steer",
@@ -12,15 +14,19 @@ export const REALTIME_VOICE_AGENT_CONTROL_MODES = [
   "followup",
 ] as const;
 
+/** Shared type for Realtime Voice Agent Control Mode in src/talk. */
 export type RealtimeVoiceAgentControlMode = (typeof REALTIME_VOICE_AGENT_CONTROL_MODES)[number];
 
+/** Shared type for Realtime Voice Agent Control Provider Result in src/talk. */
 export type RealtimeVoiceAgentControlProviderResult = {
   status: "cancelled";
   message: string;
 };
 
+/** Reused constant for REALTIME VOICE AGENT CONTROL TOOL NAME behavior in src/talk. */
 export const REALTIME_VOICE_AGENT_CONTROL_TOOL_NAME = "openclaw_agent_control";
 
+/** Reused constant for REALTIME VOICE AGENT CONTROL TOOL behavior in src/talk. */
 export const REALTIME_VOICE_AGENT_CONTROL_TOOL: RealtimeVoiceTool = {
   type: "function",
   name: REALTIME_VOICE_AGENT_CONTROL_TOOL_NAME,
@@ -44,6 +50,7 @@ export const REALTIME_VOICE_AGENT_CONTROL_TOOL: RealtimeVoiceTool = {
   },
 };
 
+/** Shared type for Realtime Voice Agent Control Intent in src/talk. */
 export type RealtimeVoiceAgentControlIntent = {
   mode: RealtimeVoiceAgentControlMode;
   confidence: "high" | "medium" | "low";
@@ -57,6 +64,7 @@ export type RealtimeVoiceAgentControlIntent = {
   shouldAutoControl: boolean;
 };
 
+/** Shared type for Realtime Voice Agent Run Activity in src/talk. */
 export type RealtimeVoiceAgentRunActivity = {
   activeWorkKind?: "tool_call" | "model_call" | "embedded_run";
   hasActiveEmbeddedRun?: boolean;
@@ -67,6 +75,7 @@ export type RealtimeVoiceAgentRunActivity = {
   lastProgressReason?: string;
 };
 
+/** Shared type for Realtime Voice Agent Control Result in src/talk. */
 export type RealtimeVoiceAgentControlResult = {
   ok: boolean;
   mode: RealtimeVoiceAgentControlMode;
@@ -86,6 +95,7 @@ export type RealtimeVoiceAgentControlResult = {
   deliveredAtMs?: number;
 };
 
+/** Reused helper for normalize Realtime Voice Agent Control Mode behavior in src/talk. */
 export function normalizeRealtimeVoiceAgentControlMode(
   value: unknown,
 ): RealtimeVoiceAgentControlMode | undefined {
@@ -139,6 +149,7 @@ function hasNegatedCancelIntent(text: string): boolean {
   );
 }
 
+/** Reused helper for resolve Realtime Voice Agent Control Intent behavior in src/talk. */
 export function resolveRealtimeVoiceAgentControlIntent(params: {
   text: string;
   mode?: unknown;
@@ -206,14 +217,17 @@ export function resolveRealtimeVoiceAgentControlIntent(params: {
   };
 }
 
+/** Reused helper for classify Realtime Voice Agent Control Text behavior in src/talk. */
 export function classifyRealtimeVoiceAgentControlText(text: string): RealtimeVoiceAgentControlMode {
   return resolveRealtimeVoiceAgentControlIntent({ text }).mode;
 }
 
+/** Reused helper for should Auto Control Realtime Voice Agent Text behavior in src/talk. */
 export function shouldAutoControlRealtimeVoiceAgentText(text: string): boolean {
   return resolveRealtimeVoiceAgentControlIntent({ text }).shouldAutoControl;
 }
 
+/** Reused helper for parse Realtime Voice Agent Control Tool Args behavior in src/talk. */
 export function parseRealtimeVoiceAgentControlToolArgs(args: unknown): {
   text: string;
   mode: RealtimeVoiceAgentControlMode;
@@ -249,6 +263,7 @@ function parseRealtimeVoiceAgentControlToolArgsRecord(args: unknown): unknown {
   }
 }
 
+/** Reused helper for build Realtime Voice Agent Control Speech Message behavior in src/talk. */
 export function buildRealtimeVoiceAgentControlSpeechMessage(text: string): string {
   return [
     "Internal OpenClaw voice control result.",
@@ -258,6 +273,7 @@ export function buildRealtimeVoiceAgentControlSpeechMessage(text: string): strin
   ].join("\n");
 }
 
+/** Reused helper for build Realtime Voice Agent Cancel Provider Result behavior in src/talk. */
 export function buildRealtimeVoiceAgentCancelProviderResult(
   message = "Cancelled the active OpenClaw run.",
 ): RealtimeVoiceAgentControlProviderResult {
@@ -267,6 +283,7 @@ export function buildRealtimeVoiceAgentCancelProviderResult(
   };
 }
 
+/** Reused helper for build Realtime Voice Agent Followup Steering Text behavior in src/talk. */
 export function buildRealtimeVoiceAgentFollowupSteeringText(text: string): string {
   return [
     "Spoken follow-up for the current voice call.",
@@ -276,6 +293,7 @@ export function buildRealtimeVoiceAgentFollowupSteeringText(text: string): strin
   ].join("\n");
 }
 
+/** Reused helper for format Realtime Voice Agent Queue Rejection behavior in src/talk. */
 export function formatRealtimeVoiceAgentQueueRejection(
   mode: RealtimeVoiceAgentControlMode,
   reason: string,
@@ -302,6 +320,7 @@ function isRealtimeVoiceAgentControlToolEvent(event: TalkEvent): boolean {
   return normalizeOptionalString(payload.name) === REALTIME_VOICE_AGENT_CONTROL_TOOL_NAME;
 }
 
+/** Reused helper for format Realtime Voice Agent Status behavior in src/talk. */
 export function formatRealtimeVoiceAgentStatus(params: {
   active: boolean;
   recentEvents?: readonly TalkEvent[];

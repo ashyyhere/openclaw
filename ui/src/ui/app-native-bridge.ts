@@ -1,13 +1,16 @@
+// ui/src/ui app native bridge helpers and runtime behavior.
 type WebView2Bridge = {
   postMessage(message: unknown): void;
   addEventListener(type: "message", listener: (event: MessageEvent) => void): void;
   removeEventListener(type: "message", listener: (event: MessageEvent) => void): void;
 };
 
+/** Shared type for Native Bridge Message in ui/src/ui. */
 export type NativeBridgeMessage =
   | { type: "draft-text"; payload: { text: string } }
   | { type: "ready"; payload?: Record<string, unknown> };
 
+/** Shared type for Native Bridge Host in ui/src/ui. */
 export type NativeBridgeHost = {
   handleChatDraftChange: (next: string) => void;
 };
@@ -17,10 +20,12 @@ function getWebview(): WebView2Bridge | undefined {
   return webview;
 }
 
+/** Reused helper for is Web View2 behavior in ui/src/ui. */
 export function isWebView2(): boolean {
   return getWebview() !== undefined;
 }
 
+/** Reused helper for send To Native behavior in ui/src/ui. */
 export function sendToNative(msg: NativeBridgeMessage): void {
   getWebview()?.postMessage(msg);
 }

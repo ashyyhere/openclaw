@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/browser/routes agent snapshot test behavior.
 import { describe, expect, it } from "vitest";
 import { resolveTargetIdAfterNavigate } from "./agent.snapshot-target.js";
 

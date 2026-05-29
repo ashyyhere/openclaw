@@ -1,3 +1,4 @@
+// Tests plugins hook agent context test behavior.
 import { describe, expect, it } from "vitest";
 import {
   buildAgentHookContextChannelFields,

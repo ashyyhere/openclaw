@@ -1,3 +1,4 @@
+// Tests process exec no output timer test behavior.
 import type { ChildProcess } from "node:child_process";
 import { EventEmitter } from "node:events";
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";

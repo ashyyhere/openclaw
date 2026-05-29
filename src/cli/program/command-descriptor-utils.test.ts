@@ -1,3 +1,4 @@
+/** Tests command descriptor registration helpers. */
 import { Command } from "commander";
 import { describe, expect, it } from "vitest";
 import {

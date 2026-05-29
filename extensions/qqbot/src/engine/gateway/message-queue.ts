@@ -1,3 +1,4 @@
+// extensions/qqbot/src/engine/gateway message queue helpers and runtime behavior.
 import { formatErrorMessage } from "../utils/format.js";
 
 const DEFAULT_GLOBAL_QUEUE_SIZE = 1000;

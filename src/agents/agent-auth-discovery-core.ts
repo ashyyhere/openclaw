@@ -1,3 +1,4 @@
+/** Core auth-discovery helpers for env-backed and legacy static credentials. */
 import fs from "node:fs";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { tryReadJsonSync } from "../infra/json-files.js";
@@ -10,12 +11,14 @@ import {
 } from "./model-auth-env-vars.js";
 import { resolveEnvApiKey } from "./model-auth-env.js";
 
+/** Shared type for Agent Discovery Auth Lookup Options in src/agents. */
 export type AgentDiscoveryAuthLookupOptions = {
   config?: OpenClawConfig;
   workspaceDir?: string;
   env?: NodeJS.ProcessEnv;
 };
 
+/** Add env-backed provider credentials to an existing discovery credential map. */
 export function addEnvBackedAgentCredentials(
   credentials: AgentCredentialMap,
   options: AgentDiscoveryAuthLookupOptions = {},
@@ -57,6 +60,7 @@ export function addEnvBackedAgentCredentials(
   return next;
 }
 
+/** Remove legacy static api_key auth.json entries before discovery reads credentials. */
 export function scrubLegacyStaticAuthJsonEntriesForDiscovery(pathname: string): void {
   if (process.env.OPENCLAW_AUTH_STORE_READONLY === "1") {
     return;

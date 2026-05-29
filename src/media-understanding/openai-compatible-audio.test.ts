@@ -1,3 +1,4 @@
+// Tests media-understanding openai compatible audio test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { VERSION } from "../version.js";
 import {

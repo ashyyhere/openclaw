@@ -1,3 +1,4 @@
+/** Registers CLI commands for exporting and inspecting capability manifests. */
 import { randomUUID } from "node:crypto";
 import { createWriteStream } from "node:fs";
 import fs from "node:fs/promises";
@@ -1794,6 +1795,7 @@ function registerCapabilityListAndInspect(capability: Command) {
     });
 }
 
+/** Reused helper for register Capability Cli behavior in src/cli. */
 export function registerCapabilityCli(program: Command) {
   removeCommandByName(program, "infer");
   removeCommandByName(program, "capability");

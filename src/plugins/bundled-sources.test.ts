@@ -1,3 +1,4 @@
+// Tests plugins bundled sources test behavior.
 import { bundledPluginRootAt } from "openclaw/plugin-sdk/test-fixtures";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {

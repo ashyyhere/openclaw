@@ -1,5 +1,7 @@
+// plugins runtime channel state helpers and runtime behavior.
 import type { ActivePluginChannelRegistry } from "./channel-registry-state.types.js";
 
+/** Reused constant for PLUGIN REGISTRY STATE behavior in src/plugins. */
 export const PLUGIN_REGISTRY_STATE = Symbol.for("openclaw.pluginRegistryState");
 
 type GlobalChannelRegistryState = typeof globalThis & {
@@ -15,6 +17,7 @@ type GlobalChannelRegistryState = typeof globalThis & {
 
 type GlobalChannelRegistryRuntimeState = GlobalChannelRegistryState[typeof PLUGIN_REGISTRY_STATE];
 
+/** Shared type for Active Plugin Channel Registry Snapshot in src/plugins. */
 export type ActivePluginChannelRegistrySnapshot = {
   registry: ActivePluginChannelRegistry | null;
   version: number;
@@ -35,6 +38,7 @@ function countChannels(registry: ActivePluginChannelRegistry | null | undefined)
   return registry?.channels?.length ?? 0;
 }
 
+/** Reused helper for get Active Plugin Channel Registry Snapshot From State behavior in src/plugins. */
 export function getActivePluginChannelRegistrySnapshotFromState(): ActivePluginChannelRegistrySnapshot {
   const state = (globalThis as GlobalChannelRegistryState)[PLUGIN_REGISTRY_STATE];
   const pinnedRegistry = state?.channel?.registry ?? null;
@@ -71,10 +75,12 @@ export function getActivePluginChannelRegistrySnapshotFromState(): ActivePluginC
   return snapshot;
 }
 
+/** Reused helper for get Active Plugin Channel Registry From State behavior in src/plugins. */
 export function getActivePluginChannelRegistryFromState(): ActivePluginChannelRegistry | null {
   return getActivePluginChannelRegistrySnapshotFromState().registry;
 }
 
+/** Reused helper for get Active Plugin Channel Registry Version From State behavior in src/plugins. */
 export function getActivePluginChannelRegistryVersionFromState(): number {
   return getActivePluginChannelRegistrySnapshotFromState().version;
 }

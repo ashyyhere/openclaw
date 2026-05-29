@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor native command model picker ui helpers and runtime behavior.
 import { resolveDefaultModelForAgent } from "openclaw/plugin-sdk/agent-runtime";
 import {
   resolveStoredModelOverride,

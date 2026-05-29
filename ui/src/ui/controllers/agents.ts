@@ -1,3 +1,4 @@
+// ui/src/ui/controllers agents helpers and runtime behavior.
 import {
   normalizeChatModelOverrideValue,
   resolvePreferredServerChatModelValue,
@@ -19,6 +20,7 @@ import {
   isMissingOperatorReadScopeError,
 } from "./scope-errors.ts";
 
+/** Shared type for Agents State in ui/src/ui/controllers. */
 export type AgentsState = {
   client: GatewayBrowserClient | null;
   connected: boolean;
@@ -42,6 +44,7 @@ export type AgentsState = {
   agentsPanel?: "overview" | "files" | "tools" | "skills" | "channels" | "cron";
 };
 
+/** Shared type for Agents Config Save State in ui/src/ui/controllers. */
 export type AgentsConfigSaveState = AgentsState & ConfigState;
 
 function hasSelectedAgentMismatch(state: AgentsState, agentId: string): boolean {
@@ -57,6 +60,7 @@ function resolveToolsErrorMessage(
     : String(err);
 }
 
+/** Reused helper for load Agents behavior in ui/src/ui/controllers. */
 export async function loadAgents(state: AgentsState) {
   if (!state.client || !state.connected || state.agentsLoading) {
     return;
@@ -84,6 +88,7 @@ export async function loadAgents(state: AgentsState) {
   }
 }
 
+/** Reused helper for load Tools Catalog behavior in ui/src/ui/controllers. */
 export async function loadToolsCatalog(state: AgentsState, agentId: string) {
   const resolvedAgentId = agentId.trim();
   if (
@@ -123,6 +128,7 @@ export async function loadToolsCatalog(state: AgentsState, agentId: string) {
   }
 }
 
+/** Reused helper for load Tools Effective behavior in ui/src/ui/controllers. */
 export async function loadToolsEffective(
   state: AgentsState,
   params: { agentId: string; sessionKey: string },
@@ -173,6 +179,7 @@ export async function loadToolsEffective(
   }
 }
 
+/** Reused helper for reset Tools Effective State behavior in ui/src/ui/controllers. */
 export function resetToolsEffectiveState(state: AgentsState) {
   state.toolsEffectiveResult = null;
   state.toolsEffectiveResultKey = null;
@@ -181,6 +188,7 @@ export function resetToolsEffectiveState(state: AgentsState) {
   state.toolsEffectiveLoadingKey = null;
 }
 
+/** Reused helper for build Tools Effective Request Key behavior in ui/src/ui/controllers. */
 export function buildToolsEffectiveRequestKey(
   state: Pick<AgentsState, "sessionsResult" | "chatModelOverrides" | "chatModelCatalog">,
   params: { agentId: string; sessionKey: string },
@@ -191,6 +199,7 @@ export function buildToolsEffectiveRequestKey(
   return `${resolvedAgentId}:${resolvedSessionKey}:model=${modelKey || "(default)"}`;
 }
 
+/** Reused helper for refresh Visible Tools Effective For Current Session behavior in ui/src/ui/controllers. */
 export function refreshVisibleToolsEffectiveForCurrentSession(
   state: AgentsState,
 ): Promise<void> | undefined {
@@ -237,6 +246,7 @@ function resolveEffectiveToolsModelKey(
   return defaultModel;
 }
 
+/** Reused helper for save Agents Config behavior in ui/src/ui/controllers. */
 export async function saveAgentsConfig(state: AgentsConfigSaveState) {
   const selectedBefore = state.agentsSelectedId;
   await saveConfig(state);

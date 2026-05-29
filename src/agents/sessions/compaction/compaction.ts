@@ -24,6 +24,7 @@ import {
 import type { AgentMessage, StreamFn, ThinkingLevel } from "../../runtime/index.js";
 import type { SessionEntry } from "../session-manager.js";
 
+/** Re-exported API for src/agents/sessions. */
 export {
   calculateContextTokens,
   DEFAULT_COMPACTION_SETTINGS,
@@ -48,6 +49,7 @@ function unwrapCompactionResult<T>(result: Result<T, Error>): T {
   throw result.error;
 }
 
+/** Prepares session entries and settings for compaction. */
 export function prepareCompaction(
   pathEntries: SessionEntry[],
   settings: CompactionSettings,
@@ -55,6 +57,7 @@ export function prepareCompaction(
   return unwrapCompactionResult(prepareCompactionCore(pathEntries, settings));
 }
 
+/** Generates a compaction summary for prepared session entries. */
 export async function generateSummary(
   currentMessages: AgentMessage[],
   model: Model,
@@ -84,6 +87,7 @@ export async function generateSummary(
   );
 }
 
+/** Runs full compaction and returns updated session state. */
 export async function compact(
   preparation: CompactionPreparation,
   model: Model,

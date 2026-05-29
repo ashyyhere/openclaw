@@ -1,3 +1,4 @@
+/** Regression coverage for mirroring refreshed OAuth credentials. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";

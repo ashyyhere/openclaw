@@ -1,3 +1,4 @@
+// extensions/browser/src/browser cdp helpers and runtime behavior.
 import { resolveIntegerOption } from "openclaw/plugin-sdk/number-runtime";
 import type { SsrFPolicy } from "../infra/net/ssrf.js";
 import {

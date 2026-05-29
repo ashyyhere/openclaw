@@ -1,3 +1,4 @@
+// Tests cron isolated agent delivery awareness test behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import "./isolated-agent.mocks.js";

@@ -1,3 +1,4 @@
+/** Agent tool for yielding control back to an active session. */
 import { Type } from "typebox";
 import type { AnyAgentTool } from "./common.js";
 import { jsonResult, readStringParam } from "./common.js";
@@ -6,6 +7,7 @@ const SessionsYieldToolSchema = Type.Object({
   message: Type.Optional(Type.String()),
 });
 
+/** Creates the sessions yield AgentTool. */
 export function createSessionsYieldTool(opts?: {
   sessionId?: string;
   onYield?: (message: string) => Promise<void> | void;

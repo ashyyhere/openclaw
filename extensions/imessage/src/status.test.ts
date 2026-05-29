@@ -1,3 +1,4 @@
+// Tests extensions/imessage/src status test behavior.
 import { createPluginSetupWizardStatus } from "openclaw/plugin-sdk/plugin-test-runtime";
 import * as processRuntime from "openclaw/plugin-sdk/process-runtime";
 import * as setupRuntime from "openclaw/plugin-sdk/setup";

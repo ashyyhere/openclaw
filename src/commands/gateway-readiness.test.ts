@@ -1,3 +1,4 @@
+/** Tests gateway readiness checks before operations. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { DaemonStatus } from "../cli/daemon-cli/status.gather.js";
 import { ensureGatewayReadyForOperation } from "./gateway-readiness.js";

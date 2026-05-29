@@ -1,3 +1,4 @@
+// Tests secrets runtime telegram token inheritance test behavior.
 import { describe, expect, it } from "vitest";
 import "./runtime-telegram.test-support.ts";
 import {

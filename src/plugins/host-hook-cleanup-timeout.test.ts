@@ -1,3 +1,4 @@
+// Tests plugins host hook cleanup timeout test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   PLUGIN_HOST_CLEANUP_TIMEOUT_MS,

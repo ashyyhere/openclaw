@@ -1,3 +1,4 @@
+// Tests extensions/qqbot/src/engine/group message gating test behavior.
 import { describe, expect, it } from "vitest";
 import {
   resolveGroupMessageGate,

@@ -1,3 +1,4 @@
+/** Registers nodes camera capture commands. */
 import type { Command } from "commander";
 import { getTerminalTableWidth, renderTable } from "../../../packages/terminal-core/src/table.js";
 import { defaultRuntime } from "../../runtime.js";
@@ -42,6 +43,7 @@ function getGatewayInvokePayload(raw: unknown): unknown {
     : undefined;
 }
 
+/** Reused helper for register Nodes Camera Commands behavior in src/cli/nodes-cli. */
 export function registerNodesCameraCommands(nodes: Command) {
   const camera = nodes.command("camera").description("Capture camera media from a paired node");
 

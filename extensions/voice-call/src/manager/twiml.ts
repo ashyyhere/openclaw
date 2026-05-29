@@ -1,3 +1,4 @@
+// extensions/voice-call/src/manager twiml helpers and runtime behavior.
 import { escapeXml } from "../voice-mapping.js";
 
 export function generateNotifyTwiml(message: string, voice: string): string {

@@ -1,3 +1,4 @@
+// Coverage for durable final delivery capability derivation.
 import { describe, expect, it } from "vitest";
 import { deriveDurableFinalDeliveryRequirements } from "./capabilities.js";
 

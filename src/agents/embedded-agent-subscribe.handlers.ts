@@ -1,3 +1,4 @@
+/** Dispatches embedded-agent session events through ordered async handlers. */
 import {
   handleAgentEnd,
   handleAgentStart,
@@ -20,6 +21,7 @@ import type {
 } from "./embedded-agent-subscribe.handlers.types.js";
 import { isPromiseLike } from "./embedded-agent-subscribe.promise.js";
 
+/** Create the ordered event handler for one subscribed embedded-agent session. */
 export function createEmbeddedAgentSessionEventHandler(ctx: EmbeddedAgentSubscribeContext) {
   let pendingEventChain: Promise<void> | null = null;
 

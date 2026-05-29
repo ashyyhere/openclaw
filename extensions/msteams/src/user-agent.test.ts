@@ -1,3 +1,4 @@
+// Tests extensions/msteams/src user agent test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 // Mock the runtime before importing buildUserAgent

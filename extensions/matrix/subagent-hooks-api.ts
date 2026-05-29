@@ -1,3 +1,4 @@
+// extensions/matrix subagent hooks api helpers and runtime behavior.
 import type { OpenClawPluginApi } from "openclaw/plugin-sdk/channel-entry-contract";
 
 type MatrixSubagentHooksModule = typeof import("./src/matrix/subagent-hooks.js");

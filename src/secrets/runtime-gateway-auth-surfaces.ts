@@ -1,8 +1,10 @@
+// secrets runtime gateway auth surfaces helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { createGatewayCredentialPlan } from "../gateway/credential-planner.js";
 import type { SecretDefaults } from "./runtime-shared.js";
 import { isRecord } from "./shared.js";
 
+/** Reused constant for GATEWAY AUTH SURFACE PATHS behavior in src/secrets. */
 export const GATEWAY_AUTH_SURFACE_PATHS = [
   "gateway.auth.token",
   "gateway.auth.password",
@@ -10,8 +12,10 @@ export const GATEWAY_AUTH_SURFACE_PATHS = [
   "gateway.remote.password",
 ] as const;
 
+/** Shared type for Gateway Auth Surface Path in src/secrets. */
 export type GatewayAuthSurfacePath = (typeof GATEWAY_AUTH_SURFACE_PATHS)[number];
 
+/** Shared type for Gateway Auth Surface State in src/secrets. */
 export type GatewayAuthSurfaceState = {
   path: GatewayAuthSurfacePath;
   active: boolean;
@@ -19,6 +23,7 @@ export type GatewayAuthSurfaceState = {
   hasSecretRef: boolean;
 };
 
+/** Shared type for Gateway Auth Surface State Map in src/secrets. */
 export type GatewayAuthSurfaceStateMap = Record<GatewayAuthSurfacePath, GatewayAuthSurfaceState>;
 
 function formatAuthMode(mode: string | undefined): string {
@@ -57,6 +62,7 @@ function createState(params: {
   };
 }
 
+/** Reused helper for evaluate Gateway Auth Surface States behavior in src/secrets. */
 export function evaluateGatewayAuthSurfaceStates(params: {
   config: OpenClawConfig;
   env: NodeJS.ProcessEnv;

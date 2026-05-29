@@ -1,3 +1,4 @@
+// Coverage for Node extra CA certificate discovery.
 import { describe, expect, it } from "vitest";
 import {
   isNodeVersionManagerRuntime,

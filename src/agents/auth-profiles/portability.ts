@@ -1,12 +1,15 @@
+/** Decides which auth profile credentials are safe to copy between agents. */
 import { AUTH_STORE_VERSION } from "./constants.js";
 import type { AuthProfileCredential, AuthProfileSecretsStore, AuthProfileStore } from "./types.js";
 
+/** Shared type for Auth Profile Portability Reason in src/agents/auth-profiles. */
 export type AuthProfilePortabilityReason =
   | "portable-static-credential"
   | "non-portable-oauth-refresh-token"
   | "credential-opted-out"
   | "oauth-provider-opted-in";
 
+/** Shared type for Auth Profile Portability in src/agents/auth-profiles. */
 export type AuthProfilePortability = {
   portable: boolean;
   reason: AuthProfilePortabilityReason;
@@ -25,6 +28,7 @@ function hasCopyableOAuthMaterial(credential: AuthProfileCredential): boolean {
   );
 }
 
+/** Reused helper for resolve Auth Profile Portability behavior in src/agents/auth-profiles. */
 export function resolveAuthProfilePortability(
   credential: AuthProfileCredential,
 ): AuthProfilePortability {
@@ -43,12 +47,14 @@ export function resolveAuthProfilePortability(
   return { portable: true, reason: "portable-static-credential" };
 }
 
+/** Reused helper for is Auth Profile Credential Portable For Agent Copy behavior in src/agents/auth-profiles. */
 export function isAuthProfileCredentialPortableForAgentCopy(
   credential: AuthProfileCredential,
 ): boolean {
   return resolveAuthProfilePortability(credential).portable;
 }
 
+/** Reused helper for build Portable Auth Profile Secrets Store For Agent Copy behavior in src/agents/auth-profiles. */
 export function buildPortableAuthProfileSecretsStoreForAgentCopy(store: AuthProfileStore): {
   store: AuthProfileSecretsStore;
   copiedProfileIds: string[];

@@ -1,3 +1,4 @@
+/** Supplies dynamic footer data for interactive sessions. */
 import { type ExecFileException, execFile, spawnSync } from "node:child_process";
 import {
   existsSync,

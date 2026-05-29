@@ -1,3 +1,4 @@
+// Command authorization resolution across native commands, text commands, and owners.
 import {
   getLoadedChannelPluginById,
   listLoadedChannelPlugins,
@@ -20,6 +21,7 @@ import {
 import { isNativeCommandTurn, resolveCommandTurnContext } from "./command-turn-context.js";
 import type { MsgContext } from "./templating.js";
 
+/** Authorization facts used by command handlers to gate privileged actions. */
 export type CommandAuthorization = {
   providerId?: ChannelId;
   ownerList: string[];
@@ -627,6 +629,7 @@ function resolveFallbackDefaultAccountConfig(
   return definedAccounts.length === 1 ? definedAccounts[0] : undefined;
 }
 
+/** Resolve whether the current sender may run command handling for this turn. */
 export function resolveCommandAuthorization(params: {
   ctx: MsgContext;
   cfg: OpenClawConfig;

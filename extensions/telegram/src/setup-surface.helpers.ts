@@ -1,3 +1,4 @@
+// extensions/telegram/src setup surface helpers helpers and runtime behavior.
 import {
   addWildcardAllowFrom,
   applySetupAccountConfigPatch,

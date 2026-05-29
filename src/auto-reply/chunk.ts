@@ -14,6 +14,7 @@ import { resolveAccountEntry } from "../routing/account-lookup.js";
 import { normalizeAccountId } from "../routing/session-key.js";
 import { chunkTextByBreakResolver } from "../shared/text-chunking.js";
 
+/** Shared type for Text Chunk Provider in src/auto-reply. */
 export type TextChunkProvider = ChannelId;
 
 /**
@@ -56,6 +57,7 @@ function resolveChunkLimitForProvider(
   return cfgSection.textChunkLimit;
 }
 
+/** Reused helper for resolve Text Chunk Limit behavior in src/auto-reply. */
 export function resolveTextChunkLimit(
   cfg: OpenClawConfig | undefined,
   provider?: TextChunkProvider,
@@ -100,6 +102,7 @@ function resolveChunkModeForProvider(
   return resolveChannelStreamingChunkMode(cfgSection) ?? cfgSection.chunkMode;
 }
 
+/** Reused helper for resolve Chunk Mode behavior in src/auto-reply. */
 export function resolveChunkMode(
   cfg: OpenClawConfig | undefined,
   provider?: TextChunkProvider,
@@ -287,6 +290,7 @@ export function chunkTextWithMode(text: string, limit: number, mode: ChunkMode):
   return chunkText(text, limit);
 }
 
+/** Reused helper for chunk Markdown Text With Mode behavior in src/auto-reply. */
 export function chunkMarkdownTextWithMode(text: string, limit: number, mode: ChunkMode): string[] {
   if (mode === "newline") {
     // Paragraph chunking is fence-safe because we never split at arbitrary indices.
@@ -362,6 +366,7 @@ function resolveChunkEarlyReturn(text: string, limit: number): string[] | undefi
   return undefined;
 }
 
+/** Reused helper for chunk Text behavior in src/auto-reply. */
 export function chunkText(text: string, limit: number): string[] {
   const early = resolveChunkEarlyReturn(text, limit);
   if (early) {
@@ -375,6 +380,7 @@ export function chunkText(text: string, limit: number): string[] {
   });
 }
 
+/** Reused helper for chunk Markdown Text behavior in src/auto-reply. */
 export function chunkMarkdownText(text: string, limit: number): string[] {
   const early = resolveChunkEarlyReturn(text, limit);
   if (early) {

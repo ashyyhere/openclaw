@@ -1,3 +1,4 @@
+// extensions/fireworks provider catalog helpers and runtime behavior.
 import { buildManifestModelProviderConfig } from "openclaw/plugin-sdk/provider-catalog-shared";
 import type {
   ModelDefinitionConfig,

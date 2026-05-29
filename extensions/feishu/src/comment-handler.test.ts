@@ -1,3 +1,4 @@
+// Tests extensions/feishu/src comment handler test behavior.
 import type { PreparedInboundReply } from "openclaw/plugin-sdk/channel-inbound";
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { ClawdbotConfig, PluginRuntime } from "../runtime-api.js";

@@ -1,3 +1,4 @@
+// extensions/telegram/src target writeback helpers and runtime behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import {
   readConfigFileSnapshotForWrite,

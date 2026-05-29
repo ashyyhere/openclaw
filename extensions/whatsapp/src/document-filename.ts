@@ -1,3 +1,4 @@
+// extensions/whatsapp/src document filename helpers and runtime behavior.
 import { extensionForMime } from "openclaw/plugin-sdk/media-mime";
 
 const WHATSAPP_DEFAULT_DOCUMENT_FILE_NAME = "file";

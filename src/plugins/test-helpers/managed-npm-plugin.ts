@@ -1,3 +1,4 @@
+// plugins/test-helpers managed npm plugin helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { resolvePluginNpmProjectDir } from "../install-paths.js";

@@ -1,3 +1,4 @@
+// Tests model-list table and JSON rendering paths.
 import { describe, expect, it, vi } from "vitest";
 import { printModelTable } from "./list.table.js";
 import type { ModelRow } from "./list.types.js";

@@ -1,3 +1,4 @@
+// extensions/qa-lab/src agentic parity helpers and runtime behavior.
 import { uniqueStrings } from "openclaw/plugin-sdk/string-coerce-runtime";
 
 const QA_AGENTIC_PARITY_PACK = "agentic";

@@ -1,3 +1,4 @@
+// extensions/discord/src/actions runtime messaging shared helpers and runtime behavior.
 import { resolveOpenProviderRuntimeGroupPolicy } from "openclaw/plugin-sdk/runtime-group-policy";
 import { mergeDiscordAccountConfig, resolveDefaultDiscordAccountId } from "../accounts.js";
 import { createDiscordRuntimeAccountContext } from "../client.js";

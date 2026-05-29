@@ -1,3 +1,4 @@
+// Tests gateway server ios client id test behavior.
 import { describe, expect, test } from "vitest";
 import {
   GATEWAY_CLIENT_IDS,

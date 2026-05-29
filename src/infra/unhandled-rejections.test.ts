@@ -1,3 +1,4 @@
+// Tests infra unhandled rejections test behavior.
 import { describe, expect, it } from "vitest";
 import {
   isAbortError,

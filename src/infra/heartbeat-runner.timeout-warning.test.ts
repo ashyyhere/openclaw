@@ -1,3 +1,4 @@
+// Tests infra heartbeat runner timeout warning test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 

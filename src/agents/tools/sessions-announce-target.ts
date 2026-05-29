@@ -1,3 +1,4 @@
+/** Resolves announcement delivery targets for session sends. */
 import { getChannelPlugin, normalizeChannelId } from "../../channels/plugins/index.js";
 import type { CallGatewayOptions } from "../../gateway/call.js";
 import { parseThreadSessionSuffix } from "../../sessions/session-key-utils.js";
@@ -12,6 +13,7 @@ async function callGatewayLazy<T = unknown>(opts: CallGatewayOptions): Promise<T
   return callGateway<T>(opts);
 }
 
+/** Resolves an announce target from a session key and gateway options. */
 export async function resolveAnnounceTarget(params: {
   sessionKey: string;
   displayKey: string;

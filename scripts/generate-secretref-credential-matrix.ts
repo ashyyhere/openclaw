@@ -1,3 +1,4 @@
+// scripts generate secretref credential matrix helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { buildSecretRefCredentialMatrix } from "../src/secrets/credential-matrix.js";

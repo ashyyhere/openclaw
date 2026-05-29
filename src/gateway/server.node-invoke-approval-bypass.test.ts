@@ -1,3 +1,4 @@
+// Tests gateway server node invoke approval bypass test behavior.
 import crypto from "node:crypto";
 import { afterAll, beforeAll, describe, expect, test, vi } from "vitest";
 import { WebSocket } from "ws";

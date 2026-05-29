@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src api fetch test behavior.
 import { createRequire } from "node:module";
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { fetchTelegramChatId } from "./api-fetch.js";

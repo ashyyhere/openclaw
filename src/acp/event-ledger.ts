@@ -1,3 +1,4 @@
+/** Persistent ACP event ledger used to replay session output across reconnects. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import type { ContentBlock, SessionUpdate } from "@agentclientprotocol/sdk";
@@ -22,6 +23,7 @@ const FILE_LEDGER_LOCK_OPTIONS = {
   stale: 15_000,
 } as const;
 
+/** One persisted ACP event with monotonic per-session sequence metadata. */
 export type AcpEventLedgerEntry = {
   seq: number;
   at: number;
@@ -31,6 +33,7 @@ export type AcpEventLedgerEntry = {
   update: SessionUpdate;
 };
 
+/** Replay payload returned when reconnecting to a persisted ACP session. */
 export type AcpEventLedgerReplay = {
   complete: boolean;
   sessionId?: string;
@@ -38,6 +41,7 @@ export type AcpEventLedgerReplay = {
   events: AcpEventLedgerEntry[];
 };
 
+/** Storage contract for recording ACP prompts and runtime updates. */
 export type AcpEventLedger = {
   startSession: (params: {
     sessionId: string;
@@ -417,6 +421,7 @@ function createLedgerApi(params: {
   };
 }
 
+/** Create a memory-backed ACP event ledger for tests and ephemeral runtimes. */
 export function createInMemoryAcpEventLedger(options: LedgerOptions = {}): AcpEventLedger {
   const normalized = normalizeLedgerOptions(options);
   const state: MutableLedgerState = {
@@ -432,10 +437,12 @@ export function createInMemoryAcpEventLedger(options: LedgerOptions = {}): AcpEv
   });
 }
 
+/** Resolve the default event ledger path from env or OpenClaw state dir. */
 export function resolveDefaultAcpEventLedgerPath(env: NodeJS.ProcessEnv = process.env): string {
   return path.join(resolveStateDir(env), "acp", "event-ledger.json");
 }
 
+/** Create a file-backed ACP event ledger rooted in the OpenClaw state dir. */
 export function createFileAcpEventLedger(
   params: { filePath: string } & LedgerOptions,
 ): AcpEventLedger {

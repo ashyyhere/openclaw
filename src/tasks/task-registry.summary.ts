@@ -1,3 +1,4 @@
+// tasks task registry summary helpers and runtime behavior.
 import type {
   TaskRecord,
   TaskRegistrySummary,
@@ -26,6 +27,7 @@ function createEmptyTaskRuntimeCounts(): TaskRuntimeCounts {
   };
 }
 
+/** Reused helper for create Empty Task Registry Summary behavior in src/tasks. */
 export function createEmptyTaskRegistrySummary(): TaskRegistrySummary {
   return {
     total: 0,
@@ -37,6 +39,7 @@ export function createEmptyTaskRegistrySummary(): TaskRegistrySummary {
   };
 }
 
+/** Reused helper for summarize Task Records behavior in src/tasks. */
 export function summarizeTaskRecords(records: Iterable<TaskRecord>): TaskRegistrySummary {
   const summary = createEmptyTaskRegistrySummary();
   for (const task of records) {

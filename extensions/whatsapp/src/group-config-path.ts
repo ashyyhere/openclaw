@@ -1,3 +1,4 @@
+// extensions/whatsapp/src group config path helpers and runtime behavior.
 import { DEFAULT_ACCOUNT_ID, type OpenClawConfig } from "openclaw/plugin-sdk/account-core";
 
 const WHATSAPP_GROUP_SCOPE_FIELDS = ["groupPolicy", "groupAllowFrom", "groups"] as const;

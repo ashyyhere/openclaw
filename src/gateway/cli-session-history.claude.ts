@@ -1,3 +1,4 @@
+// gateway cli session history claude helpers and runtime behavior.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -12,6 +13,7 @@ import { asFiniteNumber } from "../shared/number-coercion.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import { attachOpenClawTranscriptMeta } from "./session-utils.fs.js";
 
+/** Reused constant for CLAUDE CLI PROVIDER behavior in src/gateway. */
 export const CLAUDE_CLI_PROVIDER = "claude-cli";
 const CLAUDE_PROJECTS_RELATIVE_DIR = path.join(".claude", "projects");
 
@@ -47,6 +49,7 @@ function resolveClaudeProjectsDir(homeDir?: string): string {
   return path.join(resolveHistoryHomeDir(homeDir), CLAUDE_PROJECTS_RELATIVE_DIR);
 }
 
+/** Reused helper for resolve Claude Cli Binding Session Id behavior in src/gateway. */
 export function resolveClaudeCliBindingSessionId(
   entry: SessionEntry | undefined,
 ): string | undefined {
@@ -272,6 +275,7 @@ function parseClaudeCliHistoryEntry(
   ) as TranscriptLikeMessage;
 }
 
+/** Reused helper for resolve Claude Cli Session File Path behavior in src/gateway. */
 export function resolveClaudeCliSessionFilePath(params: {
   cliSessionId: string;
   homeDir?: string;
@@ -312,6 +316,7 @@ export function resolveClaudeCliSessionFilePath(params: {
   return undefined;
 }
 
+/** Reused helper for read Claude Cli Session Messages behavior in src/gateway. */
 export function readClaudeCliSessionMessages(params: {
   cliSessionId: string;
   homeDir?: string;
@@ -365,6 +370,7 @@ type ClaudeCliSummaryEntry = {
   timestamp?: unknown;
 };
 
+/** Shared type for Claude Cli Fallback Seed in src/gateway. */
 export type ClaudeCliFallbackSeed = {
   summaryText?: string;
   recentTurns: TranscriptLikeMessage[];
@@ -391,6 +397,7 @@ function extractSummaryText(entry: ClaudeCliProjectEntry): string | undefined {
   return typeof summary === "string" && summary.trim() ? summary.trim() : undefined;
 }
 
+/** Reused helper for read Claude Cli Fallback Seed behavior in src/gateway. */
 export function readClaudeCliFallbackSeed(params: {
   cliSessionId: string;
   homeDir?: string;

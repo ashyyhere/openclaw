@@ -1,3 +1,4 @@
+// Coverage for exec hint handling in get-reply runs.
 import { describe, expect, it } from "vitest";
 import type { SessionEntry } from "../../config/sessions.js";
 import type { TemplateContext } from "../templating.js";

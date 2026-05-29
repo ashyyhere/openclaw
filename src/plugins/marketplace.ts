@@ -1,3 +1,4 @@
+// plugins marketplace helpers and runtime behavior.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
@@ -42,6 +43,7 @@ type MarketplaceEntrySource =
   | { kind: "git-subdir"; url: string; path: string; ref?: string }
   | { kind: "url"; url: string };
 
+/** Shared type for Marketplace Plugin Entry in src/plugins. */
 export type MarketplacePluginEntry = {
   name: string;
   version?: string;
@@ -49,6 +51,7 @@ export type MarketplacePluginEntry = {
   source: MarketplaceEntrySource;
 };
 
+/** Shared type for Marketplace Manifest in src/plugins. */
 export type MarketplaceManifest = {
   name?: string;
   version?: string;
@@ -75,6 +78,7 @@ type KnownMarketplaceRecord = {
   source?: unknown;
 };
 
+/** Shared type for Marketplace Plugin List Result in src/plugins. */
 export type MarketplacePluginListResult =
   | {
       ok: true;
@@ -86,6 +90,7 @@ export type MarketplacePluginListResult =
       error: string;
     };
 
+/** Shared type for Marketplace Install Result in src/plugins. */
 export type MarketplaceInstallResult =
   | ({
       ok: true;
@@ -97,6 +102,7 @@ export type MarketplaceInstallResult =
     } & Extract<InstallPluginResult, { ok: true }>)
   | Extract<InstallPluginResult, { ok: false }>;
 
+/** Shared type for Marketplace Shortcut Resolution in src/plugins. */
 export type MarketplaceShortcutResolution =
   | {
       ok: true;
@@ -1032,6 +1038,7 @@ async function resolveMarketplaceEntryInstallPath(params: {
   };
 }
 
+/** Reused helper for list Marketplace Plugins behavior in src/plugins. */
 export async function listMarketplacePlugins(params: {
   marketplace: string;
   logger?: MarketplaceLogger;
@@ -1056,6 +1063,7 @@ export async function listMarketplacePlugins(params: {
   }
 }
 
+/** Reused helper for resolve Marketplace Install Shortcut behavior in src/plugins. */
 export async function resolveMarketplaceInstallShortcut(
   raw: string,
 ): Promise<MarketplaceShortcutResolution> {
@@ -1102,6 +1110,7 @@ export async function resolveMarketplaceInstallShortcut(
   };
 }
 
+/** Reused helper for install Plugin From Marketplace behavior in src/plugins. */
 export async function installPluginFromMarketplace(
   params: InstallSafetyOverrides & {
     marketplace: string;

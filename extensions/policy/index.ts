@@ -1,3 +1,4 @@
+// extensions/policy index helpers and runtime behavior.
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 import { registerPolicyCli } from "./src/cli.js";
 import { registerPolicyDoctorChecks } from "./src/doctor/register.js";

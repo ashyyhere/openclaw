@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/whatsapp/src channel react action runtime behavior.
 import { readStringOrNumberParam, readStringParam } from "openclaw/plugin-sdk/channel-actions";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 

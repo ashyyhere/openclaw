@@ -1,3 +1,4 @@
+// test/vitest vitest extension voice call config helpers and runtime behavior.
 import { voiceCallExtensionTestRoots } from "./vitest.extension-voice-call-paths.mjs";
 import { loadPatternListFromEnv } from "./vitest.pattern-file.ts";
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";

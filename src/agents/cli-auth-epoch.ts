@@ -1,3 +1,4 @@
+/** CLI/auth-profile fingerprint epoch for cache invalidation. */
 import crypto from "node:crypto";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import { loadAuthProfileStoreForRuntime } from "./auth-profiles/store.js";
@@ -27,12 +28,15 @@ const defaultCliAuthEpochDeps: CliAuthEpochDeps = {
 
 const cliAuthEpochDeps: CliAuthEpochDeps = { ...defaultCliAuthEpochDeps };
 
+/** Reused constant for CLI AUTH EPOCH VERSION behavior in src/agents. */
 export const CLI_AUTH_EPOCH_VERSION = 4;
 
+/** Override CLI auth epoch dependencies for tests. */
 export function setCliAuthEpochTestDeps(overrides: Partial<CliAuthEpochDeps>): void {
   Object.assign(cliAuthEpochDeps, overrides);
 }
 
+/** Reset CLI auth epoch dependencies after tests. */
 export function resetCliAuthEpochTestDeps(): void {
   Object.assign(cliAuthEpochDeps, defaultCliAuthEpochDeps);
 }
@@ -173,6 +177,7 @@ function getAuthProfileCredential(
   return store.profiles[authProfileId];
 }
 
+/** Resolve a stable auth epoch for CLI/profile credential state. */
 export async function resolveCliAuthEpoch(params: {
   provider: string;
   authProfileId?: string;

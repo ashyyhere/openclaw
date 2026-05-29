@@ -1,7 +1,9 @@
+// packages/memory-host-sdk/src/host embeddings debug helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "./string-utils.js";
 
 const debugEmbeddings = isTruthyEnvValue(process.env.OPENCLAW_DEBUG_MEMORY_EMBEDDINGS);
 
+/** Public helper for debug Embeddings Log behavior in packages/memory-host-sdk. */
 export function debugEmbeddingsLog(message: string, meta?: Record<string, unknown>): void {
   if (!debugEmbeddings) {
     return;

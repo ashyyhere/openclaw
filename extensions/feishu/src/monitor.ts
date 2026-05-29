@@ -1,3 +1,4 @@
+// extensions/feishu/src monitor helpers and runtime behavior.
 import type { ClawdbotConfig, RuntimeEnv } from "../runtime-api.js";
 import { listEnabledFeishuAccounts, resolveFeishuRuntimeAccount } from "./accounts.js";
 import { fetchBotIdentityForMonitor } from "./monitor.startup.js";

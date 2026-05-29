@@ -1,3 +1,4 @@
+// extensions/tlon/src/monitor media helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import { mkdir, writeFile } from "node:fs/promises";
 import * as path from "node:path";

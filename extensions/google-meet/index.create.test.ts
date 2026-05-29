@@ -1,3 +1,4 @@
+// Tests extensions/google-meet index create test behavior.
 import { Command } from "commander";
 import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import plugin, { testing as googleMeetPluginTesting } from "./index.js";

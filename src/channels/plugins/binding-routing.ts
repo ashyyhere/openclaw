@@ -1,3 +1,4 @@
+// Configured binding routing helpers.
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { logVerbose } from "../../globals.js";
 import {
@@ -15,6 +16,7 @@ import type { ConfiguredBindingResolution } from "./binding-types.js";
 
 const CONFIGURED_BINDING_ROUTE_READY_TIMEOUT_MS = 30_000;
 
+/** Shared type for Configured Binding Route Result in src/channels/plugins. */
 export type ConfiguredBindingRouteResult = {
   bindingResolution: ConfiguredBindingResolution | null;
   route: ResolvedAgentRoute;
@@ -22,6 +24,7 @@ export type ConfiguredBindingRouteResult = {
   boundAgentId?: string;
 };
 
+/** Shared type for Runtime Conversation Binding Route Result in src/channels/plugins. */
 export type RuntimeConversationBindingRouteResult = {
   bindingRecord: SessionBindingRecord | null;
   route: ResolvedAgentRoute;
@@ -66,6 +69,7 @@ function isPluginOwnedRuntimeBindingRecord(record: SessionBindingRecord | null):
   );
 }
 
+/** Reused helper for resolve Configured Binding Route behavior in src/channels/plugins. */
 export function resolveConfiguredBindingRoute(
   params: {
     cfg: OpenClawConfig;
@@ -110,6 +114,7 @@ export function resolveConfiguredBindingRoute(
   };
 }
 
+/** Reused helper for resolve Runtime Conversation Binding Route behavior in src/channels/plugins. */
 export function resolveRuntimeConversationBindingRoute(
   params: {
     route: ResolvedAgentRoute;
@@ -162,6 +167,7 @@ export function resolveRuntimeConversationBindingRoute(
   };
 }
 
+/** Reused helper for ensure Configured Binding Route Ready behavior in src/channels/plugins. */
 export async function ensureConfiguredBindingRouteReady(params: {
   cfg: OpenClawConfig;
   bindingResolution: ConfiguredBindingResolution | null;

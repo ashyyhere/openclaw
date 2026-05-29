@@ -1,3 +1,4 @@
+// Coverage for group id resolution.
 import { afterEach, describe, expect, it } from "vitest";
 import { setActivePluginRegistry } from "../../plugins/runtime.js";
 import {

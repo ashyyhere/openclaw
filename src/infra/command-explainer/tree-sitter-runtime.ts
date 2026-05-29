@@ -1,3 +1,4 @@
+// infra/command-explainer tree sitter runtime helpers and runtime behavior.
 import fs from "node:fs";
 import { createRequire } from "node:module";
 import path from "node:path";
@@ -10,6 +11,7 @@ let parserLoader: () => Promise<TreeSitter.Parser> = loadParser;
 const MAX_COMMAND_EXPLANATION_SOURCE_CHARS = 128 * 1024;
 const MAX_COMMAND_EXPLANATION_PARSE_MS = 500;
 
+/** Reused helper for resolve Package File For Command Explanation behavior in src/infra/command-explainer. */
 export function resolvePackageFileForCommandExplanation(
   packageName: string,
   fileName: string,
@@ -61,6 +63,7 @@ async function loadParser(): Promise<TreeSitter.Parser> {
   return parser;
 }
 
+/** Reused helper for get Bash Parser For Command Explanation behavior in src/infra/command-explainer. */
 export function getBashParserForCommandExplanation(): Promise<TreeSitter.Parser> {
   parserPromise ??= parserLoader().catch((error: unknown) => {
     parserPromise = null;
@@ -69,6 +72,7 @@ export function getBashParserForCommandExplanation(): Promise<TreeSitter.Parser>
   return parserPromise;
 }
 
+/** Reused helper for set Bash Parser Loader For Command Explanation For Test behavior in src/infra/command-explainer. */
 export function setBashParserLoaderForCommandExplanationForTest(
   loader?: () => Promise<TreeSitter.Parser>,
 ): void {

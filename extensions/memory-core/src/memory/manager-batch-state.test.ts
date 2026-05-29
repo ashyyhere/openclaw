@@ -1,3 +1,4 @@
+// Tests extensions/memory-core/src/memory manager batch state test behavior.
 import { describe, expect, it } from "vitest";
 import {
   MEMORY_BATCH_FAILURE_LIMIT,

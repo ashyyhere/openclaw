@@ -1,3 +1,4 @@
+// Tests extensions/anthropic provider policy api test behavior.
 import type { ModelDefinitionConfig } from "openclaw/plugin-sdk/provider-model-types";
 import { describe, expect, it } from "vitest";
 import {

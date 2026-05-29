@@ -1,3 +1,4 @@
+// scripts/e2e/parallels agent workspace helpers and runtime behavior.
 export function posixAgentWorkspaceScript(purpose: string): string {
   return `set -eu
 workspace="\${OPENCLAW_WORKSPACE_DIR:-$HOME/.openclaw/workspace}"

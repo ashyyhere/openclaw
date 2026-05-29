@@ -1,3 +1,4 @@
+// test/vitest vitest gateway client config helpers and runtime behavior.
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
 export function createGatewayClientVitestConfig(env?: Record<string, string | undefined>) {

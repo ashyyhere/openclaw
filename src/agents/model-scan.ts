@@ -56,6 +56,7 @@ type ProbeResult = {
   skipped?: boolean;
 };
 
+/** Result from scanning a provider model catalog. */
 export type ModelScanResult = {
   id: string;
   name: string;
@@ -402,6 +403,7 @@ async function mapWithConcurrency<T, R>(
   return results;
 }
 
+/** Scan OpenRouter model catalog and normalize useful model metadata. */
 export async function scanOpenRouterModels(
   options: OpenRouterScanOptions = {},
 ): Promise<ModelScanResult[]> {

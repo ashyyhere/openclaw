@@ -1,3 +1,4 @@
+// Tests extensions/deepinfra image generation provider test behavior.
 import { afterAll, afterEach, describe, expect, it, vi } from "vitest";
 import { buildDeepInfraImageGenerationProvider } from "./image-generation-provider.js";
 

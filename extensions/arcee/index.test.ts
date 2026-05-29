@@ -1,3 +1,4 @@
+// Tests extensions/arcee index test behavior.
 import {
   registerSingleProviderPlugin,
   resolveProviderPluginChoice,

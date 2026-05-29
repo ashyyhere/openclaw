@@ -3,13 +3,16 @@
  */
 
 export type { SlashCommandInfo, SlashCommandSource } from "../slash-commands.js";
+/** Re-exported API for src/agents/sessions, starting with Source Info. */
 export type { SourceInfo } from "../source-info.js";
+/** Re-exported API for src/agents/sessions. */
 export {
   createExtensionRuntime,
   discoverAndLoadExtensions,
   loadExtensionFromFactory,
   loadExtensions,
 } from "./loader.js";
+/** Re-exported API for src/agents/sessions. */
 export type {
   ExtensionErrorListener,
   ForkHandler,
@@ -18,7 +21,9 @@ export type {
   ShutdownHandler,
   SwitchSessionHandler,
 } from "./runner.js";
+/** Re-exported API for src/agents/sessions, starting with Extension Runner. */
 export { ExtensionRunner } from "./runner.js";
+/** Re-exported API for src/agents/sessions. */
 export type {
   AfterProviderResponseEvent,
   AgentEndEvent,
@@ -158,6 +163,7 @@ export type {
   WriteToolResultEvent,
 } from "./types.js";
 // Type guards
+/** Re-exported API for src/agents/sessions. */
 export {
   defineTool,
   isBashToolResult,
@@ -169,4 +175,5 @@ export {
   isToolCallEventType,
   isWriteToolResult,
 } from "./types.js";
+/** Re-exported API for src/agents/sessions, starting with wrap Registered Tool. */
 export { wrapRegisteredTool, wrapRegisteredTools } from "./wrapper.js";

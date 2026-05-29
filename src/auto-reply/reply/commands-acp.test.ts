@@ -1,3 +1,4 @@
+// Coverage for ACP chat commands.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { AcpRuntimeError } from "../../acp/runtime/errors.js";
 import type { OpenClawConfig } from "../../config/config.js";

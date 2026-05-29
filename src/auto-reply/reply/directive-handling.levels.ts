@@ -1,5 +1,7 @@
+// Inline directive level normalization for reasoning, verbosity, and elevation.
 import type { ElevatedLevel, ReasoningLevel, ThinkLevel, VerboseLevel } from "../thinking.js";
 
+/** Reused helper for resolve Current Directive Levels behavior in src/auto-reply/reply. */
 export async function resolveCurrentDirectiveLevels(params: {
   sessionEntry?: {
     thinkingLevel?: unknown;

@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix/monitor events helpers and runtime behavior.
 import { normalizeOptionalString, uniqueStrings } from "openclaw/plugin-sdk/string-coerce-runtime";
 import type { PluginRuntime, RuntimeLogger } from "../../runtime-api.js";
 import type { CoreConfig } from "../../types.js";

@@ -1,3 +1,4 @@
+// Tests extensions/irc/src normalize test behavior.
 import { describe, expect, it } from "vitest";
 import {
   buildIrcAllowlistCandidates,

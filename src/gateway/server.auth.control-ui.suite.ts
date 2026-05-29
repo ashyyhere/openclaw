@@ -1,3 +1,4 @@
+// gateway server auth control ui suite helpers and runtime behavior.
 import os from "node:os";
 import path from "node:path";
 import { expect, test, vi } from "vitest";
@@ -41,6 +42,7 @@ function expectArrayIncludes(actual: unknown, expectedValues: string[]): void {
   }
 }
 
+/** Reused helper for register Control Ui And Pairing Suite behavior in src/gateway. */
 export function registerControlUiAndPairingSuite(): void {
   const trustedProxyControlUiCases: Array<{
     name: string;

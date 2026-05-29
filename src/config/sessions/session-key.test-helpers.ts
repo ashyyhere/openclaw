@@ -1,3 +1,4 @@
+// config/sessions session key test helpers helpers and runtime behavior.
 import { afterEach, beforeEach } from "vitest";
 import type { MsgContext } from "../../auto-reply/templating.js";
 import type { ChannelPlugin } from "../../channels/plugins/types.plugin.js";
@@ -7,6 +8,7 @@ import {
   createTestRegistry,
 } from "../../test-utils/channel-plugins.js";
 
+/** Reused helper for make Ctx behavior in src/config/sessions. */
 export function makeCtx(overrides: Partial<MsgContext>): MsgContext {
   return {
     Body: "",
@@ -16,6 +18,7 @@ export function makeCtx(overrides: Partial<MsgContext>): MsgContext {
   } as MsgContext;
 }
 
+/** Reused helper for install Discord Session Key Normalizer Fixture behavior in src/config/sessions. */
 export function installDiscordSessionKeyNormalizerFixture(): void {
   beforeEach(() => {
     const discordPlugin: ChannelPlugin = {

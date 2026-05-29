@@ -1,3 +1,4 @@
+// Tests extensions/openai media understanding provider test behavior.
 import {
   createAuthCaptureJsonFetch,
   createRequestCaptureJsonFetch,

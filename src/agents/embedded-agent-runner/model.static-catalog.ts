@@ -112,6 +112,7 @@ function resolveManifestModelCatalogProviderAlias(params: {
   return targets.size === 1 ? [...targets][0] : undefined;
 }
 
+/** Reused helper for canonicalize Manifest Model Catalog Provider Alias behavior in src/agents/embedded-agent-runner. */
 export function canonicalizeManifestModelCatalogProviderAlias(params: {
   provider: string;
   cfg?: OpenClawConfig;
@@ -134,6 +135,7 @@ export function canonicalizeManifestModelCatalogProviderAlias(params: {
   );
 }
 
+/** Reused helper for bundled Static Catalog Provider Uses Runtime Augment behavior in src/agents/embedded-agent-runner. */
 export function bundledStaticCatalogProviderUsesRuntimeAugment(params: {
   provider: string;
   env?: NodeJS.ProcessEnv;
@@ -158,6 +160,7 @@ export function bundledStaticCatalogProviderUsesRuntimeAugment(params: {
   });
 }
 
+/** Reused helper for resolve Bundled Static Catalog Model behavior in src/agents/embedded-agent-runner. */
 export function resolveBundledStaticCatalogModel(params: {
   provider: string;
   modelId: string;

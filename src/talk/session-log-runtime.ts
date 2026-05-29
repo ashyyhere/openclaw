@@ -1,12 +1,15 @@
+// talk session log runtime helpers and runtime behavior.
 import { uniqueStrings } from "../shared/string-normalization.js";
 import type { RealtimeVoiceBridgeEvent, RealtimeVoiceRole } from "./provider-types.js";
 
+/** Shared type for Realtime Voice Transcript Entry in src/talk. */
 export type RealtimeVoiceTranscriptEntry = {
   at: string;
   role: RealtimeVoiceRole;
   text: string;
 };
 
+/** Shared type for Realtime Voice Transcript Health in src/talk. */
 export type RealtimeVoiceTranscriptHealth = {
   realtimeTranscriptLines: number;
   lastRealtimeTranscriptAt?: string;
@@ -15,10 +18,12 @@ export type RealtimeVoiceTranscriptHealth = {
   recentRealtimeTranscript: RealtimeVoiceTranscriptEntry[];
 };
 
+/** Shared type for Realtime Voice Bridge Event Log Entry in src/talk. */
 export type RealtimeVoiceBridgeEventLogEntry = RealtimeVoiceBridgeEvent & {
   at: string;
 };
 
+/** Shared type for Realtime Voice Bridge Event Health in src/talk. */
 export type RealtimeVoiceBridgeEventHealth = {
   lastRealtimeEventAt?: string;
   lastRealtimeEventType?: string;
@@ -26,6 +31,7 @@ export type RealtimeVoiceBridgeEventHealth = {
   recentRealtimeEvents: RealtimeVoiceBridgeEventLogEntry[];
 };
 
+/** Reused helper for record Realtime Voice Transcript behavior in src/talk. */
 export function recordRealtimeVoiceTranscript(
   transcript: RealtimeVoiceTranscriptEntry[],
   role: RealtimeVoiceRole,
@@ -40,6 +46,7 @@ export function recordRealtimeVoiceTranscript(
   return entry;
 }
 
+/** Reused helper for get Realtime Voice Transcript Health behavior in src/talk. */
 export function getRealtimeVoiceTranscriptHealth(
   transcript: RealtimeVoiceTranscriptEntry[],
 ): RealtimeVoiceTranscriptHealth {
@@ -53,6 +60,7 @@ export function getRealtimeVoiceTranscriptHealth(
   };
 }
 
+/** Reused helper for record Realtime Voice Bridge Event behavior in src/talk. */
 export function recordRealtimeVoiceBridgeEvent(
   events: RealtimeVoiceBridgeEventLogEntry[],
   event: RealtimeVoiceBridgeEvent,
@@ -67,6 +75,7 @@ export function recordRealtimeVoiceBridgeEvent(
   }
 }
 
+/** Reused helper for get Realtime Voice Bridge Event Health behavior in src/talk. */
 export function getRealtimeVoiceBridgeEventHealth(
   events: RealtimeVoiceBridgeEventLogEntry[],
 ): RealtimeVoiceBridgeEventHealth {
@@ -102,6 +111,7 @@ function hasMeaningfulEchoOverlap(userTokens: string[], assistantTokens: string[
   return overlap / uniqueUserTokens.length >= 0.58;
 }
 
+/** Reused helper for is Likely Realtime Voice Assistant Echo Transcript behavior in src/talk. */
 export function isLikelyRealtimeVoiceAssistantEchoTranscript(params: {
   transcript: RealtimeVoiceTranscriptEntry[];
   text: string;
@@ -137,6 +147,7 @@ export function isLikelyRealtimeVoiceAssistantEchoTranscript(params: {
   );
 }
 
+/** Reused helper for extend Realtime Voice Output Echo Suppression behavior in src/talk. */
 export function extendRealtimeVoiceOutputEchoSuppression(params: {
   audio: Buffer;
   bytesPerMs: number;

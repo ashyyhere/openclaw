@@ -1,3 +1,4 @@
+// Tests extensions/deepinfra onboard test behavior.
 import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";

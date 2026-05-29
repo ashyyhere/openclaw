@@ -1,3 +1,4 @@
+/** Tests ACP translator stop-reason mapping from gateway lifecycle events. */
 import type { PromptRequest } from "@agentclientprotocol/sdk";
 import { describe, expect, it, vi } from "vitest";
 import type { GatewayClient } from "../gateway/client.js";

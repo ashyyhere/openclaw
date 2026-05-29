@@ -1,3 +1,4 @@
+// plugins cli gateway nodes runtime helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import {
   GATEWAY_CLIENT_MODES,

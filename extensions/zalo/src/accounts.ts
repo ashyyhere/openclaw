@@ -1,3 +1,4 @@
+// extensions/zalo/src accounts helpers and runtime behavior.
 import {
   createAccountListHelpers,
   resolveMergedAccountConfig,

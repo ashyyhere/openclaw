@@ -1,3 +1,4 @@
+// Tests extensions/github-copilot stream test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { buildCopilotDynamicHeaders } from "./stream.js";
 import {

@@ -1,3 +1,4 @@
+// infra install from npm spec helpers and runtime behavior.
 import type { NpmIntegrityDriftPayload } from "./npm-integrity.js";
 import {
   finalizeNpmSpecArchiveInstall,
@@ -6,6 +7,7 @@ import {
 } from "./npm-pack-install.js";
 import { validateRegistryNpmSpec } from "./npm-registry-spec.js";
 
+/** Reused helper for install From Validated Npm Spec Archive behavior in src/infra. */
 export async function installFromValidatedNpmSpecArchive<
   TResult extends { ok: boolean },
   TArchiveInstallParams extends { archivePath: string },

@@ -23,19 +23,24 @@ import type {
 import { getAgentDir } from "../config.js";
 import { resolveConfigValue } from "./resolve-config-value.js";
 
+/** Shared type for Api Key Credential in src/agents/sessions. */
 export type ApiKeyCredential = {
   type: "api_key";
   key: string;
 };
 
+/** Shared type for OAuth Credential in src/agents/sessions. */
 export type OAuthCredential = {
   type: "oauth";
 } & OAuthCredentials;
 
+/** Shared type for Auth Credential in src/agents/sessions. */
 export type AuthCredential = ApiKeyCredential | OAuthCredential;
 
+/** Shared type for Auth Storage Data in src/agents/sessions. */
 export type AuthStorageData = Record<string, AuthCredential>;
 
+/** Shared type for Auth Status in src/agents/sessions. */
 export type AuthStatus = {
   configured: boolean;
   source?:
@@ -53,11 +58,13 @@ type LockResult<T> = {
   next?: string;
 };
 
+/** Shared type for Auth Storage Backend in src/agents/sessions. */
 export interface AuthStorageBackend {
   withLock<T>(fn: (current: string | undefined) => LockResult<T>): T;
   withLockAsync<T>(fn: (current: string | undefined) => Promise<LockResult<T>>): Promise<T>;
 }
 
+/** Reused class for File Auth Storage Backend behavior in src/agents/sessions. */
 export class FileAuthStorageBackend implements AuthStorageBackend {
   private authPath: string;
 
@@ -178,6 +185,7 @@ export class FileAuthStorageBackend implements AuthStorageBackend {
   }
 }
 
+/** Reused class for In Memory Auth Storage Backend behavior in src/agents/sessions. */
 export class InMemoryAuthStorageBackend implements AuthStorageBackend {
   private value: string | undefined;
 

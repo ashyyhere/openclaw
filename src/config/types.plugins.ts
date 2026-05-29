@@ -1,3 +1,5 @@
+// config types plugins helpers and runtime behavior.
+/** Shared type for Plugin Entry Config in src/config. */
 export type PluginEntryConfig = {
   enabled?: boolean;
   hooks?: {
@@ -38,6 +40,7 @@ export type PluginEntryConfig = {
   config?: Record<string, unknown>;
 };
 
+/** Shared type for Plugin Slots Config in src/config. */
 export type PluginSlotsConfig = {
   /** Select which plugin owns the memory slot ("none" disables memory plugins). */
   memory?: string;
@@ -45,11 +48,13 @@ export type PluginSlotsConfig = {
   contextEngine?: string;
 };
 
+/** Shared type for Plugins Load Config in src/config. */
 export type PluginsLoadConfig = {
   /** Additional plugin/extension paths to load. */
   paths?: string[];
 };
 
+/** Shared type for Plugin Install Record in src/config. */
 export type PluginInstallRecord = Omit<InstallRecordBase, "source"> & {
   source: InstallRecordBase["source"] | "marketplace";
   marketplaceName?: string;
@@ -57,6 +62,7 @@ export type PluginInstallRecord = Omit<InstallRecordBase, "source"> & {
   marketplacePlugin?: string;
 };
 
+/** Shared type for Plugins Config in src/config. */
 export type PluginsConfig = {
   /** Enable or disable plugin loading. */
   enabled?: boolean;

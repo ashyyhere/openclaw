@@ -1,5 +1,7 @@
+// ui/src/ui/chat realtime talk pcm output helpers and runtime behavior.
 import { base64ToBytes, pcm16ToFloat } from "./realtime-talk-audio.ts";
 
+/** Reused class for Realtime Talk Pcm Output Queue behavior in ui/src/ui/chat. */
 export class RealtimeTalkPcmOutputQueue {
   private playhead = 0;
   private readonly sources = new Set<AudioBufferSourceNode>();

@@ -1,8 +1,10 @@
+// daemon schtasks exec helpers and runtime behavior.
 import { runCommandWithTimeout } from "../process/exec.js";
 
 const SCHTASKS_TIMEOUT_MS = 15_000;
 const SCHTASKS_NO_OUTPUT_TIMEOUT_MS = 30_000;
 
+/** Reused helper for exec Schtasks behavior in src/daemon. */
 export async function execSchtasks(
   args: string[],
 ): Promise<{ stdout: string; stderr: string; code: number }> {

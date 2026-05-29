@@ -1,3 +1,4 @@
+// gateway/server-methods exec approval helpers and runtime behavior.
 import { GATEWAY_CLIENT_IDS } from "../../../packages/gateway-protocol/src/client-info.js";
 import {
   ErrorCodes,
@@ -90,6 +91,7 @@ function normalizeCommandSpans(
   return accepted.length > 0 ? accepted : undefined;
 }
 
+/** Reused helper for create Exec Approval Handlers behavior in src/gateway/server-methods. */
 export function createExecApprovalHandlers(
   manager: ExecApprovalManager,
   opts?: { forwarder?: ExecApprovalForwarder; iosPushDelivery?: ExecApprovalIosPushDelivery },

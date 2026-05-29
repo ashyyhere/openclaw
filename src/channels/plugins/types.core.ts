@@ -1,3 +1,4 @@
+/** Core public channel plugin capability and runtime surface contracts. */
 import type { TSchema } from "typebox";
 import type {
   GatewayClientMode,
@@ -17,14 +18,17 @@ import type { ChannelId } from "./channel-id.types.js";
 import type { ChannelMessageActionName as ChannelMessageActionNameFromList } from "./message-action-names.js";
 import type { ChannelMessageCapability } from "./message-capabilities.js";
 
+/** Re-exported API for src/channels/plugins, starting with Channel Id. */
 export type { ChannelId } from "./channel-id.types.js";
 
+/** Shared type for Channel Exposure in src/channels/plugins. */
 export type ChannelExposure = {
   configured?: boolean;
   setup?: boolean;
   docs?: boolean;
 };
 
+/** Shared type for Channel Outbound Target Mode in src/channels/plugins. */
 export type ChannelOutboundTargetMode = "explicit" | "implicit" | "heartbeat";
 
 /** Agent tool registered by a channel plugin. */
@@ -75,6 +79,7 @@ type ChannelMessageToolMediaSourceParams =
   | readonly string[]
   | Partial<Record<ChannelMessageActionName, readonly string[]>>;
 
+/** Shared type for Channel Message Tool Discovery in src/channels/plugins. */
 export type ChannelMessageToolDiscovery = {
   actions?: readonly ChannelMessageActionName[] | null;
   capabilities?: readonly ChannelMessageCapability[] | null;
@@ -133,6 +138,7 @@ export type ChannelSetupInput = {
   autoDiscoverChannels?: boolean;
 };
 
+/** Shared type for Channel Status Issue in src/channels/plugins. */
 export type ChannelStatusIssue = {
   channel: ChannelId;
   accountId: string;
@@ -141,6 +147,7 @@ export type ChannelStatusIssue = {
   fix?: string;
 };
 
+/** Shared type for Channel Account State in src/channels/plugins. */
 export type ChannelAccountState =
   | "linked"
   | "not linked"
@@ -149,11 +156,13 @@ export type ChannelAccountState =
   | "enabled"
   | "disabled";
 
+/** Shared type for Channel Heartbeat Deps in src/channels/plugins. */
 export type ChannelHeartbeatDeps = {
   webAuthExists?: () => Promise<boolean>;
   hasActiveWebListener?: (accountId?: string) => boolean;
 };
 
+/** Shared type for Channel Legacy State Migration Plan in src/channels/plugins. */
 export type ChannelLegacyStateMigrationPlan =
   | {
       kind: "copy" | "move";
@@ -271,6 +280,7 @@ export type ChannelAccountSnapshot = {
   channelSecret?: string;
 };
 
+/** Shared type for Channel Log Sink in src/channels/plugins. */
 export type ChannelLogSink = {
   info: (msg: string) => void;
   warn: (msg: string) => void;
@@ -278,6 +288,7 @@ export type ChannelLogSink = {
   debug?: (msg: string) => void;
 };
 
+/** Shared type for Channel Group Context in src/channels/plugins. */
 export type ChannelGroupContext = {
   cfg: OpenClawConfig;
   groupId?: string | null;
@@ -302,6 +313,7 @@ export type ChannelGroupContext = {
  */
 export type PreferredAudioFileFormat = "caf";
 
+/** Shared type for Channel Tts Voice Delivery Capabilities in src/channels/plugins. */
 export type ChannelTtsVoiceDeliveryCapabilities = {
   synthesisTarget: "audio-file" | "voice-note";
   transcodesAudio?: boolean;
@@ -336,6 +348,7 @@ export type ChannelCapabilities = {
   blockStreaming?: boolean;
 };
 
+/** Shared type for Channel Security Dm Policy in src/channels/plugins. */
 export type ChannelSecurityDmPolicy = {
   policy: string;
   allowFrom?: Array<string | number> | null;
@@ -345,12 +358,14 @@ export type ChannelSecurityDmPolicy = {
   normalizeEntry?: (raw: string) => string;
 };
 
+/** Shared type for Channel Security Context in src/channels/plugins. */
 export type ChannelSecurityContext<ResolvedAccount = unknown> = {
   cfg: OpenClawConfig;
   accountId?: string | null;
   account: ResolvedAccount;
 };
 
+/** Shared type for Channel Mention Adapter in src/channels/plugins. */
 export type ChannelMentionAdapter = {
   stripRegexes?: (params: {
     ctx: MsgContext;
@@ -370,6 +385,7 @@ export type ChannelMentionAdapter = {
   }) => string;
 };
 
+/** Shared type for Channel Streaming Adapter in src/channels/plugins. */
 export type ChannelStreamingAdapter = {
   blockStreamingCoalesceDefaults?: {
     minChars: number;
@@ -379,8 +395,10 @@ export type ChannelStreamingAdapter = {
 
 // Keep core transport-agnostic. Plugins can carry richer component types on
 // their side and cast at the boundary.
+/** Shared type for Channel Structured Components in src/channels/plugins. */
 export type ChannelStructuredComponents = unknown[];
 
+/** Shared type for Channel Cross Context Presentation Factory in src/channels/plugins. */
 export type ChannelCrossContextPresentationFactory = (params: {
   originLabel: string;
   message: string;
@@ -388,11 +406,13 @@ export type ChannelCrossContextPresentationFactory = (params: {
   accountId?: string | null;
 }) => MessagePresentation;
 
+/** Shared type for Channel Reply Transport in src/channels/plugins. */
 export type ChannelReplyTransport = {
   replyToId?: string | null;
   threadId?: string | number | null;
 };
 
+/** Shared type for Channel Focused Binding Context in src/channels/plugins. */
 export type ChannelFocusedBindingContext = {
   conversationId: string;
   parentConversationId?: string;
@@ -400,6 +420,7 @@ export type ChannelFocusedBindingContext = {
   labelNoun: string;
 };
 
+/** Shared type for Channel Outbound Session Route in src/channels/plugins. */
 export type ChannelOutboundSessionRoute = {
   sessionKey: string;
   baseSessionKey: string;
@@ -413,6 +434,7 @@ export type ChannelOutboundSessionRoute = {
   threadId?: string | number;
 };
 
+/** Shared type for Channel Threading Adapter in src/channels/plugins. */
 export type ChannelThreadingAdapter = {
   resolveReplyToMode?: (params: {
     cfg: OpenClawConfig;
@@ -462,6 +484,7 @@ export type ChannelThreadingAdapter = {
   }) => ChannelFocusedBindingContext | null;
 };
 
+/** Shared type for Channel Threading Context in src/channels/plugins. */
 export type ChannelThreadingContext = {
   Channel?: string;
   From?: string;
@@ -477,6 +500,7 @@ export type ChannelThreadingContext = {
   NativeChannelId?: string;
 };
 
+/** Shared type for Channel Threading Tool Context in src/channels/plugins. */
 export type ChannelThreadingToolContext = {
   currentChannelId?: string;
   currentGraphChannelId?: string;
@@ -658,6 +682,7 @@ export type ChannelMessagingAdapter = {
   }) => ChannelOutboundSessionRoute | Promise<ChannelOutboundSessionRoute | null> | null;
 };
 
+/** Shared type for Channel Agent Prompt Adapter in src/channels/plugins. */
 export type ChannelAgentPromptAdapter = {
   messageToolHints?: (params: { cfg: OpenClawConfig; accountId?: string | null }) => string[];
   messageToolCapabilities?: (params: {
@@ -676,8 +701,10 @@ export type ChannelAgentPromptAdapter = {
   }) => { level: "minimal" | "extensive"; channelLabel?: string } | undefined;
 };
 
+/** Shared type for Channel Directory Entry Kind in src/channels/plugins. */
 export type ChannelDirectoryEntryKind = "user" | "group" | "channel";
 
+/** Shared type for Channel Directory Entry in src/channels/plugins. */
 export type ChannelDirectoryEntry = {
   kind: ChannelDirectoryEntryKind;
   id: string;
@@ -688,6 +715,7 @@ export type ChannelDirectoryEntry = {
   raw?: unknown;
 };
 
+/** Shared type for Channel Message Action Name in src/channels/plugins. */
 export type ChannelMessageActionName = ChannelMessageActionNameFromList;
 
 /** Execution context passed to channel-owned actions on the shared `message` tool. */
@@ -724,12 +752,14 @@ export type ChannelMessageActionContext = {
   gatewayClientScopes?: readonly string[];
 };
 
+/** Shared type for Channel Tool Send in src/channels/plugins. */
 export type ChannelToolSend = {
   to: string;
   accountId?: string | null;
   threadId?: string | null;
 };
 
+/** Shared type for Channel Message Prepared Send Payload Context in src/channels/plugins. */
 export type ChannelMessagePreparedSendPayloadContext = {
   ctx: ChannelMessageActionContext;
   to: string;
@@ -786,6 +816,7 @@ export type ChannelMessageActionAdapter = {
   handleAction?: (ctx: ChannelMessageActionContext) => Promise<AgentToolResult<unknown>>;
 };
 
+/** Shared type for Channel Poll Result in src/channels/plugins. */
 export type ChannelPollResult = {
   messageId: string;
   toJid?: string;

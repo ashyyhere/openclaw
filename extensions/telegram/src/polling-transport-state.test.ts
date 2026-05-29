@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src polling transport state test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { TelegramTransport } from "./fetch.js";
 import { TelegramPollingTransportState } from "./polling-transport-state.js";

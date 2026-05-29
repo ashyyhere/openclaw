@@ -18,13 +18,16 @@ export type TuiOptions = {
   forceProcessExitOnReturn?: boolean;
 };
 
+/** Shared type for Tui Exit Reason in src/tui. */
 export type TuiExitReason = "exit" | "return-to-crestodian";
 
+/** Shared type for Tui Result in src/tui. */
 export type TuiResult = {
   exitReason: TuiExitReason;
   crestodianMessage?: string;
 };
 
+/** Shared type for Chat Event in src/tui. */
 export type ChatEvent = {
   runId: string;
   sessionKey: string;
@@ -34,6 +37,7 @@ export type ChatEvent = {
   errorMessage?: string;
 };
 
+/** Shared type for Btw Event in src/tui. */
 export type BtwEvent = {
   kind: "btw";
   runId?: string;
@@ -46,14 +50,17 @@ export type BtwEvent = {
   ts?: number;
 };
 
+/** Shared type for Agent Event in src/tui. */
 export type AgentEvent = {
   runId: string;
   stream: string;
   data?: Record<string, unknown>;
 };
 
+/** Shared type for Response Usage Mode in src/tui. */
 export type ResponseUsageMode = "on" | "off" | "tokens" | "full";
 
+/** Shared type for Session Info in src/tui. */
 export type SessionInfo = {
   thinkingLevel?: string;
   thinkingLevels?: Array<{ id: string; label: string }>;
@@ -73,21 +80,26 @@ export type SessionInfo = {
   displayName?: string;
 };
 
+/** Shared type for Session Scope in src/tui. */
 export type SessionScope = "per-sender" | "global";
 
+/** Shared type for Agent Summary in src/tui. */
 export type AgentSummary = {
   id: string;
   name?: string;
 };
 
+/** Shared type for Queued Message Mode in src/tui. */
 export type QueuedMessageMode = "steer" | "followUp";
 
+/** Shared type for Queued Message in src/tui. */
 export type QueuedMessage = {
   runId: string;
   text: string;
   mode: QueuedMessageMode;
 };
 
+/** Shared type for Gateway Status Summary in src/tui. */
 export type GatewayStatusSummary = {
   runtimeVersion?: string | null;
   linkChannel?: {
@@ -127,6 +139,7 @@ export type GatewayStatusSummary = {
   };
 };
 
+/** Shared type for Tui State Access in src/tui. */
 export type TuiStateAccess = {
   agentDefaultId: string;
   sessionMainKey: string;

@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/perplexity/src perplexity web search provider runtime behavior.
 import {
   readPositiveIntegerParam,
   readStringArrayParam,

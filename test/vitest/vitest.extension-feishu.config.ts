@@ -1,3 +1,4 @@
+// test/vitest vitest extension feishu config helpers and runtime behavior.
 import { feishuExtensionTestRoots } from "./vitest.extension-feishu-paths.mjs";
 import { loadPatternListFromEnv } from "./vitest.pattern-file.ts";
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";

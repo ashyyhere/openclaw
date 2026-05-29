@@ -1,3 +1,4 @@
+/** Regression coverage for deferred subagent cleanup decisions. */
 import { describe, expect, it } from "vitest";
 import { resolveDeferredCleanupDecision } from "./subagent-registry-cleanup.js";
 import type { SubagentRunRecord } from "./subagent-registry.types.js";

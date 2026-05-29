@@ -1,3 +1,4 @@
+// extensions/xai/src x search shared helpers and runtime behavior.
 import { readProviderJsonObjectResponse } from "openclaw/plugin-sdk/provider-http";
 import { postTrustedWebToolsJson, wrapWebContent } from "openclaw/plugin-sdk/provider-web-search";
 import {

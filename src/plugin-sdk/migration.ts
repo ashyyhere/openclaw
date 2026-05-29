@@ -10,6 +10,7 @@ import type {
 } from "../plugins/types.js";
 import { isRecord } from "../shared/record-coerce.js";
 
+/** Re-exported API for src/plugin-sdk. */
 export type {
   MigrationDetection,
   MigrationItem,
@@ -19,9 +20,12 @@ export type {
   MigrationSummary,
 };
 
+/** Reused constant for MIGRATION REASON MISSING SOURCE OR TARGET behavior in src/plugin-sdk. */
 export const MIGRATION_REASON_MISSING_SOURCE_OR_TARGET = "missing source or target";
+/** Reused constant for MIGRATION REASON TARGET EXISTS behavior in src/plugin-sdk. */
 export const MIGRATION_REASON_TARGET_EXISTS = "target exists";
 
+/** Reused helper for create Migration Item behavior in src/plugin-sdk. */
 export function createMigrationItem(
   params: Omit<MigrationItem, "status"> & { status?: MigrationItem["status"] },
 ): MigrationItem {
@@ -31,18 +35,22 @@ export function createMigrationItem(
   };
 }
 
+/** Reused helper for mark Migration Item Conflict behavior in src/plugin-sdk. */
 export function markMigrationItemConflict(item: MigrationItem, reason: string): MigrationItem {
   return { ...item, status: "conflict", reason };
 }
 
+/** Reused helper for mark Migration Item Error behavior in src/plugin-sdk. */
 export function markMigrationItemError(item: MigrationItem, reason: string): MigrationItem {
   return { ...item, status: "error", reason };
 }
 
+/** Reused helper for mark Migration Item Skipped behavior in src/plugin-sdk. */
 export function markMigrationItemSkipped(item: MigrationItem, reason: string): MigrationItem {
   return { ...item, status: "skipped", reason };
 }
 
+/** Reused helper for summarize Migration Items behavior in src/plugin-sdk. */
 export function summarizeMigrationItems(items: readonly MigrationItem[]): MigrationSummary {
   return {
     total: items.length,
@@ -93,6 +101,7 @@ function isSecretKey(key: string): boolean {
   return SECRET_KEY_MARKERS.some((marker) => normalized.includes(marker));
 }
 
+/** Shared type for Migration Config Patch Details in src/plugin-sdk. */
 export type MigrationConfigPatchDetails = {
   path: string[];
   value: unknown;
@@ -105,6 +114,7 @@ class MigrationConfigPatchConflictError extends Error {
   }
 }
 
+/** Reused helper for read Migration Config Path behavior in src/plugin-sdk. */
 export function readMigrationConfigPath(
   root: Record<string, unknown>,
   path: readonly string[],
@@ -119,6 +129,7 @@ export function readMigrationConfigPath(
   return current;
 }
 
+/** Reused helper for merge Migration Config Value behavior in src/plugin-sdk. */
 export function mergeMigrationConfigValue(left: unknown, right: unknown): unknown {
   if (!isRecord(left) || !isRecord(right)) {
     return structuredClone(right);
@@ -130,6 +141,7 @@ export function mergeMigrationConfigValue(left: unknown, right: unknown): unknow
   return next;
 }
 
+/** Reused helper for write Migration Config Path behavior in src/plugin-sdk. */
 export function writeMigrationConfigPath(
   root: Record<string, unknown>,
   path: readonly string[],
@@ -150,6 +162,7 @@ export function writeMigrationConfigPath(
   current[leaf] = mergeMigrationConfigValue(current[leaf], value);
 }
 
+/** Reused helper for has Migration Config Patch Conflict behavior in src/plugin-sdk. */
 export function hasMigrationConfigPatchConflict(
   config: MigrationProviderContext["config"],
   path: readonly string[],
@@ -165,6 +178,7 @@ export function hasMigrationConfigPatchConflict(
   return Object.keys(value).some((key) => existing[key] !== undefined);
 }
 
+/** Reused helper for create Migration Config Patch Item behavior in src/plugin-sdk. */
 export function createMigrationConfigPatchItem(params: {
   id: string;
   target: string;
@@ -189,6 +203,7 @@ export function createMigrationConfigPatchItem(params: {
   });
 }
 
+/** Reused helper for create Migration Manual Item behavior in src/plugin-sdk. */
 export function createMigrationManualItem(params: {
   id: string;
   source: string;
@@ -206,6 +221,7 @@ export function createMigrationManualItem(params: {
   });
 }
 
+/** Reused helper for read Migration Config Patch Details behavior in src/plugin-sdk. */
 export function readMigrationConfigPatchDetails(
   item: MigrationItem,
 ): MigrationConfigPatchDetails | undefined {
@@ -219,6 +235,7 @@ export function readMigrationConfigPatchDetails(
   return { path, value: item.details?.value };
 }
 
+/** Reused helper for apply Migration Config Patch Item behavior in src/plugin-sdk. */
 export async function applyMigrationConfigPatchItem(
   ctx: MigrationProviderContext,
   item: MigrationItem,
@@ -261,6 +278,7 @@ export async function applyMigrationConfigPatchItem(
   }
 }
 
+/** Reused helper for apply Migration Manual Item behavior in src/plugin-sdk. */
 export function applyMigrationManualItem(item: MigrationItem): MigrationItem {
   return markMigrationItemSkipped(item, item.reason ?? "manual follow-up required");
 }
@@ -309,14 +327,17 @@ function redactMigrationValueInternal(value: unknown, seen: WeakSet<object>): un
   return next;
 }
 
+/** Reused helper for redact Migration Value behavior in src/plugin-sdk. */
 export function redactMigrationValue(value: unknown): unknown {
   return redactMigrationValueInternal(value, new WeakSet<object>());
 }
 
+/** Reused helper for redact Migration Item behavior in src/plugin-sdk. */
 export function redactMigrationItem(item: MigrationItem): MigrationItem {
   return redactMigrationValue(item) as MigrationItem;
 }
 
+/** Reused helper for redact Migration Plan behavior in src/plugin-sdk. */
 export function redactMigrationPlan<T extends MigrationPlan>(plan: T): T {
   return redactMigrationValue(plan) as T;
 }

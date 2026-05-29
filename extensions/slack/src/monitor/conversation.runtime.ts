@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/slack/src/monitor conversation runtime behavior.
 export {
   buildPluginBindingResolvedText,
   parsePluginBindingApprovalCustomId,

@@ -1,3 +1,4 @@
+// extensions/qa-lab/src suite runtime agent helpers and runtime behavior.
 export {
   createSession,
   readEffectiveTools,

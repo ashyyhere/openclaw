@@ -1,3 +1,4 @@
+// gateway sessions patch helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import {
   ErrorCodes,
@@ -129,6 +130,7 @@ function normalizeSubagentControlScope(raw: string): "children" | "none" | undef
   return undefined;
 }
 
+/** Reused helper for apply Sessions Patch To Store behavior in src/gateway. */
 export async function applySessionsPatchToStore(params: {
   cfg: OpenClawConfig;
   store: Record<string, SessionEntry>;

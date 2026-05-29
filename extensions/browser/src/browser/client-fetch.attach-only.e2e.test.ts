@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/browser client fetch attach only e2e test behavior.
 import fs from "node:fs/promises";
 import net from "node:net";
 import path from "node:path";

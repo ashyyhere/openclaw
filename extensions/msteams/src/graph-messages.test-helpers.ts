@@ -1,3 +1,4 @@
+// extensions/msteams/src graph messages test helpers helpers and runtime behavior.
 import { beforeEach, vi } from "vitest";
 
 const graphMessagesMockState = vi.hoisted(() => ({

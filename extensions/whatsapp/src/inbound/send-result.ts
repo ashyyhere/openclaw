@@ -1,3 +1,4 @@
+// extensions/whatsapp/src/inbound send result helpers and runtime behavior.
 import type { WAMessage, WAMessageKey } from "baileys";
 import {
   createMessageReceiptFromOutboundResults,

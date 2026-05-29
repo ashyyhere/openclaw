@@ -1,3 +1,4 @@
+// Coverage for subagent info command behavior.
 import os from "node:os";
 import path from "node:path";
 import { beforeEach, describe, expect, it } from "vitest";

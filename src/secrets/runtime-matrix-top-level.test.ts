@@ -1,3 +1,4 @@
+// Tests secrets runtime matrix top level test behavior.
 import { describe, expect, it } from "vitest";
 import "./runtime-matrix.test-support.ts";
 import { asConfig, setupSecretsRuntimeSnapshotTestHooks } from "./runtime.test-support.ts";

@@ -1,3 +1,4 @@
+// Tests packages/agent-core/src/harness/session memory storage test behavior.
 import { describe, expect, it } from "vitest";
 import type { SessionTreeEntry } from "../types.js";
 import { InMemorySessionStorage } from "./memory-storage.js";

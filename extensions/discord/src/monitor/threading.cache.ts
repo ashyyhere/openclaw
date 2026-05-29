@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor threading cache helpers and runtime behavior.
 import type { DiscordThreadStarter } from "./threading.types.js";
 
 type DiscordThreadStarterCacheEntry = {

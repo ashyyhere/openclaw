@@ -1,6 +1,8 @@
+// media sniff mime from base64 helpers and runtime behavior.
 import { canonicalizeBase64 } from "./base64.js";
 import { detectMime } from "./mime.js";
 
+/** Reused helper for sniff Mime From Base64 behavior in src/media. */
 export async function sniffMimeFromBase64(base64: string): Promise<string | undefined> {
   const trimmed = base64.trim();
   const canonicalBase64 = trimmed ? canonicalizeBase64(trimmed) : undefined;

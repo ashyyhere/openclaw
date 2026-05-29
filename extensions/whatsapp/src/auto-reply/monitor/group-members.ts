@@ -1,3 +1,4 @@
+// extensions/whatsapp/src/auto-reply/monitor group members helpers and runtime behavior.
 import { normalizeE164 } from "../../text-runtime.js";
 
 function appendNormalizedUnique(entries: Iterable<string>, seen: Set<string>, ordered: string[]) {

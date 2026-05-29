@@ -1,3 +1,4 @@
+/** Tests secret input normalization and schema helpers. */
 import { describe, expect, it } from "vitest";
 import {
   INVALID_EXEC_SECRET_REF_IDS,

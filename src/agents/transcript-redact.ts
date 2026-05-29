@@ -1,3 +1,4 @@
+/** Redacts sensitive tool/message content before transcript persistence or display. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { readLoggingConfig } from "../logging/config.js";
 import {
@@ -100,6 +101,7 @@ function redactTranscriptStructuredValue(
   return next ?? value;
 }
 
+/** Reused helper for redact Transcript Message behavior in src/agents. */
 export function redactTranscriptMessage(message: AgentMessage, cfg?: OpenClawConfig): AgentMessage {
   if (cfg?.logging?.redactSensitive === "off") {
     return message;

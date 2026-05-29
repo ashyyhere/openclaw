@@ -1,3 +1,4 @@
+// Shared types for ui/src/ui/views channels types behavior.
 import type {
   ChannelAccountSnapshot,
   ChannelsStatusSnapshot,
@@ -14,8 +15,10 @@ import type {
 } from "../types.ts";
 import type { NostrProfileFormState } from "./channels.nostr-profile-form.ts";
 
+/** Shared type for Channel Key in ui/src/ui/views. */
 export type ChannelKey = string;
 
+/** Shared type for Channels Props in ui/src/ui/views. */
 export type ChannelsProps = {
   connected: boolean;
   loading: boolean;
@@ -49,6 +52,7 @@ export type ChannelsProps = {
   onNostrProfileToggleAdvanced: () => void;
 };
 
+/** Shared type for Channels Channel Data in ui/src/ui/views. */
 export type ChannelsChannelData = {
   whatsapp?: WhatsAppStatus;
   telegram?: TelegramStatus;

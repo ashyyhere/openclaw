@@ -1,5 +1,7 @@
+// utils boolean helpers and runtime behavior.
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 
+/** Shared type for Boolean Parse Options in src/utils. */
 export type BooleanParseOptions = {
   truthy?: string[];
   falsy?: string[];
@@ -10,10 +12,12 @@ const DEFAULT_FALSY = ["false", "0", "no", "off"] as const;
 const DEFAULT_TRUTHY_SET = new Set<string>(DEFAULT_TRUTHY);
 const DEFAULT_FALSY_SET = new Set<string>(DEFAULT_FALSY);
 
+/** Reused helper for as Boolean behavior in src/utils. */
 export function asBoolean(value: unknown): boolean | undefined {
   return typeof value === "boolean" ? value : undefined;
 }
 
+/** Reused helper for parse Boolean Value behavior in src/utils. */
 export function parseBooleanValue(
   value: unknown,
   options: BooleanParseOptions = {},

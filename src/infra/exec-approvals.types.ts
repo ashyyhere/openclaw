@@ -1,3 +1,5 @@
+// Shared types for infra exec approvals types behavior.
+/** Shared type for Exec Allowlist Entry in src/infra. */
 export type ExecAllowlistEntry = {
   id?: string;
   pattern: string;

@@ -1,3 +1,4 @@
+// ACP reset target resolution for session reset commands.
 import {
   buildConfiguredAcpSessionKey,
   normalizeBindingConfig,
@@ -19,6 +20,7 @@ const acpResetTargetDeps = {
   resolveConfiguredBindingRecord,
 };
 
+/** Reused constant for testing behavior in src/auto-reply/reply. */
 export const testing = {
   setDepsForTest(
     overrides?: Partial<{
@@ -100,6 +102,7 @@ function resolveRawConfiguredAcpSessionKey(params: {
   return undefined;
 }
 
+/** Reused helper for resolve Effective Reset Target Session Key behavior in src/auto-reply/reply. */
 export function resolveEffectiveResetTargetSessionKey(params: {
   cfg: OpenClawConfig;
   channel?: string | null;
@@ -182,4 +185,5 @@ export function resolveEffectiveResetTargetSessionKey(params: {
   }
   return activeAcpSessionKey;
 }
+/** Re-exported API for src/auto-reply/reply, starting with testing. */
 export { testing as __testing };

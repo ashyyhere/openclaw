@@ -1,3 +1,4 @@
+// Tests extensions/slack/src send upload test behavior.
 import type { WebClient } from "@slack/web-api";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { installSlackBlockTestMocks } from "./blocks.test-helpers.js";

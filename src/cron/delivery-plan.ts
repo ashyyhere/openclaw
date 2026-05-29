@@ -1,3 +1,4 @@
+// cron delivery plan helpers and runtime behavior.
 import type { CronFailureDestinationConfig } from "../config/types.cron.js";
 import { resolveTargetPrefixedChannel } from "../infra/outbound/channel-target-prefix.js";
 import {
@@ -8,6 +9,7 @@ import {
 } from "../shared/string-coerce.js";
 import type { CronDelivery, CronDeliveryMode, CronJob, CronMessageChannel } from "./types.js";
 
+/** Shared type for Cron Delivery Plan in src/cron. */
 export type CronDeliveryPlan = {
   mode: CronDeliveryMode;
   channel?: CronMessageChannel;
@@ -19,6 +21,7 @@ export type CronDeliveryPlan = {
   requested: boolean;
 };
 
+/** Reused helper for has Explicit Cron Delivery Target behavior in src/cron. */
 export function hasExplicitCronDeliveryTarget(plan: CronDeliveryPlan): boolean {
   return Boolean(
     (plan.channel && plan.channel !== "last") || plan.to || plan.threadId != null || plan.accountId,
@@ -47,6 +50,7 @@ function resolveAnnounceChannel(params: {
   );
 }
 
+/** Reused helper for resolve Cron Delivery Plan behavior in src/cron. */
 export function resolveCronDeliveryPlan(job: CronJob): CronDeliveryPlan {
   const delivery = job.delivery;
   const hasDelivery = delivery && typeof delivery === "object";
@@ -110,6 +114,7 @@ export function resolveCronDeliveryPlan(job: CronJob): CronDeliveryPlan {
   };
 }
 
+/** Shared type for Cron Failure Delivery Plan in src/cron. */
 export type CronFailureDeliveryPlan = {
   mode: "announce" | "webhook";
   channel?: CronMessageChannel;
@@ -117,6 +122,7 @@ export type CronFailureDeliveryPlan = {
   accountId?: string;
 };
 
+/** Shared type for Cron Failure Destination Input in src/cron. */
 export type CronFailureDestinationInput = {
   channel?: CronMessageChannel;
   to?: string;
@@ -132,6 +138,7 @@ function normalizeFailureMode(value: unknown): "announce" | "webhook" | undefine
   return undefined;
 }
 
+/** Reused helper for resolve Failure Destination behavior in src/cron. */
 export function resolveFailureDestination(
   job: CronJob,
   globalConfig?: CronFailureDestinationConfig,

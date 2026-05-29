@@ -1,3 +1,4 @@
+// Tests extensions/slack/src monitor tool result test behavior.
 import { CURRENT_MESSAGE_MARKER } from "openclaw/plugin-sdk/channel-mention-gating";
 import { expectPairingReplyText } from "openclaw/plugin-sdk/channel-test-helpers";
 import { HISTORY_CONTEXT_MARKER } from "openclaw/plugin-sdk/reply-history";

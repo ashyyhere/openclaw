@@ -1,3 +1,4 @@
+// extensions/voice-call/src webhook security helpers and runtime behavior.
 import crypto from "node:crypto";
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";
 import { isLoopbackHost } from "openclaw/plugin-sdk/gateway-runtime";

@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/discord/src/monitor provider session runtime behavior.
 export { getAcpSessionManager, isAcpRuntimeError } from "openclaw/plugin-sdk/acp-runtime";
 export {
   resolveThreadBindingIdleTimeoutMs,

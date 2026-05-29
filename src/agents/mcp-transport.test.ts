@@ -1,3 +1,4 @@
+/** Tests MCP transport startup and HTTP redirect handling. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { resolveMcpTransport } from "./mcp-transport.js";
 

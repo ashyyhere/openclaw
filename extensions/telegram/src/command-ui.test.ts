@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src command ui test behavior.
 import { describe, expect, it } from "vitest";
 import { buildCommandsPaginationKeyboard } from "./command-ui.js";
 

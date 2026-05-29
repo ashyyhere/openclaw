@@ -1,3 +1,4 @@
+// Tests extensions/xai/src responses tool shared test behavior.
 import { describe, expect, it } from "vitest";
 import { testing } from "./responses-tool-shared.js";
 

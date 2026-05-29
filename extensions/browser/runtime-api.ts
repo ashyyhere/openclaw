@@ -1,4 +1,7 @@
+// extensions/browser runtime api helpers and runtime behavior.
+/** Re-exported browser plugin public API, starting with create Browser Tool. */
 export { createBrowserTool } from "./src/browser-tool.js";
+/** Re-exported browser plugin public API. */
 export {
   applyBrowserProxyPaths,
   browserAct,
@@ -79,10 +82,15 @@ export {
   trackSessionBrowserTab,
   untrackSessionBrowserTab,
 } from "./src/browser-runtime.js";
+/** Re-exported browser plugin public API, starting with register Browser Cli. */
 export { registerBrowserCli } from "./src/cli/browser-cli.js";
+/** Re-exported browser plugin public API, starting with create Browser Plugin Service. */
 export { createBrowserPluginService } from "./src/plugin-service.js";
+/** Re-exported browser plugin public API, starting with handle Browser Gateway Request. */
 export { handleBrowserGatewayRequest } from "./src/gateway/browser-request.js";
+/** Re-exported browser plugin public API, starting with browser Handlers. */
 export { browserHandlers } from "./src/gateway/browser-request.js";
+/** Re-exported browser plugin public API. */
 export {
   definePluginEntry,
   type OpenClawPluginApi,

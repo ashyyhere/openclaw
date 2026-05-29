@@ -1,3 +1,4 @@
+/** Tests node daemon status command behavior. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { GatewayServiceRuntime } from "../../daemon/service-runtime.js";
 import { runNodeDaemonStatus } from "./daemon.js";

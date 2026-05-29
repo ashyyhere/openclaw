@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// scripts ts topology helpers and runtime behavior.
 import path from "node:path";
 import { formatErrorMessage } from "../src/infra/errors.ts";
 import { analyzeTopology } from "./lib/ts-topology/analyze.js";

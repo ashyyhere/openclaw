@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix device health helpers and runtime behavior.
 export type MatrixManagedDeviceInfo = {
   deviceId: string;
   displayName: string | null;

@@ -1,3 +1,4 @@
+/** Shared runtime mocks for subagent announcement delivery tests. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { callGateway } from "../gateway/call.js";
 import type { dispatchGatewayMethodInProcess } from "../gateway/server-plugins.js";
@@ -51,6 +52,7 @@ function resolveQueueSettings(params: {
   };
 }
 
+/** Creates a delivery-runtime mock with controllable session entries and gateway outcomes. */
 export function createSubagentAnnounceDeliveryRuntimeMock(options: DeliveryRuntimeMockOptions) {
   return {
     callGateway: (async <T = Record<string, unknown>>(request: Parameters<typeof callGateway>[0]) =>

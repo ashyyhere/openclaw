@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src/matrix format test behavior.
 import { describe, expect, it } from "vitest";
 import { markdownToMatrixHtml, renderMarkdownToMatrixHtmlWithMentions } from "./format.js";
 

@@ -1,7 +1,9 @@
+/** Runtime registry for compaction-safeguard hooks and cancellation reasons. */
 import type { AgentCompactionIdentifierPolicy } from "../../config/types.agent-defaults.js";
 import type { Model } from "../../llm/types.js";
 import { createSessionManagerRuntimeRegistry } from "./session-manager-runtime-registry.js";
 
+/** Hook implementation bundle used by compaction safeguard runtime calls. */
 export type CompactionSafeguardRuntimeValue = {
   maxHistoryShare?: number;
   contextWindowTokens?: number;
@@ -35,10 +37,13 @@ export type CompactionSafeguardRuntimeValue = {
 
 const registry = createSessionManagerRuntimeRegistry<CompactionSafeguardRuntimeValue>();
 
+/** Reused constant for set Compaction Safeguard Runtime behavior in src/agents/agent-hooks. */
 export const setCompactionSafeguardRuntime = registry.set;
 
+/** Reused constant for get Compaction Safeguard Runtime behavior in src/agents/agent-hooks. */
 export const getCompactionSafeguardRuntime = registry.get;
 
+/** Records why a compaction attempt was cancelled for a session manager. */
 export function setCompactionSafeguardCancelReason(
   sessionManager: unknown,
   reason: string | undefined,
@@ -63,6 +68,7 @@ export function setCompactionSafeguardCancelReason(
   setCompactionSafeguardRuntime(sessionManager, next);
 }
 
+/** Reads and clears the most recent compaction cancellation reason for a session manager. */
 export function consumeCompactionSafeguardCancelReason(sessionManager: unknown): string | null {
   const current = getCompactionSafeguardRuntime(sessionManager);
   const reason = current?.cancelReason?.trim();

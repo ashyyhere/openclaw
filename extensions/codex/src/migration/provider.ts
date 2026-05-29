@@ -1,3 +1,4 @@
+// extensions/codex/src/migration provider helpers and runtime behavior.
 import type {
   MigrationPlan,
   MigrationProviderContext,

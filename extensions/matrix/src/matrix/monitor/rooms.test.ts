@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src/matrix/monitor rooms test behavior.
 import { describe, expect, it } from "vitest";
 import { resolveMatrixRoomConfig } from "./rooms.js";
 

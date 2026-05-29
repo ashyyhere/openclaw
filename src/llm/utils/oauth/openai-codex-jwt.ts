@@ -1,5 +1,7 @@
+// llm/utils/oauth openai codex jwt helpers and runtime behavior.
 const OPENAI_CODEX_AUTH_CLAIM = "https://api.openai.com/auth";
 
+/** Shared type for Open AICodex Jwt Payload in src/llm/utils. */
 export type OpenAICodexJwtPayload = {
   [OPENAI_CODEX_AUTH_CLAIM]?: {
     chatgpt_account_id?: unknown;
@@ -7,6 +9,7 @@ export type OpenAICodexJwtPayload = {
   [key: string]: unknown;
 };
 
+/** Reused helper for decode Open AICodex Jwt Payload behavior in src/llm/utils. */
 export function decodeOpenAICodexJwtPayload(token: string): OpenAICodexJwtPayload | null {
   const parts = token.split(".");
   if (parts.length !== 3) {
@@ -24,6 +27,7 @@ export function decodeOpenAICodexJwtPayload(token: string): OpenAICodexJwtPayloa
   }
 }
 
+/** Reused helper for resolve Open AICodex Account Id behavior in src/llm/utils. */
 export function resolveOpenAICodexAccountId(token: string): string | null {
   const accountId =
     decodeOpenAICodexJwtPayload(token)?.[OPENAI_CODEX_AUTH_CLAIM]?.chatgpt_account_id;

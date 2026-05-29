@@ -1,3 +1,4 @@
+/** Tests direct session `/status` reply runtime behavior and privacy gating. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const buildStatusReply = vi.fn(async (params: unknown) => params);

@@ -1,3 +1,4 @@
+// extensions/xai/src code execution config helpers and runtime behavior.
 import { isXaiToolEnabled, type XaiToolAuthContext } from "./tool-auth-shared.js";
 
 export type CodeExecutionConfig = {

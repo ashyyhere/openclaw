@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor message handler preflight channel context helpers and runtime behavior.
 import {
   normalizeDiscordDisplaySlug,
   normalizeDiscordSlug,

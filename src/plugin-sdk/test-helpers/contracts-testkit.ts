@@ -1,3 +1,4 @@
+// plugin-sdk/test-helpers contracts testkit helpers and runtime behavior.
 import type { PluginRegistryParams } from "../../plugins/registry-types.js";
 import type { OpenClawPluginApi } from "../plugin-entry.js";
 import {

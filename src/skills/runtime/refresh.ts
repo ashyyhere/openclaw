@@ -1,3 +1,4 @@
+/** Watches skill roots and refreshes workspace skill snapshots. */
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -12,6 +13,7 @@ import {
   resetSkillsRefreshStateForTest,
   setSkillsChangeListenerErrorHandler,
 } from "./refresh-state.js";
+/** Re-exported API for src/agents/skills. */
 export {
   bumpSkillsSnapshotVersion,
   getSkillsSnapshotVersion,
@@ -64,6 +66,7 @@ setSkillsChangeListenerErrorHandler((err) => {
   log.warn(`skills change listener failed: ${String(err)}`);
 });
 
+/** Reused constant for DEFAULT SKILLS WATCH IGNORED behavior in src/agents/skills. */
 export const DEFAULT_SKILLS_WATCH_IGNORED: RegExp[] = [
   /(^|[\\/])\.git([\\/]|$)/,
   /(^|[\\/])node_modules([\\/]|$)/,
@@ -381,6 +384,7 @@ function isPathInsideAnyRoot(roots: readonly string[], child: string): boolean {
   return roots.some((root) => isPathInside(root, child));
 }
 
+/** Checks whether a path should be ignored by skill file watchers. */
 export function shouldIgnoreSkillsWatchPath(
   watchPath: string,
   stats?: { isDirectory?: () => boolean; isSymbolicLink?: () => boolean },
@@ -523,6 +527,7 @@ function unsubscribeWorkspaceFromPath(workspaceDir: string, watchTarget: WatchTa
   }
 }
 
+/** Ensures a watcher exists for skill roots visible to a workspace. */
 export function ensureSkillsWatcher(params: { workspaceDir: string; config?: OpenClawConfig }) {
   const workspaceDir = params.workspaceDir.trim();
   if (!workspaceDir) {
@@ -577,6 +582,7 @@ export function ensureSkillsWatcher(params: { workspaceDir: string; config?: Ope
   }
 }
 
+/** Stops watchers and resets refresh state for isolated tests. */
 export async function resetSkillsRefreshForTest(): Promise<void> {
   resetSkillsRefreshStateForTest();
 

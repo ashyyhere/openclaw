@@ -1,3 +1,4 @@
+/** Contract tests for channel catalog entries, fallback metadata, and paths. */
 import {
   describeBundledMetadataOnlyChannelCatalogContract,
   describeChannelCatalogEntryContract,

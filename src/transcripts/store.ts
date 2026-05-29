@@ -1,3 +1,4 @@
+// transcripts store helpers and runtime behavior.
 import { createReadStream } from "node:fs";
 import type { Dirent } from "node:fs";
 import fs from "node:fs/promises";
@@ -7,6 +8,7 @@ import type { TranscriptSessionDescriptor, TranscriptUtterance } from "./provide
 import type { TranscriptsSummary } from "./summary.js";
 import { renderTranscriptsMarkdown } from "./summary.js";
 
+/** Shared type for Transcripts Session Entry in src/transcripts. */
 export type TranscriptsSessionEntry = {
   session: TranscriptSessionDescriptor;
   sessionDir: string;
@@ -46,6 +48,7 @@ function sameSessionIdentity(
   return left.sessionId === right.sessionId && left.startedAt === right.startedAt;
 }
 
+/** Reused class for Transcripts Store behavior in src/transcripts. */
 export class TranscriptsStore {
   constructor(private readonly rootDir: string) {}
 

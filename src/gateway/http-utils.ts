@@ -1,3 +1,4 @@
+// gateway http utils helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import type { IncomingMessage } from "node:http";
 import { resolveDefaultAgentId } from "../agents/agent-scope.js";
@@ -14,6 +15,7 @@ import { normalizeMessageChannel } from "../utils/message-channel.js";
 import { getHeader } from "./http-auth-utils.js";
 import { loadGatewayModelCatalog } from "./server-model-catalog.js";
 
+/** Re-exported API for src/gateway. */
 export {
   authorizeGatewayHttpRequestOrReply,
   authorizeScopedGatewayHttpRequestOrReply,
@@ -31,7 +33,9 @@ export {
   type GatewayHttpRequestAuthCheckResult,
 } from "./http-auth-utils.js";
 
+/** Reused constant for OPENCLAW MODEL ID behavior in src/gateway. */
 export const OPENCLAW_MODEL_ID = "openclaw";
+/** Reused constant for OPENCLAW DEFAULT MODEL ID behavior in src/gateway. */
 export const OPENCLAW_DEFAULT_MODEL_ID = "openclaw/default";
 
 function resolveAgentIdFromHeader(req: IncomingMessage): string | undefined {
@@ -45,6 +49,7 @@ function resolveAgentIdFromHeader(req: IncomingMessage): string | undefined {
   return normalizeAgentId(raw);
 }
 
+/** Reused helper for resolve Agent Id From Model behavior in src/gateway. */
 export function resolveAgentIdFromModel(
   model: string | undefined,
   cfg = getRuntimeConfig(),
@@ -68,6 +73,7 @@ export function resolveAgentIdFromModel(
   return normalizeAgentId(agentId);
 }
 
+/** Reused helper for resolve Open Ai Compat Model Override behavior in src/gateway. */
 export async function resolveOpenAiCompatModelOverride(params: {
   req: IncomingMessage;
   agentId: string;
@@ -124,6 +130,7 @@ export async function resolveOpenAiCompatModelOverride(params: {
   return { modelOverride: raw };
 }
 
+/** Reused helper for resolve Agent Id For Request behavior in src/gateway. */
 export function resolveAgentIdForRequest(params: {
   req: IncomingMessage;
   model: string | undefined;
@@ -154,6 +161,7 @@ function resolveSessionKey(params: {
   return buildAgentMainSessionKey({ agentId: params.agentId, mainKey });
 }
 
+/** Reused helper for resolve Gateway Request Context behavior in src/gateway. */
 export function resolveGatewayRequestContext(params: {
   req: IncomingMessage;
   model: string | undefined;

@@ -1,3 +1,4 @@
+/** Tests persistence of plugin install records into config. */
 import { beforeEach, describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import {

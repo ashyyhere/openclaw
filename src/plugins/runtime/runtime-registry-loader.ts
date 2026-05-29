@@ -1,3 +1,4 @@
+// plugins/runtime runtime registry loader helpers and runtime behavior.
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { withActivatedPluginIds } from "../activation-context.js";
 import {
@@ -24,6 +25,7 @@ import {
 
 let pluginRegistryLoaded: "none" | "configured-channels" | "channels" | "all" = "none";
 
+/** Shared type for Plugin Registry Scope in src/plugins/runtime. */
 export type PluginRegistryScope = "configured-channels" | "channels" | "all";
 
 function scopeRank(scope: typeof pluginRegistryLoaded): number {
@@ -122,6 +124,7 @@ function resolveOrLoadRuntimePluginRegistry(
   }
 }
 
+/** Reused helper for ensure Plugin Registry Loaded behavior in src/plugins/runtime. */
 export function ensurePluginRegistryLoaded(options?: {
   scope?: PluginRegistryScope;
   config?: OpenClawConfig;
@@ -227,9 +230,11 @@ export function ensurePluginRegistryLoaded(options?: {
   }
 }
 
+/** Reused constant for testing behavior in src/plugins/runtime. */
 export const testing = {
   resetPluginRegistryLoadedForTests(): void {
     pluginRegistryLoaded = "none";
   },
 };
+/** Re-exported API for src/plugins/runtime, starting with testing. */
 export { testing as __testing };

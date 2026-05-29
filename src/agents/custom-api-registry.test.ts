@@ -1,3 +1,4 @@
+/** Tests custom model API registry behavior. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   clearApiProviders,

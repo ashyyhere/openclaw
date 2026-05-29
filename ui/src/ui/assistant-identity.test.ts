@@ -1,3 +1,4 @@
+// Tests ui/src/ui assistant identity test behavior.
 import { describe, expect, it } from "vitest";
 import { normalizeAssistantIdentity } from "./assistant-identity.ts";
 

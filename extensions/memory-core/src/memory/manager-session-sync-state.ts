@@ -1,3 +1,4 @@
+// extensions/memory-core/src/memory manager session sync state helpers and runtime behavior.
 import { type MemorySourceFileStateRow } from "./manager-source-state.js";
 
 export type MemorySessionStartupFileState = {

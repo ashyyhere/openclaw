@@ -1,3 +1,4 @@
+// extensions/nvidia onboard helpers and runtime behavior.
 import {
   createDefaultModelsPresetAppliers,
   type OpenClawConfig,

@@ -1,3 +1,4 @@
+// Tests gateway/server/ws-connection handshake auth log limiter test behavior.
 import { describe, expect, it } from "vitest";
 import {
   buildHandshakeAuthLogKey,

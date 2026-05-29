@@ -1,3 +1,4 @@
+/** Keeps generated provider secrets aligned with source config secret refs. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveSecretInputRef } from "../config/types.secrets.js";
 import { isRecord } from "../utils.js";
@@ -70,6 +71,7 @@ function resolveSourceManagedHeaderMarkers(params: {
   return markers;
 }
 
+/** Reapply source-config secret markers after provider merge/normalization. */
 export function enforceSourceManagedProviderSecrets(params: {
   providers: ModelsConfig["providers"];
   sourceProviders: ModelsConfig["providers"] | undefined;

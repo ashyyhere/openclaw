@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor message handler module test helpers helpers and runtime behavior.
 import type { MockFn } from "openclaw/plugin-sdk/plugin-test-runtime";
 import { vi } from "vitest";
 import type { DiscordMessageRunQueueTestingHooks } from "./message-run-queue.js";

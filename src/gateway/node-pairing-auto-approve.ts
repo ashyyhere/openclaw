@@ -1,5 +1,7 @@
+// gateway node pairing auto approve helpers and runtime behavior.
 import { isTrustedProxyAddress } from "./net.js";
 
+/** Shared type for Node Pairing Auto Approve Reason in src/gateway. */
 export type NodePairingAutoApproveReason =
   | "not-paired"
   | "role-upgrade"
@@ -12,6 +14,7 @@ type NodePairingAutoApproveClientIpSource =
   | "loopback-trusted-proxy"
   | "none";
 
+/** Reused helper for resolve Node Pairing Client Ip Source behavior in src/gateway. */
 export function resolveNodePairingClientIpSource(params: {
   reportedClientIp?: string;
   hasProxyHeaders: boolean;
@@ -27,6 +30,7 @@ export function resolveNodePairingClientIpSource(params: {
   return params.remoteIsLoopback ? "loopback-trusted-proxy" : "trusted-proxy";
 }
 
+/** Reused helper for should Auto Approve Node Pairing From Trusted Cidrs behavior in src/gateway. */
 export function shouldAutoApproveNodePairingFromTrustedCidrs(params: {
   existingPairedDevice: boolean;
   role: string;

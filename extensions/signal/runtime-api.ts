@@ -1,3 +1,5 @@
+// extensions/signal runtime api helpers and runtime behavior.
+/** Re-exported signal plugin public API. */
 export {
   applyAccountNameToChannelSection,
   buildBaseAccountStatusSnapshot,
@@ -45,4 +47,5 @@ export {
   SignalConfigSchema,
   signalMessageActions,
 } from "./src/runtime-api.js";
+/** Re-exported signal plugin public API, starting with set Signal Runtime. */
 export { setSignalRuntime } from "./src/runtime.js";

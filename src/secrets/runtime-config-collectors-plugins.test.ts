@@ -1,3 +1,4 @@
+// Tests secrets runtime config collectors plugins test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import type { PluginOrigin } from "../plugins/types.js";

@@ -1,3 +1,4 @@
+// Tests gateway control ui csp test behavior.
 import { createHash } from "node:crypto";
 import { describe, expect, it } from "vitest";
 import { buildControlUiCspHeader, computeInlineScriptHashes } from "./control-ui-csp.js";

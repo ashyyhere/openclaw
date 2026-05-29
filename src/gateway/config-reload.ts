@@ -1,3 +1,4 @@
+// gateway config reload helpers and runtime behavior.
 import chokidar from "chokidar";
 import type { ConfigWriteNotification } from "../config/io.js";
 import { formatConfigIssueLines } from "../config/issue-format.js";
@@ -19,6 +20,7 @@ import {
 } from "./config-reload-plan.js";
 import { resolveGatewayReloadSettings } from "./config-reload-settings.js";
 
+/** Re-exported API for src/gateway. */
 export {
   buildGatewayReloadPlan,
   diffConfigPaths,
@@ -27,6 +29,7 @@ export {
   resolveConfigReloadMetadata,
   resolveGatewayReloadSettings,
 };
+/** Re-exported API for src/gateway, starting with Channel Kind. */
 export type { ChannelKind, GatewayReloadPlan } from "./config-reload-plan.js";
 const MISSING_CONFIG_RETRY_DELAY_MS = 150;
 const MISSING_CONFIG_MAX_RETRIES = 2;
@@ -50,6 +53,7 @@ function firstSkillsChangedPath(changedPaths: string[]): string | undefined {
   return changedPaths.find(matchesSkillsInvalidationPrefix);
 }
 
+/** Reused helper for should Invalidate Skills Snapshot For Paths behavior in src/gateway. */
 export function shouldInvalidateSkillsSnapshotForPaths(changedPaths: string[]): boolean {
   return firstSkillsChangedPath(changedPaths) !== undefined;
 }
@@ -83,6 +87,7 @@ function asPluginInstallConfig(records: PluginInstallRecords): OpenClawConfig {
   };
 }
 
+/** Reused helper for start Gateway Config Reloader behavior in src/gateway. */
 export function startGatewayConfigReloader(opts: {
   initialConfig: OpenClawConfig;
   initialCompareConfig?: OpenClawConfig;

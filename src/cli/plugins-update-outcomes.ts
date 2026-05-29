@@ -5,6 +5,7 @@ type PluginUpdateCliOutcome = {
   message: string;
 };
 
+/** Reused helper for log Plugin Update Outcomes behavior in src/cli. */
 export function logPluginUpdateOutcomes(params: {
   outcomes: readonly PluginUpdateCliOutcome[];
   log: (message: string) => void;

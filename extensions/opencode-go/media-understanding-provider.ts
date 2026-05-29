@@ -1,3 +1,4 @@
+// extensions/opencode-go media understanding provider helpers and runtime behavior.
 import {
   describeImageWithModel,
   describeImagesWithModel,

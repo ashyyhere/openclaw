@@ -1,3 +1,4 @@
+// Chat command handler for steering active sessions.
 import {
   resolveInternalSessionKey,
   resolveMainSessionAlias,
@@ -102,6 +103,7 @@ function continueWithSteerFallback(
   return { shouldContinue: true };
 }
 
+/** Reused constant for handle Steer Command behavior in src/auto-reply/reply. */
 export const handleSteerCommand: CommandHandler = async (params, allowTextCommands) => {
   if (!allowTextCommands) {
     return null;

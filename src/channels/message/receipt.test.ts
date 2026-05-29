@@ -1,3 +1,4 @@
+// Coverage for message receipt construction.
 import { describe, expect, it } from "vitest";
 import {
   createMessageReceiptFromOutboundResults,

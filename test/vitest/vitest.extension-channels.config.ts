@@ -1,3 +1,4 @@
+// test/vitest vitest extension channels config helpers and runtime behavior.
 import {
   extensionChannelOverrideExcludeGlobs,
   extensionChannelTestInclude,

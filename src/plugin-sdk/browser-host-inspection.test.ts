@@ -1,3 +1,4 @@
+/** Tests host browser executable/version inspection facade loading. */
 import { beforeEach, describe, it, vi } from "vitest";
 import {
   expectBrowserHostInspectionDelegation,

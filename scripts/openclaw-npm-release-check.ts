@@ -1,4 +1,5 @@
 #!/usr/bin/env -S node --import tsx
+// scripts openclaw npm release check helpers and runtime behavior.
 
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";

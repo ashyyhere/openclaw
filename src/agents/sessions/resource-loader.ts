@@ -1,3 +1,4 @@
+/** Loads session resources such as tools, skills, prompts, themes, and extensions. */
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { homedir } from "node:os";
 import { join, resolve, sep } from "node:path";
@@ -6,6 +7,7 @@ import { CONFIG_DIR_NAME } from "../config.js";
 import { loadThemeFromPath, type Theme } from "../modes/interactive/theme/theme.js";
 import type { ResourceDiagnostic } from "./diagnostics.js";
 
+/** Re-exported API for src/agents/sessions, starting with Resource Collision. */
 export type { ResourceCollision, ResourceDiagnostic } from "./diagnostics.js";
 
 import type { Skill } from "../../skills/loading/session.js";
@@ -29,12 +31,14 @@ import { loadPromptTemplates } from "./prompt-templates.js";
 import { SettingsManager } from "./settings-manager.js";
 import { createSourceInfo, type SourceInfo } from "./source-info.js";
 
+/** Shared type for Resource Extension Paths in src/agents/sessions. */
 export interface ResourceExtensionPaths {
   skillPaths?: Array<{ path: string; metadata: PathMetadata }>;
   promptPaths?: Array<{ path: string; metadata: PathMetadata }>;
   themePaths?: Array<{ path: string; metadata: PathMetadata }>;
 }
 
+/** Shared type for Resource Loader in src/agents/sessions. */
 export interface ResourceLoader {
   getExtensions(): LoadExtensionsResult;
   getSkills(): { skills: Skill[]; diagnostics: ResourceDiagnostic[] };
@@ -84,6 +88,7 @@ function loadContextFileFromDir(dir: string): { path: string; content: string } 
   return null;
 }
 
+/** Loads project context files listed in resource configuration. */
 export function loadProjectContextFiles(options: {
   cwd: string;
   agentDir: string;
@@ -128,6 +133,7 @@ export function loadProjectContextFiles(options: {
   return contextFiles;
 }
 
+/** Shared type for Default Resource Loader Options in src/agents/sessions. */
 export interface DefaultResourceLoaderOptions {
   cwd: string;
   agentDir: string;
@@ -169,6 +175,7 @@ export interface DefaultResourceLoaderOptions {
   appendSystemPromptOverride?: (base: string[]) => string[];
 }
 
+/** Reused class for Default Resource Loader behavior in src/agents/sessions. */
 export class DefaultResourceLoader implements ResourceLoader {
   private cwd: string;
   private agentDir: string;

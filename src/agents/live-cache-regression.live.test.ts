@@ -1,3 +1,4 @@
+/** Live tests for prompt-cache regression lanes. */
 import { describe, expect, it } from "vitest";
 import { runLiveCacheRegression } from "./live-cache-regression-runner.js";
 import { LIVE_CACHE_TEST_ENABLED } from "./live-cache-test-support.js";

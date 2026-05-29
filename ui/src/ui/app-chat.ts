@@ -1,3 +1,4 @@
+// ui/src/ui app chat helpers and runtime behavior.
 import { setLastActiveSessionKey } from "./app-last-active-session.ts";
 import { scheduleChatScroll, resetChatScroll } from "./app-scroll.ts";
 import { resetToolStream } from "./app-tool-stream.ts";
@@ -49,6 +50,7 @@ import type { ChatAttachment, ChatQueueItem } from "./ui-types.ts";
 import { generateUUID } from "./uuid.ts";
 import { isRenderableControlUiAvatarUrl } from "./views/agents-utils.ts";
 
+/** Shared type for Chat Host in ui/src/ui. */
 export type ChatHost = ChatInputHistoryState & {
   client: GatewayBrowserClient | null;
   chatStream: string | null;
@@ -86,11 +88,13 @@ export type ChatHost = ChatInputHistoryState & {
   onSlashAction?: (action: string) => void | Promise<void>;
 };
 
+/** Shared type for Chat Send Options in ui/src/ui. */
 export type ChatSendOptions = {
   confirmReset?: boolean;
   restoreDraft?: boolean;
 };
 
+/** Shared type for Chat Abort Options in ui/src/ui. */
 export type ChatAbortOptions = {
   preserveDraft?: boolean;
 };
@@ -101,9 +105,12 @@ type SessionDefaultsSnapshot = {
 };
 
 // Chat pickers need recency-free session rows so older channel chats remain selectable.
+/** Reused constant for CHAT SESSIONS ACTIVE MINUTES behavior in ui/src/ui. */
 export const CHAT_SESSIONS_ACTIVE_MINUTES = 0;
+/** Reused constant for CHAT SESSIONS REFRESH LIMIT behavior in ui/src/ui. */
 export const CHAT_SESSIONS_REFRESH_LIMIT = 50;
 
+/** Reused helper for create Chat Sessions Load Overrides behavior in ui/src/ui. */
 export function createChatSessionsLoadOverrides(
   state: { sessionsShowArchived?: boolean },
   options: { offset?: number; append?: boolean; search?: string | null } = {},
@@ -134,18 +141,22 @@ export function createChatSessionsLoadOverrides(
   }
   return overrides;
 }
+/** Re-exported API for ui/src/ui. */
 export {
   handleChatDraftChange,
   handleChatInputHistoryKey,
   navigateChatInputHistory,
   resetChatInputHistoryNavigation,
 };
+/** Re-exported API for ui/src/ui, starting with Chat Input History Key Input. */
 export type { ChatInputHistoryKeyInput, ChatInputHistoryKeyResult };
 
+/** Reused helper for is Chat Busy behavior in ui/src/ui. */
 export function isChatBusy(host: ChatHost) {
   return host.chatSending || Boolean(host.chatRunId);
 }
 
+/** Reused helper for has Abortable Session Run behavior in ui/src/ui. */
 export function hasAbortableSessionRun(host: {
   chatRunId?: string | null;
   sessionKey: string;
@@ -161,6 +172,7 @@ export function hasAbortableSessionRun(host: {
   );
 }
 
+/** Reused helper for is Chat Stop Command behavior in ui/src/ui. */
 export function isChatStopCommand(text: string) {
   const trimmed = text.trim();
   if (!trimmed) {
@@ -838,6 +850,7 @@ async function sendDetachedBtwMessage(
   return ok;
 }
 
+/** Reused helper for steer Queued Chat Message behavior in ui/src/ui. */
 export async function steerQueuedChatMessage(host: ChatHost, id: string) {
   if (!host.connected || !host.chatRunId) {
     return;
@@ -915,6 +928,7 @@ async function flushChatQueue(host: ChatHost) {
   }
 }
 
+/** Reused helper for remove Queued Message behavior in ui/src/ui. */
 export function removeQueuedMessage(host: ChatHost, id: string) {
   const removed = host.chatQueue.filter((item) => item.id === id);
   host.chatQueue = host.chatQueue.filter((item) => item.id !== id);
@@ -923,6 +937,7 @@ export function removeQueuedMessage(host: ChatHost, id: string) {
   }
 }
 
+/** Reused helper for clear Pending Queue Items For Run behavior in ui/src/ui. */
 export function clearPendingQueueItemsForRun(host: ChatHost, runId: string | undefined) {
   if (!runId) {
     return;
@@ -943,12 +958,14 @@ function chatQueueCollections(host: ChatQueueStoreHost): ChatQueueItem[][] {
   return [host.chatQueue, ...Object.values(host.chatQueueBySession ?? {})];
 }
 
+/** Reused helper for has Reconnectable Queued Chat Sends behavior in ui/src/ui. */
 export function hasReconnectableQueuedChatSends(host: ChatQueueStoreHost): boolean {
   return chatQueueCollections(host).some((queue) =>
     queue.some((item) => item.sendRunId && item.sendState === "waiting-reconnect"),
   );
 }
 
+/** Reused helper for mark Queued Chat Sends Waiting For Reconnect behavior in ui/src/ui. */
 export function markQueuedChatSendsWaitingForReconnect(host: ChatQueueStoreHost) {
   const markQueue = (queue: ChatQueueItem[]): { changed: boolean; queue: ChatQueueItem[] } => {
     let changed = false;
@@ -984,6 +1001,7 @@ export function markQueuedChatSendsWaitingForReconnect(host: ChatQueueStoreHost)
   }
 }
 
+/** Reused helper for retry Reconnectable Queued Chat Sends behavior in ui/src/ui. */
 export async function retryReconnectableQueuedChatSends(host: ChatHost) {
   if (!host.connected || !host.client || host.chatSending) {
     return;
@@ -1015,6 +1033,7 @@ export async function retryReconnectableQueuedChatSends(host: ChatHost) {
   }
 }
 
+/** Reused helper for retry Queued Chat Message behavior in ui/src/ui. */
 export async function retryQueuedChatMessage(host: ChatHost, id: string) {
   const item = host.chatQueue.find((entry) => entry.id === id);
   if (!item || item.localCommandName || item.pendingRunId || item.sendState === "sending") {
@@ -1031,6 +1050,7 @@ export async function retryQueuedChatMessage(host: ChatHost, id: string) {
   }
 }
 
+/** Reused helper for handle Send Chat behavior in ui/src/ui. */
 export async function handleSendChat(
   host: ChatHost,
   messageOverride?: string,
@@ -1285,6 +1305,7 @@ function injectCommandResult(host: ChatHost, content: string) {
   ];
 }
 
+/** Reused helper for refresh Chat behavior in ui/src/ui. */
 export async function refreshChat(
   host: ChatHost,
   opts?: { scheduleScroll?: boolean; awaitHistory?: boolean },
@@ -1335,6 +1356,7 @@ async function refreshChatCommands(host: ChatHost) {
   });
 }
 
+/** Reused constant for flush Chat Queue For Event behavior in ui/src/ui. */
 export const flushChatQueueForEvent = flushChatQueue;
 const chatAvatarRequestVersions = new WeakMap<object, number>();
 
@@ -1431,6 +1453,7 @@ function isLocalControlUiAvatarUrl(avatarUrl: string): boolean {
   return avatarUrl.startsWith("/");
 }
 
+/** Reused helper for refresh Chat Avatar behavior in ui/src/ui. */
 export async function refreshChatAvatar(host: ChatHost) {
   if (!host.connected) {
     clearChatAvatarState(host);

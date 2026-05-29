@@ -1,7 +1,11 @@
+// Shared types for proxy-capture types behavior.
+/** Shared type for Capture Protocol in src/proxy-capture. */
 export type CaptureProtocol = "http" | "https" | "sse" | "ws" | "wss" | "connect";
 
+/** Shared type for Capture Direction in src/proxy-capture. */
 export type CaptureDirection = "outbound" | "inbound" | "local";
 
+/** Shared type for Capture Event Kind in src/proxy-capture. */
 export type CaptureEventKind =
   | "connect"
   | "tls-handshake"
@@ -13,6 +17,7 @@ export type CaptureEventKind =
   | "error"
   | "retry-link";
 
+/** Shared type for Capture Session Record in src/proxy-capture. */
 export type CaptureSessionRecord = {
   id: string;
   startedAt: number;
@@ -25,6 +30,7 @@ export type CaptureSessionRecord = {
   blobDir: string;
 };
 
+/** Shared type for Capture Blob Record in src/proxy-capture. */
 export type CaptureBlobRecord = {
   blobId: string;
   path: string;
@@ -34,6 +40,7 @@ export type CaptureBlobRecord = {
   contentType?: string;
 };
 
+/** Shared type for Capture Event Record in src/proxy-capture. */
 export type CaptureEventRecord = {
   sessionId: string;
   ts: number;
@@ -57,6 +64,7 @@ export type CaptureEventRecord = {
   metaJson?: string;
 };
 
+/** Shared type for Capture Query Preset in src/proxy-capture. */
 export type CaptureQueryPreset =
   | "double-sends"
   | "retry-storms"
@@ -65,8 +73,10 @@ export type CaptureQueryPreset =
   | "missing-ack"
   | "error-bursts";
 
+/** Shared type for Capture Query Row in src/proxy-capture. */
 export type CaptureQueryRow = Record<string, string | number | null>;
 
+/** Shared type for Capture Session Summary in src/proxy-capture. */
 export type CaptureSessionSummary = {
   id: string;
   startedAt: number;
@@ -77,11 +87,13 @@ export type CaptureSessionSummary = {
   eventCount: number;
 };
 
+/** Shared type for Capture Observed Dimension in src/proxy-capture. */
 export type CaptureObservedDimension = {
   value: string;
   count: number;
 };
 
+/** Shared type for Capture Session Coverage Summary in src/proxy-capture. */
 export type CaptureSessionCoverageSummary = {
   sessionId: string;
   totalEvents: number;

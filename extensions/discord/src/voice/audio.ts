@@ -1,3 +1,4 @@
+// extensions/discord/src/voice audio helpers and runtime behavior.
 import { spawn } from "node:child_process";
 import fs from "node:fs/promises";
 import { Transform, type Readable, type TransformCallback } from "node:stream";

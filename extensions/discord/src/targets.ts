@@ -1,3 +1,4 @@
+// extensions/discord/src targets helpers and runtime behavior.
 import {
   parseDiscordTarget,
   type DiscordTarget,

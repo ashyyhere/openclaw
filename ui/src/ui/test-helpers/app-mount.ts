@@ -1,3 +1,4 @@
+// ui/src/ui/test-helpers app mount helpers and runtime behavior.
 import { afterEach, beforeEach, vi } from "vitest";
 import { i18n } from "../../i18n/index.ts";
 import { getSafeLocalStorage, getSafeSessionStorage } from "../../local-storage.ts";

@@ -1,3 +1,4 @@
+/** Tests after-tool-call handling in agent tool definition adapters. */
 import type { AgentTool } from "openclaw/plugin-sdk/agent-core";
 import { Type } from "typebox";
 import { beforeEach, describe, expect, it, vi } from "vitest";

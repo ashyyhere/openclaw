@@ -1,3 +1,4 @@
+// extensions/document-extract document extractor helpers and runtime behavior.
 import type { PdfDocument, PdfEngine, PdfImage } from "clawpdf";
 import type {
   DocumentExtractedImage,

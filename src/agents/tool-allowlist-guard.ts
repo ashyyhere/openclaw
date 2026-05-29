@@ -1,3 +1,4 @@
+/** Guards configured tool allowlists against invalid or unsafe entries. */
 import { normalizeStringEntries } from "../shared/string-normalization.js";
 import { normalizeToolList, normalizeToolName } from "./tool-policy.js";
 
@@ -7,6 +8,7 @@ type ExplicitToolAllowlistSource = {
   enforceWhenToolsDisabled?: boolean;
 };
 
+/** Reused helper for collect Explicit Tool Allowlist Sources behavior in src/agents. */
 export function collectExplicitToolAllowlistSources(
   sources: Array<{ label: string; allow?: string[]; enforceWhenToolsDisabled?: boolean }>,
 ): ExplicitToolAllowlistSource[] {
@@ -25,6 +27,7 @@ export function collectExplicitToolAllowlistSources(
   });
 }
 
+/** Reused helper for build Empty Explicit Tool Allowlist Error behavior in src/agents. */
 export function buildEmptyExplicitToolAllowlistError(params: {
   sources: ExplicitToolAllowlistSource[];
   callableToolNames: string[];

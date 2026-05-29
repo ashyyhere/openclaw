@@ -1,3 +1,4 @@
+// Tests plugins web search providers runtime test behavior.
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 type RegistryModule = typeof import("./registry.js");

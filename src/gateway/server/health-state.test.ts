@@ -1,3 +1,4 @@
+// Tests gateway/server health state test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { HealthSummary } from "../../commands/health.js";
 

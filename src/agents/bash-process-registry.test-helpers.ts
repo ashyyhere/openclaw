@@ -1,6 +1,8 @@
+/** Test helpers for bash process registry fixtures. */
 import type { ChildProcessWithoutNullStreams } from "node:child_process";
 import type { ProcessSession } from "./bash-process-registry.js";
 
+/** Reused helper for create Process Session Fixture behavior in src/agents. */
 export function createProcessSessionFixture(params: {
   id: string;
   command?: string;

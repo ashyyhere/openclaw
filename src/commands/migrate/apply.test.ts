@@ -1,3 +1,4 @@
+// Tests migration apply forwarding of provider-scoped options through both phases.
 import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";

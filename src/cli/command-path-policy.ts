@@ -1,3 +1,4 @@
+/** Resolves command-path policies for config, secrets, and plugin startup. */
 import { isGatewayConfigBypassCommandPath } from "../gateway/explicit-connection-policy.js";
 import { getCommandPathWithRootOptions } from "./argv.js";
 import {
@@ -18,6 +19,7 @@ const DEFAULT_CLI_COMMAND_PATH_POLICY: CliCommandPathPolicy = {
   networkProxy: "default",
 };
 
+/** Reused helper for resolve Cli Command Path Policy behavior in src/cli. */
 export function resolveCliCommandPathPolicy(commandPath: string[]): CliCommandPathPolicy {
   let resolvedPolicy: CliCommandPathPolicy = { ...DEFAULT_CLI_COMMAND_PATH_POLICY };
   for (const entry of cliCommandCatalog) {
@@ -39,6 +41,7 @@ function isCommandPathPrefix(commandPath: string[], pattern: readonly string[]):
   return pattern.every((segment, index) => commandPath[index] === segment);
 }
 
+/** Reused helper for resolve Cli Catalog Command Path behavior in src/cli. */
 export function resolveCliCatalogCommandPath(argv: string[]): string[] {
   const tokens =
     resolveGatewayCatalogCommandPath(argv) ?? getCommandPathWithRootOptions(argv, argv.length);
@@ -57,6 +60,7 @@ export function resolveCliCatalogCommandPath(argv: string[]): string[] {
   return bestMatch ? [...bestMatch] : [tokens[0]];
 }
 
+/** Reused helper for resolve Cli Network Proxy Policy behavior in src/cli. */
 export function resolveCliNetworkProxyPolicy(argv: string[]): CliNetworkProxyPolicy {
   const commandPath = resolveCliCatalogCommandPath(argv);
   const networkProxy = resolveCliCommandPathPolicy(commandPath).networkProxy;

@@ -1,3 +1,4 @@
+// gateway node pending work helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import {
   asDateTimestampMs,
@@ -7,9 +8,11 @@ import {
 } from "../shared/number-coercion.js";
 
 const NODE_PENDING_WORK_TYPES = ["status.request", "location.request"] as const;
+/** Shared type for Node Pending Work Type in src/gateway. */
 export type NodePendingWorkType = (typeof NODE_PENDING_WORK_TYPES)[number];
 
 const NODE_PENDING_WORK_PRIORITIES = ["default", "normal", "high"] as const;
+/** Shared type for Node Pending Work Priority in src/gateway. */
 export type NodePendingWorkPriority = (typeof NODE_PENDING_WORK_PRIORITIES)[number];
 
 type NodePendingWorkItem = {
@@ -120,6 +123,7 @@ function resolvePendingWorkExpiresAtMs(expiresInMs: unknown, nowMs: number): num
   return resolveExpiresAtMsFromDurationMs(Math.max(1_000, Math.trunc(expiresInMs)), { nowMs }) ?? 0;
 }
 
+/** Queue a deduped work item for a gateway node until it is drained or expires. */
 export function enqueueNodePendingWork(params: {
   nodeId: string;
   type: NodePendingWorkType;
@@ -152,6 +156,7 @@ export function enqueueNodePendingWork(params: {
   return { revision: state.revision, item, deduped: false };
 }
 
+/** Reused helper for drain Node Pending Work behavior in src/gateway. */
 export function drainNodePendingWork(nodeId: string, opts: DrainOptions = {}): DrainResult {
   const normalizedNodeId = nodeId.trim();
   if (!normalizedNodeId) {
@@ -181,6 +186,7 @@ export function drainNodePendingWork(nodeId: string, opts: DrainOptions = {}): D
   };
 }
 
+/** Reused helper for acknowledge Node Pending Work behavior in src/gateway. */
 export function acknowledgeNodePendingWork(params: { nodeId: string; itemIds: string[] }): {
   revision: number;
   removedItemIds: string[];
@@ -210,10 +216,12 @@ export function acknowledgeNodePendingWork(params: { nodeId: string; itemIds: st
   return { revision: state.revision, removedItemIds };
 }
 
+/** Reused helper for reset Node Pending Work For Tests behavior in src/gateway. */
 export function resetNodePendingWorkForTests() {
   stateByNodeId.clear();
 }
 
+/** Reused helper for get Node Pending Work State Count For Tests behavior in src/gateway. */
 export function getNodePendingWorkStateCountForTests(): number {
   return stateByNodeId.size;
 }

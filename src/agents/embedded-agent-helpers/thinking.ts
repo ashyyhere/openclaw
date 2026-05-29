@@ -1,3 +1,4 @@
+/** Chooses lower-cost thinking levels for retry/fallback attempts. */
 import { normalizeThinkLevel, type ThinkLevel } from "../../auto-reply/thinking.js";
 import { normalizeStringEntries } from "../../shared/string-normalization.js";
 import { isReasoningConstraintErrorMessage } from "./errors.js";
@@ -20,6 +21,7 @@ function extractSupportedValues(raw: string): string[] {
   );
 }
 
+/** Reused helper for pick Fallback Thinking Level behavior in src/agents/embedded-agent-helpers. */
 export function pickFallbackThinkingLevel(params: {
   message?: string;
   attempted: Set<ThinkLevel>;

@@ -1,3 +1,4 @@
+// Coverage for shared ACP command helpers.
 import { describe, expect, it } from "vitest";
 import { parseSpawnInput, parseSteerInput } from "./shared.js";
 

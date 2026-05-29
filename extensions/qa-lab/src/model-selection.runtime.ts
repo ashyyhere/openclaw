@@ -1,3 +1,4 @@
+// Runtime boundary for extensions/qa-lab/src model selection runtime behavior.
 import {
   defaultQaModelForMode,
   normalizeQaProviderMode,

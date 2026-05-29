@@ -16,6 +16,7 @@ import { resolveGatewayInstallToken } from "./gateway-install-token.js";
 import { guardCancel } from "./onboard-helpers.js";
 import { ensureSystemdUserLingerInteractive } from "./systemd-linger.js";
 
+/** Reused helper for maybe Install Daemon behavior in src/commands. */
 export async function maybeInstallDaemon(params: {
   runtime: RuntimeEnv;
   port: number;

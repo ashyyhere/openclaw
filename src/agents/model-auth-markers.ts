@@ -1,3 +1,4 @@
+/** Non-secret auth marker constants and classifiers for model catalogs. */
 import type { SecretRefSource } from "../config/types.secrets.js";
 import { listOpenClawPluginManifestMetadata } from "../plugins/manifest-metadata-scan.js";
 import { normalizeTrimmedStringList, uniqueStrings } from "../shared/string-normalization.js";
@@ -5,12 +6,17 @@ import { listKnownProviderEnvApiKeyNames } from "./model-auth-env-vars.js";
 
 /** @deprecated MiniMax provider-owned marker; do not use from third-party plugins. */
 export const MINIMAX_OAUTH_MARKER = "minimax-oauth";
+/** Marker prefix for OAuth-backed provider auth. */
 export const OAUTH_API_KEY_MARKER_PREFIX = "oauth:";
+/** Marker for local Ollama auth that does not require secrets. */
 export const OLLAMA_LOCAL_AUTH_MARKER = "ollama-local";
 /** @deprecated Bundled local-provider marker; do not use from third-party plugins. */
 export const CUSTOM_LOCAL_AUTH_MARKER = "custom-local";
+/** Marker for GCP Vertex credential-file auth. */
 export const GCP_VERTEX_CREDENTIALS_MARKER = "gcp-vertex-credentials";
+/** Reused constant for NON ENV SECRETREF MARKER behavior in src/agents. */
 export const NON_ENV_SECRETREF_MARKER = "secretref-managed"; // pragma: allowlist secret
+/** Reused constant for SECRETREF ENV HEADER MARKER PREFIX behavior in src/agents. */
 export const SECRETREF_ENV_HEADER_MARKER_PREFIX = "secretref-env:"; // pragma: allowlist secret
 
 const AWS_SDK_ENV_MARKERS = new Set([
@@ -47,6 +53,7 @@ function listKnownEnvApiKeyMarkers(): Set<string> {
   return knownEnvApiKeyMarkersCache;
 }
 
+/** List all known non-secret API key markers. */
 export function listKnownNonSecretApiKeyMarkers(): string[] {
   knownNonSecretApiKeyMarkersCache ??= uniqueStrings([
     ...CORE_NON_SECRET_API_KEY_MARKERS,
@@ -59,35 +66,43 @@ export function listKnownNonSecretApiKeyMarkers(): string[] {
   return [...knownNonSecretApiKeyMarkersCache];
 }
 
+/** Return whether a marker indicates AWS SDK environment auth. */
 export function isAwsSdkAuthMarker(value: string): boolean {
   return AWS_SDK_ENV_MARKERS.has(value.trim());
 }
 
+/** Return whether a marker names a known env API key. */
 export function isKnownEnvApiKeyMarker(value: string): boolean {
   const trimmed = value.trim();
   return listKnownEnvApiKeyMarkers().has(trimmed) && !isAwsSdkAuthMarker(trimmed);
 }
 
+/** Build an OAuth auth marker for a provider id. */
 export function resolveOAuthApiKeyMarker(providerId: string): string {
   return `${OAUTH_API_KEY_MARKER_PREFIX}${providerId.trim()}`;
 }
 
+/** Return whether a marker is OAuth-backed. */
 export function isOAuthApiKeyMarker(value: string): boolean {
   return value.trim().startsWith(OAUTH_API_KEY_MARKER_PREFIX);
 }
 
+/** Build the auth marker for non-env secret refs. */
 export function resolveNonEnvSecretRefApiKeyMarker(_source: SecretRefSource): string {
   return NON_ENV_SECRETREF_MARKER;
 }
 
+/** Build the header marker for non-env secret refs. */
 export function resolveNonEnvSecretRefHeaderValueMarker(_source: SecretRefSource): string {
   return NON_ENV_SECRETREF_MARKER;
 }
 
+/** Build the header marker for env-backed secret refs. */
 export function resolveEnvSecretRefHeaderValueMarker(envVarName: string): string {
   return `${SECRETREF_ENV_HEADER_MARKER_PREFIX}${envVarName.trim()}`;
 }
 
+/** Return whether a value is a secret-ref header marker. */
 export function isSecretRefHeaderValueMarker(value: string): boolean {
   const trimmed = value.trim();
   return (
@@ -95,6 +110,7 @@ export function isSecretRefHeaderValueMarker(value: string): boolean {
   );
 }
 
+/** Return whether an API key value is a known non-secret marker. */
 export function isNonSecretApiKeyMarker(
   value: string,
   opts?: { includeEnvVarName?: boolean },

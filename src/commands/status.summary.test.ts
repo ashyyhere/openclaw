@@ -1,3 +1,4 @@
+/** Tests status summary aggregation and redaction. */
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { TaskAuditFinding } from "../tasks/task-registry.audit.js";
 import type { TaskRegistrySummary } from "../tasks/task-registry.types.js";

@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix/client create client helpers and runtime behavior.
 import fs from "node:fs";
 import type { PinnedDispatcherPolicy } from "openclaw/plugin-sdk/ssrf-dispatcher";
 import {

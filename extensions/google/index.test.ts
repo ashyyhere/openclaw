@@ -1,3 +1,4 @@
+// Tests extensions/google index test behavior.
 import type { Context, Model } from "openclaw/plugin-sdk/llm";
 import type {
   ProviderReplaySessionEntry,

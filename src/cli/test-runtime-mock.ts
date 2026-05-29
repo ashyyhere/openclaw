@@ -1,7 +1,9 @@
+/** Test helper for constructing minimal runtime mocks. */
 import type { vi } from "vitest";
 
 type ViLike = Pick<typeof vi, "fn">;
 
+/** Reused helper for create Cli Runtime Mock behavior in src/cli. */
 export function createCliRuntimeMock(
   viInstance: ViLike,
   options: {

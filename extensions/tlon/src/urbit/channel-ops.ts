@@ -1,3 +1,4 @@
+// extensions/tlon/src/urbit channel ops helpers and runtime behavior.
 import type { LookupFn, SsrFPolicy } from "openclaw/plugin-sdk/ssrf-runtime";
 import { UrbitHttpError } from "./errors.js";
 import { urbitFetch } from "./fetch.js";

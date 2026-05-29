@@ -1,3 +1,4 @@
+/** Resolves memory-search indexing, embedding, and query configuration. */
 import os from "node:os";
 import path from "node:path";
 import {
@@ -18,6 +19,7 @@ import { normalizeStringEntries, uniqueStrings } from "../shared/string-normaliz
 import { clampInt, clampNumber, resolveUserPath } from "../utils.js";
 import { resolveAgentConfig } from "./agent-scope.js";
 
+/** Fully resolved memory-search config. */
 export type ResolvedMemorySearchConfig = {
   enabled: boolean;
   sources: Array<"memory" | "sessions">;
@@ -103,6 +105,7 @@ export type ResolvedMemorySearchConfig = {
   };
 };
 
+/** Resolved memory-search sync config. */
 export type ResolvedMemorySearchSyncConfig = ResolvedMemorySearchConfig["sync"];
 
 const DEFAULT_CHUNK_TOKENS = 400;
@@ -431,6 +434,7 @@ function resolveSyncConfig(
   };
 }
 
+/** Resolve memory-search config from OpenClaw config and workspace defaults. */
 export function resolveMemorySearchConfig(
   cfg: OpenClawConfig,
   agentId: string,
@@ -463,6 +467,7 @@ export function resolveMemorySearchConfig(
   return resolved;
 }
 
+/** Resolve only the memory-search sync subsection. */
 export function resolveMemorySearchSyncConfig(
   cfg: OpenClawConfig,
   agentId: string,

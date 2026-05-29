@@ -1,3 +1,4 @@
+// extensions/discord/src ui colors helpers and runtime behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { inspectDiscordAccount } from "./account-inspect.js";
 

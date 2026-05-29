@@ -1,3 +1,4 @@
+// Tests config merge patch proto pollution test behavior.
 import { describe, it, expect } from "vitest";
 import { applyMergePatch } from "./merge-patch.js";
 

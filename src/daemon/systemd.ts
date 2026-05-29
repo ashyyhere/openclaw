@@ -1,3 +1,4 @@
+// daemon systemd helpers and runtime behavior.
 import * as fsSync from "node:fs";
 import fs from "node:fs/promises";
 import os from "node:os";
@@ -74,14 +75,17 @@ function resolveSystemdUnitPath(env: GatewayServiceEnv): string {
   return resolveSystemdUnitPathForName(env, resolveSystemdServiceName(env));
 }
 
+/** Reused helper for resolve Systemd User Unit Path behavior in src/daemon. */
 export function resolveSystemdUserUnitPath(env: GatewayServiceEnv): string {
   return resolveSystemdUnitPath(env);
 }
 
+/** Re-exported API for src/daemon, starting with enable Systemd User Linger. */
 export { enableSystemdUserLinger, readSystemdUserLingerStatus };
 
 // Unit file parsing/rendering: see systemd-unit.ts
 
+/** Reused helper for read Systemd Service Exec Start behavior in src/daemon. */
 export async function readSystemdServiceExecStart(
   env: GatewayServiceEnv,
 ): Promise<GatewayServiceCommandConfig | null> {
@@ -399,6 +403,7 @@ type SystemdServiceInfo = {
   memoryCurrent?: number;
 };
 
+/** Reused helper for parse Systemd Show behavior in src/daemon. */
 export function parseSystemdShow(output: string): SystemdServiceInfo {
   const entries = parseKeyValueOutput(output, "=");
   const info: SystemdServiceInfo = {};
@@ -453,6 +458,7 @@ export function parseSystemdShow(output: string): SystemdServiceInfo {
   return info;
 }
 
+/** Shared type for Systemd Unit Scope in src/daemon. */
 export type SystemdUnitScope = "system" | "user";
 
 async function execSystemctl(
@@ -524,6 +530,7 @@ function isGenericSystemctlIsEnabledFailure(detail: string): boolean {
   );
 }
 
+/** Reused helper for is Non Fatal Systemd Install Probe Error behavior in src/daemon. */
 export function isNonFatalSystemdInstallProbeError(error: unknown): boolean {
   const detail = error instanceof Error ? error.message : typeof error === "string" ? error : "";
   if (!detail) {
@@ -664,6 +671,7 @@ async function execSystemctlUser(
   return await execSystemctl([...machineScopeArgs, ...args], env);
 }
 
+/** Reused helper for is Systemd User Service Available behavior in src/daemon. */
 export async function isSystemdUserServiceAvailable(
   env: GatewayServiceEnv = process.env as GatewayServiceEnv,
 ): Promise<boolean> {
@@ -678,6 +686,7 @@ export async function isSystemdUserServiceAvailable(
   return !isSystemdUserScopeUnavailable(detail);
 }
 
+/** Reused helper for is Systemd Unit Active behavior in src/daemon. */
 export async function isSystemdUnitActive(
   env: GatewayServiceEnv,
   unitName: string,
@@ -915,6 +924,7 @@ async function removeNodeSystemdManagedEnvironmentKeys(env: GatewayServiceEnv): 
   await fs.chmod(envFilePath, 0o600);
 }
 
+/** Reused helper for stage Systemd Service behavior in src/daemon. */
 export async function stageSystemdService({
   stdout,
   ...args
@@ -983,6 +993,7 @@ async function activateSystemdService(params: { env: GatewayServiceEnv }) {
   }
 }
 
+/** Reused helper for install Systemd Service behavior in src/daemon. */
 export async function installSystemdService(
   args: GatewayServiceInstallArgs,
 ): Promise<{ unitPath: string }> {
@@ -1009,6 +1020,7 @@ export async function installSystemdService(
   return { unitPath };
 }
 
+/** Reused helper for uninstall Systemd Service behavior in src/daemon. */
 export async function uninstallSystemdService({
   env,
   stdout,
@@ -1054,6 +1066,7 @@ async function runSystemdServiceAction(params: {
   params.stdout.write(`${formatLine(params.label, unitName)}\n`);
 }
 
+/** Reused helper for stop Systemd Service behavior in src/daemon. */
 export async function stopSystemdService({
   stdout,
   env,
@@ -1066,6 +1079,7 @@ export async function stopSystemdService({
   });
 }
 
+/** Reused helper for restart Systemd Service behavior in src/daemon. */
 export async function restartSystemdService({
   stdout,
   env,
@@ -1079,6 +1093,7 @@ export async function restartSystemdService({
   return { outcome: "completed" };
 }
 
+/** Reused helper for is Systemd Service Enabled behavior in src/daemon. */
 export async function isSystemdServiceEnabled(args: GatewayServiceEnvArgs): Promise<boolean> {
   const env = args.env ?? process.env;
   try {
@@ -1103,6 +1118,7 @@ export async function isSystemdServiceEnabled(args: GatewayServiceEnvArgs): Prom
   throw new Error(`systemctl is-enabled unavailable: ${detail || "unknown error"}`.trim());
 }
 
+/** Reused helper for read Systemd Service Runtime behavior in src/daemon. */
 export async function readSystemdServiceRuntime(
   env: GatewayServiceEnv = process.env as GatewayServiceEnv,
 ): Promise<GatewayServiceRuntime> {
@@ -1189,6 +1205,7 @@ async function findLegacySystemdUnits(env: GatewayServiceEnv): Promise<LegacySys
   return results;
 }
 
+/** Reused helper for uninstall Legacy Systemd Units behavior in src/daemon. */
 export async function uninstallLegacySystemdUnits({
   env,
   stdout,

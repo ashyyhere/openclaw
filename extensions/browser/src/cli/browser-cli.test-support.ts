@@ -1,3 +1,4 @@
+// extensions/browser/src/cli browser cli test support helpers and runtime behavior.
 import { Command } from "commander";
 import { createCliRuntimeCapture } from "../../test-support.js";
 import type { CliRuntimeCapture } from "../../test-support.js";

@@ -1,3 +1,4 @@
+// Tests gateway test helpers server test behavior.
 import { describe, expect, it } from "vitest";
 import { testOnlyResolveAuthTokenForSignature } from "./test-helpers.server.js";
 

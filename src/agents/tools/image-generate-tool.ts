@@ -1,3 +1,4 @@
+/** Agent tool for generating images through configured providers. */
 import { Type } from "typebox";
 import { getRuntimeConfig } from "../../config/config.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
@@ -227,6 +228,7 @@ const ImageGenerateToolSchema = Type.Object({
   ),
 });
 
+/** Resolves model config used by image generation tool calls. */
 export function resolveImageGenerationModelConfigForTool(params: {
   cfg?: OpenClawConfig;
   workspaceDir?: string;
@@ -836,6 +838,7 @@ async function executeImageGenerationJob(params: {
   } satisfies ExecutedImageGeneration;
 }
 
+/** Creates the image generation AgentTool. */
 export function createImageGenerateTool(options?: {
   config?: OpenClawConfig;
   agentDir?: string;

@@ -1,3 +1,4 @@
+// config validation helpers and runtime behavior.
 import path from "node:path";
 import { collectConfiguredModelRefs } from "@openclaw/model-catalog-core/configured-model-refs";
 import { isCanonicalDottedDecimalIPv4, isLoopbackIpAddress } from "@openclaw/net-policy/ip";
@@ -652,6 +653,7 @@ function mergeUnsupportedMutableSecretRefIssues(
   return [...policyIssues, ...filteredSchemaIssues];
 }
 
+/** Reused helper for collect Unsupported Secret Ref Policy Issues behavior in src/config. */
 export function collectUnsupportedSecretRefPolicyIssues(raw: unknown): ConfigValidationIssue[] {
   return collectUnsupportedMutableSecretRefIssues(raw);
 }
@@ -770,6 +772,7 @@ function resolveExplicitPluginReferencePath(
   return undefined;
 }
 
+/** Reused constant for testing behavior in src/config. */
 export const testing = {
   mapZodIssueToConfigIssue,
 };
@@ -940,6 +943,7 @@ export function validateConfigObjectRaw(
   };
 }
 
+/** Reused helper for validate Config Object behavior in src/config. */
 export function validateConfigObject(
   raw: unknown,
   opts?: {
@@ -982,6 +986,7 @@ type ValidateConfigWithPluginsParams = {
   preservedLegacyRootKeys?: readonly string[];
 };
 
+/** Reused helper for validate Config Object With Plugins behavior in src/config. */
 export function validateConfigObjectWithPlugins(
   raw: unknown,
   params?: ValidateConfigWithPluginsParams,
@@ -997,6 +1002,7 @@ export function validateConfigObjectWithPlugins(
   });
 }
 
+/** Reused helper for validate Config Object Raw With Plugins behavior in src/config. */
 export function validateConfigObjectRawWithPlugins(
   raw: unknown,
   params?: ValidateConfigWithPluginsParams,
@@ -1914,4 +1920,5 @@ function validateConfigObjectWithPluginsBase(
 
   return { ok: true, config: mutatedConfig, warnings };
 }
+/** Re-exported API for src/config, starting with testing. */
 export { testing as __testing };

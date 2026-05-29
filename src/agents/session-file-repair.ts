@@ -1,3 +1,4 @@
+/** Repairs malformed session JSONL transcripts before replay. */
 import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -291,6 +292,7 @@ function insertMissingCodeModeToolResults(entries: unknown[]): {
   return { entries: insertedToolResults > 0 ? out : entries, insertedToolResults };
 }
 
+/** Repair a session JSONL file when malformed entries can be safely rewritten. */
 export async function repairSessionFileIfNeeded(params: {
   sessionFile: string;
   debug?: (message: string) => void;

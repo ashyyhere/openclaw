@@ -1,3 +1,4 @@
+// Tests logging levels test behavior.
 import { describe, expect, it } from "vitest";
 import { levelToMinLevel } from "./levels.js";
 

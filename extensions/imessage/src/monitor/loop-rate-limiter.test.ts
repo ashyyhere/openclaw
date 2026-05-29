@@ -1,3 +1,4 @@
+// Tests extensions/imessage/src/monitor loop rate limiter test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createLoopRateLimiter } from "./loop-rate-limiter.js";
 

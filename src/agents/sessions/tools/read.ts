@@ -1,3 +1,4 @@
+/** Read tool definition for loading file text and supported media. */
 import { constants } from "node:fs";
 import { access as fsAccess, readFile as fsReadFile } from "node:fs/promises";
 import { basename, dirname, isAbsolute, relative, resolve as resolvePath, sep } from "node:path";
@@ -30,6 +31,7 @@ const readSchema = Type.Object({
   ),
   limit: Type.Optional(Type.Number({ description: "Maximum number of lines to read" })),
 });
+/** Re-exported API for src/agents/sessions, starting with Read Tool Details. */
 export type { ReadToolDetails, ReadToolInput } from "./tool-contracts.js";
 
 interface CompactReadClassification {
@@ -58,6 +60,7 @@ const defaultReadOperations: ReadOperations = {
   detectImageMimeType: detectSupportedImageMimeTypeFromFile,
 };
 
+/** Shared type for Read Tool Options in src/agents/sessions. */
 export interface ReadToolOptions {
   /** Whether to auto-resize images to 2000x2000 max. Default: true */
   autoResizeImages?: boolean;
@@ -219,6 +222,7 @@ function formatReadResult(
   return text;
 }
 
+/** Creates the SDK tool definition for reading files. */
 export function createReadToolDefinition(
   cwd: string,
   options?: ReadToolOptions,
@@ -411,6 +415,7 @@ export function createReadToolDefinition(
   };
 }
 
+/** Creates the runtime AgentTool wrapper for reading files. */
 export function createReadTool(
   cwd: string,
   options?: ReadToolOptions,

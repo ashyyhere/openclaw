@@ -1,3 +1,4 @@
+// Tests extensions/memory-core/src/memory generic embedding provider integration test behavior.
 import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
 import type { AddressInfo } from "node:net";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";

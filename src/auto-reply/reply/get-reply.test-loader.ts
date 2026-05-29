@@ -1,3 +1,4 @@
+// Fresh module loader for get-reply tests.
 import { importFreshModule } from "openclaw/plugin-sdk/test-fixtures";
 
 type GetReplyModule = typeof import("./get-reply.js");

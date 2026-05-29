@@ -1,3 +1,4 @@
+// Tests extensions/oc-path/src/oc-path/tests/jsonc edit test behavior.
 import { describe, expect, it } from "vitest";
 import { setJsoncOcPath } from "../../jsonc/edit.js";
 import { emitJsonc } from "../../jsonc/emit.js";

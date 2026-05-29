@@ -1,3 +1,4 @@
+// extensions/diffs/src language hints helpers and runtime behavior.
 import { resolveLanguage } from "@pierre/diffs";
 import type { FileContents, FileDiffMetadata, SupportedLanguages } from "@pierre/diffs";
 import {

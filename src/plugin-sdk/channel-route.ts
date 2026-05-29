@@ -1,3 +1,4 @@
+/** Public SDK helpers for canonical channel route identity, matching, and compact keys. */
 import { normalizeOptionalAccountId } from "../routing/account-id.js";
 import {
   normalizeLowercaseStringOrEmpty,
@@ -5,12 +6,16 @@ import {
   normalizeOptionalThreadValue,
 } from "../shared/string-coerce.js";
 
+/** Conversation shape for a normalized channel route target. */
 export type ChannelRouteChatType = "direct" | "group" | "channel";
 
+/** Thread identifier family used by a normalized channel route. */
 export type ChannelRouteThreadKind = "topic" | "thread" | "reply";
 
+/** Source that supplied the thread id for route comparisons and diagnostics. */
 export type ChannelRouteThreadSource = "explicit" | "target" | "session" | "turn";
 
+/** Canonical channel route reference used for delivery, dedupe, and matching. */
 export type ChannelRouteRef = {
   channel?: string;
   accountId?: string;
@@ -26,6 +31,7 @@ export type ChannelRouteRef = {
   };
 };
 
+/** Shared type for Channel Route Ref Input in src/plugin-sdk. */
 export type ChannelRouteRefInput = {
   channel?: unknown;
   accountId?: unknown;
@@ -37,11 +43,13 @@ export type ChannelRouteRefInput = {
   threadSource?: ChannelRouteThreadSource;
 };
 
+/** Shared type for Channel Route Target Input in src/plugin-sdk. */
 export type ChannelRouteTargetInput = Pick<
   ChannelRouteRefInput,
   "channel" | "accountId" | "to" | "rawTo" | "chatType" | "threadId"
 >;
 
+/** Shared type for Channel Route Key Input in src/plugin-sdk. */
 export type ChannelRouteKeyInput = ChannelRouteRef | ChannelRouteTargetInput;
 
 /** @deprecated Use `messaging.resolveOutboundSessionRoute` for provider-specific target grammar. */
@@ -57,15 +65,18 @@ export type ChannelRouteExplicitTargetParser = (
   rawTarget: string,
 ) => ChannelRouteExplicitTarget | null;
 
+/** Normalize thread ids while preserving string/number identity for channel APIs. */
 export function normalizeRouteThreadId(value: unknown): string | number | undefined {
   return normalizeOptionalThreadValue(value);
 }
 
+/** Convert a normalized thread id into the string form used by keys. */
 export function stringifyRouteThreadId(value: unknown): string | undefined {
   const normalized = normalizeRouteThreadId(value);
   return normalized == null ? undefined : String(normalized);
 }
 
+/** Normalize raw route fields into a compact route ref, dropping empty values. */
 export function normalizeChannelRouteRef(
   input?: ChannelRouteRefInput,
 ): ChannelRouteRef | undefined {
@@ -105,20 +116,24 @@ export function normalizeChannelRouteRef(
   };
 }
 
+/** Reused helper for channel Route Target behavior in src/plugin-sdk. */
 export function channelRouteTarget(route?: ChannelRouteRef): string | undefined {
   return route?.target?.to;
 }
 
+/** Reused helper for channel Route Thread Id behavior in src/plugin-sdk. */
 export function channelRouteThreadId(route?: ChannelRouteRef): string | number | undefined {
   return route?.thread?.id;
 }
 
+/** Reused helper for normalize Channel Route Target behavior in src/plugin-sdk. */
 export function normalizeChannelRouteTarget(
   input?: ChannelRouteTargetInput | null,
 ): ChannelRouteRef | undefined {
   return input ? normalizeChannelRouteRef(input) : undefined;
 }
 
+/** Shared type for Channel Route Parsed Target in src/plugin-sdk. */
 export type ChannelRouteParsedTarget = ChannelRouteTargetInput & {
   channel: string;
   rawTo: string;
@@ -150,6 +165,7 @@ export function resolveChannelRouteTargetWithParser(params: {
   };
 }
 
+/** Build a stable dedupe key where missing fields are represented explicitly. */
 export function channelRouteDedupeKey(input?: ChannelRouteTargetInput | null): string {
   const route = normalizeChannelRouteTarget(input);
   return JSON.stringify([
@@ -172,6 +188,8 @@ function threadIdsEqual(left?: string | number, right?: string | number): boolea
 }
 
 function accountsCompatible(left?: string, right?: string): boolean {
+  // Conversation sharing treats an unspecified account as compatible with a specified account,
+  // while exact matching below requires both sides to agree.
   return !left || !right || left === right;
 }
 
@@ -179,6 +197,7 @@ function accountsEqual(left?: string, right?: string): boolean {
   return (left ?? "") === (right ?? "");
 }
 
+/** Return true only when channel, target, account, and thread match exactly. */
 export function channelRoutesMatchExact(params: {
   left?: ChannelRouteRef | null;
   right?: ChannelRouteRef | null;
@@ -195,6 +214,7 @@ export function channelRoutesMatchExact(params: {
   );
 }
 
+/** Return true when two routes point at the same conversation even if one side omits account/thread. */
 export function channelRoutesShareConversation(params: {
   left?: ChannelRouteRef | null;
   right?: ChannelRouteRef | null;
@@ -216,6 +236,7 @@ export function channelRoutesShareConversation(params: {
   return threadIdsEqual(left.thread.id, right.thread.id);
 }
 
+/** Reused helper for channel Route Targets Match Exact behavior in src/plugin-sdk. */
 export function channelRouteTargetsMatchExact(params: {
   left?: ChannelRouteTargetInput | null;
   right?: ChannelRouteTargetInput | null;
@@ -226,6 +247,7 @@ export function channelRouteTargetsMatchExact(params: {
   });
 }
 
+/** Reused helper for channel Route Targets Share Conversation behavior in src/plugin-sdk. */
 export function channelRouteTargetsShareConversation(params: {
   left?: ChannelRouteTargetInput | null;
   right?: ChannelRouteTargetInput | null;
@@ -256,6 +278,7 @@ function normalizeChannelRouteKeyInput(
     : normalizeChannelRouteTarget(route);
 }
 
+/** Build the compact route key used in logs and route indexes. */
 export function channelRouteCompactKey(route?: ChannelRouteKeyInput | null): string | undefined {
   const normalized = normalizeChannelRouteKeyInput(route);
   if (!normalized?.channel || !normalized.target?.to) {

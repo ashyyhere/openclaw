@@ -1,9 +1,12 @@
+/** Doctor checks for gateway auth token availability. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveSecretInputRef } from "../config/types.secrets.js";
+/** Re-exported API for src/commands, starting with should Require Gateway Token For Install. */
 export { shouldRequireGatewayTokenForInstall } from "../gateway/auth-install-policy.js";
 import { resolveGatewayAuthToken } from "../gateway/auth-token-resolution.js";
 import { trimToUndefined } from "../gateway/credentials.js";
 
+/** Reused helper for resolve Gateway Auth Token For Service behavior in src/commands. */
 export async function resolveGatewayAuthTokenForService(
   cfg: OpenClawConfig,
   env: NodeJS.ProcessEnv,

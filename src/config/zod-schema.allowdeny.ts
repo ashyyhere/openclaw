@@ -1,3 +1,4 @@
+// config zod schema allowdeny helpers and runtime behavior.
 import { z } from "zod";
 
 const AllowDenyActionSchema = z.union([z.literal("allow"), z.literal("deny")]);
@@ -12,6 +13,7 @@ const AllowDenyChatTypeSchema = z
   ])
   .optional();
 
+/** Reused helper for create Allow Deny Channel Rules Schema behavior in src/config. */
 export function createAllowDenyChannelRulesSchema() {
   return z
     .object({

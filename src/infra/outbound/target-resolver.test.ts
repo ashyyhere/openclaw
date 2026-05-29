@@ -1,3 +1,4 @@
+// Tests infra/outbound target resolver test behavior.
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { ChannelDirectoryEntry } from "../../channels/plugins/types.js";
 import type { OpenClawConfig } from "../../config/config.js";

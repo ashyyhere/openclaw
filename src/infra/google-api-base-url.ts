@@ -1,3 +1,5 @@
+// infra google api base url helpers and runtime behavior.
+/** Reused constant for DEFAULT GOOGLE API BASE URL behavior in src/infra. */
 export const DEFAULT_GOOGLE_API_BASE_URL = "https://generativelanguage.googleapis.com/v1beta";
 const GOOGLE_GENERATIVE_LANGUAGE_HOST = "generativelanguage.googleapis.com";
 
@@ -9,6 +11,7 @@ function isCanonicalGoogleApiOriginShorthand(value: string): boolean {
   return /^https:\/\/generativelanguage\.googleapis\.com\/?$/i.test(value);
 }
 
+/** Reused helper for normalize Google Api Base Url behavior in src/infra. */
 export function normalizeGoogleApiBaseUrl(baseUrl?: string): string {
   const raw = trimTrailingSlashes(baseUrl?.trim() || DEFAULT_GOOGLE_API_BASE_URL);
   try {

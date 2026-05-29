@@ -1,3 +1,4 @@
+// infra is main helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 
@@ -33,6 +34,7 @@ function resolveDefaultCwd(currentFile: string): string {
   }
 }
 
+/** Reused helper for is Main Module behavior in src/infra. */
 export function isMainModule({
   currentFile,
   argv = process.argv,

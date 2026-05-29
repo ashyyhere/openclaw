@@ -1,3 +1,4 @@
+// ui vitest config helpers and runtime behavior.
 import { playwright } from "@vitest/browser-playwright";
 import { defineConfig, defineProject } from "vitest/config";
 import {

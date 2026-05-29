@@ -1,3 +1,4 @@
+// Tests infra system run approval binding test behavior.
 import { describe, expect, it } from "vitest";
 import {
   buildSystemRunApprovalBinding,

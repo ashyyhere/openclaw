@@ -1,3 +1,4 @@
+// extensions/telegram/src button types helpers and runtime behavior.
 import { reduceInteractiveReply } from "openclaw/plugin-sdk/interactive-runtime";
 import {
   isMessagePresentationInteractiveBlock,

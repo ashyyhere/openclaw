@@ -1,3 +1,4 @@
+// Tests infra heartbeat runner respects ackmaxchars heartbeat acks test behavior.
 import fs from "node:fs/promises";
 import { describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";

@@ -1,3 +1,4 @@
+// Tests extensions/qqbot/src/engine/api media test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { MediaFileType, type UploadMediaResponse } from "../types.js";
 import { MAX_UPLOAD_SIZE } from "../utils/file-utils.js";

@@ -1,11 +1,14 @@
+/** Combines command path policy and environment flags into startup behavior. */
 import { isTruthyEnvValue } from "../infra/env.js";
 import type { CliCommandPluginLoadPolicy } from "./command-catalog.js";
 import { resolveCliCommandPathPolicy } from "./command-path-policy.js";
 
+/** Reused helper for should Bypass Config Guard For Command Path behavior in src/cli. */
 export function shouldBypassConfigGuardForCommandPath(commandPath: string[]): boolean {
   return resolveCliCommandPathPolicy(commandPath).bypassConfigGuard;
 }
 
+/** Reused helper for should Skip Route Config Guard For Command Path behavior in src/cli. */
 export function shouldSkipRouteConfigGuardForCommandPath(params: {
   commandPath: string[];
   suppressDoctorStdout: boolean;
@@ -17,6 +20,7 @@ export function shouldSkipRouteConfigGuardForCommandPath(params: {
   );
 }
 
+/** Reused helper for should Load Plugins For Command Path behavior in src/cli. */
 export function shouldLoadPluginsForCommandPath(params: {
   argv?: string[];
   commandPath: string[];
@@ -47,6 +51,7 @@ function shouldLoadPlugins(params: {
   return loadPlugins === "always" || (loadPlugins === "text-only" && !params.jsonOutputMode);
 }
 
+/** Reused helper for should Hide Cli Banner For Command Path behavior in src/cli. */
 export function shouldHideCliBannerForCommandPath(
   commandPath: string[],
   env: NodeJS.ProcessEnv = process.env,
@@ -57,10 +62,12 @@ export function shouldHideCliBannerForCommandPath(
   );
 }
 
+/** Reused helper for should Ensure Cli Path For Command Path behavior in src/cli. */
 export function shouldEnsureCliPathForCommandPath(commandPath: string[]): boolean {
   return commandPath.length === 0 || resolveCliCommandPathPolicy(commandPath).ensureCliPath;
 }
 
+/** Reused helper for resolve Cli Startup Policy behavior in src/cli. */
 export function resolveCliStartupPolicy(params: {
   argv?: string[];
   commandPath: string[];

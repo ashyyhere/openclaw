@@ -1,3 +1,4 @@
+// extensions/anthropic provider discovery helpers and runtime behavior.
 import type { ProviderPlugin } from "openclaw/plugin-sdk/provider-model-shared";
 import { readClaudeCliCredentialsForRuntime } from "./cli-auth-seam.js";
 

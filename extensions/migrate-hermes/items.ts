@@ -1,3 +1,4 @@
+// extensions/migrate-hermes items helpers and runtime behavior.
 import type { MigrationItem } from "openclaw/plugin-sdk/migration";
 import {
   createMigrationItem,

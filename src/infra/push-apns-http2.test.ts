@@ -1,3 +1,4 @@
+// Tests infra push apns http2 test behavior.
 import type http2 from "node:http2";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { MAX_TIMER_TIMEOUT_MS } from "../shared/number-coercion.js";

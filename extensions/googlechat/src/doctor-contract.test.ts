@@ -1,3 +1,4 @@
+// Tests extensions/googlechat/src doctor contract test behavior.
 import { describe, expect, it } from "vitest";
 import { normalizeCompatibilityConfig } from "./doctor-contract.js";
 

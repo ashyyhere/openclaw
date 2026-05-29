@@ -1,3 +1,4 @@
+// Tests extensions/feishu/src bot group name test behavior.
 import { afterAll, describe, it, expect, vi, beforeEach } from "vitest";
 import { resolveGroupName, clearGroupNameCache } from "./bot.js";
 import type { ResolvedFeishuAccount } from "./types.js";

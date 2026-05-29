@@ -1,3 +1,4 @@
+/** Helpers for deciding whether ACP sessions should speak directly or via parent. */
 import type { SessionEntry } from "../config/sessions/types.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 
@@ -20,6 +21,7 @@ function resolveAcpSessionInteractionMode(
   return "interactive";
 }
 
+/** Return whether an ACP session is parent-owned background work. */
 export function isParentOwnedBackgroundAcpSession(entry?: SessionInteractionEntry | null): boolean {
   return resolveAcpSessionInteractionMode(entry) === "parent-owned-background";
 }

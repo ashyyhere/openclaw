@@ -1,3 +1,4 @@
+/** Registers system-level CLI commands for diagnostics and maintenance. */
 import type { Command } from "commander";
 import { formatDocsLink } from "../../packages/terminal-core/src/links.js";
 import { theme } from "../../packages/terminal-core/src/theme.js";
@@ -45,6 +46,7 @@ async function runSystemGatewayCommand(
   }
 }
 
+/** Reused helper for register System Cli behavior in src/cli. */
 export function registerSystemCli(program: Command) {
   const system = program
     .command("system")

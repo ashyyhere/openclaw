@@ -1,3 +1,4 @@
+// Tests infra runtime status test behavior.
 import { describe, expect, it } from "vitest";
 import { formatRuntimeStatusWithDetails } from "./runtime-status.js";
 

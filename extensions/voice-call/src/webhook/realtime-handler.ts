@@ -1,3 +1,4 @@
+// extensions/voice-call/src/webhook realtime handler helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import http from "node:http";
 import type { Duplex } from "node:stream";

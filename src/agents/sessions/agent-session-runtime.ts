@@ -1,3 +1,4 @@
+/** Creates full AgentSession runtimes from OpenClaw session services. */
 import { copyFileSync, existsSync, mkdirSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 import type {
@@ -411,6 +412,7 @@ export class AgentSessionRuntime {
  * The same factory is stored on the returned AgentSessionRuntime and reused for
  * later /new, /resume, /fork, and import flows.
  */
+/** Creates an AgentSession plus diagnostics and runtime service metadata. */
 export async function createAgentSessionRuntime(
   createRuntime: CreateAgentSessionRuntimeFactory,
   options: {
@@ -431,6 +433,7 @@ export async function createAgentSessionRuntime(
   );
 }
 
+/** Re-exported API for src/agents/sessions. */
 export {
   type AgentSessionRuntimeDiagnostic,
   type AgentSessionServices,

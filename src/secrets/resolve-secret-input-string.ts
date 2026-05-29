@@ -1,3 +1,4 @@
+// secrets resolve secret input string helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {
   normalizeSecretInputString,
@@ -8,6 +9,7 @@ import { resolveSecretRefString } from "./resolve.js";
 
 type SecretDefaults = NonNullable<OpenClawConfig["secrets"]>["defaults"];
 
+/** Reused helper for resolve Secret Input String behavior in src/secrets. */
 export async function resolveSecretInputString(params: {
   config: OpenClawConfig;
   value: unknown;

@@ -1,3 +1,4 @@
+// extensions/memory-wiki/src config compat helpers and runtime behavior.
 import type { OpenClawConfig } from "../api.js";
 
 type LegacyConfigRule = {

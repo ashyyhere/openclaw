@@ -1,3 +1,4 @@
+// extensions/qa-lab/src/live-transports/whatsapp cli helpers and runtime behavior.
 import {
   createLazyCliRuntimeLoader,
   createLiveTransportQaCliRegistration,

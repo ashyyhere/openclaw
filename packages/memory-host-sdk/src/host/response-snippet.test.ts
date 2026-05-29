@@ -1,3 +1,4 @@
+// Tests packages/memory-host-sdk/src/host response snippet test behavior.
 import { describe, expect, it } from "vitest";
 import { readResponseTextSnippet } from "./response-snippet.js";
 

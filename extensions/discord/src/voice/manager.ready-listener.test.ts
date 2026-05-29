@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/voice manager ready listener test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { GatewayDispatchEvents } from "../internal/discord.js";
 import {

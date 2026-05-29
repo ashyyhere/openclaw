@@ -1,3 +1,4 @@
+/** Tests generated models config uses runtime source snapshots for secrets. */
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { createFixtureSuite } from "../test-utils/fixture-suite.js";

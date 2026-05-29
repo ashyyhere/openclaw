@@ -1,3 +1,4 @@
+// ui/src/ui gateway helpers and runtime behavior.
 import {
   GATEWAY_CLIENT_MODES,
   GATEWAY_CLIENT_NAMES,
@@ -24,6 +25,7 @@ import { clearDeviceAuthToken, loadDeviceAuthToken, storeDeviceAuthToken } from 
 import { loadOrCreateDeviceIdentity, signDevicePayload } from "./device-identity.ts";
 import { generateUUID } from "./uuid.ts";
 
+/** Shared type for Gateway Event Frame in ui/src/ui. */
 export type GatewayEventFrame = {
   type: "event";
   event: string;
@@ -32,6 +34,7 @@ export type GatewayEventFrame = {
   stateVersion?: { presence: number; health: number };
 };
 
+/** Shared type for Gateway Response Frame in ui/src/ui. */
 export type GatewayResponseFrame = {
   type: "res";
   id: string;
@@ -46,6 +49,7 @@ export type GatewayResponseFrame = {
   };
 };
 
+/** Shared type for Gateway Error Info in ui/src/ui. */
 export type GatewayErrorInfo = {
   code: string;
   message: string;
@@ -54,6 +58,7 @@ export type GatewayErrorInfo = {
   retryAfterMs?: number;
 };
 
+/** Reused class for Gateway Request Error behavior in ui/src/ui. */
 export class GatewayRequestError extends Error {
   readonly gatewayCode: string;
   readonly details?: unknown;
@@ -90,6 +95,7 @@ function enrichProtocolMismatchDetails(message: string | undefined, details: unk
   };
 }
 
+/** Reused helper for resolve Gateway Error Detail Code behavior in ui/src/ui. */
 export function resolveGatewayErrorDetailCode(
   error: { details?: unknown } | null | undefined,
 ): string | null {
@@ -167,6 +173,7 @@ function isTrustedRetryEndpoint(url: string): boolean {
   }
 }
 
+/** Shared type for Gateway Hello Ok in ui/src/ui. */
 export type GatewayHelloOk = {
   type: "hello-ok";
   protocol: number;
@@ -205,6 +212,7 @@ type SelectedConnectAuth = {
 
 const CONTROL_UI_OPERATOR_ROLE = "operator";
 
+/** Reused constant for CONTROL UI OPERATOR SCOPES behavior in ui/src/ui. */
 export const CONTROL_UI_OPERATOR_SCOPES = [
   "operator.admin",
   "operator.read",
@@ -213,12 +221,14 @@ export const CONTROL_UI_OPERATOR_SCOPES = [
   "operator.pairing",
 ] as const;
 
+/** Shared type for Gateway Connect Auth in ui/src/ui. */
 export type GatewayConnectAuth = {
   token?: string;
   deviceToken?: string;
   password?: string;
 };
 
+/** Shared type for Gateway Connect Device in ui/src/ui. */
 export type GatewayConnectDevice = {
   id: string;
   publicKey: string;
@@ -227,6 +237,7 @@ export type GatewayConnectDevice = {
   nonce: string;
 };
 
+/** Shared type for Gateway Connect Client Info in ui/src/ui. */
 export type GatewayConnectClientInfo = {
   id: GatewayClientName;
   version: string;
@@ -235,6 +246,7 @@ export type GatewayConnectClientInfo = {
   instanceId?: string;
 };
 
+/** Shared type for Gateway Connect Params in ui/src/ui. */
 export type GatewayConnectParams = {
   minProtocol: typeof MIN_CLIENT_PROTOCOL_VERSION;
   maxProtocol: typeof PROTOCOL_VERSION;
@@ -269,6 +281,7 @@ type DeviceTokenRetryDecision = {
   url: string;
 };
 
+/** Shared type for Gateway Browser Client Options in ui/src/ui. */
 export type GatewayBrowserClientOptions = {
   url: string;
   token?: string;
@@ -285,8 +298,10 @@ export type GatewayBrowserClientOptions = {
   onRequestTiming?: (timing: GatewayRequestTiming) => void;
 };
 
+/** Shared type for Gateway Event Listener in ui/src/ui. */
 export type GatewayEventListener = (evt: GatewayEventFrame) => void;
 
+/** Shared type for Gateway Request Timing in ui/src/ui. */
 export type GatewayRequestTiming = {
   id: string;
   method: string;
@@ -423,6 +438,7 @@ async function buildGatewayConnectDevice(params: {
   };
 }
 
+/** Reused helper for should Retry With Device Token behavior in ui/src/ui. */
 export function shouldRetryWithDeviceToken(params: DeviceTokenRetryDecision): boolean {
   return (
     !params.deviceTokenRetryBudgetUsed &&
@@ -435,6 +451,7 @@ export function shouldRetryWithDeviceToken(params: DeviceTokenRetryDecision): bo
   );
 }
 
+/** Reused class for Gateway Browser Client behavior in ui/src/ui. */
 export class GatewayBrowserClient {
   private ws: WebSocket | null = null;
   private pending = new Map<string, Pending>();

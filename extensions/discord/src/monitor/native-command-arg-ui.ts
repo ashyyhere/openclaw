@@ -1,3 +1,4 @@
+// extensions/discord/src/monitor native command arg ui helpers and runtime behavior.
 import { ButtonStyle } from "discord-api-types/v10";
 import {
   buildCommandTextFromArgs,

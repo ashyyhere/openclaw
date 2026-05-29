@@ -1,3 +1,4 @@
+// image-generation normalization helpers and runtime behavior.
 import {
   hasMediaNormalizationEntry,
   resolveClosestAspectRatio,
@@ -37,6 +38,7 @@ function finalizeImageNormalization(
     : undefined;
 }
 
+/** Reused helper for resolve Image Generation Overrides behavior in src/image-generation. */
 export function resolveImageGenerationOverrides(params: {
   provider: ImageGenerationProvider;
   model?: string;

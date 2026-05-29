@@ -1,8 +1,10 @@
+// plugins install source info helpers and runtime behavior.
 import { parseClawHubPluginSpec } from "../infra/clawhub-spec.js";
 import { parseRegistryNpmSpec, type ParsedRegistryNpmSpec } from "../infra/npm-registry-spec.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import type { PluginPackageInstall } from "./manifest.js";
 
+/** Shared type for Plugin Install Source Warning in src/plugins. */
 export type PluginInstallSourceWarning =
   | "invalid-clawhub-spec"
   | "invalid-npm-spec"
@@ -14,12 +16,14 @@ export type PluginInstallSourceWarning =
   | "npm-spec-missing-integrity"
   | "npm-spec-package-name-mismatch";
 
+/** Shared type for Plugin Install Npm Pin State in src/plugins. */
 export type PluginInstallNpmPinState =
   | "exact-with-integrity"
   | "exact-without-integrity"
   | "floating-with-integrity"
   | "floating-without-integrity";
 
+/** Shared type for Plugin Install Npm Source Info in src/plugins. */
 export type PluginInstallNpmSourceInfo = {
   spec: string;
   packageName: string;
@@ -31,10 +35,12 @@ export type PluginInstallNpmSourceInfo = {
   pinState: PluginInstallNpmPinState;
 };
 
+/** Shared type for Plugin Install Local Source Info in src/plugins. */
 export type PluginInstallLocalSourceInfo = {
   path: string;
 };
 
+/** Shared type for Plugin Install Claw Hub Source Info in src/plugins. */
 export type PluginInstallClawHubSourceInfo = {
   spec: string;
   packageName: string;
@@ -42,6 +48,7 @@ export type PluginInstallClawHubSourceInfo = {
   exactVersion: boolean;
 };
 
+/** Shared type for Plugin Install Source Info in src/plugins. */
 export type PluginInstallSourceInfo = {
   defaultChoice?: PluginPackageInstall["defaultChoice"];
   clawhub?: PluginInstallClawHubSourceInfo;
@@ -50,6 +57,7 @@ export type PluginInstallSourceInfo = {
   warnings: readonly PluginInstallSourceWarning[];
 };
 
+/** Shared type for Describe Plugin Install Source Options in src/plugins. */
 export type DescribePluginInstallSourceOptions = {
   expectedPackageName?: string | null;
 };
@@ -76,6 +84,7 @@ function normalizeExpectedPackageName(value: string | null | undefined): string 
   return parseRegistryNpmSpec(expected)?.name ?? expected;
 }
 
+/** Reused helper for describe Plugin Install Source behavior in src/plugins. */
 export function describePluginInstallSource(
   install: PluginPackageInstall,
   options?: DescribePluginInstallSourceOptions,

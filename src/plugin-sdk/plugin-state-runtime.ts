@@ -1,3 +1,4 @@
+/** Runtime SDK barrel for plugin state store contracts. */
 export type {
   OpenKeyedStoreOptions,
   PluginStateEntry,

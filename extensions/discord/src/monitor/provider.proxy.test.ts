@@ -1,3 +1,4 @@
+// Tests extensions/discord/src/monitor provider proxy test behavior.
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 function createGatewayInfoBody(overrides?: {

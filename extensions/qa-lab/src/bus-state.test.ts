@@ -1,3 +1,4 @@
+// Tests extensions/qa-lab/src bus state test behavior.
 import { describe, expect, it } from "vitest";
 import { createQaBusState } from "./bus-state.js";
 

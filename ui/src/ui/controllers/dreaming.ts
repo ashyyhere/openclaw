@@ -1,7 +1,9 @@
+// ui/src/ui/controllers dreaming helpers and runtime behavior.
 import type { GatewayBrowserClient, GatewayHelloOk } from "../gateway.ts";
 import { isPluginEnabledInConfigSnapshot } from "../plugin-activation.ts";
 import type { ConfigSnapshot } from "../types.ts";
 
+/** Shared type for Dreaming Phase Id in ui/src/ui/controllers. */
 export type DreamingPhaseId = "light" | "deep" | "rem";
 const DEFAULT_DREAM_DIARY_PATH = "DREAMS.md";
 const DEFAULT_DREAMING_PLUGIN_ID = "memory-core";
@@ -35,6 +37,7 @@ type RemDreamingStatus = DreamingPhaseStatusBase & {
   minPatternStrength: number;
 };
 
+/** Shared type for Dreaming Entry in ui/src/ui/controllers. */
 export type DreamingEntry = {
   key: string;
   path: string;
@@ -52,6 +55,7 @@ export type DreamingEntry = {
   lastRecalledAt?: string;
 };
 
+/** Shared type for Dreaming Status in ui/src/ui/controllers. */
 export type DreamingStatus = {
   enabled: boolean;
   timezone?: string;
@@ -82,6 +86,7 @@ export type DreamingStatus = {
   };
 };
 
+/** Shared type for Wiki Import Insight Item in ui/src/ui/controllers. */
 export type WikiImportInsightItem = {
   pagePath: string;
   title: string;
@@ -105,6 +110,7 @@ export type WikiImportInsightItem = {
   updatedAt?: string;
 };
 
+/** Shared type for Wiki Import Insight Cluster in ui/src/ui/controllers. */
 export type WikiImportInsightCluster = {
   key: string;
   label: string;
@@ -116,6 +122,7 @@ export type WikiImportInsightCluster = {
   items: WikiImportInsightItem[];
 };
 
+/** Shared type for Wiki Import Insights in ui/src/ui/controllers. */
 export type WikiImportInsights = {
   sourceType: "chatgpt";
   totalItems: number;
@@ -123,6 +130,7 @@ export type WikiImportInsights = {
   clusters: WikiImportInsightCluster[];
 };
 
+/** Shared type for Wiki Memory Palace Item in ui/src/ui/controllers. */
 export type WikiMemoryPalaceItem = {
   pagePath: string;
   title: string;
@@ -139,6 +147,7 @@ export type WikiMemoryPalaceItem = {
   snippet?: string;
 };
 
+/** Shared type for Wiki Memory Palace Cluster in ui/src/ui/controllers. */
 export type WikiMemoryPalaceCluster = {
   key: WikiMemoryPalaceItem["kind"];
   label: string;
@@ -150,8 +159,10 @@ export type WikiMemoryPalaceCluster = {
   items: WikiMemoryPalaceItem[];
 };
 
+/** Shared type for Wiki Memory Palace Page Counts in ui/src/ui/controllers. */
 export type WikiMemoryPalacePageCounts = Record<WikiMemoryPalaceItem["kind"], number>;
 
+/** Shared type for Wiki Memory Palace in ui/src/ui/controllers. */
 export type WikiMemoryPalace = {
   totalItems: number;
   totalPages: number;
@@ -205,6 +216,7 @@ type WikiMemoryPalacePayload = {
   clusters?: unknown;
 };
 
+/** Shared type for Dreaming State in ui/src/ui/controllers. */
 export type DreamingState = {
   client: GatewayBrowserClient | null;
   connected: boolean;
@@ -377,6 +389,7 @@ function resolveDreamingPluginId(configValue: Record<string, unknown> | null): s
   return DEFAULT_DREAMING_PLUGIN_ID;
 }
 
+/** Reused helper for resolve Configured Dreaming behavior in ui/src/ui/controllers. */
 export function resolveConfiguredDreaming(configValue: Record<string, unknown> | null): {
   pluginId: string;
   enabled: boolean;
@@ -774,6 +787,7 @@ function normalizeDreamingStatus(raw: unknown): DreamingStatus | null {
   };
 }
 
+/** Reused helper for load Dreaming Status behavior in ui/src/ui/controllers. */
 export async function loadDreamingStatus(state: DreamingState): Promise<void> {
   if (!state.client || !state.connected || state.dreamingStatusLoading) {
     return;
@@ -793,6 +807,7 @@ export async function loadDreamingStatus(state: DreamingState): Promise<void> {
   }
 }
 
+/** Reused helper for load Dream Diary behavior in ui/src/ui/controllers. */
 export async function loadDreamDiary(state: DreamingState): Promise<void> {
   if (!state.client || !state.connected || state.dreamDiaryLoading) {
     return;
@@ -820,6 +835,7 @@ export async function loadDreamDiary(state: DreamingState): Promise<void> {
   }
 }
 
+/** Reused helper for load Wiki Import Insights behavior in ui/src/ui/controllers. */
 export async function loadWikiImportInsights(state: DreamingState): Promise<void> {
   if (!state.client || !state.connected || state.wikiImportInsightsLoading) {
     return;
@@ -844,6 +860,7 @@ export async function loadWikiImportInsights(state: DreamingState): Promise<void
   }
 }
 
+/** Reused helper for load Wiki Memory Palace behavior in ui/src/ui/controllers. */
 export async function loadWikiMemoryPalace(state: DreamingState): Promise<void> {
   if (!state.client || !state.connected || state.wikiMemoryPalaceLoading) {
     return;
@@ -928,26 +945,31 @@ async function runDreamDiaryAction(
   }
 }
 
+/** Reused helper for backfill Dream Diary behavior in ui/src/ui/controllers. */
 export async function backfillDreamDiary(state: DreamingState): Promise<boolean> {
   return runDreamDiaryAction(state, "doctor.memory.backfillDreamDiary");
 }
 
+/** Reused helper for reset Dream Diary behavior in ui/src/ui/controllers. */
 export async function resetDreamDiary(state: DreamingState): Promise<boolean> {
   return runDreamDiaryAction(state, "doctor.memory.resetDreamDiary");
 }
 
+/** Reused helper for reset Grounded Short Term behavior in ui/src/ui/controllers. */
 export async function resetGroundedShortTerm(state: DreamingState): Promise<boolean> {
   return runDreamDiaryAction(state, "doctor.memory.resetGroundedShortTerm", {
     reloadDiary: false,
   });
 }
 
+/** Reused helper for repair Dreaming Artifacts behavior in ui/src/ui/controllers. */
 export async function repairDreamingArtifacts(state: DreamingState): Promise<boolean> {
   return runDreamDiaryAction(state, "doctor.memory.repairDreamingArtifacts", {
     reloadDiary: false,
   });
 }
 
+/** Reused helper for copy Dreaming Archive Path behavior in ui/src/ui/controllers. */
 export async function copyDreamingArchivePath(state: DreamingState): Promise<boolean> {
   const path = state.dreamDiaryActionArchivePath;
   if (!path) {
@@ -976,6 +998,7 @@ export async function copyDreamingArchivePath(state: DreamingState): Promise<boo
   }
 }
 
+/** Reused helper for dedupe Dream Diary behavior in ui/src/ui/controllers. */
 export async function dedupeDreamDiary(state: DreamingState): Promise<boolean> {
   return runDreamDiaryAction(state, "doctor.memory.dedupeDreamDiary");
 }
@@ -1060,6 +1083,7 @@ async function ensureDreamingPathSupported(
   return true;
 }
 
+/** Reused helper for update Dreaming Enabled behavior in ui/src/ui/controllers. */
 export async function updateDreamingEnabled(
   state: DreamingState,
   enabled: boolean,

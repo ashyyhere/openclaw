@@ -1,3 +1,4 @@
+/** Tests update_plan registration and gating in OpenClaw tools. */
 import { afterEach, describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import { setEmbeddedMode } from "../infra/embedded-mode.js";

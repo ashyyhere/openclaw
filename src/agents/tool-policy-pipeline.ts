@@ -1,3 +1,4 @@
+/** Applies configured, sender, and plugin tool policy filters to available tools. */
 import { filterToolsByPolicy } from "./agent-tools.policy.js";
 import type { AnyAgentTool } from "./agent-tools.types.js";
 import { isKnownCoreToolId } from "./tool-catalog.js";
@@ -29,6 +30,7 @@ function rememberToolPolicyWarning(warning: string): boolean {
   return true;
 }
 
+/** Shared type for Tool Policy Pipeline Step in src/agents. */
 export type ToolPolicyPipelineStep = {
   policy: ToolPolicyLike | undefined;
   label: string;
@@ -38,6 +40,7 @@ export type ToolPolicyPipelineStep = {
   unavailableCoreToolReason?: string;
 };
 
+/** Reused helper for build Default Tool Policy Pipeline Steps behavior in src/agents. */
 export function buildDefaultToolPolicyPipelineSteps(params: {
   profilePolicy?: ToolPolicyLike;
   profile?: string;
@@ -115,6 +118,7 @@ export function buildDefaultToolPolicyPipelineSteps(params: {
   ];
 }
 
+/** Reused helper for apply Tool Policy Pipeline behavior in src/agents. */
 export function applyToolPolicyPipeline(params: {
   tools: AnyAgentTool[];
   toolMeta: (tool: AnyAgentTool) => { pluginId: string } | undefined;
@@ -228,6 +232,7 @@ function describeUnknownAllowlistSuffix(params: {
   return preface ? `${preface} ${detail}` : detail;
 }
 
+/** Reused helper for reset Tool Policy Warning Cache For Test behavior in src/agents. */
 export function resetToolPolicyWarningCacheForTest(): void {
   seenToolPolicyWarnings.clear();
   toolPolicyWarningOrder.length = 0;

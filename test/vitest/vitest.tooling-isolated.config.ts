@@ -1,3 +1,4 @@
+// test/vitest vitest tooling isolated config helpers and runtime behavior.
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
 export function createToolingIsolatedVitestConfig(env?: Record<string, string | undefined>) {

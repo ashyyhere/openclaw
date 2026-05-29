@@ -1,3 +1,4 @@
+/** Tests agents_list OpenClaw tool filtering. */
 import { describe, expect, it, vi } from "vitest";
 import { createPerSenderSessionConfig } from "./test-helpers/session-config.js";
 import { createAgentsListTool } from "./tools/agents-list-tool.js";

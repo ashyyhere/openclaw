@@ -1,3 +1,4 @@
+// Tests extensions/msteams/src/attachments bot framework test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { setMSTeamsRuntime } from "../runtime.js";
 import {

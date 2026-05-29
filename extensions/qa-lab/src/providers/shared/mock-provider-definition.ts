@@ -1,3 +1,4 @@
+// extensions/qa-lab/src/providers/shared mock provider definition helpers and runtime behavior.
 import { createMockProviderMap } from "./mock-model-config.js";
 import type { QaProviderDefinition, QaProviderMode } from "./types.js";
 

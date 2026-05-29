@@ -1,5 +1,7 @@
+// daemon runtime parse helpers and runtime behavior.
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
+/** Reused helper for parse Key Value Output behavior in src/daemon. */
 export function parseKeyValueOutput(output: string, separator: string): Record<string, string> {
   const entries: Record<string, string> = {};
   for (const rawLine of output.split(/\r?\n/)) {

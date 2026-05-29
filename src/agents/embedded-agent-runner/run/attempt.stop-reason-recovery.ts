@@ -1,3 +1,4 @@
+/** Converts sensitive unhandled stop reasons into safe assistant messages. */
 import { formatErrorMessage } from "../../../infra/errors.js";
 import { createAssistantMessageEventStream } from "../../../llm/utils/event-stream.js";
 import type { StreamFn } from "../../runtime/index.js";
@@ -135,6 +136,7 @@ function wrapStreamHandleUnhandledStopReason(
   return stream;
 }
 
+/** Wraps a stream function to recover provider stop-reason errors safely. */
 export function wrapStreamFnHandleSensitiveStopReason(baseFn: StreamFn): StreamFn {
   return (model, context, options) => {
     try {

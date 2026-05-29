@@ -1,3 +1,4 @@
+// Tests extensions/file-transfer/src/tools file write tool test behavior.
 import { callGatewayTool } from "openclaw/plugin-sdk/agent-harness-runtime";
 import { describe, expect, it, vi } from "vitest";
 import { createFileWriteTool } from "./file-write-tool.js";

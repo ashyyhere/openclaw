@@ -1,3 +1,4 @@
+/** Shared stream and client-tool types for command execution. */
 export type AgentStreamParams = {
   /** Provider stream params override (best-effort). */
   temperature?: number;
@@ -14,6 +15,7 @@ export type AgentStreamParams = {
 };
 
 // Simplified tool definition for client-provided tools (OpenResponses hosted tools)
+/** Shared type for Client Tool Definition in src/agents/command. */
 export type ClientToolDefinition = {
   type: "function";
   function: {

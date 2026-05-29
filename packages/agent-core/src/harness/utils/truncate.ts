@@ -9,9 +9,12 @@
  */
 
 export const DEFAULT_MAX_LINES = 2000;
+/** Public constant for DEFAULT MAX BYTES behavior in packages/agent-core. */
 export const DEFAULT_MAX_BYTES = 50 * 1024; // 50KB
+/** Public constant for GREP MAX LINE LENGTH behavior in packages/agent-core. */
 export const GREP_MAX_LINE_LENGTH = 500; // Max chars per grep match line
 
+/** Public type describing Truncation Result for packages/agent-core. */
 export interface TruncationResult {
   /** The truncated content */
   content: string;
@@ -37,6 +40,7 @@ export interface TruncationResult {
   maxBytes: number;
 }
 
+/** Public type describing Truncation Options for packages/agent-core. */
 export interface TruncationOptions {
   /** Maximum number of lines (default: 2000) */
   maxLines?: number;

@@ -1,3 +1,4 @@
+// Markdown-style YAML frontmatter parsing helpers.
 import { parse } from "yaml";
 
 type ParsedFrontmatter<T extends Record<string, unknown>> = {
@@ -26,6 +27,7 @@ const extractFrontmatter = (content: string): { yamlString: string | null; body:
   };
 };
 
+/** Parse optional YAML frontmatter and return typed metadata plus the remaining body. */
 export const parseFrontmatter = <T extends Record<string, unknown> = Record<string, unknown>>(
   content: string,
 ): ParsedFrontmatter<T> => {
@@ -37,4 +39,5 @@ export const parseFrontmatter = <T extends Record<string, unknown> = Record<stri
   return { frontmatter: (parsed ?? {}) as T, body };
 };
 
+/** Return content without its leading YAML frontmatter block. */
 export const stripFrontmatter = (content: string): string => parseFrontmatter(content).body;

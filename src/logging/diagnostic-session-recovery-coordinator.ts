@@ -1,3 +1,4 @@
+// logging diagnostic session recovery coordinator helpers and runtime behavior.
 import { emitInternalDiagnosticEvent as emitDiagnosticEvent } from "../infra/diagnostic-events.js";
 import { markDiagnosticActivity as markActivity } from "./diagnostic-runtime.js";
 import type { SessionAttentionClassification } from "./diagnostic-session-attention.js";
@@ -14,6 +15,7 @@ import {
   peekDiagnosticSessionState,
 } from "./diagnostic-session-state.js";
 
+/** Shared type for Recover Stuck Session in src/logging. */
 export type RecoverStuckSession = (
   params: StuckSessionRecoveryRequest,
 ) => void | StuckSessionRecoveryOutcome | Promise<void | StuckSessionRecoveryOutcome>;
@@ -142,6 +144,7 @@ function applyRecoveryOutcomeToDiagnosticState(params: {
   markActivity();
 }
 
+/** Reused helper for request Stuck Session Recovery behavior in src/logging. */
 export function requestStuckSessionRecovery(params: {
   recover: RecoverStuckSession;
   request: StuckSessionRecoveryRequest;
@@ -215,6 +218,7 @@ export function requestStuckSessionRecovery(params: {
   }
 }
 
+/** Reused helper for reset Diagnostic Session Recovery Coordinator For Test behavior in src/logging. */
 export function resetDiagnosticSessionRecoveryCoordinatorForTest(): void {
   recoveryRequestsInFlight.clear();
 }

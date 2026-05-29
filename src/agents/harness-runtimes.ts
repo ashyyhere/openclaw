@@ -166,10 +166,12 @@ function pushConfiguredAgentModelRuntimeIds(
   }
 }
 
+/** Options controlling configured harness runtime collection. */
 export type ConfiguredAgentHarnessRuntimeOptions = {
   includeImplicitRuntimePreferences?: boolean;
 };
 
+/** Collect selectable plugin harness runtimes referenced by config. */
 export function collectConfiguredAgentHarnessRuntimes(
   config: OpenClawConfig,
   options: ConfiguredAgentHarnessRuntimeOptions = {},

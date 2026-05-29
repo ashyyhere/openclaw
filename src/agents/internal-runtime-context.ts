@@ -1,14 +1,21 @@
+/** Delimited internal runtime-context helpers and transcript sanitizers. */
+/** Begin delimiter for internal runtime context blocks. */
 export const INTERNAL_RUNTIME_CONTEXT_BEGIN = "<<<BEGIN_OPENCLAW_INTERNAL_CONTEXT>>>";
+/** End delimiter for internal runtime context blocks. */
 export const INTERNAL_RUNTIME_CONTEXT_END = "<<<END_OPENCLAW_INTERNAL_CONTEXT>>>";
 
 const ESCAPED_INTERNAL_RUNTIME_CONTEXT_BEGIN = "[[OPENCLAW_INTERNAL_CONTEXT_BEGIN]]";
 const ESCAPED_INTERNAL_RUNTIME_CONTEXT_END = "[[OPENCLAW_INTERNAL_CONTEXT_END]]";
 
+/** Reused constant for OPENCLAW RUNTIME CONTEXT NOTICE behavior in src/agents. */
 export const OPENCLAW_RUNTIME_CONTEXT_NOTICE =
   "This context is runtime-generated, not user-authored. Keep internal details private.";
+/** Reused constant for OPENCLAW NEXT TURN RUNTIME CONTEXT HEADER behavior in src/agents. */
 export const OPENCLAW_NEXT_TURN_RUNTIME_CONTEXT_HEADER =
   "OpenClaw runtime context for the immediately preceding user message.";
+/** Reused constant for OPENCLAW RUNTIME EVENT HEADER behavior in src/agents. */
 export const OPENCLAW_RUNTIME_EVENT_HEADER = "OpenClaw runtime event.";
+/** Reused constant for OPENCLAW RUNTIME CONTEXT CUSTOM TYPE behavior in src/agents. */
 export const OPENCLAW_RUNTIME_CONTEXT_CUSTOM_TYPE = "openclaw.runtime-context";
 
 const LEGACY_INTERNAL_CONTEXT_HEADER =
@@ -19,6 +26,7 @@ const LEGACY_INTERNAL_EVENT_SEPARATOR = "\n\n---\n\n";
 const LEGACY_UNTRUSTED_RESULT_BEGIN = "<<<BEGIN_UNTRUSTED_CHILD_RESULT>>>";
 const LEGACY_UNTRUSTED_RESULT_END = "<<<END_UNTRUSTED_CHILD_RESULT>>>";
 
+/** Escape runtime-context delimiters in untrusted text. */
 export function escapeInternalRuntimeContextDelimiters(value: string): string {
   return value
     .replaceAll(INTERNAL_RUNTIME_CONTEXT_BEGIN, ESCAPED_INTERNAL_RUNTIME_CONTEXT_BEGIN)
@@ -204,6 +212,7 @@ function stripRuntimeContextPromptPreface(text: string): string {
     : text;
 }
 
+/** Remove internal runtime-context blocks from text. */
 export function stripInternalRuntimeContext(text: string): string {
   if (!text) {
     return text;
@@ -218,6 +227,7 @@ export function stripInternalRuntimeContext(text: string): string {
   );
 }
 
+/** Extract internal runtime-context blocks from text. */
 export function extractInternalRuntimeContext(text: string): {
   text: string;
   runtimeContext?: string;
@@ -233,6 +243,7 @@ export function extractInternalRuntimeContext(text: string): {
   };
 }
 
+/** Return whether text contains an internal runtime-context block. */
 export function hasInternalRuntimeContext(text: string): boolean {
   if (!text) {
     return false;
@@ -257,6 +268,7 @@ function isOpenClawRuntimeContextCustomMessage(message: unknown): boolean {
   );
 }
 
+/** Remove runtime-context custom messages from a transcript. */
 export function stripRuntimeContextCustomMessages<T>(messages: T[]): T[] {
   if (!messages.some(isOpenClawRuntimeContextCustomMessage)) {
     return messages;
@@ -271,6 +283,7 @@ function isUserMessage(message: unknown): boolean {
 }
 
 /** Keeps only current-turn runtime context positioned immediately before the active user. */
+/** Remove historical runtime-context custom messages while preserving the current one. */
 export function stripHistoricalRuntimeContextCustomMessages<T>(messages: T[]): T[] {
   if (!messages.some(isOpenClawRuntimeContextCustomMessage)) {
     return messages;

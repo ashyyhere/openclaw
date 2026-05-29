@@ -1,3 +1,4 @@
+// extensions/qa-lab/web/src main helpers and runtime behavior.
 import "./styles.css";
 import { createQaLabApp } from "./app.js";
 

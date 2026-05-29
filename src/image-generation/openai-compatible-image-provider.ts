@@ -1,3 +1,4 @@
+// image-generation openai compatible image provider helpers and runtime behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { isProviderApiKeyConfigured } from "openclaw/plugin-sdk/provider-auth";
 import { resolveApiKeyForProvider } from "openclaw/plugin-sdk/provider-auth-runtime";
@@ -22,8 +23,10 @@ import type {
 
 type ModelProviderConfig = NonNullable<NonNullable<OpenClawConfig["models"]>["providers"]>[string];
 
+/** Shared type for Open Ai Compatible Image Request Mode in src/image-generation. */
 export type OpenAiCompatibleImageRequestMode = "generate" | "edit";
 
+/** Shared type for Open Ai Compatible Image Provider Request Params in src/image-generation. */
 export type OpenAiCompatibleImageProviderRequestParams = {
   req: ImageGenerationRequest;
   inputImages: ImageGenerationSourceImage[];
@@ -32,10 +35,12 @@ export type OpenAiCompatibleImageProviderRequestParams = {
   mode: OpenAiCompatibleImageRequestMode;
 };
 
+/** Shared type for Open Ai Compatible Image Provider Request Body in src/image-generation. */
 export type OpenAiCompatibleImageProviderRequestBody =
   | { kind: "json"; body: Record<string, unknown> }
   | { kind: "multipart"; form: FormData };
 
+/** Shared type for Open Ai Compatible Image Provider Options in src/image-generation. */
 export type OpenAiCompatibleImageProviderOptions = {
   id: string;
   label: string;
@@ -123,6 +128,7 @@ function resolveRequestTimeoutMs(params: {
   });
 }
 
+/** Reused helper for create Open Ai Compatible Image Generation Provider behavior in src/image-generation. */
 export function createOpenAiCompatibleImageGenerationProvider(
   options: OpenAiCompatibleImageProviderOptions,
 ): ImageGenerationProvider {

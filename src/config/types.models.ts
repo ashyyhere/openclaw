@@ -1,3 +1,4 @@
+// config types models helpers and runtime behavior.
 import type {
   AnthropicMessagesCompat,
   OpenAICompletionsCompat,
@@ -8,6 +9,7 @@ import type { AgentRuntimePolicyConfig } from "./types.agents-shared.js";
 import type { ConfiguredModelProviderRequest } from "./types.provider-request.js";
 import type { SecretInput } from "./types.secrets.js";
 
+/** Reused constant for MODEL APIS behavior in src/config. */
 export const MODEL_APIS = [
   "openai-completions",
   "openai-responses",
@@ -21,6 +23,7 @@ export const MODEL_APIS = [
   "azure-openai-responses",
 ] as const;
 
+/** Shared type for Model Api in src/config. */
 export type ModelApi = (typeof MODEL_APIS)[number];
 
 type SupportedOpenAICompatFields = Pick<
@@ -52,12 +55,14 @@ type SupportedAnthropicMessagesCompatFields = Pick<
   "supportsEagerToolInputStreaming" | "supportsLongCacheRetention"
 >;
 
+/** Shared type for Supported Thinking Format in src/config. */
 export type SupportedThinkingFormat =
   | NonNullable<OpenAICompletionsCompat["thinkingFormat"]>
   | "deepseek"
   | "openrouter"
   | "together";
 
+/** Reused constant for MODEL THINKING FORMATS behavior in src/config. */
 export const MODEL_THINKING_FORMATS = [
   "openai",
   "openrouter",
@@ -68,10 +73,12 @@ export const MODEL_THINKING_FORMATS = [
   "zai",
 ] as const satisfies readonly SupportedThinkingFormat[];
 
+/** Reused helper for is Model Thinking Format behavior in src/config. */
 export function isModelThinkingFormat(value: string): value is SupportedThinkingFormat {
   return (MODEL_THINKING_FORMATS as readonly string[]).includes(value);
 }
 
+/** Shared type for Model Compat Config in src/config. */
 export type ModelCompatConfig = SupportedOpenAICompatFields &
   SupportedOpenAIResponsesCompatFields &
   SupportedAnthropicMessagesCompatFields & {
@@ -91,6 +98,7 @@ export type ModelCompatConfig = SupportedOpenAICompatFields &
     requiresOpenAiAnthropicToolPayload?: boolean;
   };
 
+/** Shared type for Model Image Input Config in src/config. */
 export type ModelImageInputConfig = {
   /** Provider-documented maximum encoded image payload size. */
   maxBytes?: number;
@@ -104,12 +112,15 @@ export type ModelImageInputConfig = {
   tokenMode?: "tile" | "detail" | "provider";
 };
 
+/** Shared type for Model Media Input Config in src/config. */
 export type ModelMediaInputConfig = {
   image?: ModelImageInputConfig;
 };
 
+/** Shared type for Model Provider Auth Mode in src/config. */
 export type ModelProviderAuthMode = "api-key" | "aws-sdk" | "oauth" | "token";
 
+/** Shared type for Model Provider Local Service Config in src/config. */
 export type ModelProviderLocalServiceConfig = {
   command: string;
   args?: string[];
@@ -120,6 +131,7 @@ export type ModelProviderLocalServiceConfig = {
   idleStopMs?: number;
 };
 
+/** Shared type for Model Definition Config in src/config. */
 export type ModelDefinitionConfig = {
   id: string;
   name: string;
@@ -165,6 +177,7 @@ export type ModelDefinitionConfig = {
   metadataSource?: "models-add";
 };
 
+/** Shared type for Model Provider Config in src/config. */
 export type ModelProviderConfig = {
   baseUrl: string;
   apiKey?: SecretInput;
@@ -189,12 +202,15 @@ export type ModelProviderConfig = {
   models: ModelDefinitionConfig[];
 };
 
+/** Shared type for Model Provider Declaration Config in src/config. */
 export type ModelProviderDeclarationConfig = ModelProviderConfig;
 
+/** Shared type for Model Provider Config Input in src/config. */
 export type ModelProviderConfigInput = Omit<Partial<ModelProviderConfig>, "models"> & {
   models?: ModelDefinitionConfig[];
 };
 
+/** Shared type for Bedrock Discovery Config in src/config. */
 export type BedrockDiscoveryConfig = {
   enabled?: boolean;
   region?: string;
@@ -204,20 +220,24 @@ export type BedrockDiscoveryConfig = {
   defaultMaxTokens?: number;
 };
 
+/** Shared type for Discovery Toggle Config in src/config. */
 export type DiscoveryToggleConfig = {
   enabled?: boolean;
 };
 
+/** Shared type for Model Pricing Config in src/config. */
 export type ModelPricingConfig = {
   enabled?: boolean;
 };
 
+/** Shared type for Models Config in src/config. */
 export type ModelsConfig = {
   mode?: "merge" | "replace";
   providers?: Record<string, ModelProviderConfig>;
   pricing?: ModelPricingConfig;
 };
 
+/** Shared type for Models Config Input in src/config. */
 export type ModelsConfigInput = Omit<ModelsConfig, "providers"> & {
   providers?: Record<string, ModelProviderConfigInput>;
 };

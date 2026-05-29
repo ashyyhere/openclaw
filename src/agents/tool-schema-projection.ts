@@ -1,5 +1,7 @@
+/** Projects tool schemas into provider-compatible JSON schema shapes. */
 import type { AnyAgentTool } from "./tools/common.js";
 
+/** Shared type for Runtime Tool Input Schema Json in src/agents. */
 export type RuntimeToolInputSchemaJson =
   | null
   | boolean
@@ -8,17 +10,20 @@ export type RuntimeToolInputSchemaJson =
   | RuntimeToolInputSchemaJson[]
   | { [key: string]: RuntimeToolInputSchemaJson };
 
+/** Shared type for Runtime Tool Input Schema Projection in src/agents. */
 export type RuntimeToolInputSchemaProjection = {
   readonly schema: RuntimeToolInputSchemaJson;
   readonly violations: readonly string[];
 };
 
+/** Shared type for Runtime Tool Schema Diagnostic in src/agents. */
 export type RuntimeToolSchemaDiagnostic = {
   readonly toolName: string;
   readonly toolIndex: number;
   readonly violations: readonly string[];
 };
 
+/** Shared type for Runtime Tool Schema Inspection in src/agents. */
 export type RuntimeToolSchemaInspection<TTool extends Pick<AnyAgentTool, "name" | "parameters">> = {
   readonly tools: readonly TTool[];
   readonly diagnostics: readonly RuntimeToolSchemaDiagnostic[];
@@ -122,6 +127,7 @@ const schemaMapKeywords = new Set([
   "properties",
 ]);
 
+/** Reused helper for project Runtime Tool Input Schema behavior in src/agents. */
 export function projectRuntimeToolInputSchema(
   schema: unknown,
   path = "parameters",
@@ -140,6 +146,7 @@ export function projectRuntimeToolInputSchema(
   };
 }
 
+/** Reused helper for inspect Runtime Tool Input Schemas behavior in src/agents. */
 export function inspectRuntimeToolInputSchemas(
   tools: readonly Pick<AnyAgentTool, "name" | "parameters">[],
 ): RuntimeToolSchemaDiagnostic[] {
@@ -153,6 +160,7 @@ export function inspectRuntimeToolInputSchemas(
   });
 }
 
+/** Reused helper for filter Runtime Compatible Tools behavior in src/agents. */
 export function filterRuntimeCompatibleTools<
   TTool extends Pick<AnyAgentTool, "name" | "parameters">,
 >(tools: readonly TTool[]): RuntimeToolSchemaInspection<TTool> {

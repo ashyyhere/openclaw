@@ -1,3 +1,5 @@
+// memory-host-sdk secret helpers and runtime behavior.
+/** Re-exported API for src/memory-host-sdk. */
 export {
   hasConfiguredMemorySecretInput,
   resolveMemorySecretInputString,

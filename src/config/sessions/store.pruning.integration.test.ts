@@ -1,3 +1,4 @@
+// Tests config/sessions store pruning integration test behavior.
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";

@@ -1,3 +1,4 @@
+// Usage line formatting for reply agent run summaries.
 import {
   estimateUsageCost,
   formatTokenCount,
@@ -6,6 +7,7 @@ import {
 } from "../../utils/usage-format.js";
 import type { ReplyPayload } from "../types.js";
 
+/** Reused constant for format Response Usage Line behavior in src/auto-reply/reply. */
 export const formatResponseUsageLine = (params: {
   usage?: {
     input?: number;
@@ -51,6 +53,7 @@ export const formatResponseUsageLine = (params: {
   return `Usage: ${inputLabel} in / ${outputLabel} out${cacheSuffix}${suffix}`;
 };
 
+/** Reused constant for append Usage Line behavior in src/auto-reply/reply. */
 export const appendUsageLine = (payloads: ReplyPayload[], line: string): ReplyPayload[] => {
   let index = -1;
   for (let i = payloads.length - 1; i >= 0; i -= 1) {

@@ -1,3 +1,4 @@
+// Tests infra/command-explainer extract test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { Node as TreeSitterNode, Parser, Tree } from "web-tree-sitter";
 import { explainShellCommand } from "./extract.js";

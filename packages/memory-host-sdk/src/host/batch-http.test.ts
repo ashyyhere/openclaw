@@ -1,3 +1,4 @@
+// Tests packages/memory-host-sdk/src/host batch http test behavior.
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("./post-json.js", () => ({

@@ -1,3 +1,4 @@
+// extensions/browser plugin registration helpers and runtime behavior.
 import type {
   AnyAgentTool,
   OpenClawPluginApi,

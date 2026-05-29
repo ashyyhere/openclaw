@@ -1,3 +1,4 @@
+// Tests wizard clack prompter test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { createClackPrompter, tokenizedOptionFilter } from "./clack-prompter.js";
 

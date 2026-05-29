@@ -1,3 +1,4 @@
+// Tests test/scripts e2e mock config limits test behavior.
 import { spawnSync } from "node:child_process";
 import { describe, expect, it } from "vitest";
 

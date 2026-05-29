@@ -1,3 +1,4 @@
+/** Lifecycle controller for subagent completion, announcement, and cleanup transitions. */
 import { isSilentReplyText, SILENT_REPLY_TOKEN } from "../auto-reply/tokens.js";
 import type { cleanupBrowserSessionsForLifecycleEnd } from "../browser-lifecycle-cleanup.js";
 import type { callGateway as defaultCallGateway } from "../gateway/call.js";
@@ -132,6 +133,7 @@ function resolveExpiredExplicitRunDeadlineMs(params: {
   return deadlineMs !== undefined && params.nextEndedAt > deadlineMs ? deadlineMs : undefined;
 }
 
+/** Reused helper for create Subagent Registry Lifecycle Controller behavior in src/agents. */
 export function createSubagentRegistryLifecycleController(params: {
   runs: Map<string, SubagentRunRecord>;
   resumedRuns: Set<string>;

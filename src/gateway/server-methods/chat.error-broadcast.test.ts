@@ -1,3 +1,4 @@
+// Tests gateway/server-methods chat error broadcast test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { chatHandlers } from "./chat.js";
 import type { GatewayRequestContext } from "./types.js";

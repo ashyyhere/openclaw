@@ -1,3 +1,4 @@
+// Tests extensions/matrix/src/matrix thread bindings test behavior.
 import fsSync from "node:fs";
 import fs from "node:fs/promises";
 import os from "node:os";

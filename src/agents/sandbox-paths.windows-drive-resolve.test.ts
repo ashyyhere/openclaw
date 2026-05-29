@@ -1,3 +1,4 @@
+/** Tests Windows drive path handling in sandbox path resolution. */
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { resolveToolPathAgainstWorkspaceRoot } from "./agent-tools.read.js";

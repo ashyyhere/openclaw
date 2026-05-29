@@ -1,3 +1,4 @@
+// Tests config config agent concurrency defaults test behavior.
 import { describe, expect, it } from "vitest";
 import {
   DEFAULT_AGENT_MAX_CONCURRENT,

@@ -1,4 +1,6 @@
+/** Re-exports interactive outbound presentation helpers for channel plugins. */
 import type { InteractiveReply, InteractiveReplyBlock } from "../../../interactive/payload.js";
+/** Re-exported API for src/channels/plugins. */
 export {
   adaptMessagePresentationForChannel,
   applyPresentationActionLimits,

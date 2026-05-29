@@ -1,3 +1,4 @@
+// extensions/vydra speech provider helpers and runtime behavior.
 import {
   assertOkOrThrowHttpError,
   postJsonRequest,

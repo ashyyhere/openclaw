@@ -1,5 +1,7 @@
+// gateway hooks policy helpers and runtime behavior.
 import { normalizeAgentId } from "../routing/session-key.js";
 
+/** Reused helper for resolve Allowed Agent Ids behavior in src/gateway. */
 export function resolveAllowedAgentIds(raw: string[] | undefined): Set<string> | undefined {
   if (!Array.isArray(raw)) {
     return undefined;

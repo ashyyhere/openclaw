@@ -1,3 +1,4 @@
+/** Installs bundled plugins required by onboarding choices. */
 import fs from "node:fs";
 import path from "node:path";
 import { sanitizeTerminalText } from "../../packages/terminal-core/src/safe-text.js";
@@ -46,6 +47,7 @@ type InstallPluginFromClawHubResult = Awaited<
 const ONBOARDING_PLUGIN_INSTALL_TIMEOUT_MS = 5 * 60 * 1000;
 const ONBOARDING_PLUGIN_INSTALL_WATCHDOG_TIMEOUT_MS = ONBOARDING_PLUGIN_INSTALL_TIMEOUT_MS + 5_000;
 
+/** Shared type for Onboarding Plugin Install Entry in src/commands. */
 export type OnboardingPluginInstallEntry = {
   pluginId: string;
   label: string;
@@ -54,8 +56,10 @@ export type OnboardingPluginInstallEntry = {
   preferRemoteInstall?: boolean;
 };
 
+/** Shared type for Onboarding Plugin Install Status in src/commands. */
 export type OnboardingPluginInstallStatus = "installed" | "skipped" | "failed" | "timed_out";
 
+/** Shared type for Onboarding Plugin Install Result in src/commands. */
 export type OnboardingPluginInstallResult = {
   cfg: OpenClawConfig;
   installed: boolean;
@@ -961,6 +965,7 @@ async function installPluginFromClawHubSpecWithProgress(params: {
   }
 }
 
+/** Reused helper for ensure Onboarding Plugin Installed behavior in src/commands. */
 export async function ensureOnboardingPluginInstalled(params: {
   cfg: OpenClawConfig;
   entry: OnboardingPluginInstallEntry;

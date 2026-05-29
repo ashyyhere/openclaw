@@ -1,3 +1,4 @@
+// test/vitest vitest extension messaging config helpers and runtime behavior.
 import { messagingExtensionTestRoots } from "./vitest.extension-messaging-paths.mjs";
 import { loadPatternListFromEnv } from "./vitest.pattern-file.ts";
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";

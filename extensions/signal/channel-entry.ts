@@ -1,3 +1,4 @@
+// extensions/signal channel entry helpers and runtime behavior.
 import { defineBundledChannelEntry } from "openclaw/plugin-sdk/channel-entry-contract";
 
 export default defineBundledChannelEntry({

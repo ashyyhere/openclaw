@@ -1,3 +1,4 @@
+// ui/src/ui markdown helpers and runtime behavior.
 import DOMPurify from "dompurify";
 import hljs from "highlight.js/lib/core";
 import bash from "highlight.js/lib/languages/bash";
@@ -89,8 +90,10 @@ const HOST_LOCAL_FILE_HREF_RE =
 const markdownCache = new Map<string, string>();
 const TAIL_LINK_BLUR_CLASS = "chat-link-tail-blur";
 
+/** Shared type for Markdown Code Block Chrome in ui/src/ui. */
 export type MarkdownCodeBlockChrome = "copy" | "none";
 
+/** Shared type for Markdown Render Options in ui/src/ui. */
 export type MarkdownRenderOptions = {
   codeBlockChrome?: MarkdownCodeBlockChrome;
 };
@@ -282,6 +285,7 @@ function codeClassAttribute(lang: string, highlighted: string): string {
   return classes.length > 0 ? ` class="${escapeHtml(classes.join(" "))}"` : "";
 }
 
+/** Reused constant for md behavior in ui/src/ui. */
 export const md = new MarkdownIt({
   html: true, // Enable HTML recognition so html_block/html_inline overrides can escape it
   breaks: true,
@@ -613,6 +617,7 @@ md.renderer.rules.code_block = (tokens, idx, _options, env) => {
   return `<div class="code-block-wrapper">${header}${codeBlock}</div>`;
 };
 
+/** Reused helper for to Sanitized Markdown Html behavior in ui/src/ui. */
 export function toSanitizedMarkdownHtml(
   markdown: string,
   options: MarkdownRenderOptions = {},

@@ -1,3 +1,4 @@
+/** Discovers cached agent model stores for startup/model resolution. */
 import { statSync } from "node:fs";
 import path from "node:path";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
@@ -135,6 +136,7 @@ function discoverFreshAgentStores(
   return { authStorage, modelRegistry };
 }
 
+/** Reused helper for discover Cached Agent Stores behavior in src/agents/embedded-agent-runner. */
 export function discoverCachedAgentStores(
   options: DiscoverCachedAgentStoresOptions,
 ): DiscoveryStores {
@@ -173,6 +175,7 @@ export function discoverCachedAgentStores(
   return stores;
 }
 
+/** Reused helper for reset Model Discovery Cache For Test behavior in src/agents/embedded-agent-runner. */
 export function resetModelDiscoveryCacheForTest(): void {
   DISCOVERY_STORE_CACHE.clear();
 }

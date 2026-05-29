@@ -1,3 +1,4 @@
+/** Tests model transport debug URL sanitization. */
 import { describe, expect, it } from "vitest";
 import {
   formatModelTransportDebugBaseUrl,

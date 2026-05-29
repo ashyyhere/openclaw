@@ -1,3 +1,4 @@
+// Tests extensions/slack/src message tools test behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { describe, expect, it } from "vitest";
 import { listSlackMessageActions } from "./message-actions.js";

@@ -1,3 +1,4 @@
+// Tests extensions/oc-path/src/oc-path/tests/jsonc resolve test behavior.
 import { describe, expect, it } from "vitest";
 import { parseJsonc } from "../../jsonc/parse.js";
 import { resolveJsoncOcPath } from "../../jsonc/resolve.js";

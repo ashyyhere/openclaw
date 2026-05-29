@@ -1,3 +1,4 @@
+/** Regression coverage for deferred tool search behavior. */
 import { describe, expect, it, vi } from "vitest";
 import { setPluginToolMeta } from "../plugins/tools.js";
 import { wrapToolWithAbortSignal } from "./agent-tools.abort.js";

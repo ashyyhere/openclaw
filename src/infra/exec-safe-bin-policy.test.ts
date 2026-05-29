@@ -1,3 +1,4 @@
+// Tests infra exec safe bin policy test behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";

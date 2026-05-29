@@ -1,3 +1,4 @@
+/** Regression coverage for skill installer command building, safety scans, and warnings. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";

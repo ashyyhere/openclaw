@@ -1,3 +1,5 @@
+// config types auth helpers and runtime behavior.
+/** Shared type for Auth Profile Config in src/config. */
 export type AuthProfileConfig = {
   provider: string;
   /**
@@ -12,6 +14,7 @@ export type AuthProfileConfig = {
   displayName?: string;
 };
 
+/** Shared type for Auth Config in src/config. */
 export type AuthConfig = {
   profiles?: Record<string, AuthProfileConfig>;
   order?: Record<string, string[]>;

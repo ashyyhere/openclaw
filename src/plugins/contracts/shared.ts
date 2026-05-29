@@ -1,3 +1,5 @@
+// plugins/contracts shared helpers and runtime behavior.
+/** Reused helper for unique Strings behavior in src/plugins/contracts. */
 export function uniqueStrings(
   values: readonly string[] | undefined,
   normalize: (value: string) => string = (value) => value,

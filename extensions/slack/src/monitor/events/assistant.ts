@@ -1,3 +1,4 @@
+// extensions/slack/src/monitor/events assistant helpers and runtime behavior.
 import type { Block, KnownBlock } from "@slack/web-api";
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";
 import { danger, logVerbose } from "openclaw/plugin-sdk/runtime-env";

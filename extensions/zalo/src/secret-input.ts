@@ -1,3 +1,4 @@
+// extensions/zalo/src secret input helpers and runtime behavior.
 export {
   buildSecretInputSchema,
   normalizeResolvedSecretInputString,

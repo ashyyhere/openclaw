@@ -1,3 +1,4 @@
+// extensions/cloudflare-ai-gateway index helpers and runtime behavior.
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 import {
   applyAuthProfileConfig,

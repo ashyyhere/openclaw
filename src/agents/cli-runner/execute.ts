@@ -1,3 +1,4 @@
+/** Executes prepared CLI backend runs, parses output, and handles failover events. */
 import crypto from "node:crypto";
 import { shouldLogVerbose } from "../../globals.js";
 import { emitAgentEvent } from "../../infra/agent-events.js";
@@ -96,6 +97,7 @@ function appendCliOutputParseBuffer(
   };
 }
 
+/** Overrides execute-time dependencies for tests. */
 export function setCliRunnerExecuteTestDeps(overrides: Partial<typeof executeDeps>): void {
   Object.assign(executeDeps, overrides);
 }
@@ -223,6 +225,7 @@ function fingerprintCliSessionId(sessionId?: string): string {
   return crypto.createHash("sha256").update(trimmed).digest("hex").slice(0, 12);
 }
 
+/** Reused helper for build Cli Exec Log Line behavior in src/agents/cli-runner. */
 export function buildCliExecLogLine(params: {
   provider: string;
   model: string;
@@ -253,6 +256,7 @@ export function buildCliExecLogLine(params: {
   ].join(" ");
 }
 
+/** Reused helper for build Cli Env Auth Log behavior in src/agents/cli-runner. */
 export function buildCliEnvAuthLog(childEnv: Record<string, string>): string {
   const hostKeys = listPresentCliAuthEnvKeys(process.env);
   const childKeys = listPresentCliAuthEnvKeys(childEnv);
@@ -265,6 +269,7 @@ export function buildCliEnvAuthLog(childEnv: Record<string, string>): string {
   ].join(" ");
 }
 
+/** Reused helper for execute Prepared Cli Run behavior in src/agents/cli-runner. */
 export async function executePreparedCliRun(
   context: PreparedCliRunContext,
   cliSessionIdToUse?: string,

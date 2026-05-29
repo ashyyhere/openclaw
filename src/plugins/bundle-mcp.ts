@@ -1,3 +1,4 @@
+// plugins bundle mcp helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { applyMergePatch } from "../config/merge-patch.js";
@@ -20,21 +21,26 @@ import {
 import type { PluginManifestRegistry } from "./manifest-registry.js";
 import type { PluginBundleFormat } from "./manifest-types.js";
 
+/** Shared type for Bundle Mcp Server Config in src/plugins. */
 export type BundleMcpServerConfig = Record<string, unknown>;
 
+/** Shared type for Bundle Mcp Config in src/plugins. */
 export type BundleMcpConfig = {
   mcpServers: Record<string, BundleMcpServerConfig>;
 };
 
+/** Shared type for Bundle Mcp Diagnostic in src/plugins. */
 export type BundleMcpDiagnostic = {
   pluginId: string;
   message: string;
 };
 
+/** Shared type for Enabled Bundle Mcp Config Result in src/plugins. */
 export type EnabledBundleMcpConfigResult = {
   config: BundleMcpConfig;
   diagnostics: BundleMcpDiagnostic[];
 };
+/** Shared type for Bundle Mcp Runtime Support in src/plugins. */
 export type BundleMcpRuntimeSupport = {
   hasSupportedStdioServer: boolean;
   supportedServerNames: string[];
@@ -62,6 +68,7 @@ function resolveBundleMcpConfigPaths(params: {
   return mergeBundlePathLists(defaults, declared);
 }
 
+/** Reused helper for extract Mcp Server Map behavior in src/plugins. */
 export function extractMcpServerMap(raw: unknown): Record<string, BundleMcpServerConfig> {
   if (!isRecord(raw)) {
     return {};
@@ -271,6 +278,7 @@ function loadBundleMcpConfig(params: {
   return { config: merged, diagnostics };
 }
 
+/** Reused helper for inspect Bundle Mcp Runtime Support behavior in src/plugins. */
 export function inspectBundleMcpRuntimeSupport(params: {
   pluginId: string;
   rootDir: string;
@@ -288,6 +296,7 @@ export function inspectBundleMcpRuntimeSupport(params: {
   };
 }
 
+/** Reused helper for load Enabled Bundle Mcp Config behavior in src/plugins. */
 export function loadEnabledBundleMcpConfig(params: {
   workspaceDir: string;
   cfg?: OpenClawConfig;

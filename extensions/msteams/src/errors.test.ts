@@ -1,3 +1,4 @@
+// Tests extensions/msteams/src errors test behavior.
 import { describe, expect, it, vi } from "vitest";
 import {
   classifyMSTeamsSendError,

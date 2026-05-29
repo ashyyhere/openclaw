@@ -1,3 +1,4 @@
+// gateway/server-methods native hook relay helpers and runtime behavior.
 import { ErrorCodes, errorShape } from "../../../packages/gateway-protocol/src/index.js";
 import {
   invokeNativeHookRelay,
@@ -5,6 +6,7 @@ import {
 } from "../../agents/harness/native-hook-relay.js";
 import type { GatewayRequestHandlers } from "./types.js";
 
+/** Reused constant for native Hook Relay Handlers behavior in src/gateway/server-methods. */
 export const nativeHookRelayHandlers: GatewayRequestHandlers = {
   "nativeHook.invoke": async ({ params, respond }) => {
     try {

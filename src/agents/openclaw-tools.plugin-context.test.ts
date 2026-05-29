@@ -1,3 +1,4 @@
+/** Tests plugin tool context resolution for OpenClaw tools. */
 import path from "node:path";
 import { describe, expect, it, vi } from "vitest";
 import { resolveOpenClawPluginToolInputs } from "./openclaw-tools.plugin-context.js";

@@ -1,3 +1,4 @@
+// extensions/qa-lab/src gateway child helpers and runtime behavior.
 import { spawn, type ChildProcess } from "node:child_process";
 import { randomUUID } from "node:crypto";
 import { createWriteStream, existsSync, type WriteStream } from "node:fs";

@@ -1,3 +1,4 @@
+// test/vitest vitest full core unit fast config helpers and runtime behavior.
 import { defineConfig } from "vitest/config";
 import { sharedVitestConfig } from "./vitest.shared.config.ts";
 

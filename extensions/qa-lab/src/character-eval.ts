@@ -1,3 +1,4 @@
+// extensions/qa-lab/src character eval helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";

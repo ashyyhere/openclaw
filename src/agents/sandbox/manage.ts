@@ -1,3 +1,4 @@
+/** Lists and removes sandbox/browser containers from registries. */
 import { getRuntimeConfig } from "../../config/config.js";
 import { stopBrowserBridgeServer } from "../../plugin-sdk/browser-bridge.js";
 import { getSandboxBackendManager } from "./backend.js";
@@ -13,11 +14,13 @@ import {
 } from "./registry.js";
 import { resolveSandboxAgentId } from "./shared.js";
 
+/** Shared type for Sandbox Container Info in src/agents/sandbox. */
 export type SandboxContainerInfo = SandboxRegistryEntry & {
   running: boolean;
   imageMatch: boolean;
 };
 
+/** Shared type for Sandbox Browser Info in src/agents/sandbox. */
 export type SandboxBrowserInfo = SandboxBrowserRegistryEntry & {
   running: boolean;
   imageMatch: boolean;
@@ -32,6 +35,7 @@ function toBrowserDockerRuntimeEntry(entry: SandboxBrowserRegistryEntry): Sandbo
   };
 }
 
+/** Lists known sandbox containers with backend runtime status. */
 export async function listSandboxContainers(): Promise<SandboxContainerInfo[]> {
   const config = getRuntimeConfig();
   const registry = await readRegistry();
@@ -65,6 +69,7 @@ export async function listSandboxContainers(): Promise<SandboxContainerInfo[]> {
   return results;
 }
 
+/** Lists known sandbox browser containers with runtime status. */
 export async function listSandboxBrowsers(): Promise<SandboxBrowserInfo[]> {
   const config = getRuntimeConfig();
   const registry = await readBrowserRegistry();
@@ -88,6 +93,7 @@ export async function listSandboxBrowsers(): Promise<SandboxBrowserInfo[]> {
   return results;
 }
 
+/** Removes a sandbox container through its owning backend manager. */
 export async function removeSandboxContainer(containerName: string): Promise<void> {
   const config = getRuntimeConfig();
   const registry = await readRegistry();
@@ -103,6 +109,7 @@ export async function removeSandboxContainer(containerName: string): Promise<voi
   await removeRegistryEntry(containerName);
 }
 
+/** Stops bridge state and removes a sandbox browser container. */
 export async function removeSandboxBrowserContainer(containerName: string): Promise<void> {
   const config = getRuntimeConfig();
   const registry = await readBrowserRegistry();

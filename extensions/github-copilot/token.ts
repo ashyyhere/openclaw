@@ -1,3 +1,4 @@
+// extensions/github-copilot token helpers and runtime behavior.
 export {
   DEFAULT_COPILOT_API_BASE_URL,
   deriveCopilotApiBaseUrlFromToken,

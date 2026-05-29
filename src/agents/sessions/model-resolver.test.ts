@@ -1,3 +1,4 @@
+/** Covers model pattern parsing and initial model selection. */
 import { describe, expect, it } from "vitest";
 import type { Model } from "../../llm/types.js";
 import { DEFAULT_MODEL, DEFAULT_PROVIDER } from "../defaults.js";

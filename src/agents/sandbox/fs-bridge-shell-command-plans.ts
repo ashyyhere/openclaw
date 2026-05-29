@@ -1,6 +1,8 @@
+/** Builds shell command plans for sandbox filesystem bridge reads/stats. */
 import type { AnchoredSandboxEntry, PathSafetyCheck } from "./fs-bridge-path-safety.js";
 import type { SandboxResolvedFsPath } from "./fs-paths.js";
 
+/** Shared type for Sandbox Fs Command Plan in src/agents/sandbox. */
 export type SandboxFsCommandPlan = {
   checks: PathSafetyCheck[];
   script: string;
@@ -10,6 +12,7 @@ export type SandboxFsCommandPlan = {
   allowFailure?: boolean;
 };
 
+/** Builds a stat command with all required path-safety checks. */
 export function buildStatPlan(
   target: SandboxResolvedFsPath,
   anchoredTarget: AnchoredSandboxEntry,

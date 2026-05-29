@@ -1,3 +1,4 @@
+// Identity adapter helpers for stable channel ingress matching.
 import type {
   ChannelIngressAdapter,
   ChannelIngressAdapterEntry,
@@ -95,6 +96,7 @@ function adapterEntry(params: {
   };
 }
 
+/** Create a channel ingress adapter from an identity descriptor. */
 export function createIdentityAdapter(
   identity: ChannelIngressIdentityDescriptor,
 ): ChannelIngressAdapter {
@@ -155,6 +157,7 @@ export function createIdentityAdapter(
   };
 }
 
+/** Create a redacted ingress subject from stable id and alias inputs. */
 export function createIdentitySubject(
   identity: ChannelIngressIdentityDescriptor,
   input: ChannelIngressIdentitySubjectInput,

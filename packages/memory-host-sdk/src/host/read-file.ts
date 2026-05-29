@@ -1,3 +1,4 @@
+// packages/memory-host-sdk/src/host read file helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import {
@@ -57,6 +58,7 @@ function isFileDisappearedDuringReadError(err: unknown): boolean {
   );
 }
 
+/** Public helper for read Memory File behavior in packages/memory-host-sdk. */
 export async function readMemoryFile(params: {
   workspaceDir: string;
   extraPaths?: string[];
@@ -144,6 +146,7 @@ export async function readMemoryFile(params: {
   });
 }
 
+/** Public helper for read Agent Memory File behavior in packages/memory-host-sdk. */
 export async function readAgentMemoryFile(params: {
   cfg: OpenClawConfig;
   agentId: string;

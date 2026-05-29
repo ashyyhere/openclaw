@@ -1,3 +1,4 @@
+// gateway test helpers config runtime helpers and runtime behavior.
 import fsSync from "node:fs";
 import fs from "node:fs/promises";
 import os from "node:os";
@@ -15,6 +16,7 @@ import { testConfigRoot, testIsNixMode, testState } from "./test-helpers.runtime
 
 type GatewayConfigModule = typeof import("../config/config.js");
 
+/** Reused helper for create Gateway Config Module Mock behavior in src/gateway. */
 export function createGatewayConfigModuleMock(actual: GatewayConfigModule): GatewayConfigModule {
   const resolveConfigPath = () => path.join(testConfigRoot.value, "openclaw.json");
 

@@ -1,3 +1,4 @@
+// Coverage for queued follow-up run orchestration.
 import fs from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";

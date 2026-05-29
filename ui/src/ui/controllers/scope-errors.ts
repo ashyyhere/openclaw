@@ -1,6 +1,8 @@
+// ui/src/ui/controllers scope errors helpers and runtime behavior.
 import { ConnectErrorDetailCodes } from "../../../../packages/gateway-protocol/src/connect-error-details.js";
 import { GatewayRequestError, resolveGatewayErrorDetailCode } from "../gateway.ts";
 
+/** Reused helper for is Missing Operator Read Scope Error behavior in ui/src/ui/controllers. */
 export function isMissingOperatorReadScopeError(err: unknown): boolean {
   if (!(err instanceof GatewayRequestError)) {
     return false;
@@ -16,6 +18,7 @@ export function isMissingOperatorReadScopeError(err: unknown): boolean {
   return err.message.includes("missing scope: operator.read");
 }
 
+/** Reused helper for format Missing Operator Read Scope Message behavior in ui/src/ui/controllers. */
 export function formatMissingOperatorReadScopeMessage(feature: string): string {
   return `This connection is missing operator.read, so ${feature} cannot be loaded yet.`;
 }

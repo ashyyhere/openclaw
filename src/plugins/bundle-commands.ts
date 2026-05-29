@@ -1,3 +1,4 @@
+// plugins bundle commands helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { parseFrontmatterBlock } from "../../packages/markdown-core/src/frontmatter.js";
@@ -20,6 +21,7 @@ import {
 } from "./config-state.js";
 import { loadPluginManifestRegistryForPluginRegistry } from "./plugin-registry-contributions.js";
 
+/** Shared type for Claude Bundle Command Spec in src/plugins. */
 export type ClaudeBundleCommandSpec = {
   pluginId: string;
   rawName: string;
@@ -156,6 +158,7 @@ function loadBundleCommandsFromRoot(params: {
   return entries;
 }
 
+/** Reused helper for load Enabled Claude Bundle Commands behavior in src/plugins. */
 export function loadEnabledClaudeBundleCommands(params: {
   workspaceDir: string;
   cfg?: OpenClawConfig;

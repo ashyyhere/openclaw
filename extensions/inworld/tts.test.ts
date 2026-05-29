@@ -1,3 +1,4 @@
+// Tests extensions/inworld tts test behavior.
 import { afterAll, afterEach, describe, expect, it, vi } from "vitest";
 
 const { fetchWithSsrFGuardMock } = vi.hoisted(() => ({

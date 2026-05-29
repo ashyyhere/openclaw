@@ -1,13 +1,17 @@
+// config types hooks helpers and runtime behavior.
+/** Shared type for Hook Mapping Match in src/config. */
 export type HookMappingMatch = {
   path?: string;
   source?: string;
 };
 
+/** Shared type for Hook Mapping Transform in src/config. */
 export type HookMappingTransform = {
   module: string;
   export?: string;
 };
 
+/** Shared type for Hook Mapping Config in src/config. */
 export type HookMappingConfig = {
   id?: string;
   match?: HookMappingMatch;
@@ -35,8 +39,10 @@ export type HookMappingConfig = {
   transform?: HookMappingTransform;
 };
 
+/** Shared type for Hooks Gmail Tailscale Mode in src/config. */
 export type HooksGmailTailscaleMode = "off" | "serve" | "funnel";
 
+/** Shared type for Hooks Gmail Config in src/config. */
 export type HooksGmailConfig = {
   account?: string;
   label?: string;
@@ -66,16 +72,19 @@ export type HooksGmailConfig = {
   thinking?: "off" | "minimal" | "low" | "medium" | "high";
 };
 
+/** Shared type for Hook Config in src/config. */
 export type HookConfig = {
   enabled?: boolean;
   env?: Record<string, string>;
   [key: string]: unknown;
 };
 
+/** Shared type for Hook Install Record in src/config. */
 export type HookInstallRecord = InstallRecordBase & {
   hooks?: string[];
 };
 
+/** Shared type for Internal Hooks Config in src/config. */
 export type InternalHooksConfig = {
   /** Enable hooks system */
   enabled?: boolean;
@@ -90,6 +99,7 @@ export type InternalHooksConfig = {
   installs?: Record<string, HookInstallRecord>;
 };
 
+/** Shared type for Hooks Config in src/config. */
 export type HooksConfig = {
   enabled?: boolean;
   path?: string;

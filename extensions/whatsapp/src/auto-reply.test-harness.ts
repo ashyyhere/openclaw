@@ -1,3 +1,4 @@
+// extensions/whatsapp/src auto reply test harness helpers and runtime behavior.
 import "./test-helpers.js";
 import { EventEmitter } from "node:events";
 import fs from "node:fs/promises";

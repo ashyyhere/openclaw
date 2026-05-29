@@ -1,3 +1,4 @@
+// Tests wizard setup plugin config test behavior.
 import { describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import type { PluginConfigUiHint } from "../plugins/types.js";

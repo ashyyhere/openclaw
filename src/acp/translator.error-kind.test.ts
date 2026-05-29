@@ -1,3 +1,4 @@
+/** Tests ACP translator tool-error kind mapping. */
 import { describe, expect, it } from "vitest";
 import {
   createChatEvent,

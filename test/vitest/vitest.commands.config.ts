@@ -1,3 +1,4 @@
+// test/vitest vitest commands config helpers and runtime behavior.
 import { commandsLightTestFiles } from "./vitest.commands-light-paths.mjs";
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 

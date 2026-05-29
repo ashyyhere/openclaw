@@ -1,3 +1,4 @@
+// Tests crestodian rescue policy test behavior.
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveCrestodianRescuePolicy } from "./rescue-policy.js";

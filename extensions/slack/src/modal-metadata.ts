@@ -1,3 +1,4 @@
+// extensions/slack/src modal metadata helpers and runtime behavior.
 import { normalizeOptionalString } from "openclaw/plugin-sdk/string-coerce-runtime";
 
 type SlackModalPrivateMetadata = {

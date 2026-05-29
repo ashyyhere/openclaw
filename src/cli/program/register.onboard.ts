@@ -1,3 +1,4 @@
+/** Registers onboarding command and provider/channel auth options. */
 import type { Command } from "commander";
 import { formatDocsLink } from "../../../packages/terminal-core/src/links.js";
 import { theme } from "../../../packages/terminal-core/src/theme.js";
@@ -88,6 +89,7 @@ function pickOnboardProviderAuthOptionValues(
   );
 }
 
+/** Reused helper for register Onboard Command behavior in src/cli/program. */
 export function registerOnboardCommand(program: Command): void {
   const command = program
     .command("onboard")

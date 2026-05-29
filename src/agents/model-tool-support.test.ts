@@ -1,3 +1,4 @@
+/** Tests model tool-support compatibility helper. */
 import { describe, expect, it } from "vitest";
 import { supportsModelTools } from "./model-tool-support.js";
 

@@ -1,3 +1,4 @@
+/** Vitest mocks for fast bash tool imports. */
 import { vi } from "vitest";
 import { stubTool } from "./fast-tool-stubs.js";
 

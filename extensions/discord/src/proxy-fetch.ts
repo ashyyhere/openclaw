@@ -1,3 +1,4 @@
+// extensions/discord/src proxy fetch helpers and runtime behavior.
 import { isIP } from "node:net";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { makeProxyFetch } from "openclaw/plugin-sdk/fetch-runtime";

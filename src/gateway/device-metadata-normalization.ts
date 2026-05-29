@@ -1,3 +1,4 @@
+// gateway device metadata normalization helpers and runtime behavior.
 function normalizeTrimmedMetadata(value?: string | null): string {
   if (typeof value !== "string") {
     return "";
@@ -10,6 +11,7 @@ function toLowerAscii(input: string): string {
   return input.replace(/[A-Z]/g, (char) => String.fromCharCode(char.charCodeAt(0) + 32));
 }
 
+/** Reused helper for normalize Device Metadata For Auth behavior in src/gateway. */
 export function normalizeDeviceMetadataForAuth(value?: string | null): string {
   const trimmed = normalizeTrimmedMetadata(value);
   if (!trimmed) {
@@ -20,6 +22,7 @@ export function normalizeDeviceMetadataForAuth(value?: string | null): string {
   return toLowerAscii(trimmed);
 }
 
+/** Reused helper for normalize Device Metadata For Policy behavior in src/gateway. */
 export function normalizeDeviceMetadataForPolicy(value?: string | null): string {
   const trimmed = normalizeTrimmedMetadata(value);
   if (!trimmed) {

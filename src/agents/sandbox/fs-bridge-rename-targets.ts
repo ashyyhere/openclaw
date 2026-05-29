@@ -1,3 +1,4 @@
+/** Resolves writable source/target pairs for sandbox rename operations. */
 export function resolveWritableRenameTargets<T extends { containerPath: string }>(params: {
   from: string;
   to: string;
@@ -14,6 +15,7 @@ export function resolveWritableRenameTargets<T extends { containerPath: string }
   return { from, to };
 }
 
+/** Resolves rename targets using a sandbox bridge path resolver. */
 export function resolveWritableRenameTargetsForBridge<T extends { containerPath: string }>(
   params: {
     from: string;
@@ -31,6 +33,7 @@ export function resolveWritableRenameTargetsForBridge<T extends { containerPath:
   });
 }
 
+/** Creates a reusable resolver for pinned writable rename targets. */
 export function createWritableRenameTargetResolver<T extends { containerPath: string }>(
   resolveTarget: (params: { filePath: string; cwd?: string }) => T,
   ensureWritable: (target: T, action: string) => void,

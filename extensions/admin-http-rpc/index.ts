@@ -1,3 +1,4 @@
+// extensions/admin-http-rpc index helpers and runtime behavior.
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 import { handleAdminHttpRpcRequest } from "./src/handler.js";
 

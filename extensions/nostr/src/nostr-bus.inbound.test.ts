@@ -1,3 +1,4 @@
+// Tests extensions/nostr/src nostr bus inbound test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { startNostrBus } from "./nostr-bus.js";
 import { TEST_HEX_PRIVATE_KEY } from "./test-fixtures.js";

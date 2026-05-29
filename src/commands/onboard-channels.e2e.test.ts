@@ -1,3 +1,4 @@
+/** E2E tests for channel onboarding behavior. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { ChannelPluginCatalogEntry } from "../channels/plugins/catalog.js";
 import {

@@ -1,3 +1,4 @@
+// config doc baseline helpers and runtime behavior.
 import { createHash } from "node:crypto";
 import fsSync from "node:fs";
 import os from "node:os";
@@ -29,6 +30,7 @@ type JsonSchemaObject = JsonSchemaNode & {
 
 type ConfigDocBaselineKind = "core" | "channel" | "plugin";
 
+/** Shared type for Config Doc Baseline Entry in src/config. */
 export type ConfigDocBaselineEntry = {
   path: string;
   kind: ConfigDocBaselineKind;
@@ -388,6 +390,7 @@ async function loadBundledConfigSchemaResponse(): Promise<ConfigSchemaResponse> 
   });
 }
 
+/** Reused helper for collect Config Doc Baseline Entries behavior in src/config. */
 export function collectConfigDocBaselineEntries(
   schema: JsonSchemaObject,
   uiHints: ConfigSchemaResponse["uiHints"],
@@ -481,6 +484,7 @@ export function collectConfigDocBaselineEntries(
   return entries;
 }
 
+/** Reused helper for dedupe Config Doc Baseline Entries behavior in src/config. */
 export function dedupeConfigDocBaselineEntries(
   entries: ConfigDocBaselineEntry[],
 ): ConfigDocBaselineEntry[] {
@@ -518,6 +522,7 @@ function splitConfigDocBaselineEntries(entries: ConfigDocBaselineEntry[]): {
   return { coreEntries, channelEntries, pluginEntries };
 }
 
+/** Reused helper for flatten Config Doc Baseline Entries behavior in src/config. */
 export function flattenConfigDocBaselineEntries(
   baseline: ConfigDocBaseline,
 ): ConfigDocBaselineEntry[] {
@@ -573,6 +578,7 @@ function renderKindBaseline(
   return `${JSON.stringify(baseline, null, 2)}\n`;
 }
 
+/** Reused helper for render Config Doc Baseline Artifacts behavior in src/config. */
 export async function renderConfigDocBaselineArtifacts(
   baseline?: ConfigDocBaseline | Promise<ConfigDocBaseline>,
 ): Promise<ConfigDocBaselineArtifactsRender> {
@@ -642,6 +648,7 @@ function resolveBaselineArtifactPaths(
   };
 }
 
+/** Reused helper for write Config Doc Baseline Artifacts behavior in src/config. */
 export async function writeConfigDocBaselineArtifacts(params?: {
   repoRoot?: string;
   check?: boolean;
@@ -694,6 +701,7 @@ export async function writeConfigDocBaselineArtifacts(params?: {
   };
 }
 
+/** Reused helper for normalize Config Doc Baseline Help Path behavior in src/config. */
 export function normalizeConfigDocBaselineHelpPath(pathValue: string): string {
   return normalizeBaselinePath(pathValue);
 }

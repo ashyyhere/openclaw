@@ -1,3 +1,4 @@
+// Subagent command action for logs.
 import { callGateway } from "../../../gateway/call.js";
 import { parseStrictNonNegativeInteger } from "../../../shared/number-coercion.js";
 import { normalizeLowercaseStringOrEmpty } from "../../../shared/string-coerce.js";
@@ -12,6 +13,7 @@ import {
   stripToolMessages,
 } from "./shared.js";
 
+/** Reused helper for handle Subagents Log Action behavior in src/auto-reply/reply. */
 export async function handleSubagentsLogAction(
   ctx: SubagentsCommandContext,
 ): Promise<CommandHandlerResult> {

@@ -1,3 +1,4 @@
+/** Tests sandbox doctor warning when Docker is unavailable. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import type { RuntimeEnv } from "../runtime.js";

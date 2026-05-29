@@ -1,3 +1,4 @@
+/** Tests daemon lifecycle command wrappers and env handling. */
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { captureEnv } from "../../test-utils/env.js";
 

@@ -1,5 +1,7 @@
+// ui/src/ui/controllers exec approval helpers and runtime behavior.
 import { normalizeOptionalString } from "../string-coerce.ts";
 
+/** Shared type for Exec Approval Request Payload in ui/src/ui/controllers. */
 export type ExecApprovalRequestPayload = {
   command: string;
   cwd?: string | null;
@@ -16,8 +18,10 @@ export type ExecApprovalRequestPayload = {
   allowedDecisions?: readonly ExecApprovalDecision[];
 };
 
+/** Shared type for Exec Approval Decision in ui/src/ui/controllers. */
 export type ExecApprovalDecision = "allow-once" | "allow-always" | "deny";
 
+/** Shared type for Exec Approval Request in ui/src/ui/controllers. */
 export type ExecApprovalRequest = {
   id: string;
   kind: "exec" | "plugin";
@@ -30,6 +34,7 @@ export type ExecApprovalRequest = {
   expiresAtMs: number;
 };
 
+/** Shared type for Exec Approval Resolved in ui/src/ui/controllers. */
 export type ExecApprovalResolved = {
   id: string;
   decision?: string | null;
@@ -37,6 +42,7 @@ export type ExecApprovalResolved = {
   ts?: number | null;
 };
 
+/** Shared type for Exec Approval Prompt State in ui/src/ui/controllers. */
 export type ExecApprovalPromptState = {
   client: {
     request(method: string, params?: unknown): Promise<unknown>;
@@ -102,6 +108,7 @@ function parseAllowedDecisions(value: unknown): ExecApprovalDecision[] | undefin
   return decisions.length > 0 ? decisions : undefined;
 }
 
+/** Reused helper for parse Exec Approval Requested behavior in ui/src/ui/controllers. */
 export function parseExecApprovalRequested(payload: unknown): ExecApprovalRequest | null {
   if (!isRecord(payload)) {
     return null;
@@ -140,6 +147,7 @@ export function parseExecApprovalRequested(payload: unknown): ExecApprovalReques
   };
 }
 
+/** Reused helper for parse Exec Approval Resolved behavior in ui/src/ui/controllers. */
 export function parseExecApprovalResolved(payload: unknown): ExecApprovalResolved | null {
   if (!isRecord(payload)) {
     return null;
@@ -156,6 +164,7 @@ export function parseExecApprovalResolved(payload: unknown): ExecApprovalResolve
   };
 }
 
+/** Reused helper for parse Plugin Approval Requested behavior in ui/src/ui/controllers. */
 export function parsePluginApprovalRequested(payload: unknown): ExecApprovalRequest | null {
   if (!isRecord(payload)) {
     return null;
@@ -197,11 +206,13 @@ export function parsePluginApprovalRequested(payload: unknown): ExecApprovalRequ
   };
 }
 
+/** Reused helper for prune Exec Approval Queue behavior in ui/src/ui/controllers. */
 export function pruneExecApprovalQueue(queue: ExecApprovalRequest[]): ExecApprovalRequest[] {
   const now = Date.now();
   return queue.filter((entry) => entry.expiresAtMs > now);
 }
 
+/** Reused helper for add Exec Approval behavior in ui/src/ui/controllers. */
 export function addExecApproval(
   queue: ExecApprovalRequest[],
   entry: ExecApprovalRequest,
@@ -211,6 +222,7 @@ export function addExecApproval(
   return next;
 }
 
+/** Reused helper for remove Exec Approval behavior in ui/src/ui/controllers. */
 export function removeExecApproval(
   queue: ExecApprovalRequest[],
   id: string,
@@ -236,6 +248,7 @@ function readGatewayErrorReason(err: unknown): string | null {
   return normalizeOptionalString(details.reason) ?? null;
 }
 
+/** Reused helper for is Stale Approval Resolution Error behavior in ui/src/ui/controllers. */
 export function isStaleApprovalResolutionError(err: unknown): boolean {
   if (!(err instanceof Error)) {
     return false;
@@ -314,6 +327,7 @@ function removeExecApprovalFromState(state: ExecApprovalPromptState, id: string)
   }
 }
 
+/** Reused helper for enqueue Exec Approval Prompt behavior in ui/src/ui/controllers. */
 export function enqueueExecApprovalPrompt(
   state: ExecApprovalPromptState,
   entry: ExecApprovalRequest,
@@ -323,6 +337,7 @@ export function enqueueExecApprovalPrompt(
   scheduleApprovalExpiryPrune(state, entry);
 }
 
+/** Reused helper for refresh Pending Approval Queue behavior in ui/src/ui/controllers. */
 export async function refreshPendingApprovalQueue(state: ExecApprovalPromptState): Promise<void> {
   const client = state.client;
   if (!client) {
@@ -364,12 +379,14 @@ export async function refreshPendingApprovalQueue(state: ExecApprovalPromptState
   }
 }
 
+/** Reused helper for dismiss Exec Approval Prompt behavior in ui/src/ui/controllers. */
 export function dismissExecApprovalPrompt(state: ExecApprovalPromptState, id: string): void {
   removeExecApprovalFromState(state, id);
   state.execApprovalRefreshRemovedIds?.add(id);
   state.execApprovalError = null;
 }
 
+/** Reused helper for clear Resolved Exec Approval Prompt behavior in ui/src/ui/controllers. */
 export function clearResolvedExecApprovalPrompt(state: ExecApprovalPromptState, id: string): void {
   removeExecApprovalFromState(state, id);
   state.execApprovalRefreshRemovedIds?.add(id);

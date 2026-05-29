@@ -1,3 +1,4 @@
+// infra os summary helpers and runtime behavior.
 import { spawnSync } from "node:child_process";
 import os from "node:os";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
@@ -17,6 +18,7 @@ function macosVersion(): string {
   return out || os.release();
 }
 
+/** Reused helper for resolve Os Summary behavior in src/infra. */
 export function resolveOsSummary(): OsSummary {
   const platform = os.platform();
   const release = os.release();

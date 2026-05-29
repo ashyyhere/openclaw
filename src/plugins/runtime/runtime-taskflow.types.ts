@@ -1,3 +1,4 @@
+// Shared types for plugins/runtime runtime taskflow types behavior.
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { JsonValue, TaskFlowRecord } from "../../tasks/task-flow-registry.types.js";
 import type {
@@ -10,13 +11,16 @@ import type {
 } from "../../tasks/task-registry.types.js";
 import type { OpenClawPluginToolContext } from "../tool-types.js";
 
+/** Shared type for Managed Task Flow Record in src/plugins/runtime. */
 export type ManagedTaskFlowRecord = TaskFlowRecord & {
   syncMode: "managed";
   controllerId: string;
 };
 
+/** Shared type for Managed Task Flow Mutation Error Code in src/plugins/runtime. */
 export type ManagedTaskFlowMutationErrorCode = "not_found" | "not_managed" | "revision_conflict";
 
+/** Shared type for Managed Task Flow Mutation Result in src/plugins/runtime. */
 export type ManagedTaskFlowMutationResult =
   | {
       applied: true;
@@ -28,6 +32,7 @@ export type ManagedTaskFlowMutationResult =
       current?: TaskFlowRecord;
     };
 
+/** Shared type for Bound Task Flow Task Run Result in src/plugins/runtime. */
 export type BoundTaskFlowTaskRunResult =
   | {
       created: true;
@@ -41,6 +46,7 @@ export type BoundTaskFlowTaskRunResult =
       flow?: TaskFlowRecord;
     };
 
+/** Shared type for Bound Task Flow Cancel Result in src/plugins/runtime. */
 export type BoundTaskFlowCancelResult = {
   found: boolean;
   cancelled: boolean;
@@ -49,6 +55,7 @@ export type BoundTaskFlowCancelResult = {
   tasks?: TaskRecord[];
 };
 
+/** Shared type for Bound Task Flow Runtime in src/plugins/runtime. */
 export type BoundTaskFlowRuntime = {
   readonly sessionKey: string;
   readonly requesterOrigin?: TaskDeliveryState["requesterOrigin"];
@@ -130,6 +137,7 @@ export type BoundTaskFlowRuntime = {
   }) => BoundTaskFlowTaskRunResult;
 };
 
+/** Shared type for Plugin Runtime Task Flow in src/plugins/runtime. */
 export type PluginRuntimeTaskFlow = {
   bindSession: (params: {
     sessionKey: string;

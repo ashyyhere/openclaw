@@ -1,3 +1,4 @@
+// Tests extensions/slack/src/http plugin routes test behavior.
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { createTestPluginApi } from "openclaw/plugin-sdk/plugin-test-api";
 import { describe, expect, it, vi } from "vitest";

@@ -1,3 +1,4 @@
+/** Doctor checks and repairs for session snapshot state. */
 import fs from "node:fs";
 import path from "node:path";
 import { note } from "../../packages/terminal-core/src/note.js";
@@ -21,6 +22,7 @@ type CachedSnapshotPath = {
   path: string;
 };
 
+/** Shared type for Stale Session Snapshot Path Finding in src/commands. */
 export type StaleSessionSnapshotPathFinding = {
   sessionKey: string;
   field: SnapshotPathSource;
@@ -187,6 +189,7 @@ function resolveExpectedBundledSkillPath(params: {
   return params.pathExists(expectedPath) ? expectedPath : undefined;
 }
 
+/** Reused helper for scan Session Store For Stale Runtime Snapshot Paths behavior in src/commands. */
 export function scanSessionStoreForStaleRuntimeSnapshotPaths(params: {
   store: Record<string, SessionEntry>;
   bundledSkillsDir: string | undefined;
@@ -270,6 +273,7 @@ function loadSessionStoreForSnapshotScan(storePath: string): Record<string, Sess
   return store;
 }
 
+/** Reused helper for note Session Snapshot Health behavior in src/commands. */
 export async function noteSessionSnapshotHealth(params?: {
   storePaths?: string[];
   bundledSkillsDir?: string;

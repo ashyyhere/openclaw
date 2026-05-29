@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix/sdk transport helpers and runtime behavior.
 import { parseMediaContentLength } from "openclaw/plugin-sdk/media-runtime";
 import { MatrixMediaSizeLimitError } from "../media-errors.js";
 import { readResponseWithLimit } from "./read-response-with-limit.js";

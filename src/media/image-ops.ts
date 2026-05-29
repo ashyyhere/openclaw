@@ -1,3 +1,4 @@
+// media image ops helpers and runtime behavior.
 import {
   createRastermill,
   isRastermillUnavailableError,
@@ -11,8 +12,10 @@ import {
 import { resolveSystemBin } from "../infra/resolve-system-bin.js";
 import { resolvePreferredOpenClawTmpDir } from "../infra/tmp-openclaw-dir.js";
 
+/** Re-exported API for src/media, starting with Image Metadata. */
 export type { ImageMetadata, ImageProbe };
 
+/** Reused class for Image Processor Unavailable Error behavior in src/media. */
 export class ImageProcessorUnavailableError extends Error {
   readonly code = "IMAGE_PROCESSOR_UNAVAILABLE";
   readonly operation: string;
@@ -28,6 +31,7 @@ export class ImageProcessorUnavailableError extends Error {
   }
 }
 
+/** Shared type for Resize To Jpeg Params in src/media. */
 export type ResizeToJpegParams = {
   buffer: Buffer;
   maxSide: number;
@@ -35,6 +39,7 @@ export type ResizeToJpegParams = {
   withoutEnlargement?: boolean;
 };
 
+/** Shared type for Resize To Png Params in src/media. */
 export type ResizeToPngParams = {
   buffer: Buffer;
   maxSide: number;
@@ -42,9 +47,12 @@ export type ResizeToPngParams = {
   withoutEnlargement?: boolean;
 };
 
+/** Reused constant for IMAGE REDUCE QUALITY STEPS behavior in src/media. */
 export const IMAGE_REDUCE_QUALITY_STEPS = [85, 75, 65, 55, 45, 35] as const;
+/** Reused constant for MAX IMAGE INPUT PIXELS behavior in src/media. */
 export const MAX_IMAGE_INPUT_PIXELS = 25_000_000;
 
+/** Reused helper for create Image Processor behavior in src/media. */
 export function createImageProcessor() {
   return createRastermill({
     execution: "auto",
@@ -61,10 +69,12 @@ export function createImageProcessor() {
   });
 }
 
+/** Reused helper for is Image Processor Unavailable Error behavior in src/media. */
 export function isImageProcessorUnavailableError(err: unknown): boolean {
   return err instanceof ImageProcessorUnavailableError || isRastermillUnavailableError(err);
 }
 
+/** Reused helper for build Image Resize Side Grid behavior in src/media. */
 export function buildImageResizeSideGrid(maxSide: number, sideStart: number): number[] {
   return [sideStart, 1800, 1600, 1400, 1200, 1000, 800]
     .map((value) => Math.min(maxSide, value))
@@ -72,10 +82,12 @@ export function buildImageResizeSideGrid(maxSide: number, sideStart: number): nu
     .toSorted((a, b) => b - a);
 }
 
+/** Reused helper for read Image Metadata From Header behavior in src/media. */
 export function readImageMetadataFromHeader(buffer: Buffer): ImageMetadata | null {
   return readRastermillImageMetadataFromHeader(buffer);
 }
 
+/** Reused helper for read Image Probe From Header behavior in src/media. */
 export function readImageProbeFromHeader(buffer: Buffer): ImageProbe | null {
   return readRastermillImageProbeFromHeader(buffer);
 }
@@ -87,11 +99,13 @@ function wrapRastermillUnavailable(operation: string, error: unknown): never {
   throw error;
 }
 
+/** Reused helper for get Image Metadata behavior in src/media. */
 export async function getImageMetadata(buffer: Buffer): Promise<ImageMetadata | null> {
   const info = await createImageProcessor().probe(buffer);
   return info ? { width: info.width, height: info.height } : null;
 }
 
+/** Reused helper for normalize Exif Orientation behavior in src/media. */
 export async function normalizeExifOrientation(buffer: Buffer): Promise<Buffer> {
   try {
     const rastermill = createImageProcessor();
@@ -111,6 +125,7 @@ export async function normalizeExifOrientation(buffer: Buffer): Promise<Buffer> 
   }
 }
 
+/** Reused helper for resize To Jpeg behavior in src/media. */
 export async function resizeToJpeg(params: ResizeToJpegParams): Promise<Buffer> {
   try {
     return (
@@ -128,6 +143,7 @@ export async function resizeToJpeg(params: ResizeToJpegParams): Promise<Buffer> 
   }
 }
 
+/** Reused helper for convert Heic To Jpeg behavior in src/media. */
 export async function convertHeicToJpeg(buffer: Buffer): Promise<Buffer> {
   try {
     return (await createImageProcessor().encode(buffer, { format: "jpeg" })).data;
@@ -136,6 +152,7 @@ export async function convertHeicToJpeg(buffer: Buffer): Promise<Buffer> {
   }
 }
 
+/** Reused helper for has Alpha Channel behavior in src/media. */
 export async function hasAlphaChannel(buffer: Buffer): Promise<boolean> {
   try {
     return (await createImageProcessor().transparency(buffer)).hasAlphaChannel;
@@ -155,6 +172,7 @@ export async function hasAlphaChannel(buffer: Buffer): Promise<boolean> {
   }
 }
 
+/** Reused helper for resize To Png behavior in src/media. */
 export async function resizeToPng(params: ResizeToPngParams): Promise<Buffer> {
   try {
     return (
@@ -174,6 +192,7 @@ export async function resizeToPng(params: ResizeToPngParams): Promise<Buffer> {
   }
 }
 
+/** Reused helper for optimize Image To Png behavior in src/media. */
 export async function optimizeImageToPng(
   buffer: Buffer,
   maxBytes: number,

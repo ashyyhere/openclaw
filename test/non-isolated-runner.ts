@@ -1,3 +1,4 @@
+// test non isolated runner helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { TestRunner, type RunnerTask, type RunnerTestSuite, vi } from "vitest";

@@ -1,3 +1,4 @@
+/** Tests required tool-parameter validation. */
 import { describe, expect, it, vi } from "vitest";
 import {
   assertRequiredParams,

@@ -1,3 +1,4 @@
+/** Loads target parsing helpers from active channel plugin registrations. */
 import {
   channelRouteTargetsMatchExact,
   channelRouteTargetsShareConversation,
@@ -11,6 +12,7 @@ import {
 import { getChannelPlugin, normalizeChannelId } from "./index.js";
 import { getLoadedChannelPluginForRead } from "./registry-loaded-read.js";
 
+/** Re-exported API for src/channels/plugins, starting with Channel Route Parsed Target. */
 export type { ChannelRouteParsedTarget } from "../../plugin-sdk/channel-route.js";
 
 /** @deprecated Use `ChannelRouteParsedTarget`; provider-specific target grammar should live in `messaging.resolveOutboundSessionRoute`. */
@@ -20,6 +22,7 @@ export type ParsedChannelExplicitTarget = {
   chatType?: "direct" | "group" | "channel";
 };
 
+/** Reused helper for resolve Compat Parsed Route Target behavior in src/channels/plugins. */
 export function resolveCompatParsedRouteTarget(params: {
   channel: string;
   rawTarget?: string | null;
@@ -78,6 +81,7 @@ export function resolveRouteTargetForLoadedChannel(params: {
   });
 }
 
+/** Reused helper for resolve Explicit Delivery Target Compat behavior in src/channels/plugins. */
 export function resolveExplicitDeliveryTargetCompat(params: {
   channel: string;
   rawTarget?: string | null;

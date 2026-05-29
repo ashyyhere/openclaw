@@ -1,3 +1,4 @@
+/** Quality checks and fallback structure helpers for compaction summaries. */
 import { extractKeywords, isQueryStopWordToken } from "../../memory-host-sdk/query.js";
 import { localeLowercasePreservingWhitespace } from "../../shared/string-coerce.js";
 import { uniqueStrings } from "../../shared/string-normalization.js";
@@ -20,6 +21,7 @@ const STRICT_EXACT_IDENTIFIERS_INSTRUCTION =
 const POLICY_OFF_EXACT_IDENTIFIERS_INSTRUCTION =
   "For ## Exact identifiers, include identifiers only when needed for continuity; do not enforce literal-preservation rules.";
 
+/** Wraps untrusted user/model text so compaction prompts do not treat it as instructions. */
 export function wrapUntrustedInstructionBlock(label: string, text: string): string {
   return wrapUntrustedPromptDataBlock({
     label,
@@ -50,6 +52,7 @@ function resolveExactIdentifierSectionInstruction(
   return STRICT_EXACT_IDENTIFIERS_INSTRUCTION;
 }
 
+/** Builds structure requirements for model-generated compaction summaries. */
 export function buildCompactionStructureInstructions(
   customInstructions?: string,
   summarizationInstructions?: CompactionSummarizationInstructions,
@@ -94,6 +97,7 @@ function hasRequiredSummarySections(summary: string): boolean {
   return true;
 }
 
+/** Builds a deterministic fallback summary when model compaction output is weak. */
 export function buildStructuredFallbackSummary(
   previousSummary: string | undefined,
   _summarizationInstructions?: CompactionSummarizationInstructions,
@@ -121,6 +125,7 @@ export function buildStructuredFallbackSummary(
   ].join("\n");
 }
 
+/** Appends a section to an existing summary with stable spacing. */
 export function appendSummarySection(summary: string, section: string): string {
   if (!section) {
     return summary;
@@ -153,6 +158,7 @@ function summaryIncludesIdentifier(summary: string, identifier: string): boolean
   return summary.includes(identifier);
 }
 
+/** Extracts issue/PR/SHA-like identifiers that summary quality checks should preserve. */
 export function extractOpaqueIdentifiers(text: string): string[] {
   const matches =
     text.match(
@@ -218,6 +224,7 @@ function hasAskOverlap(summary: string, latestAsk: string | null): boolean {
   return overlapCount >= requiredMatches;
 }
 
+/** Audits whether a summary retained enough structure, identifiers, and task context. */
 export function auditSummaryQuality(params: {
   summary: string;
   identifiers: string[];

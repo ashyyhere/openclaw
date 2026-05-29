@@ -1,3 +1,4 @@
+// config state dir dotenv helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import dotenv from "dotenv";
@@ -33,6 +34,7 @@ function parseStateDirDotEnvContent(content: string): Record<string, string> {
   return entries;
 }
 
+/** Reused helper for read State Dir Dot Env Vars From State Dir behavior in src/config. */
 export function readStateDirDotEnvVarsFromStateDir(stateDir: string): Record<string, string> {
   const dotEnvPath = path.join(stateDir, ".env");
   try {
@@ -54,12 +56,14 @@ export function readStateDirDotEnvVars(
   return readStateDirDotEnvVarsFromStateDir(stateDir);
 }
 
+/** Shared type for Durable Service Env Var Sources in src/config. */
 export type DurableServiceEnvVarSources = {
   stateDirDotEnvEnvironment: Record<string, string>;
   configEnvironment: Record<string, string>;
   durableEnvironment: Record<string, string>;
 };
 
+/** Reused helper for collect Durable Service Env Var Sources behavior in src/config. */
 export function collectDurableServiceEnvVarSources(params: {
   env: Record<string, string | undefined>;
   config?: OpenClawConfig;

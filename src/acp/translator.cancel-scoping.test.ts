@@ -1,3 +1,4 @@
+/** Tests ACP translator cancellation scoping across sessions and runs. */
 import type { CancelNotification, PromptRequest, PromptResponse } from "@agentclientprotocol/sdk";
 import { describe, expect, it, vi } from "vitest";
 import type { EventFrame } from "../../packages/gateway-protocol/src/index.js";

@@ -1,3 +1,4 @@
+// extensions/browser/src browser tool schema helpers and runtime behavior.
 import {
   optionalFiniteNumberSchema,
   optionalNonNegativeIntegerSchema,

@@ -1,3 +1,4 @@
+/** Tests setup command registration. */
 import { Command } from "commander";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { registerSetupCommand } from "./register.setup.js";

@@ -1,3 +1,4 @@
+// extensions/feishu/src drive schema helpers and runtime behavior.
 import { Type, type Static } from "typebox";
 
 const FileType = Type.Union([

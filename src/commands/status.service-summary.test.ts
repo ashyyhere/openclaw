@@ -1,3 +1,4 @@
+/** Tests service status summary parsing and formatting. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { describe, expect, it, vi } from "vitest";

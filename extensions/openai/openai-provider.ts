@@ -1,3 +1,4 @@
+// extensions/openai openai provider helpers and runtime behavior.
 import {
   type ProviderResolveDynamicModelContext,
   type ProviderRuntimeModel,

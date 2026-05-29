@@ -1,3 +1,4 @@
+/** Logs observable changes in auth profile cooldown/blocked state. */
 import { redactIdentifier } from "../../logging/redact-identifier.js";
 import { createSubsystemLogger } from "../../logging/subsystem.js";
 import { sanitizeForConsole } from "../console-sanitize.js";
@@ -5,6 +6,7 @@ import type { AuthProfileFailureReason, ProfileUsageStats } from "./types.js";
 
 const observationLog = createSubsystemLogger("agent/embedded");
 
+/** Reused helper for log Auth Profile Failure State Change behavior in src/agents/auth-profiles. */
 export function logAuthProfileFailureStateChange(params: {
   runId?: string;
   profileId: string;

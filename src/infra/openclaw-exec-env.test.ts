@@ -1,3 +1,4 @@
+// Tests infra openclaw exec env test behavior.
 import { describe, expect, it } from "vitest";
 import {
   ensureOpenClawExecMarkerOnProcess,

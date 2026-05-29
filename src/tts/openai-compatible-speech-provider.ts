@@ -1,3 +1,4 @@
+// tts openai compatible speech provider helpers and runtime behavior.
 import {
   assertOkOrThrowHttpError,
   postJsonRequest,
@@ -23,14 +24,17 @@ type OpenAiCompatibleSpeechProviderBaseConfig = {
   responseFormat?: string;
 };
 
+/** Shared type for Open Ai Compatible Speech Provider Config in src/tts. */
 export type OpenAiCompatibleSpeechProviderConfig<
   ExtraConfig extends Record<string, unknown> = Record<string, never>,
 > = OpenAiCompatibleSpeechProviderBaseConfig & ExtraConfig;
 
+/** Shared type for Open Ai Compatible Speech Provider Base Url Policy in src/tts. */
 export type OpenAiCompatibleSpeechProviderBaseUrlPolicy =
   | { kind: "trim-trailing-slash" }
   | { kind: "canonical"; aliases?: readonly string[]; allowCustom?: boolean };
 
+/** Shared type for Open Ai Compatible Speech Provider Extra Json Body Field in src/tts. */
 export type OpenAiCompatibleSpeechProviderExtraJsonBodyField<
   ExtraConfig extends Record<string, unknown>,
 > = {
@@ -38,6 +42,7 @@ export type OpenAiCompatibleSpeechProviderExtraJsonBodyField<
   requestKey?: string;
 };
 
+/** Shared type for Open Ai Compatible Speech Provider Options in src/tts. */
 export type OpenAiCompatibleSpeechProviderOptions<
   ExtraConfig extends Record<string, unknown> = Record<string, never>,
 > = {
@@ -185,6 +190,7 @@ function buildExtraJsonBodyFields<ExtraConfig extends Record<string, unknown>>(
   return body;
 }
 
+/** Reused helper for create Open Ai Compatible Speech Provider behavior in src/tts. */
 export function createOpenAiCompatibleSpeechProvider<
   ExtraConfig extends Record<string, unknown> = Record<string, never>,
 >(options: OpenAiCompatibleSpeechProviderOptions<ExtraConfig>): SpeechProviderPlugin {

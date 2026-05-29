@@ -1,3 +1,4 @@
+// scripts generate prompt snapshots helpers and runtime behavior.
 import { execFile } from "node:child_process";
 import fs from "node:fs/promises";
 import os from "node:os";

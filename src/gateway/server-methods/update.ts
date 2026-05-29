@@ -1,3 +1,4 @@
+// gateway/server-methods update helpers and runtime behavior.
 import { randomUUID } from "node:crypto";
 import os from "node:os";
 import {
@@ -62,6 +63,7 @@ function resolveManagedServiceHandoffRestartDelayMs(
   );
 }
 
+/** Reused constant for update Handlers behavior in src/gateway/server-methods. */
 export const updateHandlers: GatewayRequestHandlers = {
   "update.status": async ({ params, respond }) => {
     if (!assertValidParams(params, validateUpdateStatusParams, "update.status", respond)) {

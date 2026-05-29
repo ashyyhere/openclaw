@@ -1,3 +1,4 @@
+/** Tests top-level CLI route selection and startup policy. */
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 const emitCliBannerMock = vi.hoisted(() => vi.fn());

@@ -1,3 +1,4 @@
+/** Formats daemon command responses and platform-specific hints. */
 import { Writable } from "node:stream";
 import type { GatewayService } from "../../daemon/service.js";
 import {
@@ -8,8 +9,10 @@ import { classifySystemdUnavailableDetail } from "../../daemon/systemd-unavailab
 import { isWSL } from "../../infra/wsl.js";
 import { defaultRuntime } from "../../runtime.js";
 
+/** Shared type for Daemon Action in src/cli/daemon-cli. */
 export type DaemonAction = "install" | "uninstall" | "start" | "stop" | "restart";
 
+/** Shared type for Daemon Hint Kind in src/cli/daemon-cli. */
 export type DaemonHintKind =
   | "install"
   | "container-restart"
@@ -19,11 +22,13 @@ export type DaemonHintKind =
   | "wsl-systemd"
   | "generic";
 
+/** Shared type for Daemon Hint Item in src/cli/daemon-cli. */
 export type DaemonHintItem = {
   kind: DaemonHintKind;
   text: string;
 };
 
+/** Shared type for Daemon Action Response in src/cli/daemon-cli. */
 export type DaemonActionResponse = {
   ok: boolean;
   action: DaemonAction;
@@ -74,6 +79,7 @@ function classifyDaemonHintText(text: string): DaemonHintKind {
   return "generic";
 }
 
+/** Reused helper for build Daemon Hint Items behavior in src/cli/daemon-cli. */
 export function buildDaemonHintItems(hints: string[] | undefined): DaemonHintItem[] | undefined {
   if (!hints?.length) {
     return undefined;
@@ -81,6 +87,7 @@ export function buildDaemonHintItems(hints: string[] | undefined): DaemonHintIte
   return hints.map((text) => ({ kind: classifyDaemonHintText(text), text }));
 }
 
+/** Reused helper for build Daemon Service Snapshot behavior in src/cli/daemon-cli. */
 export function buildDaemonServiceSnapshot(service: GatewayService, loaded: boolean) {
   return {
     label: service.label,
@@ -98,6 +105,7 @@ function createNullWriter(): Writable {
   });
 }
 
+/** Reused helper for create Daemon Action Context behavior in src/cli/daemon-cli. */
 export function createDaemonActionContext(params: { action: DaemonAction; json: boolean }): {
   stdout: Writable;
   warnings: string[];
@@ -149,6 +157,7 @@ async function buildInstallFailureHints(error: unknown): Promise<string[] | unde
   });
 }
 
+/** Reused helper for install Daemon Service And Emit behavior in src/cli/daemon-cli. */
 export async function installDaemonServiceAndEmit(params: {
   serviceNoun: string;
   service: GatewayService;

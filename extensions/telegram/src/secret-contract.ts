@@ -1,3 +1,4 @@
+// extensions/telegram/src secret contract helpers and runtime behavior.
 import {
   collectConditionalChannelFieldAssignments,
   getChannelSurface,

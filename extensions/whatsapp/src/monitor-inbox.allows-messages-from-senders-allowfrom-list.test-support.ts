@@ -1,3 +1,4 @@
+// extensions/whatsapp/src monitor inbox allows messages from senders allowfrom list test support helpers and runtime behavior.
 import "./monitor-inbox.test-harness.js";
 import { describe, expect, it, vi } from "vitest";
 import {

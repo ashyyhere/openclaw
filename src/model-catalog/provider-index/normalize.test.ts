@@ -1,3 +1,4 @@
+// Tests model-catalog/provider-index normalize test behavior.
 import { describe, expect, it } from "vitest";
 import { loadOpenClawProviderIndex, normalizeOpenClawProviderIndex } from "./index.js";
 

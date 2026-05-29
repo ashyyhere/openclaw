@@ -1,3 +1,4 @@
+// Tests extensions/qa-lab/src suite test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { QaLabServerHandle } from "./lab-server.types.js";
 import { makeQaSuiteTestScenario } from "./suite-test-helpers.js";

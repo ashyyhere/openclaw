@@ -1,3 +1,4 @@
+// extensions/discord/src api helpers and runtime behavior.
 import { resolveFetch } from "openclaw/plugin-sdk/fetch-runtime";
 import { resolveTimerTimeoutMs } from "openclaw/plugin-sdk/number-runtime";
 import {
@@ -91,6 +92,7 @@ function formatDiscordApiErrorText(text: string, response: Response): string | u
   return retryAfter ? `${message} (retry after ${retryAfter})` : message;
 }
 
+/** Public discord plugin class for Discord Api Error behavior. */
 export class DiscordApiError extends Error {
   status: number;
   retryAfter?: number;
@@ -150,6 +152,7 @@ function resolveDiscordRequestSignal(options: DiscordApiRequestOptions) {
   return AbortSignal.timeout(resolveTimerTimeoutMs(options.timeoutMs, 1));
 }
 
+/** Public discord plugin helper for request Discord behavior. */
 export async function requestDiscord<T>(
   path: string,
   token: string,
@@ -200,6 +203,7 @@ export async function requestDiscord<T>(
   );
 }
 
+/** Public discord plugin helper for fetch Discord behavior. */
 export async function fetchDiscord<T>(
   path: string,
   token: string,

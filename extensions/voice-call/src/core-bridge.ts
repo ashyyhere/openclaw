@@ -1,3 +1,4 @@
+// extensions/voice-call/src core bridge helpers and runtime behavior.
 import type { OpenClawPluginApi } from "../api.js";
 import type { VoiceCallTtsConfig } from "./config.js";
 

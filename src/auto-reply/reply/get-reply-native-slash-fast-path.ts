@@ -1,3 +1,4 @@
+// Fast path for native slash commands in get-reply.
 import { loadModelCatalog } from "../../agents/model-catalog.js";
 import {
   resolveThinkingDefaultWithRuntimeCatalog,
@@ -70,6 +71,7 @@ async function resolveNativeSlashDefaultThinkingLevel(params: {
   });
 }
 
+/** Reused helper for maybe Resolve Native Slash Command Fast Reply behavior in src/auto-reply/reply. */
 export async function maybeResolveNativeSlashCommandFastReply(params: {
   ctx: MsgContext;
   cfg: OpenClawConfig;

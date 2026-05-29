@@ -1,3 +1,4 @@
+// extensions/discord/src/test-support partial channel helpers and runtime behavior.
 const DISCORD_PARTIAL_CHANNEL_RAW_DATA_ERROR =
   "Cannot access rawData on partial Channel. Use fetch() to populate data.";
 

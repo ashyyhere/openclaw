@@ -1,3 +1,4 @@
+// Tests test/scripts bundled plugin install uninstall probe test behavior.
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import { createServer as createHttpServer, type Server as HttpServer } from "node:http";

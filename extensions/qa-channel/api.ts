@@ -1,3 +1,5 @@
+// extensions/qa-channel api helpers and runtime behavior.
+/** Re-exported qa-channel plugin public API. */
 export {
   DEFAULT_ACCOUNT_ID,
   listEnabledQaChannelAccounts,
@@ -6,9 +8,13 @@ export {
   type ResolvedQaChannelAccount,
   resolveQaChannelAccount,
 } from "./src/accounts.js";
+/** Re-exported qa-channel plugin public API, starting with qa Channel Plugin. */
 export { qaChannelPlugin } from "./src/channel.js";
+/** Re-exported qa-channel plugin public API, starting with qa Channel Message Actions. */
 export { qaChannelMessageActions } from "./src/channel-actions.js";
+/** Re-exported qa-channel plugin public API, starting with get Qa Channel Runtime. */
 export { getQaChannelRuntime, setQaChannelRuntime } from "./src/runtime.js";
+/** Re-exported qa-channel plugin public API. */
 export {
   buildQaTarget,
   createQaBusThread,

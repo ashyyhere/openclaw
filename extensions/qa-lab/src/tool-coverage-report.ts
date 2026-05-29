@@ -1,3 +1,4 @@
+// extensions/qa-lab/src tool coverage report helpers and runtime behavior.
 import {
   isRecord,
   normalizeOptionalString as readString,

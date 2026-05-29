@@ -1,6 +1,9 @@
+// Normalized command turn context shared by text and native command paths.
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 
+/** Command turn source folded into its runtime handling kind. */
 export type CommandTurnKind = "native" | "text-slash" | "normal";
+/** Raw source category observed on the inbound message. */
 export type CommandTurnSource = "native" | "text" | "message";
 
 type BaseCommandTurnContext = {
@@ -8,29 +11,34 @@ type BaseCommandTurnContext = {
   body?: string;
 };
 
+/** Native platform command with authorization metadata from the channel. */
 export type NativeCommandTurnContext = BaseCommandTurnContext & {
   kind: "native";
   source: "native";
   authorized: boolean;
 };
 
+/** Text slash command parsed from a regular message body. */
 export type TextSlashCommandTurnContext = BaseCommandTurnContext & {
   kind: "text-slash";
   source: "text";
   authorized: boolean;
 };
 
+/** Ordinary message turn that should flow to the agent rather than command handling. */
 export type NormalCommandTurnContext = BaseCommandTurnContext & {
   kind: "normal";
   source: "message";
   authorized: false;
 };
 
+/** Closed command turn shape used by downstream command gates. */
 export type CommandTurnContext =
   | NativeCommandTurnContext
   | TextSlashCommandTurnContext
   | NormalCommandTurnContext;
 
+/** Legacy and normalized message fields used to reconstruct command context. */
 export type CommandTurnContextInput = {
   CommandTurn?: unknown;
   CommandSource?: unknown;
@@ -59,6 +67,7 @@ function parseCommandName(body: string | undefined): string | undefined {
   return normalizeOptionalString(name);
 }
 
+/** Convert normalized command kind back to its source label. */
 export function commandTurnKindToSource(kind: CommandTurnKind): CommandTurnSource {
   if (kind === "native") {
     return "native";
@@ -77,6 +86,7 @@ function normalizeCommandTurnSource(value: unknown): CommandTurnSource | undefin
   return value === "native" || value === "text" || value === "message" ? value : undefined;
 }
 
+/** Convert legacy command source labels into normalized command kind. */
 export function commandTurnSourceToKind(source: CommandTurnSource): CommandTurnKind {
   if (source === "native") {
     return "native";
@@ -87,6 +97,7 @@ export function commandTurnSourceToKind(source: CommandTurnSource): CommandTurnK
   return "normal";
 }
 
+/** Create a normalized command context from explicit fields. */
 export function createCommandTurnContext(
   source: CommandTurnSource,
   input: {
@@ -153,6 +164,7 @@ function normalizeExplicitCommandTurn(
   });
 }
 
+/** Resolve command context from mixed legacy and current inbound fields. */
 export function resolveCommandTurnContext(input: CommandTurnContextInput): CommandTurnContext {
   const explicit = normalizeExplicitCommandTurn(input.CommandTurn, input);
   if (explicit) {
@@ -173,26 +185,31 @@ export function resolveCommandTurnContext(input: CommandTurnContextInput): Comma
   });
 }
 
+/** Reused helper for is Native Command Turn behavior in src/auto-reply. */
 export function isNativeCommandTurn(commandTurn: CommandTurnContext | undefined): boolean {
   return commandTurn?.kind === "native";
 }
 
+/** Reused helper for is Text Slash Command Turn behavior in src/auto-reply. */
 export function isTextSlashCommandTurn(commandTurn: CommandTurnContext | undefined): boolean {
   return commandTurn?.kind === "text-slash";
 }
 
+/** Reused helper for is Authorized Text Slash Command Turn behavior in src/auto-reply. */
 export function isAuthorizedTextSlashCommandTurn(
   commandTurn: CommandTurnContext | undefined,
 ): boolean {
   return commandTurn?.kind === "text-slash" && commandTurn.authorized;
 }
 
+/** Reused helper for is Explicit Command Turn behavior in src/auto-reply. */
 export function isExplicitCommandTurn(commandTurn: CommandTurnContext | undefined): boolean {
   return (
     commandTurn?.kind === "native" || (commandTurn?.kind === "text-slash" && commandTurn.authorized)
   );
 }
 
+/** Reused helper for resolve Command Turn Target Session Key behavior in src/auto-reply. */
 export function resolveCommandTurnTargetSessionKey(input: {
   CommandTurn?: CommandTurnContext;
   CommandSource?: unknown;

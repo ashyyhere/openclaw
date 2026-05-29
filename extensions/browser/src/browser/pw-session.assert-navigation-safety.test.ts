@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/browser pw session assert navigation safety test behavior.
 import type { Page } from "playwright-core";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { SsrFBlockedError } from "../infra/net/ssrf.js";

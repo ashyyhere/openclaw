@@ -1,3 +1,4 @@
+// plugin-sdk/test-helpers directory helpers and runtime behavior.
 import type { ChannelDirectoryAdapter } from "../channel-contract.js";
 
 type DirectorySurface = {

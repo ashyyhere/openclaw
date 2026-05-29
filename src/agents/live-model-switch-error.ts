@@ -1,3 +1,4 @@
+/** Error used to request live-session model switching through failover paths. */
 type LiveSessionModelSelection = {
   provider: string;
   model: string;
@@ -5,6 +6,7 @@ type LiveSessionModelSelection = {
   authProfileIdSource?: "auto" | "user";
 };
 
+/** Structured control error carrying the requested live model selection. */
 export class LiveSessionModelSwitchError extends Error {
   provider: string;
   model: string;

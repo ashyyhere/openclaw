@@ -1,3 +1,4 @@
+// extensions/matrix/src/matrix active client helpers and runtime behavior.
 import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "openclaw/plugin-sdk/account-id";
 import type { MatrixClient } from "./sdk.js";
 

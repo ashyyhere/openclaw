@@ -1,3 +1,4 @@
+/** Resolves filesystem read/write policy for tool execution. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveAgentConfig } from "./agent-scope.js";
 import { pickSandboxToolPolicy } from "./sandbox-tool-policy.js";
@@ -5,14 +6,17 @@ import type { ToolFsPolicy } from "./tool-fs-policy.types.js";
 import { isToolAllowedByPolicies } from "./tool-policy-match.js";
 import { mergeAlsoAllowPolicy, resolveToolProfilePolicy } from "./tool-policy.js";
 
+/** Re-exported API for src/agents, starting with Tool Fs Policy. */
 export type { ToolFsPolicy } from "./tool-fs-policy.types.js";
 
+/** Reused helper for create Tool Fs Policy behavior in src/agents. */
 export function createToolFsPolicy(params: { workspaceOnly?: boolean }): ToolFsPolicy {
   return {
     workspaceOnly: params.workspaceOnly === true,
   };
 }
 
+/** Reused helper for resolve Tool Fs Config behavior in src/agents. */
 export function resolveToolFsConfig(params: { cfg?: OpenClawConfig; agentId?: string }): {
   workspaceOnly?: boolean;
 } {
@@ -25,6 +29,7 @@ export function resolveToolFsConfig(params: { cfg?: OpenClawConfig; agentId?: st
   };
 }
 
+/** Reused helper for resolve Effective Tool Fs Workspace Only behavior in src/agents. */
 export function resolveEffectiveToolFsWorkspaceOnly(params: {
   cfg?: OpenClawConfig;
   agentId?: string;
@@ -32,6 +37,7 @@ export function resolveEffectiveToolFsWorkspaceOnly(params: {
   return resolveToolFsConfig(params).workspaceOnly === true;
 }
 
+/** Reused helper for resolve Effective Tool Fs Root Expansion Allowed behavior in src/agents. */
 export function resolveEffectiveToolFsRootExpansionAllowed(params: {
   cfg?: OpenClawConfig;
   agentId?: string;

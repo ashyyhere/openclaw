@@ -1,3 +1,4 @@
+// extensions/slack/src index helpers and runtime behavior.
 export {
   listEnabledSlackAccounts,
   listSlackAccountIds,

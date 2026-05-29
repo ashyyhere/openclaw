@@ -1,3 +1,4 @@
+// Tests extensions/imessage/src normalize test behavior.
 import { describe, expect, it } from "vitest";
 import { looksLikeIMessageTargetId, normalizeIMessageMessagingTarget } from "./normalize.js";
 

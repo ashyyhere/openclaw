@@ -1,3 +1,4 @@
+// Tests extensions/discord/src outbound session route test behavior.
 import { describe, expect, it } from "vitest";
 import { resolveDiscordOutboundSessionRoute } from "./outbound-session-route.js";
 

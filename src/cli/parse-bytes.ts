@@ -1,3 +1,4 @@
+/** Parses human-readable byte values used by CLI options. */
 import {
   normalizeLowercaseStringOrEmpty,
   normalizeOptionalString,
@@ -27,6 +28,7 @@ function invalidByteSize(raw: string, reason?: string): Error {
   return new Error(`${prefix} Use values like 512kb, 10mb, 1gb, or 500.`);
 }
 
+/** Reused helper for parse Byte Size behavior in src/cli. */
 export function parseByteSize(raw: string, opts?: BytesParseOptions): number {
   const trimmed = normalizeLowercaseStringOrEmpty(normalizeOptionalString(raw) ?? "");
   if (!trimmed) {

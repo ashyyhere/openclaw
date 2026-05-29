@@ -1,14 +1,18 @@
+/** Shared sandbox config/context types. */
 import type { SandboxBackendHandle, SandboxBackendId } from "./backend-handle.types.js";
 import type { SandboxFsBridge } from "./fs-bridge.types.js";
 import type { SandboxDockerConfig } from "./types.docker.js";
 
+/** Re-exported API for src/agents/sandbox, starting with Sandbox Docker Config. */
 export type { SandboxDockerConfig } from "./types.docker.js";
 
+/** Shared type for Sandbox Tool Policy in src/agents/sandbox. */
 export type SandboxToolPolicy = {
   allow?: string[];
   deny?: string[];
 };
 
+/** Shared type for Sandbox Tool Policy Source in src/agents/sandbox. */
 export type SandboxToolPolicySource = {
   source: "agent" | "global" | "default";
   /**
@@ -18,6 +22,7 @@ export type SandboxToolPolicySource = {
   key: string;
 };
 
+/** Shared type for Sandbox Tool Policy Resolved in src/agents/sandbox. */
 export type SandboxToolPolicyResolved = {
   allow: string[];
   deny: string[];
@@ -27,8 +32,10 @@ export type SandboxToolPolicyResolved = {
   };
 };
 
+/** Shared type for Sandbox Workspace Access in src/agents/sandbox. */
 export type SandboxWorkspaceAccess = "none" | "ro" | "rw";
 
+/** Shared type for Sandbox Browser Config in src/agents/sandbox. */
 export type SandboxBrowserConfig = {
   enabled: boolean;
   image: string;
@@ -46,11 +53,13 @@ export type SandboxBrowserConfig = {
   binds?: string[];
 };
 
+/** Shared type for Sandbox Prune Config in src/agents/sandbox. */
 export type SandboxPruneConfig = {
   idleHours: number;
   maxAgeDays: number;
 };
 
+/** Shared type for Sandbox Ssh Config in src/agents/sandbox. */
 export type SandboxSshConfig = {
   target?: string;
   command: string;
@@ -65,8 +74,10 @@ export type SandboxSshConfig = {
   knownHostsData?: string;
 };
 
+/** Shared type for Sandbox Scope in src/agents/sandbox. */
 export type SandboxScope = "session" | "agent" | "shared";
 
+/** Shared type for Sandbox Config in src/agents/sandbox. */
 export type SandboxConfig = {
   mode: "off" | "non-main" | "all";
   backend: SandboxBackendId;
@@ -80,12 +91,14 @@ export type SandboxConfig = {
   prune: SandboxPruneConfig;
 };
 
+/** Shared type for Sandbox Browser Context in src/agents/sandbox. */
 export type SandboxBrowserContext = {
   bridgeUrl: string;
   noVncUrl?: string;
   containerName: string;
 };
 
+/** Shared type for Sandbox Context in src/agents/sandbox. */
 export type SandboxContext = {
   enabled: boolean;
   backendId: SandboxBackendId;
@@ -105,6 +118,7 @@ export type SandboxContext = {
   backend?: SandboxBackendHandle;
 };
 
+/** Shared type for Sandbox Workspace Info in src/agents/sandbox. */
 export type SandboxWorkspaceInfo = {
   workspaceDir: string;
   containerWorkdir: string;

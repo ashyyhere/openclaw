@@ -1,3 +1,4 @@
+// extensions/telegram/src inline keyboard helpers and runtime behavior.
 import type { InlineKeyboardButton, InlineKeyboardMarkup } from "grammy/types";
 import type { TelegramInlineButtons } from "./button-types.js";
 

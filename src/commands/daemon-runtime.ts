@@ -1,7 +1,10 @@
+/** Gateway daemon runtime option constants. */
 export type GatewayDaemonRuntime = "node" | "bun";
 
+/** Reused constant for DEFAULT GATEWAY DAEMON RUNTIME behavior in src/commands. */
 export const DEFAULT_GATEWAY_DAEMON_RUNTIME: GatewayDaemonRuntime = "node";
 
+/** Reused constant for GATEWAY DAEMON RUNTIME OPTIONS behavior in src/commands. */
 export const GATEWAY_DAEMON_RUNTIME_OPTIONS: Array<{
   value: GatewayDaemonRuntime;
   label: string;
@@ -14,6 +17,7 @@ export const GATEWAY_DAEMON_RUNTIME_OPTIONS: Array<{
   },
 ];
 
+/** Reused helper for is Gateway Daemon Runtime behavior in src/commands. */
 export function isGatewayDaemonRuntime(value: string | undefined): value is GatewayDaemonRuntime {
   return value === "node" || value === "bun";
 }

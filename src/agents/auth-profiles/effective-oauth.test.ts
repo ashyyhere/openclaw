@@ -1,3 +1,4 @@
+/** Regression coverage for effective OAuth credential resolution. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { resolveEffectiveOAuthCredential } from "./effective-oauth.js";
 import type { OAuthCredential } from "./types.js";

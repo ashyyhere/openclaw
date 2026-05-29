@@ -1,3 +1,4 @@
+// extensions/slack/src/http paths helpers and runtime behavior.
 export function normalizeSlackWebhookPath(path?: string | null): string {
   const trimmed = path?.trim();
   if (!trimmed) {

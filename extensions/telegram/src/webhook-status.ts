@@ -1,3 +1,4 @@
+// extensions/telegram/src webhook status helpers and runtime behavior.
 import type { ChannelAccountSnapshot } from "openclaw/plugin-sdk/channel-contract";
 import { createConnectedChannelStatusPatch } from "openclaw/plugin-sdk/gateway-runtime";
 

@@ -209,6 +209,7 @@ interface AgentHarnessTurnState<
   activeTools: TTool[];
 }
 
+/** Public class implementing Agent Harness behavior for packages/agent-core. */
 export class AgentHarness<
   TSkill extends Skill = Skill,
   TPromptTemplate extends PromptTemplate = PromptTemplate,

@@ -1,9 +1,12 @@
+/** Helpers for attempt thread prompts, workspace paths, and cache markers. */
 import type { OpenClawConfig } from "../../../config/types.openclaw.js";
 import { joinPresentTextSegments } from "../../../shared/text/join-segments.js";
 import { normalizeStructuredPromptSection } from "../../prompt-cache-stability.js";
 
+/** Reused constant for ATTEMPT CACHE TTL CUSTOM TYPE behavior in src/agents/embedded-agent-runner. */
 export const ATTEMPT_CACHE_TTL_CUSTOM_TYPE = "openclaw.cache-ttl";
 
+/** Appends hook-provided system prompt context to the base prompt. */
 export function composeSystemPromptWithHookContext(params: {
   baseSystemPrompt?: string;
   prependSystemContext?: string;
@@ -25,6 +28,7 @@ export function composeSystemPromptWithHookContext(params: {
   });
 }
 
+/** Resolves the workspace path visible to spawned sessions for this attempt. */
 export function resolveAttemptSpawnWorkspaceDir(params: {
   sandbox?: {
     enabled?: boolean;
@@ -55,6 +59,7 @@ function shouldAppendAttemptCacheTtl(params: {
   );
 }
 
+/** Appends a cache-retention marker when a retry should preserve prompt cache. */
 export function appendAttemptCacheTtlIfNeeded(params: {
   sessionManager: {
     appendCustomEntry?: (customType: string, data: unknown) => void;
@@ -79,6 +84,7 @@ export function appendAttemptCacheTtlIfNeeded(params: {
   return true;
 }
 
+/** Decides whether a completed bootstrap turn marker should be persisted. */
 export function shouldPersistCompletedBootstrapTurn(params: {
   shouldRecordCompletedBootstrapTurn: boolean;
   promptError: unknown;

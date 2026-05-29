@@ -1,3 +1,4 @@
+// Tests gateway token resolution and config preservation for non-interactive onboarding.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../../../config/types.openclaw.js";
 import type { OnboardOptions } from "../../onboard-types.js";

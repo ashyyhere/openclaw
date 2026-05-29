@@ -1,3 +1,4 @@
+// Tests infra/outbound channel target prefix test behavior.
 import { describe, expect, it } from "vitest";
 import { stripTargetTopicSuffix } from "./channel-target-prefix.js";
 

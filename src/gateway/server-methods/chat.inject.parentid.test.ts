@@ -1,3 +1,4 @@
+// Tests gateway/server-methods chat inject parentid test behavior.
 import fs from "node:fs";
 import { describe, expect, it } from "vitest";
 import { onSessionTranscriptUpdate } from "../../sessions/transcript-events.js";

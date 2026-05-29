@@ -1,3 +1,4 @@
+// Tests extensions/googlechat/src monitor durable test behavior.
 import { describe, expect, it } from "vitest";
 import { resolveGoogleChatDurableReplyOptions } from "./monitor-durable.js";
 

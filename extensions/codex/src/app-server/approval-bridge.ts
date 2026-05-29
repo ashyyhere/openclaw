@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server approval bridge helpers and runtime behavior.
 import {
   type AgentApprovalEventData,
   buildAgentHookContextChannelFields,

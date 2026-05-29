@@ -1,3 +1,4 @@
+// Tests extensions/browser/src/browser server context hot reload profiles test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { BrowserServerState } from "./server-context.types.js";
 

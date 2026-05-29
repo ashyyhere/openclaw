@@ -1,3 +1,4 @@
+// extensions/discord/src channel conversation helpers and runtime behavior.
 import {
   normalizeLowercaseStringOrEmpty,
   normalizeOptionalString,

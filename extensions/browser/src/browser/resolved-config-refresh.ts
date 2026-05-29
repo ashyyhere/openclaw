@@ -1,3 +1,4 @@
+// extensions/browser/src/browser resolved config refresh helpers and runtime behavior.
 import { loadBrowserConfigForRuntimeRefresh } from "./config-refresh-source.js";
 import { resolveBrowserConfig, resolveProfile, type ResolvedBrowserProfile } from "./config.js";
 import type { BrowserServerState } from "./server-context.types.js";

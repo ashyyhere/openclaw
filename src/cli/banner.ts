@@ -61,6 +61,7 @@ function resolveEmojiOptions(options: BannerOptions): DecorativeEmojiOptions {
   };
 }
 
+/** Reused helper for format Cli Banner Line behavior in src/cli. */
 export function formatCliBannerLine(version: string, options: BannerOptions = {}): string {
   const commit =
     options.commit ?? resolveCommitHash({ env: options.env, moduleUrl: import.meta.url });
@@ -129,6 +130,7 @@ function formatCliBannerArtLines(options: BannerOptions): string[] {
   return [...LOBSTER_ASCII_BODY, centerText(title, width), " "];
 }
 
+/** Reused helper for format Cli Banner Art behavior in src/cli. */
 export function formatCliBannerArt(options: BannerOptions = {}): string {
   const rich = options.richTty ?? isRich();
   const lines = formatCliBannerArtLines(options);
@@ -169,6 +171,7 @@ export function formatCliBannerArt(options: BannerOptions = {}): string {
   return colored.join("\n");
 }
 
+/** Reused helper for emit Cli Banner behavior in src/cli. */
 export function emitCliBanner(version: string, options: BannerOptions = {}) {
   if (bannerEmitted) {
     return;
@@ -189,6 +192,7 @@ export function emitCliBanner(version: string, options: BannerOptions = {}) {
   bannerEmitted = true;
 }
 
+/** Reused helper for has Emitted Cli Banner behavior in src/cli. */
 export function hasEmittedCliBanner(): boolean {
   return bannerEmitted;
 }

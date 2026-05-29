@@ -1,3 +1,4 @@
+// ui/src/ui/views channels config helpers and runtime behavior.
 import { html } from "lit";
 import { t } from "../../i18n/index.ts";
 import type { ConfigUiHints } from "../types.ts";
@@ -83,6 +84,7 @@ function renderExtraChannelFields(value: Record<string, unknown>) {
   `;
 }
 
+/** Reused helper for render Channel Config Form behavior in ui/src/ui/views. */
 export function renderChannelConfigForm(props: ChannelConfigFormProps) {
   const analysis = analyzeConfigSchema(props.schema);
   const normalized = analysis.schema;
@@ -112,6 +114,7 @@ export function renderChannelConfigForm(props: ChannelConfigFormProps) {
   `;
 }
 
+/** Reused helper for render Channel Config Section behavior in ui/src/ui/views. */
 export function renderChannelConfigSection(params: { channelId: string; props: ChannelsProps }) {
   const { channelId, props } = params;
   const disabled = props.configSaving || props.configSchemaLoading;

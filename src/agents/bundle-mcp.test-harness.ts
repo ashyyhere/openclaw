@@ -1,3 +1,4 @@
+/** CLI bundle MCP test harness helpers. */
 import { createRequire } from "node:module";
 import {
   writeBundleProbeMcpServer,
@@ -9,8 +10,10 @@ const require = createRequire(import.meta.url);
 const SDK_CLIENT_INDEX_PATH = require.resolve("@modelcontextprotocol/sdk/client/index.js");
 const SDK_CLIENT_STDIO_PATH = require.resolve("@modelcontextprotocol/sdk/client/stdio.js");
 
+/** Re-exported API for src/agents, starting with write Bundle Probe Mcp Server. */
 export { writeBundleProbeMcpServer, writeClaudeBundle };
 
+/** Write a fake live Claude CLI that exercises bundle MCP config. */
 export async function writeFakeClaudeLiveCli(params: {
   filePath: string;
   pidPath?: string;
@@ -112,6 +115,7 @@ try {
   );
 }
 
+/** Write a fake Claude CLI that connects to the configured bundle MCP server. */
 export async function writeFakeClaudeCli(filePath: string): Promise<void> {
   await writeExecutable(
     filePath,

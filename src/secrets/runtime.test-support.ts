@@ -1,3 +1,4 @@
+// secrets runtime test support helpers and runtime behavior.
 import { afterEach, beforeAll, beforeEach, vi } from "vitest";
 import type { AuthProfileStore } from "../agents/auth-profiles.js";
 import type { OpenClawConfig } from "../config/config.js";
@@ -20,10 +21,12 @@ vi.mock("../plugins/installed-plugin-index-records.js", () => ({
   loadInstalledPluginIndexInstallRecordsSync: () => ({}),
 }));
 
+/** Reused helper for as Config behavior in src/secrets. */
 export function asConfig(value: unknown): OpenClawConfig {
   return value as OpenClawConfig;
 }
 
+/** Reused helper for load Auth Store With Profiles behavior in src/secrets. */
 export function loadAuthStoreWithProfiles(
   profiles: AuthProfileStore["profiles"],
 ): AuthProfileStore {
@@ -95,6 +98,7 @@ function createTestProvider(params: {
   };
 }
 
+/** Reused helper for build Test Web Search Providers behavior in src/secrets. */
 export function buildTestWebSearchProviders(): PluginWebSearchProviderEntry[] {
   return [
     createTestProvider({ id: "brave", pluginId: "brave", order: 10 }),
@@ -105,15 +109,18 @@ export function buildTestWebSearchProviders(): PluginWebSearchProviderEntry[] {
   ];
 }
 
+/** Reused helper for reset Plugin Web Search Providers Mock behavior in src/secrets. */
 export function resetPluginWebSearchProvidersMock() {
   resolvePluginWebSearchProvidersMock.mockReset();
   resolvePluginWebSearchProvidersMock.mockReturnValue(buildTestWebSearchProviders());
 }
 
+/** Reused helper for get Resolve Plugin Web Search Providers Mock behavior in src/secrets. */
 export function getResolvePluginWebSearchProvidersMock() {
   return resolvePluginWebSearchProvidersMock;
 }
 
+/** Reused helper for setup Secrets Runtime Snapshot Test Hooks behavior in src/secrets. */
 export function setupSecretsRuntimeSnapshotTestHooks(): {
   prepareSecretsRuntimeSnapshot: PrepareSecretsRuntimeSnapshot;
 } {

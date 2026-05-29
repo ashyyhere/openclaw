@@ -1,3 +1,4 @@
+// Tests infra exec safety test behavior.
 import { describe, expect, it } from "vitest";
 import { isSafeExecutableValue } from "./exec-safety.js";
 

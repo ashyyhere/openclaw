@@ -1,3 +1,4 @@
+// infra approval request account binding helpers and runtime behavior.
 import { resolveStorePath } from "../config/sessions/paths.js";
 import { loadSessionStore } from "../config/sessions/store-load.js";
 import { resolveMaintenanceConfigFromInput } from "../config/sessions/store-maintenance.js";
@@ -26,6 +27,7 @@ function normalizeOptionalChannel(value?: string | null): string | undefined {
   return normalizeMessageChannel(value);
 }
 
+/** Reused helper for resolve Persisted Approval Request Session Entry behavior in src/infra. */
 export function resolvePersistedApprovalRequestSessionEntry(params: {
   cfg: OpenClawConfig;
   request: ApprovalRequestLike;
@@ -61,6 +63,7 @@ function resolvePersistedApprovalRequestSessionBinding(params: {
   return channel || accountId ? { channel, accountId } : null;
 }
 
+/** Reused helper for resolve Approval Request Account Id behavior in src/infra. */
 export function resolveApprovalRequestAccountId(params: {
   cfg: OpenClawConfig;
   request: ApprovalRequestLike;
@@ -88,6 +91,7 @@ export function resolveApprovalRequestAccountId(params: {
   return sessionBinding?.accountId ?? null;
 }
 
+/** Reused helper for resolve Approval Request Channel Account Id behavior in src/infra. */
 export function resolveApprovalRequestChannelAccountId(params: {
   cfg: OpenClawConfig;
   request: ApprovalRequestLike;
@@ -106,6 +110,7 @@ export function resolveApprovalRequestChannelAccountId(params: {
   return sessionBinding?.channel === expectedChannel ? (sessionBinding.accountId ?? null) : null;
 }
 
+/** Reused helper for does Approval Request Match Channel Account behavior in src/infra. */
 export function doesApprovalRequestMatchChannelAccount(params: {
   cfg: OpenClawConfig;
   request: ApprovalRequestLike;

@@ -1,3 +1,4 @@
+// extensions/qa-lab/src/live-transports/shared live transport cli helpers and runtime behavior.
 import {
   createLiveTransportQaCliRegistration as createSharedLiveTransportQaCliRegistration,
   type LiveTransportQaCliRegistrationOptions,

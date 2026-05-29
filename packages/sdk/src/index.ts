@@ -1,3 +1,5 @@
+// packages/sdk/src index helpers and runtime behavior.
+/** Re-exported public API for packages/sdk. */
 export {
   Agent,
   AgentsNamespace,
@@ -14,9 +16,13 @@ export {
   ToolsNamespace,
   type OpenClawOptions,
 } from "./client.js";
+/** Re-exported public API for packages/sdk, starting with Event Hub. */
 export { EventHub, isGatewayEvent } from "./event-hub.js";
+/** Re-exported public API for packages/sdk, starting with normalize Gateway Event. */
 export { normalizeGatewayEvent } from "./normalize.js";
+/** Re-exported public API for packages/sdk, starting with Gateway Client Transport. */
 export { GatewayClientTransport, isConnectableTransport } from "./transport.js";
+/** Re-exported public API for packages/sdk. */
 export type {
   AgentRunParams,
   ApprovalMode,

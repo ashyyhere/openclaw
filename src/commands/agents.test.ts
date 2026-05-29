@@ -1,3 +1,4 @@
+/** Tests shared agent binding config helpers. */
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";

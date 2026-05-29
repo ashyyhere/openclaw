@@ -1,3 +1,4 @@
+// Tests extensions/qa-lab/src harness parity test behavior.
 import { describe, expect, it } from "vitest";
 import {
   buildHarnessParityCell,

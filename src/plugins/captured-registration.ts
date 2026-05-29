@@ -1,3 +1,4 @@
+// plugins captured registration helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { normalizeStringEntries } from "../shared/string-normalization.js";
 import type {
@@ -51,6 +52,7 @@ type CapturedPluginCliRegistration = {
   descriptors: OpenClawPluginCliCommandDescriptor[];
 };
 
+/** Shared type for Captured Plugin Registration in src/plugins. */
 export type CapturedPluginRegistration = {
   api: OpenClawPluginApi;
   providers: ProviderPlugin[];
@@ -85,6 +87,7 @@ export type CapturedPluginRegistration = {
   modelCatalogProviders: UnifiedModelCatalogProviderPlugin[];
 };
 
+/** Reused helper for create Captured Plugin Registration behavior in src/plugins. */
 export function createCapturedPluginRegistration(params?: {
   config?: OpenClawConfig;
   id?: string;
@@ -320,6 +323,7 @@ export function createCapturedPluginRegistration(params?: {
   };
 }
 
+/** Reused helper for capture Plugin Registration behavior in src/plugins. */
 export function capturePluginRegistration(
   params: NonNullable<Parameters<typeof createCapturedPluginRegistration>[0]> & {
     register(api: OpenClawPluginApi): void;

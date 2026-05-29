@@ -1,3 +1,4 @@
+// web-fetch runtime helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.js";
 import { logVerbose } from "../globals.js";
 import type {
@@ -26,6 +27,7 @@ type WebFetchConfig = NonNullable<OpenClawConfig["tools"]>["web"] extends infer 
     : undefined
   : undefined;
 
+/** Shared type for Resolve Web Fetch Definition Params in src/web-fetch. */
 export type ResolveWebFetchDefinitionParams = {
   config?: OpenClawConfig;
   sandboxed?: boolean;
@@ -34,6 +36,7 @@ export type ResolveWebFetchDefinitionParams = {
   preferRuntimeProviders?: boolean;
 };
 
+/** Reused helper for resolve Web Fetch Enabled behavior in src/web-fetch. */
 export function resolveWebFetchEnabled(params: {
   fetch?: WebFetchConfig;
   sandboxed?: boolean;
@@ -74,6 +77,7 @@ function hasEntryCredential(
   });
 }
 
+/** Reused helper for is Web Fetch Provider Configured behavior in src/web-fetch. */
 export function isWebFetchProviderConfigured(params: {
   provider: Pick<
     PluginWebFetchProviderEntry,
@@ -88,6 +92,7 @@ export function isWebFetchProviderConfigured(params: {
   return hasEntryCredential(params.provider, params.config, resolveFetchConfig(params.config));
 }
 
+/** Reused helper for list Web Fetch Providers behavior in src/web-fetch. */
 export function listWebFetchProviders(params?: {
   config?: OpenClawConfig;
 }): PluginWebFetchProviderEntry[] {
@@ -96,6 +101,7 @@ export function listWebFetchProviders(params?: {
   });
 }
 
+/** Reused helper for list Configured Web Fetch Providers behavior in src/web-fetch. */
 export function listConfiguredWebFetchProviders(params?: {
   config?: OpenClawConfig;
 }): PluginWebFetchProviderEntry[] {
@@ -104,6 +110,7 @@ export function listConfiguredWebFetchProviders(params?: {
   });
 }
 
+/** Reused helper for resolve Web Fetch Provider Id behavior in src/web-fetch. */
 export function resolveWebFetchProviderId(params: {
   fetch?: WebFetchConfig;
   config?: OpenClawConfig;
@@ -160,6 +167,7 @@ function resolveConfiguredWebFetchProviderId(params: {
   return params.providers.find((provider) => provider.id === raw)?.id;
 }
 
+/** Reused helper for resolve Web Fetch Definition behavior in src/web-fetch. */
 export function resolveWebFetchDefinition(
   options?: ResolveWebFetchDefinitionParams,
 ): { provider: PluginWebFetchProviderEntry; definition: WebFetchProviderToolDefinition } | null {

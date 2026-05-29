@@ -1,3 +1,4 @@
+// extensions/line/src bindings helpers and runtime behavior.
 function normalizeLineConversationId(raw?: string | null): string | null {
   const trimmed = raw?.trim() ?? "";
   if (!trimmed) {

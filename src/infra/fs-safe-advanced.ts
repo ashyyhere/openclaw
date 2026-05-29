@@ -1,4 +1,6 @@
+// infra fs safe advanced helpers and runtime behavior.
 import "./fs-safe-defaults.js";
+/** Re-exported API for src/infra. */
 export {
   assertNoHardlinkedFinalPath,
   assertNoSymlinkParents,

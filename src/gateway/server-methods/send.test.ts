@@ -1,3 +1,4 @@
+// Tests gateway/server-methods send test behavior.
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { jsonResult } from "../../agents/tools/common.js";
 import type { ChannelPlugin } from "../../channels/plugins/types.js";

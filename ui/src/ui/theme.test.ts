@@ -1,3 +1,4 @@
+// Tests ui/src/ui theme test behavior.
 import { describe, expect, it, vi } from "vitest";
 import { parseThemeSelection, resolveSystemTheme, resolveTheme } from "./theme.ts";
 

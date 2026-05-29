@@ -1,3 +1,4 @@
+// extensions/zalo/src runtime support helpers and runtime behavior.
 export type { ReplyPayload } from "openclaw/plugin-sdk/reply-runtime";
 export type { OpenClawConfig, GroupPolicy } from "openclaw/plugin-sdk/config-contracts";
 export type { MarkdownTableMode } from "openclaw/plugin-sdk/config-contracts";

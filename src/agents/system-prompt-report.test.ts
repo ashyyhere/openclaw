@@ -1,3 +1,4 @@
+/** Regression coverage for system prompt report generation. */
 import { describe, expect, it } from "vitest";
 import { buildSystemPromptReport } from "./system-prompt-report.js";
 import type { WorkspaceBootstrapFile } from "./workspace.js";

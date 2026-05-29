@@ -1,5 +1,8 @@
+// packages/plugin-package-contract/src index helpers and runtime behavior.
+/** Public type describing Json Object for packages/plugin-package-contract. */
 export type JsonObject = Record<string, unknown>;
 
+/** Public type describing External Plugin Compatibility for packages/plugin-package-contract. */
 export type ExternalPluginCompatibility = {
   pluginApiRange?: string;
   builtWithOpenClawVersion?: string;
@@ -7,16 +10,19 @@ export type ExternalPluginCompatibility = {
   minGatewayVersion?: string;
 };
 
+/** Public type describing External Plugin Validation Issue for packages/plugin-package-contract. */
 export type ExternalPluginValidationIssue = {
   fieldPath: string;
   message: string;
 };
 
+/** Public type describing External Code Plugin Validation Result for packages/plugin-package-contract. */
 export type ExternalCodePluginValidationResult = {
   compatibility?: ExternalPluginCompatibility;
   issues: ExternalPluginValidationIssue[];
 };
 
+/** Public constant for EXTERNAL CODE PLUGIN REQUIRED FIELD PATHS behavior in packages/plugin-package-contract. */
 export const EXTERNAL_CODE_PLUGIN_REQUIRED_FIELD_PATHS = [
   "openclaw.compat.pluginApi",
   "openclaw.build.openclawVersion",
@@ -43,6 +49,7 @@ function readOpenClawBlock(packageJson: unknown) {
   return { root, openclaw, compat, build, install };
 }
 
+/** Public helper for normalize External Plugin Compatibility behavior in packages/plugin-package-contract. */
 export function normalizeExternalPluginCompatibility(
   packageJson: unknown,
 ): ExternalPluginCompatibility | undefined {
@@ -74,6 +81,7 @@ export function normalizeExternalPluginCompatibility(
   return Object.keys(compatibility).length > 0 ? compatibility : undefined;
 }
 
+/** Public helper for list Missing External Code Plugin Field Paths behavior in packages/plugin-package-contract. */
 export function listMissingExternalCodePluginFieldPaths(packageJson: unknown): string[] {
   const { compat, build } = readOpenClawBlock(packageJson);
   const missing: string[] = [];
@@ -86,6 +94,7 @@ export function listMissingExternalCodePluginFieldPaths(packageJson: unknown): s
   return missing;
 }
 
+/** Public helper for validate External Code Plugin Package Json behavior in packages/plugin-package-contract. */
 export function validateExternalCodePluginPackageJson(
   packageJson: unknown,
 ): ExternalCodePluginValidationResult {

@@ -1,3 +1,4 @@
+/** Tests agent command session key resolution. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../../config/config.js";
 import { resolveSessionKeyForRequest } from "./session.js";

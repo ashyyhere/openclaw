@@ -1,3 +1,4 @@
+// Tests extensions/codex/src/app-server run attempt steering test behavior.
 import path from "node:path";
 import { abortAgentHarnessRun } from "openclaw/plugin-sdk/agent-harness-runtime";
 import { describe, expect, it, vi } from "vitest";

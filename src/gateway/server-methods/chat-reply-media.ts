@@ -1,3 +1,4 @@
+// gateway/server-methods chat reply media helpers and runtime behavior.
 import { resolveAgentWorkspaceDir } from "../../agents/agent-scope.js";
 import type { ReplyPayload } from "../../auto-reply/reply-payload.js";
 import { createReplyMediaPathNormalizer } from "../../auto-reply/reply/reply-media-paths.runtime.js";
@@ -23,6 +24,7 @@ function shouldPreserveDisplayMediaUrl(payload: ReplyPayload, mediaUrl: string):
   return payload.trustedLocalMedia === true;
 }
 
+/** Reused helper for normalize Webchat Reply Media Paths For Display behavior in src/gateway/server-methods. */
 export async function normalizeWebchatReplyMediaPathsForDisplay(params: {
   cfg: OpenClawConfig;
   sessionKey: string;

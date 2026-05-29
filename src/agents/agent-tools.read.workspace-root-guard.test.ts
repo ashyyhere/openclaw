@@ -1,3 +1,4 @@
+/** Tests workspace-root path guard behavior for file tools. */
 import path from "node:path";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { AnyAgentTool } from "./agent-tools.types.js";

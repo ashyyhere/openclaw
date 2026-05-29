@@ -1,3 +1,4 @@
+/** Shared registration tests for optional OpenClaw generation tools. */
 import { describe, expect, it } from "vitest";
 import { collectPresentOpenClawTools } from "./openclaw-tools.registration.js";
 import { textResult, type AnyAgentTool } from "./tools/common.js";
@@ -14,6 +15,7 @@ function stubAgentTool(name: string): AnyAgentTool {
   };
 }
 
+/** Define standard present/absent registration tests for a generation tool. */
 export function describeOpenClawGenerationToolRegistration(params: {
   suiteName: string;
   toolName: string;

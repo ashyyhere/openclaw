@@ -180,6 +180,7 @@ function applyRtlIsolation(text: string): string {
     .join("\n");
 }
 
+/** Reused helper for sanitize Renderable Text behavior in src/tui. */
 export function sanitizeRenderableText(text: string): string {
   if (!text) {
     return text;
@@ -211,6 +212,7 @@ export function sanitizeRenderableText(text: string): string {
   return applyRtlIsolation(tokenSafe);
 }
 
+/** Reused helper for resolve Final Assistant Text behavior in src/tui. */
 export function resolveFinalAssistantText(params: {
   finalText?: string | null;
   streamedText?: string | null;
@@ -231,6 +233,7 @@ export function resolveFinalAssistantText(params: {
   return "(no output)";
 }
 
+/** Reused helper for compose Thinking And Content behavior in src/tui. */
 export function composeThinkingAndContent(params: {
   thinkingText?: string;
   contentText?: string;
@@ -390,6 +393,7 @@ function extractTextBlocks(content: unknown, opts?: { includeThinking?: boolean 
   });
 }
 
+/** Reused helper for extract Text From Message behavior in src/tui. */
 export function extractTextFromMessage(
   message: unknown,
   opts?: { includeThinking?: boolean },
@@ -420,6 +424,7 @@ export function extractTextFromMessage(
   return errorText;
 }
 
+/** Reused helper for is Command Message behavior in src/tui. */
 export function isCommandMessage(message: unknown): boolean {
   if (!message || typeof message !== "object") {
     return false;
@@ -427,6 +432,7 @@ export function isCommandMessage(message: unknown): boolean {
   return (message as Record<string, unknown>).command === true;
 }
 
+/** Reused helper for format Tokens behavior in src/tui. */
 export function formatTokens(total?: number | null, context?: number | null) {
   if (total == null && context == null) {
     return "tokens ?";
@@ -488,6 +494,7 @@ export function formatContextUsageLine(params: {
   return `tokens ${totalLabel}/${ctxLabel}${extra ? ` (${extra})` : ""}`;
 }
 
+/** Reused helper for as String behavior in src/tui. */
 export function asString(value: unknown, fallback = ""): string {
   if (typeof value === "string") {
     return value;

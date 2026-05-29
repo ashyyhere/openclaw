@@ -1,3 +1,4 @@
+/** Regression coverage for loading workspace, managed, and bundled skill entries. */
 import fsSync from "node:fs";
 import fs from "node:fs/promises";
 import os from "node:os";

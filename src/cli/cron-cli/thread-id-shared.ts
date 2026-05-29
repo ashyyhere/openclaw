@@ -1,8 +1,10 @@
+/** Normalizes cron thread id options shared by cron commands. */
 import {
   normalizeLowercaseStringOrEmpty,
   normalizeOptionalString,
 } from "../../shared/string-coerce.js";
 
+/** Reused helper for parse Cron Thread Id Option behavior in src/cli/cron-cli. */
 export function parseCronThreadIdOption(value: unknown): number | undefined {
   const raw = normalizeOptionalString(value);
   if (!raw) {
@@ -18,6 +20,7 @@ export function parseCronThreadIdOption(value: unknown): number | undefined {
   return parsed;
 }
 
+/** Reused helper for normalize Cron Session Target Option behavior in src/cli/cron-cli. */
 export function normalizeCronSessionTargetOption(value: unknown): string | undefined {
   const raw = normalizeOptionalString(value);
   if (!raw) {

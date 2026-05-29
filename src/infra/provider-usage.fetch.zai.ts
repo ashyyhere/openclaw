@@ -1,3 +1,4 @@
+// infra provider usage fetch zai helpers and runtime behavior.
 import {
   buildUsageHttpErrorSnapshot,
   fetchJson,
@@ -23,6 +24,7 @@ type ZaiUsageResponse = {
   };
 };
 
+/** Reused helper for fetch Zai Usage behavior in src/infra. */
 export async function fetchZaiUsage(
   apiKey: string,
   timeoutMs: number,

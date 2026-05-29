@@ -1,3 +1,4 @@
+// Tests extensions/qa-lab/src/providers/mock-openai server test behavior.
 import { afterEach, describe, expect, it } from "vitest";
 import { resolveProviderVariant, startQaMockOpenAiServer } from "./server.js";
 

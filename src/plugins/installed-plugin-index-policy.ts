@@ -1,8 +1,10 @@
+// plugins installed plugin index policy helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.js";
 import { listPluginCompatRecords } from "./compat/registry.js";
 import { normalizePluginsConfig } from "./config-state.js";
 import { hashJson } from "./installed-plugin-index-hash.js";
 
+/** Reused helper for resolve Compat Registry Version behavior in src/plugins. */
 export function resolveCompatRegistryVersion(): string {
   return hashJson(
     listPluginCompatRecords().map((record) => ({
@@ -16,6 +18,7 @@ export function resolveCompatRegistryVersion(): string {
   );
 }
 
+/** Reused helper for resolve Installed Plugin Index Policy Hash behavior in src/plugins. */
 export function resolveInstalledPluginIndexPolicyHash(config: OpenClawConfig | undefined): string {
   const normalized = normalizePluginsConfig(config?.plugins);
   const channelPolicy: Record<string, boolean> = {};

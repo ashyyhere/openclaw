@@ -1,17 +1,30 @@
+// config types base helpers and runtime behavior.
 import type { ChatType } from "../channels/chat-type.js";
 
+/** Shared type for Reply Mode in src/config. */
 export type ReplyMode = "text" | "command";
+/** Shared type for Typing Mode in src/config. */
 export type TypingMode = "never" | "instant" | "thinking" | "message";
+/** Shared type for Session Scope in src/config. */
 export type SessionScope = "per-sender" | "global";
+/** Shared type for Dm Scope in src/config. */
 export type DmScope = "main" | "per-peer" | "per-channel-peer" | "per-account-channel-peer";
+/** Shared type for Reply To Mode in src/config. */
 export type ReplyToMode = "off" | "first" | "all" | "batched";
+/** Shared type for Group Policy in src/config. */
 export type GroupPolicy = "open" | "disabled" | "allowlist";
+/** Shared type for Dm Policy in src/config. */
 export type DmPolicy = "pairing" | "allowlist" | "open" | "disabled";
+/** Shared type for Context Visibility Mode in src/config. */
 export type ContextVisibilityMode = "all" | "allowlist" | "allowlist_quote";
+/** Shared type for Text Chunk Mode in src/config. */
 export type TextChunkMode = "length" | "newline";
+/** Shared type for Streaming Mode in src/config. */
 export type StreamingMode = "off" | "partial" | "block" | "progress";
+/** Shared type for Channel Streaming Command Text Mode in src/config. */
 export type ChannelStreamingCommandTextMode = "raw" | "status";
 
+/** Shared type for Outbound Retry Config in src/config. */
 export type OutboundRetryConfig = {
   /** Max retry attempts for outbound requests (default: 3). */
   attempts?: number;
@@ -23,18 +36,21 @@ export type OutboundRetryConfig = {
   jitter?: number;
 };
 
+/** Shared type for Block Streaming Coalesce Config in src/config. */
 export type BlockStreamingCoalesceConfig = {
   minChars?: number;
   maxChars?: number;
   idleMs?: number;
 };
 
+/** Shared type for Block Streaming Chunk Config in src/config. */
 export type BlockStreamingChunkConfig = {
   minChars?: number;
   maxChars?: number;
   breakPreference?: "paragraph" | "newline" | "sentence";
 };
 
+/** Shared type for Channel Streaming Progress Config in src/config. */
 export type ChannelStreamingProgressConfig = {
   /** Initial progress title. "auto" picks from labels; false hides the title. Default: "auto". */
   label?: string | false;
@@ -52,6 +68,7 @@ export type ChannelStreamingProgressConfig = {
   commandText?: ChannelStreamingCommandTextMode;
 };
 
+/** Shared type for Channel Streaming Preview Config in src/config. */
 export type ChannelStreamingPreviewConfig = {
   /** Chunking thresholds for preview-draft updates while streaming. */
   chunk?: BlockStreamingChunkConfig;
@@ -65,6 +82,7 @@ export type ChannelStreamingPreviewConfig = {
   commandText?: ChannelStreamingCommandTextMode;
 };
 
+/** Shared type for Channel Streaming Block Config in src/config. */
 export type ChannelStreamingBlockConfig = {
   /** Enable chunked block-reply delivery for channels that support it. */
   enabled?: boolean;
@@ -72,6 +90,7 @@ export type ChannelStreamingBlockConfig = {
   coalesce?: BlockStreamingCoalesceConfig;
 };
 
+/** Shared type for Channel Streaming Config in src/config. */
 export type ChannelStreamingConfig = {
   /**
    * Preview streaming mode:
@@ -93,20 +112,25 @@ export type ChannelStreamingConfig = {
   block?: ChannelStreamingBlockConfig;
 };
 
+/** Shared type for Channel Delivery Streaming Config in src/config. */
 export type ChannelDeliveryStreamingConfig = Pick<ChannelStreamingConfig, "chunkMode" | "block">;
 
+/** Shared type for Channel Preview Streaming Config in src/config. */
 export type ChannelPreviewStreamingConfig = Pick<
   ChannelStreamingConfig,
   "mode" | "chunkMode" | "preview" | "progress" | "block"
 >;
 
+/** Shared type for Markdown Table Mode in src/config. */
 export type MarkdownTableMode = "off" | "bullets" | "code" | "block";
 
+/** Shared type for Markdown Config in src/config. */
 export type MarkdownConfig = {
   /** Table rendering mode (off|bullets|code|block). */
   tables?: MarkdownTableMode;
 };
 
+/** Shared type for Human Delay Config in src/config. */
 export type HumanDelayConfig = {
   /** Delay style for block replies (off|natural|custom). */
   mode?: "off" | "natural" | "custom";
@@ -116,7 +140,9 @@ export type HumanDelayConfig = {
   maxMs?: number;
 };
 
+/** Shared type for Session Send Policy Action in src/config. */
 export type SessionSendPolicyAction = "allow" | "deny";
+/** Shared type for Session Send Policy Match in src/config. */
 export type SessionSendPolicyMatch = {
   channel?: string;
   chatType?: ChatType;
@@ -128,16 +154,20 @@ export type SessionSendPolicyMatch = {
   /** Optional raw session-key prefix match for consumers that normalize session keys. */
   rawKeyPrefix?: string;
 };
+/** Shared type for Session Send Policy Rule in src/config. */
 export type SessionSendPolicyRule = {
   action: SessionSendPolicyAction;
   match?: SessionSendPolicyMatch;
 };
+/** Shared type for Session Send Policy Config in src/config. */
 export type SessionSendPolicyConfig = {
   default?: SessionSendPolicyAction;
   rules?: SessionSendPolicyRule[];
 };
 
+/** Shared type for Session Reset Mode in src/config. */
 export type SessionResetMode = "daily" | "idle";
+/** Shared type for Session Reset Config in src/config. */
 export type SessionResetConfig = {
   mode?: SessionResetMode;
   /** Local hour (0-23) for the daily reset boundary. */
@@ -145,6 +175,7 @@ export type SessionResetConfig = {
   /** Sliding idle window (minutes). When set with daily mode, whichever expires first wins. */
   idleMinutes?: number;
 };
+/** Shared type for Session Reset By Type Config in src/config. */
 export type SessionResetByTypeConfig = {
   direct?: SessionResetConfig;
   /** @deprecated Use `direct` instead. Kept for backward compatibility. */
@@ -153,6 +184,7 @@ export type SessionResetByTypeConfig = {
   thread?: SessionResetConfig;
 };
 
+/** Shared type for Session Thread Bindings Config in src/config. */
 export type SessionThreadBindingsConfig = {
   /**
    * Master switch for thread-bound session routing features.
@@ -182,6 +214,7 @@ export type SessionThreadBindingsConfig = {
   defaultSpawnContext?: "isolated" | "fork";
 };
 
+/** Shared type for Session Config in src/config. */
 export type SessionConfig = {
   scope?: SessionScope;
   /** DM session scoping (default: "main"). */
@@ -211,6 +244,7 @@ export type SessionConfig = {
   maintenance?: SessionMaintenanceConfig;
 };
 
+/** Shared type for Session Write Lock Config in src/config. */
 export type SessionWriteLockConfig = {
   /** How long to wait while acquiring a session transcript write lock. Default: 60000. */
   acquireTimeoutMs?: number;
@@ -220,8 +254,10 @@ export type SessionWriteLockConfig = {
   maxHoldMs?: number;
 };
 
+/** Shared type for Session Maintenance Mode in src/config. */
 export type SessionMaintenanceMode = "enforce" | "warn";
 
+/** Shared type for Session Maintenance Config in src/config. */
 export type SessionMaintenanceConfig = {
   /** Whether to enforce maintenance or warn only. Default: "warn". */
   mode?: SessionMaintenanceMode;
@@ -250,6 +286,7 @@ export type SessionMaintenanceConfig = {
   highWaterBytes?: number | string;
 };
 
+/** Shared type for Logging Config in src/config. */
 export type LoggingConfig = {
   level?: "silent" | "fatal" | "error" | "warn" | "info" | "debug" | "trace";
   file?: string;
@@ -263,6 +300,7 @@ export type LoggingConfig = {
   redactPatterns?: string[];
 };
 
+/** Shared type for Diagnostics Otel Config in src/config. */
 export type DiagnosticsOtelConfig = {
   enabled?: boolean;
   endpoint?: string;
@@ -297,6 +335,7 @@ export type DiagnosticsOtelConfig = {
       };
 };
 
+/** Shared type for Diagnostics Cache Trace Config in src/config. */
 export type DiagnosticsCacheTraceConfig = {
   enabled?: boolean;
   filePath?: string;
@@ -305,6 +344,7 @@ export type DiagnosticsCacheTraceConfig = {
   includeSystem?: boolean;
 };
 
+/** Shared type for Diagnostics Config in src/config. */
 export type DiagnosticsConfig = {
   enabled?: boolean;
   /** Optional ad-hoc diagnostics flags (e.g. "telegram.http"). */
@@ -319,6 +359,7 @@ export type DiagnosticsConfig = {
   cacheTrace?: DiagnosticsCacheTraceConfig;
 };
 
+/** Shared type for Web Reconnect Config in src/config. */
 export type WebReconnectConfig = {
   initialMs?: number;
   maxMs?: number;
@@ -327,6 +368,7 @@ export type WebReconnectConfig = {
   maxAttempts?: number; // 0 = unlimited
 };
 
+/** Shared type for Web Whats App Config in src/config. */
 export type WebWhatsAppConfig = {
   /** Baileys application ping interval in milliseconds. Default: 25000. */
   keepAliveIntervalMs?: number;
@@ -336,6 +378,7 @@ export type WebWhatsAppConfig = {
   defaultQueryTimeoutMs?: number;
 };
 
+/** Shared type for Web Config in src/config. */
 export type WebConfig = {
   /** If false, do not start the WhatsApp web provider. Default: true. */
   enabled?: boolean;
@@ -345,8 +388,10 @@ export type WebConfig = {
 };
 
 // Provider docking: allowlists keyed by provider id (and internal "webchat").
+/** Shared type for Agent Elevated Allow From Config in src/config. */
 export type AgentElevatedAllowFromConfig = Partial<Record<string, Array<string | number>>>;
 
+/** Shared type for Identity Config in src/config. */
 export type IdentityConfig = {
   name?: string;
   theme?: string;

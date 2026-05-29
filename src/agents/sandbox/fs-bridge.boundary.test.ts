@@ -1,3 +1,4 @@
+/** Covers sandbox filesystem bridge host-boundary protections. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { describe, expect, it } from "vitest";

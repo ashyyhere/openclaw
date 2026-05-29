@@ -1,3 +1,4 @@
+// extensions/imessage/src actions helpers and runtime behavior.
 import { readBooleanParam } from "openclaw/plugin-sdk/boolean-param";
 import {
   createActionGate,

@@ -1,3 +1,4 @@
+// Tests extensions/discord/src send permissions authz test behavior.
 import { ChannelType, PermissionFlagsBits, Routes } from "discord-api-types/v10";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { RequestClient } from "./internal/discord.js";

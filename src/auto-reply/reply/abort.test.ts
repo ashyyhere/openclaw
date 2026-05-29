@@ -1,3 +1,4 @@
+// Coverage for abort command parsing and session stop behavior.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

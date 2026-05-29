@@ -1,3 +1,4 @@
+// Tests cron/isolated-agent run tools allow test behavior.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "../../agents/test-helpers/fast-coding-tools.js";
 import {

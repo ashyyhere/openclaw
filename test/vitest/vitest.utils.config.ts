@@ -1,3 +1,4 @@
+// test/vitest vitest utils config helpers and runtime behavior.
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 import { getUnitFastTestFiles } from "./vitest.unit-fast-paths.mjs";
 

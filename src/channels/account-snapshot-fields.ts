@@ -1,3 +1,4 @@
+// Safe channel account snapshot projection helpers.
 import { stripUrlUserInfo } from "@openclaw/net-policy/url-userinfo";
 import { asFiniteNumber } from "../shared/number-coercion.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
@@ -5,10 +6,6 @@ import { normalizeStringEntries } from "../shared/string-normalization.js";
 import { isRecord } from "../utils.js";
 import { asBoolean } from "../utils/boolean.js";
 import type { ChannelAccountSnapshot } from "./plugins/types.core.js";
-
-// Read-only status commands project a safe subset of account fields into snapshots
-// so renderers can preserve "configured but unavailable" state without touching
-// strict runtime-only credential helpers.
 
 const CREDENTIAL_STATUS_KEYS = [
   "tokenStatus",
@@ -57,6 +54,7 @@ function readCredentialStatus(record: Record<string, unknown>, key: CredentialSt
     : undefined;
 }
 
+/** Resolve configured state from loose credential status fields. */
 export function resolveConfiguredFromCredentialStatuses(account: unknown): boolean | undefined {
   const record = isRecord(account) ? account : null;
   if (!record) {
@@ -76,6 +74,7 @@ export function resolveConfiguredFromCredentialStatuses(account: unknown): boole
   return sawCredentialStatus ? false : undefined;
 }
 
+/** Resolve configured state while requiring every named credential to be configured. */
 export function resolveConfiguredFromRequiredCredentialStatuses(
   account: unknown,
   requiredKeys: CredentialStatusKey[],
@@ -98,6 +97,7 @@ export function resolveConfiguredFromRequiredCredentialStatuses(
   return sawCredentialStatus ? true : undefined;
 }
 
+/** Return true when any credential is configured but currently unavailable. */
 export function hasConfiguredUnavailableCredentialStatus(account: unknown): boolean {
   const record = isRecord(account) ? account : null;
   if (!record) {
@@ -108,6 +108,7 @@ export function hasConfiguredUnavailableCredentialStatus(account: unknown): bool
   );
 }
 
+/** Return true when account data includes a concrete resolved credential value. */
 export function hasResolvedCredentialValue(account: unknown): boolean {
   const record = isRecord(account) ? account : null;
   if (!record) {
@@ -120,6 +121,7 @@ export function hasResolvedCredentialValue(account: unknown): boolean {
   );
 }
 
+/** Project safe credential status fields from account data into a channel snapshot. */
 export function projectCredentialSnapshotFields(
   account: unknown,
 ): Pick<
@@ -166,6 +168,7 @@ export function projectCredentialSnapshotFields(
   };
 }
 
+/** Project the safe account fields allowed in channel account snapshots. */
 export function projectSafeChannelAccountSnapshotFields(
   account: unknown,
 ): Partial<ChannelAccountSnapshot> {

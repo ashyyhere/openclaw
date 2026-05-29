@@ -1,3 +1,4 @@
+// trajectory cleanup helpers and runtime behavior.
 import fs from "node:fs";
 import path from "node:path";
 import { resolveSessionFilePath } from "../config/sessions/paths.js";
@@ -9,6 +10,7 @@ import {
   safeTrajectorySessionFileName,
 } from "./paths.js";
 
+/** Shared type for Removed Trajectory Artifact in src/trajectory. */
 export type RemovedTrajectoryArtifact = {
   kind: "pointer" | "runtime";
   path: string;
@@ -172,6 +174,7 @@ function mayRemoveRuntimeTarget(params: {
   return runtimeFileStartsWithSessionEvent(resolved, params.sessionId);
 }
 
+/** Reused helper for remove Session Trajectory Artifacts behavior in src/trajectory. */
 export async function removeSessionTrajectoryArtifacts(params: {
   sessionId: string;
   sessionFile?: string;
@@ -225,6 +228,7 @@ export async function removeSessionTrajectoryArtifacts(params: {
   return removed;
 }
 
+/** Reused helper for remove Removed Session Trajectory Artifacts behavior in src/trajectory. */
 export async function removeRemovedSessionTrajectoryArtifacts(params: {
   removedSessionFiles: Iterable<[string, string | undefined]>;
   referencedSessionIds: ReadonlySet<string>;

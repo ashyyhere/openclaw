@@ -1,3 +1,4 @@
+// extensions/telegram/src outbound message context helpers and runtime behavior.
 import type { Message } from "grammy/types";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { logVerbose } from "openclaw/plugin-sdk/runtime-env";

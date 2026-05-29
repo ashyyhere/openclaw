@@ -1,6 +1,8 @@
+// infra/outbound base session key helpers and runtime behavior.
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { buildAgentSessionKey, type RoutePeer } from "../../routing/resolve-route.js";
 
+/** Reused helper for build Outbound Base Session Key behavior in src/infra/outbound. */
 export function buildOutboundBaseSessionKey(params: {
   cfg: OpenClawConfig;
   agentId: string;

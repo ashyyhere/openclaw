@@ -1,3 +1,4 @@
+// Tests cron service issue 17852 daily skip test behavior.
 import { describe, expect, it } from "vitest";
 import { createMockCronStateForJobs } from "./service.test-harness.js";
 import { recomputeNextRuns, recomputeNextRunsForMaintenance } from "./service/jobs.js";

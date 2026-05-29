@@ -1,3 +1,4 @@
+// extensions/codex/src/app-server vision tools helpers and runtime behavior.
 export function filterToolsForVisionInputs<T extends { name?: string }>(
   tools: T[],
   params: {

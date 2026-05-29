@@ -1,3 +1,4 @@
+/** Resolves and evaluates sandbox-specific tool allow/deny policy. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";
 import { uniqueStrings } from "../../shared/string-normalization.js";
@@ -178,6 +179,7 @@ function expandResolvedPolicy(policy: SandboxToolPolicy): SandboxToolPolicy {
   };
 }
 
+/** Classifies one tool name against sandbox allow/deny policy. */
 export function classifyToolAgainstSandboxToolPolicy(name: string, policy?: SandboxToolPolicy) {
   if (!policy) {
     return {
@@ -204,11 +206,13 @@ export function classifyToolAgainstSandboxToolPolicy(name: string, policy?: Sand
   };
 }
 
+/** Returns whether a tool is allowed under sandbox policy. */
 export function isToolAllowed(policy: SandboxToolPolicy, name: string) {
   const { blockedByDeny, blockedByAllow } = classifyToolAgainstSandboxToolPolicy(name, policy);
   return !blockedByDeny && !blockedByAllow;
 }
 
+/** Resolves effective sandbox tool policy from global and agent config. */
 export function resolveSandboxToolPolicyForAgent(
   cfg?: OpenClawConfig,
   agentId?: string,

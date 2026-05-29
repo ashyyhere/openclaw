@@ -1,3 +1,4 @@
+// shared operator scope compat helpers and runtime behavior.
 const OPERATOR_ROLE = "operator";
 const OPERATOR_ADMIN_SCOPE = "operator.admin";
 const OPERATOR_READ_SCOPE = "operator.read";
@@ -31,6 +32,7 @@ function operatorScopeSatisfied(requestedScope: string, granted: Set<string>): b
   return granted.has(requestedScope);
 }
 
+/** Reused helper for role Scopes Allow behavior in src/shared. */
 export function roleScopesAllow(params: {
   role: string;
   requestedScopes: readonly string[];
@@ -52,6 +54,7 @@ export function roleScopesAllow(params: {
   return requested.every((scope) => operatorScopeSatisfied(scope, allowedSet));
 }
 
+/** Reused helper for resolve Missing Requested Scope behavior in src/shared. */
 export function resolveMissingRequestedScope(params: {
   role: string;
   requestedScopes: readonly string[];
@@ -71,6 +74,7 @@ export function resolveMissingRequestedScope(params: {
   return null;
 }
 
+/** Reused helper for resolve Scope Outside Requested Roles behavior in src/shared. */
 export function resolveScopeOutsideRequestedRoles(params: {
   requestedRoles: readonly string[];
   requestedScopes: readonly string[];

@@ -1,3 +1,4 @@
+/** Legacy runtime config migrations for TTS settings. */
 import {
   defineLegacyConfigMigration,
   getRecord,
@@ -533,6 +534,7 @@ const LEGACY_TTS_SPEAKER_SELECTION_RULES: LegacyConfigRule[] = [
   },
 ];
 
+/** Reused constant for LEGACY CONFIG MIGRATIONS RUNTIME TTS behavior in src/commands/doctor. */
 export const LEGACY_CONFIG_MIGRATIONS_RUNTIME_TTS: LegacyConfigMigrationSpec[] = [
   defineLegacyConfigMigration({
     id: "tts.providers-generic-shape",

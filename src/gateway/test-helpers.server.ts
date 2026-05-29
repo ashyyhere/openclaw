@@ -1,3 +1,4 @@
+// gateway test helpers server helpers and runtime behavior.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
@@ -193,6 +194,7 @@ async function persistTestSessionConfig(): Promise<void> {
   lastSyncedSessionConfigJson = serializeGatewayTestSessionConfig();
 }
 
+/** Reused helper for write Session Store behavior in src/gateway. */
 export async function writeSessionStore(params: {
   entries: Record<string, Partial<SessionEntry>>;
   storePath?: string;
@@ -455,6 +457,7 @@ async function resetGatewayTestRuntimeOnly() {
   resetAgentRunContextForTest();
 }
 
+/** Reused helper for install Gateway Test Hooks behavior in src/gateway. */
 export function installGatewayTestHooks(options?: { scope?: "test" | "suite" }) {
   const scope = options?.scope ?? "test";
   if (scope === "suite") {
@@ -498,6 +501,7 @@ export function installGatewayTestHooks(options?: { scope?: "test" | "suite" }) 
   });
 }
 
+/** Reused helper for get Free Port behavior in src/gateway. */
 export async function getFreePort(): Promise<number> {
   return await getDeterministicFreePortBlock({ offsets: [0, 1, 2, 3, 4] });
 }
@@ -517,11 +521,13 @@ const CONNECT_CHALLENGE_NONCE_KEY = "__openclawTestConnectChallengeNonce";
 const CONNECT_CHALLENGE_TRACKED_KEY = "__openclawTestConnectChallengeTracked";
 type TrackedWs = WebSocket & Record<string, unknown>;
 
+/** Reused helper for get Tracked Connect Challenge Nonce behavior in src/gateway. */
 export function getTrackedConnectChallengeNonce(ws: WebSocket): string | undefined {
   const tracked = (ws as TrackedWs)[CONNECT_CHALLENGE_NONCE_KEY];
   return typeof tracked === "string" && tracked.trim().length > 0 ? tracked.trim() : undefined;
 }
 
+/** Reused helper for track Connect Challenge Nonce behavior in src/gateway. */
 export function trackConnectChallengeNonce(ws: WebSocket): void {
   const trackedWs = ws as TrackedWs;
   if (trackedWs[CONNECT_CHALLENGE_TRACKED_KEY] === true) {
@@ -544,6 +550,7 @@ export function trackConnectChallengeNonce(ws: WebSocket): void {
   });
 }
 
+/** Reused helper for once Message behavior in src/gateway. */
 export function onceMessage<T extends GatewayTestMessage = GatewayTestMessage>(
   ws: WebSocket,
   filter: (obj: T) => boolean,
@@ -580,6 +587,7 @@ export function onceMessage<T extends GatewayTestMessage = GatewayTestMessage>(
   });
 }
 
+/** Reused helper for start Gateway Server behavior in src/gateway. */
 export async function startGatewayServer(port: number, opts?: GatewayServerOptions) {
   // Tests mutate testState-backed config before server startup; discard earlier
   // helper reads so startup observes the current fixture state.
@@ -616,6 +624,7 @@ export async function startGatewayServer(port: number, opts?: GatewayServerOptio
   return server;
 }
 
+/** Reused helper for start Gateway Server With Retries behavior in src/gateway. */
 export async function startGatewayServerWithRetries(params: {
   port: number;
   opts?: GatewayServerOptions;
@@ -678,6 +687,7 @@ async function openTrackedWebSocket(params: {
   return ws;
 }
 
+/** Reused helper for with Gateway Server behavior in src/gateway. */
 export async function withGatewayServer<T>(
   fn: (ctx: { port: number; server: Awaited<ReturnType<typeof startGatewayServer>> }) => Promise<T>,
   opts?: { port?: number; serverOptions?: GatewayServerOptions },
@@ -693,6 +703,7 @@ export async function withGatewayServer<T>(
   }
 }
 
+/** Reused helper for create Gateway Suite Harness behavior in src/gateway. */
 export async function createGatewaySuiteHarness(opts?: {
   port?: number;
   serverOptions?: GatewayServerOptions;
@@ -721,6 +732,7 @@ export async function createGatewaySuiteHarness(opts?: {
   };
 }
 
+/** Reused helper for start Server behavior in src/gateway. */
 export async function startServer(token?: string, opts?: GatewayServerOptions) {
   let port = await getFreePort();
   const envSnapshot = captureEnv(["OPENCLAW_GATEWAY_TOKEN"]);
@@ -754,6 +766,7 @@ export async function startServer(token?: string, opts?: GatewayServerOptions) {
   return { server, port, prevToken: prev, envSnapshot };
 }
 
+/** Reused helper for start Server With Client behavior in src/gateway. */
 export async function startServerWithClient(
   token?: string,
   opts?: GatewayServerOptions & { wsHeaders?: Record<string, string> },
@@ -765,6 +778,7 @@ export async function startServerWithClient(
   return { server, ws, port, prevToken, envSnapshot };
 }
 
+/** Reused helper for start Connected Server With Client behavior in src/gateway. */
 export async function startConnectedServerWithClient(
   token?: string,
   opts?: GatewayServerOptions & { wsHeaders?: Record<string, string> },
@@ -799,6 +813,7 @@ function resolveDefaultTestDeviceIdentityPath(params: {
   return path.join(suiteRoot, "test-device-identities", `${safe}.json`);
 }
 
+/** Reused helper for read Connect Challenge Nonce behavior in src/gateway. */
 export async function readConnectChallengeNonce(
   ws: WebSocket,
   timeoutMs = 2_000,
@@ -833,6 +848,7 @@ function resolveAuthTokenForSignature(opts?: {
   return opts?.token ?? opts?.bootstrapToken ?? opts?.deviceToken;
 }
 
+/** Reused helper for test Only Resolve Auth Token For Signature behavior in src/gateway. */
 export function testOnlyResolveAuthTokenForSignature(opts?: {
   token?: string;
   bootstrapToken?: string;
@@ -953,6 +969,7 @@ async function prePairTestDevice(params: {
   }
 }
 
+/** Reused helper for connect Req behavior in src/gateway. */
 export async function connectReq(
   ws: WebSocket,
   opts?: ConnectReqOptions,
@@ -1090,6 +1107,7 @@ export async function connectReq(
   return await responsePromise;
 }
 
+/** Reused helper for connect Ok behavior in src/gateway. */
 export async function connectOk(ws: WebSocket, opts?: Parameters<typeof connectReq>[1]) {
   const res = await connectReq(ws, opts);
   expect(res.ok, JSON.stringify(res)).toBe(true);
@@ -1097,6 +1115,7 @@ export async function connectOk(ws: WebSocket, opts?: Parameters<typeof connectR
   return res.payload as { type: "hello-ok" };
 }
 
+/** Reused helper for connect Webchat Client behavior in src/gateway. */
 export async function connectWebchatClient(params: {
   port: number;
   origin?: string;
@@ -1136,6 +1155,7 @@ export async function connectWebchatClient(params: {
 }
 
 // oxlint-disable-next-line typescript/no-unnecessary-type-parameters -- Gateway test RPC helper lets callers ascribe response payload shape.
+/** Reused helper for rpc Req behavior in src/gateway. */
 export async function rpcReq<T extends Record<string, unknown>>(
   ws: WebSocket,
   method: string,
@@ -1173,6 +1193,7 @@ export async function rpcReq<T extends Record<string, unknown>>(
   return await responsePromise;
 }
 
+/** Reused helper for wait For System Event behavior in src/gateway. */
 export async function waitForSystemEvent(timeoutMs = 2000) {
   const sessionKeys = resolveGatewayTestMainSessionKeys();
   const deadline = Date.now() + timeoutMs;

@@ -1,3 +1,4 @@
+// Tests packages/memory-host-sdk/src/host embeddings model normalize test behavior.
 import { describe, expect, it } from "vitest";
 import { normalizeEmbeddingModelWithPrefixes } from "./embeddings-model-normalize.js";
 

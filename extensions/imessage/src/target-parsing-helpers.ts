@@ -1,3 +1,4 @@
+// extensions/imessage/src target parsing helpers helpers and runtime behavior.
 export {
   createAllowedChatSenderMatcher,
   parseChatAllowTargetPrefixes,

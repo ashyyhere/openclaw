@@ -1,3 +1,4 @@
+// infra safe package install helpers and runtime behavior.
 import type { NpmProjectInstallEnvOptions } from "./npm-install-env.js";
 import { createNpmProjectInstallEnv } from "./npm-install-env.js";
 
@@ -18,6 +19,7 @@ type SafeNpmInstallArgsOptions = {
   omitPeer?: boolean;
 };
 
+/** Reused helper for create Safe Npm Install Env behavior in src/infra. */
 export function createSafeNpmInstallEnv(
   env: NodeJS.ProcessEnv,
   options: SafeNpmInstallEnvOptions = {},
@@ -45,6 +47,7 @@ export function createSafeNpmInstallEnv(
   return nextEnv;
 }
 
+/** Reused helper for create Safe Npm Install Args behavior in src/infra. */
 export function createSafeNpmInstallArgs(options: SafeNpmInstallArgsOptions = {}): string[] {
   return [
     "install",

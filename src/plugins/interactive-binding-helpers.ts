@@ -1,3 +1,4 @@
+// plugins interactive binding helpers helpers and runtime behavior.
 import {
   detachPluginConversationBinding,
   getCurrentPluginConversationBinding,
@@ -15,6 +16,7 @@ type PluginBindingConversation = Parameters<
   typeof requestPluginConversationBinding
 >[0]["conversation"];
 
+/** Reused helper for create Interactive Conversation Binding Helpers behavior in src/plugins. */
 export function createInteractiveConversationBindingHelpers(params: {
   registration: RegisteredInteractiveMetadata;
   senderId?: string;

@@ -1,3 +1,4 @@
+/** Tests sub-CLI registration by name and policy. */
 import { Command } from "commander";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { registerSubCliByName, registerSubCliCommands } from "./register.subclis.js";

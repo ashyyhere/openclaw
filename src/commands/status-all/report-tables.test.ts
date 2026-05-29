@@ -1,3 +1,4 @@
+// Tests stable table column contracts and row transforms for status-all sections.
 import { describe, expect, it } from "vitest";
 import {
   buildStatusAgentTableRows,

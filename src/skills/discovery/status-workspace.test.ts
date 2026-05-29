@@ -1,3 +1,4 @@
+/** Regression coverage for skill status summaries built from workspace snapshots. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

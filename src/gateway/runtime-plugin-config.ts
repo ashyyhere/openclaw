@@ -1,3 +1,4 @@
+// gateway runtime plugin config helpers and runtime behavior.
 import { applyPluginAutoEnable } from "../config/plugin-auto-enable.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { getCurrentPluginMetadataSnapshot } from "../plugins/current-plugin-metadata-snapshot.js";
@@ -10,6 +11,7 @@ type CachedGatewayPluginConfig = {
 
 const gatewayPluginConfigCache = new WeakMap<OpenClawConfig, CachedGatewayPluginConfig>();
 
+/** Reused helper for resolve Gateway Plugin Config behavior in src/gateway. */
 export function resolveGatewayPluginConfig(params: { config: OpenClawConfig }): OpenClawConfig {
   const currentSnapshot = getCurrentPluginMetadataSnapshot({
     config: params.config,

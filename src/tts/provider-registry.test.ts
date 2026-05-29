@@ -1,3 +1,4 @@
+// Tests tts provider registry test behavior.
 import { beforeEach, describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/types.js";
 import type { SpeechProviderPlugin } from "../plugins/types.js";

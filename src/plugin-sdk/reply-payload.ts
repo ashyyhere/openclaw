@@ -1,3 +1,4 @@
+/** Public SDK helpers for outbound reply payload normalization and delivery fallbacks. */
 import type { ReplyPayload as InternalReplyPayload } from "../auto-reply/reply-payload.js";
 import type { ChannelOutboundAdapter } from "../channels/plugins/outbound.types.js";
 import { normalizeOutboundReplyPayload as normalizeCoreOutboundReplyPayload } from "../infra/outbound/reply-payload-normalize.js";
@@ -6,10 +7,15 @@ import { hasReplyPayloadContent } from "../interactive/payload.js";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import { normalizeStringEntries } from "../shared/string-normalization.js";
 
+/** Re-exported API for src/plugin-sdk, starting with Media Payload. */
 export type { MediaPayload, MediaPayloadInput } from "../channels/plugins/media-payload.js";
+/** Re-exported API for src/plugin-sdk, starting with build Media Payload. */
 export { buildMediaPayload } from "../channels/plugins/media-payload.js";
+/** Shared type for Reply Payload in src/plugin-sdk. */
 export type ReplyPayload = Omit<InternalReplyPayload, "trustedLocalMedia">;
+/** Re-exported API for src/plugin-sdk, starting with Reply Payload Tts Supplement. */
 export type { ReplyPayloadTtsSupplement } from "../auto-reply/reply-payload.js";
+/** Re-exported API for src/plugin-sdk. */
 export {
   buildTtsSupplementMediaPayload,
   getReplyPayloadTtsSupplement,
@@ -18,6 +24,7 @@ export {
   markReplyPayloadAsTtsSupplement,
 } from "../auto-reply/reply-payload.js";
 
+/** Shared type for Outbound Reply Payload in src/plugin-sdk. */
 export type OutboundReplyPayload = {
   text?: string;
   mediaUrls?: string[];
@@ -32,11 +39,13 @@ export type OutboundReplyPayload = {
   replyToId?: string;
 };
 
+/** Shared type for Reasoning Reply Payload in src/plugin-sdk. */
 export type ReasoningReplyPayload = {
   text?: string;
   isReasoning?: boolean;
 };
 
+/** Shared type for Sendable Outbound Reply Parts in src/plugin-sdk. */
 export type SendableOutboundReplyParts = {
   text: string;
   trimmedText: string;
@@ -64,6 +73,7 @@ function trimLeadingMarkdownQuoteMarkers(text: string): string {
   return candidate;
 }
 
+/** Reused helper for is Reasoning Reply Payload behavior in src/plugin-sdk. */
 export function isReasoningReplyPayload(payload: ReasoningReplyPayload): boolean {
   if (payload.isReasoning === true) {
     return true;
@@ -225,6 +235,7 @@ export async function sendPayloadWithChunkedTextAndMedia<
   return lastResult!;
 }
 
+/** Reused helper for send Payload Media Sequence behavior in src/plugin-sdk. */
 export async function sendPayloadMediaSequence<TResult>(params: {
   text: string;
   mediaUrls: readonly string[];
@@ -251,6 +262,7 @@ export async function sendPayloadMediaSequence<TResult>(params: {
   return lastResult;
 }
 
+/** Reused helper for send Payload Media Sequence Or Fallback behavior in src/plugin-sdk. */
 export async function sendPayloadMediaSequenceOrFallback<TResult>(params: {
   text: string;
   mediaUrls: readonly string[];
@@ -269,6 +281,7 @@ export async function sendPayloadMediaSequenceOrFallback<TResult>(params: {
   return (await sendPayloadMediaSequence(params)) ?? params.fallbackResult;
 }
 
+/** Reused helper for send Payload Media Sequence And Finalize behavior in src/plugin-sdk. */
 export async function sendPayloadMediaSequenceAndFinalize<TMediaResult, TResult>(params: {
   text: string;
   mediaUrls: readonly string[];
@@ -286,6 +299,7 @@ export async function sendPayloadMediaSequenceAndFinalize<TMediaResult, TResult>
   return await params.finalize();
 }
 
+/** Reused helper for send Text Media Payload behavior in src/plugin-sdk. */
 export async function sendTextMediaPayload(params: {
   channel: string;
   ctx: SendPayloadContext;
@@ -398,6 +412,7 @@ export async function sendMediaWithLeadingCaption(params: {
   return true;
 }
 
+/** Reused helper for deliver Text Or Media Reply behavior in src/plugin-sdk. */
 export async function deliverTextOrMediaReply(params: {
   payload: OutboundReplyPayload;
   text: string;
@@ -439,6 +454,7 @@ export async function deliverTextOrMediaReply(params: {
   return sentText ? "text" : "empty";
 }
 
+/** Reused helper for deliver Formatted Text With Attachments behavior in src/plugin-sdk. */
 export async function deliverFormattedTextWithAttachments(params: {
   payload: OutboundReplyPayload;
   send: (params: { text: string; replyToId?: string }) => Promise<void>;

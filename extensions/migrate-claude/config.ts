@@ -1,3 +1,4 @@
+// extensions/migrate-claude config helpers and runtime behavior.
 import {
   applyMigrationConfigPatchItem,
   applyMigrationManualItem,

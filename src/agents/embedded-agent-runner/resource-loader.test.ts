@@ -1,3 +1,4 @@
+/** Regression coverage for embedded-agent resource loader creation. */
 import { describe, expect, it, vi } from "vitest";
 import { DefaultResourceLoader } from "../sessions/index.js";
 import {

@@ -1,3 +1,4 @@
+// Tests extensions/telegram/src bot message dispatch test behavior.
 import fs from "node:fs";
 import type { Bot } from "grammy";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";

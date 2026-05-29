@@ -1,3 +1,4 @@
+/** Regression coverage for tool catalog normalization. */
 import { describe, expect, it } from "vitest";
 import { resolveCoreToolProfilePolicy } from "./tool-catalog.js";
 
