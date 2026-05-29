@@ -1,7 +1,7 @@
-// node-host invoke types helpers and runtime behavior.
+// Gateway payload/result contracts for node-host invoke requests.
 import type { SkillBinTrustEntry, SystemRunApprovalPlan } from "../infra/exec-approvals.js";
 
-/** Shared type for System Run Params in src/node-host. */
+/** Input payload for the node-host SYSTEM_RUN command. */
 export type SystemRunParams = {
   command: string[];
   rawCommand?: string | null;
@@ -18,7 +18,7 @@ export type SystemRunParams = {
   suppressNotifyOnExit?: boolean | null;
 };
 
-/** Shared type for Run Result in src/node-host. */
+/** Normalized process execution result returned by node-host. */
 export type RunResult = {
   exitCode?: number;
   timedOut: boolean;
@@ -29,7 +29,7 @@ export type RunResult = {
   truncated: boolean;
 };
 
-/** Shared type for Exec Event Payload in src/node-host. */
+/** Event payload emitted while node-host command execution progresses. */
 export type ExecEventPayload = {
   sessionKey: string;
   runId: string;
@@ -43,7 +43,7 @@ export type ExecEventPayload = {
   suppressNotifyOnExit?: boolean;
 };
 
-/** Shared type for Exec Finished Result in src/node-host. */
+/** Compact command result included in execution-finished events. */
 export type ExecFinishedResult = {
   stdout?: string;
   stderr?: string;
@@ -53,7 +53,7 @@ export type ExecFinishedResult = {
   success?: boolean;
 };
 
-/** Shared type for Exec Finished Event Params in src/node-host. */
+/** Parameters for publishing a node-host execution-finished event. */
 export type ExecFinishedEventParams = {
   sessionKey: string;
   runId: string;
@@ -62,7 +62,7 @@ export type ExecFinishedEventParams = {
   suppressNotifyOnExit?: boolean;
 };
 
-/** Shared type for Skill Bins Provider in src/node-host. */
+/** Provider for trusted skill binaries advertised by the connected gateway. */
 export type SkillBinsProvider = {
   current(force?: boolean): Promise<SkillBinTrustEntry[]>;
 };

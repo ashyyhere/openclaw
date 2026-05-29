@@ -1,4 +1,5 @@
-// node-host exec policy helpers and runtime behavior.
+// Policy decisions for node-host SYSTEM_RUN requests after command analysis and
+// allowlist evaluation have run.
 import { requiresExecApproval, type ExecAsk, type ExecSecurity } from "../infra/exec-approvals.js";
 
 type ExecApprovalDecision = "allow-once" | "allow-always" | null;
@@ -22,7 +23,7 @@ type SystemRunPolicyDecision = {
     }
 );
 
-/** Reused helper for resolve Exec Approval Decision behavior in src/node-host. */
+/** Normalize an approval decision value received over the gateway protocol. */
 export function resolveExecApprovalDecision(value: unknown): ExecApprovalDecision {
   if (value === "allow-once" || value === "allow-always") {
     return value;
@@ -30,7 +31,7 @@ export function resolveExecApprovalDecision(value: unknown): ExecApprovalDecisio
   return null;
 }
 
-/** Reused helper for format System Run Allowlist Miss Message behavior in src/node-host. */
+/** Format the user-facing denial reason for allowlist misses. */
 export function formatSystemRunAllowlistMissMessage(params?: {
   shellWrapperBlocked?: boolean;
   windowsShellWrapperBlocked?: boolean;
@@ -52,7 +53,7 @@ export function formatSystemRunAllowlistMissMessage(params?: {
   return "SYSTEM_RUN_DENIED: allowlist miss";
 }
 
-/** Reused helper for evaluate System Run Policy behavior in src/node-host. */
+/** Decide whether a SYSTEM_RUN request may execute under security/ask policy. */
 export function evaluateSystemRunPolicy(params: {
   security: ExecSecurity;
   ask: ExecAsk;
