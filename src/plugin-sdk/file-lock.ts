@@ -26,18 +26,18 @@ export type FileLockHandle = {
   release: () => Promise<void>;
 };
 
-/** Reused constant for FILE LOCK TIMEOUT ERROR CODE behavior in src/plugin-sdk. */
+/** Error code surfaced when retry policy expires before the lock can be acquired. */
 export const FILE_LOCK_TIMEOUT_ERROR_CODE = "file_lock_timeout";
-/** Reused constant for FILE LOCK STALE ERROR CODE behavior in src/plugin-sdk. */
+/** Error code surfaced when a stale lock cannot be reclaimed safely. */
 export const FILE_LOCK_STALE_ERROR_CODE = "file_lock_stale";
 
-/** Shared type for File Lock Timeout Error in src/plugin-sdk. */
+/** Timeout error shape kept stable for plugin callers that branch on `code`. */
 export type FileLockTimeoutError = Error & {
   code: typeof FILE_LOCK_TIMEOUT_ERROR_CODE;
   lockPath: string;
 };
 
-/** Shared type for File Lock Stale Error in src/plugin-sdk. */
+/** Stale-lock error shape kept stable for plugin callers that branch on `code`. */
 export type FileLockStaleError = Error & {
   code: typeof FILE_LOCK_STALE_ERROR_CODE;
   lockPath: string;
@@ -76,12 +76,12 @@ function normalizeLockError(err: unknown): never {
   throw err;
 }
 
-/** Reused helper for reset File Lock State For Test behavior in src/plugin-sdk. */
+/** Reset the process-local lock manager for tests that need an empty lock registry. */
 export function resetFileLockStateForTest(): void {
   resetFileLockManagerForTest(FILE_LOCK_MANAGER_KEY, FILE_LOCK_MANAGER_KEY);
 }
 
-/** Reused helper for drain File Lock State For Test behavior in src/plugin-sdk. */
+/** Wait for pending lock-manager work to settle before test cleanup continues. */
 export async function drainFileLockStateForTest(): Promise<void> {
   await drainFileLockManagerForTest(FILE_LOCK_MANAGER_KEY, FILE_LOCK_MANAGER_KEY);
 }

@@ -10,7 +10,7 @@ import type {
 } from "../plugins/types.js";
 import { isRecord } from "../shared/record-coerce.js";
 
-/** Re-exported API for src/plugin-sdk. */
+/** Public migration provider contracts re-exported from the plugin runtime. */
 export type {
   MigrationDetection,
   MigrationItem,
@@ -20,12 +20,12 @@ export type {
   MigrationSummary,
 };
 
-/** Reused constant for MIGRATION REASON MISSING SOURCE OR TARGET behavior in src/plugin-sdk. */
+/** Standard conflict reason when a provider cannot identify both sides of a move. */
 export const MIGRATION_REASON_MISSING_SOURCE_OR_TARGET = "missing source or target";
-/** Reused constant for MIGRATION REASON TARGET EXISTS behavior in src/plugin-sdk. */
+/** Standard conflict reason for non-overwrite writes into an occupied config path. */
 export const MIGRATION_REASON_TARGET_EXISTS = "target exists";
 
-/** Reused helper for create Migration Item behavior in src/plugin-sdk. */
+/** Build a migration item and default it to planned so providers only fill domain fields. */
 export function createMigrationItem(
   params: Omit<MigrationItem, "status"> & { status?: MigrationItem["status"] },
 ): MigrationItem {
@@ -35,22 +35,22 @@ export function createMigrationItem(
   };
 }
 
-/** Reused helper for mark Migration Item Conflict behavior in src/plugin-sdk. */
+/** Return a copy of a migration item marked as a user-resolvable conflict. */
 export function markMigrationItemConflict(item: MigrationItem, reason: string): MigrationItem {
   return { ...item, status: "conflict", reason };
 }
 
-/** Reused helper for mark Migration Item Error behavior in src/plugin-sdk. */
+/** Return a copy of a migration item marked as an execution error. */
 export function markMigrationItemError(item: MigrationItem, reason: string): MigrationItem {
   return { ...item, status: "error", reason };
 }
 
-/** Reused helper for mark Migration Item Skipped behavior in src/plugin-sdk. */
+/** Return a copy of a migration item marked as intentionally skipped. */
 export function markMigrationItemSkipped(item: MigrationItem, reason: string): MigrationItem {
   return { ...item, status: "skipped", reason };
 }
 
-/** Reused helper for summarize Migration Items behavior in src/plugin-sdk. */
+/** Count migration outcomes without changing item order or item payloads. */
 export function summarizeMigrationItems(items: readonly MigrationItem[]): MigrationSummary {
   return {
     total: items.length,
@@ -101,7 +101,7 @@ function isSecretKey(key: string): boolean {
   return SECRET_KEY_MARKERS.some((marker) => normalized.includes(marker));
 }
 
-/** Shared type for Migration Config Patch Details in src/plugin-sdk. */
+/** Config mutation payload stored in migration item details for later apply. */
 export type MigrationConfigPatchDetails = {
   path: string[];
   value: unknown;
@@ -114,7 +114,7 @@ class MigrationConfigPatchConflictError extends Error {
   }
 }
 
-/** Reused helper for read Migration Config Path behavior in src/plugin-sdk. */
+/** Read a nested config path, returning undefined when any segment is not an object. */
 export function readMigrationConfigPath(
   root: Record<string, unknown>,
   path: readonly string[],
@@ -129,7 +129,7 @@ export function readMigrationConfigPath(
   return current;
 }
 
-/** Reused helper for merge Migration Config Value behavior in src/plugin-sdk. */
+/** Deep-merge object patches; scalar and array values replace the existing value. */
 export function mergeMigrationConfigValue(left: unknown, right: unknown): unknown {
   if (!isRecord(left) || !isRecord(right)) {
     return structuredClone(right);
@@ -141,7 +141,7 @@ export function mergeMigrationConfigValue(left: unknown, right: unknown): unknow
   return next;
 }
 
-/** Reused helper for write Migration Config Path behavior in src/plugin-sdk. */
+/** Create missing parent objects and merge the supplied value at the leaf path. */
 export function writeMigrationConfigPath(
   root: Record<string, unknown>,
   path: readonly string[],
@@ -162,7 +162,7 @@ export function writeMigrationConfigPath(
   current[leaf] = mergeMigrationConfigValue(current[leaf], value);
 }
 
-/** Reused helper for has Migration Config Patch Conflict behavior in src/plugin-sdk. */
+/** Detect whether a patch would overwrite existing config when overwrite is disabled. */
 export function hasMigrationConfigPatchConflict(
   config: MigrationProviderContext["config"],
   path: readonly string[],
@@ -178,7 +178,7 @@ export function hasMigrationConfigPatchConflict(
   return Object.keys(value).some((key) => existing[key] !== undefined);
 }
 
-/** Reused helper for create Migration Config Patch Item behavior in src/plugin-sdk. */
+/** Create a config merge migration item with path/value details for apply-time replay. */
 export function createMigrationConfigPatchItem(params: {
   id: string;
   target: string;
@@ -203,7 +203,7 @@ export function createMigrationConfigPatchItem(params: {
   });
 }
 
-/** Reused helper for create Migration Manual Item behavior in src/plugin-sdk. */
+/** Create a skipped manual item for migration work that cannot be safely automated. */
 export function createMigrationManualItem(params: {
   id: string;
   source: string;
@@ -221,7 +221,7 @@ export function createMigrationManualItem(params: {
   });
 }
 
-/** Reused helper for read Migration Config Patch Details behavior in src/plugin-sdk. */
+/** Decode patch details from a migration item, rejecting malformed path metadata. */
 export function readMigrationConfigPatchDetails(
   item: MigrationItem,
 ): MigrationConfigPatchDetails | undefined {
@@ -235,7 +235,7 @@ export function readMigrationConfigPatchDetails(
   return { path, value: item.details?.value };
 }
 
-/** Reused helper for apply Migration Config Patch Item behavior in src/plugin-sdk. */
+/** Apply a planned config patch through the runtime config mutator and report item status. */
 export async function applyMigrationConfigPatchItem(
   ctx: MigrationProviderContext,
   item: MigrationItem,
@@ -278,7 +278,7 @@ export async function applyMigrationConfigPatchItem(
   }
 }
 
-/** Reused helper for apply Migration Manual Item behavior in src/plugin-sdk. */
+/** Keep manual migration items skipped and surface the follow-up reason to callers. */
 export function applyMigrationManualItem(item: MigrationItem): MigrationItem {
   return markMigrationItemSkipped(item, item.reason ?? "manual follow-up required");
 }
@@ -327,17 +327,17 @@ function redactMigrationValueInternal(value: unknown, seen: WeakSet<object>): un
   return next;
 }
 
-/** Reused helper for redact Migration Value behavior in src/plugin-sdk. */
+/** Redact likely secrets in arbitrary migration values while preserving secret references. */
 export function redactMigrationValue(value: unknown): unknown {
   return redactMigrationValueInternal(value, new WeakSet<object>());
 }
 
-/** Reused helper for redact Migration Item behavior in src/plugin-sdk. */
+/** Redact a migration item before it is shown in logs, diagnostics, or PR proof. */
 export function redactMigrationItem(item: MigrationItem): MigrationItem {
   return redactMigrationValue(item) as MigrationItem;
 }
 
-/** Reused helper for redact Migration Plan behavior in src/plugin-sdk. */
+/** Redact every item in a migration plan without changing the plan's public shape. */
 export function redactMigrationPlan<T extends MigrationPlan>(plan: T): T {
   return redactMigrationValue(plan) as T;
 }

@@ -31,7 +31,7 @@ export type ChannelRouteRef = {
   };
 };
 
-/** Shared type for Channel Route Ref Input in src/plugin-sdk. */
+/** Raw route fields accepted from runtime state, channel adapters, or plugin calls. */
 export type ChannelRouteRefInput = {
   channel?: unknown;
   accountId?: unknown;
@@ -43,13 +43,13 @@ export type ChannelRouteRefInput = {
   threadSource?: ChannelRouteThreadSource;
 };
 
-/** Shared type for Channel Route Target Input in src/plugin-sdk. */
+/** Minimal route target payload before it is normalized into a route ref. */
 export type ChannelRouteTargetInput = Pick<
   ChannelRouteRefInput,
   "channel" | "accountId" | "to" | "rawTo" | "chatType" | "threadId"
 >;
 
-/** Shared type for Channel Route Key Input in src/plugin-sdk. */
+/** Route payload accepted by key builders that can consume normalized or raw values. */
 export type ChannelRouteKeyInput = ChannelRouteRef | ChannelRouteTargetInput;
 
 /** @deprecated Use `messaging.resolveOutboundSessionRoute` for provider-specific target grammar. */
@@ -116,24 +116,24 @@ export function normalizeChannelRouteRef(
   };
 }
 
-/** Reused helper for channel Route Target behavior in src/plugin-sdk. */
+/** Return the canonical delivery target from a normalized route. */
 export function channelRouteTarget(route?: ChannelRouteRef): string | undefined {
   return route?.target?.to;
 }
 
-/** Reused helper for channel Route Thread Id behavior in src/plugin-sdk. */
+/** Return the canonical thread id from a normalized route. */
 export function channelRouteThreadId(route?: ChannelRouteRef): string | number | undefined {
   return route?.thread?.id;
 }
 
-/** Reused helper for normalize Channel Route Target behavior in src/plugin-sdk. */
+/** Normalize a target-only payload into the same compact route ref used by sessions. */
 export function normalizeChannelRouteTarget(
   input?: ChannelRouteTargetInput | null,
 ): ChannelRouteRef | undefined {
   return input ? normalizeChannelRouteRef(input) : undefined;
 }
 
-/** Shared type for Channel Route Parsed Target in src/plugin-sdk. */
+/** Parsed target shape produced by the deprecated explicit-target parser bridge. */
 export type ChannelRouteParsedTarget = ChannelRouteTargetInput & {
   channel: string;
   rawTo: string;
@@ -236,7 +236,7 @@ export function channelRoutesShareConversation(params: {
   return threadIdsEqual(left.thread.id, right.thread.id);
 }
 
-/** Reused helper for channel Route Targets Match Exact behavior in src/plugin-sdk. */
+/** Exact-match raw target payloads after normalization. */
 export function channelRouteTargetsMatchExact(params: {
   left?: ChannelRouteTargetInput | null;
   right?: ChannelRouteTargetInput | null;
@@ -247,7 +247,7 @@ export function channelRouteTargetsMatchExact(params: {
   });
 }
 
-/** Reused helper for channel Route Targets Share Conversation behavior in src/plugin-sdk. */
+/** Conversation-match raw target payloads after normalization. */
 export function channelRouteTargetsShareConversation(params: {
   left?: ChannelRouteTargetInput | null;
   right?: ChannelRouteTargetInput | null;
