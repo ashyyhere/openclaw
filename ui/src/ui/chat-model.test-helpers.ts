@@ -1,4 +1,6 @@
-// ui/src/ui chat model test helpers helpers and runtime behavior.
+// Test fixtures for Control UI model/session tests. These helpers build small
+// gateway-shaped payloads so tests can exercise model-selection behavior without
+// duplicating full session responses.
 import type {
   GatewaySessionRow,
   ModelCatalogEntry,
@@ -6,39 +8,39 @@ import type {
   SessionsPatchResult,
 } from "./types.ts";
 
-/** Reused constant for OPENAI GPT5 MODEL behavior in ui/src/ui. */
+/** Canonical OpenAI GPT-5 catalog entry used in model-selection tests. */
 export const OPENAI_GPT5_MODEL: ModelCatalogEntry = {
   id: "gpt-5",
   name: "GPT-5",
   provider: "openai",
 };
 
-/** Reused constant for OPENAI GPT5 MINI MODEL behavior in ui/src/ui. */
+/** Canonical OpenAI GPT-5 Mini catalog entry used in model-selection tests. */
 export const OPENAI_GPT5_MINI_MODEL: ModelCatalogEntry = {
   id: "gpt-5-mini",
   name: "GPT-5 Mini",
   provider: "openai",
 };
 
-/** Reused constant for DEEPSEEK CHAT MODEL behavior in ui/src/ui. */
+/** DeepSeek catalog entry used to prove provider disambiguation. */
 export const DEEPSEEK_CHAT_MODEL: ModelCatalogEntry = {
   id: "deepseek-chat",
   name: "DeepSeek Chat",
   provider: "deepseek",
 };
 
-/** Reused constant for DEFAULT CHAT MODEL CATALOG behavior in ui/src/ui. */
+/** Default compact catalog used by chat model tests. */
 export const DEFAULT_CHAT_MODEL_CATALOG = [
   OPENAI_GPT5_MODEL,
   OPENAI_GPT5_MINI_MODEL,
 ] satisfies ModelCatalogEntry[];
 
-/** Reused helper for create Model Catalog behavior in ui/src/ui. */
+/** Clone catalog entries into a mutable test catalog. */
 export function createModelCatalog(...entries: ModelCatalogEntry[]): ModelCatalogEntry[] {
   return [...entries];
 }
 
-/** Reused helper for create Ambiguous Model Catalog behavior in ui/src/ui. */
+/** Build duplicate model ids across providers for ambiguity tests. */
 export function createAmbiguousModelCatalog(
   id: string,
   ...providers: string[]
@@ -50,7 +52,7 @@ export function createAmbiguousModelCatalog(
   }));
 }
 
-/** Reused helper for create Main Session Row behavior in ui/src/ui. */
+/** Build a minimal main-session row with caller overrides. */
 export function createMainSessionRow(
   overrides: Partial<GatewaySessionRow> = {},
 ): GatewaySessionRow {
@@ -62,7 +64,7 @@ export function createMainSessionRow(
   };
 }
 
-/** Reused helper for create Sessions List Result behavior in ui/src/ui. */
+/** Build a minimal sessions-list response for model/default resolution tests. */
 export function createSessionsListResult(
   params: {
     model?: string | null;
@@ -112,7 +114,7 @@ export function createSessionsListResult(
   };
 }
 
-/** Reused helper for create Resolved Model Patch behavior in ui/src/ui. */
+/** Build a successful model patch response with resolved provider/model fields. */
 export function createResolvedModelPatch(
   model: string,
   modelProvider?: string | null,

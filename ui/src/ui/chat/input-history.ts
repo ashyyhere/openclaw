@@ -1,4 +1,6 @@
-// ui/src/ui/chat input history helpers and runtime behavior.
+// Chat composer input-history state machine. It merges transcript-backed user
+// messages with local unsent command history, then handles arrow-key recall
+// without letting live chat updates reorder an active navigation snapshot.
 import { CHAT_HISTORY_RENDER_LIMIT } from "./history-limits.ts";
 import { extractText } from "./message-extract.ts";
 
@@ -7,7 +9,7 @@ type ChatLocalInputHistoryEntry = {
   ts: number;
 };
 
-/** Shared type for Chat Input History State in ui/src/ui/chat. */
+/** Mutable chat state fields needed for input-history collection and navigation. */
 export type ChatInputHistoryState = {
   sessionKey: string;
   chatLoading: boolean;
@@ -20,7 +22,7 @@ export type ChatInputHistoryState = {
   chatDraftBeforeHistory: string | null;
 };
 
-/** Shared type for Chat Input History Key Input in ui/src/ui/chat. */
+/** Keyboard/caret snapshot used to decide whether an arrow key recalls history. */
 export type ChatInputHistoryKeyInput = {
   key: "ArrowUp" | "ArrowDown";
   selectionStart: number;
@@ -34,7 +36,7 @@ export type ChatInputHistoryKeyInput = {
   keyCode: number;
 };
 
-/** Shared type for Chat Input History Key Result in ui/src/ui/chat. */
+/** Result of handling an input-history key event, including debug decision code. */
 export type ChatInputHistoryKeyResult = {
   handled: boolean;
   preventDefault: boolean;
@@ -100,7 +102,7 @@ function collectUserInputHistory(
   return items;
 }
 
-/** Reused helper for record Non Transcript Input History behavior in ui/src/ui/chat. */
+/** Remember local input that will not appear in the transcript-backed history. */
 export function recordNonTranscriptInputHistory(state: ChatInputHistoryState, text: string) {
   const trimmed = text.trim();
   if (!trimmed) {
@@ -116,7 +118,7 @@ export function recordNonTranscriptInputHistory(state: ChatInputHistoryState, te
   ].slice(0, CHAT_HISTORY_RENDER_LIMIT);
 }
 
-/** Reused helper for reset Chat Input History Navigation behavior in ui/src/ui/chat. */
+/** Exit history navigation and clear the active snapshot. */
 export function resetChatInputHistoryNavigation(state: ChatInputHistoryState) {
   state.chatInputHistorySessionKey = null;
   state.chatInputHistoryItems = null;
@@ -124,7 +126,7 @@ export function resetChatInputHistoryNavigation(state: ChatInputHistoryState) {
   state.chatDraftBeforeHistory = null;
 }
 
-/** Reused helper for handle Chat Draft Change behavior in ui/src/ui/chat. */
+/** Apply a draft edit and leave history navigation mode. */
 export function handleChatDraftChange(state: ChatInputHistoryState, next: string) {
   state.chatMessage = next;
   resetChatInputHistoryNavigation(state);
@@ -163,7 +165,7 @@ function ensureChatInputHistorySnapshot(state: ChatInputHistoryState): string[] 
   return items;
 }
 
-/** Reused helper for navigate Chat Input History behavior in ui/src/ui/chat. */
+/** Move through the current history snapshot and update the composer draft. */
 export function navigateChatInputHistory(
   state: ChatInputHistoryState,
   direction: "up" | "down",
@@ -195,7 +197,7 @@ export function navigateChatInputHistory(
   return true;
 }
 
-/** Reused helper for handle Chat Input History Key behavior in ui/src/ui/chat. */
+/** Decide whether an ArrowUp/ArrowDown key should navigate composer history. */
 export function handleChatInputHistoryKey(
   state: ChatInputHistoryState,
   input: ChatInputHistoryKeyInput,

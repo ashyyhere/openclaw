@@ -1,5 +1,5 @@
-// ui/src/ui/chat history limits helpers and runtime behavior.
-/** Reused constant for CHAT HISTORY RENDER LIMIT behavior in ui/src/ui/chat. */
+// Chat transcript render limits shared by history display and input recall.
+/** Maximum number of recent messages rendered or scanned for input history. */
 export const CHAT_HISTORY_RENDER_LIMIT = 100;
-/** Reused constant for CHAT HISTORY RENDER CHAR BUDGET behavior in ui/src/ui/chat. */
+/** Soft character budget for rendered transcript text before pruning. */
 export const CHAT_HISTORY_RENDER_CHAR_BUDGET = 240_000;

@@ -1,5 +1,7 @@
-// ui/src/ui ui types helpers and runtime behavior.
-/** Shared type for Chat Attachment in ui/src/ui. */
+// Shared Control UI state shapes that are consumed across chat, cron, and
+// scheduling views. Keep these lightweight data contracts free of rendering
+// concerns so reducers and view helpers can share them.
+/** Attachment metadata plus optional in-memory object URLs for chat drafts. */
 export type ChatAttachment = {
   id: string;
   dataUrl?: string;
@@ -9,7 +11,7 @@ export type ChatAttachment = {
   sizeBytes?: number;
 };
 
-/** Shared type for Chat Queue Item in ui/src/ui. */
+/** Pending chat send item tracked while the gateway is busy or disconnected. */
 export type ChatQueueItem = {
   id: string;
   text: string;
@@ -28,10 +30,10 @@ export type ChatQueueItem = {
   agentId?: string;
 };
 
-/** Reused constant for CRON CHANNEL LAST behavior in ui/src/ui. */
+/** Sentinel meaning a cron job should reuse the last active channel target. */
 export const CRON_CHANNEL_LAST = "last";
 
-/** Shared type for Cron Form State in ui/src/ui. */
+/** Complete editable state for the cron/scheduled-run form. */
 export type CronFormState = {
   name: string;
   description: string;
