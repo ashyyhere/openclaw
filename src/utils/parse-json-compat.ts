@@ -1,7 +1,7 @@
-// utils parse json compat helpers and runtime behavior.
+// JSON parser adapter that accepts strict JSON first, then JSON5 compatibility.
 import JSON5 from "json5";
 
-/** Reused helper for parse Json With Json5 Fallback behavior in src/utils. */
+/** Parse JSON with a JSON5 fallback for legacy relaxed config bodies. */
 export function parseJsonWithJson5Fallback(raw: string): unknown {
   try {
     return JSON.parse(raw);

@@ -1,4 +1,5 @@
-// utils delivery context shared helpers and runtime behavior.
+// Delivery-context normalization shared by sessions, queues, and channel route
+// metadata. Keeps legacy last* fields aligned with canonical channel routes.
 import {
   channelRouteCompactKey,
   channelRouteThreadId,
@@ -15,10 +16,10 @@ import {
 } from "./message-channel-constants.js";
 import { normalizeMessageChannel } from "./message-channel-core.js";
 import { isDeliverableMessageChannel } from "./message-channel-normalize.js";
-/** Re-exported API for src/utils, starting with Delivery Context. */
+/** Delivery context types re-exported for callers using the shared helpers. */
 export type { DeliveryContext, DeliveryContextSessionSource } from "./delivery-context.types.js";
 
-/** Reused helper for normalize Delivery Context behavior in src/utils. */
+/** Normalize a delivery context into a canonical channel route target shape. */
 export function normalizeDeliveryContext(context?: DeliveryContext): DeliveryContext | undefined {
   if (!context) {
     return undefined;
@@ -47,7 +48,7 @@ export function normalizeDeliveryContext(context?: DeliveryContext): DeliveryCon
   return normalized;
 }
 
-/** Reused helper for normalize Delivery Channel Route behavior in src/utils. */
+/** Normalize an unknown route-like value into a channel route reference. */
 export function normalizeDeliveryChannelRoute(route?: unknown): ChannelRouteRef | undefined {
   if (!route || typeof route !== "object" || Array.isArray(route)) {
     return undefined;
@@ -65,7 +66,7 @@ export function normalizeDeliveryChannelRoute(route?: unknown): ChannelRouteRef 
   });
 }
 
-/** Reused helper for delivery Context From Channel Route behavior in src/utils. */
+/** Convert a channel route reference into delivery context fields. */
 export function deliveryContextFromChannelRoute(
   route?: ChannelRouteRef,
 ): DeliveryContext | undefined {
@@ -78,7 +79,7 @@ export function deliveryContextFromChannelRoute(
   });
 }
 
-/** Reused helper for channel Route From Delivery Context behavior in src/utils. */
+/** Convert delivery context fields back into a channel route reference. */
 export function channelRouteFromDeliveryContext(
   context?: DeliveryContext,
 ): ChannelRouteRef | undefined {
@@ -128,7 +129,7 @@ function mergeExternalDeliveryContextOverInternalRoute(
   });
 }
 
-/** Reused helper for normalize Session Delivery Fields behavior in src/utils. */
+/** Normalize route, deliveryContext, and legacy last* session fields together. */
 export function normalizeSessionDeliveryFields(source?: DeliveryContextSessionSource): {
   route?: ChannelRouteRef;
   deliveryContext?: DeliveryContext;
@@ -192,7 +193,7 @@ export function normalizeSessionDeliveryFields(source?: DeliveryContextSessionSo
   };
 }
 
-/** Reused helper for delivery Context From Session behavior in src/utils. */
+/** Resolve the best outbound delivery context from a persisted session entry. */
 export function deliveryContextFromSession(
   entry?: DeliveryContextSessionSource,
 ): DeliveryContext | undefined {
@@ -212,7 +213,7 @@ export function deliveryContextFromSession(
   return normalizeSessionDeliveryFields(source).deliveryContext;
 }
 
-/** Reused helper for merge Delivery Context behavior in src/utils. */
+/** Merge primary/fallback delivery context without crossing targets between channels. */
 export function mergeDeliveryContext(
   primary?: DeliveryContext,
   fallback?: DeliveryContext,
@@ -242,7 +243,7 @@ export function mergeDeliveryContext(
   });
 }
 
-/** Reused helper for delivery Context Key behavior in src/utils. */
+/** Build a stable compact key for a delivery context. */
 export function deliveryContextKey(context?: DeliveryContext): string | undefined {
   return channelRouteCompactKey(normalizeDeliveryContext(context));
 }

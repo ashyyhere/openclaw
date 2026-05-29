@@ -1,8 +1,8 @@
-// utils delivery context helpers and runtime behavior.
+// Public delivery-context facade plus conversation-id target helpers.
 import { getChannelPlugin, normalizeChannelId } from "../channels/plugins/index.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import { normalizeMessageChannel } from "./message-channel.js";
-/** Re-exported API for src/utils. */
+/** Canonical delivery-context normalization and conversion helpers. */
 export {
   channelRouteFromDeliveryContext,
   deliveryContextFromChannelRoute,
@@ -12,7 +12,7 @@ export {
   normalizeDeliveryContext,
   normalizeSessionDeliveryFields,
 } from "./delivery-context.shared.js";
-/** Re-exported API for src/utils, starting with Delivery Context. */
+/** Public delivery-context types. */
 export type { DeliveryContext, DeliveryContextSessionSource } from "./delivery-context.types.js";
 
 type ConversationTargetParams = {
@@ -43,7 +43,7 @@ function normalizeConversationTargetParams(params: ConversationTargetParams): {
   return { channel, conversationId, parentConversationId };
 }
 
-/** Reused helper for format Conversation Target behavior in src/utils. */
+/** Format a channel conversation id into the fallback `to` target string. */
 export function formatConversationTarget(params: ConversationTargetParams): string | undefined {
   const { channel, conversationId, parentConversationId } =
     normalizeConversationTargetParams(params);
@@ -62,7 +62,7 @@ export function formatConversationTarget(params: ConversationTargetParams): stri
   return `channel:${conversationId}`;
 }
 
-/** Reused helper for resolve Conversation Delivery Target behavior in src/utils. */
+/** Resolve channel-specific `to`/thread targets for conversation ids. */
 export function resolveConversationDeliveryTarget(params: {
   channel?: string;
   conversationId?: string | number;
