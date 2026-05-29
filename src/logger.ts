@@ -40,7 +40,7 @@ const warn = theme.warn;
 const success = theme.success;
 const danger = theme.error;
 
-/** Reused helper for log Info behavior in src. */
+/** Logs an informational message through the runtime and persistent logger. */
 export function logInfo(message: string, runtime: RuntimeEnv = defaultRuntime) {
   logWithSubsystem({
     message,
@@ -52,7 +52,7 @@ export function logInfo(message: string, runtime: RuntimeEnv = defaultRuntime) {
   });
 }
 
-/** Reused helper for log Warn behavior in src. */
+/** Logs a warning message through the runtime and persistent logger. */
 export function logWarn(message: string, runtime: RuntimeEnv = defaultRuntime) {
   logWithSubsystem({
     message,
@@ -64,7 +64,7 @@ export function logWarn(message: string, runtime: RuntimeEnv = defaultRuntime) {
   });
 }
 
-/** Reused helper for log Success behavior in src. */
+/** Logs a success message while recording it as informational in the file logger. */
 export function logSuccess(message: string, runtime: RuntimeEnv = defaultRuntime) {
   logWithSubsystem({
     message,
@@ -76,7 +76,7 @@ export function logSuccess(message: string, runtime: RuntimeEnv = defaultRuntime
   });
 }
 
-/** Reused helper for log Error behavior in src. */
+/** Logs an error message through stderr/runtime and the persistent logger. */
 export function logError(message: string, runtime: RuntimeEnv = defaultRuntime) {
   logWithSubsystem({
     message,
@@ -88,7 +88,7 @@ export function logError(message: string, runtime: RuntimeEnv = defaultRuntime) 
   });
 }
 
-/** Reused helper for log Debug behavior in src. */
+/** Logs debug details to the file logger and to console only when verbose. */
 export function logDebug(message: string) {
   // Always emit to file logger (level-filtered); console only when verbose.
   getLogger().debug(message);

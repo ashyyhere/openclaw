@@ -20,25 +20,25 @@ if (shouldWarnExtensionApiImport) {
   );
 }
 
-/** Re-exported API for src, starting with resolve Agent Dir. */
+/** Legacy agent path helpers kept for deprecated extension-api importers. */
 export { resolveAgentDir, resolveAgentWorkspaceDir } from "./agents/agent-scope.js";
-/** Re-exported API for src, starting with DEFAULT MODEL. */
+/** Legacy default model/provider constants kept for deprecated extension-api importers. */
 export { DEFAULT_MODEL, DEFAULT_PROVIDER } from "./agents/defaults.js";
-/** Re-exported API for src, starting with resolve Agent Identity. */
+/** Legacy agent identity resolver kept for deprecated extension-api importers. */
 export { resolveAgentIdentity } from "./agents/identity.js";
-/** Re-exported API for src, starting with resolve Thinking Default. */
+/** Legacy thinking-default resolver kept for deprecated extension-api importers. */
 export { resolveThinkingDefault } from "./agents/model-selection.js";
-/** Re-exported API for src. */
+/** Legacy embedded agent runner export kept for deprecated extension-api importers. */
 export {
   runEmbeddedAgent,
   /** @deprecated Use runEmbeddedAgent. */
   runEmbeddedAgent as runEmbeddedPiAgent,
 } from "./agents/embedded-agent.js";
-/** Re-exported API for src, starting with resolve Agent Timeout Ms. */
+/** Legacy agent timeout resolver kept for deprecated extension-api importers. */
 export { resolveAgentTimeoutMs } from "./agents/timeout.js";
-/** Re-exported API for src, starting with ensure Agent Workspace. */
+/** Legacy workspace setup helper kept for deprecated extension-api importers. */
 export { ensureAgentWorkspace } from "./agents/workspace.js";
-/** Re-exported API for src. */
+/** Legacy session-store helpers kept for deprecated extension-api importers. */
 export {
   resolveStorePath,
   loadSessionStore,

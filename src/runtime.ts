@@ -1,14 +1,14 @@
 import { clearActiveProgressLine } from "../packages/terminal-core/src/progress-line.js";
 import { restoreTerminalState } from "../packages/terminal-core/src/restore.js";
 
-/** Shared type for Runtime Env in src. */
+/** Minimal runtime surface for logging errors and exiting commands. */
 export type RuntimeEnv = {
   log: (...args: unknown[]) => void;
   error: (...args: unknown[]) => void;
   exit: (code: number) => void;
 };
 
-/** Shared type for Output Runtime Env in src. */
+/** Runtime surface that can write plain stdout and JSON payloads. */
 export type OutputRuntimeEnv = RuntimeEnv & {
   writeStdout: (value: string) => void;
   writeJson: (value: unknown, space?: number) => void;
@@ -87,7 +87,7 @@ function createRuntimeIo(): Pick<OutputRuntimeEnv, "log" | "error" | "writeStdou
   };
 }
 
-/** Reused constant for default Runtime behavior in src. */
+/** Default process-backed runtime that restores terminal state before exit. */
 export const defaultRuntime: OutputRuntimeEnv = {
   ...createRuntimeIo(),
   exit: (code) => {
@@ -97,7 +97,7 @@ export const defaultRuntime: OutputRuntimeEnv = {
   },
 };
 
-/** Reused helper for create Non Exiting Runtime behavior in src. */
+/** Creates a runtime whose exit throws, useful for tests and embedded callers. */
 export function createNonExitingRuntime(): OutputRuntimeEnv {
   return {
     ...createRuntimeIo(),
@@ -107,7 +107,7 @@ export function createNonExitingRuntime(): OutputRuntimeEnv {
   };
 }
 
-/** Reused helper for write Runtime Json behavior in src. */
+/** Writes JSON through runtime-specific stdout when available, else falls back to log. */
 export function writeRuntimeJson(
   runtime: RuntimeEnv | OutputRuntimeEnv,
   value: unknown,

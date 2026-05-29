@@ -1,8 +1,8 @@
-// OpenClaw entry version fast path helpers and runtime behavior.
+// Root CLI version fast path that avoids loading the full command graph.
 import { isRootVersionInvocation } from "./cli/argv.js";
 import { resolveCliContainerTarget } from "./cli/container-target.js";
 
-/** Reused helper for try Handle Root Version Fast Path behavior in src. */
+/** Handles root `--version` invocations before container routing or heavy imports. */
 export function tryHandleRootVersionFastPath(
   argv: string[],
   deps: {
