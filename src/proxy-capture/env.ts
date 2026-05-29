@@ -1,4 +1,5 @@
-// proxy-capture env helpers and runtime behavior.
+// Environment contract for debug proxy capture. These helpers propagate proxy
+// settings into child processes and websocket clients.
 import { randomUUID } from "node:crypto";
 import type { Agent } from "node:http";
 import process from "node:process";
@@ -9,22 +10,22 @@ import {
   resolveDebugProxyDbPath,
 } from "./paths.js";
 
-/** Reused constant for OPENCLAW DEBUG PROXY ENABLED behavior in src/proxy-capture. */
+/** Env flag enabling debug proxy capture. */
 export const OPENCLAW_DEBUG_PROXY_ENABLED = "OPENCLAW_DEBUG_PROXY_ENABLED";
-/** Reused constant for OPENCLAW DEBUG PROXY URL behavior in src/proxy-capture. */
+/** Env value containing the active debug proxy URL. */
 export const OPENCLAW_DEBUG_PROXY_URL = "OPENCLAW_DEBUG_PROXY_URL";
-/** Reused constant for OPENCLAW DEBUG PROXY DB PATH behavior in src/proxy-capture. */
+/** Env override for the debug proxy SQLite capture database path. */
 export const OPENCLAW_DEBUG_PROXY_DB_PATH = "OPENCLAW_DEBUG_PROXY_DB_PATH";
-/** Reused constant for OPENCLAW DEBUG PROXY BLOB DIR behavior in src/proxy-capture. */
+/** Env override for captured payload blob storage. */
 export const OPENCLAW_DEBUG_PROXY_BLOB_DIR = "OPENCLAW_DEBUG_PROXY_BLOB_DIR";
-/** Reused constant for OPENCLAW DEBUG PROXY CERT DIR behavior in src/proxy-capture. */
+/** Env override for debug proxy CA/cert material. */
 export const OPENCLAW_DEBUG_PROXY_CERT_DIR = "OPENCLAW_DEBUG_PROXY_CERT_DIR";
-/** Reused constant for OPENCLAW DEBUG PROXY SESSION ID behavior in src/proxy-capture. */
+/** Env value grouping captured events into one diagnostic session. */
 export const OPENCLAW_DEBUG_PROXY_SESSION_ID = "OPENCLAW_DEBUG_PROXY_SESSION_ID";
-/** Reused constant for OPENCLAW DEBUG PROXY REQUIRE behavior in src/proxy-capture. */
+/** Env flag that treats missing/partial proxy coverage as diagnostic-worthy. */
 export const OPENCLAW_DEBUG_PROXY_REQUIRE = "OPENCLAW_DEBUG_PROXY_REQUIRE";
 
-/** Shared type for Debug Proxy Settings in src/proxy-capture. */
+/** Resolved debug proxy settings for the current OpenClaw process. */
 export type DebugProxySettings = {
   enabled: boolean;
   required: boolean;
@@ -42,7 +43,7 @@ function isTruthy(value: string | undefined): boolean {
   return value === "1" || value === "true" || value === "yes" || value === "on";
 }
 
-/** Reused helper for resolve Debug Proxy Settings behavior in src/proxy-capture. */
+/** Resolve debug proxy settings from env plus default state paths. */
 export function resolveDebugProxySettings(
   env: NodeJS.ProcessEnv = process.env,
 ): DebugProxySettings {
@@ -61,7 +62,7 @@ export function resolveDebugProxySettings(
   };
 }
 
-/** Reused helper for apply Debug Proxy Env behavior in src/proxy-capture. */
+/** Return an env object that forces child traffic through the debug proxy. */
 export function applyDebugProxyEnv(
   env: NodeJS.ProcessEnv,
   params: {
@@ -87,7 +88,7 @@ export function applyDebugProxyEnv(
   };
 }
 
-/** Reused helper for create Debug Proxy Web Socket Agent behavior in src/proxy-capture. */
+/** Create a websocket-capable proxy agent when capture is enabled. */
 export function createDebugProxyWebSocketAgent(settings: DebugProxySettings): Agent | undefined {
   if (!settings.enabled || !settings.proxyUrl) {
     return undefined;
@@ -107,7 +108,7 @@ export function createDebugProxyWebSocketAgent(settings: DebugProxySettings): Ag
   }) as Agent | undefined;
 }
 
-/** Reused helper for resolve Effective Debug Proxy Url behavior in src/proxy-capture. */
+/** Resolve the proxy URL from explicit config or enabled process settings. */
 export function resolveEffectiveDebugProxyUrl(configuredProxyUrl?: string): string | undefined {
   const explicit = configuredProxyUrl?.trim();
   if (explicit) {

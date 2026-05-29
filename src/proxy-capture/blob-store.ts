@@ -1,4 +1,4 @@
-// proxy-capture blob store helpers and runtime behavior.
+// Compressed blob storage for captured proxy payloads too large for inline rows.
 import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
@@ -9,7 +9,7 @@ function ensureDir(dir: string) {
   fs.mkdirSync(dir, { recursive: true });
 }
 
-/** Reused helper for write Capture Blob behavior in src/proxy-capture. */
+/** Persist a compressed capture blob and return its content-addressed record. */
 export function writeCaptureBlob(params: {
   blobDir: string;
   data: Buffer;
@@ -32,7 +32,7 @@ export function writeCaptureBlob(params: {
   };
 }
 
-/** Reused helper for read Capture Blob Text behavior in src/proxy-capture. */
+/** Read a compressed captured blob as UTF-8 text for diagnostics. */
 export function readCaptureBlobText(blobPath: string): string {
   return gunzipSync(fs.readFileSync(blobPath)).toString("utf8");
 }

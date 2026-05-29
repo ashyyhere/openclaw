@@ -1,12 +1,12 @@
-// proxy-capture coverage helpers and runtime behavior.
+// Static coverage registry for debug proxy seams and warning/report helpers.
 import process from "node:process";
 import { resolveDebugProxySettings, type DebugProxySettings } from "./env.js";
 import type { CaptureProtocol } from "./types.js";
 
-/** Shared type for Debug Proxy Coverage Status in src/proxy-capture. */
+/** Capture coverage state for one integration seam. */
 export type DebugProxyCoverageStatus = "captured" | "proxy-only" | "uncovered";
 
-/** Shared type for Debug Proxy Coverage Entry in src/proxy-capture. */
+/** Coverage entry describing one traffic seam and its capture support. */
 export type DebugProxyCoverageEntry = {
   id: string;
   label: string;
@@ -16,7 +16,7 @@ export type DebugProxyCoverageEntry = {
   notes: string;
 };
 
-/** Shared type for Debug Proxy Coverage Summary in src/proxy-capture. */
+/** Aggregate counts for debug proxy capture coverage. */
 export type DebugProxyCoverageSummary = {
   total: number;
   captured: number;
@@ -126,7 +126,7 @@ const DEBUG_PROXY_COVERAGE_ENTRIES: readonly DebugProxyCoverageEntry[] = [
 
 let warnedCoverageSessionKey: string | null = null;
 
-/** Reused helper for list Debug Proxy Coverage Entries behavior in src/proxy-capture. */
+/** Return a copy of the known debug proxy coverage entries. */
 export function listDebugProxyCoverageEntries(): DebugProxyCoverageEntry[] {
   return DEBUG_PROXY_COVERAGE_ENTRIES.map((entry) => ({
     ...entry,
@@ -134,7 +134,7 @@ export function listDebugProxyCoverageEntries(): DebugProxyCoverageEntry[] {
   }));
 }
 
-/** Reused helper for summarize Debug Proxy Coverage behavior in src/proxy-capture. */
+/** Summarize capture/proxy-only/uncovered counts for coverage entries. */
 export function summarizeDebugProxyCoverage(
   entries: readonly DebugProxyCoverageEntry[] = DEBUG_PROXY_COVERAGE_ENTRIES,
 ): DebugProxyCoverageSummary {
@@ -160,7 +160,7 @@ export function summarizeDebugProxyCoverage(
   };
 }
 
-/** Reused helper for build Debug Proxy Coverage Report behavior in src/proxy-capture. */
+/** Build the full debug proxy coverage report payload. */
 export function buildDebugProxyCoverageReport() {
   const entries = listDebugProxyCoverageEntries();
   return {
@@ -169,7 +169,7 @@ export function buildDebugProxyCoverageReport() {
   };
 }
 
-/** Reused helper for maybe Warn About Debug Proxy Coverage behavior in src/proxy-capture. */
+/** Warn once per required capture session when coverage has proxy-only gaps. */
 export function maybeWarnAboutDebugProxyCoverage(
   settings: DebugProxySettings = resolveDebugProxySettings(),
   warn: (message: string) => void = (message) => process.stderr.write(`${message}\n`),
