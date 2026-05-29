@@ -1,4 +1,4 @@
-// crestodian operations helpers and runtime behavior.
+// Maps short Crestodian commands onto read-only checks, config mutations, plugin lifecycle, and TUI handoff.
 import { DEFAULT_MODEL, DEFAULT_PROVIDER } from "../agents/defaults.js";
 import type { ConfigSetOptions } from "../cli/config-set-input.js";
 import type { DoctorOptions } from "../commands/doctor.types.js";
@@ -52,7 +52,7 @@ export type CrestodianOperation =
   | { kind: "open-tui"; agentId?: string; workspace?: string }
   | { kind: "set-default-model"; model: string };
 
-/** Shared type for Crestodian Operation Result in src/crestodian. */
+/** Result metadata used by the interactive loop to continue, exit, or feed a returned TUI request. */
 export type CrestodianOperationResult = {
   applied: boolean;
   exitsInteractive?: boolean;
@@ -60,7 +60,7 @@ export type CrestodianOperationResult = {
   nextInput?: string;
 };
 
-/** Shared type for Crestodian Command Deps in src/crestodian. */
+/** Injectable command runners used by tests, rescue mode, and the interactive TUI wrapper. */
 export type CrestodianCommandDeps = {
   formatOverview?: CrestodianOverviewFormatter;
   loadOverview?: CrestodianOverviewLoader;
@@ -123,7 +123,7 @@ const ANTHROPIC_API_DEFAULT_MODEL_REF = "anthropic/claude-opus-4-8";
 const CLAUDE_CLI_DEFAULT_MODEL_REF = "claude-cli/claude-opus-4-8";
 const CODEX_APP_SERVER_DEFAULT_MODEL_REF = "openai/gpt-5.5";
 
-/** Reused helper for parse Crestodian Operation behavior in src/crestodian. */
+/** Parses compact human commands into the single operation executor accepts. */
 export function parseCrestodianOperation(input: string): CrestodianOperation {
   const trimmed = input.trim();
   const lower = trimmed.toLowerCase();
@@ -304,7 +304,7 @@ function validateCrestodianPluginInstallSpec(spec: string): string | null {
   return null;
 }
 
-/** Reused helper for is Persistent Crestodian Operation behavior in src/crestodian. */
+/** Identifies operations that require explicit approval because they mutate config, plugins, agents, or gateway state. */
 export function isPersistentCrestodianOperation(operation: CrestodianOperation): boolean {
   return (
     operation.kind === "set-default-model" ||
@@ -321,7 +321,7 @@ export function isPersistentCrestodianOperation(operation: CrestodianOperation):
   );
 }
 
-/** Reused helper for describe Crestodian Persistent Operation behavior in src/crestodian. */
+/** Formats a user-readable summary for approval prompts without leaking secret values. */
 export function describeCrestodianPersistentOperation(operation: CrestodianOperation): string {
   switch (operation.kind) {
     case "set-default-model":
@@ -351,7 +351,7 @@ export function describeCrestodianPersistentOperation(operation: CrestodianOpera
   }
 }
 
-/** Reused helper for format Crestodian Persistent Plan behavior in src/crestodian. */
+/** Builds the standard approval prompt for pending write operations. */
 export function formatCrestodianPersistentPlan(operation: CrestodianOperation): string {
   return `Plan: ${describeCrestodianPersistentOperation(operation)}. Say yes to apply.`;
 }
@@ -521,7 +521,7 @@ async function resolveTuiAgentId(params: {
   return match?.id ?? requested;
 }
 
-/** Reused helper for execute Crestodian Operation behavior in src/crestodian. */
+/** Executes a parsed Crestodian operation and writes audit entries for approved persistent changes. */
 export async function executeCrestodianOperation(
   operation: CrestodianOperation,
   runtime: RuntimeEnv,

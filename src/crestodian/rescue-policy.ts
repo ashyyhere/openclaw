@@ -1,4 +1,4 @@
-// crestodian rescue policy helpers and runtime behavior.
+// Gates message-channel Crestodian rescue so remote repair stays limited to owner DMs and YOLO-style host posture.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { normalizeAgentId } from "../routing/session-key.js";
 
@@ -64,7 +64,7 @@ function isYoloHostPosture(cfg: OpenClawConfig, agentId?: string): boolean {
   return security === "full" && ask === "off";
 }
 
-/** Reused helper for resolve Crestodian Rescue Policy behavior in src/crestodian. */
+/** Decides whether a `/crestodian` message may run a remote rescue command for the current config and sender. */
 export function resolveCrestodianRescuePolicy(
   input: CrestodianRescuePolicyInput,
 ): CrestodianRescueDecision {

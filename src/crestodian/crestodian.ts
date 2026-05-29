@@ -1,4 +1,4 @@
-// crestodian crestodian helpers and runtime behavior.
+// CLI entry for Crestodian: JSON overview, one-shot message handling, or interactive TUI mode.
 import { stdin as defaultStdin, stdout as defaultStdout } from "node:process";
 import { withProgress } from "../cli/progress.js";
 import { defaultRuntime, writeRuntimeJson, type RuntimeEnv } from "../runtime.js";
@@ -20,7 +20,7 @@ type CrestodianInteractiveRunner = (
   runtime: RuntimeEnv,
 ) => Promise<void>;
 
-/** Shared type for Run Crestodian Options in src/crestodian. */
+/** Options accepted by the Crestodian command runner and its test seams. */
 export type RunCrestodianOptions = {
   message?: string;
   yes?: boolean;
@@ -61,7 +61,7 @@ async function runOneShot(
   });
 }
 
-/** Reused helper for run Crestodian behavior in src/crestodian. */
+/** Runs Crestodian in JSON, one-shot, or interactive mode depending on CLI options and TTY availability. */
 export async function runCrestodian(
   opts: RunCrestodianOptions = {},
   runtime: RuntimeEnv = defaultRuntime,

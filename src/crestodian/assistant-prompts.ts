@@ -1,12 +1,12 @@
-// crestodian assistant prompts helpers and runtime behavior.
+// Builds and parses the constrained JSON prompt contract used by Crestodian assistant planners.
 import type { CrestodianOverview } from "./overview.js";
 
-/** Reused constant for CRESTODIAN ASSISTANT TIMEOUT MS behavior in src/crestodian. */
+/** Planner deadline; Crestodian should remain responsive during startup and rescue handling. */
 export const CRESTODIAN_ASSISTANT_TIMEOUT_MS = 10_000;
-/** Reused constant for CRESTODIAN ASSISTANT MAX TOKENS behavior in src/crestodian. */
+/** Small completion budget because the planner returns only `{reply, command}` JSON. */
 export const CRESTODIAN_ASSISTANT_MAX_TOKENS = 512;
 
-/** Reused constant for CRESTODIAN ASSISTANT SYSTEM PROMPT behavior in src/crestodian. */
+/** System prompt that constrains model output to one supported Crestodian command and no side effects. */
 export const CRESTODIAN_ASSISTANT_SYSTEM_PROMPT = [
   "You are Crestodian, OpenClaw's ring-zero setup helper.",
   "Turn the user's request into exactly one safe OpenClaw Crestodian command.",
@@ -42,14 +42,14 @@ export const CRESTODIAN_ASSISTANT_SYSTEM_PROMPT = [
   "If unsure, choose overview.",
 ].join("\n");
 
-/** Shared type for Crestodian Assistant Plan in src/crestodian. */
+/** Parsed assistant output: one command plus optional user-facing explanation and planner label. */
 export type CrestodianAssistantPlan = {
   command: string;
   reply?: string;
   modelLabel?: string;
 };
 
-/** Reused helper for build Crestodian Assistant User Prompt behavior in src/crestodian. */
+/** Serializes the current OpenClaw overview into the user prompt consumed by configured/local planners. */
 export function buildCrestodianAssistantUserPrompt(params: {
   input: string;
   overview: CrestodianOverview;
@@ -90,7 +90,7 @@ export function buildCrestodianAssistantUserPrompt(params: {
   ].join("\n");
 }
 
-/** Reused helper for parse Crestodian Assistant Plan Text behavior in src/crestodian. */
+/** Extracts the first JSON object from model text and validates the command/reply fields. */
 export function parseCrestodianAssistantPlanText(
   rawText: string | undefined,
 ): CrestodianAssistantPlan | null {

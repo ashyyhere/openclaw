@@ -1,4 +1,4 @@
-// crestodian dialogue helpers and runtime behavior.
+// Resolves interactive Crestodian input by parsing known commands and asking the assistant planner only as fallback.
 import type { RuntimeEnv } from "../runtime.js";
 import type { CrestodianAssistantPlan, CrestodianAssistantPlanner } from "./assistant.js";
 import {
@@ -13,17 +13,17 @@ type CrestodianDialogueOptions = {
   planWithAssistant?: CrestodianAssistantPlanner;
 };
 
-/** Reused helper for approval Question behavior in src/crestodian. */
+/** Formats the confirmation question for a persistent operation. */
 export function approvalQuestion(operation: CrestodianOperation): string {
   return `Apply this operation: ${describeCrestodianPersistentOperation(operation)}?`;
 }
 
-/** Reused helper for is Yes behavior in src/crestodian. */
+/** Accepts the short approval phrases used by both TUI and rescue flows. */
 export function isYes(input: string): boolean {
   return /^(y|yes|apply|do it|approved?)$/i.test(input.trim());
 }
 
-/** Reused helper for resolve Crestodian Operation behavior in src/crestodian. */
+/** Returns the parsed operation, or asks an assistant planner to reinterpret unknown non-empty input. */
 export async function resolveCrestodianOperation(
   input: string,
   runtime: RuntimeEnv,

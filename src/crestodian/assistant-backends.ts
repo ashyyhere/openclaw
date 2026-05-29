@@ -1,4 +1,4 @@
-// crestodian assistant backends helpers and runtime behavior.
+// Selects local Claude/Codex runtimes that can translate a Crestodian request when configured model planning is unavailable.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { CrestodianOverview } from "./overview.js";
 
@@ -33,7 +33,7 @@ const CODEX_APP_SERVER_BACKEND: CrestodianLocalPlannerBackend = {
   buildConfig: buildCodexAppServerPlannerConfig,
 };
 
-/** Reused helper for select Crestodian Local Planner Backends behavior in src/crestodian. */
+/** Returns the local planner backends currently discoverable from the Crestodian overview probe results. */
 export function selectCrestodianLocalPlannerBackends(
   overview: CrestodianOverview,
 ): CrestodianLocalPlannerBackend[] {

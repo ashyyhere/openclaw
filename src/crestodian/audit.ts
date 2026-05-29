@@ -1,4 +1,4 @@
-// crestodian audit helpers and runtime behavior.
+// Appends JSONL audit records for Crestodian actions that changed local OpenClaw state.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { resolveStateDir } from "../config/paths.js";
@@ -14,7 +14,7 @@ type CrestodianAuditEntry = {
   details?: Record<string, unknown>;
 };
 
-/** Reused helper for resolve Crestodian Audit Path behavior in src/crestodian. */
+/** Resolves the per-user Crestodian audit log path under OpenClaw state. */
 export function resolveCrestodianAuditPath(
   env: NodeJS.ProcessEnv = process.env,
   stateDir = resolveStateDir(env),
@@ -22,7 +22,7 @@ export function resolveCrestodianAuditPath(
   return path.join(stateDir, "audit", "crestodian.jsonl");
 }
 
-/** Reused helper for append Crestodian Audit Entry behavior in src/crestodian. */
+/** Appends one symlink-safe audit record and returns the file path written. */
 export async function appendCrestodianAuditEntry(
   entry: Omit<CrestodianAuditEntry, "timestamp">,
   opts: { env?: NodeJS.ProcessEnv; auditPath?: string } = {},

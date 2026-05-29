@@ -1,4 +1,4 @@
-// crestodian assistant helpers and runtime behavior.
+// Plans Crestodian commands from natural language using configured models first, then local Codex/Claude runtimes.
 import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import os from "node:os";
@@ -21,14 +21,14 @@ import {
 } from "./assistant-prompts.js";
 import type { CrestodianOverview } from "./overview.js";
 
-/** Re-exported API for src/crestodian. */
+/** Re-export planner prompt helpers for tests and alternate Crestodian frontends. */
 export {
   buildCrestodianAssistantUserPrompt,
   parseCrestodianAssistantPlanText,
   type CrestodianAssistantPlan,
 } from "./assistant-prompts.js";
 
-/** Shared type for Crestodian Assistant Planner in src/crestodian. */
+/** Converts a user request plus system overview into a single Crestodian command plan. */
 export type CrestodianAssistantPlanner = (params: {
   input: string;
   overview: CrestodianOverview;
@@ -40,14 +40,14 @@ type ReadConfigFileSnapshotFn = typeof readConfigFileSnapshot;
 type PrepareSimpleCompletionModelForAgentFn = typeof prepareSimpleCompletionModelForAgent;
 type CompleteWithPreparedSimpleCompletionModelFn = typeof completeWithPreparedSimpleCompletionModel;
 
-/** Shared type for Crestodian Configured Model Planner Deps in src/crestodian. */
+/** Injectable configured-model dependencies for deterministic planner tests. */
 export type CrestodianConfiguredModelPlannerDeps = {
   readConfigFileSnapshot?: ReadConfigFileSnapshotFn;
   prepareSimpleCompletionModelForAgent?: PrepareSimpleCompletionModelForAgentFn;
   completeWithPreparedSimpleCompletionModel?: CompleteWithPreparedSimpleCompletionModelFn;
 };
 
-/** Shared type for Crestodian Local Runtime Planner Deps in src/crestodian. */
+/** Injectable local-runtime dependencies for probing Claude/Codex planner fallback behavior. */
 export type CrestodianLocalRuntimePlannerDeps = {
   runCliAgent?: RunCliAgentFn;
   runEmbeddedAgent?: RunEmbeddedAgentFn;
@@ -55,11 +55,11 @@ export type CrestodianLocalRuntimePlannerDeps = {
   removeTempDir?: (dir: string) => Promise<void>;
 };
 
-/** Shared type for Crestodian Planner Deps in src/crestodian. */
+/** Combined dependency bag for every Crestodian assistant planner path. */
 export type CrestodianPlannerDeps = CrestodianConfiguredModelPlannerDeps &
   CrestodianLocalRuntimePlannerDeps;
 
-/** Reused helper for plan Crestodian Command behavior in src/crestodian. */
+/** Plans a Crestodian command, preferring the configured OpenClaw model before local runtime fallbacks. */
 export async function planCrestodianCommand(params: {
   input: string;
   overview: CrestodianOverview;
@@ -72,7 +72,7 @@ export async function planCrestodianCommand(params: {
   return await planCrestodianCommandWithLocalRuntime(params);
 }
 
-/** Reused helper for plan Crestodian Command With Configured Model behavior in src/crestodian. */
+/** Uses the default agent model to produce a compact JSON command plan when config and auth are available. */
 export async function planCrestodianCommandWithConfiguredModel(params: {
   input: string;
   overview: CrestodianOverview;
@@ -141,7 +141,7 @@ export async function planCrestodianCommandWithConfiguredModel(params: {
   }
 }
 
-/** Reused helper for plan Crestodian Command With Local Runtime behavior in src/crestodian. */
+/** Falls back to locally installed Claude/Codex runtimes without requiring OpenClaw model credentials. */
 export async function planCrestodianCommandWithLocalRuntime(params: {
   input: string;
   overview: CrestodianOverview;

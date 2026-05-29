@@ -1,4 +1,4 @@
-// crestodian rescue message helpers and runtime behavior.
+// Parses and applies `/crestodian` rescue messages, including one-message approval for persistent writes.
 import { createHash, randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -26,7 +26,7 @@ type RescuePendingOperation = {
   auditDetails: Record<string, unknown>;
 };
 
-/** Shared type for Crestodian Rescue Message Input in src/crestodian. */
+/** Runtime context for handling a possible `/crestodian` command from a channel message. */
 export type CrestodianRescueMessageInput = {
   cfg: OpenClawConfig;
   command: CommandContext;
@@ -57,7 +57,7 @@ function createCaptureRuntime(): { runtime: RuntimeEnv; read: () => string } {
   };
 }
 
-/** Reused helper for extract Crestodian Rescue Message behavior in src/crestodian. */
+/** Returns the command body after `/crestodian`, or null when the message is for normal chat handling. */
 export function extractCrestodianRescueMessage(commandBody: string): string | null {
   const normalized = commandBody.trim();
   const lower = normalized.toLowerCase();
@@ -143,7 +143,7 @@ function formatUnsupportedRemoteOperation(operation: CrestodianOperation): strin
   return null;
 }
 
-/** Reused helper for run Crestodian Rescue Message behavior in src/crestodian. */
+/** Runs an allowed rescue message, persisting an approval token when the command would mutate state. */
 export async function runCrestodianRescueMessage(
   input: CrestodianRescueMessageInput,
 ): Promise<string | null> {
