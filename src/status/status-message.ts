@@ -1,4 +1,7 @@
-// status status message helpers and runtime behavior.
+// Builds the multi-line status payload shown by chat commands and control
+// surfaces. Keep this formatter display-only: it reads session/runtime facts
+// and normalizes labels, but ownership of model, sandbox, queue, and TTS state
+// remains in the upstream modules it calls.
 import fs from "node:fs";
 import { resolveContextTokensForModel } from "../agents/context.js";
 import { DEFAULT_CONTEXT_TOKENS, DEFAULT_MODEL, DEFAULT_PROVIDER } from "../agents/defaults.js";
@@ -69,7 +72,7 @@ type AgentConfig = Partial<AgentDefaults> & {
   model?: AgentDefaults["model"] | string;
 };
 
-/** Reused constant for format Token Count behavior in src/status. */
+/** Shared short token formatter used by status builders and adjacent tests. */
 export const formatTokenCount = formatTokenCountShared;
 
 type QueueStatus = {
@@ -81,7 +84,7 @@ type QueueStatus = {
   showDetails?: boolean;
 };
 
-/** Shared type for Status Args in src/status. */
+/** Runtime and persisted session facts needed to render a status response. */
 export type StatusArgs = {
   config?: OpenClawConfig;
   agent: AgentConfig;
@@ -249,7 +252,7 @@ const formatEstimatedContextBudgetTokens = (
   return `~${totalLabel}/${ctxLabel}${pct !== null ? ` (${pct}% est)` : " (est)"}`;
 };
 
-/** Reused constant for format Context Usage Short behavior in src/status. */
+/** Format the compact context usage label used by queue/status summaries. */
 export const formatContextUsageShort = (
   total: number | null | undefined,
   contextTokens: number | null | undefined,
@@ -549,7 +552,12 @@ function hasUserPinnedModelSelection(entry: SessionEntry | undefined): boolean {
   return !hasSessionAutoModelFallbackProvenance(entry);
 }
 
-/** Reused helper for build Status Message behavior in src/status. */
+/**
+ * Render the full human-facing status message for the active session.
+ *
+ * The builder deliberately accepts already-resolved runtime facts so callers do
+ * not need to rediscover provider/channel/plugin state while formatting.
+ */
 export function buildStatusMessage(args: StatusArgs): string {
   const now = args.now ?? Date.now();
   const entry = args.sessionEntry;
