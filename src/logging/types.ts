@@ -1,10 +1,10 @@
-// Shared types for logging types behavior.
+// Shared logging configuration types used by console and file logger setup.
 import type { LogLevel } from "./levels.js";
 
-/** Shared type for Console Style in src/logging. */
+/** Console renderer modes: human pretty output, compact text, or JSON lines. */
 export type ConsoleStyle = "pretty" | "compact" | "json";
 
-/** Shared type for Logger Settings in src/logging. */
+/** User/configurable logging settings before runtime defaults are applied. */
 export type LoggerSettings = {
   level?: LogLevel;
   file?: string;
