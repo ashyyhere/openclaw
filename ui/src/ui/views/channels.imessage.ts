@@ -1,4 +1,4 @@
-// ui/src/ui/views channels imessage helpers and runtime behavior.
+// iMessage channel card renderer for the macOS bridge runtime/probe status.
 import { html, nothing } from "lit";
 import { t } from "../../i18n/index.ts";
 import { formatRelativeTimestamp } from "../format.ts";
@@ -11,7 +11,7 @@ import {
 } from "./channels.shared.ts";
 import type { ChannelsProps } from "./channels.types.ts";
 
-/** Reused helper for render IMessage Card behavior in ui/src/ui/views. */
+/** Render iMessage bridge status and channel config controls. */
 export function renderIMessageCard(params: {
   props: ChannelsProps;
   imessage?: IMessageStatus | null;

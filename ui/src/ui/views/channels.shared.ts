@@ -1,4 +1,6 @@
-// ui/src/ui/views channels shared helpers and runtime behavior.
+// Shared channel-card helpers for the Control UI. These normalize per-channel
+// status snapshots and account lists into display state that single-channel
+// renderers can use without duplicating account/configured/running logic.
 import { html, nothing } from "lit";
 import { t } from "../../i18n/index.ts";
 import type { ChannelAccountSnapshot } from "../types.ts";
@@ -26,7 +28,7 @@ function resolveChannelStatus(
   return channels?.[key] as Record<string, unknown> | undefined;
 }
 
-/** Reused helper for resolve Default Channel Account behavior in ui/src/ui/views. */
+/** Select the configured default account, falling back to the first account. */
 export function resolveDefaultChannelAccount(
   key: ChannelKey,
   props: ChannelsProps,
@@ -42,7 +44,7 @@ export function resolveDefaultChannelAccount(
   );
 }
 
-/** Reused helper for resolve Channel Display State behavior in ui/src/ui/views. */
+/** Merge channel status and account snapshots into one card display state. */
 export function resolveChannelDisplayState(
   key: ChannelKey,
   props: ChannelsProps,
@@ -72,7 +74,7 @@ export function resolveChannelDisplayState(
   };
 }
 
-/** Reused helper for channel Enabled behavior in ui/src/ui/views. */
+/** Return whether a channel has any configured, running, or connected signal. */
 export function channelEnabled(key: ChannelKey, props: ChannelsProps) {
   if (!props.snapshot) {
     return false;
@@ -86,12 +88,12 @@ export function channelEnabled(key: ChannelKey, props: ChannelsProps) {
   );
 }
 
-/** Reused helper for resolve Channel Configured behavior in ui/src/ui/views. */
+/** Resolve the best-known configured state for a channel card. */
 export function resolveChannelConfigured(key: ChannelKey, props: ChannelsProps): boolean | null {
   return resolveChannelDisplayState(key, props).configured;
 }
 
-/** Reused helper for format Nullable Boolean behavior in ui/src/ui/views. */
+/** Format tri-state booleans for channel status rows. */
 export function formatNullableBoolean(value: boolean | null): string {
   if (value == null) {
     return t("common.na");
@@ -99,7 +101,7 @@ export function formatNullableBoolean(value: boolean | null): string {
   return value ? t("common.yes") : t("common.no");
 }
 
-/** Reused helper for render Single Account Channel Card behavior in ui/src/ui/views. */
+/** Render the common single-account channel status card shell. */
 export function renderSingleAccountChannelCard(params: {
   title: string;
   subtitle: string;
@@ -137,7 +139,7 @@ export function renderSingleAccountChannelCard(params: {
   `;
 }
 
-/** Reused helper for get Channel Account Count behavior in ui/src/ui/views. */
+/** Count known accounts for one channel in the snapshot. */
 export function getChannelAccountCount(
   key: ChannelKey,
   channelAccounts?: Record<string, ChannelAccountSnapshot[]> | null,
@@ -145,7 +147,7 @@ export function getChannelAccountCount(
   return channelAccounts?.[key]?.length ?? 0;
 }
 
-/** Reused helper for render Channel Account Count behavior in ui/src/ui/views. */
+/** Render an account-count chip only when multiple accounts exist. */
 export function renderChannelAccountCount(
   key: ChannelKey,
   channelAccounts?: Record<string, ChannelAccountSnapshot[]> | null,

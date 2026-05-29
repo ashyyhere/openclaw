@@ -1,4 +1,5 @@
-// ui/src/ui/views channels whatsapp helpers and runtime behavior.
+// WhatsApp channel card renderer. It includes link/QR actions in addition to
+// the common channel status/config shell.
 import { html, nothing } from "lit";
 import { t } from "../../i18n/index.ts";
 import { formatRelativeTimestamp, formatDurationHuman } from "../format.ts";
@@ -11,7 +12,7 @@ import {
 } from "./channels.shared.ts";
 import type { ChannelsProps } from "./channels.types.ts";
 
-/** Reused helper for render Whats App Card behavior in ui/src/ui/views. */
+/** Render WhatsApp Web link state, QR actions, and channel config controls. */
 export function renderWhatsAppCard(params: {
   props: ChannelsProps;
   whatsapp?: WhatsAppStatus;

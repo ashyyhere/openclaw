@@ -1,4 +1,5 @@
-// ui/src/ui/views channels telegram helpers and runtime behavior.
+// Telegram channel card renderer. It handles both the standard single-account
+// card and the multi-account layout with per-bot status rows.
 import { html, nothing } from "lit";
 import { t } from "../../i18n/index.ts";
 import { formatRelativeTimestamp } from "../format.ts";
@@ -11,7 +12,7 @@ import {
 } from "./channels.shared.ts";
 import type { ChannelsProps } from "./channels.types.ts";
 
-/** Reused helper for render Telegram Card behavior in ui/src/ui/views. */
+/** Render Telegram bot status, probe output, and channel config controls. */
 export function renderTelegramCard(params: {
   props: ChannelsProps;
   telegram?: TelegramStatus;

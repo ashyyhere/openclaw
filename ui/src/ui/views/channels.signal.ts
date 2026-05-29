@@ -1,4 +1,4 @@
-// ui/src/ui/views channels signal helpers and runtime behavior.
+// Signal channel card renderer for signal-cli bridge status and probe output.
 import { html, nothing } from "lit";
 import { t } from "../../i18n/index.ts";
 import { formatRelativeTimestamp } from "../format.ts";
@@ -11,7 +11,7 @@ import {
 } from "./channels.shared.ts";
 import type { ChannelsProps } from "./channels.types.ts";
 
-/** Reused helper for render Signal Card behavior in ui/src/ui/views. */
+/** Render Signal bridge status and channel config controls. */
 export function renderSignalCard(params: {
   props: ChannelsProps;
   signal?: SignalStatus | null;
