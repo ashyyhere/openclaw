@@ -1,13 +1,13 @@
-// talk activation name helpers and runtime behavior.
-/** Reused constant for REALTIME VOICE ACTIVATION NAME MAX WORDS behavior in src/talk. */
+// Activation-name parsing for wake-word style realtime voice transcripts.
+/** Maximum supported activation-name word count for fuzzy transcript matching. */
 export const REALTIME_VOICE_ACTIVATION_NAME_MAX_WORDS = 2;
 
-/** Shared type for Realtime Voice Activation Name Edge in src/talk. */
+/** Which edge of the transcript contained the activation name. */
 export type RealtimeVoiceActivationNameEdge = "leading" | "trailing";
-/** Shared type for Realtime Voice Activation Name Match Kind in src/talk. */
+/** Whether the heard activation name matched exactly or through fuzzy tolerance. */
 export type RealtimeVoiceActivationNameMatchKind = "exact" | "fuzzy";
 
-/** Shared type for Realtime Voice Activation Name Transcript Result in src/talk. */
+/** Result of allowing or rejecting a transcript after activation-name matching. */
 export type RealtimeVoiceActivationNameTranscriptResult =
   | {
       allowed: true;
@@ -37,18 +37,18 @@ type PreparedEdgeActivationNameCandidate = {
   compact: string;
 };
 
-/** Reused helper for realtime Voice Activation Name Word Count behavior in src/talk. */
+/** Counts alphanumeric words in a candidate activation name. */
 export function realtimeVoiceActivationNameWordCount(value: string): number {
   return Array.from(value.matchAll(/[a-z0-9]+/gi)).length;
 }
 
-/** Reused helper for normalize Realtime Voice Activation Name behavior in src/talk. */
+/** Normalizes configured activation names for comparison. */
 export function normalizeRealtimeVoiceActivationName(value: string): string | undefined {
   const normalized = value.toLowerCase().replace(/\s+/g, " ").trim();
   return normalized || undefined;
 }
 
-/** Reused helper for normalize Realtime Voice Activation Name Prefix behavior in src/talk. */
+/** Extracts the leading activation-name-sized prefix from transcript text. */
 export function normalizeRealtimeVoiceActivationNamePrefix(
   value: string,
   maxWords = REALTIME_VOICE_ACTIVATION_NAME_MAX_WORDS,
@@ -60,7 +60,7 @@ export function normalizeRealtimeVoiceActivationNamePrefix(
   return words.slice(0, maxWords).join(" ");
 }
 
-/** Reused helper for is Supported Realtime Voice Activation Name behavior in src/talk. */
+/** Checks whether an activation name fits the supported word-count bounds. */
 export function isSupportedRealtimeVoiceActivationName(
   value: string,
   maxWords = REALTIME_VOICE_ACTIVATION_NAME_MAX_WORDS,
@@ -69,7 +69,7 @@ export function isSupportedRealtimeVoiceActivationName(
   return wordCount >= 1 && wordCount <= maxWords;
 }
 
-/** Reused helper for normalize Supported Realtime Voice Activation Name behavior in src/talk. */
+/** Normalizes a configured activation name only when it is supported. */
 export function normalizeSupportedRealtimeVoiceActivationName(
   value: string | undefined,
   maxWords = REALTIME_VOICE_ACTIVATION_NAME_MAX_WORDS,
@@ -83,12 +83,12 @@ export function normalizeSupportedRealtimeVoiceActivationName(
     : undefined;
 }
 
-/** Reused helper for sort Realtime Voice Activation Names behavior in src/talk. */
+/** Sorts activation names so longer/more-specific names match first. */
 export function sortRealtimeVoiceActivationNames(names: string[]): string[] {
   return names.toSorted((left, right) => right.length - left.length || left.localeCompare(right));
 }
 
-/** Reused helper for match Realtime Voice Activation Name behavior in src/talk. */
+/** Matches and strips leading/trailing activation names from transcript text. */
 export function matchRealtimeVoiceActivationName(
   text: string,
   activationNames: string[],

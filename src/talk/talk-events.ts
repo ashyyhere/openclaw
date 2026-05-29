@@ -1,5 +1,5 @@
-// talk talk events helpers and runtime behavior.
-/** Reused constant for TALK EVENT TYPES behavior in src/talk. */
+// Typed Talk event stream contract and monotonic per-session sequencer.
+/** Closed event type set emitted by realtime Talk sessions. */
 export const TALK_EVENT_TYPES = [
   "session.started",
   "session.ready",
@@ -31,19 +31,19 @@ export const TALK_EVENT_TYPES = [
   "health.changed",
 ] as const;
 
-/** Shared type for Talk Event Type in src/talk. */
+/** Talk event type derived from the closed event list. */
 export type TalkEventType = (typeof TALK_EVENT_TYPES)[number];
 
-/** Shared type for Talk Mode in src/talk. */
+/** High-level Talk runtime mode for a session. */
 export type TalkMode = "realtime" | "stt-tts" | "transcription";
 
-/** Shared type for Talk Transport in src/talk. */
+/** Transport family used by the active Talk session. */
 export type TalkTransport = "webrtc" | "provider-websocket" | "gateway-relay" | "managed-room";
 
-/** Shared type for Talk Brain in src/talk. */
+/** Decision engine that produces Talk session responses. */
 export type TalkBrain = "agent-consult" | "direct-tools" | "none";
 
-/** Shared type for Talk Event Context in src/talk. */
+/** Session-scoped metadata attached to every Talk event. */
 export type TalkEventContext = {
   sessionId: string;
   mode: TalkMode;
@@ -52,7 +52,7 @@ export type TalkEventContext = {
   provider?: string;
 };
 
-/** Shared type for Talk Event in src/talk. */
+/** Fully correlated Talk event emitted to logs, diagnostics, and UI subscribers. */
 export type TalkEvent<TPayload = unknown> = TalkEventContext & {
   id: string;
   type: TalkEventType;
@@ -67,7 +67,7 @@ export type TalkEvent<TPayload = unknown> = TalkEventContext & {
   payload: TPayload;
 };
 
-/** Shared type for Talk Event Input in src/talk. */
+/** Event payload accepted by the sequencer before id/seq/timestamp are assigned. */
 export type TalkEventInput<TPayload = unknown> = {
   type: TalkEventType;
   payload: TPayload;
@@ -80,7 +80,7 @@ export type TalkEventInput<TPayload = unknown> = {
   parentId?: string;
 };
 
-/** Shared type for Talk Event Sequencer in src/talk. */
+/** Assigns monotonic event ids and validates required turn/capture correlation. */
 export type TalkEventSequencer = {
   next<TPayload>(input: TalkEventInput<TPayload>): TalkEvent<TPayload>;
 };
@@ -120,7 +120,7 @@ function assertTalkEventCorrelation(input: TalkEventInput): void {
   }
 }
 
-/** Reused helper for create Talk Event Sequencer behavior in src/talk. */
+/** Creates a per-session Talk event sequencer with optional deterministic clock. */
 export function createTalkEventSequencer(
   context: TalkEventContext,
   options: { now?: () => Date | string } = {},

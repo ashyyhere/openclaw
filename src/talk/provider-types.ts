@@ -1,17 +1,17 @@
-// talk provider types helpers and runtime behavior.
+// Public realtime voice provider contracts shared by gateway, browser, and plugin runtimes.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { TalkTransport } from "./talk-events.js";
 
-/** Shared type for Realtime Voice Provider Id in src/talk. */
+/** Canonical or alias id for a realtime voice provider plugin. */
 export type RealtimeVoiceProviderId = string;
 
-/** Shared type for Realtime Voice Role in src/talk. */
+/** Speaker role used by realtime transcript callbacks. */
 export type RealtimeVoiceRole = "user" | "assistant";
 
-/** Shared type for Realtime Voice Close Reason in src/talk. */
+/** Close reason reported by provider bridge sessions. */
 export type RealtimeVoiceCloseReason = "completed" | "error";
 
-/** Shared type for Realtime Voice Audio Format in src/talk. */
+/** Audio formats supported by current realtime bridge transports. */
 export type RealtimeVoiceAudioFormat =
   | {
       encoding: "g711_ulaw";
@@ -24,21 +24,21 @@ export type RealtimeVoiceAudioFormat =
       channels: 1;
     };
 
-/** Reused constant for REALTIME VOICE AUDIO FORMAT G711 ULAW 8 KHZ behavior in src/talk. */
+/** 8 kHz mu-law mono format used by telephony transports. */
 export const REALTIME_VOICE_AUDIO_FORMAT_G711_ULAW_8KHZ: RealtimeVoiceAudioFormat = {
   encoding: "g711_ulaw",
   sampleRateHz: 8000,
   channels: 1,
 };
 
-/** Reused constant for REALTIME VOICE AUDIO FORMAT PCM16 24 KHZ behavior in src/talk. */
+/** 24 kHz PCM16 mono format used by provider-native realtime sessions. */
 export const REALTIME_VOICE_AUDIO_FORMAT_PCM16_24KHZ: RealtimeVoiceAudioFormat = {
   encoding: "pcm16",
   sampleRateHz: 24000,
   channels: 1,
 };
 
-/** Shared type for Realtime Voice Tool in src/talk. */
+/** Function-tool schema subset accepted by realtime voice providers. */
 export type RealtimeVoiceTool = {
   type: "function";
   name: string;
@@ -50,7 +50,7 @@ export type RealtimeVoiceTool = {
   };
 };
 
-/** Shared type for Realtime Voice Tool Call Event in src/talk. */
+/** Provider-emitted tool call request normalized for OpenClaw handling. */
 export type RealtimeVoiceToolCallEvent = {
   itemId: string;
   callId: string;
@@ -58,7 +58,7 @@ export type RealtimeVoiceToolCallEvent = {
   args: unknown;
 };
 
-/** Shared type for Realtime Voice Tool Result Options in src/talk. */
+/** Options controlling provider continuation after a tool result is submitted. */
 export type RealtimeVoiceToolResultOptions = {
   /**
    * Submit the tool result without prompting the realtime provider to generate a new assistant
@@ -68,7 +68,7 @@ export type RealtimeVoiceToolResultOptions = {
   willContinue?: boolean;
 };
 
-/** Shared type for Realtime Voice Bridge Event in src/talk. */
+/** Low-level bridge event surfaced for diagnostics without provider-specific payloads. */
 export type RealtimeVoiceBridgeEvent = {
   direction: "client" | "server";
   type: string;
@@ -77,7 +77,7 @@ export type RealtimeVoiceBridgeEvent = {
   responseId?: string;
 };
 
-/** Shared type for Realtime Voice Bridge Callbacks in src/talk. */
+/** Callback contract implemented by callers that own a realtime voice bridge session. */
 export type RealtimeVoiceBridgeCallbacks = {
   onAudio: (audio: Buffer) => void;
   onClearAudio: () => void;
@@ -90,10 +90,10 @@ export type RealtimeVoiceBridgeCallbacks = {
   onClose?: (reason: RealtimeVoiceCloseReason) => void;
 };
 
-/** Shared type for Realtime Voice Provider Config in src/talk. */
+/** Provider-specific config payload after core config resolution. */
 export type RealtimeVoiceProviderConfig = Record<string, unknown>;
 
-/** Shared type for Realtime Voice Provider Capabilities in src/talk. */
+/** Capability declaration used to choose transports, audio formats, and UI affordances. */
 export type RealtimeVoiceProviderCapabilities = {
   transports: TalkTransport[];
   inputAudioFormats: RealtimeVoiceAudioFormat[];
@@ -105,19 +105,19 @@ export type RealtimeVoiceProviderCapabilities = {
   supportsSessionResumption?: boolean;
 };
 
-/** Shared type for Realtime Voice Provider Resolve Config Context in src/talk. */
+/** Context passed to provider config resolvers. */
 export type RealtimeVoiceProviderResolveConfigContext = {
   cfg: OpenClawConfig;
   rawConfig: RealtimeVoiceProviderConfig;
 };
 
-/** Shared type for Realtime Voice Provider Configured Context in src/talk. */
+/** Context passed to provider hooks after config has been resolved. */
 export type RealtimeVoiceProviderConfiguredContext = {
   cfg?: OpenClawConfig;
   providerConfig: RealtimeVoiceProviderConfig;
 };
 
-/** Shared type for Realtime Voice Bridge Create Request in src/talk. */
+/** Request shape for creating a server-side realtime voice bridge. */
 export type RealtimeVoiceBridgeCreateRequest = RealtimeVoiceBridgeCallbacks & {
   cfg?: OpenClawConfig;
   providerConfig: RealtimeVoiceProviderConfig;
@@ -128,7 +128,7 @@ export type RealtimeVoiceBridgeCreateRequest = RealtimeVoiceBridgeCallbacks & {
   tools?: RealtimeVoiceTool[];
 };
 
-/** Shared type for Realtime Voice Browser Session Create Request in src/talk. */
+/** Request shape for creating a browser-facing realtime voice session. */
 export type RealtimeVoiceBrowserSessionCreateRequest = {
   cfg?: OpenClawConfig;
   providerConfig: RealtimeVoiceProviderConfig;
@@ -142,7 +142,7 @@ export type RealtimeVoiceBrowserSessionCreateRequest = {
   reasoningEffort?: string;
 };
 
-/** Shared type for Realtime Voice Browser Audio Contract in src/talk. */
+/** Audio encoding contract a browser client must honor for a realtime session. */
 export type RealtimeVoiceBrowserAudioContract = {
   inputEncoding: "pcm16" | "g711_ulaw";
   inputSampleRateHz: number;
@@ -150,7 +150,7 @@ export type RealtimeVoiceBrowserAudioContract = {
   outputSampleRateHz: number;
 };
 
-/** Shared type for Realtime Voice Browser Web Rtc Sdp Session in src/talk. */
+/** Browser session credentials for direct WebRTC SDP exchange with a provider. */
 export type RealtimeVoiceBrowserWebRtcSdpSession = {
   provider: RealtimeVoiceProviderId;
   transport: "webrtc";
@@ -162,7 +162,7 @@ export type RealtimeVoiceBrowserWebRtcSdpSession = {
   expiresAt?: number;
 };
 
-/** Shared type for Realtime Voice Browser Json Pcm Web Socket Session in src/talk. */
+/** Browser session credentials for provider WebSocket JSON/PCM transport. */
 export type RealtimeVoiceBrowserJsonPcmWebSocketSession = {
   provider: RealtimeVoiceProviderId;
   transport: "provider-websocket";
@@ -176,7 +176,7 @@ export type RealtimeVoiceBrowserJsonPcmWebSocketSession = {
   expiresAt?: number;
 };
 
-/** Shared type for Realtime Voice Browser Gateway Relay Session in src/talk. */
+/** Browser session descriptor for audio relayed through the OpenClaw gateway. */
 export type RealtimeVoiceBrowserGatewayRelaySession = {
   provider: RealtimeVoiceProviderId;
   transport: "gateway-relay";
@@ -187,7 +187,7 @@ export type RealtimeVoiceBrowserGatewayRelaySession = {
   expiresAt?: number;
 };
 
-/** Shared type for Realtime Voice Browser Managed Room Session in src/talk. */
+/** Browser session descriptor for provider-managed room URLs. */
 export type RealtimeVoiceBrowserManagedRoomSession = {
   provider: RealtimeVoiceProviderId;
   transport: "managed-room";
@@ -198,14 +198,14 @@ export type RealtimeVoiceBrowserManagedRoomSession = {
   expiresAt?: number;
 };
 
-/** Shared type for Realtime Voice Browser Session in src/talk. */
+/** Discriminated browser realtime session descriptor returned by providers. */
 export type RealtimeVoiceBrowserSession =
   | RealtimeVoiceBrowserWebRtcSdpSession
   | RealtimeVoiceBrowserJsonPcmWebSocketSession
   | RealtimeVoiceBrowserGatewayRelaySession
   | RealtimeVoiceBrowserManagedRoomSession;
 
-/** Shared type for Realtime Voice Bridge in src/talk. */
+/** Runtime bridge interface implemented by server-side realtime voice providers. */
 export type RealtimeVoiceBridge = {
   supportsToolResultContinuation?: boolean;
   connect(): Promise<void>;
@@ -220,7 +220,7 @@ export type RealtimeVoiceBridge = {
   isConnected(): boolean;
 };
 
-/** Shared type for Realtime Voice Barge In Options in src/talk. */
+/** Options for interrupting current assistant output on caller speech. */
 export type RealtimeVoiceBargeInOptions = {
   /**
    * The caller has already confirmed assistant audio is still playing in its output sink.
