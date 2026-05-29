@@ -1,4 +1,4 @@
-// packages/memory-host-sdk/src/host secret input helpers and runtime behavior.
+// Memory-specific secret input wrappers with env SecretRef resolution.
 import {
   hasConfiguredSecretInput,
   normalizeEnvSecretInputString,
@@ -6,12 +6,12 @@ import {
   resolveSecretInputRef,
 } from "./secret-input-utils.js";
 
-/** Public helper for has Configured Memory Secret Input behavior in packages/memory-host-sdk. */
+/** Detects whether memory provider config includes a usable secret input. */
 export function hasConfiguredMemorySecretInput(value: unknown): boolean {
   return hasConfiguredSecretInput(value);
 }
 
-/** Public helper for resolve Memory Secret Input String behavior in packages/memory-host-sdk. */
+/** Resolves memory secret inputs, including env SecretRefs when present. */
 export function resolveMemorySecretInputString(params: {
   value: unknown;
   path: string;

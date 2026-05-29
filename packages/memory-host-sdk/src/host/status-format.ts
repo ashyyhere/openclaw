@@ -1,8 +1,8 @@
-// packages/memory-host-sdk/src/host status format helpers and runtime behavior.
-/** Public type describing Tone for packages/memory-host-sdk. */
+// Status tone and state helpers for memory health summaries.
+/** Small status tone vocabulary used by memory UI/CLI surfaces. */
 export type Tone = "ok" | "warn" | "muted";
 
-/** Public helper for resolve Memory Vector State behavior in packages/memory-host-sdk. */
+/** Converts vector-search availability into display tone and state. */
 export function resolveMemoryVectorState(vector: { enabled: boolean; available?: boolean }): {
   tone: Tone;
   state: "ready" | "unavailable" | "disabled" | "unknown";
@@ -19,7 +19,7 @@ export function resolveMemoryVectorState(vector: { enabled: boolean; available?:
   return { tone: "muted", state: "unknown" };
 }
 
-/** Public helper for resolve Memory Fts State behavior in packages/memory-host-sdk. */
+/** Converts FTS availability into display tone and state. */
 export function resolveMemoryFtsState(fts: { enabled: boolean; available: boolean }): {
   tone: Tone;
   state: "ready" | "unavailable" | "disabled";
@@ -30,7 +30,7 @@ export function resolveMemoryFtsState(fts: { enabled: boolean; available: boolea
   return fts.available ? { tone: "ok", state: "ready" } : { tone: "warn", state: "unavailable" };
 }
 
-/** Public helper for resolve Memory Cache Summary behavior in packages/memory-host-sdk. */
+/** Builds a compact cache status label with optional entry count. */
 export function resolveMemoryCacheSummary(cache: { enabled: boolean; entries?: number }): {
   tone: Tone;
   text: string;
@@ -42,7 +42,7 @@ export function resolveMemoryCacheSummary(cache: { enabled: boolean; entries?: n
   return { tone: "ok", text: `cache on${suffix}` };
 }
 
-/** Public helper for resolve Memory Cache State behavior in packages/memory-host-sdk. */
+/** Converts cache enablement into display tone and state. */
 export function resolveMemoryCacheState(cache: { enabled: boolean }): {
   tone: Tone;
   state: "enabled" | "disabled";

@@ -1,5 +1,5 @@
-// packages/memory-host-sdk/src/host ssrf policy helpers and runtime behavior.
-/** Public type describing Ssr FPolicy for packages/memory-host-sdk. */
+// SSRF policy shape shared with guarded remote memory HTTP calls.
+/** Network ranges and hostnames allowed by guarded remote memory fetches. */
 export type SsrFPolicy = {
   allowPrivateNetwork?: boolean;
   dangerouslyAllowPrivateNetwork?: boolean;

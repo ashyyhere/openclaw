@@ -1,4 +1,4 @@
-// packages/memory-host-sdk/src/host multimodal helpers and runtime behavior.
+// Multimodal memory indexing settings and file classification helpers.
 import { normalizeLowercaseStringOrEmpty } from "./string-utils.js";
 
 const MEMORY_MULTIMODAL_SPECS = {
@@ -12,26 +12,26 @@ const MEMORY_MULTIMODAL_SPECS = {
   },
 } as const;
 
-/** Public type describing Memory Multimodal Modality for packages/memory-host-sdk. */
+/** Multimodal file families supported by memory indexing. */
 export type MemoryMultimodalModality = keyof typeof MEMORY_MULTIMODAL_SPECS;
-/** Public constant for MEMORY MULTIMODAL MODALITIES behavior in packages/memory-host-sdk. */
+/** Ordered list of supported multimodal memory file families. */
 export const MEMORY_MULTIMODAL_MODALITIES = Object.keys(
   MEMORY_MULTIMODAL_SPECS,
 ) as MemoryMultimodalModality[];
-/** Public type describing Memory Multimodal Selection for packages/memory-host-sdk. */
+/** Config selection for one modality or all supported modalities. */
 export type MemoryMultimodalSelection = MemoryMultimodalModality | "all";
 
-/** Public type describing Memory Multimodal Settings for packages/memory-host-sdk. */
+/** Normalized multimodal memory indexing settings. */
 export type MemoryMultimodalSettings = {
   enabled: boolean;
   modalities: MemoryMultimodalModality[];
   maxFileBytes: number;
 };
 
-/** Public constant for DEFAULT MEMORY MULTIMODAL MAX FILE BYTES behavior in packages/memory-host-sdk. */
+/** Default maximum multimodal file size accepted for indexing. */
 export const DEFAULT_MEMORY_MULTIMODAL_MAX_FILE_BYTES = 10 * 1024 * 1024;
 
-/** Public helper for normalize Memory Multimodal Modalities behavior in packages/memory-host-sdk. */
+/** Normalizes raw modality selection, expanding "all" to every supported modality. */
 export function normalizeMemoryMultimodalModalities(
   raw: MemoryMultimodalSelection[] | undefined,
 ): MemoryMultimodalModality[] {
@@ -47,7 +47,7 @@ export function normalizeMemoryMultimodalModalities(
   return Array.from(normalized);
 }
 
-/** Public helper for normalize Memory Multimodal Settings behavior in packages/memory-host-sdk. */
+/** Normalizes enablement, modalities, and max file size for multimodal indexing. */
 export function normalizeMemoryMultimodalSettings(raw: {
   enabled?: boolean;
   modalities?: MemoryMultimodalSelection[];
@@ -65,19 +65,19 @@ export function normalizeMemoryMultimodalSettings(raw: {
   };
 }
 
-/** Public helper for is Memory Multimodal Enabled behavior in packages/memory-host-sdk. */
+/** Returns true when multimodal indexing is enabled with at least one modality. */
 export function isMemoryMultimodalEnabled(settings: MemoryMultimodalSettings): boolean {
   return settings.enabled && settings.modalities.length > 0;
 }
 
-/** Public helper for get Memory Multimodal Extensions behavior in packages/memory-host-sdk. */
+/** Lists file extensions associated with a multimodal modality. */
 export function getMemoryMultimodalExtensions(
   modality: MemoryMultimodalModality,
 ): readonly string[] {
   return MEMORY_MULTIMODAL_SPECS[modality].extensions;
 }
 
-/** Public helper for build Memory Multimodal Label behavior in packages/memory-host-sdk. */
+/** Builds the text label stored for a multimodal memory file. */
 export function buildMemoryMultimodalLabel(
   modality: MemoryMultimodalModality,
   normalizedPath: string,
@@ -85,7 +85,7 @@ export function buildMemoryMultimodalLabel(
   return `${MEMORY_MULTIMODAL_SPECS[modality].labelPrefix}: ${normalizedPath}`;
 }
 
-/** Public helper for build Case Insensitive Extension Glob behavior in packages/memory-host-sdk. */
+/** Builds a case-insensitive glob for an extension without relying on glob flags. */
 export function buildCaseInsensitiveExtensionGlob(extension: string): string {
   const normalized = normalizeLowercaseStringOrEmpty(extension).replace(/^\./, "");
   if (!normalized) {
@@ -95,7 +95,7 @@ export function buildCaseInsensitiveExtensionGlob(extension: string): string {
   return `*.${parts.join("")}`;
 }
 
-/** Public helper for classify Memory Multimodal Path behavior in packages/memory-host-sdk. */
+/** Classifies a file path into a supported modality under normalized settings. */
 export function classifyMemoryMultimodalPath(
   filePath: string,
   settings: MemoryMultimodalSettings,
