@@ -1,4 +1,4 @@
-// tools planner helpers and runtime behavior.
+// Builds a deterministic visible/hidden plan from registered tool descriptors.
 import { evaluateToolAvailability } from "./availability.js";
 import { ToolPlanContractError } from "./diagnostics.js";
 import type {
@@ -30,7 +30,7 @@ function assertUniqueNames(descriptors: readonly ToolDescriptor[]): void {
   }
 }
 
-/** Reused helper for build Tool Plan behavior in src/tools. */
+/** Sorts descriptors, enforces unique names, and separates unavailable tools with diagnostics. */
 export function buildToolPlan(options: BuildToolPlanOptions): ToolPlan {
   const descriptors = options.descriptors.toSorted(compareDescriptors);
   assertUniqueNames(descriptors);

@@ -1,31 +1,31 @@
-// Shared types for tools types behavior.
-/** Shared type for Json Primitive in src/tools. */
+// Public contracts for planning, gating, and exposing OpenClaw tools.
+/** JSON scalar accepted in tool schemas, annotations, and availability context. */
 export type JsonPrimitive = string | number | boolean | null;
 
-/** Shared type for Json Value in src/tools. */
+/** Recursive JSON value accepted by tool metadata contracts. */
 export type JsonValue =
   | JsonPrimitive
   | readonly JsonValue[]
   | { readonly [key: string]: JsonValue };
 
-/** Shared type for Json Object in src/tools. */
+/** JSON object used for schemas and structured annotations. */
 export type JsonObject = { readonly [key: string]: JsonValue };
 
-/** Shared type for Tool Owner Ref in src/tools. */
+/** Stable owner identity for diagnostics, routing, and UI grouping. */
 export type ToolOwnerRef =
   | { readonly kind: "core" }
   | { readonly kind: "plugin"; readonly pluginId: string }
   | { readonly kind: "channel"; readonly channelId: string; readonly pluginId?: string }
   | { readonly kind: "mcp"; readonly serverId: string };
 
-/** Shared type for Tool Executor Ref in src/tools. */
+/** Runtime executor identity used after a descriptor is visible in the tool plan. */
 export type ToolExecutorRef =
   | { readonly kind: "core"; readonly executorId: string }
   | { readonly kind: "plugin"; readonly pluginId: string; readonly toolName: string }
   | { readonly kind: "channel"; readonly channelId: string; readonly actionId: string }
   | { readonly kind: "mcp"; readonly serverId: string; readonly toolName: string };
 
-/** Shared type for Tool Availability Signal in src/tools. */
+/** Atomic condition that can hide a tool until auth, config, env, or context is ready. */
 export type ToolAvailabilitySignal =
   | { readonly kind: "always" }
   | { readonly kind: "auth"; readonly providerId: string }
@@ -38,13 +38,13 @@ export type ToolAvailabilitySignal =
   | { readonly kind: "plugin-enabled"; readonly pluginId: string }
   | { readonly kind: "context"; readonly key: string; readonly equals?: JsonPrimitive };
 
-/** Shared type for Tool Availability Expression in src/tools. */
+/** Recursive availability expression; `allOf` requires all entries, `anyOf` requires one. */
 export type ToolAvailabilityExpression =
   | ToolAvailabilitySignal
   | { readonly allOf: readonly ToolAvailabilityExpression[] }
   | { readonly anyOf: readonly ToolAvailabilityExpression[] };
 
-/** Shared type for Tool Descriptor in src/tools. */
+/** Complete model-facing tool descriptor plus owner, executor, and availability metadata. */
 export type ToolDescriptor = {
   readonly name: string;
   readonly title?: string;
@@ -58,7 +58,7 @@ export type ToolDescriptor = {
   readonly sortKey?: string;
 };
 
-/** Shared type for Tool Availability Context in src/tools. */
+/** Snapshot used to evaluate whether descriptors should be visible to a model. */
 export type ToolAvailabilityContext = {
   readonly authProviderIds?: ReadonlySet<string>;
   readonly config?: JsonObject;
@@ -72,7 +72,7 @@ export type ToolAvailabilityContext = {
   readonly values?: Readonly<Record<string, JsonPrimitive | undefined>>;
 };
 
-/** Shared type for Tool Unavailable Reason in src/tools. */
+/** Machine-readable reason a descriptor was hidden from the tool plan. */
 export type ToolUnavailableReason =
   | "auth-missing"
   | "config-missing"
@@ -81,32 +81,32 @@ export type ToolUnavailableReason =
   | "plugin-disabled"
   | "unsupported-signal";
 
-/** Shared type for Tool Availability Diagnostic in src/tools. */
+/** Diagnostic emitted for a failed availability signal or malformed expression. */
 export type ToolAvailabilityDiagnostic = {
   readonly reason: ToolUnavailableReason;
   readonly signal?: ToolAvailabilitySignal;
   readonly message: string;
 };
 
-/** Shared type for Tool Plan Entry in src/tools. */
+/** Visible descriptor paired with the executor that can run it. */
 export type ToolPlanEntry = {
   readonly descriptor: ToolDescriptor;
   readonly executor: ToolExecutorRef;
 };
 
-/** Shared type for Hidden Tool Plan Entry in src/tools. */
+/** Hidden descriptor paired with diagnostics explaining why it is unavailable. */
 export type HiddenToolPlanEntry = {
   readonly descriptor: ToolDescriptor;
   readonly diagnostics: readonly ToolAvailabilityDiagnostic[];
 };
 
-/** Shared type for Tool Plan in src/tools. */
+/** Result of planning descriptors into visible and hidden tool sets. */
 export type ToolPlan = {
   readonly visible: readonly ToolPlanEntry[];
   readonly hidden: readonly HiddenToolPlanEntry[];
 };
 
-/** Shared type for Build Tool Plan Options in src/tools. */
+/** Inputs for producing a sorted, availability-filtered tool plan. */
 export type BuildToolPlanOptions = {
   readonly descriptors: readonly ToolDescriptor[];
   readonly availability?: ToolAvailabilityContext;

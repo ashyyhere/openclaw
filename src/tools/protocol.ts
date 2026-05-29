@@ -1,7 +1,7 @@
-// tools protocol helpers and runtime behavior.
+// Projects planned tools into the compact descriptor shape sent to model adapters.
 import type { JsonObject, ToolPlanEntry } from "./types.js";
 
-/** Shared type for Tool Protocol Descriptor in src/tools. */
+/** Provider-facing descriptor subset used after planning and schema normalization. */
 export type ToolProtocolDescriptor = {
   readonly name: string;
   readonly description: string;
@@ -9,7 +9,7 @@ export type ToolProtocolDescriptor = {
 };
 
 // Shared descriptor shape only. Model/provider adapters still own schema normalization.
-/** Reused helper for to Tool Protocol Descriptor behavior in src/tools. */
+/** Converts a visible tool-plan entry into the model/provider protocol shape. */
 export function toToolProtocolDescriptor(entry: ToolPlanEntry): ToolProtocolDescriptor {
   return {
     name: entry.descriptor.name,
@@ -18,7 +18,7 @@ export function toToolProtocolDescriptor(entry: ToolPlanEntry): ToolProtocolDesc
   };
 }
 
-/** Reused helper for to Tool Protocol Descriptors behavior in src/tools. */
+/** Converts all visible plan entries into provider-facing descriptors. */
 export function toToolProtocolDescriptors(
   entries: readonly ToolPlanEntry[],
 ): readonly ToolProtocolDescriptor[] {

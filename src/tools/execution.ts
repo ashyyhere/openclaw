@@ -1,7 +1,7 @@
-// tools execution helpers and runtime behavior.
+// Formats tool executor references for logs and diagnostics.
 import type { ToolExecutorRef } from "./types.js";
 
-/** Reused helper for format Tool Executor Ref behavior in src/tools. */
+/** Converts a closed executor reference into a stable human-readable string. */
 export function formatToolExecutorRef(ref: ToolExecutorRef): string {
   switch (ref.kind) {
     case "core":

@@ -1,4 +1,4 @@
-// tools availability helpers and runtime behavior.
+// Evaluates descriptor availability expressions against runtime context snapshots.
 import type {
   JsonObject,
   JsonPrimitive,
@@ -153,7 +153,7 @@ function evaluateExpression(
   ];
 }
 
-/** Reused helper for evaluate Tool Availability behavior in src/tools. */
+/** Returns diagnostics for unmet availability requirements; empty means visible. */
 export function evaluateToolAvailability(params: {
   descriptor: ToolDescriptor;
   context?: ToolAvailabilityContext;

@@ -1,17 +1,17 @@
-// tools index helpers and runtime behavior.
-/** Re-exported API for src/tools, starting with evaluate Tool Availability. */
+// Public barrel for tool descriptor, planning, availability, and protocol contracts.
+/** Re-exports availability diagnostics for descriptor gating. */
 export { evaluateToolAvailability } from "./availability.js";
-/** Re-exported API for src/tools, starting with define Tool Descriptor. */
+/** Re-exports descriptor identity helpers. */
 export { defineToolDescriptor, defineToolDescriptors } from "./descriptors.js";
-/** Re-exported API for src/tools, starting with Tool Plan Contract Error. */
+/** Re-exports tool-planning contract errors. */
 export { ToolPlanContractError } from "./diagnostics.js";
-/** Re-exported API for src/tools, starting with format Tool Executor Ref. */
+/** Re-exports executor reference formatting. */
 export { formatToolExecutorRef } from "./execution.js";
-/** Re-exported API for src/tools, starting with build Tool Plan. */
+/** Re-exports deterministic tool planning. */
 export { buildToolPlan } from "./planner.js";
-/** Re-exported API for src/tools, starting with to Tool Protocol Descriptor. */
+/** Re-exports provider-facing protocol projection helpers. */
 export { toToolProtocolDescriptor, toToolProtocolDescriptors } from "./protocol.js";
-/** Re-exported API for src/tools. */
+/** Re-exports public tool descriptor and planning types. */
 export type {
   BuildToolPlanOptions,
   HiddenToolPlanEntry,
