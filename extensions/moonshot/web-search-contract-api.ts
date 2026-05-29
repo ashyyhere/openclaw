@@ -1,9 +1,10 @@
-// extensions/moonshot web search contract api helpers and runtime behavior.
+// Static Kimi web-search provider contract for setup and metadata surfaces.
 import {
   createWebSearchProviderContractFields,
   type WebSearchProviderPlugin,
 } from "openclaw/plugin-sdk/provider-web-search-config-contract";
 
+/** Builds the metadata-only Kimi web search provider contract. */
 export function createKimiWebSearchProvider(): WebSearchProviderPlugin {
   const credentialPath = "plugins.entries.moonshot.config.webSearch.apiKey";
 

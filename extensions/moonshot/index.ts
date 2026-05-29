@@ -1,4 +1,5 @@
-// extensions/moonshot index helpers and runtime behavior.
+// Moonshot bundled provider plugin entry: registers Kimi model catalog, auth,
+// web search, media understanding, and provider replay/streaming compat hooks.
 import { defineSingleProviderPluginEntry } from "openclaw/plugin-sdk/provider-entry";
 import { buildProviderReplayFamilyHooks } from "openclaw/plugin-sdk/provider-model-shared";
 import { MOONSHOT_THINKING_STREAM_HOOKS } from "openclaw/plugin-sdk/provider-stream-family";
