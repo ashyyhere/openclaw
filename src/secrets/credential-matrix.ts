@@ -1,4 +1,4 @@
-// secrets credential matrix helpers and runtime behavior.
+// Builds the public matrix of user-supplied credential surfaces.
 import { getSourceSecretTargetRegistry } from "./target-registry-data.js";
 import { getUnsupportedSecretRefSurfacePatterns } from "./unsupported-surface-policy.js";
 
@@ -13,7 +13,7 @@ type CredentialMatrixEntry = {
   notes?: string;
 };
 
-/** Shared type for Secret Ref Credential Matrix Document in src/secrets. */
+/** Serializable credential matrix used by docs and coverage checks. */
 export type SecretRefCredentialMatrixDocument = {
   version: 1;
   matrixId: "strictly-user-supplied-credentials";
@@ -23,7 +23,7 @@ export type SecretRefCredentialMatrixDocument = {
   entries: CredentialMatrixEntry[];
 };
 
-/** Reused helper for build Secret Ref Credential Matrix behavior in src/secrets. */
+/** Builds a deduplicated, sorted matrix from the source secret target registry. */
 export function buildSecretRefCredentialMatrix(): SecretRefCredentialMatrixDocument {
   const entriesByKey = new Map<string, CredentialMatrixEntry>();
   for (const entry of getSourceSecretTargetRegistry()) {

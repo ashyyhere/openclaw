@@ -1,4 +1,4 @@
-// secrets storage scan helpers and runtime behavior.
+// Locates and reads secret-bearing auth/model config files for migration and audits.
 import fs from "node:fs";
 import path from "node:path";
 import { listAgentIds, resolveAgentDir } from "../agents/agent-scope.js";
@@ -9,17 +9,17 @@ import { resolveUserPath } from "../utils.js";
 import { listAuthProfileStorePaths as listAuthProfileStorePathsFromAuthStorePaths } from "./auth-store-paths.js";
 import { parseEnvValue } from "./shared.js";
 
-/** Reused helper for parse Env Assignment Value behavior in src/secrets. */
+/** Parses shell-style environment assignment values using the shared secret parser. */
 export function parseEnvAssignmentValue(raw: string): string {
   return parseEnvValue(raw);
 }
 
-/** Reused helper for list Auth Profile Store Paths behavior in src/secrets. */
+/** Lists configured auth-profile stores that may contain secret references. */
 export function listAuthProfileStorePaths(config: OpenClawConfig, stateDir: string): string[] {
   return listAuthProfileStorePathsFromAuthStorePaths(config, stateDir);
 }
 
-/** Reused helper for list Legacy Auth Json Paths behavior in src/secrets. */
+/** Lists legacy per-agent `auth.json` files so migration can scrub old secrets. */
 export function listLegacyAuthJsonPaths(stateDir: string): string[] {
   const out: string[] = [];
   const agentsRoot = path.join(resolveUserPath(stateDir), "agents");
@@ -46,7 +46,7 @@ function resolveActiveAgentDir(stateDir: string, env: NodeJS.ProcessEnv = proces
   return path.join(resolveUserPath(stateDir), "agents", "main", "agent");
 }
 
-/** Reused helper for list Agent Models Json Paths behavior in src/secrets. */
+/** Lists known `models.json` locations from defaults, active env overrides, and agents. */
 export function listAgentModelsJsonPaths(
   config: OpenClawConfig,
   stateDir: string,
@@ -79,18 +79,18 @@ export function listAgentModelsJsonPaths(
   return [...paths];
 }
 
-/** Shared type for Read Json Object Options in src/secrets. */
+/** Safety controls for optional JSON object reads during secret storage scans. */
 export type ReadJsonObjectOptions = {
   maxBytes?: number;
   requireRegularFile?: boolean;
 };
 
-/** Reused helper for read Json Object If Exists behavior in src/secrets. */
+/** Reads a JSON object when present, returning null for missing or non-object content. */
 export function readJsonObjectIfExists(filePath: string): {
   value: Record<string, unknown> | null;
   error?: string;
 };
-/** Reused helper for read Json Object If Exists behavior in src/secrets. */
+/** Reads a JSON object with size and regular-file safeguards. */
 export function readJsonObjectIfExists(
   filePath: string,
   options: ReadJsonObjectOptions,
@@ -98,7 +98,7 @@ export function readJsonObjectIfExists(
   value: Record<string, unknown> | null;
   error?: string;
 };
-/** Reused helper for read Json Object If Exists behavior in src/secrets. */
+/** Implements optional JSON reads without throwing parse or filesystem errors to callers. */
 export function readJsonObjectIfExists(
   filePath: string,
   options: ReadJsonObjectOptions = {},

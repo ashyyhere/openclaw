@@ -1,4 +1,4 @@
-// secrets runtime discord test support helpers and runtime behavior.
+// Vitest shim that exposes Discord bundled secret contracts to runtime-auth tests.
 import { vi } from "vitest";
 import { loadBundledChannelSecretContractApi } from "./channel-contract-api.js";
 
