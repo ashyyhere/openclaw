@@ -1,4 +1,5 @@
-// ui/src/ui app polling helpers and runtime behavior.
+// Tab-scoped polling helpers for Control UI panes that need quiet background
+// refresh while their tab is active.
 import type { DebugState } from "./controllers/debug.ts";
 import { loadDebug } from "./controllers/debug.ts";
 import type { LogsState } from "./controllers/logs.ts";
@@ -13,10 +14,10 @@ type PollingHost = {
   tab: string;
 };
 
-/** Reused constant for NODES ACTIVE POLL INTERVAL MS behavior in ui/src/ui. */
+/** Refresh cadence for the nodes tab while it is active. */
 export const NODES_ACTIVE_POLL_INTERVAL_MS = 30_000;
 
-/** Reused helper for start Nodes Polling behavior in ui/src/ui. */
+/** Start nodes polling if it is not already running. */
 export function startNodesPolling(host: PollingHost) {
   if (host.nodesPollInterval != null) {
     return;
@@ -29,7 +30,7 @@ export function startNodesPolling(host: PollingHost) {
   }, NODES_ACTIVE_POLL_INTERVAL_MS);
 }
 
-/** Reused helper for stop Nodes Polling behavior in ui/src/ui. */
+/** Stop nodes polling and clear its interval handle. */
 export function stopNodesPolling(host: PollingHost) {
   if (host.nodesPollInterval == null) {
     return;
@@ -38,7 +39,7 @@ export function stopNodesPolling(host: PollingHost) {
   host.nodesPollInterval = null;
 }
 
-/** Reused helper for start Logs Polling behavior in ui/src/ui. */
+/** Start logs polling if it is not already running. */
 export function startLogsPolling(host: PollingHost) {
   if (host.logsPollInterval != null) {
     return;
@@ -51,7 +52,7 @@ export function startLogsPolling(host: PollingHost) {
   }, 2000);
 }
 
-/** Reused helper for stop Logs Polling behavior in ui/src/ui. */
+/** Stop logs polling and clear its interval handle. */
 export function stopLogsPolling(host: PollingHost) {
   if (host.logsPollInterval == null) {
     return;
@@ -60,7 +61,7 @@ export function stopLogsPolling(host: PollingHost) {
   host.logsPollInterval = null;
 }
 
-/** Reused helper for start Debug Polling behavior in ui/src/ui. */
+/** Start debug polling if it is not already running. */
 export function startDebugPolling(host: PollingHost) {
   if (host.debugPollInterval != null) {
     return;
@@ -73,7 +74,7 @@ export function startDebugPolling(host: PollingHost) {
   }, 3000);
 }
 
-/** Reused helper for stop Debug Polling behavior in ui/src/ui. */
+/** Stop debug polling and clear its interval handle. */
 export function stopDebugPolling(host: PollingHost) {
   if (host.debugPollInterval == null) {
     return;

@@ -1,7 +1,8 @@
-// ui/src/ui thinking helpers and runtime behavior.
+// Thinking-level helpers for model controls. They normalize provider aliases and
+// map catalog reasoning support into default UI selections.
 import { normalizeLowercaseStringOrEmpty } from "./string-coerce.ts";
 
-/** Shared type for Thinking Catalog Entry in ui/src/ui. */
+/** Minimal catalog row used to decide whether a model supports reasoning. */
 export type ThinkingCatalogEntry = {
   provider: string;
   id: string;
@@ -10,7 +11,7 @@ export type ThinkingCatalogEntry = {
 
 const BASE_THINKING_LEVELS = ["off", "minimal", "low", "medium", "high"] as const;
 
-/** Reused helper for normalize Thinking Provider Id behavior in ui/src/ui. */
+/** Normalize provider aliases used by thinking-level controls. */
 export function normalizeThinkingProviderId(provider?: string | null): string {
   if (!provider) {
     return "";
@@ -25,13 +26,13 @@ export function normalizeThinkingProviderId(provider?: string | null): string {
   return normalized;
 }
 
-/** Reused helper for is Binary Thinking Provider behavior in ui/src/ui. */
+/** Return whether a provider only supports on/off thinking controls. */
 export function isBinaryThinkingProvider(provider?: string | null): boolean {
   void provider;
   return false;
 }
 
-/** Reused helper for normalize Think Level behavior in ui/src/ui. */
+/** Normalize free-form thinking level labels into supported UI values. */
 export function normalizeThinkLevel(raw?: string | null): string | undefined {
   if (!raw) {
     return undefined;
@@ -71,7 +72,7 @@ export function normalizeThinkLevel(raw?: string | null): string | undefined {
   return undefined;
 }
 
-/** Reused helper for list Thinking Level Labels behavior in ui/src/ui. */
+/** List supported thinking-level labels for a provider/model pair. */
 export function listThinkingLevelLabels(
   provider?: string | null,
   model?: string | null,
@@ -81,12 +82,12 @@ export function listThinkingLevelLabels(
   return BASE_THINKING_LEVELS;
 }
 
-/** Reused helper for format Thinking Levels behavior in ui/src/ui. */
+/** Format supported thinking levels for display. */
 export function formatThinkingLevels(provider?: string | null, model?: string | null): string {
   return listThinkingLevelLabels(provider, model).join(", ");
 }
 
-/** Reused helper for resolve Thinking Default For Model behavior in ui/src/ui. */
+/** Resolve the default thinking level for a model catalog entry. */
 export function resolveThinkingDefaultForModel(params: {
   provider: string;
   model: string;

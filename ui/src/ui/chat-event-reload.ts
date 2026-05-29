@@ -1,4 +1,5 @@
-// ui/src/ui chat event reload helpers and runtime behavior.
+// Chat event reload heuristic. It detects final events that need a history
+// refresh because the streamed payload does not contain renderable assistant text.
 import { extractText } from "./chat/message-extract.ts";
 import type { ChatEventPayload } from "./controllers/chat.ts";
 import { normalizeLowercaseStringOrEmpty } from "./string-coerce.ts";
@@ -21,7 +22,7 @@ function hasRenderableAssistantFinalMessage(message: unknown): boolean {
   return typeof text === "string" && text.trim() !== "" && !SILENT_REPLY_PATTERN.test(text);
 }
 
-/** Reused helper for should Reload History For Final Event behavior in ui/src/ui. */
+/** Return whether a final chat event should trigger a history reload. */
 export function shouldReloadHistoryForFinalEvent(payload?: ChatEventPayload): boolean {
   return Boolean(
     payload && payload.state === "final" && !hasRenderableAssistantFinalMessage(payload.message),

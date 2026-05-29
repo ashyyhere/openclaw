@@ -1,4 +1,5 @@
-// ui/src/ui control ui auth helpers and runtime behavior.
+// Control UI auth header resolver. It chooses header-safe bearer credentials
+// from the live hello payload, saved settings token, or configured password.
 import { normalizeOptionalString, uniqueStrings } from "./string-coerce.ts";
 
 type ControlUiAuthSource = {
@@ -21,7 +22,7 @@ function sanitizeHeaderToken(value: string | null): string | null {
   return /[\r\n]/.test(value) ? null : value;
 }
 
-/** Reused helper for resolve Control Ui Auth Token behavior in ui/src/ui. */
+/** Resolve the first usable bearer credential for Control UI requests. */
 export function resolveControlUiAuthToken(source: ControlUiAuthSource): string | null {
   return (
     sanitizeHeaderToken(normalizeOptionalString(source.hello?.auth?.deviceToken) ?? null) ??
@@ -31,7 +32,7 @@ export function resolveControlUiAuthToken(source: ControlUiAuthSource): string |
   );
 }
 
-/** Reused helper for resolve Control Ui Auth Header behavior in ui/src/ui. */
+/** Build an Authorization header from the preferred Control UI credential. */
 export function resolveControlUiAuthHeader(source: ControlUiAuthSource): string | null {
   const token = resolveControlUiAuthToken(source);
   return token ? `Bearer ${token}` : null;
@@ -41,7 +42,7 @@ export function resolveControlUiAuthHeader(source: ControlUiAuthSource): string 
 // call sites that can retry a single request against an alternate credential
 // when the first returns 401 — for example, recovering from a stale
 // `settings.token` when the live session is authenticated via `password`.
-/** Reused helper for resolve Control Ui Auth Candidates behavior in ui/src/ui. */
+/** Return all usable bearer credentials in retry order. */
 export function resolveControlUiAuthCandidates(source: ControlUiAuthSource): string[] {
   return uniqueStrings(
     [

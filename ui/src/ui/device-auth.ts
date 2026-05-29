@@ -1,4 +1,5 @@
-// ui/src/ui device auth helpers and runtime behavior.
+// Browser local-storage adapter for device-auth tokens. Core store helpers own
+// token shape and role scoping; this module supplies Control UI persistence.
 import {
   clearDeviceAuthTokenFromStore,
   type DeviceAuthEntry,
@@ -40,7 +41,7 @@ function writeStore(store: DeviceAuthStore) {
   }
 }
 
-/** Reused helper for load Device Auth Token behavior in ui/src/ui. */
+/** Load a device auth token for one device and role from local storage. */
 export function loadDeviceAuthToken(params: {
   deviceId: string;
   role: string;
@@ -52,7 +53,7 @@ export function loadDeviceAuthToken(params: {
   });
 }
 
-/** Reused helper for store Device Auth Token behavior in ui/src/ui. */
+/** Store a device auth token for one device and role in local storage. */
 export function storeDeviceAuthToken(params: {
   deviceId: string;
   role: string;
@@ -68,7 +69,7 @@ export function storeDeviceAuthToken(params: {
   });
 }
 
-/** Reused helper for clear Device Auth Token behavior in ui/src/ui. */
+/** Remove a device auth token for one device and role from local storage. */
 export function clearDeviceAuthToken(params: { deviceId: string; role: string }) {
   clearDeviceAuthTokenFromStore({
     adapter: { readStore, writeStore },

@@ -1,4 +1,5 @@
-// ui/src/ui chat model select state helpers and runtime behavior.
+// Chat model select-state builder. It combines session overrides, server
+// defaults, and catalog display metadata into the dropdown model.
 import type { AppViewState } from "./app-view-state.ts";
 import {
   buildCatalogDisplayLookup,
@@ -15,13 +16,13 @@ type ChatModelSelectStateInput = Pick<
   "sessionKey" | "chatModelOverrides" | "chatModelCatalog" | "sessionsResult"
 >;
 
-/** Shared type for Chat Model Select Option in ui/src/ui. */
+/** One selectable model option for the chat model override control. */
 export type ChatModelSelectOption = {
   value: string;
   label: string;
 };
 
-/** Shared type for Chat Model Select State in ui/src/ui. */
+/** Resolved state for the chat model override dropdown. */
 export type ChatModelSelectState = {
   currentOverride: string;
   defaultModel: string;
@@ -34,7 +35,7 @@ function resolveActiveSessionRow(state: ChatModelSelectStateInput) {
   return state.sessionsResult?.sessions?.find((row) => row.key === state.sessionKey);
 }
 
-/** Reused helper for resolve Chat Model Override Value behavior in ui/src/ui. */
+/** Resolve the active session model override, preferring local in-flight patches. */
 export function resolveChatModelOverrideValue(state: ChatModelSelectStateInput): string {
   const catalog = state.chatModelCatalog ?? [];
 
@@ -89,7 +90,7 @@ function buildChatModelOptions(
   return options;
 }
 
-/** Reused helper for resolve Chat Model Select State behavior in ui/src/ui. */
+/** Build the chat model select state from current session data and catalog entries. */
 export function resolveChatModelSelectState(
   state: ChatModelSelectStateInput,
 ): ChatModelSelectState {

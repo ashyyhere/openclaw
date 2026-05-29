@@ -1,4 +1,5 @@
-// ui/src/ui session display helpers and runtime behavior.
+// Session display-name helpers. They parse stored session keys into readable
+// names while preserving explicit labels from session rows when available.
 import { normalizeLowercaseStringOrEmpty, normalizeOptionalString } from "./string-coerce.ts";
 import type { SessionsListResult } from "./types.ts";
 
@@ -78,7 +79,7 @@ export function parseSessionKey(key: string): SessionKeyInfo {
   return { prefix: "", fallbackName: key };
 }
 
-/** Reused helper for resolve Session Display Name behavior in ui/src/ui. */
+/** Resolve the label shown for a session row or key. */
 export function resolveSessionDisplayName(
   key: string,
   row?: SessionsListResult["sessions"][number],
@@ -104,7 +105,7 @@ export function resolveSessionDisplayName(
   return fallbackName;
 }
 
-/** Reused helper for is Cron Session Key behavior in ui/src/ui. */
+/** Return whether a session key points at a cron-owned session. */
 export function isCronSessionKey(key: string): boolean {
   const normalized = normalizeLowercaseStringOrEmpty(key);
   if (!normalized) {

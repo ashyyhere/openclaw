@@ -1,11 +1,11 @@
-// ui/src/ui usage cache status helpers and runtime behavior.
+// Usage-cache status copy helpers for the usage tab refresh indicator.
 import { t } from "../i18n/index.ts";
 import type { SessionsUsageResult } from "./usage-types.ts";
 
-/** Shared type for Usage Cache Status in ui/src/ui. */
+/** Cache freshness status returned with session usage data. */
 export type UsageCacheStatus = SessionsUsageResult["cacheStatus"];
 
-/** Reused helper for get Usage Cache Refresh Title behavior in ui/src/ui. */
+/** Build tooltip text for stale, partial, or actively refreshing usage caches. */
 export function getUsageCacheRefreshTitle(cacheStatus: UsageCacheStatus): string | null {
   if (
     !cacheStatus ||

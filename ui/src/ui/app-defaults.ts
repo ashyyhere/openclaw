@@ -1,8 +1,8 @@
-// ui/src/ui app defaults helpers and runtime behavior.
+// Default UI state used when filters and cron forms have no persisted value.
 import type { LogLevel } from "./types.ts";
 import type { CronFormState } from "./ui-types.ts";
 
-/** Reused constant for DEFAULT LOG LEVEL FILTERS behavior in ui/src/ui. */
+/** Initial enabled log levels for the logs tab. */
 export const DEFAULT_LOG_LEVEL_FILTERS: Record<LogLevel, boolean> = {
   trace: true,
   debug: true,
@@ -12,13 +12,13 @@ export const DEFAULT_LOG_LEVEL_FILTERS: Record<LogLevel, boolean> = {
   fatal: true,
 };
 
-/** Reused constant for DEFAULT SESSIONS FILTERS behavior in ui/src/ui. */
+/** Initial sessions-query filters for the sessions tab. */
 export const DEFAULT_SESSIONS_FILTERS = {
   activeMinutes: "120",
   limit: "200",
 } as const;
 
-/** Reused constant for DEFAULT CRON FORM behavior in ui/src/ui. */
+/** Empty cron editor state used for creating a new schedule. */
 export const DEFAULT_CRON_FORM: CronFormState = {
   name: "",
   description: "",

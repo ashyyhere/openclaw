@@ -1,4 +1,5 @@
-// ui/src/ui connect error helpers and runtime behavior.
+// Gateway connection-error formatter. It translates structured gateway detail
+// codes and pairing metadata into short Control UI messages.
 import {
   ConnectErrorDetailCodes,
   describePairingConnectRequirement,
@@ -93,7 +94,7 @@ function formatErrorFromMessageAndDetails(error: ErrorWithMessageAndDetails): st
   return message;
 }
 
-/** Reused helper for format Connect Error behavior in ui/src/ui. */
+/** Format a thrown gateway connection error into user-facing text. */
 export function formatConnectError(error: unknown): string {
   if (error && typeof error === "object") {
     return formatErrorFromMessageAndDetails(error as ErrorWithMessageAndDetails);

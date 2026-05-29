@@ -1,4 +1,5 @@
-// ui/src/ui uuid helpers and runtime behavior.
+// Browser UUID helper. It requires Web Crypto so UI-generated identifiers do not
+// silently fall back to weak randomness.
 type CryptoLike = {
   randomUUID?: (() => string) | undefined;
   getRandomValues?: (<T extends Exclude<BufferSource, ArrayBuffer>>(array: T) => T) | undefined;
@@ -29,7 +30,7 @@ function warnWeakCryptoOnce() {
   console.warn("[uuid] crypto API missing; refusing insecure UUID generation");
 }
 
-/** Reused helper for generate UUID behavior in ui/src/ui. */
+/** Generate a UUID v4 using Web Crypto or throw when secure crypto is unavailable. */
 export function generateUUID(cryptoLike: CryptoLike | null = globalThis.crypto): string {
   if (cryptoLike && typeof cryptoLike.randomUUID === "function") {
     return cryptoLike.randomUUID();
