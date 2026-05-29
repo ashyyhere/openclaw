@@ -1,5 +1,5 @@
-// packages/speech-core runtime api helpers and runtime behavior.
-/** Re-exported public API for packages/speech-core. */
+// Runtime speech-core barrel for OpenClaw internals and bundled plugins.
+/** Runtime TTS configuration, synthesis, streaming, and test exports. */
 export {
   buildTtsSystemPromptHint,
   getLastTtsAttempt,

@@ -1,18 +1,19 @@
-// packages/speech-core voice models helpers and runtime behavior.
-/** Public type describing Voice Model Capability for packages/speech-core. */
+// Voice model catalog helpers: resolve provider/model refs, fallback order, and
+// static catalog entries for TTS/realtime voice providers.
+/** Voice capability category advertised by a provider model. */
 export type VoiceModelCapability = "tts" | "realtime_transcription" | "realtime_voice";
 
-/** Public type describing Voice Model Capabilities for packages/speech-core. */
+/** Capability flags supported by a voice model. */
 export type VoiceModelCapabilities = Partial<Record<VoiceModelCapability, true>>;
 
-/** Public type describing Voice Model Ref for packages/speech-core. */
+/** Parsed provider/model reference with optional per-model timeout. */
 export type VoiceModelRef = {
   provider: string;
   model: string;
   timeoutMs?: number;
 };
 
-/** Public type describing Voice Model Provider for packages/speech-core. */
+/** Provider model list and aliases used for voice model resolution. */
 export type VoiceModelProvider = {
   id: string;
   aliases?: readonly string[];
@@ -21,7 +22,7 @@ export type VoiceModelProvider = {
   models?: readonly string[];
 };
 
-/** Public type describing Voice Model Catalog Entry for packages/speech-core. */
+/** Static catalog entry synthesized from provider voice model metadata. */
 export type VoiceModelCatalogEntry = {
   kind: "voice";
   provider: string;
@@ -33,7 +34,7 @@ export type VoiceModelCatalogEntry = {
   modes?: readonly string[];
 };
 
-/** Public type describing Voice Provider Candidate for packages/speech-core. */
+/** Provider candidate selected for voice synthesis or fallback. */
 export type VoiceProviderCandidate = {
   provider: string;
   voiceModel?: VoiceModelRef;
@@ -80,7 +81,7 @@ function sameProvider(left: string | undefined, right: string | undefined): bool
   return Boolean(normalizedLeft && normalizedLeft === normalizeLowercaseString(right));
 }
 
-/** Public helper for provider Matches Id behavior in packages/speech-core. */
+/** Matches a provider id against its canonical id or aliases. */
 export function providerMatchesId(provider: VoiceModelProvider, providerId?: string): boolean {
   return (
     sameProvider(provider.id, providerId) ||
@@ -88,7 +89,7 @@ export function providerMatchesId(provider: VoiceModelProvider, providerId?: str
   );
 }
 
-/** Public helper for find Voice Model Provider behavior in packages/speech-core. */
+/** Finds a voice provider by id or alias. */
 export function findVoiceModelProvider<T extends VoiceModelProvider>(params: {
   providers: readonly T[];
   providerId?: string;
@@ -96,7 +97,7 @@ export function findVoiceModelProvider<T extends VoiceModelProvider>(params: {
   return params.providers.find((provider) => providerMatchesId(provider, params.providerId));
 }
 
-/** Public helper for voice Provider Supports Model behavior in packages/speech-core. */
+/** Checks whether a provider advertises a specific voice model. */
 export function voiceProviderSupportsModel(
   provider: VoiceModelProvider | undefined,
   model: unknown,
@@ -110,7 +111,7 @@ export function voiceProviderSupportsModel(
   );
 }
 
-/** Public helper for resolve Voice Model Refs behavior in packages/speech-core. */
+/** Parses primary/fallback voice model refs from config. */
 export function resolveVoiceModelRefs(config: unknown): VoiceModelRef[] {
   const voiceModel = config as VoiceModelConfig | undefined;
   if (typeof voiceModel === "string") {
@@ -137,7 +138,7 @@ export function resolveVoiceModelRefs(config: unknown): VoiceModelRef[] {
   return refs;
 }
 
-/** Public helper for resolve Supported Voice Model Refs behavior in packages/speech-core. */
+/** Filters configured voice refs to providers/models supported by the catalog. */
 export function resolveSupportedVoiceModelRefs(params: {
   config: unknown;
   providers: readonly VoiceModelProvider[];
@@ -157,7 +158,7 @@ export function resolveSupportedVoiceModelRefs(params: {
   });
 }
 
-/** Public helper for resolve Voice Provider Candidates behavior in packages/speech-core. */
+/** Builds primary and fallback provider candidates from provider order and voice refs. */
 export function resolveVoiceProviderCandidates(params: {
   primaryProvider: string;
   providers: readonly VoiceModelProvider[];
@@ -196,7 +197,7 @@ export function resolveVoiceProviderCandidates(params: {
   return candidates;
 }
 
-/** Public helper for resolve Primary Voice Provider Candidate behavior in packages/speech-core. */
+/** Resolves only the primary provider candidate and its supported voice ref. */
 export function resolvePrimaryVoiceProviderCandidate(params: {
   primaryProvider: string;
   providers: readonly VoiceModelProvider[];
@@ -213,7 +214,7 @@ export function resolvePrimaryVoiceProviderCandidate(params: {
   return voiceModel ? { provider, voiceModel } : { provider };
 }
 
-/** Public helper for get Voice Provider Config behavior in packages/speech-core. */
+/** Reads provider config using configured id, canonical id, or aliases. */
 export function getVoiceProviderConfig<TConfig extends Record<string, unknown>>(params: {
   providerConfigs: Record<string, TConfig | undefined>;
   provider: VoiceModelProvider;
@@ -240,7 +241,7 @@ export function getVoiceProviderConfig<TConfig extends Record<string, unknown>>(
   return {} as TConfig;
 }
 
-/** Public helper for synthesize Voice Model Catalog Entries behavior in packages/speech-core. */
+/** Synthesizes static voice model catalog entries from provider metadata. */
 export function synthesizeVoiceModelCatalogEntries(params: {
   provider: VoiceModelProvider;
   capabilities: VoiceModelCapabilities;

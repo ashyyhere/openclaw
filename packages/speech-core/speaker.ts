@@ -1,12 +1,12 @@
-// packages/speech-core speaker helpers and runtime behavior.
-/** Public type describing Speaker Selection Config for packages/speech-core. */
+// Speaker selection compatibility helpers for legacy voice/voiceId config keys.
+/** Mutable provider config object containing speaker selection aliases. */
 export type SpeakerSelectionConfig = Record<string, unknown>;
 
 function readString(value: unknown): string | undefined {
   return typeof value === "string" && value.trim() ? value.trim() : undefined;
 }
 
-/** Public helper for with Speaker Selection Compat behavior in packages/speech-core. */
+/** Copies speaker voice aliases into all canonical and legacy voice fields. */
 export function withSpeakerSelectionCompat(
   config: SpeakerSelectionConfig | undefined,
 ): SpeakerSelectionConfig {
@@ -30,7 +30,7 @@ export function withSpeakerSelectionCompat(
   return next;
 }
 
-/** Public helper for with Speaker Selection Fallback Compat behavior in packages/speech-core. */
+/** Backfills legacy voice fields from speaker-specific fields only when absent. */
 export function withSpeakerSelectionFallbackCompat(
   config: SpeakerSelectionConfig | undefined,
 ): SpeakerSelectionConfig {

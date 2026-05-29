@@ -1,5 +1,5 @@
-// packages/speech-core api helpers and runtime behavior.
-/** Re-exported public API for packages/speech-core. */
+// Public speech-core SDK barrel re-exported for plugin-facing speech helpers.
+/** Speech-core runtime helper exports from the plugin SDK surface. */
 export {
   asBoolean,
   asFiniteNumber,
@@ -28,7 +28,7 @@ export {
   truncateErrorDetail,
   TTS_AUTO_MODES,
 } from "openclaw/plugin-sdk/speech-core";
-/** Re-exported public API for packages/speech-core. */
+/** Speech-core public types from the plugin SDK surface. */
 export type {
   ResolvedTtsConfig,
   ResolvedTtsModelOverrides,
