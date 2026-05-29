@@ -1,4 +1,4 @@
-// packages/memory-host-sdk/src/host error utils helpers and runtime behavior.
+// Error formatting with conservative secret redaction for memory host diagnostics.
 const SECRET_PATTERNS: RegExp[] = [
   /\b[A-Z0-9_]*(?:KEY|TOKEN|SECRET|PASSWORD|PASSWD)\b\s*[=:]\s*(["']?)([^\s"'\\]+)\1/g,
   /[?&](?:access[-_]?token|auth[-_]?token|hook[-_]?token|refresh[-_]?token|api[-_]?key|client[-_]?secret|token|key|secret|password|pass|passwd|auth|signature)=([^&\s"'<>]+)/gi,
@@ -55,7 +55,7 @@ function redactSensitiveText(text: string): string {
   return next;
 }
 
-/** Public helper for format Error Message behavior in packages/memory-host-sdk. */
+/** Formats unknown errors and nested causes while redacting common secret shapes. */
 export function formatErrorMessage(err: unknown): string {
   let formatted: string;
   if (err instanceof Error) {
