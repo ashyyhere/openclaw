@@ -1,4 +1,4 @@
-// ui/src/ui model auth helpers helpers and runtime behavior.
+// Model-auth dashboard helpers shared by overview and attention surfaces.
 import type { ModelAuthStatusProvider } from "./types.ts";
 
 /**

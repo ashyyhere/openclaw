@@ -1,4 +1,5 @@
-// ui/src/ui/chat tool expansion state helpers and runtime behavior.
+// Per-session tool-card expansion state. It initializes new tool cards from the
+// auto-expand preference and preserves user toggles across chat re-renders.
 import type { ChatItem, MessageGroup } from "../types/chat-types.ts";
 import { isToolResultMessage, normalizeRoleForGrouping } from "./role-normalizer.ts";
 import { getOrCreateSessionCacheValue } from "./session-cache.ts";
@@ -8,7 +9,7 @@ const expandedToolCardsBySession = new Map<string, Map<string, boolean>>();
 const initializedToolCardsBySession = new Map<string, Set<string>>();
 const lastAutoExpandPrefBySession = new Map<string, boolean>();
 
-/** Reused helper for get Expanded Tool Cards behavior in ui/src/ui/chat. */
+/** Return the mutable expansion map for one session. */
 export function getExpandedToolCards(sessionKey: string): Map<string, boolean> {
   return getOrCreateSessionCacheValue(expandedToolCardsBySession, sessionKey, () => new Map());
 }
@@ -17,14 +18,14 @@ function getInitializedToolCards(sessionKey: string): Set<string> {
   return getOrCreateSessionCacheValue(initializedToolCardsBySession, sessionKey, () => new Set());
 }
 
-/** Reused helper for reset Tool Expansion State For Test behavior in ui/src/ui/chat. */
+/** Clear all cached expansion state for tests. */
 export function resetToolExpansionStateForTest() {
   expandedToolCardsBySession.clear();
   initializedToolCardsBySession.clear();
   lastAutoExpandPrefBySession.clear();
 }
 
-/** Reused helper for sync Tool Card Expansion State behavior in ui/src/ui/chat. */
+/** Register current tool cards/messages and apply auto-expand to newly seen entries. */
 export function syncToolCardExpansionState(
   sessionKey: string,
   items: Array<ChatItem | MessageGroup>,

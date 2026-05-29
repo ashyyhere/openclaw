@@ -1,4 +1,6 @@
-// ui/src/ui/chat realtime talk google live helpers and runtime behavior.
+// Google Live realtime-talk transport. It validates the gateway-issued WebSocket
+// URL, pumps microphone PCM to Google Live, plays PCM output, and routes tool
+// calls through the shared realtime-talk control helpers.
 import { base64ToBytes, bytesToBase64, floatToPcm16 } from "./realtime-talk-audio.ts";
 import { RealtimeTalkPcmOutputQueue } from "./realtime-talk-pcm-output.ts";
 import type { RealtimeTalkJsonPcmWebSocketSessionResult } from "./realtime-talk-shared.ts";
@@ -47,7 +49,7 @@ const GOOGLE_LIVE_WEBSOCKET_HOST = "generativelanguage.googleapis.com";
 const GOOGLE_LIVE_WEBSOCKET_PATH =
   /^\/ws\/google\.ai\.generativelanguage\.v[0-9a-z]+\.GenerativeService\.BidiGenerateContent(?:Constrained)?$/;
 
-/** Reused helper for build Google Live Url behavior in ui/src/ui/chat. */
+/** Build a credentialed Google Live WebSocket URL from a validated session result. */
 export function buildGoogleLiveUrl(session: RealtimeTalkJsonPcmWebSocketSessionResult): string {
   let url: URL;
   try {
@@ -72,7 +74,7 @@ export function buildGoogleLiveUrl(session: RealtimeTalkJsonPcmWebSocketSessionR
   return url.toString();
 }
 
-/** Reused class for Google Live Realtime Talk Transport behavior in ui/src/ui/chat. */
+/** Browser transport for Google Live JSON/PCM realtime voice sessions. */
 export class GoogleLiveRealtimeTalkTransport implements RealtimeTalkTransport {
   private ws: WebSocket | null = null;
   private media: MediaStream | null = null;

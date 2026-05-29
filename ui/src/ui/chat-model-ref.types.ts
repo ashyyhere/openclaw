@@ -1,5 +1,5 @@
-// Shared types for ui/src/ui chat model ref types behavior.
-/** Shared type for Chat Model Override in ui/src/ui. */
+// Stored chat model override shapes shared by UI state and chat-model helpers.
+/** Chat model override stored as either raw user text or provider-qualified value. */
 export type ChatModelOverride =
   | {
       kind: "qualified";
