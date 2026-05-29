@@ -9,7 +9,7 @@ import { VERSION } from "../version.js";
 import { formatHealthCheckFailure } from "./health-format.js";
 import type { StatusSummary } from "./status.types.js";
 
-/** Shared type for Gateway Memory Probe in src/commands. */
+/** Gateway embedding memory readiness probe result used by doctor renderers. */
 export type GatewayMemoryProbe = {
   checked: boolean;
   ready: boolean;
@@ -42,7 +42,7 @@ function noteCliGatewayVersionSkew(status: StatusSummary | undefined): void {
   );
 }
 
-/** Reused helper for check Gateway Health behavior in src/commands. */
+/** Checks gateway RPC health and reports channel/version warnings to the doctor UI. */
 export async function checkGatewayHealth(params: {
   runtime: RuntimeEnv;
   cfg: OpenClawConfig;
@@ -101,7 +101,7 @@ export async function checkGatewayHealth(params: {
   return { healthOk, status };
 }
 
-/** Reused helper for probe Gateway Memory Status behavior in src/commands. */
+/** Probes gateway memory readiness while preserving intentional skip vs timeout. */
 export async function probeGatewayMemoryStatus(params: {
   cfg: OpenClawConfig;
   timeoutMs?: number;

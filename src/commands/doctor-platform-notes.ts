@@ -18,7 +18,7 @@ function resolveHomeDir(): string {
   return process.env.HOME ?? os.homedir();
 }
 
-/** Reused helper for collect Mac Launch Agent Override Warning behavior in src/commands. */
+/** Returns the macOS warning for a local marker that disables LaunchAgent writes. */
 export function collectMacLaunchAgentOverrideWarning(deps?: {
   platform?: NodeJS.Platform;
   homeDir?: string;
@@ -43,7 +43,7 @@ export function collectMacLaunchAgentOverrideWarning(deps?: {
   ].join("\n");
 }
 
-/** Reused helper for note Mac Launch Agent Overrides behavior in src/commands. */
+/** Emits the LaunchAgent override warning during doctor runs on macOS. */
 export async function noteMacLaunchAgentOverrides() {
   const warning = collectMacLaunchAgentOverrideWarning();
   if (warning) {
@@ -51,7 +51,7 @@ export async function noteMacLaunchAgentOverrides() {
   }
 }
 
-/** Reused helper for collect Mac Stale Open Claw Update Launchd Jobs Warning behavior in src/commands. */
+/** Collects stale updater launchd job details without mutating launchd state. */
 export async function collectMacStaleOpenClawUpdateLaunchdJobsWarning(deps?: {
   platform?: NodeJS.Platform;
   findJobs?: typeof findStaleOpenClawUpdateLaunchdJobs;
@@ -79,7 +79,7 @@ export async function collectMacStaleOpenClawUpdateLaunchdJobsWarning(deps?: {
   ].join("\n");
 }
 
-/** Reused helper for note Mac Stale Open Claw Update Launchd Jobs behavior in src/commands. */
+/** Emits stale updater launchd job warnings when doctor finds old jobs. */
 export async function noteMacStaleOpenClawUpdateLaunchdJobs(deps?: {
   platform?: NodeJS.Platform;
   findJobs?: typeof findStaleOpenClawUpdateLaunchdJobs;
@@ -113,7 +113,7 @@ function hasConfigGatewayCreds(cfg: OpenClawConfig): boolean {
   );
 }
 
-/** Reused helper for collect Mac Launchctl Gateway Env Override Warning behavior in src/commands. */
+/** Warns when host-wide launchctl auth env can override configured gateway creds. */
 export async function collectMacLaunchctlGatewayEnvOverrideWarning(
   cfg: OpenClawConfig,
   deps?: {
@@ -163,7 +163,7 @@ export async function collectMacLaunchctlGatewayEnvOverrideWarning(
     .join("\n");
 }
 
-/** Reused helper for note Mac Launchctl Gateway Env Overrides behavior in src/commands. */
+/** Emits macOS launchctl gateway auth override warnings during doctor runs. */
 export async function noteMacLaunchctlGatewayEnvOverrides(
   cfg: OpenClawConfig,
   deps?: {
@@ -178,7 +178,7 @@ export async function noteMacLaunchctlGatewayEnvOverrides(
   }
 }
 
-/** Reused helper for collect Mac Gateway Platform Warnings behavior in src/commands. */
+/** Aggregates macOS gateway platform warnings for doctor status/report surfaces. */
 export async function collectMacGatewayPlatformWarnings(
   cfg: OpenClawConfig,
 ): Promise<readonly string[]> {
@@ -212,7 +212,7 @@ function isTmpCompileCachePath(cachePath: string): boolean {
   );
 }
 
-/** Reused helper for note Startup Optimization Hints behavior in src/commands. */
+/** Emits startup tuning hints for low-memory or ARM Linux hosts. */
 export function noteStartupOptimizationHints(
   env: NodeJS.ProcessEnv = process.env,
   deps?: {

@@ -3,14 +3,14 @@ import type { DoctorPrompter } from "./doctor-prompter.js";
 
 type ServiceRepairPolicy = "auto" | "external";
 
-/** Reused constant for SERVICE REPAIR POLICY ENV behavior in src/commands. */
+/** Env key that lets externally supervised installs opt out of doctor service repair. */
 export const SERVICE_REPAIR_POLICY_ENV = "OPENCLAW_SERVICE_REPAIR_POLICY";
 
-/** Reused constant for EXTERNAL SERVICE REPAIR NOTE behavior in src/commands. */
+/** Doctor note shown when service repair is delegated to an external supervisor. */
 export const EXTERNAL_SERVICE_REPAIR_NOTE =
   "Gateway service is managed externally; skipped service install/start repair. Start or repair the gateway through your supervisor.";
 
-/** Reused helper for resolve Service Repair Policy behavior in src/commands. */
+/** Resolves service repair policy from env, defaulting to managed automatic repair. */
 export function resolveServiceRepairPolicy(
   env: NodeJS.ProcessEnv = process.env,
 ): ServiceRepairPolicy {
@@ -24,14 +24,14 @@ export function resolveServiceRepairPolicy(
   }
 }
 
-/** Reused helper for is Service Repair Externally Managed behavior in src/commands. */
+/** Checks whether doctor must avoid mutating gateway service supervision. */
 export function isServiceRepairExternallyManaged(
   policy: ServiceRepairPolicy = resolveServiceRepairPolicy(),
 ): boolean {
   return policy === "external";
 }
 
-/** Reused helper for confirm Doctor Service Repair behavior in src/commands. */
+/** Confirms a service repair only when the active policy allows doctor-managed repair. */
 export async function confirmDoctorServiceRepair(
   prompter: DoctorPrompter,
   params: Parameters<DoctorPrompter["confirmRuntimeRepair"]>[0],
