@@ -1,4 +1,4 @@
-// media-understanding image input normalize helpers and runtime behavior.
+// Image input normalization before media-understanding provider calls.
 import { extractImageContentFromSource, normalizeMimeType } from "../media/input-files.js";
 import { DEFAULT_MAX_BYTES } from "./defaults.constants.js";
 
@@ -14,7 +14,7 @@ function isHeicInput(params: { mime?: string; fileName?: string }): boolean {
   return Boolean(fileName && HEIC_EXT_RE.test(fileName));
 }
 
-/** Reused helper for normalize Image Description Input behavior in src/media-understanding. */
+/** Convert HEIC/HEIF image inputs to provider-friendly bytes when needed. */
 export async function normalizeImageDescriptionInput(params: {
   buffer: Buffer;
   fileName?: string;

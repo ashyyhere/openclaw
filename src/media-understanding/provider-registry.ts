@@ -1,4 +1,4 @@
-// media-understanding provider registry helpers and runtime behavior.
+// Provider registry for plugin and model-backed media-understanding providers.
 import type { OpenClawConfig } from "../config/types.js";
 import { resolvePluginCapabilityProviders } from "../plugins/capability-provider-runtime.js";
 import { resolveImageCapableConfigProviderIds } from "./config-provider-models.js";
@@ -43,10 +43,10 @@ function hydrateModelBackedMediaProvider(
   };
 }
 
-/** Re-exported API for src/media-understanding, starting with normalize Media Execution Provider Id. */
+/** Provider id normalizers exported with the media-understanding registry. */
 export { normalizeMediaExecutionProviderId, normalizeMediaProviderId } from "./provider-id.js";
 
-/** Reused helper for build Media Understanding Registry behavior in src/media-understanding. */
+/** Build the media-understanding provider registry from plugins, config, and overrides. */
 export function buildMediaUnderstandingRegistry(
   overrides?: Record<string, MediaUnderstandingProvider>,
   cfg?: OpenClawConfig,
@@ -77,7 +77,7 @@ export function buildMediaUnderstandingRegistry(
   return registry;
 }
 
-/** Reused helper for get Media Understanding Provider behavior in src/media-understanding. */
+/** Look up a provider by normalized media-understanding id. */
 export function getMediaUnderstandingProvider(
   id: string,
   registry: Map<string, MediaUnderstandingProvider>,

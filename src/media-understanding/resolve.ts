@@ -1,4 +1,4 @@
-// media-understanding resolve helpers and runtime behavior.
+// Config resolution helpers for media-understanding provider/model execution.
 import type { MsgContext } from "../auto-reply/templating.js";
 import type { OpenClawConfig } from "../config/types.js";
 import type {
@@ -39,7 +39,7 @@ export function resolveMediaRuntimeTimeoutMs(timeoutMs: number | undefined): num
   return resolveTimerTimeoutMs(timeoutMs, DEFAULT_MEDIA_RUNTIME_TIMEOUT_MS);
 }
 
-/** Reused helper for resolve Prompt behavior in src/media-understanding. */
+/** Resolve the provider prompt, appending character guidance when applicable. */
 export function resolvePrompt(
   capability: MediaUnderstandingCapability,
   prompt?: string,
@@ -52,7 +52,7 @@ export function resolvePrompt(
   return `${base} Respond in at most ${maxChars} characters.`;
 }
 
-/** Reused helper for resolve Max Chars behavior in src/media-understanding. */
+/** Resolve output character budget for a capability/model entry. */
 export function resolveMaxChars(params: {
   capability: MediaUnderstandingCapability;
   entry: MediaUnderstandingModelConfig;
@@ -68,7 +68,7 @@ export function resolveMaxChars(params: {
   return DEFAULT_MAX_CHARS_BY_CAPABILITY[capability];
 }
 
-/** Reused helper for resolve Max Bytes behavior in src/media-understanding. */
+/** Resolve input byte budget for a capability/model entry. */
 export function resolveMaxBytes(params: {
   capability: MediaUnderstandingCapability;
   entry: MediaUnderstandingModelConfig;
@@ -85,7 +85,7 @@ export function resolveMaxBytes(params: {
   return DEFAULT_MAX_BYTES[params.capability];
 }
 
-/** Reused helper for resolve Scope Decision behavior in src/media-understanding. */
+/** Resolve whether media-understanding is allowed for the current message context. */
 export function resolveScopeDecision(params: {
   scope?: MediaUnderstandingScopeConfig;
   ctx: MsgContext;
@@ -98,7 +98,7 @@ export function resolveScopeDecision(params: {
   });
 }
 
-/** Reused helper for resolve Model Entries behavior in src/media-understanding. */
+/** Resolve configured model entries that can run a media capability. */
 export function resolveModelEntries(params: {
   cfg: OpenClawConfig;
   capability: MediaUnderstandingCapability;
@@ -138,7 +138,7 @@ export function resolveModelEntries(params: {
     .map(({ entry }) => entry);
 }
 
-/** Reused helper for resolve Concurrency behavior in src/media-understanding. */
+/** Resolve the media-understanding concurrency limit. */
 export function resolveConcurrency(cfg: OpenClawConfig): number {
   const configured = cfg.tools?.media?.concurrency;
   if (typeof configured === "number" && Number.isFinite(configured) && configured > 0) {
@@ -147,7 +147,7 @@ export function resolveConcurrency(cfg: OpenClawConfig): number {
   return DEFAULT_MEDIA_CONCURRENCY;
 }
 
-/** Reused helper for resolve Entries With Active Fallback behavior in src/media-understanding. */
+/** Resolve model entries, falling back to the active model when config allows it. */
 export function resolveEntriesWithActiveFallback(params: {
   cfg: OpenClawConfig;
   capability: MediaUnderstandingCapability;

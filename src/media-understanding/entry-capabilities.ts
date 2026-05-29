@@ -1,4 +1,5 @@
-// media-understanding entry capabilities helpers and runtime behavior.
+// Capability resolution for media-understanding model entries from shared and
+// capability-specific config.
 import type { MediaUnderstandingModelConfig } from "../config/types.tools.js";
 import { normalizeMediaProviderId } from "./provider-id.js";
 import type {
@@ -16,7 +17,7 @@ function resolveEntryType(entry: MediaUnderstandingModelConfig): "provider" | "c
   return entry.type ?? (entry.command ? "cli" : "provider");
 }
 
-/** Reused helper for resolve Configured Media Entry Capabilities behavior in src/media-understanding. */
+/** Return valid media capabilities explicitly configured on a model entry. */
 export function resolveConfiguredMediaEntryCapabilities(
   entry: MediaUnderstandingModelConfig,
 ): MediaUnderstandingCapability[] | undefined {
@@ -27,7 +28,7 @@ export function resolveConfiguredMediaEntryCapabilities(
   return capabilities.length > 0 ? capabilities : undefined;
 }
 
-/** Reused helper for resolve Effective Media Entry Capabilities behavior in src/media-understanding. */
+/** Resolve capabilities from entry config or provider registry defaults. */
 export function resolveEffectiveMediaEntryCapabilities(params: {
   entry: MediaUnderstandingModelConfig;
   source: "shared" | "capability";
@@ -50,7 +51,7 @@ export function resolveEffectiveMediaEntryCapabilities(params: {
   return params.providerRegistry.get(providerId)?.capabilities;
 }
 
-/** Reused helper for matches Media Entry Capability behavior in src/media-understanding. */
+/** Return true when a model entry can satisfy the requested media capability. */
 export function matchesMediaEntryCapability(params: {
   entry: MediaUnderstandingModelConfig;
   source: "shared" | "capability";
