@@ -1,5 +1,6 @@
 import type { SecretInput } from "./types.secrets.js";
 
+/** Per-skill config entry for enablement, secrets, env, and skill-owned config. */
 export type SkillConfig = {
   enabled?: boolean;
   apiKey?: SecretInput;
@@ -7,6 +8,7 @@ export type SkillConfig = {
   config?: Record<string, unknown>;
 };
 
+/** Skill discovery roots and watcher settings. */
 export type SkillsLoadConfig = {
   /**
    * Additional skill folders to scan (lowest precedence).
@@ -24,6 +26,7 @@ export type SkillsLoadConfig = {
   watchDebounceMs?: number;
 };
 
+/** Skill installer preferences and archive-upload permissions. */
 export type SkillsInstallConfig = {
   preferBrew?: boolean;
   nodeManager?: "npm" | "pnpm" | "yarn" | "bun";
@@ -31,6 +34,7 @@ export type SkillsInstallConfig = {
   allowUploadedArchives?: boolean;
 };
 
+/** Guardrails for skill discovery and model-facing prompt size. */
 export type SkillsLimitsConfig = {
   /** Max number of immediate child directories to consider under a skills root before treating it as suspicious. */
   maxCandidatesPerRoot?: number;
@@ -58,6 +62,7 @@ export type SkillsWorkshopConfig = {
   maxSkillBytes?: number;
 };
 
+/** Top-level skills config block from `openclaw.json`. */
 export type SkillsConfig = {
   /** Optional bundled-skill allowlist (only affects bundled skills). */
   allowBundled?: string[];

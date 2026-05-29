@@ -1,4 +1,4 @@
-// config types crestodian helpers and runtime behavior.
+// Crestodian config contracts for gated remote message rescue.
 type CrestodianRescueConfig = {
   /**
    * Remote message rescue gate.
@@ -11,7 +11,7 @@ type CrestodianRescueConfig = {
   pendingTtlMinutes?: number;
 };
 
-/** Shared type for Crestodian Config in src/config. */
+/** Top-level Crestodian config block. */
 export type CrestodianConfig = {
   rescue?: CrestodianRescueConfig;
 };

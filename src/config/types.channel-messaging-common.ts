@@ -1,4 +1,4 @@
-// config types channel messaging common helpers and runtime behavior.
+// Shared account/channel messaging config used by multiple message-channel plugins.
 import type {
   BlockStreamingCoalesceConfig,
   ContextVisibilityMode,
@@ -12,7 +12,7 @@ import type {
 } from "./types.channel-health.js";
 import type { DmConfig } from "./types.messages.js";
 
-/** Shared type for Common Channel Messaging Config in src/config. */
+/** Common inbound, outbound, context, and health settings for message channels. */
 export type CommonChannelMessagingConfig = {
   /** Optional display name for this account (used in CLI/UI lists). */
   name?: string;
