@@ -1,9 +1,9 @@
-// packages/gateway-protocol/src/schema sessions helpers and runtime behavior.
+// TypeBox schemas for session lifecycle, messaging, patching, compaction, and usage RPCs.
 import { Type } from "typebox";
 import { PluginJsonValueSchema } from "./plugins.js";
 import { NonEmptyString, SessionLabelString } from "./primitives.js";
 
-/** Public constant for Session Compaction Checkpoint Reason Schema behavior in packages/gateway-protocol. */
+/** Allowed reasons for writing a session compaction checkpoint. */
 export const SessionCompactionCheckpointReasonSchema = Type.Union([
   Type.Literal("manual"),
   Type.Literal("auto-threshold"),
@@ -11,7 +11,7 @@ export const SessionCompactionCheckpointReasonSchema = Type.Union([
   Type.Literal("timeout-retry"),
 ]);
 
-/** Public constant for Session Operation Event Schema behavior in packages/gateway-protocol. */
+/** Event payload emitted while long-running session operations progress. */
 export const SessionOperationEventSchema = Type.Object(
   {
     operationId: NonEmptyString,
@@ -26,7 +26,7 @@ export const SessionOperationEventSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Session Compaction Transcript Reference Schema behavior in packages/gateway-protocol. */
+/** Transcript location recorded before or after a compaction checkpoint. */
 export const SessionCompactionTranscriptReferenceSchema = Type.Object(
   {
     sessionId: NonEmptyString,
@@ -37,7 +37,7 @@ export const SessionCompactionTranscriptReferenceSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Session Compaction Checkpoint Schema behavior in packages/gateway-protocol. */
+/** Persisted checkpoint metadata for compaction branch/restore workflows. */
 export const SessionCompactionCheckpointSchema = Type.Object(
   {
     checkpointId: NonEmptyString,
@@ -55,7 +55,7 @@ export const SessionCompactionCheckpointSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Sessions List Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for filtering and decorating session list results. */
 export const SessionsListParamsSchema = Type.Object(
   {
     /**
@@ -90,7 +90,7 @@ export const SessionsListParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Sessions Cleanup Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for repairing stale or malformed session bindings. */
 export const SessionsCleanupParamsSchema = Type.Object(
   {
     agent: Type.Optional(NonEmptyString),
@@ -103,7 +103,7 @@ export const SessionsCleanupParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Sessions Preview Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for reading bounded transcript previews for selected sessions. */
 export const SessionsPreviewParamsSchema = Type.Object(
   {
     keys: Type.Array(NonEmptyString, { minItems: 1 }),
@@ -113,7 +113,7 @@ export const SessionsPreviewParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Sessions Describe Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for describing one session and optional derived display fields. */
 export const SessionsDescribeParamsSchema = Type.Object(
   {
     key: NonEmptyString,
@@ -123,7 +123,7 @@ export const SessionsDescribeParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Sessions Resolve Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for resolving a session by key, id, label, or ownership metadata. */
 export const SessionsResolveParamsSchema = Type.Object(
   {
     key: Type.Optional(NonEmptyString),
@@ -137,7 +137,7 @@ export const SessionsResolveParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Sessions Create Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for creating or adopting a session with optional seed message. */
 export const SessionsCreateParamsSchema = Type.Object(
   {
     key: Type.Optional(NonEmptyString),
@@ -152,7 +152,7 @@ export const SessionsCreateParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Sessions Send Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for sending a user message into an existing session. */
 export const SessionsSendParamsSchema = Type.Object(
   {
     key: NonEmptyString,
@@ -166,7 +166,7 @@ export const SessionsSendParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Sessions Messages Subscribe Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for subscribing to live message events for one session. */
 export const SessionsMessagesSubscribeParamsSchema = Type.Object(
   {
     key: NonEmptyString,
@@ -175,7 +175,7 @@ export const SessionsMessagesSubscribeParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Sessions Messages Unsubscribe Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for unsubscribing from live message events for one session. */
 export const SessionsMessagesUnsubscribeParamsSchema = Type.Object(
   {
     key: NonEmptyString,
@@ -184,7 +184,7 @@ export const SessionsMessagesUnsubscribeParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Sessions Abort Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for aborting active work by session, run, or agent scope. */
 export const SessionsAbortParamsSchema = Type.Object(
   {
     key: Type.Optional(NonEmptyString),
@@ -194,7 +194,7 @@ export const SessionsAbortParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Sessions Patch Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for updating persisted session settings and ownership metadata. */
 export const SessionsPatchParamsSchema = Type.Object(
   {
     key: NonEmptyString,
@@ -243,7 +243,7 @@ export const SessionsPatchParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Sessions Plugin Patch Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for setting or unsetting plugin-owned session state. */
 export const SessionsPluginPatchParamsSchema = Type.Object(
   {
     key: NonEmptyString,
@@ -255,7 +255,7 @@ export const SessionsPluginPatchParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Sessions Plugin Patch Result Schema behavior in packages/gateway-protocol. */
+/** Result schema for plugin-owned session state updates. */
 export const SessionsPluginPatchResultSchema = Type.Object(
   {
     ok: Type.Literal(true),
@@ -265,7 +265,7 @@ export const SessionsPluginPatchResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Sessions Reset Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for resetting a session transcript binding. */
 export const SessionsResetParamsSchema = Type.Object(
   {
     key: NonEmptyString,
@@ -275,7 +275,7 @@ export const SessionsResetParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Sessions Delete Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for deleting session metadata and optionally transcript data. */
 export const SessionsDeleteParamsSchema = Type.Object(
   {
     key: NonEmptyString,
@@ -287,7 +287,7 @@ export const SessionsDeleteParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Sessions Compact Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for manually compacting a session transcript. */
 export const SessionsCompactParamsSchema = Type.Object(
   {
     key: NonEmptyString,
@@ -297,7 +297,7 @@ export const SessionsCompactParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Sessions Compaction List Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for listing compaction checkpoints for a session. */
 export const SessionsCompactionListParamsSchema = Type.Object(
   {
     key: NonEmptyString,
@@ -306,7 +306,7 @@ export const SessionsCompactionListParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Sessions Compaction Get Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for fetching one compaction checkpoint. */
 export const SessionsCompactionGetParamsSchema = Type.Object(
   {
     key: NonEmptyString,
@@ -316,7 +316,7 @@ export const SessionsCompactionGetParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Sessions Compaction Branch Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for branching a session from a compaction checkpoint. */
 export const SessionsCompactionBranchParamsSchema = Type.Object(
   {
     key: NonEmptyString,
@@ -326,7 +326,7 @@ export const SessionsCompactionBranchParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Sessions Compaction Restore Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for restoring a session to a compaction checkpoint. */
 export const SessionsCompactionRestoreParamsSchema = Type.Object(
   {
     key: NonEmptyString,
@@ -336,7 +336,7 @@ export const SessionsCompactionRestoreParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Sessions Compaction List Result Schema behavior in packages/gateway-protocol. */
+/** Result schema for listing compaction checkpoints. */
 export const SessionsCompactionListResultSchema = Type.Object(
   {
     ok: Type.Literal(true),
@@ -346,7 +346,7 @@ export const SessionsCompactionListResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Sessions Compaction Get Result Schema behavior in packages/gateway-protocol. */
+/** Result schema for fetching one compaction checkpoint. */
 export const SessionsCompactionGetResultSchema = Type.Object(
   {
     ok: Type.Literal(true),
@@ -356,7 +356,7 @@ export const SessionsCompactionGetResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Sessions Compaction Branch Result Schema behavior in packages/gateway-protocol. */
+/** Result schema for creating a new branch from a compaction checkpoint. */
 export const SessionsCompactionBranchResultSchema = Type.Object(
   {
     ok: Type.Literal(true),
@@ -375,7 +375,7 @@ export const SessionsCompactionBranchResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Sessions Compaction Restore Result Schema behavior in packages/gateway-protocol. */
+/** Result schema for restoring a session from a compaction checkpoint. */
 export const SessionsCompactionRestoreResultSchema = Type.Object(
   {
     ok: Type.Literal(true),
@@ -393,7 +393,7 @@ export const SessionsCompactionRestoreResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Sessions Usage Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for session token/cost usage reports. */
 export const SessionsUsageParamsSchema = Type.Object(
   {
     /** Specific session key to analyze; if omitted returns sessions for the effective agent. */
