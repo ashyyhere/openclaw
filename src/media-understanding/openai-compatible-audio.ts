@@ -1,4 +1,4 @@
-// media-understanding openai compatible audio helpers and runtime behavior.
+// OpenAI-compatible audio transcription adapter for media-understanding providers.
 import {
   assertOkOrThrowHttpError,
   buildAudioTranscriptionFormData,
@@ -20,7 +20,7 @@ function resolveModel(model: string | undefined, fallback: string): string {
   return trimmed || fallback;
 }
 
-/** Reused helper for transcribe Open Ai Compatible Audio behavior in src/media-understanding. */
+/** Transcribe audio through an OpenAI-compatible `/audio/transcriptions` endpoint. */
 export async function transcribeOpenAiCompatibleAudio(
   params: OpenAiCompatibleAudioParams,
 ): Promise<AudioTranscriptionResult> {

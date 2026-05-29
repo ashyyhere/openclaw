@@ -1,4 +1,5 @@
-// media-understanding apply helpers and runtime behavior.
+// Applies media understanding outputs to inbound message context before the
+// agent sees the turn.
 import path from "node:path";
 import { finalizeInboundContext } from "../auto-reply/reply/inbound-context.js";
 import type { MsgContext } from "../auto-reply/templating.js";
@@ -39,7 +40,7 @@ import type {
   MediaUnderstandingProvider,
 } from "./types.js";
 
-/** Shared type for Apply Media Understanding Result in src/media-understanding. */
+/** Result of applying media understanding and file extraction to a message. */
 export type ApplyMediaUnderstandingResult = {
   outputs: MediaUnderstandingOutput[];
   decisions: MediaUnderstandingDecision[];
@@ -90,7 +91,7 @@ const MIME_TYPE_WITH_OPTIONAL_PARAMS = new RegExp(
   "i",
 );
 
-/** Reused helper for sanitize Mime Type behavior in src/media-understanding. */
+/** Sanitize a MIME type while permitting valid RFC parameter suffixes. */
 export function sanitizeMimeType(value?: string): string | undefined {
   const trimmed = normalizeOptionalString(value);
   if (!trimmed) {
@@ -522,7 +523,7 @@ async function extractFileBlocks(params: {
   return blocks;
 }
 
-/** Reused helper for apply Media Understanding behavior in src/media-understanding. */
+/** Run configured media/file understanding and merge results into message context. */
 export async function applyMediaUnderstanding(params: {
   ctx: MsgContext;
   cfg: OpenClawConfig;
