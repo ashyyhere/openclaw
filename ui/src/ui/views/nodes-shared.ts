@@ -1,13 +1,15 @@
-// ui/src/ui/views nodes shared helpers and runtime behavior.
+// Shared Nodes view helpers for selecting config agents and node-host targets.
+// Node metadata is provider/plugin-shaped, so these helpers coerce only the
+// fields the UI needs.
 import { normalizeOptionalString } from "../string-coerce.ts";
 
-/** Shared type for Node Target Option in ui/src/ui/views. */
+/** Select option for a node-host that supports required commands. */
 export type NodeTargetOption = {
   id: string;
   label: string;
 };
 
-/** Shared type for Config Agent Option in ui/src/ui/views. */
+/** Configured agent option extracted from raw config form state. */
 export type ConfigAgentOption = {
   id: string;
   name?: string;
@@ -16,7 +18,7 @@ export type ConfigAgentOption = {
   record: Record<string, unknown>;
 };
 
-/** Reused helper for resolve Config Agents behavior in ui/src/ui/views. */
+/** Extract configured agents from raw config state in source order. */
 export function resolveConfigAgents(config: Record<string, unknown> | null): ConfigAgentOption[] {
   const agentsNode = (config?.agents ?? {}) as Record<string, unknown>;
   const list = Array.isArray(agentsNode.list) ? agentsNode.list : [];
@@ -39,7 +41,7 @@ export function resolveConfigAgents(config: Record<string, unknown> | null): Con
   return agents;
 }
 
-/** Reused helper for resolve Node Targets behavior in ui/src/ui/views. */
+/** Return node targets whose command list supports any required command. */
 export function resolveNodeTargets(
   nodes: Array<Record<string, unknown>>,
   requiredCommands: string[],

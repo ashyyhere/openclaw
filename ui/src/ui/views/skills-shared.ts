@@ -1,8 +1,10 @@
-// ui/src/ui/views skills shared helpers and runtime behavior.
+// Shared Skills view formatting helpers for eligibility reasons and status
+// chips. These keep list and detail panels using the same blocked/eligible
+// vocabulary.
 import { html, nothing } from "lit";
 import type { SkillStatusEntry } from "../types.ts";
 
-/** Reused helper for compute Skill Missing behavior in ui/src/ui/views. */
+/** Flatten missing bins/env/config/os requirements into compact reason labels. */
 export function computeSkillMissing(skill: SkillStatusEntry): string[] {
   return [
     ...skill.missing.bins.map((b) => `bin:${b}`),
@@ -12,7 +14,7 @@ export function computeSkillMissing(skill: SkillStatusEntry): string[] {
   ];
 }
 
-/** Reused helper for compute Skill Reasons behavior in ui/src/ui/views. */
+/** Return non-requirement reasons that keep a skill from being eligible. */
 export function computeSkillReasons(skill: SkillStatusEntry): string[] {
   const reasons: string[] = [];
   if (skill.disabled) {
@@ -24,7 +26,7 @@ export function computeSkillReasons(skill: SkillStatusEntry): string[] {
   return reasons;
 }
 
-/** Reused helper for render Skill Status Chips behavior in ui/src/ui/views. */
+/** Render source, bundled, and eligibility chips for a skill row/card. */
 export function renderSkillStatusChips(params: {
   skill: SkillStatusEntry;
   showBundledBadge?: boolean;

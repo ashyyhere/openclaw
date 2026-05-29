@@ -1,4 +1,5 @@
-// ui/src/ui/views overview log tail helpers and runtime behavior.
+// Overview log-tail panel renderer. It presents a short, ANSI-stripped slice of
+// recent logs with an inline refresh control.
 import { html, nothing } from "lit";
 import { t } from "../../i18n/index.ts";
 import { icons } from "../icons.ts";
@@ -9,13 +10,13 @@ function stripAnsi(text: string): string {
   return text.replace(/\x1b\]8;;.*?\x1b\\|\x1b\]8;;\x1b\\/g, "").replace(/\x1b\[[0-9;]*m/g, "");
 }
 
-/** Shared type for Overview Log Tail Props in ui/src/ui/views. */
+/** Log lines and refresh callback available to the Overview panel. */
 export type OverviewLogTailProps = {
   lines: string[];
   onRefreshLogs: () => void;
 };
 
-/** Reused helper for render Overview Log Tail behavior in ui/src/ui/views. */
+/** Render the compact Overview log-tail card when log lines exist. */
 export function renderOverviewLogTail(props: OverviewLogTailProps) {
   if (props.lines.length === 0) {
     return nothing;

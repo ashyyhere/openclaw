@@ -1,7 +1,9 @@
-// ui/src/ui/views skills grouping helpers and runtime behavior.
+// Grouping helpers for the Skills view. Skill source ids are normalized into
+// stable display groups so workspace, bundled, managed, and extra skills render
+// in predictable sections.
 import type { SkillStatusEntry } from "../types.ts";
 
-/** Shared type for Skill Group in ui/src/ui/views. */
+/** Display group containing skills from one source family. */
 export type SkillGroup = {
   id: string;
   label: string;
@@ -15,7 +17,7 @@ const SKILL_SOURCE_GROUPS: Array<{ id: string; label: string; sources: string[] 
   { id: "extra", label: "Extra Skills", sources: ["openclaw-extra"] },
 ];
 
-/** Reused helper for group Skills behavior in ui/src/ui/views. */
+/** Group skill status entries into ordered source buckets. */
 export function groupSkills(skills: SkillStatusEntry[]): SkillGroup[] {
   const groups = new Map<string, SkillGroup>();
   for (const def of SKILL_SOURCE_GROUPS) {
