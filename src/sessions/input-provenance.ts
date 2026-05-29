@@ -1,18 +1,19 @@
-// sessions input provenance helpers and runtime behavior.
+// User-input provenance helpers: tag routed/inter-session prompts and add
+// policy-visible prefixes when content did not originate from the current user.
 import type { AgentMessage } from "../agents/runtime/index.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 
-/** Reused constant for INPUT PROVENANCE KIND VALUES behavior in src/sessions. */
+/** Allowed provenance kinds persisted on user messages. */
 export const INPUT_PROVENANCE_KIND_VALUES = [
   "external_user",
   "inter_session",
   "internal_system",
 ] as const;
 
-/** Shared type for Input Provenance Kind in src/sessions. */
+/** Provenance category for user-message input sources. */
 export type InputProvenanceKind = (typeof INPUT_PROVENANCE_KIND_VALUES)[number];
 
-/** Shared type for Input Provenance in src/sessions. */
+/** Metadata describing where a user-message payload came from. */
 export type InputProvenance = {
   kind: InputProvenanceKind;
   originSessionId?: string;
@@ -21,9 +22,9 @@ export type InputProvenance = {
   sourceTool?: string;
 };
 
-/** Reused constant for INTER SESSION PROMPT PREFIX BASE behavior in src/sessions. */
+/** Marker prefix inserted before inter-session prompt text. */
 export const INTER_SESSION_PROMPT_PREFIX_BASE = "[Inter-session message]";
-/** Reused constant for AGENT MEDIATED COMPLETION SOURCE TOOLS behavior in src/sessions. */
+/** Tools whose generated completions may preserve user-facing session state. */
 export const AGENT_MEDIATED_COMPLETION_SOURCE_TOOLS = [
   "agent_harness_task",
   "image_generate",
@@ -39,7 +40,7 @@ function isInputProvenanceKind(value: unknown): value is InputProvenanceKind {
   );
 }
 
-/** Reused helper for normalize Input Provenance behavior in src/sessions. */
+/** Normalizes persisted or runtime provenance values into the closed provenance shape. */
 export function normalizeInputProvenance(value: unknown): InputProvenance | undefined {
   if (!value || typeof value !== "object") {
     return undefined;
@@ -57,7 +58,7 @@ export function normalizeInputProvenance(value: unknown): InputProvenance | unde
   };
 }
 
-/** Reused helper for apply Input Provenance To User Message behavior in src/sessions. */
+/** Adds provenance to user messages that do not already carry it. */
 export function applyInputProvenanceToUserMessage(
   message: AgentMessage,
   inputProvenance: InputProvenance | undefined,
@@ -78,7 +79,7 @@ export function applyInputProvenanceToUserMessage(
   } as unknown as AgentMessage;
 }
 
-/** Reused helper for is Inter Session Input Provenance behavior in src/sessions. */
+/** Checks whether a provenance value marks inter-session routed input. */
 export function isInterSessionInputProvenance(value: unknown): boolean {
   return normalizeInputProvenance(value)?.kind === "inter_session";
 }
@@ -87,7 +88,7 @@ const AGENT_MEDIATED_COMPLETION_SOURCE_TOOL_SET: ReadonlySet<string> = new Set(
   AGENT_MEDIATED_COMPLETION_SOURCE_TOOLS,
 );
 
-/** Reused helper for is Agent Mediated Completion Source Tool behavior in src/sessions. */
+/** Checks whether a source tool is one of the agent-mediated completion tools. */
 export function isAgentMediatedCompletionSourceTool(value: unknown): boolean {
   const sourceTool = normalizeOptionalString(value)?.toLowerCase();
   return sourceTool ? AGENT_MEDIATED_COMPLETION_SOURCE_TOOL_SET.has(sourceTool) : false;
@@ -99,7 +100,7 @@ const USER_FACING_SESSION_STATE_PRESERVING_SOURCE_TOOLS: ReadonlySet<string> = n
   "subagent_interrupted_resume",
 ]);
 
-/** Reused helper for should Preserve User Facing Session State For Input Provenance behavior in src/sessions. */
+/** Decides whether routed input should preserve user-facing session state. */
 export function shouldPreserveUserFacingSessionStateForInputProvenance(value: unknown): boolean {
   const provenance = normalizeInputProvenance(value);
   if (provenance?.kind !== "inter_session") {
@@ -109,7 +110,7 @@ export function shouldPreserveUserFacingSessionStateForInputProvenance(value: un
   return sourceTool ? USER_FACING_SESSION_STATE_PRESERVING_SOURCE_TOOLS.has(sourceTool) : false;
 }
 
-/** Reused helper for has Inter Session User Provenance behavior in src/sessions. */
+/** Checks whether a user message carries inter-session provenance. */
 export function hasInterSessionUserProvenance(
   message: { role?: unknown; provenance?: unknown } | undefined,
 ): boolean {
@@ -119,7 +120,7 @@ export function hasInterSessionUserProvenance(
   return isInterSessionInputProvenance(message.provenance);
 }
 
-/** Reused helper for build Inter Session Prompt Prefix behavior in src/sessions. */
+/** Builds the policy prefix inserted before inter-session prompt text. */
 export function buildInterSessionPromptPrefix(
   inputProvenance: InputProvenance | undefined,
 ): string {
@@ -160,7 +161,7 @@ function removeFirstInterSessionPromptPrefix(text: string): string {
     .join("\n");
 }
 
-/** Reused helper for annotate Inter Session Prompt Text behavior in src/sessions. */
+/** Adds or refreshes the inter-session policy prefix on prompt text. */
 export function annotateInterSessionPromptText(
   text: string,
   inputProvenance: InputProvenance | undefined,

@@ -1,8 +1,9 @@
-// sessions model overrides helpers and runtime behavior.
+// Session model override helpers: apply live model/profile selections and repair
+// older provider-wrapped override state.
 import type { SessionEntry } from "../config/sessions.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 
-/** Shared type for Model Override Selection in src/sessions. */
+/** Provider/model pair selected for a session, optionally representing the default. */
 export type ModelOverrideSelection = {
   provider: string;
   model: string;
@@ -22,7 +23,7 @@ function clearFallbackOrigin(entry: SessionEntry): boolean {
   return updated;
 }
 
-/** Reused helper for apply Model Override To Session Entry behavior in src/sessions. */
+/** Applies a model/profile override to a session entry and clears stale runtime fields. */
 export function applyModelOverrideToSessionEntry(params: {
   entry: SessionEntry;
   selection: ModelOverrideSelection;
@@ -161,7 +162,7 @@ function wrappedOverrideModel(provider: string, model: string): string {
   return `${provider}/${model}`;
 }
 
-/** Reused helper for repair Provider Wrapped Model Override behavior in src/sessions. */
+/** Repairs legacy overrides where the model field was stored as provider/model. */
 export function repairProviderWrappedModelOverride(params: {
   entry: SessionEntry;
   defaultProvider: string;
