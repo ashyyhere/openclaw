@@ -1,4 +1,4 @@
-// talk audio codec helpers and runtime behavior.
+// PCM16 resampling and G.711 mu-law conversion for realtime voice transports.
 const TELEPHONY_SAMPLE_RATE = 8000;
 const RESAMPLE_FILTER_TAPS = 31;
 const RESAMPLE_CUTOFF_GUARD = 0.94;
@@ -146,7 +146,7 @@ function sampleBandlimited(
   return weighted / weightSum;
 }
 
-/** Reused helper for resample Pcm behavior in src/talk. */
+/** Resamples little-endian PCM16 audio with a bounded low-pass filter. */
 export function resamplePcm(
   input: Buffer,
   inputSampleRate: number,
@@ -192,12 +192,12 @@ export function resamplePcm(
   return output;
 }
 
-/** Reused helper for resample Pcm To8k behavior in src/talk. */
+/** Resamples PCM16 audio to the 8 kHz telephony rate. */
 export function resamplePcmTo8k(input: Buffer, inputSampleRate: number): Buffer {
   return resamplePcm(input, inputSampleRate, TELEPHONY_SAMPLE_RATE);
 }
 
-/** Reused helper for pcm To Mulaw behavior in src/talk. */
+/** Encodes little-endian PCM16 samples as G.711 mu-law bytes. */
 export function pcmToMulaw(pcm: Buffer): Buffer {
   const pcmView = readInt16Samples(pcm);
   const mulaw = Buffer.alloc(pcmView.length);
@@ -209,7 +209,7 @@ export function pcmToMulaw(pcm: Buffer): Buffer {
   return mulaw;
 }
 
-/** Reused helper for mulaw To Pcm behavior in src/talk. */
+/** Decodes G.711 mu-law bytes into little-endian PCM16 samples. */
 export function mulawToPcm(mulaw: Buffer): Buffer {
   const pcm = Buffer.alloc(mulaw.length * 2);
   const pcmView = canUseInt16View(pcm) ? int16View(pcm) : undefined;
@@ -226,7 +226,7 @@ export function mulawToPcm(mulaw: Buffer): Buffer {
   return pcm;
 }
 
-/** Reused helper for convert Pcm To Mulaw8k behavior in src/talk. */
+/** Converts arbitrary-rate PCM16 audio into 8 kHz mu-law telephony audio. */
 export function convertPcmToMulaw8k(pcm: Buffer, inputSampleRate: number): Buffer {
   return pcmToMulaw(resamplePcmTo8k(pcm, inputSampleRate));
 }

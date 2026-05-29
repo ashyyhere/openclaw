@@ -1,17 +1,17 @@
-// talk output activity tracker helpers and runtime behavior.
-/** Shared type for Realtime Voice Output Activity Tracker Options in src/talk. */
+// Realtime voice output playback activity tracker for barge-in and watchdog logic.
+/** Clock injection options for deterministic playback activity tests. */
 export type RealtimeVoiceOutputActivityTrackerOptions = {
   now?: () => number;
 };
 
-/** Shared type for Realtime Voice Output Activity Delta in src/talk. */
+/** Incremental output chunk metrics recorded by the playback tracker. */
 export type RealtimeVoiceOutputActivityDelta = {
   audioMs?: number;
   sourceAudioBytes?: number;
   sinkAudioBytes?: number;
 };
 
-/** Shared type for Realtime Voice Output Activity Snapshot in src/talk. */
+/** Snapshot of output playback state used by diagnostics and interrupt checks. */
 export type RealtimeVoiceOutputActivitySnapshot = {
   audioMs: number;
   chunks: number;
@@ -23,7 +23,7 @@ export type RealtimeVoiceOutputActivitySnapshot = {
   playbackStartedAt?: number;
 };
 
-/** Shared type for Realtime Voice Output Activity Tracker in src/talk. */
+/** Mutable tracker for output stream lifecycle, audio chunks, and playback timing. */
 export type RealtimeVoiceOutputActivityTracker = {
   markStreamOpened(): void;
   markStreamEnding(): void;
@@ -37,7 +37,7 @@ export type RealtimeVoiceOutputActivityTracker = {
   snapshot(): RealtimeVoiceOutputActivitySnapshot;
 };
 
-/** Reused helper for create Realtime Voice Output Activity Tracker behavior in src/talk. */
+/** Creates an isolated output activity tracker for one realtime voice session. */
 export function createRealtimeVoiceOutputActivityTracker(
   options: RealtimeVoiceOutputActivityTrackerOptions = {},
 ): RealtimeVoiceOutputActivityTracker {

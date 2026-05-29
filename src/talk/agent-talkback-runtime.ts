@@ -1,18 +1,18 @@
-// talk agent talkback runtime helpers and runtime behavior.
+// Debounced realtime voice talkback queue for consulting the embedded agent.
 import type { RuntimeLogger } from "../plugins/runtime/types-core.js";
 
-/** Shared type for Realtime Voice Agent Talkback Result in src/talk. */
+/** Text result returned by an agent talkback consultation. */
 export type RealtimeVoiceAgentTalkbackResult = {
   text: string;
 };
 
-/** Shared type for Realtime Voice Agent Talkback Queue in src/talk. */
+/** Queue API for debounced caller questions sent to the agent. */
 export type RealtimeVoiceAgentTalkbackQueue = {
   close(): void;
   enqueue(question: string, metadata?: unknown): void;
 };
 
-/** Shared type for Realtime Voice Agent Talkback Queue Params in src/talk. */
+/** Runtime dependencies and policy for talkback queue processing. */
 export type RealtimeVoiceAgentTalkbackQueueParams = {
   debounceMs: number;
   isStopped: () => boolean;
@@ -34,7 +34,7 @@ type PendingQuestion = {
   metadata?: unknown;
 };
 
-/** Reused helper for create Realtime Voice Agent Talkback Queue behavior in src/talk. */
+/** Creates a debounced serial talkback queue that merges compatible pending questions. */
 export function createRealtimeVoiceAgentTalkbackQueue(
   params: RealtimeVoiceAgentTalkbackQueueParams,
 ): RealtimeVoiceAgentTalkbackQueue {
