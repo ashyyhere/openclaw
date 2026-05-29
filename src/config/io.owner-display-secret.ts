@@ -1,12 +1,12 @@
-// config io owner display secret helpers and runtime behavior.
+// Tracks generated owner display secrets until config write/repair code consumes them.
 import type { OpenClawConfig } from "./types.openclaw.js";
 
-/** Shared type for Owner Display Secret Runtime State in src/config. */
+/** Process-local generated owner-display secrets keyed by config path. */
 export type OwnerDisplaySecretRuntimeState = {
   pendingByPath: Map<string, string>;
 };
 
-/** Reused helper for retain Generated Owner Display Secret behavior in src/config. */
+/** Retain or clear a generated owner-display secret without mutating the config object. */
 export function retainGeneratedOwnerDisplaySecret(params: {
   config: OpenClawConfig;
   configPath: string;
