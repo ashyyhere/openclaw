@@ -1,5 +1,5 @@
-// cron types shared helpers and runtime behavior.
-/** Shared type for Cron Job Base in src/cron. */
+// Generic cron job shape shared by config and persisted runtime variants.
+/** Base cron job fields parameterized by schedule, payload, delivery, and failure-alert shapes. */
 export type CronJobBase<TSchedule, TSessionTarget, TWakeMode, TPayload, TDelivery, TFailureAlert> =
   {
     id: string;

@@ -1,4 +1,4 @@
-// OpenClaw entry respawn helpers and runtime behavior.
+// CLI respawn planner that applies required Node flags and startup TLS env once.
 import { spawn, type ChildProcess } from "node:child_process";
 import path from "node:path";
 import { resolveNodeStartupTlsEnvironment } from "./bootstrap/node-startup-env.js";
@@ -14,11 +14,11 @@ import {
   type RespawnChildRuntime,
 } from "./process/respawn-child-runner.js";
 
-/** Reused constant for EXPERIMENTAL WARNING FLAG behavior in src. */
+/** Node flag used by the respawned CLI to suppress experimental builtin warnings. */
 export const EXPERIMENTAL_WARNING_FLAG = "--disable-warning=ExperimentalWarning";
-/** Reused constant for OPENCLAW NODE OPTIONS READY behavior in src. */
+/** Env guard that prevents repeated NODE_OPTIONS respawns. */
 export const OPENCLAW_NODE_OPTIONS_READY = "OPENCLAW_NODE_OPTIONS_READY";
-/** Reused constant for OPENCLAW NODE EXTRA CA CERTS READY behavior in src. */
+/** Env guard that prevents repeated NODE_EXTRA_CA_CERTS respawns. */
 export const OPENCLAW_NODE_EXTRA_CA_CERTS_READY = "OPENCLAW_NODE_EXTRA_CA_CERTS_READY";
 const WINDOWS_STACK_SIZE_FLAG = "--stack-size=8192";
 
@@ -36,7 +36,7 @@ function pathModuleForPlatform(platform: NodeJS.Platform): typeof path.posix {
   return platform === "win32" ? path.win32 : path.posix;
 }
 
-/** Reused helper for resolve Cli Respawn Command behavior in src. */
+/** Resolves the executable used for a respawn, unwrapping Volta's shim when needed. */
 export function resolveCliRespawnCommand(params: {
   execPath: string;
   platform?: NodeJS.Platform;
@@ -74,7 +74,7 @@ function hasStackSizeConfigured(execArgv: string[]): boolean {
   );
 }
 
-/** Reused helper for build Cli Respawn Plan behavior in src. */
+/** Builds a respawn command only when startup flags or TLS env need one more process. */
 export function buildCliRespawnPlan(
   params: {
     argv?: string[];
@@ -159,7 +159,7 @@ export function buildCliRespawnPlan(
   };
 }
 
-/** Reused helper for run Cli Respawn Plan behavior in src. */
+/** Spawns the planned CLI child and bridges parent signals to child shutdown. */
 export function runCliRespawnPlan(
   plan: CliRespawnPlan,
   runtime: CliRespawnRuntime = {

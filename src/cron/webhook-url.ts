@@ -1,9 +1,9 @@
-// cron webhook url helpers and runtime behavior.
+// Cron webhook URL normalization and scheme validation.
 function isAllowedWebhookProtocol(protocol: string) {
   return protocol === "http:" || protocol === "https:";
 }
 
-/** Reused helper for normalize Http Webhook Url behavior in src/cron. */
+/** Returns a trimmed http(s) webhook URL or null for unsupported input. */
 export function normalizeHttpWebhookUrl(value: unknown): string | null {
   if (typeof value !== "string") {
     return null;

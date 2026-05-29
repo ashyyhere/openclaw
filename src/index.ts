@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// OpenClaw index helpers and runtime behavior.
+// Dual package entrypoint: lazy library exports for imports, CLI handoff for direct execution.
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 import { formatCliFailureLines } from "./cli/failure-output.js";
@@ -20,45 +20,45 @@ type LibraryExports = typeof import("./library.js");
 
 // These bindings are populated only for library consumers. The CLI entry stays
 // on the lean path and must not read them while running as main.
-/** Reused constant for apply Template behavior in src. */
+/** Template application helper loaded lazily for library consumers. */
 export let applyTemplate: LibraryExports["applyTemplate"];
-/** Reused constant for create Default Deps behavior in src. */
+/** Default dependency factory loaded lazily for library consumers. */
 export let createDefaultDeps: LibraryExports["createDefaultDeps"];
-/** Reused constant for derive Session Key behavior in src. */
+/** Session key derivation helper loaded lazily for library consumers. */
 export let deriveSessionKey: LibraryExports["deriveSessionKey"];
-/** Reused constant for describe Port Owner behavior in src. */
+/** Port-owner diagnostic helper loaded lazily for library consumers. */
 export let describePortOwner: LibraryExports["describePortOwner"];
-/** Reused constant for ensure Binary behavior in src. */
+/** Binary availability helper loaded lazily for library consumers. */
 export let ensureBinary: LibraryExports["ensureBinary"];
-/** Reused constant for ensure Port Available behavior in src. */
+/** Port availability helper loaded lazily for library consumers. */
 export let ensurePortAvailable: LibraryExports["ensurePortAvailable"];
-/** Reused constant for get Reply From Config behavior in src. */
+/** Reply-config resolver loaded lazily for library consumers. */
 export let getReplyFromConfig: LibraryExports["getReplyFromConfig"];
-/** Reused constant for handle Port Error behavior in src. */
+/** Port error formatter loaded lazily for library consumers. */
 export let handlePortError: LibraryExports["handlePortError"];
-/** Reused constant for load Config behavior in src. */
+/** Config loader loaded lazily for library consumers. */
 export let loadConfig: LibraryExports["loadConfig"];
-/** Reused constant for load Session Store behavior in src. */
+/** Session store loader loaded lazily for library consumers. */
 export let loadSessionStore: LibraryExports["loadSessionStore"];
-/** Reused constant for monitor Web Channel behavior in src. */
+/** Web channel monitor loaded lazily for library consumers. */
 export let monitorWebChannel: LibraryExports["monitorWebChannel"];
-/** Reused constant for normalize E164 behavior in src. */
+/** Phone-number normalization helper loaded lazily for library consumers. */
 export let normalizeE164: LibraryExports["normalizeE164"];
-/** Reused constant for Port In Use Error behavior in src. */
+/** Port-in-use error class loaded lazily for library consumers. */
 export let PortInUseError: LibraryExports["PortInUseError"];
-/** Reused constant for prompt Yes No behavior in src. */
+/** CLI yes/no prompt helper loaded lazily for library consumers. */
 export let promptYesNo: LibraryExports["promptYesNo"];
-/** Reused constant for resolve Session Key behavior in src. */
+/** Session key resolver loaded lazily for library consumers. */
 export let resolveSessionKey: LibraryExports["resolveSessionKey"];
-/** Reused constant for resolve Store Path behavior in src. */
+/** Store path resolver loaded lazily for library consumers. */
 export let resolveStorePath: LibraryExports["resolveStorePath"];
-/** Reused constant for run Command With Timeout behavior in src. */
+/** Timed command runner loaded lazily for library consumers. */
 export let runCommandWithTimeout: LibraryExports["runCommandWithTimeout"];
-/** Reused constant for run Exec behavior in src. */
+/** Exec runner loaded lazily for library consumers. */
 export let runExec: LibraryExports["runExec"];
-/** Reused constant for save Session Store behavior in src. */
+/** Session store saver loaded lazily for library consumers. */
 export let saveSessionStore: LibraryExports["saveSessionStore"];
-/** Reused constant for wait Forever behavior in src. */
+/** Indefinite wait helper loaded lazily for library consumers. */
 export let waitForever: LibraryExports["waitForever"];
 
 async function loadLegacyCliDeps(): Promise<LegacyCliDeps> {
@@ -67,7 +67,7 @@ async function loadLegacyCliDeps(): Promise<LegacyCliDeps> {
 }
 
 // Legacy direct file entrypoint only. Package root exports now live in library.ts.
-/** Reused helper for run Legacy Cli Entry behavior in src. */
+/** Runs the legacy direct-file CLI entry after loading CLI dependencies. */
 export async function runLegacyCliEntry(
   argv: string[] = process.argv,
   deps?: LegacyCliDeps,
