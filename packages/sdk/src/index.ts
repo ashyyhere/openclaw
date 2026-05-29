@@ -1,5 +1,5 @@
-// packages/sdk/src index helpers and runtime behavior.
-/** Re-exported public API for packages/sdk. */
+// Public OpenClaw SDK entrypoint; keep exports stable for package consumers.
+/** Primary client, namespaces, and resource wrappers exposed by `@openclaw/sdk`. */
 export {
   Agent,
   AgentsNamespace,
@@ -16,13 +16,13 @@ export {
   ToolsNamespace,
   type OpenClawOptions,
 } from "./client.js";
-/** Re-exported public API for packages/sdk, starting with Event Hub. */
+/** Event stream helper used by transports and advanced SDK consumers. */
 export { EventHub, isGatewayEvent } from "./event-hub.js";
-/** Re-exported public API for packages/sdk, starting with normalize Gateway Event. */
+/** Gateway-to-SDK event normalizer for callers that provide their own transport. */
 export { normalizeGatewayEvent } from "./normalize.js";
-/** Re-exported public API for packages/sdk, starting with Gateway Client Transport. */
+/** Default gateway transport and transport capability guard. */
 export { GatewayClientTransport, isConnectableTransport } from "./transport.js";
-/** Re-exported public API for packages/sdk. */
+/** Public SDK request, result, event, and transport types. */
 export type {
   AgentRunParams,
   ApprovalMode,

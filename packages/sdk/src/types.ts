@@ -1,14 +1,14 @@
-// Shared types for packages/sdk/src types behavior.
-/** Public type describing Json Object for packages/sdk. */
+// Public data contracts for `@openclaw/sdk` requests, results, events, and transports.
+/** JSON object payload accepted by SDK request helpers. */
 export type JsonObject = Record<string, unknown>;
 
-/** Public type describing Gateway Request Options for packages/sdk. */
+/** Per-request gateway behavior controls for final responses and timeouts. */
 export type GatewayRequestOptions = {
   expectFinal?: boolean;
   timeoutMs?: number | null;
 };
 
-/** Public type describing Gateway Event for packages/sdk. */
+/** Raw event frame emitted by the gateway transport before SDK normalization. */
 export type GatewayEvent = {
   event: string;
   payload?: unknown;
@@ -16,7 +16,7 @@ export type GatewayEvent = {
   stateVersion?: unknown;
 };
 
-/** Public type describing Open Claw Transport for packages/sdk. */
+/** Minimal transport contract required by the high-level SDK client. */
 export type OpenClawTransport = {
   request<T = unknown>(
     method: string,
@@ -27,12 +27,12 @@ export type OpenClawTransport = {
   close?(): Promise<void> | void;
 };
 
-/** Public type describing Connectable Open Claw Transport for packages/sdk. */
+/** Transport variant that performs an explicit async connection handshake. */
 export type ConnectableOpenClawTransport = OpenClawTransport & {
   connect(): Promise<void>;
 };
 
-/** Public type describing Runtime Selection for packages/sdk. */
+/** Requested runtime target for future per-run execution selection. */
 export type RuntimeSelection =
   | "auto"
   | { type: "embedded"; id: "openclaw" | "codex" | (string & {}) }
@@ -40,7 +40,7 @@ export type RuntimeSelection =
   | { type: "acp"; harness: "claude" | "cursor" | "gemini" | "opencode" | (string & {}) }
   | { type: "managed"; provider: "local" | "node" | "testbox" | "cloud" | (string & {}) };
 
-/** Public type describing Environment Selection for packages/sdk. */
+/** Requested execution environment for future per-run placement. */
 export type EnvironmentSelection =
   | { type: "local"; cwd?: string }
   | { type: "gateway"; url?: string; cwd?: string }
@@ -48,7 +48,7 @@ export type EnvironmentSelection =
   | { type: "managed"; provider: string; repo?: string; ref?: string }
   | { type: "ephemeral"; provider: string; repo?: string; ref?: string };
 
-/** Public type describing Environment Summary for packages/sdk. */
+/** Gateway-reported environment record returned from environment listing/status APIs. */
 export type EnvironmentSummary = {
   id: string;
   type: "local" | "gateway" | "node" | "managed" | "ephemeral" | (string & {});
@@ -57,28 +57,28 @@ export type EnvironmentSummary = {
   capabilities?: string[];
 };
 
-/** Public type describing Environments List Result for packages/sdk. */
+/** Result envelope for environment listing. */
 export type EnvironmentsListResult = {
   environments: EnvironmentSummary[];
 };
 
-/** Public type describing Workspace Selection for packages/sdk. */
+/** Workspace selector for future per-run workspace placement. */
 export type WorkspaceSelection = {
   cwd?: string;
   repo?: string;
   ref?: string;
 };
 
-/** Public type describing Approval Mode for packages/sdk. */
+/** Approval policy requested for future per-run execution. */
 export type ApprovalMode = "ask" | "never" | "auto" | "trusted";
 
-/** Public type describing Run Status for packages/sdk. */
+/** Terminal or accepted status returned by run wait/create APIs. */
 export type RunStatus = "accepted" | "completed" | "failed" | "cancelled" | "timed_out";
 
-/** Public type describing Run Timestamp for packages/sdk. */
+/** Timestamp format preserved from gateway responses. */
 export type RunTimestamp = string | number;
 
-/** Public type describing SDKMessage for packages/sdk. */
+/** Message shape used in run output summaries. */
 export type SDKMessage = {
   role: "system" | "user" | "assistant" | "tool";
   content: string;
@@ -86,7 +86,7 @@ export type SDKMessage = {
   toolCallId?: string;
 };
 
-/** Public type describing Artifact Summary for packages/sdk. */
+/** Artifact metadata returned by artifact list/get/download APIs. */
 export type ArtifactSummary = {
   id: string;
   runId?: string;
@@ -116,23 +116,23 @@ export type ArtifactSummary = {
   expiresAt?: string;
 };
 
-/** Public type describing Artifact Query for packages/sdk. */
+/** Required scope for artifact APIs: at least one session, run, or task id. */
 export type ArtifactQuery =
   | { sessionKey: string; runId?: string; taskId?: string; agentId?: string }
   | { runId: string; sessionKey?: string; taskId?: string; agentId?: string }
   | { taskId: string; sessionKey?: string; runId?: string; agentId?: string };
 
-/** Public type describing Artifacts List Result for packages/sdk. */
+/** Result envelope for artifact listing. */
 export type ArtifactsListResult = {
   artifacts: ArtifactSummary[];
 };
 
-/** Public type describing Artifacts Get Result for packages/sdk. */
+/** Result envelope for artifact metadata lookup. */
 export type ArtifactsGetResult = {
   artifact: ArtifactSummary;
 };
 
-/** Public type describing Artifacts Download Result for packages/sdk. */
+/** Result envelope for artifact download payloads or redirect URLs. */
 export type ArtifactsDownloadResult = {
   artifact: ArtifactSummary;
   encoding?: "base64";
@@ -140,10 +140,10 @@ export type ArtifactsDownloadResult = {
   url?: string;
 };
 
-/** Public type describing Task Status for packages/sdk. */
+/** Task lifecycle status returned by task APIs. */
 export type TaskStatus = "queued" | "running" | "completed" | "failed" | "cancelled" | "timed_out";
 
-/** Public type describing Task Summary for packages/sdk. */
+/** Task metadata returned by task list/get APIs. */
 export type TaskSummary = {
   id: string;
   taskId?: string;
@@ -168,7 +168,7 @@ export type TaskSummary = {
   error?: string;
 };
 
-/** Public type describing Tasks List Params for packages/sdk. */
+/** Filters and pagination controls for task listing. */
 export type TasksListParams = {
   status?: TaskStatus | TaskStatus[];
   agentId?: string;
@@ -177,18 +177,18 @@ export type TasksListParams = {
   cursor?: string;
 };
 
-/** Public type describing Tasks List Result for packages/sdk. */
+/** Result envelope for task listing. */
 export type TasksListResult = {
   tasks: TaskSummary[];
   nextCursor?: string;
 };
 
-/** Public type describing Tasks Get Result for packages/sdk. */
+/** Result envelope for task metadata lookup. */
 export type TasksGetResult = {
   task: TaskSummary;
 };
 
-/** Public type describing Tasks Cancel Result for packages/sdk. */
+/** Result envelope for task cancellation attempts. */
 export type TasksCancelResult = {
   found: boolean;
   cancelled: boolean;
@@ -196,14 +196,14 @@ export type TasksCancelResult = {
   task?: TaskSummary;
 };
 
-/** Public type describing SDKError for packages/sdk. */
+/** Error payload shape used by SDK result envelopes. */
 export type SDKError = {
   code?: string;
   message: string;
   details?: unknown;
 };
 
-/** Public type describing Tool Invoke Params for packages/sdk. */
+/** Tool invocation payload accepted by `client.tools.invoke`. */
 export type ToolInvokeParams = {
   args?: JsonObject;
   sessionKey?: string;
@@ -212,7 +212,7 @@ export type ToolInvokeParams = {
   idempotencyKey?: string;
 };
 
-/** Public type describing Tool Invoke Result for packages/sdk. */
+/** Result envelope returned by tool invocation. */
 export type ToolInvokeResult = {
   ok: boolean;
   toolName: string;
@@ -223,7 +223,7 @@ export type ToolInvokeResult = {
   error?: SDKError;
 };
 
-/** Public type describing Run Result for packages/sdk. */
+/** Run wait result with normalized status plus raw gateway payload. */
 export type RunResult = {
   runId: string;
   status: RunStatus;
@@ -247,7 +247,7 @@ export type RunResult = {
   raw?: unknown;
 };
 
-/** Public type describing Open Claw Event Type for packages/sdk. */
+/** Stable SDK event names produced from gateway event frames. */
 export type OpenClawEventType =
   | "run.created"
   | "run.queued"
@@ -278,7 +278,7 @@ export type OpenClawEventType =
   | "git.pr"
   | "raw";
 
-/** Public type describing Open Claw Event for packages/sdk. */
+/** Versioned SDK event envelope used by `client.events()` and run streams. */
 export type OpenClawEvent<TData = unknown> = {
   version: 1;
   id: string;
@@ -293,7 +293,7 @@ export type OpenClawEvent<TData = unknown> = {
   raw?: GatewayEvent;
 };
 
-/** Public type describing Agent Run Params for packages/sdk. */
+/** Run creation parameters accepted by agents and runs namespaces. */
 export type AgentRunParams = {
   input: string;
   agentId?: string;
@@ -312,7 +312,7 @@ export type AgentRunParams = {
   idempotencyKey?: string;
 };
 
-/** Public type describing Session Create Params for packages/sdk. */
+/** Session creation parameters accepted by `client.sessions.create`. */
 export type SessionCreateParams = {
   key?: string;
   agentId?: string;
@@ -323,7 +323,7 @@ export type SessionCreateParams = {
   message?: string;
 };
 
-/** Public type describing Session Send Params for packages/sdk. */
+/** Session send parameters accepted by `client.sessions.send` and session handles. */
 export type SessionSendParams = {
   key: string;
   message: string;
@@ -333,7 +333,7 @@ export type SessionSendParams = {
   idempotencyKey?: string;
 };
 
-/** Public type describing Session Target for packages/sdk. */
+/** Session lookup target accepted by session helper APIs. */
 export type SessionTarget = {
   key: string;
   sessionId?: string;
@@ -341,5 +341,5 @@ export type SessionTarget = {
   label?: string;
 };
 
-/** Public type describing Run Create Params for packages/sdk. */
+/** Alias for run creation parameters; runs currently share the agent-run request shape. */
 export type RunCreateParams = AgentRunParams;

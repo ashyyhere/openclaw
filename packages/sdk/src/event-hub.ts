@@ -1,19 +1,19 @@
-// packages/sdk/src event hub helpers and runtime behavior.
+// Small async event hub with bounded replay for SDK stream consumers.
 import type { GatewayEvent } from "./types.js";
 
 type Listener<T> = (event: T) => void;
 
-/** Public type describing Event Hub Options for packages/sdk. */
+/** Event hub options controlling how many past events are replayed to new streams. */
 export type EventHubOptions = {
   replayLimit?: number;
 };
 
-/** Public type describing Event Stream Options for packages/sdk. */
+/** Stream options controlling whether iteration starts with buffered replay events. */
 export type EventStreamOptions = {
   replay?: boolean;
 };
 
-/** Public class implementing Event Hub behavior for packages/sdk. */
+/** In-memory publish/subscribe hub that exposes async iterables and optional replay. */
 export class EventHub<T> {
   private readonly replayLimit: number;
   private readonly replayEvents: T[] = [];
@@ -124,7 +124,7 @@ export class EventHub<T> {
   }
 }
 
-/** Public helper for is Gateway Event behavior in packages/sdk. */
+/** Narrow unknown values to raw gateway events by checking the event name field. */
 export function isGatewayEvent(value: unknown): value is GatewayEvent {
   return (
     typeof value === "object" &&
