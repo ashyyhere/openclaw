@@ -1,4 +1,4 @@
-// tasks detached task runtime contract helpers and runtime behavior.
+// Contract between core task registry code and detachable task runtimes.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type {
   TaskDeliveryState,
@@ -11,7 +11,7 @@ import type {
   TaskTerminalOutcome,
 } from "./task-registry.types.js";
 
-/** Shared type for Detached Task Create Params in src/tasks. */
+/** Input for creating a queued detached task record. */
 export type DetachedTaskCreateParams = {
   runtime: TaskRuntime;
   taskKind?: string;
@@ -32,14 +32,14 @@ export type DetachedTaskCreateParams = {
   deliveryStatus?: TaskDeliveryStatus;
 };
 
-/** Shared type for Detached Running Task Create Params in src/tasks. */
+/** Input for creating a detached task that is already running. */
 export type DetachedRunningTaskCreateParams = DetachedTaskCreateParams & {
   startedAt?: number;
   lastEventAt?: number;
   progressSummary?: string | null;
 };
 
-/** Shared type for Detached Task Start Params in src/tasks. */
+/** Input for transitioning detached tasks with a run id to running. */
 export type DetachedTaskStartParams = {
   runId: string;
   runtime?: TaskRuntime;
@@ -50,7 +50,7 @@ export type DetachedTaskStartParams = {
   eventSummary?: string | null;
 };
 
-/** Shared type for Detached Task Progress Params in src/tasks. */
+/** Input for recording progress on detached tasks by run id. */
 export type DetachedTaskProgressParams = {
   runId: string;
   runtime?: TaskRuntime;
@@ -60,7 +60,7 @@ export type DetachedTaskProgressParams = {
   eventSummary?: string | null;
 };
 
-/** Shared type for Detached Task Complete Params in src/tasks. */
+/** Input for marking detached tasks by run id as successful. */
 export type DetachedTaskCompleteParams = {
   runId: string;
   runtime?: TaskRuntime;
@@ -72,7 +72,7 @@ export type DetachedTaskCompleteParams = {
   terminalOutcome?: TaskTerminalOutcome | null;
 };
 
-/** Shared type for Detached Task Fail Params in src/tasks. */
+/** Input for marking detached tasks by run id as failed, timed out, or cancelled. */
 export type DetachedTaskFailParams = {
   runId: string;
   runtime?: TaskRuntime;
@@ -85,7 +85,7 @@ export type DetachedTaskFailParams = {
   terminalSummary?: string | null;
 };
 
-/** Shared type for Detached Task Finalize Params in src/tasks. */
+/** Unified terminal-state input for runtimes that support a single finalize hook. */
 export type DetachedTaskFinalizeParams = {
   runId: string;
   runtime?: TaskRuntime;
@@ -99,7 +99,7 @@ export type DetachedTaskFinalizeParams = {
   terminalOutcome?: TaskTerminalOutcome | null;
 };
 
-/** Shared type for Detached Task Delivery Status Params in src/tasks. */
+/** Input for updating requester delivery status for detached task completions. */
 export type DetachedTaskDeliveryStatusParams = {
   runId: string;
   runtime?: TaskRuntime;
@@ -108,14 +108,14 @@ export type DetachedTaskDeliveryStatusParams = {
   error?: string;
 };
 
-/** Shared type for Detached Task Cancel Params in src/tasks. */
+/** Input for cancelling a detached task through its owning runtime. */
 export type DetachedTaskCancelParams = {
   cfg: OpenClawConfig;
   taskId: string;
   reason?: string;
 };
 
-/** Shared type for Detached Task Cancel Result in src/tasks. */
+/** Cancellation result, including ownership and whether cancellation was applied. */
 export type DetachedTaskCancelResult = {
   found: boolean;
   cancelled: boolean;
@@ -123,7 +123,7 @@ export type DetachedTaskCancelResult = {
   task?: TaskRecord;
 };
 
-/** Shared type for Detached Task Recovery Attempt Params in src/tasks. */
+/** Input for giving a runtime a chance to recover a task before maintenance marks it lost. */
 export type DetachedTaskRecoveryAttemptParams = {
   taskId: string;
   runtime: TaskRuntime;
@@ -131,12 +131,12 @@ export type DetachedTaskRecoveryAttemptParams = {
   now: number;
 };
 
-/** Shared type for Detached Task Recovery Attempt Result in src/tasks. */
+/** Recovery outcome returned by a detached task runtime. */
 export type DetachedTaskRecoveryAttemptResult = {
   recovered: boolean;
 };
 
-/** Shared type for Detached Task Lifecycle Runtime in src/tasks. */
+/** Runtime hooks core uses to create, mutate, cancel, and recover detached tasks. */
 export type DetachedTaskLifecycleRuntime = {
   createQueuedTaskRun: (params: DetachedTaskCreateParams) => TaskRecord;
   createRunningTaskRun: (params: DetachedRunningTaskCreateParams) => TaskRecord;
@@ -162,7 +162,7 @@ export type DetachedTaskLifecycleRuntime = {
   ) => DetachedTaskRecoveryAttemptResult | Promise<DetachedTaskRecoveryAttemptResult>;
 };
 
-/** Shared type for Detached Task Lifecycle Runtime Registration in src/tasks. */
+/** Process-local detached task runtime registration. */
 export type DetachedTaskLifecycleRuntimeRegistration = {
   pluginId: string;
   runtime: DetachedTaskLifecycleRuntime;

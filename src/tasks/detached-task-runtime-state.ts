@@ -1,15 +1,15 @@
-// tasks detached task runtime state helpers and runtime behavior.
+// Process-local registration state for the active detached task lifecycle runtime.
 import type {
   DetachedTaskLifecycleRuntime,
   DetachedTaskLifecycleRuntimeRegistration,
 } from "./detached-task-runtime-contract.js";
 
-/** Re-exported API for src/tasks, starting with Detached Task Lifecycle Runtime. */
+/** Re-export detached task runtime contracts for registry users. */
 export type { DetachedTaskLifecycleRuntime, DetachedTaskLifecycleRuntimeRegistration };
 
 let detachedTaskLifecycleRuntimeRegistration: DetachedTaskLifecycleRuntimeRegistration | undefined;
 
-/** Reused helper for register Detached Task Lifecycle Runtime behavior in src/tasks. */
+/** Registers the active detached task lifecycle runtime for this process. */
 export function registerDetachedTaskLifecycleRuntime(
   pluginId: string,
   runtime: DetachedTaskLifecycleRuntime,
@@ -20,7 +20,7 @@ export function registerDetachedTaskLifecycleRuntime(
   };
 }
 
-/** Reused helper for get Detached Task Lifecycle Runtime Registration behavior in src/tasks. */
+/** Returns a shallow copy of the active detached task runtime registration. */
 export function getDetachedTaskLifecycleRuntimeRegistration():
   | DetachedTaskLifecycleRuntimeRegistration
   | undefined {
@@ -33,14 +33,14 @@ export function getDetachedTaskLifecycleRuntimeRegistration():
   };
 }
 
-/** Reused helper for get Registered Detached Task Lifecycle Runtime behavior in src/tasks. */
+/** Returns only the active detached task runtime hooks when registered. */
 export function getRegisteredDetachedTaskLifecycleRuntime():
   | DetachedTaskLifecycleRuntime
   | undefined {
   return detachedTaskLifecycleRuntimeRegistration?.runtime;
 }
 
-/** Reused helper for restore Detached Task Lifecycle Runtime Registration behavior in src/tasks. */
+/** Restores a previous detached task runtime registration, mainly for tests. */
 export function restoreDetachedTaskLifecycleRuntimeRegistration(
   registration: DetachedTaskLifecycleRuntimeRegistration | undefined,
 ): void {
@@ -52,7 +52,7 @@ export function restoreDetachedTaskLifecycleRuntimeRegistration(
     : undefined;
 }
 
-/** Reused helper for clear Detached Task Lifecycle Runtime Registration behavior in src/tasks. */
+/** Clears the process-local detached task runtime registration. */
 export function clearDetachedTaskLifecycleRuntimeRegistration(): void {
   detachedTaskLifecycleRuntimeRegistration = undefined;
 }

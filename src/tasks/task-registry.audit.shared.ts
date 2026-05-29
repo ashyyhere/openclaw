@@ -1,9 +1,9 @@
-// tasks task registry audit shared helpers and runtime behavior.
+// Shared task registry audit finding and summary helpers.
 import type { TaskRecord } from "./task-registry.types.js";
 
-/** Shared type for Task Audit Severity in src/tasks. */
+/** Severity level assigned to a task registry audit finding. */
 export type TaskAuditSeverity = "warn" | "error";
-/** Shared type for Task Audit Code in src/tasks. */
+/** Stable audit code for task registry consistency and staleness findings. */
 export type TaskAuditCode =
   | "stale_queued"
   | "stale_running"
@@ -12,7 +12,7 @@ export type TaskAuditCode =
   | "missing_cleanup"
   | "inconsistent_timestamps";
 
-/** Shared type for Task Audit Finding in src/tasks. */
+/** One task registry audit finding with the affected task and diagnostic detail. */
 export type TaskAuditFinding = {
   severity: TaskAuditSeverity;
   code: TaskAuditCode;
@@ -21,7 +21,7 @@ export type TaskAuditFinding = {
   detail: string;
 };
 
-/** Shared type for Task Audit Summary in src/tasks. */
+/** Aggregate audit counts by severity and code. */
 export type TaskAuditSummary = {
   total: number;
   warnings: number;
@@ -35,7 +35,7 @@ type TaskAuditComparableFinding = {
   createdAt: number;
 };
 
-/** Reused helper for create Empty Task Audit Summary behavior in src/tasks. */
+/** Creates a zero-filled audit summary with all known codes present. */
 export function createEmptyTaskAuditSummary(): TaskAuditSummary {
   return {
     total: 0,
@@ -52,7 +52,7 @@ export function createEmptyTaskAuditSummary(): TaskAuditSummary {
   };
 }
 
-/** Reused helper for compare Task Audit Finding Sort Keys behavior in src/tasks. */
+/** Sorts audit findings by severity, age, then creation time for stable reports. */
 export function compareTaskAuditFindingSortKeys(
   left: TaskAuditComparableFinding,
   right: TaskAuditComparableFinding,

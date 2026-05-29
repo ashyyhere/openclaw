@@ -1,7 +1,7 @@
-// tasks task completion contract helpers and runtime behavior.
+// Required-completion heuristics that mark progress-only outputs as blocked terminal results.
 import type { TaskTerminalOutcome } from "./task-registry.types.js";
 
-/** Shared type for Required Completion Terminal Result in src/tasks. */
+/** Terminal metadata inferred when a required completion did not produce a final deliverable. */
 export type RequiredCompletionTerminalResult = {
   terminalOutcome?: Extract<TaskTerminalOutcome, "blocked">;
   terminalSummary?: string;
@@ -50,7 +50,7 @@ function hasNonProgressFollowupSentence(value: string): boolean {
   return matchesProgressOnlyPrefix(firstSentence) && !isProgressOnlyCompletionText(rest);
 }
 
-/** Reused helper for is Progress Only Completion Text behavior in src/tasks. */
+/** Detects completion text that says work is still in progress rather than delivering a result. */
 export function isProgressOnlyCompletionText(value: string | null | undefined): boolean {
   const normalized = normalizeCompletionText(value);
   if (!normalized) {
@@ -62,7 +62,7 @@ export function isProgressOnlyCompletionText(value: string | null | undefined): 
   return matchesProgressOnlyPrefix(normalized);
 }
 
-/** Reused helper for resolve Required Completion Terminal Result behavior in src/tasks. */
+/** Resolves blocked terminal metadata for missing or progress-only required completion text. */
 export function resolveRequiredCompletionTerminalResult(
   resultText: string | null | undefined,
 ): RequiredCompletionTerminalResult {
@@ -83,7 +83,7 @@ export function resolveRequiredCompletionTerminalResult(
   return {};
 }
 
-/** Reused helper for resolve Required Completion Delivery Failure Terminal Result behavior in src/tasks. */
+/** Builds blocked terminal metadata when delivery failed before the requester saw the result. */
 export function resolveRequiredCompletionDeliveryFailureTerminalResult(
   reason: string | null | undefined,
 ): RequiredCompletionTerminalResult {
