@@ -1,5 +1,5 @@
-// flows doctor health conversion plan helpers and runtime behavior.
-/** Shared type for Doctor Health Conversion Kind in src/flows. */
+// Routing plan for converting legacy doctor contributions into health checks.
+/** Migration category for one legacy doctor contribution. */
 export type DoctorHealthConversionKind =
   | "already-detect"
   | "detect-only"
@@ -9,7 +9,7 @@ export type DoctorHealthConversionKind =
   | "terminal-side-effect"
   | "interactive-maintenance";
 
-/** Shared type for Doctor Health Conversion Rule in src/flows. */
+/** One conversion rule mapping a legacy contribution to health-check targets. */
 export interface DoctorHealthConversionRule {
   readonly contributionId: string;
   readonly conversion: DoctorHealthConversionKind;
@@ -17,7 +17,7 @@ export interface DoctorHealthConversionRule {
   readonly rule: string;
 }
 
-/** Reused constant for doctor Health Conversion Rules behavior in src/flows. */
+/** Maintainer checklist for doctor contribution conversion and ownership. */
 export const doctorHealthConversionRules = [
   {
     contributionId: "doctor:gateway-config",

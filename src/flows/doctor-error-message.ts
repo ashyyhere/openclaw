@@ -1,7 +1,7 @@
-// flows doctor error message helpers and runtime behavior.
+// Doctor-safe error message normalization for display and structured findings.
 const ERR_MESSAGE_MAX_LEN = 256;
 
-/** Reused helper for scrub Doctor Error Message behavior in src/flows. */
+/** Strip control characters and cap error text before showing doctor output. */
 export function scrubDoctorErrorMessage(err: unknown): string {
   const raw = err instanceof Error ? err.message : String(err);
   let stripped = "";

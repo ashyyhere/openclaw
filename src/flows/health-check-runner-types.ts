@@ -1,4 +1,4 @@
-// flows health check runner types helpers and runtime behavior.
+// Shared health-check runner contracts for doctor detection and repair execution.
 import type {
   HealthCheck,
   HealthCheckContext,
@@ -9,14 +9,14 @@ import type {
   HealthRepairResult,
 } from "./health-checks.js";
 
-/** Shared type for Health Check Run Context in src/flows. */
+/** Runtime context passed to a health check during detect or repair runs. */
 export interface HealthCheckRunContext extends HealthCheckContext {
   readonly repair: boolean;
   readonly diff?: boolean;
   readonly previewRepair?: boolean;
 }
 
-/** Shared type for Health Check Run Result in src/flows. */
+/** Normalized result returned by runnable health checks. */
 export interface HealthCheckRunResult extends Omit<HealthRepairResult, "changes" | "status"> {
   readonly findings?: readonly HealthFinding[];
   readonly status?: "repairable" | "repaired" | "skipped" | "failed";
@@ -25,7 +25,7 @@ export interface HealthCheckRunResult extends Omit<HealthRepairResult, "changes"
   readonly effects?: readonly HealthRepairEffect[];
 }
 
-/** Shared type for Runnable Health Check in src/flows. */
+/** Health check shape after legacy split detect/repair code is adapted to run(). */
 export interface RunnableHealthCheck extends Pick<
   HealthCheck,
   "id" | "kind" | "description" | "source"
@@ -33,10 +33,10 @@ export interface RunnableHealthCheck extends Pick<
   run(ctx: HealthCheckRunContext, scope?: HealthCheckScope): Promise<HealthCheckRunResult>;
 }
 
-/** Shared type for Health Check Input in src/flows. */
+/** Health check registry input before normalization. */
 export type HealthCheckInput = HealthCheck | RunnableHealthCheck;
 
-/** Shared type for Registered Health Check in src/flows. */
+/** Health check shape stored by the runner after source contract normalization. */
 export interface RegisteredHealthCheck extends HealthCheck {
   readonly sourceContract: "split" | "run";
   run(ctx: HealthCheckRunContext, scope?: HealthCheckScope): Promise<HealthCheckRunResult>;
