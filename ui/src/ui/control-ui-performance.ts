@@ -1,4 +1,6 @@
-// ui/src/ui control ui performance helpers and runtime behavior.
+// Control UI performance telemetry helpers. They record refresh, RPC, render,
+// tab-paint, and browser responsiveness timings into the debug event buffer
+// without coupling instrumentation to individual views.
 import type { EventLogEntry } from "./app-events.ts";
 import type { GatewayRequestTiming } from "./gateway.ts";
 import type { Tab } from "./navigation.ts";
@@ -14,7 +16,7 @@ type ControlUiPerformanceHost = {
   controlUiTabPaintSeq?: number;
 };
 
-/** Shared type for Control Ui Refresh Run in ui/src/ui. */
+/** Token for one refresh cycle so stale async completions can be ignored. */
 export type ControlUiRefreshRun = {
   seq: number;
   tab: Tab;
@@ -50,14 +52,14 @@ type ResponsivenessPerformanceEntry = PerformanceEntry & {
   scripts?: LongAnimationFrameScriptTiming[];
 };
 
-/** Reused helper for control Ui Now Ms behavior in ui/src/ui. */
+/** Monotonic-ish timestamp source used for UI duration measurements. */
 export function controlUiNowMs(): number {
   return typeof performance !== "undefined" && typeof performance.now === "function"
     ? performance.now()
     : Date.now();
 }
 
-/** Reused helper for rounded Control Ui Duration Ms behavior in ui/src/ui. */
+/** Clamp and round a duration for stable debug output. */
 export function roundedControlUiDurationMs(durationMs: number): number {
   return Math.max(0, Math.round(durationMs));
 }
@@ -90,7 +92,7 @@ function logPerformanceEvent(event: string, payload: Record<string, unknown>, wa
   logger(`[openclaw] ${event}`, payload);
 }
 
-/** Reused helper for record Control Ui Performance Event behavior in ui/src/ui. */
+/** Add a performance event to the bounded debug buffer and optional console log. */
 export function recordControlUiPerformanceEvent(
   host: ControlUiPerformanceHost,
   event: string,
@@ -138,7 +140,7 @@ function keepLatestBufferedEventsForType(
   });
 }
 
-/** Reused helper for schedule Control Ui Tab Visible Timing behavior in ui/src/ui. */
+/** Measure how long it takes a tab switch to commit and paint. */
 export function scheduleControlUiTabVisibleTiming(
   host: ControlUiPerformanceHost,
   previousTab: Tab,
@@ -165,7 +167,7 @@ export function scheduleControlUiTabVisibleTiming(
     .then(() => runAfterPaint(record));
 }
 
-/** Reused helper for begin Control Ui Refresh behavior in ui/src/ui. */
+/** Start a refresh timing record for the currently visible tab. */
 export function beginControlUiRefresh(
   host: ControlUiPerformanceHost,
   tab: Tab,
@@ -182,7 +184,7 @@ export function beginControlUiRefresh(
   return run;
 }
 
-/** Reused helper for is Current Control Ui Refresh behavior in ui/src/ui. */
+/** Check whether an async refresh completion still belongs to the current tab. */
 export function isCurrentControlUiRefresh(
   host: ControlUiPerformanceHost,
   run: ControlUiRefreshRun,
@@ -190,7 +192,7 @@ export function isCurrentControlUiRefresh(
   return host.controlUiRefreshSeq === run.seq && host.tab === run.tab;
 }
 
-/** Reused helper for finish Control Ui Refresh behavior in ui/src/ui. */
+/** Finish the current refresh timing if it has not been superseded. */
 export function finishControlUiRefresh(
   host: ControlUiPerformanceHost,
   run: ControlUiRefreshRun,
@@ -212,7 +214,7 @@ export function finishControlUiRefresh(
   );
 }
 
-/** Reused helper for record Control Ui Rpc Timing behavior in ui/src/ui. */
+/** Record gateway request latency and warn on failed or slow RPCs. */
 export function recordControlUiRpcTiming(
   host: ControlUiPerformanceHost,
   timing: GatewayRequestTiming,
@@ -234,7 +236,7 @@ export function recordControlUiRpcTiming(
   );
 }
 
-/** Reused helper for record Control Ui Render Timing behavior in ui/src/ui. */
+/** Record slow render spans after the current microtask settles. */
 export function recordControlUiRenderTiming(
   host: ControlUiPerformanceHost,
   surface: string,
@@ -333,7 +335,7 @@ function recordResponsivenessEntry(
   );
 }
 
-/** Reused helper for start Control Ui Responsiveness Observer behavior in ui/src/ui. */
+/** Start a browser PerformanceObserver for long frames/tasks when supported. */
 export function startControlUiResponsivenessObserver(
   host: ControlUiPerformanceHost,
 ): ControlUiResponsivenessObserver | null {

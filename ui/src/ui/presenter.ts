@@ -1,4 +1,6 @@
-// ui/src/ui presenter helpers and runtime behavior.
+// Formatting helpers for Control UI display text. These keep raw gateway
+// payloads out of templates by converting presence, session, cron, and event
+// data into compact localized labels.
 import { t } from "../i18n/index.ts";
 import { resolveCronJobLastRunStatus } from "./cron-status.ts";
 import {
@@ -10,7 +12,7 @@ import {
 } from "./format.ts";
 import type { CronJob, GatewaySessionRow, PresenceEntry } from "./types.ts";
 
-/** Reused helper for format Presence Summary behavior in ui/src/ui. */
+/** Format a gateway presence row into a compact host/mode/version label. */
 export function formatPresenceSummary(entry: PresenceEntry): string {
   const host = entry.host ?? "unknown";
   const ip = entry.ip ? `(${entry.ip})` : "";
@@ -19,13 +21,13 @@ export function formatPresenceSummary(entry: PresenceEntry): string {
   return `${host} ${ip} ${mode} ${version}`.trim();
 }
 
-/** Reused helper for format Presence Age behavior in ui/src/ui. */
+/** Format the relative age of the last presence heartbeat. */
 export function formatPresenceAge(entry: PresenceEntry): string {
   const ts = entry.ts ?? null;
   return ts ? formatRelativeTimestamp(ts) : t("common.na");
 }
 
-/** Reused helper for format Next Run behavior in ui/src/ui. */
+/** Format a next-run timestamp with weekday and relative time. */
 export function formatNextRun(ms?: number | null) {
   if (!ms) {
     return t("common.na");
@@ -37,7 +39,7 @@ export function formatNextRun(ms?: number | null) {
   return `${weekday}, ${formatMs(ms)} (${formatRelativeTimestamp(ms)})`;
 }
 
-/** Reused helper for format Session Tokens behavior in ui/src/ui. */
+/** Format session token usage against its context window. */
 export function formatSessionTokens(row: GatewaySessionRow) {
   if (row.totalTokens == null) {
     return t("common.na");
@@ -47,7 +49,7 @@ export function formatSessionTokens(row: GatewaySessionRow) {
   return ctx ? `${total} / ${ctx}` : String(total);
 }
 
-/** Reused helper for format Event Payload behavior in ui/src/ui. */
+/** Pretty-print event payloads for the debug panel. */
 export function formatEventPayload(payload: unknown): string {
   if (payload == null) {
     return "";
@@ -59,7 +61,7 @@ export function formatEventPayload(payload: unknown): string {
   }
 }
 
-/** Reused helper for format Cron State behavior in ui/src/ui. */
+/** Summarize cron runtime state with last and next run timestamps. */
 export function formatCronState(job: CronJob) {
   const state = job.state ?? {};
   const next = state.nextRunAtMs ? formatMs(state.nextRunAtMs) : t("common.na");
@@ -68,7 +70,7 @@ export function formatCronState(job: CronJob) {
   return `${status} · next ${next} · last ${last}`;
 }
 
-/** Reused helper for format Cron Schedule behavior in ui/src/ui. */
+/** Format a cron schedule regardless of at/every/cron mode. */
 export function formatCronSchedule(job: CronJob) {
   const s = job.schedule;
   if (s.kind === "at") {
@@ -81,7 +83,7 @@ export function formatCronSchedule(job: CronJob) {
   return `Cron ${s.expr}${s.tz ? ` (${s.tz})` : ""}`;
 }
 
-/** Reused helper for format Cron Payload behavior in ui/src/ui. */
+/** Summarize the scheduled payload and optional delivery target. */
 export function formatCronPayload(job: CronJob) {
   const p = job.payload;
   if (p.kind === "systemEvent") {

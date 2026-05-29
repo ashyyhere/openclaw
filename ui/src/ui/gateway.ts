@@ -1,4 +1,6 @@
-// ui/src/ui gateway helpers and runtime behavior.
+// Browser Gateway client for the Control UI. It manages WebSocket connect auth,
+// request/response correlation, event sequencing, reconnect behavior, and
+// device-token retry without leaking protocol details into views.
 import {
   GATEWAY_CLIENT_MODES,
   GATEWAY_CLIENT_NAMES,
@@ -25,7 +27,7 @@ import { clearDeviceAuthToken, loadDeviceAuthToken, storeDeviceAuthToken } from 
 import { loadOrCreateDeviceIdentity, signDevicePayload } from "./device-identity.ts";
 import { generateUUID } from "./uuid.ts";
 
-/** Shared type for Gateway Event Frame in ui/src/ui. */
+/** Gateway event frame delivered over the browser WebSocket. */
 export type GatewayEventFrame = {
   type: "event";
   event: string;
@@ -34,7 +36,7 @@ export type GatewayEventFrame = {
   stateVersion?: { presence: number; health: number };
 };
 
-/** Shared type for Gateway Response Frame in ui/src/ui. */
+/** Gateway response frame paired with a client request id. */
 export type GatewayResponseFrame = {
   type: "res";
   id: string;
@@ -49,7 +51,7 @@ export type GatewayResponseFrame = {
   };
 };
 
-/** Shared type for Gateway Error Info in ui/src/ui. */
+/** Normalized gateway error shape used by requests and close handling. */
 export type GatewayErrorInfo = {
   code: string;
   message: string;
@@ -58,7 +60,7 @@ export type GatewayErrorInfo = {
   retryAfterMs?: number;
 };
 
-/** Reused class for Gateway Request Error behavior in ui/src/ui. */
+/** Error thrown for failed gateway RPCs with protocol detail metadata attached. */
 export class GatewayRequestError extends Error {
   readonly gatewayCode: string;
   readonly details?: unknown;
@@ -95,7 +97,7 @@ function enrichProtocolMismatchDetails(message: string | undefined, details: unk
   };
 }
 
-/** Reused helper for resolve Gateway Error Detail Code behavior in ui/src/ui. */
+/** Extract the structured gateway detail code from a normalized error. */
 export function resolveGatewayErrorDetailCode(
   error: { details?: unknown } | null | undefined,
 ): string | null {
@@ -173,7 +175,7 @@ function isTrustedRetryEndpoint(url: string): boolean {
   }
 }
 
-/** Shared type for Gateway Hello Ok in ui/src/ui. */
+/** Successful gateway hello response, including auth scopes and initial snapshot. */
 export type GatewayHelloOk = {
   type: "hello-ok";
   protocol: number;
@@ -212,7 +214,7 @@ type SelectedConnectAuth = {
 
 const CONTROL_UI_OPERATOR_ROLE = "operator";
 
-/** Reused constant for CONTROL UI OPERATOR SCOPES behavior in ui/src/ui. */
+/** Operator scopes requested by the browser Control UI. */
 export const CONTROL_UI_OPERATOR_SCOPES = [
   "operator.admin",
   "operator.read",
@@ -221,14 +223,14 @@ export const CONTROL_UI_OPERATOR_SCOPES = [
   "operator.pairing",
 ] as const;
 
-/** Shared type for Gateway Connect Auth in ui/src/ui. */
+/** Auth material included in a connect frame. */
 export type GatewayConnectAuth = {
   token?: string;
   deviceToken?: string;
   password?: string;
 };
 
-/** Shared type for Gateway Connect Device in ui/src/ui. */
+/** Signed browser-device identity included during pairing/device auth. */
 export type GatewayConnectDevice = {
   id: string;
   publicKey: string;
@@ -237,7 +239,7 @@ export type GatewayConnectDevice = {
   nonce: string;
 };
 
-/** Shared type for Gateway Connect Client Info in ui/src/ui. */
+/** Client metadata sent during gateway protocol negotiation. */
 export type GatewayConnectClientInfo = {
   id: GatewayClientName;
   version: string;
@@ -246,7 +248,7 @@ export type GatewayConnectClientInfo = {
   instanceId?: string;
 };
 
-/** Shared type for Gateway Connect Params in ui/src/ui. */
+/** Full connect payload sent after WebSocket open. */
 export type GatewayConnectParams = {
   minProtocol: typeof MIN_CLIENT_PROTOCOL_VERSION;
   maxProtocol: typeof PROTOCOL_VERSION;
@@ -281,7 +283,7 @@ type DeviceTokenRetryDecision = {
   url: string;
 };
 
-/** Shared type for Gateway Browser Client Options in ui/src/ui. */
+/** Construction options and lifecycle callbacks for the browser gateway client. */
 export type GatewayBrowserClientOptions = {
   url: string;
   token?: string;
@@ -298,10 +300,10 @@ export type GatewayBrowserClientOptions = {
   onRequestTiming?: (timing: GatewayRequestTiming) => void;
 };
 
-/** Shared type for Gateway Event Listener in ui/src/ui. */
+/** Listener for already-normalized gateway event frames. */
 export type GatewayEventListener = (evt: GatewayEventFrame) => void;
 
-/** Shared type for Gateway Request Timing in ui/src/ui. */
+/** Per-RPC timing emitted to Control UI performance telemetry. */
 export type GatewayRequestTiming = {
   id: string;
   method: string;
@@ -438,7 +440,7 @@ async function buildGatewayConnectDevice(params: {
   };
 }
 
-/** Reused helper for should Retry With Device Token behavior in ui/src/ui. */
+/** Decide whether an auth mismatch can safely retry with the stored device token. */
 export function shouldRetryWithDeviceToken(params: DeviceTokenRetryDecision): boolean {
   return (
     !params.deviceTokenRetryBudgetUsed &&
@@ -451,7 +453,7 @@ export function shouldRetryWithDeviceToken(params: DeviceTokenRetryDecision): bo
   );
 }
 
-/** Reused class for Gateway Browser Client behavior in ui/src/ui. */
+/** WebSocket RPC client used by Control UI views and stores. */
 export class GatewayBrowserClient {
   private ws: WebSocket | null = null;
   private pending = new Map<string, Pending>();
