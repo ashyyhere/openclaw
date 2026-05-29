@@ -1,4 +1,4 @@
-// talk provider registry helpers and runtime behavior.
+// Realtime voice provider registry lookup over plugin capability metadata.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {
   resolvePluginCapabilityProvider,
@@ -11,7 +11,7 @@ import {
 import type { RealtimeVoiceProviderPlugin } from "../plugins/types.js";
 import type { RealtimeVoiceProviderId } from "./provider-types.js";
 
-/** Reused helper for normalize Realtime Voice Provider Id behavior in src/talk. */
+/** Normalizes provider ids and aliases before registry lookup. */
 export function normalizeRealtimeVoiceProviderId(
   providerId: string | undefined,
 ): RealtimeVoiceProviderId | undefined {
@@ -32,12 +32,12 @@ function buildProviderMaps(cfg?: OpenClawConfig): {
   return buildCapabilityProviderMaps(resolveRealtimeVoiceProviderEntries(cfg));
 }
 
-/** Reused helper for list Realtime Voice Providers behavior in src/talk. */
+/** Lists canonical realtime voice providers available from the plugin registry. */
 export function listRealtimeVoiceProviders(cfg?: OpenClawConfig): RealtimeVoiceProviderPlugin[] {
   return [...buildProviderMaps(cfg).canonical.values()];
 }
 
-/** Reused helper for get Realtime Voice Provider behavior in src/talk. */
+/** Resolves a realtime voice provider by canonical id or declared alias. */
 export function getRealtimeVoiceProvider(
   providerId: string | undefined,
   cfg?: OpenClawConfig,
@@ -57,7 +57,7 @@ export function getRealtimeVoiceProvider(
   return buildProviderMaps(cfg).aliases.get(normalized);
 }
 
-/** Reused helper for canonicalize Realtime Voice Provider Id behavior in src/talk. */
+/** Converts an input provider id or alias to the provider's canonical id. */
 export function canonicalizeRealtimeVoiceProviderId(
   providerId: string | undefined,
   cfg?: OpenClawConfig,

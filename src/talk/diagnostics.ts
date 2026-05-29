@@ -1,4 +1,4 @@
-// talk diagnostics helpers and runtime behavior.
+// Trusted diagnostic event adapter for realtime Talk events.
 import {
   emitTrustedDiagnosticEvent,
   type DiagnosticEventInput,
@@ -8,7 +8,7 @@ import type { TalkEvent } from "./talk-events.js";
 
 type TalkDiagnosticEventInput = Extract<DiagnosticEventInput, { type: "talk.event" }>;
 
-/** Reused helper for create Talk Diagnostic Event behavior in src/talk. */
+/** Converts a Talk event into the stable diagnostic-event payload shape. */
 export function createTalkDiagnosticEvent(event: TalkEvent): TalkDiagnosticEventInput {
   const payload = talkEventPayloadRecord(event.payload);
   return {
@@ -27,7 +27,7 @@ export function createTalkDiagnosticEvent(event: TalkEvent): TalkDiagnosticEvent
   };
 }
 
-/** Reused helper for record Talk Diagnostic Event behavior in src/talk. */
+/** Emits a Talk diagnostic event through the trusted diagnostic channel. */
 export function recordTalkDiagnosticEvent(event: TalkEvent): void {
   emitTrustedDiagnosticEvent(createTalkDiagnosticEvent(event));
 }

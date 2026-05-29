@@ -1,8 +1,8 @@
-// talk event metrics helpers and runtime behavior.
-/** Re-exported API for src/talk, starting with as Optional Record. */
+// Shared Talk event payload helpers used by logging and diagnostics.
+/** Narrows arbitrary Talk event payloads to record-shaped metric input. */
 export { asOptionalRecord as talkEventPayloadRecord } from "../shared/record-coerce.js";
 
-/** Reused helper for first Finite Talk Event Number behavior in src/talk. */
+/** Returns the first non-negative finite numeric metric from a payload. */
 export function firstFiniteTalkEventNumber(
   record: Record<string, unknown> | undefined,
   keys: readonly string[],

@@ -1,9 +1,9 @@
-// talk observability helpers and runtime behavior.
+// Fanout point for Talk observability sinks.
 import { recordTalkDiagnosticEvent } from "./diagnostics.js";
 import { recordTalkLogEvent } from "./logging.js";
 import type { TalkEvent } from "./talk-events.js";
 
-/** Reused helper for record Talk Observability Event behavior in src/talk. */
+/** Sends one Talk event to both diagnostics and structured logs. */
 export function recordTalkObservabilityEvent(event: TalkEvent): void {
   recordTalkDiagnosticEvent(event);
   recordTalkLogEvent(event);
