@@ -12,7 +12,7 @@ function pathFor(platform: NodeJS.Platform) {
 // "not logged in", even though the operator HOME has a valid hosts.yml.
 // See https://github.com/openclaw/openclaw/issues/78063.
 
-/** Shared type for Gh Config Discovery Env in src/agents/skills. */
+/** Environment variables relevant to GitHub CLI config discovery. */
 export type GhConfigDiscoveryEnv = {
   HOME?: string;
   XDG_CONFIG_HOME?: string;
@@ -23,7 +23,7 @@ export type GhConfigDiscoveryEnv = {
   USERPROFILE?: string;
 };
 
-/** Shared type for Gh Config Discovery Input in src/agents/skills. */
+/** Inputs used to compare effective and alternate GitHub CLI config dirs. */
 export type GhConfigDiscoveryInput = {
   platform: NodeJS.Platform;
   env: GhConfigDiscoveryEnv;
@@ -34,7 +34,7 @@ export type GhConfigDiscoveryInput = {
   candidateOperatorHomes?: readonly string[];
 };
 
-/** Shared type for Gh Config Dir Mismatch in src/agents/skills. */
+/** Details for a discovered GitHub CLI config-dir mismatch. */
 export type GhConfigDirMismatch = {
   // The directory `gh` would actually consult given the current process env.
   effectiveConfigDir: string;
@@ -49,7 +49,7 @@ export type GhConfigDirMismatch = {
   suggestedEnvValue: string;
 };
 
-/** Shared type for Gh Config Discovery Result in src/agents/skills. */
+/** Outcome of checking whether GitHub CLI auth is visible to the process. */
 export type GhConfigDiscoveryResult =
   | { kind: "no-gh-binary" }
   | { kind: "explicit-gh-config-dir-set"; ghConfigDir: string }

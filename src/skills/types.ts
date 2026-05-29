@@ -1,7 +1,8 @@
-// Shared types for src/skills types behavior.
+// Shared skill metadata, command, exposure, and snapshot contracts used by
+// loading, install, and runtime prompt assembly.
 import type { Skill } from "./loading/skill-contract.js";
 
-/** Shared type for Skill Install Spec in src/skills. */
+/** Declarative install recipe embedded in skill metadata. */
 export type SkillInstallSpec = {
   id?: string;
   kind: "brew" | "node" | "go" | "uv" | "download";
@@ -18,7 +19,7 @@ export type SkillInstallSpec = {
   targetDir?: string;
 };
 
-/** Shared type for Open Claw Skill Metadata in src/skills. */
+/** OpenClaw-specific frontmatter metadata parsed from a skill. */
 export type OpenClawSkillMetadata = {
   always?: boolean;
   skillKey?: string;
@@ -35,13 +36,13 @@ export type OpenClawSkillMetadata = {
   install?: SkillInstallSpec[];
 };
 
-/** Shared type for Skill Invocation Policy in src/skills. */
+/** Model/user invocation flags resolved for a skill. */
 export type SkillInvocationPolicy = {
   userInvocable: boolean;
   disableModelInvocation: boolean;
 };
 
-/** Shared type for Skill Command Dispatch Spec in src/skills. */
+/** Deterministic dispatch target for a user-invocable skill command. */
 export type SkillCommandDispatchSpec = {
   kind: "tool";
   /** Name of the tool to invoke (AnyAgentTool.name). */
@@ -53,10 +54,10 @@ export type SkillCommandDispatchSpec = {
   argMode?: "raw";
 };
 
-/** Shared type for Skill Telemetry Source in src/skills. */
+/** Bounded source label for skill command diagnostics and telemetry. */
 export type SkillTelemetrySource = "bundled" | "unknown" | "workspace";
 
-/** Shared type for Skill Command Spec in src/skills. */
+/** Native command surface contributed by a skill. */
 export type SkillCommandSpec = {
   name: string;
   skillName: string;
@@ -73,23 +74,23 @@ export type SkillCommandSpec = {
   sourceFilePath?: string;
 };
 
-/** Shared type for Skills Install Preferences in src/skills. */
+/** Operator preferences used when installing skill prerequisites. */
 export type SkillsInstallPreferences = {
   preferBrew: boolean;
   nodeManager: "npm" | "pnpm" | "yarn" | "bun";
 };
 
-/** Shared type for Parsed Skill Frontmatter in src/skills. */
+/** String metadata parsed from a skill Markdown frontmatter block. */
 export type ParsedSkillFrontmatter = Record<string, string>;
 
-/** Shared type for Skill Exposure in src/skills. */
+/** Resolved exposure flags controlling registry and prompt visibility. */
 export type SkillExposure = {
   includeInRuntimeRegistry: boolean;
   includeInAvailableSkillsPrompt: boolean;
   userInvocable: boolean;
 };
 
-/** Shared type for Skill Entry in src/skills. */
+/** Loaded skill plus parsed metadata used by runtime filtering. */
 export type SkillEntry = {
   skill: Skill;
   frontmatter: ParsedSkillFrontmatter;
@@ -100,7 +101,7 @@ export type SkillEntry = {
   syncDirName?: string;
 };
 
-/** Shared type for Skill Eligibility Context in src/skills. */
+/** Runtime facts used to decide whether a skill is eligible on a host. */
 export type SkillEligibilityContext = {
   remote?: {
     platforms: string[];
@@ -110,7 +111,7 @@ export type SkillEligibilityContext = {
   };
 };
 
-/** Shared type for Skill Snapshot in src/skills. */
+/** Prepared skill prompt snapshot and the skills that produced it. */
 export type SkillSnapshot = {
   prompt: string;
   skills: Array<{ name: string; primaryEnv?: string; requiredEnv?: string[] }>;

@@ -2,7 +2,7 @@
 import os from "node:os";
 import { vi } from "vitest";
 
-/** Shared type for Skills Home Env Snapshot in src/agents/skills. */
+/** Previous home-related env values captured for test restoration. */
 export type SkillsHomeEnvSnapshot = {
   previousHome: string | undefined;
   previousOpenClawHome: string | undefined;

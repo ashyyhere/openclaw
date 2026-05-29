@@ -1,4 +1,4 @@
-// src/skills/lifecycle upload install helpers and runtime behavior.
+// Install flow for previously uploaded skill archives.
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { ArchiveLogger } from "../../infra/archive.js";
 import { formatErrorMessage } from "../../infra/errors.js";
@@ -14,19 +14,19 @@ import {
   type SkillUploadStore,
 } from "./upload-store.js";
 
-/** Shared type for Uploaded Skill Install Error Kind in src/skills/lifecycle. */
+/** Public error category returned by uploaded skill archive installs. */
 export type UploadedSkillInstallErrorKind = "invalid-request" | "unavailable";
 
-/** Reused constant for UPLOADED SKILL ARCHIVES DISABLED MESSAGE behavior in src/skills/lifecycle. */
+/** Error shown when config disables uploaded skill archive installs. */
 export const UPLOADED_SKILL_ARCHIVES_DISABLED_MESSAGE =
   "Uploaded skill archive installs are disabled by skills.install.allowUploadedArchives";
 
-/** Reused helper for are Uploaded Skill Archives Enabled behavior in src/skills/lifecycle. */
+/** Return true when config allows installing committed uploaded archives. */
 export function areUploadedSkillArchivesEnabled(config: OpenClawConfig): boolean {
   return config.skills?.install?.allowUploadedArchives === true;
 }
 
-/** Shared type for Uploaded Skill Install Result in src/skills/lifecycle. */
+/** Result shape returned by installing a committed uploaded skill archive. */
 export type UploadedSkillInstallResult =
   | {
       ok: true;
@@ -50,7 +50,7 @@ function uploadInstallFailureErrorKind(
   return failureKind === "invalid-request" ? "invalid-request" : "unavailable";
 }
 
-/** Reused helper for install Uploaded Skill Archive behavior in src/skills/lifecycle. */
+/** Validate and install a committed uploaded skill archive, then consume it. */
 export async function installUploadedSkillArchive(params: {
   uploadId: string;
   slug: string;

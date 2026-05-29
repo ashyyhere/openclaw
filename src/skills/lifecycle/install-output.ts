@@ -1,4 +1,4 @@
-// src/skills/lifecycle install output helpers and runtime behavior.
+// Condense installer stdout/stderr into concise user-facing failure messages.
 import { normalizeStringEntries } from "../../shared/string-normalization.js";
 
 type InstallCommandResult = {
@@ -30,7 +30,7 @@ function summarizeInstallOutput(text: string): string | undefined {
   return normalized.length > maxLen ? `${normalized.slice(0, maxLen - 1)}…` : normalized;
 }
 
-/** Reused helper for format Install Failure Message behavior in src/skills/lifecycle. */
+/** Format an install command failure using exit code and the best output summary. */
 export function formatInstallFailureMessage(result: InstallCommandResult): string {
   const code = typeof result.code === "number" ? `exit ${result.code}` : "unknown exit";
   const summary = summarizeInstallOutput(result.stderr) ?? summarizeInstallOutput(result.stdout);

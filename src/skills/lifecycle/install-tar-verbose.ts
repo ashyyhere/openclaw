@@ -1,4 +1,4 @@
-// src/skills/lifecycle install tar verbose helpers and runtime behavior.
+// Parser for verbose `tar` listing output used to audit uploaded skill archives.
 import { normalizeStringEntries } from "../../shared/string-normalization.js";
 
 const TAR_VERBOSE_MONTHS = new Set([
@@ -68,7 +68,7 @@ function parseTarSizeToken(raw: string, line: string): number {
   return size;
 }
 
-/** Reused helper for parse Tar Verbose Metadata behavior in src/skills/lifecycle. */
+/** Parse verbose tar entries into normalized type and size metadata. */
 export function parseTarVerboseMetadata(stdout: string): Array<{ type: string; size: number }> {
   const lines = normalizeStringEntries(stdout.split("\n"));
   return lines.map((line) => {
