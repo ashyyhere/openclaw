@@ -1,11 +1,14 @@
+// Compaction timeout grace-period helpers for embedded agent runs.
 import type { AgentMessage } from "../../runtime/index.js";
 
+/** Exported API contract used by runtime callers and tests. */
 export type CompactionTimeoutSignal = {
   isTimeout: boolean;
   isCompactionPendingOrRetrying: boolean;
   isCompactionInFlight: boolean;
 };
 
+/** Exported API contract used by runtime callers and tests. */
 export function shouldFlagCompactionTimeout(signal: CompactionTimeoutSignal): boolean {
   if (!signal.isTimeout) {
     return false;
@@ -13,6 +16,7 @@ export function shouldFlagCompactionTimeout(signal: CompactionTimeoutSignal): bo
   return signal.isCompactionPendingOrRetrying || signal.isCompactionInFlight;
 }
 
+/** Exported API contract used by runtime callers and tests. */
 export function resolveRunTimeoutDuringCompaction(params: {
   isCompactionPendingOrRetrying: boolean;
   isCompactionInFlight: boolean;
@@ -24,6 +28,7 @@ export function resolveRunTimeoutDuringCompaction(params: {
   return params.graceAlreadyUsed ? "abort" : "extend";
 }
 
+/** Exported API contract used by runtime callers and tests. */
 export function resolveRunTimeoutWithCompactionGraceMs(params: {
   runTimeoutMs: number;
   compactionTimeoutMs: number;
@@ -31,6 +36,7 @@ export function resolveRunTimeoutWithCompactionGraceMs(params: {
   return params.runTimeoutMs + params.compactionTimeoutMs;
 }
 
+/** Exported API contract used by runtime callers and tests. */
 export type SnapshotSelectionParams = {
   timedOutDuringCompaction: boolean;
   preCompactionSnapshot: AgentMessage[] | null;
@@ -39,6 +45,7 @@ export type SnapshotSelectionParams = {
   currentSessionId: string;
 };
 
+/** Exported API contract used by runtime callers and tests. */
 export type SnapshotSelection = {
   messagesSnapshot: AgentMessage[];
   sessionIdUsed: string;
@@ -68,6 +75,7 @@ function trimToContinuableTail(messages: AgentMessage[]): AgentMessage[] | null 
   return end > 0 ? messages.slice(0, end) : null;
 }
 
+/** Exported API contract used by runtime callers and tests. */
 export function selectCompactionTimeoutSnapshot(
   params: SnapshotSelectionParams,
 ): SnapshotSelection {

@@ -1,3 +1,4 @@
+// Tool configuration type contracts for media, exec, fs, sessions, and memory tools.
 import type { ChatType } from "../channels/chat-type.js";
 import type { SafeBinProfileFixture } from "../infra/exec-safe-bin-policy.js";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
@@ -7,24 +8,29 @@ import type { MemoryQmdIndexPath } from "./types.memory.js";
 import type { ConfiguredProviderRequest } from "./types.provider-request.js";
 import type { SecretInput } from "./types.secrets.js";
 
+/** Exported API contract used by runtime callers and tests. */
 export type MediaUnderstandingScopeMatch = {
   channel?: string;
   chatType?: ChatType;
   keyPrefix?: string;
 };
 
+/** Exported API contract used by runtime callers and tests. */
 export type MediaUnderstandingScopeRule = {
   action: SessionSendPolicyAction;
   match?: MediaUnderstandingScopeMatch;
 };
 
+/** Exported API contract used by runtime callers and tests. */
 export type MediaUnderstandingScopeConfig = {
   default?: SessionSendPolicyAction;
   rules?: MediaUnderstandingScopeRule[];
 };
 
+/** Exported API contract used by runtime callers and tests. */
 export type MediaUnderstandingCapability = "image" | "audio" | "video";
 
+/** Exported API contract used by runtime callers and tests. */
 export type MediaUnderstandingAttachmentsConfig = {
   /** Select the first matching attachment or process multiple. */
   mode?: "first" | "all";
@@ -51,6 +57,7 @@ type MediaProviderRequestConfig = {
   request?: ConfiguredProviderRequest;
 };
 
+/** Exported API contract used by runtime callers and tests. */
 export type MediaUnderstandingModelConfig = MediaProviderRequestConfig & {
   /** provider API id (e.g. openai, google). */
   provider?: string;
@@ -80,6 +87,7 @@ export type MediaUnderstandingModelConfig = MediaProviderRequestConfig & {
   preferredProfile?: string;
 };
 
+/** Exported API contract used by runtime callers and tests. */
 export type MediaUnderstandingConfig = MediaProviderRequestConfig & {
   /** Enable media understanding when models are configured. */
   enabled?: boolean;
@@ -115,6 +123,7 @@ export type MediaUnderstandingConfig = MediaProviderRequestConfig & {
   echoFormat?: string;
 };
 
+/** Exported API contract used by runtime callers and tests. */
 export type LinkModelConfig = {
   /** Use a CLI command for link processing. */
   type?: "cli";
@@ -126,6 +135,7 @@ export type LinkModelConfig = {
   timeoutSeconds?: number;
 };
 
+/** Exported API contract used by runtime callers and tests. */
 export type LinkToolsConfig = {
   /** Enable link understanding when models are configured. */
   enabled?: boolean;
@@ -139,6 +149,7 @@ export type LinkToolsConfig = {
   models?: LinkModelConfig[];
 };
 
+/** Exported API contract used by runtime callers and tests. */
 export type MediaToolsConfig = {
   /** Shared model list applied across image/audio/video. */
   models?: MediaUnderstandingModelConfig[];
@@ -156,8 +167,10 @@ export type MediaToolsConfig = {
   video?: MediaUnderstandingConfig;
 };
 
+/** Exported API contract used by runtime callers and tests. */
 export type ToolProfileId = "minimal" | "coding" | "messaging" | "full";
 
+/** Exported API contract used by runtime callers and tests. */
 export type ToolLoopDetectionDetectorConfig = {
   /** Enable warning/blocking for repeated identical calls to the same tool/params. */
   genericRepeat?: boolean;
@@ -167,11 +180,13 @@ export type ToolLoopDetectionDetectorConfig = {
   pingPong?: boolean;
 };
 
+/** Exported API contract used by runtime callers and tests. */
 export type ToolLoopPostCompactionGuardConfig = {
   /** How many attempts post-compaction the guard remains armed (default: 3). */
   windowSize?: number;
 };
 
+/** Exported API contract used by runtime callers and tests. */
 export type ToolLoopDetectionConfig = {
   /** Enable tool-loop protection (default: false). */
   enabled?: boolean;
@@ -191,6 +206,7 @@ export type ToolLoopDetectionConfig = {
   postCompactionGuard?: ToolLoopPostCompactionGuardConfig;
 };
 
+/** Exported API contract used by runtime callers and tests. */
 export type ToolSearchConfig =
   | boolean
   | {
@@ -206,6 +222,7 @@ export type ToolSearchConfig =
       maxSearchLimit?: number;
     };
 
+/** Exported API contract used by runtime callers and tests. */
 export type CodeModeConfig =
   | boolean
   | {
@@ -235,8 +252,10 @@ export type CodeModeConfig =
       maxSearchLimit?: number;
     };
 
+/** Exported API contract used by runtime callers and tests. */
 export type SessionsToolsVisibility = "self" | "tree" | "agent" | "all";
 
+/** Exported API contract used by runtime callers and tests. */
 export type ToolPolicyConfig = {
   allow?: string[];
   /**
@@ -250,6 +269,7 @@ export type ToolPolicyConfig = {
   profile?: ToolProfileId;
 };
 
+/** Exported API contract used by runtime callers and tests. */
 export type GroupToolPolicyConfig = {
   allow?: string[];
   /** Additional allowlist entries merged into allow. */
@@ -257,9 +277,12 @@ export type GroupToolPolicyConfig = {
   deny?: string[];
 };
 
+/** Exported API contract used by runtime callers and tests. */
 export const TOOLS_BY_SENDER_KEY_TYPES = ["channel", "id", "e164", "username", "name"] as const;
+/** Exported API contract used by runtime callers and tests. */
 export type ToolsBySenderKeyType = (typeof TOOLS_BY_SENDER_KEY_TYPES)[number];
 
+/** Exported API contract used by runtime callers and tests. */
 export function parseToolsBySenderTypedKey(
   rawKey: string,
 ): { type: ToolsBySenderKeyType; value: string } | undefined {
@@ -296,6 +319,7 @@ export function parseToolsBySenderTypedKey(
  */
 export type GroupToolPolicyBySenderConfig = Record<string, GroupToolPolicyConfig>;
 
+/** Exported API contract used by runtime callers and tests. */
 export type ExecToolConfig = {
   /** Exec host routing (default: auto). */
   host?: "auto" | "sandbox" | "gateway" | "node";
@@ -361,6 +385,7 @@ export type ExecToolConfig = {
   };
 };
 
+/** Exported API contract used by runtime callers and tests. */
 export type FsToolsConfig = {
   /**
    * Restrict filesystem tools (read/write/edit/apply_patch) to the agent workspace directory.
@@ -369,6 +394,7 @@ export type FsToolsConfig = {
   workspaceOnly?: boolean;
 };
 
+/** Exported API contract used by runtime callers and tests. */
 export type SessionsSpawnToolsConfig = {
   attachments?: {
     /** Enable inline attachments for sessions_spawn. */
@@ -380,6 +406,7 @@ export type SessionsSpawnToolsConfig = {
   };
 };
 
+/** Exported API contract used by runtime callers and tests. */
 export type AgentToolsConfig = {
   /** Base tool profile applied before allow/deny lists. */
   profile?: ToolProfileId;
@@ -418,6 +445,7 @@ export type AgentToolsConfig = {
   };
 };
 
+/** Exported API contract used by runtime callers and tests. */
 export type MemorySearchConfig = {
   /** Enable vector memory search (default: true). */
   enabled?: boolean;
@@ -578,6 +606,7 @@ export type MemorySearchConfig = {
   };
 };
 
+/** Exported API contract used by runtime callers and tests. */
 export type ToolsConfig = {
   /** Base tool profile applied before allow/deny lists. */
   profile?: ToolProfileId;
@@ -738,6 +767,7 @@ export type ToolsConfig = {
   };
 };
 
+/** Exported API contract used by runtime callers and tests. */
 export type MessageToolsConfig = {
   /**
    * @deprecated Use tools.message.crossContext settings.

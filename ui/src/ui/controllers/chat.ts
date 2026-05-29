@@ -1,3 +1,4 @@
+// Chat controller state, event routing, and view-model updates for the UI.
 import { resetToolStream } from "../app-tool-stream.ts";
 import {
   getChatAttachmentDataUrl,
@@ -194,6 +195,7 @@ function messageDisplaySignature(message: unknown): string | null {
   }
 }
 
+/** Exported API contract used by runtime callers and tests. */
 export function preserveOptimisticTailMessages(
   historyMessages: unknown[],
   previousMessages: unknown[],
@@ -272,6 +274,7 @@ function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+/** Exported API contract used by runtime callers and tests. */
 export type ChatState = {
   client: GatewayBrowserClient | null;
   connected: boolean;
@@ -293,6 +296,7 @@ export type ChatState = {
   hello?: GatewayHelloOk | null;
 };
 
+/** Exported API contract used by runtime callers and tests. */
 export type ChatEventPayload = {
   runId?: string;
   sessionKey: string;
@@ -394,6 +398,7 @@ function maybeResetToolStream(state: ChatState) {
   }
 }
 
+/** Exported API contract used by runtime callers and tests. */
 export async function loadChatHistory(state: ChatState) {
   if (!state.client || !state.connected) {
     return;
@@ -510,8 +515,10 @@ function buildApiAttachments(attachments?: ChatAttachment[]) {
     : undefined;
 }
 
+/** Exported API contract used by runtime callers and tests. */
 export type ChatSendAckStatus = "started" | "in_flight" | "ok";
 
+/** Exported API contract used by runtime callers and tests. */
 export type ChatSendAck = {
   runId: string;
   status: ChatSendAckStatus;
@@ -531,6 +538,7 @@ function normalizeChatSendAck(payload: unknown, fallbackRunId: string): ChatSend
   };
 }
 
+/** Exported API contract used by runtime callers and tests. */
 export async function requestChatSend(
   state: ChatState,
   params: {
@@ -701,6 +709,7 @@ export async function sendChatMessage(
   }
 }
 
+/** Exported API contract used by runtime callers and tests. */
 export function appendUserChatMessage(
   state: ChatState,
   message: string,
@@ -787,6 +796,7 @@ async function sendChatMessageWithGeneratedRunId(
   }
 }
 
+/** Exported API contract used by runtime callers and tests. */
 export async function sendDetachedChatMessage(
   state: ChatState,
   message: string,
@@ -795,6 +805,7 @@ export async function sendDetachedChatMessage(
   return sendChatMessageWithGeneratedRunId(state, message, attachments);
 }
 
+/** Exported API contract used by runtime callers and tests. */
 export async function sendSteerChatMessage(
   state: ChatState,
   message: string,
@@ -803,6 +814,7 @@ export async function sendSteerChatMessage(
   return sendChatMessageWithGeneratedRunId(state, message, attachments);
 }
 
+/** Exported API contract used by runtime callers and tests. */
 export async function abortChatRun(state: ChatState): Promise<boolean> {
   if (!state.client || !state.connected) {
     return false;
@@ -835,6 +847,7 @@ export async function abortChatRun(state: ChatState): Promise<boolean> {
   }
 }
 
+/** Exported API contract used by runtime callers and tests. */
 export function handleChatEvent(state: ChatState, payload?: ChatEventPayload) {
   if (!payload) {
     return null;

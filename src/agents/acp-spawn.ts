@@ -1,3 +1,4 @@
+// ACP spawn tool parameter parsing, policy checks, and direct runtime launch.
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import { getAcpSessionManager } from "../acp/control-plane/manager.js";
@@ -98,13 +99,20 @@ import { resolveInternalSessionKey, resolveMainSessionAlias } from "./tools/sess
 
 const log = createSubsystemLogger("agents/acp-spawn");
 
+/** Exported API contract used by runtime callers and tests. */
 export const ACP_SPAWN_MODES = ["run", "session"] as const;
+/** Exported API contract used by runtime callers and tests. */
 export type SpawnAcpMode = (typeof ACP_SPAWN_MODES)[number];
+/** Exported API contract used by runtime callers and tests. */
 export const ACP_SPAWN_SANDBOX_MODES = ["inherit", "require"] as const;
+/** Exported API contract used by runtime callers and tests. */
 export type SpawnAcpSandboxMode = (typeof ACP_SPAWN_SANDBOX_MODES)[number];
+/** Exported API contract used by runtime callers and tests. */
 export const ACP_SPAWN_STREAM_TARGETS = ["parent"] as const;
+/** Exported API contract used by runtime callers and tests. */
 export type SpawnAcpStreamTarget = (typeof ACP_SPAWN_STREAM_TARGETS)[number];
 
+/** Exported API contract used by runtime callers and tests. */
 export type SpawnAcpParams = {
   task: string;
   label?: string;
@@ -146,6 +154,7 @@ function toGatewayImageAttachments(
   }));
 }
 
+/** Exported API contract used by runtime callers and tests. */
 export type SpawnAcpContext = {
   agentSessionKey?: string;
   agentChannel?: string;
@@ -163,6 +172,7 @@ export type SpawnAcpContext = {
   inheritedToolDenylist?: string[];
 };
 
+/** Exported API contract used by runtime callers and tests. */
 export const ACP_SPAWN_ERROR_CODES = [
   "acp_disabled",
   "requester_session_required",
@@ -178,6 +188,7 @@ export const ACP_SPAWN_ERROR_CODES = [
   "spawn_failed",
   "dispatch_failed",
 ] as const;
+/** Exported API contract used by runtime callers and tests. */
 export type SpawnAcpErrorCode = (typeof ACP_SPAWN_ERROR_CODES)[number];
 
 type SpawnAcpResultFields = {
@@ -202,17 +213,22 @@ type SpawnAcpFailedResult = SpawnAcpResultFields & {
   errorCode: SpawnAcpErrorCode;
 };
 
+/** Exported API contract used by runtime callers and tests. */
 export type SpawnAcpResult = SpawnAcpAcceptedResult | SpawnAcpFailedResult;
 
+/** Exported API contract used by runtime callers and tests. */
 export function isSpawnAcpAcceptedResult(result: SpawnAcpResult): result is SpawnAcpAcceptedResult {
   return result.status === "accepted";
 }
 
+/** Exported API contract used by runtime callers and tests. */
 export const ACP_SPAWN_ACCEPTED_NOTE =
   "initial ACP task queued in isolated session; follow-ups continue in the bound thread.";
+/** Exported API contract used by runtime callers and tests. */
 export const ACP_SPAWN_SESSION_ACCEPTED_NOTE =
   "thread-bound ACP session stays active after this task; continue in-thread for follow-ups.";
 
+/** Exported API contract used by runtime callers and tests. */
 export function resolveAcpSpawnRuntimePolicyError(params: {
   cfg: OpenClawConfig;
   requesterSessionKey?: string;
@@ -1185,6 +1201,7 @@ function resolveAcpSpawnBootstrapDeliveryPlan(params: {
   };
 }
 
+/** Exported API contract used by runtime callers and tests. */
 export async function spawnAcpDirect(
   params: SpawnAcpParams,
   ctx: SpawnAcpContext,

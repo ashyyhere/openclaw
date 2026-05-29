@@ -1,3 +1,4 @@
+// QA credential admin runtime tests for local secret inventory management.
 import { MAX_TIMER_TIMEOUT_MS } from "openclaw/plugin-sdk/number-runtime";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {

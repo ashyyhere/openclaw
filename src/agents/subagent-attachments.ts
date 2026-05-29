@@ -1,3 +1,4 @@
+// Subagent attachment decoding and materialization helpers.
 import crypto from "node:crypto";
 import { promises as fs } from "node:fs";
 import path from "node:path";
@@ -6,6 +7,7 @@ import { privateFileStore } from "../infra/private-file-store.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import { resolveAgentWorkspaceDir } from "./agent-scope.js";
 
+/** Exported API contract used by runtime callers and tests. */
 export function decodeStrictBase64(value: string, maxDecodedBytes: number): Buffer | null {
   const maxEncodedBytes = Math.ceil(maxDecodedBytes / 3) * 4;
   if (value.length > maxEncodedBytes * 2) {
@@ -28,6 +30,7 @@ export function decodeStrictBase64(value: string, maxDecodedBytes: number): Buff
   return decoded;
 }
 
+/** Exported API contract used by runtime callers and tests. */
 export type SubagentInlineAttachment = {
   name: string;
   content: string;
@@ -48,6 +51,7 @@ type AttachmentLimits = {
   retainOnSessionKeep: boolean;
 };
 
+/** Exported API contract used by runtime callers and tests. */
 export type SubagentAttachmentReceiptFile = {
   name: string;
   bytes: number;
@@ -281,6 +285,7 @@ export function resolveAcpSessionsSpawnImageAttachments(params: {
   }
 }
 
+/** Exported API contract used by runtime callers and tests. */
 export async function materializeSubagentAttachments(params: {
   config: OpenClawConfig;
   targetAgentId: string;

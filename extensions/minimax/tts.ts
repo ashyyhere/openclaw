@@ -1,3 +1,4 @@
+// MiniMax text-to-speech provider runtime and request normalization.
 import { resolveTimerTimeoutMs } from "openclaw/plugin-sdk/number-runtime";
 import { assertOkOrThrowProviderError } from "openclaw/plugin-sdk/provider-http";
 import {
@@ -5,8 +6,10 @@ import {
   ssrfPolicyFromHttpBaseUrlAllowedHostname,
 } from "openclaw/plugin-sdk/ssrf-runtime";
 
+/** Exported API contract used by runtime callers and tests. */
 export const DEFAULT_MINIMAX_TTS_BASE_URL = "https://api.minimax.io";
 
+/** Exported API contract used by runtime callers and tests. */
 export const MINIMAX_TTS_MODELS = [
   "speech-2.8-hd",
   "speech-2.8-turbo",
@@ -19,6 +22,7 @@ export const MINIMAX_TTS_MODELS = [
   "speech-01-240228",
 ] as const;
 
+/** Exported API contract used by runtime callers and tests. */
 export const MINIMAX_TTS_VOICES = [
   "English_expressive_narrator",
   "Chinese (Mandarin)_Warm_Girl",
@@ -27,6 +31,7 @@ export const MINIMAX_TTS_VOICES = [
   "Chinese (Mandarin)_Steady_Boy",
 ] as const;
 
+/** Exported API contract used by runtime callers and tests. */
 export function normalizeMinimaxTtsBaseUrl(baseUrl?: string): string {
   const trimmed = baseUrl?.trim();
   if (!trimmed) {
@@ -39,6 +44,7 @@ function normalizeMinimaxTtsPitch(pitch: number): number {
   return Math.trunc(pitch);
 }
 
+/** Exported API contract used by runtime callers and tests. */
 export async function minimaxTTS(params: {
   text: string;
   apiKey: string;

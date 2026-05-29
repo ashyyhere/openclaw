@@ -1,5 +1,7 @@
+// Timeout wrapper for node-host operations that must release callers promptly.
 import { resolveTimerTimeoutMs } from "../shared/number-coercion.js";
 
+/** Exported API contract used by runtime callers and tests. */
 export async function withTimeout<T>(
   work: (signal: AbortSignal | undefined) => Promise<T>,
   timeoutMs?: number,
