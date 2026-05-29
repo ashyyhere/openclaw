@@ -1,4 +1,4 @@
-// ui/src/ui storage helpers and runtime behavior.
+// Browser storage boundary for Control UI preferences and local identity hints.
 const SETTINGS_KEY_PREFIX = "openclaw.control.settings.v1:";
 const LEGACY_SETTINGS_KEY = "openclaw.control.settings.v1";
 const LOCAL_USER_IDENTITY_KEY = "openclaw.control.user.v1";
@@ -35,22 +35,22 @@ import {
   type LocalUserIdentity,
 } from "./user-identity.ts";
 
-/** Reused constant for BORDER RADIUS STOPS behavior in ui/src/ui. */
+/** Discrete border-radius stops exposed by settings UI and theme sync. */
 export const BORDER_RADIUS_STOPS = [0, 25, 50, 75, 100] as const;
-/** Shared type for Border Radius Stop in ui/src/ui. */
+/** Allowed border-radius percentage stop. */
 export type BorderRadiusStop = (typeof BORDER_RADIUS_STOPS)[number];
 
-/** Reused constant for TEXT SCALE STOPS behavior in ui/src/ui. */
+/** Discrete text scale percentages exposed by accessibility settings. */
 export const TEXT_SCALE_STOPS = [90, 100, 110, 125, 140] as const;
-/** Shared type for Text Scale Stop in ui/src/ui. */
+/** Allowed browser-local text scale percentage. */
 export type TextScaleStop = (typeof TEXT_SCALE_STOPS)[number];
 
-/** Reused constant for CHAT AUTO SCROLL MODES behavior in ui/src/ui. */
+/** Chat scroll behavior modes persisted with other local UI preferences. */
 export const CHAT_AUTO_SCROLL_MODES = ["always", "near-bottom", "off"] as const;
-/** Shared type for Chat Auto Scroll Mode in ui/src/ui. */
+/** Allowed chat auto-scroll mode. */
 export type ChatAutoScrollMode = (typeof CHAT_AUTO_SCROLL_MODES)[number];
 
-/** Reused helper for normalize Chat Auto Scroll Mode behavior in ui/src/ui. */
+/** Normalize persisted/user supplied scroll mode, defaulting to conservative follow. */
 export function normalizeChatAutoScrollMode(value: unknown): ChatAutoScrollMode {
   return CHAT_AUTO_SCROLL_MODES.includes(value as ChatAutoScrollMode)
     ? (value as ChatAutoScrollMode)
@@ -70,7 +70,7 @@ function snapBorderRadius(value: number): BorderRadiusStop {
   return best;
 }
 
-/** Reused helper for normalize Text Scale behavior in ui/src/ui. */
+/** Snap arbitrary persisted text scale input to the nearest supported stop. */
 export function normalizeTextScale(value: unknown, fallback: TextScaleStop = 100): TextScaleStop {
   if (typeof value !== "number" || !Number.isFinite(value)) {
     return fallback;
@@ -87,7 +87,7 @@ export function normalizeTextScale(value: unknown, fallback: TextScaleStop = 100
   return best;
 }
 
-/** Shared type for Ui Settings in ui/src/ui. */
+/** In-memory Control UI settings shape after storage defaults and migrations apply. */
 export type UiSettings = {
   gatewayUrl: string;
   token: string;
@@ -110,7 +110,7 @@ export type UiSettings = {
   locale?: string;
 };
 
-/** Re-exported API for ui/src/ui, starting with Local User Identity. */
+/** Public identity type re-exported with the storage helpers that persist it. */
 export type { LocalUserIdentity } from "./user-identity.ts";
 
 function isViteDevPage(): boolean {
@@ -229,7 +229,7 @@ function persistSessionToken(gatewayUrl: string, token: string) {
   }
 }
 
-/** Reused helper for load Settings behavior in ui/src/ui. */
+/** Load UI settings from local/session storage with scoped gateway defaults. */
 export function loadSettings(): UiSettings {
   const { pageUrl: pageDerivedUrl, effectiveUrl: defaultUrl } = deriveDefaultGatewayUrl();
   const storage = getSafeLocalStorage();
@@ -331,12 +331,12 @@ export function loadSettings(): UiSettings {
   }
 }
 
-/** Reused helper for save Settings behavior in ui/src/ui. */
+/** Persist UI settings while keeping gateway auth token in session storage only. */
 export function saveSettings(next: UiSettings) {
   persistSettings(next);
 }
 
-/** Reused helper for load Local User Identity behavior in ui/src/ui. */
+/** Load browser-local user identity hints used to personalize chat surfaces. */
 export function loadLocalUserIdentity(): LocalUserIdentity {
   const storage = getSafeLocalStorage();
   try {
@@ -350,7 +350,7 @@ export function loadLocalUserIdentity(): LocalUserIdentity {
   }
 }
 
-/** Reused helper for save Local User Identity behavior in ui/src/ui. */
+/** Persist browser-local user identity hints, removing empty identity records. */
 export function saveLocalUserIdentity(next: LocalUserIdentity) {
   const storage = getSafeLocalStorage();
   const normalized = normalizeLocalUserIdentity(next);
@@ -366,10 +366,10 @@ export function saveLocalUserIdentity(next: LocalUserIdentity) {
   }
 }
 
-/** Shared type for Local Assistant Identity in ui/src/ui. */
+/** Browser-local assistant identity customization stored outside agent state. */
 export type LocalAssistantIdentity = { avatar: string | null };
 
-/** Reused helper for load Local Assistant Identity behavior in ui/src/ui. */
+/** Load local assistant avatar customization, falling back to no avatar. */
 export function loadLocalAssistantIdentity(): LocalAssistantIdentity {
   const storage = getSafeLocalStorage();
   try {
@@ -384,7 +384,7 @@ export function loadLocalAssistantIdentity(): LocalAssistantIdentity {
   }
 }
 
-/** Reused helper for save Local Assistant Identity behavior in ui/src/ui. */
+/** Persist local assistant avatar customization, clearing storage when unset. */
 export function saveLocalAssistantIdentity(next: LocalAssistantIdentity) {
   const storage = getSafeLocalStorage();
   try {
