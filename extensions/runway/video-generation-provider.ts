@@ -1,4 +1,5 @@
-// extensions/runway video generation provider helpers and runtime behavior.
+// Runway video-generation provider: submits text/image/video tasks, polls task
+// completion, and downloads bounded generated video assets.
 import { extensionForMime } from "openclaw/plugin-sdk/media-mime";
 import { isProviderApiKeyConfigured } from "openclaw/plugin-sdk/provider-auth";
 import { resolveApiKeyForProvider } from "openclaw/plugin-sdk/provider-auth-runtime";
@@ -281,6 +282,8 @@ async function pollRunwayTask(params: {
     timeoutMs: params.timeoutMs,
     label: `Runway video generation task ${params.taskId}`,
   });
+  // Runway generation is asynchronous; poll with the shared provider deadline so
+  // create, status, and download stages respect one caller timeout budget.
   for (let attempt = 0; attempt < MAX_POLL_ATTEMPTS; attempt += 1) {
     const response = await fetchProviderOperationResponse({
       stage: "poll",
@@ -339,6 +342,8 @@ async function downloadRunwayVideos(params: {
       requestFailedMessage: "Runway generated video download failed",
     });
     const mimeType = normalizeOptionalString(response.headers.get("content-type")) ?? "video/mp4";
+    // Generated videos can be large; enforce the configured media cap before
+    // buffering so a provider response cannot exhaust local memory.
     const buffer = await readResponseWithLimit(response, params.maxBytes, {
       onOverflow: ({ maxBytes }) =>
         new Error(`Runway generated video download exceeds ${maxBytes} bytes`),
@@ -353,6 +358,7 @@ async function downloadRunwayVideos(params: {
   return videos;
 }
 
+/** Builds the Runway video-generation provider descriptor and task executor. */
 export function buildRunwayVideoGenerationProvider(): VideoGenerationProvider {
   return {
     id: "runway",
