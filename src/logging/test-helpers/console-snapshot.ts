@@ -1,4 +1,5 @@
-// logging/test-helpers console snapshot helpers and runtime behavior.
+// Test helper for saving and restoring patched console methods.
+/** Snapshot of console methods that may be patched by logging tests. */
 export type ConsoleSnapshot = {
   log: typeof console.log;
   info: typeof console.info;
@@ -8,6 +9,7 @@ export type ConsoleSnapshot = {
   trace: typeof console.trace;
 };
 
+/** Captures the current console methods before a test patches logging. */
 export function captureConsoleSnapshot(): ConsoleSnapshot {
   return {
     log: console.log,
@@ -19,6 +21,7 @@ export function captureConsoleSnapshot(): ConsoleSnapshot {
   };
 }
 
+/** Restores console methods from a prior snapshot. */
 export function restoreConsoleSnapshot(snapshot: ConsoleSnapshot): void {
   console.log = snapshot.log;
   console.info = snapshot.info;

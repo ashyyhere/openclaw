@@ -1,9 +1,11 @@
-// logging/test-helpers warn log capture helpers and runtime behavior.
+// Test helper for capturing warning-level diagnostic log records while routing
+// file output to a temporary log path.
 import path from "node:path";
 import { resolvePreferredOpenClawTmpDir } from "../../infra/tmp-openclaw-dir.js";
 import { resetLogger, setLoggerOverride } from "../logger.js";
 import { createDiagnosticLogRecordCapture } from "./diagnostic-log-capture.js";
 
+/** Captures warning log records and exposes a text search helper for tests. */
 export function createWarnLogCapture(prefix: string) {
   const capture = createDiagnosticLogRecordCapture();
   setLoggerOverride({
