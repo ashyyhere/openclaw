@@ -1,7 +1,7 @@
-// packages/net-policy/src ipv4 helpers and runtime behavior.
+// IPv4 form validation helpers for network bind configuration.
 import { isCanonicalDottedDecimalIPv4 } from "./ip.js";
 
-/** Public helper for validate Dotted Decimal IPv4 Input behavior in packages/net-policy. */
+/** Return a user-facing validation error unless input is canonical dotted IPv4. */
 export function validateDottedDecimalIPv4Input(value: string | undefined): string | undefined {
   if (!value) {
     return "IP address is required for custom bind mode";

@@ -1,4 +1,4 @@
-// packages/net-policy/src redact sensitive url helpers and runtime behavior.
+// URL redaction helpers for logs, config previews, and diagnostics.
 type ConfigUiHintTags = {
   tags?: string[];
 };
@@ -7,7 +7,7 @@ function normalizeLowercaseStringOrEmpty(value: unknown): string {
   return typeof value === "string" ? value.trim().toLowerCase() : "";
 }
 
-/** Public constant for SENSITIVE URL HINT TAG behavior in packages/net-policy. */
+/** Config UI hint tag marking URL fields that may contain embedded secrets. */
 export const SENSITIVE_URL_HINT_TAG = "url-secret";
 
 const SENSITIVE_URL_QUERY_PARAM_NAMES = new Set([
@@ -28,13 +28,13 @@ const SENSITIVE_URL_QUERY_PARAM_NAMES = new Set([
   "signature",
 ]);
 
-/** Public helper for is Sensitive Url Query Param Name behavior in packages/net-policy. */
+/** Detect URL query parameter names that usually carry secrets. */
 export function isSensitiveUrlQueryParamName(name: string): boolean {
   const normalized = normalizeLowercaseStringOrEmpty(name).replaceAll("-", "_");
   return SENSITIVE_URL_QUERY_PARAM_NAMES.has(normalized);
 }
 
-/** Public helper for is Sensitive Url Config Path behavior in packages/net-policy. */
+/** Detect config paths whose URL values should be redacted by default. */
 export function isSensitiveUrlConfigPath(path: string): boolean {
   if (path.endsWith(".baseUrl") || path.endsWith(".httpUrl")) {
     return true;
@@ -48,12 +48,12 @@ export function isSensitiveUrlConfigPath(path: string): boolean {
   return /^mcp\.servers\.(?:\*|[^.]+)\.url$/.test(path);
 }
 
-/** Public helper for has Sensitive Url Hint Tag behavior in packages/net-policy. */
+/** Check config UI metadata for the sensitive URL hint tag. */
 export function hasSensitiveUrlHintTag(hint: ConfigUiHintTags | undefined): boolean {
   return hint?.tags?.includes(SENSITIVE_URL_HINT_TAG) === true;
 }
 
-/** Public helper for redact Sensitive Url behavior in packages/net-policy. */
+/** Redact userinfo and sensitive query parameters from a parseable URL. */
 export function redactSensitiveUrl(value: string): string {
   try {
     const parsed = new URL(value);
@@ -75,7 +75,7 @@ export function redactSensitiveUrl(value: string): string {
   }
 }
 
-/** Public helper for redact Sensitive Url Like String behavior in packages/net-policy. */
+/** Redact credentials from parseable URLs or URL-like strings. */
 export function redactSensitiveUrlLikeString(value: string): string {
   const redactedUrl = redactSensitiveUrl(value);
   if (redactedUrl !== value) {

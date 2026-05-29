@@ -1,4 +1,4 @@
-// packages/net-policy/src ip helpers and runtime behavior.
+// IP parsing and special-use network policy helpers for SSRF-safe URL handling.
 import ipaddr from "ipaddr.js";
 
 function normalizeOptionalString(value: unknown): string | undefined {
@@ -13,7 +13,7 @@ function normalizeLowercaseStringOrEmpty(value: unknown): string {
   return typeof value === "string" ? value.trim().toLowerCase() : "";
 }
 
-/** Public type describing Parsed Ip Address for packages/net-policy. */
+/** Parsed IPv4 or IPv6 address returned by net-policy helpers. */
 export type ParsedIpAddress = ipaddr.IPv4 | ipaddr.IPv6;
 type Ipv4Range = ReturnType<ipaddr.IPv4["range"]>;
 type Ipv6Range = ReturnType<ipaddr.IPv6["range"]>;
@@ -50,7 +50,7 @@ const BLOCKED_IPV6_SPECIAL_USE_RANGES = new Set<BlockedIpv6Range>([
 ]);
 const RFC2544_BENCHMARK_PREFIX: [ipaddr.IPv4, number] = [ipaddr.IPv4.parse("198.18.0.0"), 15];
 const CLOUD_METADATA_IP_ADDRESSES = new Set(["100.100.100.200", "fd00:ec2::254"]);
-/** Public type describing Ipv4 Special Use Block Options for packages/net-policy. */
+/** Per-call exemptions for IPv4 special-use range checks. */
 export type Ipv4SpecialUseBlockOptions = {
   allowRfc2544BenchmarkRange?: boolean;
 };
@@ -149,12 +149,12 @@ function parseIpv6WithEmbeddedIpv4(raw: string): ipaddr.IPv6 | undefined {
   return ipaddr.IPv6.parse(normalizedIpv6);
 }
 
-/** Public helper for is Ipv4 Address behavior in packages/net-policy. */
+/** Type guard for parsed IPv4 addresses. */
 export function isIpv4Address(address: ParsedIpAddress): address is ipaddr.IPv4 {
   return address.kind() === "ipv4";
 }
 
-/** Public helper for is Ipv6 Address behavior in packages/net-policy. */
+/** Type guard for parsed IPv6 addresses. */
 export function isIpv6Address(address: ParsedIpAddress): address is ipaddr.IPv6 {
   return address.kind() === "ipv6";
 }
@@ -177,7 +177,7 @@ function normalizeIpParseInput(raw: string | undefined): string | undefined {
   return stripIpv6Brackets(trimmed);
 }
 
-/** Public helper for parse Canonical Ip Address behavior in packages/net-policy. */
+/** Parse canonical IPv4/IPv6 literals, rejecting legacy IPv4 forms. */
 export function parseCanonicalIpAddress(raw: string | undefined): ParsedIpAddress | undefined {
   const normalized = normalizeIpParseInput(raw);
   if (!normalized) {
@@ -195,7 +195,7 @@ export function parseCanonicalIpAddress(raw: string | undefined): ParsedIpAddres
   return parseIpv6WithEmbeddedIpv4(normalized);
 }
 
-/** Public helper for parse Loose Ip Address behavior in packages/net-policy. */
+/** Parse IP literals using the permissive parser for detection-only checks. */
 export function parseLooseIpAddress(raw: string | undefined): ParsedIpAddress | undefined {
   const normalized = normalizeIpParseInput(raw);
   if (!normalized) {
@@ -207,7 +207,7 @@ export function parseLooseIpAddress(raw: string | undefined): ParsedIpAddress | 
   return parseIpv6WithEmbeddedIpv4(normalized);
 }
 
-/** Public helper for normalize Ip Address behavior in packages/net-policy. */
+/** Normalize a canonical IP literal into the string form used for comparisons. */
 export function normalizeIpAddress(raw: string | undefined): string | undefined {
   const parsed = parseCanonicalIpAddress(raw);
   if (!parsed) {
@@ -217,7 +217,7 @@ export function normalizeIpAddress(raw: string | undefined): string | undefined 
   return normalizeLowercaseStringOrEmpty(normalized.toString());
 }
 
-/** Public helper for is Canonical Dotted Decimal IPv4 behavior in packages/net-policy. */
+/** Check whether input is canonical four-part dotted decimal IPv4. */
 export function isCanonicalDottedDecimalIPv4(raw: string | undefined): boolean {
   const trimmed = normalizeOptionalString(raw);
   if (!trimmed) {
@@ -230,7 +230,7 @@ export function isCanonicalDottedDecimalIPv4(raw: string | undefined): boolean {
   return ipaddr.IPv4.isValidFourPartDecimal(normalized);
 }
 
-/** Public helper for is Legacy Ipv4 Literal behavior in packages/net-policy. */
+/** Detect legacy IPv4 literal forms such as octal, hex, or shortened quads. */
 export function isLegacyIpv4Literal(raw: string | undefined): boolean {
   const trimmed = normalizeOptionalString(raw);
   if (!trimmed) {
@@ -256,7 +256,7 @@ export function isLegacyIpv4Literal(raw: string | undefined): boolean {
   return true;
 }
 
-/** Public helper for is Loopback Ip Address behavior in packages/net-policy. */
+/** Check whether a canonical IP literal resolves to loopback. */
 export function isLoopbackIpAddress(raw: string | undefined): boolean {
   const parsed = parseCanonicalIpAddress(raw);
   if (!parsed) {
@@ -266,7 +266,7 @@ export function isLoopbackIpAddress(raw: string | undefined): boolean {
   return normalized.range() === "loopback";
 }
 
-/** Public helper for is Link Local Ip Address behavior in packages/net-policy. */
+/** Check whether an IP literal or embedded IPv4 address is link-local. */
 export function isLinkLocalIpAddress(raw: string | undefined): boolean {
   const parsed = parseLooseIpAddress(raw);
   if (!parsed) {
@@ -283,7 +283,7 @@ export function isLinkLocalIpAddress(raw: string | undefined): boolean {
   return normalized.range() === "linkLocal";
 }
 
-/** Public helper for is Cloud Metadata Ip Address behavior in packages/net-policy. */
+/** Detect cloud metadata service addresses, including embedded IPv4 forms. */
 export function isCloudMetadataIpAddress(raw: string | undefined): boolean {
   const parsed = parseLooseIpAddress(raw);
   if (!parsed) {
@@ -299,7 +299,7 @@ export function isCloudMetadataIpAddress(raw: string | undefined): boolean {
   return CLOUD_METADATA_IP_ADDRESSES.has(normalized.toString());
 }
 
-/** Public helper for is Private Or Loopback Ip Address behavior in packages/net-policy. */
+/** Detect private, loopback, link-local, CGNAT, or blocked IPv6 ranges. */
 export function isPrivateOrLoopbackIpAddress(raw: string | undefined): boolean {
   const parsed = parseCanonicalIpAddress(raw);
   if (!parsed) {
@@ -312,7 +312,7 @@ export function isPrivateOrLoopbackIpAddress(raw: string | undefined): boolean {
   return isBlockedSpecialUseIpv6Address(normalized);
 }
 
-/** Public helper for is Blocked Special Use Ipv6 Address behavior in packages/net-policy. */
+/** Check IPv6 special-use ranges blocked by outbound network policy. */
 export function isBlockedSpecialUseIpv6Address(
   address: ipaddr.IPv6,
   options: Ipv6SpecialUseBlockOptions = {},
@@ -333,7 +333,7 @@ export function isBlockedSpecialUseIpv6Address(
   return (address.parts[0] & 0xffc0) === 0xfec0;
 }
 
-/** Public helper for is Rfc1918 Ipv4 Address behavior in packages/net-policy. */
+/** Check whether input is an RFC1918 private IPv4 literal. */
 export function isRfc1918Ipv4Address(raw: string | undefined): boolean {
   const parsed = parseCanonicalIpAddress(raw);
   if (!parsed || !isIpv4Address(parsed)) {
@@ -342,7 +342,7 @@ export function isRfc1918Ipv4Address(raw: string | undefined): boolean {
   return parsed.range() === "private";
 }
 
-/** Public helper for is Carrier Grade Nat Ipv4 Address behavior in packages/net-policy. */
+/** Check whether input is in the carrier-grade NAT IPv4 range. */
 export function isCarrierGradeNatIpv4Address(raw: string | undefined): boolean {
   const parsed = parseCanonicalIpAddress(raw);
   if (!parsed || !isIpv4Address(parsed)) {
@@ -351,7 +351,7 @@ export function isCarrierGradeNatIpv4Address(raw: string | undefined): boolean {
   return parsed.range() === "carrierGradeNat";
 }
 
-/** Public helper for is Blocked Special Use Ipv4 Address behavior in packages/net-policy. */
+/** Check IPv4 special-use ranges blocked by outbound network policy. */
 export function isBlockedSpecialUseIpv4Address(
   address: ipaddr.IPv4,
   options: Ipv4SpecialUseBlockOptions = {},
@@ -373,7 +373,7 @@ function decodeIpv4FromHextets(high: number, low: number): ipaddr.IPv4 {
   return ipaddr.IPv4.parse(octets.join("."));
 }
 
-/** Public helper for extract Embedded Ipv4 From Ipv6 behavior in packages/net-policy. */
+/** Extract IPv4 addresses embedded in mapped, NAT64, 6to4, Teredo, or ISATAP IPv6. */
 export function extractEmbeddedIpv4FromIpv6(address: ipaddr.IPv6): ipaddr.IPv4 | undefined {
   if (address.isIPv4MappedAddress()) {
     return address.toIPv4Address();
@@ -394,7 +394,7 @@ export function extractEmbeddedIpv4FromIpv6(address: ipaddr.IPv6): ipaddr.IPv4 |
   return undefined;
 }
 
-/** Public helper for is Ip In Cidr behavior in packages/net-policy. */
+/** Check whether an IP literal matches an exact IP or CIDR range. */
 export function isIpInCidr(ip: string, cidr: string): boolean {
   const normalizedIp = parseCanonicalIpAddress(ip);
   if (!normalizedIp) {
