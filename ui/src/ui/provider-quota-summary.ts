@@ -1,7 +1,7 @@
 import { asDateTimestampMs } from "../../../src/shared/number-coercion.js";
 import type { ModelAuthStatusProvider, ModelAuthStatusResult } from "./types.ts";
 
-/** Shared type for Quota Window Summary in ui/src/ui. */
+/** Compact quota window row for provider summary surfaces. */
 export type QuotaWindowSummary = {
   displayName: string;
   label: string;
@@ -9,7 +9,7 @@ export type QuotaWindowSummary = {
   resetAt?: number;
 };
 
-/** Reused helper for format Quota Reset behavior in ui/src/ui. */
+/** Format a quota reset timestamp as a short relative label. */
 export function formatQuotaReset(resetAt?: number): string | null {
   const timestampMs = asDateTimestampMs(resetAt);
   if (timestampMs === undefined) {
@@ -36,7 +36,7 @@ export function formatQuotaReset(resetAt?: number): string | null {
   return new Date(timestampMs).toLocaleDateString(undefined, { month: "short", day: "numeric" });
 }
 
-/** Reused helper for collect Quota Windows behavior in ui/src/ui. */
+/** Collect and sort quota windows from provider auth status entries. */
 export function collectQuotaWindows(
   providers: ReadonlyArray<ModelAuthStatusProvider>,
 ): QuotaWindowSummary[] {
@@ -52,7 +52,7 @@ export function collectQuotaWindows(
     .toSorted((a, b) => a.remaining - b.remaining || a.displayName.localeCompare(b.displayName));
 }
 
-/** Reused helper for collect Quota Windows From Auth Status behavior in ui/src/ui. */
+/** Filter auth-status providers before collecting quota window summaries. */
 export function collectQuotaWindowsFromAuthStatus(
   status: ModelAuthStatusResult | null,
   filter: (provider: ModelAuthStatusProvider) => boolean,

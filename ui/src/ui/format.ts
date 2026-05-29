@@ -1,15 +1,17 @@
-// ui/src/ui format helpers and runtime behavior.
+// Small formatting helpers shared across Control UI views. The module keeps
+// browser rendering code on one set of timestamp, text, cost, token, and session
+// key formatters.
 import { formatDurationHuman } from "../../../src/infra/format-time/format-duration.ts";
 import { formatRelativeTimestamp } from "../../../src/infra/format-time/format-relative.ts";
 import { asDateTimestampMs } from "../../../src/shared/number-coercion.js";
 import { t } from "../i18n/index.ts";
 
-/** Re-exported API for ui/src/ui, starting with format Relative Timestamp. */
+/** Shared timestamp/duration formatters used by UI views. */
 export { formatRelativeTimestamp, formatDurationHuman };
-/** Re-exported API for ui/src/ui, starting with strip Thinking Tags. */
+/** Assistant-visible text cleanup helper. */
 export { stripThinkingTags } from "./strip-thinking-tags.ts";
 
-/** Reused helper for format Unknown Text behavior in ui/src/ui. */
+/** Convert unknown values into readable UI text without throwing on bad JSON. */
 export function formatUnknownText(
   value: unknown,
   opts: { fallback?: string; pretty?: boolean } = {},
@@ -41,7 +43,7 @@ export function formatUnknownText(
   return Object.prototype.toString.call(value);
 }
 
-/** Reused helper for format Ms behavior in ui/src/ui. */
+/** Format an epoch-millisecond timestamp for display, or `N/A` when absent. */
 export function formatMs(ms?: number | null): string {
   const timestampMs = asDateTimestampMs(ms);
   if (timestampMs === undefined) {
@@ -81,7 +83,7 @@ export function formatDateTimeMs(
   return timestampMs === undefined ? fallback : new Date(timestampMs).toLocaleString([], options);
 }
 
-/** Reused helper for format List behavior in ui/src/ui. */
+/** Format a list of optional strings as comma-separated text. */
 export function formatList(values?: Array<string | null | undefined>): string {
   if (!values || values.length === 0) {
     return "none";
@@ -89,7 +91,7 @@ export function formatList(values?: Array<string | null | undefined>): string {
   return values.filter((v): v is string => Boolean(v && v.trim())).join(", ");
 }
 
-/** Reused helper for clamp Text behavior in ui/src/ui. */
+/** Clamp a string to a maximum length with an ellipsis. */
 export function clampText(value: string, max = 120): string {
   if (value.length <= max) {
     return value;
@@ -97,7 +99,7 @@ export function clampText(value: string, max = 120): string {
   return `${value.slice(0, Math.max(0, max - 1))}…`;
 }
 
-/** Reused helper for truncate Text behavior in ui/src/ui. */
+/** Truncate a string and return metadata describing the original length. */
 export function truncateText(
   value: string,
   max: number,
@@ -116,13 +118,13 @@ export function truncateText(
   };
 }
 
-/** Reused helper for to Number behavior in ui/src/ui. */
+/** Parse a numeric input value with a caller-supplied fallback. */
 export function toNumber(value: string, fallback: number): number {
   const n = Number(value);
   return Number.isFinite(n) ? n : fallback;
 }
 
-/** Reused helper for format Cost behavior in ui/src/ui. */
+/** Format a dollar cost with extra precision for sub-cent values. */
 export function formatCost(cost: number | null | undefined, fallback = "$0.00"): string {
   if (cost == null || !Number.isFinite(cost)) {
     return fallback;
@@ -139,7 +141,7 @@ export function formatCost(cost: number | null | undefined, fallback = "$0.00"):
   return `$${cost.toFixed(2)}`;
 }
 
-/** Reused helper for format Tokens behavior in ui/src/ui. */
+/** Format token counts using compact `k`/`M` suffixes. */
 export function formatTokens(tokens: number | null | undefined, fallback = "0"): string {
   if (tokens == null || !Number.isFinite(tokens)) {
     return fallback;
@@ -155,7 +157,7 @@ export function formatTokens(tokens: number | null | undefined, fallback = "0"):
   return m < 10 ? `${m.toFixed(1)}M` : `${Math.round(m)}M`;
 }
 
-/** Reused helper for parse Session Key Parts behavior in ui/src/ui. */
+/** Parse an agent session key into agent, channel, and account identifiers. */
 export function parseSessionKeyParts(
   key: string,
 ): { agentId: string; channel: string; accountId: string } | null {

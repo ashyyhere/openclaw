@@ -1,12 +1,12 @@
-// ui/src/ui external link helpers and runtime behavior.
+// External-link constants and rel-token builder for safe new-tab navigation.
 import { normalizeOptionalLowercaseString } from "./string-coerce.ts";
 
 const REQUIRED_EXTERNAL_REL_TOKENS = ["noopener", "noreferrer"] as const;
 
-/** Reused constant for EXTERNAL LINK TARGET behavior in ui/src/ui. */
+/** Target used for links that leave the Control UI. */
 export const EXTERNAL_LINK_TARGET = "_blank";
 
-/** Reused helper for build External Link Rel behavior in ui/src/ui. */
+/** Preserve caller rel tokens while forcing noopener/noreferrer for new tabs. */
 export function buildExternalLinkRel(currentRel?: string): string {
   const extraTokens: string[] = [];
   const seen = new Set<string>(REQUIRED_EXTERNAL_REL_TOKENS);

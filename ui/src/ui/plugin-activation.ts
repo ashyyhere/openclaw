@@ -1,11 +1,11 @@
-// ui/src/ui plugin activation helpers and runtime behavior.
+// Plugin activation reader for config snapshots shown in the UI.
 import type { ConfigSnapshot } from "./types.ts";
 
 type PluginActivationOptions = {
   enabledByDefault?: boolean;
 };
 
-/** Reused helper for is Plugin Enabled In Config Snapshot behavior in ui/src/ui. */
+/** Resolve whether a plugin is enabled by global allow/deny lists and entry config. */
 export function isPluginEnabledInConfigSnapshot(
   configSnapshot: ConfigSnapshot | null | undefined,
   pluginId: string,

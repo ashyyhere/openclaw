@@ -1,4 +1,6 @@
-// ui/src/ui tool display helpers and runtime behavior.
+// Tool-display resolver for the Control UI. It combines the shared tool display
+// JSON with browser-safe detail shortening so chat/tool rows show stable labels,
+// icons, verbs, and details without importing Node-only path helpers.
 import SHARED_TOOL_DISPLAY_JSON from "../../../apps/shared/OpenClawKit/Sources/OpenClawKit/Resources/tool-display.json" with { type: "json" };
 import {
   defaultTitle,
@@ -25,7 +27,7 @@ type SharedToolDisplayConfig = {
   tools?: Record<string, SharedToolDisplaySpec>;
 };
 
-/** Shared type for Tool Display in ui/src/ui. */
+/** Display metadata resolved for one tool call row. */
 export type ToolDisplay = {
   name: string;
   icon: IconName;
@@ -99,7 +101,7 @@ function shortenHomeInString(input: string): string {
   return input;
 }
 
-/** Reused helper for resolve Tool Display behavior in ui/src/ui. */
+/** Resolve display copy, icon, action verb, and shortened detail for a tool call. */
 export function resolveToolDisplay(params: {
   name?: string;
   args?: unknown;
@@ -137,7 +139,7 @@ export function resolveToolDisplay(params: {
   };
 }
 
-/** Reused helper for format Tool Detail behavior in ui/src/ui. */
+/** Format a resolved tool detail for sentence-style display. */
 export function formatToolDetail(display: ToolDisplay): string | undefined {
   return formatToolDetailText(display.detail, { prefixWithWith: true });
 }
