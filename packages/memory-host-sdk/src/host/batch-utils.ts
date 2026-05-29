@@ -1,19 +1,19 @@
-// packages/memory-host-sdk/src/host batch utils helpers and runtime behavior.
+// Shared HTTP and grouping helpers for remote embedding batch providers.
 import type { SsrFPolicy } from "./ssrf-policy.js";
 
-/** Public type describing Batch Http Client Config for packages/memory-host-sdk. */
+/** Auth, base URL, and SSRF policy for embedding batch HTTP calls. */
 export type BatchHttpClientConfig = {
   baseUrl?: string;
   headers?: Record<string, string>;
   ssrfPolicy?: SsrFPolicy;
 };
 
-/** Public helper for normalize Batch Base Url behavior in packages/memory-host-sdk. */
+/** Normalizes an embedding batch base URL by trimming a trailing slash. */
 export function normalizeBatchBaseUrl(client: BatchHttpClientConfig): string {
   return client.baseUrl?.replace(/\/$/, "") ?? "";
 }
 
-/** Public helper for build Batch Headers behavior in packages/memory-host-sdk. */
+/** Builds JSON or multipart batch request headers without clobbering provider overrides. */
 export function buildBatchHeaders(
   client: Pick<BatchHttpClientConfig, "headers">,
   params: { json: boolean },
@@ -30,7 +30,7 @@ export function buildBatchHeaders(
   return headers;
 }
 
-/** Public helper for split Batch Requests behavior in packages/memory-host-sdk. */
+/** Splits provider batch requests into max-sized groups while preserving order. */
 export function splitBatchRequests<T>(requests: T[], maxRequests: number): T[][] {
   if (requests.length <= maxRequests) {
     return [requests];

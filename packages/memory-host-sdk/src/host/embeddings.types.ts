@@ -1,8 +1,8 @@
-// Shared types for packages/memory-host-sdk/src/host embeddings types behavior.
+// Public embedding provider contracts shared by memory host implementations.
 import type { OpenClawConfig, SecretInput } from "../engine-foundation.js";
 import type { EmbeddingInput } from "./embedding-inputs.js";
 
-/** Public type describing Embedding Provider for packages/memory-host-sdk. */
+/** Normalized provider interface for single, batch, and structured embedding calls. */
 export type EmbeddingProvider = {
   id: string;
   model: string;
@@ -16,19 +16,19 @@ export type EmbeddingProvider = {
   close?: () => Promise<void> | void;
 };
 
-/** Public type describing Embedding Provider Call Options for packages/memory-host-sdk. */
+/** Per-call cancellation options passed through provider implementations. */
 export type EmbeddingProviderCallOptions = {
   signal?: AbortSignal;
 };
 
-/** Public type describing Embedding Provider Id for packages/memory-host-sdk. */
+/** Provider id after memory config resolution. */
 export type EmbeddingProviderId = string;
-/** Public type describing Embedding Provider Request for packages/memory-host-sdk. */
+/** Raw provider selector requested by config or CLI input. */
 export type EmbeddingProviderRequest = string;
-/** Public type describing Embedding Provider Fallback for packages/memory-host-sdk. */
+/** Provider fallback selector used when the requested backend is unavailable. */
 export type EmbeddingProviderFallback = string;
 
-/** Public type describing Gemini Task Type for packages/memory-host-sdk. */
+/** Gemini embedding task types accepted by the upstream API. */
 export type GeminiTaskType =
   | "RETRIEVAL_QUERY"
   | "RETRIEVAL_DOCUMENT"
@@ -38,7 +38,7 @@ export type GeminiTaskType =
   | "QUESTION_ANSWERING"
   | "FACT_VERIFICATION";
 
-/** Public type describing Embedding Provider Options for packages/memory-host-sdk. */
+/** Memory embedding provider configuration after host config has been loaded. */
 export type EmbeddingProviderOptions = {
   config: OpenClawConfig;
   agentDir?: string;

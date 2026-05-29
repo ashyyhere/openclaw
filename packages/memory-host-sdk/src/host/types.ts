@@ -1,8 +1,8 @@
-// Shared types for packages/memory-host-sdk/src/host types behavior.
-/** Public type describing Memory Source for packages/memory-host-sdk. */
+// Public memory host result, status, debug, and manager contracts.
+/** Source family for an indexed memory hit. */
 export type MemorySource = "memory" | "sessions";
 
-/** Public type describing Memory Search Result for packages/memory-host-sdk. */
+/** Search hit returned from memory_search with location, score, and snippet metadata. */
 export type MemorySearchResult = {
   path: string;
   startLine: number;
@@ -15,7 +15,7 @@ export type MemorySearchResult = {
   citation?: string;
 };
 
-/** Public type describing Memory Embedding Probe Result for packages/memory-host-sdk. */
+/** Cached readiness result for embedding provider and vector-store probes. */
 export type MemoryEmbeddingProbeResult = {
   ok: boolean;
   error?: string;
@@ -25,14 +25,14 @@ export type MemoryEmbeddingProbeResult = {
   cacheExpiresAtMs?: number;
 };
 
-/** Public type describing Memory Sync Progress Update for packages/memory-host-sdk. */
+/** Progress event emitted while memory indexes are rebuilt or synced. */
 export type MemorySyncProgressUpdate = {
   completed: number;
   total: number;
   label?: string;
 };
 
-/** Public type describing Memory Search Runtime Debug for packages/memory-host-sdk. */
+/** Runtime debug snapshot for memory query planning and backend selection. */
 export type MemorySearchRuntimeDebug = {
   backend: "builtin" | "qmd";
   configuredMode?: string;
@@ -40,7 +40,7 @@ export type MemorySearchRuntimeDebug = {
   fallback?: string;
 };
 
-/** Public type describing Memory Read Result for packages/memory-host-sdk. */
+/** Bounded memory file read result with continuation metadata. */
 export type MemoryReadResult = {
   text: string;
   path: string;
@@ -50,7 +50,7 @@ export type MemoryReadResult = {
   nextFrom?: number;
 };
 
-/** Public type describing Memory Provider Status for packages/memory-host-sdk. */
+/** Aggregated memory backend status shown in health and diagnostics surfaces. */
 export type MemoryProviderStatus = {
   backend: "builtin" | "qmd";
   provider: string;
@@ -90,7 +90,7 @@ export type MemoryProviderStatus = {
   custom?: Record<string, unknown>;
 };
 
-/** Public type describing Memory Search Manager for packages/memory-host-sdk. */
+/** Runtime API exposed by memory host implementations to tools and provider adapters. */
 export interface MemorySearchManager {
   search(
     query: string,

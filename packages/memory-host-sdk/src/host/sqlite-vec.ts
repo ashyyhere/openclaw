@@ -1,4 +1,4 @@
-// packages/memory-host-sdk/src/host sqlite vec helpers and runtime behavior.
+// sqlite-vec extension loading with explicit paths and optional package variants.
 import type { DatabaseSync } from "node:sqlite";
 import { formatErrorMessage } from "./error-utils.js";
 import { resolveSqliteVecPlatformVariant } from "./sqlite-vec-platform-variant.js";
@@ -28,7 +28,7 @@ function isMissingSqliteVecPackageError(err: unknown): boolean {
   );
 }
 
-/** Public helper for load Sqlite Vec Extension behavior in packages/memory-host-sdk. */
+/** Loads sqlite-vec into a database and reports path or load errors for diagnostics. */
 export async function loadSqliteVecExtension(params: {
   db: DatabaseSync;
   extensionPath?: string;

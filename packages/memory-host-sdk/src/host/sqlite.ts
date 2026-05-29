@@ -1,4 +1,4 @@
-// packages/memory-host-sdk/src/host sqlite helpers and runtime behavior.
+// Node SQLite loading and memory database WAL maintenance lifecycle helpers.
 import { createRequire } from "node:module";
 import type { DatabaseSync } from "node:sqlite";
 import { formatErrorMessage } from "./error-utils.js";
@@ -12,7 +12,7 @@ import { installProcessWarningFilter } from "./warning-filter.js";
 const require = createRequire(import.meta.url);
 const sqliteWalMaintenanceByDb = new WeakMap<DatabaseSync, SqliteWalMaintenance>();
 
-/** Public helper for require Node Sqlite behavior in packages/memory-host-sdk. */
+/** Loads node:sqlite and turns missing-runtime support into an actionable error. */
 export function requireNodeSqlite(): typeof import("node:sqlite") {
   installProcessWarningFilter();
   try {
@@ -28,7 +28,7 @@ export function requireNodeSqlite(): typeof import("node:sqlite") {
   }
 }
 
-/** Public helper for configure Memory Sqlite Wal Maintenance behavior in packages/memory-host-sdk. */
+/** Attaches one WAL maintenance controller to a memory database instance. */
 export function configureMemorySqliteWalMaintenance(
   db: DatabaseSync,
   options?: SqliteWalMaintenanceOptions,
@@ -42,7 +42,7 @@ export function configureMemorySqliteWalMaintenance(
   return maintenance;
 }
 
-/** Public helper for close Memory Sqlite Wal Maintenance behavior in packages/memory-host-sdk. */
+/** Closes and forgets WAL maintenance for a memory database instance. */
 export function closeMemorySqliteWalMaintenance(db: DatabaseSync): boolean {
   const maintenance = sqliteWalMaintenanceByDb.get(db);
   if (!maintenance) {
