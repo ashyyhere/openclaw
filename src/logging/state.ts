@@ -1,5 +1,6 @@
-// logging state helpers and runtime behavior.
-/** Reused constant for logging State behavior in src/logging. */
+// Shared mutable logging runtime state: logger caches, console patch flags, and
+// test overrides kept in one module to avoid import cycles.
+/** Process-local logging state shared by console/file logger modules. */
 export const loggingState = {
   cachedLogger: null as unknown,
   cachedSettings: null as unknown,

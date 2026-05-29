@@ -27,7 +27,7 @@ const STUCK_SESSION_ABORT_SETTLE_MS = 15_000;
 const STUCK_SESSION_PROGRESS_STALE_MS = 5 * 60_000;
 const recoveriesInFlight = new Set<string>();
 
-/** Shared type for Stuck Session Recovery Params in src/logging. */
+/** Runtime-facing stuck-session recovery request shape. */
 export type StuckSessionRecoveryParams = StuckSessionRecoveryRequest;
 
 function resolveStaleActiveProgressAbortMs(params: StuckSessionRecoveryParams): number {
@@ -83,7 +83,7 @@ function formatRecoveryContext(
   return fields.join(" ");
 }
 
-/** Reused helper for recover Stuck Diagnostic Session behavior in src/logging. */
+/** Recovers leaked/stuck diagnostic session state by aborting runs or releasing lanes. */
 export async function recoverStuckDiagnosticSession(
   params: StuckSessionRecoveryParams,
 ): Promise<StuckSessionRecoveryOutcome> {
@@ -322,11 +322,11 @@ export async function recoverStuckDiagnosticSession(
   }
 }
 
-/** Reused constant for testing behavior in src/logging. */
+/** Test-only recovery runtime helpers. */
 export const testing = {
   resetRecoveriesInFlight(): void {
     recoveriesInFlight.clear();
   },
 };
-/** Re-exported API for src/logging, starting with testing. */
+/** Test-only namespace for clearing stuck-session recovery in-flight guards. */
 export { testing as __testing };

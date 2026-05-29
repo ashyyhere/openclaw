@@ -1,4 +1,5 @@
-// logging message lifecycle helpers and runtime behavior.
+// Diagnostic message lifecycle helper: emits queue, processing, idle, and
+// processed events around channel message handling.
 import { logMessageProcessed, logMessageQueued, logSessionStateChange } from "./diagnostic.js";
 
 type MessageLifecycleRef = {
@@ -14,7 +15,7 @@ type MessageLifecycleProcessedOptions = MessageLifecycleRef & {
   error?: string;
 };
 
-/** Reused helper for create Diagnostic Message Lifecycle behavior in src/logging. */
+/** Creates lifecycle markers for one inbound message processing attempt. */
 export function createDiagnosticMessageLifecycle(
   params: MessageLifecycleRef & {
     enabled: boolean;
