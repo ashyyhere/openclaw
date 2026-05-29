@@ -1,7 +1,7 @@
-// config types provider request helpers and runtime behavior.
+// Provider HTTP request override contracts for auth, proxy, TLS, and private-network policy.
 import type { SecretInput } from "./types.secrets.js";
 
-/** Shared type for Configured Provider Request Auth in src/config. */
+/** Auth override strategy applied on top of provider-default request auth. */
 export type ConfiguredProviderRequestAuth =
   | {
       mode: "provider-default";
@@ -17,7 +17,7 @@ export type ConfiguredProviderRequestAuth =
       prefix?: string;
     };
 
-/** Shared type for Configured Provider Request Tls in src/config. */
+/** TLS material and verification overrides for provider or proxy connections. */
 export type ConfiguredProviderRequestTls = {
   ca?: SecretInput;
   cert?: SecretInput;
@@ -27,7 +27,7 @@ export type ConfiguredProviderRequestTls = {
   insecureSkipVerify?: boolean;
 };
 
-/** Shared type for Configured Provider Request Proxy in src/config. */
+/** Proxy routing mode for provider HTTP requests. */
 export type ConfiguredProviderRequestProxy =
   | {
       mode: "env-proxy";
@@ -39,7 +39,7 @@ export type ConfiguredProviderRequestProxy =
       tls?: ConfiguredProviderRequestTls;
     };
 
-/** Shared type for Configured Provider Request in src/config. */
+/** Provider request customization shared by provider and model configs. */
 export type ConfiguredProviderRequest = {
   headers?: Record<string, SecretInput>;
   auth?: ConfiguredProviderRequestAuth;
@@ -47,7 +47,7 @@ export type ConfiguredProviderRequest = {
   tls?: ConfiguredProviderRequestTls;
 };
 
-/** Shared type for Configured Model Provider Request in src/config. */
+/** Model provider request config with private-network allowance for local providers. */
 export type ConfiguredModelProviderRequest = ConfiguredProviderRequest & {
   allowPrivateNetwork?: boolean;
 };

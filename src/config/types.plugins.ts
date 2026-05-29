@@ -1,5 +1,5 @@
-// config types plugins helpers and runtime behavior.
-/** Shared type for Plugin Entry Config in src/config. */
+// Plugin config contracts for load policy, per-plugin permissions, and install records.
+/** Per-plugin config entry controlling enablement, hook permissions, and plugin-owned config. */
 export type PluginEntryConfig = {
   enabled?: boolean;
   hooks?: {
@@ -40,7 +40,7 @@ export type PluginEntryConfig = {
   config?: Record<string, unknown>;
 };
 
-/** Shared type for Plugin Slots Config in src/config. */
+/** Slot ownership config for plugin-provided singleton capabilities. */
 export type PluginSlotsConfig = {
   /** Select which plugin owns the memory slot ("none" disables memory plugins). */
   memory?: string;
@@ -48,13 +48,13 @@ export type PluginSlotsConfig = {
   contextEngine?: string;
 };
 
-/** Shared type for Plugins Load Config in src/config. */
+/** Additional plugin load roots outside the built-in registry. */
 export type PluginsLoadConfig = {
   /** Additional plugin/extension paths to load. */
   paths?: string[];
 };
 
-/** Shared type for Plugin Install Record in src/config. */
+/** Persisted plugin install record, including marketplace install provenance. */
 export type PluginInstallRecord = Omit<InstallRecordBase, "source"> & {
   source: InstallRecordBase["source"] | "marketplace";
   marketplaceName?: string;
@@ -62,7 +62,7 @@ export type PluginInstallRecord = Omit<InstallRecordBase, "source"> & {
   marketplacePlugin?: string;
 };
 
-/** Shared type for Plugins Config in src/config. */
+/** Top-level plugin config block from `openclaw.json`. */
 export type PluginsConfig = {
   /** Enable or disable plugin loading. */
   enabled?: boolean;

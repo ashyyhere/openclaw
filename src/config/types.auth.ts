@@ -1,5 +1,5 @@
-// config types auth helpers and runtime behavior.
-/** Shared type for Auth Profile Config in src/config. */
+// Auth profile config contracts used by provider auth selection and backoff policy.
+/** Auth profile metadata stored separately from provider secrets. */
 export type AuthProfileConfig = {
   provider: string;
   /**
@@ -14,7 +14,7 @@ export type AuthProfileConfig = {
   displayName?: string;
 };
 
-/** Shared type for Auth Config in src/config. */
+/** Top-level auth routing and failure backoff policy. */
 export type AuthConfig = {
   profiles?: Record<string, AuthProfileConfig>;
   order?: Record<string, string[]>;
