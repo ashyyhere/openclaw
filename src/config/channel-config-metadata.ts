@@ -1,4 +1,4 @@
-// config channel config metadata helpers and runtime behavior.
+// Collects plugin and channel schema metadata for config UI/schema lookup surfaces.
 import type { PluginManifestRegistry } from "../plugins/manifest-registry.js";
 import type { PluginOrigin } from "../plugins/plugin-origin.types.js";
 import type { ChannelUiMetadata, PluginUiMetadata } from "./schema.js";
@@ -14,7 +14,7 @@ const PLUGIN_ORIGIN_RANK: Readonly<Record<PluginOrigin, number>> = {
   bundled: 3,
 };
 
-/** Reused helper for collect Plugin Schema Metadata behavior in src/config. */
+/** Deduplicate plugin config metadata, preferring the highest-priority plugin origin. */
 export function collectPluginSchemaMetadata(registry: PluginManifestRegistry): PluginUiMetadata[] {
   const deduped = new Map<
     string,
@@ -44,7 +44,7 @@ export function collectPluginSchemaMetadata(registry: PluginManifestRegistry): P
     .map(({ originRank: _originRank, ...record }) => record);
 }
 
-/** Reused helper for collect Channel Schema Metadata behavior in src/config. */
+/** Build channel config metadata from manifests, preserving higher-priority schema owners. */
 export function collectChannelSchemaMetadata(
   registry: PluginManifestRegistry,
 ): ChannelUiMetadata[] {
