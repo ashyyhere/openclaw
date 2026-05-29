@@ -1,4 +1,4 @@
-// context-engine legacy helpers and runtime behavior.
+// Legacy context-engine adapter that preserves the pre-plugin context pipeline.
 import type { AgentMessage } from "../agents/runtime/index.js";
 import type { MemoryCitationsMode } from "../config/types.memory.js";
 import { delegateCompactionToRuntime } from "./delegate.js";

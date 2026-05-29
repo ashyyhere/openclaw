@@ -1,4 +1,4 @@
-// context-engine init helpers and runtime behavior.
+// Built-in context-engine registration entry point.
 import { registerLegacyContextEngine } from "./legacy.registration.js";
 
 /**
@@ -13,7 +13,7 @@ import { registerLegacyContextEngine } from "./legacy.registration.js";
  */
 let initialized = false;
 
-/** Reused helper for ensure Context Engines Initialized behavior in src/context-engine. */
+/** Register built-in context engines once for this process. */
 export function ensureContextEnginesInitialized(): void {
   if (initialized) {
     return;

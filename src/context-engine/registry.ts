@@ -37,7 +37,7 @@ export type ContextEngineFactoryContext = {
 export type ContextEngineFactory = (
   ctx: ContextEngineFactoryContext,
 ) => ContextEngine | Promise<ContextEngine>;
-/** Shared type for Context Engine Registration Result in src/context-engine. */
+/** Result returned when registering a context engine id. */
 export type ContextEngineRegistrationResult = { ok: true } | { ok: false; existingOwner: string };
 
 type RegisterContextEngineForOwnerOptions = {
@@ -376,7 +376,7 @@ const CONTEXT_ENGINE_REGISTRY_STATE = Symbol.for("openclaw.contextEngineRegistry
 const CORE_CONTEXT_ENGINE_OWNER = "core";
 const PUBLIC_CONTEXT_ENGINE_OWNER = "public-sdk";
 
-/** Shared type for Context Engine Runtime Quarantine in src/context-engine. */
+/** Runtime quarantine record for an engine that failed during guarded execution. */
 export type ContextEngineRuntimeQuarantine = {
   engineId: string;
   owner?: string;
@@ -457,7 +457,7 @@ function getContextEngineQuarantine(engineId: string): ContextEngineRuntimeQuara
   return getContextEngineRegistryState().quarantinedEngines.get(engineId);
 }
 
-/** Reused helper for list Context Engine Quarantines behavior in src/context-engine. */
+/** List process-local context engine runtime quarantines. */
 export function listContextEngineQuarantines(): ContextEngineRuntimeQuarantine[] {
   const quarantines: ContextEngineRuntimeQuarantine[] = [];
   for (const entry of getContextEngineRegistryState().quarantinedEngines.values()) {
@@ -475,7 +475,7 @@ export function listContextEngineQuarantines(): ContextEngineRuntimeQuarantine[]
   return quarantines;
 }
 
-/** Reused helper for clear Context Engine Runtime Quarantine behavior in src/context-engine. */
+/** Clear one or all process-local context engine runtime quarantines. */
 export function clearContextEngineRuntimeQuarantine(engineId?: string): void {
   const quarantinedEngines = getContextEngineRegistryState().quarantinedEngines;
   if (engineId === undefined) {
@@ -542,7 +542,7 @@ export function listContextEngineIds(): string[] {
   return [...getContextEngineRegistryState().engines.keys()];
 }
 
-/** Reused helper for clear Context Engines For Owner behavior in src/context-engine. */
+/** Remove all registered engines and quarantines for a trusted owner. */
 export function clearContextEnginesForOwner(owner: string): void {
   const normalizedOwner = requireContextEngineOwner(owner);
   const registryState = getContextEngineRegistryState();

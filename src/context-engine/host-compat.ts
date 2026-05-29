@@ -1,4 +1,5 @@
-// context-engine host compat helpers and runtime behavior.
+// Host compatibility contracts for deciding whether a context engine can run
+// safely in a given runtime surface.
 import type {
   ContextEngine,
   ContextEngineHostCapability,
@@ -7,21 +8,21 @@ import type {
   ContextEngineOperation,
 } from "./types.js";
 
-/** Shared type for Context Engine Host Support in src/context-engine. */
+/** Host id, label, and capabilities advertised to context engines. */
 export type ContextEngineHostSupport = {
   id: string;
   label: string;
   capabilities: readonly ContextEngineHostCapability[];
 };
 
-/** Reused constant for GENERIC CLI CONTEXT ENGINE HOST CAPABILITIES behavior in src/context-engine. */
+/** Baseline capabilities provided by generic CLI context-engine hosts. */
 export const GENERIC_CLI_CONTEXT_ENGINE_HOST_CAPABILITIES = [
   "bootstrap",
   "after-turn",
   "maintain",
 ] as const satisfies readonly ContextEngineHostCapability[];
 
-/** Reused constant for OPENCLAW EMBEDDED CONTEXT ENGINE HOST behavior in src/context-engine. */
+/** Capability profile for OpenClaw's embedded runner host. */
 export const OPENCLAW_EMBEDDED_CONTEXT_ENGINE_HOST = {
   id: "openclaw-embedded",
   label: "OpenClaw embedded runner",
@@ -35,7 +36,7 @@ export const OPENCLAW_EMBEDDED_CONTEXT_ENGINE_HOST = {
   ],
 } as const satisfies ContextEngineHostSupport;
 
-/** Reused constant for CODEX APP SERVER CONTEXT ENGINE HOST behavior in src/context-engine. */
+/** Capability profile for the Codex app-server harness host. */
 export const CODEX_APP_SERVER_CONTEXT_ENGINE_HOST = {
   id: "codex-app-server",
   label: "Codex app-server harness",
@@ -50,7 +51,7 @@ export const CODEX_APP_SERVER_CONTEXT_ENGINE_HOST = {
   ],
 } as const satisfies ContextEngineHostSupport;
 
-/** Shared type for Context Engine Host Support Evaluation in src/context-engine. */
+/** Result of checking engine operation requirements against host capabilities. */
 export type ContextEngineHostSupportEvaluation =
   | {
       ok: true;

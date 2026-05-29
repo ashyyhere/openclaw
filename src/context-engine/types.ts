@@ -1,10 +1,11 @@
-// Shared types for context-engine types behavior.
+// Public context-engine contract for pluggable context assembly, ingestion,
+// compaction, maintenance, and runtime host integration.
 import type { AgentMessage } from "../agents/runtime/index.js";
 import type { MemoryCitationsMode } from "../config/types.memory.js";
 
 // Result types
 
-/** Shared type for Assemble Result in src/context-engine. */
+/** Messages and metadata returned by context assembly before a model call. */
 export type AssembleResult = {
   /** Ordered messages to use as model context */
   messages: AgentMessage[];
@@ -37,7 +38,7 @@ export type AssembleResult = {
   contextProjection?: ContextEngineProjection;
 };
 
-/** Shared type for Context Engine Projection in src/context-engine. */
+/** Projection lifecycle requested by an engine for backend prompt context. */
 export type ContextEngineProjection = {
   /** How the assembled context should be projected into the backend runtime. */
   mode: "per_turn" | "thread_bootstrap";
@@ -47,10 +48,10 @@ export type ContextEngineProjection = {
   fingerprint?: string;
 };
 
-/** Shared type for Context Engine Operation in src/context-engine. */
+/** Operation kinds whose host requirements can differ. */
 export type ContextEngineOperation = "agent-run" | "manual-compact" | "subagent-spawn";
 
-/** Shared type for Context Engine Host Capability in src/context-engine. */
+/** Capability flag advertised by a context-engine host. */
 export type ContextEngineHostCapability =
   | "bootstrap"
   | "assemble-before-prompt"
@@ -60,7 +61,7 @@ export type ContextEngineHostCapability =
   | "runtime-llm-complete"
   | "thread-bootstrap-projection";
 
-/** Shared type for Context Engine Host Requirements in src/context-engine. */
+/** Host capabilities required to safely run an engine operation. */
 export type ContextEngineHostRequirements = {
   /** Host capabilities required before the engine can safely serve this operation. */
   requiredCapabilities: ContextEngineHostCapability[];
@@ -68,7 +69,7 @@ export type ContextEngineHostRequirements = {
   unsupportedMessage?: string;
 };
 
-/** Shared type for Compact Result in src/context-engine. */
+/** Result returned by context compaction implementations. */
 export type CompactResult = {
   ok: boolean;
   compacted: boolean;
@@ -86,19 +87,19 @@ export type CompactResult = {
   };
 };
 
-/** Shared type for Ingest Result in src/context-engine. */
+/** Result of ingesting a single message into engine state. */
 export type IngestResult = {
   /** Whether the message was ingested (false if duplicate or no-op) */
   ingested: boolean;
 };
 
-/** Shared type for Ingest Batch Result in src/context-engine. */
+/** Result of ingesting a completed turn batch into engine state. */
 export type IngestBatchResult = {
   /** Number of messages ingested from the supplied batch */
   ingestedCount: number;
 };
 
-/** Shared type for Bootstrap Result in src/context-engine. */
+/** Result of bootstrapping engine state for a session. */
 export type BootstrapResult = {
   /** Whether bootstrap ran and initialized the engine's store */
   bootstrapped: boolean;
@@ -108,7 +109,7 @@ export type BootstrapResult = {
   reason?: string;
 };
 
-/** Shared type for Context Engine Info in src/context-engine. */
+/** Engine metadata and host requirement declaration. */
 export type ContextEngineInfo = {
   id: string;
   name: string;
@@ -129,16 +130,16 @@ export type ContextEngineInfo = {
   hostRequirements?: Partial<Record<ContextEngineOperation, ContextEngineHostRequirements>>;
 };
 
-/** Shared type for Subagent Spawn Preparation in src/context-engine. */
+/** Rollback handle returned after preparing subagent context state. */
 export type SubagentSpawnPreparation = {
   /** Roll back pre-spawn setup when subagent launch fails. */
   rollback: () => void | Promise<void>;
 };
 
-/** Shared type for Subagent End Reason in src/context-engine. */
+/** Reason a subagent lifecycle ended. */
 export type SubagentEndReason = "deleted" | "completed" | "swept" | "released";
 
-/** Shared type for Transcript Rewrite Replacement in src/context-engine. */
+/** Replacement for one transcript entry during safe rewrite. */
 export type TranscriptRewriteReplacement = {
   /** Existing transcript entry id to replace on the active branch. */
   entryId: string;
@@ -146,7 +147,7 @@ export type TranscriptRewriteReplacement = {
   message: AgentMessage;
 };
 
-/** Shared type for Transcript Rewrite Request in src/context-engine. */
+/** Request to rewrite a suffix of transcript entries. */
 export type TranscriptRewriteRequest = {
   /** Message entry replacements to apply in one branch-and-reappend pass. */
   replacements: TranscriptRewriteReplacement[];
@@ -154,7 +155,7 @@ export type TranscriptRewriteRequest = {
   allowedRewriteSuffixEntryIds?: string[];
 };
 
-/** Shared type for Transcript Rewrite Result in src/context-engine. */
+/** Result returned by runtime-owned transcript rewrite helper. */
 export type TranscriptRewriteResult = {
   /** Whether the active branch changed. */
   changed: boolean;
@@ -166,7 +167,7 @@ export type TranscriptRewriteResult = {
   reason?: string;
 };
 
-/** Shared type for Context Engine Maintenance Result in src/context-engine. */
+/** Maintenance result, currently expressed as transcript rewrite statistics. */
 export type ContextEngineMaintenanceResult = TranscriptRewriteResult;
 
 type ContextEnginePromptCacheRetention = "none" | "short" | "long" | "in_memory" | "24h";
@@ -199,7 +200,7 @@ type ContextEnginePromptCacheObservation = {
   changes?: ContextEnginePromptCacheObservationChange[];
 };
 
-/** Shared type for Context Engine Prompt Cache Info in src/context-engine. */
+/** Prompt-cache telemetry supplied to cache-aware context engines. */
 export type ContextEnginePromptCacheInfo = {
   /** Runtime-resolved retention for the actual provider/model/request path. */
   retention?: ContextEnginePromptCacheRetention;
@@ -213,7 +214,7 @@ export type ContextEnginePromptCacheInfo = {
   expiresAt?: number;
 };
 
-/** Shared type for Context Engine Runtime Context in src/context-engine. */
+/** Runtime-owned context passed to engines for host capabilities and helpers. */
 export type ContextEngineRuntimeContext = Record<string, unknown> & {
   /** Runtime task working directory; workspaceDir remains the agent bootstrap workspace. */
   cwd?: string;
