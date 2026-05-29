@@ -1,4 +1,6 @@
-// ui/src/ui/controllers channels helpers and runtime behavior.
+// Controller helpers for channel status and WhatsApp login actions. Channel
+// refreshes can return early on a soft timeout so the UI remains responsive
+// while the underlying gateway request finishes in the background.
 import type { ChannelsStatusSnapshot } from "../types.ts";
 import type { ChannelsState } from "./channels.types.ts";
 import {
@@ -6,7 +8,7 @@ import {
   isMissingOperatorReadScopeError,
 } from "./scope-errors.ts";
 
-/** Re-exported API for ui/src/ui/controllers, starting with Channels State. */
+/** Channel controller state contract shared with the Channels view. */
 export type { ChannelsState };
 
 type LoadChannelsOptions = {
@@ -17,7 +19,7 @@ function delay(ms: number): Promise<"timeout"> {
   return new Promise((resolve) => setTimeout(() => resolve("timeout"), ms));
 }
 
-/** Reused helper for load Channels behavior in ui/src/ui/controllers. */
+/** Load channel status/probe data, guarding against stale overlapping refreshes. */
 export async function loadChannels(
   state: ChannelsState,
   probe: boolean,
@@ -74,7 +76,7 @@ export async function loadChannels(
   await refresh;
 }
 
-/** Reused helper for start Whats App Login behavior in ui/src/ui/controllers. */
+/** Start WhatsApp Web login and store QR/message state for the card. */
 export async function startWhatsAppLogin(state: ChannelsState, force: boolean) {
   if (!state.client || !state.connected || state.whatsappBusy) {
     return;
@@ -101,7 +103,7 @@ export async function startWhatsAppLogin(state: ChannelsState, force: boolean) {
   }
 }
 
-/** Reused helper for wait Whats App Login behavior in ui/src/ui/controllers. */
+/** Wait for the current WhatsApp QR login to connect or return an updated QR. */
 export async function waitWhatsAppLogin(state: ChannelsState) {
   if (!state.client || !state.connected || state.whatsappBusy) {
     return;
@@ -131,7 +133,7 @@ export async function waitWhatsAppLogin(state: ChannelsState) {
   }
 }
 
-/** Reused helper for logout Whats App behavior in ui/src/ui/controllers. */
+/** Logout the WhatsApp channel and clear login UI state. */
 export async function logoutWhatsApp(state: ChannelsState) {
   if (!state.client || !state.connected || state.whatsappBusy) {
     return;

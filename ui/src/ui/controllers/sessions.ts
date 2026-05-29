@@ -1,4 +1,6 @@
-// ui/src/ui/controllers sessions helpers and runtime behavior.
+// Controller helpers for the Sessions view and active chat-session integration.
+// This module owns list loading, live session-change reconciliation, selected
+// message subscriptions, session mutations, and compaction checkpoint actions.
 import {
   reconcileChatRunFromCurrentSessionRow,
   type ChatRunUiStatus,
@@ -26,7 +28,7 @@ type SessionsChatRunState = {
   requestUpdate?: () => void;
 };
 
-/** Shared type for Sessions State in ui/src/ui/controllers. */
+/** Mutable Sessions view state plus active chat-run fields that rows can reconcile. */
 export type SessionsState = SessionsChatRunState & {
   client: GatewayBrowserClient | null;
   connected: boolean;
@@ -51,7 +53,7 @@ export type SessionsState = SessionsChatRunState & {
   hello?: GatewayHelloOk | null;
 };
 
-/** Shared type for Load Sessions Overrides in ui/src/ui/controllers. */
+/** Per-load filters and behavior overrides for sessions.list requests. */
 export type LoadSessionsOverrides = {
   agentId?: string;
   activeMinutes?: number;
@@ -337,7 +339,7 @@ function hasOwn(record: Record<string, unknown>, key: string): boolean {
   return Object.prototype.hasOwnProperty.call(record, key);
 }
 
-/** Reused helper for parse Sessions Filter Integer behavior in ui/src/ui/controllers. */
+/** Parse a non-negative integer filter field, returning 0 for blank/invalid text. */
 export function parseSessionsFilterInteger(value: string): number {
   const trimmed = value.trim();
   if (!/^\d+$/.test(trimmed)) {
@@ -364,7 +366,7 @@ function normalizeSessionKind(value: unknown): GatewaySessionRow["kind"] | undef
     : undefined;
 }
 
-/** Reused helper for is Archived Session Row behavior in ui/src/ui/controllers. */
+/** Return whether a session row is archived and hidden by default. */
 export function isArchivedSessionRow(row: GatewaySessionRow): boolean {
   return row.archived === true;
 }
@@ -536,7 +538,7 @@ async function runCompactionMutation<T>(
   }
 }
 
-/** Shared type for Sessions Changed Apply Result in ui/src/ui/controllers. */
+/** Result of applying one live session-change event to the cached list. */
 export type SessionsChangedApplyResult =
   | { applied: false }
   | {
@@ -546,7 +548,7 @@ export type SessionsChangedApplyResult =
       clearedChatRunStatus?: Pick<ChatRunUiStatus, "phase" | "runId" | "sessionKey">;
     };
 
-/** Reused helper for apply Sessions Changed Event behavior in ui/src/ui/controllers. */
+/** Merge a live session event into the current list and reconcile active chat status. */
 export function applySessionsChangedEvent(
   state: SessionsState,
   payload: unknown,
@@ -686,7 +688,7 @@ export function applySessionsChangedEvent(
   };
 }
 
-/** Reused helper for subscribe Sessions behavior in ui/src/ui/controllers. */
+/** Subscribe the browser connection to live session-list events. */
 export async function subscribeSessions(state: SessionsState) {
   if (!state.client || !state.connected) {
     return;
@@ -698,7 +700,7 @@ export async function subscribeSessions(state: SessionsState) {
   }
 }
 
-/** Reused helper for sync Selected Session Message Subscription behavior in ui/src/ui/controllers. */
+/** Keep the gateway message subscription aligned to the selected chat session. */
 export async function syncSelectedSessionMessageSubscription(
   state: SessionsState & { sessionKey: string },
   opts?: { force?: boolean },
@@ -783,7 +785,7 @@ export async function syncSelectedSessionMessageSubscription(
   }
 }
 
-/** Reused helper for load Sessions behavior in ui/src/ui/controllers. */
+/** Coalesce overlapping sessions.list requests and run the newest pending load. */
 export async function loadSessions(state: SessionsState, overrides?: LoadSessionsOverrides) {
   if (!state.client || !state.connected) {
     return;
@@ -916,7 +918,7 @@ async function loadSessionsOnce(
   });
 }
 
-/** Reused helper for patch Session behavior in ui/src/ui/controllers. */
+/** Patch editable session fields and refresh the list afterward. */
 export async function patchSession(
   state: SessionsState,
   key: string,
@@ -957,7 +959,7 @@ export async function patchSession(
   }
 }
 
-/** Reused helper for create Session And Refresh behavior in ui/src/ui/controllers. */
+/** Create a session, refresh the list, and return the created session key. */
 export async function createSessionAndRefresh(
   state: SessionsState,
   params: CreateSessionParams = {},
@@ -985,7 +987,7 @@ export async function createSessionAndRefresh(
   return createdKey;
 }
 
-/** Reused helper for delete Sessions And Refresh behavior in ui/src/ui/controllers. */
+/** Confirm deletion, delete selected sessions, and refresh the list when needed. */
 export async function deleteSessionsAndRefresh(
   state: SessionsState,
   keys: string[],
@@ -1032,7 +1034,7 @@ export async function deleteSessionsAndRefresh(
   return deleted;
 }
 
-/** Reused helper for toggle Session Compaction Checkpoints behavior in ui/src/ui/controllers. */
+/** Toggle checkpoint expansion and lazily load checkpoints for the selected row. */
 export async function toggleSessionCompactionCheckpoints(state: SessionsState, key: string) {
   const trimmedKey = key.trim();
   if (!trimmedKey) {
@@ -1049,7 +1051,7 @@ export async function toggleSessionCompactionCheckpoints(state: SessionsState, k
   await fetchSessionCompactionCheckpoints(state, trimmedKey);
 }
 
-/** Reused helper for branch Session From Checkpoint behavior in ui/src/ui/controllers. */
+/** Create a child session from a compaction checkpoint after confirmation. */
 export async function branchSessionFromCheckpoint(
   state: SessionsState,
   key: string,
@@ -1065,7 +1067,7 @@ export async function branchSessionFromCheckpoint(
   return result?.key ?? null;
 }
 
-/** Reused helper for restore Session From Checkpoint behavior in ui/src/ui/controllers. */
+/** Restore a session transcript to a compaction checkpoint after confirmation. */
 export async function restoreSessionFromCheckpoint(
   state: SessionsState,
   key: string,
