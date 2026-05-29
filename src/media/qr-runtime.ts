@@ -1,4 +1,4 @@
-// media qr runtime helpers and runtime behavior.
+// Lazy QR-code runtime loader and input validation helpers.
 import type QRCode from "qrcode";
 import { createLazyImportLoader } from "../shared/lazy-promise.js";
 
@@ -8,12 +8,12 @@ const qrCodeRuntimeLoader = createLazyImportLoader<QrCodeRuntime>(() =>
   import("qrcode").then((mod) => mod.default ?? mod),
 );
 
-/** Reused helper for load Qr Code Runtime behavior in src/media. */
+/** Loads the optional qrcode package once for QR generation callers. */
 export async function loadQrCodeRuntime(): Promise<QrCodeRuntime> {
   return await qrCodeRuntimeLoader.load();
 }
 
-/** Reused helper for normalize Qr Text behavior in src/media. */
+/** Validates QR payload text before handing it to the QR runtime. */
 export function normalizeQrText(text: string): string {
   if (typeof text !== "string") {
     throw new TypeError("QR text must be a string.");

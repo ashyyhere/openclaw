@@ -1,4 +1,4 @@
-// media fetch helpers and runtime behavior.
+// SSRF-guarded remote media fetching and save-to-store helpers.
 import { formatErrorMessage } from "../infra/errors.js";
 import {
   fetchWithSsrFGuard,
@@ -16,7 +16,7 @@ import { detectMime, extensionForMime } from "./mime.js";
 import { readResponseTextSnippet, readResponseWithLimit } from "./read-response-with-limit.js";
 import { saveMediaBuffer, saveMediaStream, type SavedMedia } from "./store.js";
 
-/** Reused constant for DEFAULT FETCH MEDIA MAX BYTES behavior in src/media. */
+/** Default remote media download cap shared with document ingestion limits. */
 export const DEFAULT_FETCH_MEDIA_MAX_BYTES = MAX_DOCUMENT_BYTES;
 
 type FetchMediaResult = {
@@ -25,18 +25,18 @@ type FetchMediaResult = {
   fileName?: string;
 };
 
-/** Shared type for Saved Remote Media in src/media. */
+/** Saved media record with the best-effort remote filename preserved. */
 export type SavedRemoteMedia = SavedMedia & {
   fileName?: string;
 };
 
-/** Shared type for Media Fetch Error Code in src/media. */
+/** Stable error categories for remote media download failures. */
 export type MediaFetchErrorCode = "max_bytes" | "http_error" | "fetch_failed";
 
-/** Shared type for Media Fetch Retry Options in src/media. */
+/** Retry policy applied around the guarded fetch and full body read/save operation. */
 export type MediaFetchRetryOptions = RetryOptions;
 
-/** Reused class for Media Fetch Error behavior in src/media. */
+/** Error type that preserves media fetch category and HTTP status for callers. */
 export class MediaFetchError extends Error {
   readonly code: MediaFetchErrorCode;
   readonly status?: number;
@@ -53,10 +53,10 @@ export class MediaFetchError extends Error {
   }
 }
 
-/** Shared type for Fetch Like in src/media. */
+/** Fetch-compatible function used by tests and guarded network callers. */
 export type FetchLike = (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 
-/** Shared type for Fetch Dispatcher Attempt in src/media. */
+/** Optional pinned DNS/dispatcher attempt used for guarded media fetch retries. */
 export type FetchDispatcherAttempt = {
   dispatcherPolicy?: PinnedDispatcherPolicy;
   lookupFn?: LookupFn;
@@ -90,7 +90,7 @@ type FetchMediaOptions = {
   trustExplicitProxyDns?: boolean;
 };
 
-/** Shared type for Save Response Media Options in src/media. */
+/** Options for saving an already-fetched response into the media store. */
 export type SaveResponseMediaOptions = {
   sourceUrl?: string;
   filePathHint?: string;
@@ -101,7 +101,7 @@ export type SaveResponseMediaOptions = {
   originalFilename?: string;
 };
 
-/** Shared type for Save Remote Media Options in src/media. */
+/** Options for fetching remote media and storing the response body. */
 export type SaveRemoteMediaOptions = FetchMediaOptions & {
   fallbackContentType?: string;
   subdir?: string;
@@ -558,7 +558,7 @@ async function withMediaFetchRetry<T>(
   });
 }
 
-/** Reused helper for save Response Media behavior in src/media. */
+/** Validates and saves a successful response while deriving filename and content type. */
 export async function saveResponseMedia(
   res: Response,
   options: SaveResponseMediaOptions = {},
@@ -585,7 +585,7 @@ export async function saveResponseMedia(
   });
 }
 
-/** Reused helper for save Remote Media behavior in src/media. */
+/** Fetches remote media through SSRF guards, retries, and stores it on disk. */
 export async function saveRemoteMedia(options: SaveRemoteMediaOptions): Promise<SavedRemoteMedia> {
   return await withMediaFetchRetry(options, () => saveRemoteMediaOnce(options));
 }
@@ -618,7 +618,7 @@ async function saveRemoteMediaOnce(options: SaveRemoteMediaOptions): Promise<Sav
   }
 }
 
-/** Reused helper for read Remote Media Buffer behavior in src/media. */
+/** Fetches remote media through SSRF guards and returns a bounded in-memory buffer. */
 export async function readRemoteMediaBuffer(options: FetchMediaOptions): Promise<FetchMediaResult> {
   return await withMediaFetchRetry(options, () => readRemoteMediaBufferOnce(options));
 }

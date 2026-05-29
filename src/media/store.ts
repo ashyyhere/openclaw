@@ -1,4 +1,4 @@
-// media store helpers and runtime behavior.
+// Local media claim-check store for inbound, outbound, and downloaded attachments.
 import "../infra/fs-safe-defaults.js";
 import crypto from "node:crypto";
 import { createWriteStream } from "node:fs";
@@ -20,7 +20,7 @@ import { detectMime, extensionForMime } from "./mime.js";
 import { isFsSafeError, readLocalFileSafely, type FsSafeLikeError } from "./store.runtime.js";
 
 const resolveMediaDir = () => path.join(resolveConfigDir(), "media");
-/** Reused constant for MEDIA MAX BYTES behavior in src/media. */
+/** Default persisted media size limit for local and remote attachment ingestion. */
 export const MEDIA_MAX_BYTES = 5 * 1024 * 1024; // 5MB default
 const MAX_BYTES = MEDIA_MAX_BYTES;
 const DEFAULT_TTL_MS = 2 * 60 * 1000; // 2 minutes
@@ -95,7 +95,7 @@ let httpRequestImpl: RequestImpl = defaultHttpRequestImpl;
 let httpsRequestImpl: RequestImpl = defaultHttpsRequestImpl;
 let resolvePinnedHostnameImpl: ResolvePinnedHostnameImpl = defaultResolvePinnedHostnameImpl;
 
-/** Reused helper for set Media Store Network Deps For Test behavior in src/media. */
+/** Replaces media-store network dependencies for deterministic unit tests. */
 export function setMediaStoreNetworkDepsForTest(deps?: {
   httpRequest?: RequestImpl;
   httpsRequest?: RequestImpl;
@@ -146,12 +146,12 @@ export function extractOriginalFilename(filePath: string): string {
   return basename; // Fallback: use as-is
 }
 
-/** Reused helper for get Media Dir behavior in src/media. */
+/** Returns the configured media store directory. */
 export function getMediaDir() {
   return resolveMediaDir();
 }
 
-/** Reused helper for ensure Media Dir behavior in src/media. */
+/** Creates and returns the media store directory with private directory permissions. */
 export async function ensureMediaDir() {
   const mediaDir = resolveMediaDir();
   await fs.mkdir(mediaDir, { recursive: true, mode: 0o700 });
@@ -190,7 +190,7 @@ async function retryAfterRecreatingDir<T>(dir: string, run: () => Promise<T>): P
   }
 }
 
-/** Reused helper for clean Old Media behavior in src/media. */
+/** Prunes expired media files and optionally empty scoped directories. */
 export async function cleanOldMedia(ttlMs = DEFAULT_TTL_MS, options: CleanOldMediaOptions = {}) {
   await openMediaStore().pruneExpired({
     maxDepth: options.recursive ? undefined : 1,
@@ -301,7 +301,7 @@ async function downloadToFile(
   });
 }
 
-/** Shared type for Saved Media in src/media. */
+/** Opaque media-store record returned after saving bytes to disk. */
 export type SavedMedia = {
   id: string;
   path: string;
@@ -467,7 +467,7 @@ async function writeMediaStreamToFile(params: {
   }
 }
 
-/** Shared type for Save Media Source Error Code in src/media. */
+/** Stable local media-source failure categories surfaced to callers. */
 export type SaveMediaSourceErrorCode =
   | "invalid-path"
   | "not-found"
@@ -475,7 +475,7 @@ export type SaveMediaSourceErrorCode =
   | "path-mismatch"
   | "too-large";
 
-/** Reused class for Save Media Source Error behavior in src/media. */
+/** Error type for unsafe, missing, mismatched, or oversized local media sources. */
 export class SaveMediaSourceError extends Error {
   code: SaveMediaSourceErrorCode;
 
@@ -518,7 +518,7 @@ function toSaveMediaSourceError(err: FsSafeLikeError, maxBytes = MAX_BYTES): Sav
   }
 }
 
-/** Reused helper for save Media Source behavior in src/media. */
+/** Saves a URL or safe local file path into the media store. */
 export async function saveMediaSource(
   source: string,
   headers?: Record<string, string>,
@@ -567,7 +567,7 @@ export async function saveMediaSource(
   }
 }
 
-/** Reused helper for save Media Buffer behavior in src/media. */
+/** Saves an in-memory attachment buffer with MIME sniffing and stable file mode. */
 export async function saveMediaBuffer(
   buffer: Buffer,
   contentType?: string,
@@ -599,7 +599,7 @@ export async function saveMediaBuffer(
   return buildSavedMediaResult({ dir, id, size: buffer.byteLength, contentType: mime });
 }
 
-/** Reused helper for save Media Stream behavior in src/media. */
+/** Streams attachment bytes to a sibling temp file before atomically publishing. */
 export async function saveMediaStream(
   stream: AsyncIterable<unknown>,
   contentType?: string,
@@ -679,7 +679,7 @@ export async function resolveMediaBufferPath(id: string, subdir = "inbound"): Pr
   }
 }
 
-/** Shared type for Read Media Buffer Result in src/media. */
+/** Read result containing media bytes plus the resolved physical store path. */
 export type ReadMediaBufferResult = {
   id: string;
   path: string;
@@ -687,7 +687,7 @@ export type ReadMediaBufferResult = {
   size: number;
 };
 
-/** Reused helper for read Media Buffer behavior in src/media. */
+/** Reads a saved media id from the scoped store with path and size validation. */
 export async function readMediaBuffer(
   id: string,
   subdir = "inbound",

@@ -1,7 +1,7 @@
-// llm model registry helpers and runtime behavior.
+// Model registry interface shared by provider routing and catalog callers.
 import type { Model } from "./types.js";
 
-/** Shared type for Model Registry in src/llm. */
+/** Query surface for available models and their configured auth state. */
 export type ModelRegistry = {
   getAll(): Model[];
   getAvailable(): Model[];

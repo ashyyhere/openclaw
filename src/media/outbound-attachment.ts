@@ -1,9 +1,9 @@
-// media outbound attachment helpers and runtime behavior.
+// Outbound attachment resolver that loads web media and writes it to the media store.
 import { buildOutboundMediaLoadOptions, type OutboundMediaAccess } from "./load-options.js";
 import { saveMediaBuffer } from "./store.js";
 import { loadWebMedia } from "./web-media.js";
 
-/** Reused helper for resolve Outbound Attachment From Url behavior in src/media. */
+/** Resolves a remote or allowed local media URL into a stored outbound file path. */
 export async function resolveOutboundAttachmentFromUrl(
   mediaUrl: string,
   maxBytes: number,
