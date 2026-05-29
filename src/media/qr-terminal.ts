@@ -1,4 +1,4 @@
-// media qr terminal helpers and runtime behavior.
+// Renders QR payloads as terminal-safe ANSI blocks for pairing flows.
 import { loadQrCodeRuntime, normalizeQrText } from "./qr-runtime.ts";
 
 type QrTerminalModules = {
@@ -45,7 +45,7 @@ function renderCompactTerminalQr(modules: QrTerminalModules): string {
   return lines.join("\n");
 }
 
-/** Reused helper for render Qr Terminal behavior in src/media. */
+/** Returns a terminal QR code, optionally in a compact half-block layout. */
 export async function renderQrTerminal(
   input: string,
   opts: { small?: boolean } = {},

@@ -1,4 +1,4 @@
-// media inbound path policy helpers and runtime behavior.
+// Validates whether local inbound attachment paths are inside allowed channel roots.
 import path from "node:path";
 
 const WILDCARD_SEGMENT = "*";
@@ -45,7 +45,7 @@ function matchesRootPattern(params: { candidatePath: string; rootPattern: string
   return true;
 }
 
-/** Reused helper for is Valid Inbound Path Root Pattern behavior in src/media. */
+/** Checks that a root pattern is absolute and only uses whole-segment wildcards. */
 export function isValidInboundPathRootPattern(value: string): boolean {
   const normalized = normalizePosixAbsolutePath(value);
   if (!normalized) {
@@ -58,7 +58,7 @@ export function isValidInboundPathRootPattern(value: string): boolean {
   return segments.every((segment) => segment === WILDCARD_SEGMENT || !segment.includes("*"));
 }
 
-/** Reused helper for normalize Inbound Path Roots behavior in src/media. */
+/** Normalizes root patterns, dropping invalid and duplicate entries. */
 export function normalizeInboundPathRoots(roots?: readonly string[]): string[] {
   const normalized: string[] = [];
   const seen = new Set<string>();
@@ -79,7 +79,7 @@ export function normalizeInboundPathRoots(roots?: readonly string[]): string[] {
   return normalized;
 }
 
-/** Reused helper for merge Inbound Path Roots behavior in src/media. */
+/** Merges multiple root lists while preserving first-seen order after normalization. */
 export function mergeInboundPathRoots(
   ...rootsLists: Array<readonly string[] | undefined>
 ): string[] {
@@ -98,7 +98,7 @@ export function mergeInboundPathRoots(
   return merged;
 }
 
-/** Reused helper for is Inbound Path Allowed behavior in src/media. */
+/** Returns true when a candidate path matches configured roots or their fallback roots. */
 export function isInboundPathAllowed(params: {
   filePath: string;
   roots: readonly string[];

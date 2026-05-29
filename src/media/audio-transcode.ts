@@ -1,4 +1,4 @@
-// media audio transcode helpers and runtime behavior.
+// Converts in-memory audio buffers into channel-compatible voice containers.
 import { spawn } from "node:child_process";
 import path from "node:path";
 import { writeExternalFileWithinRoot } from "../infra/fs-safe.js";
@@ -43,7 +43,7 @@ function normalizeOutputFileName(value?: string): string {
   return DEFAULT_OUTPUT_FILE_NAME;
 }
 
-/** Reused helper for transcode Audio Buffer To Opus behavior in src/media. */
+/** Transcodes an audio buffer to Opus using ffmpeg in an isolated temp workspace. */
 export async function transcodeAudioBufferToOpus(params: {
   audioBuffer: Buffer;
   inputExtension?: string;
@@ -102,7 +102,7 @@ export async function transcodeAudioBufferToOpus(params: {
   );
 }
 
-/** Shared type for Audio Container Transcode Outcome in src/media. */
+/** Result from attempting a best-effort container conversion for voice playback. */
 export type AudioContainerTranscodeOutcome =
   | { ok: true; buffer: Buffer }
   | {
@@ -116,7 +116,7 @@ export type AudioContainerTranscodeOutcome =
       detail?: string;
     };
 
-/** Reused helper for transcode Audio Buffer behavior in src/media. */
+/** Converts between supported audio containers, currently using macOS afconvert recipes. */
 export async function transcodeAudioBuffer(params: {
   audioBuffer: Buffer;
   sourceExtension: string;

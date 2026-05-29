@@ -1,11 +1,11 @@
-// media read byte stream with limit helpers and runtime behavior.
-/** Shared type for Byte Stream Limit Overflow in src/media. */
+// Reads async byte streams while enforcing a hard maximum size.
+/** Size details passed to byte-stream overflow error factories. */
 export type ByteStreamLimitOverflow = {
   size: number;
   maxBytes: number;
 };
 
-/** Shared type for Read Byte Stream With Limit Options in src/media. */
+/** Controls the byte limit and optional overflow error for stream reads. */
 export type ReadByteStreamWithLimitOptions = {
   maxBytes: number;
   onOverflow?: (params: ByteStreamLimitOverflow) => Error;
@@ -45,7 +45,7 @@ function destroyReadableOnOverflow(stream: unknown, err: Error): void {
   }
 }
 
-/** Reused helper for read Byte Stream With Limit behavior in src/media. */
+/** Buffers an async byte stream and destroys/cancels it as soon as the limit is exceeded. */
 export async function readByteStreamWithLimit(
   stream: AsyncIterable<unknown>,
   opts: ReadByteStreamWithLimitOptions,
