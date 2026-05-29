@@ -1,4 +1,4 @@
-// packages/gateway-protocol/src/schema primitives helpers and runtime behavior.
+// Shared TypeBox primitives reused across gateway protocol schemas.
 import { Type } from "typebox";
 import { GATEWAY_CLIENT_IDS, GATEWAY_CLIENT_MODES } from "../client-info.js";
 import {
@@ -13,21 +13,21 @@ const ENV_SECRET_REF_ID_RE = /^[A-Z][A-Z0-9_]{0,127}$/;
 const INPUT_PROVENANCE_KIND_VALUES = ["external_user", "inter_session", "internal_system"] as const;
 const SESSION_LABEL_MAX_LENGTH = 512;
 
-/** Public constant for Non Empty String behavior in packages/gateway-protocol. */
+/** Generic string schema for required non-empty identifiers and names. */
 export const NonEmptyString = Type.String({ minLength: 1 });
-/** Public constant for CHAT SEND SESSION KEY MAX LENGTH behavior in packages/gateway-protocol. */
+/** Maximum session key length accepted by chat send routes. */
 export const CHAT_SEND_SESSION_KEY_MAX_LENGTH = 512;
-/** Public constant for Chat Send Session Key String behavior in packages/gateway-protocol. */
+/** Session key string schema for chat send payloads. */
 export const ChatSendSessionKeyString = Type.String({
   minLength: 1,
   maxLength: CHAT_SEND_SESSION_KEY_MAX_LENGTH,
 });
-/** Public constant for Session Label String behavior in packages/gateway-protocol. */
+/** Human-visible session label with the shared UI/storage length cap. */
 export const SessionLabelString = Type.String({
   minLength: 1,
   maxLength: SESSION_LABEL_MAX_LENGTH,
 });
-/** Public constant for Input Provenance Schema behavior in packages/gateway-protocol. */
+/** Provenance metadata for inputs copied from users, sessions, tools, or systems. */
 export const InputProvenanceSchema = Type.Object(
   {
     kind: Type.String({ enum: [...INPUT_PROVENANCE_KIND_VALUES] }),
@@ -39,13 +39,13 @@ export const InputProvenanceSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Gateway Client Id Schema behavior in packages/gateway-protocol. */
+/** Schema for the stable client ids advertised during gateway connection setup. */
 export const GatewayClientIdSchema = Type.Enum(GATEWAY_CLIENT_IDS);
 
-/** Public constant for Gateway Client Mode Schema behavior in packages/gateway-protocol. */
+/** Schema for coarse gateway client runtime modes. */
 export const GatewayClientModeSchema = Type.Enum(GATEWAY_CLIENT_MODES);
 
-/** Public constant for Secret Ref Source Schema behavior in packages/gateway-protocol. */
+/** Allowed secret resolver backends referenced in protocol payloads. */
 export const SecretRefSourceSchema = Type.Union([
   Type.Literal("env"),
   Type.Literal("file"),
@@ -96,12 +96,12 @@ const ExecSecretRefSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Secret Ref Schema behavior in packages/gateway-protocol. */
+/** Structured reference to a secret resolved by env, file, or exec providers. */
 export const SecretRefSchema = Type.Union([
   EnvSecretRefSchema,
   FileSecretRefSchema,
   ExecSecretRefSchema,
 ]);
 
-/** Public constant for Secret Input Schema behavior in packages/gateway-protocol. */
+/** Secret-bearing input can be an inline string or structured secret reference. */
 export const SecretInputSchema = Type.Union([Type.String(), SecretRefSchema]);
