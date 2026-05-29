@@ -1,4 +1,4 @@
-// sessions send policy helpers and runtime behavior.
+// Resolves whether a session is allowed to send outbound messages.
 import { normalizeChatType } from "../channels/chat-type.js";
 import type { SessionChatType, SessionEntry } from "../config/sessions.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -8,10 +8,10 @@ import {
 } from "../shared/string-coerce.js";
 import { deriveSessionChatType } from "./session-chat-type.js";
 
-/** Shared type for Session Send Policy Decision in src/sessions. */
+/** Final allow/deny decision from session send-policy evaluation. */
 export type SessionSendPolicyDecision = "allow" | "deny";
 
-/** Reused helper for normalize Send Policy behavior in src/sessions. */
+/** Normalizes an optional policy action string into allow, deny, or undefined. */
 export function normalizeSendPolicy(raw?: string | null): SessionSendPolicyDecision | undefined {
   const value = normalizeOptionalLowercaseString(raw);
   if (value === "allow") {
@@ -74,7 +74,7 @@ function deriveChatTypeFromKey(key?: string): SessionChatType | undefined {
   return undefined;
 }
 
-/** Reused helper for resolve Send Policy behavior in src/sessions. */
+/** Applies entry override, ordered config rules, and default fallback for a session send. */
 export function resolveSendPolicy(params: {
   cfg: OpenClawConfig;
   entry?: SessionEntry;

@@ -1,4 +1,4 @@
-// sessions session chat type helpers and runtime behavior.
+// Resolves chat type from built-in key rules and channel plugin legacy adapters.
 import { getBootstrapChannelPlugin } from "../channels/plugins/bootstrap-registry.js";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import {
@@ -7,7 +7,7 @@ import {
 } from "./session-chat-type-shared.js";
 import { parseAgentSessionKey } from "./session-key-utils.js";
 
-/** Re-exported API for src/sessions. */
+/** Re-exports shared session-key chat type inference helpers. */
 export {
   deriveSessionChatTypeFromKey,
   type SessionKeyChatType,
@@ -47,7 +47,7 @@ function derivePluginLegacySessionChatType(
   return deriveLegacySessionChatType(scopedSessionKey);
 }
 
-/** Reused helper for derive Session Chat Type behavior in src/sessions. */
+/** Infers chat type using built-in rules first, then channel plugin legacy hooks. */
 export function deriveSessionChatType(sessionKey: string | undefined | null): SessionKeyChatType {
   const builtInType = deriveSessionChatTypeFromKey(sessionKey);
   if (builtInType !== "unknown") {

@@ -1,7 +1,7 @@
-// sessions classify session kind helpers and runtime behavior.
+// Classifies session keys into display categories for listings and diagnostics.
 import { isCronSessionKey } from "./session-key-utils.js";
 
-/** Shared type for Session Kind in src/sessions. */
+/** Display category derived from session key shape and session metadata. */
 export type SessionKind = "cron" | "direct" | "group" | "global" | "spawn-child" | "unknown";
 
 /**

@@ -1,4 +1,4 @@
-// sessions level overrides helpers and runtime behavior.
+// Parses and applies per-session verbose and trace level overrides.
 import {
   normalizeTraceLevel,
   normalizeVerboseLevel,
@@ -9,7 +9,7 @@ import type { SessionEntry } from "../config/sessions.js";
 
 const INVALID_VERBOSE_LEVEL_ERROR = 'invalid verboseLevel (use "on"|"off"|"full")';
 
-/** Reused helper for parse Verbose Override behavior in src/sessions. */
+/** Parses a verbose-level override, preserving null as an explicit reset. */
 export function parseVerboseOverride(
   raw: unknown,
 ): { ok: true; value: VerboseLevel | null | undefined } | { ok: false; error: string } {
@@ -29,7 +29,7 @@ export function parseVerboseOverride(
   return { ok: true, value: normalized };
 }
 
-/** Reused helper for apply Verbose Override behavior in src/sessions. */
+/** Applies a parsed verbose-level override to a mutable session entry. */
 export function applyVerboseOverride(entry: SessionEntry, level: VerboseLevel | null | undefined) {
   if (level === undefined) {
     return;
@@ -41,7 +41,7 @@ export function applyVerboseOverride(entry: SessionEntry, level: VerboseLevel | 
   entry.verboseLevel = level;
 }
 
-/** Reused helper for parse Trace Override behavior in src/sessions. */
+/** Parses a trace-level override, preserving null as an explicit reset. */
 export function parseTraceOverride(
   raw: unknown,
 ): { ok: true; value: TraceLevel | null | undefined } | { ok: false; error: string } {
@@ -61,7 +61,7 @@ export function parseTraceOverride(
   return { ok: true, value: normalized };
 }
 
-/** Reused helper for apply Trace Override behavior in src/sessions. */
+/** Applies a parsed trace-level override to a mutable session entry. */
 export function applyTraceOverride(entry: SessionEntry, level: TraceLevel | null | undefined) {
   if (level === undefined) {
     return;
