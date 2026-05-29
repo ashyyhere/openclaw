@@ -1,4 +1,4 @@
-// logging diagnostic phase helpers and runtime behavior.
+// Diagnostic phase timing helpers with recent in-memory snapshots and optional event emission.
 import { performance } from "node:perf_hooks";
 import {
   areDiagnosticsEnabledForProcess,
@@ -35,7 +35,7 @@ function pushRecentPhase(snapshot: DiagnosticPhaseSnapshot): void {
   }
 }
 
-/** Reused helper for get Current Diagnostic Phase behavior in src/logging. */
+/** Returns the currently active diagnostic phase name, if any. */
 export function getCurrentDiagnosticPhase(): string | undefined {
   return activePhaseStack.at(-1)?.name;
 }
@@ -47,7 +47,7 @@ function resolveRecentPhaseLimit(limit: number): number | null {
   return Math.floor(limit);
 }
 
-/** Reused helper for get Recent Diagnostic Phases behavior in src/logging. */
+/** Returns recent completed diagnostic phases, newest-limited by count. */
 export function getRecentDiagnosticPhases(limit = 8): DiagnosticPhaseSnapshot[] {
   const resolved = resolveRecentPhaseLimit(limit);
   if (resolved === null) {
@@ -56,7 +56,7 @@ export function getRecentDiagnosticPhases(limit = 8): DiagnosticPhaseSnapshot[] 
   return recentPhases.slice(-resolved).map((phase) => Object.assign({}, phase));
 }
 
-/** Reused helper for record Diagnostic Phase behavior in src/logging. */
+/** Records a completed phase and emits a diagnostic event when diagnostics are enabled. */
 export function recordDiagnosticPhase(snapshot: DiagnosticPhaseSnapshot): void {
   pushRecentPhase(snapshot);
   if (!areDiagnosticsEnabledForProcess()) {
@@ -68,7 +68,7 @@ export function recordDiagnosticPhase(snapshot: DiagnosticPhaseSnapshot): void {
   });
 }
 
-/** Reused helper for with Diagnostic Phase behavior in src/logging. */
+/** Runs work inside a timed diagnostic phase and records wall/cpu metrics on completion. */
 export async function withDiagnosticPhase<T>(
   name: string,
   run: () => Promise<T> | T,
@@ -106,7 +106,7 @@ export async function withDiagnosticPhase<T>(
   }
 }
 
-/** Reused helper for reset Diagnostic Phases For Test behavior in src/logging. */
+/** Clears active/recent diagnostic phase state for tests. */
 export function resetDiagnosticPhasesForTest(): void {
   activePhaseStack = [];
   recentPhases = [];

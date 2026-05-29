@@ -1,4 +1,4 @@
-// hooks update helpers and runtime behavior.
+// Updates npm-installed hook packs while preserving install records and integrity checks.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { buildNpmResolutionFields } from "../infra/install-source-utils.js";
 import {
@@ -12,16 +12,16 @@ import {
 } from "./install.js";
 import { recordHookInstall } from "./installs.js";
 
-/** Shared type for Hook Pack Update Logger in src/hooks. */
+/** Minimal logger used while updating hook packs. */
 export type HookPackUpdateLogger = {
   info?: (message: string) => void;
   warn?: (message: string) => void;
 };
 
-/** Shared type for Hook Pack Update Status in src/hooks. */
+/** Per-hook-pack update outcome status. */
 export type HookPackUpdateStatus = "updated" | "unchanged" | "skipped" | "error";
 
-/** Shared type for Hook Pack Update Outcome in src/hooks. */
+/** Result for one hook pack update attempt. */
 export type HookPackUpdateOutcome = {
   hookId: string;
   status: HookPackUpdateStatus;
@@ -30,14 +30,14 @@ export type HookPackUpdateOutcome = {
   nextVersion?: string;
 };
 
-/** Shared type for Hook Pack Update Summary in src/hooks. */
+/** Aggregate update result including the next config when install records changed. */
 export type HookPackUpdateSummary = {
   config: OpenClawConfig;
   changed: boolean;
   outcomes: HookPackUpdateOutcome[];
 };
 
-/** Shared type for Hook Pack Update Integrity Drift Params in src/hooks. */
+/** Integrity drift payload exposed before accepting an updated npm hook pack. */
 export type HookPackUpdateIntegrityDriftParams = HookNpmIntegrityDriftParams & {
   hookId: string;
   resolvedSpec?: string;
@@ -72,7 +72,7 @@ function createHookPackUpdateIntegrityDriftHandler(params: {
   };
 }
 
-/** Reused helper for update Npm Installed Hook Packs behavior in src/hooks. */
+/** Updates npm-sourced hook packs in config and records changed install metadata. */
 export async function updateNpmInstalledHookPacks(params: {
   config: OpenClawConfig;
   logger?: HookPackUpdateLogger;

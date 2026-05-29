@@ -1,8 +1,8 @@
-// logging diagnostic session attention helpers and runtime behavior.
+// Classifies diagnostic session activity as long-running, stalled, or recoverably stuck.
 import type { DiagnosticSessionActiveWorkKind } from "../infra/diagnostic-events.js";
 import type { DiagnosticSessionActivitySnapshot } from "./diagnostic-run-activity.js";
 
-/** Shared type for Session Attention Classification in src/logging. */
+/** Diagnostic attention classification emitted for session watchdog decisions. */
 export type SessionAttentionClassification =
   | {
       eventType: "session.long_running";
@@ -26,7 +26,7 @@ export type SessionAttentionClassification =
       recoveryEligible: true;
     };
 
-/** Reused helper for classify Session Attention behavior in src/logging. */
+/** Classifies a session snapshot based on queue depth, active work, and stale progress age. */
 export function classifySessionAttention(params: {
   state?: "idle" | "processing" | "waiting";
   queueDepth: number;
@@ -103,7 +103,7 @@ export function classifySessionAttention(params: {
   };
 }
 
-/** Reused helper for is Terminal Diagnostic Progress Reason behavior in src/logging. */
+/** Detects progress markers that already represent terminal model/run completion. */
 export function isTerminalDiagnosticProgressReason(reason: string | undefined): boolean {
   if (!reason) {
     return false;

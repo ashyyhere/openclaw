@@ -1,4 +1,4 @@
-// hooks config helpers and runtime behavior.
+// Hook inclusion helpers that combine config enablement, frontmatter requires, and runtime eligibility.
 import type { OpenClawConfig, HookConfig } from "../config/config.js";
 import {
   evaluateRuntimeEligibility,
@@ -14,15 +14,15 @@ const DEFAULT_CONFIG_VALUES: Record<string, boolean> = {
   "workspace.dir": true,
 };
 
-/** Re-exported API for src/hooks, starting with has Binary. */
+/** Re-export binary lookup helper used by hook eligibility evaluation. */
 export { hasBinary };
 
-/** Reused helper for is Config Path Truthy behavior in src/hooks. */
+/** Evaluates a config path with hook-specific default truthy values. */
 export function isConfigPathTruthy(config: OpenClawConfig | undefined, pathStr: string): boolean {
   return isConfigPathTruthyWithDefaults(config, pathStr, DEFAULT_CONFIG_VALUES);
 }
 
-/** Re-exported API for src/hooks, starting with resolve Hook Config. */
+/** Re-export hook config resolver from the policy module. */
 export { resolveHookConfig };
 
 function evaluateHookRuntimeEligibility(params: {
@@ -49,7 +49,7 @@ function evaluateHookRuntimeEligibility(params: {
   });
 }
 
-/** Reused helper for should Include Hook behavior in src/hooks. */
+/** Decides whether a hook should be included for the current config and runtime eligibility context. */
 export function shouldIncludeHook(params: {
   entry: HookEntry;
   config?: OpenClawConfig;

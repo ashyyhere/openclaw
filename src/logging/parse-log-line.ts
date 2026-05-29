@@ -1,4 +1,4 @@
-// logging parse log line helpers and runtime behavior.
+// Parses logtape-style JSON log lines for diagnostics and support views.
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 
 type ParsedLogLine = {
@@ -41,7 +41,7 @@ function parseMetaName(raw?: unknown): { subsystem?: string; module?: string } {
   }
 }
 
-/** Reused helper for parse Log Line behavior in src/logging. */
+/** Parses one JSON log line into normalized time, level, subsystem/module, and message fields. */
 export function parseLogLine(raw: string): ParsedLogLine | null {
   try {
     const parsed = JSON.parse(raw) as Record<string, unknown>;

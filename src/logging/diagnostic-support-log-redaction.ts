@@ -1,4 +1,4 @@
-// logging diagnostic support log redaction helpers and runtime behavior.
+// Redacts structured log lines into safe support-bundle records.
 import { isBlockedObjectKey } from "../infra/prototype-keys.js";
 import { asOptionalRecord } from "../shared/record-coerce.js";
 import {
@@ -31,7 +31,7 @@ function createLogRecord(): Record<string, unknown> {
   return Object.create(null) as Record<string, unknown>;
 }
 
-/** Reused helper for sanitize Support Log Record behavior in src/logging. */
+/** Parses one JSON log line and keeps only safe scalar fields after support redaction. */
 export function sanitizeSupportLogRecord(
   line: string,
   redaction: SupportRedactionContext,

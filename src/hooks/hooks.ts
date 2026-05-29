@@ -1,10 +1,10 @@
-// hooks hooks helpers and runtime behavior.
-/** Shared type for Hook Handler in src/hooks. */
+// Public hook facade for internal hook handlers and hook event helpers.
+/** Internal hook handler function type. */
 export type HookHandler = import("./internal-hook-types.js").InternalHookHandler;
 
-/** Re-exported API for src/hooks, starting with Agent Bootstrap Hook Context. */
+/** Re-export bootstrap hook context for hook consumers. */
 export type { AgentBootstrapHookContext } from "./internal-hooks.js";
-/** Re-exported API for src/hooks. */
+/** Re-export hook event construction and bootstrap type guard. */
 export {
   createInternalHookEvent as createHookEvent,
   isAgentBootstrapEvent,
