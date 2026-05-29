@@ -1,4 +1,5 @@
-// logging diagnostic session context helpers and runtime behavior.
+// Cron/session diagnostic context: pulls bounded transcript/job details for
+// stuck-session log messages without loading full session history.
 import fs from "node:fs";
 import path from "node:path";
 import { resolveStateDir } from "../config/paths.js";
@@ -24,7 +25,7 @@ function quoteLogField(value: string): string {
   return `"${truncated.replace(/["\\]/g, "\\$&")}"`;
 }
 
-/** Reused helper for parse Cron Run Session Key behavior in src/logging. */
+/** Parses agent/cron/run session keys into diagnostic identifiers. */
 export function parseCronRunSessionKey(sessionKey?: string): {
   agentId?: string;
   cronJobId?: string;
@@ -104,7 +105,7 @@ function textFromContent(content: unknown): string | undefined {
   return texts.length ? texts.join(" ") : undefined;
 }
 
-/** Reused helper for read Last Assistant From Session File behavior in src/logging. */
+/** Reads the last assistant text from a bounded tail of a session JSONL file. */
 export function readLastAssistantFromSessionFile(filePath: string | undefined): string | undefined {
   if (!filePath) {
     return undefined;
@@ -149,7 +150,7 @@ function readCronJobName(cronJobId: string | undefined): string | undefined {
   }
 }
 
-/** Reused helper for resolve Cron Session Diagnostic Context behavior in src/logging. */
+/** Resolves cron job/run labels and last assistant text for diagnostic messages. */
 export function resolveCronSessionDiagnosticContext(params: {
   sessionKey?: string;
   activeSessionId?: string;
@@ -167,7 +168,7 @@ export function resolveCronSessionDiagnosticContext(params: {
   };
 }
 
-/** Reused helper for format Cron Session Diagnostic Fields behavior in src/logging. */
+/** Formats cron diagnostic context as compact key=value log fields. */
 export function formatCronSessionDiagnosticFields(context: CronSessionContext): string {
   const fields: string[] = [];
   if (context.cronJobId) {
@@ -185,7 +186,7 @@ export function formatCronSessionDiagnosticFields(context: CronSessionContext): 
   return fields.join(" ");
 }
 
-/** Reused helper for format Stopped Cron Session Diagnostic Fields behavior in src/logging. */
+/** Formats stopped-cron diagnostic fields with the job name foregrounded. */
 export function formatStoppedCronSessionDiagnosticFields(context: CronSessionContext): string {
   const fields: string[] = [];
   if (context.cronJobName) {
@@ -202,9 +203,9 @@ export function formatStoppedCronSessionDiagnosticFields(context: CronSessionCon
   return fields.join(" ");
 }
 
-/** Reused constant for testing behavior in src/logging. */
+/** Test-only access to field quoting used by cron diagnostic formatting. */
 export const testing = {
   quoteLogField,
 };
-/** Re-exported API for src/logging, starting with testing. */
+/** Test-only namespace for cron diagnostic formatting helpers. */
 export { testing as __testing };

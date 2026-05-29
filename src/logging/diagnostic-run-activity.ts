@@ -1,4 +1,5 @@
-// logging diagnostic run activity helpers and runtime behavior.
+// Diagnostic run activity tracker: correlates internal model/tool/run events
+// into per-session active-work snapshots for stuck-session heuristics.
 import {
   onInternalDiagnosticEvent,
   type DiagnosticEventPayload,
@@ -37,7 +38,7 @@ type DiagnosticRunProgressActivityEvent = Pick<
   "runId" | "sessionId" | "sessionKey" | "reason"
 >;
 
-/** Shared type for Diagnostic Session Activity Snapshot in src/logging. */
+/** Current active-work summary for a session, safe for diagnostic classification. */
 export type DiagnosticSessionActivitySnapshot = {
   activeWorkKind?: DiagnosticSessionActiveWorkKind;
   hasActiveEmbeddedRun?: boolean;
@@ -231,7 +232,7 @@ function recordRunProgress(event: DiagnosticRunProgressActivityEvent): void {
   markDiagnosticRunProgress(event);
 }
 
-/** Reused helper for mark Diagnostic Run Progress behavior in src/logging. */
+/** Records explicit run progress for the session/run correlation maps. */
 export function markDiagnosticRunProgress(params: DiagnosticRunProgressActivityEvent): void {
   const activity = resolveSessionActivity({ ...params, create: true });
   if (!activity) {
@@ -254,7 +255,7 @@ function recordRunCompleted(
   touchSessionActivity(activity, "run:completed");
 }
 
-/** Reused helper for mark Diagnostic Embedded Run Started behavior in src/logging. */
+/** Marks an embedded run as active for a session. */
 export function markDiagnosticEmbeddedRunStarted(params: {
   sessionId: string;
   sessionKey?: string;
@@ -268,7 +269,7 @@ export function markDiagnosticEmbeddedRunStarted(params: {
   touchSessionActivity(activity, "embedded_run:started");
 }
 
-/** Reused helper for mark Diagnostic Embedded Run Ended behavior in src/logging. */
+/** Marks an embedded run complete and optionally clears related run activity. */
 export function markDiagnosticEmbeddedRunEnded(params: {
   sessionId: string;
   sessionKey?: string;
@@ -291,7 +292,7 @@ function resolveEmbeddedRunWorkKey(params: { sessionId: string; workKey?: string
   return params.workKey ?? params.sessionId;
 }
 
-/** Reused helper for get Diagnostic Session Activity Snapshot behavior in src/logging. */
+/** Returns active model/tool/embedded-run state for stuck-session diagnostics. */
 export function getDiagnosticSessionActivitySnapshot(
   params: { sessionId?: string; sessionKey?: string },
   now = Date.now(),
@@ -327,12 +328,12 @@ export function getDiagnosticSessionActivitySnapshot(
   };
 }
 
-/** Reused helper for mark Diagnostic Run Progress For Test behavior in src/logging. */
+/** Test hook for recording run progress without emitting a diagnostic event. */
 export function markDiagnosticRunProgressForTest(params: DiagnosticRunProgressActivityEvent): void {
   markDiagnosticRunProgress(params);
 }
 
-/** Reused helper for mark Diagnostic Tool Started For Test behavior in src/logging. */
+/** Test hook for registering an active tool call in the activity tracker. */
 export function markDiagnosticToolStartedForTest(params: {
   sessionId?: string;
   sessionKey?: string;
@@ -343,14 +344,14 @@ export function markDiagnosticToolStartedForTest(params: {
   recordToolStarted(params);
 }
 
-/** Reused helper for mark Diagnostic Model Started For Test behavior in src/logging. */
+/** Test hook for registering an active model call in the activity tracker. */
 export function markDiagnosticModelStartedForTest(
   params: DiagnosticModelStartedActivityEvent,
 ): void {
   recordModelStarted(params);
 }
 
-/** Reused helper for reset Diagnostic Run Activity For Test behavior in src/logging. */
+/** Clears diagnostic activity maps and reinstalls the internal event listener for tests. */
 export function resetDiagnosticRunActivityForTest(): void {
   activityByRef.clear();
   activityByRunId.clear();
