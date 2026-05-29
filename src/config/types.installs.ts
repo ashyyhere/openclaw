@@ -1,5 +1,5 @@
-// config types installs helpers and runtime behavior.
-/** Shared type for Install Record Base in src/config. */
+// Shared plugin install provenance record fields.
+/** Persisted install metadata for npm, archive, path, ClawHub, and git plugin sources. */
 export type InstallRecordBase = {
   source: "npm" | "archive" | "path" | "clawhub" | "git";
   spec?: string;

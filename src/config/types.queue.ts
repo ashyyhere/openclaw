@@ -1,10 +1,10 @@
-// config types queue helpers and runtime behavior.
-/** Shared type for Queue Mode in src/config. */
+// Inbound message queue mode config shared across channel providers.
+/** Inbound queue behavior for concurrent messages from the same source. */
 export type QueueMode = "steer" | "followup" | "collect" | "interrupt";
-/** Shared type for Queue Drop Policy in src/config. */
+/** Which queued messages to drop when queue capacity is exceeded. */
 export type QueueDropPolicy = "old" | "new" | "summarize";
 
-/** Shared type for Queue Mode By Provider in src/config. */
+/** Per-channel queue mode overrides. */
 export type QueueModeByProvider = {
   whatsapp?: QueueMode;
   telegram?: QueueMode;
