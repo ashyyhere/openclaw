@@ -1,4 +1,4 @@
-// mcp channel server helpers and runtime behavior.
+// MCP stdio server for OpenClaw channel conversations and approval events.
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -7,10 +7,10 @@ import { OpenClawChannelBridge } from "./channel-bridge.js";
 import { ClaudePermissionRequestSchema, type ClaudeChannelMode } from "./channel-shared.js";
 import { getChannelMcpCapabilities, registerChannelMcpTools } from "./channel-tools.js";
 
-/** Re-exported API for src/mcp, starting with Open Claw Channel Bridge. */
+/** Bridge class re-exported for tests and embedders that build their own server. */
 export { OpenClawChannelBridge } from "./channel-bridge.js";
 
-/** Shared type for Open Claw Mcp Serve Options in src/mcp. */
+/** Startup options for the channel MCP server and gateway bridge. */
 export type OpenClawMcpServeOptions = {
   gatewayUrl?: string;
   gatewayToken?: string;
@@ -28,7 +28,7 @@ async function resolveMcpConfig(config: OpenClawConfig | undefined): Promise<Ope
   return getRuntimeConfig();
 }
 
-/** Reused helper for create Open Claw Channel Mcp Server behavior in src/mcp. */
+/** Creates the channel MCP server, bridge, tool handlers, and lifecycle hooks. */
 export async function createOpenClawChannelMcpServer(opts: OpenClawMcpServeOptions = {}): Promise<{
   server: McpServer;
   bridge: OpenClawChannelBridge;
@@ -74,7 +74,7 @@ export async function createOpenClawChannelMcpServer(opts: OpenClawMcpServeOptio
   };
 }
 
-/** Reused helper for serve Open Claw Channel Mcp behavior in src/mcp. */
+/** Runs the channel MCP server over stdio and closes cleanly on stdin or signal shutdown. */
 export async function serveOpenClawChannelMcp(opts: OpenClawMcpServeOptions = {}): Promise<void> {
   const { server, start, close } = await createOpenClawChannelMcpServer(opts);
   const transport = new StdioServerTransport();

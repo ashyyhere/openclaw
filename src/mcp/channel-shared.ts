@@ -1,14 +1,14 @@
-// mcp channel shared helpers and runtime behavior.
+// Shared MCP channel payload types, schemas, and event projection helpers.
 import { z } from "zod";
 import {
   normalizeOptionalLowercaseString,
   normalizeOptionalString as toText,
 } from "../shared/string-coerce.js";
 
-/** Shared type for Claude Channel Mode in src/mcp. */
+/** Claude channel notification mode advertised by the MCP bridge. */
 export type ClaudeChannelMode = "off" | "on" | "auto";
 
-/** Shared type for Conversation Descriptor in src/mcp. */
+/** Normalized channel conversation descriptor exposed to MCP clients. */
 export type ConversationDescriptor = {
   sessionKey: string;
   channel: string;
@@ -47,22 +47,22 @@ type SessionRow = {
   updatedAt?: number | null;
 };
 
-/** Shared type for Session List Result in src/mcp. */
+/** Gateway session-list response shape consumed by the bridge. */
 export type SessionListResult = {
   sessions?: SessionRow[];
 };
 
-/** Shared type for Session Describe Result in src/mcp. */
+/** Gateway session-describe response shape consumed by the bridge. */
 export type SessionDescribeResult = {
   session?: SessionRow | null;
 };
 
-/** Shared type for Chat History Result in src/mcp. */
+/** Gateway chat-history response shape consumed by the bridge. */
 export type ChatHistoryResult = {
   messages?: Array<{ id?: string; role?: string; content?: unknown; [key: string]: unknown }>;
 };
 
-/** Shared type for Session Message Payload in src/mcp. */
+/** Gateway session-message payload shape normalized into MCP queue events. */
 export type SessionMessagePayload = {
   sessionKey?: string;
   messageId?: string;
@@ -75,12 +75,12 @@ export type SessionMessagePayload = {
   [key: string]: unknown;
 };
 
-/** Shared type for Approval Kind in src/mcp. */
+/** Approval request families forwarded through the MCP event queue. */
 export type ApprovalKind = "exec" | "plugin";
-/** Shared type for Approval Decision in src/mcp. */
+/** Approval decisions accepted from MCP callers. */
 export type ApprovalDecision = "allow-once" | "allow-always" | "deny";
 
-/** Shared type for Pending Approval in src/mcp. */
+/** Pending gateway approval retained until a client resolves or it expires. */
 export type PendingApproval = {
   kind: ApprovalKind;
   id: string;
@@ -89,7 +89,7 @@ export type PendingApproval = {
   expiresAtMs?: number;
 };
 
-/** Shared type for Queue Event in src/mcp. */
+/** Event queue item emitted to MCP clients waiting for channel or approval updates. */
 export type QueueEvent =
   | {
       cursor: number;
@@ -121,20 +121,20 @@ export type QueueEvent =
       raw: Record<string, unknown>;
     };
 
-/** Shared type for Claude Permission Request in src/mcp. */
+/** Claude channel permission notification payload tracked for yes/no replies. */
 export type ClaudePermissionRequest = {
   toolName: string;
   description: string;
   inputPreview: string;
 };
 
-/** Shared type for Wait Filter in src/mcp. */
+/** Cursor and optional session filter used by event wait calls. */
 export type WaitFilter = {
   afterCursor: number;
   sessionKey?: string;
 };
 
-/** Reused constant for Claude Permission Request Schema behavior in src/mcp. */
+/** MCP notification schema for Claude channel permission requests. */
 export const ClaudePermissionRequestSchema = z.object({
   method: z.literal("notifications/claude/channel/permission_request"),
   params: z.object({
@@ -145,10 +145,10 @@ export const ClaudePermissionRequestSchema = z.object({
   }),
 });
 
-/** Re-exported API for src/mcp, starting with to Text. */
+/** Shared string coercion helper used by channel projection code. */
 export { toText };
 
-/** Reused helper for resolve Message Id behavior in src/mcp. */
+/** Resolves a message id from either direct fields or OpenClaw metadata. */
 export function resolveMessageId(entry: Record<string, unknown>): string | undefined {
   return (
     toText(entry.id) ??
@@ -158,7 +158,7 @@ export function resolveMessageId(entry: Record<string, unknown>): string | undef
   );
 }
 
-/** Reused helper for summarize Result behavior in src/mcp. */
+/** Builds a text-only MCP result summary for count-based tools. */
 export function summarizeResult(
   label: string,
   count: number,
@@ -168,7 +168,7 @@ export function summarizeResult(
   };
 }
 
-/** Reused helper for summarize Structured Result behavior in src/mcp. */
+/** Builds a text summary plus serialized payload for structured MCP tool results. */
 export function summarizeStructuredResult(
   label: string,
   count: number,
@@ -188,7 +188,7 @@ function resolveConversationChannel(row: SessionRow): string | undefined {
   );
 }
 
-/** Reused helper for to Conversation behavior in src/mcp. */
+/** Projects gateway session rows into channel conversation descriptors. */
 export function toConversation(row: SessionRow): ConversationDescriptor | null {
   const channel = resolveConversationChannel(row);
   const to = toText(row.deliveryContext?.to) ?? toText(row.lastTo);
@@ -212,7 +212,7 @@ export function toConversation(row: SessionRow): ConversationDescriptor | null {
   };
 }
 
-/** Reused helper for match Event Filter behavior in src/mcp. */
+/** Checks whether a queued event is newer than and relevant to a wait filter. */
 export function matchEventFilter(event: QueueEvent, filter: WaitFilter): boolean {
   if (event.cursor <= filter.afterCursor) {
     return false;
@@ -223,7 +223,7 @@ export function matchEventFilter(event: QueueEvent, filter: WaitFilter): boolean
   return "sessionKey" in event && event.sessionKey === filter.sessionKey;
 }
 
-/** Reused helper for extract Attachments From Message behavior in src/mcp. */
+/** Extracts non-text message content blocks for MCP message reads. */
 export function extractAttachmentsFromMessage(message: unknown): unknown[] {
   if (!message || typeof message !== "object") {
     return [];
@@ -240,7 +240,7 @@ export function extractAttachmentsFromMessage(message: unknown): unknown[] {
   });
 }
 
-/** Reused helper for normalize Approval Id behavior in src/mcp. */
+/** Normalizes optional approval ids before gateway resolution calls. */
 export function normalizeApprovalId(value: unknown): string | undefined {
   const id = toText(value);
   return id ? id.trim() : undefined;

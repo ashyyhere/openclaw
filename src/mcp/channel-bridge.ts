@@ -1,4 +1,4 @@
-// mcp channel bridge helpers and runtime behavior.
+// Gateway-backed bridge that exposes OpenClaw channel sessions through MCP tools/events.
 import { randomUUID } from "node:crypto";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import type { EventFrame } from "../../packages/gateway-protocol/src/index.js";
@@ -47,7 +47,7 @@ const PENDING_CLAUDE_PERMISSION_TTL_MS = 60 * 60 * 1_000;
 const PENDING_APPROVAL_DEFAULT_TTL_MS = 30 * 60 * 1_000;
 const PENDING_SWEEP_INTERVAL_MS = 5 * 60 * 1_000;
 
-/** Reused class for Open Claw Channel Bridge behavior in src/mcp. */
+/** Maintains gateway connection state, event queueing, approvals, and Claude channel notifications. */
 export class OpenClawChannelBridge {
   private gateway: GatewayClient | null = null;
   private readonly verbose: boolean;
@@ -603,7 +603,7 @@ export class OpenClawChannelBridge {
   }
 }
 
-/** Reused helper for should Retry Initial Mcp Gateway Connect behavior in src/mcp. */
+/** Detects transient gateway connect failures worth retrying during MCP startup. */
 export function shouldRetryInitialMcpGatewayConnect(error: Error): boolean {
   if (
     error.name === "GatewayClientRequestError" &&

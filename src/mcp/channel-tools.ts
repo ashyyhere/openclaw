@@ -1,4 +1,4 @@
-// mcp channel tools helpers and runtime behavior.
+// Tool registration for the channel MCP server.
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import type { OpenClawChannelBridge } from "./channel-bridge.js";
@@ -10,7 +10,7 @@ import {
   toText,
 } from "./channel-shared.js";
 
-/** Reused helper for get Channel Mcp Capabilities behavior in src/mcp. */
+/** Returns experimental Claude channel capabilities when bridge notifications are enabled. */
 export function getChannelMcpCapabilities(claudeChannelMode: "off" | "on" | "auto") {
   if (claudeChannelMode === "off") {
     return undefined;
@@ -23,7 +23,7 @@ export function getChannelMcpCapabilities(claudeChannelMode: "off" | "on" | "aut
   };
 }
 
-/** Reused helper for register Channel Mcp Tools behavior in src/mcp. */
+/** Registers conversation, message, wait, send, and approval tools on the MCP server. */
 export function registerChannelMcpTools(server: McpServer, bridge: OpenClawChannelBridge): void {
   server.tool(
     "conversations_list",

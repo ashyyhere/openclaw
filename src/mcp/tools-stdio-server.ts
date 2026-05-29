@@ -1,4 +1,4 @@
-// mcp tools stdio server helpers and runtime behavior.
+// Generic MCP stdio server wrapper for OpenClaw agent tools.
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { CallToolRequestSchema, ListToolsRequestSchema } from "@modelcontextprotocol/sdk/types.js";
@@ -7,7 +7,7 @@ import { routeLogsToStderr } from "../logging/console.js";
 import { VERSION } from "../version.js";
 import { createPluginToolsMcpHandlers } from "./plugin-tools-handlers.js";
 
-/** Reused helper for create Tools Mcp Server behavior in src/mcp. */
+/** Creates a low-level MCP server that lists and calls OpenClaw agent tools. */
 export function createToolsMcpServer(params: { name: string; tools: AnyAgentTool[] }): Server {
   const handlers = createPluginToolsMcpHandlers(params.tools);
   const server = new Server(
@@ -23,7 +23,7 @@ export function createToolsMcpServer(params: { name: string; tools: AnyAgentTool
   return server;
 }
 
-/** Reused helper for connect Tools Mcp Server To Stdio behavior in src/mcp. */
+/** Connects an MCP server to stdio while routing all logs away from stdout. */
 export async function connectToolsMcpServerToStdio(server: Server): Promise<void> {
   // MCP stdio requires stdout to stay protocol-only.
   routeLogsToStderr();

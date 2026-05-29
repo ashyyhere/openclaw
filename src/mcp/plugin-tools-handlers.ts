@@ -1,4 +1,4 @@
-// mcp plugin tools handlers helpers and runtime behavior.
+// MCP list/call handlers for OpenClaw plugin and agent tools.
 import {
   isToolWrappedWithBeforeToolCallHook,
   rewrapToolWithBeforeToolCallHook,
@@ -21,7 +21,7 @@ function resolveJsonSchemaForTool(tool: AnyAgentTool): Record<string, unknown> {
   return { type: "object", properties: {} };
 }
 
-/** Reused helper for create Plugin Tools Mcp Handlers behavior in src/mcp. */
+/** Wraps tools with approval reporting and returns MCP list/call request handlers. */
 export function createPluginToolsMcpHandlers(tools: AnyAgentTool[]) {
   const wrappedTools = tools.map((tool) => {
     if (isToolWrappedWithBeforeToolCallHook(tool)) {
