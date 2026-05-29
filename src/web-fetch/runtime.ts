@@ -1,4 +1,5 @@
-// web-fetch runtime helpers and runtime behavior.
+// Runtime resolver for web-fetch providers and their model-facing tool
+// definitions, including runtime metadata and credential auto-detection.
 import type { OpenClawConfig } from "../config/types.js";
 import { logVerbose } from "../globals.js";
 import type {
@@ -27,7 +28,7 @@ type WebFetchConfig = NonNullable<OpenClawConfig["tools"]>["web"] extends infer 
     : undefined
   : undefined;
 
-/** Shared type for Resolve Web Fetch Definition Params in src/web-fetch. */
+/** Options used to resolve the active web-fetch provider definition. */
 export type ResolveWebFetchDefinitionParams = {
   config?: OpenClawConfig;
   sandboxed?: boolean;
@@ -36,7 +37,7 @@ export type ResolveWebFetchDefinitionParams = {
   preferRuntimeProviders?: boolean;
 };
 
-/** Reused helper for resolve Web Fetch Enabled behavior in src/web-fetch. */
+/** Resolve whether web-fetch is enabled for the current config/sandbox. */
 export function resolveWebFetchEnabled(params: {
   fetch?: WebFetchConfig;
   sandboxed?: boolean;
@@ -77,7 +78,7 @@ function hasEntryCredential(
   });
 }
 
-/** Reused helper for is Web Fetch Provider Configured behavior in src/web-fetch. */
+/** Return true when a web-fetch provider has usable credentials/config. */
 export function isWebFetchProviderConfigured(params: {
   provider: Pick<
     PluginWebFetchProviderEntry,
@@ -92,7 +93,7 @@ export function isWebFetchProviderConfigured(params: {
   return hasEntryCredential(params.provider, params.config, resolveFetchConfig(params.config));
 }
 
-/** Reused helper for list Web Fetch Providers behavior in src/web-fetch. */
+/** List available web-fetch providers from plugin/runtime registration. */
 export function listWebFetchProviders(params?: {
   config?: OpenClawConfig;
 }): PluginWebFetchProviderEntry[] {
@@ -101,7 +102,7 @@ export function listWebFetchProviders(params?: {
   });
 }
 
-/** Reused helper for list Configured Web Fetch Providers behavior in src/web-fetch. */
+/** List web-fetch providers available for configured resolution. */
 export function listConfiguredWebFetchProviders(params?: {
   config?: OpenClawConfig;
 }): PluginWebFetchProviderEntry[] {
@@ -110,7 +111,7 @@ export function listConfiguredWebFetchProviders(params?: {
   });
 }
 
-/** Reused helper for resolve Web Fetch Provider Id behavior in src/web-fetch. */
+/** Resolve explicit or auto-detected web-fetch provider id. */
 export function resolveWebFetchProviderId(params: {
   fetch?: WebFetchConfig;
   config?: OpenClawConfig;
@@ -167,7 +168,7 @@ function resolveConfiguredWebFetchProviderId(params: {
   return params.providers.find((provider) => provider.id === raw)?.id;
 }
 
-/** Reused helper for resolve Web Fetch Definition behavior in src/web-fetch. */
+/** Resolve the active web-fetch provider plus its tool definition. */
 export function resolveWebFetchDefinition(
   options?: ResolveWebFetchDefinitionParams,
 ): { provider: PluginWebFetchProviderEntry; definition: WebFetchProviderToolDefinition } | null {
