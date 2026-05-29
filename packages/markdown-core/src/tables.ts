@@ -10,7 +10,7 @@ const MARKDOWN_STYLE_MARKERS = {
   code_block: { open: "```\n", close: "```" },
 } as const;
 
-/** Reused helper for convert Markdown Tables behavior in src/markdown. */
+/** Re-renders markdown tables according to the configured table fallback mode. */
 export function convertMarkdownTables(markdown: string, mode: MarkdownTableMode): string {
   if (!markdown || mode === "off") {
     return markdown;

@@ -1,13 +1,13 @@
-// markdown code spans helpers and runtime behavior.
+// Tracks fenced and inline code ranges while scanning markdown text.
 import { scanFenceSpans, type FenceScanState, type FenceSpan } from "./fences.js";
 
-/** Shared type for Inline Code State in src/markdown. */
+/** Carry-over state for inline backtick parsing across streamed chunks. */
 export type InlineCodeState = {
   open: boolean;
   ticks: number;
 };
 
-/** Reused helper for create Inline Code State behavior in src/markdown. */
+/** Creates the initial inline-code scanner state. */
 export function createInlineCodeState(): InlineCodeState {
   return { open: false, ticks: 0 };
 }
@@ -23,7 +23,7 @@ type CodeSpanIndex = {
   isInside: (index: number) => boolean;
 };
 
-/** Reused helper for build Code Span Index behavior in src/markdown. */
+/** Builds a predicate for checking whether a character index is inside code. */
 export function buildCodeSpanIndex(
   text: string,
   inlineState?: InlineCodeState,
