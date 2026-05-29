@@ -1,4 +1,5 @@
-// markdown frontmatter helpers and runtime behavior.
+// Markdown frontmatter parser with YAML support plus line-parser fallbacks for
+// legacy metadata blocks that contain informal scalar values.
 import YAML from "yaml";
 
 type ParsedFrontmatter = Record<string, string>;
@@ -196,7 +197,7 @@ function extractFrontmatterBlock(content: string): string | undefined {
   return normalized.slice(4, endIndex);
 }
 
-/** Reused helper for parse Frontmatter Block behavior in src/markdown. */
+/** Parse a leading Markdown frontmatter block into string metadata values. */
 export function parseFrontmatterBlock(content: string): ParsedFrontmatter {
   const block = extractFrontmatterBlock(content);
   if (!block) {

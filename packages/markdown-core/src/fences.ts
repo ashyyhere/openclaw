@@ -1,5 +1,6 @@
-// markdown fences helpers and runtime behavior.
-/** Shared type for Fence Span in src/markdown. */
+// Markdown fenced-code scanner used by chunking/rendering logic to avoid unsafe
+// split points inside code fences.
+/** Source range and opener metadata for a Markdown fenced-code block. */
 export type FenceSpan = {
   start: number;
   end: number;
@@ -8,7 +9,7 @@ export type FenceSpan = {
   indent: string;
 };
 
-/** Shared type for Fence Scan State in src/markdown. */
+/** Incremental scanner state for detecting fences across streamed chunks. */
 export type FenceScanState = {
   atLineStart?: boolean;
   open?: {
@@ -20,7 +21,7 @@ export type FenceScanState = {
   };
 };
 
-/** Reused helper for scan Fence Spans behavior in src/markdown. */
+/** Scan Markdown text for fenced-code spans and return resumable state. */
 export function scanFenceSpans(
   buffer: string,
   state?: FenceScanState,
@@ -106,12 +107,12 @@ export function scanFenceSpans(
   return { spans, state: nextState };
 }
 
-/** Reused helper for parse Fence Spans behavior in src/markdown. */
+/** Parse all fenced-code spans in a complete Markdown buffer. */
 export function parseFenceSpans(buffer: string): FenceSpan[] {
   return scanFenceSpans(buffer).spans;
 }
 
-/** Reused helper for find Fence Span At behavior in src/markdown. */
+/** Find the fenced-code span containing a source index, if any. */
 export function findFenceSpanAt(spans: FenceSpan[], index: number): FenceSpan | undefined {
   let low = 0;
   let high = spans.length - 1;
@@ -136,7 +137,7 @@ export function findFenceSpanAt(spans: FenceSpan[], index: number): FenceSpan | 
   return undefined;
 }
 
-/** Reused helper for is Safe Fence Break behavior in src/markdown. */
+/** Return true when a source index is outside fenced-code spans. */
 export function isSafeFenceBreak(spans: FenceSpan[], index: number): boolean {
   return !findFenceSpanAt(spans, index);
 }

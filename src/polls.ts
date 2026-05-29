@@ -1,5 +1,6 @@
-// OpenClaw polls helpers and runtime behavior.
-/** Shared type for Poll Input in src. */
+// Poll normalization helpers shared by channel plugins that expose native poll
+// creation with different duration and option limits.
+/** Raw poll request shape accepted by channel-facing helpers. */
 export type PollInput = {
   question: string;
   options: string[];
@@ -16,7 +17,7 @@ export type PollInput = {
   durationHours?: number;
 };
 
-/** Shared type for Normalized Poll Input in src. */
+/** Validated poll request after trimming, defaulting, and duration checks. */
 export type NormalizedPollInput = {
   question: string;
   options: string[];
@@ -29,7 +30,7 @@ type NormalizePollOptions = {
   maxOptions?: number;
 };
 
-/** Reused helper for resolve Poll Max Selections behavior in src. */
+/** Resolve the default max selection count for single- or multi-select polls. */
 export function resolvePollMaxSelections(
   optionCount: number,
   allowMultiselect: boolean | undefined,
@@ -37,7 +38,7 @@ export function resolvePollMaxSelections(
   return allowMultiselect ? Math.max(2, optionCount) : 1;
 }
 
-/** Reused helper for normalize Poll Input behavior in src. */
+/** Validate and normalize poll text, options, selection count, and duration. */
 export function normalizePollInput(
   input: PollInput,
   options: NormalizePollOptions = {},
@@ -95,7 +96,7 @@ export function normalizePollInput(
   };
 }
 
-/** Reused helper for normalize Poll Duration Hours behavior in src. */
+/** Clamp a channel poll duration to a positive hour value within its max. */
 export function normalizePollDurationHours(
   value: number | undefined,
   options: { defaultHours: number; maxHours: number },
