@@ -1,4 +1,4 @@
-// music-generation runtime helpers and runtime behavior.
+// Runtime entrypoint for music generation provider selection, fallback, normalization, and result shaping.
 import type { FallbackAttempt } from "../agents/model-fallback.types.js";
 import { resolveAgentModelTimeoutMsValue } from "../config/model-input.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -19,7 +19,7 @@ import type { MusicGenerationResult } from "./types.js";
 
 const log = createSubsystemLogger("music-generation");
 
-/** Shared type for Music Generation Runtime Deps in src/music-generation. */
+/** Injectable seams for provider lookup, env hints, and logging in music-generation tests/runtime. */
 export type MusicGenerationRuntimeDeps = {
   getProvider?: typeof getMusicGenerationProvider;
   listProviders?: typeof listMusicGenerationProviders;
@@ -27,10 +27,10 @@ export type MusicGenerationRuntimeDeps = {
   log?: Pick<typeof log, "debug">;
 };
 
-/** Re-exported API for src/music-generation, starting with Generate Music Params. */
+/** Re-export public runtime request/result types for callers of the music generation facade. */
 export type { GenerateMusicParams, GenerateMusicRuntimeResult } from "./runtime-types.js";
 
-/** Reused helper for list Runtime Music Generation Providers behavior in src/music-generation. */
+/** Lists currently available music-generation providers using the runtime dependency seam. */
 export function listRuntimeMusicGenerationProviders(
   params?: { config?: OpenClawConfig },
   deps: MusicGenerationRuntimeDeps = {},
@@ -38,7 +38,7 @@ export function listRuntimeMusicGenerationProviders(
   return (deps.listProviders ?? listMusicGenerationProviders)(params?.config);
 }
 
-/** Reused helper for generate Music behavior in src/music-generation. */
+/** Generates tracks by resolving candidates, sanitizing unsupported overrides, and trying fallback providers. */
 export async function generateMusic(
   params: GenerateMusicParams,
   deps: MusicGenerationRuntimeDeps = {},

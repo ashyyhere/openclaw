@@ -1,4 +1,4 @@
-// music-generation capabilities helpers and runtime behavior.
+// Capability helpers for choosing music-generation generate/edit mode and per-mode provider limits.
 import type {
   MusicGenerationEditCapabilities,
   MusicGenerationMode,
@@ -6,14 +6,14 @@ import type {
   MusicGenerationProvider,
 } from "./types.js";
 
-/** Reused helper for resolve Music Generation Mode behavior in src/music-generation. */
+/** Selects edit mode when source images are present, otherwise generate mode. */
 export function resolveMusicGenerationMode(params: {
   inputImageCount?: number;
 }): MusicGenerationMode {
   return (params.inputImageCount ?? 0) > 0 ? "edit" : "generate";
 }
 
-/** Reused helper for list Supported Music Generation Modes behavior in src/music-generation. */
+/** Lists provider modes exposed to runtime/UI callers. */
 export function listSupportedMusicGenerationModes(
   provider: Pick<MusicGenerationProvider, "capabilities">,
 ): MusicGenerationMode[] {
@@ -25,7 +25,7 @@ export function listSupportedMusicGenerationModes(
   return modes;
 }
 
-/** Reused helper for resolve Music Generation Mode Capabilities behavior in src/music-generation. */
+/** Returns the capability block relevant to the resolved generate/edit mode. */
 export function resolveMusicGenerationModeCapabilities(params: {
   provider?: Pick<MusicGenerationProvider, "capabilities">;
   inputImageCount?: number;
