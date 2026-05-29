@@ -1,4 +1,5 @@
-// ui/src/ui/views sessions helpers and runtime behavior.
+// Sessions table view. It filters, sorts, paginates, edits per-session model
+// overrides, and exposes checkpoint actions for branching/restoring sessions.
 import { html, nothing } from "lit";
 import { t } from "../../i18n/index.ts";
 import { formatRelativeTimestamp, parseSessionKeyParts } from "../format.ts";
@@ -23,7 +24,7 @@ import type {
 } from "../types.ts";
 import { resolveAgentRuntimeLabel } from "./agents-utils.ts";
 
-/** Shared type for Sessions Props in ui/src/ui/views. */
+/** State and callbacks required to render and mutate the sessions table. */
 export type SessionsProps = {
   loading: boolean;
   result: SessionsListResult | null;
@@ -500,7 +501,7 @@ function renderFilterToggle(params: {
   `;
 }
 
-/** Reused helper for render Sessions behavior in ui/src/ui/views. */
+/** Render the sessions list, filters, selection actions, and checkpoint controls. */
 export function renderSessions(props: SessionsProps) {
   const rawRows = props.result?.sessions ?? [];
   const filtered = filterRows(rawRows, props.searchQuery, props.agentIdentityById);

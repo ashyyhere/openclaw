@@ -1,4 +1,6 @@
-// ui/src/ui app render usage tab helpers and runtime behavior.
+// Usage-tab adapter for the app shell. It maps AppViewState into the usage view
+// model, merges cache freshness from session/cost queries, and wires callbacks
+// back to the usage controller.
 import { nothing } from "lit";
 import type { AppViewState } from "./app-view-state.ts";
 import type { UsageState } from "./controllers/usage.ts";
@@ -41,7 +43,7 @@ const debouncedLoadUsage = (state: UsageState) => {
   usageDateDebounceTimeout = window.setTimeout(() => void loadUsage(state), 400);
 };
 
-/** Reused helper for render Usage Tab behavior in ui/src/ui. */
+/** Render the usage tab when active and bind view callbacks to app state. */
 export function renderUsageTab(state: AppViewState) {
   if (state.tab !== "usage") {
     return nothing;

@@ -1,4 +1,6 @@
-// ui/src/ui/views agents panels status files helpers and runtime behavior.
+// Agent detail panels for status-adjacent surfaces. This module renders channel
+// health, cron jobs, and workspace files while sharing context cards and preview
+// helpers across those panels.
 import { applyPreviewTheme } from "@create-markdown/preview";
 import DOMPurify from "dompurify";
 import { html, nothing } from "lit";
@@ -217,7 +219,7 @@ function summarizeChannelAccounts(accounts: ChannelAccountSnapshot[]) {
   };
 }
 
-/** Reused helper for render Agent Channels behavior in ui/src/ui/views. */
+/** Render configured channel status for one agent, including per-account health. */
 export function renderAgentChannels(params: {
   context: AgentContext;
   configForm: Record<string, unknown> | null;
@@ -322,7 +324,7 @@ export function renderAgentChannels(params: {
   `;
 }
 
-/** Reused helper for render Agent Cron behavior in ui/src/ui/views. */
+/** Render cron jobs owned by the selected agent and expose manual run actions. */
 export function renderAgentCron(params: {
   context: AgentContext;
   agentId: string;
@@ -421,7 +423,7 @@ export function renderAgentCron(params: {
   `;
 }
 
-/** Reused helper for render Agent Files behavior in ui/src/ui/views. */
+/** Render editable workspace files for the selected agent. */
 export function renderAgentFiles(params: {
   agentId: string;
   agentFilesList: AgentsFilesListResult | null;
