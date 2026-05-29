@@ -1,15 +1,15 @@
 /** Shared channel target builders and validators for messaging destinations. */
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
-/** Re-exported API for src/channels, starting with Directory Config Params. */
+/** Directory config params re-exported for channel setup and docs helpers. */
 export type { DirectoryConfigParams } from "./plugins/directory-types.js";
-/** Re-exported API for src/channels, starting with Channel Directory Entry. */
+/** Public directory entry shape re-exported for channel target pickers. */
 export type { ChannelDirectoryEntry } from "./plugins/types.public.js";
 
-/** Shared type for Messaging Target Kind in src/channels. */
+/** Supported generic messaging destination families. */
 export type MessagingTargetKind = "user" | "channel";
 
-/** Shared type for Messaging Target in src/channels. */
+/** Parsed messaging destination with raw and normalized forms for comparisons. */
 export type MessagingTarget = {
   kind: MessagingTargetKind;
   id: string;
@@ -17,18 +17,18 @@ export type MessagingTarget = {
   normalized: string;
 };
 
-/** Shared type for Messaging Target Parse Options in src/channels. */
+/** Parser options for channel-specific destination grammars. */
 export type MessagingTargetParseOptions = {
   defaultKind?: MessagingTargetKind;
   ambiguousMessage?: string;
 };
 
-/** Reused helper for normalize Target Id behavior in src/channels. */
+/** Build the normalized comparison key for a target kind/id pair. */
 export function normalizeTargetId(kind: MessagingTargetKind, id: string): string {
   return normalizeLowercaseStringOrEmpty(`${kind}:${id}`);
 }
 
-/** Reused helper for build Messaging Target behavior in src/channels. */
+/** Build a parsed target while preserving the user-supplied raw string. */
 export function buildMessagingTarget(
   kind: MessagingTargetKind,
   id: string,
@@ -42,7 +42,7 @@ export function buildMessagingTarget(
   };
 }
 
-/** Reused helper for ensure Target Id behavior in src/channels. */
+/** Validate a target id against a channel grammar and return the original id. */
 export function ensureTargetId(params: {
   candidate: string;
   pattern: RegExp;
@@ -54,7 +54,7 @@ export function ensureTargetId(params: {
   return params.candidate;
 }
 
-/** Reused helper for parse Target Mention behavior in src/channels. */
+/** Parse native mention syntax into a messaging target when the regex captures an id. */
 export function parseTargetMention(params: {
   raw: string;
   mentionPattern: RegExp;
@@ -67,7 +67,7 @@ export function parseTargetMention(params: {
   return buildMessagingTarget(params.kind, match[1], params.raw);
 }
 
-/** Reused helper for parse Target Prefix behavior in src/channels. */
+/** Parse a single `prefix:id`-style target. */
 export function parseTargetPrefix(params: {
   raw: string;
   prefix: string;
@@ -80,7 +80,7 @@ export function parseTargetPrefix(params: {
   return id ? buildMessagingTarget(params.kind, id, params.raw) : undefined;
 }
 
-/** Reused helper for parse Target Prefixes behavior in src/channels. */
+/** Try prefixed target grammars in order and return the first match. */
 export function parseTargetPrefixes(params: {
   raw: string;
   prefixes: Array<{ prefix: string; kind: MessagingTargetKind }>;
@@ -98,7 +98,7 @@ export function parseTargetPrefixes(params: {
   return undefined;
 }
 
-/** Reused helper for parse At User Target behavior in src/channels. */
+/** Parse shorthand `@user` syntax with channel-specific id validation. */
 export function parseAtUserTarget(params: {
   raw: string;
   pattern: RegExp;
@@ -116,7 +116,7 @@ export function parseAtUserTarget(params: {
   return buildMessagingTarget("user", id, params.raw);
 }
 
-/** Reused helper for parse Mention Prefix Or At User Target behavior in src/channels. */
+/** Parse mention, prefixed, then `@user` target forms in precedence order. */
 export function parseMentionPrefixOrAtUserTarget(params: {
   raw: string;
   mentionPattern: RegExp;
@@ -146,7 +146,7 @@ export function parseMentionPrefixOrAtUserTarget(params: {
   });
 }
 
-/** Reused helper for require Target Kind behavior in src/channels. */
+/** Require a parsed target of the expected kind and return its channel-specific id. */
 export function requireTargetKind(params: {
   platform: string;
   target: MessagingTarget | undefined;

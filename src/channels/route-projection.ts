@@ -21,7 +21,7 @@ import {
   type DeliveryContext,
 } from "../utils/delivery-context.js";
 
-/** Shared type for Routable Channel Route Ref in src/channels. */
+/** Route ref guaranteed to include the channel id and delivery target needed to send. */
 export type RoutableChannelRouteRef = ChannelRouteRef & {
   channel: string;
   target: {
@@ -31,7 +31,7 @@ export type RoutableChannelRouteRef = ChannelRouteRef & {
   };
 };
 
-/** Shared type for Session Route Delivery Fields in src/channels. */
+/** Session fields that preserve the last known route and legacy delivery context. */
 export type SessionRouteDeliveryFields = {
   route?: ChannelRouteRef;
   deliveryContext?: DeliveryContext;
@@ -41,7 +41,7 @@ export type SessionRouteDeliveryFields = {
   lastThreadId?: string | number;
 };
 
-/** Reused helper for normalize Routable Channel Route behavior in src/channels. */
+/** Normalize a route and reject it unless it has enough data for channel delivery. */
 export function normalizeRoutableChannelRoute(
   route?: ChannelRouteRef | null,
 ): RoutableChannelRouteRef | undefined {
@@ -61,17 +61,17 @@ export function normalizeRoutableChannelRoute(
   return normalized as RoutableChannelRouteRef;
 }
 
-/** Reused helper for route From Delivery Context behavior in src/channels. */
+/** Convert legacy delivery-context fields into the canonical channel route shape. */
 export function routeFromDeliveryContext(context?: DeliveryContext): ChannelRouteRef | undefined {
   return channelRouteFromDeliveryContext(normalizeDeliveryContext(context));
 }
 
-/** Reused helper for delivery Context From Route behavior in src/channels. */
+/** Project a canonical route back into legacy delivery-context fields. */
 export function deliveryContextFromRoute(route?: ChannelRouteRef): DeliveryContext | undefined {
   return deliveryContextFromChannelRoute(route);
 }
 
-/** Reused helper for route From Session Entry behavior in src/channels. */
+/** Read the best available route from a session entry, falling back to legacy fields. */
 export function routeFromSessionEntry(entry?: SessionEntry | null): ChannelRouteRef | undefined {
   if (!entry) {
     return undefined;
@@ -82,14 +82,14 @@ export function routeFromSessionEntry(entry?: SessionEntry | null): ChannelRoute
   );
 }
 
-/** Reused helper for session Delivery Fields From Route behavior in src/channels. */
+/** Build the session persistence fields for a canonical route. */
 export function sessionDeliveryFieldsFromRoute(
   route?: ChannelRouteRef,
 ): SessionRouteDeliveryFields {
   return normalizeSessionDeliveryFields({ route });
 }
 
-/** Reused helper for route From Conversation Ref behavior in src/channels. */
+/** Convert a persisted conversation binding reference into a delivery route. */
 export function routeFromConversationRef(
   conversation?: ConversationRef | null,
 ): ChannelRouteRef | undefined {
@@ -110,28 +110,28 @@ export function routeFromConversationRef(
   });
 }
 
-/** Reused helper for routable Route From Conversation Ref behavior in src/channels. */
+/** Convert a conversation binding reference into a sendable route, if complete. */
 export function routableRouteFromConversationRef(
   conversation?: ConversationRef | null,
 ): RoutableChannelRouteRef | undefined {
   return normalizeRoutableChannelRoute(routeFromConversationRef(conversation));
 }
 
-/** Reused helper for route From Binding Record behavior in src/channels. */
+/** Extract the delivery route from a session binding record. */
 export function routeFromBindingRecord(
   binding?: SessionBindingRecord | null,
 ): ChannelRouteRef | undefined {
   return routeFromConversationRef(binding?.conversation);
 }
 
-/** Reused helper for routable Route From Binding Record behavior in src/channels. */
+/** Extract a sendable route from a session binding record, if complete. */
 export function routableRouteFromBindingRecord(
   binding?: SessionBindingRecord | null,
 ): RoutableChannelRouteRef | undefined {
   return normalizeRoutableChannelRoute(routeFromBindingRecord(binding));
 }
 
-/** Reused helper for route To Delivery Fields behavior in src/channels. */
+/** Expand a canonical route into both legacy and flat delivery fields. */
 export function routeToDeliveryFields(route?: ChannelRouteRef): {
   deliveryContext?: DeliveryContext;
   channel?: string;
@@ -149,7 +149,7 @@ export function routeToDeliveryFields(route?: ChannelRouteRef): {
   };
 }
 
-/** Reused helper for routes Share Delivery Target behavior in src/channels. */
+/** Compare whether two routes address the same channel/account/target/thread destination. */
 export function routesShareDeliveryTarget(params: {
   left?: ChannelRouteRef | null;
   right?: ChannelRouteRef | null;

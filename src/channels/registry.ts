@@ -11,18 +11,18 @@ import {
   findRegisteredChannelPluginEntryById,
   listRegisteredChannelPluginEntries,
 } from "./registry-lookup.js";
-/** Re-exported API for src/channels, starting with get Chat Channel Meta. */
+/** Bundled chat-channel metadata lookup re-exported for core callers. */
 export { getChatChannelMeta } from "./chat-meta.js";
-/** Re-exported API for src/channels, starting with CHAT CHANNEL ORDER. */
+/** Stable bundled channel ordering re-exported for display surfaces. */
 export { CHAT_CHANNEL_ORDER } from "./ids.js";
-/** Re-exported API for src/channels, starting with Chat Channel Id. */
+/** Bundled chat-channel id union re-exported for channel-aware code. */
 export type { ChatChannelId } from "./ids.js";
-/** Re-exported API for src/channels, starting with normalize Chat Channel Id. */
+/** Bundled channel id normalizer re-exported as part of the registry facade. */
 export { normalizeChatChannelId };
 
 // Channel docking: prefer this helper in shared code. Importing from
 // `src/channels/plugins/*` can eagerly load channel implementations.
-/** Reused helper for normalize Channel Id behavior in src/channels. */
+/** Normalize known bundled channel ids without loading channel implementations. */
 export function normalizeChannelId(raw?: string | null): ChatChannelId | null {
   return normalizeChatChannelId(raw);
 }
@@ -31,7 +31,7 @@ export function normalizeChannelId(raw?: string | null): ChatChannelId | null {
 //
 // Keep this light: we do not import channel plugins here (those are "heavy" and can pull in
 // monitors, web login, etc). The plugin registry must be initialized first.
-/** Reused helper for normalize Any Channel Id behavior in src/channels. */
+/** Normalize bundled or registered plugin channel ids through the lightweight registry. */
 export function normalizeAnyChannelId(raw?: string | null): ChannelId | null {
   const key = normalizeOptionalLowercaseString(raw);
   if (!key) {
@@ -40,7 +40,7 @@ export function normalizeAnyChannelId(raw?: string | null): ChannelId | null {
   return findRegisteredChannelPluginEntry(key)?.plugin.id ?? null;
 }
 
-/** Reused helper for list Registered Channel Plugin Ids behavior in src/channels. */
+/** List registered channel plugin ids without importing their runtime modules. */
 export function listRegisteredChannelPluginIds(): ChannelId[] {
   return listRegisteredChannelPluginEntries().flatMap((entry) => {
     const id = normalizeOptionalString(entry.plugin.id);
@@ -48,19 +48,19 @@ export function listRegisteredChannelPluginIds(): ChannelId[] {
   });
 }
 
-/** Reused helper for get Registered Channel Plugin Meta behavior in src/channels. */
+/** Read display metadata for a registered channel plugin by id. */
 export function getRegisteredChannelPluginMeta(
   id: string,
 ): Pick<ChannelMeta, "aliases" | "markdownCapable"> | null {
   return findRegisteredChannelPluginEntryById(id)?.plugin.meta ?? null;
 }
 
-/** Reused helper for format Channel Primer Line behavior in src/channels. */
+/** Format a one-line channel primer for setup and help output. */
 export function formatChannelPrimerLine(meta: ChannelMeta): string {
   return `${meta.label}: ${meta.blurb}`;
 }
 
-/** Reused helper for format Channel Selection Line behavior in src/channels. */
+/** Format a channel selection/help line with docs and optional extra text. */
 export function formatChannelSelectionLine(
   meta: ChannelMeta,
   docsLink: (path: string, label?: string) => string,
