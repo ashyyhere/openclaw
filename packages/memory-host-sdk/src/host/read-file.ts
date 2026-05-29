@@ -1,4 +1,4 @@
-// packages/memory-host-sdk/src/host read file helpers and runtime behavior.
+// Secure Markdown memory-file reader for workspace and configured extra paths.
 import fs from "node:fs/promises";
 import path from "node:path";
 import {
@@ -58,7 +58,7 @@ function isFileDisappearedDuringReadError(err: unknown): boolean {
   );
 }
 
-/** Public helper for read Memory File behavior in packages/memory-host-sdk. */
+/** Reads a bounded Markdown memory file after workspace/extra-path safety checks. */
 export async function readMemoryFile(params: {
   workspaceDir: string;
   extraPaths?: string[];
@@ -146,7 +146,7 @@ export async function readMemoryFile(params: {
   });
 }
 
-/** Public helper for read Agent Memory File behavior in packages/memory-host-sdk. */
+/** Resolves an agent workspace/search config before reading one memory file. */
 export async function readAgentMemoryFile(params: {
   cfg: OpenClawConfig;
   agentId: string;

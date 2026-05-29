@@ -1,4 +1,4 @@
-// packages/memory-host-sdk/src/host remote http helpers and runtime behavior.
+// Remote HTTP wrapper that applies SSRF policy and releases guarded responses.
 import {
   fetchWithSsrFGuard,
   shouldUseEnvHttpProxyForUrl,
@@ -6,14 +6,14 @@ import {
 } from "./openclaw-runtime-network.js";
 import type { SsrFPolicy } from "./ssrf-policy.js";
 
-/** Public constant for MEMORY REMOTE TRUSTED ENV PROXY MODE behavior in packages/memory-host-sdk. */
+/** Fetch guard mode used when a remote memory URL is allowed to use env proxy settings. */
 export const MEMORY_REMOTE_TRUSTED_ENV_PROXY_MODE = "trusted_env_proxy";
 
-/** Public constant for build Remote Base Url Policy behavior in packages/memory-host-sdk. */
+/** Builds an SSRF policy that permits the hostname from a configured remote base URL. */
 export const buildRemoteBaseUrlPolicy: (baseUrl: string) => SsrFPolicy | undefined =
   ssrfPolicyFromHttpBaseUrlAllowedHostname;
 
-/** Public helper for with Remote Http Response behavior in packages/memory-host-sdk. */
+/** Runs a guarded fetch and guarantees response resources are released. */
 export async function withRemoteHttpResponse<T>(params: {
   url: string;
   init?: RequestInit;

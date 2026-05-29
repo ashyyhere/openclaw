@@ -1,12 +1,12 @@
-// packages/memory-host-sdk/src/host read file shared helpers and runtime behavior.
+// Shared memory-read result slicing, truncation, and continuation helpers.
 import type { MemoryReadResult } from "./types.js";
 
-/** Public constant for DEFAULT MEMORY READ LINES behavior in packages/memory-host-sdk. */
+/** Default number of lines returned by memory file reads. */
 export const DEFAULT_MEMORY_READ_LINES = 120;
-/** Public constant for DEFAULT MEMORY READ MAX CHARS behavior in packages/memory-host-sdk. */
+/** Default character budget for memory file excerpts. */
 export const DEFAULT_MEMORY_READ_MAX_CHARS = 12_000;
 
-/** Re-exported public API for packages/memory-host-sdk, starting with Memory Read Result. */
+/** Public memory read result shape shared with SDK callers. */
 export type { MemoryReadResult } from "./types.js";
 
 function buildContinuationNotice(params: {
@@ -57,7 +57,7 @@ function normalizePositiveInteger(value: number | undefined, fallback: number): 
     : fallback;
 }
 
-/** Public helper for build Memory Read Result From Slice behavior in packages/memory-host-sdk. */
+/** Builds a read result from preselected lines while preserving continuation metadata. */
 export function buildMemoryReadResultFromSlice(params: {
   selectedLines: string[];
   relPath: string;
@@ -97,7 +97,7 @@ export function buildMemoryReadResultFromSlice(params: {
   };
 }
 
-/** Public helper for build Memory Read Result behavior in packages/memory-host-sdk. */
+/** Slices file content into a bounded memory read result. */
 export function buildMemoryReadResult(params: {
   content: string;
   relPath: string;

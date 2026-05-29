@@ -1,9 +1,9 @@
-// packages/memory-host-sdk/src/host post json helpers and runtime behavior.
+// JSON POST helper with SSRF-guarded fetch and bounded response parsing.
 import { withRemoteHttpResponse } from "./remote-http.js";
 import { readResponseJsonWithLimit, readResponseTextSnippet } from "./response-snippet.js";
 import type { SsrFPolicy } from "./ssrf-policy.js";
 
-/** Public helper for post Json behavior in packages/memory-host-sdk. */
+/** POSTs JSON, converts non-2xx responses to errors, and parses bounded JSON output. */
 export async function postJson<T>(params: {
   url: string;
   headers: Record<string, string>;

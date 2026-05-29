@@ -1,17 +1,17 @@
-// packages/memory-host-sdk/src/host fs utils helpers and runtime behavior.
+// Filesystem safety re-exports and missing-file classification for memory reads.
 import { configureFsSafePython } from "@openclaw/fs-safe/config";
-/** Re-exported public API for packages/memory-host-sdk, starting with root. */
+/** Safe root resolver used to constrain workspace-relative file access. */
 export { root } from "@openclaw/fs-safe/root";
-/** Re-exported public API for packages/memory-host-sdk, starting with is Path Inside. */
+/** Path containment helpers used before and after realpath resolution. */
 export { isPathInside, isPathInsideWithRealpath } from "@openclaw/fs-safe/path";
-/** Re-exported public API for packages/memory-host-sdk. */
+/** Regular-file and symlink-parent guards for memory file reads. */
 export {
   assertNoSymlinkParents,
   readRegularFile,
   statRegularFile,
   type RegularFileStatResult,
 } from "@openclaw/fs-safe/advanced";
-/** Re-exported public API for packages/memory-host-sdk, starting with walk Directory. */
+/** Safe directory walker used by memory indexing. */
 export { walkDirectory, type WalkDirectoryEntry } from "@openclaw/fs-safe/walk";
 
 const hasPythonModeOverride =
@@ -21,7 +21,7 @@ if (!hasPythonModeOverride) {
   configureFsSafePython({ mode: "off" });
 }
 
-/** Public helper for is File Missing Error behavior in packages/memory-host-sdk. */
+/** Detects missing-file errors across Node and fs-safe error codes. */
 export function isFileMissingError(
   err: unknown,
 ): err is NodeJS.ErrnoException & { code: "ENOENT" | "ENOTDIR" | "not-found" } {
