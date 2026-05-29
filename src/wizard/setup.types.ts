@@ -1,11 +1,11 @@
-// Shared types for wizard setup types behavior.
+// Shared setup wizard configuration shapes.
 import type { GatewayAuthChoice } from "../commands/onboard-types.js";
 import type { SecretInput } from "../config/types.secrets.js";
 
-/** Shared type for Wizard Flow in src/wizard. */
+/** Setup flow depth selected by the operator. */
 export type WizardFlow = "quickstart" | "advanced";
 
-/** Shared type for Quickstart Gateway Defaults in src/wizard. */
+/** Gateway defaults discovered before quickstart prompts are shown. */
 export type QuickstartGatewayDefaults = {
   hasExisting: boolean;
   port: number;
@@ -18,7 +18,7 @@ export type QuickstartGatewayDefaults = {
   tailscaleResetOnExit: boolean;
 };
 
-/** Shared type for Gateway Wizard Settings in src/wizard. */
+/** Gateway settings produced by setup wizard prompts. */
 export type GatewayWizardSettings = {
   port: number;
   bind: "loopback" | "lan" | "auto" | "custom" | "tailnet";

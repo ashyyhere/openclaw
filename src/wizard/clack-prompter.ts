@@ -1,4 +1,4 @@
-// wizard clack prompter helpers and runtime behavior.
+// Terminal-backed wizard prompter implementation using Clack prompts.
 import {
   autocomplete,
   autocompleteMultiselect,
@@ -49,7 +49,7 @@ function buildOptionSearchText<T>(option: Option<T>): string {
   return normalizeLowercaseStringOrEmpty(`${label} ${hint} ${value}`);
 }
 
-/** Reused helper for tokenized Option Filter behavior in src/wizard. */
+/** Matches autocomplete options when every search token appears in label, hint, or value. */
 export function tokenizedOptionFilter<T>(search: string, option: Option<T>): boolean {
   const tokens = normalizeSearchTokens(search);
   if (tokens.length === 0) {
@@ -59,7 +59,7 @@ export function tokenizedOptionFilter<T>(search: string, option: Option<T>): boo
   return tokens.every((token) => haystack.includes(token));
 }
 
-/** Reused helper for create Clack Prompter behavior in src/wizard. */
+/** Creates the interactive terminal prompter used by local setup flows. */
 export function createClackPrompter(): WizardPrompter {
   return {
     intro: async (title) => {

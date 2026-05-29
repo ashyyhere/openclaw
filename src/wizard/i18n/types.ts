@@ -1,14 +1,14 @@
-// Shared types for wizard/i18n types behavior.
-/** Shared type for Wizard Locale in src/wizard/i18n. */
+// Shared setup wizard localization types.
+/** Locales currently bundled for setup wizard text. */
 export type WizardLocale = "en" | "zh-CN" | "zh-TW";
 
-/** Shared type for Wizard I18n Params in src/wizard/i18n. */
+/** Interpolation parameters accepted by wizard translations. */
 export type WizardI18nParams = Record<string, boolean | number | string | null | undefined>;
 
-/** Shared type for Wizard Translation Tree in src/wizard/i18n. */
+/** Nested translation tree where leaves are localized strings. */
 export type WizardTranslationTree = {
   readonly [key: string]: string | WizardTranslationTree;
 };
 
-/** Shared type for Wizard Translation Map in src/wizard/i18n. */
+/** Root translation map for one locale. */
 export type WizardTranslationMap = WizardTranslationTree;

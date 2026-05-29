@@ -1,4 +1,4 @@
-// wizard setup secret input helpers and runtime behavior.
+// Resolves setup wizard secret inputs from raw strings or configured SecretRefs.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { normalizeSecretInputString, resolveSecretInputRef } from "../config/types.secrets.js";
 import { resolveSecretRefString } from "../secrets/resolve.js";
@@ -12,7 +12,7 @@ function formatSecretResolutionError(error: unknown): string {
   return String(error);
 }
 
-/** Reused helper for resolve Setup Secret Input String behavior in src/wizard. */
+/** Resolves a setup value into a secret string, wrapping SecretRef errors with config path context. */
 export async function resolveSetupSecretInputString(params: {
   config: OpenClawConfig;
   value: unknown;

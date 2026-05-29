@@ -1,12 +1,12 @@
-// wizard prompts helpers and runtime behavior.
-/** Shared type for Wizard Select Option in src/wizard. */
+// Prompt abstraction shared by terminal and session-backed setup wizards.
+/** Selectable wizard option with optional secondary hint text. */
 export type WizardSelectOption<T = string> = {
   value: T;
   label: string;
   hint?: string;
 };
 
-/** Shared type for Wizard Select Params in src/wizard. */
+/** Parameters for one single-select wizard prompt. */
 export type WizardSelectParams<T = string> = {
   message: string;
   options: Array<WizardSelectOption<T>>;
@@ -14,7 +14,7 @@ export type WizardSelectParams<T = string> = {
   searchable?: boolean;
 };
 
-/** Shared type for Wizard Multi Select Params in src/wizard. */
+/** Parameters for one multi-select wizard prompt. */
 export type WizardMultiSelectParams<T = string> = {
   message: string;
   options: Array<WizardSelectOption<T>>;
@@ -22,7 +22,7 @@ export type WizardMultiSelectParams<T = string> = {
   searchable?: boolean;
 };
 
-/** Shared type for Wizard Text Params in src/wizard. */
+/** Parameters for one text prompt, including optional validation and masking. */
 export type WizardTextParams = {
   message: string;
   initialValue?: string;
@@ -33,19 +33,19 @@ export type WizardTextParams = {
   sensitive?: boolean;
 };
 
-/** Shared type for Wizard Confirm Params in src/wizard. */
+/** Parameters for one yes/no confirmation prompt. */
 export type WizardConfirmParams = {
   message: string;
   initialValue?: boolean;
 };
 
-/** Shared type for Wizard Progress in src/wizard. */
+/** Long-running wizard progress handle. */
 export type WizardProgress = {
   update: (message: string) => void;
   stop: (message?: string) => void;
 };
 
-/** Shared type for Wizard Prompter in src/wizard. */
+/** UI-independent prompt interface consumed by setup flows. */
 export type WizardPrompter = {
   intro: (title: string) => Promise<void>;
   outro: (message: string) => Promise<void>;
@@ -58,7 +58,7 @@ export type WizardPrompter = {
   progress: (label: string) => WizardProgress;
 };
 
-/** Reused class for Wizard Cancelled Error behavior in src/wizard. */
+/** Error thrown when the user cancels a wizard flow. */
 export class WizardCancelledError extends Error {
   constructor(message = "wizard cancelled") {
     super(message);

@@ -1,4 +1,4 @@
-// wizard setup completion helpers and runtime behavior.
+// Installs or repairs shell completion during setup.
 import os from "node:os";
 import path from "node:path";
 import { resolveCliName } from "../cli/cli-name.js";
@@ -48,7 +48,7 @@ function formatReloadHint(shell: ShellCompletionStatus["shell"], profileHint: st
   return t("wizard.completion.reloadShell", { profile: profileHint });
 }
 
-/** Reused helper for setup Wizard Shell Completion behavior in src/wizard. */
+/** Ensures setup leaves shell completion installed or repaired for the active shell. */
 export async function setupWizardShellCompletion(params: {
   flow: WizardFlow;
   prompter: Pick<WizardPrompter, "confirm" | "note">;

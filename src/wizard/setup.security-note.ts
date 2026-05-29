@@ -1,21 +1,21 @@
-// wizard setup security note helpers and runtime behavior.
+// Builds localized security guidance shown during setup.
 import chalk from "chalk";
 import { formatCliCommand } from "../cli/command-format.js";
 import { t } from "./i18n/index.js";
 
 const heading = (text: string) => chalk.bold(text);
 
-/** Reused helper for get Security Note Title behavior in src/wizard. */
+/** Returns the localized security note title. */
 export function getSecurityNoteTitle(): string {
   return t("wizard.security.title");
 }
 
-/** Reused helper for get Security Confirm Message behavior in src/wizard. */
+/** Returns the localized acknowledgement prompt for the security note. */
 export function getSecurityConfirmMessage(): string {
   return t("wizard.security.confirm");
 }
 
-/** Reused helper for get Security Note Message behavior in src/wizard. */
+/** Builds the full localized security note body with recommended hardening commands. */
 export function getSecurityNoteMessage(): string {
   return [
     t("wizard.security.beta"),

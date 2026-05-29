@@ -1,4 +1,4 @@
-// wizard/i18n index helpers and runtime behavior.
+// Locale resolution and translation helpers for setup wizard text.
 import { en } from "./locales/en.js";
 import { zh_CN } from "./locales/zh-CN.js";
 import { zh_TW } from "./locales/zh-TW.js";
@@ -9,10 +9,10 @@ import type {
   WizardTranslationTree,
 } from "./types.js";
 
-/** Re-exported API for src/wizard/i18n, starting with Wizard I18n Params. */
+/** Re-exports wizard localization types. */
 export type { WizardI18nParams, WizardLocale, WizardTranslationMap };
 
-/** Shared type for Setup Translator in src/wizard/i18n. */
+/** Translation function used by setup modules. */
 export type SetupTranslator = (key: string, params?: WizardI18nParams) => string;
 
 const LOCALES: Record<WizardLocale, WizardTranslationMap> = {
@@ -21,16 +21,16 @@ const LOCALES: Record<WizardLocale, WizardTranslationMap> = {
   "zh-TW": zh_TW,
 };
 
-/** Reused constant for WIZARD DEFAULT LOCALE behavior in src/wizard/i18n. */
+/** Fallback locale used when environment locale cannot be mapped. */
 export const WIZARD_DEFAULT_LOCALE: WizardLocale = "en";
-/** Reused constant for WIZARD SUPPORTED LOCALES behavior in src/wizard/i18n. */
+/** Locales bundled for setup wizard translations. */
 export const WIZARD_SUPPORTED_LOCALES: readonly WizardLocale[] = ["en", "zh-CN", "zh-TW"];
 
 function normalizeLocaleToken(raw: string | undefined): string {
   return (raw ?? "").trim().split(".")[0]?.split("@")[0]?.replaceAll("_", "-") ?? "";
 }
 
-/** Reused helper for resolve Wizard Locale behavior in src/wizard/i18n. */
+/** Maps locale tokens such as LANG/LC_* values to a bundled wizard locale. */
 export function resolveWizardLocale(value: string | undefined): WizardLocale {
   const normalized = normalizeLocaleToken(value);
   if (!normalized) {
@@ -50,7 +50,7 @@ export function resolveWizardLocale(value: string | undefined): WizardLocale {
   return WIZARD_DEFAULT_LOCALE;
 }
 
-/** Reused helper for resolve Wizard Locale From Env behavior in src/wizard/i18n. */
+/** Resolves the wizard locale from OpenClaw and process locale environment variables. */
 export function resolveWizardLocaleFromEnv(env: NodeJS.ProcessEnv = process.env): WizardLocale {
   return resolveWizardLocale(env.OPENCLAW_LOCALE ?? env.LC_ALL ?? env.LC_MESSAGES ?? env.LANG);
 }
@@ -76,7 +76,7 @@ function interpolate(value: string, params?: WizardI18nParams): string {
   });
 }
 
-/** Reused helper for wizard T behavior in src/wizard/i18n. */
+/** Translates a wizard key with locale fallback and simple `{param}` interpolation. */
 export function wizardT(
   key: string,
   params?: WizardI18nParams,
@@ -88,10 +88,10 @@ export function wizardT(
   return interpolate(fallback, params);
 }
 
-/** Reused constant for t behavior in src/wizard/i18n. */
+/** Default process-locale translator. */
 export const t = wizardT;
 
-/** Reused helper for create Setup Translator behavior in src/wizard/i18n. */
+/** Creates a translator bound to an optional locale and key prefix. */
 export function createSetupTranslator(options?: {
   locale?: WizardLocale;
   keyPrefix?: string;
@@ -118,7 +118,7 @@ function collectLeafKeys(tree: WizardTranslationTree, prefix = "", out: string[]
   return out;
 }
 
-/** Reused helper for list Wizard I18n Keys behavior in src/wizard/i18n. */
+/** Lists leaf translation keys for coverage checks and diagnostics. */
 export function listWizardI18nKeys(locale: WizardLocale = WIZARD_DEFAULT_LOCALE): string[] {
   return collectLeafKeys(LOCALES[locale]).toSorted();
 }

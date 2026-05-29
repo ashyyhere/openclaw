@@ -1,15 +1,15 @@
-// wizard session helpers and runtime behavior.
+// Drives setup wizards over a request/response session API instead of a terminal.
 import { randomUUID } from "node:crypto";
 import { WizardCancelledError, type WizardProgress, type WizardPrompter } from "./prompts.js";
 
-/** Shared type for Wizard Step Option in src/wizard. */
+/** Serializable option sent to clients for select-style wizard steps. */
 export type WizardStepOption = {
   value: unknown;
   label: string;
   hint?: string;
 };
 
-/** Shared type for Wizard Step in src/wizard. */
+/** Serializable wizard step exchanged between the runner and a client UI. */
 export type WizardStep = {
   id: string;
   type: "note" | "select" | "text" | "confirm" | "multiselect" | "progress" | "action";
@@ -23,10 +23,10 @@ export type WizardStep = {
   executor?: "gateway" | "client";
 };
 
-/** Shared type for Wizard Session Status in src/wizard. */
+/** Terminal and active states for a wizard session. */
 export type WizardSessionStatus = "running" | "done" | "cancelled" | "error";
 
-/** Shared type for Wizard Next Result in src/wizard. */
+/** Result returned when a client polls for the next wizard step. */
 export type WizardNextResult = {
   done: boolean;
   step?: WizardStep;
@@ -172,7 +172,7 @@ class WizardSessionPrompter implements WizardPrompter {
   }
 }
 
-/** Reused class for Wizard Session behavior in src/wizard. */
+/** Coordinates wizard runner prompts with client-provided answers. */
 export class WizardSession {
   private currentStep: WizardStep | null = null;
   private stepDeferred: Deferred<WizardStep | null> | null = null;
