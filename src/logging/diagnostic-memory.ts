@@ -1,4 +1,5 @@
-// logging diagnostic memory helpers and runtime behavior.
+// Diagnostic memory sampler: emits bounded process memory events, detects
+// threshold/growth pressure, and optionally writes critical support bundles.
 import {
   emitInternalDiagnosticEvent as emitDiagnosticEvent,
   type DiagnosticMemoryPressureEvent,
@@ -187,7 +188,7 @@ function logMemoryPressure(params: {
   }
 }
 
-/** Reused helper for emit Diagnostic Memory Sample behavior in src/logging. */
+/** Emits a memory sample, detects pressure, and returns normalized memory usage. */
 export function emitDiagnosticMemorySample(options?: {
   now?: number;
   memoryUsage?: NodeJS.MemoryUsage;
@@ -248,7 +249,7 @@ export function emitDiagnosticMemorySample(options?: {
   return memory;
 }
 
-/** Reused helper for reset Diagnostic Memory For Test behavior in src/logging. */
+/** Clears diagnostic memory pressure debounce state between tests. */
 export function resetDiagnosticMemoryForTest(): void {
   state.lastSample = null;
   state.lastPressureAtByKey.clear();

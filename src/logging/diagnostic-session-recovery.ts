@@ -1,10 +1,11 @@
-// logging diagnostic session recovery helpers and runtime behavior.
+// Stuck-session recovery contracts shared by diagnostics, lane recovery, and
+// log formatting.
 import type {
   DiagnosticSessionActiveWorkKind,
   DiagnosticSessionState,
 } from "../infra/diagnostic-events.js";
 
-/** Shared type for Diagnostic Session Recovery Status in src/logging. */
+/** Outcome status returned by stuck-session recovery attempts. */
 export type DiagnosticSessionRecoveryStatus =
   | "aborted"
   | "released"
@@ -12,7 +13,7 @@ export type DiagnosticSessionRecoveryStatus =
   | "noop"
   | "failed";
 
-/** Shared type for Diagnostic Session Recovery Skip Reason in src/logging. */
+/** Reasons recovery intentionally observed a stuck session without mutating it. */
 export type DiagnosticSessionRecoverySkipReason =
   | "active_embedded_run"
   | "active_reply_work"
@@ -21,10 +22,10 @@ export type DiagnosticSessionRecoverySkipReason =
   | "missing_session_ref"
   | "stale_session_state";
 
-/** Shared type for Diagnostic Session Recovery Noop Reason in src/logging. */
+/** Reasons recovery found no state to change. */
 export type DiagnosticSessionRecoveryNoopReason = "no_active_work";
 
-/** Shared type for Stuck Session Recovery Request in src/logging. */
+/** Snapshot passed from diagnostics into the stuck-session recovery runtime. */
 export type StuckSessionRecoveryRequest = {
   sessionId?: string;
   sessionKey?: string;
@@ -50,7 +51,7 @@ type DiagnosticSessionRecoveryBaseOutcome = {
   activeWorkKind?: DiagnosticSessionActiveWorkKind;
 };
 
-/** Shared type for Stuck Session Recovery Outcome in src/logging. */
+/** Closed union describing how a stuck-session recovery attempt ended. */
 export type StuckSessionRecoveryOutcome =
   | (DiagnosticSessionRecoveryBaseOutcome & {
       status: "aborted";
@@ -85,7 +86,7 @@ export type StuckSessionRecoveryOutcome =
       error: string;
     });
 
-/** Reused helper for recovery Outcome Mutates Session State behavior in src/logging. */
+/** Checks whether a recovery outcome should advance diagnostic session state. */
 export function recoveryOutcomeMutatesSessionState(
   outcome: StuckSessionRecoveryOutcome | undefined,
 ): boolean {
@@ -99,7 +100,7 @@ export function recoveryOutcomeMutatesSessionState(
   );
 }
 
-/** Reused helper for recovery Outcome Clears Queued Session State behavior in src/logging. */
+/** Checks whether an outcome clears queued-session diagnostics. */
 export function recoveryOutcomeClearsQueuedSessionState(
   outcome: StuckSessionRecoveryOutcome,
 ): boolean {
@@ -110,12 +111,12 @@ export function recoveryOutcomeClearsQueuedSessionState(
   );
 }
 
-/** Reused helper for recovery Outcome Released Count behavior in src/logging. */
+/** Returns released queued work count for outcomes that carry it. */
 export function recoveryOutcomeReleasedCount(outcome: StuckSessionRecoveryOutcome): number {
   return "released" in outcome ? outcome.released : 0;
 }
 
-/** Reused helper for format Recovery Outcome behavior in src/logging. */
+/** Formats a recovery outcome as compact key=value diagnostic text. */
 export function formatRecoveryOutcome(outcome: StuckSessionRecoveryOutcome): string {
   const fields = [
     `status=${outcome.status}`,
