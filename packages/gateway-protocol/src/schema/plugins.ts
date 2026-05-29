@@ -1,11 +1,11 @@
-// packages/gateway-protocol/src/schema plugins helpers and runtime behavior.
+// TypeBox schemas for plugin UI descriptors and session action RPCs.
 import { Type } from "typebox";
 import { NonEmptyString } from "./primitives.js";
 
-/** Public constant for Plugin Json Value Schema behavior in packages/gateway-protocol. */
+/** Opaque plugin-owned JSON payload carried through the gateway unchanged. */
 export const PluginJsonValueSchema = Type.Unknown();
 
-/** Public constant for Plugin Control Ui Descriptor Schema behavior in packages/gateway-protocol. */
+/** Descriptor a plugin publishes for Control UI surfaces and actions. */
 export const PluginControlUiDescriptorSchema = Type.Object(
   {
     id: NonEmptyString,
@@ -26,10 +26,10 @@ export const PluginControlUiDescriptorSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Plugins Ui Descriptors Params Schema behavior in packages/gateway-protocol. */
+/** Empty params schema for listing plugin-provided UI descriptors. */
 export const PluginsUiDescriptorsParamsSchema = Type.Object({}, { additionalProperties: false });
 
-/** Public constant for Plugins Ui Descriptors Result Schema behavior in packages/gateway-protocol. */
+/** Result schema for plugin UI descriptor discovery. */
 export const PluginsUiDescriptorsResultSchema = Type.Object(
   {
     ok: Type.Literal(true),
@@ -38,7 +38,7 @@ export const PluginsUiDescriptorsResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Plugins Session Action Params Schema behavior in packages/gateway-protocol. */
+/** Params schema for invoking a plugin action against an optional session. */
 export const PluginsSessionActionParamsSchema = Type.Object(
   {
     pluginId: NonEmptyString,
@@ -49,7 +49,7 @@ export const PluginsSessionActionParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Plugins Session Action Success Result Schema behavior in packages/gateway-protocol. */
+/** Success result schema returned by plugin session actions. */
 export const PluginsSessionActionSuccessResultSchema = Type.Object(
   {
     ok: Type.Literal(true),
@@ -60,7 +60,7 @@ export const PluginsSessionActionSuccessResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Plugins Session Action Failure Result Schema behavior in packages/gateway-protocol. */
+/** Failure result schema returned by plugin session actions. */
 export const PluginsSessionActionFailureResultSchema = Type.Object(
   {
     ok: Type.Literal(false),
@@ -71,7 +71,7 @@ export const PluginsSessionActionFailureResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Plugins Session Action Result Schema behavior in packages/gateway-protocol. */
+/** Union of success and failure payloads for plugin session actions. */
 export const PluginsSessionActionResultSchema = Type.Union([
   PluginsSessionActionSuccessResultSchema,
   PluginsSessionActionFailureResultSchema,
