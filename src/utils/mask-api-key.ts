@@ -1,5 +1,5 @@
-// utils mask api key helpers and runtime behavior.
-/** Reused constant for mask Api Key behavior in src/utils. */
+// Redacts API keys for diagnostics while preserving enough prefix/suffix to identify the value.
+/** Masks an API key with length-sensitive prefix/suffix retention. */
 export const maskApiKey = (value: string): string => {
   const trimmed = value.trim();
   if (!trimmed) {

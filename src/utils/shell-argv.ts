@@ -1,11 +1,11 @@
-// utils shell argv helpers and runtime behavior.
+// Minimal POSIX-like shell argument splitter for config snippets and command parsing.
 const DOUBLE_QUOTE_ESCAPES = new Set(["\\", '"', "$", "`", "\n", "\r"]);
 
 function isDoubleQuoteEscape(next: string | undefined): next is string {
   return Boolean(next && DOUBLE_QUOTE_ESCAPES.has(next));
 }
 
-/** Reused helper for split Shell Args behavior in src/utils. */
+/** Splits a shell-like string into argv tokens, returning null on unterminated quotes/escapes. */
 export function splitShellArgs(raw: string): string[] | null {
   const tokens: string[] = [];
   let buf = "";

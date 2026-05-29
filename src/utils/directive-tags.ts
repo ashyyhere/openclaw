@@ -1,7 +1,7 @@
-// utils directive tags helpers and runtime behavior.
+// Parses and strips inline delivery directives embedded in assistant-visible text.
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 
-/** Shared type for Inline Directive Parse Result in src/utils. */
+/** Parsed inline directive state plus the cleaned text body. */
 export type InlineDirectiveParseResult = {
   text: string;
   audioAsVoice: boolean;
@@ -79,12 +79,12 @@ type MessageTextPart = {
 
 type MessagePart = Record<string, unknown> | null | undefined;
 
-/** Shared type for Display Message With Content in src/utils. */
+/** Minimal assistant message shape used when stripping display-only directive tags. */
 export type DisplayMessageWithContent = {
   content?: unknown;
 } & Record<string, unknown>;
 
-/** Reused helper for strip Inline Directive Tags For Display behavior in src/utils. */
+/** Removes audio/reply directive tags from text intended for transcript display. */
 export function stripInlineDirectiveTagsForDisplay(text: string): StripInlineDirectiveTagsResult {
   if (!text) {
     return { text, changed: false };
@@ -109,7 +109,7 @@ function stripUnsafeReplyDirectiveChars(value: string): string {
   return next;
 }
 
-/** Reused helper for sanitize Reply Directive Id behavior in src/utils. */
+/** Removes control/bracket characters and bounds explicit reply directive ids. */
 export function sanitizeReplyDirectiveId(rawReplyToId?: string): string | undefined {
   const trimmed = rawReplyToId?.trim();
   if (!trimmed) {
@@ -125,7 +125,7 @@ export function sanitizeReplyDirectiveId(rawReplyToId?: string): string | undefi
   return sanitized;
 }
 
-/** Reused helper for strip Inline Directive Tags For Delivery behavior in src/utils. */
+/** Removes inline directives and surrounding padding from text before channel delivery. */
 export function stripInlineDirectiveTagsForDelivery(text: string): StripInlineDirectiveTagsResult {
   if (!text) {
     return { text, changed: false };
@@ -184,7 +184,7 @@ export function stripInlineDirectiveTagsFromMessageForDisplay(
   return { ...message, content: cleaned };
 }
 
-/** Reused helper for parse Inline Directives behavior in src/utils. */
+/** Parses `[[audio_as_voice]]` and reply directives while preserving code-block whitespace. */
 export function parseInlineDirectives(
   text?: string,
   options: InlineDirectiveParseOptions = {},

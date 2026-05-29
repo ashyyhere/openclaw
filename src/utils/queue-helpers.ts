@@ -1,27 +1,27 @@
-// utils queue helpers helpers and runtime behavior.
-/** Shared type for Queue Summary State in src/utils. */
+// Queue overflow, debounce, and drain helpers shared by channel/runtime batching code.
+/** Mutable summary state used when a capped queue drops old items and preserves a compact prompt. */
 export type QueueSummaryState = {
   dropPolicy: "summarize" | "old" | "new";
   droppedCount: number;
   summaryLines: string[];
 };
 
-/** Shared type for Queue Drop Policy in src/utils. */
+/** Queue overflow strategy: summarize old drops, drop old silently, or reject new items. */
 export type QueueDropPolicy = QueueSummaryState["dropPolicy"];
 
-/** Shared type for Queue State in src/utils. */
+/** Generic capped queue state with optional overflow summaries. */
 export type QueueState<T> = QueueSummaryState & {
   items: T[];
   cap: number;
 };
 
-/** Reused helper for clear Queue Summary State behavior in src/utils. */
+/** Clears accumulated overflow summary state after it has been emitted. */
 export function clearQueueSummaryState(state: QueueSummaryState): void {
   state.droppedCount = 0;
   state.summaryLines = [];
 }
 
-/** Reused helper for preview Queue Summary Prompt behavior in src/utils. */
+/** Builds an overflow summary prompt without mutating the live queue state. */
 export function previewQueueSummaryPrompt(params: {
   state: QueueSummaryState;
   noun: string;
@@ -38,7 +38,7 @@ export function previewQueueSummaryPrompt(params: {
   });
 }
 
-/** Reused helper for apply Queue Runtime Settings behavior in src/utils. */
+/** Applies runtime queue settings while clamping debounce/cap values to usable ranges. */
 export function applyQueueRuntimeSettings<TMode extends string>(params: {
   target: {
     mode: TMode;
@@ -65,7 +65,7 @@ export function applyQueueRuntimeSettings<TMode extends string>(params: {
   params.target.dropPolicy = params.settings.dropPolicy ?? params.target.dropPolicy;
 }
 
-/** Reused helper for elide Queue Text behavior in src/utils. */
+/** Truncates queue summary text to a compact single-line display. */
 export function elideQueueText(text: string, limit = 140): string {
   if (text.length <= limit) {
     return text;
@@ -73,13 +73,13 @@ export function elideQueueText(text: string, limit = 140): string {
   return `${text.slice(0, Math.max(0, limit - 1)).trimEnd()}…`;
 }
 
-/** Reused helper for build Queue Summary Line behavior in src/utils. */
+/** Normalizes whitespace and elides one dropped queue item summary line. */
 export function buildQueueSummaryLine(text: string, limit = 160): string {
   const cleaned = text.replace(/\s+/g, " ").trim();
   return elideQueueText(cleaned, limit);
 }
 
-/** Reused helper for should Skip Queue Item behavior in src/utils. */
+/** Runs optional queue dedupe logic before enqueueing a new item. */
 export function shouldSkipQueueItem<T>(params: {
   item: T;
   items: T[];
@@ -91,7 +91,7 @@ export function shouldSkipQueueItem<T>(params: {
   return params.dedupe(params.item, params.items);
 }
 
-/** Reused helper for apply Queue Drop Policy behavior in src/utils. */
+/** Enforces queue capacity and records summaries for items dropped by the selected policy. */
 export function applyQueueDropPolicy<T>(params: {
   queue: QueueState<T>;
   summarize: (item: T) => string;
@@ -121,7 +121,7 @@ export function applyQueueDropPolicy<T>(params: {
   return true;
 }
 
-/** Reused helper for wait For Queue Debounce behavior in src/utils. */
+/** Waits until no newer item has arrived within the queue debounce window. */
 export function waitForQueueDebounce(queue: {
   debounceMs: number;
   lastEnqueuedAt: number;
@@ -146,7 +146,7 @@ export function waitForQueueDebounce(queue: {
   });
 }
 
-/** Reused helper for begin Queue Drain behavior in src/utils. */
+/** Marks one keyed queue as draining and returns it, or skips when missing/already draining. */
 export function beginQueueDrain<T extends { draining: boolean }>(
   map: Map<string, T>,
   key: string,
@@ -159,7 +159,7 @@ export function beginQueueDrain<T extends { draining: boolean }>(
   return queue;
 }
 
-/** Reused helper for drain Next Queue Item behavior in src/utils. */
+/** Runs and removes the next queued item, returning whether anything was drained. */
 export async function drainNextQueueItem<T>(
   items: T[],
   run: (item: T) => Promise<void>,
@@ -173,7 +173,7 @@ export async function drainNextQueueItem<T>(
   return true;
 }
 
-/** Reused helper for drain Collect Item If Needed behavior in src/utils. */
+/** Drains one item individually when collect-mode is forced or cross-channel items require it. */
 export async function drainCollectItemIfNeeded<T>(params: {
   forceIndividualCollect: boolean;
   isCrossChannel: boolean;
@@ -191,7 +191,7 @@ export async function drainCollectItemIfNeeded<T>(params: {
   return drained ? "drained" : "empty";
 }
 
-/** Reused helper for drain Collect Queue Step behavior in src/utils. */
+/** Updates collect drain state and delegates one optional individual drain step. */
 export async function drainCollectQueueStep<T>(params: {
   collectState: { forceIndividualCollect: boolean };
   isCrossChannel: boolean;
@@ -209,7 +209,7 @@ export async function drainCollectQueueStep<T>(params: {
   });
 }
 
-/** Reused helper for build Queue Summary Prompt behavior in src/utils. */
+/** Emits and clears a prompt summarizing dropped queue items. */
 export function buildQueueSummaryPrompt(params: {
   state: QueueSummaryState;
   noun: string;
@@ -233,7 +233,7 @@ export function buildQueueSummaryPrompt(params: {
   return lines.join("\n");
 }
 
-/** Reused helper for build Collect Prompt behavior in src/utils. */
+/** Builds the prompt for a batch of collected queue items. */
 export function buildCollectPrompt<T>(params: {
   title: string;
   items: T[];
@@ -250,7 +250,7 @@ export function buildCollectPrompt<T>(params: {
   return blocks.join("\n\n");
 }
 
-/** Reused helper for has Cross Channel Items behavior in src/utils. */
+/** Detects whether queued items span multiple routing keys or explicitly mark cross-channel state. */
 export function hasCrossChannelItems<T>(
   items: T[],
   resolveKey: (item: T) => { key?: string; cross?: boolean },

@@ -1,3 +1,3 @@
-// utils with timeout helpers and runtime behavior.
-/** Re-exported API for src/utils, starting with with Timeout. */
+// Compatibility export for filesystem-safe timeout helper.
+/** Re-export `withTimeout` for older utility callers. */
 export { withTimeout } from "../infra/fs-safe.js";
