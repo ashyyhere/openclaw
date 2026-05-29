@@ -1,4 +1,4 @@
-// talk consult transcript helpers and runtime behavior.
+// Transcript filters that avoid consulting on incomplete or non-actionable voice fragments.
 const REALTIME_VOICE_CONSULT_TRAILING_FRAGMENT_WORDS = new Set([
   "a",
   "about",
@@ -23,14 +23,14 @@ const REALTIME_VOICE_CONSULT_TRAILING_FRAGMENT_WORDS = new Set([
   "with",
 ]);
 
-/** Shared type for Skippable Realtime Voice Consult Transcript Reason in src/talk. */
+/** Reason a transcript fragment should not trigger a realtime voice consult. */
 export type SkippableRealtimeVoiceConsultTranscriptReason =
   | "empty"
   | "incomplete-transcript"
   | "trailing-fragment"
   | "non-actionable-closing";
 
-/** Reused helper for classify Skippable Realtime Voice Consult Transcript behavior in src/talk. */
+/** Classifies transcript text that is empty, incomplete, trailing, or just a closing. */
 export function classifySkippableRealtimeVoiceConsultTranscript(
   text: string,
 ): SkippableRealtimeVoiceConsultTranscriptReason | undefined {

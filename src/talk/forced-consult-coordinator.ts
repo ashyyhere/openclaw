@@ -1,4 +1,4 @@
-// talk forced consult coordinator helpers and runtime behavior.
+// Coordinator for forced consults and native consult de-duplication in voice sessions.
 import {
   matchRealtimeVoiceConsultQuestions,
   readRealtimeVoiceConsultQuestion,
@@ -7,12 +7,12 @@ import {
 const DEFAULT_REALTIME_VOICE_FORCED_CONSULT_NATIVE_DEDUPE_MS = 2_000;
 const DEFAULT_REALTIME_VOICE_FORCED_CONSULT_LIMIT = 12;
 
-/** Shared type for Realtime Voice Forced Consult Timer in src/talk. */
+/** Timer handle abstraction used by production timers and deterministic tests. */
 export type RealtimeVoiceForcedConsultTimer = {
   clear(): void;
 };
 
-/** Shared type for Realtime Voice Forced Consult Coordinator Options in src/talk. */
+/** Limits, clock hooks, and matching strategy for forced consult coordination. */
 export type RealtimeVoiceForcedConsultCoordinatorOptions = {
   limit?: number;
   nativeDedupeMs?: number;
@@ -21,14 +21,14 @@ export type RealtimeVoiceForcedConsultCoordinatorOptions = {
   questionsMatch?: (left: string | undefined, right: string | undefined) => boolean;
 };
 
-/** Shared type for Realtime Voice Forced Consult Handle in src/talk. */
+/** Stable handle for one forced consult request and its optional caller context. */
 export type RealtimeVoiceForcedConsultHandle<TContext = unknown> = {
   id: string;
   question: string;
   context?: TContext;
 };
 
-/** Shared type for Realtime Voice Forced Consult Native Match in src/talk. */
+/** Relationship between a provider-native consult call and queued forced consults. */
 export type RealtimeVoiceForcedConsultNativeMatch<TContext = unknown> =
   | { kind: "none"; question?: string }
   | { kind: "pending"; question?: string; handle: RealtimeVoiceForcedConsultHandle<TContext> }
@@ -39,12 +39,12 @@ export type RealtimeVoiceForcedConsultNativeMatch<TContext = unknown> =
       handle: RealtimeVoiceForcedConsultHandle<TContext>;
     };
 
-/** Shared type for Realtime Voice Forced Consult Native Recent Options in src/talk. */
+/** Options for treating recent native consults without a readable question as matches. */
 export type RealtimeVoiceForcedConsultNativeRecentOptions = {
   allowUnknownQuestion?: boolean;
 };
 
-/** Shared type for Realtime Voice Forced Consult Coordinator in src/talk. */
+/** State machine for queued, in-flight, delivered, and cancelled forced consults. */
 export type RealtimeVoiceForcedConsultCoordinator<TContext = unknown> = {
   prepare(
     question: string,
@@ -97,7 +97,7 @@ type RecentNativeConsult = {
   at: number;
 };
 
-/** Reused helper for create Realtime Voice Forced Consult Coordinator behavior in src/talk. */
+/** Creates a bounded forced-consult coordinator with recent native-call de-dupe. */
 export function createRealtimeVoiceForcedConsultCoordinator<TContext = unknown>(
   options: RealtimeVoiceForcedConsultCoordinatorOptions = {},
 ): RealtimeVoiceForcedConsultCoordinator<TContext> {
