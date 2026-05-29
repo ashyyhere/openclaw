@@ -1,5 +1,5 @@
-// packages/gateway-client/src device auth helpers and runtime behavior.
-/** Public helper for normalize Device Metadata For Auth behavior in packages/gateway-client. */
+// Device-auth payload canonicalization shared by gateway clients and tests.
+/** Normalize optional metadata before it is included in signed auth payloads. */
 export function normalizeDeviceMetadataForAuth(value?: string | null): string {
   if (typeof value !== "string") {
     return "";
@@ -27,7 +27,7 @@ type DeviceAuthPayloadV3Params = DeviceAuthPayloadParams & {
   deviceFamily?: string | null;
 };
 
-/** Public helper for build Device Auth Payload behavior in packages/gateway-client. */
+/** Build the v2 pipe-delimited payload that gateway device auth signs. */
 export function buildDeviceAuthPayload(params: DeviceAuthPayloadParams): string {
   const scopes = params.scopes.join(",");
   const token = params.token ?? "";
@@ -44,7 +44,7 @@ export function buildDeviceAuthPayload(params: DeviceAuthPayloadParams): string 
   ].join("|");
 }
 
-/** Public helper for build Device Auth Payload V3 behavior in packages/gateway-client. */
+/** Build the v3 signed payload with normalized platform/device-family metadata. */
 export function buildDeviceAuthPayloadV3(params: DeviceAuthPayloadV3Params): string {
   const scopes = params.scopes.join(",");
   const token = params.token ?? "";
