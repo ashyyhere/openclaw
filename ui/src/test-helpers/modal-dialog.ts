@@ -1,10 +1,11 @@
-// ui/src/test-helpers modal dialog helpers and runtime behavior.
+// Modal-dialog test helpers for environments without native dialog behavior.
 import { expect } from "vitest";
 import type { OpenClawModalDialog } from "../ui/components/modal-dialog.ts";
 
 type DialogMethodName = "showModal" | "close";
 type DialogDescriptorSnapshot = Record<DialogMethodName, PropertyDescriptor | undefined>;
 
+/** Resolve after one animation frame so Lit/shadow DOM updates can settle. */
 export function nextFrame() {
   return new Promise<void>((resolve) => {
     requestAnimationFrame(() => resolve());
@@ -19,6 +20,7 @@ function restoreDescriptor(name: DialogMethodName, descriptor: PropertyDescripto
   delete (HTMLDialogElement.prototype as Partial<HTMLDialogElement>)[name];
 }
 
+/** Install a minimal HTMLDialogElement polyfill and return its restore callback. */
 export function installDialogPolyfill(): () => void {
   const snapshot: DialogDescriptorSnapshot = {
     close: Object.getOwnPropertyDescriptor(HTMLDialogElement.prototype, "close"),
@@ -42,6 +44,7 @@ export function installDialogPolyfill(): () => void {
   };
 }
 
+/** Return the rendered OpenClaw modal element and its shadow dialog. */
 export async function getRenderedModalDialog(container: HTMLElement) {
   const modal = container.querySelector<OpenClawModalDialog>("openclaw-modal-dialog");
   expect(modal).toBeInstanceOf(HTMLElement);

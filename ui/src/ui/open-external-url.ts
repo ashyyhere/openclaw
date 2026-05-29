@@ -1,4 +1,5 @@
-// ui/src/ui open external url helpers and runtime behavior.
+// Safe external URL opener. It allows only browser-safe external protocols and
+// optionally data image URLs while blocking SVG and non-image data payloads.
 import { normalizeLowercaseStringOrEmpty } from "./string-coerce.ts";
 
 const DATA_URL_PREFIX = "data:";
@@ -24,12 +25,12 @@ function isAllowedDataImageUrl(url: string): boolean {
   return !BLOCKED_DATA_IMAGE_MIME_TYPES.has(mimeType);
 }
 
-/** Shared type for Resolve Safe External Url Options in ui/src/ui. */
+/** Options for resolving a user-provided external URL. */
 export type ResolveSafeExternalUrlOptions = {
   allowDataImage?: boolean;
 };
 
-/** Reused helper for resolve Safe External Url behavior in ui/src/ui. */
+/** Resolve an external URL against a base URL and reject unsafe protocols. */
 export function resolveSafeExternalUrl(
   rawUrl: string,
   baseHref: string,
@@ -58,12 +59,12 @@ export function resolveSafeExternalUrl(
   }
 }
 
-/** Shared type for Open External Url Safe Options in ui/src/ui. */
+/** Options for opening a user-provided external URL in a new tab. */
 export type OpenExternalUrlSafeOptions = ResolveSafeExternalUrlOptions & {
   baseHref?: string;
 };
 
-/** Reused helper for open External Url Safe behavior in ui/src/ui. */
+/** Open a validated external URL with noopener/noreferrer protections. */
 export function openExternalUrlSafe(
   rawUrl: string,
   opts: OpenExternalUrlSafeOptions = {},

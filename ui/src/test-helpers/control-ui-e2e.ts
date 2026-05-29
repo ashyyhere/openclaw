@@ -1,4 +1,6 @@
-// ui/src/test-helpers control ui e2e helpers and runtime behavior.
+// Control UI E2E test harness. It starts a Vite server plus mock gateway
+// WebSocket/RPC controls so Playwright tests can drive the UI without a live
+// OpenClaw gateway.
 import { existsSync } from "node:fs";
 import { createRequire } from "node:module";
 import { createServer as createNetServer } from "node:net";
@@ -29,12 +31,14 @@ const commonJsOptimizeDeps = [
   "highlight.js/lib/languages/yaml",
 ] as const;
 
+/** JSON-RPC request captured by the mock gateway. */
 export type MockGatewayRequest = {
   id: string;
   method: string;
   params?: unknown;
 };
 
+/** Scenario options used to seed the mock gateway and initial UI state. */
 export type ControlUiMockGatewayScenario = {
   assistantAgentId?: string;
   assistantName?: string;
@@ -45,22 +49,26 @@ export type ControlUiMockGatewayScenario = {
   sessionKey?: string;
 };
 
+/** One conditional mock response for a gateway method. */
 export type ControlUiMockGatewayMethodResponseCase = {
   match?: Record<string, unknown>;
   response: unknown;
 };
 
+/** Conditional mock response table for a gateway method. */
 export type ControlUiMockGatewayMethodResponseCases = {
   cases: ControlUiMockGatewayMethodResponseCase[];
 };
 
 type NormalizedControlUiMockGatewayScenario = Required<ControlUiMockGatewayScenario>;
 
+/** Running E2E server handle returned to Playwright tests. */
 export type ControlUiE2eServer = {
   baseUrl: string;
   close: () => Promise<void>;
 };
 
+/** Imperative controls for the mock gateway backing an E2E page. */
 export type MockGatewayControls = {
   closeLatest: (code?: number, reason?: string) => Promise<void>;
   deferNext: (method: string) => Promise<void>;
@@ -82,10 +90,12 @@ function resolveRepoRoot(): string {
   return path.resolve(here, "../../..");
 }
 
+/** Return whether the configured Chromium executable exists locally. */
 export function canRunPlaywrightChromium(chromiumExecutablePath: string): boolean {
   return existsSync(chromiumExecutablePath);
 }
 
+/** Start the Control UI Vite server used by E2E tests. */
 export async function startControlUiE2eServer(): Promise<ControlUiE2eServer> {
   const repoRoot = resolveRepoRoot();
   const uiRoot = path.join(repoRoot, "ui");

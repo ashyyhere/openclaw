@@ -1,4 +1,5 @@
-// ui/src/test-helpers storage helpers and runtime behavior.
+// In-memory Storage implementation for browser-oriented UI tests.
+/** Create a mutable Storage mock backed by a Map. */
 export function createStorageMock(): Storage {
   const store = new Map<string, string>();
   return {

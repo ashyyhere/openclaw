@@ -1,10 +1,10 @@
-// ui/src/ui cron status helpers and runtime behavior.
+// Cron status helpers for reconciling old and current last-run fields.
 import type { CronJob, CronRunStatus } from "./types.ts";
 
-/** Shared type for Cron Job Last Run Status in ui/src/ui. */
+/** Last run status shown for a cron job, with unknown as UI fallback. */
 export type CronJobLastRunStatus = CronRunStatus | "unknown";
 
-/** Reused helper for resolve Cron Job Last Run Status behavior in ui/src/ui. */
+/** Resolve a cron job's most recent run status across current and legacy fields. */
 export function resolveCronJobLastRunStatus(job: CronJob): CronJobLastRunStatus {
   return job.state?.lastRunStatus ?? job.state?.lastStatus ?? "unknown";
 }
