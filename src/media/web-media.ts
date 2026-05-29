@@ -1,4 +1,4 @@
-// media web media helpers and runtime behavior.
+// Loads local/remote media for model input, enforcing access policy, byte caps, MIME detection, and image optimization.
 import { lstat, realpath } from "node:fs/promises";
 import path from "node:path";
 import { logVerbose, shouldLogVerbose } from "../globals.js";
@@ -34,12 +34,12 @@ import {
   normalizeMimeType,
 } from "./mime.js";
 
-/** Re-exported API for src/media, starting with get Default Local Roots. */
+/** Re-export local media access helpers used by legacy media callers. */
 export { getDefaultLocalRoots, LocalMediaAccessError };
-/** Re-exported API for src/media, starting with Local Media Access Error Code. */
+/** Re-export local media access denial code type. */
 export type { LocalMediaAccessErrorCode };
 
-/** Shared type for Web Media Result in src/media. */
+/** Loaded media bytes plus detected kind/content metadata. */
 export type WebMediaResult = {
   buffer: Buffer;
   contentType?: string;
@@ -69,10 +69,10 @@ type WebMediaOptions = {
   hostReadCapability?: boolean;
 };
 
-/** Shared type for Image Quality Preference in src/media. */
+/** Image optimization quality preset. */
 export type ImageQualityPreference = "auto" | "efficient" | "balanced" | "high";
 
-/** Shared type for Image Compression Model Policy in src/media. */
+/** Per-model image compression limits used to choose resizing and encoding budgets. */
 export type ImageCompressionModelPolicy = {
   maxBytes?: number;
   maxPixels?: number;
@@ -80,7 +80,7 @@ export type ImageCompressionModelPolicy = {
   preferredSidePx?: number;
 };
 
-/** Shared type for Image Compression Policy in src/media. */
+/** Policy controlling model-aware image compression and count-sensitive budgets. */
 export type ImageCompressionPolicy = {
   quality?: ImageQualityPreference;
   models?: ImageCompressionModelPolicy[];
@@ -635,7 +635,7 @@ function isPreservableImageMime(
   );
 }
 
-/** Reused helper for effective Image Bytes Cap behavior in src/media. */
+/** Resolves the effective image byte cap by combining caller cap and compression policy cap. */
 export function effectiveImageBytesCap(
   baseCap: number | undefined,
   policy?: ImageCompressionPolicy,
@@ -666,7 +666,7 @@ function buildDescendingLadder(maxSide: number, values: readonly number[]): numb
   return uniqueValues(fallbackLadder.filter((value) => value > 0)).toSorted((a, b) => b - a);
 }
 
-/** Reused helper for resolve Image Compression Grid behavior in src/media. */
+/** Builds descending resize-side and quality candidates for the selected image quality policy. */
 export function resolveImageCompressionGrid(policy?: ImageCompressionPolicy): {
   sides: number[];
   qualities: number[];
@@ -749,7 +749,7 @@ async function optimizeImageWithFallback(params: {
   };
 }
 
-/** Reused helper for optimize Image Buffer For Web Media behavior in src/media. */
+/** Optimizes image bytes for model transport while preserving GIFs and alpha-capable formats when needed. */
 export async function optimizeImageBufferForWebMedia(params: {
   buffer: Buffer;
   contentType?: string;
@@ -1061,7 +1061,7 @@ async function loadWebMediaInternal(
   });
 }
 
-/** Reused helper for load Web Media behavior in src/media. */
+/** Loads media and applies image optimization when appropriate. */
 export async function loadWebMedia(
   mediaUrl: string,
   maxBytesOrOptions?: number | WebMediaOptions,
@@ -1073,7 +1073,7 @@ export async function loadWebMedia(
   );
 }
 
-/** Reused helper for load Web Media Raw behavior in src/media. */
+/** Loads media without image optimization, preserving original bytes within policy caps. */
 export async function loadWebMediaRaw(
   mediaUrl: string,
   maxBytesOrOptions?: number | WebMediaOptions,
@@ -1085,7 +1085,7 @@ export async function loadWebMediaRaw(
   );
 }
 
-/** Reused helper for optimize Image To Jpeg behavior in src/media. */
+/** Encodes image bytes to a JPEG under the requested byte cap. */
 export async function optimizeImageToJpeg(
   buffer: Buffer,
   maxBytes: number,
@@ -1119,5 +1119,5 @@ export async function optimizeImageToJpeg(
   };
 }
 
-/** Re-exported API for src/media, starting with optimize Image To Png. */
+/** Re-export PNG optimizer from the media service runtime. */
 export { optimizeImageToPng } from "./media-services.js";
