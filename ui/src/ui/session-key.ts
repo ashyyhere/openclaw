@@ -1,19 +1,20 @@
-// ui/src/ui session key helpers and runtime behavior.
+// Session-key normalization for main agents, subagents, and legacy `main` UI
+// aliases.
 import {
   normalizeLowercaseStringOrEmpty,
   normalizeOptionalLowercaseString,
   normalizeOptionalString,
 } from "./string-coerce.ts";
 
-/** Shared type for Parsed Agent Session Key in ui/src/ui. */
+/** Parsed `agent:<agentId>:<rest>` session key components. */
 export type ParsedAgentSessionKey = {
   agentId: string;
   rest: string;
 };
 
-/** Reused constant for DEFAULT AGENT ID behavior in ui/src/ui. */
+/** Default Control UI agent id for legacy main-session routes. */
 export const DEFAULT_AGENT_ID = "main";
-/** Reused constant for DEFAULT MAIN KEY behavior in ui/src/ui. */
+/** Legacy main session key alias. */
 export const DEFAULT_MAIN_KEY = "main";
 
 const VALID_ID_RE = /^[a-z0-9][a-z0-9_-]{0,63}$/i;
@@ -21,7 +22,7 @@ const INVALID_CHARS_RE = /[^a-z0-9_-]+/g;
 const LEADING_DASH_RE = /^-+/;
 const TRAILING_DASH_RE = /-+$/;
 
-/** Reused helper for parse Agent Session Key behavior in ui/src/ui. */
+/** Parse an agent-scoped session key, returning null for legacy/unscoped keys. */
 export function parseAgentSessionKey(
   sessionKey: string | undefined | null,
 ): ParsedAgentSessionKey | null {
@@ -45,7 +46,7 @@ function normalizeMainKey(value: string | undefined | null): string {
   return normalizeOptionalLowercaseString(value) ?? DEFAULT_MAIN_KEY;
 }
 
-/** Reused helper for normalize Agent Id behavior in ui/src/ui. */
+/** Normalize an agent id into the Control UI-safe id format. */
 export function normalizeAgentId(value: string | undefined | null): string {
   const trimmed = normalizeOptionalString(value) ?? "";
   if (!trimmed) {
@@ -63,7 +64,7 @@ export function normalizeAgentId(value: string | undefined | null): string {
   );
 }
 
-/** Reused helper for build Agent Main Session Key behavior in ui/src/ui. */
+/** Build the canonical main session key for an agent. */
 export function buildAgentMainSessionKey(params: {
   agentId: string;
   mainKey?: string | undefined;
@@ -80,7 +81,7 @@ function normalizeDefaultMainSessionAliasForUi(sessionKey: string | undefined | 
     : normalized;
 }
 
-/** Reused helper for are Ui Session Keys Equivalent behavior in ui/src/ui. */
+/** Compare session keys while treating legacy `main` as the main-agent key. */
 export function areUiSessionKeysEquivalent(
   left: string | undefined | null,
   right: string | undefined | null,
@@ -90,13 +91,13 @@ export function areUiSessionKeysEquivalent(
   return Boolean(normalizedLeft && normalizedRight && normalizedLeft === normalizedRight);
 }
 
-/** Reused helper for resolve Agent Id From Session Key behavior in ui/src/ui. */
+/** Resolve the owning agent id from a session key, defaulting to main. */
 export function resolveAgentIdFromSessionKey(sessionKey: string | undefined | null): string {
   const parsed = parseAgentSessionKey(sessionKey);
   return normalizeAgentId(parsed?.agentId ?? DEFAULT_AGENT_ID);
 }
 
-/** Reused helper for is Subagent Session Key behavior in ui/src/ui. */
+/** Return true when a UI session key points at a subagent session. */
 export function isSubagentSessionKey(sessionKey: string | undefined | null): boolean {
   const raw = normalizeOptionalString(sessionKey) ?? "";
   if (!raw) {

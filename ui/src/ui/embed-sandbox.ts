@@ -1,10 +1,10 @@
-// ui/src/ui embed sandbox helpers and runtime behavior.
+// Iframe sandbox policy mapping for Control UI embedded content.
 import type { ControlUiEmbedSandboxMode } from "../../../src/gateway/control-ui-contract.js";
 
-/** Shared type for Embed Sandbox Mode in ui/src/ui. */
+/** Sandbox mode accepted by Control UI embed frames. */
 export type EmbedSandboxMode = ControlUiEmbedSandboxMode;
 
-/** Reused helper for resolve Embed Sandbox behavior in ui/src/ui. */
+/** Convert an embed sandbox mode into an iframe sandbox attribute value. */
 export function resolveEmbedSandbox(mode: EmbedSandboxMode | null | undefined): string {
   switch (mode) {
     case "strict":

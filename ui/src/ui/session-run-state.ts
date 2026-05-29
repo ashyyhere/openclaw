@@ -1,4 +1,4 @@
-// ui/src/ui session run state helpers and runtime behavior.
+// Session run-state helper shared by activity/chat UI indicators.
 import type { SessionRunStatus } from "./types.ts";
 
 type SessionRunState = {
@@ -6,7 +6,7 @@ type SessionRunState = {
   status?: SessionRunStatus;
 };
 
-/** Reused helper for is Session Run Active behavior in ui/src/ui. */
+/** Return true when session metadata indicates an active run. */
 export function isSessionRunActive(state: SessionRunState): boolean {
   if (state.status && state.status !== "running") {
     return false;

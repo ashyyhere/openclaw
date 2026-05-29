@@ -1,12 +1,12 @@
-// ui/src/ui sidebar content helpers and runtime behavior.
-/** Shared type for Markdown Sidebar Content in ui/src/ui. */
+// Sidebar content model for markdown notes and canvas embeds.
+/** Markdown sidebar content rendered from a text payload. */
 export type MarkdownSidebarContent = {
   kind: "markdown";
   content: string;
   rawText?: string | null;
 };
 
-/** Shared type for Canvas Sidebar Content in ui/src/ui. */
+/** Canvas sidebar content rendered from a gateway document entry URL. */
 export type CanvasSidebarContent = {
   kind: "canvas";
   docId: string;
@@ -16,5 +16,5 @@ export type CanvasSidebarContent = {
   rawText?: string | null;
 };
 
-/** Shared type for Sidebar Content in ui/src/ui. */
+/** Union of supported sidebar content payloads. */
 export type SidebarContent = MarkdownSidebarContent | CanvasSidebarContent;

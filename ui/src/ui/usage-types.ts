@@ -1,21 +1,21 @@
-// ui/src/ui usage types helpers and runtime behavior.
+// UI-facing aliases for shared usage and cost time-series payloads.
 import type {
   SessionUsageTimePoint as SharedSessionUsageTimePoint,
   SessionUsageTimeSeries as SharedSessionUsageTimeSeries,
 } from "../../../src/shared/session-usage-timeseries-types.js";
 import type { SessionsUsageResult as SharedSessionsUsageResult } from "../../../src/shared/usage-types.js";
 
-/** Shared type for Sessions Usage Entry in ui/src/ui. */
+/** One session row from the shared usage result. */
 export type SessionsUsageEntry = SharedSessionsUsageResult["sessions"][number];
-/** Shared type for Sessions Usage Totals in ui/src/ui. */
+/** Aggregate usage totals from the shared usage result. */
 export type SessionsUsageTotals = SharedSessionsUsageResult["totals"];
-/** Shared type for Sessions Usage Result in ui/src/ui. */
+/** Shared usage result as consumed by Control UI. */
 export type SessionsUsageResult = SharedSessionsUsageResult;
 
-/** Shared type for Cost Usage Daily Entry in ui/src/ui. */
+/** Daily cost/usage aggregate rendered in charts. */
 export type CostUsageDailyEntry = SessionsUsageTotals & { date: string };
 
-/** Shared type for Cost Usage Summary in ui/src/ui. */
+/** Cost summary payload for the usage dashboard. */
 export type CostUsageSummary = {
   updatedAt: number;
   days: number;
@@ -24,8 +24,8 @@ export type CostUsageSummary = {
   cacheStatus?: SharedSessionsUsageResult["cacheStatus"];
 };
 
-/** Shared type for Session Usage Time Point in ui/src/ui. */
+/** Shared time-series point for per-session usage. */
 export type SessionUsageTimePoint = SharedSessionUsageTimePoint;
 
-/** Shared type for Session Usage Time Series in ui/src/ui. */
+/** Shared time-series payload for per-session usage charts. */
 export type SessionUsageTimeSeries = SharedSessionUsageTimeSeries;
