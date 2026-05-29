@@ -1,4 +1,4 @@
-// music-generation provider assets helpers and runtime behavior.
+// Converts provider audio payloads, URLs, and base64 blobs into bounded generated music assets.
 import { fetchProviderDownloadResponse } from "../media-understanding/shared.js";
 import { maxBytesForKind } from "../media/constants.js";
 import { extensionForMime } from "../media/mime.js";
@@ -7,7 +7,7 @@ import { isRecord } from "../shared/record-coerce.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import type { GeneratedMusicAsset } from "./types.js";
 
-/** Shared type for Generated Music File Candidate in src/music-generation. */
+/** Download candidate discovered in a provider response. */
 export type GeneratedMusicFileCandidate = {
   url: string;
   mimeType?: string;
@@ -51,7 +51,7 @@ function pushGeneratedMusicFileCandidate(
   });
 }
 
-/** Reused helper for extract Generated Music File Candidates behavior in src/music-generation. */
+/** Extracts audio URL candidates from common provider response fields. */
 export function extractGeneratedMusicFileCandidates(
   payload: unknown,
   keys: readonly string[] = ["audio", "audio_file"],
@@ -66,7 +66,7 @@ export function extractGeneratedMusicFileCandidates(
   return candidates;
 }
 
-/** Reused helper for generated Music Asset From Base64 behavior in src/music-generation. */
+/** Builds a generated music asset from an inline base64 provider payload. */
 export function generatedMusicAssetFromBase64(params: {
   base64: string;
   mimeType: string;
@@ -81,7 +81,7 @@ export function generatedMusicAssetFromBase64(params: {
   };
 }
 
-/** Reused helper for download Generated Music Asset behavior in src/music-generation. */
+/** Downloads one generated audio URL with timeout, MIME normalization, and max-byte enforcement. */
 export async function downloadGeneratedMusicAsset(params: {
   candidate: GeneratedMusicFileCandidate;
   timeoutMs: number;

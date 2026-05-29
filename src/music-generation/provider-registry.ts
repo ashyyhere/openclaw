@@ -1,4 +1,4 @@
-// music-generation provider registry helpers and runtime behavior.
+// Registry for plugin-provided music-generation providers and their aliases.
 import { normalizeProviderId } from "../agents/model-selection.js";
 import type { OpenClawConfig } from "../config/types.js";
 import { isBlockedObjectKey } from "../infra/prototype-keys.js";
@@ -60,14 +60,14 @@ function buildProviderMaps(cfg?: OpenClawConfig): {
   return { canonical, aliases };
 }
 
-/** Reused helper for list Music Generation Providers behavior in src/music-generation. */
+/** Lists canonical music-generation providers available from built-ins and enabled plugins. */
 export function listMusicGenerationProviders(
   cfg?: OpenClawConfig,
 ): MusicGenerationProviderPlugin[] {
   return [...buildProviderMaps(cfg).canonical.values()];
 }
 
-/** Reused helper for get Music Generation Provider behavior in src/music-generation. */
+/** Resolves a provider id or alias after normalizing and rejecting prototype-polluting keys. */
 export function getMusicGenerationProvider(
   providerId: string | undefined,
   cfg?: OpenClawConfig,

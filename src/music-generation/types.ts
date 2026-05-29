@@ -2,10 +2,10 @@ import type { MediaNormalizationEntry } from "../../packages/media-generation-co
 import type { AuthProfileStore } from "../agents/auth-profiles/types.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 
-/** Shared type for Music Generation Output Format in src/music-generation. */
+/** Audio formats that runtime callers may request from capable providers. */
 export type MusicGenerationOutputFormat = "mp3" | "wav";
 
-/** Shared type for Generated Music Asset in src/music-generation. */
+/** One generated audio file plus optional provider metadata. */
 export type GeneratedMusicAsset = {
   buffer: Buffer;
   mimeType: string;
@@ -13,7 +13,7 @@ export type GeneratedMusicAsset = {
   metadata?: Record<string, unknown>;
 };
 
-/** Shared type for Music Generation Source Image in src/music-generation. */
+/** Optional visual reference accepted by edit-capable music providers. */
 export type MusicGenerationSourceImage = {
   url?: string;
   buffer?: Buffer;
@@ -27,7 +27,7 @@ type MusicGenerationProviderConfiguredContext = {
   agentDir?: string;
 };
 
-/** Shared type for Music Generation Request in src/music-generation. */
+/** Normalized provider request passed to a music-generation plugin implementation. */
 export type MusicGenerationRequest = {
   provider: string;
   model: string;
@@ -43,7 +43,7 @@ export type MusicGenerationRequest = {
   inputImages?: MusicGenerationSourceImage[];
 };
 
-/** Shared type for Music Generation Result in src/music-generation. */
+/** Provider result returned to the runtime after one music-generation attempt. */
 export type MusicGenerationResult = {
   tracks: GeneratedMusicAsset[];
   model?: string;
@@ -51,16 +51,16 @@ export type MusicGenerationResult = {
   metadata?: Record<string, unknown>;
 };
 
-/** Shared type for Music Generation Ignored Override in src/music-generation. */
+/** User override that was intentionally ignored because the selected provider/model cannot honor it. */
 export type MusicGenerationIgnoredOverride = {
   key: "lyrics" | "instrumental" | "durationSeconds" | "format";
   value: string | boolean | number;
 };
 
-/** Shared type for Music Generation Mode in src/music-generation. */
+/** Capability mode: fresh generation or editing from input images. */
 export type MusicGenerationMode = "generate" | "edit";
 
-/** Shared type for Music Generation Mode Capabilities in src/music-generation. */
+/** Common capability flags for either generate or edit mode. */
 export type MusicGenerationModeCapabilities = {
   maxTracks?: number;
   maxDurationSeconds?: number;
@@ -74,25 +74,25 @@ export type MusicGenerationModeCapabilities = {
   supportedFormatsByModel?: Readonly<Record<string, readonly MusicGenerationOutputFormat[]>>;
 };
 
-/** Shared type for Music Generation Edit Capabilities in src/music-generation. */
+/** Edit-mode capability block, including whether editing is exposed at all. */
 export type MusicGenerationEditCapabilities = MusicGenerationModeCapabilities & {
   enabled: boolean;
   maxInputImages?: number;
 };
 
-/** Shared type for Music Generation Provider Capabilities in src/music-generation. */
+/** Provider capability declaration used for validation, normalization, and UI/runtime routing. */
 export type MusicGenerationProviderCapabilities = MusicGenerationModeCapabilities & {
   maxInputImages?: number;
   generate?: MusicGenerationModeCapabilities;
   edit?: MusicGenerationEditCapabilities;
 };
 
-/** Shared type for Music Generation Normalization in src/music-generation. */
+/** Normalized values derived from user input before the provider request is sent. */
 export type MusicGenerationNormalization = {
   durationSeconds?: MediaNormalizationEntry<number>;
 };
 
-/** Shared type for Music Generation Provider in src/music-generation. */
+/** Plugin-facing provider interface for music generation. */
 export type MusicGenerationProvider = {
   id: string;
   aliases?: string[];

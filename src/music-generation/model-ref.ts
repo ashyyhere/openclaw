@@ -1,6 +1,6 @@
 import { parseGenerationModelRef } from "../../packages/media-generation-core/src/model-ref.js";
 
-/** Reused helper for parse Music Generation Model Ref behavior in src/music-generation. */
+/** Parses `provider/model` refs for music generation using the shared media-generation rules. */
 export function parseMusicGenerationModelRef(
   raw: string | undefined,
 ): { provider: string; model: string } | null {

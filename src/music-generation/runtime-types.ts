@@ -1,4 +1,4 @@
-// music-generation runtime types helpers and runtime behavior.
+// Runtime request/result types for selecting music providers and reporting fallback attempts.
 import type { AuthProfileStore } from "../agents/auth-profiles/types.js";
 import type { FallbackAttempt } from "../agents/model-fallback.types.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -11,7 +11,7 @@ import type {
   MusicGenerationSourceImage,
 } from "./types.js";
 
-/** Shared type for Generate Music Params in src/music-generation. */
+/** High-level runtime request before provider/model fallback resolution. */
 export type GenerateMusicParams = {
   cfg: OpenClawConfig;
   prompt: string;
@@ -28,7 +28,7 @@ export type GenerateMusicParams = {
   timeoutMs?: number;
 };
 
-/** Shared type for Generate Music Runtime Result in src/music-generation. */
+/** Runtime response including selected provider/model, fallback trace, assets, and ignored overrides. */
 export type GenerateMusicRuntimeResult = {
   tracks: GeneratedMusicAsset[];
   provider: string;
@@ -40,10 +40,10 @@ export type GenerateMusicRuntimeResult = {
   ignoredOverrides: MusicGenerationIgnoredOverride[];
 };
 
-/** Shared type for List Runtime Music Generation Providers Params in src/music-generation. */
+/** Input for provider listing; config is needed to include plugin capability providers. */
 export type ListRuntimeMusicGenerationProvidersParams = {
   config?: OpenClawConfig;
 };
 
-/** Shared type for Runtime Music Generation Provider in src/music-generation. */
+/** Runtime-visible provider shape, currently identical to the plugin provider contract. */
 export type RuntimeMusicGenerationProvider = MusicGenerationProvider;

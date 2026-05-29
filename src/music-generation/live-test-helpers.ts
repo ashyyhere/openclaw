@@ -1,4 +1,4 @@
-// music-generation live test helpers helpers and runtime behavior.
+// Live-test helpers for selecting configured music models and auth stores.
 import type { OpenClawConfig } from "../config/types.js";
 import {
   parseLiveCsvFilter,
@@ -8,10 +8,10 @@ import {
   resolveLiveAuthStore,
 } from "../media-generation/live-test-helpers.js";
 
-/** Re-exported API for src/music-generation, starting with parse Provider Model Map. */
+/** Re-export shared live-test parsers so music tests use the same env syntax as media generation. */
 export { parseProviderModelMap, redactLiveApiKey };
 
-/** Reused constant for DEFAULT LIVE MUSIC MODELS behavior in src/music-generation. */
+/** Default provider/model refs used when live music tests are enabled without explicit overrides. */
 export const DEFAULT_LIVE_MUSIC_MODELS: Record<string, string> = {
   fal: "fal/fal-ai/minimax-music/v2.6",
   google: "google/lyria-3-clip-preview",
@@ -19,17 +19,17 @@ export const DEFAULT_LIVE_MUSIC_MODELS: Record<string, string> = {
   openrouter: "openrouter/google/lyria-3-pro-preview",
 };
 
-/** Reused helper for parse Csv Filter behavior in src/music-generation. */
+/** Parses comma-separated provider/model filters for live music tests. */
 export function parseCsvFilter(raw?: string): Set<string> | null {
   return parseLiveCsvFilter(raw);
 }
 
-/** Reused helper for resolve Configured Live Music Models behavior in src/music-generation. */
+/** Resolves live-test music model overrides from the OpenClaw config default. */
 export function resolveConfiguredLiveMusicModels(cfg: OpenClawConfig): Map<string, string> {
   return resolveConfiguredLiveProviderModels(cfg.agents?.defaults?.musicGenerationModel);
 }
 
-/** Reused helper for resolve Live Music Auth Store behavior in src/music-generation. */
+/** Resolves whether live music tests should use profile-backed auth or direct env keys. */
 export function resolveLiveMusicAuthStore(params: {
   requireProfileKeys: boolean;
   hasLiveKeys: boolean;
