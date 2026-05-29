@@ -1,4 +1,5 @@
-// media ffmpeg exec helpers and runtime behavior.
+// Thin ffmpeg/ffprobe execution wrappers shared by media inspection and
+// transform code. All binaries resolve through trusted system paths.
 import { execFile, type ExecFileOptions } from "node:child_process";
 import { promisify } from "node:util";
 import { resolveSystemBin } from "../infra/resolve-system-bin.js";
@@ -11,7 +12,7 @@ import {
 
 const execFileAsync = promisify(execFile);
 
-/** Shared type for Media Exec Options in src/media. */
+/** Execution limits and stdin payload for ffmpeg/ffprobe invocations. */
 export type MediaExecOptions = {
   timeoutMs?: number;
   maxBufferBytes?: number;
@@ -43,7 +44,7 @@ function requireSystemBin(name: string): string {
   return resolved;
 }
 
-/** Reused helper for resolve Ffmpeg Bin behavior in src/media. */
+/** Resolve the trusted ffmpeg binary or throw with an install hint. */
 export function resolveFfmpegBin(): string {
   return requireSystemBin("ffmpeg");
 }
@@ -52,7 +53,7 @@ function isBrokenPipeError(error: Error): boolean {
   return (error as NodeJS.ErrnoException).code === "EPIPE";
 }
 
-/** Reused helper for run Ffprobe behavior in src/media. */
+/** Run ffprobe with OpenClaw's timeout/buffer defaults. */
 export async function runFfprobe(args: string[], options?: MediaExecOptions): Promise<string> {
   const execOptions = resolveExecOptions(MEDIA_FFPROBE_TIMEOUT_MS, options);
   if (options?.input == null) {
@@ -80,7 +81,7 @@ export async function runFfprobe(args: string[], options?: MediaExecOptions): Pr
   });
 }
 
-/** Reused helper for run Ffmpeg behavior in src/media. */
+/** Run ffmpeg with OpenClaw's timeout/buffer defaults. */
 export async function runFfmpeg(args: string[], options?: MediaExecOptions): Promise<string> {
   const { stdout } = await execFileAsync(
     resolveFfmpegBin(),
@@ -90,7 +91,7 @@ export async function runFfmpeg(args: string[], options?: MediaExecOptions): Pro
   return stdout.toString();
 }
 
-/** Reused helper for parse Ffprobe Csv Fields behavior in src/media. */
+/** Parse compact ffprobe CSV output into normalized lowercase fields. */
 export function parseFfprobeCsvFields(stdout: string, maxFields: number): string[] {
   return stdout
     .trim()
@@ -106,7 +107,7 @@ function parseFfprobeSampleRateHz(value: string | undefined): number | null {
   return Number.isSafeInteger(sampleRate) && sampleRate > 0 ? sampleRate : null;
 }
 
-/** Reused helper for parse Ffprobe Codec And Sample Rate behavior in src/media. */
+/** Extract codec and sample-rate facts from ffprobe CSV output. */
 export function parseFfprobeCodecAndSampleRate(stdout: string): {
   codec: string | null;
   sampleRateHz: number | null;

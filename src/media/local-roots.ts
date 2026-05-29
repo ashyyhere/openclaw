@@ -1,4 +1,5 @@
-// media local roots helpers and runtime behavior.
+// Local filesystem roots from which media attachments may be read. These roots
+// are the boundary between host files and model/channel media payloads.
 import path from "node:path";
 import { resolveAgentWorkspaceDir } from "../agents/agent-scope.js";
 import {
@@ -29,7 +30,7 @@ function resolveCachedPreferredTmpDir(): string {
   return cachedPreferredTmpDir;
 }
 
-/** Reused helper for build Media Local Roots behavior in src/media. */
+/** Build the base local media roots for state, config, temp, and workspace data. */
 export function buildMediaLocalRoots(
   stateDir: string,
   configDir: string,
@@ -50,12 +51,12 @@ export function buildMediaLocalRoots(
   );
 }
 
-/** Reused helper for get Default Media Local Roots behavior in src/media. */
+/** Return process-default media roots for non-agent-scoped callers. */
 export function getDefaultMediaLocalRoots(): readonly string[] {
   return buildMediaLocalRoots(resolveStateDir(), resolveConfigDir());
 }
 
-/** Reused helper for get Agent Scoped Media Local Roots behavior in src/media. */
+/** Return media roots plus the agent workspace when one is configured. */
 export function getAgentScopedMediaLocalRoots(
   cfg: OpenClawConfig,
   agentId?: string,
@@ -97,7 +98,7 @@ function resolveLocalMediaPath(source: string): string | undefined {
   return undefined;
 }
 
-/** Reused helper for append Local Media Parent Roots behavior in src/media. */
+/** Add parent directories for explicit local media source paths. */
 export function appendLocalMediaParentRoots(
   roots: readonly string[],
   mediaSources?: readonly string[],
@@ -120,7 +121,7 @@ export function appendLocalMediaParentRoots(
   return appended;
 }
 
-/** Reused helper for get Agent Scoped Media Local Roots For Sources behavior in src/media. */
+/** Return agent media roots, optionally expanded by source parents when policy allows it. */
 export function getAgentScopedMediaLocalRootsForSources(params: {
   cfg: OpenClawConfig;
   agentId?: string;

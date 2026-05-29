@@ -1,4 +1,5 @@
-// media read capability helpers and runtime behavior.
+// Agent-scoped host file read capability for outbound media. This module keeps
+// media file access aligned with workspace and group tool policy.
 import path from "node:path";
 import { resolveAgentWorkspaceDir } from "../agents/agent-scope.js";
 import { resolveGroupToolPolicy } from "../agents/agent-tools.policy.js";
@@ -62,7 +63,7 @@ function isAgentScopedHostMediaReadAllowed(
   return true;
 }
 
-/** Reused helper for create Agent Scoped Host Media Read File behavior in src/media. */
+/** Create a readFile hook for agent-scoped host media paths when policy allows it. */
 export function createAgentScopedHostMediaReadFile(
   params: {
     cfg: OpenClawConfig;
@@ -100,7 +101,7 @@ function appendWorkspaceDirToLocalRoots(
   return [...roots, resolvedWorkspaceDir];
 }
 
-/** Reused helper for resolve Agent Scoped Outbound Media Access behavior in src/media. */
+/** Resolve outbound media roots/read hooks for an agent, existing access object, and sources. */
 export function resolveAgentScopedOutboundMediaAccess(
   params: {
     cfg: OpenClawConfig;

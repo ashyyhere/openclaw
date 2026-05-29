@@ -1,7 +1,7 @@
-// media temp files helpers and runtime behavior.
+// Best-effort cleanup helpers for media temp files.
 import fs from "node:fs/promises";
 
-/** Reused helper for unlink If Exists behavior in src/media. */
+/** Remove a temp file if present, ignoring cleanup races and missing files. */
 export async function unlinkIfExists(filePath: string | null | undefined): Promise<void> {
   if (!filePath) {
     return;

@@ -1,5 +1,6 @@
-// media base64 helpers and runtime behavior.
-/** Reused helper for estimate Base64 Decoded Bytes behavior in src/media. */
+// Base64 helpers for media ingestion paths that need to budget decoded bytes
+// before allocating buffers.
+/** Estimate decoded bytes without normalizing or copying a large base64 payload. */
 export function estimateBase64DecodedBytes(base64: string): number {
   // Avoid `trim()`/`replace()` here: they allocate a second (potentially huge) string.
   // We only need a conservative decoded-size estimate to enforce budgets before Buffer.from(..., "base64").
@@ -49,8 +50,10 @@ function isBase64DataChar(code: number): boolean {
 }
 
 /**
- * Normalize and validate a base64 string.
- * Returns canonical base64 (no whitespace) or undefined when invalid.
+ * Normalize and validate base64 for media payloads.
+ *
+ * Returns canonical base64 with whitespace removed, or undefined when the input
+ * contains invalid data characters, misplaced padding, or a non-base64 length.
  */
 export function canonicalizeBase64(base64: string): string | undefined {
   let cleaned = "";

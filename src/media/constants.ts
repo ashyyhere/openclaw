@@ -1,17 +1,18 @@
-// media constants helpers and runtime behavior.
-/** Reused constant for MAX IMAGE BYTES behavior in src/media. */
+// Shared media size ceilings used before loading or generating attachment
+// buffers. Keep these defaults conservative for provider and channel limits.
+/** Default maximum image attachment size in bytes. */
 export const MAX_IMAGE_BYTES = 6 * 1024 * 1024; // 6MB
-/** Reused constant for MAX AUDIO BYTES behavior in src/media. */
+/** Default maximum audio attachment size in bytes. */
 export const MAX_AUDIO_BYTES = 16 * 1024 * 1024; // 16MB
-/** Reused constant for MAX VIDEO BYTES behavior in src/media. */
+/** Default maximum video attachment size in bytes. */
 export const MAX_VIDEO_BYTES = 16 * 1024 * 1024; // 16MB
-/** Reused constant for MAX DOCUMENT BYTES behavior in src/media. */
+/** Default maximum document attachment size in bytes. */
 export const MAX_DOCUMENT_BYTES = 100 * 1024 * 1024; // 100MB
 
-/** Shared type for Media Kind in src/media. */
+/** Media bucket used to choose attachment size limits and channel handling. */
 export type MediaKind = "image" | "audio" | "video" | "document";
 
-/** Reused helper for media Kind From Mime behavior in src/media. */
+/** Map a normalized MIME type to the broad media kind OpenClaw routes on. */
 export function mediaKindFromMime(mime?: string | null): MediaKind | undefined {
   if (!mime) {
     return undefined;
@@ -37,7 +38,7 @@ export function mediaKindFromMime(mime?: string | null): MediaKind | undefined {
   return undefined;
 }
 
-/** Reused helper for max Bytes For Kind behavior in src/media. */
+/** Return the default byte ceiling for a broad media kind. */
 export function maxBytesForKind(kind: MediaKind): number {
   switch (kind) {
     case "image":
