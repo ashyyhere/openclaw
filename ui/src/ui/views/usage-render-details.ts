@@ -1,4 +1,5 @@
-// ui/src/ui/views usage render details helpers and runtime behavior.
+// Detail renderers for the Usage page selected-session panel, including
+// time-series charts, transcript logs, context summary, and filtered usage math.
 import { html, svg, nothing } from "lit";
 import { formatDurationCompact } from "../../../../src/infra/format-time/format-duration.ts";
 import { t } from "../../i18n/index.ts";
@@ -1221,7 +1222,7 @@ function renderSessionLogsCompact(
   `;
 }
 
-/** Re-exported API for ui/src/ui/views. */
+/** Selected-session detail renderers and chart constants for Usage. */
 export {
   computeFilteredUsage,
   renderContextPanel,

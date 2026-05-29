@@ -1,4 +1,5 @@
-// ui/src/ui/views usage render overview helpers and runtime behavior.
+// Overview renderers for the Usage page: totals, daily charts, insights,
+// filters, and session cards. Detailed selected-session panels live separately.
 import { html, nothing } from "lit";
 import { formatDurationCompact } from "../../../../src/infra/format-time/format-duration.ts";
 import { t } from "../../i18n/index.ts";
@@ -1186,7 +1187,7 @@ function renderSessionsCard(
   `;
 }
 
-/** Re-exported API for ui/src/ui/views. */
+/** Overview chart/card renderers shared by the top-level Usage page. */
 export {
   renderCostBreakdownCompact,
   renderDailyChartCompact,

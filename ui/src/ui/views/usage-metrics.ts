@@ -1,4 +1,5 @@
-// ui/src/ui/views usage metrics helpers and runtime behavior.
+// Usage metrics helpers for aggregation, formatting, insight stats, and compact
+// charts. Keep data math here so render modules can focus on layout.
 import { html } from "lit";
 import {
   buildUsageAggregateTail,
@@ -750,9 +751,9 @@ const buildUsageInsightStats = (
   };
 };
 
-/** Re-exported API for ui/src/ui/views, starting with Usage Insight Stats. */
+/** Insight stats type consumed by overview renderers and tests. */
 export type { UsageInsightStats };
-/** Re-exported API for ui/src/ui/views. */
+/** Metrics, formatting, aggregation, and chart helpers for the Usage view. */
 export {
   buildAggregatesFromSessions,
   buildPeakErrorHours,

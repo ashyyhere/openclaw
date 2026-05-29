@@ -1,4 +1,6 @@
-// ui/src/ui/views usage helpers and runtime behavior.
+// Top-level Usage page renderer. It composes usage data filters, query helpers,
+// overview charts, session cards, and detail panels without owning gateway
+// loading; controllers provide the state bundle.
 import { html, nothing } from "lit";
 import { t } from "../../i18n/index.ts";
 import { getUsageCacheRefreshTitle } from "../usage-cache-status.ts";
@@ -42,7 +44,7 @@ import type {
   UsageTotals,
 } from "./usageTypes.ts";
 
-/** Re-exported API for ui/src/ui/views, starting with Usage Column Id. */
+/** Usage view types re-exported for controllers/tests that import the page module. */
 export type { UsageColumnId, SessionLogEntry, SessionLogRole };
 
 function createEmptyUsageTotals(): UsageTotals {
@@ -136,7 +138,7 @@ function renderUsageEmptyState(onRefresh: () => void) {
   `;
 }
 
-/** Reused helper for render Usage behavior in ui/src/ui/views. */
+/** Render the full Usage page from loaded data, filters, display state, and callbacks. */
 export function renderUsage(props: UsageProps) {
   const { data, filters, display, detail, callbacks } = props;
   const filterActions = callbacks.filters;

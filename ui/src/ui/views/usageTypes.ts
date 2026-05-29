@@ -1,4 +1,6 @@
-// ui/src/ui/views usageTypes helpers and runtime behavior.
+// Shared Usage view state contracts. These types separate loaded usage data,
+// filters, display preferences, detail-panel state, and callbacks so the large
+// usage page can stay split across render modules.
 import type {
   CostUsageDailyEntry,
   SessionsUsageEntry,
@@ -7,16 +9,16 @@ import type {
   SessionUsageTimePoint,
 } from "../usage-types.ts";
 
-/** Shared type for Usage Session Entry in ui/src/ui/views. */
+/** Per-session usage row from the gateway usage endpoint. */
 export type UsageSessionEntry = SessionsUsageEntry;
-/** Shared type for Usage Totals in ui/src/ui/views. */
+/** Aggregate token and cost totals for the current usage query. */
 export type UsageTotals = SessionsUsageTotals;
-/** Shared type for Cost Daily Entry in ui/src/ui/views. */
+/** Daily cost bucket used by overview charts. */
 export type CostDailyEntry = CostUsageDailyEntry;
-/** Shared type for Usage Aggregates in ui/src/ui/views. */
+/** Additional grouped usage aggregates returned with session usage. */
 export type UsageAggregates = SessionsUsageResult["aggregates"];
 
-/** Shared type for Usage Column Id in ui/src/ui/views. */
+/** Toggleable columns in the usage sessions table. */
 export type UsageColumnId =
   | "channel"
   | "agent"
@@ -27,10 +29,10 @@ export type UsageColumnId =
   | "errors"
   | "duration";
 
-/** Shared type for Time Series Point in ui/src/ui/views. */
+/** One point in the selected session time-series chart. */
 export type TimeSeriesPoint = SessionUsageTimePoint;
 
-/** Shared type for Usage Data State in ui/src/ui/views. */
+/** Loaded usage data and fetch status for the Usage page. */
 export type UsageDataState = {
   loading: boolean;
   error: string | null;
@@ -43,7 +45,7 @@ export type UsageDataState = {
   cacheStatus: SessionsUsageResult["cacheStatus"];
 };
 
-/** Shared type for Usage Filter State in ui/src/ui/views. */
+/** Active filters and query draft state for usage exploration. */
 export type UsageFilterState = {
   startDate: string;
   endDate: string;
@@ -57,7 +59,7 @@ export type UsageFilterState = {
   timeZone: "local" | "utc";
 };
 
-/** Shared type for Usage Display State in ui/src/ui/views. */
+/** Local display preferences for charts, sorting, tabs, and visible columns. */
 export type UsageDisplayState = {
   chartMode: "tokens" | "cost";
   dailyChartMode: "total" | "by-type";
@@ -70,7 +72,7 @@ export type UsageDisplayState = {
   headerPinned: boolean;
 };
 
-/** Shared type for Usage Detail State in ui/src/ui/views. */
+/** State for selected session details, time series, and session log filters. */
 export type UsageDetailState = {
   timeSeriesMode: "cumulative" | "per-turn";
   timeSeriesBreakdownMode: "total" | "by-type";
@@ -89,7 +91,7 @@ export type UsageDetailState = {
   };
 };
 
-/** Shared type for Usage Callbacks in ui/src/ui/views. */
+/** View callbacks grouped by filter, display, and detail-panel responsibility. */
 export type UsageCallbacks = {
   filters: {
     onStartDateChange: (date: string) => void;
@@ -132,7 +134,7 @@ export type UsageCallbacks = {
   };
 };
 
-/** Shared type for Usage Props in ui/src/ui/views. */
+/** Complete prop bundle consumed by the Usage page renderer. */
 export type UsageProps = {
   data: UsageDataState;
   filters: UsageFilterState;
@@ -141,7 +143,7 @@ export type UsageProps = {
   callbacks: UsageCallbacks;
 };
 
-/** Shared type for Session Log Entry in ui/src/ui/views. */
+/** Normalized transcript/log row shown in selected-session usage details. */
 export type SessionLogEntry = {
   timestamp: number;
   role: "user" | "assistant" | "tool" | "toolResult";
@@ -150,5 +152,5 @@ export type SessionLogEntry = {
   cost?: number;
 };
 
-/** Shared type for Session Log Role in ui/src/ui/views. */
+/** Session log role filter values. */
 export type SessionLogRole = SessionLogEntry["role"];
