@@ -1,4 +1,4 @@
-// packages/memory-host-sdk/src/host internal helpers and runtime behavior.
+// Core memory indexing helpers for file discovery, chunking, and vector math.
 import crypto from "node:crypto";
 import fsSync from "node:fs";
 import fs from "node:fs/promises";
@@ -32,11 +32,11 @@ import {
 } from "./openclaw-runtime-memory.js";
 import { normalizeStringEntries, uniqueStrings } from "./string-utils.js";
 
-/** Re-exported public API for packages/memory-host-sdk, starting with hash Text. */
+/** Stable text hashing helper shared with index entries and chunks. */
 export { hashText } from "./hash.js";
 import { hashText } from "./hash.js";
 
-/** Public type describing Memory File Entry for packages/memory-host-sdk. */
+/** Indexed memory file metadata used to decide whether chunks need refreshing. */
 export type MemoryFileEntry = {
   path: string;
   absPath: string;
@@ -50,7 +50,7 @@ export type MemoryFileEntry = {
   mimeType?: string;
 };
 
-/** Public type describing Memory Chunk for packages/memory-host-sdk. */
+/** Text or structured embedding unit derived from a memory source file. */
 export type MemoryChunk = {
   startLine: number;
   endLine: number;
@@ -59,7 +59,7 @@ export type MemoryChunk = {
   embeddingInput?: EmbeddingInput;
 };
 
-/** Public type describing Multimodal Memory Chunk for packages/memory-host-sdk. */
+/** Multimodal chunk plus estimated structured input size for provider limits. */
 export type MultimodalMemoryChunk = {
   chunk: MemoryChunk;
   structuredInputBytes: number;
@@ -71,13 +71,13 @@ const DISABLED_MULTIMODAL_SETTINGS: MemoryMultimodalSettings = {
   maxFileBytes: 0,
 };
 
-/** Public helper for ensure Dir behavior in packages/memory-host-sdk. */
+/** Creates a directory tree and returns the requested path for call chaining. */
 export function ensureDir(dir: string): string {
   fsSync.mkdirSync(dir, { recursive: true });
   return dir;
 }
 
-/** Public helper for normalize Rel Path behavior in packages/memory-host-sdk. */
+/** Normalizes memory-relative paths to slash-separated paths without leading dots. */
 export function normalizeRelPath(value: string): string {
   const trimmed = value.trim().replace(/^[./]+/, "");
   return trimmed.replace(/\\/g, "/");
@@ -93,7 +93,7 @@ function expandHomePath(value: string): string {
   return value;
 }
 
-/** Public helper for normalize Extra Memory Paths behavior in packages/memory-host-sdk. */
+/** Resolves configured extra memory paths against the workspace and home dir. */
 export function normalizeExtraMemoryPaths(workspaceDir: string, extraPaths?: string[]): string[] {
   if (!extraPaths?.length) {
     return [];
@@ -106,7 +106,7 @@ export function normalizeExtraMemoryPaths(workspaceDir: string, extraPaths?: str
   return uniqueStrings(resolved);
 }
 
-/** Public helper for is Memory Path behavior in packages/memory-host-sdk. */
+/** Returns true for canonical workspace memory files and memory/ descendants. */
 export function isMemoryPath(relPath: string): boolean {
   const normalized = normalizeRelPath(relPath);
   if (!normalized) {
@@ -154,7 +154,7 @@ async function collectMemoryFilesFromDir(
   files.push(...scan.entries.map((entry) => entry.path));
 }
 
-/** Public helper for list Memory Files behavior in packages/memory-host-sdk. */
+/** Lists markdown and enabled multimodal memory files from workspace and extra paths. */
 export async function listMemoryFiles(
   workspaceDir: string,
   extraPaths?: string[],
@@ -235,7 +235,7 @@ export async function listMemoryFiles(
   return deduped;
 }
 
-/** Public helper for build File Entry behavior in packages/memory-host-sdk. */
+/** Builds a stable memory file entry, validating multimodal MIME and size constraints. */
 export async function buildFileEntry(
   absPath: string,
   workspaceDir: string,
@@ -357,7 +357,7 @@ async function loadMultimodalEmbeddingInput(
   };
 }
 
-/** Public helper for build Multimodal Chunk For Indexing behavior in packages/memory-host-sdk. */
+/** Loads a multimodal file into a structured embedding chunk when it still matches metadata. */
 export async function buildMultimodalChunkForIndexing(
   entry: Pick<
     MemoryFileEntry,
@@ -380,7 +380,7 @@ export async function buildMultimodalChunkForIndexing(
   };
 }
 
-/** Public helper for chunk Markdown behavior in packages/memory-host-sdk. */
+/** Splits markdown into overlapping token-budgeted chunks with stable hashes. */
 export function chunkMarkdown(
   content: string,
   chunking: { tokens: number; overlap: number },
@@ -507,7 +507,7 @@ export function remapChunkLines(chunks: MemoryChunk[], lineMap: number[] | undef
   }
 }
 
-/** Public helper for parse Embedding behavior in packages/memory-host-sdk. */
+/** Parses a stored embedding JSON array, returning an empty vector on malformed input. */
 export function parseEmbedding(raw: string): number[] {
   try {
     const parsed = JSON.parse(raw) as number[];
@@ -517,7 +517,7 @@ export function parseEmbedding(raw: string): number[] {
   }
 }
 
-/** Public helper for cosine Similarity behavior in packages/memory-host-sdk. */
+/** Computes cosine similarity for two embedding vectors over their shared dimensions. */
 export function cosineSimilarity(a: number[], b: number[]): number {
   if (a.length === 0 || b.length === 0) {
     return 0;
@@ -539,7 +539,7 @@ export function cosineSimilarity(a: number[], b: number[]): number {
   return dot / (Math.sqrt(normA) * Math.sqrt(normB));
 }
 
-/** Public helper for run With Concurrency behavior in packages/memory-host-sdk. */
+/** Runs async tasks with bounded concurrency and throws the first task failure. */
 export async function runWithConcurrency<T>(
   tasks: Array<() => Promise<T>>,
   limit: number,

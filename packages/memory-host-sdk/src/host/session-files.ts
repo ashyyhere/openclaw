@@ -1,4 +1,4 @@
-// packages/memory-host-sdk/src/host session files helpers and runtime behavior.
+// Session transcript discovery, classification, sanitization, and indexing helpers.
 import fsSync from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -31,7 +31,7 @@ const SESSION_EXPORT_CONTENT_WRAP_CHARS = 800;
 const SESSION_ENTRY_PARSE_YIELD_LINES = 250;
 const DIRECT_CRON_PROMPT_RE = /^\[cron:[^\]]+\]\s*/;
 
-/** Public type describing Session File Entry for packages/memory-host-sdk. */
+/** Indexed session transcript content plus source-line and timestamp mapping. */
 export type SessionFileEntry = {
   path: string;
   absPath: string;
@@ -49,7 +49,7 @@ export type SessionFileEntry = {
   generatedByCronRun?: boolean;
 };
 
-/** Public type describing Build Session Entry Options for packages/memory-host-sdk. */
+/** Optional transcript classifications and parser yield cadence for session indexing. */
 export type BuildSessionEntryOptions = {
   /** Optional preclassification from a caller-managed dreaming transcript lookup. */
   generatedByDreamingNarrative?: boolean;
@@ -59,7 +59,7 @@ export type BuildSessionEntryOptions = {
   parseYieldEveryLines?: number;
 };
 
-/** Public type describing Session Transcript Classification for packages/memory-host-sdk. */
+/** Normalized transcript path sets for generated dreaming and cron sessions. */
 export type SessionTranscriptClassification = {
   dreamingNarrativeTranscriptPaths: ReadonlySet<string>;
   cronRunTranscriptPaths: ReadonlySet<string>;
@@ -197,7 +197,7 @@ function normalizeComparablePath(pathname: string): string {
   return process.platform === "win32" ? resolved.toLowerCase() : resolved;
 }
 
-/** Public helper for normalize Session Transcript Path For Comparison behavior in packages/memory-host-sdk. */
+/** Normalizes transcript paths for platform-correct set comparisons. */
 export function normalizeSessionTranscriptPathForComparison(pathname: string): string {
   return normalizeComparablePath(pathname);
 }
@@ -219,7 +219,7 @@ function resolveSessionStoreTranscriptPath(
   return null;
 }
 
-/** Public helper for load Dreaming Narrative Transcript Path Set For Sessions Dir behavior in packages/memory-host-sdk. */
+/** Loads transcript paths known to belong to dreaming narrative sessions. */
 export function loadDreamingNarrativeTranscriptPathSetForSessionsDir(
   sessionsDir: string,
 ): ReadonlySet<string> {
@@ -227,7 +227,7 @@ export function loadDreamingNarrativeTranscriptPathSetForSessionsDir(
     .dreamingNarrativeTranscriptPaths;
 }
 
-/** Public helper for load Session Transcript Classification For Sessions Dir behavior in packages/memory-host-sdk. */
+/** Classifies session transcript paths from a sessions.json store. */
 export function loadSessionTranscriptClassificationForSessionsDir(
   sessionsDir: string,
 ): SessionTranscriptClassification {
@@ -267,14 +267,14 @@ function readSessionTranscriptClassificationStore(
   }
 }
 
-/** Public helper for load Dreaming Narrative Transcript Path Set For Agent behavior in packages/memory-host-sdk. */
+/** Loads dreaming transcript paths for an agent's session directory. */
 export function loadDreamingNarrativeTranscriptPathSetForAgent(
   agentId: string,
 ): ReadonlySet<string> {
   return loadSessionTranscriptClassificationForAgent(agentId).dreamingNarrativeTranscriptPaths;
 }
 
-/** Public helper for load Session Transcript Classification For Agent behavior in packages/memory-host-sdk. */
+/** Loads generated transcript classifications for an agent. */
 export function loadSessionTranscriptClassificationForAgent(
   agentId: string,
 ): SessionTranscriptClassification {
@@ -306,7 +306,7 @@ function classifySessionTranscriptFromSessionStore(absPath: string): {
   };
 }
 
-/** Public helper for list Session Files For Agent behavior in packages/memory-host-sdk. */
+/** Lists usage-counted transcript files for an agent, ignoring non-session artifacts. */
 export async function listSessionFilesForAgent(agentId: string): Promise<string[]> {
   const dir = resolveSessionTranscriptsDirForAgent(agentId);
   try {
@@ -330,7 +330,7 @@ function extractAgentIdFromSessionPath(absPath: string): string | null {
   return parts[sessionsIndex - 1] || null;
 }
 
-/** Public helper for session Path For File behavior in packages/memory-host-sdk. */
+/** Converts an absolute transcript file path into the memory index display path. */
 export function sessionPathForFile(absPath: string): string {
   const agentId = extractAgentIdFromSessionPath(absPath);
   return path
@@ -501,7 +501,7 @@ function sanitizeSessionText(text: string, role: "user" | "assistant"): string |
   return normalized;
 }
 
-/** Public helper for extract Session Text behavior in packages/memory-host-sdk. */
+/** Extracts and sanitizes user-visible text from a session message payload. */
 export function extractSessionText(
   content: unknown,
   role: "user" | "assistant" = "assistant",
@@ -554,7 +554,7 @@ async function yieldSessionEntryParseIfNeeded(
   }
 }
 
-/** Public helper for build Session Entry behavior in packages/memory-host-sdk. */
+/** Reads a JSONL transcript into sanitized indexable content with source line maps. */
 export async function buildSessionEntry(
   absPath: string,
   opts: BuildSessionEntryOptions = {},
