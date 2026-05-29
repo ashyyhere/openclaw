@@ -1,3 +1,3 @@
-// Runtime boundary for link-understanding apply runtime behavior.
-/** Re-exported API for src/link-understanding, starting with apply Link Understanding. */
+// Lazy runtime boundary for applying link-understanding outputs.
+/** Re-exports the link-understanding context mutation entrypoint. */
 export { applyLinkUnderstanding } from "./apply.js";

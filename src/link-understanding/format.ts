@@ -1,7 +1,7 @@
-// link-understanding format helpers and runtime behavior.
+// Merges link-understanding outputs into the message body sent to the agent.
 import { normalizeStringEntries } from "../shared/string-normalization.js";
 
-/** Reused helper for format Link Understanding Body behavior in src/link-understanding. */
+/** Appends normalized link-understanding outputs after the original body text. */
 export function formatLinkUnderstandingBody(params: { body?: string; outputs: string[] }): string {
   const outputs = normalizeStringEntries(params.outputs);
   if (outputs.length === 0) {

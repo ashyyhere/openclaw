@@ -1,4 +1,4 @@
-// link-understanding runner helpers and runtime behavior.
+// Fetches message links safely and runs configured link-understanding adapters.
 import type { MsgContext } from "../auto-reply/templating.js";
 import { applyTemplate } from "../auto-reply/templating.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -73,6 +73,8 @@ async function fetchLinkContent(params: {
   timeoutMs: number;
   url: string;
 }): Promise<{ content: string; finalUrl: string } | null> {
+  // Link understanding fetches untrusted URLs, so every request goes through
+  // the strict SSRF guard and releases its audit lease before returning.
   const { response, finalUrl, release } = await fetchWithSsrFGuard({
     url: params.url,
     timeoutMs: params.timeoutMs,
@@ -118,6 +120,8 @@ async function runCliEntry(params: {
   const args = params.entry.args ?? [];
   const timeoutMs = resolveTimeoutMsFromConfig({ config: params.config, entry: params.entry });
   if (isUrlFetcherCommand(command) && args.some(isLinkUrlTemplate)) {
+    // curl/wget entries with URL templates are fetchers, not summarizers; the
+    // guarded fetch above already produced the content we should pass through.
     return params.content;
   }
 
@@ -185,7 +189,7 @@ async function runLinkEntries(params: {
   return null;
 }
 
-/** Reused helper for run Link Understanding behavior in src/link-understanding. */
+/** Runs link understanding for configured links and returns fetched URLs plus adapter outputs. */
 export async function runLinkUnderstanding(params: {
   cfg: OpenClawConfig;
   ctx: MsgContext;
