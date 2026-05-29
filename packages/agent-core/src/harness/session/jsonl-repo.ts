@@ -1,4 +1,4 @@
-// packages/agent-core/src/harness/session jsonl repo helpers and runtime behavior.
+// JSONL-backed session repository for persisted harness transcripts.
 import type {
   FileSystem,
   JsonlSessionCreateOptions,
@@ -37,7 +37,7 @@ function encodeCwd(cwd: string): string {
   return `--${cwd.replace(/^[/\\]/, "").replace(/[/\\:]/g, "-")}--`;
 }
 
-/** Public class implementing Jsonl Session Repo behavior for packages/agent-core. */
+/** Session repository backed by JSONL transcript files on an injected filesystem. */
 export class JsonlSessionRepo implements JsonlSessionRepoApi {
   private readonly fs: JsonlSessionRepoFileSystem;
   private readonly sessionsRootInput: string;

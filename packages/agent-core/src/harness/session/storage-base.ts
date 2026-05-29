@@ -1,4 +1,4 @@
-// packages/agent-core/src/harness/session storage base helpers and runtime behavior.
+// Base in-memory session tree storage shared by concrete harness stores.
 import {
   type LeafEntry,
   SessionError,
@@ -38,7 +38,7 @@ function generateEntryId(byId: { has(id: string): boolean }): string {
   return uuidv7();
 }
 
-/** Public helper for leaf Id After Entry behavior in packages/agent-core. */
+/** Return the effective leaf id after applying one tree entry. */
 export function leafIdAfterEntry(entry: SessionTreeEntry): string | null {
   return entry.type === "leaf" ? entry.targetId : entry.id;
 }

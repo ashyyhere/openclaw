@@ -1,4 +1,4 @@
-// packages/agent-core/src node helpers and runtime behavior.
-/** Re-exported public API for packages/agent-core, starting with Node Execution Env. */
+// Node.js package entrypoint for agent-core plus Node execution environment.
+/** Node execution environment re-exported for harness callers. */
 export { NodeExecutionEnv } from "./harness/env/nodejs.js";
 export * from "./index.js";
