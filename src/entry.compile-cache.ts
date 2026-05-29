@@ -1,4 +1,6 @@
-// OpenClaw entry compile cache helpers and runtime behavior.
+// Startup helpers for Node's compile cache. Packaged installs opt into a
+// version-scoped cache directory, while source checkouts respawn without the
+// cache so local edits are never shadowed by stale compiled output.
 import { spawn, type ChildProcess } from "node:child_process";
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { enableCompileCache, getCompileCacheDir } from "node:module";
@@ -10,14 +12,14 @@ import {
   type RespawnChildRuntime,
 } from "./process/respawn-child-runner.js";
 
-/** Reused helper for resolve Entry Install Root behavior in src. */
+/** Resolve the package root from either a source or built entry file path. */
 export function resolveEntryInstallRoot(entryFile: string): string {
   const entryDir = path.dirname(entryFile);
   const entryParent = path.basename(entryDir);
   return entryParent === "dist" || entryParent === "src" ? path.dirname(entryDir) : entryDir;
 }
 
-/** Reused helper for is Source Checkout Install Root behavior in src. */
+/** Detect checkouts where compile-cache reuse would be surprising during dev. */
 export function isSourceCheckoutInstallRoot(installRoot: string): boolean {
   return (
     existsSync(path.join(installRoot, ".git")) ||
@@ -33,7 +35,7 @@ function isNodeCompileCacheRequested(env: NodeJS.ProcessEnv | undefined): boolea
   return env?.NODE_COMPILE_CACHE !== undefined && !isNodeCompileCacheDisabled(env);
 }
 
-/** Reused helper for should Enable Open Claw Compile Cache behavior in src. */
+/** Decide whether startup should enable Node's compile cache for this install. */
 export function shouldEnableOpenClawCompileCache(params: {
   env?: NodeJS.ProcessEnv;
   installRoot: string;
@@ -67,7 +69,7 @@ function readPackageVersion(packageJsonPath: string): string {
   return "unknown";
 }
 
-/** Reused helper for resolve Open Claw Compile Cache Directory behavior in src. */
+/** Build the cache directory key from package version and package.json metadata. */
 export function resolveOpenClawCompileCacheDirectory(params: {
   env?: NodeJS.ProcessEnv;
   installRoot: string;
@@ -94,7 +96,7 @@ export function resolveOpenClawCompileCacheDirectory(params: {
   );
 }
 
-/** Shared type for Open Claw Compile Cache Respawn Plan in src. */
+/** Child process command line used to relaunch source checkouts without caching. */
 export type OpenClawCompileCacheRespawnPlan = {
   command: string;
   args: string[];
@@ -105,7 +107,7 @@ type OpenClawCompileCacheRespawnRuntime = RespawnChildRuntime & {
   writeError: (message: string) => void;
 };
 
-/** Reused helper for build Open Claw Compile Cache Respawn Plan behavior in src. */
+/** Create the source-checkout relaunch plan when a compile cache is already active. */
 export function buildOpenClawCompileCacheRespawnPlan(params: {
   currentFile: string;
   env?: NodeJS.ProcessEnv;
@@ -142,7 +144,7 @@ export function buildOpenClawCompileCacheRespawnPlan(params: {
   };
 }
 
-/** Reused helper for respawn Without Open Claw Compile Cache If Needed behavior in src. */
+/** Relaunch source checkouts without compile cache and report whether parent exits. */
 export function respawnWithoutOpenClawCompileCacheIfNeeded(params: {
   currentFile: string;
   installRoot: string;
@@ -159,7 +161,7 @@ export function respawnWithoutOpenClawCompileCacheIfNeeded(params: {
   return true;
 }
 
-/** Reused helper for run Open Claw Compile Cache Respawn Plan behavior in src. */
+/** Spawn the uncached child and bridge stdio, exit status, and termination signals. */
 export function runOpenClawCompileCacheRespawnPlan(
   plan: OpenClawCompileCacheRespawnPlan,
   runtime: OpenClawCompileCacheRespawnRuntime = {
@@ -184,7 +186,7 @@ export function runOpenClawCompileCacheRespawnPlan(
   });
 }
 
-/** Reused helper for enable Open Claw Compile Cache behavior in src. */
+/** Enable compile caching for packaged installs; failures must not block startup. */
 export function enableOpenClawCompileCache(params: {
   env?: NodeJS.ProcessEnv;
   installRoot: string;
