@@ -1,4 +1,5 @@
-// sessions user turn transcript helpers and runtime behavior.
+// User-turn transcript persistence: builds user messages with media/provenance,
+// appends them to session JSONL, and coordinates runtime/fallback persistence.
 import path from "node:path";
 import type { AgentMessage } from "../agents/runtime/index.js";
 import { appendSessionTranscriptMessage } from "../config/sessions/transcript-append.js";
@@ -33,10 +34,10 @@ type PersistedUserTurnMediaFields = {
   MediaTypes?: string[];
 };
 
-/** Shared type for Persisted User Turn Message in src/sessions. */
+/** User-role agent message shape persisted to session transcripts. */
 export type PersistedUserTurnMessage = Extract<AgentMessage, { role: "user" }>;
 
-/** Shared type for User Turn Input in src/sessions. */
+/** Raw user-turn input used to build a persisted transcript message. */
 export type UserTurnInput = {
   text?: string | null;
   media?: readonly PersistedUserTurnMediaInput[] | null;
@@ -48,7 +49,7 @@ export type UserTurnInput = {
 
 type UserTurnTranscriptUpdateMode = "inline" | "none";
 
-/** Shared type for User Turn Before Message Write in src/sessions. */
+/** Hook that may adjust or suppress a user-turn message before transcript append. */
 export type UserTurnBeforeMessageWrite = (params: {
   message: PersistedUserTurnMessage;
   agentId?: string;
@@ -113,7 +114,7 @@ type UserTurnTranscriptTargetResolver =
 
 type UserTurnInputResolver = () => UserTurnInput | undefined | Promise<UserTurnInput | undefined>;
 
-/** Shared type for User Turn Transcript Recorder in src/sessions. */
+/** Coordinates approved/fallback transcript persistence for one user turn. */
 export type UserTurnTranscriptRecorder = {
   readonly message: PersistedUserTurnMessage | undefined;
   resolveMessage: () => Promise<PersistedUserTurnMessage | undefined>;
@@ -170,7 +171,7 @@ function normalizeTranscriptText(value: string | null | undefined): string {
 
 const CHANNEL_MEDIA_PLACEHOLDER_PATTERN = /^<media:[a-z0-9_-]+>(?:\s+\([^)]*\))?$/i;
 
-/** Reused helper for resolve Persisted User Turn Text behavior in src/sessions. */
+/** Normalizes user text and suppresses channel media placeholders when media exists. */
 export function resolvePersistedUserTurnText(
   value: string | null | undefined,
   options: ResolvePersistedUserTurnTextOptions = {},
@@ -234,7 +235,7 @@ function resolveTranscriptMediaType(params: {
   return params.explicitType ?? mimeTypeFromFilePath(params.mediaPath ?? params.mediaUrl);
 }
 
-/** Reused helper for build Persisted User Turn Media Inputs From Fields behavior in src/sessions. */
+/** Builds normalized media inputs from legacy transcript media fields. */
 export function buildPersistedUserTurnMediaInputsFromFields(
   fields: PersistedUserTurnMediaFieldSource | null | undefined,
 ): PersistedUserTurnMediaInput[] {
@@ -330,7 +331,7 @@ function isBeforeAgentRunBlockedMessage(message: AgentMessage): boolean {
   return marker !== undefined;
 }
 
-/** Reused helper for merge Prepared User Turn Message For Runtime behavior in src/sessions. */
+/** Merges prepared transcript fields into the runtime user message when safe. */
 export function mergePreparedUserTurnMessageForRuntime(params: {
   runtimeMessage: AgentMessage;
   preparedMessage?: PersistedUserTurnMessage;
@@ -383,7 +384,7 @@ function applyBeforeMessageWriteToUserTurn(
     : nextUserMessage;
 }
 
-/** Reused helper for append User Turn Transcript Message behavior in src/sessions. */
+/** Appends a prepared or built user-turn message to a concrete transcript file. */
 export async function appendUserTurnTranscriptMessage(
   params: AppendUserTurnTranscriptMessageParams,
 ): Promise<
@@ -436,7 +437,7 @@ export async function appendUserTurnTranscriptMessage(
   };
 }
 
-/** Reused helper for persist User Turn Transcript behavior in src/sessions. */
+/** Resolves a session transcript file and persists one user-turn message into it. */
 export async function persistUserTurnTranscript(
   params: PersistUserTurnTranscriptParams,
 ): Promise<UserTurnTranscriptPersistResult | undefined> {
@@ -489,7 +490,7 @@ function isUserTurnTranscriptFileTarget(
   return "transcriptPath" in target;
 }
 
-/** Reused helper for create User Turn Transcript Recorder behavior in src/sessions. */
+/** Creates a recorder that can persist approved turns or fallback after runtime persistence. */
 export function createUserTurnTranscriptRecorder(
   params: CreateUserTurnTranscriptRecorderParams,
 ): UserTurnTranscriptRecorder {
