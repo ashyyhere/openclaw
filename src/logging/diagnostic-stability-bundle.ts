@@ -1,4 +1,5 @@
-// logging diagnostic stability bundle helpers and runtime behavior.
+// Diagnostic stability bundle persistence: writes payload-free snapshots for
+// fatal errors, memory pressure, and support export troubleshooting.
 import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
@@ -18,13 +19,13 @@ import {
 } from "./diagnostic-stability.js";
 import { redactSensitiveText } from "./redact.js";
 
-/** Reused constant for DIAGNOSTIC STABILITY BUNDLE VERSION behavior in src/logging. */
+/** Schema version for serialized diagnostic stability bundle JSON files. */
 export const DIAGNOSTIC_STABILITY_BUNDLE_VERSION = 1;
-/** Reused constant for DEFAULT DIAGNOSTIC STABILITY BUNDLE LIMIT behavior in src/logging. */
+/** Default event limit captured from the process-local stability ring. */
 export const DEFAULT_DIAGNOSTIC_STABILITY_BUNDLE_LIMIT = MAX_DIAGNOSTIC_STABILITY_LIMIT;
-/** Reused constant for DEFAULT DIAGNOSTIC STABILITY BUNDLE RETENTION behavior in src/logging. */
+/** Number of newest stability bundles retained after each write. */
 export const DEFAULT_DIAGNOSTIC_STABILITY_BUNDLE_RETENTION = 20;
-/** Reused constant for MAX DIAGNOSTIC STABILITY BUNDLE BYTES behavior in src/logging. */
+/** Maximum bundle file size accepted by sync readers. */
 export const MAX_DIAGNOSTIC_STABILITY_BUNDLE_BYTES = 5 * 1024 * 1024;
 
 const SAFE_REASON_CODE = /^[A-Za-z0-9_.:-]{1,120}$/u;
@@ -75,7 +76,7 @@ type DiagnosticSessionFileSummary = {
   mtimeMs: number;
 };
 
-/** Shared type for Diagnostic Memory Pressure Bundle Evidence in src/logging. */
+/** Extra memory/cgroup/session evidence attached to memory-pressure bundles. */
 export type DiagnosticMemoryPressureBundleEvidence = {
   level: DiagnosticMemoryPressureEvent["level"];
   reason: DiagnosticMemoryPressureEvent["reason"];
@@ -90,12 +91,12 @@ export type DiagnosticMemoryPressureBundleEvidence = {
   topSessionFiles?: DiagnosticSessionFileSummary[];
 };
 
-/** Shared type for Diagnostic Stability Bundle Evidence in src/logging. */
+/** Optional evidence payloads attached to a stability bundle. */
 export type DiagnosticStabilityBundleEvidence = {
   memoryPressure?: DiagnosticMemoryPressureBundleEvidence;
 };
 
-/** Shared type for Diagnostic Stability Bundle in src/logging. */
+/** Payload-free diagnostic snapshot written to disk for later support analysis. */
 export type DiagnosticStabilityBundle = {
   version: typeof DIAGNOSTIC_STABILITY_BUNDLE_VERSION;
   generatedAt: string;
@@ -119,13 +120,13 @@ export type DiagnosticStabilityBundle = {
   snapshot: DiagnosticStabilitySnapshot;
 };
 
-/** Shared type for Write Diagnostic Stability Bundle Result in src/logging. */
+/** Result of a synchronous stability bundle write attempt. */
 export type WriteDiagnosticStabilityBundleResult =
   | { status: "written"; path: string; bundle: DiagnosticStabilityBundle }
   | { status: "skipped"; reason: "empty" }
   | { status: "failed"; error: unknown };
 
-/** Shared type for Write Diagnostic Stability Bundle Options in src/logging. */
+/** Inputs for writing a diagnostic stability bundle. */
 export type WriteDiagnosticStabilityBundleOptions = {
   reason: string;
   error?: unknown;
@@ -138,37 +139,37 @@ export type WriteDiagnosticStabilityBundleOptions = {
   evidence?: DiagnosticStabilityBundleEvidence;
 };
 
-/** Shared type for Diagnostic Stability Bundle Location Options in src/logging. */
+/** State directory/env overrides used to locate stability bundle files. */
 export type DiagnosticStabilityBundleLocationOptions = {
   env?: NodeJS.ProcessEnv;
   stateDir?: string;
 };
 
-/** Shared type for Diagnostic Stability Bundle File in src/logging. */
+/** File metadata for a discovered stability bundle. */
 export type DiagnosticStabilityBundleFile = {
   path: string;
   mtimeMs: number;
 };
 
-/** Shared type for Read Diagnostic Stability Bundle Result in src/logging. */
+/** Result of reading a stability bundle from disk. */
 export type ReadDiagnosticStabilityBundleResult =
   | { status: "found"; path: string; mtimeMs: number; bundle: DiagnosticStabilityBundle }
   | { status: "missing"; dir: string }
   | { status: "failed"; path?: string; error: unknown };
 
-/** Shared type for Diagnostic Stability Bundle Failure Write Outcome in src/logging. */
+/** User-facing outcome returned after trying to write a failure bundle. */
 export type DiagnosticStabilityBundleFailureWriteOutcome =
   | { status: "written"; message: string; path: string }
   | { status: "failed"; message: string; error: unknown }
   | { status: "skipped"; reason: "empty" };
 
-/** Shared type for Write Diagnostic Stability Bundle For Failure Options in src/logging. */
+/** Options inherited by fatal/failure bundle writes. */
 export type WriteDiagnosticStabilityBundleForFailureOptions = Omit<
   WriteDiagnosticStabilityBundleOptions,
   "error" | "includeEmpty" | "reason"
 >;
 
-/** Shared type for Write Diagnostic Memory Pressure Bundle Options in src/logging. */
+/** Inputs for writing a critical memory-pressure stability bundle. */
 export type WriteDiagnosticMemoryPressureBundleOptions = Omit<
   WriteDiagnosticStabilityBundleOptions,
   "reason" | "error" | "evidence" | "includeEmpty"
@@ -240,7 +241,7 @@ function readSafeErrorMetadata(error: unknown): DiagnosticStabilityBundle["error
   };
 }
 
-/** Reused helper for resolve Diagnostic Stability Bundle Dir behavior in src/logging. */
+/** Resolves the directory that stores diagnostic stability bundles. */
 export function resolveDiagnosticStabilityBundleDir(
   options: DiagnosticStabilityBundleLocationOptions = {},
 ): string {
@@ -1230,7 +1231,7 @@ function isMemoryPressureReason(reason: string): reason is DiagnosticMemoryPress
   return reason === "rss_threshold" || reason === "heap_threshold" || reason === "rss_growth";
 }
 
-/** Reused helper for list Diagnostic Stability Bundle Files Sync behavior in src/logging. */
+/** Lists stability bundle files newest-first from the configured state dir. */
 export function listDiagnosticStabilityBundleFilesSync(
   options: DiagnosticStabilityBundleLocationOptions = {},
 ): DiagnosticStabilityBundleFile[] {
@@ -1255,7 +1256,7 @@ export function listDiagnosticStabilityBundleFilesSync(
   }
 }
 
-/** Reused helper for read Diagnostic Stability Bundle File Sync behavior in src/logging. */
+/** Reads and validates one stability bundle JSON file. */
 export function readDiagnosticStabilityBundleFileSync(
   file: string,
 ): ReadDiagnosticStabilityBundleResult {
@@ -1279,7 +1280,7 @@ export function readDiagnosticStabilityBundleFileSync(
   }
 }
 
-/** Reused helper for read Latest Diagnostic Stability Bundle Sync behavior in src/logging. */
+/** Reads the newest stability bundle, or reports the bundle directory as missing. */
 export function readLatestDiagnosticStabilityBundleSync(
   options: DiagnosticStabilityBundleLocationOptions = {},
 ): ReadDiagnosticStabilityBundleResult {
@@ -1329,7 +1330,7 @@ function pruneOldBundles(dir: string, retention: number): void {
   }
 }
 
-/** Reused helper for write Diagnostic Stability Bundle Sync behavior in src/logging. */
+/** Writes a payload-free stability snapshot and prunes old bundle files. */
 export function writeDiagnosticStabilityBundleSync(
   options: WriteDiagnosticStabilityBundleOptions,
 ): WriteDiagnosticStabilityBundleResult {
@@ -1379,7 +1380,7 @@ export function writeDiagnosticStabilityBundleSync(
   }
 }
 
-/** Reused helper for write Diagnostic Memory Pressure Bundle Sync behavior in src/logging. */
+/** Writes a critical memory-pressure bundle with heap/cgroup/session evidence. */
 export function writeDiagnosticMemoryPressureBundleSync(
   options: WriteDiagnosticMemoryPressureBundleOptions,
 ): WriteDiagnosticStabilityBundleResult {
@@ -1391,7 +1392,7 @@ export function writeDiagnosticMemoryPressureBundleSync(
   });
 }
 
-/** Reused helper for write Diagnostic Stability Bundle For Failure Sync behavior in src/logging. */
+/** Writes a fatal/failure stability bundle and converts the result to a hook message. */
 export function writeDiagnosticStabilityBundleForFailureSync(
   reason: string,
   error?: unknown,
@@ -1420,7 +1421,7 @@ export function writeDiagnosticStabilityBundleForFailureSync(
   return result;
 }
 
-/** Reused helper for install Diagnostic Stability Fatal Hook behavior in src/logging. */
+/** Installs one fatal-error hook that writes a stability bundle before shutdown. */
 export function installDiagnosticStabilityFatalHook(
   options: WriteDiagnosticStabilityBundleForFailureOptions = {},
 ): void {
@@ -1433,13 +1434,13 @@ export function installDiagnosticStabilityFatalHook(
   });
 }
 
-/** Reused helper for uninstall Diagnostic Stability Fatal Hook behavior in src/logging. */
+/** Removes the installed fatal-error stability bundle hook. */
 export function uninstallDiagnosticStabilityFatalHook(): void {
   fatalHookUnsubscribe?.();
   fatalHookUnsubscribe = null;
 }
 
-/** Reused helper for reset Diagnostic Stability Bundle For Test behavior in src/logging. */
+/** Resets fatal-hook state for stability bundle tests. */
 export function resetDiagnosticStabilityBundleForTest(): void {
   uninstallDiagnosticStabilityFatalHook();
 }
