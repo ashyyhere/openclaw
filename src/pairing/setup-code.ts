@@ -1,4 +1,4 @@
-// pairing setup code helpers and runtime behavior.
+// Device pairing setup-code generation from gateway config and network state.
 import os from "node:os";
 import {
   isCarrierGradeNatIpv4Address,
@@ -26,26 +26,26 @@ import {
 } from "../shared/string-coerce.js";
 import { resolveTailnetHostWithRunner } from "../shared/tailscale-status.js";
 
-/** Shared type for Pairing Setup Payload in src/pairing. */
+/** Encoded mobile/device pairing payload containing gateway URL and bootstrap token. */
 export type PairingSetupPayload = {
   url: string;
   bootstrapToken: string;
 };
 
-/** Shared type for Pairing Setup Command Result in src/pairing. */
+/** Minimal command result shape for injected Tailscale/status command runners. */
 export type PairingSetupCommandResult = {
   code: number | null;
   stdout: string;
   stderr?: string;
 };
 
-/** Shared type for Pairing Setup Command Runner in src/pairing. */
+/** Command runner contract used to probe local network helpers. */
 export type PairingSetupCommandRunner = (
   argv: string[],
   opts: { timeoutMs: number },
 ) => Promise<PairingSetupCommandResult>;
 
-/** Shared type for Resolve Pairing Setup Options in src/pairing. */
+/** Inputs that override config/env while resolving a setup payload. */
 export type ResolvePairingSetupOptions = {
   env?: NodeJS.ProcessEnv;
   publicUrl?: string;
@@ -56,7 +56,7 @@ export type ResolvePairingSetupOptions = {
   networkInterfaces?: () => ReturnType<typeof os.networkInterfaces>;
 };
 
-/** Shared type for Pairing Setup Resolution in src/pairing. */
+/** Success or actionable setup failure returned to pairing commands. */
 export type PairingSetupResolution =
   | {
       ok: true;
@@ -358,14 +358,14 @@ async function resolveGatewayUrl(
   };
 }
 
-/** Reused helper for encode Pairing Setup Code behavior in src/pairing. */
+/** Encodes a setup payload as URL-safe base64 without padding. */
 export function encodePairingSetupCode(payload: PairingSetupPayload): string {
   const json = JSON.stringify(payload);
   const base64 = Buffer.from(json, "utf8").toString("base64");
   return base64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
 }
 
-/** Reused helper for resolve Pairing Setup From Config behavior in src/pairing. */
+/** Resolves a secure pairing URL and bootstrap token from OpenClaw config. */
 export async function resolvePairingSetupFromConfig(
   cfg: OpenClawConfig,
   options: ResolvePairingSetupOptions = {},

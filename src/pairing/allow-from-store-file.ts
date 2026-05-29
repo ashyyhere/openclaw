@@ -1,4 +1,4 @@
-// pairing allow from store file helpers and runtime behavior.
+// File-backed allow-from store helpers for channel/account pairing permissions.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -12,7 +12,7 @@ import {
 import { normalizeUniqueStringEntries } from "../shared/string-normalization.js";
 import type { PairingChannel } from "./pairing-store.types.js";
 
-/** Shared type for Allow From Store in src/pairing. */
+/** Persisted JSON shape for allowed sender ids. */
 export type AllowFromStore = {
   version: 1;
   allowFrom: string[];
@@ -31,7 +31,7 @@ type NormalizeAllowFromStore = (store: AllowFromStore) => string[];
 
 const allowFromReadCache = new Map<string, AllowFromReadCacheEntry>();
 
-/** Reused helper for resolve Pairing Credentials Dir behavior in src/pairing. */
+/** Resolves the credentials directory that stores pairing allow-list files. */
 export function resolvePairingCredentialsDir(env: NodeJS.ProcessEnv = process.env): string {
   const stateDir = resolveStateDir(env, () => resolveRequiredHomeDir(env, os.homedir));
   return resolveOAuthDir(env, stateDir);
@@ -101,7 +101,7 @@ function resolveOptionalAccountFilenameKey(accountId: unknown): string | null {
   return normalizedAccountId ? safeAccountKey(normalizedAccountId) : null;
 }
 
-/** Reused helper for resolve Allow From File Path behavior in src/pairing. */
+/** Resolves the scoped allow-from file path for a channel and optional account. */
 export function resolveAllowFromFilePath(
   channel: PairingChannel,
   env: NodeJS.ProcessEnv = process.env,
@@ -115,17 +115,17 @@ export function resolveAllowFromFilePath(
   return path.join(resolvePairingCredentialsDir(env), `${base}-${accountKey}-allowFrom.json`);
 }
 
-/** Reused helper for dedupe Preserve Order behavior in src/pairing. */
+/** Deduplicates sender ids while preserving the first-seen order. */
 export function dedupePreserveOrder(entries: string[]): string[] {
   return normalizeUniqueStringEntries(entries);
 }
 
-/** Reused helper for should Include Legacy Allow From Entries behavior in src/pairing. */
+/** Keeps legacy unscoped allow-list entries only for the default account. */
 export function shouldIncludeLegacyAllowFromEntries(normalizedAccountId: string): boolean {
   return !normalizedAccountId || normalizedAccountId === DEFAULT_ACCOUNT_ID;
 }
 
-/** Reused helper for resolve Allow From Account Id behavior in src/pairing. */
+/** Normalizes account ids for allow-list file scoping. */
 export function resolveAllowFromAccountId(accountId?: string): string {
   if (accountId != null && typeof accountId !== "string") {
     throw invalidPairingFilenameKeyError("account id", "expected non-empty string", accountId);
@@ -146,7 +146,7 @@ function resolveAllowFromCacheKey(cacheNamespace: string, filePath: string): str
   return `${cacheNamespace}\u0000${filePath}`;
 }
 
-/** Reused helper for set Allow From File Read Cache behavior in src/pairing. */
+/** Seeds the allow-list read cache for tests and same-process reuse. */
 export function setAllowFromFileReadCache(params: {
   cacheNamespace: string;
   filePath: string;
@@ -214,7 +214,7 @@ function resolveAllowFromReadCacheOrMissing(params: {
   return null;
 }
 
-/** Reused helper for read Allow From File With Exists behavior in src/pairing. */
+/** Reads an allow-list file with existence metadata and stat-based cache reuse. */
 export async function readAllowFromFileWithExists(params: {
   cacheNamespace: string;
   filePath: string;
@@ -272,7 +272,7 @@ export async function readAllowFromFileWithExists(params: {
   return { entries, exists: true };
 }
 
-/** Reused helper for read Allow From File Sync With Exists behavior in src/pairing. */
+/** Synchronous allow-list read used by startup paths that cannot await IO. */
 export function readAllowFromFileSyncWithExists(params: {
   cacheNamespace: string;
   filePath: string;
@@ -340,7 +340,7 @@ export function readAllowFromFileSyncWithExists(params: {
   }
 }
 
-/** Reused helper for clear Allow From File Read Cache For Namespace behavior in src/pairing. */
+/** Clears cached allow-list reads for one namespace without disturbing other callers. */
 export function clearAllowFromFileReadCacheForNamespace(cacheNamespace: string): void {
   for (const key of allowFromReadCache.keys()) {
     if (key.startsWith(`${cacheNamespace}\u0000`)) {

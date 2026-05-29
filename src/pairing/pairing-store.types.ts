@@ -1,18 +1,18 @@
-// Shared types for pairing pairing store types behavior.
+// Pairing store callback types shared by channel plugins and pairing commands.
 import type { ChannelId } from "../channels/plugins/channel-id.types.js";
 import type { ChannelPairingAdapter } from "../channels/plugins/pairing.types.js";
 
-/** Shared type for Pairing Channel in src/pairing. */
+/** Channel id accepted by pairing persistence helpers. */
 export type PairingChannel = ChannelId;
 
-/** Shared type for Read Channel Allow From Store For Account in src/pairing. */
+/** Reads the allowed sender ids for a channel/account pair. */
 export type ReadChannelAllowFromStoreForAccount = (params: {
   channel: PairingChannel;
   accountId: string;
   env?: NodeJS.ProcessEnv;
 }) => Promise<string[]>;
 
-/** Shared type for Upsert Channel Pairing Request For Account in src/pairing. */
+/** Creates or refreshes a pending pairing request for a channel/account pair. */
 export type UpsertChannelPairingRequestForAccount = (params: {
   channel: PairingChannel;
   id: string | number;

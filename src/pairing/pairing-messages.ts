@@ -1,8 +1,8 @@
-// pairing pairing messages helpers and runtime behavior.
+// Pairing challenge message formatting for channel replies.
 import { formatCliCommand } from "../cli/command-format.js";
 import type { PairingChannel } from "./pairing-store.types.js";
 
-/** Reused helper for build Pairing Reply behavior in src/pairing. */
+/** Builds the user-facing pairing reply with approval command and one-time code. */
 export function buildPairingReply(params: {
   channel: PairingChannel;
   idLine: string;

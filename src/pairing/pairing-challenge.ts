@@ -1,9 +1,9 @@
-// pairing pairing challenge helpers and runtime behavior.
+// Shared pairing challenge flow for channel DM authorization gates.
 import { buildPairingReply } from "./pairing-messages.js";
 
 type PairingMeta = Record<string, string | undefined>;
 
-/** Shared type for Pairing Challenge Params in src/pairing. */
+/** Dependencies and message fields needed to issue a one-time pairing challenge. */
 export type PairingChallengeParams = {
   channel: string;
   senderId: string;
