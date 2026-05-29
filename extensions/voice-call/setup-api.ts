@@ -1,4 +1,5 @@
-// extensions/voice-call setup api helpers and runtime behavior.
+// Setup-only plugin entry for voice-call config migration. This runs during
+// doctor/setup flows and stays separate from the call runtime.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/plugin-entry";
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 import { isRecord } from "openclaw/plugin-sdk/string-coerce-runtime";

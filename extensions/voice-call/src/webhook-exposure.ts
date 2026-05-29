@@ -1,4 +1,5 @@
-// extensions/voice-call/src webhook exposure helpers and runtime behavior.
+// Webhook reachability checks for providers that need public callback URLs.
+// Local/private hosts are rejected before Twilio/Telnyx/Plivo setup proceeds.
 import { isBlockedHostnameOrIp } from "../api.js";
 
 type VoiceCallWebhookExposureConfig = {

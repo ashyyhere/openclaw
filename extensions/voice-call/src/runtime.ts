@@ -1,4 +1,6 @@
-// extensions/voice-call/src runtime helpers and runtime behavior.
+// Runtime assembly for the voice-call plugin. This wires config, provider
+// modules, call manager, webhook server, tunnel/Tailscale exposure, and
+// realtime-agent helpers into one activated runtime instance.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";
 import { isLoopbackHost } from "openclaw/plugin-sdk/gateway-runtime";

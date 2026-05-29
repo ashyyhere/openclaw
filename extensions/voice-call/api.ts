@@ -1,4 +1,6 @@
-// extensions/voice-call api helpers and runtime behavior.
+// Public facade for the voice-call plugin. Keep this barrel limited to SDK
+// contracts and narrow runtime helpers that core/plugin discovery can import
+// without pulling in provider runtimes.
 /** Re-exported voice-call plugin public API. */
 export {
   definePluginEntry,

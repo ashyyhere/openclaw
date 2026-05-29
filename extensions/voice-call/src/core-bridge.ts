@@ -1,4 +1,5 @@
-// extensions/voice-call/src core bridge helpers and runtime behavior.
+// Narrow local types for the core/plugin-sdk values voice-call needs. Keeping
+// the bridge here avoids importing core internals across the extension boundary.
 import type { OpenClawPluginApi } from "../api.js";
 import type { VoiceCallTtsConfig } from "./config.js";
 
