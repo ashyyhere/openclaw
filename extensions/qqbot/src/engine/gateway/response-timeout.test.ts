@@ -1,3 +1,4 @@
+// Tests extensions/qqbot/src/engine/gateway response timeout test behavior.
 import { MAX_TIMER_TIMEOUT_MS } from "openclaw/plugin-sdk/number-runtime";
 import { describe, expect, it } from "vitest";
 import { DEFAULT_RESPONSE_TIMEOUT_MS, resolveResponseTimeoutMs } from "./response-timeout.js";

@@ -1,3 +1,4 @@
+// Shared types for src/plugins provider runtime model types behavior.
 import type { Model } from "openclaw/plugin-sdk/llm";
 // Shared types for plugins provider runtime model types behavior.
 import type { ModelCompatConfig, ModelMediaInputConfig } from "../config/types.models.js";

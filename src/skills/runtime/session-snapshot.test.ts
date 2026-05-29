@@ -1,3 +1,4 @@
+// Tests src/skills/runtime session snapshot test behavior.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../../config/config.js";
 import type { SkillSnapshot } from "../types.js";

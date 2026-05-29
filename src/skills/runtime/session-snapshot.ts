@@ -1,3 +1,4 @@
+// src/skills/runtime session snapshot helpers and runtime behavior.
 import crypto from "node:crypto";
 import { stableStringify } from "../../agents/stable-stringify.js";
 import { redactConfigObject } from "../../config/redact-snapshot.js";
@@ -12,6 +13,7 @@ import { hydrateResolvedSkills } from "./snapshot-hydration.js";
 const resolvedSkillsCache = new Map<string, SkillSnapshot["resolvedSkills"]>();
 const RESOLVED_SKILLS_CACHE_MAX = 10;
 
+/** Shared type for Reusable Skill Snapshot Params in src/skills/runtime. */
 export type ReusableSkillSnapshotParams = {
   workspaceDir: string;
   config: OpenClawConfig;
@@ -24,12 +26,14 @@ export type ReusableSkillSnapshotParams = {
   hydrateExisting?: boolean;
 };
 
+/** Shared type for Reusable Skill Snapshot Result in src/skills/runtime. */
 export type ReusableSkillSnapshotResult = {
   snapshot: SkillSnapshot;
   shouldRefresh: boolean;
   snapshotVersion: number;
 };
 
+/** Reused helper for reset Resolved Skills Cache For Tests behavior in src/skills/runtime. */
 export function resetResolvedSkillsCacheForTests(): void {
   resolvedSkillsCache.clear();
 }
@@ -52,6 +56,7 @@ function cacheResolvedSkills(cacheKey: string, snapshot: SkillSnapshot): SkillSn
   return snapshot;
 }
 
+/** Reused helper for resolve Reusable Workspace Skill Snapshot behavior in src/skills/runtime. */
 export function resolveReusableWorkspaceSkillSnapshot(
   params: ReusableSkillSnapshotParams,
 ): ReusableSkillSnapshotResult {

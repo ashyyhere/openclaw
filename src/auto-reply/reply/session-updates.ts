@@ -1,3 +1,4 @@
+// src/auto-reply/reply session updates helpers and runtime behavior.
 import crypto from "node:crypto";
 import path from "node:path";
 import { resolveSessionAgentId } from "../../agents/agent-scope.js";
@@ -23,7 +24,9 @@ import { normalizeOptionalString } from "../../shared/string-coerce.js";
 import { getRemoteSkillEligibility } from "../../skills/runtime/remote.js";
 import { resolveReusableWorkspaceSkillSnapshot } from "../../skills/runtime/session-snapshot.js";
 import { buildSessionEndHookPayload, buildSessionStartHookPayload } from "./session-hooks.js";
+/** Re-exported API for src/auto-reply/reply, starting with drain Formatted System Events. */
 export { drainFormattedSystemEvents } from "./session-system-events.js";
+/** Re-exported API for src/auto-reply/reply, starting with reset Resolved Skills Cache For Tests. */
 export { resetResolvedSkillsCacheForTests } from "../../skills/runtime/session-snapshot.js";
 
 async function persistSessionEntryUpdate(params: {
@@ -121,6 +124,7 @@ function resolveNonNegativeTokenCount(value: number | undefined): number | undef
     : undefined;
 }
 
+/** Reused helper for ensure Skill Snapshot behavior in src/auto-reply/reply. */
 export async function ensureSkillSnapshot(params: {
   sessionEntry?: SessionEntry;
   sessionStore?: Record<string, SessionEntry>;
@@ -236,6 +240,7 @@ export async function ensureSkillSnapshot(params: {
   return { sessionEntry: nextEntry, skillsSnapshot, systemSent };
 }
 
+/** Reused helper for increment Compaction Count behavior in src/auto-reply/reply. */
 export async function incrementCompactionCount(params: {
   sessionEntry?: SessionEntry;
   sessionStore?: Record<string, SessionEntry>;

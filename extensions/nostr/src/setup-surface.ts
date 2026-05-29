@@ -1,3 +1,4 @@
+// extensions/nostr/src setup surface helpers and runtime behavior.
 import { DEFAULT_ACCOUNT_ID } from "openclaw/plugin-sdk/routing";
 // extensions/nostr/src setup surface helpers and runtime behavior.
 import {

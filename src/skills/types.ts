@@ -1,5 +1,7 @@
+// Shared types for src/skills types behavior.
 import type { Skill } from "./loading/skill-contract.js";
 
+/** Shared type for Skill Install Spec in src/skills. */
 export type SkillInstallSpec = {
   id?: string;
   kind: "brew" | "node" | "go" | "uv" | "download";
@@ -16,6 +18,7 @@ export type SkillInstallSpec = {
   targetDir?: string;
 };
 
+/** Shared type for Open Claw Skill Metadata in src/skills. */
 export type OpenClawSkillMetadata = {
   always?: boolean;
   skillKey?: string;
@@ -32,11 +35,13 @@ export type OpenClawSkillMetadata = {
   install?: SkillInstallSpec[];
 };
 
+/** Shared type for Skill Invocation Policy in src/skills. */
 export type SkillInvocationPolicy = {
   userInvocable: boolean;
   disableModelInvocation: boolean;
 };
 
+/** Shared type for Skill Command Dispatch Spec in src/skills. */
 export type SkillCommandDispatchSpec = {
   kind: "tool";
   /** Name of the tool to invoke (AnyAgentTool.name). */
@@ -48,8 +53,10 @@ export type SkillCommandDispatchSpec = {
   argMode?: "raw";
 };
 
+/** Shared type for Skill Telemetry Source in src/skills. */
 export type SkillTelemetrySource = "bundled" | "unknown" | "workspace";
 
+/** Shared type for Skill Command Spec in src/skills. */
 export type SkillCommandSpec = {
   name: string;
   skillName: string;
@@ -66,19 +73,23 @@ export type SkillCommandSpec = {
   sourceFilePath?: string;
 };
 
+/** Shared type for Skills Install Preferences in src/skills. */
 export type SkillsInstallPreferences = {
   preferBrew: boolean;
   nodeManager: "npm" | "pnpm" | "yarn" | "bun";
 };
 
+/** Shared type for Parsed Skill Frontmatter in src/skills. */
 export type ParsedSkillFrontmatter = Record<string, string>;
 
+/** Shared type for Skill Exposure in src/skills. */
 export type SkillExposure = {
   includeInRuntimeRegistry: boolean;
   includeInAvailableSkillsPrompt: boolean;
   userInvocable: boolean;
 };
 
+/** Shared type for Skill Entry in src/skills. */
 export type SkillEntry = {
   skill: Skill;
   frontmatter: ParsedSkillFrontmatter;
@@ -89,6 +100,7 @@ export type SkillEntry = {
   syncDirName?: string;
 };
 
+/** Shared type for Skill Eligibility Context in src/skills. */
 export type SkillEligibilityContext = {
   remote?: {
     platforms: string[];
@@ -98,6 +110,7 @@ export type SkillEligibilityContext = {
   };
 };
 
+/** Shared type for Skill Snapshot in src/skills. */
 export type SkillSnapshot = {
   prompt: string;
   skills: Array<{ name: string; primaryEnv?: string; requiredEnv?: string[] }>;

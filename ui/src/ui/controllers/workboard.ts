@@ -1,6 +1,8 @@
+// ui/src/ui/controllers workboard helpers and runtime behavior.
 import type { GatewayBrowserClient } from "../gateway.ts";
 import type { GatewaySessionRow } from "../types.ts";
 
+/** Reused constant for WORKBOARD STATUSES behavior in ui/src/ui/controllers. */
 export const WORKBOARD_STATUSES = [
   "triage",
   "backlog",
@@ -13,9 +15,13 @@ export const WORKBOARD_STATUSES = [
   "done",
 ] as const;
 
+/** Reused constant for WORKBOARD PRIORITIES behavior in ui/src/ui/controllers. */
 export const WORKBOARD_PRIORITIES = ["low", "normal", "high", "urgent"] as const;
+/** Reused constant for WORKBOARD EXECUTION ENGINES behavior in ui/src/ui/controllers. */
 export const WORKBOARD_EXECUTION_ENGINES = ["codex", "claude"] as const;
+/** Reused constant for WORKBOARD EXECUTION MODES behavior in ui/src/ui/controllers. */
 export const WORKBOARD_EXECUTION_MODES = ["autonomous", "manual"] as const;
+/** Reused constant for WORKBOARD EXECUTION STATUSES behavior in ui/src/ui/controllers. */
 export const WORKBOARD_EXECUTION_STATUSES = [
   "idle",
   "running",
@@ -23,6 +29,7 @@ export const WORKBOARD_EXECUTION_STATUSES = [
   "blocked",
   "done",
 ] as const;
+/** Reused constant for WORKBOARD EVENT KINDS behavior in ui/src/ui/controllers. */
 export const WORKBOARD_EVENT_KINDS = [
   "created",
   "edited",
@@ -49,6 +56,7 @@ export const WORKBOARD_EVENT_KINDS = [
   "unarchived",
   "stale",
 ] as const;
+/** Reused constant for WORKBOARD ATTEMPT STATUSES behavior in ui/src/ui/controllers. */
 export const WORKBOARD_ATTEMPT_STATUSES = [
   "running",
   "succeeded",
@@ -64,26 +72,41 @@ export const WORKBOARD_LINK_TYPES = [
   "relates_to",
 ] as const;
 export const WORKBOARD_PROOF_STATUSES = ["passed", "failed", "skipped", "unknown"] as const;
+/** Reused constant for WORKBOARD TEMPLATE IDS behavior in ui/src/ui/controllers. */
 export const WORKBOARD_TEMPLATE_IDS = ["bugfix", "docs", "release", "pr_review", "plugin"] as const;
+/** Reused constant for WORKBOARD DIAGNOSTIC SEVERITIES behavior in ui/src/ui/controllers. */
 export const WORKBOARD_DIAGNOSTIC_SEVERITIES = ["warning", "error", "critical"] as const;
 
+/** Reused constant for WORKBOARD ENGINE MODELS behavior in ui/src/ui/controllers. */
 export const WORKBOARD_ENGINE_MODELS = {
   codex: "openai/gpt-5.5",
   claude: "anthropic/claude-sonnet-4-6",
 } as const;
 
+/** Shared type for Workboard Status in ui/src/ui/controllers. */
 export type WorkboardStatus = (typeof WORKBOARD_STATUSES)[number];
+/** Shared type for Workboard Priority in ui/src/ui/controllers. */
 export type WorkboardPriority = (typeof WORKBOARD_PRIORITIES)[number];
+/** Shared type for Workboard Execution Engine in ui/src/ui/controllers. */
 export type WorkboardExecutionEngine = (typeof WORKBOARD_EXECUTION_ENGINES)[number];
+/** Shared type for Workboard Execution Mode in ui/src/ui/controllers. */
 export type WorkboardExecutionMode = (typeof WORKBOARD_EXECUTION_MODES)[number];
+/** Shared type for Workboard Execution Status in ui/src/ui/controllers. */
 export type WorkboardExecutionStatus = (typeof WORKBOARD_EXECUTION_STATUSES)[number];
+/** Shared type for Workboard Event Kind in ui/src/ui/controllers. */
 export type WorkboardEventKind = (typeof WORKBOARD_EVENT_KINDS)[number];
+/** Shared type for Workboard Attempt Status in ui/src/ui/controllers. */
 export type WorkboardAttemptStatus = (typeof WORKBOARD_ATTEMPT_STATUSES)[number];
+/** Shared type for Workboard Link Type in ui/src/ui/controllers. */
 export type WorkboardLinkType = (typeof WORKBOARD_LINK_TYPES)[number];
+/** Shared type for Workboard Proof Status in ui/src/ui/controllers. */
 export type WorkboardProofStatus = (typeof WORKBOARD_PROOF_STATUSES)[number];
+/** Shared type for Workboard Template Id in ui/src/ui/controllers. */
 export type WorkboardTemplateId = (typeof WORKBOARD_TEMPLATE_IDS)[number];
+/** Shared type for Workboard Diagnostic Severity in ui/src/ui/controllers. */
 export type WorkboardDiagnosticSeverity = (typeof WORKBOARD_DIAGNOSTIC_SEVERITIES)[number];
 
+/** Shared type for Workboard Execution in ui/src/ui/controllers. */
 export type WorkboardExecution = {
   id: string;
   kind: "agent-session";
@@ -97,6 +120,7 @@ export type WorkboardExecution = {
   updatedAt: number;
 };
 
+/** Shared type for Workboard Event in ui/src/ui/controllers. */
 export type WorkboardEvent = {
   id: string;
   kind: WorkboardEventKind;
@@ -107,6 +131,7 @@ export type WorkboardEvent = {
   runId?: string;
 };
 
+/** Shared type for Workboard Run Attempt in ui/src/ui/controllers. */
 export type WorkboardRunAttempt = {
   id: string;
   status: WorkboardAttemptStatus;
@@ -120,6 +145,7 @@ export type WorkboardRunAttempt = {
   error?: string;
 };
 
+/** Shared type for Workboard Comment in ui/src/ui/controllers. */
 export type WorkboardComment = {
   id: string;
   body: string;
@@ -127,6 +153,7 @@ export type WorkboardComment = {
   updatedAt?: number;
 };
 
+/** Shared type for Workboard Link in ui/src/ui/controllers. */
 export type WorkboardLink = {
   id: string;
   type: WorkboardLinkType;
@@ -136,6 +163,7 @@ export type WorkboardLink = {
   url?: string;
 };
 
+/** Shared type for Workboard Proof in ui/src/ui/controllers. */
 export type WorkboardProof = {
   id: string;
   status: WorkboardProofStatus;
@@ -146,12 +174,14 @@ export type WorkboardProof = {
   note?: string;
 };
 
+/** Shared type for Workboard Stale State in ui/src/ui/controllers. */
 export type WorkboardStaleState = {
   detectedAt: number;
   lastSessionUpdatedAt?: number;
   reason: string;
 };
 
+/** Shared type for Workboard Claim in ui/src/ui/controllers. */
 export type WorkboardClaim = {
   ownerId: string;
   token?: string;
@@ -160,6 +190,7 @@ export type WorkboardClaim = {
   expiresAt?: number;
 };
 
+/** Shared type for Workboard Artifact in ui/src/ui/controllers. */
 export type WorkboardArtifact = {
   id: string;
   createdAt: number;
@@ -169,6 +200,7 @@ export type WorkboardArtifact = {
   mimeType?: string;
 };
 
+/** Uploaded or linked file attached to a workboard card. */
 export type WorkboardAttachment = {
   id: string;
   cardId: string;
@@ -179,6 +211,7 @@ export type WorkboardAttachment = {
   note?: string;
 };
 
+/** Worker log entry attached to a card execution attempt. */
 export type WorkboardWorkerLog = {
   id: string;
   createdAt: number;
@@ -188,12 +221,14 @@ export type WorkboardWorkerLog = {
   runId?: string;
 };
 
+/** Worker protocol state reported by automation runners. */
 export type WorkboardWorkerProtocol = {
   state: "idle" | "running" | "completed" | "blocked" | "violated";
   updatedAt: number;
   detail?: string;
 };
 
+/** Diagnostic rollup attached to a workboard card. */
 export type WorkboardDiagnostic = {
   kind: string;
   severity: WorkboardDiagnosticSeverity;
@@ -204,6 +239,7 @@ export type WorkboardDiagnostic = {
   count: number;
 };
 
+/** Shared type for Workboard Notification in ui/src/ui/controllers. */
 export type WorkboardNotification = {
   id: string;
   kind: string;
@@ -254,6 +290,7 @@ export type WorkboardMetadata = {
   failureCount?: number;
 };
 
+/** Shared type for Workboard Card in ui/src/ui/controllers. */
 export type WorkboardCard = {
   id: string;
   title: string;
@@ -276,6 +313,7 @@ export type WorkboardCard = {
   metadata?: WorkboardMetadata;
 };
 
+/** Shared type for Workboard Lifecycle State in ui/src/ui/controllers. */
 export type WorkboardLifecycleState =
   | "unlinked"
   | "missing"
@@ -285,12 +323,14 @@ export type WorkboardLifecycleState =
   | "succeeded"
   | "failed";
 
+/** Shared type for Workboard Lifecycle in ui/src/ui/controllers. */
 export type WorkboardLifecycle = {
   session: GatewaySessionRow | null;
   state: WorkboardLifecycleState;
   targetStatus?: WorkboardStatus;
 };
 
+/** Shared type for Workboard Ui State in ui/src/ui/controllers. */
 export type WorkboardUiState = {
   loading: boolean;
   loaded: boolean;
@@ -364,6 +404,7 @@ function createDefaultState(): WorkboardUiState {
   };
 }
 
+/** Reused helper for get Workboard State behavior in ui/src/ui/controllers. */
 export function getWorkboardState(host: WorkboardHost): WorkboardUiState {
   let state = workboardStates.get(host);
   if (!state) {
@@ -868,6 +909,7 @@ function normalizeCardPayload(payload: unknown): WorkboardCard {
   return card;
 }
 
+/** Reused helper for load Workboard behavior in ui/src/ui/controllers. */
 export async function loadWorkboard(params: {
   host: WorkboardHost;
   client: GatewayBrowserClient | null;
@@ -1008,6 +1050,7 @@ function workboardCardRunId(card: WorkboardCard): string | undefined {
   return card.runId ?? card.execution?.runId;
 }
 
+/** Reused helper for get Workboard Lifecycle behavior in ui/src/ui/controllers. */
 export function getWorkboardLifecycle(
   card: WorkboardCard,
   sessions: readonly GatewaySessionRow[],
@@ -1218,6 +1261,7 @@ function buildSessionCaptureNotes(params: {
   return lines.join("\n");
 }
 
+/** Reused helper for capture Session To Workboard behavior in ui/src/ui/controllers. */
 export async function captureSessionToWorkboard(params: {
   host: WorkboardHost;
   client: GatewayBrowserClient | null;
@@ -1291,6 +1335,7 @@ export async function captureSessionToWorkboard(params: {
   }
 }
 
+/** Reused helper for sync Workboard Lifecycle behavior in ui/src/ui/controllers. */
 export async function syncWorkboardLifecycle(params: {
   host: WorkboardHost;
   client: GatewayBrowserClient | null;
@@ -1363,6 +1408,7 @@ export async function syncWorkboardLifecycle(params: {
   }
 }
 
+/** Reused helper for create Workboard Card behavior in ui/src/ui/controllers. */
 export async function createWorkboardCard(params: {
   host: WorkboardHost;
   client: GatewayBrowserClient | null;
@@ -1387,6 +1433,7 @@ export async function createWorkboardCard(params: {
   }
 }
 
+/** Reused helper for save Workboard Card Draft behavior in ui/src/ui/controllers. */
 export async function saveWorkboardCardDraft(params: {
   host: WorkboardHost;
   client: GatewayBrowserClient | null;
@@ -1418,6 +1465,7 @@ export async function saveWorkboardCardDraft(params: {
   }
 }
 
+/** Reused helper for move Workboard Card behavior in ui/src/ui/controllers. */
 export async function moveWorkboardCard(params: {
   host: WorkboardHost;
   client: GatewayBrowserClient | null;
@@ -1449,6 +1497,7 @@ export async function moveWorkboardCard(params: {
   }
 }
 
+/** Reused helper for delete Workboard Card behavior in ui/src/ui/controllers. */
 export async function deleteWorkboardCard(params: {
   host: WorkboardHost;
   client: GatewayBrowserClient | null;
@@ -1473,6 +1522,7 @@ export async function deleteWorkboardCard(params: {
   }
 }
 
+/** Reused helper for archive Workboard Card behavior in ui/src/ui/controllers. */
 export async function archiveWorkboardCard(params: {
   host: WorkboardHost;
   client: GatewayBrowserClient | null;
@@ -1768,6 +1818,7 @@ export async function startWorkboardCard(params: {
   }
 }
 
+/** Reused helper for stop Workboard Card behavior in ui/src/ui/controllers. */
 export async function stopWorkboardCard(params: {
   host: WorkboardHost;
   client: GatewayBrowserClient | null;
@@ -1815,6 +1866,7 @@ export async function stopWorkboardCard(params: {
   }
 }
 
+/** Reused helper for find Workboard Session behavior in ui/src/ui/controllers. */
 export function findWorkboardSession(
   card: WorkboardCard,
   sessions: readonly GatewaySessionRow[],

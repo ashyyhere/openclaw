@@ -1,3 +1,4 @@
+// src/agents/sessions sdk helpers and runtime behavior.
 import { join } from "node:path";
 import { clampThinkingLevel } from "../../llm/model-utils.js";
 import { streamSimple } from "../../llm/stream.js";
@@ -37,6 +38,7 @@ import {
   withFileMutationQueue,
 } from "./tools/index.js";
 
+/** Shared type for Create Agent Session Options in src/agents/sessions. */
 export interface CreateAgentSessionOptions {
   /** Working directory for project-local discovery. Default: process.cwd() */
   cwd?: string;
@@ -100,6 +102,7 @@ export interface CreateAgentSessionResult {
 
 // Re-exports
 
+/** Re-exported API for src/agents/sessions. */
 export type {
   ExtensionAPI,
   ExtensionCommandContext,
@@ -109,10 +112,14 @@ export type {
   SlashCommandSource,
   ToolDefinition,
 } from "./extensions/index.js";
+/** Re-exported API for src/agents/sessions, starting with Prompt Template. */
 export type { PromptTemplate } from "./prompt-templates.js";
+/** Re-exported API for src/agents/sessions, starting with Skill. */
 export type { Skill } from "../../skills/loading/session.js";
+/** Re-exported API for src/agents/sessions, starting with Tool. */
 export type { Tool } from "./tools/index.js";
 
+/** Re-exported API for src/agents/sessions. */
 export {
   withFileMutationQueue,
   // Tool factories (for custom cwd)

@@ -1,6 +1,9 @@
+// src/skills/loading skill contract helpers and runtime behavior.
 import type { SourceInfo } from "../../agents/sessions/source-info.js";
 
+/** Shared type for Source Scope in src/skills/loading. */
 export type SourceScope = "user" | "project" | "temporary";
+/** Shared type for Source Origin in src/skills/loading. */
 export type SourceOrigin = "package" | "top-level";
 
 export interface Skill {
@@ -14,6 +17,7 @@ export interface Skill {
   source: string;
 }
 
+/** Reused helper for create Synthetic Source Info behavior in src/skills/loading. */
 export function createSyntheticSourceInfo(
   path: string,
   options: {

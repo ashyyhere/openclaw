@@ -1,3 +1,4 @@
+// scripts/lib bounded response helpers and runtime behavior.
 type BoundedResponseTextOptions = {
   createTooLargeError?: (message: string) => Error;
   formatTooLargeMessage?: (label: string, maxBytes: number) => string;

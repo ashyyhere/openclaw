@@ -1,3 +1,4 @@
+// scripts firecrawl compare helpers and runtime behavior.
 import { pathToFileURL } from "node:url";
 import { fetchFirecrawlContent } from "../extensions/firecrawl/api.ts";
 import { extractReadableContent } from "../src/agents/tools/web-tools.js";

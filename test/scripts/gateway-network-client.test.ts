@@ -1,3 +1,4 @@
+// Tests test/scripts gateway network client test behavior.
 import { describe, expect, it } from "vitest";
 import { readGatewayNetworkClientConnectTimeoutMs } from "../../scripts/e2e/lib/gateway-network/limits.mjs";
 

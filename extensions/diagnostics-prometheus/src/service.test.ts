@@ -1,3 +1,4 @@
+// Tests extensions/diagnostics-prometheus/src service test behavior.
 import type { DiagnosticEventPrivateData } from "openclaw/plugin-sdk/diagnostic-runtime";
 // Tests extensions/diagnostics-prometheus/src service test behavior.
 import { describe, expect, it, vi } from "vitest";

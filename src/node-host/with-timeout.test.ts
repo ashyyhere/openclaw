@@ -1,3 +1,4 @@
+// Tests src/node-host with timeout test behavior.
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { MAX_TIMER_TIMEOUT_MS } from "../shared/number-coercion.js";
 import { withTimeout } from "./with-timeout.js";

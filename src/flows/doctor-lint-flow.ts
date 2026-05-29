@@ -1,3 +1,4 @@
+// src/flows doctor lint flow helpers and runtime behavior.
 import { scrubDoctorErrorMessage } from "./doctor-error-message.js";
 // flows doctor lint flow helpers and runtime behavior.
 import { listHealthChecks } from "./health-check-registry.js";

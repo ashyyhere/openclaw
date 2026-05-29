@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// scripts plugin boundary report helpers and runtime behavior.
 import { spawnSync } from "node:child_process";
 import { existsSync, lstatSync, readdirSync, readFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";

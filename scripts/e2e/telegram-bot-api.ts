@@ -1,3 +1,4 @@
+// scripts/e2e telegram bot api helpers and runtime behavior.
 import { readBoundedResponseText } from "../lib/bounded-response.ts";
 import { readPositiveIntEnv } from "./lib/env-limits.mjs";
 

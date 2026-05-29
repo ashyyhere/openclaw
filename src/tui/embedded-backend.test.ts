@@ -1,3 +1,4 @@
+// Tests src/tui embedded backend test behavior.
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { isEmbeddedMode, setEmbeddedMode } from "../infra/embedded-mode.js";
 import { defaultRuntime } from "../runtime.js";

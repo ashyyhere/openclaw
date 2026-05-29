@@ -1,3 +1,4 @@
+// src/config io helpers and runtime behavior.
 import crypto from "node:crypto";
 import fs from "node:fs";
 import os from "node:os";
@@ -114,6 +115,7 @@ import {
 } from "./validation.js";
 import { shouldWarnOnTouchedVersion } from "./version.js";
 
+/** Re-exported API for src/config. */
 export {
   clearRuntimeConfigSnapshotState as clearRuntimeConfigSnapshot,
   getRuntimeConfigSnapshotMetadataState as getRuntimeConfigSnapshotMetadata,
@@ -127,8 +129,11 @@ export {
 };
 
 // Re-export for backwards compatibility
+/** Re-exported API for src/config, starting with Circular Include Error. */
 export { CircularIncludeError, ConfigIncludeError } from "./includes.js";
+/** Re-exported API for src/config, starting with Missing Env Var Error. */
 export { MissingEnvVarError } from "./env-substitution.js";
+/** Re-exported API for src/config, starting with resolve Shell Env Expected Keys. */
 export { resolveShellEnvExpectedKeys } from "./shell-env-expected-keys.js";
 
 type ShippedPluginInstallConfigWriteMigration =
@@ -186,12 +191,15 @@ type ConfigHealthState = {
   entries?: Record<string, ConfigHealthEntry>;
 };
 
+/** Shared type for Parse Config Json5 Result in src/config. */
 export type ParseConfigJson5Result = { ok: true; parsed: unknown } | { ok: false; error: string };
+/** Shared type for Config Write Result in src/config. */
 export type ConfigWriteResult = { persistedHash: string; persistedConfig: OpenClawConfig };
 const configWritePostCommitRollback = Symbol("configWritePostCommitRollback");
 type InternalConfigWriteResult = ConfigWriteResult & {
   [configWritePostCommitRollback]?: () => void;
 };
+/** Shared type for Config Write Options in src/config. */
 export type ConfigWriteOptions = {
   /**
    * Read-time env snapshot used to validate `${VAR}` restoration decisions.
@@ -280,14 +288,18 @@ export type ConfigWriteOptions = {
   preCommitRuntimePreflight?: (sourceConfig: OpenClawConfig) => Promise<unknown>;
 };
 
+/** Shared type for Read Config File Snapshot For Write Result in src/config. */
 export type ReadConfigFileSnapshotForWriteResult = {
   snapshot: ConfigFileSnapshot;
   writeOptions: ConfigWriteOptions;
 };
 
+/** Shared type for Config Write Notification in src/config. */
 export type ConfigWriteNotification = RuntimeConfigWriteNotification;
+/** Shared type for Config Snapshot Read Measure in src/config. */
 export type ConfigSnapshotReadMeasure = <T>(name: string, run: () => T | Promise<T>) => Promise<T>;
 
+/** Reused class for Config Runtime Refresh Error behavior in src/config. */
 export class ConfigRuntimeRefreshError extends Error {
   constructor(message: string, options?: { cause?: unknown }) {
     super(message, options);
@@ -328,6 +340,7 @@ async function tightenStateDirPermissionsIfNeeded(params: {
   }
 }
 
+/** Reused helper for resolve Config Snapshot Hash behavior in src/config. */
 export function resolveConfigSnapshotHash(snapshot: {
   hash?: string;
   raw?: string | null;
@@ -945,6 +958,7 @@ function observeConfigSnapshotSync(
   writeConfigHealthStateSync(deps, healthState);
 }
 
+/** Shared type for Config Io Deps in src/config. */
 export type ConfigIoDeps = {
   fs?: typeof fs;
   json5?: typeof JSON5;
@@ -957,6 +971,7 @@ export type ConfigIoDeps = {
   observe?: boolean;
 };
 
+/** Shared type for Config Snapshot Read Options in src/config. */
 export type ConfigSnapshotReadOptions = {
   measure?: ConfigSnapshotReadMeasure;
   observe?: boolean;
@@ -1043,6 +1058,7 @@ function maybeLoadDotEnvForConfig(env: NodeJS.ProcessEnv): void {
   loadDotEnv({ quiet: true });
 }
 
+/** Reused helper for parse Config Json5 behavior in src/config. */
 export function parseConfigJson5(
   raw: string,
   json5: { parse: (value: string) => unknown } = JSON5,
@@ -1266,6 +1282,7 @@ function snapshotEnv(env: NodeJS.ProcessEnv): Record<string, string | undefined>
   return { ...env };
 }
 
+/** Reused helper for restore Env Changes If Unchanged behavior in src/config. */
 export function restoreEnvChangesIfUnchanged(params: {
   env: NodeJS.ProcessEnv;
   before: Record<string, string | undefined>;
@@ -1291,6 +1308,7 @@ type ReadConfigFileSnapshotInternalResult = {
   pluginMetadataSnapshot?: PluginMetadataSnapshot;
 };
 
+/** Shared type for Read Config File Snapshot With Plugin Metadata Result in src/config. */
 export type ReadConfigFileSnapshotWithPluginMetadataResult = {
   snapshot: ConfigFileSnapshot;
   pluginMetadataSnapshot?: PluginMetadataSnapshot;
@@ -1350,6 +1368,7 @@ async function collectInvalidConfigLegacyIssues(
   return findDoctorLegacyConfigIssues(raw, sourceRaw);
 }
 
+/** Reused helper for create Config IO behavior in src/config. */
 export function createConfigIO(
   overrides: ConfigIoDeps & {
     pluginValidation?: "full" | "skip";
@@ -2488,10 +2507,12 @@ export function createConfigIO(
 // module scope. `OPENCLAW_CONFIG_PATH` (and friends) are expected to work even
 // when set after the module has been imported (tests, one-off scripts, etc.).
 const AUTO_OWNER_DISPLAY_SECRET_BY_PATH = new Map<string, string>();
+/** Reused helper for clear Config Cache behavior in src/config. */
 export function clearConfigCache(): void {
   // Compat shim: runtime snapshot is the only in-process cache now.
 }
 
+/** Reused helper for register Config Write Listener behavior in src/config. */
 export function registerConfigWriteListener(
   listener: (event: ConfigWriteNotification) => void,
 ): () => void {
@@ -2527,6 +2548,7 @@ function isCompatibleTopLevelRuntimeProjectionShape(params: {
   return true;
 }
 
+/** Reused helper for project Config Onto Runtime Source Snapshot behavior in src/config. */
 export function projectConfigOntoRuntimeSourceSnapshot(config: OpenClawConfig): OpenClawConfig {
   const runtimeConfigSnapshot = getRuntimeConfigSnapshotState();
   const runtimeConfigSourceSnapshot = getRuntimeConfigSourceSnapshotState();
@@ -2555,6 +2577,7 @@ export function projectConfigOntoRuntimeSourceSnapshot(config: OpenClawConfig): 
   return coerceConfig(applyMergePatch(projectedSource, runtimePatch));
 }
 
+/** Reused helper for load Config behavior in src/config. */
 export function loadConfig(options?: {
   skipPluginValidation?: boolean;
   pin?: boolean;
@@ -2570,6 +2593,7 @@ export function loadConfig(options?: {
   return loadPinnedRuntimeConfig(loadFresh);
 }
 
+/** Reused helper for get Runtime Config behavior in src/config. */
 export function getRuntimeConfig(options?: {
   skipPluginValidation?: boolean;
   pin?: boolean;
@@ -2577,6 +2601,7 @@ export function getRuntimeConfig(options?: {
   return loadConfig(options);
 }
 
+/** Reused helper for read Best Effort Config behavior in src/config. */
 export async function readBestEffortConfig(options?: {
   skipPluginValidation?: boolean;
 }): Promise<OpenClawConfig> {
@@ -2585,10 +2610,12 @@ export async function readBestEffortConfig(options?: {
   ).readBestEffortConfig();
 }
 
+/** Reused helper for read Source Config Best Effort behavior in src/config. */
 export async function readSourceConfigBestEffort(): Promise<OpenClawConfig> {
   return await createConfigIO().readSourceConfigBestEffort();
 }
 
+/** Reused helper for read Config File Snapshot behavior in src/config. */
 export async function readConfigFileSnapshot(
   options: ConfigSnapshotReadOptions = {},
 ): Promise<ConfigFileSnapshot> {
@@ -2603,6 +2630,7 @@ export async function readConfigFileSnapshot(
   }).readConfigFileSnapshot();
 }
 
+/** Reused helper for read Config File Snapshot With Plugin Metadata behavior in src/config. */
 export async function readConfigFileSnapshotWithPluginMetadata(options?: {
   measure?: ConfigSnapshotReadMeasure;
 }): Promise<ReadConfigFileSnapshotWithPluginMetadataResult> {
@@ -2611,12 +2639,14 @@ export async function readConfigFileSnapshotWithPluginMetadata(options?: {
   ).readConfigFileSnapshotWithPluginMetadata();
 }
 
+/** Reused helper for promote Config Snapshot To Last Known Good behavior in src/config. */
 export async function promoteConfigSnapshotToLastKnownGood(
   snapshot: ConfigFileSnapshot,
 ): Promise<boolean> {
   return await createConfigIO().promoteConfigSnapshotToLastKnownGood(snapshot);
 }
 
+/** Reused helper for recover Config From Last Known Good behavior in src/config. */
 export async function recoverConfigFromLastKnownGood(params: {
   snapshot: ConfigFileSnapshot;
   reason: string;
@@ -2624,16 +2654,19 @@ export async function recoverConfigFromLastKnownGood(params: {
   return await createConfigIO().recoverConfigFromLastKnownGood(params);
 }
 
+/** Reused helper for recover Config From Json Root Suffix behavior in src/config. */
 export async function recoverConfigFromJsonRootSuffix(
   snapshot: ConfigFileSnapshot,
 ): Promise<boolean> {
   return await createConfigIO().recoverConfigFromJsonRootSuffix(snapshot);
 }
 
+/** Reused helper for read Source Config Snapshot behavior in src/config. */
 export async function readSourceConfigSnapshot(): Promise<ConfigFileSnapshot> {
   return await readConfigFileSnapshot();
 }
 
+/** Reused helper for read Config File Snapshot For Write behavior in src/config. */
 export async function readConfigFileSnapshotForWrite(options?: {
   skipPluginValidation?: boolean;
 }): Promise<ReadConfigFileSnapshotForWriteResult> {
@@ -2642,10 +2675,12 @@ export async function readConfigFileSnapshotForWrite(options?: {
   ).readConfigFileSnapshotForWrite();
 }
 
+/** Reused helper for read Source Config Snapshot For Write behavior in src/config. */
 export async function readSourceConfigSnapshotForWrite(): Promise<ReadConfigFileSnapshotForWriteResult> {
   return await readConfigFileSnapshotForWrite();
 }
 
+/** Reused helper for write Config File behavior in src/config. */
 export async function writeConfigFile(
   cfg: OpenClawConfig,
   options: ConfigWriteOptions = {},

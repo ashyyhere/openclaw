@@ -1,3 +1,4 @@
+// src/skills/runtime cron snapshot helpers and runtime behavior.
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { createLazyImportLoader } from "../../shared/lazy-promise.js";
 import type { SkillSnapshot } from "../types.js";
@@ -10,6 +11,7 @@ async function loadSkillsSnapshotRuntime() {
   return await skillsSnapshotRuntimeLoader.load();
 }
 
+/** Reused helper for resolve Cron Skills Snapshot behavior in src/skills/runtime. */
 export async function resolveCronSkillsSnapshot(params: {
   workspaceDir: string;
   config: OpenClawConfig;

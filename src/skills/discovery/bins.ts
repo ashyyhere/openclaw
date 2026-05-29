@@ -1,6 +1,8 @@
+// src/skills/discovery bins helpers and runtime behavior.
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 import type { SkillEntry } from "../types.js";
 
+/** Reused helper for collect Skill Bins behavior in src/skills/discovery. */
 export function collectSkillBins(entries: SkillEntry[]): string[] {
   const bins = new Set<string>();
   for (const entry of entries) {

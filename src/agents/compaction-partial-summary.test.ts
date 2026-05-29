@@ -1,3 +1,4 @@
+// Tests src/agents compaction partial summary test behavior.
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 /** Tests compaction partial-summary fallback behavior. */
 import type { AgentMessage } from "./runtime/index.js";

@@ -1,3 +1,4 @@
+// Tests extensions/feishu/src app registration test behavior.
 import { MAX_TIMER_TIMEOUT_MS } from "openclaw/plugin-sdk/number-runtime";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { beginAppRegistration, pollAppRegistration } from "./app-registration.js";

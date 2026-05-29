@@ -1,3 +1,4 @@
+// Tests extensions/file-transfer/src/shared node invoke policy test behavior.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

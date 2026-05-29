@@ -1,3 +1,4 @@
+// src/skills/lifecycle install helpers and runtime behavior.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -23,6 +24,7 @@ import { installDownloadSpec } from "./install-download.js";
 import { formatInstallFailureMessage } from "./install-output.js";
 import type { SkillInstallResult } from "./install-types.js";
 
+/** Shared type for Skill Install Request in src/skills/lifecycle. */
 export type SkillInstallRequest = InstallSafetyOverrides & {
   workspaceDir: string;
   skillName: string;
@@ -30,6 +32,7 @@ export type SkillInstallRequest = InstallSafetyOverrides & {
   timeoutMs?: number;
   config?: OpenClawConfig;
 };
+/** Re-exported API for src/skills/lifecycle, starting with Skill Install Result. */
 export type { SkillInstallResult } from "./install-types.js";
 
 type SkillsInstallDeps = {
@@ -455,6 +458,7 @@ async function executeInstallCommand(params: {
   });
 }
 
+/** Reused helper for install Skill behavior in src/skills/lifecycle. */
 export async function installSkill(params: SkillInstallRequest): Promise<SkillInstallResult> {
   const timeoutMs = Math.min(Math.max(params.timeoutMs ?? 300_000, 1_000), 900_000);
   const workspaceDir = resolveUserPath(params.workspaceDir);
@@ -573,6 +577,7 @@ export async function installSkill(params: SkillInstallRequest): Promise<SkillIn
   return withWarnings(await executeInstallCommand({ argv, timeoutMs, env }), warnings);
 }
 
+/** Reused constant for testing behavior in src/skills/lifecycle. */
 export const testing = {
   resolveDefaultNodeInstallStateDir,
   setDepsForTest(overrides?: Partial<SkillsInstallDeps>): void {
@@ -582,4 +587,5 @@ export const testing = {
     };
   },
 };
+/** Re-exported API for src/skills/lifecycle, starting with testing. */
 export { testing as __testing };

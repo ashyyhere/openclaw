@@ -1,3 +1,4 @@
+// Tests src/channels/plugins/contracts channel import guardrails test behavior.
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import { basename, dirname, resolve } from "node:path";

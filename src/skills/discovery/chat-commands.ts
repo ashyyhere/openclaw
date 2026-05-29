@@ -1,3 +1,4 @@
+// src/skills/discovery chat commands helpers and runtime behavior.
 import fs from "node:fs";
 import { listAgentIds, resolveAgentWorkspaceDir } from "../../agents/agent-scope.js";
 import { canExecRequestNode } from "../../agents/exec-defaults.js";
@@ -13,11 +14,13 @@ import type { SkillCommandSpec } from "../types.js";
 import { resolveEffectiveAgentSkillFilter } from "./agent-filter.js";
 import { listReservedChatSlashCommandNames } from "./chat-command-invocation.js";
 import { buildWorkspaceSkillCommandSpecs } from "./command-specs.js";
+/** Re-exported API for src/skills/discovery. */
 export {
   listReservedChatSlashCommandNames,
   resolveSkillCommandInvocation,
 } from "./chat-command-invocation.js";
 
+/** Reused helper for list Skill Commands For Workspace behavior in src/skills/discovery. */
 export function listSkillCommandsForWorkspace(params: {
   workspaceDir: string;
   cfg: OpenClawConfig;
@@ -56,6 +59,7 @@ function dedupeBySkillName(commands: SkillCommandSpec[]): SkillCommandSpec[] {
   return out;
 }
 
+/** Reused helper for list Skill Commands For Agents behavior in src/skills/discovery. */
 export function listSkillCommandsForAgents(params: {
   cfg: OpenClawConfig;
   agentIds?: string[];
@@ -128,7 +132,9 @@ export function listSkillCommandsForAgents(params: {
   return dedupeBySkillName(entries);
 }
 
+/** Reused constant for testing behavior in src/skills/discovery. */
 export const testing = {
   dedupeBySkillName,
 };
+/** Re-exported API for src/skills/discovery, starting with testing. */
 export { testing as __testing };

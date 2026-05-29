@@ -1,3 +1,4 @@
+// src/agents/command claude cli project dir helpers and runtime behavior.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -31,6 +32,7 @@ function canonicalizeWorkspaceDir(workspaceDir: string): string {
   }
 }
 
+/** Reused helper for resolve Claude Cli Project Dir For Workspace behavior in src/agents/command. */
 export function resolveClaudeCliProjectDirForWorkspace(params: {
   workspaceDir: string;
   homeDir?: string;

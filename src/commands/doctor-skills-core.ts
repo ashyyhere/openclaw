@@ -1,6 +1,8 @@
+// src/commands doctor skills core helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { SkillStatusEntry, SkillStatusReport } from "../skills/discovery/status.js";
 
+/** Reused helper for collect Unavailable Agent Skills behavior in src/commands. */
 export function collectUnavailableAgentSkills(report: SkillStatusReport): SkillStatusEntry[] {
   return report.skills.filter(
     (skill) =>
@@ -11,6 +13,7 @@ export function collectUnavailableAgentSkills(report: SkillStatusReport): SkillS
   );
 }
 
+/** Reused helper for disable Unavailable Skills In Config behavior in src/commands. */
 export function disableUnavailableSkillsInConfig(
   config: OpenClawConfig,
   skills: readonly SkillStatusEntry[],

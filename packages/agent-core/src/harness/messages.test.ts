@@ -1,3 +1,4 @@
+// Tests packages/agent-core/src/harness messages test behavior.
 import { describe, expect, it } from "vitest";
 import { convertToLlm, createCustomMessage } from "./messages.js";
 

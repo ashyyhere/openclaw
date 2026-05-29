@@ -1,3 +1,4 @@
+// Tests src/skills/runtime snapshot hydration test behavior.
 import { describe, expect, it } from "vitest";
 import type { SessionSkillSnapshot } from "../../config/sessions/types.js";
 import { createCanonicalFixtureSkill } from "../test-support/test-helpers.js";

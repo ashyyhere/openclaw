@@ -1,3 +1,4 @@
+// src/agents/command attempt execution helpers helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import readline from "node:readline";
@@ -83,6 +84,7 @@ export async function sessionFileHasContent(sessionFile: string | undefined): Pr
   return await jsonlFileHasAssistantMessage(sessionFile);
 }
 
+/** Reused helper for claude Cli Session Transcript Path behavior in src/agents/command. */
 export function claudeCliSessionTranscriptPath(params: {
   sessionId: string | undefined;
   workspaceDir: string | undefined;
@@ -108,6 +110,7 @@ export function claudeCliSessionTranscriptPath(params: {
 const CLAUDE_CLI_TRANSCRIPT_FLUSH_GRACE_MS = 250;
 const CLAUDE_CLI_ORPHAN_PROBE_TAIL_BYTES = 1024 * 1024;
 
+/** Reused helper for claude Cli Session Transcript Has Content behavior in src/agents/command. */
 export async function claudeCliSessionTranscriptHasContent(params: {
   sessionId: string | undefined;
   workspaceDir: string | undefined;
@@ -435,6 +438,7 @@ export function buildClaudeCliFallbackContextPrelude(params: {
   return formatClaudeCliFallbackPrelude(seed, { charBudget: params.charBudget });
 }
 
+/** Reused helper for create Acp Visible Text Accumulator behavior in src/agents/command. */
 export function createAcpVisibleTextAccumulator() {
   let pendingSilentPrefix = "";
   let visibleText = "";
