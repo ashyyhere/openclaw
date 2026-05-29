@@ -1,4 +1,4 @@
-// video-generation live test helpers helpers and runtime behavior.
+// Live-test helpers for selecting video models, auth stores, and provider-specific lanes.
 import type { OpenClawConfig } from "../config/types.js";
 import {
   parseLiveCsvFilter,
@@ -9,10 +9,10 @@ import {
 } from "../media-generation/live-test-helpers.js";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
-/** Re-exported API for src/video-generation, starting with parse Provider Model Map. */
+/** Re-export shared live-test parsers so video tests use the same env syntax as media generation. */
 export { parseProviderModelMap, redactLiveApiKey };
 
-/** Reused constant for DEFAULT LIVE VIDEO MODELS behavior in src/video-generation. */
+/** Default provider/model refs used when live video tests are enabled without explicit overrides. */
 export const DEFAULT_LIVE_VIDEO_MODELS: Record<string, string> = {
   alibaba: "alibaba/wan2.6-t2v",
   byteplus: "byteplus/seedance-1-0-lite-t2v-250428",
@@ -34,7 +34,7 @@ const REMOTE_URL_VIDEO_TO_VIDEO_PROVIDERS = new Set(["alibaba", "google", "opena
 const BUFFER_BACKED_IMAGE_TO_VIDEO_UNSUPPORTED_PROVIDERS = new Set(["vydra"]);
 const TOGETHER_BUFFER_BACKED_IMAGE_TO_VIDEO_MODEL = "Wan-AI/Wan2.2-I2V-A14B";
 
-/** Reused helper for resolve Live Video Resolution behavior in src/video-generation. */
+/** Picks a conservative live-test resolution supported by the selected provider lane. */
 export function resolveLiveVideoResolution(params: {
   providerId: string;
   modelRef: string;
@@ -52,17 +52,17 @@ export function resolveLiveVideoResolution(params: {
   return "480P";
 }
 
-/** Reused helper for parse Csv Filter behavior in src/video-generation. */
+/** Parses comma-separated provider/model filters for live video tests. */
 export function parseCsvFilter(raw?: string): Set<string> | null {
   return parseLiveCsvFilter(raw);
 }
 
-/** Reused helper for resolve Configured Live Video Models behavior in src/video-generation. */
+/** Resolves live-test video model overrides from the OpenClaw config default. */
 export function resolveConfiguredLiveVideoModels(cfg: OpenClawConfig): Map<string, string> {
   return resolveConfiguredLiveProviderModels(cfg.agents?.defaults?.videoGenerationModel);
 }
 
-/** Reused helper for can Run Buffer Backed Video To Video Live Lane behavior in src/video-generation. */
+/** Checks whether the provider/model can run live video-to-video tests with in-memory buffers. */
 export function canRunBufferBackedVideoToVideoLiveLane(params: {
   providerId: string;
   modelRef: string;
@@ -85,7 +85,7 @@ export function canRunBufferBackedVideoToVideoLiveLane(params: {
   return model === "gen4_aleph";
 }
 
-/** Reused helper for can Run Buffer Backed Image To Video Live Lane behavior in src/video-generation. */
+/** Checks whether the provider/model can run live image-to-video tests with in-memory buffers. */
 export function canRunBufferBackedImageToVideoLiveLane(params: {
   providerId: string;
   modelRef: string;
@@ -100,7 +100,7 @@ export function canRunBufferBackedImageToVideoLiveLane(params: {
   return true;
 }
 
-/** Reused helper for resolve Live Video Auth Store behavior in src/video-generation. */
+/** Resolves whether live video tests should use profile-backed auth or direct env keys. */
 export function resolveLiveVideoAuthStore(params: {
   requireProfileKeys: boolean;
   hasLiveKeys: boolean;

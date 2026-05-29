@@ -1,6 +1,6 @@
 import { parseGenerationModelRef } from "../../packages/media-generation-core/src/model-ref.js";
 
-/** Reused helper for parse Video Generation Model Ref behavior in src/video-generation. */
+/** Parses `provider/model` refs for video generation using the shared media-generation rules. */
 export function parseVideoGenerationModelRef(
   raw: string | undefined,
 ): { provider: string; model: string } | null {

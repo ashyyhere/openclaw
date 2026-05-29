@@ -1,4 +1,4 @@
-// video-generation runtime types helpers and runtime behavior.
+// Runtime request/result types for selecting video providers and reporting fallback attempts.
 import type { AuthProfileStore } from "../agents/auth-profiles/types.js";
 import type { FallbackAttempt } from "../agents/model-fallback.types.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -11,7 +11,7 @@ import type {
   VideoGenerationSourceAsset,
 } from "./types.js";
 
-/** Shared type for Generate Video Params in src/video-generation. */
+/** High-level runtime request before provider/model fallback and capability overlay resolution. */
 export type GenerateVideoParams = {
   cfg: OpenClawConfig;
   prompt: string;
@@ -34,7 +34,7 @@ export type GenerateVideoParams = {
   timeoutMs?: number;
 };
 
-/** Shared type for Generate Video Runtime Result in src/video-generation. */
+/** Runtime response including selected provider/model, fallback trace, videos, and ignored overrides. */
 export type GenerateVideoRuntimeResult = {
   videos: GeneratedVideoAsset[];
   provider: string;
@@ -45,10 +45,10 @@ export type GenerateVideoRuntimeResult = {
   ignoredOverrides: VideoGenerationIgnoredOverride[];
 };
 
-/** Shared type for List Runtime Video Generation Providers Params in src/video-generation. */
+/** Input for provider listing; config is needed to include plugin capability providers. */
 export type ListRuntimeVideoGenerationProvidersParams = {
   config?: OpenClawConfig;
 };
 
-/** Shared type for Runtime Video Generation Provider in src/video-generation. */
+/** Runtime-visible provider shape, currently identical to the plugin provider contract. */
 export type RuntimeVideoGenerationProvider = VideoGenerationProvider;

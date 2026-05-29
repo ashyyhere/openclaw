@@ -1,4 +1,4 @@
-// video-generation provider registry helpers and runtime behavior.
+// Registry for plugin-provided video-generation providers and aliases.
 import { normalizeProviderId } from "../agents/model-selection.js";
 import type { OpenClawConfig } from "../config/types.js";
 import { isBlockedObjectKey } from "../infra/prototype-keys.js";
@@ -60,14 +60,14 @@ function buildProviderMaps(cfg?: OpenClawConfig): {
   return { canonical, aliases };
 }
 
-/** Reused helper for list Video Generation Providers behavior in src/video-generation. */
+/** Lists canonical video-generation providers available from built-ins and enabled plugins. */
 export function listVideoGenerationProviders(
   cfg?: OpenClawConfig,
 ): VideoGenerationProviderPlugin[] {
   return [...buildProviderMaps(cfg).canonical.values()];
 }
 
-/** Reused helper for get Video Generation Provider behavior in src/video-generation. */
+/** Resolves a provider id or alias after normalizing and rejecting prototype-polluting keys. */
 export function getVideoGenerationProvider(
   providerId: string | undefined,
   cfg?: OpenClawConfig,

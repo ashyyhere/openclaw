@@ -1,4 +1,4 @@
-// video-generation capability overlays helpers and runtime behavior.
+// Applies provider/model capability overlays and validates reference-input support before video generation.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveVideoGenerationModeCapabilities } from "./capabilities.js";
 import type { GenerateVideoParams } from "./runtime-types.js";
@@ -15,7 +15,7 @@ function isVideoGenerationTransformCapabilities(
   return Boolean(capabilities && "enabled" in capabilities);
 }
 
-/** Reused helper for build Reference Input Capability Failure behavior in src/video-generation. */
+/** Returns a skip/failure reason when requested image/video/audio references exceed provider capabilities. */
 export function buildReferenceInputCapabilityFailure(params: {
   providerId: string;
   model: string;
@@ -106,7 +106,7 @@ function mergeVideoGenerationModeCapabilities<
   } as T;
 }
 
-/** Reused helper for merge Video Generation Provider Capabilities behavior in src/video-generation. */
+/** Merges base provider capabilities with model-specific overlays, including provider option maps. */
 export function mergeVideoGenerationProviderCapabilities(
   base: VideoGenerationProviderCapabilities,
   overlay: VideoGenerationProviderCapabilities,
@@ -133,7 +133,7 @@ export function mergeVideoGenerationProviderCapabilities(
   };
 }
 
-/** Reused helper for resolve Provider With Model Capabilities behavior in src/video-generation. */
+/** Resolves model-specific capability overlays and returns a provider copy with merged capabilities. */
 export async function resolveProviderWithModelCapabilities(params: {
   provider: VideoGenerationProvider;
   providerId: string;
