@@ -1,5 +1,5 @@
-// test-utils fetch mock helpers and runtime behavior.
-/** Shared type for Fetch Mock in src/test-utils. */
+// Fetch mock helpers that emulate OpenClaw's preconnect-capable fetch shape.
+/** Fetch-compatible mock signature accepted by network helper tests. */
 export type FetchMock = (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 
 type FetchPreconnectOptions = {
@@ -14,13 +14,13 @@ type FetchWithPreconnect = {
   __openclawAcceptsDispatcher: true;
 };
 
-/** Reused helper for with Fetch Preconnect behavior in src/test-utils. */
+/** Adds no-op preconnect and dispatcher marker fields to a fetch mock. */
 export function withFetchPreconnect<T extends typeof fetch>(fn: T): T & FetchWithPreconnect;
-/** Reused helper for with Fetch Preconnect behavior in src/test-utils. */
+/** Adds no-op preconnect and dispatcher marker fields to an object-style fetch mock. */
 export function withFetchPreconnect<T extends object>(
   fn: T,
 ): T & FetchWithPreconnect & typeof fetch;
-/** Reused helper for with Fetch Preconnect behavior in src/test-utils. */
+/** Implements the shared preconnect marker assignment for fetch mocks. */
 export function withFetchPreconnect(fn: object) {
   return Object.assign(fn, {
     preconnect: (_url: string | URL, _options?: FetchPreconnectOptions) => {},

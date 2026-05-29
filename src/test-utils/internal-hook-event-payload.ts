@@ -1,5 +1,5 @@
-// test-utils internal hook event payload helpers and runtime behavior.
-/** Reused helper for create Internal Hook Event Payload behavior in src/test-utils. */
+// Test payload builder for internal hook event fixtures.
+/** Builds the minimal internal hook event payload shape expected by hook tests. */
 export function createInternalHookEventPayload(
   type: string,
   action: string,

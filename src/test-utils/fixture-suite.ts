@@ -1,9 +1,9 @@
-// test-utils fixture suite helpers and runtime behavior.
+// Temporary fixture-suite directory manager for tests that create case folders.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 
-/** Reused helper for create Fixture Suite behavior in src/test-utils. */
+/** Creates a reusable temp root with numbered per-case directories and cleanup. */
 export function createFixtureSuite(rootPrefix: string) {
   let fixtureRoot = "";
   let fixtureCount = 0;

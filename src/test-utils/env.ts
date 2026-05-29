@@ -1,7 +1,7 @@
-// test-utils env helpers and runtime behavior.
+// Process environment snapshot and scoped mutation helpers for tests.
 import path from "node:path";
 
-/** Reused helper for capture Env behavior in src/test-utils. */
+/** Captures selected env vars and returns a restore handle. */
 export function captureEnv(keys: string[]) {
   const snapshot = new Map<string, string | undefined>();
   for (const key of keys) {
@@ -56,7 +56,7 @@ function resolveWindowsHomeParts(homeDir: string): { homeDrive?: string; homePat
   };
 }
 
-/** Reused helper for create Path Resolution Env behavior in src/test-utils. */
+/** Builds an env map that makes home/state path resolution deterministic. */
 export function createPathResolutionEnv(
   homeDir: string,
   env: Record<string, string | undefined> = {},
@@ -83,7 +83,7 @@ export function createPathResolutionEnv(
   return nextEnv;
 }
 
-/** Reused helper for with Path Resolution Env behavior in src/test-utils. */
+/** Runs a callback with only path-resolution env vars scoped and restored. */
 export function withPathResolutionEnv<T>(
   homeDir: string,
   env: Record<string, string | undefined>,
@@ -97,7 +97,7 @@ export function withPathResolutionEnv<T>(
   return withEnv(scopedEnv, () => fn(resolvedEnv));
 }
 
-/** Reused helper for capture Full Env behavior in src/test-utils. */
+/** Captures the full process environment and returns a restore handle. */
 export function captureFullEnv() {
   const snapshot: Record<string, string | undefined> = { ...process.env };
 
@@ -119,7 +119,7 @@ export function captureFullEnv() {
   };
 }
 
-/** Reused helper for with Env behavior in src/test-utils. */
+/** Temporarily applies env values around a synchronous callback. */
 export function withEnv<T>(env: Record<string, string | undefined>, fn: () => T): T {
   const snapshot = captureEnv(Object.keys(env));
   try {
@@ -130,7 +130,7 @@ export function withEnv<T>(env: Record<string, string | undefined>, fn: () => T)
   }
 }
 
-/** Reused helper for with Env Async behavior in src/test-utils. */
+/** Temporarily applies env values around an async callback. */
 export async function withEnvAsync<T>(
   env: Record<string, string | undefined>,
   fn: () => Promise<T>,

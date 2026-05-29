@@ -1,9 +1,9 @@
-// test-utils temp dir helpers and runtime behavior.
+// Temporary directory wrapper with automatic recursive cleanup.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 
-/** Reused helper for with Temp Dir behavior in src/test-utils. */
+/** Runs a callback inside a new temp directory and removes it afterwards. */
 export async function withTempDir<T>(prefix: string, run: (dir: string) => Promise<T>): Promise<T> {
   const dir = await fs.mkdtemp(path.join(os.tmpdir(), prefix));
   try {

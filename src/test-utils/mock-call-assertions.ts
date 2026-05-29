@@ -1,7 +1,7 @@
-// test-utils mock call assertions helpers and runtime behavior.
+// Vitest mock call inspection helpers with clearer assertion failures.
 import { expect } from "vitest";
 
-/** Reused helper for mock Call behavior in src/test-utils. */
+/** Returns a mock call by index or throws an explicit missing-call error. */
 export function mockCall(mock: unknown, index = 0): Array<unknown> {
   const calls = (mock as { mock?: { calls?: Array<Array<unknown>> } }).mock?.calls ?? [];
   const call = calls.at(index);
@@ -11,7 +11,7 @@ export function mockCall(mock: unknown, index = 0): Array<unknown> {
   return call;
 }
 
-/** Reused helper for mock First Object Arg behavior in src/test-utils. */
+/** Returns the first mock argument when it is an object record. */
 export function mockFirstObjectArg(mock: unknown): Record<string, unknown> {
   const [arg] = mockCall(mock);
   if (!arg || typeof arg !== "object") {
@@ -20,7 +20,7 @@ export function mockFirstObjectArg(mock: unknown): Record<string, unknown> {
   return arg as Record<string, unknown>;
 }
 
-/** Reused helper for expect Object Fields behavior in src/test-utils. */
+/** Asserts selected object fields without requiring a full object match. */
 export function expectObjectFields(value: unknown, expected: Record<string, unknown>): void {
   if (!value || typeof value !== "object") {
     throw new Error("expected object fields");

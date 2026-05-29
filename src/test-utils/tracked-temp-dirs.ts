@@ -1,9 +1,9 @@
-// test-utils tracked temp dirs helpers and runtime behavior.
+// Temp directory tracker for tests that need multiple deterministic child dirs.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 
-/** Reused helper for create Tracked Temp Dirs behavior in src/test-utils. */
+/** Creates a temp-dir allocator with shared prefix roots and one-shot cleanup. */
 export function createTrackedTempDirs() {
   const prefixRoots = new Map<string, { root: string; nextIndex: number }>();
   const pendingPrefixRoots = new Map<string, Promise<{ root: string; nextIndex: number }>>();

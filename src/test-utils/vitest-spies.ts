@@ -1,7 +1,7 @@
-// test-utils vitest spies helpers and runtime behavior.
+// Vitest spy helpers that restore platform/process mocks reliably.
 import { vi } from "vitest";
 
-/** Shared type for Restorable Mock in src/test-utils. */
+/** Minimal mock handle that can be restored after a scoped test callback. */
 export type RestorableMock = {
   mockRestore(): void;
 };
@@ -20,14 +20,14 @@ function isPromiseLike<T>(value: T | Promise<T>): value is Promise<T> {
   );
 }
 
-/** Reused helper for with Restored Mocks behavior in src/test-utils. */
+/** Runs an async callback and restores mocks in reverse order afterwards. */
 export function withRestoredMocks<T>(
   mocks: readonly RestorableMock[],
   run: () => Promise<T>,
 ): Promise<T>;
-/** Reused helper for with Restored Mocks behavior in src/test-utils. */
+/** Runs a sync callback and restores mocks in reverse order afterwards. */
 export function withRestoredMocks<T>(mocks: readonly RestorableMock[], run: () => T): T;
-/** Reused helper for with Restored Mocks behavior in src/test-utils. */
+/** Shared implementation for sync and async mock restoration scopes. */
 export function withRestoredMocks<T>(
   mocks: readonly RestorableMock[],
   run: () => T | Promise<T>,
@@ -45,16 +45,16 @@ export function withRestoredMocks<T>(
   }
 }
 
-/** Reused helper for mock Process Platform behavior in src/test-utils. */
+/** Mocks process.platform through a getter spy. */
 export function mockProcessPlatform(platform: NodeJS.Platform): RestorableMock {
   return vi.spyOn(process, "platform", "get").mockReturnValue(platform);
 }
 
-/** Reused helper for with Mocked Platform behavior in src/test-utils. */
+/** Runs an async callback with process.platform mocked. */
 export function withMockedPlatform<T>(platform: NodeJS.Platform, run: () => Promise<T>): Promise<T>;
-/** Reused helper for with Mocked Platform behavior in src/test-utils. */
+/** Runs a sync callback with process.platform mocked. */
 export function withMockedPlatform<T>(platform: NodeJS.Platform, run: () => T): T;
-/** Reused helper for with Mocked Platform behavior in src/test-utils. */
+/** Shared implementation for scoped process.platform mocks. */
 export function withMockedPlatform<T>(
   platform: NodeJS.Platform,
   run: () => T | Promise<T>,
@@ -62,11 +62,11 @@ export function withMockedPlatform<T>(
   return withRestoredMocks([mockProcessPlatform(platform)], run);
 }
 
-/** Reused helper for with Mocked Windows Platform behavior in src/test-utils. */
+/** Runs an async callback with process.platform mocked as win32. */
 export function withMockedWindowsPlatform<T>(run: () => Promise<T>): Promise<T>;
-/** Reused helper for with Mocked Windows Platform behavior in src/test-utils. */
+/** Runs a sync callback with process.platform mocked as win32. */
 export function withMockedWindowsPlatform<T>(run: () => T): T;
-/** Reused helper for with Mocked Windows Platform behavior in src/test-utils. */
+/** Shared implementation for scoped win32 platform mocks. */
 export function withMockedWindowsPlatform<T>(run: () => T | Promise<T>): T | Promise<T> {
   return withMockedPlatform("win32", run);
 }
