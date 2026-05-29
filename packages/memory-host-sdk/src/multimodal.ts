@@ -1,5 +1,5 @@
-// packages/memory-host-sdk/src multimodal helpers and runtime behavior.
-/** Re-exported public API for packages/memory-host-sdk. */
+// Public multimodal memory settings helpers.
+/** Multimodal memory feature flag normalization and settings type. */
 export {
   isMemoryMultimodalEnabled,
   normalizeMemoryMultimodalSettings,

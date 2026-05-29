@@ -1,5 +1,5 @@
-// packages/memory-host-sdk/src status helpers and runtime behavior.
-/** Re-exported public API for packages/memory-host-sdk. */
+// Public memory status formatting helpers.
+/** Cache, FTS, and vector status summary helpers for memory host UIs and CLIs. */
 export {
   resolveMemoryCacheSummary,
   resolveMemoryFtsState,
