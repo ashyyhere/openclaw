@@ -1,4 +1,3 @@
-// extensions/voice-call/src/webhook tailscale helpers and runtime behavior.
 import { spawn } from "node:child_process";
 import type { VoiceCallConfig } from "../config.js";
 

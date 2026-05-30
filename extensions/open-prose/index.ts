@@ -1,4 +1,3 @@
-// extensions/open-prose index helpers and runtime behavior.
 import { definePluginEntry, type OpenClawPluginApi } from "./runtime-api.js";
 
 export default definePluginEntry({

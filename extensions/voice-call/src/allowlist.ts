@@ -1,4 +1,3 @@
-// extensions/voice-call/src allowlist helpers and runtime behavior.
 export function normalizePhoneNumber(input?: string): string {
   if (!input) {
     return "";
