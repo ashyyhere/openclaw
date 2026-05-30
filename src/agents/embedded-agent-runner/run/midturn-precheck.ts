@@ -1,7 +1,7 @@
 /** Signal type used to stop a turn before mid-turn context overflow. */
 import type { PreemptiveCompactionRoute } from "./preemptive-compaction.types.js";
 
-/** Shared type for Mid Turn Precheck Request in src/agents/embedded-agent-runner. */
+/** Snapshot of the prompt-budget overflow detected before a mid-turn model call. */
 export type MidTurnPrecheckRequest = {
   route: Exclude<PreemptiveCompactionRoute, "fits">;
   estimatedPromptTokens: number;
@@ -11,11 +11,11 @@ export type MidTurnPrecheckRequest = {
   effectiveReserveTokens: number;
 };
 
-/** Reused constant for MID TURN PRECHECK ERROR MESSAGE behavior in src/agents/embedded-agent-runner. */
+/** Stable error message for mid-turn context overflow signals. */
 export const MID_TURN_PRECHECK_ERROR_MESSAGE =
   "Context overflow: prompt too large for the model (mid-turn precheck).";
 
-/** Reused class for Mid Turn Precheck Signal behavior in src/agents/embedded-agent-runner. */
+/** Error-like control signal carrying the mid-turn overflow route request. */
 export class MidTurnPrecheckSignal extends Error {
   readonly request: MidTurnPrecheckRequest;
 

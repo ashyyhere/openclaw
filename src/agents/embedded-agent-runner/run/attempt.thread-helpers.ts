@@ -3,7 +3,7 @@ import type { OpenClawConfig } from "../../../config/types.openclaw.js";
 import { joinPresentTextSegments } from "../../../shared/text/join-segments.js";
 import { normalizeStructuredPromptSection } from "../../prompt-cache-stability.js";
 
-/** Reused constant for ATTEMPT CACHE TTL CUSTOM TYPE behavior in src/agents/embedded-agent-runner. */
+/** Transcript custom-entry type that marks a prompt-cache TTL preservation point. */
 export const ATTEMPT_CACHE_TTL_CUSTOM_TYPE = "openclaw.cache-ttl";
 
 /** Appends hook-provided system prompt context to the base prompt. */

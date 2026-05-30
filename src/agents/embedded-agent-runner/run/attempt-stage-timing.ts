@@ -5,19 +5,19 @@ export type EmbeddedRunStageTiming = {
   elapsedMs: number;
 };
 
-/** Shared type for Embedded Run Stage Summary in src/agents/embedded-agent-runner. */
+/** Cumulative timing snapshot for one embedded run attempt. */
 export type EmbeddedRunStageSummary = {
   totalMs: number;
   stages: EmbeddedRunStageTiming[];
 };
 
-/** Shared type for Embedded Run Stage Tracker in src/agents/embedded-agent-runner. */
+/** Mutable tracker that records stage marks and returns immutable snapshots. */
 export type EmbeddedRunStageTracker = {
   mark: (name: string) => void;
   snapshot: () => EmbeddedRunStageSummary;
 };
 
-/** Reused constant for EMBEDDED RUN ATTEMPT DISPATCH STAGE behavior in src/agents/embedded-agent-runner. */
+/** Stage names used around workspace, prompt, runtime-plan, and dispatch setup. */
 export const EMBEDDED_RUN_ATTEMPT_DISPATCH_STAGE = {
   workspace: "attempt-workspace",
   prompt: "attempt-prompt",

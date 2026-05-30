@@ -5,7 +5,7 @@ type AgentModelWithOptionalContextTokens = Model & {
   contextTokens?: number;
 };
 
-/** Reused helper for read Agent Model Context Tokens behavior in src/agents/embedded-agent-runner. */
+/** Reads finite context-token metadata from a resolved model definition. */
 export function readAgentModelContextTokens(model: Model | null | undefined): number | undefined {
   const value = (model as AgentModelWithOptionalContextTokens | null | undefined)?.contextTokens;
   return typeof value === "number" && Number.isFinite(value) ? value : undefined;
