@@ -1,4 +1,4 @@
-// src/agents/command attempt execution helpers helpers and runtime behavior.
+/** Helpers for transcript probing, fallback prelude, and visible text accumulation. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import readline from "node:readline";
@@ -84,7 +84,7 @@ export async function sessionFileHasContent(sessionFile: string | undefined): Pr
   return await jsonlFileHasAssistantMessage(sessionFile);
 }
 
-/** Reused helper for claude Cli Session Transcript Path behavior in src/agents/command. */
+/** Resolves the Claude CLI JSONL transcript path for a session/workspace. */
 export function claudeCliSessionTranscriptPath(params: {
   sessionId: string | undefined;
   workspaceDir: string | undefined;
@@ -110,7 +110,7 @@ export function claudeCliSessionTranscriptPath(params: {
 const CLAUDE_CLI_TRANSCRIPT_FLUSH_GRACE_MS = 250;
 const CLAUDE_CLI_ORPHAN_PROBE_TAIL_BYTES = 1024 * 1024;
 
-/** Reused helper for claude Cli Session Transcript Has Content behavior in src/agents/command. */
+/** Checks whether a Claude CLI transcript has flushed assistant content. */
 export async function claudeCliSessionTranscriptHasContent(params: {
   sessionId: string | undefined;
   workspaceDir: string | undefined;
@@ -246,6 +246,7 @@ async function jsonlFileHasOrphanedTrailingToolUse(filePath: string): Promise<bo
   }
 }
 
+/** Checks whether a Claude CLI transcript ends with an orphaned tool use. */
 export async function claudeCliSessionTranscriptHasOrphanedToolUse(params: {
   sessionId: string | undefined;
   workspaceDir: string | undefined;
@@ -262,6 +263,7 @@ export async function claudeCliSessionTranscriptHasOrphanedToolUse(params: {
   return await jsonlFileHasOrphanedTrailingToolUse(expectedPath);
 }
 
+/** Builds the retry prompt used when falling back with prior session context. */
 export function resolveFallbackRetryPrompt(params: {
   body: string;
   isFallbackRetry: boolean;
@@ -438,7 +440,7 @@ export function buildClaudeCliFallbackContextPrelude(params: {
   return formatClaudeCliFallbackPrelude(seed, { charBudget: params.charBudget });
 }
 
-/** Reused helper for create Acp Visible Text Accumulator behavior in src/agents/command. */
+/** Accumulates ACP-visible text while stripping silent reply prefixes. */
 export function createAcpVisibleTextAccumulator() {
   let pendingSilentPrefix = "";
   let visibleText = "";

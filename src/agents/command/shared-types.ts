@@ -14,8 +14,7 @@ export type AgentStreamParams = {
   seed?: number;
 };
 
-// Simplified tool definition for client-provided tools (OpenResponses hosted tools)
-/** Shared type for Client Tool Definition in src/agents/command. */
+/** Client-provided function tool definition forwarded to OpenResponses. */
 export type ClientToolDefinition = {
   type: "function";
   function: {

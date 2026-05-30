@@ -15,7 +15,7 @@ export type ImageContent = {
   data: string;
   mimeType: string;
 };
-/** Re-exported API for src/agents/command, starting with Agent Stream Params. */
+/** Provider stream parameter overrides accepted by command execution. */
 export type { AgentStreamParams } from "./shared-types.js";
 
 /** Metadata overrides attached to command results for fallback/handoff paths. */

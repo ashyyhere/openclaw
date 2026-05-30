@@ -113,12 +113,12 @@ const cliCompactionDeps: CliCompactionDeps = {
   recordCliCompactionInStore: recordCliCompactionInStoreImpl,
 };
 
-/** Reused helper for set Cli Compaction Test Deps behavior in src/agents/command. */
+/** Overrides CLI compaction dependencies for tests. */
 export function setCliCompactionTestDeps(overrides: Partial<typeof cliCompactionDeps>): void {
   Object.assign(cliCompactionDeps, overrides);
 }
 
-/** Reused helper for reset Cli Compaction Test Deps behavior in src/agents/command. */
+/** Restores default CLI compaction dependencies after tests. */
 export function resetCliCompactionTestDeps(): void {
   Object.assign(cliCompactionDeps, {
     openSessionManager: (sessionFile: string) => SessionManager.open(sessionFile),
@@ -438,7 +438,7 @@ async function compactNativeHarnessCliTranscript(params: {
   return { compacted: true, result };
 }
 
-/** Reused helper for run Cli Turn Compaction Lifecycle behavior in src/agents/command. */
+/** Runs pre/post-turn compaction maintenance for CLI-backed sessions. */
 export async function runCliTurnCompactionLifecycle(params: {
   cfg: OpenClawConfig;
   sessionId: string;

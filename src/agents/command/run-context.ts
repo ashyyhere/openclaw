@@ -4,7 +4,7 @@ import { normalizeAccountId } from "../../utils/account-id.js";
 import { resolveMessageChannel } from "../../utils/message-channel.js";
 import type { AgentCommandOpts, AgentRunContext } from "./types.js";
 
-/** Reused helper for resolve Agent Run Context behavior in src/agents/command. */
+/** Normalizes channel, account, thread, and delivery context for a run. */
 export function resolveAgentRunContext(opts: AgentCommandOpts): AgentRunContext {
   const merged: AgentRunContext = opts.runContext ? { ...opts.runContext } : {};
 
