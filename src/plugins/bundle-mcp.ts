@@ -1,4 +1,4 @@
-// plugins bundle mcp helpers and runtime behavior.
+// MCP server config extraction for Claude/Codex/Cursor plugin bundles.
 import fs from "node:fs";
 import path from "node:path";
 import { applyMergePatch } from "../config/merge-patch.js";
@@ -21,26 +21,26 @@ import {
 import type { PluginManifestRegistry } from "./manifest-registry.js";
 import type { PluginBundleFormat } from "./manifest-types.js";
 
-/** Shared type for Bundle Mcp Server Config in src/plugins. */
+/** Raw MCP server config extracted from a plugin bundle. */
 export type BundleMcpServerConfig = Record<string, unknown>;
 
-/** Shared type for Bundle Mcp Config in src/plugins. */
+/** MCP server map merged from bundle manifests and sidecar files. */
 export type BundleMcpConfig = {
   mcpServers: Record<string, BundleMcpServerConfig>;
 };
 
-/** Shared type for Bundle Mcp Diagnostic in src/plugins. */
+/** Diagnostic emitted while loading MCP config for a plugin bundle. */
 export type BundleMcpDiagnostic = {
   pluginId: string;
   message: string;
 };
 
-/** Shared type for Enabled Bundle Mcp Config Result in src/plugins. */
+/** Enabled bundle MCP config plus diagnostics from configured plugins. */
 export type EnabledBundleMcpConfigResult = {
   config: BundleMcpConfig;
   diagnostics: BundleMcpDiagnostic[];
 };
-/** Shared type for Bundle Mcp Runtime Support in src/plugins. */
+/** Runtime support summary for MCP servers declared by a plugin bundle. */
 export type BundleMcpRuntimeSupport = {
   hasSupportedStdioServer: boolean;
   supportedServerNames: string[];
@@ -68,7 +68,7 @@ function resolveBundleMcpConfigPaths(params: {
   return mergeBundlePathLists(defaults, declared);
 }
 
-/** Reused helper for extract Mcp Server Map behavior in src/plugins. */
+/** Extracts an MCP server map from supported manifest/server JSON shapes. */
 export function extractMcpServerMap(raw: unknown): Record<string, BundleMcpServerConfig> {
   if (!isRecord(raw)) {
     return {};
@@ -278,7 +278,7 @@ function loadBundleMcpConfig(params: {
   return { config: merged, diagnostics };
 }
 
-/** Reused helper for inspect Bundle Mcp Runtime Support behavior in src/plugins. */
+/** Inspects whether a bundle declares MCP servers supported by OpenClaw runtime. */
 export function inspectBundleMcpRuntimeSupport(params: {
   pluginId: string;
   rootDir: string;
@@ -296,7 +296,7 @@ export function inspectBundleMcpRuntimeSupport(params: {
   };
 }
 
-/** Reused helper for load Enabled Bundle Mcp Config behavior in src/plugins. */
+/** Loads MCP server config from enabled plugin bundles in the current workspace. */
 export function loadEnabledBundleMcpConfig(params: {
   workspaceDir: string;
   cfg?: OpenClawConfig;

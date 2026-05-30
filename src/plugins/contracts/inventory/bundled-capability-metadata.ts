@@ -1,4 +1,4 @@
-// plugins/contracts/inventory bundled capability metadata helpers and runtime behavior.
+// Build/test inventory snapshots for bundled plugin capability contracts.
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -19,7 +19,7 @@ import { uniqueStrings } from "../shared.js";
 // Build/test inventory only.
 // Runtime code should prefer manifest/runtime registry queries instead of these snapshots.
 
-/** Shared type for Bundled Plugin Contract Snapshot in src/plugins/contracts. */
+/** Capability ids extracted from one bundled plugin manifest. */
 export type BundledPluginContractSnapshot = {
   pluginId: string;
   cliBackendIds: string[];
@@ -52,7 +52,7 @@ const RUNNING_FROM_BUILT_ARTIFACT =
   CURRENT_MODULE_PATH.includes(`${path.sep}dist${path.sep}`) ||
   CURRENT_MODULE_PATH.includes(`${path.sep}dist-runtime${path.sep}`);
 
-/** Shared type for Bundled Capability Manifest in src/plugins/contracts. */
+/** Manifest fields needed to build bundled capability inventory snapshots. */
 export type BundledCapabilityManifest = Pick<
   PluginManifest,
   | "id"
@@ -122,7 +122,7 @@ function normalizeSetupProviderEnvVars(setup: PluginManifest["setup"]): Record<s
   );
 }
 
-/** Reused helper for build Bundled Plugin Contract Snapshot behavior in src/plugins/contracts. */
+/** Builds the capability inventory snapshot for one bundled plugin manifest. */
 export function buildBundledPluginContractSnapshot(
   manifest: BundledCapabilityManifest,
 ): BundledPluginContractSnapshot {
@@ -181,7 +181,7 @@ export function buildBundledPluginContractSnapshot(
   };
 }
 
-/** Reused helper for has Bundled Plugin Contract Snapshot Capabilities behavior in src/plugins/contracts. */
+/** Checks whether a bundled plugin snapshot declares any capability ids. */
 export function hasBundledPluginContractSnapshotCapabilities(
   entry: BundledPluginContractSnapshot,
 ): boolean {
@@ -206,13 +206,13 @@ export function hasBundledPluginContractSnapshotCapabilities(
   );
 }
 
-/** Reused constant for BUNDLED PLUGIN CONTRACT SNAPSHOTS behavior in src/plugins/contracts. */
+/** Static bundled plugin capability inventory used by contract tests. */
 export const BUNDLED_PLUGIN_CONTRACT_SNAPSHOTS: readonly BundledPluginContractSnapshot[] =
   BUNDLED_CAPABILITY_MANIFESTS.map(buildBundledPluginContractSnapshot)
     .filter(hasBundledPluginContractSnapshotCapabilities)
     .toSorted((left, right) => left.pluginId.localeCompare(right.pluginId));
 
-/** Reused constant for BUNDLED LEGACY PLUGIN ID ALIASES behavior in src/plugins/contracts. */
+/** Legacy bundled plugin id to current plugin id aliases from manifests. */
 export const BUNDLED_LEGACY_PLUGIN_ID_ALIASES = Object.fromEntries(
   BUNDLED_CAPABILITY_MANIFESTS.flatMap((manifest) =>
     (manifest.legacyPluginIds ?? []).map(
@@ -221,7 +221,7 @@ export const BUNDLED_LEGACY_PLUGIN_ID_ALIASES = Object.fromEntries(
   ).toSorted(([left], [right]) => left.localeCompare(right)),
 ) as Readonly<Record<string, string>>;
 
-/** Reused constant for BUNDLED AUTO ENABLE PROVIDER PLUGIN IDS behavior in src/plugins/contracts. */
+/** Provider id to bundled plugin id map for auto-enable provider manifests. */
 export const BUNDLED_AUTO_ENABLE_PROVIDER_PLUGIN_IDS = Object.fromEntries(
   BUNDLED_CAPABILITY_MANIFESTS.flatMap((manifest) =>
     (manifest.autoEnableWhenConfiguredProviders ?? []).map((providerId) => [
@@ -236,7 +236,7 @@ type BundledContractIdSnapshotKey = Exclude<
   "providerEnvVars"
 >;
 
-/** Reused helper for resolve Bundled Contract Snapshot Plugin Ids behavior in src/plugins/contracts. */
+/** Lists bundled plugin ids that declare a given capability snapshot field. */
 export function resolveBundledContractSnapshotPluginIds(
   key: BundledContractIdSnapshotKey,
 ): string[] {

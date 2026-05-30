@@ -1,8 +1,8 @@
-// plugins embedding provider types helpers and runtime behavior.
+// Embedding provider plugin contracts and runtime creation types.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { SecretInput } from "../config/types.secrets.js";
 
-/** Shared type for Embedding Input in src/plugins. */
+/** Text or multimodal content accepted by embedding providers. */
 export type EmbeddingInput =
   | string
   | {
@@ -12,13 +12,13 @@ export type EmbeddingInput =
       >;
     };
 
-/** Shared type for Embedding Provider Call Options in src/plugins. */
+/** Per-call options passed into embedding provider methods. */
 export type EmbeddingProviderCallOptions = {
   signal?: AbortSignal;
   inputType?: "query" | "document" | "semantic" | "classification" | "clustering";
 };
 
-/** Shared type for Embedding Provider Runtime in src/plugins. */
+/** Runtime metadata returned with an initialized embedding provider. */
 export type EmbeddingProviderRuntime = {
   id: string;
   cacheKeyData?: Record<string, unknown>;
@@ -26,7 +26,7 @@ export type EmbeddingProviderRuntime = {
   inlineBatchTimeoutMs?: number;
 };
 
-/** Shared type for Embedding Provider in src/plugins. */
+/** Runtime embedding provider instance registered by a plugin. */
 export type EmbeddingProvider = {
   id: string;
   model: string;
@@ -40,7 +40,7 @@ export type EmbeddingProvider = {
   close?: () => Promise<void> | void;
 };
 
-/** Shared type for Embedding Provider Create Options in src/plugins. */
+/** Inputs supplied when constructing an embedding provider adapter. */
 export type EmbeddingProviderCreateOptions = {
   config: OpenClawConfig;
   agentDir?: string;
@@ -62,13 +62,13 @@ export type EmbeddingProviderCreateOptions = {
   taskType?: string;
 };
 
-/** Shared type for Embedding Provider Create Result in src/plugins. */
+/** Provider instance and runtime metadata returned by adapter creation. */
 export type EmbeddingProviderCreateResult = {
   provider: EmbeddingProvider | null;
   runtime?: EmbeddingProviderRuntime;
 };
 
-/** Shared type for Embedding Provider Adapter in src/plugins. */
+/** Plugin adapter that creates embedding provider instances. */
 export type EmbeddingProviderAdapter = {
   id: string;
   defaultModel?: string;
@@ -78,7 +78,7 @@ export type EmbeddingProviderAdapter = {
   formatSetupError?: (err: unknown) => string;
 };
 
-/** Shared type for Registered Embedding Provider in src/plugins. */
+/** Embedding provider adapter plus owning plugin id. */
 export type RegisteredEmbeddingProvider = {
   adapter: EmbeddingProviderAdapter;
   ownerPluginId?: string;

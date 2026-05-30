@@ -1,8 +1,8 @@
-// plugins externalized bundled plugins helpers and runtime behavior.
-/** Shared type for Externalized Bundled Plugin Preferred Source in src/plugins. */
+// Metadata helpers for migrating formerly bundled plugins to external packages.
+/** Preferred install source for an externalized bundled plugin bridge. */
 export type ExternalizedBundledPluginPreferredSource = "npm" | "clawhub";
 
-/** Shared type for Externalized Bundled Plugin Bridge in src/plugins. */
+/** Mapping from a legacy bundled plugin id to its external package metadata. */
 export type ExternalizedBundledPluginBridge = {
   /** Plugin id used while the plugin was bundled in core. */
   bundledPluginId: string;
@@ -36,7 +36,7 @@ function normalizeOptionalSpec(value: string | undefined): string {
   return value?.trim() ?? "";
 }
 
-/** Reused helper for get Externalized Bundled Plugin Preferred Source behavior in src/plugins. */
+/** Resolves the preferred install source for an externalized bundled plugin. */
 export function getExternalizedBundledPluginPreferredSource(
   bridge: ExternalizedBundledPluginBridge,
 ): ExternalizedBundledPluginPreferredSource {
@@ -51,28 +51,28 @@ export function getExternalizedBundledPluginPreferredSource(
     : "npm";
 }
 
-/** Reused helper for get Externalized Bundled Plugin Npm Spec behavior in src/plugins. */
+/** Returns the normalized npm install spec for an externalized bundled plugin. */
 export function getExternalizedBundledPluginNpmSpec(
   bridge: ExternalizedBundledPluginBridge,
 ): string {
   return normalizeOptionalSpec(bridge.npmSpec);
 }
 
-/** Reused helper for get Externalized Bundled Plugin Claw Hub Spec behavior in src/plugins. */
+/** Returns the normalized ClawHub install spec for an externalized bundled plugin. */
 export function getExternalizedBundledPluginClawHubSpec(
   bridge: ExternalizedBundledPluginBridge,
 ): string {
   return normalizeOptionalSpec(bridge.clawhubSpec);
 }
 
-/** Reused helper for get Externalized Bundled Plugin Target Id behavior in src/plugins. */
+/** Resolves the external plugin id that should be installed/enabled. */
 export function getExternalizedBundledPluginTargetId(
   bridge: ExternalizedBundledPluginBridge,
 ): string {
   return normalizePluginId(bridge.pluginId) || normalizePluginId(bridge.bundledPluginId);
 }
 
-/** Reused helper for get Externalized Bundled Plugin Lookup Ids behavior in src/plugins. */
+/** Lists legacy, bundled, channel, and external ids that should match this bridge. */
 export function getExternalizedBundledPluginLookupIds(
   bridge: ExternalizedBundledPluginBridge,
 ): readonly string[] {
@@ -90,7 +90,7 @@ export function getExternalizedBundledPluginLookupIds(
   );
 }
 
-/** Reused helper for get Externalized Bundled Plugin Legacy Path Suffix behavior in src/plugins. */
+/** Returns the old bundled path suffix used to detect legacy installs. */
 export function getExternalizedBundledPluginLegacyPathSuffix(
   bridge: ExternalizedBundledPluginBridge,
 ): string {

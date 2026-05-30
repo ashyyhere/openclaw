@@ -1,4 +1,4 @@
-// plugins command registration helpers and runtime behavior.
+// Plugin command validation and registry mutation helpers.
 import { isOperatorScope } from "../gateway/operator-scopes.js";
 import { logVerbose } from "../globals.js";
 import {
@@ -77,19 +77,19 @@ function getAgentPromptSurfaces(): Set<string> {
   return agentPromptSurfaces;
 }
 
-/** Shared type for Command Registration Result in src/plugins. */
+/** Result returned when registering a plugin command. */
 export type CommandRegistrationResult = {
   ok: boolean;
   error?: string;
 };
 
-/** Reused helper for is Reserved Command Name behavior in src/plugins. */
+/** Checks whether a command name is reserved by a built-in command. */
 export function isReservedCommandName(name: string): boolean {
   const trimmed = normalizeOptionalLowercaseString(name) ?? "";
   return Boolean(trimmed && getReservedCommands().has(trimmed));
 }
 
-/** Reused helper for validate Command Name behavior in src/plugins. */
+/** Validates a plugin command name and reserved-name policy. */
 export function validateCommandName(
   name: string,
   opts?: { allowReservedCommandNames?: boolean },
@@ -282,7 +282,7 @@ function normalizeAgentPromptGuidance(
   });
 }
 
-/** Reused helper for list Plugin Invocation Keys behavior in src/plugins. */
+/** Lists slash-command invocation keys for a plugin command and native aliases. */
 export function listPluginInvocationKeys(command: OpenClawPluginCommandDefinition): string[] {
   const keys = new Set<string>();
   const push = (value: string | undefined) => {
@@ -303,7 +303,7 @@ export function listPluginInvocationKeys(command: OpenClawPluginCommandDefinitio
   return [...keys];
 }
 
-/** Reused helper for plugin Command Supports Channel behavior in src/plugins. */
+/** Checks whether a plugin command is available for a channel id. */
 export function pluginCommandSupportsChannel(
   command: OpenClawPluginCommandDefinition,
   channel?: string,
@@ -317,7 +317,7 @@ export function pluginCommandSupportsChannel(
   );
 }
 
-/** Reused helper for register Plugin Command behavior in src/plugins. */
+/** Validates and registers a plugin command in the global command registry. */
 export function registerPluginCommand(
   pluginId: string,
   command: OpenClawPluginCommandDefinition,
@@ -389,7 +389,7 @@ export function registerPluginCommand(
   return { ok: true };
 }
 
-/** Re-exported API for src/plugins, starting with clear Plugin Commands. */
+/** Command registry reset helpers for tests and plugin lifecycle cleanup. */
 export { clearPluginCommands, clearPluginCommandsForPlugin };
-/** Re-exported API for src/plugins, starting with Registered Plugin Command. */
+/** Registered plugin command record exposed to command dispatch callers. */
 export type { RegisteredPluginCommand };
