@@ -1,4 +1,4 @@
-// tui tui last session helpers and runtime behavior.
+// TUI remembered-session persistence scoped by connection, agent, and session mode.
 import { createHash } from "node:crypto";
 import path from "node:path";
 import { resolveStateDir } from "../config/paths.js";
@@ -14,12 +14,12 @@ type LastSessionRecord = {
 
 type LastSessionStore = Record<string, LastSessionRecord>;
 
-/** Reused helper for resolve Tui Last Session State Path behavior in src/tui. */
+/** Resolve the private state file used to remember the last TUI session. */
 export function resolveTuiLastSessionStatePath(stateDir = resolveStateDir()): string {
   return path.join(stateDir, "tui", "last-session.json");
 }
 
-/** Reused helper for build Tui Last Session Scope Key behavior in src/tui. */
+/** Build a stable privacy-preserving key for a remembered TUI session scope. */
 export function buildTuiLastSessionScopeKey(params: {
   connectionUrl: string;
   agentId: string;
@@ -54,7 +54,7 @@ function isHeartbeatSessionKey(sessionKey: string): boolean {
   return normalizeMarker(sessionKey).endsWith(":heartbeat");
 }
 
-/** Reused helper for is Heartbeat Like Tui Session behavior in src/tui. */
+/** Detect heartbeat-like sessions that should not become the remembered TUI target. */
 export function isHeartbeatLikeTuiSession(session: TuiSessionList["sessions"][number]): boolean {
   if (isHeartbeatSessionKey(session.key)) {
     return true;
@@ -71,7 +71,7 @@ export function isHeartbeatLikeTuiSession(session: TuiSessionList["sessions"][nu
   return markers.some((marker) => normalizeMarker(marker) === "heartbeat");
 }
 
-/** Reused helper for read Tui Last Session Key behavior in src/tui. */
+/** Read the remembered session key for a TUI scope. */
 export async function readTuiLastSessionKey(params: {
   scopeKey: string;
   stateDir?: string;
@@ -81,7 +81,7 @@ export async function readTuiLastSessionKey(params: {
   return typeof value === "string" && value.trim() ? value.trim() : null;
 }
 
-/** Reused helper for write Tui Last Session Key behavior in src/tui. */
+/** Persist a remembered TUI session key unless it is empty, unknown, or heartbeat-only. */
 export async function writeTuiLastSessionKey(params: {
   scopeKey: string;
   sessionKey: string;
@@ -102,7 +102,7 @@ export async function writeTuiLastSessionKey(params: {
   });
 }
 
-/** Reused helper for resolve Remembered Tui Session Key behavior in src/tui. */
+/** Match a remembered session key against currently listed sessions for the active agent. */
 export function resolveRememberedTuiSessionKey(params: {
   rememberedKey: string | null | undefined;
   currentAgentId: string;

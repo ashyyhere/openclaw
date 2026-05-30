@@ -1,4 +1,4 @@
-// tui tui backend helpers and runtime behavior.
+// TUI backend contract for gateway connection, chat, session, model, and command APIs.
 import type {
   CommandEntry,
   CommandsListParams,
@@ -8,7 +8,7 @@ import type {
 } from "../../packages/gateway-protocol/src/index.js";
 import type { ResponseUsageMode, SessionInfo, SessionScope } from "./tui-types.js";
 
-/** Shared type for Chat Send Options in src/tui. */
+/** Chat send payload accepted by TUI backend implementations. */
 export type ChatSendOptions = {
   sessionKey: string;
   agentId?: string;
@@ -32,7 +32,7 @@ export type TuiEvent = {
   seq?: number;
 };
 
-/** Shared type for Tui Session List in src/tui. */
+/** Session list payload consumed by the TUI session picker and sidebar. */
 export type TuiSessionList = {
   ts: number;
   path: string;
@@ -90,7 +90,7 @@ export type TuiSessionList = {
   >;
 };
 
-/** Shared type for Tui Agents List in src/tui. */
+/** Agent list payload consumed by the TUI agent selector. */
 export type TuiAgentsList = {
   defaultId: string;
   mainKey: string;
@@ -101,7 +101,7 @@ export type TuiAgentsList = {
   }>;
 };
 
-/** Shared type for Tui Model Choice in src/tui. */
+/** Model option displayed by the TUI model selector. */
 export type TuiModelChoice = {
   id: string;
   name: string;
@@ -110,7 +110,7 @@ export type TuiModelChoice = {
   reasoning?: boolean;
 };
 
-/** Shared type for Tui Backend in src/tui. */
+/** Backend interface implemented by local and remote TUI gateway clients. */
 export type TuiBackend = {
   connection: {
     url: string;

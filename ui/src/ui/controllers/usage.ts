@@ -1,4 +1,4 @@
-// ui/src/ui/controllers usage helpers and runtime behavior.
+// Usage controller helpers for loading cost/session summaries and drill-down logs.
 import { getSafeLocalStorage } from "../../local-storage.ts";
 import type { GatewayBrowserClient } from "../gateway.ts";
 import { normalizeLowercaseStringOrEmpty } from "../string-coerce.ts";
@@ -9,7 +9,7 @@ import {
   isMissingOperatorReadScopeError,
 } from "./scope-errors.ts";
 
-/** Shared type for Usage State in ui/src/ui/controllers. */
+/** Mutable UI state required by the usage dashboard controller. */
 export type UsageState = {
   client: GatewayBrowserClient | null;
   connected: boolean;
@@ -261,7 +261,7 @@ function applyUsageResults(state: UsageState, sessionsRes: unknown, costRes: unk
   }
 }
 
-/** Reused helper for load Usage behavior in ui/src/ui/controllers. */
+/** Load usage summary data, retrying without params unsupported by older gateways. */
 export async function loadUsage(
   state: UsageState,
   overrides?: {
@@ -380,7 +380,7 @@ export async function loadUsage(
   }
 }
 
-/** Reused constant for test Api behavior in ui/src/ui/controllers. */
+/** Test-only hooks for resetting gateway compatibility caches. */
 export const testApi = {
   formatUtcOffset,
   buildDateInterpretationParams,
@@ -405,7 +405,7 @@ export const testApi = {
     legacyUsageAgentScopeCache = null;
   },
 };
-/** Re-exported API for ui/src/ui/controllers, starting with test Api. */
+/** Test-only usage controller hooks. */
 export { testApi as __test };
 
 async function runOptionalUsageDetailRequest(
@@ -427,7 +427,7 @@ async function runOptionalUsageDetailRequest(
   }
 }
 
-/** Reused helper for load Session Time Series behavior in ui/src/ui/controllers. */
+/** Load time-series usage points for a selected session. */
 export async function loadSessionTimeSeries(state: UsageState, sessionKey: string) {
   await runOptionalUsageDetailRequest(state, "usageTimeSeriesLoading", async (client) => {
     state.usageTimeSeries = null;
@@ -436,7 +436,7 @@ export async function loadSessionTimeSeries(state: UsageState, sessionKey: strin
   });
 }
 
-/** Reused helper for load Session Logs behavior in ui/src/ui/controllers. */
+/** Load usage log entries for a selected session. */
 export async function loadSessionLogs(state: UsageState, sessionKey: string) {
   await runOptionalUsageDetailRequest(state, "usageSessionLogsLoading", async (client) => {
     state.usageSessionLogs = null;

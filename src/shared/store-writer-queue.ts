@@ -1,19 +1,19 @@
-// shared store writer queue helpers and runtime behavior.
-/** Shared type for Store Writer Task in src/shared. */
+// Per-store async write queue that serializes file updates by store path.
+/** Pending write task held by a store writer queue. */
 export type StoreWriterTask = {
   fn: () => Promise<unknown>;
   resolve: (value: unknown) => void;
   reject: (reason: unknown) => void;
 };
 
-/** Shared type for Store Writer Queue in src/shared. */
+/** FIFO queue state for writes targeting one store path. */
 export type StoreWriterQueue = {
   running: boolean;
   pending: StoreWriterTask[];
   drainPromise: Promise<void> | null;
 };
 
-/** Shared type for Store Writer Queues in src/shared. */
+/** Registry of writer queues keyed by store path. */
 export type StoreWriterQueues = Map<string, StoreWriterQueue>;
 
 function getOrCreateStoreWriterQueue(
@@ -76,7 +76,7 @@ async function drainStoreWriterQueue(queues: StoreWriterQueues, storePath: strin
   await queue.drainPromise;
 }
 
-/** Reused helper for run Queued Store Write behavior in src/shared. */
+/** Run a write task after earlier writes for the same store path finish. */
 export async function runQueuedStoreWrite<T>(params: {
   queues: StoreWriterQueues;
   storePath: string;
@@ -102,7 +102,7 @@ export async function runQueuedStoreWrite<T>(params: {
   });
 }
 
-/** Reused helper for clear Store Writer Queues For Test behavior in src/shared. */
+/** Reject and clear pending store writer queues for tests. */
 export function clearStoreWriterQueuesForTest(queues: StoreWriterQueues, message: string): void {
   for (const queue of queues.values()) {
     for (const task of queue.pending) {
@@ -112,7 +112,7 @@ export function clearStoreWriterQueuesForTest(queues: StoreWriterQueues, message
   queues.clear();
 }
 
-/** Reused helper for drain Store Writer Queues For Test behavior in src/shared. */
+/** Wait for active store writer queues to drain after rejecting pending test tasks. */
 export async function drainStoreWriterQueuesForTest(
   queues: StoreWriterQueues,
   message: string,

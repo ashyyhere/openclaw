@@ -1,23 +1,23 @@
-// shared silent reply policy helpers and runtime behavior.
+// Silent-reply policy helpers for channel and internal conversation contexts.
 import { normalizeLowercaseStringOrEmpty } from "./string-coerce.js";
 
-/** Shared type for Silent Reply Policy in src/shared. */
+/** Whether a silent reply token is allowed in a conversation class. */
 export type SilentReplyPolicy = "allow" | "disallow";
-/** Shared type for Silent Reply Conversation Type in src/shared. */
+/** Conversation class used when resolving silent reply policy. */
 export type SilentReplyConversationType = "direct" | "group" | "internal";
-/** Shared type for Silent Reply Policy Shape in src/shared. */
+/** Partial policy override for non-direct conversation classes. */
 export type SilentReplyPolicyShape = Partial<
   Record<Exclude<SilentReplyConversationType, "direct">, SilentReplyPolicy>
 >;
 
-/** Reused constant for DEFAULT SILENT REPLY POLICY behavior in src/shared. */
+/** Default silent-reply behavior for each conversation class. */
 export const DEFAULT_SILENT_REPLY_POLICY: Record<SilentReplyConversationType, SilentReplyPolicy> = {
   direct: "disallow",
   group: "allow",
   internal: "allow",
 };
 
-/** Reused helper for classify Silent Reply Conversation Type behavior in src/shared. */
+/** Classify a session/surface into the silent-reply policy conversation class. */
 export function classifySilentReplyConversationType(params: {
   sessionKey?: string;
   surface?: string;
@@ -40,7 +40,7 @@ export function classifySilentReplyConversationType(params: {
   return "internal";
 }
 
-/** Reused helper for resolve Silent Reply Policy From Policies behavior in src/shared. */
+/** Resolve the effective silent-reply policy from defaults and surface overrides. */
 export function resolveSilentReplyPolicyFromPolicies(params: {
   conversationType: SilentReplyConversationType;
   defaultPolicy?: SilentReplyPolicyShape;

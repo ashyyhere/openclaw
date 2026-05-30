@@ -1,4 +1,4 @@
-// secrets channel contract api helpers and runtime behavior.
+// Loads bundled and external channel contract APIs for secret and security metadata.
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -71,13 +71,13 @@ function loadBundledChannelPublicArtifact(
   return undefined;
 }
 
-/** Shared type for Bundled Channel Secret Contract Api in src/secrets. */
+/** Secret contract surface exposed by bundled or external channel artifacts. */
 export type BundledChannelSecretContractApi = Pick<
   BundledChannelContractApi,
   "collectRuntimeConfigAssignments" | "secretTargetRegistryEntries"
 >;
 
-/** Reused helper for load Bundled Channel Secret Contract Api behavior in src/secrets. */
+/** Load a bundled channel secret contract artifact if one exists. */
 export function loadBundledChannelSecretContractApi(
   channelId: string,
 ): BundledChannelSecretContractApi | undefined {
@@ -201,7 +201,7 @@ function listChannelSecretContractRecords(params: {
     });
 }
 
-/** Reused helper for load Channel Secret Contract Api behavior in src/secrets. */
+/** Load the secret contract API for a channel from bundled or plugin-owned artifacts. */
 export function loadChannelSecretContractApi(params: {
   channelId: string;
   config: OpenClawConfig;
@@ -227,7 +227,7 @@ export function loadChannelSecretContractApi(params: {
   return undefined;
 }
 
-/** Reused helper for load Channel Secret Contract Api For Record behavior in src/secrets. */
+/** Load a secret contract API directly from one plugin manifest record. */
 export function loadChannelSecretContractApiForRecord(
   record: PluginManifestRecord,
 ): BundledChannelSecretContractApi | undefined {
@@ -237,13 +237,13 @@ export function loadChannelSecretContractApiForRecord(
   return loadExternalChannelSecretContractFromRecord(record);
 }
 
-/** Shared type for Bundled Channel Security Contract Api in src/secrets. */
+/** Security contract surface exposed by bundled channel artifacts. */
 export type BundledChannelSecurityContractApi = Pick<
   BundledChannelContractApi,
   "unsupportedSecretRefSurfacePatterns" | "collectUnsupportedSecretRefConfigCandidates"
 >;
 
-/** Reused helper for load Bundled Channel Security Contract Api behavior in src/secrets. */
+/** Load a bundled channel security contract artifact if one exists. */
 export function loadBundledChannelSecurityContractApi(
   channelId: string,
 ): BundledChannelSecurityContractApi | undefined {

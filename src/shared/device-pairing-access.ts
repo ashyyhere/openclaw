@@ -1,20 +1,20 @@
-// shared device pairing access helpers and runtime behavior.
+// Device pairing access comparison helpers for pending approval prompts.
 import { normalizeDeviceAuthScopes } from "./device-auth.js";
 
-/** Shared type for Device Pairing Access Summary in src/shared. */
+/** Normalized role/scope summary for a device pairing request or approval. */
 export type DevicePairingAccessSummary = {
   roles: string[];
   scopes: string[];
 };
 
-/** Shared type for Pending Device Approval Kind in src/shared. */
+/** Reason a pending device pairing still needs approval. */
 export type PendingDeviceApprovalKind =
   | "new-pairing"
   | "role-upgrade"
   | "scope-upgrade"
   | "re-approval";
 
-/** Shared type for Pending Device Approval State in src/shared. */
+/** Comparison of requested device access against the current approval. */
 export type PendingDeviceApprovalState = {
   kind: PendingDeviceApprovalKind;
   requested: DevicePairingAccessSummary;
@@ -73,7 +73,7 @@ function includesAll(allowed: readonly string[], requested: readonly string[]): 
   return requested.every((value) => allowedSet.has(value));
 }
 
-/** Reused helper for summarize Pending Device Access behavior in src/shared. */
+/** Normalize requested roles and scopes from a pending device pairing. */
 export function summarizePendingDeviceAccess(request: PendingLike): DevicePairingAccessSummary {
   return {
     roles: normalizeRoleList(request.roles, request.role),
@@ -81,7 +81,7 @@ export function summarizePendingDeviceAccess(request: PendingLike): DevicePairin
   };
 }
 
-/** Reused helper for summarize Approved Device Access behavior in src/shared. */
+/** Normalize currently approved active roles and scopes for a paired device. */
 export function summarizeApprovedDeviceAccess(device: PairedLike): DevicePairingAccessSummary {
   const approvedRoles = normalizeRoleList(device.roles, device.role);
   const tokenList = Array.isArray(device.tokens)
@@ -101,7 +101,7 @@ export function summarizeApprovedDeviceAccess(device: PairedLike): DevicePairing
   };
 }
 
-/** Reused helper for resolve Pending Device Approval State behavior in src/shared. */
+/** Classify whether a pending device request is new, upgraded, or re-approval. */
 export function resolvePendingDeviceApprovalState(
   request: PendingLike,
   paired?: PairedLike,

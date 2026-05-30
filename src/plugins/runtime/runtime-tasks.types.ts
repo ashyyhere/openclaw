@@ -11,7 +11,7 @@ import type {
   TaskRunDetail,
   TaskRunView,
 } from "./task-domain-types.js";
-/** Re-exported API for src/plugins/runtime. */
+/** Task and flow DTOs exposed by plugin runtime task APIs. */
 export type {
   TaskFlowDetail,
   TaskFlowView,
@@ -20,10 +20,10 @@ export type {
   TaskRunDetail,
   TaskRunView,
 } from "./task-domain-types.js";
-/** Re-exported API for src/plugins/runtime, starting with Detached Task Lifecycle Runtime. */
+/** Detached task lifecycle runtime contract re-exported for plugin runtime callers. */
 export type { DetachedTaskLifecycleRuntime } from "../../tasks/detached-task-runtime-contract.js";
 
-/** Shared type for Bound Task Runs Runtime in src/plugins/runtime. */
+/** Task-run runtime bound to one session and requester origin. */
 export type BoundTaskRunsRuntime = {
   readonly sessionKey: string;
   readonly requesterOrigin?: TaskDeliveryState["requesterOrigin"];
@@ -34,7 +34,7 @@ export type BoundTaskRunsRuntime = {
   cancel: (params: { taskId: string; cfg: OpenClawConfig }) => Promise<TaskRunCancelResult>;
 };
 
-/** Shared type for Plugin Runtime Task Runs in src/plugins/runtime. */
+/** Plugin task-run accessors for binding task APIs to sessions or tool calls. */
 export type PluginRuntimeTaskRuns = {
   bindSession: (params: {
     sessionKey: string;
@@ -45,7 +45,7 @@ export type PluginRuntimeTaskRuns = {
   ) => BoundTaskRunsRuntime;
 };
 
-/** Shared type for Bound Task Flows Runtime in src/plugins/runtime. */
+/** Task-flow runtime bound to one session and requester origin. */
 export type BoundTaskFlowsRuntime = {
   readonly sessionKey: string;
   readonly requesterOrigin?: TaskDeliveryState["requesterOrigin"];
@@ -56,7 +56,7 @@ export type BoundTaskFlowsRuntime = {
   getTaskSummary: (flowId: string) => TaskRunAggregateSummary | undefined;
 };
 
-/** Shared type for Plugin Runtime Task Flows in src/plugins/runtime. */
+/** Plugin task-flow accessors for binding flow APIs to sessions or tool calls. */
 export type PluginRuntimeTaskFlows = {
   bindSession: (params: {
     sessionKey: string;
@@ -67,7 +67,7 @@ export type PluginRuntimeTaskFlows = {
   ) => BoundTaskFlowsRuntime;
 };
 
-/** Shared type for Plugin Runtime Tasks in src/plugins/runtime. */
+/** Combined plugin runtime task namespace exposed to plugins. */
 export type PluginRuntimeTasks = {
   runs: PluginRuntimeTaskRuns;
   flows: PluginRuntimeTaskFlows;

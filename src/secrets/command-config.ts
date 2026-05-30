@@ -1,30 +1,30 @@
-// secrets command config helpers and runtime behavior.
+// Command-time secret assignment analysis for resolved config snapshots.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { coerceSecretRef, resolveSecretInputRef } from "../config/types.secrets.js";
 import { getPath } from "./path-utils.js";
 import { isExpectedResolvedSecretValue } from "./secret-value.js";
 import { discoverConfigSecretTargetsByIds } from "./target-registry.js";
 
-/** Shared type for Command Secret Assignment in src/secrets. */
+/** Resolved secret value ready to assign back into command config. */
 export type CommandSecretAssignment = {
   path: string;
   pathSegments: string[];
   value: unknown;
 };
 
-/** Shared type for Resolve Assignments From Snapshot Result in src/secrets. */
+/** Resolved command secret assignments plus non-fatal diagnostics. */
 export type ResolveAssignmentsFromSnapshotResult = {
   assignments: CommandSecretAssignment[];
   diagnostics: string[];
 };
 
-/** Shared type for Unresolved Command Secret Assignment in src/secrets. */
+/** Secret assignment path that could not be resolved from the active snapshot. */
 export type UnresolvedCommandSecretAssignment = {
   path: string;
   pathSegments: string[];
 };
 
-/** Shared type for Analyze Assignments From Snapshot Result in src/secrets. */
+/** Full command secret assignment analysis including skipped targets. */
 export type AnalyzeAssignmentsFromSnapshotResult = {
   assignments: CommandSecretAssignment[];
   diagnostics: string[];
@@ -32,7 +32,7 @@ export type AnalyzeAssignmentsFromSnapshotResult = {
   inactive: UnresolvedCommandSecretAssignment[];
 };
 
-/** Reused helper for analyze Command Secret Assignments From Snapshot behavior in src/secrets. */
+/** Analyze command secret targets against source and resolved config snapshots. */
 export function analyzeCommandSecretAssignmentsFromSnapshot(params: {
   sourceConfig: OpenClawConfig;
   resolvedConfig: OpenClawConfig;
@@ -97,7 +97,7 @@ export function analyzeCommandSecretAssignmentsFromSnapshot(params: {
   return { assignments, diagnostics, unresolved, inactive };
 }
 
-/** Reused helper for collect Command Secret Assignments From Snapshot behavior in src/secrets. */
+/** Collect resolved command secret assignments or throw on unresolved active refs. */
 export function collectCommandSecretAssignmentsFromSnapshot(params: {
   sourceConfig: OpenClawConfig;
   resolvedConfig: OpenClawConfig;

@@ -1,23 +1,23 @@
-// security context visibility helpers and runtime behavior.
+// Supplemental context visibility policy shared by channels and message routing.
 import type { ContextVisibilityMode } from "../config/types.base.js";
 
-/** Shared type for Context Visibility Kind in src/security. */
+/** Supplemental context source class used for visibility decisions. */
 export type ContextVisibilityKind = "history" | "thread" | "quote" | "forwarded";
 
-/** Shared type for Context Visibility Decision Reason in src/security. */
+/** Reason code explaining a supplemental context visibility decision. */
 export type ContextVisibilityDecisionReason =
   | "mode_all"
   | "sender_allowed"
   | "quote_override"
   | "blocked";
 
-/** Shared type for Context Visibility Decision in src/security. */
+/** Include/omit decision for supplemental context. */
 export type ContextVisibilityDecision = {
   include: boolean;
   reason: ContextVisibilityDecisionReason;
 };
 
-/** Reused helper for evaluate Supplemental Context Visibility behavior in src/security. */
+/** Evaluate whether one supplemental context item class is visible. */
 export function evaluateSupplementalContextVisibility(params: {
   mode: ContextVisibilityMode;
   kind: ContextVisibilityKind;
@@ -35,7 +35,7 @@ export function evaluateSupplementalContextVisibility(params: {
   return { include: false, reason: "blocked" };
 }
 
-/** Reused helper for should Include Supplemental Context behavior in src/security. */
+/** Return only the boolean include decision for supplemental context. */
 export function shouldIncludeSupplementalContext(params: {
   mode: ContextVisibilityMode;
   kind: ContextVisibilityKind;
@@ -44,7 +44,7 @@ export function shouldIncludeSupplementalContext(params: {
   return evaluateSupplementalContextVisibility(params).include;
 }
 
-/** Reused helper for filter Supplemental Context Items behavior in src/security. */
+/** Filter supplemental context items and count how many were omitted. */
 export function filterSupplementalContextItems<T>(params: {
   items: readonly T[];
   mode: ContextVisibilityMode;
