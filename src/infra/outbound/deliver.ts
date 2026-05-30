@@ -1,4 +1,5 @@
-// infra/outbound deliver helpers and runtime behavior.
+// Outbound delivery substrate for message payload batches.
+// Bridges legacy outbound adapters, durable queues, lifecycle hooks, and plugin message sends.
 import { resolveChunkMode, resolveTextChunkLimit } from "../../auto-reply/chunk.js";
 import { runReplyPayloadSendingHook } from "../../auto-reply/reply/reply-payload-sending-hook.js";
 import type { ReplyPayload } from "../../auto-reply/types.js";
@@ -90,19 +91,19 @@ import { type OutboundSendDeps } from "./send-deps.js";
 import type { OutboundSessionContext } from "./session-context.js";
 import type { OutboundChannel } from "./targets.js";
 
-/** Re-exported API for src/infra/outbound, starting with Outbound Delivery Result. */
+/** Outbound delivery result type returned by send adapters. */
 export type { OutboundDeliveryResult } from "./deliver-types.js";
-/** Re-exported API for src/infra/outbound, starting with Normalized Outbound Payload. */
+/** Normalized outbound payload type used by batch delivery. */
 export type { NormalizedOutboundPayload } from "./payloads.js";
-/** Re-exported API for src/infra/outbound, starting with normalize Outbound Payloads. */
+/** Payload normalization helper for outbound delivery callers. */
 export { normalizeOutboundPayloads } from "./payloads.js";
-/** Re-exported API for src/infra/outbound, starting with resolve Outbound Send Dep. */
+/** Dependency resolver and deps type used by outbound send paths. */
 export { resolveOutboundSendDep, type OutboundSendDeps } from "./send-deps.js";
 
-/** Shared type for Outbound Delivery Queue Policy in src/infra/outbound. */
+/** Durability policy for write-ahead outbound delivery queueing. */
 export type OutboundDeliveryQueuePolicy = "required" | "best_effort";
 
-/** Shared type for Outbound Delivery Intent in src/infra/outbound. */
+/** Durable delivery intent persisted before platform send attempts. */
 export type OutboundDeliveryIntent = {
   id: string;
   channel: Exclude<OutboundChannel, "none">;
@@ -111,17 +112,17 @@ export type OutboundDeliveryIntent = {
   queuePolicy: OutboundDeliveryQueuePolicy;
 };
 
-/** Shared type for Durable Final Delivery Requirement in src/infra/outbound. */
+/** Durable-final capability required from a channel delivery adapter. */
 export type DurableFinalDeliveryRequirement = keyof NonNullable<
   ChannelDeliveryCapabilities["durableFinal"]
 >;
 
-/** Shared type for Durable Final Delivery Requirements in src/infra/outbound. */
+/** Set of durable-final capabilities required for a send path. */
 export type DurableFinalDeliveryRequirements = Partial<
   Record<DurableFinalDeliveryRequirement, boolean>
 >;
 
-/** Shared type for Outbound Durable Delivery Support in src/infra/outbound. */
+/** Result of checking channel support for required durable delivery semantics. */
 export type OutboundDurableDeliverySupport =
   | { ok: true }
   | {
@@ -308,7 +309,7 @@ async function runChannelMessageSendWithLifecycle<
   }
 }
 
-/** Reused helper for resolve Outbound Durable Final Delivery Support behavior in src/infra/outbound. */
+/** Check whether a channel can satisfy durable-final delivery requirements. */
 export async function resolveOutboundDurableFinalDeliverySupport(params: {
   cfg: OpenClawConfig;
   channel: Exclude<OutboundChannel, "none">;
@@ -1248,7 +1249,7 @@ export async function deliverOutboundPayloads(
   return await deliverOutboundPayloadsInternal(params);
 }
 
-/** Reused helper for deliver Outbound Payloads Internal behavior in src/infra/outbound. */
+/** Deliver a normalized outbound payload batch with queue, hooks, and commit handling. */
 export async function deliverOutboundPayloadsInternal(
   params: DeliverOutboundPayloadsParams,
 ): Promise<OutboundDeliveryResult[]> {
