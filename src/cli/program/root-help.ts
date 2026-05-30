@@ -11,7 +11,7 @@ import { getCoreCliCommandDescriptors } from "./core-command-descriptors.js";
 import { configureProgramHelp } from "./help.js";
 import { getSubCliEntries } from "./subcli-descriptors.js";
 
-/** Shared type for Root Help Render Options in src/cli/program. */
+/** Options controlling whether root help includes config/plugin command descriptors. */
 export type RootHelpRenderOptions = Pick<PluginLoadOptions, "pluginSdkResolution"> & {
   config?: OpenClawConfig;
   env?: NodeJS.ProcessEnv;
@@ -55,7 +55,7 @@ async function buildRootHelpProgram(renderOptions?: RootHelpRenderOptions): Prom
   return program;
 }
 
-/** Reused helper for render Root Help Text behavior in src/cli/program. */
+/** Render root help through a temporary Commander program and captured stdout. */
 export async function renderRootHelpText(renderOptions?: RootHelpRenderOptions): Promise<string> {
   const program = await buildRootHelpProgram(renderOptions);
   let output = "";
@@ -73,7 +73,7 @@ export async function renderRootHelpText(renderOptions?: RootHelpRenderOptions):
   return output;
 }
 
-/** Reused helper for output Root Help behavior in src/cli/program. */
+/** Write rendered root help directly to stdout. */
 export async function outputRootHelp(renderOptions?: RootHelpRenderOptions): Promise<void> {
   process.stdout.write(await renderRootHelpText(renderOptions));
 }

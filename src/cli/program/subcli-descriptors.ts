@@ -2,7 +2,7 @@ import { defineCommandDescriptorCatalog } from "./command-descriptor-utils.js";
 import type { NamedCommandDescriptor } from "./command-group-descriptors.js";
 import { isPrivateQaCliEnabled } from "./private-qa-cli.js";
 
-/** Shared type for Sub Cli Descriptor in src/cli/program. */
+/** Descriptor metadata for lazily registered sub-CLI command groups. */
 export type SubCliDescriptor = NamedCommandDescriptor;
 
 const subCliCommandCatalog = defineCommandDescriptorCatalog([
@@ -190,13 +190,13 @@ function filterPrivateQaItems<T>(
   return items.filter((item) => getName(item) !== "qa");
 }
 
-/** Reused constant for SUB CLI DESCRIPTORS behavior in src/cli/program. */
+/** Sub-CLI descriptors visible in the current environment, excluding private QA unless enabled. */
 export const SUB_CLI_DESCRIPTORS = filterPrivateQaItems(
   subCliCommandCatalog.descriptors,
   (descriptor) => descriptor.name,
 );
 
-/** Reused helper for get Sub Cli Entries behavior in src/cli/program. */
+/** Return fresh sub-CLI descriptors with private QA filtering applied. */
 export function getSubCliEntries(): ReadonlyArray<SubCliDescriptor> {
   return filterPrivateQaItems(
     subCliCommandCatalog.getDescriptors(),
@@ -204,7 +204,7 @@ export function getSubCliEntries(): ReadonlyArray<SubCliDescriptor> {
   );
 }
 
-/** Reused helper for get Sub Cli Commands With Subcommands behavior in src/cli/program. */
+/** Return sub-CLI command names that should show the root-help subcommand marker. */
 export function getSubCliCommandsWithSubcommands(): string[] {
   return [
     ...filterPrivateQaItems(
@@ -214,7 +214,7 @@ export function getSubCliCommandsWithSubcommands(): string[] {
   ];
 }
 
-/** Reused helper for get Sub Cli Parent Default Help Commands behavior in src/cli/program. */
+/** Return sub-CLI command groups whose parent action should display help. */
 export function getSubCliParentDefaultHelpCommands(): string[] {
   return [
     ...filterPrivateQaItems(

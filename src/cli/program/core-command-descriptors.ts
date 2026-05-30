@@ -1,7 +1,7 @@
 import { defineCommandDescriptorCatalog } from "./command-descriptor-utils.js";
 import type { NamedCommandDescriptor } from "./command-group-descriptors.js";
 
-/** Shared type for Core Cli Command Descriptor in src/cli/program. */
+/** Descriptor metadata for core commands registered directly on the root CLI. */
 export type CoreCliCommandDescriptor = NamedCommandDescriptor;
 
 const coreCliCommandCatalog = defineCommandDescriptorCatalog([
@@ -114,25 +114,25 @@ const coreCliCommandCatalog = defineCommandDescriptorCatalog([
   },
 ] as const satisfies ReadonlyArray<CoreCliCommandDescriptor>);
 
-/** Reused constant for CORE CLI COMMAND DESCRIPTORS behavior in src/cli/program. */
+/** Static core command descriptors used for help, routing, and registration. */
 export const CORE_CLI_COMMAND_DESCRIPTORS = coreCliCommandCatalog.descriptors;
 
-/** Reused helper for get Core Cli Command Descriptors behavior in src/cli/program. */
+/** Return core command descriptors from the catalog. */
 export function getCoreCliCommandDescriptors(): ReadonlyArray<CoreCliCommandDescriptor> {
   return coreCliCommandCatalog.getDescriptors();
 }
 
-/** Reused helper for get Core Cli Command Names behavior in src/cli/program. */
+/** Return core command names in catalog order. */
 export function getCoreCliCommandNames(): string[] {
   return coreCliCommandCatalog.getNames();
 }
 
-/** Reused helper for get Core Cli Commands With Subcommands behavior in src/cli/program. */
+/** Return core command names that should show the root-help subcommand marker. */
 export function getCoreCliCommandsWithSubcommands(): string[] {
   return coreCliCommandCatalog.getCommandsWithSubcommands();
 }
 
-/** Reused helper for get Core Cli Parent Default Help Commands behavior in src/cli/program. */
+/** Return core command groups whose parent action should display help. */
 export function getCoreCliParentDefaultHelpCommands(): string[] {
   return coreCliCommandCatalog.getParentDefaultHelpCommands();
 }

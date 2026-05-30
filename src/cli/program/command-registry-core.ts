@@ -19,7 +19,7 @@ import {
   type CommandGroupEntry,
 } from "./register-command-groups.js";
 
-/** Re-exported API for src/cli/program, starting with get Core Cli Command Descriptors. */
+/** Re-export core descriptor helpers for program help and completion assembly. */
 export { getCoreCliCommandDescriptors, getCoreCliCommandsWithSubcommands };
 
 type CommandRegisterParams = {
@@ -28,7 +28,7 @@ type CommandRegisterParams = {
   argv: string[];
 };
 
-/** Shared type for Command Registration in src/cli/program. */
+/** Registry entry for a root command group and its lazy/eager registration hook. */
 export type CommandRegistration = {
   id: string;
   register: (params: CommandRegisterParams) => void;
@@ -146,12 +146,12 @@ function resolveCoreCommandGroups(ctx: ProgramContext, argv: string[]): CommandG
   );
 }
 
-/** Reused helper for get Core Cli Command Names behavior in src/cli/program. */
+/** Return registered core command names without loading command modules. */
 export function getCoreCliCommandNames(): string[] {
   return getCoreDescriptorNames();
 }
 
-/** Reused helper for register Core Cli By Name behavior in src/cli/program. */
+/** Register one core command group by name for completion or lazy dispatch. */
 export async function registerCoreCliByName(
   program: Command,
   ctx: ProgramContext,
@@ -161,7 +161,7 @@ export async function registerCoreCliByName(
   return registerCommandGroupByName(program, resolveCoreCommandGroups(ctx, argv), name);
 }
 
-/** Reused helper for register Core Cli Commands behavior in src/cli/program. */
+/** Attach core commands to the root program using lazy registration policy. */
 export function registerCoreCliCommands(program: Command, ctx: ProgramContext, argv: string[]) {
   const { primary } = resolveCliArgvInvocation(argv);
   registerCommandGroups(program, resolveCoreCommandGroups(ctx, argv), {
