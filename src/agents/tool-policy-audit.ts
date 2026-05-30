@@ -153,7 +153,7 @@ function matchedPolicyRules(params: {
   return [...rules].toSorted();
 }
 
-/** Reused helper for audit Tool Policy Filter behavior in src/agents. */
+/** Log which tools a policy step removed, with bounded rule and tool-name details. */
 export function auditToolPolicyFilter(params: {
   stepLabel: string;
   policy: ToolPolicyLike;
@@ -197,7 +197,7 @@ export function auditToolPolicyFilter(params: {
   }
 }
 
-/** Reused helper for audit Sandbox Tool Policy Block behavior in src/agents. */
+/** Log sandbox policy blocks with the matching allow/deny rule when one is available. */
 export function auditSandboxToolPolicyBlock(params: {
   toolName: string;
   ruleType: "allow" | "deny";

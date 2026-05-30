@@ -1,3 +1,4 @@
+/** Resolves and applies agent, channel, group, sender, and sandbox tool policies. */
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
 import { getLoadedChannelPlugin } from "../channels/plugins/index.js";
 import { resolveSessionConversation } from "../channels/plugins/session-conversation.js";
@@ -608,5 +609,5 @@ export function resolveGroupToolPolicy(params: {
   return pickSandboxToolPolicy(configTools);
 }
 
-/** Re-exported API for src/agents, starting with is Tool Allowed By Policies. */
+/** Tool-name policy matchers used by sandbox checks and allowlist diagnostics. */
 export { isToolAllowedByPolicies, isToolAllowedByPolicyName } from "./tool-policy-match.js";

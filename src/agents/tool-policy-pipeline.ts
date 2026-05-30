@@ -30,7 +30,7 @@ function rememberToolPolicyWarning(warning: string): boolean {
   return true;
 }
 
-/** Shared type for Tool Policy Pipeline Step in src/agents. */
+/** One named policy layer applied while shrinking the available tool list. */
 export type ToolPolicyPipelineStep = {
   policy: ToolPolicyLike | undefined;
   label: string;
@@ -40,7 +40,7 @@ export type ToolPolicyPipelineStep = {
   unavailableCoreToolReason?: string;
 };
 
-/** Reused helper for build Default Tool Policy Pipeline Steps behavior in src/agents. */
+/** Build policy layers from profile, provider, agent, group, and sender scopes. */
 export function buildDefaultToolPolicyPipelineSteps(params: {
   profilePolicy?: ToolPolicyLike;
   profile?: string;
@@ -118,7 +118,7 @@ export function buildDefaultToolPolicyPipelineSteps(params: {
   ];
 }
 
-/** Reused helper for apply Tool Policy Pipeline behavior in src/agents. */
+/** Apply policy layers in order and emit bounded warnings/audit records for removed tools. */
 export function applyToolPolicyPipeline(params: {
   tools: AnyAgentTool[];
   toolMeta: (tool: AnyAgentTool) => { pluginId: string } | undefined;
@@ -232,7 +232,7 @@ function describeUnknownAllowlistSuffix(params: {
   return preface ? `${preface} ${detail}` : detail;
 }
 
-/** Reused helper for reset Tool Policy Warning Cache For Test behavior in src/agents. */
+/** Clear duplicate-warning suppression so tests can assert policy warnings independently. */
 export function resetToolPolicyWarningCacheForTest(): void {
   seenToolPolicyWarnings.clear();
   toolPolicyWarningOrder.length = 0;

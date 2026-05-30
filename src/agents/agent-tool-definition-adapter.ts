@@ -48,7 +48,7 @@ const TOOL_ERROR_EXEC_COMMAND_HASH_CHARS = 16;
 const SENSITIVE_EXEC_ENV_VALUE = "[omitted exec env value]";
 const EXEC_COMMAND_PARAM_KEYS = new Set(["command", "cmd"]);
 
-/** Shared type for Client Tool Call Recorder in src/agents. */
+/** Callback/object sink used to correlate client-side tool calls with runtime updates. */
 export type ClientToolCallRecorder =
   | ((toolName: string, params: Record<string, unknown>) => void)
   | {
@@ -271,7 +271,7 @@ function splitToolExecuteArgs(args: ToolExecuteArgsAny): {
   };
 }
 
-/** Reused constant for CLIENT TOOL NAME CONFLICT PREFIX behavior in src/agents. */
+/** Prefix used for synthetic conflict messages when client tools collide with host tools. */
 export const CLIENT_TOOL_NAME_CONFLICT_PREFIX = "client tool name conflict:";
 
 /** Find tool-name collisions between host/client tools before merging them. */
