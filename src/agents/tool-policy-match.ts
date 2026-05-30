@@ -30,7 +30,7 @@ function makeToolPolicyMatcher(policy: SandboxToolPolicy) {
   };
 }
 
-/** Reused helper for is Tool Allowed By Policy Name behavior in src/agents. */
+/** Checks a single tool name against one sandbox tool policy. */
 export function isToolAllowedByPolicyName(name: string, policy?: SandboxToolPolicy): boolean {
   if (!policy) {
     return true;
@@ -38,7 +38,7 @@ export function isToolAllowedByPolicyName(name: string, policy?: SandboxToolPoli
   return makeToolPolicyMatcher(policy)(name);
 }
 
-/** Reused helper for is Tool Allowed By Policies behavior in src/agents. */
+/** Checks that every applicable sandbox policy allows a tool name. */
 export function isToolAllowedByPolicies(
   name: string,
   policies: Array<SandboxToolPolicy | undefined>,

@@ -8,7 +8,7 @@ type ExplicitToolAllowlistSource = {
   enforceWhenToolsDisabled?: boolean;
 };
 
-/** Reused helper for collect Explicit Tool Allowlist Sources behavior in src/agents. */
+/** Collects non-empty explicit allowlists with labels for diagnostics. */
 export function collectExplicitToolAllowlistSources(
   sources: Array<{ label: string; allow?: string[]; enforceWhenToolsDisabled?: boolean }>,
 ): ExplicitToolAllowlistSource[] {
@@ -27,7 +27,7 @@ export function collectExplicitToolAllowlistSources(
   });
 }
 
-/** Reused helper for build Empty Explicit Tool Allowlist Error behavior in src/agents. */
+/** Builds the operator-facing error when explicit allowlists remove every callable tool. */
 export function buildEmptyExplicitToolAllowlistError(params: {
   sources: ExplicitToolAllowlistSource[];
   callableToolNames: string[];

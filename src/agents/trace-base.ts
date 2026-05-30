@@ -9,7 +9,7 @@ type AgentTraceBase = {
   workspaceDir?: string;
 };
 
-/** Reused helper for build Agent Trace Base behavior in src/agents. */
+/** Builds the common trace fields attached to agent runtime telemetry. */
 export function buildAgentTraceBase(params: AgentTraceBase): AgentTraceBase {
   return {
     runId: params.runId,

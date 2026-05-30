@@ -41,12 +41,12 @@ function wrapPromptDataBlockWithTag(params: PromptDataBlockParams & { tagName: s
   ].join("\n");
 }
 
-/** Reused helper for wrap Prompt Data Block behavior in src/agents. */
+/** Wraps trusted prompt data in a tagged block that discourages instruction parsing. */
 export function wrapPromptDataBlock(params: PromptDataBlockParams): string {
   return wrapPromptDataBlockWithTag({ ...params, tagName: "prompt-data" });
 }
 
-/** Reused helper for wrap Untrusted Prompt Data Block behavior in src/agents. */
+/** Wraps untrusted prompt data in a stronger data-only tag. */
 export function wrapUntrustedPromptDataBlock(params: PromptDataBlockParams): string {
   return wrapPromptDataBlockWithTag({ ...params, tagName: "untrusted-text" });
 }
