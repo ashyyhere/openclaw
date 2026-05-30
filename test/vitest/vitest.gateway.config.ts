@@ -1,4 +1,4 @@
-// test/vitest vitest gateway config helpers and runtime behavior.
+// Gateway Vitest config either runs the fallback gateway shard or fans out to project shards.
 import { createProjectShardVitestConfig } from "./vitest.project-shard-config.ts";
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
@@ -9,6 +9,7 @@ const gatewayProjectConfigs = [
   "test/vitest/vitest.gateway-server.config.ts",
 ] as const;
 
+/** Creates the non-sharded gateway Vitest project config. */
 export function createGatewayVitestConfig(env?: Record<string, string | undefined>) {
   return createScopedVitestConfig(["src/gateway/**/*.test.ts"], {
     dir: "src/gateway",
@@ -22,10 +23,12 @@ export function createGatewayVitestConfig(env?: Record<string, string | undefine
   });
 }
 
+/** Creates the gateway project-shard aggregate config. */
 export function createGatewayProjectShardVitestConfig() {
   return createProjectShardVitestConfig(gatewayProjectConfigs);
 }
 
+/** Default gateway Vitest config, selected by the project-shard env toggle. */
 export default process.env.OPENCLAW_GATEWAY_PROJECT_SHARDS === "1"
   ? createGatewayProjectShardVitestConfig()
   : createGatewayVitestConfig();

@@ -1,4 +1,4 @@
-// test/vitest vitest gateway server config helpers and runtime behavior.
+// Gateway server Vitest config groups server and HTTP-backed gateway tests.
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
 const gatewayServerBackedHttpTests = [
@@ -9,6 +9,7 @@ const gatewayServerBackedHttpTests = [
   "src/gateway/probe.auth.integration.test.ts",
 ];
 
+/** Creates the gateway server Vitest project config. */
 export function createGatewayServerVitestConfig(env?: Record<string, string | undefined>) {
   return createScopedVitestConfig(
     ["src/gateway/**/*server*.test.ts", ...gatewayServerBackedHttpTests],
@@ -28,4 +29,5 @@ export function createGatewayServerVitestConfig(env?: Record<string, string | un
   );
 }
 
+/** Default gateway server Vitest project config. */
 export default createGatewayServerVitestConfig();
