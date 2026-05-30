@@ -1,28 +1,29 @@
-// Runtime boundary for cron/isolated-agent run execution runtime behavior.
-/** Re-exported API for src/cron/isolated-agent. */
+// Runtime facade for isolated cron agent execution. Keeps the main runner on
+// light imports while deferring CLI runner/session code until needed.
+/** Resolves model fallback configuration for cron agent execution. */
 export {
   resolveEffectiveModelFallbacks,
   resolveSubagentModelFallbacksOverride,
 } from "../../agents/agent-scope.js";
-/** Re-exported API for src/cron/isolated-agent, starting with resolve Bootstrap Warning Signatures Seen. */
+/** Tracks bootstrap warning signatures already surfaced during cron runs. */
 export { resolveBootstrapWarningSignaturesSeen } from "../../agents/bootstrap-budget.js";
-/** Re-exported API for src/cron/isolated-agent, starting with resolve Cron Agent Lane. */
+/** Chooses the command lane used by cron agent execution. */
 export { resolveCronAgentLane } from "../../agents/lanes.js";
-/** Re-exported API for src/cron/isolated-agent, starting with ensure Selected Agent Harness Plugin. */
+/** Ensures the selected agent harness plugin is loaded before execution. */
 export { ensureSelectedAgentHarnessPlugin } from "../../agents/harness/runtime-plugin.js";
-/** Re-exported API for src/cron/isolated-agent, starting with Live Session Model Switch Error. */
+/** Error type used when live session model switching fails. */
 export { LiveSessionModelSwitchError } from "../../agents/live-model-switch-error.js";
-/** Re-exported API for src/cron/isolated-agent, starting with run With Model Fallback. */
+/** Runs agent work with configured model fallback handling. */
 export { runWithModelFallback } from "../../agents/model-fallback.js";
-/** Re-exported API for src/cron/isolated-agent, starting with is Cli Provider. */
+/** Detects providers that execute through CLI-backed agents. */
 export { isCliProvider } from "../../agents/model-selection-cli.js";
-/** Re-exported API for src/cron/isolated-agent, starting with normalize Verbose Level. */
+/** Normalizes verbose thinking/logging levels for cron execution. */
 export { normalizeVerboseLevel } from "../../auto-reply/thinking.shared.js";
-/** Re-exported API for src/cron/isolated-agent, starting with resolve Session Transcript Path. */
+/** Resolves transcript paths for cron-created sessions. */
 export { resolveSessionTranscriptPath } from "../../config/sessions/paths.js";
-/** Re-exported API for src/cron/isolated-agent, starting with register Agent Run Context. */
+/** Registers agent run context for event subscribers and diagnostics. */
 export { registerAgentRunContext } from "../../infra/agent-events.js";
-/** Re-exported API for src/cron/isolated-agent, starting with log Warn. */
+/** Warning logger used by isolated cron execution runtime. */
 export { logWarn } from "../../logger.js";
 import { createLazyImportLoader } from "../../shared/lazy-promise.js";
 
@@ -34,7 +35,7 @@ async function loadCronExecutionCliRuntime() {
   return await cronExecutionCliRuntimeLoader.load();
 }
 
-/** Reused helper for get Cli Session Id behavior in src/cron/isolated-agent. */
+/** Lazily resolves the CLI session id helper for cron agent runs. */
 export async function getCliSessionId(
   ...args: Parameters<typeof import("../../agents/cli-session.js").getCliSessionId>
 ): Promise<ReturnType<typeof import("../../agents/cli-session.js").getCliSessionId>> {
@@ -42,7 +43,7 @@ export async function getCliSessionId(
   return runtime.getCliSessionId(...args);
 }
 
-/** Reused helper for run Cli Agent behavior in src/cron/isolated-agent. */
+/** Lazily invokes the CLI agent runner for cron execution. */
 export async function runCliAgent(
   ...args: Parameters<typeof import("../../agents/cli-runner.js").runCliAgent>
 ): ReturnType<typeof import("../../agents/cli-runner.js").runCliAgent> {

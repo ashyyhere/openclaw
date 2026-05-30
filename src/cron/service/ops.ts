@@ -1,4 +1,5 @@
-// cron/service ops helpers and runtime behavior.
+// Public cron service operations. All store mutations run under the service
+// lock; manual runs reserve jobs before executing outside the lock.
 import { enqueueCommandInLane } from "../../process/command-queue.js";
 import { CommandLane } from "../../process/lanes.js";
 import { DEFAULT_AGENT_ID } from "../../routing/session-key.js";
@@ -164,7 +165,7 @@ async function ensureLoadedForRead(state: CronServiceState) {
   }
 }
 
-/** Reused helper for start behavior in src/cron/service. */
+/** Starts the cron service, repairs interrupted runs, catches up, and arms timer. */
 export async function start(state: CronServiceState) {
   if (!state.deps.cronEnabled) {
     state.deps.log.info({ enabled: false }, "cron: disabled");
@@ -240,12 +241,12 @@ export async function start(state: CronServiceState) {
   });
 }
 
-/** Reused helper for stop behavior in src/cron/service. */
+/** Stops the cron service timer without mutating job state. */
 export function stop(state: CronServiceState) {
   stopTimer(state);
 }
 
-/** Reused helper for status behavior in src/cron/service. */
+/** Returns scheduler status after maintenance-only next-run recomputation. */
 export async function status(state: CronServiceState) {
   return await locked(state, async () => {
     await ensureLoadedForRead(state);
@@ -258,7 +259,7 @@ export async function status(state: CronServiceState) {
   });
 }
 
-/** Reused helper for list behavior in src/cron/service. */
+/** Lists cron jobs sorted by next run, optionally including disabled jobs. */
 export async function list(state: CronServiceState, opts?: { includeDisabled?: boolean }) {
   return await locked(state, async () => {
     await ensureLoadedForRead(state);
@@ -268,7 +269,7 @@ export async function list(state: CronServiceState, opts?: { includeDisabled?: b
   });
 }
 
-/** Reused helper for read Job behavior in src/cron/service. */
+/** Reads one cron job by id after loading current store state. */
 export async function readJob(state: CronServiceState, id: string) {
   return await locked(state, async () => {
     await ensureLoadedForRead(state);
@@ -352,7 +353,7 @@ function resolveEffectiveJobAgentId(job: CronJob, defaultAgentId: string | undef
   );
 }
 
-/** Reused helper for list Page behavior in src/cron/service. */
+/** Lists a filtered, sorted, paginated cron job page. */
 export async function listPage(state: CronServiceState, opts?: CronListPageOptions) {
   return await locked(state, async () => {
     await ensureLoadedForRead(state);
@@ -409,7 +410,7 @@ export async function listPage(state: CronServiceState, opts?: CronListPageOptio
   });
 }
 
-/** Reused helper for add behavior in src/cron/service. */
+/** Adds a cron job, persists it, emits an event, and re-arms scheduling. */
 export async function add(state: CronServiceState, input: CronJobCreate) {
   return await locked(state, async () => {
     warnIfDisabled(state, "add");
@@ -445,7 +446,7 @@ export async function add(state: CronServiceState, input: CronJobCreate) {
   });
 }
 
-/** Reused helper for update behavior in src/cron/service. */
+/** Applies a cron job patch and recomputes scheduling when needed. */
 export async function update(state: CronServiceState, id: string, patch: CronJobPatch) {
   return await locked(state, async () => {
     warnIfDisabled(state, "update");
@@ -508,7 +509,7 @@ export async function update(state: CronServiceState, id: string, patch: CronJob
   });
 }
 
-/** Reused helper for remove behavior in src/cron/service. */
+/** Removes a cron job from the store and emits removal when found. */
 export async function remove(state: CronServiceState, id: string) {
   return await locked(state, async () => {
     warnIfDisabled(state, "remove");
@@ -889,7 +890,7 @@ async function finishPreparedManualRun(
   }
 }
 
-/** Reused helper for run behavior in src/cron/service. */
+/** Runs a cron job manually after reserving its running marker. */
 export async function run(
   state: CronServiceState,
   id: string,
@@ -904,7 +905,7 @@ export async function run(
   return { ok: true, ran: true } as const;
 }
 
-/** Reused helper for enqueue Run behavior in src/cron/service. */
+/** Queues a manual cron run on the cron command lane. */
 export async function enqueueRun(state: CronServiceState, id: string, mode?: "due" | "force") {
   const disposition = await inspectManualRunDisposition(state, id, mode);
   if (!disposition.ok || !("runnable" in disposition && disposition.runnable)) {
@@ -942,7 +943,7 @@ export async function enqueueRun(state: CronServiceState, id: string, mode?: "du
   return { ok: true, enqueued: true, runId } as const;
 }
 
-/** Reused helper for wake Now behavior in src/cron/service. */
+/** Wakes the cron scheduler immediately with an explicit wake mode. */
 export function wakeNow(
   state: CronServiceState,
   opts: { mode: CronWakeMode; text: string; sessionKey?: string },
