@@ -1,4 +1,4 @@
-// extensions/qa-lab/src/providers/shared auth store helpers and runtime behavior.
+// QA Lab auth-store helpers write fixture auth profiles into isolated agent state.
 import fs from "node:fs/promises";
 import path from "node:path";
 
@@ -44,10 +44,12 @@ type QaLegacyOAuthRef = {
   id: string;
 };
 
+/** Resolves the agent auth directory under a QA Lab state root. */
 export function resolveQaAgentAuthDir(params: { stateDir: string; agentId: string }): string {
   return path.join(params.stateDir, "agents", params.agentId, "agent");
 }
 
+/** Merges QA fixture auth profiles into `auth-profiles.json` for one agent. */
 export async function writeQaAuthProfiles(params: {
   agentDir: string;
   profiles: Record<string, QaAuthProfileCredential>;
@@ -88,6 +90,9 @@ function parseQaAuthProfiles(raw: string): { profiles?: Record<string, QaAuthPro
   if (!profiles || typeof profiles !== "object" || Array.isArray(profiles)) {
     throw new Error("Invalid QA auth profiles file");
   }
+  // Auth profiles are persisted test fixtures but still feed the real auth
+  // loader. Validate the credential shape here so malformed fixture files
+  // fail at setup time instead of routing through provider code later.
   for (const value of Object.values(profiles)) {
     if (!isQaAuthProfileRecord(value)) {
       throw new Error("Invalid QA auth profiles file");

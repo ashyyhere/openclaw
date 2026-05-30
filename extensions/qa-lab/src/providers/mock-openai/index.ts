@@ -1,6 +1,7 @@
-// extensions/qa-lab/src/providers/mock-openai index helpers and runtime behavior.
+// QA Lab mock OpenAI provider entry registers the local Responses-compatible server.
 import { createMockQaProviderDefinition } from "../shared/mock-provider-definition.js";
 
+/** Provider definition for the QA mock OpenAI mode. */
 export const mockOpenAiProviderDefinition = createMockQaProviderDefinition({
   mode: "mock-openai",
   commandName: "mock-openai",

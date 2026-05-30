@@ -1,4 +1,4 @@
-// extensions/qa-lab/src/providers/shared mock provider definition helpers and runtime behavior.
+// QA Lab mock provider definitions describe embedded provider modes for suite runs.
 import { createMockProviderMap } from "./mock-model-config.js";
 import type { QaProviderDefinition, QaProviderMode } from "./types.js";
 
@@ -14,6 +14,7 @@ function mockModelRef(providerId: string, alternate?: boolean) {
   return `${providerId}/${alternate ? "gpt-5.5-alt" : "gpt-5.5"}`;
 }
 
+/** Builds a QA provider definition backed by the local deterministic mock server. */
 export function createMockQaProviderDefinition(
   params: MockQaProviderDefinitionParams,
 ): QaProviderDefinition {
