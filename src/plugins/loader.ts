@@ -1,4 +1,5 @@
-// plugins loader helpers and runtime behavior.
+// Loads plugin manifests and runtime modules, builds registries, applies
+// activation policy, and manages process-local plugin loader caches.
 import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
@@ -173,12 +174,12 @@ import type {
   PluginRegistrationMode,
 } from "./types.js";
 
-/** Shared type for Plugin Load Result in src/plugins. */
+/** Runtime plugin registry produced by a plugin load. */
 export type PluginLoadResult = PluginRegistry;
-/** Re-exported API for src/plugins, starting with Plugin Load Reentry Error. */
+/** Error raised when the same plugin cache key recursively loads. */
 export { PluginLoadReentryError } from "./loader-cache-state.js";
 
-/** Shared type for Plugin Load Options in src/plugins. */
+/** Control-plane and runtime options for loading plugin metadata and modules. */
 export type PluginLoadOptions = {
   config?: OpenClawConfig;
   activationSourceConfig?: OpenClawConfig;
@@ -261,7 +262,7 @@ function resolveDreamingSidecarEngineId(params: {
   return dreamingConfig.enabled ? DEFAULT_MEMORY_DREAMING_PLUGIN_ID : null;
 }
 
-/** Reused class for Plugin Load Failure Error behavior in src/plugins. */
+/** Error that carries the registry when one or more plugins fail to load. */
 export class PluginLoadFailureError extends Error {
   readonly pluginIds: string[];
   readonly registry: PluginRegistry;
@@ -335,14 +336,14 @@ function createPluginCandidatesFromManifestRegistry(
   }));
 }
 
-/** Reused helper for clear Plugin Loader Cache behavior in src/plugins. */
+/** Clears plugin registry/module caches and all activated plugin runtime state. */
 export function clearPluginLoaderCache(): void {
   pluginLoaderCacheState.clear();
   fullWorkspacePluginLoaderCacheState.clear();
   clearActivatedPluginRuntimeState();
 }
 
-/** Reused helper for clear Activated Plugin Runtime State behavior in src/plugins. */
+/** Clears global registrations created by activated plugin runtime modules. */
 export function clearActivatedPluginRuntimeState(): void {
   clearAgentHarnesses();
   clearPluginCommands();
@@ -354,7 +355,7 @@ export function clearActivatedPluginRuntimeState(): void {
   clearMemoryPluginState();
 }
 
-/** Reused helper for clear Plugin Registry Load Cache behavior in src/plugins. */
+/** Clears cached plugin registries while preserving already activated runtime state. */
 export function clearPluginRegistryLoadCache(): void {
   pluginLoaderCacheState.clearCachedRegistries();
   fullWorkspacePluginLoaderCacheState.clearCachedRegistries();
@@ -733,7 +734,7 @@ function formatPluginRuntimeModuleResolutionError(params: {
   ].join("; ");
 }
 
-/** Reused constant for testing behavior in src/plugins. */
+/** Test surface for loader aliasing, guarded registration, cache, and registry helpers. */
 export const testing = {
   buildPluginLoaderJitiOptions,
   buildPluginLoaderAliasMap,
@@ -1496,7 +1497,7 @@ function getCompatibleActivePluginRegistry(
   return undefined;
 }
 
-/** Reused helper for resolve Runtime Plugin Registry behavior in src/plugins. */
+/** Returns a compatible active registry or loads plugins when no compatible registry exists. */
 export function resolveRuntimePluginRegistry(
   options?: PluginLoadOptions,
 ): PluginRegistry | undefined {
@@ -1516,24 +1517,24 @@ export function resolveRuntimePluginRegistry(
   return loadOpenClawPlugins(options);
 }
 
-/** Reused helper for get Runtime Plugin Registry For Load Options behavior in src/plugins. */
+/** Compatibility alias for resolving a registry from plugin load options. */
 export function getRuntimePluginRegistryForLoadOptions(
   options?: PluginLoadOptions,
 ): PluginRegistry | undefined {
   return resolveRuntimePluginRegistry(options);
 }
 
-/** Reused helper for resolve Plugin Registry Load Cache Key behavior in src/plugins. */
+/** Computes the cache key used for a plugin registry load. */
 export function resolvePluginRegistryLoadCacheKey(options: PluginLoadOptions = {}): string {
   return resolvePluginLoadCacheContext(options).cacheKey;
 }
 
-/** Reused helper for is Plugin Registry Load In Flight behavior in src/plugins. */
+/** Returns whether the registry load for the computed cache key is currently running. */
 export function isPluginRegistryLoadInFlight(options: PluginLoadOptions = {}): boolean {
   return pluginLoaderCacheState.isLoadInFlight(resolvePluginRegistryLoadCacheKey(options));
 }
 
-/** Reused helper for resolve Compatible Runtime Plugin Registry behavior in src/plugins. */
+/** Returns a compatible active runtime registry without starting a fresh load. */
 export function resolveCompatibleRuntimePluginRegistry(
   options?: PluginLoadOptions,
 ): PluginRegistry | undefined {
@@ -1697,7 +1698,7 @@ function activatePluginRegistry(
   }
 }
 
-/** Reused helper for load Open Claw Plugins behavior in src/plugins. */
+/** Loads plugin runtime modules, builds the registry, optionally caches and activates it. */
 export function loadOpenClawPlugins(options: PluginLoadOptions = {}): PluginRegistry {
   const requestedOnlyPluginIds = normalizePluginIdScope(options.onlyPluginIds);
   const requestedOnlyPluginIdSet = createPluginIdScopeSet(requestedOnlyPluginIds);
@@ -2775,7 +2776,7 @@ export function loadOpenClawPlugins(options: PluginLoadOptions = {}): PluginRegi
   }
 }
 
-/** Reused helper for load Open Claw Plugin Cli Registry behavior in src/plugins. */
+/** Loads only plugin CLI metadata/registrars without activating normal runtime modules. */
 export async function loadOpenClawPluginCliRegistry(
   options: PluginLoadOptions = {},
 ): Promise<PluginRegistry> {
@@ -3175,5 +3176,5 @@ function resolveCliMetadataEntrySource(rootDir: string): string | null {
   }
   return null;
 }
-/** Re-exported API for src/plugins, starting with testing. */
+/** Legacy test alias for loader internals. */
 export { testing as __testing };
