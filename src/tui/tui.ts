@@ -1,4 +1,4 @@
-// tui tui helpers and runtime behavior.
+/** Terminal UI entrypoint, session resolution, input handling, and shutdown helpers. */
 import { execFileSync, spawn } from "node:child_process";
 import { existsSync } from "node:fs";
 import path from "node:path";
@@ -62,11 +62,11 @@ import type {
 } from "./tui-types.js";
 import { buildWaitingStatusMessage, defaultWaitingPhrases } from "./tui-waiting.js";
 
-/** Re-exported API for src/tui, starting with resolve Final Assistant Text. */
+/** Final assistant text formatter exposed for TUI tests and callers. */
 export { resolveFinalAssistantText } from "./tui-formatters.js";
-/** Re-exported API for src/tui, starting with Tui Options. */
+/** Public option shape accepted by the TUI runner. */
 export type { TuiOptions } from "./tui-types.js";
-/** Re-exported API for src/tui. */
+/** Submit helpers exposed for TUI component and PTY tests. */
 export {
   createEditorSubmitHandler,
   createSubmitBurstCoalescer,
@@ -102,7 +102,7 @@ export function resolveCodexCliBin(): string | null {
   }
 }
 
-/** Reused helper for resolve Local Auth Cli Invocation behavior in src/tui. */
+/** Chooses the CLI invocation used when local TUI auth opens model login. */
 export function resolveLocalAuthCliInvocation(params?: {
   execPath?: string;
   wrapperPath?: string;
@@ -125,7 +125,7 @@ export function resolveLocalAuthCliInvocation(params?: {
     : { command, args: [runNodePath, "models", "auth", "login"] };
 }
 
-/** Reused helper for resolve Local Auth Spawn Options behavior in src/tui. */
+/** Enables shell spawning only for Windows command/batch auth wrappers. */
 export function resolveLocalAuthSpawnOptions(params: {
   command: string;
   platform?: NodeJS.Platform;
@@ -136,7 +136,7 @@ export function resolveLocalAuthSpawnOptions(params: {
     : {};
 }
 
-/** Reused helper for resolve Local Auth Spawn Cwd behavior in src/tui. */
+/** Resolves the working directory for wrapper or run-node auth invocations. */
 export function resolveLocalAuthSpawnCwd(params: { args: string[]; defaultCwd?: string }): string {
   const defaultCwd = params.defaultCwd ?? process.cwd();
   const entryArg = params.args[0]?.trim();
@@ -153,7 +153,7 @@ export function resolveLocalAuthSpawnCwd(params: { args: string[]; defaultCwd?: 
   return defaultCwd;
 }
 
-/** Reused helper for resolve Tui Session Key behavior in src/tui. */
+/** Normalizes raw TUI session input into global or agent-scoped session keys. */
 export function resolveTuiSessionKey(params: {
   raw?: string;
   sessionScope: SessionScope;
@@ -179,7 +179,7 @@ export function resolveTuiSessionKey(params: {
   return `agent:${params.currentAgentId}:${normalizeLowercaseStringOrEmpty(trimmed)}`;
 }
 
-/** Reused helper for resolve Initial Tui Agent Id behavior in src/tui. */
+/** Resolves the starting agent from session input, workspace mapping, or default. */
 export function resolveInitialTuiAgentId(params: {
   cfg: OpenClawConfig;
   fallbackAgentId: string;
@@ -202,7 +202,7 @@ export function resolveInitialTuiAgentId(params: {
   return normalizeAgentId(params.fallbackAgentId);
 }
 
-/** Reused helper for resolve Gateway Disconnect State behavior in src/tui. */
+/** Maps Gateway disconnect reasons into user-visible status and pairing hints. */
 export function resolveGatewayDisconnectState(reason?: string): {
   connectionStatus: string;
   activityStatus: string;
@@ -223,7 +223,7 @@ export function resolveGatewayDisconnectState(reason?: string): {
   };
 }
 
-/** Reused helper for create Backspace Deduper behavior in src/tui. */
+/** Deduplicates terminal backspace sequences emitted twice by some PTYs. */
 export function createBackspaceDeduper(params?: { dedupeWindowMs?: number; now?: () => number }) {
   const dedupeWindowMs = Math.max(0, Math.floor(params?.dedupeWindowMs ?? 8));
   const now = params?.now ?? (() => Date.now());
@@ -242,7 +242,7 @@ export function createBackspaceDeduper(params?: { dedupeWindowMs?: number; now?:
   };
 }
 
-/** Reused helper for is Ignorable Tui Stop Error behavior in src/tui. */
+/** Detects raw-mode stop errors that can happen after terminal teardown. */
 export function isIgnorableTuiStopError(error: unknown): boolean {
   if (!error || typeof error !== "object") {
     return false;
@@ -257,7 +257,7 @@ export function isIgnorableTuiStopError(error: unknown): boolean {
   return /setRawMode/i.test(message) && /EBADF/i.test(message);
 }
 
-/** Reused helper for stop Tui Safely behavior in src/tui. */
+/** Stops the TUI while suppressing expected terminal teardown races. */
 export function stopTuiSafely(stop: () => void): void {
   try {
     stop();
@@ -273,7 +273,7 @@ type TerminalLossEmitter = {
   off(event: "close" | "end", listener: () => void): unknown;
 };
 
-/** Reused helper for is Tui Terminal Loss Error behavior in src/tui. */
+/** Detects stdin/stdout loss errors that should exit the TUI cleanly. */
 export function isTuiTerminalLossError(error: unknown): boolean {
   if (!error || typeof error !== "object") {
     return false;
@@ -290,7 +290,7 @@ export function isTuiTerminalLossError(error: unknown): boolean {
   );
 }
 
-/** Reused helper for install Tui Terminal Loss Exit Handler behavior in src/tui. */
+/** Installs one-shot terminal-loss handlers and returns their disposer. */
 export function installTuiTerminalLossExitHandler(
   requestExit: () => void,
   targets: { stdin?: TerminalLossEmitter; stdout?: TerminalLossEmitter } = {
@@ -325,7 +325,7 @@ export function installTuiTerminalLossExitHandler(
   };
 }
 
-/** Reused helper for create Deferred Tui Finish behavior in src/tui. */
+/** Defers a finish request until the TUI loop has registered its stop callback. */
 export function createDeferredTuiFinish(): {
   requestFinish: () => void;
   setFinish: (finish: () => void) => void;
@@ -372,7 +372,7 @@ type TuiProcessExitTimer = {
 
 type TuiProcessExitTimeout = (callback: () => void, delayMs: number) => TuiProcessExitTimer;
 
-/** Reused helper for drain And Stop Tui Safely behavior in src/tui. */
+/** Drains pending terminal input before stopping, then suppresses teardown races. */
 export async function drainAndStopTuiSafely(tui: DrainableTui): Promise<void> {
   if (typeof tui.terminal?.drainInput === "function") {
     try {
@@ -384,7 +384,7 @@ export async function drainAndStopTuiSafely(tui: DrainableTui): Promise<void> {
   stopTuiSafely(() => tui.stop());
 }
 
-/** Reused helper for can Submit Tui Chat Message behavior in src/tui. */
+/** Determines whether Enter should submit, queue, or allow a stop command. */
 export function canSubmitTuiChatMessage(params: {
   local?: boolean;
   activeChatRunId?: string | null;
@@ -411,17 +411,17 @@ const TUI_BUSY_ACTIVITY_STATUSES = new Set([
   "finishing context",
 ]);
 
-/** Reused helper for is Tui Busy Activity Status behavior in src/tui. */
+/** Returns whether a status string should drive the busy spinner. */
 export function isTuiBusyActivityStatus(status: string): boolean {
   return TUI_BUSY_ACTIVITY_STATUSES.has(status);
 }
 
-/** Reused helper for resolve Tui Shutdown Hard Exit Ms behavior in src/tui. */
+/** Adds local-runtime grace time to the hard-exit timeout when needed. */
 export function resolveTuiShutdownHardExitMs(params: { localMode?: boolean } = {}): number {
   return TUI_SHUTDOWN_HARD_EXIT_MS + (params.localMode ? resolveLocalRunShutdownGraceMs() : 0);
 }
 
-/** Reused helper for schedule Process Exit After Tui Return behavior in src/tui. */
+/** Schedules a guarded process exit after the TUI returns to the CLI. */
 export function scheduleProcessExitAfterTuiReturn(
   params: {
     delayMs?: number;
@@ -455,7 +455,7 @@ export function scheduleProcessExitAfterTuiReturn(
 type CtrlCAction = "clear" | "warn" | "exit";
 type TuiCtrlCAction = CtrlCAction | "force-exit";
 
-/** Reused helper for resolve Ctrl CAction behavior in src/tui. */
+/** Resolves single/double Ctrl-C behavior for input clearing and exit. */
 export function resolveCtrlCAction(params: {
   hasInput: boolean;
   now: number;
@@ -481,7 +481,7 @@ export function resolveCtrlCAction(params: {
   };
 }
 
-/** Reused helper for resolve Tui Ctrl CAction behavior in src/tui. */
+/** Extends Ctrl-C handling with disconnected and forced-exit TUI states. */
 export function resolveTuiCtrlCAction(params: {
   hasInput: boolean;
   now: number;
@@ -499,7 +499,7 @@ export function resolveTuiCtrlCAction(params: {
   return resolveCtrlCAction(params);
 }
 
-/** Reused helper for run Tui behavior in src/tui. */
+/** Runs the terminal chat UI against a Gateway, embedded backend, or test backend. */
 export async function runTui(opts: RunTuiOptions): Promise<TuiResult> {
   const isLocalMode = opts.local === true || opts.backend !== undefined;
   const config = opts.config ?? getRuntimeConfig({ skipPluginValidation: !isLocalMode });
