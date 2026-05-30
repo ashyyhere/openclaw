@@ -1,4 +1,4 @@
-// plugins config activation shared helpers and runtime behavior.
+// Shared plugin activation policy and enablement-result helpers.
 type EnableStateLike = {
   enabled: boolean;
   reason?: string;
@@ -6,10 +6,10 @@ type EnableStateLike = {
 
 type PluginKindLike = string | readonly string[] | undefined;
 
-/** Shared type for Plugin Activation Source in src/plugins. */
+/** Source bucket explaining how a plugin activation decision was reached. */
 export type PluginActivationSource = "disabled" | "explicit" | "auto" | "default";
 
-/** Shared type for Plugin Explicit Selection Cause in src/plugins. */
+/** Config causes that count as an explicit plugin selection. */
 export type PluginExplicitSelectionCause =
   | "enabled-in-config"
   | "bundled-channel-enabled-in-config"
@@ -17,7 +17,7 @@ export type PluginExplicitSelectionCause =
   | "selected-context-engine-slot"
   | "selected-in-allowlist";
 
-/** Shared type for Plugin Activation Cause in src/plugins. */
+/** Detailed cause for plugin activation, disablement, or default handling. */
 export type PluginActivationCause =
   | PluginExplicitSelectionCause
   | "plugins-disabled"
@@ -30,7 +30,7 @@ export type PluginActivationCause =
   | "bundled-default-enablement"
   | "bundled-disabled-by-default";
 
-/** Shared type for Plugin Activation State Like in src/plugins. */
+/** Public activation state returned by plugin config and loader callers. */
 export type PluginActivationStateLike = {
   enabled: boolean;
   activated: boolean;
@@ -39,7 +39,7 @@ export type PluginActivationStateLike = {
   reason?: string;
 };
 
-/** Shared type for Plugin Activation Decision in src/plugins. */
+/** Internal activation decision before cause text is formatted. */
 export type PluginActivationDecision = PluginActivationStateLike & {
   cause?: PluginActivationCause;
 };
@@ -55,13 +55,13 @@ type PluginActivationConfigLike = {
   entries: Record<string, { enabled?: boolean } | undefined>;
 };
 
-/** Shared type for Plugin Activation Config Source Like in src/plugins. */
+/** Config source used to resolve activation against normalized plugin config. */
 export type PluginActivationConfigSourceLike<TRootConfig> = {
   plugins: PluginActivationConfigLike;
   rootConfig?: TRootConfig;
 };
 
-/** Reused constant for PLUGIN ACTIVATION REASON BY CAUSE behavior in src/plugins. */
+/** Default human reason text for each activation cause. */
 export const PLUGIN_ACTIVATION_REASON_BY_CAUSE: Record<PluginActivationCause, string> = {
   "enabled-in-config": "enabled in config",
   "bundled-channel-enabled-in-config": "channel enabled in config",
@@ -79,7 +79,7 @@ export const PLUGIN_ACTIVATION_REASON_BY_CAUSE: Record<PluginActivationCause, st
   "bundled-disabled-by-default": "bundled (disabled by default)",
 };
 
-/** Reused helper for resolve Plugin Activation Reason behavior in src/plugins. */
+/** Chooses explicit reason text or falls back to the activation cause label. */
 export function resolvePluginActivationReason(
   cause?: PluginActivationCause,
   reason?: string,
@@ -90,7 +90,7 @@ export function resolvePluginActivationReason(
   return cause ? PLUGIN_ACTIVATION_REASON_BY_CAUSE[cause] : undefined;
 }
 
-/** Reused helper for to Plugin Activation State behavior in src/plugins. */
+/** Converts an internal activation decision to public activation state. */
 export function toPluginActivationState(
   decision: PluginActivationDecision,
 ): PluginActivationStateLike {
@@ -134,7 +134,7 @@ function resolveExplicitPluginSelectionShared<TRootConfig>(params: {
   return { explicitlyEnabled: false };
 }
 
-/** Reused helper for resolve Plugin Activation Decision Shared behavior in src/plugins. */
+/** Applies shared plugin activation policy for allowlists, slots, origins, and defaults. */
 export function resolvePluginActivationDecisionShared<TRootConfig>(params: {
   id: string;
   origin: string;
@@ -308,12 +308,12 @@ export function resolvePluginActivationDecisionShared<TRootConfig>(params: {
   };
 }
 
-/** Reused helper for to Enable State Result behavior in src/plugins. */
+/** Converts activation-like state to the legacy enabled/reason result shape. */
 export function toEnableStateResult(state: EnableStateLike): { enabled: boolean; reason?: string } {
   return state.enabled ? { enabled: true } : { enabled: false, reason: state.reason };
 }
 
-/** Reused helper for resolve Enable State Result behavior in src/plugins. */
+/** Resolves an enable-state result through a caller-supplied state resolver. */
 export function resolveEnableStateResult<TParams>(
   params: TParams,
   resolveState: (params: TParams) => EnableStateLike,
@@ -321,7 +321,7 @@ export function resolveEnableStateResult<TParams>(
   return toEnableStateResult(resolveState(params));
 }
 
-/** Reused helper for create Plugin Enable State Resolver behavior in src/plugins. */
+/** Builds the legacy positional enable-state resolver around activation policy. */
 export function createPluginEnableStateResolver<TConfig, TOrigin extends string>(
   resolveState: (params: {
     id: string;
@@ -339,7 +339,7 @@ export function createPluginEnableStateResolver<TConfig, TOrigin extends string>
     resolveEnableStateResult({ id, origin, config, enabledByDefault }, resolveState);
 }
 
-/** Reused helper for create Effective Enable State Resolver behavior in src/plugins. */
+/** Builds a parameter-object enable-state resolver around activation policy. */
 export function createEffectiveEnableStateResolver<TParams>(
   resolveState: (params: TParams) => EnableStateLike,
 ): (params: TParams) => { enabled: boolean; reason?: string } {
@@ -353,7 +353,7 @@ function hasKind(kind: PluginKindLike, target: string): boolean {
   return Array.isArray(kind) ? kind.includes(target) : kind === target;
 }
 
-/** Reused helper for resolve Memory Slot Decision Shared behavior in src/plugins. */
+/** Resolves whether a memory-capable plugin should load for the selected memory slot. */
 export function resolveMemorySlotDecisionShared(params: {
   id: string;
   kind?: PluginKindLike;
