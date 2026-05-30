@@ -1,4 +1,4 @@
-// llm/providers openai responses helpers and runtime behavior.
+// OpenAI Responses API stream adapter.
 import OpenAI from "openai";
 import type { ResponseCreateParamsStreaming } from "openai/resources/responses/responses.js";
 import { getEnvApiKey } from "../env-api-keys.js";
@@ -72,7 +72,7 @@ function formatOpenAIResponsesError(error: unknown): string {
 }
 
 // OpenAI Responses-specific options
-/** Shared type for Open AIResponses Options in src/llm/providers. */
+/** Provider-specific stream options for OpenAI Responses requests. */
 export interface OpenAIResponsesOptions extends StreamOptions {
   reasoningEffort?: "minimal" | "low" | "medium" | "high" | "xhigh";
   reasoningSummary?: "auto" | "detailed" | "concise" | null;
@@ -114,7 +114,7 @@ export const streamOpenAIResponses: StreamFunction<"openai-responses", OpenAIRes
   return stream;
 };
 
-/** Reused constant for stream Simple Open AIResponses behavior in src/llm/providers. */
+/** Map simple stream options into OpenAI Responses stream options. */
 export const streamSimpleOpenAIResponses: StreamFunction<
   "openai-responses",
   SimpleStreamOptions

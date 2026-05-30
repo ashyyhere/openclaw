@@ -1,4 +1,4 @@
-// llm/providers simple options helpers and runtime behavior.
+// Shared mapping from simple stream options into provider-specific stream options.
 import type {
   Model,
   SimpleStreamOptions,
@@ -7,7 +7,7 @@ import type {
   ThinkingLevel,
 } from "../types.js";
 
-/** Reused helper for build Base Options behavior in src/llm/providers. */
+/** Build provider stream options shared by all simple stream adapters. */
 export function buildBaseOptions(
   model: Model,
   options?: SimpleStreamOptions,
@@ -34,14 +34,14 @@ export function buildBaseOptions(
   };
 }
 
-/** Reused helper for clamp Reasoning behavior in src/llm/providers. */
+/** Clamp unsupported `xhigh` reasoning to the highest broadly supported level. */
 export function clampReasoning(
   effort: ThinkingLevel | undefined,
 ): Exclude<ThinkingLevel, "xhigh"> | undefined {
   return effort === "xhigh" ? "high" : effort;
 }
 
-/** Reused helper for adjust Max Tokens For Thinking behavior in src/llm/providers. */
+/** Allocate a thinking budget while keeping total requested tokens within model limits. */
 export function adjustMaxTokensForThinking(
   // Undefined means no explicit caller cap. Use the model cap and fit thinking inside it.
   baseMaxTokens: number | undefined,

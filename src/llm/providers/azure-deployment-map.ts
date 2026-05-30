@@ -1,5 +1,5 @@
-// llm/providers azure deployment map helpers and runtime behavior.
-/** Reused helper for parse Azure Deployment Name Map behavior in src/llm/providers. */
+// Azure OpenAI deployment-name mapping helpers.
+/** Parse a comma-separated `model=deployment` mapping string. */
 export function parseAzureDeploymentNameMap(value: string | undefined): Map<string, string> {
   const map = new Map<string, string>();
   if (!value) {
@@ -24,7 +24,7 @@ export function parseAzureDeploymentNameMap(value: string | undefined): Map<stri
   return map;
 }
 
-/** Reused helper for resolve Azure Deployment Name From Map behavior in src/llm/providers. */
+/** Resolve the Azure deployment name for a model id, falling back to the model id. */
 export function resolveAzureDeploymentNameFromMap(params: {
   modelId: string;
   deploymentMap?: string;

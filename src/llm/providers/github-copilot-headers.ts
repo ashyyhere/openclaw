@@ -1,16 +1,16 @@
-// llm/providers github copilot headers helpers and runtime behavior.
+// GitHub Copilot dynamic request header helpers.
 import type { Message } from "../types.js";
 
 // Copilot expects X-Initiator to indicate whether the request is user-initiated
 // or agent-initiated (e.g. follow-up after assistant/tool messages).
-/** Reused helper for infer Copilot Initiator behavior in src/llm/providers. */
+/** Infer Copilot's `X-Initiator` header from the last message role. */
 export function inferCopilotInitiator(messages: Message[]): "user" | "agent" {
   const last = messages[messages.length - 1];
   return last && last.role !== "user" ? "agent" : "user";
 }
 
 // Copilot requires Copilot-Vision-Request header when sending images
-/** Reused helper for has Copilot Vision Input behavior in src/llm/providers. */
+/** Return whether messages include image input requiring Copilot vision headers. */
 export function hasCopilotVisionInput(messages: Message[]): boolean {
   return messages.some((msg) => {
     if (msg.role === "user" && Array.isArray(msg.content)) {
@@ -23,7 +23,7 @@ export function hasCopilotVisionInput(messages: Message[]): boolean {
   });
 }
 
-/** Reused helper for build Copilot Dynamic Headers behavior in src/llm/providers. */
+/** Build per-request Copilot headers for initiator and vision state. */
 export function buildCopilotDynamicHeaders(params: {
   messages: Message[];
   hasImages: boolean;
