@@ -1,29 +1,29 @@
 // Shared setup wizard/types/helpers for plugin and channel setup surfaces.
 
-/** Re-exported API for src/plugin-sdk, starting with Open Claw Config. */
+/** OpenClaw config shape accepted by setup adapters. */
 export type { OpenClawConfig } from "../config/config.js";
-/** Re-exported API for src/plugin-sdk, starting with Dm Policy. */
+/** Channel DM and group policy config contracts. */
 export type { DmPolicy, GroupPolicy } from "../config/types.js";
-/** Re-exported API for src/plugin-sdk, starting with Secret Input. */
+/** Secret input shape used by setup prompts and config patches. */
 export type { SecretInput } from "../config/types.secrets.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Wizard prompt contracts available to plugin setup flows. */
 export type {
   WizardMultiSelectParams,
   WizardProgress,
   WizardPrompter,
   WizardSelectParams,
 } from "../wizard/prompts.js";
-/** Re-exported API for src/plugin-sdk, starting with Wizard Cancelled Error. */
+/** Error thrown when an interactive setup wizard is cancelled. */
 export { WizardCancelledError } from "../wizard/prompts.js";
-/** Re-exported API for src/plugin-sdk, starting with create Setup Translator. */
+/** Factory for localized setup wizard strings. */
 export { createSetupTranslator } from "../wizard/i18n/index.js";
-/** Re-exported API for src/plugin-sdk, starting with Setup Translator. */
+/** Setup wizard translation contracts. */
 export type { SetupTranslator, WizardI18nParams } from "../wizard/i18n/index.js";
-/** Re-exported API for src/plugin-sdk, starting with Channel Setup Adapter. */
+/** Channel setup adapter contract implemented by plugins. */
 export type { ChannelSetupAdapter } from "../channels/plugins/types.adapters.js";
-/** Re-exported API for src/plugin-sdk, starting with Channel Setup Input. */
+/** Runtime input passed into channel setup adapters. */
 export type { ChannelSetupInput } from "../channels/plugins/types.core.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Channel setup wizard contracts and parsed input shapes. */
 export type {
   ChannelSetupDmPolicy,
   ChannelSetupWizardAdapter,
@@ -32,18 +32,18 @@ export type {
   ChannelSetupWizardTextInput,
 } from "../channels/plugins/setup-wizard-types.js";
 
-/** Re-exported API for src/plugin-sdk, starting with DEFAULT ACCOUNT ID. */
+/** Account id helpers used by multi-account channel setup. */
 export { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "../routing/session-key.js";
-/** Re-exported API for src/plugin-sdk, starting with format Cli Command. */
+/** CLI command formatter for setup instructions. */
 export { formatCliCommand } from "../cli/command-format.js";
-/** Re-exported API for src/plugin-sdk, starting with detect Binary. */
+/** Binary detector used by setup prerequisites. */
 export { detectBinary } from "../plugins/setup-binary.js";
 export { formatDocsLink } from "../../packages/terminal-core/src/links.js";
 export { hasConfiguredSecretInput, normalizeSecretInputString } from "../config/types.secrets.js";
-/** Re-exported API for src/plugin-sdk, starting with normalize E164. */
+/** Common setup utilities for phone numbers and filesystem checks. */
 export { normalizeE164, pathExists } from "../utils.js";
 
-/** Re-exported API for src/plugin-sdk. */
+/** Account-scoped setup config patch and validation helpers. */
 export {
   moveSingleAccountChannelSectionToDefaultAccount,
   applyAccountNameToChannelSection,
@@ -56,7 +56,7 @@ export {
   patchScopedAccountConfig,
   prepareScopedSetupConfig,
 } from "../channels/plugins/setup-helpers.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Channel setup allowlist, DM policy, group policy, and prompt helpers. */
 export {
   addWildcardAllowFrom,
   buildSingleChannelSecretPromptState,
@@ -110,18 +110,18 @@ export {
   setTopLevelChannelGroupPolicy,
   splitSetupEntries,
 } from "../channels/plugins/setup-wizard-helpers.js";
-/** Re-exported API for src/plugin-sdk, starting with prompt Channel Access Config. */
+/** Prompt flow for channel access and group allowlist config. */
 export { promptChannelAccessConfig } from "../channels/plugins/setup-group-access.js";
-/** Re-exported API for src/plugin-sdk, starting with create Allowlist Setup Wizard Proxy. */
+/** Proxy helper for setup wizards that only need allowlist prompts. */
 export { createAllowlistSetupWizardProxy } from "../channels/plugins/setup-wizard-proxy.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Delegation helpers for composing setup wizard prepare/finalize/status flows. */
 export {
   createDelegatedFinalize,
   createDelegatedPrepare,
   createDelegatedResolveConfigured,
   createDelegatedSetupWizardProxy,
 } from "../channels/plugins/setup-wizard-proxy.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Binary-driven setup wizard text inputs and status resolvers. */
 export {
   createCliPathTextInput,
   createDelegatedSetupWizardStatusResolvers,
@@ -129,5 +129,5 @@ export {
   createDetectedBinaryStatus,
 } from "../channels/plugins/setup-wizard-binary.js";
 
-/** Re-exported API for src/plugin-sdk, starting with format Resolved Unresolved Note. */
+/** Formats resolved/unresolved setup notes for status output. */
 export { formatResolvedUnresolvedNote } from "./resolution-notes.js";
