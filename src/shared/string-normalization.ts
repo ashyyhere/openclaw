@@ -1,51 +1,51 @@
-// shared string normalization helpers and runtime behavior.
+// Shared string-list, uniqueness, sorting, and slug normalization helpers.
 import { normalizeOptionalLowercaseString, normalizeOptionalString } from "./string-coerce.js";
 
-/** Reused helper for normalize String Entries behavior in src/shared. */
+/** Trims/coerces unknown list entries and drops empty strings. */
 export function normalizeStringEntries(list?: ReadonlyArray<unknown>) {
   return (list ?? []).map((entry) => normalizeOptionalString(String(entry)) ?? "").filter(Boolean);
 }
 
-/** Reused helper for normalize String Entries Lower behavior in src/shared. */
+/** Normalizes list entries to lowercase trimmed strings. */
 export function normalizeStringEntriesLower(list?: ReadonlyArray<unknown>) {
   return normalizeStringEntries(list).map((entry) => normalizeOptionalLowercaseString(entry) ?? "");
 }
 
-/** Reused helper for unique Values behavior in src/shared. */
+/** Preserves first-seen order while removing duplicate values. */
 export function uniqueValues<T>(values: Iterable<T>): T[] {
   return [...new Set(values)];
 }
 
-/** Reused helper for unique Strings behavior in src/shared. */
+/** Preserves first-seen order while removing duplicate strings. */
 export function uniqueStrings(values: Iterable<string>): string[] {
   return uniqueValues(values);
 }
 
-/** Reused helper for sort Unique Strings behavior in src/shared. */
+/** Deduplicates strings, then returns them in stable lexicographic order. */
 export function sortUniqueStrings(values: Iterable<string>): string[] {
   return uniqueStrings(values).toSorted((left, right) =>
     left < right ? -1 : left > right ? 1 : 0,
   );
 }
 
-/** Reused helper for normalize Unique String Entries behavior in src/shared. */
+/** Normalizes unknown entries to unique non-empty strings. */
 export function normalizeUniqueStringEntries(values?: Iterable<unknown>): string[] {
   return uniqueStrings(normalizeStringEntries(values ? [...values] : undefined));
 }
 
-/** Reused helper for normalize Unique String Entries Lower behavior in src/shared. */
+/** Normalizes unknown entries to unique lowercase non-empty strings. */
 export function normalizeUniqueStringEntriesLower(values?: Iterable<unknown>): string[] {
   return uniqueStrings(
     normalizeStringEntriesLower(values ? [...values] : undefined).filter(Boolean),
   );
 }
 
-/** Reused helper for normalize Sorted Unique String Entries behavior in src/shared. */
+/** Normalizes unknown entries to sorted unique non-empty strings. */
 export function normalizeSortedUniqueStringEntries(values?: Iterable<unknown>): string[] {
   return sortUniqueStrings(normalizeUniqueStringEntries(values));
 }
 
-/** Reused helper for normalize Trimmed String List behavior in src/shared. */
+/** Accepts only arrays and returns trimmed non-empty string values. */
 export function normalizeTrimmedStringList(value: unknown): string[] {
   if (!Array.isArray(value)) {
     return [];
@@ -56,23 +56,23 @@ export function normalizeTrimmedStringList(value: unknown): string[] {
   });
 }
 
-/** Reused helper for normalize Unique Trimmed String List behavior in src/shared. */
+/** Normalizes an array-backed string list and removes duplicates. */
 export function normalizeUniqueTrimmedStringList(value: unknown): string[] {
   return uniqueStrings(normalizeTrimmedStringList(value));
 }
 
-/** Reused helper for normalize Sorted Unique Trimmed String List behavior in src/shared. */
+/** Normalizes an array-backed string list to sorted unique values. */
 export function normalizeSortedUniqueTrimmedStringList(value: unknown): string[] {
   return sortUniqueStrings(normalizeTrimmedStringList(value));
 }
 
-/** Reused helper for normalize Optional Trimmed String List behavior in src/shared. */
+/** Returns a normalized string list only when at least one value remains. */
 export function normalizeOptionalTrimmedStringList(value: unknown): string[] | undefined {
   const normalized = normalizeTrimmedStringList(value);
   return normalized.length > 0 ? normalized : undefined;
 }
 
-/** Reused helper for normalize Array Backed Trimmed String List behavior in src/shared. */
+/** Distinguishes missing/non-array input from an explicitly empty array. */
 export function normalizeArrayBackedTrimmedStringList(value: unknown): string[] | undefined {
   if (!Array.isArray(value)) {
     return undefined;
@@ -80,7 +80,7 @@ export function normalizeArrayBackedTrimmedStringList(value: unknown): string[] 
   return normalizeTrimmedStringList(value);
 }
 
-/** Reused helper for normalize Single Or Trimmed String List behavior in src/shared. */
+/** Accepts either one scalar string-like value or an array-backed list. */
 export function normalizeSingleOrTrimmedStringList(value: unknown): string[] {
   if (Array.isArray(value)) {
     return normalizeTrimmedStringList(value);
@@ -89,12 +89,12 @@ export function normalizeSingleOrTrimmedStringList(value: unknown): string[] {
   return normalized ? [normalized] : [];
 }
 
-/** Reused helper for normalize Unique Single Or Trimmed String List behavior in src/shared. */
+/** Normalizes scalar-or-array input and removes duplicate values. */
 export function normalizeUniqueSingleOrTrimmedStringList(value: unknown): string[] {
   return uniqueStrings(normalizeSingleOrTrimmedStringList(value));
 }
 
-/** Reused helper for normalize Csv Or Loose String List behavior in src/shared. */
+/** Accepts arrays or comma-separated strings as loose string-list input. */
 export function normalizeCsvOrLooseStringList(value: unknown): string[] {
   if (Array.isArray(value)) {
     return normalizeStringEntries(value);
@@ -112,7 +112,7 @@ function normalizeSlugInput(raw?: string | null) {
   return (normalizeOptionalLowercaseString(raw) ?? "").normalize("NFC");
 }
 
-/** Reused helper for normalize Hyphen Slug behavior in src/shared. */
+/** Builds a lowercase NFC slug that keeps letters, numbers, and common symbols. */
 export function normalizeHyphenSlug(raw?: string | null) {
   const trimmed = normalizeSlugInput(raw);
   if (!trimmed) {
@@ -123,7 +123,7 @@ export function normalizeHyphenSlug(raw?: string | null) {
   return cleaned.replace(/-{2,}/g, "-").replace(/^[-.]+|[-.]+$/g, "");
 }
 
-/** Reused helper for normalize At Hash Slug behavior in src/shared. */
+/** Builds a lowercase hashtag/handle-style slug without leading @ or #. */
 export function normalizeAtHashSlug(raw?: string | null) {
   const trimmed = normalizeSlugInput(raw);
   if (!trimmed) {
