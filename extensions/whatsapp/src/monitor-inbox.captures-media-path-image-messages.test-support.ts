@@ -80,7 +80,7 @@ describe("web monitor inbox", () => {
     });
 
     expect(onMessage).toHaveBeenCalledTimes(1);
-    expect(onMessage.mock.calls[0]?.[0]?.body).toBe("<media:image>");
+    expect(onMessage.mock.calls[0]?.[0]?.payload.body).toBe("<media:image>");
     expect(sock.readMessages).toHaveBeenCalledWith([
       {
         remoteJid: "888@s.whatsapp.net",
@@ -220,8 +220,14 @@ describe("web monitor inbox", () => {
     expectSingleGroupMessage(onMessage, {
       chatType: "group",
       conversationId: "99999@g.us",
-      senderE164: "+777",
-      mentionedJids: ["123@s.whatsapp.net"],
+      group: expect.objectContaining({
+        mentions: expect.objectContaining({
+          jids: ["123@s.whatsapp.net"],
+        }),
+      }),
+      platform: expect.objectContaining({
+        senderE164: "+777",
+      }),
     });
     await listener.close();
   });
@@ -253,9 +259,17 @@ describe("web monitor inbox", () => {
     expectSingleGroupMessage(onMessage, {
       chatType: "group",
       conversationId: "424242@g.us",
-      body: "oh hey @Clawd UK !",
-      mentionedJids: ["123@s.whatsapp.net"],
-      senderE164: "+888",
+      group: expect.objectContaining({
+        mentions: expect.objectContaining({
+          jids: ["123@s.whatsapp.net"],
+        }),
+      }),
+      payload: expect.objectContaining({
+        body: "oh hey @Clawd UK !",
+      }),
+      platform: expect.objectContaining({
+        senderE164: "+888",
+      }),
     });
     await listener.close();
   });
@@ -297,11 +311,17 @@ describe("web monitor inbox", () => {
     expectSingleGroupMessage(onMessage, {
       chatType: "group",
       from: "55555@g.us",
-      senderE164: "+777",
-      senderJid: "777@s.whatsapp.net",
-      mentionedJids: ["123@s.whatsapp.net"],
-      selfE164: "+123",
-      selfJid: "123@s.whatsapp.net",
+      group: expect.objectContaining({
+        mentions: expect.objectContaining({
+          jids: ["123@s.whatsapp.net"],
+        }),
+      }),
+      platform: expect.objectContaining({
+        senderE164: "+777",
+        senderJid: "777@s.whatsapp.net",
+        selfE164: "+123",
+        selfJid: "123@s.whatsapp.net",
+      }),
     });
     await listener.close();
   });

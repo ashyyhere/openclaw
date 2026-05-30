@@ -91,9 +91,7 @@ async function primeInboundReplyHandle(params: {
   );
   await waitForMessageCalls(params.onMessage, 1);
 
-  const inbound = inboundMessage(params.onMessage) as {
-    reply: (text: string) => Promise<void>;
-  };
+  const inbound = inboundMessage(params.onMessage);
 
   return { listener, sock, inbound };
 }
@@ -112,7 +110,7 @@ describe("web monitor inbox", () => {
 
   async function expectQuotedReplyContext(quotedMessage: unknown) {
     const onMessage = vi.fn(async (msg) => {
-      await msg.reply("pong");
+      await msg.platform.reply("pong");
     });
 
     const { listener, sock } = await startInboxMonitor(onMessage as InboxOnMessage);
@@ -145,13 +143,13 @@ describe("web monitor inbox", () => {
     await waitForMessageCalls(onMessage, 1);
 
     const inbound = inboundMessage(onMessage);
-    expect(inbound.replyToId).toBe("q1");
-    expect(inbound.replyToBody).toBe("original");
-    expect(inbound.replyToSender).toBe("+111");
-    const sender = inbound.sender as { e164?: string; name?: string };
+    expect(inbound.quote?.id).toBe("q1");
+    expect(inbound.quote?.body).toBe("original");
+    expect(inbound.quote?.sender?.displayName).toBe("+111");
+    const sender = inbound.platform.sender as { e164?: string; name?: string };
     expect(sender.e164).toBe("+999");
     expect(sender.name).toBe("Tester");
-    const replyTo = inbound.replyTo as {
+    const replyTo = inbound.quote?.context as {
       body?: string;
       id?: string;
       sender?: { e164?: string; jid?: string; label?: string };
@@ -161,7 +159,7 @@ describe("web monitor inbox", () => {
     expect(replyTo.sender?.jid).toBe("111@s.whatsapp.net");
     expect(replyTo.sender?.e164).toBe("+111");
     expect(replyTo.sender?.label).toBe("+111");
-    const self = inbound.self as { e164?: string; jid?: string };
+    const self = inbound.platform.self as { e164?: string; jid?: string };
     expect(self.jid).toBe("123@s.whatsapp.net");
     expect(self.e164).toBe("+123");
     expect(sock.sendMessage).toHaveBeenCalledWith("999@s.whatsapp.net", {
@@ -173,8 +171,8 @@ describe("web monitor inbox", () => {
 
   it("streams inbound messages", async () => {
     const onMessage = vi.fn(async (msg) => {
-      await msg.sendComposing();
-      await msg.reply("pong");
+      await msg.platform.sendComposing();
+      await msg.platform.reply("pong");
     });
 
     const { listener, sock } = await startInboxMonitor(onMessage as InboxOnMessage);
@@ -192,9 +190,22 @@ describe("web monitor inbox", () => {
     await waitForMessageCalls(onMessage, 1);
 
     const inbound = inboundMessage(onMessage);
-    expect(inbound.body).toBe("ping");
+    expect(inbound.payload.body).toBe("ping");
+    expect(inbound.payload.media).toBeUndefined();
+    expect(inbound.body).toBe(inbound.payload.body);
+    expect(inbound.mediaPath).toBeUndefined();
+    expect(inbound.mediaType).toBeUndefined();
+    expect(inbound.id).toBe(inbound.event.id);
+    expect(inbound.timestamp).toBe(inbound.event.timestamp);
     expect(inbound.from).toBe("+999");
-    expect(inbound.to).toBe("+123");
+    expect(inbound.platform.recipientJid).toBe("+123");
+    expect(inbound.to).toBe(inbound.platform.recipientJid);
+    expect(inbound.chatId).toBe(inbound.platform.chatJid);
+    expect(inbound.pushName).toBe(inbound.platform.pushName);
+    expect(inbound.senderE164).toBe(inbound.platform.senderE164);
+    expect(inbound.reply).toBe(inbound.platform.reply);
+    expect(inbound.sendComposing).toBe(inbound.platform.sendComposing);
+    expect(inbound.sendMedia).toBe(inbound.platform.sendMedia);
     expect(sock.readMessages).toHaveBeenCalledWith([
       {
         remoteJid: "999@s.whatsapp.net",
@@ -271,7 +282,7 @@ describe("web monitor inbox", () => {
     );
     await waitForMessageCalls(onMessage, 1);
 
-    expect(inboundMessage(onMessage).body).toBe("ping");
+    expect(inboundMessage(onMessage).payload.body).toBe("ping");
     await vi.waitFor(() => {
       expect(sock.readMessages).toHaveBeenCalledWith([
         {
@@ -390,12 +401,12 @@ describe("web monitor inbox", () => {
 
     await waitForMessageCalls(onMessage, 1);
     const inbound = inboundMessage(onMessage);
-    expect(inbound.body).toBe("ping");
+    expect(inbound.payload.body).toBe("ping");
     expect(inbound.from).toBe("123@g.us");
-    expect(inbound.groupSubject).toBe("Recovered Group");
-    expect(inbound.senderE164).toBe("+444");
+    expect(inbound.group?.subject).toBe("Recovered Group");
+    expect(inbound.platform.senderE164).toBe("+444");
     expect(inbound.chatType).toBe("group");
-    expect(inbound.groupParticipants).toBeUndefined();
+    expect(inbound.group?.participants).toBeUndefined();
 
     await second.listener.close();
   });
@@ -505,11 +516,7 @@ describe("web monitor inbox", () => {
     );
     await waitForMessageCalls(onMessage, 1);
 
-    const inbound = inboundMessage(onMessage) as {
-      reply: (text: string) => Promise<void>;
-      sendMedia: (payload: Record<string, unknown>) => Promise<void>;
-      sendComposing: () => Promise<void>;
-    };
+    const inbound = inboundMessage(onMessage);
 
     const replacementSock = {
       sendMessage: vi.fn(async () => undefined),
@@ -519,9 +526,9 @@ describe("web monitor inbox", () => {
       InboxMonitorOptions["socketRef"]
     >["current"];
 
-    await inbound.reply("pong");
-    await inbound.sendMedia({ text: "after-reconnect" });
-    await inbound.sendComposing();
+    await inbound.platform.reply("pong");
+    await inbound.platform.sendMedia({ text: "after-reconnect" });
+    await inbound.platform.sendComposing();
 
     expect(replacementSock.sendMessage).toHaveBeenNthCalledWith(1, "999@s.whatsapp.net", {
       text: "pong",
@@ -553,15 +560,13 @@ describe("web monitor inbox", () => {
     );
     await waitForMessageCalls(onMessage, 1);
 
-    const inbound = inboundMessage(onMessage) as {
-      sendMedia: (payload: Record<string, unknown>) => Promise<void>;
-    };
+    const inbound = inboundMessage(onMessage);
     const image = Buffer.from("img");
     const thumbnail = Buffer.from("thumb");
     imageOps.getImageMetadata.mockResolvedValueOnce({ width: 640, height: 480 });
     imageOps.resizeToJpeg.mockResolvedValueOnce(thumbnail);
 
-    await inbound.sendMedia({ image, caption: "cap", mimetype: "image/png" });
+    await inbound.platform.sendMedia({ image, caption: "cap", mimetype: "image/png" });
 
     expect(imageOps.resizeToJpeg).toHaveBeenCalledWith({
       buffer: image,
@@ -608,7 +613,7 @@ describe("web monitor inbox", () => {
       >["current"];
     });
 
-    await inbound?.reply("pong");
+    await inbound?.platform.reply("pong");
 
     expect(sleepWithAbortMock).toHaveBeenCalledWith(10, undefined);
     expect(replacementSock.sendMessage).toHaveBeenCalledWith("999@s.whatsapp.net", {
@@ -650,7 +655,13 @@ describe("web monitor inbox", () => {
       await listener.close();
       await vi.advanceTimersByTimeAsync(50);
       await waitForMessageCalls(onMessage, 1);
-      expect(inboundMessage(onMessage).body).toBe("first\nsecond");
+      const inbound = inboundMessage(onMessage);
+      expect(inbound.payload.body).toBe("first\nsecond");
+      expect(inbound.body).toBe(inbound.payload.body);
+      expect(inbound.chatType).toBe("direct");
+      expect(inbound.group).toBeUndefined();
+      expect(inbound.event.isBatched).toBe(true);
+      expect(inbound.isBatched).toBe(inbound.event.isBatched);
     } finally {
       vi.useRealTimers();
     }
@@ -660,8 +671,8 @@ describe("web monitor inbox", () => {
     vi.useFakeTimers();
     try {
       const onMessage = vi.fn(async (msg) => {
-        await msg.reply("pong");
-        await msg.sendMedia({ text: "media" });
+        await msg.platform.reply("pong");
+        await msg.platform.sendMedia({ text: "media" });
       });
       const { listener, sock } = await startInboxMonitor(onMessage as InboxOnMessage, {
         debounceMs: 50,
@@ -690,7 +701,7 @@ describe("web monitor inbox", () => {
       await listener.close();
 
       expect(onMessage).toHaveBeenCalledTimes(1);
-      expect(inboundMessage(onMessage).body).toBe("first\nsecond");
+      expect(inboundMessage(onMessage).payload.body).toBe("first\nsecond");
       expect(sock.sendMessage).toHaveBeenNthCalledWith(1, "999@s.whatsapp.net", {
         text: "pong",
       });
@@ -716,7 +727,7 @@ describe("web monitor inbox", () => {
       markHandlerStarted = resolve;
     });
     const onMessage = vi.fn(async (msg) => {
-      await msg.reply("pong");
+      await msg.platform.reply("pong");
       markHandlerStarted?.();
       await handlerGate;
     });
@@ -775,7 +786,7 @@ describe("web monitor inbox", () => {
       .mockRejectedValueOnce(new Error("operation timed out"))
       .mockResolvedValueOnce({ key: { id: "after-timeout" } });
 
-    await inbound?.reply("pong");
+    await inbound?.platform.reply("pong");
 
     expect(sock.sendMessage).toHaveBeenNthCalledWith(1, "999@s.whatsapp.net", {
       text: "pong",
@@ -808,7 +819,7 @@ describe("web monitor inbox", () => {
 
     socketRef.current = null;
 
-    await expect(inbound?.reply("pong")).rejects.toThrow(
+    await expect(inbound?.platform.reply("pong")).rejects.toThrow(
       "no active socket - reconnection in progress",
     );
     expect(sleepWithAbortMock).toHaveBeenCalledTimes(11);
@@ -891,9 +902,9 @@ describe("web monitor inbox", () => {
 
     expect(getPNForLID).toHaveBeenCalledWith("999@lid");
     const inbound = inboundMessage(onMessage);
-    expect(inbound.body).toBe("ping");
+    expect(inbound.payload.body).toBe("ping");
     expect(inbound.from).toBe("+999");
-    expect(inbound.to).toBe("+123");
+    expect(inbound.platform.recipientJid).toBe("+123");
 
     await listener.close();
   });
@@ -921,9 +932,9 @@ describe("web monitor inbox", () => {
     await waitForMessageCalls(onMessage, 1);
 
     const inbound = inboundMessage(onMessage);
-    expect(inbound.body).toBe("ping");
+    expect(inbound.payload.body).toBe("ping");
     expect(inbound.from).toBe("+1555");
-    expect(inbound.to).toBe("+123");
+    expect(inbound.platform.recipientJid).toBe("+123");
     expect(getPNForLID).not.toHaveBeenCalled();
 
     await listener.close();
@@ -950,10 +961,12 @@ describe("web monitor inbox", () => {
 
     expect(getPNForLID).toHaveBeenCalledWith("444@lid");
     const inbound = inboundMessage(onMessage);
-    expect(inbound.body).toBe("ping");
+    expect(inbound.payload.body).toBe("ping");
     expect(inbound.from).toBe("123@g.us");
-    expect(inbound.senderE164).toBe("+444");
+    expect(inbound.platform.senderE164).toBe("+444");
     expect(inbound.chatType).toBe("group");
+    expect(inbound.group?.mentions).toBeUndefined();
+    expect(inbound.mentions).toBeUndefined();
 
     await listener.close();
   });
