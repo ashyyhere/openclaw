@@ -1,4 +1,4 @@
-// secrets runtime web tools shared helpers and runtime behavior.
+// Shared runtime web-search/web-fetch provider selection and SecretRef resolution helpers.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveSecretInputRef } from "../config/types.secrets.js";
 import { createLazyRuntimeNamedExport } from "../shared/lazy-runtime.js";
@@ -11,7 +11,7 @@ import type {
 } from "./runtime-shared.js";
 import { pushInactiveSurfaceWarning, pushWarning } from "./runtime-shared.js";
 import type { RuntimeWebDiagnostic, RuntimeWebDiagnosticCode } from "./runtime-web-tools.types.js";
-/** Re-exported API for src/secrets, starting with is Record. */
+/** Runtime object guard re-exported for web-tool resolver callers. */
 export { isRecord } from "./shared.js";
 import { isRecord } from "./shared.js";
 
@@ -21,7 +21,7 @@ const loadResolveManifestContractOwnerPluginId = createLazyRuntimeNamedExport(
 );
 
 type RuntimeWebWarningCode = Extract<RuntimeWebDiagnosticCode, SecretResolverWarningCode>;
-/** Shared type for Secret Resolution Result in src/secrets. */
+/** Result of resolving one provider credential from plaintext, SecretRef, env, or fallback. */
 export type SecretResolutionResult<TSource extends string> = {
   value?: string;
   source: TSource;
@@ -31,7 +31,7 @@ export type SecretResolutionResult<TSource extends string> = {
   fallbackUsedAfterRefFailure: boolean;
 };
 
-/** Shared type for Runtime Web Provider Metadata Base in src/secrets. */
+/** Metadata shape written after runtime web provider auto-detection or explicit selection. */
 export type RuntimeWebProviderMetadataBase<TSource extends string> = {
   providerConfigured?: string;
   providerSource: "configured" | "auto-detect" | "none";
@@ -40,7 +40,7 @@ export type RuntimeWebProviderMetadataBase<TSource extends string> = {
   diagnostics: RuntimeWebDiagnostic[];
 };
 
-/** Shared type for Runtime Web Provider Selection Params in src/secrets. */
+/** Dependency bundle for credential resolution across one web provider family. */
 export type RuntimeWebProviderSelectionParams<
   TProvider extends {
     id: string;
@@ -127,7 +127,7 @@ function pushInactiveProviderCredentialWarnings<
   }
 }
 
-/** Reused helper for ensure Object behavior in src/secrets. */
+/** Ensures a nested object exists on a resolved config object before setting a credential. */
 export function ensureObject(
   target: Record<string, unknown>,
   key: string,
@@ -155,7 +155,7 @@ function normalizeKnownProvider(
   return undefined;
 }
 
-/** Reused helper for has Configured Secret Ref behavior in src/secrets. */
+/** Checks whether a config value contains a SecretRef after applying resolver defaults. */
 export function hasConfiguredSecretRef(
   value: unknown,
   defaults: SecretDefaults | undefined,
@@ -195,7 +195,7 @@ function setResolvedCredentialPath(params: {
   }
 }
 
-/** Shared type for Runtime Web Provider Surface in src/secrets. */
+/** Active provider surface after config presence, enabled state, and provider loading are resolved. */
 export type RuntimeWebProviderSurface<TProvider extends { id: string }> = {
   providers: TProvider[];
   configuredProvider?: string;
@@ -203,7 +203,7 @@ export type RuntimeWebProviderSurface<TProvider extends { id: string }> = {
   hasConfiguredSurface: boolean;
 };
 
-/** Shared type for Resolve Runtime Web Provider Surface Params in src/secrets. */
+/** Inputs for resolving the active runtime web provider list and configured provider id. */
 export type ResolveRuntimeWebProviderSurfaceParams<
   TProvider extends {
     id: string;
@@ -238,7 +238,7 @@ export type ResolveRuntimeWebProviderSurfaceParams<
   normalizeConfiguredProviderAgainstActiveProviders?: boolean;
 };
 
-/** Reused helper for resolve Runtime Web Provider Surface behavior in src/secrets. */
+/** Resolves active providers, configured provider validity, and disabled/missing-surface state. */
 export async function resolveRuntimeWebProviderSurface<
   TProvider extends {
     id: string;
@@ -344,7 +344,7 @@ export async function resolveRuntimeWebProviderSurface<
   };
 }
 
-/** Reused helper for resolve Runtime Web Provider Selection behavior in src/secrets. */
+/** Selects a web provider, resolves its credential, records diagnostics, and writes runtime metadata. */
 export async function resolveRuntimeWebProviderSelection<
   TProvider extends {
     id: string;
