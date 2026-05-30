@@ -1,4 +1,4 @@
-// scripts/e2e telegram bot api helpers and runtime behavior.
+// Telegram Bot API helper posts bounded JSON requests for E2E user-credential scenarios.
 import { readBoundedResponseText } from "../lib/bounded-response.ts";
 import { readPositiveIntEnv } from "./lib/env-limits.mjs";
 
@@ -50,6 +50,7 @@ function parseJsonPayload(rawPayload: string, label: string) {
   }
 }
 
+/** Call one Telegram Bot API method with timeout and bounded response parsing. */
 export async function telegramBotApi(
   token: string,
   method: string,

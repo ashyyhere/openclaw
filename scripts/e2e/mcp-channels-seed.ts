@@ -1,4 +1,4 @@
-// scripts/e2e mcp channels seed helpers and runtime behavior.
+// MCP channel E2E seed script writes a local OpenClaw config and session store.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

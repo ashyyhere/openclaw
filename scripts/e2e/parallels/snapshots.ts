@@ -1,7 +1,8 @@
-// scripts/e2e/parallels snapshots helpers and runtime behavior.
+// Parallels E2E snapshot resolver picks the best powered-off snapshot for a hint.
 import { die, run } from "./host-command.ts";
 import type { SnapshotInfo } from "./types.ts";
 
+/** Resolve the best matching Parallels snapshot for a VM and human hint. */
 export function resolveSnapshot(vmName: string, hint: string): SnapshotInfo {
   const output = run("prlctl", ["snapshot-list", vmName, "--json"], { quiet: true }).stdout;
   const payload = JSON.parse(output) as Record<string, { name?: string; state?: string }>;
@@ -55,6 +56,7 @@ export function resolveSnapshot(vmName: string, hint: string): SnapshotInfo {
   return best;
 }
 
+/** Score two strings by normalized Levenshtein similarity for snapshot matching. */
 export function stringSimilarity(a: string, b: string): number {
   if (a === b) {
     return 1;

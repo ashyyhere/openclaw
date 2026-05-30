@@ -1,8 +1,9 @@
-// scripts/e2e/parallels phase runner helpers and runtime behavior.
+// Parallels E2E phase runner records phase logs, deadlines, and timing summaries.
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import { say, warn } from "./host-command.ts";
 
+/** Runs named E2E phases with timeout logging and summary timing output. */
 export class PhaseRunner {
   private logText = "";
   private deadlineMs = 0;

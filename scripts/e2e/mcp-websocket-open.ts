@@ -1,4 +1,4 @@
-// scripts/e2e mcp websocket open helpers and runtime behavior.
+// MCP E2E helper waits for WebSocket open while cleaning up timeout listeners.
 type WebSocketOpenHandle = {
   close?: () => void;
   off?: (event: "open" | "error" | "close", listener: (...args: unknown[]) => void) => void;
@@ -7,6 +7,7 @@ type WebSocketOpenHandle = {
   terminate?: () => void;
 };
 
+/** Wait for a WebSocket to open, rejecting and closing it on timeout or error. */
 export function waitForWebSocketOpen(
   ws: WebSocketOpenHandle,
   timeoutMs: number,
