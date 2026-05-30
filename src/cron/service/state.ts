@@ -1,4 +1,4 @@
-// cron/service state helpers and runtime behavior.
+// Defines cron service dependencies, runtime state, and public operation result types.
 import type { CronConfig } from "../../config/types.cron.js";
 import type { HeartbeatRunResult, HeartbeatWakeRequest } from "../../infra/heartbeat-wake.js";
 import type { DeliveryContext } from "../../utils/delivery-context.types.js";
@@ -20,7 +20,7 @@ import type {
   CronStoreFile,
 } from "../types.js";
 
-/** Shared type for Cron Event in src/cron/service. */
+/** Scheduler event emitted when jobs change state or finish a run. */
 export type CronEvent = {
   jobId: string;
   action: "added" | "updated" | "removed" | "started" | "finished";
@@ -43,7 +43,7 @@ export type CronEvent = {
   nextRunAtMs?: number;
 } & CronRunTelemetry;
 
-/** Shared type for Logger in src/cron/service. */
+/** Logger interface injected by the cron service host. */
 export type Logger = {
   debug: (obj: unknown, msg?: string) => void;
   info: (obj: unknown, msg?: string) => void;
@@ -51,7 +51,7 @@ export type Logger = {
   error: (obj: unknown, msg?: string) => void;
 };
 
-/** Shared type for Cron Service Deps in src/cron/service. */
+/** Host dependencies required to load jobs, enqueue work, and deliver results. */
 export type CronServiceDeps = {
   nowMs?: () => number;
   log: Logger;
@@ -151,12 +151,12 @@ export type CronServiceDeps = {
   onEvent?: (evt: CronEvent) => void;
 };
 
-/** Shared type for Cron Service Deps Internal in src/cron/service. */
+/** Cron dependencies after defaulted runtime helpers are installed. */
 export type CronServiceDepsInternal = Omit<CronServiceDeps, "nowMs"> & {
   nowMs: () => number;
 };
 
-/** Shared type for Cron Service State in src/cron/service. */
+/** Mutable scheduler state kept across ticks and store reloads. */
 export type CronServiceState = {
   deps: CronServiceDepsInternal;
   store: CronStoreFile | null;
@@ -180,7 +180,7 @@ export type CronServiceState = {
   storeLoadedAtMs: number | null;
 };
 
-/** Reused helper for create Cron Service State behavior in src/cron/service. */
+/** Creates an initialized cron service state object with default clocks and caches. */
 export function createCronServiceState(deps: CronServiceDeps): CronServiceState {
   return {
     deps: { ...deps, nowMs: deps.nowMs ?? (() => Date.now()) },
@@ -197,12 +197,12 @@ export function createCronServiceState(deps: CronServiceDeps): CronServiceState 
   };
 }
 
-/** Shared type for Cron Run Mode in src/cron/service. */
+/** Run mode used by scheduled ticks and explicit force-run requests. */
 export type CronRunMode = "due" | "force";
-/** Shared type for Cron Wake Mode in src/cron/service. */
+/** Heartbeat wake strategy for cron-triggered work. */
 export type CronWakeMode = "now" | "next-heartbeat";
 
-/** Shared type for Cron Status Summary in src/cron/service. */
+/** Compact status summary returned by cron service status calls. */
 export type CronStatusSummary = {
   enabled: boolean;
   storePath: string;
@@ -210,7 +210,7 @@ export type CronStatusSummary = {
   nextWakeAtMs: number | null;
 };
 
-/** Shared type for Cron Run Result in src/cron/service. */
+/** Result of attempting to run or enqueue a cron job. */
 export type CronRunResult =
   | { ok: true; ran: true }
   | { ok: true; enqueued: true; runId: string }
@@ -218,17 +218,17 @@ export type CronRunResult =
   | { ok: true; ran: false; reason: "already-running" }
   | { ok: false };
 
-/** Shared type for Cron Remove Result in src/cron/service. */
+/** Result of removing a cron job from the store. */
 export type CronRemoveResult = { ok: true; removed: boolean } | { ok: false; removed: false };
 
-/** Shared type for Cron Add Result in src/cron/service. */
+/** Job returned after adding a cron entry. */
 export type CronAddResult = CronJob;
-/** Shared type for Cron Update Result in src/cron/service. */
+/** Job returned after updating a cron entry. */
 export type CronUpdateResult = CronJob;
 
-/** Shared type for Cron List Result in src/cron/service. */
+/** Jobs returned by cron list operations. */
 export type CronListResult = CronJob[];
-/** Shared type for Cron Add Input in src/cron/service. */
+/** Input accepted by cron add operations. */
 export type CronAddInput = CronJobCreate;
-/** Shared type for Cron Update Input in src/cron/service. */
+/** Input accepted by cron update operations. */
 export type CronUpdateInput = CronJobPatch;
