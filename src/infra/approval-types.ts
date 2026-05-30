@@ -1,3 +1,3 @@
-// infra approval types helpers and runtime behavior.
-/** Shared type for Channel Approval Kind in src/infra. */
+// Shared approval discriminants used by channel and plugin approval flows.
+/** Approval categories understood by channel approval handlers. */
 export type ChannelApprovalKind = "exec" | "plugin";

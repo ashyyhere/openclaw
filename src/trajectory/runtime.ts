@@ -1,4 +1,4 @@
-// trajectory runtime helpers and runtime behavior.
+// Records bounded JSONL trajectory sidecars for agent runtime events.
 import fs from "node:fs";
 import path from "node:path";
 import { sanitizeDiagnosticPayload } from "../agents/payload-redaction.js";
@@ -22,7 +22,7 @@ import {
 } from "./paths.js";
 import type { TrajectoryEvent, TrajectoryToolDefinition } from "./types.js";
 
-/** Re-exported API for src/trajectory. */
+/** Re-export trajectory path helpers and byte limits used by recorder callers. */
 export {
   TRAJECTORY_RUNTIME_CAPTURE_MAX_BYTES,
   TRAJECTORY_RUNTIME_EVENT_MAX_BYTES,
@@ -456,7 +456,7 @@ function getTrajectoryWindowWriter(
   return writer;
 }
 
-/** Reused helper for to Trajectory Tool Definitions behavior in src/trajectory. */
+/** Normalize tool definitions into deterministic, redacted trajectory metadata. */
 export function toTrajectoryToolDefinitions(
   tools: ReadonlyArray<{ name?: string; description?: string; parameters?: unknown }>,
 ): TrajectoryToolDefinition[] {
@@ -477,7 +477,7 @@ export function toTrajectoryToolDefinitions(
     .toSorted((left, right) => left.name.localeCompare(right.name));
 }
 
-/** Reused helper for create Trajectory Runtime Recorder behavior in src/trajectory. */
+/** Create the runtime recorder that writes bounded, redacted JSONL trajectory events. */
 export function createTrajectoryRuntimeRecorder(
   params: TrajectoryRuntimeInit,
 ): TrajectoryRuntimeRecorder | null {

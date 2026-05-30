@@ -1,5 +1,5 @@
-// infra map size helpers and runtime behavior.
-/** Reused helper for prune Map To Max Size behavior in src/infra. */
+// Shared bounded-map helper for insertion-ordered caches.
+/** Prune the oldest Map entries until the map fits the requested maximum size. */
 export function pruneMapToMaxSize<K, V>(map: Map<K, V>, maxSize: number): void {
   if (Number.isNaN(maxSize) || maxSize === Number.POSITIVE_INFINITY) {
     return;

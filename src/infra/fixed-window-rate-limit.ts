@@ -1,5 +1,5 @@
-// infra fixed window rate limit helpers and runtime behavior.
-/** Shared type for Fixed Window Rate Limiter in src/infra. */
+// Small in-memory fixed-window limiter for local polling and request guards.
+/** Mutable limiter state exposed as consume/reset operations. */
 export type FixedWindowRateLimiter = {
   consume: () => {
     allowed: boolean;
@@ -9,7 +9,7 @@ export type FixedWindowRateLimiter = {
   reset: () => void;
 };
 
-/** Reused helper for resolve Fixed Window Rate Limit Integer behavior in src/infra. */
+/** Coerce limiter config to a finite integer with a minimum bound. */
 export function resolveFixedWindowRateLimitInteger(
   value: number | undefined,
   fallback: number,
@@ -19,7 +19,7 @@ export function resolveFixedWindowRateLimitInteger(
   return Math.max(params.min, Math.floor(candidate));
 }
 
-/** Reused helper for create Fixed Window Rate Limiter behavior in src/infra. */
+/** Create an in-memory fixed-window limiter with optional clock injection for tests. */
 export function createFixedWindowRateLimiter(params: {
   maxRequests: number;
   windowMs: number;

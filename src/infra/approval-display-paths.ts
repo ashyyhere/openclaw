@@ -1,5 +1,5 @@
-// infra approval display paths helpers and runtime behavior.
-/** Reused helper for format Approval Display Path behavior in src/infra. */
+// Formats approval paths for compact, non-sensitive display text.
+/** Compact absolute home-directory paths while leaving relative or unsafe paths untouched. */
 export function formatApprovalDisplayPath(value: string): string {
   const normalized = value.trim();
   if (!normalized || hasRelativePathSegment(normalized)) {

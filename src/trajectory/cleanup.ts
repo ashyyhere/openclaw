@@ -1,4 +1,4 @@
-// trajectory cleanup helpers and runtime behavior.
+// Removes trajectory sidecars that belong to deleted or pruned sessions.
 import fs from "node:fs";
 import path from "node:path";
 import { resolveSessionFilePath } from "../config/sessions/paths.js";
@@ -10,7 +10,7 @@ import {
   safeTrajectorySessionFileName,
 } from "./paths.js";
 
-/** Shared type for Removed Trajectory Artifact in src/trajectory. */
+/** Removed trajectory artifact reported back to cleanup callers. */
 export type RemovedTrajectoryArtifact = {
   kind: "pointer" | "runtime";
   path: string;
@@ -174,7 +174,7 @@ function mayRemoveRuntimeTarget(params: {
   return runtimeFileStartsWithSessionEvent(resolved, params.sessionId);
 }
 
-/** Reused helper for remove Session Trajectory Artifacts behavior in src/trajectory. */
+/** Remove pointer/runtime files that can be proven to belong to one session. */
 export async function removeSessionTrajectoryArtifacts(params: {
   sessionId: string;
   sessionFile?: string;
@@ -228,7 +228,7 @@ export async function removeSessionTrajectoryArtifacts(params: {
   return removed;
 }
 
-/** Reused helper for remove Removed Session Trajectory Artifacts behavior in src/trajectory. */
+/** Remove trajectory artifacts for sessions that are no longer referenced by the store. */
 export async function removeRemovedSessionTrajectoryArtifacts(params: {
   removedSessionFiles: Iterable<[string, string | undefined]>;
   referencedSessionIds: ReadonlySet<string>;

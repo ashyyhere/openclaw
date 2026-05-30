@@ -1,6 +1,6 @@
-// infra archive path helpers and runtime behavior.
+// Wires fs-safe archive path helpers through the infra defaults bootstrap.
 import "./fs-safe-defaults.js";
-/** Re-exported API for src/infra. */
+/** Re-export archive entry validation and output path helpers with OpenClaw defaults loaded. */
 export {
   isWindowsDrivePath,
   normalizeArchiveEntryPath,

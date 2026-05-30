@@ -1,4 +1,4 @@
-// src/trajectory metadata helpers and runtime behavior.
+// Builds redacted trajectory metadata snapshots for support/export bundles.
 import { resolveStateDir } from "../config/paths.js";
 import { redactConfigObject } from "../config/redact-snapshot.js";
 import type { SessionSystemPromptReport } from "../config/sessions/types.js";
@@ -218,7 +218,7 @@ function buildTrajectorySupportRedaction(env: NodeJS.ProcessEnv): SupportRedacti
   };
 }
 
-/** Reused helper for build Trajectory Run Metadata behavior in src/trajectory. */
+/** Build the stable run metadata object stored next to a trajectory capture. */
 export function buildTrajectoryRunMetadata(
   params: BuildTrajectoryRunMetadataParams,
 ): Record<string, unknown> {
@@ -302,7 +302,7 @@ export function buildTrajectoryRunMetadata(
   };
 }
 
-/** Reused helper for build Trajectory Artifacts behavior in src/trajectory. */
+/** Build terminal run artifacts that summarize status, timing, text, and tool outcomes. */
 export function buildTrajectoryArtifacts(
   params: BuildTrajectoryArtifactsParams,
 ): Record<string, unknown> {

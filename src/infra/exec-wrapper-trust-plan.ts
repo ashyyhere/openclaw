@@ -1,4 +1,4 @@
-// infra exec wrapper trust plan helpers and runtime behavior.
+// Resolves shell/dispatch wrapper layers before exec approval policy checks.
 import {
   MAX_DISPATCH_WRAPPER_DEPTH,
   resolveDispatchWrapperTrustPlan,
@@ -63,7 +63,7 @@ function finalizeExecWrapperTrustPlan(
   return plan;
 }
 
-/** Reused helper for resolve Exec Wrapper Trust Plan behavior in src/infra. */
+/** Resolve the command argv that approval policy should inspect after trusted wrappers. */
 export function resolveExecWrapperTrustPlan(
   argv: string[],
   maxDepth = MAX_DISPATCH_WRAPPER_DEPTH,

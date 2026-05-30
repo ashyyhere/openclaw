@@ -1,4 +1,4 @@
-// trajectory export helpers and runtime behavior.
+// Exports session trajectory captures into a redacted support bundle.
 import fsp from "node:fs/promises";
 import path from "node:path";
 import { sanitizeDiagnosticPayload } from "../agents/payload-redaction.js";
@@ -856,7 +856,7 @@ function buildPromptsCapture(params: {
   };
 }
 
-/** Reused helper for resolve Default Trajectory Export Dir behavior in src/trajectory. */
+/** Resolve the default timestamped directory for a trajectory export bundle. */
 export function resolveDefaultTrajectoryExportDir(params: {
   workspaceDir: string;
   sessionId: string;
@@ -872,7 +872,7 @@ export function resolveDefaultTrajectoryExportDir(params: {
   );
 }
 
-/** Reused helper for export Trajectory Bundle behavior in src/trajectory. */
+/** Assemble a redacted trajectory bundle from the session file and runtime sidecar. */
 export async function exportTrajectoryBundle(params: BuildTrajectoryBundleParams): Promise<{
   manifest: TrajectoryBundleManifest;
   outputDir: string;

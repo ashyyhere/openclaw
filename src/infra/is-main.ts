@@ -1,4 +1,4 @@
-// infra is main helpers and runtime behavior.
+// Detects whether an ESM module is the effective process entrypoint.
 import fs from "node:fs";
 import path from "node:path";
 
@@ -34,7 +34,7 @@ function resolveDefaultCwd(currentFile: string): string {
   }
 }
 
-/** Reused helper for is Main Module behavior in src/infra. */
+/** Return true when the current module is the script launched by Node or a known wrapper. */
 export function isMainModule({
   currentFile,
   argv = process.argv,
