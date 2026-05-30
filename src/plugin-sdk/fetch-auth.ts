@@ -1,10 +1,9 @@
-// plugin-sdk fetch auth helpers and runtime behavior.
 import {
   normalizeHeadersInitForFetch,
   normalizeRequestInitHeadersForFetch,
 } from "../infra/fetch-headers.js";
 
-/** Shared type for Scope Token Provider in src/plugin-sdk. */
+/** Supplies access tokens for provider-defined auth scopes. */
 export type ScopeTokenProvider = {
   getAccessToken: (scope: string) => Promise<string>;
 };
@@ -72,7 +71,8 @@ export async function fetchWithBearerAuthScopeFallback(params: {
         continue;
       }
     } catch {
-      // Ignore token/fetch errors and continue trying remaining scopes.
+      // Scope acquisition can fail independently; keep later scopes available
+      // instead of turning one provider-side auth miss into a total fetch miss.
     }
   }
 

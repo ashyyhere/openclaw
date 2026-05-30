@@ -18,7 +18,6 @@ import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "../routing/session-key.j
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 import { normalizeStringEntries } from "../shared/string-normalization.js";
 
-/** Re-exported API for src/plugin-sdk. */
 export {
   ensureOpenDmPolicyAllowFromWildcard,
   normalizeChannelDmPolicy,
@@ -665,5 +664,4 @@ export function createScopedDmSecurityResolver<
   };
 }
 
-/** Re-exported API for src/plugin-sdk, starting with build Account Scoped Dm Security Policy. */
 export { buildAccountScopedDmSecurityPolicy };

@@ -25,7 +25,7 @@ export type PairLoopGuardResult =
   | { suppressed: false }
   | { suppressed: true; cooldownUntilMs: number };
 
-/** Shared type for Pair Loop Guard Snapshot Entry in src/plugin-sdk. */
+/** Serializable state for debugging active pair-loop windows. */
 export type PairLoopGuardSnapshotEntry = {
   key: string;
   recentCount: number;
@@ -39,7 +39,7 @@ type PairLoopGuardEntry = {
   cooldownUntilMs: number;
 };
 
-/** Shared type for Pair Loop Guard in src/plugin-sdk. */
+/** In-memory guard that suppresses rapid reply loops between two participants. */
 export type PairLoopGuard = {
   recordAndCheck: (params: {
     scopeId: string;
@@ -56,7 +56,7 @@ export type PairLoopGuard = {
 const DEFAULT_PRUNE_INTERVAL_MS = 60_000;
 const KEY_SEPARATOR = "\u0001";
 
-/** Reused constant for DEFAULT PAIR LOOP GUARD CONFIG behavior in src/plugin-sdk. */
+/** Default pair-loop guard values in config-friendly seconds/counts. */
 export const DEFAULT_PAIR_LOOP_GUARD_CONFIG: Required<PairLoopGuardConfig> = {
   enabled: true,
   maxEventsPerWindow: 20,
@@ -64,7 +64,7 @@ export const DEFAULT_PAIR_LOOP_GUARD_CONFIG: Required<PairLoopGuardConfig> = {
   cooldownSeconds: 60,
 };
 
-/** Reused constant for DEFAULT PAIR LOOP GUARD SETTINGS behavior in src/plugin-sdk. */
+/** Default pair-loop guard values after conversion to runtime milliseconds. */
 export const DEFAULT_PAIR_LOOP_GUARD_SETTINGS: PairLoopGuardSettings = {
   enabled: DEFAULT_PAIR_LOOP_GUARD_CONFIG.enabled,
   maxEventsPerWindow: DEFAULT_PAIR_LOOP_GUARD_CONFIG.maxEventsPerWindow,
