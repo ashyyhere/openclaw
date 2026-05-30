@@ -2,10 +2,10 @@
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { ProviderRuntimeModel } from "../plugins/provider-runtime-model.types.js";
 
-/** Shared type for Effective Tool Source in src/agents. */
+/** Source bucket used when presenting the tools actually available to an agent. */
 export type EffectiveToolSource = "core" | "plugin" | "channel" | "mcp";
 
-/** Shared type for Effective Tool Inventory Entry in src/agents. */
+/** Single normalized tool entry after policy, plugin, and channel filtering. */
 export type EffectiveToolInventoryEntry = {
   id: string;
   label: string;
@@ -18,7 +18,7 @@ export type EffectiveToolInventoryEntry = {
   tags?: string[];
 };
 
-/** Shared type for Effective Tool Inventory Group in src/agents. */
+/** Group of effective tools with the same source bucket. */
 export type EffectiveToolInventoryGroup = {
   id: EffectiveToolSource;
   label: string;
@@ -26,14 +26,14 @@ export type EffectiveToolInventoryGroup = {
   tools: EffectiveToolInventoryEntry[];
 };
 
-/** Shared type for Effective Tool Inventory Notice in src/agents. */
+/** Informational or warning note emitted while resolving effective tools. */
 export type EffectiveToolInventoryNotice = {
   id: string;
   severity: "info" | "warning";
   message: string;
 };
 
-/** Shared type for Effective Tool Inventory Result in src/agents. */
+/** Complete tool inventory result for one agent/profile view. */
 export type EffectiveToolInventoryResult = {
   agentId: string;
   profile: string;
@@ -41,7 +41,7 @@ export type EffectiveToolInventoryResult = {
   notices?: EffectiveToolInventoryNotice[];
 };
 
-/** Shared type for Resolve Effective Tool Inventory Params in src/agents. */
+/** Inputs needed to resolve the tools visible for a session and model context. */
 export type ResolveEffectiveToolInventoryParams = {
   cfg: OpenClawConfig;
   agentId?: string;

@@ -18,7 +18,7 @@ import { DEFAULT_MODEL, DEFAULT_PROVIDER } from "../defaults.js";
 import { hasUsableCustomProviderApiKey, resolveEnvApiKey } from "../model-auth.js";
 import { resolveConfiguredModelRef } from "../model-selection.js";
 
-/** Shared type for Tool Model Config in src/agents/tools. */
+/** Model override shape accepted by tool-specific provider fallbacks. */
 export type ToolModelConfig = { primary?: string; fallbacks?: string[]; timeoutMs?: number };
 
 /** Checks whether any tool model config fields are set. */
@@ -41,7 +41,7 @@ export function resolveDefaultModelRef(cfg?: OpenClawConfig): { provider: string
   return { provider: DEFAULT_PROVIDER, model: DEFAULT_MODEL };
 }
 
-/** Reused helper for has Auth For Provider behavior in src/agents/tools. */
+/** Checks whether a provider has env or auth-profile credentials available. */
 export function hasAuthForProvider(params: {
   provider: string;
   agentDir?: string;
@@ -53,7 +53,7 @@ export function hasAuthForProvider(params: {
   return hasAuthProfileForProvider({ ...params, includeExternalCli: true });
 }
 
-/** Reused helper for has Auth Profile For Provider behavior in src/agents/tools. */
+/** Checks auth-profile credentials for a provider, optionally filtering by credential type. */
 export function hasAuthProfileForProvider(params: {
   provider: string;
   agentDir?: string;
