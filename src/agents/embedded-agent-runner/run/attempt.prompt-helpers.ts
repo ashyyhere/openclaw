@@ -31,7 +31,7 @@ import { log } from "../logger.js";
 import { shouldInjectHeartbeatPromptForTrigger } from "./trigger-policy.js";
 import type { EmbeddedRunAttemptParams } from "./types.js";
 
-/** Shared type for Prompt Build Hook Runner in src/agents/embedded-agent-runner. */
+/** Hook runner surface used while assembling one provider prompt. */
 export type PromptBuildHookRunner = {
   hasHooks: (
     hookName:
@@ -248,7 +248,7 @@ export function shouldWarnOnOrphanedUserRepair(
   return trigger === "user" || trigger === "manual";
 }
 
-/** Shared type for Prompt Submission Skip Reason in src/agents/embedded-agent-runner. */
+/** Reason a prompt is skipped before any provider submission. */
 export type PromptSubmissionSkipReason = "blank_user_prompt" | "empty_prompt_history_images";
 
 /** Returns why the current prompt should be skipped before provider submission. */

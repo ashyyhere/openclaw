@@ -6,17 +6,17 @@ import type { AgentMessage } from "../../runtime/index.js";
 import { normalizeUsage, type NormalizedUsage } from "../../usage.js";
 import type { PromptCacheChange } from "../prompt-cache-observability.js";
 import type { EmbeddedRunAttemptResult } from "./types.js";
-/** Re-exported API for src/agents/embedded-agent-runner. */
+/** Re-export context-engine lifecycle helpers under attempt-scoped names. */
 export {
   assembleHarnessContextEngine as assembleAttemptContextEngine,
   bootstrapHarnessContextEngine as runAttemptContextEngineBootstrap,
   finalizeHarnessContextEngineTurn as finalizeAttemptContextEngineTurn,
 } from "../../harness/context-engine-lifecycle.js";
 
-/** Shared type for Attempt Context Engine in src/agents/embedded-agent-runner. */
+/** Context engine interface used by one embedded attempt. */
 export type AttemptContextEngine = ContextEngine;
 
-/** Shared type for Attempt Bootstrap Context in src/agents/embedded-agent-runner. */
+/** Bootstrap and context files resolved for one attempt. */
 export type AttemptBootstrapContext<TBootstrapFile = unknown, TContextFile = unknown> = {
   bootstrapFiles: TBootstrapFile[];
   contextFiles: TContextFile[];

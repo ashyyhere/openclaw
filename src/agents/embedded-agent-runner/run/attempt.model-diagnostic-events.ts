@@ -30,7 +30,7 @@ import type {
 } from "../../../plugins/hook-types.js";
 import type { StreamFn } from "../../runtime/index.js";
 
-/** Re-exported API for src/agents/embedded-agent-runner, starting with diagnostic Error Category. */
+/** Re-export diagnostic error categorization for attempt diagnostics. */
 export { diagnosticErrorCategory };
 
 type ModelCallDiagnosticContext = {

@@ -23,7 +23,7 @@ import {
 const SINGLE_TOOL_RESULT_CONTEXT_SHARE = 0.5;
 const PREEMPTIVE_OVERFLOW_RATIO = 0.9;
 
-/** Reused constant for PREEMPTIVE CONTEXT OVERFLOW MESSAGE behavior in src/agents/embedded-agent-runner. */
+/** Stable message emitted when tool-loop context pressure crosses the guard threshold. */
 export const PREEMPTIVE_CONTEXT_OVERFLOW_MESSAGE =
   "Context overflow: estimated context size exceeds safe threshold during tool loop.";
 const TOOL_RESULT_ESTIMATE_TO_TEXT_RATIO = 4 / TOOL_RESULT_CHARS_PER_TOKEN_ESTIMATE;
@@ -50,7 +50,7 @@ type MidTurnPrecheckOptions = {
   onMidTurnPrecheck?: (request: MidTurnPrecheckRequest) => void;
 };
 
-/** Re-exported API for src/agents/embedded-agent-runner, starting with CONTEXT LIMIT TRUNCATION NOTICE. */
+/** Re-export context-limit truncation marker helpers for guard callers. */
 export { CONTEXT_LIMIT_TRUNCATION_NOTICE, formatContextLimitTruncationNotice };
 
 /** Records prompt-visible transcript text for later context-size accounting. */
