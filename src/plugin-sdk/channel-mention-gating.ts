@@ -11,7 +11,6 @@ export type {
   ResolveInboundMentionDecisionNestedParams,
   ResolveInboundMentionDecisionParams,
 } from "../channels/mention-gating.js";
-/** Re-exported API for src/plugin-sdk. */
 export {
   implicitMentionKindWhen,
   resolveInboundMentionDecision,
@@ -20,7 +19,6 @@ export {
   // @deprecated Prefer `resolveInboundMentionDecision({ facts, policy })`.
   resolveMentionGatingWithBypass,
 } from "../channels/mention-gating.js";
-/** Re-exported API for src/plugin-sdk. */
 export {
   CURRENT_MESSAGE_MARKER,
   buildMentionRegexes,
