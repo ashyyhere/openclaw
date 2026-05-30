@@ -16,12 +16,12 @@ import type {
 } from "./channel-contract.js";
 import type { OpenClawConfig } from "./config-runtime.js";
 
-/** Re-exported API for src/plugin-sdk, starting with is Private Ip Address. */
+/** Core SSRF helpers exposed to plugin SDK callers building network policies. */
 export { isPrivateIpAddress, mergeSsrFPolicies };
-/** Re-exported API for src/plugin-sdk, starting with Ssr FPolicy. */
+/** Network policy shape consumed by guarded fetch and hostname pinning helpers. */
 export type { SsrFPolicy };
 
-/** Shared type for Private Network Opt In Input in src/plugin-sdk. */
+/** Accepted plugin config shapes for explicit private-network opt-in. */
 export type PrivateNetworkOptInInput =
   | boolean
   | null
@@ -37,7 +37,7 @@ export type PrivateNetworkOptInInput =
         | undefined;
     };
 
-/** Reused helper for is Private Network Opt In Enabled behavior in src/plugin-sdk. */
+/** Detects whether any supported config shape opts into private-network access. */
 export function isPrivateNetworkOptInEnabled(input: PrivateNetworkOptInInput): boolean {
   if (input === true) {
     return true;
@@ -55,27 +55,27 @@ export function isPrivateNetworkOptInEnabled(input: PrivateNetworkOptInInput): b
   );
 }
 
-/** Reused helper for ssrf Policy From Private Network Opt In behavior in src/plugin-sdk. */
+/** Converts private-network opt-in config into an SSRF policy fragment. */
 export function ssrfPolicyFromPrivateNetworkOptIn(
   input: PrivateNetworkOptInInput,
 ): SsrFPolicy | undefined {
   return isPrivateNetworkOptInEnabled(input) ? { allowPrivateNetwork: true } : undefined;
 }
 
-/** Reused helper for ssrf Policy From Dangerously Allow Private Network behavior in src/plugin-sdk. */
+/** Converts the canonical private-network flag into an SSRF policy fragment. */
 export function ssrfPolicyFromDangerouslyAllowPrivateNetwork(
   dangerouslyAllowPrivateNetwork: boolean | null | undefined,
 ): SsrFPolicy | undefined {
   return ssrfPolicyFromPrivateNetworkOptIn(dangerouslyAllowPrivateNetwork);
 }
 
-/** Reused helper for has Legacy Flat Allow Private Network Alias behavior in src/plugin-sdk. */
+/** Checks for the legacy flat allowPrivateNetwork alias on a channel config entry. */
 export function hasLegacyFlatAllowPrivateNetworkAlias(value: unknown): boolean {
   const entry = asNullableRecord(value);
   return Boolean(entry && Object.prototype.hasOwnProperty.call(entry, "allowPrivateNetwork"));
 }
 
-/** Reused helper for migrate Legacy Flat Allow Private Network Alias behavior in src/plugin-sdk. */
+/** Moves a legacy flat allowPrivateNetwork value into the canonical nested network config. */
 export function migrateLegacyFlatAllowPrivateNetworkAlias(params: {
   entry: Record<string, unknown>;
   pathPrefix: string;
@@ -129,7 +129,7 @@ function hasLegacyAllowPrivateNetworkInAccounts(value: unknown): boolean {
   );
 }
 
-/** Reused helper for create Legacy Private Network Doctor Contract behavior in src/plugin-sdk. */
+/** Builds doctor rules and fixers for channels migrating private-network config aliases. */
 export function createLegacyPrivateNetworkDoctorContract(params: { channelKey: string }): {
   legacyConfigRules: ChannelDoctorLegacyConfigRule[];
   normalizeCompatibilityConfig: (params: { cfg: OpenClawConfig }) => ChannelDoctorConfigMutation;
@@ -211,14 +211,14 @@ export function createLegacyPrivateNetworkDoctorContract(params: { channelKey: s
   };
 }
 
-/** Reused helper for ssrf Policy From Allow Private Network behavior in src/plugin-sdk. */
+/** Compatibility alias for older plugin callers that still pass allowPrivateNetwork. */
 export function ssrfPolicyFromAllowPrivateNetwork(
   allowPrivateNetwork: boolean | null | undefined,
 ): SsrFPolicy | undefined {
   return ssrfPolicyFromDangerouslyAllowPrivateNetwork(allowPrivateNetwork);
 }
 
-/** Reused helper for assert Http Url Targets Private Network behavior in src/plugin-sdk. */
+/** Verifies a cleartext HTTP URL resolves only to trusted private-network targets. */
 export async function assertHttpUrlTargetsPrivateNetwork(
   url: string,
   params: {

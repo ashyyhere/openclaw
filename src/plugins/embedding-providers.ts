@@ -1,11 +1,11 @@
-// plugins embedding providers helpers and runtime behavior.
+// Process-local registry for embedding provider adapters contributed by plugins.
 import type {
   EmbeddingProviderAdapter,
   RegisteredEmbeddingProvider,
 } from "./embedding-provider-types.js";
 import { openAICompatibleEmbeddingProviderAdapter } from "./openai-compatible-embedding-provider.js";
 
-/** Re-exported API for src/plugins. */
+/** Public embedding provider adapter/runtime types used by plugin implementations. */
 export type {
   EmbeddingInput,
   EmbeddingProvider,
@@ -36,7 +36,7 @@ function getEmbeddingProviders(): Map<string, RegisteredEmbeddingProvider> {
   return created;
 }
 
-/** Reused helper for register Embedding Provider behavior in src/plugins. */
+/** Registers or replaces an embedding provider adapter for the current process. */
 export function registerEmbeddingProvider(
   adapter: EmbeddingProviderAdapter,
   options?: { ownerPluginId?: string },
@@ -47,7 +47,7 @@ export function registerEmbeddingProvider(
   });
 }
 
-/** Reused helper for get Registered Embedding Provider behavior in src/plugins. */
+/** Gets a registered embedding provider with owner metadata, falling back to core providers. */
 export function getRegisteredEmbeddingProvider(
   id: string,
 ): RegisteredEmbeddingProvider | undefined {
@@ -57,12 +57,12 @@ export function getRegisteredEmbeddingProvider(
   );
 }
 
-/** Reused helper for get Embedding Provider behavior in src/plugins. */
+/** Gets only the embedding provider adapter for callers that do not need owner metadata. */
 export function getEmbeddingProvider(id: string): EmbeddingProviderAdapter | undefined {
   return getRegisteredEmbeddingProvider(id)?.adapter;
 }
 
-/** Reused helper for list Registered Embedding Providers behavior in src/plugins. */
+/** Lists core and plugin-registered embedding providers with plugin entries overriding duplicates. */
 export function listRegisteredEmbeddingProviders(): RegisteredEmbeddingProvider[] {
   const merged = new Map<string, RegisteredEmbeddingProvider>(
     CORE_EMBEDDING_PROVIDERS.map((entry) => [entry.adapter.id, entry]),
@@ -73,12 +73,12 @@ export function listRegisteredEmbeddingProviders(): RegisteredEmbeddingProvider[
   return Array.from(merged.values());
 }
 
-/** Reused helper for list Embedding Providers behavior in src/plugins. */
+/** Lists only embedding provider adapters in effective registration order. */
 export function listEmbeddingProviders(): EmbeddingProviderAdapter[] {
   return listRegisteredEmbeddingProviders().map((entry) => entry.adapter);
 }
 
-/** Reused helper for restore Embedding Providers behavior in src/plugins. */
+/** Replaces process-local registrations with adapter-only entries, primarily for tests. */
 export function restoreEmbeddingProviders(adapters: EmbeddingProviderAdapter[]): void {
   getEmbeddingProviders().clear();
   for (const adapter of adapters) {
@@ -86,7 +86,7 @@ export function restoreEmbeddingProviders(adapters: EmbeddingProviderAdapter[]):
   }
 }
 
-/** Reused helper for restore Registered Embedding Providers behavior in src/plugins. */
+/** Restores registered embedding providers including owner metadata. */
 export function restoreRegisteredEmbeddingProviders(entries: RegisteredEmbeddingProvider[]): void {
   getEmbeddingProviders().clear();
   for (const entry of entries) {
@@ -96,10 +96,10 @@ export function restoreRegisteredEmbeddingProviders(entries: RegisteredEmbedding
   }
 }
 
-/** Reused helper for clear Embedding Providers behavior in src/plugins. */
+/** Clears process-local embedding provider registrations without removing core providers. */
 export function clearEmbeddingProviders(): void {
   getEmbeddingProviders().clear();
 }
 
-/** Reused constant for reset Embedding Providers behavior in src/plugins. */
+/** Backwards-compatible test alias for clearing process-local embedding providers. */
 export const resetEmbeddingProviders = clearEmbeddingProviders;

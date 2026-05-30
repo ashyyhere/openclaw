@@ -1,15 +1,15 @@
-// Shared types for plugins cli backend types behavior.
+// Plugin-owned CLI backend contracts used by the generic CLI runner.
 import type { CliBackendConfig } from "../config/types.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { ContextEngineHostCapability } from "../context-engine/types.js";
 
-/** Shared type for Plugin Text Replacement in src/plugins. */
+/** One text replacement rule applied to CLI backend input or output. */
 export type PluginTextReplacement = {
   from: string | RegExp;
   to: string;
 };
 
-/** Shared type for Plugin Text Transforms in src/plugins. */
+/** Bidirectional text rewrite hooks supplied by CLI backend plugins. */
 export type PluginTextTransforms = {
   /** Rewrites applied to outbound prompt text before provider/CLI transport. */
   input?: PluginTextReplacement[];
@@ -17,13 +17,13 @@ export type PluginTextTransforms = {
   output?: PluginTextReplacement[];
 };
 
-/** Shared type for Cli Bundle Mcp Mode in src/plugins. */
+/** Supported strategies for injecting OpenClaw bundle MCP config into a CLI backend. */
 export type CliBundleMcpMode =
   | "claude-config-file"
   | "codex-config-overrides"
   | "gemini-system-settings";
 
-/** Shared type for Cli Backend Prepare Execution Context in src/plugins. */
+/** Context passed to backend-owned preparation before launching a CLI process. */
 export type CliBackendPrepareExecutionContext = {
   config?: OpenClawConfig;
   workspaceDir: string;
@@ -33,14 +33,14 @@ export type CliBackendPrepareExecutionContext = {
   authProfileId?: string;
 };
 
-/** Shared type for Cli Backend Prepared Execution in src/plugins. */
+/** Environment overrides and cleanup returned by CLI backend preparation. */
 export type CliBackendPreparedExecution = {
   env?: Record<string, string>;
   clearEnv?: string[];
   cleanup?: () => Promise<void>;
 };
 
-/** Shared type for Cli Backend Thinking Level in src/plugins. */
+/** Normalized thinking levels that CLI backends may translate to native flags. */
 export type CliBackendThinkingLevel =
   | "off"
   | "minimal"
@@ -51,7 +51,7 @@ export type CliBackendThinkingLevel =
   | "adaptive"
   | "max";
 
-/** Shared type for Cli Backend Resolve Execution Args Context in src/plugins. */
+/** Context passed when a CLI backend rewrites request-scoped process arguments. */
 export type CliBackendResolveExecutionArgsContext = {
   config?: OpenClawConfig;
   workspaceDir: string;
@@ -63,18 +63,18 @@ export type CliBackendResolveExecutionArgsContext = {
   baseArgs: readonly string[];
 };
 
-/** Shared type for Cli Backend Resolve Execution Args in src/plugins. */
+/** Backend hook for replacing or declining the final CLI argv list. */
 export type CliBackendResolveExecutionArgs = (
   ctx: CliBackendResolveExecutionArgsContext,
 ) => readonly string[] | null | undefined;
 
-/** Shared type for Cli Backend Auth Epoch Mode in src/plugins. */
+/** Session invalidation policy for host credentials versus OpenClaw auth profiles. */
 export type CliBackendAuthEpochMode = "combined" | "profile-only";
 
-/** Shared type for Cli Backend Native Tool Mode in src/plugins. */
+/** Native tool availability advertised by a CLI backend outside OpenClaw's tool catalog. */
 export type CliBackendNativeToolMode = "none" | "always-on";
 
-/** Shared type for Cli Backend Normalize Config Context in src/plugins. */
+/** Context supplied to backend-specific config normalizers after user overrides merge. */
 export type CliBackendNormalizeConfigContext = {
   config?: OpenClawConfig;
   backendId: string;
