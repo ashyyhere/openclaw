@@ -1,4 +1,4 @@
-// config port defaults helpers and runtime behavior.
+/** Default port ranges derived from configured gateway/browser ports. */
 type PortRange = { start: number; end: number };
 
 function isValidPort(port: number): boolean {
@@ -13,14 +13,14 @@ function derivePort(base: number, offset: number, fallback: number): number {
   return clampPort(base + offset, fallback);
 }
 
-/** Reused constant for DEFAULT BROWSER CDP PORT RANGE START behavior in src/config. */
+/** Default first port reserved for browser CDP endpoints. */
 export const DEFAULT_BROWSER_CDP_PORT_RANGE_START = 18800;
-/** Reused constant for DEFAULT BROWSER CDP PORT RANGE END behavior in src/config. */
+/** Default last port reserved for browser CDP endpoints. */
 export const DEFAULT_BROWSER_CDP_PORT_RANGE_END = 18899;
 const DEFAULT_BROWSER_CDP_PORT_RANGE_SPAN =
   DEFAULT_BROWSER_CDP_PORT_RANGE_END - DEFAULT_BROWSER_CDP_PORT_RANGE_START;
 
-/** Reused helper for derive Default Browser Cdp Port Range behavior in src/config. */
+/** Derives the default browser CDP port range from the browser-control port. */
 export function deriveDefaultBrowserCdpPortRange(browserControlPort: number): PortRange {
   const start = derivePort(browserControlPort, 9, DEFAULT_BROWSER_CDP_PORT_RANGE_START);
   const end = start + DEFAULT_BROWSER_CDP_PORT_RANGE_SPAN;

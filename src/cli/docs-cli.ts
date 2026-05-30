@@ -6,7 +6,7 @@ import { docsSearchCommand } from "../commands/docs.js";
 import { defaultRuntime } from "../runtime.js";
 import { runCommandWithRuntime } from "./cli-utils.js";
 
-/** Reused helper for register Docs Cli behavior in src/cli. */
+/** Registers the docs search command with terminal link help. */
 export function registerDocsCli(program: Command) {
   program
     .command("docs")

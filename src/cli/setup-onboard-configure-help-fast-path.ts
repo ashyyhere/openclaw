@@ -66,7 +66,7 @@ async function registerHelpCommand(
   registerConfigureCommand(program);
 }
 
-/** Reused helper for try Output Setup Onboard Configure Help behavior in src/cli. */
+/** Renders setup/onboard/configure help without loading the full CLI. */
 export async function tryOutputSetupOnboardConfigureHelp(argv: string[]): Promise<boolean> {
   const command = resolveSetupOnboardConfigureHelpCommand(argv);
   if (!command) {

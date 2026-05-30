@@ -27,7 +27,7 @@ const GATEWAY_RUN_BOOLEAN_FLAGS = new Set([
   "--raw-stream",
 ]);
 
-/** Reused helper for consume Gateway Run Option Token behavior in src/cli. */
+/** Returns how many argv tokens are consumed by one gateway run option. */
 export function consumeGatewayRunOptionToken(args: ReadonlyArray<string>, index: number): number {
   const arg = args[index];
   if (!arg || arg === "--" || !arg.startsWith("-")) {
@@ -47,7 +47,7 @@ export function consumeGatewayRunOptionToken(args: ReadonlyArray<string>, index:
   return isValueToken(args[index + 1]) ? 2 : 0;
 }
 
-/** Reused helper for consume Gateway Fast Path Root Option Token behavior in src/cli. */
+/** Returns how many root-level fast-path argv tokens are consumed. */
 export function consumeGatewayFastPathRootOptionToken(
   args: ReadonlyArray<string>,
   index: number,
@@ -68,7 +68,7 @@ export function consumeGatewayFastPathRootOptionToken(
   return 0;
 }
 
-/** Reused helper for resolve Gateway Catalog Command Path behavior in src/cli. */
+/** Resolves gateway catalog command path from process argv. */
 export function resolveGatewayCatalogCommandPath(argv: string[]): string[] | null {
   const args = argv.slice(2);
   let sawGateway = false;
