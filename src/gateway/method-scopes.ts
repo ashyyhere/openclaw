@@ -1,4 +1,5 @@
-// gateway method scopes helpers and runtime behavior.
+// Gateway operator-scope classification and authorization helpers. Core,
+// reserved, and plugin-declared methods all resolve through this policy seam.
 import { getPluginRegistryState } from "../plugins/runtime-state.js";
 import { resolveReservedGatewayMethodScope } from "../shared/gateway-method-policy.js";
 import { normalizeOptionalString as normalizeSessionActionParam } from "../shared/string-coerce.js";
@@ -19,7 +20,7 @@ import {
   type OperatorScope,
 } from "./operator-scopes.js";
 
-/** Re-exported API for src/gateway. */
+/** Operator scope constants and type used by gateway auth policy. */
 export {
   ADMIN_SCOPE,
   APPROVALS_SCOPE,
@@ -30,7 +31,7 @@ export {
   type OperatorScope,
 };
 
-/** Reused constant for CLI DEFAULT OPERATOR SCOPES behavior in src/gateway. */
+/** Broad operator scopes requested by CLI callers when exact dynamic scope is unknown. */
 export const CLI_DEFAULT_OPERATOR_SCOPES: OperatorScope[] = [
   ADMIN_SCOPE,
   READ_SCOPE,
@@ -56,37 +57,37 @@ function resolveScopedMethod(method: string): OperatorScope | undefined {
   return pluginScope === "node" || pluginScope === "dynamic" ? undefined : pluginScope;
 }
 
-/** Reused helper for is Approval Method behavior in src/gateway. */
+/** Returns true when a method requires the approvals operator scope. */
 export function isApprovalMethod(method: string): boolean {
   return resolveScopedMethod(method) === APPROVALS_SCOPE;
 }
 
-/** Reused helper for is Pairing Method behavior in src/gateway. */
+/** Returns true when a method requires the pairing operator scope. */
 export function isPairingMethod(method: string): boolean {
   return resolveScopedMethod(method) === PAIRING_SCOPE;
 }
 
-/** Reused helper for is Read Method behavior in src/gateway. */
+/** Returns true when a method requires read access. */
 export function isReadMethod(method: string): boolean {
   return resolveScopedMethod(method) === READ_SCOPE;
 }
 
-/** Reused helper for is Write Method behavior in src/gateway. */
+/** Returns true when a method requires write access. */
 export function isWriteMethod(method: string): boolean {
   return resolveScopedMethod(method) === WRITE_SCOPE;
 }
 
-/** Reused helper for is Node Role Method behavior in src/gateway. */
+/** Returns true for methods reserved to node-role clients. */
 export function isNodeRoleMethod(method: string): boolean {
   return isCoreNodeGatewayMethod(method);
 }
 
-/** Reused helper for is Admin Only Method behavior in src/gateway. */
+/** Returns true when a method requires admin scope. */
 export function isAdminOnlyMethod(method: string): boolean {
   return resolveScopedMethod(method) === ADMIN_SCOPE;
 }
 
-/** Reused helper for resolve Required Operator Scope For Method behavior in src/gateway. */
+/** Resolves the required operator scope for a gateway method when classified. */
 export function resolveRequiredOperatorScopeForMethod(method: string): OperatorScope | undefined {
   return resolveScopedMethod(method);
 }
@@ -139,7 +140,7 @@ function resolveDynamicLeastPrivilegeOperatorScopesForMethod(
   return [WRITE_SCOPE];
 }
 
-/** Reused helper for resolve Least Privilege Operator Scopes For Method behavior in src/gateway. */
+/** Resolves the minimal scopes a caller should request for a method. */
 export function resolveLeastPrivilegeOperatorScopesForMethod(
   method: string,
   params?: unknown,
@@ -155,7 +156,7 @@ export function resolveLeastPrivilegeOperatorScopesForMethod(
   return [];
 }
 
-/** Reused helper for authorize Operator Scopes For Method behavior in src/gateway. */
+/** Checks whether granted operator scopes authorize a method call. */
 export function authorizeOperatorScopesForMethod(
   method: string,
   scopes: readonly string[],
@@ -194,7 +195,7 @@ export function authorizeOperatorScopesForMethod(
   return { allowed: false, missingScope: requiredScope };
 }
 
-/** Reused helper for is Gateway Method Classified behavior in src/gateway. */
+/** Returns true when a gateway method has known role/scope classification. */
 export function isGatewayMethodClassified(method: string): boolean {
   if (isNodeRoleMethod(method)) {
     return true;
