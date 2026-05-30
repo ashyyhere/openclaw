@@ -1,6 +1,6 @@
 import type { FindExtraGatewayServicesOptions } from "../../daemon/inspect.js";
 
-/** Shared type for Gateway Rpc Opts in src/cli/daemon-cli. */
+/** Gateway RPC connection options shared by daemon status/probe commands. */
 export type GatewayRpcOpts = {
   url?: string;
   token?: string;
@@ -9,7 +9,7 @@ export type GatewayRpcOpts = {
   json?: boolean;
 };
 
-/** Shared type for Daemon Status Options in src/cli/daemon-cli. */
+/** Options controlling daemon status gathering, probing, and extra-service discovery. */
 export type DaemonStatusOptions = {
   rpc: GatewayRpcOpts;
   probe: boolean;
@@ -17,7 +17,7 @@ export type DaemonStatusOptions = {
   json: boolean;
 } & FindExtraGatewayServicesOptions;
 
-/** Shared type for Daemon Install Options in src/cli/daemon-cli. */
+/** Options accepted when installing the managed gateway service. */
 export type DaemonInstallOptions = {
   port?: string | number;
   runtime?: string;
@@ -27,7 +27,7 @@ export type DaemonInstallOptions = {
   json?: boolean;
 };
 
-/** Shared type for Daemon Lifecycle Options in src/cli/daemon-cli. */
+/** Options shared by daemon start/stop/restart/uninstall lifecycle commands. */
 export type DaemonLifecycleOptions = {
   json?: boolean;
   force?: boolean;

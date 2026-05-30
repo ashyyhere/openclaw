@@ -3,7 +3,7 @@ import { formatDocsLink } from "../../../packages/terminal-core/src/links.js";
 import { theme } from "../../../packages/terminal-core/src/theme.js";
 import { addGatewayServiceCommands } from "./register-service-commands.js";
 
-/** Reused helper for register Daemon Cli behavior in src/cli/daemon-cli. */
+/** Register the daemon command group for managed gateway service operations. */
 export function registerDaemonCli(program: Command) {
   const daemon = program
     .command("daemon")

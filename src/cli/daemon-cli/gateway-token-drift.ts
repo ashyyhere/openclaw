@@ -21,7 +21,7 @@ function isPasswordFallbackActive(params: {
   return plan.passwordCanWin && !plan.tokenCanWin;
 }
 
-/** Reused helper for resolve Gateway Token For Drift Check behavior in src/cli/daemon-cli. */
+/** Resolve the token only when token auth can affect daemon credential drift checks. */
 export async function resolveGatewayTokenForDriftCheck(params: {
   cfg: OpenClawConfig;
   env?: NodeJS.ProcessEnv;

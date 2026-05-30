@@ -44,7 +44,7 @@ function readRuntimeVersionFromStatusPayload(payload: unknown): string | null {
     : null;
 }
 
-/** Reused helper for probe Gateway Status behavior in src/cli/daemon-cli. */
+/** Probe gateway connectivity and optionally perform an authenticated status RPC. */
 export async function probeGatewayStatus(opts: {
   url: string;
   token?: string;
