@@ -1,21 +1,22 @@
-// infra/outbound reply policy helpers and runtime behavior.
+// Reply-to policy helpers for outbound fanout.
+// Single-use implicit reply references are consumed once while explicit overrides persist.
 import { isSingleUseReplyToMode } from "../../auto-reply/reply/reply-reference.js";
 import type { ReplyPayload } from "../../auto-reply/types.js";
 import type { ReplyToMode } from "../../config/types.js";
 
-/** Shared type for Reply To Override in src/infra/outbound. */
+/** Per-payload reply-to override carried through outbound delivery. */
 export type ReplyToOverride = {
   replyToId?: string | null | undefined;
   replyToIdSource?: ReplyToResolution["source"] | undefined;
 };
 
-/** Shared type for Reply To Resolution in src/infra/outbound. */
+/** Resolved reply reference and whether it came from explicit payload data. */
 export type ReplyToResolution = {
   replyToId?: string;
   source?: "explicit" | "implicit";
 };
 
-/** Reused helper for create Reply To Fanout behavior in src/infra/outbound. */
+/** Create a reply-to supplier for fanout sends, consuming implicit single-use references once. */
 export function createReplyToFanout(params: {
   replyToId?: string | null;
   replyToMode?: ReplyToMode;
@@ -40,7 +41,7 @@ export function createReplyToFanout(params: {
   };
 }
 
-/** Reused helper for create Reply To Delivery Policy behavior in src/infra/outbound. */
+/** Track reply-to resolution and consumption across a batch of outbound payloads. */
 export function createReplyToDeliveryPolicy(params: {
   replyToId?: string | null;
   replyToMode?: ReplyToMode;
