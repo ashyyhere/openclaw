@@ -22,14 +22,14 @@ const ROOT_COMMANDS_WITH_SUBCOMMANDS: ReadonlySet<string> = new Set(
   ),
 );
 
-/** Reused helper for has Help Or Version behavior in src/cli. */
+/** Checks whether argv contains any help or version trigger, including root `-v`. */
 export function hasHelpOrVersion(argv: string[]): boolean {
   return (
     argv.some((arg) => HELP_FLAGS.has(arg) || VERSION_FLAGS.has(arg)) || hasRootVersionAlias(argv)
   );
 }
 
-/** Reused helper for is Help Or Version Invocation behavior in src/cli. */
+/** Detects invocations that should short-circuit into help/version handling. */
 export function isHelpOrVersionInvocation(argv: string[]): boolean {
   if (hasRootVersionAlias(argv)) {
     return true;
@@ -83,7 +83,7 @@ function parsePositiveInt(value: string): number | undefined {
   return parseStrictPositiveInteger(value);
 }
 
-/** Reused helper for has Flag behavior in src/cli. */
+/** Returns whether a flag appears before the argv terminator. */
 export function hasFlag(argv: string[], name: string): boolean {
   const args = argv.slice(2);
   for (const arg of args) {
@@ -97,7 +97,7 @@ export function hasFlag(argv: string[], name: string): boolean {
   return false;
 }
 
-/** Reused helper for has Root Version Alias behavior in src/cli. */
+/** Detects the root-only `-v` version alias while rejecting subcommand use. */
 export function hasRootVersionAlias(argv: string[]): boolean {
   const args = argv.slice(2);
   let hasAlias = false;
@@ -126,7 +126,7 @@ export function hasRootVersionAlias(argv: string[]): boolean {
   return hasAlias;
 }
 
-/** Reused helper for is Root Version Invocation behavior in src/cli. */
+/** Detects root version requests that can bypass full Commander setup. */
 export function isRootVersionInvocation(argv: string[]): boolean {
   return isRootInvocationForFlags(argv, VERSION_FLAGS, { includeVersionAlias: true });
 }
@@ -164,7 +164,7 @@ function isRootInvocationForFlags(
   return hasTarget;
 }
 
-/** Reused helper for is Root Help Invocation behavior in src/cli. */
+/** Detects root help requests that can bypass full Commander setup. */
 export function isRootHelpInvocation(argv: string[]): boolean {
   return isRootInvocationForFlags(argv, HELP_FLAGS);
 }
@@ -209,7 +209,7 @@ function scanHelpNormalizationArgv(argv: string[]): HelpNormalizationScanResult 
   return { ok: true, positionals, rootOptions, helpFlagIndex };
 }
 
-/** Reused helper for normalize Generated Help Command Argv behavior in src/cli. */
+/** Rewrites generated `command help target` argv forms into Commander `--help` form. */
 export function normalizeGeneratedHelpCommandArgv(argv: string[]): string[] {
   const scan = scanHelpNormalizationArgv(argv);
   if (!scan.ok) {
@@ -240,7 +240,7 @@ export function normalizeGeneratedHelpCommandArgv(argv: string[]): string[] {
   return [argv[0], argv[1], ...rootOptions, primary.value, target.value, "--help"];
 }
 
-/** Reused helper for normalize Root Help Target Argv behavior in src/cli. */
+/** Rewrites root `help <target>` requests into `<target> --help`. */
 export function normalizeRootHelpTargetArgv(argv: string[]): string[] {
   const scan = scanHelpNormalizationArgv(argv);
   if (!scan.ok) {
@@ -261,7 +261,7 @@ export function normalizeRootHelpTargetArgv(argv: string[]): string[] {
   return [argv[0], argv[1], ...rootOptions, ...targetPath, "--help"];
 }
 
-/** Reused helper for get Flag Value behavior in src/cli. */
+/** Reads a string flag value from `--flag value` or `--flag=value` forms. */
 export function getFlagValue(argv: string[], name: string): string | null | undefined {
   const args = argv.slice(2);
   for (let i = 0; i < args.length; i += 1) {
@@ -281,7 +281,7 @@ export function getFlagValue(argv: string[], name: string): string | null | unde
   return undefined;
 }
 
-/** Reused helper for get Verbose Flag behavior in src/cli. */
+/** Resolves verbose mode, optionally treating `--debug` as verbose. */
 export function getVerboseFlag(argv: string[], options?: { includeDebug?: boolean }): boolean {
   if (hasFlag(argv, "--verbose")) {
     return true;
@@ -292,7 +292,7 @@ export function getVerboseFlag(argv: string[], options?: { includeDebug?: boolea
   return false;
 }
 
-/** Reused helper for get Positive Int Flag Value behavior in src/cli. */
+/** Parses a positive integer flag value while preserving missing/null flag states. */
 export function getPositiveIntFlagValue(argv: string[], name: string): number | null | undefined {
   const raw = getFlagValue(argv, name);
   if (raw === null || raw === undefined) {
@@ -301,12 +301,12 @@ export function getPositiveIntFlagValue(argv: string[], name: string): number | 
   return parsePositiveInt(raw);
 }
 
-/** Reused helper for get Command Path behavior in src/cli. */
+/** Extracts positional command path segments without consuming root options. */
 export function getCommandPath(argv: string[], depth = 2): string[] {
   return getCommandPathInternal(argv, depth, { skipRootOptions: false });
 }
 
-/** Reused helper for get Command Path With Root Options behavior in src/cli. */
+/** Extracts command path segments after skipping recognized root options. */
 export function getCommandPathWithRootOptions(argv: string[], depth = 2): string[] {
   return getCommandPathInternal(argv, depth, { skipRootOptions: true });
 }
@@ -344,7 +344,7 @@ function getCommandPathInternal(
   return path;
 }
 
-/** Reused helper for get Primary Command behavior in src/cli. */
+/** Returns the first command positional after root options. */
 export function getPrimaryCommand(argv: string[]): string | null {
   const [primary] = getCommandPathWithRootOptions(argv, 1);
   return primary ?? null;
@@ -386,7 +386,7 @@ function consumeKnownOptionToken(
   return isValueToken(args[index + 1]) ? 2 : 0;
 }
 
-/** Reused helper for get Command Positionals With Root Options behavior in src/cli. */
+/** Returns command arguments after a known command path while validating known options. */
 export function getCommandPositionalsWithRootOptions(
   argv: string[],
   options: CommandPositionalsParseOptions,
@@ -436,7 +436,7 @@ export function getCommandPositionalsWithRootOptions(
   return positionals;
 }
 
-/** Reused helper for build Parse Argv behavior in src/cli. */
+/** Normalizes raw args into a Node-style argv tuple for shared command parsers. */
 export function buildParseArgv(params: {
   programName?: string;
   rawArgs?: string[];
@@ -464,7 +464,7 @@ export function buildParseArgv(params: {
   return ["node", programName || "openclaw", ...normalizedArgv];
 }
 
-/** Reused helper for should Migrate State From Path behavior in src/cli. */
+/** Decides whether a parsed command path should run state migration before execution. */
 export function shouldMigrateStateFromPath(path: string[]): boolean {
   if (path.length === 0) {
     return true;
@@ -488,7 +488,7 @@ export function shouldMigrateStateFromPath(path: string[]): boolean {
   return true;
 }
 
-/** Reused helper for should Migrate State behavior in src/cli. */
+/** Decides whether argv should trigger state migration before command execution. */
 export function shouldMigrateState(argv: string[]): boolean {
   return shouldMigrateStateFromPath(getCommandPathWithRootOptions(argv, 2));
 }
