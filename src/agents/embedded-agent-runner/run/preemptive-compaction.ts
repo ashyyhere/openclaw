@@ -11,7 +11,7 @@ import type { AgentMessage } from "../../runtime/index.js";
 import { estimateToolResultReductionPotential } from "../tool-result-truncation.js";
 import type { PreemptiveCompactionRoute } from "./preemptive-compaction.types.js";
 
-/** Reused constant for PREEMPTIVE OVERFLOW ERROR TEXT behavior in src/agents/embedded-agent-runner. */
+/** Stable error text used when preflight detects a prompt beyond model budget. */
 export const PREEMPTIVE_OVERFLOW_ERROR_TEXT =
   "Context overflow: prompt too large for the model (precheck).";
 
@@ -23,10 +23,10 @@ const CONTENT_BLOCK_OVERHEAD_TOKENS = 6;
 const IMAGE_BLOCK_TOKENS = 2_000;
 const TRUNCATION_ROUTE_BUFFER_TOKENS = 512;
 
-/** Re-exported API for src/agents/embedded-agent-runner, starting with Preemptive Compaction Route. */
+/** Re-export the route enum used by callers that handle preflight pressure. */
 export type { PreemptiveCompactionRoute } from "./preemptive-compaction.types.js";
 
-/** Shared type for Preemptive Compaction Decision in src/agents/embedded-agent-runner. */
+/** Decision returned before provider submission when prompt pressure is known. */
 export type PreemptiveCompactionDecision = {
   route: PreemptiveCompactionRoute;
   shouldCompact: boolean;
@@ -38,7 +38,7 @@ export type PreemptiveCompactionDecision = {
   effectiveReserveTokens: number;
 };
 
-/** Shared type for Llm Boundary Token Pressure in src/agents/embedded-agent-runner. */
+/** Caller-supplied token pressure estimate from rendered provider-bound payloads. */
 export type LlmBoundaryTokenPressure = {
   estimatedPromptTokens: number;
   source: string;

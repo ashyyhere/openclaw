@@ -9,7 +9,7 @@ import {
 import type { FailoverReason } from "../../embedded-agent-helpers.js";
 import { log } from "../logger.js";
 
-/** Shared type for Failover Decision Logger Input in src/agents/embedded-agent-runner. */
+/** Fully normalized failover observation fields emitted to structured logs. */
 export type FailoverDecisionLoggerInput = {
   stage: "prompt" | "assistant";
   decision: "rotate_profile" | "fallback_model" | "surface_error";
@@ -28,7 +28,7 @@ export type FailoverDecisionLoggerInput = {
   status?: number;
 };
 
-/** Shared type for Failover Decision Logger Base in src/agents/embedded-agent-runner. */
+/** Failover observation context before the concrete decision is attached. */
 export type FailoverDecisionLoggerBase = Omit<FailoverDecisionLoggerInput, "decision" | "status">;
 
 /** Redacts identifiers and derives common fields for failover decision logs. */

@@ -1,9 +1,9 @@
 /** Removes image payloads from history after the model has already seen them. */
 import type { AgentMessage } from "../../runtime/index.js";
 
-/** Reused constant for PRUNED HISTORY IMAGE MARKER behavior in src/agents/embedded-agent-runner. */
+/** Replacement text for old image blocks removed from replay history. */
 export const PRUNED_HISTORY_IMAGE_MARKER = "[image data removed - already processed by model]";
-/** Reused constant for PRUNED HISTORY MEDIA REFERENCE MARKER behavior in src/agents/embedded-agent-runner. */
+/** Replacement text for old media reference strings removed from replay history. */
 export const PRUNED_HISTORY_MEDIA_REFERENCE_MARKER =
   "[media reference removed - already processed by model]";
 

@@ -1,7 +1,7 @@
 /** Decides whether an embedded run should retry, rotate, or surface errors. */
 import type { FailoverReason } from "../../embedded-agent-helpers.js";
 
-/** Shared type for Run Failover Decision in src/agents/embedded-agent-runner. */
+/** Normalized action selected after a prompt/assistant/retry-limit failure. */
 export type RunFailoverDecision =
   | {
       action: "continue_normal";
@@ -18,19 +18,19 @@ export type RunFailoverDecision =
       action: "return_error_payload";
     };
 
-/** Shared type for Retry Limit Failover Decision in src/agents/embedded-agent-runner. */
+/** Decision subset allowed after exhausting retry attempts. */
 export type RetryLimitFailoverDecision = Extract<
   RunFailoverDecision,
   { action: "fallback_model" | "return_error_payload" }
 >;
 
-/** Shared type for Prompt Failover Decision in src/agents/embedded-agent-runner. */
+/** Decision subset allowed while preparing or submitting the prompt. */
 export type PromptFailoverDecision = Extract<
   RunFailoverDecision,
   { action: "rotate_profile" | "fallback_model" | "surface_error" }
 >;
 
-/** Shared type for Assistant Failover Decision in src/agents/embedded-agent-runner. */
+/** Decision subset allowed after assistant streaming has begun. */
 export type AssistantFailoverDecision = Extract<
   RunFailoverDecision,
   { action: "continue_normal" | "rotate_profile" | "fallback_model" | "surface_error" }
@@ -70,7 +70,7 @@ type AssistantDecisionParams = {
   profileRotated: boolean;
 };
 
-/** Shared type for Run Failover Decision Params in src/agents/embedded-agent-runner. */
+/** Stage-specific facts used to resolve the next failover action. */
 export type RunFailoverDecisionParams =
   | RetryLimitDecisionParams
   | PromptDecisionParams
@@ -147,13 +147,13 @@ export function mergeRetryFailoverReason(params: {
   return params.failoverReason ?? (params.timedOut ? "timeout" : null) ?? params.previous;
 }
 
-/** Reused helper for resolve Run Failover Decision behavior in src/agents/embedded-agent-runner. */
+/** Resolves failover behavior after retry limits are reached. */
 export function resolveRunFailoverDecision(
   params: RetryLimitDecisionParams,
 ): RetryLimitFailoverDecision;
-/** Reused helper for resolve Run Failover Decision behavior in src/agents/embedded-agent-runner. */
+/** Resolves failover behavior for prompt-stage errors. */
 export function resolveRunFailoverDecision(params: PromptDecisionParams): PromptFailoverDecision;
-/** Reused helper for resolve Run Failover Decision behavior in src/agents/embedded-agent-runner. */
+/** Resolves failover behavior for assistant-stage errors. */
 export function resolveRunFailoverDecision(
   params: AssistantDecisionParams,
 ): AssistantFailoverDecision;
