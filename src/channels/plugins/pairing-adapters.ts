@@ -2,7 +2,6 @@ import type { ChannelPairingAdapter } from "./types.adapters.js";
 
 type PairingNotifyParams = Parameters<NonNullable<ChannelPairingAdapter["notifyApproval"]>>[0];
 
-/** Reused helper for create Pairing Prefix Stripper behavior in src/channels/plugins. */
 export function createPairingPrefixStripper(
   prefixRe: RegExp,
   map: (entry: string) => string = (entry) => entry,
@@ -10,7 +9,6 @@ export function createPairingPrefixStripper(
   return (entry) => map(entry.trim().replace(prefixRe, "").trim());
 }
 
-/** Reused helper for create Logged Pairing Approval Notifier behavior in src/channels/plugins. */
 export function createLoggedPairingApprovalNotifier(
   format: string | ((params: PairingNotifyParams) => string),
   log: (message: string) => void = console.log,
@@ -20,7 +18,6 @@ export function createLoggedPairingApprovalNotifier(
   };
 }
 
-/** Reused helper for create Text Pairing Adapter behavior in src/channels/plugins. */
 export function createTextPairingAdapter(params: {
   idLabel: string;
   message: string;

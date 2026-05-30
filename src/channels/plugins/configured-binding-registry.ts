@@ -1,4 +1,3 @@
-// Runtime registry for configured binding providers and consumers.
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { ConversationRef } from "../../infra/outbound/session-binding-service.js";
 import type {
@@ -47,7 +46,6 @@ function resolveMaterializedConfiguredBinding(params: {
   };
 }
 
-/** Reused helper for prime Configured Binding Registry behavior in src/channels/plugins. */
 export function primeConfiguredBindingRegistry(params: { cfg: OpenClawConfig }): {
   bindingCount: number;
   channelCount: number;
@@ -55,7 +53,6 @@ export function primeConfiguredBindingRegistry(params: { cfg: OpenClawConfig }):
   return countCompiledBindingRegistry(primeCompiledBindingRegistry(params.cfg));
 }
 
-/** Reused helper for resolve Configured Binding Record behavior in src/channels/plugins. */
 export function resolveConfiguredBindingRecord(params: {
   cfg: OpenClawConfig;
   channel: string;
@@ -78,7 +75,6 @@ export function resolveConfiguredBindingRecord(params: {
   });
 }
 
-/** Reused helper for resolve Configured Binding Record For Conversation behavior in src/channels/plugins. */
 export function resolveConfiguredBindingRecordForConversation(params: {
   cfg: OpenClawConfig;
   conversation: ConversationRef;
@@ -90,7 +86,6 @@ export function resolveConfiguredBindingRecordForConversation(params: {
   return resolved.materializedTarget;
 }
 
-/** Reused helper for resolve Configured Binding behavior in src/channels/plugins. */
 export function resolveConfiguredBinding(params: {
   cfg: OpenClawConfig;
   conversation: ConversationRef;
@@ -107,7 +102,6 @@ export function resolveConfiguredBinding(params: {
   };
 }
 
-/** Reused helper for resolve Configured Binding Record By Session Key behavior in src/channels/plugins. */
 export function resolveConfiguredBindingRecordBySessionKey(params: {
   cfg: OpenClawConfig;
   sessionKey: string;

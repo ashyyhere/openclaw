@@ -5,14 +5,12 @@ import {
   listBundledChannelIdsForPackageState,
 } from "./package-state-probes.js";
 
-/** Reused helper for list Bundled Channel Ids With Persisted Auth State behavior in src/channels/plugins. */
 export function listBundledChannelIdsWithPersistedAuthState(
   discovery?: PluginDiscoveryResult,
 ): string[] {
   return listBundledChannelIdsForPackageState("persistedAuthState", discovery);
 }
 
-/** Reused helper for has Bundled Channel Persisted Auth State behavior in src/channels/plugins. */
 export function hasBundledChannelPersistedAuthState(params: {
   channelId: string;
   cfg: OpenClawConfig;
