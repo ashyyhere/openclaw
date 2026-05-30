@@ -2,7 +2,6 @@ import type { MsgContext } from "../auto-reply/templating.js";
 import type { GroupKeyResolution, SessionEntry } from "../config/sessions/types.js";
 import type { ChannelRouteRef } from "../plugin-sdk/channel-route.js";
 
-/** Shared type for Inbound Last Route Update in src/channels. */
 export type InboundLastRouteUpdate = {
   sessionKey: string;
   channel: SessionEntry["lastChannel"];
@@ -17,7 +16,6 @@ export type InboundLastRouteUpdate = {
   };
 };
 
-/** Shared type for Record Inbound Session in src/channels. */
 export type RecordInboundSession = (params: {
   storePath: string;
   sessionKey: string;

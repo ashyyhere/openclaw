@@ -9,7 +9,6 @@ import type { HistoryEntry, HistoryMediaEntry } from "../../auto-reply/reply/his
 
 type MaybePromise<T> = T | Promise<T>;
 
-/** Shared type for Channel History Window in src/channels/turn. */
 export type ChannelHistoryWindow<T extends HistoryEntry = HistoryEntry> = {
   record: (params: { historyKey: string; entry?: T | null; limit: number }) => T[];
   recordWithMedia: (params: {
@@ -38,7 +37,6 @@ export type ChannelHistoryWindow<T extends HistoryEntry = HistoryEntry> = {
   clear: (params: { historyKey: string; limit: number }) => void;
 };
 
-/** Reused helper for create Channel History Window behavior in src/channels/turn. */
 export function createChannelHistoryWindow<T extends HistoryEntry = HistoryEntry>(params: {
   historyMap: Map<string, T[]>;
 }): ChannelHistoryWindow<T> {

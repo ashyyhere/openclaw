@@ -1,4 +1,3 @@
-// Cached public accessors for bundled chat channel metadata.
 import { buildChatChannelMetaById, type ChatChannelMeta } from "./chat-meta-shared.js";
 import { CHAT_CHANNEL_ORDER, type ChatChannelId } from "./ids.js";
 
@@ -9,7 +8,6 @@ function getChatChannelMetaById(): Record<ChatChannelId, ChatChannelMeta> {
   return chatChannelMetaCache;
 }
 
-/** Re-exported API for src/channels, starting with Chat Channel Meta. */
 export type { ChatChannelMeta };
 
 /** List metadata for configured bundled chat channels in display order. */

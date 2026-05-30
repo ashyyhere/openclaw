@@ -1,4 +1,3 @@
-// Message receive context and acknowledgement policy helpers.
 import type { ChannelMessageReceiveAckPolicy } from "./types.js";
 
 /** Ack policy used by a channel message receive adapter. */
@@ -51,7 +50,6 @@ function normalizeAckErrorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
 }
 
-/** Reused helper for create Message Receive Context behavior in src/channels/message. */
 export function createMessageReceiveContext<TMessage>(params: {
   id: string;
   channel: string;
