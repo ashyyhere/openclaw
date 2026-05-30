@@ -1,4 +1,4 @@
-// plugins host hooks helpers and runtime behavior.
+// Plugin host hook contracts for session state, tool policy, UI actions, and events.
 import type { OperatorScope } from "../gateway/operator-scopes.js";
 import type { AgentEventPayload, AgentEventStream } from "../infra/agent-events.js";
 import type {
@@ -14,11 +14,11 @@ import type {
   PluginNextTurnInjectionRecord,
 } from "./host-hook-turn-types.js";
 
-/** Re-exported API for src/plugins, starting with is Plugin Json Value. */
+/** JSON value validator shared by host hook payloads. */
 export { isPluginJsonValue } from "./host-hook-json.js";
-/** Re-exported API for src/plugins, starting with Plugin Json Primitive. */
+/** JSON value types accepted by host hook payloads and plugin state. */
 export type { PluginJsonPrimitive, PluginJsonValue } from "./host-hook-json.js";
-/** Re-exported API for src/plugins. */
+/** Agent-turn preparation, heartbeat, and next-turn injection hook contracts. */
 export type {
   PluginAgentTurnPrepareEvent,
   PluginAgentTurnPrepareResult,
@@ -30,17 +30,17 @@ export type {
   PluginNextTurnInjectionRecord,
 } from "./host-hook-turn-types.js";
 
-/** Shared type for Plugin Host Cleanup Reason in src/plugins. */
+/** Reason supplied when the host asks plugin-owned resources to clean up. */
 export type PluginHostCleanupReason = "disable" | "reset" | "delete" | "restart";
 
-/** Shared type for Plugin Session Extension Projection Context in src/plugins. */
+/** Context passed when projecting plugin session extension state. */
 export type PluginSessionExtensionProjectionContext = {
   sessionKey: string;
   sessionId?: string;
   state: PluginJsonValue | undefined;
 };
 
-/** Shared type for Plugin Session Extension Registration in src/plugins. */
+/** Registration for plugin-owned session extension state and optional mirrors. */
 export type PluginSessionExtensionRegistration = {
   namespace: string;
   description: string;
@@ -65,14 +65,14 @@ export type PluginSessionExtensionRegistration = {
   sessionEntrySlotSchema?: PluginJsonValue;
 };
 
-/** Shared type for Plugin Session Extension Projection in src/plugins. */
+/** Projected plugin session extension value ready for host exposure. */
 export type PluginSessionExtensionProjection = {
   pluginId: string;
   namespace: string;
   value: PluginJsonValue;
 };
 
-/** Shared type for Plugin Session Extension Patch Params in src/plugins. */
+/** Patch request for one plugin-owned session extension namespace. */
 export type PluginSessionExtensionPatchParams = {
   key: string;
   pluginId: string;
@@ -81,7 +81,7 @@ export type PluginSessionExtensionPatchParams = {
   unset?: boolean;
 };
 
-/** Shared type for Plugin Tool Policy Decision in src/plugins. */
+/** Decision returned by plugin trusted-tool policy evaluators. */
 export type PluginToolPolicyDecision =
   | PluginHookBeforeToolCallResult
   | {
@@ -89,7 +89,7 @@ export type PluginToolPolicyDecision =
       reason?: string;
     };
 
-/** Shared type for Plugin Trusted Tool Policy Registration in src/plugins. */
+/** Registration for a plugin policy that can allow or deny trusted tool calls. */
 export type PluginTrustedToolPolicyRegistration = {
   id: string;
   description: string;
@@ -99,7 +99,7 @@ export type PluginTrustedToolPolicyRegistration = {
   ) => PluginToolPolicyDecision | void | Promise<PluginToolPolicyDecision | void>;
 };
 
-/** Shared type for Plugin Tool Metadata Registration in src/plugins. */
+/** Plugin-provided metadata for host-visible tools. */
 export type PluginToolMetadataRegistration = {
   toolName: string;
   displayName?: string;
@@ -108,12 +108,12 @@ export type PluginToolMetadataRegistration = {
   tags?: string[];
 };
 
-/** Shared type for Plugin Command Continuation in src/plugins. */
+/** Result shape for plugin commands that may continue the agent run. */
 export type PluginCommandContinuation = {
   continueAgent?: boolean;
 };
 
-/** Shared type for Plugin Control Ui Descriptor in src/plugins. */
+/** Descriptor for a plugin-provided Control UI surface. */
 export type PluginControlUiDescriptor = {
   id: string;
   surface: "session" | "tool" | "run" | "settings";
@@ -124,7 +124,7 @@ export type PluginControlUiDescriptor = {
   requiredScopes?: OperatorScope[];
 };
 
-/** Shared type for Plugin Session Action Context in src/plugins. */
+/** Context passed to plugin session action handlers. */
 export type PluginSessionActionContext = {
   pluginId: string;
   actionId: string;
@@ -136,7 +136,7 @@ export type PluginSessionActionContext = {
   };
 };
 
-/** Shared type for Plugin Session Action Result in src/plugins. */
+/** Success or failure result returned by plugin session actions. */
 export type PluginSessionActionResult =
   | {
       ok?: true;
@@ -151,7 +151,7 @@ export type PluginSessionActionResult =
       details?: PluginJsonValue;
     };
 
-/** Shared type for Plugin Session Action Registration in src/plugins. */
+/** Registration for a plugin action callable from a session UI/control surface. */
 export type PluginSessionActionRegistration = {
   id: string;
   description?: string;
@@ -162,7 +162,7 @@ export type PluginSessionActionRegistration = {
   ) => PluginSessionActionResult | void | Promise<PluginSessionActionResult | void>;
 };
 
-/** Shared type for Plugin Runtime Lifecycle Registration in src/plugins. */
+/** Registration for plugin runtime cleanup hooks. */
 export type PluginRuntimeLifecycleRegistration = {
   id: string;
   description?: string;
@@ -173,7 +173,7 @@ export type PluginRuntimeLifecycleRegistration = {
   }) => void | Promise<void>;
 };
 
-/** Shared type for Plugin Agent Event Subscription Registration in src/plugins. */
+/** Registration for plugin subscriptions to host agent event streams. */
 export type PluginAgentEventSubscriptionRegistration = {
   id: string;
   description?: string;
@@ -191,7 +191,7 @@ export type PluginAgentEventSubscriptionRegistration = {
   ) => void | Promise<void>;
 };
 
-/** Shared type for Plugin Agent Event Emit Params in src/plugins. */
+/** Parameters for emitting a plugin-owned agent event. */
 export type PluginAgentEventEmitParams = {
   runId: string;
   stream: AgentEventStream;
@@ -199,12 +199,12 @@ export type PluginAgentEventEmitParams = {
   sessionKey?: string;
 };
 
-/** Shared type for Plugin Agent Event Emit Result in src/plugins. */
+/** Result of emitting a plugin-owned agent event. */
 export type PluginAgentEventEmitResult =
   | { emitted: true; stream: AgentEventStream }
   | { emitted: false; reason: string };
 
-/** Shared type for Plugin Run Context Patch in src/plugins. */
+/** Patch request for plugin run-scoped JSON context. */
 export type PluginRunContextPatch = {
   runId: string;
   namespace: string;
@@ -212,13 +212,13 @@ export type PluginRunContextPatch = {
   unset?: boolean;
 };
 
-/** Shared type for Plugin Run Context Get Params in src/plugins. */
+/** Lookup request for plugin run-scoped JSON context. */
 export type PluginRunContextGetParams = {
   runId: string;
   namespace: string;
 };
 
-/** Shared type for Plugin Session Scheduler Job Registration in src/plugins. */
+/** Registration for plugin-owned scheduled work tied to a session. */
 export type PluginSessionSchedulerJobRegistration = {
   id: string;
   sessionKey: string;
@@ -231,7 +231,7 @@ export type PluginSessionSchedulerJobRegistration = {
   }) => void | Promise<void>;
 };
 
-/** Shared type for Plugin Session Scheduler Job Handle in src/plugins. */
+/** Stable handle returned for a plugin-owned scheduled session job. */
 export type PluginSessionSchedulerJobHandle = {
   id: string;
   pluginId: string;
@@ -239,12 +239,12 @@ export type PluginSessionSchedulerJobHandle = {
   kind: string;
 };
 
-/** Shared type for Plugin Session Attachment File in src/plugins. */
+/** File path supplied for plugin-initiated session attachment delivery. */
 export type PluginSessionAttachmentFile = {
   path: string;
 };
 
-/** Shared type for Plugin Attachment Channel Hints in src/plugins. */
+/** Channel-specific delivery hints for plugin session attachments. */
 export type PluginAttachmentChannelHints = {
   telegram?: {
     parseMode?: "HTML";
@@ -260,10 +260,10 @@ export type PluginAttachmentChannelHints = {
   };
 };
 
-/** Shared type for Plugin Session Attachment Caption Format in src/plugins. */
+/** Caption format requested for plugin session attachment text. */
 export type PluginSessionAttachmentCaptionFormat = "plain" | "html" | "markdown";
 
-/** Shared type for Plugin Session Attachment Params in src/plugins. */
+/** Parameters for delivering plugin-provided files into a session channel. */
 export type PluginSessionAttachmentParams = {
   sessionKey: string;
   files: PluginSessionAttachmentFile[];
@@ -275,7 +275,7 @@ export type PluginSessionAttachmentParams = {
   channelHints?: PluginAttachmentChannelHints;
 };
 
-/** Shared type for Plugin Session Attachment Result in src/plugins. */
+/** Result of plugin-initiated session attachment delivery. */
 export type PluginSessionAttachmentResult =
   | {
       ok: true;
@@ -285,7 +285,7 @@ export type PluginSessionAttachmentResult =
     }
   | { ok: false; error: string };
 
-/** Shared type for Plugin Session Turn Schedule in src/plugins. */
+/** Absolute, relative, or cron schedule for a plugin-created session turn. */
 export type PluginSessionTurnSchedule =
   | { at: string | number | Date }
   | { delayMs: number }
@@ -301,7 +301,7 @@ type PluginSessionTurnScheduleCommonParams = {
   tag?: string;
 };
 
-/** Shared type for Plugin Session Turn Schedule Params in src/plugins. */
+/** Parameters for scheduling a plugin-created session turn. */
 export type PluginSessionTurnScheduleParams =
   | ({
       at: string | number | Date;
@@ -317,19 +317,19 @@ export type PluginSessionTurnScheduleParams =
       deleteAfterRun?: false;
     } & PluginSessionTurnScheduleCommonParams);
 
-/** Shared type for Plugin Session Turn Unschedule By Tag Params in src/plugins. */
+/** Parameters for unscheduling plugin-created session turns by cleanup tag. */
 export type PluginSessionTurnUnscheduleByTagParams = {
   sessionKey: string;
   tag: string;
 };
 
-/** Shared type for Plugin Session Turn Unschedule By Tag Result in src/plugins. */
+/** Count result from unscheduling plugin-created session turns by tag. */
 export type PluginSessionTurnUnscheduleByTagResult = {
   removed: number;
   failed: number;
 };
 
-/** Reused helper for normalize Plugin Host Hook Id behavior in src/plugins. */
+/** Normalizes host hook registration ids before storage or comparison. */
 export function normalizePluginHostHookId(value: string | undefined): string {
   return (value ?? "").trim();
 }
@@ -349,7 +349,7 @@ function normalizeQueuedInjectionText(
   return text || undefined;
 }
 
-/** Reused helper for build Plugin Agent Turn Prepare Context behavior in src/plugins. */
+/** Builds agent-turn context text from queued plugin next-turn injections. */
 export function buildPluginAgentTurnPrepareContext(params: {
   queuedInjections: PluginNextTurnInjectionRecord[];
 }): PluginAgentTurnPrepareResult {
@@ -365,5 +365,5 @@ export function buildPluginAgentTurnPrepareContext(params: {
   };
 }
 
-/** Shared type for Plugin Host Hook Run Context in src/plugins. */
+/** Agent run context shape passed through plugin host hooks. */
 export type PluginHostHookRunContext = PluginHookAgentContext;
