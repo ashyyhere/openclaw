@@ -293,7 +293,7 @@ import {
   isPrimaryBootstrapRun,
   remapInjectedContextFilesToWorkspace,
 } from "./attempt.bootstrap-context.js";
-/** Re-exported API for src/agents/embedded-agent-runner, starting with build Context Engine Prompt Cache Info. */
+/** Re-export prompt-cache diagnostics assembled while building context-engine prompts. */
 export { buildContextEnginePromptCacheInfo } from "./attempt.context-engine-helpers.js";
 import {
   rotateTranscriptAfterCompaction,
@@ -429,13 +429,13 @@ import {
 } from "./runtime-context-prompt.js";
 import type { EmbeddedRunAttemptParams, EmbeddedRunAttemptResult } from "./types.js";
 
-/** Re-exported API for src/agents/embedded-agent-runner. */
+/** Re-export thread/workspace helpers used by attempt orchestration tests. */
 export {
   appendAttemptCacheTtlIfNeeded,
   composeSystemPromptWithHookContext,
   resolveAttemptSpawnWorkspaceDir,
 } from "./attempt.thread-helpers.js";
-/** Re-exported API for src/agents/embedded-agent-runner. */
+/** Re-export prompt-construction helpers shared with focused attempt tests. */
 export {
   buildAfterTurnRuntimeContext,
   buildAfterTurnRuntimeContextFromUsage,
@@ -448,23 +448,23 @@ export {
   shouldWarnOnOrphanedUserRepair,
   shouldInjectHeartbeatPrompt,
 } from "./attempt.prompt-helpers.js";
-/** Re-exported API for src/agents/embedded-agent-runner. */
+/** Re-export sessions-yield message helpers used by attempt-level tests. */
 export {
   persistSessionsYieldContextMessage,
   queueSessionsYieldInterruptMessage,
   stripSessionsYieldArtifacts,
 } from "./attempt.sessions-yield.js";
-/** Re-exported API for src/agents/embedded-agent-runner. */
+/** Re-export malformed tool-call argument repair helpers for stream wrapper tests. */
 export {
   decodeHtmlEntitiesInObject,
   wrapStreamFnRepairMalformedToolCallArguments,
 } from "./attempt.tool-call-argument-repair.js";
-/** Re-exported API for src/agents/embedded-agent-runner. */
+/** Re-export tool-call normalization wrappers used by provider stream tests. */
 export {
   wrapStreamFnSanitizeMalformedToolCalls,
   wrapStreamFnTrimToolCallNames,
 } from "./attempt.tool-call-normalization.js";
-/** Re-exported API for src/agents/embedded-agent-runner. */
+/** Re-export stream resolution helpers and test cache reset from the runtime boundary. */
 export {
   resetEmbeddedAgentBaseStreamFnCacheForTest,
   resolveEmbeddedAgentBaseStreamFn,
