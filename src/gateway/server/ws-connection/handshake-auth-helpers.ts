@@ -1,4 +1,4 @@
-// gateway/server/ws-connection handshake auth helpers helpers and runtime behavior.
+// WebSocket handshake helpers for gateway auth locality, pairing, and unauthorized diagnostics.
 import {
   GATEWAY_CLIENT_IDS,
   GATEWAY_CLIENT_MODES,
@@ -18,11 +18,11 @@ import {
 } from "../../net.js";
 import type { AuthProvidedKind } from "./auth-messages.js";
 
-/** Reused constant for BROWSER ORIGIN LOOPBACK RATE LIMIT IP behavior in src/gateway/server. */
+/** Synthetic loopback bucket used when a browser-origin request has no stable client IP. */
 export const BROWSER_ORIGIN_LOOPBACK_RATE_LIMIT_IP = "198.18.0.1";
-/** Reused constant for BROWSER ORIGIN RATE LIMIT KEY PREFIX behavior in src/gateway/server. */
+/** Prefix for browser-origin rate-limit keys derived from the Origin header. */
 export const BROWSER_ORIGIN_RATE_LIMIT_KEY_PREFIX = "browser-origin:";
-/** Shared type for Pairing Locality Kind in src/gateway/server. */
+/** Locality classification used to decide whether pairing can be auto-approved. */
 export type PairingLocalityKind =
   | "direct_local"
   | "cli_container_local"
@@ -30,7 +30,7 @@ export type PairingLocalityKind =
   | "shared_secret_loopback_local"
   | "remote";
 
-/** Shared type for Handshake Browser Security Context in src/gateway/server. */
+/** Browser-origin security controls applied before gateway WebSocket auth decisions. */
 export type HandshakeBrowserSecurityContext = {
   hasBrowserOriginHeader: boolean;
   enforceOriginCheckForAnyClient: boolean;
@@ -58,7 +58,7 @@ function resolveBrowserOriginRateLimitKey(requestOrigin?: string): string {
   }
 }
 
-/** Reused helper for resolve Handshake Browser Security Context behavior in src/gateway/server. */
+/** Resolves origin-enforcement and rate-limit identity for a handshake request. */
 export function resolveHandshakeBrowserSecurityContext(params: {
   requestOrigin?: string;
   clientIp: string | undefined;
@@ -82,7 +82,7 @@ export function resolveHandshakeBrowserSecurityContext(params: {
   };
 }
 
-/** Reused helper for should Allow Silent Local Pairing behavior in src/gateway/server. */
+/** Decides whether a local client pairing or scope upgrade can skip interactive approval. */
 export function shouldAllowSilentLocalPairing(params: {
   locality: PairingLocalityKind;
   hasBrowserOriginHeader: boolean;
@@ -204,7 +204,7 @@ function isControlUiBrowserContainerLocalEquivalent(params: {
   );
 }
 
-/** Reused helper for resolve Pairing Locality behavior in src/gateway/server. */
+/** Classifies a handshake as direct local, container-local, shared-secret local, or remote. */
 export function resolvePairingLocality(params: {
   connectParams: ConnectParams;
   isLocalClient: boolean;
@@ -261,7 +261,7 @@ export function resolvePairingLocality(params: {
   return "remote";
 }
 
-/** Reused helper for should Skip Local Backend Self Pairing behavior in src/gateway/server. */
+/** Allows local backend clients to avoid pairing themselves when local auth proof is sufficient. */
 export function shouldSkipLocalBackendSelfPairing(params: {
   connectParams: ConnectParams;
   locality: PairingLocalityKind;
@@ -316,7 +316,7 @@ function buildUnauthorizedHandshakeContext(params: {
   };
 }
 
-/** Reused helper for resolve Device Signature Payload Version behavior in src/gateway/server. */
+/** Verifies a device signature against current v3 payloads and legacy v2 payloads. */
 export function resolveDeviceSignaturePayloadVersion(params: {
   device: {
     id: string;
@@ -370,7 +370,7 @@ function resolveAuthProvidedKind(
           : "none";
 }
 
-/** Reused helper for resolve Unauthorized Handshake Context behavior in src/gateway/server. */
+/** Builds structured unauthorized-handshake guidance for clients after auth failure. */
 export function resolveUnauthorizedHandshakeContext(params: {
   connectAuth: HandshakeConnectAuth | null | undefined;
   failedAuth: GatewayAuthResult;

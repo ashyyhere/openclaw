@@ -1,4 +1,4 @@
-// gateway session compaction checkpoints helpers and runtime behavior.
+// Gateway helpers for capturing, retaining, and restoring session compaction checkpoints.
 import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -22,12 +22,12 @@ import { resolveGatewaySessionStoreTarget } from "./session-utils.js";
 
 const log = createSubsystemLogger("gateway/session-compaction-checkpoints");
 const MAX_COMPACTION_CHECKPOINTS_PER_SESSION = 25;
-/** Reused constant for MAX COMPACTION CHECKPOINT LEAF SCAN BYTES behavior in src/gateway. */
+/** Maximum transcript tail bytes scanned when deriving the leaf entry for a checkpoint. */
 export const MAX_COMPACTION_CHECKPOINT_LEAF_SCAN_BYTES = 64 * 1024 * 1024;
-/** Reused constant for MAX COMPACTION CHECKPOINT RETAINED BYTES PER SESSION behavior in src/gateway. */
+/** Per-session byte budget for retained checkpoint transcript snapshots. */
 export const MAX_COMPACTION_CHECKPOINT_RETAINED_BYTES_PER_SESSION = 128 * 1024 * 1024;
 
-/** Shared type for Captured Compaction Checkpoint Snapshot in src/gateway. */
+/** Stable pre-compaction transcript identity captured before session history is compacted. */
 export type CapturedCompactionCheckpointSnapshot = {
   sessionId: string;
   sessionFile?: string;
@@ -121,7 +121,7 @@ async function statCheckpointSnapshotBytes(
   return bytesByPath;
 }
 
-/** Reused helper for resolve Session Compaction Checkpoint Reason behavior in src/gateway. */
+/** Maps compaction trigger/timing context to the stored checkpoint reason. */
 export function resolveSessionCompactionCheckpointReason(params: {
   trigger?: "budget" | "overflow" | "manual";
   timedOut?: boolean;
@@ -273,7 +273,7 @@ function trimTranscriptEntriesThroughLeaf(
   return entries.slice(0, leafIndex + 1);
 }
 
-/** Reused helper for read Session Leaf Id From Transcript Async behavior in src/gateway. */
+/** Reads the newest transcript entry id by scanning the tail of a JSONL session file. */
 export async function readSessionLeafIdFromTranscriptAsync(
   sessionFile: string,
   maxBytes = MAX_COMPACTION_CHECKPOINT_LEAF_SCAN_BYTES,
@@ -333,7 +333,7 @@ export async function readSessionLeafIdFromTranscriptAsync(
   return null;
 }
 
-/** Reused helper for fork Compaction Checkpoint Transcript Async behavior in src/gateway. */
+/** Forks a transcript through a source leaf so restore/branch can resume pre-compaction state. */
 export async function forkCompactionCheckpointTranscriptAsync(params: {
   sourceFile: string;
   sourceLeafId?: string;
@@ -430,7 +430,7 @@ export async function captureCompactionCheckpointSnapshotAsync(params: {
   };
 }
 
-/** Reused helper for cleanup Compaction Checkpoint Snapshot behavior in src/gateway. */
+/** Removes a snapshot transcript when checkpoint persistence or retention no longer needs it. */
 export async function cleanupCompactionCheckpointSnapshot(
   snapshot: CapturedCompactionCheckpointSnapshot | null | undefined,
 ): Promise<void> {
@@ -478,7 +478,7 @@ async function cleanupTrimmedCompactionCheckpointFiles(params: {
   }
 }
 
-/** Reused helper for persist Session Compaction Checkpoint behavior in src/gateway. */
+/** Stores a compaction checkpoint in the session index and enforces count/byte retention limits. */
 export async function persistSessionCompactionCheckpoint(params: {
   cfg: OpenClawConfig;
   sessionKey: string;
@@ -575,14 +575,14 @@ export async function persistSessionCompactionCheckpoint(params: {
   return checkpoint;
 }
 
-/** Reused helper for list Session Compaction Checkpoints behavior in src/gateway. */
+/** Lists a session's checkpoints newest-first for restore/inspection UI. */
 export function listSessionCompactionCheckpoints(
   entry: Pick<SessionEntry, "compactionCheckpoints"> | undefined,
 ): SessionCompactionCheckpoint[] {
   return sessionStoreCheckpoints(entry).toSorted((a, b) => b.createdAt - a.createdAt);
 }
 
-/** Reused helper for get Session Compaction Checkpoint behavior in src/gateway. */
+/** Finds one stored compaction checkpoint by id after trimming whitespace from user input. */
 export function getSessionCompactionCheckpoint(params: {
   entry: Pick<SessionEntry, "compactionCheckpoints"> | undefined;
   checkpointId: string;

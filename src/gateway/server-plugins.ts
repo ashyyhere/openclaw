@@ -1,4 +1,4 @@
-// gateway server plugins helpers and runtime behavior.
+// Gateway plugin loading plus in-process dispatch/runtime bridges for plugin APIs.
 import { randomUUID } from "node:crypto";
 import { performance } from "node:perf_hooks";
 import {
@@ -52,7 +52,7 @@ const getFallbackGatewayContextState = () =>
     resolveContext: undefined,
   }));
 
-/** Reused helper for set Fallback Gateway Context behavior in src/gateway. */
+/** Installs a fallback gateway context for plugin calls that bypass WebSocket request scope. */
 export function setFallbackGatewayContext(ctx: GatewayRequestContext): () => void {
   const fallbackGatewayContextState = getFallbackGatewayContextState();
   fallbackGatewayContextState.context = ctx;
@@ -68,7 +68,7 @@ export function setFallbackGatewayContext(ctx: GatewayRequestContext): () => voi
   };
 }
 
-/** Reused helper for set Fallback Gateway Context Resolver behavior in src/gateway. */
+/** Installs a lazy fallback gateway context resolver for non-WS plugin runtime paths. */
 export function setFallbackGatewayContextResolver(
   resolveContext: () => GatewayRequestContext | undefined,
 ): () => void {
@@ -84,7 +84,7 @@ export function setFallbackGatewayContextResolver(
   };
 }
 
-/** Reused helper for clear Fallback Gateway Context behavior in src/gateway. */
+/** Clears fallback gateway context state between gateway lifecycles and tests. */
 export function clearFallbackGatewayContext(): void {
   const fallbackGatewayContextState = getFallbackGatewayContextState();
   fallbackGatewayContextState.context = undefined;
@@ -138,7 +138,7 @@ function normalizeAllowedModelRef(raw: string): string | null {
   return `${normalized.provider}/${normalized.model}`;
 }
 
-/** Reused helper for set Plugin Subagent Override Policies behavior in src/gateway. */
+/** Caches plugin subagent model-override policy from normalized plugin config. */
 export function setPluginSubagentOverridePolicies(cfg: OpenClawConfig): void {
   const pluginSubagentPolicyState = getPluginSubagentPolicyState();
   const normalized = normalizePluginsConfig(cfg.plugins);
@@ -317,7 +317,7 @@ type DispatchGatewayMethodInProcessOptions = {
   timeoutMs?: number;
 };
 
-/** Shared type for Gateway Method Dispatch Response in src/gateway. */
+/** Raw in-process gateway method response before helper unwraps ok/error payloads. */
 export type GatewayMethodDispatchResponse = {
   ok: boolean;
   payload?: unknown;
@@ -335,7 +335,7 @@ function unwrapGatewayMethodDispatchResponse(
   return response.payload;
 }
 
-/** Reused helper for dispatch Gateway Method In Process Raw behavior in src/gateway. */
+/** Dispatches a gateway method inside the current process and returns raw ok/error metadata. */
 export async function dispatchGatewayMethodInProcessRaw(
   method: string,
   params: unknown,
@@ -448,7 +448,7 @@ async function dispatchGatewayMethod<T>(
   return unwrapGatewayMethodDispatchResponse(method, response) as T;
 }
 
-/** Reused helper for dispatch Gateway Method In Process behavior in src/gateway. */
+/** Dispatches an in-process gateway method and throws when the method returns an error shape. */
 export async function dispatchGatewayMethodInProcess<T>(
   method: string,
   params: Record<string, unknown>,
@@ -457,7 +457,7 @@ export async function dispatchGatewayMethodInProcess<T>(
   return await dispatchGatewayMethod<T>(method, params, options);
 }
 
-/** Reused helper for create Gateway Subagent Runtime behavior in src/gateway. */
+/** Creates the plugin runtime subagent bridge backed by gateway agent/session methods. */
 export function createGatewaySubagentRuntime(): PluginRuntime["subagent"] {
   const getSessionMessages: PluginRuntime["subagent"]["getSessionMessages"] = async (params) => {
     const payload = await dispatchGatewayMethod<{ messages?: unknown[] }>("sessions.get", {
@@ -571,7 +571,7 @@ export function createGatewaySubagentRuntime(): PluginRuntime["subagent"] {
   };
 }
 
-/** Reused helper for create Gateway Nodes Runtime behavior in src/gateway. */
+/** Creates the plugin runtime node bridge backed by gateway node methods. */
 export function createGatewayNodesRuntime(): PluginRuntime["nodes"] {
   return {
     async list(params) {
@@ -618,7 +618,7 @@ function createGatewayPluginRegistrationLogger(params?: {
   };
 }
 
-/** Reused helper for load Gateway Plugins behavior in src/gateway. */
+/** Loads gateway plugins, applies auto-enable state, and publishes the active plugin registry. */
 export function loadGatewayPlugins(params: {
   cfg: OpenClawConfig;
   activationSourceConfig?: OpenClawConfig;
