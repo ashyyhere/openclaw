@@ -1,4 +1,4 @@
-// ui/src/ui app settings helpers and runtime behavior.
+// Control UI settings, routing, theme, tab refresh, and overview attention helpers.
 import { roleScopesAllow } from "../../../src/shared/operator-scope-compat.js";
 import { t } from "../i18n/index.ts";
 import { refreshChat } from "./app-chat.ts";
@@ -81,7 +81,7 @@ import type { AgentsListResult, AttentionItem } from "./types.ts";
 import { normalizeLocalUserIdentity } from "./user-identity.ts";
 import { resetChatViewState } from "./views/chat.ts";
 
-/** Re-exported API for ui/src/ui, starting with set Last Active Session Key. */
+/** Re-export session persistence helper used by chat/session routing. */
 export { setLastActiveSessionKey } from "./app-last-active-session.ts";
 
 type SettingsHost = {
@@ -154,7 +154,7 @@ type SettingsAppHost = SettingsHost &
     hello: { auth?: { role?: string; scopes?: string[] } } | null;
   };
 
-/** Reused helper for apply Settings behavior in ui/src/ui. */
+/** Persist normalized UI settings and apply theme, radius, text scale, and session defaults. */
 export function applySettings(host: SettingsHost, next: UiSettings) {
   const normalized = {
     ...next,
@@ -177,7 +177,7 @@ export function applySettings(host: SettingsHost, next: UiSettings) {
   host.applySessionKey = host.settings.lastActiveSessionKey;
 }
 
-/** Reused helper for apply Local User Identity behavior in ui/src/ui. */
+/** Persist normalized local user identity fields used for dashboard personalization. */
 export function applyLocalUserIdentity(
   host: LocalUserIdentityHost,
   next: Partial<LocalUserIdentity>,
@@ -241,7 +241,7 @@ function applyNativeControlAuth(host: SettingsHost) {
   }
 }
 
-/** Reused helper for apply Settings From Url behavior in ui/src/ui. */
+/** Apply native/deep-link settings and strip one-time auth params from the URL. */
 export function applySettingsFromUrl(host: SettingsHost) {
   applyNativeControlAuth(host);
   if (!window.location.search && !window.location.hash) {
@@ -323,7 +323,7 @@ export function applySettingsFromUrl(host: SettingsHost) {
   updateBrowserHistory(url, true);
 }
 
-/** Reused helper for set Tab behavior in ui/src/ui. */
+/** Select a dashboard tab, refresh it, and synchronize browser location. */
 export function setTab(host: SettingsHost, next: Tab) {
   applyTabSelection(host, next, { refreshPolicy: "always", syncUrl: true });
 }
@@ -343,7 +343,7 @@ function applyThemeTransition(
   syncSystemThemeListener(host);
 }
 
-/** Reused helper for set Theme behavior in ui/src/ui. */
+/** Persist a theme change through the visual theme-transition path. */
 export function setTheme(host: SettingsHost, next: ThemeName, context?: ThemeTransitionContext) {
   applyThemeTransition(
     host,
@@ -353,7 +353,7 @@ export function setTheme(host: SettingsHost, next: ThemeName, context?: ThemeTra
   );
 }
 
-/** Reused helper for set Theme Mode behavior in ui/src/ui. */
+/** Persist light/dark/system mode through the visual theme-transition path. */
 export function setThemeMode(
   host: SettingsHost,
   next: ThemeMode,
@@ -413,7 +413,7 @@ function loadConfigSchemaAfterPrimary(
   );
 }
 
-/** Reused helper for refresh Active Tab behavior in ui/src/ui. */
+/** Refresh data loaders for the currently selected dashboard tab. */
 export async function refreshActiveTab(host: SettingsHost) {
   const app = host as unknown as SettingsAppHost;
   const refreshRun = beginControlUiRefresh(host, host.tab);
@@ -510,7 +510,7 @@ export async function refreshActiveTab(host: SettingsHost) {
   }
 }
 
-/** Reused helper for infer Base Path behavior in ui/src/ui. */
+/** Infer the dashboard base path from runtime config or the current pathname. */
 export function inferBasePath() {
   if (typeof window === "undefined") {
     return "";
@@ -523,7 +523,7 @@ export function inferBasePath() {
   return inferBasePathFromPathname(window.location.pathname);
 }
 
-/** Reused helper for sync Theme With Settings behavior in ui/src/ui. */
+/** Apply stored theme settings, custom theme CSS, radius, text scale, and system listener. */
 export function syncThemeWithSettings(host: SettingsHost) {
   syncCustomThemeStyleTag(host.settings.customTheme);
   const normalizedTheme =
@@ -542,7 +542,7 @@ export function syncThemeWithSettings(host: SettingsHost) {
   syncSystemThemeListener(host);
 }
 
-/** Reused helper for detach Theme Listener behavior in ui/src/ui. */
+/** Remove the system-theme listener when the app host is torn down. */
 export function detachThemeListener(host: SettingsHost) {
   host.systemThemeCleanup?.();
   host.systemThemeCleanup = null;
@@ -550,7 +550,7 @@ export function detachThemeListener(host: SettingsHost) {
 
 const BASE_RADII = { sm: 6, md: 10, lg: 14, xl: 20, full: 9999, default: 10 };
 
-/** Reused helper for apply Border Radius behavior in ui/src/ui. */
+/** Write CSS radius variables from the stored radius scale. */
 export function applyBorderRadius(value: number) {
   if (typeof document === "undefined") {
     return;
@@ -565,7 +565,7 @@ export function applyBorderRadius(value: number) {
   root.style.setProperty("--radius", `${Math.round(BASE_RADII.default * scale)}px`);
 }
 
-/** Reused helper for apply Text Scale behavior in ui/src/ui. */
+/** Write the root text-scale CSS variable from user settings. */
 export function applyTextScale(value: unknown) {
   if (typeof document === "undefined") {
     return;
@@ -575,7 +575,7 @@ export function applyTextScale(value: unknown) {
   root.style.setProperty("--control-ui-text-scale", scale.toFixed(2));
 }
 
-/** Reused helper for apply Resolved Theme behavior in ui/src/ui. */
+/** Apply resolved theme and color-scheme attributes to the document root. */
 export function applyResolvedTheme(host: SettingsHost, resolved: ResolvedTheme) {
   host.themeResolved = resolved;
   if (typeof document === "undefined") {
@@ -623,7 +623,7 @@ function syncSystemThemeListener(host: SettingsHost) {
   }
 }
 
-/** Reused helper for sync Tab With Location behavior in ui/src/ui. */
+/** Resolve the current URL to a tab and update app tab state without duplicating history. */
 export function syncTabWithLocation(host: SettingsHost, replace: boolean) {
   if (typeof window === "undefined") {
     return;
@@ -633,7 +633,7 @@ export function syncTabWithLocation(host: SettingsHost, replace: boolean) {
   syncUrlWithTab(host, resolved, replace);
 }
 
-/** Reused helper for on Pop State behavior in ui/src/ui. */
+/** Handle browser back/forward navigation for tab and chat session state. */
 export function onPopState(host: SettingsHost) {
   if (typeof window === "undefined") {
     return;
@@ -652,7 +652,7 @@ export function onPopState(host: SettingsHost) {
   setTabFromRoute(host, resolved);
 }
 
-/** Reused helper for set Tab From Route behavior in ui/src/ui. */
+/** Select a tab from routing without forcing refresh while disconnected. */
 export function setTabFromRoute(host: SettingsHost, next: Tab) {
   applyTabSelection(host, next, { refreshPolicy: "connected" });
 }
@@ -715,7 +715,7 @@ function applyTabSelection(
   }
 }
 
-/** Reused helper for sync Url With Tab behavior in ui/src/ui. */
+/** Synchronize browser path and chat session query param for a selected tab. */
 export function syncUrlWithTab(host: SettingsHost, tab: Tab, replace: boolean) {
   const href = typeof window === "undefined" ? undefined : window.location?.href;
   const pathname = typeof window === "undefined" ? undefined : window.location?.pathname;
@@ -739,7 +739,7 @@ export function syncUrlWithTab(host: SettingsHost, tab: Tab, replace: boolean) {
   updateBrowserHistory(url, replace);
 }
 
-/** Reused helper for sync Url With Session Key behavior in ui/src/ui. */
+/** Update the current URL with the active chat session key. */
 export function syncUrlWithSessionKey(
   _hostValue: SettingsHost,
   sessionKey: string,
@@ -754,7 +754,7 @@ export function syncUrlWithSessionKey(
   updateBrowserHistory(url, replace);
 }
 
-/** Reused helper for load Overview behavior in ui/src/ui. */
+/** Load overview primary data immediately and schedule secondary diagnostics if still current. */
 export async function loadOverview(host: SettingsHost, opts?: { refresh?: boolean }) {
   const app = host as SettingsAppHost;
   const overviewSeq = (host.controlUiOverviewRefreshSeq ?? 0) + 1;
@@ -803,7 +803,7 @@ export async function loadOverview(host: SettingsHost, opts?: { refresh?: boolea
   });
 }
 
-/** Reused helper for has Operator Read Access behavior in ui/src/ui. */
+/** Return whether the connected operator auth grants read access. */
 export function hasOperatorReadAccess(
   auth: { role?: string; scopes?: readonly string[] } | null,
 ): boolean {
@@ -817,7 +817,7 @@ export function hasOperatorReadAccess(
   });
 }
 
-/** Reused helper for has Operator Write Access behavior in ui/src/ui. */
+/** Return whether the connected operator auth grants write access; legacy no-scope auth passes. */
 export function hasOperatorWriteAccess(
   auth: { role?: string; scopes?: readonly string[] } | null,
 ): boolean {
@@ -831,7 +831,7 @@ export function hasOperatorWriteAccess(
   });
 }
 
-/** Reused helper for has Missing Skill Dependencies behavior in ui/src/ui. */
+/** Detect non-empty missing dependency groups on a skill report entry. */
 export function hasMissingSkillDependencies(
   missing: Record<string, unknown> | null | undefined,
 ): boolean {
@@ -980,7 +980,7 @@ function buildAttentionItems(host: SettingsAppHost) {
   host.attentionItems = items;
 }
 
-/** Reused helper for load Channels Tab behavior in ui/src/ui. */
+/** Load channel tab data and refresh config schema after primary data resolves. */
 export async function loadChannelsTab(host: SettingsHost) {
   const app = host as unknown as SettingsAppHost;
   const primaryRefresh = Promise.all([loadChannels(app, false), loadConfig(app)]);
@@ -988,7 +988,7 @@ export async function loadChannelsTab(host: SettingsHost) {
   await primaryRefresh;
 }
 
-/** Reused helper for load Cron behavior in ui/src/ui. */
+/** Load cron status, jobs, and run history while ignoring stale tab refreshes. */
 export async function loadCron(host: SettingsHost) {
   const app = host as unknown as SettingsAppHost;
   const activeCronJobId = app.cronRunsScope === "job" ? app.cronRunsJobId : null;
