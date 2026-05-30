@@ -19,7 +19,7 @@ import {
 } from "./oauth-shared.js";
 import type { AuthProfileStore, OAuthCredential } from "./types.js";
 
-/** Re-exported API for src/agents/auth-profiles. */
+/** OAuth adoption and comparison helpers shared with external CLI sync. */
 export {
   areOAuthCredentialsEquivalent,
   hasUsableOAuthCredential,
@@ -29,14 +29,14 @@ export {
   shouldReplaceStoredOAuthCredential,
 } from "./oauth-shared.js";
 
-/** Shared type for External Cli Resolved Profile in src/agents/auth-profiles. */
+/** Runtime profile resolved from an external CLI credential source. */
 export type ExternalCliResolvedProfile = {
   profileId: string;
   credential: OAuthCredential;
   persistence?: "runtime-only" | "persisted";
 };
 
-/** Shared type for External Cli Auth Profile Options in src/agents/auth-profiles. */
+/** Scope and prompt controls for reading external CLI auth profiles. */
 export type ExternalCliAuthProfileOptions = {
   allowKeychainPrompt?: boolean;
   providerIds?: Iterable<string>;
@@ -69,7 +69,7 @@ function normalizeAuthEmailToken(value: string | undefined): string | undefined 
 }
 
 // Keep this gate aligned with the canonical identity-copy rule in oauth.ts.
-/** Reused helper for is Safe To Use External Cli Credential behavior in src/agents/auth-profiles. */
+/** Check whether an external CLI credential can safely shadow an existing one. */
 export function isSafeToUseExternalCliCredential(
   existing: OAuthCredential | undefined,
   imported: OAuthCredential,
@@ -197,7 +197,7 @@ function hasInlineOAuthTokenMaterial(credential: OAuthCredential): boolean {
   );
 }
 
-/** Reused helper for read External Cli Bootstrap Credential behavior in src/agents/auth-profiles. */
+/** Read an external CLI credential only when it is valid for bootstrap adoption. */
 export function readExternalCliBootstrapCredential(params: {
   profileId: string;
   credential: OAuthCredential;
@@ -221,10 +221,10 @@ export function readExternalCliBootstrapCredential(params: {
   );
 }
 
-/** Reused constant for read Managed External Cli Credential behavior in src/agents/auth-profiles. */
+/** Backward-compatible alias for reading managed external CLI bootstrap credentials. */
 export const readManagedExternalCliCredential = readExternalCliBootstrapCredential;
 
-/** Reused helper for read External Cli Fallback Credential behavior in src/agents/auth-profiles. */
+/** Read an external CLI credential as a runtime fallback for an existing OAuth profile. */
 export function readExternalCliFallbackCredential(params: {
   profileId: string;
   credential: OAuthCredential;

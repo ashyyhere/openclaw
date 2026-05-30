@@ -160,17 +160,17 @@ type RunnerEmitResult<TEvent extends RunnerEmitEvent> = TEvent extends {
         ? SessionBeforeTreeResult | undefined
         : undefined;
 
-/** Shared type for Extension Error Listener in src/agents/sessions. */
+/** Listener notified when an extension handler throws. */
 export type ExtensionErrorListener = (error: ExtensionError) => void;
 
-/** Shared type for New Session Handler in src/agents/sessions. */
+/** Host callback used by extensions to create or replace sessions. */
 export type NewSessionHandler = (options?: {
   parentSession?: string;
   setup?: (sessionManager: SessionManager) => Promise<void>;
   withSession?: (ctx: ReplacedSessionContext) => Promise<void>;
 }) => Promise<{ cancelled: boolean }>;
 
-/** Shared type for Fork Handler in src/agents/sessions. */
+/** Host callback used by extensions to fork a session tree entry. */
 export type ForkHandler = (
   entryId: string,
   options?: {
@@ -179,7 +179,7 @@ export type ForkHandler = (
   },
 ) => Promise<{ cancelled: boolean }>;
 
-/** Shared type for Navigate Tree Handler in src/agents/sessions. */
+/** Host callback used by extensions to navigate or compact a session tree. */
 export type NavigateTreeHandler = (
   targetId: string,
   options?: {
@@ -190,16 +190,16 @@ export type NavigateTreeHandler = (
   },
 ) => Promise<{ cancelled: boolean }>;
 
-/** Shared type for Switch Session Handler in src/agents/sessions. */
+/** Host callback used by extensions to switch to a different session. */
 export type SwitchSessionHandler = (
   sessionPath: string,
   options?: { withSession?: (ctx: ReplacedSessionContext) => Promise<void> },
 ) => Promise<{ cancelled: boolean }>;
 
-/** Shared type for Reload Handler in src/agents/sessions. */
+/** Host callback used by extensions to request a session reload. */
 export type ReloadHandler = () => Promise<void>;
 
-/** Shared type for Shutdown Handler in src/agents/sessions. */
+/** Host callback used by extensions to request shutdown. */
 export type ShutdownHandler = () => void;
 
 /**
@@ -253,7 +253,7 @@ const noOpUIContext: ExtensionUIContext = {
   setToolsExpanded: () => {},
 };
 
-/** Reused class for Extension Runner behavior in src/agents/sessions. */
+/** Coordinates extension handlers, UI context, and session lifecycle events. */
 export class ExtensionRunner {
   private extensions: Extension[];
   private runtime: ExtensionRuntime;

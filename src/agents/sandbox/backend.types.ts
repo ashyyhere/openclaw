@@ -4,14 +4,14 @@ import type { SandboxBackendHandle } from "./backend-handle.types.js";
 import type { SandboxRegistryEntry } from "./registry.js";
 import type { SandboxConfig } from "./types.js";
 
-/** Shared type for Sandbox Backend Runtime Info in src/agents/sandbox. */
+/** Runtime status summary returned by sandbox backend managers. */
 export type SandboxBackendRuntimeInfo = {
   running: boolean;
   actualConfigLabel?: string;
   configLabelMatch: boolean;
 };
 
-/** Shared type for Sandbox Backend Manager in src/agents/sandbox. */
+/** Optional manager contract for inspecting and removing sandbox runtimes. */
 export type SandboxBackendManager = {
   describeRuntime(params: {
     entry: SandboxRegistryEntry;
@@ -25,7 +25,7 @@ export type SandboxBackendManager = {
   }): Promise<void>;
 };
 
-/** Shared type for Create Sandbox Backend Params in src/agents/sandbox. */
+/** Inputs required to create a sandbox backend handle for one session. */
 export type CreateSandboxBackendParams = {
   sessionKey: string;
   scopeKey: string;
@@ -34,12 +34,12 @@ export type CreateSandboxBackendParams = {
   cfg: SandboxConfig;
 };
 
-/** Shared type for Sandbox Backend Factory in src/agents/sandbox. */
+/** Factory that creates a concrete sandbox backend handle. */
 export type SandboxBackendFactory = (
   params: CreateSandboxBackendParams,
 ) => Promise<SandboxBackendHandle>;
 
-/** Shared type for Sandbox Backend Registration in src/agents/sandbox. */
+/** Registration shape for sandbox backends with optional runtime management. */
 export type SandboxBackendRegistration =
   | SandboxBackendFactory
   | {
@@ -47,15 +47,15 @@ export type SandboxBackendRegistration =
       manager?: SandboxBackendManager;
     };
 
-/** Shared type for Registered Sandbox Backend in src/agents/sandbox. */
+/** Normalized sandbox backend registration stored by the registry. */
 export type RegisteredSandboxBackend = {
   factory: SandboxBackendFactory;
   manager?: SandboxBackendManager;
 };
 
-/** Re-exported API for src/agents/sandbox, starting with Sandbox Backend Handle. */
+/** Sandbox backend handle and id contracts exposed by backend factories. */
 export type { SandboxBackendHandle, SandboxBackendId } from "./backend-handle.types.js";
-/** Re-exported API for src/agents/sandbox. */
+/** Command and filesystem bridge contracts exposed by sandbox backends. */
 export type {
   SandboxBackendCommandParams,
   SandboxBackendCommandResult,

@@ -21,7 +21,7 @@ const FINALIZE_RETRY_BUDGET_MAX_ENTRIES = 2048;
 type AgentHarnessHookRunner = ReturnType<typeof getGlobalHookRunner>;
 type FinalizeRetryBudget = Map<string, Map<string, number>>;
 
-/** Reused helper for get Agent Harness Hook Runner behavior in src/agents/harness. */
+/** Return the global hook runner used by agent harness lifecycle hooks. */
 export function getAgentHarnessHookRunner(): AgentHarnessHookRunner {
   return getGlobalHookRunner();
 }
@@ -59,7 +59,7 @@ function buildFinalizeRetryInstructionKey(instruction: string): string {
   return `instruction:${createHash("sha256").update(instruction).digest("hex")}`;
 }
 
-/** Reused helper for clear Agent Harness Finalize Retry Budget behavior in src/agents/harness. */
+/** Clear the before-finalize revise retry budget globally or for one run. */
 export function clearAgentHarnessFinalizeRetryBudget(params?: { runId?: string }): void {
   const budget = getFinalizeRetryBudget();
   if (!params?.runId) {
@@ -69,7 +69,7 @@ export function clearAgentHarnessFinalizeRetryBudget(params?: { runId?: string }
   budget.delete(params.runId);
 }
 
-/** Reused helper for run Agent Harness Llm Input Hook behavior in src/agents/harness. */
+/** Fire-and-forget the `llm_input` hook with agent harness context. */
 export function runAgentHarnessLlmInputHook(params: {
   event: PluginHookLlmInputEvent;
   ctx: AgentHarnessHookContext;
@@ -84,7 +84,7 @@ export function runAgentHarnessLlmInputHook(params: {
   });
 }
 
-/** Reused helper for run Agent Harness Llm Output Hook behavior in src/agents/harness. */
+/** Fire-and-forget the `llm_output` hook with agent harness context. */
 export function runAgentHarnessLlmOutputHook(params: {
   event: PluginHookLlmOutputEvent;
   ctx: AgentHarnessHookContext;
@@ -117,7 +117,7 @@ async function executeAgentHarnessAgentEndHook(params: {
   }
 }
 
-/** Reused helper for run Agent Harness Agent End Hook behavior in src/agents/harness. */
+/** Run the `agent_end` hook after agent completion without blocking shutdown. */
 export function runAgentHarnessAgentEndHook(params: {
   event: PluginHookAgentEndEvent;
   ctx: AgentHarnessHookContext;
@@ -126,7 +126,7 @@ export function runAgentHarnessAgentEndHook(params: {
   void executeAgentHarnessAgentEndHook({ ...params, unrefTimeout: true });
 }
 
-/** Reused helper for await Agent Harness Agent End Hook behavior in src/agents/harness. */
+/** Await the `agent_end` hook when callers need deterministic completion. */
 export async function awaitAgentHarnessAgentEndHook(params: {
   event: PluginHookAgentEndEvent;
   ctx: AgentHarnessHookContext;
@@ -135,13 +135,13 @@ export async function awaitAgentHarnessAgentEndHook(params: {
   await executeAgentHarnessAgentEndHook({ ...params, unrefTimeout: false });
 }
 
-/** Shared type for Agent Harness Before Agent Finalize Outcome in src/agents/harness. */
+/** Decision returned by before-finalize hooks after normalization and retry checks. */
 export type AgentHarnessBeforeAgentFinalizeOutcome =
   | { action: "continue" }
   | { action: "revise"; reason: string }
   | { action: "finalize"; reason?: string };
 
-/** Reused helper for run Agent Harness Before Agent Finalize Hook behavior in src/agents/harness. */
+/** Run before-finalize hooks and normalize continue/revise/finalize outcomes. */
 export async function runAgentHarnessBeforeAgentFinalizeHook(params: {
   event: PluginHookBeforeAgentFinalizeEvent;
   ctx: AgentHarnessHookContext;

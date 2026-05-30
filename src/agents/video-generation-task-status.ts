@@ -10,12 +10,12 @@ import {
   isActiveMediaGenerationTask,
 } from "./media-generation-task-status-shared.js";
 
-/** Reused constant for VIDEO GENERATION TASK KIND behavior in src/agents. */
+/** Task kind used for video generation entries in the shared task registry. */
 export const VIDEO_GENERATION_TASK_KIND = "video_generation";
 const VIDEO_GENERATION_SOURCE_PREFIX = "video_generate";
 const RECENT_VIDEO_GENERATION_DUPLICATE_GUARD_MS = 2 * 60_000;
 
-/** Reused helper for is Active Video Generation Task behavior in src/agents. */
+/** Return whether a task record is an active video generation run. */
 export function isActiveVideoGenerationTask(task: TaskRecord): boolean {
   return isActiveMediaGenerationTask({
     task,
@@ -23,12 +23,12 @@ export function isActiveVideoGenerationTask(task: TaskRecord): boolean {
   });
 }
 
-/** Reused helper for get Video Generation Task Provider Id behavior in src/agents. */
+/** Extract the provider id encoded in a video generation task source. */
 export function getVideoGenerationTaskProviderId(task: TaskRecord): string | undefined {
   return getMediaGenerationTaskProviderId(task, VIDEO_GENERATION_SOURCE_PREFIX);
 }
 
-/** Reused helper for find Active Video Generation Task For Session behavior in src/agents. */
+/** Find the active video generation task associated with a session key. */
 export function findActiveVideoGenerationTaskForSession(
   sessionKey?: string,
 ): TaskRecord | undefined {
@@ -39,7 +39,7 @@ export function findActiveVideoGenerationTaskForSession(
   });
 }
 
-/** Reused helper for find Duplicate Guard Video Generation Task For Session behavior in src/agents. */
+/** Find a recent matching video generation task to suppress duplicate starts. */
 export function findDuplicateGuardVideoGenerationTaskForSession(
   sessionKey?: string,
   params?: { prompt?: string; requestKey?: string },
@@ -54,7 +54,7 @@ export function findDuplicateGuardVideoGenerationTaskForSession(
   });
 }
 
-/** Reused helper for build Video Generation Task Status Details behavior in src/agents. */
+/** Build structured status details for a video generation task. */
 export function buildVideoGenerationTaskStatusDetails(task: TaskRecord): Record<string, unknown> {
   return buildMediaGenerationTaskStatusDetails({
     task,
@@ -62,7 +62,7 @@ export function buildVideoGenerationTaskStatusDetails(task: TaskRecord): Record<
   });
 }
 
-/** Reused helper for build Video Generation Task Status Text behavior in src/agents. */
+/** Build user-facing status text for a video generation task. */
 export function buildVideoGenerationTaskStatusText(
   task: TaskRecord,
   params?: { duplicateGuard?: boolean },
@@ -77,7 +77,7 @@ export function buildVideoGenerationTaskStatusText(
   });
 }
 
-/** Reused helper for build Active Video Generation Task Prompt Context For Session behavior in src/agents. */
+/** Build prompt context that reminds the agent about an active video generation task. */
 export function buildActiveVideoGenerationTaskPromptContextForSession(
   sessionKey?: string,
 ): string | undefined {

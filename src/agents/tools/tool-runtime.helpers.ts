@@ -1,22 +1,22 @@
 /** Runtime helper re-exports used by media and model-backed tools. */
 export { getApiKeyForModel, requireApiKey } from "../model-auth.js";
-/** Re-exported API for src/agents/tools, starting with run With Image Model Fallback. */
+/** Image model fallback runner shared by media tools. */
 export { runWithImageModelFallback } from "../model-fallback.js";
-/** Re-exported API for src/agents/tools, starting with ensure Open Claw Models Json. */
+/** Models JSON bootstrap helper shared by model-backed tools. */
 export { ensureOpenClawModelsJson } from "../models-config.js";
-/** Re-exported API for src/agents/tools, starting with discover Auth Storage. */
+/** Runtime model and auth discovery helpers shared by tools. */
 export { discoverAuthStorage, discoverModels } from "../agent-model-discovery.js";
-/** Re-exported API for src/agents/tools. */
+/** Sandbox media path helpers used by file-backed media tools. */
 export {
   createSandboxBridgeReadFile,
   resolveSandboxedBridgeMediaPath,
   type SandboxedBridgeMediaPathConfig,
 } from "../sandbox-media-paths.js";
-/** Re-exported API for src/agents/tools, starting with Sandbox Fs Bridge. */
+/** Filesystem bridge contract exposed to sandbox-aware tools. */
 export type { SandboxFsBridge } from "../sandbox/fs-bridge.js";
-/** Re-exported API for src/agents/tools, starting with Tool Fs Policy. */
+/** Filesystem access policy contract used by tools. */
 export type { ToolFsPolicy } from "../tool-fs-policy.js";
-/** Re-exported API for src/agents/tools, starting with normalize Workspace Dir. */
+/** Workspace directory normalizer shared by tool runtimes. */
 export { normalizeWorkspaceDir } from "../workspace-dir.js";
-/** Re-exported API for src/agents/tools, starting with Any Agent Tool. */
+/** Agent tool union exported for tool registry callers. */
 export type { AnyAgentTool } from "./common.js";

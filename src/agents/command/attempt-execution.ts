@@ -49,7 +49,7 @@ import { resolveAgentRunContext } from "./run-context.js";
 import { clearCliSessionInStore } from "./session-store.js";
 import type { AgentCommandOpts } from "./types.js";
 
-/** Re-exported API for src/agents/command. */
+/** ACP text accumulator helpers shared by command execution callers. */
 export {
   createAcpVisibleTextAccumulator,
   sessionFileHasContent,
@@ -728,7 +728,7 @@ export function runAgentAttempt(params: {
   });
 }
 
-/** Reused helper for build Acp Result behavior in src/agents/command. */
+/** Build the normalized reply payload and metadata for an ACP run result. */
 export function buildAcpResult(params: {
   payloadText: string;
   startedAt: number;
@@ -749,7 +749,7 @@ export function buildAcpResult(params: {
   };
 }
 
-/** Reused helper for emit Acp Lifecycle Start behavior in src/agents/command. */
+/** Emit the start lifecycle event for an ACP-backed agent run. */
 export function emitAcpLifecycleStart(params: { runId: string; startedAt: number }) {
   emitAgentEvent({
     runId: params.runId,
@@ -819,7 +819,7 @@ function acpRuntimeEventDiagnostics(event: AcpRuntimeEvent): Record<string, unkn
   };
 }
 
-/** Reused helper for emit Acp Prompt Submitted behavior in src/agents/command. */
+/** Emit ACP prompt-submission diagnostics, including present proxy env keys. */
 export function emitAcpPromptSubmitted(params: { runId: string; sessionKey?: string; at: number }) {
   emitAgentEvent({
     runId: params.runId,
@@ -833,7 +833,7 @@ export function emitAcpPromptSubmitted(params: { runId: string; sessionKey?: str
   });
 }
 
-/** Reused helper for emit Acp Runtime Event behavior in src/agents/command. */
+/** Emit a sanitized ACP runtime event into the agent event stream. */
 export function emitAcpRuntimeEvent(params: {
   runId: string;
   event: AcpRuntimeEvent;
@@ -850,7 +850,7 @@ export function emitAcpRuntimeEvent(params: {
   });
 }
 
-/** Reused helper for emit Acp Lifecycle End behavior in src/agents/command. */
+/** Emit the end lifecycle event for an ACP-backed agent run. */
 export function emitAcpLifecycleEnd(params: { runId: string }) {
   emitAgentEvent({
     runId: params.runId,
@@ -862,7 +862,7 @@ export function emitAcpLifecycleEnd(params: { runId: string }) {
   });
 }
 
-/** Reused helper for emit Acp Lifecycle Error behavior in src/agents/command. */
+/** Emit a sanitized lifecycle error for an ACP-backed agent run. */
 export function emitAcpLifecycleError(params: {
   runId: string;
   error: unknown;
@@ -883,7 +883,7 @@ export function emitAcpLifecycleError(params: {
 /** @deprecated use formatAcpErrorChain from src/acp/runtime/errors.ts */
 export const formatAcpLifecycleError = formatAcpErrorChain;
 
-/** Reused helper for emit Acp Assistant Delta behavior in src/agents/command. */
+/** Emit an assistant text delta from ACP streaming output. */
 export function emitAcpAssistantDelta(params: { runId: string; text: string; delta: string }) {
   emitAgentEvent({
     runId: params.runId,

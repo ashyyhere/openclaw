@@ -102,14 +102,14 @@ export function applyMusicGenerationModelConfigDefaults(
   return applyAgentDefaultModelConfig(cfg, "musicGenerationModel", musicGenerationModelConfig);
 }
 
-/** Reused helper for read Generation Timeout Ms behavior in src/agents/tools. */
+/** Read a positive `timeoutMs` argument for generation tools. */
 export function readGenerationTimeoutMs(args: Record<string, unknown>): number | undefined {
   return readPositiveIntegerParam(args, "timeoutMs", {
     message: "timeoutMs must be a positive integer in milliseconds.",
   });
 }
 
-/** Reused helper for resolve Remote Media Ssrf Policy behavior in src/agents/tools. */
+/** Resolve the configured SSRF policy used for remote media fetches. */
 export function resolveRemoteMediaSsrfPolicy(
   cfg: OpenClawConfig | undefined,
 ): SsrFPolicy | undefined {
@@ -164,7 +164,7 @@ function parseCapabilityModelRefForProviders(params: {
   });
 }
 
-/** Reused helper for is Capability Provider Configured behavior in src/agents/tools. */
+/** Determine whether a capability provider has usable config or auth. */
 export function isCapabilityProviderConfigured<T extends CapabilityProvider>(params: {
   providers: T[];
   provider?: T;
@@ -432,7 +432,7 @@ export function resolveGenerateAction<TAction extends string>(params: {
   throw new ToolInputError(`action must be ${formatQuotedList(params.allowed)}`);
 }
 
-/** Reused helper for read Boolean Tool Param behavior in src/agents/tools. */
+/** Read boolean tool params from camelCase or snake_case inputs. */
 export function readBooleanToolParam(
   params: Record<string, unknown>,
   key: string,
@@ -513,7 +513,7 @@ export function buildMediaReferenceDetails<T extends MediaReferenceDetailEntry>(
   return {};
 }
 
-/** Reused helper for build Task Run Details behavior in src/agents/tools. */
+/** Add task/run ids to tool details when an async task was created. */
 export function buildTaskRunDetails(
   handle: TaskRunDetailHandle | null | undefined,
 ): Record<string, unknown> {
@@ -546,7 +546,7 @@ export function resolveMediaToolLocalRoots(
   return uniqueStrings([...roots, ...(workspaceDir ? [workspaceDir] : [])]);
 }
 
-/** Reused helper for resolve Media Tool Inbound Roots behavior in src/agents/tools. */
+/** Resolve channel-owned inbound attachment roots available to media tools. */
 export function resolveMediaToolInboundRoots(options?: {
   workspaceOnly?: boolean;
   cfg?: OpenClawConfig;
@@ -578,7 +578,7 @@ export function resolvePromptAndModelOverride(
   return { prompt, modelOverride };
 }
 
-/** Reused helper for build Text Tool Result behavior in src/agents/tools. */
+/** Build a text tool result payload with model and attempt metadata. */
 export function buildTextToolResult(
   result: TextToolResult,
   extraDetails: Record<string, unknown>,
@@ -596,7 +596,7 @@ export function buildTextToolResult(
   };
 }
 
-/** Reused helper for resolve Model From Registry behavior in src/agents/tools. */
+/** Resolve a provider/model pair from the registry, accepting provider-prefixed ids. */
 export function resolveModelFromRegistry(params: {
   modelRegistry: { find: (provider: string, modelId: string) => unknown };
   provider: string;

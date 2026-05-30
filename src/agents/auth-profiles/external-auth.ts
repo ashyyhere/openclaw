@@ -24,7 +24,7 @@ type ExternalCliOverlayOptions = {
 
 let resolveExternalAuthProfilesForRuntime: ResolveExternalAuthProfiles | undefined;
 
-/** Reused constant for testing behavior in src/agents/auth-profiles. */
+/** Test hooks for replacing external auth profile resolution. */
 export const testing = {
   resetResolveExternalAuthProfilesForTest(): void {
     resolveExternalAuthProfilesForRuntime = undefined;
@@ -91,7 +91,7 @@ function resolveExternalAuthProfileMap(params: {
   return resolved;
 }
 
-/** Reused helper for list Runtime External Auth Profiles behavior in src/agents/auth-profiles. */
+/** List runtime-only and persistable external auth profiles from plugins and CLIs. */
 export function listRuntimeExternalAuthProfiles(params: {
   store: AuthProfileStore;
   agentDir?: string;
@@ -128,7 +128,7 @@ function hasScopedExternalCliOverlay(params?: ExternalCliOverlayOptions): boolea
   return Boolean(params?.externalCliProviderIds || params?.externalCliProfileIds);
 }
 
-/** Reused helper for overlay External Auth Profiles behavior in src/agents/auth-profiles. */
+/** Overlay external OAuth profiles onto a cloned runtime auth profile store. */
 export function overlayExternalAuthProfiles(
   store: AuthProfileStore,
   params?: { agentDir?: string; env?: NodeJS.ProcessEnv } & ExternalCliOverlayOptions,
@@ -144,7 +144,7 @@ export function overlayExternalAuthProfiles(
   });
 }
 
-/** Reused helper for should Persist External Auth Profile behavior in src/agents/auth-profiles. */
+/** Decide whether a runtime external profile should be persisted locally. */
 export function shouldPersistExternalAuthProfile(params: {
   store: AuthProfileStore;
   profileId: string;
@@ -172,7 +172,7 @@ export function shouldPersistExternalAuthProfile(params: {
   });
 }
 
-/** Reused helper for sync Persisted External Cli Auth Profiles behavior in src/agents/auth-profiles. */
+/** Copy persistable external CLI profiles into the stored auth profile map. */
 export function syncPersistedExternalCliAuthProfiles(
   store: AuthProfileStore,
   params?: { agentDir?: string; env?: NodeJS.ProcessEnv } & ExternalCliOverlayOptions,
@@ -205,9 +205,9 @@ export function syncPersistedExternalCliAuthProfiles(
 }
 
 // Compat aliases while file/function naming catches up.
-/** Reused constant for overlay External OAuth Profiles behavior in src/agents/auth-profiles. */
+/** Compatibility alias for callers using the older OAuth-specific name. */
 export const overlayExternalOAuthProfiles = overlayExternalAuthProfiles;
-/** Reused constant for should Persist External OAuth Profile behavior in src/agents/auth-profiles. */
+/** Compatibility alias for callers using the older OAuth-specific name. */
 export const shouldPersistExternalOAuthProfile = shouldPersistExternalAuthProfile;
-/** Re-exported API for src/agents/auth-profiles, starting with testing. */
+/** Test-only external auth resolver controls. */
 export { testing as __testing };
