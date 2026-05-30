@@ -1,6 +1,6 @@
-// infra path safety helpers and runtime behavior.
+/** Re-exports hardened path-safety helpers after installing safe fs defaults. */
 import "./fs-safe-defaults.js";
-/** Re-exported API for src/infra. */
+/** Public path guards and safe filesystem probes from the fs-safe package. */
 export {
   isNotFoundPathError,
   hasNodeErrorCode,
@@ -16,5 +16,5 @@ export {
   safeStatSync,
   splitSafeRelativePath,
 } from "@openclaw/fs-safe/path";
-/** Re-exported API for src/infra, starting with format Posix Mode. */
+/** Formatting helper for POSIX mode values used in diagnostics. */
 export { formatPosixMode } from "@openclaw/fs-safe/advanced";
