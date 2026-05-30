@@ -11,7 +11,7 @@ export {
   touchConversationBindingRecord,
   unbindConversationBindingRecord,
 } from "../bindings/records.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Binding route resolvers that ensure configured conversation targets are ready. */
 export {
   ensureConfiguredBindingRouteReady,
   resolveConfiguredBindingRoute,
@@ -19,7 +19,7 @@ export {
   resolveRuntimeConversationBindingRoute,
   type RuntimeConversationBindingRouteResult,
 } from "../channels/plugins/binding-routing.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Configured binding registry helpers for resolving records by session or conversation. */
 export {
   primeConfiguredBindingRegistry,
   resolveConfiguredBinding,
@@ -27,34 +27,34 @@ export {
   resolveConfiguredBindingRecordBySessionKey,
   resolveConfiguredBindingRecordForConversation,
 } from "../channels/plugins/binding-registry.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Target lifecycle helpers for prepared configured bindings. */
 export {
   ensureConfiguredBindingTargetReady,
   ensureConfiguredBindingTargetSession,
   resetConfiguredBindingTargetInPlace,
 } from "../channels/plugins/binding-targets.js";
-/** Re-exported API for src/plugin-sdk, starting with resolve Conversation Label. */
+/** Resolves a stable display label for a conversation reference. */
 export { resolveConversationLabel } from "../channels/conversation-label.js";
-/** Re-exported API for src/plugin-sdk, starting with record Inbound Session. */
+/** Records inbound channel sessions for later binding resolution. */
 export { recordInboundSession } from "../channels/session.js";
-/** Re-exported API for src/plugin-sdk, starting with record Inbound Session Meta Safe. */
+/** Safely records optional inbound session metadata. */
 export { recordInboundSessionMetaSafe } from "../channels/session-meta.js";
-/** Re-exported API for src/plugin-sdk, starting with resolve Thread Binding Conversation Id From Binding Id. */
+/** Converts persisted thread binding ids back to conversation ids. */
 export { resolveThreadBindingConversationIdFromBindingId } from "../channels/thread-binding-id.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Reply-to mode resolvers shared by threaded channel integrations. */
 export {
   createScopedAccountReplyToModeResolver,
   createStaticReplyToModeResolver,
   createTopLevelChannelReplyToModeResolver,
 } from "../channels/plugins/threading-helpers.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Thread binding message text and label formatters. */
 export {
   formatThreadBindingDurationLabel,
   resolveThreadBindingFarewellText,
   resolveThreadBindingIntroText,
   resolveThreadBindingThreadName,
 } from "../channels/thread-bindings-messages.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Thread binding policy resolvers for enablement, spawn, expiry, and errors. */
 export {
   formatThreadBindingDisabledError,
   formatThreadBindingSpawnDisabledError,
@@ -69,21 +69,21 @@ export {
   type ThreadBindingSpawnKind,
   type ThreadBindingSpawnPolicy,
 } from "../channels/thread-bindings-policy.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Configured binding descriptor and resolution types. */
 export type {
   ConfiguredBindingConversation,
   ConfiguredBindingResolution,
   CompiledConfiguredBinding,
   StatefulBindingTargetDescriptor,
 } from "../channels/plugins/binding-types.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Stateful target driver contracts for binding-capable channels. */
 export type {
   StatefulBindingTargetDriver,
   StatefulBindingTargetReadyResult,
   StatefulBindingTargetResetResult,
   StatefulBindingTargetSessionResult,
 } from "../channels/plugins/stateful-target-drivers.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Session binding service API used by channel plugins and runtime glue. */
 export {
   type BindingStatus,
   type BindingTargetKind,
@@ -102,14 +102,14 @@ export {
   registerSessionBindingAdapter,
   unregisterSessionBindingAdapter,
 } from "../infra/outbound/session-binding-service.js";
-/** Re-exported API for src/plugin-sdk, starting with testing. */
+/** Session binding test hooks retained for existing SDK consumers. */
 export { testing, testing as __testing } from "../infra/outbound/session-binding-service.js";
 export * from "../pairing/pairing-challenge.js";
-/** Re-exported API for src/plugin-sdk, starting with resolve Pairing Id Label. */
+/** Formats pairing ids for display in binding and setup flows. */
 export { resolvePairingIdLabel } from "../pairing/pairing-labels.js";
 export * from "../pairing/pairing-messages.js";
 export * from "../pairing/pairing-store.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Plugin-owned conversation binding request, approval, and metadata helpers. */
 export {
   buildPluginBindingApprovalCustomId,
   buildPluginBindingDeclinedText,
@@ -127,5 +127,5 @@ export {
   resolvePluginConversationBindingApproval,
   toPluginConversationBinding,
 } from "../plugins/conversation-binding.js";
-/** Re-exported API for src/plugin-sdk, starting with resolve Pinned Main Dm Owner From Allowlist. */
+/** Resolves the pinned main-DM owner for allowlist compatibility callers. */
 export { resolvePinnedMainDmOwnerFromAllowlist } from "./channel-access-compat.js";
