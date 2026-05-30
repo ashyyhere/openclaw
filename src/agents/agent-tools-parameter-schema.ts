@@ -11,7 +11,7 @@ import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import { uniqueValues } from "../shared/string-normalization.js";
 import { cleanSchemaForGemini } from "./schema/clean-for-gemini.js";
 
-/** Shared type for Tool Parameter Schema Options in src/agents. */
+/** Provider/model compatibility options used while normalizing tool schemas. */
 export type ToolParameterSchemaOptions = {
   modelProvider?: string;
   modelId?: string;

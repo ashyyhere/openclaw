@@ -3,7 +3,7 @@ import type { ExecAsk, ExecSecurity } from "../infra/exec-approvals.js";
 import type { ExecAutoReviewer } from "../infra/exec-auto-review.js";
 import type { ExecElevatedDefaults } from "./bash-tools.exec-types.js";
 
-/** Shared type for Execute Node Host Command Params in src/agents. */
+/** Parameters passed from exec tool routing into the node-host executor. */
 export type ExecuteNodeHostCommandParams = {
   command: string;
   workdir: string | undefined;

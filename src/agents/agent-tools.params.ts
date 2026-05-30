@@ -1,7 +1,7 @@
 /** Required-parameter validation wrappers for built-in agent tools. */
 import type { AnyAgentTool } from "./agent-tools.types.js";
 
-/** Shared type for Required Param Group in src/agents. */
+/** One acceptable set of required parameters for a tool call. */
 export type RequiredParamGroup = {
   keys: readonly string[];
   allowEmpty?: boolean;
@@ -80,7 +80,7 @@ function hasValidEditReplacements(record: Record<string, unknown>): boolean {
   );
 }
 
-/** Reused constant for REQUIRED PARAM GROUPS behavior in src/agents. */
+/** Built-in required parameter groups for read/write/edit wrappers. */
 export const REQUIRED_PARAM_GROUPS = {
   read: [{ keys: ["path"], label: "path" }],
   write: [
