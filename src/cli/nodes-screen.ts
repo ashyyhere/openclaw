@@ -2,7 +2,7 @@ import * as path from "node:path";
 import { writeBase64ToFile } from "./nodes-camera.js";
 import { asRecord, asString, resolveTempPathParts } from "./nodes-media-utils.js";
 
-/** Shared type for Screen Record Payload in src/cli. */
+/** Gateway payload returned by node screen-record commands. */
 export type ScreenRecordPayload = {
   format: string;
   base64: string;
@@ -12,7 +12,7 @@ export type ScreenRecordPayload = {
   hasAudio?: boolean;
 };
 
-/** Reused helper for parse Screen Record Payload behavior in src/cli. */
+/** Validates and normalizes a raw node screen-record payload. */
 export function parseScreenRecordPayload(value: unknown): ScreenRecordPayload {
   const obj = asRecord(value);
   const format = asString(obj.format);
@@ -30,13 +30,13 @@ export function parseScreenRecordPayload(value: unknown): ScreenRecordPayload {
   };
 }
 
-/** Reused helper for screen Record Temp Path behavior in src/cli. */
+/** Builds the default temp file path for a downloaded screen recording. */
 export function screenRecordTempPath(opts: { ext: string; tmpDir?: string; id?: string }) {
   const { tmpDir, id, ext } = resolveTempPathParts(opts);
   return path.join(tmpDir, `openclaw-screen-record-${id}${ext}`);
 }
 
-/** Reused helper for write Screen Record To File behavior in src/cli. */
+/** Writes a base64 screen recording payload to disk with optional size limits. */
 export async function writeScreenRecordToFile(
   filePath: string,
   base64: string,

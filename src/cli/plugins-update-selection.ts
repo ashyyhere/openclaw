@@ -6,7 +6,7 @@ import {
   extractInstalledNpmPackageName,
 } from "./plugins-install-records.js";
 
-/** Reused helper for resolve Plugin Update Selection behavior in src/cli. */
+/** Resolves plugin update targets from ids, `--all`, or npm specs that match install records. */
 export function resolvePluginUpdateSelection(params: {
   installs: Record<string, PluginInstallRecord>;
   rawId?: string;
@@ -54,7 +54,7 @@ export function resolvePluginUpdateSelection(params: {
   };
 }
 
-/** Reused helper for resolve Hook Pack Update Selection behavior in src/cli. */
+/** Resolves hook-pack update targets from ids, `--all`, or matching npm specs. */
 export function resolveHookPackUpdateSelection(params: {
   installs: Record<string, HookInstallRecord>;
   rawId?: string;

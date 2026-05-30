@@ -3,18 +3,18 @@ import { resolveCliArgvInvocation } from "./argv-invocation.js";
 
 const RESERVED_NON_PLUGIN_COMMAND_ROOTS = new Set(["auth", "tool", "tools"]);
 
-/** Reused helper for is Reserved Non Plugin Command Root behavior in src/cli. */
+/** Identifies command roots reserved for core command handling rather than plugins. */
 export function isReservedNonPluginCommandRoot(primary: string | null | undefined): boolean {
   return typeof primary === "string" && RESERVED_NON_PLUGIN_COMMAND_ROOTS.has(primary);
 }
 
-/** Reused helper for should Register Primary Command Only behavior in src/cli. */
+/** Returns whether startup can register only the primary command path for this argv. */
 export function shouldRegisterPrimaryCommandOnly(argv: string[]): boolean {
   const invocation = resolveCliArgvInvocation(argv);
   return invocation.primary !== null || !invocation.hasHelpOrVersion;
 }
 
-/** Reused helper for should Skip Plugin Command Registration behavior in src/cli. */
+/** Skips plugin command registration when built-ins or help/version output already own argv. */
 export function shouldSkipPluginCommandRegistration(params: {
   argv: string[];
   primary: string | null;
@@ -41,12 +41,12 @@ export function shouldSkipPluginCommandRegistration(params: {
   return false;
 }
 
-/** Reused helper for should Eager Register Subcommands behavior in src/cli. */
+/** Allows env-driven eager subcommand registration for debugging/lazy-load bypass. */
 export function shouldEagerRegisterSubcommands(env: NodeJS.ProcessEnv = process.env): boolean {
   return isTruthyEnvValue(env.OPENCLAW_DISABLE_LAZY_SUBCOMMANDS);
 }
 
-/** Reused helper for should Register Primary Subcommand Only behavior in src/cli. */
+/** Uses lazy subcommand registration unless env opts into eager registration. */
 export function shouldRegisterPrimarySubcommandOnly(
   argv: string[],
   env: NodeJS.ProcessEnv = process.env,
