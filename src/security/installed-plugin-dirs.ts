@@ -1,9 +1,9 @@
-// security installed plugin dirs helpers and runtime behavior.
+// Filters plugin install directories before security trust inspection.
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 
 const IGNORED_INSTALLED_PLUGIN_DIR_NAMES = new Set(["node_modules", ".openclaw-install-backups"]);
 
-/** Reused helper for should Ignore Installed Plugin Dir Name behavior in src/security. */
+/** Return whether an installed-plugin directory name is metadata, backup, or disabled state. */
 export function shouldIgnoreInstalledPluginDirName(name: string): boolean {
   const normalized = normalizeOptionalLowercaseString(name);
   if (!normalized) {
