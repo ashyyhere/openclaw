@@ -1,4 +1,4 @@
-// plugins official external plugin catalog helpers and runtime behavior.
+// Official external plugin catalog metadata and lookup helpers.
 import officialExternalChannelCatalog from "../../scripts/lib/official-external-channel-catalog.json" with { type: "json" };
 import officialExternalPluginCatalog from "../../scripts/lib/official-external-plugin-catalog.json" with { type: "json" };
 import officialExternalProviderCatalog from "../../scripts/lib/official-external-provider-catalog.json" with { type: "json" };
@@ -14,7 +14,7 @@ import type {
 
 type ManifestKey = typeof MANIFEST_KEY;
 
-/** Shared type for Official External Provider Auth Choice in src/plugins. */
+/** Provider authentication option advertised by an official external plugin. */
 export type OfficialExternalProviderAuthChoice = {
   method?: string;
   choiceId?: string;
@@ -32,7 +32,7 @@ export type OfficialExternalProviderAuthChoice = {
   onboardingScopes?: readonly ("text-inference" | "image-generation" | "music-generation")[];
 };
 
-/** Shared type for Official External Provider Catalog Provider in src/plugins. */
+/** Provider metadata entry embedded in an official external plugin manifest. */
 export type OfficialExternalProviderCatalogProvider = {
   id?: string;
   name?: string;
@@ -41,7 +41,7 @@ export type OfficialExternalProviderCatalogProvider = {
   authChoices?: readonly OfficialExternalProviderAuthChoice[];
 };
 
-/** Shared type for Official External Web Search Provider in src/plugins. */
+/** Web-search provider metadata exposed for setup and onboarding flows. */
 export type OfficialExternalWebSearchProvider = {
   id?: string;
   label?: string;
@@ -57,7 +57,7 @@ export type OfficialExternalWebSearchProvider = {
   autoDetectOrder?: number;
 };
 
-/** Shared type for Official External Plugin Catalog Manifest in src/plugins. */
+/** Manifest slice stored in generated official external catalog JSON. */
 export type OfficialExternalPluginCatalogManifest = {
   plugin?: {
     id?: string;
@@ -74,7 +74,7 @@ export type OfficialExternalPluginCatalogManifest = {
   channelConfigs?: Record<string, PluginManifestChannelConfig>;
 };
 
-/** Shared type for Official External Plugin Catalog Entry in src/plugins. */
+/** Raw package entry from the official external channel, provider, or plugin catalog. */
 export type OfficialExternalPluginCatalogEntry = {
   name?: string;
   version?: string;
@@ -107,7 +107,7 @@ function normalizeDefaultChoice(value: unknown): PluginPackageInstall["defaultCh
   return value === "clawhub" || value === "npm" || value === "local" ? value : undefined;
 }
 
-/** Reused helper for get Official External Plugin Catalog Manifest behavior in src/plugins. */
+/** Reads the OpenClaw manifest block from a generated catalog entry. */
 export function getOfficialExternalPluginCatalogManifest(
   entry: OfficialExternalPluginCatalogEntry,
 ): OfficialExternalPluginCatalogManifest | undefined {
@@ -115,7 +115,7 @@ export function getOfficialExternalPluginCatalogManifest(
   return isRecord(manifest) ? manifest : undefined;
 }
 
-/** Reused helper for resolve Official External Plugin Id behavior in src/plugins. */
+/** Resolves the primary plugin/channel/provider id used for catalog identity. */
 export function resolveOfficialExternalPluginId(
   entry: OfficialExternalPluginCatalogEntry,
 ): string | undefined {
@@ -140,7 +140,7 @@ function resolveOfficialExternalPluginLookupIds(
   );
 }
 
-/** Reused helper for resolve Official External Plugin Label behavior in src/plugins. */
+/** Resolves the human label shown for an official external catalog entry. */
 export function resolveOfficialExternalPluginLabel(
   entry: OfficialExternalPluginCatalogEntry,
 ): string {
@@ -155,7 +155,7 @@ export function resolveOfficialExternalPluginLabel(
   );
 }
 
-/** Reused helper for resolve Official External Plugin Install behavior in src/plugins. */
+/** Builds the install choices exposed for an official external catalog entry. */
 export function resolveOfficialExternalPluginInstall(
   entry: OfficialExternalPluginCatalogEntry,
 ): PluginPackageInstall | null {
@@ -181,7 +181,7 @@ export function resolveOfficialExternalPluginInstall(
   };
 }
 
-/** Reused helper for list Official External Plugin Catalog Entries behavior in src/plugins. */
+/** Returns de-duplicated entries from all generated official external catalogs. */
 export function listOfficialExternalPluginCatalogEntries(): OfficialExternalPluginCatalogEntry[] {
   const entries = OFFICIAL_CATALOG_SOURCES.flatMap((source) => parseCatalogEntries(source));
   const resolved = new Map<string, OfficialExternalPluginCatalogEntry>();
@@ -195,21 +195,21 @@ export function listOfficialExternalPluginCatalogEntries(): OfficialExternalPlug
   return [...resolved.values()];
 }
 
-/** Reused helper for list Official External Channel Catalog Entries behavior in src/plugins. */
+/** Lists official external entries that provide channel manifest metadata. */
 export function listOfficialExternalChannelCatalogEntries(): OfficialExternalPluginCatalogEntry[] {
   return listOfficialExternalPluginCatalogEntries().filter((entry) =>
     Boolean(getOfficialExternalPluginCatalogManifest(entry)?.channel),
   );
 }
 
-/** Reused helper for list Official External Provider Catalog Entries behavior in src/plugins. */
+/** Lists official external entries that provide one or more providers. */
 export function listOfficialExternalProviderCatalogEntries(): OfficialExternalPluginCatalogEntry[] {
   return listOfficialExternalPluginCatalogEntries().filter(
     (entry) => (getOfficialExternalPluginCatalogManifest(entry)?.providers?.length ?? 0) > 0,
   );
 }
 
-/** Reused helper for get Official External Plugin Catalog Entry behavior in src/plugins. */
+/** Finds an official external catalog entry by any manifest lookup id. */
 export function getOfficialExternalPluginCatalogEntry(
   pluginId: string,
 ): OfficialExternalPluginCatalogEntry | undefined {
@@ -222,7 +222,7 @@ export function getOfficialExternalPluginCatalogEntry(
   );
 }
 
-/** Reused helper for get Official External Plugin Catalog Entry For Package behavior in src/plugins. */
+/** Finds an official external catalog entry by npm package name. */
 export function getOfficialExternalPluginCatalogEntryForPackage(
   packageName: string | undefined,
 ): OfficialExternalPluginCatalogEntry | undefined {
