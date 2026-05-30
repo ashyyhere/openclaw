@@ -1,3 +1,4 @@
+/** Formats auth doctor hints for provider-specific credential repair. */
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { buildProviderAuthDoctorHintWithPlugin } from "../../plugins/provider-runtime.runtime.js";
@@ -14,7 +15,7 @@ function hasLegacyQwenPortalOAuthProfile(store: AuthProfileStore, profileId?: st
   );
 }
 
-/** Reused helper for format Auth Doctor Hint behavior in src/agents/auth-profiles. */
+/** Formats provider-specific auth repair guidance for doctor output. */
 export async function formatAuthDoctorHint(params: {
   cfg?: OpenClawConfig;
   store: AuthProfileStore;

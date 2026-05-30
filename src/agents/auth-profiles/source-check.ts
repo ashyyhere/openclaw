@@ -15,7 +15,7 @@ function hasStoredAuthProfileFiles(agentDir?: string): boolean {
   );
 }
 
-/** Reused helper for has Any Auth Profile Store Source behavior in src/agents/auth-profiles. */
+/** Returns true when runtime or on-disk auth profile state exists. */
 export function hasAnyAuthProfileStoreSource(agentDir?: string): boolean {
   if (hasAnyRuntimeAuthProfileStoreSource(agentDir)) {
     return true;

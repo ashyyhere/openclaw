@@ -3,7 +3,7 @@ import { readManagedExternalCliCredential } from "./external-cli-sync.js";
 import { resolveEffectiveOAuthCredential as resolveManagedOAuthCredential } from "./oauth-manager.js";
 import type { OAuthCredential } from "./types.js";
 
-/** Reused helper for resolve Effective OAuth Credential behavior in src/agents/auth-profiles. */
+/** Resolves OAuth credentials with managed external CLI bootstrap fallback. */
 export function resolveEffectiveOAuthCredential(params: {
   profileId: string;
   credential: OAuthCredential;

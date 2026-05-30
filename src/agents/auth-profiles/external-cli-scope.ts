@@ -1,3 +1,4 @@
+/** Resolves which external CLI auth credentials are relevant to config. */
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
 import {
   resolveAgentModelFallbackValues,
@@ -6,7 +7,7 @@ import {
 import type { AgentModelConfig } from "../../config/types.agents-shared.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 
-/** Shared type for External Cli Auth Scope in src/agents/auth-profiles. */
+/** Provider/profile ids that may need external CLI auth overlays. */
 export type ExternalCliAuthScope = {
   providerIds: string[];
   profileIds: string[];
@@ -68,7 +69,7 @@ function addExternalCliRuntimeScopeFromModelMap(
   }
 }
 
-/** Reused helper for resolve External Cli Auth Scope From Config behavior in src/agents/auth-profiles. */
+/** Resolves external CLI auth overlay scope from model and auth config. */
 export function resolveExternalCliAuthScopeFromConfig(
   cfg: OpenClawConfig,
 ): ExternalCliAuthScope | undefined {

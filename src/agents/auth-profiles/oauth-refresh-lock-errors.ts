@@ -1,7 +1,7 @@
 /** Classifies global OAuth refresh lock contention errors. */
 import { FILE_LOCK_TIMEOUT_ERROR_CODE } from "../../infra/file-lock.js";
 
-/** Reused helper for is Global Refresh Lock Timeout Error behavior in src/agents/auth-profiles. */
+/** Detects contention on the global OAuth refresh file lock. */
 export function isGlobalRefreshLockTimeoutError(error: unknown, lockPath: string): boolean {
   const candidate =
     typeof error === "object" && error !== null
@@ -12,7 +12,7 @@ export function isGlobalRefreshLockTimeoutError(error: unknown, lockPath: string
   );
 }
 
-/** Reused helper for build Refresh Contention Error behavior in src/agents/auth-profiles. */
+/** Builds a structured OAuth refresh-contention error. */
 export function buildRefreshContentionError(params: {
   provider: string;
   profileId: string;

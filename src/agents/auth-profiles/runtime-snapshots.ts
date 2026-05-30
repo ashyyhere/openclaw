@@ -9,7 +9,7 @@ function resolveRuntimeStoreKey(agentDir?: string): string {
   return resolveAuthStorePath(agentDir);
 }
 
-/** Reused helper for get Runtime Auth Profile Store Snapshot behavior in src/agents/auth-profiles. */
+/** Returns a cloned runtime auth-profile snapshot for an agent dir. */
 export function getRuntimeAuthProfileStoreSnapshot(
   agentDir?: string,
 ): AuthProfileStore | undefined {
@@ -17,12 +17,12 @@ export function getRuntimeAuthProfileStoreSnapshot(
   return store ? cloneAuthProfileStore(store) : undefined;
 }
 
-/** Reused helper for has Runtime Auth Profile Store Snapshot behavior in src/agents/auth-profiles. */
+/** Checks whether a runtime auth-profile snapshot exists for an agent dir. */
 export function hasRuntimeAuthProfileStoreSnapshot(agentDir?: string): boolean {
   return runtimeAuthStoreSnapshots.has(resolveRuntimeStoreKey(agentDir));
 }
 
-/** Reused helper for has Any Runtime Auth Profile Store Source behavior in src/agents/auth-profiles. */
+/** Checks requested and main runtime snapshots for any stored profiles. */
 export function hasAnyRuntimeAuthProfileStoreSource(agentDir?: string): boolean {
   const requestedStore = getRuntimeAuthProfileStoreSnapshot(agentDir);
   if (requestedStore && Object.keys(requestedStore.profiles).length > 0) {
@@ -35,7 +35,7 @@ export function hasAnyRuntimeAuthProfileStoreSource(agentDir?: string): boolean 
   return Boolean(mainStore && Object.keys(mainStore.profiles).length > 0);
 }
 
-/** Reused helper for replace Runtime Auth Profile Store Snapshots behavior in src/agents/auth-profiles. */
+/** Replaces all runtime auth-profile snapshots with cloned entries. */
 export function replaceRuntimeAuthProfileStoreSnapshots(
   entries: Array<{ agentDir?: string; store: AuthProfileStore }>,
 ): void {
@@ -48,12 +48,12 @@ export function replaceRuntimeAuthProfileStoreSnapshots(
   }
 }
 
-/** Reused helper for clear Runtime Auth Profile Store Snapshots behavior in src/agents/auth-profiles. */
+/** Clears all process-local runtime auth-profile snapshots. */
 export function clearRuntimeAuthProfileStoreSnapshots(): void {
   runtimeAuthStoreSnapshots.clear();
 }
 
-/** Reused helper for set Runtime Auth Profile Store Snapshot behavior in src/agents/auth-profiles. */
+/** Sets one cloned runtime auth-profile snapshot for an agent dir. */
 export function setRuntimeAuthProfileStoreSnapshot(
   store: AuthProfileStore,
   agentDir?: string,

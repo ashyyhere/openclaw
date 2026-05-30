@@ -1,8 +1,9 @@
+/** Classifies OAuth refresh failures and formats recovery commands. */
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
 import { sanitizeForLog } from "../../../packages/terminal-core/src/ansi.js";
 import { formatCliCommand } from "../../cli/command-format.js";
 
-/** Shared type for OAuth Refresh Failure Reason in src/agents/auth-profiles. */
+/** Normalized OAuth refresh failure reason parsed from provider errors. */
 export type OAuthRefreshFailureReason =
   | "refresh_token_reused"
   | "invalid_grant"
@@ -39,6 +40,7 @@ function canonicalizeOAuthRefreshFailureProvider(provider: string | null): strin
   return provider === LEGACY_OPENAI_CODEX_PROVIDER_ID ? OPENAI_PROVIDER_ID : provider;
 }
 
+/** Classifies an OAuth refresh failure message into a normalized reason. */
 export function classifyOAuthRefreshFailureReason(
   message: string,
 ): OAuthRefreshFailureReason | null {
@@ -61,7 +63,7 @@ export function classifyOAuthRefreshFailureReason(
   return null;
 }
 
-/** Reused helper for classify OAuth Refresh Failure behavior in src/agents/auth-profiles. */
+/** Classifies OAuth refresh failures by provider and normalized reason. */
 export function classifyOAuthRefreshFailure(message: string): {
   provider: string | null;
   reason: OAuthRefreshFailureReason | null;
@@ -77,7 +79,7 @@ export function classifyOAuthRefreshFailure(message: string): {
   };
 }
 
-/** Reused helper for build OAuth Refresh Failure Login Command behavior in src/agents/auth-profiles. */
+/** Builds the login command suggested after OAuth refresh failure. */
 export function buildOAuthRefreshFailureLoginCommand(provider: string | null | undefined): string {
   const canonicalProvider = canonicalizeOAuthRefreshFailureProvider(
     sanitizeOAuthRefreshFailureProvider(provider),

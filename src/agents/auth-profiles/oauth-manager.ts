@@ -135,7 +135,7 @@ export class OAuthManagerRefreshError extends Error {
   }
 }
 
-/** Re-exported API for src/agents/auth-profiles. */
+/** OAuth adoption and identity-safety helpers for profile synchronization. */
 export {
   areOAuthCredentialsEquivalent,
   hasUsableOAuthCredential,
@@ -147,7 +147,7 @@ export {
   shouldPersistRuntimeExternalOAuthProfile,
   shouldReplaceStoredOAuthCredential,
 };
-/** Re-exported API for src/agents/auth-profiles, starting with Runtime External OAuth Profile. */
+/** Runtime external OAuth profile contract used for managed CLI overlays. */
 export type { RuntimeExternalOAuthProfile };
 
 function hasOAuthCredentialChanged(
@@ -273,7 +273,7 @@ async function loadFreshStoredOAuthCredential(params: {
   return reloaded;
 }
 
-/** Reused helper for resolve Effective OAuth Credential behavior in src/agents/auth-profiles. */
+/** Chooses the effective OAuth credential between local and bootstrap sources. */
 export function resolveEffectiveOAuthCredential(params: {
   profileId: string;
   credential: OAuthCredential;
@@ -318,7 +318,7 @@ export function resolveEffectiveOAuthCredential(params: {
   return params.credential;
 }
 
-/** Reused helper for create OAuth Manager behavior in src/agents/auth-profiles. */
+/** Creates OAuth credential refresh/adoption operations around a store adapter. */
 export function createOAuthManager(adapter: OAuthManagerAdapter) {
   function adoptNewerMainOAuthCredential(params: {
     store: AuthProfileStore;

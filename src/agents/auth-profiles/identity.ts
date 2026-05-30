@@ -15,7 +15,7 @@ function resolveStoredMetadata(store: AuthProfileStore | undefined, profileId: s
   };
 }
 
-/** Reused helper for build Auth Profile Id behavior in src/agents/auth-profiles. */
+/** Builds a normalized provider-prefixed auth profile id. */
 export function buildAuthProfileId(params: {
   providerId: string;
   profileName?: string | null;
@@ -26,7 +26,7 @@ export function buildAuthProfileId(params: {
   return `${profilePrefix}:${profileName}`;
 }
 
-/** Reused helper for resolve Auth Profile Metadata behavior in src/agents/auth-profiles. */
+/** Resolves display metadata from config with stored credential fallback. */
 export function resolveAuthProfileMetadata(params: {
   cfg?: OpenClawConfig;
   store?: AuthProfileStore;
