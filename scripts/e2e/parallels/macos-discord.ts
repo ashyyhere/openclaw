@@ -1,17 +1,20 @@
-// scripts/e2e/parallels macos discord helpers and runtime behavior.
+// Parallels macOS Discord smoke verifies outbound send and inbound readback in a guest.
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import type { MacosGuest } from "./guest-transports.ts";
 import { run, say, shellQuote, warn } from "./host-command.ts";
 
+/** Discord smoke phase aligned with the fresh or upgrade lane. */
 export type DiscordSmokePhase = "fresh" | "upgrade";
 
+/** Discord credentials and target channel used by the macOS smoke. */
 export interface MacosDiscordConfig {
   channelId: string;
   guildId: string;
   token: string;
 }
 
+/** Runs macOS guest Discord configuration, roundtrip checks, and cleanup. */
 export class MacosDiscordSmoke {
   constructor(
     private input: {

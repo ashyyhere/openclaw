@@ -1,4 +1,4 @@
-// scripts/e2e/parallels powershell helpers and runtime behavior.
+// Parallels PowerShell helpers generate Windows guest smoke scripts.
 import {
   configPathMapKey,
   modelProviderConfigBatchJson,
@@ -6,20 +6,24 @@ import {
   providerTimeoutConfigJson,
 } from "./provider-auth.ts";
 
+/** Quote a string as a single-quoted PowerShell literal. */
 export function psSingleQuote(value: string): string {
   return `'${value.replaceAll("'", "''")}'`;
 }
 
+/** Render a PowerShell array literal of single-quoted strings. */
 export function psArray(values: string[]): string {
   return `@(${values.map(psSingleQuote).join(", ")})`;
 }
 
+/** Encode a PowerShell script for -EncodedCommand execution. */
 export function encodePowerShell(script: string): string {
   return Buffer.from(`$ProgressPreference = 'SilentlyContinue'\n${script}`, "utf16le").toString(
     "base64",
   );
 }
 
+/** PowerShell helper that temporarily applies process env vars around a script block. */
 export const windowsScopedEnvFunction = String.raw`function Invoke-WithScopedEnv {
   param(
     [Parameter(Mandatory = $true)][hashtable] $Values,
@@ -43,6 +47,7 @@ export const windowsScopedEnvFunction = String.raw`function Invoke-WithScopedEnv
   }
 }`;
 
+/** Build Windows PowerShell that applies model provider timeout config. */
 export function windowsModelProviderTimeoutScript(modelId: string): string {
   const providerId = providerIdFromModelId(modelId);
   const configJson = providerTimeoutConfigJson(modelId, "windows");
@@ -74,6 +79,7 @@ Remove-Item $providerTimeoutBatchPath -Force -ErrorAction SilentlyContinue
 if ($providerTimeoutExit -ne 0) { throw "model provider timeout config set failed" }`;
 }
 
+/** Build Windows PowerShell that patches agent/model config for smoke turns. */
 export function windowsAgentTurnConfigPatchScript(modelId: string): string {
   const batchJson = modelProviderConfigBatchJson(modelId, "windows");
   const pluginId = providerIdFromModelId(modelId) || modelId.split("/", 1)[0] || "openai";
@@ -169,6 +175,7 @@ Remove-Item Env:OPENCLAW_PARALLELS_AGENT_RUNTIME_POLICY_SUPPORTED -Force -ErrorA
 if ($agentTurnConfigPatchExit -ne 0) { throw "agent turn config patch failed" }`;
 }
 
+/** PowerShell helper that resolves the installed OpenClaw command shim. */
 export const windowsOpenClawResolver = String.raw`function Resolve-OpenClawCommand {
   if ($script:OpenClawResolvedCommand) { return $script:OpenClawResolvedCommand }
   $shimCandidates = @()

@@ -1,4 +1,4 @@
-// scripts/e2e/parallels host server helpers and runtime behavior.
+// Parallels host server helpers expose local artifacts to guest VMs during smoke runs.
 import { spawn, type ChildProcessWithoutNullStreams } from "node:child_process";
 import { createServer } from "node:http";
 import { createConnection } from "node:net";
@@ -9,6 +9,7 @@ import type { HostServer } from "./types.ts";
 const HOST_SERVER_STDERR_LIMIT_BYTES = 64 * 1024;
 const HOST_SERVER_STDERR_DRAIN_MS = 5_000;
 
+/** Resolve the host IP visible from Parallels guests, honoring an explicit override. */
 export function resolveHostIp(explicit = ""): string {
   if (explicit) {
     return explicit;
@@ -22,6 +23,7 @@ export function resolveHostIp(explicit = ""): string {
   return output;
 }
 
+/** Allocate a free host TCP port for temporary artifact serving. */
 export function allocateHostPort(): number {
   return Number(
     run(
@@ -35,6 +37,7 @@ export function allocateHostPort(): number {
   );
 }
 
+/** Check whether a host TCP port can be bound for artifact serving. */
 export async function isHostPortFree(port: number): Promise<boolean> {
   return await new Promise((resolve) => {
     const server = createServer();
@@ -45,6 +48,7 @@ export async function isHostPortFree(port: number): Promise<boolean> {
   });
 }
 
+/** Resolve the requested host port or allocate a fallback when the default is busy. */
 export async function resolveHostPort(
   port: number,
   explicit: boolean,
@@ -61,6 +65,7 @@ export async function resolveHostPort(
   return allocated;
 }
 
+/** Start a local HTTP artifact server and return guest-visible URL metadata. */
 export async function startHostServer(input: {
   dir: string;
   hostIp: string;
@@ -155,6 +160,7 @@ async function delay(ms: number): Promise<void> {
   await new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+/** Test-only access to bounded host-server output helpers. */
 export const testing = {
   appendBoundedOutput,
 };

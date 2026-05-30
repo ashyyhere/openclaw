@@ -1,9 +1,12 @@
-// scripts/e2e/parallels lane runner helpers and runtime behavior.
+// Parallels lane runner records fresh/upgrade smoke lane pass or failure state.
 import { warn } from "./host-command.ts";
 
+/** Smoke lane names tracked by Parallels update/install runs. */
 export type SmokeLane = "fresh" | "upgrade";
+/** Terminal status recorded for one smoke lane. */
 export type SmokeLaneStatus = "pass" | "fail";
 
+/** Run one smoke lane, record its status, and keep the parent run moving after failure. */
 export async function runSmokeLane(
   name: SmokeLane,
   fn: () => Promise<void>,

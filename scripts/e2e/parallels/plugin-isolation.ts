@@ -1,4 +1,4 @@
-// scripts/e2e/parallels plugin isolation helpers and runtime behavior.
+// Parallels plugin isolation helpers generate guest scripts that restrict provider plugins.
 import { shellQuote } from "./host-command.ts";
 import { providerIdFromModelId } from "./provider-auth.ts";
 
@@ -9,10 +9,12 @@ interface PluginIsolationOptions {
   nodeCommand?: string;
 }
 
+/** Resolve the only plugin ID that should remain enabled for a provider model. */
 export function providerOnlyPluginId(modelId: string, fallbackPluginId: string): string {
   return providerIdFromModelId(modelId) || fallbackPluginId;
 }
 
+/** Build a POSIX guest script that rewrites config to isolate one provider plugin. */
 export function posixProviderOnlyPluginIsolationScript(options: PluginIsolationOptions): string {
   const nodeCommand = shellQuote(options.nodeCommand ?? "node");
   const homeEnv = options.homeFallback
@@ -23,6 +25,7 @@ ${providerOnlyPluginIsolationNodeScript(options)}
 JS`;
 }
 
+/** Build a Windows guest script that rewrites config to isolate one provider plugin. */
 export function windowsProviderOnlyPluginIsolationScript(options: PluginIsolationOptions): string {
   const payloadJson = JSON.stringify({
     modelId: options.modelId,

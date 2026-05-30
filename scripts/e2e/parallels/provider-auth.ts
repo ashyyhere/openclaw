@@ -1,4 +1,4 @@
-// scripts/e2e/parallels provider auth helpers and runtime behavior.
+// Parallels provider auth helpers resolve model credentials and config patches for smoke runs.
 import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -6,10 +6,12 @@ import { parsePositiveInt, readPositiveIntEnv } from "./env-limits.ts";
 import { die, run } from "./host-command.ts";
 import type { Mode, Platform, Provider, ProviderAuth } from "./types.ts";
 
+/** Parse a truthy Parallels smoke env flag. */
 export function parseBoolEnv(value: string | undefined): boolean {
   return /^(1|true|yes|on)$/i.test(value ?? "");
 }
 
+/** Read a required CLI flag value or terminate with a flag-specific error. */
 export function ensureValue(args: string[], index: number, flag: string): string {
   const value = args[index + 1];
   if (value == null || value === "") {
@@ -18,6 +20,7 @@ export function ensureValue(args: string[], index: number, flag: string): string
   return value;
 }
 
+/** Resolve provider auth, model ID, and CLI auth flags for a Parallels smoke run. */
 export function resolveProviderAuth(input: {
   provider: Provider;
   apiKeyEnv?: string;
@@ -55,6 +58,7 @@ export function resolveProviderAuth(input: {
   return { ...resolved, apiKeyValue };
 }
 
+/** Resolve Windows provider auth with the Windows-specific OpenAI model default. */
 export function resolveWindowsProviderAuth(input: {
   provider: Provider;
   apiKeyEnv?: string;
@@ -74,11 +78,13 @@ export function resolveWindowsProviderAuth(input: {
   return { ...auth, modelId: "openai/gpt-5.5" };
 }
 
+/** Extract a safe provider ID from a provider/model identifier. */
 export function providerIdFromModelId(modelId: string): string {
   const providerId = modelId.split("/", 1)[0]?.trim() ?? "";
   return /^[A-Za-z0-9_-]+$/u.test(providerId) ? providerId : "";
 }
 
+/** Resolve model timeout seconds for a Parallels platform from env defaults. */
 export function resolveParallelsModelTimeoutSeconds(platform?: Platform): number {
   const platformEnvName =
     platform === undefined
@@ -92,6 +98,7 @@ export function resolveParallelsModelTimeoutSeconds(platform?: Platform): number
   return readPositiveIntEnv("OPENCLAW_PARALLELS_MODEL_TIMEOUT_S", defaultSeconds);
 }
 
+/** Build provider config JSON that applies OpenAI model timeout overrides. */
 export function providerTimeoutConfigJson(
   modelId: string,
   platform: Platform,
@@ -120,6 +127,7 @@ export function providerTimeoutConfigJson(
   });
 }
 
+/** Build per-model transport config JSON for models that need SSE in smoke runs. */
 export function modelTransportConfigJson(modelId: string): string {
   if (providerIdFromModelId(modelId) !== "openai") {
     return "";
@@ -132,10 +140,12 @@ export function modelTransportConfigJson(modelId: string): string {
   });
 }
 
+/** Encode a config path segment for map keys containing provider/model separators. */
 export function configPathMapKey(key: string): string {
   return `[${JSON.stringify(key)}]`;
 }
 
+/** Build batched config set operations for provider/model smoke defaults. */
 export function modelProviderConfigBatchJson(
   modelId: string,
   platform: Platform,
@@ -160,6 +170,7 @@ export function modelProviderConfigBatchJson(
   return commands.length === 0 ? "" : JSON.stringify(commands);
 }
 
+/** Parse a supported provider CLI value. */
 export function parseProvider(value: string): Provider {
   if (value === "openai" || value === "anthropic" || value === "minimax") {
     return value;
@@ -167,6 +178,7 @@ export function parseProvider(value: string): Provider {
   return die(`invalid --provider: ${value}`);
 }
 
+/** Parse a supported Parallels smoke mode. */
 export function parseMode(value: string): Mode {
   if (value === "fresh" || value === "upgrade" || value === "both") {
     return value;
@@ -174,6 +186,7 @@ export function parseMode(value: string): Mode {
   return die(`invalid --mode: ${value}`);
 }
 
+/** Parse a comma-separated platform list or all into a platform set. */
 export function parsePlatformList(value: string): Set<Platform> {
   const normalized = value.replaceAll(" ", "");
   if (normalized === "all") {
@@ -193,6 +206,7 @@ export function parsePlatformList(value: string): Set<Platform> {
   return result;
 }
 
+/** Resolve the npm latest OpenClaw version unless an override was provided. */
 export function resolveLatestVersion(versionOverride = ""): string {
   if (versionOverride) {
     return versionOverride;

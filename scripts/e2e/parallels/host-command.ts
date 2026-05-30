@@ -1,4 +1,4 @@
-// scripts/e2e/parallels host command helpers and runtime behavior.
+// Parallels host command helpers normalize process execution across host platforms.
 import { spawn, spawnSync, type SpawnOptions } from "node:child_process";
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
@@ -8,6 +8,7 @@ import { resolvePnpmRunner } from "../../pnpm-runner.mjs";
 import { buildCmdExeCommandLine } from "../../windows-cmd-helpers.mjs";
 import type { CommandResult, RunOptions } from "./types.ts";
 
+/** Repository root used as the default cwd for Parallels host commands. */
 export const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../..");
 
 type HostCommandInvocation = {
@@ -35,19 +36,23 @@ function hostInvocationFromRunner(runner: HostCommandInvocation): HostCommandInv
   return runner;
 }
 
+/** Print a host smoke progress message. */
 export function say(message: string): void {
   process.stdout.write(`==> ${message}\n`);
 }
 
+/** Print a host smoke warning message. */
 export function warn(message: string): void {
   process.stderr.write(`warn: ${message}\n`);
 }
 
+/** Print an error and terminate the host smoke process. */
 export function die(message: string): never {
   process.stderr.write(`error: ${message}\n`);
   process.exit(1);
 }
 
+/** Quote a string for POSIX shell snippets used by guest commands. */
 export function shellQuote(value: string): string {
   return `'${value.replaceAll("'", `'"'"'`)}'`;
 }
@@ -69,6 +74,7 @@ function resolveEnvValue(env: NodeJS.ProcessEnv, name: string): string | undefin
   return key === undefined ? undefined : env[key];
 }
 
+/** Resolve npm/pnpm/cmd launch details for a host command invocation. */
 export function resolveHostCommandInvocation(
   command: string,
   args: string[],
@@ -114,6 +120,7 @@ export function resolveHostCommandInvocation(
   return { args, command, shell: false };
 }
 
+/** Run a host command synchronously and optionally fail on non-zero exit. */
 export function run(command: string, args: string[], options: RunOptions = {}): CommandResult {
   const env = { ...process.env, ...options.env };
   const invocation = resolveHostCommandInvocation(command, args, { env });
@@ -153,10 +160,12 @@ export function run(command: string, args: string[], options: RunOptions = {}): 
   return commandResult;
 }
 
+/** Run a POSIX shell script through bash on the host. */
 export function sh(script: string, options: RunOptions = {}): CommandResult {
   return run("bash", ["-lc", script], options);
 }
 
+/** Run a host command while streaming output and optionally writing a log file. */
 export async function runStreaming(
   command: string,
   args: string[],

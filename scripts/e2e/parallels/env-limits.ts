@@ -1,8 +1,9 @@
-// scripts/e2e/parallels env limits helpers and runtime behavior.
+// Parallels env limit helpers parse positive integer smoke settings.
 import { die } from "./host-command.ts";
 
 const positiveIntPattern = /^[1-9]\d*$/u;
 
+/** Parse a required positive integer option or terminate with a labeled error. */
 export function parsePositiveInt(value: string, label: string): number {
   const trimmed = value.trim();
   if (!positiveIntPattern.test(trimmed)) {
@@ -15,6 +16,7 @@ export function parsePositiveInt(value: string, label: string): number {
   return parsed;
 }
 
+/** Read a positive integer env var with a fallback when unset. */
 export function readPositiveIntEnv(name: string, fallback: number): number {
   const raw = process.env[name];
   if (raw == null || raw.trim() === "") {
