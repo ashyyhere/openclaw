@@ -1,4 +1,4 @@
-// infra/command-explainer format helpers and runtime behavior.
+// Formats parsed command explanations into exec approval span metadata.
 import type { ExecApprovalCommandSpan } from "../exec-approvals.js";
 import { normalizeExecutableToken } from "../exec-wrapper-tokens.js";
 import {
@@ -42,7 +42,7 @@ function hasUnsupportedShellWrapper(explanation: CommandExplanation): boolean {
   );
 }
 
-/** Reused helper for format Command Spans behavior in src/infra/command-explainer. */
+/** Converts supported command explanations into executable highlight spans. */
 export function formatCommandSpans(explanation: CommandExplanation): ExecApprovalCommandSpan[] {
   if (hasUnsupportedShellWrapper(explanation)) {
     return [];

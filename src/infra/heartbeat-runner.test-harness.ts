@@ -1,4 +1,4 @@
-// infra heartbeat runner test harness helpers and runtime behavior.
+// Installs heartbeat runner channel plugin fixtures for tests.
 import { beforeEach } from "vitest";
 import {
   heartbeatRunnerSlackPlugin,
@@ -8,7 +8,7 @@ import {
 import { setActivePluginRegistry } from "../plugins/runtime.js";
 import { createTestRegistry } from "../test-utils/channel-plugins.js";
 
-/** Reused helper for install Heartbeat Runner Test Runtime behavior in src/infra. */
+/** Registers heartbeat test channel plugins before each test. */
 export function installHeartbeatRunnerTestRuntime(params?: { includeSlack?: boolean }): void {
   beforeEach(() => {
     if (params?.includeSlack) {

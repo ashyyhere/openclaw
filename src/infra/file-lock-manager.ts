@@ -1,7 +1,7 @@
-// infra file lock manager helpers and runtime behavior.
+// Re-exports fs-safe file lock manager with infra defaults initialized.
 import "./fs-safe-defaults.js";
 
-/** Re-exported API for src/infra. */
+/** File lock manager primitives used to serialize durable file mutations. */
 export {
   createFileLockManager,
   type FileLockHeldEntry,

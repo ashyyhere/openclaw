@@ -1,11 +1,11 @@
-// infra detect binary helpers and runtime behavior.
+// Detects whether a safe binary name or path is available locally.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { runCommandWithTimeout } from "../process/exec.js";
 import { resolveUserPath } from "../utils.js";
 import { isSafeExecutableValue } from "./exec-safety.js";
 
-/** Reused helper for detect Binary behavior in src/infra. */
+/** Checks executable availability without accepting shell-like binary names. */
 export async function detectBinary(name: string): Promise<boolean> {
   if (!name?.trim()) {
     return false;

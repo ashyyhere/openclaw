@@ -1,9 +1,9 @@
-// infra heartbeat visibility helpers and runtime behavior.
+// Resolves channel/account heartbeat notification visibility settings.
 import type { ChannelHeartbeatVisibilityConfig } from "../config/types.channels.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { GatewayMessageChannel } from "../utils/message-channel.js";
 
-/** Shared type for Resolved Heartbeat Visibility in src/infra. */
+/** Effective visibility flags for heartbeat result messages and indicators. */
 export type ResolvedHeartbeatVisibility = {
   showOk: boolean;
   showAlerts: boolean;

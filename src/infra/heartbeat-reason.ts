@@ -1,7 +1,7 @@
-// infra heartbeat reason helpers and runtime behavior.
+// Normalizes heartbeat wake reasons for events and logs.
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 
-/** Reused helper for normalize Heartbeat Wake Reason behavior in src/infra. */
+/** Returns a trimmed heartbeat wake reason, defaulting to requested. */
 export function normalizeHeartbeatWakeReason(reason?: string): string {
   return normalizeOptionalString(reason) ?? "requested";
 }

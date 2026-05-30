@@ -1,4 +1,4 @@
-// infra exec safety helpers and runtime behavior.
+// Screens executable tokens before binary probing or execution.
 const SHELL_METACHARS = /[;&|`$<>]/;
 const CONTROL_CHARS = /[\r\n]/;
 const QUOTE_CHARS = /["']/;
@@ -14,7 +14,7 @@ function isLikelyPath(value: string): boolean {
   return /^[A-Za-z]:[\\/]/.test(value);
 }
 
-/** Reused helper for is Safe Executable Value behavior in src/infra. */
+/** Allows bare binary names or paths while rejecting shell/control syntax. */
 export function isSafeExecutableValue(value: string | null | undefined): boolean {
   if (!value) {
     return false;

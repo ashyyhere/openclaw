@@ -1,4 +1,4 @@
-// infra/command-explainer extract helpers and runtime behavior.
+// Extracts command shapes, spans, and risk hints from parsed shell commands.
 import type { Node as TreeSitterNode } from "web-tree-sitter";
 import type { InterpreterInlineEvalHit } from "../command-analysis/inline-eval.js";
 import {
@@ -1124,7 +1124,7 @@ async function walk(
   }
 }
 
-/** Reused helper for explain Shell Command behavior in src/infra/command-explainer. */
+/** Parses shell source into command spans, argv steps, shapes, and risk markers. */
 export async function explainShellCommand(source: string): Promise<CommandExplanation> {
   const tree = await parseBashForCommandExplanation(source);
   try {
