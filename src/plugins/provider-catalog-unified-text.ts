@@ -1,26 +1,48 @@
+import type { ModelProviderConfig } from "../config/types.models.js";
 import type { UnifiedModelCatalogEntry } from "../model-catalog/types.js";
+import {
+  copyArrayEntries,
+  copyRecordEntries,
+  isRecord,
+  readRecordValue,
+} from "../shared/safe-record.js";
 import type { ProviderCatalogResult } from "./types.js";
+
+function copyProviderCatalogResultEntries(params: {
+  providerId: string;
+  result: ProviderCatalogResult;
+}): Array<[string, ModelProviderConfig]> {
+  const provider = readRecordValue(params.result, "provider");
+  if (isRecord(provider)) {
+    return [[params.providerId, provider as ModelProviderConfig]];
+  }
+  return copyRecordEntries<ModelProviderConfig>(readRecordValue(params.result, "providers"));
+}
+
+function copyProviderModels(providerConfig: ModelProviderConfig): ModelProviderConfig["models"] {
+  return copyArrayEntries(readRecordValue(providerConfig, "models")).filter(
+    (entry): entry is ModelProviderConfig["models"][number] => isRecord(entry),
+  );
+}
 
 export function projectProviderCatalogResultToUnifiedTextRows(params: {
   providerId: string;
   result: ProviderCatalogResult;
   source: UnifiedModelCatalogEntry["source"];
 }): UnifiedModelCatalogEntry[] {
-  if (!params.result) {
-    return [];
-  }
-  const providers =
-    "provider" in params.result
-      ? { [params.providerId]: params.result.provider }
-      : params.result.providers;
   const rows: UnifiedModelCatalogEntry[] = [];
-  for (const [providerId, providerConfig] of Object.entries(providers)) {
-    for (const model of providerConfig.models ?? []) {
+  for (const [providerId, providerConfig] of copyProviderCatalogResultEntries(params)) {
+    for (const model of copyProviderModels(providerConfig)) {
+      const modelId = readRecordValue(model, "id");
+      if (typeof modelId !== "string") {
+        continue;
+      }
+      const modelName = readRecordValue(model, "name");
       rows.push({
         kind: "text",
         provider: providerId,
-        model: model.id,
-        ...(model.name ? { label: model.name } : {}),
+        model: modelId,
+        ...(typeof modelName === "string" && modelName ? { label: modelName } : {}),
         source: params.source,
       });
     }
