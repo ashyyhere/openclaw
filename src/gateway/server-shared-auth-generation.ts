@@ -1,21 +1,21 @@
-// gateway server shared auth generation helpers and runtime behavior.
+/** Tracks shared gateway auth generations and disconnects stale clients. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveGatewayReloadSettings } from "./config-reload-settings.js";
 
-/** Shared type for Shared Gateway Auth Client in src/gateway. */
+/** Connected client fields needed for shared-auth generation enforcement. */
 export type SharedGatewayAuthClient = {
   usesSharedGatewayAuth?: boolean;
   sharedGatewaySessionGeneration?: string;
   socket: { close: (code: number, reason: string) => void };
 };
 
-/** Shared type for Shared Gateway Session Generation State in src/gateway. */
+/** Current and required shared-auth session generations for gateway clients. */
 export type SharedGatewaySessionGenerationState = {
   current: string | undefined;
   required: string | undefined | null;
 };
 
-/** Reused helper for disconnect Stale Shared Gateway Auth Clients behavior in src/gateway. */
+/** Disconnects shared-auth clients whose generation no longer matches. */
 export function disconnectStaleSharedGatewayAuthClients(params: {
   clients: Iterable<SharedGatewayAuthClient>;
   expectedGeneration: string | undefined;
@@ -35,7 +35,7 @@ export function disconnectStaleSharedGatewayAuthClients(params: {
   }
 }
 
-/** Reused helper for disconnect All Shared Gateway Auth Clients behavior in src/gateway. */
+/** Disconnects every client currently using shared gateway auth. */
 export function disconnectAllSharedGatewayAuthClients(
   clients: Iterable<SharedGatewayAuthClient>,
 ): void {
@@ -51,14 +51,14 @@ export function disconnectAllSharedGatewayAuthClients(
   }
 }
 
-/** Reused helper for get Required Shared Gateway Session Generation behavior in src/gateway. */
+/** Resolves the generation clients must present after reload decisions. */
 export function getRequiredSharedGatewaySessionGeneration(
   state: SharedGatewaySessionGenerationState,
 ): string | undefined {
   return state.required === null ? state.current : state.required;
 }
 
-/** Reused helper for set Current Shared Gateway Session Generation behavior in src/gateway. */
+/** Updates current shared-auth generation and clears satisfied requirements. */
 export function setCurrentSharedGatewaySessionGeneration(
   state: SharedGatewaySessionGenerationState,
   nextGeneration: string | undefined,
@@ -74,7 +74,7 @@ export function setCurrentSharedGatewaySessionGeneration(
   }
 }
 
-/** Reused helper for enforce Shared Gateway Session Generation For Config Write behavior in src/gateway. */
+/** Applies shared-auth generation rules after a config write. */
 export function enforceSharedGatewaySessionGenerationForConfigWrite(params: {
   state: SharedGatewaySessionGenerationState;
   nextConfig: OpenClawConfig;

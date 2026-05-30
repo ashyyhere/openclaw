@@ -1,4 +1,4 @@
-// gateway node command policy helpers and runtime behavior.
+/** Policy helpers for deciding which commands connected nodes may run. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {
   NODE_BROWSER_PROXY_COMMAND,
@@ -64,7 +64,7 @@ const UNKNOWN_PLATFORM_COMMANDS = [
 
 // "High risk" node commands. These can be enabled by explicitly adding them to
 // `gateway.nodes.allowCommands` (and ensuring they're not blocked by denyCommands).
-/** Reused constant for DEFAULT DANGEROUS NODE COMMANDS behavior in src/gateway. */
+/** High-risk node commands that require explicit operator allowlisting. */
 export const DEFAULT_DANGEROUS_NODE_COMMANDS = [
   ...CAMERA_DANGEROUS_COMMANDS,
   ...SCREEN_DANGEROUS_COMMANDS,
@@ -215,7 +215,7 @@ function normalizePlatformId(platform?: string, deviceFamily?: string): Platform
   return byFamily ?? "unknown";
 }
 
-/** Reused helper for list Dangerous Plugin Node Commands behavior in src/gateway. */
+/** Lists dangerous node commands contributed by active plugins. */
 export function listDangerousPluginNodeCommands(): string[] {
   const registry = getActiveRuntimePluginRegistry();
   if (!registry) {
@@ -247,7 +247,7 @@ function listDefaultPluginNodeCommands(platformId: PlatformId): string[] {
   return normalizeUniqueStringEntries(commands);
 }
 
-/** Reused helper for is Foreground Restricted Plugin Node Command behavior in src/gateway. */
+/** Checks whether a plugin command is restricted while an iOS node is foregrounded. */
 export function isForegroundRestrictedPluginNodeCommand(command: string): boolean {
   const registry = getActiveRuntimePluginRegistry();
   if (!registry) {
@@ -357,7 +357,7 @@ function resolveNodeCommandAllowlistInternal(
   return allow;
 }
 
-/** Reused helper for resolve Node Command Allowlist behavior in src/gateway. */
+/** Resolves allowed commands for a node after platform defaults and config policy. */
 export function resolveNodeCommandAllowlist(
   cfg: OpenClawConfig,
   node?: NodeCommandPolicyNode,
@@ -365,7 +365,7 @@ export function resolveNodeCommandAllowlist(
   return resolveNodeCommandAllowlistInternal(cfg, node);
 }
 
-/** Reused helper for resolve Node Pairing Command Allowlist behavior in src/gateway. */
+/** Resolves the broader command allowlist used during node pairing. */
 export function resolveNodePairingCommandAllowlist(
   cfg: OpenClawConfig,
   node?: NodeCommandPolicyNode,
@@ -392,7 +392,7 @@ function normalizeDeclaredCommands(commands?: readonly string[]): string[] {
   return normalized;
 }
 
-/** Reused helper for normalize Declared Node Commands behavior in src/gateway. */
+/** Filters node-declared commands to commands present in the allowlist. */
 export function normalizeDeclaredNodeCommands(params: {
   declaredCommands?: readonly string[];
   allowlist: Set<string>;
@@ -402,7 +402,7 @@ export function normalizeDeclaredNodeCommands(params: {
   );
 }
 
-/** Reused helper for is Node Command Allowed behavior in src/gateway. */
+/** Validates one node command against allowlist and optional node declarations. */
 export function isNodeCommandAllowed(params: {
   command: string;
   declaredCommands?: string[];

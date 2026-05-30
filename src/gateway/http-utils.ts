@@ -1,4 +1,4 @@
-// gateway http utils helpers and runtime behavior.
+/** Shared HTTP auth exports and OpenAI-compatible request context helpers. */
 import { randomUUID } from "node:crypto";
 import type { IncomingMessage } from "node:http";
 import { resolveDefaultAgentId } from "../agents/agent-scope.js";
@@ -15,7 +15,7 @@ import { normalizeMessageChannel } from "../utils/message-channel.js";
 import { getHeader } from "./http-auth-utils.js";
 import { loadGatewayModelCatalog } from "./server-model-catalog.js";
 
-/** Re-exported API for src/gateway. */
+/** HTTP auth helpers re-exported for gateway route modules. */
 export {
   authorizeGatewayHttpRequestOrReply,
   authorizeScopedGatewayHttpRequestOrReply,
@@ -33,9 +33,9 @@ export {
   type GatewayHttpRequestAuthCheckResult,
 } from "./http-auth-utils.js";
 
-/** Reused constant for OPENCLAW MODEL ID behavior in src/gateway. */
+/** OpenAI-compatible model id that selects the default OpenClaw agent. */
 export const OPENCLAW_MODEL_ID = "openclaw";
-/** Reused constant for OPENCLAW DEFAULT MODEL ID behavior in src/gateway. */
+/** Explicit OpenAI-compatible model id for the default OpenClaw agent. */
 export const OPENCLAW_DEFAULT_MODEL_ID = "openclaw/default";
 
 function resolveAgentIdFromHeader(req: IncomingMessage): string | undefined {
@@ -49,7 +49,7 @@ function resolveAgentIdFromHeader(req: IncomingMessage): string | undefined {
   return normalizeAgentId(raw);
 }
 
-/** Reused helper for resolve Agent Id From Model behavior in src/gateway. */
+/** Resolves an OpenClaw agent id from an OpenAI-compatible model selector. */
 export function resolveAgentIdFromModel(
   model: string | undefined,
   cfg = getRuntimeConfig(),
@@ -73,7 +73,7 @@ export function resolveAgentIdFromModel(
   return normalizeAgentId(agentId);
 }
 
-/** Reused helper for resolve Open Ai Compat Model Override behavior in src/gateway. */
+/** Validates and resolves x-openclaw-model overrides for OpenAI-compatible routes. */
 export async function resolveOpenAiCompatModelOverride(params: {
   req: IncomingMessage;
   agentId: string;
@@ -130,7 +130,7 @@ export async function resolveOpenAiCompatModelOverride(params: {
   return { modelOverride: raw };
 }
 
-/** Reused helper for resolve Agent Id For Request behavior in src/gateway. */
+/** Resolves the target agent id from headers, model selector, or defaults. */
 export function resolveAgentIdForRequest(params: {
   req: IncomingMessage;
   model: string | undefined;
@@ -161,7 +161,7 @@ function resolveSessionKey(params: {
   return buildAgentMainSessionKey({ agentId: params.agentId, mainKey });
 }
 
-/** Reused helper for resolve Gateway Request Context behavior in src/gateway. */
+/** Builds agent, session, and message-channel context for HTTP chat requests. */
 export function resolveGatewayRequestContext(params: {
   req: IncomingMessage;
   model: string | undefined;

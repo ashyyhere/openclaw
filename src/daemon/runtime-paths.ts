@@ -1,4 +1,4 @@
-// daemon runtime paths helpers and runtime behavior.
+/** Resolves stable Node executable paths for daemon service installation. */
 import { execFile } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -111,7 +111,7 @@ async function isVersionManagedRealNodePath(
   }
 }
 
-/** Reused helper for is Version Managed Node Path behavior in src/daemon. */
+/** Detects Node executable paths managed by nvm/fnm/volta/asdf-like tools. */
 export function isVersionManagedNodePath(
   nodePath: string,
   platform: NodeJS.Platform = process.platform,
@@ -120,7 +120,7 @@ export function isVersionManagedNodePath(
   return VERSION_MANAGER_MARKERS.some((marker) => normalized.includes(marker));
 }
 
-/** Reused helper for is System Node Path behavior in src/daemon. */
+/** Checks whether a Node path matches known system install locations. */
 export function isSystemNodePath(
   nodePath: string,
   env: Record<string, string | undefined> = process.env,
@@ -133,7 +133,7 @@ export function isSystemNodePath(
   });
 }
 
-/** Reused helper for resolve System Node Path behavior in src/daemon. */
+/** Returns the first accessible system Node executable for the platform. */
 export async function resolveSystemNodePath(
   env: Record<string, string | undefined> = process.env,
   platform: NodeJS.Platform = process.platform,
@@ -150,7 +150,7 @@ export async function resolveSystemNodePath(
   return null;
 }
 
-/** Reused helper for resolve System Node Info behavior in src/daemon. */
+/** Resolves system Node path, version, and support status. */
 export async function resolveSystemNodeInfo(params: {
   env?: Record<string, string | undefined>;
   platform?: NodeJS.Platform;
@@ -183,7 +183,7 @@ export async function resolveSystemNodeInfo(params: {
   return firstAvailable;
 }
 
-/** Reused helper for render System Node Warning behavior in src/daemon. */
+/** Renders an operator warning when system Node is present but unsupported. */
 export function renderSystemNodeWarning(
   systemNode: SystemNodeInfo | null,
   selectedNodePath?: string,
@@ -195,10 +195,10 @@ export function renderSystemNodeWarning(
   const selectedLabel = selectedNodePath ? ` Using ${selectedNodePath} for the daemon.` : "";
   return `System Node ${versionLabel} at ${systemNode.path} is below the required Node 22.19+.${selectedLabel} Install Node 24 (recommended) or Node 22 LTS from nodejs.org or Homebrew.`;
 }
-/** Re-exported API for src/daemon, starting with resolve Stable Node Path. */
+/** Resolves symlink-stable Node paths for service command persistence. */
 export { resolveStableNodePath };
 
-/** Reused helper for resolve Preferred Node Path behavior in src/daemon. */
+/** Chooses the preferred supported Node executable for daemon runtime use. */
 export async function resolvePreferredNodePath(params: {
   env?: Record<string, string | undefined>;
   runtime?: string;

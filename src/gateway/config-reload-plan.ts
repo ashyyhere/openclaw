@@ -1,4 +1,4 @@
-// gateway config reload plan helpers and runtime behavior.
+/** Computes hot-reload versus restart actions for changed config paths. */
 import { type ChannelId, listChannelPlugins } from "../channels/plugins/index.js";
 import {
   getActivePluginChannelRegistryVersion,
@@ -7,10 +7,10 @@ import {
 } from "../plugins/runtime.js";
 import { isPlainObject } from "../utils.js";
 
-/** Shared type for Channel Kind in src/gateway. */
+/** Channel id type used by gateway reload planning. */
 export type ChannelKind = ChannelId;
 
-/** Shared type for Gateway Reload Plan in src/gateway. */
+/** Reload action plan derived from changed config paths. */
 export type GatewayReloadPlan = {
   changedPaths: string[];
   restartGateway: boolean;
@@ -33,7 +33,7 @@ type ReloadRule = {
   actions?: ReloadAction[];
 };
 
-/** Shared type for Config Reload Metadata in src/gateway. */
+/** Classification metadata for one config path reload rule. */
 export type ConfigReloadMetadata = {
   kind: ReloadRule["kind"];
 };
@@ -230,7 +230,7 @@ function matchRule(path: string): ReloadRule | null {
   return null;
 }
 
-/** Reused helper for resolve Config Reload Metadata behavior in src/gateway. */
+/** Resolves reload metadata for one dot-separated config path. */
 export function resolveConfigReloadMetadata(path: string): ConfigReloadMetadata {
   if (isPluginInstallTimestampPath(path)) {
     return { kind: "none" };
@@ -258,7 +258,7 @@ function getPluginInstallRecords(config: unknown): Record<string, unknown> {
   return isPlainObject(installs) ? installs : {};
 }
 
-/** Reused helper for list Plugin Install Timestamp Metadata Paths behavior in src/gateway. */
+/** Lists plugin install timestamp metadata paths that changed without restart impact. */
 export function listPluginInstallTimestampMetadataPaths(
   prevConfig: unknown,
   nextConfig: unknown,
@@ -284,7 +284,7 @@ export function listPluginInstallTimestampMetadataPaths(
   return paths;
 }
 
-/** Reused helper for list Plugin Install Whole Record Paths behavior in src/gateway. */
+/** Lists plugin install records added or removed as whole config paths. */
 export function listPluginInstallWholeRecordPaths(
   prevConfig: unknown,
   nextConfig: unknown,
@@ -305,7 +305,7 @@ export function listPluginInstallWholeRecordPaths(
   return paths;
 }
 
-/** Reused helper for build Gateway Reload Plan behavior in src/gateway. */
+/** Builds a complete reload/restart action plan for changed config paths. */
 export function buildGatewayReloadPlan(
   changedPaths: string[],
   options: GatewayReloadPlanOptions = {},

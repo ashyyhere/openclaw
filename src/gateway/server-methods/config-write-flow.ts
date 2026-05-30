@@ -1,4 +1,4 @@
-// gateway/server-methods config write flow helpers and runtime behavior.
+/** Shared config write helpers for gateway server methods. */
 import { isDeepStrictEqual } from "node:util";
 import {
   createConfigIO,
@@ -21,16 +21,16 @@ import { formatControlPlaneActor, type ControlPlaneActor } from "../control-plan
 import { parseRestartRequestParams } from "./restart-request.js";
 import type { GatewayRequestContext } from "./types.js";
 
-/** Shared type for Config Write Snapshot in src/gateway/server-methods. */
+/** Snapshot shape read before gateway config writes. */
 export type ConfigWriteSnapshot = Awaited<
   ReturnType<typeof readConfigFileSnapshotForWrite>
 >["snapshot"];
-/** Shared type for Config Write Options in src/gateway/server-methods. */
+/** Write options paired with a config write snapshot. */
 export type ConfigWriteOptions = Awaited<
   ReturnType<typeof readConfigFileSnapshotForWrite>
 >["writeOptions"];
 
-/** Reused helper for resolve Gateway Config Path behavior in src/gateway/server-methods. */
+/** Resolves the config path reported for a gateway config write. */
 export function resolveGatewayConfigPath(snapshot?: Pick<ConfigWriteSnapshot, "path">): string {
   return snapshot?.path ?? createConfigIO().configPath;
 }
@@ -53,7 +53,7 @@ function normalizeTrustedProxyAuthForCompare(auth: ReturnType<typeof resolveGate
   };
 }
 
-/** Reused helper for did Shared Gateway Auth Change behavior in src/gateway/server-methods. */
+/** Detects whether shared gateway auth changed between two configs. */
 export function didSharedGatewayAuthChange(prev: OpenClawConfig, next: OpenClawConfig): boolean {
   const prevResolvedAuth = resolveGatewayAuth({
     authConfig: prev.gateway?.auth,
@@ -97,7 +97,7 @@ export function didSharedGatewayAuthChange(prev: OpenClawConfig, next: OpenClawC
   return prevAuth.mode !== nextAuth.mode || !isDeepStrictEqual(prevAuth.secret, nextAuth.secret);
 }
 
-/** Reused helper for did Active Shared Gateway Auth Change behavior in src/gateway/server-methods. */
+/** Detects shared-auth changes against the active secrets-resolved config. */
 export function didActiveSharedGatewayAuthChange(params: {
   fallbackPrev: OpenClawConfig;
   next: OpenClawConfig;
@@ -212,7 +212,7 @@ async function tryWriteRestartSentinelPayload(
   }
 }
 
-/** Reused helper for commit Gateway Config Write behavior in src/gateway/server-methods. */
+/** Writes config, disables auth-store ref hydration, and queues post-write follow-up. */
 export async function commitGatewayConfigWrite(params: {
   snapshot: ConfigWriteSnapshot;
   writeOptions: ConfigWriteOptions;
@@ -241,7 +241,7 @@ export async function commitGatewayConfigWrite(params: {
   };
 }
 
-/** Reused helper for resolve Gateway Config Restart Write Result behavior in src/gateway/server-methods. */
+/** Builds restart sentinel payload and schedules restart after config writes. */
 export async function resolveGatewayConfigRestartWriteResult(params: {
   requestParams: unknown;
   kind: RestartSentinelPayload["kind"];

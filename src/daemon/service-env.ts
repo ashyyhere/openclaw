@@ -1,4 +1,4 @@
-// daemon service env helpers and runtime behavior.
+/** Builds durable daemon service environments and minimal PATH values. */
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -24,7 +24,7 @@ import {
 } from "./constants.js";
 import { resolveGatewayStateDir } from "./paths.js";
 
-/** Re-exported API for src/daemon, starting with is Node Version Manager Runtime. */
+/** Node runtime and Linux CA helpers used by service environment construction. */
 export { isNodeVersionManagerRuntime, resolveLinuxSystemCaBundle };
 
 type MinimalServicePathOptions = {
@@ -52,7 +52,7 @@ type SharedServiceEnvironmentFields = {
   nodeUseSystemCa: string | undefined;
 };
 
-/** Reused constant for SERVICE PROXY ENV KEYS behavior in src/daemon. */
+/** Proxy env keys considered when building daemon service environments. */
 export const SERVICE_PROXY_ENV_KEYS = [
   "OPENCLAW_PROXY_URL",
   "HTTP_PROXY",
@@ -333,7 +333,7 @@ function resolveLinuxUserBinDirs(
   return dirs;
 }
 
-/** Reused helper for get Minimal Service Path Parts behavior in src/daemon. */
+/** Builds ordered PATH parts suitable for durable daemon services. */
 export function getMinimalServicePathParts(options: MinimalServicePathOptions = {}): string[] {
   const platform = options.platform ?? process.platform;
   if (platform === "win32") {
@@ -376,7 +376,7 @@ export function getMinimalServicePathParts(options: MinimalServicePathOptions = 
   return parts;
 }
 
-/** Reused helper for get Minimal Service Path Parts From Env behavior in src/daemon. */
+/** Builds minimal service PATH parts using HOME and env-derived directories. */
 export function getMinimalServicePathPartsFromEnv(options: BuildServicePathOptions = {}): string[] {
   const env = options.env ?? process.env;
   return getMinimalServicePathParts({
@@ -386,7 +386,7 @@ export function getMinimalServicePathPartsFromEnv(options: BuildServicePathOptio
   });
 }
 
-/** Reused helper for build Minimal Service Path behavior in src/daemon. */
+/** Builds the PATH string installed into daemon service environments. */
 export function buildMinimalServicePath(options: BuildServicePathOptions = {}): string {
   const env = options.env ?? process.env;
   const platform = options.platform ?? process.platform;
@@ -405,7 +405,7 @@ function resolveGatewaySystemdUnitEnv(env: Record<string, string | undefined>): 
   return `${resolveGatewaySystemdServiceName(env.OPENCLAW_PROFILE)}.service`;
 }
 
-/** Reused helper for build Service Environment behavior in src/daemon. */
+/** Builds environment variables for the gateway daemon service. */
 export function buildServiceEnvironment(params: {
   env: Record<string, string | undefined>;
   port: number;
@@ -441,7 +441,7 @@ export function buildServiceEnvironment(params: {
   };
 }
 
-/** Reused helper for build Node Service Environment behavior in src/daemon. */
+/** Builds environment variables for the companion node daemon service. */
 export function buildNodeServiceEnvironment(params: {
   env: Record<string, string | undefined>;
   platform?: NodeJS.Platform;

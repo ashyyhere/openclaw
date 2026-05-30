@@ -1,8 +1,8 @@
-// daemon service env plan helpers and runtime behavior.
+/** Mutable plan for assembling daemon service environment variables. */
 import { normalizeEnvVarKey } from "../infra/host-env-security.js";
 import type { GatewayServiceEnvironmentValueSource } from "./service-types.js";
 
-/** Shared type for Service Env Source in src/daemon. */
+/** Source category explaining where a service env value came from. */
 export type ServiceEnvSource =
   | "state-dotenv"
   | "config-env"
@@ -12,7 +12,7 @@ export type ServiceEnvSource =
   | "existing-preserved"
   | "service-generated";
 
-/** Shared type for Service Env Plan Entry in src/daemon. */
+/** One normalized service env value recorded in a mutable plan. */
 export type ServiceEnvPlanEntry = {
   rawKey: string;
   normalizedKey: string;
@@ -20,14 +20,14 @@ export type ServiceEnvPlanEntry = {
   source: ServiceEnvSource;
 };
 
-/** Shared type for Mutable Service Env Plan in src/daemon. */
+/** Mutable service env plan with raw env and normalized source tracking. */
 export type MutableServiceEnvPlan = {
   environment: Record<string, string | undefined>;
   environmentValueSources: Record<string, GatewayServiceEnvironmentValueSource | undefined>;
   entriesByNormalizedKey: Map<string, ServiceEnvPlanEntry>;
 };
 
-/** Reused helper for create Mutable Service Env Plan behavior in src/daemon. */
+/** Creates an empty mutable service environment plan. */
 export function createMutableServiceEnvPlan(): MutableServiceEnvPlan {
   return {
     environment: {},
@@ -36,12 +36,12 @@ export function createMutableServiceEnvPlan(): MutableServiceEnvPlan {
   };
 }
 
-/** Reused helper for normalize Service Env Plan Key behavior in src/daemon. */
+/** Normalizes a service env key for portable case-insensitive tracking. */
 export function normalizeServiceEnvPlanKey(rawKey: string): string | undefined {
   return normalizeEnvVarKey(rawKey, { portable: true })?.toUpperCase();
 }
 
-/** Reused helper for add Service Env Plan Entries behavior in src/daemon. */
+/** Adds raw env entries to a mutable plan with normalized source metadata. */
 export function addServiceEnvPlanEntries(
   plan: MutableServiceEnvPlan,
   entries: Record<string, string | undefined>,
@@ -84,7 +84,7 @@ export function addServiceEnvPlanEntries(
   }
 }
 
-/** Reused helper for compact Service Env Plan Value Sources behavior in src/daemon. */
+/** Removes value-source metadata for env keys no longer present in the plan. */
 export function compactServiceEnvPlanValueSources(plan: MutableServiceEnvPlan): void {
   for (const key of Object.keys(plan.environmentValueSources)) {
     if (!Object.hasOwn(plan.environment, key)) {
