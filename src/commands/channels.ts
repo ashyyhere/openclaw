@@ -1,28 +1,28 @@
 /** Public barrel for channel management command implementations. */
 export type { ChannelsAddOptions } from "./channels/add.js";
-/** Re-exported API for src/commands, starting with channels Add Command. */
+/** Registers the `channels add` command implementation. */
 export { channelsAddCommand } from "./channels/add.js";
-/** Re-exported API for src/commands, starting with Channels Capabilities Options. */
+/** Options accepted by the `channels capabilities` command. */
 export type { ChannelsCapabilitiesOptions } from "./channels/capabilities.js";
-/** Re-exported API for src/commands, starting with channels Capabilities Command. */
+/** Registers the `channels capabilities` command implementation. */
 export { channelsCapabilitiesCommand } from "./channels/capabilities.js";
-/** Re-exported API for src/commands, starting with Channels List Options. */
+/** Options accepted by the `channels list` command. */
 export type { ChannelsListOptions } from "./channels/list.js";
-/** Re-exported API for src/commands, starting with channels List Command. */
+/** Registers the `channels list` command implementation. */
 export { channelsListCommand } from "./channels/list.js";
-/** Re-exported API for src/commands, starting with Channels Logs Options. */
+/** Options accepted by the `channels logs` command. */
 export type { ChannelsLogsOptions } from "./channels/logs.js";
-/** Re-exported API for src/commands, starting with channels Logs Command. */
+/** Registers the `channels logs` command implementation. */
 export { channelsLogsCommand } from "./channels/logs.js";
-/** Re-exported API for src/commands, starting with Channels Remove Options. */
+/** Options accepted by the `channels remove` command. */
 export type { ChannelsRemoveOptions } from "./channels/remove.js";
-/** Re-exported API for src/commands, starting with channels Remove Command. */
+/** Registers the `channels remove` command implementation. */
 export { channelsRemoveCommand } from "./channels/remove.js";
-/** Re-exported API for src/commands, starting with Channels Resolve Options. */
+/** Options accepted by the `channels resolve` command. */
 export type { ChannelsResolveOptions } from "./channels/resolve.js";
-/** Re-exported API for src/commands, starting with channels Resolve Command. */
+/** Registers the `channels resolve` command implementation. */
 export { channelsResolveCommand } from "./channels/resolve.js";
-/** Re-exported API for src/commands, starting with Channels Status Options. */
+/** Options accepted by the `channels status` command. */
 export type { ChannelsStatusOptions } from "./channels/status.js";
-/** Re-exported API for src/commands, starting with channels Status Command. */
+/** Registers and formats the `channels status` command implementation. */
 export { channelsStatusCommand, formatGatewayChannelsStatusLines } from "./channels/status.js";

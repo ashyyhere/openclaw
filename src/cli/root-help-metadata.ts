@@ -1,7 +1,7 @@
 /** Reads precomputed startup metadata for root help rendering. */
 import { readCliStartupMetadata } from "./startup-metadata.js";
 
-/** Shared type for Precomputed Subcommand Help Name in src/cli. */
+/** Subcommands whose help text may be precomputed into startup metadata. */
 export type PrecomputedSubcommandHelpName = "doctor" | "gateway" | "models" | "plugins";
 
 let precomputedRootHelpText: string | null | undefined;
@@ -42,35 +42,35 @@ function loadPrecomputedHelpText(
   return null;
 }
 
-/** Reused helper for load Precomputed Root Help Text behavior in src/cli. */
+/** Loads cached root help text from startup metadata when available. */
 export function loadPrecomputedRootHelpText(): string | null {
   return loadPrecomputedHelpText("rootHelpText", precomputedRootHelpText, (value) => {
     precomputedRootHelpText = value;
   });
 }
 
-/** Reused helper for load Precomputed Browser Help Text behavior in src/cli. */
+/** Loads cached browser help text from startup metadata when available. */
 export function loadPrecomputedBrowserHelpText(): string | null {
   return loadPrecomputedHelpText("browserHelpText", precomputedBrowserHelpText, (value) => {
     precomputedBrowserHelpText = value;
   });
 }
 
-/** Reused helper for load Precomputed Secrets Help Text behavior in src/cli. */
+/** Loads cached secrets help text from startup metadata when available. */
 export function loadPrecomputedSecretsHelpText(): string | null {
   return loadPrecomputedHelpText("secretsHelpText", precomputedSecretsHelpText, (value) => {
     precomputedSecretsHelpText = value;
   });
 }
 
-/** Reused helper for load Precomputed Nodes Help Text behavior in src/cli. */
+/** Loads cached nodes help text from startup metadata when available. */
 export function loadPrecomputedNodesHelpText(): string | null {
   return loadPrecomputedHelpText("nodesHelpText", precomputedNodesHelpText, (value) => {
     precomputedNodesHelpText = value;
   });
 }
 
-/** Reused helper for load Precomputed Subcommand Help Text behavior in src/cli. */
+/** Loads cached help text for a supported subcommand. */
 export function loadPrecomputedSubcommandHelpText(commandName: string): string | null {
   if (!isPrecomputedSubcommandHelpName(commandName)) {
     return null;
@@ -96,7 +96,7 @@ export function loadPrecomputedSubcommandHelpText(commandName: string): string |
   return null;
 }
 
-/** Reused helper for output Precomputed Root Help Text behavior in src/cli. */
+/** Writes precomputed root help to stdout when metadata contains it. */
 export function outputPrecomputedRootHelpText(): boolean {
   const rootHelpText = loadPrecomputedRootHelpText();
   if (!rootHelpText) {
@@ -106,7 +106,7 @@ export function outputPrecomputedRootHelpText(): boolean {
   return true;
 }
 
-/** Reused helper for output Precomputed Browser Help Text behavior in src/cli. */
+/** Writes precomputed browser help to stdout when metadata contains it. */
 export function outputPrecomputedBrowserHelpText(): boolean {
   const browserHelpText = loadPrecomputedBrowserHelpText();
   if (!browserHelpText) {
@@ -116,7 +116,7 @@ export function outputPrecomputedBrowserHelpText(): boolean {
   return true;
 }
 
-/** Reused helper for output Precomputed Secrets Help Text behavior in src/cli. */
+/** Writes precomputed secrets help to stdout when metadata contains it. */
 export function outputPrecomputedSecretsHelpText(): boolean {
   const secretsHelpText = loadPrecomputedSecretsHelpText();
   if (!secretsHelpText) {
@@ -126,7 +126,7 @@ export function outputPrecomputedSecretsHelpText(): boolean {
   return true;
 }
 
-/** Reused helper for output Precomputed Nodes Help Text behavior in src/cli. */
+/** Writes precomputed nodes help to stdout when metadata contains it. */
 export function outputPrecomputedNodesHelpText(): boolean {
   const nodesHelpText = loadPrecomputedNodesHelpText();
   if (!nodesHelpText) {
@@ -136,7 +136,7 @@ export function outputPrecomputedNodesHelpText(): boolean {
   return true;
 }
 
-/** Reused helper for output Precomputed Subcommand Help Text behavior in src/cli. */
+/** Writes precomputed subcommand help to stdout when metadata contains it. */
 export function outputPrecomputedSubcommandHelpText(commandName: string): boolean {
   const helpText = loadPrecomputedSubcommandHelpText(commandName);
   if (!helpText) {
@@ -173,7 +173,7 @@ function setPrecomputedSubcommandHelpText(
   };
 }
 
-/** Reused constant for testing behavior in src/cli. */
+/** Test hooks for resetting precomputed help metadata caches. */
 export const testing = {
   resetPrecomputedRootHelpTextForTests(): void {
     precomputedRootHelpText = undefined;
@@ -183,5 +183,5 @@ export const testing = {
     precomputedSubcommandHelpText = undefined;
   },
 };
-/** Re-exported API for src/cli, starting with testing. */
+/** Private test-only alias for root help metadata cache hooks. */
 export { testing as __testing };
