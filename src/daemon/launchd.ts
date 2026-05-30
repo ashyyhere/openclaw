@@ -1,4 +1,4 @@
-// daemon launchd helpers and runtime behavior.
+// macOS LaunchAgent service management for the OpenClaw gateway.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { sanitizeForLog } from "../../packages/terminal-core/src/ansi.js";
@@ -49,7 +49,7 @@ const LAUNCH_AGENT_ENV_DIR_NAME = "service-env";
 const LAUNCH_AGENT_STDERR_PATH = "/dev/null";
 const OPENCLAW_UPDATE_LAUNCHD_LABEL_PREFIX = "ai.openclaw.update.";
 
-/** Shared type for Stale Open Claw Update Launchd Job in src/daemon. */
+/** launchctl list entry for an older update helper job that can be disabled. */
 export type StaleOpenClawUpdateLaunchdJob = {
   label: string;
   pid?: number;
@@ -79,7 +79,7 @@ function isCurrentGatewayLaunchdLabel(label: string, env: NodeJS.ProcessEnv): bo
   return Boolean(configuredLabel && label === configuredLabel);
 }
 
-/** Reused helper for is Open Claw Update Launchd Label behavior in src/daemon. */
+/** Detects labels belonging to OpenClaw update LaunchAgent helper jobs. */
 export function isOpenClawUpdateLaunchdLabel(label: unknown): label is string {
   return normalizeOpenClawUpdateLaunchdLabel(label) !== null;
 }
@@ -231,7 +231,7 @@ async function prepareLaunchAgentProgramArguments(params: {
   };
 }
 
-/** Reused helper for resolve Launch Agent Plist Path behavior in src/daemon. */
+/** Resolves the managed gateway LaunchAgent plist path for the active profile. */
 export function resolveLaunchAgentPlistPath(env: GatewayServiceEnv): string {
   const label = resolveLaunchAgentLabel({ env });
   return resolveLaunchAgentPlistPathForLabel(env, label);
@@ -245,7 +245,7 @@ function resolveLaunchAgentEnvironmentReadOptions(env: GatewayServiceEnv, label:
   };
 }
 
-/** Reused helper for read Launch Agent Program Arguments behavior in src/daemon. */
+/** Reads the installed LaunchAgent command and generated env wrapper metadata. */
 export async function readLaunchAgentProgramArguments(
   env: GatewayServiceEnv,
 ): Promise<GatewayServiceCommandConfig | null> {
@@ -294,7 +294,7 @@ async function execLaunchctl(
   return await execFileUtf8(file, fileArgs, isWindows ? { windowsHide: true } : {});
 }
 
-/** Reused helper for parse Launchctl List Open Claw Update Jobs behavior in src/daemon. */
+/** Parses launchctl list output for stale OpenClaw update helper jobs. */
 export function parseLaunchctlListOpenClawUpdateJobs(
   output: string,
 ): StaleOpenClawUpdateLaunchdJob[] {
@@ -321,7 +321,7 @@ export function parseLaunchctlListOpenClawUpdateJobs(
   return jobs.toSorted((a, b) => a.label.localeCompare(b.label));
 }
 
-/** Reused helper for find Stale Open Claw Update Launchd Jobs behavior in src/daemon. */
+/** Lists stale OpenClaw update helper jobs from the current launchd domain. */
 export async function findStaleOpenClawUpdateLaunchdJobs(): Promise<
   StaleOpenClawUpdateLaunchdJob[]
 > {
@@ -335,7 +335,7 @@ export async function findStaleOpenClawUpdateLaunchdJobs(): Promise<
   return parseLaunchctlListOpenClawUpdateJobs(result.stdout);
 }
 
-/** Reused helper for remove Open Claw Update Launchd Job behavior in src/daemon. */
+/** Removes a stale OpenClaw update helper job from launchd. */
 export async function removeOpenClawUpdateLaunchdJob(label: string): Promise<boolean> {
   const normalizedLabel = normalizeOpenClawUpdateLaunchdLabel(label);
   if (process.platform !== "darwin" || !normalizedLabel) {
@@ -345,7 +345,7 @@ export async function removeOpenClawUpdateLaunchdJob(label: string): Promise<boo
   return result.code === 0;
 }
 
-/** Reused helper for disable Open Claw Update Launchd Job behavior in src/daemon. */
+/** Persists launchd disabled state for a stale OpenClaw update helper job. */
 export async function disableOpenClawUpdateLaunchdJob(label: string): Promise<boolean> {
   const normalizedLabel = normalizeOpenClawUpdateLaunchdLabel(label);
   if (process.platform !== "darwin" || !normalizedLabel) {
@@ -356,7 +356,7 @@ export async function disableOpenClawUpdateLaunchdJob(label: string): Promise<bo
   return result.code === 0;
 }
 
-/** Reused helper for disable Current Open Claw Update Launchd Job behavior in src/daemon. */
+/** Disables the update helper job that is currently running this process. */
 export async function disableCurrentOpenClawUpdateLaunchdJob(
   env: NodeJS.ProcessEnv = process.env,
 ): Promise<boolean> {
@@ -510,7 +510,7 @@ type LaunchctlPrintInfo = {
   lastExitReason?: string;
 };
 
-/** Reused helper for parse Launchctl Print behavior in src/daemon. */
+/** Parses selected launchctl print fields into gateway runtime state. */
 export function parseLaunchctlPrint(output: string): LaunchctlPrintInfo {
   const entries = parseKeyValueOutput(output, "=");
   const info: LaunchctlPrintInfo = {};
@@ -539,7 +539,7 @@ export function parseLaunchctlPrint(output: string): LaunchctlPrintInfo {
   return info;
 }
 
-/** Reused helper for is Launch Agent Loaded behavior in src/daemon. */
+/** Checks whether the gateway LaunchAgent is loaded in the GUI domain. */
 export async function isLaunchAgentLoaded(args: GatewayServiceEnvArgs): Promise<boolean> {
   const domain = resolveGuiDomain();
   const label = resolveLaunchAgentLabel({ env: args.env });
@@ -547,7 +547,7 @@ export async function isLaunchAgentLoaded(args: GatewayServiceEnvArgs): Promise<
   return res.code === 0;
 }
 
-/** Reused helper for is Launch Agent Listed behavior in src/daemon. */
+/** Checks whether launchctl list includes the gateway LaunchAgent label. */
 export async function isLaunchAgentListed(args: GatewayServiceEnvArgs): Promise<boolean> {
   const label = resolveLaunchAgentLabel({ env: args.env });
   const res = await execLaunchctl(["list"]);
@@ -557,7 +557,7 @@ export async function isLaunchAgentListed(args: GatewayServiceEnvArgs): Promise<
   return res.stdout.split(/\r?\n/).some((line) => line.trim().split(/\s+/).at(-1) === label);
 }
 
-/** Reused helper for launch Agent Plist Exists behavior in src/daemon. */
+/** Checks whether the managed gateway LaunchAgent plist exists on disk. */
 export async function launchAgentPlistExists(env: GatewayServiceEnv): Promise<boolean> {
   try {
     const plistPath = resolveLaunchAgentPlistPath(env);
@@ -568,7 +568,7 @@ export async function launchAgentPlistExists(env: GatewayServiceEnv): Promise<bo
   }
 }
 
-/** Reused helper for read Launch Agent Runtime behavior in src/daemon. */
+/** Reads launchd runtime status plus plist-presence diagnostics. */
 export async function readLaunchAgentRuntime(
   env: Record<string, string | undefined>,
 ): Promise<GatewayServiceRuntime> {
@@ -606,7 +606,7 @@ function isLaunchctlAlreadyLoaded(res: { stdout: string; stderr: string; code: n
   return res.code === 130 || detail.includes("already exists in domain");
 }
 
-/** Reused helper for repair Launch Agent Bootstrap behavior in src/daemon. */
+/** Re-enables and bootstraps the gateway LaunchAgent when supervision is missing. */
 export async function repairLaunchAgentBootstrap(args: {
   env?: Record<string, string | undefined>;
 }): Promise<LaunchAgentBootstrapRepairResult> {
@@ -647,7 +647,7 @@ export async function repairLaunchAgentBootstrap(args: {
   return { ok: true, status: repairStatus };
 }
 
-/** Reused helper for uninstall Launch Agent behavior in src/daemon. */
+/** Unloads the gateway LaunchAgent and moves its plist to Trash when present. */
 export async function uninstallLaunchAgent({
   env,
   stdout,
@@ -791,7 +791,7 @@ async function assertGatewayPortReleasedAfterStop(env: GatewayServiceEnv): Promi
   );
 }
 
-/** Reused helper for stop Launch Agent behavior in src/daemon. */
+/** Stops the gateway LaunchAgent, optionally persisting launchd disable state. */
 export async function stopLaunchAgent({
   stdout,
   env,
@@ -910,7 +910,7 @@ async function writeLaunchAgentPlist({
   return { plistPath, stdoutPath };
 }
 
-/** Reused helper for stage Launch Agent behavior in src/daemon. */
+/** Writes the gateway LaunchAgent plist and env wrapper without loading it. */
 export async function stageLaunchAgent({
   stdout,
   ...args
@@ -942,7 +942,7 @@ async function activateLaunchAgent(params: { env: GatewayServiceEnv; plistPath: 
   });
 }
 
-/** Reused helper for install Launch Agent behavior in src/daemon. */
+/** Writes, enables, and bootstraps the gateway LaunchAgent. */
 export async function installLaunchAgent(
   args: GatewayServiceInstallArgs,
 ): Promise<{ plistPath: string }> {
@@ -1031,7 +1031,7 @@ async function ensureLaunchAgentLoadedAfterFailure(params: {
   }
 }
 
-/** Reused helper for restart Launch Agent behavior in src/daemon. */
+/** Restarts or schedules a safe restart for the managed gateway LaunchAgent. */
 export async function restartLaunchAgent({
   stdout,
   env,
