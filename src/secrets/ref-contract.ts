@@ -1,4 +1,4 @@
-// secrets ref contract helpers and runtime behavior.
+// Defines secret reference id, provider alias, and default-provider contracts.
 import {
   DEFAULT_SECRET_PROVIDER_ALIAS,
   type SecretRef,
@@ -6,24 +6,24 @@ import {
 } from "../config/types.secrets.js";
 
 const FILE_SECRET_REF_SEGMENT_PATTERN = /^(?:[^~]|~0|~1)*$/;
-/** Reused constant for SECRET PROVIDER ALIAS PATTERN behavior in src/secrets. */
+/** Valid provider alias format for secret ref providers. */
 export const SECRET_PROVIDER_ALIAS_PATTERN = /^[a-z][a-z0-9_-]{0,63}$/;
 const EXEC_SECRET_REF_ID_PATTERN = /^[A-Za-z0-9][A-Za-z0-9._:/#-]{0,255}$/;
 
-/** Reused constant for SINGLE VALUE FILE REF ID behavior in src/secrets. */
+/** Reserved file-secret id for files that contain only one secret value. */
 export const SINGLE_VALUE_FILE_REF_ID = "value";
-/** Reused constant for FILE SECRET REF ID ABSOLUTE JSON SCHEMA PATTERN behavior in src/secrets. */
+/** JSON schema pattern requiring JSON-pointer file secret ids to be absolute. */
 export const FILE_SECRET_REF_ID_ABSOLUTE_JSON_SCHEMA_PATTERN = "^/";
-/** Reused constant for FILE SECRET REF ID INVALID ESCAPE JSON SCHEMA PATTERN behavior in src/secrets. */
+/** JSON schema pattern that rejects invalid JSON-pointer escape sequences. */
 export const FILE_SECRET_REF_ID_INVALID_ESCAPE_JSON_SCHEMA_PATTERN = "~(?:[^01]|$)";
-/** Reused constant for EXEC SECRET REF ID JSON SCHEMA PATTERN behavior in src/secrets. */
+/** JSON schema pattern for exec-secret ids with path traversal segments excluded. */
 export const EXEC_SECRET_REF_ID_JSON_SCHEMA_PATTERN =
   "^(?!.*(?:^|/)\\.{1,2}(?:/|$))[A-Za-z0-9][A-Za-z0-9._:/#-]{0,255}$";
 
-/** Shared type for Exec Secret Ref Id Validation Reason in src/secrets. */
+/** Failure reason returned when an exec secret ref id is invalid. */
 export type ExecSecretRefIdValidationReason = "pattern" | "traversal-segment";
 
-/** Shared type for Exec Secret Ref Id Validation Result in src/secrets. */
+/** Validation result for exec secret ref ids. */
 export type ExecSecretRefIdValidationResult =
   | { ok: true }
   | {
@@ -31,7 +31,7 @@ export type ExecSecretRefIdValidationResult =
       reason: ExecSecretRefIdValidationReason;
     };
 
-/** Shared type for Secret Ref Defaults Carrier in src/secrets. */
+/** Minimal config shape needed to resolve default providers for secret refs. */
 export type SecretRefDefaultsCarrier = {
   secrets?: {
     defaults?: {
@@ -43,12 +43,12 @@ export type SecretRefDefaultsCarrier = {
   };
 };
 
-/** Reused helper for secret Ref Key behavior in src/secrets. */
+/** Builds a stable cache key for one secret ref. */
 export function secretRefKey(ref: SecretRef): string {
   return `${ref.source}:${ref.provider}:${ref.id}`;
 }
 
-/** Reused helper for resolve Default Secret Provider Alias behavior in src/secrets. */
+/** Resolves the provider alias used when a secret ref omits provider. */
 export function resolveDefaultSecretProviderAlias(
   config: SecretRefDefaultsCarrier,
   source: SecretRefSource,
@@ -78,7 +78,7 @@ export function resolveDefaultSecretProviderAlias(
   return DEFAULT_SECRET_PROVIDER_ALIAS;
 }
 
-/** Reused helper for is Valid File Secret Ref Id behavior in src/secrets. */
+/** Validates file secret ids, including JSON-pointer paths and single-value refs. */
 export function isValidFileSecretRefId(value: string): boolean {
   if (value === SINGLE_VALUE_FILE_REF_ID) {
     return true;
@@ -92,12 +92,12 @@ export function isValidFileSecretRefId(value: string): boolean {
     .every((segment) => FILE_SECRET_REF_SEGMENT_PATTERN.test(segment));
 }
 
-/** Reused helper for is Valid Secret Provider Alias behavior in src/secrets. */
+/** Validates a secret provider alias. */
 export function isValidSecretProviderAlias(value: string): boolean {
   return SECRET_PROVIDER_ALIAS_PATTERN.test(value);
 }
 
-/** Reused helper for validate Exec Secret Ref Id behavior in src/secrets. */
+/** Validates exec secret ids and reports pattern or traversal failures. */
 export function validateExecSecretRefId(value: string): ExecSecretRefIdValidationResult {
   if (!EXEC_SECRET_REF_ID_PATTERN.test(value)) {
     return { ok: false, reason: "pattern" };
@@ -110,12 +110,12 @@ export function validateExecSecretRefId(value: string): ExecSecretRefIdValidatio
   return { ok: true };
 }
 
-/** Reused helper for is Valid Exec Secret Ref Id behavior in src/secrets. */
+/** Returns whether an exec secret ref id is valid. */
 export function isValidExecSecretRefId(value: string): boolean {
   return validateExecSecretRefId(value).ok;
 }
 
-/** Reused helper for format Exec Secret Ref Id Validation Message behavior in src/secrets. */
+/** Formats the human validation message for invalid exec secret ref ids. */
 export function formatExecSecretRefIdValidationMessage(): string {
   return [
     "Exec secret reference id must match /^[A-Za-z0-9][A-Za-z0-9._:/#-]{0,255}$/",
