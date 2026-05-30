@@ -1,4 +1,4 @@
-// extensions/qa-lab/src suite runtime agent media helpers and runtime behavior.
+// QA Lab suite-runtime media helpers configure image generation and find generated media.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { buildQaImageGenerationConfigPatch } from "./providers/image-generation.js";
@@ -100,4 +100,5 @@ async function ensureImageGenerationConfigured(env: QaSuiteRuntimeEnv) {
   await waitForTransportReady(env, 60_000);
 }
 
+/** Media helpers exposed to YAML scenario flows. */
 export { ensureImageGenerationConfigured, extractMediaPathFromText, resolveGeneratedImagePath };

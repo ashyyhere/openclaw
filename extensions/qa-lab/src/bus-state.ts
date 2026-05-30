@@ -1,4 +1,4 @@
-// extensions/qa-lab/src bus state helpers and runtime behavior.
+// QA Lab bus state stores normalized conversations, messages, threads, events, and waiters.
 import { randomUUID } from "node:crypto";
 import { sanitizeQaBusToolCalls } from "openclaw/plugin-sdk/qa-channel-protocol";
 import {
@@ -68,6 +68,7 @@ type QaBusEventSeed =
       senderId: string;
     };
 
+/** Creates an in-memory QA bus state container with mutation and query helpers. */
 export function createQaBusState() {
   const conversations = new Map<string, QaBusConversation>();
   const threads = new Map<string, QaBusThread>();
@@ -301,4 +302,5 @@ export function createQaBusState() {
   };
 }
 
+/** In-memory QA bus state API returned by `createQaBusState`. */
 export type QaBusState = ReturnType<typeof createQaBusState>;

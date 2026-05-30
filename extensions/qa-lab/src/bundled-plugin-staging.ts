@@ -1,4 +1,4 @@
-// extensions/qa-lab/src bundled plugin staging helpers and runtime behavior.
+// QA Lab bundled-plugin staging helpers assemble temporary plugin trees for runtime tests.
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -70,6 +70,7 @@ function isQaOpenAiResponsesProviderConfig(config: ModelProviderConfig) {
   );
 }
 
+/** Resolves the source directory for a bundled plugin id in source or built trees. */
 export function resolveQaBundledPluginSourceDir(params: { repoRoot: string; pluginId: string }) {
   assertSafeQaBundledPluginId(params.pluginId);
   const candidates = [
@@ -132,6 +133,7 @@ function findQaBundledPluginDirsByManifestId(params: {
   return candidates;
 }
 
+/** Resolves owning plugin ids for provider ids used by QA runtime config. */
 export async function resolveQaOwnerPluginIdsForProviderIds(params: {
   repoRoot: string;
   providerIds: readonly string[];
@@ -346,6 +348,7 @@ async function seedQaStagedBuiltTreeRoots(params: {
   }
 }
 
+/** Resolves the minimum host version required by staged QA bundled plugins. */
 export async function resolveQaRuntimeHostVersion(params: {
   repoRoot: string;
   allowedPluginIds: readonly string[];
@@ -387,6 +390,7 @@ export async function resolveQaRuntimeHostVersion(params: {
   return selected?.label;
 }
 
+/** Creates a temporary staged bundled-plugin tree for QA runtime processes. */
 export async function createQaBundledPluginsDir(params: {
   repoRoot: string;
   tempRoot: string;
