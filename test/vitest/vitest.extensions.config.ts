@@ -1,4 +1,4 @@
-// test/vitest vitest extensions config helpers and runtime behavior.
+// Vitest project config for bundled plugin tests not owned by narrower plugin lanes.
 import { BUNDLED_PLUGIN_TEST_GLOB } from "./vitest.bundled-plugin-paths.ts";
 import { extensionExcludedChannelTestGlobs } from "./vitest.channel-paths.mjs";
 import { acpxExtensionTestRoots } from "./vitest.extension-acpx-paths.mjs";
@@ -27,12 +27,14 @@ import { zaloExtensionTestRoots } from "./vitest.extension-zalo-paths.mjs";
 import { loadPatternListFromEnv } from "./vitest.pattern-file.ts";
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
+/** Load bundled plugin include patterns from the Vitest include-file env var. */
 export function loadIncludePatternsFromEnv(
   env: Record<string, string | undefined> = process.env,
 ): string[] | null {
   return loadPatternListFromEnv("OPENCLAW_VITEST_INCLUDE_FILE", env);
 }
 
+/** Create the shared bundled plugin Vitest config excluding plugin-specific lanes. */
 export function createExtensionsVitestConfig(
   env: Record<string, string | undefined> = process.env,
 ) {
@@ -71,4 +73,5 @@ export function createExtensionsVitestConfig(
   });
 }
 
+/** Default bundled extensions Vitest project configuration. */
 export default createExtensionsVitestConfig();

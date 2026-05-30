@@ -1,6 +1,7 @@
-// test/vitest vitest cron config helpers and runtime behavior.
+// Vitest project config for serialized cron tests.
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
+/** Create the scoped Vitest config for cron tests with serialized execution. */
 export function createCronVitestConfig(env?: Record<string, string | undefined>) {
   const config = createScopedVitestConfig(["src/cron/**/*.test.ts"], {
     dir: "src",
@@ -20,4 +21,5 @@ export function createCronVitestConfig(env?: Record<string, string | undefined>)
   return config;
 }
 
+/** Default cron Vitest project configuration. */
 export default createCronVitestConfig();

@@ -1,6 +1,7 @@
-// test/vitest vitest runtime config config helpers and runtime behavior.
+// Vitest project config for runtime config tests with early sequencing.
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
+/** Create the scoped Vitest config for runtime config tests. */
 export function createRuntimeConfigVitestConfig(env?: Record<string, string | undefined>) {
   const config = createScopedVitestConfig(["src/config/**/*.test.ts"], {
     dir: "src",
@@ -21,4 +22,5 @@ export function createRuntimeConfigVitestConfig(env?: Record<string, string | un
   };
 }
 
+/** Default runtime-config Vitest project configuration. */
 export default createRuntimeConfigVitestConfig();
