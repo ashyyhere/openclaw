@@ -10,12 +10,12 @@ import {
 import { pathExists, shortenHomePath } from "../utils.js";
 import { buildCleanupPlan, isPathWithin } from "./cleanup-utils.js";
 
-/** Shared type for Backup Asset Kind in src/commands. */
+/** Asset category included in an OpenClaw backup. */
 export type BackupAssetKind = "state" | "config" | "credentials" | "workspace";
-/** Shared type for Backup Skip Reason in src/commands. */
+/** Reason a backup candidate was skipped. */
 export type BackupSkipReason = "covered" | "missing";
 
-/** Shared type for Backup Asset in src/commands. */
+/** Backup asset selected for archive inclusion. */
 export type BackupAsset = {
   kind: BackupAssetKind;
   sourcePath: string;
@@ -23,7 +23,7 @@ export type BackupAsset = {
   archivePath: string;
 };
 
-/** Shared type for Skipped Backup Asset in src/commands. */
+/** Backup candidate omitted because it was missing or covered by another asset. */
 export type SkippedBackupAsset = {
   kind: BackupAssetKind;
   sourcePath: string;
@@ -32,7 +32,7 @@ export type SkippedBackupAsset = {
   coveredBy?: string;
 };
 
-/** Shared type for Backup Plan in src/commands. */
+/** Full backup plan with included and skipped assets. */
 export type BackupPlan = {
   stateDir: string;
   configPath: string;
@@ -63,7 +63,7 @@ function backupAssetPriority(kind: BackupAssetKind): number {
   throw new Error("Unsupported backup asset kind");
 }
 
-/** Reused helper for format Backup Archive Timestamp behavior in src/commands. */
+/** Formats a filesystem-safe timestamp for backup archive names. */
 export function formatBackupArchiveTimestamp(
   nowMs = Date.now(),
   offsetMinutes = -new Date(nowMs).getTimezoneOffset(),
@@ -84,17 +84,17 @@ export function formatBackupArchiveTimestamp(
   return `${year}-${month}-${day}T${hours}-${minutes}-${seconds}.${millis}${sign}${offsetHours}-${offsetMins}`;
 }
 
-/** Reused helper for build Backup Archive Root behavior in src/commands. */
+/** Builds the root directory name inside a backup archive. */
 export function buildBackupArchiveRoot(nowMs = Date.now()): string {
   return `${formatBackupArchiveTimestamp(nowMs)}-openclaw-backup`;
 }
 
-/** Reused helper for build Backup Archive Basename behavior in src/commands. */
+/** Builds the `.tar.gz` backup archive basename. */
 export function buildBackupArchiveBasename(nowMs = Date.now()): string {
   return `${buildBackupArchiveRoot(nowMs)}.tar.gz`;
 }
 
-/** Reused helper for encode Absolute Path For Backup Archive behavior in src/commands. */
+/** Encodes an absolute source path into a portable archive-relative path. */
 export function encodeAbsolutePathForBackupArchive(sourcePath: string): string {
   const normalized = sourcePath.replaceAll("\\", "/");
   const windowsMatch = normalized.match(/^([A-Za-z]):\/(.*)$/);
@@ -109,12 +109,12 @@ export function encodeAbsolutePathForBackupArchive(sourcePath: string): string {
   return path.posix.join("relative", normalized);
 }
 
-/** Reused helper for build Backup Archive Path behavior in src/commands. */
+/** Builds the archive payload path for one source path. */
 export function buildBackupArchivePath(archiveRoot: string, sourcePath: string): string {
   return path.posix.join(archiveRoot, "payload", encodeAbsolutePathForBackupArchive(sourcePath));
 }
 
-/** Reused helper for resolve Backup Plan From Paths behavior in src/commands. */
+/** Resolves included/skipped backup assets from explicit filesystem paths. */
 export async function resolveBackupPlanFromPaths(params: {
   stateDir: string;
   configPath: string;
@@ -275,7 +275,7 @@ async function canonicalizeExistingPath(targetPath: string): Promise<string> {
   }
 }
 
-/** Reused helper for resolve Backup Plan From Disk behavior in src/commands. */
+/** Resolves a backup plan from current config, state, credentials, and workspaces. */
 export async function resolveBackupPlanFromDisk(
   params: {
     includeWorkspace?: boolean;
