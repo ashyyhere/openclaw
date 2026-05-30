@@ -1,4 +1,5 @@
-// plugins activation context helpers and runtime behavior.
+// Plugin activation input assembly. This keeps raw config, auto-enabled config,
+// normalized plugin state, and bundled compat overrides in one load-time shape.
 import { applyPluginAutoEnable } from "../config/plugin-auto-enable.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {
@@ -14,19 +15,19 @@ import {
 import { getCurrentPluginMetadataSnapshot } from "./current-plugin-metadata-snapshot.js";
 import type { PluginDiscoveryResult } from "./discovery.js";
 
-/** Shared type for Plugin Activation Compat Config in src/plugins. */
+/** Bundled plugin ids that should receive legacy activation compatibility. */
 export type PluginActivationCompatConfig = {
   enablementPluginIds?: readonly string[];
   vitestPluginIds?: readonly string[];
 };
 
-/** Shared type for Plugin Activation Bundled Compat Mode in src/plugins. */
+/** Selects which bundled compatibility shims are applied during activation. */
 export type PluginActivationBundledCompatMode = {
   enablement?: "always";
   vitest?: boolean;
 };
 
-/** Shared type for Plugin Activation Inputs in src/plugins. */
+/** Resolved config inputs consumed by plugin discovery and activation. */
 export type PluginActivationInputs = {
   rawConfig?: OpenClawConfig;
   config?: OpenClawConfig;
@@ -36,7 +37,7 @@ export type PluginActivationInputs = {
   autoEnabledReasons: Record<string, string[]>;
 };
 
-/** Shared type for Plugin Activation Snapshot in src/plugins. */
+/** Activation state captured before optional bundled compatibility overrides. */
 export type PluginActivationSnapshot = Pick<
   PluginActivationInputs,
   | "rawConfig"
@@ -47,12 +48,12 @@ export type PluginActivationSnapshot = Pick<
   | "autoEnabledReasons"
 >;
 
-/** Shared type for Bundled Plugin Compatible Activation Inputs in src/plugins. */
+/** Activation inputs plus the bundled plugin ids selected for compatibility. */
 export type BundledPluginCompatibleActivationInputs = PluginActivationInputs & {
   compatPluginIds: string[];
 };
 
-/** Shared type for Bundled Plugin Compatible Load Values in src/plugins. */
+/** Minimal load values needed by bundled-compatible plugin loader paths. */
 export type BundledPluginCompatibleLoadValues = Pick<
   BundledPluginCompatibleActivationInputs,
   "rawConfig" | "config" | "activationSourceConfig" | "autoEnabledReasons" | "compatPluginIds"
@@ -76,7 +77,7 @@ type BundledPluginCompatibleActivationParams = {
   discovery?: PluginDiscoveryResult;
 };
 
-/** Reused helper for with Activated Plugin Ids behavior in src/plugins. */
+/** Returns config with selected plugin ids enabled and allowlisted when needed. */
 export function withActivatedPluginIds(params: {
   config?: OpenClawConfig;
   pluginIds: readonly string[];
@@ -121,7 +122,7 @@ export function withActivatedPluginIds(params: {
   };
 }
 
-/** Reused helper for apply Plugin Compatibility Overrides behavior in src/plugins. */
+/** Applies bundled enablement/Vitest compatibility overrides to plugin config. */
 export function applyPluginCompatibilityOverrides(params: {
   config?: OpenClawConfig;
   compat?: PluginActivationCompatConfig;
@@ -191,7 +192,7 @@ function applyPluginAutoEnableForActivation(params: {
   });
 }
 
-/** Reused helper for resolve Plugin Activation Snapshot behavior in src/plugins. */
+/** Resolves raw and auto-enabled plugin activation state without compat shims. */
 export function resolvePluginActivationSnapshot(params: {
   rawConfig?: OpenClawConfig;
   resolvedConfig?: OpenClawConfig;
@@ -229,7 +230,7 @@ export function resolvePluginActivationSnapshot(params: {
   };
 }
 
-/** Reused helper for resolve Plugin Activation Inputs behavior in src/plugins. */
+/** Resolves activation inputs after auto-enable and compatibility overrides. */
 export function resolvePluginActivationInputs(params: {
   rawConfig?: OpenClawConfig;
   resolvedConfig?: OpenClawConfig;
@@ -266,7 +267,7 @@ export function resolvePluginActivationInputs(params: {
   };
 }
 
-/** Reused helper for resolve Bundled Plugin Compatible Activation Inputs behavior in src/plugins. */
+/** Resolves activation inputs and records bundled compat plugin ids. */
 export function resolveBundledPluginCompatibleActivationInputs(
   params: BundledPluginCompatibleActivationParams,
 ): BundledPluginCompatibleActivationInputs {
@@ -309,7 +310,7 @@ export function resolveBundledPluginCompatibleActivationInputs(
   };
 }
 
-/** Reused helper for resolve Bundled Plugin Compatible Load Values behavior in src/plugins. */
+/** Resolves the loader-only subset for bundled-compatible activation paths. */
 export function resolveBundledPluginCompatibleLoadValues(
   params: BundledPluginCompatibleActivationParams,
 ): BundledPluginCompatibleLoadValues {

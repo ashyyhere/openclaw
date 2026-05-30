@@ -1,4 +1,5 @@
-// plugins loader test fixtures helpers and runtime behavior.
+// Test fixtures for plugin loader suites. Helpers create isolated temp plugins,
+// disable bundled plugin discovery, and reset loader/runtime globals between tests.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -7,11 +8,11 @@ import { withEnv } from "../test-utils/env.js";
 import { clearPluginLoaderCache, loadOpenClawPlugins } from "./loader.js";
 import { resetPluginRuntimeStateForTest } from "./runtime.js";
 
-/** Shared type for Temp Plugin in src/plugins. */
+/** Paths and id for a generated temporary plugin fixture. */
 export type TempPlugin = { dir: string; file: string; id: string };
-/** Shared type for Plugin Load Config in src/plugins. */
+/** Config shape accepted by `loadOpenClawPlugins` in tests. */
 export type PluginLoadConfig = NonNullable<Parameters<typeof loadOpenClawPlugins>[0]>["config"];
-/** Shared type for Plugin Registry in src/plugins. */
+/** Registry shape returned by `loadOpenClawPlugins` in tests. */
 export type PluginRegistry = ReturnType<typeof loadOpenClawPlugins>;
 
 function chmodSafeDir(dir: string) {
@@ -27,7 +28,7 @@ function mkdtempSafe(prefix: string) {
   return dir;
 }
 
-/** Reused helper for mkdir Safe behavior in src/plugins. */
+/** Creates a fixture directory and relaxes permissions for cross-user test access. */
 export function mkdirSafe(dir: string) {
   fs.mkdirSync(dir, { recursive: true });
   chmodSafeDir(dir);
@@ -38,14 +39,14 @@ let tempDirIndex = 0;
 const prevBundledDir = process.env.OPENCLAW_BUNDLED_PLUGINS_DIR;
 const prevDisableBundledPlugins = process.env.OPENCLAW_DISABLE_BUNDLED_PLUGINS;
 
-/** Reused constant for EMPTY PLUGIN SCHEMA behavior in src/plugins. */
+/** Minimal config schema used by generated plugin manifests. */
 export const EMPTY_PLUGIN_SCHEMA = {
   type: "object",
   additionalProperties: false,
   properties: {},
 };
 
-/** Reused helper for inline Channel Plugin Entry Factory Source behavior in src/plugins. */
+/** Returns inline CJS source for channel plugin entry fixtures. */
 export function inlineChannelPluginEntryFactorySource(): string {
   return `function defineChannelPluginEntry(options) {
   return {
@@ -77,14 +78,14 @@ export function inlineChannelPluginEntryFactorySource(): string {
 `;
 }
 
-/** Reused helper for make Temp Dir behavior in src/plugins. */
+/** Creates a unique directory under the shared loader fixture root. */
 export function makeTempDir() {
   const dir = path.join(fixtureRoot, `case-${tempDirIndex++}`);
   mkdirSafe(dir);
   return dir;
 }
 
-/** Reused helper for write Plugin behavior in src/plugins. */
+/** Writes a plugin source file plus `openclaw.plugin.json` manifest. */
 export function writePlugin(params: {
   id: string;
   body: string;
@@ -112,13 +113,13 @@ export function writePlugin(params: {
   return { dir, file, id: params.id };
 }
 
-/** Reused helper for use No Bundled Plugins behavior in src/plugins. */
+/** Disables bundled plugin discovery for tests that need isolated fixtures. */
 export function useNoBundledPlugins() {
   process.env.OPENCLAW_DISABLE_BUNDLED_PLUGINS = "1";
   delete process.env.OPENCLAW_BUNDLED_PLUGINS_DIR;
 }
 
-/** Reused helper for load Bundle Fixture behavior in src/plugins. */
+/** Builds and loads one workspace-scoped bundled-plugin fixture. */
 export function loadBundleFixture(params: {
   pluginId: string;
   build: (bundleRoot: string) => void;
@@ -148,7 +149,7 @@ export function loadBundleFixture(params: {
   );
 }
 
-/** Reused helper for reset Plugin Loader Test State For Test behavior in src/plugins. */
+/** Resets loader/runtime globals and restores bundled-plugin env flags. */
 export function resetPluginLoaderTestStateForTest() {
   clearPluginLoaderCache();
   resetPluginRuntimeStateForTest();
@@ -165,7 +166,7 @@ export function resetPluginLoaderTestStateForTest() {
   }
 }
 
-/** Reused helper for cleanup Plugin Loader Fixtures For Test behavior in src/plugins. */
+/** Removes shared fixture files and restores bundled-plugin disablement env. */
 export function cleanupPluginLoaderFixturesForTest() {
   try {
     fs.rmSync(fixtureRoot, { recursive: true, force: true });
