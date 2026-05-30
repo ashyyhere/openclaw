@@ -18,7 +18,6 @@ import {
   resolveBundledFacadeModuleLocation,
   resolveRegistryPluginModuleLocationFromRecords,
 } from "./facade-resolution-shared.js";
-/** Re-exported API for src/plugin-sdk. */
 export {
   createLazyFacadeArrayValue,
   createLazyFacadeObjectValue,
@@ -190,7 +189,7 @@ function buildFacadeActivationCheckParams(
 }
 
 // oxlint-disable-next-line typescript/no-unnecessary-type-parameters -- Dynamic facade loaders use caller-supplied module surface types.
-/** Reused helper for load Bundled Plugin Public Surface Module Sync behavior in src/plugin-sdk. */
+/** Loads a bundled plugin facade from the active registry/install location. */
 export function loadBundledPluginPublicSurfaceModuleSync<T extends object>(
   params: BundledPluginPublicSurfaceParams,
 ): T {
@@ -255,14 +254,14 @@ export function tryLoadActivatedBundledPluginPublicSurfaceModuleSync<T extends o
   return loadBundledPluginPublicSurfaceModuleSync<T>(params);
 }
 
-/** Reused helper for reset Facade Runtime State For Test behavior in src/plugin-sdk. */
+/** Clears facade runtime caches used by tests that swap activation state. */
 export function resetFacadeRuntimeStateForTest(): void {
   resetFacadeLoaderStateForTest();
   facadeActivationCheckRuntimeModule = undefined;
   facadeActivationCheckRuntimeLoaders.clear();
 }
 
-/** Reused constant for testing behavior in src/plugin-sdk. */
+/** Test-only hooks for facade resolution and activation checks. */
 export const testing = {
   setFacadeActivationCheckRuntimeForTest,
   loadFacadeModuleAtLocationSync,
@@ -307,5 +306,4 @@ export const testing = {
       buildFacadeActivationCheckParams(params),
     )) as (params: BundledPluginPublicSurfaceParams) => string,
 };
-/** Re-exported API for src/plugin-sdk, starting with testing. */
 export { testing as __testing };
