@@ -11,7 +11,7 @@ type ToolDisplayConfig = {
   tools: Record<string, ToolDisplaySpec>;
 };
 
-/** Reused constant for TOOL DISPLAY CONFIG behavior in src/agents. */
+/** Default display titles, icons, and detail keys for agent tools. */
 export const TOOL_DISPLAY_CONFIG: ToolDisplayConfig = {
   version: 1,
   fallback: {

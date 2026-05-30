@@ -9,7 +9,7 @@ const oauthProviderRuntimeMocks = vi.hoisted(() => ({
   formatProviderAuthProfileApiKeyWithPluginMock: vi.fn(() => undefined),
 }));
 
-/** Reused helper for get OAuth Provider Runtime Mocks behavior in src/agents/auth-profiles. */
+/** Returns hoisted OAuth provider runtime mocks for auth-profile tests. */
 export function getOAuthProviderRuntimeMocks() {
   return oauthProviderRuntimeMocks;
 }

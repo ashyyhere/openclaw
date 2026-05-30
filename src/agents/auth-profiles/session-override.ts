@@ -60,7 +60,7 @@ function uniqueProviders(provider: string, acceptedProviderIds?: readonly string
   return [...providers];
 }
 
-/** Reused helper for clear Session Auth Profile Override behavior in src/agents/auth-profiles. */
+/** Clears a persisted auth-profile override from a session entry. */
 export async function clearSessionAuthProfileOverride(params: {
   sessionEntry: SessionEntry;
   sessionStore: Record<string, SessionEntry>;
@@ -82,7 +82,7 @@ export async function clearSessionAuthProfileOverride(params: {
   }
 }
 
-/** Reused helper for resolve Session Auth Profile Override behavior in src/agents/auth-profiles. */
+/** Resolves and persists the auth-profile override for a session. */
 export async function resolveSessionAuthProfileOverride(params: {
   cfg: OpenClawConfig;
   provider: string;

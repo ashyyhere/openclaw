@@ -1031,24 +1031,24 @@ export function ensureAuthProfileStoreForLocalUpdate(agentDir?: string): AuthPro
   });
 }
 
-/** Re-exported API for src/agents/auth-profiles, starting with has Any Auth Profile Store Source. */
+/** Detects whether any auth-profile source exists for a runtime. */
 export { hasAnyAuthProfileStoreSource } from "./source-check.js";
 
-/** Reused helper for get Runtime Auth Profile Store Snapshot behavior in src/agents/auth-profiles. */
+/** Returns the in-memory runtime auth-profile snapshot for an agent dir. */
 export function getRuntimeAuthProfileStoreSnapshot(
   agentDir?: string,
 ): AuthProfileStore | undefined {
   return getRuntimeAuthProfileStoreSnapshotImpl(agentDir);
 }
 
-/** Reused helper for replace Runtime Auth Profile Store Snapshots behavior in src/agents/auth-profiles. */
+/** Replaces in-memory runtime auth-profile snapshots for tests/runtime injection. */
 export function replaceRuntimeAuthProfileStoreSnapshots(
   entries: Array<{ agentDir?: string; store: AuthProfileStore }>,
 ): void {
   replaceRuntimeAuthProfileStoreSnapshotsImpl(entries);
 }
 
-/** Reused helper for clear Runtime Auth Profile Store Snapshots behavior in src/agents/auth-profiles. */
+/** Clears runtime auth-profile snapshots and loaded-store caches. */
 export function clearRuntimeAuthProfileStoreSnapshots(): void {
   clearRuntimeAuthProfileStoreSnapshotsImpl();
   clearLoadedAuthStoreCache();

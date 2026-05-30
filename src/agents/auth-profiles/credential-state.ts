@@ -3,7 +3,7 @@ import { coerceSecretRef, normalizeSecretInputString } from "../../config/types.
 import { MAX_DATE_TIMESTAMP_MS } from "../../shared/number-coercion.js";
 import type { AuthProfileCredential, OAuthCredential } from "./types.js";
 
-/** Shared type for Auth Credential Reason Code in src/agents/auth-profiles. */
+/** Reason code describing whether an auth credential is currently usable. */
 export type AuthCredentialReasonCode =
   | "ok"
   | "missing_credential"
@@ -11,10 +11,10 @@ export type AuthCredentialReasonCode =
   | "expired"
   | "unresolved_ref";
 
-/** Reused constant for DEFAULT OAUTH REFRESH MARGIN MS behavior in src/agents/auth-profiles. */
+/** Default refresh window before OAuth credentials are treated as expiring. */
 export const DEFAULT_OAUTH_REFRESH_MARGIN_MS = 5 * 60 * 1000;
 
-/** Shared type for Token Expiry State in src/agents/auth-profiles. */
+/** Token expiry classification relative to current time and refresh margin. */
 export type TokenExpiryState = "missing" | "valid" | "expiring" | "expired" | "invalid_expires";
 
 /** Classifies a token expiry timestamp relative to now and an optional refresh window. */

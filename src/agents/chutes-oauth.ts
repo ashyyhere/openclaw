@@ -5,11 +5,11 @@ import type { OAuthCredentials } from "../llm/oauth.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 
 const CHUTES_OAUTH_ISSUER = "https://api.chutes.ai";
-/** Reused constant for CHUTES AUTHORIZE ENDPOINT behavior in src/agents. */
+/** Chutes OAuth authorization endpoint. */
 export const CHUTES_AUTHORIZE_ENDPOINT = `${CHUTES_OAUTH_ISSUER}/idp/authorize`;
-/** Reused constant for CHUTES TOKEN ENDPOINT behavior in src/agents. */
+/** Chutes OAuth token endpoint. */
 export const CHUTES_TOKEN_ENDPOINT = `${CHUTES_OAUTH_ISSUER}/idp/token`;
-/** Reused constant for CHUTES USERINFO ENDPOINT behavior in src/agents. */
+/** Chutes OAuth userinfo endpoint. */
 export const CHUTES_USERINFO_ENDPOINT = `${CHUTES_OAUTH_ISSUER}/idp/userinfo`;
 
 const DEFAULT_EXPIRES_BUFFER_MS = 5 * 60 * 1000;
@@ -22,7 +22,7 @@ type ChutesUserInfo = {
   created_at?: string;
 };
 
-/** Shared type for Chutes OAuth App Config in src/agents. */
+/** Chutes OAuth app credentials and scopes used for PKCE flows. */
 export type ChutesOAuthAppConfig = {
   clientId: string;
   clientSecret?: string;

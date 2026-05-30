@@ -5,11 +5,11 @@ export type {
   ExecToolDefaults,
   ExecToolDetails,
 } from "./bash-tools.exec.js";
-/** Re-exported API for src/agents, starting with describe Exec Tool. */
+/** Human-readable descriptions for exec and process tools. */
 export { describeExecTool, describeProcessTool } from "./bash-tools.descriptions.js";
-/** Re-exported API for src/agents, starting with create Exec Tool. */
+/** Exec tool factories and default instance. */
 export { createExecTool, execTool } from "./bash-tools.exec.js";
-/** Re-exported API for src/agents, starting with Process Tool Defaults. */
+/** Process tool default configuration contract. */
 export type { ProcessToolDefaults } from "./bash-tools.process.js";
-/** Re-exported API for src/agents, starting with create Process Tool. */
+/** Process tool factories and default instance. */
 export { createProcessTool, processTool } from "./bash-tools.process.js";
