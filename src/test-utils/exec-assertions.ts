@@ -1,4 +1,4 @@
-// test-utils exec assertions helpers and runtime behavior.
+// Assertions for npm subprocess calls emitted by install flows.
 import fs from "node:fs";
 import path from "node:path";
 import { expect } from "vitest";
@@ -18,7 +18,7 @@ function canonicalizeComparableDir(dirPath: string): string {
   }
 }
 
-/** Reused helper for expect Single Npm Install Ignore Scripts Call behavior in src/test-utils. */
+/** Assert one staged `npm install` call used `--ignore-scripts`. */
 export function expectSingleNpmInstallIgnoreScriptsCall(params: {
   calls: Array<[unknown, { cwd?: string } | undefined]>;
   expectedTargetDir: string;
@@ -40,7 +40,7 @@ export function expectSingleNpmInstallIgnoreScriptsCall(params: {
   expect(path.basename(cwd)).toMatch(/^\.openclaw-install-stage-/);
 }
 
-/** Reused helper for expect Single Npm Pack Ignore Scripts Call behavior in src/test-utils. */
+/** Assert one `npm pack` call used `--ignore-scripts` and ignore-scripts env. */
 export function expectSingleNpmPackIgnoreScriptsCall(params: {
   calls: Array<[unknown, unknown]>;
   expectedSpec: string;

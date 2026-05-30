@@ -1,4 +1,4 @@
-// test-utils provider usage fetch helpers and runtime behavior.
+// Fetch mocks for provider usage/telemetry tests.
 import { vi } from "vitest";
 import { withFetchPreconnect } from "./fetch-mock.js";
 
@@ -8,19 +8,19 @@ type UsageFetchMock = ReturnType<
   typeof vi.fn<(input: UsageFetchInput, init?: RequestInit) => Promise<Response>>
 >;
 
-/** Reused helper for make Response behavior in src/test-utils. */
+/** Build a Response from JSON-like or string body content. */
 export function makeResponse(status: number, body: unknown): Response {
   const payload = typeof body === "string" ? body : JSON.stringify(body);
   const headers = typeof body === "string" ? undefined : { "Content-Type": "application/json" };
   return new Response(payload, { status, headers });
 }
 
-/** Reused helper for to Request Url behavior in src/test-utils. */
+/** Convert fetch input variants into a URL string for mock routing. */
 export function toRequestUrl(input: UsageFetchInput): string {
   return typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
 }
 
-/** Reused helper for create Provider Usage Fetch behavior in src/test-utils. */
+/** Create a preconnect-compatible fetch mock backed by a URL handler. */
 export function createProviderUsageFetch(
   handler: UsageFetchHandler,
 ): typeof fetch & UsageFetchMock {

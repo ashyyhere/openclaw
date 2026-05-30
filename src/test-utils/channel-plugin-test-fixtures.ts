@@ -1,7 +1,7 @@
-// test-utils channel plugin test fixtures helpers and runtime behavior.
+// Small channel plugin fixtures shared by direct-message channel tests.
 import type { ChannelPlugin } from "../channels/plugins/types.plugin.js";
 
-/** Reused helper for make Direct Plugin behavior in src/test-utils. */
+/** Build a direct-message-only channel plugin fixture. */
 export function makeDirectPlugin(params: {
   id: string;
   label: string;

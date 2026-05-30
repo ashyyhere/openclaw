@@ -1,7 +1,7 @@
-// test-utils command runner helpers and runtime behavior.
+// Commander CLI runner helper for command registration tests.
 import { Command } from "commander";
 
-/** Reused helper for run Registered Cli behavior in src/test-utils. */
+/** Register a CLI command tree and parse user-style argv. */
 export async function runRegisteredCli(params: {
   register: (program: Command) => void;
   argv: string[];

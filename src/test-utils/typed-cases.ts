@@ -1,5 +1,5 @@
-// test-utils typed cases helpers and runtime behavior.
-/** Reused helper for typed Cases behavior in src/test-utils. */
+// Type-preserving table-case helper for Vitest parameterized tests.
+/** Preserve the inferred tuple/object type of a test case array. */
 export function typedCases<T>(cases: T[]): T[] {
   return cases;
 }

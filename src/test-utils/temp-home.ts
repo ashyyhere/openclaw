@@ -1,4 +1,4 @@
-// test-utils temp home helpers and runtime behavior.
+// Temporary HOME/USERPROFILE environment helper for state-dir tests.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
@@ -13,7 +13,7 @@ const HOME_ENV_KEYS = [
   "OPENCLAW_STATE_DIR",
 ] as const;
 
-/** Shared type for Temp Home Env in src/test-utils. */
+/** Temporary home directory plus async restore hook. */
 export type TempHomeEnv = {
   home: string;
   restore: () => Promise<void>;
@@ -43,7 +43,7 @@ async function ensurePrefixRoot(prefix: string): Promise<string> {
   }
 }
 
-/** Reused helper for create Temp Home Env behavior in src/test-utils. */
+/** Create an isolated home/state directory and patch process home env vars. */
 export async function createTempHomeEnv(prefix: string): Promise<TempHomeEnv> {
   const prefixRoot = await ensurePrefixRoot(prefix);
   const home = path.join(prefixRoot, `home-${String(nextHomeIndex)}`);

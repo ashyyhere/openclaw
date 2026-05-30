@@ -1,13 +1,13 @@
-// test-utils talk test provider helpers and runtime behavior.
+// Shared talk provider fixture values for speech config tests.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 
-/** Reused constant for TALK TEST PROVIDER ID behavior in src/test-utils. */
+/** Stable id for the fake speech provider used in tests. */
 export const TALK_TEST_PROVIDER_ID = "acme-speech";
-/** Reused constant for TALK TEST PROVIDER LABEL behavior in src/test-utils. */
+/** Display label for the fake speech provider used in tests. */
 export const TALK_TEST_PROVIDER_LABEL = "Acme Speech";
-/** Reused constant for TALK TEST PROVIDER API KEY PATH behavior in src/test-utils. */
+/** Dot-path to the fake speech provider API key in OpenClaw config. */
 export const TALK_TEST_PROVIDER_API_KEY_PATH = `talk.providers.${TALK_TEST_PROVIDER_ID}.apiKey`;
-/** Reused constant for TALK TEST PROVIDER API KEY PATH SEGMENTS behavior in src/test-utils. */
+/** Path segments for the fake speech provider API key in OpenClaw config. */
 export const TALK_TEST_PROVIDER_API_KEY_PATH_SEGMENTS = [
   "talk",
   "providers",
@@ -15,7 +15,7 @@ export const TALK_TEST_PROVIDER_API_KEY_PATH_SEGMENTS = [
   "apiKey",
 ] as const;
 
-/** Reused helper for build Talk Test Provider Config behavior in src/test-utils. */
+/** Build config containing the fake speech provider API key value. */
 export function buildTalkTestProviderConfig(apiKey: unknown): OpenClawConfig {
   return {
     talk: {
@@ -28,7 +28,7 @@ export function buildTalkTestProviderConfig(apiKey: unknown): OpenClawConfig {
   } as OpenClawConfig;
 }
 
-/** Reused helper for read Talk Test Provider Api Key behavior in src/test-utils. */
+/** Read the fake speech provider API key from OpenClaw config. */
 export function readTalkTestProviderApiKey(config: OpenClawConfig): unknown {
   return config.talk?.providers?.[TALK_TEST_PROVIDER_ID]?.apiKey;
 }

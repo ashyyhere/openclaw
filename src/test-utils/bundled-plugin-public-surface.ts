@@ -1,4 +1,4 @@
-// test-utils bundled plugin public surface helpers and runtime behavior.
+// Helpers for loading bundled plugin public-surface modules in tests.
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -124,7 +124,7 @@ type AsyncBundledPluginPublicSurfaceLoader = <T extends object>(params: {
 // oxlint-disable-next-line typescript/no-unnecessary-type-parameters -- Test loaders use caller-supplied module surface types.
 type BundledPluginPublicArtifactLoader = <T extends object>(pluginId: string) => T;
 
-/** Reused constant for load Bundled Plugin Public Surface Sync behavior in src/test-utils. */
+/** Synchronously load a bundled plugin public artifact through the facade loader. */
 export const loadBundledPluginPublicSurfaceSync: BundledPluginPublicSurfaceLoader = (params) => {
   const metadata = findBundledPluginMetadata(params.pluginId);
   return loadBundledPluginPublicSurfaceModuleSync({
@@ -133,7 +133,7 @@ export const loadBundledPluginPublicSurfaceSync: BundledPluginPublicSurfaceLoade
   });
 };
 
-/** Reused helper for load Bundled Plugin Public Surface Source Sync behavior in src/test-utils. */
+/** Load a bundled plugin source artifact through the Vitest source-module loader. */
 export function loadBundledPluginPublicSurfaceSourceSync(params: {
   pluginId: string;
   artifactBasename: string;
@@ -154,7 +154,7 @@ export function loadBundledPluginPublicSurfaceSourceSync(params: {
   return loader(modulePath) as object;
 }
 
-/** Reused constant for load Bundled Plugin Public Surface behavior in src/test-utils. */
+/** Asynchronously load a bundled plugin public artifact through the facade loader. */
 export const loadBundledPluginPublicSurface: AsyncBundledPluginPublicSurfaceLoader = (params) => {
   const metadata = findBundledPluginMetadata(params.pluginId);
   return loadBundledPluginPublicSurfaceModule({
@@ -163,7 +163,7 @@ export const loadBundledPluginPublicSurface: AsyncBundledPluginPublicSurfaceLoad
   });
 };
 
-/** Reused constant for load Bundled Plugin Api Sync behavior in src/test-utils. */
+/** Synchronously load a bundled plugin `api.js` artifact. */
 export const loadBundledPluginApiSync: BundledPluginPublicArtifactLoader = (pluginId) => {
   return loadBundledPluginPublicSurfaceSync({
     pluginId,
@@ -171,7 +171,7 @@ export const loadBundledPluginApiSync: BundledPluginPublicArtifactLoader = (plug
   });
 };
 
-/** Reused constant for load Bundled Plugin Contract Api Sync behavior in src/test-utils. */
+/** Synchronously load a bundled plugin `contract-api.js` artifact. */
 export const loadBundledPluginContractApiSync: BundledPluginPublicArtifactLoader = (pluginId) => {
   return loadBundledPluginPublicSurfaceSync({
     pluginId,
@@ -179,7 +179,7 @@ export const loadBundledPluginContractApiSync: BundledPluginPublicArtifactLoader
   });
 };
 
-/** Reused constant for load Bundled Plugin Runtime Api Sync behavior in src/test-utils. */
+/** Synchronously load a bundled plugin `runtime-api.js` artifact. */
 export const loadBundledPluginRuntimeApiSync: BundledPluginPublicArtifactLoader = (pluginId) => {
   return loadBundledPluginPublicSurfaceSync({
     pluginId,
@@ -187,7 +187,7 @@ export const loadBundledPluginRuntimeApiSync: BundledPluginPublicArtifactLoader 
   });
 };
 
-/** Reused constant for load Bundled Plugin Test Api Sync behavior in src/test-utils. */
+/** Synchronously load a bundled plugin `test-api.js` artifact. */
 export const loadBundledPluginTestApiSync: BundledPluginPublicArtifactLoader = (pluginId) => {
   return loadBundledPluginPublicSurfaceSync({
     pluginId,
@@ -195,7 +195,7 @@ export const loadBundledPluginTestApiSync: BundledPluginPublicArtifactLoader = (
   });
 };
 
-/** Reused helper for resolve Bundled Plugin Public Module Path behavior in src/test-utils. */
+/** Resolve the source-tree path for a bundled plugin public artifact. */
 export function resolveBundledPluginPublicModulePath(params: {
   pluginId: string;
   artifactBasename: string;
@@ -225,7 +225,7 @@ function pathExists(filePath: string): boolean {
   }
 }
 
-/** Reused helper for resolve Relative Bundled Plugin Public Module Id behavior in src/test-utils. */
+/** Resolve a relative import id from a test module to a bundled plugin public artifact. */
 export function resolveRelativeBundledPluginPublicModuleId(params: {
   fromModuleUrl: string;
   pluginId: string;
@@ -244,7 +244,7 @@ export function resolveRelativeBundledPluginPublicModuleId(params: {
   return relativePath.startsWith(".") ? relativePath : `./${relativePath}`;
 }
 
-/** Reused helper for resolve Relative Extension Public Module Id behavior in src/test-utils. */
+/** Resolve a relative import id from a test module to an extension artifact. */
 export function resolveRelativeExtensionPublicModuleId(params: {
   fromModuleUrl: string;
   dirName: string;
@@ -260,7 +260,7 @@ export function resolveRelativeExtensionPublicModuleId(params: {
   return relativePath.startsWith(".") ? relativePath : `./${relativePath}`;
 }
 
-/** Reused helper for resolve Relative Workspace Package Public Module Id behavior in src/test-utils. */
+/** Resolve a relative import id to a workspace package artifact, falling back to file URL. */
 export function resolveRelativeWorkspacePackagePublicModuleId(params: {
   fromModuleUrl: string;
   packageName: string;
@@ -283,7 +283,7 @@ export function resolveRelativeWorkspacePackagePublicModuleId(params: {
   return normalizedRelativePath;
 }
 
-/** Reused helper for resolve Workspace Package Public Module Url behavior in src/test-utils. */
+/** Resolve a file URL for a workspace package public artifact. */
 export function resolveWorkspacePackagePublicModuleUrl(params: {
   packageName: string;
   artifactBasename: string;

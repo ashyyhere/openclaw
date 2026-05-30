@@ -1,4 +1,4 @@
-// test-utils task registry runtime helpers and runtime behavior.
+// In-memory task registry runtime for task scheduler tests.
 import {
   configureTaskRegistryRuntime,
   type TaskRegistryStore,
@@ -17,7 +17,7 @@ function cloneDeliveryState(state: TaskDeliveryState): TaskDeliveryState {
   };
 }
 
-/** Reused helper for install In Memory Task Registry Runtime behavior in src/test-utils. */
+/** Install an isolated in-memory task store and return it for assertions. */
 export function installInMemoryTaskRegistryRuntime(): {
   taskStore: TaskRegistryStore;
 } {

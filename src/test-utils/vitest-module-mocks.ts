@@ -1,5 +1,5 @@
-// test-utils vitest module mocks helpers and runtime behavior.
-/** Reused helper for merge Mocked Module behavior in src/test-utils. */
+// Vitest module mock helper for preserving actual exports with targeted overrides.
+/** Merge a real module object with async or sync mock overrides. */
 export async function mergeMockedModule<TModule extends object>(
   actual: TModule,
   buildOverrides: (actual: TModule) => Partial<TModule> | Promise<Partial<TModule>>,

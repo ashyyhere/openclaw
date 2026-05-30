@@ -1,4 +1,4 @@
-// test-utils session state cleanup helpers and runtime behavior.
+// Test cleanup hooks for session stores, writer queues, and lock state.
 import { drainSessionWriteLockStateForTest } from "../agents/session-write-lock.js";
 import { clearSessionStoreCaches } from "../config/sessions/store-cache.js";
 import { drainSessionStoreWriterQueuesForTest } from "../config/sessions/store-writer-state.js";
@@ -9,7 +9,7 @@ let sessionStoreWriterQueueDrainerForTests: typeof drainSessionStoreWriterQueues
   null;
 let sessionWriteLockDrainerForTests: typeof drainSessionWriteLockStateForTest | null = null;
 
-/** Reused helper for set Session State Cleanup Runtime For Tests behavior in src/test-utils. */
+/** Override session cleanup drainers for module-isolated tests. */
 export function setSessionStateCleanupRuntimeForTests(params: {
   drainFileLockStateForTest?: typeof drainFileLockStateForTest | null;
   drainSessionStoreWriterQueuesForTest?: typeof drainSessionStoreWriterQueuesForTest | null;
@@ -26,14 +26,14 @@ export function setSessionStateCleanupRuntimeForTests(params: {
   }
 }
 
-/** Reused helper for reset Session State Cleanup Runtime For Tests behavior in src/test-utils. */
+/** Restore default session cleanup drainers. */
 export function resetSessionStateCleanupRuntimeForTests(): void {
   fileLockDrainerForTests = null;
   sessionStoreWriterQueueDrainerForTests = null;
   sessionWriteLockDrainerForTests = null;
 }
 
-/** Reused helper for cleanup Session State For Test behavior in src/test-utils. */
+/** Drain session writer/lock state and clear session store caches after a test. */
 export async function cleanupSessionStateForTest(): Promise<void> {
   await (sessionStoreWriterQueueDrainerForTests ?? drainSessionStoreWriterQueuesForTest)();
   clearSessionStoreCaches();

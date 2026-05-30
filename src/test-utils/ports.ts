@@ -1,4 +1,4 @@
-// test-utils ports helpers and runtime behavior.
+// Port allocation helpers that reduce derived-port collisions in parallel tests.
 import { createServer } from "node:net";
 import { isMainThread, threadId } from "node:worker_threads";
 
@@ -92,7 +92,7 @@ export async function getDeterministicFreePortBlock(params?: {
   throw new Error("failed to acquire a free port block");
 }
 
-/** Reused helper for get Free Port Block With Permission Fallback behavior in src/test-utils. */
+/** Allocate a free port block, falling back to a deterministic base on permission errors. */
 export async function getFreePortBlockWithPermissionFallback(params: {
   offsets: number[];
   fallbackBase: number;

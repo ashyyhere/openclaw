@@ -3,6 +3,6 @@
 // Keep the callable bound permissive so explicit callback signatures remain assignable.
 // Vitest's mock generic is itself anchored to an `any`-based Procedure type.
 // oxlint-disable-next-line typescript/no-explicit-any
-/** Shared type for Mock Fn in src/test-utils. */
+/** Named Vitest mock function type that avoids leaking inferred vi.fn module paths. */
 export type MockFn<T extends (...args: any[]) => any = (...args: any[]) => any> =
   import("vitest").Mock<T>;

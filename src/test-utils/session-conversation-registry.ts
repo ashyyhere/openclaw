@@ -1,4 +1,4 @@
-// test-utils session conversation registry helpers and runtime behavior.
+// Channel registry fixture with conversation resolvers for session-routing tests.
 import { parseThreadSessionSuffix } from "../sessions/session-key-utils.js";
 import { createTestRegistry } from "./channel-plugins.js";
 
@@ -50,7 +50,7 @@ function resolveFeishuSessionConversation(params: { kind: "group" | "channel"; r
   };
 }
 
-/** Reused helper for create Session Conversation Test Registry behavior in src/test-utils. */
+/** Create a registry containing channel stubs with realistic conversation resolution. */
 export function createSessionConversationTestRegistry() {
   return createTestRegistry([
     {

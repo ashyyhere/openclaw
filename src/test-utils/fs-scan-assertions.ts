@@ -1,4 +1,4 @@
-// test-utils fs scan assertions helpers and runtime behavior.
+// Assertions for preventing filesystem scan regressions in hot paths.
 import fs from "node:fs";
 import { expect, vi } from "vitest";
 import { spawnNodeEvalSync } from "./node-process.js";
@@ -10,12 +10,12 @@ type NodeFsScanResult<T> = {
   result: T;
 };
 
-/** Reused helper for expect No Readdir Sync During behavior in src/test-utils. */
+/** Assert a callback does not call `fs.readdirSync`. */
 export function expectNoReaddirSyncDuring<T>(run: () => T): T {
   return expectNoFsSyncDuring(run, ["readdirSync"]);
 }
 
-/** Reused helper for expect No Fs Sync During behavior in src/test-utils. */
+/** Assert a callback does not call selected synchronous fs scan APIs. */
 export function expectNoFsSyncDuring<T>(run: () => T, counters: FsScanCounter[]): T {
   const spies = counters.map((counter) => {
     switch (counter) {
@@ -44,7 +44,7 @@ export function expectNoFsSyncDuring<T>(run: () => T, counters: FsScanCounter[])
   }
 }
 
-/** Reused helper for capture Readdir Sync Calls During behavior in src/test-utils. */
+/** Capture `fs.readdirSync` calls made while running a callback. */
 export function captureReaddirSyncCallsDuring<T>(run: () => T): {
   calls: unknown[][];
   result: T;
@@ -59,7 +59,7 @@ export function captureReaddirSyncCallsDuring<T>(run: () => T): {
   }
 }
 
-/** Reused helper for expect No Node Fs Scans behavior in src/test-utils. */
+/** Run code in a Node subprocess and assert selected fs scan counters remain zero. */
 export function expectNoNodeFsScans<T>(
   body: string,
   options?: {
