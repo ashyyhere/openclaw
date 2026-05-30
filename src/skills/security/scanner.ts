@@ -1,4 +1,4 @@
-// security skill scanner helpers and runtime behavior.
+// Static security scanner for installed skill source files.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { hasErrnoCode } from "../../infra/errors.js";
@@ -8,10 +8,10 @@ import { isPathInside } from "../../security/scan-paths.js";
 // Types
 // ---------------------------------------------------------------------------
 
-/** Shared type for Skill Scan Severity in src/security. */
+/** Severity assigned to a skill scan finding. */
 export type SkillScanSeverity = "info" | "warn" | "critical";
 
-/** Shared type for Skill Scan Finding in src/security. */
+/** One scanner rule hit with file, line, message, and evidence. */
 export type SkillScanFinding = {
   ruleId: string;
   severity: SkillScanSeverity;
@@ -21,7 +21,7 @@ export type SkillScanFinding = {
   evidence: string;
 };
 
-/** Shared type for Skill Scan Summary in src/security. */
+/** Aggregated skill scan result with counts and truncation state. */
 export type SkillScanSummary = {
   scannedFiles: number;
   critical: number;
@@ -31,7 +31,7 @@ export type SkillScanSummary = {
   findings: SkillScanFinding[];
 };
 
-/** Shared type for Skill Scan Options in src/security. */
+/** Directory scan options controlling scope, limits, and test-file inclusion. */
 export type SkillScanOptions = {
   excludeTestFiles?: boolean;
   includeHiddenDirectories?: boolean;
@@ -88,7 +88,7 @@ type DirEntryCacheEntry = {
 };
 const DIR_ENTRY_CACHE = new Map<string, DirEntryCacheEntry>();
 
-/** Reused helper for is Scannable behavior in src/security. */
+/** Checks whether a path extension is eligible for skill source scanning. */
 export function isScannable(filePath: string): boolean {
   return SCANNABLE_EXTENSIONS.has(path.extname(filePath).toLowerCase());
 }
@@ -134,7 +134,7 @@ function setCachedDirEntries(dirPath: string, entry: DirEntryCacheEntry): void {
   DIR_ENTRY_CACHE.set(dirPath, entry);
 }
 
-/** Reused helper for clear Skill Scan Cache For Test behavior in src/security. */
+/** Clears scanner caches for tests that mutate files or directories. */
 export function clearSkillScanCacheForTest(): void {
   FILE_SCAN_CACHE.clear();
   DIR_ENTRY_CACHE.clear();
@@ -396,7 +396,7 @@ function findSourceRuleMatch(params: {
   return { line: 1, evidence: params.source.slice(0, 120) };
 }
 
-/** Reused helper for scan Source behavior in src/security. */
+/** Scans one source string with line and whole-file security heuristics. */
 export function scanSource(source: string, filePath: string): SkillScanFinding[] {
   const findings: SkillScanFinding[] = [];
   const lines = source.split("\n");
@@ -778,7 +778,7 @@ async function scanFileWithCache(params: {
   return { scanned: true, findings };
 }
 
-/** Reused helper for scan Directory behavior in src/security. */
+/** Scans eligible files under a directory and returns findings only. */
 export async function scanDirectory(
   dirPath: string,
   opts?: SkillScanOptions,
@@ -801,7 +801,7 @@ export async function scanDirectory(
   return allFindings;
 }
 
-/** Reused helper for scan Directory With Summary behavior in src/security. */
+/** Scans a directory and returns findings with file/severity counts. */
 export async function scanDirectoryWithSummary(
   dirPath: string,
   opts?: SkillScanOptions,

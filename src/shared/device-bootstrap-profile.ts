@@ -1,19 +1,19 @@
-// shared device bootstrap profile helpers and runtime behavior.
+// Device bootstrap profile normalization and operator handoff scope rules.
 import { normalizeDeviceAuthRole, normalizeDeviceAuthScopes } from "./device-auth.js";
 
-/** Shared type for Device Bootstrap Profile in src/shared. */
+/** Normalized bootstrap roles and scopes granted during device pairing. */
 export type DeviceBootstrapProfile = {
   roles: string[];
   scopes: string[];
 };
 
-/** Shared type for Device Bootstrap Profile Input in src/shared. */
+/** Raw bootstrap profile input accepted from pairing/config payloads. */
 export type DeviceBootstrapProfileInput = {
   roles?: readonly string[];
   scopes?: readonly string[];
 };
 
-/** Reused constant for BOOTSTRAP HANDOFF OPERATOR SCOPES behavior in src/shared. */
+/** Operator scopes allowed to cross the pairing bootstrap handoff. */
 export const BOOTSTRAP_HANDOFF_OPERATOR_SCOPES = [
   "operator.approvals",
   "operator.read",
@@ -23,7 +23,7 @@ export const BOOTSTRAP_HANDOFF_OPERATOR_SCOPES = [
 
 const BOOTSTRAP_HANDOFF_OPERATOR_SCOPE_SET = new Set<string>(BOOTSTRAP_HANDOFF_OPERATOR_SCOPES);
 
-/** Reused constant for PAIRING SETUP BOOTSTRAP PROFILE behavior in src/shared. */
+/** Canonical pairing bootstrap profile for node plus bounded operator setup. */
 export const PAIRING_SETUP_BOOTSTRAP_PROFILE: DeviceBootstrapProfile = {
   // QR/setup-code bootstrap must hand off both tokens for native onboarding:
   // iOS/Android suppress the operator loop while bootstrap auth is active and
@@ -32,7 +32,7 @@ export const PAIRING_SETUP_BOOTSTRAP_PROFILE: DeviceBootstrapProfile = {
   scopes: [...BOOTSTRAP_HANDOFF_OPERATOR_SCOPES],
 };
 
-/** Reused helper for is Pairing Setup Bootstrap Profile behavior in src/shared. */
+/** Checks whether input normalizes to the canonical pairing setup profile. */
 export function isPairingSetupBootstrapProfile(
   input: DeviceBootstrapProfileInput | undefined,
 ): boolean {
@@ -49,7 +49,7 @@ export function isPairingSetupBootstrapProfile(
   );
 }
 
-/** Reused helper for resolve Bootstrap Profile Scopes For Role behavior in src/shared. */
+/** Returns the handoff scopes permitted for one normalized bootstrap role. */
 export function resolveBootstrapProfileScopesForRole(
   role: string,
   scopes: readonly string[],
@@ -62,7 +62,7 @@ export function resolveBootstrapProfileScopesForRole(
   return [];
 }
 
-/** Reused helper for resolve Bootstrap Profile Scopes For Roles behavior in src/shared. */
+/** Returns normalized handoff scopes permitted by a role set. */
 export function resolveBootstrapProfileScopesForRoles(
   roles: readonly string[],
   scopes: readonly string[],
@@ -72,7 +72,7 @@ export function resolveBootstrapProfileScopesForRoles(
   );
 }
 
-/** Reused helper for normalize Device Bootstrap Handoff Profile behavior in src/shared. */
+/** Normalizes a bootstrap profile and drops scopes outside the handoff allowlist. */
 export function normalizeDeviceBootstrapHandoffProfile(
   input: DeviceBootstrapProfileInput | undefined,
 ): DeviceBootstrapProfile {
@@ -98,7 +98,7 @@ function normalizeBootstrapRoles(roles: readonly string[] | undefined): string[]
   return [...out].toSorted();
 }
 
-/** Reused helper for normalize Device Bootstrap Profile behavior in src/shared. */
+/** Normalizes bootstrap roles and scopes without applying handoff restrictions. */
 export function normalizeDeviceBootstrapProfile(
   input: DeviceBootstrapProfileInput | undefined,
 ): DeviceBootstrapProfile {
