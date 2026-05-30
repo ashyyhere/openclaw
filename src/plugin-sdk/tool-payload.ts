@@ -1,10 +1,8 @@
-// plugin-sdk tool payload helpers and runtime behavior.
 type ToolPayloadTextBlock = {
   type: "text";
   text: string;
 };
 
-/** Shared type for Tool Payload Carrier in src/plugin-sdk. */
 export type ToolPayloadCarrier = {
   details?: unknown;
   content?: unknown;
@@ -44,7 +42,6 @@ export function extractToolPayload(result: ToolPayloadCarrier | null | undefined
   }
 }
 
-/** Shared type for Plain Text Tool Call Block in src/plugin-sdk. */
 export type PlainTextToolCallBlock = {
   arguments: Record<string, unknown>;
   end: number;
@@ -53,7 +50,6 @@ export type PlainTextToolCallBlock = {
   start: number;
 };
 
-/** Shared type for Plain Text Tool Call Parse Options in src/plugin-sdk. */
 export type PlainTextToolCallParseOptions = {
   allowedToolNames?: Iterable<string>;
   maxPayloadBytes?: number;
@@ -367,7 +363,6 @@ function parseXmlishPlainTextToolCallBlockEndAt(
   return consumeOptionalXmlishFunctionClose(text, payloadEnd);
 }
 
-/** Reused helper for parse Standalone Plain Text Tool Call Blocks behavior in src/plugin-sdk. */
 export function parseStandalonePlainTextToolCallBlocks(
   text: string,
   options?: PlainTextToolCallParseOptions,
@@ -385,7 +380,6 @@ export function parseStandalonePlainTextToolCallBlocks(
   return blocks.length > 0 ? blocks : null;
 }
 
-/** Reused helper for strip Plain Text Tool Call Blocks behavior in src/plugin-sdk. */
 export function stripPlainTextToolCallBlocks(text: string): string {
   if (
     !text ||

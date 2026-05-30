@@ -7,5 +7,4 @@ export {
   writePrivateSecretFileAtomic,
   tryReadSecretFileSync,
 } from "../infra/secret-file.js";
-/** Re-exported API for src/plugin-sdk, starting with Secret File Read Options. */
 export type { SecretFileReadOptions, SecretFileReadResult } from "../infra/secret-file.js";

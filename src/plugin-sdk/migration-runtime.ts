@@ -1,5 +1,3 @@
-// Runtime helpers for migration providers that need filesystem side effects.
-
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -17,10 +15,8 @@ import {
   redactMigrationPlan,
 } from "./migration.js";
 
-/** Re-exported API for src/plugin-sdk, starting with Migration Apply Result. */
 export type { MigrationApplyResult, MigrationItem } from "../plugins/types.js";
 
-/** Reused helper for with Cached Migration Config Runtime behavior in src/plugin-sdk. */
 export function withCachedMigrationConfigRuntime(
   runtime: MigrationProviderContext["runtime"] | undefined,
   fallbackConfig: MigrationProviderContext["config"],
@@ -132,7 +128,6 @@ async function resolveUniqueArchivePath(
   return candidate;
 }
 
-/** Reused helper for archive Migration Item behavior in src/plugin-sdk. */
 export async function archiveMigrationItem(
   item: MigrationItem,
   reportDir: string,
@@ -169,7 +164,6 @@ export async function archiveMigrationItem(
   }
 }
 
-/** Reused helper for copy Migration File Item behavior in src/plugin-sdk. */
 export async function copyMigrationFileItem(
   item: MigrationItem,
   reportDir: string,
@@ -205,7 +199,6 @@ export async function copyMigrationFileItem(
   }
 }
 
-/** Reused helper for write Migration Report behavior in src/plugin-sdk. */
 export async function writeMigrationReport(
   result: MigrationApplyResult,
   opts: { title?: string } = {},
