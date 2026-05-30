@@ -1,4 +1,5 @@
-// infra npm managed root helpers and runtime behavior.
+// Managed npm root manifest and lockfile helpers.
+// Keeps plugin install roots aligned with host overrides, peer pins, and installed package metadata.
 import type { Stats } from "node:fs";
 import fs from "node:fs/promises";
 import os from "node:os";
@@ -33,13 +34,13 @@ type ManagedNpmRootOpenClawMetadata = {
   [key: string]: unknown;
 };
 
-/** Shared type for Managed Npm Root Peer Dependency Snapshot in src/infra. */
+/** Snapshot of managed peer dependency specs before temporary repair work. */
 export type ManagedNpmRootPeerDependencySnapshot = {
   dependencies: Record<string, string>;
   managedPeerDependencies: string[];
 };
 
-/** Shared type for Managed Npm Root Installed Dependency in src/infra. */
+/** Installed dependency metadata read from a managed npm package-lock. */
 export type ManagedNpmRootInstalledDependency = {
   version?: string;
   integrity?: string;
@@ -192,7 +193,7 @@ function filterUnsupportedManagedNpmRootOverrides(value: unknown): Record<string
   return filtered;
 }
 
-/** Reused helper for read Open Claw Managed Npm Root Overrides behavior in src/infra. */
+/** Read host OpenClaw npm overrides that should be mirrored into managed roots. */
 export async function readOpenClawManagedNpmRootOverrides(params?: {
   argv1?: string;
   cwd?: string;
@@ -229,7 +230,7 @@ export async function readOpenClawManagedNpmRootOverrides(params?: {
   }
 }
 
-/** Reused helper for resolve Managed Npm Root Dependency Spec behavior in src/infra. */
+/** Resolve the dependency spec to write for a parsed registry npm package. */
 export function resolveManagedNpmRootDependencySpec(params: {
   parsedSpec: ParsedRegistryNpmSpec;
   resolution: NpmSpecResolution;
@@ -237,7 +238,7 @@ export function resolveManagedNpmRootDependencySpec(params: {
   return params.resolution.version ?? params.parsedSpec.selector ?? "latest";
 }
 
-/** Reused helper for upsert Managed Npm Root Dependency behavior in src/infra. */
+/** Add or update a dependency in a private managed npm root manifest. */
 export async function upsertManagedNpmRootDependency(params: {
   npmRoot: string;
   packageName: string;
@@ -642,7 +643,7 @@ async function collectNpmResolvedManagedNpmRootPeerDependencyPins(params: {
   }
 }
 
-/** Reused helper for read Managed Npm Root Peer Dependency Snapshot behavior in src/infra. */
+/** Snapshot current managed peer dependency entries from a managed root manifest. */
 export async function readManagedNpmRootPeerDependencySnapshot(params: {
   npmRoot: string;
 }): Promise<ManagedNpmRootPeerDependencySnapshot> {
@@ -662,7 +663,7 @@ export async function readManagedNpmRootPeerDependencySnapshot(params: {
   };
 }
 
-/** Reused helper for restore Managed Npm Root Peer Dependency Snapshot behavior in src/infra. */
+/** Restore managed peer dependency entries after temporary install/repair work. */
 export async function restoreManagedNpmRootPeerDependencySnapshot(params: {
   npmRoot: string;
   snapshot: ManagedNpmRootPeerDependencySnapshot;
@@ -693,7 +694,7 @@ export async function restoreManagedNpmRootPeerDependencySnapshot(params: {
   await writeJson(manifestPath, next, { trailingNewline: true });
 }
 
-/** Reused helper for sync Managed Npm Root Peer Dependencies behavior in src/infra. */
+/** Sync managed peer dependency pins and mirrored overrides into the managed root. */
 export async function syncManagedNpmRootPeerDependencies(params: {
   npmRoot: string;
   managedOverrides?: Record<string, unknown>;
@@ -764,7 +765,7 @@ export async function syncManagedNpmRootPeerDependencies(params: {
   return changed;
 }
 
-/** Reused helper for repair Managed Npm Root Open Claw Peer behavior in src/infra. */
+/** Repair an unmanaged/linked OpenClaw peer inside a managed npm root when needed. */
 export async function repairManagedNpmRootOpenClawPeer(params: {
   npmRoot: string;
   packageRoot?: string | null;
@@ -1001,7 +1002,7 @@ async function scrubManagedNpmRootOpenClawPeer(params: {
   });
 }
 
-/** Reused helper for read Managed Npm Root Installed Dependency behavior in src/infra. */
+/** Read installed package metadata for a dependency from package-lock.json. */
 export async function readManagedNpmRootInstalledDependency(params: {
   npmRoot: string;
   packageName: string;
@@ -1022,7 +1023,7 @@ export async function readManagedNpmRootInstalledDependency(params: {
   };
 }
 
-/** Reused helper for remove Managed Npm Root Dependency behavior in src/infra. */
+/** Remove a dependency from the managed npm root manifest. */
 export async function removeManagedNpmRootDependency(params: {
   npmRoot: string;
   packageName: string;

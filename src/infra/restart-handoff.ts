@@ -1,4 +1,5 @@
-// infra restart handoff helpers and runtime behavior.
+// Gateway supervisor restart handoff persistence.
+// Short-lived JSON files let the next process explain intentional restarts after the old PID exits.
 import { randomUUID } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
@@ -6,10 +7,10 @@ import { resolveStateDir } from "../config/paths.js";
 import { createSubsystemLogger } from "../logging/subsystem.js";
 import { isRecord } from "../shared/record-coerce.js";
 
-/** Reused constant for GATEWAY SUPERVISOR RESTART HANDOFF FILENAME behavior in src/infra. */
+/** Filename used for supervisor restart handoff state under the OpenClaw state dir. */
 export const GATEWAY_SUPERVISOR_RESTART_HANDOFF_FILENAME =
   "gateway-supervisor-restart-handoff.json";
-/** Reused constant for GATEWAY SUPERVISOR RESTART HANDOFF KIND behavior in src/infra. */
+/** Kind discriminator stored in restart handoff JSON payloads. */
 export const GATEWAY_SUPERVISOR_RESTART_HANDOFF_KIND = "gateway-supervisor-restart-handoff";
 const GATEWAY_RESTART_HANDOFF_TTL_MS = 60_000;
 const GATEWAY_RESTART_TRACE_HANDOFF_MAX_DURATION_MS = 10 * 60_000;
@@ -20,9 +21,9 @@ const MAX_REASON_LENGTH = 200;
 
 const handoffLog = createSubsystemLogger("restart-handoff");
 
-/** Shared type for Gateway Restart Handoff Restart Kind in src/infra. */
+/** Restart shape requested by the exiting gateway process. */
 export type GatewayRestartHandoffRestartKind = "full-process" | "update-process";
-/** Shared type for Gateway Restart Handoff Source in src/infra. */
+/** Subsystem or operator action that caused the restart handoff. */
 export type GatewayRestartHandoffSource =
   | "config-write"
   | "gateway-update"
@@ -30,10 +31,10 @@ export type GatewayRestartHandoffSource =
   | "plugin-change"
   | "signal"
   | "unknown";
-/** Shared type for Gateway Restart Handoff Supervisor Mode in src/infra. */
+/** Supervisor expected to observe and restart the gateway process. */
 export type GatewayRestartHandoffSupervisorMode = "launchd" | "systemd" | "schtasks" | "external";
 
-/** Shared type for Gateway Restart Handoff in src/infra. */
+/** Validated restart handoff payload shared between old and new gateway processes. */
 export type GatewayRestartHandoff = {
   kind: typeof GATEWAY_SUPERVISOR_RESTART_HANDOFF_KIND;
   version: 1;
@@ -84,7 +85,7 @@ function formatDiagnosticValue(value: string): string {
   return normalized.trimEnd();
 }
 
-/** Reused helper for format Gateway Restart Handoff Diagnostic behavior in src/infra. */
+/** Format a compact diagnostic line for a recent restart handoff. */
 export function formatGatewayRestartHandoffDiagnostic(
   handoff: GatewayRestartHandoff,
   now = Date.now(),
@@ -118,7 +119,7 @@ function unlinkRegularFileSync(filePath: string): boolean {
   }
 }
 
-/** Reused helper for clear Gateway Restart Handoff Sync behavior in src/infra. */
+/** Remove the restart handoff file when it is a safe regular file. */
 export function clearGatewayRestartHandoffSync(env: NodeJS.ProcessEnv = process.env): void {
   unlinkRegularFileSync(resolveGatewayRestartHandoffPath(env));
 }
@@ -286,7 +287,7 @@ function readGatewayRestartHandoffRawSync(env: NodeJS.ProcessEnv): string | null
   }
 }
 
-/** Reused helper for write Gateway Restart Handoff Sync behavior in src/infra. */
+/** Write a bounded restart handoff payload atomically for the next gateway process. */
 export function writeGatewayRestartHandoffSync(opts: {
   env?: NodeJS.ProcessEnv;
   pid?: number;
@@ -360,7 +361,7 @@ export function writeGatewayRestartHandoffSync(opts: {
   }
 }
 
-/** Reused helper for read Gateway Restart Handoff Sync behavior in src/infra. */
+/** Read the current unexpired gateway restart handoff payload. */
 export function readGatewayRestartHandoffSync(
   env: NodeJS.ProcessEnv = process.env,
   now = Date.now(),
@@ -376,7 +377,7 @@ export function readGatewayRestartHandoffSync(
   return payload;
 }
 
-/** Reused helper for consume Gateway Restart Handoff For Exited Process Sync behavior in src/infra. */
+/** Consume a restart handoff after confirming it belongs to the exited process. */
 export function consumeGatewayRestartHandoffForExitedProcessSync(opts: {
   env?: NodeJS.ProcessEnv;
   exitedPid?: number;
