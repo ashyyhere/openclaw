@@ -15,7 +15,7 @@ export const CLI_OUTBOUND_SEND_FACTORY: unique symbol = Symbol.for(
 ) as never;
 
 type CliOutboundSendFactory = (channelId: string) => unknown;
-/** Shared type for Cli Outbound Send Source in src/cli. */
+/** CLI outbound send dependency map keyed by channel id or factory symbol. */
 export type CliOutboundSendSource = {
   [channelId: string]: unknown;
   [CLI_OUTBOUND_SEND_FACTORY]?: CliOutboundSendFactory;

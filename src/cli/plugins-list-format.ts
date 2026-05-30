@@ -1,9 +1,10 @@
+/** Formats plugin registry records for CLI list output. */
 import { sanitizeTerminalText } from "../../packages/terminal-core/src/safe-text.js";
 import { theme } from "../../packages/terminal-core/src/theme.js";
 import type { PluginRecord } from "../plugins/registry.js";
 import { shortenHomeInString } from "../utils.js";
 
-/** Reused helper for format Plugin Line behavior in src/cli. */
+/** Formats one plugin registry record for CLI list output. */
 export function formatPluginLine(plugin: PluginRecord, verbose = false): string {
   const status =
     plugin.status === "error"

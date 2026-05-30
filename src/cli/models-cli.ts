@@ -35,7 +35,7 @@ async function withModelsRuntime(
   return runtime.runModelsCommand(() => action(runtime));
 }
 
-/** Reused helper for register Models Cli behavior in src/cli. */
+/** Registers model discovery, auth, status, and configuration commands. */
 export function registerModelsCli(program: Command) {
   const models = program
     .command("models")

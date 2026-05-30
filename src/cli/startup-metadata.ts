@@ -14,7 +14,7 @@ function resolveStartupMetadataPathCandidates(moduleUrl: string): string[] {
   ];
 }
 
-/** Reused helper for read Cli Startup Metadata behavior in src/cli. */
+/** Reads bundled CLI startup metadata from source or dist layouts. */
 export function readCliStartupMetadata(moduleUrl: string): Record<string, unknown> | null {
   for (const metadataPath of resolveStartupMetadataPathCandidates(moduleUrl)) {
     const cached = startupMetadataByPath.get(metadataPath);
@@ -36,12 +36,12 @@ export function readCliStartupMetadata(moduleUrl: string): Record<string, unknow
   return null;
 }
 
-/** Reused constant for testing behavior in src/cli. */
+/** Test-only startup metadata cache helpers. */
 export const testing = {
   resolveStartupMetadataPathCandidates,
   clearStartupMetadataCache(): void {
     startupMetadataByPath.clear();
   },
 };
-/** Re-exported API for src/cli, starting with testing. */
+/** Test-only startup metadata cache helpers. */
 export { testing as __testing };

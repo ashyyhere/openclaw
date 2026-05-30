@@ -12,7 +12,7 @@ import { parseTimeoutMsWithFallback } from "./parse-timeout.js";
 
 const MAX_NATIVE_HOOK_STDIN_BYTES = 1024 * 1024;
 
-/** Shared type for Native Hook Relay Cli Options in src/cli. */
+/** CLI options required to invoke a native hook relay bridge. */
 export type NativeHookRelayCliOptions = {
   provider?: string;
   relayId?: string;
@@ -29,7 +29,7 @@ type NativeHookRelayCliDeps = {
   callGateway?: typeof callGateway;
 };
 
-/** Reused helper for run Native Hook Relay Cli behavior in src/cli. */
+/** Runs the native hook relay CLI bridge and returns an exit code. */
 export async function runNativeHookRelayCli(
   opts: NativeHookRelayCliOptions,
   deps: NativeHookRelayCliDeps = {},
@@ -144,12 +144,12 @@ function formatRelayCliError(prefix: string, error: unknown): string {
   return `${prefix}: ${message}\n`;
 }
 
-/** Reused helper for create Readable Text Stream behavior in src/cli. */
+/** Creates a readable stream containing a fixed text payload. */
 export function createReadableTextStream(text: string): NodeJS.ReadableStream {
   return Readable.from([text]);
 }
 
-/** Reused helper for create Writable Text Buffer behavior in src/cli. */
+/** Creates a writable stream that exposes all written text for tests. */
 export function createWritableTextBuffer(): NodeJS.WritableStream & { text: () => string } {
   const chunks: Buffer[] = [];
   const stream = new Writable({

@@ -19,7 +19,7 @@ const DEFAULT_CLI_COMMAND_PATH_POLICY: CliCommandPathPolicy = {
   networkProxy: "default",
 };
 
-/** Reused helper for resolve Cli Command Path Policy behavior in src/cli. */
+/** Resolves startup/config policy for a normalized CLI command path. */
 export function resolveCliCommandPathPolicy(commandPath: string[]): CliCommandPathPolicy {
   let resolvedPolicy: CliCommandPathPolicy = { ...DEFAULT_CLI_COMMAND_PATH_POLICY };
   for (const entry of cliCommandCatalog) {
@@ -41,7 +41,7 @@ function isCommandPathPrefix(commandPath: string[], pattern: readonly string[]):
   return pattern.every((segment, index) => commandPath[index] === segment);
 }
 
-/** Reused helper for resolve Cli Catalog Command Path behavior in src/cli. */
+/** Resolves argv to the best-known command catalog path. */
 export function resolveCliCatalogCommandPath(argv: string[]): string[] {
   const tokens =
     resolveGatewayCatalogCommandPath(argv) ?? getCommandPathWithRootOptions(argv, argv.length);
@@ -60,7 +60,7 @@ export function resolveCliCatalogCommandPath(argv: string[]): string[] {
   return bestMatch ? [...bestMatch] : [tokens[0]];
 }
 
-/** Reused helper for resolve Cli Network Proxy Policy behavior in src/cli. */
+/** Resolves whether a CLI invocation should use network proxy policy. */
 export function resolveCliNetworkProxyPolicy(argv: string[]): CliNetworkProxyPolicy {
   const commandPath = resolveCliCatalogCommandPath(argv);
   const networkProxy = resolveCliCommandPathPolicy(commandPath).networkProxy;

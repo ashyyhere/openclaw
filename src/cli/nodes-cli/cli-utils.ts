@@ -1,9 +1,10 @@
+/** Shared formatting and error handling for nodes CLI commands. */
 import { isRich, theme } from "../../../packages/terminal-core/src/theme.js";
 import { defaultRuntime } from "../../runtime.js";
 import { runCommandWithRuntime } from "../cli-utils.js";
 import { unauthorizedHintForMessage } from "./rpc.js";
 
-/** Reused helper for get Nodes Theme behavior in src/cli/nodes-cli. */
+/** Resolves color-aware formatters for nodes CLI output. */
 export function getNodesTheme() {
   const rich = isRich();
   const color = (fn: (value: string) => string) => (value: string) => (rich ? fn(value) : value);
@@ -17,7 +18,7 @@ export function getNodesTheme() {
   };
 }
 
-/** Reused helper for run Nodes Command behavior in src/cli/nodes-cli. */
+/** Runs a nodes command with shared runtime error handling. */
 export function runNodesCommand(label: string, action: () => Promise<void>) {
   return runCommandWithRuntime(defaultRuntime, action, (err) => {
     const message = String(err);
