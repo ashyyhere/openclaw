@@ -6,7 +6,6 @@ import {
 } from "../shared/string-coerce.js";
 import type { ProviderCatalogContext, ProviderCatalogResult } from "./types.js";
 
-/** Reused helper for find Catalog Template behavior in src/plugins. */
 export function findCatalogTemplate(params: {
   entries: ReadonlyArray<{ provider: string; id: string }>;
   providerId: string;
@@ -23,7 +22,6 @@ export function findCatalogTemplate(params: {
     .find((entry) => entry !== undefined);
 }
 
-/** Reused helper for build Single Provider Api Key Catalog behavior in src/plugins. */
 export async function buildSingleProviderApiKeyCatalog(params: {
   ctx: ProviderCatalogContext;
   providerId: string;
@@ -53,7 +51,6 @@ export async function buildSingleProviderApiKeyCatalog(params: {
   };
 }
 
-/** Reused helper for build Paired Provider Api Key Catalog behavior in src/plugins. */
 export async function buildPairedProviderApiKeyCatalog(params: {
   ctx: ProviderCatalogContext;
   providerId: string;

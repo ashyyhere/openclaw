@@ -1,4 +1,3 @@
-// plugins effective plugin ids helpers and runtime behavior.
 import {
   listExplicitlyDisabledChannelIdsForConfig,
   listPotentialConfiguredChannelIds,
@@ -141,7 +140,6 @@ function collectSelectedContextEnginePluginIds(config: OpenClawConfig): string[]
   return [pluginId];
 }
 
-/** Reused helper for resolve Effective Plugin Ids behavior in src/plugins. */
 export function resolveEffectivePluginIds(params: {
   config: OpenClawConfig;
   env: NodeJS.ProcessEnv;
