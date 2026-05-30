@@ -1,4 +1,4 @@
-// tasks task registry audit helpers and runtime behavior.
+// Task registry audit helpers for stale, lost, failed-delivery, and inconsistent task records.
 import {
   compareTaskAuditFindingSortKeys,
   createEmptyTaskAuditSummary,
@@ -10,7 +10,7 @@ import {
 import type { TaskRecord } from "./task-registry.types.js";
 import { resolveEffectiveTaskCleanupAfter } from "./task-retention.js";
 
-/** Shared type for Task Audit Options in src/tasks. */
+/** Inputs and stale-age thresholds for task registry audit runs. */
 export type TaskAuditOptions = {
   now?: number;
   tasks?: TaskRecord[];
@@ -18,7 +18,7 @@ export type TaskAuditOptions = {
   staleRunningMs?: number;
 };
 
-/** Shared type for Retained Lost Task Audit Summary in src/tasks. */
+/** Summary for lost tasks still retained until their cleanup window expires. */
 export type RetainedLostTaskAuditSummary = {
   count: number;
   nextCleanupAfter?: number;
@@ -26,14 +26,14 @@ export type RetainedLostTaskAuditSummary = {
 
 const DEFAULT_STALE_QUEUED_MS = 10 * 60_000;
 const DEFAULT_STALE_RUNNING_MS = 30 * 60_000;
-/** Re-exported API for src/tasks, starting with create Empty Task Audit Summary. */
+/** Empty audit-summary factory shared with callers that aggregate custom finding lists. */
 export { createEmptyTaskAuditSummary };
-/** Re-exported API for src/tasks, starting with Task Audit Code. */
+/** Public audit finding codes, severities, records, and summary shapes. */
 export type { TaskAuditCode, TaskAuditFinding, TaskAuditSeverity, TaskAuditSummary };
 
 let taskAuditTaskProvider: () => TaskRecord[] = () => [];
 
-/** Reused helper for configure Task Audit Task Provider behavior in src/tasks. */
+/** Installs the task source used by audit callers that do not pass explicit task records. */
 export function configureTaskAuditTaskProvider(provider: () => TaskRecord[]): void {
   taskAuditTaskProvider = provider;
 }
@@ -101,7 +101,7 @@ function compareFindings(left: TaskAuditFinding, right: TaskAuditFinding): numbe
   );
 }
 
-/** Reused helper for list Task Audit Findings behavior in src/tasks. */
+/** Finds actionable registry issues and returns them in deterministic severity/age order. */
 export function listTaskAuditFindings(options: TaskAuditOptions = {}): TaskAuditFinding[] {
   const tasks = options.tasks ?? taskAuditTaskProvider();
   const now = options.now ?? Date.now();
@@ -192,7 +192,7 @@ export function listTaskAuditFindings(options: TaskAuditOptions = {}): TaskAudit
   return findings.toSorted(compareFindings);
 }
 
-/** Reused helper for is Retained Lost Task Audit Finding behavior in src/tasks. */
+/** Identifies lost-task findings that are noisy but intentionally retained until cleanup. */
 export function isRetainedLostTaskAuditFinding(
   finding: TaskAuditFinding,
   now = Date.now(),
@@ -206,7 +206,7 @@ export function isRetainedLostTaskAuditFinding(
   );
 }
 
-/** Reused helper for summarize Task Audit Findings behavior in src/tasks. */
+/** Counts audit findings by severity and code. */
 export function summarizeTaskAuditFindings(findings: Iterable<TaskAuditFinding>): TaskAuditSummary {
   const summary = createEmptyTaskAuditSummary();
   for (const finding of findings) {
@@ -221,7 +221,7 @@ export function summarizeTaskAuditFindings(findings: Iterable<TaskAuditFinding>)
   return summary;
 }
 
-/** Reused helper for summarize Actionable Task Audit Findings behavior in src/tasks. */
+/** Summarizes findings after removing retained-lost tasks that are not yet actionable. */
 export function summarizeActionableTaskAuditFindings(
   findings: Iterable<TaskAuditFinding>,
   options: { now?: number } = {},
@@ -232,7 +232,7 @@ export function summarizeActionableTaskAuditFindings(
   );
 }
 
-/** Reused helper for summarize Retained Lost Task Audit Findings behavior in src/tasks. */
+/** Counts retained-lost findings and reports the next cleanup time that will make one actionable. */
 export function summarizeRetainedLostTaskAuditFindings(
   findings: Iterable<TaskAuditFinding>,
   options: { now?: number } = {},

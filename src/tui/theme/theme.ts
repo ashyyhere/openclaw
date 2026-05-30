@@ -1,4 +1,4 @@
-// tui/theme theme helpers and runtime behavior.
+// Shared TUI color palette and component theme adapters.
 import type {
   EditorTheme,
   MarkdownTheme,
@@ -78,7 +78,7 @@ function isLightBackground(): boolean {
 /** Whether the terminal has a light background. Exported for testing only. */
 export const lightMode = isLightBackground();
 
-/** Reused constant for dark Palette behavior in src/tui/theme. */
+/** Dark-terminal palette used by TUI text, markdown, editor, and picker components. */
 export const darkPalette = {
   text: "#E8E3D5",
   dim: "#7B7F87",
@@ -103,7 +103,7 @@ export const darkPalette = {
   success: "#7DD3A5",
 } as const;
 
-/** Reused constant for light Palette behavior in src/tui/theme. */
+/** Light-terminal palette with contrast-safe equivalents for the dark theme roles. */
 export const lightPalette = {
   text: "#1E1E1E",
   dim: "#5B6472",
@@ -128,7 +128,7 @@ export const lightPalette = {
   success: "#047857",
 } as const;
 
-/** Reused constant for palette behavior in src/tui/theme. */
+/** Active palette selected from terminal theme hints and explicit OPENCLAW_THEME. */
 export const palette = lightMode ? lightPalette : darkPalette;
 
 const fg = (hex: string) => (text: string) => chalk.hex(hex)(text);
@@ -142,7 +142,7 @@ function highlightCode(code: string): string[] {
   return code.split("\n").map((line) => fg(palette.code)(line));
 }
 
-/** Reused constant for theme behavior in src/tui/theme. */
+/** Base text stylers consumed by the TUI renderer and shared message components. */
 export const theme = {
   fg: fg(palette.text),
   assistantText: (text: string) => text,
@@ -165,7 +165,7 @@ export const theme = {
   italic: (text: string) => chalk.italic(text),
 };
 
-/** Reused constant for markdown Theme behavior in src/tui/theme. */
+/** Markdown renderer styling wired to the active TUI palette. */
 export const markdownTheme: MarkdownTheme = {
   heading: (text) => chalk.bold(fg(palette.accent)(text)),
   link: (text) => fg(palette.link)(text),
@@ -192,16 +192,16 @@ const baseSelectListTheme: SelectListTheme = {
   noMatch: (text) => fg(palette.dim)(text),
 };
 
-/** Reused constant for select List Theme behavior in src/tui/theme. */
+/** Basic selectable-list styling for menu and prompt components. */
 export const selectListTheme: SelectListTheme = baseSelectListTheme;
 
-/** Reused constant for filterable Select List Theme behavior in src/tui/theme. */
+/** Select-list styling plus filter input colors for filterable pickers. */
 export const filterableSelectListTheme = {
   ...baseSelectListTheme,
   filterLabel: (text: string) => fg(palette.dim)(text),
 };
 
-/** Reused constant for settings List Theme behavior in src/tui/theme. */
+/** Settings-list styling for label/value rows and the active cursor marker. */
 export const settingsListTheme: SettingsListTheme = {
   label: (text, selected) =>
     selected ? chalk.bold(fg(palette.accent)(text)) : fg(palette.text)(text),
@@ -211,13 +211,13 @@ export const settingsListTheme: SettingsListTheme = {
   hint: (text) => fg(palette.dim)(text),
 };
 
-/** Reused constant for editor Theme behavior in src/tui/theme. */
+/** Editor component styling, reusing the shared select-list theme for embedded choices. */
 export const editorTheme: EditorTheme = {
   borderColor: (text) => fg(palette.border)(text),
   selectList: selectListTheme,
 };
 
-/** Reused constant for searchable Select List Theme behavior in src/tui/theme. */
+/** Searchable picker styling including prompt, input, and match-highlight colors. */
 export const searchableSelectListTheme: SearchableSelectListTheme = {
   ...baseSelectListTheme,
   searchPrompt: (text) => fg(palette.accentSoft)(text),

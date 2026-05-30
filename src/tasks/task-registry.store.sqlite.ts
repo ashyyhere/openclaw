@@ -305,7 +305,7 @@ function withWriteTransaction(write: (database: TaskRegistryDatabase) => void) {
   });
 }
 
-/** Reused helper for load Task Registry State From Sqlite behavior in src/tasks. */
+/** Loads all task records and delivery states into the in-memory registry snapshot shape. */
 export function loadTaskRegistryStateFromSqlite(): TaskRegistryStoreSnapshot {
   const { db } = openTaskRegistryDatabase();
   const taskRows = selectTaskRows(db);
@@ -316,7 +316,7 @@ export function loadTaskRegistryStateFromSqlite(): TaskRegistryStoreSnapshot {
   };
 }
 
-/** Reused helper for list Task Registry Records By Owner Key From Sqlite behavior in src/tasks. */
+/** Lists persisted tasks for one owner key, preserving store-level row-to-record normalization. */
 export function listTaskRegistryRecordsByOwnerKeyFromSqlite(ownerKey: string): TaskRecord[] {
   const key = ownerKey.trim();
   if (!key) {
@@ -333,7 +333,7 @@ export function listTaskRegistryRecordsByOwnerKeyFromSqlite(ownerKey: string): T
   return rows.map(rowToTaskRecord);
 }
 
-/** Reused helper for save Task Registry State To Sqlite behavior in src/tasks. */
+/** Replaces SQLite registry contents with a full in-memory snapshot in one write transaction. */
 export function saveTaskRegistryStateToSqlite(snapshot: TaskRegistryStoreSnapshot) {
   withWriteTransaction(({ db }) => {
     const kysely = getTaskRegistryKysely(db);
@@ -371,14 +371,14 @@ export function saveTaskRegistryStateToSqlite(snapshot: TaskRegistryStoreSnapsho
   });
 }
 
-/** Reused helper for upsert Task Registry Record To Sqlite behavior in src/tasks. */
+/** Upserts a single task row without changing any existing delivery state. */
 export function upsertTaskRegistryRecordToSqlite(task: TaskRecord) {
   withWriteTransaction(({ db }) => {
     upsertTaskRow(db, bindTaskRecordBase(task));
   });
 }
 
-/** Reused helper for upsert Task With Delivery State To Sqlite behavior in src/tasks. */
+/** Upserts a task row and its matching delivery state atomically. */
 export function upsertTaskWithDeliveryStateToSqlite(params: {
   task: TaskRecord;
   deliveryState?: TaskDeliveryState;
@@ -398,28 +398,28 @@ export function upsertTaskWithDeliveryStateToSqlite(params: {
   });
 }
 
-/** Reused helper for delete Task Registry Record From Sqlite behavior in src/tasks. */
+/** Deletes a task and any associated delivery state from the cached SQLite store. */
 export function deleteTaskRegistryRecordFromSqlite(taskId: string) {
   withWriteTransaction(({ db }) => {
     deleteTaskRowsWithDeliveryState(db, taskId);
   });
 }
 
-/** Reused helper for delete Task And Delivery State From Sqlite behavior in src/tasks. */
+/** Deletes a task row and delivery row inside a write transaction. */
 export function deleteTaskAndDeliveryStateFromSqlite(taskId: string) {
   withWriteTransaction(({ db }) => {
     deleteTaskRowsWithDeliveryState(db, taskId);
   });
 }
 
-/** Reused helper for upsert Task Delivery State To Sqlite behavior in src/tasks. */
+/** Stores delivery progress for a task without modifying the task registry row. */
 export function upsertTaskDeliveryStateToSqlite(state: TaskDeliveryState) {
   withWriteTransaction(({ db }) => {
     replaceTaskDeliveryStateRow(db, bindTaskDeliveryState(state));
   });
 }
 
-/** Reused helper for delete Task Delivery State From Sqlite behavior in src/tasks. */
+/** Removes delivery progress for a task while leaving the task record intact. */
 export function deleteTaskDeliveryStateFromSqlite(taskId: string) {
   withWriteTransaction(({ db }) => {
     executeSqliteQuerySync(
