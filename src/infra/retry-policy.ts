@@ -1,12 +1,12 @@
-// infra retry policy helpers and runtime behavior.
+// Builds shared retry runners for channel APIs and rate-limited provider calls.
 import { createSubsystemLogger } from "../logging/subsystem.js";
 import { formatErrorMessage } from "./errors.js";
 import { type RetryConfig, resolveRetryConfig, retryAsync } from "./retry.js";
 
-/** Shared type for Retry Runner in src/infra. */
+/** Function wrapper that retries async work according to a resolved retry policy. */
 export type RetryRunner = <T>(fn: () => Promise<T>, label?: string) => Promise<T>;
 
-/** Reused constant for CHANNEL API RETRY DEFAULTS behavior in src/infra. */
+/** Default retry policy for idempotent channel API requests. */
 export const CHANNEL_API_RETRY_DEFAULTS = {
   attempts: 3,
   minDelayMs: 400,
@@ -54,7 +54,7 @@ function getChannelApiRetryAfterMs(err: unknown): number | undefined {
   return typeof candidate === "number" && Number.isFinite(candidate) ? candidate * 1000 : undefined;
 }
 
-/** Reused helper for create Rate Limit Retry Runner behavior in src/infra. */
+/** Creates a configurable retry runner for rate-limit aware operations. */
 export function createRateLimitRetryRunner(params: {
   retry?: RetryConfig;
   configRetry?: RetryConfig;
@@ -86,7 +86,7 @@ export function createRateLimitRetryRunner(params: {
     });
 }
 
-/** Reused helper for create Channel Api Retry Runner behavior in src/infra. */
+/** Creates the channel API retry runner with retry-after and transient-error handling. */
 export function createChannelApiRetryRunner(params: {
   retry?: RetryConfig;
   configRetry?: RetryConfig;

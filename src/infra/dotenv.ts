@@ -1,4 +1,4 @@
-// infra dotenv helpers and runtime behavior.
+// Loads trusted global and restricted workspace dotenv files without overriding env.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -282,7 +282,7 @@ function readDotEnvFile(params: {
   return { filePath: params.filePath, entries };
 }
 
-/** Reused helper for load Workspace Dot Env File behavior in src/infra. */
+/** Loads a workspace .env file after blocking runtime, provider-auth, and host-control keys. */
 export function loadWorkspaceDotEnvFile(filePath: string, opts?: { quiet?: boolean }) {
   let providerAuthBlockedKeys: ReadonlySet<string> | undefined;
   const getProviderAuthBlockedKeys = () => {
@@ -351,7 +351,7 @@ function loadParsedDotEnvFiles(files: LoadedDotEnvFile[]) {
   }
 }
 
-/** Reused helper for load Global Runtime Dot Env Files behavior in src/infra. */
+/** Loads trusted global runtime dotenv files in precedence order. */
 export function loadGlobalRuntimeDotEnvFiles(opts?: { quiet?: boolean; stateEnvPath?: string }) {
   const quiet = opts?.quiet ?? true;
   const stateEnvPath = opts?.stateEnvPath ?? path.join(resolveConfigDir(process.env), ".env");
@@ -388,7 +388,7 @@ export function loadGlobalRuntimeDotEnvFiles(opts?: { quiet?: boolean; stateEnvP
   loadParsedDotEnvFiles(parsed);
 }
 
-/** Reused helper for load Dot Env behavior in src/infra. */
+/** Loads workspace dotenv first, then trusted global runtime dotenv fallbacks. */
 export function loadDotEnv(opts?: { quiet?: boolean }) {
   const quiet = opts?.quiet ?? true;
   const cwdEnvPath = path.join(process.cwd(), ".env");
