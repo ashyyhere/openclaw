@@ -7,27 +7,27 @@ import type { Transport } from "../../llm/types.js";
 import { CONFIG_DIR_NAME, getAgentDir } from "../config.js";
 import { DEFAULT_HTTP_IDLE_TIMEOUT_MS, parseHttpIdleTimeoutMs } from "./http-dispatcher.js";
 
-/** Shared type for Compaction Settings in src/agents/sessions. */
+/** Token-reserve and recency controls for automatic session compaction. */
 export interface CompactionSettings {
   enabled?: boolean; // default: true
   reserveTokens?: number; // default: 16384
   keepRecentTokens?: number; // default: 20000
 }
 
-/** Shared type for Branch Summary Settings in src/agents/sessions. */
+/** Token budget and prompt behavior for branch-summary generation. */
 export interface BranchSummarySettings {
   reserveTokens?: number; // default: 16384 (tokens reserved for prompt + LLM response)
   skipPrompt?: boolean; // default: false - when true, skips "Summarize branch?" prompt and defaults to no summary
 }
 
-/** Shared type for Provider Retry Settings in src/agents/sessions. */
+/** Provider SDK timeout and retry limits. */
 export interface ProviderRetrySettings {
   timeoutMs?: number; // SDK/provider request timeout in milliseconds
   maxRetries?: number; // SDK/provider retry attempts
   maxRetryDelayMs?: number; // default: 60000 (max server-requested delay before failing)
 }
 
-/** Shared type for Retry Settings in src/agents/sessions. */
+/** Agent retry policy, including provider-specific request retries. */
 export interface RetrySettings {
   enabled?: boolean; // default: true
   maxRetries?: number; // default: 3
@@ -35,7 +35,7 @@ export interface RetrySettings {
   provider?: ProviderRetrySettings;
 }
 
-/** Shared type for Terminal Settings in src/agents/sessions. */
+/** Terminal rendering options used by the session UI. */
 export interface TerminalSettings {
   showImages?: boolean; // default: true (only relevant if terminal supports images)
   imageWidthCells?: number; // default: 60 (preferred inline image width in terminal cells)
@@ -43,13 +43,13 @@ export interface TerminalSettings {
   showTerminalProgress?: boolean; // default: false (OSC 9;4 terminal progress indicators)
 }
 
-/** Shared type for Image Settings in src/agents/sessions. */
+/** Image attachment preprocessing and blocking settings. */
 export interface ImageSettings {
   autoResize?: boolean; // default: true (resize images to 2000x2000 max for better model compatibility)
   blockImages?: boolean; // default: false - when true, prevents all images from being sent to LLM providers
 }
 
-/** Shared type for Thinking Budgets Settings in src/agents/sessions. */
+/** Custom token budgets for each thinking level. */
 export interface ThinkingBudgetsSettings {
   minimal?: number;
   low?: number;
@@ -58,17 +58,17 @@ export interface ThinkingBudgetsSettings {
   max?: number;
 }
 
-/** Shared type for Markdown Settings in src/agents/sessions. */
+/** Markdown rendering preferences for assistant output. */
 export interface MarkdownSettings {
   codeBlockIndent?: string; // default: "  "
 }
 
-/** Shared type for Warning Settings in src/agents/sessions. */
+/** Warning toggles for provider-specific diagnostics. */
 export interface WarningSettings {
   anthropicExtraUsage?: boolean; // default: true
 }
 
-/** Shared type for Transport Setting in src/agents/sessions. */
+/** Preferred model transport mode for sessions. */
 export type TransportSetting = Transport;
 
 /**
@@ -86,7 +86,7 @@ export type PackageSource =
       themes?: string[];
     };
 
-/** Shared type for Settings in src/agents/sessions. */
+/** Persisted user and project settings consumed when creating agent sessions. */
 export interface Settings {
   lastChangelogVersion?: string;
   defaultProvider?: string;
@@ -158,21 +158,21 @@ function deepMergeSettings(base: Settings, overrides: Settings): Settings {
   return result;
 }
 
-/** Shared type for Settings Scope in src/agents/sessions. */
+/** Settings scope stored globally or in the current project. */
 export type SettingsScope = "global" | "project";
 
-/** Shared type for Settings Storage in src/agents/sessions. */
+/** Storage backend contract used by file-backed and in-memory settings managers. */
 export interface SettingsStorage {
   withLock(scope: SettingsScope, fn: (current: string | undefined) => string | undefined): void;
 }
 
-/** Shared type for Settings Error in src/agents/sessions. */
+/** Load or parse error captured for one settings scope. */
 export interface SettingsError {
   scope: SettingsScope;
   error: Error;
 }
 
-/** Reused class for File Settings Storage behavior in src/agents/sessions. */
+/** File-backed settings storage with per-file locking. */
 export class FileSettingsStorage implements SettingsStorage {
   private globalSettingsPath: string;
   private projectSettingsPath: string;
@@ -240,7 +240,7 @@ export class FileSettingsStorage implements SettingsStorage {
   }
 }
 
-/** Reused class for In Memory Settings Storage behavior in src/agents/sessions. */
+/** In-memory settings storage for tests and ephemeral sessions. */
 export class InMemorySettingsStorage implements SettingsStorage {
   private global: string | undefined;
   private project: string | undefined;
@@ -258,7 +258,7 @@ export class InMemorySettingsStorage implements SettingsStorage {
   }
 }
 
-/** Reused class for Settings Manager behavior in src/agents/sessions. */
+/** Loads, merges, mutates, and persists global plus project session settings. */
 export class SettingsManager {
   private storage: SettingsStorage;
   private globalSettings: Settings;
