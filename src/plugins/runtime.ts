@@ -1,4 +1,5 @@
-// plugins runtime helpers and runtime behavior.
+// Process-local plugin registry runtime state for active, HTTP route, and
+// channel surfaces.
 import { onAgentEvent } from "../infra/agent-events.js";
 import { createSubsystemLogger } from "../logging/subsystem.js";
 import {
@@ -146,7 +147,7 @@ function syncPluginAgentEventBridge(): void {
   });
 }
 
-/** Reused helper for record Imported Plugin Id behavior in src/plugins. */
+/** Records a plugin id whose runtime module was imported in this process. */
 export function recordImportedPluginId(pluginId: string): void {
   state.importedPluginIds.add(pluginId);
 }
@@ -181,7 +182,7 @@ function syncTrackedSurface(
   installSurfaceRegistry(surface, registry, false);
 }
 
-/** Reused helper for set Active Plugin Registry behavior in src/plugins. */
+/** Installs the active plugin registry and retires replaced registries when unused. */
 export function setActivePluginRegistry(
   registry: PluginRegistry,
   cacheKey?: string,
@@ -207,17 +208,17 @@ export function setActivePluginRegistry(
   cleanupRetiredPluginHostRegistry(previousRegistry);
 }
 
-/** Reused helper for get Active Plugin Registry behavior in src/plugins. */
+/** Returns the current active registry without creating a fallback registry. */
 export function getActivePluginRegistry(): PluginRegistry | null {
   return asPluginRegistry(state.activeRegistry);
 }
 
-/** Reused helper for get Active Plugin Registry Workspace Dir behavior in src/plugins. */
+/** Returns the workspace directory associated with the active registry. */
 export function getActivePluginRegistryWorkspaceDir(): string | undefined {
   return state.workspaceDir ?? undefined;
 }
 
-/** Reused helper for require Active Plugin Registry behavior in src/plugins. */
+/** Returns the active registry, creating an empty one for runtime callers if needed. */
 export function requireActivePluginRegistry(): PluginRegistry {
   if (!state.activeRegistry) {
     state.activeRegistry = createEmptyPluginRegistry();
@@ -229,7 +230,7 @@ export function requireActivePluginRegistry(): PluginRegistry {
   return asPluginRegistry(state.activeRegistry)!;
 }
 
-/** Reused helper for pin Active Plugin Http Route Registry behavior in src/plugins. */
+/** Pins a registry for HTTP route handling independently of active swaps. */
 export function pinActivePluginHttpRouteRegistry(registry: PluginRegistry) {
   const previousRegistry = asPluginRegistry(state.httpRoute.registry);
   installSurfaceRegistry(state.httpRoute, registry, true);
@@ -240,7 +241,7 @@ export function pinActivePluginHttpRouteRegistry(registry: PluginRegistry) {
   }
 }
 
-/** Reused helper for release Pinned Plugin Http Route Registry behavior in src/plugins. */
+/** Releases the pinned HTTP route registry back to active-registry tracking. */
 export function releasePinnedPluginHttpRouteRegistry(registry?: PluginRegistry) {
   if (registry && state.httpRoute.registry !== registry) {
     return;
@@ -253,17 +254,17 @@ export function releasePinnedPluginHttpRouteRegistry(registry?: PluginRegistry) 
   }
 }
 
-/** Reused helper for get Active Plugin Http Route Registry behavior in src/plugins. */
+/** Returns the registry used for plugin-owned HTTP routes. */
 export function getActivePluginHttpRouteRegistry(): PluginRegistry | null {
   return asPluginRegistry(state.httpRoute.registry ?? state.activeRegistry);
 }
 
-/** Reused helper for get Active Plugin Http Route Registry Version behavior in src/plugins. */
+/** Version token that changes when the HTTP route registry surface changes. */
 export function getActivePluginHttpRouteRegistryVersion(): number {
   return state.httpRoute.registry ? state.httpRoute.version : state.activeVersion;
 }
 
-/** Reused helper for require Active Plugin Http Route Registry behavior in src/plugins. */
+/** Returns the HTTP route registry, creating the active fallback if needed. */
 export function requireActivePluginHttpRouteRegistry(): PluginRegistry {
   const existing = getActivePluginHttpRouteRegistry();
   if (existing) {
@@ -274,7 +275,7 @@ export function requireActivePluginHttpRouteRegistry(): PluginRegistry {
   return created;
 }
 
-/** Reused helper for resolve Active Plugin Http Route Registry behavior in src/plugins. */
+/** Chooses the route registry, falling back when the active snapshot has no routes. */
 export function resolveActivePluginHttpRouteRegistry(fallback: PluginRegistry): PluginRegistry {
   const routeRegistry = getActivePluginHttpRouteRegistry();
   if (!routeRegistry) {
@@ -291,7 +292,7 @@ export function resolveActivePluginHttpRouteRegistry(fallback: PluginRegistry): 
   return routeRegistry;
 }
 
-/** Reused helper for pin Active Plugin Channel Registry behavior in src/plugins. */
+/** Pins a registry for channel dispatch independently of active swaps. */
 export function pinActivePluginChannelRegistry(registry: PluginRegistry) {
   const previousRegistry = asPluginRegistry(state.channel.registry);
   installSurfaceRegistry(state.channel, registry, true);
@@ -302,7 +303,7 @@ export function pinActivePluginChannelRegistry(registry: PluginRegistry) {
   }
 }
 
-/** Reused helper for release Pinned Plugin Channel Registry behavior in src/plugins. */
+/** Releases the pinned channel registry back to active-registry tracking. */
 export function releasePinnedPluginChannelRegistry(registry?: PluginRegistry) {
   if (registry && state.channel.registry !== registry) {
     return;
@@ -315,17 +316,17 @@ export function releasePinnedPluginChannelRegistry(registry?: PluginRegistry) {
   }
 }
 
-/** Reused helper for get Active Plugin Channel Registry behavior in src/plugins. */
+/** Returns the registry snapshot used by channel dispatch. */
 export function getActivePluginChannelRegistry(): PluginRegistry | null {
   return getActivePluginChannelRegistrySnapshotFromState().registry as PluginRegistry | null;
 }
 
-/** Reused helper for get Active Plugin Channel Registry Version behavior in src/plugins. */
+/** Version token that changes when the channel registry surface changes. */
 export function getActivePluginChannelRegistryVersion(): number {
   return getActivePluginChannelRegistrySnapshotFromState().version;
 }
 
-/** Reused helper for require Active Plugin Channel Registry behavior in src/plugins. */
+/** Returns the channel registry, creating the active fallback if needed. */
 export function requireActivePluginChannelRegistry(): PluginRegistry {
   const existing = getActivePluginChannelRegistry();
   if (existing) {
@@ -336,17 +337,17 @@ export function requireActivePluginChannelRegistry(): PluginRegistry {
   return created;
 }
 
-/** Reused helper for get Active Plugin Registry Key behavior in src/plugins. */
+/** Cache key associated with the currently active registry build. */
 export function getActivePluginRegistryKey(): string | null {
   return state.key;
 }
 
-/** Reused helper for get Active Plugin Runtime Subagent Mode behavior in src/plugins. */
+/** Runtime subagent mode selected when the active registry was installed. */
 export function getActivePluginRuntimeSubagentMode(): "default" | "explicit" | "gateway-bindable" {
   return state.runtimeSubagentMode;
 }
 
-/** Reused helper for get Active Plugin Registry Version behavior in src/plugins. */
+/** Monotonic version token for active-registry replacements. */
 export function getActivePluginRegistryVersion(): number {
   return state.activeVersion;
 }
@@ -384,7 +385,7 @@ export function listImportedRuntimePluginIds(): string[] {
   return [...imported].toSorted((left, right) => left.localeCompare(right));
 }
 
-/** Reused helper for reset Plugin Runtime State For Test behavior in src/plugins. */
+/** Clears plugin runtime globals and lifecycle caches for isolated tests. */
 export function resetPluginRuntimeStateForTest(): void {
   state.activeRegistry = null;
   state.activeVersion += 1;
