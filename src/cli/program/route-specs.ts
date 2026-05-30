@@ -7,7 +7,7 @@ import {
   type AnyRoutedCommandDefinition,
 } from "./routed-command-definitions.js";
 
-/** Shared type for Route Spec in src/cli/program. */
+/** Route-first command handler with optional plugin preload and argv gating. */
 export type RouteSpec = {
   matches: (path: string[]) => boolean;
   canRun?: (argv: string[]) => boolean;
@@ -44,7 +44,7 @@ function createParsedRoute(params: {
   };
 }
 
-/** Reused constant for routed Commands behavior in src/cli/program. */
+/** Route specs derived from the command catalog for the fast CLI dispatch path. */
 export const routedCommands: RouteSpec[] = cliCommandCatalog
   .filter(
     (

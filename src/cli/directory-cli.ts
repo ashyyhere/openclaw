@@ -60,7 +60,7 @@ function printDirectoryList(params: {
   );
 }
 
-/** Reused helper for register Directory Cli behavior in src/cli. */
+/** Register channel directory lookups for self, peers, groups, and group members. */
 export function registerDirectoryCli(program: Command) {
   const directory = program
     .command("directory")

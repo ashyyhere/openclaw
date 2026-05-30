@@ -5,7 +5,7 @@ import { parseStrictPositiveInteger } from "../infra/parse-finite-number.js";
 import { defaultRuntime } from "../runtime.js";
 import { parseTimeoutMs } from "./parse-timeout.js";
 
-/** Reused helper for register Tui Cli behavior in src/cli. */
+/** Register TUI entrypoints, including legacy terminal/chat aliases for local mode. */
 export function registerTuiCli(program: Command) {
   program
     .command("tui")

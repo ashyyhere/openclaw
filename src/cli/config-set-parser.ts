@@ -10,7 +10,7 @@ type ConfigSetModeResolution =
       error: string;
     };
 
-/** Reused helper for resolve Config Set Mode behavior in src/cli. */
+/** Resolve the mutually exclusive config-set input mode before parsing values. */
 export function resolveConfigSetMode(params: {
   hasBatchMode: boolean;
   hasRefBuilderOptions: boolean;

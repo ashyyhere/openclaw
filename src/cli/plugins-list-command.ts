@@ -2,7 +2,7 @@ import { getRuntimeConfig } from "../config/config.js";
 import type { PluginLogger } from "../plugins/types.js";
 import { defaultRuntime, writeRuntimeJson, type RuntimeEnv } from "../runtime.js";
 
-/** Shared type for Plugins List Options in src/cli. */
+/** Options accepted by plugin listing for filtering and machine-readable output. */
 export type PluginsListOptions = {
   json?: boolean;
   enabled?: boolean;
@@ -36,6 +36,7 @@ async function loadHumanListModules() {
   };
 }
 
+/** Build the plugin registry snapshot and render it as JSON or a terminal table. */
 export async function runPluginsListCommand(
   opts: PluginsListOptions,
   runtime: RuntimeEnv = defaultRuntime,
