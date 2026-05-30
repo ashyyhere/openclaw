@@ -4,7 +4,6 @@ export {
   formatConfigWriteDeniedMessage,
   resolveChannelConfigWrites,
 } from "./channel-config-helpers.js";
-/** Re-exported API for src/plugin-sdk. */
 export type {
   ConfigWriteAuthorizationResult,
   ConfigWriteScope,
