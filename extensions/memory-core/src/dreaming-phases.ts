@@ -1,4 +1,3 @@
-// extensions/memory-core/src dreaming phases helpers and runtime behavior.
 import { createHash } from "node:crypto";
 import type { Dirent } from "node:fs";
 import fs from "node:fs/promises";

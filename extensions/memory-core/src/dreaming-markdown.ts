@@ -1,4 +1,3 @@
-// extensions/memory-core/src dreaming markdown helpers and runtime behavior.
 import fs from "node:fs/promises";
 import path from "node:path";
 import {

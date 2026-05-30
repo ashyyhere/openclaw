@@ -1,4 +1,3 @@
-// extensions/memory-core/src runtime provider helpers and runtime behavior.
 import type { MemoryPluginRuntime } from "openclaw/plugin-sdk/memory-core-host-runtime-core";
 import { resolveMemoryBackendConfig } from "openclaw/plugin-sdk/memory-core-host-runtime-files";
 import {
