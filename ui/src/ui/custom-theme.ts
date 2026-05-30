@@ -1,4 +1,4 @@
-// ui/src/ui custom theme helpers and runtime behavior.
+/** Imports, sanitizes, stores, and applies tweakcn custom UI themes. */
 import { z } from "zod";
 import { normalizeOptionalString } from "./string-coerce.ts";
 
@@ -111,7 +111,7 @@ const REQUIRED_TWEAKCN_MODE_VARS = [
 ] as const;
 type RequiredTweakcnModeVar = (typeof REQUIRED_TWEAKCN_MODE_VARS)[number];
 
-/** Shared type for Imported Custom Theme in ui/src/ui. */
+/** Sanitized custom theme persisted by the UI and rendered into CSS variables. */
 export type ImportedCustomTheme = {
   sourceUrl: string;
   themeId: string;
@@ -433,7 +433,7 @@ function describeThemeLabel(value: string | undefined) {
   return normalized.slice(0, 80);
 }
 
-/** Reused helper for normalize Tweakcn Theme Url behavior in ui/src/ui. */
+/** Normalizes pasted tweakcn input into canonical source and JSON fetch URLs. */
 export function normalizeTweakcnThemeUrl(input: string): TweakcnThemeResolution {
   const normalized = normalizePastedThemeInput(input);
   let parsed: URL;
@@ -453,7 +453,7 @@ export function normalizeTweakcnThemeUrl(input: string): TweakcnThemeResolution 
   };
 }
 
-/** Reused helper for parse Imported Custom Theme behavior in ui/src/ui. */
+/** Parses a stored custom theme, returning null when required tokens are invalid. */
 export function parseImportedCustomTheme(value: unknown): ImportedCustomTheme | null {
   const parsed = importedCustomThemeSchema.safeParse(value);
   if (!parsed.success) {
@@ -479,7 +479,7 @@ export function parseImportedCustomTheme(value: unknown): ImportedCustomTheme | 
   }
 }
 
-/** Reused helper for normalize Imported Custom Theme behavior in ui/src/ui. */
+/** Converts a fetched tweakcn payload into the UI's sanitized token map. */
 export function normalizeImportedCustomTheme(
   payload: unknown,
   resolution: Pick<TweakcnThemeResolution, "sourceUrl" | "themeId">,
@@ -567,7 +567,7 @@ async function readJsonResponseWithLimit(response: Response): Promise<unknown> {
   }
 }
 
-/** Reused helper for import Custom Theme From Url behavior in ui/src/ui. */
+/** Fetches a tweakcn theme with timeout, redirect, size, and token validation. */
 export async function importCustomThemeFromUrl(
   input: string,
   fetchImpl: typeof fetch = fetch,
@@ -597,7 +597,7 @@ export async function importCustomThemeFromUrl(
   }
 }
 
-/** Reused helper for build Custom Theme Styles behavior in ui/src/ui. */
+/** Renders a sanitized custom theme as data-theme scoped CSS variables. */
 export function buildCustomThemeStyles(theme: ImportedCustomTheme) {
   const light = normalizeStoredTokenMap(theme.light);
   const dark = normalizeStoredTokenMap(theme.dark);
@@ -616,7 +616,7 @@ export function buildCustomThemeStyles(theme: ImportedCustomTheme) {
   ].join("\n");
 }
 
-/** Reused helper for sync Custom Theme Style Tag behavior in ui/src/ui. */
+/** Creates, updates, or removes the document style tag for the active custom theme. */
 export function syncCustomThemeStyleTag(theme: ImportedCustomTheme | null | undefined) {
   if (typeof document === "undefined") {
     return;

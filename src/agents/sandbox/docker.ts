@@ -17,7 +17,7 @@ type ExecDockerRawOptions = {
   signal?: AbortSignal;
 };
 
-/** Shared type for Exec Docker Raw Result in src/agents/sandbox. */
+/** Raw Docker CLI result with byte buffers preserved for low-level callers. */
 export type ExecDockerRawResult = {
   stdout: Buffer;
   stderr: Buffer;
@@ -194,7 +194,7 @@ const log = createSubsystemLogger("docker");
 
 const HOT_CONTAINER_WINDOW_MS = 5 * 60 * 1000;
 
-/** Shared type for Exec Docker Options in src/agents/sandbox. */
+/** Options passed to Docker command execution, including abort and failure policy. */
 export type ExecDockerOptions = ExecDockerRawOptions;
 
 function envRecordsEqual(left: Record<string, string>, right: Record<string, string>): boolean {
@@ -233,7 +233,7 @@ export async function execDocker(args: string[], opts?: ExecDockerOptions) {
   };
 }
 
-/** Reused helper for read Docker Container Label behavior in src/agents/sandbox. */
+/** Reads one label from a container, returning null when inspect fails or label is absent. */
 export async function readDockerContainerLabel(
   containerName: string,
   label: string,
@@ -252,7 +252,7 @@ export async function readDockerContainerLabel(
   return raw;
 }
 
-/** Reused helper for read Docker Container Env Var behavior in src/agents/sandbox. */
+/** Reads one environment variable from a container without exposing the full env map. */
 export async function readDockerContainerEnvVar(
   containerName: string,
   envVar: string,
@@ -272,7 +272,7 @@ export async function readDockerContainerEnvVar(
   return null;
 }
 
-/** Reused helper for read Docker Network Driver behavior in src/agents/sandbox. */
+/** Reads the Docker network driver, or null when the network cannot be inspected. */
 export async function readDockerNetworkDriver(network: string): Promise<string | null> {
   const result = await execDocker(["network", "inspect", "-f", "{{.Driver}}", network], {
     allowFailure: true,
@@ -284,7 +284,7 @@ export async function readDockerNetworkDriver(network: string): Promise<string |
   return driver || null;
 }
 
-/** Reused helper for read Docker Network Gateway behavior in src/agents/sandbox. */
+/** Reads the preferred gateway for a Docker network used by host-container relays. */
 export async function readDockerNetworkGateway(network: string): Promise<string | null> {
   const result = await execDocker(
     ["network", "inspect", "-f", "{{range .IPAM.Config}}{{println .Gateway}}{{end}}", network],
@@ -305,7 +305,7 @@ export async function readDockerNetworkGateway(network: string): Promise<string 
   return gw || null;
 }
 
-/** Reused helper for read Docker Port behavior in src/agents/sandbox. */
+/** Reads the host TCP port mapped to a container port. */
 export async function readDockerPort(containerName: string, port: number) {
   const result = await execDocker(["port", containerName, `${port}/tcp`], {
     allowFailure: true,
@@ -329,12 +329,12 @@ const DOCKER_DAEMON_UNAVAILABLE_MARKERS = [
   "connection refused",
 ];
 
-/** Reused helper for is Docker Daemon Unavailable behavior in src/agents/sandbox. */
+/** Detects Docker daemon connectivity failures from CLI stderr. */
 export function isDockerDaemonUnavailable(stderr: string): boolean {
   return DOCKER_DAEMON_UNAVAILABLE_MARKERS.some((marker) => stderr.toLowerCase().includes(marker));
 }
 
-/** Reused helper for format Docker Daemon Unavailable Error behavior in src/agents/sandbox. */
+/** Formats Docker daemon connectivity failures as operator-facing guidance. */
 export function formatDockerDaemonUnavailableError(stderr: string): string {
   const detail = stderr.trim();
   return [

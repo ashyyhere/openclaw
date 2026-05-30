@@ -73,9 +73,9 @@ export function createSandboxFsBridge(
   return createSandboxFsBridgeImpl(...args);
 }
 
-/** Reused constant for mocked Exec Docker Raw behavior in src/agents/sandbox. */
+/** Hoisted Docker execution mock shared by fs-bridge tests. */
 export const mockedExecDockerRaw: ExecDockerRawMock = hoisted.execDockerRaw;
-/** Reused constant for mocked Open Root File behavior in src/agents/sandbox. */
+/** Hoisted path-safety mock shared by fs-bridge tests. */
 export const mockedOpenRootFile: OpenRootFileMock = hoisted.openRootFile;
 const DOCKER_SCRIPT_INDEX = 5;
 const DOCKER_FIRST_SCRIPT_ARG_INDEX = 7;
@@ -85,34 +85,34 @@ export function getDockerScript(args: string[]): string {
   return args[DOCKER_SCRIPT_INDEX] ?? "";
 }
 
-/** Reused helper for get Docker Arg behavior in src/agents/sandbox. */
+/** Reads the nth user argument passed to the mocked Docker shell script. */
 export function getDockerArg(args: string[], position: number): string {
   return args[DOCKER_FIRST_SCRIPT_ARG_INDEX + position - 1] ?? "";
 }
 
-/** Reused helper for get Scripts From Calls behavior in src/agents/sandbox. */
+/** Returns all shell scripts passed to mocked Docker calls. */
 export function getScriptsFromCalls(): string[] {
   return mockedExecDockerRaw.mock.calls.map(([args]) => getDockerScript(args));
 }
 
-/** Reused helper for find Call By Script Fragment behavior in src/agents/sandbox. */
+/** Finds the first mocked Docker call whose shell script contains a fragment. */
 export function findCallByScriptFragment(fragment: string) {
   return mockedExecDockerRaw.mock.calls.find(([args]) => getDockerScript(args).includes(fragment));
 }
 
-/** Reused helper for find Call By Docker Arg behavior in src/agents/sandbox. */
+/** Finds the first mocked Docker call with a matching positional script argument. */
 export function findCallByDockerArg(position: number, value: string) {
   return mockedExecDockerRaw.mock.calls.find(([args]) => getDockerArg(args, position) === value);
 }
 
-/** Reused helper for find Calls By Script Fragment behavior in src/agents/sandbox. */
+/** Finds every mocked Docker call whose shell script contains a fragment. */
 export function findCallsByScriptFragment(fragment: string) {
   return mockedExecDockerRaw.mock.calls.filter(([args]) =>
     getDockerScript(args).includes(fragment),
   );
 }
 
-/** Reused helper for docker Exec Result behavior in src/agents/sandbox. */
+/** Builds a successful raw Docker result with stdout bytes for mock returns. */
 export function dockerExecResult(stdout: string) {
   return {
     stdout: Buffer.from(stdout),
@@ -210,7 +210,7 @@ export async function createHostEscapeFixture(stateDir: string) {
   return { workspaceDir, outsideFile };
 }
 
-/** Reused helper for expect Mkdirp Allows Existing Directory behavior in src/agents/sandbox. */
+/** Asserts mkdirp accepts an existing directory through host or Docker fallback paths. */
 export async function expectMkdirpAllowsExistingDirectory(params?: {
   forceBoundaryIoFallback?: boolean;
 }) {

@@ -8,7 +8,7 @@ import { access, readFile } from "node:fs/promises";
 import * as Diff from "diff";
 import { resolveToCwd } from "./path-utils.js";
 
-/** Reused helper for detect Line Ending behavior in src/agents/sessions. */
+/** Detects the first line-ending style so edit previews preserve file convention. */
 export function detectLineEnding(content: string): "\r\n" | "\n" {
   const crlfIdx = content.indexOf("\r\n");
   const lfIdx = content.indexOf("\n");
@@ -21,12 +21,12 @@ export function detectLineEnding(content: string): "\r\n" | "\n" {
   return crlfIdx < lfIdx ? "\r\n" : "\n";
 }
 
-/** Reused helper for normalize To LF behavior in src/agents/sessions. */
+/** Converts all supported newline spellings to LF before diff matching. */
 export function normalizeToLF(text: string): string {
   return text.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
 }
 
-/** Reused helper for restore Line Endings behavior in src/agents/sessions. */
+/** Restores LF-normalized edit output to the original file newline style. */
 export function restoreLineEndings(text: string, ending: "\r\n" | "\n"): string {
   return ending === "\r\n" ? text.replace(/\n/g, "\r\n") : text;
 }
@@ -61,7 +61,7 @@ export function normalizeForFuzzyMatch(text: string): string {
   );
 }
 
-/** Shared type for Fuzzy Match Result in src/agents/sessions. */
+/** Match details used by edit application to replace exact or normalized text. */
 export interface FuzzyMatchResult {
   /** Whether a match was found */
   found: boolean;
@@ -78,7 +78,7 @@ export interface FuzzyMatchResult {
   contentForReplacement: string;
 }
 
-/** Shared type for Edit in src/agents/sessions. */
+/** Single exact-text replacement requested by the edit tool. */
 export interface Edit {
   oldText: string;
   newText: string;
@@ -91,7 +91,7 @@ interface MatchedEdit {
   newText: string;
 }
 
-/** Shared type for Applied Edits Result in src/agents/sessions. */
+/** Normalized before/after content returned after applying validated edits. */
 export interface AppliedEditsResult {
   baseContent: string;
   newContent: string;
@@ -420,18 +420,18 @@ export function generateDiffString(
   return { diff: output.join("\n"), firstChangedLine };
 }
 
-/** Shared type for Edit Diff Result in src/agents/sessions. */
+/** Preview diff plus the first new-file line touched by an edit. */
 export interface EditDiffResult {
   diff: string;
   firstChangedLine: number | undefined;
 }
 
-/** Shared type for Edit Diff Error in src/agents/sessions. */
+/** Non-throwing diff preview error returned to tool preview callers. */
 export interface EditDiffError {
   error: string;
 }
 
-/** Shared type for Edit Diff Operations in src/agents/sessions. */
+/** File operations injected by tests or sandbox-aware preview callers. */
 export interface EditDiffOperations {
   readFile: (absolutePath: string) => Promise<Buffer | string>;
   access: (absolutePath: string) => Promise<void>;

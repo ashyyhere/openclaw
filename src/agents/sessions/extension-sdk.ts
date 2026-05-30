@@ -11,19 +11,19 @@ export * from "./auth-storage.js";
 export * from "./bash-executor.js";
 export * from "./compaction/index.js";
 export * from "./event-bus.js";
-/** Re-exported API for src/agents/sessions, starting with Readonly Footer Data Provider. */
+/** Footer data provider type exposed without pulling in session runtime internals. */
 export type { ReadonlyFooterDataProvider } from "./footer-data-provider.js";
-/** Re-exported API for src/agents/sessions, starting with convert To Llm. */
+/** Message conversion helper used by extensions that need model-format payloads. */
 export { convertToLlm } from "./messages.js";
 export * from "./model-registry.js";
 export * from "./model-resolver.js";
 export * from "./package-manager.js";
-/** Re-exported API for src/agents/sessions, starting with Prompt Template. */
+/** Prompt template shape shared with extension-provided prompt resources. */
 export type { PromptTemplate } from "./prompt-templates.js";
-/** Re-exported API for src/agents/sessions, starting with Resource Collision. */
+/** Diagnostic types surfaced when extension resources collide. */
 export type { ResourceCollision, ResourceDiagnostic } from "./diagnostics.js";
 export * from "./session-manager.js";
-/** Re-exported API for src/agents/sessions. */
+/** Settings manager surface safe for extension SDK consumers. */
 export {
   FileSettingsStorage,
   InMemorySettingsStorage,
@@ -43,13 +43,13 @@ export {
   type TransportSetting,
   type WarningSettings,
 } from "./settings-manager.js";
-/** Re-exported API for src/agents/sessions, starting with Skill. */
+/** Loaded skill metadata shape exposed to extension session APIs. */
 export type { Skill } from "../../skills/loading/session.js";
 export * from "./source-info.js";
 export * from "./tools/index.js";
-/** Shared type for this surface in src/agents/sessions. */
+/** Extension tool and event types exported as type-only SDK surface. */
 export type * from "./extensions/types.js";
-/** Re-exported API for src/agents/sessions. */
+/** Runtime extension tool guards and builders exposed through the SDK barrel. */
 export {
   defineTool,
   isBashToolResult,
@@ -61,5 +61,5 @@ export {
   isToolCallEventType,
   isWriteToolResult,
 } from "./extensions/types.js";
-/** Re-exported API for src/agents/sessions, starting with wrap Registered Tool. */
+/** Wraps registered extension tools for the session tool execution surface. */
 export { wrapRegisteredTool, wrapRegisteredTools } from "./extensions/wrapper.js";
