@@ -1,4 +1,4 @@
-// extensions/qa-lab/src lab server helpers and runtime behavior.
+// QA Lab server starts the debugger UI, bus state, capture APIs, and optional gateway loop.
 import fs from "node:fs";
 import { createServer } from "node:http";
 import path from "node:path";
@@ -57,6 +57,7 @@ type QaLabBootstrapDefaults = {
   senderName: string;
 };
 
+/** Public QA Lab server handle and request/response types. */
 export type {
   QaLabLatestReport,
   QaLabScenarioOutcome,
@@ -65,6 +66,7 @@ export type {
   QaLabServerStartParams,
 } from "./lab-server.types.js";
 
+/** Writes a QA Lab server error, preserving body-limit errors when applicable. */
 export function writeQaLabServerError(res: Parameters<typeof writeError>[0], error: unknown): void {
   if (writeQaRequestBodyLimitError(res, error)) {
     return;
@@ -210,6 +212,7 @@ async function startQaGatewayLoop(params: { state: QaBusState; baseUrl: string }
   };
 }
 
+/** Starts the QA Lab HTTP server and returns its lifecycle handle. */
 export async function startQaLabServer(
   params?: QaLabServerStartParams,
 ): Promise<QaLabServerHandle> {

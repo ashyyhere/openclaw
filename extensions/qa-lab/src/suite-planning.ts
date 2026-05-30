@@ -1,4 +1,4 @@
-// extensions/qa-lab/src suite planning helpers and runtime behavior.
+// QA Lab suite-planning helpers select scenarios, merge config, and schedule workers.
 import path from "node:path";
 import { parseStrictNonNegativeInteger } from "openclaw/plugin-sdk/number-runtime";
 import { normalizeLowercaseStringOrEmpty } from "openclaw/plugin-sdk/string-coerce-runtime";
@@ -252,6 +252,7 @@ async function resolveQaSuiteOutputDir(repoRoot: string, outputDir?: string) {
   });
 }
 
+/** Planning helpers reused by suite runner tests and isolated worker setup. */
 export {
   applyQaMergePatch,
   collectQaSuiteGatewayConfigPatch,

@@ -1,6 +1,7 @@
-// extensions/qa-lab/src model switch eval helpers and runtime behavior.
+// QA Lab model-switch evaluator checks for concise handoff continuity signals.
 import { normalizeLowercaseStringOrEmpty } from "openclaw/plugin-sdk/string-coerce-runtime";
 
+/** Returns whether text looks like a valid model-switch continuity handoff. */
 export function hasModelSwitchContinuitySignal(text: string) {
   const lower = normalizeLowercaseStringOrEmpty(text);
   const mentionsHandoff =
