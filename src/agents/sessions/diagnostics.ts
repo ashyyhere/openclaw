@@ -8,7 +8,7 @@ export interface ResourceCollision {
   loserSource?: string;
 }
 
-/** Shared type for Resource Diagnostic in src/agents/sessions. */
+/** Warning/error/collision emitted while loading session resources. */
 export interface ResourceDiagnostic {
   type: "warning" | "error" | "collision";
   message: string;

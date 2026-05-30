@@ -433,7 +433,7 @@ export async function createAgentSessionRuntime(
   );
 }
 
-/** Re-exported API for src/agents/sessions. */
+/** Runtime construction types re-exported with the AgentSession runtime factory. */
 export {
   type AgentSessionRuntimeDiagnostic,
   type AgentSessionServices,

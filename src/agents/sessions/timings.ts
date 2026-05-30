@@ -7,7 +7,7 @@ const ENABLED = process.env.OPENCLAW_TIMING === "1";
 const timings: Array<{ label: string; ms: number }> = [];
 let lastTime = Date.now();
 
-/** Reused helper for reset Timings behavior in src/agents/sessions. */
+/** Reset startup timing state when timing instrumentation is enabled. */
 export function resetTimings(): void {
   if (!ENABLED) {
     return;
@@ -16,7 +16,7 @@ export function resetTimings(): void {
   lastTime = Date.now();
 }
 
-/** Reused helper for time behavior in src/agents/sessions. */
+/** Record elapsed startup time since the previous timing mark. */
 export function time(label: string): void {
   if (!ENABLED) {
     return;
@@ -26,7 +26,7 @@ export function time(label: string): void {
   lastTime = now;
 }
 
-/** Reused helper for print Timings behavior in src/agents/sessions. */
+/** Print collected startup timing marks to stderr. */
 export function printTimings(): void {
   if (!ENABLED || timings.length === 0) {
     return;

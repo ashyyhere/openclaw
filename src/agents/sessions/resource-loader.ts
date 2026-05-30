@@ -7,7 +7,7 @@ import { CONFIG_DIR_NAME } from "../config.js";
 import { loadThemeFromPath, type Theme } from "../modes/interactive/theme/theme.js";
 import type { ResourceDiagnostic } from "./diagnostics.js";
 
-/** Re-exported API for src/agents/sessions, starting with Resource Collision. */
+/** Resource loading diagnostics re-exported with the loader surface. */
 export type { ResourceCollision, ResourceDiagnostic } from "./diagnostics.js";
 
 import type { Skill } from "../../skills/loading/session.js";
@@ -31,14 +31,14 @@ import { loadPromptTemplates } from "./prompt-templates.js";
 import { SettingsManager } from "./settings-manager.js";
 import { createSourceInfo, type SourceInfo } from "./source-info.js";
 
-/** Shared type for Resource Extension Paths in src/agents/sessions. */
+/** Additional resource paths that can be appended after initial loader setup. */
 export interface ResourceExtensionPaths {
   skillPaths?: Array<{ path: string; metadata: PathMetadata }>;
   promptPaths?: Array<{ path: string; metadata: PathMetadata }>;
   themePaths?: Array<{ path: string; metadata: PathMetadata }>;
 }
 
-/** Shared type for Resource Loader in src/agents/sessions. */
+/** Loaded session resources consumed by AgentSession construction. */
 export interface ResourceLoader {
   getExtensions(): LoadExtensionsResult;
   getSkills(): { skills: Skill[]; diagnostics: ResourceDiagnostic[] };
@@ -133,7 +133,7 @@ export function loadProjectContextFiles(options: {
   return contextFiles;
 }
 
-/** Shared type for Default Resource Loader Options in src/agents/sessions. */
+/** Construction options and test hooks for the default resource loader. */
 export interface DefaultResourceLoaderOptions {
   cwd: string;
   agentDir: string;
@@ -175,7 +175,7 @@ export interface DefaultResourceLoaderOptions {
   appendSystemPromptOverride?: (base: string[]) => string[];
 }
 
-/** Reused class for Default Resource Loader behavior in src/agents/sessions. */
+/** Default loader for extensions, skills, prompts, themes, and AGENTS context files. */
 export class DefaultResourceLoader implements ResourceLoader {
   private cwd: string;
   private agentDir: string;
