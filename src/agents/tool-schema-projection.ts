@@ -1,7 +1,7 @@
 /** Projects tool schemas into provider-compatible JSON schema shapes. */
 import type { AnyAgentTool } from "./tools/common.js";
 
-/** Shared type for Runtime Tool Input Schema Json in src/agents. */
+/** JSON value subset allowed for runtime-projected tool input schemas. */
 export type RuntimeToolInputSchemaJson =
   | null
   | boolean
@@ -10,20 +10,20 @@ export type RuntimeToolInputSchemaJson =
   | RuntimeToolInputSchemaJson[]
   | { [key: string]: RuntimeToolInputSchemaJson };
 
-/** Shared type for Runtime Tool Input Schema Projection in src/agents. */
+/** Projected JSON schema plus any provider-compatibility violations. */
 export type RuntimeToolInputSchemaProjection = {
   readonly schema: RuntimeToolInputSchemaJson;
   readonly violations: readonly string[];
 };
 
-/** Shared type for Runtime Tool Schema Diagnostic in src/agents. */
+/** Diagnostic for one tool whose parameters schema is not runtime-compatible. */
 export type RuntimeToolSchemaDiagnostic = {
   readonly toolName: string;
   readonly toolIndex: number;
   readonly violations: readonly string[];
 };
 
-/** Shared type for Runtime Tool Schema Inspection in src/agents. */
+/** Filtered runtime-compatible tools plus diagnostics for rejected tools. */
 export type RuntimeToolSchemaInspection<TTool extends Pick<AnyAgentTool, "name" | "parameters">> = {
   readonly tools: readonly TTool[];
   readonly diagnostics: readonly RuntimeToolSchemaDiagnostic[];
@@ -127,7 +127,7 @@ const schemaMapKeywords = new Set([
   "properties",
 ]);
 
-/** Reused helper for project Runtime Tool Input Schema behavior in src/agents. */
+/** Serialize and inspect one tool input schema for runtime/provider compatibility. */
 export function projectRuntimeToolInputSchema(
   schema: unknown,
   path = "parameters",
@@ -146,7 +146,7 @@ export function projectRuntimeToolInputSchema(
   };
 }
 
-/** Reused helper for inspect Runtime Tool Input Schemas behavior in src/agents. */
+/** Return diagnostics for every tool whose parameters schema cannot be used at runtime. */
 export function inspectRuntimeToolInputSchemas(
   tools: readonly Pick<AnyAgentTool, "name" | "parameters">[],
 ): RuntimeToolSchemaDiagnostic[] {
@@ -160,7 +160,7 @@ export function inspectRuntimeToolInputSchemas(
   });
 }
 
-/** Reused helper for filter Runtime Compatible Tools behavior in src/agents. */
+/** Remove tools with incompatible input schemas and return diagnostics for the removals. */
 export function filterRuntimeCompatibleTools<
   TTool extends Pick<AnyAgentTool, "name" | "parameters">,
 >(tools: readonly TTool[]): RuntimeToolSchemaInspection<TTool> {

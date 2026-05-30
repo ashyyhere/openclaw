@@ -30,7 +30,7 @@ const inboundDedupeInFlight = resolveGlobalSingleton(
   () => new Set<string>(),
 );
 
-/** Shared type for Inbound Dedupe Claim Result in src/auto-reply/reply. */
+/** Result of attempting to claim one inbound message for processing. */
 export type InboundDedupeClaimResult =
   | { status: "invalid" }
   | { status: "duplicate"; key: string }
@@ -55,7 +55,7 @@ function resolveInboundDedupeSessionScope(ctx: MsgContext): string {
   return `agent:${parsed.agentId}`;
 }
 
-/** Reused helper for build Inbound Dedupe Key behavior in src/auto-reply/reply. */
+/** Build a stable dedupe key from inbound route, message id, and agent session scope. */
 export function buildInboundDedupeKey(ctx: MsgContext): string | null {
   const provider =
     normalizeOptionalLowercaseString(ctx.OriginatingChannel ?? ctx.Provider ?? ctx.Surface) || "";
@@ -78,7 +78,7 @@ export function buildInboundDedupeKey(ctx: MsgContext): string | null {
   return JSON.stringify([sessionScope, routeKey, messageId]);
 }
 
-/** Reused helper for should Skip Duplicate Inbound behavior in src/auto-reply/reply. */
+/** Check and mark a duplicate inbound message using the shared dedupe cache. */
 export function shouldSkipDuplicateInbound(
   ctx: MsgContext,
   opts?: { cache?: DedupeCache; now?: number },
@@ -95,7 +95,7 @@ export function shouldSkipDuplicateInbound(
   return skipped;
 }
 
-/** Reused helper for claim Inbound Dedupe behavior in src/auto-reply/reply. */
+/** Claim an inbound message while preventing concurrent processing of the same key. */
 export function claimInboundDedupe(
   ctx: MsgContext,
   opts?: { cache?: DedupeCache; now?: number; inFlight?: Set<string> },
@@ -116,7 +116,7 @@ export function claimInboundDedupe(
   return { status: "claimed", key };
 }
 
-/** Reused helper for commit Inbound Dedupe behavior in src/auto-reply/reply. */
+/** Commit a claimed inbound key to the dedupe cache and release in-flight state. */
 export function commitInboundDedupe(
   key: string,
   opts?: { cache?: DedupeCache; now?: number; inFlight?: Set<string> },
@@ -127,13 +127,13 @@ export function commitInboundDedupe(
   inFlight.delete(key);
 }
 
-/** Reused helper for release Inbound Dedupe behavior in src/auto-reply/reply. */
+/** Release an in-flight inbound key without committing it as processed. */
 export function releaseInboundDedupe(key: string, opts?: { inFlight?: Set<string> }): void {
   const inFlight = opts?.inFlight ?? inboundDedupeInFlight;
   inFlight.delete(key);
 }
 
-/** Reused helper for reset Inbound Dedupe behavior in src/auto-reply/reply. */
+/** Clear inbound dedupe cache and in-flight state for tests. */
 export function resetInboundDedupe(): void {
   inboundDedupeCache.clear();
   inboundDedupeInFlight.clear();

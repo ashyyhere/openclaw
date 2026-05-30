@@ -26,7 +26,7 @@ function normalizeReplyToModeChatType(
     : undefined;
 }
 
-/** Reused helper for resolve Configured Reply To Mode behavior in src/auto-reply/reply. */
+/** Resolve replyToMode from channel config, including chat-type and legacy DM overrides. */
 export function resolveConfiguredReplyToMode(
   cfg: OpenClawConfig,
   channel?: OriginatingChannelType,
@@ -55,7 +55,7 @@ export function resolveConfiguredReplyToMode(
   return channelConfig?.replyToMode ?? "all";
 }
 
-/** Reused helper for resolve Reply To Mode With Threading behavior in src/auto-reply/reply. */
+/** Resolve replyToMode with channel threading adapter override before config fallback. */
 export function resolveReplyToModeWithThreading(
   cfg: OpenClawConfig,
   threading: ChannelThreadingAdapter | undefined,
@@ -73,7 +73,7 @@ export function resolveReplyToModeWithThreading(
   return resolved ?? resolveConfiguredReplyToMode(cfg, params.channel, params.chatType);
 }
 
-/** Reused helper for resolve Reply To Mode behavior in src/auto-reply/reply. */
+/** Resolve effective replyToMode for one channel/account/chat-type context. */
 export function resolveReplyToMode(
   cfg: OpenClawConfig,
   channel?: OriginatingChannelType,
@@ -93,7 +93,7 @@ export function resolveReplyToMode(
   });
 }
 
-/** Reused helper for create Reply To Mode Filter behavior in src/auto-reply/reply. */
+/** Build a payload filter that strips reply targets according to replyToMode. */
 export function createReplyToModeFilter(
   mode: ReplyToMode,
   opts: { allowExplicitReplyTagsWhenOff?: boolean } = {},
@@ -139,7 +139,7 @@ export function createReplyToModeFilter(
   };
 }
 
-/** Reused helper for resolve Implicit Current Message Reply Allowance behavior in src/auto-reply/reply. */
+/** Decide whether current-message reply targets are allowed by threading policy. */
 export function resolveImplicitCurrentMessageReplyAllowance(
   mode: ReplyToMode | undefined,
   policy?: ReplyThreadingPolicy,
@@ -154,7 +154,7 @@ export function resolveImplicitCurrentMessageReplyAllowance(
   return mode !== "batched";
 }
 
-/** Reused helper for resolve Batched Reply Threading Policy behavior in src/auto-reply/reply. */
+/** Return the threading policy implied by `replyToMode=batched`. */
 export function resolveBatchedReplyThreadingPolicy(
   mode: ReplyToMode,
   isBatched: boolean,
@@ -167,7 +167,7 @@ export function resolveBatchedReplyThreadingPolicy(
   };
 }
 
-/** Reused helper for create Reply To Mode Filter For Channel behavior in src/auto-reply/reply. */
+/** Build a reply target filter with channel-aware explicit tag handling. */
 export function createReplyToModeFilterForChannel(
   mode: ReplyToMode,
   channel?: OriginatingChannelType,

@@ -3,7 +3,7 @@ import type { SessionEntry } from "../../config/sessions/types.js";
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 import type { MsgContext } from "../templating.js";
 
-/** Shared type for Abort Cutoff in src/auto-reply/reply. */
+/** Message id/timestamp boundary recorded after a stop/abort command. */
 export type AbortCutoff = {
   messageSid?: string;
   timestamp?: number;
@@ -11,7 +11,7 @@ export type AbortCutoff = {
 
 type SessionAbortCutoffEntry = Pick<SessionEntry, "abortCutoffMessageSid" | "abortCutoffTimestamp">;
 
-/** Reused helper for resolve Abort Cutoff From Context behavior in src/auto-reply/reply. */
+/** Resolve an abort cutoff marker from the command message context. */
 export function resolveAbortCutoffFromContext(ctx: MsgContext): AbortCutoff | undefined {
   const messageSid =
     normalizeOptionalString(ctx.MessageSidFull) ?? normalizeOptionalString(ctx.MessageSid);
@@ -23,7 +23,7 @@ export function resolveAbortCutoffFromContext(ctx: MsgContext): AbortCutoff | un
   return { messageSid, timestamp };
 }
 
-/** Reused helper for read Abort Cutoff From Session Entry behavior in src/auto-reply/reply. */
+/** Read persisted abort cutoff fields from a session entry. */
 export function readAbortCutoffFromSessionEntry(
   entry: SessionAbortCutoffEntry | undefined,
 ): AbortCutoff | undefined {
@@ -41,12 +41,12 @@ export function readAbortCutoffFromSessionEntry(
   return { messageSid, timestamp };
 }
 
-/** Reused helper for has Abort Cutoff behavior in src/auto-reply/reply. */
+/** Check whether a session entry currently carries an abort cutoff. */
 export function hasAbortCutoff(entry: SessionAbortCutoffEntry | undefined): boolean {
   return readAbortCutoffFromSessionEntry(entry) !== undefined;
 }
 
-/** Reused helper for apply Abort Cutoff To Session Entry behavior in src/auto-reply/reply. */
+/** Write or clear abort cutoff fields on a mutable session entry. */
 export function applyAbortCutoffToSessionEntry(
   entry: SessionAbortCutoffEntry,
   cutoff: AbortCutoff | undefined,
@@ -67,7 +67,7 @@ function toNumericMessageSid(value: string | undefined): bigint | undefined {
   }
 }
 
-/** Reused helper for should Skip Message By Abort Cutoff behavior in src/auto-reply/reply. */
+/** Decide whether an inbound message is older than or equal to a recorded abort cutoff. */
 export function shouldSkipMessageByAbortCutoff(params: {
   cutoffMessageSid?: string;
   cutoffTimestamp?: number;
@@ -97,7 +97,7 @@ export function shouldSkipMessageByAbortCutoff(params: {
   return false;
 }
 
-/** Reused helper for should Persist Abort Cutoff behavior in src/auto-reply/reply. */
+/** Persist cutoffs only when the command session and target session share id/timestamp space. */
 export function shouldPersistAbortCutoff(params: {
   commandSessionKey?: string;
   targetSessionKey?: string;

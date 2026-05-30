@@ -20,15 +20,15 @@ import {
   type TypingCallbacks,
 } from "../typing.js";
 
-/** Shared type for Reply Prefix Context in src/channels/message. */
+/** Prefix template context prepared for channel replies. */
 export type ReplyPrefixContext = ReplyPrefixContextBundle["prefixContext"];
-/** Re-exported API for src/channels/message, starting with Reply Prefix Context Bundle. */
+/** Reply prefix bundle/options types re-exported for channel senders. */
 export type { ReplyPrefixContextBundle, ReplyPrefixOptions };
-/** Re-exported API for src/channels/message, starting with Create Typing Callbacks Params. */
+/** Typing callback types re-exported for channel reply pipelines. */
 export type { CreateTypingCallbacksParams, TypingCallbacks };
-/** Re-exported API for src/channels/message, starting with create Reply Prefix Context. */
+/** Prefix/typing helpers re-exported for channel reply pipelines. */
 export { createReplyPrefixContext, createReplyPrefixOptions, createTypingCallbacks };
-/** Re-exported API for src/channels/message, starting with Source Reply Delivery Mode. */
+/** Source reply delivery mode type used by channel pipeline resolution. */
 export type { SourceReplyDeliveryMode };
 
 /** Resolve source reply delivery mode for a channel message pipeline. */
@@ -41,13 +41,13 @@ export function resolveChannelSourceReplyDeliveryMode(params: {
   return resolveSourceReplyDeliveryMode(params);
 }
 
-/** Shared type for Channel Reply Pipeline in src/channels/message. */
+/** Reply pipeline pieces assembled for one channel/account context. */
 export type ChannelReplyPipeline = ReplyPrefixOptions & {
   typingCallbacks?: TypingCallbacks;
   transformReplyPayload?: (payload: ReplyPayload) => ReplyPayload | null;
 };
 
-/** Shared type for Create Channel Reply Pipeline Params in src/channels/message. */
+/** Inputs used to create channel-specific reply prefix, typing, and transform behavior. */
 export type CreateChannelReplyPipelineParams = {
   cfg: Parameters<typeof createReplyPrefixOptions>[0]["cfg"];
   agentId: string;

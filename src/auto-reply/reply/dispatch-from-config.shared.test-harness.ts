@@ -145,7 +145,7 @@ const threadInfoMocks = vi.hoisted(() => ({
   >(),
 }));
 
-/** Re-exported API for src/auto-reply/reply. */
+/** Hoisted mocks shared by dispatch-from-config test suites. */
 export {
   acpManagerRuntimeMocks,
   acpMocks,
@@ -360,12 +360,12 @@ vi.mock("../../tts/tts-config.js", () => ({
   shouldAttemptTtsPayload: () => true,
 }));
 
-/** Reused constant for no Abort Result behavior in src/auto-reply/reply. */
+/** Default abort mock result for dispatch-from-config tests. */
 export const noAbortResult = { handled: false, aborted: false } as const;
-/** Reused constant for empty Config behavior in src/auto-reply/reply. */
+/** Minimal config fixture for dispatch-from-config harness callers. */
 export const emptyConfig = {} as OpenClawConfig;
 
-/** Reused helper for create Dispatcher behavior in src/auto-reply/reply. */
+/** Create a mock reply dispatcher that records reply payloads for assertions. */
 export function createDispatcher(): ReplyDispatcher {
   const acceptReply = () => true;
   const emptyCounts = () => ({ tool: 0, block: 0, final: 0 });
@@ -380,7 +380,7 @@ export function createDispatcher(): ReplyDispatcher {
   };
 }
 
-/** Reused helper for reset Plugin Tts And Thread Mocks behavior in src/auto-reply/reply. */
+/** Reset plugin registry, TTS, and thread parsing mocks between harness tests. */
 export function resetPluginTtsAndThreadMocks() {
   pluginConversationBindingMocks.shownFallbackNoticeBindingIds.clear();
   ttsMocks.maybeApplyTtsToPayload.mockReset().mockImplementation(async (paramsUnknown: unknown) => {
@@ -399,7 +399,7 @@ export function resetPluginTtsAndThreadMocks() {
     .mockImplementation(parseGenericThreadSessionInfo);
 }
 
-/** Reused helper for set Discord Test Registry behavior in src/auto-reply/reply. */
+/** Install a Discord channel test registry for dispatch-from-config tests. */
 export function setDiscordTestRegistry() {
   const discordTestPlugin = {
     ...createChannelTestPluginBase({
@@ -416,7 +416,7 @@ export function setDiscordTestRegistry() {
   );
 }
 
-/** Reused helper for create Hook Ctx behavior in src/auto-reply/reply. */
+/** Build the plugin hook context fixture used by dispatch-from-config tests. */
 export function createHookCtx() {
   return buildTestCtx({
     Body: "hello",

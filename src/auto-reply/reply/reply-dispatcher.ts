@@ -18,7 +18,7 @@ import type {
 import type { ResponsePrefixContext } from "./response-prefix-template.js";
 import type { TypingController } from "./typing.js";
 
-/** Re-exported API for src/auto-reply/reply, starting with Reply Dispatch Kind. */
+/** Reply dispatcher types consumed by channel/runtime send paths. */
 export type { ReplyDispatchKind, ReplyDispatcher } from "./reply-dispatcher.types.js";
 
 type ReplyDispatchErrorHandler = (err: unknown, info: { kind: ReplyDispatchKind }) => void;
@@ -33,7 +33,7 @@ type ReplyDispatchDeliverer = (
   info: { kind: ReplyDispatchKind },
 ) => Promise<unknown>;
 
-/** Re-exported API for src/auto-reply/reply, starting with Reply Dispatch Before Deliver. */
+/** Hook type that can inspect or mutate replies before delivery. */
 export type { ReplyDispatchBeforeDeliver };
 
 const DEFAULT_HUMAN_DELAY_MIN_MS = 800;
@@ -56,7 +56,7 @@ function getHumanDelay(config: HumanDelayConfig | undefined): number {
   return min + generateSecureInt(max - min + 1);
 }
 
-/** Shared type for Reply Dispatcher Options in src/auto-reply/reply. */
+/** Options for constructing a serialized reply dispatcher. */
 export type ReplyDispatcherOptions = {
   deliver: ReplyDispatchDeliverer;
   silentReplyContext?: {
@@ -82,7 +82,7 @@ export type ReplyDispatcherOptions = {
   beforeDeliver?: ReplyDispatchBeforeDeliver;
 };
 
-/** Shared type for Reply Dispatcher With Typing Options in src/auto-reply/reply. */
+/** Options for wiring reply dispatch together with typing lifecycle callbacks. */
 export type ReplyDispatcherWithTypingOptions = Omit<ReplyDispatcherOptions, "onIdle"> & {
   typingCallbacks?: TypingCallbacks;
   onReplyStart?: () => Promise<void> | void;
@@ -128,7 +128,7 @@ function normalizeReplyPayloadInternal(
   });
 }
 
-/** Reused helper for create Reply Dispatcher behavior in src/auto-reply/reply. */
+/** Create a dispatcher that normalizes, prefixes, serializes, and delivers replies. */
 export function createReplyDispatcher(options: ReplyDispatcherOptions): ReplyDispatcher {
   let beforeDeliver = options.beforeDeliver;
   let sendChain: Promise<void> = Promise.resolve();
@@ -273,7 +273,7 @@ export function createReplyDispatcher(options: ReplyDispatcherOptions): ReplyDis
   };
 }
 
-/** Reused helper for wait For Reply Dispatcher Idle behavior in src/auto-reply/reply. */
+/** Wait until the reply dispatcher drains, or return early when the caller aborts. */
 export async function waitForReplyDispatcherIdle(
   dispatcher: Pick<ReplyDispatcher, "waitForIdle">,
   abortSignal?: AbortSignal,
@@ -298,7 +298,7 @@ export async function waitForReplyDispatcherIdle(
   }
 }
 
-/** Reused helper for create Reply Dispatcher With Typing behavior in src/auto-reply/reply. */
+/** Create a reply dispatcher wired to typing start/cleanup and settle callbacks. */
 export function createReplyDispatcherWithTyping(
   options: ReplyDispatcherWithTypingOptions,
 ): ReplyDispatcherWithTypingResult {

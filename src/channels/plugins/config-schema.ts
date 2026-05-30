@@ -19,12 +19,12 @@ type ExtendableZodObject = ZodTypeAny & {
   extend: (shape: Record<string, ZodTypeAny>) => ZodTypeAny;
 };
 
-/** Reused constant for Allow From Entry Schema behavior in src/channels/plugins. */
+/** Zod schema for one allowFrom entry, preserving numeric ids used by some channels. */
 export const AllowFromEntrySchema = z.union([z.string(), z.number()]);
-/** Reused constant for Allow From List Schema behavior in src/channels/plugins. */
+/** Optional allowFrom list schema shared by channel config sections. */
 export const AllowFromListSchema = z.array(AllowFromEntrySchema).optional();
 
-/** Reused helper for build Nested Dm Config Schema behavior in src/channels/plugins. */
+/** Build an optional nested DM policy schema with channel-specific extra fields. */
 export function buildNestedDmConfigSchema(extraShape?: ZodRawShape) {
   const baseShape = {
     enabled: z.boolean().optional(),
@@ -34,7 +34,7 @@ export function buildNestedDmConfigSchema(extraShape?: ZodRawShape) {
   return z.object(extraShape ? { ...baseShape, ...extraShape } : baseShape).optional();
 }
 
-/** Reused helper for build Catchall Multi Account Channel Schema behavior in src/channels/plugins. */
+/** Extend an account schema with catchall `accounts` and `defaultAccount` fields. */
 export function buildCatchallMultiAccountChannelSchema<T extends ExtendableZodObject>(
   accountSchema: T,
 ): T {
@@ -117,7 +117,7 @@ function safeParseJsonSchema(
   };
 }
 
-/** Reused helper for build Json Channel Config Schema behavior in src/channels/plugins. */
+/** Wrap a JSON Schema channel config with runtime validation and optional UI hints. */
 export function buildJsonChannelConfigSchema(
   schema: JsonSchemaObject,
   options?: BuildJsonChannelConfigSchemaOptions,
@@ -132,7 +132,7 @@ export function buildJsonChannelConfigSchema(
   };
 }
 
-/** Reused helper for build Channel Config Schema behavior in src/channels/plugins. */
+/** Convert a Zod channel config schema into JSON Schema plus runtime safeParse support. */
 export function buildChannelConfigSchema(
   schema: ZodTypeAny,
   options?: BuildChannelConfigSchemaOptions,
@@ -165,7 +165,7 @@ export function buildChannelConfigSchema(
   };
 }
 
-/** Reused helper for empty Channel Config Schema behavior in src/channels/plugins. */
+/** Empty channel config schema for plugins with no user-configurable fields. */
 export function emptyChannelConfigSchema(): ChannelConfigSchema {
   return {
     schema: {

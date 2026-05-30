@@ -2,7 +2,7 @@
 import { expect, vi, type Mock } from "vitest";
 import type { MsgContext } from "../templating.js";
 
-/** Reused helper for build Get Reply Ctx behavior in src/auto-reply/reply. */
+/** Build a default direct-message context for get-reply tests. */
 export function buildGetReplyCtx(overrides: Partial<MsgContext> = {}): MsgContext {
   return {
     Provider: "telegram",
@@ -20,7 +20,7 @@ export function buildGetReplyCtx(overrides: Partial<MsgContext> = {}): MsgContex
   };
 }
 
-/** Reused helper for build Get Reply Group Ctx behavior in src/auto-reply/reply. */
+/** Build a default group-message context for get-reply tests. */
 export function buildGetReplyGroupCtx(overrides: Partial<MsgContext> = {}): MsgContext {
   return {
     Provider: "telegram",
@@ -41,7 +41,7 @@ export function buildGetReplyGroupCtx(overrides: Partial<MsgContext> = {}): MsgC
   };
 }
 
-/** Reused helper for build Native Reset Context behavior in src/auto-reply/reply. */
+/** Build a native command reset context targeting the main Telegram session. */
 export function buildNativeResetContext(): MsgContext {
   return {
     Provider: "telegram",
@@ -59,7 +59,7 @@ export function buildNativeResetContext(): MsgContext {
   };
 }
 
-/** Reused helper for create Get Reply Session State behavior in src/auto-reply/reply. */
+/** Create the default session-state fixture used by get-reply tests. */
 export function createGetReplySessionState(overrides: Record<string, unknown> = {}) {
   return {
     sessionCtx: {},
@@ -82,7 +82,7 @@ export function createGetReplySessionState(overrides: Record<string, unknown> = 
   };
 }
 
-/** Reused helper for create Get Reply Continue Directives Result behavior in src/auto-reply/reply. */
+/** Create a directive-resolution continuation fixture for get-reply tests. */
 export function createGetReplyContinueDirectivesResult(params: {
   body: string;
   abortKey: string;
@@ -145,7 +145,7 @@ export function createGetReplyContinueDirectivesResult(params: {
   };
 }
 
-/** Reused helper for register Get Reply Runtime Overrides behavior in src/auto-reply/reply. */
+/** Register vi module overrides for get-reply runtime collaborators. */
 export function registerGetReplyRuntimeOverrides(handles: {
   resolveReplyDirectives: (...args: unknown[]) => unknown;
   initSessionState: (...args: unknown[]) => unknown;
@@ -163,7 +163,7 @@ export function registerGetReplyRuntimeOverrides(handles: {
   }));
 }
 
-/** Reused helper for expect Resolved Telegram Timezone behavior in src/auto-reply/reply. */
+/** Assert timezone resolution payloads in Telegram get-reply tests. */
 export function expectResolvedTelegramTimezone(
   resolveReplyDirectives: Mock,
   userTimezone = "America/New_York",
