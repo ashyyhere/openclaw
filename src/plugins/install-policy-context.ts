@@ -1,4 +1,3 @@
-// plugins install policy context helpers and runtime behavior.
 import type {
   PluginHookBeforeInstallBuiltinScan,
   PluginHookBeforeInstallContext,
@@ -28,7 +27,6 @@ export type BeforeInstallHookPayloadParams = {
   plugin?: PluginHookBeforeInstallPlugin;
 };
 
-/** Reused helper for create Before Install Hook Payload behavior in src/plugins. */
 export function createBeforeInstallHookPayload(params: BeforeInstallHookPayloadParams): {
   ctx: PluginHookBeforeInstallContext;
   event: PluginHookBeforeInstallEvent;

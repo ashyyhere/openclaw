@@ -1,4 +1,3 @@
-// plugins provider openai codex oauth helpers and runtime behavior.
 import type { OAuthCredentials } from "../llm/oauth.js";
 import { loadActivatedBundledPluginPublicSurfaceModuleSync } from "../plugin-sdk/facade-runtime.js";
 import type { RuntimeEnv } from "../runtime.js";

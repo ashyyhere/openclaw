@@ -1,4 +1,3 @@
-// plugins provider auth choice preference helpers and runtime behavior.
 import { normalizeLegacyOnboardAuthChoice } from "../commands/auth-choice-legacy.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveManifestProviderAuthChoice } from "./provider-auth-choices.js";
@@ -7,7 +6,6 @@ function normalizeLegacyAuthChoice(choice: string, env?: NodeJS.ProcessEnv): str
   return normalizeLegacyOnboardAuthChoice(choice, { env }) ?? choice;
 }
 
-/** Reused helper for resolve Preferred Provider For Auth Choice behavior in src/plugins. */
 export async function resolvePreferredProviderForAuthChoice(params: {
   choice: string;
   config?: OpenClawConfig;
