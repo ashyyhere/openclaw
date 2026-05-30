@@ -28,7 +28,7 @@ import type { GatewayCallOptions } from "./gateway.js";
 import { callGatewayTool } from "./gateway.js";
 import { resolveNode, resolveNodeId } from "./nodes-utils.js";
 
-/** Reused constant for MEDIA INVOKE ACTIONS behavior in src/agents/tools. */
+/** Gateway invoke commands mapped to dedicated node media/file tool actions. */
 export const MEDIA_INVOKE_ACTIONS = {
   "camera.snap": "camera_snap",
   "camera.clip": "camera_clip",
@@ -45,7 +45,7 @@ export const MEDIA_INVOKE_ACTIONS = {
 
 // Subset of MEDIA_INVOKE_ACTIONS where the dedicated tool is the preferred
 // agent UX. Gateway node-invoke policy still protects raw node.invoke callers.
-/** Reused constant for POLICY REDIRECT INVOKE COMMANDS behavior in src/agents/tools. */
+/** Raw invoke commands that policy should redirect to dedicated tool implementations. */
 export const POLICY_REDIRECT_INVOKE_COMMANDS: ReadonlySet<string> = new Set([
   "file.fetch",
   "dir.list",
@@ -53,7 +53,7 @@ export const POLICY_REDIRECT_INVOKE_COMMANDS: ReadonlySet<string> = new Set([
   "file.write",
 ]);
 
-/** Shared type for Node Media Action in src/agents/tools. */
+/** Media capture actions handled locally before calling the gateway. */
 export type NodeMediaAction = "camera_snap" | "photos_latest" | "camera_clip" | "screen_record";
 const MAX_RECORDING_DURATION_MS = 300_000;
 

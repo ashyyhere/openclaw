@@ -18,7 +18,7 @@ import {
   type MediaGenerateActionResult,
 } from "./media-generate-tool-actions-shared.js";
 
-/** Shared type for Image Generate Action Result in src/agents/tools. */
+/** Result shape returned by image generation action handlers. */
 export type ImageGenerateActionResult = MediaGenerateActionResult;
 
 /** Formats provider auth hints for image generation status output. */
@@ -35,12 +35,12 @@ export function formatImageGenerationAuthHint(provider: {
   return `set ${provider.authEnvVars.join(" / ")} to use ${provider.id}/*`;
 }
 
-/** Reused helper for list Supported Image Generation Modes behavior in src/agents/tools. */
+/** List generate/edit modes supported by one image generation provider. */
 export function listSupportedImageGenerationModes(provider: ImageGenerationProvider): string[] {
   return ["generate", ...(provider.capabilities.edit.enabled ? ["edit"] : [])];
 }
 
-/** Reused helper for summarize Image Generation Capabilities behavior in src/agents/tools. */
+/** Build a compact human-readable summary of image provider capabilities. */
 export function summarizeImageGenerationCapabilities(provider: ImageGenerationProvider): string {
   const caps: string[] = [];
   if (provider.capabilities.edit.enabled) {

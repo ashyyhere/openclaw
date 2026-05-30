@@ -24,7 +24,7 @@ const NODE_READ_ACTION_COMMANDS = {
   device_health: "device.health",
 } as const;
 
-/** Shared type for Node Command Action in src/agents/tools. */
+/** Gateway-backed non-media node command actions exposed through the nodes tool. */
 export type NodeCommandAction =
   | keyof typeof NODE_READ_ACTION_COMMANDS
   | "notifications_action"

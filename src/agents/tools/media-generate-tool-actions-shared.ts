@@ -1,3 +1,4 @@
+/** Shared provider-list and task-status action helpers for media generation tools. */
 import {
   listMediaGenerationProviderModels,
   synthesizeMediaGenerationCatalogEntries,
@@ -36,7 +37,7 @@ type MediaGenerateListProviderDetails<TProvider extends MediaGenerateProvider> =
   catalog: ReturnType<typeof synthesizeMediaGenerationCatalogEntries<TProvider["capabilities"]>>;
 };
 
-/** Re-exported API for src/agents/tools, starting with Media Generate Action Result. */
+/** Generic action result used by media generation tools. */
 export type { MediaGenerateActionResult };
 
 /** Builds a provider/model listing action result for a media tool. */
