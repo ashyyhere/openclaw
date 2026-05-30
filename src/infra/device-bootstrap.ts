@@ -1,4 +1,4 @@
-// infra device bootstrap helpers and runtime behavior.
+/** Issues and verifies short-lived bootstrap tokens for device pairing handoff. */
 import path from "node:path";
 import { createSubsystemLogger } from "../logging/subsystem.js";
 import {
@@ -16,10 +16,10 @@ import { resolvePairingPaths } from "./pairing-files.js";
 import { createAsyncLock, pruneExpiredPending, tryReadJson, writeJson } from "./pairing-files.js";
 import { generatePairingToken, verifyPairingToken } from "./pairing-token.js";
 
-/** Reused constant for DEVICE BOOTSTRAP TOKEN TTL MS behavior in src/infra. */
+/** Lifetime for pending device bootstrap tokens before automatic pruning. */
 export const DEVICE_BOOTSTRAP_TOKEN_TTL_MS = 10 * 60 * 1000;
 
-/** Shared type for Device Bootstrap Token Record in src/infra. */
+/** Persisted bootstrap token state, including device binding and redemption progress. */
 export type DeviceBootstrapTokenRecord = {
   token: string;
   ts: number;
@@ -229,7 +229,7 @@ async function persistState(state: DeviceBootstrapStateFile, baseDir?: string): 
   await writeJson(bootstrapPath, state);
 }
 
-/** Reused helper for issue Device Bootstrap Token behavior in src/infra. */
+/** Issue a bootstrap token scoped to the requested handoff profile. */
 export async function issueDeviceBootstrapToken(
   params: {
     baseDir?: string;
@@ -264,7 +264,7 @@ export async function issueDeviceBootstrapToken(
   });
 }
 
-/** Reused helper for clear Device Bootstrap Tokens behavior in src/infra. */
+/** Remove all pending bootstrap tokens from the pairing state. */
 export async function clearDeviceBootstrapTokens(
   params: {
     baseDir?: string;
@@ -278,7 +278,7 @@ export async function clearDeviceBootstrapTokens(
   });
 }
 
-/** Reused helper for revoke Device Bootstrap Token behavior in src/infra. */
+/** Revoke one bootstrap token by verifying the provided token value. */
 export async function revokeDeviceBootstrapToken(params: {
   token: string;
   baseDir?: string;
@@ -302,7 +302,7 @@ export async function revokeDeviceBootstrapToken(params: {
   });
 }
 
-/** Reused helper for revoke Device Bootstrap Tokens For Device behavior in src/infra. */
+/** Revoke bootstrap tokens already bound to a specific device identity. */
 export async function revokeDeviceBootstrapTokensForDevice(params: {
   deviceId: string;
   publicKey: string;
@@ -333,7 +333,7 @@ export async function revokeDeviceBootstrapTokensForDevice(params: {
   });
 }
 
-/** Reused helper for restore Device Bootstrap Token behavior in src/infra. */
+/** Restore a token record, primarily for rollback after failed handoff work. */
 export async function restoreDeviceBootstrapToken(params: {
   record: DeviceBootstrapTokenRecord;
   baseDir?: string;
@@ -345,7 +345,7 @@ export async function restoreDeviceBootstrapToken(params: {
   });
 }
 
-/** Reused helper for get Device Bootstrap Token Profile behavior in src/infra. */
+/** Read the issued bootstrap profile for a valid token. */
 export async function getDeviceBootstrapTokenProfile(params: {
   token: string;
   baseDir?: string;
@@ -363,7 +363,7 @@ export async function getDeviceBootstrapTokenProfile(params: {
   });
 }
 
-/** Reused helper for redeem Device Bootstrap Token Profile behavior in src/infra. */
+/** Record role/scope redemption progress for a bootstrap token. */
 export async function redeemDeviceBootstrapTokenProfile(params: {
   token: string;
   role: string;
@@ -422,7 +422,7 @@ export async function redeemDeviceBootstrapTokenProfile(params: {
   });
 }
 
-/** Reused helper for verify Device Bootstrap Token behavior in src/infra. */
+/** Verify and bind a bootstrap token to a concrete device identity and requested scope. */
 export async function verifyDeviceBootstrapToken(params: {
   token: string;
   deviceId: string;

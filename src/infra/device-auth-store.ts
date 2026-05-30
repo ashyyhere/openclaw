@@ -1,4 +1,4 @@
-// infra device auth store helpers and runtime behavior.
+/** Stores per-device role tokens in the private OpenClaw state directory. */
 import fs from "node:fs";
 import path from "node:path";
 import { z } from "zod";
@@ -74,7 +74,7 @@ function writeStore(filePath: string, store: DeviceAuthStore): void {
   }
 }
 
-/** Reused helper for load Device Auth Token behavior in src/infra. */
+/** Load a stored token entry for a device/role pair. */
 export function loadDeviceAuthToken(params: {
   deviceId: string;
   role: string;
@@ -88,7 +88,7 @@ export function loadDeviceAuthToken(params: {
   });
 }
 
-/** Reused helper for store Device Auth Token behavior in src/infra. */
+/** Store or replace the token entry for a device/role pair. */
 export function storeDeviceAuthToken(params: {
   deviceId: string;
   role: string;
@@ -109,7 +109,7 @@ export function storeDeviceAuthToken(params: {
   });
 }
 
-/** Reused helper for clear Device Auth Token behavior in src/infra. */
+/** Remove the stored token entry for a device/role pair. */
 export function clearDeviceAuthToken(params: {
   deviceId: string;
   role: string;
