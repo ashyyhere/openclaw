@@ -42,7 +42,7 @@ type MockCompactionResult =
       result?: undefined;
     };
 
-/** Reused constant for mocked Global Hook Runner behavior in src/agents/embedded-agent-runner. */
+/** Mock hook runner used to isolate embedded-runner hook side effects. */
 export const mockedGlobalHookRunner = {
   hasHooks: vi.fn((_hookName: string) => false),
   runBeforeAgentReply: vi.fn(
@@ -73,7 +73,7 @@ export const mockedGlobalHookRunner = {
   runAfterCompaction: vi.fn(async () => undefined),
 };
 
-/** Reused constant for mocked Context Engine behavior in src/agents/embedded-agent-runner. */
+/** Mock context engine used by overflow and compaction scenarios. */
 export const mockedContextEngine = {
   info: { ownsCompaction: false as boolean },
   compact: vi.fn<(params: unknown) => Promise<MockCompactionResult>>(async () => ({
@@ -83,21 +83,21 @@ export const mockedContextEngine = {
   })),
 };
 
-/** Reused constant for mocked Context Engine Compact behavior in src/agents/embedded-agent-runner. */
+/** Direct handle for assertions against context-engine compaction calls. */
 export const mockedContextEngineCompact = mockedContextEngine.compact;
-/** Reused constant for mocked Compact Direct behavior in src/agents/embedded-agent-runner. */
+/** Legacy direct compaction mock alias used by older harness tests. */
 export const mockedCompactDirect = mockedContextEngine.compact;
-/** Reused constant for mocked Resolve Context Engine behavior in src/agents/embedded-agent-runner. */
+/** Mock context-engine resolver injected into runner module mocks. */
 export const mockedResolveContextEngine = vi.fn(async () => mockedContextEngine);
-/** Reused constant for mocked Resolve Context Engine Owner Plugin Id behavior in src/agents/embedded-agent-runner. */
+/** Mock owner-plugin resolver for context-engine hook attribution. */
 export const mockedResolveContextEngineOwnerPluginId = vi.fn(() => undefined);
-/** Reused constant for mocked Build Agent Runtime Plan behavior in src/agents/embedded-agent-runner. */
+/** Mock runtime plan builder used before attempt execution. */
 export const mockedBuildAgentRuntimePlan = vi.fn(() => ({}));
-/** Reused constant for mocked Run Post Compaction Side Effects behavior in src/agents/embedded-agent-runner. */
+/** Mock post-compaction side-effect runner. */
 export const mockedRunPostCompactionSideEffects = vi.fn(async () => {});
-/** Reused constant for mocked Ensure Runtime Plugins Loaded behavior in src/agents/embedded-agent-runner. */
+/** Mock runtime plugin loader used by embedded-runner setup. */
 export const mockedEnsureRuntimePluginsLoaded = vi.fn<(params?: unknown) => void>();
-/** Reused constant for mocked Resolve Model Async behavior in src/agents/embedded-agent-runner. */
+/** Mock model resolver returning a large-context Anthropic-style model by default. */
 export const mockedResolveModelAsync = vi.fn(async () => ({
   model: {
     id: "test-model",
@@ -111,29 +111,29 @@ export const mockedResolveModelAsync = vi.fn(async () => ({
   },
   modelRegistry: {},
 }));
-/** Reused constant for mocked Prepare Provider Runtime Auth behavior in src/agents/embedded-agent-runner. */
+/** Mock provider runtime-auth preparation hook. */
 export const mockedPrepareProviderRuntimeAuth = vi.fn(async () => undefined);
-/** Reused constant for mocked Run Embedded Attempt behavior in src/agents/embedded-agent-runner. */
+/** Mock single embedded attempt executor. */
 export const mockedRunEmbeddedAttempt =
   vi.fn<(params: unknown) => Promise<EmbeddedRunAttemptResult>>();
-/** Reused constant for mocked Build Embedded Run Payloads behavior in src/agents/embedded-agent-runner. */
+/** Mock payload builder used to inspect compaction/fallback prompt payloads. */
 export const mockedBuildEmbeddedRunPayloads = vi.fn<
   (
     ...args: Parameters<typeof buildEmbeddedRunPayloads>
   ) => ReturnType<typeof buildEmbeddedRunPayloads>
 >(() => []);
-/** Reused constant for mocked Run Context Engine Maintenance behavior in src/agents/embedded-agent-runner. */
+/** Mock context-engine maintenance runner. */
 export const mockedRunContextEngineMaintenance = vi.fn(async () => undefined);
-/** Reused constant for mocked Session Likely Has Oversized Tool Results behavior in src/agents/embedded-agent-runner. */
+/** Mock detector for oversized tool results in the session transcript. */
 export const mockedSessionLikelyHasOversizedToolResults = vi.fn(() => false);
-/** Reused constant for mocked Resolve Live Tool Result Max Chars behavior in src/agents/embedded-agent-runner. */
+/** Mock live tool-result truncation limit resolver. */
 export const mockedResolveLiveToolResultMaxChars = vi.fn(() => 32_000);
 type MockTruncateOversizedToolResultsResult = {
   truncated: boolean;
   truncatedCount: number;
   reason?: string;
 };
-/** Reused constant for mocked Truncate Oversized Tool Results In Session behavior in src/agents/embedded-agent-runner. */
+/** Mock transcript truncation helper for oversized tool results. */
 export const mockedTruncateOversizedToolResultsInSession = vi.fn<
   () => Promise<MockTruncateOversizedToolResultsResult>
 >(async () => ({
@@ -155,7 +155,7 @@ type MockCoerceToFailoverError = (
 ) => unknown;
 type MockDescribeFailoverError = (err: unknown) => MockFailoverErrorDescription;
 type MockResolveFailoverStatus = (reason: string) => number | undefined;
-/** Reused class for Mocked Failover Error behavior in src/agents/embedded-agent-runner. */
+/** Test FailoverError shape used by fallback-classification tests. */
 export class MockedFailoverError extends Error {
   constructor(message: string) {
     super(message);
@@ -163,9 +163,9 @@ export class MockedFailoverError extends Error {
   }
 }
 
-/** Reused constant for mocked Coerce To Failover Error behavior in src/agents/embedded-agent-runner. */
+/** Mock failover-error coercion hook. */
 export const mockedCoerceToFailoverError = vi.fn<MockCoerceToFailoverError>();
-/** Reused constant for mocked Describe Failover Error behavior in src/agents/embedded-agent-runner. */
+/** Mock failover-error describer with formatErrorMessage default behavior. */
 export const mockedDescribeFailoverError = vi.fn<MockDescribeFailoverError>(
   (err: unknown): MockFailoverErrorDescription => ({
     message: formatErrorMessage(err),
@@ -174,10 +174,10 @@ export const mockedDescribeFailoverError = vi.fn<MockDescribeFailoverError>(
     code: undefined,
   }),
 );
-/** Reused constant for mocked Resolve Failover Status behavior in src/agents/embedded-agent-runner. */
+/** Mock HTTP/status resolver for failover reasons. */
 export const mockedResolveFailoverStatus = vi.fn<MockResolveFailoverStatus>();
 
-/** Reused constant for mocked Log behavior in src/agents/embedded-agent-runner. */
+/** Mock embedded-runner logger. */
 export const mockedLog: {
   debug: Mock<(...args: unknown[]) => void>;
   info: Mock<(...args: unknown[]) => void>;
@@ -192,30 +192,30 @@ export const mockedLog: {
   isEnabled: vi.fn(() => false),
 };
 
-/** Reused constant for mocked Format Billing Error Message behavior in src/agents/embedded-agent-runner. */
+/** Mock billing-error formatter. */
 export const mockedFormatBillingErrorMessage = vi.fn(() => "");
-/** Reused constant for mocked Classify Failover Reason behavior in src/agents/embedded-agent-runner. */
+/** Mock classifier for raw failover reason strings. */
 export const mockedClassifyFailoverReason = vi.fn<(raw: string) => FailoverReason | null>(
   () => null,
 );
-/** Reused constant for mocked Extract Observed Overflow Token Count behavior in src/agents/embedded-agent-runner. */
+/** Mock token-count extractor for provider overflow messages. */
 export const mockedExtractObservedOverflowTokenCount = vi.fn((msg?: string) => {
   const match = msg?.match(/prompt is too long:\s*([\d,]+)\s+tokens\s*>\s*[\d,]+\s+maximum/i);
   return match?.[1] ? Number(match[1].replaceAll(",", "")) : undefined;
 });
-/** Reused constant for mocked Format Assistant Error Text behavior in src/agents/embedded-agent-runner. */
+/** Mock assistant-facing error formatter. */
 export const mockedFormatAssistantErrorText = vi.fn(() => "");
-/** Reused constant for mocked Is Auth Assistant Error behavior in src/agents/embedded-agent-runner. */
+/** Mock guard for auth-related assistant errors. */
 export const mockedIsAuthAssistantError = vi.fn(() => false);
-/** Reused constant for mocked Is Billing Assistant Error behavior in src/agents/embedded-agent-runner. */
+/** Mock guard for billing-related assistant errors. */
 export const mockedIsBillingAssistantError = vi.fn(() => false);
-/** Reused constant for mocked Is Compaction Failure Error behavior in src/agents/embedded-agent-runner. */
+/** Mock guard for compaction failure errors. */
 export const mockedIsCompactionFailureError = vi.fn(() => false);
-/** Reused constant for mocked Is Failover Assistant Error behavior in src/agents/embedded-agent-runner. */
+/** Mock guard for assistant errors that should trigger failover. */
 export const mockedIsFailoverAssistantError = vi.fn(() => false);
-/** Reused constant for mocked Is Failover Error Message behavior in src/agents/embedded-agent-runner. */
+/** Mock guard for raw messages that should trigger failover. */
 export const mockedIsFailoverErrorMessage = vi.fn(() => false);
-/** Reused constant for mocked Is Likely Context Overflow Error behavior in src/agents/embedded-agent-runner. */
+/** Mock heuristic for context-window overflow errors. */
 export const mockedIsLikelyContextOverflowError = vi.fn((msg?: string) => {
   const lower = normalizeLowercaseStringOrEmpty(msg ?? "");
   return (
@@ -225,19 +225,19 @@ export const mockedIsLikelyContextOverflowError = vi.fn((msg?: string) => {
     lower.includes("prompt is too long")
   );
 });
-/** Reused constant for mocked Parse Image Size Error behavior in src/agents/embedded-agent-runner. */
+/** Mock parser for provider image-size errors. */
 export const mockedParseImageSizeError = vi.fn(() => null);
-/** Reused constant for mocked Parse Image Dimension Error behavior in src/agents/embedded-agent-runner. */
+/** Mock parser for provider image-dimension errors. */
 export const mockedParseImageDimensionError = vi.fn(() => null);
-/** Reused constant for mocked Is Rate Limit Assistant Error behavior in src/agents/embedded-agent-runner. */
+/** Mock guard for rate-limit assistant errors. */
 export const mockedIsRateLimitAssistantError = vi.fn(() => false);
-/** Reused constant for mocked Is Timeout Error Message behavior in src/agents/embedded-agent-runner. */
+/** Mock guard for timeout error messages. */
 export const mockedIsTimeoutErrorMessage = vi.fn(() => false);
-/** Reused constant for mocked Pick Fallback Thinking Level behavior in src/agents/embedded-agent-runner. */
+/** Mock fallback thinking-level selector. */
 export const mockedPickFallbackThinkingLevel = vi.fn<(params?: unknown) => ThinkLevel | null>(
   () => null,
 );
-/** Reused constant for mocked Evaluate Context Window Guard behavior in src/agents/embedded-agent-runner. */
+/** Mock context-window guard evaluator. */
 export const mockedEvaluateContextWindowGuard = vi.fn(() => ({
   shouldWarn: false,
   shouldBlock: false,
@@ -246,22 +246,22 @@ export const mockedEvaluateContextWindowGuard = vi.fn(() => ({
   hardMinTokens: 1000,
   warnBelowTokens: 5000,
 }));
-/** Reused constant for mocked Resolve Context Window Info behavior in src/agents/embedded-agent-runner. */
+/** Mock context-window info resolver. */
 export const mockedResolveContextWindowInfo = vi.fn(() => ({
   tokens: 200000,
   source: "model",
 }));
-/** Reused constant for mocked Format Context Window Warning Message behavior in src/agents/embedded-agent-runner. */
+/** Mock user-facing context-window warning formatter. */
 export const mockedFormatContextWindowWarningMessage = vi.fn(
   (params: { provider: string; modelId: string; guard: { tokens: number; source: string } }) =>
     `low context window: ${params.provider}/${params.modelId} ctx=${params.guard.tokens} source=${params.guard.source}`,
 );
-/** Reused constant for mocked Format Context Window Block Message behavior in src/agents/embedded-agent-runner. */
+/** Mock user-facing context-window block formatter. */
 export const mockedFormatContextWindowBlockMessage = vi.fn(
   (params: { guard: { tokens: number; source: string } }) =>
     `Model context window too small (${params.guard.tokens} tokens; source=${params.guard.source}). Minimum is 1000.`,
 );
-/** Reused constant for mocked Get Api Key For Model behavior in src/agents/embedded-agent-runner. */
+/** Mock model API-key resolver. */
 export const mockedGetApiKeyForModel = vi.fn(
   async ({ profileId }: { profileId?: string } = {}) => ({
     apiKey: "test-key",
@@ -270,24 +270,24 @@ export const mockedGetApiKeyForModel = vi.fn(
     mode: "api-key" as const,
   }),
 );
-/** Reused constant for mocked Mark Auth Profile Failure behavior in src/agents/embedded-agent-runner. */
+/** Mock auth profile failure marker. */
 export const mockedMarkAuthProfileFailure = vi.fn(async () => {});
-/** Reused constant for mocked Ensure Auth Profile Store behavior in src/agents/embedded-agent-runner. */
+/** Mock auth profile store initializer. */
 export const mockedEnsureAuthProfileStore = vi.fn(() => ({}));
-/** Reused constant for mocked Ensure Auth Profile Store Without External Profiles behavior in src/agents/embedded-agent-runner. */
+/** Mock auth store initializer that skips external profile overlays. */
 export const mockedEnsureAuthProfileStoreWithoutExternalProfiles = vi.fn(
   (_agentDir?: string, _options?: { allowKeychainPrompt?: boolean }) => ({}),
 );
-/** Reused constant for mocked Resolve Auth Profile Order behavior in src/agents/embedded-agent-runner. */
+/** Mock auth profile ordering helper. */
 export const mockedResolveAuthProfileOrder = vi.fn<(_params?: unknown) => string[]>(
   (_params?: unknown) => [],
 );
-/** Reused constant for mocked Mark Auth Profile Success behavior in src/agents/embedded-agent-runner. */
+/** Mock auth profile success marker. */
 export const mockedMarkAuthProfileSuccess = vi.fn(async () => {});
-/** Reused constant for mocked Should Prefer Explicit Config Api Key Auth behavior in src/agents/embedded-agent-runner. */
+/** Mock policy for preferring explicit config API-key auth. */
 export const mockedShouldPreferExplicitConfigApiKeyAuth = vi.fn(() => false);
 
-/** Reused constant for overflow Base Run Params behavior in src/agents/embedded-agent-runner. */
+/** Baseline embedded-runner params shared by overflow compaction tests. */
 export const overflowBaseRunParams = {
   sessionId: "test-session",
   sessionKey: "test-key",
@@ -298,7 +298,7 @@ export const overflowBaseRunParams = {
   runId: "run-1",
 } as const;
 
-/** Reused helper for reset Run Overflow Compaction Harness Mocks behavior in src/agents/embedded-agent-runner. */
+/** Reset all harness mocks and register the test Codex agent harness. */
 export function resetRunOverflowCompactionHarnessMocks(): void {
   clearAgentHarnesses();
   registerAgentHarness({
@@ -482,7 +482,7 @@ export function resetRunOverflowCompactionHarnessMocks(): void {
   mockedRunPostCompactionSideEffects.mockResolvedValue(undefined);
 }
 
-/** Reused helper for load Run Overflow Compaction Harness behavior in src/agents/embedded-agent-runner. */
+/** Install module mocks, reset state, and import the embedded runner under test. */
 export async function loadRunOverflowCompactionHarness(): Promise<{
   runEmbeddedAgent: typeof import("./run.js").runEmbeddedAgent;
 }> {
