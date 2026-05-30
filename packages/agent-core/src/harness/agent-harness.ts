@@ -209,7 +209,7 @@ interface AgentHarnessTurnState<
   activeTools: TTool[];
 }
 
-/** Public class implementing Agent Harness behavior for packages/agent-core. */
+/** Stateful facade for running agent turns against a persisted session tree. */
 export class AgentHarness<
   TSkill extends Skill = Skill,
   TPromptTemplate extends PromptTemplate = PromptTemplate,

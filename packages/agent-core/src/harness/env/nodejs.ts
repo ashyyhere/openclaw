@@ -1,4 +1,4 @@
-// packages/agent-core/src/harness/env nodejs helpers and runtime behavior.
+// Node.js-backed execution environment for filesystem and shell operations.
 import { spawn } from "node:child_process";
 import { randomUUID } from "node:crypto";
 import { constants, createReadStream } from "node:fs";
@@ -242,7 +242,7 @@ function getShellEnv(
   };
 }
 
-/** Public class implementing Node Execution Env behavior for packages/agent-core. */
+/** ExecutionEnv implementation backed by Node fs, temp files, and shell processes. */
 export class NodeExecutionEnv implements ExecutionEnv {
   cwd: string;
   private shellPath?: string;
