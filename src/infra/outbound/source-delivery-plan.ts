@@ -1,9 +1,10 @@
-// infra/outbound source delivery plan helpers and runtime behavior.
+// Source-visible delivery planning for replies and completion notifications.
+// Tracks whether message tools, direct fallback, or private output satisfy source delivery.
 import type { SourceReplyDeliveryMode } from "../../auto-reply/get-reply-options.types.js";
 import { stringifyRouteThreadId } from "../../plugin-sdk/channel-route.js";
 import { normalizeTargetForProvider } from "./target-normalization.js";
 
-/** Shared type for Source Visible Delivery Owner in src/infra/outbound. */
+/** Owner responsible for making a reply/completion visible at its source. */
 export type SourceVisibleDeliveryOwner =
   | "automatic_source"
   | "message_tool"
@@ -11,7 +12,7 @@ export type SourceVisibleDeliveryOwner =
   | "direct_fallback"
   | "none";
 
-/** Shared type for Source Delivery Plan Reason in src/infra/outbound. */
+/** Reason that selected the source-delivery plan. */
 export type SourceDeliveryPlanReason =
   | "config"
   | "room_event"
@@ -21,7 +22,7 @@ export type SourceDeliveryPlanReason =
   | "media_completion"
   | "subagent_completion";
 
-/** Shared type for Source Delivery Target in src/infra/outbound. */
+/** Canonical target for direct source delivery or message-tool verification. */
 export type SourceDeliveryTarget = {
   channel?: string;
   to?: string;
@@ -29,7 +30,7 @@ export type SourceDeliveryTarget = {
   threadId?: string | number;
 };
 
-/** Shared type for Source Delivery Message Tool Target in src/infra/outbound. */
+/** Message-tool target observed while deciding whether source delivery was satisfied. */
 export type SourceDeliveryMessageToolTarget = {
   tool?: string;
   provider?: string;
@@ -42,14 +43,14 @@ export type SourceDeliveryMessageToolTarget = {
   mediaUrls?: string[];
 };
 
-/** Shared type for Source Delivery Visible Delivery in src/infra/outbound. */
+/** Visible message-tool delivery and whether it matched the planned source target. */
 export type SourceDeliveryVisibleDelivery = {
   via: "message_tool";
   target: SourceDeliveryMessageToolTarget;
   verifiedTarget: boolean;
 };
 
-/** Shared type for Source Delivery Outcome in src/infra/outbound. */
+/** Outcome of comparing actual message-tool sends against a source-delivery plan. */
 export type SourceDeliveryOutcome = {
   visibleDeliveries: SourceDeliveryVisibleDelivery[];
   verifiedMessageToolDelivery: boolean;
@@ -57,7 +58,7 @@ export type SourceDeliveryOutcome = {
   unverifiedMessageToolDelivery: boolean;
 };
 
-/** Shared type for Source Delivery Plan in src/infra/outbound. */
+/** Source-delivery policy for one reply/completion path. */
 export type SourceDeliveryPlan = {
   owner: SourceVisibleDeliveryOwner;
   reason: SourceDeliveryPlanReason;
@@ -130,7 +131,7 @@ function extractTopicThreadId(targetTo: string): string | undefined {
   return targetTo.match(/:topic:(\d+)$/i)?.[1];
 }
 
-/** Reused helper for source Delivery Targets Match behavior in src/infra/outbound. */
+/** Return whether a message-tool target satisfies the planned delivery target. */
 export function sourceDeliveryTargetsMatch(
   target: SourceDeliveryMessageToolTarget,
   delivery: SourceDeliveryTarget,
@@ -163,7 +164,7 @@ export function sourceDeliveryTargetsMatch(
   return deliveryThreadId === targetThreadId;
 }
 
-/** Reused helper for create Source Delivery Plan behavior in src/infra/outbound. */
+/** Build a normalized source-delivery plan from ownership/fallback knobs. */
 export function createSourceDeliveryPlan(params: {
   owner: SourceVisibleDeliveryOwner;
   reason: SourceDeliveryPlanReason;
@@ -226,7 +227,7 @@ function resolveImplicitMessageToolDeliveryTarget(
   };
 }
 
-/** Reused helper for resolve Source Delivery Outcome behavior in src/infra/outbound. */
+/** Resolve whether observed message-tool sends satisfy a source-delivery plan. */
 export function resolveSourceDeliveryOutcome(
   plan: SourceDeliveryPlan,
   params: {
