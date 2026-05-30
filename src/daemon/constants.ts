@@ -1,32 +1,32 @@
-// daemon constants helpers and runtime behavior.
+/** Platform service identifiers and profile-aware daemon naming helpers. */
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
 // Default service labels (canonical + legacy compatibility)
-/** Reused constant for GATEWAY LAUNCH AGENT LABEL behavior in src/daemon. */
+/** Canonical macOS launchd label for the default Gateway service. */
 export const GATEWAY_LAUNCH_AGENT_LABEL = "ai.openclaw.gateway";
-/** Reused constant for GATEWAY SYSTEMD SERVICE NAME behavior in src/daemon. */
+/** Canonical systemd service name for the default Gateway service. */
 export const GATEWAY_SYSTEMD_SERVICE_NAME = "openclaw-gateway";
-/** Reused constant for GATEWAY WINDOWS TASK NAME behavior in src/daemon. */
+/** Canonical Windows scheduled task name for the default Gateway service. */
 export const GATEWAY_WINDOWS_TASK_NAME = "OpenClaw Gateway";
-/** Reused constant for GATEWAY SERVICE MARKER behavior in src/daemon. */
+/** Service marker used to identify OpenClaw Gateway-managed service files. */
 export const GATEWAY_SERVICE_MARKER = "openclaw";
-/** Reused constant for GATEWAY SERVICE KIND behavior in src/daemon. */
+/** Service kind label for Gateway daemon metadata. */
 export const GATEWAY_SERVICE_KIND = "gateway";
-/** Reused constant for GATEWAY SERVICE RUNTIME PID ENV behavior in src/daemon. */
+/** Env var used by managed Gateway processes to publish their runtime pid. */
 export const GATEWAY_SERVICE_RUNTIME_PID_ENV = "OPENCLAW_GATEWAY_SERVICE_PID";
 const NODE_LAUNCH_AGENT_LABEL = "ai.openclaw.node";
 const NODE_SYSTEMD_SERVICE_NAME = "openclaw-node";
 const NODE_WINDOWS_TASK_NAME = "OpenClaw Node";
-/** Reused constant for NODE SERVICE MARKER behavior in src/daemon. */
+/** Service marker used to identify OpenClaw Node Host-managed service files. */
 export const NODE_SERVICE_MARKER = "openclaw";
-/** Reused constant for NODE SERVICE KIND behavior in src/daemon. */
+/** Service kind label for Node Host daemon metadata. */
 export const NODE_SERVICE_KIND = "node";
-/** Reused constant for NODE WINDOWS TASK SCRIPT NAME behavior in src/daemon. */
+/** Windows task script filename used for the Node Host service. */
 export const NODE_WINDOWS_TASK_SCRIPT_NAME = "node.cmd";
-/** Reused constant for LEGACY GATEWAY SYSTEMD SERVICE NAMES behavior in src/daemon. */
+/** Legacy systemd service names recognized during Gateway migration/cleanup. */
 export const LEGACY_GATEWAY_SYSTEMD_SERVICE_NAMES: string[] = ["clawdbot-gateway"];
 
-/** Reused helper for normalize Gateway Profile behavior in src/daemon. */
+/** Normalizes Gateway profile names, treating default/empty as the base profile. */
 export function normalizeGatewayProfile(profile?: string): string | null {
   const trimmed = profile?.trim();
   if (!trimmed || normalizeLowercaseStringOrEmpty(trimmed) === "default") {
@@ -35,13 +35,13 @@ export function normalizeGatewayProfile(profile?: string): string | null {
   return trimmed;
 }
 
-/** Reused helper for resolve Gateway Profile Suffix behavior in src/daemon. */
+/** Builds the suffix appended to profile-specific Gateway service names. */
 export function resolveGatewayProfileSuffix(profile?: string): string {
   const normalized = normalizeGatewayProfile(profile);
   return normalized ? `-${normalized}` : "";
 }
 
-/** Reused helper for resolve Gateway Launch Agent Label behavior in src/daemon. */
+/** Resolves the macOS launchd label for a Gateway profile. */
 export function resolveGatewayLaunchAgentLabel(profile?: string): string {
   const normalized = normalizeGatewayProfile(profile);
   if (!normalized) {
@@ -50,13 +50,13 @@ export function resolveGatewayLaunchAgentLabel(profile?: string): string {
   return `ai.openclaw.${normalized}`;
 }
 
-/** Reused helper for resolve Legacy Gateway Launch Agent Labels behavior in src/daemon. */
+/** Returns legacy launchd labels for Gateway profile cleanup. */
 export function resolveLegacyGatewayLaunchAgentLabels(profile?: string): string[] {
   void profile;
   return [];
 }
 
-/** Reused helper for resolve Gateway Systemd Service Name behavior in src/daemon. */
+/** Resolves the systemd service name for a Gateway profile. */
 export function resolveGatewaySystemdServiceName(profile?: string): string {
   const suffix = resolveGatewayProfileSuffix(profile);
   if (!suffix) {
@@ -65,7 +65,7 @@ export function resolveGatewaySystemdServiceName(profile?: string): string {
   return `openclaw-gateway${suffix}`;
 }
 
-/** Reused helper for resolve Gateway Windows Task Name behavior in src/daemon. */
+/** Resolves the Windows scheduled task name for a Gateway profile. */
 export function resolveGatewayWindowsTaskName(profile?: string): string {
   const normalized = normalizeGatewayProfile(profile);
   if (!normalized) {
@@ -74,7 +74,7 @@ export function resolveGatewayWindowsTaskName(profile?: string): string {
   return `OpenClaw Gateway (${normalized})`;
 }
 
-/** Reused helper for format Gateway Service Description behavior in src/daemon. */
+/** Formats a Gateway service description with optional profile and version. */
 export function formatGatewayServiceDescription(params?: {
   profile?: string;
   version?: string;
@@ -94,7 +94,7 @@ export function formatGatewayServiceDescription(params?: {
   return `OpenClaw Gateway (${parts.join(", ")})`;
 }
 
-/** Reused helper for resolve Gateway Service Description behavior in src/daemon. */
+/** Resolves a Gateway service description from explicit text or environment. */
 export function resolveGatewayServiceDescription(params: {
   env: Record<string, string | undefined>;
   environment?: Record<string, string | undefined>;
@@ -109,22 +109,22 @@ export function resolveGatewayServiceDescription(params: {
   );
 }
 
-/** Reused helper for resolve Node Launch Agent Label behavior in src/daemon. */
+/** Returns the macOS launchd label for the Node Host service. */
 export function resolveNodeLaunchAgentLabel(): string {
   return NODE_LAUNCH_AGENT_LABEL;
 }
 
-/** Reused helper for resolve Node Systemd Service Name behavior in src/daemon. */
+/** Returns the systemd service name for the Node Host service. */
 export function resolveNodeSystemdServiceName(): string {
   return NODE_SYSTEMD_SERVICE_NAME;
 }
 
-/** Reused helper for resolve Node Windows Task Name behavior in src/daemon. */
+/** Returns the Windows scheduled task name for the Node Host service. */
 export function resolveNodeWindowsTaskName(): string {
   return NODE_WINDOWS_TASK_NAME;
 }
 
-/** Reused helper for format Node Service Description behavior in src/daemon. */
+/** Formats a Node Host service description with an optional version. */
 export function formatNodeServiceDescription(params?: { version?: string }): string {
   const version = params?.version?.trim();
   if (!version) {
