@@ -1,6 +1,6 @@
-// infra fs safe advanced helpers and runtime behavior.
+// Wires advanced fs-safe helpers through the infra defaults bootstrap.
 import "./fs-safe-defaults.js";
-/** Re-exported API for src/infra. */
+/** Re-export symlink, hardlink, and sibling-temp write guards with OpenClaw defaults loaded. */
 export {
   assertNoHardlinkedFinalPath,
   assertNoSymlinkParents,

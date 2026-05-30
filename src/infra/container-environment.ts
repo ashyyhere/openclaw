@@ -1,4 +1,4 @@
-// infra container environment helpers and runtime behavior.
+// Detects containerized runtime environments for install/update behavior.
 import fs from "node:fs";
 
 /**
@@ -14,7 +14,7 @@ import fs from "node:fs";
  */
 let containerEnvironmentCache: boolean | undefined;
 
-/** Reused helper for is Container Environment behavior in src/infra. */
+/** Return whether the process appears to run inside Docker, Podman, Kubernetes, or Fly. */
 export function isContainerEnvironment(): boolean {
   if (containerEnvironmentCache !== undefined) {
     return containerEnvironmentCache;

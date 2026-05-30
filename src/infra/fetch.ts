@@ -1,4 +1,4 @@
-// infra fetch helpers and runtime behavior.
+// Normalizes fetch behavior across Node, Bun, and custom fetch implementations.
 import { bindAbortRelay } from "../utils/fetch-timeout.js";
 import { normalizeRequestInitHeadersForFetch } from "./fetch-headers.js";
 
@@ -35,7 +35,7 @@ function withDuplex(
     : ({ duplex: "half" as const } as RequestInitWithDuplex);
 }
 
-/** Reused helper for wrap Fetch With Abort Signal behavior in src/infra. */
+/** Wrap fetch so foreign AbortSignal-like objects relay through a native AbortController. */
 export function wrapFetchWithAbortSignal(fetchImpl: typeof fetch): typeof fetch {
   if ((fetchImpl as FetchWithAbortSignalMarker)[wrapFetchWithAbortSignalMarker]) {
     return fetchImpl;
@@ -103,7 +103,7 @@ export function wrapFetchWithAbortSignal(fetchImpl: typeof fetch): typeof fetch 
   return wrappedFetch;
 }
 
-/** Reused helper for resolve Fetch behavior in src/infra. */
+/** Resolve the active fetch implementation and apply OpenClaw compatibility wrapping. */
 export function resolveFetch(fetchImpl?: typeof fetch): typeof fetch | undefined {
   const resolved = fetchImpl ?? globalThis.fetch;
   if (!resolved) {
