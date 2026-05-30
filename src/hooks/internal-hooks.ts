@@ -18,10 +18,10 @@ import type {
   InternalHookEventType,
   InternalHookHandler,
 } from "./internal-hook-types.js";
-/** Re-exported API for src/hooks, starting with Internal Hook Event. */
+/** Core internal hook event and handler contracts. */
 export type { InternalHookEvent, InternalHookEventType, InternalHookHandler };
 
-/** Shared type for Agent Bootstrap Hook Context in src/hooks. */
+/** Context emitted when an agent workspace is bootstrapped. */
 export type AgentBootstrapHookContext = {
   workspaceDir: string;
   bootstrapFiles: WorkspaceBootstrapFile[];
@@ -31,21 +31,21 @@ export type AgentBootstrapHookContext = {
   agentId?: string;
 };
 
-/** Shared type for Agent Bootstrap Hook Event in src/hooks. */
+/** Hook event fired after agent bootstrap inputs have been prepared. */
 export type AgentBootstrapHookEvent = InternalHookEvent & {
   type: "agent";
   action: "bootstrap";
   context: AgentBootstrapHookContext;
 };
 
-/** Shared type for Gateway Startup Hook Context in src/hooks. */
+/** Context emitted during Gateway startup hooks. */
 export type GatewayStartupHookContext = {
   cfg?: OpenClawConfig;
   deps?: CliDeps;
   workspaceDir?: string;
 };
 
-/** Shared type for Gateway Startup Hook Event in src/hooks. */
+/** Hook event fired while Gateway startup work is being coordinated. */
 export type GatewayStartupHookEvent = InternalHookEvent & {
   type: "gateway";
   action: "startup";
@@ -56,7 +56,7 @@ export type GatewayStartupHookEvent = InternalHookEvent & {
 // Message Hook Events
 // ============================================================================
 
-/** Shared type for Message Received Hook Context in src/hooks. */
+/** Provider message metadata captured before reply processing. */
 export type MessageReceivedHookContext = {
   /** Sender identifier (e.g., phone number, user ID) */
   from: string;
@@ -76,14 +76,14 @@ export type MessageReceivedHookContext = {
   metadata?: Record<string, unknown>;
 };
 
-/** Shared type for Message Received Hook Event in src/hooks. */
+/** Hook event fired when a channel message is received. */
 export type MessageReceivedHookEvent = InternalHookEvent & {
   type: "message";
   action: "received";
   context: MessageReceivedHookContext;
 };
 
-/** Shared type for Message Sent Hook Context in src/hooks. */
+/** Provider send result metadata emitted after outbound delivery. */
 export type MessageSentHookContext = {
   /** Recipient identifier */
   to: string;
@@ -107,7 +107,7 @@ export type MessageSentHookContext = {
   groupId?: string;
 };
 
-/** Shared type for Message Sent Hook Event in src/hooks. */
+/** Hook event fired after a channel send attempt completes. */
 export type MessageSentHookEvent = InternalHookEvent & {
   type: "message";
   action: "sent";
@@ -147,20 +147,20 @@ type MessageEnrichedBodyHookContext = {
   mediaType?: string;
 };
 
-/** Shared type for Message Transcribed Hook Context in src/hooks. */
+/** Enriched message context for audio transcription events. */
 export type MessageTranscribedHookContext = MessageEnrichedBodyHookContext & {
   /** The transcribed text from audio */
   transcript: string;
 };
 
-/** Shared type for Message Transcribed Hook Event in src/hooks. */
+/** Hook event fired after media transcription enriches a message. */
 export type MessageTranscribedHookEvent = InternalHookEvent & {
   type: "message";
   action: "transcribed";
   context: MessageTranscribedHookContext;
 };
 
-/** Shared type for Message Preprocessed Hook Context in src/hooks. */
+/** Enriched message context after channel-specific preprocessing. */
 export type MessagePreprocessedHookContext = MessageEnrichedBodyHookContext & {
   /** Transcribed audio text, if the message contained audio */
   transcript?: string;
@@ -170,21 +170,21 @@ export type MessagePreprocessedHookContext = MessageEnrichedBodyHookContext & {
   groupId?: string;
 };
 
-/** Shared type for Message Preprocessed Hook Event in src/hooks. */
+/** Hook event fired after inbound preprocessing but before reply dispatch. */
 export type MessagePreprocessedHookEvent = InternalHookEvent & {
   type: "message";
   action: "preprocessed";
   context: MessagePreprocessedHookContext;
 };
 
-/** Shared type for Session Patch Hook Context in src/hooks. */
+/** Context emitted when session metadata is patched. */
 export type SessionPatchHookContext = {
   sessionEntry: SessionEntry;
   patch: SessionsPatchParams;
   cfg: OpenClawConfig;
 };
 
-/** Shared type for Session Patch Hook Event in src/hooks. */
+/** Hook event fired for session patch operations. */
 export type SessionPatchHookEvent = InternalHookEvent & {
   type: "session";
   action: "patch";
@@ -269,7 +269,7 @@ export function clearInternalHooks(): void {
   handlers.clear();
 }
 
-/** Reused helper for set Internal Hooks Enabled behavior in src/hooks. */
+/** Enables or disables internal hook dispatch process-wide. */
 export function setInternalHooksEnabled(enabled: boolean): void {
   internalHooksEnabledState.enabled = enabled;
 }
@@ -281,7 +281,7 @@ export function getRegisteredEventKeys(): string[] {
   return Array.from(handlers.keys());
 }
 
-/** Reused helper for has Internal Hook Listeners behavior in src/hooks. */
+/** Checks whether a general or action-specific hook listener is registered. */
 export function hasInternalHookListeners(type: InternalHookEventType, action: string): boolean {
   return (
     (handlers.get(type)?.length ?? 0) > 0 || (handlers.get(`${type}:${action}`)?.length ?? 0) > 0
@@ -378,7 +378,7 @@ function hasBooleanContextField<T extends Record<string, unknown>>(
   return typeof context[key] === "boolean";
 }
 
-/** Reused helper for is Agent Bootstrap Event behavior in src/hooks. */
+/** Narrows a generic internal hook event to an agent bootstrap event. */
 export function isAgentBootstrapEvent(event: InternalHookEvent): event is AgentBootstrapHookEvent {
   if (!isHookEventTypeAndAction(event, "agent", "bootstrap")) {
     return false;
@@ -393,7 +393,7 @@ export function isAgentBootstrapEvent(event: InternalHookEvent): event is AgentB
   return Array.isArray(context.bootstrapFiles);
 }
 
-/** Reused helper for is Gateway Startup Event behavior in src/hooks. */
+/** Narrows a generic internal hook event to a Gateway startup event. */
 export function isGatewayStartupEvent(event: InternalHookEvent): event is GatewayStartupHookEvent {
   if (!isHookEventTypeAndAction(event, "gateway", "startup")) {
     return false;
@@ -401,7 +401,7 @@ export function isGatewayStartupEvent(event: InternalHookEvent): event is Gatewa
   return Boolean(getHookContext<GatewayStartupHookContext>(event));
 }
 
-/** Reused helper for is Message Received Event behavior in src/hooks. */
+/** Narrows a generic internal hook event to a received-message event. */
 export function isMessageReceivedEvent(
   event: InternalHookEvent,
 ): event is MessageReceivedHookEvent {
@@ -419,7 +419,7 @@ export function isMessageReceivedEvent(
   );
 }
 
-/** Reused helper for is Message Sent Event behavior in src/hooks. */
+/** Narrows a generic internal hook event to a sent-message event. */
 export function isMessageSentEvent(event: InternalHookEvent): event is MessageSentHookEvent {
   if (!isHookEventTypeAndAction(event, "message", "sent")) {
     return false;
@@ -436,7 +436,7 @@ export function isMessageSentEvent(event: InternalHookEvent): event is MessageSe
   );
 }
 
-/** Reused helper for is Message Transcribed Event behavior in src/hooks. */
+/** Narrows a generic internal hook event to a transcribed-message event. */
 export function isMessageTranscribedEvent(
   event: InternalHookEvent,
 ): event is MessageTranscribedHookEvent {
@@ -452,7 +452,7 @@ export function isMessageTranscribedEvent(
   );
 }
 
-/** Reused helper for is Message Preprocessed Event behavior in src/hooks. */
+/** Narrows a generic internal hook event to a preprocessed-message event. */
 export function isMessagePreprocessedEvent(
   event: InternalHookEvent,
 ): event is MessagePreprocessedHookEvent {
@@ -466,7 +466,7 @@ export function isMessagePreprocessedEvent(
   return hasStringContextField(context, "channelId");
 }
 
-/** Reused helper for is Session Patch Event behavior in src/hooks. */
+/** Narrows a generic internal hook event to a session patch event. */
 export function isSessionPatchEvent(event: InternalHookEvent): event is SessionPatchHookEvent {
   if (!isHookEventTypeAndAction(event, "session", "patch")) {
     return false;
