@@ -291,7 +291,7 @@ export async function runTrustedToolPolicies(
     } catch {
       return trustedPolicyFailureResult(registration, "policy evaluation failed");
     }
-    if (!decision) {
+    if (decision === undefined) {
       continue;
     }
     if ((typeof decision !== "object" && typeof decision !== "function") || decision === null) {

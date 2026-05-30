@@ -499,6 +499,35 @@ describe("host-hook fixture plugin contract", () => {
     });
   });
 
+  it.each([
+    ["false", false as never],
+    ["null", null as never],
+    ["zero", 0 as never],
+    ["empty string", "" as never],
+  ])("fails closed when a trusted policy returns malformed %s", async (_label, decision) => {
+    const registry = createEmptyPluginRegistry();
+    registry.trustedToolPolicies = [
+      {
+        pluginId: "fuzzplugin",
+        pluginName: "Fuzz Plugin",
+        source: "test",
+        policy: {
+          id: "fuzzpolicy",
+          description: "synthetic trusted policy",
+          evaluate: () => decision,
+        },
+      },
+    ];
+    setActivePluginRegistry(registry);
+
+    await expect(
+      runTrustedToolPolicies({ toolName: "exec", params: {} }, { toolName: "exec" }),
+    ).resolves.toEqual({
+      block: true,
+      blockReason: "blocked by fuzzpolicy: policy decision is malformed",
+    });
+  });
+
   it("fails closed when a trusted policy returns unreadable params", async () => {
     const registry = createEmptyPluginRegistry();
     const revokedParams = Proxy.revocable({ command: "mock" }, {});
