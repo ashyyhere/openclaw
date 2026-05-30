@@ -1,4 +1,4 @@
-// infra/command-analysis policy helpers and runtime behavior.
+// Normalizes shell or argv command analysis for exec policy decisions.
 import {
   analyzeArgvCommand,
   analyzeShellCommand,
@@ -7,7 +7,7 @@ import {
 } from "../exec-approvals-analysis.js";
 import { detectInlineEvalInSegments } from "./risks.js";
 
-/** Shared type for Command Policy Analysis in src/infra/command-analysis. */
+/** Parsed command-analysis result used by exec approval policy checks. */
 export type CommandPolicyAnalysis =
   | {
       ok: true;
@@ -23,7 +23,7 @@ export type CommandPolicyAnalysis =
       segments: [];
     };
 
-/** Reused helper for analyze Command For Policy behavior in src/infra/command-analysis. */
+/** Parses shell text or argv into policy-ready command segments. */
 export function analyzeCommandForPolicy(
   params:
     | {
@@ -66,7 +66,7 @@ export function analyzeCommandForPolicy(
   };
 }
 
-/** Reused helper for detect Policy Inline Eval behavior in src/infra/command-analysis. */
+/** Detects inline-eval risk across policy command segments. */
 export function detectPolicyInlineEval(segments: readonly ExecCommandSegment[]) {
   return detectInlineEvalInSegments(segments);
 }
