@@ -1,4 +1,4 @@
-// media-understanding config provider models helpers and runtime behavior.
+// Helpers for discovering image-capable providers declared directly in config.
 import type { OpenClawConfig } from "../config/types.js";
 import { normalizeMediaProviderId } from "./provider-id.js";
 
@@ -15,7 +15,7 @@ function hasImageCapableModel(providerCfg: ConfigProvider): boolean {
   );
 }
 
-/** Reused helper for resolve Image Capable Config Provider Ids behavior in src/media-understanding. */
+/** Returns normalized provider ids whose config includes at least one image-input model. */
 export function resolveImageCapableConfigProviderIds(cfg?: OpenClawConfig): string[] {
   const configProviders = cfg?.models?.providers;
   if (!configProviders || typeof configProviders !== "object") {

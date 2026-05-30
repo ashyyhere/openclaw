@@ -1,4 +1,5 @@
-// media-understanding attachments cache helpers and runtime behavior.
+// Attachment cache for media understanding runners, with local-path validation,
+// remote-fetch fallback, and temp-file cleanup shared by capability adapters.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { logVerbose, shouldLogVerbose } from "../globals.js";
@@ -68,7 +69,7 @@ function getDefaultLocalPathRoots(): readonly string[] {
   return defaultLocalPathRoots;
 }
 
-/** Shared type for Media Attachment Cache Options in src/media-understanding. */
+/** Controls which attachment paths and URLs the cache may resolve for a run. */
 export type MediaAttachmentCacheOptions = {
   localPathRoots?: readonly string[];
   includeDefaultLocalPathRoots?: boolean;
@@ -76,7 +77,13 @@ export type MediaAttachmentCacheOptions = {
   workspaceDir?: string;
 };
 
-/** Reused class for Media Attachment Cache behavior in src/media-understanding. */
+/**
+ * Resolves media attachments once per run and reuses their buffers or paths.
+ *
+ * Local files are preferred when allowed by inbound path roots; blocked or
+ * missing local paths may fall back to the attachment URL so mixed client
+ * payloads still work without disabling SSRF and file-boundary checks.
+ */
 export class MediaAttachmentCache {
   private readonly entries = new Map<number, AttachmentCacheEntry>();
   private readonly attachments: MediaAttachment[];
@@ -153,6 +160,8 @@ export class MediaAttachmentCache {
           };
         }
       } catch (err) {
+        // A client can send both a local placeholder path and a remote URL.
+        // Only boundary/empty local failures should fall through to URL fetch.
         if (
           !(err instanceof MediaUnderstandingSkipError) ||
           !url ||
@@ -229,6 +238,8 @@ export class MediaAttachmentCache {
             }
           }
         } catch (err) {
+          // Path callers need a usable file path; blocked local placeholders
+          // can still be materialized from a remote URL below.
           if (
             !(err instanceof MediaUnderstandingSkipError) ||
             (err.reason !== "blocked" && err.reason !== "empty")
@@ -337,6 +348,8 @@ export class MediaAttachmentCache {
       } finally {
         await opened.handle.close().catch(() => {});
       }
+      // Check again after canonicalization so symlinks cannot escape the
+      // configured inbound roots after the initial lexical allowlist match.
       if (!isInboundPathAllowed({ filePath: opened.realPath, roots: canonicalRoots })) {
         entry.resolvedPath = undefined;
         if (shouldLogVerbose()) {

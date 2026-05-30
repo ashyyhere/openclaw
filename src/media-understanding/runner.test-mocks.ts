@@ -1,7 +1,7 @@
-// media-understanding runner test mocks helpers and runtime behavior.
+// Small Vitest module factories shared by media-understanding runner tests.
 import { vi } from "vitest";
 
-/** Reused helper for create Available Model Auth Mock Module behavior in src/media-understanding. */
+/** Creates auth mocks that make every provider appear configured for tests. */
 export function createAvailableModelAuthMockModule() {
   return {
     hasAvailableAuthForProvider: vi.fn(() => true),
@@ -14,7 +14,7 @@ export function createAvailableModelAuthMockModule() {
   };
 }
 
-/** Reused helper for create Empty Capability Provider Mock Module behavior in src/media-understanding. */
+/** Creates plugin capability-provider mocks with no discovered providers. */
 export function createEmptyCapabilityProviderMockModule() {
   return {
     resolvePluginCapabilityProviders: () => [],

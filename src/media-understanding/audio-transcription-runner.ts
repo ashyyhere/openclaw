@@ -1,4 +1,5 @@
-// media-understanding audio transcription runner helpers and runtime behavior.
+// High-level audio transcription runner used by reply flows that need text
+// extracted from inbound media attachments before prompt rendering.
 import type { MsgContext } from "../auto-reply/templating.js";
 import type { OpenClawConfig } from "../config/types.js";
 import type { ActiveMediaModel } from "./active-model.types.js";
@@ -10,7 +11,12 @@ import {
 } from "./runner.js";
 import type { MediaAttachment, MediaUnderstandingProvider } from "./types.js";
 
-/** Reused helper for run Audio Transcription behavior in src/media-understanding. */
+/**
+ * Runs the audio media capability and returns the first transcription output.
+ *
+ * The attachment cache is always cleaned up because URL-backed attachments may
+ * be materialized as temp files for provider runtimes that require file paths.
+ */
 export async function runAudioTranscription(params: {
   ctx: MsgContext;
   cfg: OpenClawConfig;

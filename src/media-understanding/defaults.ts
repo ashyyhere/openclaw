@@ -1,4 +1,5 @@
-// media-understanding defaults helpers and runtime behavior.
+// Media model defaults derived from plugin manifest metadata and user config.
+// Keeps provider selection deterministic for automatic media capability runs.
 import { resolveRuntimeConfigCacheKey } from "../config/runtime-snapshot.js";
 import type { OpenClawConfig } from "../config/types.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
@@ -10,7 +11,7 @@ import {
 } from "./provider-registry.js";
 import { providerSupportsCapability } from "./provider-supports.js";
 import type { MediaUnderstandingCapability, MediaUnderstandingProvider } from "./types.js";
-/** Re-exported API for src/media-understanding. */
+/** Public media limit defaults shared by runners, provider adapters, and CLI config. */
 export {
   CLI_OUTPUT_MAX_BUFFER,
   DEFAULT_MAX_BYTES,
@@ -138,7 +139,13 @@ function insertConfiguredImageProviders(params: {
   return uniqueStrings(merged);
 }
 
-/** Reused helper for resolve Default Media Model behavior in src/media-understanding. */
+/**
+ * Resolves the default model for a provider/capability pair.
+ *
+ * Configured image-capable provider models win over manifest defaults unless a
+ * caller supplies an explicit registry, which is used as an isolated test/runtime
+ * view of provider metadata.
+ */
 export function resolveDefaultMediaModel(params: {
   providerId: string;
   capability: MediaUnderstandingCapability;
@@ -171,7 +178,13 @@ export function resolveDefaultMediaModel(params: {
   return undefined;
 }
 
-/** Reused helper for resolve Auto Media Key Providers behavior in src/media-understanding. */
+/**
+ * Returns provider ids ordered for automatic key probing for one media capability.
+ *
+ * Manifest priorities are stable-sorted, then image providers declared only in
+ * config are inserted near their canonical provider so user-defined aliases can
+ * participate in auto-selection.
+ */
 export function resolveAutoMediaKeyProviders(params: {
   capability: MediaUnderstandingCapability;
   cfg?: OpenClawConfig;
@@ -210,7 +223,7 @@ export function resolveAutoMediaKeyProviders(params: {
   });
 }
 
-/** Reused helper for provider Supports Native Pdf Document behavior in src/media-understanding. */
+/** Reports whether provider metadata declares direct PDF document input support. */
 export function providerSupportsNativePdfDocument(params: {
   providerId: string;
   cfg?: OpenClawConfig;
@@ -223,7 +236,12 @@ export function providerSupportsNativePdfDocument(params: {
   return provider?.nativeDocumentInputs?.includes("pdf") ?? false;
 }
 
-/** Reused helper for resolve Document Media Model behavior in src/media-understanding. */
+/**
+ * Resolves document-specific media model overrides.
+ *
+ * A `false` value is preserved so providers can explicitly opt out of a document
+ * mode instead of falling through to a generic default model.
+ */
 export function resolveDocumentMediaModel(params: {
   providerId: string;
   document: "pdf";
