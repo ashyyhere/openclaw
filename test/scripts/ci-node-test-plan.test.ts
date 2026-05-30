@@ -195,14 +195,58 @@ describe("scripts/lib/ci-node-test-plan.mjs", () => {
 
     expect(runtimeShards).toEqual([
       {
-        configs: [
-          "test/vitest/vitest.infra.config.ts",
-          "test/vitest/vitest.hooks.config.ts",
-          "test/vitest/vitest.secrets.config.ts",
-        ],
+        configs: ["test/vitest/vitest.hooks.config.ts", "test/vitest/vitest.secrets.config.ts"],
         requiresDist: false,
         runner: "blacksmith-4vcpu-ubuntu-2404",
         shardName: "core-runtime-infra-state",
+      },
+      {
+        configs: ["test/vitest/vitest.infra.config.ts"],
+        requiresDist: false,
+        runner: "blacksmith-4vcpu-ubuntu-2404",
+        shardName: "core-runtime-infra-approvals-exec",
+      },
+      {
+        configs: ["test/vitest/vitest.infra.config.ts"],
+        requiresDist: false,
+        runner: "blacksmith-4vcpu-ubuntu-2404",
+        shardName: "core-runtime-infra-events-sessions",
+      },
+      {
+        configs: ["test/vitest/vitest.infra.config.ts"],
+        requiresDist: false,
+        runner: "blacksmith-4vcpu-ubuntu-2404",
+        shardName: "core-runtime-infra-gateway-restart",
+      },
+      {
+        configs: ["test/vitest/vitest.infra.config.ts"],
+        requiresDist: false,
+        runner: "blacksmith-4vcpu-ubuntu-2404",
+        shardName: "core-runtime-infra-install-update",
+      },
+      {
+        configs: ["test/vitest/vitest.infra.config.ts"],
+        requiresDist: false,
+        runner: "blacksmith-4vcpu-ubuntu-2404",
+        shardName: "core-runtime-infra-network-provider",
+      },
+      {
+        configs: ["test/vitest/vitest.infra.config.ts"],
+        requiresDist: false,
+        runner: "blacksmith-4vcpu-ubuntu-2404",
+        shardName: "core-runtime-infra-outbound",
+      },
+      {
+        configs: ["test/vitest/vitest.infra.config.ts"],
+        requiresDist: false,
+        runner: "blacksmith-4vcpu-ubuntu-2404",
+        shardName: "core-runtime-infra-files-state",
+      },
+      {
+        configs: ["test/vitest/vitest.infra.config.ts"],
+        requiresDist: false,
+        runner: "blacksmith-4vcpu-ubuntu-2404",
+        shardName: "core-runtime-infra-utils",
       },
       {
         configs: [
@@ -256,6 +300,30 @@ describe("scripts/lib/ci-node-test-plan.mjs", () => {
         shardName: "core-runtime-cron-service",
       },
     ]);
+  });
+
+  it("covers every infra test exactly once across core runtime infra shards", () => {
+    const infraShards = createNodeTestShards().filter(
+      (shard) =>
+        shard.shardName.startsWith("core-runtime-infra-") &&
+        shard.configs.includes("test/vitest/vitest.infra.config.ts"),
+    );
+    const actual = infraShards
+      .flatMap((shard) => shard.includePatterns ?? [])
+      .toSorted((a, b) => a.localeCompare(b));
+
+    expect(infraShards.map((shard) => shard.shardName)).toEqual([
+      "core-runtime-infra-approvals-exec",
+      "core-runtime-infra-events-sessions",
+      "core-runtime-infra-gateway-restart",
+      "core-runtime-infra-install-update",
+      "core-runtime-infra-network-provider",
+      "core-runtime-infra-outbound",
+      "core-runtime-infra-files-state",
+      "core-runtime-infra-utils",
+    ]);
+    expect(actual).toEqual(listTestFiles("src/infra"));
+    expect(new Set(actual).size).toBe(actual.length);
   });
 
   it("covers every cron test exactly once across core runtime cron shards", () => {
@@ -339,6 +407,9 @@ describe("scripts/lib/ci-node-test-plan.mjs", () => {
     expect(commandShards.map((shard) => shard.shardName)).toEqual([
       "agentic-commands-agent-channel",
       "agentic-commands-doctor",
+      "agentic-commands-doctor-auth-config",
+      "agentic-commands-doctor-cron-state",
+      "agentic-commands-doctor-gateway-session",
       "agentic-commands-doctor-shared",
       "agentic-commands-models",
       "agentic-commands-onboard-config",

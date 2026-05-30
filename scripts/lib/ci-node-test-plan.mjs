@@ -71,6 +71,29 @@ function resolveCommandShardName(file) {
     if (name.startsWith("doctor/shared/") || name.startsWith("doctor/")) {
       return "agentic-commands-doctor-shared";
     }
+    if (
+      name.startsWith("doctor-auth") ||
+      name.startsWith("doctor-browser") ||
+      name.startsWith("doctor-claude") ||
+      name.startsWith("doctor-config") ||
+      name.startsWith("doctor-prompter")
+    ) {
+      return "agentic-commands-doctor-auth-config";
+    }
+    if (
+      name.startsWith("doctor-bootstrap") ||
+      name.startsWith("doctor-cron") ||
+      name.startsWith("doctor-state")
+    ) {
+      return "agentic-commands-doctor-cron-state";
+    }
+    if (
+      name.startsWith("doctor-gateway") ||
+      name.startsWith("doctor-heartbeat") ||
+      name.startsWith("doctor-session")
+    ) {
+      return "agentic-commands-doctor-gateway-session";
+    }
     return "agentic-commands-doctor";
   }
   if (
@@ -105,6 +128,9 @@ function createAgenticCommandSplitShards() {
   return [
     "agentic-commands-agent-channel",
     "agentic-commands-doctor",
+    "agentic-commands-doctor-auth-config",
+    "agentic-commands-doctor-cron-state",
+    "agentic-commands-doctor-gateway-session",
     "agentic-commands-doctor-shared",
     "agentic-commands-models",
     "agentic-commands-onboard-config",
@@ -117,6 +143,132 @@ function createAgenticCommandSplitShards() {
       shardName,
     }))
     .filter((shard) => shard.includePatterns.length > 0);
+}
+
+function resolveInfraStateShardName(file) {
+  const name = relative("src/infra", file).replaceAll("\\", "/");
+  if (name.startsWith("outbound/")) {
+    return "core-runtime-infra-outbound";
+  }
+  if (
+    name.startsWith("approval") ||
+    name.startsWith("command-") ||
+    name.startsWith("exec-") ||
+    name.startsWith("host-env-security") ||
+    name.startsWith("openclaw-exec-env") ||
+    name.startsWith("plugin-approval") ||
+    name.startsWith("system-run")
+  ) {
+    return "core-runtime-infra-approvals-exec";
+  }
+  if (
+    name.startsWith("agent-events") ||
+    name.startsWith("channel") ||
+    name.startsWith("event-session") ||
+    name.startsWith("heartbeat") ||
+    name.startsWith("session-") ||
+    name.startsWith("system-events") ||
+    name.startsWith("system-message") ||
+    name.startsWith("system-presence")
+  ) {
+    return "core-runtime-infra-events-sessions";
+  }
+  if (
+    name.startsWith("fetch") ||
+    name.startsWith("google-api") ||
+    name.startsWith("net/") ||
+    name.startsWith("network") ||
+    name.startsWith("provider-usage") ||
+    name.startsWith("push-") ||
+    name.startsWith("tailnet") ||
+    name.startsWith("tailscale") ||
+    name.startsWith("tls/") ||
+    name.startsWith("widearea-dns")
+  ) {
+    return "core-runtime-infra-network-provider";
+  }
+  if (
+    name.startsWith("clawhub") ||
+    name.startsWith("install") ||
+    name.startsWith("npm") ||
+    name.startsWith("package") ||
+    name.startsWith("safe-package-install") ||
+    name.startsWith("update")
+  ) {
+    return "core-runtime-infra-install-update";
+  }
+  if (
+    name.startsWith("gateway") ||
+    name.startsWith("infra-runtime") ||
+    name.startsWith("restart") ||
+    name.startsWith("run-node") ||
+    name.startsWith("supervisor") ||
+    name.startsWith("watch-node")
+  ) {
+    return "core-runtime-infra-gateway-restart";
+  }
+  if (
+    name.startsWith("archive") ||
+    name.startsWith("backup") ||
+    name.startsWith("boundary") ||
+    name.startsWith("device") ||
+    name.startsWith("diagnostic") ||
+    name.startsWith("disk") ||
+    name.startsWith("file") ||
+    name.startsWith("fs-") ||
+    name.startsWith("git-") ||
+    name.startsWith("hardlink") ||
+    name.startsWith("home-dir") ||
+    name.startsWith("json") ||
+    name.startsWith("kysely") ||
+    name.startsWith("machine") ||
+    name.startsWith("path") ||
+    name.startsWith("pairing") ||
+    name.startsWith("replace-file") ||
+    name.startsWith("secret-file") ||
+    name.startsWith("sqlite") ||
+    name.startsWith("stale-lock") ||
+    name.startsWith("state-migrations") ||
+    name.startsWith("tmp-openclaw-dir")
+  ) {
+    return "core-runtime-infra-files-state";
+  }
+  return "core-runtime-infra-utils";
+}
+
+function createInfraStateSplitShards() {
+  const groups = new Map();
+  for (const file of listTestFiles("src/infra")) {
+    const shardName = resolveInfraStateShardName(file);
+    groups.set(shardName, [...(groups.get(shardName) ?? []), file]);
+  }
+
+  return [
+    {
+      shardName: "core-runtime-infra-state",
+      configs: ["test/vitest/vitest.hooks.config.ts", "test/vitest/vitest.secrets.config.ts"],
+      requiresDist: false,
+      runner: "blacksmith-4vcpu-ubuntu-2404",
+    },
+    ...[
+      "core-runtime-infra-approvals-exec",
+      "core-runtime-infra-events-sessions",
+      "core-runtime-infra-gateway-restart",
+      "core-runtime-infra-install-update",
+      "core-runtime-infra-network-provider",
+      "core-runtime-infra-outbound",
+      "core-runtime-infra-files-state",
+      "core-runtime-infra-utils",
+    ]
+      .map((shardName) => ({
+        configs: ["test/vitest/vitest.infra.config.ts"],
+        includePatterns: groups.get(shardName) ?? [],
+        requiresDist: false,
+        runner: "blacksmith-4vcpu-ubuntu-2404",
+        shardName,
+      }))
+      .filter((shard) => shard.includePatterns.length > 0),
+  ];
 }
 
 const GATEWAY_SERVER_BACKED_HTTP_TESTS = new Set([
@@ -286,16 +438,7 @@ const SPLIT_NODE_SHARDS = new Map([
   [
     "core-runtime",
     [
-      {
-        shardName: "core-runtime-infra-state",
-        configs: [
-          "test/vitest/vitest.infra.config.ts",
-          "test/vitest/vitest.hooks.config.ts",
-          "test/vitest/vitest.secrets.config.ts",
-        ],
-        requiresDist: false,
-        runner: "blacksmith-4vcpu-ubuntu-2404",
-      },
+      ...createInfraStateSplitShards(),
       {
         shardName: "core-runtime-infra-process",
         configs: [
