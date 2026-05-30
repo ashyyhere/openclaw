@@ -1,5 +1,5 @@
 #!/usr/bin/env -S node --import tsx
-// scripts openclaw npm postpublish verify helpers and runtime behavior.
+// Postpublish verifier installs published OpenClaw packages and checks packaged runtime artifacts.
 
 import {
   existsSync,
@@ -85,12 +85,14 @@ const OPTIONAL_OR_EXTERNALIZED_RUNTIME_IMPORTS = new Set([
 const require = createRequire(import.meta.url);
 const acorn = require("acorn") as typeof import("acorn");
 
+/** Published package install scenario used by postpublish verification. */
 export type PublishedInstallScenario = {
   name: string;
   installSpecs: string[];
   expectedVersion: string;
 };
 
+/** Build install/upgrade scenarios expected for a published OpenClaw version. */
 export function buildPublishedInstallScenarios(version: string): PublishedInstallScenario[] {
   const parsed = parseReleaseVersion(version);
   if (parsed === null) {
@@ -117,6 +119,7 @@ export function buildPublishedInstallScenarios(version: string): PublishedInstal
   return scenarios;
 }
 
+/** Collect package metadata, binary, shrinkwrap, sidecar, and runtime artifact errors. */
 export function collectInstalledPackageErrors(params: {
   expectedVersion: string;
   installedVersion: string;
@@ -161,6 +164,7 @@ function collectInstalledBundledExtensionIds(packageRoot: string): Set<string> {
   return ids;
 }
 
+/** List bundled runtime sidecar files present in an installed package root. */
 export function collectInstalledBundledRuntimeSidecarPaths(packageRoot: string): string[] {
   const installedExtensionIds = collectInstalledBundledExtensionIds(packageRoot);
   return PUBLISHED_BUNDLED_RUNTIME_SIDECAR_PATHS.filter((relativePath) => {
@@ -169,6 +173,7 @@ export function collectInstalledBundledRuntimeSidecarPaths(packageRoot: string):
   });
 }
 
+/** Normalize openclaw --version output for package-version comparison. */
 export function normalizeInstalledBinaryVersion(output: string): string {
   const trimmed = output.trim();
   const versionMatch = /\b\d{4}\.\d{1,2}\.\d{1,2}(?:-\d+|-(?:alpha|beta)\.\d+)?\b/u.exec(trimmed);
@@ -210,6 +215,7 @@ function listDistJavaScriptFiles(
   return files;
 }
 
+/** Detect unresolved legacy context-engine runtime markers in installed root dist files. */
 export function collectInstalledContextEngineRuntimeErrors(packageRoot: string): string[] {
   const errors: string[] = [];
   for (const filePath of listDistJavaScriptFiles(packageRoot)) {
@@ -260,6 +266,7 @@ function resolveInstalledDistRelativeImport(params: {
   return null;
 }
 
+/** Check installed Plugin SDK artifacts for bundled zod runtime references. */
 export function collectInstalledPluginSdkZodArtifactErrors(packageRoot: string): string[] {
   const distRoot = join(packageRoot, "dist");
   const entryRelativePath = "dist/plugin-sdk/zod.js";
@@ -398,6 +405,7 @@ function extractJavaScriptImportSpecifiers(source: string): ParsedImportSpecifie
   return { ok: true, specifiers };
 }
 
+/** Check installed bundled extension manifests for undeclared root runtime deps. */
 export function collectInstalledRootDependencyManifestErrors(packageRoot: string): string[] {
   const packageJsonPath = join(packageRoot, "package.json");
   if (!existsSync(packageJsonPath)) {
@@ -503,12 +511,14 @@ function isBundledExtensionOwnedRuntimeImport(params: {
   );
 }
 
+/** Resolve the installed OpenClaw binary path under an npm prefix. */
 export function resolveInstalledBinaryPath(prefixDir: string, platform = process.platform): string {
   return platform === "win32"
     ? pathWin32.join(prefixDir, "openclaw.cmd")
     : pathPosix.join(prefixDir, "bin", "openclaw");
 }
 
+/** Build the platform-specific command invocation for the installed binary. */
 export function resolveInstalledBinaryCommandInvocation(
   prefixDir: string,
   args: string[],
@@ -624,6 +634,7 @@ function resolveGlobalRoot(prefixDir: string, cwd: string): string {
   return npmExec(["root", "-g", "--prefix", prefixDir], cwd);
 }
 
+/** Build npm install args for a published package scenario. */
 export function buildPublishedInstallCommandArgs(prefixDir: string, spec: string): string[] {
   return ["install", "-g", "--prefix", prefixDir, spec, "--no-fund", "--no-audit"];
 }

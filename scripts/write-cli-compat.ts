@@ -1,4 +1,4 @@
-// scripts write cli compat helpers and runtime behavior.
+// Legacy CLI compat writer emits daemon CLI shim modules after bundle names/accessors are known.
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";

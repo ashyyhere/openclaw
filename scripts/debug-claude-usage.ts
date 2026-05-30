@@ -1,4 +1,4 @@
-// scripts debug claude usage helpers and runtime behavior.
+// Claude usage debugger inspects local auth/session state and optionally queries Claude usage APIs.
 import { execFileSync } from "node:child_process";
 import crypto from "node:crypto";
 import fs from "node:fs";
@@ -478,6 +478,7 @@ const main = async () => {
   console.log(previewForDevToolLog(web.body, 400));
 };
 
+/** Test-only access to Claude usage parsing, masking, and fetch helpers. */
 export const testing = {
   CLAUDE_COOKIE_HOST_SQL,
   CLAUDE_FIREFOX_COOKIE_HOST_SQL,

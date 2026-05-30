@@ -1,5 +1,5 @@
 #!/usr/bin/env -S node --import tsx
-// scripts openclaw npm release check helpers and runtime behavior.
+// Npm release check validates package metadata, version/tag policy, pack contents, and npm command wiring.
 
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
@@ -31,6 +31,7 @@ type PackageJson = {
   peerDependenciesMeta?: Record<string, { optional?: boolean }>;
 };
 
+/** Parsed OpenClaw release version with channel and calver components. */
 export type ParsedReleaseVersion = {
   version: string;
   baseVersion: string;
@@ -44,6 +45,7 @@ export type ParsedReleaseVersion = {
   date: Date;
 };
 
+/** Parsed GitHub release tag metadata mapped to npm package version. */
 export type ParsedReleaseTag = {
   version: string;
   packageVersion: string;
@@ -53,12 +55,14 @@ export type ParsedReleaseTag = {
   date: Date;
 };
 
+/** Npm dist-tag plan for publishing one OpenClaw release version. */
 export type NpmPublishPlan = {
   channel: "stable" | "alpha" | "beta";
   publishTag: "latest" | "alpha" | "beta";
   mirrorDistTags: ("latest" | "alpha" | "beta")[];
 };
 
+/** Detected auth source for mirroring npm dist tags. */
 export type NpmDistTagMirrorAuth = {
   hasAuth: boolean;
   source: "node-auth-token" | "npm-token" | "none";
@@ -198,14 +202,17 @@ function isLocalDependencySpec(value: string | undefined): boolean {
   return /^(?:file|link|workspace):/u.test(value ?? "");
 }
 
+/** Parse an OpenClaw package version into channel/correction metadata. */
 export function parseReleaseVersion(version: string): ParsedReleaseVersion | null {
   return parseReleaseVersionBase(version) as ParsedReleaseVersion | null;
 }
 
+/** Compare two OpenClaw release versions using release planner semantics. */
 export function compareReleaseVersions(left: string, right: string): number | null {
   return compareReleaseVersionsBase(left, right);
 }
 
+/** Resolve npm publish and mirror dist tags for a release version. */
 export function resolveNpmPublishPlan(
   version: string,
   _currentBetaVersion?: string | null,
@@ -252,6 +259,7 @@ export function resolveNpmPublishPlan(
   };
 }
 
+/** Detect whether npm dist-tag mirror commands have usable auth. */
 export function resolveNpmDistTagMirrorAuth(params?: {
   nodeAuthToken?: string | null;
   npmToken?: string | null;
@@ -265,6 +273,7 @@ export function resolveNpmDistTagMirrorAuth(params?: {
   }) as NpmDistTagMirrorAuth;
 }
 
+/** Return whether packed tarball validation is explicitly skipped by env. */
 export function shouldSkipPackedTarballValidation(env = process.env): boolean {
   const raw = env[skipPackValidationEnv];
   if (!raw) {
@@ -273,6 +282,7 @@ export function shouldSkipPackedTarballValidation(env = process.env): boolean {
   return !/^(0|false)$/i.test(raw);
 }
 
+/** Parse a Git tag version and derive the npm package version. */
 export function parseReleaseTagVersion(version: string): ParsedReleaseTag | null {
   const trimmed = version.trim();
   if (!trimmed) {
@@ -298,6 +308,7 @@ function startOfUtcDay(date: Date): number {
   return Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
 }
 
+/** Return absolute day distance between two UTC calendar dates. */
 export function utcCalendarDayDistance(left: Date, right: Date): number {
   return Math.round(Math.abs(startOfUtcDay(left) - startOfUtcDay(right)) / 86_400_000);
 }
@@ -311,6 +322,7 @@ function positiveEnvInt(name: string, env: NodeJS.ProcessEnv, fallback: number):
   return Number.isSafeInteger(value) && value > 0 ? value : fallback;
 }
 
+/** Resolve npm release-check command timeout from env with sane bounds. */
 export function resolveNpmReleaseCheckCommandTimeoutMs(
   env: NodeJS.ProcessEnv = process.env,
 ): number {
@@ -321,6 +333,7 @@ export function resolveNpmReleaseCheckCommandTimeoutMs(
   );
 }
 
+/** Run a release-check subprocess command with timeout handling. */
 export function runNpmReleaseCheckCommand(
   invocation: ReleaseCheckCommandInvocation,
   options: {
@@ -349,6 +362,7 @@ export function runNpmReleaseCheckCommand(
   return typeof output === "string" ? output : output.toString("utf8");
 }
 
+/** Collect package.json metadata errors that would block npm release. */
 export function collectReleasePackageMetadataErrors(pkg: PackageJson): string[] {
   const actualRepositoryUrl = normalizeRepoUrl(
     typeof pkg.repository === "string" ? pkg.repository : pkg.repository?.url,
@@ -405,6 +419,7 @@ export function collectReleasePackageMetadataErrors(pkg: PackageJson): string[] 
   return errors;
 }
 
+/** Collect version/tag consistency errors for an npm/GitHub release. */
 export function collectReleaseTagErrors(params: {
   packageVersion: string;
   releaseTag: string;
@@ -506,6 +521,7 @@ type NpmCommandInvocation = {
   windowsVerbatimArguments?: boolean;
 };
 
+/** Build npm command invocation respecting npm_execpath and platform behavior. */
 export function resolveNpmCommandInvocation(
   params: {
     comSpec?: string;
@@ -599,6 +615,7 @@ function describeExecFailure(error: unknown): string {
   return details.join(" | ");
 }
 
+/** Parse npm pack --json output into normalized pack result records. */
 export function parseNpmPackJsonOutput(stdout: string): NpmPackResult[] | null {
   const trimmed = stdout.trim();
   if (!trimmed) {
@@ -625,6 +642,7 @@ export function parseNpmPackJsonOutput(stdout: string): NpmPackResult[] | null {
   return null;
 }
 
+/** Collect missing Control UI asset errors from packed file paths. */
 export function collectControlUiPackErrors(paths: Iterable<string>): string[] {
   const packedPaths = new Set(paths);
   const assetPaths = [...packedPaths].filter((path) => path.startsWith(CONTROL_UI_ASSET_PREFIX));
@@ -703,6 +721,7 @@ function collectNpmShrinkwrapErrors(): string[] {
   }
 }
 
+/** Collect forbidden packaged path errors from npm pack output paths. */
 export function collectForbiddenPackedPathErrors(paths: Iterable<string>): string[] {
   const errors: string[] = [];
   for (const packedPath of paths) {
@@ -717,6 +736,7 @@ export function collectForbiddenPackedPathErrors(paths: Iterable<string>): strin
   return errors.toSorted((left, right) => left.localeCompare(right));
 }
 
+/** Scan packed file contents for forbidden build/test cargo. */
 export function collectForbiddenPackedContentErrors(
   paths: Iterable<string>,
   rootDir = process.cwd(),
@@ -751,6 +771,7 @@ export function collectForbiddenPackedContentErrors(
   return errors.toSorted((left, right) => left.localeCompare(right));
 }
 
+/** Collect test/support cargo errors from packed file paths. */
 export function collectPackedTestCargoErrors(paths: Iterable<string>): string[] {
   const errors: string[] = [];
   for (const packedPath of paths) {

@@ -1,4 +1,4 @@
-// scripts anthropic prompt probe helpers and runtime behavior.
+// Anthropic prompt probe checks setup-token prompt transport through direct and gateway paths.
 import { spawn } from "node:child_process";
 // Live prompt probe for Anthropic setup-token and Claude CLI prompt-path debugging.
 // Usage:
@@ -700,6 +700,7 @@ async function main() {
   );
 }
 
+/** Test-only access to prompt capture and upstream proxy helpers. */
 export const testing = {
   matchesExtraUsage400,
   resolveAnthropicUpstreamUrl,

@@ -1,4 +1,4 @@
-// scripts firecrawl compare helpers and runtime behavior.
+// Firecrawl comparison CLI contrasts local readability extraction with Firecrawl output.
 import { pathToFileURL } from "node:url";
 import { fetchFirecrawlContent } from "../extensions/firecrawl/api.ts";
 import { extractReadableContent } from "../src/agents/tools/web-tools.js";
@@ -172,6 +172,7 @@ if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
   });
 }
 
+/** Test-only access to bounded fetch helpers used by the comparison CLI. */
 export const testing = {
   FETCH_HTML_MAX_BYTES,
   fetchHtml,
