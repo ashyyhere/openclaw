@@ -76,7 +76,7 @@ type ProxySerializableStreamOptions = Pick<
   | "maxRetryDelayMs"
 >;
 
-/** Shared type for Proxy Stream Options in src/agents/runtime. */
+/** Stream options that are serialized to the proxy plus local auth/abort controls. */
 export interface ProxyStreamOptions extends ProxySerializableStreamOptions {
   /** Local abort signal for the proxy request */
   signal?: AbortSignal;
@@ -125,7 +125,7 @@ function sanitizeProxyModel(model: Model): Model {
   return safeModel as Model;
 }
 
-/** Reused helper for stream Proxy behavior in src/agents/runtime. */
+/** Stream a model request through an authenticated proxy server and rebuild deltas locally. */
 export function streamProxy(
   model: Model,
   context: Context,

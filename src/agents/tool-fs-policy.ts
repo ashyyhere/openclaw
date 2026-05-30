@@ -6,17 +6,17 @@ import type { ToolFsPolicy } from "./tool-fs-policy.types.js";
 import { isToolAllowedByPolicies } from "./tool-policy-match.js";
 import { mergeAlsoAllowPolicy, resolveToolProfilePolicy } from "./tool-policy.js";
 
-/** Re-exported API for src/agents, starting with Tool Fs Policy. */
+/** Filesystem policy shape enforced by read/write/edit/apply_patch tools. */
 export type { ToolFsPolicy } from "./tool-fs-policy.types.js";
 
-/** Reused helper for create Tool Fs Policy behavior in src/agents. */
+/** Create a filesystem policy object from resolved workspace-only settings. */
 export function createToolFsPolicy(params: { workspaceOnly?: boolean }): ToolFsPolicy {
   return {
     workspaceOnly: params.workspaceOnly === true,
   };
 }
 
-/** Reused helper for resolve Tool Fs Config behavior in src/agents. */
+/** Resolve filesystem tool config with agent-level settings overriding global config. */
 export function resolveToolFsConfig(params: { cfg?: OpenClawConfig; agentId?: string }): {
   workspaceOnly?: boolean;
 } {
@@ -29,7 +29,7 @@ export function resolveToolFsConfig(params: { cfg?: OpenClawConfig; agentId?: st
   };
 }
 
-/** Reused helper for resolve Effective Tool Fs Workspace Only behavior in src/agents. */
+/** Return whether filesystem tools must stay inside the workspace root. */
 export function resolveEffectiveToolFsWorkspaceOnly(params: {
   cfg?: OpenClawConfig;
   agentId?: string;
@@ -37,7 +37,7 @@ export function resolveEffectiveToolFsWorkspaceOnly(params: {
   return resolveToolFsConfig(params).workspaceOnly === true;
 }
 
-/** Reused helper for resolve Effective Tool Fs Root Expansion Allowed behavior in src/agents. */
+/** Return whether root/absolute expansion is allowed for filesystem tools. */
 export function resolveEffectiveToolFsRootExpansionAllowed(params: {
   cfg?: OpenClawConfig;
   agentId?: string;
