@@ -1,4 +1,3 @@
-// extensions/llm-task/src llm task tool helpers and runtime behavior.
 import path from "node:path";
 import { buildModelAliasIndex, resolveModelRefFromString } from "openclaw/plugin-sdk/agent-runtime";
 import {

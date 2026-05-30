@@ -1,4 +1,3 @@
-// extensions/vllm index helpers and runtime behavior.
 import {
   definePluginEntry,
   type OpenClawPluginApi,
