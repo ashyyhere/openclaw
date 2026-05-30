@@ -1,4 +1,4 @@
-// infra shell env helpers and runtime behavior.
+/** Loads selected variables from a trusted login shell when process env is incomplete. */
 import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
@@ -225,7 +225,7 @@ function hasExplicitEnvBinding(env: NodeJS.ProcessEnv, key: string): boolean {
   return Object.prototype.hasOwnProperty.call(env, key);
 }
 
-/** Reused helper for load Shell Env Fallback behavior in src/infra. */
+/** Probe the login shell and apply missing expected keys to the target env map. */
 export function loadShellEnvFallback(opts: ShellEnvFallbackOptions): ShellEnvFallbackResult {
   const logger = opts.logger ?? console;
 
@@ -268,17 +268,17 @@ export function loadShellEnvFallback(opts: ShellEnvFallbackOptions): ShellEnvFal
   return { ok: true, applied };
 }
 
-/** Reused helper for should Enable Shell Env Fallback behavior in src/infra. */
+/** Check whether shell env probing is explicitly enabled. */
 export function shouldEnableShellEnvFallback(env: NodeJS.ProcessEnv): boolean {
   return isTruthyEnvValue(env.OPENCLAW_LOAD_SHELL_ENV);
 }
 
-/** Reused helper for should Defer Shell Env Fallback behavior in src/infra. */
+/** Check whether startup should defer shell env probing to a later lifecycle point. */
 export function shouldDeferShellEnvFallback(env: NodeJS.ProcessEnv): boolean {
   return isTruthyEnvValue(env.OPENCLAW_DEFER_SHELL_ENV_FALLBACK);
 }
 
-/** Reused helper for resolve Shell Env Fallback Timeout Ms behavior in src/infra. */
+/** Resolve the login-shell probe timeout from env with a safe default. */
 export function resolveShellEnvFallbackTimeoutMs(env: NodeJS.ProcessEnv): number {
   const raw = env.OPENCLAW_SHELL_ENV_TIMEOUT_MS?.trim();
   if (!raw) {
@@ -291,7 +291,7 @@ export function resolveShellEnvFallbackTimeoutMs(env: NodeJS.ProcessEnv): number
   return resolveTimeoutMs(parsed);
 }
 
-/** Reused helper for get Shell Path From Login Shell behavior in src/infra. */
+/** Read PATH from the trusted login shell and cache the result for executable lookup. */
 export function getShellPathFromLoginShell(opts: {
   env: NodeJS.ProcessEnv;
   timeoutMs?: number;
@@ -323,7 +323,7 @@ export function getShellPathFromLoginShell(opts: {
   return cachedShellPath;
 }
 
-/** Reused helper for reset Shell Path Cache For Tests behavior in src/infra. */
+/** Reset login-shell caches so tests can vary env, shell, and exec probes. */
 export function resetShellPathCacheForTests(): void {
   cachedShellPath = undefined;
   cachedEtcShells = undefined;
@@ -331,7 +331,7 @@ export function resetShellPathCacheForTests(): void {
   nextExecCacheId = 1;
 }
 
-/** Reused helper for get Shell Env Applied Keys behavior in src/infra. */
+/** Return the env keys most recently populated by shell fallback probing. */
 export function getShellEnvAppliedKeys(): string[] {
   return [...lastAppliedKeys];
 }

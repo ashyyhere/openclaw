@@ -1,4 +1,4 @@
-// infra executable path helpers and runtime behavior.
+/** Resolves executable paths from user input, cwd, PATH, and Windows PATHEXT. */
 import fs from "node:fs";
 import path from "node:path";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
@@ -8,7 +8,7 @@ function isDriveLessWindowsRootedPath(value: string): boolean {
   return process.platform === "win32" && /^:[\\/]/.test(value);
 }
 
-/** Reused helper for resolve Executable Path Candidate behavior in src/infra. */
+/** Normalize a raw executable string into either a command name or absolute path. */
 export function resolveExecutablePathCandidate(
   rawExecutable: string,
   options?: { cwd?: string; env?: NodeJS.ProcessEnv; requirePathSeparator?: boolean },
@@ -72,7 +72,7 @@ function resolveWindowsExecutableExtSet(env: NodeJS.ProcessEnv | undefined): Set
   );
 }
 
-/** Reused helper for is Executable File behavior in src/infra. */
+/** Check whether a filesystem path points to an executable file for this platform. */
 export function isExecutableFile(filePath: string): boolean {
   try {
     const stat = fs.statSync(filePath);
@@ -93,7 +93,7 @@ export function isExecutableFile(filePath: string): boolean {
   }
 }
 
-/** Reused helper for resolve Executable From Path Env behavior in src/infra. */
+/** Search a PATH string for an executable, honoring PATHEXT on Windows. */
 export function resolveExecutableFromPathEnv(
   executable: string,
   pathEnv: string,
@@ -113,7 +113,7 @@ export function resolveExecutableFromPathEnv(
   return undefined;
 }
 
-/** Reused helper for resolve Executable Path behavior in src/infra. */
+/** Resolve user-provided executable input to a runnable path when it exists. */
 export function resolveExecutablePath(
   rawExecutable: string,
   options?: { cwd?: string; env?: NodeJS.ProcessEnv },
