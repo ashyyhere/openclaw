@@ -1,11 +1,11 @@
-// interactive payload helpers and runtime behavior.
+// Portable interactive message payloads shared by channel adapters.
 import { asOptionalRecord as toRecord } from "../shared/record-coerce.js";
 import {
   normalizeOptionalLowercaseString,
   normalizeOptionalString,
 } from "../shared/string-coerce.js";
 
-/** Shared type for Interactive Button Style in src/interactive. */
+/** Button style names supported by portable interactive payloads. */
 export type InteractiveButtonStyle = "primary" | "secondary" | "success" | "danger";
 
 /** Visual tone for a portable message presentation. */
@@ -100,33 +100,33 @@ export type InteractiveReply = {
   blocks: InteractiveReplyBlock[];
 };
 
-/** Shared type for Message Presentation Text Block in src/interactive. */
+/** Main text block in a portable message presentation. */
 export type MessagePresentationTextBlock = {
   type: "text";
   /** Primary markdown-ish text rendered in the message body. */
   text: string;
 };
 
-/** Shared type for Message Presentation Context Block in src/interactive. */
+/** Lower-emphasis context block in a portable message presentation. */
 export type MessagePresentationContextBlock = {
   type: "context";
   /** Lower-emphasis contextual text, or normal text on channels without context support. */
   text: string;
 };
 
-/** Shared type for Message Presentation Divider Block in src/interactive. */
+/** Visual separator block for channels that support message dividers. */
 export type MessagePresentationDividerBlock = {
   type: "divider";
 };
 
-/** Shared type for Message Presentation Buttons Block in src/interactive. */
+/** Button control block in a portable message presentation. */
 export type MessagePresentationButtonsBlock = {
   type: "buttons";
   /** Button row candidates; core may split or truncate them for channel limits. */
   buttons: MessagePresentationButton[];
 };
 
-/** Shared type for Message Presentation Select Block in src/interactive. */
+/** Select/menu control block in a portable message presentation. */
 export type MessagePresentationSelectBlock = {
   type: "select";
   /** Optional prompt shown above or inside the select control. */
@@ -135,12 +135,12 @@ export type MessagePresentationSelectBlock = {
   options: MessagePresentationOption[];
 };
 
-/** Shared type for Message Presentation Interactive Block in src/interactive. */
+/** Presentation blocks that require interactive controls from the channel. */
 export type MessagePresentationInteractiveBlock =
   | MessagePresentationButtonsBlock
   | MessagePresentationSelectBlock;
 
-/** Shared type for Message Presentation Block in src/interactive. */
+/** Any block supported by the portable message presentation contract. */
 export type MessagePresentationBlock =
   | MessagePresentationTextBlock
   | MessagePresentationContextBlock
@@ -148,7 +148,7 @@ export type MessagePresentationBlock =
   | MessagePresentationButtonsBlock
   | MessagePresentationSelectBlock;
 
-/** Shared type for Message Presentation in src/interactive. */
+/** Portable rich reply shape that channel adapters render or downgrade. */
 export type MessagePresentation = {
   /** Optional short heading rendered before blocks when the channel supports it. */
   title?: string;
@@ -158,14 +158,14 @@ export type MessagePresentation = {
   blocks: MessagePresentationBlock[];
 };
 
-/** Shared type for Reply Payload Delivery Pin in src/interactive. */
+/** Pinning preferences carried with a reply payload delivery request. */
 export type ReplyPayloadDeliveryPin = {
   enabled: boolean;
   notify?: boolean;
   required?: boolean;
 };
 
-/** Shared type for Reply Payload Delivery in src/interactive. */
+/** Delivery-level options that apply outside the message body itself. */
 export type ReplyPayloadDelivery = {
   pin?: boolean | ReplyPayloadDeliveryPin;
 };
@@ -308,7 +308,7 @@ function normalizePresentationBlock(raw: unknown): MessagePresentationBlock | un
   return undefined;
 }
 
-/** Reused helper for normalize Message Presentation behavior in src/interactive. */
+/** Normalize unknown JSON-like input into a portable message presentation. */
 export function normalizeMessagePresentation(raw: unknown): MessagePresentation | undefined {
   const record = toRecord(raw);
   if (!record) {
@@ -333,7 +333,7 @@ export function hasInteractiveReplyBlocks(value: unknown): value is InteractiveR
   return Boolean(normalizeInteractiveReply(value));
 }
 
-/** Reused helper for has Message Presentation Blocks behavior in src/interactive. */
+/** Return whether a value contains at least one valid presentation title or block. */
 export function hasMessagePresentationBlocks(value: unknown): value is MessagePresentation {
   return Boolean(normalizeMessagePresentation(value));
 }
@@ -398,7 +398,7 @@ export function presentationToInteractiveReply(
   return blocks.length > 0 ? { blocks } : undefined;
 }
 
-/** Reused helper for is Message Presentation Interactive Block behavior in src/interactive. */
+/** Narrow a presentation block to the controls that require channel interaction support. */
 export function isMessagePresentationInteractiveBlock(
   block: MessagePresentationBlock,
 ): block is MessagePresentationInteractiveBlock {
@@ -438,7 +438,7 @@ export function interactiveReplyToPresentation(
   return blocks.length > 0 ? { blocks } : undefined;
 }
 
-/** Reused helper for render Message Presentation Fallback Text behavior in src/interactive. */
+/** Render a text-only fallback for channels that cannot carry presentation blocks. */
 export function renderMessagePresentationFallbackText(params: {
   presentation?: MessagePresentation;
   emptyFallback?: string | null;
@@ -485,14 +485,14 @@ export function renderMessagePresentationFallbackText(params: {
   return rendered || normalizeOptionalString(params.emptyFallback) || "";
 }
 
-/** Reused helper for has Reply Channel Data behavior in src/interactive. */
+/** Return whether channel-specific payload data contains any keys. */
 export function hasReplyChannelData(value: unknown): value is Record<string, unknown> {
   return Boolean(
     value && typeof value === "object" && !Array.isArray(value) && Object.keys(value).length > 0,
   );
 }
 
-/** Reused helper for has Reply Content behavior in src/interactive. */
+/** Check reply content fields before deciding whether a message should be delivered. */
 export function hasReplyContent(params: {
   text?: string | null;
   mediaUrl?: string | null;
@@ -515,7 +515,7 @@ export function hasReplyContent(params: {
   );
 }
 
-/** Reused helper for has Reply Payload Content behavior in src/interactive. */
+/** Check a full reply payload for text, media, presentation, interactive, or channel data. */
 export function hasReplyPayloadContent(
   payload: {
     text?: string | null;
