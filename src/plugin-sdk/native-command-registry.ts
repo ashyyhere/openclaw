@@ -10,7 +10,6 @@ export {
   resolveCommandArgMenu,
   serializeCommandArgs,
 } from "../auto-reply/commands-registry.js";
-/** Re-exported API for src/plugin-sdk. */
 export type {
   ChatCommandDefinition,
   CommandArgDefinition,

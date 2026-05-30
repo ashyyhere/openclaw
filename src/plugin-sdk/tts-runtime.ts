@@ -5,10 +5,9 @@ export {
   TtsProviderSchema,
 } from "../config/zod-schema.core.js";
 
-/** Reused helper for prewarm Tts Runtime Facade behavior in src/plugin-sdk. */
+/** Keeps the TTS runtime facade shape stable for callers that prewarm plugin SDK subpaths. */
 export function prewarmTtsRuntimeFacade(): void {}
 
-/** Re-exported API for src/plugin-sdk. */
 export {
   buildTtsSystemPromptHint,
   getLastTtsAttempt,
