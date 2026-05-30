@@ -5,7 +5,6 @@ export {
   buildJsonChannelConfigSchema,
   buildNestedDmConfigSchema,
 } from "../channels/plugins/config-schema.js";
-/** Re-exported API for src/plugin-sdk. */
 export {
   BlockStreamingCoalesceSchema,
   ContextVisibilityModeSchema,
@@ -17,5 +16,4 @@ export {
   requireAllowlistAllowFrom,
   requireOpenAllowFrom,
 } from "../config/zod-schema.core.js";
-/** Re-exported API for src/plugin-sdk, starting with Tool Policy Schema. */
 export { ToolPolicySchema } from "../config/zod-schema.agent-runtime.js";
