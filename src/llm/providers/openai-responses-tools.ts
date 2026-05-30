@@ -1,4 +1,4 @@
-// llm/providers openai responses tools helpers and runtime behavior.
+// OpenAI Responses tool-schema conversion and strict-mode diagnostics.
 import { createHash } from "node:crypto";
 import type { Tool as OpenAITool } from "openai/resources/responses/responses.js";
 import { resolveOpenAIStrictToolSetting } from "../../agents/openai-strict-tool-setting.js";
@@ -10,7 +10,7 @@ import {
 import { createSubsystemLogger } from "../../logging/subsystem.js";
 import type { Model, Tool } from "../types.js";
 
-/** Shared type for Convert Responses Tools Options in src/llm/providers. */
+/** Options that control Responses API tool conversion and strict schema handling. */
 export interface ConvertResponsesToolsOptions {
   strict?: boolean | null;
   model?: Model;
@@ -30,7 +30,7 @@ const log = createSubsystemLogger("llm/openai-responses");
 const MAX_STRICT_TOOL_DOWNGRADE_DIAGNOSTIC_KEYS = 64;
 const loggedStrictToolDowngradeDiagnosticKeys = new Set<string>();
 
-/** Reused helper for convert Responses Tools behavior in src/llm/providers. */
+/** Convert OpenClaw tools into OpenAI Responses function tool definitions. */
 export function convertResponsesTools(
   tools: Tool[],
   options?: ConvertResponsesToolsOptions,
