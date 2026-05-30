@@ -1,4 +1,4 @@
-// infra supervisor markers helpers and runtime behavior.
+/** Detects which OS supervisor is expected to respawn the gateway. */
 import { GATEWAY_LAUNCH_AGENT_LABEL, resolveGatewayLaunchAgentLabel } from "../daemon/constants.js";
 
 const SUPERVISOR_HINTS = {
@@ -7,7 +7,7 @@ const SUPERVISOR_HINTS = {
   schtasks: ["OPENCLAW_WINDOWS_TASK_NAME"],
 } as const;
 
-/** Reused constant for SUPERVISOR HINT ENV VARS behavior in src/infra. */
+/** Env vars worth surfacing when debugging supervised gateway launches. */
 export const SUPERVISOR_HINT_ENV_VARS = [
   "LAUNCH_JOB_LABEL",
   "LAUNCH_JOB_NAME",
@@ -19,7 +19,7 @@ export const SUPERVISOR_HINT_ENV_VARS = [
   "OPENCLAW_SERVICE_KIND",
 ] as const;
 
-/** Shared type for Respawn Supervisor in src/infra. */
+/** Supported supervisor families that can restart the gateway process. */
 export type RespawnSupervisor = "launchd" | "systemd" | "schtasks";
 
 function hasAnyHint(env: NodeJS.ProcessEnv, keys: readonly string[]): boolean {
@@ -39,7 +39,7 @@ function isCurrentGatewayLaunchdJob(env: NodeJS.ProcessEnv): boolean {
   return env.XPC_SERVICE_NAME?.trim() === GATEWAY_LAUNCH_AGENT_LABEL;
 }
 
-/** Reused helper for detect Respawn Supervisor behavior in src/infra. */
+/** Infer the active gateway supervisor from platform-specific env markers. */
 export function detectRespawnSupervisor(
   env: NodeJS.ProcessEnv = process.env,
   platform: NodeJS.Platform = process.platform,

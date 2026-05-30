@@ -1,11 +1,11 @@
-// infra file lock helpers and runtime behavior.
-/** Re-exported API for src/infra. */
+/** Re-exports file-lock primitives from the plugin SDK for infra callers. */
+/** File-lock handle/options/error types used by infra and plugin-facing code. */
 export type {
   FileLockHandle,
   FileLockOptions,
   FileLockTimeoutError,
 } from "../plugin-sdk/file-lock.js";
-/** Re-exported API for src/infra. */
+/** File-lock acquisition helpers plus test-only state cleanup utilities. */
 export {
   acquireFileLock,
   drainFileLockStateForTest,

@@ -1,4 +1,4 @@
-// infra ports lsof helpers and runtime behavior.
+/** Locates lsof for port-inspection commands without relying on PATH first. */
 import fs from "node:fs";
 import fsPromises from "node:fs/promises";
 
@@ -16,7 +16,7 @@ async function canExecute(path: string): Promise<boolean> {
   }
 }
 
-/** Reused helper for resolve Lsof Command behavior in src/infra. */
+/** Resolve an executable lsof path asynchronously, falling back to PATH lookup. */
 export async function resolveLsofCommand(): Promise<string> {
   for (const candidate of LSOF_CANDIDATES) {
     if (await canExecute(candidate)) {
@@ -26,7 +26,7 @@ export async function resolveLsofCommand(): Promise<string> {
   return "lsof";
 }
 
-/** Reused helper for resolve Lsof Command Sync behavior in src/infra. */
+/** Resolve an executable lsof path synchronously for startup diagnostics. */
 export function resolveLsofCommandSync(): string {
   for (const candidate of LSOF_CANDIDATES) {
     try {

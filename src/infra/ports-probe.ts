@@ -1,7 +1,7 @@
-// infra ports probe helpers and runtime behavior.
+/** Probes whether a local TCP port can be bound. */
 import net from "node:net";
 
-/** Reused helper for try Listen On Port behavior in src/infra. */
+/** Attempt a temporary listen on a port and reject with the native bind error. */
 export async function tryListenOnPort(params: {
   port: number;
   host?: string;
