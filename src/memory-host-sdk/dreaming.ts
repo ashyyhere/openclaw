@@ -1,4 +1,4 @@
-// memory-host-sdk dreaming helpers and runtime behavior.
+// Memory dreaming defaults, config normalization, and workspace resolution.
 import path from "node:path";
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../agents/agent-scope.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -10,112 +10,112 @@ import {
   normalizeStringifiedOptionalString,
 } from "../shared/string-coerce.js";
 
-/** Reused constant for DEFAULT MEMORY DREAMING ENABLED behavior in src/memory-host-sdk. */
+/** Default top-level opt-in state for managed memory dreaming. */
 export const DEFAULT_MEMORY_DREAMING_ENABLED = false;
-/** Reused constant for DEFAULT MEMORY DREAMING TIMEZONE behavior in src/memory-host-sdk. */
+/** Optional timezone override used when config and agent defaults omit one. */
 export const DEFAULT_MEMORY_DREAMING_TIMEZONE = undefined;
-/** Reused constant for DEFAULT MEMORY DREAMING VERBOSE LOGGING behavior in src/memory-host-sdk. */
+/** Default logging verbosity for memory promotion runs. */
 export const DEFAULT_MEMORY_DREAMING_VERBOSE_LOGGING = false;
-/** Reused constant for DEFAULT MEMORY DREAMING STORAGE MODE behavior in src/memory-host-sdk. */
+/** Default report storage mode for promotion outputs. */
 export const DEFAULT_MEMORY_DREAMING_STORAGE_MODE = "separate";
-/** Reused constant for DEFAULT MEMORY DREAMING SEPARATE REPORTS behavior in src/memory-host-sdk. */
+/** Default for writing separate promotion reports alongside memory updates. */
 export const DEFAULT_MEMORY_DREAMING_SEPARATE_REPORTS = false;
-/** Reused constant for DEFAULT MEMORY DREAMING FREQUENCY behavior in src/memory-host-sdk. */
+/** Default cron expression for the unified managed promotion job. */
 export const DEFAULT_MEMORY_DREAMING_FREQUENCY = "0 3 * * *";
-/** Reused constant for DEFAULT MEMORY DREAMING PLUGIN ID behavior in src/memory-host-sdk. */
+/** Default plugin id that owns memory dreaming config. */
 export const DEFAULT_MEMORY_DREAMING_PLUGIN_ID = "memory-core";
-/** Reused constant for MANAGED MEMORY DREAMING CRON NAME behavior in src/memory-host-sdk. */
+/** Cron display name for the current managed promotion job. */
 export const MANAGED_MEMORY_DREAMING_CRON_NAME = "Memory Dreaming Promotion";
-/** Reused constant for MANAGED MEMORY DREAMING CRON TAG behavior in src/memory-host-sdk. */
+/** Managed cron tag used to find/update current promotion jobs. */
 export const MANAGED_MEMORY_DREAMING_CRON_TAG = "[managed-by=memory-core.short-term-promotion]";
-/** Reused constant for MEMORY DREAMING SYSTEM EVENT TEXT behavior in src/memory-host-sdk. */
+/** System event text used to trigger the current promotion workflow. */
 export const MEMORY_DREAMING_SYSTEM_EVENT_TEXT =
   "__openclaw_memory_core_short_term_promotion_dream__";
-/** Reused constant for LEGACY MEMORY LIGHT DREAMING CRON NAME behavior in src/memory-host-sdk. */
+/** Legacy light-dreaming cron name recognized during migration/cleanup. */
 export const LEGACY_MEMORY_LIGHT_DREAMING_CRON_NAME = "Memory Light Dreaming";
-/** Reused constant for LEGACY MEMORY LIGHT DREAMING CRON TAG behavior in src/memory-host-sdk. */
+/** Legacy light-dreaming cron tag recognized during migration/cleanup. */
 export const LEGACY_MEMORY_LIGHT_DREAMING_CRON_TAG = "[managed-by=memory-core.dreaming.light]";
-/** Reused constant for LEGACY MEMORY LIGHT DREAMING EVENT TEXT behavior in src/memory-host-sdk. */
+/** Legacy light-dreaming system event recognized during migration/cleanup. */
 export const LEGACY_MEMORY_LIGHT_DREAMING_EVENT_TEXT = "__openclaw_memory_core_light_sleep__";
-/** Reused constant for LEGACY MEMORY REM DREAMING CRON NAME behavior in src/memory-host-sdk. */
+/** Legacy REM-dreaming cron name recognized during migration/cleanup. */
 export const LEGACY_MEMORY_REM_DREAMING_CRON_NAME = "Memory REM Dreaming";
-/** Reused constant for LEGACY MEMORY REM DREAMING CRON TAG behavior in src/memory-host-sdk. */
+/** Legacy REM-dreaming cron tag recognized during migration/cleanup. */
 export const LEGACY_MEMORY_REM_DREAMING_CRON_TAG = "[managed-by=memory-core.dreaming.rem]";
-/** Reused constant for LEGACY MEMORY REM DREAMING EVENT TEXT behavior in src/memory-host-sdk. */
+/** Legacy REM-dreaming system event recognized during migration/cleanup. */
 export const LEGACY_MEMORY_REM_DREAMING_EVENT_TEXT = "__openclaw_memory_core_rem_sleep__";
 
-/** Reused constant for DEFAULT MEMORY LIGHT DREAMING CRON EXPR behavior in src/memory-host-sdk. */
+/** Legacy standalone light phase cron expression. */
 export const DEFAULT_MEMORY_LIGHT_DREAMING_CRON_EXPR = "0 */6 * * *";
-/** Reused constant for DEFAULT MEMORY LIGHT DREAMING LOOKBACK DAYS behavior in src/memory-host-sdk. */
+/** Default number of days scanned by the light phase. */
 export const DEFAULT_MEMORY_LIGHT_DREAMING_LOOKBACK_DAYS = 2;
-/** Reused constant for DEFAULT MEMORY LIGHT DREAMING LIMIT behavior in src/memory-host-sdk. */
+/** Default candidate limit for the light phase. */
 export const DEFAULT_MEMORY_LIGHT_DREAMING_LIMIT = 100;
-/** Reused constant for DEFAULT MEMORY LIGHT DREAMING DEDUPE SIMILARITY behavior in src/memory-host-sdk. */
+/** Default similarity threshold for light-phase dedupe. */
 export const DEFAULT_MEMORY_LIGHT_DREAMING_DEDUPE_SIMILARITY = 0.9;
 
-/** Reused constant for DEFAULT MEMORY DEEP DREAMING CRON EXPR behavior in src/memory-host-sdk. */
+/** Legacy standalone deep phase cron expression. */
 export const DEFAULT_MEMORY_DEEP_DREAMING_CRON_EXPR = "0 3 * * *";
-/** Reused constant for DEFAULT MEMORY DEEP DREAMING LIMIT behavior in src/memory-host-sdk. */
+/** Default promotion limit for the deep phase. */
 export const DEFAULT_MEMORY_DEEP_DREAMING_LIMIT = 10;
-/** Reused constant for DEFAULT MEMORY DEEP DREAMING MIN SCORE behavior in src/memory-host-sdk. */
+/** Default minimum score for deep-phase promotion candidates. */
 export const DEFAULT_MEMORY_DEEP_DREAMING_MIN_SCORE = 0.8;
-/** Reused constant for DEFAULT MEMORY DEEP DREAMING MIN RECALL COUNT behavior in src/memory-host-sdk. */
+/** Default minimum recall count required for deep-phase promotion. */
 export const DEFAULT_MEMORY_DEEP_DREAMING_MIN_RECALL_COUNT = 3;
-/** Reused constant for DEFAULT MEMORY DEEP DREAMING MIN UNIQUE QUERIES behavior in src/memory-host-sdk. */
+/** Default minimum unique query count required for deep-phase promotion. */
 export const DEFAULT_MEMORY_DEEP_DREAMING_MIN_UNIQUE_QUERIES = 3;
-/** Reused constant for DEFAULT MEMORY DEEP DREAMING RECENCY HALF LIFE DAYS behavior in src/memory-host-sdk. */
+/** Default recency half-life used by deep-phase scoring. */
 export const DEFAULT_MEMORY_DEEP_DREAMING_RECENCY_HALF_LIFE_DAYS = 14;
-/** Reused constant for DEFAULT MEMORY DEEP DREAMING MAX AGE DAYS behavior in src/memory-host-sdk. */
+/** Default max age for deep-phase promotion candidates. */
 export const DEFAULT_MEMORY_DEEP_DREAMING_MAX_AGE_DAYS = 30;
-/** Reused constant for DEFAULT MEMORY DEEP DREAMING MAX PROMOTED SNIPPET TOKENS behavior in src/memory-host-sdk. */
+/** Default snippet budget for promoted deep-phase memory facts. */
 export const DEFAULT_MEMORY_DEEP_DREAMING_MAX_PROMOTED_SNIPPET_TOKENS = 160;
 
-/** Reused constant for DEFAULT MEMORY DEEP DREAMING RECOVERY ENABLED behavior in src/memory-host-sdk. */
+/** Default opt-in state for deep-phase recovery. */
 export const DEFAULT_MEMORY_DEEP_DREAMING_RECOVERY_ENABLED = true;
-/** Reused constant for DEFAULT MEMORY DEEP DREAMING RECOVERY TRIGGER BELOW HEALTH behavior in src/memory-host-sdk. */
+/** Default health threshold that triggers deep-phase recovery. */
 export const DEFAULT_MEMORY_DEEP_DREAMING_RECOVERY_TRIGGER_BELOW_HEALTH = 0.35;
-/** Reused constant for DEFAULT MEMORY DEEP DREAMING RECOVERY LOOKBACK DAYS behavior in src/memory-host-sdk. */
+/** Default recovery lookback window for deep dreaming. */
 export const DEFAULT_MEMORY_DEEP_DREAMING_RECOVERY_LOOKBACK_DAYS = 30;
-/** Reused constant for DEFAULT MEMORY DEEP DREAMING RECOVERY MAX CANDIDATES behavior in src/memory-host-sdk. */
+/** Default maximum recovery candidates considered by deep dreaming. */
 export const DEFAULT_MEMORY_DEEP_DREAMING_RECOVERY_MAX_CANDIDATES = 20;
-/** Reused constant for DEFAULT MEMORY DEEP DREAMING RECOVERY MIN CONFIDENCE behavior in src/memory-host-sdk. */
+/** Default confidence threshold for recovered deep-dreaming candidates. */
 export const DEFAULT_MEMORY_DEEP_DREAMING_RECOVERY_MIN_CONFIDENCE = 0.9;
-/** Reused constant for DEFAULT MEMORY DEEP DREAMING RECOVERY AUTO WRITE MIN CONFIDENCE behavior in src/memory-host-sdk. */
+/** Default confidence threshold for automatically writing recovered memories. */
 export const DEFAULT_MEMORY_DEEP_DREAMING_RECOVERY_AUTO_WRITE_MIN_CONFIDENCE = 0.97;
 
-/** Reused constant for DEFAULT MEMORY REM DREAMING CRON EXPR behavior in src/memory-host-sdk. */
+/** Legacy standalone REM phase cron expression. */
 export const DEFAULT_MEMORY_REM_DREAMING_CRON_EXPR = "0 5 * * 0";
-/** Reused constant for DEFAULT MEMORY REM DREAMING LOOKBACK DAYS behavior in src/memory-host-sdk. */
+/** Default lookback window for REM pattern extraction. */
 export const DEFAULT_MEMORY_REM_DREAMING_LOOKBACK_DAYS = 7;
-/** Reused constant for DEFAULT MEMORY REM DREAMING LIMIT behavior in src/memory-host-sdk. */
+/** Default pattern limit for REM dreaming. */
 export const DEFAULT_MEMORY_REM_DREAMING_LIMIT = 10;
-/** Reused constant for DEFAULT MEMORY REM DREAMING MIN PATTERN STRENGTH behavior in src/memory-host-sdk. */
+/** Default minimum strength for REM pattern candidates. */
 export const DEFAULT_MEMORY_REM_DREAMING_MIN_PATTERN_STRENGTH = 0.75;
 
-/** Reused constant for DEFAULT MEMORY DREAMING SPEED behavior in src/memory-host-sdk. */
+/** Default model speed tier for memory dreaming prompts. */
 export const DEFAULT_MEMORY_DREAMING_SPEED = "balanced";
-/** Reused constant for DEFAULT MEMORY DREAMING THINKING behavior in src/memory-host-sdk. */
+/** Default reasoning depth tier for memory dreaming prompts. */
 export const DEFAULT_MEMORY_DREAMING_THINKING = "medium";
-/** Reused constant for DEFAULT MEMORY DREAMING BUDGET behavior in src/memory-host-sdk. */
+/** Default cost budget tier for memory dreaming prompts. */
 export const DEFAULT_MEMORY_DREAMING_BUDGET = "medium";
 
-/** Shared type for Memory Dreaming Speed in src/memory-host-sdk. */
+/** Latency tier requested for dreaming model calls. */
 export type MemoryDreamingSpeed = "fast" | "balanced" | "slow";
-/** Shared type for Memory Dreaming Thinking in src/memory-host-sdk. */
+/** Reasoning depth tier requested for dreaming model calls. */
 export type MemoryDreamingThinking = "low" | "medium" | "high";
-/** Shared type for Memory Dreaming Budget in src/memory-host-sdk. */
+/** Cost budget tier requested for dreaming model calls. */
 export type MemoryDreamingBudget = "cheap" | "medium" | "expensive";
-/** Shared type for Memory Dreaming Storage Mode in src/memory-host-sdk. */
+/** Where dreaming reports and promoted memory outputs should be stored. */
 export type MemoryDreamingStorageMode = "inline" | "separate" | "both";
 
-/** Shared type for Memory Light Dreaming Source in src/memory-host-sdk. */
+/** Input sources scanned by the light dreaming phase. */
 export type MemoryLightDreamingSource = "daily" | "sessions" | "recall";
-/** Shared type for Memory Deep Dreaming Source in src/memory-host-sdk. */
+/** Input sources scanned by the deep dreaming phase. */
 export type MemoryDeepDreamingSource = "daily" | "memory" | "sessions" | "logs" | "recall";
-/** Shared type for Memory Rem Dreaming Source in src/memory-host-sdk. */
+/** Input sources scanned by the REM dreaming phase. */
 export type MemoryRemDreamingSource = "memory" | "daily" | "deep";
 
-/** Shared type for Memory Dreaming Execution Config in src/memory-host-sdk. */
+/** Model/execution policy for a dreaming prompt. */
 export type MemoryDreamingExecutionConfig = {
   speed: MemoryDreamingSpeed;
   thinking: MemoryDreamingThinking;
@@ -126,13 +126,13 @@ export type MemoryDreamingExecutionConfig = {
   timeoutMs?: number;
 };
 
-/** Shared type for Memory Dreaming Storage Config in src/memory-host-sdk. */
+/** Storage policy for dreaming reports and promoted snippets. */
 export type MemoryDreamingStorageConfig = {
   mode: MemoryDreamingStorageMode;
   separateReports: boolean;
 };
 
-/** Shared type for Memory Light Dreaming Config in src/memory-host-sdk. */
+/** Normalized config for fast short-term candidate collection. */
 export type MemoryLightDreamingConfig = {
   enabled: boolean;
   cron: string;
@@ -143,7 +143,7 @@ export type MemoryLightDreamingConfig = {
   execution: MemoryDreamingExecutionConfig;
 };
 
-/** Shared type for Memory Deep Dreaming Recovery Config in src/memory-host-sdk. */
+/** Recovery thresholds used when deep dreaming detects poor memory health. */
 export type MemoryDeepDreamingRecoveryConfig = {
   enabled: boolean;
   triggerBelowHealth: number;
@@ -153,7 +153,7 @@ export type MemoryDeepDreamingRecoveryConfig = {
   autoWriteMinConfidence: number;
 };
 
-/** Shared type for Memory Deep Dreaming Config in src/memory-host-sdk. */
+/** Normalized config for promotion-worthy memory consolidation. */
 export type MemoryDeepDreamingConfig = {
   enabled: boolean;
   cron: string;
@@ -169,7 +169,7 @@ export type MemoryDeepDreamingConfig = {
   execution: MemoryDreamingExecutionConfig;
 };
 
-/** Shared type for Memory Rem Dreaming Config in src/memory-host-sdk. */
+/** Normalized config for slower pattern extraction. */
 export type MemoryRemDreamingConfig = {
   enabled: boolean;
   cron: string;
@@ -180,10 +180,10 @@ export type MemoryRemDreamingConfig = {
   execution: MemoryDreamingExecutionConfig;
 };
 
-/** Shared type for Memory Dreaming Phase Name in src/memory-host-sdk. */
+/** Named phase inside the unified dreaming config. */
 export type MemoryDreamingPhaseName = "light" | "deep" | "rem";
 
-/** Shared type for Memory Dreaming Config in src/memory-host-sdk. */
+/** Fully normalized memory dreaming config with top-level and phase settings. */
 export type MemoryDreamingConfig = {
   enabled: boolean;
   frequency: string;
@@ -200,13 +200,13 @@ export type MemoryDreamingConfig = {
   };
 };
 
-/** Shared type for Memory Dreaming Workspace in src/memory-host-sdk. */
+/** Workspace and agent ids targeted by a memory dreaming run. */
 export type MemoryDreamingWorkspace = {
   workspaceDir: string;
   agentIds: string[];
 };
 
-/** Shared type for Memory Dreaming Workspace Options in src/memory-host-sdk. */
+/** Optional primary workspace/agent injected by the current runtime context. */
 export type MemoryDreamingWorkspaceOptions = {
   primaryWorkspaceDir?: string | null;
   primaryAgentId?: string | null;
@@ -393,7 +393,7 @@ function formatLocalIsoDay(epochMs: number): string {
   return `${year}-${month}-${day}`;
 }
 
-/** Reused helper for resolve Memory Dreaming Plugin Id behavior in src/memory-host-sdk. */
+/** Resolve the plugin id that owns memory dreaming config for this host config. */
 export function resolveMemoryDreamingPluginId(
   cfg: OpenClawConfig | Record<string, unknown> | undefined,
 ): string {
@@ -407,7 +407,7 @@ export function resolveMemoryDreamingPluginId(
   return DEFAULT_MEMORY_DREAMING_PLUGIN_ID;
 }
 
-/** Reused helper for resolve Memory Dreaming Plugin Config behavior in src/memory-host-sdk. */
+/** Resolve the configured memory plugin's raw config block. */
 export function resolveMemoryDreamingPluginConfig(
   cfg: OpenClawConfig | Record<string, unknown> | undefined,
 ): Record<string, unknown> | undefined {
@@ -422,7 +422,7 @@ export function resolveMemoryDreamingPluginConfig(
 /** @deprecated Use resolveMemoryDreamingPluginConfig. */
 export const resolveMemoryCorePluginConfig = resolveMemoryDreamingPluginConfig;
 
-/** Reused helper for resolve Memory Dreaming Config behavior in src/memory-host-sdk. */
+/** Normalize the full memory dreaming config with top-level and phase defaults. */
 export function resolveMemoryDreamingConfig(params: {
   pluginConfig?: Record<string, unknown>;
   cfg?: OpenClawConfig;
@@ -586,7 +586,7 @@ export function resolveMemoryDreamingConfig(params: {
   };
 }
 
-/** Reused helper for resolve Memory Deep Dreaming Config behavior in src/memory-host-sdk. */
+/** Resolve the effective deep phase config plus inherited runtime metadata. */
 export function resolveMemoryDeepDreamingConfig(params: {
   pluginConfig?: Record<string, unknown>;
   cfg?: OpenClawConfig;
@@ -605,7 +605,7 @@ export function resolveMemoryDeepDreamingConfig(params: {
   };
 }
 
-/** Reused helper for resolve Memory Light Dreaming Config behavior in src/memory-host-sdk. */
+/** Resolve the effective light phase config plus inherited runtime metadata. */
 export function resolveMemoryLightDreamingConfig(params: {
   pluginConfig?: Record<string, unknown>;
   cfg?: OpenClawConfig;
@@ -624,7 +624,7 @@ export function resolveMemoryLightDreamingConfig(params: {
   };
 }
 
-/** Reused helper for resolve Memory Rem Dreaming Config behavior in src/memory-host-sdk. */
+/** Resolve the effective REM phase config plus inherited runtime metadata. */
 export function resolveMemoryRemDreamingConfig(params: {
   pluginConfig?: Record<string, unknown>;
   cfg?: OpenClawConfig;
@@ -643,7 +643,7 @@ export function resolveMemoryRemDreamingConfig(params: {
   };
 }
 
-/** Reused helper for format Memory Dreaming Day behavior in src/memory-host-sdk. */
+/** Format an epoch as the local or configured timezone day for run de-duping. */
 export function formatMemoryDreamingDay(epochMs: number, timezone?: string): string {
   if (!timezone) {
     return formatLocalIsoDay(epochMs);
@@ -668,7 +668,7 @@ export function formatMemoryDreamingDay(epochMs: number, timezone?: string): str
   return formatLocalIsoDay(epochMs);
 }
 
-/** Reused helper for is Same Memory Dreaming Day behavior in src/memory-host-sdk. */
+/** Compare two epochs using the same dreaming-day timezone rules. */
 export function isSameMemoryDreamingDay(
   firstEpochMs: number,
   secondEpochMs: number,
@@ -680,7 +680,7 @@ export function isSameMemoryDreamingDay(
   );
 }
 
-/** Reused helper for resolve Memory Dreaming Workspaces behavior in src/memory-host-sdk. */
+/** Resolve unique workspace buckets and agent ids targeted by memory dreaming. */
 export function resolveMemoryDreamingWorkspaces(
   cfg: OpenClawConfig,
   options: MemoryDreamingWorkspaceOptions = {},
