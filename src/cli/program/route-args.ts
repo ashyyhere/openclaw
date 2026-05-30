@@ -64,7 +64,7 @@ function parseSinglePositional(
   return positionals[0] ?? null;
 }
 
-/** Reused helper for parse Health Route Args behavior in src/cli/program. */
+/** Parses lightweight `health` route flags for JSON/verbosity/timeout. */
 export function parseHealthRouteArgs(argv: string[]) {
   const timeoutMs = getPositiveIntFlagValue(argv, "--timeout");
   if (timeoutMs === null) {
@@ -77,7 +77,7 @@ export function parseHealthRouteArgs(argv: string[]) {
   };
 }
 
-/** Reused helper for parse Status Route Args behavior in src/cli/program. */
+/** Parses lightweight `status` route flags. */
 export function parseStatusRouteArgs(argv: string[]) {
   const timeoutMs = getPositiveIntFlagValue(argv, "--timeout");
   if (timeoutMs === null) {
@@ -93,7 +93,7 @@ export function parseStatusRouteArgs(argv: string[]) {
   };
 }
 
-/** Reused helper for parse Gateway Status Route Args behavior in src/cli/program. */
+/** Parses lightweight `gateway status` route flags without SSH options. */
 export function parseGatewayStatusRouteArgs(argv: string[]) {
   const url = parseOptionalFlagValue(argv, "--url");
   if (!url.ok) {
@@ -136,7 +136,7 @@ export function parseGatewayStatusRouteArgs(argv: string[]) {
   };
 }
 
-/** Reused helper for parse Sessions Route Args behavior in src/cli/program. */
+/** Parses lightweight `sessions` route filters. */
 export function parseSessionsRouteArgs(argv: string[]) {
   const agent = parseOptionalFlagValue(argv, "--agent");
   if (!agent.ok) {
@@ -164,7 +164,7 @@ export function parseSessionsRouteArgs(argv: string[]) {
   };
 }
 
-/** Reused helper for parse Agents List Route Args behavior in src/cli/program. */
+/** Parses lightweight `agents list` route flags. */
 export function parseAgentsListRouteArgs(argv: string[]) {
   return {
     json: hasFlag(argv, "--json"),
@@ -172,7 +172,7 @@ export function parseAgentsListRouteArgs(argv: string[]) {
   };
 }
 
-/** Reused helper for parse Config Get Route Args behavior in src/cli/program. */
+/** Parses lightweight `config get` route args. */
 export function parseConfigGetRouteArgs(argv: string[]) {
   const path = parseSinglePositional(argv, {
     commandPath: ["config", "get"],
@@ -187,7 +187,7 @@ export function parseConfigGetRouteArgs(argv: string[]) {
   };
 }
 
-/** Reused helper for parse Config Unset Route Args behavior in src/cli/program. */
+/** Parses lightweight `config unset` route args and execution flags. */
 export function parseConfigUnsetRouteArgs(argv: string[]) {
   const path = parseSinglePositional(argv, {
     commandPath: ["config", "unset"],
@@ -206,7 +206,7 @@ export function parseConfigUnsetRouteArgs(argv: string[]) {
   };
 }
 
-/** Reused helper for parse Models List Route Args behavior in src/cli/program. */
+/** Parses lightweight `models list` route filters. */
 export function parseModelsListRouteArgs(argv: string[]) {
   const provider = parseOptionalFlagValue(argv, "--provider");
   if (!provider.ok) {
@@ -221,7 +221,7 @@ export function parseModelsListRouteArgs(argv: string[]) {
   };
 }
 
-/** Reused helper for parse Models Status Route Args behavior in src/cli/program. */
+/** Parses lightweight `models status` route probe flags. */
 export function parseModelsStatusRouteArgs(argv: string[]) {
   const probeProvider = parseOptionalFlagValue(argv, "--probe-provider");
   if (!probeProvider.ok) {
@@ -267,7 +267,7 @@ export function parseModelsStatusRouteArgs(argv: string[]) {
   };
 }
 
-/** Reused helper for parse Channels List Route Args behavior in src/cli/program. */
+/** Parses lightweight `channels list` route flags. */
 export function parseChannelsListRouteArgs(argv: string[]) {
   return {
     json: hasFlag(argv, "--json"),
@@ -275,7 +275,7 @@ export function parseChannelsListRouteArgs(argv: string[]) {
   };
 }
 
-/** Reused helper for parse Channels Status Route Args behavior in src/cli/program. */
+/** Parses lightweight `channels status` route flags. */
 export function parseChannelsStatusRouteArgs(argv: string[]) {
   const timeout = parseOptionalFlagValue(argv, "--timeout");
   const channel = parseOptionalFlagValue(argv, "--channel");
@@ -293,7 +293,7 @@ export function parseChannelsStatusRouteArgs(argv: string[]) {
   };
 }
 
-/** Reused helper for parse Plugins List Route Args behavior in src/cli/program. */
+/** Parses lightweight `plugins list` route flags. */
 export function parsePluginsListRouteArgs(argv: string[]) {
   if (!hasFlag(argv, "--json")) {
     return null;
@@ -339,7 +339,7 @@ function parseTasksListRouteArgsForCommandPath(argv: string[], commandPath: stri
   };
 }
 
-/** Reused helper for parse Tasks List Route Args behavior in src/cli/program. */
+/** Parses lightweight `tasks` and `tasks list` route flags. */
 export function parseTasksListRouteArgs(argv: string[]) {
   return (
     parseTasksListRouteArgsForCommandPath(argv, ["tasks"]) ??
@@ -347,7 +347,7 @@ export function parseTasksListRouteArgs(argv: string[]) {
   );
 }
 
-/** Reused helper for parse Tasks Audit Route Args behavior in src/cli/program. */
+/** Parses lightweight `tasks audit` route filters. */
 export function parseTasksAuditRouteArgs(argv: string[]) {
   if (!hasFlag(argv, "--json")) {
     return null;
