@@ -1,4 +1,4 @@
-// config runtime schema helpers and runtime behavior.
+// Runtime config schema generation with plugin and channel metadata.
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../agents/agent-scope.js";
 import { resolvePluginMetadataSnapshot } from "../plugins/plugin-metadata-snapshot.js";
 import {
@@ -19,7 +19,7 @@ function loadManifestRegistry(config: OpenClawConfig, env?: NodeJS.ProcessEnv) {
   }).manifestRegistry;
 }
 
-/** Reused helper for load Gateway Runtime Config Schema behavior in src/config. */
+/** Build the gateway runtime config schema from the loaded runtime config. */
 export function loadGatewayRuntimeConfigSchema(): ConfigSchemaResponse {
   const config = getRuntimeConfig();
   const registry = loadManifestRegistry(config);
@@ -29,7 +29,7 @@ export function loadGatewayRuntimeConfigSchema(): ConfigSchemaResponse {
   });
 }
 
-/** Reused helper for read Best Effort Runtime Config Schema behavior in src/config. */
+/** Build a runtime config schema even when the current config file is invalid. */
 export async function readBestEffortRuntimeConfigSchema(): Promise<ConfigSchemaResponse> {
   const snapshot = await readConfigFileSnapshot();
   const config = snapshot.valid ? snapshot.config : { plugins: { enabled: true } };

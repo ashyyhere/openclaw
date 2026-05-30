@@ -137,7 +137,7 @@ export async function updateConfiguredMcpServerTools(params: {
   };
 }
 
-/** Adds or replaces one configured MCP server. */
+/** Add or replace one configured MCP server and persist validated config. */
 export async function setConfiguredMcpServer(params: {
   name: string;
   server: unknown;
@@ -184,7 +184,7 @@ export async function setConfiguredMcpServer(params: {
   };
 }
 
-/** Removes one configured MCP server from config. */
+/** Remove one configured MCP server and persist validated config. */
 export async function unsetConfiguredMcpServer(params: {
   name: string;
 }): Promise<ConfigMcpWriteResult> {

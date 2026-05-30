@@ -1,7 +1,7 @@
-// Shared types for tasks task flow registry store types behavior.
+// TaskFlow registry store snapshot types.
 import type { TaskFlowRecord } from "./task-flow-registry.types.js";
 
-/** Shared type for Task Flow Registry Store Snapshot in src/tasks. */
+/** In-memory TaskFlow store snapshot keyed by flow id. */
 export type TaskFlowRegistryStoreSnapshot = {
   flows: Map<string, TaskFlowRecord>;
 };

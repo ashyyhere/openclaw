@@ -1,11 +1,11 @@
-// config commands helpers and runtime behavior.
+// Native channel command and skill enablement resolution.
 import { getLoadedChannelPlugin, normalizeChannelId } from "../channels/plugins/index.js";
 import { resolveReadOnlyChannelCommandDefaults } from "../channels/plugins/read-only-command-defaults.js";
 import type { ChannelId } from "../channels/plugins/types.public.js";
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 import type { NativeCommandsSetting } from "./types.js";
 import type { OpenClawConfig } from "./types.openclaw.js";
-/** Re-exported API for src/config, starting with is Command Flag Enabled. */
+/** Re-export command flag helpers used by command-surface config checks. */
 export { isCommandFlagEnabled, isRestartEnabled } from "./commands.flags.js";
 
 function resolveAutoDefault(
@@ -40,7 +40,7 @@ function resolveAutoDefault(
   return commandDefaults?.nativeSkillsAutoEnabled === true;
 }
 
-/** Reused helper for resolve Native Skills Enabled behavior in src/config. */
+/** Resolve whether native channel skills are enabled for a provider. */
 export function resolveNativeSkillsEnabled(params: {
   providerId: ChannelId;
   providerSetting?: NativeCommandsSetting;
@@ -54,7 +54,7 @@ export function resolveNativeSkillsEnabled(params: {
   return resolveNativeCommandSetting({ ...params, kind: "nativeSkills" });
 }
 
-/** Reused helper for resolve Native Commands Enabled behavior in src/config. */
+/** Resolve whether native channel commands are enabled for a provider. */
 export function resolveNativeCommandsEnabled(params: {
   providerId: ChannelId;
   providerSetting?: NativeCommandsSetting;
@@ -90,7 +90,7 @@ function resolveNativeCommandSetting(params: {
   return resolveAutoDefault(providerId, kind, options);
 }
 
-/** Reused helper for is Native Commands Explicitly Disabled behavior in src/config. */
+/** Return whether native commands are disabled by provider or global config. */
 export function isNativeCommandsExplicitlyDisabled(params: {
   providerSetting?: NativeCommandsSetting;
   globalSetting?: NativeCommandsSetting;
