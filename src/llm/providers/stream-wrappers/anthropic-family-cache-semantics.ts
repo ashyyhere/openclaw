@@ -1,4 +1,4 @@
-// llm/providers/stream-wrappers anthropic family cache semantics helpers and runtime behavior.
+// Anthropic-family cache-retention eligibility and provider-family detection.
 import {
   normalizeLowercaseStringOrEmpty,
   normalizeOptionalLowercaseString,
@@ -9,7 +9,7 @@ type AnthropicCacheRetentionFamily =
   | "anthropic-bedrock"
   | "custom-anthropic-api";
 
-/** Reused helper for is Anthropic Model Ref behavior in src/llm/providers. */
+/** Return whether a model id is an OpenRouter-style `anthropic/...` reference. */
 export function isAnthropicModelRef(modelId: string): boolean {
   return normalizeLowercaseStringOrEmpty(modelId).startsWith("anthropic/");
 }
@@ -17,7 +17,7 @@ export function isAnthropicModelRef(modelId: string): boolean {
 /** Matches Application Inference Profile ARNs across all AWS partitions with Bedrock. */
 const BEDROCK_APP_INFERENCE_PROFILE_ARN_RE = /^arn:aws(-cn|-us-gov)?:bedrock:/;
 
-/** Reused helper for is Anthropic Bedrock Model behavior in src/llm/providers. */
+/** Return whether a Bedrock model id or profile ARN appears to route to Claude. */
 export function isAnthropicBedrockModel(modelId: string): boolean {
   const normalized = normalizeLowercaseStringOrEmpty(modelId);
 
@@ -48,14 +48,14 @@ export function isAnthropicBedrockModel(modelId: string): boolean {
   return false;
 }
 
-/** Reused helper for is Open Router Anthropic Model Ref behavior in src/llm/providers. */
+/** Return whether an OpenRouter provider/model pair targets Anthropic models. */
 export function isOpenRouterAnthropicModelRef(provider: string, modelId: string): boolean {
   return (
     normalizeOptionalLowercaseString(provider) === "openrouter" && isAnthropicModelRef(modelId)
   );
 }
 
-/** Reused helper for is Anthropic Family Cache Ttl Eligible behavior in src/llm/providers. */
+/** Return whether a provider/model pair may accept Anthropic cache TTL controls. */
 export function isAnthropicFamilyCacheTtlEligible(params: {
   provider: string;
   modelApi?: string;
@@ -71,7 +71,7 @@ export function isAnthropicFamilyCacheTtlEligible(params: {
   return params.modelApi === "anthropic-messages";
 }
 
-/** Reused helper for resolve Anthropic Cache Retention Family behavior in src/llm/providers. */
+/** Resolve which Anthropic cache-retention contract applies to a request. */
 export function resolveAnthropicCacheRetentionFamily(params: {
   provider: string;
   modelApi?: string;

@@ -1,4 +1,4 @@
-// llm/providers/stream-wrappers zai helpers and runtime behavior.
+// Z.ai stream wrapper for provider-owned tool-stream payload activation.
 import type { StreamFn } from "../../../agents/runtime/index.js";
 import { streamSimple } from "../../stream.js";
 import { streamWithPayloadPatch } from "./stream-payload-utils.js";

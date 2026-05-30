@@ -1,4 +1,4 @@
-// llm/providers/stream-wrappers moonshot thinking helpers and runtime behavior.
+// Moonshot thinking payload normalization and wrapper helpers.
 import type { StreamFn } from "../../../agents/runtime/index.js";
 import type { ThinkLevel } from "../../../auto-reply/thinking.js";
 import { createLazyImportLoader } from "../../../shared/lazy-promise.js";

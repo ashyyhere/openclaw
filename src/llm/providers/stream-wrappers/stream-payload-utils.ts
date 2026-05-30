@@ -1,7 +1,7 @@
-// llm/providers/stream-wrappers stream payload utils helpers and runtime behavior.
+// Utility for stream wrappers that patch outgoing provider payloads.
 import type { StreamFn } from "../../../agents/runtime/index.js";
 
-/** Reused helper for stream With Payload Patch behavior in src/llm/providers. */
+/** Run a stream with an `onPayload` hook that mutates object payloads before caller hooks run. */
 export function streamWithPayloadPatch(
   underlying: StreamFn,
   model: Parameters<StreamFn>[0],

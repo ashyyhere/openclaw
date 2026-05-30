@@ -1,4 +1,4 @@
-// llm/providers/stream-wrappers openai helpers and runtime behavior.
+// OpenAI-family stream wrappers for payload policy, attribution, tools, and reasoning.
 import {
   patchCodexNativeWebSearchPayload,
   resolveCodexNativeSearchActivation,
@@ -38,7 +38,7 @@ type OpenAIServiceTier = "auto" | "default" | "flex" | "priority";
 type OpenClawSimpleStreamOptions = SimpleStreamOptions & {
   openclawCodeModeToolSurface?: boolean;
 };
-/** Re-exported API for src/llm/providers, starting with resolve Open AIText Verbosity. */
+/** Re-export OpenAI text verbosity resolution for provider registration wiring. */
 export { resolveOpenAITextVerbosity };
 
 function resolveOpenAITextVerbosityForModel(

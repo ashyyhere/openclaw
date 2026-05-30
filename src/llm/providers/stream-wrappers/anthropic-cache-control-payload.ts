@@ -1,3 +1,3 @@
-// llm/providers/stream-wrappers anthropic cache control payload helpers and runtime behavior.
-/** Re-exported API for src/llm/providers, starting with apply Anthropic Ephemeral Cache Control Markers. */
+// Anthropic cache-control payload marker facade for provider stream wrappers.
+/** Re-export the Anthropic ephemeral cache-control payload marker helper. */
 export { applyAnthropicEphemeralCacheControlMarkers } from "../../../agents/anthropic-payload-policy.js";

@@ -1,4 +1,4 @@
-// llm/providers/stream-wrappers anthropic family tool payload compat helpers and runtime behavior.
+// Anthropic-family tool payload compatibility wrappers for OpenAI-shaped proxies.
 import type { StreamFn } from "../../../agents/runtime/index.js";
 import { normalizeOptionalString } from "../../../shared/string-coerce.js";
 import { streamSimple } from "../../stream.js";
