@@ -8,7 +8,11 @@ import { resetLogger, setLoggerOverride } from "openclaw/plugin-sdk/runtime-env"
 import { mockPinnedHostnameResolution } from "openclaw/plugin-sdk/test-env";
 import { afterAll, afterEach, beforeAll, beforeEach, vi, type Mock } from "vitest";
 import type { WebChannelStatus } from "./auto-reply/types.js";
-import type { WebInboundMessage, WebListenerCloseReason } from "./inbound.js";
+import type {
+  WebInboundCallbackMessage,
+  WebInboundMessageInput,
+  WebListenerCloseReason,
+} from "./inbound.js";
 import type { WhatsAppSendKind, WhatsAppSendResult } from "./inbound/send-result.js";
 import {
   resetBaileysMocks as _resetBaileysMocks,
@@ -230,16 +234,16 @@ export function installWebAutoReplyUnitTestHooks(opts?: { pinDns?: boolean }) {
 }
 
 export function createWebListenerFactoryCapture(): AnyExport {
-  let capturedOnMessage: ((msg: WebInboundMessage) => Promise<void>) | undefined;
+  let capturedOnMessage: ((msg: WebInboundMessageInput) => Promise<void>) | undefined;
   let capturedOptions:
     | {
-        onMessage: (msg: WebInboundMessage) => Promise<void>;
+        onMessage: (msg: WebInboundMessageInput) => Promise<void>;
         debounceMs?: number;
         selfChatMode?: boolean;
       }
     | undefined;
   const listenerFactory = async (opts: {
-    onMessage: (msg: WebInboundMessage) => Promise<void>;
+    onMessage: (msg: WebInboundMessageInput) => Promise<void>;
     debounceMs?: number;
     selfChatMode?: boolean;
   }) => {
@@ -280,12 +284,12 @@ export function createAcceptedWhatsAppSendResult(
 }
 
 export function createScriptedWebListenerFactory(): AnyExport {
-  const onMessages: Array<(msg: WebInboundMessage) => Promise<void>> = [];
+  const onMessages: Array<(msg: WebInboundMessageInput) => Promise<void>> = [];
   const closeResolvers: Array<(reason: unknown) => void> = [];
   const listeners: MockWebListener[] = [];
 
   const listenerFactory = vi.fn(
-    async (opts: { onMessage: (msg: WebInboundMessage) => Promise<void> }) => {
+    async (opts: { onMessage: (msg: WebInboundMessageInput) => Promise<void> }) => {
       onMessages.push(opts.onMessage);
       let resolveClose: (reason: unknown) => void = () => {};
       const onClose = new Promise<WebListenerCloseReason>((res) => {
@@ -365,7 +369,7 @@ export function startWebAutoReplyMonitor(params: {
 }
 
 export async function sendWebGroupInboundMessage(params: {
-  onMessage: (msg: WebInboundMessage) => Promise<void>;
+  onMessage: (msg: WebInboundMessageInput) => Promise<void>;
   body: string;
   id: string;
   senderE164: string;
@@ -379,28 +383,42 @@ export async function sendWebGroupInboundMessage(params: {
 }) {
   const conversationId = params.conversationId ?? "123@g.us";
   const accountId = params.accountId ?? "default";
-  await params.onMessage({
-    body: params.body,
+  const group = params.mentionedJids?.length
+    ? {
+        mentions: {
+          jids: params.mentionedJids,
+        },
+      }
+    : undefined;
+  const msg = {
+    event: {
+      id: params.id,
+    },
+    payload: {
+      body: params.body,
+    },
+    platform: {
+      chatJid: conversationId,
+      recipientJid: "+2",
+      senderE164: params.senderE164,
+      senderName: params.senderName,
+      selfE164: params.selfE164,
+      selfJid: params.selfJid,
+      sendComposing: params.spies.sendComposing,
+      reply: params.spies.reply,
+      sendMedia: params.spies.sendMedia,
+    },
     from: conversationId,
     conversationId,
-    chatId: conversationId,
     chatType: "group",
-    to: "+2",
     accountId,
-    id: params.id,
-    senderE164: params.senderE164,
-    senderName: params.senderName,
-    mentionedJids: params.mentionedJids,
-    selfE164: params.selfE164,
-    selfJid: params.selfJid,
-    sendComposing: params.spies.sendComposing,
-    reply: params.spies.reply,
-    sendMedia: params.spies.sendMedia,
-  } as WebInboundMessage);
+    group,
+  } satisfies WebInboundCallbackMessage;
+  await params.onMessage(msg);
 }
 
 export async function sendWebDirectInboundMessage(params: {
-  onMessage: (msg: WebInboundMessage) => Promise<void>;
+  onMessage: (msg: WebInboundMessageInput) => Promise<void>;
   body: string;
   id: string;
   from: string;
@@ -410,18 +428,25 @@ export async function sendWebDirectInboundMessage(params: {
   timestamp?: number;
 }) {
   const accountId = params.accountId ?? "default";
-  await params.onMessage({
+  const msg = {
     accountId,
-    id: params.id,
+    event: {
+      id: params.id,
+      timestamp: params.timestamp ?? Date.now(),
+    },
+    payload: {
+      body: params.body,
+    },
+    platform: {
+      chatJid: `direct:${params.from}`,
+      recipientJid: params.to,
+      sendComposing: params.spies.sendComposing,
+      reply: params.spies.reply,
+      sendMedia: params.spies.sendMedia,
+    },
     from: params.from,
     conversationId: params.from,
-    to: params.to,
-    body: params.body,
-    timestamp: params.timestamp ?? Date.now(),
     chatType: "direct",
-    chatId: `direct:${params.from}`,
-    sendComposing: params.spies.sendComposing,
-    reply: params.spies.reply,
-    sendMedia: params.spies.sendMedia,
-  } as WebInboundMessage);
+  } satisfies WebInboundCallbackMessage;
+  await params.onMessage(msg);
 }

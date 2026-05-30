@@ -178,19 +178,35 @@ function makePolicy(account: ReturnType<typeof makeAccount>) {
 
 const GROUP_JID = "123@g.us";
 
-const baseMsg = {
-  id: "msg1",
-  from: GROUP_JID,
-  to: "+15550001111",
-  conversationId: GROUP_JID,
-  accountId: "default",
-  chatId: GROUP_JID,
-  chatType: "group" as const,
-  body: "hi",
-  sendComposing: async () => {},
-  reply: async () => acceptedSendResult("text", "r1"),
-  sendMedia: async () => acceptedSendResult("media", "m1"),
-};
+function makeBaseMsg(overrides: { body?: string } = {}) {
+  const body = overrides.body ?? "hi";
+  return {
+    event: {
+      id: "msg1",
+      timestamp: 1710000000,
+    },
+    payload: {
+      body,
+    },
+    platform: {
+      chatJid: GROUP_JID,
+      recipientJid: "+15550001111",
+      senderJid: "15550002222@s.whatsapp.net",
+      senderE164: "+15550002222",
+      senderName: "Alice",
+      sendComposing: async () => {},
+      reply: async () => acceptedSendResult("text", "r1"),
+      sendMedia: async () => acceptedSendResult("media", "m1"),
+    },
+    from: GROUP_JID,
+    conversationId: GROUP_JID,
+    accountId: "default",
+    chatType: "group" as const,
+    group: {
+      subject: "Test Group",
+    },
+  };
+}
 
 const baseRoute = {
   agentId: "main",
@@ -205,7 +221,7 @@ const baseRoute = {
 function callProcessMessage(overrides: { cfg?: unknown; msg?: unknown } = {}) {
   return processMessage({
     cfg: (overrides.cfg ?? {}) as never,
-    msg: (overrides.msg ?? baseMsg) as never,
+    msg: (overrides.msg ?? makeBaseMsg()) as never,
     route: baseRoute as never,
     groupHistoryKey: "whatsapp:default:group:123@g.us",
     groupHistories: new Map(),
@@ -283,10 +299,7 @@ describe("processMessage group system prompt wiring", () => {
     shouldComputeCommandAuthorizedMock.mockReturnValue(true);
 
     await callProcessMessage({
-      msg: {
-        ...baseMsg,
-        body: "/status",
-      },
+      msg: makeBaseMsg({ body: "/status" }),
     });
 
     expect(shouldComputeCommandAuthorizedMock).toHaveBeenCalledWith("/status", {});
@@ -310,10 +323,7 @@ describe("processMessage group system prompt wiring", () => {
     shouldComputeCommandAuthorizedMock.mockReturnValue(true);
 
     await callProcessMessage({
-      msg: {
-        ...baseMsg,
-        body: "please inspect `/tmp/foo`",
-      },
+      msg: makeBaseMsg({ body: "please inspect `/tmp/foo`" }),
     });
 
     expect(buildContextMock.mock.calls[0][0]).toMatchObject({

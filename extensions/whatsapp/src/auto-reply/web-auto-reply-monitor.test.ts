@@ -3,6 +3,7 @@ import os from "node:os";
 import path from "node:path";
 import { resolveAgentRoute } from "openclaw/plugin-sdk/routing";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { withDeprecatedWebInboundMessageFlatAliases } from "../inbound/message-aliases.js";
 import type { WhatsAppSendResult } from "../inbound/send-result.js";
 import { buildMentionConfig } from "./mentions.js";
 import { applyGroupGating, type GroupHistoryEntry } from "./monitor/group-gating.js";
@@ -80,23 +81,110 @@ async function runGroupGating(params: {
   return { result, groupHistories, verboseLogs };
 }
 
-function createGroupMessage(overrides: Partial<WebInboundMsg> = {}): WebInboundMsg {
-  return {
-    id: "g1",
+type TestMessageOverrides = Partial<WebInboundMsg> & {
+  body?: string;
+  id?: string;
+  mentionedJids?: string[];
+  replyToBody?: string;
+  replyToId?: string;
+  replyToSender?: string;
+  replyToSenderE164?: string;
+  replyToSenderJid?: string;
+  selfE164?: string;
+  selfJid?: string;
+  senderE164?: string;
+  senderJid?: string;
+  senderName?: string;
+  timestamp?: number;
+  to?: string;
+};
+
+function createGroupMessage(overrides: TestMessageOverrides = {}): WebInboundMsg {
+  const {
+    body,
+    event,
+    group,
+    id,
+    mentionedJids,
+    payload,
+    platform,
+    quote,
+    replyToBody,
+    replyToId,
+    replyToSender,
+    replyToSenderE164,
+    replyToSenderJid,
+    selfE164,
+    selfJid,
+    senderE164,
+    senderJid,
+    senderName,
+    timestamp,
+    to,
+    ...messageOverrides
+  } = overrides;
+  return withDeprecatedWebInboundMessageFlatAliases({
+    event: {
+      id: id ?? "g1",
+      timestamp,
+      ...event,
+    },
+    payload: {
+      body: body ?? "hello group",
+      ...payload,
+    },
+    platform: {
+      chatJid: "123@g.us",
+      recipientJid: to ?? "+2",
+      senderE164: senderE164 ?? "+111",
+      senderJid,
+      senderName: senderName ?? "Alice",
+      selfE164: selfE164 ?? "+999",
+      selfJid,
+      sendComposing: async () => {},
+      reply: async (_text, _options) => acceptedSendResult("text", "r1"),
+      sendMedia: async (_payload, _options) => acceptedSendResult("media", "m1"),
+      ...platform,
+    },
     from: "123@g.us",
     conversationId: "123@g.us",
-    chatId: "123@g.us",
     chatType: "group",
-    to: "+2",
     accountId: "default",
-    body: "hello group",
-    senderE164: "+111",
-    senderName: "Alice",
-    selfE164: "+999",
-    sendComposing: async () => {},
-    reply: async (_text, _options) => acceptedSendResult("text", "r1"),
-    sendMedia: async (_payload, _options) => acceptedSendResult("media", "m1"),
-    ...overrides,
+    quote:
+      replyToBody || quote
+        ? {
+            id: replyToId,
+            body: replyToBody,
+            sender: {
+              displayName: replyToSender,
+              jid: replyToSenderJid,
+              e164: replyToSenderE164,
+            },
+            ...quote,
+          }
+        : undefined,
+    group: {
+      mentions: {
+        jids: mentionedJids,
+      },
+      ...group,
+    },
+    ...messageOverrides,
+  });
+}
+
+function createDirectMessage(overrides: TestMessageOverrides = {}): WebInboundMsg {
+  const msg = createGroupMessage(overrides);
+  return {
+    ...msg,
+    from: overrides.from ?? "+1555",
+    conversationId: overrides.conversationId ?? overrides.from ?? "+1555",
+    chatType: "direct",
+    group: undefined,
+    platform: {
+      ...msg.platform,
+      chatJid: overrides.platform?.chatJid ?? overrides.from ?? "+1555",
+    },
   };
 }
 
@@ -656,7 +744,6 @@ describe("buildInboundLine", () => {
       cfg: makeInboundCfg(""),
       agentId: "main",
       msg: createGroupMessage({
-        to: "+15550009999",
         accountId: "default",
         body: "ping",
         timestamp: 1700000000000,
@@ -674,15 +761,13 @@ describe("buildInboundLine", () => {
     const line = buildInboundLine({
       cfg: makeInboundCfg(""),
       agentId: "main",
-      msg: {
+      msg: createDirectMessage({
         from: "+1555",
-        to: "+1555",
         body: "hello",
-        chatType: "direct",
         replyToId: "q1",
         replyToBody: "original",
         replyToSender: "+1999",
-      } as never,
+      }),
       envelope: { includeTimestamp: false },
     });
 
@@ -695,12 +780,11 @@ describe("buildInboundLine", () => {
     const line = buildInboundLine({
       cfg: makeInboundCfg("[PFX]"),
       agentId: "main",
-      msg: {
+      msg: createDirectMessage({
         from: "+1555",
-        to: "+2666",
         body: "ping",
-        chatType: "direct",
-      } as never,
+        to: "+2666",
+      }),
       envelope: { includeTimestamp: false },
     });
 
@@ -711,12 +795,11 @@ describe("buildInboundLine", () => {
     const line = buildInboundLine({
       cfg: makeInboundCfg(""),
       agentId: "main",
-      msg: {
+      msg: createDirectMessage({
         from: "whatsapp:+15550001111",
-        to: "+2666",
         body: "ping",
-        chatType: "direct",
-      } as never,
+        to: "+2666",
+      }),
       envelope: { includeTimestamp: false },
     });
 
@@ -732,9 +815,11 @@ describe("formatReplyContext", () => {
 
   it("uses unknown sender label when reply sender is absent", () => {
     expect(
-      formatReplyContext({
-        replyToBody: "original",
-      } as never),
+      formatReplyContext(
+        createDirectMessage({
+          replyToBody: "original",
+        }),
+      ),
     ).toBe("[Replying to unknown sender]\noriginal\n[/Replying]");
   });
 });

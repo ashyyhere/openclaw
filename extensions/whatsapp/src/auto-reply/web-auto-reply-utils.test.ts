@@ -34,21 +34,60 @@ function acceptedSendResult(kind: "media" | "text", id: string): WhatsAppSendRes
   };
 }
 
-const makeMsg = (overrides: Partial<WebInboundMsg>): WebInboundMsg =>
-  ({
-    id: "m1",
+type TestMessageOverrides = Partial<WebInboundMsg> & {
+  body?: string;
+  mentionedJids?: string[];
+  selfE164?: string;
+  selfJid?: string;
+  selfLid?: string;
+};
+
+const makeMsg = (overrides: TestMessageOverrides): WebInboundMsg => {
+  const {
+    body,
+    mentionedJids,
+    selfE164,
+    selfJid,
+    selfLid,
+    event,
+    payload,
+    platform,
+    group,
+    ...messageOverrides
+  } = overrides;
+  return {
+    event: {
+      id: "m1",
+      ...event,
+    },
+    payload: {
+      body: body ?? "",
+      ...payload,
+    },
+    platform: {
+      chatJid: "120363401234567890@g.us",
+      recipientJid: "15551234567@s.whatsapp.net",
+      selfE164,
+      selfJid,
+      selfLid,
+      sendComposing: async () => {},
+      reply: async () => acceptedSendResult("text", "r1"),
+      sendMedia: async () => acceptedSendResult("media", "m1"),
+      ...platform,
+    },
     from: "120363401234567890@g.us",
     conversationId: "120363401234567890@g.us",
-    to: "15551234567@s.whatsapp.net",
     accountId: "default",
-    body: "",
     chatType: "group",
-    chatId: "120363401234567890@g.us",
-    sendComposing: async () => {},
-    reply: async () => acceptedSendResult("text", "r1"),
-    sendMedia: async () => acceptedSendResult("media", "m1"),
-    ...overrides,
-  }) as WebInboundMsg;
+    group: {
+      mentions: {
+        jids: mentionedJids,
+      },
+      ...group,
+    },
+    ...messageOverrides,
+  } as WebInboundMsg;
+};
 
 function getSessionSnapshotForTest(
   cfg: OpenClawConfig,

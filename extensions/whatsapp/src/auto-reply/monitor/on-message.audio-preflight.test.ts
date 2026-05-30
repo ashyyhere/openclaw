@@ -92,29 +92,46 @@ vi.mock("openclaw/plugin-sdk/routing", () => ({
   }),
 }));
 
+import { withDeprecatedWebInboundMessageFlatAliases } from "../../inbound/message-aliases.js";
 import type { WebInboundMsg } from "../types.js";
 import { createWebOnMessageHandler } from "./on-message.js";
 
 function makeAudioMsg(): WebInboundMsg {
-  return {
-    id: "msg-1",
+  return withDeprecatedWebInboundMessageFlatAliases({
+    event: {
+      id: "msg-1",
+      timestamp: 1700000000,
+    },
+    payload: {
+      body: "<media:audio>",
+      media: {
+        type: "audio/ogg; codecs=opus",
+        path: "/tmp/voice.ogg",
+      },
+    },
+    platform: {
+      chatJid: "+15550000002",
+      recipientJid: "+15550000001",
+      sendComposing: async () => {},
+      reply: async () => ({ kind: "text", providerAccepted: true }) as never,
+      sendMedia: async () => ({ kind: "media", providerAccepted: true }) as never,
+    },
     from: "+15550000002",
-    to: "+15550000001",
     accessControlPassed: true,
-    body: "<media:audio>",
+    conversationId: "+15550000002",
     chatType: "direct",
-    mediaType: "audio/ogg; codecs=opus",
-    mediaPath: "/tmp/voice.ogg",
-    timestamp: 1700000000,
     accountId: "default",
-  } as WebInboundMsg;
+  });
 }
 
 function makeGroupAudioMsg(): WebInboundMsg {
   return {
     ...makeAudioMsg(),
     from: "1203630@g.us",
-    chatId: "1203630@g.us",
+    platform: {
+      ...makeAudioMsg().platform,
+      chatJid: "1203630@g.us",
+    },
     chatType: "group",
     conversationId: "1203630@g.us",
     wasMentioned: false,

@@ -1,7 +1,8 @@
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { withDeprecatedWebInboundMessageFlatAliases } from "../../inbound/message-aliases.js";
 import type { WhatsAppSendResult } from "../../inbound/send-result.js";
-import type { WebInboundMessage } from "../../inbound/types.js";
+import type { WebInboundMessageWithDeprecatedAliases } from "../../inbound/types.js";
 import { maybeSendAckReaction } from "./ack-reaction.js";
 
 const hoisted = vi.hoisted(() => ({
@@ -21,21 +22,29 @@ function acceptedSendResult(kind: "media" | "text", id: string): WhatsAppSendRes
   };
 }
 
-function createMessage(overrides: Partial<WebInboundMessage> = {}): WebInboundMessage {
-  return {
-    id: "msg-1",
+function createMessage(
+  overrides: Partial<WebInboundMessageWithDeprecatedAliases> = {},
+): WebInboundMessageWithDeprecatedAliases {
+  return withDeprecatedWebInboundMessageFlatAliases({
+    event: {
+      id: "msg-1",
+    },
+    payload: {
+      body: "hello",
+    },
+    platform: {
+      chatJid: "15551234567@s.whatsapp.net",
+      recipientJid: "15559876543",
+      sendComposing: async () => {},
+      reply: async () => acceptedSendResult("text", "r1"),
+      sendMedia: async () => acceptedSendResult("media", "m1"),
+    },
     from: "15551234567",
     conversationId: "15551234567",
-    to: "15559876543",
     accountId: "default",
-    body: "hello",
     chatType: "direct",
-    chatId: "15551234567@s.whatsapp.net",
-    sendComposing: async () => {},
-    reply: async () => acceptedSendResult("text", "r1"),
-    sendMedia: async () => acceptedSendResult("media", "m1"),
     ...overrides,
-  };
+  });
 }
 
 function createConfig(

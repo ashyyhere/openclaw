@@ -4,6 +4,7 @@ vi.mock("./group-activation.js", () => ({
   resolveGroupActivationFor: vi.fn(async () => "mention"),
 }));
 
+import { withDeprecatedWebInboundMessageFlatAliases } from "../../inbound/message-aliases.js";
 import type { MentionConfig } from "../mentions.js";
 import type { WebInboundMsg } from "../types.js";
 import {
@@ -16,18 +17,27 @@ function makeUnregisteredGroupMsg(
   conversationId: string,
   accountId: string = "default",
 ): WebInboundMsg {
-  return {
-    id: `msg-${conversationId}`,
+  return withDeprecatedWebInboundMessageFlatAliases({
+    event: {
+      id: `msg-${conversationId}`,
+      timestamp: 1700000000,
+    },
+    payload: {
+      body: "@openclaw hello",
+    },
+    platform: {
+      chatJid: conversationId,
+      recipientJid: "+15550000001",
+      sender: { e164: "+15550000002", name: "Alice" },
+      sendComposing: async () => {},
+      reply: async () => ({ kind: "text", providerAccepted: true }) as never,
+      sendMedia: async () => ({ kind: "media", providerAccepted: true }) as never,
+    },
     from: conversationId,
-    to: "+15550000001",
-    body: "@openclaw hello",
-    chatId: conversationId,
     chatType: "group",
     conversationId,
-    timestamp: 1700000000,
     accountId,
-    sender: { e164: "+15550000002", name: "Alice" },
-  } as WebInboundMsg;
+  });
 }
 
 type WarnLogger = (obj: unknown, msg: string) => void;
