@@ -1,4 +1,3 @@
-// extensions/tokenjuice tool result middleware helpers and runtime behavior.
 import process from "node:process";
 import type {
   AgentToolResultMiddleware,

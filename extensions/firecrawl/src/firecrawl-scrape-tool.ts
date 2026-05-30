@@ -1,4 +1,3 @@
-// extensions/firecrawl/src firecrawl scrape tool helpers and runtime behavior.
 import { optionalStringEnum } from "openclaw/plugin-sdk/channel-actions";
 import type { OpenClawPluginApi } from "openclaw/plugin-sdk/plugin-runtime";
 import {

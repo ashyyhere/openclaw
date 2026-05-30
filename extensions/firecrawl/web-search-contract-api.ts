@@ -1,4 +1,3 @@
-// extensions/firecrawl web search contract api helpers and runtime behavior.
 import { type WebSearchProviderPlugin } from "openclaw/plugin-sdk/provider-web-search-contract";
 import { buildFirecrawlWebSearchProviderBase } from "./web-search-shared.js";
 
