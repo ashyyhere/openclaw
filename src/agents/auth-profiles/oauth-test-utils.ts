@@ -5,10 +5,10 @@ import path from "node:path";
 import type { resolveApiKeyForProfile } from "./oauth.js";
 import type { AuthProfileStore, OAuthCredential } from "./types.js";
 
-/** Reused constant for OAUTH AGENT ENV KEYS behavior in src/agents/auth-profiles. */
+/** Env keys reset by OAuth auth-profile tests. */
 export const OAUTH_AGENT_ENV_KEYS = ["OPENCLAW_STATE_DIR", "OPENCLAW_AGENT_DIR"];
 
-/** Reused helper for resolve Api Key For Profile In Test behavior in src/agents/auth-profiles. */
+/** Calls `resolveApiKeyForProfile` with an empty config for tests. */
 export function resolveApiKeyForProfileInTest(
   resolver: typeof resolveApiKeyForProfile,
   params: Omit<Parameters<typeof resolveApiKeyForProfile>[0], "cfg">,
@@ -16,7 +16,7 @@ export function resolveApiKeyForProfileInTest(
   return resolver({ cfg: {}, ...params });
 }
 
-/** Reused helper for oauth Cred behavior in src/agents/auth-profiles. */
+/** Builds an OAuth credential fixture. */
 export function oauthCred(params: {
   provider: string;
   access: string;
@@ -28,12 +28,12 @@ export function oauthCred(params: {
   return { type: "oauth", ...params };
 }
 
-/** Reused helper for store With behavior in src/agents/auth-profiles. */
+/** Builds an auth profile store containing one OAuth credential. */
 export function storeWith(profileId: string, cred: OAuthCredential): AuthProfileStore {
   return { version: 1, profiles: { [profileId]: cred } };
 }
 
-/** Reused helper for create Expired Oauth Store behavior in src/agents/auth-profiles. */
+/** Builds an auth profile store with one expired OAuth credential. */
 export function createExpiredOauthStore(params: {
   profileId: string;
   provider: string;
@@ -58,12 +58,12 @@ export function createExpiredOauthStore(params: {
   };
 }
 
-/** Reused helper for create OAuth Test Temp Root behavior in src/agents/auth-profiles. */
+/** Creates a temp root for OAuth profile filesystem tests. */
 export async function createOAuthTestTempRoot(prefix: string): Promise<string> {
   return fs.mkdtemp(path.join(os.tmpdir(), prefix));
 }
 
-/** Reused helper for create OAuth Main Agent Dir behavior in src/agents/auth-profiles. */
+/** Creates and exports the main agent dir under a test state directory. */
 export async function createOAuthMainAgentDir(stateDir: string): Promise<string> {
   const agentDir = path.join(stateDir, "agents", "main", "agent");
   process.env.OPENCLAW_STATE_DIR = stateDir;
@@ -72,7 +72,7 @@ export async function createOAuthMainAgentDir(stateDir: string): Promise<string>
   return agentDir;
 }
 
-/** Reused helper for remove OAuth Test Temp Root behavior in src/agents/auth-profiles. */
+/** Removes an OAuth test temp root if one was created. */
 export async function removeOAuthTestTempRoot(tempRoot: string): Promise<void> {
   if (tempRoot) {
     await fs.rm(tempRoot, { recursive: true, force: true });
@@ -91,7 +91,7 @@ type ReturnValueMock = ResettableMock & {
   mockReturnValue(value: unknown): unknown;
 };
 
-/** Reused helper for reset OAuth Provider Runtime Mocks behavior in src/agents/auth-profiles. */
+/** Resets OAuth provider runtime mocks to their neutral defaults. */
 export function resetOAuthProviderRuntimeMocks(mocks: {
   refreshProviderOAuthCredentialWithPluginMock: ResolvedValueMock;
   formatProviderAuthProfileApiKeyWithPluginMock: ReturnValueMock;
@@ -102,7 +102,7 @@ export function resetOAuthProviderRuntimeMocks(mocks: {
   mocks.formatProviderAuthProfileApiKeyWithPluginMock.mockReturnValue(undefined);
 }
 
-/** Reused helper for make Seeded Random behavior in src/agents/auth-profiles. */
+/** Creates a deterministic pseudo-random generator for fixture fuzzing. */
 export function makeSeededRandom(seed: number): () => number {
   let state = seed >>> 0;
   return () => {
@@ -114,7 +114,7 @@ export function makeSeededRandom(seed: number): () => number {
   };
 }
 
-/** Reused helper for random Ascii String behavior in src/agents/auth-profiles. */
+/** Generates a deterministic random ASCII string from a seeded RNG. */
 export function randomAsciiString(rng: () => number, maxLen: number): string {
   const len = Math.floor(rng() * maxLen);
   const chars: string[] = [];
@@ -124,12 +124,12 @@ export function randomAsciiString(rng: () => number, maxLen: number): string {
   return chars.join("");
 }
 
-/** Reused helper for maybe behavior in src/agents/auth-profiles. */
+/** Returns a fixture value roughly half the time. */
 export function maybe<T>(rng: () => number, value: T): T | undefined {
   return rng() < 0.5 ? value : undefined;
 }
 
-/** Reused helper for randomly Cased behavior in src/agents/auth-profiles. */
+/** Applies deterministic random casing to a fixture string. */
 export function randomlyCased(value: string, rng: () => number): string {
   return value
     .split("")

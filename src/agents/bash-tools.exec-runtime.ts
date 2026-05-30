@@ -23,9 +23,9 @@ import type { ProcessSession } from "./bash-process-registry.js";
 import type { ExecToolDetails } from "./bash-tools.exec-types.js";
 import type { BashSandboxConfig } from "./bash-tools.shared.js";
 import type { AgentToolResult } from "./runtime/index.js";
-/** Re-exported API for src/agents, starting with apply Path Prepend. */
+/** PATH prepend helpers used when shaping exec environments. */
 export { applyPathPrepend, findPathKey, normalizePathPrepend } from "../infra/path-prepend.js";
-/** Re-exported API for src/agents. */
+/** Exec approval policy normalizers shared with runtime callers. */
 export {
   normalizeExecAsk,
   normalizeExecHost,
@@ -58,7 +58,7 @@ import {
 import { buildCursorPositionResponse, stripDsrRequests } from "./pty-dsr.js";
 import { getShellConfig, sanitizeBinaryOutput } from "./shell-utils.js";
 
-/** Re-exported API for src/agents, starting with exec Schema. */
+/** Model-facing schema for the bash exec tool. */
 export { execSchema } from "./bash-tools.schemas.js";
 
 const SMKX = "\x1b[?1h";
@@ -128,34 +128,34 @@ export function validateHostEnv(env: Record<string, string>): void {
     }
   }
 }
-/** Reused constant for DEFAULT MAX OUTPUT behavior in src/agents. */
+/** Default maximum captured output for completed exec processes. */
 export const DEFAULT_MAX_OUTPUT = clampWithDefault(
   readEnvInt("OPENCLAW_BASH_MAX_OUTPUT_CHARS", "PI_BASH_MAX_OUTPUT_CHARS"),
   200_000,
   1_000,
   200_000,
 );
-/** Reused constant for DEFAULT PENDING MAX OUTPUT behavior in src/agents. */
+/** Default maximum captured output for still-running exec processes. */
 export const DEFAULT_PENDING_MAX_OUTPUT = clampWithDefault(
   readEnvInt("OPENCLAW_BASH_PENDING_MAX_OUTPUT_CHARS"),
   30_000,
   1_000,
   200_000,
 );
-/** Reused constant for DEFAULT PATH behavior in src/agents. */
+/** Fallback PATH used when the runtime env does not provide one. */
 export const DEFAULT_PATH =
   process.env.PATH ?? "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin";
-/** Reused constant for DEFAULT NOTIFY TAIL CHARS behavior in src/agents. */
+/** Tail length included in exec completion notifications. */
 export const DEFAULT_NOTIFY_TAIL_CHARS = 400;
 const DEFAULT_NOTIFY_SNIPPET_CHARS = 180;
-/** Reused constant for DEFAULT APPROVAL TIMEOUT MS behavior in src/agents. */
+/** Default timeout while waiting for an exec approval decision. */
 export const DEFAULT_APPROVAL_TIMEOUT_MS = DEFAULT_EXEC_APPROVAL_TIMEOUT_MS;
-/** Reused constant for DEFAULT APPROVAL REQUEST TIMEOUT MS behavior in src/agents. */
+/** Default timeout for approval request delivery plus decision latency. */
 export const DEFAULT_APPROVAL_REQUEST_TIMEOUT_MS = DEFAULT_APPROVAL_TIMEOUT_MS + 10_000;
 const DEFAULT_APPROVAL_RUNNING_NOTICE_MS = 10_000;
 const APPROVAL_SLUG_LENGTH = 8;
 
-/** Shared type for Exec Process Failure Kind in src/agents. */
+/** Normalized failure classes for supervised exec processes. */
 export type ExecProcessFailureKind =
   | "shell-command-not-found"
   | "shell-not-executable"
@@ -167,7 +167,7 @@ export type ExecProcessFailureKind =
 
 type ExecExitFailureKind = Exclude<ExecProcessFailureKind, "runtime-error">;
 
-/** Shared type for Exec Process Outcome in src/agents. */
+/** Completed or failed process result after output aggregation. */
 export type ExecProcessOutcome =
   | {
       status: "completed";
@@ -188,7 +188,7 @@ export type ExecProcessOutcome =
       reason: string;
     };
 
-/** Shared type for Exec Process Handle in src/agents. */
+/** Runtime handle for a supervised exec process session. */
 export type ExecProcessHandle = {
   session: ProcessSession;
   startedAt: number;
@@ -507,7 +507,7 @@ export function emitExecSystemEvent(
   }
 }
 
-/** Re-exported API for src/agents, starting with render Exec Update Text. */
+/** Renders user-facing incremental exec update text. */
 export { renderExecUpdateText } from "./bash-tools.exec-output.js";
 
 function joinExecFailureOutput(aggregated: string, reason: string) {

@@ -7,7 +7,7 @@ function resolveControllerSessionKey(entry: SubagentRunRecord): string {
   return entry.controllerSessionKey?.trim() || entry.requesterSessionKey;
 }
 
-/** Reused helper for list Runs For Requester From Runs behavior in src/agents. */
+/** Lists subagent runs requested by a session, optionally scoped to one parent run. */
 export function listRunsForRequesterFromRuns(
   runs: Map<string, SubagentRunRecord>,
   requesterSessionKey: string,
@@ -41,7 +41,7 @@ export function listRunsForRequesterFromRuns(
   });
 }
 
-/** Reused helper for list Runs For Controller From Runs behavior in src/agents. */
+/** Lists subagent runs controlled by a session key. */
 export function listRunsForControllerFromRuns(
   runs: Map<string, SubagentRunRecord>,
   controllerSessionKey: string,
@@ -58,7 +58,7 @@ type LatestRunPair = {
   entry: SubagentRunRecord;
 };
 
-/** Shared type for Subagent Run Read Index in src/agents. */
+/** Precomputed read index for display and descendant run counts. */
 export type SubagentRunReadIndex = {
   getDisplaySubagentRun(childSessionKey: string): SubagentRunRecord | null;
   countActiveDescendantRuns(rootSessionKey: string): number;
@@ -88,7 +88,7 @@ function rememberLatestRunPair(
   }
 }
 
-/** Reused helper for build Subagent Run Read Index From Runs behavior in src/agents. */
+/** Builds a read-optimized subagent run index from snapshots and live records. */
 export function buildSubagentRunReadIndexFromRuns(params: {
   runs: Map<string, SubagentRunRecord>;
   inMemoryRuns?: Iterable<SubagentRunRecord>;
@@ -260,7 +260,7 @@ function findLatestRunForChildSession(
   return latest;
 }
 
-/** Reused helper for is Subagent Session Run Active From Runs behavior in src/agents. */
+/** Returns whether the latest run for a child session is still live. */
 export function isSubagentSessionRunActiveFromRuns(
   runs: Map<string, SubagentRunRecord>,
   childSessionKey: string,
@@ -269,7 +269,7 @@ export function isSubagentSessionRunActiveFromRuns(
   return Boolean(latest && isLiveUnendedSubagentRun(latest));
 }
 
-/** Reused helper for get Subagent Run By Child Session Key From Runs behavior in src/agents. */
+/** Returns the latest active or ended run for a child session. */
 export function getSubagentRunByChildSessionKeyFromRuns(
   runs: Map<string, SubagentRunRecord>,
   childSessionKey: string,
@@ -299,7 +299,7 @@ export function getSubagentRunByChildSessionKeyFromRuns(
   return latestActive ?? latestEnded;
 }
 
-/** Reused helper for resolve Requester For Child Session From Runs behavior in src/agents. */
+/** Resolves the requester session and origin for a child session's latest run. */
 export function resolveRequesterForChildSessionFromRuns(
   runs: Map<string, SubagentRunRecord>,
   childSessionKey: string,
@@ -317,7 +317,7 @@ export function resolveRequesterForChildSessionFromRuns(
   };
 }
 
-/** Reused helper for should Ignore Post Completion Announce For Session From Runs behavior in src/agents. */
+/** Detects completed non-session spawns whose post-completion announce is stale. */
 export function shouldIgnorePostCompletionAnnounceForSessionFromRuns(
   runs: Map<string, SubagentRunRecord>,
   childSessionKey: string,
@@ -332,7 +332,7 @@ export function shouldIgnorePostCompletionAnnounceForSessionFromRuns(
   );
 }
 
-/** Reused helper for count Active Runs For Session From Runs behavior in src/agents. */
+/** Counts active direct runs for a controller, including descendants still pending. */
 export function countActiveRunsForSessionFromRuns(
   runs: Map<string, SubagentRunRecord>,
   controllerSessionKey: string,
@@ -424,7 +424,7 @@ function forEachDescendantRun(
   return true;
 }
 
-/** Reused helper for count Active Descendant Runs From Runs behavior in src/agents. */
+/** Counts live descendant runs under a requester session tree. */
 export function countActiveDescendantRunsFromRuns(
   runs: Map<string, SubagentRunRecord>,
   rootSessionKey: string,
@@ -464,7 +464,7 @@ function countPendingDescendantRunsInternal(
   return count;
 }
 
-/** Reused helper for count Pending Descendant Runs From Runs behavior in src/agents. */
+/** Counts descendant runs that are live or awaiting cleanup. */
 export function countPendingDescendantRunsFromRuns(
   runs: Map<string, SubagentRunRecord>,
   rootSessionKey: string,
@@ -472,7 +472,7 @@ export function countPendingDescendantRunsFromRuns(
   return countPendingDescendantRunsInternal(runs, rootSessionKey);
 }
 
-/** Reused helper for count Pending Descendant Runs Excluding Run From Runs behavior in src/agents. */
+/** Counts pending descendants while excluding one run id. */
 export function countPendingDescendantRunsExcludingRunFromRuns(
   runs: Map<string, SubagentRunRecord>,
   rootSessionKey: string,
@@ -481,7 +481,7 @@ export function countPendingDescendantRunsExcludingRunFromRuns(
   return countPendingDescendantRunsInternal(runs, rootSessionKey, excludeRunId);
 }
 
-/** Reused helper for list Descendant Runs For Requester From Runs behavior in src/agents. */
+/** Lists latest descendant runs reachable from a requester session tree. */
 export function listDescendantRunsForRequesterFromRuns(
   runs: Map<string, SubagentRunRecord>,
   rootSessionKey: string,
