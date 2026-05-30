@@ -12,7 +12,7 @@ import type { NostrProfile as NostrProfileType } from "../types.ts";
 // Types
 // ============================================================================
 
-/** Shared type for Nostr Profile Form State in ui/src/ui/views. */
+/** Editable Nostr profile state and validation feedback for the profile form. */
 export interface NostrProfileFormState {
   /** Current form values */
   values: NostrProfileType;
@@ -32,7 +32,7 @@ export interface NostrProfileFormState {
   showAdvanced: boolean;
 }
 
-/** Shared type for Nostr Profile Form Callbacks in ui/src/ui/views. */
+/** Event callbacks owned by the parent Nostr profile screen. */
 export interface NostrProfileFormCallbacks {
   /** Called when a field value changes */
   onFieldChange: (field: keyof NostrProfileType, value: string) => void;
@@ -68,7 +68,7 @@ function isFormDirty(state: NostrProfileFormState): boolean {
 // Form Rendering
 // ============================================================================
 
-/** Reused helper for render Nostr Profile Form behavior in ui/src/ui/views. */
+/** Render the Nostr kind:0 profile editor with dirty-state aware actions. */
 export function renderNostrProfileForm(params: {
   state: NostrProfileFormState;
   callbacks: NostrProfileFormCallbacks;
