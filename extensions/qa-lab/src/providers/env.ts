@@ -1,4 +1,4 @@
-// extensions/qa-lab/src/providers env helpers and runtime behavior.
+// QA Lab provider env helpers scrub mock runs and forward live-provider credentials safely.
 import { existsSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -21,11 +21,14 @@ const QA_LIVE_ENV_ALIASES = Object.freeze([
   },
 ]);
 
+/** Env var that points live-provider QA runs at an OpenClaw config file. */
 export const QA_LIVE_PROVIDER_CONFIG_PATH_ENV = "OPENCLAW_QA_LIVE_PROVIDER_CONFIG_PATH";
 const QA_LIVE_CLI_BACKEND_PRESERVE_ENV = "OPENCLAW_LIVE_CLI_BACKEND_PRESERVE_ENV";
 const QA_LIVE_CLI_BACKEND_AUTH_MODE_ENV = "OPENCLAW_LIVE_CLI_BACKEND_AUTH_MODE";
+/** Auth modes accepted by live CLI backends during QA runs. */
 export type QaCliBackendAuthMode = "auto" | "api-key" | "subscription";
 
+/** Secret env vars that must be redacted or scrubbed in QA diagnostics. */
 export const QA_PROVIDER_SECRET_ENV_VARS = Object.freeze([
   "ANTHROPIC_API_KEY",
   "ANTHROPIC_OAUTH_TOKEN",
@@ -49,6 +52,7 @@ export const QA_PROVIDER_SECRET_ENV_VARS = Object.freeze([
   "OPENCLAW_QA_CONVEX_SECRET_MAINTAINER",
   "VOYAGE_API_KEY",
 ]);
+/** Secret env key patterns that must be redacted or scrubbed in QA diagnostics. */
 export const QA_PROVIDER_SECRET_ENV_KEY_PATTERNS = Object.freeze([
   /^OPENCLAW_LIVE_[A-Z0-9_]+_KEYS?$/u,
 ]);
@@ -129,6 +133,7 @@ function renderPreservedCliEnv(values: string[]) {
   return JSON.stringify(uniqueStrings(values));
 }
 
+/** Normalizes env vars for mock or live provider mode before launching QA processes. */
 export function normalizeQaProviderModeEnv(env: NodeJS.ProcessEnv, providerMode?: QaProviderMode) {
   const provider = providerMode ? getQaProvider(providerMode) : null;
   if (provider?.scrubsLiveProviderEnv) {
@@ -150,6 +155,7 @@ export function normalizeQaProviderModeEnv(env: NodeJS.ProcessEnv, providerMode?
   return env;
 }
 
+/** Resolves extra env needed by live CLI backends such as Claude CLI and Codex. */
 export function resolveQaLiveCliAuthEnv(
   baseEnv: NodeJS.ProcessEnv,
   opts?: {
@@ -204,6 +210,7 @@ export function resolveQaLiveCliAuthEnv(
   };
 }
 
+/** Resolves the OpenClaw config path used by live-provider QA runs. */
 export function resolveQaLiveProviderConfigPath(env: NodeJS.ProcessEnv = process.env) {
   const explicit =
     env[QA_LIVE_PROVIDER_CONFIG_PATH_ENV]?.trim() || env.OPENCLAW_CONFIG_PATH?.trim();
@@ -212,6 +219,7 @@ export function resolveQaLiveProviderConfigPath(env: NodeJS.ProcessEnv = process
     : { path: path.join(os.homedir(), ".openclaw", "openclaw.json"), explicit: false };
 }
 
+/** Filters and aliases host env for forwarding into live-provider QA processes. */
 export function resolveQaForwardedLiveEnv(baseEnv: NodeJS.ProcessEnv = process.env) {
   const forwarded: Record<string, string> = {};
   for (const [key, rawValue] of Object.entries(baseEnv)) {

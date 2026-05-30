@@ -1,4 +1,4 @@
-// extensions/qa-lab/src/providers image generation helpers and runtime behavior.
+// QA Lab image-generation provider helper builds config patches for image fixtures.
 import {
   normalizeTrimmedStringList,
   uniqueStrings,
@@ -23,6 +23,7 @@ function uniqueNonEmpty(values: readonly (string | null | undefined)[]) {
   return uniqueStrings(normalizeTrimmedStringList(values));
 }
 
+/** Builds the gateway config patch needed to enable image generation in QA runs. */
 export function buildQaImageGenerationConfigPatch(input: QaImageGenerationPatchInput) {
   const provider = getQaProvider(input.providerMode);
   const usesOpenAiMockImageProvider = input.providerMode === "mock-openai";

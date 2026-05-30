@@ -1,4 +1,4 @@
-// extensions/qa-lab/src/providers/aimock server helpers and runtime behavior.
+// QA Lab AIMock server wraps LLMock with debug endpoints for provider-request inspection.
 import type { IncomingMessage, ServerResponse } from "node:http";
 import {
   LLMock,
@@ -183,6 +183,7 @@ function createDebugMount(mock: LLMock): Mountable {
   };
 }
 
+/** Starts the local AIMock provider server used by QA Lab mock runs. */
 export async function startQaAimockServer(params?: { host?: string; port?: number }) {
   const mock = new LLMock({
     host: params?.host ?? "127.0.0.1",

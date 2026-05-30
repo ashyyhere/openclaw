@@ -1,9 +1,10 @@
-// extensions/qa-lab/src/providers index helpers and runtime behavior.
+// QA Lab provider registry normalizes provider modes and exposes provider metadata.
 import { aimockProviderDefinition } from "./aimock/index.js";
 import { liveFrontierProviderDefinition } from "./live-frontier/index.js";
 import { mockOpenAiProviderDefinition } from "./mock-openai/index.js";
 import type { QaProviderDefinition, QaProviderMode, QaProviderModeInput } from "./shared/types.js";
 
+/** Public provider registry types. */
 export type { QaMockProviderServer, QaProviderMode, QaProviderModeInput } from "./shared/types.js";
 
 const PROVIDERS: readonly QaProviderDefinition[] = [
@@ -12,7 +13,9 @@ const PROVIDERS: readonly QaProviderDefinition[] = [
   liveFrontierProviderDefinition,
 ] as const;
 
+/** Default provider mode for non-live QA runs. */
 export const DEFAULT_QA_PROVIDER_MODE: QaProviderMode = "mock-openai";
+/** Default provider mode for live QA runs. */
 export const DEFAULT_QA_LIVE_PROVIDER_MODE: QaProviderMode = "live-frontier";
 
 const PROVIDERS_BY_INPUT = new Map<QaProviderModeInput, QaProviderDefinition>();
@@ -20,14 +23,17 @@ for (const provider of PROVIDERS) {
   PROVIDERS_BY_INPUT.set(provider.mode, provider);
 }
 
+/** Returns whether input is a registered QA provider mode. */
 export function isQaProviderModeInput(input: unknown): input is QaProviderModeInput {
   return typeof input === "string" && PROVIDERS_BY_INPUT.has(input as QaProviderModeInput);
 }
 
+/** Normalizes a provider-mode input to its canonical mode. */
 export function normalizeQaProviderMode(input: QaProviderModeInput): QaProviderMode {
   return getQaProvider(input).mode;
 }
 
+/** Looks up a provider definition for a provider-mode input. */
 export function getQaProvider(input: QaProviderModeInput): QaProviderDefinition {
   const provider = PROVIDERS_BY_INPUT.get(input);
   if (!provider) {
@@ -40,10 +46,12 @@ function listQaProviderModes() {
   return PROVIDERS.map((provider) => provider.mode);
 }
 
+/** Formats provider-mode help text for CLI output. */
 export function formatQaProviderModeHelp() {
   return `Provider mode: ${listQaProviderModes().join(", ")}`;
 }
 
+/** Lists standalone provider commands exposed by registered provider definitions. */
 export function listQaStandaloneProviderCommands() {
   return PROVIDERS.flatMap((provider) =>
     provider.standaloneCommand
