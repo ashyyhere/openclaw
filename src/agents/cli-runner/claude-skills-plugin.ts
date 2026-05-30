@@ -32,7 +32,7 @@ function sanitizeSkillDirName(name: string, used: Set<string>): string {
   return candidate;
 }
 
-/** Reused helper for is Claude Cli Skill File Accessible behavior in src/agents/cli-runner. */
+/** Checks whether a Claude CLI skill file can be materialized into the plugin dir. */
 export function isClaudeCliSkillFileAccessible(skillFilePath: string): boolean {
   try {
     accessSync(skillFilePath);
@@ -85,7 +85,7 @@ async function linkOrCopySkillDir(params: { sourceDir: string; targetDir: string
   }
 }
 
-/** Reused helper for prepare Claude Cli Skills Plugin behavior in src/agents/cli-runner. */
+/** Materializes selected OpenClaw skills as a temporary Claude CLI plugin. */
 export async function prepareClaudeCliSkillsPlugin(params: {
   backendId: string;
   skillsSnapshot?: SkillSnapshot;

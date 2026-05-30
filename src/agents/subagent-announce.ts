@@ -74,11 +74,11 @@ function loadSubagentRegistryRuntime() {
   return subagentRegistryRuntimeLoader.load();
 }
 
-/** Re-exported API for src/agents, starting with build Subagent System Prompt. */
+/** Subagent system prompt builder used by announcement runs. */
 export { buildSubagentSystemPrompt } from "./subagent-system-prompt.js";
-/** Re-exported API for src/agents, starting with capture Subagent Completion Reply. */
+/** Captures concise completion replies from subagent announcement output. */
 export { captureSubagentCompletionReply } from "./subagent-announce-output.js";
-/** Re-exported API for src/agents, starting with Subagent Run Outcome. */
+/** Subagent run outcome contract returned after announcement processing. */
 export type { SubagentRunOutcome } from "./subagent-announce-output.js";
 
 /** Human-readable source kind used in parent announcement prompts. */
@@ -643,5 +643,5 @@ export const testing = {
       : defaultSubagentAnnounceDeps;
   },
 };
-/** Re-exported API for src/agents, starting with testing. */
+/** Test-only dependency override hooks for subagent announcement delivery. */
 export { testing as __testing };

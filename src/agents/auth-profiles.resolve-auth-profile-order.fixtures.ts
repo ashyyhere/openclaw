@@ -2,7 +2,7 @@
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { AuthProfileStore } from "./auth-profiles.js";
 
-/** Reused constant for ANTHROPIC STORE behavior in src/agents. */
+/** Auth profile store fixture with default and work Anthropic profiles. */
 export const ANTHROPIC_STORE: AuthProfileStore = {
   version: 1,
   profiles: {
@@ -19,7 +19,7 @@ export const ANTHROPIC_STORE: AuthProfileStore = {
   },
 };
 
-/** Reused constant for ANTHROPIC CFG behavior in src/agents. */
+/** Config fixture referencing the Anthropic profiles by id. */
 export const ANTHROPIC_CFG: OpenClawConfig = {
   auth: {
     profiles: {

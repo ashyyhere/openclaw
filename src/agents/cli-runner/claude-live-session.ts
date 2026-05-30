@@ -118,7 +118,7 @@ function sha256(value: string): string {
   return crypto.createHash("sha256").update(value).digest("hex");
 }
 
-/** Reused helper for reset Claude Live Sessions For Test behavior in src/agents/cli-runner. */
+/** Closes and clears reusable Claude live sessions between tests. */
 export function resetClaudeLiveSessionsForTest(): void {
   for (const session of liveSessions.values()) {
     closeLiveSession(session, "restart");
@@ -147,7 +147,7 @@ async function waitForManagedRunExit(managedRun: ManagedRun): Promise<void> {
   }
 }
 
-/** Reused helper for close Claude Live Session For Context behavior in src/agents/cli-runner. */
+/** Closes the reusable Claude live session matching a prepared run context. */
 export async function closeClaudeLiveSessionForContext(
   context: PreparedCliRunContext,
 ): Promise<void> {
@@ -160,7 +160,7 @@ export async function closeClaudeLiveSessionForContext(
   liveSessionCreates.delete(key);
 }
 
-/** Reused helper for should Use Claude Live Session behavior in src/agents/cli-runner. */
+/** Returns true when a prepared Claude CLI run can reuse stdio live mode. */
 export function shouldUseClaudeLiveSession(context: PreparedCliRunContext): boolean {
   return (
     context.backendResolved.id === "claude-cli" &&
@@ -219,7 +219,7 @@ function stripLiveProcessArgs(
   return stripped;
 }
 
-/** Reused helper for build Claude Live Args behavior in src/agents/cli-runner. */
+/** Normalizes Claude CLI args for stream-json stdio live-session mode. */
 export function buildClaudeLiveArgs(params: {
   args: string[];
   backend: CliBackendConfig;
@@ -1196,7 +1196,7 @@ function ensureLiveSessionCapacity(key: string, context: PreparedCliRunContext):
   });
 }
 
-/** Reused helper for run Claude Live Session Turn behavior in src/agents/cli-runner. */
+/** Runs one prompt through a reusable Claude CLI live session. */
 export async function runClaudeLiveSessionTurn(params: {
   context: PreparedCliRunContext;
   args: string[];

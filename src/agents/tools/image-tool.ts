@@ -162,7 +162,7 @@ function isCanonicalCandidateShadowedByExecutionAlias(
   );
 }
 
-/** Reused constant for testing behavior in src/agents/tools. */
+/** Test-only image-tool helper and provider override surface. */
 export const testing = {
   decodeDataUrl,
   coerceImageAssistantText,
@@ -1033,5 +1033,5 @@ export function createImageTool(options?: {
     },
   };
 }
-/** Re-exported API for src/agents/tools, starting with testing. */
+/** Test-only image-tool helper and provider override surface. */
 export { testing as __testing };
