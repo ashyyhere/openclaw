@@ -31,17 +31,17 @@ import { uniqueStrings } from "../shared/string-normalization.js";
 import { resolveConfigDir, shortenHomeInString, shortenHomePath, sleep } from "../utils.js";
 import { VERSION } from "../version.js";
 import type { NodeManagerChoice, OnboardMode, ResetScope } from "./onboard-types.js";
-/** Re-exported API for src/commands, starting with random Token. */
+/** Token generator reused by onboarding flows that create gateway credentials. */
 export { randomToken } from "./random-token.js";
 
-/** Re-exported API for src/commands, starting with detect Binary. */
+/** Binary detector exposed for setup steps that verify local tooling. */
 export { detectBinary };
-/** Re-exported API for src/commands, starting with detect Browser Open Support. */
+/** Browser-open helpers used by onboarding to launch or explain Control UI access. */
 export { detectBrowserOpenSupport, openUrl, resolveBrowserOpenCommand };
-/** Re-exported API for src/commands, starting with resolve Control Ui Links. */
+/** Control UI link resolver shared by local and remote onboarding summaries. */
 export { resolveControlUiLinks };
 
-/** Reused helper for guard Cancel behavior in src/commands. */
+/** Handles Clack cancellation consistently before exiting the onboarding command. */
 export function guardCancel<T>(value: T | symbol, runtime: RuntimeEnv): T {
   if (isCancel(value)) {
     cancel(stylePromptTitle("Setup cancelled.") ?? "Setup cancelled.");
@@ -51,7 +51,7 @@ export function guardCancel<T>(value: T | symbol, runtime: RuntimeEnv): T {
   return value;
 }
 
-/** Reused helper for summarize Existing Config behavior in src/commands. */
+/** Builds a compact summary of existing config values shown before setup changes them. */
 export function summarizeExistingConfig(config: OpenClawConfig): string {
   const rows: string[] = [];
   const defaults = config.agents?.defaults;
@@ -128,7 +128,7 @@ function formatGatewayBind(value: string | undefined): string | undefined {
   }
 }
 
-/** Reused helper for normalize Gateway Token Input behavior in src/commands. */
+/** Normalizes gateway token prompts and rejects stringified nullish values. */
 export function normalizeGatewayTokenInput(value: unknown): string {
   if (typeof value !== "string") {
     return "";
@@ -142,7 +142,7 @@ export function normalizeGatewayTokenInput(value: unknown): string {
   return trimmed;
 }
 
-/** Reused helper for validate Gateway Password Input behavior in src/commands. */
+/** Validates gateway password prompt input for required non-nullish text. */
 export function validateGatewayPasswordInput(value: unknown): string | undefined {
   if (typeof value !== "string") {
     return "Required";
@@ -157,7 +157,7 @@ export function validateGatewayPasswordInput(value: unknown): string | undefined
   return undefined;
 }
 
-/** Reused helper for print Wizard Header behavior in src/commands. */
+/** Prints the onboarding banner using runtime logging and terminal capability checks. */
 export function printWizardHeader(runtime: RuntimeEnv) {
   const bannerWidth = 54;
   const icon = decorativeEmoji("🦞");
@@ -176,7 +176,7 @@ export function printWizardHeader(runtime: RuntimeEnv) {
   runtime.log(header);
 }
 
-/** Reused helper for apply Wizard Metadata behavior in src/commands. */
+/** Records the onboarding command, mode, version, and commit on the config object. */
 export function applyWizardMetadata(
   cfg: OpenClawConfig,
   params: { command: string; mode: OnboardMode },
@@ -196,7 +196,7 @@ export function applyWizardMetadata(
   };
 }
 
-/** Reused helper for format Control Ui Ssh Hint behavior in src/commands. */
+/** Formats the no-GUI SSH tunnel hint for opening Control UI from another machine. */
 export function formatControlUiSshHint(params: {
   port: number;
   basePath?: string;
@@ -232,7 +232,7 @@ function resolveSshTargetHint(): string {
   return `${user}@${host}`;
 }
 
-/** Reused helper for ensure Workspace And Sessions behavior in src/commands. */
+/** Ensures the agent workspace and transcript directory exist during onboarding. */
 export async function ensureWorkspaceAndSessions(
   workspaceDir: string,
   runtime: RuntimeEnv,
@@ -253,7 +253,7 @@ export async function ensureWorkspaceAndSessions(
   runtime.log(`Sessions OK: ${shortenHomePath(sessionsDir)}`);
 }
 
-/** Reused helper for resolve Node Manager Options behavior in src/commands. */
+/** Returns the node package manager choices shown by setup prompts. */
 export function resolveNodeManagerOptions(): Array<{
   value: NodeManagerChoice;
   label: string;
@@ -265,7 +265,7 @@ export function resolveNodeManagerOptions(): Array<{
   ];
 }
 
-/** Reused helper for move To Trash behavior in src/commands. */
+/** Moves reset targets to Trash when present and logs a manual-delete fallback. */
 export async function moveToTrash(pathname: string, runtime: RuntimeEnv): Promise<void> {
   if (!pathname) {
     return;
@@ -306,7 +306,7 @@ async function resolveMoveToTrashAllowedRoots(targetPath: string): Promise<strin
   return uniqueStrings(allowedRoots);
 }
 
-/** Reused helper for handle Reset behavior in src/commands. */
+/** Applies the selected reset scope to config, credentials, sessions, and workspace paths. */
 export async function handleReset(scope: ResetScope, workspaceDir: string, runtime: RuntimeEnv) {
   await moveToTrash(resolveConfigPath(), runtime);
   if (scope === "config") {
@@ -319,7 +319,7 @@ export async function handleReset(scope: ResetScope, workspaceDir: string, runti
   }
 }
 
-/** Reused helper for probe Gateway Reachable behavior in src/commands. */
+/** Probes a gateway health endpoint with optional setup credentials. */
 export async function probeGatewayReachable(params: {
   url: string;
   token?: string;
@@ -344,7 +344,7 @@ export async function probeGatewayReachable(params: {
   }
 }
 
-/** Reused helper for wait For Gateway Reachable behavior in src/commands. */
+/** Polls gateway health until it responds or the setup deadline expires. */
 export async function waitForGatewayReachable(params: {
   url: string;
   token?: string;
@@ -396,5 +396,5 @@ function summarizeError(err: unknown): string {
   return line.length > 120 ? `${line.slice(0, 119)}…` : line;
 }
 
-/** Reused constant for DEFAULT WORKSPACE behavior in src/commands. */
+/** Default workspace path offered by onboarding. */
 export const DEFAULT_WORKSPACE = DEFAULT_AGENT_WORKSPACE_DIR;
