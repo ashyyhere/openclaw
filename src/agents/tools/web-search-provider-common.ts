@@ -37,7 +37,7 @@ async function loadSelfHostedWebToolsEndpoint(): Promise<
   return (await webGuardedFetchLoader.load()).withSelfHostedWebToolsEndpoint;
 }
 
-/** Shared type for Search Config Record in src/agents/tools. */
+/** Provider search config block with room for provider-specific fields. */
 export type SearchConfigRecord = (NonNullable<OpenClawConfig["tools"]>["web"] extends infer Web
   ? Web extends { search?: infer Search }
     ? Search
@@ -52,11 +52,11 @@ type UnsupportedWebSearchFilterName =
   | "date_after"
   | "date_before";
 
-/** Reused constant for DEFAULT SEARCH COUNT behavior in src/agents/tools. */
+/** Default number of search results requested from providers. */
 export const DEFAULT_SEARCH_COUNT = 5;
-/** Reused constant for MAX SEARCH COUNT behavior in src/agents/tools. */
+/** Hard cap on search result count across providers. */
 export const MAX_SEARCH_COUNT = 10;
-/** Reused constant for SEARCH CACHE behavior in src/agents/tools. */
+/** Shared in-memory cache for normalized search provider payloads. */
 export const SEARCH_CACHE = new Map<string, CacheEntry<Record<string, unknown>>>();
 
 /** Resolves search timeout seconds from provider config. */
@@ -76,12 +76,12 @@ export function resolveSearchCount(value: unknown, fallback: number): number {
   return clamped;
 }
 
-/** Reused helper for read Configured Secret String behavior in src/agents/tools. */
+/** Reads a resolved secret input as a normalized non-empty string. */
 export function readConfiguredSecretString(value: unknown, path: string): string | undefined {
   return normalizeSecretInput(normalizeResolvedSecretInputString({ value, path })) || undefined;
 }
 
-/** Reused helper for read Provider Env Value behavior in src/agents/tools. */
+/** Returns the first non-empty provider credential from candidate env vars. */
 export function readProviderEnvValue(envVars: string[]): string | undefined {
   for (const envVar of envVars) {
     const value = normalizeSecretInput(process.env[envVar]);
@@ -92,7 +92,7 @@ export function readProviderEnvValue(envVars: string[]): string | undefined {
   return undefined;
 }
 
-/** Reused helper for with Trusted Web Search Endpoint behavior in src/agents/tools. */
+/** Runs a request through trusted web-tool endpoint policy. */
 export async function withTrustedWebSearchEndpoint<T>(
   params: {
     url: string;
@@ -114,7 +114,7 @@ export async function withTrustedWebSearchEndpoint<T>(
   );
 }
 
-/** Reused helper for with Self Hosted Web Search Endpoint behavior in src/agents/tools. */
+/** Runs a request through self-hosted web-tool endpoint policy. */
 export async function withSelfHostedWebSearchEndpoint<T>(
   params: {
     url: string;
@@ -181,14 +181,14 @@ export async function postTrustedWebToolsJson<T>(
   );
 }
 
-/** Reused helper for throw Web Search Api Error behavior in src/agents/tools. */
+/** Throws a provider-labeled API error with bounded response body detail. */
 export async function throwWebSearchApiError(res: Response, providerLabel: string): Promise<never> {
   const detailResult = await readResponseText(res, { maxBytes: 64_000 });
   const detail = detailResult.text;
   throw new Error(`${providerLabel} API error (${res.status}): ${detail || res.statusText}`);
 }
 
-/** Reused helper for resolve Site Name behavior in src/agents/tools. */
+/** Extracts a hostname to use as a search result site label. */
 export function resolveSiteName(url: string | undefined): string | undefined {
   if (!url) {
     return undefined;
@@ -240,7 +240,7 @@ function isValidIsoDate(value: string): boolean {
   );
 }
 
-/** Reused helper for iso To Perplexity Date behavior in src/agents/tools. */
+/** Converts an ISO date into Perplexity's M/D/YYYY date format. */
 export function isoToPerplexityDate(iso: string): string | undefined {
   const match = iso.match(ISO_DATE_PATTERN);
   if (!match) {
@@ -250,7 +250,7 @@ export function isoToPerplexityDate(iso: string): string | undefined {
   return `${Number.parseInt(month, 10)}/${Number.parseInt(day, 10)}/${year}`;
 }
 
-/** Reused helper for normalize To Iso Date behavior in src/agents/tools. */
+/** Normalizes ISO or Perplexity date input to YYYY-MM-DD. */
 export function normalizeToIsoDate(value: string): string | undefined {
   const trimmed = value.trim();
   if (ISO_DATE_PATTERN.test(trimmed)) {
@@ -265,7 +265,7 @@ export function normalizeToIsoDate(value: string): string | undefined {
   return undefined;
 }
 
-/** Reused helper for parse Iso Date Range behavior in src/agents/tools. */
+/** Parses and validates optional ISO date-after/date-before bounds. */
 export function parseIsoDateRange(params: {
   rawDateAfter?: string;
   rawDateBefore?: string;
@@ -423,7 +423,7 @@ export function buildSearchCacheKey(parts: Array<string | number | boolean | und
   );
 }
 
-/** Reused helper for write Cached Search Payload behavior in src/agents/tools. */
+/** Writes a normalized search payload to the shared search cache. */
 export function writeCachedSearchPayload(
   cacheKey: string,
   payload: Record<string, unknown>,
