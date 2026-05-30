@@ -1,10 +1,10 @@
-// infra/net undici family policy helpers and runtime behavior.
+// Resolves Undici address-family defaults, including WSL2 IPv4 fallback policy.
 import * as net from "node:net";
 import { isWSL2Sync } from "../wsl.js";
 
 const AUTO_SELECT_FAMILY_ATTEMPT_TIMEOUT_MS = 300;
 
-/** Reused helper for resolve Undici Auto Select Family behavior in src/infra/net. */
+/** Resolves whether Undici should use Node's autoSelectFamily connection behavior. */
 export function resolveUndiciAutoSelectFamily(): boolean | undefined {
   if (typeof net.getDefaultAutoSelectFamily !== "function") {
     return undefined;
@@ -22,7 +22,7 @@ export function resolveUndiciAutoSelectFamily(): boolean | undefined {
   }
 }
 
-/** Reused helper for create Undici Auto Select Family Connect Options behavior in src/infra/net. */
+/** Builds Undici connect options for a known autoSelectFamily decision. */
 export function createUndiciAutoSelectFamilyConnectOptions(
   autoSelectFamily: boolean | undefined,
 ): { autoSelectFamily: boolean; autoSelectFamilyAttemptTimeout: number } | undefined {
@@ -35,14 +35,14 @@ export function createUndiciAutoSelectFamilyConnectOptions(
   };
 }
 
-/** Reused helper for resolve Undici Auto Select Family Connect Options behavior in src/infra/net. */
+/** Resolves connect options using the current Node and platform address-family policy. */
 export function resolveUndiciAutoSelectFamilyConnectOptions():
   | { autoSelectFamily: boolean; autoSelectFamilyAttemptTimeout: number }
   | undefined {
   return createUndiciAutoSelectFamilyConnectOptions(resolveUndiciAutoSelectFamily());
 }
 
-/** Reused helper for with Temporary Undici Auto Select Family behavior in src/infra/net. */
+/** Temporarily overrides Node's global autoSelectFamily default while building a dispatcher. */
 export function withTemporaryUndiciAutoSelectFamily<T>(
   autoSelectFamily: boolean | undefined,
   run: () => T,
