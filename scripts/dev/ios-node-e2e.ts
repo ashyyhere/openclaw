@@ -1,4 +1,4 @@
-// scripts/dev ios node e2e helpers and runtime behavior.
+// iOS node E2E helper connects to Gateway and invokes representative device commands.
 import {
   MIN_CLIENT_PROTOCOL_VERSION,
   PROTOCOL_VERSION,

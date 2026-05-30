@@ -1,5 +1,5 @@
 #!/usr/bin/env -S node --import tsx
-// scripts qa otel smoke helpers and runtime behavior.
+// QA OTEL smoke validates telemetry shape and privacy from QA-lab scenarios.
 
 import { spawn, type ChildProcess } from "node:child_process";
 import { randomUUID } from "node:crypto";
@@ -1332,6 +1332,7 @@ async function main() {
   );
 }
 
+/** Test seam exposing request parsing helpers without running the OTEL smoke CLI. */
 export const testing = {
   appendCapturedBodyText,
   decodeRequestBody,

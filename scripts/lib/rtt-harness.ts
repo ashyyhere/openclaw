@@ -1,4 +1,4 @@
-// scripts/lib rtt harness helpers and runtime behavior.
+// Telegram RTT harness helpers run npm package round-trip timing scenarios.
 import { execFile, spawn } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -6,8 +6,11 @@ import { promisify } from "node:util";
 
 const execFileAsync = promisify(execFile);
 
+/** Provider mode used by Telegram RTT validation. */
 export type RttProviderMode = "mock-openai" | "live-frontier";
+/** Credential source used by Telegram RTT validation. */
 export type RttCredentialSource = "env" | "convex";
+/** Credential role used when leasing Telegram RTT credentials. */
 export type RttCredentialRole = "maintainer" | "ci";
 
 type RttResult = {
@@ -75,6 +78,7 @@ const REQUIRED_TELEGRAM_ENV = [
   "OPENCLAW_QA_TELEGRAM_SUT_BOT_TOKEN",
 ] as const;
 
+/** Parses the RTT credential source option. */
 export function parseRttCredentialSource(value: string): RttCredentialSource {
   const normalized = value.trim().toLowerCase();
   if (normalized === "env" || normalized === "convex") {
@@ -83,6 +87,7 @@ export function parseRttCredentialSource(value: string): RttCredentialSource {
   throw new Error(`--credential-source must be env or convex; got: ${value}`);
 }
 
+/** Parses the RTT credential role option. */
 export function parseRttCredentialRole(value: string): RttCredentialRole {
   const normalized = value.trim().toLowerCase();
   if (normalized === "maintainer" || normalized === "ci") {
@@ -127,6 +132,7 @@ function resolveRttCredentialRole(
   return env.CI ? "ci" : "maintainer";
 }
 
+/** Validates OpenClaw npm package specs accepted by RTT runs. */
 export function validateOpenClawPackageSpec(spec: string) {
   if (!OPENCLAW_PACKAGE_SPEC_RE.test(spec)) {
     throw new Error(
@@ -136,16 +142,19 @@ export function validateOpenClawPackageSpec(spec: string) {
   return spec;
 }
 
+/** Converts package specs into filesystem-safe RTT run labels. */
 export function safeRunLabel(input: string) {
   return input.replace(/[^a-zA-Z0-9.-]+/gu, "_").replace(/^_+|_+$/gu, "");
 }
 
+/** Builds a timestamped RTT run id. */
 export function buildRunId(params: { now: Date; spec: string; index?: number }) {
   const stamp = params.now.toISOString().replaceAll(":", "").replaceAll(".", "");
   const suffix = params.index === undefined ? "" : `-${params.index + 1}`;
   return `${stamp}-${safeRunLabel(params.spec)}${suffix}`;
 }
 
+/** Extracts RTT metrics from a Telegram QA summary. */
 export function extractRtt(summary: TelegramQaSummary) {
   const scenarios = summary.scenarios ?? [];
   const mention = scenarios.find((scenario) => scenario.id === "telegram-mentioned-message-reply");
@@ -170,6 +179,7 @@ export function extractRtt(summary: TelegramQaSummary) {
   return rtt;
 }
 
+/** Builds the environment passed to the Telegram RTT Docker harness. */
 export function createHarnessEnv(params: {
   baseEnv: NodeJS.ProcessEnv;
   credentialRole?: RttCredentialRole;
@@ -206,6 +216,7 @@ export function createHarnessEnv(params: {
   };
 }
 
+/** Ensures required Telegram or Convex credential environment is present. */
 export function assertRequiredEnv(
   env: NodeJS.ProcessEnv,
   options: {
@@ -238,6 +249,7 @@ export function assertRequiredEnv(
   }
 }
 
+/** Verifies the RTT harness script exists in the target checkout. */
 export async function assertHarnessRoot(harnessRoot: string) {
   const scriptPath = path.join(harnessRoot, "scripts/e2e/npm-telegram-rtt-docker.sh");
   try {
@@ -247,6 +259,7 @@ export async function assertHarnessRoot(harnessRoot: string) {
   }
 }
 
+/** Verifies Docker is available before running RTT scenarios. */
 export async function assertDockerAvailable() {
   try {
     await execFileAsync("docker", ["version", "--format", "{{.Server.Version}}"], {
@@ -257,6 +270,7 @@ export async function assertDockerAvailable() {
   }
 }
 
+/** Resolves a published OpenClaw package spec to its npm version. */
 export async function resolvePublishedVersion(spec: string) {
   const { stdout } = await execFileAsync("npm", ["view", spec, "version", "--json"], {
     timeout: 30_000,
@@ -268,6 +282,7 @@ export async function resolvePublishedVersion(spec: string) {
   return parsed.trim();
 }
 
+/** Resolves the current checkout version plus short git SHA for `openclaw@main`. */
 export async function resolveMainVersion(harnessRoot: string) {
   const packageJson = JSON.parse(
     await fs.readFile(path.join(harnessRoot, "package.json"), "utf8"),
@@ -282,20 +297,24 @@ export async function resolveMainVersion(harnessRoot: string) {
   return `${packageJson.version.trim()}+${stdout.trim()}`;
 }
 
+/** Reads the raw Telegram QA summary emitted by the RTT harness. */
 export async function readTelegramSummary(summaryPath: string) {
   return JSON.parse(await fs.readFile(summaryPath, "utf8")) as TelegramQaSummary;
 }
 
+/** Writes pretty JSON, creating parent directories as needed. */
 export async function writeJson(pathname: string, value: unknown) {
   await fs.mkdir(path.dirname(pathname), { recursive: true });
   await fs.writeFile(pathname, `${JSON.stringify(value, null, 2)}\n`);
 }
 
+/** Appends one JSONL record, creating parent directories as needed. */
 export async function appendJsonl(pathname: string, value: unknown) {
   await fs.mkdir(path.dirname(pathname), { recursive: true });
   await fs.appendFile(pathname, `${JSON.stringify(value)}\n`);
 }
 
+/** Runs the Telegram RTT Docker harness script. */
 export async function runHarness(params: { env: NodeJS.ProcessEnv; harnessRoot: string }) {
   const scriptPath = path.join(params.harnessRoot, "scripts/e2e/npm-telegram-rtt-docker.sh");
   const child = spawn("bash", [scriptPath], {
@@ -310,6 +329,7 @@ export async function runHarness(params: { env: NodeJS.ProcessEnv; harnessRoot: 
   return exitCode ?? 1;
 }
 
+/** Builds the normalized RTT result artifact from raw harness output. */
 export function buildRttResult(params: {
   artifacts: RttResult["artifacts"];
   finishedAt: Date;

@@ -1,4 +1,4 @@
-// scripts/lib release beta verifier helpers and runtime behavior.
+// Beta release verifier checks GitHub, npm, ClawHub, workflow, and evidence state.
 import { execFileSync } from "node:child_process";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
@@ -11,6 +11,7 @@ import {
 
 type JsonRecord = Record<string, unknown>;
 
+/** Normalized inputs for beta release verification. */
 export type ReleaseVerifyBetaArgs = {
   version: string;
   tag: string;
@@ -32,6 +33,7 @@ export type ReleaseVerifyBetaArgs = {
   };
 };
 
+/** npm metadata fields required to verify a published package version. */
 export type NpmViewFields = {
   version?: string;
   distTagVersion?: string;
@@ -89,6 +91,7 @@ function parseJson(raw: string, label: string): unknown {
   }
 }
 
+/** Parses `npm view` JSON output into stable verification fields. */
 export function parseNpmViewFields(raw: string, distTag: string): NpmViewFields {
   const parsed = parseJson(raw, "npm view");
   if (Array.isArray(parsed)) {
@@ -110,6 +113,7 @@ export function parseNpmViewFields(raw: string, distTag: string): NpmViewFields 
   };
 }
 
+/** Parses beta release verification CLI arguments. */
 export function parseReleaseVerifyBetaArgs(argv: string[]): ReleaseVerifyBetaArgs {
   const values = [...argv];
   if (values[0] === "--") {
@@ -240,6 +244,7 @@ async function fetchJsonWithRetry(url: string): Promise<unknown> {
   return await readBoundedJsonResponse(response, url);
 }
 
+/** Reads bounded JSON from release verification HTTP responses. */
 export async function readBoundedJsonResponse(
   response: Response,
   label: string,
@@ -466,6 +471,7 @@ function assertSelectedPackagesResolved(params: {
   }
 }
 
+/** Verifies beta release publication state and returns evidence lines. */
 export async function verifyBetaRelease(
   args: ReleaseVerifyBetaArgs,
   options: { rootDir?: string } = {},
