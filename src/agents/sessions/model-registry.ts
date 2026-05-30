@@ -227,7 +227,7 @@ interface ProviderRequestConfig {
   authHeader?: boolean;
 }
 
-/** Shared type for Resolved Request Auth in src/agents/sessions. */
+/** Auth headers/API key resolved for a provider request, or a user-facing error. */
 export type ResolvedRequestAuth =
   | {
       ok: true;

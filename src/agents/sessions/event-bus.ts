@@ -1,13 +1,13 @@
 /** Tiny event bus abstraction used by AgentSession runtime services. */
 import { EventEmitter } from "node:events";
 
-/** Shared type for Event Bus in src/agents/sessions. */
+/** Minimal publish/subscribe surface used by session runtime services. */
 export interface EventBus {
   emit(channel: string, data: unknown): void;
   on(channel: string, handler: (data: unknown) => void): () => void;
 }
 
-/** Shared type for Event Bus Controller in src/agents/sessions. */
+/** Event bus with lifecycle cleanup for tests and session teardown. */
 export interface EventBusController extends EventBus {
   clear(): void;
 }

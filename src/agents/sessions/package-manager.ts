@@ -11,7 +11,7 @@ import { type GitSource, parseGitUrl } from "../utils/git.js";
 import { canonicalizePath, isLocalPath } from "../utils/paths.js";
 import type { PackageSource, SettingsManager } from "./settings-manager.js";
 
-/** Shared type for Path Metadata in src/agents/sessions. */
+/** Origin metadata for a resolved extension, skill, prompt, or theme path. */
 export interface PathMetadata {
   source: string;
   scope: SourceScope;
@@ -19,14 +19,14 @@ export interface PathMetadata {
   baseDir?: string;
 }
 
-/** Shared type for Resolved Resource in src/agents/sessions. */
+/** Resolved package resource path plus enabled state and provenance. */
 export interface ResolvedResource {
   path: string;
   enabled: boolean;
   metadata: PathMetadata;
 }
 
-/** Shared type for Resolved Paths in src/agents/sessions. */
+/** Resource groups available to a session after package resolution. */
 export interface ResolvedPaths {
   extensions: ResolvedResource[];
   skills: ResolvedResource[];
@@ -34,10 +34,10 @@ export interface ResolvedPaths {
   themes: ResolvedResource[];
 }
 
-/** Shared type for Missing Source Action in src/agents/sessions. */
+/** Policy returned when a configured package source cannot be found. */
 export type MissingSourceAction = "skip" | "error";
 
-/** Shared type for Package Manager in src/agents/sessions. */
+/** Resolves configured package sources into session resource paths. */
 export interface PackageManager {
   resolve(onMissing?: (source: string) => Promise<MissingSourceAction>): Promise<ResolvedPaths>;
   resolveExtensionSources(
@@ -790,7 +790,7 @@ function applyPatterns(allPaths: string[], patterns: string[], baseDir: string):
   return new Set(result);
 }
 
-/** Reused class for Default Package Manager behavior in src/agents/sessions. */
+/** Default package resolver for local, git, npm, and scoped resource sources. */
 export class DefaultPackageManager implements PackageManager {
   private cwd: string;
   private agentDir: string;

@@ -188,14 +188,14 @@ export type AgentSessionEvent =
 
 /** Listener function for agent session events */
 export type AgentSessionEventListener = (event: AgentSessionEvent) => void;
-/** Shared type for Agent Session Write Lock Runner in src/agents/sessions. */
+/** Serializes writes that mutate the session transcript or write-capable hooks. */
 export type AgentSessionWriteLockRunner = <T>(run: () => Promise<T> | T) => Promise<T>;
 
 // ============================================================================
 // Types
 // ============================================================================
 
-/** Shared type for Agent Session Config in src/agents/sessions. */
+/** Constructor dependencies and runtime options for an AgentSession. */
 export interface AgentSessionConfig {
   agent: Agent;
   sessionManager: SessionManager;
@@ -230,7 +230,7 @@ export interface AgentSessionConfig {
   withSessionWriteLock?: AgentSessionWriteLockRunner;
 }
 
-/** Shared type for Extension Bindings in src/agents/sessions. */
+/** Runtime callbacks installed by extensions for UI, command, and shutdown hooks. */
 export interface ExtensionBindings {
   uiContext?: ExtensionUIContext;
   commandContextActions?: ExtensionCommandContextActions;
@@ -310,7 +310,7 @@ const THINKING_LEVELS: ThinkingLevel[] = ["off", "minimal", "low", "medium", "hi
 // AgentSession Class
 // ============================================================================
 
-/** Reused class for Agent Session behavior in src/agents/sessions. */
+/** Coordinates prompts, tools, model selection, transcript writes, and session events. */
 export class AgentSession {
   readonly agent: Agent;
   readonly sessionManager: SessionManager;
