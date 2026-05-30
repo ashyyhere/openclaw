@@ -171,7 +171,7 @@ import { readTranscriptFileState } from "./transcript-file-state.js";
 import type { EmbeddedAgentCompactResult } from "./types.js";
 import { mapThinkingLevel, normalizeContextTokenBudget } from "./utils.js";
 import { flushPendingToolResultsAfterIdle } from "./wait-for-idle-before-flush.js";
-/** Re-exported API for src/agents/embedded-agent-runner, starting with Compact Embedded Agent Session Params. */
+/** Public parameter contract for callers that compact an embedded-agent session. */
 export type { CompactEmbeddedAgentSessionParams } from "./compact.types.js";
 
 function hasRealConversationContent(
@@ -1542,7 +1542,7 @@ async function compactEmbeddedAgentSessionDirectOnce(
   }
 }
 
-/** Reused constant for testing behavior in src/agents/embedded-agent-runner. */
+/** Test hook exposing compaction helpers that are intentionally private at runtime. */
 export const testing = {
   hasRealConversationContent,
   hasMeaningfulConversationContent,
@@ -1557,7 +1557,7 @@ export const testing = {
   runPostCompactionSideEffects,
 } as const;
 
-/** Re-exported API for src/agents/embedded-agent-runner, starting with run Post Compaction Side Effects. */
+/** Allow orchestration tests to run the same post-compaction side-effect pipeline. */
 export { runPostCompactionSideEffects } from "./compaction-hooks.js";
-/** Re-exported API for src/agents/embedded-agent-runner, starting with testing. */
+/** Stable test-only alias for compaction internals. */
 export { testing as __testing };
