@@ -1,4 +1,3 @@
-// plugins trusted tool policy helpers and runtime behavior.
 import { getRuntimeConfig } from "../config/config.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { isPlainObject } from "../utils.js";
@@ -13,7 +12,6 @@ import { getPluginSessionExtensionStateSync } from "./host-hook-state.js";
 import type { PluginJsonValue } from "./host-hooks.js";
 import { getActivePluginRegistry } from "./runtime.js";
 
-/** Reused helper for has Trusted Tool Policies behavior in src/plugins. */
 export function hasTrustedToolPolicies(): boolean {
   return (getActivePluginRegistry()?.trustedToolPolicies?.length ?? 0) > 0;
 }
@@ -38,7 +36,6 @@ function normalizeToolIdentity(
   };
 }
 
-/** Reused helper for run Trusted Tool Policies behavior in src/plugins. */
 export async function runTrustedToolPolicies(
   event: PluginHookBeforeToolCallEvent,
   ctx: PluginHookToolContext,

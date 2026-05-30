@@ -1,7 +1,6 @@
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 
-/** Reused helper for resolve Provider Config Api Owner Hint behavior in src/plugins. */
 export function resolveProviderConfigApiOwnerHint(params: {
   provider: string;
   config?: OpenClawConfig;

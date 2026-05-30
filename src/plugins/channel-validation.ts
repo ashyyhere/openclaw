@@ -1,4 +1,3 @@
-// plugins channel validation helpers and runtime behavior.
 import { listChatChannels } from "../channels/chat-meta.js";
 import { normalizeChannelMeta } from "../channels/plugins/meta-normalization.js";
 import type { ChannelPlugin } from "../channels/plugins/types.plugin.js";
@@ -51,7 +50,6 @@ function collectMissingChannelMetaFields(meta?: Partial<ChannelMeta> | null): st
   return missing;
 }
 
-/** Reused helper for normalize Registered Channel Plugin behavior in src/plugins. */
 export function normalizeRegisteredChannelPlugin(params: {
   pluginId: string;
   source: string;
