@@ -1,6 +1,7 @@
-// test/vitest vitest wizard config helpers and runtime behavior.
+// Wizard Vitest config scopes tests to setup wizard source files.
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
+/** Creates the wizard Vitest project config. */
 export function createWizardVitestConfig(env?: Record<string, string | undefined>) {
   return createScopedVitestConfig(["src/wizard/**/*.test.ts"], {
     dir: "src",
@@ -10,4 +11,5 @@ export function createWizardVitestConfig(env?: Record<string, string | undefined
   });
 }
 
+/** Default wizard Vitest project config. */
 export default createWizardVitestConfig();

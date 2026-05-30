@@ -1,14 +1,16 @@
-// test/vitest vitest extension active memory config helpers and runtime behavior.
+// Active Memory extension Vitest config scopes tests to generated Active Memory root lists.
 import { activeMemoryExtensionTestRoots } from "./vitest.extension-active-memory-paths.mjs";
 import { loadPatternListFromEnv } from "./vitest.pattern-file.ts";
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
+/** Loads optional Active Memory test include patterns from an env-provided pattern file. */
 export function loadIncludePatternsFromEnv(
   env: Record<string, string | undefined> = process.env,
 ): string[] | null {
   return loadPatternListFromEnv("OPENCLAW_VITEST_INCLUDE_FILE", env);
 }
 
+/** Creates the Active Memory extension Vitest project config. */
 export function createExtensionActiveMemoryVitestConfig(
   env: Record<string, string | undefined> = process.env,
 ) {
@@ -25,4 +27,5 @@ export function createExtensionActiveMemoryVitestConfig(
   );
 }
 
+/** Default Active Memory extension Vitest project config. */
 export default createExtensionActiveMemoryVitestConfig();
