@@ -35,30 +35,30 @@ if (shouldWarnCompatImport) {
   );
 }
 
-/** Re-exported API for src/plugin-sdk, starting with empty Plugin Config Schema. */
+/** Legacy config-schema helper for plugins that have not moved to the config subpath. */
 export { emptyPluginConfigSchema } from "../plugins/config-schema.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Legacy memory artifact contracts kept for older memory-capable plugins. */
 export type {
   MemoryPluginCapability,
   MemoryPluginPublicArtifact,
   MemoryPluginPublicArtifactsProvider,
 } from "../plugins/memory-state.js";
-/** Re-exported API for src/plugin-sdk, starting with resolve Control Command Gate. */
+/** Legacy command-gating helper for channel plugins still importing through compat. */
 export { resolveControlCommandGate } from "../channels/command-gating.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Legacy context compaction helpers retained until plugins adopt context-engine subpaths. */
 export {
   buildMemorySystemPromptAddition,
   delegateCompactionToRuntime,
 } from "../context-engine/delegate.js";
-/** Re-exported API for src/plugin-sdk, starting with register Context Engine. */
+/** Legacy context-engine registration export for older plugin entrypoints. */
 export { registerContextEngine } from "../context-engine/registry.js";
-/** Re-exported API for src/plugin-sdk, starting with Diagnostic Event Payload. */
+/** Legacy diagnostic event payload contract for plugins listening to host diagnostics. */
 export type { DiagnosticEventPayload } from "../infra/diagnostic-events.js";
-/** Re-exported API for src/plugin-sdk, starting with on Diagnostic Event. */
+/** Legacy diagnostic event subscription helper. */
 export { onDiagnosticEvent } from "../infra/diagnostic-events.js";
-/** Re-exported API for src/plugin-sdk, starting with optional String Enum. */
+/** Legacy TypeBox enum helpers used by older plugin schemas. */
 export { optionalStringEnum, stringEnum } from "../agents/schema/typebox.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Legacy provider credential helpers for plugins that have not moved to provider subpaths. */
 export {
   applyAuthProfileConfig,
   buildApiKeyCredential,
@@ -68,18 +68,18 @@ export {
   type WriteOAuthCredentialsOptions,
 } from "../plugins/provider-auth-helpers.js";
 
-/** Re-exported API for src/plugin-sdk, starting with create Account Status Sink. */
+/** Legacy account-status sink export for channel lifecycle integrations. */
 export { createAccountStatusSink } from "./channel-lifecycle.core.js";
-/** Re-exported API for src/plugin-sdk, starting with create Plugin Runtime Store. */
+/** Legacy runtime store export for plugins keeping process-local state through compat. */
 export { createPluginRuntimeStore } from "./runtime-store.js";
-/** Re-exported API for src/plugin-sdk, starting with Keyed Async Queue. */
+/** Legacy keyed queue export for serialized plugin account work. */
 export { KeyedAsyncQueue } from "./keyed-async-queue.js";
-/** Re-exported API for src/plugin-sdk, starting with normalize Account Id. */
+/** Legacy account id normalizer for channel plugins. */
 export { normalizeAccountId } from "./account-id.js";
-/** Re-exported API for src/plugin-sdk, starting with resolve Preferred Open Claw Tmp Dir. */
+/** Legacy temp-dir resolver for plugins that need host-preferred scratch paths. */
 export { resolvePreferredOpenClawTmpDir } from "./temp-path.js";
 
-/** Re-exported API for src/plugin-sdk. */
+/** Legacy channel config adapter helpers retained for old channel plugin imports. */
 export {
   createHybridChannelConfigAdapter,
   createHybridChannelConfigBase,
@@ -91,15 +91,15 @@ export {
   createTopLevelChannelConfigBase,
   mapAllowFromEntries,
 } from "./channel-config-helpers.js";
-/** Re-exported API for src/plugin-sdk, starting with format Allow From Lowercase. */
+/** Legacy allowlist formatting helpers for channel configuration displays. */
 export { formatAllowFromLowercase, formatNormalizedAllowFromEntries } from "./allow-from.js";
 export * from "./channel-config-schema.js";
 export * from "./channel-policy.js";
-/** Re-exported API for src/plugin-sdk, starting with collect Open Group Policy Configured Route Warnings. */
+/** Legacy open-group route warning collector for channel policy validation. */
 export { collectOpenGroupPolicyConfiguredRouteWarnings } from "./channel-policy.js";
 export * from "./reply-history.js";
 export * from "./directory-runtime.js";
-/** Re-exported API for src/plugin-sdk, starting with map Allowlist Resolution Inputs. */
+/** Legacy allowlist mapping helper for channel policy resolution. */
 export { mapAllowlistResolutionInputs } from "./allow-from.js";
 
 /** @deprecated Use `openclaw/plugin-sdk/channel-outbound`. */
