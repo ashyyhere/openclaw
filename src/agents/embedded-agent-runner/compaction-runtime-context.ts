@@ -14,7 +14,7 @@ import {
   resolveSelectedOpenAIRuntimeProvider,
 } from "../openai-codex-routing.js";
 
-/** Shared type for Embedded Compaction Runtime Context in src/agents/embedded-agent-runner. */
+/** Runtime inputs carried into compaction-owned embedded agent turns. */
 export type EmbeddedCompactionRuntimeContext = {
   sessionKey?: string;
   messageChannel?: string;

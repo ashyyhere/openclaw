@@ -2,7 +2,7 @@
 import crypto from "node:crypto";
 import type { NormalizedUsage } from "../usage.js";
 
-/** Shared type for Prompt Cache Change Code in src/agents/embedded-agent-runner. */
+/** Stable category for a prompt-cache-relevant change between attempts. */
 export type PromptCacheChangeCode =
   | "cacheRetention"
   | "model"
@@ -11,13 +11,13 @@ export type PromptCacheChangeCode =
   | "tools"
   | "transport";
 
-/** Shared type for Prompt Cache Change in src/agents/embedded-agent-runner. */
+/** One observed prompt-cache input change with a compact diagnostic detail. */
 export type PromptCacheChange = {
   code: PromptCacheChangeCode;
   detail: string;
 };
 
-/** Shared type for Prompt Cache Snapshot in src/agents/embedded-agent-runner. */
+/** Digest snapshot of inputs that affect provider prompt-cache reuse. */
 export type PromptCacheSnapshot = {
   provider: string;
   modelId: string;
@@ -31,14 +31,14 @@ export type PromptCacheSnapshot = {
   toolNames: string[];
 };
 
-/** Shared type for Prompt Cache Observation Start in src/agents/embedded-agent-runner. */
+/** Baseline returned when a prompt-cache observation begins. */
 export type PromptCacheObservationStart = {
   snapshot: PromptCacheSnapshot;
   changes: PromptCacheChange[] | null;
   previousCacheRead: number | null;
 };
 
-/** Shared type for Prompt Cache Break in src/agents/embedded-agent-runner. */
+/** Drop in cache-read tokens plus the pending changes that may explain it. */
 export type PromptCacheBreak = {
   previousCacheRead: number;
   cacheRead: number;
@@ -143,7 +143,7 @@ function diffSnapshots(
   return changes.length > 0 ? changes : null;
 }
 
-/** Reused helper for collect Prompt Cache Tool Names behavior in src/agents/embedded-agent-runner. */
+/** Extracts stable tool names for prompt-cache tool-set digests. */
 export function collectPromptCacheToolNames(tools: Array<{ name?: string }>): string[] {
   return tools.map((tool) => tool.name?.trim()).filter((name): name is string => Boolean(name));
 }
@@ -230,7 +230,7 @@ export function completePromptCacheObservation(params: {
   return result;
 }
 
-/** Reused helper for reset Prompt Cache Observability For Test behavior in src/agents/embedded-agent-runner. */
+/** Clears process-local prompt-cache observation state for isolated tests. */
 export function resetPromptCacheObservabilityForTest(): void {
   trackers.clear();
 }

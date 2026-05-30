@@ -4,7 +4,7 @@ import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";
 
 type CacheRetention = "none" | "short" | "long";
 
-/** Reused helper for is Google Prompt Cache Eligible behavior in src/agents/embedded-agent-runner. */
+/** Checks whether a Google model family supports explicit prompt-cache retention. */
 export function isGooglePromptCacheEligible(params: {
   modelApi?: string;
   modelId?: string;
@@ -16,7 +16,7 @@ export function isGooglePromptCacheEligible(params: {
   return normalizedModelId.startsWith("gemini-2.5") || normalizedModelId.startsWith("gemini-3");
 }
 
-/** Reused helper for resolve Cache Retention behavior in src/agents/embedded-agent-runner. */
+/** Resolves effective cache retention after provider-family eligibility gates. */
 export function resolveCacheRetention(
   extraParams: Record<string, unknown> | undefined,
   provider: string,
