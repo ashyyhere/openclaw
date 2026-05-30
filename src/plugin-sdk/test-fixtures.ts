@@ -1,6 +1,6 @@
 // Focused public test helpers for generic fixtures shared by plugin tests.
 
-/** Re-exported API for src/plugin-sdk. */
+/** CLI runtime capture helpers for plugin tests. */
 export {
   createCliRuntimeCapture,
   firstWrittenJsonArg,
@@ -8,33 +8,33 @@ export {
   spyRuntimeJson,
   spyRuntimeLogs,
 } from "../cli/test-runtime-capture.js";
-/** Re-exported API for src/plugin-sdk, starting with Cli Mock Output Runtime. */
+/** CLI runtime capture fixture types. */
 export type { CliMockOutputRuntime, CliRuntimeCapture } from "../cli/test-runtime-capture.js";
-/** Re-exported API for src/plugin-sdk, starting with create Sandbox Test Context. */
+/** Sandbox test context factory for plugin and agent tests. */
 export { createSandboxTestContext } from "../agents/sandbox/test-fixtures.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Sandbox config fixture builders. */
 export {
   createSandboxBrowserConfig,
   createSandboxPruneConfig,
   createSandboxSshConfig,
 } from "./test-helpers/sandbox-fixtures.js";
-/** Re-exported API for src/plugin-sdk, starting with write Skill. */
+/** Skill fixture writer for end-to-end tests. */
 export { writeSkill } from "../skills/test-support/e2e-test-helpers.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Agent message fixture builders. */
 export {
   castAgentMessage,
   makeAgentAssistantMessage,
   makeAgentUserMessage,
 } from "../agents/test-helpers/agent-message-fixtures.js";
-/** Re-exported API for src/plugin-sdk, starting with peek System Events. */
+/** System event test inspection and reset helpers. */
 export { peekSystemEvents, resetSystemEventsForTest } from "../infra/system-events.js";
 export { sanitizeTerminalText } from "../../packages/terminal-core/src/safe-text.js";
 export { countLines, hasBalancedFences } from "../test-utils/chunk-test-helpers.js";
-/** Re-exported API for src/plugin-sdk, starting with expect Generated Token Persisted To Gateway Auth. */
+/** Gateway auth token assertion helper for tests. */
 export { expectGeneratedTokenPersistedToGatewayAuth } from "../test-utils/auth-token-assertions.js";
-/** Re-exported API for src/plugin-sdk, starting with typed Cases. */
+/** Typed table-case helper for tests. */
 export { typedCases } from "../test-utils/typed-cases.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Bundled plugin path fixture helpers. */
 export {
   BUNDLED_PLUGIN_PATH_PREFIX,
   BUNDLED_PLUGIN_ROOT_DIR,
@@ -51,9 +51,9 @@ export {
   installedPluginRoot,
   repoInstallSpec,
 } from "./test-helpers/bundled-plugin-paths.js";
-/** Re-exported API for src/plugin-sdk, starting with import Fresh Module. */
+/** Fresh module import helper for tests that need isolated module state. */
 export { importFreshModule } from "./test-helpers/import-fresh.js";
-/** Re-exported API for src/plugin-sdk. */
+/** PNG/RGBA image fixture builders. */
 export {
   createGrayscaleAlphaPngBuffer,
   createNoisyPngBuffer,

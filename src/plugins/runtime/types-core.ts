@@ -1,4 +1,4 @@
-// plugins/runtime types core helpers and runtime behavior.
+// Core runtime surface injected into trusted native plugin runtime helpers.
 import type { HeartbeatRunResult } from "../../infra/heartbeat-wake.js";
 import type { LogLevel } from "../../logging/levels.js";
 import type { MediaUnderstandingRuntime } from "../../media-understanding/runtime-types.js";
@@ -10,15 +10,15 @@ import type {
 } from "../../plugin-sdk/tts-runtime.types.js";
 import type { PluginRuntimeTaskFlows, PluginRuntimeTaskRuns } from "./runtime-tasks.types.js";
 
-/** Re-exported API for src/plugins/runtime, starting with Heartbeat Run Result. */
+/** Result shape returned by immediate heartbeat runs. */
 export type { HeartbeatRunResult };
 
-/** Shared type for Runtime Request Heartbeat Options in src/plugins/runtime. */
+/** Options accepted by the runtime heartbeat request helper. */
 export type RuntimeRequestHeartbeatOptions = Parameters<
   typeof import("../../infra/heartbeat-wake.js").requestHeartbeat
 >[0];
 
-/** Shared type for Runtime Request Heartbeat Now Options in src/plugins/runtime. */
+/** Legacy heartbeat-now options with optional source and intent. */
 export type RuntimeRequestHeartbeatNowOptions = Omit<
   RuntimeRequestHeartbeatOptions,
   "source" | "intent"
@@ -31,7 +31,7 @@ type RuntimeWriteConfigOptions = {
   unsetPaths?: string[][];
 };
 
-/** Shared type for Deep Readonly in src/plugins/runtime. */
+/** Recursive readonly view used for runtime config snapshots. */
 export type DeepReadonly<T> = T extends (...args: never[]) => unknown
   ? T
   : T extends readonly (infer U)[]
@@ -63,18 +63,18 @@ type RuntimeReplaceConfigFileParams = {
   afterWrite: RuntimeConfigAfterWrite;
   writeOptions?: RuntimeWriteConfigOptions;
 };
-/** Shared type for Plugin Runtime Thinking Policy Request in src/plugins/runtime. */
+/** Provider/model request used to resolve plugin runtime thinking policy. */
 export type PluginRuntimeThinkingPolicyRequest = {
   provider?: string | null;
   model?: string | null;
   catalog?: import("../../auto-reply/thinking.js").ThinkingCatalogEntry[];
 };
-/** Shared type for Plugin Runtime Thinking Policy Level in src/plugins/runtime. */
+/** One thinking level exposed to plugin runtime callers. */
 export type PluginRuntimeThinkingPolicyLevel = {
   id: import("../../auto-reply/thinking.js").ThinkLevel;
   label: string;
 };
-/** Shared type for Plugin Runtime Thinking Policy in src/plugins/runtime. */
+/** Supported thinking levels and default level exposed through plugin runtime. */
 export type PluginRuntimeThinkingPolicy = {
   levels: PluginRuntimeThinkingPolicyLevel[];
   defaultLevel?: import("../../auto-reply/thinking.js").ThinkLevel | null;
@@ -88,7 +88,7 @@ export type RuntimeLogger = {
   error: (message: string, meta?: Record<string, unknown>) => void;
 };
 
-/** Shared type for Run Heartbeat Once Options in src/plugins/runtime. */
+/** Options for running one heartbeat cycle immediately. */
 export type RunHeartbeatOnceOptions = {
   reason?: string;
   agentId?: string;
@@ -97,20 +97,20 @@ export type RunHeartbeatOnceOptions = {
   heartbeat?: { target?: string };
 };
 
-/** Shared type for Llm Complete Message in src/plugins/runtime. */
+/** Chat message accepted by the runtime LLM completion helper. */
 export type LlmCompleteMessage = {
   role: "system" | "user" | "assistant";
   content: string;
 };
 
-/** Shared type for Llm Complete Caller in src/plugins/runtime. */
+/** Caller identity included in LLM completion audit metadata. */
 export type LlmCompleteCaller = {
   kind: "plugin" | "context-engine" | "host" | "unknown";
   id?: string;
   name?: string;
 };
 
-/** Shared type for Llm Complete Usage in src/plugins/runtime. */
+/** Token and cost usage returned by runtime LLM completion. */
 export type LlmCompleteUsage = {
   inputTokens?: number;
   outputTokens?: number;
@@ -120,7 +120,7 @@ export type LlmCompleteUsage = {
   costUsd?: number;
 };
 
-/** Shared type for Llm Complete Params in src/plugins/runtime. */
+/** Request parameters for runtime LLM completion. */
 export type LlmCompleteParams = {
   messages: LlmCompleteMessage[];
   /** Model ref (e.g. "anthropic/claude-sonnet-4-6"); defaults to the target agent's configured model. */
@@ -135,7 +135,7 @@ export type LlmCompleteParams = {
   agentId?: string;
 };
 
-/** Shared type for Llm Complete Result in src/plugins/runtime. */
+/** Result returned by runtime LLM completion. */
 export type LlmCompleteResult = {
   text: string;
   provider: string;
