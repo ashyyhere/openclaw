@@ -1,7 +1,7 @@
-// config types secrets helpers and runtime behavior.
+// Secret input contracts and coercion helpers for env/file/exec SecretRef config.
 import { isRecord } from "../utils.js";
 
-/** Shared type for Secret Ref Source in src/config. */
+/** Supported backing store families for configured secret references. */
 export type SecretRefSource = "env" | "file" | "exec"; // pragma: allowlist secret
 
 /**
@@ -17,21 +17,21 @@ export type SecretRef = {
   id: string;
 };
 
-/** Shared type for Secret Input in src/config. */
+/** Secret-bearing config input; may be an inline value or unresolved reference. */
 export type SecretInput = string | SecretRef;
-/** Reused constant for DEFAULT SECRET PROVIDER ALIAS behavior in src/config. */
+/** Provider alias used when legacy or shorthand refs omit an explicit provider. */
 export const DEFAULT_SECRET_PROVIDER_ALIAS = "default"; // pragma: allowlist secret
-/** Reused constant for ENV SECRET REF ID RE behavior in src/config. */
+/** Allowed env-var id syntax for env-backed secret refs. */
 export const ENV_SECRET_REF_ID_RE = /^[A-Z][A-Z0-9_]{0,127}$/;
-/** Reused constant for LEGACY SECRETREF ENV MARKER PREFIX behavior in src/config. */
+/** Legacy inline marker for env secret refs. */
 export const LEGACY_SECRETREF_ENV_MARKER_PREFIX = "secretref-env:"; // pragma: allowlist secret
-/** Reused constant for LEGACY DOUBLE UNDERSCORE ENV MARKER PREFIX behavior in src/config. */
+/** Older env secret marker retained for config migration and parsing. */
 export const LEGACY_DOUBLE_UNDERSCORE_ENV_MARKER_PREFIX = "__env__:"; // pragma: allowlist secret
 const ENV_SECRET_TEMPLATE_RE = /^\$\{([A-Z][A-Z0-9_]{0,127})\}$/;
 const ENV_SECRET_SHORTHAND_RE = /^\$([A-Z][A-Z0-9_]{0,127})$/;
-/** Shared type for Secret Input String Resolution Mode in src/config. */
+/** Resolution mode for callers that either require a value or only inspect state. */
 export type SecretInputStringResolutionMode = "strict" | "inspect";
-/** Shared type for Secret Input String Resolution in src/config. */
+/** Result of resolving a secret input to an inline string or unresolved ref state. */
 export type SecretInputStringResolution =
   | { status: "available"; value: string; ref: null }
   | { status: "configured_unavailable"; value: undefined; ref: SecretRef }
@@ -42,12 +42,12 @@ type SecretDefaults = {
   exec?: string;
 };
 
-/** Reused helper for is Valid Env Secret Ref Id behavior in src/config. */
+/** Returns whether a value is a valid env secret ref identifier. */
 export function isValidEnvSecretRefId(value: string): boolean {
   return ENV_SECRET_REF_ID_RE.test(value);
 }
 
-/** Reused helper for is Secret Ref behavior in src/config. */
+/** Type guard for fully qualified SecretRef objects. */
 export function isSecretRef(value: unknown): value is SecretRef {
   if (!isRecord(value)) {
     return false;
@@ -78,7 +78,7 @@ function isLegacySecretRefWithoutProvider(
   );
 }
 
-/** Reused helper for parse Env Template Secret Ref behavior in src/config. */
+/** Parses `$ENV_NAME` and `${ENV_NAME}` shorthand into env SecretRefs. */
 export function parseEnvTemplateSecretRef(
   value: unknown,
   provider = DEFAULT_SECRET_PROVIDER_ALIAS,
@@ -98,7 +98,7 @@ export function parseEnvTemplateSecretRef(
   };
 }
 
-/** Reused helper for parse Legacy Secret Ref Env Marker behavior in src/config. */
+/** Parses legacy env marker strings into env SecretRefs. */
 export function parseLegacySecretRefEnvMarker(
   value: unknown,
   provider = DEFAULT_SECRET_PROVIDER_ALIAS,
@@ -126,7 +126,7 @@ export function parseLegacySecretRefEnvMarker(
   };
 }
 
-/** Reused helper for coerce Secret Ref behavior in src/config. */
+/** Coerces supported legacy, shorthand, and object shapes into a SecretRef. */
 export function coerceSecretRef(value: unknown, defaults?: SecretDefaults): SecretRef | null {
   if (isSecretRef(value)) {
     return value;
@@ -155,7 +155,7 @@ export function coerceSecretRef(value: unknown, defaults?: SecretDefaults): Secr
   return null;
 }
 
-/** Reused helper for has Configured Secret Input behavior in src/config. */
+/** Returns whether config contains either an inline secret value or a SecretRef. */
 export function hasConfiguredSecretInput(value: unknown, defaults?: SecretDefaults): boolean {
   if (normalizeSecretInputString(value)) {
     return true;
@@ -163,7 +163,7 @@ export function hasConfiguredSecretInput(value: unknown, defaults?: SecretDefaul
   return coerceSecretRef(value, defaults) !== null;
 }
 
-/** Reused helper for normalize Secret Input String behavior in src/config. */
+/** Normalizes non-empty inline secret strings without resolving SecretRefs. */
 export function normalizeSecretInputString(value: unknown): string | undefined {
   if (typeof value !== "string") {
     return undefined;
@@ -182,7 +182,7 @@ function createUnresolvedSecretInputError(params: { path: string; ref: SecretRef
   );
 }
 
-/** Reused helper for assert Secret Input Resolved behavior in src/config. */
+/** Throws when a secret input still contains an unresolved SecretRef. */
 export function assertSecretInputResolved(params: {
   value: unknown;
   refValue?: unknown;
@@ -200,7 +200,7 @@ export function assertSecretInputResolved(params: {
   throw createUnresolvedSecretInputError({ path: params.path, ref });
 }
 
-/** Reused helper for resolve Secret Input String behavior in src/config. */
+/** Resolves inline secret strings or reports unresolved SecretRefs by mode. */
 export function resolveSecretInputString(params: {
   value: unknown;
   refValue?: unknown;
@@ -238,7 +238,7 @@ export function resolveSecretInputString(params: {
   };
 }
 
-/** Reused helper for normalize Resolved Secret Input String behavior in src/config. */
+/** Resolves a secret input in strict mode and returns only available strings. */
 export function normalizeResolvedSecretInputString(params: {
   value: unknown;
   refValue?: unknown;
@@ -255,7 +255,7 @@ export function normalizeResolvedSecretInputString(params: {
   return undefined;
 }
 
-/** Reused helper for resolve Secret Input Ref behavior in src/config. */
+/** Resolves explicit ref fields before inline shorthand refs. */
 export function resolveSecretInputRef(params: {
   value: unknown;
   refValue?: unknown;
@@ -274,17 +274,17 @@ export function resolveSecretInputRef(params: {
   };
 }
 
-/** Shared type for Env Secret Provider Config in src/config. */
+/** Env-backed secret provider configuration. */
 export type EnvSecretProviderConfig = {
   source: "env";
   /** Optional env var allowlist (exact names). */
   allowlist?: string[];
 };
 
-/** Shared type for File Secret Provider Mode in src/config. */
+/** File-backed secret provider parsing mode. */
 export type FileSecretProviderMode = "singleValue" | "json"; // pragma: allowlist secret
 
-/** Shared type for File Secret Provider Config in src/config. */
+/** File-backed secret provider configuration and read limits. */
 export type FileSecretProviderConfig = {
   source: "file";
   path: string;
@@ -326,7 +326,7 @@ export type SecretProviderConfig =
   | FileSecretProviderConfig
   | ExecSecretProviderConfig;
 
-/** Shared type for Secrets Config in src/config. */
+/** Top-level secret provider defaults and resolution limits. */
 export type SecretsConfig = {
   providers?: Record<string, SecretProviderConfig>;
   defaults?: {
