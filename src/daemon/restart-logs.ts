@@ -1,14 +1,14 @@
-// daemon restart logs helpers and runtime behavior.
+// Gateway restart log path resolution and shell snippets for supervised restarts.
 import path from "node:path";
 import { quoteCmdScriptArg } from "./cmd-argv.js";
 import { resolveGatewayProfileSuffix } from "./constants.js";
 import { resolveGatewayStateDir, resolveHomeDir } from "./paths.js";
 import type { GatewayServiceEnv } from "./service-types.js";
 
-/** Reused constant for GATEWAY RESTART LOG FILENAME behavior in src/daemon. */
+/** Filename reserved for restart-script diagnostics under the gateway log directory. */
 export const GATEWAY_RESTART_LOG_FILENAME = "gateway-restart.log";
 
-/** Shared type for Gateway Log Paths in src/daemon. */
+/** Standard stdout/stderr log path set for gateway service supervisors. */
 export type GatewayLogPaths = {
   logDir: string;
   stdoutPath: string;
@@ -25,7 +25,7 @@ function resolveMacLaunchAgentLogPrefix(env: GatewayServiceEnv): string {
   );
 }
 
-/** Reused helper for resolve Gateway Log Paths behavior in src/daemon. */
+/** Resolves cross-platform gateway log paths under the OpenClaw state directory. */
 export function resolveGatewayLogPaths(env: GatewayServiceEnv): GatewayLogPaths {
   const stateDir = resolveGatewayStateDir(env);
   const logDir = path.join(stateDir, "logs");
@@ -37,7 +37,7 @@ export function resolveGatewayLogPaths(env: GatewayServiceEnv): GatewayLogPaths 
   };
 }
 
-/** Reused helper for resolve Mac Launch Agent Log Paths behavior in src/daemon. */
+/** Resolves LaunchAgent-compatible log paths under ~/Library/Logs/openclaw. */
 export function resolveMacLaunchAgentLogPaths(env: GatewayServiceEnv): GatewayLogPaths {
   const home = resolveHomeDir(env).replaceAll("\\", "/");
   const logDir = path.posix.join(home, "Library", "Logs", "openclaw");
@@ -49,7 +49,7 @@ export function resolveMacLaunchAgentLogPaths(env: GatewayServiceEnv): GatewayLo
   };
 }
 
-/** Reused helper for resolve Gateway Supervisor Log Paths behavior in src/daemon. */
+/** Picks the correct gateway log path convention for the active supervisor platform. */
 export function resolveGatewaySupervisorLogPaths(
   env: GatewayServiceEnv,
   options?: { platform?: NodeJS.Platform },
@@ -59,17 +59,17 @@ export function resolveGatewaySupervisorLogPaths(
     : resolveGatewayLogPaths(env);
 }
 
-/** Reused helper for resolve Gateway Restart Log Path behavior in src/daemon. */
+/** Returns the append-only restart log used by generated restart scripts. */
 export function resolveGatewayRestartLogPath(env: GatewayServiceEnv): string {
   return path.join(resolveGatewayLogPaths(env).logDir, GATEWAY_RESTART_LOG_FILENAME);
 }
 
-/** Reused helper for shell Escape Restart Log Value behavior in src/daemon. */
+/** Escapes a value for single-quoted POSIX shell fragments in restart log setup. */
 export function shellEscapeRestartLogValue(value: string): string {
   return value.replace(/'/g, "'\\''");
 }
 
-/** Reused helper for render Posix Restart Log Setup behavior in src/daemon. */
+/** Renders POSIX shell setup that creates and redirects into the restart log. */
 export function renderPosixRestartLogSetup(env: GatewayServiceEnv): string {
   const logDir = path.dirname(resolveGatewayRestartLogPath(env));
   const logPath = resolveGatewayRestartLogPath(env);
@@ -80,7 +80,7 @@ export function renderPosixRestartLogSetup(env: GatewayServiceEnv): string {
 fi`;
 }
 
-/** Reused helper for render Cmd Restart Log Setup behavior in src/daemon. */
+/** Renders Windows cmd setup lines that initialize the restart log path. */
 export function renderCmdRestartLogSetup(env: GatewayServiceEnv): {
   lines: string[];
   quotedLogPath: string;

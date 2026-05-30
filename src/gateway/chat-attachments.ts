@@ -1,4 +1,4 @@
-// gateway chat attachments helpers and runtime behavior.
+// Gateway chat attachment normalization, inline image routing, and media offload support.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { formatErrorMessage } from "../infra/errors.js";
 import { estimateBase64DecodedBytes } from "../media/base64.js";
@@ -9,7 +9,7 @@ import { sniffMimeFromBase64 } from "../media/sniff-mime-from-base64.js";
 import { deleteMediaBuffer, saveMediaBuffer } from "../media/store.js";
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 
-/** Shared type for Chat Attachment in src/gateway. */
+/** Raw attachment shape accepted by gateway chat entrypoints. */
 export type ChatAttachment = {
   type?: string;
   mimeType?: string;
@@ -17,14 +17,14 @@ export type ChatAttachment = {
   content?: unknown;
 };
 
-/** Shared type for Chat Image Content in src/gateway. */
+/** Inline image payload passed to model runners that support image inputs. */
 export type ChatImageContent = {
   type: "image";
   data: string;
   mimeType: string;
 };
 
-/** Shared type for Offloaded Ref in src/gateway. */
+/** Saved attachment reference appended to prompts or exposed to sandboxed tools. */
 export type OffloadedRef = {
   mediaRef: string;
   id: string;
@@ -60,10 +60,10 @@ type SavedMedia = {
 const OFFLOAD_THRESHOLD_BYTES = 2_000_000;
 const TEXT_ONLY_OFFLOAD_LIMIT = 10;
 
-/** Reused constant for DEFAULT CHAT ATTACHMENT MAX MB behavior in src/gateway. */
+/** Default per-attachment ceiling used when config does not set a media limit. */
 export const DEFAULT_CHAT_ATTACHMENT_MAX_MB = 20;
 
-/** Reused helper for resolve Chat Attachment Max Bytes behavior in src/gateway. */
+/** Converts configured media megabytes into the byte limit used by gateway validation. */
 export function resolveChatAttachmentMaxBytes(cfg: OpenClawConfig): number {
   const configured = cfg.agents?.defaults?.mediaMaxMb;
   const mb =
@@ -79,7 +79,7 @@ type UnsupportedAttachmentReason =
   | "unsupported-non-image"
   | "non-image-too-large-for-sandbox";
 
-/** Reused class for Unsupported Attachment Error behavior in src/gateway. */
+/** User-facing attachment rejection with a stable reason for gateway handlers. */
 export class UnsupportedAttachmentError extends Error {
   readonly reason: UnsupportedAttachmentReason;
   constructor(reason: UnsupportedAttachmentReason, message: string) {
@@ -89,7 +89,7 @@ export class UnsupportedAttachmentError extends Error {
   }
 }
 
-/** Reused class for Media Offload Error behavior in src/gateway. */
+/** Wraps failures while saving large or non-inline attachments to the media store. */
 export class MediaOffloadError extends Error {
   override readonly cause: unknown;
   constructor(message: string, options?: ErrorOptions) {
@@ -243,7 +243,7 @@ function validateAttachmentBase64OrThrow(
   return sizeBytes;
 }
 
-/** Reused helper for parse Message With Attachments behavior in src/gateway. */
+/** Parses chat attachments into inline images, prompt media refs, and saved media metadata. */
 export async function parseMessageWithAttachments(
   message: string,
   attachments: ChatAttachment[] | undefined,
@@ -437,7 +437,7 @@ export async function parseMessageWithAttachments(
   };
 }
 
-/** Reused helper for resolve Chat Attachment Looks Like Image behavior in src/gateway. */
+/** Sniffs attachment content and metadata to decide whether it should be treated as an image. */
 export async function resolveChatAttachmentLooksLikeImage(
   attachment: ChatAttachment,
   index = 0,
