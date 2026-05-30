@@ -2,7 +2,7 @@
 import { expect } from "vitest";
 import { buildEmbeddedRunPayloads } from "./payloads.js";
 
-/** Shared type for Build Payload Params in src/agents/embedded-agent-runner. */
+/** Parameter type accepted by the production embedded-run payload builder. */
 export type BuildPayloadParams = Parameters<typeof buildEmbeddedRunPayloads>[0];
 type RunPayloads = ReturnType<typeof buildEmbeddedRunPayloads>;
 

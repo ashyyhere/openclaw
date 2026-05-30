@@ -843,7 +843,7 @@ vi.mock("./history-image-prune.js", () => ({
   pruneProcessedHistoryImages: () => null,
 }));
 
-/** Shared type for Mutable Session in src/agents/embedded-agent-runner. */
+/** Minimal mutable session shape used by spawn-workspace attempt tests. */
 export type MutableSession = {
   sessionId: string;
   messages: unknown[];
@@ -1130,7 +1130,7 @@ export function expectCalledWithSessionKey(mock: ReturnType<typeof vi.fn>, sessi
   expect(mock).toHaveBeenCalledWith(expect.objectContaining({ sessionKey }));
 }
 
-/** Reused constant for test Model behavior in src/agents/embedded-agent-runner. */
+/** Baseline OpenAI-compatible model fixture for spawn-workspace tests. */
 export const testModel = {
   api: "openai-completions",
   provider: "openai",
