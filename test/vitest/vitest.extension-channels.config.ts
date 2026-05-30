@@ -1,10 +1,11 @@
-// test/vitest vitest extension channels config helpers and runtime behavior.
+// Extension channels Vitest config runs channel plugin tests outside single-channel shards.
 import {
   extensionChannelOverrideExcludeGlobs,
   extensionChannelTestInclude,
 } from "./vitest.channel-paths.mjs";
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
+/** Creates the extension channels Vitest project config. */
 export function createExtensionChannelsVitestConfig(
   env: Record<string, string | undefined> = process.env,
 ) {
@@ -17,4 +18,5 @@ export function createExtensionChannelsVitestConfig(
   });
 }
 
+/** Default extension channels Vitest project config. */
 export default createExtensionChannelsVitestConfig();

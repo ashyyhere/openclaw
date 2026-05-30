@@ -1,6 +1,7 @@
-// test/vitest vitest logging config helpers and runtime behavior.
+// Logging Vitest config scopes tests to the logging source tree.
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
+/** Creates the logging Vitest project config. */
 export function createLoggingVitestConfig(env?: Record<string, string | undefined>) {
   return createScopedVitestConfig(["src/logging/**/*.test.ts"], {
     dir: "src",
@@ -10,4 +11,5 @@ export function createLoggingVitestConfig(env?: Record<string, string | undefine
   });
 }
 
+/** Default logging Vitest project config. */
 export default createLoggingVitestConfig();

@@ -1,6 +1,7 @@
-// test/vitest vitest extension channel single config helpers and runtime behavior.
+// Single-channel extension Vitest config helper builds per-plugin extension shards.
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
+/** Creates a Vitest project config for one channel extension id. */
 export function createSingleChannelExtensionVitestConfig(
   extensionId: string,
   env: Record<string, string | undefined> = process.env,
