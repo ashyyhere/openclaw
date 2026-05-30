@@ -1,4 +1,4 @@
-// test setup shared helpers and runtime behavior.
+// Shared Vitest setup installs global mocks, isolated home state, and warning filters once per worker.
 import { vi } from "vitest";
 
 const openAiCodexTokenRefreshTestHook = "__OPENCLAW_TEST_REFRESH_OPENAI_CODEX_TOKEN__";
@@ -65,6 +65,7 @@ type SharedTestSetupHandle = {
   tempHome: string;
 };
 
+/** Install or reuse the shared isolated OpenClaw test setup for this worker. */
 export function installSharedTestSetup(options?: SharedTestSetupOptions): {
   cleanup: () => void;
   tempHome: string;

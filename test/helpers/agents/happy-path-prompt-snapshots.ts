@@ -1,4 +1,4 @@
-// test/helpers/agents happy path prompt snapshots helpers and runtime behavior.
+// Happy-path prompt snapshot fixtures render stable Codex runtime prompts for representative scenarios.
 import fs from "node:fs";
 import path from "node:path";
 import type { Api, Model } from "openclaw/plugin-sdk/llm";
@@ -28,6 +28,7 @@ import {
   CODEX_RUNTIME_HAPPY_PATH_PROMPT_SNAPSHOT_DIR,
 } from "./prompt-snapshot-paths.js";
 
+/** Re-export prompt snapshot fixture directories for generator tests. */
 export { CODEX_MODEL_PROMPT_FIXTURE_DIR, CODEX_RUNTIME_HAPPY_PATH_PROMPT_SNAPSHOT_DIR };
 
 const WORKSPACE_DIR = "/tmp/openclaw-happy-path/workspace";
@@ -901,6 +902,7 @@ function renderReadme(scenarios: PromptScenario[]): string {
   ].join("\n");
 }
 
+/** Build all happy-path prompt snapshot files from the current scenario fixtures. */
 export function createHappyPathPromptSnapshotFiles(): PromptSnapshotFile[] {
   const scenarios = createScenarios();
   const files = [

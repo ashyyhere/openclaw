@@ -1,4 +1,4 @@
-// test/helpers gateway e2e harness helpers and runtime behavior.
+// Gateway E2E tests share process launch, HTTP, node connection, and chat-event wait helpers here.
 import { randomUUID } from "node:crypto";
 import { request as httpRequest } from "node:http";
 import path from "node:path";
@@ -10,8 +10,10 @@ import { sleep } from "../../src/utils.js";
 import { GATEWAY_CLIENT_MODES, GATEWAY_CLIENT_NAMES } from "../../src/utils/message-channel.js";
 import { createOpenClawTestInstance, type OpenClawTestInstance } from "./openclaw-test-instance.js";
 
+/** Re-export chat text extraction for gateway E2E assertions. */
 export { extractFirstTextBlock };
 
+/** Minimal chat event fields used by gateway E2E wait helpers. */
 export type ChatEventPayload = {
   runId?: string;
   sessionKey?: string;
@@ -19,6 +21,7 @@ export type ChatEventPayload = {
   message?: unknown;
 };
 
+/** OpenClaw gateway instance fixture type used by E2E tests. */
 export type GatewayInstance = OpenClawTestInstance;
 
 const GATEWAY_CONNECT_STATUS_TIMEOUT_MS = 10_000;
@@ -27,11 +30,13 @@ const GATEWAY_NODE_STATUS_POLL_MS = 20;
 const POST_JSON_TIMEOUT_MS = 15_000;
 const POST_JSON_MAX_RESPONSE_BYTES = 1024 * 1024;
 
+/** Options controlling bounded JSON POST helper behavior. */
 export type PostJsonOptions = {
   maxResponseBytes?: number;
   timeoutMs?: number;
 };
 
+/** Start an isolated OpenClaw gateway instance for an E2E test. */
 export async function spawnGatewayInstance(name: string): Promise<GatewayInstance> {
   const inst = await createOpenClawTestInstance({ name });
   try {
@@ -43,10 +48,12 @@ export async function spawnGatewayInstance(name: string): Promise<GatewayInstanc
   }
 }
 
+/** Stop and clean up a gateway E2E instance. */
 export async function stopGatewayInstance(inst: GatewayInstance) {
   await inst.cleanup();
 }
 
+/** POST JSON to a gateway endpoint with timeout and bounded response parsing. */
 export async function postJson(
   url: string,
   body: unknown,
@@ -127,6 +134,7 @@ export async function postJson(
   });
 }
 
+/** Connect a simulated node client to the gateway instance. */
 export async function connectNode(
   inst: GatewayInstance,
   label: string,
@@ -201,6 +209,7 @@ async function connectStatusClient(
   });
 }
 
+/** Wait until the gateway reports the simulated node as connected and paired. */
 export async function waitForNodeStatus(
   inst: GatewayInstance,
   nodeId: string,
@@ -226,6 +235,7 @@ export async function waitForNodeStatus(
   throw new Error(`timeout waiting for node status for ${nodeId}`);
 }
 
+/** Wait for a matching final chat event, reporting recent observed states on timeout. */
 export async function waitForChatFinalEvent(params: {
   events: ChatEventPayload[];
   runId: string;

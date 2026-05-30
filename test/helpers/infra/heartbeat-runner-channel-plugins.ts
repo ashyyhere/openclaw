@@ -1,4 +1,4 @@
-// test/helpers/infra heartbeat runner channel plugins helpers and runtime behavior.
+// Heartbeat runner tests use these channel plugins to exercise outbound delivery contracts.
 import type {
   ChannelId,
   ChannelMessagingAdapter,
@@ -68,12 +68,14 @@ function createHeartbeatChannelPlugin(params: {
   };
 }
 
+/** Slack channel plugin fixture with heartbeat outbound delivery wired to test deps. */
 export const heartbeatRunnerSlackPlugin = createHeartbeatChannelPlugin({
   id: "slack",
   label: "Slack",
   docsPath: "/channels/slack",
 });
 
+/** Telegram channel plugin fixture that preserves thread ids for heartbeat replies. */
 export const heartbeatRunnerTelegramPlugin = createHeartbeatChannelPlugin({
   id: "telegram",
   label: "Telegram",
@@ -83,6 +85,7 @@ export const heartbeatRunnerTelegramPlugin = createHeartbeatChannelPlugin({
   },
 });
 
+/** WhatsApp channel plugin fixture with heartbeat readiness checks backed by test deps. */
 export const heartbeatRunnerWhatsAppPlugin = createHeartbeatChannelPlugin({
   id: "whatsapp",
   label: "WhatsApp",

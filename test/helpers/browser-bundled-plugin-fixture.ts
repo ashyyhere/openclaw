@@ -1,4 +1,4 @@
-// test/helpers browser bundled plugin fixture helpers and runtime behavior.
+// Browser plugin fixture materializes a minimal bundled plugin tree for loader tests.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -53,6 +53,7 @@ const BROWSER_FIXTURE_ENTRY = `module.exports = {
   },
 };`;
 
+/** Create a temporary bundled Browser plugin fixture and cleanup handle. */
 export function createBundledBrowserPluginFixture(): { rootDir: string; cleanup: () => void } {
   const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "openclaw-browser-bundled-"));
   const pluginDir = path.join(rootDir, "browser");

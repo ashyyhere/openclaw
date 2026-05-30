@@ -1,4 +1,4 @@
-// test setup openclaw runtime helpers and runtime behavior.
+// OpenClaw runtime test setup installs shared hooks and resets plugin/session state between tests.
 import { afterAll, afterEach, beforeAll, vi } from "vitest";
 import type {
   ChannelId,

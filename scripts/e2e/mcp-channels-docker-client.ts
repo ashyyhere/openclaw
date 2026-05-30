@@ -1,4 +1,4 @@
-// scripts/e2e mcp channels docker client helpers and runtime behavior.
+// Docker E2E client verifies MCP channel bridge flows against a live gateway.
 import { randomUUID } from "node:crypto";
 import {
   assert,
