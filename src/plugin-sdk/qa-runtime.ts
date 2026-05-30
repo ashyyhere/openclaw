@@ -30,7 +30,7 @@ function isMissingQaRuntimeError(error: unknown) {
   );
 }
 
-/** Reused helper for load Qa Runtime Module behavior in src/plugin-sdk. */
+/** Loads the bundled qa-lab runtime surface when the private QA plugin is available. */
 export function loadQaRuntimeModule(): QaRuntimeSurface {
   const env = resolvePrivateQaBundledPluginsEnv();
   return loadBundledPluginPublicSurfaceModuleSync<QaRuntimeSurface>({
@@ -40,7 +40,7 @@ export function loadQaRuntimeModule(): QaRuntimeSurface {
   });
 }
 
-/** Reused helper for is Qa Runtime Available behavior in src/plugin-sdk. */
+/** Checks whether the optional qa-lab runtime surface can be resolved. */
 export function isQaRuntimeAvailable(): boolean {
   try {
     loadQaRuntimeModule();
@@ -53,7 +53,7 @@ export function isQaRuntimeAvailable(): boolean {
   }
 }
 
-/** Shared type for Live Transport Qa Command Options in src/plugin-sdk. */
+/** Normalized options passed to live transport QA command implementations. */
 export type LiveTransportQaCommandOptions = {
   repoRoot?: string;
   outputDir?: string;
@@ -88,19 +88,19 @@ type LiveTransportQaCommanderOptions = {
   credentialRole?: string;
 };
 
-/** Shared type for Live Transport Qa Cli Registration in src/plugin-sdk. */
+/** Commander registration contract for one live transport QA command. */
 export type LiveTransportQaCliRegistration = {
   commandName: string;
   register(qa: Command): void;
 };
 
-/** Shared type for Live Transport Qa Credential Cli Options in src/plugin-sdk. */
+/** Optional credential-related CLI help text for live QA commands. */
 export type LiveTransportQaCredentialCliOptions = {
   sourceDescription?: string;
   roleDescription?: string;
 };
 
-/** Shared type for Live Transport Qa Cli Registration Options in src/plugin-sdk. */
+/** Inputs for building a reusable live transport QA Commander command. */
 export type LiveTransportQaCliRegistrationOptions = {
   commandName: string;
   credentialOptions?: LiveTransportQaCredentialCliOptions;
@@ -117,7 +117,7 @@ export type LiveTransportQaCliRegistrationOptions = {
   run: (opts: LiveTransportQaCommandOptions) => Promise<void>;
 };
 
-/** Reused helper for create Lazy Cli Runtime Loader behavior in src/plugin-sdk. */
+/** Memoizes an async CLI runtime import so repeated command paths share one load. */
 export function createLazyCliRuntimeLoader<T>(load: () => Promise<T>) {
   let promise: Promise<T> | null = null;
   return async () => {
@@ -202,7 +202,7 @@ function registerLiveTransportQaCli(
   });
 }
 
-/** Reused helper for create Live Transport Qa Cli Registration behavior in src/plugin-sdk. */
+/** Creates a Commander registration wrapper for a live transport QA lane. */
 export function createLiveTransportQaCliRegistration(
   params: LiveTransportQaCliRegistrationOptions,
 ): LiveTransportQaCliRegistration {
@@ -217,14 +217,14 @@ export function createLiveTransportQaCliRegistration(
   };
 }
 
-/** Shared type for Qa Report Check in src/plugin-sdk. */
+/** One top-level check row in a rendered QA report. */
 export type QaReportCheck = {
   name: string;
   status: "pass" | "fail" | "skip";
   details?: string;
 };
 
-/** Shared type for Qa Report Scenario in src/plugin-sdk. */
+/** Scenario result block in a rendered QA report. */
 export type QaReportScenario = {
   name: string;
   status: "pass" | "fail" | "skip";
@@ -241,14 +241,14 @@ export {
   type LiveTransportStandardScenarioId,
 } from "./qa-live-transport-scenarios.js";
 
-/** Shared type for Qa Docker Run Command in src/plugin-sdk. */
+/** Docker command runner contract used by QA Docker helpers. */
 export type QaDockerRunCommand = (
   command: string,
   args: string[],
   cwd: string,
 ) => Promise<{ stdout: string; stderr: string }>;
 
-/** Shared type for Qa Docker Fetch Like in src/plugin-sdk. */
+/** Minimal fetch contract used for QA Docker health probes. */
 export type QaDockerFetchLike = (input: string) => Promise<{ ok: boolean }>;
 
 const DEFAULT_QA_DOCKER_COMMAND_TIMEOUT_MS = 120_000;
@@ -262,7 +262,7 @@ function pushQaReportDetailsBlock(lines: string[], label: string, details: strin
   lines.push("", "```text", details, "```");
 }
 
-/** Reused helper for render Qa Markdown Report behavior in src/plugin-sdk. */
+/** Renders checks, scenarios, timeline, and notes into a Markdown QA report. */
 export function renderQaMarkdownReport(params: {
   title: string;
   startedAt: Date;
@@ -342,12 +342,12 @@ export function renderQaMarkdownReport(params: {
   return lines.join("\n");
 }
 
-/** Reused helper for append Qa Live Lane Issue behavior in src/plugin-sdk. */
+/** Appends a formatted live-lane issue line to an issue accumulator. */
 export function appendQaLiveLaneIssue(issues: string[], label: string, error: unknown) {
   issues.push(`${label}: ${formatErrorMessage(error)}`);
 }
 
-/** Reused helper for build Qa Live Lane Artifacts Error behavior in src/plugin-sdk. */
+/** Builds an error message that points at generated QA lane artifacts. */
 export function buildQaLiveLaneArtifactsError(params: {
   heading: string;
   artifacts: Record<string, string>;
@@ -361,7 +361,7 @@ export function buildQaLiveLaneArtifactsError(params: {
   ].join("\n");
 }
 
-/** Reused helper for print Live Transport Qa Artifacts behavior in src/plugin-sdk. */
+/** Prints artifact paths in the format consumed by live transport QA logs. */
 export function printLiveTransportQaArtifacts(
   laneLabel: string,
   artifacts: Record<string, string>,
@@ -413,7 +413,7 @@ async function findFreeQaDockerPort() {
   });
 }
 
-/** Reused helper for resolve Qa Docker Host Port behavior in src/plugin-sdk. */
+/** Resolves a QA Docker host port, honoring pinned ports or picking a free one. */
 export async function resolveQaDockerHostPort(preferredPort: number, pinned: boolean) {
   if (pinned || (await isQaDockerPortFree(preferredPort))) {
     return preferredPort;
@@ -488,7 +488,7 @@ async function isQaDockerHealthy(url: string, fetchImpl: QaDockerFetchLike) {
   }
 }
 
-/** Reused helper for create Qa Docker Runtime behavior in src/plugin-sdk. */
+/** Creates Docker command, health-check, service URL, and wait helpers for QA lanes. */
 export function createQaDockerRuntime(params: {
   auditContext: string;
   commandTimeoutMs?: number | null;
@@ -657,7 +657,7 @@ export function createQaDockerRuntime(params: {
 
 type ProcessWriteCallback = (err?: Error | null) => void;
 
-/** Reused helper for start Live Transport Qa Output Tee behavior in src/plugin-sdk. */
+/** Mirrors stdout/stderr to a QA artifact file until the returned tee is stopped. */
 export async function startLiveTransportQaOutputTee(params: {
   fileName: string;
   outputDir: string;
