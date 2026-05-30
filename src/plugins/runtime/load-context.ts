@@ -1,4 +1,4 @@
-// plugins/runtime load context helpers and runtime behavior.
+/** Builds plugin runtime load context from config, metadata snapshots, and env. */
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../../agents/agent-scope.js";
 import { getRuntimeConfig } from "../../config/config.js";
 import { applyPluginAutoEnable } from "../../config/plugin-auto-enable.js";
@@ -19,7 +19,7 @@ import type { PluginLogger } from "../types.js";
 
 const log = createSubsystemLogger("plugins");
 
-/** Shared type for Plugin Runtime Load Context in src/plugins/runtime. */
+/** Fully resolved values needed to load runtime plugins. */
 export type PluginRuntimeLoadContext = {
   rawConfig: OpenClawConfig;
   config: OpenClawConfig;
@@ -32,7 +32,7 @@ export type PluginRuntimeLoadContext = {
   installRecords?: Record<string, PluginInstallRecord>;
 };
 
-/** Shared type for Plugin Runtime Resolved Load Values in src/plugins/runtime. */
+/** Load option subset carried between context resolution and registry loading. */
 export type PluginRuntimeResolvedLoadValues = Pick<
   PluginLoadOptions,
   | "config"
@@ -45,7 +45,7 @@ export type PluginRuntimeResolvedLoadValues = Pick<
   | "installRecords"
 >;
 
-/** Shared type for Plugin Runtime Load Context Options in src/plugins/runtime. */
+/** Optional overrides for plugin runtime context resolution. */
 export type PluginRuntimeLoadContextOptions = {
   config?: OpenClawConfig;
   activationSourceConfig?: OpenClawConfig;
@@ -55,7 +55,7 @@ export type PluginRuntimeLoadContextOptions = {
   manifestRegistry?: PluginManifestRegistry;
 };
 
-/** Reused helper for create Plugin Runtime Loader Logger behavior in src/plugins/runtime. */
+/** Creates the default subsystem-backed logger passed to plugin loaders. */
 export function createPluginRuntimeLoaderLogger(): PluginLogger {
   return {
     info: (message) => log.info(message),
@@ -65,7 +65,7 @@ export function createPluginRuntimeLoaderLogger(): PluginLogger {
   };
 }
 
-/** Reused helper for resolve Plugin Runtime Load Context behavior in src/plugins/runtime. */
+/** Resolves config, manifests, install records, workspace, and logger for plugin loading. */
 export function resolvePluginRuntimeLoadContext(
   options?: PluginRuntimeLoadContextOptions,
 ): PluginRuntimeLoadContext {
@@ -123,7 +123,7 @@ export function resolvePluginRuntimeLoadContext(
   };
 }
 
-/** Reused helper for build Plugin Runtime Load Options behavior in src/plugins/runtime. */
+/** Converts a resolved load context into plugin loader options. */
 export function buildPluginRuntimeLoadOptions(
   context: PluginRuntimeLoadContext,
   overrides?: Partial<PluginLoadOptions>,
@@ -131,7 +131,7 @@ export function buildPluginRuntimeLoadOptions(
   return buildPluginRuntimeLoadOptionsFromValues(context, overrides);
 }
 
-/** Reused helper for build Plugin Runtime Load Options From Values behavior in src/plugins/runtime. */
+/** Builds plugin loader options from pre-resolved values plus caller overrides. */
 export function buildPluginRuntimeLoadOptionsFromValues(
   values: PluginRuntimeResolvedLoadValues,
   overrides?: Partial<PluginLoadOptions>,

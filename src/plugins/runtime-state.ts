@@ -1,20 +1,20 @@
-// plugins runtime state helpers and runtime behavior.
+/** Global runtime plugin registry state shared across plugin surfaces. */
 import type { PluginRegistry } from "./registry-types.js";
 
-/** Reused constant for PLUGIN REGISTRY STATE behavior in src/plugins. */
+/** Global symbol used to store process-local plugin registry state. */
 export const PLUGIN_REGISTRY_STATE = Symbol.for("openclaw.pluginRegistryState");
 
-/** Shared type for Runtime Tracked Plugin Registry in src/plugins. */
+/** Registry shape tracked by process-local plugin runtime state. */
 export type RuntimeTrackedPluginRegistry = PluginRegistry;
 
-/** Shared type for Registry Surface State in src/plugins. */
+/** Registry instance currently pinned for one runtime surface. */
 export type RegistrySurfaceState = {
   registry: RuntimeTrackedPluginRegistry | null;
   pinned: boolean;
   version: number;
 };
 
-/** Shared type for Registry State in src/plugins. */
+/** Process-global plugin registry state for HTTP, channel, and active surfaces. */
 export type RegistryState = {
   activeRegistry: RuntimeTrackedPluginRegistry | null;
   activeVersion: number;
@@ -31,18 +31,18 @@ type GlobalRegistryState = typeof globalThis & {
   [PLUGIN_REGISTRY_STATE]?: RegistryState;
 };
 
-/** Reused helper for get Plugin Registry State behavior in src/plugins. */
+/** Reads process-global plugin registry state when initialized. */
 export function getPluginRegistryState(): RegistryState | undefined {
   return (globalThis as GlobalRegistryState)[PLUGIN_REGISTRY_STATE];
 }
 
-/** Reused helper for get Active Plugin Channel Registry From State behavior in src/plugins. */
+/** Returns the channel registry, falling back to the active registry. */
 export function getActivePluginChannelRegistryFromState(): RuntimeTrackedPluginRegistry | null {
   const state = getPluginRegistryState();
   return state?.channel.registry ?? state?.activeRegistry ?? null;
 }
 
-/** Reused helper for get Active Plugin Registry Workspace Dir From State behavior in src/plugins. */
+/** Returns the workspace dir associated with the active plugin registry state. */
 export function getActivePluginRegistryWorkspaceDirFromState(): string | undefined {
   const state = getPluginRegistryState();
   return state?.workspaceDir ?? undefined;

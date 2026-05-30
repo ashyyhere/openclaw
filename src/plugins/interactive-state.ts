@@ -1,9 +1,9 @@
-// plugins interactive state helpers and runtime behavior.
+/** Process-global state for plugin interactive handlers and callback dedupe. */
 import { createDedupeCache, resolveGlobalDedupeCache } from "../infra/dedupe.js";
 import type { DedupeCache } from "../infra/dedupe.js";
 import type { PluginInteractiveHandlerRegistration } from "./types.js";
 
-/** Shared type for Registered Interactive Handler in src/plugins. */
+/** Interactive handler registration annotated with plugin ownership metadata. */
 export type RegisteredInteractiveHandler = PluginInteractiveHandlerRegistration & {
   pluginId: string;
   pluginName?: string;
@@ -69,7 +69,7 @@ function getState() {
   return created;
 }
 
-/** Reused helper for get Plugin Interactive Handlers State behavior in src/plugins. */
+/** Returns the mutable process-global interactive handler registry. */
 export function getPluginInteractiveHandlersState() {
   return getState().interactiveHandlers;
 }
@@ -78,7 +78,7 @@ function getPluginInteractiveCallbackDedupeState() {
   return getState().callbackDedupe;
 }
 
-/** Reused helper for claim Plugin Interactive Callback Dedupe behavior in src/plugins. */
+/** Claims a callback dedupe key before handler execution starts. */
 export function claimPluginInteractiveCallbackDedupe(
   dedupeKey: string | undefined,
   now = Date.now(),
@@ -94,7 +94,7 @@ export function claimPluginInteractiveCallbackDedupe(
   return true;
 }
 
-/** Reused helper for commit Plugin Interactive Callback Dedupe behavior in src/plugins. */
+/** Commits a callback dedupe key after successful handler execution. */
 export function commitPluginInteractiveCallbackDedupe(
   dedupeKey: string | undefined,
   now = Date.now(),
@@ -107,7 +107,7 @@ export function commitPluginInteractiveCallbackDedupe(
   state.callbackDedupe.check(dedupeKey, now);
 }
 
-/** Reused helper for release Plugin Interactive Callback Dedupe behavior in src/plugins. */
+/** Releases an in-flight callback dedupe key without marking it handled. */
 export function releasePluginInteractiveCallbackDedupe(dedupeKey: string | undefined): void {
   if (!dedupeKey) {
     return;
@@ -115,14 +115,14 @@ export function releasePluginInteractiveCallbackDedupe(dedupeKey: string | undef
   getState().inflightCallbackDedupe.delete(dedupeKey);
 }
 
-/** Reused helper for clear Plugin Interactive Handlers State behavior in src/plugins. */
+/** Clears handler registrations plus callback dedupe state. */
 export function clearPluginInteractiveHandlersState(): void {
   clearPluginInteractiveHandlerRegistrationsState();
   getPluginInteractiveCallbackDedupeState().clear();
   getState().inflightCallbackDedupe.clear();
 }
 
-/** Reused helper for clear Plugin Interactive Handler Registrations State behavior in src/plugins. */
+/** Clears only plugin interactive handler registrations. */
 export function clearPluginInteractiveHandlerRegistrationsState(): void {
   getPluginInteractiveHandlersState().clear();
 }

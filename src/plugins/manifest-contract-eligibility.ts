@@ -1,4 +1,4 @@
-// plugins manifest contract eligibility helpers and runtime behavior.
+/** Manifest contract eligibility helpers for control-plane plugin queries. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { sortUniqueStrings } from "../shared/string-normalization.js";
 import { isInstalledPluginEnabled } from "./installed-plugin-index.js";
@@ -10,7 +10,7 @@ import type {
   PluginMetadataSnapshot,
 } from "./plugin-metadata-snapshot.types.js";
 
-/** Reused helper for is Manifest Plugin Available For Control Plane behavior in src/plugins. */
+/** Checks whether a manifest plugin is enabled enough for control-plane use. */
 export function isManifestPluginAvailableForControlPlane(params: {
   snapshot: Pick<PluginMetadataSnapshot, "index">;
   plugin: Pick<
@@ -25,7 +25,7 @@ export function isManifestPluginAvailableForControlPlane(params: {
   return isInstalledPluginEnabled(params.snapshot.index, params.plugin.id, params.config);
 }
 
-/** Reused helper for has Manifest Contract Value behavior in src/plugins. */
+/** Checks whether a plugin declares a contract value or any value for a contract. */
 export function hasManifestContractValue(params: {
   plugin: Pick<PluginManifestRecord, "contracts">;
   contract: PluginManifestContractListKey;
@@ -35,7 +35,7 @@ export function hasManifestContractValue(params: {
   return values.length > 0 && (!params.value || values.includes(params.value));
 }
 
-/** Reused helper for list Available Manifest Contract Plugins behavior in src/plugins. */
+/** Lists enabled manifest plugins that declare a matching contract. */
 export function listAvailableManifestContractPlugins(params: {
   snapshot: Pick<PluginMetadataSnapshot, "index" | "plugins">;
   contract: PluginManifestContractListKey;
@@ -57,7 +57,7 @@ export function listAvailableManifestContractPlugins(params: {
   );
 }
 
-/** Reused helper for list Available Manifest Contract Values behavior in src/plugins. */
+/** Lists unique contract values from enabled manifest plugins. */
 export function listAvailableManifestContractValues(params: {
   snapshot: Pick<PluginMetadataSnapshot, "index" | "plugins">;
   contract: PluginManifestContractListKey;
@@ -72,7 +72,7 @@ export function listAvailableManifestContractValues(params: {
   return sortUniqueStrings(values);
 }
 
-/** Reused helper for load Manifest Contract Snapshot behavior in src/plugins. */
+/** Loads the manifest snapshot view needed for contract queries. */
 export function loadManifestContractSnapshot(params: {
   config?: OpenClawConfig;
   workspaceDir?: string;
@@ -85,7 +85,7 @@ export function loadManifestContractSnapshot(params: {
   };
 }
 
-/** Reused helper for load Manifest Metadata Registry behavior in src/plugins. */
+/** Loads the manifest registry view for metadata consumers. */
 export function loadManifestMetadataRegistry(params: {
   config?: OpenClawConfig;
   workspaceDir?: string;
@@ -98,7 +98,7 @@ export function loadManifestMetadataRegistry(params: {
   };
 }
 
-/** Reused helper for load Manifest Metadata Snapshot behavior in src/plugins. */
+/** Resolves the full plugin metadata snapshot used by manifest helpers. */
 export function loadManifestMetadataSnapshot(params: {
   config?: OpenClawConfig;
   workspaceDir?: string;

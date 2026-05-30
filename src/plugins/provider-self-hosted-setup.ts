@@ -30,7 +30,7 @@ import type {
   ProviderNonInteractiveApiKeyResult,
 } from "./types.js";
 
-/** Re-exported API for src/plugins. */
+/** Default self-hosted model metadata reused by provider setup flows. */
 export {
   SELF_HOSTED_DEFAULT_CONTEXT_WINDOW,
   SELF_HOSTED_DEFAULT_COST,
@@ -139,7 +139,7 @@ async function discoverLlamaCppRuntimeContextTokens(params: {
   }
 }
 
-/** Reused helper for discover Open AICompatible Local Models behavior in src/plugins. */
+/** Discovers local OpenAI-compatible models and maps them to model config entries. */
 export async function discoverOpenAICompatibleLocalModels(params: {
   baseUrl: string;
   apiKey?: string;
@@ -236,7 +236,7 @@ export async function discoverOpenAICompatibleLocalModels(params: {
   }
 }
 
-/** Reused helper for apply Provider Default Model behavior in src/plugins. */
+/** Updates agent defaults so a configured self-hosted model becomes primary. */
 export function applyProviderDefaultModel(cfg: OpenClawConfig, modelRef: string): OpenClawConfig {
   const existingModel = cfg.agents?.defaults?.model;
   const fallbacks =
@@ -342,7 +342,7 @@ function buildSelfHostedProviderAuthResult(
   };
 }
 
-/** Reused helper for prompt And Configure Open AICompatible Self Hosted Provider behavior in src/plugins. */
+/** Prompts for base URL, API key, and model id, then builds provider config. */
 export async function promptAndConfigureOpenAICompatibleSelfHostedProvider(
   params: OpenAICompatibleSelfHostedProviderSetupParams,
 ): Promise<OpenAICompatibleSelfHostedProviderPromptResult> {
@@ -393,7 +393,7 @@ export async function promptAndConfigureOpenAICompatibleSelfHostedProvider(
   };
 }
 
-/** Reused helper for prompt And Configure Open AICompatible Self Hosted Provider Auth behavior in src/plugins. */
+/** Interactive auth wrapper that returns auth profiles plus config patch. */
 export async function promptAndConfigureOpenAICompatibleSelfHostedProviderAuth(
   params: OpenAICompatibleSelfHostedProviderSetupParams,
 ): Promise<ProviderAuthResult> {
@@ -401,7 +401,7 @@ export async function promptAndConfigureOpenAICompatibleSelfHostedProviderAuth(
   return buildSelfHostedProviderAuthResult(result);
 }
 
-/** Reused helper for discover Open AICompatible Self Hosted Provider behavior in src/plugins. */
+/** Discovers a configured self-hosted provider for provider runtime registration. */
 export async function discoverOpenAICompatibleSelfHostedProvider<
   T extends Record<string, unknown>,
 >(params: {
@@ -459,7 +459,7 @@ function buildSelfHostedProviderCredential(params: {
   });
 }
 
-/** Reused helper for configure Open AICompatible Self Hosted Provider Non Interactive behavior in src/plugins. */
+/** Applies non-interactive self-hosted provider setup from CLI/auth-choice options. */
 export async function configureOpenAICompatibleSelfHostedProviderNonInteractive(params: {
   ctx: ProviderAuthMethodNonInteractiveContext;
   providerId: string;

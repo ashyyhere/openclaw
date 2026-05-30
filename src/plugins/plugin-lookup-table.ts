@@ -1,4 +1,4 @@
-// plugins plugin lookup table helpers and runtime behavior.
+/** Plugin lookup table combining metadata snapshots with gateway startup plans. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {
   resolveGatewayStartupPluginPlanFromRegistry,
@@ -13,13 +13,13 @@ import {
 } from "./plugin-metadata-snapshot.js";
 import type { PluginRegistrySnapshot } from "./plugin-registry-snapshot.js";
 
-/** Shared type for Plugin Look Up Table Owner Maps in src/plugins. */
+/** Owner maps exposed through the plugin lookup table. */
 export type PluginLookUpTableOwnerMaps = PluginMetadataSnapshotOwnerMaps;
 
-/** Shared type for Plugin Look Up Table Startup Plan in src/plugins. */
+/** Gateway startup plugin plan stored in lookup tables. */
 export type PluginLookUpTableStartupPlan = GatewayStartupPluginPlan;
 
-/** Shared type for Plugin Look Up Table Metrics in src/plugins. */
+/** Metrics captured while resolving a plugin lookup table. */
 export type PluginLookUpTableMetrics = {
   registrySnapshotMs: number;
   manifestRegistryMs: number;
@@ -32,7 +32,7 @@ export type PluginLookUpTableMetrics = {
   deferredChannelPluginCount: number;
 };
 
-/** Shared type for Plugin Look Up Table in src/plugins. */
+/** Cached plugin metadata plus startup plan used by hot control-plane lookups. */
 export type PluginLookUpTable = PluginMetadataSnapshot & {
   key: string;
   startup: PluginLookUpTableStartupPlan;
@@ -43,7 +43,7 @@ export type PluginLookUpTable = PluginMetadataSnapshot & {
     >;
 };
 
-/** Shared type for Load Plugin Look Up Table Params in src/plugins. */
+/** Inputs for loading a plugin lookup table from config and metadata snapshots. */
 export type LoadPluginLookUpTableParams = {
   config: OpenClawConfig;
   activationSourceConfig?: OpenClawConfig;
@@ -58,7 +58,7 @@ let lookupTableMemoBySnapshot = new WeakMap<
   Map<string, PluginLookUpTable>
 >();
 
-/** Reused helper for clear Plugin Look Up Table Memo For Test behavior in src/plugins. */
+/** Clears lookup-table memoization for tests. */
 export function clearPluginLookUpTableMemoForTest(): void {
   lookupTableMemoBySnapshot = new WeakMap<PluginMetadataSnapshot, Map<string, PluginLookUpTable>>();
 }
@@ -86,7 +86,7 @@ function createPluginLookUpTableMemoKey(params: {
   });
 }
 
-/** Reused helper for load Plugin Look Up Table behavior in src/plugins. */
+/** Loads or reuses a plugin lookup table for the supplied control-plane context. */
 export function loadPluginLookUpTable(params: LoadPluginLookUpTableParams): PluginLookUpTable {
   const requestedSnapshotConfig = params.activationSourceConfig ?? params.config;
   const metadataSnapshot =

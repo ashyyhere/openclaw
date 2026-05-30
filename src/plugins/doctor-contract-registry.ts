@@ -1,4 +1,4 @@
-// plugins doctor contract registry helpers and runtime behavior.
+/** Loads plugin doctor contracts for config migration and route-state ownership. */
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -148,7 +148,7 @@ function hasLegacyElevenLabsTalkFields(raw: unknown): boolean {
   );
 }
 
-/** Reused helper for collect Relevant Doctor Plugin Ids behavior in src/plugins. */
+/** Finds plugin ids that may own doctor repairs for a raw config object. */
 export function collectRelevantDoctorPluginIds(raw: unknown): string[] {
   const ids = new Set<string>();
   const root = asNullableRecord(raw);
@@ -179,7 +179,7 @@ export function collectRelevantDoctorPluginIds(raw: unknown): string[] {
   return [...ids].toSorted();
 }
 
-/** Reused helper for collect Relevant Doctor Plugin Ids For Touched Paths behavior in src/plugins. */
+/** Narrows relevant doctor plugin ids from changed config paths. */
 export function collectRelevantDoctorPluginIdsForTouchedPaths(params: {
   raw: unknown;
   touchedPaths: ReadonlyArray<ReadonlyArray<string>>;
@@ -290,12 +290,12 @@ function resolvePluginDoctorContracts(params?: {
   return entries;
 }
 
-/** Reused helper for clear Plugin Doctor Contract Registry Cache behavior in src/plugins. */
+/** Clears cached plugin doctor contract modules. */
 export function clearPluginDoctorContractRegistryCache(): void {
   moduleLoaders.clear();
 }
 
-/** Reused helper for set Plugin Doctor Contract Registry Module Loader Factory For Test behavior in src/plugins. */
+/** Installs a test-only module loader factory for doctor contract modules. */
 export function setPluginDoctorContractRegistryModuleLoaderFactoryForTest(
   factory: PluginModuleLoaderFactory | undefined,
 ): void {
@@ -303,7 +303,7 @@ export function setPluginDoctorContractRegistryModuleLoaderFactoryForTest(
   moduleLoaders.clear();
 }
 
-/** Reused helper for list Plugin Doctor Legacy Config Rules behavior in src/plugins. */
+/** Lists legacy config rules contributed by relevant plugin doctor contracts. */
 export function listPluginDoctorLegacyConfigRules(params?: {
   config?: OpenClawConfig;
   workspaceDir?: string;
@@ -313,7 +313,7 @@ export function listPluginDoctorLegacyConfigRules(params?: {
   return resolvePluginDoctorContracts(params).flatMap((entry) => entry.rules);
 }
 
-/** Reused helper for list Plugin Doctor Session Route State Owners behavior in src/plugins. */
+/** Lists session route-state owners contributed by plugin doctor contracts. */
 export function listPluginDoctorSessionRouteStateOwners(params?: {
   config?: OpenClawConfig;
   workspaceDir?: string;
@@ -331,7 +331,7 @@ export function listPluginDoctorSessionRouteStateOwners(params?: {
   return [...owners.values()].toSorted((left, right) => left.id.localeCompare(right.id));
 }
 
-/** Reused helper for apply Plugin Doctor Compatibility Migrations behavior in src/plugins. */
+/** Applies plugin-owned compatibility migrations and returns accumulated changes. */
 export function applyPluginDoctorCompatibilityMigrations(
   cfg: OpenClawConfig,
   params?: {

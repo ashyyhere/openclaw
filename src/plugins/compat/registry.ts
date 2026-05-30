@@ -1,4 +1,4 @@
-// plugins/compat registry helpers and runtime behavior.
+/** Registry of plugin compatibility contracts, deprecations, and diagnostics. */
 import type { PluginCompatRecord } from "./types.js";
 
 const CHANNEL_RUNTIME_SDK_SURFACE = ["openclaw/plugin-sdk/channel", "runtime"].join("-");
@@ -7,7 +7,7 @@ const LEGACY_CONFIG_MIGRATE_TEST_PATH = [
   "migrate.test.ts",
 ].join("-");
 
-/** Reused constant for PLUGIN COMPAT RECORDS behavior in src/plugins/compat. */
+/** Canonical plugin compatibility records used by status, docs, and tests. */
 export const PLUGIN_COMPAT_RECORDS = [
   {
     code: "legacy-before-agent-start",
@@ -1042,21 +1042,21 @@ export const PLUGIN_COMPAT_RECORDS = [
   },
 ] as const satisfies readonly PluginCompatRecord[];
 
-/** Shared type for Plugin Compat Code in src/plugins/compat. */
+/** Known plugin compatibility code derived from the registry. */
 export type PluginCompatCode = (typeof PLUGIN_COMPAT_RECORDS)[number]["code"];
-/** Shared type for Known Plugin Compat Record in src/plugins/compat. */
+/** Registry record narrowed to known plugin compatibility codes. */
 export type KnownPluginCompatRecord = PluginCompatRecord<PluginCompatCode>;
 
 const pluginCompatRecordByCode = new Map<PluginCompatCode, KnownPluginCompatRecord>(
   PLUGIN_COMPAT_RECORDS.map((record) => [record.code, record]),
 );
 
-/** Reused helper for list Plugin Compat Records behavior in src/plugins/compat. */
+/** Lists all known plugin compatibility records. */
 export function listPluginCompatRecords(): readonly KnownPluginCompatRecord[] {
   return PLUGIN_COMPAT_RECORDS;
 }
 
-/** Reused helper for get Plugin Compat Record behavior in src/plugins/compat. */
+/** Returns one known plugin compatibility record or throws for unknown codes. */
 export function getPluginCompatRecord(code: PluginCompatCode): KnownPluginCompatRecord {
   const record = pluginCompatRecordByCode.get(code);
   if (!record) {
@@ -1065,12 +1065,12 @@ export function getPluginCompatRecord(code: PluginCompatCode): KnownPluginCompat
   return record;
 }
 
-/** Reused helper for is Plugin Compat Code behavior in src/plugins/compat. */
+/** Type guard for known plugin compatibility codes. */
 export function isPluginCompatCode(code: string): code is PluginCompatCode {
   return pluginCompatRecordByCode.has(code as PluginCompatCode);
 }
 
-/** Reused helper for list Deprecated Plugin Compat Records behavior in src/plugins/compat. */
+/** Lists compatibility records that represent deprecated or removal-pending surfaces. */
 export function listDeprecatedPluginCompatRecords(): readonly KnownPluginCompatRecord[] {
   return PLUGIN_COMPAT_RECORDS.filter((record) =>
     (["deprecated", "removal-pending"] as readonly string[]).includes(record.status),

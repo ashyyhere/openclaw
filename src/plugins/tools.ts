@@ -1,4 +1,4 @@
-// plugins tools helpers and runtime behavior.
+/** Plugin tool discovery, metadata tracking, allowlists, and runtime loading. */
 import { compileGlobPatterns, matchesAnyGlobPattern } from "../agents/glob-pattern.js";
 import { DEFAULT_PLUGIN_TOOLS_ALLOWLIST_ENTRY, normalizeToolName } from "../agents/tool-policy.js";
 import type { AnyAgentTool } from "../agents/tools/common.js";
@@ -33,13 +33,13 @@ import {
 } from "./tool-descriptor-cache.js";
 import type { OpenClawPluginToolContext } from "./types.js";
 
-/** Re-exported API for src/plugins. */
+/** Tool descriptor cache reset APIs exposed for tests and runtime reloads. */
 export {
   resetPluginToolDescriptorCache,
   resetPluginToolDescriptorCache as resetPluginToolFactoryCache,
 } from "./tool-descriptor-cache.js";
 
-/** Shared type for Plugin Tool Meta in src/plugins. */
+/** Metadata attached to tool objects created by plugin registrations. */
 export type PluginToolMeta = {
   pluginId: string;
   optional: boolean;
@@ -67,17 +67,17 @@ const PLUGIN_TOOL_FACTORY_SUMMARY_LIMIT = 20;
 
 const pluginToolMeta = new WeakMap<AnyAgentTool, PluginToolMeta>();
 
-/** Reused helper for set Plugin Tool Meta behavior in src/plugins. */
+/** Attaches plugin ownership metadata to a tool instance. */
 export function setPluginToolMeta(tool: AnyAgentTool, meta: PluginToolMeta): void {
   pluginToolMeta.set(tool, meta);
 }
 
-/** Reused helper for get Plugin Tool Meta behavior in src/plugins. */
+/** Reads plugin ownership metadata from a tool instance. */
 export function getPluginToolMeta(tool: AnyAgentTool): PluginToolMeta | undefined {
   return pluginToolMeta.get(tool);
 }
 
-/** Reused helper for copy Plugin Tool Meta behavior in src/plugins. */
+/** Copies plugin ownership metadata when a tool is wrapped. */
 export function copyPluginToolMeta(source: AnyAgentTool, target: AnyAgentTool): void {
   const meta = pluginToolMeta.get(source);
   if (meta) {
@@ -884,7 +884,7 @@ function resolvePluginToolLoadState(params: {
   return { context, env, loadOptions, onlyPluginIds, runtimeOptions, snapshot };
 }
 
-/** Reused helper for ensure Standalone Plugin Tool Registry Loaded behavior in src/plugins. */
+/** Loads the standalone plugin registry needed before plugin tool discovery. */
 export function ensureStandalonePluginToolRegistryLoaded(params: {
   context: OpenClawPluginToolContext;
   toolAllowlist?: string[];
@@ -904,7 +904,7 @@ export function ensureStandalonePluginToolRegistryLoaded(params: {
   });
 }
 
-/** Reused helper for resolve Plugin Tools behavior in src/plugins. */
+/** Resolves available plugin tools after availability, allowlist, and conflict checks. */
 export function resolvePluginTools(params: {
   context: OpenClawPluginToolContext;
   existingToolNames?: Set<string>;

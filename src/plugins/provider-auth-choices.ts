@@ -6,7 +6,7 @@ import { loadManifestMetadataSnapshot } from "./manifest-contract-eligibility.js
 import type { PluginManifestRecord } from "./manifest-registry.js";
 import type { PluginOrigin } from "./plugin-origin.types.js";
 
-/** Shared type for Provider Auth Choice Metadata in src/plugins. */
+/** Normalized provider auth choice exposed to onboarding and assistant flows. */
 export type ProviderAuthChoiceMetadata = {
   pluginId: string;
   providerId: string;
@@ -28,7 +28,7 @@ export type ProviderAuthChoiceMetadata = {
   onboardingScopes?: ("text-inference" | "image-generation" | "music-generation")[];
 };
 
-/** Shared type for Provider Onboard Auth Flag in src/plugins. */
+/** CLI flag descriptor generated from a manifest provider auth choice. */
 export type ProviderOnboardAuthFlag = {
   optionKey: string;
   authChoice: string;
@@ -270,7 +270,7 @@ function resolvePreferredManifestAuthChoiceMetadata(params: {
   return preferred ? stripChoiceOrigin(preferred) : undefined;
 }
 
-/** Reused helper for resolve Manifest Provider Auth Choices behavior in src/plugins. */
+/** Lists preferred manifest provider auth choices after origin-based dedupe. */
 export function resolveManifestProviderAuthChoices(
   params?: ManifestProviderAuthChoiceParams,
 ): ProviderAuthChoiceMetadata[] {
@@ -279,7 +279,7 @@ export function resolveManifestProviderAuthChoices(
   ).map(stripChoiceOrigin);
 }
 
-/** Reused helper for resolve Manifest Provider Auth Choice behavior in src/plugins. */
+/** Resolves one manifest auth choice by current choice id. */
 export function resolveManifestProviderAuthChoice(
   choiceId: string,
   params?: ManifestProviderAuthChoiceParams,
@@ -294,7 +294,7 @@ export function resolveManifestProviderAuthChoice(
   });
 }
 
-/** Reused helper for resolve Manifest Provider Api Key Choice behavior in src/plugins. */
+/** Resolves the preferred API-key choice for a provider alias or id. */
 export function resolveManifestProviderApiKeyChoice(params: {
   providerId: string;
   config?: OpenClawConfig;
@@ -314,7 +314,7 @@ export function resolveManifestProviderApiKeyChoice(params: {
   });
 }
 
-/** Reused helper for resolve Manifest Deprecated Provider Auth Choice behavior in src/plugins. */
+/** Resolves a deprecated auth choice id to its current manifest choice. */
 export function resolveManifestDeprecatedProviderAuthChoice(
   choiceId: string,
   params?: ManifestProviderAuthChoiceParams,
@@ -329,7 +329,7 @@ export function resolveManifestDeprecatedProviderAuthChoice(
   });
 }
 
-/** Reused helper for resolve Manifest Provider Onboard Auth Flags behavior in src/plugins. */
+/** Lists CLI onboarding flags contributed by manifest provider auth choices. */
 export function resolveManifestProviderOnboardAuthFlags(
   params?: ManifestProviderAuthChoiceParams,
 ): ProviderOnboardAuthFlag[] {

@@ -1,10 +1,10 @@
-// plugins plugin cache primitives helpers and runtime behavior.
+/** Small cache primitives used by plugin metadata and runtime loaders. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 
-/** Shared type for Plugin Lru Cache Result in src/plugins. */
+/** Lookup result for plugin LRU caches that distinguishes misses from undefined values. */
 export type PluginLruCacheResult<T> = { hit: true; value: T } | { hit: false };
 
-/** Reused class for Plugin Lru Cache behavior in src/plugins. */
+/** Minimal insertion-ordered LRU cache for plugin runtime metadata. */
 export class PluginLruCache<T> {
   readonly #defaultMaxEntries: number;
   #maxEntries: number;
@@ -69,16 +69,16 @@ export class PluginLruCache<T> {
   }
 }
 
-/** Shared type for Config Scoped Runtime Cache in src/plugins. */
+/** Weak config-scoped cache for derived runtime values. */
 export type ConfigScopedRuntimeCache<T> = WeakMap<OpenClawConfig, Map<string, T>>;
 
-/** Shared type for Config Scoped Promise Loader in src/plugins. */
+/** Promise loader that memoizes separately for default and config-scoped calls. */
 export type ConfigScopedPromiseLoader<T> = {
   load(config?: OpenClawConfig): Promise<T>;
   clear(): void;
 };
 
-/** Reused helper for resolve Config Scoped Runtime Cache Value behavior in src/plugins. */
+/** Returns a config-scoped cached value or stores a freshly loaded one. */
 export function resolveConfigScopedRuntimeCacheValue<T>(params: {
   cache: ConfigScopedRuntimeCache<T>;
   config?: OpenClawConfig;
@@ -101,12 +101,12 @@ export function resolveConfigScopedRuntimeCacheValue<T>(params: {
   return loaded;
 }
 
-/** Reused helper for create Plugin Cache Key behavior in src/plugins. */
+/** Builds a deterministic JSON cache key from plugin cache parts. */
 export function createPluginCacheKey(parts: readonly unknown[]): string {
   return JSON.stringify(parts);
 }
 
-/** Reused helper for create Config Scoped Promise Loader behavior in src/plugins. */
+/** Creates a memoized async loader keyed by config object identity. */
 export function createConfigScopedPromiseLoader<T>(
   load: (config?: OpenClawConfig) => T | Promise<T>,
 ): ConfigScopedPromiseLoader<T> {

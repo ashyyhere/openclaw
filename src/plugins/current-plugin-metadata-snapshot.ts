@@ -30,7 +30,7 @@ export function resolvePluginMetadataControlPlaneFingerprint(
   });
 }
 
-/** Reused helper for is Reusable Current Plugin Metadata Snapshot behavior in src/plugins. */
+/** Returns whether a current metadata snapshot can be considered for reuse. */
 export function isReusableCurrentPluginMetadataSnapshot(
   _snapshot: PluginMetadataSnapshot,
 ): boolean {
@@ -39,7 +39,7 @@ export function isReusableCurrentPluginMetadataSnapshot(
 
 // Single-slot Gateway-owned handoff. Replace or clear it at lifecycle boundaries;
 // never accumulate historical metadata snapshots here.
-/** Reused helper for set Current Plugin Metadata Snapshot behavior in src/plugins. */
+/** Stores the current metadata snapshot with compatible config fingerprints. */
 export function setCurrentPluginMetadataSnapshot(
   snapshot: PluginMetadataSnapshot | undefined,
   options: {
@@ -114,19 +114,19 @@ export function setCurrentPluginMetadataSnapshot(
   }
 }
 
-/** Reused helper for clear Current Plugin Metadata Snapshot behavior in src/plugins. */
+/** Clears the current metadata snapshot and config identity cache. */
 export function clearCurrentPluginMetadataSnapshot(): void {
   currentPluginMetadataConfigIdentityCache = new WeakSet();
   setCurrentManifestModelIdNormalizationRecords(undefined);
   clearCurrentPluginMetadataSnapshotState();
 }
 
-/** Reused helper for capture Current Plugin Metadata Snapshot State behavior in src/plugins. */
+/** Captures current metadata snapshot state for tests. */
 export function captureCurrentPluginMetadataSnapshotState(): CurrentPluginMetadataSnapshotState {
   return getCurrentPluginMetadataSnapshotState();
 }
 
-/** Reused helper for restore Current Plugin Metadata Snapshot State behavior in src/plugins. */
+/** Restores current metadata snapshot state for tests. */
 export function restoreCurrentPluginMetadataSnapshotState(
   state: CurrentPluginMetadataSnapshotState,
 ): void {
@@ -159,7 +159,7 @@ export function restoreCurrentPluginMetadataSnapshotState(
   );
 }
 
-/** Reused helper for get Current Plugin Metadata Snapshot behavior in src/plugins. */
+/** Returns the current metadata snapshot when config/env/workspace fingerprints match. */
 export function getCurrentPluginMetadataSnapshot(
   params: {
     config?: OpenClawConfig;

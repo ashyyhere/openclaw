@@ -1,4 +1,4 @@
-// Shared types for plugins plugin metadata snapshot types behavior.
+/** Shared types for plugin metadata snapshots used by control-plane lookups. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { PluginDiscoveryResult } from "./discovery.js";
 import type { InstalledPluginIndex } from "./installed-plugin-index-types.js";
@@ -6,7 +6,7 @@ import type { PluginManifestRecord, PluginManifestRegistry } from "./manifest-re
 import type { PluginDiagnostic } from "./manifest-types.js";
 import type { PluginRegistrySnapshotSource } from "./plugin-registry-snapshot.types.js";
 
-/** Shared type for Plugin Metadata Snapshot Owner Maps in src/plugins. */
+/** Ownership maps from channel/provider/contract ids to plugin ids. */
 export type PluginMetadataSnapshotOwnerMaps = {
   channels: ReadonlyMap<string, readonly string[]>;
   channelConfigs: ReadonlyMap<string, readonly string[]>;
@@ -18,7 +18,7 @@ export type PluginMetadataSnapshotOwnerMaps = {
   contracts: ReadonlyMap<string, readonly string[]>;
 };
 
-/** Shared type for Plugin Metadata Snapshot Metrics in src/plugins. */
+/** Timing and size metrics captured while building a plugin metadata snapshot. */
 export type PluginMetadataSnapshotMetrics = {
   registrySnapshotMs: number;
   manifestRegistryMs: number;
@@ -28,7 +28,7 @@ export type PluginMetadataSnapshotMetrics = {
   manifestPluginCount: number;
 };
 
-/** Shared type for Plugin Metadata Snapshot Registry Diagnostic in src/plugins. */
+/** Diagnostic explaining how persisted plugin registry data was used. */
 export type PluginMetadataSnapshotRegistryDiagnostic = {
   level: "info" | "warn";
   code:
@@ -39,7 +39,7 @@ export type PluginMetadataSnapshotRegistryDiagnostic = {
   message: string;
 };
 
-/** Shared type for Plugin Metadata Snapshot in src/plugins. */
+/** Process-stable plugin metadata snapshot for manifest and registry queries. */
 export type PluginMetadataSnapshot = {
   policyHash: string;
   configFingerprint?: string;
@@ -57,13 +57,13 @@ export type PluginMetadataSnapshot = {
   discovery?: PluginDiscoveryResult;
 };
 
-/** Shared type for Plugin Metadata Registry View in src/plugins. */
+/** Minimal snapshot view needed by manifest registry callers. */
 export type PluginMetadataRegistryView = Pick<PluginMetadataSnapshot, "index" | "manifestRegistry">;
 
-/** Shared type for Plugin Metadata Manifest View in src/plugins. */
+/** Minimal snapshot view needed by manifest contract callers. */
 export type PluginMetadataManifestView = Pick<PluginMetadataSnapshot, "index" | "plugins">;
 
-/** Shared type for Load Plugin Metadata Snapshot Params in src/plugins. */
+/** Inputs for building or loading a plugin metadata snapshot. */
 export type LoadPluginMetadataSnapshotParams = {
   config?: OpenClawConfig;
   workspaceDir?: string;
@@ -73,7 +73,7 @@ export type LoadPluginMetadataSnapshotParams = {
   preferPersisted?: boolean;
 };
 
-/** Shared type for Resolve Plugin Metadata Snapshot Params in src/plugins. */
+/** Snapshot resolution inputs, including current-snapshot reuse controls. */
 export type ResolvePluginMetadataSnapshotParams = LoadPluginMetadataSnapshotParams & {
   allowCurrent?: boolean;
   allowWorkspaceScopedCurrent?: boolean;
