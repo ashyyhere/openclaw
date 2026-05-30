@@ -1,14 +1,14 @@
-// security config regex helpers and runtime behavior.
+// Security-audit helpers for compiling operator-provided regex config safely.
 import {
   compileSafeRegexDetailed,
   type SafeRegexCompileResult,
   type SafeRegexRejectReason,
 } from "./safe-regex.js";
 
-/** Shared type for Config Regex Reject Reason in src/security. */
+/** Reject reasons surfaced for non-empty config regex patterns. */
 export type ConfigRegexRejectReason = Exclude<SafeRegexRejectReason, "empty">;
 
-/** Shared type for Compiled Config Regex in src/security. */
+/** Compiled config regex or normalized rejection metadata for audit reporting. */
 export type CompiledConfigRegex =
   | {
       regex: RegExp;
@@ -30,7 +30,7 @@ function normalizeRejectReason(result: SafeRegexCompileResult): ConfigRegexRejec
   return result.reason;
 }
 
-/** Reused helper for compile Config Regex behavior in src/security. */
+/** Compile one config regex, returning null for intentionally blank patterns. */
 export function compileConfigRegex(pattern: string, flags = ""): CompiledConfigRegex | null {
   const result = compileSafeRegexDetailed(pattern, flags);
   if (result.reason === "empty") {
@@ -44,7 +44,7 @@ export function compileConfigRegex(pattern: string, flags = ""): CompiledConfigR
   } as CompiledConfigRegex;
 }
 
-/** Reused helper for compile Config Regexes behavior in src/security. */
+/** Compile many config regexes and split accepted regexes from rejected patterns. */
 export function compileConfigRegexes(
   patterns: string[],
   flags = "",

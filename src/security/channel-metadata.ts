@@ -1,4 +1,4 @@
-// security channel metadata helpers and runtime behavior.
+// Helpers for wrapping channel metadata as explicitly untrusted model context.
 import { uniqueStrings } from "../shared/string-normalization.js";
 import { wrapExternalContent } from "./external-content.js";
 
@@ -20,7 +20,7 @@ function truncateText(value: string, maxChars: number): string {
   return `${trimmed}...`;
 }
 
-/** Reused helper for build Untrusted Channel Metadata behavior in src/security. */
+/** Build bounded untrusted channel metadata for prompt injection-safe context. */
 export function buildUntrustedChannelMetadata(params: {
   source: string;
   label: string;

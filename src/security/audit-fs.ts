@@ -1,5 +1,5 @@
-// security audit fs helpers and runtime behavior.
-/** Re-exported API for src/security. */
+// Security-audit barrel for filesystem permission checks.
+/** Re-export filesystem permission helpers from the shared permissions implementation. */
 export {
   formatPermissionDetail,
   formatPermissionRemediation,

@@ -1,5 +1,5 @@
-// security windows acl helpers and runtime behavior.
-/** Re-exported API for src/security. */
+// Security-audit barrel for Windows ACL inspection and repair command helpers.
+/** Re-export Windows ACL helpers from the shared permissions implementation. */
 export {
   createIcaclsResetCommand,
   formatIcaclsResetCommand,

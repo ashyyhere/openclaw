@@ -1,8 +1,8 @@
-// security audit deep probe findings helpers and runtime behavior.
+// Security-audit helpers for translating deep probe failures into report findings.
 import { formatCliCommand } from "../cli/command-format.js";
 import type { SecurityAuditFinding, SecurityAuditReport } from "./audit.types.js";
 
-/** Reused helper for collect Deep Probe Findings behavior in src/security. */
+/** Collect warning findings for failed deep gateway probes and unavailable auth. */
 export function collectDeepProbeFindings(params: {
   deep?: SecurityAuditReport["deep"];
   authWarning?: string;
