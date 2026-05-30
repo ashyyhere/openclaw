@@ -1,4 +1,4 @@
-// gateway auth helpers and runtime behavior.
+// Gateway auth helpers for shared secrets, Tailscale identity, and trusted proxy mode.
 import type { IncomingMessage } from "node:http";
 import type { GatewayAuthConfig, GatewayTrustedProxyConfig } from "../config/types.gateway.js";
 import { readTailscaleWhoisIdentity, type TailscaleWhoisIdentity } from "../infra/tailscale.js";
@@ -22,7 +22,7 @@ import {
 } from "./net.js";
 import { checkBrowserOrigin } from "./origin-check.js";
 import { withSerializedRateLimitAttempt } from "./rate-limit-attempt-serialization.js";
-/** Re-exported API for src/gateway. */
+/** Gateway auth config resolution helpers and public resolved-auth types. */
 export {
   resolveEffectiveSharedGatewayAuth,
   resolveGatewayAuth,
@@ -35,7 +35,7 @@ export {
 const LEGACY_OPENCLAW_ENV_NOTE =
   " Legacy CLAWDBOT_* and MOLTBOT_* environment variables are ignored; use OPENCLAW_* names.";
 
-/** Shared type for Gateway Auth Result in src/gateway. */
+/** Result of an HTTP or WebSocket gateway authorization attempt. */
 export type GatewayAuthResult = {
   ok: boolean;
   method?:
@@ -59,10 +59,10 @@ type ConnectAuth = {
   password?: string;
 };
 
-/** Shared type for Gateway Auth Surface in src/gateway. */
+/** Gateway surface being authorized; controls which trusted headers are allowed. */
 export type GatewayAuthSurface = "http" | "ws-control-ui";
 
-/** Shared type for Authorize Gateway Connect Params in src/gateway. */
+/** Inputs for authorizing gateway connect requests across HTTP and Control UI WebSocket paths. */
 export type AuthorizeGatewayConnectParams = {
   auth: ResolvedGatewayAuth;
   connectAuth?: ConnectAuth | null;
@@ -126,7 +126,7 @@ function resolveTailscaleClientIp(req?: IncomingMessage): string | undefined {
   });
 }
 
-/** Reused helper for has Forwarded Request Headers behavior in src/gateway. */
+/** Detects whether a request carries forwarded/proxy headers. */
 export function hasForwardedRequestHeaders(req?: IncomingMessage): boolean {
   if (!req) {
     return false;
@@ -142,7 +142,7 @@ export function hasForwardedRequestHeaders(req?: IncomingMessage): boolean {
   );
 }
 
-/** Reused helper for is Local Direct Request behavior in src/gateway. */
+/** Checks for direct loopback requests without forwarded headers. */
 export function isLocalDirectRequest(
   req?: IncomingMessage,
   _trustedProxies?: string[],
@@ -226,7 +226,7 @@ async function resolveVerifiedTailscaleUser(params: {
   };
 }
 
-/** Reused helper for assert Gateway Auth Configured behavior in src/gateway. */
+/** Fails fast when resolved gateway auth mode lacks required startup credentials/config. */
 export function assertGatewayAuthConfigured(
   auth: ResolvedGatewayAuth,
   rawAuthConfig?: GatewayAuthConfig | null,
@@ -405,7 +405,7 @@ function authorizePasswordAuth(params: {
   return { ok: true, method: "password" };
 }
 
-/** Reused helper for authorize Gateway Connect behavior in src/gateway. */
+/** Authorizes a gateway connection using the configured auth mode and rate limiter. */
 export async function authorizeGatewayConnect(
   params: AuthorizeGatewayConnectParams,
 ): Promise<GatewayAuthResult> {
@@ -570,7 +570,7 @@ async function authorizeGatewayConnectCore(
   return { ok: false, reason: "unauthorized" };
 }
 
-/** Reused helper for authorize Http Gateway Connect behavior in src/gateway. */
+/** Authorizes an HTTP gateway request with Tailscale forwarded-header auth disabled. */
 export async function authorizeHttpGatewayConnect(
   params: Omit<AuthorizeGatewayConnectParams, "authSurface">,
 ): Promise<GatewayAuthResult> {
@@ -580,7 +580,7 @@ export async function authorizeHttpGatewayConnect(
   });
 }
 
-/** Reused helper for authorize Ws Control Ui Gateway Connect behavior in src/gateway. */
+/** Authorizes a Control UI WebSocket request, allowing verified Tailscale header auth. */
 export async function authorizeWsControlUiGatewayConnect(
   params: Omit<AuthorizeGatewayConnectParams, "authSurface">,
 ): Promise<GatewayAuthResult> {

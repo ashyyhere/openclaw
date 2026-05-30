@@ -1,4 +1,4 @@
-// gateway net helpers and runtime behavior.
+// Gateway network helpers for host parsing, proxy IP resolution, and bind/listen choices.
 import type { IncomingMessage } from "node:http";
 import net from "node:net";
 import {
@@ -33,12 +33,12 @@ export function pickPrimaryLanIPv4(): string | undefined {
   });
 }
 
-/** Reused helper for normalize Host Header behavior in src/gateway. */
+/** Normalizes Host header text before hostname and locality checks. */
 export function normalizeHostHeader(hostHeader?: string): string {
   return normalizeLowercaseStringOrEmpty(hostHeader);
 }
 
-/** Reused helper for resolve Host Name behavior in src/gateway. */
+/** Extracts a hostname or IP literal from a Host header, preserving unbracketed IPv6. */
 export function resolveHostName(hostHeader?: string): string {
   const host = normalizeHostHeader(hostHeader);
   if (!host) {
@@ -58,12 +58,12 @@ export function resolveHostName(hostHeader?: string): string {
   return name ?? "";
 }
 
-/** Reused helper for is Loopback Address behavior in src/gateway. */
+/** Checks whether an IP literal is loopback after shared normalization. */
 export function isLoopbackAddress(ip: string | undefined): boolean {
   return isLoopbackIpAddress(ip);
 }
 
-/** Reused helper for is Local Interface Address behavior in src/gateway. */
+/** Checks whether an IP matches a local network interface when the interface snapshot is available. */
 export function isLocalInterfaceAddress(
   ip: string | undefined,
   snapshot?: NetworkInterfacesSnapshot,
@@ -75,7 +75,7 @@ export function isLocalInterfaceAddress(
   );
 }
 
-/** Reused helper for resolve Local Interface Address Match behavior in src/gateway. */
+/** Resolves local-interface membership, returning undefined when interfaces cannot be read. */
 export function resolveLocalInterfaceAddressMatch(
   ip: string | undefined,
   snapshot?: NetworkInterfacesSnapshot,
@@ -181,7 +181,7 @@ function resolveForwardedClientIp(params: {
   return undefined;
 }
 
-/** Reused helper for is Trusted Proxy Address behavior in src/gateway. */
+/** Checks whether an IP literal belongs to one of the configured trusted proxy CIDRs. */
 export function isTrustedProxyAddress(ip: string | undefined, trustedProxies?: string[]): boolean {
   const normalized = normalizeIp(ip);
   if (!normalized || !trustedProxies || trustedProxies.length === 0) {
@@ -197,7 +197,7 @@ export function isTrustedProxyAddress(ip: string | undefined, trustedProxies?: s
   });
 }
 
-/** Reused helper for resolve Client Ip behavior in src/gateway. */
+/** Resolves the client IP from remote address and forwarded headers, trusting only configured proxies. */
 export function resolveClientIp(params: {
   remoteAddr?: string;
   forwardedFor?: string;
@@ -233,7 +233,7 @@ function headerValue(value: string | string[] | undefined): string | undefined {
   return Array.isArray(value) ? value[0] : value;
 }
 
-/** Reused helper for resolve Request Client Ip behavior in src/gateway. */
+/** Resolves proxy-aware client IP directly from a Node HTTP request. */
 export function resolveRequestClientIp(
   req?: IncomingMessage,
   trustedProxies?: string[],
@@ -251,7 +251,7 @@ export function resolveRequestClientIp(
   });
 }
 
-/** Re-exported API for src/gateway. */
+/** Container environment detector re-exported for gateway bind-mode tests and startup code. */
 export {
   isContainerEnvironment,
   resetContainerEnvironmentCacheForTest as __resetContainerCacheForTest,
@@ -369,7 +369,7 @@ async function canBindToHost(host: string): Promise<boolean> {
   });
 }
 
-/** Reused helper for resolve Gateway Listen Hosts behavior in src/gateway. */
+/** Expands a bind host into actual listen hosts, adding IPv6 loopback where safe. */
 export async function resolveGatewayListenHosts(
   bindHost: string,
   opts?: { canBindToHost?: (host: string) => Promise<boolean> },

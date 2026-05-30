@@ -1,4 +1,4 @@
-// gateway/methods core descriptors helpers and runtime behavior.
+// Core gateway method descriptor table and scope lookup helpers.
 import type { OperatorScope } from "../operator-scopes.js";
 import {
   DYNAMIC_GATEWAY_METHOD_SCOPE,
@@ -16,7 +16,7 @@ type CoreGatewayMethodSpec = {
   controlPlaneWrite?: true;
 };
 
-/** Reused constant for CORE GATEWAY METHOD SPECS behavior in src/gateway/methods. */
+/** Canonical scope/startup/advertising metadata for built-in gateway methods. */
 export const CORE_GATEWAY_METHOD_SPECS: readonly CoreGatewayMethodSpec[] = [
   { name: "health", scope: "operator.read" },
   { name: "diagnostics.stability", scope: "operator.read" },
@@ -227,29 +227,29 @@ const CORE_GATEWAY_METHOD_SPEC_BY_NAME: ReadonlyMap<string, CoreGatewayMethodSpe
   CORE_GATEWAY_METHOD_SPECS.map((spec) => [spec.name, spec]),
 );
 
-/** Reused constant for STARTUP UNAVAILABLE GATEWAY METHODS behavior in src/gateway/methods. */
+/** Core methods that are advertised but unavailable until sidecars finish startup. */
 export const STARTUP_UNAVAILABLE_GATEWAY_METHODS = CORE_GATEWAY_METHOD_SPECS.filter(
   (spec) => spec.startup === true,
 ).map((spec) => spec.name);
 
-/** Reused helper for list Core Advertised Gateway Method Names behavior in src/gateway/methods. */
+/** Lists built-in gateway method names that should be advertised to clients. */
 export function listCoreAdvertisedGatewayMethodNames(): string[] {
   return CORE_GATEWAY_METHOD_SPECS.filter((spec) => spec.advertise !== false).map(
     (spec) => spec.name,
   );
 }
 
-/** Reused helper for list Core Gateway Method Names behavior in src/gateway/methods. */
+/** Lists all built-in gateway method names, including hidden/internal methods. */
 export function listCoreGatewayMethodNames(): string[] {
   return CORE_GATEWAY_METHOD_SPECS.map((spec) => spec.name);
 }
 
-/** Reused helper for resolve Core Gateway Method Scope behavior in src/gateway/methods. */
+/** Resolves the configured access scope for a built-in gateway method. */
 export function resolveCoreGatewayMethodScope(method: string): GatewayMethodScope | undefined {
   return CORE_GATEWAY_METHOD_SPEC_BY_NAME.get(method)?.scope;
 }
 
-/** Reused helper for resolve Core Operator Gateway Method Scope behavior in src/gateway/methods. */
+/** Resolves only operator scopes, excluding node and dynamic methods. */
 export function resolveCoreOperatorGatewayMethodScope(method: string): OperatorScope | undefined {
   const scope = resolveCoreGatewayMethodScope(method);
   return scope === NODE_GATEWAY_METHOD_SCOPE || scope === DYNAMIC_GATEWAY_METHOD_SCOPE
@@ -257,22 +257,22 @@ export function resolveCoreOperatorGatewayMethodScope(method: string): OperatorS
     : scope;
 }
 
-/** Reused helper for is Core Node Gateway Method behavior in src/gateway/methods. */
+/** Checks whether a built-in gateway method is reserved for node clients. */
 export function isCoreNodeGatewayMethod(method: string): boolean {
   return resolveCoreGatewayMethodScope(method) === NODE_GATEWAY_METHOD_SCOPE;
 }
 
-/** Reused helper for is Dynamic Operator Gateway Method behavior in src/gateway/methods. */
+/** Checks whether a built-in gateway method resolves operator scope dynamically. */
 export function isDynamicOperatorGatewayMethod(method: string): boolean {
   return resolveCoreGatewayMethodScope(method) === DYNAMIC_GATEWAY_METHOD_SCOPE;
 }
 
-/** Reused helper for is Core Gateway Method Classified behavior in src/gateway/methods. */
+/** Checks whether a method has an explicit built-in descriptor entry. */
 export function isCoreGatewayMethodClassified(method: string): boolean {
   return CORE_GATEWAY_METHOD_SPEC_BY_NAME.has(method);
 }
 
-/** Reused helper for create Core Gateway Method Descriptors behavior in src/gateway/methods. */
+/** Builds runtime descriptors for core handlers and fails if a handler lacks metadata. */
 export function createCoreGatewayMethodDescriptors(
   handlers: Record<string, GatewayMethodHandler>,
 ): GatewayMethodDescriptorInput[] {
