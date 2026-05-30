@@ -1,5 +1,5 @@
-// infra exec safe bin policy helpers and runtime behavior.
-/** Re-exported API for src/infra. */
+// Public facade for safe-bin profiles and validation used by exec approval policy.
+/** Safe-bin profile definitions and documentation renderers. */
 export {
   DEFAULT_SAFE_BINS,
   SAFE_BIN_PROFILE_FIXTURES,
@@ -15,5 +15,5 @@ export {
   type SafeBinProfileFixtures,
 } from "./exec-safe-bin-policy-profiles.js";
 
-/** Re-exported API for src/infra, starting with validate Safe Bin Argv. */
+/** Safe-bin argv validator used before approved host command execution. */
 export { validateSafeBinArgv } from "./exec-safe-bin-policy-validator.js";

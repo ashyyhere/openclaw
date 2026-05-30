@@ -1,9 +1,9 @@
-// infra sqlite wal helpers and runtime behavior.
+// Configures SQLite WAL pragmas and periodic checkpoints for local stores.
 import type { DatabaseSync } from "node:sqlite";
 
-/** Reused constant for DEFAULT SQLITE WAL AUTOCHECKPOINT PAGES behavior in src/infra. */
+/** Default page threshold for SQLite automatic WAL checkpoints. */
 export const DEFAULT_SQLITE_WAL_AUTOCHECKPOINT_PAGES = 1000;
-/** Reused constant for DEFAULT SQLITE WAL TRUNCATE INTERVAL MS behavior in src/infra. */
+/** Default interval for explicit WAL truncate checkpoints. */
 export const DEFAULT_SQLITE_WAL_TRUNCATE_INTERVAL_MS = 30 * 60 * 1000;
 
 type IntervalHandle = ReturnType<typeof setInterval> & {
@@ -12,13 +12,13 @@ type IntervalHandle = ReturnType<typeof setInterval> & {
 
 type SqliteWalCheckpointMode = "PASSIVE" | "FULL" | "RESTART" | "TRUNCATE";
 
-/** Shared type for Sqlite Wal Maintenance in src/infra. */
+/** Handle returned by WAL maintenance setup for manual checkpoint and cleanup. */
 export type SqliteWalMaintenance = {
   checkpoint: () => boolean;
   close: () => boolean;
 };
 
-/** Shared type for Sqlite Wal Maintenance Options in src/infra. */
+/** Tuning options for SQLite WAL checkpoint setup. */
 export type SqliteWalMaintenanceOptions = {
   autoCheckpointPages?: number;
   checkpointIntervalMs?: number;
@@ -35,7 +35,7 @@ function normalizeNonNegativeInteger(value: number, label: string): number {
   return value;
 }
 
-/** Reused helper for configure Sqlite Wal Maintenance behavior in src/infra. */
+/** Enables WAL mode, configures autocheckpointing, and starts optional truncation. */
 export function configureSqliteWalMaintenance(
   db: DatabaseSync,
   options: SqliteWalMaintenanceOptions = {},

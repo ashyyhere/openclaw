@@ -1,14 +1,14 @@
-// infra update managed service handoff cleanup helpers and runtime behavior.
+// Cleans stale temporary handoff directories left by managed-service updates.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 
-/** Reused constant for MANAGED SERVICE UPDATE HANDOFF TEMP PREFIX behavior in src/infra. */
+/** Prefix used for temp dirs that transfer managed-service update state. */
 export const MANAGED_SERVICE_UPDATE_HANDOFF_TEMP_PREFIX = "openclaw-update-run-handoff-";
-/** Reused constant for MANAGED SERVICE UPDATE HANDOFF STALE TTL MS behavior in src/infra. */
+/** Age after which abandoned update handoff dirs are safe to remove. */
 export const MANAGED_SERVICE_UPDATE_HANDOFF_STALE_TTL_MS = 24 * 60 * 60_000;
 
-/** Reused helper for cleanup Stale Managed Service Update Handoffs behavior in src/infra. */
+/** Removes stale managed-service update handoff directories from the temp dir. */
 export async function cleanupStaleManagedServiceUpdateHandoffs(params?: {
   tmpDir?: string;
   nowMs?: number;

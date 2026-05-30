@@ -1,4 +1,4 @@
-// infra exec allowlist pattern helpers and runtime behavior.
+// Matches exec allowlist path patterns against platform-normalized command targets.
 import fs from "node:fs";
 import path from "node:path";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
@@ -89,7 +89,7 @@ function compileGlobRegex(pattern: string): RegExp {
   return compiled;
 }
 
-/** Reused helper for matches Exec Allowlist Pattern behavior in src/infra. */
+/** Tests whether a command target path matches an allowlist glob or literal path. */
 export function matchesExecAllowlistPattern(pattern: string, target: string): boolean {
   const trimmed = pattern.trim();
   if (!trimmed) {
