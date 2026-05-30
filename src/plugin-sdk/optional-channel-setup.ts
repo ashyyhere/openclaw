@@ -19,7 +19,7 @@ function buildOptionalChannelSetupMessage(params: OptionalChannelSetupParams): s
   return message.join(" ");
 }
 
-/** Reused helper for create Optional Channel Setup Adapter behavior in src/plugin-sdk. */
+/** Creates a setup adapter that reports a missing optional channel plugin. */
 export function createOptionalChannelSetupAdapter(
   params: OptionalChannelSetupParams,
 ): ChannelSetupAdapter {
@@ -33,7 +33,7 @@ export function createOptionalChannelSetupAdapter(
   };
 }
 
-/** Reused helper for create Optional Channel Setup Wizard behavior in src/plugin-sdk. */
+/** Creates a setup wizard that points users at the missing optional channel plugin. */
 export function createOptionalChannelSetupWizard(
   params: OptionalChannelSetupParams,
 ): ChannelSetupWizard {

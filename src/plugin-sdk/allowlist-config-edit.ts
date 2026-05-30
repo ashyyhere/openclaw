@@ -46,7 +46,7 @@ const LEGACY_DM_ALLOWLIST_CONFIG_PATHS: AllowlistConfigPaths = {
   cleanupPaths: [["dm", "allowFrom"]],
 };
 
-/** Reused helper for resolve Dm Group Allowlist Config Paths behavior in src/plugin-sdk. */
+/** Resolves config paths for DM or group allowlist edits. */
 export function resolveDmGroupAllowlistConfigPaths(scope: "dm" | "group") {
   return scope === "dm" ? DM_ALLOWLIST_CONFIG_PATHS : GROUP_ALLOWLIST_CONFIG_PATHS;
 }
