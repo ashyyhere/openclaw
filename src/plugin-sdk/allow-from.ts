@@ -2,15 +2,12 @@ import { isAllowedParsedChatSender as isAllowedParsedChatSenderShared } from "..
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 import { normalizeStringEntries } from "../shared/string-normalization.js";
 
-/** Re-exported API for src/plugin-sdk. */
 export type {
   AllowlistMatch,
   AllowlistMatchSource,
   CompiledAllowlist,
 } from "../channels/allowlist-match.js";
-/** Re-exported API for src/plugin-sdk, starting with Allowlist User Resolution Like. */
 export type { AllowlistUserResolutionLike } from "../channels/allowlists/resolve-utils.js";
-/** Re-exported API for src/plugin-sdk. */
 export {
   compileAllowlist,
   formatAllowlistMatchMeta,
@@ -19,14 +16,12 @@ export {
   resolveAllowlistMatchSimple,
   resolveCompiledAllowlistMatch,
 } from "../channels/allowlist-match.js";
-/** Re-exported API for src/plugin-sdk. */
 export {
   firstDefined,
   isSenderIdAllowed,
   mergeDmAllowFromSources,
   resolveGroupAllowFromSources,
 } from "../channels/allow-from.js";
-/** Re-exported API for src/plugin-sdk. */
 export {
   addAllowlistUserEntriesFromConfigEntry,
   buildAllowlistResolutionSummary,

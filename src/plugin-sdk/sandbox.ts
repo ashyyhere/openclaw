@@ -19,10 +19,8 @@ export type {
   SshSandboxSession,
   SshSandboxSettings,
 } from "../agents/sandbox.js";
-/** Re-exported API for src/plugin-sdk, starting with Open Claw Config. */
 export type { OpenClawConfig } from "../config/config.js";
 
-/** Re-exported API for src/plugin-sdk. */
 export {
   buildExecRemoteCommand,
   buildRemoteCommand,
@@ -47,15 +45,12 @@ export {
   uploadDirectoryToSshTarget,
 } from "../agents/sandbox.js";
 
-/** Re-exported API for src/plugin-sdk. */
 export {
   runPluginCommandWithTimeout,
   type PluginCommandRunOptions,
   type PluginCommandRunResult,
 } from "./run-command.js";
-/** Re-exported API for src/plugin-sdk, starting with resolve Preferred Open Claw Tmp Dir. */
 export { resolvePreferredOpenClawTmpDir } from "../infra/tmp-openclaw-dir.js";
-/** Re-exported API for src/plugin-sdk. */
 export {
   tempWorkspace,
   tempWorkspaceSync,
