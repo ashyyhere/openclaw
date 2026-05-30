@@ -1,4 +1,4 @@
-// scripts sync plugin versions helpers and runtime behavior.
+// Plugin version sync aligns publishable extension package metadata with the root version.
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
@@ -96,6 +96,7 @@ function ensureChangelogEntry(changelogPath: string, version: string, write: boo
   return true;
 }
 
+/** Updates extension package versions, OpenClaw ranges, and plugin changelog stubs. */
 export function syncPluginVersions(
   rootDir = resolve("."),
   options: SyncPluginVersionsOptions = {},

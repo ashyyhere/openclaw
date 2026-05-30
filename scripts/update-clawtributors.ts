@@ -1,4 +1,4 @@
-// scripts update clawtributors helpers and runtime behavior.
+// Clawtributors updater rebuilds the README contributor avatar block from git and GitHub data.
 import { execFileSync, execSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";

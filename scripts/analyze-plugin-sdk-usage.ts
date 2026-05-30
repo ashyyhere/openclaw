@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// scripts analyze plugin sdk usage helpers and runtime behavior.
+// Plugin SDK usage analyzer forwards to the topology CLI with the plugin-sdk scope.
 import { main } from "./ts-topology.ts";
 
 const forwardedArgs = process.argv.slice(2);
