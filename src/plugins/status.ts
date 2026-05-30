@@ -1,4 +1,5 @@
-// plugins status helpers and runtime behavior.
+// Builds plugin status, diagnostics, inspect, and compatibility reports from
+// metadata snapshots or runtime-loaded registries.
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../agents/agent-scope.js";
 import { resolveDefaultAgentWorkspaceDir } from "../agents/workspace.js";
 import { getRuntimeConfig } from "../config/config.js";
@@ -32,7 +33,7 @@ import { loadPluginMetadataRegistrySnapshot } from "./runtime/metadata-registry-
 import { buildPluginDependencyStatus } from "./status-dependencies.js";
 import type { PluginHookName, PluginLogger } from "./types.js";
 
-/** Shared type for Plugin Status Report in src/plugins. */
+/** Plugin registry report plus the workspace directory used to resolve plugin roots. */
 export type PluginStatusReport = PluginRegistry & {
   workspaceDir?: string;
 };
@@ -43,7 +44,7 @@ export {
 } from "./status-snapshot.js";
 export type { PluginCapabilityKind, PluginInspectShape } from "./inspect-shape.js";
 
-/** Shared type for Plugin Compatibility Notice in src/plugins. */
+/** Compatibility notice emitted for legacy or deprecated plugin shapes. */
 export type PluginCompatibilityNotice = {
   pluginId: string;
   code: "legacy-before-agent-start" | "hook-only" | "deprecated-memory-embedding-provider-api";
@@ -52,13 +53,13 @@ export type PluginCompatibilityNotice = {
   message: string;
 };
 
-/** Shared type for Plugin Compatibility Summary in src/plugins. */
+/** Aggregate counts for compatibility notices and affected plugins. */
 export type PluginCompatibilitySummary = {
   noticeCount: number;
   pluginCount: number;
 };
 
-/** Shared type for Plugin Inspect Report in src/plugins. */
+/** Detailed per-plugin inspect report used by CLI and doctor diagnostics. */
 export type PluginInspectReport = {
   workspaceDir?: string;
   plugin: PluginRegistry["plugins"][number];
@@ -295,17 +296,17 @@ function buildPluginReport(
   };
 }
 
-/** Reused helper for build Plugin Snapshot Report behavior in src/plugins. */
+/** Builds a metadata-only plugin report for fast list/status paths. */
 export function buildPluginSnapshotReport(params?: PluginReportParams): PluginStatusReport {
   return buildPluginReport(params, false);
 }
 
-/** Reused helper for build Plugin Diagnostics Report behavior in src/plugins. */
+/** Builds a runtime-loaded plugin report for diagnostics that need activated module shape. */
 export function buildPluginDiagnosticsReport(params?: PluginReportParams): PluginStatusReport {
   return buildPluginReport(params, true);
 }
 
-/** Reused helper for build Plugin Inspect Report behavior in src/plugins. */
+/** Builds the detailed inspect payload for one plugin id or package name. */
 export function buildPluginInspectReport(params: {
   id: string;
   config?: OpenClawConfig;
@@ -451,7 +452,7 @@ export function buildPluginInspectReport(params: {
   };
 }
 
-/** Reused helper for build All Plugin Inspect Reports behavior in src/plugins. */
+/** Builds inspect reports for every plugin in the supplied or freshly loaded report. */
 export function buildAllPluginInspectReports(params?: {
   config?: OpenClawConfig;
   workspaceDir?: string;
@@ -490,7 +491,7 @@ export function buildAllPluginInspectReports(params?: {
     .filter((entry): entry is PluginInspectReport => entry !== null);
 }
 
-/** Reused helper for build Plugin Compatibility Warnings behavior in src/plugins. */
+/** Formats compatibility notices as warning strings for CLI/status output. */
 export function buildPluginCompatibilityWarnings(params?: {
   config?: OpenClawConfig;
   workspaceDir?: string;
@@ -501,7 +502,7 @@ export function buildPluginCompatibilityWarnings(params?: {
   return buildPluginCompatibilityNotices(params).map(formatPluginCompatibilityNotice);
 }
 
-/** Reused helper for build Plugin Compatibility Notices behavior in src/plugins. */
+/** Collects compatibility notices from runtime-capable inspect reports. */
 export function buildPluginCompatibilityNotices(params?: {
   config?: OpenClawConfig;
   workspaceDir?: string;
@@ -512,7 +513,7 @@ export function buildPluginCompatibilityNotices(params?: {
   return buildAllPluginInspectReports(params).flatMap((inspect) => inspect.compatibility);
 }
 
-/** Reused helper for build Plugin Compatibility Snapshot Notices behavior in src/plugins. */
+/** Collects compatibility notices using the fast metadata snapshot report. */
 export function buildPluginCompatibilitySnapshotNotices(params?: {
   config?: OpenClawConfig;
   workspaceDir?: string;
@@ -525,12 +526,12 @@ export function buildPluginCompatibilitySnapshotNotices(params?: {
   });
 }
 
-/** Reused helper for format Plugin Compatibility Notice behavior in src/plugins. */
+/** Formats one compatibility notice with the plugin id prefix. */
 export function formatPluginCompatibilityNotice(notice: PluginCompatibilityNotice): string {
   return `${notice.pluginId} ${notice.message}`;
 }
 
-/** Reused helper for summarize Plugin Compatibility behavior in src/plugins. */
+/** Summarizes compatibility notices by total count and distinct plugin count. */
 export function summarizePluginCompatibility(
   notices: PluginCompatibilityNotice[],
 ): PluginCompatibilitySummary {
