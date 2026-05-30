@@ -317,7 +317,7 @@ function findMissingModuleCodeInChain(error: unknown): string | undefined {
   return undefined;
 }
 
-/** Reused helper for describe Bundled Channel Load Error behavior in src/channels/plugins. */
+/** Formats bundled channel load failures with doctor guidance for missing runtime deps. */
 export function describeBundledChannelLoadError(error: unknown, channelId: string): string {
   const detail = formatErrorMessage(error);
   if (findMissingModuleCodeInChain(error) !== undefined) {
@@ -522,12 +522,12 @@ function listBundledChannelPluginIdsForSetupFeature(
         .toSorted((left, right) => left.localeCompare(right));
 }
 
-/** Reused helper for list Bundled Channel Plugin Ids behavior in src/channels/plugins. */
+/** Lists bundled channel plugin ids from generated metadata. */
 export function listBundledChannelPluginIds(): readonly ChannelId[] {
   return listBundledChannelPluginIdsForRoot(resolveBundledChannelRootScope());
 }
 
-/** Reused helper for has Bundled Channel Package Setup Feature behavior in src/channels/plugins. */
+/** Checks package metadata for a bundled channel setup feature. */
 export function hasBundledChannelPackageSetupFeature(
   id: ChannelId,
   feature: BundledChannelPackageSetupFeature,
@@ -798,7 +798,7 @@ function getBundledChannelSetupSecretsForRoot(
   }
 }
 
-/** Reused helper for list Bundled Channel Plugins behavior in src/channels/plugins. */
+/** Lazily loads all bundled channel plugins. */
 export function listBundledChannelPlugins(): readonly ChannelPlugin[] {
   const { rootScope, loadContext } = resolveActiveBundledChannelLoadScope();
   return listBundledChannelPluginIdsForRoot(rootScope).flatMap((id) => {
@@ -807,7 +807,7 @@ export function listBundledChannelPlugins(): readonly ChannelPlugin[] {
   });
 }
 
-/** Reused helper for list Bundled Channel Setup Plugins behavior in src/channels/plugins. */
+/** Lazily loads all bundled channel setup plugins. */
 export function listBundledChannelSetupPlugins(): readonly ChannelPlugin[] {
   const { rootScope, loadContext } = resolveActiveBundledChannelLoadScope();
   return listBundledChannelPluginIdsForRoot(rootScope).flatMap((id) => {
@@ -816,7 +816,7 @@ export function listBundledChannelSetupPlugins(): readonly ChannelPlugin[] {
   });
 }
 
-/** Reused helper for list Bundled Channel Setup Plugins By Feature behavior in src/channels/plugins. */
+/** Loads setup plugins that advertise one setup feature. */
 export function listBundledChannelSetupPluginsByFeature(
   feature: keyof NonNullable<BundledChannelSetupEntryRuntimeContract["features"]>,
   options: { config?: OpenClawConfig } = {},
@@ -834,7 +834,7 @@ export function listBundledChannelSetupPluginsByFeature(
   });
 }
 
-/** Reused helper for list Bundled Channel Legacy Session Surfaces behavior in src/channels/plugins. */
+/** Loads legacy session surfaces from lightweight setup entries when available. */
 export function listBundledChannelLegacySessionSurfaces(
   options: {
     config?: OpenClawConfig;
@@ -857,7 +857,7 @@ export function listBundledChannelLegacySessionSurfaces(
   });
 }
 
-/** Reused helper for list Bundled Channel Legacy State Migration Detectors behavior in src/channels/plugins. */
+/** Loads legacy state migration detectors from bundled channel setup entries. */
 export function listBundledChannelLegacyStateMigrationDetectors(
   options: {
     config?: OpenClawConfig;
@@ -882,7 +882,7 @@ export function listBundledChannelLegacyStateMigrationDetectors(
   });
 }
 
-/** Reused helper for has Bundled Channel Entry Feature behavior in src/channels/plugins. */
+/** Checks a bundled channel entry feature without forcing full plugin loading. */
 export function hasBundledChannelEntryFeature(
   id: ChannelId,
   feature: keyof NonNullable<BundledChannelEntryRuntimeContract["features"]>,
@@ -892,7 +892,7 @@ export function hasBundledChannelEntryFeature(
   return hasChannelEntryFeature(entry, feature);
 }
 
-/** Reused helper for get Bundled Channel Account Inspector behavior in src/channels/plugins. */
+/** Loads a bundled channel account inspector when its entry exposes one. */
 export function getBundledChannelAccountInspector(
   id: ChannelId,
 ): NonNullable<ChannelPlugin["config"]["inspectAccount"]> | undefined {
@@ -900,19 +900,19 @@ export function getBundledChannelAccountInspector(
   return getBundledChannelAccountInspectorForRoot(id, rootScope, loadContext);
 }
 
-/** Reused helper for get Bundled Channel Plugin behavior in src/channels/plugins. */
+/** Lazily loads one bundled channel plugin. */
 export function getBundledChannelPlugin(id: ChannelId): ChannelPlugin | undefined {
   const { rootScope, loadContext } = resolveActiveBundledChannelLoadScope();
   return getBundledChannelPluginForRoot(id, rootScope, loadContext);
 }
 
-/** Reused helper for get Bundled Channel Secrets behavior in src/channels/plugins. */
+/** Loads bundled channel secret descriptors without forcing callers to load setup code. */
 export function getBundledChannelSecrets(id: ChannelId): ChannelPlugin["secrets"] | undefined {
   const { rootScope, loadContext } = resolveActiveBundledChannelLoadScope();
   return getBundledChannelSecretsForRoot(id, rootScope, loadContext);
 }
 
-/** Reused helper for get Bundled Channel Setup Plugin behavior in src/channels/plugins. */
+/** Lazily loads one bundled channel setup plugin. */
 export function getBundledChannelSetupPlugin(
   id: ChannelId,
   env: NodeJS.ProcessEnv = process.env,
@@ -921,7 +921,7 @@ export function getBundledChannelSetupPlugin(
   return getBundledChannelSetupPluginForRoot(id, rootScope, loadContext);
 }
 
-/** Reused helper for get Bundled Channel Setup Secrets behavior in src/channels/plugins. */
+/** Loads secret descriptors from the bundled setup entry or setup plugin. */
 export function getBundledChannelSetupSecrets(
   id: ChannelId,
   env: NodeJS.ProcessEnv = process.env,
@@ -930,7 +930,7 @@ export function getBundledChannelSetupSecrets(
   return getBundledChannelSetupSecretsForRoot(id, rootScope, loadContext);
 }
 
-/** Reused helper for require Bundled Channel Plugin behavior in src/channels/plugins. */
+/** Loads one bundled channel plugin or throws a stable missing-plugin error. */
 export function requireBundledChannelPlugin(id: ChannelId): ChannelPlugin {
   const plugin = getBundledChannelPlugin(id);
   if (!plugin) {
@@ -939,7 +939,7 @@ export function requireBundledChannelPlugin(id: ChannelId): ChannelPlugin {
   return plugin;
 }
 
-/** Reused helper for set Bundled Channel Runtime behavior in src/channels/plugins. */
+/** Installs runtime services into a bundled channel entry. */
 export function setBundledChannelRuntime(id: ChannelId, runtime: PluginRuntime): void {
   const { rootScope, loadContext } = resolveActiveBundledChannelLoadScope();
   const setter = getLazyGeneratedBundledChannelEntryForRoot(id, rootScope, loadContext)?.entry
