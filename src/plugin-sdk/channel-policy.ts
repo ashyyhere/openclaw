@@ -11,7 +11,7 @@ export type {
   GroupToolPolicyBySenderConfig,
   GroupToolPolicyConfig,
 } from "../config/types.tools.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Group-policy warning builders and collector combinators for channel setup/doctor flows. */
 export {
   composeAccountWarningCollectors,
   buildOpenGroupPolicyConfigureRouteAllowlistWarning,
@@ -37,9 +37,9 @@ export {
   projectConfigWarningCollector,
   projectWarningCollector,
 } from "../channels/plugins/group-policy-warnings.js";
-/** Re-exported API for src/plugin-sdk, starting with build Account Scoped Dm Security Policy. */
+/** Builds DM security policy descriptors scoped to one channel account. */
 export { buildAccountScopedDmSecurityPolicy } from "../channels/plugins/helpers.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Group policy resolution helpers for channel config and sender-scoped tool rules. */
 export {
   resolveChannelGroupPolicy,
   resolveChannelGroupRequireMention,
@@ -47,7 +47,7 @@ export {
   resolveToolsBySender,
   type ChannelGroupPolicy,
 } from "../config/group-policy.js";
-/** Re-exported API for src/plugin-sdk. */
+/** DM allowlist compatibility helpers shared by channel plugins. */
 export {
   DM_GROUP_ACCESS_REASON,
   readStoreAllowFromForDmPolicy,
@@ -56,16 +56,16 @@ export {
   resolveEffectiveAllowFromLists,
   resolveOpenDmAllowlistAccess,
 } from "./channel-access-compat.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Runtime group access evaluators for routes and senders. */
 export {
   evaluateGroupRouteAccessForPolicy,
   evaluateSenderGroupAccessForPolicy,
   resolveSenderScopedGroupPolicy,
 } from "./group-access.js";
-/** Re-exported API for src/plugin-sdk, starting with create Allowlist Provider Restrict Senders Warning Collector. */
+/** Restrict-senders warning collector for allowlist-backed providers. */
 export { createAllowlistProviderRestrictSendersWarningCollector };
 
-/** Reused helper for normalize Allow From List behavior in src/plugin-sdk. */
+/** Normalizes DM/group allow-from entries into trimmed unique strings. */
 export function normalizeAllowFromList(list: Array<string | number> | undefined | null): string[] {
   if (!Array.isArray(list)) {
     return [];
@@ -73,7 +73,7 @@ export function normalizeAllowFromList(list: Array<string | number> | undefined 
   return normalizeStringEntries(list);
 }
 
-/** Reused helper for coerce Native Setting behavior in src/plugin-sdk. */
+/** Coerces channel native-setting config to boolean, auto, or undefined. */
 export function coerceNativeSetting(value: unknown): boolean | "auto" | undefined {
   if (value === true || value === false || value === "auto") {
     return value;
@@ -81,7 +81,7 @@ export function coerceNativeSetting(value: unknown): boolean | "auto" | undefine
   return undefined;
 }
 
-/** Shared type for Channel Mutable Allowlist Candidate in src/plugin-sdk. */
+/** Candidate allowlist inspected for mutable name/email/nick entries. */
 export type ChannelMutableAllowlistCandidate = {
   pathLabel: string;
   list: unknown;
@@ -119,7 +119,7 @@ function collectMutableAllowlistWarningLines(
   ];
 }
 
-/** Reused helper for create Dangerous Name Matching Mutable Allowlist Warning Collector behavior in src/plugin-sdk. */
+/** Builds warnings for mutable allowlist entries when dangerous name matching is disabled. */
 export function createDangerousNameMatchingMutableAllowlistWarningCollector(params: {
   channel: string;
   detector: (entry: string) => boolean;

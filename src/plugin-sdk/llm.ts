@@ -6,21 +6,21 @@ export {
   unregisterApiProviders,
   type ApiProvider,
 } from "../llm/api-registry.js";
-/** Re-exported API for src/plugin-sdk, starting with get Env Api Key. */
+/** Reads model provider API keys from supported environment variable names. */
 export { getEnvApiKey } from "../llm/env-api-keys.js";
-/** Re-exported API for src/plugin-sdk, starting with calculate Cost. */
+/** Model cost and thinking-level helpers shared by provider implementations. */
 export { calculateCost, clampThinkingLevel } from "../llm/model-utils.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Common option normalizers for simple provider implementations. */
 export {
   adjustMaxTokensForThinking,
   buildBaseOptions,
   clampReasoning,
 } from "../llm/providers/simple-options.js";
-/** Re-exported API for src/plugin-sdk, starting with transform Messages. */
+/** Converts OpenClaw message objects into provider-ready text/content payloads. */
 export { transformMessages } from "../llm/providers/transform-messages.js";
-/** Re-exported API for src/plugin-sdk, starting with complete. */
+/** Generic completion and streaming entrypoints for SDK-backed LLM providers. */
 export { complete, completeSimple, stream, streamSimple } from "../llm/stream.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Public LLM message, model, tool, usage, and streaming contract types. */
 export type {
   Api,
   AssistantMessage,
@@ -48,14 +48,14 @@ export type {
   Usage,
   UserMessage,
 } from "../llm/types.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Assistant event stream builder used by streaming provider adapters. */
 export {
   AssistantMessageEventStream,
   createAssistantMessageEventStream,
 } from "../../packages/llm-core/src/utils/event-stream.js";
 export { parseStreamingJson } from "../llm/utils/json-parse.js";
-/** Re-exported API for src/plugin-sdk, starting with create Http Proxy Agents For Target. */
+/** Creates HTTP proxy agents for a target provider endpoint. */
 export { createHttpProxyAgentsForTarget } from "../llm/utils/node-http-proxy.js";
-/** Re-exported API for src/plugin-sdk, starting with sanitize Surrogates. */
+/** Sanitizes invalid Unicode surrogate pairs before provider transport. */
 export { sanitizeSurrogates } from "../llm/utils/sanitize-unicode.js";
 export { validateToolArguments, validateToolCall } from "../../packages/llm-core/src/validation.js";
