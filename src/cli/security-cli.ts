@@ -72,7 +72,7 @@ function formatSummary(summary: { critical: number; warn: number; info: number }
   return parts.join(" · ");
 }
 
-/** Reused helper for register Security Cli behavior in src/cli. */
+/** Registers local security audit commands. */
 export function registerSecurityCli(program: Command) {
   const security = program
     .command("security")

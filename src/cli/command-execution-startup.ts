@@ -13,7 +13,7 @@ const hasJsonFlag = (argv: readonly string[]) =>
 const hasVersionFlag = (argv: readonly string[]) =>
   argv.some((arg) => arg === "--version" || arg === "-V");
 
-/** Reused helper for resolve Cli Execution Startup Context behavior in src/cli. */
+/** Resolves command path and startup policy before running a CLI command. */
 export function resolveCliExecutionStartupContext(params: {
   argv: string[];
   jsonOutputMode: boolean;
@@ -35,7 +35,7 @@ export function resolveCliExecutionStartupContext(params: {
   };
 }
 
-/** Reused helper for apply Cli Execution Startup Presentation behavior in src/cli. */
+/** Applies banner/log routing presentation choices before command execution. */
 export async function applyCliExecutionStartupPresentation(params: {
   argv?: string[];
   routeLogsToStderrOnSuppress?: boolean;
@@ -60,7 +60,7 @@ export async function applyCliExecutionStartupPresentation(params: {
   emitCliBanner(params.version);
 }
 
-/** Reused helper for ensure Cli Execution Bootstrap behavior in src/cli. */
+/** Performs config/plugin bootstrap required by a CLI command path. */
 export async function ensureCliExecutionBootstrap(params: {
   runtime: RuntimeEnv;
   commandPath: string[];

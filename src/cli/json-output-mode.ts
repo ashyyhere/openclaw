@@ -1,7 +1,7 @@
 /** Routes console logs to stderr when commands emit JSON on stdout. */
 import { loggingState } from "../logging/state.js";
 
-/** Reused helper for has Json Output Flag behavior in src/cli. */
+/** Detects whether argv requests JSON output before command separator. */
 export function hasJsonOutputFlag(argv: readonly string[]): boolean {
   for (const arg of argv) {
     if (arg === "--") {
@@ -14,7 +14,7 @@ export function hasJsonOutputFlag(argv: readonly string[]): boolean {
   return false;
 }
 
-/** Reused helper for with Console Logs Routed To Stderr For Json behavior in src/cli. */
+/** Routes console logs to stderr while a JSON-output command runs. */
 export async function withConsoleLogsRoutedToStderrForJson<T>(
   argv: readonly string[],
   run: () => Promise<T>,

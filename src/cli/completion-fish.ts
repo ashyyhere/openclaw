@@ -12,7 +12,7 @@ function parseOptionFlags(flags: string): { long?: string; short?: string } {
   return { long, short };
 }
 
-/** Reused helper for build Fish Subcommand Completion Line behavior in src/cli. */
+/** Builds one fish completion line for a subcommand. */
 export function buildFishSubcommandCompletionLine(params: {
   rootCmd: string;
   condition: string;
@@ -23,7 +23,7 @@ export function buildFishSubcommandCompletionLine(params: {
   return `complete -c ${params.rootCmd} -n "${params.condition}" -a "${params.name}" -d '${desc}'\n`;
 }
 
-/** Reused helper for build Fish Option Completion Line behavior in src/cli. */
+/** Builds one fish completion line for a command option. */
 export function buildFishOptionCompletionLine(params: {
   rootCmd: string;
   condition: string;

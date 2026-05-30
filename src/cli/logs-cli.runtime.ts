@@ -1,16 +1,16 @@
 /** Runtime helpers for streaming gateway and local service logs. */
 import { spawn } from "node:child_process";
 
-/** Re-exported API for src/cli, starting with build Gateway Connection Details. */
+/** Gateway connection detail formatter used by logs commands. */
 export { buildGatewayConnectionDetails } from "../gateway/call.js";
-/** Re-exported API for src/cli, starting with resolve Gateway Systemd Service Name. */
+/** Gateway systemd service-name resolver used by logs commands. */
 export { resolveGatewaySystemdServiceName } from "../daemon/constants.js";
-/** Re-exported API for src/cli, starting with read Systemd Service Runtime. */
+/** Systemd runtime reader used by logs commands. */
 export { readSystemdServiceRuntime } from "../daemon/systemd.js";
 
 type ExecFileTailResult = { stdout: string; stderr: string; code: number; truncated: boolean };
 
-/** Reused helper for exec File Utf8 Tail behavior in src/cli. */
+/** Executes a command and retains only the UTF-8 tail of stdout/stderr. */
 export async function execFileUtf8Tail(
   command: string,
   args: string[],
