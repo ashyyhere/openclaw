@@ -1,4 +1,5 @@
-// infra process respawn helpers and runtime behavior.
+// Chooses whether gateway restart/update flows should respawn, delegate to a
+// supervisor, or stay in-process for the current runtime environment.
 import { spawn, type ChildProcess } from "node:child_process";
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 import { isContainerEnvironment } from "./container-environment.js";

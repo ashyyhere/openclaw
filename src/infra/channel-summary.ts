@@ -13,7 +13,7 @@ import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { DEFAULT_ACCOUNT_ID } from "../routing/session-key.js";
 import { formatTimeAgo } from "./format-time/format-relative.ts";
 
-/** Shared type for Channel Summary Options in src/infra. */
+/** Rendering and plugin-source options for channel summary output. */
 export type ChannelSummaryOptions = {
   colorize?: boolean;
   includeAllowFrom?: boolean;
@@ -120,7 +120,7 @@ const buildAccountDetails = (params: {
   return details;
 };
 
-/** Reused helper for build Channel Summary behavior in src/infra. */
+/** Produces status lines for configured channel plugins and accounts. */
 export async function buildChannelSummary(
   cfg?: OpenClawConfig,
   options?: ChannelSummaryOptions,

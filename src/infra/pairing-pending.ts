@@ -1,9 +1,9 @@
-// infra pairing pending helpers and runtime behavior.
+// Shared mutation helper for rejecting pending pairing records in state files.
 type PendingState<TPending> = {
   pendingById: Record<string, TPending>;
 };
 
-/** Reused helper for reject Pending Pairing Request behavior in src/infra. */
+/** Removes one pending pairing request and returns its caller-selected id field. */
 export async function rejectPendingPairingRequest<
   TPending,
   TState extends PendingState<TPending>,

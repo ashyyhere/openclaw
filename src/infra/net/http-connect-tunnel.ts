@@ -1,10 +1,11 @@
-// infra/net http connect tunnel helpers and runtime behavior.
+// Opens an HTTP CONNECT tunnel through a proxy, then upgrades the tunnel to the
+// APNs HTTP/2 TLS socket expected by push delivery.
 import * as net from "node:net";
 import * as tls from "node:tls";
 import { resolveTimerTimeoutMs } from "../../shared/number-coercion.js";
 import type { ManagedProxyTlsOptions } from "./proxy/proxy-tls.js";
 
-/** Shared type for Http Connect Tunnel Params in src/infra/net. */
+/** Inputs required to open a proxied APNs HTTP/2 CONNECT tunnel. */
 export type HttpConnectTunnelParams = {
   proxyUrl: URL;
   proxyTls?: ManagedProxyTlsOptions;
@@ -312,7 +313,7 @@ class HttpConnectTunnelAttempt {
   };
 }
 
-/** Reused helper for open Http Connect Tunnel behavior in src/infra/net. */
+/** Opens a TLS socket to the target through an HTTP(S) CONNECT proxy. */
 export async function openHttpConnectTunnel(
   params: HttpConnectTunnelParams,
 ): Promise<tls.TLSSocket> {
