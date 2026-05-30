@@ -164,7 +164,7 @@ function toManifestOwnerRecord(plugin: PluginRegistryRecord) {
   };
 }
 
-/** Reused helper for with Bundled Provider Vitest Compat behavior in src/plugins. */
+/** Applies test-time bundled provider enablement compatibility to plugin config. */
 export function withBundledProviderVitestCompat(params: {
   config: PluginLoadOptions["config"];
   pluginIds: readonly string[];
@@ -173,7 +173,7 @@ export function withBundledProviderVitestCompat(params: {
   return withBundledPluginVitestCompat(params);
 }
 
-/** Reused helper for resolve Bundled Provider Compat Plugin Ids behavior in src/plugins. */
+/** Lists bundled provider plugins that need legacy enablement compatibility. */
 export function resolveBundledProviderCompatPluginIds(params: {
   config?: PluginLoadOptions["config"];
   workspaceDir?: string;
@@ -204,7 +204,7 @@ export function resolveBundledProviderCompatPluginIds(params: {
   );
 }
 
-/** Reused helper for resolve Enabled Provider Plugin Ids behavior in src/plugins. */
+/** Lists provider plugins effectively activated by current config and platform defaults. */
 export function resolveEnabledProviderPluginIds(params: ProviderRegistryLoadParams): string[] {
   const { registry, onlyPluginIdSet } = loadScopedProviderRegistry(params);
   const providerSurfacePluginIds = resolveProviderSurfacePluginIdSet({ ...params, registry });
@@ -224,7 +224,7 @@ export function resolveEnabledProviderPluginIds(params: ProviderRegistryLoadPara
   );
 }
 
-/** Reused helper for resolve External Auth Profile Provider Plugin Ids behavior in src/plugins. */
+/** Lists plugins that declare external auth provider contracts. */
 export function resolveExternalAuthProfileProviderPluginIds(params: {
   config?: PluginLoadOptions["config"];
   workspaceDir?: string;
@@ -268,7 +268,7 @@ function resolveRegistryManifestContractPluginIds(params: {
     .toSorted((left, right) => left.localeCompare(right));
 }
 
-/** Reused helper for resolve External Auth Profile Compat Fallback Plugin Ids behavior in src/plugins. */
+/** Finds external provider plugins that need auth-profile fallback activation. */
 export function resolveExternalAuthProfileCompatFallbackPluginIds(params: {
   config?: PluginLoadOptions["config"];
   workspaceDir?: string;
@@ -297,7 +297,7 @@ export function resolveExternalAuthProfileCompatFallbackPluginIds(params: {
   );
 }
 
-/** Reused helper for resolve Discovered Provider Plugin Ids behavior in src/plugins. */
+/** Lists provider plugins eligible for setup discovery without activating runtime modules. */
 export function resolveDiscoveredProviderPluginIds(params: {
   config?: PluginLoadOptions["config"];
   workspaceDir?: string;
@@ -360,7 +360,7 @@ function isProviderPluginEligibleForSetupDiscovery(params: {
   });
 }
 
-/** Reused helper for resolve Discoverable Provider Owner Plugin Ids behavior in src/plugins. */
+/** Filters candidate provider owners to those eligible for setup discovery. */
 export function resolveDiscoverableProviderOwnerPluginIds(params: {
   pluginIds: readonly string[];
   config?: PluginLoadOptions["config"];
@@ -406,7 +406,7 @@ function isProviderPluginEligibleForRuntimeOwnerActivation(params: {
   });
 }
 
-/** Reused helper for resolve Activatable Provider Owner Plugin Ids behavior in src/plugins. */
+/** Filters candidate provider owners to those eligible for runtime activation. */
 export function resolveActivatableProviderOwnerPluginIds(params: {
   pluginIds: readonly string[];
   config?: PluginLoadOptions["config"];
@@ -427,7 +427,7 @@ export function resolveActivatableProviderOwnerPluginIds(params: {
   });
 }
 
-/** Reused constant for testing behavior in src/plugins. */
+/** Test surface for provider ownership and activation resolution helpers. */
 export const testing = {
   resolveActivatableProviderOwnerPluginIds,
   resolveEnabledProviderPluginIds,
@@ -582,7 +582,7 @@ function resolvePreferredManifestPluginIds(
   return undefined;
 }
 
-/** Reused helper for resolve Owning Plugin Ids For Provider behavior in src/plugins. */
+/** Resolves plugin ids that own a provider id or provider alias. */
 export function resolveOwningPluginIdsForProvider(params: {
   provider: string;
   config?: PluginLoadOptions["config"];
@@ -690,7 +690,7 @@ function resolveOwningPluginIdsForCliBackend(params: {
   return deduped.length > 0 ? deduped : undefined;
 }
 
-/** Reused helper for resolve Owning Plugin Ids For Provider Ref behavior in src/plugins. */
+/** Resolves plugin ids for provider references, falling back to CLI backend ownership. */
 export function resolveOwningPluginIdsForProviderRef(params: {
   provider: string;
   config?: PluginLoadOptions["config"];
@@ -712,7 +712,7 @@ export function resolveOwningPluginIdsForProviderRef(params: {
   );
 }
 
-/** Reused helper for resolve Owning Plugin Ids For Model Ref behavior in src/plugins. */
+/** Resolves plugin ids that own an explicit provider/model ref or bare model id. */
 export function resolveOwningPluginIdsForModelRef(params: {
   model: string;
   config?: PluginLoadOptions["config"];
@@ -767,7 +767,7 @@ export function resolveOwningPluginIdsForModelRef(params: {
   return resolvePreferredManifestPluginIds(manifestRegistry, matchedByPrefix);
 }
 
-/** Reused helper for resolve Owning Plugin Ids For Model Refs behavior in src/plugins. */
+/** Resolves the deduped set of plugin ids that own any supplied model refs. */
 export function resolveOwningPluginIdsForModelRefs(params: {
   models: readonly string[];
   config?: PluginLoadOptions["config"];
@@ -792,7 +792,7 @@ export function resolveOwningPluginIdsForModelRefs(params: {
   );
 }
 
-/** Reused helper for resolve Non Bundled Provider Plugin Ids behavior in src/plugins. */
+/** Lists activated provider plugins that are not bundled with core. */
 export function resolveNonBundledProviderPluginIds(params: {
   config?: PluginLoadOptions["config"];
   workspaceDir?: string;
@@ -814,7 +814,7 @@ export function resolveNonBundledProviderPluginIds(params: {
   );
 }
 
-/** Reused helper for resolve Catalog Hook Provider Plugin Ids behavior in src/plugins. */
+/** Lists enabled provider plugins that may augment the runtime model catalog. */
 export function resolveCatalogHookProviderPluginIds(params: {
   config?: PluginLoadOptions["config"];
   workspaceDir?: string;
@@ -852,5 +852,5 @@ export function resolveCatalogHookProviderPluginIds(params: {
   }).filter((pluginId) => runtimeAugmentPluginIds.has(pluginId));
   return dedupeSortedPluginIds([...enabledProviderPluginIds, ...bundledCompatPluginIds]);
 }
-/** Re-exported API for src/plugins, starting with testing. */
+/** Legacy test alias for provider ownership helper coverage. */
 export { testing as __testing };
