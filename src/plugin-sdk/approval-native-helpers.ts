@@ -881,11 +881,10 @@ function hasCustomTargetsMatch<TTarget>(
 export function createChannelNativeOriginTargetResolver<TTarget extends NativeApprovalTarget>(
   params: NativeOriginResolverParams<TTarget>,
 ): (input: ApprovalResolverParams) => TTarget | null;
-/** Reused helper for create Channel Native Origin Target Resolver behavior in src/plugin-sdk. */
+/** Build an origin-target resolver with caller-provided target matching. */
 export function createChannelNativeOriginTargetResolver<TTarget>(
   params: CustomOriginResolverParams<TTarget>,
 ): (input: ApprovalResolverParams) => TTarget | null;
-/** Reused helper for create Channel Native Origin Target Resolver behavior in src/plugin-sdk. */
 export function createChannelNativeOriginTargetResolver<TTarget>(
   params: NativeOriginResolverParams<NativeApprovalTarget> | CustomOriginResolverParams<TTarget>,
 ): (input: ApprovalResolverParams) => NativeApprovalTarget | TTarget | null {
