@@ -4,7 +4,7 @@ import type { SpawnSubagentMode } from "./subagent-spawn.types.js";
 
 type CallGateway = typeof defaultCallGateway;
 
-/** Reused helper for delete Subagent Session For Cleanup behavior in src/agents. */
+/** Deletes a completed subagent child session through the gateway cleanup path. */
 export async function deleteSubagentSessionForCleanup(params: {
   callGateway: CallGateway;
   childSessionKey: string;

@@ -33,7 +33,7 @@ function shouldPreserveForMaintenance(entry: SubagentRunRecord): boolean {
   );
 }
 
-/** Reused helper for list Session Maintenance Protected Subagent Session Keys behavior in src/agents. */
+/** Lists child session keys that maintenance must keep while subagent delivery is unresolved. */
 export function listSessionMaintenanceProtectedSubagentSessionKeys(): string[] {
   const keys = new Set<string>();
   for (const entry of getSubagentRunsSnapshotForRead(subagentRuns).values()) {

@@ -14,7 +14,7 @@ import type { SubagentRunRecord } from "./subagent-registry.types.js";
 
 const log = createSubsystemLogger("agents/subagent-registry-completion");
 
-/** Reused helper for run Outcomes Equal behavior in src/agents. */
+/** Compares stored and newly reported subagent outcomes, including timing when present. */
 export function runOutcomesEqual(
   a: SubagentRunOutcome | undefined,
   b: SubagentRunOutcome | undefined,
@@ -39,7 +39,7 @@ export function runOutcomesEqual(
   return a.startedAt === b.startedAt && a.endedAt === b.endedAt && a.elapsedMs === b.elapsedMs;
 }
 
-/** Reused helper for run Outcome Has Timing behavior in src/agents. */
+/** Checks whether an outcome contains any timing data worth preserving. */
 export function runOutcomeHasTiming(outcome: SubagentRunOutcome | undefined): boolean {
   return (
     Number.isFinite(outcome?.startedAt) ||
@@ -48,7 +48,7 @@ export function runOutcomeHasTiming(outcome: SubagentRunOutcome | undefined): bo
   );
 }
 
-/** Reused helper for should Update Run Outcome behavior in src/agents. */
+/** Decides whether a registry outcome update carries new status or timing information. */
 export function shouldUpdateRunOutcome(
   current: SubagentRunOutcome | undefined,
   next: SubagentRunOutcome | undefined,
@@ -58,7 +58,7 @@ export function shouldUpdateRunOutcome(
   );
 }
 
-/** Reused helper for resolve Lifecycle Outcome From Run Outcome behavior in src/agents. */
+/** Maps a run outcome into the compact lifecycle outcome exposed to hooks. */
 export function resolveLifecycleOutcomeFromRunOutcome(
   outcome: SubagentRunOutcome | undefined,
 ): SubagentLifecycleEndedOutcome {
@@ -71,7 +71,7 @@ export function resolveLifecycleOutcomeFromRunOutcome(
   return SUBAGENT_ENDED_OUTCOME_OK;
 }
 
-/** Reused helper for emit Subagent Ended Hook Once behavior in src/agents. */
+/** Emits the subagent-ended hook once per run and records the emission timestamp. */
 export async function emitSubagentEndedHookOnce(params: {
   entry: SubagentRunRecord;
   reason: SubagentLifecycleEndedReason;
