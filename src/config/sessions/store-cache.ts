@@ -1,10 +1,10 @@
-// config/sessions store cache helpers and runtime behavior.
+// Session store object, snapshot, serialized-string, and large-prompt caches.
 import { parseStrictNonNegativeInteger } from "../../infra/parse-finite-number.js";
 import { createExpiringMapCache, isCacheEnabled, resolveCacheTtlMs } from "../cache-utils.js";
 import { clearSessionSkillPromptRefCache } from "./skill-prompt-blobs.js";
 import type { SessionEntry } from "./types.js";
 
-/** Shared type for Deep Readonly in src/config/sessions. */
+/** Recursive readonly view used for immutable session store snapshots. */
 export type DeepReadonly<T> = T extends (...args: never[]) => unknown
   ? T
   : T extends readonly (infer U)[]
@@ -13,13 +13,13 @@ export type DeepReadonly<T> = T extends (...args: never[]) => unknown
       ? { readonly [K in keyof T]: DeepReadonly<T[K]> }
       : T;
 
-/** Shared type for Session Store Snapshot in src/config/sessions. */
+/** Frozen readonly snapshot of the whole session store. */
 export type SessionStoreSnapshot = DeepReadonly<Record<string, SessionEntry>>;
 
-/** Shared type for Session Store Snapshot Entry in src/config/sessions. */
+/** Frozen readonly snapshot of a single session entry. */
 export type SessionStoreSnapshotEntry = DeepReadonly<SessionEntry>;
 
-/** Shared type for Session Store Snapshot Entries in src/config/sessions. */
+/** Readonly iterable shape for frozen session store snapshot entries. */
 export type SessionStoreSnapshotEntries = ReadonlyArray<
   readonly [string, SessionStoreSnapshotEntry]
 >;
@@ -112,7 +112,7 @@ function internLargeSessionStoreString(value: string): string {
   return value;
 }
 
-/** Reused helper for intern Session Entry Large Strings behavior in src/config/sessions. */
+/** Interns large duplicated prompt strings inside one mutable session entry. */
 export function internSessionEntryLargeStrings(entry: SessionEntry): void {
   const snapshot = entry.skillsSnapshot;
   if (!snapshot?.prompt) {
@@ -123,14 +123,14 @@ export function internSessionEntryLargeStrings(entry: SessionEntry): void {
   snapshot.prompt = internLargeSessionStoreString(snapshot.prompt);
 }
 
-/** Reused helper for intern Session Store Large Strings behavior in src/config/sessions. */
+/** Interns large duplicated prompt strings across a mutable session store. */
 export function internSessionStoreLargeStrings(store: Record<string, SessionEntry>): void {
   for (const entry of Object.values(store)) {
     internSessionEntryLargeStrings(entry);
   }
 }
 
-/** Reused helper for get Session Store String Intern Stats For Test behavior in src/config/sessions. */
+/** Returns string-intern pool counters for focused cache tests. */
 export function getSessionStoreStringInternStatsForTest(): {
   poolSize: number;
   stored: number;
@@ -151,7 +151,7 @@ export function getSessionStoreStringInternStatsForTest(): {
   };
 }
 
-/** Reused helper for get Serialized Session Store Cache Stats For Test behavior in src/config/sessions. */
+/** Returns serialized session-store cache size counters for tests. */
 export function getSerializedSessionStoreCacheStatsForTest(): {
   entries: number;
   totalBytes: number;
@@ -167,7 +167,7 @@ export function getSerializedSessionStoreCacheStatsForTest(): {
   };
 }
 
-/** Reused helper for get Session Store Snapshot Cache Stats For Test behavior in src/config/sessions. */
+/** Returns immutable snapshot cache counters for tests. */
 export function getSessionStoreSnapshotCacheStatsForTest(): {
   entries: number;
 } {
@@ -191,7 +191,7 @@ function deepFreeze<T>(value: T, seen = new WeakSet<object>()): DeepReadonly<T> 
   return Object.freeze(value) as DeepReadonly<T>;
 }
 
-/** Reused helper for clone Session Store Record behavior in src/config/sessions. */
+/** Deep-clones a session store record and interns known large prompt fields. */
 export function cloneSessionStoreRecord(
   store: Record<string, SessionEntry>,
   serialized?: string,
@@ -243,7 +243,7 @@ function cloneJsonLikeValue<T>(value: T): T {
   return cloned as T;
 }
 
-/** Reused helper for clone Session Store Snapshot behavior in src/config/sessions. */
+/** Deep-clones, interns, and freezes a session store snapshot. */
 export function cloneSessionStoreSnapshot(
   store: Record<string, SessionEntry>,
   serialized?: string,
@@ -256,12 +256,12 @@ export function cloneSessionStoreSnapshot(
   return deepFreeze(cloned);
 }
 
-/** Reused helper for clone Session Store Snapshot Entry behavior in src/config/sessions. */
+/** Clones and freezes a single session entry as a snapshot value. */
 export function cloneSessionStoreSnapshotEntry(entry: SessionEntry): SessionStoreSnapshotEntry {
   return deepFreeze(cloneSessionStoreRecord({ entry }).entry);
 }
 
-/** Reused helper for get Session Store Ttl behavior in src/config/sessions. */
+/** Resolves the session store cache TTL from env or the default window. */
 export function getSessionStoreTtl(): number {
   return resolveCacheTtlMs({
     envValue: process.env.OPENCLAW_SESSION_CACHE_TTL_MS,
@@ -269,7 +269,7 @@ export function getSessionStoreTtl(): number {
   });
 }
 
-/** Reused helper for is Session Store Cache Enabled behavior in src/config/sessions. */
+/** Returns whether session store caches should retain entries. */
 export function isSessionStoreCacheEnabled(): boolean {
   return isCacheEnabled(getSessionStoreTtl());
 }
@@ -278,12 +278,12 @@ function bumpSessionStoreCacheVersion(storePath: string): void {
   SESSION_STORE_CACHE_VERSION.set(storePath, (SESSION_STORE_CACHE_VERSION.get(storePath) ?? 0) + 1);
 }
 
-/** Reused helper for get Session Store Cache Version behavior in src/config/sessions. */
+/** Returns the mutation version for one session store path. */
 export function getSessionStoreCacheVersion(storePath: string): number {
   return SESSION_STORE_CACHE_VERSION.get(storePath) ?? 0;
 }
 
-/** Reused helper for clear Session Store Caches behavior in src/config/sessions. */
+/** Clears all session store caches and related prompt-ref/string-intern state. */
 export function clearSessionStoreCaches(): void {
   SESSION_STORE_CACHE.clear();
   SESSION_STORE_SNAPSHOT_CACHE.clear();
@@ -295,7 +295,7 @@ export function clearSessionStoreCaches(): void {
   resetSessionStoreStringInternStats();
 }
 
-/** Reused helper for invalidate Session Store Cache behavior in src/config/sessions. */
+/** Invalidates object, snapshot, and serialized caches for one store path. */
 export function invalidateSessionStoreCache(storePath: string): void {
   bumpSessionStoreCacheVersion(storePath);
   SESSION_STORE_CACHE.delete(storePath);
@@ -328,13 +328,13 @@ function pruneSerializedSessionStoreCache(): void {
   }
 }
 
-/** Reused helper for get Serialized Session Store behavior in src/config/sessions. */
+/** Returns cached serialized JSON for one session store path, if retained. */
 export function getSerializedSessionStore(storePath: string): string | undefined {
   pruneSerializedSessionStoreCache();
   return SESSION_STORE_SERIALIZED_CACHE.get(storePath)?.serialized;
 }
 
-/** Reused helper for set Serialized Session Store behavior in src/config/sessions. */
+/** Stores serialized session JSON subject to entry-count and byte limits. */
 export function setSerializedSessionStore(
   storePath: string,
   serialized?: string,
@@ -358,18 +358,18 @@ export function setSerializedSessionStore(
   pruneSerializedSessionStoreCache();
 }
 
-/** Reused helper for drop Session Store Object Cache behavior in src/config/sessions. */
+/** Drops only the mutable object cache for one store path and bumps its version. */
 export function dropSessionStoreObjectCache(storePath: string): void {
   bumpSessionStoreCacheVersion(storePath);
   SESSION_STORE_CACHE.delete(storePath);
 }
 
-/** Reused helper for drop Session Store Snapshot Cache behavior in src/config/sessions. */
+/** Drops only the immutable snapshot cache for one store path. */
 export function dropSessionStoreSnapshotCache(storePath: string): void {
   SESSION_STORE_SNAPSHOT_CACHE.delete(storePath);
 }
 
-/** Reused helper for read Session Store Snapshot Cache behavior in src/config/sessions. */
+/** Reads a frozen snapshot cache entry when file metadata still matches. */
 export function readSessionStoreSnapshotCache(params: {
   storePath: string;
   mtimeMs?: number;
@@ -386,7 +386,7 @@ export function readSessionStoreSnapshotCache(params: {
   return cached.snapshot;
 }
 
-/** Reused helper for write Session Store Snapshot Cache behavior in src/config/sessions. */
+/** Writes and returns a frozen session store snapshot cache entry. */
 export function writeSessionStoreSnapshotCache(params: {
   storePath: string;
   store: Record<string, SessionEntry>;
@@ -403,7 +403,7 @@ export function writeSessionStoreSnapshotCache(params: {
   return snapshot;
 }
 
-/** Reused helper for read Session Store Cache behavior in src/config/sessions. */
+/** Reads the mutable object cache, cloning unless ownership is explicitly requested. */
 export function readSessionStoreCache(params: {
   storePath: string;
   mtimeMs?: number;
@@ -424,7 +424,7 @@ export function readSessionStoreCache(params: {
   return cloneSessionStoreRecord(cached.store, cached.serialized);
 }
 
-/** Reused helper for take Mutable Session Store Cache behavior in src/config/sessions. */
+/** Removes and returns the mutable object cache entry for in-place update flows. */
 export function takeMutableSessionStoreCache(params: {
   storePath: string;
   mtimeMs?: number;
@@ -442,7 +442,7 @@ export function takeMutableSessionStoreCache(params: {
   return cached.store;
 }
 
-/** Reused helper for write Session Store Cache behavior in src/config/sessions. */
+/** Writes the mutable object cache and optional serialized cache for a store path. */
 export function writeSessionStoreCache(params: {
   storePath: string;
   store: Record<string, SessionEntry>;
