@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// scripts check madge import cycles helpers and runtime behavior.
+// Import-cycle check builds a TypeScript import graph and reports strongly connected components.
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";

@@ -1,7 +1,8 @@
-// test/helpers fast short timeouts helpers and runtime behavior.
+// Test helper shortens small timers while leaving long timeout behavior intact.
 import { setTimeout as nativeSetTimeout } from "node:timers";
 import { vi } from "vitest";
 
+/** Replace short setTimeout delays with immediate timers and return a restore callback. */
 export function useFastShortTimeouts(maxDelayMs = 2000): () => void {
   const spy = vi.spyOn(global, "setTimeout").mockImplementation(((
     handler: TimerHandler,

@@ -1,4 +1,4 @@
-// test/helpers/media-generation runtime module mocks helpers and runtime behavior.
+// Media-generation runtime tests share hoisted provider/auth/model mocks from this module.
 import { vi } from "vitest";
 import type { OpenClawConfig } from "../../../src/config/config.js";
 import type { ImageGenerationProvider } from "../../../src/image-generation/types.js";
@@ -129,10 +129,12 @@ vi.mock("../../../src/video-generation/provider-registry.js", () => ({
   listVideoGenerationProviders: mediaRuntimeMocks.listVideoGenerationProviders,
 }));
 
+/** Return the shared hoisted mocks for media-generation runtime modules. */
 export function getMediaGenerationRuntimeMocks() {
   return mediaRuntimeMocks;
 }
 
+/** Reset shared mocks for image-generation runtime tests. */
 export function resetImageGenerationRuntimeMocks(): void {
   resetSharedRuntimeImportMocks();
   resetGenerationRuntimeMocks({
@@ -143,6 +145,7 @@ export function resetImageGenerationRuntimeMocks(): void {
   });
 }
 
+/** Reset shared mocks for music-generation runtime tests. */
 export function resetMusicGenerationRuntimeMocks(): void {
   resetSharedRuntimeImportMocks();
   resetGenerationRuntimeMocks({
@@ -153,6 +156,7 @@ export function resetMusicGenerationRuntimeMocks(): void {
   });
 }
 
+/** Reset shared mocks for video-generation runtime tests. */
 export function resetVideoGenerationRuntimeMocks(): void {
   resetSharedRuntimeImportMocks();
   resetGenerationRuntimeMocks({

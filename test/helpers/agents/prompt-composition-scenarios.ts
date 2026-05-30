@@ -1,4 +1,4 @@
-// test/helpers/agents prompt composition scenarios helpers and runtime behavior.
+// Prompt composition fixtures build stable multi-surface scenarios for prompt snapshot tests.
 import fs from "node:fs/promises";
 import path from "node:path";
 import {
@@ -27,6 +27,7 @@ import { SILENT_REPLY_TOKEN } from "../../../src/auto-reply/tokens.js";
 import type { OpenClawConfig } from "../../../src/config/config.js";
 import { makeTempWorkspace, writeWorkspaceFile } from "../../../src/test-helpers/workspace.js";
 
+/** One turn in a prompt composition scenario snapshot. */
 export type PromptScenarioTurn = {
   id: string;
   label: string;
@@ -35,6 +36,7 @@ export type PromptScenarioTurn = {
   notes: string[];
 };
 
+/** Full prompt composition scenario with stability expectations across turns. */
 export type PromptScenario = {
   scenario: string;
   focus: string;
@@ -734,6 +736,7 @@ async function createMaintenanceScenario(workspaceDir: string): Promise<PromptSc
   };
 }
 
+/** Create a temp workspace containing AGENTS/TOOLS/SOUL prompt context files. */
 export async function createWorkspaceWithPromptCompositionFiles(): Promise<string> {
   const workspaceDir = await makeTempWorkspace("openclaw-prompt-cache-");
   await writeWorkspaceFile({
@@ -762,6 +765,7 @@ export async function createWorkspaceWithPromptCompositionFiles(): Promise<strin
   return workspaceDir;
 }
 
+/** Build all prompt composition scenarios and return cleanup for temp workspaces. */
 export async function createPromptCompositionScenarios(): Promise<{
   workspaceDir: string;
   warningWorkspaceDir: string;

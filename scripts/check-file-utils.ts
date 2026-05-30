@@ -1,9 +1,10 @@
-// scripts check file utils helpers and runtime behavior.
+// Shared file-walking helpers for repo check scripts.
 import fs from "node:fs";
 import path from "node:path";
 
 const DEFAULT_SKIPPED_DIR_NAMES = new Set(["node_modules", "dist", "coverage", ".generated"]);
 
+/** Return true for JS/TS source files while excluding declaration files. */
 export function isCodeFile(filePath: string): boolean {
   if (filePath.endsWith(".d.ts")) {
     return false;
@@ -11,6 +12,7 @@ export function isCodeFile(filePath: string): boolean {
   return /\.(?:[cm]?ts|[cm]?js|tsx|jsx)$/u.test(filePath);
 }
 
+/** Recursively collect matching files while skipping generated/dependency directories. */
 export function collectFilesSync(
   rootDir: string,
   options: {
@@ -51,6 +53,7 @@ export function collectFilesSync(
   return files;
 }
 
+/** Convert a path to POSIX separators for stable script output. */
 export function toPosixPath(filePath: string): string {
   if (path.sep === "/") {
     return filePath;
@@ -58,6 +61,7 @@ export function toPosixPath(filePath: string): string {
   return filePath.replaceAll("\\", "/");
 }
 
+/** Return a cwd-relative POSIX path for script diagnostics. */
 export function relativeToCwd(filePath: string): string {
   const relativePath = path.relative(process.cwd(), filePath) || filePath;
   return toPosixPath(relativePath);

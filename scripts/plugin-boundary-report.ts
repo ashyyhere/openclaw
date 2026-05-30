@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// scripts plugin boundary report helpers and runtime behavior.
+// Plugin boundary report audits SDK compatibility debt, reserved imports, and memory-host ownership.
 import { spawnSync } from "node:child_process";
 import { existsSync, lstatSync, readdirSync, readFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
@@ -123,6 +123,7 @@ type BoundaryReportSummary = {
   };
 };
 
+/** Rendered plugin boundary report plus exit code for CLI and tests. */
 export type PluginBoundaryReportResult = {
   stdout: string;
   stderr: string;
@@ -645,6 +646,7 @@ function collectFailures(report: BoundaryReport, options: CliOptions): string[] 
   return failures;
 }
 
+/** Create the plugin boundary report from CLI-style arguments. */
 export function createPluginBoundaryReport(args: readonly string[]): PluginBoundaryReportResult {
   const options = parseArgs(args);
   if (options.help) {

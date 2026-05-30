@@ -1,5 +1,5 @@
 #!/usr/bin/env -S node --import tsx
-// scripts test live media helpers and runtime behavior.
+// Live media test runner selects image/music/video provider suites based on auth and CLI filters.
 
 import type { ChildProcess } from "node:child_process";
 import { createRequire } from "node:module";
@@ -19,8 +19,10 @@ const { spawnPnpmRunner: _spawnPnpmRunner } = require("./pnpm-runner.mjs") as {
   spawnPnpmRunner: SpawnPnpmRunner;
 };
 
+/** Supported live media suite identifiers. */
 export type MediaSuiteId = "image" | "music" | "video";
 
+/** Static metadata for one live media test suite. */
 export type MediaSuiteConfig = {
   id: MediaSuiteId;
   testFile: string;
@@ -29,6 +31,7 @@ export type MediaSuiteConfig = {
   defaultProviders?: string[];
 };
 
+/** Live media suite catalog and provider env wiring. */
 export const MEDIA_SUITES: Record<MediaSuiteId, MediaSuiteConfig> = {
   image: {
     id: "image",
@@ -80,6 +83,7 @@ export const MEDIA_SUITES: Record<MediaSuiteId, MediaSuiteConfig> = {
 
 const DEFAULT_SUITES: MediaSuiteId[] = ["image", "music", "video"];
 
+/** Parsed CLI options for the live media runner. */
 export type CliOptions = {
   suites: MediaSuiteId[];
   globalProviders: Set<string> | null;
@@ -90,6 +94,7 @@ export type CliOptions = {
   help: boolean;
 };
 
+/** Planned run or skip decision for one media suite. */
 export type SuiteRunPlan = {
   suite: MediaSuiteConfig;
   providers: string[];
@@ -128,6 +133,7 @@ function parseSuiteToken(raw: string): MediaSuiteId | null {
   return null;
 }
 
+/** Parse live media runner CLI arguments. */
 export function parseArgs(argv: string[]): CliOptions {
   const separatorIndex = argv.indexOf("--");
   const optionArgs = separatorIndex >= 0 ? argv.slice(0, separatorIndex) : argv;
@@ -274,6 +280,7 @@ function selectProviders(params: {
   return providers;
 }
 
+/** Build suite run plans after loading provider auth env fallbacks. */
 export function buildRunPlan(options: CliOptions): SuiteRunPlan[] {
   const expectedKeys = [
     ...new Set(
@@ -381,6 +388,7 @@ async function runSuite(params: {
   });
 }
 
+/** Run the live media CLI and return a process-style exit code. */
 export async function runCli(argv: string[]): Promise<number> {
   const options = parseArgs(argv);
   if (options.help) {
