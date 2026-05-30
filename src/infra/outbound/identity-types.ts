@@ -1,5 +1,5 @@
-// infra/outbound identity types helpers and runtime behavior.
-/** Shared type for Outbound Identity in src/infra/outbound. */
+// Shared outbound sender identity metadata.
+/** Display identity used when sending outbound messages through a channel. */
 export type OutboundIdentity = {
   name?: string;
   avatarUrl?: string;

@@ -1,11 +1,11 @@
-// infra node sqlite helpers and runtime behavior.
+// Loads node:sqlite with warning filtering and a clearer runtime error.
 import { createRequire } from "node:module";
 import { formatErrorMessage } from "./errors.js";
 import { installProcessWarningFilter } from "./warning-filter.js";
 
 const require = createRequire(import.meta.url);
 
-/** Reused helper for require Node Sqlite behavior in src/infra. */
+/** Requires node:sqlite or throws an actionable unsupported-runtime error. */
 export function requireNodeSqlite(): typeof import("node:sqlite") {
   installProcessWarningFilter();
   try {

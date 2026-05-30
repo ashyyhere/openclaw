@@ -1,4 +1,4 @@
-// infra/outbound message action param keys helpers and runtime behavior.
+// Detects non-standard message action params that may belong to plugins.
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 
 const STANDARD_MESSAGE_ACTION_PARAM_KEYS = new Set([
@@ -43,7 +43,7 @@ const STANDARD_MESSAGE_ACTION_PARAM_KEYS = new Set([
   "to",
 ]);
 
-/** Reused helper for has Potential Plugin Action Param behavior in src/infra/outbound. */
+/** Returns true when action params include populated keys outside the standard schema. */
 export function hasPotentialPluginActionParam(params: Record<string, unknown>): boolean {
   return Object.entries(params).some(([key, value]) => {
     if (STANDARD_MESSAGE_ACTION_PARAM_KEYS.has(key)) {

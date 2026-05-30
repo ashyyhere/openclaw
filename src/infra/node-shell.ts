@@ -1,7 +1,7 @@
-// infra node shell helpers and runtime behavior.
+// Builds the platform shell command used by Node process launches.
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
-/** Reused helper for build Node Shell Command behavior in src/infra. */
+/** Returns Windows or POSIX shell argv for executing one command string. */
 export function buildNodeShellCommand(command: string, platform?: string | null) {
   const normalized = normalizeLowercaseStringOrEmpty((platform ?? "").trim());
   if (normalized.startsWith("win")) {

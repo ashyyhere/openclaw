@@ -1,5 +1,5 @@
-// infra non fatal cleanup helpers and runtime behavior.
-/** Reused helper for run Best Effort Cleanup behavior in src/infra. */
+// Runs cleanup hooks without letting cleanup failures mask primary work.
+/** Runs cleanup and reports errors through an optional callback instead of throwing. */
 export async function runBestEffortCleanup<T>(params: {
   cleanup: () => Promise<T>;
   onError?: (error: unknown) => void;

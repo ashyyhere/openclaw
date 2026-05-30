@@ -1,4 +1,4 @@
-// infra install from npm spec helpers and runtime behavior.
+// Installs validated npm specs through the archive install pipeline.
 import type { NpmIntegrityDriftPayload } from "./npm-integrity.js";
 import {
   finalizeNpmSpecArchiveInstall,
@@ -7,7 +7,7 @@ import {
 } from "./npm-pack-install.js";
 import { validateRegistryNpmSpec } from "./npm-registry-spec.js";
 
-/** Reused helper for install From Validated Npm Spec Archive behavior in src/infra. */
+/** Validates an npm spec, downloads its archive, installs it, and finalizes the result. */
 export async function installFromValidatedNpmSpecArchive<
   TResult extends { ok: boolean },
   TArchiveInstallParams extends { archivePath: string },
