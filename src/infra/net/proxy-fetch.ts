@@ -1,4 +1,5 @@
-// infra/net proxy fetch helpers and runtime behavior.
+// Creates fetch implementations that route through explicit or env-selected
+// HTTP proxies while preserving proxy metadata for diagnostics.
 import { logWarn } from "../../logger.js";
 import { formatErrorMessage } from "../errors.js";
 import { normalizeHeadersInitForFetch } from "../fetch-headers.js";
@@ -8,7 +9,7 @@ import {
 } from "./proxy/managed-proxy-undici.js";
 import { loadUndiciRuntimeDeps, type UndiciRuntimeDeps } from "./undici-runtime.js";
 
-/** Reused constant for PROXY FETCH PROXY URL behavior in src/infra/net. */
+/** Symbol metadata storing the explicit proxy URL attached to a proxy fetch. */
 export const PROXY_FETCH_PROXY_URL = Symbol.for("openclaw.proxyFetch.proxyUrl");
 type ProxyFetchWithMetadata = typeof fetch & {
   [PROXY_FETCH_PROXY_URL]?: string;
@@ -100,7 +101,7 @@ export function makeProxyFetch(proxyUrl: string): typeof fetch {
   return proxyFetch;
 }
 
-/** Reused helper for get Proxy Url From Fetch behavior in src/infra/net. */
+/** Reads the explicit proxy URL metadata from a fetch implementation. */
 export function getProxyUrlFromFetch(fetchImpl?: typeof fetch): string | undefined {
   const proxyUrl = (fetchImpl as ProxyFetchWithMetadata | undefined)?.[PROXY_FETCH_PROXY_URL];
   if (typeof proxyUrl !== "string") {
