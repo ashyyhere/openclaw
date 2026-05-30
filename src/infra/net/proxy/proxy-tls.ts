@@ -1,9 +1,9 @@
-// infra/net/proxy proxy tls helpers and runtime behavior.
+// Resolves and loads custom CA material for HTTPS managed proxy connections.
 import { readFileSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import type { ProxyConfig } from "../../../config/zod-schema.proxy.js";
 
-/** Shared type for Managed Proxy Tls Options in src/infra/net. */
+/** TLS material passed to managed proxy clients. */
 export type ManagedProxyTlsOptions = Readonly<{
   ca?: string;
 }>;
@@ -28,7 +28,7 @@ function isHttpsProxyUrl(value: string | undefined): boolean {
   }
 }
 
-/** Reused helper for resolve Managed Proxy Ca File behavior in src/infra/net. */
+/** Resolves a proxy CA file from an explicit override or proxy config. */
 export function resolveManagedProxyCaFile(params: {
   config?: ProxyConfig;
   caFileOverride?: string;
@@ -39,7 +39,7 @@ export function resolveManagedProxyCaFile(params: {
   );
 }
 
-/** Reused helper for resolve Managed Proxy Ca File For Url behavior in src/infra/net. */
+/** Resolves a proxy CA file only when the proxy URL uses HTTPS. */
 export function resolveManagedProxyCaFileForUrl(params: {
   proxyUrl: string | undefined;
   config?: ProxyConfig;
@@ -54,7 +54,7 @@ export function resolveManagedProxyCaFileForUrl(params: {
   });
 }
 
-/** Reused helper for load Managed Proxy Tls Options behavior in src/infra/net. */
+/** Loads async TLS options from a proxy CA file path. */
 export async function loadManagedProxyTlsOptions(
   caFile: string | undefined,
 ): Promise<ManagedProxyTlsOptions | undefined> {
@@ -70,7 +70,7 @@ export async function loadManagedProxyTlsOptions(
   }
 }
 
-/** Reused helper for load Managed Proxy Tls Options Sync behavior in src/infra/net. */
+/** Loads sync TLS options from a proxy CA file path. */
 export function loadManagedProxyTlsOptionsSync(
   caFile: string | undefined,
 ): ManagedProxyTlsOptions | undefined {

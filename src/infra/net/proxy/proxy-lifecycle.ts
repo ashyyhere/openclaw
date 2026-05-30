@@ -14,7 +14,7 @@ import {
 } from "@openclaw/proxyline";
 import type { ProxyConfig } from "../../../config/zod-schema.proxy.js";
 
-/** Shared type for Proxy Loopback Mode in src/infra/net. */
+/** Loopback handling mode used while managed proxy routing is active. */
 export type ProxyLoopbackMode = NonNullable<NonNullable<ProxyConfig>["loopbackMode"]>;
 import { isLoopbackIpAddress } from "@openclaw/net-policy/ip";
 import { logInfo, logWarn } from "../../../logger.js";
@@ -32,7 +32,7 @@ import {
   resolveManagedProxyCaFileForUrl,
 } from "./proxy-tls.js";
 
-/** Shared type for Proxy Handle in src/infra/net. */
+/** Active managed proxy routing handle returned to gateway lifecycle code. */
 export type ProxyHandle = {
   /** The operator-managed proxy URL injected into process.env. */
   proxyUrl: string;
@@ -59,7 +59,7 @@ const MANAGED_PROXY_UNDICI_OPTIONS = Object.freeze({
   allowH2: false,
 }) satisfies ProxylineUndiciOptions;
 
-/** Reused helper for reset Proxy Lifecycle For Tests behavior in src/infra/net. */
+/** Clears proxy lifecycle singleton state for tests. */
 export function resetProxyLifecycleForTests(): void {
   baseProxyEnvSnapshot = null;
   proxylineHandle?.stop();
@@ -187,7 +187,7 @@ function redactProxyUrlForLog(value: string): string {
   }
 }
 
-/** Reused helper for ensure Inherited Managed Proxy Routing Active behavior in src/infra/net. */
+/** Reinstalls managed proxy routing when inherited env indicates an active proxy. */
 export function ensureInheritedManagedProxyRoutingActive(): void {
   if (process.env["OPENCLAW_PROXY_ACTIVE"] !== "1") {
     return;
@@ -211,7 +211,7 @@ export function ensureInheritedManagedProxyRoutingActive(): void {
   forceResetGlobalDispatcher({ preserveProxylineManaged: true });
 }
 
-/** Reused helper for start Proxy behavior in src/infra/net. */
+/** Activates process-wide managed proxy routing from proxy config. */
 export async function startProxy(config: ProxyConfig | undefined): Promise<ProxyHandle | null> {
   if (config?.enabled !== true) {
     return null;
@@ -287,7 +287,7 @@ export async function startProxy(config: ProxyConfig | undefined): Promise<Proxy
   return handle;
 }
 
-/** Reused helper for stop Proxy behavior in src/infra/net. */
+/** Stops an active managed proxy routing handle. */
 export async function stopProxy(handle: ProxyHandle | null): Promise<void> {
   if (!handle) {
     return;
@@ -319,7 +319,7 @@ function getGatewayControlPlaneBypassAuthority(value: string): string | null {
   return url.port ? `${url.hostname}:${url.port}` : url.hostname;
 }
 
-/** Reused helper for register Managed Proxy Gateway Loopback Bypass behavior in src/infra/net. */
+/** Registers a managed-proxy bypass for loopback gateway control-plane URLs. */
 export function registerManagedProxyGatewayLoopbackBypass(url: string): (() => void) | undefined {
   const authority = getGatewayControlPlaneBypassAuthority(url);
   if (!authority) {

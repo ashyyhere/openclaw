@@ -1,4 +1,5 @@
-// infra/net/proxy proxy validation helpers and runtime behavior.
+// Validates managed proxy configuration by proving allowed, denied, and APNs
+// reachability paths through the configured forward proxy.
 import { randomUUID } from "node:crypto";
 import { createServer, type Server } from "node:http";
 import type { ProxyConfig } from "../../../config/zod-schema.proxy.js";
@@ -11,19 +12,19 @@ import {
   type ManagedProxyTlsOptions,
 } from "./proxy-tls.js";
 
-/** Reused constant for DEFAULT PROXY VALIDATION ALLOWED URLS behavior in src/infra/net. */
+/** Default public URL used to prove allowed proxy egress. */
 export const DEFAULT_PROXY_VALIDATION_ALLOWED_URLS = ["https://example.com/"] as const;
-/** Reused constant for DEFAULT PROXY VALIDATION APNS AUTHORITY behavior in src/infra/net. */
+/** Default APNs authority used for HTTP/2 tunnel reachability checks. */
 export const DEFAULT_PROXY_VALIDATION_APNS_AUTHORITY = "https://api.sandbox.push.apple.com";
 
 const DEFAULT_PROXY_VALIDATION_TIMEOUT_MS = 5000;
 const DENIED_CANARY_HEADER = "x-openclaw-proxy-validation-canary";
 const APNS_REACHABILITY_REASON = "InvalidProviderToken";
 
-/** Shared type for Proxy Validation Config Source in src/infra/net. */
+/** Source that supplied or withheld the proxy URL under validation. */
 export type ProxyValidationConfigSource = "override" | "config" | "env" | "missing" | "disabled";
 
-/** Shared type for Proxy Validation Resolved Config in src/infra/net. */
+/** Resolved proxy validation config plus validation errors before network checks run. */
 export type ProxyValidationResolvedConfig = {
   enabled: boolean;
   proxyUrl?: string;
@@ -32,10 +33,10 @@ export type ProxyValidationResolvedConfig = {
   errors: string[];
 };
 
-/** Shared type for Proxy Validation Check Kind in src/infra/net. */
+/** Individual proxy validation probe category. */
 export type ProxyValidationCheckKind = "allowed" | "denied" | "apns";
 
-/** Shared type for Proxy Validation Check in src/infra/net. */
+/** Result from one allowed, denied, or APNs proxy validation check. */
 export type ProxyValidationCheck = {
   kind: ProxyValidationCheckKind;
   url: string;
@@ -44,14 +45,14 @@ export type ProxyValidationCheck = {
   error?: string;
 };
 
-/** Shared type for Proxy Validation Result in src/infra/net. */
+/** Full proxy validation result returned to CLI/API callers. */
 export type ProxyValidationResult = {
   ok: boolean;
   config: ProxyValidationResolvedConfig;
   checks: ProxyValidationCheck[];
 };
 
-/** Shared type for Proxy Validation Fetch Check Params in src/infra/net. */
+/** Inputs for one HTTP fetch validation probe through the proxy. */
 export type ProxyValidationFetchCheckParams = {
   proxyUrl: string;
   proxyTls?: ManagedProxyTlsOptions;
@@ -59,19 +60,19 @@ export type ProxyValidationFetchCheckParams = {
   timeoutMs: number;
 };
 
-/** Shared type for Proxy Validation Fetch Check Result in src/infra/net. */
+/** Response details from one HTTP fetch validation probe. */
 export type ProxyValidationFetchCheckResult = {
   ok: boolean;
   status: number;
   deniedCanaryToken?: string;
 };
 
-/** Shared type for Proxy Validation Fetch Check in src/infra/net. */
+/** Injectable HTTP fetch probe used by proxy validation tests and runtime. */
 export type ProxyValidationFetchCheck = (
   params: ProxyValidationFetchCheckParams,
 ) => Promise<ProxyValidationFetchCheckResult>;
 
-/** Shared type for Proxy Validation Apns Check Params in src/infra/net. */
+/** Inputs for the APNs HTTP/2 reachability proxy validation probe. */
 export type ProxyValidationApnsCheckParams = {
   proxyUrl: string;
   proxyTls?: ManagedProxyTlsOptions;
@@ -79,7 +80,7 @@ export type ProxyValidationApnsCheckParams = {
   timeoutMs: number;
 };
 
-/** Shared type for Proxy Validation Apns Check Result in src/infra/net. */
+/** Response details from the APNs HTTP/2 reachability probe. */
 export type ProxyValidationApnsCheckResult = {
   status: number;
   /** Present when the response originated from a real APNs server (Apple always returns this UUID). */
@@ -88,12 +89,12 @@ export type ProxyValidationApnsCheckResult = {
   apnsReason?: string;
 };
 
-/** Shared type for Proxy Validation Apns Check in src/infra/net. */
+/** Injectable APNs reachability probe used by proxy validation tests and runtime. */
 export type ProxyValidationApnsCheck = (
   params: ProxyValidationApnsCheckParams,
 ) => Promise<ProxyValidationApnsCheckResult>;
 
-/** Shared type for Resolve Proxy Validation Config Options in src/infra/net. */
+/** Inputs used to resolve the proxy URL and CA file before validation. */
 export type ResolveProxyValidationConfigOptions = {
   config?: ProxyConfig;
   env?: NodeJS.ProcessEnv | Partial<Record<"OPENCLAW_PROXY_URL", string | undefined>>;
@@ -101,7 +102,7 @@ export type ResolveProxyValidationConfigOptions = {
   proxyCaFileOverride?: string;
 };
 
-/** Shared type for Run Proxy Validation Options in src/infra/net. */
+/** Options controlling proxy validation probe selection and injection. */
 export type RunProxyValidationOptions = ResolveProxyValidationConfigOptions & {
   allowedUrls?: readonly string[];
   deniedUrls?: readonly string[];
@@ -154,7 +155,7 @@ function validateResolvedProxy(
   return [...validateProxyUrl(value), ...validateProxyEnabled(source, enabled)];
 }
 
-/** Reused helper for resolve Proxy Validation Config behavior in src/infra/net. */
+/** Resolves proxy validation config from overrides, config, and env in precedence order. */
 export function resolveProxyValidationConfig(
   options: ResolveProxyValidationConfigOptions,
 ): ProxyValidationResolvedConfig {
@@ -538,7 +539,7 @@ async function runApnsReachabilityCheck(params: {
   }
 }
 
-/** Reused helper for run Proxy Validation behavior in src/infra/net. */
+/** Runs configured proxy validation probes and returns aggregate pass/fail state. */
 export async function runProxyValidation(
   options: RunProxyValidationOptions,
 ): Promise<ProxyValidationResult> {
