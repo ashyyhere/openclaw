@@ -1,8 +1,8 @@
-// packages/plugin-package-contract/src index helpers and runtime behavior.
-/** Public type describing Json Object for packages/plugin-package-contract. */
+// Public helpers for validating OpenClaw external code plugin package metadata.
+/** Generic JSON object shape accepted at the package metadata boundary. */
 export type JsonObject = Record<string, unknown>;
 
-/** Public type describing External Plugin Compatibility for packages/plugin-package-contract. */
+/** Normalized compatibility metadata read from an external plugin package.json. */
 export type ExternalPluginCompatibility = {
   pluginApiRange?: string;
   builtWithOpenClawVersion?: string;
@@ -10,19 +10,19 @@ export type ExternalPluginCompatibility = {
   minGatewayVersion?: string;
 };
 
-/** Public type describing External Plugin Validation Issue for packages/plugin-package-contract. */
+/** Field-level validation issue reported for plugin package metadata. */
 export type ExternalPluginValidationIssue = {
   fieldPath: string;
   message: string;
 };
 
-/** Public type describing External Code Plugin Validation Result for packages/plugin-package-contract. */
+/** Validation result for external code plugin package metadata. */
 export type ExternalCodePluginValidationResult = {
   compatibility?: ExternalPluginCompatibility;
   issues: ExternalPluginValidationIssue[];
 };
 
-/** Public constant for EXTERNAL CODE PLUGIN REQUIRED FIELD PATHS behavior in packages/plugin-package-contract. */
+/** Required package.json field paths for external code plugins that run inside OpenClaw. */
 export const EXTERNAL_CODE_PLUGIN_REQUIRED_FIELD_PATHS = [
   "openclaw.compat.pluginApi",
   "openclaw.build.openclawVersion",
@@ -49,7 +49,7 @@ function readOpenClawBlock(packageJson: unknown) {
   return { root, openclaw, compat, build, install };
 }
 
-/** Public helper for normalize External Plugin Compatibility behavior in packages/plugin-package-contract. */
+/** Extract compatibility metadata from supported package.json fields and legacy install floor. */
 export function normalizeExternalPluginCompatibility(
   packageJson: unknown,
 ): ExternalPluginCompatibility | undefined {
@@ -81,7 +81,7 @@ export function normalizeExternalPluginCompatibility(
   return Object.keys(compatibility).length > 0 ? compatibility : undefined;
 }
 
-/** Public helper for list Missing External Code Plugin Field Paths behavior in packages/plugin-package-contract. */
+/** List required external code plugin metadata paths that are absent or blank. */
 export function listMissingExternalCodePluginFieldPaths(packageJson: unknown): string[] {
   const { compat, build } = readOpenClawBlock(packageJson);
   const missing: string[] = [];
@@ -94,7 +94,7 @@ export function listMissingExternalCodePluginFieldPaths(packageJson: unknown): s
   return missing;
 }
 
-/** Public helper for validate External Code Plugin Package Json behavior in packages/plugin-package-contract. */
+/** Validate external code plugin metadata and return both compatibility data and issues. */
 export function validateExternalCodePluginPackageJson(
   packageJson: unknown,
 ): ExternalCodePluginValidationResult {

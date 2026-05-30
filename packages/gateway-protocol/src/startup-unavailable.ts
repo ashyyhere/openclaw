@@ -1,23 +1,23 @@
-// packages/gateway-protocol/src startup unavailable helpers and runtime behavior.
-/** Public constant for GATEWAY STARTUP UNAVAILABLE REASON behavior in packages/gateway-protocol. */
+// Shared startup-unavailable constants and readers for retryable gateway connections.
+/** Details reason used when startup sidecars are not ready to accept work. */
 export const GATEWAY_STARTUP_UNAVAILABLE_REASON = "startup-sidecars";
-/** Public constant for GATEWAY STARTUP PENDING CLOSE CAUSE behavior in packages/gateway-protocol. */
+/** Close cause emitted while the gateway is still waiting on startup sidecars. */
 export const GATEWAY_STARTUP_PENDING_CLOSE_CAUSE = "startup-sidecars-pending";
-/** Public constant for GATEWAY STARTUP CLOSE CODE behavior in packages/gateway-protocol. */
+/** WebSocket close code for temporary service restart/startup unavailability. */
 export const GATEWAY_STARTUP_CLOSE_CODE = 1013;
-/** Public constant for GATEWAY STARTUP CLOSE REASON behavior in packages/gateway-protocol. */
+/** Human-readable close reason paired with the temporary startup close code. */
 export const GATEWAY_STARTUP_CLOSE_REASON = "gateway starting";
-/** Public constant for GATEWAY STARTUP RETRY AFTER MS behavior in packages/gateway-protocol. */
+/** Default retry delay when a startup-unavailable error omits a bounded retry hint. */
 export const GATEWAY_STARTUP_RETRY_AFTER_MS = 500;
 const GATEWAY_STARTUP_RETRY_MIN_MS = 100;
 const GATEWAY_STARTUP_RETRY_MAX_MS = 2_000;
 
-/** Public type describing Gateway Startup Unavailable Details for packages/gateway-protocol. */
+/** Structured error details that identify retryable startup unavailability. */
 export type GatewayStartupUnavailableDetails = {
   reason: typeof GATEWAY_STARTUP_UNAVAILABLE_REASON;
 };
 
-/** Public helper for gateway Startup Unavailable Details behavior in packages/gateway-protocol. */
+/** Build the details object embedded in retryable startup-unavailable errors. */
 export function gatewayStartupUnavailableDetails(): GatewayStartupUnavailableDetails {
   return { reason: GATEWAY_STARTUP_UNAVAILABLE_REASON };
 }
@@ -32,7 +32,7 @@ function isGatewayStartupUnavailableDetails(
   );
 }
 
-/** Public helper for is Retryable Gateway Startup Unavailable Error behavior in packages/gateway-protocol. */
+/** Identify gateway errors that are safe for clients to retry during startup. */
 export function isRetryableGatewayStartupUnavailableError(error: unknown): boolean {
   if (!error || typeof error !== "object") {
     return false;
@@ -51,7 +51,7 @@ export function isRetryableGatewayStartupUnavailableError(error: unknown): boole
   );
 }
 
-/** Public helper for resolve Gateway Startup Retry After Ms behavior in packages/gateway-protocol. */
+/** Read and clamp the retry-after delay for retryable startup-unavailable errors. */
 export function resolveGatewayStartupRetryAfterMs(error: unknown): number | null {
   if (!isRetryableGatewayStartupUnavailableError(error)) {
     return null;
