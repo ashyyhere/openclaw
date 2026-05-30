@@ -7,13 +7,11 @@ import {
   type WebhookInFlightLimiter,
 } from "./webhook-request-guards.js";
 
-/** Shared type for Registered Webhook Target in src/plugin-sdk. */
 export type RegisteredWebhookTarget<T> = {
   target: T;
   unregister: () => void;
 };
 
-/** Shared type for Register Webhook Target Options in src/plugin-sdk. */
 export type RegisterWebhookTargetOptions<T extends { path: string }> = {
   onFirstPathTarget?: (params: { path: string; target: T }) => void | (() => void);
   onLastPathTargetRemoved?: (params: { path: string }) => void;
@@ -21,10 +19,8 @@ export type RegisterWebhookTargetOptions<T extends { path: string }> = {
 
 type RegisterPluginHttpRouteParams = Parameters<typeof registerPluginHttpRoute>[0];
 
-/** Re-exported API for src/plugin-sdk, starting with register Plugin Http Route. */
 export { registerPluginHttpRoute };
 
-/** Shared type for Register Webhook Plugin Route Options in src/plugin-sdk. */
 export type RegisterWebhookPluginRouteOptions = Omit<
   RegisterPluginHttpRouteParams,
   "path" | "fallbackPath"
@@ -171,7 +167,6 @@ export async function withResolvedWebhookRequestPipeline<T>(params: {
   }
 }
 
-/** Shared type for Webhook Target Match Result in src/plugin-sdk. */
 export type WebhookTargetMatchResult<T> =
   | { kind: "none" }
   | { kind: "single"; target: T }
