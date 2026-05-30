@@ -1,4 +1,4 @@
-// gateway server http test harness helpers and runtime behavior.
+// Shared HTTP server test harness for gateway auth, hooks, and path canonicalization.
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { expect, vi } from "vitest";
 import type { createSubsystemLogger } from "../logging/subsystem.js";
@@ -14,7 +14,7 @@ type GatewayServerOptions = Partial<Parameters<typeof createGatewayHttpServer>[0
 type HooksHandlerDeps = Parameters<typeof createHooksRequestHandler>[0];
 
 const responseEndPromises = new WeakMap<ServerResponse, Promise<void>>();
-/** Reused constant for AUTH NONE behavior in src/gateway. */
+/** Resolved no-auth gateway fixture for HTTP server tests. */
 export const AUTH_NONE: ResolvedGatewayAuth = {
   mode: "none",
   token: undefined,
@@ -22,7 +22,7 @@ export const AUTH_NONE: ResolvedGatewayAuth = {
   allowTailscale: false,
 };
 
-/** Reused constant for AUTH TOKEN behavior in src/gateway. */
+/** Resolved token-auth gateway fixture for HTTP server tests. */
 export const AUTH_TOKEN: ResolvedGatewayAuth = {
   mode: "token",
   token: "test-token",
@@ -30,7 +30,7 @@ export const AUTH_TOKEN: ResolvedGatewayAuth = {
   allowTailscale: false,
 };
 
-/** Reused helper for create Request behavior in src/gateway. */
+/** Creates a minimal IncomingMessage fixture for gateway HTTP handlers. */
 export function createRequest(params: {
   path: string;
   authorization?: string;
@@ -49,7 +49,7 @@ export function createRequest(params: {
   });
 }
 
-/** Reused helper for create Hook Request behavior in src/gateway. */
+/** Creates a POST hook request fixture with the default hook token. */
 export function createHookRequest(params?: {
   authorization?: string;
   remoteAddress?: string;
@@ -66,7 +66,7 @@ export function createHookRequest(params?: {
   });
 }
 
-/** Reused helper for create Response behavior in src/gateway. */
+/** Creates a ServerResponse fixture that captures headers, status, and body. */
 export function createResponse(): {
   res: ServerResponse;
   setHeader: ReturnType<typeof vi.fn>;
@@ -108,7 +108,7 @@ export function createResponse(): {
   };
 }
 
-/** Reused helper for dispatch Request behavior in src/gateway. */
+/** Emits a request against the test server and waits for response completion. */
 export async function dispatchRequest(
   server: GatewayHttpServer,
   req: IncomingMessage,
@@ -132,7 +132,7 @@ export async function dispatchRequest(
   }
 }
 
-/** Reused helper for with Gateway Temp Config behavior in src/gateway. */
+/** Runs a test with a temporary gateway config root and trusted-proxy baseline. */
 export async function withGatewayTempConfig(
   prefix: string,
   run: () => Promise<void>,
@@ -144,7 +144,7 @@ export async function withGatewayTempConfig(
   });
 }
 
-/** Reused helper for create Test Gateway Server behavior in src/gateway. */
+/** Creates a gateway HTTP server with default test-disabled optional surfaces. */
 export function createTestGatewayServer(options: {
   resolvedAuth: ResolvedGatewayAuth;
   overrides?: GatewayServerOptions;
@@ -161,7 +161,7 @@ export function createTestGatewayServer(options: {
   });
 }
 
-/** Reused helper for with Gateway Server behavior in src/gateway. */
+/** Runs a callback with a temporary configured gateway HTTP server. */
 export async function withGatewayServer(params: {
   prefix: string;
   resolvedAuth: ResolvedGatewayAuth;
@@ -177,7 +177,7 @@ export async function withGatewayServer(params: {
   });
 }
 
-/** Reused helper for send Request behavior in src/gateway. */
+/** Sends a fixture request through a gateway HTTP server and returns the capture. */
 export async function sendRequest(
   server: GatewayHttpServer,
   params: {
@@ -193,7 +193,7 @@ export async function sendRequest(
   return response;
 }
 
-/** Reused helper for expect Unauthorized Response behavior in src/gateway. */
+/** Asserts that a captured gateway response is a 401 Unauthorized body. */
 export function expectUnauthorizedResponse(
   response: ReturnType<typeof createResponse>,
   label?: string,
@@ -202,7 +202,7 @@ export function expectUnauthorizedResponse(
   expect(response.getBody(), label).toContain("Unauthorized");
 }
 
-/** Reused helper for create Canonicalized Channel Plugin Handler behavior in src/gateway. */
+/** Creates a channel handler that only accepts the canonicalized profile route. */
 export function createCanonicalizedChannelPluginHandler() {
   return vi.fn(async (req: IncomingMessage, res: ServerResponse) => {
     const pathname = new URL(req.url ?? "/", "http://localhost").pathname;
@@ -217,7 +217,7 @@ export function createCanonicalizedChannelPluginHandler() {
   });
 }
 
-/** Reused helper for create Hooks Handler behavior in src/gateway. */
+/** Creates a hooks request handler with test logging and dispatch defaults. */
 export function createHooksHandler(
   params:
     | string
@@ -250,7 +250,7 @@ type RouteVariant = {
   path: string;
 };
 
-/** Reused constant for CANONICAL UNAUTH VARIANTS behavior in src/gateway. */
+/** Canonical path variants expected to fail without authorization. */
 export const CANONICAL_UNAUTH_VARIANTS: RouteVariant[] = [
   { label: "case-variant", path: "/API/channels/nostr/default/profile" },
   { label: "encoded-slash", path: "/api/channels%2Fnostr%2Fdefault%2Fprofile" },
@@ -274,7 +274,7 @@ export const CANONICAL_UNAUTH_VARIANTS: RouteVariant[] = [
   { label: "malformed-double-slash-short-percent", path: "/api//channels%2" },
 ];
 
-/** Reused constant for CANONICAL AUTH VARIANTS behavior in src/gateway. */
+/** Canonical path variants expected to route after authorization. */
 export const CANONICAL_AUTH_VARIANTS: RouteVariant[] = [
   { label: "auth-case-variant", path: "/API/channels/nostr/default/profile" },
   {
@@ -293,7 +293,7 @@ export const CANONICAL_AUTH_VARIANTS: RouteVariant[] = [
   },
 ];
 
-/** Reused helper for build Channel Path Fuzz Corpus behavior in src/gateway. */
+/** Builds the channel path canonicalization fuzz corpus for HTTP tests. */
 export function buildChannelPathFuzzCorpus(): RouteVariant[] {
   const variants = [
     "/api/channels/nostr/default/profile",
@@ -314,7 +314,7 @@ export function buildChannelPathFuzzCorpus(): RouteVariant[] {
   return variants.map((path) => ({ label: `fuzz:${path}`, path }));
 }
 
-/** Reused helper for expect Unauthorized Variants behavior in src/gateway. */
+/** Asserts every route variant is rejected without auth. */
 export async function expectUnauthorizedVariants(params: {
   server: GatewayHttpServer;
   variants: RouteVariant[];
@@ -325,7 +325,7 @@ export async function expectUnauthorizedVariants(params: {
   }
 }
 
-/** Reused helper for expect Authorized Variants behavior in src/gateway. */
+/** Asserts every authorized route variant reaches the canonical channel handler. */
 export async function expectAuthorizedVariants(params: {
   server: GatewayHttpServer;
   variants: RouteVariant[];
