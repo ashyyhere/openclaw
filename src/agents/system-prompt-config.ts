@@ -9,7 +9,7 @@ import { resolveEffectiveToolFsWorkspaceOnly } from "./tool-fs-policy.js";
 
 type AgentSystemPromptRenderParams = Parameters<typeof buildAgentSystemPrompt>[0];
 
-/** Shared type for Resolved Agent System Prompt Config in src/agents. */
+/** Effective config-derived fields passed into system prompt rendering. */
 export type ResolvedAgentSystemPromptConfig = Pick<
   AgentSystemPromptRenderParams,
   | "ownerDisplay"
@@ -21,13 +21,13 @@ export type ResolvedAgentSystemPromptConfig = Pick<
   | "fsWorkspaceOnly"
 >;
 
-/** Shared type for Configured Agent System Prompt Params in src/agents. */
+/** System prompt render params plus the agent config scope used to derive defaults. */
 export type ConfiguredAgentSystemPromptParams = AgentSystemPromptRenderParams & {
   config?: OpenClawConfig;
   agentId?: string;
 };
 
-/** Reused helper for resolve Agent System Prompt Config behavior in src/agents. */
+/** Resolve owner display, delegation, TTS, memory, and filesystem prompt flags. */
 export function resolveAgentSystemPromptConfig(params: {
   config?: OpenClawConfig;
   agentId?: string;
@@ -50,7 +50,7 @@ export function resolveAgentSystemPromptConfig(params: {
   };
 }
 
-/** Reused helper for build Configured Agent System Prompt behavior in src/agents. */
+/** Build the agent system prompt after applying config-derived render fields. */
 export function buildConfiguredAgentSystemPrompt(params: ConfiguredAgentSystemPromptParams) {
   const { config, agentId, ...renderParams } = params;
   const configParams = config ? resolveAgentSystemPromptConfig({ config, agentId }) : {};

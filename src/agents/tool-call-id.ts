@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 import type { AgentMessage } from "./runtime/index.js";
 import { isAllowedToolCallName, normalizeAllowedToolNames } from "./tool-call-shared.js";
 
-/** Shared type for Tool Call Id Mode in src/agents. */
+/** Sanitization mode for provider-specific tool call id constraints. */
 export type ToolCallIdMode = "strict" | "strict9";
 const NATIVE_ANTHROPIC_TOOL_USE_ID_RE = /^toolu_[A-Za-z0-9_]+$/;
 const NATIVE_KIMI_TOOL_CALL_ID_RE = /^functions\.[A-Za-z0-9_-]+:\d+$/;
@@ -58,7 +58,7 @@ export function sanitizeToolCallId(id: string, mode: ToolCallIdMode = "strict"):
   return alphanumericOnly.length > 0 ? alphanumericOnly : "sanitizedtoolid";
 }
 
-/** Reused helper for extract Tool Calls From Assistant behavior in src/agents. */
+/** Extract provider tool-call ids from assistant content blocks. */
 export function extractToolCallsFromAssistant(
   msg: Extract<AgentMessage, { role: "assistant" }>,
 ): ToolCallLike[] {
@@ -86,14 +86,14 @@ export function extractToolCallsFromAssistant(
   return toolCalls;
 }
 
-/** Reused helper for extract Tool Result Id behavior in src/agents. */
+/** Extract the first tool result id from a tool result message. */
 export function extractToolResultId(
   msg: Extract<AgentMessage, { role: "toolResult" }>,
 ): string | null {
   return extractToolResultIds(msg)[0] ?? null;
 }
 
-/** Reused helper for extract Tool Result Ids behavior in src/agents. */
+/** Extract all known provider-specific tool result id aliases from a message. */
 export function extractToolResultIds(msg: Extract<AgentMessage, { role: "toolResult" }>): string[] {
   const ids: string[] = [];
   const record = msg as {
@@ -211,7 +211,7 @@ function collectReplaySafeThinkingToolIds(
   return { reservedIds: reserved, preservedIndexes };
 }
 
-/** Reused helper for is Valid Cloud Code Assist Tool Id behavior in src/agents. */
+/** Validate tool ids against Cloud Code Assist replay constraints. */
 export function isValidCloudCodeAssistToolId(id: string, mode: ToolCallIdMode = "strict"): boolean {
   if (!id || typeof id !== "string") {
     return false;

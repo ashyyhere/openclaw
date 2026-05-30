@@ -1,15 +1,15 @@
 /** Formats stable prompt cache boundary markers. */
 import { normalizeStructuredPromptSection } from "./prompt-cache-stability.js";
 
-/** Reused constant for SYSTEM PROMPT CACHE BOUNDARY behavior in src/agents. */
+/** Marker separating cache-stable prompt prefix from dynamic suffix content. */
 export const SYSTEM_PROMPT_CACHE_BOUNDARY = "\n<!-- OPENCLAW_CACHE_BOUNDARY -->\n";
 
-/** Reused helper for strip System Prompt Cache Boundary behavior in src/agents. */
+/** Remove cache boundary markers when rendering providers that do not need them. */
 export function stripSystemPromptCacheBoundary(text: string): string {
   return text.replaceAll(SYSTEM_PROMPT_CACHE_BOUNDARY, "\n");
 }
 
-/** Reused helper for split System Prompt Cache Boundary behavior in src/agents. */
+/** Split prompt text into stable and dynamic sections around the cache boundary. */
 export function splitSystemPromptCacheBoundary(
   text: string,
 ): { stablePrefix: string; dynamicSuffix: string } | undefined {
@@ -23,7 +23,7 @@ export function splitSystemPromptCacheBoundary(
   };
 }
 
-/** Reused helper for prepend System Prompt Addition After Cache Boundary behavior in src/agents. */
+/** Insert additive prompt text into the dynamic side of the cache boundary. */
 export function prependSystemPromptAdditionAfterCacheBoundary(params: {
   systemPrompt: string;
   systemPromptAddition?: string;
