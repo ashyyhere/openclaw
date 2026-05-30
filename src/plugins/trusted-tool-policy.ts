@@ -177,6 +177,14 @@ function readPlainTrustedPolicyParams(value: unknown):
   }
 }
 
+function isPlainTrustedPolicyDecision(decision: unknown): boolean {
+  try {
+    return isPlainObject(decision);
+  } catch {
+    return false;
+  }
+}
+
 function normalizeDerivedEventFields(
   value: Pick<PluginHookBeforeToolCallEvent, "derivedPaths"> | undefined,
 ): Pick<PluginHookBeforeToolCallEvent, "derivedPaths"> {
@@ -294,12 +302,15 @@ export async function runTrustedToolPolicies(
     if (decision === undefined) {
       continue;
     }
-    if ((typeof decision !== "object" && typeof decision !== "function") || decision === null) {
+    if (!isPlainTrustedPolicyDecision(decision)) {
       return trustedPolicyFailureResult(registration, "policy decision is malformed");
     }
     const allow = readTrustedPolicyDecisionField(decision, "allow");
     if (!allow.ok) {
       return trustedPolicyFailureResult(registration, "policy decision has unreadable allow");
+    }
+    if (allow.present && typeof allow.value !== "boolean") {
+      return trustedPolicyFailureResult(registration, "policy decision is malformed");
     }
     if (allow.present && allow.value === false) {
       return {
@@ -314,6 +325,9 @@ export async function runTrustedToolPolicies(
     const block = readTrustedPolicyDecisionField(decision, "block");
     if (!block.ok) {
       return trustedPolicyFailureResult(registration, "policy decision has unreadable block");
+    }
+    if (block.present && typeof block.value !== "boolean") {
+      return trustedPolicyFailureResult(registration, "policy decision is malformed");
     }
     if (block.present && block.value === true) {
       return {
@@ -363,6 +377,9 @@ export async function runTrustedToolPolicies(
         registration,
         "policy decision has unreadable requireApproval",
       );
+    }
+    if (!allow.present && !block.present && !params.present && !requireApproval.present) {
+      return trustedPolicyFailureResult(registration, "policy decision is malformed");
     }
     if (requireApproval.present && requireApproval.value && !approval) {
       approval = requireApproval.value as PluginHookBeforeToolCallResult["requireApproval"];

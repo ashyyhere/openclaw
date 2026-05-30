@@ -504,6 +504,12 @@ describe("host-hook fixture plugin contract", () => {
     ["null", null as never],
     ["zero", 0 as never],
     ["empty string", "" as never],
+    ["array", [] as never],
+    ["date", new Date(0) as never],
+    ["function", (() => undefined) as never],
+    ["empty object", {} as never],
+    ["non-boolean allow", { allow: "yes" } as never],
+    ["non-boolean block", { block: "no" } as never],
   ])("fails closed when a trusted policy returns malformed %s", async (_label, decision) => {
     const registry = createEmptyPluginRegistry();
     registry.trustedToolPolicies = [
