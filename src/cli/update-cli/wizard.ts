@@ -22,7 +22,7 @@ import {
 } from "./shared.js";
 import { updateCommand } from "./update-command.js";
 
-/** Reused helper for update Wizard Command behavior in src/cli/update-cli. */
+/** Runs the interactive update flow and delegates the selected channel to the updater. */
 export async function updateWizardCommand(opts: UpdateWizardOptions = {}): Promise<void> {
   if (!process.stdin.isTTY) {
     defaultRuntime.error(

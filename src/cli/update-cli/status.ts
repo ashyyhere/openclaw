@@ -1,3 +1,4 @@
+/** Renders update-channel, install-kind, and availability status for the CLI. */
 import { getTerminalTableWidth, renderTable } from "../../../packages/terminal-core/src/table.js";
 import { theme } from "../../../packages/terminal-core/src/theme.js";
 import {
@@ -32,7 +33,7 @@ function formatGitStatusLine(params: {
   return parts.join(" · ");
 }
 
-/** Reused helper for update Status Command behavior in src/cli/update-cli. */
+/** Checks update availability and prints either JSON or a compact terminal table. */
 export async function updateStatusCommand(opts: UpdateStatusOptions): Promise<void> {
   const timeoutMs = parseTimeoutMsOrExit(opts.timeout);
   if (timeoutMs === null) {

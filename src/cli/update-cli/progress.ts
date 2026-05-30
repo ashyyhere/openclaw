@@ -41,7 +41,7 @@ function getStepLabel(step: UpdateStepInfo): string {
   return STEP_LABELS[step.name] ?? step.name;
 }
 
-/** Reused helper for infer Update Failure Hints behavior in src/cli/update-cli. */
+/** Maps known updater failure modes to CLI recovery hints without parsing full logs. */
 export function inferUpdateFailureHints(result: UpdateRunResult): string[] {
   if (result.status !== "error") {
     return [];
@@ -109,13 +109,13 @@ export function inferUpdateFailureHints(result: UpdateRunResult): string[] {
   return hints;
 }
 
-/** Shared type for Progress Controller in src/cli/update-cli. */
+/** Spinner callback set plus cleanup hook for the updater runner. */
 export type ProgressController = {
   progress: UpdateStepProgress;
   stop: () => void;
 };
 
-/** Reused helper for create Update Progress behavior in src/cli/update-cli. */
+/** Creates step progress hooks, returning no-op hooks for JSON/noninteractive output. */
 export function createUpdateProgress(enabled: boolean): ProgressController {
   if (!enabled) {
     return {
@@ -179,7 +179,7 @@ type PrintResultOptions = UpdateCommandOptions & {
   hideSteps?: boolean;
 };
 
-/** Reused helper for print Result behavior in src/cli/update-cli. */
+/** Prints the final update result as JSON or themed human output with recovery hints. */
 export function printResult(result: UpdateRunResult, opts: PrintResultOptions): void {
   if (opts.json) {
     defaultRuntime.writeJson(result);

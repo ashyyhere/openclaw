@@ -16,7 +16,7 @@ import { parseNpmPrefixSpec, resolveFileNpmSpecToLocalPath } from "./plugins-com
 
 type PluginInstallInvalidConfigPolicy = "deny" | "allow-plugin-recovery";
 
-/** Shared type for Plugin Install Request Context in src/cli. */
+/** Normalized install target plus metadata used to decide invalid-config recovery policy. */
 export type PluginInstallRequestContext = {
   rawSpec: string;
   normalizedSpec: string;
@@ -182,7 +182,7 @@ function resolvePluginInstallArgvRequest(commandPath: string[], argv: string[]) 
   return rawSpec ? { rawSpec, marketplace } : null;
 }
 
-/** Reused helper for resolve Plugin Install Request Context behavior in src/cli. */
+/** Normalizes plugin install specs and recovers bundled/official install metadata when known. */
 export function resolvePluginInstallRequestContext(params: {
   rawSpec: string;
   marketplace?: string;
@@ -234,7 +234,7 @@ export function resolvePluginInstallRequestContext(params: {
   };
 }
 
-/** Reused helper for resolve Plugin Install Preaction Request behavior in src/cli. */
+/** Extracts the plugin install target from Commander state, falling back to raw argv tokens. */
 export function resolvePluginInstallPreactionRequest(params: {
   actionCommand: Command;
   commandPath: string[];
@@ -260,7 +260,7 @@ export function resolvePluginInstallPreactionRequest(params: {
   return request.ok ? request.request : null;
 }
 
-/** Reused helper for resolve Plugin Install Invalid Config Policy behavior in src/cli. */
+/** Allows invalid-config recovery only for plugin installs that explicitly opted into repair. */
 export function resolvePluginInstallInvalidConfigPolicy(
   request: PluginInstallRequestContext | null,
 ): PluginInstallInvalidConfigPolicy {

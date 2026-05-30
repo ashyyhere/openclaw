@@ -2,7 +2,7 @@
 import { isValueToken } from "../infra/cli-root-options.js";
 import { parseInlineOptionToken } from "../infra/inline-option-token.js";
 
-/** Reused helper for take Cli Root Option Value behavior in src/cli. */
+/** Reads an inline or following-token value for a root CLI option. */
 export function takeCliRootOptionValue(
   raw: string,
   next: string | undefined,

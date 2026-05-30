@@ -18,7 +18,7 @@ import {
   type PluginPayloadSmokeFailure,
 } from "./plugin-payload-validation.js";
 
-/** Shared type for Post Core Convergence Warning in src/cli/update-cli. */
+/** User-facing repair warning produced while reconciling plugins after a core package update. */
 export type PostCoreConvergenceWarning = {
   pluginId?: string;
   reason: string;
@@ -26,7 +26,7 @@ export type PostCoreConvergenceWarning = {
   guidance: string[];
 };
 
-/** Shared type for Post Core Convergence Result in src/cli/update-cli. */
+/** Complete convergence outcome, including persisted install-record state for later commits. */
 export type PostCoreConvergenceResult = {
   changes: string[];
   warnings: PostCoreConvergenceWarning[];

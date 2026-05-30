@@ -7,7 +7,7 @@ import { validatePackageExtensionEntriesForInstall } from "../../plugins/package
 import { auditOpenClawPeerDependencyLink } from "../../plugins/plugin-peer-link.js";
 import { resolveUserPath } from "../../utils.js";
 
-/** Shared type for Plugin Payload Smoke Failure Reason in src/cli/update-cli. */
+/** Static payload corruption classes that can block a gateway restart after update. */
 export type PluginPayloadSmokeFailureReason =
   | "missing-install-path"
   | "missing-package-dir"
@@ -17,7 +17,7 @@ export type PluginPayloadSmokeFailureReason =
   | "missing-extension-entry"
   | "missing-openclaw-peer-link";
 
-/** Shared type for Plugin Payload Smoke Failure in src/cli/update-cli. */
+/** Single plugin payload validation failure, carrying the resolved path when available. */
 export type PluginPayloadSmokeFailure = {
   pluginId: string;
   installPath?: string;
@@ -25,7 +25,7 @@ export type PluginPayloadSmokeFailure = {
   detail: string;
 };
 
-/** Shared type for Plugin Payload Smoke Result in src/cli/update-cli. */
+/** Aggregate static smoke-check result for tracked plugin install records. */
 export type PluginPayloadSmokeResult = {
   checked: string[];
   failures: PluginPayloadSmokeFailure[];
