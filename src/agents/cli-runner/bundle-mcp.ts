@@ -137,7 +137,7 @@ async function prepareModeSpecificBundleMcpConfig(params: {
   };
 }
 
-/** Reused helper for prepare Cli Bundle Mcp Config behavior in src/agents/cli-runner. */
+/** Materialize bundled MCP config for a CLI backend invocation. */
 export async function prepareCliBundleMcpConfig(params: {
   enabled: boolean;
   mode?: CliBundleMcpMode;

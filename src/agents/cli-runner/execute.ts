@@ -225,7 +225,7 @@ function fingerprintCliSessionId(sessionId?: string): string {
   return crypto.createHash("sha256").update(trimmed).digest("hex").slice(0, 12);
 }
 
-/** Reused helper for build Cli Exec Log Line behavior in src/agents/cli-runner. */
+/** Build the structured log line emitted before a CLI backend run. */
 export function buildCliExecLogLine(params: {
   provider: string;
   model: string;
@@ -256,7 +256,7 @@ export function buildCliExecLogLine(params: {
   ].join(" ");
 }
 
-/** Reused helper for build Cli Env Auth Log behavior in src/agents/cli-runner. */
+/** Summarize auth-related env keys passed to a CLI child process. */
 export function buildCliEnvAuthLog(childEnv: Record<string, string>): string {
   const hostKeys = listPresentCliAuthEnvKeys(process.env);
   const childKeys = listPresentCliAuthEnvKeys(childEnv);
@@ -269,7 +269,7 @@ export function buildCliEnvAuthLog(childEnv: Record<string, string>): string {
   ].join(" ");
 }
 
-/** Reused helper for execute Prepared Cli Run behavior in src/agents/cli-runner. */
+/** Execute a prepared CLI run and stream/parse its output into agent messages. */
 export async function executePreparedCliRun(
   context: PreparedCliRunContext,
   cliSessionIdToUse?: string,

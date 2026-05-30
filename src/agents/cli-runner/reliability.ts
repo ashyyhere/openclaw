@@ -63,7 +63,7 @@ function pickWatchdogProfile(
   };
 }
 
-/** Reused helper for resolve Cli No Output Timeout Ms behavior in src/agents/cli-runner. */
+/** Resolve the no-output watchdog timeout for a CLI backend run. */
 export function resolveCliNoOutputTimeoutMs(params: {
   backend: CliBackendConfig;
   timeoutMs: number;
@@ -81,7 +81,7 @@ export function resolveCliNoOutputTimeoutMs(params: {
   return Math.min(bounded, cap);
 }
 
-/** Reused helper for build Cli Supervisor Scope Key behavior in src/agents/cli-runner. */
+/** Build a supervisor reuse key for CLI processes that support session reuse. */
 export function buildCliSupervisorScopeKey(params: {
   backend: CliBackendConfig;
   backendId: string;

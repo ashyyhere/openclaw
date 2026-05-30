@@ -55,7 +55,7 @@ function normalizeGeminiServerConfig(
   return next;
 }
 
-/** Reused helper for write Gemini System Settings behavior in src/agents/cli-runner. */
+/** Write temporary Gemini system settings with bundled MCP server config. */
 export async function writeGeminiSystemSettings(
   mergedConfig: BundleMcpConfig,
   inheritedEnv: Record<string, string> | undefined,

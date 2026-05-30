@@ -55,7 +55,7 @@ function isCodexMcpServerAllowedForAgent(
   return agentIds.includes(normalizeAgentId(options.agentId));
 }
 
-/** Reused helper for inject Codex Mcp Config Args behavior in src/agents/cli-runner. */
+/** Inject bundled MCP server config into Codex CLI override args. */
 export function injectCodexMcpConfigArgs(
   args: string[] | undefined,
   config: BundleMcpConfig,
