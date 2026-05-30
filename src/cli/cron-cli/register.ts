@@ -10,7 +10,7 @@ import {
 import { registerCronEditCommand } from "./register.cron-edit.js";
 import { registerCronSimpleCommands } from "./register.cron-simple.js";
 
-/** Reused helper for register Cron Cli behavior in src/cli/cron-cli. */
+/** Register the cron command group and attach scheduler management subcommands. */
 export function registerCronCli(program: Command) {
   const cron = program
     .command("cron")

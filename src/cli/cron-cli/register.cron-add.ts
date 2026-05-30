@@ -23,7 +23,7 @@ import {
 } from "./shared.js";
 import { normalizeCronSessionTargetOption, parseCronThreadIdOption } from "./thread-id-shared.js";
 
-/** Reused helper for register Cron Status Command behavior in src/cli/cron-cli. */
+/** Register scheduler status output through the gateway cron.status RPC. */
 export function registerCronStatusCommand(cron: Command) {
   addGatewayClientOptions(
     cron
@@ -41,7 +41,7 @@ export function registerCronStatusCommand(cron: Command) {
   );
 }
 
-/** Reused helper for register Cron List Command behavior in src/cli/cron-cli. */
+/** Register cron listing with optional disabled-job and agent filters. */
 export function registerCronListCommand(cron: Command) {
   addGatewayClientOptions(
     cron
@@ -74,7 +74,7 @@ export function registerCronListCommand(cron: Command) {
   );
 }
 
-/** Reused helper for register Cron Add Command behavior in src/cli/cron-cli. */
+/** Register cron creation across one-shot, interval, cron expression, and delivery options. */
 export function registerCronAddCommand(cron: Command) {
   addGatewayClientOptions(
     cron

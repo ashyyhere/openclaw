@@ -89,7 +89,7 @@ function findCronJobInPage(jobs: CronJob[], idOrName: string): CronJob | undefin
   );
 }
 
-/** Reused helper for load Cron Job For Show behavior in src/cli/cron-cli. */
+/** Page through cron.list until a show/get target matches by id or name. */
 export async function loadCronJobForShow(
   opts: GatewayRpcOpts,
   idOrName: string,
@@ -148,7 +148,7 @@ function registerCronToggleCommand(params: {
   );
 }
 
-/** Reused helper for register Cron Simple Commands behavior in src/cli/cron-cli. */
+/** Register cron remove, toggle, show, run, logs, and suspend/resume helpers. */
 export function registerCronSimpleCommands(cron: Command) {
   addGatewayClientOptions(
     cron
