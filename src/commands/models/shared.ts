@@ -20,19 +20,19 @@ import type { AgentModelEntryConfig } from "../../config/types.agent-defaults.js
 import type { AgentModelConfig } from "../../config/types.agents-shared.js";
 import { normalizeAgentId } from "../../routing/session-key.js";
 import { canonicalizeModelCatalogProviderRef } from "./provider-aliases.js";
-/** Re-exported API for src/commands/models, starting with normalize Alias. */
+/** Alias-name normalizer shared by model add/remove/list commands. */
 export { normalizeAlias } from "./alias-name.js";
-/** Re-exported API for src/commands/models, starting with is Local Base Url. */
+/** Local URL detector used when displaying provider endpoints. */
 export { isLocalBaseUrl } from "./list.local-url.js";
 
-/** Reused constant for ensure Flag Compatibility behavior in src/commands/models. */
+/** Rejects mutually exclusive model command output modes. */
 export const ensureFlagCompatibility = (opts: { json?: boolean; plain?: boolean }) => {
   if (opts.json && opts.plain) {
     throw new Error("Choose either --json or --plain, not both.");
   }
 };
 
-/** Reused constant for format Token K behavior in src/commands/models. */
+/** Formats context/token counts for compact CLI tables. */
 export const formatTokenK = (value?: number | null) => {
   if (!value || !Number.isFinite(value)) {
     return "-";
@@ -43,7 +43,7 @@ export const formatTokenK = (value?: number | null) => {
   return `${Math.round(value / 1024)}k`;
 };
 
-/** Reused constant for format Ms behavior in src/commands/models. */
+/** Formats latency measurements for compact CLI output. */
 export const formatMs = (value?: number | null) => {
   if (value === null || value === undefined) {
     return "-";
@@ -57,7 +57,7 @@ export const formatMs = (value?: number | null) => {
   return `${Math.round(value / 100) / 10}s`;
 };
 
-/** Reused helper for load Valid Config Or Throw behavior in src/commands/models. */
+/** Loads runtime config for model commands and reports authored config validation errors. */
 export async function loadValidConfigOrThrow(): Promise<OpenClawConfig> {
   const snapshot = await readConfigFileSnapshot();
   if (!snapshot.valid) {
@@ -67,12 +67,12 @@ export async function loadValidConfigOrThrow(): Promise<OpenClawConfig> {
   return snapshot.runtimeConfig ?? snapshot.config;
 }
 
-/** Shared type for Update Config Context in src/commands/models. */
+/** Runtime config supplied to model config mutators alongside the editable source config. */
 export type UpdateConfigContext = {
   runtimeConfig: OpenClawConfig;
 };
 
-/** Reused helper for update Config behavior in src/commands/models. */
+/** Applies a model command config mutator and writes the resulting source config. */
 export async function updateConfig(
   mutator: (cfg: OpenClawConfig, context: UpdateConfigContext) => OpenClawConfig,
 ): Promise<OpenClawConfig> {
@@ -91,7 +91,7 @@ export async function updateConfig(
   return next;
 }
 
-/** Reused helper for resolve Model Target behavior in src/commands/models. */
+/** Resolves a CLI model reference or alias into a canonical provider/model pair. */
 export function resolveModelTarget(params: { raw: string; cfg: OpenClawConfig }): {
   provider: string;
   model: string;
@@ -127,7 +127,7 @@ function resolveAuthoredModelAliasTarget(params: {
   return resolved?.alias ? resolved.ref : undefined;
 }
 
-/** Reused helper for resolve Model Keys From Entries behavior in src/commands/models. */
+/** Converts model references from config entries into canonical provider/model keys. */
 export function resolveModelKeysFromEntries(params: {
   cfg: OpenClawConfig;
   entries: readonly string[];
@@ -148,7 +148,7 @@ export function resolveModelKeysFromEntries(params: {
     .map((entry) => modelKey(entry.ref.provider, entry.ref.model));
 }
 
-/** Reused helper for build Allowlist Set behavior in src/commands/models. */
+/** Builds the set of model keys currently allowed in default agent model config. */
 export function buildAllowlistSet(cfg: OpenClawConfig): Set<string> {
   const allowed = new Set<string>();
   const models = cfg.agents?.defaults?.models ?? {};
@@ -162,7 +162,7 @@ export function buildAllowlistSet(cfg: OpenClawConfig): Set<string> {
   return allowed;
 }
 
-/** Reused helper for resolve Known Agent Id behavior in src/commands/models. */
+/** Normalizes an optional agent id and rejects ids not present in config. */
 export function resolveKnownAgentId(params: {
   cfg: OpenClawConfig;
   rawAgentId?: string | null;
@@ -181,10 +181,10 @@ export function resolveKnownAgentId(params: {
   return agentId;
 }
 
-/** Shared type for Primary Fallback Config in src/commands/models. */
+/** Primary/fallback model selector shape stored on agent defaults. */
 export type PrimaryFallbackConfig = { primary?: string; fallbacks?: string[] };
 
-/** Reused helper for upsert Canonical Model Config Entry behavior in src/commands/models. */
+/** Ensures a canonical model config entry exists and folds legacy keys into it. */
 export function upsertCanonicalModelConfigEntry(
   models: Record<string, AgentModelEntryConfig>,
   params: { provider: string; model: string },
@@ -228,7 +228,7 @@ export function upsertCanonicalModelConfigEntry(
   return key;
 }
 
-/** Reused helper for merge Primary Fallback Config behavior in src/commands/models. */
+/** Merges primary/fallback patches while normalizing model refs for config storage. */
 export function mergePrimaryFallbackConfig(
   existing: PrimaryFallbackConfig | undefined,
   patch: { primary?: string; fallbacks?: string[] },
@@ -246,7 +246,7 @@ export function mergePrimaryFallbackConfig(
   return next;
 }
 
-/** Reused helper for apply Default Model Primary Update behavior in src/commands/models. */
+/** Updates the default text or image primary model and keeps its catalog entry canonical. */
 export function applyDefaultModelPrimaryUpdate(params: {
   cfg: OpenClawConfig;
   resolveCfg?: OpenClawConfig;
@@ -290,9 +290,9 @@ export function applyDefaultModelPrimaryUpdate(params: {
   };
 }
 
-/** Re-exported API for src/commands/models, starting with model Key. */
+/** Canonical provider/model key builder shared with model command output. */
 export { modelKey };
-/** Re-exported API for src/commands/models, starting with DEFAULT MODEL. */
+/** Built-in provider/model defaults used by model command resolution. */
 export { DEFAULT_MODEL, DEFAULT_PROVIDER };
 
 /**
