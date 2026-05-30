@@ -1,7 +1,8 @@
-// test/vitest vitest agents embedded agent config helpers and runtime behavior.
+// Embedded agent Vitest config scopes tests to embedded-agent runtime patterns.
 import { agentsEmbeddedTestPatterns } from "./vitest.agents-paths.mjs";
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
+/** Creates the embedded agent Vitest project config. */
 export function createAgentsEmbeddedVitestConfig(env?: Record<string, string | undefined>) {
   return createScopedVitestConfig(agentsEmbeddedTestPatterns, {
     dir: "src/agents",
@@ -10,4 +11,5 @@ export function createAgentsEmbeddedVitestConfig(env?: Record<string, string | u
   });
 }
 
+/** Default embedded agent Vitest project config. */
 export default createAgentsEmbeddedVitestConfig();

@@ -1,6 +1,7 @@
-// test/vitest vitest plugins config helpers and runtime behavior.
+// Plugins Vitest config scopes core plugin loader tests outside contract shards.
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
+/** Creates the plugins Vitest project config. */
 export function createPluginsVitestConfig(env?: Record<string, string | undefined>) {
   return createScopedVitestConfig(["src/plugins/**/*.test.ts"], {
     dir: "src/plugins",
@@ -12,4 +13,5 @@ export function createPluginsVitestConfig(env?: Record<string, string | undefine
   });
 }
 
+/** Default plugins Vitest project config. */
 export default createPluginsVitestConfig();

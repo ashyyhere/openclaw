@@ -1,4 +1,4 @@
-// test/vitest vitest pattern file helpers and runtime behavior.
+// Vitest pattern-file helpers parse env and CLI include filters for shard configs.
 import fs from "node:fs";
 import path from "node:path";
 
@@ -52,6 +52,7 @@ function patternsCouldOverlap(value: string, pattern: string): boolean {
   );
 }
 
+/** Loads and validates a JSON string-array pattern list file. */
 export function loadPatternListFile(filePath: string, label: string): string[] {
   const parsed = JSON.parse(fs.readFileSync(filePath, "utf8")) as unknown;
   if (!Array.isArray(parsed)) {
@@ -60,6 +61,7 @@ export function loadPatternListFile(filePath: string, label: string): string[] {
   return parsed.filter((value): value is string => typeof value === "string" && value.length > 0);
 }
 
+/** Loads a JSON string-array pattern list from an environment variable path. */
 export function loadPatternListFromEnv(
   envKey: string,
   env: Record<string, string | undefined> = process.env,
@@ -71,6 +73,7 @@ export function loadPatternListFromEnv(
   return loadPatternListFile(filePath, envKey);
 }
 
+/** Extracts test include patterns from positional Vitest CLI arguments. */
 export function loadPatternListFromArgv(argv: string[] = process.argv): string[] | null {
   const optionValueFlags = new Set([
     "-c",
@@ -115,6 +118,7 @@ export function loadPatternListFromArgv(argv: string[] = process.argv): string[]
   return patterns.length > 0 ? [...new Set(patterns)] : null;
 }
 
+/** Narrows configured include patterns to CLI-provided patterns that can overlap them. */
 export function narrowIncludePatternsForCli(
   includePatterns: string[],
   argv: string[] = process.argv,
