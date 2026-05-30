@@ -1,17 +1,17 @@
-// extensions/qa-lab/src runtime api helpers and runtime behavior.
-/** Re-exported qa-lab plugin public API, starting with Command. */
+// QA Lab runtime API barrel exposes the SDK and QA bus surface used by fixtures.
+/** Commander command type used by QA Lab CLI composition. */
 export type { Command } from "commander";
-/** Re-exported qa-lab plugin public API, starting with Open Claw Config. */
+/** OpenClaw config contract type accepted by QA Lab runtime helpers. */
 export type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
-/** Re-exported qa-lab plugin public API, starting with define Plugin Entry. */
+/** Plugin entry factory re-exported so fixtures can build isolated QA plugins. */
 export { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
-/** Re-exported qa-lab plugin public API, starting with call Gateway From Cli. */
+/** CLI gateway caller used by QA Lab commands that exercise a live gateway. */
 export { callGatewayFromCli } from "openclaw/plugin-sdk/gateway-runtime";
-/** Re-exported qa-lab plugin public API, starting with Plugin Runtime. */
+/** Plugin runtime type used by QA Lab extension entrypoints. */
 export type { PluginRuntime } from "openclaw/plugin-sdk/runtime-store";
-/** Re-exported qa-lab plugin public API, starting with default Qa Runtime Model For Mode. */
+/** Default model selector used by QA Lab provider and transport lanes. */
 export { defaultQaRuntimeModelForMode } from "./model-selection.runtime.js";
-/** Re-exported qa-lab plugin public API. */
+/** QA bus helpers re-exported for scenario fixtures and live transport harnesses. */
 export {
   buildQaTarget,
   createQaBusThread,
@@ -29,7 +29,7 @@ export {
   sendQaBusMessage,
   setQaChannelRuntime,
 } from "openclaw/plugin-sdk/qa-channel";
-/** Re-exported qa-lab plugin public API. */
+/** QA bus protocol types shared by fixtures, transports, and report generation. */
 export type {
   QaBusAttachment,
   QaBusConversation,

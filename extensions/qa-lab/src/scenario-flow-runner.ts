@@ -1,4 +1,4 @@
-// extensions/qa-lab/src scenario flow runner helpers and runtime behavior.
+// QA Lab scenario-flow runner executes declarative flow steps against transport APIs.
 import { isRecord as isPlainObject } from "openclaw/plugin-sdk/string-coerce-runtime";
 import type { QaTransportState } from "./qa-transport.js";
 import type { QaScenarioFlow, QaSeedScenarioWithSource } from "./scenario-catalog.js";
@@ -80,6 +80,9 @@ function createEvalContext(api: QaFlowApi, vars: QaFlowVars) {
   };
 }
 
+// Flow YAML files are repo-local test fixtures, so expressions can use
+// AsyncFunction here. Keep the context explicit to avoid accidental access
+// to module locals outside the supported QA DSL surface.
 async function evalExpr(expr: string, api: QaFlowApi, vars: QaFlowVars) {
   const context = createEvalContext(api, vars);
   const names = Object.keys(context);
@@ -88,6 +91,8 @@ async function evalExpr(expr: string, api: QaFlowApi, vars: QaFlowVars) {
   return await fn(...values);
 }
 
+// Lambda nodes let flow fixtures pass callbacks into runtime helpers while
+// still resolving captures from the same restricted flow context as expr/ref.
 function buildLambda(
   spec: { params?: string[]; expr: string; async?: boolean },
   api: QaFlowApi,
@@ -277,6 +282,7 @@ async function runFlowAction(action: unknown, api: QaFlowApi, vars: QaFlowVars) 
   throw new Error(`unknown qa flow action: ${JSON.stringify(action)}`);
 }
 
+/** Runs a declarative QA scenario flow and returns the suite result from the host API. */
 export async function runScenarioFlow(params: {
   api: QaFlowApi;
   flow: QaScenarioFlow;
