@@ -1,6 +1,3 @@
-// Public retry helpers for plugins that need retry config or policy runners.
-
-/** Re-exported API for src/plugin-sdk. */
 export {
   resolveRetryConfig,
   retryAsync,
@@ -8,7 +5,6 @@ export {
   type RetryInfo,
   type RetryOptions,
 } from "../infra/retry.js";
-/** Re-exported API for src/plugin-sdk. */
 export {
   createRateLimitRetryRunner,
   createChannelApiRetryRunner as createTelegramRetryRunner,

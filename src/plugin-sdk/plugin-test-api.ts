@@ -4,10 +4,10 @@ import {
 } from "../plugins/api-facades.js";
 import type { OpenClawPluginApi } from "./plugin-runtime.js";
 
-/** Shared type for Test Plugin Api Input in src/plugin-sdk. */
+/** Partial plugin API override map accepted by the test harness helper. */
 export type TestPluginApiInput = Partial<OpenClawPluginApi>;
 
-/** Reused helper for create Test Plugin Api behavior in src/plugin-sdk. */
+/** Builds a complete plugin API test double with facade helpers attached. */
 export function createTestPluginApi(api: TestPluginApiInput = {}): OpenClawPluginApi {
   const { agent, lifecycle, runContext, session, ...flatApi } = api;
   const mergedApi = {

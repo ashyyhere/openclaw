@@ -1,5 +1,3 @@
-// Pure channel contract types used by plugin implementations and tests.
-/** Re-exported API for src/plugin-sdk. */
 export type {
   BaseProbeResult,
   BaseTokenResolution,
@@ -27,10 +25,8 @@ export type {
   ChannelThreadingToolContext,
   ChannelToolSend,
 } from "../channels/plugins/types.public.js";
-/** Re-exported API for src/plugin-sdk, starting with Channel Legacy State Migration Plan. */
 export type { ChannelLegacyStateMigrationPlan } from "../channels/plugins/types.core.js";
 
-/** Re-exported API for src/plugin-sdk. */
 export type {
   ChannelDirectoryAdapter,
   ChannelDoctorAdapter,
@@ -44,5 +40,4 @@ export type {
   ChannelOutboundPayloadHint,
   ChannelStatusAdapter,
 } from "../channels/plugins/types.adapters.js";
-/** Re-exported API for src/plugin-sdk, starting with Channel Runtime Surface. */
 export type { ChannelRuntimeSurface } from "../channels/plugins/channel-runtime-surface.types.js";
