@@ -1,13 +1,13 @@
 /** Public barrel for embedded-agent runner lifecycle APIs. */
 export { compactEmbeddedAgentSession } from "./embedded-agent-runner/compact.queued.js";
-/** Re-exported API for src/agents, starting with apply Extra Params To Agent. */
+/** Applies provider/runtime extra params to embedded agent construction. */
 export { applyExtraParamsToAgent } from "./embedded-agent-runner/extra-params.js";
 
-/** Re-exported API for src/agents, starting with resolve Embedded Session Lane. */
+/** Resolves the embedded session lane used for an agent run. */
 export { resolveEmbeddedSessionLane } from "./embedded-agent-runner/lanes.js";
-/** Re-exported API for src/agents, starting with run Embedded Agent. */
+/** Runs an embedded agent request. */
 export { runEmbeddedAgent } from "./embedded-agent-runner/run.js";
-/** Re-exported API for src/agents. */
+/** Embedded agent run lifecycle helpers for streaming, aborting, and queueing messages. */
 export {
   abortAndDrainEmbeddedAgentRun,
   abortEmbeddedAgentRun,
@@ -20,11 +20,11 @@ export {
   resolveActiveEmbeddedRunSessionIdBySessionFile,
   waitForEmbeddedAgentRunEnd,
 } from "./embedded-agent-runner/runs.js";
-/** Re-exported API for src/agents, starting with build Embedded Sandbox Info. */
+/** Builds sandbox metadata for embedded agent status surfaces. */
 export { buildEmbeddedSandboxInfo } from "./embedded-agent-runner/sandbox-info.js";
-/** Re-exported API for src/agents, starting with split Sdk Tools. */
+/** Splits SDK tool definitions into supported embedded runtime groups. */
 export { splitSdkTools } from "./embedded-agent-runner/tool-split.js";
-/** Re-exported API for src/agents. */
+/** Embedded agent metadata and result types. */
 export type {
   EmbeddedAgentMeta,
   EmbeddedAgentCompactResult,

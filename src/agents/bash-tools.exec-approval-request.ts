@@ -34,7 +34,7 @@ function loadExecApprovalCommandSpansRuntime(): Promise<ExecApprovalCommandSpans
   return execApprovalCommandSpansRuntimePromise;
 }
 
-/** Shared type for Request Exec Approval Decision Params in src/agents. */
+/** Payload needed to register or resolve an exec approval decision. */
 export type RequestExecApprovalDecisionParams = {
   id: string;
   command?: string;
@@ -117,7 +117,7 @@ function resolveDefaultExecApprovalExpiresAtMs(): number {
   return resolveExpiresAtMsFromDurationMs(DEFAULT_APPROVAL_TIMEOUT_MS) ?? 0;
 }
 
-/** Shared type for Exec Approval Registration in src/agents. */
+/** Gateway registration result for a pending exec approval request. */
 export type ExecApprovalRegistration = {
   id: string;
   expiresAtMs: number;
@@ -217,7 +217,7 @@ type ExecApprovalRequesterContext = {
   sessionKey?: string;
 };
 
-/** Reused helper for build Exec Approval Requester Context behavior in src/agents. */
+/** Builds requester attribution fields for exec approval payloads. */
 export function buildExecApprovalRequesterContext(params: ExecApprovalRequesterContext): {
   agentId?: string;
   sessionKey?: string;
@@ -235,7 +235,7 @@ type ExecApprovalTurnSourceContext = {
   turnSourceThreadId?: string | number;
 };
 
-/** Reused helper for build Exec Approval Turn Source Context behavior in src/agents. */
+/** Builds turn-source routing fields for exec approval payloads. */
 export function buildExecApprovalTurnSourceContext(
   params: ExecApprovalTurnSourceContext,
 ): ExecApprovalTurnSourceContext {
@@ -319,21 +319,21 @@ async function buildHostApprovalDecisionParams(
   };
 }
 
-/** Reused helper for request Exec Approval Decision For Host behavior in src/agents. */
+/** Registers and waits for an exec approval decision for a host command. */
 export async function requestExecApprovalDecisionForHost(
   params: HostExecApprovalParams,
 ): Promise<string | null> {
   return await requestExecApprovalDecision(await buildHostApprovalDecisionParams(params));
 }
 
-/** Reused helper for register Exec Approval Request For Host behavior in src/agents. */
+/** Registers an exec approval request for a host command without waiting. */
 export async function registerExecApprovalRequestForHost(
   params: HostExecApprovalParams,
 ): Promise<ExecApprovalRegistration> {
   return await registerExecApprovalRequest(await buildHostApprovalDecisionParams(params));
 }
 
-/** Reused helper for register Exec Approval Request For Host Or Throw behavior in src/agents. */
+/** Registers a host exec approval request and wraps registration failures with context. */
 export async function registerExecApprovalRequestForHostOrThrow(
   params: HostExecApprovalParams,
 ): Promise<ExecApprovalRegistration> {

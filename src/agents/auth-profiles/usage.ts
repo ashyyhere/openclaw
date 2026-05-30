@@ -1,3 +1,4 @@
+/** Tracks auth profile failures, cooldowns, and provider usage blocks. */
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { createSubsystemLogger } from "../../logging/subsystem.js";
@@ -23,7 +24,7 @@ import {
   isAuthCooldownBypassedForProvider,
   resolveProfileUnusableUntil,
 } from "./usage-state.js";
-/** Re-exported API for src/agents/auth-profiles. */
+/** Auth-profile cooldown state helpers re-exported for callers. */
 export {
   clearExpiredCooldowns,
   getSoonestCooldownExpiry,
@@ -41,12 +42,12 @@ const authProfileUsageDeps = {
 // against the real auth state.
 let onAuthProfileFailureHook: (() => void) | undefined;
 
-/** Reused helper for set Auth Profile Failure Hook behavior in src/agents/auth-profiles. */
+/** Installs a hook invoked after auth profile failure state changes. */
 export function setAuthProfileFailureHook(hook: (() => void) | undefined): void {
   onAuthProfileFailureHook = hook;
 }
 
-/** Reused constant for testing behavior in src/agents/auth-profiles. */
+/** Test-only dependency override seam for auth-profile usage persistence. */
 export const testing = {
   setDepsForTest(
     overrides: Partial<{
@@ -384,7 +385,7 @@ export function resolveProfilesUnavailableReason(params: {
   return best;
 }
 
-/** Reused helper for calculate Auth Profile Cooldown Ms behavior in src/agents/auth-profiles. */
+/** Calculates stepped transient cooldown duration from consecutive failure count. */
 export function calculateAuthProfileCooldownMs(errorCount: number): number {
   const normalized = Math.max(1, errorCount);
   if (normalized <= 1) {
@@ -510,7 +511,7 @@ function resolveDisabledFailureBackoffMs(params: {
   });
 }
 
-/** Reused helper for resolve Profile Unusable Until For Display behavior in src/agents/auth-profiles. */
+/** Resolves the active unusable-until timestamp for status display. */
 export function resolveProfileUnusableUntilForDisplay(
   store: AuthProfileStore,
   profileId: string,
@@ -810,7 +811,7 @@ export async function markAuthProfileFailure(params: {
   }
 }
 
-/** Reused helper for mark Auth Profile Blocked Until behavior in src/agents/auth-profiles. */
+/** Marks a profile blocked until a provider-supplied usage reset time. */
 export async function markAuthProfileBlockedUntil(params: {
   store: AuthProfileStore;
   profileId: string;
@@ -971,5 +972,5 @@ export async function clearAuthProfileCooldown(params: {
   updateUsageStatsEntry(store, profileId, (existing) => resetUsageStats(existing));
   authProfileUsageDeps.saveAuthProfileStore(store, agentDir);
 }
-/** Re-exported API for src/agents/auth-profiles, starting with testing. */
+/** Test-only alias for auth-profile usage dependency overrides. */
 export { testing as __testing };

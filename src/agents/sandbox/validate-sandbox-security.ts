@@ -58,19 +58,19 @@ let blockedHostPathsCache:
     }
   | undefined;
 
-/** Shared type for Validate Bind Mounts Options in src/agents/sandbox. */
+/** Options controlling host-path validation for Docker sandbox bind mounts. */
 export type ValidateBindMountsOptions = {
   allowedSourceRoots?: string[];
   allowSourcesOutsideAllowedRoots?: boolean;
   allowReservedContainerTargets?: boolean;
 };
 
-/** Shared type for Validate Network Mode Options in src/agents/sandbox. */
+/** Options controlling Docker sandbox network-mode validation. */
 export type ValidateNetworkModeOptions = {
   allowContainerNamespaceJoin?: boolean;
 };
 
-/** Shared type for Blocked Bind Reason in src/agents/sandbox. */
+/** Reason a sandbox bind mount was rejected by host-path policy. */
 export type BlockedBindReason =
   | { kind: "targets"; blockedPath: string }
   | { kind: "covers"; blockedPath: string }
@@ -371,7 +371,7 @@ export function validateBindMounts(
   }
 }
 
-/** Reused helper for validate Network Mode behavior in src/agents/sandbox. */
+/** Validates Docker network mode against sandbox isolation policy. */
 export function validateNetworkMode(
   network: string | undefined,
   options?: ValidateNetworkModeOptions,
@@ -397,7 +397,7 @@ export function validateNetworkMode(
   }
 }
 
-/** Reused helper for validate Seccomp Profile behavior in src/agents/sandbox. */
+/** Blocks seccomp profiles that disable syscall filtering. */
 export function validateSeccompProfile(profile: string | undefined): void {
   if (profile && BLOCKED_SECCOMP_PROFILES.has(normalizeOptionalLowercaseString(profile) ?? "")) {
     throw new Error(
@@ -408,7 +408,7 @@ export function validateSeccompProfile(profile: string | undefined): void {
   }
 }
 
-/** Reused helper for validate Apparmor Profile behavior in src/agents/sandbox. */
+/** Blocks AppArmor profiles that disable mandatory access controls. */
 export function validateApparmorProfile(profile: string | undefined): void {
   if (profile && BLOCKED_APPARMOR_PROFILES.has(normalizeOptionalLowercaseString(profile) ?? "")) {
     throw new Error(
@@ -419,7 +419,7 @@ export function validateApparmorProfile(profile: string | undefined): void {
   }
 }
 
-/** Reused helper for validate Sandbox Security behavior in src/agents/sandbox. */
+/** Validates all Docker sandbox security-sensitive settings before container creation. */
 export function validateSandboxSecurity(
   cfg: {
     binds?: string[];

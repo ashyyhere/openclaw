@@ -6,7 +6,7 @@ import {
   type ExternalCliAuthScope,
 } from "./external-cli-scope.js";
 
-/** Shared type for External Cli Auth Discovery in src/agents/auth-profiles. */
+/** Scope describing when external CLI auth discovery is allowed. */
 export type ExternalCliAuthDiscovery =
   | {
       mode: "none";
@@ -49,7 +49,7 @@ function normalizeStringList(values: Iterable<string | undefined>): string[] {
   return normalizeTrimmedStringList([...values]);
 }
 
-/** Reused helper for external Cli Discovery None behavior in src/agents/auth-profiles. */
+/** Disables external CLI auth discovery for a caller. */
 export function externalCliDiscoveryNone(params?: {
   config?: OpenClawConfig;
 }): ExternalCliAuthDiscovery {
@@ -60,7 +60,7 @@ export function externalCliDiscoveryNone(params?: {
   };
 }
 
-/** Reused helper for external Cli Discovery Existing behavior in src/agents/auth-profiles. */
+/** Allows discovery against existing configured external CLI credentials. */
 export function externalCliDiscoveryExisting(params?: {
   config?: OpenClawConfig;
   allowKeychainPrompt?: boolean;
@@ -74,7 +74,7 @@ export function externalCliDiscoveryExisting(params?: {
   };
 }
 
-/** Reused helper for external Cli Discovery Scoped behavior in src/agents/auth-profiles. */
+/** Allows external CLI auth discovery for selected providers or profiles. */
 export function externalCliDiscoveryScoped(params: {
   config?: OpenClawConfig;
   providerIds?: Iterable<string>;
@@ -92,7 +92,7 @@ export function externalCliDiscoveryScoped(params: {
   };
 }
 
-/** Reused helper for external Cli Discovery For Provider Auth behavior in src/agents/auth-profiles. */
+/** Builds CLI discovery scope for one provider auth lookup. */
 export function externalCliDiscoveryForProviderAuth(
   params: ProviderAuthDiscoveryParams,
 ): ExternalCliAuthDiscovery {
@@ -105,7 +105,7 @@ export function externalCliDiscoveryForProviderAuth(
   });
 }
 
-/** Reused helper for external Cli Discovery For Config Status behavior in src/agents/auth-profiles. */
+/** Builds CLI discovery scope from config status surfaces. */
 export function externalCliDiscoveryForConfigStatus(
   params: ConfigStatusDiscoveryParams,
 ): ExternalCliAuthDiscovery {
@@ -117,7 +117,7 @@ export function externalCliDiscoveryForConfigStatus(
   });
 }
 
-/** Reused helper for external Cli Discovery For Providers behavior in src/agents/auth-profiles. */
+/** Builds CLI discovery scope for a set of provider ids. */
 export function externalCliDiscoveryForProviders(
   params: ProviderSetDiscoveryParams,
 ): ExternalCliAuthDiscovery {
