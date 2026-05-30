@@ -1,9 +1,10 @@
-// extensions/qa-lab/src gateway log sentinel helpers and runtime behavior.
+// QA Lab gateway-log sentinel helpers classify known bad log and transcript patterns.
 import {
   isRecord,
   normalizeOptionalString as readNonEmptyString,
 } from "openclaw/plugin-sdk/string-coerce-runtime";
 
+/** Sentinel kinds detected in gateway logs or transcripts. */
 export type GatewayLogSentinelKind =
   | "plugin-hook-failure"
   | "plugin-contract-error"
@@ -13,12 +14,14 @@ export type GatewayLogSentinelKind =
   | "cron-model-allowlist"
   | "live-quota-or-subscription";
 
+/** QA verdict assigned to a sentinel finding. */
 export type GatewayLogSentinelVerdict =
   | "product-bug"
   | "qa-harness-bug"
   | "fixture-bug"
   | "environment-blocked";
 
+/** Owning surface assigned to a sentinel finding. */
 export type GatewayLogSentinelOwner =
   | "plugin"
   | "openclaw-routing"
@@ -26,6 +29,7 @@ export type GatewayLogSentinelOwner =
   | "openclaw-cron"
   | "environment";
 
+/** One classified sentinel finding. */
 export type GatewayLogSentinelFinding = {
   kind: GatewayLogSentinelKind;
   verdict: GatewayLogSentinelVerdict;
@@ -36,12 +40,14 @@ export type GatewayLogSentinelFinding = {
   text: string;
 };
 
+/** Options for filtering gateway log sentinel scans. */
 export type GatewayLogSentinelScanOptions = {
   since?: number;
   kinds?: readonly GatewayLogSentinelKind[];
   ignoreKinds?: readonly GatewayLogSentinelKind[];
 };
 
+/** Options for assertion-style sentinel checks. */
 export type GatewayLogSentinelAssertOptions = GatewayLogSentinelScanOptions & {
   allowEnvironmentBlocked?: boolean;
 };
@@ -283,6 +289,7 @@ function transcriptHasDirectReplySelfMessage(transcriptBytes: string) {
   );
 }
 
+/** Scans gateway logs for classified sentinel patterns. */
 export function scanGatewayLogSentinels(
   logs: string | undefined,
   options?: GatewayLogSentinelScanOptions,
@@ -316,6 +323,7 @@ export function scanGatewayLogSentinels(
   return filterGatewayLogSentinelFindings(findings, options);
 }
 
+/** Scans transcript bytes for direct-reply self-message sentinel behavior. */
 export function scanDirectReplyTranscriptSentinels(
   transcriptBytes: string,
 ): GatewayLogSentinelFinding[] {
@@ -335,6 +343,7 @@ export function scanDirectReplyTranscriptSentinels(
   ];
 }
 
+/** Formats sentinel findings for error output. */
 export function formatGatewayLogSentinelSummary(findings: readonly GatewayLogSentinelFinding[]) {
   if (findings.length === 0) {
     return "no gateway log sentinels";
@@ -347,6 +356,7 @@ export function formatGatewayLogSentinelSummary(findings: readonly GatewayLogSen
     .join("\n");
 }
 
+/** Throws when disallowed gateway log sentinels are present. */
 export function assertNoGatewayLogSentinels(
   logs: string | undefined,
   options?: GatewayLogSentinelAssertOptions,

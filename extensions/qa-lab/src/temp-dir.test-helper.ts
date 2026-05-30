@@ -1,10 +1,11 @@
-// extensions/qa-lab/src temp dir test helper helpers and runtime behavior.
+// QA Lab temp-dir test helper tracks temporary workspaces for cleanup.
 import {
   tempWorkspace,
   resolvePreferredOpenClawTmpDir,
   type TempWorkspace,
 } from "openclaw/plugin-sdk/temp-path";
 
+/** Creates a test harness for allocating and cleaning temporary directories. */
 export function createTempDirHarness() {
   const tempDirs: TempWorkspace[] = [];
 
