@@ -16,7 +16,7 @@ const FALLBACK_DOCS_TEMPLATE_DIR = path.resolve(
 let cachedTemplateDir: string | undefined;
 let resolvingTemplateDir: Promise<string> | undefined;
 
-/** Reused helper for resolve Workspace Template Dir behavior in src/agents. */
+/** Resolves and caches the primary workspace template directory for this runtime. */
 export async function resolveWorkspaceTemplateDir(opts?: {
   cwd?: string;
   argv1?: string;
@@ -60,7 +60,7 @@ export async function resolveWorkspaceTemplateDir(opts?: {
   }
 }
 
-/** Reused helper for reset Workspace Template Dir Cache behavior in src/agents. */
+/** Clears cached template directory resolution for tests and runtime resets. */
 export function resetWorkspaceTemplateDirCache() {
   cachedTemplateDir = undefined;
   resolvingTemplateDir = undefined;
@@ -92,7 +92,7 @@ async function resolveExistingTemplateDirs(candidates: readonly string[]): Promi
   return dirs;
 }
 
-/** Reused helper for resolve Workspace Template Search Dirs behavior in src/agents. */
+/** Resolves all workspace template directories searched for bootstrap files. */
 export async function resolveWorkspaceTemplateSearchDirs(opts?: {
   cwd?: string;
   argv1?: string;

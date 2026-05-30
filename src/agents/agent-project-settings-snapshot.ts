@@ -20,14 +20,14 @@ import type { SettingsManager } from "./sessions/index.js";
 
 const log = createSubsystemLogger("embedded-agent-settings");
 
-/** Reused constant for DEFAULT EMBEDDED AGENT PROJECT SETTINGS POLICY behavior in src/agents. */
+/** Default policy for project-local settings merged into embedded agent runs. */
 export const DEFAULT_EMBEDDED_AGENT_PROJECT_SETTINGS_POLICY = "sanitize";
 const SANITIZED_PROJECT_AGENT_KEYS = ["shellPath", "shellCommandPrefix"] as const;
 
-/** Shared type for Embedded Agent Project Settings Policy in src/agents. */
+/** Controls how project-local settings are trusted, sanitized, or ignored. */
 export type EmbeddedAgentProjectSettingsPolicy = "trusted" | "sanitize" | "ignore";
 
-/** Shared type for Agent Settings Snapshot in src/agents. */
+/** Serializable settings snapshot handed to embedded agent runtimes. */
 export type AgentSettingsSnapshot = ReturnType<SettingsManager["getGlobalSettings"]> & {
   mcpServers?: Record<string, BundleMcpServerConfig>;
 };

@@ -4,7 +4,7 @@ import path from "node:path";
 import { resolveRequiredHomeDir } from "../infra/home-dir.js";
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 
-/** Reused helper for resolve Default Agent Workspace Dir behavior in src/agents. */
+/** Resolves the default workspace directory from env, profile, and home-directory state. */
 export function resolveDefaultAgentWorkspaceDir(
   env: NodeJS.ProcessEnv = process.env,
   homedir: () => string = os.homedir,
@@ -21,5 +21,5 @@ export function resolveDefaultAgentWorkspaceDir(
   return path.join(home, ".openclaw", "workspace");
 }
 
-/** Reused constant for DEFAULT AGENT WORKSPACE DIR behavior in src/agents. */
+/** Default workspace directory for the current process profile. */
 export const DEFAULT_AGENT_WORKSPACE_DIR = resolveDefaultAgentWorkspaceDir();
