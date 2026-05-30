@@ -1,4 +1,4 @@
-// extensions/qa-lab/src process tree cpu helpers and runtime behavior.
+// QA Lab process-tree metric helpers read CPU and RSS for a process and its children.
 import { spawnSync } from "node:child_process";
 import { parseStrictFiniteNumber, parseStrictInteger } from "openclaw/plugin-sdk/number-runtime";
 
@@ -36,6 +36,7 @@ function parseNonNegativeNumber(value: unknown): number | null {
   return parsed;
 }
 
+/** Parses POSIX `ps` elapsed CPU time strings into milliseconds. */
 export function parsePsCpuTimeMs(raw: string): number | null {
   const match = raw.trim().match(/^(?:(\d+)-)?(\d+):(\d{2}(?:\.\d+)?)(?::(\d{2}(?:\.\d+)?))?$/u);
   if (!match) {
@@ -68,6 +69,7 @@ export function parsePsCpuTimeMs(raw: string): number | null {
   return Math.round((first * 60 + second) * 1000);
 }
 
+/** Parses POSIX `ps` RSS KiB output into bytes. */
 export function parsePsRssBytes(raw: string): number | null {
   const trimmed = raw.trim();
   if (!trimmed) {
@@ -80,6 +82,7 @@ export function parsePsRssBytes(raw: string): number | null {
   return Math.round(rssKiB * 1024);
 }
 
+/** Converts Windows kernel/user process times from 100ns ticks into milliseconds. */
 export function parseWindowsProcessCpuTimeMs(params: {
   kernelModeTime: unknown;
   userModeTime: unknown;
@@ -92,11 +95,13 @@ export function parseWindowsProcessCpuTimeMs(params: {
   return Math.round((kernelModeTime + userModeTime) / 10_000);
 }
 
+/** Parses a Windows working-set byte value from CIM output. */
 export function parseWindowsWorkingSetBytes(raw: unknown): number | null {
   const parsed = parseNonNegativeNumber(raw);
   return parsed === null ? null : Math.round(parsed);
 }
 
+/** Parses Windows process JSON into parent, CPU, and RSS lookup maps. */
 export function parseWindowsProcessTreeSnapshot(raw: string): ProcessTreeSnapshot | null {
   let parsed: unknown;
   try {
@@ -200,6 +205,7 @@ function readWindowsProcessTreeSnapshot(): ProcessTreeSnapshot | null {
   return parseWindowsProcessTreeSnapshot(result.stdout);
 }
 
+/** Reads cumulative CPU milliseconds for a root process and descendants. */
 export function readProcessTreeCpuMs(rootPid: number | null | undefined): number | null {
   if (typeof rootPid !== "number" || !Number.isInteger(rootPid) || rootPid <= 0) {
     return null;
@@ -244,6 +250,7 @@ export function readProcessTreeCpuMs(rootPid: number | null | undefined): number
   return collectProcessTreeMetric(rootPid, childrenByParent, cpuByPid);
 }
 
+/** Reads cumulative RSS bytes for a root process and descendants. */
 export function readProcessTreeRssBytes(rootPid: number | null | undefined): number | null {
   if (typeof rootPid !== "number" || !Number.isInteger(rootPid) || rootPid <= 0) {
     return null;

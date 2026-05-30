@@ -1,4 +1,4 @@
-// extensions/qa-lab/src suite runtime agent session helpers and runtime behavior.
+// QA Lab agent-session helpers create sessions and inspect transcripts through the gateway.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { setTimeout as sleep } from "node:timers/promises";
@@ -238,6 +238,7 @@ async function readSessionTranscriptSummary(
   };
 }
 
+/** Session helpers reused by QA suite runtimes and agentic parity checks. */
 export {
   createSession,
   readEffectiveTools,

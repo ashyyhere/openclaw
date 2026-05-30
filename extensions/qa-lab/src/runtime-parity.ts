@@ -1,4 +1,4 @@
-// extensions/qa-lab/src runtime parity helpers and runtime behavior.
+// QA Lab runtime parity helpers compare OpenClaw and Codex transcripts for scenario drift.
 import { createHash } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -14,8 +14,10 @@ import {
   type GatewayLogSentinelFinding,
 } from "./gateway-log-sentinel.js";
 
+/** Runtime identifiers compared by QA Lab parity scenarios. */
 export type RuntimeId = "openclaw" | "codex";
 
+/** Normalized tool-call row used when comparing transcript behavior. */
 export type RuntimeParityToolCall = {
   tool: string;
   argsHash: string;
@@ -23,6 +25,7 @@ export type RuntimeParityToolCall = {
   errorClass?: string;
 };
 
+/** Token usage totals extracted from assistant transcript messages. */
 export type RuntimeParityUsage = {
   inputTokens: number;
   outputTokens: number;
@@ -31,6 +34,7 @@ export type RuntimeParityUsage = {
   cacheWrite?: number;
 };
 
+/** Captured transcript and diagnostics for one runtime side of a scenario. */
 export type RuntimeParityCell = {
   runtime: RuntimeId;
   transcriptBytes: string;
@@ -44,6 +48,7 @@ export type RuntimeParityCell = {
   sentinelFindings?: GatewayLogSentinelFinding[];
 };
 
+/** Drift category assigned after comparing both runtime cells. */
 export type RuntimeParityDrift =
   | "none"
   | "text-only"
@@ -52,6 +57,7 @@ export type RuntimeParityDrift =
   | "structural"
   | "failure-mode";
 
+/** Full parity comparison result for one scenario id. */
 export type RuntimeParityResult = {
   scenarioId: string;
   cells: {
@@ -62,12 +68,14 @@ export type RuntimeParityResult = {
   driftDetails?: string;
 };
 
+/** Scenario execution payload returned by each runtime runner. */
 export type RuntimeParityScenarioExecution = {
   scenarioStatus: "pass" | "fail";
   scenarioDetails?: string;
   cell: RuntimeParityCell;
 };
 
+/** Returns the pass/fail/missing status for one captured runtime cell. */
 export function runtimeParityCellStatus(
   cell: RuntimeParityCell | undefined,
 ): "pass" | "fail" | "missing" {
@@ -77,6 +85,7 @@ export function runtimeParityCellStatus(
   return cell.runtimeErrorClass || cell.transportErrorClass ? "fail" : "pass";
 }
 
+/** Returns whether a parity result completed without failure-mode drift. */
 export function isRuntimeParityResultPass(result: RuntimeParityResult) {
   return (
     result.drift !== "failure-mode" &&
@@ -971,6 +980,7 @@ async function loadRuntimeParityMockToolCalls(
   }
 }
 
+/** Captures transcript, tool-call, usage, and sentinel data for one runtime execution. */
 export async function captureRuntimeParityCell(
   params: RuntimeParityCaptureParams,
 ): Promise<RuntimeParityCell> {
@@ -1003,6 +1013,7 @@ export async function captureRuntimeParityCell(
   };
 }
 
+/** Runs a parity scenario for both runtimes and classifies the resulting drift. */
 export async function runRuntimeParityScenario(params: {
   scenarioId: string;
   runCell: (runtime: RuntimeId) => Promise<RuntimeParityScenarioExecution>;
