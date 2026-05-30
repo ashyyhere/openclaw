@@ -1,12 +1,12 @@
-// tasks task flow registry audit helpers and runtime behavior.
+// TaskFlow registry consistency audit helpers.
 import { listTasksForFlowId } from "./runtime-internal.js";
 import { getTaskFlowRegistryRestoreFailure, listTaskFlowRecords } from "./task-flow-registry.js";
 import type { TaskFlowRecord } from "./task-flow-registry.types.js";
 import type { TaskRecord } from "./task-registry.types.js";
 
-/** Shared type for Task Flow Audit Severity in src/tasks. */
+/** Severity assigned to a TaskFlow audit finding. */
 export type TaskFlowAuditSeverity = "warn" | "error";
-/** Shared type for Task Flow Audit Code in src/tasks. */
+/** Stable code describing the TaskFlow invariant that failed. */
 export type TaskFlowAuditCode =
   | "restore_failed"
   | "stale_running"
@@ -17,7 +17,7 @@ export type TaskFlowAuditCode =
   | "blocked_task_missing"
   | "inconsistent_timestamps";
 
-/** Shared type for Task Flow Audit Finding in src/tasks. */
+/** Single TaskFlow audit finding with optional age and flow context. */
 export type TaskFlowAuditFinding = {
   severity: TaskFlowAuditSeverity;
   code: TaskFlowAuditCode;
@@ -26,7 +26,7 @@ export type TaskFlowAuditFinding = {
   flow?: TaskFlowRecord;
 };
 
-/** Shared type for Task Flow Audit Summary in src/tasks. */
+/** Aggregate counts for a set of TaskFlow audit findings. */
 export type TaskFlowAuditSummary = {
   total: number;
   warnings: number;
@@ -34,7 +34,7 @@ export type TaskFlowAuditSummary = {
   byCode: Record<TaskFlowAuditCode, number>;
 };
 
-/** Shared type for Task Flow Audit Options in src/tasks. */
+/** Inputs and stale-age thresholds for TaskFlow audits. */
 export type TaskFlowAuditOptions = {
   now?: number;
   flows?: TaskFlowRecord[];
@@ -124,7 +124,7 @@ function findTimestampInconsistency(flow: TaskFlowRecord): TaskFlowAuditFinding 
   return null;
 }
 
-/** Reused helper for create Empty Task Flow Audit Summary behavior in src/tasks. */
+/** Create a zeroed audit summary with every known code initialized. */
 export function createEmptyTaskFlowAuditSummary(): TaskFlowAuditSummary {
   return {
     total: 0,
@@ -143,7 +143,7 @@ export function createEmptyTaskFlowAuditSummary(): TaskFlowAuditSummary {
   };
 }
 
-/** Reused helper for list Task Flow Audit Findings behavior in src/tasks. */
+/** Scan TaskFlow records for stale state, missing links, restore failures, and bad timestamps. */
 export function listTaskFlowAuditFindings(
   options: TaskFlowAuditOptions = {},
 ): TaskFlowAuditFinding[] {
@@ -277,7 +277,7 @@ export function listTaskFlowAuditFindings(
   return findings.toSorted(compareFindings);
 }
 
-/** Reused helper for summarize Task Flow Audit Findings behavior in src/tasks. */
+/** Count TaskFlow audit findings by severity and code. */
 export function summarizeTaskFlowAuditFindings(
   findings: Iterable<TaskFlowAuditFinding>,
 ): TaskFlowAuditSummary {
