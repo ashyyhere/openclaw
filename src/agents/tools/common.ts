@@ -18,7 +18,7 @@ import type {
 } from "../runtime/index.js";
 import { sanitizeToolResultImages } from "../tool-images.js";
 
-/** Shared type for Agent Tool With Meta in src/agents/tools. */
+/** Agent tool definition plus optional display summary metadata. */
 export type AgentToolWithMeta<TParameters extends TSchema, TResult> = AgentTool<
   TParameters,
   TResult
@@ -36,7 +36,7 @@ type ErasedAgentToolExecute = {
   ): Promise<AgentToolResult<unknown>>;
 };
 
-/** Shared type for Any Agent Tool in src/agents/tools. */
+/** Erased tool shape used by registries that store heterogeneous tools. */
 export type AnyAgentTool = Omit<AgentTool, "execute"> &
   ErasedAgentToolExecute & {
     displaySummary?: string;
@@ -49,7 +49,7 @@ export function asToolParamsRecord(params: unknown): Record<string, unknown> {
     : {};
 }
 
-/** Shared type for String Param Options in src/agents/tools. */
+/** Options for reading string-like tool params from untrusted input. */
 export type StringParamOptions = {
   required?: boolean;
   trim?: boolean;
@@ -57,13 +57,13 @@ export type StringParamOptions = {
   allowEmpty?: boolean;
 };
 
-/** Shared type for Action Gate in src/agents/tools. */
+/** Predicate for feature-gated tool actions. */
 export type ActionGate<T extends Record<string, boolean | undefined>> = (
   key: keyof T,
   defaultValue?: boolean,
 ) => boolean;
 
-/** Reused class for Tool Input Error behavior in src/agents/tools. */
+/** Validation error for malformed tool input. */
 export class ToolInputError extends Error {
   readonly status: number = 400;
 
@@ -73,7 +73,7 @@ export class ToolInputError extends Error {
   }
 }
 
-/** Reused class for Tool Authorization Error behavior in src/agents/tools. */
+/** Authorization error for tool actions blocked by policy. */
 export class ToolAuthorizationError extends ToolInputError {
   override readonly status = 403;
 
@@ -100,19 +100,19 @@ function readParamRaw(params: Record<string, unknown>, key: string): unknown {
   return readSnakeCaseParamRaw(params, key);
 }
 
-/** Reused helper for read String Param behavior in src/agents/tools. */
+/** Reads a required string param and throws when missing. */
 export function readStringParam(
   params: Record<string, unknown>,
   key: string,
   options: StringParamOptions & { required: true },
 ): string;
-/** Reused helper for read String Param behavior in src/agents/tools. */
+/** Reads an optional string param. */
 export function readStringParam(
   params: Record<string, unknown>,
   key: string,
   options?: StringParamOptions,
 ): string | undefined;
-/** Reused helper for read String Param behavior in src/agents/tools. */
+/** Reads and normalizes a string param from snake-case-compatible input. */
 export function readStringParam(
   params: Record<string, unknown>,
   key: string,
@@ -154,7 +154,7 @@ export function normalizeToolModelOverride(value: string | undefined): string | 
   return trimmed;
 }
 
-/** Reused helper for read String Or Number Param behavior in src/agents/tools. */
+/** Reads a string param while accepting finite numeric input. */
 export function readStringOrNumberParam(
   params: Record<string, unknown>,
   key: string,
@@ -177,7 +177,7 @@ export function readStringOrNumberParam(
   return undefined;
 }
 
-/** Reused helper for read Number Param behavior in src/agents/tools. */
+/** Reads a numeric tool param with optional integer and strict parsing constraints. */
 export function readNumberParam(
   params: Record<string, unknown>,
   key: string,
@@ -226,7 +226,7 @@ export function readNumberParam(
   return integer ? Math.trunc(value) : value;
 }
 
-/** Reused helper for read Positive Integer Param behavior in src/agents/tools. */
+/** Reads an optional positive integer tool param with an optional max bound. */
 export function readPositiveIntegerParam(
   params: Record<string, unknown>,
   key: string,
@@ -248,7 +248,7 @@ export function readPositiveIntegerParam(
   return value;
 }
 
-/** Reused helper for read Non Negative Integer Param behavior in src/agents/tools. */
+/** Reads an optional non-negative integer tool param with an optional max bound. */
 export function readNonNegativeIntegerParam(
   params: Record<string, unknown>,
   key: string,
@@ -270,7 +270,7 @@ export function readNonNegativeIntegerParam(
   return value;
 }
 
-/** Reused helper for read Finite Number Param behavior in src/agents/tools. */
+/** Reads an optional finite number tool param with inclusive/exclusive bounds. */
 export function readFiniteNumberParam(
   params: Record<string, unknown>,
   key: string,
@@ -306,19 +306,19 @@ export function readFiniteNumberParam(
   return value;
 }
 
-/** Reused helper for read String Array Param behavior in src/agents/tools. */
+/** Reads a required string array param, also accepting one string value. */
 export function readStringArrayParam(
   params: Record<string, unknown>,
   key: string,
   options: StringParamOptions & { required: true },
 ): string[];
-/** Reused helper for read String Array Param behavior in src/agents/tools. */
+/** Reads an optional string array param, also accepting one string value. */
 export function readStringArrayParam(
   params: Record<string, unknown>,
   key: string,
   options?: StringParamOptions,
 ): string[] | undefined;
-/** Reused helper for read String Array Param behavior in src/agents/tools. */
+/** Reads and normalizes string array params from snake-case-compatible input. */
 export function readStringArrayParam(
   params: Record<string, unknown>,
   key: string,
@@ -352,14 +352,14 @@ export function readStringArrayParam(
   return undefined;
 }
 
-/** Shared type for Reaction Params in src/agents/tools. */
+/** Normalized reaction input shared by reaction-capable tools. */
 export type ReactionParams = {
   emoji: string;
   remove: boolean;
   isEmpty: boolean;
 };
 
-/** Reused helper for read Reaction Params behavior in src/agents/tools. */
+/** Reads emoji/remove reaction params and validates remove requires an emoji. */
 export function readReactionParams(
   params: Record<string, unknown>,
   options: {
@@ -410,7 +410,7 @@ export function textResult<TDetails>(text: string, details: TDetails): AgentTool
   };
 }
 
-/** Reused helper for failed Text Result behavior in src/agents/tools. */
+/** Builds a failed text-only tool result with typed failure details. */
 export function failedTextResult<TDetails extends { status: "failed" }>(
   text: string,
   details: TDetails,
@@ -418,7 +418,7 @@ export function failedTextResult<TDetails extends { status: "failed" }>(
   return textResult(text, details);
 }
 
-/** Reused helper for payload Text Result behavior in src/agents/tools. */
+/** Builds a text result by stringifying the payload into model-visible content. */
 export function payloadTextResult<TDetails>(payload: TDetails): AgentToolResult<TDetails> {
   return textResult(stringifyToolPayload(payload), payload);
 }
@@ -428,10 +428,10 @@ export function jsonResult(payload: unknown): AgentToolResult<unknown> {
   return textResult(JSON.stringify(payload, null, 2), payload);
 }
 
-/** Shared type for Public Tool Progress in src/agents/tools. */
+/** Public progress payload that can be shown in channel/UI previews. */
 export type PublicToolProgress = Pick<AgentToolProgress, "text" | "id">;
 
-/** Reused helper for tool Progress Result behavior in src/agents/tools. */
+/** Builds a public progress-only tool update result. */
 export function toolProgressResult(progress: PublicToolProgress): AgentToolResult<undefined> {
   return {
     content: [],
@@ -465,7 +465,7 @@ export function emitToolProgress(
 
 // Long-running tools can arm delayed progress and cancel it on completion or
 // abort. This avoids stale "still working" lines after a fast or canceled call.
-/** Reused helper for schedule Tool Progress behavior in src/agents/tools. */
+/** Schedules delayed public progress and returns a cancellation function. */
 export function scheduleToolProgress(
   onUpdate: AgentToolUpdateCallback | undefined,
   progress: PublicToolProgress,
@@ -552,7 +552,7 @@ export async function imageResultFromFile(params: {
   });
 }
 
-/** Shared type for Available Tag in src/agents/tools. */
+/** Provider tag metadata exposed by tag-aware tools. */
 export type AvailableTag = {
   id?: string;
   name: string;
