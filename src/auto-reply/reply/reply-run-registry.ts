@@ -6,16 +6,16 @@ import {
 import { resolveGlobalSingleton } from "../../shared/global-singleton.js";
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 
-/** Shared type for Reply Run Key in src/auto-reply/reply. */
+/** Canonical key used to serialize reply runs for one routed session. */
 export type ReplyRunKey = string;
 
-/** Shared type for Reply Backend Kind in src/auto-reply/reply. */
+/** Backend implementation family attached to an active reply operation. */
 export type ReplyBackendKind = "embedded" | "cli";
 
-/** Shared type for Reply Backend Cancel Reason in src/auto-reply/reply. */
+/** Cancellation reason forwarded to the active backend handle. */
 export type ReplyBackendCancelReason = "user_abort" | "restart" | "superseded";
 
-/** Shared type for Reply Backend Handle in src/auto-reply/reply. */
+/** Backend control handle attached while a reply operation is executing. */
 export type ReplyBackendHandle = {
   readonly kind: ReplyBackendKind;
   cancel(reason?: ReplyBackendCancelReason): void;
@@ -28,7 +28,7 @@ export type ReplyBackendHandle = {
   isCompacting?: () => boolean;
 };
 
-/** Shared type for Reply Operation Phase in src/auto-reply/reply. */
+/** Lifecycle phase for a tracked reply operation. */
 export type ReplyOperationPhase =
   | "queued"
   | "preflight_compacting"
@@ -38,7 +38,7 @@ export type ReplyOperationPhase =
   | "failed"
   | "aborted";
 
-/** Shared type for Reply Operation Failure Code in src/auto-reply/reply. */
+/** Failure code persisted on reply operations that end unsuccessfully. */
 export type ReplyOperationFailureCode =
   | "gateway_draining"
   | "command_lane_cleared"
@@ -46,16 +46,16 @@ export type ReplyOperationFailureCode =
   | "session_corruption_reset"
   | "run_failed";
 
-/** Shared type for Reply Operation Abort Code in src/auto-reply/reply. */
+/** Abort code persisted when a reply operation is cancelled intentionally. */
 export type ReplyOperationAbortCode = "aborted_by_user" | "aborted_for_restart";
 
-/** Shared type for Reply Operation Result in src/auto-reply/reply. */
+/** Terminal result for a reply operation. */
 export type ReplyOperationResult =
   | { kind: "completed" }
   | { kind: "failed"; code: ReplyOperationFailureCode; cause?: unknown }
   | { kind: "aborted"; code: ReplyOperationAbortCode };
 
-/** Shared type for Reply Operation in src/auto-reply/reply. */
+/** Active reply operation with session rebinding, backend, and cancellation controls. */
 export type ReplyOperation = {
   readonly key: ReplyRunKey;
   readonly sessionId: string;
@@ -78,7 +78,7 @@ export type ReplyOperation = {
   abortForRestart(): void;
 };
 
-/** Shared type for Reply Run Registry in src/auto-reply/reply. */
+/** Process-global registry for active reply operations and idle waiters. */
 export type ReplyRunRegistry = {
   begin(params: {
     sessionKey: string;
@@ -121,10 +121,10 @@ const replyRunState = resolveGlobalSingleton<ReplyRunState>(REPLY_RUN_STATE_KEY,
   waitersByKey: new Map<string, Set<ReplyRunWaiter>>(),
 }));
 
-/** Reused constant for REPLY RUN IDLE SETTLE TIMEOUT MS behavior in src/auto-reply/reply. */
+/** Default timeout for callers waiting for a reply run to become idle. */
 export const REPLY_RUN_IDLE_SETTLE_TIMEOUT_MS = 15_000;
 
-/** Reused class for Reply Run Already Active Error behavior in src/auto-reply/reply. */
+/** Thrown when a session tries to start a second active reply operation. */
 export class ReplyRunAlreadyActiveError extends Error {
   constructor(sessionKey: string) {
     super(`Reply run already active for ${sessionKey}`);
@@ -235,7 +235,7 @@ function markReplyRunDiagnosticWorkEnded(params: { sessionKey: string; sessionId
   });
 }
 
-/** Reused helper for create Reply Operation behavior in src/auto-reply/reply. */
+/** Creates and registers a tracked reply operation for one session key. */
 export function createReplyOperation(params: {
   sessionKey: string;
   sessionId: string;
@@ -422,7 +422,7 @@ export function createReplyOperation(params: {
   return operation;
 }
 
-/** Reused constant for reply Run Registry behavior in src/auto-reply/reply. */
+/** Singleton reply-run registry shared across module copies. */
 export const replyRunRegistry: ReplyRunRegistry = {
   begin(params) {
     return createReplyOperation(params);
@@ -510,17 +510,17 @@ export const replyRunRegistry: ReplyRunRegistry = {
   },
 };
 
-/** Reused helper for resolve Active Reply Run Session Id behavior in src/auto-reply/reply. */
+/** Resolves the current session id bound to an active reply run key. */
 export function resolveActiveReplyRunSessionId(sessionKey: string): string | undefined {
   return replyRunRegistry.resolveSessionId(sessionKey);
 }
 
-/** Reused helper for is Reply Run Active For Session Id behavior in src/auto-reply/reply. */
+/** Returns whether a current session id has an active reply run. */
 export function isReplyRunActiveForSessionId(sessionId: string): boolean {
   return resolveReplyRunForCurrentSessionId(sessionId) !== undefined;
 }
 
-/** Reused helper for is Reply Run Streaming For Session Id behavior in src/auto-reply/reply. */
+/** Returns whether the reply run for a session id is actively streaming. */
 export function isReplyRunStreamingForSessionId(sessionId: string): boolean {
   const operation = resolveReplyRunForCurrentSessionId(sessionId);
   if (!operation || operation.phase !== "running") {
@@ -529,7 +529,7 @@ export function isReplyRunStreamingForSessionId(sessionId: string): boolean {
   return getAttachedBackend(operation)?.isStreaming() ?? false;
 }
 
-/** Reused helper for queue Reply Run Message behavior in src/auto-reply/reply. */
+/** Queues user text into a streaming backend when the active run supports it. */
 export function queueReplyRunMessage(sessionId: string, text: string): boolean {
   const operation = resolveReplyRunForCurrentSessionId(sessionId);
   const backend = operation ? getAttachedBackend(operation) : undefined;
@@ -543,7 +543,7 @@ export function queueReplyRunMessage(sessionId: string, text: string): boolean {
   return true;
 }
 
-/** Reused helper for abort Reply Run By Session Id behavior in src/auto-reply/reply. */
+/** Aborts the active reply run currently bound to a session id. */
 export function abortReplyRunBySessionId(sessionId: string): boolean {
   const operation = resolveReplyRunForCurrentSessionId(sessionId);
   if (!operation) {
@@ -553,7 +553,7 @@ export function abortReplyRunBySessionId(sessionId: string): boolean {
   return true;
 }
 
-/** Reused helper for force Clear Reply Run By Session Id behavior in src/auto-reply/reply. */
+/** Force-clears an active reply run by marking it failed. */
 export function forceClearReplyRunBySessionId(sessionId: string, cause?: unknown): boolean {
   const operation = resolveReplyRunForCurrentSessionId(sessionId);
   if (!operation) {
@@ -563,7 +563,7 @@ export function forceClearReplyRunBySessionId(sessionId: string, cause?: unknown
   return true;
 }
 
-/** Reused helper for wait For Reply Run End By Session Id behavior in src/auto-reply/reply. */
+/** Waits for the current or recently rebound reply run for a session id to end. */
 export function waitForReplyRunEndBySessionId(
   sessionId: string,
   timeoutMs: number,
@@ -575,7 +575,7 @@ export function waitForReplyRunEndBySessionId(
   return replyRunRegistry.waitForIdle(waitKey, timeoutMs);
 }
 
-/** Reused helper for abort Active Reply Runs behavior in src/auto-reply/reply. */
+/** Aborts all active reply runs or only runs currently compacting. */
 export function abortActiveReplyRuns(opts: { mode: "all" | "compacting" }): boolean {
   let aborted = false;
   for (const operation of replyRunState.activeRunsByKey.values()) {
@@ -588,22 +588,22 @@ export function abortActiveReplyRuns(opts: { mode: "all" | "compacting" }): bool
   return aborted;
 }
 
-/** Reused helper for get Active Reply Run Count behavior in src/auto-reply/reply. */
+/** Returns the number of active reply operations. */
 export function getActiveReplyRunCount(): number {
   return replyRunState.activeRunsByKey.size;
 }
 
-/** Reused helper for list Active Reply Run Session Ids behavior in src/auto-reply/reply. */
+/** Lists session ids currently bound to active reply operations. */
 export function listActiveReplyRunSessionIds(): string[] {
   return [...replyRunState.activeSessionIdsByKey.values()];
 }
 
-/** Reused helper for list Active Reply Run Session Keys behavior in src/auto-reply/reply. */
+/** Lists session keys currently holding active reply operations. */
 export function listActiveReplyRunSessionKeys(): string[] {
   return [...replyRunState.activeSessionIdsByKey.keys()];
 }
 
-/** Reused constant for testing behavior in src/auto-reply/reply. */
+/** Test-only controls for clearing the global reply-run registry. */
 export const testing = {
   resetReplyRunRegistry(): void {
     for (const [sessionKey, sessionId] of replyRunState.activeSessionIdsByKey) {
@@ -621,5 +621,5 @@ export const testing = {
     replyRunState.waitersByKey.clear();
   },
 };
-/** Re-exported API for src/auto-reply/reply, starting with testing. */
+/** Test-only alias preserved for existing registry tests. */
 export { testing as __testing };
