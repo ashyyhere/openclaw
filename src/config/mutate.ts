@@ -1,4 +1,5 @@
-// config mutate helpers and runtime behavior.
+// Serializes config file mutations, checks optimistic hashes, and coordinates
+// runtime snapshot refresh/rollback around atomic source writes.
 import { AsyncLocalStorage } from "node:async_hooks";
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
@@ -39,7 +40,7 @@ import {
 import type { ConfigFileSnapshot, OpenClawConfig } from "./types.js";
 import { validateConfigObjectWithPlugins } from "./validation.js";
 
-/** Shared type for Config Mutation Base in src/config. */
+/** Selects whether transforms receive the source-authored config or runtime-expanded config. */
 export type ConfigMutationBase = "runtime" | "source";
 
 const CONFIG_MUTATION_LOCK_OPTIONS = {
@@ -57,7 +58,7 @@ const DEFAULT_CONFIG_MUTATION_RETRY_ATTEMPTS = 5;
 const activeConfigMutationLocks = new AsyncLocalStorage<Set<string>>();
 const configMutationQueueTails = new Map<string, Promise<void>>();
 
-/** Reused class for Config Mutation Conflict Error behavior in src/config. */
+/** Raised when a caller's expected config hash no longer matches the file on disk. */
 export class ConfigMutationConflictError extends Error {
   readonly currentHash: string | null;
 
@@ -68,7 +69,7 @@ export class ConfigMutationConflictError extends Error {
   }
 }
 
-/** Shared type for Config Replace Result in src/config. */
+/** Result returned after replacing config, including before/after hashes and follow-up policy. */
 export type ConfigReplaceResult = {
   path: string;
   previousHash: string | null;
@@ -79,7 +80,7 @@ export type ConfigReplaceResult = {
   followUp: ConfigWriteFollowUp;
 };
 
-/** Shared type for Config Mutation IO in src/config. */
+/** Injectable config IO used by tests and callers that already own read/write behavior. */
 export type ConfigMutationIO = {
   env?: NodeJS.ProcessEnv;
   readConfigFileSnapshotForWrite: typeof readConfigFileSnapshotForWrite;
@@ -89,20 +90,20 @@ export type ConfigMutationIO = {
   ) => Promise<ConfigWriteResult | void>;
 };
 
-/** Shared type for Config Mutation Context in src/config. */
+/** Per-attempt context passed to transform and mutate callbacks. */
 export type ConfigMutationContext = {
   snapshot: ConfigFileSnapshot;
   previousHash: string | null;
   attempt: number;
 };
 
-/** Shared type for Config Transform Result in src/config. */
+/** Transform output: the config to persist plus an optional caller result. */
 export type ConfigTransformResult<T> = {
   nextConfig: OpenClawConfig;
   result?: T;
 };
 
-/** Shared type for Config Mutation Commit Params in src/config. */
+/** Prepared write inputs passed to custom commit hooks. */
 export type ConfigMutationCommitParams = {
   nextConfig: OpenClawConfig;
   snapshot: ConfigFileSnapshot;
@@ -112,19 +113,19 @@ export type ConfigMutationCommitParams = {
   io?: ConfigMutationIO;
 };
 
-/** Shared type for Config Mutation Commit Result in src/config. */
+/** Minimal commit result needed to finish mutation bookkeeping. */
 export type ConfigMutationCommitResult = {
   config: OpenClawConfig;
   persistedHash: string | null;
   afterWrite?: ConfigWriteAfterWrite;
 };
 
-/** Shared type for Config Mutation Commit in src/config. */
+/** Optional commit hook for callers that need to intercept the prepared config write. */
 export type ConfigMutationCommit = (
   params: ConfigMutationCommitParams,
 ) => Promise<ConfigMutationCommitResult>;
 
-/** Shared type for Transform Config File Params in src/config. */
+/** Parameters for a single config transform attempt under the mutation lock. */
 export type TransformConfigFileParams<T> = {
   base?: ConfigMutationBase;
   baseHash?: string;
@@ -138,12 +139,12 @@ export type TransformConfigFileParams<T> = {
   ) => Promise<ConfigTransformResult<T>> | ConfigTransformResult<T>;
 };
 
-/** Shared type for Transform Config File With Retry Params in src/config. */
+/** Config transform parameters plus a conflict-retry limit. */
 export type TransformConfigFileWithRetryParams<T> = TransformConfigFileParams<T> & {
   maxAttempts?: number;
 };
 
-/** Shared type for Config Mutation Result in src/config. */
+/** Mutation result with caller return value and number of attempts used. */
 export type ConfigMutationResult<T> = ConfigReplaceResult & {
   result: T | undefined;
   attempts: number;
@@ -477,7 +478,7 @@ function resolveConfigWriteResult(
   return { persistedHash: null, persistedConfig: fallbackConfig };
 }
 
-/** Reused helper for replace Config File behavior in src/config. */
+/** Replaces the config file under the mutation lock and validates runtime refresh side effects. */
 export async function replaceConfigFile(params: {
   nextConfig: OpenClawConfig;
   baseHash?: string;
@@ -627,7 +628,7 @@ async function transformConfigFileAttempt<T>(
   };
 }
 
-/** Reused helper for transform Config File behavior in src/config. */
+/** Runs one transform under the mutation lock and persists the returned config. */
 export async function transformConfigFile<T = void>(
   params: TransformConfigFileParams<T>,
 ): Promise<ConfigMutationResult<T>> {
@@ -637,7 +638,7 @@ export async function transformConfigFile<T = void>(
   );
 }
 
-/** Reused helper for transform Config File With Retry behavior in src/config. */
+/** Retries a transform when optimistic hash checks detect concurrent config writes. */
 export async function transformConfigFileWithRetry<T = void>(
   params: TransformConfigFileWithRetryParams<T>,
 ): Promise<ConfigMutationResult<T>> {
@@ -660,7 +661,7 @@ export async function transformConfigFileWithRetry<T = void>(
   });
 }
 
-/** Reused helper for mutate Config File behavior in src/config. */
+/** Clones the selected config, lets a callback mutate the draft, then persists it. */
 export async function mutateConfigFile<T = void>(params: {
   base?: ConfigMutationBase;
   baseHash?: string;
@@ -683,7 +684,7 @@ export async function mutateConfigFile<T = void>(params: {
   });
 }
 
-/** Reused helper for mutate Config File With Retry behavior in src/config. */
+/** Draft-mutation wrapper that retries on config hash conflicts. */
 export async function mutateConfigFileWithRetry<T = void>(params: {
   base?: ConfigMutationBase;
   baseHash?: string;
