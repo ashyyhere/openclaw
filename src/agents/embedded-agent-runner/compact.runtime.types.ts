@@ -2,7 +2,7 @@
 import type { CompactEmbeddedAgentSessionParams } from "./compact.types.js";
 import type { EmbeddedAgentCompactResult } from "./types.js";
 
-/** Shared type for Compact Embedded Agent Session Direct in src/agents/embedded-agent-runner. */
+/** Direct compaction function signature used by lazy runtime boundaries. */
 export type CompactEmbeddedAgentSessionDirect = (
   params: CompactEmbeddedAgentSessionParams,
 ) => Promise<EmbeddedAgentCompactResult>;

@@ -25,7 +25,7 @@ function resolveSessionManagerCachePruneInterval(ttlMs: number): number {
   );
 }
 
-/** Shared type for Session Manager Cache in src/agents/embedded-agent-runner. */
+/** Minimal cache surface for warming transcript files before session manager startup. */
 export type SessionManagerCache = {
   clear: () => void;
   isSessionManagerCached: (sessionFile: string) => boolean;

@@ -6,14 +6,14 @@ const log = createSubsystemLogger("agents/post-compaction-guard");
 
 const DEFAULT_WINDOW_SIZE = 3;
 
-/** Shared type for Post Compaction Guard Observation in src/agents/embedded-agent-runner. */
+/** One normalized tool call/result signature observed after a compaction pass. */
 export type PostCompactionGuardObservation = {
   toolName: string;
   argsHash: string;
   resultHash: string;
 };
 
-/** Shared type for Post Compaction Guard Verdict in src/agents/embedded-agent-runner. */
+/** Decision returned after recording a post-compaction tool observation. */
 export type PostCompactionGuardVerdict =
   | { shouldAbort: false; armed: boolean; remainingAttempts: number }
   | {
@@ -26,7 +26,7 @@ export type PostCompactionGuardVerdict =
       message: string;
     };
 
-/** Shared type for Post Compaction Loop Guard in src/agents/embedded-agent-runner. */
+/** Stateful guard armed only for the first few tool calls after compaction. */
 export type PostCompactionLoopGuard = {
   armPostCompaction: () => void;
   observe: (call: PostCompactionGuardObservation) => PostCompactionGuardVerdict;
@@ -47,7 +47,7 @@ function asPositiveInt(value: number | undefined, fallback: number): number {
   return value;
 }
 
-/** Reused helper for create Post Compaction Loop Guard behavior in src/agents/embedded-agent-runner. */
+/** Creates a bounded detector for repeated identical tool calls after compaction. */
 export function createPostCompactionLoopGuard(
   config?: ToolLoopPostCompactionGuardConfig,
   options?: { enabled?: boolean },
@@ -111,7 +111,7 @@ export function createPostCompactionLoopGuard(
   return { armPostCompaction, observe, snapshot };
 }
 
-/** Reused class for Post Compaction Loop Persisted Error behavior in src/agents/embedded-agent-runner. */
+/** Error raised when compaction failed to break a repeated tool-call loop. */
 export class PostCompactionLoopPersistedError extends Error {
   readonly detector: "compaction_loop_persisted";
   readonly count: number;

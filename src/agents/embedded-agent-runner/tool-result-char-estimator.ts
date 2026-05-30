@@ -1,13 +1,13 @@
 /** Estimates message size for context-budget and tool-result guards. */
 import type { AgentMessage } from "../runtime/index.js";
 
-/** Reused constant for CHARS PER TOKEN ESTIMATE behavior in src/agents/embedded-agent-runner. */
+/** General text-to-token approximation used when only character counts are available. */
 export const CHARS_PER_TOKEN_ESTIMATE = 4;
-/** Reused constant for TOOL RESULT CHARS PER TOKEN ESTIMATE behavior in src/agents/embedded-agent-runner. */
+/** Heavier weighting for tool output because JSON/code tends to tokenize densely. */
 export const TOOL_RESULT_CHARS_PER_TOKEN_ESTIMATE = 2;
 const IMAGE_CHAR_ESTIMATE = 8_000;
 
-/** Shared type for Message Char Estimate Cache in src/agents/embedded-agent-runner. */
+/** Weak per-message estimate cache scoped to one context-budget calculation. */
 export type MessageCharEstimateCache = WeakMap<AgentMessage, number>;
 
 function isTextBlock(block: unknown): block is { type: "text"; text: string } {

@@ -9,7 +9,7 @@ import {
 
 type CompactionEntry = Extract<SessionEntry, { type: "compaction" }>;
 
-/** Shared type for Hardened Manual Compaction Boundary in src/agents/embedded-agent-runner. */
+/** Result of rewriting a manual compaction leaf to start context at its summary. */
 export type HardenedManualCompactionBoundary = {
   applied: boolean;
   firstKeptEntryId?: string;
@@ -71,7 +71,10 @@ function hasMessagesToSummarizeBeforeKeptTail(params: {
     .some((entry) => entryCreatesCompactionInputMessage(entry));
 }
 
-/** Reused helper for harden Manual Compaction Boundary behavior in src/agents/embedded-agent-runner. */
+/**
+ * Rewrites the latest manual compaction boundary when its kept tail would
+ * retain summarized messages, preventing old turns from surviving `/compact`.
+ */
 export async function hardenManualCompactionBoundary(params: {
   sessionFile: string;
   preserveRecentTail?: boolean;
