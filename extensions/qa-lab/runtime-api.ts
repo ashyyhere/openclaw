@@ -1,5 +1,5 @@
-// extensions/qa-lab runtime api helpers and runtime behavior.
-/** Re-exported qa-lab plugin public API. */
+// QA Lab runtime API barrel exposes bus, channel, target, and plugin entry helpers.
+/** Public QA Lab runtime API consumed by plugin entrypoints and tests. */
 export {
   buildQaTarget,
   callGatewayFromCli,
@@ -40,5 +40,5 @@ export {
   sendQaBusMessage,
   setQaChannelRuntime,
 } from "./src/runtime-api.js";
-/** Re-exported qa-lab plugin public API, starting with start Qa Live Lane Gateway. */
+/** Starts a live-lane gateway for QA Lab live transport plugins. */
 export { startQaLiveLaneGateway } from "./src/live-transports/shared/live-gateway.runtime.js";

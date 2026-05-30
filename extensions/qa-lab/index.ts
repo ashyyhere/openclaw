@@ -1,7 +1,8 @@
-// extensions/qa-lab index helpers and runtime behavior.
+// QA Lab plugin entry registers the private QA CLI surface.
 import { definePluginEntry } from "./runtime-api.js";
 import { registerQaLabCli } from "./src/cli.js";
 
+/** Default QA Lab plugin entry used by the OpenClaw plugin loader. */
 export default definePluginEntry({
   id: "qa-lab",
   name: "QA Lab",

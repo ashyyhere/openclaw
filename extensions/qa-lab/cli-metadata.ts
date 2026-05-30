@@ -1,6 +1,7 @@
-// extensions/qa-lab cli metadata helpers and runtime behavior.
+// QA Lab CLI metadata entry exposes command descriptors without loading CLI runtime code.
 import { definePluginEntry } from "openclaw/plugin-sdk/core";
 
+/** Metadata-only QA Lab plugin entry used by CLI discovery. */
 export default definePluginEntry({
   id: "qa-lab",
   name: "QA Lab",
