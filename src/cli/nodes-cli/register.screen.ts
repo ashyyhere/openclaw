@@ -19,7 +19,7 @@ import {
 } from "./rpc.js";
 import type { NodesRpcOpts } from "./types.js";
 
-/** Reused helper for register Nodes Screen Commands behavior in src/cli/nodes-cli. */
+/** Register node screen recording capture and media-file output handling. */
 export function registerNodesScreenCommands(nodes: Command) {
   const screen = nodes
     .command("screen")

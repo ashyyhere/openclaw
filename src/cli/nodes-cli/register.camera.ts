@@ -42,7 +42,7 @@ function getGatewayInvokePayload(raw: unknown): unknown {
     : undefined;
 }
 
-/** Reused helper for register Nodes Camera Commands behavior in src/cli/nodes-cli. */
+/** Register camera listing, snapshots, and clip capture for paired nodes. */
 export function registerNodesCameraCommands(nodes: Command) {
   const camera = nodes.command("camera").description("Capture camera media from a paired node");
 

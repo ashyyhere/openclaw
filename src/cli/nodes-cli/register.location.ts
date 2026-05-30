@@ -12,7 +12,7 @@ import {
 } from "./rpc.js";
 import type { NodesRpcOpts } from "./types.js";
 
-/** Reused helper for register Nodes Location Commands behavior in src/cli/nodes-cli. */
+/** Register node location reads with cache age, accuracy, and invoke timeout controls. */
 export function registerNodesLocationCommands(nodes: Command) {
   const location = nodes.command("location").description("Fetch location from a paired node");
 

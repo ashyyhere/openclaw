@@ -26,7 +26,7 @@ function normalizeEnvironment(value: unknown): "sandbox" | "production" | null {
   return null;
 }
 
-/** Reused helper for register Nodes Push Command behavior in src/cli/nodes-cli. */
+/** Register APNs test push dispatch for paired iOS nodes. */
 export function registerNodesPushCommand(nodes: Command) {
   nodesCallOpts(
     nodes
