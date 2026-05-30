@@ -3,9 +3,9 @@ export { asFiniteNumber } from "../shared/number-coercion.js";
 import { redactSensitiveText } from "../logging/redact.js";
 import { readResponseWithLimit } from "../media/read-response-with-limit.js";
 import { normalizeOptionalString as trimToUndefined } from "../shared/string-coerce.js";
-/** Re-exported API for src/agents, starting with as Boolean. */
+/** Boolean coercion helper used while parsing provider response metadata. */
 export { asBoolean } from "../utils/boolean.js";
-/** Re-exported API for src/agents, starting with normalize Optional String. */
+/** Trim string-like provider error fields to undefined when empty. */
 export { normalizeOptionalString as trimToUndefined } from "../shared/string-coerce.js";
 
 const ERROR_BODY_METADATA_LIMIT = 500;
@@ -78,7 +78,7 @@ export async function readResponseTextLimited(
   return text;
 }
 
-/** Reused helper for format Provider Error Payload behavior in src/agents. */
+/** Extract a compact provider error message from common JSON error payload shapes. */
 export function formatProviderErrorPayload(payload: unknown): string | undefined {
   const root = asObject(payload);
   const detailObject = asObject(root?.detail);
