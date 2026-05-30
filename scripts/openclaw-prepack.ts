@@ -1,5 +1,5 @@
 #!/usr/bin/env -S node --import tsx
-// scripts openclaw prepack helpers and runtime behavior.
+// OpenClaw prepack verifies built artifacts and refreshes package metadata before packing.
 
 import { spawnSync, type SpawnSyncOptions } from "node:child_process";
 import { existsSync, readdirSync } from "node:fs";
@@ -24,6 +24,7 @@ function normalizeFiles(files: Iterable<string>): Set<string> {
   return new Set(Array.from(files, (file) => file.replace(/\\/g, "/")));
 }
 
+/** Collect missing build and Control UI artifacts that block package prepack. */
 export function collectPreparedPrepackErrors(
   files: Iterable<string>,
   assetPaths: Iterable<string>,
@@ -103,6 +104,7 @@ function positiveEnvInt(name: string, env: NodeJS.ProcessEnv, fallback: number):
   return Number.isSafeInteger(value) && value > 0 ? value : fallback;
 }
 
+/** Resolve prepack subprocess timeout from env with a release-safe fallback. */
 export function resolvePrepackCommandTimeoutMs(env: NodeJS.ProcessEnv = process.env): number {
   return positiveEnvInt(
     "OPENCLAW_PREPACK_COMMAND_TIMEOUT_MS",
@@ -111,6 +113,7 @@ export function resolvePrepackCommandTimeoutMs(env: NodeJS.ProcessEnv = process.
   );
 }
 
+/** Run a prepack subprocess with the configured timeout and inherited stdio defaults. */
 export function runPrepackCommand(
   command: string,
   args: string[],

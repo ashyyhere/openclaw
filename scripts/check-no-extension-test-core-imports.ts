@@ -1,4 +1,4 @@
-// scripts check no extension test core imports helpers and runtime behavior.
+// Guardrail script rejects bundled plugin tests that depend on private core test helpers.
 import fs from "node:fs";
 import path from "node:path";
 import { collectFilesSync, isCodeFile, relativeToCwd } from "./check-file-utils.js";

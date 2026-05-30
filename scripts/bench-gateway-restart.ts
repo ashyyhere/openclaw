@@ -1,4 +1,4 @@
-// scripts bench gateway restart helpers and runtime behavior.
+// Gateway restart benchmark measures downtime, resource slope, and restart readiness.
 import { spawn, spawnSync, type ChildProcessWithoutNullStreams } from "node:child_process";
 import fs from "node:fs";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
@@ -1651,6 +1651,7 @@ async function main() {
   }
 }
 
+/** Test-only access to gateway restart benchmark classifiers and helpers. */
 export const testing = {
   classifyGatewayReadyLog,
   classifyProbeErrorKind,
@@ -1685,4 +1686,5 @@ if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
     process.exitCode = 1;
   });
 }
+/** Backward-compatible test alias for gateway restart benchmark internals. */
 export { testing as __testing };

@@ -1,5 +1,5 @@
 #!/usr/bin/env -S node --import tsx
-// scripts prepare codex ci auth helpers and runtime behavior.
+// Codex CI auth preparer patches staged auth JSON with account claims needed by app-server.
 import fs from "node:fs/promises";
 import path from "node:path";
 
@@ -45,6 +45,7 @@ function stringifyJwt(parts: JwtParts): string {
   return [parts.header, encodeBase64UrlJson(parts.payload), parts.signature].join(".");
 }
 
+/** Patch a Codex auth JSON object with chatgpt_account_id when CI needs the claim. */
 export function patchCodexAuthForCi(auth: CodexAuthJson): {
   auth: CodexAuthJson;
   changed: boolean;
@@ -85,6 +86,7 @@ export function patchCodexAuthForCi(auth: CodexAuthJson): {
   };
 }
 
+/** Patch a Codex auth JSON file in place while preserving its file mode. */
 export async function prepareCodexCiAuth(authPath: string): Promise<boolean> {
   const raw = await fs.readFile(authPath, "utf-8");
   const parsed = JSON.parse(raw) as CodexAuthJson;

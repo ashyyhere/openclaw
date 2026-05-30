@@ -1,4 +1,4 @@
-// scripts zai fallback repro helpers and runtime behavior.
+// Z.ai fallback repro runs provider prompts with bounded subprocess output capture.
 import { spawn } from "node:child_process";
 import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
@@ -42,6 +42,7 @@ function resolveEnvValue(env: NodeJS.ProcessEnv, name: string): string | undefin
   return key === undefined ? undefined : env[key];
 }
 
+/** Append subprocess output while retaining only the bounded tail and truncation count. */
 export function appendBoundedReproOutput(
   capture: OutputCapture,
   chunk: unknown,
@@ -62,6 +63,7 @@ function formatBoundedReproOutput(capture: OutputCapture): string {
   return `[output truncated ${capture.truncatedChars} chars; showing tail]\n${capture.text}`;
 }
 
+/** Resolve the pnpm command invocation used by the Z.ai fallback repro script. */
 export function resolveZaiFallbackPnpmCommand(
   args: string[],
   options: ResolvePnpmCommandOptions = {},

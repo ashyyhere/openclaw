@@ -1,5 +1,5 @@
 #!/usr/bin/env -S node --import tsx
-// scripts release check helpers and runtime behavior.
+// Release check validates pack contents, installed tarballs, appcast metadata, and SDK surfaces.
 
 import { execFileSync } from "node:child_process";
 import {
@@ -56,7 +56,9 @@ import { listStaticExtensionAssetOutputs } from "./runtime-postbuild.mjs";
 import { sparkleBuildFloorsFromShortVersion, type SparkleBuildFloors } from "./sparkle-build.ts";
 import { buildCmdExeCommandLine } from "./windows-cmd-helpers.mjs";
 
+/** Re-export bundled extension manifest validation for release-check tests. */
 export { collectBundledExtensionManifestErrors } from "./lib/bundled-extension-manifest.ts";
+/** Re-export package-name parsing for release-check tests. */
 export { packageNameFromSpecifier } from "./lib/plugin-package-dependencies.mjs";
 
 type PackFile = { path: string };
@@ -146,13 +148,17 @@ const laneFloorAdoptionDateKey = 20260227;
 const SAFE_UNIX_SMOKE_PATH = "/usr/bin:/bin";
 const DEFAULT_RELEASE_CHECK_COMMAND_TIMEOUT_MS = 5 * 60 * 1000;
 const DEFAULT_RELEASE_CHECK_COMMAND_MAX_BUFFER_BYTES = 100 * 1024 * 1024;
+/** Maximum allowed bundled size for critical public Plugin SDK entrypoints. */
 export const MAX_CRITICAL_PLUGIN_SDK_ENTRYPOINT_BYTES = 2 * 1024 * 1024;
+/** Public Plugin SDK entrypoints checked for package-size regressions. */
 export const CRITICAL_PLUGIN_SDK_SIZE_CHECK_SPECIFIERS = [
   "openclaw/plugin-sdk/core",
   "openclaw/plugin-sdk/provider-entry",
   "openclaw/plugin-sdk/runtime",
 ] as const;
+/** Public Plugin SDK entrypoints imported by the packed package smoke test. */
 export const CRITICAL_PLUGIN_SDK_IMPORT_SMOKE_SPECIFIERS = ["openclaw/plugin-sdk/core"] as const;
+/** CLI commands run against an installed packed tarball during release verification. */
 export const PACKED_CLI_SMOKE_COMMANDS = [
   ["--help"],
   ["onboard", "--help"],
@@ -161,11 +167,13 @@ export const PACKED_CLI_SMOKE_COMMANDS = [
   ["config", "schema"],
   ["models", "list", "--provider", "openai"],
 ] as const;
+/** Doctor command args used to repair packed bundled runtime dependency metadata. */
 export const PACKED_BUNDLED_RUNTIME_DEPS_REPAIR_ARGS = [
   "doctor",
   "--fix",
   "--non-interactive",
 ] as const;
+/** Completion command args used by the packed tarball smoke test. */
 export const PACKED_COMPLETION_SMOKE_ARGS = [
   "completion",
   "--write-state",
@@ -185,6 +193,7 @@ function positiveEnvInt(name: string, fallback: number): number {
   return Number.isSafeInteger(value) && value > 0 ? value : fallback;
 }
 
+/** Run a release-check subprocess with timeout and buffer limits from env. */
 export function runReleaseCheckCommand(
   invocation: ReleaseCheckCommandInvocation,
   options: {
@@ -224,6 +233,7 @@ export function runReleaseCheckCommand(
   return typeof output === "string" ? output : output.toString("utf8");
 }
 
+/** Collect non-executable shell scripts under skill folders on Unix platforms. */
 export function collectSkillShellScriptExecutableErrors(rootDir = resolve(".")): string[] {
   if (process.platform === "win32") {
     return [];
@@ -321,6 +331,7 @@ function checkSkillShellScriptsExecutable() {
   }
 }
 
+/** Resolve npm command invocation for release checks across Node and Windows launchers. */
 export function resolveReleaseNpmCommand(
   args: string[],
   params: {
@@ -415,6 +426,7 @@ function resolveGlobalRoot(prefixDir: string, cwd: string): string {
   }).trim();
 }
 
+/** Create env for packed bundled plugin postinstall with source fallback disabled. */
 export function createPackedBundledPluginPostinstallEnv(
   env: NodeJS.ProcessEnv = process.env,
 ): NodeJS.ProcessEnv {
@@ -424,6 +436,7 @@ export function createPackedBundledPluginPostinstallEnv(
   };
 }
 
+/** Create sanitized env for packed CLI smoke commands with isolated home/state. */
 export function createPackedCliSmokeEnv(
   env: NodeJS.ProcessEnv,
   overrides: NodeJS.ProcessEnv = {},
@@ -471,6 +484,7 @@ export function createPackedCliSmokeEnv(
   };
 }
 
+/** Create env for packed completion smoke while skipping slow plugin completion discovery. */
 export function createPackedCompletionSmokeEnv(
   env: NodeJS.ProcessEnv,
   overrides: NodeJS.ProcessEnv = {},
@@ -498,6 +512,7 @@ function runPackedBundledPluginPostinstall(packageRoot: string): void {
   );
 }
 
+/** Collect installed packed-package verification errors after tarball install. */
 export function collectPackedInstalledPackageVerificationErrors(params: {
   expectedVersion: string;
   installedBinaryVersion?: string;
@@ -562,6 +577,7 @@ function verifyPackedInstalledPackage(params: {
   }
 }
 
+/** Create a temporary consumer project for packed Plugin SDK TypeScript smoke tests. */
 export function createPackedPluginSdkTypescriptSmokeProject(params: {
   consumerDir: string;
   packageSpec: string;
@@ -637,6 +653,7 @@ function runPackedPluginSdkTypescriptSmoke(tarballPath: string, tmpRoot: string)
   );
 }
 
+/** Write minimal config that activates a bundled plugin for packed tarball smoke tests. */
 export function writePackedBundledPluginActivationConfig(homeDir: string): void {
   const configPath = join(homeDir, ".openclaw", "openclaw.json");
   mkdirSync(join(homeDir, ".openclaw"), { recursive: true });
@@ -865,6 +882,7 @@ function runPackedBundledChannelEntrySmoke(): void {
   }
 }
 
+/** Collect required package paths missing from npm pack output. */
 export function collectMissingPackPaths(paths: Iterable<string>): string[] {
   const available = new Set(paths);
   return requiredPathGroups
@@ -877,6 +895,7 @@ export function collectMissingPackPaths(paths: Iterable<string>): string[] {
     .toSorted((left, right) => left.localeCompare(right));
 }
 
+/** Resolve the build command hint for missing pack artifacts. */
 export function resolveMissingPackBuildHint(missing: readonly string[]): string | null {
   const needsControlUiBuild = missing.includes("dist/control-ui/index.html");
   const needsRuntimeBuild = missing.some(
@@ -898,6 +917,7 @@ export function resolveMissingPackBuildHint(missing: readonly string[]): string 
   return "release-check: build artifacts are missing. Run `pnpm build` before `pnpm release:check`.";
 }
 
+/** Collect forbidden paths that must not appear in npm pack output. */
 export function collectForbiddenPackPaths(paths: Iterable<string>): string[] {
   return [...paths]
     .filter(
@@ -911,6 +931,7 @@ export function collectForbiddenPackPaths(paths: Iterable<string>): string[] {
     .toSorted((left, right) => left.localeCompare(right));
 }
 
+/** Collect packed text files containing private QA or local Plugin SDK markers. */
 export function collectForbiddenPackContentPaths(
   paths: Iterable<string>,
   rootDir = process.cwd(),
@@ -938,6 +959,7 @@ export function collectForbiddenPackContentPaths(
     .toSorted((left, right) => left.localeCompare(right));
 }
 
+/** Re-export npm pack unpacked-size budget checks for release-check tests. */
 export { collectPackUnpackedSizeErrors } from "./lib/npm-pack-budget.mjs";
 
 function extractTag(item: string, tag: string): string | null {
@@ -946,6 +968,7 @@ function extractTag(item: string, tag: string): string | null {
   return regex.exec(item)?.[1]?.trim() ?? null;
 }
 
+/** Collect Sparkle appcast version/build-floor errors for macOS release metadata. */
 export function collectAppcastSparkleVersionErrors(xml: string): string[] {
   const itemMatches = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)];
   const errors: string[] = [];
@@ -1095,6 +1118,7 @@ async function checkPluginSdkExports() {
   }
 }
 
+/** Collect size-budget errors for critical public Plugin SDK entrypoints. */
 export function collectCriticalPluginSdkEntrypointSizeErrors(rootDir = process.cwd()): string[] {
   const errors: string[] = [];
   for (const specifier of CRITICAL_PLUGIN_SDK_SIZE_CHECK_SPECIFIERS) {

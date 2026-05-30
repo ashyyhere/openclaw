@@ -1,4 +1,4 @@
-// scripts qa parity report helpers and runtime behavior.
+// QA parity report CLI forwards normalized report options to the QA lab runtime.
 import { runQaParityReportCommand } from "../extensions/qa-lab/src/cli.runtime.ts";
 import { booleanFlag, parseFlagArgs, stringFlag } from "./lib/arg-utils.mjs";
 
