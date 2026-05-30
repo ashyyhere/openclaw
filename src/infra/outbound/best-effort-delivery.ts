@@ -1,4 +1,4 @@
-// infra/outbound best effort delivery helpers and runtime behavior.
+// Resolves best-effort external delivery targets for session-first replies.
 import { stringifyRouteThreadId } from "../../plugin-sdk/channel-route.js";
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 import {
@@ -7,7 +7,7 @@ import {
   normalizeMessageChannel,
 } from "../../utils/message-channel.js";
 
-/** Shared type for External Best Effort Delivery Target in src/infra/outbound. */
+/** External delivery target selected for optional best-effort sends. */
 export type ExternalBestEffortDeliveryTarget = {
   deliver: boolean;
   channel?: string;
@@ -16,7 +16,7 @@ export type ExternalBestEffortDeliveryTarget = {
   threadId?: string;
 };
 
-/** Reused helper for resolve External Best Effort Delivery Target behavior in src/infra/outbound. */
+/** Resolves whether best-effort delivery has enough channel/target data to send. */
 export function resolveExternalBestEffortDeliveryTarget(params: {
   channel?: string | null;
   to?: string | null;
@@ -42,7 +42,7 @@ export function resolveExternalBestEffortDeliveryTarget(params: {
   };
 }
 
-/** Reused helper for should Downgrade Delivery To Session Only behavior in src/infra/outbound. */
+/** Returns whether delivery should fall back to session-only internal handling. */
 export function shouldDowngradeDeliveryToSessionOnly(params: {
   wantsDelivery: boolean;
   bestEffortDeliver: boolean;

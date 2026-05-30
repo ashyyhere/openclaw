@@ -1,7 +1,7 @@
-// infra exec wrapper resolution helpers and runtime behavior.
-/** Re-exported API for src/infra, starting with basename Lower. */
+// Re-exports executable wrapper normalization, dispatch, and shell unwrapping helpers.
+/** Executable token basename normalization helpers. */
 export { basenameLower, normalizeExecutableToken } from "./exec-wrapper-tokens.js";
-/** Re-exported API for src/infra. */
+/** Dispatch-wrapper detection and unwrapping helpers. */
 export {
   extractEnvAssignmentKeysFromDispatchWrappers,
   isDispatchWrapperExecutable,
@@ -10,7 +10,7 @@ export {
   unwrapEnvInvocation,
   unwrapKnownDispatchWrapperInvocation,
 } from "./dispatch-wrapper-resolution.js";
-/** Re-exported API for src/infra. */
+/** Shell-wrapper detection, command extraction, and transport argv helpers. */
 export {
   extractBindableShellWrapperInlineCommand,
   extractShellWrapperCommand,

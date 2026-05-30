@@ -1,9 +1,9 @@
-// infra/command-explainer index helpers and runtime behavior.
-/** Re-exported API for src/infra/command-explainer, starting with explain Shell Command. */
+// Public facade for shell command explanation helpers.
+/** Parses shell source into command explanation metadata. */
 export { explainShellCommand } from "./extract.js";
-/** Re-exported API for src/infra/command-explainer, starting with format Command Spans. */
+/** Converts command explanation metadata into approval highlight spans. */
 export { formatCommandSpans } from "./format.js";
-/** Re-exported API for src/infra/command-explainer. */
+/** Command explanation result, command step, risk, and span types. */
 export type {
   CommandContext,
   CommandExplanation,
