@@ -1,23 +1,23 @@
 // Public queue directive facade.
-/** Re-exported API for src/auto-reply/reply, starting with extract Queue Directive. */
+/** Inline directive parser for queue mode/options. */
 export { extractQueueDirective } from "./queue/directive.js";
-/** Re-exported API for src/auto-reply/reply, starting with clear Session Queues. */
+/** Session queue cleanup helper. */
 export { clearSessionQueues } from "./queue/cleanup.js";
-/** Re-exported API for src/auto-reply/reply, starting with Clear Session Queue Result. */
+/** Result summary returned by session queue cleanup. */
 export type { ClearSessionQueueResult } from "./queue/cleanup.js";
-/** Re-exported API for src/auto-reply/reply, starting with schedule Followup Drain. */
+/** Followup drain scheduler facade. */
 export { scheduleFollowupDrain } from "./queue/drain.js";
-/** Re-exported API for src/auto-reply/reply. */
+/** Followup enqueue and queue-depth facade. */
 export {
   enqueueFollowupRun,
   getFollowupQueueDepth,
   resetRecentQueuedMessageIdDedupe,
 } from "./queue/enqueue.js";
-/** Re-exported API for src/auto-reply/reply, starting with resolve Queue Settings. */
+/** Queue setting resolver facade. */
 export { resolveQueueSettings } from "./queue/settings-runtime.js";
-/** Re-exported API for src/auto-reply/reply, starting with clear Followup Queue. */
+/** Followup queue state mutation facade. */
 export { clearFollowupQueue, refreshQueuedFollowupSession } from "./queue/state.js";
-/** Re-exported API for src/auto-reply/reply. */
+/** Queue mode, settings, and followup run public types. */
 export type {
   FollowupRun,
   QueueDedupeMode,
@@ -25,9 +25,9 @@ export type {
   QueueMode,
   QueueSettings,
 } from "./queue/types.js";
-/** Re-exported API for src/auto-reply/reply, starting with is Followup Run Aborted. */
+/** Followup abort-state helper facade. */
 export { isFollowupRunAborted } from "./queue/types.js";
-/** Re-exported API for src/auto-reply/reply, starting with complete Followup Run Lifecycle. */
+/** Followup lifecycle completion facade. */
 export { completeFollowupRunLifecycle } from "./queue/types.js";
-/** Re-exported API for src/auto-reply/reply, starting with Followup Run Deferred Error. */
+/** Followup deferral error facade. */
 export { FollowupRunDeferredError, isFollowupRunDeferredError } from "./queue/types.js";

@@ -6,7 +6,7 @@ type PreambleResult = {
   chdirPath?: string;
 };
 
-/** Reused helper for strip Outer Quotes behavior in src/agents. */
+/** Removes one balanced shell-quote pair around a display token. */
 export function stripOuterQuotes(value: string | undefined): string | undefined {
   if (!value) {
     return value;
@@ -22,7 +22,7 @@ export function stripOuterQuotes(value: string | undefined): string | undefined 
   return trimmed;
 }
 
-/** Reused helper for split Shell Words behavior in src/agents. */
+/** Splits a shell command into display tokens without executing or expanding it. */
 export function splitShellWords(input: string | undefined, maxWords = 48): string[] {
   if (!input) {
     return [];
@@ -81,7 +81,7 @@ export function splitShellWords(input: string | undefined, maxWords = 48): strin
   return words;
 }
 
-/** Reused helper for binary Name behavior in src/agents. */
+/** Extracts a normalized executable basename from a shell token. */
 export function binaryName(token: string | undefined): string | undefined {
   if (!token) {
     return undefined;
@@ -91,7 +91,7 @@ export function binaryName(token: string | undefined): string | undefined {
   return normalizeLowercaseStringOrEmpty(segment);
 }
 
-/** Reused helper for option Value behavior in src/agents. */
+/** Reads an option value from parsed shell tokens, including `--name=value`. */
 export function optionValue(words: string[], names: string[]): string | undefined {
   const lookup = new Set(names);
 
@@ -119,7 +119,7 @@ export function optionValue(words: string[], names: string[]): string | undefine
   return undefined;
 }
 
-/** Reused helper for positional Args behavior in src/agents. */
+/** Returns positional arguments while skipping known options and their values. */
 export function positionalArgs(
   words: string[],
   from = 1,
@@ -167,7 +167,7 @@ export function positionalArgs(
   return args;
 }
 
-/** Reused helper for first Positional behavior in src/agents. */
+/** Returns the first positional argument after option filtering. */
 export function firstPositional(
   words: string[],
   from = 1,
@@ -176,7 +176,7 @@ export function firstPositional(
   return positionalArgs(words, from, optionsWithValue)[0];
 }
 
-/** Reused helper for trim Leading Env behavior in src/agents. */
+/** Removes leading `env` and VAR=value prefixes before command classification. */
 export function trimLeadingEnv(words: string[]): string[] {
   if (words.length === 0) {
     return words;
@@ -209,7 +209,7 @@ export function trimLeadingEnv(words: string[]): string[] {
   return words.slice(index);
 }
 
-/** Reused helper for unwrap Shell Wrapper behavior in src/agents. */
+/** Extracts the inner command from common `sh -c`/`bash -lc` wrappers. */
 export function unwrapShellWrapper(command: string): string {
   const words = splitShellWords(command, 10);
   if (words.length < 3) {
@@ -272,7 +272,7 @@ function scanTopLevelChars(
   }
 }
 
-/** Reused helper for split Top Level Stages behavior in src/agents. */
+/** Splits top-level shell stages on separators outside quotes. */
 export function splitTopLevelStages(command: string): string[] {
   const parts: string[] = [];
   let start = 0;
@@ -295,7 +295,7 @@ export function splitTopLevelStages(command: string): string[] {
   return parts.map((part) => part.trim()).filter((part) => part.length > 0);
 }
 
-/** Reused helper for split Top Level Pipes behavior in src/agents. */
+/** Splits top-level pipelines while preserving quoted pipe characters. */
 export function splitTopLevelPipes(command: string): string[] {
   const parts: string[] = [];
   let start = 0;
@@ -330,7 +330,7 @@ function isPopdCommand(head: string): boolean {
   return binaryName(splitShellWords(head, 2)[0]) === "popd";
 }
 
-/** Reused helper for strip Shell Preamble behavior in src/agents. */
+/** Removes leading env/export/chdir preamble commands from display text. */
 export function stripShellPreamble(command: string): PreambleResult {
   let rest = command.trim();
   let chdirPath: string | undefined;

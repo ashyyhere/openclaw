@@ -18,13 +18,13 @@ import type {
 import type { OriginatingChannelType } from "../../templating.js";
 import type { ElevatedLevel, ReasoningLevel, ThinkLevel, VerboseLevel } from "../directives.js";
 
-/** Shared type for Queue Mode in src/auto-reply/reply. */
+/** Queue behavior selected by inline directives or channel policy. */
 export type QueueMode = "steer" | "followup" | "collect" | "interrupt";
 
-/** Shared type for Queue Drop Policy in src/auto-reply/reply. */
+/** Overflow policy applied when queued followups exceed their cap. */
 export type QueueDropPolicy = "old" | "new" | "summarize";
 
-/** Shared type for Queue Settings in src/auto-reply/reply. */
+/** Resolved queue settings for one inbound reply path. */
 export type QueueSettings = {
   mode: QueueMode;
   debounceMs?: number;
@@ -32,10 +32,10 @@ export type QueueSettings = {
   dropPolicy?: QueueDropPolicy;
 };
 
-/** Shared type for Queue Dedupe Mode in src/auto-reply/reply. */
+/** Dedupe key strategy for queued inbound messages. */
 export type QueueDedupeMode = "message-id" | "prompt" | "none";
 
-/** Reused class for Followup Run Deferred Error behavior in src/auto-reply/reply. */
+/** Control-flow error thrown when a followup turn is intentionally deferred. */
 export class FollowupRunDeferredError extends Error {
   constructor(message = "Follow-up run deferred") {
     super(message);
@@ -43,12 +43,12 @@ export class FollowupRunDeferredError extends Error {
   }
 }
 
-/** Reused helper for is Followup Run Deferred Error behavior in src/auto-reply/reply. */
+/** Narrows errors raised by intentional followup deferral. */
 export function isFollowupRunDeferredError(error: unknown): error is FollowupRunDeferredError {
   return error instanceof FollowupRunDeferredError;
 }
 
-/** Shared type for Followup Run in src/auto-reply/reply. */
+/** Queued followup turn plus routing, transcript, model, and execution context. */
 export type FollowupRun = {
   prompt: string;
   /** User-visible prompt body persisted to transcript; excludes runtime-only prompt context. */
@@ -145,7 +145,7 @@ export type FollowupRun = {
   };
 };
 
-/** Reused helper for is Followup Run Aborted behavior in src/auto-reply/reply. */
+/** Checks whether the source-channel admission fence canceled this followup. */
 export function isFollowupRunAborted(run: Pick<FollowupRun, "abortSignal">): boolean {
   return run.abortSignal?.aborted === true;
 }
@@ -153,7 +153,7 @@ export function isFollowupRunAborted(run: Pick<FollowupRun, "abortSignal">): boo
 const enqueuedFollowupLifecycles = new WeakSet<QueuedReplyLifecycle>();
 const completedFollowupLifecycles = new WeakSet<QueuedReplyLifecycle>();
 
-/** Reused helper for mark Followup Run Enqueued behavior in src/auto-reply/reply. */
+/** Fires a followup lifecycle enqueue callback at most once. */
 export function markFollowupRunEnqueued(run: Pick<FollowupRun, "queuedLifecycle">): void {
   const lifecycle = run.queuedLifecycle;
   if (!lifecycle || enqueuedFollowupLifecycles.has(lifecycle)) {
@@ -163,7 +163,7 @@ export function markFollowupRunEnqueued(run: Pick<FollowupRun, "queuedLifecycle"
   lifecycle.onEnqueued?.();
 }
 
-/** Reused helper for complete Followup Run Lifecycle behavior in src/auto-reply/reply. */
+/** Fires a followup lifecycle completion callback at most once. */
 export function completeFollowupRunLifecycle(run: Pick<FollowupRun, "queuedLifecycle">): void {
   const lifecycle = run.queuedLifecycle;
   if (!lifecycle || completedFollowupLifecycles.has(lifecycle)) {
@@ -173,7 +173,7 @@ export function completeFollowupRunLifecycle(run: Pick<FollowupRun, "queuedLifec
   lifecycle.onComplete?.();
 }
 
-/** Shared type for Resolve Queue Settings Params in src/auto-reply/reply. */
+/** Inputs used to resolve effective queue settings for an inbound source. */
 export type ResolveQueueSettingsParams = {
   cfg: OpenClawConfig;
   channel?: string;
