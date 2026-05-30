@@ -28,20 +28,20 @@ import type { SilentReplyPromptMode } from "../../system-prompt.types.js";
 import type { PromptMode } from "../../system-prompt.types.js";
 import type { EmbeddedAgentExecutionPhase } from "../execution-phase.js";
 import type { AuthProfileFailurePolicy } from "./auth-profile-failure-policy.types.js";
-/** Re-exported API for src/agents/embedded-agent-runner, starting with Client Tool Definition. */
+/** Re-export client tool definitions for embedded-run callers. */
 export type { ClientToolDefinition } from "../../command/shared-types.js";
 
-/** Shared type for Embedded Run Trigger in src/agents/embedded-agent-runner. */
+/** Source that initiated an embedded-agent run. */
 export type EmbeddedRunTrigger = "cron" | "heartbeat" | "manual" | "memory" | "overflow" | "user";
 
-/** Shared type for Current Inbound Prompt Context in src/agents/embedded-agent-runner. */
+/** Optional text prefix derived from the current inbound event. */
 export type CurrentInboundPromptContext = {
   text: string;
   resumableText?: string;
   promptJoiner?: "\n\n" | "\n" | " ";
 };
 
-/** Shared type for Run Embedded Agent Params in src/agents/embedded-agent-runner. */
+/** Full caller contract for starting an embedded-agent run. */
 export type RunEmbeddedAgentParams = {
   sessionId: string;
   sessionKey?: string;

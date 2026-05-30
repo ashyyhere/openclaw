@@ -7,7 +7,7 @@ import {
   OPENCLAW_RUNTIME_EVENT_HEADER,
 } from "../../internal-runtime-context.js";
 import type { CurrentInboundPromptContext } from "./params.js";
-/** Re-exported API for src/agents/embedded-agent-runner, starting with OPENCLAW RUNTIME CONTEXT CUSTOM TYPE. */
+/** Re-export the transcript custom-entry marker for runtime context messages. */
 export { OPENCLAW_RUNTIME_CONTEXT_CUSTOM_TYPE };
 
 const OPENCLAW_RUNTIME_EVENT_USER_PROMPT = "Continue the OpenClaw runtime event.";
@@ -20,7 +20,7 @@ type RuntimeContextPromptParts = {
   runtimeSystemContext?: string;
 };
 
-/** Shared type for Runtime Context Custom Message in src/agents/embedded-agent-runner. */
+/** Hidden custom transcript entry carrying OpenClaw runtime context between turns. */
 export type RuntimeContextCustomMessage = {
   role: "custom";
   customType: string;

@@ -11,7 +11,7 @@ type ProviderSystemPromptTransform = (params: {
   context: ProviderTransformSystemPromptContext;
 }) => string;
 
-/** Shared type for Build Attempt System Prompt Params in src/agents/embedded-agent-runner. */
+/** Inputs needed to build and provider-transform the system prompt for one attempt. */
 export type BuildAttemptSystemPromptParams = {
   isRawModelRun: boolean;
   embeddedSystemPrompt: EmbeddedSystemPromptParams;
@@ -24,7 +24,7 @@ export type BuildAttemptSystemPromptParams = {
   };
 };
 
-/** Shared type for Attempt System Prompt in src/agents/embedded-agent-runner. */
+/** Base prompt and provider-final prompt produced for one attempt. */
 export type AttemptSystemPrompt = {
   baseSystemPrompt: string;
   systemPrompt: string;

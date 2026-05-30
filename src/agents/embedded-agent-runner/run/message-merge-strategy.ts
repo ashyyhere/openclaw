@@ -2,14 +2,14 @@
 import { mergeOrphanedTrailingUserPrompt } from "./attempt.prompt-helpers.js";
 import type { EmbeddedRunAttemptParams } from "./types.js";
 
-/** Shared type for Orphaned Trailing User Prompt Merge Params in src/agents/embedded-agent-runner. */
+/** Inputs for merging a new prompt into an orphaned trailing user leaf. */
 export type OrphanedTrailingUserPromptMergeParams = {
   prompt: string;
   trigger: EmbeddedRunAttemptParams["trigger"];
   leafMessage: { content?: unknown };
 };
 
-/** Shared type for Orphaned Trailing User Prompt Merge Result in src/agents/embedded-agent-runner. */
+/** Result of merging or preserving an orphaned trailing user prompt. */
 export type OrphanedTrailingUserPromptMergeResult = {
   prompt: string;
   merged: boolean;
@@ -21,10 +21,10 @@ export type OrphanedTrailingUserPromptMergeResult = {
   removeLeaf: boolean;
 };
 
-/** Shared type for Message Merge Strategy Id in src/agents/embedded-agent-runner. */
+/** Registered merge strategy identifier for provider-bound message repair. */
 export type MessageMergeStrategyId = "orphan-trailing-user-prompt";
 
-/** Shared type for Message Merge Strategy in src/agents/embedded-agent-runner. */
+/** Strategy interface for repairing message history before provider submission. */
 export type MessageMergeStrategy = {
   id: MessageMergeStrategyId;
   mergeOrphanedTrailingUserPrompt: (
@@ -32,7 +32,7 @@ export type MessageMergeStrategy = {
   ) => OrphanedTrailingUserPromptMergeResult;
 };
 
-/** Reused constant for DEFAULT MESSAGE MERGE STRATEGY ID behavior in src/agents/embedded-agent-runner. */
+/** Default strategy that repairs consecutive trailing user prompts. */
 export const DEFAULT_MESSAGE_MERGE_STRATEGY_ID: MessageMergeStrategyId =
   "orphan-trailing-user-prompt";
 

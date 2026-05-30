@@ -2,7 +2,7 @@
 import type { StreamFn } from "openclaw/plugin-sdk/agent-core";
 import type { AgentMessage } from "../../runtime/index.js";
 
-/** Shared type for Message Transform in src/agents/embedded-agent-runner. */
+/** Function that can replace provider-bound messages before stream dispatch. */
 export type MessageTransform = (messages: AgentMessage[], model: unknown) => AgentMessage[];
 
 /** Applies a message transform to each stream invocation while preserving options. */
