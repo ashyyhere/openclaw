@@ -1,4 +1,4 @@
-// infra heartbeat active hours helpers and runtime behavior.
+// Evaluates heartbeat active-hour windows in user, local, or explicit timezones.
 import { resolveUserTimezone } from "../agents/date-time.js";
 import type { AgentDefaultsConfig } from "../config/types.agent-defaults.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -7,7 +7,7 @@ type HeartbeatConfig = AgentDefaultsConfig["heartbeat"];
 
 const ACTIVE_HOURS_TIME_PATTERN = /^(?:([01]\d|2[0-3]):([0-5]\d)|24:00)$/;
 
-/** Reused helper for resolve Active Hours Timezone behavior in src/infra. */
+/** Resolves heartbeat active-hours timezone, falling back to configured user timezone. */
 export function resolveActiveHoursTimezone(cfg: OpenClawConfig, raw?: string): string {
   const trimmed = raw?.trim();
   if (!trimmed || trimmed === "user") {
@@ -69,7 +69,7 @@ function resolveMinutesInTimeZone(nowMs: number, timeZone: string): number | nul
   }
 }
 
-/** Reused helper for is Within Active Hours behavior in src/infra. */
+/** Returns whether the current time falls inside a heartbeat active-hours window. */
 export function isWithinActiveHours(
   cfg: OpenClawConfig,
   heartbeat?: HeartbeatConfig,

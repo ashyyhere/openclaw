@@ -1,4 +1,4 @@
-// infra git root helpers and runtime behavior.
+// Discovers git repository roots and HEAD files by walking parent dirs.
 import fs from "node:fs";
 import path from "node:path";
 
@@ -35,7 +35,7 @@ function hasGitMarker(repoRoot: string): boolean {
   }
 }
 
-/** Reused helper for find Git Root behavior in src/infra. */
+/** Finds the nearest parent containing a `.git` marker within the depth limit. */
 export function findGitRoot(startDir: string, opts: { maxDepth?: number } = {}): string | null {
   // A `.git` file counts as a repo marker even if it is not a valid gitdir pointer.
   return walkUpFrom(startDir, opts, (repoRoot) => (hasGitMarker(repoRoot) ? repoRoot : null));
@@ -62,7 +62,7 @@ function resolveGitDirFromMarker(repoRoot: string): string | null {
   }
 }
 
-/** Reused helper for resolve Git Head Path behavior in src/infra. */
+/** Resolves the HEAD file path for directory or gitdir-file based repositories. */
 export function resolveGitHeadPath(
   startDir: string,
   opts: { maxDepth?: number } = {},

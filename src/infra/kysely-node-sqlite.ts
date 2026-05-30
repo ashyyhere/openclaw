@@ -1,4 +1,4 @@
-// infra kysely node sqlite helpers and runtime behavior.
+// Kysely dialect backed by Node's synchronous node:sqlite DatabaseSync API.
 import type { DatabaseSync, SQLInputValue } from "node:sqlite";
 import type {
   DatabaseConnection,
@@ -23,14 +23,14 @@ import {
 
 type MaybePromise<T> = T | Promise<T>;
 
-/** Shared type for Node Sqlite Kysely Dialect Config in src/infra. */
+/** Configures the DatabaseSync source and transaction mode for the Kysely dialect. */
 export type NodeSqliteKyselyDialectConfig = {
   database: DatabaseSync | (() => MaybePromise<DatabaseSync>);
   onCreateConnection?: (connection: DatabaseConnection) => MaybePromise<void>;
   transactionMode?: "deferred" | "immediate" | "exclusive";
 };
 
-/** Reused class for Node Sqlite Kysely Dialect behavior in src/infra. */
+/** Kysely SQLite dialect implementation using Node's built-in node:sqlite driver. */
 export class NodeSqliteKyselyDialect implements Dialect {
   readonly #config: NodeSqliteKyselyDialectConfig;
 

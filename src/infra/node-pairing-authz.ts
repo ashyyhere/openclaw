@@ -1,14 +1,14 @@
-// infra node pairing authz helpers and runtime behavior.
+// Resolves authorization scopes requested during node pairing.
 import { NODE_SYSTEM_RUN_COMMANDS } from "./node-commands.js";
 
-/** Shared type for Node Approval Scope in src/infra. */
+/** Scope granted to a paired operator node. */
 export type NodeApprovalScope = "operator.pairing" | "operator.write" | "operator.admin";
 
 const OPERATOR_PAIRING_SCOPE: NodeApprovalScope = "operator.pairing";
 const OPERATOR_WRITE_SCOPE: NodeApprovalScope = "operator.write";
 const OPERATOR_ADMIN_SCOPE: NodeApprovalScope = "operator.admin";
 
-/** Reused helper for resolve Node Pair Approval Scopes behavior in src/infra. */
+/** Grants write/admin scopes based on requested node system-run commands. */
 export function resolveNodePairApprovalScopes(commands: unknown): NodeApprovalScope[] {
   const normalized = Array.isArray(commands)
     ? commands.filter((command): command is string => typeof command === "string")
