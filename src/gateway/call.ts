@@ -1,4 +1,4 @@
-// gateway call helpers and runtime behavior.
+// Gateway WebSocket RPC client helpers for auth, scopes, transport errors, and CLI calls.
 import { randomUUID } from "node:crypto";
 import { isLoopbackIpAddress } from "@openclaw/net-policy/ip";
 import { redactSensitiveUrlLikeString } from "@openclaw/net-policy/redact-sensitive-url";
@@ -54,10 +54,10 @@ import {
   resolveLeastPrivilegeOperatorScopesForMethod,
   type OperatorScope,
 } from "./method-scopes.js";
-/** Re-exported API for src/gateway, starting with Gateway Connection Details. */
+/** Connection detail shape used in Gateway call errors and diagnostics. */
 export type { GatewayConnectionDetails };
 
-/** Shared type for Gateway Request Function in src/gateway. */
+/** Bound Gateway request function passed to abort hooks. */
 export type GatewayRequestFunction = <T = Record<string, unknown>>(
   method: string,
   params?: unknown,
@@ -95,25 +95,25 @@ type CallGatewayBaseOptions = {
   configPath?: string;
 };
 
-/** Shared type for Call Gateway Scoped Options in src/gateway. */
+/** Gateway call options with caller-provided operator scopes. */
 export type CallGatewayScopedOptions = CallGatewayBaseOptions & {
   scopes: OperatorScope[];
 };
 
-/** Shared type for Call Gateway Cli Options in src/gateway. */
+/** Gateway call options used by CLI callers that may infer default scopes. */
 export type CallGatewayCliOptions = CallGatewayBaseOptions & {
   scopes?: OperatorScope[];
 };
 
-/** Shared type for Call Gateway Options in src/gateway. */
+/** Gateway call options for backend or CLI-compatible callers. */
 export type CallGatewayOptions = CallGatewayBaseOptions & {
   scopes?: OperatorScope[];
 };
 
-/** Shared type for Gateway Transport Error Kind in src/gateway. */
+/** Transport failure kind surfaced for Gateway connection failures. */
 export type GatewayTransportErrorKind = "closed" | "timeout";
 
-/** Reused class for Gateway Transport Error behavior in src/gateway. */
+/** Error carrying Gateway close/timeout details plus redaction-safe connection metadata. */
 export class GatewayTransportError extends Error {
   readonly kind: GatewayTransportErrorKind;
   readonly connectionDetails: GatewayConnectionDetails;
@@ -145,7 +145,7 @@ export class GatewayTransportError extends Error {
   }
 }
 
-/** Reused class for Gateway Credentials Required Error behavior in src/gateway. */
+/** Error thrown before WebSocket connect when configured auth has no usable credential. */
 export class GatewayCredentialsRequiredError extends Error {
   readonly method: string;
   readonly configPath: string;
@@ -164,7 +164,7 @@ export class GatewayCredentialsRequiredError extends Error {
   }
 }
 
-/** Shared type for Gateway Transport Error Json in src/gateway. */
+/** JSON-safe Gateway transport error payload for CLI/tool output. */
 export type GatewayTransportErrorJson = {
   ok: false;
   error: {
@@ -187,7 +187,7 @@ function firstGatewayErrorLine(message: string): string {
   return message.split("\n", 1)[0]?.trim() || message;
 }
 
-/** Reused helper for format Gateway Transport Error Json behavior in src/gateway. */
+/** Converts GatewayTransportError instances to redacted JSON output. */
 export function formatGatewayTransportErrorJson(value: unknown): GatewayTransportErrorJson | null {
   if (!isGatewayTransportError(value)) {
     return null;
@@ -215,7 +215,7 @@ export function formatGatewayTransportErrorJson(value: unknown): GatewayTranspor
   };
 }
 
-/** Reused helper for is Gateway Transport Error behavior in src/gateway. */
+/** Type guard for Gateway transport errors, including cross-realm copies. */
 export function isGatewayTransportError(value: unknown): value is GatewayTransportError {
   if (value instanceof GatewayTransportError) {
     return true;
@@ -231,7 +231,7 @@ export function isGatewayTransportError(value: unknown): value is GatewayTranspo
   );
 }
 
-/** Reused helper for is Gateway Credentials Required Error behavior in src/gateway. */
+/** Type guard for missing Gateway credential errors, including cross-realm copies. */
 export function isGatewayCredentialsRequiredError(
   value: unknown,
 ): value is GatewayCredentialsRequiredError {
@@ -315,7 +315,7 @@ function resolveGatewayPortValue(config?: OpenClawConfig, env?: NodeJS.ProcessEn
   return resolveGatewayPortFn(config, env);
 }
 
-/** Reused helper for build Gateway Connection Details behavior in src/gateway. */
+/** Builds Gateway connection details using injectable config/path/port resolvers. */
 export function buildGatewayConnectionDetails(
   options: {
     config?: OpenClawConfig;
@@ -331,7 +331,7 @@ export function buildGatewayConnectionDetails(
   });
 }
 
-/** Reused constant for testing behavior in src/gateway. */
+/** Test-only dependency injection controls for Gateway call helpers. */
 export const testing = {
   setDepsForTests(deps: Partial<typeof defaultGatewayCallDeps> | undefined): void {
     gatewayCallDeps.createGatewayClient =
@@ -465,10 +465,10 @@ function ensureGatewayCallCanAuthenticate(params: {
   });
 }
 
-/** Re-exported API for src/gateway, starting with Explicit Gateway Auth. */
+/** Explicit token/password auth shape accepted by Gateway callers. */
 export type { ExplicitGatewayAuth } from "./credentials.js";
 
-/** Reused helper for resolve Explicit Gateway Auth behavior in src/gateway. */
+/** Normalizes explicit Gateway token/password values. */
 export function resolveExplicitGatewayAuth(opts?: ExplicitGatewayAuth): ExplicitGatewayAuth {
   const token =
     typeof opts?.token === "string" && opts.token.trim().length > 0 ? opts.token.trim() : undefined;
@@ -479,7 +479,7 @@ export function resolveExplicitGatewayAuth(opts?: ExplicitGatewayAuth): Explicit
   return { token, password };
 }
 
-/** Reused helper for ensure Explicit Gateway Auth behavior in src/gateway. */
+/** Enforces explicit credentials when a caller overrides the Gateway URL. */
 export function ensureExplicitGatewayAuth(params: {
   urlOverride?: string;
   urlOverrideSource?: "cli" | "env";
@@ -652,7 +652,7 @@ async function resolveGatewayCredentialsWithEnv(
   });
 }
 
-/** Re-exported API for src/gateway, starting with resolve Gateway Credentials With Secret Inputs. */
+/** SecretRef-aware Gateway credential resolver for callers that need the lower-level API. */
 export { resolveGatewayCredentialsWithSecretInputs };
 
 async function resolveGatewayTlsFingerprint(params: {
@@ -1024,14 +1024,14 @@ async function callGatewayWithScopes<T = Record<string, unknown>>(
   });
 }
 
-/** Reused helper for call Gateway Scoped behavior in src/gateway. */
+/** Calls Gateway with explicit operator scopes. */
 export async function callGatewayScoped<T = Record<string, unknown>>(
   opts: CallGatewayScopedOptions,
 ): Promise<T> {
   return await callGatewayWithScopes(opts, opts.scopes);
 }
 
-/** Reused helper for call Gateway Cli behavior in src/gateway. */
+/** Calls Gateway as a CLI client, inferring scopes when possible. */
 export async function callGatewayCli<T = Record<string, unknown>>(
   opts: CallGatewayCliOptions,
 ): Promise<T> {
@@ -1043,7 +1043,7 @@ export async function callGatewayCli<T = Record<string, unknown>>(
   return await callGatewayWithScopes(opts, scopes);
 }
 
-/** Reused helper for call Gateway Least Privilege behavior in src/gateway. */
+/** Calls Gateway with scopes derived from the requested method and params. */
 export async function callGatewayLeastPrivilege<T = Record<string, unknown>>(
   opts: CallGatewayBaseOptions,
 ): Promise<T> {
@@ -1051,7 +1051,7 @@ export async function callGatewayLeastPrivilege<T = Record<string, unknown>>(
   return await callGatewayWithScopes(opts, scopes);
 }
 
-/** Reused helper for call Gateway behavior in src/gateway. */
+/** Calls Gateway using backend defaults unless CLI mode/name is requested. */
 export async function callGateway<T = Record<string, unknown>>(
   opts: CallGatewayOptions,
 ): Promise<T> {
@@ -1077,9 +1077,9 @@ export async function callGateway<T = Record<string, unknown>>(
   });
 }
 
-/** Reused helper for random Idempotency Key behavior in src/gateway. */
+/** Creates a random idempotency key for Gateway mutation requests. */
 export function randomIdempotencyKey() {
   return randomUUID();
 }
-/** Re-exported API for src/gateway, starting with testing. */
+/** Test-only alias for Gateway call dependency controls. */
 export { testing as __testing };
