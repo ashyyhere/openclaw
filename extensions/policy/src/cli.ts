@@ -1,4 +1,3 @@
-// extensions/policy/src cli helpers and runtime behavior.
 import { isAbsolute, resolve } from "node:path";
 import { setTimeout as sleep } from "node:timers/promises";
 import type { Command } from "commander";
