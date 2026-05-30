@@ -1,4 +1,4 @@
-// model-catalog/provider-index openclaw provider index helpers and runtime behavior.
+// Built-in provider index used before provider plugins are installed.
 import type { OpenClawProviderIndex } from "./types.js";
 
 // OpenClaw-owned preview metadata for providers whose plugins may not be
@@ -10,7 +10,7 @@ import type { OpenClawProviderIndex } from "./types.js";
 // When a bundled provider moves to an external package, keep its provider id
 // here and add plugin package metadata so pre-install surfaces do not disappear
 // before the user installs the new package.
-/** Reused constant for OPENCLAW PROVIDER INDEX behavior in src/model-catalog/provider-index. */
+/** OpenClaw-owned preview metadata for installable provider plugins. */
 export const OPENCLAW_PROVIDER_INDEX = {
   version: 1,
   providers: {

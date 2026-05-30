@@ -1,9 +1,9 @@
-// model-catalog/provider-index index helpers and runtime behavior.
-/** Re-exported API for src/model-catalog/provider-index, starting with load Open Claw Provider Index. */
+// Barrel for the OpenClaw-owned installable provider index.
+/** Re-export provider index loader. */
 export { loadOpenClawProviderIndex } from "./load.js";
-/** Re-exported API for src/model-catalog/provider-index, starting with normalize Open Claw Provider Index. */
+/** Re-export provider index normalizer. */
 export { normalizeOpenClawProviderIndex } from "./normalize.js";
-/** Re-exported API for src/model-catalog/provider-index. */
+/** Re-export provider index data contracts. */
 export type {
   OpenClawProviderIndex,
   OpenClawProviderIndexPluginInstall,

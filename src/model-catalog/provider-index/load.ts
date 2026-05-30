@@ -1,9 +1,9 @@
-// model-catalog/provider-index load helpers and runtime behavior.
+// Loader for the built-in OpenClaw provider index.
 import { normalizeOpenClawProviderIndex } from "./normalize.js";
 import { OPENCLAW_PROVIDER_INDEX } from "./openclaw-provider-index.js";
 import type { OpenClawProviderIndex } from "./types.js";
 
-/** Reused helper for load Open Claw Provider Index behavior in src/model-catalog/provider-index. */
+/** Normalize an OpenClaw provider index source or return an empty index. */
 export function loadOpenClawProviderIndex(
   source: unknown = OPENCLAW_PROVIDER_INDEX,
 ): OpenClawProviderIndex {
