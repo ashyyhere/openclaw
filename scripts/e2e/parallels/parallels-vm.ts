@@ -1,4 +1,4 @@
-// scripts/e2e/parallels parallels vm helpers and runtime behavior.
+// Parallels VM helpers discover, start, resume, and select guest machines for E2E lanes.
 import { die, run, say, warn } from "./host-command.ts";
 
 interface PrlctlVmListItem {
@@ -6,16 +6,19 @@ interface PrlctlVmListItem {
   status?: string;
 }
 
+/** Lists available Parallels VM names. */
 export function listVmNames(): string[] {
   return listVms()
     .map((item) => (item.name ?? "").trim())
     .filter(Boolean);
 }
 
+/** Returns the current Parallels VM status or `missing`. */
 export function vmStatus(vmName: string): string {
   return listVms().find((vm) => vm.name === vmName)?.status || "missing";
 }
 
+/** Waits until a VM reaches a target status. */
 export function waitForVmStatus(vmName: string, expected: string, timeoutSeconds: number): void {
   const deadline = Date.now() + timeoutSeconds * 1000;
   while (Date.now() < deadline) {
@@ -31,6 +34,7 @@ export function waitForVmStatus(vmName: string, expected: string, timeoutSeconds
   throw new Error(`VM ${vmName} did not reach ${expected}`);
 }
 
+/** Starts or resumes a VM and waits until it is running. */
 export function ensureVmRunning(vmName: string, timeoutSeconds = 180): void {
   const deadline = Date.now() + timeoutSeconds * 1000;
   while (Date.now() < deadline) {
@@ -52,6 +56,7 @@ export function ensureVmRunning(vmName: string, timeoutSeconds = 180): void {
   die(`VM did not become running before update phase: ${vmName}`);
 }
 
+/** Resolves a requested Ubuntu VM name with fallback to the newest available Ubuntu VM. */
 export function resolveUbuntuVmName(requested: string, explicit = false): string {
   const names = listVmNames();
   if (names.includes(requested)) {

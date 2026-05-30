@@ -1,22 +1,26 @@
-// scripts/lib gateway bench child helpers and runtime behavior.
+// Gateway benchmark child helpers stop spawned processes and report teardown state.
 import type { ChildProcessWithoutNullStreams } from "node:child_process";
 
 const TEARDOWN_GRACE_MS = 2_000;
 const TEARDOWN_KILL_GRACE_MS = 1_000;
 
+/** Exit status observed from a benchmark child process. */
 export type ChildExit = {
   exitCode: number | null;
   signal: string | null;
 };
 
+/** Result of stopping a benchmark child process. */
 export type StopChildResult = ChildExit & {
   exitedBeforeTeardown: boolean;
 };
 
+/** Resolves after the requested number of milliseconds. */
 export function delay(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+/** Stops a child process tree with graceful and force-kill phases. */
 export async function stopChild(
   child: ChildProcessWithoutNullStreams,
   options: { killGraceMs?: number; teardownGraceMs?: number } = {},

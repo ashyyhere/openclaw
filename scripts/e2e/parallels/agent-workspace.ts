@@ -1,4 +1,5 @@
-// scripts/e2e/parallels agent workspace helpers and runtime behavior.
+// Parallels agent workspace scripts seed deterministic identity and setup state in guests.
+/** Renders a POSIX shell script that prepares a guest OpenClaw workspace. */
 export function posixAgentWorkspaceScript(purpose: string): string {
   return `set -eu
 workspace="\${OPENCLAW_WORKSPACE_DIR:-$HOME/.openclaw/workspace}"
@@ -18,6 +19,7 @@ STATE_EOF
 rm -f "$workspace/BOOTSTRAP.md"`;
 }
 
+/** Renders a PowerShell script that prepares a Windows guest OpenClaw workspace. */
 export function windowsAgentWorkspaceScript(purpose: string): string {
   return `$workspace = $env:OPENCLAW_WORKSPACE_DIR
 if (-not $workspace) { $workspace = Join-Path $env:USERPROFILE '.openclaw\\workspace' }

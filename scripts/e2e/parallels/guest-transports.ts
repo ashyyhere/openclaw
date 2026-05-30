@@ -1,15 +1,17 @@
-// scripts/e2e/parallels guest transports helpers and runtime behavior.
+// Parallels guest transports wrap prlctl exec for Linux, macOS, and Windows guests.
 import { run } from "./host-command.ts";
 import type { PhaseRunner } from "./phase-runner.ts";
 import { encodePowerShell, psSingleQuote } from "./powershell.ts";
 import type { CommandResult } from "./types.ts";
 
+/** Common options for guest command execution. */
 export interface GuestExecOptions {
   check?: boolean;
   input?: string;
   timeoutMs?: number;
 }
 
+/** Options for running and polling a long-lived background PowerShell script. */
 export interface WindowsBackgroundPowerShellOptions {
   append?: (chunk: string | Uint8Array) => void;
   beforeLaunchAttempt?: () => void;
@@ -47,6 +49,7 @@ function throwIfFailed(label: string, result: CommandResult, check: boolean | un
   throw new Error(`${label} failed with exit code ${result.status}`);
 }
 
+/** Starts a hidden PowerShell process in a Windows guest and streams its log until done. */
 export async function runWindowsBackgroundPowerShell(
   options: WindowsBackgroundPowerShellOptions,
 ): Promise<void> {
@@ -257,6 +260,7 @@ Remove-Item -Path $scriptPath, $logPath, $donePath, $exitPath -Force -ErrorActio
   );
 }
 
+/** Linux guest command transport backed by `prlctl exec`. */
 export class LinuxGuest {
   constructor(
     private vmName: string,
@@ -310,10 +314,12 @@ export class LinuxGuest {
   }
 }
 
+/** macOS guest execution options with per-command environment overrides. */
 export interface MacosGuestOptions extends GuestExecOptions {
   env?: Record<string, string>;
 }
 
+/** macOS guest command transport with current-user and sudo execution modes. */
 export class MacosGuest {
   constructor(
     private input: {
@@ -377,6 +383,7 @@ export class MacosGuest {
   }
 }
 
+/** Windows guest command transport with cmd and PowerShell helpers. */
 export class WindowsGuest {
   constructor(
     private vmName: string,

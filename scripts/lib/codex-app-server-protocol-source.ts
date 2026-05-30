@@ -1,4 +1,4 @@
-// scripts/lib codex app server protocol source helpers and runtime behavior.
+// Codex app-server protocol source helpers generate and normalize experimental schemas.
 import { spawnSync } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -6,6 +6,7 @@ import { resolvePnpmRunner } from "../pnpm-runner.mjs";
 
 const PROTOCOL_SCHEMA_RELATIVE_PATH = "codex-rs/app-server-protocol/schema";
 
+/** JSON schema files copied into OpenClaw Codex app-server protocol fixtures. */
 export const selectedCodexAppServerJsonSchemas = [
   "DynamicToolCallParams.json",
   "v2/ErrorNotification.json",
@@ -17,6 +18,7 @@ export const selectedCodexAppServerJsonSchemas = [
   "v2/TurnStartResponse.json",
 ] as const;
 
+/** Temporary generated Codex app-server protocol source tree. */
 export type GeneratedCodexAppServerProtocolSource = {
   root: string;
   codexRepo: string;
@@ -46,6 +48,7 @@ function resolveEnvValue(env: NodeJS.ProcessEnv, name: string): string | undefin
   return key === undefined ? undefined : env[key];
 }
 
+/** Resolves a pnpm invocation that works across npm, pnpm, and Windows runners. */
 export function resolveCodexProtocolPnpmCommand(
   args: string[],
   options: ResolvePnpmCommandOptions = {},
@@ -66,6 +69,7 @@ export function resolveCodexProtocolPnpmCommand(
   return command;
 }
 
+/** Locates a Codex checkout that contains app-server protocol schema sources. */
 export async function resolveCodexAppServerProtocolSource(repoRoot: string): Promise<{
   codexRepo: string;
   sourceRoot: string;
@@ -94,6 +98,7 @@ export async function resolveCodexAppServerProtocolSource(repoRoot: string): Pro
   );
 }
 
+/** Generates experimental TypeScript and JSON schema protocol sources from Codex. */
 export async function generateExperimentalCodexAppServerProtocolSource(
   repoRoot = process.cwd(),
 ): Promise<GeneratedCodexAppServerProtocolSource> {
@@ -225,6 +230,7 @@ function formatGeneratedTypeScript(repoRoot: string, root: string): void {
   }
 }
 
+/** Rewrites generated TypeScript imports so emitted files resolve under ESM. */
 export async function rewriteTypeScriptImports(root: string): Promise<void> {
   const entries = await fs.readdir(root, { withFileTypes: true });
   await Promise.all(
@@ -243,6 +249,7 @@ export async function rewriteTypeScriptImports(root: string): Promise<void> {
   );
 }
 
+/** Normalizes generated TypeScript text for OpenClaw's ESM import expectations. */
 export function normalizeGeneratedTypeScript(text: string): string {
   return text
     .replace(/(from\s+["'])(\.{1,2}\/[^"']+?)(\.js)?(["'])/g, "$1$2.js$4")
