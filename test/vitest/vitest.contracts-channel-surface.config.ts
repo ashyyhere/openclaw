@@ -1,9 +1,10 @@
-// test/vitest vitest contracts channel surface config helpers and runtime behavior.
+// Vitest project config for channel surface contract tests.
 import {
   channelSurfaceContractPatterns,
   createContractsVitestConfig,
 } from "./vitest.contracts-shared.ts";
 
+/** Channel surface contract Vitest project configuration. */
 export default createContractsVitestConfig(
   channelSurfaceContractPatterns,
   process.env,

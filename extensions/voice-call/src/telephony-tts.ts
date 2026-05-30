@@ -1,4 +1,4 @@
-// extensions/voice-call/src telephony tts helpers and runtime behavior.
+// Telephony TTS provider merges voice-call overrides, applies directives, and emits mu-law audio.
 import {
   parseTtsDirectives,
   type SpeechModelOverridePolicy,
@@ -10,6 +10,7 @@ import type { CoreConfig } from "./core-bridge.js";
 import { deepMergeDefined } from "./deep-merge.js";
 import { convertPcmToMulaw8k } from "./telephony-audio.js";
 
+/** Runtime TTS bridge used by voice-call telephony synthesis. */
 export type TelephonyTtsRuntime = {
   textToSpeechTelephony: (params: {
     text: string;
@@ -27,11 +28,13 @@ export type TelephonyTtsRuntime = {
   }>;
 };
 
+/** Telephony TTS provider surface consumed by the voice-call manager. */
 export type TelephonyTtsProvider = {
   synthesisTimeoutMs: number;
   synthesizeForTelephony: (text: string) => Promise<Buffer>;
 };
 
+/** Default timeout for voice-call telephony synthesis requests. */
 export const TELEPHONY_DEFAULT_TTS_TIMEOUT_MS = 8000;
 
 type TelephonyModelOverrideConfig = {
@@ -45,6 +48,7 @@ type TelephonyModelOverrideConfig = {
   allowSeed?: boolean;
 };
 
+/** Create a telephony TTS provider that converts synthesized PCM to 8kHz mu-law. */
 export function createTelephonyTtsProvider(params: {
   coreConfig: CoreConfig;
   ttsOverride?: VoiceCallTtsConfig;

@@ -1,4 +1,4 @@
-// test/vitest vitest gateway core config helpers and runtime behavior.
+// Vitest project config for focused gateway core tests, excluding broader gateway lanes.
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
 const nonCoreGatewayTestExclude = [
@@ -19,6 +19,7 @@ const nonCoreGatewayTestExclude = [
   "src/gateway/sessions-history-http.test.ts",
 ];
 
+/** Create the gateway-core Vitest project config with non-core gateway tests excluded. */
 export function createGatewayCoreVitestConfig(env?: Record<string, string | undefined>) {
   return createScopedVitestConfig(["src/gateway/**/*.test.ts"], {
     dir: "src/gateway",
@@ -28,4 +29,5 @@ export function createGatewayCoreVitestConfig(env?: Record<string, string | unde
   });
 }
 
+/** Default gateway-core Vitest project configuration. */
 export default createGatewayCoreVitestConfig();

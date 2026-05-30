@@ -1,8 +1,9 @@
-// test/vitest vitest system load helpers and runtime behavior.
+// Vitest system-load helpers detect other active Vitest processes for local throttling.
 import { spawnSync } from "node:child_process";
 
 type EnvMap = Record<string, string | undefined>;
 
+/** Snapshot of other Vitest root/worker process pressure on the machine. */
 export type VitestProcessStats = {
   otherVitestRootCount: number;
   otherVitestWorkerCount: number;
@@ -51,6 +52,7 @@ function normalizeCpu(rawCpu: string): number {
   return Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
 }
 
+/** Parse `ps` output into Vitest process stats while ignoring the current process. */
 export function parseVitestProcessStats(
   psOutput: string,
   selfPid: number = process.pid,
@@ -90,6 +92,7 @@ export function parseVitestProcessStats(
   return stats;
 }
 
+/** Detect current non-Windows Vitest process pressure unless throttling is disabled. */
 export function detectVitestProcessStats(
   env: EnvMap = process.env,
   options: DetectVitestProcessStatsOptions = {},
@@ -117,6 +120,7 @@ export function detectVitestProcessStats(
   return { ...EMPTY_VITEST_PROCESS_STATS };
 }
 
+/** Return whether the caller requested throttle diagnostics in test output. */
 export function shouldPrintVitestThrottle(env: EnvMap = process.env): boolean {
   const normalized = env.OPENCLAW_VITEST_PRINT_SYSTEM_THROTTLE?.trim().toLowerCase();
   return normalized ? BOOLEAN_TRUE_VALUES.has(normalized) : false;

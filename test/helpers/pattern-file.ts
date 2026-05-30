@@ -1,8 +1,9 @@
-// test/helpers pattern file helpers and runtime behavior.
+// Pattern-file helpers create temporary JSON include/exclude files for Vitest config tests.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
+/** Create temp pattern files and expose cleanup for config tests. */
 export function createPatternFileHelper(prefix: string) {
   const tempDirs = new Set<string>();
 

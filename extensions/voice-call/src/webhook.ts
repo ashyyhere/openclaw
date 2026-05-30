@@ -1,4 +1,4 @@
-// extensions/voice-call/src webhook helpers and runtime behavior.
+// Voice-call webhook server handles provider callbacks, media streams, and realtime talk events.
 import http from "node:http";
 import { URL } from "node:url";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
