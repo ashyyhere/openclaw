@@ -1,4 +1,4 @@
-// plugins installed plugin index store helpers and runtime behavior.
+// Persistence layer for the installed plugin index cache and refresh decisions.
 import { z } from "zod";
 import { saveJsonFile } from "../infra/json-file.js";
 import { tryReadJson, tryReadJsonSync, writeJson } from "../infra/json-files.js";
@@ -30,16 +30,16 @@ import {
   type RefreshInstalledPluginIndexParams,
 } from "./installed-plugin-index.js";
 import { clearPluginMetadataLifecycleCaches } from "./plugin-metadata-lifecycle.js";
-/** Re-exported API for src/plugins. */
+/** Store path resolver used by callers that need to inspect or override the index file location. */
 export {
   resolveInstalledPluginIndexStorePath,
   type InstalledPluginIndexStoreOptions,
 } from "./installed-plugin-index-store-path.js";
 
-/** Shared type for Installed Plugin Index Store State in src/plugins. */
+/** Freshness state for the persisted installed-plugin index. */
 export type InstalledPluginIndexStoreState = "missing" | "fresh" | "stale";
 
-/** Shared type for Installed Plugin Index Store Inspection in src/plugins. */
+/** Inspection result comparing the persisted index with a newly generated in-memory index. */
 export type InstalledPluginIndexStoreInspection = {
   state: InstalledPluginIndexStoreState;
   refreshReasons: readonly InstalledPluginIndexRefreshReason[];
@@ -163,7 +163,7 @@ function parseInstalledPluginIndex(value: unknown): InstalledPluginIndex | null 
   };
 }
 
-/** Reused helper for read Persisted Installed Plugin Index behavior in src/plugins. */
+/** Reads and validates the persisted installed-plugin index, returning null for invalid cache data. */
 export async function readPersistedInstalledPluginIndex(
   options: InstalledPluginIndexStoreOptions = {},
 ): Promise<InstalledPluginIndex | null> {
@@ -171,7 +171,7 @@ export async function readPersistedInstalledPluginIndex(
   return parseInstalledPluginIndex(parsed);
 }
 
-/** Reused helper for read Persisted Installed Plugin Index Sync behavior in src/plugins. */
+/** Synchronous persisted-index reader for startup paths that cannot await. */
 export function readPersistedInstalledPluginIndexSync(
   options: InstalledPluginIndexStoreOptions = {},
 ): InstalledPluginIndex | null {
@@ -179,7 +179,7 @@ export function readPersistedInstalledPluginIndexSync(
   return parseInstalledPluginIndex(parsed);
 }
 
-/** Reused helper for write Persisted Installed Plugin Index behavior in src/plugins. */
+/** Writes the installed-plugin index with private permissions and clears dependent metadata caches. */
 export async function writePersistedInstalledPluginIndex(
   index: InstalledPluginIndex,
   options: InstalledPluginIndexStoreOptions = {},
@@ -199,7 +199,7 @@ export async function writePersistedInstalledPluginIndex(
   return filePath;
 }
 
-/** Reused helper for write Persisted Installed Plugin Index Sync behavior in src/plugins. */
+/** Synchronous installed-plugin index writer for setup and test paths. */
 export function writePersistedInstalledPluginIndexSync(
   index: InstalledPluginIndex,
   options: InstalledPluginIndexStoreOptions = {},
@@ -270,7 +270,7 @@ function refreshPersistedPolicyState(
   };
 }
 
-/** Reused helper for inspect Persisted Installed Plugin Index behavior in src/plugins. */
+/** Compares the persisted index with current discovery state and reports invalidation reasons. */
 export async function inspectPersistedInstalledPluginIndex(
   params: LoadInstalledPluginIndexParams & InstalledPluginIndexStoreOptions = {},
 ): Promise<InstalledPluginIndexStoreInspection> {
@@ -298,7 +298,7 @@ export async function inspectPersistedInstalledPluginIndex(
   };
 }
 
-/** Reused helper for refresh Persisted Installed Plugin Index behavior in src/plugins. */
+/** Refreshes the persisted index, using a cheap policy-only update when file metadata is unchanged. */
 export async function refreshPersistedInstalledPluginIndex(
   params: RefreshInstalledPluginIndexParams & InstalledPluginIndexStoreOptions,
 ): Promise<InstalledPluginIndex> {
@@ -320,7 +320,7 @@ export async function refreshPersistedInstalledPluginIndex(
   return index;
 }
 
-/** Reused helper for refresh Persisted Installed Plugin Index Sync behavior in src/plugins. */
+/** Synchronous persisted-index refresh for callers already on sync plugin-discovery paths. */
 export function refreshPersistedInstalledPluginIndexSync(
   params: RefreshInstalledPluginIndexParams & InstalledPluginIndexStoreOptions,
 ): InstalledPluginIndex {
