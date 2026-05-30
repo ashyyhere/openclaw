@@ -6,4 +6,11 @@ export {
   extractText,
 } from "./inbound/extract.js";
 export { monitorWebInbox } from "./inbound/monitor.js";
-export type { WebInboundMessage, WebListenerCloseReason } from "./inbound/types.js";
+export type {
+  LegacyFlatWebInboundMessage,
+  WebInboundCallbackMessage,
+  WebInboundMessage,
+  WebInboundMessageInput,
+  WebInboundMessageWithDeprecatedAliases,
+  WebListenerCloseReason,
+} from "./inbound/types.js";

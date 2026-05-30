@@ -13,7 +13,7 @@ import { resolveDefaultGroupPolicy } from "openclaw/plugin-sdk/runtime-group-pol
 import { resolveGroupSessionKey } from "openclaw/plugin-sdk/session-store-runtime";
 import { resolveWhatsAppAccount, type ResolvedWhatsAppAccount } from "./accounts.js";
 import { getSelfIdentity, getSenderIdentity } from "./identity.js";
-import type { WebInboundMessage } from "./inbound/types.js";
+import type { WebInboundMessageWithDeprecatedAliases } from "./inbound/types.js";
 import { resolveWhatsAppRuntimeGroupPolicy } from "./runtime-group-policy.js";
 import { isSelfChatMode, normalizeE164 } from "./text-runtime.js";
 
@@ -178,7 +178,7 @@ export async function resolveWhatsAppIngressAccess(params: {
 
 export async function resolveWhatsAppCommandAuthorized(params: {
   cfg: OpenClawConfig;
-  msg: WebInboundMessage;
+  msg: WebInboundMessageWithDeprecatedAliases;
   policy?: ResolvedWhatsAppInboundPolicy;
 }): Promise<boolean> {
   const useAccessGroups = params.cfg.commands?.useAccessGroups !== false;

@@ -41,7 +41,11 @@ export {
 export {
   type ActiveWebListener,
   type ActiveWebSendOptions,
+  type LegacyFlatWebInboundMessage,
+  type WebInboundCallbackMessage,
   type WebInboundMessage,
+  type WebInboundMessageInput,
+  type WebInboundMessageWithDeprecatedAliases,
   type WebListenerCloseReason,
   type WhatsAppStructuredContactContext,
 } from "./src/inbound/types.js";
