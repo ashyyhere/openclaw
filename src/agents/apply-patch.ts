@@ -49,7 +49,7 @@ type UpdateFileHunk = {
 
 type Hunk = AddFileHunk | DeleteFileHunk | UpdateFileHunk;
 
-/** Shared type for Apply Patch Summary in src/agents. */
+/** File-level summary returned after an apply_patch request succeeds. */
 export type ApplyPatchSummary = {
   added: string[];
   modified: string[];

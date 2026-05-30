@@ -34,7 +34,7 @@ type AgentTaskCompletionInternalEvent = {
 /** Internal event payloads passed between child and parent agent runs. */
 export type AgentInternalEvent = AgentTaskCompletionInternalEvent;
 
-/** Re-exported API for src/agents, starting with INTERNAL RUNTIME CONTEXT BEGIN. */
+/** Runtime-context delimiters reused by internal-event formatting and sanitization. */
 export { INTERNAL_RUNTIME_CONTEXT_BEGIN, INTERNAL_RUNTIME_CONTEXT_END };
 
 function sanitizeSingleLineField(value: string, fallback: string): string {

@@ -55,5 +55,5 @@ export function createModelVisibilityPolicy(
   });
 }
 
-/** Re-exported API for src/agents, starting with Model Visibility Policy. */
+/** Effective provider/model visibility policy used by selection and fallback callers. */
 export type { ModelVisibilityPolicy };

@@ -28,7 +28,7 @@ const defaultCliAuthEpochDeps: CliAuthEpochDeps = {
 
 const cliAuthEpochDeps: CliAuthEpochDeps = { ...defaultCliAuthEpochDeps };
 
-/** Reused constant for CLI AUTH EPOCH VERSION behavior in src/agents. */
+/** Version salt for CLI/auth-profile fingerprinting when epoch inputs change shape. */
 export const CLI_AUTH_EPOCH_VERSION = 4;
 
 /** Override CLI auth epoch dependencies for tests. */
