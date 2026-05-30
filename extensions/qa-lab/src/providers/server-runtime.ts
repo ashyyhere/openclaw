@@ -1,4 +1,4 @@
-// extensions/qa-lab/src/providers server runtime helpers and runtime behavior.
+// QA Lab provider server runtime starts mock provider servers for selected modes.
 import { getQaProvider, type QaMockProviderServer, type QaProviderModeInput } from "./index.js";
 
 type QaProviderServerParams = {
@@ -16,6 +16,7 @@ async function startAimockProviderServer(params: QaProviderServerParams) {
   return await startQaAimockServer(params);
 }
 
+/** Starts the mock provider server for a provider mode, or returns null for live modes. */
 export async function startQaProviderServer(
   input: QaProviderModeInput,
   params?: { host?: string; port?: number },

@@ -1,4 +1,4 @@
-// extensions/qa-lab/src bus queries helpers and runtime behavior.
+// QA Lab bus query helpers normalize targets, clone state, and poll message events.
 import { normalizeOptionalLowercaseString } from "openclaw/plugin-sdk/string-coerce-runtime";
 import type {
   QaBusAttachment,
@@ -14,13 +14,16 @@ import type {
   QaBusToolCall,
 } from "./runtime-api.js";
 
+/** Default QA bus account id used when callers omit account routing. */
 export const DEFAULT_ACCOUNT_ID = "default";
 
+/** Normalizes optional account ids for QA bus operations. */
 export function normalizeAccountId(raw?: string): string {
   const trimmed = raw?.trim();
   return trimmed || DEFAULT_ACCOUNT_ID;
 }
 
+/** Parses a target string into a QA bus conversation and optional thread id. */
 export function normalizeConversationFromTarget(target: string): {
   conversation: QaBusConversation;
   threadId?: string;
@@ -56,6 +59,7 @@ export function normalizeConversationFromTarget(target: string): {
   };
 }
 
+/** Deep-clones a QA bus message before exposing it to callers. */
 export function cloneMessage(message: QaBusMessage): QaBusMessage {
   return {
     ...message,
@@ -77,6 +81,7 @@ function cloneToolCall(toolCall: QaBusToolCall): QaBusToolCall {
   };
 }
 
+/** Deep-clones a QA bus event before exposing it to callers. */
 export function cloneEvent(event: QaBusEvent): QaBusEvent {
   switch (event.kind) {
     case "inbound-message":
@@ -91,6 +96,7 @@ export function cloneEvent(event: QaBusEvent): QaBusEvent {
   throw new Error("Unsupported QA bus event kind");
 }
 
+/** Builds a serializable QA bus snapshot from in-memory state maps. */
 export function buildQaBusSnapshot(params: {
   cursor: number;
   conversations: Map<string, QaBusConversation>;
@@ -109,6 +115,7 @@ export function buildQaBusSnapshot(params: {
   };
 }
 
+/** Reads one QA bus message by id or throws when missing. */
 export function readQaBusMessage(params: {
   messages: Map<string, QaBusMessage>;
   input: QaBusReadMessageInput;
@@ -120,6 +127,7 @@ export function readQaBusMessage(params: {
   return cloneMessage(message);
 }
 
+/** Searches QA bus messages by account, conversation, thread, query, and limit. */
 export function searchQaBusMessages(params: {
   messages: Map<string, QaBusMessage>;
   input: QaBusSearchMessagesInput;
@@ -161,6 +169,7 @@ export function searchQaBusMessages(params: {
     .map((message) => cloneMessage(message));
 }
 
+/** Resolves the effective poll cursor, resetting stale cursors to zero. */
 export function resolveQaBusPollStartCursor(params: {
   currentCursor: number;
   requestedCursor?: number;
@@ -169,6 +178,7 @@ export function resolveQaBusPollStartCursor(params: {
   return params.currentCursor < requestedCursor ? 0 : requestedCursor;
 }
 
+/** Polls QA bus events after the effective cursor for one account. */
 export function pollQaBusEvents(params: {
   events: QaBusEvent[];
   cursor: number;

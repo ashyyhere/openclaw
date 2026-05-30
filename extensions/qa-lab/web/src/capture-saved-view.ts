@@ -1,4 +1,4 @@
-// extensions/qa-lab/web/src capture saved view helpers and runtime behavior.
+// QA Lab capture saved-view helpers sanitize persisted capture filter/view presets.
 import type { CaptureSavedView } from "./ui-render.js";
 
 const MAX_SAVED_VIEWS = 12;
@@ -66,6 +66,7 @@ function readTimelineZoom(value: unknown): CaptureSavedView["timelineZoom"] {
     : 100;
 }
 
+/** Normalizes one persisted capture saved view, dropping invalid records. */
 export function normalizeCaptureSavedView(value: unknown): CaptureSavedView | null {
   const record =
     typeof value === "object" && value !== null ? (value as Record<string, unknown>) : null;
@@ -106,6 +107,7 @@ export function normalizeCaptureSavedView(value: unknown): CaptureSavedView | nu
   };
 }
 
+/** Normalizes and bounds the persisted capture saved-view list. */
 export function normalizeCaptureSavedViews(value: unknown): CaptureSavedView[] {
   if (!Array.isArray(value)) {
     return [];

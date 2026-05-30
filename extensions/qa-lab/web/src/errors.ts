@@ -1,4 +1,5 @@
-// extensions/qa-lab/web/src errors helpers and runtime behavior.
+// QA Lab web error helpers flatten Error causes into readable UI messages.
+/** Formats unknown thrown values for display in QA Lab web UI. */
 export function formatErrorMessage(err: unknown): string {
   if (err instanceof Error) {
     let formatted = err.message || err.name || "Error";

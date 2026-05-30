@@ -1,4 +1,4 @@
-// extensions/qa-lab/web/src app helpers and runtime behavior.
+// QA Lab web app wires API calls, persisted UI state, and renderer callbacks.
 import { defaultQaModelForMode, isQaFastModeEnabled } from "../../model-selection.js";
 import { normalizeCaptureSavedView, normalizeCaptureSavedViews } from "./capture-saved-view.js";
 import { formatErrorMessage } from "./errors.js";
@@ -159,6 +159,7 @@ function isEditableElement(target: EventTarget | null): boolean {
   );
 }
 
+/** Creates and starts the QA Lab browser app in the provided root element. */
 export async function createQaLabApp(root: HTMLDivElement) {
   const state: UiState = {
     theme: detectTheme(),
