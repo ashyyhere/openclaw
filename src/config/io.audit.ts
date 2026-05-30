@@ -1,4 +1,5 @@
-// config io audit helpers and runtime behavior.
+// Persistent audit helpers for config reads/writes. Records include process and
+// filesystem metadata, with argv/env-like secrets redacted before persistence.
 import path from "node:path";
 import { redactSecrets, redactToolPayloadText } from "../logging/redact.js";
 import { resolveStateDir } from "./paths.js";
@@ -84,7 +85,7 @@ function parseFlagName(arg: string): string | null {
 //     `KEY=VALUE` env-style assignments, raw token shapes (sk-, ghp_, xox*,
 //     gsk_, AIza*, npm_, Telegram bot tokens, PEM blocks, Bearer headers,
 //     URL query secrets) using the shared redaction patterns.
-/** Reused helper for redact Config Audit Argv behavior in src/config. */
+/** Redacts credential-bearing CLI arguments before writing audit records. */
 export function redactConfigAuditArgv(argv: readonly string[]): string[] {
   const result: string[] = [];
   let redactNext = false;
@@ -123,7 +124,7 @@ function capArgv(argv: readonly string[] | undefined): string[] {
   return argv.slice(0, CONFIG_AUDIT_ARGV_CAP);
 }
 
-/** Reused helper for snapshot Config Audit Process Info behavior in src/config. */
+/** Captures the current process identity and redacted argv for audit records. */
 export function snapshotConfigAuditProcessInfo(): ConfigAuditProcessInfo {
   return {
     pid: process.pid,
@@ -136,7 +137,7 @@ export function snapshotConfigAuditProcessInfo(): ConfigAuditProcessInfo {
 
 const CONFIG_AUDIT_LOG_FILENAME = "config-audit.jsonl";
 
-/** Shared type for Config Write Audit Result in src/config. */
+/** Config write outcome recorded in the audit log. */
 export type ConfigWriteAuditResult = "rename" | "copy-fallback" | "failed" | "rejected";
 
 type ConfigWriteAuditRecord = {
@@ -180,7 +181,7 @@ type ConfigWriteAuditRecord = {
   errorMessage?: string;
 };
 
-/** Shared type for Config Observe Audit Record in src/config. */
+/** Audit record emitted when config is read/observed and compared with backups. */
 export type ConfigObserveAuditRecord = {
   ts: string;
   source: "config-io";
@@ -309,12 +310,12 @@ function resolveConfigAuditProcessInfo(
   return snapshotConfigAuditProcessInfo();
 }
 
-/** Reused helper for resolve Config Audit Log Path behavior in src/config. */
+/** Resolves the persistent config audit JSONL path under the state directory. */
 export function resolveConfigAuditLogPath(env: NodeJS.ProcessEnv, homedir: () => string): string {
   return path.join(resolveStateDir(env, homedir), "logs", CONFIG_AUDIT_LOG_FILENAME);
 }
 
-/** Reused helper for format Config Overwrite Log Message behavior in src/config. */
+/** Formats the operator-facing summary for a config overwrite event. */
 export function formatConfigOverwriteLogMessage(params: {
   configPath: string;
   previousHash: string | null;
@@ -326,7 +327,7 @@ export function formatConfigOverwriteLogMessage(params: {
   return `Config overwrite: ${params.configPath} (sha256 ${params.previousHash ?? "unknown"} -> ${params.nextHash}, backup=${params.configPath}.bak${changeSummary})`;
 }
 
-/** Reused helper for create Config Write Audit Record Base behavior in src/config. */
+/** Builds the common write audit record before the final filesystem result is known. */
 export function createConfigWriteAuditRecordBase(params: {
   configPath: string;
   env: NodeJS.ProcessEnv;
@@ -379,7 +380,7 @@ export function createConfigWriteAuditRecordBase(params: {
   };
 }
 
-/** Reused helper for finalize Config Write Audit Record behavior in src/config. */
+/** Adds write result, next-file metadata, and error details to a write audit record. */
 export function finalizeConfigWriteAuditRecord(params: {
   base: ConfigWriteAuditRecordBase;
   result: ConfigWriteAuditResult;
@@ -447,7 +448,7 @@ function resolveConfigAuditAppendRecord(params: ConfigAuditAppendParams): Config
   return redactSecrets(record as ConfigAuditRecord);
 }
 
-/** Shared type for Config Audit Scrub Result in src/config. */
+/** Summary returned after redacting historical config audit records. */
 export type ConfigAuditScrubResult = {
   scanned: number;
   rewritten: number;
@@ -484,7 +485,7 @@ type ConfigAuditScrubFs = {
 // Atomic write: produces a sibling `*.scrub.tmp` file at mode `0o600`, then
 // renames it over the audit log. The temp file is unlinked on any error path
 // so a partial scrub never leaves plaintext at rest.
-/** Reused helper for scrub Config Audit Log behavior in src/config. */
+/** Rewrites historical audit argv fields through the current redactor. */
 export async function scrubConfigAuditLog(params: {
   fs: ConfigAuditScrubFs;
   env: NodeJS.ProcessEnv;
@@ -618,7 +619,7 @@ export async function scrubConfigAuditLog(params: {
   return { scanned, rewritten, skipped, aborted: false };
 }
 
-/** Reused helper for append Config Audit Record behavior in src/config. */
+/** Appends a redacted config audit record asynchronously on a best-effort basis. */
 export async function appendConfigAuditRecord(params: ConfigAuditAppendParams): Promise<void> {
   try {
     const auditPath = resolveConfigAuditLogPath(params.env, params.homedir);
@@ -633,7 +634,7 @@ export async function appendConfigAuditRecord(params: ConfigAuditAppendParams): 
   }
 }
 
-/** Reused helper for append Config Audit Record Sync behavior in src/config. */
+/** Appends a redacted config audit record synchronously on a best-effort basis. */
 export function appendConfigAuditRecordSync(params: ConfigAuditAppendParams): void {
   try {
     const auditPath = resolveConfigAuditLogPath(params.env, params.homedir);

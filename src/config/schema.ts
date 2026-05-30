@@ -1,4 +1,5 @@
-// config schema helpers and runtime behavior.
+// Config schema assembly and lookup helpers for UI/Gateway callers. Base schema
+// is merged with plugin/channel metadata while lookup responses stay bounded.
 import crypto from "node:crypto";
 import { CHANNEL_IDS } from "../channels/ids.js";
 import { parseConfigPathArrayIndex } from "../shared/path-array-index.js";
@@ -15,10 +16,10 @@ import {
 } from "./schema.shared.js";
 import { applyDerivedTags } from "./schema.tags.js";
 
-/** Re-exported API for src/config, starting with Config Ui Hint. */
+/** UI hint types paired with config schema nodes. */
 export type { ConfigUiHint, ConfigUiHints } from "./schema.hints.js";
 
-/** Shared type for Config Schema in src/config. */
+/** JSON-schema-like config schema object returned by the config schema API. */
 export type ConfigSchema = Record<string, unknown>;
 
 type JsonSchemaNode = Record<string, unknown>;
@@ -103,7 +104,7 @@ function mergeObjectSchema(base: JsonSchemaObject, extension: JsonSchemaObject):
   return merged;
 }
 
-/** Shared type for Config Schema Response in src/config. */
+/** Full config schema response including UI hints and generation metadata. */
 export type ConfigSchemaResponse = {
   schema: ConfigSchema;
   uiHints: ConfigUiHints;
@@ -111,7 +112,7 @@ export type ConfigSchemaResponse = {
   generatedAt: string;
 };
 
-/** Shared type for Config Schema Lookup Child in src/config. */
+/** Child entry listed by a bounded config schema lookup response. */
 export type ConfigSchemaLookupChild = {
   key: string;
   path: string;
@@ -123,20 +124,20 @@ export type ConfigSchemaLookupChild = {
   hintPath?: string;
 };
 
-/** Shared type for Config Schema Reload Kind in src/config. */
+/** Reload behavior required after changing a config path. */
 export type ConfigSchemaReloadKind = "restart" | "hot" | "none";
 
-/** Shared type for Config Schema Reload Metadata in src/config. */
+/** Reload metadata attached to a config schema lookup path. */
 export type ConfigSchemaReloadMetadata = {
   kind: ConfigSchemaReloadKind;
 };
 
-/** Shared type for Config Schema Reload Metadata Resolver in src/config. */
+/** Callback that supplies reload metadata for a config path. */
 export type ConfigSchemaReloadMetadataResolver = (
   path: string,
 ) => ConfigSchemaReloadMetadata | null | undefined;
 
-/** Shared type for Config Schema Lookup Result in src/config. */
+/** Bounded schema and child listing for one normalized config path. */
 export type ConfigSchemaLookupResult = {
   path: string;
   schema: JsonSchemaNode;
@@ -146,7 +147,7 @@ export type ConfigSchemaLookupResult = {
   children: ConfigSchemaLookupChild[];
 };
 
-/** Shared type for Plugin Ui Metadata in src/config. */
+/** Plugin-provided schema and UI metadata merged into config schema responses. */
 export type PluginUiMetadata = {
   id: string;
   name?: string;
@@ -158,7 +159,7 @@ export type PluginUiMetadata = {
   configSchema?: JsonSchemaNode;
 };
 
-/** Shared type for Channel Ui Metadata in src/config. */
+/** Channel-provided schema and UI metadata merged into config schema responses. */
 export type ChannelUiMetadata = {
   id: string;
   label?: string;
@@ -575,7 +576,7 @@ function buildBaseConfigSchema(): ConfigSchemaResponse {
   return next;
 }
 
-/** Reused helper for build Config Schema behavior in src/config. */
+/** Builds the merged config schema response for bundled and dynamic extensions. */
 export function buildConfigSchema(params?: {
   plugins?: PluginUiMetadata[];
   channels?: ChannelUiMetadata[];
@@ -813,7 +814,7 @@ function buildLookupChildren(
   return children;
 }
 
-/** Reused helper for lookup Config Schema behavior in src/config. */
+/** Looks up one config path and returns a bounded schema node plus children. */
 export function lookupConfigSchema(
   response: ConfigSchemaResponse,
   path: string,

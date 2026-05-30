@@ -1,4 +1,5 @@
-// config/sessions paths helpers and runtime behavior.
+// Session path resolvers. These keep transcript/store paths under the
+// per-agent sessions directory while tolerating older absolute persisted paths.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -18,7 +19,7 @@ function resolveAgentSessionsDir(
   return path.join(root, "agents", id, "sessions");
 }
 
-/** Reused helper for resolve Session Transcripts Dir behavior in src/config/sessions. */
+/** Resolves the default agent transcript directory. */
 export function resolveSessionTranscriptsDir(
   env: NodeJS.ProcessEnv = process.env,
   homedir: () => string = () => resolveRequiredHomeDir(env, os.homedir),
@@ -26,7 +27,7 @@ export function resolveSessionTranscriptsDir(
   return resolveAgentSessionsDir(DEFAULT_AGENT_ID, env, homedir);
 }
 
-/** Reused helper for resolve Session Transcripts Dir For Agent behavior in src/config/sessions. */
+/** Resolves the transcript directory for a specific agent id. */
 export function resolveSessionTranscriptsDirForAgent(
   agentId?: string,
   env: NodeJS.ProcessEnv = process.env,
@@ -35,12 +36,12 @@ export function resolveSessionTranscriptsDirForAgent(
   return resolveAgentSessionsDir(agentId, env, homedir);
 }
 
-/** Reused helper for resolve Default Session Store Path behavior in src/config/sessions. */
+/** Resolves the default `sessions.json` store path for an agent. */
 export function resolveDefaultSessionStorePath(agentId?: string): string {
   return path.join(resolveAgentSessionsDir(agentId), "sessions.json");
 }
 
-/** Shared type for Session File Path Options in src/config/sessions. */
+/** Overrides used when resolving transcript files outside default agent state. */
 export type SessionFilePathOptions = {
   agentId?: string;
   sessionsDir?: string;
@@ -48,7 +49,7 @@ export type SessionFilePathOptions = {
 
 const MULTI_STORE_PATH_SENTINEL = "(multiple)";
 
-/** Reused helper for resolve Session File Path Options behavior in src/config/sessions. */
+/** Converts legacy store path and agent id inputs into path resolver options. */
 export function resolveSessionFilePathOptions(params: {
   agentId?: string;
   storePath?: string;
@@ -65,10 +66,10 @@ export function resolveSessionFilePathOptions(params: {
   return undefined;
 }
 
-/** Reused constant for SAFE SESSION ID RE behavior in src/config/sessions. */
+/** Accepted session id shape for transcript filenames. */
 export const SAFE_SESSION_ID_RE = /^[a-z0-9][a-z0-9._-]{0,127}$/i;
 
-/** Reused helper for validate Session Id behavior in src/config/sessions. */
+/** Validates and trims a session id before it is used in a transcript filename. */
 export function validateSessionId(sessionId: string): string {
   const trimmed = sessionId.trim();
   if (
@@ -245,7 +246,7 @@ function resolvePathWithinSessionsDir(
   return path.resolve(realBase, normalized);
 }
 
-/** Reused helper for resolve Session Transcript Path In Dir behavior in src/config/sessions. */
+/** Resolves a transcript path inside a known sessions directory. */
 export function resolveSessionTranscriptPathInDir(
   sessionId: string,
   sessionsDir: string,
@@ -265,7 +266,7 @@ export function resolveSessionTranscriptPathInDir(
   return resolvePathWithinSessionsDir(sessionsDir, fileName);
 }
 
-/** Reused helper for resolve Session Transcript Path behavior in src/config/sessions. */
+/** Resolves a transcript path for a session id, agent id, and optional topic. */
 export function resolveSessionTranscriptPath(
   sessionId: string,
   agentId?: string,
@@ -274,7 +275,7 @@ export function resolveSessionTranscriptPath(
   return resolveSessionTranscriptPathInDir(sessionId, resolveAgentSessionsDir(agentId), topicId);
 }
 
-/** Reused helper for resolve Session File Path behavior in src/config/sessions. */
+/** Resolves a persisted session file path or falls back to the transcript path. */
 export function resolveSessionFilePath(
   sessionId: string,
   entry?: { sessionFile?: string },
@@ -292,7 +293,7 @@ export function resolveSessionFilePath(
   return resolveSessionTranscriptPathInDir(sessionId, sessionsDir);
 }
 
-/** Reused helper for resolve Store Path behavior in src/config/sessions. */
+/** Resolves a session store path, expanding `~` and `{agentId}` placeholders. */
 export function resolveStorePath(
   store?: string,
   opts?: { agentId?: string; env?: NodeJS.ProcessEnv },
@@ -328,7 +329,7 @@ export function resolveStorePath(
   return path.resolve(store);
 }
 
-/** Reused helper for resolve Agents Dir From Session Store Path behavior in src/config/sessions. */
+/** Extracts the shared agents directory from a canonical `sessions.json` path. */
 export function resolveAgentsDirFromSessionStorePath(storePath: string): string | undefined {
   const candidateAbsPath = path.resolve(storePath);
   if (path.basename(candidateAbsPath) !== "sessions.json") {
