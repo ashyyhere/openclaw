@@ -1,4 +1,4 @@
-// llm/providers register builtins helpers and runtime behavior.
+// Registers built-in LLM API providers through lazy stream-module loaders.
 import { registerApiProvider, unregisterApiProviders } from "../api-registry.js";
 import type {
   Api,
@@ -77,7 +77,7 @@ interface OpenAIResponsesProviderModule {
   streamSimpleOpenAIResponses: StreamFunction<"openai-responses", SimpleStreamOptions>;
 }
 
-/** Reused constant for BUILT IN API PROVIDER SOURCE ID behavior in src/llm/providers. */
+/** Registry source id used to replace all core built-in provider registrations as one group. */
 export const BUILT_IN_API_PROVIDER_SOURCE_ID = "core:built-in";
 
 let anthropicProviderModulePromise:
@@ -303,48 +303,48 @@ function loadOpenAIResponsesProviderModule(): Promise<
   return openAIResponsesProviderModulePromise;
 }
 
-/** Reused constant for stream Anthropic behavior in src/llm/providers. */
+/** Lazy Anthropic Messages stream entrypoint. */
 export const streamAnthropic = createLazyStream(loadAnthropicProviderModule);
-/** Reused constant for stream Simple Anthropic behavior in src/llm/providers. */
+/** Lazy Anthropic Messages simple-stream entrypoint. */
 export const streamSimpleAnthropic = createLazySimpleStream(loadAnthropicProviderModule);
-/** Reused constant for stream Azure Open AIResponses behavior in src/llm/providers. */
+/** Lazy Azure OpenAI Responses stream entrypoint. */
 export const streamAzureOpenAIResponses = createLazyStream(loadAzureOpenAIResponsesProviderModule);
-/** Reused constant for stream Simple Azure Open AIResponses behavior in src/llm/providers. */
+/** Lazy Azure OpenAI Responses simple-stream entrypoint. */
 export const streamSimpleAzureOpenAIResponses = createLazySimpleStream(
   loadAzureOpenAIResponsesProviderModule,
 );
-/** Reused constant for stream Google behavior in src/llm/providers. */
+/** Lazy Google Generative AI stream entrypoint. */
 export const streamGoogle = createLazyStream(loadGoogleProviderModule);
-/** Reused constant for stream Simple Google behavior in src/llm/providers. */
+/** Lazy Google Generative AI simple-stream entrypoint. */
 export const streamSimpleGoogle = createLazySimpleStream(loadGoogleProviderModule);
-/** Reused constant for stream Google Vertex behavior in src/llm/providers. */
+/** Lazy Google Vertex stream entrypoint. */
 export const streamGoogleVertex = createLazyStream(loadGoogleVertexProviderModule);
-/** Reused constant for stream Simple Google Vertex behavior in src/llm/providers. */
+/** Lazy Google Vertex simple-stream entrypoint. */
 export const streamSimpleGoogleVertex = createLazySimpleStream(loadGoogleVertexProviderModule);
-/** Reused constant for stream Mistral behavior in src/llm/providers. */
+/** Lazy Mistral Conversations stream entrypoint. */
 export const streamMistral = createLazyStream(loadMistralProviderModule);
-/** Reused constant for stream Simple Mistral behavior in src/llm/providers. */
+/** Lazy Mistral Conversations simple-stream entrypoint. */
 export const streamSimpleMistral = createLazySimpleStream(loadMistralProviderModule);
-/** Reused constant for stream Open AICodex Responses behavior in src/llm/providers. */
+/** Lazy OpenAI Codex Responses stream entrypoint. */
 export const streamOpenAICodexResponses = createLazyStream(loadOpenAICodexResponsesProviderModule);
-/** Reused constant for stream Simple Open AICodex Responses behavior in src/llm/providers. */
+/** Lazy OpenAI Codex Responses simple-stream entrypoint. */
 export const streamSimpleOpenAICodexResponses = createLazySimpleStream(
   loadOpenAICodexResponsesProviderModule,
 );
-/** Reused constant for stream Open AICompletions behavior in src/llm/providers. */
+/** Lazy OpenAI Chat Completions stream entrypoint. */
 export const streamOpenAICompletions = createLazyStream(loadOpenAICompletionsProviderModule);
-/** Reused constant for stream Simple Open AICompletions behavior in src/llm/providers. */
+/** Lazy OpenAI Chat Completions simple-stream entrypoint. */
 export const streamSimpleOpenAICompletions = createLazySimpleStream(
   loadOpenAICompletionsProviderModule,
 );
-/** Reused constant for stream Open AIResponses behavior in src/llm/providers. */
+/** Lazy OpenAI Responses stream entrypoint. */
 export const streamOpenAIResponses = createLazyStream(loadOpenAIResponsesProviderModule);
-/** Reused constant for stream Simple Open AIResponses behavior in src/llm/providers. */
+/** Lazy OpenAI Responses simple-stream entrypoint. */
 export const streamSimpleOpenAIResponses = createLazySimpleStream(
   loadOpenAIResponsesProviderModule,
 );
 
-/** Reused helper for register Built In Api Providers behavior in src/llm/providers. */
+/** Register all core API provider stream implementations in the global API registry. */
 export function registerBuiltInApiProviders(): void {
   registerApiProvider(
     {
@@ -419,7 +419,7 @@ export function registerBuiltInApiProviders(): void {
   );
 }
 
-/** Reused helper for reset Api Providers behavior in src/llm/providers. */
+/** Replace the built-in provider registrations with a freshly registered set. */
 export function resetApiProviders(): void {
   unregisterApiProviders(BUILT_IN_API_PROVIDER_SOURCE_ID);
   registerBuiltInApiProviders();
