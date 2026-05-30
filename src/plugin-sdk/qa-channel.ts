@@ -1,4 +1,4 @@
-// Manual facade. Keep loader boundary explicit.
+// Lazy public SDK facade for the bundled QA channel and QA bus protocol helpers.
 import type { ChannelPlugin } from "../channels/plugins/types.plugin.js";
 import {
   createLazyFacadeObjectValue,
@@ -15,7 +15,7 @@ import type {
   QaBusToolCall,
 } from "./qa-channel-protocol.js";
 
-/** Shared type for this surface in src/plugin-sdk. */
+/** QA bus protocol types re-exported for plugin and test callers. */
 export type * from "./qa-channel-protocol.js";
 
 type QaTargetParts = {
@@ -98,69 +98,69 @@ function loadFacadeModule(): FacadeModule {
   });
 }
 
-/** Reused constant for build Qa Target behavior in src/plugin-sdk. */
+/** Builds a canonical QA target string from chat/conversation/thread parts. */
 export const buildQaTarget: FacadeModule["buildQaTarget"] = ((...args) =>
   loadFacadeModule().buildQaTarget(...args)) as FacadeModule["buildQaTarget"];
 
-/** Reused constant for format Qa Target behavior in src/plugin-sdk. */
+/** Formats a QA target for user-facing channel display. */
 export const formatQaTarget: FacadeModule["buildQaTarget"] = ((...args) =>
   loadFacadeModule().buildQaTarget(...args)) as FacadeModule["buildQaTarget"];
 
-/** Reused constant for create Qa Bus Thread behavior in src/plugin-sdk. */
+/** Creates a QA bus thread through the bundled channel runtime. */
 export const createQaBusThread: FacadeModule["createQaBusThread"] = ((...args) =>
   loadFacadeModule().createQaBusThread(...args)) as FacadeModule["createQaBusThread"];
 
-/** Reused constant for delete Qa Bus Message behavior in src/plugin-sdk. */
+/** Deletes a QA bus message and returns the updated message state. */
 export const deleteQaBusMessage: FacadeModule["deleteQaBusMessage"] = ((...args) =>
   loadFacadeModule().deleteQaBusMessage(...args)) as FacadeModule["deleteQaBusMessage"];
 
-/** Reused constant for edit Qa Bus Message behavior in src/plugin-sdk. */
+/** Edits a QA bus message through the bundled channel runtime. */
 export const editQaBusMessage: FacadeModule["editQaBusMessage"] = ((...args) =>
   loadFacadeModule().editQaBusMessage(...args)) as FacadeModule["editQaBusMessage"];
 
-/** Reused constant for get Qa Bus State behavior in src/plugin-sdk. */
+/** Reads the current QA bus state snapshot. */
 export const getQaBusState: FacadeModule["getQaBusState"] = ((...args) =>
   loadFacadeModule().getQaBusState(...args)) as FacadeModule["getQaBusState"];
 
-/** Reused constant for inject Qa Bus Inbound Message behavior in src/plugin-sdk. */
+/** Injects an inbound QA bus message for channel and integration tests. */
 export const injectQaBusInboundMessage: FacadeModule["injectQaBusInboundMessage"] = ((...args) =>
   loadFacadeModule().injectQaBusInboundMessage(
     ...args,
   )) as FacadeModule["injectQaBusInboundMessage"];
 
-/** Reused constant for normalize Qa Target behavior in src/plugin-sdk. */
+/** Normalizes raw QA target text when it can be parsed. */
 export const normalizeQaTarget: FacadeModule["normalizeQaTarget"] = ((...args) =>
   loadFacadeModule().normalizeQaTarget(...args)) as FacadeModule["normalizeQaTarget"];
 
-/** Reused constant for parse Qa Target behavior in src/plugin-sdk. */
+/** Parses a QA target into chat, conversation, and optional thread parts. */
 export const parseQaTarget: FacadeModule["parseQaTarget"] = ((...args) =>
   loadFacadeModule().parseQaTarget(...args)) as FacadeModule["parseQaTarget"];
 
-/** Reused constant for poll Qa Bus behavior in src/plugin-sdk. */
+/** Polls QA bus events for an account from a cursor. */
 export const pollQaBus: FacadeModule["pollQaBus"] = ((...args) =>
   loadFacadeModule().pollQaBus(...args)) as FacadeModule["pollQaBus"];
 
-/** Reused constant for qa Channel Plugin behavior in src/plugin-sdk. */
+/** Lazy channel plugin descriptor exposed through the SDK facade. */
 export const qaChannelPlugin: FacadeModule["qaChannelPlugin"] = createLazyFacadeObjectValue(
   () => loadFacadeModule().qaChannelPlugin,
 );
 
-/** Reused constant for react To Qa Bus Message behavior in src/plugin-sdk. */
+/** Applies an emoji reaction to a QA bus message. */
 export const reactToQaBusMessage: FacadeModule["reactToQaBusMessage"] = ((...args) =>
   loadFacadeModule().reactToQaBusMessage(...args)) as FacadeModule["reactToQaBusMessage"];
 
-/** Reused constant for read Qa Bus Message behavior in src/plugin-sdk. */
+/** Reads one QA bus message by id. */
 export const readQaBusMessage: FacadeModule["readQaBusMessage"] = ((...args) =>
   loadFacadeModule().readQaBusMessage(...args)) as FacadeModule["readQaBusMessage"];
 
-/** Reused constant for search Qa Bus Messages behavior in src/plugin-sdk. */
+/** Searches QA bus messages using the protocol query shape. */
 export const searchQaBusMessages: FacadeModule["searchQaBusMessages"] = ((...args) =>
   loadFacadeModule().searchQaBusMessages(...args)) as FacadeModule["searchQaBusMessages"];
 
-/** Reused constant for send Qa Bus Message behavior in src/plugin-sdk. */
+/** Sends a QA bus message with optional reply, attachment, and tool-call data. */
 export const sendQaBusMessage: FacadeModule["sendQaBusMessage"] = ((...args) =>
   loadFacadeModule().sendQaBusMessage(...args)) as FacadeModule["sendQaBusMessage"];
 
-/** Reused constant for set Qa Channel Runtime behavior in src/plugin-sdk. */
+/** Installs the QA channel runtime used by the facade methods. */
 export const setQaChannelRuntime: FacadeModule["setQaChannelRuntime"] = ((...args) =>
   loadFacadeModule().setQaChannelRuntime(...args)) as FacadeModule["setQaChannelRuntime"];
