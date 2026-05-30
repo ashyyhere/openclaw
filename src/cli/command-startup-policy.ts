@@ -2,12 +2,12 @@ import { isTruthyEnvValue } from "../infra/env.js";
 import type { CliCommandPluginLoadPolicy } from "./command-catalog.js";
 import { resolveCliCommandPathPolicy } from "./command-path-policy.js";
 
-/** Reused helper for should Bypass Config Guard For Command Path behavior in src/cli. */
+/** Returns whether this command path is allowed to run before config validation. */
 export function shouldBypassConfigGuardForCommandPath(commandPath: string[]): boolean {
   return resolveCliCommandPathPolicy(commandPath).bypassConfigGuard;
 }
 
-/** Reused helper for should Skip Route Config Guard For Command Path behavior in src/cli. */
+/** Applies route-mode config-guard policy, including JSON-output suppression rules. */
 export function shouldSkipRouteConfigGuardForCommandPath(params: {
   commandPath: string[];
   suppressDoctorStdout: boolean;
@@ -19,7 +19,7 @@ export function shouldSkipRouteConfigGuardForCommandPath(params: {
   );
 }
 
-/** Reused helper for should Load Plugins For Command Path behavior in src/cli. */
+/** Resolves command-path plugin loading policy for the current argv/output mode. */
 export function shouldLoadPluginsForCommandPath(params: {
   argv?: string[];
   commandPath: string[];
@@ -50,7 +50,7 @@ function shouldLoadPlugins(params: {
   return loadPlugins === "always" || (loadPlugins === "text-only" && !params.jsonOutputMode);
 }
 
-/** Reused helper for should Hide Cli Banner For Command Path behavior in src/cli. */
+/** Hides the banner when either env or command-path policy suppresses it. */
 export function shouldHideCliBannerForCommandPath(
   commandPath: string[],
   env: NodeJS.ProcessEnv = process.env,
@@ -61,12 +61,12 @@ export function shouldHideCliBannerForCommandPath(
   );
 }
 
-/** Reused helper for should Ensure Cli Path For Command Path behavior in src/cli. */
+/** Returns whether startup should repair/ensure the CLI path before this command. */
 export function shouldEnsureCliPathForCommandPath(commandPath: string[]): boolean {
   return commandPath.length === 0 || resolveCliCommandPathPolicy(commandPath).ensureCliPath;
 }
 
-/** Reused helper for resolve Cli Startup Policy behavior in src/cli. */
+/** Produces the consolidated startup policy used before command execution. */
 export function resolveCliStartupPolicy(params: {
   argv?: string[];
   commandPath: string[];

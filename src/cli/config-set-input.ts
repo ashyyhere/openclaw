@@ -5,7 +5,7 @@ import {
   normalizeStringifiedOptionalString,
 } from "../shared/string-coerce.js";
 
-/** Shared type for Config Set Options in src/cli. */
+/** Raw `openclaw config set` options before value/ref/provider mode is resolved. */
 export type ConfigSetOptions = {
   strictJson?: boolean;
   /** @deprecated Use strictJson. */
@@ -37,7 +37,7 @@ export type ConfigSetOptions = {
   batchFile?: string;
 };
 
-/** Shared type for Config Set Batch Entry in src/cli. */
+/** Single batch config mutation; exactly one of value/ref/provider must be present. */
 export type ConfigSetBatchEntry = {
   path: string;
   value?: unknown;
@@ -45,19 +45,19 @@ export type ConfigSetBatchEntry = {
   provider?: unknown;
 };
 
-/** Reused helper for has Batch Mode behavior in src/cli. */
+/** Detects whether config set should read a JSON/JSON5 batch instead of one path/value pair. */
 export function hasBatchMode(opts: ConfigSetOptions): boolean {
   return Boolean(
     normalizeOptionalString(opts.batchJson) || normalizeOptionalString(opts.batchFile),
   );
 }
 
-/** Reused helper for has Ref Builder Options behavior in src/cli. */
+/** Detects options that build a config reference value. */
 export function hasRefBuilderOptions(opts: ConfigSetOptions): boolean {
   return Boolean(opts.refProvider || opts.refSource || opts.refId);
 }
 
-/** Reused helper for has Provider Builder Options behavior in src/cli. */
+/** Detects options that build an executable provider config value. */
 export function hasProviderBuilderOptions(opts: ConfigSetOptions): boolean {
   return Boolean(
     opts.providerSource ||
@@ -121,7 +121,7 @@ function parseBatchEntries(raw: string, sourceLabel: string): ConfigSetBatchEntr
   return out;
 }
 
-/** Reused helper for parse Batch Source behavior in src/cli. */
+/** Parses an inline or file-backed batch source into validated mutation entries. */
 export function parseBatchSource(opts: ConfigSetOptions): ConfigSetBatchEntry[] | null {
   const batchJson = normalizeOptionalString(opts.batchJson);
   const batchFile = normalizeOptionalString(opts.batchFile);

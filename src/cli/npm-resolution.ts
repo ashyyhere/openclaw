@@ -3,7 +3,7 @@ import {
   type NpmSpecResolution as NpmResolutionMetadata,
 } from "../infra/install-source-utils.js";
 
-/** Reused helper for resolve Pinned Npm Spec behavior in src/cli. */
+/** Chooses the install-record spec for `--pin`, warning when exact resolution is unavailable. */
 export function resolvePinnedNpmSpec(params: {
   rawSpec: string;
   pin: boolean;
@@ -25,7 +25,7 @@ export function resolvePinnedNpmSpec(params: {
   };
 }
 
-/** Reused helper for map Npm Resolution Metadata behavior in src/cli. */
+/** Converts npm resolution metadata into persisted install-record fields. */
 export function mapNpmResolutionMetadata(resolution?: NpmResolutionMetadata): {
   resolvedName?: string;
   resolvedVersion?: string;
@@ -37,7 +37,7 @@ export function mapNpmResolutionMetadata(resolution?: NpmResolutionMetadata): {
   return buildNpmResolutionFields(resolution);
 }
 
-/** Reused helper for build Npm Install Record Fields behavior in src/cli. */
+/** Builds the npm-specific install-record fields persisted after plugin install. */
 export function buildNpmInstallRecordFields(params: {
   spec: string;
   installPath: string;
@@ -64,7 +64,7 @@ export function buildNpmInstallRecordFields(params: {
   };
 }
 
-/** Reused helper for resolve Pinned Npm Install Record behavior in src/cli. */
+/** Builds a pinned npm install record and emits any pinning notice/warning. */
 export function resolvePinnedNpmInstallRecord(params: {
   rawSpec: string;
   pin: boolean;
@@ -88,7 +88,7 @@ export function resolvePinnedNpmInstallRecord(params: {
   });
 }
 
-/** Reused helper for resolve Pinned Npm Install Record For Cli behavior in src/cli. */
+/** CLI adapter for pinned npm install records that formats warnings before logging. */
 export function resolvePinnedNpmInstallRecordForCli(
   rawSpec: string,
   pin: boolean,
@@ -109,7 +109,7 @@ export function resolvePinnedNpmInstallRecordForCli(
   });
 }
 
-/** Reused helper for log Pinned Npm Spec Messages behavior in src/cli. */
+/** Emits the warning/notice pair returned by `resolvePinnedNpmSpec`. */
 export function logPinnedNpmSpecMessages(
   pinInfo: { pinWarning?: string; pinNotice?: string },
   log: (message: string) => void,
