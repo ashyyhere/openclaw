@@ -29,7 +29,7 @@ const findSchema = Type.Object({
   ),
   limit: Type.Optional(Type.Number({ description: "Maximum number of results (default: 1000)" })),
 });
-/** Re-exported API for src/agents/sessions, starting with Find Tool Details. */
+/** Find tool input/details contracts shared with renderers and callers. */
 export type { FindToolDetails, FindToolInput } from "./tool-contracts.js";
 
 const DEFAULT_LIMIT = 1000;
@@ -55,7 +55,7 @@ const defaultFindOperations: FindOperations = {
   glob: () => [],
 };
 
-/** Shared type for Find Tool Options in src/agents/sessions. */
+/** Dependency injection options for find tool filesystem/glob operations. */
 export interface FindToolOptions {
   /** Custom operations for find. Default: local filesystem plus fd */
   operations?: FindOperations;
@@ -149,6 +149,7 @@ function buildFindResult(params: {
   };
 }
 
+/** Create the find tool definition for a workspace cwd and optional operations. */
 export function createFindToolDefinition(
   cwd: string,
   options?: FindToolOptions,

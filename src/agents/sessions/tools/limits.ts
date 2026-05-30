@@ -6,7 +6,7 @@ export function normalizePositiveLimit(value: number | undefined, fallback: numb
   return Math.max(1, Math.floor(value));
 }
 
-/** Reused constant for SESSION TOOL STDERR TAIL BYTES behavior in src/agents/sessions. */
+/** Maximum stderr bytes retained for session tool error tails. */
 export const SESSION_TOOL_STDERR_TAIL_BYTES = 64 * 1024;
 
 function decodeUtf8TextTail(buffer: Buffer, maxBytes: number): string {

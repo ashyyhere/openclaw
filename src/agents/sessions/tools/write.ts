@@ -27,7 +27,7 @@ const writeSchema = Type.Object({
   path: Type.String({ description: "Path to the file to write (relative or absolute)" }),
   content: Type.String({ description: "Content to write to the file" }),
 });
-/** Re-exported API for src/agents/sessions, starting with Write Tool Input. */
+/** Write tool input contract shared with tool-call consumers. */
 export type { WriteToolInput } from "./tool-contracts.js";
 
 /**
@@ -71,7 +71,7 @@ const defaultWriteOperations: WriteOperations = {
   },
 };
 
-/** Shared type for Write Tool Options in src/agents/sessions. */
+/** Dependency injection options for write tool filesystem operations. */
 export interface WriteToolOptions {
   /** Custom operations for file writing. Default: local filesystem */
   operations?: WriteOperations;

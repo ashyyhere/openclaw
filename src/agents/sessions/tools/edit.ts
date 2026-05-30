@@ -56,7 +56,7 @@ const editSchema = Type.Object(
   },
   { additionalProperties: false },
 );
-/** Re-exported API for src/agents/sessions, starting with Edit Tool Details. */
+/** Edit tool input/details contracts shared with renderers and callers. */
 export type { EditToolDetails, EditToolInput } from "./tool-contracts.js";
 
 type LegacyEditToolInput = Record<string, unknown> & {
@@ -87,7 +87,7 @@ const defaultEditOperations: EditOperations = {
   access: (path) => fsAccess(path, constants.R_OK | constants.W_OK),
 };
 
-/** Shared type for Edit Tool Options in src/agents/sessions. */
+/** Dependency injection options for edit tool filesystem operations. */
 export interface EditToolOptions {
   /** Custom operations for file editing. Default: local filesystem */
   operations?: EditOperations;

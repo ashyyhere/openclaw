@@ -8,14 +8,14 @@ import {
   truncateTail,
 } from "./truncate.js";
 
-/** Shared type for Output Accumulator Options in src/agents/sessions. */
+/** Limits and spill-file prefix for streaming output accumulation. */
 export interface OutputAccumulatorOptions {
   maxLines?: number;
   maxBytes?: number;
   tempFilePrefix?: string;
 }
 
-/** Shared type for Output Snapshot in src/agents/sessions. */
+/** Current bounded output plus truncation and optional full-output path. */
 export interface OutputSnapshot {
   content: string;
   truncation: TruncationResult;

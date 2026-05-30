@@ -30,12 +30,13 @@ const bashSchema = Type.Object({
     Type.Number({ description: "Timeout in seconds (optional, no default timeout)" }),
   ),
 });
-/** Re-exported API for src/agents/sessions, starting with Bash Tool Details. */
+/** Bash tool input/details contracts shared with renderers and callers. */
 export type { BashToolDetails, BashToolInput } from "./tool-contracts.js";
 
-/** Re-exported API for src/agents/sessions, starting with Bash Operations. */
+/** Bash operation hooks used to replace local shell execution. */
 export type { BashOperations } from "./bash-operations.js";
 
+/** Convert a positive timeout in seconds to a bounded millisecond timeout. */
 export function resolveBashTimeoutMs(timeoutSeconds: unknown): number | undefined {
   if (
     typeof timeoutSeconds !== "number" ||
@@ -142,14 +143,14 @@ export function createLocalBashOperations(options?: { shellPath?: string }): Bas
   };
 }
 
-/** Shared type for Bash Spawn Context in src/agents/sessions. */
+/** Command, cwd, and env passed through the bash spawn hook. */
 export interface BashSpawnContext {
   command: string;
   cwd: string;
   env: NodeJS.ProcessEnv;
 }
 
-/** Shared type for Bash Spawn Hook in src/agents/sessions. */
+/** Hook that can rewrite bash spawn context before execution. */
 export type BashSpawnHook = (context: BashSpawnContext) => BashSpawnContext;
 
 function resolveSpawnContext(
@@ -161,7 +162,7 @@ function resolveSpawnContext(
   return spawnHook ? spawnHook(baseContext) : baseContext;
 }
 
-/** Shared type for Bash Tool Options in src/agents/sessions. */
+/** Dependency injection and shell configuration options for the bash tool. */
 export interface BashToolOptions {
   /** Custom operations for command execution. Default: local shell */
   operations?: BashOperations;

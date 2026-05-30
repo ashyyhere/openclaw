@@ -18,7 +18,7 @@ export function shortenPath(path: unknown): string {
   return path;
 }
 
-/** Reused helper for str behavior in src/agents/sessions. */
+/** Coerce display values to string while preserving invalid non-null inputs. */
 export function str(value: unknown): string | null {
   if (typeof value === "string") {
     return value;
@@ -29,12 +29,12 @@ export function str(value: unknown): string | null {
   return null;
 }
 
-/** Reused helper for replace Tabs behavior in src/agents/sessions. */
+/** Replace tabs with fixed spaces for stable terminal rendering. */
 export function replaceTabs(text: string): string {
   return text.replace(/\t/g, "   ");
 }
 
-/** Reused helper for normalize Display Text behavior in src/agents/sessions. */
+/** Normalize carriage returns before rendering tool output text. */
 export function normalizeDisplayText(text: string): string {
   return text.replace(/\r/g, "");
 }
@@ -75,13 +75,13 @@ export function getTextOutput(
   return output;
 }
 
-/** Shared type for Tool Render Result Like in src/agents/sessions. */
+/** Minimal tool result shape accepted by shared render helpers. */
 export type ToolRenderResultLike<TDetails> = {
   content: (TextContent | ImageContent)[];
   details: TDetails;
 };
 
-/** Reused helper for invalid Arg Text behavior in src/agents/sessions. */
+/** Render the standard invalid-argument placeholder in themed output. */
 export function invalidArgText(theme: Pick<Theme, "fg">): string {
   return theme.fg("error", "[invalid arg]");
 }
