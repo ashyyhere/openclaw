@@ -1,4 +1,3 @@
-// extensions/microsoft-foundry shared helpers and runtime behavior.
 import type { AuthConfig } from "openclaw/plugin-sdk/config-contracts";
 import {
   applyAuthProfileConfig,

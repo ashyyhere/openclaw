@@ -1,4 +1,3 @@
-// extensions/feishu/src tool account helpers and runtime behavior.
 import type * as Lark from "@larksuiteoapi/node-sdk";
 import { normalizeOptionalString } from "openclaw/plugin-sdk/string-coerce-runtime";
 import type { OpenClawPluginApi } from "../runtime-api.js";

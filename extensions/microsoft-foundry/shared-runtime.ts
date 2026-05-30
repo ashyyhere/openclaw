@@ -1,4 +1,3 @@
-// extensions/microsoft-foundry shared runtime helpers and runtime behavior.
 export {
   TOKEN_REFRESH_MARGIN_MS,
   buildFoundryProviderBaseUrl,
