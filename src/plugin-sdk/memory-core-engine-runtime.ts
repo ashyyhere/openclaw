@@ -9,7 +9,7 @@ import {
 } from "./facade-runtime.js";
 import type { MemorySearchManager } from "./memory-core-host-engine-storage.js";
 
-/** Shared type for Builtin Memory Embedding Provider Doctor Metadata in src/plugin-sdk. */
+/** Doctor metadata for bundled memory embedding providers. */
 export type BuiltinMemoryEmbeddingProviderDoctorMetadata = {
   providerId: string;
   authProviderId: string;
@@ -18,7 +18,7 @@ export type BuiltinMemoryEmbeddingProviderDoctorMetadata = {
   autoSelectPriority?: number;
 };
 
-/** Shared type for Dreaming Artifacts Audit Issue in src/plugin-sdk. */
+/** Single issue found while auditing long-term dreaming artifacts. */
 export type DreamingArtifactsAuditIssue = {
   severity: "warn" | "error";
   code:
@@ -30,7 +30,7 @@ export type DreamingArtifactsAuditIssue = {
   fixable: boolean;
 };
 
-/** Shared type for Dreaming Artifacts Audit Summary in src/plugin-sdk. */
+/** Audit summary for long-term dreaming corpus and ingestion artifacts. */
 export type DreamingArtifactsAuditSummary = {
   dreamsPath?: string;
   sessionCorpusDir: string;
@@ -42,7 +42,7 @@ export type DreamingArtifactsAuditSummary = {
   issues: DreamingArtifactsAuditIssue[];
 };
 
-/** Shared type for Repair Dreaming Artifacts Result in src/plugin-sdk. */
+/** Result of archiving or repairing dreaming-related memory artifacts. */
 export type RepairDreamingArtifactsResult = {
   changed: boolean;
   archiveDir?: string;
@@ -53,7 +53,7 @@ export type RepairDreamingArtifactsResult = {
   warnings: string[];
 };
 
-/** Shared type for Short Term Audit Issue in src/plugin-sdk. */
+/** Single issue found while auditing short-term promotion artifacts. */
 export type ShortTermAuditIssue = {
   severity: "warn" | "error";
   code:
@@ -70,7 +70,7 @@ export type ShortTermAuditIssue = {
   fixable: boolean;
 };
 
-/** Shared type for Short Term Audit Summary in src/plugin-sdk. */
+/** Audit summary for short-term recall store, lock, and Qdrant metadata. */
 export type ShortTermAuditSummary = {
   storePath: string;
   lockPath: string;
@@ -92,7 +92,7 @@ export type ShortTermAuditSummary = {
     | undefined;
 };
 
-/** Shared type for Repair Short Term Promotion Artifacts Result in src/plugin-sdk. */
+/** Result of repairing short-term promotion recall artifacts. */
 export type RepairShortTermPromotionArtifactsResult = {
   changed: boolean;
   removedInvalidEntries: number;
@@ -149,42 +149,42 @@ function loadFacadeModule(): FacadeModule {
     artifactBasename: "runtime-api.js",
   });
 }
-/** Reused constant for audit Short Term Promotion Artifacts behavior in src/plugin-sdk. */
+/** Lazily audits short-term promotion artifacts through the memory-core runtime facade. */
 export const auditShortTermPromotionArtifacts: FacadeModule["auditShortTermPromotionArtifacts"] = ((
   ...args
 ) =>
   loadFacadeModule()["auditShortTermPromotionArtifacts"](
     ...args,
   )) as FacadeModule["auditShortTermPromotionArtifacts"];
-/** Reused constant for audit Dreaming Artifacts behavior in src/plugin-sdk. */
+/** Lazily audits dreaming artifacts through the memory-core runtime facade. */
 export const auditDreamingArtifacts: FacadeModule["auditDreamingArtifacts"] = ((...args) =>
   loadFacadeModule()["auditDreamingArtifacts"](...args)) as FacadeModule["auditDreamingArtifacts"];
-/** Reused constant for get Builtin Memory Embedding Provider Doctor Metadata behavior in src/plugin-sdk. */
+/** Lazily reads doctor metadata for a bundled memory embedding provider. */
 export const getBuiltinMemoryEmbeddingProviderDoctorMetadata: FacadeModule["getBuiltinMemoryEmbeddingProviderDoctorMetadata"] =
   ((...args) =>
     loadFacadeModule()["getBuiltinMemoryEmbeddingProviderDoctorMetadata"](
       ...args,
     )) as FacadeModule["getBuiltinMemoryEmbeddingProviderDoctorMetadata"];
-/** Reused constant for get Memory Search Manager behavior in src/plugin-sdk. */
+/** Lazily resolves the memory search manager for an agent. */
 export const getMemorySearchManager: FacadeModule["getMemorySearchManager"] = ((...args) =>
   loadFacadeModule()["getMemorySearchManager"](...args)) as FacadeModule["getMemorySearchManager"];
-/** Reused constant for list Builtin Auto Select Memory Embedding Provider Doctor Metadata behavior in src/plugin-sdk. */
+/** Lazily lists bundled memory providers eligible for auto-selection. */
 export const listBuiltinAutoSelectMemoryEmbeddingProviderDoctorMetadata: FacadeModule["listBuiltinAutoSelectMemoryEmbeddingProviderDoctorMetadata"] =
   ((...args) =>
     loadFacadeModule()["listBuiltinAutoSelectMemoryEmbeddingProviderDoctorMetadata"](
       ...args,
     )) as FacadeModule["listBuiltinAutoSelectMemoryEmbeddingProviderDoctorMetadata"];
-/** Reused constant for Memory Index Manager behavior in src/plugin-sdk. */
+/** Lazy object facade for the memory index manager API. */
 export const MemoryIndexManager: FacadeModule["MemoryIndexManager"] = createLazyFacadeObjectValue(
   () => loadFacadeModule()["MemoryIndexManager"] as object,
 ) as FacadeModule["MemoryIndexManager"];
-/** Reused constant for repair Short Term Promotion Artifacts behavior in src/plugin-sdk. */
+/** Lazily repairs short-term promotion artifacts through memory-core. */
 export const repairShortTermPromotionArtifacts: FacadeModule["repairShortTermPromotionArtifacts"] =
   ((...args) =>
     loadFacadeModule()["repairShortTermPromotionArtifacts"](
       ...args,
     )) as FacadeModule["repairShortTermPromotionArtifacts"];
-/** Reused constant for repair Dreaming Artifacts behavior in src/plugin-sdk. */
+/** Lazily repairs dreaming artifacts through memory-core. */
 export const repairDreamingArtifacts: FacadeModule["repairDreamingArtifacts"] = ((...args) =>
   loadFacadeModule()["repairDreamingArtifacts"](
     ...args,
