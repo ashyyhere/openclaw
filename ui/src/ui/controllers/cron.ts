@@ -1,4 +1,4 @@
-// ui/src/ui/controllers cron helpers and runtime behavior.
+// Cron controller state, validation, pagination, and mutation helpers for Control UI.
 import { t } from "../../i18n/index.ts";
 import { DEFAULT_CRON_FORM } from "../app-defaults.ts";
 import { getCronJobPayload, hasCronJobPayload } from "../cron-payload.ts";
@@ -28,7 +28,7 @@ import {
   isMissingOperatorReadScopeError,
 } from "./scope-errors.ts";
 
-/** Shared type for Cron Field Key in ui/src/ui/controllers. */
+/** Form field keys that can surface cron validation errors. */
 export type CronFieldKey =
   | "name"
   | "scheduleAt"
@@ -43,17 +43,17 @@ export type CronFieldKey =
   | "failureAlertAfter"
   | "failureAlertCooldownSeconds";
 
-/** Shared type for Cron Field Errors in ui/src/ui/controllers. */
+/** Validation errors keyed by cron form field. */
 export type CronFieldErrors = Partial<Record<CronFieldKey, string>>;
 
-/** Shared type for Cron Jobs Schedule Kind Filter in ui/src/ui/controllers. */
+/** Schedule-kind filter used by the cron jobs table. */
 export type CronJobsScheduleKindFilter = "all" | "at" | "every" | "cron";
-/** Shared type for Cron Jobs Last Status Filter in ui/src/ui/controllers. */
+/** Last-run status filter used by the cron jobs table. */
 export type CronJobsLastStatusFilter = "all" | CronRunStatus | "unknown";
-/** Shared type for Cron Runs Load Status in ui/src/ui/controllers. */
+/** Load outcome returned by cron run pagination helpers. */
 export type CronRunsLoadStatus = "ok" | "error" | "skipped";
 
-/** Shared type for Cron State in ui/src/ui/controllers. */
+/** Mutable Control UI cron state shared by views and controller actions. */
 export type CronState = {
   client: GatewayBrowserClient | null;
   connected: boolean;
@@ -97,7 +97,7 @@ export type CronState = {
   cronBusy: boolean;
 };
 
-/** Shared type for Cron Model Suggestions State in ui/src/ui/controllers. */
+/** Minimal state needed to load configured model suggestions for cron payloads. */
 export type CronModelSuggestionsState = {
   client: GatewayBrowserClient | null;
   connected: boolean;
@@ -108,7 +108,7 @@ function supportsAnnounceDelivery(form: Pick<CronFormState, "sessionTarget" | "p
   return form.sessionTarget !== "main" && form.payloadKind === "agentTurn";
 }
 
-/** Reused helper for normalize Cron Form State behavior in ui/src/ui/controllers. */
+/** Coerces unsupported announce delivery combinations back to no delivery. */
 export function normalizeCronFormState(form: CronFormState): CronFormState {
   if (form.deliveryMode !== "announce") {
     return form;
@@ -122,7 +122,7 @@ export function normalizeCronFormState(form: CronFormState): CronFormState {
   };
 }
 
-/** Reused helper for validate Cron Form behavior in ui/src/ui/controllers. */
+/** Validates cron form state and returns i18n/error text keys by field. */
 export function validateCronForm(form: CronFormState): CronFieldErrors {
   const errors: CronFieldErrors = {};
   if (!form.name.trim()) {
@@ -194,12 +194,12 @@ export function validateCronForm(form: CronFormState): CronFieldErrors {
   return errors;
 }
 
-/** Reused helper for has Cron Form Errors behavior in ui/src/ui/controllers. */
+/** Returns whether cron validation produced any field errors. */
 export function hasCronFormErrors(errors: CronFieldErrors): boolean {
   return Object.keys(errors).length > 0;
 }
 
-/** Reused helper for load Cron Status behavior in ui/src/ui/controllers. */
+/** Loads cron scheduler status and maps operator-scope failures to UI copy. */
 export async function loadCronStatus(state: CronState) {
   if (!state.client || !state.connected) {
     return;
@@ -217,7 +217,7 @@ export async function loadCronStatus(state: CronState) {
   }
 }
 
-/** Reused helper for load Cron Model Suggestions behavior in ui/src/ui/controllers. */
+/** Loads configured model ids for cron payload autocomplete. */
 export async function loadCronModelSuggestions(state: CronModelSuggestionsState) {
   if (!state.client || !state.connected) {
     return;
@@ -301,7 +301,7 @@ async function drainPendingCronJobsReload(state: CronState) {
   await loadCronJobsPage(state, { tableFilters });
 }
 
-/** Reused helper for load Cron Jobs Page behavior in ui/src/ui/controllers. */
+/** Loads or appends a paged cron job list using current table filters. */
 export async function loadCronJobsPage(
   state: CronState,
   opts?: { append?: boolean; tableFilters?: boolean },
@@ -374,7 +374,7 @@ export async function loadCronJobsPage(
   }
 }
 
-/** Reused helper for update Cron Jobs Filter behavior in ui/src/ui/controllers. */
+/** Applies cron job table filter/sort changes to controller state. */
 export function updateCronJobsFilter(
   state: CronState,
   patch: Partial<
@@ -400,7 +400,7 @@ export function updateCronJobsFilter(
   state.cronJobsSortDir = patch.cronJobsSortDir ?? state.cronJobsSortDir;
 }
 
-/** Reused helper for get Visible Cron Jobs behavior in ui/src/ui/controllers. */
+/** Applies client-side schedule and last-run filters to loaded cron jobs. */
 export function getVisibleCronJobs(
   state: Pick<CronState, "cronJobs" | "cronJobsScheduleKindFilter" | "cronJobsLastStatusFilter">,
 ): CronJob[] {
@@ -700,7 +700,7 @@ function buildFailureAlert(form: CronFormState, existingChannel?: string) {
   return patch;
 }
 
-/** Reused helper for add Cron Job behavior in ui/src/ui/controllers. */
+/** Creates or updates a cron job from the current form state. */
 export async function addCronJob(state: CronState): Promise<boolean> {
   let saved = false;
   await withCronBusy(state, async (client) => {
@@ -793,7 +793,7 @@ export async function addCronJob(state: CronState): Promise<boolean> {
   return saved;
 }
 
-/** Reused helper for toggle Cron Job behavior in ui/src/ui/controllers. */
+/** Enables or disables a cron job and refreshes jobs/status. */
 export async function toggleCronJob(state: CronState, job: CronJob, enabled: boolean) {
   await withCronBusy(state, async (client) => {
     await client.request("cron.update", { id: job.id, patch: { enabled } });
@@ -802,7 +802,7 @@ export async function toggleCronJob(state: CronState, job: CronJob, enabled: boo
   });
 }
 
-/** Reused helper for run Cron Job behavior in ui/src/ui/controllers. */
+/** Triggers a cron job manually and refreshes visible run history. */
 export async function runCronJob(state: CronState, job: CronJob, mode: "force" | "due" = "force") {
   await withCronBusy(state, async (client) => {
     await client.request("cron.run", { id: job.id, mode });
@@ -810,7 +810,7 @@ export async function runCronJob(state: CronState, job: CronJob, mode: "force" |
   });
 }
 
-/** Reused helper for remove Cron Job behavior in ui/src/ui/controllers. */
+/** Deletes a cron job and clears edit/run selection tied to it. */
 export async function removeCronJob(state: CronState, job: CronJob) {
   await withCronBusy(state, async (client) => {
     await client.request("cron.remove", { id: job.id });
@@ -826,7 +826,7 @@ export async function removeCronJob(state: CronState, job: CronJob) {
   });
 }
 
-/** Reused helper for load Cron Runs behavior in ui/src/ui/controllers. */
+/** Loads or appends cron run history for all jobs or a selected job. */
 export async function loadCronRuns(
   state: CronState,
   jobId: string | null,
@@ -891,7 +891,7 @@ export async function loadCronRuns(
   }
 }
 
-/** Reused helper for load More Cron Runs behavior in ui/src/ui/controllers. */
+/** Appends the next page of cron run history when the current scope allows it. */
 export async function loadMoreCronRuns(state: CronState) {
   if (state.cronRunsScope === "job" && !state.cronRunsJobId) {
     return;
@@ -899,7 +899,7 @@ export async function loadMoreCronRuns(state: CronState) {
   await loadCronRuns(state, state.cronRunsJobId, { append: true });
 }
 
-/** Reused helper for update Cron Runs Filter behavior in ui/src/ui/controllers. */
+/** Applies cron run filter/search/sort changes to controller state. */
 export function updateCronRunsFilter(
   state: CronState,
   patch: Partial<
@@ -934,7 +934,7 @@ export function updateCronRunsFilter(
   state.cronRunsSortDir = patch.cronRunsSortDir ?? state.cronRunsSortDir;
 }
 
-/** Reused helper for start Cron Edit behavior in ui/src/ui/controllers. */
+/** Opens an existing cron job in the form for editing. */
 export function startCronEdit(state: CronState, job: CronJob) {
   state.cronEditingJobId = job.id;
   state.cronRunsJobId = job.id;
@@ -959,7 +959,7 @@ function buildCloneName(name: string, existingNames: Set<string>) {
   return `${base} copy ${Date.now()}`;
 }
 
-/** Reused helper for start Cron Clone behavior in ui/src/ui/controllers. */
+/** Copies a cron job into the form with a unique clone name. */
 export function startCronClone(state: CronState, job: CronJob) {
   clearCronEditState(state);
   state.cronRunsJobId = job.id;
@@ -972,7 +972,7 @@ export function startCronClone(state: CronState, job: CronJob) {
   state.cronFieldErrors = validateCronForm(state.cronForm);
 }
 
-/** Reused helper for cancel Cron Edit behavior in ui/src/ui/controllers. */
+/** Cancels editing and restores the cron form defaults. */
 export function cancelCronEdit(state: CronState) {
   clearCronEditState(state);
   resetCronFormToDefaults(state);
