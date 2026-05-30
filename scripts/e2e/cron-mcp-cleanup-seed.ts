@@ -1,4 +1,4 @@
-// scripts/e2e cron mcp cleanup seed helpers and runtime behavior.
+// Cron MCP cleanup seed writes Docker config and a probe MCP server for cleanup validation.
 import fs from "node:fs/promises";
 import { createRequire } from "node:module";
 import os from "node:os";

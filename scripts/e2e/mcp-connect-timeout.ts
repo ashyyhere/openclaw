@@ -1,10 +1,11 @@
-// scripts/e2e mcp connect timeout helpers and runtime behavior.
+// MCP connect timeout helper aborts stuck stdio transport startup in E2E probes.
 type McpConnectTransport = {
   close?(): Promise<void> | void;
 };
 
 const MCP_TIMEOUT_CLOSE_GRACE_MS = 5_000;
 
+/** Connects an MCP client and closes the transport if startup exceeds the timeout. */
 export async function connectMcpWithTimeout<TTransport extends McpConnectTransport>(
   client: { connect(transport: TTransport): Promise<void> },
   transport: TTransport,
