@@ -1,13 +1,13 @@
-// memory-host-sdk events helpers and runtime behavior.
+// JSONL event log for memory recall, promotion, and dreaming activity.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { appendRegularFile } from "../infra/fs-safe.js";
 import type { MemoryDreamingPhaseName } from "./dreaming.js";
 
-/** Reused constant for MEMORY HOST EVENT LOG RELATIVE PATH behavior in src/memory-host-sdk. */
+/** Workspace-relative path for the memory host event log. */
 export const MEMORY_HOST_EVENT_LOG_RELATIVE_PATH = path.join("memory", ".dreams", "events.jsonl");
 
-/** Shared type for Memory Host Recall Recorded Event in src/memory-host-sdk. */
+/** Event written after a memory recall query is recorded. */
 export type MemoryHostRecallRecordedEvent = {
   type: "memory.recall.recorded";
   timestamp: string;
@@ -21,7 +21,7 @@ export type MemoryHostRecallRecordedEvent = {
   }>;
 };
 
-/** Shared type for Memory Host Promotion Applied Event in src/memory-host-sdk. */
+/** Event written when recalled memory candidates are promoted into durable memory. */
 export type MemoryHostPromotionAppliedEvent = {
   type: "memory.promotion.applied";
   timestamp: string;
@@ -37,7 +37,7 @@ export type MemoryHostPromotionAppliedEvent = {
   }>;
 };
 
-/** Shared type for Memory Host Dream Completed Event in src/memory-host-sdk. */
+/** Event written after a dreaming phase emits inline, file, or combined output. */
 export type MemoryHostDreamCompletedEvent = {
   type: "memory.dream.completed";
   timestamp: string;
@@ -48,18 +48,18 @@ export type MemoryHostDreamCompletedEvent = {
   storageMode: "inline" | "separate" | "both";
 };
 
-/** Shared type for Memory Host Event in src/memory-host-sdk. */
+/** Union of memory host events persisted in the workspace JSONL log. */
 export type MemoryHostEvent =
   | MemoryHostRecallRecordedEvent
   | MemoryHostPromotionAppliedEvent
   | MemoryHostDreamCompletedEvent;
 
-/** Reused helper for resolve Memory Host Event Log Path behavior in src/memory-host-sdk. */
+/** Resolve the absolute memory host event-log path for a workspace. */
 export function resolveMemoryHostEventLogPath(workspaceDir: string): string {
   return path.join(workspaceDir, MEMORY_HOST_EVENT_LOG_RELATIVE_PATH);
 }
 
-/** Reused helper for append Memory Host Event behavior in src/memory-host-sdk. */
+/** Append one memory host event to the workspace JSONL log using symlink-safe writes. */
 export async function appendMemoryHostEvent(
   workspaceDir: string,
   event: MemoryHostEvent,
@@ -73,7 +73,7 @@ export async function appendMemoryHostEvent(
   });
 }
 
-/** Reused helper for read Memory Host Events behavior in src/memory-host-sdk. */
+/** Read recent memory host events, ignoring malformed JSONL rows. */
 export async function readMemoryHostEvents(params: {
   workspaceDir: string;
   limit?: number;

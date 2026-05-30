@@ -1,5 +1,5 @@
-// memory-host-sdk engine qmd helpers and runtime behavior.
-/** Re-exported API for src/memory-host-sdk. */
+// Re-exports QMD binary availability helpers for memory host integrations.
+/** Public QMD availability checks and unavailable-reason types. */
 export {
   checkQmdBinaryAvailability,
   resolveQmdBinaryUnavailableReason,

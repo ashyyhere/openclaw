@@ -1,2 +1,2 @@
-// memory-host-sdk query helpers and runtime behavior.
+// Re-exports memory host query primitives for core imports.
 export * from "../../packages/memory-host-sdk/src/query.js";

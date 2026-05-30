@@ -1,5 +1,5 @@
-// memory-host-sdk engine storage helpers and runtime behavior.
-/** Re-exported API for src/memory-host-sdk. */
+// Re-exports memory backend storage config helpers for core imports.
+/** Public memory backend config/status helpers from the shared memory host package. */
 export {
   resolveMemoryBackendConfig,
   type MemoryProviderStatus,
