@@ -1,4 +1,3 @@
-// extensions/brave index helpers and runtime behavior.
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 import { createBraveWebSearchProvider } from "./src/brave-web-search-provider.js";
 

@@ -1,4 +1,3 @@
-// extensions/discord/src setup surface helpers and runtime behavior.
 import {
   createSetupTranslator,
   type ChannelSetupWizard,

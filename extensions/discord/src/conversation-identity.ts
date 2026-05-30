@@ -1,4 +1,3 @@
-// extensions/discord/src conversation identity helpers and runtime behavior.
 import {
   normalizeOptionalLowercaseString,
   normalizeOptionalString,

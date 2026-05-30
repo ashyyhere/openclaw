@@ -1,4 +1,3 @@
-// extensions/microsoft-foundry cli helpers and runtime behavior.
 import { execFile, execFileSync, spawn } from "node:child_process";
 import {
   normalizeOptionalString,
