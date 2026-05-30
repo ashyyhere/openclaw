@@ -1,10 +1,11 @@
-// scripts/e2e telegram user credential paths helpers and runtime behavior.
+// Telegram user credential path helpers expand home paths and write private JSON files.
 import { chmod, mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 type JsonObject = Record<string, unknown>;
 type PathImpl = Pick<typeof path, "dirname" | "join">;
 
+/** Expands `~` in credential file paths using the current user environment. */
 export function expandHome(
   filePath: string,
   params: { env?: NodeJS.ProcessEnv; pathImpl?: PathImpl } = {},
@@ -21,6 +22,7 @@ export function expandHome(
   return filePath;
 }
 
+/** Resolves the parent directory for a private JSON credential file. */
 export function resolvePrivateJsonDirectory(
   filePath: string,
   params: { env?: NodeJS.ProcessEnv; pathImpl?: PathImpl } = {},
@@ -29,6 +31,7 @@ export function resolvePrivateJsonDirectory(
   return pathImpl.dirname(expandHome(filePath, params));
 }
 
+/** Writes JSON credentials with private file permissions. */
 export async function writePrivateJson(filePath: string, payload: JsonObject) {
   const expanded = expandHome(filePath);
   await mkdir(resolvePrivateJsonDirectory(filePath), { recursive: true });

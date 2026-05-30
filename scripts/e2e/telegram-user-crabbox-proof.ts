@@ -1,5 +1,5 @@
 #!/usr/bin/env -S node --import tsx
-// scripts/e2e telegram user crabbox proof helpers and runtime behavior.
+// Telegram user Crabbox proof CLI records real Telegram Desktop send/view evidence.
 
 import { type ChildProcess, spawn, type SpawnOptionsWithoutStdio } from "node:child_process";
 import fs from "node:fs";
@@ -143,8 +143,11 @@ const DEFAULT_SKILL_DIR = "~/.codex/skills/custom/telegram-e2e-bot-to-bot";
 const DEFAULT_CONVEX_ENV_FILE = `${DEFAULT_SKILL_DIR}/convex.local.env`;
 const DEFAULT_USER_DRIVER = "scripts/e2e/telegram-user-driver.py";
 const DEFAULT_OUTPUT_ROOT = ".artifacts/qa-e2e/telegram-user-crabbox";
+/** Maximum stdout retained from local or remote proof commands. */
 export const COMMAND_STDOUT_MAX_CHARS = 1024 * 1024;
+/** Maximum stderr tail retained from proof commands. */
 export const COMMAND_STDERR_TAIL_CHARS = 256 * 1024;
+/** Maximum stdout tail included when a proof command fails. */
 export const COMMAND_FAILURE_STDOUT_TAIL_CHARS = 64 * 1024;
 const REMOTE_ROOT = "/tmp/openclaw-telegram-user-crabbox";
 const CREDENTIAL_SCRIPT = fileURLToPath(new URL("./telegram-user-credential.ts", import.meta.url));
@@ -526,11 +529,13 @@ function appendCommandText(current: string, chunk: Buffer): string {
   return current + chunk.toString("utf8");
 }
 
+/** Appends command output and keeps only the newest characters. */
 export function appendCommandTextTail(current: string, chunk: Buffer, maxChars: number): string {
   const next = appendCommandText(current, chunk);
   return next.length > maxChars ? next.slice(-maxChars) : next;
 }
 
+/** Appends stdout while enforcing the hard retained-output limit. */
 export function appendCommandStdout(
   current: string,
   chunk: Buffer,
@@ -543,6 +548,7 @@ export function appendCommandStdout(
   return { ok: true, value: next };
 }
 
+/** Appends stderr while retaining only the configured diagnostic tail. */
 export function appendCommandStderrTail(
   current: string,
   chunk: Buffer,
@@ -754,6 +760,7 @@ function spawnDaemon(params: {
   return child.pid;
 }
 
+/** Reads the newest bytes from a log file without loading the whole file. */
 export function readLogTail(logPath: string, maxBytes = LOG_READY_TAIL_BYTES): string {
   let stat: fs.Stats;
   try {
@@ -776,6 +783,7 @@ export function readLogTail(logPath: string, maxBytes = LOG_READY_TAIL_BYTES): s
   return buffer.subarray(0, bytesRead).toString("utf8");
 }
 
+/** Waits until a log file tail matches a readiness pattern. */
 export async function waitForLog(
   logPath: string,
   pattern: RegExp,
