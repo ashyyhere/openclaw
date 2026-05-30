@@ -1,7 +1,7 @@
 // Shared provider-facing HTTP helpers. Keep generic transport utilities here so
 // capability SDKs do not depend on each other.
 
-/** Re-exported API for src/plugin-sdk. */
+/** Provider HTTP error helpers for status validation, limited reads, and diagnostics. */
 export {
   assertOkOrThrowHttpError,
   assertOkOrThrowProviderError,
@@ -18,7 +18,7 @@ export {
   readResponseTextLimited,
   truncateErrorDetail,
 } from "../agents/provider-http-errors.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Shared media-provider HTTP helpers for uploads, polling, deadlines, and config cleanup. */
 export {
   buildAudioTranscriptionFormData,
   createProviderOperationDeadline,
@@ -39,24 +39,24 @@ export {
   sanitizeConfiguredModelProviderRequest,
   waitProviderOperationPollInterval,
 } from "../media-understanding/shared.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Operation deadline and timeout types used by provider HTTP helpers. */
 export type {
   ProviderOperationDeadline,
   ProviderOperationTimeoutMs,
 } from "../media-understanding/shared.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Retry executor and default transient retry config for provider operations. */
 export {
   executeProviderOperationWithRetry,
   providerOperationRetryConfig,
 } from "../provider-runtime/operation-retry.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Retry stage and option types for provider operation retries. */
 export type {
   ProviderOperationRetryStage,
   TransientProviderRetryConfig,
   TransientProviderRetryOptions,
   TransientProviderRetryParams,
 } from "../provider-runtime/operation-retry.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Provider request policy and capability types resolved from endpoint metadata. */
 export type {
   ProviderAttributionPolicy,
   ProviderRequestCapabilities,
@@ -69,16 +69,16 @@ export type {
   ProviderRequestPolicyResolution,
   ProviderRequestTransport,
 } from "../agents/provider-attribution.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Provider request override types for auth, proxy, TLS, and transport settings. */
 export type {
   ProviderRequestAuthOverride,
   ProviderRequestProxyOverride,
   ProviderRequestTlsOverride,
   ProviderRequestTransportOverrides,
 } from "../agents/provider-request-config.js";
-/** Re-exported API for src/plugin-sdk, starting with resolve Provider Request Headers. */
+/** Resolve provider request headers from auth and transport override config. */
 export { resolveProviderRequestHeaders } from "../agents/provider-request-config.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Resolve endpoint, capability, and attribution policy for provider HTTP calls. */
 export {
   resolveProviderEndpoint,
   resolveProviderRequestCapabilities,

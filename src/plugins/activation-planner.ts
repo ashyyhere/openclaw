@@ -11,7 +11,7 @@ import type { PluginOrigin } from "./plugin-origin.types.js";
 import { loadPluginManifestRegistryForPluginRegistry } from "./plugin-registry-contributions.js";
 import { createPluginIdScopeSet, normalizePluginIdScope } from "./plugin-scope.js";
 
-/** Shared type for Plugin Activation Planner Trigger in src/plugins. */
+/** Runtime event that can activate plugin-owned hooks, commands, routes, or capabilities. */
 export type PluginActivationPlannerTrigger =
   | { kind: "command"; command: string }
   | { kind: "provider"; provider: string }
@@ -20,7 +20,7 @@ export type PluginActivationPlannerTrigger =
   | { kind: "route"; route: string }
   | { kind: "capability"; capability: PluginManifestActivationCapability };
 
-/** Shared type for Plugin Activation Planner Hint Reason in src/plugins. */
+/** Reason emitted when a manifest activation hint matched the requested trigger. */
 export type PluginActivationPlannerHintReason =
   | "activation-agent-harness-hint"
   | "activation-capability-hint"
@@ -29,7 +29,7 @@ export type PluginActivationPlannerHintReason =
   | "activation-provider-hint"
   | "activation-route-hint";
 
-/** Shared type for Plugin Activation Planner Manifest Reason in src/plugins. */
+/** Reason emitted when existing manifest ownership metadata matched the trigger. */
 export type PluginActivationPlannerManifestReason =
   | "manifest-channel-owner"
   | "manifest-command-alias"
@@ -38,19 +38,19 @@ export type PluginActivationPlannerManifestReason =
   | "manifest-setup-provider-owner"
   | "manifest-tool-contract";
 
-/** Shared type for Plugin Activation Planner Reason in src/plugins. */
+/** Stable diagnostic reason explaining why a plugin was selected for activation. */
 export type PluginActivationPlannerReason =
   | PluginActivationPlannerHintReason
   | PluginActivationPlannerManifestReason;
 
-/** Shared type for Plugin Activation Plan Entry in src/plugins. */
+/** One plugin selected for activation, including origin and all matching reasons. */
 export type PluginActivationPlanEntry = {
   pluginId: string;
   origin: PluginOrigin;
   reasons: readonly PluginActivationPlannerReason[];
 };
 
-/** Shared type for Plugin Activation Plan in src/plugins. */
+/** Deterministic activation decision plus registry diagnostics for the trigger. */
 export type PluginActivationPlan = {
   trigger: PluginActivationPlannerTrigger;
   pluginIds: readonly string[];
@@ -69,7 +69,7 @@ type ResolveManifestActivationPlanParams = {
   allowRestrictiveAllowlistBypass?: boolean;
 };
 
-/** Reused helper for resolve Manifest Activation Plan behavior in src/plugins. */
+/** Build a deterministic plugin activation plan from manifest hints and owner metadata. */
 export function resolveManifestActivationPlan(
   params: ResolveManifestActivationPlanParams,
 ): PluginActivationPlan {
@@ -122,7 +122,7 @@ export function resolveManifestActivationPlan(
   };
 }
 
-/** Reused helper for resolve Manifest Activation Plugin Ids behavior in src/plugins. */
+/** Return only the ordered plugin ids from a manifest activation plan. */
 export function resolveManifestActivationPluginIds(
   params: ResolveManifestActivationPlanParams,
 ): string[] {

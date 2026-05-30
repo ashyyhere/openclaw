@@ -7,16 +7,16 @@ import {
 } from "../shared/string-coerce.js";
 import { normalizeStringEntries } from "../shared/string-normalization.js";
 
-/** Shared type for Windows Spawn Resolution in src/plugin-sdk. */
+/** Strategy chosen for launching a Windows command without unsafe wrapper guesses. */
 export type WindowsSpawnResolution =
   | "direct"
   | "node-entrypoint"
   | "exe-entrypoint"
   | "shell-fallback";
 
-/** Shared type for Windows Spawn Candidate Resolution in src/plugin-sdk. */
+/** Candidate strategy before shell fallback policy is applied. */
 export type WindowsSpawnCandidateResolution = Exclude<WindowsSpawnResolution, "shell-fallback">;
-/** Shared type for Windows Spawn Program Candidate in src/plugin-sdk. */
+/** Resolved command candidate before the caller decides whether shell fallback is allowed. */
 export type WindowsSpawnProgramCandidate = {
   command: string;
   leadingArgv: string[];
@@ -24,7 +24,7 @@ export type WindowsSpawnProgramCandidate = {
   windowsHide?: boolean;
 };
 
-/** Shared type for Windows Spawn Program in src/plugin-sdk. */
+/** Final command and leading argv that should be passed to a process spawn call. */
 export type WindowsSpawnProgram = {
   command: string;
   leadingArgv: string[];
@@ -33,7 +33,7 @@ export type WindowsSpawnProgram = {
   windowsHide?: boolean;
 };
 
-/** Shared type for Windows Spawn Invocation in src/plugin-sdk. */
+/** Materialized process invocation after appending the caller's runtime arguments. */
 export type WindowsSpawnInvocation = {
   command: string;
   argv: string[];
@@ -42,7 +42,7 @@ export type WindowsSpawnInvocation = {
   windowsHide?: boolean;
 };
 
-/** Shared type for Resolve Windows Spawn Program Params in src/plugin-sdk. */
+/** Inputs used to resolve a package command or script into a Windows-safe spawn program. */
 export type ResolveWindowsSpawnProgramParams = {
   command: string;
   platform?: NodeJS.Platform;
@@ -52,12 +52,12 @@ export type ResolveWindowsSpawnProgramParams = {
   /** Trusted compatibility escape hatch for callers that intentionally accept shell-mediated wrapper execution. */
   allowShellFallback?: boolean;
 };
-/** Shared type for Resolve Windows Spawn Program Candidate Params in src/plugin-sdk. */
+/** Candidate-resolution inputs before shell fallback is considered. */
 export type ResolveWindowsSpawnProgramCandidateParams = Omit<
   ResolveWindowsSpawnProgramParams,
   "allowShellFallback"
 >;
-/** Shared type for Windows Spawn Command Inline Args in src/plugin-sdk. */
+/** Parsed executable plus inline argument text from an invalid command string. */
 export type WindowsSpawnCommandInlineArgs = {
   executable: string;
   arguments: string;
@@ -113,7 +113,7 @@ function readCommandToken(command: string): { token: string; rest: string } | nu
   };
 }
 
-/** Reused helper for detect Windows Spawn Command Inline Args behavior in src/plugin-sdk. */
+/** Detect package-manager command strings that incorrectly bundle argv in the command field. */
 export function detectWindowsSpawnCommandInlineArgs(
   command: string,
 ): WindowsSpawnCommandInlineArgs | null {

@@ -10,7 +10,7 @@ export {
   type FixedWindowRateLimiter,
   type WebhookAnomalyTracker,
 } from "./webhook-memory-guards.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Webhook memory guard primitives for counters, rate limits, and anomaly tracking. */
 export {
   applyBasicWebhookRequestGuards,
   beginWebhookRequestPipelineOrReject,
@@ -26,7 +26,7 @@ export {
   type WebhookBodyReadProfile,
   type WebhookInFlightLimiter,
 } from "./webhook-request-guards.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Request pipeline guards for body limits, JSON parsing, and in-flight rejection. */
 export {
   registerPluginHttpRoute,
   registerWebhookTarget,
@@ -42,17 +42,17 @@ export {
   type RegisteredWebhookTarget,
   type WebhookTargetMatchResult,
 } from "./webhook-targets.js";
-/** Re-exported API for src/plugin-sdk, starting with normalize Webhook Path. */
+/** Normalize plugin-provided webhook paths before registration or matching. */
 export { normalizeWebhookPath, resolveWebhookPath } from "./webhook-path.js";
-/** Re-exported API for src/plugin-sdk, starting with resolve Request Client Ip. */
+/** Resolve the best client IP from gateway request headers. */
 export { resolveRequestClientIp } from "../gateway/net.js";
-/** Re-exported API for src/plugin-sdk, starting with create Auth Rate Limiter. */
+/** Build auth rate limiters shared by webhook and route ingress guards. */
 export { createAuthRateLimiter } from "../gateway/auth-rate-limit.js";
-/** Re-exported API for src/plugin-sdk, starting with Auth Rate Limiter. */
+/** Auth limiter types exposed so plugin routes can share gateway guard config. */
 export type { AuthRateLimiter, RateLimitConfig } from "../gateway/auth-rate-limit.js";
-/** Re-exported API for src/plugin-sdk, starting with raw Data To String. */
+/** Convert raw websocket or HTTP body chunks into bounded strings. */
 export { rawDataToString } from "../infra/ws.js";
-/** Re-exported API for src/plugin-sdk, starting with normalize Plugin Http Path. */
+/** Normalize plugin HTTP route paths using the core route contract. */
 export { normalizePluginHttpPath } from "../plugins/http-path.js";
-/** Re-exported API for src/plugin-sdk, starting with DEFAULT WEBHOOK MAX BODY BYTES. */
+/** Default webhook body cap used by SDK ingress helpers. */
 export { DEFAULT_WEBHOOK_MAX_BODY_BYTES } from "../infra/http-body.js";

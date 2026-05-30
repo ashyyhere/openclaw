@@ -21,17 +21,17 @@ import {
 } from "../shared/number-coercion.js";
 import type { ModelProviderConfig } from "./provider-model-shared.js";
 
-/** Re-exported API for src/plugin-sdk, starting with Provider Catalog Context. */
+/** Provider catalog hook context/result types implemented by provider plugins. */
 export type { ProviderCatalogContext, ProviderCatalogResult } from "../plugins/types.js";
 
-/** Re-exported API for src/plugin-sdk. */
+/** Catalog builders for provider manifests that expose one or paired API-key templates. */
 export {
   buildPairedProviderApiKeyCatalog,
   buildSingleProviderApiKeyCatalog,
   findCatalogTemplate,
 } from "../plugins/provider-catalog.js";
 
-/** Shared type for Configured Provider Catalog Entry in src/plugin-sdk. */
+/** Normalized model entry read from user-configured provider catalog overrides. */
 export type ConfiguredProviderCatalogEntry = {
   id: string;
   name: string;
@@ -52,7 +52,7 @@ function buildLiveCatalogCacheKey(parts: readonly unknown[]): string {
   return createHash("sha256").update(JSON.stringify(parts)).digest("hex");
 }
 
-/** Reused helper for get Cached Live Catalog Value behavior in src/plugin-sdk. */
+/** Cache one live catalog load promise by stable key parts for a short TTL. */
 export async function getCachedLiveCatalogValue<T>(params: {
   keyParts: readonly unknown[];
   load: () => Promise<T>;
@@ -85,7 +85,7 @@ export async function getCachedLiveCatalogValue<T>(params: {
   }
 }
 
-/** Reused helper for clear Live Catalog Cache For Tests behavior in src/plugin-sdk. */
+/** Clear the process-local live catalog cache between tests. */
 export function clearLiveCatalogCacheForTests(): void {
   liveCatalogCache.clear();
 }
@@ -160,7 +160,7 @@ function buildManifestCatalogModel(
   };
 }
 
-/** Reused helper for build Manifest Model Provider Config behavior in src/plugin-sdk. */
+/** Convert a normalized manifest modelCatalog block into runtime provider config. */
 export function buildManifestModelProviderConfig(params: {
   providerId: string;
   catalog: unknown;
@@ -223,7 +223,7 @@ function resolveConfiguredProviderModels(
   return Array.isArray(providerConfig.models) ? providerConfig.models : [];
 }
 
-/** Reused helper for read Configured Provider Catalog Entries behavior in src/plugin-sdk. */
+/** Read user-configured provider models as normalized catalog rows for live catalogs. */
 export function readConfiguredProviderCatalogEntries(params: {
   config?: OpenClawConfig;
   providerId: string;
@@ -284,7 +284,7 @@ function withStreamingUsageCompat(provider: ModelProviderConfig): ModelProviderC
   return changed ? { ...provider, models } : provider;
 }
 
-/** Reused helper for supports Native Streaming Usage Compat behavior in src/plugin-sdk. */
+/** Check whether a provider endpoint natively reports usage metadata while streaming. */
 export function supportsNativeStreamingUsageCompat(params: {
   providerId: string;
   baseUrl: string | undefined;
@@ -298,7 +298,7 @@ export function supportsNativeStreamingUsageCompat(params: {
   }).supportsNativeStreamingUsageCompat;
 }
 
-/** Reused helper for apply Provider Native Streaming Usage Compat behavior in src/plugin-sdk. */
+/** Mark provider models as streaming-usage compatible when endpoint metadata supports it. */
 export function applyProviderNativeStreamingUsageCompat(params: {
   providerId: string;
   providerConfig: ModelProviderConfig;
