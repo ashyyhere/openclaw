@@ -7,9 +7,9 @@ export {
   createBashToolDefinition,
   createLocalBashOperations,
 } from "./bash.js";
-/** Re-exported API for src/agents/sessions, starting with Bash Operations. */
+/** File-system and process operations used by the bash tool implementation. */
 export type { BashOperations } from "./bash-operations.js";
-/** Re-exported API for src/agents/sessions. */
+/** Built-in tool input and detail contracts shared by tool definitions. */
 export type {
   BashToolDetails,
   BashToolInput,
@@ -25,44 +25,44 @@ export type {
   ReadToolInput,
   WriteToolInput,
 } from "./tool-contracts.js";
-/** Re-exported API for src/agents/sessions. */
+/** Edit tool factory and operation contracts. */
 export {
   createEditTool,
   createEditToolDefinition,
   type EditOperations,
   type EditToolOptions,
 } from "./edit.js";
-/** Re-exported API for src/agents/sessions, starting with with File Mutation Queue. */
+/** Serializes file mutations so write/edit tools do not race each other. */
 export { withFileMutationQueue } from "./file-mutation-queue.js";
-/** Re-exported API for src/agents/sessions. */
+/** Find tool factory and operation contracts. */
 export {
   createFindTool,
   createFindToolDefinition,
   type FindOperations,
   type FindToolOptions,
 } from "./find.js";
-/** Re-exported API for src/agents/sessions. */
+/** Grep tool factory and operation contracts. */
 export {
   createGrepTool,
   createGrepToolDefinition,
   type GrepOperations,
   type GrepToolOptions,
 } from "./grep.js";
-/** Re-exported API for src/agents/sessions. */
+/** Directory listing tool factory and operation contracts. */
 export {
   createLsTool,
   createLsToolDefinition,
   type LsOperations,
   type LsToolOptions,
 } from "./ls.js";
-/** Re-exported API for src/agents/sessions. */
+/** Read tool factory and operation contracts. */
 export {
   createReadTool,
   createReadToolDefinition,
   type ReadOperations,
   type ReadToolOptions,
 } from "./read.js";
-/** Re-exported API for src/agents/sessions. */
+/** Shared truncation helpers for file and command output tools. */
 export {
   DEFAULT_MAX_BYTES,
   DEFAULT_MAX_LINES,
@@ -73,7 +73,7 @@ export {
   truncateLine,
   truncateTail,
 } from "./truncate.js";
-/** Re-exported API for src/agents/sessions. */
+/** Write tool factory and operation contracts. */
 export {
   createWriteTool,
   createWriteToolDefinition,
@@ -91,13 +91,13 @@ import { createLsTool, createLsToolDefinition, type LsToolOptions } from "./ls.j
 import { createReadTool, createReadToolDefinition, type ReadToolOptions } from "./read.js";
 import { createWriteTool, createWriteToolDefinition, type WriteToolOptions } from "./write.js";
 
-/** Shared type for Tool in src/agents/sessions. */
+/** Runtime tool instance type used by built-in session tools. */
 export type Tool = AgentTool;
-/** Shared type for Tool Def in src/agents/sessions. */
+/** Model-facing tool definition type used by built-in session tools. */
 export type ToolDef = ToolDefinition;
-/** Shared type for Tool Name in src/agents/sessions. */
+/** Supported built-in session tool names. */
 export type ToolName = "read" | "bash" | "edit" | "write" | "grep" | "find" | "ls";
-/** Reused constant for all Tool Names behavior in src/agents/sessions. */
+/** Set of all supported built-in session tool names. */
 export const allToolNames: Set<ToolName> = new Set([
   "read",
   "bash",
@@ -108,7 +108,7 @@ export const allToolNames: Set<ToolName> = new Set([
   "ls",
 ]);
 
-/** Shared type for Tools Options in src/agents/sessions. */
+/** Per-tool options passed into built-in session tool factories. */
 export interface ToolsOptions {
   read?: ReadToolOptions;
   bash?: BashToolOptions;

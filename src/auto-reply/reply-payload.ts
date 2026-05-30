@@ -5,7 +5,7 @@ import type {
   ReplyPayloadDelivery,
 } from "../interactive/payload.js";
 
-/** Shared type for Reply Payload in src/auto-reply. */
+/** Channel-neutral reply payload produced by agent runs and command handlers. */
 export type ReplyPayload = {
   text?: string;
   mediaUrl?: string;
@@ -61,16 +61,16 @@ export type ReplyPayload = {
   channelData?: Record<string, unknown>;
 };
 
-/** Shared type for Reply Payload Tts Supplement in src/auto-reply. */
+/** Metadata marking audio media as a TTS supplement for visible text. */
 export type ReplyPayloadTtsSupplement = {
   spokenText: string;
   visibleTextAlreadyDelivered?: boolean;
 };
 
-/** Reused constant for REPLY MEDIA FAILURE WARNING behavior in src/auto-reply. */
+/** Warning appended when media delivery fails but text can still be sent. */
 export const REPLY_MEDIA_FAILURE_WARNING = "⚠️ Media failed.";
 
-/** Reused helper for append Reply Media Failure Warning behavior in src/auto-reply. */
+/** Appends the media failure warning without duplicating it. */
 export function appendReplyMediaFailureWarning(text: string | undefined): string {
   if (!text?.trim()) {
     return REPLY_MEDIA_FAILURE_WARNING;
@@ -89,7 +89,7 @@ function hasReplyPayloadMedia(payload: Pick<ReplyPayload, "mediaUrl" | "mediaUrl
   return Boolean(payload.mediaUrl?.trim() || payload.mediaUrls?.some((url) => url.trim()));
 }
 
-/** Reused helper for get Reply Payload Tts Supplement behavior in src/auto-reply. */
+/** Returns valid TTS supplement metadata only when the payload still carries media. */
 export function getReplyPayloadTtsSupplement(
   payload: Pick<ReplyPayload, "mediaUrl" | "mediaUrls" | "ttsSupplement">,
 ): ReplyPayloadTtsSupplement | undefined {
@@ -105,14 +105,14 @@ export function getReplyPayloadTtsSupplement(
   };
 }
 
-/** Reused helper for is Reply Payload Tts Supplement behavior in src/auto-reply. */
+/** Checks whether a reply payload is a valid TTS supplement media payload. */
 export function isReplyPayloadTtsSupplement(
   payload: Pick<ReplyPayload, "mediaUrl" | "mediaUrls" | "ttsSupplement">,
 ): boolean {
   return Boolean(getReplyPayloadTtsSupplement(payload));
 }
 
-/** Reused helper for mark Reply Payload As Tts Supplement behavior in src/auto-reply. */
+/** Marks a reply payload as supplemental TTS audio when spoken text is available. */
 export function markReplyPayloadAsTtsSupplement<T extends ReplyPayload>(
   payload: T,
   spokenText: string = payload.spokenText ?? payload.text ?? "",
@@ -134,7 +134,7 @@ export function markReplyPayloadAsTtsSupplement<T extends ReplyPayload>(
   };
 }
 
-/** Reused helper for build Tts Supplement Media Payload behavior in src/auto-reply. */
+/** Removes visible reply fields so only supplemental TTS media is delivered. */
 export function buildTtsSupplementMediaPayload(payload: ReplyPayload): ReplyPayload {
   const supplement = getReplyPayloadTtsSupplement(payload);
   if (!supplement) {
@@ -154,7 +154,7 @@ export function buildTtsSupplementMediaPayload(payload: ReplyPayload): ReplyPayl
   };
 }
 
-/** Shared type for Reply Payload Metadata in src/auto-reply. */
+/** WeakMap-backed dispatch metadata attached to reply payload objects. */
 export type ReplyPayloadMetadata = {
   assistantMessageIndex?: number;
   /**
@@ -183,7 +183,7 @@ export type ReplyPayloadMetadata = {
 
 const replyPayloadMetadata = new WeakMap<object, ReplyPayloadMetadata>();
 
-/** Reused helper for set Reply Payload Metadata behavior in src/auto-reply. */
+/** Merges dispatch metadata onto a reply payload object. */
 export function setReplyPayloadMetadata<T extends object>(
   payload: T,
   metadata: ReplyPayloadMetadata,
@@ -193,30 +193,30 @@ export function setReplyPayloadMetadata<T extends object>(
   return payload;
 }
 
-/** Reused helper for get Reply Payload Metadata behavior in src/auto-reply. */
+/** Reads dispatch metadata previously attached to a reply payload object. */
 export function getReplyPayloadMetadata(payload: object): ReplyPayloadMetadata | undefined {
   return replyPayloadMetadata.get(payload);
 }
 
-/** Reused helper for is Reply Payload Non Terminal Tool Error Warning behavior in src/auto-reply. */
+/** Detects synthesized non-terminal tool error warning payloads. */
 export function isReplyPayloadNonTerminalToolErrorWarning(payload: object): boolean {
   return getReplyPayloadMetadata(payload)?.nonTerminalToolErrorWarning === true;
 }
 
-/** Reused helper for copy Reply Payload Metadata behavior in src/auto-reply. */
+/** Copies attached dispatch metadata from one payload object to another. */
 export function copyReplyPayloadMetadata<T extends object>(source: object, payload: T): T {
   const metadata = getReplyPayloadMetadata(source);
   return metadata ? setReplyPayloadMetadata(payload, metadata) : payload;
 }
 
-/** Reused helper for mark Reply Payload For Source Suppression Delivery behavior in src/auto-reply. */
+/** Allows a reply payload to bypass source-reply suppression while send policy still applies. */
 export function markReplyPayloadForSourceSuppressionDelivery<T extends object>(payload: T): T {
   return setReplyPayloadMetadata(payload, {
     deliverDespiteSourceReplySuppression: true,
   });
 }
 
-/** Reused helper for is Reply Payload Status Notice behavior in src/auto-reply. */
+/** Detects transient status-style notices that are not assistant answer content. */
 export function isReplyPayloadStatusNotice(
   payload: Pick<ReplyPayload, "isCompactionNotice" | "isFallbackNotice" | "isStatusNotice">,
 ): boolean {
