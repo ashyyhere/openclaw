@@ -19,7 +19,7 @@ import type {
   ChannelMessageToolSchemaContribution,
 } from "./types.public.js";
 
-/** Shared type for Channel Message Action Discovery Input in src/channels/plugins. */
+/** Context fields used to discover channel message actions for the current request. */
 export type ChannelMessageActionDiscoveryInput = {
   cfg?: OpenClawConfig;
   channel?: string | null;
@@ -45,12 +45,12 @@ type ChannelMessageToolMediaSourceParamKeyInput = ChannelMessageActionDiscoveryP
 
 const loggedMessageActionErrors = new Set<string>();
 
-/** Reused helper for resolve Message Action Discovery Channel Id behavior in src/channels/plugins. */
+/** Normalizes a channel id for message action discovery, preserving unknown ids as strings. */
 export function resolveMessageActionDiscoveryChannelId(raw?: string | null): string | undefined {
   return normalizeAnyChannelId(raw) ?? normalizeOptionalString(raw);
 }
 
-/** Reused helper for create Message Action Discovery Context behavior in src/channels/plugins. */
+/** Builds the public discovery context passed to channel message tool adapters. */
 export function createMessageActionDiscoveryContext(
   params: ChannelMessageActionDiscoveryInput,
 ): ChannelMessageActionDiscoveryContext {
@@ -148,7 +148,7 @@ function normalizeMessageToolMediaSourceParams(
   );
 }
 
-/** Reused helper for resolve Current Channel Message Tool Discovery Adapter behavior in src/channels/plugins. */
+/** Resolves message tool discovery for the current channel using loaded, bundled, then registry paths. */
 export function resolveCurrentChannelMessageToolDiscoveryAdapter(channel?: string | null): {
   pluginId: string;
   actions: ChannelMessageToolDiscoveryAdapter;
@@ -181,7 +181,7 @@ export function resolveCurrentChannelMessageToolDiscoveryAdapter(channel?: strin
   };
 }
 
-/** Reused helper for resolve Message Action Discovery For Plugin behavior in src/channels/plugins. */
+/** Safely reads a plugin's message action, capability, schema, and media-source discovery. */
 export function resolveMessageActionDiscoveryForPlugin(params: {
   pluginId: string;
   actions?: ChannelMessageToolDiscoveryAdapter;
@@ -223,7 +223,7 @@ export function resolveMessageActionDiscoveryForPlugin(params: {
   };
 }
 
-/** Reused helper for list Channel Message Actions behavior in src/channels/plugins. */
+/** Lists message actions supported across configured channel plugins. */
 export function listChannelMessageActions(cfg: OpenClawConfig): ChannelMessageActionName[] {
   const actions = new Set<ChannelMessageActionName>(["send", "broadcast"]);
   for (const plugin of listChannelPlugins()) {
@@ -239,7 +239,7 @@ export function listChannelMessageActions(cfg: OpenClawConfig): ChannelMessageAc
   return Array.from(actions);
 }
 
-/** Reused helper for list Cross Channel Schema Supported Message Actions behavior in src/channels/plugins. */
+/** Lists current-channel actions that remain usable when cross-channel schema is present. */
 export function listCrossChannelSchemaSupportedMessageActions(
   params: ChannelMessageActionDiscoveryParams & {
     channel?: string;
@@ -282,7 +282,7 @@ export function listCrossChannelSchemaSupportedMessageActions(
   return resolved.actions.filter((action) => !schemaBlockedActions.has(action));
 }
 
-/** Reused helper for list Channel Message Capabilities behavior in src/channels/plugins. */
+/** Lists message capabilities advertised by configured channel plugins. */
 export function listChannelMessageCapabilities(cfg: OpenClawConfig): ChannelMessageCapability[] {
   const capabilities = new Set<ChannelMessageCapability>();
   for (const plugin of listChannelPlugins()) {
@@ -298,7 +298,7 @@ export function listChannelMessageCapabilities(cfg: OpenClawConfig): ChannelMess
   return Array.from(capabilities);
 }
 
-/** Reused helper for list Channel Message Capabilities For Channel behavior in src/channels/plugins. */
+/** Lists message capabilities advertised for one channel context. */
 export function listChannelMessageCapabilitiesForChannel(
   params: ChannelMessageActionDiscoveryParams,
 ): ChannelMessageCapability[] {
@@ -330,7 +330,7 @@ function mergeToolSchemaProperties(
   }
 }
 
-/** Reused helper for resolve Channel Message Tool Schema Properties behavior in src/channels/plugins. */
+/** Merges message tool schema properties visible to the current channel context. */
 export function resolveChannelMessageToolSchemaProperties(
   params: ChannelMessageActionDiscoveryParams,
 ): Record<string, TSchema> {
@@ -380,7 +380,7 @@ export function resolveChannelMessageToolSchemaProperties(
   return properties;
 }
 
-/** Reused helper for resolve Channel Message Tool Media Source Param Keys behavior in src/channels/plugins. */
+/** Resolves message tool parameter names that can provide media source URLs. */
 export function resolveChannelMessageToolMediaSourceParamKeys(
   params: ChannelMessageToolMediaSourceParamKeyInput,
 ): string[] {
@@ -398,7 +398,7 @@ export function resolveChannelMessageToolMediaSourceParamKeys(
   return uniqueStrings(described.mediaSourceParams);
 }
 
-/** Reused helper for channel Supports Message Capability behavior in src/channels/plugins. */
+/** Checks whether any configured channel supports a message capability. */
 export function channelSupportsMessageCapability(
   cfg: OpenClawConfig,
   capability: ChannelMessageCapability,
@@ -406,7 +406,7 @@ export function channelSupportsMessageCapability(
   return listChannelMessageCapabilities(cfg).includes(capability);
 }
 
-/** Reused helper for channel Supports Message Capability For Channel behavior in src/channels/plugins. */
+/** Checks whether a specific channel context supports a message capability. */
 export function channelSupportsMessageCapabilityForChannel(
   params: ChannelMessageActionDiscoveryParams,
   capability: ChannelMessageCapability,
@@ -414,11 +414,11 @@ export function channelSupportsMessageCapabilityForChannel(
   return listChannelMessageCapabilitiesForChannel(params).includes(capability);
 }
 
-/** Reused constant for testing behavior in src/channels/plugins. */
+/** Test hooks for clearing process-local message action discovery state. */
 export const testing = {
   resetLoggedMessageActionErrors() {
     loggedMessageActionErrors.clear();
   },
 };
-/** Re-exported API for src/channels/plugins, starting with testing. */
+/** Internal test-only access to message action discovery reset hooks. */
 export { testing as __testing };

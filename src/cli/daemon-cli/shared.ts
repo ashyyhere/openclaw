@@ -16,14 +16,14 @@ import { formatCliCommand } from "../command-format.js";
 import { parsePort } from "../shared/parse-port.js";
 import { createDaemonActionContext } from "./response.js";
 
-/** Re-exported API for src/cli/daemon-cli, starting with format Runtime Status. */
+/** Formats daemon runtime status for CLI output. */
 export { formatRuntimeStatus };
-/** Re-exported API for src/cli/daemon-cli, starting with parse Port. */
+/** Parses CLI port values shared by daemon commands. */
 export { parsePort };
-/** Re-exported API for src/cli/daemon-cli, starting with resolve Daemon Container Context. */
+/** Detects container-managed daemon execution context. */
 export { resolveDaemonContainerContext };
 
-/** Reused helper for create Daemon Install Action Context behavior in src/cli/daemon-cli. */
+/** Creates the structured response context for daemon install commands. */
 export function createDaemonInstallActionContext(jsonFlag: unknown) {
   const json = Boolean(jsonFlag);
   return {
@@ -32,7 +32,7 @@ export function createDaemonInstallActionContext(jsonFlag: unknown) {
   };
 }
 
-/** Reused helper for fail If Nix Daemon Install Mode behavior in src/cli/daemon-cli. */
+/** Fails daemon service install when Nix mode forbids managed service installation. */
 export function failIfNixDaemonInstallMode(
   fail: (message: string, hints?: string[]) => void,
   env: NodeJS.ProcessEnv = process.env,
@@ -44,7 +44,7 @@ export function failIfNixDaemonInstallMode(
   return true;
 }
 
-/** Reused helper for create Cli Status Text Styles behavior in src/cli/daemon-cli. */
+/** Creates terminal text styling helpers for daemon status output. */
 export function createCliStatusTextStyles() {
   const rich = isRich();
   return {
@@ -58,7 +58,7 @@ export function createCliStatusTextStyles() {
   };
 }
 
-/** Reused helper for resolve Runtime Status Color behavior in src/cli/daemon-cli. */
+/** Resolves a color function for daemon runtime status labels. */
 export function resolveRuntimeStatusColor(status: string | undefined): (value: string) => string {
   const runtimeStatus = status ?? "unknown";
   return runtimeStatus === "running"
@@ -70,7 +70,7 @@ export function resolveRuntimeStatusColor(status: string | undefined): (value: s
         : theme.warn;
 }
 
-/** Reused helper for parse Port From Args behavior in src/cli/daemon-cli. */
+/** Parses --port CLI arguments from daemon command argv. */
 export function parsePortFromArgs(programArguments: string[] | undefined): number | null {
   if (!programArguments?.length) {
     return null;
@@ -95,7 +95,7 @@ export function parsePortFromArgs(programArguments: string[] | undefined): numbe
   return null;
 }
 
-/** Reused helper for pick Probe Host For Bind behavior in src/cli/daemon-cli. */
+/** Picks the loopback or tailnet host used for daemon self-probes. */
 export function pickProbeHostForBind(
   bindMode: string,
   tailnetIPv4: string | undefined,
@@ -124,7 +124,7 @@ const SAFE_DAEMON_ENV_KEYS = [
   "OPENCLAW_NIX_MODE",
 ];
 
-/** Reused helper for filter Daemon Env behavior in src/cli/daemon-cli. */
+/** Keeps only daemon-safe environment keys for service manager commands. */
 export function filterDaemonEnv(env: Record<string, string> | undefined): Record<string, string> {
   if (!env) {
     return {};
@@ -140,13 +140,13 @@ export function filterDaemonEnv(env: Record<string, string> | undefined): Record
   return filtered;
 }
 
-/** Reused helper for safe Daemon Env behavior in src/cli/daemon-cli. */
+/** Formats filtered daemon environment entries as KEY=value strings. */
 export function safeDaemonEnv(env: Record<string, string> | undefined): string[] {
   const filtered = filterDaemonEnv(env);
   return Object.entries(filtered).map(([key, value]) => `${key}=${value}`);
 }
 
-/** Reused helper for normalize Listener Address behavior in src/cli/daemon-cli. */
+/** Normalizes listener addresses reported by platform networking tools. */
 export function normalizeListenerAddress(raw: string): string {
   let value = raw.trim();
   if (!value) {
@@ -157,7 +157,7 @@ export function normalizeListenerAddress(raw: string): string {
   return value.trim();
 }
 
-/** Reused helper for render Runtime Hints behavior in src/cli/daemon-cli. */
+/** Builds daemon runtime recovery hints from supervision status and log paths. */
 export function renderRuntimeHints(
   runtime: { missingUnit?: boolean; missingSupervision?: boolean; status?: string } | undefined,
   env: NodeJS.ProcessEnv = process.env,
@@ -199,7 +199,7 @@ export function renderRuntimeHints(
   return hints;
 }
 
-/** Reused helper for render Gateway Service Start Hints behavior in src/cli/daemon-cli. */
+/** Builds platform-specific commands for starting an installed gateway service. */
 export function renderGatewayServiceStartHints(env: NodeJS.ProcessEnv = process.env): string[] {
   const profile = env.OPENCLAW_PROFILE;
   const container = resolveDaemonContainerContext(env);
@@ -216,7 +216,7 @@ export function renderGatewayServiceStartHints(env: NodeJS.ProcessEnv = process.
   return [`Restart the container or the service that manages it for ${container}.`];
 }
 
-/** Reused helper for filter Container Generic Hints behavior in src/cli/daemon-cli. */
+/** Removes generic service-manager hints when a container-specific hint is available. */
 export function filterContainerGenericHints(
   hints: string[],
   env: NodeJS.ProcessEnv = process.env,
