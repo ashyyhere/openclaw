@@ -1,4 +1,5 @@
-// process command queue helpers and runtime behavior.
+// In-process command lane queue. Serializes work per lane, supports priority,
+// draining, active-task waits, and restart recovery across global state.
 import {
   diagnosticLogger as diag,
   logLaneDequeue,
@@ -31,7 +32,7 @@ export class CommandLaneTaskTimeoutError extends Error {
   }
 }
 
-/** Reused helper for is Command Lane Task Timeout Error behavior in src/process. */
+/** Checks whether an error is a lane task timeout, optionally for one lane. */
 export function isCommandLaneTaskTimeoutError(err: unknown, lane?: string): boolean {
   if (!(err instanceof Error)) {
     return false;
@@ -82,7 +83,7 @@ type LaneState = {
   generation: number;
 };
 
-/** Shared type for Command Lane Snapshot in src/process. */
+/** Snapshot of one command lane's queue and active task state. */
 export type CommandLaneSnapshot = {
   lane: string;
   queuedCount: number;
@@ -407,12 +408,12 @@ export function markGatewayDraining(): void {
   getQueueState().gatewayDraining = true;
 }
 
-/** Reused helper for is Gateway Draining behavior in src/process. */
+/** Returns whether the gateway is rejecting new queued work for restart. */
 export function isGatewayDraining(): boolean {
   return getQueueState().gatewayDraining;
 }
 
-/** Reused helper for set Command Lane Concurrency behavior in src/process. */
+/** Sets max concurrent task execution for a command lane. */
 export function setCommandLaneConcurrency(lane: string, maxConcurrent: number) {
   const cleaned = normalizeLane(lane);
   const state = getLaneState(cleaned);
@@ -424,7 +425,7 @@ export function setCommandLaneConcurrency(lane: string, maxConcurrent: number) {
   }
 }
 
-/** Reused helper for enqueue Command In Lane behavior in src/process. */
+/** Enqueues a task in a named command lane. */
 export function enqueueCommandInLane<T>(
   lane: string,
   task: () => Promise<T>,
@@ -457,7 +458,7 @@ export function enqueueCommandInLane<T>(
   });
 }
 
-/** Reused helper for enqueue Command behavior in src/process. */
+/** Enqueues a task in the main command lane. */
 export function enqueueCommand<T>(
   task: () => Promise<T>,
   opts?: CommandQueueEnqueueOptions,
@@ -465,7 +466,7 @@ export function enqueueCommand<T>(
   return enqueueCommandInLane(CommandLane.Main, task, opts);
 }
 
-/** Reused helper for get Queue Size behavior in src/process. */
+/** Returns queued plus active task count for one lane. */
 export function getQueueSize(lane: string = CommandLane.Main) {
   const resolved = normalizeLane(lane);
   const state = getQueueState().lanes.get(resolved);
@@ -475,7 +476,7 @@ export function getQueueSize(lane: string = CommandLane.Main) {
   return getLaneDepth(state);
 }
 
-/** Reused helper for get Command Lane Snapshot behavior in src/process. */
+/** Returns the current snapshot for one command lane. */
 export function getCommandLaneSnapshot(lane: string = CommandLane.Main): CommandLaneSnapshot {
   const resolved = normalizeLane(lane);
   const state = getQueueState().lanes.get(resolved);
@@ -492,14 +493,14 @@ export function getCommandLaneSnapshot(lane: string = CommandLane.Main): Command
   return createCommandLaneSnapshot(state);
 }
 
-/** Reused helper for get Command Lane Snapshots behavior in src/process. */
+/** Returns snapshots for all known command lanes. */
 export function getCommandLaneSnapshots(): CommandLaneSnapshot[] {
   return Array.from(getQueueState().lanes.values(), createCommandLaneSnapshot).toSorted((a, b) =>
     a.lane.localeCompare(b.lane),
   );
 }
 
-/** Reused helper for get Total Queue Size behavior in src/process. */
+/** Returns queued plus active task count across all lanes. */
 export function getTotalQueueSize() {
   let total = 0;
   for (const s of getQueueState().lanes.values()) {
@@ -508,7 +509,7 @@ export function getTotalQueueSize() {
   return total;
 }
 
-/** Reused helper for clear Command Lane behavior in src/process. */
+/** Rejects queued tasks in a lane without touching active work. */
 export function clearCommandLane(lane: string = CommandLane.Main) {
   const cleaned = normalizeLane(lane);
   const state = getQueueState().lanes.get(cleaned);

@@ -1,16 +1,17 @@
-// shared frontmatter helpers and runtime behavior.
+// Shared frontmatter parsing helpers for embedded OpenClaw manifests. Supports
+// JSON5 metadata blocks plus legacy manifest keys during compatibility reads.
 import JSON5 from "json5";
 import { LEGACY_MANIFEST_KEYS, MANIFEST_KEY } from "../compat/legacy-names.js";
 import { parseBooleanValue } from "../utils/boolean.js";
 import { normalizeOptionalLowercaseString, readStringValue } from "./string-coerce.js";
 import { normalizeCsvOrLooseStringList } from "./string-normalization.js";
 
-/** Reused helper for normalize String List behavior in src/shared. */
+/** Normalizes CSV, loose strings, or arrays into string entries. */
 export function normalizeStringList(input: unknown): string[] {
   return normalizeCsvOrLooseStringList(input);
 }
 
-/** Reused helper for get Frontmatter String behavior in src/shared. */
+/** Reads a string value from parsed frontmatter. */
 export function getFrontmatterString(
   frontmatter: Record<string, unknown>,
   key: string,
@@ -18,13 +19,13 @@ export function getFrontmatterString(
   return readStringValue(frontmatter[key]);
 }
 
-/** Reused helper for parse Frontmatter Bool behavior in src/shared. */
+/** Parses a frontmatter boolean string with a fallback. */
 export function parseFrontmatterBool(value: string | undefined, fallback: boolean): boolean {
   const parsed = parseBooleanValue(value);
   return parsed === undefined ? fallback : parsed;
 }
 
-/** Reused helper for resolve Open Claw Manifest Block behavior in src/shared. */
+/** Parses and returns the OpenClaw manifest block from a JSON5 metadata field. */
 export function resolveOpenClawManifestBlock(params: {
   frontmatter: Record<string, unknown>;
   key?: string;
@@ -53,7 +54,7 @@ export function resolveOpenClawManifestBlock(params: {
   }
 }
 
-/** Shared type for Open Claw Manifest Requires in src/shared. */
+/** Normalized dependency requirements declared by a frontmatter manifest. */
 export type OpenClawManifestRequires = {
   bins: string[];
   anyBins: string[];
@@ -61,7 +62,7 @@ export type OpenClawManifestRequires = {
   config: string[];
 };
 
-/** Reused helper for resolve Open Claw Manifest Requires behavior in src/shared. */
+/** Resolves normalized `requires` lists from a manifest block. */
 export function resolveOpenClawManifestRequires(
   metadataObj: Record<string, unknown>,
 ): OpenClawManifestRequires | undefined {
@@ -80,7 +81,7 @@ export function resolveOpenClawManifestRequires(
   };
 }
 
-/** Reused helper for resolve Open Claw Manifest Install behavior in src/shared. */
+/** Parses manifest install entries with a caller-provided install spec parser. */
 export function resolveOpenClawManifestInstall<T>(
   metadataObj: Record<string, unknown>,
   parseInstallSpec: (input: unknown) => T | undefined,
@@ -91,12 +92,12 @@ export function resolveOpenClawManifestInstall<T>(
     .filter((entry): entry is T => Boolean(entry));
 }
 
-/** Reused helper for resolve Open Claw Manifest Os behavior in src/shared. */
+/** Resolves normalized OS requirements from a manifest block. */
 export function resolveOpenClawManifestOs(metadataObj: Record<string, unknown>): string[] {
   return normalizeStringList(metadataObj.os);
 }
 
-/** Shared type for Parsed Open Claw Manifest Install Base in src/shared. */
+/** Common fields parsed from a frontmatter install entry. */
 export type ParsedOpenClawManifestInstallBase = {
   raw: Record<string, unknown>;
   kind: string;
@@ -105,7 +106,7 @@ export type ParsedOpenClawManifestInstallBase = {
   bins?: string[];
 };
 
-/** Reused helper for parse Open Claw Manifest Install Base behavior in src/shared. */
+/** Parses common install entry fields after validating the entry kind. */
 export function parseOpenClawManifestInstallBase(
   input: unknown,
   allowedKinds: readonly string[],
@@ -138,7 +139,7 @@ export function parseOpenClawManifestInstallBase(
   return spec;
 }
 
-/** Reused helper for apply Open Claw Manifest Install Common Fields behavior in src/shared. */
+/** Copies parsed common install fields onto a typed install spec. */
 export function applyOpenClawManifestInstallCommonFields<
   T extends { id?: string; label?: string; bins?: string[] },
 >(spec: T, parsed: Pick<ParsedOpenClawManifestInstallBase, "id" | "label" | "bins">): T {
