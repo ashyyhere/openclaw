@@ -1,10 +1,11 @@
-// test/helpers/gateway android node capabilities policy config helpers and runtime behavior.
+// Android gateway tests accept several historical config.get envelope shapes from remote nodes.
 import type { OpenClawConfig } from "../../../src/config/config.js";
 
 function asRecord(value: unknown): Record<string, unknown> {
   return typeof value === "object" && value !== null ? (value as Record<string, unknown>) : {};
 }
 
+/** Unwrap remote gateway config snapshots across current and legacy payload envelopes. */
 export function unwrapRemoteConfigSnapshot(raw: unknown): OpenClawConfig {
   const rawObj = asRecord(raw);
   const resolved = asRecord(rawObj.resolved);

@@ -1,4 +1,4 @@
-// test/helpers live image probe helpers and runtime behavior.
+// Live media tests use this tiny bitmap renderer to create deterministic PNG prompt images.
 import { encodePngRgba, fillPixel } from "../../src/media/png-encode.js";
 
 const GLYPH_ROWS_5X7: Record<string, number[]> = {
@@ -90,6 +90,7 @@ function measureTextWidthPx(text: string, scale: number) {
   return text.length * 6 * scale - scale; // 5px glyph + 1px space
 }
 
+/** Render supported 5x7 bitmap text into a base64 PNG for live image probes. */
 export function renderBitmapTextPngBase64(
   text: string,
   options: {
@@ -290,6 +291,7 @@ function drawBlockCatLabel(params: {
   });
 }
 
+/** Render a two-line CAT/nonce image for live image understanding probes. */
 export function renderCatNoncePngBase64(nonce: string): string {
   const top = "CAT";
   const bottom = nonce.toUpperCase();
@@ -330,6 +332,7 @@ export function renderCatNoncePngBase64(nonce: string): string {
   return png.toString("base64");
 }
 
+/** Render a solid-color PNG fixture for simple image input probes. */
 export function renderSolidColorPngBase64(color: { r: number; g: number; b: number }): string {
   const width = 192;
   const height = 192;
@@ -348,6 +351,7 @@ export function renderSolidColorPngBase64(color: { r: number; g: number; b: numb
   return png.toString("base64");
 }
 
+/** Render a deterministic cat-face PNG fixture for vision smoke tests. */
 export function renderCatFacePngBase64(): string {
   const width = 256;
   const height = 288;

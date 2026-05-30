@@ -1,4 +1,4 @@
-// test/helpers auth wizard helpers and runtime behavior.
+// Auth wizard tests share runtime, prompter, and temp auth-profile fixtures from this module.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { vi } from "vitest";
@@ -10,6 +10,7 @@ import type { WizardPrompter } from "../../src/wizard/prompts.js";
 const noopAsync = async () => {};
 const noop = () => {};
 
+/** Runtime fixture that turns process exits into thrown errors for assertions. */
 export function createExitThrowingRuntime(): RuntimeEnv {
   return {
     log: vi.fn(),
@@ -20,6 +21,7 @@ export function createExitThrowingRuntime(): RuntimeEnv {
   };
 }
 
+/** Create a wizard prompter with overridable mocked prompt methods. */
 export function createWizardPrompter(
   overrides: Partial<WizardPrompter>,
   options?: { defaultSelect?: string },
@@ -37,6 +39,7 @@ export function createWizardPrompter(
   };
 }
 
+/** Prepare an isolated auth test state directory and agent auth directory. */
 export async function setupAuthTestEnv(
   prefix = "openclaw-auth-",
   options?: { agentSubdir?: string },
@@ -57,6 +60,7 @@ type AuthTestLifecycle = {
   cleanup: () => Promise<void>;
 };
 
+/** Track auth test state cleanup and restore captured environment variables. */
 export function createAuthTestLifecycle(envKeys: string[]): AuthTestLifecycle {
   const envSnapshot = captureEnv(envKeys);
   let stateDir: string | null = null;
@@ -74,6 +78,7 @@ export function createAuthTestLifecycle(envKeys: string[]): AuthTestLifecycle {
   };
 }
 
+/** Return the test agent directory or fail loudly when setup forgot it. */
 export function requireOpenClawAgentDir(): string {
   const agentDir = process.env.OPENCLAW_AGENT_DIR;
   if (!agentDir) {
@@ -86,6 +91,7 @@ function authProfilePathForAgent(agentDir: string): string {
   return path.join(agentDir, "auth-profiles.json");
 }
 
+/** Read the auth profile JSON stored for a test agent. */
 export async function readAuthProfilesForAgent<T>(agentDir: string): Promise<T> {
   const raw = await fs.readFile(authProfilePathForAgent(agentDir), "utf8");
   return JSON.parse(raw) as T;

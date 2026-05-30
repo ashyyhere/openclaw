@@ -1,4 +1,4 @@
-// test/helpers/cron service regression fixtures helpers and runtime behavior.
+// Shared cron service fixtures for regression tests that need isolated stores, frozen time, and clean command queues.
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import os from "node:os";
@@ -17,6 +17,7 @@ import { useFrozenTime, useRealTime } from "../../../src/test-utils/frozen-time.
 
 const TOP_OF_HOUR_STAGGER_MS = 5 * 60 * 1_000;
 
+/** No-op logger fixture for cron service tests that assert behavior instead of logs. */
 export const noopLogger = {
   info: () => {},
   warn: () => {},
@@ -25,6 +26,7 @@ export const noopLogger = {
   trace: () => {},
 };
 
+/** Install cron regression test hooks and return per-case temp store helpers. */
 export function setupCronRegressionFixtures(options?: { prefix?: string; baseTimeIso?: string }) {
   let fixtureRoot = "";
   let fixtureCount = 0;
@@ -64,6 +66,7 @@ export function setupCronRegressionFixtures(options?: { prefix?: string; baseTim
   };
 }
 
+/** Create a promise with externally controlled resolve/reject callbacks. */
 export function createDeferred<T>() {
   let resolve!: (value: T) => void;
   let reject!: (reason?: unknown) => void;
@@ -74,6 +77,7 @@ export function createDeferred<T>() {
   return { promise, resolve, reject };
 }
 
+/** Build a cron service state preloaded with running isolated jobs. */
 export function createRunningCronServiceState(params: {
   storePath: string;
   log: CronServiceDeps["log"];
@@ -97,11 +101,13 @@ export function createRunningCronServiceState(params: {
   return state;
 }
 
+/** Match the production top-of-hour staggering hash for deterministic assertions. */
 export function topOfHourOffsetMs(jobId: string) {
   const digest = crypto.createHash("sha256").update(jobId).digest();
   return digest.readUInt32BE(0) % TOP_OF_HOUR_STAGGER_MS;
 }
 
+/** Create an enabled isolated one-shot job that is already due in fixture time. */
 export function createDueIsolatedJob(params: {
   id: string;
   nowMs: number;
@@ -124,6 +130,7 @@ export function createDueIsolatedJob(params: {
   };
 }
 
+/** Default isolated runner mock that resolves successful cron executions. */
 export function createDefaultIsolatedRunner(): CronServiceDeps["runIsolatedAgentJob"] {
   return vi.fn().mockResolvedValue({
     status: "ok",
@@ -131,6 +138,7 @@ export function createDefaultIsolatedRunner(): CronServiceDeps["runIsolatedAgent
   }) as CronServiceDeps["runIsolatedAgentJob"];
 }
 
+/** Isolated runner mock that waits for cancellation and exposes the observed abort signal. */
 export function createAbortAwareIsolatedRunner(summary = "late") {
   let observedAbortSignal: AbortSignal | undefined;
   const started = createDeferred<void>();
@@ -158,6 +166,7 @@ export function createAbortAwareIsolatedRunner(summary = "late") {
   };
 }
 
+/** Create a flexible isolated cron job fixture for regression cases. */
 export function createIsolatedRegressionJob(params: {
   id: string;
   name: string;
@@ -181,10 +190,12 @@ export function createIsolatedRegressionJob(params: {
   };
 }
 
+/** Write cron jobs using the current on-disk cron store envelope. */
 export async function writeCronJobs(storePath: string, jobs: CronJob[]) {
   await fs.writeFile(storePath, JSON.stringify({ version: 1, jobs }), "utf-8");
 }
 
+/** Write arbitrary cron job snapshots for migration and recovery tests. */
 export async function writeCronStoreSnapshot(storePath: string, jobs: unknown[]) {
   await fs.writeFile(storePath, JSON.stringify({ version: 1, jobs }), "utf-8");
 }

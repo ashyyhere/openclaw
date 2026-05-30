@@ -1,4 +1,4 @@
-// test test env helpers and runtime behavior.
+// Global test environment setup isolates home/state paths and loads live-test credentials only when requested.
 import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import { createRequire } from "node:module";
@@ -416,6 +416,7 @@ function stageLiveTestState(params: {
   restoreClaudeConfigFromBackupIfNeeded(params.tempHome);
 }
 
+/** Install the isolated test home/state environment used by Vitest projects. */
 export function installTestEnv(options?: { loadProfileEnv?: boolean }): {
   cleanup: () => void;
   tempHome: string;
@@ -447,6 +448,7 @@ export function installTestEnv(options?: { loadProfileEnv?: boolean }): {
   return testEnv;
 }
 
+/** Convenience wrapper for callers that only need an isolated home fixture. */
 export function withIsolatedTestHome(options?: { loadProfileEnv?: boolean }): {
   cleanup: () => void;
   tempHome: string;
