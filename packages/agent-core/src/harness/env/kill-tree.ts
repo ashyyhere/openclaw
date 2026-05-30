@@ -1,10 +1,10 @@
-// packages/agent-core/src/harness/env kill tree helpers and runtime behavior.
+// Cross-platform process-tree termination helpers for harness shell commands.
 import { spawn } from "node:child_process";
 
 const DEFAULT_GRACE_MS = 3000;
 const MAX_GRACE_MS = 60_000;
 
-/** Public type describing Kill Process Tree Options for packages/agent-core. */
+/** Options controlling graceful/forced process-tree termination. */
 export type KillProcessTreeOptions = {
   graceMs?: number;
   detached?: boolean;
@@ -55,7 +55,7 @@ export function killProcessTree(pid: number, opts?: KillProcessTreeOptions): voi
   }, graceMs).unref();
 }
 
-/** Public helper for signal Process Tree behavior in packages/agent-core. */
+/** Send SIGTERM/SIGKILL-equivalent signals to a process tree or direct child. */
 export function signalProcessTree(
   pid: number,
   signal: "SIGTERM" | "SIGKILL",

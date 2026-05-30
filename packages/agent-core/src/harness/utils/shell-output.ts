@@ -1,4 +1,4 @@
-// packages/agent-core/src/harness/utils shell output helpers and runtime behavior.
+// Shell execution helpers that capture bounded output while preserving full logs when needed.
 import {
   type ExecutionEnv,
   type ExecutionEnvExecOptions,
@@ -10,7 +10,7 @@ import {
 } from "../types.js";
 import { DEFAULT_MAX_BYTES, truncateTail } from "./truncate.js";
 
-/** Public type describing Shell Capture Options for packages/agent-core. */
+/** Exec options for captured shell runs, with streamed sanitized chunks exposed separately. */
 export interface ShellCaptureOptions extends Omit<
   ExecutionEnvExecOptions,
   "onStdout" | "onStderr"
@@ -18,7 +18,7 @@ export interface ShellCaptureOptions extends Omit<
   onChunk?: (chunk: string) => void;
 }
 
-/** Public type describing Shell Capture Result for packages/agent-core. */
+/** Captured shell result returned to transcripts and model context. */
 export interface ShellCaptureResult {
   output: string;
   exitCode: number | undefined;
@@ -35,7 +35,7 @@ function toExecutionError(error: unknown): ExecutionError {
   return new ExecutionError("unknown", cause.message, cause);
 }
 
-/** Public helper for sanitize Binary Output behavior in packages/agent-core. */
+/** Drop control characters from process output before it enters transcripts or logs. */
 export function sanitizeBinaryOutput(str: string): string {
   return Array.from(str)
     .filter((char) => {
@@ -57,7 +57,7 @@ export function sanitizeBinaryOutput(str: string): string {
     .join("");
 }
 
-/** Public helper for execute Shell With Capture behavior in packages/agent-core. */
+/** Execute a shell command, tail-truncate context output, and spill full output to a temp file. */
 export async function executeShellWithCapture(
   env: ExecutionEnv,
   command: string,
