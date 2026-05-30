@@ -23,7 +23,7 @@ async function loadNodesCliRpcRuntime(): Promise<NodesCliRpcRuntimeModule> {
   return nodesCliRpcRuntimeLoader.load();
 }
 
-/** Reused constant for nodes Call Opts behavior in src/cli/nodes-cli. */
+/** Adds common gateway RPC flags to nodes CLI commands. */
 export const nodesCallOpts = (cmd: Command, defaults?: { timeoutMs?: number }) =>
   cmd
     .option("--url <url>", "Gateway WebSocket URL (defaults to gateway.remote.url when configured)")
@@ -31,7 +31,7 @@ export const nodesCallOpts = (cmd: Command, defaults?: { timeoutMs?: number }) =
     .option("--timeout <ms>", "Timeout in ms", String(defaults?.timeoutMs ?? 10_000))
     .option("--json", "Output JSON", false);
 
-/** Reused constant for call Gateway Cli behavior in src/cli/nodes-cli. */
+/** Lazy gateway RPC caller used by nodes CLI commands. */
 export const callGatewayCli = async (
   method: string,
   opts: NodesRpcOpts,
@@ -42,7 +42,7 @@ export const callGatewayCli = async (
   return await runtime.callGatewayCliRuntime(method, opts, params, callOpts);
 };
 
-/** Reused constant for call Node Pair Approval Gateway Cli behavior in src/cli/nodes-cli. */
+/** Lazy gateway RPC caller for node pairing methods that require operator scopes. */
 export const callNodePairApprovalGatewayCli = async (
   method: "node.pair.list" | "node.pair.approve",
   opts: NodesRpcOpts,
@@ -53,7 +53,7 @@ export const callNodePairApprovalGatewayCli = async (
   return await runtime.callNodePairApprovalGatewayCliRuntime(method, opts, params, callOpts);
 };
 
-/** Reused helper for build Node Invoke Params behavior in src/cli/nodes-cli. */
+/** Builds node.invoke params with a stable idempotency key. */
 export function buildNodeInvokeParams(params: {
   nodeId: string;
   command: string;
@@ -77,7 +77,7 @@ function hasOptionalValue(value: unknown): boolean {
   return value !== undefined && value !== null && value !== "";
 }
 
-/** Reused helper for parse Optional Node Positive Integer behavior in src/cli/nodes-cli. */
+/** Parses an optional positive integer flag for nodes CLI commands. */
 export function parseOptionalNodePositiveInteger(value: unknown, flag: string): number | undefined {
   if (!hasOptionalValue(value)) {
     return undefined;
@@ -89,7 +89,7 @@ export function parseOptionalNodePositiveInteger(value: unknown, flag: string): 
   return parsed;
 }
 
-/** Reused helper for parse Optional Node Non Negative Integer behavior in src/cli/nodes-cli. */
+/** Parses an optional non-negative integer flag for nodes CLI commands. */
 export function parseOptionalNodeNonNegativeInteger(
   value: unknown,
   flag: string,
@@ -104,7 +104,7 @@ export function parseOptionalNodeNonNegativeInteger(
   return parsed;
 }
 
-/** Reused helper for parse Optional Node Finite Number behavior in src/cli/nodes-cli. */
+/** Parses an optional finite-number flag with optional bounds. */
 export function parseOptionalNodeFiniteNumber(
   value: unknown,
   flag: string,
@@ -133,7 +133,7 @@ export function parseOptionalNodeFiniteNumber(
   return parsed;
 }
 
-/** Reused helper for unauthorized Hint For Message behavior in src/cli/nodes-cli. */
+/** Returns a Peekaboo signing hint for known unauthorized bridge errors. */
 export function unauthorizedHintForMessage(message: string): string | null {
   const haystack = normalizeLowercaseStringOrEmpty(message);
   if (
@@ -150,12 +150,12 @@ export function unauthorizedHintForMessage(message: string): string | null {
   return null;
 }
 
-/** Reused helper for resolve Node Id behavior in src/cli/nodes-cli. */
+/** Resolves a node query to a node id through paired/listed nodes. */
 export async function resolveNodeId(opts: NodesRpcOpts, query: string) {
   return (await resolveNode(opts, query)).nodeId;
 }
 
-/** Reused helper for resolve Node behavior in src/cli/nodes-cli. */
+/** Resolves a node query, falling back from node.list to node.pair.list. */
 export async function resolveNode(opts: NodesRpcOpts, query: string): Promise<NodeListNode> {
   let nodes: NodeListNode[] = [];
   try {

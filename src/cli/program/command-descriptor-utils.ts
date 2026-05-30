@@ -3,12 +3,12 @@ import type { Command } from "commander";
 import { sanitizeForLog } from "../../../packages/terminal-core/src/ansi.js";
 import type { NamedCommandDescriptor } from "./command-group-descriptors.js";
 
-/** Shared type for Command Descriptor Like in src/cli/program. */
+/** Minimal command descriptor shape needed to register placeholder commands. */
 export type CommandDescriptorLike = Pick<NamedCommandDescriptor, "name" | "description">;
 
 const SAFE_COMMAND_NAME_PATTERN = /^[A-Za-z0-9][A-Za-z0-9_-]*$/;
 
-/** Shared type for Command Descriptor Catalog in src/cli/program. */
+/** Descriptor catalog facade used by CLI groups and tests. */
 export type CommandDescriptorCatalog<TDescriptor extends NamedCommandDescriptor> = {
   descriptors: readonly TDescriptor[];
   getDescriptors: () => readonly TDescriptor[];
@@ -17,7 +17,7 @@ export type CommandDescriptorCatalog<TDescriptor extends NamedCommandDescriptor>
   getParentDefaultHelpCommands: () => string[];
 };
 
-/** Reused helper for normalize Command Descriptor Name behavior in src/cli/program. */
+/** Validates and trims a command descriptor name before Commander registration. */
 export function normalizeCommandDescriptorName(name: string): string | null {
   const normalized = name.trim();
   return SAFE_COMMAND_NAME_PATTERN.test(normalized) ? normalized : null;
@@ -31,17 +31,17 @@ function assertSafeCommandDescriptorName(name: string): string {
   return normalized;
 }
 
-/** Reused helper for sanitize Command Descriptor Description behavior in src/cli/program. */
+/** Removes terminal control characters from command descriptions. */
 export function sanitizeCommandDescriptorDescription(description: string): string {
   return sanitizeForLog(description).trim();
 }
 
-/** Reused helper for get Command Descriptor Names behavior in src/cli/program. */
+/** Returns descriptor names in registration order. */
 export function getCommandDescriptorNames(descriptors: readonly CommandDescriptorLike[]): string[] {
   return descriptors.map((descriptor) => descriptor.name);
 }
 
-/** Reused helper for get Commands With Subcommands behavior in src/cli/program. */
+/** Returns descriptor names whose real command implementations own subcommands. */
 export function getCommandsWithSubcommands(
   descriptors: readonly NamedCommandDescriptor[],
 ): string[] {
@@ -50,7 +50,7 @@ export function getCommandsWithSubcommands(
     .map((descriptor) => descriptor.name);
 }
 
-/** Reused helper for get Parent Default Help Commands behavior in src/cli/program. */
+/** Returns parent commands that should show help when invoked without subcommands. */
 export function getParentDefaultHelpCommands(
   descriptors: readonly NamedCommandDescriptor[],
 ): string[] {
@@ -59,7 +59,7 @@ export function getParentDefaultHelpCommands(
     .map((descriptor) => descriptor.name);
 }
 
-/** Reused helper for collect Unique Command Descriptors behavior in src/cli/program. */
+/** Deduplicates descriptor groups while preserving first-seen command order. */
 export function collectUniqueCommandDescriptors<TDescriptor extends CommandDescriptorLike>(
   descriptorGroups: readonly (readonly TDescriptor[])[],
 ): TDescriptor[] {
@@ -77,7 +77,7 @@ export function collectUniqueCommandDescriptors<TDescriptor extends CommandDescr
   return descriptors;
 }
 
-/** Reused helper for define Command Descriptor Catalog behavior in src/cli/program. */
+/** Builds the command descriptor catalog helper object from static descriptors. */
 export function defineCommandDescriptorCatalog<TDescriptor extends NamedCommandDescriptor>(
   descriptors: readonly TDescriptor[],
 ): CommandDescriptorCatalog<TDescriptor> {
@@ -90,7 +90,7 @@ export function defineCommandDescriptorCatalog<TDescriptor extends NamedCommandD
   };
 }
 
-/** Reused helper for add Command Descriptors To Program behavior in src/cli/program. */
+/** Registers safe descriptor-backed placeholder commands on a Commander program. */
 export function addCommandDescriptorsToProgram(
   program: Command,
   descriptors: readonly CommandDescriptorLike[],

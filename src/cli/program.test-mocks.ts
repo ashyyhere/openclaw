@@ -38,22 +38,22 @@ const programMocks = vi.hoisted(() => {
   };
 });
 
-/** Reused constant for configure Command behavior in src/cli. */
+/** Hoisted configure command mock shared by CLI program tests. */
 export const configureCommand = programMocks.configureCommand as AnyMock;
-/** Reused constant for setup Command behavior in src/cli. */
+/** Hoisted setup command mock shared by CLI program tests. */
 export const setupCommand = programMocks.setupCommand as AnyMock;
-/** Reused constant for setup Wizard Command behavior in src/cli. */
+/** Hoisted setup wizard/onboard command mock shared by CLI program tests. */
 export const setupWizardCommand = programMocks.setupWizardCommand as AnyMock;
-/** Reused constant for call Gateway behavior in src/cli. */
+/** Hoisted gateway-call mock shared by CLI program tests. */
 export const callGateway = programMocks.callGateway as AnyMock;
-/** Reused constant for run Tui behavior in src/cli. */
+/** Hoisted TUI runner mock shared by CLI program tests. */
 export const runTui = programMocks.runTui as AnyMock;
-/** Reused constant for run Crestodian behavior in src/cli. */
+/** Hoisted Crestodian runner mock shared by CLI program tests. */
 export const runCrestodian = programMocks.runCrestodian as AnyMock;
-/** Reused constant for ensure Config Ready behavior in src/cli. */
+/** Hoisted config guard mock shared by CLI program tests. */
 export const ensureConfigReady = programMocks.ensureConfigReady as AnyMock;
 
-/** Reused constant for runtime behavior in src/cli. */
+/** Mock runtime object installed as the CLI default runtime. */
 export const runtime = programMocks.runtime as {
   log: Mock<(...args: unknown[]) => void>;
   error: Mock<(...args: unknown[]) => void>;
@@ -119,8 +119,8 @@ vi.mock("./program/config-guard.js", () => ({
 }));
 vi.mock("./preaction.js", () => ({ registerPreActionHooks: () => {} }));
 
-/** Reused helper for install Base Program Mocks behavior in src/cli. */
+/** Imports this module for side-effect mocks in base CLI program tests. */
 export function installBaseProgramMocks() {}
 
-/** Reused helper for install Smoke Program Mocks behavior in src/cli. */
+/** Imports this module for side-effect mocks in CLI smoke tests. */
 export function installSmokeProgramMocks() {}

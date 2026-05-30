@@ -20,20 +20,20 @@ import { isRecord } from "../utils.js";
 
 type JsonObject = Record<string, unknown>;
 
-/** Shared type for Plugins Build Options in src/cli. */
+/** Options accepted by `openclaw plugins build`. */
 export type PluginsBuildOptions = {
   root?: string;
   entry?: string;
   check?: boolean;
 };
 
-/** Shared type for Plugins Validate Options in src/cli. */
+/** Options accepted by `openclaw plugins validate`. */
 export type PluginsValidateOptions = {
   root?: string;
   entry?: string;
 };
 
-/** Shared type for Plugins Init Options in src/cli. */
+/** Options accepted by `openclaw plugins init`. */
 export type PluginsInitOptions = {
   directory?: string;
   force?: boolean;
@@ -114,7 +114,7 @@ async function importToolPluginEntry(entryPath: string): Promise<unknown> {
   return typeof candidate === "function" ? (candidate as () => unknown)() : candidate;
 }
 
-/** Reused helper for load Tool Plugin behavior in src/cli. */
+/** Loads a tool plugin entry and extracts defineToolPlugin metadata. */
 export async function loadToolPlugin(params: {
   rootDir: string;
   entryPath: string;
@@ -137,7 +137,7 @@ export async function loadToolPlugin(params: {
   return { entry, metadata };
 }
 
-/** Reused helper for build Tool Plugin Manifest behavior in src/cli. */
+/** Builds openclaw.plugin.json metadata from tool plugin metadata and package data. */
 export function buildToolPluginManifest(params: {
   metadata: ToolPluginMetadata;
   packageManifest: JsonObject;
@@ -191,7 +191,7 @@ function buildToolPluginToolMetadata(
   return nextEntries.length > 0 ? Object.fromEntries(nextEntries) : undefined;
 }
 
-/** Reused helper for build Tool Plugin Package Manifest behavior in src/cli. */
+/** Adds the plugin entry to package.json `openclaw.extensions` without duplicates. */
 export function buildToolPluginPackageManifest(params: {
   packageManifest: JsonObject;
   entry: string;
@@ -215,7 +215,7 @@ export function buildToolPluginPackageManifest(params: {
   };
 }
 
-/** Reused helper for validate Tool Plugin Project behavior in src/cli. */
+/** Validates generated plugin manifest/package metadata against the entrypoint. */
 export function validateToolPluginProject(params: {
   metadata: ToolPluginMetadata;
   manifest: JsonObject;
@@ -269,7 +269,7 @@ export function validateToolPluginProject(params: {
   return errors;
 }
 
-/** Reused helper for run Plugins Build Command behavior in src/cli. */
+/** Implements `openclaw plugins build`, including check-only mode. */
 export async function runPluginsBuildCommand(opts: PluginsBuildOptions): Promise<void> {
   const rootDir = resolveRootDir(opts.root);
   const entryPath = resolveEntryPath(rootDir, opts.entry);
@@ -310,7 +310,7 @@ export async function runPluginsBuildCommand(opts: PluginsBuildOptions): Promise
   defaultRuntime.log(`Updated ${path.relative(process.cwd(), packagePath) || "package.json"}`);
 }
 
-/** Reused helper for run Plugins Validate Command behavior in src/cli. */
+/** Implements `openclaw plugins validate` for a local tool plugin project. */
 export async function runPluginsValidateCommand(opts: PluginsValidateOptions): Promise<void> {
   const rootDir = resolveRootDir(opts.root);
   const entryPath = resolveEntryPath(rootDir, opts.entry);
@@ -352,7 +352,7 @@ function titleFromId(id: string): string {
     .join(" ");
 }
 
-/** Reused helper for run Plugins Init Command behavior in src/cli. */
+/** Scaffolds a minimal local tool plugin project. */
 export async function runPluginsInitCommand(id: string, opts: PluginsInitOptions): Promise<void> {
   const rootDir = path.resolve(opts.directory ?? id);
   const force = opts.force === true;

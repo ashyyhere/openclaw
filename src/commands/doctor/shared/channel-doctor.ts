@@ -53,7 +53,7 @@ const channelDoctorEnumValues: Partial<Record<keyof ChannelDoctorAdapter, Readon
   groupModel: new Set(["sender", "route", "hybrid"]),
 };
 
-/** Shared type for Channel Doctor Empty Allowlist Policy Hooks in src/commands/doctor. */
+/** Plugin-provided allowlist warning hooks used by shared channel doctor flows. */
 export type ChannelDoctorEmptyAllowlistPolicyHooks = {
   extraWarningsForAccount: (params: ChannelDoctorEmptyAllowlistAccountContext) => string[];
   shouldSkipDefaultEmptyGroupAllowlistWarning: (
@@ -262,7 +262,7 @@ function shouldSkipDefaultEmptyGroupAllowlistWarningForEntries(
   );
 }
 
-/** Reused helper for create Channel Doctor Empty Allowlist Policy Hooks behavior in src/commands/doctor. */
+/** Creates cached per-channel allowlist policy hooks from configured doctor adapters. */
 export function createChannelDoctorEmptyAllowlistPolicyHooks(
   context: ChannelDoctorLookupContext,
 ): ChannelDoctorEmptyAllowlistPolicyHooks {
@@ -288,7 +288,7 @@ export function createChannelDoctorEmptyAllowlistPolicyHooks(
   };
 }
 
-/** Reused helper for run Channel Doctor Config Sequences behavior in src/commands/doctor. */
+/** Runs channel-owned doctor sequences and gathers repair/warning notes. */
 export async function runChannelDoctorConfigSequences(params: {
   cfg: OpenClawConfig;
   env: NodeJS.ProcessEnv;
@@ -310,7 +310,7 @@ export async function runChannelDoctorConfigSequences(params: {
   return { changeNotes, warningNotes };
 }
 
-/** Reused helper for collect Channel Doctor Compatibility Mutations behavior in src/commands/doctor. */
+/** Collects ordered compatibility config migrations from channel doctor adapters. */
 export function collectChannelDoctorCompatibilityMutations(
   cfg: OpenClawConfig,
   options: { env?: NodeJS.ProcessEnv } = {},
@@ -332,7 +332,7 @@ export function collectChannelDoctorCompatibilityMutations(
   return mutations;
 }
 
-/** Reused helper for collect Channel Doctor Stale Config Mutations behavior in src/commands/doctor. */
+/** Collects stale-config cleanup mutations from channel doctor adapters. */
 export async function collectChannelDoctorStaleConfigMutations(
   cfg: OpenClawConfig,
   options: { env?: NodeJS.ProcessEnv } = {},
@@ -353,7 +353,7 @@ export async function collectChannelDoctorStaleConfigMutations(
   return mutations;
 }
 
-/** Reused helper for collect Channel Doctor Preview Warnings behavior in src/commands/doctor. */
+/** Collects non-mutating preview warnings for configured channel plugins. */
 export async function collectChannelDoctorPreviewWarnings(params: {
   cfg: OpenClawConfig;
   doctorFixCommand: string;
@@ -372,7 +372,7 @@ export async function collectChannelDoctorPreviewWarnings(params: {
   return warnings;
 }
 
-/** Reused helper for collect Channel Doctor Mutable Allowlist Warnings behavior in src/commands/doctor. */
+/** Collects warnings for allowlists that are mutable by channel doctor repair. */
 export async function collectChannelDoctorMutableAllowlistWarnings(params: {
   cfg: OpenClawConfig;
   env?: NodeJS.ProcessEnv;
@@ -390,7 +390,7 @@ export async function collectChannelDoctorMutableAllowlistWarnings(params: {
   return warnings;
 }
 
-/** Reused helper for collect Channel Doctor Repair Mutations behavior in src/commands/doctor. */
+/** Collects repair mutations and warnings for configured channel plugins. */
 export async function collectChannelDoctorRepairMutations(params: {
   cfg: OpenClawConfig;
   doctorFixCommand: string;
@@ -418,7 +418,7 @@ export async function collectChannelDoctorRepairMutations(params: {
   return mutations;
 }
 
-/** Reused helper for collect Channel Doctor Empty Allowlist Extra Warnings behavior in src/commands/doctor. */
+/** Collects plugin-specific warning text for an empty allowlist account. */
 export function collectChannelDoctorEmptyAllowlistExtraWarnings(
   params: ChannelDoctorEmptyAllowlistLookupParams,
 ): string[] {
@@ -430,7 +430,7 @@ export function collectChannelDoctorEmptyAllowlistExtraWarnings(
   );
 }
 
-/** Reused helper for should Skip Channel Doctor Default Empty Group Allowlist Warning behavior in src/commands/doctor. */
+/** Checks whether a channel plugin replaces the default empty group allowlist warning. */
 export function shouldSkipChannelDoctorDefaultEmptyGroupAllowlistWarning(
   params: ChannelDoctorEmptyAllowlistLookupParams,
 ): boolean {
