@@ -1,4 +1,4 @@
-// security dangerous config flags core helpers and runtime behavior.
+// Core dangerous config flag collection across built-in and plugin contracts.
 import { DANGEROUS_SANDBOX_DOCKER_BOOLEAN_KEYS } from "../agents/sandbox/config.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { isRecord } from "../utils.js";
@@ -27,7 +27,7 @@ type CollectPluginConfigContractMatches = (input: {
   root: Record<string, unknown>;
 }) => Iterable<PluginConfigContractMatch>;
 
-/** Shared type for Dangerous Config Flag Contract Inputs in src/security. */
+/** Plugin contract inputs used when collecting dangerous config flags. */
 export type DangerousConfigFlagContractInputs = {
   configContractsById?: ReadonlyMap<string, PluginConfigContractMetadata>;
   collectPluginConfigContractMatches?: CollectPluginConfigContractMatches;
@@ -59,7 +59,7 @@ function collectExactPluginConfigContractMatches({
   return Object.hasOwn(root, pathPattern) ? [{ path: pathPattern, value: root[pathPattern] }] : [];
 }
 
-/** Reused helper for collect Enabled Insecure Or Dangerous Flags From Contracts behavior in src/security. */
+/** Collect enabled dangerous config flags from core config and plugin contracts. */
 export function collectEnabledInsecureOrDangerousFlagsFromContracts(
   cfg: OpenClawConfig,
   inputs: DangerousConfigFlagContractInputs = {},

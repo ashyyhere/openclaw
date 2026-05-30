@@ -1,10 +1,10 @@
-// security external content source helpers and runtime behavior.
+// Maps external hook session keys to external content source categories.
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
-/** Shared type for Hook External Content Source in src/security. */
+/** Hook-origin sources that need external-content prompt isolation. */
 export type HookExternalContentSource = "gmail" | "webhook";
 
-/** Reused helper for resolve Hook External Content Source behavior in src/security. */
+/** Resolve the external content source encoded in a hook session key. */
 export function resolveHookExternalContentSource(
   sessionKey: string,
 ): HookExternalContentSource | undefined {
@@ -18,14 +18,14 @@ export function resolveHookExternalContentSource(
   return undefined;
 }
 
-/** Reused helper for map Hook External Content Source behavior in src/security. */
+/** Map hook-specific source ids onto external content wrapper sources. */
 export function mapHookExternalContentSource(
   source: HookExternalContentSource,
 ): "email" | "webhook" {
   return source === "gmail" ? "email" : "webhook";
 }
 
-/** Reused helper for is External Hook Session behavior in src/security. */
+/** Return whether a session key belongs to an external hook source. */
 export function isExternalHookSession(sessionKey: string): boolean {
   return resolveHookExternalContentSource(sessionKey) !== undefined;
 }

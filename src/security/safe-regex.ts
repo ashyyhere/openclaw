@@ -1,4 +1,4 @@
-// security safe regex helpers and runtime behavior.
+// Bounded regex compilation and testing helpers for untrusted config patterns.
 type QuantifierRead = {
   consumed: number;
   minRepeat: number;
@@ -31,10 +31,10 @@ type PatternToken =
 
 const SAFE_REGEX_CACHE_MAX = 256;
 const SAFE_REGEX_TEST_WINDOW = 2048;
-/** Shared type for Safe Regex Reject Reason in src/security. */
+/** Reason a regex pattern was rejected by the safe compiler. */
 export type SafeRegexRejectReason = "empty" | "unsafe-nested-repetition" | "invalid-regex";
 
-/** Shared type for Safe Regex Compile Result in src/security. */
+/** Detailed safe regex compilation result with reject reason when compilation fails. */
 export type SafeRegexCompileResult =
   | {
       regex: RegExp;
@@ -301,7 +301,7 @@ function testRegexFromStart(regex: RegExp, value: string): boolean {
   return regex.test(value);
 }
 
-/** Reused helper for test Regex With Bounded Input behavior in src/security. */
+/** Test only bounded slices of large input to cap regex evaluation cost. */
 export function testRegexWithBoundedInput(
   regex: RegExp,
   input: string,
@@ -320,14 +320,14 @@ export function testRegexWithBoundedInput(
   return testRegexFromStart(regex, input.slice(-maxWindow));
 }
 
-/** Reused helper for has Nested Repetition behavior in src/security. */
+/** Return whether a pattern contains nested repetition likely to cause backtracking blowups. */
 export function hasNestedRepetition(source: string): boolean {
   // Conservative parser: tokenize first, then check if repeated tokens/groups are repeated again.
   // Non-goal: complete regex AST support; keep strict enough for config safety checks.
   return analyzeTokensForNestedRepetition(tokenizePattern(source));
 }
 
-/** Reused helper for compile Safe Regex Detailed behavior in src/security. */
+/** Compile a regex with nested-repetition rejection and cached detailed status. */
 export function compileSafeRegexDetailed(source: string, flags = ""): SafeRegexCompileResult {
   const trimmed = source.trim();
   if (!trimmed) {
@@ -366,7 +366,7 @@ export function compileSafeRegexDetailed(source: string, flags = ""): SafeRegexC
   return result;
 }
 
-/** Reused helper for compile Safe Regex behavior in src/security. */
+/** Compile a regex through the safe compiler, returning null on rejection. */
 export function compileSafeRegex(source: string, flags = ""): RegExp | null {
   return compileSafeRegexDetailed(source, flags).regex;
 }

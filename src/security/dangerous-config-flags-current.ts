@@ -1,4 +1,4 @@
-// security dangerous config flags current helpers and runtime behavior.
+// Dangerous config flag collection using the current plugin metadata snapshot.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { collectPluginConfigContractMatches } from "../plugins/config-contract-matches.js";
 import { getCurrentPluginMetadataSnapshot } from "../plugins/current-plugin-metadata-snapshot.js";
@@ -45,7 +45,7 @@ function resolveCurrentPluginConfigContractsById(params: {
   return contractsById;
 }
 
-/** Reused helper for collect Enabled Insecure Or Dangerous Flags From Current Snapshot behavior in src/security. */
+/** Collect enabled dangerous flags using already-loaded plugin metadata when available. */
 export function collectEnabledInsecureOrDangerousFlagsFromCurrentSnapshot(
   cfg: OpenClawConfig,
 ): string[] | undefined {

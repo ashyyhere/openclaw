@@ -1,9 +1,9 @@
-// security test temp cases helpers and runtime behavior.
+// Test helper for per-case temporary directories in security tests.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 
-/** Reused class for Async Temp Case Factory behavior in src/security. */
+/** Creates and cleans isolated temporary directories for async security test cases. */
 export class AsyncTempCaseFactory {
   private caseId = 0;
   private fixtureRoot = "";
