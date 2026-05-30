@@ -31,7 +31,7 @@ import type { AgentToolResult } from "./runtime/index.js";
 import { PROCESS_TOOL_DISPLAY_SUMMARY } from "./tool-description-presets.js";
 import type { AgentToolWithMeta } from "./tools/common.js";
 
-/** Shared type for Process Tool Defaults in src/agents. */
+/** Runtime defaults for the process-management tool. */
 export type ProcessToolDefaults = {
   cleanupMs?: number;
   hasCronTool?: boolean;
@@ -742,5 +742,5 @@ export function createProcessTool(
   };
 }
 
-/** Reused constant for process Tool behavior in src/agents. */
+/** Default process tool instance for polling, killing, and sending input to exec sessions. */
 export const processTool = createProcessTool();

@@ -70,9 +70,9 @@ import type { AgentToolResult } from "./runtime/index.js";
 import { EXEC_TOOL_DISPLAY_SUMMARY } from "./tool-description-presets.js";
 import { type AgentToolWithMeta, failedTextResult, textResult } from "./tools/common.js";
 
-/** Re-exported API for src/agents, starting with Bash Sandbox Config. */
+/** Sandbox config type surfaced from exec tool setup. */
 export type { BashSandboxConfig } from "./bash-tools.shared.js";
-/** Re-exported API for src/agents. */
+/** Exec tool option/result types shared with callers that assemble tool defaults. */
 export type {
   ExecElevatedDefaults,
   ExecToolDefaults,
@@ -1817,13 +1817,13 @@ export function createExecTool(
   };
 }
 
-/** Reused constant for exec Tool behavior in src/agents. */
+/** Default exec tool instance registered for shell command execution. */
 export const execTool = createExecTool();
 
-/** Reused constant for testing behavior in src/agents. */
+/** Test hooks for shell-command parsing and script-file validation paths. */
 export const testing = {
   parseOpenClawChannelsLoginShellCommand,
   validateScriptFileForShellBleed,
 };
-/** Re-exported API for src/agents, starting with testing. */
+/** Backward-compatible test hook export for underscored internal imports. */
 export { testing as __testing };

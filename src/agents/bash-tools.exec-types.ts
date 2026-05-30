@@ -15,7 +15,7 @@ import type { BashSandboxConfig } from "./bash-tools.shared.js";
 import type { EmbeddedFullAccessBlockedReason } from "./embedded-agent-runner/types.js";
 import type { ExecReviewerConfig } from "./exec-auto-reviewer.js";
 
-/** Shared type for Exec Tool Defaults in src/agents. */
+/** Runtime defaults injected into exec tool creation from config and channel context. */
 export type ExecToolDefaults = {
   hasCronTool?: boolean;
   host?: ExecTarget;
@@ -65,7 +65,7 @@ export type ExecToolDefaults = {
   cwd?: string;
 };
 
-/** Shared type for Exec Approval Followup Outcome in src/agents. */
+/** Completed command summary passed to approval follow-up renderers. */
 export type ExecApprovalFollowupOutcome = {
   status: "completed" | "failed";
   exitCode: number | null;
@@ -81,12 +81,12 @@ type ExecApprovalFollowupContext = {
   outcome: ExecApprovalFollowupOutcome;
 };
 
-/** Shared type for Exec Approval Followup Factory in src/agents. */
+/** Builds optional follow-up text after an approved exec command completes. */
 export type ExecApprovalFollowupFactory = (
   context: ExecApprovalFollowupContext,
 ) => string | undefined | Promise<string | undefined>;
 
-/** Shared type for Exec Elevated Defaults in src/agents. */
+/** Effective elevated-access settings after policy and runtime availability are resolved. */
 export type ExecElevatedDefaults = {
   enabled: boolean;
   allowed: boolean;
@@ -95,7 +95,7 @@ export type ExecElevatedDefaults = {
   fullAccessBlockedReason?: EmbeddedFullAccessBlockedReason;
 };
 
-/** Shared type for Exec Tool Details in src/agents. */
+/** Structured details returned by exec tool calls for UI and transcript consumers. */
 export type ExecToolDetails =
   | {
       status: "running";
