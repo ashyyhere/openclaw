@@ -1,4 +1,5 @@
-// plugins plugin registry snapshot helpers and runtime behavior.
+// Loads the plugin registry snapshot from the current process snapshot, persisted index,
+// or live discovery while keeping gateway metadata reads bounded and restart-scoped.
 import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
@@ -35,29 +36,29 @@ import { registerPluginMetadataProcessMemoLifecycleClear } from "./plugin-metada
 import type { PluginRegistrySnapshotSource } from "./plugin-registry-snapshot.types.js";
 import { resolvePluginCacheInputs } from "./roots.js";
 
-/** Shared type for Plugin Registry Snapshot in src/plugins. */
+/** Canonical plugin registry shape consumed by loader, doctor, and CLI registry callers. */
 export type PluginRegistrySnapshot = InstalledPluginIndex;
-/** Shared type for Plugin Registry Record in src/plugins. */
+/** Single installed plugin entry from a registry snapshot. */
 export type PluginRegistryRecord = InstalledPluginIndexRecord;
-/** Shared type for Plugin Registry Inspection in src/plugins. */
+/** Persisted registry store inspection returned by registry diagnostics. */
 export type PluginRegistryInspection = InstalledPluginIndexStoreInspection;
-/** Re-exported API for src/plugins, starting with Plugin Registry Snapshot Source. */
+/** Describes whether a returned registry came from caller input, process state, disk, or discovery. */
 export type { PluginRegistrySnapshotSource } from "./plugin-registry-snapshot.types.js";
-/** Shared type for Plugin Registry Snapshot Diagnostic Code in src/plugins. */
+/** Machine-readable reason a persisted registry could not be used as the active snapshot. */
 export type PluginRegistrySnapshotDiagnosticCode =
   | "persisted-registry-disabled"
   | "persisted-registry-missing"
   | "persisted-registry-stale-policy"
   | "persisted-registry-stale-source";
 
-/** Shared type for Plugin Registry Snapshot Diagnostic in src/plugins. */
+/** Warning or informational note explaining how registry snapshot selection fell back. */
 export type PluginRegistrySnapshotDiagnostic = {
   level: "info" | "warn";
   code: PluginRegistrySnapshotDiagnosticCode;
   message: string;
 };
 
-/** Shared type for Plugin Registry Snapshot Result in src/plugins. */
+/** Registry snapshot plus source and optional discovery details for callers that report provenance. */
 export type PluginRegistrySnapshotResult = {
   snapshot: PluginRegistrySnapshot;
   source: PluginRegistrySnapshotSource;
@@ -65,7 +66,7 @@ export type PluginRegistrySnapshotResult = {
   discovery?: PluginDiscoveryResult;
 };
 
-/** Reused constant for DISABLE PERSISTED PLUGIN REGISTRY ENV behavior in src/plugins. */
+/** Deprecated break-glass env flag that forces registry loading back to live discovery. */
 export const DISABLE_PERSISTED_PLUGIN_REGISTRY_ENV = "OPENCLAW_DISABLE_PERSISTED_PLUGIN_REGISTRY";
 const MAX_PLUGIN_REGISTRY_SNAPSHOT_MEMOS = 8;
 const REGISTRY_SNAPSHOT_MEMO_ENV_KEYS = [
@@ -101,14 +102,14 @@ function formatDeprecatedPersistedRegistryDisableWarning(): string {
   return `${DISABLE_PERSISTED_PLUGIN_REGISTRY_ENV} is a deprecated break-glass compatibility switch; use \`openclaw plugins registry --refresh\` or \`openclaw doctor --fix\` to repair registry state.`;
 }
 
-/** Shared type for Load Plugin Registry Params in src/plugins. */
+/** Inputs shared by registry snapshot readers, including explicit indexes for tests/tools. */
 export type LoadPluginRegistryParams = LoadInstalledPluginIndexParams &
   InstalledPluginIndexStoreOptions & {
     index?: PluginRegistrySnapshot;
     preferPersisted?: boolean;
   };
 
-/** Shared type for Get Plugin Record Params in src/plugins. */
+/** Registry load options plus the plugin id to resolve from the selected snapshot. */
 export type GetPluginRecordParams = LoadPluginRegistryParams & {
   pluginId: string;
 };
@@ -426,7 +427,7 @@ function hasRecoveredInstallRecordsMissingFromPersistedIndex(
   });
 }
 
-/** Reused helper for load Plugin Registry Snapshot With Metadata behavior in src/plugins. */
+/** Loads a plugin registry snapshot and reports whether disk state or live discovery won. */
 export function loadPluginRegistrySnapshotWithMetadata(
   params: LoadPluginRegistryParams = {},
 ): PluginRegistrySnapshotResult {
@@ -551,38 +552,38 @@ function resolveSnapshot(params: LoadPluginRegistryParams = {}): PluginRegistryS
   return loadPluginRegistrySnapshotWithMetadata(params).snapshot;
 }
 
-/** Reused helper for load Plugin Registry Snapshot behavior in src/plugins. */
+/** Loads the active plugin registry snapshot without provenance metadata. */
 export function loadPluginRegistrySnapshot(
   params: LoadPluginRegistryParams = {},
 ): PluginRegistrySnapshot {
   return resolveSnapshot(params);
 }
 
-/** Reused helper for list Plugin Records behavior in src/plugins. */
+/** Lists plugin records from the active registry snapshot in registry order. */
 export function listPluginRecords(
   params: LoadPluginRegistryParams = {},
 ): readonly PluginRegistryRecord[] {
   return listInstalledPluginRecords(resolveSnapshot(params));
 }
 
-/** Reused helper for get Plugin Record behavior in src/plugins. */
+/** Resolves one plugin record from the active registry snapshot. */
 export function getPluginRecord(params: GetPluginRecordParams): PluginRegistryRecord | undefined {
   return getInstalledPluginRecord(resolveSnapshot(params), params.pluginId);
 }
 
-/** Reused helper for is Plugin Enabled behavior in src/plugins. */
+/** Checks a plugin's enabled state after config policy is applied to the selected snapshot. */
 export function isPluginEnabled(params: GetPluginRecordParams): boolean {
   return isInstalledPluginEnabled(resolveSnapshot(params), params.pluginId, params.config);
 }
 
-/** Reused helper for inspect Plugin Registry behavior in src/plugins. */
+/** Inspects persisted registry storage without forcing a refresh. */
 export function inspectPluginRegistry(
   params: LoadInstalledPluginIndexParams & InstalledPluginIndexStoreOptions = {},
 ): Promise<PluginRegistryInspection> {
   return inspectPersistedInstalledPluginIndex(params);
 }
 
-/** Reused helper for refresh Plugin Registry behavior in src/plugins. */
+/** Rebuilds and persists the plugin registry index, returning the refreshed snapshot. */
 export function refreshPluginRegistry(
   params: RefreshInstalledPluginIndexParams & InstalledPluginIndexStoreOptions,
 ): Promise<PluginRegistrySnapshot> {
