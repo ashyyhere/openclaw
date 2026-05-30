@@ -1,5 +1,5 @@
-// infra diagnostic llm content helpers and runtime behavior.
-/** Shared type for Diagnostic Model Content Capture Policy in src/infra. */
+/** Resolves which model payload content may be captured in diagnostics. */
+/** Fine-grained diagnostic capture permissions for model and tool content. */
 export type DiagnosticModelContentCapturePolicy = {
   inputMessages: boolean;
   outputMessages: boolean;
@@ -37,7 +37,7 @@ function withDerivedFields(
   };
 }
 
-/** Reused helper for resolve Diagnostic Model Content Capture Policy behavior in src/infra. */
+/** Resolve diagnostic content capture policy from the OpenClaw config shape. */
 export function resolveDiagnosticModelContentCapturePolicy(
   config: unknown,
 ): DiagnosticModelContentCapturePolicy {

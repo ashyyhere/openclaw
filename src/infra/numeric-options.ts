@@ -1,15 +1,15 @@
-// infra numeric options helpers and runtime behavior.
+/** Infra-facing wrappers for shared numeric option coercion helpers. */
 import {
   resolveIntegerOption as resolveSharedIntegerOption,
   resolveNonNegativeIntegerOption as resolveSharedNonNegativeIntegerOption,
 } from "../shared/number-coercion.js";
 
-/** Reused helper for resolve Non Negative Integer Option behavior in src/infra. */
+/** Resolve a non-negative integer option or fall back. */
 export function resolveNonNegativeIntegerOption(value: number, fallback: number): number {
   return resolveSharedNonNegativeIntegerOption(value, fallback);
 }
 
-/** Reused helper for resolve Integer Option behavior in src/infra. */
+/** Resolve an integer option with a minimum bound or fall back. */
 export function resolveIntegerOption(
   value: number,
   fallback: number,

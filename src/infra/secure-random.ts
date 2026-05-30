@@ -1,17 +1,17 @@
-// infra secure random helpers and runtime behavior.
+/** Cryptographically secure random helpers for ids, tokens, hex, and ranges. */
 import { randomBytes, randomInt, randomUUID } from "node:crypto";
 
-/** Reused helper for generate Secure Uuid behavior in src/infra. */
+/** Generate a random UUID using the platform crypto provider. */
 export function generateSecureUuid(): string {
   return randomUUID();
 }
 
-/** Reused helper for generate Secure Token behavior in src/infra. */
+/** Generate a URL-safe random token from secure bytes. */
 export function generateSecureToken(bytes = 16): string {
   return randomBytes(bytes).toString("base64url");
 }
 
-/** Reused helper for generate Secure Hex behavior in src/infra. */
+/** Generate a hex-encoded random token from secure bytes. */
 export function generateSecureHex(bytes = 16): string {
   return randomBytes(bytes).toString("hex");
 }
@@ -21,11 +21,11 @@ export function generateSecureFraction(): number {
   return randomBytes(4).readUInt32BE(0) / 0x1_0000_0000;
 }
 
-/** Reused helper for generate Secure Int behavior in src/infra. */
+/** Generate a secure integer from 0 inclusive to max exclusive. */
 export function generateSecureInt(maxExclusive: number): number;
-/** Reused helper for generate Secure Int behavior in src/infra. */
+/** Generate a secure integer from min inclusive to max exclusive. */
 export function generateSecureInt(minInclusive: number, maxExclusive: number): number;
-/** Reused helper for generate Secure Int behavior in src/infra. */
+/** Generate a secure integer for the supported one- or two-bound overloads. */
 export function generateSecureInt(a: number, b?: number): number {
   return typeof b === "number" ? randomInt(a, b) : randomInt(a);
 }

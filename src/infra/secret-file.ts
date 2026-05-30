@@ -1,9 +1,9 @@
-// infra secret file helpers and runtime behavior.
+/** Re-exports secure secret-file primitives and legacy read result adapter. */
 import "./fs-safe-defaults.js";
 import { readSecretFileSync as readSecretFileSyncImpl } from "@openclaw/fs-safe/secret";
 import { resolveUserPath } from "../utils.js";
 
-/** Re-exported API for src/infra. */
+/** Secret-file read constants and helpers from fs-safe. */
 export {
   DEFAULT_SECRET_FILE_MAX_BYTES,
   PRIVATE_SECRET_DIR_MODE,
@@ -12,10 +12,10 @@ export {
   tryReadSecretFileSync,
   type SecretFileReadOptions,
 } from "@openclaw/fs-safe/secret";
-/** Re-exported API for src/infra, starting with write Secret File Atomic. */
+/** Atomic private secret-file writer exposed under the infra naming convention. */
 export { writeSecretFileAtomic as writePrivateSecretFileAtomic } from "@openclaw/fs-safe/secret";
 
-/** Shared type for Secret File Read Result in src/infra. */
+/** Legacy result shape for callers that still need message/error fields instead of throws. */
 export type SecretFileReadResult =
   | {
       ok: true;
