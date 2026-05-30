@@ -16,10 +16,10 @@ export const EMBEDDED_AGENT_EXECUTION_PHASES = [
   "model_call_started",
 ] as const;
 
-/** Shared type for Embedded Agent Execution Phase in src/agents/embedded-agent-runner. */
+/** Closed set of phase ids used for embedded-agent startup/attempt timing. */
 export type EmbeddedAgentExecutionPhase = (typeof EMBEDDED_AGENT_EXECUTION_PHASES)[number];
 
-/** Reused constant for EMBEDDED AGENT EXECUTION PHASE LABELS behavior in src/agents/embedded-agent-runner. */
+/** Stable human-readable labels for execution phase metrics and logs. */
 export const EMBEDDED_AGENT_EXECUTION_PHASE_LABELS = {
   runner_entered: "runner-entered",
   workspace: "workspace",
@@ -37,7 +37,7 @@ export const EMBEDDED_AGENT_EXECUTION_PHASE_LABELS = {
   model_call_started: "model-call-started",
 } as const satisfies Record<EmbeddedAgentExecutionPhase, string>;
 
-/** Reused helper for format Embedded Agent Execution Phase behavior in src/agents/embedded-agent-runner. */
+/** Formats an optional phase id for logging and status output. */
 export function formatEmbeddedAgentExecutionPhase(
   phase?: EmbeddedAgentExecutionPhase,
 ): string | undefined {

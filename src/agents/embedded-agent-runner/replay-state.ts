@@ -4,13 +4,13 @@ export type EmbeddedRunReplayState = {
   hadPotentialSideEffects: boolean;
 };
 
-/** Shared type for Embedded Run Replay Metadata in src/agents/embedded-agent-runner. */
+/** Replay safety metadata emitted by an embedded-agent attempt. */
 export type EmbeddedRunReplayMetadata = {
   hadPotentialSideEffects: boolean;
   replaySafe: boolean;
 };
 
-/** Reused helper for create Embedded Run Replay State behavior in src/agents/embedded-agent-runner. */
+/** Creates replay state with missing flags defaulting to the conservative safe values. */
 export function createEmbeddedRunReplayState(
   state?: Partial<EmbeddedRunReplayState>,
 ): EmbeddedRunReplayState {
@@ -20,7 +20,7 @@ export function createEmbeddedRunReplayState(
   };
 }
 
-/** Reused helper for merge Embedded Run Replay State behavior in src/agents/embedded-agent-runner. */
+/** Merges replay observations without ever clearing an earlier unsafe signal. */
 export function mergeEmbeddedRunReplayState(
   current: EmbeddedRunReplayState,
   next?: Partial<EmbeddedRunReplayState>,
@@ -35,7 +35,7 @@ export function mergeEmbeddedRunReplayState(
   };
 }
 
-/** Reused helper for observe Replay Metadata behavior in src/agents/embedded-agent-runner. */
+/** Records attempt metadata, treating missing metadata as unsafe to replay. */
 export function observeReplayMetadata(
   current: EmbeddedRunReplayState,
   metadata?: EmbeddedRunReplayMetadata | null,
@@ -52,7 +52,7 @@ export function observeReplayMetadata(
   });
 }
 
-/** Reused helper for replay Metadata From State behavior in src/agents/embedded-agent-runner. */
+/** Converts accumulated replay state back to the attempt metadata shape. */
 export function replayMetadataFromState(state: EmbeddedRunReplayState): EmbeddedRunReplayMetadata {
   return {
     hadPotentialSideEffects: state.hadPotentialSideEffects,
