@@ -39,9 +39,9 @@ const MAX_TOOL_RESULT_CONTEXT_SHARE = 0.3;
  * request-local ceiling so oversized tool output cannot dominate the next turn.
  */
 export const DEFAULT_MAX_LIVE_TOOL_RESULT_CHARS = 16_000;
-/** Reused constant for LARGE CONTEXT MAX LIVE TOOL RESULT CHARS behavior in src/agents/embedded-agent-runner. */
+/** Live tool-result cap used once the model context is large enough for bigger payloads. */
 export const LARGE_CONTEXT_MAX_LIVE_TOOL_RESULT_CHARS = 32_000;
-/** Reused constant for XL CONTEXT MAX LIVE TOOL RESULT CHARS behavior in src/agents/embedded-agent-runner. */
+/** Live tool-result cap for extra-large context models where 64k chars stays bounded. */
 export const XL_CONTEXT_MAX_LIVE_TOOL_RESULT_CHARS = 64_000;
 const LARGE_CONTEXT_TOOL_RESULT_TOKENS = 100_000;
 const XL_CONTEXT_TOOL_RESULT_TOKENS = 200_000;
@@ -63,7 +63,7 @@ const DEFAULT_SUFFIX = (truncatedChars: number) =>
   formatContextLimitTruncationNotice(truncatedChars);
 const COMPACT_RECOVERY_SUFFIX = (truncatedChars: number) =>
   `[... ${Math.max(1, Math.floor(truncatedChars))} chars truncated; narrow args]`;
-/** Reused constant for MIN TRUNCATED TEXT CHARS behavior in src/agents/embedded-agent-runner. */
+/** Smallest emitted truncated block, including the default truncation notice. */
 export const MIN_TRUNCATED_TEXT_CHARS = MIN_KEEP_CHARS + DEFAULT_SUFFIX(1).length;
 
 function resolveSuffixFactory(
@@ -395,7 +395,7 @@ function calculateRecoveryAggregateToolResultChars(
   );
 }
 
-/** Shared type for Tool Result Reduction Potential in src/agents/embedded-agent-runner. */
+/** Estimated savings available from reducing oversized tool-result text in a branch. */
 export type ToolResultReductionPotential = {
   maxChars: number;
   aggregateBudgetChars: number;
