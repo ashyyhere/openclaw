@@ -12,10 +12,10 @@ import { normalizeOptionalString } from "../../shared/string-coerce.js";
 import { VERSION } from "../../version.js";
 import { formatUpdateOneLiner, resolveUpdateAvailability } from "../status.update.js";
 
-/** Re-exported API for src/commands/status-all, starting with format Time Ago. */
+/** Relative time formatter shared by status-all sections. */
 export { formatTimeAgo } from "../../infra/format-time/format-relative.ts";
 
-/** Shared type for Status Overview Row in src/commands/status-all. */
+/** One row in the status-all overview table. */
 export type StatusOverviewRow = {
   Item: string;
   Value: string;
@@ -60,7 +60,7 @@ type StatusManagedService = {
   } | null;
 };
 
-/** Reused helper for resolve Status Update Channel Info behavior in src/commands/status-all. */
+/** Resolves update channel labels from config and install metadata. */
 export function resolveStatusUpdateChannelInfo(params: {
   updateConfigChannel?: string | null;
   update: {
@@ -80,7 +80,7 @@ export function resolveStatusUpdateChannelInfo(params: {
   });
 }
 
-/** Reused helper for build Status Update Surface behavior in src/commands/status-all. */
+/** Builds display-ready update channel, git, and availability fields. */
 export function buildStatusUpdateSurface(params: {
   updateConfigChannel?: string | null;
   update: StatusUpdateLike;
@@ -98,13 +98,13 @@ export function buildStatusUpdateSurface(params: {
   };
 }
 
-/** Reused helper for format Status Dashboard Value behavior in src/commands/status-all. */
+/** Formats the dashboard URL cell, falling back to disabled. */
 export function formatStatusDashboardValue(value: string | null | undefined): string {
   const trimmed = normalizeOptionalString(value);
   return trimmed && trimmed.length > 0 ? trimmed : "disabled";
 }
 
-/** Reused helper for format Status Tailscale Value behavior in src/commands/status-all. */
+/** Formats Tailscale exposure, DNS, HTTPS URL, and daemon state. */
 export function formatStatusTailscaleValue(params: {
   tailscaleMode: string;
   dnsName?: string | null;
@@ -146,7 +146,7 @@ export function formatStatusTailscaleValue(params: {
   return decorateWarn(parts.join(" · "));
 }
 
-/** Reused helper for format Status Service Value behavior in src/commands/status-all. */
+/** Formats installed/loaded/runtime state for a managed service row. */
 export function formatStatusServiceValue(params: {
   label: string;
   installed: boolean;
@@ -169,7 +169,7 @@ export function formatStatusServiceValue(params: {
   return `${params.label} ${installedPrefix}${params.loadedText}${runtimeSuffix}`;
 }
 
-/** Reused helper for resolve Status Dashboard Url behavior in src/commands/status-all. */
+/** Resolves the local Control UI dashboard URL when enabled. */
 export function resolveStatusDashboardUrl(params: {
   cfg: Pick<OpenClawConfig, "gateway">;
 }): string | null {
@@ -185,7 +185,7 @@ export function resolveStatusDashboardUrl(params: {
   }).httpUrl;
 }
 
-/** Reused helper for build Status Overview Rows behavior in src/commands/status-all. */
+/** Assembles the ordered status-all overview rows. */
 export function buildStatusOverviewRows(params: {
   prefixRows?: StatusOverviewRow[];
   dashboardValue: string;
@@ -234,7 +234,7 @@ export function buildStatusOverviewRows(params: {
   return rows;
 }
 
-/** Reused helper for build Status Overview Surface Rows behavior in src/commands/status-all. */
+/** Builds overview rows from raw update, gateway, service, and Tailscale surfaces. */
 export function buildStatusOverviewSurfaceRows(params: {
   cfg: Pick<OpenClawConfig, "update" | "gateway">;
   update: StatusUpdateLike;
@@ -321,7 +321,7 @@ export function buildStatusOverviewSurfaceRows(params: {
   });
 }
 
-/** Reused helper for format Gateway Auth Used behavior in src/commands/status-all. */
+/** Summarizes which Gateway auth credentials were used for probing. */
 export function formatGatewayAuthUsed(
   auth: {
     token?: string;
@@ -342,7 +342,7 @@ export function formatGatewayAuthUsed(
   return "none";
 }
 
-/** Reused helper for format Gateway Self Summary behavior in src/commands/status-all. */
+/** Formats Gateway self-reported host, address, version, and platform. */
 export function formatGatewaySelfSummary(gatewaySelf: StatusGatewaySelf): string | null {
   return gatewaySelf?.host || gatewaySelf?.ip || gatewaySelf?.version || gatewaySelf?.platform
     ? [
@@ -356,7 +356,7 @@ export function formatGatewaySelfSummary(gatewaySelf: StatusGatewaySelf): string
     : null;
 }
 
-/** Reused helper for build Gateway Status Summary Parts behavior in src/commands/status-all. */
+/** Builds target, reachability, auth, and mode text for Gateway status. */
 export function buildGatewayStatusSummaryParts(params: {
   gatewayMode: "local" | "remote";
   remoteUrlMissing: boolean;
@@ -397,7 +397,7 @@ export function buildGatewayStatusSummaryParts(params: {
   };
 }
 
-/** Reused helper for build Status Gateway Surface Values behavior in src/commands/status-all. */
+/** Builds Gateway, dashboard, and managed service values for overview output. */
 export function buildStatusGatewaySurfaceValues(params: {
   cfg: Pick<OpenClawConfig, "gateway">;
   gatewayMode: "local" | "remote";
@@ -467,7 +467,7 @@ export function buildStatusGatewaySurfaceValues(params: {
   };
 }
 
-/** Reused helper for build Gateway Status Json Payload behavior in src/commands/status-all. */
+/** Builds the redacted JSON payload for Gateway status-all output. */
 export function buildGatewayStatusJsonPayload(params: {
   gatewayMode: "local" | "remote";
   gatewayConnection: {
@@ -515,7 +515,7 @@ export function buildGatewayStatusJsonPayload(params: {
   };
 }
 
-/** Reused helper for redact Secrets behavior in src/commands/status-all. */
+/** Redacts common token, password, secret, and bearer credential patterns. */
 export function redactSecrets(text: string): string {
   if (!text) {
     return text;
