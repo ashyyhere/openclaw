@@ -6,7 +6,7 @@ type MockWithReset = {
   mockResolvedValue?(value: unknown): void;
 };
 
-/** Reused constant for task Executor Mocks behavior in src/agents/tools. */
+/** Vitest mocks for task executor calls made by media background helpers. */
 export const taskExecutorMocks = {
   createRunningTaskRun: vi.fn(),
   recordTaskRunProgressByRunId: vi.fn(),
@@ -14,12 +14,12 @@ export const taskExecutorMocks = {
   failTaskRunByRunId: vi.fn(),
 };
 
-/** Reused constant for announce Delivery Mocks behavior in src/agents/tools. */
+/** Vitest mocks for fallback subagent announcement delivery. */
 export const announceDeliveryMocks = {
   deliverSubagentAnnouncement: vi.fn(),
 };
 
-/** Reused constant for task Delivery Runtime Mocks behavior in src/agents/tools. */
+/** Vitest mocks for direct media completion delivery. */
 export const taskDeliveryRuntimeMocks = {
   sendMessage: vi.fn(),
 };
@@ -172,7 +172,7 @@ export function expectQueuedTaskRun({
   expect(params.progressSummary).toBe(progressSummary);
 }
 
-/** Reused helper for expect Recorded Task Progress behavior in src/agents/tools. */
+/** Asserts that task progress was recorded for a media generation run. */
 export function expectRecordedTaskProgress({
   taskExecutorMocks,
   runId,
@@ -186,7 +186,7 @@ export function expectRecordedTaskProgress({
   expect(params.progressSummary).toBe(progressSummary);
 }
 
-/** Reused helper for expect Direct Media Send behavior in src/agents/tools. */
+/** Asserts that media completion was delivered through direct channel send. */
 export function expectDirectMediaSend({
   sendMessageMock,
   channel,
@@ -203,7 +203,7 @@ export function expectDirectMediaSend({
   expect(params.mediaUrls).toEqual(mediaUrls);
 }
 
-/** Reused helper for expect Fallback Media Announcement behavior in src/agents/tools. */
+/** Asserts that media completion fell back to a subagent announcement. */
 export function expectFallbackMediaAnnouncement({
   deliverAnnouncementMock,
   requesterSessionKey,

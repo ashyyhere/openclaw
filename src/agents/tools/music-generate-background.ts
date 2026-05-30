@@ -7,10 +7,10 @@ import {
   type MediaGenerationTaskHandle,
 } from "./media-generate-background-shared.js";
 
-/** Shared type for Music Generation Task Handle in src/agents/tools. */
+/** Handle for an active or resumable background music generation task. */
 export type MusicGenerationTaskHandle = MediaGenerationTaskHandle;
 
-/** Reused constant for music Generation Task Lifecycle behavior in src/agents/tools. */
+/** Music generation lifecycle configured with music-specific progress and completion labels. */
 export const musicGenerationTaskLifecycle = createMediaGenerationTaskLifecycle({
   toolName: "music_generate",
   taskKind: MUSIC_GENERATION_TASK_KIND,
@@ -23,22 +23,22 @@ export const musicGenerationTaskLifecycle = createMediaGenerationTaskLifecycle({
   completionLabel: "music",
 });
 
-/** Reused constant for create Music Generation Task Run behavior in src/agents/tools. */
+/** Starts a tracked music generation task run. */
 export const createMusicGenerationTaskRun = (
   ...params: Parameters<typeof musicGenerationTaskLifecycle.createTaskRun>
 ) => musicGenerationTaskLifecycle.createTaskRun(...params);
 
-/** Reused constant for record Music Generation Task Progress behavior in src/agents/tools. */
+/** Records progress for a tracked music generation task run. */
 export const recordMusicGenerationTaskProgress = (
   ...params: Parameters<typeof musicGenerationTaskLifecycle.recordTaskProgress>
 ) => musicGenerationTaskLifecycle.recordTaskProgress(...params);
 
-/** Reused constant for complete Music Generation Task Run behavior in src/agents/tools. */
+/** Marks a tracked music generation task run complete. */
 export const completeMusicGenerationTaskRun = (
   ...params: Parameters<typeof musicGenerationTaskLifecycle.completeTaskRun>
 ) => musicGenerationTaskLifecycle.completeTaskRun(...params);
 
-/** Reused constant for fail Music Generation Task Run behavior in src/agents/tools. */
+/** Marks a tracked music generation task run failed. */
 export const failMusicGenerationTaskRun = (
   ...params: Parameters<typeof musicGenerationTaskLifecycle.failTaskRun>
 ) => musicGenerationTaskLifecycle.failTaskRun(...params);

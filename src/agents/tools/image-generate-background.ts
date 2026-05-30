@@ -7,10 +7,10 @@ import {
   type MediaGenerationTaskHandle,
 } from "./media-generate-background-shared.js";
 
-/** Shared type for Image Generation Task Handle in src/agents/tools. */
+/** Handle for an active or resumable background image generation task. */
 export type ImageGenerationTaskHandle = MediaGenerationTaskHandle;
 
-/** Reused constant for image Generation Task Lifecycle behavior in src/agents/tools. */
+/** Image generation lifecycle configured with image-specific progress and completion labels. */
 export const imageGenerationTaskLifecycle = createMediaGenerationTaskLifecycle({
   toolName: "image_generate",
   taskKind: IMAGE_GENERATION_TASK_KIND,
@@ -23,22 +23,22 @@ export const imageGenerationTaskLifecycle = createMediaGenerationTaskLifecycle({
   completionLabel: "image",
 });
 
-/** Reused constant for create Image Generation Task Run behavior in src/agents/tools. */
+/** Starts a tracked image generation task run. */
 export const createImageGenerationTaskRun = (
   ...params: Parameters<typeof imageGenerationTaskLifecycle.createTaskRun>
 ) => imageGenerationTaskLifecycle.createTaskRun(...params);
 
-/** Reused constant for record Image Generation Task Progress behavior in src/agents/tools. */
+/** Records progress for a tracked image generation task run. */
 export const recordImageGenerationTaskProgress = (
   ...params: Parameters<typeof imageGenerationTaskLifecycle.recordTaskProgress>
 ) => imageGenerationTaskLifecycle.recordTaskProgress(...params);
 
-/** Reused constant for complete Image Generation Task Run behavior in src/agents/tools. */
+/** Marks a tracked image generation task run complete. */
 export const completeImageGenerationTaskRun = (
   ...params: Parameters<typeof imageGenerationTaskLifecycle.completeTaskRun>
 ) => imageGenerationTaskLifecycle.completeTaskRun(...params);
 
-/** Reused constant for fail Image Generation Task Run behavior in src/agents/tools. */
+/** Marks a tracked image generation task run failed. */
 export const failImageGenerationTaskRun = (
   ...params: Parameters<typeof imageGenerationTaskLifecycle.failTaskRun>
 ) => imageGenerationTaskLifecycle.failTaskRun(...params);

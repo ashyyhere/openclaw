@@ -8,12 +8,12 @@ import {
   findDuplicateGuardMediaGenerationTaskForSession,
 } from "./media-generation-task-status-shared.js";
 
-/** Reused constant for MUSIC GENERATION TASK KIND behavior in src/agents. */
+/** Task registry kind for background music generation runs. */
 export const MUSIC_GENERATION_TASK_KIND = "music_generation";
 const MUSIC_GENERATION_SOURCE_PREFIX = "music_generate";
 const RECENT_MUSIC_GENERATION_DUPLICATE_GUARD_MS = 2 * 60_000;
 
-/** Reused helper for find Active Music Generation Task For Session behavior in src/agents. */
+/** Finds the active music generation task for a session, if one exists. */
 export function findActiveMusicGenerationTaskForSession(
   sessionKey?: string,
 ): TaskRecord | undefined {
@@ -24,7 +24,7 @@ export function findActiveMusicGenerationTaskForSession(
   });
 }
 
-/** Reused helper for find Duplicate Guard Music Generation Task For Session behavior in src/agents. */
+/** Finds a recent duplicate-guard music generation task for a session. */
 export function findDuplicateGuardMusicGenerationTaskForSession(
   sessionKey?: string,
   params?: { prompt?: string; requestKey?: string },
@@ -39,7 +39,7 @@ export function findDuplicateGuardMusicGenerationTaskForSession(
   });
 }
 
-/** Reused helper for build Music Generation Task Status Details behavior in src/agents. */
+/** Builds structured status details for a music generation task. */
 export function buildMusicGenerationTaskStatusDetails(task: TaskRecord): Record<string, unknown> {
   return buildMediaGenerationTaskStatusDetails({
     task,
@@ -47,7 +47,7 @@ export function buildMusicGenerationTaskStatusDetails(task: TaskRecord): Record<
   });
 }
 
-/** Reused helper for build Music Generation Task Status Text behavior in src/agents. */
+/** Builds user-facing status text for a music generation task. */
 export function buildMusicGenerationTaskStatusText(
   task: TaskRecord,
   params?: { duplicateGuard?: boolean },
@@ -62,7 +62,7 @@ export function buildMusicGenerationTaskStatusText(
   });
 }
 
-/** Reused helper for build Active Music Generation Task Prompt Context For Session behavior in src/agents. */
+/** Builds prompt context describing an active music generation task. */
 export function buildActiveMusicGenerationTaskPromptContextForSession(
   sessionKey?: string,
 ): string | undefined {

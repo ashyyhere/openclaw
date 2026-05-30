@@ -7,10 +7,10 @@ import {
   type MediaGenerationTaskHandle,
 } from "./media-generate-background-shared.js";
 
-/** Shared type for Video Generation Task Handle in src/agents/tools. */
+/** Handle for an active or resumable background video generation task. */
 export type VideoGenerationTaskHandle = MediaGenerationTaskHandle;
 
-/** Reused constant for video Generation Task Lifecycle behavior in src/agents/tools. */
+/** Video generation lifecycle configured with video-specific progress and completion labels. */
 export const videoGenerationTaskLifecycle = createMediaGenerationTaskLifecycle({
   toolName: "video_generate",
   taskKind: VIDEO_GENERATION_TASK_KIND,
@@ -23,22 +23,22 @@ export const videoGenerationTaskLifecycle = createMediaGenerationTaskLifecycle({
   completionLabel: "video",
 });
 
-/** Reused constant for create Video Generation Task Run behavior in src/agents/tools. */
+/** Starts a tracked video generation task run. */
 export const createVideoGenerationTaskRun = (
   ...params: Parameters<typeof videoGenerationTaskLifecycle.createTaskRun>
 ) => videoGenerationTaskLifecycle.createTaskRun(...params);
 
-/** Reused constant for record Video Generation Task Progress behavior in src/agents/tools. */
+/** Records progress for a tracked video generation task run. */
 export const recordVideoGenerationTaskProgress = (
   ...params: Parameters<typeof videoGenerationTaskLifecycle.recordTaskProgress>
 ) => videoGenerationTaskLifecycle.recordTaskProgress(...params);
 
-/** Reused constant for complete Video Generation Task Run behavior in src/agents/tools. */
+/** Marks a tracked video generation task run complete. */
 export const completeVideoGenerationTaskRun = (
   ...params: Parameters<typeof videoGenerationTaskLifecycle.completeTaskRun>
 ) => videoGenerationTaskLifecycle.completeTaskRun(...params);
 
-/** Reused constant for fail Video Generation Task Run behavior in src/agents/tools. */
+/** Marks a tracked video generation task run failed. */
 export const failVideoGenerationTaskRun = (
   ...params: Parameters<typeof videoGenerationTaskLifecycle.failTaskRun>
 ) => videoGenerationTaskLifecycle.failTaskRun(...params);
