@@ -1,11 +1,11 @@
-// terminal stream writer helpers and runtime behavior.
-/** Shared type for Safe Stream Writer Options in src/terminal. */
+// Safe terminal stream writer that suppresses repeated broken-pipe failures.
+/** Hooks for safe stream writes and broken-pipe notifications. */
 export type SafeStreamWriterOptions = {
   beforeWrite?: () => void;
   onBrokenPipe?: (err: NodeJS.ErrnoException, stream: NodeJS.WriteStream) => void;
 };
 
-/** Shared type for Safe Stream Writer in src/terminal. */
+/** Writer facade that tracks whether the destination stream has closed. */
 export type SafeStreamWriter = {
   write: (stream: NodeJS.WriteStream, text: string) => boolean;
   writeLine: (stream: NodeJS.WriteStream, text: string) => boolean;
@@ -18,7 +18,7 @@ function isBrokenPipeError(err: unknown): err is NodeJS.ErrnoException {
   return code === "EPIPE" || code === "EIO";
 }
 
-/** Reused helper for create Safe Stream Writer behavior in src/terminal. */
+/** Create a stream writer that treats EPIPE/EIO as terminal shutdown instead of throwing. */
 export function createSafeStreamWriter(options: SafeStreamWriterOptions = {}): SafeStreamWriter {
   let closed = false;
   let notified = false;

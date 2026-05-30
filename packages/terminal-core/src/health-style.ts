@@ -1,7 +1,7 @@
 import { normalizeLowercaseStringOrEmpty } from "./string.js";
 import { theme } from "./theme.js";
 
-/** Reused helper for style Health Channel Line behavior in src/terminal. */
+/** Color the status word in a channel health line when rich output is enabled. */
 export function styleHealthChannelLine(line: string, rich: boolean): string {
   if (!rich) {
     return line;

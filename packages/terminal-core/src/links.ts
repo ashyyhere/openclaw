@@ -1,11 +1,11 @@
-// terminal links helpers and runtime behavior.
+// Terminal link helpers for OpenClaw documentation URLs.
 import { formatTerminalLink } from "./terminal-link.js";
 
 function resolveDocsRoot(): string {
   return "https://docs.openclaw.ai";
 }
 
-/** Reused helper for format Docs Link behavior in src/terminal. */
+/** Resolve and format a docs URL as a terminal hyperlink with fallback text. */
 export function formatDocsLink(
   path: string | undefined | null,
   label?: string,

@@ -1,4 +1,4 @@
-// terminal theme helpers and runtime behavior.
+// Terminal color theme helpers that respect NO_COLOR and FORCE_COLOR.
 import chalk, { Chalk } from "chalk";
 import { LOBSTER_PALETTE } from "./palette.js";
 
@@ -11,7 +11,7 @@ const baseChalk = process.env.NO_COLOR && !hasForceColor ? new Chalk({ level: 0 
 
 const hex = (value: string) => baseChalk.hex(value);
 
-/** Reused constant for theme behavior in src/terminal. */
+/** Shared terminal color functions for CLI output. */
 export const theme = {
   accent: hex(LOBSTER_PALETTE.accent),
   accentBright: hex(LOBSTER_PALETTE.accentBright),
@@ -26,9 +26,9 @@ export const theme = {
   option: hex(LOBSTER_PALETTE.warn),
 } as const;
 
-/** Reused constant for is Rich behavior in src/terminal. */
+/** Return whether current terminal output should include color styling. */
 export const isRich = () => baseChalk.level > 0;
 
-/** Reused constant for colorize behavior in src/terminal. */
+/** Apply a color function only when rich terminal output is enabled. */
 export const colorize = (rich: boolean, color: (value: string) => string, value: string) =>
   rich ? color(value) : value;

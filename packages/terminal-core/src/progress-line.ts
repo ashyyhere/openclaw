@@ -1,7 +1,7 @@
-// terminal progress line helpers and runtime behavior.
+// Tracks the active one-line terminal progress display so other output can clear it.
 let activeStream: NodeJS.WriteStream | null = null;
 
-/** Reused helper for register Active Progress Line behavior in src/terminal. */
+/** Register a TTY stream as owning the active progress line. */
 export function registerActiveProgressLine(stream: NodeJS.WriteStream): void {
   if (!stream.isTTY) {
     return;
@@ -9,7 +9,7 @@ export function registerActiveProgressLine(stream: NodeJS.WriteStream): void {
   activeStream = stream;
 }
 
-/** Reused helper for clear Active Progress Line behavior in src/terminal. */
+/** Clear the active terminal progress line if one is registered. */
 export function clearActiveProgressLine(): void {
   if (!activeStream?.isTTY) {
     return;
@@ -17,7 +17,7 @@ export function clearActiveProgressLine(): void {
   activeStream.write("\r\x1b[2K");
 }
 
-/** Reused helper for unregister Active Progress Line behavior in src/terminal. */
+/** Unregister the active progress line, optionally only for a matching stream. */
 export function unregisterActiveProgressLine(stream?: NodeJS.WriteStream): void {
   if (!activeStream) {
     return;

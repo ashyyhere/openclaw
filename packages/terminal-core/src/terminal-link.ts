@@ -1,5 +1,5 @@
-// terminal terminal link helpers and runtime behavior.
-/** Reused helper for format Terminal Link behavior in src/terminal. */
+// OSC 8 terminal hyperlink formatting with plain-text fallback.
+/** Format a terminal hyperlink when supported, otherwise return a readable fallback. */
 export function formatTerminalLink(
   label: string,
   url: string,
