@@ -38,7 +38,7 @@ function commandSelectedJsonFlag(command: Command, argv: string[]): boolean {
   return hasFlag(argv, "--json");
 }
 
-/** Reused helper for set Command Json Mode behavior in src/cli/program. */
+/** Mark a command as honoring --json for either output or parse-only handling. */
 export function setCommandJsonMode(command: Command, mode: JsonMode): Command {
   (command as JsonModeCommand)[jsonModeSymbol] = mode;
   return command;
@@ -51,7 +51,7 @@ function getCommandJsonMode(command: Command, argv: string[] = process.argv): Js
   return getDeclaredCommandJsonMode(command);
 }
 
-/** Reused helper for is Command Json Output Mode behavior in src/cli/program. */
+/** True only when --json is selected and the command declares JSON output semantics. */
 export function isCommandJsonOutputMode(command: Command, argv: string[] = process.argv): boolean {
   return getCommandJsonMode(command, argv) === "output";
 }

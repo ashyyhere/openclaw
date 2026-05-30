@@ -1,3 +1,8 @@
+/**
+ * Re-export port cleanup for command tests that need to release a bound dev port.
+ */
 export { forceFreePort } from "./ports.js";
-/** Re-exported API for src/cli, starting with build Program. */
+/**
+ * Re-export the canonical Commander program builder for CLI entrypoints.
+ */
 export { buildProgram } from "./program/build-program.js";

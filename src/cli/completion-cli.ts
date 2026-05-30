@@ -21,7 +21,7 @@ import { getCoreCliCommandNames, registerCoreCliByName } from "./program/command
 import { getProgramContext } from "./program/program-context.js";
 import { getSubCliEntries, registerSubCliByName } from "./program/register.subclis-core.js";
 
-/** Reused helper for get Completion Script behavior in src/cli. */
+/** Generate a shell-specific completion script from the fully registered Commander tree. */
 export function getCompletionScript(shell: CompletionShell, program: Command): string {
   if (shell === "zsh") {
     return generateZshCompletion(program);
@@ -168,7 +168,7 @@ async function registerSubcommandsForCompletion(program: Command): Promise<void>
   }
 }
 
-/** Reused helper for register Completion Cli behavior in src/cli. */
+/** Register the completion command and isolate script output from diagnostic logging. */
 export function registerCompletionCli(program: Command) {
   program
     .command("completion")

@@ -9,12 +9,12 @@ function loadPluginRegistryModule() {
   return pluginRegistryModuleLoader.load();
 }
 
-/** Shared type for Cli Plugin Registry Load Policy in src/cli. */
+/** Scope that determines which plugin commands are loaded into the CLI registry. */
 export type CliPluginRegistryLoadPolicy = {
   scope: CliPluginRegistryScope;
 };
 
-/** Reused helper for ensure Cli Plugin Registry Loaded behavior in src/cli. */
+/** Load the plugin registry once while optionally routing plugin diagnostics to stderr. */
 export async function ensureCliPluginRegistryLoaded(params: {
   scope: CliPluginRegistryScope;
   routeLogsToStderr?: boolean;
