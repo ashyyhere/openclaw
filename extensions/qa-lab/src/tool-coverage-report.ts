@@ -1,4 +1,4 @@
-// extensions/qa-lab/src tool coverage report helpers and runtime behavior.
+// QA Lab tool coverage report helpers summarize runtime tool fixture coverage and drift.
 import {
   isRecord,
   normalizeOptionalString as readString,
@@ -23,6 +23,7 @@ type QaToolCoverageSuiteScenario = {
   runtimeParity?: RuntimeParityResult;
 };
 
+/** Suite summary subset consumed by the tool coverage report. */
 export type QaToolCoverageSuiteSummary = {
   scenarios: QaToolCoverageSuiteScenario[];
   run?: {
@@ -30,10 +31,14 @@ export type QaToolCoverageSuiteSummary = {
   };
 };
 
+/** Per-runtime coverage status for one tool row. */
 export type QaToolCoverageStatus = "pass" | "fail" | "missing" | "not-run";
+/** Drift status reported for one tool row. */
 export type QaToolCoverageDrift = RuntimeParityDrift | "not-run";
+/** Tool coverage bucket label. */
 export type QaToolCoverageBucket = QaRuntimeToolBucket;
 
+/** One tool coverage report row. */
 export type QaToolCoverageRow = {
   tool: string;
   runtimeToolName?: string;
@@ -56,6 +61,7 @@ export type QaToolCoverageRow = {
   details?: string;
 };
 
+/** Aggregated tool coverage report. */
 export type QaToolCoverageReport = {
   runtimePair: [RuntimeId, RuntimeId];
   generatedAt: string;
@@ -255,6 +261,7 @@ function coverageFailureForRow(row: QaToolCoverageRow): string | undefined {
   return undefined;
 }
 
+/** Builds a tool coverage report from scenarios and optional runtime parity summary. */
 export function buildQaToolCoverageReport(params: {
   scenarios: readonly QaSeedScenarioWithSource[];
   summary?: QaToolCoverageSuiteSummary;
@@ -304,6 +311,7 @@ export function buildQaToolCoverageReport(params: {
   };
 }
 
+/** Renders a tool coverage report as Markdown. */
 export function renderQaToolCoverageMarkdownReport(report: QaToolCoverageReport): string {
   const lines = [
     `# OpenClaw Runtime Tool Coverage — ${report.runtimePair[0]} vs ${report.runtimePair[1]}`,
