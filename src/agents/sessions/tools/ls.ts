@@ -21,7 +21,7 @@ const lsSchema = Type.Object({
     Type.Number({ description: "Maximum number of entries to return (default: 500)" }),
   ),
 });
-/** Re-exported API for src/agents/sessions, starting with Ls Tool Details. */
+/** Ls tool input/details contracts shared with renderers and callers. */
 export type { LsToolDetails, LsToolInput } from "./tool-contracts.js";
 
 const DEFAULT_LIMIT = 500;
@@ -47,7 +47,7 @@ const defaultLsOperations: LsOperations = {
   readdir: readdirSync,
 };
 
-/** Shared type for Ls Tool Options in src/agents/sessions. */
+/** Dependency injection options for ls tool filesystem operations. */
 export interface LsToolOptions {
   /** Custom operations for directory listing. Default: local filesystem */
   operations?: LsOperations;

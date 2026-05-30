@@ -1,7 +1,7 @@
 /** Validates and formats missing session cwd errors. */
 import { existsSync } from "node:fs";
 
-/** Shared type for Session Cwd Issue in src/agents/sessions. */
+/** Missing stored cwd details plus fallback cwd for resumed sessions. */
 export interface SessionCwdIssue {
   sessionFile?: string;
   sessionCwd: string;
@@ -46,7 +46,7 @@ export function formatMissingSessionCwdPrompt(issue: SessionCwdIssue): string {
   return `cwd from session file does not exist\n${issue.sessionCwd}\n\ncontinue in current cwd\n${issue.fallbackCwd}`;
 }
 
-/** Reused class for Missing Session Cwd Error behavior in src/agents/sessions. */
+/** Error thrown when a resumed session's stored cwd no longer exists. */
 export class MissingSessionCwdError extends Error {
   readonly issue: SessionCwdIssue;
 

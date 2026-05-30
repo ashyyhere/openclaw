@@ -47,7 +47,7 @@ const grepSchema = Type.Object({
     Type.Number({ description: "Maximum number of matches to return (default: 100)" }),
   ),
 });
-/** Re-exported API for src/agents/sessions, starting with Grep Tool Details. */
+/** Grep tool input/details contracts shared with renderers and callers. */
 export type { GrepToolDetails, GrepToolInput } from "./tool-contracts.js";
 const DEFAULT_LIMIT = 100;
 
@@ -67,7 +67,7 @@ const defaultGrepOperations: GrepOperations = {
   readFile: (p) => readFileSync(p, "utf-8"),
 };
 
-/** Shared type for Grep Tool Options in src/agents/sessions. */
+/** Dependency injection options for grep tool filesystem/search operations. */
 export interface GrepToolOptions {
   /** Custom operations for grep. Default: local filesystem plus ripgrep */
   operations?: GrepOperations;

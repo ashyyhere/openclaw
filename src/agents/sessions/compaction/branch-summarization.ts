@@ -11,18 +11,18 @@ import {
 } from "../../runtime/index.js";
 import type { SessionEntry, ReadonlySessionManager } from "../session-manager.js";
 
-/** Re-exported API for src/agents/sessions, starting with Branch Preparation. */
+/** Branch summary preparation and filesystem operation contracts from agent-core. */
 export type { BranchPreparation, BranchSummaryDetails, FileOperations };
-/** Re-exported API for src/agents/sessions, starting with prepare Branch Entries. */
+/** Prepare branch entries before generating a branch summary. */
 export { prepareBranchEntries };
 
-/** Shared type for Collect Entries Result in src/agents/sessions. */
+/** Transcript entries and common ancestor selected for branch summarization. */
 export interface CollectEntriesResult {
   entries: SessionEntry[];
   commonAncestorId: string | null;
 }
 
-/** Shared type for Branch Summary Result in src/agents/sessions. */
+/** Branch summary text plus file metadata or failure state. */
 export interface BranchSummaryResult {
   summary?: string;
   readFiles?: string[];
@@ -31,7 +31,7 @@ export interface BranchSummaryResult {
   error?: string;
 }
 
-/** Shared type for Generate Branch Summary Options in src/agents/sessions. */
+/** Model/auth/runtime options for branch summary generation. */
 export interface GenerateBranchSummaryOptions {
   model: Model;
   apiKey: string;

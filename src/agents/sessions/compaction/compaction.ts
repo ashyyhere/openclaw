@@ -1,3 +1,4 @@
+// Adapts agent-core compaction helpers for session transcript compaction.
 import type { StreamFn as CoreStreamFn } from "../../../../packages/llm-core/src/index.js";
 import type { Model } from "../../../llm/types.js";
 import {
@@ -24,7 +25,7 @@ import {
 import type { AgentMessage, StreamFn, ThinkingLevel } from "../../runtime/index.js";
 import type { SessionEntry } from "../session-manager.js";
 
-/** Re-exported API for src/agents/sessions. */
+/** Agent-core compaction helpers and result types exposed to sessions. */
 export {
   calculateContextTokens,
   DEFAULT_COMPACTION_SETTINGS,

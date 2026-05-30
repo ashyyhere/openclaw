@@ -31,7 +31,7 @@ const readSchema = Type.Object({
   ),
   limit: Type.Optional(Type.Number({ description: "Maximum number of lines to read" })),
 });
-/** Re-exported API for src/agents/sessions, starting with Read Tool Details. */
+/** Read tool input/details contracts shared with renderers and callers. */
 export type { ReadToolDetails, ReadToolInput } from "./tool-contracts.js";
 
 interface CompactReadClassification {
@@ -60,7 +60,7 @@ const defaultReadOperations: ReadOperations = {
   detectImageMimeType: detectSupportedImageMimeTypeFromFile,
 };
 
-/** Shared type for Read Tool Options in src/agents/sessions. */
+/** Dependency injection and media handling options for the read tool. */
 export interface ReadToolOptions {
   /** Whether to auto-resize images to 2000x2000 max. Default: true */
   autoResizeImages?: boolean;
