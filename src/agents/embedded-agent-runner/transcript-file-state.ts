@@ -431,7 +431,7 @@ function fileEntryOrMigrationSlot(value: unknown, index: number): FileEntry {
   } as unknown as FileEntry;
 }
 
-/** Reused class for Transcript File State behavior in src/agents/embedded-agent-runner. */
+/** Indexed view of a transcript file that preserves migration state and parent/leaf links. */
 export class TranscriptFileState {
   readonly header: SessionHeader | null;
   readonly entries: SessionEntry[];
