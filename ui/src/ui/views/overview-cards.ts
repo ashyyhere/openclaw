@@ -1,4 +1,4 @@
-// ui/src/ui/views overview cards helpers and runtime behavior.
+// Dashboard overview metric cards for usage, sessions, skills, cron, and quotas.
 import { html, nothing, type TemplateResult } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { asDateTimestampMs } from "../../../../src/shared/number-coercion.js";
@@ -22,7 +22,7 @@ import type {
   ModelAuthStatusResult,
 } from "../types.ts";
 
-/** Shared type for Overview Cards Props in ui/src/ui/views. */
+/** Data and navigation callback required by the overview metric card strip. */
 export type OverviewCardsProps = {
   usageResult: SessionsUsageResult | null;
   sessionsResult: SessionsListResult | null;
@@ -114,7 +114,7 @@ function renderSkeletonCards() {
   `;
 }
 
-/** Reused helper for render Overview Cards behavior in ui/src/ui/views. */
+/** Render dashboard summary cards and loading skeletons. */
 export function renderOverviewCards(props: OverviewCardsProps) {
   const dataLoaded =
     props.usageResult != null || props.sessionsResult != null || props.skillsReport != null;

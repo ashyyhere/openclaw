@@ -1,4 +1,4 @@
-// ui/src/ui/views skills helpers and runtime behavior.
+// Skills management view with local status, setup actions, and ClawHub discovery.
 import { html, nothing } from "lit";
 import { ref } from "lit/directives/ref.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
@@ -44,12 +44,12 @@ function showDialogWhenClosed(el?: Element) {
   }
 }
 
-/** Shared type for Skills Status Filter in ui/src/ui/views. */
+/** Skill status tabs exposed by the skills view. */
 export type SkillsStatusFilter = "all" | "ready" | "needs-setup" | "disabled";
-/** Shared type for Skill Detail Tab in ui/src/ui/views. */
+/** Detail dialog tabs for a selected skill. */
 export type SkillDetailTab = "overview" | "card";
 
-/** Shared type for Skills Props in ui/src/ui/views. */
+/** Inputs and event handlers required to render the skills management view. */
 export type SkillsProps = {
   connected: boolean;
   loading: boolean;
@@ -171,7 +171,7 @@ function verdictChipClass(verdict: ClawHubSkillSecurityVerdict | null | undefine
   return status === "pending" || status === "not-run" ? "chip" : "chip-warn";
 }
 
-/** Reused helper for render Skills behavior in ui/src/ui/views. */
+/** Render local skill status, setup controls, detail dialogs, and ClawHub search. */
 export function renderSkills(props: SkillsProps) {
   const skills = props.report?.skills ?? [];
 

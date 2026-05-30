@@ -1,4 +1,4 @@
-// ui/src/ui/views nodes exec approvals helpers and runtime behavior.
+// Node/gateway exec approval policy editor for the Control UI.
 import { html, nothing } from "lit";
 import { t } from "../../i18n/index.ts";
 import type {
@@ -147,7 +147,7 @@ function resolveExecApprovalsScope(
   return EXEC_APPROVALS_DEFAULT_SCOPE;
 }
 
-/** Reused helper for resolve Exec Approvals State behavior in ui/src/ui/views. */
+/** Derive exec approval form state for gateway or selected node targets. */
 export function resolveExecApprovalsState(props: NodesProps): ExecApprovalsState {
   const form = props.execApprovalsForm ?? props.execApprovalsSnapshot?.file ?? null;
   const ready = Boolean(form);
@@ -192,7 +192,7 @@ export function resolveExecApprovalsState(props: NodesProps): ExecApprovalsState
   };
 }
 
-/** Reused helper for render Exec Approvals behavior in ui/src/ui/views. */
+/** Render the exec approval policy editor and allowlist controls. */
 export function renderExecApprovals(state: ExecApprovalsState) {
   const ready = state.ready;
   const targetReady = state.target !== "node" || Boolean(state.targetNodeId);
