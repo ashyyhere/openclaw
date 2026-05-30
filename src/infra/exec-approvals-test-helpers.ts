@@ -1,10 +1,11 @@
-// infra exec approvals test helpers helpers and runtime behavior.
+// Test helpers for exec approval command/path resolution.
+// Fixtures keep shell parser and wrapper-resolution parity tests data-driven.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import type { CommandResolution, ExecutableResolution } from "./exec-command-resolution.js";
 
-/** Reused helper for make Path Env behavior in src/infra. */
+/** Build a minimal PATH/PATHEXT environment for executable resolution tests. */
 export function makePathEnv(binDir: string): NodeJS.ProcessEnv {
   if (process.platform !== "win32") {
     return { PATH: binDir };
@@ -12,12 +13,12 @@ export function makePathEnv(binDir: string): NodeJS.ProcessEnv {
   return { PATH: binDir, PATHEXT: ".EXE;.CMD;.BAT;.COM" };
 }
 
-/** Reused helper for make Temp Dir behavior in src/infra. */
+/** Create a realpath-normalized temp directory for exec approval fixtures. */
 export function makeTempDir(): string {
   return fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), "openclaw-exec-approvals-")));
 }
 
-/** Reused helper for make Mock Executable Resolution behavior in src/infra. */
+/** Build an executable-resolution object for command-resolution tests. */
 export function makeMockExecutableResolution(params: {
   rawExecutable: string;
   executableName: string;
@@ -32,7 +33,7 @@ export function makeMockExecutableResolution(params: {
   };
 }
 
-/** Reused helper for make Mock Command Resolution behavior in src/infra. */
+/** Build a command-resolution object with legacy getter aliases used by older tests. */
 export function makeMockCommandResolution(params: {
   execution: ExecutableResolution;
   policy?: ExecutableResolution;
@@ -90,7 +91,7 @@ type WrapperResolutionParityFixture = {
   cases: WrapperResolutionParityFixtureCase[];
 };
 
-/** Reused helper for load Shell Parser Parity Fixture Cases behavior in src/infra. */
+/** Load shell parser parity fixture cases from the repo test fixtures. */
 export function loadShellParserParityFixtureCases(): ShellParserParityFixtureCase[] {
   const fixturePath = path.join(
     process.cwd(),
@@ -102,7 +103,7 @@ export function loadShellParserParityFixtureCases(): ShellParserParityFixtureCas
   return fixture.cases;
 }
 
-/** Reused helper for load Wrapper Resolution Parity Fixture Cases behavior in src/infra. */
+/** Load wrapper resolution parity fixture cases from the repo test fixtures. */
 export function loadWrapperResolutionParityFixtureCases(): WrapperResolutionParityFixtureCase[] {
   const fixturePath = path.join(
     process.cwd(),

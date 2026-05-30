@@ -1,10 +1,11 @@
-// infra windows install roots helpers and runtime behavior.
+// Windows install-root discovery for trusted system/package directories.
+// Registry roots are preferred for the real process; injected envs skip registry reads for tests.
 import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
-/** Reused constant for DEFAULT WINDOWS SYSTEM ROOT behavior in src/infra. */
+/** Fallback Windows system root when registry/env discovery is unavailable. */
 export const DEFAULT_WINDOWS_SYSTEM_ROOT = "C:\\Windows";
 const DEFAULT_PROGRAM_FILES = "C:\\Program Files";
 const DEFAULT_PROGRAM_FILES_X86 = "C:\\Program Files (x86)";
@@ -205,7 +206,7 @@ function buildWindowsInstallRoots(
   };
 }
 
-/** Reused helper for get Windows Install Roots behavior in src/infra. */
+/** Resolve Windows system and Program Files roots from registry/env/defaults. */
 export function getWindowsInstallRoots(
   env: Record<string, string | undefined> = process.env,
 ): WindowsInstallRoots {
@@ -216,7 +217,7 @@ export function getWindowsInstallRoots(
   return buildWindowsInstallRoots(env, false);
 }
 
-/** Reused helper for get Windows Program Files Roots behavior in src/infra. */
+/** Return unique Program Files roots in preferred 64-bit then default then x86 order. */
 export function getWindowsProgramFilesRoots(
   env: Record<string, string | undefined> = process.env,
 ): readonly string[] {
@@ -237,7 +238,7 @@ export function getWindowsProgramFilesRoots(
   return result;
 }
 
-/** Reused helper for reset Windows Install Roots For Tests behavior in src/infra. */
+/** Reset registry/file probes and process cache for Windows root tests. */
 export function resetWindowsInstallRootsForTests(
   overrides: WindowsInstallRootsTestOverrides = {},
 ): void {
@@ -246,7 +247,7 @@ export function resetWindowsInstallRootsForTests(
   cachedProcessInstallRoots = null;
 }
 
-/** Reused constant for private Test Api behavior in src/infra. */
+/** Private test hooks for registry executable discovery behavior. */
 export const privateTestApi = {
   getWindowsRegExeCandidates,
   locateWindowsRegExe,

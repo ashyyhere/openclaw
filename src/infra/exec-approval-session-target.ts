@@ -1,4 +1,5 @@
-// infra exec approval session target helpers and runtime behavior.
+// Approval request session-target resolution.
+// Used to route exec/plugin approvals back to the originating conversation safely.
 import { resolveSessionConversationRef } from "../channels/plugins/session-conversation.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
@@ -11,7 +12,7 @@ import type { ExecApprovalRequest } from "./exec-approvals.js";
 import { resolveSessionDeliveryTarget } from "./outbound/targets.js";
 import type { PluginApprovalRequest } from "./plugin-approvals.js";
 
-/** Shared type for Exec Approval Session Target in src/infra. */
+/** Deliverable target resolved from a persisted approval request session. */
 export type ExecApprovalSessionTarget = {
   channel?: string;
   to: string;
@@ -19,7 +20,7 @@ export type ExecApprovalSessionTarget = {
   threadId?: string | number;
 };
 
-/** Shared type for Approval Request Session Conversation in src/infra. */
+/** Conversation identity extracted from an approval request session key. */
 export type ApprovalRequestSessionConversation = {
   channel: string;
   kind: "group" | "channel";
@@ -81,7 +82,7 @@ function normalizeOptionalChannel(value?: string | null): string | undefined {
   return normalizeMessageChannel(value);
 }
 
-/** Reused helper for resolve Approval Request Session Conversation behavior in src/infra. */
+/** Resolve a request session key to a channel conversation, optionally enforcing channel. */
 export function resolveApprovalRequestSessionConversation(params: {
   request: ApprovalRequestLike;
   channel?: string | null;
@@ -113,7 +114,7 @@ export function resolveApprovalRequestSessionConversation(params: {
   };
 }
 
-/** Reused helper for resolve Exec Approval Session Target behavior in src/infra. */
+/** Resolve an exec approval request to the session's last deliverable target. */
 export function resolveExecApprovalSessionTarget(params: {
   cfg: OpenClawConfig;
   request: ExecApprovalRequest;
@@ -154,7 +155,7 @@ export function resolveExecApprovalSessionTarget(params: {
   };
 }
 
-/** Reused helper for resolve Approval Request Session Target behavior in src/infra. */
+/** Resolve exec or plugin approval requests to a deliverable session target. */
 export function resolveApprovalRequestSessionTarget(params: {
   cfg: OpenClawConfig;
   request: ApprovalRequestLike;
@@ -181,7 +182,7 @@ function resolveApprovalRequestStoredSessionTarget(params: {
   });
 }
 
-/** Reused helper for resolve Approval Request Origin Target behavior in src/infra. */
+/** Match an approval request to a channel/account and resolve the expected origin target. */
 export function resolveApprovalRequestOriginTarget<TTarget>(
   params: ApprovalRequestOriginTargetResolver<TTarget>,
 ): TTarget | null {
