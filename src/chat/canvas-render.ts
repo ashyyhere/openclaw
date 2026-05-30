@@ -176,7 +176,7 @@ function previewFromShortcode(attrs: Record<string, string>): CanvasPreview | un
   return undefined;
 }
 
-/** Reused helper for extract Canvas From Text behavior in src/chat. */
+/** Extract a canvas preview from JSON text emitted by a tool or assistant response. */
 export function extractCanvasFromText(
   outputText: string | undefined,
   _toolName?: string,
@@ -185,7 +185,7 @@ export function extractCanvasFromText(
   return coerceCanvasPreview(parsed);
 }
 
-/** Reused helper for extract Canvas Shortcodes behavior in src/chat. */
+/** Extract `[embed]` canvas shortcodes while preserving code-fenced text. */
 export function extractCanvasShortcodes(text: string | undefined): {
   text: string;
   previews: CanvasPreview[];
