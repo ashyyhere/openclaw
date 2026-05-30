@@ -1,4 +1,4 @@
-// infra approval handler runtime helpers and runtime behavior.
+// Adapts plugin approval capabilities into channel approval runtime handlers.
 import type {
   ChannelApprovalCapability,
   ChannelApprovalNativeAdapter,
@@ -36,7 +36,7 @@ import type {
 import type { ExecApprovalChannelRuntime } from "./exec-approval-channel-runtime.js";
 import type { ExecApprovalChannelRuntimeEventKind } from "./exec-approval-channel-runtime.types.js";
 
-/** Re-exported API for src/infra. */
+/** Approval view-model shapes exposed to channel approval integrations. */
 export type {
   ApprovalActionView,
   ApprovalMetadataView,
@@ -51,12 +51,12 @@ export type {
   PluginApprovalResolvedView,
   ResolvedApprovalView,
 } from "./approval-view-model.types.js";
-/** Re-exported API for src/infra. */
+/** Native runtime context and lazy adapter factory for channel approval plugins. */
 export {
   CHANNEL_APPROVAL_NATIVE_RUNTIME_CONTEXT_CAPABILITY,
   createLazyChannelApprovalNativeRuntimeAdapter,
 };
-/** Re-exported API for src/infra. */
+/** Native approval runtime adapter contracts implemented by channel plugins. */
 export type {
   ChannelApprovalCapabilityHandlerContext,
   ChannelApprovalNativeAvailabilityAdapter,
@@ -69,7 +69,7 @@ export type {
   ChannelApprovalNativeTransportAdapter,
 } from "./approval-handler-runtime-types.js";
 
-/** Shared type for Channel Approval Handler in src/infra. */
+/** Runtime that delivers approval requests and finalizes their channel entries. */
 export type ChannelApprovalHandler<
   TRequest extends ApprovalRequest = ApprovalRequest,
   TResolved extends ApprovalResolved = ApprovalResolved,
@@ -187,7 +187,7 @@ async function applyApprovalFinalAction(params: {
   }
 }
 
-/** Reused helper for create Channel Approval Native Runtime Adapter behavior in src/infra. */
+/** Wraps a strongly typed native approval runtime spec behind the generic adapter contract. */
 export function createChannelApprovalNativeRuntimeAdapter<
   TPendingPayload,
   TPreparedTarget,
@@ -365,7 +365,7 @@ type ChannelApprovalHandlerLifecycleSpec<
   onStopped?: () => Promise<void> | void;
 };
 
-/** Shared type for Channel Approval Handler Adapter in src/infra. */
+/** Adapter bundle used to create a channel approval handler from runtime pieces. */
 export type ChannelApprovalHandlerAdapter<
   TPendingEntry,
   TPreparedTarget,
@@ -390,7 +390,7 @@ export type ChannelApprovalHandlerAdapter<
   >;
 };
 
-/** Reused helper for create Channel Approval Handler behavior in src/infra. */
+/** Creates a channel approval runtime from content, transport, and lifecycle adapters. */
 export function createChannelApprovalHandler<
   TPendingEntry,
   TPreparedTarget,
@@ -438,7 +438,7 @@ export function createChannelApprovalHandler<
   });
 }
 
-/** Reused helper for create Channel Approval Handler From Capability behavior in src/infra. */
+/** Creates a channel approval handler directly from a plugin nativeRuntime capability. */
 export async function createChannelApprovalHandlerFromCapability(params: {
   capability?: Pick<ChannelApprovalCapability, "native" | "nativeRuntime"> | null;
   label: string;
