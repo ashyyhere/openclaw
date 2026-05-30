@@ -1,4 +1,4 @@
-// gateway channel health policy helpers and runtime behavior.
+// Evaluates channel runtime snapshots for health checks and restart decisions.
 import type { ChannelId } from "../channels/plugins/types.public.js";
 
 type ChannelHealthSnapshot = {
@@ -28,13 +28,13 @@ type ChannelHealthEvaluationReason =
   | "disconnected"
   | "stale-socket";
 
-/** Shared type for Channel Health Evaluation in src/gateway. */
+/** Health decision and reason for one channel runtime snapshot. */
 export type ChannelHealthEvaluation = {
   healthy: boolean;
   reason: ChannelHealthEvaluationReason;
 };
 
-/** Shared type for Channel Health Policy in src/gateway. */
+/** Time-window policy used to evaluate one channel runtime snapshot. */
 export type ChannelHealthPolicy = {
   channelId: ChannelId;
   now: number;
@@ -51,12 +51,12 @@ function isManagedAccount(snapshot: ChannelHealthSnapshot): boolean {
 const BUSY_ACTIVITY_STALE_THRESHOLD_MS = 25 * 60_000;
 // Keep these shared between the background health monitor and on-demand readiness
 // probes so both surfaces evaluate channel lifecycle windows consistently.
-/** Reused constant for DEFAULT CHANNEL STALE EVENT THRESHOLD MS behavior in src/gateway. */
+/** Default max socket-transport silence before a connected channel is considered stale. */
 export const DEFAULT_CHANNEL_STALE_EVENT_THRESHOLD_MS = 30 * 60_000;
-/** Reused constant for DEFAULT CHANNEL CONNECT GRACE MS behavior in src/gateway. */
+/** Default startup grace period before disconnected channels are considered unhealthy. */
 export const DEFAULT_CHANNEL_CONNECT_GRACE_MS = 120_000;
 
-/** Reused helper for evaluate Channel Health behavior in src/gateway. */
+/** Classify channel health from lifecycle, connection, busy, and transport activity fields. */
 export function evaluateChannelHealth(
   snapshot: ChannelHealthSnapshot,
   policy: ChannelHealthPolicy,
@@ -133,7 +133,7 @@ export function evaluateChannelHealth(
   return { healthy: true, reason: "healthy" };
 }
 
-/** Reused helper for resolve Channel Restart Reason behavior in src/gateway. */
+/** Map a failed health evaluation to the restart reason used by the monitor. */
 export function resolveChannelRestartReason(
   snapshot: ChannelHealthSnapshot,
   evaluation: ChannelHealthEvaluation,

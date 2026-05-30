@@ -1,15 +1,15 @@
-// config types signal helpers and runtime behavior.
+// Signal channel config contracts shared by config validation and channel runtime.
 import type { CommonChannelMessagingConfig } from "./types.channel-messaging-common.js";
 import type { GroupToolPolicyBySenderConfig, GroupToolPolicyConfig } from "./types.tools.js";
 
-/** Shared type for Signal Reaction Notification Mode in src/config. */
+/** Which incoming Signal reactions should be surfaced to the agent. */
 export type SignalReactionNotificationMode = "off" | "own" | "all" | "allowlist";
-/** Shared type for Signal Reaction Level in src/config. */
+/** How aggressively the agent may emit Signal reactions. */
 export type SignalReactionLevel = "off" | "ack" | "minimal" | "extensive";
-/** Shared type for Signal Api Mode in src/config. */
+/** Signal API backend selection for native signal-cli or REST container mode. */
 export type SignalApiMode = "auto" | "native" | "container";
 
-/** Shared type for Signal Group Config in src/config. */
+/** Per-group Signal policy overrides keyed by group id or wildcard. */
 export type SignalGroupConfig = {
   requireMention?: boolean;
   /** Emit internal message hooks for mention-skipped group messages. */
@@ -18,7 +18,7 @@ export type SignalGroupConfig = {
   toolsBySender?: GroupToolPolicyBySenderConfig;
 };
 
-/** Shared type for Signal Account Config in src/config. */
+/** Per-account Signal connection, daemon, messaging, and group-policy config. */
 export type SignalAccountConfig = CommonChannelMessagingConfig & {
   /** Optional explicit E.164 account for signal-cli. */
   account?: string;
@@ -65,7 +65,7 @@ export type SignalAccountConfig = CommonChannelMessagingConfig & {
   reactionLevel?: SignalReactionLevel;
 };
 
-/** Shared type for Signal Config in src/config. */
+/** Root Signal channel config, including global defaults and per-account overrides. */
 export type SignalConfig = {
   /**
    * Signal API mode (channel-global):

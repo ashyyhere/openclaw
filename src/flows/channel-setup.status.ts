@@ -335,7 +335,7 @@ export function findBundledSourceForCatalogChannel(params: {
   return undefined;
 }
 
-/** Reused helper for collect Channel Status behavior in src/flows. */
+/** Collect configured/installed/installable channel status for setup wizard display. */
 export async function collectChannelStatus(params: {
   cfg: OpenClawConfig;
   options?: SetupChannelsOptions;
@@ -442,7 +442,7 @@ export async function collectChannelStatus(params: {
   };
 }
 
-/** Reused helper for note Channel Status behavior in src/flows. */
+/** Render current channel status lines into the setup wizard. */
 export async function noteChannelStatus(params: {
   cfg: OpenClawConfig;
   prompter: WizardPrompter;
@@ -463,7 +463,7 @@ export async function noteChannelStatus(params: {
   }
 }
 
-/** Reused helper for note Channel Primer behavior in src/flows. */
+/** Render the safety/usage primer for selected channel setup choices. */
 export async function noteChannelPrimer(
   prompter: WizardPrompter,
   channels: Array<{ id: ChannelChoice; blurb: string; label: string }>,
@@ -499,7 +499,7 @@ export async function noteChannelPrimer(
   );
 }
 
-/** Reused helper for resolve Quickstart Default behavior in src/flows. */
+/** Pick the highest-scoring channel status entry as the quickstart default. */
 export function resolveQuickstartDefault(
   statusByChannel: Map<ChannelChoice, { quickstartScore?: number }>,
 ): ChannelChoice | undefined {
@@ -515,7 +515,7 @@ export function resolveQuickstartDefault(
   return best?.channel;
 }
 
-/** Reused helper for resolve Channel Selection Note Lines behavior in src/flows. */
+/** Build per-channel selection notes with localized metadata and docs links. */
 export function resolveChannelSelectionNoteLines(params: {
   cfg: OpenClawConfig;
   installedPlugins: ChannelSetupPlugin[];
@@ -538,7 +538,7 @@ export function resolveChannelSelectionNoteLines(params: {
     .filter((line): line is string => Boolean(line));
 }
 
-/** Reused helper for resolve Channel Setup Selection Contributions behavior in src/flows. */
+/** Convert channel setup entries into sorted wizard contribution options. */
 export function resolveChannelSetupSelectionContributions(params: {
   entries: ChannelSetupSelectionEntry[];
   statusByChannel: Map<ChannelChoice, { selectionHint?: string }>;

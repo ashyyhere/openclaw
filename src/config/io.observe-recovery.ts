@@ -1,4 +1,4 @@
-// config io observe recovery helpers and runtime behavior.
+// Observes config reads, records health fingerprints, and recovers suspicious clobbers.
 import crypto from "node:crypto";
 import path from "node:path";
 import { isRecord } from "../utils.js";
@@ -20,7 +20,7 @@ import {
 } from "./recovery-policy.js";
 import type { ConfigFileSnapshot } from "./types.openclaw.js";
 
-/** Shared type for Observe Recovery Deps in src/config. */
+/** Filesystem/parser/logger dependencies for async and sync config recovery paths. */
 export type ObserveRecoveryDeps = {
   fs: {
     promises: {
@@ -631,7 +631,7 @@ function readConfigFingerprintForPathSync(
   }
 }
 
-/** Reused helper for resolve Last Known Good Config Path behavior in src/config. */
+/** Resolve the sidecar path storing the last promoted good config snapshot. */
 export function resolveLastKnownGoodConfigPath(configPath: string): string {
   return `${configPath}.last-good`;
 }
@@ -877,7 +877,7 @@ export function maybeRecoverSuspiciousConfigReadSync(
   return { raw: backupRaw, parsed: backupParse.parsed };
 }
 
-/** Reused helper for promote Config Snapshot To Last Known Good behavior in src/config. */
+/** Promote a valid config snapshot into last-known-good health state and sidecar file. */
 export async function promoteConfigSnapshotToLastKnownGood(params: {
   deps: ObserveRecoveryDeps;
   snapshot: ConfigFileSnapshot;
@@ -924,7 +924,7 @@ export async function promoteConfigSnapshotToLastKnownGood(params: {
   return true;
 }
 
-/** Reused helper for recover Config From Last Known Good behavior in src/config. */
+/** Restore a config file from the last-known-good sidecar when policy allows recovery. */
 export async function recoverConfigFromLastKnownGood(params: {
   deps: ObserveRecoveryDeps;
   snapshot: ConfigFileSnapshot;

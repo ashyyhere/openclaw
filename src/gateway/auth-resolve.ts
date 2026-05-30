@@ -1,4 +1,4 @@
-// gateway auth resolve helpers and runtime behavior.
+// Resolves effective gateway auth mode and shared-secret material from config/env/overrides.
 import type {
   GatewayAuthConfig,
   GatewayTailscaleMode,
@@ -7,9 +7,9 @@ import type {
 import { resolveSecretInputRef } from "../config/types.secrets.js";
 import { resolveGatewayCredentialsFromValues } from "./credentials.js";
 
-/** Shared type for Resolved Gateway Auth Mode in src/gateway. */
+/** Gateway authentication mode after config/env/default resolution. */
 export type ResolvedGatewayAuthMode = "none" | "token" | "password" | "trusted-proxy";
-/** Shared type for Resolved Gateway Auth Mode Source in src/gateway. */
+/** Source that selected the resolved gateway auth mode. */
 export type ResolvedGatewayAuthModeSource =
   | "override"
   | "config"
@@ -17,7 +17,7 @@ export type ResolvedGatewayAuthModeSource =
   | "token"
   | "default";
 
-/** Shared type for Resolved Gateway Auth in src/gateway. */
+/** Effective gateway auth settings used by HTTP/WebSocket authorization. */
 export type ResolvedGatewayAuth = {
   mode: ResolvedGatewayAuthMode;
   modeSource?: ResolvedGatewayAuthModeSource;
@@ -27,13 +27,13 @@ export type ResolvedGatewayAuth = {
   trustedProxy?: GatewayTrustedProxyConfig;
 };
 
-/** Shared type for Effective Shared Gateway Auth in src/gateway. */
+/** Shared-secret auth material that can be mirrored to companion services. */
 export type EffectiveSharedGatewayAuth = {
   mode: "token" | "password";
   secret: string | undefined;
 };
 
-/** Reused helper for resolve Gateway Auth behavior in src/gateway. */
+/** Resolve gateway auth mode, credentials, Tailscale allowance, and trusted proxy config. */
 export function resolveGatewayAuth(params: {
   authConfig?: GatewayAuthConfig | null;
   authOverride?: GatewayAuthConfig | null;
@@ -110,7 +110,7 @@ export function resolveGatewayAuth(params: {
   };
 }
 
-/** Reused helper for resolve Effective Shared Gateway Auth behavior in src/gateway. */
+/** Return token/password shared auth when the effective gateway mode uses one. */
 export function resolveEffectiveSharedGatewayAuth(params: {
   authConfig?: GatewayAuthConfig | null;
   authOverride?: GatewayAuthConfig | null;

@@ -34,12 +34,12 @@ function modelKeyForConfig(provider: string, model: string): string {
 
 type AgentModelInput = AgentModelConfig | AgentToolModelConfig;
 
-/** Reused helper for resolve Agent Model Primary Value behavior in src/config. */
+/** Resolve a model config's primary model string from string or object input. */
 export function resolveAgentModelPrimaryValue(model?: AgentModelInput): string | undefined {
   return resolvePrimaryStringValue(model);
 }
 
-/** Reused helper for resolve Agent Model Fallback Values behavior in src/config. */
+/** Resolve fallback model strings from object-style model config. */
 export function resolveAgentModelFallbackValues(model?: AgentModelInput): string[] {
   if (!model || typeof model !== "object") {
     return [];
@@ -47,7 +47,7 @@ export function resolveAgentModelFallbackValues(model?: AgentModelInput): string
   return Array.isArray(model.fallbacks) ? model.fallbacks : [];
 }
 
-/** Reused helper for resolve Agent Model Timeout Ms Value behavior in src/config. */
+/** Resolve a positive integer timeout from tool model config. */
 export function resolveAgentModelTimeoutMsValue(model?: AgentToolModelConfig): number | undefined {
   if (!model || typeof model !== "object") {
     return undefined;
@@ -59,7 +59,7 @@ export function resolveAgentModelTimeoutMsValue(model?: AgentToolModelConfig): n
     : undefined;
 }
 
-/** Reused helper for to Agent Model List Like behavior in src/config. */
+/** Convert string/object model config into the list-like shape used by selection code. */
 export function toAgentModelListLike(model?: AgentModelConfig): AgentModelListLike | undefined {
   if (typeof model === "string") {
     const primary = normalizeOptionalString(model);
@@ -73,7 +73,7 @@ export function toAgentModelListLike(model?: AgentModelConfig): AgentModelListLi
 
 const GOOGLE_PROVIDER_IDS = new Set(["google", "google-gemini-cli", "google-vertex"]);
 
-/** Reused helper for normalize Agent Model Ref For Config behavior in src/config. */
+/** Normalize provider/model references for config map keys, including provider-specific aliases. */
 export function normalizeAgentModelRefForConfig(model: string): string {
   const trimmed = model.trim();
   const slash = trimmed.indexOf("/");
@@ -108,7 +108,7 @@ function mergeAgentModelEntryForConfig(existing: unknown, incoming: unknown): un
   };
 }
 
-/** Reused helper for normalize Agent Model Map For Config behavior in src/config. */
+/** Normalize all model-map keys and merge entries that collapse to the same provider/model ref. */
 export function normalizeAgentModelMapForConfig<T extends Record<string, unknown>>(models: T): T {
   let mutated = false;
   const next: Record<string, unknown> = {};

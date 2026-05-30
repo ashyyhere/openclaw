@@ -1,4 +1,4 @@
-// config/sessions store load helpers and runtime behavior.
+// Loads, normalizes, migrates, maintains, and snapshots persisted session stores.
 import fs from "node:fs";
 import { createSubsystemLogger } from "../../logging/subsystem.js";
 import type { ChannelRouteRef } from "../../plugin-sdk/channel-route.js";
@@ -40,7 +40,7 @@ import {
 import { applySessionStoreMigrations } from "./store-migrations.js";
 import { normalizeSessionRuntimeModelFields, type SessionEntry } from "./types.js";
 
-/** Shared type for Load Session Store Options in src/config/sessions. */
+/** Options controlling cache, clone, and maintenance behavior while loading sessions. */
 export type LoadSessionStoreOptions = {
   skipCache?: boolean;
   maintenanceConfig?: ResolvedSessionMaintenanceConfig;
@@ -345,7 +345,7 @@ function stripPersistedSkillsCache(entry: SessionEntry): SessionEntry {
   return { ...entry, skillsSnapshot: rest };
 }
 
-/** Reused helper for normalize Session Store behavior in src/config/sessions. */
+/** Normalize every persisted session entry in-place and report whether anything changed. */
 export function normalizeSessionStore(store: Record<string, SessionEntry>): boolean {
   let changed = false;
   for (const [key, entry] of Object.entries(store)) {
@@ -373,7 +373,7 @@ export function normalizeSessionStore(store: Record<string, SessionEntry>): bool
   return changed;
 }
 
-/** Reused helper for load Session Store behavior in src/config/sessions. */
+/** Read a session store from disk, applying migrations, normalization, cache, and maintenance. */
 export function loadSessionStore(
   storePath: string,
   opts: LoadSessionStoreOptions = {},
@@ -486,7 +486,7 @@ export function loadSessionStore(
   return opts.clone === false ? store : cloneSessionStoreRecord(store, serializedFromDisk);
 }
 
-/** Reused helper for read Session Store Snapshot behavior in src/config/sessions. */
+/** Return a cloned snapshot of the session store, using the snapshot cache when valid. */
 export function readSessionStoreSnapshot(storePath: string): SessionStoreSnapshot {
   const currentFileStat = getFileStatSnapshot(storePath);
   const cacheEnabled = isSessionStoreCacheEnabled();
@@ -513,7 +513,7 @@ export function readSessionStoreSnapshot(storePath: string): SessionStoreSnapsho
   });
 }
 
-/** Reused helper for read Session Entry behavior in src/config/sessions. */
+/** Read one session entry by key and return a defensive snapshot clone. */
 export function readSessionEntry(
   storePath: string,
   sessionKey: string,
@@ -530,7 +530,7 @@ export function readSessionEntry(
   return resolved.existing ? cloneSessionStoreSnapshotEntry(resolved.existing) : undefined;
 }
 
-/** Reused helper for read Session Entries behavior in src/config/sessions. */
+/** Read all session entries as snapshot key/value tuples. */
 export function readSessionEntries(storePath: string): SessionStoreSnapshotEntries {
   return Object.entries(readSessionStoreSnapshot(storePath)) as SessionStoreSnapshotEntries;
 }
