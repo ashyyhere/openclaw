@@ -10,7 +10,7 @@ function loadConfigGuardModule() {
   return configGuardModuleLoader.load();
 }
 
-/** Reused helper for ensure Cli Command Bootstrap behavior in src/cli. */
+/** Runs config guard and optional plugin-registry loading before command execution. */
 export async function ensureCliCommandBootstrap(params: {
   runtime: RuntimeEnv;
   commandPath: string[];

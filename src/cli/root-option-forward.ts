@@ -1,6 +1,6 @@
 import { consumeRootOptionToken } from "../infra/cli-root-options.js";
 
-/** Reused helper for forward Consumed Cli Root Option behavior in src/cli. */
+/** Copies a recognized root option and its value tokens into forwarded argv. */
 export function forwardConsumedCliRootOption(
   args: readonly string[],
   index: number,

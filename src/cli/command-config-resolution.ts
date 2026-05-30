@@ -6,7 +6,7 @@ import {
   resolveCommandSecretRefsViaGateway,
 } from "./command-secret-gateway.js";
 
-/** Reused helper for resolve Command Config With Secrets behavior in src/cli. */
+/** Resolves command-visible secrets, reports diagnostics, then applies optional auto-enable. */
 export async function resolveCommandConfigWithSecrets<TConfig extends OpenClawConfig>(params: {
   config: TConfig;
   commandName: string;

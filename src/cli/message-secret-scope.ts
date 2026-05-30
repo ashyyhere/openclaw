@@ -50,7 +50,7 @@ function resolveScopedAccountId(value: unknown): string | undefined {
   return normalizeAccountId(trimmed);
 }
 
-/** Reused helper for resolve Message Secret Scope behavior in src/cli. */
+/** Infers channel/account secret scope from message CLI options and fallback routing state. */
 export function resolveMessageSecretScope(params: {
   channel?: unknown;
   target?: unknown;

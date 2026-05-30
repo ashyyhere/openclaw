@@ -23,7 +23,7 @@ function normalizeCommandPathMatchRule(rule: CommandPathMatchRule): NormalizedCo
   return { pattern: rule.pattern, exact: rule.exact ?? false };
 }
 
-/** Reused helper for matches Command Path behavior in src/cli. */
+/** Matches command-path prefixes, with optional exact-length enforcement. */
 export function matchesCommandPath(
   commandPath: string[],
   pattern: readonly string[],
@@ -35,7 +35,7 @@ export function matchesCommandPath(
   return !params?.exact || commandPath.length === pattern.length;
 }
 
-/** Reused helper for matches Command Path Rule behavior in src/cli. */
+/** Applies a normalized command-path rule to an argv-derived command path. */
 export function matchesCommandPathRule(commandPath: string[], rule: CommandPathMatchRule): boolean {
   const normalizedRule = normalizeCommandPathMatchRule(rule);
   return matchesCommandPath(commandPath, normalizedRule.pattern, {
@@ -43,7 +43,7 @@ export function matchesCommandPathRule(commandPath: string[], rule: CommandPathM
   });
 }
 
-/** Reused helper for matches Any Command Path behavior in src/cli. */
+/** Returns true when any command-path rule matches the given command path. */
 export function matchesAnyCommandPath(
   commandPath: string[],
   rules: readonly CommandPathMatchRule[],

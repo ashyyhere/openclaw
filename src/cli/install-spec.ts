@@ -1,6 +1,6 @@
 import path from "node:path";
 
-/** Reused helper for looks Like Local Install Spec behavior in src/cli. */
+/** Detects local path/archive install specs before treating input as an npm spec. */
 export function looksLikeLocalInstallSpec(spec: string, knownSuffixes: readonly string[]): boolean {
   return (
     spec.startsWith(".") ||
