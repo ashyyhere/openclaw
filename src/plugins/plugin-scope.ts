@@ -1,10 +1,10 @@
-// plugins plugin scope helpers and runtime behavior.
+// Normalizes optional plugin-id scopes for cache keys, registry filters, and diagnostics.
 import { normalizeStringEntries } from "../shared/string-normalization.js";
 
-/** Shared type for Plugin Id Scope in src/plugins. */
+/** Optional sorted plugin-id list; `undefined` means unscoped, while `[]` means explicitly empty. */
 export type PluginIdScope = readonly string[] | undefined;
 
-/** Reused helper for normalize Plugin Id Scope behavior in src/plugins. */
+/** Normalize user/plugin supplied scope ids into a stable sorted set. */
 export function normalizePluginIdScope(ids?: readonly unknown[]): string[] | undefined {
   if (ids === undefined) {
     return undefined;
@@ -14,17 +14,17 @@ export function normalizePluginIdScope(ids?: readonly unknown[]): string[] | und
   ).toSorted();
 }
 
-/** Reused helper for has Explicit Plugin Id Scope behavior in src/plugins. */
+/** Distinguish "no scope provided" from an explicit empty scope. */
 export function hasExplicitPluginIdScope(ids?: readonly string[]): boolean {
   return ids !== undefined;
 }
 
-/** Reused helper for has Non Empty Plugin Id Scope behavior in src/plugins. */
+/** Check whether a scope can match at least one plugin id. */
 export function hasNonEmptyPluginIdScope(ids?: readonly string[]): boolean {
   return ids !== undefined && ids.length > 0;
 }
 
-/** Reused helper for create Plugin Id Scope Set behavior in src/plugins. */
+/** Convert an optional scope into a lookup set, preserving `null` for unscoped callers. */
 export function createPluginIdScopeSet(ids?: readonly string[]): ReadonlySet<string> | null {
   if (ids === undefined) {
     return null;
@@ -32,7 +32,7 @@ export function createPluginIdScopeSet(ids?: readonly string[]): ReadonlySet<str
   return new Set(ids);
 }
 
-/** Reused helper for serialize Plugin Id Scope behavior in src/plugins. */
+/** Stable cache-key representation that keeps unscoped distinct from explicit lists. */
 export function serializePluginIdScope(ids?: readonly string[]): string {
   return ids === undefined ? "__unscoped__" : JSON.stringify(ids);
 }

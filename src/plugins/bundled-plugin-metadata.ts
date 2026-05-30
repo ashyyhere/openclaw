@@ -1,4 +1,4 @@
-// plugins bundled plugin metadata helpers and runtime behavior.
+// Scans bundled plugin manifests and maps source entries to generated runtime artifacts.
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -38,7 +38,7 @@ type BundledPluginPathPair = {
   built: string;
 };
 
-/** Shared type for Bundled Plugin Metadata in src/plugins. */
+/** Metadata collected from a bundled plugin directory and its generated artifacts. */
 export type BundledPluginMetadata = {
   dirName: string;
   idHint: string;
@@ -170,7 +170,7 @@ function collectBundledPluginMetadata(
   return entries;
 }
 
-/** Reused helper for list Bundled Plugin Metadata behavior in src/plugins. */
+/** List bundled plugin metadata from source checkout or built-package layout. */
 export function listBundledPluginMetadata(params?: {
   rootDir?: string;
   scanDir?: string;
@@ -193,7 +193,7 @@ export function listBundledPluginMetadata(params?: {
   return metadata;
 }
 
-/** Reused helper for find Bundled Plugin Metadata By Id behavior in src/plugins. */
+/** Find one bundled plugin metadata record by manifest id. */
 export function findBundledPluginMetadataById(
   pluginId: string,
   params?: {
@@ -206,7 +206,7 @@ export function findBundledPluginMetadataById(
   return listBundledPluginMetadata(params).find((entry) => entry.manifest.id === pluginId);
 }
 
-/** Reused helper for resolve Bundled Plugin Workspace Source Path behavior in src/plugins. */
+/** Resolve the source directory for a bundled plugin in the current workspace layout. */
 export function resolveBundledPluginWorkspaceSourcePath(params: {
   rootDir: string;
   scanDir?: string;
@@ -301,7 +301,7 @@ function listBundledPluginEntrySearchPaths(
   return uniqueStrings(paths);
 }
 
-/** Reused helper for resolve Bundled Plugin Generated Path behavior in src/plugins. */
+/** Locate the generated artifact for a bundled plugin entry across source/built layouts. */
 export function resolveBundledPluginGeneratedPath(
   rootDir: string,
   entry: BundledPluginPathPair | undefined,
@@ -351,7 +351,7 @@ function resolveBundledPluginEntryCandidate(baseDir: string, entryPath: string):
   return candidate;
 }
 
-/** Reused helper for resolve Bundled Plugin Repo Entry Path behavior in src/plugins. */
+/** Resolve the repo-relative runtime entry path for a bundled plugin. */
 export function resolveBundledPluginRepoEntryPath(params: {
   rootDir: string;
   pluginId: string;

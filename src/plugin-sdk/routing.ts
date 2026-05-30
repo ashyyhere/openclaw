@@ -8,7 +8,7 @@ export {
   type RoutePeer,
   type RoutePeerKind,
 } from "../routing/resolve-route.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Session-key builders and parsers used by channel/provider plugins. */
 export {
   buildAgentMainSessionKey,
   DEFAULT_ACCOUNT_ID,
@@ -27,18 +27,18 @@ export {
   resolveThreadSessionKeys,
   sanitizeAgentId,
 } from "../routing/session-key.js";
-/** Re-exported API for src/plugin-sdk, starting with resolve Account Entry. */
+/** Resolve a configured account entry for a plugin/channel binding. */
 export { resolveAccountEntry } from "../routing/account-lookup.js";
-/** Re-exported API for src/plugin-sdk, starting with list Bound Account Ids. */
+/** Account-binding helpers used by plugins that multiplex accounts. */
 export { listBoundAccountIds, resolveDefaultAgentBoundAccountId } from "../routing/bindings.js";
-/** Re-exported API for src/plugin-sdk. */
+/** User-facing default-account warning formatters shared with setup flows. */
 export {
   formatSetExplicitDefaultInstruction,
   formatSetExplicitDefaultToConfiguredInstruction,
 } from "../routing/default-account-warnings.js";
-/** Re-exported API for src/plugin-sdk, starting with build Outbound Base Session Key. */
+/** Build the base session key for outbound channel sends. */
 export { buildOutboundBaseSessionKey } from "../infra/outbound/base-session-key.js";
-/** Re-exported API for src/plugin-sdk, starting with normalize Outbound Thread Id. */
+/** Normalize outbound thread ids before session-key construction. */
 export { normalizeOutboundThreadId } from "../infra/outbound/thread-id.js";
-/** Re-exported API for src/plugin-sdk, starting with normalize Message Channel. */
+/** Normalize channel labels used in routing and gateway messages. */
 export { normalizeMessageChannel, resolveGatewayMessageChannel } from "../utils/message-channel.js";

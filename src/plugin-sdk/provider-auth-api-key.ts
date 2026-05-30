@@ -1,13 +1,13 @@
 // Public API-key onboarding helpers for provider plugins.
 
-/** Re-exported API for src/plugin-sdk, starting with Open Claw Config. */
+/** Root config type accepted by provider API-key setup helpers. */
 export type { OpenClawConfig } from "../config/config.js";
-/** Re-exported API for src/plugin-sdk, starting with Secret Input. */
+/** Secret input type accepted as plaintext or a structured secret reference. */
 export type { SecretInput } from "../config/types.secrets.js";
 
-/** Re-exported API for src/plugin-sdk, starting with upsert Auth Profile. */
+/** Auth-profile store writers used by provider setup flows. */
 export { upsertAuthProfile, upsertAuthProfileWithLock } from "../agents/auth-profiles/profiles.js";
-/** Re-exported API for src/plugin-sdk. */
+/** API-key input normalization and prompting helpers for setup flows. */
 export {
   formatApiKeyPreview,
   normalizeApiKeyInput,
@@ -17,16 +17,16 @@ export {
   promptSecretRefForSetup,
   resolveSecretInputModeForEnvSelection,
 } from "../plugins/provider-auth-input.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Provider API-key credential/profile helpers shared with bundled plugins. */
 export {
   applyAuthProfileConfig,
   buildApiKeyCredential,
   upsertApiKeyProfile,
   type ApiKeyStorageOptions,
 } from "../plugins/provider-auth-helpers.js";
-/** Re-exported API for src/plugin-sdk, starting with create Provider Api Key Auth Method. */
+/** Build a provider auth method backed by API-key setup helpers. */
 export { createProviderApiKeyAuthMethod } from "../plugins/provider-api-key-auth.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Secret-input normalization helpers for config values and prompt results. */
 export {
   normalizeOptionalSecretInput,
   normalizeSecretInput,

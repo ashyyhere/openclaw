@@ -1,14 +1,14 @@
-// plugins min host version helpers and runtime behavior.
+// Validates plugin manifest host-version floors against the running OpenClaw host.
 import { isAtLeast, parseSemver } from "../infra/runtime-guard.js";
 
-/** Reused constant for MIN HOST VERSION FORMAT behavior in src/plugins. */
+/** Human-readable contract for manifest `openclaw.install.minHostVersion`. */
 export const MIN_HOST_VERSION_FORMAT =
   'openclaw.install.minHostVersion must use a semver floor in the form ">=x.y.z[-prerelease][+build]"';
 const SEMVER_LABEL_RE = String.raw`\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?`;
 const MIN_HOST_VERSION_RE = new RegExp(`^>=(${SEMVER_LABEL_RE})$`);
 const LEGACY_MIN_HOST_VERSION_RE = /^(\d+)\.(\d+)\.(\d+)$/;
 
-/** Shared type for Min Host Version Requirement in src/plugins. */
+/** Parsed semver floor from a plugin manifest requirement. */
 export type MinHostVersionRequirement = {
   raw: string;
   minimumLabel: string;
@@ -16,7 +16,7 @@ export type MinHostVersionRequirement = {
 
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 
-/** Shared type for Min Host Version Check Result in src/plugins. */
+/** Compatibility decision for a plugin requirement and a concrete host version. */
 export type MinHostVersionCheckResult =
   | { ok: true; requirement: MinHostVersionRequirement | null }
   | { ok: false; kind: "invalid"; error: string }
@@ -28,7 +28,7 @@ export type MinHostVersionCheckResult =
       currentVersion: string;
     };
 
-/** Reused helper for parse Min Host Version Requirement behavior in src/plugins. */
+/** Parse the supported `>=x.y.z` requirement, with legacy bare-semver opt-in for shipped data. */
 export function parseMinHostVersionRequirement(
   raw: unknown,
   options: { allowLegacyBareSemver?: boolean } = {},
@@ -56,7 +56,7 @@ export function parseMinHostVersionRequirement(
   };
 }
 
-/** Reused helper for validate Min Host Version behavior in src/plugins. */
+/** Return a manifest validation error string, or null when the requirement is absent/valid. */
 export function validateMinHostVersion(raw: unknown): string | null {
   if (raw === undefined) {
     return null;
@@ -64,7 +64,7 @@ export function validateMinHostVersion(raw: unknown): string | null {
   return parseMinHostVersionRequirement(raw) ? null : MIN_HOST_VERSION_FORMAT;
 }
 
-/** Reused helper for check Min Host Version behavior in src/plugins. */
+/** Compare a manifest host-version floor with the current host and classify failures. */
 export function checkMinHostVersion(params: {
   currentVersion: string | undefined;
   minHostVersion: unknown;

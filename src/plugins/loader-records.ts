@@ -1,4 +1,4 @@
-// plugins loader records helpers and runtime behavior.
+// Builds plugin registry records and loader diagnostics from manifest/discovery state.
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import type { PluginCompatCode } from "./compat/registry.js";
 import type { PluginActivationState } from "./config-state.js";
@@ -7,7 +7,7 @@ import type { PluginManifestContracts } from "./manifest.js";
 import type { PluginRecord, PluginRegistry } from "./registry.js";
 import type { PluginLogger } from "./types.js";
 
-/** Reused helper for create Plugin Record behavior in src/plugins. */
+/** Create the mutable registry record seeded from manifest contracts before activation runs. */
 export function createPluginRecord(params: {
   id: string;
   name?: string;
@@ -86,14 +86,14 @@ export function createPluginRecord(params: {
   };
 }
 
-/** Reused helper for mark Plugin Activation Disabled behavior in src/plugins. */
+/** Mark an otherwise discovered plugin as disabled by activation policy. */
 export function markPluginActivationDisabled(record: PluginRecord, reason?: string): void {
   record.activated = false;
   record.activationSource = "disabled";
   record.activationReason = reason;
 }
 
-/** Reused helper for format Auto Enabled Activation Reason behavior in src/plugins. */
+/** Collapse auto-enable reasons into the single registry field shown in diagnostics. */
 export function formatAutoEnabledActivationReason(
   reasons: readonly string[] | undefined,
 ): string | undefined {
@@ -103,7 +103,7 @@ export function formatAutoEnabledActivationReason(
   return reasons.join("; ");
 }
 
-/** Reused helper for record Plugin Error behavior in src/plugins. */
+/** Persist a plugin load/activation failure into logs, registry records, and diagnostics. */
 export function recordPluginError(params: {
   logger: PluginLogger;
   registry: PluginRegistry;
@@ -142,7 +142,7 @@ export function recordPluginError(params: {
   });
 }
 
-/** Reused helper for format Plugin Failure Summary behavior in src/plugins. */
+/** Group failed plugin ids by loader phase for terse startup error summaries. */
 export function formatPluginFailureSummary(failedPlugins: PluginRecord[]): string {
   const grouped = new Map<NonNullable<PluginRecord["failurePhase"]>, string[]>();
   for (const plugin of failedPlugins) {
@@ -196,7 +196,7 @@ function describePluginModuleExportShape(
   return details;
 }
 
-/** Reused helper for format Missing Plugin Register Error behavior in src/plugins. */
+/** Format the "missing register" error, optionally including module-shape debug details. */
 export function formatMissingPluginRegisterError(
   moduleExport: unknown,
   env: NodeJS.ProcessEnv,

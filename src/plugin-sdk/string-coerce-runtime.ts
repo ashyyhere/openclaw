@@ -1,6 +1,6 @@
 // Narrow primitive coercion helpers for plugins that do not need the full text-runtime barrel.
 
-/** Re-exported API for src/plugin-sdk. */
+/** String coercion helpers kept in this narrow barrel for plugin runtime code. */
 export {
   hasNonEmptyString,
   localeLowercasePreservingWhitespace,
@@ -15,7 +15,7 @@ export {
   normalizeStringifiedOptionalString,
   readStringValue,
 } from "../shared/string-coerce.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Numeric coercion helpers exposed without importing the larger utility barrel. */
 export {
   asFiniteNumberInRange,
   asFiniteNumber,
@@ -27,18 +27,18 @@ export {
   parseStrictNonNegativeInteger,
   parseStrictPositiveInteger,
 } from "../shared/number-coercion.js";
-/** Re-exported API for src/plugin-sdk, starting with as Boolean. */
+/** Boolean parsing/coercion helpers for plugin config and tool inputs. */
 export { asBoolean, parseBooleanValue } from "../utils/boolean.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Record guards and field readers for plugin boundary normalization. */
 export {
   asRecord,
   asNullableRecord,
   asOptionalRecord,
   readStringField,
 } from "../shared/record-coerce.js";
-/** Re-exported API for src/plugin-sdk, starting with is Record. */
+/** Low-level record guard used by existing SDK consumers. */
 export { isRecord } from "../utils.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Stable string-list normalization helpers for plugin manifests and config. */
 export {
   normalizeAtHashSlug,
   normalizeHyphenSlug,
@@ -54,5 +54,5 @@ export {
   uniqueStrings,
   uniqueValues,
 } from "../shared/string-normalization.js";
-/** Re-exported API for src/plugin-sdk, starting with summarize String Entries. */
+/** Compact string-list summary helper for diagnostics. */
 export { summarizeStringEntries } from "../shared/string-sample.js";

@@ -1,4 +1,4 @@
-// plugins registry helpers and runtime behavior.
+// Central plugin registry builder for provider, channel, hook, command, and gateway surfaces.
 import path from "node:path";
 import {
   getRegisteredAgentHarness,
@@ -131,7 +131,7 @@ import type {
   PluginSessionActionRegistryRegistration,
   PluginTextTransformsRegistration,
 } from "./registry-types.js";
-/** Re-exported API for src/plugins. */
+/** Registry-side service/session/reload registration types exposed to internal callers. */
 export type {
   PluginReloadRegistration,
   PluginRuntimeLifecycleRegistryRegistration,
@@ -200,7 +200,7 @@ import type {
   WebSearchProviderPlugin,
 } from "./types.js";
 
-/** Shared type for Plugin Http Route Registration in src/plugins. */
+/** HTTP route registration with optional gateway runtime-scope policy. */
 export type PluginHttpRouteRegistration = RegistryTypesPluginHttpRouteRegistration & {
   gatewayRuntimeScopeSurface?: OpenClawPluginGatewayRuntimeScopeSurface;
 };
@@ -242,7 +242,7 @@ type PluginOwnedProviderRegistration<T extends { id: string }> = {
   rootDir?: string;
 };
 
-/** Re-exported API for src/plugins. */
+/** Registry record and registration types exposed by the plugin runtime. */
 export type {
   PluginChannelRegistration,
   PluginChannelSetupRegistration,
@@ -315,10 +315,10 @@ const constrainLegacyPromptInjectionHook = (
   };
 };
 
-/** Re-exported API for src/plugins, starting with create Empty Plugin Registry. */
+/** Create an empty mutable registry without installing plugin registration handlers. */
 export { createEmptyPluginRegistry } from "./registry-empty.js";
 
-/** Reused helper for resolve Plugin Path behavior in src/plugins. */
+/** Resolve a configured plugin path relative to workspace root, home, or cwd state. */
 export function resolvePluginPath(input: string, rootDir: string | undefined): string {
   const trimmed = input.trim();
   if (!trimmed || path.isAbsolute(trimmed) || trimmed.startsWith("~")) {
@@ -402,7 +402,7 @@ function adaptPluginGatewayMethodHandler(handler: GatewayRequestHandler): Gatewa
   };
 }
 
-/** Reused helper for create Plugin Registry behavior in src/plugins. */
+/** Build a registry facade that records plugin registrations and enforces ownership rules. */
 export function createPluginRegistry(registryParams: PluginRegistryParams) {
   const registry = createEmptyPluginRegistry();
   const coreGatewayMethodNames = Array.from(

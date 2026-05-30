@@ -1,8 +1,8 @@
-// Shared types for plugins hook message types behavior.
+// Plugin hook event/context contracts for inbound and outbound channel messages.
 import type { DiagnosticTraceContext } from "../infra/diagnostic-trace-context.js";
 import type { PluginConversationBinding } from "./conversation-binding.types.js";
 
-/** Shared type for Plugin Hook Message Context in src/plugins. */
+/** Common channel/session metadata supplied to message hook handlers. */
 export type PluginHookMessageContext = {
   channelId: string;
   accountId?: string;
@@ -53,7 +53,7 @@ export type PluginHookMessageContext = {
   callDepth?: number;
 };
 
-/** Shared type for Plugin Hook Inbound Claim Context in src/plugins. */
+/** Context passed while plugins decide whether to claim an inbound conversation. */
 export type PluginHookInboundClaimContext = PluginHookMessageContext & {
   parentConversationId?: string;
   senderId?: string;
@@ -61,7 +61,7 @@ export type PluginHookInboundClaimContext = PluginHookMessageContext & {
   pluginBinding?: PluginConversationBinding;
 };
 
-/** Shared type for Plugin Hook Inbound Claim Event in src/plugins. */
+/** Inbound message payload visible to claim hooks before agent routing. */
 export type PluginHookInboundClaimEvent = {
   content: string;
   body?: string;
@@ -89,7 +89,7 @@ export type PluginHookInboundClaimEvent = {
   metadata?: Record<string, unknown>;
 };
 
-/** Shared type for Plugin Hook Message Received Event in src/plugins. */
+/** Normalized inbound message payload delivered after channel receipt. */
 export type PluginHookMessageReceivedEvent = {
   from: string;
   content: string;
@@ -106,7 +106,7 @@ export type PluginHookMessageReceivedEvent = {
   metadata?: Record<string, unknown>;
 };
 
-/** Shared type for Plugin Hook Message Sending Event in src/plugins. */
+/** Outbound message payload exposed before channel delivery. */
 export type PluginHookMessageSendingEvent = {
   to: string;
   content: string;
@@ -115,7 +115,7 @@ export type PluginHookMessageSendingEvent = {
   metadata?: Record<string, unknown>;
 };
 
-/** Shared type for Plugin Hook Message Sending Result in src/plugins. */
+/** Optional outbound-hook mutation/cancellation result. */
 export type PluginHookMessageSendingResult = {
   content?: string;
   cancel?: boolean;
@@ -123,7 +123,7 @@ export type PluginHookMessageSendingResult = {
   metadata?: Record<string, unknown>;
 };
 
-/** Shared type for Plugin Hook Message Sent Event in src/plugins. */
+/** Delivery result payload emitted after an outbound channel send completes. */
 export type PluginHookMessageSentEvent = {
   to: string;
   content: string;

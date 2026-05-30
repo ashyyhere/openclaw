@@ -1,4 +1,4 @@
-// plugins config normalization shared helpers and runtime behavior.
+// Normalizes plugin config into stable shapes for activation, hooks, slots, and model policy.
 import { normalizeChatChannelId } from "../channels/ids.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {
@@ -8,7 +8,7 @@ import {
 import { normalizeArrayBackedTrimmedStringList } from "../shared/string-normalization.js";
 import { defaultSlotIdForKey } from "./slots.js";
 
-/** Shared type for Normalized Plugins Config in src/plugins. */
+/** Canonical plugin config snapshot consumed by activation and registration code. */
 export type NormalizedPluginsConfig = {
   enabled: boolean;
   allow: string[];
@@ -44,10 +44,10 @@ export type NormalizedPluginsConfig = {
   >;
 };
 
-/** Shared type for Normalize Plugin Id in src/plugins. */
+/** Plugin-id normalizer used by callers with registry-aware aliases. */
 export type NormalizePluginId = (id: string) => string;
 
-/** Reused constant for identity Normalize Plugin Id behavior in src/plugins. */
+/** Default id normalizer for config paths that must preserve ids exactly apart from trimming. */
 export const identityNormalizePluginId: NormalizePluginId = (id) => id.trim();
 
 function normalizeList(value: unknown, normalizePluginId: NormalizePluginId): string[] {
@@ -224,7 +224,7 @@ function normalizePluginEntries(
   return normalized;
 }
 
-/** Reused helper for normalize Plugins Config With Resolver behavior in src/plugins. */
+/** Normalize raw plugin config using the caller's plugin-id resolver. */
 export function normalizePluginsConfigWithResolver(
   config?: OpenClawConfig["plugins"],
   normalizePluginId: NormalizePluginId = identityNormalizePluginId,
@@ -243,7 +243,7 @@ export function normalizePluginsConfigWithResolver(
   };
 }
 
-/** Reused helper for has Explicit Plugin Config behavior in src/plugins. */
+/** Detect whether a config file contains any explicit plugin settings. */
 export function hasExplicitPluginConfig(plugins?: OpenClawConfig["plugins"]): boolean {
   if (!plugins) {
     return false;
@@ -269,7 +269,7 @@ export function hasExplicitPluginConfig(plugins?: OpenClawConfig["plugins"]): bo
   return false;
 }
 
-/** Reused helper for is Bundled Channel Enabled By Channel Config behavior in src/plugins. */
+/** Check whether legacy channel config explicitly enables its bundled plugin owner. */
 export function isBundledChannelEnabledByChannelConfig(
   cfg: OpenClawConfig | undefined,
   pluginId: string,

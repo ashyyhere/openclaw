@@ -9,7 +9,7 @@ import type {
 } from "../plugins/types.js";
 import type { WizardPrompter } from "../wizard/prompts.js";
 
-/** Re-exported API for src/plugin-sdk. */
+/** Provider and auth contracts needed by LM Studio setup/runtime integration. */
 export type {
   OpenClawPluginApi,
   ProviderAuthContext,
@@ -20,9 +20,9 @@ export type {
   ProviderPrepareDynamicModelContext,
   ProviderRuntimeModel,
 } from "../plugins/types.js";
-/** Re-exported API for src/plugin-sdk, starting with Lmstudio Model Base. */
+/** LM Studio model wire/runtime shapes shared with bundled plugin code. */
 export type { LmstudioModelBase, LmstudioModelWire } from "./lmstudio-runtime.js";
-/** Re-exported API for src/plugin-sdk. */
+/** LM Studio constants, config normalization, discovery, and auth helpers. */
 export {
   LMSTUDIO_DEFAULT_API_KEY_ENV_VAR,
   LMSTUDIO_DEFAULT_BASE_URL,
@@ -87,23 +87,23 @@ function loadFacadeModule(): FacadeModule {
   });
 }
 
-/** Reused constant for prompt And Configure Lmstudio Interactive behavior in src/plugin-sdk. */
+/** Lazy facade for interactive LM Studio setup from the bundled plugin artifact. */
 export const promptAndConfigureLmstudioInteractive: FacadeModule["promptAndConfigureLmstudioInteractive"] =
   ((...args) =>
     loadFacadeModule().promptAndConfigureLmstudioInteractive(
       ...args,
     )) as FacadeModule["promptAndConfigureLmstudioInteractive"];
-/** Reused constant for configure Lmstudio Non Interactive behavior in src/plugin-sdk. */
+/** Lazy facade for non-interactive LM Studio config repair/setup. */
 export const configureLmstudioNonInteractive: FacadeModule["configureLmstudioNonInteractive"] = ((
   ...args
 ) =>
   loadFacadeModule().configureLmstudioNonInteractive(
     ...args,
   )) as FacadeModule["configureLmstudioNonInteractive"];
-/** Reused constant for discover Lmstudio Provider behavior in src/plugin-sdk. */
+/** Lazy facade for LM Studio provider discovery without importing bundled source directly. */
 export const discoverLmstudioProvider: FacadeModule["discoverLmstudioProvider"] = ((...args) =>
   loadFacadeModule().discoverLmstudioProvider(...args)) as FacadeModule["discoverLmstudioProvider"];
-/** Reused constant for prepare Lmstudio Dynamic Models behavior in src/plugin-sdk. */
+/** Lazy facade for dynamic LM Studio model preparation. */
 export const prepareLmstudioDynamicModels: FacadeModule["prepareLmstudioDynamicModels"] = ((
   ...args
 ) =>

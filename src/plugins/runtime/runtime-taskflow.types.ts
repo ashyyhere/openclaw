@@ -1,4 +1,4 @@
-// Shared types for plugins/runtime runtime taskflow types behavior.
+// Plugin-facing task-flow runtime contracts for managed background work.
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { JsonValue, TaskFlowRecord } from "../../tasks/task-flow-registry.types.js";
 import type {
@@ -11,16 +11,16 @@ import type {
 } from "../../tasks/task-registry.types.js";
 import type { OpenClawPluginToolContext } from "../tool-types.js";
 
-/** Shared type for Managed Task Flow Record in src/plugins/runtime. */
+/** Task-flow record owned by a plugin/controller and mutated through revision checks. */
 export type ManagedTaskFlowRecord = TaskFlowRecord & {
   syncMode: "managed";
   controllerId: string;
 };
 
-/** Shared type for Managed Task Flow Mutation Error Code in src/plugins/runtime. */
+/** Stable failure codes returned when a managed flow mutation cannot apply. */
 export type ManagedTaskFlowMutationErrorCode = "not_found" | "not_managed" | "revision_conflict";
 
-/** Shared type for Managed Task Flow Mutation Result in src/plugins/runtime. */
+/** Result shape for optimistic managed-flow updates. */
 export type ManagedTaskFlowMutationResult =
   | {
       applied: true;
@@ -32,7 +32,7 @@ export type ManagedTaskFlowMutationResult =
       current?: TaskFlowRecord;
     };
 
-/** Shared type for Bound Task Flow Task Run Result in src/plugins/runtime. */
+/** Result of creating a child task from a session-bound flow. */
 export type BoundTaskFlowTaskRunResult =
   | {
       created: true;
@@ -46,7 +46,7 @@ export type BoundTaskFlowTaskRunResult =
       flow?: TaskFlowRecord;
     };
 
-/** Shared type for Bound Task Flow Cancel Result in src/plugins/runtime. */
+/** Cancellation summary for a flow and its associated tasks. */
 export type BoundTaskFlowCancelResult = {
   found: boolean;
   cancelled: boolean;
@@ -55,7 +55,7 @@ export type BoundTaskFlowCancelResult = {
   tasks?: TaskRecord[];
 };
 
-/** Shared type for Bound Task Flow Runtime in src/plugins/runtime. */
+/** Session-bound operations exposed to plugin code for one task-flow namespace. */
 export type BoundTaskFlowRuntime = {
   readonly sessionKey: string;
   readonly requesterOrigin?: TaskDeliveryState["requesterOrigin"];
@@ -137,7 +137,7 @@ export type BoundTaskFlowRuntime = {
   }) => BoundTaskFlowTaskRunResult;
 };
 
-/** Shared type for Plugin Runtime Task Flow in src/plugins/runtime. */
+/** Entry point for binding task-flow helpers to a session or plugin tool context. */
 export type PluginRuntimeTaskFlow = {
   bindSession: (params: {
     sessionKey: string;
