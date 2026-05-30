@@ -11,7 +11,7 @@ type LaunchAgentRecoveryResult = {
   message: string;
 };
 
-/** Reused helper for recover Installed Launch Agent behavior in src/cli/daemon-cli. */
+/** Re-bootstrap an installed macOS LaunchAgent when launchd forgot the loaded service. */
 export async function recoverInstalledLaunchAgent(params: {
   result: LaunchAgentRecoveryAction;
   env?: Record<string, string | undefined>;
@@ -38,5 +38,5 @@ export async function recoverInstalledLaunchAgent(params: {
   };
 }
 
-/** Re-exported API for src/cli/daemon-cli, starting with LAUNCH AGENT RECOVERY MESSAGE. */
+/** Message emitted when LaunchAgent bootstrap recovery succeeds. */
 export { LAUNCH_AGENT_RECOVERY_MESSAGE };

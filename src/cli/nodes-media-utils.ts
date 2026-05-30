@@ -1,18 +1,20 @@
 import { randomUUID } from "node:crypto";
 import fs from "node:fs";
 import { resolvePreferredOpenClawTmpDir } from "../infra/tmp-openclaw-dir.js";
-/** Re-exported API for src/cli, starting with as Finite Number. */
+/**
+ * Re-export media payload coercion helpers used by node camera/screen writers.
+ */
 export { asFiniteNumber as asNumber } from "../shared/number-coercion.js";
 import { readStringValue } from "../shared/string-coerce.js";
-/** Re-exported API for src/cli, starting with as Record. */
+/** Re-export record coercion for node media payload parsing. */
 export { asRecord } from "../shared/record-coerce.js";
-/** Re-exported API for src/cli, starting with as Boolean. */
+/** Re-export boolean coercion for node media payload parsing. */
 export { asBoolean } from "../utils/boolean.js";
 
-/** Reused constant for as String behavior in src/cli. */
+/** String coercion helper shared by node media payload parsers. */
 export const asString = readStringValue;
 
-/** Reused helper for resolve Temp Path Parts behavior in src/cli. */
+/** Resolve a safe temp directory, random id, and validated extension for media output. */
 export function resolveTempPathParts(opts: { ext: string; tmpDir?: string; id?: string }): {
   ext: string;
   tmpDir: string;

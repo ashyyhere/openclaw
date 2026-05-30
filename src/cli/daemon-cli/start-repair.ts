@@ -14,7 +14,7 @@ import { formatGatewayServiceStartRepairIssues } from "../../daemon/service.js";
 import { defaultRuntime } from "../../runtime.js";
 import { mergeInstallInvocationEnv } from "./install.js";
 
-/** Reused helper for repair Loaded Gateway Service For Start behavior in src/cli/daemon-cli. */
+/** Reinstall a loaded gateway service when its persisted start definition is stale. */
 export async function repairLoadedGatewayServiceForStart(params: {
   service: GatewayService;
   state: GatewayServiceState;

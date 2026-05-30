@@ -87,7 +87,7 @@ function resolveNodeDefaults(
   return { host, port };
 }
 
-/** Reused helper for run Node Daemon Install behavior in src/cli/node-cli. */
+/** Install the node host service with resolved gateway defaults and runtime plan. */
 export async function runNodeDaemonInstall(opts: NodeDaemonInstallOptions) {
   const { json, stdout, warnings, emit, fail } = createDaemonInstallActionContext(opts.json);
   if (failIfNixDaemonInstallMode(fail)) {
@@ -176,7 +176,7 @@ export async function runNodeDaemonInstall(opts: NodeDaemonInstallOptions) {
   });
 }
 
-/** Reused helper for run Node Daemon Uninstall behavior in src/cli/node-cli. */
+/** Uninstall the node host service without requiring an unload assertion. */
 export async function runNodeDaemonUninstall(opts: NodeDaemonLifecycleOptions = {}) {
   return await runServiceUninstall({
     serviceNoun: "Node",
@@ -187,7 +187,7 @@ export async function runNodeDaemonUninstall(opts: NodeDaemonLifecycleOptions = 
   });
 }
 
-/** Reused helper for run Node Daemon Start behavior in src/cli/node-cli. */
+/** Start the node host service and print platform-specific recovery hints on failure. */
 export async function runNodeDaemonStart(opts: NodeDaemonLifecycleOptions = {}) {
   return await runServiceStart({
     serviceNoun: "Node",
@@ -197,7 +197,7 @@ export async function runNodeDaemonStart(opts: NodeDaemonLifecycleOptions = {}) 
   });
 }
 
-/** Reused helper for run Node Daemon Restart behavior in src/cli/node-cli. */
+/** Restart the node host service through the shared daemon lifecycle runner. */
 export async function runNodeDaemonRestart(opts: NodeDaemonLifecycleOptions = {}) {
   await runServiceRestart({
     serviceNoun: "Node",
@@ -207,7 +207,7 @@ export async function runNodeDaemonRestart(opts: NodeDaemonLifecycleOptions = {}
   });
 }
 
-/** Reused helper for run Node Daemon Stop behavior in src/cli/node-cli. */
+/** Stop the node host service through the shared daemon lifecycle runner. */
 export async function runNodeDaemonStop(opts: NodeDaemonLifecycleOptions = {}) {
   return await runServiceStop({
     serviceNoun: "Node",
@@ -216,7 +216,7 @@ export async function runNodeDaemonStop(opts: NodeDaemonLifecycleOptions = {}) {
   });
 }
 
-/** Reused helper for run Node Daemon Status behavior in src/cli/node-cli. */
+/** Render node host service status, command metadata, runtime, and log hints. */
 export async function runNodeDaemonStatus(opts: NodeDaemonStatusOptions = {}) {
   const json = Boolean(opts.json);
   const service = resolveNodeService();
