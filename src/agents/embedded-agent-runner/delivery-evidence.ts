@@ -13,7 +13,7 @@ type AgentPayloadLike = {
   isReasoning?: unknown;
 };
 
-/** Shared type for Agent Delivery Evidence in src/agents/embedded-agent-runner. */
+/** Result-like shape inspected for visible outbound delivery or progress. */
 export type AgentDeliveryEvidence = {
   payloads?: unknown;
   deliveryStatus?: {
@@ -76,7 +76,7 @@ function collectMediaUrlsFromRecord(record: Record<string, unknown>, output: Set
   }
 }
 
-/** Reused helper for collect Delivered Media Urls behavior in src/agents/embedded-agent-runner. */
+/** Collects media URLs from payloads and messaging-tool delivery records. */
 export function collectDeliveredMediaUrls(result: AgentDeliveryEvidence): string[] {
   const urls = new Set<string>();
   if (Array.isArray(result.payloads)) {
@@ -92,7 +92,7 @@ export function collectDeliveredMediaUrls(result: AgentDeliveryEvidence): string
   return Array.from(urls);
 }
 
-/** Reused helper for collect Messaging Tool Delivered Media Urls behavior in src/agents/embedded-agent-runner. */
+/** Collects media URLs specifically delivered through messaging-tool state. */
 export function collectMessagingToolDeliveredMediaUrls(
   result: Pick<AgentDeliveryEvidence, "messagingToolSentMediaUrls" | "messagingToolSentTargets">,
 ): string[] {
@@ -108,7 +108,7 @@ export function collectMessagingToolDeliveredMediaUrls(
   return Array.from(urls);
 }
 
-/** Reused helper for has Delivered Expected Media behavior in src/agents/embedded-agent-runner. */
+/** Checks that every expected media URL appears in outbound delivery evidence. */
 export function hasDeliveredExpectedMedia(
   result: AgentDeliveryEvidence,
   expectedMediaUrls: readonly string[],
@@ -125,7 +125,7 @@ function hasPositiveNumber(value: unknown): boolean {
   return typeof value === "number" && Number.isFinite(value) && value > 0;
 }
 
-/** Reused helper for get Gateway Agent Result behavior in src/agents/embedded-agent-runner. */
+/** Extracts an agent result payload from direct or gateway-wrapped responses. */
 export function getGatewayAgentResult(response: unknown): AgentDeliveryEvidence | null {
   if (!response || typeof response !== "object") {
     return null;
@@ -153,7 +153,7 @@ function hasAgentDeliveryEvidenceShape(value: object): boolean {
   );
 }
 
-/** Reused helper for has Visible Agent Payload behavior in src/agents/embedded-agent-runner. */
+/** Detects visible text/media/presentation/interactive payload output. */
 export function hasVisibleAgentPayload(
   result: Pick<AgentDeliveryEvidence, "payloads">,
   options: { includeErrorPayloads?: boolean; includeReasoningPayloads?: boolean } = {},
@@ -184,14 +184,14 @@ export function hasVisibleAgentPayload(
   });
 }
 
-/** Reused helper for has Messaging Tool Delivery Evidence behavior in src/agents/embedded-agent-runner. */
+/** Detects attempted or committed messaging-tool delivery. */
 export function hasMessagingToolDeliveryEvidence(result: AgentDeliveryEvidence): boolean {
   return (
     result.didSendViaMessagingTool === true || hasCommittedMessagingToolDeliveryEvidence(result)
   );
 }
 
-/** Reused helper for has Committed Messaging Tool Delivery Evidence behavior in src/agents/embedded-agent-runner. */
+/** Detects messaging-tool delivery that committed text, media, or targets. */
 export function hasCommittedMessagingToolDeliveryEvidence(
   result: Pick<
     AgentDeliveryEvidence,
@@ -205,7 +205,7 @@ export function hasCommittedMessagingToolDeliveryEvidence(
   );
 }
 
-/** Reused helper for has Outbound Delivery Evidence behavior in src/agents/embedded-agent-runner. */
+/** Detects any durable outbound delivery or tool-side progress. */
 export function hasOutboundDeliveryEvidence(result: AgentDeliveryEvidence): boolean {
   return (
     hasMessagingToolDeliveryEvidence(result) ||
@@ -216,7 +216,7 @@ export function hasOutboundDeliveryEvidence(result: AgentDeliveryEvidence): bool
   );
 }
 
-/** Reused helper for get Agent Command Delivery Failure behavior in src/agents/embedded-agent-runner. */
+/** Returns the user-facing delivery failure message from agent command status. */
 export function getAgentCommandDeliveryFailure(result: AgentDeliveryEvidence): string | undefined {
   const status = result.deliveryStatus?.status;
   if (status !== "failed" && status !== "partial_failed") {

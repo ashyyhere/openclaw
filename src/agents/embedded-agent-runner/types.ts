@@ -14,7 +14,7 @@ import type {
 import type { FallbackAttempt } from "../model-fallback.types.js";
 import type { AgentRunTimeoutPhase } from "../run-timeout-attribution.js";
 
-/** Shared type for Embedded Agent Meta in src/agents/embedded-agent-runner. */
+/** Core model/session/context metadata reported with embedded run results. */
 export type EmbeddedAgentMeta = {
   sessionId: string;
   sessionFile?: string;
@@ -64,7 +64,7 @@ export type EmbeddedAgentMeta = {
   contextBudgetStatus?: SessionContextBudgetStatus;
 };
 
-/** Shared type for Trace Attempt in src/agents/embedded-agent-runner. */
+/** One provider/model attempt recorded in execution diagnostics. */
 export type TraceAttempt = {
   provider: string;
   model: string;
@@ -83,7 +83,7 @@ export type TraceAttempt = {
   status?: number;
 };
 
-/** Shared type for Execution Trace in src/agents/embedded-agent-runner. */
+/** Provider/model fallback trace for an embedded run. */
 export type ExecutionTrace = {
   winnerProvider?: string;
   winnerModel?: string;
@@ -92,7 +92,7 @@ export type ExecutionTrace = {
   runner?: "embedded" | "cli";
 };
 
-/** Shared type for Request Shaping Trace in src/agents/embedded-agent-runner. */
+/** Request-shaping settings that affected provider submission. */
 export type RequestShapingTrace = {
   authMode?: string;
   thinking?: string;
@@ -103,13 +103,13 @@ export type RequestShapingTrace = {
   blockStreaming?: string;
 };
 
-/** Shared type for Prompt Segment Trace in src/agents/embedded-agent-runner. */
+/** Size record for one prompt segment in diagnostics. */
 export type PromptSegmentTrace = {
   key: string;
   chars: number;
 };
 
-/** Shared type for Tool Summary Trace in src/agents/embedded-agent-runner. */
+/** Aggregate tool-call diagnostics captured for a run. */
 export type ToolSummaryTrace = {
   calls: number;
   tools: string[];
@@ -117,14 +117,14 @@ export type ToolSummaryTrace = {
   totalToolTimeMs?: number;
 };
 
-/** Shared type for Completion Trace in src/agents/embedded-agent-runner. */
+/** Provider completion metadata surfaced in diagnostics. */
 export type CompletionTrace = {
   finishReason?: string;
   stopReason?: string;
   refusal?: boolean;
 };
 
-/** Shared type for Context Management Trace in src/agents/embedded-agent-runner. */
+/** Context-management actions applied before or during a run. */
 export type ContextManagementTrace = {
   sessionCompactions?: number;
   lastTurnCompactions?: number;
@@ -132,10 +132,10 @@ export type ContextManagementTrace = {
   postCompactionContextInjected?: boolean;
 };
 
-/** Shared type for Embedded Run Liveness State in src/agents/embedded-agent-runner. */
+/** Coarse liveness state returned to channel/control surfaces. */
 export type EmbeddedRunLivenessState = "working" | "paused" | "blocked" | "abandoned";
 
-/** Shared type for Embedded Run Failure Signal in src/agents/embedded-agent-runner. */
+/** Fatal tool-denial signal used to stop cron-style retries. */
 export type EmbeddedRunFailureSignal = {
   kind: "execution_denied";
   source: "tool";
@@ -145,7 +145,7 @@ export type EmbeddedRunFailureSignal = {
   fatalForCron: true;
 };
 
-/** Shared type for Embedded Agent Run Meta in src/agents/embedded-agent-runner. */
+/** Full metadata envelope for one embedded-agent run result. */
 export type EmbeddedAgentRunMeta = {
   durationMs: number;
   agentMeta?: EmbeddedAgentMeta;
@@ -188,7 +188,7 @@ export type EmbeddedAgentRunMeta = {
   contextManagement?: ContextManagementTrace;
 };
 
-/** Shared type for Embedded Agent Run Result in src/agents/embedded-agent-runner. */
+/** User/channel payloads plus metadata produced by an embedded-agent run. */
 export type EmbeddedAgentRunResult = {
   payloads?: Array<{
     text?: string;
@@ -224,7 +224,7 @@ export type EmbeddedAgentRunResult = {
   successfulCronAdds?: number;
 };
 
-/** Shared type for Embedded Agent Compact Result in src/agents/embedded-agent-runner. */
+/** Result returned by embedded-agent session compaction. */
 export type EmbeddedAgentCompactResult = {
   ok: boolean;
   compacted: boolean;
@@ -247,10 +247,10 @@ export type EmbeddedAgentCompactResult = {
   };
 };
 
-/** Shared type for Embedded Full Access Blocked Reason in src/agents/embedded-agent-runner. */
+/** Reason full host access is unavailable for an embedded run. */
 export type EmbeddedFullAccessBlockedReason = "sandbox" | "host-policy" | "channel" | "runtime";
 
-/** Shared type for Embedded Sandbox Info in src/agents/embedded-agent-runner. */
+/** Sandbox and elevated-access state exposed to embedded run callers. */
 export type EmbeddedSandboxInfo = {
   enabled: boolean;
   workspaceDir?: string;

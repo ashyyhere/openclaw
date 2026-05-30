@@ -33,14 +33,14 @@ type EmbeddedRunAttemptBase = Omit<
   "provider" | "model" | "authProfileId" | "authProfileIdSource" | "thinkLevel" | "lane" | "enqueue"
 >;
 
-/** Shared type for Embedded Run Context Window Info in src/agents/embedded-agent-runner. */
+/** Resolved context-window budget and provenance for one attempt. */
 export type EmbeddedRunContextWindowInfo = {
   tokens: number;
   referenceTokens?: number;
   source: "model" | "modelsConfig" | "agentContextTokens" | "default";
 };
 
-/** Shared type for Embedded Run Attempt Params in src/agents/embedded-agent-runner. */
+/** Fully resolved inputs for a single provider/model attempt. */
 export type EmbeddedRunAttemptParams = EmbeddedRunAttemptBase & {
   initialReplayState?: EmbeddedRunReplayState;
   /** Pluggable context engine for ingest/assemble/compact lifecycle. */
@@ -79,7 +79,7 @@ export type EmbeddedRunAttemptParams = EmbeddedRunAttemptBase & {
   beforeAgentStartResult?: PluginHookBeforeAgentStartResult;
 };
 
-/** Shared type for Embedded Run Attempt Result in src/agents/embedded-agent-runner. */
+/** Outcome and side-channel state returned by one embedded run attempt. */
 export type EmbeddedRunAttemptResult = {
   aborted: boolean;
   /** True when the abort originated from the caller-provided abortSignal. */
