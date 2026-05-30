@@ -1,3 +1,4 @@
+// Handles embedded-agent lifecycle, error, and compaction stream events.
 import { createInlineCodeState } from "../../packages/markdown-core/src/code-spans.js";
 import { emitAgentEvent } from "../infra/agent-events.js";
 import { hasAcceptedSessionSpawn } from "./accepted-session-spawn.js";
@@ -18,7 +19,7 @@ import type { EmbeddedAgentSubscribeContext } from "./embedded-agent-subscribe.h
 import { isPromiseLike } from "./embedded-agent-subscribe.promise.js";
 import { isAssistantMessage } from "./embedded-agent-utils.js";
 
-/** Re-exported API for src/agents. */
+/** Compaction lifecycle handlers reused by the embedded-agent subscription stream. */
 export {
   handleCompactionEnd,
   handleCompactionStart,

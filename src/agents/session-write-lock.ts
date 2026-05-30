@@ -911,5 +911,5 @@ export function resetSessionWriteLockStateForTest(): void {
   unregisterCleanupHandlers();
   resolveProcessStartTimeForLock = getProcessStartTime;
 }
-/** Re-exported API for src/agents, starting with testing. */
+/** Backward-compatible test hook export for session write-lock state. */
 export { testing as __testing };

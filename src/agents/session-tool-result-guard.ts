@@ -515,7 +515,7 @@ function isTranscriptOnlyOpenClawAssistantMessage(message: AgentMessage): boolea
   return provider === "openclaw" && (model === "delivery-mirror" || model === "gateway-injected");
 }
 
-/** Re-exported API for src/agents, starting with get Raw Session Append Message. */
+/** Raw append helper used before installing the tool-result guard wrapper. */
 export { getRawSessionAppendMessage };
 
 /** Install transcript tool-result guard on a SessionManager instance. */

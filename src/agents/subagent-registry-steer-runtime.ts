@@ -26,7 +26,7 @@ type FinalizeInterruptedSubagentRunFn = (
 let replaceSubagentRunAfterSteerImpl: ReplaceSubagentRunAfterSteerFn | null = null;
 let finalizeInterruptedSubagentRunImpl: FinalizeInterruptedSubagentRunFn | null = null;
 
-/** Reused helper for configure Subagent Registry Steer Runtime behavior in src/agents. */
+/** Install steer-time registry callbacks supplied by the registry module. */
 export function configureSubagentRegistrySteerRuntime(params: {
   replaceSubagentRunAfterSteer: ReplaceSubagentRunAfterSteerFn;
   finalizeInterruptedSubagentRun?: FinalizeInterruptedSubagentRunFn;
@@ -35,12 +35,12 @@ export function configureSubagentRegistrySteerRuntime(params: {
   finalizeInterruptedSubagentRunImpl = params.finalizeInterruptedSubagentRun ?? null;
 }
 
-/** Reused helper for replace Subagent Run After Steer behavior in src/agents. */
+/** Replace a subagent run after a steer operation, when callbacks are installed. */
 export function replaceSubagentRunAfterSteer(params: ReplaceSubagentRunAfterSteerParams) {
   return replaceSubagentRunAfterSteerImpl?.(params) ?? false;
 }
 
-/** Reused helper for finalize Interrupted Subagent Run behavior in src/agents. */
+/** Finalize an interrupted subagent run through the installed registry callback. */
 export async function finalizeInterruptedSubagentRun(params: FinalizeInterruptedSubagentRunParams) {
   return (await finalizeInterruptedSubagentRunImpl?.(params)) ?? 0;
 }

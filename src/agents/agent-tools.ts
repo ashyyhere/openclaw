@@ -365,10 +365,10 @@ function resolveExecConfig(params: { cfg?: OpenClawConfig; agentId?: string }) {
   };
 }
 
-/** Re-exported API for src/agents, starting with resolve Tool Loop Detection Config. */
+/** Resolve tool loop detection config for an agent/session context. */
 export { resolveToolLoopDetectionConfig } from "./tool-loop-detection-config.js";
 
-/** Reused constant for testing behavior in src/agents. */
+/** Test hooks for tool schema cleanup, validation, and provider policy application. */
 export const testing = {
   cleanToolSchemaForGemini,
   getToolParamsRecord,
@@ -377,7 +377,7 @@ export const testing = {
   applyModelProviderToolPolicy,
 } as const;
 
-/** Shared type for Open Claw Coding Tool Construction Plan in src/agents. */
+/** Inclusion plan for coding, shell, channel, OpenClaw, and plugin tools. */
 export type OpenClawCodingToolConstructionPlan = {
   includeBaseCodingTools: boolean;
   includeShellTools: boolean;
@@ -1160,5 +1160,5 @@ export function createOpenClawCodingTools(options?: {
   // on the wire and maps them back for tool dispatch.
   return withDeferredFollowupDescriptions;
 }
-/** Re-exported API for src/agents, starting with testing. */
+/** Backward-compatible test hook export for underscored internal imports. */
 export { testing as __testing };

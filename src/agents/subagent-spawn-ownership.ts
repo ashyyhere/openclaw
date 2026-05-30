@@ -6,7 +6,7 @@ import {
   resolveMainSessionAlias,
 } from "./tools/sessions-helpers.js";
 
-/** Shared type for Subagent Spawn Ownership in src/agents. */
+/** Controller and completion owner keys assigned to a spawned subagent. */
 export type SubagentSpawnOwnership = {
   controllerSessionKey: string;
   threadBindingRequesterSessionKey: string;
@@ -14,7 +14,7 @@ export type SubagentSpawnOwnership = {
   completionRequesterDisplayKey: string;
 };
 
-/** Reused helper for resolve Subagent Spawn Ownership behavior in src/agents. */
+/** Resolve controller/completion ownership for a subagent spawn request. */
 export function resolveSubagentSpawnOwnership(params: {
   cfg: OpenClawConfig;
   agentSessionKey?: string;

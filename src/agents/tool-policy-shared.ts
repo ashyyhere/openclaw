@@ -17,16 +17,16 @@ const TOOL_NAME_ALIASES: Record<string, string> = {
   "apply-patch": "apply_patch",
 };
 
-/** Reused constant for TOOL GROUPS behavior in src/agents. */
+/** Named tool groups that expand into concrete tool allow/deny entries. */
 export const TOOL_GROUPS: Record<string, string[]> = { ...CORE_TOOL_GROUPS };
 
-/** Reused helper for normalize Tool Name behavior in src/agents. */
+/** Normalize a tool name and apply legacy aliases used in policy config. */
 export function normalizeToolName(name: string) {
   const normalized = normalizeLowercaseStringOrEmpty(name);
   return TOOL_NAME_ALIASES[normalized] ?? normalized;
 }
 
-/** Reused helper for normalize Tool List behavior in src/agents. */
+/** Normalize a configured list of tool names, dropping blank entries. */
 export function normalizeToolList(list?: string[]) {
   if (!list) {
     return [];
@@ -34,7 +34,7 @@ export function normalizeToolList(list?: string[]) {
   return list.map(normalizeToolName).filter(Boolean);
 }
 
-/** Reused helper for expand Tool Groups behavior in src/agents. */
+/** Expand configured group names into their concrete tool names. */
 export function expandToolGroups(list?: string[]) {
   const normalized = normalizeToolList(list);
   const expanded: string[] = [];
@@ -49,10 +49,10 @@ export function expandToolGroups(list?: string[]) {
   return uniqueStrings(expanded);
 }
 
-/** Reused helper for resolve Tool Profile Policy behavior in src/agents. */
+/** Resolve a named tool profile into allow/deny lists. */
 export function resolveToolProfilePolicy(profile?: string): ToolProfilePolicy | undefined {
   return resolveCoreToolProfilePolicy(profile);
 }
 
-/** Re-exported API for src/agents, starting with Tool Profile Id. */
+/** Tool profile id union from the core tool catalog. */
 export type { ToolProfileId };

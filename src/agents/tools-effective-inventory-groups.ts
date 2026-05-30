@@ -18,7 +18,7 @@ function groupLabel(source: EffectiveToolSource): string {
   }
 }
 
-/** Reused helper for build Effective Tool Inventory Groups behavior in src/agents. */
+/** Group effective tool inventory entries by source for compact UI/API output. */
 export function buildEffectiveToolInventoryGroups(
   entries: readonly EffectiveToolInventoryEntry[],
 ): EffectiveToolInventoryGroup[] {
