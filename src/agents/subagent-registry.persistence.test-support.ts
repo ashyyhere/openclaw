@@ -9,7 +9,7 @@ function resolveSubagentSessionStorePath(stateDir: string, agentId: string): str
   return path.join(stateDir, "agents", agentId, "sessions", "sessions.json");
 }
 
-/** Reused helper for read Subagent Session Store behavior in src/agents. */
+/** Reads the test session store JSON, returning an empty store when absent or invalid. */
 export async function readSubagentSessionStore(storePath: string): Promise<SessionStore> {
   try {
     const raw = await fs.readFile(storePath, "utf8");
@@ -23,7 +23,7 @@ export async function readSubagentSessionStore(storePath: string): Promise<Sessi
   return {};
 }
 
-/** Reused helper for write Subagent Session Entry behavior in src/agents. */
+/** Writes or updates one child session entry in a test session store. */
 export async function writeSubagentSessionEntry(params: {
   stateDir: string;
   sessionKey: string;
@@ -48,7 +48,7 @@ export async function writeSubagentSessionEntry(params: {
   return storePath;
 }
 
-/** Reused helper for remove Subagent Session Entry behavior in src/agents. */
+/** Removes one child session entry from a test session store. */
 export async function removeSubagentSessionEntry(params: {
   stateDir: string;
   sessionKey: string;
@@ -62,7 +62,7 @@ export async function removeSubagentSessionEntry(params: {
   return storePath;
 }
 
-/** Reused helper for create Subagent Registry Test Deps behavior in src/agents. */
+/** Builds default mocked dependencies for subagent registry tests. */
 export function createSubagentRegistryTestDeps(
   extra: Record<string, unknown> = {},
 ): Record<string, unknown> {

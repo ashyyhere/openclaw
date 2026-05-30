@@ -22,7 +22,7 @@ type DeferredCleanupDecision =
       resumeDelayMs?: number;
     };
 
-/** Reused helper for resolve Cleanup Completion Reason behavior in src/agents. */
+/** Resolves the lifecycle reason used when cleanup marks a run complete. */
 export function resolveCleanupCompletionReason(
   entry: SubagentRunRecord,
 ): SubagentLifecycleEndedReason {
@@ -33,7 +33,7 @@ function resolveEndedAgoMs(entry: SubagentRunRecord, now: number): number {
   return typeof entry.endedAt === "number" ? now - entry.endedAt : 0;
 }
 
-/** Reused helper for resolve Deferred Cleanup Decision behavior in src/agents. */
+/** Chooses whether deferred cleanup should retry, wait for descendants, or give up. */
 export function resolveDeferredCleanupDecision(params: {
   entry: SubagentRunRecord;
   now: number;

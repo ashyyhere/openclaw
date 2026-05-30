@@ -2,14 +2,14 @@
 import type { SubagentRunRecord } from "./subagent-registry.types.js";
 import { getSubagentSessionStartedAt } from "./subagent-session-metrics.js";
 
-/** Reused constant for STALE UNENDED SUBAGENT RUN MS behavior in src/agents. */
+/** Default age after which an unended subagent run is considered stale. */
 export const STALE_UNENDED_SUBAGENT_RUN_MS = 2 * 60 * 60 * 1_000;
-/** Reused constant for RECENT ENDED SUBAGENT CHILD SESSION MS behavior in src/agents. */
+/** Window where an ended subagent still keeps its child session link visible. */
 export const RECENT_ENDED_SUBAGENT_CHILD_SESSION_MS = 30 * 60 * 1_000;
 const EXPLICIT_TIMEOUT_STALE_GRACE_MS = 60_000;
 const MIN_REALISTIC_RUN_TIMESTAMP_MS = Date.UTC(2020, 0, 1);
 
-/** Reused helper for has Subagent Run Ended behavior in src/agents. */
+/** Narrows a subagent run record to one with a finite end timestamp. */
 export function hasSubagentRunEnded<T extends Pick<SubagentRunRecord, "endedAt">>(
   entry: T,
 ): entry is T & { endedAt: number } {
@@ -27,7 +27,7 @@ function resolveStaleCutoffMs(entry: Pick<SubagentRunRecord, "runTimeoutSeconds"
   return STALE_UNENDED_SUBAGENT_RUN_MS;
 }
 
-/** Reused helper for is Stale Unended Subagent Run behavior in src/agents. */
+/** Detects unended subagent runs old enough to stop treating as live. */
 export function isStaleUnendedSubagentRun(
   entry: Pick<
     SubagentRunRecord,
@@ -49,7 +49,7 @@ export function isStaleUnendedSubagentRun(
   return now - startedAt > resolveStaleCutoffMs(entry);
 }
 
-/** Reused helper for is Live Unended Subagent Run behavior in src/agents. */
+/** Detects unended subagent runs that are still recent enough to keep live. */
 export function isLiveUnendedSubagentRun(
   entry: Pick<
     SubagentRunRecord,
@@ -71,7 +71,7 @@ function isRecentlyEndedSubagentRun(
   return now - entry.endedAt <= recentMs;
 }
 
-/** Reused helper for should Keep Subagent Run Child Link behavior in src/agents. */
+/** Decides whether a parent should retain the child-session link for a run. */
 export function shouldKeepSubagentRunChildLink(
   entry: Pick<
     SubagentRunRecord,
