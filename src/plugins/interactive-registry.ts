@@ -1,4 +1,4 @@
-// plugins interactive registry helpers and runtime behavior.
+// Plugin interactive handler registry for channel callback payloads.
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 import {
   normalizePluginInteractiveNamespace,
@@ -14,13 +14,13 @@ import {
 } from "./interactive-state.js";
 import type { PluginInteractiveHandlerRegistration } from "./types.js";
 
-/** Shared type for Interactive Registration Result in src/plugins. */
+/** Result returned when registering an interactive handler namespace. */
 export type InteractiveRegistrationResult = {
   ok: boolean;
   error?: string;
 };
 
-/** Reused helper for resolve Plugin Interactive Namespace Match behavior in src/plugins. */
+/** Resolves a callback payload to the registered plugin interactive handler. */
 export function resolvePluginInteractiveNamespaceMatch(
   channel: string,
   data: string,
@@ -32,7 +32,7 @@ export function resolvePluginInteractiveNamespaceMatch(
   });
 }
 
-/** Reused helper for register Plugin Interactive Handler behavior in src/plugins. */
+/** Registers one plugin interactive handler namespace for a channel. */
 export function registerPluginInteractiveHandler(
   pluginId: string,
   registration: PluginInteractiveHandlerRegistration,
@@ -63,17 +63,17 @@ export function registerPluginInteractiveHandler(
   return { ok: true };
 }
 
-/** Reused helper for clear Plugin Interactive Handlers behavior in src/plugins. */
+/** Clears all plugin interactive handlers and registration state. */
 export function clearPluginInteractiveHandlers(): void {
   clearPluginInteractiveHandlersState();
 }
 
-/** Reused helper for clear Plugin Interactive Handler Registrations behavior in src/plugins. */
+/** Clears only interactive handler registration bookkeeping. */
 export function clearPluginInteractiveHandlerRegistrations(): void {
   clearPluginInteractiveHandlerRegistrationsState();
 }
 
-/** Reused helper for clear Plugin Interactive Handlers For Plugin behavior in src/plugins. */
+/** Removes interactive handlers owned by a single plugin. */
 export function clearPluginInteractiveHandlersForPlugin(pluginId: string): void {
   const interactiveHandlers = getPluginInteractiveHandlersState();
   for (const [key, value] of interactiveHandlers.entries()) {
@@ -83,12 +83,12 @@ export function clearPluginInteractiveHandlersForPlugin(pluginId: string): void 
   }
 }
 
-/** Reused helper for list Plugin Interactive Handlers behavior in src/plugins. */
+/** Lists currently registered plugin interactive handlers. */
 export function listPluginInteractiveHandlers(): RegisteredInteractiveHandler[] {
   return Array.from(getPluginInteractiveHandlersState().values());
 }
 
-/** Reused helper for restore Plugin Interactive Handlers behavior in src/plugins. */
+/** Restores plugin interactive handlers from a prior registration snapshot. */
 export function restorePluginInteractiveHandlers(
   registrations: readonly RegisteredInteractiveHandler[],
 ): void {

@@ -1,4 +1,4 @@
-// plugins loader channel setup helpers and runtime behavior.
+// Channel plugin loader helpers for setup/runtime split bundles.
 import type { ChannelPlugin } from "../channels/plugins/types.plugin.js";
 import { isChannelConfigured } from "../config/channel-configured.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -31,7 +31,7 @@ function mergeChannelPluginSection<T>(
   return overrideValue ?? baseValue;
 }
 
-/** Reused helper for merge Setup Runtime Channel Plugin behavior in src/plugins. */
+/** Merges setup-runtime channel plugin sections over the full runtime plugin. */
 export function mergeSetupRuntimeChannelPlugin(
   runtimePlugin: ChannelPlugin,
   setupPlugin: ChannelPlugin,
@@ -52,7 +52,7 @@ export function mergeSetupRuntimeChannelPlugin(
   } as ChannelPlugin;
 }
 
-/** Shared type for Bundled Runtime Channel Registration in src/plugins. */
+/** Normalized bundled channel runtime registration exported by a plugin entry. */
 export type BundledRuntimeChannelRegistration = {
   id?: string;
   loadChannelPlugin?: () => ChannelPlugin;
@@ -60,7 +60,7 @@ export type BundledRuntimeChannelRegistration = {
   setChannelRuntime?: (runtime: PluginRuntime) => void;
 };
 
-/** Reused helper for resolve Bundled Runtime Channel Registration behavior in src/plugins. */
+/** Extracts a bundled channel runtime registration from a module export. */
 export function resolveBundledRuntimeChannelRegistration(
   moduleExport: unknown,
 ): BundledRuntimeChannelRegistration {
@@ -100,7 +100,7 @@ export function resolveBundledRuntimeChannelRegistration(
   };
 }
 
-/** Reused helper for load Bundled Runtime Channel Plugin behavior in src/plugins. */
+/** Loads a bundled channel runtime plugin and merges separately exposed secrets. */
 export function loadBundledRuntimeChannelPlugin(params: {
   registration: BundledRuntimeChannelRegistration;
 }): {
@@ -128,7 +128,7 @@ export function loadBundledRuntimeChannelPlugin(params: {
   }
 }
 
-/** Reused helper for resolve Setup Channel Registration behavior in src/plugins. */
+/** Extracts setup-runtime channel plugin registration from a module export. */
 export function resolveSetupChannelRegistration(moduleExport: unknown): {
   plugin?: ChannelPlugin;
   setChannelRuntime?: (runtime: PluginRuntime) => void;
@@ -205,7 +205,7 @@ export function resolveSetupChannelRegistration(moduleExport: unknown): {
   };
 }
 
-/** Reused helper for should Load Channel Plugin In Setup Runtime behavior in src/plugins. */
+/** Chooses setup-runtime channel loading when full runtime is not needed yet. */
 export function shouldLoadChannelPluginInSetupRuntime(params: {
   manifestChannels: string[];
   setupSource?: string;
@@ -228,7 +228,7 @@ export function shouldLoadChannelPluginInSetupRuntime(params: {
   );
 }
 
-/** Reused helper for should Defer Configured Channel Full Runtime Merge behavior in src/plugins. */
+/** Chooses whether configured channels should defer full runtime merge until later. */
 export function shouldDeferConfiguredChannelFullRuntimeMerge(params: {
   manifestChannels: string[];
   startupDeferConfiguredChannelFullLoadUntilAfterListen?: boolean;
@@ -245,7 +245,7 @@ export function shouldDeferConfiguredChannelFullRuntimeMerge(params: {
   );
 }
 
-/** Reused helper for channel Plugin Id Belongs To Manifest behavior in src/plugins. */
+/** Checks whether a channel id is owned by the current plugin manifest. */
 export function channelPluginIdBelongsToManifest(params: {
   channelId: string | undefined;
   pluginId: string;

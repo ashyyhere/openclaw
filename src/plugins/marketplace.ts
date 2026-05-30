@@ -1,4 +1,4 @@
-// plugins marketplace helpers and runtime behavior.
+// Plugin marketplace loading, shortcut resolution, and marketplace install support.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
@@ -43,7 +43,7 @@ type MarketplaceEntrySource =
   | { kind: "git-subdir"; url: string; path: string; ref?: string }
   | { kind: "url"; url: string };
 
-/** Shared type for Marketplace Plugin Entry in src/plugins. */
+/** One plugin entry declared by a marketplace manifest. */
 export type MarketplacePluginEntry = {
   name: string;
   version?: string;
@@ -51,7 +51,7 @@ export type MarketplacePluginEntry = {
   source: MarketplaceEntrySource;
 };
 
-/** Shared type for Marketplace Manifest in src/plugins. */
+/** Marketplace manifest listing installable plugin entries. */
 export type MarketplaceManifest = {
   name?: string;
   version?: string;
@@ -78,7 +78,7 @@ type KnownMarketplaceRecord = {
   source?: unknown;
 };
 
-/** Shared type for Marketplace Plugin List Result in src/plugins. */
+/** Result returned when listing plugins from a marketplace source. */
 export type MarketplacePluginListResult =
   | {
       ok: true;
@@ -90,7 +90,7 @@ export type MarketplacePluginListResult =
       error: string;
     };
 
-/** Shared type for Marketplace Install Result in src/plugins. */
+/** Result returned after installing a plugin selected from a marketplace. */
 export type MarketplaceInstallResult =
   | ({
       ok: true;
@@ -102,7 +102,7 @@ export type MarketplaceInstallResult =
     } & Extract<InstallPluginResult, { ok: true }>)
   | Extract<InstallPluginResult, { ok: false }>;
 
-/** Shared type for Marketplace Shortcut Resolution in src/plugins. */
+/** Resolved marketplace shortcut or a user-facing resolution error. */
 export type MarketplaceShortcutResolution =
   | {
       ok: true;
@@ -1038,7 +1038,7 @@ async function resolveMarketplaceEntryInstallPath(params: {
   };
 }
 
-/** Reused helper for list Marketplace Plugins behavior in src/plugins. */
+/** Loads a marketplace manifest and returns its plugin list metadata. */
 export async function listMarketplacePlugins(params: {
   marketplace: string;
   logger?: MarketplaceLogger;
@@ -1063,7 +1063,7 @@ export async function listMarketplacePlugins(params: {
   }
 }
 
-/** Reused helper for resolve Marketplace Install Shortcut behavior in src/plugins. */
+/** Resolves `plugin@marketplace` shorthand through known Claude marketplace records. */
 export async function resolveMarketplaceInstallShortcut(
   raw: string,
 ): Promise<MarketplaceShortcutResolution> {
@@ -1110,7 +1110,7 @@ export async function resolveMarketplaceInstallShortcut(
   };
 }
 
-/** Reused helper for install Plugin From Marketplace behavior in src/plugins. */
+/** Installs a named plugin entry from a local, git, GitHub, or URL marketplace. */
 export async function installPluginFromMarketplace(
   params: InstallSafetyOverrides & {
     marketplace: string;

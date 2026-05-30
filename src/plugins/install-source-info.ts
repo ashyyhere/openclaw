@@ -1,10 +1,10 @@
-// plugins install source info helpers and runtime behavior.
+// Plugin install source parser and warning generator for package metadata.
 import { parseClawHubPluginSpec } from "../infra/clawhub-spec.js";
 import { parseRegistryNpmSpec, type ParsedRegistryNpmSpec } from "../infra/npm-registry-spec.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import type { PluginPackageInstall } from "./manifest.js";
 
-/** Shared type for Plugin Install Source Warning in src/plugins. */
+/** Warning code emitted for unsafe or incomplete plugin install source metadata. */
 export type PluginInstallSourceWarning =
   | "invalid-clawhub-spec"
   | "invalid-npm-spec"
@@ -16,14 +16,14 @@ export type PluginInstallSourceWarning =
   | "npm-spec-missing-integrity"
   | "npm-spec-package-name-mismatch";
 
-/** Shared type for Plugin Install Npm Pin State in src/plugins. */
+/** npm install pinning/integrity state derived from manifest metadata. */
 export type PluginInstallNpmPinState =
   | "exact-with-integrity"
   | "exact-without-integrity"
   | "floating-with-integrity"
   | "floating-without-integrity";
 
-/** Shared type for Plugin Install Npm Source Info in src/plugins. */
+/** Parsed npm install source information for a plugin package. */
 export type PluginInstallNpmSourceInfo = {
   spec: string;
   packageName: string;
@@ -35,12 +35,12 @@ export type PluginInstallNpmSourceInfo = {
   pinState: PluginInstallNpmPinState;
 };
 
-/** Shared type for Plugin Install Local Source Info in src/plugins. */
+/** Parsed local path install source information for a plugin package. */
 export type PluginInstallLocalSourceInfo = {
   path: string;
 };
 
-/** Shared type for Plugin Install Claw Hub Source Info in src/plugins. */
+/** Parsed ClawHub install source information for a plugin package. */
 export type PluginInstallClawHubSourceInfo = {
   spec: string;
   packageName: string;
@@ -48,7 +48,7 @@ export type PluginInstallClawHubSourceInfo = {
   exactVersion: boolean;
 };
 
-/** Shared type for Plugin Install Source Info in src/plugins. */
+/** Complete install source summary plus source-safety warnings. */
 export type PluginInstallSourceInfo = {
   defaultChoice?: PluginPackageInstall["defaultChoice"];
   clawhub?: PluginInstallClawHubSourceInfo;
@@ -57,7 +57,7 @@ export type PluginInstallSourceInfo = {
   warnings: readonly PluginInstallSourceWarning[];
 };
 
-/** Shared type for Describe Plugin Install Source Options in src/plugins. */
+/** Options for validating plugin install source metadata. */
 export type DescribePluginInstallSourceOptions = {
   expectedPackageName?: string | null;
 };
@@ -84,7 +84,7 @@ function normalizeExpectedPackageName(value: string | null | undefined): string 
   return parseRegistryNpmSpec(expected)?.name ?? expected;
 }
 
-/** Reused helper for describe Plugin Install Source behavior in src/plugins. */
+/** Parses plugin install source metadata and emits pinning/source warnings. */
 export function describePluginInstallSource(
   install: PluginPackageInstall,
   options?: DescribePluginInstallSourceOptions,

@@ -1,14 +1,14 @@
-// plugins manifest command aliases helpers and runtime behavior.
+// Plugin manifest command alias and tool-owner registry helpers.
 import {
   normalizeOptionalLowercaseString,
   normalizeOptionalString,
 } from "../shared/string-coerce.js";
 import { isRecord } from "../utils.js";
 
-/** Shared type for Plugin Manifest Command Alias Kind in src/plugins. */
+/** Supported diagnostic categories for plugin command aliases. */
 export type PluginManifestCommandAliasKind = "runtime-slash";
 
-/** Shared type for Plugin Manifest Command Alias in src/plugins. */
+/** Command-like alias declared by a plugin manifest for diagnostics. */
 export type PluginManifestCommandAlias = {
   /** Command-like name users may put in plugin config by mistake. */
   name: string;
@@ -18,13 +18,13 @@ export type PluginManifestCommandAlias = {
   cliCommand?: string;
 };
 
-/** Shared type for Plugin Manifest Command Alias Record in src/plugins. */
+/** Command alias decorated with the plugin that owns it. */
 export type PluginManifestCommandAliasRecord = PluginManifestCommandAlias & {
   pluginId: string;
   enabledByDefault?: boolean;
 };
 
-/** Shared type for Plugin Manifest Tool Owner Record in src/plugins. */
+/** Manifest-derived plugin ownership record for a tool name. */
 export type PluginManifestToolOwnerRecord = {
   toolName: string;
   pluginId: string;
@@ -42,7 +42,7 @@ export type PluginManifestToolOwnerRecord = {
   availability?: "loaded" | "manifest-only";
 };
 
-/** Shared type for Plugin Manifest Command Alias Registry in src/plugins. */
+/** Minimal manifest registry view used by command alias diagnostics. */
 export type PluginManifestCommandAliasRegistry = {
   plugins: readonly {
     id: string;
@@ -52,7 +52,7 @@ export type PluginManifestCommandAliasRegistry = {
   }[];
 };
 
-/** Reused helper for normalize Manifest Command Aliases behavior in src/plugins. */
+/** Normalizes manifest commandAliases from string/object shorthand. */
 export function normalizeManifestCommandAliases(
   value: unknown,
 ): PluginManifestCommandAlias[] | undefined {
@@ -87,7 +87,7 @@ export function normalizeManifestCommandAliases(
   return normalized.length > 0 ? normalized : undefined;
 }
 
-/** Reused helper for resolve Manifest Tool Owner In Registry behavior in src/plugins. */
+/** Resolves the manifest plugin that owns a tool contract. */
 export function resolveManifestToolOwnerInRegistry(params: {
   toolName: string | undefined;
   registry: PluginManifestCommandAliasRegistry;
@@ -111,7 +111,7 @@ export function resolveManifestToolOwnerInRegistry(params: {
   return undefined;
 }
 
-/** Reused helper for resolve Manifest Command Alias Owner In Registry behavior in src/plugins. */
+/** Resolves the plugin that declared a command alias in manifest metadata. */
 export function resolveManifestCommandAliasOwnerInRegistry(params: {
   command: string | undefined;
   registry: PluginManifestCommandAliasRegistry;
