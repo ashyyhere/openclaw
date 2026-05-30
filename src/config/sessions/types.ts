@@ -1,4 +1,4 @@
-// Shared types for config/sessions types behavior.
+// Persisted session types and merge helpers for config-backed runtime state.
 import crypto from "node:crypto";
 import type { ChatType } from "../../channels/chat-type.js";
 import type { ChannelId } from "../../channels/plugins/channel-id.types.js";
@@ -8,16 +8,16 @@ import type { Skill } from "../../skills/loading/skill-contract.js";
 import type { DeliveryContext } from "../../utils/delivery-context.types.js";
 import type { TtsAutoMode } from "../types.tts.js";
 
-/** Shared type for Session Scope in src/config/sessions. */
+/** Scope used when deriving session keys for channel senders. */
 export type SessionScope = "per-sender" | "global";
 
-/** Shared type for Session Channel Id in src/config/sessions. */
+/** Channel id stored on persisted session entries. */
 export type SessionChannelId = ChannelId;
 
-/** Shared type for Session Chat Type in src/config/sessions. */
+/** Chat type stored on persisted session entries. */
 export type SessionChatType = ChatType;
 
-/** Shared type for Session Origin in src/config/sessions. */
+/** Channel-origin metadata captured for a session. */
 export type SessionOrigin = {
   label?: string;
   provider?: string;
@@ -31,13 +31,13 @@ export type SessionOrigin = {
   threadId?: string | number;
 };
 
-/** Shared type for Session Acp Identity Source in src/config/sessions. */
+/** Source that last supplied ACP identity state. */
 export type SessionAcpIdentitySource = "ensure" | "status" | "event";
 
-/** Shared type for Session Acp Identity State in src/config/sessions. */
+/** Resolution state for ACP-backed session identity. */
 export type SessionAcpIdentityState = "pending" | "resolved";
 
-/** Shared type for Session Acp Identity in src/config/sessions. */
+/** Persisted ACP identity mapping for a runtime session. */
 export type SessionAcpIdentity = {
   state: SessionAcpIdentityState;
   acpxRecordId?: string;
@@ -47,7 +47,7 @@ export type SessionAcpIdentity = {
   lastUpdatedAt: number;
 };
 
-/** Shared type for Session Acp Meta in src/config/sessions. */
+/** Persisted ACP backend, runtime session, and lifecycle metadata. */
 export type SessionAcpMeta = {
   backend: string;
   agent: string;
@@ -61,7 +61,7 @@ export type SessionAcpMeta = {
   lastError?: string;
 };
 
-/** Shared type for Acp Session Runtime Options in src/config/sessions. */
+/** ACP runtime options persisted with a session binding. */
 export type AcpSessionRuntimeOptions = {
   /**
    * ACP runtime mode set via session/set_mode (for example: "plan", "normal", "auto").
@@ -81,7 +81,7 @@ export type AcpSessionRuntimeOptions = {
   backendExtras?: Record<string, string>;
 };
 
-/** Shared type for Cli Session Binding in src/config/sessions. */
+/** Fingerprinted CLI runtime session binding for transcript reuse. */
 export type CliSessionBinding = {
   sessionId: string;
   /** Trust an explicitly attached CLI session even when auth, prompt, or MCP fingerprints drift. */
@@ -96,14 +96,14 @@ export type CliSessionBinding = {
   mcpResumeHash?: string;
 };
 
-/** Shared type for Session Compaction Checkpoint Reason in src/config/sessions. */
+/** Reason a persisted transcript compaction checkpoint was created. */
 export type SessionCompactionCheckpointReason =
   | "manual"
   | "auto-threshold"
   | "overflow-retry"
   | "timeout-retry";
 
-/** Shared type for Session Compaction Transcript Reference in src/config/sessions. */
+/** Pointer to a transcript location before or after compaction. */
 export type SessionCompactionTranscriptReference = {
   sessionId: string;
   sessionFile?: string;
@@ -111,7 +111,7 @@ export type SessionCompactionTranscriptReference = {
   entryId?: string;
 };
 
-/** Shared type for Session Compaction Checkpoint in src/config/sessions. */
+/** Persisted record connecting pre- and post-compaction transcript state. */
 export type SessionCompactionCheckpoint = {
   checkpointId: string;
   sessionKey: string;
@@ -126,14 +126,14 @@ export type SessionCompactionCheckpoint = {
   postCompaction: SessionCompactionTranscriptReference;
 };
 
-/** Shared type for Session Context Budget Status Route in src/config/sessions. */
+/** Planned context-budget remediation route for the next prompt. */
 export type SessionContextBudgetStatusRoute =
   | "fits"
   | "compact_only"
   | "truncate_tool_results_only"
   | "compact_then_truncate";
 
-/** Shared type for Session Context Budget Status in src/config/sessions. */
+/** Persisted context budget estimate for status and preflight decisions. */
 export type SessionContextBudgetStatus = {
   schemaVersion: 1;
   source: "pre-prompt-estimate";
@@ -155,13 +155,13 @@ export type SessionContextBudgetStatus = {
   sessionId?: string;
 };
 
-/** Shared type for Session Plugin Debug Entry in src/config/sessions. */
+/** Plugin-owned debug/status lines attached to a session. */
 export type SessionPluginDebugEntry = {
   pluginId: string;
   lines: string[];
 };
 
-/** Shared type for Session Plugin Json Value in src/config/sessions. */
+/** JSON-compatible value stored in plugin-owned session extensions. */
 export type SessionPluginJsonValue =
   | string
   | number
@@ -170,7 +170,7 @@ export type SessionPluginJsonValue =
   | SessionPluginJsonValue[]
   | { [key: string]: SessionPluginJsonValue };
 
-/** Shared type for Session Plugin Next Turn Injection in src/config/sessions. */
+/** Durable plugin-owned context injection drained before the next agent turn. */
 export type SessionPluginNextTurnInjection = {
   id: string;
   pluginId: string;
@@ -183,7 +183,7 @@ export type SessionPluginNextTurnInjection = {
   metadata?: SessionPluginJsonValue;
 };
 
-/** Shared type for Subagent Recovery State in src/config/sessions. */
+/** Persisted automatic subagent orphan-recovery state. */
 export type SubagentRecoveryState = {
   /** Consecutive accepted automatic orphan-recovery resumes in the rapid re-wedge window. */
   automaticAttempts?: number;
@@ -197,7 +197,7 @@ export type SubagentRecoveryState = {
   wedgedReason?: string;
 };
 
-/** Shared type for Lane Execution State in src/config/sessions. */
+/** State machine value for quota-suspended execution lanes. */
 export type LaneExecutionState =
   | "active"
   | "draining"
@@ -206,7 +206,7 @@ export type LaneExecutionState =
   | "circuit_open"
   | "failed_handoff";
 
-/** Shared type for Quota Suspension in src/config/sessions. */
+/** Persisted quota cascade protection and resume state for a session. */
 export interface QuotaSuspension {
   schemaVersion: 1;
   suspendedAt: number; // epoch ms
@@ -455,7 +455,7 @@ export type SessionEntry = {
   acp?: SessionAcpMeta;
 };
 
-/** Reused helper for is Terminal Session Status behavior in src/config/sessions. */
+/** Narrows a session status to completed terminal states. */
 export function isTerminalSessionStatus(
   status: unknown,
 ): status is Exclude<NonNullable<SessionEntry["status"]>, "running"> {
@@ -483,21 +483,21 @@ function resolveSessionPluginLines(
     : [];
 }
 
-/** Reused helper for resolve Session Plugin Status Lines behavior in src/config/sessions. */
+/** Returns plugin debug lines intended for normal status surfaces. */
 export function resolveSessionPluginStatusLines(
   entry: Pick<SessionEntry, "pluginDebugEntries"> | undefined,
 ): string[] {
   return resolveSessionPluginLines(entry, (line) => !isSessionPluginTraceLine(line));
 }
 
-/** Reused helper for resolve Session Plugin Trace Lines behavior in src/config/sessions. */
+/** Returns plugin debug lines intended for verbose trace surfaces. */
 export function resolveSessionPluginTraceLines(
   entry: Pick<SessionEntry, "pluginDebugEntries"> | undefined,
 ): string[] {
   return resolveSessionPluginLines(entry, isSessionPluginTraceLine);
 }
 
-/** Reused helper for normalize Session Runtime Model Fields behavior in src/config/sessions. */
+/** Normalizes persisted runtime provider/model fields and removes stale empty values. */
 export function normalizeSessionRuntimeModelFields(entry: SessionEntry): SessionEntry {
   const normalizedModel = normalizeOptionalString(entry.model);
   const normalizedProvider = normalizeOptionalString(entry.modelProvider);
@@ -538,7 +538,7 @@ export function normalizeSessionRuntimeModelFields(entry: SessionEntry): Session
   return next;
 }
 
-/** Reused helper for set Session Runtime Model behavior in src/config/sessions. */
+/** Sets a non-empty runtime provider/model pair on a session entry. */
 export function setSessionRuntimeModel(
   entry: SessionEntry,
   runtime: { provider: string; model: string },
@@ -553,7 +553,7 @@ export function setSessionRuntimeModel(
   return true;
 }
 
-/** Shared type for Session Entry Merge Policy in src/config/sessions. */
+/** Merge policy for how session activity timestamps are updated. */
 export type SessionEntryMergePolicy = "touch-activity" | "preserve-activity";
 
 type MergeSessionEntryOptions = {
@@ -582,7 +582,7 @@ function normalizeMergedUpdatedAt(value: number | undefined, now: number): numbe
   return Math.min(value, now);
 }
 
-/** Reused helper for merge Session Entry With Policy behavior in src/config/sessions. */
+/** Merges a session patch while preserving identity and timestamp invariants. */
 export function mergeSessionEntryWithPolicy(
   existing: SessionEntry | undefined,
   patch: Partial<SessionEntry>,
@@ -620,7 +620,7 @@ export function mergeSessionEntryWithPolicy(
   return normalizeSessionRuntimeModelFields(next);
 }
 
-/** Reused helper for merge Session Entry behavior in src/config/sessions. */
+/** Merges a session patch and touches activity by default. */
 export function mergeSessionEntry(
   existing: SessionEntry | undefined,
   patch: Partial<SessionEntry>,
@@ -628,7 +628,7 @@ export function mergeSessionEntry(
   return mergeSessionEntryWithPolicy(existing, patch);
 }
 
-/** Reused helper for merge Session Entry Preserve Activity behavior in src/config/sessions. */
+/** Merges a session patch without advancing existing activity time. */
 export function mergeSessionEntryPreserveActivity(
   existing: SessionEntry | undefined,
   patch: Partial<SessionEntry>,
@@ -638,7 +638,7 @@ export function mergeSessionEntryPreserveActivity(
   });
 }
 
-/** Reused helper for resolve Session Total Tokens behavior in src/config/sessions. */
+/** Returns a valid persisted total-token count, including legacy freshness states. */
 export function resolveSessionTotalTokens(
   entry?: Pick<SessionEntry, "totalTokens" | "totalTokensFresh"> | null,
 ): number | undefined {
@@ -649,7 +649,7 @@ export function resolveSessionTotalTokens(
   return total;
 }
 
-/** Reused helper for resolve Fresh Session Total Tokens behavior in src/config/sessions. */
+/** Returns total tokens only when the persisted count is known fresh. */
 export function resolveFreshSessionTotalTokens(
   entry?: Pick<SessionEntry, "totalTokens" | "totalTokensFresh"> | null,
 ): number | undefined {
@@ -663,14 +663,14 @@ export function resolveFreshSessionTotalTokens(
   return total;
 }
 
-/** Reused helper for is Session Total Tokens Fresh behavior in src/config/sessions. */
+/** Reports whether a session has a fresh total-token count. */
 export function isSessionTotalTokensFresh(
   entry?: Pick<SessionEntry, "totalTokens" | "totalTokensFresh"> | null,
 ): boolean {
   return resolveFreshSessionTotalTokens(entry) !== undefined;
 }
 
-/** Shared type for Group Key Resolution in src/config/sessions. */
+/** Result of resolving group chat identity into a stable session key. */
 export type GroupKeyResolution = {
   key: string;
   channel?: string;
@@ -678,7 +678,7 @@ export type GroupKeyResolution = {
   chatType?: SessionChatType;
 };
 
-/** Shared type for Session Skill Prompt Ref in src/config/sessions. */
+/** Content-addressed reference to a persisted skill prompt blob. */
 export type SessionSkillPromptRef = {
   version: 1;
   algorithm: "sha256";
@@ -686,7 +686,7 @@ export type SessionSkillPromptRef = {
   bytes: number;
 };
 
-/** Shared type for Session Skill Snapshot in src/config/sessions. */
+/** Skill prompt snapshot attached to a session for repeatable agent turns. */
 export type SessionSkillSnapshot = {
   prompt: string;
   /** Persisted stores may replace large duplicate prompts with a content-addressed blob ref. */
@@ -706,7 +706,7 @@ export type SessionSkillSnapshot = {
   version?: number;
 };
 
-/** Shared type for Session System Prompt Report in src/config/sessions. */
+/** Detailed system-prompt construction report persisted for diagnostics. */
 export type SessionSystemPromptReport = {
   source: "run" | "estimate";
   generatedAt: number;
@@ -768,9 +768,9 @@ export type SessionSystemPromptReport = {
   };
 };
 
-/** Reused constant for DEFAULT RESET TRIGGER behavior in src/config/sessions. */
+/** Primary command that resets the current session. */
 export const DEFAULT_RESET_TRIGGER = "/new";
-/** Reused constant for DEFAULT RESET TRIGGERS behavior in src/config/sessions. */
+/** Commands that reset the current session. */
 export const DEFAULT_RESET_TRIGGERS = ["/new", "/reset"];
-/** Reused constant for DEFAULT IDLE MINUTES behavior in src/config/sessions. */
+/** Default idle timeout in minutes; zero disables idle expiry. */
 export const DEFAULT_IDLE_MINUTES = 0;
