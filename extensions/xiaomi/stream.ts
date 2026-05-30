@@ -1,4 +1,3 @@
-// extensions/xiaomi stream helpers and runtime behavior.
 import type { StreamFn } from "openclaw/plugin-sdk/agent-core";
 import type { ProviderWrapStreamFnContext } from "openclaw/plugin-sdk/plugin-entry";
 import {

@@ -1,4 +1,3 @@
-// extensions/document-extract index helpers and runtime behavior.
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 
 export default definePluginEntry({
