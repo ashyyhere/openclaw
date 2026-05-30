@@ -43,7 +43,7 @@ const DETAIL_LABEL_OVERRIDES: Record<string, string> = {
 };
 const MAX_DETAIL_ENTRIES = 8;
 
-/** Reused helper for resolve Tool Display behavior in src/agents. */
+/** Resolve configured icon, label, verb, and compact detail for a tool call. */
 export function resolveToolDisplay(params: {
   name?: string;
   args?: unknown;
@@ -82,13 +82,13 @@ export function resolveToolDisplay(params: {
   };
 }
 
-/** Reused helper for format Tool Detail behavior in src/agents. */
+/** Redact and normalize one resolved tool detail for UI display. */
 export function formatToolDetail(display: ToolDisplay): string | undefined {
   const detailRaw = display.detail ? redactToolDetail(display.detail) : undefined;
   return formatToolDetailText(detailRaw);
 }
 
-/** Reused helper for format Tool Summary behavior in src/agents. */
+/** Format a one-line tool summary with icon, label, and optional detail. */
 export function formatToolSummary(display: ToolDisplay): string {
   const detail = formatToolDetail(display);
   if (detail && (display.name === "bash" || display.name === "exec")) {

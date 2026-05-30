@@ -7,7 +7,7 @@ import {
   recordToolCallOutcome,
 } from "./tool-loop-detection.js";
 
-/** Reused constant for before Tool Call Runtime behavior in src/agents. */
+/** Runtime dependencies injected into before-tool-call hook processing. */
 export const beforeToolCallRuntime = {
   getDiagnosticSessionState,
   logToolLoopAction,
