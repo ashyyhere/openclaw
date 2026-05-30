@@ -80,9 +80,9 @@ import {
 } from "./subagent-session-reconciliation.js";
 import { resolveAgentTimeoutMs } from "./timeout.js";
 
-/** Re-exported API for src/agents, starting with Subagent Run Record. */
+/** Public subagent run record shape owned by the registry. */
 export type { SubagentRunRecord } from "./subagent-registry.types.js";
-/** Re-exported API for src/agents. */
+/** Session timing/status helpers for subagent run records. */
 export {
   getSubagentSessionRuntimeMs,
   getSubagentSessionStartedAt,
@@ -1291,7 +1291,7 @@ export function releaseSubagentRun(runId: string) {
   subagentRunManager.releaseSubagentRun(runId);
 }
 
-/** Reused helper for finalize Interrupted Subagent Run behavior in src/agents. */
+/** Marks interrupted subagent runs as errored and runs completion cleanup. */
 export async function finalizeInterruptedSubagentRun(params: {
   runId?: string;
   childSessionKey?: string;
@@ -1346,7 +1346,7 @@ export async function finalizeInterruptedSubagentRun(params: {
   return updated;
 }
 
-/** Reused helper for resolve Requester For Child Session behavior in src/agents. */
+/** Resolves the requester session and delivery origin for a child session. */
 export function resolveRequesterForChildSession(childSessionKey: string): {
   requesterSessionKey: string;
   requesterOrigin?: DeliveryContext;
@@ -1363,12 +1363,12 @@ export function resolveRequesterForChildSession(childSessionKey: string): {
   };
 }
 
-/** Reused helper for is Subagent Session Run Active behavior in src/agents. */
+/** Checks whether a child session currently belongs to an active subagent run. */
 export function isSubagentSessionRunActive(childSessionKey: string): boolean {
   return isSubagentSessionRunActiveFromRuns(subagentRuns, childSessionKey);
 }
 
-/** Reused helper for should Ignore Post Completion Announce For Session behavior in src/agents. */
+/** Checks whether a late announce should be ignored after completion cleanup. */
 export function shouldIgnorePostCompletionAnnounceForSession(childSessionKey: string): boolean {
   return shouldIgnorePostCompletionAnnounceForSessionFromRuns(
     subagentRegistryDeps.getSubagentRunsSnapshotForRead(subagentRuns),
@@ -1376,7 +1376,7 @@ export function shouldIgnorePostCompletionAnnounceForSession(childSessionKey: st
   );
 }
 
-/** Reused helper for mark Subagent Run Terminated behavior in src/agents. */
+/** Marks matching subagent runs terminated by run id or child session key. */
 export function markSubagentRunTerminated(params: {
   runId?: string;
   childSessionKey?: string;
@@ -1385,7 +1385,7 @@ export function markSubagentRunTerminated(params: {
   return subagentRunManager.markSubagentRunTerminated(params);
 }
 
-/** Reused helper for list Subagent Runs For Requester behavior in src/agents. */
+/** Lists subagent runs directly requested by a session. */
 export function listSubagentRunsForRequester(
   requesterSessionKey: string,
   options?: { requesterRunId?: string },
@@ -1393,7 +1393,7 @@ export function listSubagentRunsForRequester(
   return listRunsForRequesterFromRuns(subagentRuns, requesterSessionKey, options);
 }
 
-/** Reused helper for list Subagent Runs For Controller behavior in src/agents. */
+/** Lists subagent runs controlled by a parent/controller session. */
 export function listSubagentRunsForController(controllerSessionKey: string): SubagentRunRecord[] {
   return listRunsForControllerFromRuns(
     subagentRegistryDeps.getSubagentRunsSnapshotForRead(subagentRuns),
@@ -1401,7 +1401,7 @@ export function listSubagentRunsForController(controllerSessionKey: string): Sub
   );
 }
 
-/** Reused helper for count Active Runs For Session behavior in src/agents. */
+/** Counts active subagent runs directly owned by a requester session. */
 export function countActiveRunsForSession(requesterSessionKey: string): number {
   return countActiveRunsForSessionFromRuns(
     subagentRegistryDeps.getSubagentRunsSnapshotForRead(subagentRuns),
@@ -1409,7 +1409,7 @@ export function countActiveRunsForSession(requesterSessionKey: string): number {
   );
 }
 
-/** Reused helper for count Active Descendant Runs behavior in src/agents. */
+/** Counts active subagent descendants under a root session. */
 export function countActiveDescendantRuns(rootSessionKey: string): number {
   return countActiveDescendantRunsFromRuns(
     subagentRegistryDeps.getSubagentRunsSnapshotForRead(subagentRuns),
@@ -1417,7 +1417,7 @@ export function countActiveDescendantRuns(rootSessionKey: string): number {
   );
 }
 
-/** Reused helper for count Pending Descendant Runs behavior in src/agents. */
+/** Counts pending subagent descendants under a root session. */
 export function countPendingDescendantRuns(rootSessionKey: string): number {
   return countPendingDescendantRunsFromRuns(
     subagentRegistryDeps.getSubagentRunsSnapshotForRead(subagentRuns),
@@ -1425,7 +1425,7 @@ export function countPendingDescendantRuns(rootSessionKey: string): number {
   );
 }
 
-/** Reused helper for count Pending Descendant Runs Excluding Run behavior in src/agents. */
+/** Counts pending descendants while excluding one run from the total. */
 export function countPendingDescendantRunsExcludingRun(
   rootSessionKey: string,
   excludeRunId: string,
@@ -1437,7 +1437,7 @@ export function countPendingDescendantRunsExcludingRun(
   );
 }
 
-/** Reused helper for list Descendant Runs For Requester behavior in src/agents. */
+/** Lists all descendant subagent runs under a requester root session. */
 export function listDescendantRunsForRequester(rootSessionKey: string): SubagentRunRecord[] {
   return listDescendantRunsForRequesterFromRuns(
     subagentRegistryDeps.getSubagentRunsSnapshotForRead(subagentRuns),
@@ -1445,7 +1445,7 @@ export function listDescendantRunsForRequester(rootSessionKey: string): Subagent
   );
 }
 
-/** Reused helper for get Subagent Run By Child Session Key behavior in src/agents. */
+/** Returns the active/known subagent run for a child session key. */
 export function getSubagentRunByChildSessionKey(childSessionKey: string): SubagentRunRecord | null {
   return getSubagentRunByChildSessionKeyFromRuns(
     subagentRegistryDeps.getSubagentRunsSnapshotForRead(subagentRuns),
@@ -1453,7 +1453,7 @@ export function getSubagentRunByChildSessionKey(childSessionKey: string): Subage
   );
 }
 
-/** Reused helper for get Latest Subagent Run By Child Session Key behavior in src/agents. */
+/** Returns the newest subagent run observed for a child session key. */
 export function getLatestSubagentRunByChildSessionKey(
   childSessionKey: string,
 ): SubagentRunRecord | null {
@@ -1475,14 +1475,14 @@ export function getLatestSubagentRunByChildSessionKey(
   return latest;
 }
 
-/** Reused helper for init Subagent Registry behavior in src/agents. */
+/** Restores persisted subagent registry state on first initialization. */
 export function initSubagentRegistry() {
   restoreSubagentRunsOnce();
 }
 
 // Importing this module also registers the subagent maintenance preserve-key
 // provider as a side effect (see subagent-registry-maintenance.ts).
-/** Re-exported API for src/agents, starting with list Session Maintenance Protected Subagent Session Keys. */
+/** Session keys that maintenance must preserve while subagents are tracked. */
 export { listSessionMaintenanceProtectedSubagentSessionKeys } from "./subagent-registry-maintenance.js";
-/** Re-exported API for src/agents, starting with testing. */
+/** Test-only registry lifecycle controls. */
 export { testing as __testing };
