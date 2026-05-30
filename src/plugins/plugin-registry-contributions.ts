@@ -25,32 +25,32 @@ import {
   type LoadPluginRegistryParams,
   type PluginRegistrySnapshot,
 } from "./plugin-registry-snapshot.js";
-/** Re-exported API for src/plugins. */
+/** Plugin id normalizer used by registry contribution lookups. */
 export {
   createPluginRegistryIdNormalizer,
   type PluginRegistryIdNormalizerOptions,
 } from "./plugin-registry-id-normalizer.js";
 
-/** Shared type for Plugin Look Up Table in src/plugins. */
+/** Precomputed plugin metadata table used to avoid reloading manifest registries. */
 export type PluginLookUpTable = Pick<
   PluginMetadataSnapshot,
   "index" | "manifestRegistry" | "plugins" | "normalizePluginId" | "owners"
 >;
 
-/** Shared type for Plugin Registry Contribution Options in src/plugins. */
+/** Options shared by contribution listing and owner resolution helpers. */
 export type PluginRegistryContributionOptions = LoadPluginRegistryParams & {
   includeDisabled?: boolean;
   lookUpTable?: PluginLookUpTable;
 };
 
-/** Shared type for Load Plugin Registry Manifest Params in src/plugins. */
+/** Parameters for loading manifest records that back registry contribution queries. */
 export type LoadPluginRegistryManifestParams = LoadPluginRegistryParams & {
   includeDisabled?: boolean;
   pluginIds?: readonly string[];
   bundledChannelConfigCollector?: BundledChannelConfigCollector;
 };
 
-/** Shared type for Plugin Registry Contribution Key in src/plugins. */
+/** Manifest contribution families that can be listed or owner-resolved. */
 export type PluginRegistryContributionKey =
   | "providers"
   | "channels"
@@ -61,52 +61,52 @@ export type PluginRegistryContributionKey =
   | "commandAliases"
   | "contracts";
 
-/** Shared type for Resolve Plugin Contribution Owners Params in src/plugins. */
+/** Parameters for resolving plugin owners of a contribution id or matcher. */
 export type ResolvePluginContributionOwnersParams = PluginRegistryContributionOptions & {
   contribution: PluginRegistryContributionKey;
   matches: string | ((contributionId: string) => boolean);
 };
 
-/** Shared type for List Plugin Contribution Ids Params in src/plugins. */
+/** Parameters for listing contribution ids from enabled plugin manifests. */
 export type ListPluginContributionIdsParams = PluginRegistryContributionOptions & {
   contribution: PluginRegistryContributionKey;
 };
 
-/** Shared type for Resolve Provider Owners Params in src/plugins. */
+/** Parameters for resolving plugins that own a provider id. */
 export type ResolveProviderOwnersParams = PluginRegistryContributionOptions & {
   providerId: string;
 };
 
-/** Shared type for Resolve Channel Owners Params in src/plugins. */
+/** Parameters for resolving plugins that own a channel id. */
 export type ResolveChannelOwnersParams = PluginRegistryContributionOptions & {
   channelId: string;
 };
 
-/** Shared type for Resolve Cli Backend Owners Params in src/plugins. */
+/** Parameters for resolving plugins that own a CLI backend id. */
 export type ResolveCliBackendOwnersParams = PluginRegistryContributionOptions & {
   cliBackendId: string;
 };
 
-/** Shared type for Resolve Setup Provider Owners Params in src/plugins. */
+/** Parameters for resolving plugins that own a setup provider id. */
 export type ResolveSetupProviderOwnersParams = PluginRegistryContributionOptions & {
   setupProviderId: string;
 };
 
-/** Shared type for Resolve Manifest Contract Plugin Ids Params in src/plugins. */
+/** Parameters for listing plugins that declare a manifest contract. */
 export type ResolveManifestContractPluginIdsParams = LoadPluginRegistryParams & {
   contract: PluginManifestContractListKey;
   origin?: PluginOrigin;
   onlyPluginIds?: readonly string[];
 };
 
-/** Shared type for Resolve Manifest Contract Owner Plugin Id Params in src/plugins. */
+/** Parameters for resolving the plugin that owns one manifest contract value. */
 export type ResolveManifestContractOwnerPluginIdParams = LoadPluginRegistryParams & {
   contract: PluginManifestContractListKey;
   value: string | undefined;
   origin?: PluginOrigin;
 };
 
-/** Shared type for Resolve Manifest Contract Plugin Ids By Compatibility Runtime Path Params in src/plugins. */
+/** Parameters for resolving contract owners by compatibility runtime path. */
 export type ResolveManifestContractPluginIdsByCompatibilityRuntimePathParams =
   LoadPluginRegistryParams & {
     contract: PluginManifestContractListKey;
@@ -327,7 +327,7 @@ function loadCurrentManifestRegistryForPluginRegistry(
   };
 }
 
-/** Reused helper for load Plugin Manifest Registry For Plugin Registry behavior in src/plugins. */
+/** Loads manifest registry data for contribution queries, reusing current snapshots when safe. */
 export function loadPluginManifestRegistryForPluginRegistry(
   params: LoadPluginRegistryManifestParams = {},
 ): PluginManifestRegistry {
@@ -349,7 +349,7 @@ export function loadPluginManifestRegistryForPluginRegistry(
   });
 }
 
-/** Reused helper for normalize Plugins Config With Registry behavior in src/plugins. */
+/** Normalizes plugin config keys with ids known to a registry snapshot. */
 export function normalizePluginsConfigWithRegistry(
   config: OpenClawConfig["plugins"] | undefined,
   index: PluginRegistrySnapshot,
@@ -361,7 +361,7 @@ export function normalizePluginsConfigWithRegistry(
   );
 }
 
-/** Reused helper for list Plugin Contribution Ids behavior in src/plugins. */
+/** Lists normalized contribution ids for one manifest contribution family. */
 export function listPluginContributionIds(
   params: ListPluginContributionIdsParams,
 ): readonly string[] {
@@ -372,7 +372,7 @@ export function listPluginContributionIds(
   );
 }
 
-/** Reused helper for resolve Plugin Contribution Owners behavior in src/plugins. */
+/** Resolves enabled plugin ids that own a matching manifest contribution. */
 export function resolvePluginContributionOwners(
   params: ResolvePluginContributionOwnersParams,
 ): readonly string[] {
@@ -402,7 +402,7 @@ export function resolvePluginContributionOwners(
   );
 }
 
-/** Reused helper for resolve Provider Owners behavior in src/plugins. */
+/** Resolves enabled plugin ids that own a provider id, with provider normalization. */
 export function resolveProviderOwners(params: ResolveProviderOwnersParams): readonly string[] {
   const providerId = normalizeProviderId(params.providerId);
   if (!providerId) {
@@ -430,7 +430,7 @@ export function resolveProviderOwners(params: ResolveProviderOwnersParams): read
   });
 }
 
-/** Reused helper for resolve Channel Owners behavior in src/plugins. */
+/** Resolves enabled plugin ids that own a channel id. */
 export function resolveChannelOwners(params: ResolveChannelOwnersParams): readonly string[] {
   const channelId = normalizeContributionId(params.channelId);
   if (!channelId) {
@@ -443,7 +443,7 @@ export function resolveChannelOwners(params: ResolveChannelOwnersParams): readon
   });
 }
 
-/** Reused helper for resolve Cli Backend Owners behavior in src/plugins. */
+/** Resolves enabled plugin ids that own a CLI backend id. */
 export function resolveCliBackendOwners(params: ResolveCliBackendOwnersParams): readonly string[] {
   const cliBackendId = normalizeContributionId(params.cliBackendId);
   if (!cliBackendId) {
@@ -456,7 +456,7 @@ export function resolveCliBackendOwners(params: ResolveCliBackendOwnersParams): 
   });
 }
 
-/** Reused helper for resolve Setup Provider Owners behavior in src/plugins. */
+/** Resolves enabled plugin ids that own a setup provider id. */
 export function resolveSetupProviderOwners(
   params: ResolveSetupProviderOwnersParams,
 ): readonly string[] {
@@ -471,7 +471,7 @@ export function resolveSetupProviderOwners(
   });
 }
 
-/** Reused helper for resolve Manifest Contract Plugin Ids behavior in src/plugins. */
+/** Lists plugin ids that declare values for a manifest contract family. */
 export function resolveManifestContractPluginIds(
   params: ResolveManifestContractPluginIdsParams,
 ): string[] {
@@ -485,7 +485,7 @@ export function resolveManifestContractPluginIds(
     .toSorted((left, right) => left.localeCompare(right));
 }
 
-/** Reused helper for resolve Manifest Contract Plugin Ids By Compatibility Runtime Path behavior in src/plugins. */
+/** Lists contract-owning plugins whose config contract declares a compatibility path. */
 export function resolveManifestContractPluginIdsByCompatibilityRuntimePath(
   params: ResolveManifestContractPluginIdsByCompatibilityRuntimePathParams,
 ): string[] {
@@ -504,7 +504,7 @@ export function resolveManifestContractPluginIdsByCompatibilityRuntimePath(
     .toSorted((left, right) => left.localeCompare(right));
 }
 
-/** Reused helper for resolve Manifest Contract Owner Plugin Id behavior in src/plugins. */
+/** Resolves the first plugin id that owns a case-insensitive manifest contract value. */
 export function resolveManifestContractOwnerPluginId(
   params: ResolveManifestContractOwnerPluginIdParams,
 ): string | undefined {
