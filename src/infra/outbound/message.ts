@@ -1,4 +1,5 @@
-// infra/outbound message helpers and runtime behavior.
+// Core outbound message and poll send helpers.
+// Direct sends use durable channel delivery; gateway-mode channels proxy through the gateway runtime.
 import type { ReplyPayload } from "../../auto-reply/reply-payload.js";
 import { deriveDurableFinalDeliveryRequirements } from "../../channels/message/capabilities.js";
 import { sendDurableMessageBatch } from "../../channels/message/runtime.js";
@@ -45,7 +46,7 @@ function loadMessageGatewayRuntime() {
   return messageGatewayRuntimePromise;
 }
 
-/** Shared type for Message Gateway Options in src/infra/outbound. */
+/** Gateway client options for channels whose sends execute through gateway commands. */
 export type MessageGatewayOptions = {
   url?: string;
   token?: string;
@@ -96,7 +97,7 @@ type MessageSendParams = {
   parseMode?: "HTML";
 };
 
-/** Shared type for Message Send Result in src/infra/outbound. */
+/** Normalized send result returned by direct, gateway, and dry-run message sends. */
 export type MessageSendResult = {
   channel: string;
   to: string;
@@ -125,7 +126,7 @@ type MessagePollParams = {
   idempotencyKey?: string;
 };
 
-/** Shared type for Message Poll Result in src/infra/outbound. */
+/** Normalized poll send result returned by gateway-backed poll delivery. */
 export type MessagePollResult = {
   channel: string;
   to: string;
@@ -320,7 +321,7 @@ async function resolveGatewayIdempotencyKey(idempotencyKey?: string): Promise<st
   return randomIdempotencyKey();
 }
 
-/** Reused helper for send Message behavior in src/infra/outbound. */
+/** Send a message payload batch through the selected channel with durability checks. */
 export async function sendMessage(params: MessageSendParams): Promise<MessageSendResult> {
   const cfg = await resolveMessageConfig(params.cfg);
   const channel = await resolveRequiredChannel({ cfg, channel: params.channel });
@@ -464,7 +465,7 @@ export async function sendMessage(params: MessageSendParams): Promise<MessageSen
   };
 }
 
-/** Reused helper for send Poll behavior in src/infra/outbound. */
+/** Send a poll through the selected channel after normalizing poll limits/options. */
 export async function sendPoll(params: MessagePollParams): Promise<MessagePollResult> {
   const cfg = await resolveMessageConfig(params.cfg);
   const channel = await resolveRequiredChannel({ cfg, channel: params.channel });

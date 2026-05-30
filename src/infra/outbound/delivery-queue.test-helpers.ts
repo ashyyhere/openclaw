@@ -1,11 +1,12 @@
-// infra/outbound delivery queue test helpers helpers and runtime behavior.
+// Test helpers for outbound delivery queue recovery tests.
+// They create isolated queue roots and expose small file-level state mutations.
 import fs from "node:fs";
 import path from "node:path";
 import { afterAll, beforeAll, beforeEach, vi } from "vitest";
 import { resolvePreferredOpenClawTmpDir } from "../tmp-openclaw-dir.js";
 import type { DeliverFn, RecoveryLogger } from "./delivery-queue.js";
 
-/** Reused helper for install Delivery Queue Tmp Dir Hooks behavior in src/infra/outbound. */
+/** Install Vitest hooks that provide a fresh delivery-queue temp dir per test. */
 export function installDeliveryQueueTmpDirHooks(): { readonly tmpDir: () => string } {
   let tmpDir = "";
   let fixtureRoot = "";
@@ -33,14 +34,14 @@ export function installDeliveryQueueTmpDirHooks(): { readonly tmpDir: () => stri
   };
 }
 
-/** Reused helper for read Queued Entry behavior in src/infra/outbound. */
+/** Read a queued delivery entry JSON file from a test queue root. */
 export function readQueuedEntry(tmpDir: string, id: string): Record<string, unknown> {
   return JSON.parse(
     fs.readFileSync(path.join(tmpDir, "delivery-queue", `${id}.json`), "utf-8"),
   ) as Record<string, unknown>;
 }
 
-/** Reused helper for set Queued Entry State behavior in src/infra/outbound. */
+/** Patch retry/recovery fields on a queued delivery entry for recovery scenarios. */
 export function setQueuedEntryState(
   tmpDir: string,
   id: string,
@@ -72,7 +73,7 @@ export function setQueuedEntryState(
   fs.writeFileSync(filePath, JSON.stringify(entry), "utf-8");
 }
 
-/** Reused helper for create Recovery Log behavior in src/infra/outbound. */
+/** Create a mocked recovery logger compatible with queue recovery tests. */
 export function createRecoveryLog(): RecoveryLogger & {
   info: ReturnType<typeof vi.fn<(msg: string) => void>>;
   warn: ReturnType<typeof vi.fn<(msg: string) => void>>;
@@ -85,7 +86,7 @@ export function createRecoveryLog(): RecoveryLogger & {
   };
 }
 
-/** Reused helper for as Deliver Fn behavior in src/infra/outbound. */
+/** Cast a Vitest mock to the delivery callback type expected by recovery helpers. */
 export function asDeliverFn(deliver: ReturnType<typeof vi.fn>): DeliverFn {
   return deliver as DeliverFn;
 }

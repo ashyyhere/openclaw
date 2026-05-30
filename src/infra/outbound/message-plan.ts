@@ -1,4 +1,5 @@
-// infra/outbound message plan helpers and runtime behavior.
+// Outbound message unit planning.
+// Text and media payloads are split into send units while preserving per-unit overrides.
 import {
   chunkByParagraph,
   chunkMarkdownTextWithMode,
@@ -7,7 +8,7 @@ import {
 import type { OutboundDeliveryFormattingOptions } from "./formatting.js";
 import type { ReplyToOverride } from "./reply-policy.js";
 
-/** Shared type for Outbound Message Send Overrides in src/infra/outbound. */
+/** Per-unit delivery overrides applied when sending planned outbound units. */
 export type OutboundMessageSendOverrides = ReplyToOverride & {
   threadId?: string | number | null;
   audioAsVoice?: boolean;
@@ -15,7 +16,7 @@ export type OutboundMessageSendOverrides = ReplyToOverride & {
   formatting?: OutboundDeliveryFormattingOptions;
 };
 
-/** Shared type for Outbound Message Unit in src/infra/outbound. */
+/** Planned outbound unit: either one text chunk or one media send. */
 export type OutboundMessageUnit =
   | {
       kind: "text";
@@ -29,7 +30,7 @@ export type OutboundMessageUnit =
       overrides: OutboundMessageSendOverrides;
     };
 
-/** Shared type for Outbound Message Chunker in src/infra/outbound. */
+/** Text chunker contract used by channel-specific message limits. */
 export type OutboundMessageChunker = (
   text: string,
   limit: number,
@@ -65,7 +66,7 @@ function chunkTextForPlan(params: {
     : params.chunker(params.text, params.limit);
 }
 
-/** Reused helper for plan Outbound Text Message Units behavior in src/infra/outbound. */
+/** Plan text units, chunking when limits/chunkers are provided. */
 export function planOutboundTextMessageUnits(params: {
   text: string;
   overrides: OutboundMessageSendOverrides;
@@ -130,7 +131,7 @@ export function planOutboundTextMessageUnits(params: {
   }).map(planChunkedTextUnit);
 }
 
-/** Reused helper for plan Outbound Media Message Units behavior in src/infra/outbound. */
+/** Plan one media unit per URL, attaching the caption only to the first item. */
 export function planOutboundMediaMessageUnits(params: {
   caption: string;
   mediaUrls: readonly string[];

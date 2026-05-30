@@ -1,4 +1,5 @@
-// infra temp download helpers and runtime behavior.
+// Temporary download path helpers backed by private temp workspaces.
+// Names are sanitized before paths are exposed to download/copy flows.
 import "./fs-safe-defaults.js";
 import crypto from "node:crypto";
 import path from "node:path";
@@ -8,7 +9,7 @@ import { resolvePreferredOpenClawTmpDir } from "./tmp-openclaw-dir.js";
 
 const logger = createSubsystemLogger("infra:temp-download");
 
-/** Re-exported API for src/infra, starting with resolve Preferred Open Claw Tmp Dir. */
+/** Preferred OpenClaw temp root used by download helpers and tests. */
 export { resolvePreferredOpenClawTmpDir } from "./tmp-openclaw-dir.js";
 
 type TempDownloadTarget = {
@@ -38,14 +39,14 @@ function sanitizeTempExtension(extension?: string): string {
   return token ? `.${token}` : "";
 }
 
-/** Reused helper for sanitize Temp File Name behavior in src/infra. */
+/** Sanitize a caller-supplied filename for use inside a temp workspace. */
 export function sanitizeTempFileName(fileName: string): string {
   const base = path.basename(fileName).replace(/[^a-zA-Z0-9._-]+/g, "-");
   const normalized = base.replace(/^-+|-+$/g, "");
   return normalized || "download.bin";
 }
 
-/** Reused helper for build Random Temp File Path behavior in src/infra. */
+/** Build a random temp file path under the preferred or injected temp root. */
 export function buildRandomTempFilePath(params: {
   prefix: string;
   extension?: string;
@@ -82,7 +83,7 @@ function buildTempDownloadTarget(
   };
 }
 
-/** Reused helper for create Temp Download Target behavior in src/infra. */
+/** Create a private temp workspace and return the default download target path. */
 export async function createTempDownloadTarget(params: {
   prefix: string;
   fileName?: string;
@@ -107,7 +108,7 @@ export async function createTempDownloadTarget(params: {
   };
 }
 
-/** Reused helper for with Temp Download Path behavior in src/infra. */
+/** Run a callback with a temp download path and always attempt cleanup. */
 export async function withTempDownloadPath<T>(
   params: {
     prefix: string;

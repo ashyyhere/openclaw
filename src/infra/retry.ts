@@ -1,10 +1,11 @@
-// src/infra retry helpers and runtime behavior.
+// Generic async retry helper with bounded exponential backoff.
+// Retry-After delays are treated as lower bounds and jittered without undercutting them.
 import { asFiniteNumber } from "../shared/number-coercion.js";
 import { sleep } from "../utils.js";
 import { MAX_SAFE_TIMEOUT_DELAY_MS, resolveSafeTimeoutDelayMs } from "../utils/timer-delay.js";
 import { generateSecureFraction } from "./secure-random.js";
 
-/** Shared type for Retry Config in src/infra. */
+/** Retry timing configuration shared by retry callers. */
 export type RetryConfig = {
   attempts?: number;
   minDelayMs?: number;
@@ -12,7 +13,7 @@ export type RetryConfig = {
   jitter?: number;
 };
 
-/** Shared type for Retry Info in src/infra. */
+/** Retry attempt metadata passed to retry observers. */
 export type RetryInfo = {
   attempt: number;
   maxAttempts: number;
@@ -21,7 +22,7 @@ export type RetryInfo = {
   label?: string;
 };
 
-/** Shared type for Retry Options in src/infra. */
+/** Full retry options including retry predicates and Retry-After handling. */
 export type RetryOptions = RetryConfig & {
   label?: string;
   shouldRetry?: (err: unknown, attempt: number) => boolean;
@@ -58,7 +59,7 @@ function resolveRetryDelayMs(value: number): number {
   return resolveSafeTimeoutDelayMs(value, { minMs: 0 });
 }
 
-/** Reused helper for resolve Retry Config behavior in src/infra. */
+/** Normalize retry configuration with safe attempt counts and timeout delays. */
 export function resolveRetryConfig(
   defaults: Required<RetryConfig> = DEFAULT_RETRY_CONFIG,
   overrides?: RetryConfig,
@@ -102,7 +103,7 @@ function applyJitter(delayMs: number, jitter: number, mode: JitterMode = "symmet
   return Math.max(0, mode === "positive" ? Math.ceil(raw) : Math.round(raw));
 }
 
-/** Reused helper for retry Async behavior in src/infra. */
+/** Retry an async operation with legacy numeric attempts or structured retry options. */
 export async function retryAsync<T>(
   fn: () => Promise<T>,
   attemptsOrOptions: number | RetryOptions = 3,

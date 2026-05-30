@@ -1,4 +1,5 @@
-// infra/outbound message action runner helpers and runtime behavior.
+// Message action runner for send, poll, broadcast, and plugin channel actions.
+// It normalizes tool args, resolves channel/account/target state, then dispatches locally or via gateway.
 import { resolveSendableOutboundReplyParts } from "openclaw/plugin-sdk/reply-payload";
 import { resolveSessionAgentId } from "../../agents/agent-scope.js";
 import type { AgentToolResult } from "../../agents/runtime/index.js";
@@ -90,7 +91,7 @@ import { normalizeTargetForProvider } from "./target-normalization.js";
 import { resolveChannelTarget, type ResolvedMessagingTarget } from "./target-resolver.js";
 import { extractToolPayload } from "./tool-payload.js";
 
-/** Shared type for Message Action Runner Gateway in src/infra/outbound. */
+/** Gateway options used when a message action must execute in the channel runtime process. */
 export type MessageActionRunnerGateway = {
   url?: string;
   token?: string;
@@ -109,7 +110,7 @@ function loadMessageActionGatewayRuntime() {
   return messageActionGatewayRuntimePromise;
 }
 
-/** Shared type for Run Message Action Params in src/infra/outbound. */
+/** Inputs accepted by the message action runner from agent tools and CLI callers. */
 export type RunMessageActionParams = {
   cfg: OpenClawConfig;
   action: ChannelMessageActionName;
@@ -134,7 +135,7 @@ export type RunMessageActionParams = {
   abortSignal?: AbortSignal;
 };
 
-/** Shared type for Message Action Run Result in src/infra/outbound. */
+/** Discriminated result for every supported message action execution path. */
 export type MessageActionRunResult =
   | {
       kind: "send";
@@ -184,7 +185,7 @@ export type MessageActionRunResult =
       dryRun: boolean;
     };
 
-/** Reused helper for get Tool Result behavior in src/infra/outbound. */
+/** Extract the optional agent tool result from action results that include one. */
 export function getToolResult(
   result: MessageActionRunResult,
 ): AgentToolResult<unknown> | undefined {
@@ -1294,7 +1295,7 @@ async function handlePluginAction(ctx: ResolvedActionContext): Promise<MessageAc
   };
 }
 
-/** Reused helper for run Message Action behavior in src/infra/outbound. */
+/** Run a normalized message action after enforcing policy, media access, and routing rules. */
 export async function runMessageAction(
   input: RunMessageActionParams,
 ): Promise<MessageActionRunResult> {
