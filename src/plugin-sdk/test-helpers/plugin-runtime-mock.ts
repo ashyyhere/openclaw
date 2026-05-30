@@ -1,4 +1,3 @@
-// plugin-sdk/test-helpers plugin runtime mock helpers and runtime behavior.
 import { vi } from "vitest";
 import {
   normalizeInboundTextNewlines,

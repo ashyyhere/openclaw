@@ -1,9 +1,6 @@
-// Private helper surface for the bundled Codex plugin. This is intentionally
-// local-only so Codex can mirror app-server native subagents into OpenClaw's
-// task registry without promoting detached task mutation helpers to the public
-// plugin SDK.
+// Private bundled-Codex surface for mirroring app-server native subagents into
+// OpenClaw task state without exposing detached task mutation APIs publicly.
 
-/** Re-exported API for src/plugin-sdk. */
 export {
   CODEX_NATIVE_SUBAGENT_RUN_ID_PREFIX,
   CODEX_NATIVE_SUBAGENT_RUNTIME,
@@ -11,7 +8,6 @@ export {
   CODEX_NATIVE_SUBAGENT_TASK_KIND,
 } from "../tasks/codex-native-subagent-task.js";
 
-/** Re-exported API for src/plugin-sdk. */
 export {
   createRunningTaskRun,
   finalizeTaskRunByRunId,
