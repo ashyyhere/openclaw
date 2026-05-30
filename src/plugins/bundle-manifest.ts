@@ -1,4 +1,4 @@
-// plugins bundle manifest helpers and runtime behavior.
+// Bundle manifest parsing for Codex, Claude, and Cursor plugin formats.
 import fs from "node:fs";
 import path from "node:path";
 import JSON5 from "json5";
@@ -18,14 +18,14 @@ import {
   PLUGIN_MANIFEST_FILENAME,
 } from "./manifest.js";
 
-/** Reused constant for CODEX BUNDLE MANIFEST RELATIVE PATH behavior in src/plugins. */
+/** Relative manifest path for Codex plugin bundles. */
 export const CODEX_BUNDLE_MANIFEST_RELATIVE_PATH = ".codex-plugin/plugin.json";
-/** Reused constant for CLAUDE BUNDLE MANIFEST RELATIVE PATH behavior in src/plugins. */
+/** Relative manifest path for Claude plugin bundles. */
 export const CLAUDE_BUNDLE_MANIFEST_RELATIVE_PATH = ".claude-plugin/plugin.json";
-/** Reused constant for CURSOR BUNDLE MANIFEST RELATIVE PATH behavior in src/plugins. */
+/** Relative manifest path for Cursor plugin bundles. */
 export const CURSOR_BUNDLE_MANIFEST_RELATIVE_PATH = ".cursor-plugin/plugin.json";
 
-/** Shared type for Bundle Plugin Manifest in src/plugins. */
+/** Normalized plugin bundle manifest shared across supported bundle formats. */
 export type BundlePluginManifest = {
   id: string;
   name?: string;
@@ -40,7 +40,7 @@ export type BundlePluginManifest = {
   capabilities: string[];
 };
 
-/** Shared type for Bundle Manifest Load Result in src/plugins. */
+/** Result returned when loading and normalizing a bundle manifest. */
 export type BundleManifestLoadResult =
   | { ok: true; manifest: BundlePluginManifest; manifestPath: string }
   | { ok: false; error: string; manifestPath: string };
@@ -49,12 +49,12 @@ type BundleManifestFileLoadResult =
   | { ok: true; raw: Record<string, unknown>; manifestPath: string }
   | { ok: false; error: string; manifestPath: string };
 
-/** Reused helper for normalize Bundle Path List behavior in src/plugins. */
+/** Normalizes single or list path declarations from bundle manifests. */
 export function normalizeBundlePathList(value: unknown): string[] {
   return normalizeUniqueSingleOrTrimmedStringList(value);
 }
 
-/** Reused helper for merge Bundle Path Lists behavior in src/plugins. */
+/** Merges path lists while preserving first-seen order. */
 export function mergeBundlePathLists(...groups: string[][]): string[] {
   const merged: string[] = [];
   const seen = new Set<string>();
@@ -328,7 +328,7 @@ function buildCursorCapabilities(raw: Record<string, unknown>, rootDir: string):
   return capabilities;
 }
 
-/** Reused helper for load Bundle Manifest behavior in src/plugins. */
+/** Loads a bundle manifest and maps format-specific fields to OpenClaw shape. */
 export function loadBundleManifest(params: {
   rootDir: string;
   rootRealPath?: string;
@@ -420,7 +420,7 @@ export function loadBundleManifest(params: {
   };
 }
 
-/** Reused helper for detect Bundle Manifest Format behavior in src/plugins. */
+/** Detects Codex, Cursor, or Claude bundle format from root markers. */
 export function detectBundleManifestFormat(rootDir: string): PluginBundleFormat | null {
   if (fs.existsSync(path.join(rootDir, CODEX_BUNDLE_MANIFEST_RELATIVE_PATH))) {
     return "codex";
