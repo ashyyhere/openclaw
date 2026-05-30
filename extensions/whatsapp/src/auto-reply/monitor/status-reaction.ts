@@ -8,7 +8,7 @@ import { logVerbose } from "openclaw/plugin-sdk/runtime-env";
 import { getSenderIdentity } from "../../identity.js";
 import { resolveWhatsAppReactionLevel } from "../../reaction-level.js";
 import { sendReactionWhatsApp } from "../../send.js";
-import type { WebInboundMsg } from "../types.js";
+import type { NormalizedWebInboundMsg } from "../types.js";
 import { resolveWhatsAppAckEmoji } from "./ack-emoji.js";
 import { resolveGroupActivationFor } from "./group-activation.js";
 
@@ -16,7 +16,7 @@ export type { StatusReactionController };
 
 export type WhatsAppStatusReactionParams = {
   cfg: OpenClawConfig;
-  msg: WebInboundMsg;
+  msg: NormalizedWebInboundMsg;
   agentId: string;
   sessionKey: string;
   conversationId: string;
@@ -27,7 +27,7 @@ export type WhatsAppStatusReactionParams = {
 export async function createWhatsAppStatusReactionController(
   params: WhatsAppStatusReactionParams,
 ): Promise<StatusReactionController | null> {
-  if (!params.msg.id) {
+  if (!params.msg.event.id) {
     return null;
   }
 
@@ -90,8 +90,8 @@ export async function createWhatsAppStatusReactionController(
     ...(params.accountId ? { accountId: params.accountId } : {}),
     cfg: params.cfg,
   };
-  const chatId = params.msg.chatId;
-  const msgId = params.msg.id;
+  const chatId = params.msg.platform.chatJid;
+  const msgId = params.msg.event.id;
 
   return createStatusReactionController({
     enabled: true,
