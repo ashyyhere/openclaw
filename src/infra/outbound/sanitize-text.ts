@@ -102,7 +102,7 @@ function unwrapPromptDataWrapperLines(text: string): string {
   return changed ? output.join("\n") : text;
 }
 
-/** Reused helper for strip Internal Runtime Scaffolding behavior in src/infra/outbound. */
+/** Removes OpenClaw internal prompt/tool scaffolding before user-visible delivery. */
 export function stripInternalRuntimeScaffolding(text: string): string {
   let stripped = unwrapPromptDataWrapperLines(text)
     .replace(INTERNAL_RUNTIME_SCAFFOLDING_BLOCK_RE, "")

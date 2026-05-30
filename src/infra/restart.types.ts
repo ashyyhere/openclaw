@@ -1,5 +1,5 @@
-// Shared types for infra restart types behavior.
-/** Shared type for Restart Attempt in src/infra. */
+// Shared restart attempt result types.
+/** Result from one platform-specific restart strategy. */
 export type RestartAttempt = {
   ok: boolean;
   method: "launchctl" | "systemd" | "schtasks" | "supervisor";

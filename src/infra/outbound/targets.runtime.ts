@@ -1,3 +1,3 @@
-// Runtime boundary for infra/outbound targets runtime behavior.
-/** Re-exported API for src/infra/outbound, starting with resolve Outbound Target. */
+// Lazy runtime boundary for outbound target resolution.
+/** Outbound target resolver loaded by message delivery runtime code. */
 export { resolveOutboundTarget } from "./targets.js";

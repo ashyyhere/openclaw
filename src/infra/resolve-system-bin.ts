@@ -1,4 +1,4 @@
-// infra resolve system bin helpers and runtime behavior.
+// Resolves infrastructure binaries from trusted system directories only.
 import fs from "node:fs";
 import path from "node:path";
 import { getWindowsInstallRoots, getWindowsProgramFilesRoots } from "./windows-install-roots.js";

@@ -1,4 +1,4 @@
-// infra stable node path helpers and runtime behavior.
+// Resolves Homebrew Cellar Node paths to upgrade-stable symlink paths.
 import fs from "node:fs/promises";
 import path from "node:path";
 

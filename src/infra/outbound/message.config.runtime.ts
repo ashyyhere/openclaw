@@ -1,3 +1,3 @@
-// Runtime boundary for infra/outbound message config runtime behavior.
-/** Re-exported API for src/infra/outbound, starting with get Runtime Config. */
+// Lazy runtime boundary for outbound message config loading.
+/** Runtime config loader used by outbound message delivery chunks. */
 export { getRuntimeConfig } from "../../config/io.js";

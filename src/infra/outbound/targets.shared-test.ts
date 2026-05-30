@@ -1,4 +1,4 @@
-// infra/outbound targets shared test helpers and runtime behavior.
+// Shared outbound target resolution test suites for runtime and unit coverage.
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { setActivePluginRegistry } from "../../plugins/runtime.js";
 import { resolveOutboundTarget } from "./targets.js";
