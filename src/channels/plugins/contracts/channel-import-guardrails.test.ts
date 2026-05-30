@@ -615,6 +615,19 @@ function expectNoCrossPluginSdkFacadeImports(file: string, imports: string[]): v
   }
 }
 
+function expectNoPluginPrivateSrcImports(file: string, imports: string[]): void {
+  for (const specifier of imports) {
+    const normalized = specifier.replaceAll("\\", "/");
+    const resolved = normalized.startsWith(".")
+      ? normalizePath(resolve(dirname(file), specifier))
+      : normalized;
+    expect(
+      resolved,
+      `${file} should not import plugin-private src paths, got ${specifier}`,
+    ).not.toMatch(/(?:^|\/)extensions\/[^/]+\/src(?:\/|$)/u);
+  }
+}
+
 function expectCoreSourceStaysOffPluginSpecificSdkFacades(file: string, imports: string[]): void {
   for (const specifier of imports) {
     if (!specifier.includes("/plugin-sdk/")) {
@@ -692,10 +705,7 @@ describe("channel import guardrails", () => {
 
   it("keeps core production files off plugin-private src imports", () => {
     for (const file of collectCoreSourceFiles()) {
-      const text = readSource(file);
-      expect(text, `${file} should not import plugin-private src paths`).not.toMatch(
-        /["'][^"']*extensions\/[^/"']+\/src\//,
-      );
+      expectNoPluginPrivateSrcImports(file, getSourceAnalysis(file).importSpecifiers);
     }
   });
 

@@ -128,6 +128,10 @@ Current compatibility records include:
 - legacy runtime aliases such as `api.runtime.taskFlow`,
   `api.runtime.subagent.getSession`, `api.runtime.stt`, and deprecated
   `api.runtime.config.loadConfig()` / `api.runtime.config.writeConfigFile(...)`
+- WhatsApp `WebInboundMessage` flat callback fields such as `body`, `chatId`,
+  `reply(...)`, and `mediaPath` while callback consumers migrate to the nested
+  `WebInboundCallbackMessage` `event`, `payload`, `quote`, `group`, and
+  `platform` contexts
 - legacy memory-plugin split registration while memory plugins move to
   `registerMemoryCapability`
 - legacy memory-specific embedding provider registration while embedding
@@ -144,6 +148,49 @@ Current compatibility records include:
   `catalog.run(...)`
 - channel `showConfigured` / `showInSetup` metadata while channel packages move
   to `openclaw.channel.exposure`
+
+### WhatsApp Inbound Callback Flat Aliases
+
+WhatsApp keeps the shipped flat `WebInboundMessage` callback fields as
+deprecated aliases until **2026-08-30**. New callback code should read and
+construct `WebInboundCallbackMessage`, which carries the canonical nested
+`event`, `payload`, `quote`, `group`, and `platform` contexts without requiring
+the deprecated flat fields. Compatibility listeners that still inject old flat
+test or plugin messages should use `LegacyFlatWebInboundMessage` or
+`WebInboundMessageInput`; runtime-delivered callbacks continue to expose
+`WebInboundMessage` with the deprecated aliases attached.
+
+Mapping:
+
+- Event fields: `id`, `timestamp`, and `isBatched` move to `event.id`,
+  `event.timestamp`, and `event.isBatched`.
+- Payload fields: `body`, `location`, and `untrustedStructuredContext` move to
+  `payload.body`, `payload.location`, and `payload.untrustedStructuredContext`.
+- Media fields: `mediaPath`, `mediaType`, `mediaFileName`, and `mediaUrl` move
+  to `payload.media.path`, `payload.media.type`, `payload.media.fileName`, and
+  `payload.media.url`.
+- Platform fields: `to`, `chatId`, `pushName`, `sender`, `senderJid`,
+  `senderE164`, and `senderName` move to `platform.recipientJid`,
+  `platform.chatJid`, `platform.pushName`, `platform.sender`,
+  `platform.senderJid`, `platform.senderE164`, and `platform.senderName`.
+- Self fields: `self`, `selfJid`, `selfLid`, `selfE164`, and `fromMe` move to
+  `platform.self`, `platform.selfJid`, `platform.selfLid`, `platform.selfE164`,
+  and `platform.fromMe`.
+- Send helpers: `sendComposing`, `reply(...)`, and `sendMedia(...)` move to
+  `platform.sendComposing`, `platform.reply(...)`, and
+  `platform.sendMedia(...)`.
+- Quote fields: `replyTo`, `replyToId`, `replyToBody`, `replyToSender`,
+  `replyToSenderJid`, and `replyToSenderE164` move to `quote.context`,
+  `quote.id`, `quote.body`, `quote.sender.displayName`, `quote.sender.jid`,
+  and `quote.sender.e164`.
+- Group fields: `groupSubject`, `groupParticipants`, `mentions`, and
+  `mentionedJids` move to `group.subject`, `group.participants`, and
+  `group.mentions.jids`.
+
+`payload.untrustedStructuredContext` is extracted from inbound provider payloads.
+Plugins should inspect the `label`, `source`, and `type` before treating its
+`payload` as authoritative.
+
 - legacy runtime-policy config keys while doctor migrates operators to
   `agentRuntime`
 - generated bundled channel config metadata fallback while registry-first
