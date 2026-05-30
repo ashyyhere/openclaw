@@ -1,8 +1,5 @@
-// Shared types for plugins/compat types behavior.
-/** Shared type for Plugin Compat Status in src/plugins/compat. */
 export type PluginCompatStatus = "active" | "deprecated" | "removal-pending" | "removed";
 
-/** Shared type for Plugin Compat Owner in src/plugins/compat. */
 export type PluginCompatOwner =
   | "agent-runtime"
   | "channel"
@@ -13,7 +10,6 @@ export type PluginCompatOwner =
   | "sdk"
   | "setup";
 
-/** Shared type for Plugin Compat Record in src/plugins/compat. */
 export type PluginCompatRecord<Code extends string = string> = {
   code: Code;
   status: PluginCompatStatus;

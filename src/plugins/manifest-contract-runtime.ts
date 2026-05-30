@@ -1,4 +1,3 @@
-// plugins manifest contract runtime helpers and runtime behavior.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { sortUniqueStrings } from "../shared/string-normalization.js";
 import {
@@ -8,7 +7,6 @@ import {
 import type { PluginManifestContractListKey } from "./manifest-registry.js";
 import { loadPluginMetadataSnapshot } from "./plugin-metadata-snapshot.js";
 
-/** Shared type for Manifest Contract Runtime Plugin Resolution in src/plugins. */
 export type ManifestContractRuntimePluginResolution = {
   pluginIds: string[];
   bundledCompatPluginIds: string[];
@@ -18,7 +16,6 @@ const DEMAND_ONLY_CONTRACT_LOOKUP_OPTIONS = {
   preferPersisted: false,
 } as const;
 
-/** Reused helper for resolve Manifest Contract Runtime Plugin Resolution behavior in src/plugins. */
 export function resolveManifestContractRuntimePluginResolution(params: {
   cfg?: OpenClawConfig;
   contract: PluginManifestContractListKey;

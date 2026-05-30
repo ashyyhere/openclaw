@@ -1,8 +1,6 @@
-// plugins clawhub install records helpers and runtime behavior.
 import type { PluginInstallRecord } from "../config/types.plugins.js";
 import type { ClawHubPackageChannel, ClawHubPackageFamily } from "../infra/clawhub.js";
 
-/** Shared type for Claw Hub Plugin Install Record Fields in src/plugins. */
 export type ClawHubPluginInstallRecordFields = {
   source: "clawhub";
   clawhubUrl: string;
@@ -24,7 +22,6 @@ export type ClawHubPluginInstallRecordFields = {
   clawpackSize?: number;
 };
 
-/** Reused helper for build Claw Hub Plugin Install Record Fields behavior in src/plugins. */
 export function buildClawHubPluginInstallRecordFields(
   fields: ClawHubPluginInstallRecordFields,
 ): Pick<
