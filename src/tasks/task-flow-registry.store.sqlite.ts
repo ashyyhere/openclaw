@@ -220,7 +220,7 @@ function withWriteTransaction(write: (database: FlowRegistryDatabase) => void) {
   });
 }
 
-/** Reused helper for load Task Flow Registry State From Sqlite behavior in src/tasks. */
+/** Load all task-flow records from the SQLite registry store. */
 export function loadTaskFlowRegistryStateFromSqlite(): TaskFlowRegistryStoreSnapshot {
   const { db } = openFlowRegistryDatabase();
   const rows = selectFlowRows(db);
@@ -229,7 +229,7 @@ export function loadTaskFlowRegistryStateFromSqlite(): TaskFlowRegistryStoreSnap
   };
 }
 
-/** Reused helper for save Task Flow Registry State To Sqlite behavior in src/tasks. */
+/** Replace the SQLite task-flow registry contents with a complete snapshot. */
 export function saveTaskFlowRegistryStateToSqlite(snapshot: TaskFlowRegistryStoreSnapshot) {
   withWriteTransaction(({ db }) => {
     const kysely = getFlowRegistryKysely(db);
@@ -245,14 +245,14 @@ export function saveTaskFlowRegistryStateToSqlite(snapshot: TaskFlowRegistryStor
   });
 }
 
-/** Reused helper for upsert Task Flow Registry Record To Sqlite behavior in src/tasks. */
+/** Insert or update one task-flow record in the SQLite registry store. */
 export function upsertTaskFlowRegistryRecordToSqlite(flow: TaskFlowRecord) {
   withWriteTransaction(({ db }) => {
     upsertFlowRow(db, bindFlowRecord(flow));
   });
 }
 
-/** Reused helper for delete Task Flow Registry Record From Sqlite behavior in src/tasks. */
+/** Delete one task-flow record from the SQLite registry store. */
 export function deleteTaskFlowRegistryRecordFromSqlite(flowId: string) {
   withWriteTransaction(({ db }) => {
     executeSqliteQuerySync(

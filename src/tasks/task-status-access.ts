@@ -1,8 +1,8 @@
-// tasks task status access helpers and runtime behavior.
+// Narrow task registry accessors used by status/reporting surfaces.
 import { getTaskById, listTasksForAgentId, listTasksForSessionKey } from "./task-registry.js";
 import type { TaskRecord } from "./task-registry.types.js";
 
-/** Reused helper for get Task Session Lookup By Id For Status behavior in src/tasks. */
+/** Return the small task/session lookup shape needed by status endpoints. */
 export function getTaskSessionLookupByIdForStatus(
   taskId: string,
 ): Pick<TaskRecord, "requesterSessionKey" | "runId" | "agentId"> | undefined {
@@ -16,12 +16,12 @@ export function getTaskSessionLookupByIdForStatus(
     : undefined;
 }
 
-/** Reused helper for list Tasks For Session Key For Status behavior in src/tasks. */
+/** List task records for a session key for status rendering. */
 export function listTasksForSessionKeyForStatus(sessionKey: string): TaskRecord[] {
   return listTasksForSessionKey(sessionKey);
 }
 
-/** Reused helper for list Tasks For Agent Id For Status behavior in src/tasks. */
+/** List task records for an agent id for status rendering. */
 export function listTasksForAgentIdForStatus(agentId: string): TaskRecord[] {
   return listTasksForAgentId(agentId);
 }

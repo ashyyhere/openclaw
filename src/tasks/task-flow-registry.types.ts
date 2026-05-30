@@ -1,8 +1,8 @@
-// Shared types for tasks task flow registry types behavior.
+// Persisted task-flow registry contracts shared by store and runtime logic.
 import type { DeliveryContext } from "../utils/delivery-context.types.js";
 import type { TaskNotifyPolicy } from "./task-registry.types.js";
 
-/** Shared type for Json Value in src/tasks. */
+/** JSON value accepted for persisted flow state/wait payloads. */
 export type JsonValue =
   | null
   | boolean
@@ -11,10 +11,10 @@ export type JsonValue =
   | JsonValue[]
   | { [key: string]: JsonValue };
 
-/** Shared type for Task Flow Sync Mode in src/tasks. */
+/** How a task flow synchronizes with task-registry records. */
 export type TaskFlowSyncMode = "task_mirrored" | "managed";
 
-/** Shared type for Task Flow Status in src/tasks. */
+/** Lifecycle status persisted for a task flow. */
 export type TaskFlowStatus =
   | "queued"
   | "running"

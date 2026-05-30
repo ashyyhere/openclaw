@@ -1,4 +1,4 @@
-// tasks import boundary test helpers helpers and runtime behavior.
+// Test helpers for scanning task-module import boundaries.
 import fs from "node:fs/promises";
 import path from "node:path";
 
@@ -6,12 +6,12 @@ const TASK_ROOT = path.resolve(import.meta.dirname);
 
 const TASK_BOUNDARY_SRC_ROOT = path.resolve(TASK_ROOT, "..");
 
-/** Reused helper for to Task Boundary Relative Path behavior in src/tasks. */
+/** Normalize a source file path relative to the task boundary root. */
 export function toTaskBoundaryRelativePath(file: string, root = TASK_BOUNDARY_SRC_ROOT): string {
   return path.relative(root, file).replaceAll(path.sep, "/");
 }
 
-/** Reused helper for list Task Boundary Source Files behavior in src/tasks. */
+/** Recursively list non-test TypeScript files under the task boundary root. */
 export async function listTaskBoundarySourceFiles(
   root = TASK_BOUNDARY_SRC_ROOT,
 ): Promise<string[]> {
@@ -31,7 +31,7 @@ export async function listTaskBoundarySourceFiles(
   return files;
 }
 
-/** Reused helper for read Task Boundary Source behavior in src/tasks. */
+/** Read a task boundary source file as UTF-8 text. */
 export async function readTaskBoundarySource(file: string): Promise<string> {
   return fs.readFile(file, "utf8");
 }

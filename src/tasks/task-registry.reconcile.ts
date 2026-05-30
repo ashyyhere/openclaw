@@ -1,5 +1,5 @@
-// tasks task registry reconcile helpers and runtime behavior.
-/** Re-exported API for src/tasks. */
+// Re-exports task registry reconciliation helpers from maintenance internals.
+/** Re-export operator-inspection reconciliation helpers for task registry callers. */
 export {
   reconcileInspectableTasks,
   reconcileTaskLookupToken,
