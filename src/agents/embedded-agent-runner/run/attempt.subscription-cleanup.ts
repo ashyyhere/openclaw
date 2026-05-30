@@ -3,7 +3,7 @@ import type { SubscribeEmbeddedAgentSessionParams } from "../../embedded-agent-s
 import { log } from "../logger.js";
 import { resolveEmbeddedAbortSettleTimeoutMs } from "./attempt.abort-settle-timeout.js";
 
-/** Reused constant for EMBEDDED ABORT SETTLE TIMEOUT MS behavior in src/agents/embedded-agent-runner. */
+/** Timeout for waiting on SDK abort settlement before cleanup continues. */
 export const EMBEDDED_ABORT_SETTLE_TIMEOUT_MS = resolveEmbeddedAbortSettleTimeoutMs();
 
 type IdleAwareAgent = {

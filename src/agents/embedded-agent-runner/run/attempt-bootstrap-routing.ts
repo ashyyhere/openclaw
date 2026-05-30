@@ -3,7 +3,7 @@ import type { BootstrapMode } from "../../bootstrap-mode.js";
 import { resolveBootstrapMode } from "../../bootstrap-mode.js";
 import { DEFAULT_BOOTSTRAP_FILENAME, type WorkspaceBootstrapFile } from "../../workspace.js";
 
-/** Shared type for Attempt Bootstrap Routing Input in src/agents/embedded-agent-runner. */
+/** Inputs used to decide where bootstrap context may be injected for an attempt. */
 export type AttemptBootstrapRoutingInput = {
   workspaceBootstrapPending: boolean;
   bootstrapContextRunKind?: "default" | "heartbeat" | "cron";
@@ -16,14 +16,14 @@ export type AttemptBootstrapRoutingInput = {
   hasBootstrapFileAccess: boolean;
 };
 
-/** Shared type for Attempt Bootstrap Routing in src/agents/embedded-agent-runner. */
+/** Bootstrap mode plus concrete system/runtime-context injection targets. */
 export type AttemptBootstrapRouting = {
   bootstrapMode: BootstrapMode;
   includeBootstrapInSystemContext: boolean;
   includeBootstrapInRuntimeContext: boolean;
 };
 
-/** Shared type for Attempt Workspace Bootstrap Routing Input in src/agents/embedded-agent-runner. */
+/** Async workspace bootstrap routing input after file access helpers are available. */
 export type AttemptWorkspaceBootstrapRoutingInput = Omit<
   AttemptBootstrapRoutingInput,
   "workspaceBootstrapPending"

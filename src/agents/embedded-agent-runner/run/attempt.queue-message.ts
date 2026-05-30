@@ -1,7 +1,7 @@
 /** Steers active SDK sessions and optionally waits for transcript commit. */
 import { log } from "../logger.js";
 
-/** Shared type for Embedded Agent Active Session Steer Target in src/agents/embedded-agent-runner. */
+/** Minimal active-session surface needed to steer and observe queued messages. */
 export type EmbeddedAgentActiveSessionSteerTarget = {
   agent?: unknown;
   getSteeringMessages?(): readonly string[];
@@ -9,7 +9,7 @@ export type EmbeddedAgentActiveSessionSteerTarget = {
   subscribe(listener: (event: unknown) => void): () => void;
 };
 
-/** Reused constant for DEFAULT QUEUE TRANSCRIPT COMMIT TIMEOUT MS behavior in src/agents/embedded-agent-runner. */
+/** Default wait for a steered message to appear in the transcript. */
 export const DEFAULT_QUEUE_TRANSCRIPT_COMMIT_TIMEOUT_MS = 120_000;
 
 function extractQueuedUserMessageText(message: unknown): string | undefined {

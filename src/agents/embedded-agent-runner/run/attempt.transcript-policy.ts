@@ -4,7 +4,7 @@ import type { ProviderRuntimeModel } from "../../../plugins/provider-runtime-mod
 import type { AgentRuntimePlan } from "../../runtime-plan/types.js";
 import { resolveTranscriptPolicy, type TranscriptPolicy } from "../../transcript-policy.js";
 
-/** Shared type for Attempt Runtime Model Context in src/agents/embedded-agent-runner. */
+/** Runtime model context passed into provider-owned transcript policy resolution. */
 export type AttemptRuntimeModelContext = NonNullable<
   Parameters<AgentRuntimePlan["transcript"]["resolvePolicy"]>[0]
 >;

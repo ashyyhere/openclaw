@@ -1,7 +1,7 @@
 /** Creates SDK sessions with embedded-agent resource-loader wiring. */
 import type { CreateAgentSessionOptions } from "../../sessions/index.js";
 
-/** Shared type for Embedded Agent Session Options in src/agents/embedded-agent-runner. */
+/** SDK session options after embedded-agent runtime resources have been prepared. */
 export type EmbeddedAgentSessionOptions = {
   cwd: string;
   agentDir: string;
