@@ -16,7 +16,7 @@ function resolveFailureSignalCode(
   return undefined;
 }
 
-/** Reused helper for resolve Embedded Run Failure Signal behavior in src/agents/embedded-agent-runner. */
+/** Converts cron exec/tool denials into fatal embedded-run failure signals. */
 export function resolveEmbeddedRunFailureSignal(params: {
   trigger?: string | undefined;
   lastToolError?: ToolErrorSummary | undefined;

@@ -2,7 +2,7 @@
 import type { Model } from "../../llm/types.js";
 import { normalizeModelCompat } from "../../plugins/provider-model-compat.js";
 
-/** Reused helper for normalize Resolved Provider Model behavior in src/agents/embedded-agent-runner. */
+/** Applies provider compatibility normalization after resolving a model entry. */
 export function normalizeResolvedProviderModel(params: { provider: string; model: Model }): Model {
   return normalizeModelCompat(params.model);
 }

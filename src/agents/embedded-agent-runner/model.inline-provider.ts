@@ -11,7 +11,7 @@ import {
   sanitizeConfiguredModelProviderRequest,
 } from "../provider-request-config.js";
 
-/** Shared type for Inline Model Entry in src/agents/embedded-agent-runner. */
+/** Inline model definition after inheriting provider-level runtime settings. */
 export type InlineModelEntry = Omit<ModelDefinitionConfig, "api"> & {
   api?: Api;
   provider: string;
@@ -19,7 +19,7 @@ export type InlineModelEntry = Omit<ModelDefinitionConfig, "api"> & {
   headers?: Record<string, string>;
 };
 
-/** Shared type for Inline Provider Config in src/agents/embedded-agent-runner. */
+/** Provider config shape accepted by inline model resolution. */
 export type InlineProviderConfig = {
   baseUrl?: string;
   api?: ModelDefinitionConfig["api"];
