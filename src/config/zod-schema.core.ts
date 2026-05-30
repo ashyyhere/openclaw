@@ -1,4 +1,4 @@
-// config zod schema core helpers and runtime behavior.
+// Core config Zod schemas shared by config loading, validation, and runtime consumers.
 import path from "node:path";
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
 import { z } from "zod";
@@ -77,14 +77,14 @@ const ExecSecretRefSchema = z
   })
   .strict();
 
-/** Reused constant for Secret Ref Schema behavior in src/config. */
+/** Schema for typed secret references backed by env, file, or exec providers. */
 export const SecretRefSchema = z.discriminatedUnion("source", [
   EnvSecretRefSchema,
   FileSecretRefSchema,
   ExecSecretRefSchema,
 ]);
 
-/** Reused constant for Secret Input Schema behavior in src/config. */
+/** Schema for config values that may be plaintext or a typed secret reference. */
 export const SecretInputSchema = z.union([z.string(), SecretRefSchema]);
 
 const SecretsEnvProviderSchema = z
@@ -170,7 +170,7 @@ export const SecretProviderSchema = z.union([
   SecretsExecProviderSchema,
 ]);
 
-/** Reused constant for Secrets Config Schema behavior in src/config. */
+/** Schema for the top-level secrets provider and resolution config. */
 export const SecretsConfigSchema = z
   .object({
     providers: z
@@ -238,12 +238,12 @@ const ModelCompatSchema = z
   .optional();
 
 type AssertAssignable<_T extends U, U> = true;
-/** Shared type for Model Compat Schema Assignable To Type in src/config. */
+/** Compile-time guard that the model compat schema still satisfies the TS config type. */
 export type _ModelCompatSchemaAssignableToType = AssertAssignable<
   z.infer<typeof ModelCompatSchema>,
   ModelCompatConfig | undefined
 >;
-/** Shared type for Model Compat Type Assignable To Schema in src/config. */
+/** Compile-time guard that the TS model compat type still satisfies the Zod schema. */
 export type _ModelCompatTypeAssignableToSchema = AssertAssignable<
   ModelCompatConfig | undefined,
   z.infer<typeof ModelCompatSchema>
@@ -470,7 +470,7 @@ const BUILT_IN_MODEL_PROVIDER_OVERLAY_IDS = new Set([
   "zai",
 ]);
 
-/** Reused helper for is Built In Model Provider Overlay Id behavior in src/config. */
+/** Returns true when a model provider id may omit overlay-only fields. */
 export function isBuiltInModelProviderOverlayId(providerId: string): boolean {
   return BUILT_IN_MODEL_PROVIDER_OVERLAY_IDS.has(normalizeProviderId(providerId));
 }
@@ -532,7 +532,7 @@ const ModelPricingConfigSchema = z
   .strict()
   .optional();
 
-/** Reused constant for Models Config Schema behavior in src/config. */
+/** Schema for model provider overlays, custom providers, and pricing config. */
 export const ModelsConfigSchema = z
   .object({
     mode: z.union([z.literal("merge"), z.literal("replace")]).optional(),
@@ -545,7 +545,7 @@ export const ModelsConfigSchema = z
 const VisibleRepliesValueSchema = z.enum(["automatic", "message_tool"]);
 const AmbientGroupInboundSchema = z.enum(["user_request", "room_event"]);
 
-/** Reused constant for Visible Replies Schema behavior in src/config. */
+/** Schema for visible reply mode with legacy boolean normalization. */
 export const VisibleRepliesSchema = z
   .union([VisibleRepliesValueSchema, z.boolean()])
   .overwrite((value) => {
@@ -558,7 +558,7 @@ export const VisibleRepliesSchema = z
     return value;
   });
 
-/** Reused constant for Group Chat Schema behavior in src/config. */
+/** Schema for group-chat history, mention, ambient inbound, and visible reply policy. */
 export const GroupChatSchema = z
   .object({
     mentionPatterns: z.array(z.string()).optional(),
@@ -569,14 +569,14 @@ export const GroupChatSchema = z
   .strict()
   .optional();
 
-/** Reused constant for Dm Config Schema behavior in src/config. */
+/** Schema for per-DM history retention overrides. */
 export const DmConfigSchema = z
   .object({
     historyLimit: z.number().int().min(0).optional(),
   })
   .strict();
 
-/** Reused constant for Identity Schema behavior in src/config. */
+/** Schema for bot display identity fields. */
 export const IdentitySchema = z
   .object({
     name: z.string().optional(),
@@ -594,14 +594,14 @@ const QueueModeSchema = z.union([
   z.literal("interrupt"),
 ]);
 const QueueDropSchema = z.union([z.literal("old"), z.literal("new"), z.literal("summarize")]);
-/** Reused constant for Reply To Mode Schema behavior in src/config. */
+/** Schema for how outgoing replies bind to incoming messages. */
 export const ReplyToModeSchema = z.union([
   z.literal("off"),
   z.literal("first"),
   z.literal("all"),
   z.literal("batched"),
 ]);
-/** Reused constant for Typing Mode Schema behavior in src/config. */
+/** Schema for typing indicator behavior during reply generation. */
 export const TypingModeSchema = z.union([
   z.literal("never"),
   z.literal("instant"),
@@ -613,15 +613,15 @@ export const TypingModeSchema = z.union([
 // Used with .default("allowlist").optional() pattern:
 //   - .optional() allows field omission in input config
 //   - .default("allowlist") ensures runtime always resolves to "allowlist" if not provided
-/** Reused constant for Group Policy Schema behavior in src/config. */
+/** Schema for group message admission policy. */
 export const GroupPolicySchema = z.enum(["open", "disabled", "allowlist"]);
 
-/** Reused constant for Dm Policy Schema behavior in src/config. */
+/** Schema for direct-message admission policy. */
 export const DmPolicySchema = z.enum(["pairing", "allowlist", "open", "disabled"]);
-/** Reused constant for Context Visibility Mode Schema behavior in src/config. */
+/** Schema for transcript context visibility in generated replies. */
 export const ContextVisibilityModeSchema = z.enum(["all", "allowlist", "allowlist_quote"]);
 
-/** Reused constant for Block Streaming Coalesce Schema behavior in src/config. */
+/** Schema for coalescing streamed block updates before sending them. */
 export const BlockStreamingCoalesceSchema = z
   .object({
     minChars: z.number().int().positive().optional(),
@@ -630,7 +630,7 @@ export const BlockStreamingCoalesceSchema = z
   })
   .strict();
 
-/** Reused constant for Reply Runtime Config Schema Shape behavior in src/config. */
+/** Shared Zod shape for reply runtime limits and streaming behavior. */
 export const ReplyRuntimeConfigSchemaShape = {
   historyLimit: z.number().int().min(0).optional(),
   dmHistoryLimit: z.number().int().min(0).optional(),
@@ -644,7 +644,7 @@ export const ReplyRuntimeConfigSchemaShape = {
   mediaMaxMb: z.number().positive().optional(),
 };
 
-/** Reused constant for Block Streaming Chunk Schema behavior in src/config. */
+/** Schema for block-streaming chunk size and break preferences. */
 export const BlockStreamingChunkSchema = z
   .object({
     minChars: z.number().int().positive().optional(),
@@ -655,10 +655,10 @@ export const BlockStreamingChunkSchema = z
   })
   .strict();
 
-/** Reused constant for Markdown Table Mode Schema behavior in src/config. */
+/** Schema for markdown table rendering mode in outbound messages. */
 export const MarkdownTableModeSchema = z.enum(["off", "bullets", "code", "block"]);
 
-/** Reused constant for Markdown Config Schema behavior in src/config. */
+/** Schema for markdown rendering configuration. */
 export const MarkdownConfigSchema = z
   .object({
     tables: MarkdownTableModeSchema.optional(),
@@ -666,11 +666,11 @@ export const MarkdownConfigSchema = z
   .strict()
   .optional();
 
-/** Reused constant for Tts Provider Schema behavior in src/config. */
+/** Schema for a configured TTS provider id. */
 export const TtsProviderSchema = z.string().min(1);
-/** Reused constant for Tts Mode Schema behavior in src/config. */
+/** Schema for which assistant messages should be spoken. */
 export const TtsModeSchema = z.enum(["final", "all"]);
-/** Reused constant for Tts Auto Schema behavior in src/config. */
+/** Schema for automatic TTS trigger policy. */
 export const TtsAutoSchema = z.enum(["off", "always", "inbound", "tagged"]);
 const TtsProviderConfigSchema = z
   .object({
@@ -709,7 +709,7 @@ const TtsPersonaSchema = z
     providers: z.record(z.string(), TtsProviderConfigSchema).optional(),
   })
   .strict();
-/** Reused constant for Tts Config Schema behavior in src/config. */
+/** Schema for TTS provider, persona, model override, and runtime limits. */
 export const TtsConfigSchema = z
   .object({
     auto: TtsAutoSchema.optional(),
@@ -740,7 +740,7 @@ export const TtsConfigSchema = z
   .strict()
   .optional();
 
-/** Reused constant for Human Delay Schema behavior in src/config. */
+/** Schema for human-like outbound message delay settings. */
 export const HumanDelaySchema = z
   .object({
     mode: z.union([z.literal("off"), z.literal("natural"), z.literal("custom")]).optional(),
@@ -772,7 +772,7 @@ const CliBackendOutputLimitsSchema = z
   .strict()
   .optional();
 
-/** Reused constant for Cli Backend Schema behavior in src/config. */
+/** Schema for CLI backend command, IO, session, media, prompt, and reliability settings. */
 export const CliBackendSchema = z
   .object({
     command: z.string(),
@@ -823,11 +823,11 @@ export const CliBackendSchema = z
   })
   .strict();
 
-/** Reused constant for normalize Allow From behavior in src/config. */
+/** Normalizes allow-from config entries to comparable strings. */
 export const normalizeAllowFrom = (values?: Array<string | number>): string[] =>
   normalizeStringEntries(values);
 
-/** Reused constant for require Open Allow From behavior in src/config. */
+/** Requires wildcard allow-from when a channel policy is set to open. */
 export const requireOpenAllowFrom = (params: {
   policy?: string;
   allowFrom?: Array<string | number>;
@@ -875,10 +875,10 @@ export const requireAllowlistAllowFrom = (params: {
   });
 };
 
-/** Reused constant for MSTeams Reply Style Schema behavior in src/config. */
+/** Schema for Microsoft Teams reply placement style. */
 export const MSTeamsReplyStyleSchema = z.enum(["thread", "top-level"]);
 
-/** Reused constant for Retry Config Schema behavior in src/config. */
+/** Schema for generic retry attempts, delay bounds, and jitter. */
 export const RetryConfigSchema = z
   .object({
     attempts: z.number().int().min(1).optional(),
@@ -909,7 +909,7 @@ const QueueModeBySurfaceSchema = z
 
 const DebounceMsBySurfaceSchema = z.record(z.string(), z.number().int().nonnegative()).optional();
 
-/** Reused constant for Queue Schema behavior in src/config. */
+/** Schema for inbound queue mode, debounce, cap, and drop policy. */
 export const QueueSchema = z
   .object({
     mode: QueueModeSchema.optional(),
@@ -922,7 +922,7 @@ export const QueueSchema = z
   .strict()
   .optional();
 
-/** Reused constant for Inbound Debounce Schema behavior in src/config. */
+/** Schema for inbound debounce timing globally and per channel. */
 export const InboundDebounceSchema = z
   .object({
     debounceMs: z.number().int().nonnegative().optional(),
@@ -931,7 +931,7 @@ export const InboundDebounceSchema = z
   .strict()
   .optional();
 
-/** Reused constant for Transcribe Audio Schema behavior in src/config. */
+/** Schema for external audio transcription command settings. */
 export const TranscribeAudioSchema = z
   .object({
     command: z.array(z.string()).superRefine((value, ctx) => {
@@ -949,10 +949,10 @@ export const TranscribeAudioSchema = z
   .strict()
   .optional();
 
-/** Reused constant for Hex Color Schema behavior in src/config. */
+/** Schema for six-digit RGB hex color values. */
 export const HexColorSchema = z.string().regex(/^#?[0-9a-fA-F]{6}$/, "expected hex color (RRGGBB)");
 
-/** Reused constant for Executable Token Schema behavior in src/config. */
+/** Schema for command executable tokens accepted by config. */
 export const ExecutableTokenSchema = z
   .string()
   .refine(isSafeExecutableValue, "expected safe executable name or path");
@@ -1031,7 +1031,7 @@ const ToolsMediaUnderstandingSchema = z
   .strict()
   .optional();
 
-/** Reused constant for Tools Media Schema behavior in src/config. */
+/** Schema for media understanding tools across image, audio, and video. */
 export const ToolsMediaSchema = z
   .object({
     models: z.array(MediaUnderstandingModelSchema).optional(),
@@ -1050,12 +1050,12 @@ export const ToolsMediaSchema = z
   .optional();
 
 type ToolsMediaConfigFromSchema = NonNullable<z.infer<typeof ToolsMediaSchema>>;
-/** Shared type for Tools Media Async Completion Schema Assignable To Type in src/config. */
+/** Compile-time guard that the media async-completion schema satisfies its TS type. */
 export type _ToolsMediaAsyncCompletionSchemaAssignableToType = AssertAssignable<
   ToolsMediaConfigFromSchema["asyncCompletion"],
   MediaToolsConfig["asyncCompletion"]
 >;
-/** Shared type for Tools Media Async Completion Type Assignable To Schema in src/config. */
+/** Compile-time guard that the media async-completion TS type satisfies the schema. */
 export type _ToolsMediaAsyncCompletionTypeAssignableToSchema = AssertAssignable<
   MediaToolsConfig["asyncCompletion"],
   ToolsMediaConfigFromSchema["asyncCompletion"]
@@ -1070,7 +1070,7 @@ const LinkModelSchema = z
   })
   .strict();
 
-/** Reused constant for Tools Links Schema behavior in src/config. */
+/** Schema for link extraction and summarization tool settings. */
 export const ToolsLinksSchema = z
   .object({
     enabled: z.boolean().optional(),
@@ -1082,10 +1082,10 @@ export const ToolsLinksSchema = z
   .strict()
   .optional();
 
-/** Reused constant for Native Commands Setting Schema behavior in src/config. */
+/** Schema for native command enablement flags. */
 export const NativeCommandsSettingSchema = z.union([z.boolean(), z.literal("auto")]);
 
-/** Reused constant for Provider Commands Schema behavior in src/config. */
+/** Schema for provider-exposed native command settings. */
 export const ProviderCommandsSchema = z
   .object({
     native: NativeCommandsSettingSchema.optional(),
