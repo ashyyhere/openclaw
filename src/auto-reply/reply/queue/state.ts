@@ -10,7 +10,7 @@ import {
   type QueueSettings,
 } from "./types.js";
 
-/** Shared type for Followup Queue State in src/auto-reply/reply. */
+/** Process-local follow-up queue for one busy session key. */
 export type FollowupQueueState = {
   items: FollowupRun[];
   draining: boolean;
@@ -25,11 +25,11 @@ export type FollowupQueueState = {
   lastRun?: FollowupRun["run"];
 };
 
-/** Reused constant for DEFAULT QUEUE DEBOUNCE MS behavior in src/auto-reply/reply. */
+/** Default debounce before draining queued follow-up messages. */
 export const DEFAULT_QUEUE_DEBOUNCE_MS = 500;
-/** Reused constant for DEFAULT QUEUE CAP behavior in src/auto-reply/reply. */
+/** Default maximum queued follow-up runs per session. */
 export const DEFAULT_QUEUE_CAP = 20;
-/** Reused constant for DEFAULT QUEUE DROP behavior in src/auto-reply/reply. */
+/** Default overflow policy for follow-up queues. */
 export const DEFAULT_QUEUE_DROP: QueueDropPolicy = "summarize";
 
 /**
@@ -38,10 +38,10 @@ export const DEFAULT_QUEUE_DROP: QueueDropPolicy = "summarize";
  */
 const FOLLOWUP_QUEUES_KEY = Symbol.for("openclaw.followupQueues");
 
-/** Reused constant for FOLLOWUP QUEUES behavior in src/auto-reply/reply. */
+/** Shared process-wide follow-up queue registry keyed by session. */
 export const FOLLOWUP_QUEUES = resolveGlobalMap<string, FollowupQueueState>(FOLLOWUP_QUEUES_KEY);
 
-/** Reused helper for get Existing Followup Queue behavior in src/auto-reply/reply. */
+/** Return an existing follow-up queue without creating one. */
 export function getExistingFollowupQueue(key: string): FollowupQueueState | undefined {
   const cleaned = key.trim();
   if (!cleaned) {
@@ -50,7 +50,7 @@ export function getExistingFollowupQueue(key: string): FollowupQueueState | unde
   return FOLLOWUP_QUEUES.get(cleaned);
 }
 
-/** Reused helper for get Followup Queue behavior in src/auto-reply/reply. */
+/** Return or create a follow-up queue and apply current runtime settings. */
 export function getFollowupQueue(key: string, settings: QueueSettings): FollowupQueueState {
   const existing = FOLLOWUP_QUEUES.get(key);
   if (existing) {
@@ -87,7 +87,7 @@ export function getFollowupQueue(key: string, settings: QueueSettings): Followup
   return created;
 }
 
-/** Reused helper for clear Followup Queue behavior in src/auto-reply/reply. */
+/** Clear a follow-up queue, completing queued run lifecycles. */
 export function clearFollowupQueue(key: string): number {
   const cleaned = key.trim();
   const queue = getExistingFollowupQueue(cleaned);
@@ -111,7 +111,7 @@ export function clearFollowupQueue(key: string): number {
   return cleared;
 }
 
-/** Reused helper for refresh Queued Followup Session behavior in src/auto-reply/reply. */
+/** Rewrite queued follow-up run session/model/auth fields after session changes. */
 export function refreshQueuedFollowupSession(params: {
   key: string;
   previousSessionId?: string;

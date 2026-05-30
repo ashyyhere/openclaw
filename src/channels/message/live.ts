@@ -1,6 +1,6 @@
 // Live message preview state and finalization helpers.
 import type { LiveMessageState, MessageReceipt, RenderedMessageBatch } from "./types.js";
-/** Re-exported API for src/channels/message, starting with Live Message Phase. */
+/** Live message state and phase contracts shared by channel delivery adapters. */
 export type { LiveMessagePhase, LiveMessageState } from "./types.js";
 
 /** Draft preview object that can flush, reveal, seal, or clear a live preview. */
@@ -49,14 +49,14 @@ export type FinalizableLivePreviewAdapter<TPayload, TId, TEdit> = {
   logPreviewEditFailure?: (error: unknown) => void;
 };
 
-/** Reused helper for define Finalizable Live Preview Adapter behavior in src/channels/message. */
+/** Preserve generic inference while declaring a finalizable live preview adapter. */
 export function defineFinalizableLivePreviewAdapter<TPayload, TId, TEdit>(
   adapter: FinalizableLivePreviewAdapter<TPayload, TId, TEdit>,
 ): FinalizableLivePreviewAdapter<TPayload, TId, TEdit> {
   return adapter;
 }
 
-/** Reused helper for create Live Message State behavior in src/channels/message. */
+/** Create initial live preview state from an optional preview receipt/render. */
 export function createLiveMessageState<TPayload = unknown>(params?: {
   receipt?: MessageReceipt;
   lastRendered?: RenderedMessageBatch<TPayload>;
@@ -70,7 +70,7 @@ export function createLiveMessageState<TPayload = unknown>(params?: {
   };
 }
 
-/** Reused helper for mark Live Message Finalized behavior in src/channels/message. */
+/** Mark a live preview as finalized and disable further in-place edits. */
 export function markLiveMessageFinalized<TPayload>(
   state: LiveMessageState<TPayload>,
   receipt: MessageReceipt,
@@ -83,7 +83,7 @@ export function markLiveMessageFinalized<TPayload>(
   };
 }
 
-/** Reused helper for create Preview Message Receipt behavior in src/channels/message. */
+/** Create a standard receipt for a preview message id. */
 export function createPreviewMessageReceipt(params: {
   id: unknown;
   threadId?: string;
@@ -111,7 +111,7 @@ export function createPreviewMessageReceipt(params: {
   };
 }
 
-/** Reused helper for deliver Finalizable Live Preview behavior in src/channels/message. */
+/** Finalize a live preview in place when possible, otherwise fall back to normal delivery. */
 export async function deliverFinalizableLivePreview<TPayload, TId, TEdit>(params: {
   kind: "tool" | "block" | "final";
   payload: TPayload;
@@ -225,7 +225,7 @@ export async function deliverFinalizableLivePreview<TPayload, TId, TEdit>(params
   return { kind: delivered ? "normal-delivered" : "normal-skipped", liveState };
 }
 
-/** Reused helper for deliver With Finalizable Live Preview Adapter behavior in src/channels/message. */
+/** Deliver with an optional finalizable preview adapter. */
 export async function deliverWithFinalizableLivePreviewAdapter<TPayload, TId, TEdit>(params: {
   kind: "tool" | "block" | "final";
   payload: TPayload;
@@ -277,7 +277,7 @@ export async function deliverWithFinalizableLivePreviewAdapter<TPayload, TId, TE
   });
 }
 
-/** Reused helper for mark Live Message Preview Updated behavior in src/channels/message. */
+/** Mark live message state after a preview render/update. */
 export function markLiveMessagePreviewUpdated<TPayload>(
   state: LiveMessageState<TPayload>,
   rendered: RenderedMessageBatch<TPayload>,
@@ -289,7 +289,7 @@ export function markLiveMessagePreviewUpdated<TPayload>(
   };
 }
 
-/** Reused helper for mark Live Message Cancelled behavior in src/channels/message. */
+/** Mark live message state after preview cancellation or fallback. */
 export function markLiveMessageCancelled<TPayload>(
   state: LiveMessageState<TPayload>,
 ): LiveMessageState<TPayload> {
