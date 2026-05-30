@@ -1,12 +1,13 @@
-// infra command carriers helpers and runtime behavior.
+// Command-carrier parsing for shell approval analysis.
+// Carriers like env/sudo/command can wrap the real executable behind options.
 import { splitShellArgs } from "../utils/shell-argv.js";
 import { normalizeExecutableToken } from "./exec-wrapper-tokens.js";
 import { parseInlineOptionToken } from "./inline-option-token.js";
 
-/** Reused constant for COMMAND CARRIER EXECUTABLES behavior in src/infra. */
+/** Executables that can carry another command in their argv. */
 export const COMMAND_CARRIER_EXECUTABLES = new Set(["sudo", "doas", "env", "command", "builtin"]);
 
-/** Reused constant for SOURCE EXECUTABLES behavior in src/infra. */
+/** Shell source commands that execute file contents in the current shell. */
 export const SOURCE_EXECUTABLES = new Set([".", "source"]);
 
 const MAX_ENV_SPLIT_PAYLOAD_DEPTH = 32;
@@ -96,7 +97,7 @@ const DOAS_STANDALONE_OPTIONS = new Set(["-L", "-n", "-s"]);
 const EXEC_OPTIONS_WITH_VALUE = new Set(["-a"]);
 const EXEC_STANDALONE_OPTIONS = new Set(["-c", "-l"]);
 
-/** Reused helper for is Env Assignment Token behavior in src/infra. */
+/** Return whether a token is a POSIX-style KEY=value env assignment. */
 export function isEnvAssignmentToken(token: string): boolean {
   return /^[A-Za-z_][A-Za-z0-9_]*=.*$/u.test(token);
 }
@@ -212,7 +213,7 @@ function resolveEnvSplitPayload(
   return resolveEnvCarriedArgv(["env", ...carriedArgv], depth + 1) ?? carriedArgv;
 }
 
-/** Shared type for Parsed Env Invocation Prelude in src/infra. */
+/** Parsed env(1) prelude before the carried command starts. */
 export type ParsedEnvInvocationPrelude = {
   assignmentKeys: string[];
   commandIndex: number;
@@ -220,7 +221,7 @@ export type ParsedEnvInvocationPrelude = {
   usesModifiers: boolean;
 };
 
-/** Reused helper for parse Env Invocation Prelude behavior in src/infra. */
+/** Parse env argv, including split-string payloads, and locate the carried command. */
 export function parseEnvInvocationPrelude(
   argv: string[],
   depth = 0,
@@ -283,19 +284,19 @@ export function parseEnvInvocationPrelude(
   return null;
 }
 
-/** Reused helper for env Invocation Uses Modifiers behavior in src/infra. */
+/** Return whether env argv changes environment/options rather than transparently dispatching. */
 export function envInvocationUsesModifiers(argv: string[]): boolean {
   const parsed = parseEnvInvocationPrelude(argv);
   return parsed?.usesModifiers ?? normalizeExecutableToken(argv[0] ?? "") === "env";
 }
 
-/** Reused helper for unwrap Env Invocation behavior in src/infra. */
+/** Return argv carried by env, or null when env does not carry a command. */
 export function unwrapEnvInvocation(argv: string[]): string[] | null {
   const parsed = parseEnvInvocationPrelude(argv);
   return parsed ? (parsed.splitArgv ?? argv.slice(parsed.commandIndex)) : null;
 }
 
-/** Reused helper for resolve Env Carried Argv behavior in src/infra. */
+/** Resolve env-carried argv with bounded recursion for env -S payloads. */
 export function resolveEnvCarriedArgv(argv: string[], depth = 0): string[] | null {
   const parsed = parseEnvInvocationPrelude(argv, depth);
   return parsed ? (parsed.splitArgv ?? argv.slice(parsed.commandIndex)) : null;
@@ -398,7 +399,7 @@ function resolveExecCarriedArgv(argv: string[]): string[] | null {
   return null;
 }
 
-/** Reused helper for resolve Carrier Command Argv behavior in src/infra. */
+/** Resolve the command carried by env, command, builtin, sudo/doas, or optional exec. */
 export function resolveCarrierCommandArgv(
   argv: string[],
   depth = 0,

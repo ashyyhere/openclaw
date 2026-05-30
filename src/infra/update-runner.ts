@@ -1,4 +1,5 @@
-// infra update runner helpers and runtime behavior.
+// Update runner for git checkouts, global installs, and package-root updates.
+// Steps are recorded with bounded logs so CLI and auto-update callers can report proof.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
@@ -39,7 +40,7 @@ import {
   type UpdatePackageManagerFailureReason,
 } from "./update-package-manager.js";
 
-/** Shared type for Update Step Result in src/infra. */
+/** Result of one update command step with trimmed log tails. */
 export type UpdateStepResult = {
   name: string;
   command: string;
@@ -50,7 +51,7 @@ export type UpdateStepResult = {
   stderrTail?: string | null;
 };
 
-/** Shared type for Update Run Result in src/infra. */
+/** Complete update run result including install mode, before/after state, and step proof. */
 export type UpdateRunResult = {
   status: "ok" | "error" | "skipped";
   mode: "git" | "pnpm" | "bun" | "npm" | "unknown";
@@ -106,7 +107,7 @@ type CommandRunner = (
   options: CommandOptions,
 ) => Promise<{ stdout: string; stderr: string; code: number | null }>;
 
-/** Shared type for Update Step Info in src/infra. */
+/** Progress metadata emitted before an update step starts. */
 export type UpdateStepInfo = {
   name: string;
   command: string;
@@ -114,14 +115,14 @@ export type UpdateStepInfo = {
   total: number;
 };
 
-/** Shared type for Update Step Completion in src/infra. */
+/** Progress metadata emitted after an update step completes. */
 export type UpdateStepCompletion = UpdateStepInfo & {
   durationMs: number;
   exitCode: number | null;
   stderrTail?: string | null;
 };
 
-/** Shared type for Update Step Progress in src/infra. */
+/** Optional update progress callbacks consumed by CLI/UI callers. */
 export type UpdateStepProgress = {
   onStepStart?: (step: UpdateStepInfo) => void;
   onStepComplete?: (step: UpdateStepCompletion) => void;
@@ -139,7 +140,7 @@ type UpdateRunnerOptions = {
   progress?: UpdateStepProgress;
 };
 
-/** Shared type for Update Install Surface in src/infra. */
+/** Detected install surface that determines the update strategy. */
 export type UpdateInstallSurface =
   | {
       kind: "git";
@@ -672,7 +673,7 @@ async function buildUpdateCommandRunner(
   };
 }
 
-/** Reused helper for resolve Update Install Surface behavior in src/infra. */
+/** Resolve whether updates should run as git pulls, global package updates, or be skipped. */
 export async function resolveUpdateInstallSurface(
   opts: Pick<UpdateRunnerOptions, "cwd" | "argv1" | "timeoutMs" | "runCommand"> = {},
 ): Promise<UpdateInstallSurface> {
@@ -725,7 +726,7 @@ export async function resolveUpdateInstallSurface(
   };
 }
 
-/** Reused helper for run Gateway Update behavior in src/infra. */
+/** Run the complete gateway update flow and return structured step/proof data. */
 export async function runGatewayUpdate(opts: UpdateRunnerOptions = {}): Promise<UpdateRunResult> {
   const startedAt = Date.now();
   const { defaultCommandEnv, runCommand } = await buildUpdateCommandRunner(opts.runCommand);

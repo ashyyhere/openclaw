@@ -1,4 +1,5 @@
-// infra unhandled rejections helpers and runtime behavior.
+// Process-level unhandled rejection/exception classification.
+// Fatal errors crash with restored terminal state; transient network/sqlite noise is downgraded.
 import process from "node:process";
 import { restoreTerminalState } from "../../packages/terminal-core/src/restore.js";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
@@ -236,10 +237,7 @@ function extractErrorCodeWithCause(err: unknown): string | undefined {
   return extractErrorCode(getErrorCause(err));
 }
 
-/**
- * Checks if an error is an AbortError.
- * These are typically intentional cancellations (e.g., during shutdown) and shouldn't crash.
- */
+/** Return whether an error represents an intentional abort/cancellation. */
 export function isAbortError(err: unknown): boolean {
   if (!err || typeof err !== "object") {
     return false;
@@ -323,7 +321,7 @@ export function isTransientNetworkError(err: unknown): boolean {
   return false;
 }
 
-/** Reused helper for is Transient Sqlite Error behavior in src/infra. */
+/** Return whether a rejection looks like transient SQLite busy/open/IO failure. */
 export function isTransientSqliteError(err: unknown): boolean {
   if (!err) {
     return false;
@@ -434,7 +432,7 @@ export function isTransientFileWatchError(err: unknown): boolean {
   return false;
 }
 
-/** Reused helper for is Transient Unhandled Rejection Error behavior in src/infra. */
+/** Return whether an unhandled rejection is transient enough to log instead of crash. */
 export function isTransientUnhandledRejectionError(err: unknown): boolean {
   return (
     isTransientNetworkError(err) || isTransientSqliteError(err) || isTransientFileWatchError(err)
@@ -458,7 +456,7 @@ function isBenignUncaughtNetworkException(err: unknown): boolean {
   return false;
 }
 
-/** Reused helper for is Benign Uncaught Exception Error behavior in src/infra. */
+/** Return whether an uncaught exception is known benign process/transport noise. */
 export function isBenignUncaughtExceptionError(err: unknown): boolean {
   if (isBenignUncaughtNetworkException(err)) {
     return true;
@@ -472,7 +470,7 @@ export function isBenignUncaughtExceptionError(err: unknown): boolean {
   return false;
 }
 
-/** Reused helper for register Unhandled Rejection Handler behavior in src/infra. */
+/** Register a shared unhandled-rejection handler and return its disposer. */
 export function registerUnhandledRejectionHandler(handler: UnhandledRejectionHandler): () => void {
   handlers.add(handler);
   return () => {
@@ -480,7 +478,7 @@ export function registerUnhandledRejectionHandler(handler: UnhandledRejectionHan
   };
 }
 
-/** Reused helper for is Unhandled Rejection Handled behavior in src/infra. */
+/** Dispatch a rejection through registered handlers and report whether one consumed it. */
 export function isUnhandledRejectionHandled(reason: unknown): boolean {
   for (const handler of handlers) {
     try {
@@ -497,7 +495,7 @@ export function isUnhandledRejectionHandled(reason: unknown): boolean {
   return false;
 }
 
-/** Reused helper for register Uncaught Exception Handler behavior in src/infra. */
+/** Register a shared uncaught-exception handler and return its disposer. */
 export function registerUncaughtExceptionHandler(handler: UncaughtExceptionHandler): () => void {
   exceptionHandlers.add(handler);
   return () => {
@@ -505,7 +503,7 @@ export function registerUncaughtExceptionHandler(handler: UncaughtExceptionHandl
   };
 }
 
-/** Reused helper for is Uncaught Exception Handled behavior in src/infra. */
+/** Dispatch an uncaught exception through registered handlers and report whether one consumed it. */
 export function isUncaughtExceptionHandled(error: unknown): boolean {
   for (const handler of exceptionHandlers) {
     try {
@@ -522,7 +520,7 @@ export function isUncaughtExceptionHandled(error: unknown): boolean {
   return false;
 }
 
-/** Reused helper for install Unhandled Rejection Handler behavior in src/infra. */
+/** Install process-level rejection/exception handlers for gateway-safe crash policy. */
 export function installUnhandledRejectionHandler(): void {
   const exitWithTerminalRestore = (reason: string, error?: unknown, hookReason = reason) => {
     for (const message of runFatalErrorHooks({ reason: hookReason, error })) {
