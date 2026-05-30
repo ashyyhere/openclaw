@@ -11,7 +11,7 @@ import {
   UPDATE_PLAN_TOOL_DISPLAY_SUMMARY,
 } from "./tool-description-presets.js";
 
-/** Shared type for Tool Profile Id in src/agents. */
+/** Built-in tool profile identifier used by agent tool selection policy. */
 export type ToolProfileId = "minimal" | "coding" | "messaging" | "full";
 
 type ToolProfilePolicy = {
@@ -387,10 +387,10 @@ function buildCoreToolGroupMap() {
   };
 }
 
-/** Reused constant for CORE TOOL GROUPS behavior in src/agents. */
+/** Core tool ids grouped by display section for model/UI summaries. */
 export const CORE_TOOL_GROUPS = buildCoreToolGroupMap();
 
-/** Reused constant for PROFILE OPTIONS behavior in src/agents. */
+/** User-selectable built-in tool profile options. */
 export const PROFILE_OPTIONS = [
   { id: "minimal", label: "Minimal" },
   { id: "coding", label: "Coding" },
@@ -398,7 +398,7 @@ export const PROFILE_OPTIONS = [
   { id: "full", label: "Full" },
 ] as const;
 
-/** Reused helper for resolve Core Tool Profile Policy behavior in src/agents. */
+/** Resolves allow/deny policy for a built-in tool profile name. */
 export function resolveCoreToolProfilePolicy(profile?: string): ToolProfilePolicy | undefined {
   if (!profile) {
     return undefined;
@@ -416,7 +416,7 @@ export function resolveCoreToolProfilePolicy(profile?: string): ToolProfilePolic
   };
 }
 
-/** Reused helper for list Core Tool Sections behavior in src/agents. */
+/** Lists core tools grouped into display sections. */
 export function listCoreToolSections(): CoreToolSection[] {
   return CORE_TOOL_SECTION_ORDER.map((section) => ({
     id: section.id,
@@ -429,7 +429,7 @@ export function listCoreToolSections(): CoreToolSection[] {
   })).filter((section) => section.tools.length > 0);
 }
 
-/** Reused helper for resolve Core Tool Profiles behavior in src/agents. */
+/** Returns the built-in profiles that include a core tool id. */
 export function resolveCoreToolProfiles(toolId: string): ToolProfileId[] {
   const tool = CORE_TOOL_BY_ID.get(toolId);
   if (!tool) {
@@ -438,7 +438,7 @@ export function resolveCoreToolProfiles(toolId: string): ToolProfileId[] {
   return [...tool.profiles];
 }
 
-/** Reused helper for is Known Core Tool Id behavior in src/agents. */
+/** Checks whether a tool id belongs to the built-in core catalog. */
 export function isKnownCoreToolId(toolId: string): boolean {
   return CORE_TOOL_BY_ID.has(toolId);
 }

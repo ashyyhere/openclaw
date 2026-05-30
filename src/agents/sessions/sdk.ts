@@ -1,4 +1,4 @@
-// src/agents/sessions sdk helpers and runtime behavior.
+// Agent sessions SDK creates session runtimes and re-exports extension/tool APIs.
 import { join } from "node:path";
 import { clampThinkingLevel } from "../../llm/model-utils.js";
 import { streamSimple } from "../../llm/stream.js";
@@ -38,7 +38,7 @@ import {
   withFileMutationQueue,
 } from "./tools/index.js";
 
-/** Shared type for Create Agent Session Options in src/agents/sessions. */
+/** Options for constructing an AgentSession outside the interactive CLI. */
 export interface CreateAgentSessionOptions {
   /** Working directory for project-local discovery. Default: process.cwd() */
   cwd?: string;
@@ -90,7 +90,7 @@ export interface CreateAgentSessionOptions {
   withSessionWriteLock?: AgentSessionWriteLockRunner;
 }
 
-/** Result from createAgentSession */
+/** Result returned after constructing an AgentSession. */
 export interface CreateAgentSessionResult {
   /** The created session */
   session: AgentSession;
@@ -102,7 +102,7 @@ export interface CreateAgentSessionResult {
 
 // Re-exports
 
-/** Re-exported API for src/agents/sessions. */
+/** Extension API types used by session SDK consumers. */
 export type {
   ExtensionAPI,
   ExtensionCommandContext,
@@ -112,14 +112,14 @@ export type {
   SlashCommandSource,
   ToolDefinition,
 } from "./extensions/index.js";
-/** Re-exported API for src/agents/sessions, starting with Prompt Template. */
+/** Prompt template type used by custom session resources. */
 export type { PromptTemplate } from "./prompt-templates.js";
-/** Re-exported API for src/agents/sessions, starting with Skill. */
+/** Skill type loaded into session prompts. */
 export type { Skill } from "../../skills/loading/session.js";
-/** Re-exported API for src/agents/sessions, starting with Tool. */
+/** Built-in/custom tool type exposed by the session SDK. */
 export type { Tool } from "./tools/index.js";
 
-/** Re-exported API for src/agents/sessions. */
+/** Built-in tool factories and write-queue helper exposed by the session SDK. */
 export {
   withFileMutationQueue,
   // Tool factories (for custom cwd)

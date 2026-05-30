@@ -76,7 +76,7 @@ const MESSAGE_MUTATING_ACTIONS = new Set([
 // `buildToolActionFingerprint` stores raw path values in a `|`-delimited
 // string, so a path containing `|` could over-match (e.g. `/tmp/a|left` and
 // `/tmp/a|right` would both extract as `path=/tmp/a`).
-/** Shared type for File Target in src/agents. */
+/** Normalized file target extracted from a mutating tool call. */
 export type FileTarget = {
   path?: string;
   oldpath?: string;
@@ -128,7 +128,7 @@ function appendFingerprintAlias(
   return false;
 }
 
-/** Reused helper for is Likely Mutating Tool Name behavior in src/agents. */
+/** Checks whether a tool name is likely to mutate state even before args are inspected. */
 export function isLikelyMutatingToolName(toolName: string): boolean {
   const normalized = normalizeLowercaseStringOrEmpty(toolName);
   if (!normalized) {
@@ -142,7 +142,7 @@ export function isLikelyMutatingToolName(toolName: string): boolean {
   );
 }
 
-/** Reused helper for is Mutating Tool Call behavior in src/agents. */
+/** Determines whether a specific tool call mutates local or external state. */
 export function isMutatingToolCall(toolName: string, args: unknown): boolean {
   const normalized = normalizeLowercaseStringOrEmpty(toolName);
   const record = asRecord(args);
@@ -188,7 +188,7 @@ export function isMutatingToolCall(toolName: string, args: unknown): boolean {
   }
 }
 
-/** Reused helper for build Tool Action Fingerprint behavior in src/agents. */
+/** Builds a stable fingerprint for matching repeated mutating tool actions. */
 export function buildToolActionFingerprint(
   toolName: string,
   args: unknown,
@@ -259,7 +259,7 @@ function readArgFingerprintValue(
   return undefined;
 }
 
-/** Reused helper for extract File Target behavior in src/agents. */
+/** Extracts normalized path identity from file-mutating tool arguments. */
 export function extractFileTarget(toolName: string, args: unknown): FileTarget | undefined {
   if (!isFileMutatingToolName(toolName)) {
     return undefined;
@@ -280,7 +280,7 @@ function fileTargetsEqual(a: FileTarget, b: FileTarget): boolean {
   return (a.path ?? "") === (b.path ?? "") && (a.oldpath ?? "") === (b.oldpath ?? "");
 }
 
-/** Reused helper for build Tool Mutation State behavior in src/agents. */
+/** Builds mutation metadata used by transcript recovery and duplicate detection. */
 export function buildToolMutationState(
   toolName: string,
   args: unknown,
@@ -295,7 +295,7 @@ export function buildToolMutationState(
   };
 }
 
-/** Reused helper for is Same Tool Mutation Action behavior in src/agents. */
+/** Checks whether two mutating tool calls target the same recoverable action. */
 export function isSameToolMutationAction(existing: ToolActionRef, next: ToolActionRef): boolean {
   if (existing.actionFingerprint != null || next.actionFingerprint != null) {
     // For mutating flows, fail closed: only clear when both fingerprints exist
