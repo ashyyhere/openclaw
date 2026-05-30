@@ -18,26 +18,26 @@ import {
   resolveWorkspaceTemplateDir,
   resolveWorkspaceTemplateSearchDirs,
 } from "./workspace-templates.js";
-/** Re-exported API for src/agents. */
+/** Default workspace path helpers shared by agent setup callers. */
 export {
   DEFAULT_AGENT_WORKSPACE_DIR,
   resolveDefaultAgentWorkspaceDir,
 } from "./workspace-default.js";
-/** Reused constant for DEFAULT AGENTS FILENAME behavior in src/agents. */
+/** Root instruction file loaded into every normal agent workspace context. */
 export const DEFAULT_AGENTS_FILENAME = "AGENTS.md";
-/** Reused constant for DEFAULT SOUL FILENAME behavior in src/agents. */
+/** Optional workspace persona file seeded during first-run setup. */
 export const DEFAULT_SOUL_FILENAME = "SOUL.md";
-/** Reused constant for DEFAULT TOOLS FILENAME behavior in src/agents. */
+/** Workspace tool guidance file seeded beside AGENTS.md. */
 export const DEFAULT_TOOLS_FILENAME = "TOOLS.md";
-/** Reused constant for DEFAULT IDENTITY FILENAME behavior in src/agents. */
+/** Optional identity/profile file used by workspace onboarding. */
 export const DEFAULT_IDENTITY_FILENAME = "IDENTITY.md";
-/** Reused constant for DEFAULT USER FILENAME behavior in src/agents. */
+/** Optional user preference file used by workspace onboarding. */
 export const DEFAULT_USER_FILENAME = "USER.md";
-/** Reused constant for DEFAULT HEARTBEAT FILENAME behavior in src/agents. */
+/** Optional heartbeat guidance file for scheduled agent runs. */
 export const DEFAULT_HEARTBEAT_FILENAME = "HEARTBEAT.md";
-/** Reused constant for DEFAULT BOOTSTRAP FILENAME behavior in src/agents. */
+/** First-run bootstrap checklist file removed once setup is complete. */
 export const DEFAULT_BOOTSTRAP_FILENAME = "BOOTSTRAP.md";
-/** Reused constant for DEFAULT MEMORY FILENAME behavior in src/agents. */
+/** Canonical root memory file loaded as part of workspace bootstrap. */
 export const DEFAULT_MEMORY_FILENAME = CANONICAL_ROOT_MEMORY_FILENAME;
 const WORKSPACE_STATE_DIRNAME = ".openclaw";
 const WORKSPACE_STATE_FILENAME = "workspace-state.json";
@@ -152,7 +152,7 @@ async function loadTemplate(name: string): Promise<string> {
   }
 }
 
-/** Shared type for Workspace Bootstrap File Name in src/agents. */
+/** Bootstrap filenames that the agent workspace loader recognizes. */
 export type WorkspaceBootstrapFileName =
   | typeof DEFAULT_AGENTS_FILENAME
   | typeof DEFAULT_SOUL_FILENAME
@@ -163,7 +163,7 @@ export type WorkspaceBootstrapFileName =
   | typeof DEFAULT_BOOTSTRAP_FILENAME
   | typeof DEFAULT_MEMORY_FILENAME;
 
-/** Shared type for Workspace Bootstrap File in src/agents. */
+/** Loaded bootstrap file content or a missing marker for prompt assembly. */
 export type WorkspaceBootstrapFile = {
   name: WorkspaceBootstrapFileName;
   path: string;
@@ -171,14 +171,14 @@ export type WorkspaceBootstrapFile = {
   missing: boolean;
 };
 
-/** Shared type for Extra Bootstrap Load Diagnostic Code in src/agents. */
+/** Failure category for optional extra bootstrap files. */
 export type ExtraBootstrapLoadDiagnosticCode =
   | "invalid-bootstrap-filename"
   | "missing"
   | "security"
   | "io";
 
-/** Shared type for Extra Bootstrap Load Diagnostic in src/agents. */
+/** Diagnostic emitted when an extra bootstrap file cannot be loaded safely. */
 export type ExtraBootstrapLoadDiagnostic = {
   path: string;
   reason: ExtraBootstrapLoadDiagnosticCode;
@@ -394,13 +394,13 @@ async function readWorkspaceSetupStateForDir(dir: string): Promise<WorkspaceSetu
   return await readWorkspaceSetupState(statePath);
 }
 
-/** Reused helper for is Workspace Setup Completed behavior in src/agents. */
+/** Checks whether workspace setup completion was recorded in workspace state. */
 export async function isWorkspaceSetupCompleted(dir: string): Promise<boolean> {
   const state = await readWorkspaceSetupStateForDir(dir);
   return typeof state.setupCompletedAt === "string" && state.setupCompletedAt.trim().length > 0;
 }
 
-/** Reused helper for resolve Workspace Bootstrap Status behavior in src/agents. */
+/** Resolves whether BOOTSTRAP.md should still be shown to the agent. */
 export async function resolveWorkspaceBootstrapStatus(
   dir: string,
 ): Promise<"pending" | "complete"> {
@@ -418,12 +418,12 @@ export async function resolveWorkspaceBootstrapStatus(
   return "pending";
 }
 
-/** Reused helper for is Workspace Bootstrap Pending behavior in src/agents. */
+/** Convenience predicate for pending workspace bootstrap state. */
 export async function isWorkspaceBootstrapPending(dir: string): Promise<boolean> {
   return (await resolveWorkspaceBootstrapStatus(dir)) === "pending";
 }
 
-/** Reused helper for reconcile Workspace Bootstrap Completion behavior in src/agents. */
+/** Repairs legacy setup state when workspace evidence shows bootstrap completed. */
 export async function reconcileWorkspaceBootstrapCompletion(
   dir: string,
 ): Promise<WorkspaceBootstrapCompletionReconcileResult> {
@@ -495,7 +495,7 @@ async function ensureGitRepo(dir: string, isBrandNewWorkspace: boolean) {
   }
 }
 
-/** Reused helper for ensure Agent Workspace behavior in src/agents. */
+/** Creates the agent workspace and seeds missing bootstrap files from templates. */
 export async function ensureAgentWorkspace(params?: {
   dir?: string;
   ensureBootstrapFiles?: boolean;
@@ -649,7 +649,7 @@ export async function ensureAgentWorkspace(params?: {
   };
 }
 
-/** Reused helper for load Workspace Bootstrap Files behavior in src/agents. */
+/** Loads standard workspace bootstrap files using root-boundary path guards. */
 export async function loadWorkspaceBootstrapFiles(dir: string): Promise<WorkspaceBootstrapFile[]> {
   const resolvedDir = resolveUserPath(dir);
 
@@ -727,7 +727,7 @@ const CRON_BOOTSTRAP_ALLOWLIST = new Set([
   DEFAULT_USER_FILENAME,
 ]);
 
-/** Reused helper for filter Bootstrap Files For Session behavior in src/agents. */
+/** Filters bootstrap files for subagent and cron sessions before prompt assembly. */
 export function filterBootstrapFilesForSession(
   files: WorkspaceBootstrapFile[],
   sessionKey?: string,
@@ -834,7 +834,7 @@ async function resolveExtraBootstrapPatternPaths(
   return matches.length > 0 ? matches : [pattern];
 }
 
-/** Reused helper for load Extra Bootstrap Files behavior in src/agents. */
+/** Loads caller-requested extra bootstrap files and drops diagnostics. */
 export async function loadExtraBootstrapFiles(
   dir: string,
   extraPatterns: string[],
@@ -843,7 +843,7 @@ export async function loadExtraBootstrapFiles(
   return loaded.files;
 }
 
-/** Reused helper for load Extra Bootstrap Files With Diagnostics behavior in src/agents. */
+/** Resolves and loads extra bootstrap patterns with security/load diagnostics. */
 export async function loadExtraBootstrapFilesWithDiagnostics(
   dir: string,
   extraPatterns: string[],
