@@ -1,7 +1,7 @@
-// packages/gateway-protocol/src/schema error codes helpers and runtime behavior.
+// Shared gateway error-code constants and response envelope helper.
 import type { ErrorShape } from "./types.js";
 
-/** Public constant for Error Codes behavior in packages/gateway-protocol. */
+/** Stable gateway error codes used by clients for recovery decisions. */
 export const ErrorCodes = {
   NOT_LINKED: "NOT_LINKED",
   NOT_PAIRED: "NOT_PAIRED",
@@ -11,10 +11,10 @@ export const ErrorCodes = {
   UNAVAILABLE: "UNAVAILABLE",
 } as const;
 
-/** Public type describing Error Code for packages/gateway-protocol. */
+/** Union of the stable gateway error-code string values. */
 export type ErrorCode = (typeof ErrorCodes)[keyof typeof ErrorCodes];
 
-/** Public helper for error Shape behavior in packages/gateway-protocol. */
+/** Build a typed gateway error payload with optional retry metadata. */
 export function errorShape(
   code: ErrorCode,
   message: string,

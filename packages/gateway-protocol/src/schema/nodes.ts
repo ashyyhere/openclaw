@@ -1,4 +1,4 @@
-// packages/gateway-protocol/src/schema nodes helpers and runtime behavior.
+// Gateway protocol schemas for paired node presence, pairing, invocation, and pending work.
 import { Type } from "typebox";
 import { NonEmptyString } from "./primitives.js";
 
@@ -10,7 +10,7 @@ const NodePendingWorkPrioritySchema = Type.String({
   enum: ["normal", "high"],
 });
 
-/** Public constant for Node Presence Alive Reason Schema behavior in packages/gateway-protocol. */
+/** Reasons a paired node can report itself alive to the gateway. */
 export const NodePresenceAliveReasonSchema = Type.String({
   enum: [
     "background",
@@ -22,7 +22,7 @@ export const NodePresenceAliveReasonSchema = Type.String({
   ],
 });
 
-/** Public constant for Node Presence Alive Payload Schema behavior in packages/gateway-protocol. */
+/** Presence payload sent by paired nodes with optional device metadata. */
 export const NodePresenceAlivePayloadSchema = Type.Object(
   {
     trigger: NodePresenceAliveReasonSchema,
@@ -37,7 +37,7 @@ export const NodePresenceAlivePayloadSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Node Event Result Schema behavior in packages/gateway-protocol. */
+/** Result payload returned after routing a node-originated event. */
 export const NodeEventResultSchema = Type.Object(
   {
     ok: Type.Boolean(),
@@ -48,7 +48,7 @@ export const NodeEventResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Node Pair Request Params Schema behavior in packages/gateway-protocol. */
+/** Pairing request payload advertised by a node before approval. */
 export const NodePairRequestParamsSchema = Type.Object(
   {
     nodeId: NonEmptyString,
@@ -68,43 +68,43 @@ export const NodePairRequestParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Node Pair List Params Schema behavior in packages/gateway-protocol. */
+/** Empty params contract for listing pending node pair requests. */
 export const NodePairListParamsSchema = Type.Object({}, { additionalProperties: false });
 
-/** Public constant for Node Pair Approve Params Schema behavior in packages/gateway-protocol. */
+/** Params for approving one pending node pair request. */
 export const NodePairApproveParamsSchema = Type.Object(
   { requestId: NonEmptyString },
   { additionalProperties: false },
 );
 
-/** Public constant for Node Pair Reject Params Schema behavior in packages/gateway-protocol. */
+/** Params for rejecting one pending node pair request. */
 export const NodePairRejectParamsSchema = Type.Object(
   { requestId: NonEmptyString },
   { additionalProperties: false },
 );
 
-/** Public constant for Node Pair Remove Params Schema behavior in packages/gateway-protocol. */
+/** Params for removing a paired node by id. */
 export const NodePairRemoveParamsSchema = Type.Object(
   { nodeId: NonEmptyString },
   { additionalProperties: false },
 );
 
-/** Public constant for Node Pair Verify Params Schema behavior in packages/gateway-protocol. */
+/** Params for verifying a node pairing token. */
 export const NodePairVerifyParamsSchema = Type.Object(
   { nodeId: NonEmptyString, token: NonEmptyString },
   { additionalProperties: false },
 );
 
-/** Public constant for Node Rename Params Schema behavior in packages/gateway-protocol. */
+/** Params for updating the display name of a paired node. */
 export const NodeRenameParamsSchema = Type.Object(
   { nodeId: NonEmptyString, displayName: NonEmptyString },
   { additionalProperties: false },
 );
 
-/** Public constant for Node List Params Schema behavior in packages/gateway-protocol. */
+/** Empty params contract for listing paired nodes. */
 export const NodeListParamsSchema = Type.Object({}, { additionalProperties: false });
 
-/** Public constant for Node Pending Ack Params Schema behavior in packages/gateway-protocol. */
+/** Ack payload for pending node work ids after successful handling. */
 export const NodePendingAckParamsSchema = Type.Object(
   {
     ids: Type.Array(NonEmptyString, { minItems: 1 }),
@@ -112,13 +112,13 @@ export const NodePendingAckParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Node Describe Params Schema behavior in packages/gateway-protocol. */
+/** Params for reading one paired node's current descriptor. */
 export const NodeDescribeParamsSchema = Type.Object(
   { nodeId: NonEmptyString },
   { additionalProperties: false },
 );
 
-/** Public constant for Node Invoke Params Schema behavior in packages/gateway-protocol. */
+/** Gateway-to-node command invocation request. */
 export const NodeInvokeParamsSchema = Type.Object(
   {
     nodeId: NonEmptyString,
@@ -130,7 +130,7 @@ export const NodeInvokeParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Node Invoke Result Params Schema behavior in packages/gateway-protocol. */
+/** Node-to-gateway command invocation result payload. */
 export const NodeInvokeResultParamsSchema = Type.Object(
   {
     id: NonEmptyString,
@@ -151,7 +151,7 @@ export const NodeInvokeResultParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Node Event Params Schema behavior in packages/gateway-protocol. */
+/** Node-originated event payload with optional JSON-encoded data. */
 export const NodeEventParamsSchema = Type.Object(
   {
     event: NonEmptyString,
@@ -161,7 +161,7 @@ export const NodeEventParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Node Pending Drain Params Schema behavior in packages/gateway-protocol. */
+/** Params for draining a bounded batch of pending work for a node. */
 export const NodePendingDrainParamsSchema = Type.Object(
   {
     maxItems: Type.Optional(Type.Integer({ minimum: 1, maximum: 10 })),
@@ -169,7 +169,7 @@ export const NodePendingDrainParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Node Pending Drain Item Schema behavior in packages/gateway-protocol. */
+/** One queued pending-work item assigned to a node. */
 export const NodePendingDrainItemSchema = Type.Object(
   {
     id: NonEmptyString,
@@ -182,7 +182,7 @@ export const NodePendingDrainItemSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Node Pending Drain Result Schema behavior in packages/gateway-protocol. */
+/** Drain result with queue revision, items, and has-more state. */
 export const NodePendingDrainResultSchema = Type.Object(
   {
     nodeId: NonEmptyString,
@@ -193,7 +193,7 @@ export const NodePendingDrainResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Node Pending Enqueue Params Schema behavior in packages/gateway-protocol. */
+/** Params for enqueueing work for a node and optionally waking it. */
 export const NodePendingEnqueueParamsSchema = Type.Object(
   {
     nodeId: NonEmptyString,
@@ -205,7 +205,7 @@ export const NodePendingEnqueueParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Node Pending Enqueue Result Schema behavior in packages/gateway-protocol. */
+/** Enqueue result with queued item, queue revision, and wake outcome. */
 export const NodePendingEnqueueResultSchema = Type.Object(
   {
     nodeId: NonEmptyString,
@@ -216,7 +216,7 @@ export const NodePendingEnqueueResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Node Invoke Request Event Schema behavior in packages/gateway-protocol. */
+/** Event payload emitted to a node when a gateway command invocation is pending. */
 export const NodeInvokeRequestEventSchema = Type.Object(
   {
     id: NonEmptyString,

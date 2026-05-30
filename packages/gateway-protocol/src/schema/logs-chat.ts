@@ -1,8 +1,8 @@
-// packages/gateway-protocol/src/schema logs chat helpers and runtime behavior.
+// Gateway protocol schemas for log tailing and WebSocket-native chat streaming.
 import { Type } from "typebox";
 import { ChatSendSessionKeyString, InputProvenanceSchema, NonEmptyString } from "./primitives.js";
 
-/** Public constant for Logs Tail Params Schema behavior in packages/gateway-protocol. */
+/** Params for reading a bounded tail window from gateway logs. */
 export const LogsTailParamsSchema = Type.Object(
   {
     cursor: Type.Optional(Type.Integer({ minimum: 0 })),
@@ -12,7 +12,7 @@ export const LogsTailParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Logs Tail Result Schema behavior in packages/gateway-protocol. */
+/** Result for a log tail read, including cursor and truncation/reset hints. */
 export const LogsTailResultSchema = Type.Object(
   {
     file: NonEmptyString,
@@ -26,7 +26,7 @@ export const LogsTailResultSchema = Type.Object(
 );
 
 // WebChat/WebSocket-native chat methods
-/** Public constant for Chat History Params Schema behavior in packages/gateway-protocol. */
+/** Params for reading recent chat transcript history for one session. */
 export const ChatHistoryParamsSchema = Type.Object(
   {
     sessionKey: NonEmptyString,
@@ -37,7 +37,7 @@ export const ChatHistoryParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Chat Send Params Schema behavior in packages/gateway-protocol. */
+/** Web chat send payload for starting an agent turn inside a session. */
 export const ChatSendParamsSchema = Type.Object(
   {
     sessionKey: ChatSendSessionKeyString,
@@ -60,7 +60,7 @@ export const ChatSendParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Chat Abort Params Schema behavior in packages/gateway-protocol. */
+/** Params for aborting the active or named chat run for a session. */
 export const ChatAbortParamsSchema = Type.Object(
   {
     sessionKey: NonEmptyString,
@@ -70,7 +70,7 @@ export const ChatAbortParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Chat Inject Params Schema behavior in packages/gateway-protocol. */
+/** Params for injecting an operator-visible message into chat history. */
 export const ChatInjectParamsSchema = Type.Object(
   {
     sessionKey: NonEmptyString,
@@ -97,7 +97,7 @@ const ChatEventErrorKindSchema = Type.Union([
   Type.Literal("unknown"),
 ]);
 
-/** Public constant for Chat Delta Event Schema behavior in packages/gateway-protocol. */
+/** Streaming delta event carrying incremental text or message fragments. */
 export const ChatDeltaEventSchema = Type.Object(
   {
     ...ChatEventBaseSchema,
@@ -110,7 +110,7 @@ export const ChatDeltaEventSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Chat Final Event Schema behavior in packages/gateway-protocol. */
+/** Terminal success event for a chat run. */
 export const ChatFinalEventSchema = Type.Object(
   {
     ...ChatEventBaseSchema,
@@ -122,7 +122,7 @@ export const ChatFinalEventSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Chat Aborted Event Schema behavior in packages/gateway-protocol. */
+/** Terminal abort event for a chat run. */
 export const ChatAbortedEventSchema = Type.Object(
   {
     ...ChatEventBaseSchema,
@@ -133,7 +133,7 @@ export const ChatAbortedEventSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Chat Error Event Schema behavior in packages/gateway-protocol. */
+/** Terminal error event for a chat run with optional normalized error kind. */
 export const ChatErrorEventSchema = Type.Object(
   {
     ...ChatEventBaseSchema,
@@ -147,7 +147,7 @@ export const ChatErrorEventSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Chat Event Schema behavior in packages/gateway-protocol. */
+/** Union of all chat stream events emitted for a run. */
 export const ChatEventSchema = Type.Union([
   ChatDeltaEventSchema,
   ChatFinalEventSchema,
