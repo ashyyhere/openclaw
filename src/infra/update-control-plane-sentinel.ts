@@ -1,4 +1,4 @@
-// infra update control plane sentinel helpers and runtime behavior.
+/** Bridges managed control-plane update handoff state into restart sentinels. */
 import fs from "node:fs/promises";
 import { isRecord } from "../shared/record-coerce.js";
 import {
@@ -12,11 +12,11 @@ import {
 } from "./update-restart-sentinel-payload.js";
 import type { UpdateRunResult } from "./update-runner.js";
 
-/** Reused constant for CONTROL PLANE UPDATE SENTINEL META ENV behavior in src/infra. */
+/** Env var pointing at serialized update handoff metadata. */
 export const CONTROL_PLANE_UPDATE_SENTINEL_META_ENV = "OPENCLAW_CONTROL_PLANE_UPDATE_SENTINEL_META";
-/** Reused constant for CONTROL PLANE UPDATE HANDOFF STARTED REASON behavior in src/infra. */
+/** Sentinel reason written once the managed service starts update handoff. */
 export const CONTROL_PLANE_UPDATE_HANDOFF_STARTED_REASON = "managed-service-handoff-started";
-/** Reused constant for CONTROL PLANE UPDATE RESTART HEALTH PENDING REASON behavior in src/infra. */
+/** Sentinel reason used while waiting for post-restart health proof. */
 export const CONTROL_PLANE_UPDATE_RESTART_HEALTH_PENDING_REASON = "restart-health-pending";
 
 const CONTROL_PLANE_UPDATE_PENDING_REASONS = new Set<string>([
@@ -24,13 +24,13 @@ const CONTROL_PLANE_UPDATE_PENDING_REASONS = new Set<string>([
   CONTROL_PLANE_UPDATE_RESTART_HEALTH_PENDING_REASON,
 ]);
 
-/** Shared type for Control Plane Update Sentinel Meta File in src/infra. */
+/** Versioned metadata file consumed by the control-plane update restart flow. */
 export type ControlPlaneUpdateSentinelMetaFile = {
   version: 1;
   meta: UpdateRestartSentinelMeta;
 };
 
-/** Reused helper for build Control Plane Update Restart Health Pending Result behavior in src/infra. */
+/** Convert an update result into the skipped state used while restart health is pending. */
 export function buildControlPlaneUpdateRestartHealthPendingResult(
   result: UpdateRunResult,
 ): UpdateRunResult {
@@ -46,7 +46,7 @@ export function buildControlPlaneUpdateRestartHealthPendingResult(
   };
 }
 
-/** Reused helper for is Pending Control Plane Update Restart Sentinel behavior in src/infra. */
+/** Detect update sentinels that represent in-progress managed restart handoff. */
 export function isPendingControlPlaneUpdateRestartSentinel(
   payload: RestartSentinelPayload,
 ): boolean {
@@ -96,7 +96,7 @@ function normalizeMeta(value: unknown): UpdateRestartSentinelMeta | null {
   };
 }
 
-/** Reused helper for read Control Plane Update Sentinel Meta behavior in src/infra. */
+/** Read and normalize update handoff metadata from the env-provided file path. */
 export async function readControlPlaneUpdateSentinelMeta(
   env: NodeJS.ProcessEnv = process.env,
 ): Promise<UpdateRestartSentinelMeta | null> {
@@ -116,7 +116,7 @@ export async function readControlPlaneUpdateSentinelMeta(
   }
 }
 
-/** Reused helper for write Control Plane Update Restart Sentinel behavior in src/infra. */
+/** Write a restart sentinel carrying update result and handoff metadata. */
 export async function writeControlPlaneUpdateRestartSentinel(params: {
   result: UpdateRunResult;
   meta: UpdateRestartSentinelMeta;
@@ -129,7 +129,7 @@ export async function writeControlPlaneUpdateRestartSentinel(params: {
   );
 }
 
-/** Reused helper for mark Control Plane Update Restart Sentinel Failure behavior in src/infra. */
+/** Mark the active control-plane update sentinel as failed and return its payload. */
 export async function markControlPlaneUpdateRestartSentinelFailure(
   reason: string,
 ): Promise<RestartSentinelPayload | null> {

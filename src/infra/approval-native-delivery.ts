@@ -1,4 +1,4 @@
-// infra approval native delivery helpers and runtime behavior.
+/** Plans where channel-native approval prompts should be delivered. */
 import type {
   ChannelApprovalNativeAdapter,
   ChannelApprovalNativeSurface,
@@ -12,14 +12,14 @@ import type { PluginApprovalRequest } from "./plugin-approvals.js";
 
 type ApprovalRequest = ExecApprovalRequest | PluginApprovalRequest;
 
-/** Shared type for Channel Approval Native Planned Target in src/infra. */
+/** One native approval delivery target with its surface and selection reason. */
 export type ChannelApprovalNativePlannedTarget = {
   surface: ChannelApprovalNativeSurface;
   target: ChannelApprovalNativeTarget;
   reason: "preferred" | "fallback";
 };
 
-/** Shared type for Channel Approval Native Delivery Plan in src/infra. */
+/** Native approval delivery plan including origin notification behavior. */
 export type ChannelApprovalNativeDeliveryPlan = {
   targets: ChannelApprovalNativePlannedTarget[];
   originTarget: ChannelApprovalNativeTarget | null;
@@ -42,7 +42,7 @@ function dedupeTargets(
   return deduped;
 }
 
-/** Reused helper for resolve Channel Native Approval Delivery Plan behavior in src/infra. */
+/** Resolve preferred and fallback native approval targets from channel capabilities. */
 export async function resolveChannelNativeApprovalDeliveryPlan(params: {
   cfg: OpenClawConfig;
   accountId?: string | null;
