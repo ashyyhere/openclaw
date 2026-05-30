@@ -1,3 +1,4 @@
+import { resolveTimerTimeoutMs } from "../shared/number-coercion.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import { normalizeHeartbeatWakeReason } from "./heartbeat-reason.js";
 
@@ -184,7 +185,7 @@ function queuePendingWakeReason(params: {
 }
 
 function schedule(coalesceMs: number, kind: WakeTimerKind = "normal") {
-  const delay = Number.isFinite(coalesceMs) ? Math.max(0, coalesceMs) : DEFAULT_COALESCE_MS;
+  const delay = resolveTimerTimeoutMs(coalesceMs, DEFAULT_COALESCE_MS, 0);
   const dueAt = Date.now() + delay;
   if (timer) {
     // Keep retry cooldown as a hard minimum delay. This prevents the
