@@ -15,7 +15,7 @@ import { getActivePluginRegistryWorkspaceDirFromState } from "../../plugins/runt
 import { listProfilesForProvider } from "../auth-profiles/profile-list.js";
 import type { AuthProfileStore } from "../auth-profiles/types.js";
 
-/** Shared type for Capability Contract Key in src/agents/tools. */
+/** Manifest capability families checked when deciding whether built-in tools are available. */
 export type CapabilityContractKey =
   | "imageGenerationProviders"
   | "videoGenerationProviders"
@@ -152,6 +152,7 @@ function hasConfiguredCapabilityProviderSignal(params: {
   return false;
 }
 
+/** Read the active plugin metadata snapshot for capability checks without forcing reload. */
 export function getCurrentCapabilityMetadataSnapshot(params: {
   config?: OpenClawConfig;
   workspaceDir?: string;

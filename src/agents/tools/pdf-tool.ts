@@ -60,7 +60,7 @@ const PDF_REMOTE_READ_IDLE_TIMEOUT_MS = 120_000;
 const PDF_MIN_TEXT_CHARS = 200;
 const PDF_MAX_PIXELS = 4_000_000;
 
-/** Reused constant for Pdf Tool Schema behavior in src/agents/tools. */
+/** TypeBox schema for the PDF analysis tool input. */
 export const PdfToolSchema = Type.Object({
   prompt: Type.Optional(Type.String()),
   pdf: Type.Optional(Type.String({ description: "One PDF path/URL." })),
@@ -83,7 +83,7 @@ export const PdfToolSchema = Type.Object({
 // Model resolution (mirrors image tool pattern)
 // ---------------------------------------------------------------------------
 
-/** Re-exported API for src/agents/tools, starting with resolve Pdf Model Config For Tool. */
+/** Resolve the model config used specifically by the PDF tool. */
 export { resolvePdfModelConfigForTool } from "./pdf-tool.model-config.js";
 
 function hasExplicitPdfToolModelConfig(config?: OpenClawConfig): boolean {

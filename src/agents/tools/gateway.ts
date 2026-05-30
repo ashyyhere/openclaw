@@ -19,10 +19,10 @@ import {
 } from "../../shared/string-coerce.js";
 import { readPositiveIntegerParam, readStringParam } from "./common.js";
 
-/** Reused constant for DEFAULT GATEWAY URL behavior in src/agents/tools. */
+/** Loopback websocket endpoint used when tool params/config do not override the gateway. */
 export const DEFAULT_GATEWAY_URL = "ws://127.0.0.1:18789";
 
-/** Shared type for Gateway Call Options in src/agents/tools. */
+/** Per-call gateway connection overrides accepted by node and gateway-backed tools. */
 export type GatewayCallOptions = {
   gatewayUrl?: string;
   gatewayToken?: string;

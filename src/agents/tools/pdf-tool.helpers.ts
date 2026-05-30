@@ -8,7 +8,7 @@ import type { AssistantMessage } from "../../llm/types.js";
 import { providerSupportsNativePdfDocument } from "../../media-understanding/defaults.js";
 import { extractAssistantText } from "../embedded-agent-utils.js";
 
-/** Shared type for Pdf Model Config in src/agents/tools. */
+/** Primary/fallback model settings for PDF analysis. */
 export type PdfModelConfig = { primary?: string; fallbacks?: string[] };
 
 /** Resolves PDF input paths/URLs from tool params. */
@@ -120,7 +120,7 @@ export function coercePdfModelConfig(cfg?: OpenClawConfig): PdfModelConfig {
   return modelConfig;
 }
 
-/** Reused helper for resolve Pdf Tool Max Tokens behavior in src/agents/tools. */
+/** Cap requested PDF output tokens by the selected model limit when known. */
 export function resolvePdfToolMaxTokens(
   modelMaxTokens: number | undefined,
   requestedMaxTokens = 4096,
