@@ -1,4 +1,4 @@
-// extensions/voice-call/src/manager events helpers and runtime behavior.
+// Voice-call manager event handling creates calls, dedupes provider events, and drives state transitions.
 import crypto from "node:crypto";
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";
 import { isAllowlistedCaller, normalizePhoneNumber } from "../allowlist.js";
@@ -134,6 +134,7 @@ function persistRejectedInboundCall(params: {
   persistCallRecord(params.ctx.storePath, rejectedCall);
 }
 
+/** Process one normalized provider event against the manager context. */
 export function processEvent(ctx: EventContext, event: NormalizedEvent): void {
   const dedupeKey = event.dedupeKey || event.id;
   if (ctx.processedEventIds.has(dedupeKey)) {

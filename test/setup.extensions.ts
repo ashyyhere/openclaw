@@ -1,4 +1,4 @@
-// test setup extensions helpers and runtime behavior.
+// Extension Vitest setup installs isolated shared state and cleans it after extension suites.
 import { afterAll } from "vitest";
 import { installSharedTestSetup } from "./setup.shared.js";
 

@@ -1,9 +1,10 @@
-// test/vitest vitest contracts channel session config helpers and runtime behavior.
+// Vitest project config for channel session contract tests.
 import {
   channelSessionContractPatterns,
   createContractsVitestConfig,
 } from "./vitest.contracts-shared.ts";
 
+/** Channel session contract Vitest project configuration. */
 export default createContractsVitestConfig(
   channelSessionContractPatterns,
   process.env,

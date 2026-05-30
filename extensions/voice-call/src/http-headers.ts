@@ -1,8 +1,9 @@
-// extensions/voice-call/src http headers helpers and runtime behavior.
+// Voice-call webhook code reads case-insensitive HTTP headers through this helper.
 import { normalizeLowercaseStringOrEmpty } from "openclaw/plugin-sdk/string-coerce-runtime";
 
 type HttpHeaderMap = Record<string, string | string[] | undefined>;
 
+/** Read a header value by name regardless of incoming header casing. */
 export function getHeader(headers: HttpHeaderMap, name: string): string | undefined {
   const target = normalizeLowercaseStringOrEmpty(name);
   const direct = headers[target];

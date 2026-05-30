@@ -1,4 +1,4 @@
-// extensions/voice-call/src/manager store helpers and runtime behavior.
+// Voice-call manager store persists call records as JSONL and rebuilds active-call indexes.
 import path from "node:path";
 import {
   appendRegularFile,
@@ -9,6 +9,7 @@ import { CallRecordSchema, TerminalStates, type CallId, type CallRecord } from "
 
 const pendingPersistWrites = new Set<Promise<void>>();
 
+/** Append a call record to the voice-call JSONL store without blocking manager flow. */
 export function persistCallRecord(storePath: string, call: CallRecord): void {
   const logPath = path.join(storePath, "calls.jsonl");
   const line = `${JSON.stringify(call)}\n`;
@@ -27,10 +28,12 @@ export function persistCallRecord(storePath: string, call: CallRecord): void {
   pendingPersistWrites.add(write);
 }
 
+/** Wait for fire-and-forget call record writes to settle in tests. */
 export async function flushPendingCallRecordWritesForTest(): Promise<void> {
   await Promise.allSettled(pendingPersistWrites);
 }
 
+/** Load active calls and dedupe indexes from the persisted call store. */
 export function loadActiveCallsFromStore(storePath: string): {
   activeCalls: Map<CallId, CallRecord>;
   providerCallIdMap: Map<string, CallId>;
@@ -83,6 +86,7 @@ export function loadActiveCallsFromStore(storePath: string): {
   return { activeCalls, providerCallIdMap, processedEventIds, rejectedProviderCallIds };
 }
 
+/** Read recent call history from the persisted call store. */
 export async function getCallHistoryFromStore(
   storePath: string,
   limit = 50,
