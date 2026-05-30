@@ -1,3 +1,4 @@
+/** Provider secret resolution across config markers, auth profiles, credentials, and env vars. */
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveSecretInputRef } from "../config/types.secrets.js";
@@ -22,7 +23,7 @@ import {
 } from "./models-config.providers.secret-helpers.js";
 import { resolveProviderIdForAuth } from "./provider-auth-aliases.js";
 
-/** Re-exported API for src/agents. */
+/** Secret-resolution types consumed by provider config planning and auth discovery. */
 export type {
   ProfileApiKeyResolution,
   ProviderApiKeyResolver,
@@ -31,7 +32,7 @@ export type {
   SecretDefaults,
 } from "./models-config.providers.secret-helpers.js";
 
-/** Re-exported API for src/agents. */
+/** Secret helpers shared by provider config normalization and model auth discovery. */
 export {
   listAuthProfilesForProvider,
   normalizeApiKeyConfig,

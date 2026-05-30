@@ -328,5 +328,5 @@ export const testing = {
       : defaultRunWaitDeps;
   },
 };
-/** Re-exported API for src/agents, starting with testing. */
+/** Backward-compatible test hook export for callers that import underscored internals. */
 export { testing as __testing };

@@ -30,7 +30,7 @@ import {
 } from "./plugin-model-catalog.js";
 import { stableStringify } from "./stable-stringify.js";
 
-/** Re-exported API for src/agents, starting with reset Models Json Ready Cache For Test. */
+/** Test hook for clearing the models.json readiness cache between isolated scenarios. */
 export { resetModelsJsonReadyCacheForTest } from "./models-config-state.js";
 
 async function readFileMtimeMs(pathname: string): Promise<number | null> {

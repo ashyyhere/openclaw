@@ -1,13 +1,13 @@
 /** Barrel for generated models.json provider discovery, normalization, and secrets. */
 export { resolveImplicitProviders } from "./models-config.providers.implicit.js";
-/** Re-exported API for src/agents. */
+/** Normalize provider entries and generated catalog models for models.json planning. */
 export {
   normalizeProviderCatalogModelsForConfig,
   normalizeProviders,
 } from "./models-config.providers.normalize.js";
-/** Re-exported API for src/agents, starting with Provider Config. */
+/** Provider configuration shape shared with secret-resolution helpers. */
 export type { ProviderConfig } from "./models-config.providers.secrets.js";
-/** Re-exported API for src/agents, starting with apply Native Streaming Usage Compat. */
+/** Apply compatibility policy for providers whose streaming usage reports need normalization. */
 export { applyNativeStreamingUsageCompat } from "./models-config.providers.policy.js";
-/** Re-exported API for src/agents, starting with enforce Source Managed Provider Secrets. */
+/** Enforce config/source-managed secret rules before provider entries are persisted. */
 export { enforceSourceManagedProviderSecrets } from "./models-config.providers.source-managed.js";

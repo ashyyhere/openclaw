@@ -12,12 +12,12 @@ import { sanitizeUserFacingText } from "./embedded-agent-helpers/sanitize-user-f
 import type { AgentMessage } from "./runtime/index.js";
 import { formatToolDetail, resolveToolDisplay } from "./tool-display.js";
 
-/** Re-exported API for src/agents. */
+/** Sanitizers for downgraded tool-call markup that may leak into assistant-visible text. */
 export {
   stripDowngradedToolCallText,
   stripMinimaxToolCallXml,
 } from "../shared/text/assistant-visible-text.js";
-/** Re-exported API for src/agents, starting with strip Model Special Tokens. */
+/** Remove provider-specific wrapper tokens before embedded-agent text is displayed. */
 export { stripModelSpecialTokens } from "../shared/text/model-special-tokens.js";
 
 /** Return whether a session message is an assistant message. */
