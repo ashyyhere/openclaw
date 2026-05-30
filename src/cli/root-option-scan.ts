@@ -9,7 +9,7 @@ type CliRootOptionVisitResult =
   | { kind: "handled"; consumedNext?: boolean }
   | { kind: "error"; error: string };
 
-/** Reused helper for scan Cli Root Options behavior in src/cli. */
+/** Walks argv once, letting callers consume custom root options before command dispatch. */
 export function scanCliRootOptions(
   argv: string[],
   visit: (params: {

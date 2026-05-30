@@ -10,7 +10,7 @@ function hasListEntries(value: string[] | undefined): boolean {
   return Array.isArray(value) && value.length > 0;
 }
 
-/** Reused helper for has Plugin Help Affecting Config behavior in src/cli. */
+/** Detects source-config plugin settings that can change root help command visibility. */
 export function hasPluginHelpAffectingConfig(config: OpenClawConfig | null | undefined): boolean {
   const plugins = config?.plugins;
   if (!plugins) {
@@ -27,14 +27,14 @@ export function hasPluginHelpAffectingConfig(config: OpenClawConfig | null | und
   );
 }
 
-/** Reused helper for has Plugin Help Affecting Env behavior in src/cli. */
+/** Detects plugin-related env overrides that can change root help command visibility. */
 export function hasPluginHelpAffectingEnv(env: NodeJS.ProcessEnv): boolean {
   return Boolean(
     env.OPENCLAW_BUNDLED_PLUGINS_DIR?.trim() || env.OPENCLAW_DISABLE_BUNDLED_PLUGINS?.trim(),
   );
 }
 
-/** Reused helper for load Root Help Render Options For Config Sensitive Plugins behavior in src/cli. */
+/** Loads root-help render options only when plugin config/env can affect displayed commands. */
 export async function loadRootHelpRenderOptionsForConfigSensitivePlugins(
   env: NodeJS.ProcessEnv = process.env,
 ): Promise<RootHelpRenderOptions | null> {

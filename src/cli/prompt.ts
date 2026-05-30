@@ -4,7 +4,7 @@ import readline from "node:readline/promises";
 import { isVerbose, isYes } from "../globals.js";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
-/** Reused class for Prompt Input Closed Error behavior in src/cli. */
+/** Error raised when stdin closes before an interactive prompt receives an answer. */
 export class PromptInputClosedError extends Error {
   constructor() {
     super("Prompt input closed before an answer was received.");
@@ -35,7 +35,7 @@ function questionUntilClose(rl: ReadlineInterface, question: string): Promise<st
   });
 }
 
-/** Reused helper for prompt Yes No behavior in src/cli. */
+/** Prompts for a yes/no answer, honoring the global noninteractive yes flag first. */
 export async function promptYesNo(question: string, defaultYes = false): Promise<boolean> {
   // Simple Y/N prompt honoring global --yes and verbosity flags.
   if (isVerbose() && isYes()) {

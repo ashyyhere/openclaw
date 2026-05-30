@@ -3,7 +3,7 @@ import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { parseClawHubPluginSpec } from "../infra/clawhub-spec.js";
 import type { PluginRecord } from "../plugins/registry.js";
 
-/** Reused helper for resolve Plugin Uninstall Id behavior in src/cli. */
+/** Resolves user-supplied uninstall targets across registry ids, install specs, and ClawHub names. */
 export function resolvePluginUninstallId<
   TPlugin extends Pick<PluginRecord, "id" | "name">,
 >(params: {

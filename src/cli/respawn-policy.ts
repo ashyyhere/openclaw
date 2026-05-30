@@ -41,7 +41,7 @@ function isForegroundGatewayRunArgv(argv: string[]): boolean {
   return positionals.length === 0 || (positionals.length === 1 && positionals[0] === "run");
 }
 
-/** Reused helper for should Skip Respawn For Argv behavior in src/cli. */
+/** Skips runtime respawn for help/version, interactive TTY commands, and foreground gateway run. */
 export function shouldSkipRespawnForArgv(argv: string[]): boolean {
   const invocation = resolveCliArgvInvocation(argv);
   return (
@@ -51,7 +51,7 @@ export function shouldSkipRespawnForArgv(argv: string[]): boolean {
   );
 }
 
-/** Reused helper for should Skip Startup Environment Respawn For Argv behavior in src/cli. */
+/** Skips startup-env respawn for commands that must keep the original foreground process. */
 export function shouldSkipStartupEnvironmentRespawnForArgv(argv: string[]): boolean {
   const invocation = resolveCliArgvInvocation(argv);
   return (
