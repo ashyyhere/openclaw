@@ -47,7 +47,7 @@ type LspServerCapabilities = {
   [key: string]: unknown;
 };
 
-/** Shared type for Bundle Lsp Tool Runtime in src/agents. */
+/** Active LSP-backed tool runtime with spawned sessions and cleanup hook. */
 export type BundleLspToolRuntime = {
   tools: AnyAgentTool[];
   sessions: Array<{ serverName: string; capabilities: LspServerCapabilities }>;

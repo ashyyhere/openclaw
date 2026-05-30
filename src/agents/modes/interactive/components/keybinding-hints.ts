@@ -5,7 +5,7 @@
 import { getKeybindings, type Keybinding, type KeyId } from "@earendil-works/pi-tui";
 import { theme } from "../theme/theme.js";
 
-/** Shared type for Key Text Format Options in src/agents/modes. */
+/** Formatting switches for keyboard shortcut labels shown in the interactive UI. */
 export interface KeyTextFormatOptions {
   capitalize?: boolean;
 }
@@ -18,7 +18,7 @@ function formatKeyPart(part: string, options: KeyTextFormatOptions): string {
     : displayPart;
 }
 
-/** Reused helper for format Key Text behavior in src/agents/modes. */
+/** Format a slash-delimited shortcut string with platform-specific key names. */
 export function formatKeyText(key: string, options: KeyTextFormatOptions = {}): string {
   return key
     .split("/")
@@ -38,22 +38,22 @@ function formatKeys(keys: KeyId[], options: KeyTextFormatOptions = {}): string {
   return formatKeyText(keys.join("/"), options);
 }
 
-/** Reused helper for key Text behavior in src/agents/modes. */
+/** Return the raw keybinding shortcut text for a registered action. */
 export function keyText(keybinding: Keybinding): string {
   return formatKeys(getKeybindings().getKeys(keybinding));
 }
 
-/** Reused helper for key Display Text behavior in src/agents/modes. */
+/** Return display-cased keybinding shortcut text for a registered action. */
 export function keyDisplayText(keybinding: Keybinding): string {
   return formatKeys(getKeybindings().getKeys(keybinding), { capitalize: true });
 }
 
-/** Reused helper for key Hint behavior in src/agents/modes. */
+/** Render a dim keybinding plus muted description for footer/status hints. */
 export function keyHint(keybinding: Keybinding, description: string): string {
   return theme.fg("dim", keyText(keybinding)) + theme.fg("muted", ` ${description}`);
 }
 
-/** Reused helper for raw Key Hint behavior in src/agents/modes. */
+/** Render a hint for an ad hoc shortcut string that is not registered in keybindings. */
 export function rawKeyHint(key: string, description: string): string {
   return theme.fg("dim", formatKeyText(key)) + theme.fg("muted", ` ${description}`);
 }

@@ -71,7 +71,7 @@ function renderIntraLineDiff(
   return { removedLine, addedLine };
 }
 
-/** Shared type for Render Diff Options in src/agents/modes. */
+/** Options accepted by the interactive diff renderer. */
 export interface RenderDiffOptions {
   /** File path (unused, kept for API compatibility) */
   filePath?: string;
