@@ -31,15 +31,15 @@ type LoopDetectionResult =
       warningKey?: string;
     };
 
-/** Reused constant for TOOL CALL HISTORY SIZE behavior in src/agents. */
+/** Number of recent tool calls retained for loop detection. */
 export const TOOL_CALL_HISTORY_SIZE = 30;
-/** Reused constant for WARNING THRESHOLD behavior in src/agents. */
+/** Repeated-call count that emits a loop warning. */
 export const WARNING_THRESHOLD = 10;
-/** Reused constant for UNKNOWN TOOL THRESHOLD behavior in src/agents. */
+/** Unknown-tool count that emits a loop warning. */
 export const UNKNOWN_TOOL_THRESHOLD = 10;
-/** Reused constant for CRITICAL THRESHOLD behavior in src/agents. */
+/** Repeated-call count that escalates loop detection to critical. */
 export const CRITICAL_THRESHOLD = 20;
-/** Reused constant for GLOBAL CIRCUIT BREAKER THRESHOLD behavior in src/agents. */
+/** Total repeated-call count that trips the global circuit breaker. */
 export const GLOBAL_CIRCUIT_BREAKER_THRESHOLD = 30;
 const DEFAULT_LOOP_DETECTION_CONFIG = {
   enabled: false,

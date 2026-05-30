@@ -286,7 +286,7 @@ async function resizeImageBase64IfNeeded(params: {
   throw new Error(`Image could not be reduced below ${maxMb}MB (got ${gotMb}MB)`);
 }
 
-/** Reused helper for sanitize Content Blocks Images behavior in src/agents. */
+/** Validates and resizes inline image blocks inside tool content. */
 export async function sanitizeContentBlocksImages(
   blocks: ToolContentBlock[],
   label: string,
@@ -357,7 +357,7 @@ export async function sanitizeContentBlocksImages(
   return out;
 }
 
-/** Reused helper for sanitize Image Blocks behavior in src/agents. */
+/** Sanitizes a list of image blocks and reports how many were dropped. */
 export async function sanitizeImageBlocks(
   images: ImageContent[],
   label: string,
@@ -371,7 +371,7 @@ export async function sanitizeImageBlocks(
   return { images: next, dropped: Math.max(0, images.length - next.length) };
 }
 
-/** Reused helper for sanitize Tool Result Images behavior in src/agents. */
+/** Sanitizes image payloads embedded in an agent tool result. */
 export async function sanitizeToolResultImages(
   result: AgentToolResult<unknown>,
   label: string,

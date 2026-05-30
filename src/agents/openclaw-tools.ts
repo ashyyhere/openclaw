@@ -576,5 +576,5 @@ export const testing = {
       : defaultOpenClawToolsDeps;
   },
 };
-/** Re-exported API for src/agents, starting with testing. */
+/** Test-only dependency overrides for built-in OpenClaw tools. */
 export { testing as __testing };

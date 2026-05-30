@@ -11,7 +11,7 @@ import {
 } from "../internal-runtime-context.js";
 import type { AgentCommandOpts } from "./types.js";
 
-/** Shared type for Persist Session Entry Params in src/agents/command. */
+/** Inputs for persisting a session entry during command execution. */
 export type PersistSessionEntryParams = {
   sessionStore: Record<string, SessionEntry>;
   sessionKey: string;

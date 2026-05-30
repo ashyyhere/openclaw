@@ -391,14 +391,14 @@ export function mergeModelProviderRequestOverrides(
   return merged;
 }
 
-/** Reused helper for normalize Base Url behavior in src/agents. */
+/** Normalizes a configured base URL, falling back when provided. */
 export function normalizeBaseUrl(baseUrl: string | undefined, fallback: string): string;
-/** Reused helper for normalize Base Url behavior in src/agents. */
+/** Normalizes an optional base URL without requiring a fallback. */
 export function normalizeBaseUrl(
   baseUrl: string | undefined,
   fallback?: string,
 ): string | undefined;
-/** Reused helper for normalize Base Url behavior in src/agents. */
+/** Normalizes base URLs by trimming and removing trailing slashes. */
 export function normalizeBaseUrl(
   baseUrl: string | undefined,
   fallback?: string,
