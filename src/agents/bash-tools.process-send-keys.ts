@@ -4,7 +4,7 @@ import { deriveSessionName } from "./bash-tools.shared.js";
 import { encodeKeySequence, hasCursorModeSensitiveKeys } from "./pty-keys.js";
 import type { AgentToolResult } from "./runtime/index.js";
 
-/** Shared type for Writable Stdin in src/agents. */
+/** Minimal writable stdin contract used by process send-keys. */
 export type WritableStdin = {
   write: (data: string, cb?: (err?: Error | null) => void) => void;
   end: () => void;

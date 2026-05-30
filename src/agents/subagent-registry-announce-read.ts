@@ -13,7 +13,7 @@ import {
 import { getSubagentRunsSnapshotForRead } from "./subagent-registry-state.js";
 import type { SubagentRunRecord } from "./subagent-registry.types.js";
 
-/** Reused helper for resolve Requester For Child Session behavior in src/agents. */
+/** Resolves the requester session and delivery origin for a child subagent session. */
 export function resolveRequesterForChildSession(childSessionKey: string): {
   requesterSessionKey: string;
   requesterOrigin?: DeliveryContext;
@@ -31,12 +31,12 @@ export function resolveRequesterForChildSession(childSessionKey: string): {
   };
 }
 
-/** Reused helper for is Subagent Session Run Active behavior in src/agents. */
+/** Checks whether a child subagent session still has an active run. */
 export function isSubagentSessionRunActive(childSessionKey: string): boolean {
   return isSubagentSessionRunActiveFromRuns(subagentRuns, childSessionKey);
 }
 
-/** Reused helper for should Ignore Post Completion Announce For Session behavior in src/agents. */
+/** Decides whether a late announce for a completed child session should be ignored. */
 export function shouldIgnorePostCompletionAnnounceForSession(childSessionKey: string): boolean {
   return shouldIgnorePostCompletionAnnounceForSessionFromRuns(
     getSubagentRunsSnapshotForRead(subagentRuns),
@@ -44,7 +44,7 @@ export function shouldIgnorePostCompletionAnnounceForSession(childSessionKey: st
   );
 }
 
-/** Reused helper for list Subagent Runs For Requester behavior in src/agents. */
+/** Lists subagent runs associated with a requester session. */
 export function listSubagentRunsForRequester(
   requesterSessionKey: string,
   options?: { requesterRunId?: string },
@@ -52,7 +52,7 @@ export function listSubagentRunsForRequester(
   return listRunsForRequesterFromRuns(subagentRuns, requesterSessionKey, options);
 }
 
-/** Reused helper for count Pending Descendant Runs behavior in src/agents. */
+/** Counts pending descendant runs below a requester/root session. */
 export function countPendingDescendantRuns(rootSessionKey: string): number {
   return countPendingDescendantRunsFromRuns(
     getSubagentRunsSnapshotForRead(subagentRuns),
@@ -60,7 +60,7 @@ export function countPendingDescendantRuns(rootSessionKey: string): number {
   );
 }
 
-/** Reused helper for count Pending Descendant Runs Excluding Run behavior in src/agents. */
+/** Counts pending descendants while excluding one run id from the total. */
 export function countPendingDescendantRunsExcludingRun(
   rootSessionKey: string,
   excludeRunId: string,

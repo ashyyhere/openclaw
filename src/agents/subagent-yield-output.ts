@@ -29,7 +29,7 @@ function isToolCallBlock(value: unknown): boolean {
   );
 }
 
-/** Reused helper for assistant Calls Sessions Yield behavior in src/agents. */
+/** Detects whether an assistant message called the sessions_yield tool. */
 export function assistantCallsSessionsYield(message: unknown): boolean {
   const record = asOptionalRecord(message);
   if (!record || record.role !== "assistant" || !Array.isArray(record.content)) {
@@ -80,7 +80,7 @@ function readStructuredToolPayload(content: unknown): Record<string, unknown> | 
   return undefined;
 }
 
-/** Reused helper for is Sessions Yield Tool Result behavior in src/agents. */
+/** Detects tool-result messages that confirm a sessions_yield handoff. */
 export function isSessionsYieldToolResult(
   message: unknown,
   previousAssistantCalledYield: boolean,
