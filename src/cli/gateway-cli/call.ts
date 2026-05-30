@@ -8,7 +8,7 @@ import { callGateway } from "../../gateway/call.js";
 import { parseTimeoutMsWithFallback } from "../parse-timeout.js";
 import { withProgress } from "../progress.js";
 
-/** Shared type for Gateway Rpc Opts in src/cli/gateway-cli. */
+/** Common Gateway RPC connection and output flags used by gateway subcommands. */
 export type GatewayRpcOpts = {
   config?: OpenClawConfig;
   url?: string;
@@ -21,7 +21,7 @@ export type GatewayRpcOpts = {
 
 const DEFAULT_GATEWAY_RPC_TIMEOUT_MS = 10_000;
 
-/** Reused constant for gateway Call Opts behavior in src/cli/gateway-cli. */
+/** Adds shared Gateway RPC flags to a Commander command. */
 export const gatewayCallOpts = (cmd: Command) =>
   cmd
     .option("--url <url>", "Gateway WebSocket URL (defaults to gateway.remote.url when configured)")
@@ -31,7 +31,7 @@ export const gatewayCallOpts = (cmd: Command) =>
     .option("--expect-final", "Wait for final response (agent)", false)
     .option("--json", "Output JSON", false);
 
-/** Reused constant for call Gateway Cli behavior in src/cli/gateway-cli. */
+/** Calls the gateway from CLI commands with progress output disabled for JSON mode. */
 export const callGatewayCli = async (method: string, opts: GatewayRpcOpts, params?: unknown) =>
   withProgress(
     {
