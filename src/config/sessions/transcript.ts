@@ -1,4 +1,4 @@
-// config/sessions transcript helpers and runtime behavior.
+// Session transcript helpers for resolving files, reading assistant tails, and appending messages.
 import fs from "node:fs";
 import path from "node:path";
 import type { AgentMessage } from "../../agents/runtime/index.js";
@@ -41,15 +41,15 @@ async function ensureSessionHeader(params: {
   await writeJsonlEntry(params.sessionFile, header, { mode: 0o600 });
 }
 
-/** Shared type for Session Transcript Append Result in src/config/sessions. */
+/** Result returned after attempting to append an assistant message to a transcript. */
 export type SessionTranscriptAppendResult =
   | { ok: true; sessionFile: string; messageId: string }
   | { ok: false; reason: string };
 
-/** Shared type for Session Transcript Update Mode in src/config/sessions. */
+/** Publication mode for transcript updates after a message append. */
 export type SessionTranscriptUpdateMode = "inline" | "file-only" | "none";
 
-/** Shared type for Session Transcript Assistant Message in src/config/sessions. */
+/** Assistant message shape accepted by transcript append helpers. */
 export type SessionTranscriptAssistantMessage = Parameters<SessionManager["appendMessage"]>[0] & {
   role: "assistant";
 };
@@ -60,9 +60,9 @@ type AssistantTranscriptText = {
   timestamp?: number;
 };
 
-/** Shared type for Latest Assistant Transcript Text in src/config/sessions. */
+/** Latest visible assistant text read from a session transcript. */
 export type LatestAssistantTranscriptText = AssistantTranscriptText;
-/** Shared type for Tail Assistant Transcript Text in src/config/sessions. */
+/** Tail visible assistant text used for duplicate gap-fill detection. */
 export type TailAssistantTranscriptText = AssistantTranscriptText;
 
 function parseAssistantTranscriptText(
@@ -108,7 +108,7 @@ function isTranscriptOnlyOpenClawAssistantMessage(message: {
   );
 }
 
-/** Reused helper for resolve Session Transcript File behavior in src/config/sessions. */
+/** Resolves and, when possible, persists the transcript file path for a session entry. */
 export async function resolveSessionTranscriptFile(params: {
   sessionId: string;
   sessionKey: string;
@@ -154,7 +154,7 @@ export async function resolveSessionTranscriptFile(params: {
   };
 }
 
-/** Reused helper for read Latest Assistant Text From Session Transcript behavior in src/config/sessions. */
+/** Reads the newest non-transcript-only assistant text from a transcript. */
 export async function readLatestAssistantTextFromSessionTranscript(
   sessionFile: string | undefined,
 ): Promise<LatestAssistantTranscriptText | undefined> {
@@ -177,7 +177,7 @@ export async function readLatestAssistantTextFromSessionTranscript(
   return undefined;
 }
 
-/** Reused helper for read Tail Assistant Text From Session Transcript behavior in src/config/sessions. */
+/** Reads assistant text only when the transcript tail is an assistant message. */
 export async function readTailAssistantTextFromSessionTranscript(
   sessionFile: string | undefined,
 ): Promise<TailAssistantTranscriptText | undefined> {
@@ -205,7 +205,7 @@ export async function readTailAssistantTextFromSessionTranscript(
   return undefined;
 }
 
-/** Reused helper for append Assistant Message To Session Transcript behavior in src/config/sessions. */
+/** Appends mirrored assistant text/media as an OpenClaw delivery-mirror transcript message. */
 export async function appendAssistantMessageToSessionTranscript(params: {
   agentId?: string;
   sessionKey: string;
@@ -263,7 +263,7 @@ export async function appendAssistantMessageToSessionTranscript(params: {
   });
 }
 
-/** Reused helper for append Exact Assistant Message To Session Transcript behavior in src/config/sessions. */
+/** Appends an exact assistant message with idempotency, dedupe, locking, and update publication. */
 export async function appendExactAssistantMessageToSessionTranscript(params: {
   agentId?: string;
   sessionKey: string;

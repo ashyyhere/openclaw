@@ -1,4 +1,4 @@
-// config/sessions transcript jsonl helpers and runtime behavior.
+// JSONL serialization and append/write helpers for session transcript files.
 import { appendFileSync, writeFileSync } from "node:fs";
 import fs from "node:fs/promises";
 
@@ -8,37 +8,37 @@ type WriteJsonlFileOptions = {
   mode?: number;
 };
 
-/** Reused helper for serialize Jsonl Entry behavior in src/config/sessions. */
+/** Serializes one JSONL entry with a trailing newline. */
 export function serializeJsonlEntry(entry: unknown): string {
   return `${serializeJsonlLine(entry)}\n`;
 }
 
-/** Reused helper for serialize Jsonl Line behavior in src/config/sessions. */
+/** Serializes one JSONL entry without appending a newline. */
 export function serializeJsonlLine(entry: unknown): string {
   return JSON.stringify(entry);
 }
 
-/** Reused helper for serialize Jsonl Entries behavior in src/config/sessions. */
+/** Serializes multiple entries into newline-terminated JSONL text. */
 export function serializeJsonlEntries(entries: readonly unknown[]): string {
   return serializeJsonlLines(entries.map(serializeJsonlLine));
 }
 
-/** Reused helper for serialize Jsonl Lines behavior in src/config/sessions. */
+/** Joins pre-serialized JSONL lines and appends one final newline when non-empty. */
 export function serializeJsonlLines(lines: readonly string[]): string {
   return lines.length > 0 ? `${lines.join("\n")}\n` : "";
 }
 
-/** Reused helper for write Jsonl Entries Sync behavior in src/config/sessions. */
+/** Synchronously replaces a transcript file with serialized JSONL entries. */
 export function writeJsonlEntriesSync(filePath: string, entries: readonly unknown[]): void {
   writeFileSync(filePath, serializeJsonlEntries(entries), "utf-8");
 }
 
-/** Reused helper for append Jsonl Entry Sync behavior in src/config/sessions. */
+/** Synchronously appends one JSONL entry to a transcript file. */
 export function appendJsonlEntrySync(filePath: string, entry: unknown): void {
   appendFileSync(filePath, serializeJsonlEntry(entry), "utf-8");
 }
 
-/** Reused helper for append Jsonl Entries Sync behavior in src/config/sessions. */
+/** Synchronously appends multiple JSONL entries, skipping empty batches. */
 export function appendJsonlEntriesSync(filePath: string, entries: readonly unknown[]): void {
   if (entries.length === 0) {
     return;
@@ -46,7 +46,7 @@ export function appendJsonlEntriesSync(filePath: string, entries: readonly unkno
   appendFileSync(filePath, serializeJsonlEntries(entries), "utf-8");
 }
 
-/** Reused helper for write Jsonl Entry behavior in src/config/sessions. */
+/** Asynchronously writes one JSONL entry with optional fs write options. */
 export async function writeJsonlEntry(
   filePath: string,
   entry: unknown,
@@ -59,7 +59,7 @@ export async function writeJsonlEntry(
   });
 }
 
-/** Reused helper for write Jsonl Lines behavior in src/config/sessions. */
+/** Asynchronously writes pre-serialized JSONL lines with optional fs write options. */
 export async function writeJsonlLines(
   filePath: string,
   lines: readonly string[],
@@ -72,7 +72,7 @@ export async function writeJsonlLines(
   });
 }
 
-/** Reused helper for append Jsonl Entry behavior in src/config/sessions. */
+/** Asynchronously appends one JSONL entry to a transcript file. */
 export async function appendJsonlEntry(filePath: string, entry: unknown): Promise<void> {
   await fs.appendFile(filePath, serializeJsonlEntry(entry), "utf-8");
 }
