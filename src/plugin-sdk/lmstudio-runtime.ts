@@ -14,7 +14,7 @@ type LmstudioReasoningCapabilityWire = {
   default?: unknown;
 };
 
-/** Shared type for Lmstudio Model Wire in src/plugin-sdk. */
+/** Raw model entry returned by the LM Studio `/api/v0/models` endpoint. */
 export type LmstudioModelWire = {
   type?: "llm" | "embedding";
   key?: string;
@@ -34,7 +34,7 @@ export type LmstudioModelWire = {
   } | null>;
 };
 
-/** Shared type for Lmstudio Model Base in src/plugin-sdk. */
+/** Normalized LM Studio model metadata used by OpenClaw provider catalogs. */
 export type LmstudioModelBase = {
   id: string;
   displayName: string;
@@ -50,7 +50,7 @@ export type LmstudioModelBase = {
   maxTokens: number;
 };
 
-/** Shared type for Fetch Lmstudio Models Result in src/plugin-sdk. */
+/** Result shape for probing a local or remote LM Studio model server. */
 export type FetchLmstudioModelsResult = {
   reachable: boolean;
   status?: number;
@@ -133,72 +133,72 @@ function loadFacadeModule(): FacadeModule {
 
 // Keep defaults inline so importing the runtime facade stays cold until a helper
 // is actually used. These values are part of the public LM Studio contract.
-/** Reused constant for LMSTUDIO DEFAULT BASE URL behavior in src/plugin-sdk. */
+/** Default LM Studio server base URL for local desktop installs. */
 export const LMSTUDIO_DEFAULT_BASE_URL: FacadeModule["LMSTUDIO_DEFAULT_BASE_URL"] =
   "http://localhost:1234";
-/** Reused constant for LMSTUDIO DEFAULT INFERENCE BASE URL behavior in src/plugin-sdk. */
+/** Default OpenAI-compatible inference base derived from the LM Studio server. */
 export const LMSTUDIO_DEFAULT_INFERENCE_BASE_URL: FacadeModule["LMSTUDIO_DEFAULT_INFERENCE_BASE_URL"] = `${LMSTUDIO_DEFAULT_BASE_URL}/v1`;
-/** Reused constant for LMSTUDIO DEFAULT EMBEDDING MODEL behavior in src/plugin-sdk. */
+/** Default embedding model id used when LM Studio config does not choose one. */
 export const LMSTUDIO_DEFAULT_EMBEDDING_MODEL: FacadeModule["LMSTUDIO_DEFAULT_EMBEDDING_MODEL"] =
   "text-embedding-nomic-embed-text-v1.5";
-/** Reused constant for LMSTUDIO PROVIDER LABEL behavior in src/plugin-sdk. */
+/** Display label for the LM Studio provider. */
 export const LMSTUDIO_PROVIDER_LABEL: FacadeModule["LMSTUDIO_PROVIDER_LABEL"] = "LM Studio";
-/** Reused constant for LMSTUDIO DEFAULT API KEY ENV VAR behavior in src/plugin-sdk. */
+/** Environment variable read for LM Studio API tokens. */
 export const LMSTUDIO_DEFAULT_API_KEY_ENV_VAR: FacadeModule["LMSTUDIO_DEFAULT_API_KEY_ENV_VAR"] =
   "LM_API_TOKEN";
-/** Reused constant for LMSTUDIO LOCAL API KEY PLACEHOLDER behavior in src/plugin-sdk. */
+/** Placeholder API key accepted by local LM Studio servers that do not require auth. */
 export const LMSTUDIO_LOCAL_API_KEY_PLACEHOLDER: FacadeModule["LMSTUDIO_LOCAL_API_KEY_PLACEHOLDER"] =
   "lmstudio-local";
-/** Reused constant for LMSTUDIO MODEL PLACEHOLDER behavior in src/plugin-sdk. */
+/** Placeholder model id shown until `/api/v0/models` returns concrete models. */
 export const LMSTUDIO_MODEL_PLACEHOLDER: FacadeModule["LMSTUDIO_MODEL_PLACEHOLDER"] =
   "model-key-from-api-v1-models";
-/** Reused constant for LMSTUDIO DEFAULT LOAD CONTEXT LENGTH behavior in src/plugin-sdk. */
+/** Context length requested when loading LM Studio models without an override. */
 export const LMSTUDIO_DEFAULT_LOAD_CONTEXT_LENGTH: FacadeModule["LMSTUDIO_DEFAULT_LOAD_CONTEXT_LENGTH"] = 64000;
-/** Reused constant for LMSTUDIO DEFAULT MODEL ID behavior in src/plugin-sdk. */
+/** Default chat model id used by generated LM Studio provider config. */
 export const LMSTUDIO_DEFAULT_MODEL_ID: FacadeModule["LMSTUDIO_DEFAULT_MODEL_ID"] =
   "qwen/qwen3.5-9b";
-/** Reused constant for LMSTUDIO PROVIDER ID behavior in src/plugin-sdk. */
+/** Stable provider id for LM Studio runtime and config lookups. */
 export const LMSTUDIO_PROVIDER_ID: FacadeModule["LMSTUDIO_PROVIDER_ID"] = "lmstudio";
 
-/** Reused constant for resolve Lmstudio Reasoning Capability behavior in src/plugin-sdk. */
+/** Lazy facade for reading LM Studio reasoning support from model metadata. */
 export const resolveLmstudioReasoningCapability: FacadeModule["resolveLmstudioReasoningCapability"] =
   createLazyFacadeRuntimeValue(loadFacadeModule, "resolveLmstudioReasoningCapability");
-/** Reused constant for resolve Loaded Context Window behavior in src/plugin-sdk. */
+/** Lazy facade for resolving the context window of loaded LM Studio instances. */
 export const resolveLoadedContextWindow: FacadeModule["resolveLoadedContextWindow"] =
   createLazyFacadeRuntimeValue(loadFacadeModule, "resolveLoadedContextWindow");
-/** Reused constant for resolve Lmstudio Server Base behavior in src/plugin-sdk. */
+/** Lazy facade for normalizing the LM Studio management API base URL. */
 export const resolveLmstudioServerBase: FacadeModule["resolveLmstudioServerBase"] =
   createLazyFacadeRuntimeValue(loadFacadeModule, "resolveLmstudioServerBase");
-/** Reused constant for resolve Lmstudio Inference Base behavior in src/plugin-sdk. */
+/** Lazy facade for normalizing the LM Studio OpenAI-compatible inference base. */
 export const resolveLmstudioInferenceBase: FacadeModule["resolveLmstudioInferenceBase"] =
   createLazyFacadeRuntimeValue(loadFacadeModule, "resolveLmstudioInferenceBase");
-/** Reused constant for normalize Lmstudio Provider Config behavior in src/plugin-sdk. */
+/** Lazy facade for filling LM Studio provider config defaults. */
 export const normalizeLmstudioProviderConfig: FacadeModule["normalizeLmstudioProviderConfig"] =
   createLazyFacadeRuntimeValue(loadFacadeModule, "normalizeLmstudioProviderConfig");
-/** Reused constant for fetch Lmstudio Models behavior in src/plugin-sdk. */
+/** Lazy facade for fetching LM Studio model inventory. */
 export const fetchLmstudioModels: FacadeModule["fetchLmstudioModels"] =
   createLazyFacadeRuntimeValue(loadFacadeModule, "fetchLmstudioModels");
-/** Reused constant for map Lmstudio Wire Entry behavior in src/plugin-sdk. */
+/** Lazy facade for mapping LM Studio wire entries into OpenClaw model metadata. */
 export const mapLmstudioWireEntry: FacadeModule["mapLmstudioWireEntry"] =
   createLazyFacadeRuntimeValue(loadFacadeModule, "mapLmstudioWireEntry");
-/** Reused constant for discover Lmstudio Models behavior in src/plugin-sdk. */
+/** Lazy facade for discovering LM Studio models from config and runtime probes. */
 export const discoverLmstudioModels: FacadeModule["discoverLmstudioModels"] =
   createLazyFacadeRuntimeValue(loadFacadeModule, "discoverLmstudioModels");
-/** Reused constant for ensure Lmstudio Model Loaded behavior in src/plugin-sdk. */
+/** Lazy facade for loading an LM Studio model before inference. */
 export const ensureLmstudioModelLoaded: FacadeModule["ensureLmstudioModelLoaded"] =
   createLazyFacadeRuntimeValue(loadFacadeModule, "ensureLmstudioModelLoaded");
-/** Reused constant for build Lmstudio Auth Headers behavior in src/plugin-sdk. */
+/** Lazy facade for building LM Studio auth and JSON headers. */
 export const buildLmstudioAuthHeaders: FacadeModule["buildLmstudioAuthHeaders"] =
   createLazyFacadeRuntimeValue(loadFacadeModule, "buildLmstudioAuthHeaders");
-/** Reused constant for resolve Lmstudio Configured Api Key behavior in src/plugin-sdk. */
+/** Lazy facade for resolving configured LM Studio API keys from config/env. */
 export const resolveLmstudioConfiguredApiKey: FacadeModule["resolveLmstudioConfiguredApiKey"] =
   createLazyFacadeRuntimeValue(loadFacadeModule, "resolveLmstudioConfiguredApiKey");
-/** Reused constant for resolve Lmstudio Provider Headers behavior in src/plugin-sdk. */
+/** Lazy facade for resolving extra LM Studio provider headers. */
 export const resolveLmstudioProviderHeaders: FacadeModule["resolveLmstudioProviderHeaders"] =
   createLazyFacadeRuntimeValue(loadFacadeModule, "resolveLmstudioProviderHeaders");
-/** Reused constant for resolve Lmstudio Request Context behavior in src/plugin-sdk. */
+/** Lazy facade for composing LM Studio request auth and headers. */
 export const resolveLmstudioRequestContext: FacadeModule["resolveLmstudioRequestContext"] =
   createLazyFacadeRuntimeValue(loadFacadeModule, "resolveLmstudioRequestContext");
-/** Reused constant for resolve Lmstudio Runtime Api Key behavior in src/plugin-sdk. */
+/** Lazy facade for resolving the API key available to LM Studio runtime calls. */
 export const resolveLmstudioRuntimeApiKey: FacadeModule["resolveLmstudioRuntimeApiKey"] =
   createLazyFacadeRuntimeValue(loadFacadeModule, "resolveLmstudioRuntimeApiKey");
