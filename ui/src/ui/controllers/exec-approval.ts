@@ -1,7 +1,8 @@
-// ui/src/ui/controllers exec approval helpers and runtime behavior.
+// Normalizes Gateway exec/plugin approval events and manages the Control UI
+// approval prompt queue, including refresh races and stale resolution errors.
 import { normalizeOptionalString } from "../string-coerce.ts";
 
-/** Shared type for Exec Approval Request Payload in ui/src/ui/controllers. */
+/** Normalized command approval request fields shown by the approval prompt. */
 export type ExecApprovalRequestPayload = {
   command: string;
   cwd?: string | null;
@@ -18,10 +19,10 @@ export type ExecApprovalRequestPayload = {
   allowedDecisions?: readonly ExecApprovalDecision[];
 };
 
-/** Shared type for Exec Approval Decision in ui/src/ui/controllers. */
+/** Decisions the UI can send back to exec or plugin approval endpoints. */
 export type ExecApprovalDecision = "allow-once" | "allow-always" | "deny";
 
-/** Shared type for Exec Approval Request in ui/src/ui/controllers. */
+/** Queue entry for either an exec approval or a plugin approval prompt. */
 export type ExecApprovalRequest = {
   id: string;
   kind: "exec" | "plugin";
@@ -34,7 +35,7 @@ export type ExecApprovalRequest = {
   expiresAtMs: number;
 };
 
-/** Shared type for Exec Approval Resolved in ui/src/ui/controllers. */
+/** Resolution event emitted after an approval id is accepted, denied, or expires. */
 export type ExecApprovalResolved = {
   id: string;
   decision?: string | null;
@@ -42,7 +43,7 @@ export type ExecApprovalResolved = {
   ts?: number | null;
 };
 
-/** Shared type for Exec Approval Prompt State in ui/src/ui/controllers. */
+/** Mutable state slice used by the Control UI approval prompt controller. */
 export type ExecApprovalPromptState = {
   client: {
     request(method: string, params?: unknown): Promise<unknown>;
@@ -108,7 +109,7 @@ function parseAllowedDecisions(value: unknown): ExecApprovalDecision[] | undefin
   return decisions.length > 0 ? decisions : undefined;
 }
 
-/** Reused helper for parse Exec Approval Requested behavior in ui/src/ui/controllers. */
+/** Parses a Gateway `exec.approval.requested` payload into a queue entry. */
 export function parseExecApprovalRequested(payload: unknown): ExecApprovalRequest | null {
   if (!isRecord(payload)) {
     return null;
@@ -147,7 +148,7 @@ export function parseExecApprovalRequested(payload: unknown): ExecApprovalReques
   };
 }
 
-/** Reused helper for parse Exec Approval Resolved behavior in ui/src/ui/controllers. */
+/** Parses a Gateway approval resolution payload and keeps absent fields nullable. */
 export function parseExecApprovalResolved(payload: unknown): ExecApprovalResolved | null {
   if (!isRecord(payload)) {
     return null;
@@ -164,7 +165,7 @@ export function parseExecApprovalResolved(payload: unknown): ExecApprovalResolve
   };
 }
 
-/** Reused helper for parse Plugin Approval Requested behavior in ui/src/ui/controllers. */
+/** Parses a Gateway `plugin.approval.requested` payload into the shared prompt shape. */
 export function parsePluginApprovalRequested(payload: unknown): ExecApprovalRequest | null {
   if (!isRecord(payload)) {
     return null;
@@ -206,13 +207,13 @@ export function parsePluginApprovalRequested(payload: unknown): ExecApprovalRequ
   };
 }
 
-/** Reused helper for prune Exec Approval Queue behavior in ui/src/ui/controllers. */
+/** Removes expired approval prompts from a queue snapshot. */
 export function pruneExecApprovalQueue(queue: ExecApprovalRequest[]): ExecApprovalRequest[] {
   const now = Date.now();
   return queue.filter((entry) => entry.expiresAtMs > now);
 }
 
-/** Reused helper for add Exec Approval behavior in ui/src/ui/controllers. */
+/** Adds or replaces an approval prompt and keeps newest prompts first. */
 export function addExecApproval(
   queue: ExecApprovalRequest[],
   entry: ExecApprovalRequest,
@@ -222,7 +223,7 @@ export function addExecApproval(
   return next;
 }
 
-/** Reused helper for remove Exec Approval behavior in ui/src/ui/controllers. */
+/** Removes one approval prompt after first pruning expired prompts. */
 export function removeExecApproval(
   queue: ExecApprovalRequest[],
   id: string,
@@ -248,7 +249,7 @@ function readGatewayErrorReason(err: unknown): string | null {
   return normalizeOptionalString(details.reason) ?? null;
 }
 
-/** Reused helper for is Stale Approval Resolution Error behavior in ui/src/ui/controllers. */
+/** Detects benign stale/expired approval errors returned by the Gateway. */
 export function isStaleApprovalResolutionError(err: unknown): boolean {
   if (!(err instanceof Error)) {
     return false;
@@ -327,7 +328,7 @@ function removeExecApprovalFromState(state: ExecApprovalPromptState, id: string)
   }
 }
 
-/** Reused helper for enqueue Exec Approval Prompt behavior in ui/src/ui/controllers. */
+/** Enqueues an approval prompt, clears prompt errors, and schedules expiry pruning. */
 export function enqueueExecApprovalPrompt(
   state: ExecApprovalPromptState,
   entry: ExecApprovalRequest,
@@ -337,7 +338,7 @@ export function enqueueExecApprovalPrompt(
   scheduleApprovalExpiryPrune(state, entry);
 }
 
-/** Reused helper for refresh Pending Approval Queue behavior in ui/src/ui/controllers. */
+/** Refreshes pending exec and plugin approvals while preserving arrivals during refresh. */
 export async function refreshPendingApprovalQueue(state: ExecApprovalPromptState): Promise<void> {
   const client = state.client;
   if (!client) {
@@ -379,14 +380,14 @@ export async function refreshPendingApprovalQueue(state: ExecApprovalPromptState
   }
 }
 
-/** Reused helper for dismiss Exec Approval Prompt behavior in ui/src/ui/controllers. */
+/** Dismisses a prompt locally and marks it removed for an in-flight refresh merge. */
 export function dismissExecApprovalPrompt(state: ExecApprovalPromptState, id: string): void {
   removeExecApprovalFromState(state, id);
   state.execApprovalRefreshRemovedIds?.add(id);
   state.execApprovalError = null;
 }
 
-/** Reused helper for clear Resolved Exec Approval Prompt behavior in ui/src/ui/controllers. */
+/** Clears a resolved prompt without mutating the currently displayed error. */
 export function clearResolvedExecApprovalPrompt(state: ExecApprovalPromptState, id: string): void {
   removeExecApprovalFromState(state, id);
   state.execApprovalRefreshRemovedIds?.add(id);
