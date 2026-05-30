@@ -1,4 +1,4 @@
-// config plugin install config migration helpers and runtime behavior.
+// Migration helpers for removing shipped plugin install records from config.
 import { z } from "zod";
 import { isRecord } from "../shared/record-coerce.js";
 import type { PluginInstallRecord } from "./types.plugins.js";
@@ -14,7 +14,7 @@ function pruneEmptyPluginsObject(plugins: Record<string, unknown>): unknown {
   return Object.keys(rest).length === 0 ? undefined : rest;
 }
 
-/** Reused helper for extract Shipped Plugin Install Config Records behavior in src/config. */
+/** Extract legacy shipped plugin install records from raw config. */
 export function extractShippedPluginInstallConfigRecords(
   config: unknown,
 ): Record<string, PluginInstallRecord> {
@@ -27,7 +27,7 @@ export function extractShippedPluginInstallConfigRecords(
     : {};
 }
 
-/** Reused helper for strip Shipped Plugin Install Config Records behavior in src/config. */
+/** Return raw config with legacy shipped plugin install records removed. */
 export function stripShippedPluginInstallConfigRecords(config: unknown): unknown {
   if (!isRecord(config) || !isRecord(config.plugins) || !("installs" in config.plugins)) {
     return config;

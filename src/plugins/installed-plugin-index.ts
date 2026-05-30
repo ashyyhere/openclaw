@@ -1,4 +1,4 @@
-// plugins installed plugin index helpers and runtime behavior.
+// Installed plugin index facade and query helpers.
 import type { OpenClawConfig } from "../config/types.js";
 import { resolveCompatibilityHostVersion } from "../version.js";
 import { normalizePluginsConfig, resolveEffectivePluginActivationState } from "./config-state.js";
@@ -23,13 +23,13 @@ import {
   type RefreshInstalledPluginIndexParams,
 } from "./installed-plugin-index-types.js";
 
-/** Re-exported API for src/plugins. */
+/** Re-export installed plugin index version constants and warning text. */
 export {
   INSTALLED_PLUGIN_INDEX_MIGRATION_VERSION,
   INSTALLED_PLUGIN_INDEX_VERSION,
   INSTALLED_PLUGIN_INDEX_WARNING,
 } from "./installed-plugin-index-types.js";
-/** Re-exported API for src/plugins. */
+/** Re-export installed plugin index record and parameter types. */
 export type {
   InstalledPluginIndex,
   InstalledPluginIndexRecord,
@@ -40,11 +40,11 @@ export type {
   LoadInstalledPluginIndexParams,
   RefreshInstalledPluginIndexParams,
 } from "./installed-plugin-index-types.js";
-/** Re-exported API for src/plugins, starting with extract Plugin Install Records From Installed Plugin Index. */
+/** Re-export install-record extraction from installed plugin indexes. */
 export { extractPluginInstallRecordsFromInstalledPluginIndex } from "./installed-plugin-index-install-records.js";
-/** Re-exported API for src/plugins, starting with diff Installed Plugin Index Invalidation Reasons. */
+/** Re-export installed plugin index invalidation diffing. */
 export { diffInstalledPluginIndexInvalidationReasons } from "./installed-plugin-index-invalidation.js";
-/** Re-exported API for src/plugins, starting with resolve Installed Plugin Index Policy Hash. */
+/** Re-export policy hash calculation used for installed plugin index freshness. */
 export { resolveInstalledPluginIndexPolicyHash } from "./installed-plugin-index-policy.js";
 
 function buildInstalledPluginIndex(
@@ -89,35 +89,35 @@ function buildInstalledPluginIndex(
   };
 }
 
-/** Reused helper for load Installed Plugin Index behavior in src/plugins. */
+/** Build the installed plugin index from registry, config, and cached install records. */
 export function loadInstalledPluginIndex(
   params: LoadInstalledPluginIndexParams = {},
 ): InstalledPluginIndex {
   return buildInstalledPluginIndex(params).index;
 }
 
-/** Reused helper for load Installed Plugin Index With Discovery behavior in src/plugins. */
+/** Build the installed plugin index and return discovery details used to create it. */
 export function loadInstalledPluginIndexWithDiscovery(
   params: LoadInstalledPluginIndexParams = {},
 ): { index: InstalledPluginIndex; discovery: PluginDiscoveryResult | undefined } {
   return buildInstalledPluginIndex(params);
 }
 
-/** Reused helper for refresh Installed Plugin Index behavior in src/plugins. */
+/** Rebuild the installed plugin index and mark the refresh reason. */
 export function refreshInstalledPluginIndex(
   params: RefreshInstalledPluginIndexParams,
 ): InstalledPluginIndex {
   return buildInstalledPluginIndex({ ...params, refreshReason: params.reason }).index;
 }
 
-/** Reused helper for list Installed Plugin Records behavior in src/plugins. */
+/** Return all plugin records from an installed plugin index. */
 export function listInstalledPluginRecords(
   index: InstalledPluginIndex,
 ): readonly InstalledPluginIndexRecord[] {
   return index.plugins;
 }
 
-/** Reused helper for list Enabled Installed Plugin Records behavior in src/plugins. */
+/** Return records enabled by index state or effective config activation. */
 export function listEnabledInstalledPluginRecords(
   index: InstalledPluginIndex,
   config?: OpenClawConfig,
@@ -128,7 +128,7 @@ export function listEnabledInstalledPluginRecords(
   return index.plugins.filter((plugin) => isInstalledPluginEnabled(index, plugin.pluginId, config));
 }
 
-/** Reused helper for get Installed Plugin Record behavior in src/plugins. */
+/** Find one installed plugin record by plugin id. */
 export function getInstalledPluginRecord(
   index: InstalledPluginIndex,
   pluginId: string,
@@ -136,7 +136,7 @@ export function getInstalledPluginRecord(
   return index.plugins.find((plugin) => plugin.pluginId === pluginId);
 }
 
-/** Reused helper for is Installed Plugin Enabled behavior in src/plugins. */
+/** Return whether a plugin is effectively enabled for the provided config. */
 export function isInstalledPluginEnabled(
   index: InstalledPluginIndex,
   pluginId: string,

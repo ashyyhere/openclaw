@@ -1,4 +1,4 @@
-// config byte size helpers and runtime behavior.
+// Byte-size parsing helpers for config values.
 import { parseByteSize } from "../cli/parse-bytes.js";
 
 /**
@@ -25,7 +25,7 @@ export function parseNonNegativeByteSize(value: unknown): number | null {
   return null;
 }
 
-/** Reused helper for is Valid Non Negative Byte Size String behavior in src/config. */
+/** Return whether a string parses as a non-negative byte-size config value. */
 export function isValidNonNegativeByteSizeString(value: string): boolean {
   return parseNonNegativeByteSize(value) !== null;
 }
