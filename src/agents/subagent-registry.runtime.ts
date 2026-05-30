@@ -1,6 +1,6 @@
 /** Runtime imports isolated for subagent registry persistence tests. */
 export { ensureContextEnginesInitialized } from "../context-engine/init.js";
-/** Re-exported API for src/agents, starting with resolve Context Engine. */
+/** Context engine resolver used by subagent registry persistence tests. */
 export { resolveContextEngine } from "../context-engine/registry.js";
-/** Re-exported API for src/agents, starting with ensure Runtime Plugins Loaded. */
+/** Runtime plugin loader used before resolving registry-backed context engines. */
 export { ensureRuntimePluginsLoaded } from "./runtime-plugins.js";

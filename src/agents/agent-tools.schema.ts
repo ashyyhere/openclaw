@@ -7,7 +7,7 @@ import {
 import type { AnyAgentTool } from "./agent-tools.types.js";
 import { copyChannelAgentToolMeta } from "./channel-tools.js";
 
-/** Re-exported API for src/agents, starting with normalize Tool Parameter Schema. */
+/** Normalize tool parameter schemas for provider-compatible exports. */
 export { normalizeToolParameterSchema };
 
 function isObjectSchemaWithNoRequiredParams(schema: unknown): boolean {

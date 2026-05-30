@@ -1,10 +1,11 @@
+// Bridges in-memory subagent run state to persisted SQLite snapshots.
 import {
   loadSubagentRegistryFromSqlite,
   saveSubagentRegistryToSqlite,
 } from "./subagent-registry.store.sqlite.js";
 import type { SubagentRunRecord } from "./subagent-registry.types.js";
 
-/** Reused helper for persist Subagent Runs To Disk behavior in src/agents. */
+/** Best-effort persist of subagent runs, ignoring storage failures. */
 export function persistSubagentRunsToDisk(runs: Map<string, SubagentRunRecord>) {
   try {
     saveSubagentRegistryToSqlite(runs);
@@ -13,12 +14,12 @@ export function persistSubagentRunsToDisk(runs: Map<string, SubagentRunRecord>) 
   }
 }
 
-/** Reused helper for persist Subagent Runs To Disk Or Throw behavior in src/agents. */
+/** Persist subagent runs and surface storage failures to the caller. */
 export function persistSubagentRunsToDiskOrThrow(runs: Map<string, SubagentRunRecord>) {
   saveSubagentRegistryToSqlite(runs);
 }
 
-/** Reused helper for restore Subagent Runs From Disk behavior in src/agents. */
+/** Restore persisted subagent runs into the active registry map. */
 export function restoreSubagentRunsFromDisk(params: {
   runs: Map<string, SubagentRunRecord>;
   mergeOnly?: boolean;
@@ -41,7 +42,7 @@ export function restoreSubagentRunsFromDisk(params: {
   return added;
 }
 
-/** Reused helper for get Subagent Runs Snapshot For Read behavior in src/agents. */
+/** Build a read snapshot from persisted and in-memory subagent runs. */
 export function getSubagentRunsSnapshotForRead(
   inMemoryRuns: Map<string, SubagentRunRecord>,
 ): Map<string, SubagentRunRecord> {

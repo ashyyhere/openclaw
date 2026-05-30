@@ -38,7 +38,7 @@ function isFailedAssistantTurn(message: Context["messages"][number]): boolean {
   return message.stopReason === "error" || message.stopReason === "aborted";
 }
 
-/** Reused helper for transform Transport Messages behavior in src/agents. */
+/** Repair and normalize transcript messages before provider transport delivery. */
 export function transformTransportMessages(
   messages: Context["messages"],
   model: Model,

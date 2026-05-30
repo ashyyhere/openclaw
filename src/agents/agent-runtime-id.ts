@@ -1,9 +1,9 @@
 /** Runtime id normalization for embedded agent harness selection. */
 export type EmbeddedAgentRuntime = "openclaw" | "auto" | (string & {});
 
-/** Reused constant for OPENCLAW AGENT RUNTIME ID behavior in src/agents. */
+/** Canonical runtime id for the built-in OpenClaw agent runtime. */
 export const OPENCLAW_AGENT_RUNTIME_ID = "openclaw";
-/** Reused constant for AUTO AGENT RUNTIME ID behavior in src/agents. */
+/** Runtime id that lets harness selection choose the best available runtime. */
 export const AUTO_AGENT_RUNTIME_ID = "auto";
 
 /** Normalize configured embedded agent runtime ids and retired aliases. */

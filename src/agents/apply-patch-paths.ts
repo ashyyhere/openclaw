@@ -33,7 +33,7 @@ const DELETE_FILE_MARKER = "*** Delete File: ";
 const UPDATE_FILE_MARKER = "*** Update File: ";
 const MOVE_TO_MARKER = "*** Move to: ";
 
-/** Shared type for Apply Patch Path Extraction Options in src/agents. */
+/** Path resolution options for apply_patch path extraction. */
 export type ApplyPatchPathExtractionOptions = {
   /** Tool execution cwd. Defaults to process.cwd(), matching createApplyPatchTool. */
   cwd?: string;
