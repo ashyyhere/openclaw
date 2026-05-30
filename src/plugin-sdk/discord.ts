@@ -21,14 +21,14 @@ import { getRuntimeConfig, getRuntimeConfigSnapshot } from "./runtime-config-sna
  * New channel plugins should use generic channel SDK subpaths.
  */
 export type { ChannelMessageActionAdapter, ChannelMessageActionName } from "./channel-contract.js";
-/** Re-exported API for src/plugin-sdk, starting with Channel Plugin. */
+/** Channel plugin type kept for legacy Discord subpath consumers. */
 export type { ChannelPlugin } from "./channel-core.js";
-/** Re-exported API for src/plugin-sdk, starting with Open Claw Config. */
+/** OpenClaw config type kept for legacy Discord subpath consumers. */
 export type { OpenClawConfig } from "./config-types.js";
-/** Re-exported API for src/plugin-sdk, starting with Open Claw Plugin Api. */
+/** Core plugin API/runtime types kept for legacy Discord subpath consumers. */
 export type { OpenClawPluginApi, PluginRuntime } from "./channel-plugin-common.js";
 
-/** Re-exported API for src/plugin-sdk. */
+/** Generic channel plugin config/account helpers kept on the legacy Discord facade. */
 export {
   DEFAULT_ACCOUNT_ID,
   applyAccountNameToChannelSection,
@@ -39,20 +39,20 @@ export {
   normalizeAccountId,
   PAIRING_APPROVED_MESSAGE,
 } from "./channel-plugin-common.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Channel status helpers forwarded for legacy Discord status integrations. */
 export {
   buildComputedAccountStatusSnapshot,
   buildTokenChannelStatusSummary,
   projectCredentialSnapshotFields,
   resolveConfiguredFromCredentialStatuses,
 } from "./channel-status.js";
-/** Re-exported API for src/plugin-sdk, starting with Discord Config Schema. */
+/** Discord config schema forwarded from the bundled channel config artifact. */
 export { DiscordConfigSchema } from "./bundled-channel-config-schema.js";
 
-/** Shared type for Discord Account Config in src/plugin-sdk. */
+/** Discord channel account config shape from the canonical OpenClaw config. */
 export type DiscordAccountConfig = NonNullable<NonNullable<OpenClawConfig["channels"]>["discord"]>;
 
-/** Shared type for Discord Component Message Spec in src/plugin-sdk. */
+/** Legacy Discord component message spec accepted by the facade. */
 export type DiscordComponentMessageSpec = {
   text?: string;
   reusable?: boolean;
@@ -64,14 +64,14 @@ export type DiscordComponentMessageSpec = {
   modal?: unknown;
 };
 
-/** Shared type for Discord Component Build Result in src/plugin-sdk. */
+/** Built Discord component payload returned by the legacy builder facade. */
 export type DiscordComponentBuildResult = {
   components: unknown[];
   entries: unknown[];
   modals: unknown[];
 };
 
-/** Shared type for Discord Component Send Opts in src/plugin-sdk. */
+/** Options accepted when editing or sending Discord component messages. */
 export type DiscordComponentSendOpts = {
   cfg?: OpenClawConfig;
   accountId?: string;
@@ -86,14 +86,14 @@ export type DiscordComponentSendOpts = {
   [key: string]: unknown;
 };
 
-/** Shared type for Discord Component Send Result in src/plugin-sdk. */
+/** Minimal Discord message result returned by component send/edit helpers. */
 export type DiscordComponentSendResult = {
   id?: string;
   channel_id?: string;
   [key: string]: unknown;
 };
 
-/** Shared type for Resolved Discord Account in src/plugin-sdk. */
+/** Resolved Discord account credentials and config returned by account helpers. */
 export type ResolvedDiscordAccount = {
   accountId: string;
   enabled: boolean;
@@ -103,15 +103,15 @@ export type ResolvedDiscordAccount = {
   config: DiscordAccountConfig;
 };
 
-/** Shared type for Discord Outbound Target Resolution in src/plugin-sdk. */
+/** Result of normalizing a Discord outbound message target. */
 export type DiscordOutboundTargetResolution =
   | { ok: true; to: string }
   | { ok: false; error: Error };
 
-/** Shared type for Thread Binding Target Kind in src/plugin-sdk. */
+/** Runtime target type stored in Discord thread binding records. */
 export type ThreadBindingTargetKind = "subagent" | "acp";
 
-/** Shared type for Thread Binding Record in src/plugin-sdk. */
+/** Discord thread-to-runtime binding record exposed through the compatibility facade. */
 export type ThreadBindingRecord = {
   accountId: string;
   threadId: string;
@@ -221,26 +221,26 @@ function resolveCompatRuntimeConfig(params: { cfg?: OpenClawConfig }): OpenClawC
   return params.cfg ?? getRuntimeConfigSnapshot() ?? getRuntimeConfig();
 }
 
-/** Reused constant for discord Onboarding Adapter behavior in src/plugin-sdk. */
+/** Lazy legacy facade for Discord onboarding setup adapters. */
 export const discordOnboardingAdapter = createLazyFacadeObjectValue(
   () => loadDiscordApiFacadeModule().discordOnboardingAdapter ?? {},
 );
 
-/** Reused helper for collect Discord Status Issues behavior in src/plugin-sdk. */
+/** Collects Discord account status issues through the bundled public API facade. */
 export function collectDiscordStatusIssues(
   accounts: ChannelAccountSnapshot[],
 ): ChannelStatusIssue[] {
   return loadDiscordApiFacadeModule().collectDiscordStatusIssues(accounts);
 }
 
-/** Reused constant for build Discord Component Message behavior in src/plugin-sdk. */
+/** Builds a Discord component message through the bundled public API facade. */
 export const buildDiscordComponentMessage: DiscordApiFacadeModule["buildDiscordComponentMessage"] =
   ((...args) =>
     loadDiscordApiFacadeModule().buildDiscordComponentMessage(
       ...args,
     )) as DiscordApiFacadeModule["buildDiscordComponentMessage"];
 
-/** Reused helper for inspect Discord Account behavior in src/plugin-sdk. */
+/** Inspects one configured Discord account through the bundled public API facade. */
 export function inspectDiscordAccount(params: {
   cfg: OpenClawConfig;
   accountId?: string | null;
@@ -248,46 +248,46 @@ export function inspectDiscordAccount(params: {
   return loadDiscordApiFacadeModule().inspectDiscordAccount(params);
 }
 
-/** Reused helper for list Discord Account Ids behavior in src/plugin-sdk. */
+/** Lists configured Discord account ids through the bundled public API facade. */
 export function listDiscordAccountIds(cfg: OpenClawConfig): string[] {
   return loadDiscordApiFacadeModule().listDiscordAccountIds(cfg);
 }
 
-/** Reused helper for list Discord Directory Groups From Config behavior in src/plugin-sdk. */
+/** Lists Discord directory groups from config through the bundled public API facade. */
 export function listDiscordDirectoryGroupsFromConfig(
   params: DirectoryConfigParams,
 ): unknown[] | Promise<unknown[]> {
   return loadDiscordApiFacadeModule().listDiscordDirectoryGroupsFromConfig(params);
 }
 
-/** Reused helper for list Discord Directory Peers From Config behavior in src/plugin-sdk. */
+/** Lists Discord directory peers from config through the bundled public API facade. */
 export function listDiscordDirectoryPeersFromConfig(
   params: DirectoryConfigParams,
 ): unknown[] | Promise<unknown[]> {
   return loadDiscordApiFacadeModule().listDiscordDirectoryPeersFromConfig(params);
 }
 
-/** Reused helper for looks Like Discord Target Id behavior in src/plugin-sdk. */
+/** Checks whether a raw value resembles a Discord messaging target id. */
 export function looksLikeDiscordTargetId(raw: string): boolean {
   return loadDiscordApiFacadeModule().looksLikeDiscordTargetId(raw);
 }
 
-/** Reused helper for normalize Discord Messaging Target behavior in src/plugin-sdk. */
+/** Normalizes a Discord messaging target without resolving account config. */
 export function normalizeDiscordMessagingTarget(raw: string): string | undefined {
   return loadDiscordApiFacadeModule().normalizeDiscordMessagingTarget(raw);
 }
 
-/** Reused helper for normalize Discord Outbound Target behavior in src/plugin-sdk. */
+/** Normalizes a Discord outbound target and returns a typed error on failure. */
 export function normalizeDiscordOutboundTarget(to?: string): DiscordOutboundTargetResolution {
   return loadDiscordApiFacadeModule().normalizeDiscordOutboundTarget(to);
 }
 
-/** Reused helper for resolve Default Discord Account Id behavior in src/plugin-sdk. */
+/** Resolves the default Discord account id from config. */
 export function resolveDefaultDiscordAccountId(cfg: OpenClawConfig): string {
   return loadDiscordApiFacadeModule().resolveDefaultDiscordAccountId(cfg);
 }
 
-/** Reused helper for resolve Discord Account behavior in src/plugin-sdk. */
+/** Resolves Discord account config and credentials through the bundled facade. */
 export function resolveDiscordAccount(params: {
   cfg: OpenClawConfig;
   accountId?: string | null;
@@ -295,19 +295,19 @@ export function resolveDiscordAccount(params: {
   return loadDiscordApiFacadeModule().resolveDiscordAccount(params);
 }
 
-/** Reused helper for resolve Discord Group Require Mention behavior in src/plugin-sdk. */
+/** Resolves Discord group mention requirements for a channel group context. */
 export function resolveDiscordGroupRequireMention(
   params: ChannelGroupContext,
 ): boolean | undefined {
   return loadDiscordApiFacadeModule().resolveDiscordGroupRequireMention(params);
 }
 
-/** Reused helper for resolve Discord Group Tool Policy behavior in src/plugin-sdk. */
+/** Resolves Discord group tool policy for a channel group context. */
 export function resolveDiscordGroupToolPolicy(params: ChannelGroupContext): unknown {
   return loadDiscordApiFacadeModule().resolveDiscordGroupToolPolicy(params);
 }
 
-/** Reused helper for collect Discord Audit Channel Ids behavior in src/plugin-sdk. */
+/** Collects Discord audit channel ids through the runtime facade. */
 export function collectDiscordAuditChannelIds(params: {
   cfg: OpenClawConfig;
   accountId?: string | null;
@@ -315,21 +315,21 @@ export function collectDiscordAuditChannelIds(params: {
   return loadDiscordRuntimeFacadeModule().collectDiscordAuditChannelIds(params);
 }
 
-/** Reused constant for edit Discord Component Message behavior in src/plugin-sdk. */
+/** Edits a Discord component message through the runtime facade. */
 export const editDiscordComponentMessage: DiscordRuntimeFacadeModule["editDiscordComponentMessage"] =
   ((...args) =>
     loadDiscordRuntimeFacadeModule().editDiscordComponentMessage(
       ...args,
     )) as DiscordRuntimeFacadeModule["editDiscordComponentMessage"];
 
-/** Reused constant for register Built Discord Component Message behavior in src/plugin-sdk. */
+/** Registers a built Discord component message with the runtime facade. */
 export const registerBuiltDiscordComponentMessage: DiscordRuntimeFacadeModule["registerBuiltDiscordComponentMessage"] =
   ((...args) =>
     loadDiscordRuntimeFacadeModule().registerBuiltDiscordComponentMessage(
       ...args,
     )) as DiscordRuntimeFacadeModule["registerBuiltDiscordComponentMessage"];
 
-/** Reused helper for auto Bind Spawned Discord Subagent behavior in src/plugin-sdk. */
+/** Auto-binds a spawned subagent to a Discord thread through the runtime facade. */
 export async function autoBindSpawnedDiscordSubagent(params: {
   cfg?: OpenClawConfig;
   accountId?: string;
@@ -347,7 +347,7 @@ export async function autoBindSpawnedDiscordSubagent(params: {
   });
 }
 
-/** Reused helper for list Thread Bindings By Session Key behavior in src/plugin-sdk. */
+/** Lists Discord thread bindings for a target session key. */
 export function listThreadBindingsBySessionKey(params: {
   targetSessionKey: string;
   accountId?: string;
@@ -356,7 +356,7 @@ export function listThreadBindingsBySessionKey(params: {
   return loadDiscordRuntimeFacadeModule().listThreadBindingsBySessionKey(params);
 }
 
-/** Reused helper for unbind Thread Bindings By Session Key behavior in src/plugin-sdk. */
+/** Removes Discord thread bindings for a target session key. */
 export function unbindThreadBindingsBySessionKey(params: {
   targetSessionKey: string;
   accountId?: string;
