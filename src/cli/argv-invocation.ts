@@ -5,7 +5,7 @@ import {
   isRootHelpInvocation,
 } from "./argv.js";
 
-/** Shared type for Cli Argv Invocation in src/cli. */
+/** Parsed root-command facts reused by startup and respawn policy. */
 export type CliArgvInvocation = {
   argv: string[];
   commandPath: string[];
@@ -14,7 +14,7 @@ export type CliArgvInvocation = {
   isRootHelpInvocation: boolean;
 };
 
-/** Reused helper for resolve Cli Argv Invocation behavior in src/cli. */
+/** Extracts root command path, primary command, and help/version state from raw argv. */
 export function resolveCliArgvInvocation(argv: string[]): CliArgvInvocation {
   return {
     argv,

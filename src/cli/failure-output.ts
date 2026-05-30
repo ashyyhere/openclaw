@@ -26,7 +26,7 @@ function pushPrefixed(out: string[], value: string): void {
   }
 }
 
-/** Reused helper for format Cli Failure Lines behavior in src/cli. */
+/** Formats uncaught CLI failures with optional stack and recovery hints. */
 export function formatCliFailureLines(options: FormatCliFailureOptions): string[] {
   const env = options.env ?? process.env;
   const lines = [

@@ -3,7 +3,7 @@ import {
   normalizeOptionalString,
 } from "../../shared/string-coerce.js";
 
-/** Reused helper for parse Cron Thread Id Option behavior in src/cli/cron-cli. */
+/** Parses Telegram topic thread ids accepted by cron delivery options. */
 export function parseCronThreadIdOption(value: unknown): number | undefined {
   const raw = normalizeOptionalString(value);
   if (!raw) {
@@ -19,7 +19,7 @@ export function parseCronThreadIdOption(value: unknown): number | undefined {
   return parsed;
 }
 
-/** Reused helper for normalize Cron Session Target Option behavior in src/cli/cron-cli. */
+/** Normalizes cron session targets to built-in modes or `session:<id>` references. */
 export function normalizeCronSessionTargetOption(value: unknown): string | undefined {
   const raw = normalizeOptionalString(value);
   if (!raw) {

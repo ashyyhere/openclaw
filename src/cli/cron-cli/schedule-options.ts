@@ -23,13 +23,13 @@ type NormalizedScheduleOptions = {
   tz: string | undefined;
 };
 
-/** Shared type for Cron Edit Schedule Request in src/cli/cron-cli. */
+/** Normalized edit request: direct replacement, cron-only patch, or no schedule change. */
 export type CronEditScheduleRequest =
   | { kind: "direct"; schedule: CronSchedule }
   | { kind: "patch-existing-cron"; staggerMs: number | undefined; tz: string | undefined }
   | { kind: "none" };
 
-/** Reused helper for resolve Cron Create Schedule behavior in src/cli/cron-cli. */
+/** Resolves create options, requiring exactly one schedule source. */
 export function resolveCronCreateSchedule(options: ScheduleOptionInput): CronSchedule {
   const normalized = normalizeScheduleOptions(options);
   const chosen = countChosenSchedules(normalized);
@@ -43,7 +43,7 @@ export function resolveCronCreateSchedule(options: ScheduleOptionInput): CronSch
   return schedule;
 }
 
-/** Reused helper for resolve Cron Create Schedule From Args behavior in src/cli/cron-cli. */
+/** Accepts a positional schedule while preventing mixed positional/flag schedule input. */
 export function resolveCronCreateScheduleFromArgs(
   options: ScheduleOptionInput & PositionalScheduleInput,
 ): CronSchedule {
@@ -68,7 +68,7 @@ export function resolveCronCreateScheduleFromArgs(
   });
 }
 
-/** Reused helper for resolve Cron Edit Schedule Request behavior in src/cli/cron-cli. */
+/** Resolves edit-time schedule changes without forcing callers to mutate unchanged schedules. */
 export function resolveCronEditScheduleRequest(
   options: ScheduleOptionInput,
 ): CronEditScheduleRequest {
@@ -91,7 +91,7 @@ export function resolveCronEditScheduleRequest(
   return { kind: "none" };
 }
 
-/** Reused helper for apply Existing Cron Schedule Patch behavior in src/cli/cron-cli. */
+/** Applies timezone/stagger patches to an existing cron schedule only. */
 export function applyExistingCronSchedulePatch(
   existingSchedule: CronSchedule,
   request: Extract<CronEditScheduleRequest, { kind: "patch-existing-cron" }>,

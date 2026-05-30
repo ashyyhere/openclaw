@@ -1,10 +1,10 @@
 import { InvalidArgumentError } from "commander";
 import { ALLOWED_LOG_LEVELS, type LogLevel, tryParseLogLevel } from "../logging/levels.js";
 
-/** Reused constant for CLI LOG LEVEL VALUES behavior in src/cli. */
+/** Commander help text fragment listing accepted log levels. */
 export const CLI_LOG_LEVEL_VALUES = ALLOWED_LOG_LEVELS.join("|");
 
-/** Reused helper for parse Cli Log Level Option behavior in src/cli. */
+/** Parses `--log-level` and raises Commander-compatible errors for invalid values. */
 export function parseCliLogLevelOption(value: string): LogLevel {
   const parsed = tryParseLogLevel(value);
   if (!parsed) {
