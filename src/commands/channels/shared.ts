@@ -12,15 +12,15 @@ import {
   requireValidConfigSnapshot,
 } from "../config-validation.js";
 
-/** Shared type for Chat Channel in src/commands/channels. */
+/** Channel id accepted by channel command helpers. */
 export type ChatChannel = ChannelId;
 
-/** Re-exported API for src/commands/channels, starting with require Valid Config Snapshot. */
+/** Config snapshot validator shared by channel subcommands. */
 export { requireValidConfigSnapshot };
-/** Re-exported API for src/commands/channels, starting with require Valid Config File Snapshot. */
+/** Config file validator shared by channel subcommands. */
 export { requireValidConfigFileSnapshot };
 
-/** Reused helper for require Valid Config behavior in src/commands/channels. */
+/** Loads validated config and resolves channel command secrets for status/setup paths. */
 export async function requireValidConfig(
   runtime: RuntimeEnv = defaultRuntime,
   secretResolution?: {
@@ -50,7 +50,7 @@ function formatAccountLabel(params: { accountId: string; name?: string }) {
   return base;
 }
 
-/** Reused helper for format Channel Account Label behavior in src/commands/channels. */
+/** Formats a channel/account display label with optional styling hooks. */
 export function formatChannelAccountLabel(params: {
   channel: ChatChannel;
   accountId: string;
@@ -69,7 +69,7 @@ export function formatChannelAccountLabel(params: {
   return `${styledChannel} ${styledAccount}`;
 }
 
-/** Reused helper for append Enabled Configured Linked Bits behavior in src/commands/channels. */
+/** Appends enabled/configured/linked status bits for an account status line. */
 export function appendEnabledConfiguredLinkedBits(
   bits: string[],
   account: Record<string, unknown>,
@@ -92,14 +92,14 @@ export function appendEnabledConfiguredLinkedBits(
   }
 }
 
-/** Reused helper for append Mode Bit behavior in src/commands/channels. */
+/** Appends the channel mode status bit when present. */
 export function appendModeBit(bits: string[], account: Record<string, unknown>) {
   if (typeof account.mode === "string" && account.mode.length > 0) {
     bits.push(`mode:${account.mode}`);
   }
 }
 
-/** Reused helper for append Token Source Bits behavior in src/commands/channels. */
+/** Appends token/source status bits, including unavailable SecretRef markers. */
 export function appendTokenSourceBits(bits: string[], account: Record<string, unknown>) {
   const appendSourceBit = (label: string, sourceKey: string, statusKey: string) => {
     const source = account[sourceKey];
@@ -117,14 +117,14 @@ export function appendTokenSourceBits(bits: string[], account: Record<string, un
   appendSourceBit("signing", "signingSecretSource", "signingSecretStatus");
 }
 
-/** Reused helper for append Base Url Bit behavior in src/commands/channels. */
+/** Appends the configured base URL status bit when the account exposes one. */
 export function appendBaseUrlBit(bits: string[], account: Record<string, unknown>) {
   if (typeof account.baseUrl === "string" && account.baseUrl) {
     bits.push(`url:${account.baseUrl}`);
   }
 }
 
-/** Reused helper for build Channel Account Line behavior in src/commands/channels. */
+/** Builds one bullet line for channel account status output. */
 export function buildChannelAccountLine(
   provider: ChatChannel,
   account: Record<string, unknown>,
@@ -142,7 +142,7 @@ export function buildChannelAccountLine(
   return `- ${labelText}: ${bits.join(", ")}`;
 }
 
-/** Reused helper for should Use Wizard behavior in src/commands/channels. */
+/** Chooses the wizard path when no explicit channel command flags were provided. */
 export function shouldUseWizard(params?: { hasFlags?: boolean }) {
   return params?.hasFlags === false;
 }
