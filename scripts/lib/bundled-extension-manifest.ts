@@ -1,7 +1,8 @@
-// scripts/lib bundled extension manifest helpers and runtime behavior.
+// Bundled extension manifest checks validate install metadata for release packaging.
 import { validateMinHostVersion } from "../../src/plugins/min-host-version.ts";
 import { isRecord } from "../../src/utils.js";
 
+/** Package manifest fields read by bundled extension manifest checks. */
 export type ExtensionPackageJson = {
   name?: string;
   version?: string;
@@ -13,8 +14,10 @@ export type ExtensionPackageJson = {
   };
 };
 
+/** Bundled extension manifest paired with its extension id. */
 export type BundledExtension = { id: string; packageJson: ExtensionPackageJson };
 
+/** Collects install metadata validation errors for bundled extension manifests. */
 export function collectBundledExtensionManifestErrors(extensions: BundledExtension[]): string[] {
   const errors: string[] = [];
 

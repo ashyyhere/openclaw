@@ -1,6 +1,7 @@
-// scripts/lib npm verify exec helpers and runtime behavior.
+// npm verification command helpers run bounded subprocess checks for release validation.
 import { execFileSync } from "node:child_process";
 
+/** Command invocation shape used by npm release verification helpers. */
 export type NpmVerifyCommandInvocation = {
   command: string;
   args: string[];
@@ -19,6 +20,7 @@ function positiveEnvInt(name: string, fallback: number): number {
   return Number.isSafeInteger(value) && value > 0 ? value : fallback;
 }
 
+/** Runs an npm verification command with env-configurable timeout and output limits. */
 export function runNpmVerifyCommand(
   invocation: NpmVerifyCommandInvocation,
   cwd: string,

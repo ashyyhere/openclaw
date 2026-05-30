@@ -1,9 +1,11 @@
-// scripts/lib extension package boundary helpers and runtime behavior.
+// Extension package-boundary helpers define tsconfig path maps and opt-in discovery.
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join, posix, resolve } from "node:path";
 import { privateLocalOnlyPluginSdkEntrypoints } from "./plugin-sdk-entries.mjs";
 
+/** Source globs included by extension package-boundary tsconfigs. */
 export const EXTENSION_PACKAGE_BOUNDARY_INCLUDE = ["./*.ts", "./src/**/*.ts"] as const;
+/** Test, build, and dependency globs excluded from extension package-boundary checks. */
 export const EXTENSION_PACKAGE_BOUNDARY_EXCLUDE = [
   "./**/*.test.ts",
   "./dist/**",
@@ -21,6 +23,7 @@ const privateLocalOnlyPluginSdkPackageDtsPaths = Object.fromEntries(
   ]),
 ) as Record<string, readonly string[]>;
 
+/** Base TypeScript path aliases used by bundled extension package-boundary configs. */
 export const EXTENSION_PACKAGE_BOUNDARY_BASE_PATHS = {
   "openclaw/extension-api": ["../src/extensionAPI.ts"],
   "openclaw/plugin-sdk": ["../dist/plugin-sdk/index.d.ts"],
@@ -178,6 +181,7 @@ function prefixExtensionPackageBoundaryPaths(
   );
 }
 
+/** xAI-specific package-boundary path aliases with local stubs for provider-owned APIs. */
 export const EXTENSION_PACKAGE_BOUNDARY_XAI_PATHS = {
   ...prefixExtensionPackageBoundaryPaths(
     (({
@@ -249,6 +253,7 @@ function resolveExtensionPackageJsonPath(extensionId: string, rootDir = resolve(
   return join(rootDir, "extensions", extensionId, "package.json");
 }
 
+/** Reads an extension package-boundary tsconfig. */
 export function readExtensionPackageBoundaryTsconfig(
   extensionId: string,
   rootDir = resolve("."),
@@ -258,6 +263,7 @@ export function readExtensionPackageBoundaryTsconfig(
   );
 }
 
+/** Reads an extension package manifest for package-boundary checks. */
 export function readExtensionPackageBoundaryPackageJson(
   extensionId: string,
   rootDir = resolve("."),
@@ -267,18 +273,21 @@ export function readExtensionPackageBoundaryPackageJson(
   );
 }
 
+/** Returns whether an extension tsconfig opts into the shared package-boundary base. */
 export function isOptInExtensionPackageBoundaryTsconfig(
   tsconfig: ExtensionPackageBoundaryTsConfigJson,
 ): boolean {
   return tsconfig.extends === "../tsconfig.package-boundary.base.json";
 }
 
+/** Lists bundled extensions that have a tsconfig file. */
 export function collectExtensionsWithTsconfig(rootDir = resolve(".")): string[] {
   return collectBundledExtensionIds(rootDir).filter((extensionId) =>
     existsSync(resolveExtensionTsconfigPath(extensionId, rootDir)),
   );
 }
 
+/** Lists bundled extensions currently opted into package-boundary checking. */
 export function collectOptInExtensionPackageBoundaries(rootDir = resolve(".")): string[] {
   return collectExtensionsWithTsconfig(rootDir).filter((extensionId) =>
     isOptInExtensionPackageBoundaryTsconfig(

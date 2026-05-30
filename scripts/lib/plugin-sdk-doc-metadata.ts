@@ -1,4 +1,5 @@
-// scripts/lib plugin sdk doc metadata helpers and runtime behavior.
+// Plugin SDK doc metadata classifies public entrypoints for generated documentation.
+/** Documentation category assigned to public Plugin SDK entrypoints. */
 export type PluginSdkDocCategory =
   | "channel"
   | "core"
@@ -11,6 +12,7 @@ type PluginSdkDocMetadata = {
   category: PluginSdkDocCategory;
 };
 
+/** Metadata registry for Plugin SDK docs generation. */
 export const pluginSdkDocMetadata = {
   index: {
     category: "legacy",
@@ -131,8 +133,10 @@ export const pluginSdkDocMetadata = {
   },
 } as const satisfies Record<string, PluginSdkDocMetadata>;
 
+/** Public Plugin SDK entrypoint name covered by generated docs. */
 export type PluginSdkDocEntrypoint = keyof typeof pluginSdkDocMetadata;
 
+/** Resolves the import specifier displayed for one Plugin SDK doc entrypoint. */
 export function resolvePluginSdkDocImportSpecifier(entrypoint: PluginSdkDocEntrypoint): string {
   return entrypoint === "index" ? "openclaw/plugin-sdk" : `openclaw/plugin-sdk/${entrypoint}`;
 }
