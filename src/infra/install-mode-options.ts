@@ -1,4 +1,4 @@
-// infra install mode options helpers and runtime behavior.
+// Normalizes shared install/update option defaults for installer helpers.
 type InstallMode = "install" | "update";
 
 type InstallModeOptions<TLogger> = {
@@ -11,7 +11,7 @@ type TimedInstallModeOptions<TLogger> = InstallModeOptions<TLogger> & {
   timeoutMs?: number;
 };
 
-/** Reused helper for resolve Install Mode Options behavior in src/infra. */
+/** Applies default logger, mode, and dry-run settings for install/update flows. */
 export function resolveInstallModeOptions<TLogger>(
   params: InstallModeOptions<TLogger>,
   defaultLogger: TLogger,
@@ -27,7 +27,7 @@ export function resolveInstallModeOptions<TLogger>(
   };
 }
 
-/** Reused helper for resolve Timed Install Mode Options behavior in src/infra. */
+/** Applies install/update defaults plus a timeout default. */
 export function resolveTimedInstallModeOptions<TLogger>(
   params: TimedInstallModeOptions<TLogger>,
   defaultLogger: TLogger,

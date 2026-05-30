@@ -1,4 +1,4 @@
-// infra browser open helpers and runtime behavior.
+// Detects the platform browser-open command and opens safe HTTP(S) URLs when available.
 import path from "node:path";
 import { runCommandWithTimeout } from "../process/exec.js";
 import { detectBinary } from "./detect-binary.js";
@@ -41,7 +41,7 @@ function normalizeBrowserOpenUrl(raw: string): string | null {
   }
 }
 
-/** Reused helper for resolve Browser Open Command behavior in src/infra. */
+/** Resolves the platform command argv used to open a browser URL. */
 export async function resolveBrowserOpenCommand(): Promise<BrowserOpenCommand> {
   const platform = process.platform;
   const hasDisplay = Boolean(process.env.DISPLAY || process.env.WAYLAND_DISPLAY);
@@ -90,7 +90,7 @@ export async function resolveBrowserOpenCommand(): Promise<BrowserOpenCommand> {
   return { argv: null, reason: "unsupported-platform" };
 }
 
-/** Reused helper for detect Browser Open Support behavior in src/infra. */
+/** Reports whether this runtime can launch a browser URL. */
 export async function detectBrowserOpenSupport(): Promise<BrowserOpenSupport> {
   const resolved = await resolveBrowserOpenCommand();
   if (!resolved.argv) {
@@ -99,7 +99,7 @@ export async function detectBrowserOpenSupport(): Promise<BrowserOpenSupport> {
   return { ok: true, command: resolved.command };
 }
 
-/** Reused helper for open Url behavior in src/infra. */
+/** Opens an HTTP(S) URL in the system browser when supported. */
 export async function openUrl(url: string): Promise<boolean> {
   if (shouldSkipBrowserOpenInTests()) {
     return false;

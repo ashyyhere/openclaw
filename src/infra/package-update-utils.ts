@@ -1,10 +1,10 @@
-// infra package update utils helpers and runtime behavior.
+// Reads installed package metadata and update integrity expectations.
 import fsSync from "node:fs";
 import path from "node:path";
 import { readRootJsonObjectSync } from "@openclaw/fs-safe/json";
 import { isRecord } from "../shared/record-coerce.js";
 
-/** Reused helper for expected Integrity For Update behavior in src/infra. */
+/** Returns expected integrity only for concrete semver package update specs. */
 export function expectedIntegrityForUpdate(
   spec: string | undefined,
   integrity: string | undefined,
@@ -36,13 +36,13 @@ function readInstalledPackageManifest(dir: string): Record<string, unknown> | un
   return result.ok ? result.value : undefined;
 }
 
-/** Reused helper for read Installed Package Version behavior in src/infra. */
+/** Reads the installed package version from a package directory. */
 export async function readInstalledPackageVersion(dir: string): Promise<string | undefined> {
   const manifest = readInstalledPackageManifest(dir);
   return typeof manifest?.version === "string" ? manifest.version : undefined;
 }
 
-/** Reused helper for read Installed Package Peer Dependencies behavior in src/infra. */
+/** Reads string-valued peer dependencies from an installed package manifest. */
 export function readInstalledPackagePeerDependencies(dir: string): Record<string, string> {
   const manifest = readInstalledPackageManifest(dir);
   const peerDependencies = isRecord(manifest?.peerDependencies) ? manifest.peerDependencies : {};
@@ -54,7 +54,7 @@ export function readInstalledPackagePeerDependencies(dir: string): Record<string
   );
 }
 
-/** Reused helper for installed Package Needs Open Claw Peer Link Repair behavior in src/infra. */
+/** Returns whether an installed package needs its openclaw peer link repaired. */
 export function installedPackageNeedsOpenClawPeerLinkRepair(dir: string): boolean {
   const peerDependencies = readInstalledPackagePeerDependencies(dir);
   if (!Object.hasOwn(peerDependencies, "openclaw")) {
