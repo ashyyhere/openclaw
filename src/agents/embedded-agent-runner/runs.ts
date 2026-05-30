@@ -18,6 +18,7 @@ import {
   logSessionStateChange,
   updateDiagnosticSessionFile,
 } from "../../logging/diagnostic.js";
+import { resolveTimerTimeoutMs } from "../../shared/number-coercion.js";
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 import {
   ACTIVE_EMBEDDED_RUNS,
@@ -665,7 +666,7 @@ export function waitForEmbeddedAgentRunEnd(
           diag.warn(`wait timeout: sessionId=${sessionId} timeoutMs=${timeoutMs}`);
           resolve(false);
         },
-        Math.max(100, timeoutMs),
+        resolveTimerTimeoutMs(timeoutMs, 100, 100),
       ),
     };
     waiters.add(waiter);
