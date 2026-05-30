@@ -210,7 +210,7 @@ function normalizeLegacyToolResultId(
   return { ...message, toolCallId: toolCall.id, isError: true };
 }
 
-/** Re-exported API for src/agents, starting with make Missing Tool Result. */
+/** Fabricate an error tool result for transcript repair when a call result is missing. */
 export { makeMissingToolResult };
 
 type ToolCallInputRepairReport = {

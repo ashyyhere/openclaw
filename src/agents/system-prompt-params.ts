@@ -36,7 +36,7 @@ type SystemPromptRuntimeParams = {
   userTimeFormat?: ResolvedTimeFormat;
 };
 
-/** Reused helper for build System Prompt Params behavior in src/agents. */
+/** Build runtime, repo, and user-time facts consumed by system prompt rendering. */
 export function buildSystemPromptParams(params: {
   config?: OpenClawConfig;
   agentId?: string;

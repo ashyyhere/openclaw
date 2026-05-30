@@ -7,7 +7,7 @@ import type { AnyAgentTool } from "./tools/common.js";
 
 const log = createSubsystemLogger("agents/tools");
 
-/** Reused helper for log Runtime Tool Schema Quarantine behavior in src/agents. */
+/** Log and emit diagnostics when provider schema projection drops tool schemas. */
 export function logRuntimeToolSchemaQuarantine(params: {
   diagnostics: readonly RuntimeToolSchemaDiagnostic[];
   tools: readonly AnyAgentTool[];

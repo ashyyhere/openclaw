@@ -1,3 +1,4 @@
+// Resolves the effective tool inventory after config, policy, and model compatibility filters.
 import {
   findNormalizedProviderValue,
   normalizeProviderId,
@@ -28,7 +29,7 @@ import type {
   ResolveEffectiveToolInventoryParams,
 } from "./tools-effective-inventory.types.js";
 
-/** Re-exported API for src/agents. */
+/** Inventory builders shared with callers that already resolved policy inputs. */
 export {
   buildEffectiveToolInventoryEntries,
   buildEffectiveToolInventoryGroups,
@@ -170,7 +171,7 @@ function resolveDynamicRuntimeModelContext(params: {
   };
 }
 
-/** Reused helper for resolve Effective Tool Inventory Runtime Model Context behavior in src/agents. */
+/** Resolve runtime model metadata used to filter model-compatible tools. */
 export function resolveEffectiveToolInventoryRuntimeModelContext(params: {
   cfg: OpenClawConfig;
   agentId?: string;
@@ -285,7 +286,7 @@ function resolveEffectiveModelCompat(params: {
   return extractModelCompat(match);
 }
 
-/** Reused helper for resolve Effective Tool Inventory behavior in src/agents. */
+/** Resolve the visible tool inventory for an agent/session/model context. */
 export function resolveEffectiveToolInventory(
   params: ResolveEffectiveToolInventoryParams,
 ): EffectiveToolInventoryResult {
