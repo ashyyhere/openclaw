@@ -1,6 +1,6 @@
 /** Memory host SDK barrel for engine foundation helpers. */
 export * from "../../packages/memory-host-sdk/src/engine-foundation.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Agent scope and directory helpers needed by memory host engines. */
 export {
   resolveAgentContextLimits,
   resolveAgentDir,
@@ -8,32 +8,32 @@ export {
   resolveDefaultAgentId,
   resolveSessionAgentId,
 } from "../agents/agent-scope.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Memory search configuration resolvers shared with host engines. */
 export {
   resolveMemorySearchConfig,
   resolveMemorySearchSyncConfig,
   type ResolvedMemorySearchConfig,
   type ResolvedMemorySearchSyncConfig,
 } from "../agents/memory-search.js";
-/** Re-exported API for src/plugin-sdk, starting with parse Duration Ms. */
+/** Duration parser used by memory engine config and CLI options. */
 export { parseDurationMs } from "../cli/parse-duration.js";
-/** Re-exported API for src/plugin-sdk, starting with load Config. */
+/** Loads OpenClaw config for memory host engine startup. */
 export { loadConfig } from "../config/config.js";
-/** Re-exported API for src/plugin-sdk, starting with Open Claw Config. */
+/** OpenClaw config shape exposed to memory host engines. */
 export type { OpenClawConfig } from "../config/config.js";
-/** Re-exported API for src/plugin-sdk, starting with resolve State Dir. */
+/** Resolves the process state directory for memory engine storage. */
 export { resolveStateDir } from "../config/paths.js";
-/** Re-exported API for src/plugin-sdk, starting with resolve Session Transcripts Dir For Agent. */
+/** Resolves per-agent transcript directories for memory indexing. */
 export { resolveSessionTranscriptsDirForAgent } from "../config/sessions/paths.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Secret-input helpers used by memory provider config resolution. */
 export {
   hasConfiguredSecretInput,
   normalizeResolvedSecretInputString,
   type SecretInput,
 } from "../config/types.secrets.js";
-/** Re-exported API for src/plugin-sdk, starting with Session Send Policy Config. */
+/** Session send policy config type consumed by memory host integrations. */
 export type { SessionSendPolicyConfig } from "../config/types.base.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Memory backend and QMD config contracts exposed to host engines. */
 export type {
   MemoryBackend,
   MemoryCitationsMode,
@@ -42,23 +42,23 @@ export type {
   MemoryQmdMcporterConfig,
   MemoryQmdSearchMode,
 } from "../config/types.memory.js";
-/** Re-exported API for src/plugin-sdk, starting with Memory Search Config. */
+/** Memory search tool config used by host engine setup. */
 export type { MemorySearchConfig } from "../config/types.tools.js";
-/** Re-exported API for src/plugin-sdk, starting with root. */
+/** Root-bound filesystem helper for safe memory-engine file access. */
 export { root } from "../infra/fs-safe.js";
-/** Re-exported API for src/plugin-sdk, starting with create Subsystem Logger. */
+/** Subsystem logger factory for memory host engine diagnostics. */
 export { createSubsystemLogger } from "../logging/subsystem.js";
-/** Re-exported API for src/plugin-sdk, starting with detect Mime. */
+/** MIME detector for memory indexing inputs. */
 export { detectMime } from "../media/mime.js";
-/** Re-exported API for src/plugin-sdk, starting with on Session Transcript Update. */
+/** Transcript update subscription used by memory indexers. */
 export { onSessionTranscriptUpdate } from "../sessions/transcript-events.js";
-/** Re-exported API for src/plugin-sdk, starting with resolve Global Singleton. */
+/** Process-global singleton helper for host engine registries. */
 export { resolveGlobalSingleton } from "../shared/global-singleton.js";
-/** Re-exported API for src/plugin-sdk, starting with run Tasks With Concurrency. */
+/** Bounded concurrency runner for memory indexing jobs. */
 export { runTasksWithConcurrency } from "../utils/run-with-concurrency.js";
-/** Re-exported API for src/plugin-sdk, starting with split Shell Args. */
+/** Shell argument splitter for memory backend command options. */
 export { splitShellArgs } from "../utils/shell-argv.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Path/display string helpers reused by memory host engines. */
 export {
   resolveUserPath,
   shortenHomeInString,
