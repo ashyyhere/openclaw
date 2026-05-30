@@ -27,6 +27,7 @@ import {
   scopeLegacySessionKeyToAgent,
 } from "../routing/session-key.js";
 import { type RuntimeEnv, writeRuntimeJson } from "../runtime.js";
+import { resolveTimerTimeoutMs } from "../shared/number-coercion.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import { normalizeMessageChannel } from "../utils/message-channel.js";
 
@@ -129,6 +130,7 @@ export const agentViaGatewayTesting = {
     agentSessionModulePromise = undefined;
     agentSessionModuleLoader = loader;
   },
+  resolveGatewayAgentTimeoutMs,
 };
 
 function protectJsonStdout(opts: Pick<AgentCliOpts, "json">): void {
@@ -148,6 +150,13 @@ function parseTimeoutSeconds(opts: { cfg: OpenClawConfig; timeout?: string }) {
     );
   }
   return raw;
+}
+
+function resolveGatewayAgentTimeoutMs(timeoutSeconds: number): number {
+  if (timeoutSeconds === 0) {
+    return NO_GATEWAY_TIMEOUT_MS;
+  }
+  return resolveTimerTimeoutMs((timeoutSeconds + 30) * 1000, 10_000, 10_000);
 }
 
 function getGatewayDispatchConfig(): OpenClawConfig {
@@ -580,10 +589,7 @@ async function agentViaGatewayCommand(
     }
   }
   const timeoutSeconds = parseTimeoutSeconds({ cfg, timeout: opts.timeout });
-  const gatewayTimeoutMs =
-    timeoutSeconds === 0
-      ? NO_GATEWAY_TIMEOUT_MS // no timeout (timer-safe max)
-      : Math.max(10_000, (timeoutSeconds + 30) * 1000);
+  const gatewayTimeoutMs = resolveGatewayAgentTimeoutMs(timeoutSeconds);
 
   const sessionKey =
     classifySessionKeyShape(explicitSessionKey) === "agent"
