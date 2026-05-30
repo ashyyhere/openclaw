@@ -1,4 +1,4 @@
-// extensions/qa-lab/src/live-transports/telegram cli helpers and runtime behavior.
+// QA Lab Telegram live-transport CLI registration lazy-loads the Telegram lane.
 import {
   createLazyCliRuntimeLoader,
   createLiveTransportQaCliRegistration,
@@ -17,6 +17,7 @@ async function runQaTelegram(opts: LiveTransportQaCommandOptions) {
   await runtime.runQaTelegramCommand(opts);
 }
 
+/** CLI registration for the Telegram live QA lane. */
 export const telegramQaCliRegistration: LiveTransportQaCliRegistration =
   createLiveTransportQaCliRegistration({
     commandName: "telegram",

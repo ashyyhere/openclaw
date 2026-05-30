@@ -1,4 +1,4 @@
-// extensions/qa-lab/src/live-transports/slack cli helpers and runtime behavior.
+// QA Lab Slack live-transport CLI registration lazy-loads the Slack runtime lane.
 import {
   createLazyCliRuntimeLoader,
   createLiveTransportQaCliRegistration,
@@ -17,6 +17,7 @@ async function runQaSlack(opts: LiveTransportQaCommandOptions) {
   await runtime.runQaSlackCommand(opts);
 }
 
+/** CLI registration for the Slack live QA lane. */
 export const slackQaCliRegistration: LiveTransportQaCliRegistration =
   createLiveTransportQaCliRegistration({
     commandName: "slack",

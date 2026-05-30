@@ -1,4 +1,4 @@
-// extensions/qa-lab/src/live-transports/discord cli helpers and runtime behavior.
+// QA Lab Discord live-transport CLI registration lazy-loads the Discord lane.
 import {
   createLazyCliRuntimeLoader,
   createLiveTransportQaCliRegistration,
@@ -17,6 +17,7 @@ async function runQaDiscord(opts: LiveTransportQaCommandOptions) {
   await runtime.runQaDiscordCommand(opts);
 }
 
+/** CLI registration for the Discord live QA lane. */
 export const discordQaCliRegistration: LiveTransportQaCliRegistration =
   createLiveTransportQaCliRegistration({
     commandName: "discord",

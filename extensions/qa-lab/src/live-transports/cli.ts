@@ -1,4 +1,4 @@
-// extensions/qa-lab/src/live-transports cli helpers and runtime behavior.
+// QA Lab live-transports CLI registry collects built-in and plugin-provided lanes.
 import { listQaRunnerCliContributions } from "openclaw/plugin-sdk/qa-runner-runtime";
 import { discordQaCliRegistration } from "./discord/cli.js";
 import type { LiveTransportQaCliRegistration } from "./shared/live-transport-cli.js";
@@ -25,6 +25,9 @@ function createBlockedQaRunnerCliRegistration(params: {
   };
 }
 
+// Disabled plugin runners still get a visible command so operators see the
+// missing plugin/config state at invocation time instead of wondering why the
+// lane disappeared from the QA CLI.
 function createQaRunnerCliRegistration(
   runner: ReturnType<typeof listQaRunnerCliContributions>[number],
 ): LiveTransportQaCliRegistration {
@@ -45,6 +48,7 @@ const LIVE_TRANSPORT_QA_CLI_REGISTRATIONS: readonly LiveTransportQaCliRegistrati
   whatsappQaCliRegistration,
 ];
 
+/** Lists all live-transport QA CLI registrations available in the current runtime. */
 export function listLiveTransportQaCliRegistrations(): readonly LiveTransportQaCliRegistration[] {
   const liveRegistrations = [...LIVE_TRANSPORT_QA_CLI_REGISTRATIONS];
   const discoveredRunners = listQaRunnerCliContributions();

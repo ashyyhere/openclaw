@@ -1,4 +1,4 @@
-// extensions/qa-lab/src/live-transports/whatsapp cli helpers and runtime behavior.
+// QA Lab WhatsApp live-transport CLI registration lazy-loads the WhatsApp lane.
 import {
   createLazyCliRuntimeLoader,
   createLiveTransportQaCliRegistration,
@@ -17,6 +17,7 @@ async function runQaWhatsApp(opts: LiveTransportQaCommandOptions) {
   await runtime.runQaWhatsAppCommand(opts);
 }
 
+/** CLI registration for the WhatsApp live QA lane. */
 export const whatsappQaCliRegistration: LiveTransportQaCliRegistration =
   createLiveTransportQaCliRegistration({
     commandName: "whatsapp",
