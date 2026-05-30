@@ -1,4 +1,4 @@
-// secrets runtime shared helpers and runtime behavior.
+// Shared secret-resolution runtime state, assignment, and warning helpers.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { coerceSecretRef, type SecretRef } from "../config/types.secrets.js";
 import type { PluginManifestRegistry } from "../plugins/manifest-registry.js";
@@ -7,7 +7,7 @@ import type { SecretRefResolveCache } from "./resolve-types.js";
 import { assertExpectedResolvedSecretValue } from "./secret-value.js";
 import { isRecord } from "./shared.js";
 
-/** Shared type for Secret Resolver Warning Code in src/secrets. */
+/** Stable warning codes emitted while collecting and resolving secret refs. */
 export type SecretResolverWarningCode =
   | "SECRETS_REF_OVERRIDES_PLAINTEXT"
   | "SECRETS_REF_IGNORED_INACTIVE_SURFACE"
@@ -20,14 +20,14 @@ export type SecretResolverWarningCode =
   | "WEB_FETCH_PROVIDER_KEY_UNRESOLVED_FALLBACK_USED"
   | "WEB_FETCH_PROVIDER_KEY_UNRESOLVED_NO_FALLBACK";
 
-/** Shared type for Secret Resolver Warning in src/secrets. */
+/** One warning produced by secret ref collection or fallback resolution. */
 export type SecretResolverWarning = {
   code: SecretResolverWarningCode;
   path: string;
   message: string;
 };
 
-/** Shared type for Secret Assignment in src/secrets. */
+/** Deferred config mutation that applies one resolved secret value. */
 export type SecretAssignment = {
   ref: SecretRef;
   path: string;
@@ -35,7 +35,7 @@ export type SecretAssignment = {
   apply: (value: unknown) => void;
 };
 
-/** Shared type for Resolver Context in src/secrets. */
+/** Mutable state accumulated while collecting secret refs from config. */
 export type ResolverContext = {
   sourceConfig: OpenClawConfig;
   env: NodeJS.ProcessEnv;
@@ -46,12 +46,12 @@ export type ResolverContext = {
   assignments: SecretAssignment[];
 };
 
-/** Shared type for Secret Defaults in src/secrets. */
+/** Default secret ref config inherited by individual secret fields. */
 export type SecretDefaults = NonNullable<OpenClawConfig["secrets"]>["defaults"];
-/** Re-exported API for src/secrets, starting with Secret Ref Resolve Cache. */
+/** Cache shape shared by secret ref resolver implementations. */
 export type { SecretRefResolveCache } from "./resolve-types.js";
 
-/** Reused helper for create Resolver Context behavior in src/secrets. */
+/** Creates an empty resolver context for one config-resolution pass. */
 export function createResolverContext(params: {
   sourceConfig: OpenClawConfig;
   env: NodeJS.ProcessEnv;
@@ -68,12 +68,12 @@ export function createResolverContext(params: {
   };
 }
 
-/** Reused helper for push Assignment behavior in src/secrets. */
+/** Adds a deferred secret assignment to the resolver context. */
 export function pushAssignment(context: ResolverContext, assignment: SecretAssignment): void {
   context.assignments.push(assignment);
 }
 
-/** Reused helper for push Warning behavior in src/secrets. */
+/** Adds a de-duplicated resolver warning. */
 export function pushWarning(context: ResolverContext, warning: SecretResolverWarning): void {
   const warningKey = `${warning.code}:${warning.path}:${warning.message}`;
   if (context.warningKeys.has(warningKey)) {
@@ -83,7 +83,7 @@ export function pushWarning(context: ResolverContext, warning: SecretResolverWar
   context.warnings.push(warning);
 }
 
-/** Reused helper for push Inactive Surface Warning behavior in src/secrets. */
+/** Records that a secret ref was skipped because its config surface is inactive. */
 export function pushInactiveSurfaceWarning(params: {
   context: ResolverContext;
   path: string;
@@ -99,7 +99,7 @@ export function pushInactiveSurfaceWarning(params: {
   });
 }
 
-/** Reused helper for collect Secret Input Assignment behavior in src/secrets. */
+/** Coerces a config value to a secret ref and queues its assignment when active. */
 export function collectSecretInputAssignment(params: {
   value: unknown;
   path: string;
@@ -130,7 +130,7 @@ export function collectSecretInputAssignment(params: {
   });
 }
 
-/** Reused helper for apply Resolved Assignments behavior in src/secrets. */
+/** Applies resolved secret values to all queued config assignments. */
 export function applyResolvedAssignments(params: {
   assignments: SecretAssignment[];
   resolved: Map<string, unknown>;
@@ -153,12 +153,12 @@ export function applyResolvedAssignments(params: {
   }
 }
 
-/** Reused helper for has Own Property behavior in src/secrets. */
+/** Own-property helper used when scanning unknown config records. */
 export function hasOwnProperty(record: Record<string, unknown>, key: string): boolean {
   return Object.prototype.hasOwnProperty.call(record, key);
 }
 
-/** Reused helper for is Enabled Flag behavior in src/secrets. */
+/** Treats non-records and records without enabled=false as active. */
 export function isEnabledFlag(value: unknown): boolean {
   if (!isRecord(value)) {
     return true;
@@ -166,7 +166,7 @@ export function isEnabledFlag(value: unknown): boolean {
   return value.enabled !== false;
 }
 
-/** Reused helper for is Channel Account Effectively Enabled behavior in src/secrets. */
+/** Checks whether both channel and account records are effectively enabled. */
 export function isChannelAccountEffectivelyEnabled(
   channel: Record<string, unknown>,
   account: Record<string, unknown>,
