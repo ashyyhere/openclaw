@@ -40,18 +40,18 @@ import type {
   RunChannelTurnParams,
 } from "../turn/types.js";
 
-/** Re-exported API for src/channels/message. */
+/** Inbound turn record/drop option contracts shared with compatibility reply dispatch. */
 export type {
   ChannelTurnDroppedHistoryOptions,
   ChannelTurnDroppedHistoryOptions as ChannelInboundDroppedHistoryOptions,
   ChannelTurnRecordOptions,
   ChannelTurnRecordOptions as InboundReplyRecordOptions,
 } from "../turn/types.js";
-/** Re-exported API for src/channels/message, starting with Durable Inbound Reply Delivery Params. */
+/** Durable delivery parameters used when inbound replies are sent through message adapters. */
 export type { DurableInboundReplyDeliveryParams } from "../turn/kernel.js";
-/** Re-exported API for src/channels/message, starting with Channel Bot Loop Protection Facts. */
+/** Bot-loop facts carried through inbound channel turn preparation. */
 export type { ChannelBotLoopProtectionFacts } from "../turn/kernel.js";
-/** Re-exported API for src/channels/message, starting with record Channel Bot Pair Loop And Check Suppression. */
+/** Records paired bot-loop suppression before dispatching an inbound turn. */
 export { recordChannelBotPairLoopAndCheckSuppression } from "../turn/kernel.js";
 
 type ReplyOptionsWithoutModelSelected = Omit<
@@ -61,16 +61,16 @@ type ReplyOptionsWithoutModelSelected = Omit<
 type RecordInboundSessionFn = typeof import("../session.js").recordInboundSession;
 
 type ReplyDispatchFromConfigOptions = Omit<GetReplyOptions, "onBlockReply">;
-/** Shared type for Channel Inbound Event Runner Params in src/channels/message. */
+/** Parameters for running a raw channel event through prepare, record, and dispatch phases. */
 export type ChannelInboundEventRunnerParams<
   TRaw,
   TDispatchResult = DispatchFromConfigResult,
 > = RunChannelTurnParams<TRaw, TDispatchResult>;
-/** Shared type for Prepared Inbound Reply in src/channels/message. */
+/** Prepared inbound turn ready for shared record and reply dispatch ordering. */
 export type PreparedInboundReply<TDispatchResult> = PreparedChannelTurn<TDispatchResult>;
-/** Shared type for Assembled Inbound Reply in src/channels/message. */
+/** Fully assembled inbound turn passed directly to dispatch. */
 export type AssembledInboundReply = AssembledChannelTurn;
-/** Shared type for Inbound Reply Dispatch Result in src/channels/message. */
+/** Dispatch result for an inbound channel turn. */
 export type InboundReplyDispatchResult<TDispatchResult> = ChannelTurnResult<TDispatchResult>;
 
 /** Run an already prepared inbound reply through shared session-record + dispatch ordering. */
@@ -86,19 +86,19 @@ type PreparedInboundReplyTurnWithoutBotLoopProtection<TDispatchResult> = Omit<
   botLoopProtection?: undefined;
 };
 
-/** Reused helper for run Prepared Inbound Reply behavior in src/channels/message. */
+/** Runs a prepared inbound turn with bot-loop protection and returns the full turn result. */
 export function runPreparedInboundReply<TDispatchResult>(
   params: PreparedInboundReplyTurnWithBotLoopProtection<TDispatchResult>,
 ): Promise<ChannelTurnResult<TDispatchResult>>;
-/** Reused helper for run Prepared Inbound Reply behavior in src/channels/message. */
+/** Runs a prepared inbound turn without bot-loop protection and returns dispatch-only results. */
 export function runPreparedInboundReply<TDispatchResult>(
   params: PreparedInboundReplyTurnWithoutBotLoopProtection<TDispatchResult>,
 ): Promise<DispatchedChannelTurnResult<TDispatchResult>>;
-/** Reused helper for run Prepared Inbound Reply behavior in src/channels/message. */
+/** Runs a prepared inbound turn through shared record and dispatch ordering. */
 export function runPreparedInboundReply<TDispatchResult>(
   params: PreparedChannelTurn<TDispatchResult>,
 ): Promise<ChannelTurnResult<TDispatchResult>>;
-/** Reused helper for run Prepared Inbound Reply behavior in src/channels/message. */
+/** Runs a prepared inbound turn through the channel turn kernel. */
 export async function runPreparedInboundReply<TDispatchResult>(
   params: PreparedChannelTurn<TDispatchResult>,
 ): Promise<ChannelTurnResult<TDispatchResult>> {
@@ -109,22 +109,22 @@ export async function runPreparedInboundReply<TDispatchResult>(
 export function runPreparedInboundReplyTurn<TDispatchResult>(
   params: PreparedInboundReplyTurnWithBotLoopProtection<TDispatchResult>,
 ): Promise<ChannelTurnResult<TDispatchResult>>;
-/** Reused helper for run Prepared Inbound Reply Turn behavior in src/channels/message. */
+/** Deprecated prepared-turn overload for callers without bot-loop protection. */
 export function runPreparedInboundReplyTurn<TDispatchResult>(
   params: PreparedInboundReplyTurnWithoutBotLoopProtection<TDispatchResult>,
 ): Promise<DispatchedChannelTurnResult<TDispatchResult>>;
-/** Reused helper for run Prepared Inbound Reply Turn behavior in src/channels/message. */
+/** Deprecated prepared-turn overload retained for compatibility facades. */
 export function runPreparedInboundReplyTurn<TDispatchResult>(
   params: PreparedChannelTurn<TDispatchResult>,
 ): Promise<ChannelTurnResult<TDispatchResult>>;
-/** Reused helper for run Prepared Inbound Reply Turn behavior in src/channels/message. */
+/** Deprecated alias for `runPreparedInboundReply`. */
 export async function runPreparedInboundReplyTurn<TDispatchResult>(
   params: PreparedChannelTurn<TDispatchResult>,
 ): Promise<ChannelTurnResult<TDispatchResult>> {
   return await runPreparedInboundReply(params);
 }
 
-/** Reused helper for run Channel Inbound Event behavior in src/channels/message. */
+/** Runs a raw inbound channel event through the shared channel turn kernel. */
 export async function runChannelInboundEvent<TRaw, TDispatchResult = DispatchFromConfigResult>(
   params: ChannelInboundEventRunnerParams<TRaw, TDispatchResult>,
 ) {
@@ -138,12 +138,12 @@ export async function runInboundReplyTurn<TRaw, TDispatchResult = DispatchFromCo
   return await runChannelInboundEvent(params);
 }
 
-/** Reused helper for dispatch Channel Inbound Reply behavior in src/channels/message. */
+/** Dispatches an already assembled inbound reply turn. */
 export async function dispatchChannelInboundReply(params: AssembledInboundReply) {
   return await dispatchChannelInboundReplyCore(params);
 }
 
-/** Re-exported API for src/channels/message. */
+/** Compatibility aliases for inbound reply dispatch visibility, durability, and history helpers. */
 export {
   hasFinalChannelTurnDispatch as hasFinalInboundReplyDispatch,
   hasVisibleChannelTurnDispatch as hasVisibleInboundReplyDispatch,
