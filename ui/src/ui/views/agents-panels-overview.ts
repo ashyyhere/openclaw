@@ -1,4 +1,4 @@
-// ui/src/ui/views agents panels overview helpers and runtime behavior.
+// Agent overview panel rendering for model, workspace, runtime, and identity settings.
 import { html, nothing } from "lit";
 import { t } from "../../i18n/index.ts";
 import type {
@@ -19,7 +19,7 @@ import {
 } from "./agents-utils.ts";
 import type { AgentsPanel } from "./agents.types.ts";
 
-/** Reused helper for render Agent Overview behavior in ui/src/ui/views. */
+/** Render the agent overview panel with editable model primary/fallback controls. */
 export function renderAgentOverview(params: {
   agent: AgentsListResult["agents"][number];
   basePath: string;

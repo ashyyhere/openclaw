@@ -1,4 +1,4 @@
-// ui/src/ui/views workboard helpers and runtime behavior.
+// Workboard view rendering and drag/drop orchestration for task cards.
 import { html, nothing } from "lit";
 import { t } from "../../i18n/index.ts";
 import {
@@ -1072,7 +1072,7 @@ function renderColumn(props: WorkboardProps, status: WorkboardStatus, cards: Wor
   `;
 }
 
-/** Reused helper for render Workboard behavior in ui/src/ui/views. */
+/** Render the workboard columns, load/sync plugin state, and wire card interactions. */
 export function renderWorkboard(props: WorkboardProps) {
   const state = getWorkboardState(props.host);
   if (props.pluginEnabled) {
