@@ -7,15 +7,15 @@ import { hasReplyPayloadContent } from "../interactive/payload.js";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import { normalizeStringEntries } from "../shared/string-normalization.js";
 
-/** Re-exported API for src/plugin-sdk, starting with Media Payload. */
+/** Public media payload contract for plugin outbound replies. */
 export type { MediaPayload, MediaPayloadInput } from "../channels/plugins/media-payload.js";
-/** Re-exported API for src/plugin-sdk, starting with build Media Payload. */
+/** Builds a normalized media payload from plugin-provided media input. */
 export { buildMediaPayload } from "../channels/plugins/media-payload.js";
-/** Shared type for Reply Payload in src/plugin-sdk. */
+/** Public reply payload shape with host-only trusted local media omitted. */
 export type ReplyPayload = Omit<InternalReplyPayload, "trustedLocalMedia">;
-/** Re-exported API for src/plugin-sdk, starting with Reply Payload Tts Supplement. */
+/** TTS supplement marker carried on reply payloads. */
 export type { ReplyPayloadTtsSupplement } from "../auto-reply/reply-payload.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Public TTS supplement helpers for plugin reply payloads. */
 export {
   buildTtsSupplementMediaPayload,
   getReplyPayloadTtsSupplement,
@@ -24,7 +24,7 @@ export {
   markReplyPayloadAsTtsSupplement,
 } from "../auto-reply/reply-payload.js";
 
-/** Shared type for Outbound Reply Payload in src/plugin-sdk. */
+/** Normalized outbound payload accepted by SDK delivery helpers. */
 export type OutboundReplyPayload = {
   text?: string;
   mediaUrls?: string[];
@@ -39,13 +39,13 @@ export type OutboundReplyPayload = {
   replyToId?: string;
 };
 
-/** Shared type for Reasoning Reply Payload in src/plugin-sdk. */
+/** Minimal reply shape used to identify reasoning/thinking messages. */
 export type ReasoningReplyPayload = {
   text?: string;
   isReasoning?: boolean;
 };
 
-/** Shared type for Sendable Outbound Reply Parts in src/plugin-sdk. */
+/** Derived text/media facts used by send and fallback delivery helpers. */
 export type SendableOutboundReplyParts = {
   text: string;
   trimmedText: string;
@@ -73,7 +73,7 @@ function trimLeadingMarkdownQuoteMarkers(text: string): string {
   return candidate;
 }
 
-/** Reused helper for is Reasoning Reply Payload behavior in src/plugin-sdk. */
+/** Detects explicit or prefixed reasoning payloads, including quoted markdown text. */
 export function isReasoningReplyPayload(payload: ReasoningReplyPayload): boolean {
   if (payload.isReasoning === true) {
     return true;
@@ -235,7 +235,7 @@ export async function sendPayloadWithChunkedTextAndMedia<
   return lastResult!;
 }
 
-/** Reused helper for send Payload Media Sequence behavior in src/plugin-sdk. */
+/** Sends each media URL in order while keeping text only on the first item. */
 export async function sendPayloadMediaSequence<TResult>(params: {
   text: string;
   mediaUrls: readonly string[];
@@ -262,7 +262,7 @@ export async function sendPayloadMediaSequence<TResult>(params: {
   return lastResult;
 }
 
-/** Reused helper for send Payload Media Sequence Or Fallback behavior in src/plugin-sdk. */
+/** Sends a media sequence or returns the caller's empty/fallback result. */
 export async function sendPayloadMediaSequenceOrFallback<TResult>(params: {
   text: string;
   mediaUrls: readonly string[];
@@ -281,7 +281,7 @@ export async function sendPayloadMediaSequenceOrFallback<TResult>(params: {
   return (await sendPayloadMediaSequence(params)) ?? params.fallbackResult;
 }
 
-/** Reused helper for send Payload Media Sequence And Finalize behavior in src/plugin-sdk. */
+/** Sends optional media first, then runs a required finalize step. */
 export async function sendPayloadMediaSequenceAndFinalize<TMediaResult, TResult>(params: {
   text: string;
   mediaUrls: readonly string[];
@@ -299,7 +299,7 @@ export async function sendPayloadMediaSequenceAndFinalize<TMediaResult, TResult>
   return await params.finalize();
 }
 
-/** Reused helper for send Text Media Payload behavior in src/plugin-sdk. */
+/** Sends a channel payload through media-first fanout or text chunking. */
 export async function sendTextMediaPayload(params: {
   channel: string;
   ctx: SendPayloadContext;
@@ -412,7 +412,7 @@ export async function sendMediaWithLeadingCaption(params: {
   return true;
 }
 
-/** Reused helper for deliver Text Or Media Reply behavior in src/plugin-sdk. */
+/** Delivers media with a leading caption, falling back to chunked text. */
 export async function deliverTextOrMediaReply(params: {
   payload: OutboundReplyPayload;
   text: string;
@@ -454,7 +454,7 @@ export async function deliverTextOrMediaReply(params: {
   return sentText ? "text" : "empty";
 }
 
-/** Reused helper for deliver Formatted Text With Attachments behavior in src/plugin-sdk. */
+/** Sends text with attachment links when inline media delivery is unavailable. */
 export async function deliverFormattedTextWithAttachments(params: {
   payload: OutboundReplyPayload;
   send: (params: { text: string; replyToId?: string }) => Promise<void>;
