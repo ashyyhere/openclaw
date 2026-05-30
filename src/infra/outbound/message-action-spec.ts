@@ -1,4 +1,5 @@
-// infra/outbound message action spec helpers and runtime behavior.
+// Message action target semantics.
+// The map defines whether each action uses `to`, `channelId`, or no destination.
 import { getBootstrapChannelPlugin } from "../../channels/plugins/bootstrap-registry.js";
 import type { ChannelMessageActionName } from "../../channels/plugins/types.public.js";
 import {
@@ -7,10 +8,10 @@ import {
 } from "../../shared/string-coerce.js";
 import { hasPotentialPluginActionParam } from "./message-action-param-keys.js";
 
-/** Shared type for Message Action Target Mode in src/infra/outbound. */
+/** Target field expected by a channel message action. */
 export type MessageActionTargetMode = "to" | "channelId" | "none";
 
-/** Reused constant for MESSAGE ACTION TARGET MODE behavior in src/infra/outbound. */
+/** Canonical target requirements for known channel message actions. */
 export const MESSAGE_ACTION_TARGET_MODE: Record<ChannelMessageActionName, MessageActionTargetMode> =
   {
     send: "to",
@@ -108,12 +109,12 @@ function listActionTargetAliasSpecs(
   return specs;
 }
 
-/** Reused helper for action Requires Target behavior in src/infra/outbound. */
+/** Return whether an action needs any target-like destination. */
 export function actionRequiresTarget(action: ChannelMessageActionName): boolean {
   return MESSAGE_ACTION_TARGET_MODE[action] !== "none";
 }
 
-/** Reused helper for action Has Target behavior in src/infra/outbound. */
+/** Detect explicit target data, including plugin-provided alias fields for legacy adapters. */
 export function actionHasTarget(
   action: ChannelMessageActionName,
   params: Record<string, unknown>,

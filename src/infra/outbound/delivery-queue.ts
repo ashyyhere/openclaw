@@ -1,5 +1,6 @@
-// infra/outbound delivery queue helpers and runtime behavior.
-/** Re-exported API for src/infra/outbound. */
+// Public delivery queue barrel.
+// Storage owns queue files; recovery owns retry/backoff and active-claim behavior.
+/** Queue storage mutations and loaders used by outbound retry paths. */
 export {
   ackDelivery,
   enqueueDelivery,
@@ -11,14 +12,14 @@ export {
   markDeliveryPlatformSendAttemptStarted,
   moveToFailed,
 } from "./delivery-queue-storage.js";
-/** Re-exported API for src/infra/outbound. */
+/** Queue storage payload contracts shared by senders and recovery workers. */
 export type {
   QueuedDelivery,
   QueuedDeliveryPayload,
   QueuedReplyPayloadSendingHook,
   QueuedRenderedMessageBatchPlan,
 } from "./delivery-queue-storage.js";
-/** Re-exported API for src/infra/outbound. */
+/** Retry/recovery helpers for pending delivery queue entries. */
 export {
   computeBackoffMs,
   drainPendingDeliveries,
@@ -28,7 +29,7 @@ export {
   recoverPendingDeliveries,
   withActiveDeliveryClaim,
 } from "./delivery-queue-recovery.js";
-/** Re-exported API for src/infra/outbound. */
+/** Recovery worker contracts for delivery draining and logging. */
 export type {
   ActiveDeliveryClaimResult,
   DeliverFn,

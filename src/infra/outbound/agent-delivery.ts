@@ -1,4 +1,5 @@
-// infra/outbound agent delivery helpers and runtime behavior.
+// Agent outbound delivery planning.
+// Keeps replies on the turn source channel when shared sessions span channels.
 import type { ChannelOutboundTargetMode } from "../../channels/plugins/types.public.js";
 import type { ChannelId } from "../../channels/plugins/types.public.js";
 import type { SessionEntry } from "../../config/sessions.js";
@@ -21,7 +22,7 @@ import {
   type SessionDeliveryTarget,
 } from "./targets.js";
 
-/** Shared type for Agent Delivery Plan in src/infra/outbound. */
+/** Resolved destination facts used before validating or sending an agent reply. */
 export type AgentDeliveryPlan = {
   baseDelivery: SessionDeliveryTarget;
   resolvedChannel: GatewayMessageChannel;
@@ -31,7 +32,7 @@ export type AgentDeliveryPlan = {
   deliveryTargetMode?: ChannelOutboundTargetMode;
 };
 
-/** Reused helper for resolve Agent Delivery Plan behavior in src/infra/outbound. */
+/** Resolve requested, explicit, and last-session delivery hints into one delivery plan. */
 export function resolveAgentDeliveryPlan(params: {
   sessionEntry?: SessionEntry;
   requestedChannel?: string;
@@ -136,7 +137,7 @@ export function resolveAgentDeliveryPlan(params: {
   };
 }
 
-/** Reused helper for resolve Agent Delivery Plan With Session Route behavior in src/infra/outbound. */
+/** Let channel plugins rewrite an outbound target to an existing session route when available. */
 export async function resolveAgentDeliveryPlanWithSessionRoute(
   params: Parameters<typeof resolveAgentDeliveryPlan>[0] & {
     cfg: OpenClawConfig;
@@ -198,7 +199,7 @@ export async function resolveAgentDeliveryPlanWithSessionRoute(
   };
 }
 
-/** Reused helper for resolve Agent Outbound Target behavior in src/infra/outbound. */
+/** Validate or normalize the final outbound target for a planned agent delivery. */
 export function resolveAgentOutboundTarget(params: {
   cfg: OpenClawConfig;
   plan: AgentDeliveryPlan;

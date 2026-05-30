@@ -1,11 +1,12 @@
-// infra/outbound format helpers and runtime behavior.
+// Outbound delivery formatting for CLI/user-visible summaries and JSON output.
+// The helpers preserve channel-specific identifiers when adapters return them.
 import { getChatChannelMeta } from "../../channels/chat-meta.js";
 import { getChannelPlugin } from "../../channels/plugins/index.js";
 import type { ChannelId } from "../../channels/plugins/types.public.js";
 import { normalizeChatChannelId } from "../../channels/registry.js";
 import type { OutboundDeliveryResult } from "./deliver.js";
 
-/** Shared type for Outbound Delivery Json in src/infra/outbound. */
+/** JSON shape emitted for outbound delivery results. */
 export type OutboundDeliveryJson = {
   channel: string;
   via: "direct" | "gateway";
@@ -44,7 +45,7 @@ const resolveChannelLabel = (channel: string) => {
   return channel;
 };
 
-/** Reused helper for format Outbound Delivery Summary behavior in src/infra/outbound. */
+/** Format a concise human-readable send summary with channel-specific identifiers. */
 export function formatOutboundDeliverySummary(
   channel: string,
   result?: OutboundDeliveryResult,
@@ -71,7 +72,7 @@ export function formatOutboundDeliverySummary(
   return base;
 }
 
-/** Reused helper for build Outbound Delivery Json behavior in src/infra/outbound. */
+/** Build structured delivery output while retaining optional adapter metadata. */
 export function buildOutboundDeliveryJson(params: {
   channel: string;
   to: string;
@@ -114,7 +115,7 @@ export function buildOutboundDeliveryJson(params: {
   return payload;
 }
 
-/** Reused helper for format Gateway Summary behavior in src/infra/outbound. */
+/** Format the generic gateway send summary when no adapter result object is available. */
 export function formatGatewaySummary(params: {
   action?: string;
   channel?: string;

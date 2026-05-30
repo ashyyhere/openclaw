@@ -1,4 +1,5 @@
-// infra/outbound account scoped conversation bindings helpers and runtime behavior.
+// Account-scoped conversation binding manager for channel-specific thread routing.
+// Records are mirrored into the generic session binding service for shared routing code.
 import { resolveThreadBindingConversationIdFromBindingId } from "../../channels/thread-binding-id.js";
 import {
   resolveThreadBindingIdleTimeoutMsForChannel,
@@ -14,7 +15,7 @@ import {
   type SessionBindingRecord,
 } from "./session-binding-service.js";
 
-/** Shared type for Account Scoped Conversation Binding Record in src/infra/outbound. */
+/** Stored binding from one channel conversation to a target session key. */
 export type AccountScopedConversationBindingRecord<TKind extends string = string> = {
   accountId: string;
   conversationId: string;
@@ -27,7 +28,7 @@ export type AccountScopedConversationBindingRecord<TKind extends string = string
   lastActivityAt: number;
 };
 
-/** Shared type for Account Scoped Conversation Binding Manager in src/infra/outbound. */
+/** Per-account manager used by channel adapters to bind, touch, and unbind conversations. */
 export type AccountScopedConversationBindingManager<TKind extends string = string> = {
   accountId: string;
   getByConversationId: (
@@ -118,7 +119,7 @@ function toSessionBindingRecord<TKind extends string>(params: {
   };
 }
 
-/** Reused helper for create Account Scoped Conversation Binding Manager behavior in src/infra/outbound. */
+/** Create or reuse the singleton binding manager for one channel/account pair. */
 export function createAccountScopedConversationBindingManager<TKind extends string>(params: {
   channel: string;
   cfg: OpenClawConfig;
@@ -344,7 +345,7 @@ export function createAccountScopedConversationBindingManager<TKind extends stri
   return manager;
 }
 
-/** Reused helper for reset Account Scoped Conversation Bindings For Tests behavior in src/infra/outbound. */
+/** Clear all managers and records behind a test state key. */
 export function resetAccountScopedConversationBindingsForTests(params: { stateKey: symbol }) {
   const state = getState(params.stateKey);
   for (const manager of state.managersByAccountId.values()) {

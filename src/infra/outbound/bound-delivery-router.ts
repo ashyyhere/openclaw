@@ -1,4 +1,5 @@
-// infra/outbound bound delivery router helpers and runtime behavior.
+// Bound delivery router for task-completion replies.
+// It prefers requester-matched bindings and only falls back when policy permits ambiguity.
 import { normalizeConversationRef } from "./session-binding-normalization.js";
 import {
   getSessionBindingService,
@@ -7,7 +8,7 @@ import {
   type SessionBindingService,
 } from "./session-binding-service.js";
 
-/** Shared type for Bound Delivery Router Input in src/infra/outbound. */
+/** Inputs needed to choose a bound conversation for a completed task reply. */
 export type BoundDeliveryRouterInput = {
   eventKind: "task_completion";
   targetSessionKey: string;
@@ -15,14 +16,14 @@ export type BoundDeliveryRouterInput = {
   failClosed: boolean;
 };
 
-/** Shared type for Bound Delivery Router Result in src/infra/outbound. */
+/** Routing decision plus diagnostic reason for bound-delivery fallbacks. */
 export type BoundDeliveryRouterResult = {
   binding: SessionBindingRecord | null;
   mode: "bound" | "fallback";
   reason: string;
 };
 
-/** Shared type for Bound Delivery Router in src/infra/outbound. */
+/** Resolver facade used by outbound delivery paths. */
 export type BoundDeliveryRouter = {
   resolveDestination: (input: BoundDeliveryRouterInput) => BoundDeliveryRouterResult;
 };
@@ -59,7 +60,7 @@ function resolveBindingForRequester(
   return null;
 }
 
-/** Reused helper for create Bound Delivery Router behavior in src/infra/outbound. */
+/** Build a router over the shared session binding service. */
 export function createBoundDeliveryRouter(
   service: SessionBindingService = getSessionBindingService(),
 ): BoundDeliveryRouter {
