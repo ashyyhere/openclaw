@@ -1,7 +1,7 @@
-// infra clawhub spec helpers and runtime behavior.
+// Parses ClawHub plugin install specs.
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
-/** Reused helper for parse Claw Hub Plugin Spec behavior in src/infra. */
+/** Parses `clawhub:name` and `clawhub:name@version` plugin specs. */
 export function parseClawHubPluginSpec(raw: string): {
   name: string;
   version?: string;

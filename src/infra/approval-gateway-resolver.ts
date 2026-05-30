@@ -1,4 +1,4 @@
-// infra approval gateway resolver helpers and runtime behavior.
+// Resolves approval decisions through the operator approvals gateway client.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { withOperatorApprovalsGatewayClient } from "../gateway/operator-approvals-client.js";
 import { isApprovalNotFoundError } from "./approval-errors.js";
@@ -15,7 +15,7 @@ type ResolveApprovalOverGatewayParams = {
   clientDisplayName?: string;
 };
 
-/** Reused helper for resolve Approval Over Gateway behavior in src/infra. */
+/** Sends an exec or plugin approval resolution request over the gateway. */
 export async function resolveApprovalOverGateway(
   params: ResolveApprovalOverGatewayParams,
 ): Promise<void> {

@@ -1,4 +1,4 @@
-// infra channel approval auth helpers and runtime behavior.
+// Resolves whether a channel actor can approve exec or plugin requests.
 import { getChannelPlugin, resolveChannelApprovalCapability } from "../channels/plugins/index.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { isImplicitSameChatApprovalAuthorization } from "../plugin-sdk/approval-auth-helpers.js";
@@ -10,7 +10,7 @@ type ApprovalCommandAuthorization = {
   explicit: boolean;
 };
 
-/** Reused helper for resolve Approval Command Authorization behavior in src/infra. */
+/** Checks channel approval capability auth and marks implicit fallback approvals. */
 export function resolveApprovalCommandAuthorization(params: {
   cfg: OpenClawConfig;
   channel?: string | null;

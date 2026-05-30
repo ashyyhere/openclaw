@@ -1,6 +1,6 @@
-// infra boundary path helpers and runtime behavior.
+// Re-exports fs-safe root path resolution helpers with infra defaults loaded.
 import "./fs-safe-defaults.js";
-/** Re-exported API for src/infra. */
+/** Root path alias and boundary resolution primitives from fs-safe. */
 export {
   ROOT_PATH_ALIAS_POLICIES,
   resolvePathViaExistingAncestorSync,

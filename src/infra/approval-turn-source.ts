@@ -1,8 +1,8 @@
-// infra approval turn source helpers and runtime behavior.
+// Checks whether an approval can route back to the initiating turn source.
 import { getRuntimeConfig } from "../config/config.js";
 import { resolveApprovalInitiatingSurfaceState } from "./exec-approval-surface.js";
 
-/** Reused helper for has Approval Turn Source Route behavior in src/infra. */
+/** Returns whether the initiating channel/account can receive approval UI. */
 export function hasApprovalTurnSourceRoute(params: {
   turnSourceChannel?: string | null;
   turnSourceAccountId?: string | null;

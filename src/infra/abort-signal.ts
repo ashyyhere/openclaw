@@ -1,5 +1,5 @@
-// infra abort signal helpers and runtime behavior.
-/** Reused helper for wait For Abort Signal behavior in src/infra. */
+// Small helpers for awaiting abort-controller cancellation.
+/** Resolves when the signal aborts, or immediately when no live signal exists. */
 export async function waitForAbortSignal(signal?: AbortSignal): Promise<void> {
   if (!signal || signal.aborted) {
     return;

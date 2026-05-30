@@ -1,4 +1,4 @@
-// infra changelog unreleased helpers and runtime behavior.
+// Inserts release-note bullets into the Unreleased changelog section.
 type UnreleasedSection = "Breaking" | "Changes" | "Fixes";
 
 function findSectionRange(
@@ -45,7 +45,7 @@ function findSectionRange(
   return { start: sectionIndex, insertAt };
 }
 
-/** Reused helper for append Unreleased Changelog Entry behavior in src/infra. */
+/** Appends a de-duplicated bullet to one Unreleased changelog subsection. */
 export function appendUnreleasedChangelogEntry(
   content: string,
   params: {
