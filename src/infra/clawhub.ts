@@ -1,4 +1,5 @@
-// infra clawhub helpers and runtime behavior.
+// ClawHub API client types, downloads, and compatibility checks.
+// Normalizes package/skill metadata, auth tokens, artifact integrity, and gateway ranges.
 import { createHash } from "node:crypto";
 import fs from "node:fs/promises";
 import os from "node:os";
@@ -13,33 +14,33 @@ import { parseStrictPositiveInteger } from "./parse-finite-number.js";
 import { isAtLeast, parseSemver } from "./runtime-guard.js";
 import { compareComparableSemver, parseComparableSemver } from "./semver-compare.js";
 import { createTempDownloadTarget } from "./temp-download.js";
-/** Re-exported API for src/infra, starting with parse Claw Hub Plugin Spec. */
+/** Parse ClawHub plugin specs shared by install and discovery callers. */
 export { parseClawHubPluginSpec } from "./clawhub-spec.js";
 
 const DEFAULT_CLAWHUB_URL = "https://clawhub.ai";
 const DEFAULT_FETCH_TIMEOUT_MS = 30_000;
 const SKILL_CARD_MAX_BYTES = 256 * 1024;
 
-/** Shared type for Claw Hub Package Family in src/infra. */
+/** Package families returned by ClawHub package APIs. */
 export type ClawHubPackageFamily = "skill" | "code-plugin" | "bundle-plugin";
-/** Shared type for Claw Hub Package Channel in src/infra. */
+/** Publication channels used to scope ClawHub packages. */
 export type ClawHubPackageChannel = "official" | "community" | "private";
 // Keep aligned with @openclaw/plugin-package-contract ExternalPluginCompatibility.
-/** Shared type for Claw Hub Package Compatibility in src/infra. */
+/** Compatibility metadata embedded in ClawHub package versions. */
 export type ClawHubPackageCompatibility = {
   pluginApiRange?: string;
   builtWithOpenClawVersion?: string;
   pluginSdkVersion?: string;
   minGatewayVersion?: string;
 };
-/** Shared type for Claw Hub Package Host Target in src/infra. */
+/** Host platform target advertised by a ClawPack artifact. */
 export type ClawHubPackageHostTarget = {
   os?: string | null;
   arch?: string | null;
   libc?: string | null;
   key?: string | null;
 };
-/** Shared type for Claw Hub Package Environment Summary in src/infra. */
+/** Runtime requirements summarized from package metadata. */
 export type ClawHubPackageEnvironmentSummary = {
   requiresLocalDesktop?: boolean;
   requiresBrowser?: boolean;
@@ -50,7 +51,7 @@ export type ClawHubPackageEnvironmentSummary = {
   supportsRemoteHost?: boolean;
   knownUnsupported?: string[];
 };
-/** Shared type for Claw Hub Package Artifact Summary in src/infra. */
+/** Artifact metadata returned by package detail and version APIs. */
 export type ClawHubPackageArtifactSummary = {
   kind?: string | null;
   sha256?: string | null;
@@ -65,9 +66,9 @@ export type ClawHubPackageArtifactSummary = {
   tarballUrl?: string | null;
   legacyDownloadUrl?: string | null;
 };
-/** Shared type for Claw Hub Artifact Kind in src/infra. */
+/** Download artifact formats OpenClaw can install from ClawHub. */
 export type ClawHubArtifactKind = "legacy-zip" | "npm-pack";
-/** Shared type for Claw Hub Artifact Scan State in src/infra. */
+/** Virus/security scan state reported for a ClawHub artifact. */
 export type ClawHubArtifactScanState =
   | "pending"
   | "clean"
@@ -75,9 +76,9 @@ export type ClawHubArtifactScanState =
   | "malicious"
   | "not-run"
   | (string & {});
-/** Shared type for Claw Hub Artifact Moderation State in src/infra. */
+/** Moderation gate state reported for an artifact. */
 export type ClawHubArtifactModerationState = "approved" | "quarantined" | "revoked" | (string & {});
-/** Shared type for Claw Hub Package Security State in src/infra. */
+/** Package security decision state returned by ClawHub. */
 export type ClawHubPackageSecurityState =
   | "pending"
   | "approved"
@@ -86,7 +87,7 @@ export type ClawHubPackageSecurityState =
   | "rejected"
   | "revoked"
   | (string & {});
-/** Shared type for Claw Hub Resolved Artifact in src/infra. */
+/** Concrete artifact selected by ClawHub for a package version. */
 export type ClawHubResolvedArtifact =
   | {
       source: "clawhub";
@@ -110,7 +111,7 @@ export type ClawHubResolvedArtifact =
       scanState?: ClawHubArtifactScanState | null;
       moderationState?: ClawHubArtifactModerationState | null;
     };
-/** Shared type for Claw Hub Package Artifact Resolver Response in src/infra. */
+/** Response from ClawHub artifact resolution before download. */
 export type ClawHubPackageArtifactResolverResponse = {
   package?: {
     name?: string | null;
@@ -133,7 +134,7 @@ export type ClawHubPackageArtifactResolverResponse = {
     | null;
   artifact?: ClawHubResolvedArtifact | null;
 };
-/** Shared type for Claw Hub Package Security Response in src/infra. */
+/** Security and moderation response for a package release. */
 export type ClawHubPackageSecurityResponse = {
   packageId?: string | null;
   releaseId?: string | null;
@@ -145,7 +146,7 @@ export type ClawHubPackageSecurityResponse = {
   scanState?: ClawHubArtifactScanState | null;
   moderationState?: ClawHubArtifactModerationState | null;
 };
-/** Shared type for Claw Hub Package Claw Pack Summary in src/infra. */
+/** ClawPack bundle summary exposed by package metadata. */
 export type ClawHubPackageClawPackSummary = {
   available: boolean;
   specVersion?: number | null;
@@ -163,7 +164,7 @@ export type ClawHubPackageClawPackSummary = {
   environment?: ClawHubPackageEnvironmentSummary | null;
   runtimeBundles?: unknown[];
 };
-/** Shared type for Claw Hub Package Readiness Phase in src/infra. */
+/** Package readiness phases shown by ClawHub before install. */
 export type ClawHubPackageReadinessPhase =
   | "planned"
   | "published"
@@ -173,7 +174,7 @@ export type ClawHubPackageReadinessPhase =
   | "blocked"
   | "ready-for-openclaw"
   | (string & {});
-/** Shared type for Claw Hub Package Readiness in src/infra. */
+/** Install-readiness response for a package name. */
 export type ClawHubPackageReadiness = {
   ready?: boolean | null;
   readyForOpenClaw?: boolean | null;
@@ -192,7 +193,7 @@ export type ClawHubPackageReadiness = {
   scanState?: ClawHubArtifactScanState | null;
   moderationState?: ClawHubArtifactModerationState | null;
 };
-/** Shared type for Claw Hub Package List Item in src/infra. */
+/** Package row returned by list and search endpoints. */
 export type ClawHubPackageListItem = {
   name: string;
   displayName: string;
@@ -214,7 +215,7 @@ export type ClawHubPackageListItem = {
   artifact?: ClawHubPackageArtifactSummary | null;
   clawpack?: ClawHubPackageClawPackSummary;
 };
-/** Shared type for Claw Hub Package Detail in src/infra. */
+/** Detailed package metadata including owner, capabilities, and artifact summary. */
 export type ClawHubPackageDetail = {
   package:
     | (ClawHubPackageListItem & {
@@ -252,7 +253,7 @@ export type ClawHubPackageDetail = {
   } | null;
 };
 
-/** Shared type for Claw Hub Package Version in src/infra. */
+/** Version-specific package metadata and release files. */
 export type ClawHubPackageVersion = {
   package: {
     name: string;
@@ -287,13 +288,13 @@ export type ClawHubPackageVersion = {
   } | null;
 };
 
-/** Shared type for Claw Hub Package Search Result in src/infra. */
+/** Scored package search hit. */
 export type ClawHubPackageSearchResult = {
   score: number;
   package: ClawHubPackageListItem;
 };
 
-/** Shared type for Claw Hub Skill Search Result in src/infra. */
+/** Scored skill search hit returned by the ClawHub skill index. */
 export type ClawHubSkillSearchResult = {
   score: number;
   slug: string;
@@ -303,7 +304,7 @@ export type ClawHubSkillSearchResult = {
   updatedAt?: number;
 };
 
-/** Shared type for Claw Hub Skill Detail in src/infra. */
+/** Detailed skill metadata with latest version and publisher info. */
 export type ClawHubSkillDetail = {
   skill: {
     slug: string;
@@ -329,10 +330,10 @@ export type ClawHubSkillDetail = {
   } | null;
 };
 
-/** Shared type for Claw Hub Skill Verification Decision in src/infra. */
+/** Skill verification verdict returned by ClawHub. */
 export type ClawHubSkillVerificationDecision = "pass" | "fail" | (string & {});
 
-/** Shared type for Claw Hub Skill Verification Response in src/infra. */
+/** Full skill verification report, including provenance and security fields. */
 export type ClawHubSkillVerificationResponse = {
   schema: "clawhub.skill.verify.v1";
   ok: boolean;
@@ -348,13 +349,13 @@ export type ClawHubSkillVerificationResponse = {
   signature: unknown;
 };
 
-/** Shared type for Claw Hub Skill Security Verdict Request Item in src/infra. */
+/** Skill/version tuple submitted for batched security verdict lookup. */
 export type ClawHubSkillSecurityVerdictRequestItem = {
   slug: string;
   version: string;
 };
 
-/** Shared type for Claw Hub Skill Security Verdict Item in src/infra. */
+/** Security verdict for one requested skill version. */
 export type ClawHubSkillSecurityVerdictItem = {
   ok: boolean;
   decision: ClawHubSkillVerificationDecision;
@@ -377,13 +378,13 @@ export type ClawHubSkillSecurityVerdictItem = {
   };
 };
 
-/** Shared type for Claw Hub Skill Security Verdicts Response in src/infra. */
+/** Batched skill security verdict response. */
 export type ClawHubSkillSecurityVerdictsResponse = {
   schema: "clawhub.skill.security-verdicts.v1";
   items: ClawHubSkillSecurityVerdictItem[];
 };
 
-/** Shared type for Claw Hub Skill List Response in src/infra. */
+/** Paginated skill list response. */
 export type ClawHubSkillListResponse = {
   items: Array<{
     slug: string;
@@ -405,7 +406,7 @@ export type ClawHubSkillListResponse = {
   nextCursor?: string | null;
 };
 
-/** Shared type for Claw Hub Download Result in src/infra. */
+/** Local temp artifact written from a ClawHub download with verified integrity metadata. */
 export type ClawHubDownloadResult = {
   archivePath: string;
   integrity: string;
@@ -445,7 +446,7 @@ type ClawHubConfigLike = {
   user?: ClawHubConfigLike | null;
 };
 
-/** Reused class for Claw Hub Request Error behavior in src/infra. */
+/** HTTP error that preserves the ClawHub path, status, and bounded response body. */
 export class ClawHubRequestError extends Error {
   readonly status: number;
   readonly requestPath: string;
@@ -510,7 +511,7 @@ function resolveClawHubConfigPaths(): string[] {
   return [xdgPath];
 }
 
-/** Reused helper for resolve Claw Hub Auth Token behavior in src/infra. */
+/** Resolve a ClawHub bearer token from env or known ClawHub config files. */
 export async function resolveClawHubAuthToken(): Promise<string | undefined> {
   const envToken =
     normalizeOptionalString(process.env.OPENCLAW_CLAWHUB_TOKEN) ||
@@ -799,7 +800,7 @@ async function readClawHubResponseBytes(params: {
   });
 }
 
-/** Reused helper for resolve Claw Hub Base Url behavior in src/infra. */
+/** Resolve the effective ClawHub base URL after env/default normalization. */
 export function resolveClawHubBaseUrl(baseUrl?: string): string {
   return normalizeBaseUrl(baseUrl);
 }
@@ -847,7 +848,7 @@ function safePackageTarballName(name: string, version: string): string {
   return `${base || "package"}-${version}.tgz`;
 }
 
-/** Reused helper for normalize Claw Hub Sha256 Integrity behavior in src/infra. */
+/** Normalize hex or prefixed SHA-256 values to npm-style `sha256-...` integrity. */
 export function normalizeClawHubSha256Integrity(value: string): string | null {
   const trimmed = value.trim();
   if (!trimmed) {
@@ -875,7 +876,7 @@ export function normalizeClawHubSha256Integrity(value: string): string | null {
   return null;
 }
 
-/** Reused helper for normalize Claw Hub Sha256 Hex behavior in src/infra. */
+/** Normalize a bare SHA-256 hex digest for case-insensitive comparisons. */
 export function normalizeClawHubSha256Hex(value: string): string | null {
   const trimmed = value.trim();
   if (!/^[A-Fa-f0-9]{64}$/.test(trimmed)) {
@@ -884,7 +885,7 @@ export function normalizeClawHubSha256Hex(value: string): string | null {
   return normalizeLowercaseStringOrEmpty(trimmed);
 }
 
-/** Reused helper for fetch Claw Hub Package Detail behavior in src/infra. */
+/** Fetch package detail metadata by ClawHub package name. */
 export async function fetchClawHubPackageDetail(params: {
   name: string;
   baseUrl?: string;
@@ -901,7 +902,7 @@ export async function fetchClawHubPackageDetail(params: {
   });
 }
 
-/** Reused helper for fetch Claw Hub Package Version behavior in src/infra. */
+/** Fetch metadata for an exact ClawHub package version. */
 export async function fetchClawHubPackageVersion(params: {
   name: string;
   version: string;
@@ -921,7 +922,7 @@ export async function fetchClawHubPackageVersion(params: {
   });
 }
 
-/** Reused helper for fetch Claw Hub Package Artifact behavior in src/infra. */
+/** Resolve the artifact ClawHub would serve for a package version. */
 export async function fetchClawHubPackageArtifact(params: {
   name: string;
   version: string;
@@ -941,7 +942,7 @@ export async function fetchClawHubPackageArtifact(params: {
   });
 }
 
-/** Reused helper for fetch Claw Hub Package Security behavior in src/infra. */
+/** Fetch security and moderation state for a package version. */
 export async function fetchClawHubPackageSecurity(params: {
   name: string;
   version: string;
@@ -961,7 +962,7 @@ export async function fetchClawHubPackageSecurity(params: {
   });
 }
 
-/** Reused helper for fetch Claw Hub Package Readiness behavior in src/infra. */
+/** Fetch package readiness state used before install prompts. */
 export async function fetchClawHubPackageReadiness(params: {
   name: string;
   baseUrl?: string;
@@ -978,7 +979,7 @@ export async function fetchClawHubPackageReadiness(params: {
   });
 }
 
-/** Reused helper for search Claw Hub Packages behavior in src/infra. */
+/** Search ClawHub packages with optional family filtering. */
 export async function searchClawHubPackages(params: {
   query: string;
   family?: ClawHubPackageFamily;
@@ -1003,7 +1004,7 @@ export async function searchClawHubPackages(params: {
   return result.results ?? [];
 }
 
-/** Reused helper for search Claw Hub Skills behavior in src/infra. */
+/** Search ClawHub skills by query string. */
 export async function searchClawHubSkills(params: {
   query: string;
   baseUrl?: string;
@@ -1026,7 +1027,7 @@ export async function searchClawHubSkills(params: {
   return result.results ?? [];
 }
 
-/** Reused helper for fetch Claw Hub Skill Detail behavior in src/infra. */
+/** Fetch detailed metadata for one ClawHub skill. */
 export async function fetchClawHubSkillDetail(params: {
   slug: string;
   baseUrl?: string;
@@ -1043,7 +1044,7 @@ export async function fetchClawHubSkillDetail(params: {
   });
 }
 
-/** Reused helper for fetch Claw Hub Skill Verification behavior in src/infra. */
+/** Fetch a ClawHub verification report for a skill version or tag. */
 export async function fetchClawHubSkillVerification(params: {
   slug: string;
   version?: string;
@@ -1063,7 +1064,7 @@ export async function fetchClawHubSkillVerification(params: {
   });
 }
 
-/** Reused helper for fetch Claw Hub Skill Security Verdicts behavior in src/infra. */
+/** Fetch batched security verdicts for skill/version pairs. */
 export async function fetchClawHubSkillSecurityVerdicts(params: {
   items: ClawHubSkillSecurityVerdictRequestItem[];
   baseUrl?: string;
@@ -1084,7 +1085,7 @@ export async function fetchClawHubSkillSecurityVerdicts(params: {
   });
 }
 
-/** Reused helper for fetch Claw Hub Skill Card behavior in src/infra. */
+/** Fetch a bounded skill card by slug or explicit card URL. */
 export async function fetchClawHubSkillCard(params: {
   slug?: string;
   url?: string;
@@ -1128,7 +1129,7 @@ export async function fetchClawHubSkillCard(params: {
   return new TextDecoder().decode(bytes);
 }
 
-/** Reused helper for list Claw Hub Skills behavior in src/infra. */
+/** List ClawHub skills with optional result limit. */
 export async function listClawHubSkills(params: {
   baseUrl?: string;
   token?: string;
@@ -1148,7 +1149,7 @@ export async function listClawHubSkills(params: {
   });
 }
 
-/** Reused helper for download Claw Hub Package Archive behavior in src/infra. */
+/** Download a package archive or ClawPack artifact into a temp file and verify hashes. */
 export async function downloadClawHubPackageArchive(params: {
   name: string;
   version?: string;
@@ -1275,7 +1276,7 @@ export async function downloadClawHubPackageArchive(params: {
   };
 }
 
-/** Reused helper for download Claw Hub Skill Archive behavior in src/infra. */
+/** Download a skill archive into a temp file and return integrity metadata. */
 export async function downloadClawHubSkillArchive(params: {
   slug: string;
   version?: string;
@@ -1321,12 +1322,12 @@ export async function downloadClawHubSkillArchive(params: {
   };
 }
 
-/** Reused helper for resolve Latest Version From Package behavior in src/infra. */
+/** Resolve the latest package version from detail metadata or legacy tags. */
 export function resolveLatestVersionFromPackage(detail: ClawHubPackageDetail): string | null {
   return detail.package?.latestVersion ?? detail.package?.tags?.latest ?? null;
 }
 
-/** Reused helper for is Claw Hub Family Skill behavior in src/infra. */
+/** Return whether package or skill detail represents a skill family item. */
 export function isClawHubFamilySkill(detail: ClawHubPackageDetail | ClawHubSkillDetail): boolean {
   if ("package" in detail) {
     return detail.package?.family === "skill";
@@ -1334,7 +1335,7 @@ export function isClawHubFamilySkill(detail: ClawHubPackageDetail | ClawHubSkill
   return Boolean(detail.skill);
 }
 
-/** Reused helper for satisfies Plugin Api Range behavior in src/infra. */
+/** Check whether a plugin API version satisfies a ClawHub compatibility range. */
 export function satisfiesPluginApiRange(
   pluginApiVersion: string,
   pluginApiRange?: string | null,
@@ -1345,7 +1346,7 @@ export function satisfiesPluginApiRange(
   return satisfiesSemverRange(pluginApiVersion, pluginApiRange);
 }
 
-/** Reused helper for satisfies Gateway Minimum behavior in src/infra. */
+/** Check whether the current gateway version meets a package minimum. */
 export function satisfiesGatewayMinimum(
   currentVersion: string,
   minGatewayVersion?: string | null,
