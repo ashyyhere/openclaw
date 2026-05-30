@@ -9,11 +9,172 @@ import type {
   PluginHookToolKind,
 } from "./hook-types.js";
 import { getPluginSessionExtensionStateSync } from "./host-hook-state.js";
-import type { PluginJsonValue } from "./host-hooks.js";
+import type { PluginJsonValue, PluginTrustedToolPolicyRegistration } from "./host-hooks.js";
+import type {
+  PluginRegistry,
+  PluginTrustedToolPolicyRegistryRegistration,
+} from "./registry-types.js";
 import { getActivePluginRegistry } from "./runtime.js";
 
+type TrustedPolicyRegistration = PluginTrustedToolPolicyRegistryRegistration;
+type TrustedPolicyDecisionField =
+  | "allow"
+  | "block"
+  | "blockReason"
+  | "params"
+  | "reason"
+  | "requireApproval";
+
+type TrustedPolicyDecisionFieldRead =
+  | {
+      ok: true;
+      present: boolean;
+      value: unknown;
+    }
+  | {
+      ok: false;
+    };
+
 export function hasTrustedToolPolicies(): boolean {
-  return (getActivePluginRegistry()?.trustedToolPolicies?.length ?? 0) > 0;
+  return copyTrustedPolicyRegistrations(getActivePluginRegistry()).length > 0;
+}
+
+function unreadableTrustedPolicyRegistration(): TrustedPolicyRegistration {
+  return {
+    pluginId: "unknown-plugin",
+    source: "runtime",
+    get policy(): PluginTrustedToolPolicyRegistration {
+      throw new Error("trusted policy registration is unreadable");
+    },
+  };
+}
+
+function copyTrustedPolicyRegistrations(
+  registry: PluginRegistry | null | undefined,
+): TrustedPolicyRegistration[] {
+  const policies = registry?.trustedToolPolicies;
+  if (!policies) {
+    return [];
+  }
+  if (!Array.isArray(policies)) {
+    return [unreadableTrustedPolicyRegistration()];
+  }
+
+  let length: number;
+  try {
+    length = policies.length;
+  } catch {
+    return [unreadableTrustedPolicyRegistration()];
+  }
+
+  const copied: TrustedPolicyRegistration[] = [];
+  for (let index = 0; index < length; index += 1) {
+    try {
+      copied.push(policies[index]);
+    } catch {
+      copied.push(unreadableTrustedPolicyRegistration());
+    }
+  }
+  return copied;
+}
+
+function readTrustedPolicyPluginId(registration: TrustedPolicyRegistration): string {
+  try {
+    const pluginId = registration.pluginId;
+    return typeof pluginId === "string" && pluginId.trim() ? pluginId.trim() : "unknown-plugin";
+  } catch {
+    return "unknown-plugin";
+  }
+}
+
+function readTrustedPolicy(registration: TrustedPolicyRegistration):
+  | {
+      ok: true;
+      policy: PluginTrustedToolPolicyRegistration;
+    }
+  | {
+      ok: false;
+    } {
+  try {
+    const policy = registration.policy;
+    return policy && typeof policy.evaluate === "function" ? { ok: true, policy } : { ok: false };
+  } catch {
+    return { ok: false };
+  }
+}
+
+function readTrustedPolicyId(registration: TrustedPolicyRegistration): string {
+  const fallback = readTrustedPolicyPluginId(registration);
+  const policy = readTrustedPolicy(registration);
+  if (!policy.ok) {
+    return fallback;
+  }
+  try {
+    const id = policy.policy.id;
+    return typeof id === "string" && id.trim() ? id.trim() : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function trustedPolicyDefaultBlockReason(registration: TrustedPolicyRegistration): string {
+  return `blocked by ${readTrustedPolicyId(registration)}`;
+}
+
+function trustedPolicyFailureResult(
+  registration: TrustedPolicyRegistration,
+  detail: string,
+): PluginHookBeforeToolCallResult {
+  return {
+    block: true,
+    blockReason: `${trustedPolicyDefaultBlockReason(registration)}: ${detail}`,
+  };
+}
+
+function readTrustedPolicyDecisionField(
+  decision: unknown,
+  field: TrustedPolicyDecisionField,
+): TrustedPolicyDecisionFieldRead {
+  if ((typeof decision !== "object" && typeof decision !== "function") || decision === null) {
+    return { ok: true, present: false, value: undefined };
+  }
+  try {
+    if (!(field in decision)) {
+      return { ok: true, present: false, value: undefined };
+    }
+    return {
+      ok: true,
+      present: true,
+      value: (decision as Record<string, unknown>)[field],
+    };
+  } catch {
+    return { ok: false };
+  }
+}
+
+function readTrustedPolicyDecisionString(
+  decision: unknown,
+  field: "blockReason" | "reason",
+): string | undefined {
+  const read = readTrustedPolicyDecisionField(decision, field);
+  return read.ok && read.present && typeof read.value === "string" && read.value.trim()
+    ? read.value
+    : undefined;
+}
+
+function readPlainTrustedPolicyParams(value: unknown):
+  | {
+      ok: true;
+      params?: Record<string, unknown>;
+    }
+  | {
+      ok: false;
+    } {
+  try {
+    return isPlainObject(value) ? { ok: true, params: value } : { ok: true };
+  } catch {
+    return { ok: false };
+  }
 }
 
 function normalizeDerivedEventFields(
@@ -56,7 +217,7 @@ export async function runTrustedToolPolicies(
       | undefined;
   },
 ): Promise<PluginHookBeforeToolCallResult | undefined> {
-  const policies = getActivePluginRegistry()?.trustedToolPolicies ?? [];
+  const policies = copyTrustedPolicyRegistrations(getActivePluginRegistry());
   let adjustedParams = event.params;
   let hasAdjustedParams = false;
   let approval: PluginHookBeforeToolCallResult["requireApproval"];
@@ -91,13 +252,14 @@ export async function runTrustedToolPolicies(
     };
   };
   for (const registration of policies) {
+    const pluginId = readTrustedPolicyPluginId(registration);
     const policyCtx: PluginHookToolContext = {
       ...ctxWithoutToolIdentity,
       ...currentContextToolIdentity,
       // oxlint-disable-next-line typescript/no-unnecessary-type-parameters -- Plugin callers type JSON reads by namespace.
       getSessionExtension: <T extends PluginJsonValue = PluginJsonValue>(namespace: string) => {
         const normalizedNamespace = namespace.trim();
-        const cacheKey = registration.pluginId;
+        const cacheKey = pluginId;
         if (!sessionExtensionStateCache.has(cacheKey)) {
           const config = ctx.sessionKey ? resolveSessionConfig() : undefined;
           sessionExtensionStateCache.set(
@@ -105,7 +267,7 @@ export async function runTrustedToolPolicies(
             config
               ? getPluginSessionExtensionStateSync({
                   cfg: config,
-                  pluginId: registration.pluginId,
+                  pluginId,
                   sessionKey: ctx.sessionKey,
                 })
               : undefined,
@@ -118,39 +280,72 @@ export async function runTrustedToolPolicies(
         return pluginState[normalizedNamespace] as T | undefined;
       },
     };
-    const decision = await registration.policy.evaluate(buildEvent(), policyCtx);
+    const policy = readTrustedPolicy(registration);
+    if (!policy.ok) {
+      return trustedPolicyFailureResult(registration, "policy is unreadable");
+    }
+
+    let decision: unknown;
+    try {
+      decision = await policy.policy.evaluate(buildEvent(), policyCtx);
+    } catch {
+      return trustedPolicyFailureResult(registration, "policy evaluation failed");
+    }
     if (!decision) {
       continue;
     }
-    if ("allow" in decision && decision.allow === false) {
+    if ((typeof decision !== "object" && typeof decision !== "function") || decision === null) {
+      return trustedPolicyFailureResult(registration, "policy decision is malformed");
+    }
+    const allow = readTrustedPolicyDecisionField(decision, "allow");
+    if (!allow.ok) {
+      return trustedPolicyFailureResult(registration, "policy decision has unreadable allow");
+    }
+    if (allow.present && allow.value === false) {
       return {
         block: true,
-        blockReason: decision.reason ?? `blocked by ${registration.policy.id}`,
+        blockReason:
+          readTrustedPolicyDecisionString(decision, "reason") ??
+          trustedPolicyDefaultBlockReason(registration),
       };
     }
     // `block: true` is terminal; normalize a missing blockReason to a deterministic
     // reason so downstream diagnostics match the `{ allow: false }` path above.
-    if ("block" in decision && decision.block === true) {
+    const block = readTrustedPolicyDecisionField(decision, "block");
+    if (!block.ok) {
+      return trustedPolicyFailureResult(registration, "policy decision has unreadable block");
+    }
+    if (block.present && block.value === true) {
       return {
-        ...decision,
-        blockReason: decision.blockReason ?? `blocked by ${registration.policy.id}`,
+        block: true,
+        blockReason:
+          readTrustedPolicyDecisionString(decision, "blockReason") ??
+          trustedPolicyDefaultBlockReason(registration),
       };
     }
     // `block: false` is a no-op (matches the regular `before_tool_call` hook
     // pipeline) — it does NOT short-circuit the policy chain. Params and
     // approvals are remembered so later trusted policies can still inspect or
     // block the final call.
-    if ("params" in decision && isPlainObject(decision.params)) {
+    const params = readTrustedPolicyDecisionField(decision, "params");
+    if (!params.ok) {
+      return trustedPolicyFailureResult(registration, "policy decision has unreadable params");
+    }
+    const plainParams = params.present ? readPlainTrustedPolicyParams(params.value) : undefined;
+    if (plainParams && !plainParams.ok) {
+      return trustedPolicyFailureResult(registration, "policy decision has unreadable params");
+    }
+    if (plainParams?.params) {
       const normalized = options?.normalizeEvent?.(
         {
           ...eventWithoutDerivedPaths,
-          params: decision.params,
+          params: plainParams.params,
           ...currentEventToolIdentity,
           ...currentDerivedEvent,
         },
         policyCtx,
       );
-      adjustedParams = normalized?.params ?? decision.params;
+      adjustedParams = normalized?.params ?? plainParams.params;
       if (normalized?.event) {
         currentEventToolIdentity = normalizeToolIdentity(normalized.event);
       }
@@ -162,8 +357,15 @@ export async function runTrustedToolPolicies(
       hasAdjustedParams = true;
       currentDerivedEvent = normalizeDerivedEventFields(options?.deriveEvent?.(adjustedParams));
     }
-    if ("requireApproval" in decision && decision.requireApproval && !approval) {
-      approval = decision.requireApproval;
+    const requireApproval = readTrustedPolicyDecisionField(decision, "requireApproval");
+    if (!requireApproval.ok) {
+      return trustedPolicyFailureResult(
+        registration,
+        "policy decision has unreadable requireApproval",
+      );
+    }
+    if (requireApproval.present && requireApproval.value && !approval) {
+      approval = requireApproval.value as PluginHookBeforeToolCallResult["requireApproval"];
     }
   }
   if (!hasAdjustedParams && !approval) {
