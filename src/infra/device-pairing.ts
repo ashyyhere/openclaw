@@ -1,4 +1,5 @@
-// infra device pairing helpers and runtime behavior.
+// Device pairing state, approvals, and scoped auth tokens.
+// Persists pending/paired devices while enforcing approved roles and operator scopes.
 import { randomUUID } from "node:crypto";
 import { normalizeDeviceAuthScopes } from "../shared/device-auth.js";
 import {
@@ -24,7 +25,7 @@ import {
 } from "./pairing-files.js";
 import { generatePairingToken, verifyPairingToken } from "./pairing-token.js";
 
-/** Shared type for Device Pairing Pending Request in src/infra. */
+/** Pending device request awaiting owner or bootstrap-profile approval. */
 export type DevicePairingPendingRequest = {
   requestId: string;
   deviceId: string;
@@ -43,7 +44,7 @@ export type DevicePairingPendingRequest = {
   ts: number;
 };
 
-/** Shared type for Device Auth Token in src/infra. */
+/** Role-scoped secret issued to a paired device. */
 export type DeviceAuthToken = {
   token: string;
   role: string;
@@ -58,7 +59,7 @@ export type DeviceAuthToken = {
   lastUsedAtMs?: number;
 };
 
-/** Shared type for Device Auth Token Summary in src/infra. */
+/** Redacted token metadata shown in list/detail responses. */
 export type DeviceAuthTokenSummary = {
   role: string;
   scopes: string[];
@@ -68,27 +69,27 @@ export type DeviceAuthTokenSummary = {
   lastUsedAtMs?: number;
 };
 
-/** Shared type for Rotate Device Token Deny Reason in src/infra. */
+/** Denial codes returned when a token rotation cannot be authorized. */
 export type RotateDeviceTokenDenyReason =
   | "unknown-device-or-role"
   | "missing-approved-scope-baseline"
   | "scope-outside-approved-baseline"
   | "caller-missing-scope";
 
-/** Shared type for Rotate Device Token Result in src/infra. */
+/** Result of rotating a paired device token. */
 export type RotateDeviceTokenResult =
   | { ok: true; entry: DeviceAuthToken }
   | { ok: false; reason: RotateDeviceTokenDenyReason; scope?: string };
 
-/** Shared type for Revoke Device Token Deny Reason in src/infra. */
+/** Denial codes returned when a token revoke cannot be authorized. */
 export type RevokeDeviceTokenDenyReason = "unknown-device-or-role" | "caller-missing-scope";
 
-/** Shared type for Revoke Device Token Result in src/infra. */
+/** Result of revoking a paired device token. */
 export type RevokeDeviceTokenResult =
   | { ok: true; entry: DeviceAuthToken }
   | { ok: false; reason: RevokeDeviceTokenDenyReason; scope?: string };
 
-/** Shared type for Paired Device in src/infra. */
+/** Approved device record with durable role/scope baseline and active tokens. */
 export type PairedDevice = {
   deviceId: string;
   publicKey: string;
@@ -109,7 +110,7 @@ export type PairedDevice = {
   lastSeenReason?: string;
 };
 
-/** Shared type for Paired Device Metadata Patch in src/infra. */
+/** Mutable non-security metadata fields for a paired device. */
 export type PairedDeviceMetadataPatch = Pick<
   PairedDevice,
   | "displayName"
@@ -121,13 +122,13 @@ export type PairedDeviceMetadataPatch = Pick<
   | "lastSeenReason"
 >;
 
-/** Shared type for Device Pairing List in src/infra. */
+/** Snapshot of pending requests and approved devices. */
 export type DevicePairingList = {
   pending: DevicePairingPendingRequest[];
   paired: PairedDevice[];
 };
 
-/** Shared type for Device Pairing Forbidden Reason in src/infra. */
+/** Approval denial reasons surfaced to device pairing callers. */
 export type DevicePairingForbiddenReason =
   | "caller-scopes-required"
   | "caller-missing-scope"
@@ -135,7 +136,7 @@ export type DevicePairingForbiddenReason =
   | "bootstrap-role-not-allowed"
   | "bootstrap-scope-not-allowed";
 
-/** Shared type for Device Pairing Forbidden Result in src/infra. */
+/** Structured forbidden result with the role or scope that blocked approval. */
 export type DevicePairingForbiddenResult = {
   status: "forbidden";
   reason: DevicePairingForbiddenReason;
@@ -143,7 +144,7 @@ export type DevicePairingForbiddenResult = {
   role?: string;
 };
 
-/** Shared type for Approve Device Pairing Result in src/infra. */
+/** Approval outcome, including forbidden results and missing-request nulls. */
 export type ApproveDevicePairingResult =
   | { status: "approved"; requestId: string; device: PairedDevice }
   | DevicePairingForbiddenResult
@@ -163,7 +164,7 @@ const BROWSER_DEVICE_CLIENT_MODE = "webchat";
 
 const withLock = createAsyncLock();
 
-/** Reused helper for format Device Pairing Forbidden Message behavior in src/infra. */
+/** Format a pairing denial for CLI/API responses. */
 export function formatDevicePairingForbiddenMessage(result: DevicePairingForbiddenResult): string {
   switch (result.reason) {
     case "caller-scopes-required":
@@ -264,7 +265,7 @@ function listActiveTokenRoles(
   );
 }
 
-/** Reused helper for list Approved Paired Device Roles behavior in src/infra. */
+/** List the durable roles explicitly approved for a paired device. */
 export function listApprovedPairedDeviceRoles(
   device: Pick<PairedDevice, "role" | "roles">,
 ): string[] {
@@ -273,7 +274,7 @@ export function listApprovedPairedDeviceRoles(
   return mergeRoles(device.roles, device.role) ?? [];
 }
 
-/** Reused helper for list Effective Paired Device Roles behavior in src/infra. */
+/** List currently usable roles, bounded by active tokens and the approved role baseline. */
 export function listEffectivePairedDeviceRoles(
   device: Pick<PairedDevice, "role" | "roles" | "tokens">,
 ): string[] {
@@ -289,7 +290,7 @@ export function listEffectivePairedDeviceRoles(
   return [];
 }
 
-/** Reused helper for has Effective Paired Device Role behavior in src/infra. */
+/** Return whether a paired device currently has a usable role. */
 export function hasEffectivePairedDeviceRole(
   device: Pick<PairedDevice, "role" | "roles" | "tokens">,
   role: string,
@@ -549,7 +550,7 @@ function scopesWithinApprovedDeviceBaseline(params: {
   });
 }
 
-/** Reused helper for list Device Pairing behavior in src/infra. */
+/** List non-expired pending requests and paired devices newest-first. */
 export async function listDevicePairing(baseDir?: string): Promise<DevicePairingList> {
   const state = await loadState(baseDir);
   const pending = Object.values(state.pendingById).toSorted((a, b) => b.ts - a.ts);
@@ -559,7 +560,7 @@ export async function listDevicePairing(baseDir?: string): Promise<DevicePairing
   return { pending, paired };
 }
 
-/** Reused helper for get Paired Device behavior in src/infra. */
+/** Read a paired device by id from the persisted pairing state. */
 export async function getPairedDevice(
   deviceId: string,
   baseDir?: string,
@@ -568,7 +569,7 @@ export async function getPairedDevice(
   return state.pairedByDeviceId[normalizeDeviceId(deviceId)] ?? null;
 }
 
-/** Reused helper for get Pending Device Pairing behavior in src/infra. */
+/** Read a pending pairing request by id. */
 export async function getPendingDevicePairing(
   requestId: string,
   baseDir?: string,
@@ -577,7 +578,7 @@ export async function getPendingDevicePairing(
   return state.pendingById[requestId] ?? null;
 }
 
-/** Reused helper for request Device Pairing behavior in src/infra. */
+/** Create or reconcile a pending device pairing request. */
 export async function requestDevicePairing(
   req: Omit<DevicePairingPendingRequest, "requestId" | "ts" | "isRepair">,
   baseDir?: string,
@@ -636,18 +637,18 @@ export async function requestDevicePairing(
   });
 }
 
-/** Reused helper for approve Device Pairing behavior in src/infra. */
+/** Approve a pending request without caller-scope enforcement. */
 export async function approveDevicePairing(
   requestId: string,
   baseDir?: string,
 ): Promise<ApproveDevicePairingResult>;
-/** Reused helper for approve Device Pairing behavior in src/infra. */
+/** Approve a pending request while checking caller scopes for operator grants. */
 export async function approveDevicePairing(
   requestId: string,
   options: { callerScopes?: readonly string[] },
   baseDir?: string,
 ): Promise<ApproveDevicePairingResult>;
-/** Reused helper for approve Device Pairing behavior in src/infra. */
+/** Approve a request, minting per-role tokens and preserving prior approved scopes. */
 export async function approveDevicePairing(
   requestId: string,
   optionsOrBaseDir?: { callerScopes?: readonly string[] } | string,
@@ -756,7 +757,7 @@ export async function approveDevicePairing(
   });
 }
 
-/** Reused helper for approve Bootstrap Device Pairing behavior in src/infra. */
+/** Approve a request using a bootstrap profile's allowed roles and scopes. */
 export async function approveBootstrapDevicePairing(
   requestId: string,
   bootstrapProfile: DeviceBootstrapProfile,
@@ -846,7 +847,7 @@ export async function approveBootstrapDevicePairing(
   });
 }
 
-/** Reused helper for reject Device Pairing behavior in src/infra. */
+/** Reject a pending request and revoke matching bootstrap tokens. */
 export async function rejectDevicePairing(
   requestId: string,
   baseDir?: string,
@@ -868,7 +869,7 @@ export async function rejectDevicePairing(
   });
 }
 
-/** Reused helper for remove Paired Device behavior in src/infra. */
+/** Remove a paired device and any pending requests for the same device id. */
 export async function removePairedDevice(
   deviceId: string,
   baseDir?: string,
@@ -890,7 +891,7 @@ export async function removePairedDevice(
   });
 }
 
-/** Reused helper for update Paired Device Metadata behavior in src/infra. */
+/** Patch mutable paired-device metadata without changing roles, scopes, or tokens. */
 export async function updatePairedDeviceMetadata(
   deviceId: string,
   patch: Partial<PairedDeviceMetadataPatch>,
@@ -931,7 +932,7 @@ export async function updatePairedDeviceMetadata(
   });
 }
 
-/** Reused helper for summarize Device Tokens behavior in src/infra. */
+/** Return redacted, role-sorted token metadata for display. */
 export function summarizeDeviceTokens(
   tokens: Record<string, DeviceAuthToken> | undefined,
 ): DeviceAuthTokenSummary[] | undefined {
@@ -951,7 +952,7 @@ export function summarizeDeviceTokens(
   return summaries.length > 0 ? summaries : undefined;
 }
 
-/** Reused helper for verify Device Token behavior in src/infra. */
+/** Verify a presented device token, issuer generation, and requested scopes. */
 export async function verifyDeviceToken(params: {
   deviceId: string;
   token: string;
@@ -1016,7 +1017,7 @@ export async function verifyDeviceToken(params: {
   });
 }
 
-/** Reused helper for ensure Device Token behavior in src/infra. */
+/** Reuse or mint a token for an approved role and scope subset. */
 export async function ensureDeviceToken(params: {
   deviceId: string;
   role: string;
@@ -1106,7 +1107,7 @@ function resolveDeviceTokenUpdateContext(params: {
   return { device, role, tokens, existing };
 }
 
-/** Reused helper for rotate Device Token behavior in src/infra. */
+/** Rotate a token while keeping it within the approved role/scope baseline. */
 export async function rotateDeviceToken(params: {
   deviceId: string;
   role: string;
@@ -1168,7 +1169,7 @@ export async function rotateDeviceToken(params: {
   });
 }
 
-/** Reused helper for revoke Device Token behavior in src/infra. */
+/** Mark a role token revoked after optional caller-scope authorization. */
 export async function revokeDeviceToken(params: {
   deviceId: string;
   role: string;
@@ -1208,7 +1209,7 @@ export async function revokeDeviceToken(params: {
   });
 }
 
-/** Reused helper for clear Device Pairing behavior in src/infra. */
+/** Delete a paired device record without touching unrelated pending requests. */
 export async function clearDevicePairing(deviceId: string, baseDir?: string): Promise<boolean> {
   return await withLock(async () => {
     const state = await loadState(baseDir);
