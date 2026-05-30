@@ -1,4 +1,5 @@
-// infra/outbound delivery queue storage helpers and runtime behavior.
+// Durable outbound delivery queue storage.
+// Entries are written before sends and replayed by recovery when delivery outcome is uncertain.
 import path from "node:path";
 import {
   ackJsonDurableQueueEntry,
@@ -27,7 +28,7 @@ const QUEUE_DIRNAME = "delivery-queue";
 const FAILED_DIRNAME = "failed";
 const QUEUE_TEMP_PREFIX = ".delivery-queue";
 
-/** Shared type for Queued Rendered Message Batch Plan in src/infra/outbound. */
+/** Replayable summary of a rendered message batch captured at enqueue time. */
 export type QueuedRenderedMessageBatchPlan = {
   payloadCount: number;
   textCount: number;
@@ -39,7 +40,7 @@ export type QueuedRenderedMessageBatchPlan = {
   items: readonly RenderedMessageBatchPlanItem[];
 };
 
-/** Shared type for Queued Reply Payload Sending Hook in src/infra/outbound. */
+/** Serializable reply-payload hook context re-run during recovery. */
 export type QueuedReplyPayloadSendingHook = {
   kind: ReplyDispatchKind;
   channel?: string;
@@ -48,7 +49,7 @@ export type QueuedReplyPayloadSendingHook = {
   context: PluginHookReplyPayloadSendingContext;
 };
 
-/** Shared type for Queued Delivery Payload in src/infra/outbound. */
+/** Durable send intent persisted before outbound delivery starts. */
 export type QueuedDeliveryPayload = {
   channel: Exclude<OutboundChannel, "none">;
   to: string;
@@ -79,7 +80,7 @@ export type QueuedDeliveryPayload = {
   gatewayClientScopes?: readonly string[];
 };
 
-/** Shared type for Queued Delivery in src/infra/outbound. */
+/** Queue entry with retry and recovery-state metadata. */
 export interface QueuedDelivery extends QueuedDeliveryPayload {
   id: string;
   enqueuedAt: number;
@@ -90,7 +91,7 @@ export interface QueuedDelivery extends QueuedDeliveryPayload {
   recoveryState?: "send_attempt_started" | "unknown_after_send";
 }
 
-/** Reused helper for resolve Queue Dir behavior in src/infra/outbound. */
+/** Resolve the durable outbound delivery queue directory. */
 export function resolveQueueDir(stateDir?: string): string {
   const base = stateDir ?? resolveStateDir();
   return path.join(base, QUEUE_DIRNAME);
@@ -215,7 +216,7 @@ export async function failDelivery(id: string, error: string, stateDir?: string)
   await writeQueueEntry(filePath, entry);
 }
 
-/** Reused helper for mark Delivery Platform Send Attempt Started behavior in src/infra/outbound. */
+/** Mark that platform send started before the final outcome was known. */
 export async function markDeliveryPlatformSendAttemptStarted(
   id: string,
   stateDir?: string,
@@ -227,7 +228,7 @@ export async function markDeliveryPlatformSendAttemptStarted(
   await writeQueueEntry(filePath, entry);
 }
 
-/** Reused helper for mark Delivery Platform Outcome Unknown behavior in src/infra/outbound. */
+/** Mark that platform send may have happened but the local outcome is unknown. */
 export async function markDeliveryPlatformOutcomeUnknown(
   id: string,
   stateDir?: string,

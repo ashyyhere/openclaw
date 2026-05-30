@@ -1,5 +1,5 @@
-// infra ports types helpers and runtime behavior.
-/** Shared type for Port Listener in src/infra. */
+// Port diagnostics contracts shared by probing, inspection, and formatting helpers.
+/** Process/socket metadata for a listener using a local port. */
 export type PortListener = {
   pid?: number;
   ppid?: number;
@@ -9,18 +9,18 @@ export type PortListener = {
   address?: string;
 };
 
-/** Shared type for Port Connection Direction in src/infra. */
+/** Direction assigned to an inspected port connection. */
 export type PortConnectionDirection = "client" | "server" | "unknown";
 
-/** Shared type for Port Connection in src/infra. */
+/** Port connection metadata with direction classification. */
 export type PortConnection = PortListener & {
   direction: PortConnectionDirection;
 };
 
-/** Shared type for Port Usage Status in src/infra. */
+/** High-level availability status for a local port. */
 export type PortUsageStatus = "free" | "busy" | "unknown";
 
-/** Shared type for Port Usage in src/infra. */
+/** Port usage diagnostics returned by inspect/probe helpers. */
 export type PortUsage = {
   port: number;
   status: PortUsageStatus;
@@ -30,10 +30,10 @@ export type PortUsage = {
   errors?: string[];
 };
 
-/** Shared type for Port Listener Kind in src/infra. */
+/** Recognized listener kind for user-facing port hints. */
 export type PortListenerKind = "gateway" | "ssh" | "unknown";
 
-/** Shared type for Port Connections in src/infra. */
+/** Connection list for a port inspection query. */
 export type PortConnections = {
   port: number;
   connections: PortConnection[];

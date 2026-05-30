@@ -1,4 +1,5 @@
-// src/infra push apns relay helpers and runtime behavior.
+// Hosted APNs relay client.
+// Gateway requests are device-signed before relay send grants can be used.
 import { URL } from "node:url";
 import type { GatewayConfig } from "../config/types.gateway.js";
 import { resolveTimerTimeoutMs } from "../shared/number-coercion.js";
@@ -16,7 +17,7 @@ import { normalizeHostname } from "./net/hostname.js";
 
 type ApnsRelayPushType = "alert" | "background";
 
-/** Shared type for Apns Relay Config in src/infra. */
+/** Resolved APNs relay endpoint and timeout. */
 export type ApnsRelayConfig = {
   baseUrl: string;
   timeoutMs: number;
@@ -30,7 +31,7 @@ type ApnsRelayConfigResolutionOptions = {
   registrationRelayOrigin?: string;
 };
 
-/** Shared type for Apns Relay Push Response in src/infra. */
+/** Normalized response from the hosted APNs relay. */
 export type ApnsRelayPushResponse = {
   ok: boolean;
   status: number;
@@ -40,7 +41,7 @@ export type ApnsRelayPushResponse = {
   tokenSuffix?: string;
 };
 
-/** Shared type for Apns Relay Request Sender in src/infra. */
+/** Injectable relay request sender used by tests and the default fetch implementation. */
 export type ApnsRelayRequestSender = (params: {
   relayConfig: ApnsRelayConfig;
   sendGrant: string;
@@ -54,7 +55,7 @@ export type ApnsRelayRequestSender = (params: {
   payload: object;
 }) => Promise<ApnsRelayPushResponse>;
 
-/** Reused constant for DEFAULT APNS RELAY BASE URL behavior in src/infra. */
+/** Hosted APNs relay origin used when registration also references the hosted relay. */
 export const DEFAULT_APNS_RELAY_BASE_URL = "https://ios-push-relay.openclaw.ai";
 const DEFAULT_APNS_RELAY_TIMEOUT_MS = 10_000;
 const GATEWAY_DEVICE_ID_HEADER = "x-openclaw-gateway-device-id";
@@ -101,7 +102,7 @@ function parseReason(value: unknown): string | undefined {
   return typeof value === "string" ? normalizeOptionalString(value) : undefined;
 }
 
-/** Reused helper for normalize Apns Relay Base Url behavior in src/infra. */
+/** Validate and normalize an APNs relay base URL. */
 export function normalizeApnsRelayBaseUrl(
   baseUrl: string,
   env: NodeJS.ProcessEnv = process.env,
@@ -147,7 +148,7 @@ function buildRelayGatewaySignaturePayload(params: {
   ].join("\n");
 }
 
-/** Reused helper for resolve Apns Relay Config From Env behavior in src/infra. */
+/** Resolve relay config from env, gateway config, and registration origin. */
 export function resolveApnsRelayConfigFromEnv(
   env: NodeJS.ProcessEnv = process.env,
   gatewayConfig?: GatewayConfig,
@@ -271,7 +272,7 @@ async function sendApnsRelayRequest(params: {
   };
 }
 
-/** Reused helper for send Apns Relay Push behavior in src/infra. */
+/** Sign and send one push request through the APNs relay. */
 export async function sendApnsRelayPush(params: {
   relayConfig: ApnsRelayConfig;
   sendGrant: string;

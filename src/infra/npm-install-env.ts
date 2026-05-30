@@ -1,11 +1,12 @@
-// infra npm install env helpers and runtime behavior.
+// npm install environment sanitizer.
+// It clears inherited npm config that would break project installs and disables freshness gates.
 import { execFileSync } from "node:child_process";
 import fsSync from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { uniqueStrings } from "../shared/string-normalization.js";
 
-/** Shared type for Npm Project Install Env Options in src/infra. */
+/** Options for creating an isolated npm project-install environment. */
 export type NpmProjectInstallEnvOptions = {
   cacheDir?: string;
   npmConfigCwd?: string;
@@ -255,7 +256,7 @@ function resolveNpmFreshnessBypassMode(
   return hasRawNpmConfigKey(env, "before", scope) ? "before" : "min-release-age";
 }
 
-/** Reused helper for create Npm Freshness Bypass Args behavior in src/infra. */
+/** Build npm args that bypass registry freshness/min-age policies for installs. */
 export function createNpmFreshnessBypassArgs(
   env: NodeJS.ProcessEnv = process.env,
   now = new Date(),
@@ -267,7 +268,7 @@ export function createNpmFreshnessBypassArgs(
   return [`--before=${now.toISOString()}`];
 }
 
-/** Reused helper for apply Npm Freshness Bypass Env behavior in src/infra. */
+/** Apply freshness bypass settings directly to an npm command environment. */
 export function applyNpmFreshnessBypassEnv(
   env: NodeJS.ProcessEnv,
   now = new Date(),
@@ -288,7 +289,7 @@ export function applyNpmFreshnessBypassEnv(
   }
 }
 
-/** Reused helper for create Npm Project Install Env behavior in src/infra. */
+/** Create a project-local npm install environment with safe retry/cache defaults. */
 export function createNpmProjectInstallEnv(
   env: NodeJS.ProcessEnv,
   options: NpmProjectInstallEnvOptions = {},
@@ -318,12 +319,12 @@ export function createNpmProjectInstallEnv(
   return installEnv;
 }
 
-/** Reused helper for has Npm Script Shell Setting behavior in src/infra. */
+/** Return whether npm script-shell config is already present in env. */
 export function hasNpmScriptShellSetting(env: NodeJS.ProcessEnv): boolean {
   return NPM_CONFIG_SCRIPT_SHELL_KEYS.some((key) => Boolean(env[key]?.trim()));
 }
 
-/** Reused helper for resolve Posix Npm Script Shell behavior in src/infra. */
+/** Resolve the POSIX shell npm should use for lifecycle scripts. */
 export function resolvePosixNpmScriptShell(env: NodeJS.ProcessEnv): string | null {
   if (process.platform === "win32") {
     return null;
@@ -335,7 +336,7 @@ export function resolvePosixNpmScriptShell(env: NodeJS.ProcessEnv): string | nul
   return shell && path.isAbsolute(shell) && fsSync.existsSync(shell) ? shell : null;
 }
 
-/** Reused helper for apply Posix Npm Script Shell Env behavior in src/infra. */
+/** Set npm script shell on POSIX when the caller has not already configured it. */
 export function applyPosixNpmScriptShellEnv(env: NodeJS.ProcessEnv): void {
   if (hasNpmScriptShellSetting(env)) {
     return;

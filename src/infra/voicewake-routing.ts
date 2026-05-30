@@ -1,4 +1,5 @@
-// infra voicewake routing helpers and runtime behavior.
+// Voice wake routing configuration.
+// Trigger words map wake events to current conversation, agent id, or canonical session key.
 import path from "node:path";
 import { resolveStateDir } from "../config/paths.js";
 import {
@@ -20,7 +21,7 @@ type VoiceWakeRouteRule = {
   target: VoiceWakeRouteTarget;
 };
 
-/** Shared type for Voice Wake Routing Config in src/infra. */
+/** Persisted voice wake routing config. */
 export type VoiceWakeRoutingConfig = {
   version: 1;
   defaultTarget: VoiceWakeRouteTarget;
@@ -43,7 +44,7 @@ function resolvePath(baseDir?: string) {
   return path.join(root, "settings", "voicewake-routing.json");
 }
 
-/** Reused helper for normalize Voice Wake Trigger Word behavior in src/infra. */
+/** Normalize a spoken trigger phrase into a comparable routing key. */
 export function normalizeVoiceWakeTriggerWord(value: string): string {
   return value
     .toLowerCase()
@@ -157,7 +158,7 @@ function validateRouteTargetInput(
   };
 }
 
-/** Reused helper for validate Voice Wake Routing Config Input behavior in src/infra. */
+/** Validate user-provided voice wake routing config before persistence. */
 export function validateVoiceWakeRoutingConfigInput(
   input: unknown,
 ): { ok: true } | { ok: false; message: string } {
@@ -225,7 +226,7 @@ export function validateVoiceWakeRoutingConfigInput(
   }
   return { ok: true };
 }
-/** Reused helper for normalize Voice Wake Routing Config behavior in src/infra. */
+/** Normalize stored or user-provided voice wake routing config with defaults. */
 export function normalizeVoiceWakeRoutingConfig(input: unknown): VoiceWakeRoutingConfig {
   if (!input || typeof input !== "object") {
     return { ...DEFAULT_ROUTING };
@@ -256,7 +257,7 @@ export function normalizeVoiceWakeRoutingConfig(input: unknown): VoiceWakeRoutin
 
 const withLock = createAsyncLock();
 
-/** Reused helper for load Voice Wake Routing Config behavior in src/infra. */
+/** Load voice wake routing config from state, returning defaults when absent. */
 export async function loadVoiceWakeRoutingConfig(
   baseDir?: string,
 ): Promise<VoiceWakeRoutingConfig> {
@@ -268,7 +269,7 @@ export async function loadVoiceWakeRoutingConfig(
   return normalizeVoiceWakeRoutingConfig(existing);
 }
 
-/** Reused helper for set Voice Wake Routing Config behavior in src/infra. */
+/** Persist voice wake routing config with an updated timestamp under a file lock. */
 export async function setVoiceWakeRoutingConfig(
   config: unknown,
   baseDir?: string,
@@ -302,7 +303,7 @@ function resolveVoiceWakeRouteTarget(
   return { mode: "current" };
 }
 
-/** Reused helper for resolve Voice Wake Route By Trigger behavior in src/infra. */
+/** Resolve the route target for a trigger, falling back to the default target. */
 export function resolveVoiceWakeRouteByTrigger(params: {
   trigger: string | undefined;
   config: VoiceWakeRoutingConfig;

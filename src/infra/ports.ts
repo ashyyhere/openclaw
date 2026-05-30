@@ -1,4 +1,5 @@
-// infra ports helpers and runtime behavior.
+// Public port availability and diagnostics facade.
+// Wraps low-level probes with user-facing errors and re-exports port inspection helpers.
 import { danger, info, shouldLogVerbose, warn } from "../globals.js";
 import { logDebug } from "../logger.js";
 import type { RuntimeEnv } from "../runtime.js";
@@ -28,7 +29,7 @@ class PortInUseError extends Error {
   }
 }
 
-/** Reused helper for describe Port Owner behavior in src/infra. */
+/** Return formatted listener diagnostics for a busy port, if any. */
 export async function describePortOwner(port: number): Promise<string | undefined> {
   const diagnostics = await inspectPortUsage(port);
   if (diagnostics.listeners.length === 0) {
@@ -37,7 +38,7 @@ export async function describePortOwner(port: number): Promise<string | undefine
   return formatPortDiagnostics(diagnostics).join("\n");
 }
 
-/** Reused helper for ensure Port Available behavior in src/infra. */
+/** Probe a port and throw a PortInUseError for friendly EADDRINUSE handling. */
 export async function ensurePortAvailable(port: number): Promise<void> {
   // Detect EADDRINUSE early with a friendly message.
   try {
@@ -50,7 +51,7 @@ export async function ensurePortAvailable(port: number): Promise<void> {
   }
 }
 
-/** Reused helper for handle Port Error behavior in src/infra. */
+/** Print actionable port error diagnostics and exit through the runtime. */
 export async function handlePortError(
   err: unknown,
   port: number,
@@ -95,9 +96,9 @@ export async function handlePortError(
   throw new Error("unreachable");
 }
 
-/** Re-exported API for src/infra, starting with Port In Use Error. */
+/** Error type used when an expected listener port is already occupied. */
 export { PortInUseError };
-/** Re-exported API for src/infra. */
+/** Port diagnostics types shared by CLI and gateway startup checks. */
 export type {
   PortConnection,
   PortConnections,
@@ -106,7 +107,7 @@ export type {
   PortUsage,
   PortUsageStatus,
 };
-/** Re-exported API for src/infra. */
+/** Port formatting/classification helpers for listener diagnostics. */
 export {
   buildPortHints,
   classifyPortListener,
@@ -115,5 +116,5 @@ export {
   isExpectedGatewayListeners,
   isSingleExpectedGatewayListener,
 } from "./ports-format.js";
-/** Re-exported API for src/infra, starting with inspect Port Connections. */
+/** Low-level port inspection helpers. */
 export { inspectPortConnections, inspectPortUsage } from "./ports-inspect.js";

@@ -1,4 +1,5 @@
-// infra event session routing helpers and runtime behavior.
+// Session routing helpers for scheduled events and heartbeat wakes.
+// They collapse eligible direct-DM event sessions back to the configured main scope.
 import type { SessionScope } from "../config/types.base.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveAgentRoute } from "../routing/resolve-route.js";
@@ -16,7 +17,7 @@ import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
 type UnknownRecord = Record<string, unknown>;
 
-/** Shared type for Event Session Routing Policy in src/infra. */
+/** Routing policy derived from session config, channel/account config, and allowlists. */
 export type EventSessionRoutingPolicy = {
   mainKey?: string;
   sessionScope?: SessionScope;
@@ -63,7 +64,7 @@ function normalizeEntry(value: string): string | undefined {
   return normalizeLowercaseStringOrEmpty(value) || undefined;
 }
 
-/** Reused helper for parse Direct Agent Session Target behavior in src/infra. */
+/** Parse a direct agent session key into channel/account/peer routing facts. */
 export function parseDirectAgentSessionTarget(
   sessionKey: string | undefined | null,
 ): DirectSessionTarget | null {
@@ -90,7 +91,7 @@ export function parseDirectAgentSessionTarget(
   };
 }
 
-/** Reused helper for resolve Event Session Allow From behavior in src/infra. */
+/** Resolve channel/account allowFrom policy for a direct event session. */
 export function resolveEventSessionAllowFrom(params: {
   cfg?: OpenClawConfig;
   sessionKey?: string | null;
@@ -152,7 +153,7 @@ function shouldPreserveDirectSessionKeyFromRoute(params: {
   }
 }
 
-/** Reused helper for resolve Event Session Routing Policy behavior in src/infra. */
+/** Resolve the effective routing policy for cron/heartbeat event delivery. */
 export function resolveEventSessionRoutingPolicy(params: {
   cfg?: OpenClawConfig;
   sessionKey?: string | null;
@@ -190,7 +191,7 @@ export function resolveEventSessionRoutingPolicy(params: {
   };
 }
 
-/** Reused helper for resolve Main Scoped Event Session Key behavior in src/infra. */
+/** Return the main-scoped session key when an event direct-DM should route to main. */
 export function resolveMainScopedEventSessionKey(params: {
   cfg?: OpenClawConfig;
   sessionKey: string;
@@ -243,7 +244,7 @@ export function resolveMainScopedEventSessionKey(params: {
   });
 }
 
-/** Reused helper for resolve Event Session Key For Policy behavior in src/infra. */
+/** Apply cron scoping and main-DM collapsing to an event session key. */
 export function resolveEventSessionKeyForPolicy(
   sessionKey: string,
   policy?: EventSessionRoutingPolicy,
@@ -255,7 +256,7 @@ export function resolveEventSessionKeyForPolicy(
   return resolveMainScopedEventSessionKey({ sessionKey, policy }) ?? sessionKey;
 }
 
-/** Reused helper for scoped Heartbeat Wake Options For Policy behavior in src/infra. */
+/** Apply event session policy to heartbeat wake options. */
 export function scopedHeartbeatWakeOptionsForPolicy<T extends object>(
   sessionKey: string,
   wakeOptions: T,
