@@ -1,7 +1,8 @@
-// test/vitest vitest extension matrix config helpers and runtime behavior.
+// Vitest project config for Matrix plugin tests.
 import { matrixExtensionTestRoots } from "./vitest.extension-matrix-paths.mjs";
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
+/** Create the scoped Vitest config for Matrix plugin tests. */
 export function createExtensionMatrixVitestConfig(env?: Record<string, string | undefined>) {
   return createScopedVitestConfig(
     matrixExtensionTestRoots.map((root) => `${root}/**/*.test.ts`),
@@ -15,4 +16,5 @@ export function createExtensionMatrixVitestConfig(env?: Record<string, string | 
   );
 }
 
+/** Default Matrix plugin Vitest project configuration. */
 export default createExtensionMatrixVitestConfig();

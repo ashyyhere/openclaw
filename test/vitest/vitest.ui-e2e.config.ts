@@ -1,10 +1,11 @@
-// test/vitest vitest ui e2e config helpers and runtime behavior.
+// Vitest project config for UI E2E tests that must run isolated.
 import { defineConfig } from "vitest/config";
 import { loadPatternListFromEnv, narrowIncludePatternsForCli } from "./vitest.pattern-file.ts";
 import { sharedVitestConfig } from "./vitest.shared.config.ts";
 
 const uiE2eIncludePatterns = ["ui/src/**/*.e2e.test.ts"];
 
+/** Create the isolated Vitest config for UI E2E tests. */
 export function createUiE2eVitestConfig(
   env: Record<string, string | undefined> = process.env,
   argv: string[] = process.argv,
@@ -36,4 +37,5 @@ export function createUiE2eVitestConfig(
   });
 }
 
+/** Default UI E2E Vitest project configuration. */
 export default createUiE2eVitestConfig();

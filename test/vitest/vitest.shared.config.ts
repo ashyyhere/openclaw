@@ -1,4 +1,4 @@
-// test/vitest vitest shared config helpers and runtime behavior.
+// Shared Vitest config centralizes aliases, worker scheduling, setup, and excludes.
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { pluginSdkSubpaths } from "../../scripts/lib/plugin-sdk-entries.mjs";
@@ -22,14 +22,17 @@ type VitestHostInfo = {
   totalMemoryBytes?: number;
 };
 
+/** Vitest worker pool modes supported by OpenClaw test configs. */
 export type OpenClawVitestPool = "forks" | "threads";
 
+/** Resolved local worker scheduling used by shared Vitest configs. */
 export type LocalVitestScheduling = {
   maxWorkers: number;
   fileParallelism: boolean;
   throttledBySystem: boolean;
 };
 
+/** Vite dependency optimizer settings shared by jsdom UI test lanes. */
 export const jsdomOptimizedDeps = {
   optimizer: {
     web: {
@@ -43,6 +46,7 @@ function detectVitestHostInfo(): Required<VitestHostInfo> {
   return detectVitestHostInfoImpl() as Required<VitestHostInfo>;
 }
 
+/** Resolve local maxWorkers for a pool from env and host load/memory info. */
 export function resolveLocalVitestMaxWorkers(
   env: Record<string, string | undefined> = process.env,
   system: VitestHostInfo = detectVitestHostInfo(),
@@ -51,6 +55,7 @@ export function resolveLocalVitestMaxWorkers(
   return resolveLocalVitestMaxWorkersImpl(env, system, pool);
 }
 
+/** Resolve local worker count and file parallelism for a Vitest pool. */
 export function resolveLocalVitestScheduling(
   env: Record<string, string | undefined> = process.env,
   system: VitestHostInfo = detectVitestHostInfo(),
@@ -59,14 +64,18 @@ export function resolveLocalVitestScheduling(
   return resolveLocalVitestSchedulingImpl(env, system, pool) as LocalVitestScheduling;
 }
 
+/** Resolve the default Vitest pool used by OpenClaw tests. */
 export function resolveDefaultVitestPool(
   _env: Record<string, string | undefined> = process.env,
 ): OpenClawVitestPool {
   return "threads";
 }
 
+/** Repository root used by Vitest project configs and aliases. */
 export const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
+/** Runner path used by non-isolated Vitest lanes. */
 export const nonIsolatedRunnerPath = path.join(repoRoot, "test", "non-isolated-runner.ts");
+/** Resolve a path relative to the repository root. */
 export function resolveRepoRootPath(value: string): string {
   return path.isAbsolute(value) ? value : path.join(repoRoot, value);
 }
@@ -83,6 +92,7 @@ function hasWorkerOverride(env: Record<string, string | undefined>): boolean {
   return Boolean((env.OPENCLAW_VITEST_MAX_WORKERS ?? env.OPENCLAW_TEST_WORKERS)?.trim());
 }
 
+/** Resolve shared worker config, giving CI fixed conservative defaults. */
 export function resolveSharedVitestWorkerConfig(params: {
   env?: Record<string, string | undefined>;
   isCI?: boolean;
@@ -127,6 +137,7 @@ if (!isCI && localScheduling.throttledBySystem && shouldPrintVitestThrottle(proc
   );
 }
 
+/** Base Vitest config merged into every project lane. */
 export const sharedVitestConfig = {
   root: repoRoot,
   envFile: false,

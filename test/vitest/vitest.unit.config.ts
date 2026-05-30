@@ -1,4 +1,4 @@
-// test/vitest vitest unit config helpers and runtime behavior.
+// Vitest project config for the broad unit lane and derived unit sublanes.
 import fs from "node:fs";
 import path from "node:path";
 import { defineConfig } from "vitest/config";
@@ -24,12 +24,14 @@ import {
 const sharedTest = sharedVitestConfig.test ?? {};
 const exclude = sharedTest.exclude ?? [];
 
+/** Load unit test include patterns from the Vitest include-file env var. */
 export function loadIncludePatternsFromEnv(
   env: Record<string, string | undefined> = process.env,
 ): string[] | null {
   return loadPatternListFromEnv("OPENCLAW_VITEST_INCLUDE_FILE", env);
 }
 
+/** Load additional unit test exclude patterns from the Vitest exclude-file env var. */
 export function loadExtraExcludePatternsFromEnv(
   env: Record<string, string | undefined> = process.env,
 ): string[] {
@@ -69,6 +71,7 @@ function resolveSiblingSourceFile(testFile: string): string | null {
   return fs.existsSync(resolveRepoRootPath(sourceFile)) ? sourceFile : null;
 }
 
+/** Resolve source files for default unit coverage from colocated non-fast tests. */
 export function resolveDefaultUnitCoverageIncludePatterns(
   unitFastTestFiles = getUnitFastTestFiles(),
 ): string[] {
@@ -102,6 +105,7 @@ function isCoverageEnabledFromArgv(argv: string[] = process.argv): boolean {
   });
 }
 
+/** Create a unit Vitest config with optional include/exclude lane overrides. */
 export function createUnitVitestConfigWithOptions(
   env: Record<string, string | undefined> = process.env,
   options: {
@@ -181,8 +185,10 @@ export function createUnitVitestConfigWithOptions(
   });
 }
 
+/** Create the default broad unit Vitest config. */
 export function createUnitVitestConfig(env: Record<string, string | undefined> = process.env) {
   return createUnitVitestConfigWithOptions(env);
 }
 
+/** Default broad unit Vitest project configuration. */
 export default createUnitVitestConfigWithOptions();
