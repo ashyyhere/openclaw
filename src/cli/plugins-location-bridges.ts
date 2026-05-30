@@ -48,7 +48,7 @@ function buildBridgeFromPersistedBundledRecord(
   };
 }
 
-/** Reused helper for list Persisted Bundled Plugin Location Bridges behavior in src/cli. */
+/** Builds relocation bridges from the persisted pre-update bundled plugin registry. */
 export async function listPersistedBundledPluginLocationBridges(options: {
   workspaceDir?: string;
   env?: NodeJS.ProcessEnv;

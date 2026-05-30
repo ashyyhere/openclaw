@@ -62,7 +62,7 @@ function removeInstalledPluginFromDenylist(cfg: OpenClawConfig, pluginId: string
   };
 }
 
-/** Shared type for Config Snapshot For Install Persist in src/cli. */
+/** Config plus optimistic write hash captured before persisting install mutations. */
 export type ConfigSnapshotForInstallPersist = {
   config: OpenClawConfig;
   baseHash: string | undefined;
@@ -180,7 +180,7 @@ function resolveReplacedManagedInstallRemoval(params: {
   return plan.directoryRemoval;
 }
 
-/** Reused helper for persist Plugin Install behavior in src/cli. */
+/** Persists plugin install records, config enablement, slot selection, and registry refresh. */
 export async function persistPluginInstall(params: {
   snapshot: ConfigSnapshotForInstallPersist;
   pluginId: string;
@@ -282,7 +282,7 @@ export async function persistPluginInstall(params: {
   return next;
 }
 
-/** Reused helper for persist Hook Pack Install behavior in src/cli. */
+/** Persists hook pack installs and enables the internal hook entries they provide. */
 export async function persistHookPackInstall(params: {
   snapshot: ConfigSnapshotForInstallPersist;
   hookPackId: string;

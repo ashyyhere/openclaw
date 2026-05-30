@@ -29,7 +29,7 @@ function isBareNpmPackageName(spec: string): boolean {
   return /^[a-z0-9][a-z0-9-._~]*$/.test(trimmed);
 }
 
-/** Reused helper for resolve Bundled Install Plan For Catalog Entry behavior in src/cli. */
+/** Selects a bundled source when catalog metadata points at the same plugin/npm spec pair. */
 export function resolveBundledInstallPlanForCatalogEntry(params: {
   pluginId: string;
   npmSpec: string;
@@ -63,7 +63,7 @@ export function resolveBundledInstallPlanForCatalogEntry(params: {
   return { bundledSource: bundledById };
 }
 
-/** Reused helper for resolve Bundled Install Plan Before Npm behavior in src/cli. */
+/** Prefers bundled plugins over matching npm specs unless the caller explicitly uses `npm:`. */
 export function resolveBundledInstallPlanBeforeNpm(params: {
   rawSpec: string;
   findBundledSource: BundledLookup;
@@ -108,7 +108,7 @@ export function resolveBundledInstallPlanBeforeNpm(params: {
   };
 }
 
-/** Reused helper for resolve Official External Install Plan Before Npm behavior in src/cli. */
+/** Converts official plugin ids into their catalog-backed external npm install plan. */
 export function resolveOfficialExternalInstallPlanBeforeNpm(params: {
   rawSpec: string;
   findOfficialExternalPlugin: OfficialExternalPluginLookup;
@@ -128,7 +128,7 @@ export function resolveOfficialExternalInstallPlanBeforeNpm(params: {
   };
 }
 
-/** Reused helper for resolve Official External Npm Package Trust behavior in src/cli. */
+/** Marks npm specs as trusted when they match an official external plugin package. */
 export function resolveOfficialExternalNpmPackageTrust(params: {
   npmSpec: string;
   findOfficialExternalPackage: OfficialExternalPackageLookup;
@@ -159,7 +159,7 @@ export function resolveOfficialExternalNpmPackageTrust(params: {
   };
 }
 
-/** Reused helper for resolve Bundled Install Plan For Npm Failure behavior in src/cli. */
+/** Falls back to a bundled source only for npm package-not-found failures. */
 export function resolveBundledInstallPlanForNpmFailure(params: {
   rawSpec: string;
   code?: string;
