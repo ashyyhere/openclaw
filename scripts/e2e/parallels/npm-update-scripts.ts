@@ -1,4 +1,4 @@
-// scripts/e2e/parallels npm update scripts helpers and runtime behavior.
+// Parallels npm update scripts render platform-specific guest update smoke commands.
 import { posixAgentWorkspaceScript, windowsAgentWorkspaceScript } from "./agent-workspace.ts";
 import { shellQuote } from "./host-command.ts";
 import { posixProviderOnlyPluginIsolationScript } from "./plugin-isolation.ts";
@@ -14,6 +14,7 @@ import {
 } from "./provider-auth.ts";
 import type { Platform, ProviderAuth } from "./types.ts";
 
+/** Inputs shared by macOS, Windows, and Linux npm update smoke scripts. */
 export interface NpmUpdateScriptInput {
   auth: ProviderAuth;
   expectedNeedle: string;
@@ -142,6 +143,7 @@ for ($attempt = 1; $attempt -le 2; $attempt++) {
 if (-not $agentOk) { throw 'openclaw agent finished without OK response' }`;
 }
 
+/** Renders the macOS guest script for npm update validation. */
 export function macosUpdateScript(input: NpmUpdateScriptInput): string {
   return String.raw`set -euo pipefail
 export PATH=${macosGuestPath}
@@ -224,6 +226,7 @@ ${posixAgentWorkspaceScript("Parallels npm update smoke test assistant.")}
 ${posixAssertAgentOkScript(macosOpenClawCommand, input, "parallels-npm-update-macos")}`;
 }
 
+/** Renders the Windows guest PowerShell script for npm update validation. */
 export function windowsUpdateScript(input: NpmUpdateScriptInput): string {
   return `$ErrorActionPreference = 'Stop'
 $PSNativeCommandUseErrorActionPreference = $false
@@ -303,6 +306,7 @@ ${windowsGatewayReadyScript()}
 ${windowsAssertAgentOkScript(input)}`;
 }
 
+/** Renders the Linux guest shell script for npm update validation. */
 export function linuxUpdateScript(input: NpmUpdateScriptInput): string {
   return String.raw`set -euo pipefail
 export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/snap/bin

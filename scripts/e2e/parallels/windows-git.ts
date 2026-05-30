@@ -1,10 +1,11 @@
-// scripts/e2e/parallels windows git helpers and runtime behavior.
+// Windows guest Git helpers download MinGit and ensure git.exe exists before smoke tests.
 import path from "node:path";
 import type { WindowsGuest } from "./guest-transports.ts";
 import { die, run, say } from "./host-command.ts";
 import { psSingleQuote } from "./powershell.ts";
 import type { HostServer } from "./types.ts";
 
+/** Downloads the preferred MinGit zip into the Parallels artifact directory. */
 export async function prepareMinGitZip(tgzDir: string): Promise<string> {
   const metadata = run(
     "python3",
@@ -96,6 +97,7 @@ print(best["browser_download_url"])`,
   return zipPath;
 }
 
+/** Installs portable Git inside a Windows guest when git.exe is missing. */
 export function ensureGuestGit(input: {
   guest: WindowsGuest;
   server: HostServer | null;

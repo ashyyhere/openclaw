@@ -1,4 +1,4 @@
-// scripts/e2e/parallels update job timeout helpers and runtime behavior.
+// Parallels update job timeout helper records timeout failures in guest update logs.
 interface TimedUpdateJobOptions {
   append(this: void, chunk: string): void;
   label: string;
@@ -8,6 +8,7 @@ interface TimedUpdateJobOptions {
   writeLog(this: void): Promise<void>;
 }
 
+/** Runs an update job with a hard timeout and writes accumulated log output. */
 export async function runTimedUpdateJob({
   append,
   label,

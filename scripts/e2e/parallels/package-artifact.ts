@@ -1,4 +1,4 @@
-// scripts/e2e/parallels package artifact helpers and runtime behavior.
+// Parallels package artifact helpers build or fetch OpenClaw tgz inputs for guest lanes.
 import { randomUUID } from "node:crypto";
 import { copyFile, mkdir, readFile, rm, stat, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -8,16 +8,19 @@ import { exists, readJson } from "./filesystem.ts";
 import { die, repoRoot, run, say, sh } from "./host-command.ts";
 import type { PackageArtifact } from "./types.ts";
 
+/** Extracts and parses a JSON entry from a package tarball. */
 export async function extractPackageJsonFromTgz<T>(tgzPath: string, entry: string): Promise<T> {
   const output = run("tar", ["-xOf", tgzPath, entry], { quiet: true }).stdout;
   return JSON.parse(output) as T;
 }
 
+/** Reads the package version from an OpenClaw tarball. */
 export async function packageVersionFromTgz(tgzPath: string): Promise<string> {
   const pkg = await extractPackageJsonFromTgz<{ version: string }>(tgzPath, "package/package.json");
   return pkg.version;
 }
 
+/** Reads the build commit recorded in a packed OpenClaw tarball. */
 export async function packageBuildCommitFromTgz(tgzPath: string): Promise<string> {
   const info = await extractPackageJsonFromTgz<{ commit?: string }>(
     tgzPath,
@@ -26,6 +29,7 @@ export async function packageBuildCommitFromTgz(tgzPath: string): Promise<string
   return info.commit ?? "";
 }
 
+/** Resolves npm aliases such as beta/latest into concrete OpenClaw registry versions. */
 export function resolveOpenClawRegistryVersion(specOrAlias: string): string {
   const rawValue = specOrAlias.trim();
   const value = rawValue.startsWith("openclaw@") ? rawValue.slice("openclaw@".length) : rawValue;
@@ -57,6 +61,7 @@ function npmViewVersion(spec: string): string {
   return run("npm", ["view", spec, "version"], { quiet: true }).stdout.trim();
 }
 
+/** Ensures local dist artifacts match the current checkout before packaging. */
 export async function ensureCurrentBuild(input: {
   lockDir: string;
   requireControlUi?: boolean;
@@ -119,6 +124,7 @@ async function ensureCurrentBuildUnlocked(input: {
   }
 }
 
+/** Packs either a registry package spec or the current checkout into a tarball artifact. */
 export async function packOpenClaw(input: {
   destination: string;
   packageSpec?: string;
