@@ -1,21 +1,21 @@
-// tts provider types helpers and runtime behavior.
+/** Shared TTS provider contracts for synthesis, streaming, telephony, and directives. */
 import type { TalkProviderConfig } from "../config/types.gateway.js";
 import type { OpenClawConfig } from "../config/types.js";
 import type { ResolvedTtsPersona } from "../config/types.tts.js";
 
-/** Shared type for Speech Provider Id in src/tts. */
+/** Provider id used in config, directive overrides, and registry lookups. */
 export type SpeechProviderId = string;
 
-/** Shared type for Speech Synthesis Target in src/tts. */
+/** Output class requested from a speech provider. */
 export type SpeechSynthesisTarget = "audio-file" | "voice-note" | "telephony";
 
-/** Shared type for Speech Provider Config in src/tts. */
+/** Provider-specific resolved config payload. */
 export type SpeechProviderConfig = Record<string, unknown>;
 
-/** Shared type for Speech Provider Overrides in src/tts. */
+/** Per-request provider-specific override payload. */
 export type SpeechProviderOverrides = Record<string, unknown>;
 
-/** Shared type for Speech Model Override Policy in src/tts. */
+/** Directive policy describing which speech fields users may override. */
 export type SpeechModelOverridePolicy = {
   enabled: boolean;
   allowText: boolean;
@@ -27,14 +27,14 @@ export type SpeechModelOverridePolicy = {
   allowSeed: boolean;
 };
 
-/** Shared type for Tts Directive Overrides in src/tts. */
+/** Overrides extracted from an inline TTS directive. */
 export type TtsDirectiveOverrides = {
   ttsText?: string;
   provider?: SpeechProviderId;
   providerOverrides?: Record<string, SpeechProviderOverrides>;
 };
 
-/** Shared type for Tts Directive Parse Result in src/tts. */
+/** Parsed directive result plus cleaned message text and warnings. */
 export type TtsDirectiveParseResult = {
   cleanedText: string;
   ttsText?: string;
@@ -43,14 +43,14 @@ export type TtsDirectiveParseResult = {
   warnings: string[];
 };
 
-/** Shared type for Speech Provider Configured Context in src/tts. */
+/** Context passed to providers after config resolution. */
 export type SpeechProviderConfiguredContext = {
   cfg?: OpenClawConfig;
   providerConfig: SpeechProviderConfig;
   timeoutMs: number;
 };
 
-/** Shared type for Speech Synthesis Request in src/tts. */
+/** Request passed to file/voice-note speech synthesis providers. */
 export type SpeechSynthesisRequest = {
   text: string;
   cfg: OpenClawConfig;
@@ -60,7 +60,7 @@ export type SpeechSynthesisRequest = {
   timeoutMs: number;
 };
 
-/** Shared type for Speech Synthesis Result in src/tts. */
+/** In-memory audio result returned by non-streaming speech synthesis. */
 export type SpeechSynthesisResult = {
   audioBuffer: Buffer;
   outputFormat: string;
@@ -68,10 +68,10 @@ export type SpeechSynthesisResult = {
   voiceCompatible: boolean;
 };
 
-/** Shared type for Speech Synthesis Stream Request in src/tts. */
+/** Streaming synthesis currently uses the same input as buffered synthesis. */
 export type SpeechSynthesisStreamRequest = SpeechSynthesisRequest;
 
-/** Shared type for Speech Synthesis Stream Result in src/tts. */
+/** Streamed audio result with optional provider resource cleanup. */
 export type SpeechSynthesisStreamResult = {
   audioStream: ReadableStream<Uint8Array>;
   outputFormat: string;
@@ -80,7 +80,7 @@ export type SpeechSynthesisStreamResult = {
   release?: () => Promise<void>;
 };
 
-/** Shared type for Speech Telephony Synthesis Request in src/tts. */
+/** Request for telephony-compatible speech audio generation. */
 export type SpeechTelephonySynthesisRequest = {
   text: string;
   cfg: OpenClawConfig;
@@ -89,14 +89,14 @@ export type SpeechTelephonySynthesisRequest = {
   timeoutMs: number;
 };
 
-/** Shared type for Speech Telephony Synthesis Result in src/tts. */
+/** Telephony audio result including sample rate for downstream transports. */
 export type SpeechTelephonySynthesisResult = {
   audioBuffer: Buffer;
   outputFormat: string;
   sampleRate: number;
 };
 
-/** Shared type for Speech Provider Prepare Synthesis Context in src/tts. */
+/** Context providers can inspect before final synthesis config is chosen. */
 export type SpeechProviderPrepareSynthesisContext = {
   text: string;
   cfg: OpenClawConfig;
@@ -108,14 +108,14 @@ export type SpeechProviderPrepareSynthesisContext = {
   timeoutMs: number;
 };
 
-/** Shared type for Speech Provider Prepared Synthesis in src/tts. */
+/** Provider preparation result that can rewrite text, config, or overrides. */
 export type SpeechProviderPreparedSynthesis = {
   text?: string;
   providerConfig?: SpeechProviderConfig;
   providerOverrides?: SpeechProviderOverrides;
 };
 
-/** Shared type for Speech Voice Option in src/tts. */
+/** Voice metadata exposed by provider voice-listing APIs. */
 export type SpeechVoiceOption = {
   id: string;
   name?: string;
@@ -126,7 +126,7 @@ export type SpeechVoiceOption = {
   personalities?: string[];
 };
 
-/** Shared type for Speech List Voices Request in src/tts. */
+/** Request context for listing voices from a provider. */
 export type SpeechListVoicesRequest = {
   cfg?: OpenClawConfig;
   providerConfig?: SpeechProviderConfig;
@@ -134,14 +134,14 @@ export type SpeechListVoicesRequest = {
   baseUrl?: string;
 };
 
-/** Shared type for Speech Provider Resolve Config Context in src/tts. */
+/** Context used when converting raw provider config into resolved config. */
 export type SpeechProviderResolveConfigContext = {
   cfg: OpenClawConfig;
   rawConfig: Record<string, unknown>;
   timeoutMs: number;
 };
 
-/** Shared type for Speech Directive Token Parse Context in src/tts. */
+/** Context for provider-specific inline directive token parsing. */
 export type SpeechDirectiveTokenParseContext = {
   key: string;
   value: string;
@@ -151,14 +151,14 @@ export type SpeechDirectiveTokenParseContext = {
   currentOverrides?: SpeechProviderOverrides;
 };
 
-/** Shared type for Speech Directive Token Parse Result in src/tts. */
+/** Provider-specific directive parse outcome and warnings. */
 export type SpeechDirectiveTokenParseResult = {
   handled: boolean;
   overrides?: SpeechProviderOverrides;
   warnings?: string[];
 };
 
-/** Shared type for Speech Provider Resolve Talk Config Context in src/tts. */
+/** Context for deriving TTS config from a gateway talk provider config. */
 export type SpeechProviderResolveTalkConfigContext = {
   cfg: OpenClawConfig;
   baseTtsConfig: Record<string, unknown>;
@@ -166,7 +166,7 @@ export type SpeechProviderResolveTalkConfigContext = {
   timeoutMs: number;
 };
 
-/** Shared type for Speech Provider Resolve Talk Overrides Context in src/tts. */
+/** Context for deriving per-request overrides from talk tool params. */
 export type SpeechProviderResolveTalkOverridesContext = {
   talkProviderConfig: TalkProviderConfig;
   params: Record<string, unknown>;
