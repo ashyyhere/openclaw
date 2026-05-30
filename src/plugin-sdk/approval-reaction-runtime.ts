@@ -17,7 +17,7 @@ import {
   buildApprovalPendingReplyPayload,
   buildPluginApprovalPendingReplyPayload,
 } from "./approval-renderers.js";
-/** Re-exported API for src/plugin-sdk, starting with should Suppress Local Native Exec Approval Prompt. */
+/** Native prompt suppression helper kept on this compatibility subpath. */
 export { shouldSuppressLocalNativeExecApprovalPrompt } from "./approval-native-helpers.js";
 import type { ReplyPayload } from "./reply-payload.js";
 
@@ -38,7 +38,7 @@ type InMemoryApprovalReactionTarget<TTarget> = {
   expiresAtMs: number;
 };
 
-/** Shared type for Approval Reaction Target Store in src/plugin-sdk. */
+/** Store used to map reaction message keys back to approval targets. */
 export type ApprovalReactionTargetStore<TTarget> = {
   register(key: string, target: TTarget, opts?: { ttlMs?: number }): void;
   lookup(key: string): Promise<TTarget | null>;
@@ -46,20 +46,20 @@ export type ApprovalReactionTargetStore<TTarget> = {
   clearForTest(): void;
 };
 
-/** Shared type for Approval Reaction Decision Binding in src/plugin-sdk. */
+/** Emoji-to-decision binding shown in reaction approval prompts. */
 export type ApprovalReactionDecisionBinding = {
   decision: ExecApprovalReplyDecision;
   emoji: string;
   label: string;
 };
 
-/** Shared type for Approval Reaction Decision Resolution in src/plugin-sdk. */
+/** Decision resolved from a normalized reaction emoji. */
 export type ApprovalReactionDecisionResolution = {
   decision: ExecApprovalReplyDecision;
   normalizedEmoji: string;
 };
 
-/** Shared type for Approval Reaction Target Record in src/plugin-sdk. */
+/** Approval target metadata registered against a reaction message key. */
 export type ApprovalReactionTargetRecord<TRoute = unknown> = {
   approvalId: string;
   approvalKind?: ApprovalKind;
@@ -68,7 +68,7 @@ export type ApprovalReactionTargetRecord<TRoute = unknown> = {
   expiresAtMs?: number;
 };
 
-/** Shared type for Approval Reaction Target Resolution in src/plugin-sdk. */
+/** Fully resolved approval target plus reaction decision. */
 export type ApprovalReactionTargetResolution<TRoute = unknown> =
   ApprovalReactionDecisionResolution & {
     approvalId: string;
@@ -76,19 +76,19 @@ export type ApprovalReactionTargetResolution<TRoute = unknown> =
     route?: TRoute;
   };
 
-/** Shared type for Approval Reaction Prompt Payload in src/plugin-sdk. */
+/** Reply payload augmented with allowed reaction decisions and bindings. */
 export type ApprovalReactionPromptPayload = ReplyPayload & {
   allowedDecisions: readonly ExecApprovalReplyDecision[];
   reactionBindings: readonly ApprovalReactionDecisionBinding[];
 };
 
-/** Shared type for Approval Reaction Pending Content in src/plugin-sdk. */
+/** Reaction-first approval content plus manual command fallback content. */
 export type ApprovalReactionPendingContent = {
   reactionPayload: ApprovalReactionPromptPayload;
   manualFallbackPayload: ReplyPayload;
 };
 
-/** Reused constant for APPROVAL REACTION BINDINGS behavior in src/plugin-sdk. */
+/** Default approval reaction bindings in display order. */
 export const APPROVAL_REACTION_BINDINGS = [
   { decision: "allow-once", emoji: "👍", label: "Allow Once" },
   { decision: "allow-always", emoji: "♾️", label: "Allow Always" },
@@ -106,7 +106,7 @@ function normalizeDecisionList(
   return APPROVAL_REACTION_ORDER.filter((decision) => allowed.has(decision));
 }
 
-/** Reused helper for list Approval Reaction Bindings behavior in src/plugin-sdk. */
+/** Lists reaction bindings filtered to the allowed decision set. */
 export function listApprovalReactionBindings(params: {
   allowedDecisions: readonly ExecApprovalReplyDecision[];
 }): ApprovalReactionDecisionBinding[] {
@@ -120,7 +120,7 @@ export function listApprovalReactionBindings(params: {
   );
 }
 
-/** Reused helper for build Approval Reaction Hint behavior in src/plugin-sdk. */
+/** Builds the prompt hint that tells users which reactions are valid. */
 export function buildApprovalReactionHint(params: {
   allowedDecisions: readonly ExecApprovalReplyDecision[];
 }): string | null {
@@ -131,7 +131,7 @@ export function buildApprovalReactionHint(params: {
   return `React with:\n\n${bindings.map((binding) => `${binding.emoji} ${binding.label}`).join("\n")}`;
 }
 
-/** Reused helper for normalize Approval Reaction Emoji behavior in src/plugin-sdk. */
+/** Normalizes reaction emoji variants before decision lookup. */
 export function normalizeApprovalReactionEmoji(reactionKey: string): string {
   const normalized = reactionKey
     .trim()
@@ -143,7 +143,7 @@ export function normalizeApprovalReactionEmoji(reactionKey: string): string {
   return normalized;
 }
 
-/** Reused helper for resolve Approval Reaction Decision behavior in src/plugin-sdk. */
+/** Resolves one reaction emoji to an allowed approval decision. */
 export function resolveApprovalReactionDecision(params: {
   reactionKey: string;
   allowedDecisions: readonly ExecApprovalReplyDecision[];
@@ -160,7 +160,7 @@ export function resolveApprovalReactionDecision(params: {
   return null;
 }
 
-/** Reused helper for resolve Approval Reaction Target behavior in src/plugin-sdk. */
+/** Resolves a stored target and reaction into an actionable approval decision. */
 export function resolveApprovalReactionTarget<TRoute = unknown>(params: {
   target: ApprovalReactionTargetRecord<TRoute> | null | undefined;
   reactionKey: string;
@@ -342,7 +342,7 @@ function buildMetadataPayload(params: {
   );
 }
 
-/** Reused helper for build Approval Pending Prompt Payload behavior in src/plugin-sdk. */
+/** Builds the reaction-oriented pending approval reply payload. */
 export function buildApprovalPendingPromptPayload(params: {
   request: ApprovalRequest;
   view: PendingApprovalView;
@@ -367,7 +367,7 @@ export function buildApprovalPendingPromptPayload(params: {
   };
 }
 
-/** Reused helper for build Approval Reaction Prompt Payload For Request behavior in src/plugin-sdk. */
+/** Builds a reaction prompt payload directly from an approval request. */
 export function buildApprovalReactionPromptPayloadForRequest(params: {
   request: ApprovalRequest;
   nowMs: number;
@@ -383,7 +383,7 @@ function replaceApprovalIdPlaceholder(text: string | undefined, approvalId: stri
   return (text ?? "").replace(/\/approve\s+<id>/g, `/approve ${approvalId}`);
 }
 
-/** Reused helper for build Approval Reaction Pending Content behavior in src/plugin-sdk. */
+/** Builds reaction and manual fallback content for one pending approval. */
 export function buildApprovalReactionPendingContent(params: {
   request: ApprovalRequest;
   view: PendingApprovalView;
@@ -424,7 +424,7 @@ export function buildApprovalReactionPendingContent(params: {
   return { reactionPayload, manualFallbackPayload };
 }
 
-/** Reused helper for build Approval Reaction Pending Content For Request behavior in src/plugin-sdk. */
+/** Builds reaction pending content directly from an approval request. */
 export function buildApprovalReactionPendingContentForRequest(params: {
   request: ApprovalRequest;
   nowMs: number;
@@ -436,7 +436,7 @@ export function buildApprovalReactionPendingContentForRequest(params: {
   });
 }
 
-/** Reused helper for create Approval Reaction Target Store behavior in src/plugin-sdk. */
+/** Creates a bounded reaction-target store with optional persistent backing. */
 export function createApprovalReactionTargetStore<TTarget>(params: {
   namespace: string;
   maxEntries: number;
