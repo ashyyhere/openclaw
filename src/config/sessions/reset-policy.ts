@@ -1,13 +1,13 @@
-// config/sessions reset policy helpers and runtime behavior.
+// Session reset policy resolution and freshness checks for direct/group/thread chats.
 import type { SessionConfig, SessionResetConfig } from "../types.base.js";
 import { DEFAULT_IDLE_MINUTES } from "./types.js";
 
-/** Shared type for Session Reset Mode in src/config/sessions. */
+/** Supported automatic reset strategies for persisted sessions. */
 export type SessionResetMode = "daily" | "idle";
-/** Shared type for Session Reset Type in src/config/sessions. */
+/** Chat surface used to select resetByType overrides. */
 export type SessionResetType = "direct" | "group" | "thread";
 
-/** Shared type for Session Reset Policy in src/config/sessions. */
+/** Effective reset policy after defaults, global config, and type overrides merge. */
 export type SessionResetPolicy = {
   mode: SessionResetMode;
   atHour: number;
@@ -15,7 +15,7 @@ export type SessionResetPolicy = {
   configured?: boolean;
 };
 
-/** Shared type for Session Freshness in src/config/sessions. */
+/** Freshness result with the reset deadline that made a session stale. */
 export type SessionFreshness = {
   fresh: boolean;
   dailyResetAt?: number;
@@ -23,12 +23,12 @@ export type SessionFreshness = {
   staleReason?: SessionResetMode;
 };
 
-/** Reused constant for DEFAULT RESET MODE behavior in src/config/sessions. */
+/** Default reset behavior when no idle or type-specific config is present. */
 export const DEFAULT_RESET_MODE: SessionResetMode = "daily";
-/** Reused constant for DEFAULT RESET AT HOUR behavior in src/config/sessions. */
+/** Local hour used by the daily reset default. */
 export const DEFAULT_RESET_AT_HOUR = 4;
 
-/** Reused helper for resolve Daily Reset At Ms behavior in src/config/sessions. */
+/** Returns the most recent daily reset boundary for the given local hour. */
 export function resolveDailyResetAtMs(now: number, atHour: number): number {
   const normalizedAtHour = normalizeResetAtHour(atHour);
   const resetAt = new Date(now);
@@ -39,7 +39,7 @@ export function resolveDailyResetAtMs(now: number, atHour: number): number {
   return resetAt.getTime();
 }
 
-/** Reused helper for resolve Session Reset Policy behavior in src/config/sessions. */
+/** Resolves the effective reset policy for a chat type and optional override. */
 export function resolveSessionResetPolicy(params: {
   sessionCfg?: SessionConfig;
   resetType: SessionResetType;
@@ -79,7 +79,7 @@ export function resolveSessionResetPolicy(params: {
   return { mode, atHour, idleMinutes, configured };
 }
 
-/** Reused helper for evaluate Session Freshness behavior in src/config/sessions. */
+/** Evaluates whether a session is stale under daily and/or idle reset deadlines. */
 export function evaluateSessionFreshness(params: {
   updatedAt: number;
   sessionStartedAt?: number;

@@ -116,7 +116,7 @@ import {
 } from "./validation.js";
 import { shouldWarnOnTouchedVersion } from "./version.js";
 
-/** Re-exported API for src/config. */
+/** Runtime config snapshot facade exported from the config I/O module. */
 export {
   clearRuntimeConfigSnapshotState as clearRuntimeConfigSnapshot,
   getRuntimeConfigSnapshotMetadataState as getRuntimeConfigSnapshotMetadata,
@@ -130,11 +130,11 @@ export {
 };
 
 // Re-export for backwards compatibility
-/** Re-exported API for src/config, starting with Circular Include Error. */
+/** Include parsing errors kept available through the historical config I/O barrel. */
 export { CircularIncludeError, ConfigIncludeError } from "./includes.js";
-/** Re-exported API for src/config, starting with Missing Env Var Error. */
+/** Env-substitution error kept available through the historical config I/O barrel. */
 export { MissingEnvVarError } from "./env-substitution.js";
-/** Re-exported API for src/config, starting with resolve Shell Env Expected Keys. */
+/** Shell-env expected-key resolver kept available through the config I/O barrel. */
 export { resolveShellEnvExpectedKeys } from "./shell-env-expected-keys.js";
 
 type ShippedPluginInstallConfigWriteMigration =
@@ -959,7 +959,7 @@ function observeConfigSnapshotSync(
   writeConfigHealthStateSync(deps, healthState);
 }
 
-/** Shared type for Config Io Deps in src/config. */
+/** Dependency injection surface for config I/O tests, diagnostics, and alternate paths. */
 export type ConfigIoDeps = {
   fs?: typeof fs;
   json5?: typeof JSON5;
@@ -972,7 +972,7 @@ export type ConfigIoDeps = {
   observe?: boolean;
 };
 
-/** Shared type for Config Snapshot Read Options in src/config. */
+/** Options that tune config snapshot reads and validation behavior. */
 export type ConfigSnapshotReadOptions = {
   measure?: ConfigSnapshotReadMeasure;
   observe?: boolean;
@@ -1059,7 +1059,7 @@ function maybeLoadDotEnvForConfig(env: NodeJS.ProcessEnv): void {
   loadDotEnv({ quiet: true });
 }
 
-/** Reused helper for parse Config Json5 behavior in src/config. */
+/** Parses authored config text, trying strict JSON before JSON5 compatibility. */
 export function parseConfigJson5(
   raw: string,
   json5: { parse: (value: string) => unknown } = JSON5,
@@ -1283,7 +1283,7 @@ function snapshotEnv(env: NodeJS.ProcessEnv): Record<string, string | undefined>
   return { ...env };
 }
 
-/** Reused helper for restore Env Changes If Unchanged behavior in src/config. */
+/** Reverts env mutations from a read only when no concurrent caller changed them. */
 export function restoreEnvChangesIfUnchanged(params: {
   env: NodeJS.ProcessEnv;
   before: Record<string, string | undefined>;
@@ -1309,7 +1309,7 @@ type ReadConfigFileSnapshotInternalResult = {
   pluginMetadataSnapshot?: PluginMetadataSnapshot;
 };
 
-/** Shared type for Read Config File Snapshot With Plugin Metadata Result in src/config. */
+/** Config snapshot plus plugin metadata captured during plugin-aware reads. */
 export type ReadConfigFileSnapshotWithPluginMetadataResult = {
   snapshot: ConfigFileSnapshot;
   pluginMetadataSnapshot?: PluginMetadataSnapshot;
@@ -1369,7 +1369,7 @@ async function collectInvalidConfigLegacyIssues(
   return findDoctorLegacyConfigIssues(raw, sourceRaw);
 }
 
-/** Reused helper for create Config IO behavior in src/config. */
+/** Creates the config I/O facade bound to injected deps, paths, and validation mode. */
 export function createConfigIO(
   overrides: ConfigIoDeps & {
     pluginValidation?: "full" | "skip";
