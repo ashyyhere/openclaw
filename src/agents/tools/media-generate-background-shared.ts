@@ -36,7 +36,7 @@ const MEDIA_DIRECT_FALLBACK_DELIVERY_REASONS = new Set<SubagentAnnounceDeliveryF
   "visible_reply_missing",
 ]);
 
-/** Shared type for Media Generation Task Handle in src/agents/tools. */
+/** Ledger handle used to update and wake a background media generation run. */
 export type MediaGenerationTaskHandle = {
   taskId: string;
   runId: string;
@@ -45,13 +45,13 @@ export type MediaGenerationTaskHandle = {
   taskLabel: string;
 };
 
-/** Shared type for Media Generate Background Scheduler in src/agents/tools. */
+/** Scheduler hook for detaching media generation work from the immediate tool result. */
 export type MediaGenerateBackgroundScheduler = (work: () => Promise<void>) => void;
 
-/** Shared type for Media Generate Async Start Callback in src/agents/tools. */
+/** Optional notifier called when an async media generation task starts. */
 export type MediaGenerateAsyncStartCallback = (message: string) => Promise<void> | void;
 
-/** Shared type for Media Generation Execution Result in src/agents/tools. */
+/** Provider execution result used to mark task completion and wake delivery. */
 export type MediaGenerationExecutionResult = {
   provider: string;
   model: string;

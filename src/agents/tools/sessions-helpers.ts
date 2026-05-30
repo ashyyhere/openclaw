@@ -7,7 +7,7 @@ export {
   resolveSandboxedSessionToolContext,
 } from "./sessions-access.js";
 import { resolveSandboxedSessionToolContext } from "./sessions-access.js";
-/** Re-exported API for src/agents/tools. */
+/** Session reference resolution helpers shared by session tools. */
 export {
   resolveCurrentSessionClientAlias,
   resolveDisplaySessionKey,
@@ -17,7 +17,7 @@ export {
   resolveVisibleSessionReference,
   shouldResolveSessionIdInput,
 } from "./sessions-resolution.js";
-/** Re-exported API for src/agents/tools. */
+/** Chat transcript text helpers shared by session list/detail tools. */
 export {
   extractAssistantText,
   sanitizeTextContent,
@@ -27,10 +27,10 @@ import { getRuntimeConfig } from "../../config/config.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 
-/** Shared type for Session Kind in src/agents/tools. */
+/** Display category assigned to a session list row. */
 export type SessionKind = "main" | "group" | "cron" | "hook" | "node" | "other";
 
-/** Shared type for Session List Delivery Context in src/agents/tools. */
+/** Last known delivery target attached to a session row. */
 export type SessionListDeliveryContext = {
   channel?: string;
   to?: string;
@@ -38,10 +38,10 @@ export type SessionListDeliveryContext = {
   threadId?: string | number;
 };
 
-/** Shared type for Session Run Status in src/agents/tools. */
+/** Normalized lifecycle status shown for a session run. */
 export type SessionRunStatus = "running" | "done" | "failed" | "killed" | "timeout";
 
-/** Shared type for Session List Row in src/agents/tools. */
+/** Canonical row shape returned by session listing helpers. */
 export type SessionListRow = {
   key: string;
   agentId?: string;
