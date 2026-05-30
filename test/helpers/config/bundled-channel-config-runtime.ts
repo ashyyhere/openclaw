@@ -1,4 +1,4 @@
-// test/helpers/config bundled channel config runtime helpers and runtime behavior.
+// Bundled channel config tests read runtime and schema maps from manifests and loaded plugins.
 import * as bundledChannelModule from "../../../src/channels/plugins/bundled.js";
 import type {
   ChannelConfigRuntimeSchema,
@@ -90,10 +90,12 @@ function getBundledChannelMaps(): BundledChannelMaps {
   return maps;
 }
 
+/** Return bundled channel runtime schema metadata keyed by channel id. */
 export function getBundledChannelRuntimeMap(): BundledChannelRuntimeMap {
   return getBundledChannelMaps().runtimeMap;
 }
 
+/** Return bundled channel config schemas keyed by channel id. */
 export function getBundledChannelConfigSchemaMap(): BundledChannelConfigSchemaMap {
   return getBundledChannelMaps().configSchemaMap;
 }

@@ -1,11 +1,13 @@
-// test/helpers/config heartbeat config honor inventory helpers and runtime behavior.
+// Heartbeat config honor inventory records schema, merge, reload, consumer, and test proof paths.
 import type { ConfigHonorInventoryRow } from "./config-honor-audit.js";
 
+/** Config prefixes covered by the heartbeat honor inventory audit. */
 export const HEARTBEAT_CONFIG_PREFIXES = [
   "agents.defaults.heartbeat",
   "agents.list.*.heartbeat",
 ] as const;
 
+/** Proof inventory showing each heartbeat config key is honored across runtime surfaces. */
 export const HEARTBEAT_CONFIG_HONOR_INVENTORY: ConfigHonorInventoryRow[] = [
   {
     key: "every",

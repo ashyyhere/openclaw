@@ -1,8 +1,9 @@
-// test/helpers temp dir helpers and runtime behavior.
+// Temp directory helpers register throwaway folders for deterministic test cleanup.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
+/** Create a temp directory and register it in the caller-owned collection. */
 export function makeTempDir(tempDirs: string[] | Set<string>, prefix: string): string {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), prefix));
   if (Array.isArray(tempDirs)) {
@@ -13,6 +14,7 @@ export function makeTempDir(tempDirs: string[] | Set<string>, prefix: string): s
   return dir;
 }
 
+/** Remove all registered temp directories and clear the collection. */
 export function cleanupTempDirs(tempDirs: string[] | Set<string>): void {
   const dirs = Array.isArray(tempDirs) ? tempDirs.splice(0) : [...tempDirs];
   for (const dir of dirs) {

@@ -1,7 +1,8 @@
-// extensions/voice-call/src response model helpers and runtime behavior.
+// Voice-call response model resolution chooses explicit voice config or agent defaults.
 import type { VoiceCallConfig } from "./config.js";
 import type { CoreAgentDeps } from "./core-bridge.js";
 
+/** Resolve provider/model fields for voice-call response generation. */
 export function resolveVoiceResponseModel(params: {
   voiceConfig: VoiceCallConfig;
   agentRuntime: CoreAgentDeps;

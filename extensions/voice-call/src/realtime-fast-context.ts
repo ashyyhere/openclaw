@@ -1,4 +1,4 @@
-// extensions/voice-call/src realtime fast context helpers and runtime behavior.
+// Voice-call realtime fast-context helper labels generic SDK consult results for callers.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import {
   resolveRealtimeVoiceFastContextConsult,
@@ -10,6 +10,7 @@ type Logger = {
   debug?: (message: string) => void;
 };
 
+/** Resolve fast-context consult data with voice-call specific labels. */
 export async function resolveRealtimeFastContextConsult(params: {
   cfg: OpenClawConfig;
   agentId: string;

@@ -1,8 +1,9 @@
-// test/helpers/config redact snapshot test hints helpers and runtime behavior.
+// Redaction snapshot tests use this minimal sensitive-path hint fixture.
 import type { ConfigUiHints } from "../../../src/config/schema.js";
 
 // Keep this fixture minimal so redaction tests exercise the hint-matching
 // behavior they care about without paying to build the full config schema graph.
+/** Minimal config UI hints fixture for redaction snapshot tests. */
 export const redactSnapshotTestHints: ConfigUiHints = {
   "agents.defaults.memorySearch.remote.apiKey": { sensitive: true },
   "agents.list[].memorySearch.remote.apiKey": { sensitive: true },

@@ -1,9 +1,10 @@
-// test/helpers/config config honor audit helpers and runtime behavior.
+// Config honor audit helpers verify schema keys have merge, reload, consumer, and test proof.
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { computeBaseConfigSchemaResponse } from "../../../src/config/schema-base.js";
 
+/** Inventory row tying one config key to its schema, runtime, reload, and test proof paths. */
 export type ConfigHonorInventoryRow = {
   key: string;
   schemaPaths: string[];
@@ -23,6 +24,7 @@ type ConfigHonorProofKey =
   | "reloadPaths"
   | "testPaths";
 
+/** Result of comparing a config honor inventory against schema and filesystem proof. */
 export type ConfigHonorAuditResult = {
   schemaKeys: string[];
   missingKeys: string[];
@@ -64,6 +66,7 @@ function hasSchemaPath(schemaPath: string): boolean {
   return true;
 }
 
+/** List leaf schema keys below the provided config prefixes. */
 export function listSchemaLeafKeysForPrefixes(prefixes: string[]): string[] {
   const keys = new Set<string>();
   for (const prefix of prefixes) {
@@ -91,6 +94,7 @@ export function listSchemaLeafKeysForPrefixes(prefixes: string[]): string[] {
   return [...keys].toSorted();
 }
 
+/** Audit an inventory against schema keys, file existence, and required proof columns. */
 export function auditConfigHonorInventory(params: {
   prefixes: string[];
   rows: ConfigHonorInventoryRow[];

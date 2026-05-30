@@ -1,4 +1,4 @@
-// extensions/voice-call/src manager test harness helpers and runtime behavior.
+// Voice-call manager tests use this fake provider and store harness for call lifecycle assertions.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -19,6 +19,7 @@ import type {
   WebhookVerificationResult,
 } from "./types.js";
 
+/** Fake voice-call provider that records manager calls for assertions. */
 export class FakeProvider implements VoiceCallProvider {
   readonly name: "plivo" | "twilio" | "telnyx";
   twilioStreamConnectEnabled = true;
@@ -69,10 +70,12 @@ export class FakeProvider implements VoiceCallProvider {
   }
 }
 
+/** Create a temporary voice-call store directory for manager tests. */
 export function createTestStorePath(): string {
   return fs.mkdtempSync(path.join(os.tmpdir(), "openclaw-voice-call-test-"));
 }
 
+/** Create an initialized CallManager with a fake provider. */
 export async function createManagerHarness(
   configOverrides: Record<string, unknown> = {},
   provider = new FakeProvider(),
@@ -91,6 +94,7 @@ export async function createManagerHarness(
   return { manager, provider };
 }
 
+/** Apply an answered event to an existing call in the manager. */
 export function markCallAnswered(manager: CallManager, callId: string, eventId: string): void {
   manager.processEvent({
     id: eventId,
@@ -101,6 +105,7 @@ export function markCallAnswered(manager: CallManager, callId: string, eventId: 
   });
 }
 
+/** Write raw call records into the manager JSONL store fixture. */
 export function writeCallsToStore(storePath: string, calls: Record<string, unknown>[]): void {
   fs.mkdirSync(storePath, { recursive: true });
   const logPath = path.join(storePath, "calls.jsonl");
@@ -108,6 +113,7 @@ export function writeCallsToStore(storePath: string, calls: Record<string, unkno
   fs.writeFileSync(logPath, lines);
 }
 
+/** Build a persisted call record fixture with optional overrides. */
 export function makePersistedCall(
   overrides: Record<string, unknown> = {},
 ): Record<string, unknown> {

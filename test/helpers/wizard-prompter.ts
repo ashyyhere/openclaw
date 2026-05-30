@@ -1,7 +1,8 @@
-// test/helpers wizard prompter helpers and runtime behavior.
+// Wizard tests use this mocked prompter fixture for predictable prompt answers.
 import { vi } from "vitest";
 import type { WizardPrompter } from "../../src/wizard/prompts.js";
 
+/** Create a wizard prompter with mocked methods and optional overrides. */
 export function createWizardPrompter(overrides?: Partial<WizardPrompter>): WizardPrompter {
   const select = vi.fn(async () => "quickstart") as unknown as WizardPrompter["select"];
   return {
