@@ -1,4 +1,4 @@
-// test-utils npm spec install test helpers helpers and runtime behavior.
+// Vitest helpers for npm-spec install validation and npm command mocks.
 import fs from "node:fs";
 import path from "node:path";
 import { expect } from "vitest";
@@ -37,7 +37,7 @@ function createSuccessfulSpawnResult(stdout = ""): SpawnResult {
   };
 }
 
-/** Reused helper for mock Npm View Metadata Result behavior in src/test-utils. */
+/** Mock `npm view` to return package metadata with optional dist integrity fields. */
 export function mockNpmViewMetadataResult(
   run: {
     mockImplementation: (
@@ -67,7 +67,7 @@ export function mockNpmViewMetadataResult(
   });
 }
 
-/** Reused helper for expect Unsupported Npm Spec behavior in src/test-utils. */
+/** Assert an installer rejects unsupported npm spec forms. */
 export async function expectUnsupportedNpmSpec(
   install: (spec: string) => Promise<InstallResultLike>,
   spec = "github:evil/evil",
@@ -80,7 +80,7 @@ export async function expectUnsupportedNpmSpec(
   expect(result.error).toContain("unsupported npm spec");
 }
 
-/** Reused helper for mock Npm Pack Metadata Result behavior in src/test-utils. */
+/** Mock `npm pack` and create the tarball placeholder in the command cwd. */
 export function mockNpmPackMetadataResult(
   run: {
     mockImplementation: (
@@ -109,7 +109,7 @@ export function mockNpmPackMetadataResult(
   });
 }
 
-/** Reused helper for expect Integrity Drift Rejected behavior in src/test-utils. */
+/** Assert integrity-drift handling records the mismatch and rejects install. */
 export function expectIntegrityDriftRejected(params: {
   onIntegrityDrift: (...args: unknown[]) => unknown;
   result: InstallResultLike;
@@ -129,7 +129,7 @@ export function expectIntegrityDriftRejected(params: {
   expect(params.result.error).toContain("integrity drift");
 }
 
-/** Reused helper for expect Install Uses Ignore Scripts behavior in src/test-utils. */
+/** Assert installs pass `--ignore-scripts` for npm package extraction. */
 export async function expectInstallUsesIgnoreScripts(params: {
   run: {
     mockResolvedValue: (value: SpawnResult) => unknown;

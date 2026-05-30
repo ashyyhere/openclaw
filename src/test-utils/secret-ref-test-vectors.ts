@@ -1,5 +1,5 @@
-// test-utils secret ref test vectors helpers and runtime behavior.
-/** Reused constant for VALID FILE SECRET REF IDS behavior in src/test-utils. */
+// Shared valid/invalid secret reference ids for parser and validator tests.
+/** Valid JSON-pointer style file secret reference ids. */
 export const VALID_FILE_SECRET_REF_IDS = [
   "value",
   "/",
@@ -10,7 +10,7 @@ export const VALID_FILE_SECRET_REF_IDS = [
   `//${"/".repeat(256)}`,
 ] as const;
 
-/** Reused constant for INVALID FILE SECRET REF IDS behavior in src/test-utils. */
+/** Invalid file secret reference ids rejected by parser tests. */
 export const INVALID_FILE_SECRET_REF_IDS = [
   "",
   "providers/openai/apiKey",
@@ -20,7 +20,7 @@ export const INVALID_FILE_SECRET_REF_IDS = [
   "/providers/openai/~",
 ] as const;
 
-/** Reused constant for VALID EXEC SECRET REF IDS behavior in src/test-utils. */
+/** Valid exec-backed secret reference ids. */
 export const VALID_EXEC_SECRET_REF_IDS = [
   "vault/openai/api-key",
   "vault:secret/mykey",
@@ -32,7 +32,7 @@ export const VALID_EXEC_SECRET_REF_IDS = [
   `a/${"b".repeat(254)}`,
 ] as const;
 
-/** Reused constant for INVALID EXEC SECRET REF IDS behavior in src/test-utils. */
+/** Invalid exec-backed secret reference ids rejected by parser tests. */
 export const INVALID_EXEC_SECRET_REF_IDS = [
   "",
   " ",

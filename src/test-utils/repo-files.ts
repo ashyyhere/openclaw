@@ -1,25 +1,25 @@
-// test-utils repo files helpers and runtime behavior.
+// Repo path and tracked-file helpers for tests that inspect source trees.
 import { spawnSync } from "node:child_process";
 import path from "node:path";
 
 const gitTrackedFilesCache = new Map<string, string[] | null>();
 
-/** Reused helper for to Repo Path behavior in src/test-utils. */
+/** Normalize a path to repository-style forward slashes. */
 export function toRepoPath(filePath: string): string {
   return filePath.replaceAll("\\", "/");
 }
 
-/** Reused helper for to Repo Relative Path behavior in src/test-utils. */
+/** Resolve a file path relative to the repo root and normalize separators. */
 export function toRepoRelativePath(repoRoot: string, filePath: string): string {
   return toRepoPath(path.relative(repoRoot, filePath));
 }
 
-/** Reused helper for sort Repo Paths behavior in src/test-utils. */
+/** Normalize and sort repository paths deterministically. */
 export function sortRepoPaths(paths: Iterable<string>): string[] {
   return [...paths].map(toRepoPath).toSorted();
 }
 
-/** Reused helper for list Git Tracked Files behavior in src/test-utils. */
+/** List git-tracked files for pathspecs with a per-process cache. */
 export function listGitTrackedFiles(params: {
   pathspecs: string | readonly string[];
   repoRoot?: string;

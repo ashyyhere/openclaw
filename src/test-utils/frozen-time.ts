@@ -1,13 +1,13 @@
-// test-utils frozen time helpers and runtime behavior.
+// Vitest timer helpers for freezing and restoring Date.now/system time.
 import { vi } from "vitest";
 
-/** Reused helper for use Frozen Time behavior in src/test-utils. */
+/** Switch Vitest to fake timers and set the process clock. */
 export function useFrozenTime(at: string | number | Date): void {
   vi.useFakeTimers();
   vi.setSystemTime(at);
 }
 
-/** Reused helper for use Real Time behavior in src/test-utils. */
+/** Restore Vitest real timers after a frozen-time test. */
 export function useRealTime(): void {
   vi.useRealTimers();
 }

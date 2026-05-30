@@ -1,8 +1,8 @@
-// test-utils mock http response helpers and runtime behavior.
+// Minimal ServerResponse test double for HTTP handler unit tests.
 import type { ServerResponse } from "node:http";
 import { lowercasePreservingWhitespace } from "../shared/string-coerce.js";
 
-/** Reused helper for create Mock Server Response behavior in src/test-utils. */
+/** Create a lightweight ServerResponse mock that records headers, status, and body. */
 export function createMockServerResponse(): ServerResponse & { body?: string } {
   const headers: Record<string, string> = {};
   const res: {

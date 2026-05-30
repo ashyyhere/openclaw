@@ -1,4 +1,4 @@
-// test-utils node process helpers and runtime behavior.
+// Helpers for running small Node ESM snippets in subprocess tests.
 import { execFileSync, spawnSync, type SpawnSyncReturns } from "node:child_process";
 
 type NodeEvalArgsOptions = {
@@ -16,14 +16,14 @@ type SpawnNodeEvalOptions = Omit<NonNullable<Parameters<typeof spawnSync>[2]>, "
     encoding?: BufferEncoding;
   };
 
-/** Reused helper for create Node Eval Args behavior in src/test-utils. */
+/** Build Node args for evaluating an ESM snippet with optional preloaded imports. */
 export function createNodeEvalArgs(source: string, options: NodeEvalArgsOptions = {}): string[] {
   const args = (options.imports ?? []).flatMap((specifier) => ["--import", specifier]);
   args.push("--input-type=module", options.evalFlag ?? "--eval", source);
   return args;
 }
 
-/** Reused helper for exec Node Eval Sync behavior in src/test-utils. */
+/** Execute an ESM snippet with the current Node binary and return stdout. */
 export function execNodeEvalSync(source: string, options: ExecNodeEvalOptions = {}): string {
   const { evalFlag, imports, ...execOptions } = options;
   return execFileSync(process.execPath, createNodeEvalArgs(source, { evalFlag, imports }), {
@@ -33,7 +33,7 @@ export function execNodeEvalSync(source: string, options: ExecNodeEvalOptions = 
   });
 }
 
-/** Reused helper for spawn Node Eval Sync behavior in src/test-utils. */
+/** Spawn an ESM snippet with the current Node binary and return the full sync result. */
 export function spawnNodeEvalSync(
   source: string,
   options: SpawnNodeEvalOptions = {},

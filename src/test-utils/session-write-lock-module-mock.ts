@@ -1,9 +1,9 @@
-// test-utils session write lock module mock helpers and runtime behavior.
+// Module mock helper for replacing session write-lock acquisition in tests.
 import type * as SessionWriteLockModule from "../agents/session-write-lock.js";
 
 type SessionWriteLockModuleShape = typeof SessionWriteLockModule;
 
-/** Reused helper for build Session Write Lock Module Mock behavior in src/test-utils. */
+/** Load the real session write-lock module and override only acquireSessionWriteLock. */
 export async function buildSessionWriteLockModuleMock(
   loadActual: () => Promise<SessionWriteLockModuleShape>,
   acquireSessionWriteLock: SessionWriteLockModuleShape["acquireSessionWriteLock"],

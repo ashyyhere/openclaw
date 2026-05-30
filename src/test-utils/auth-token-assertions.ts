@@ -1,8 +1,8 @@
-// test-utils auth token assertions helpers and runtime behavior.
+// Assertions for generated gateway auth token persistence.
 import { expect } from "vitest";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 
-/** Reused helper for expect Generated Token Persisted To Gateway Auth behavior in src/test-utils. */
+/** Assert a generated token was returned and persisted into gateway auth config. */
 export function expectGeneratedTokenPersistedToGatewayAuth(params: {
   generatedToken?: string;
   authToken?: string;

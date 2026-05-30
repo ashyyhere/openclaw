@@ -1,4 +1,4 @@
-// test-utils channel plugins helpers and runtime behavior.
+// Test channel plugin factories for registry and routing tests.
 import type {
   ChannelCapabilities,
   ChannelId,
@@ -8,14 +8,14 @@ import type {
 } from "../channels/plugins/types.public.js";
 import type { PluginRegistry } from "../plugins/registry.js";
 
-/** Shared type for Test Channel Registration in src/test-utils. */
+/** Minimal channel registration row accepted by createTestRegistry. */
 export type TestChannelRegistration = {
   pluginId: string;
   plugin: unknown;
   source: string;
 };
 
-/** Reused constant for create Test Registry behavior in src/test-utils. */
+/** Create a plugin registry stub containing only the requested channel registrations. */
 export const createTestRegistry = (channels: TestChannelRegistration[] = []): PluginRegistry => ({
   plugins: [],
   tools: [],
@@ -62,7 +62,7 @@ export const createTestRegistry = (channels: TestChannelRegistration[] = []): Pl
   diagnostics: [],
 });
 
-/** Reused constant for create Channel Test Plugin Base behavior in src/test-utils. */
+/** Build the shared metadata/config base for channel plugin stubs. */
 export const createChannelTestPluginBase = (params: {
   id: ChannelId;
   label?: string;
@@ -88,7 +88,7 @@ export const createChannelTestPluginBase = (params: {
   },
 });
 
-/** Reused constant for create MSTeams Test Plugin Base behavior in src/test-utils. */
+/** Build the Microsoft Teams channel metadata used by channel alias tests. */
 export const createMSTeamsTestPluginBase = (): Pick<
   ChannelPlugin,
   "id" | "meta" | "capabilities" | "config"
@@ -110,7 +110,7 @@ export const createMSTeamsTestPluginBase = (): Pick<
   };
 };
 
-/** Reused constant for create MSTeams Test Plugin behavior in src/test-utils. */
+/** Build a Microsoft Teams channel plugin stub with optional aliases/outbound adapter. */
 export const createMSTeamsTestPlugin = (params?: {
   aliases?: string[];
   outbound?: ChannelOutboundAdapter;
@@ -126,7 +126,7 @@ export const createMSTeamsTestPlugin = (params?: {
   };
 };
 
-/** Reused constant for create Outbound Test Plugin behavior in src/test-utils. */
+/** Build a channel plugin stub with outbound and optional messaging adapters. */
 export const createOutboundTestPlugin = (params: {
   id: ChannelId;
   outbound: ChannelOutboundAdapter;
@@ -146,7 +146,7 @@ export const createOutboundTestPlugin = (params: {
   ...(params.messaging ? { messaging: params.messaging } : {}),
 });
 
-/** Shared type for Binding Resolver Test Plugin in src/test-utils. */
+/** Channel plugin shape used by binding resolver tests. */
 export type BindingResolverTestPlugin = Pick<
   ChannelPlugin,
   "id" | "meta" | "capabilities" | "config"
@@ -154,7 +154,7 @@ export type BindingResolverTestPlugin = Pick<
   setup?: Pick<NonNullable<ChannelPlugin["setup"]>, "resolveBindingAccountId">;
 };
 
-/** Reused constant for create Binding Resolver Test Plugin behavior in src/test-utils. */
+/** Build a channel plugin stub with an optional setup binding resolver. */
 export const createBindingResolverTestPlugin = (params: {
   id: ChannelId;
   label?: string;
