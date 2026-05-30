@@ -7,15 +7,15 @@ export const INTERNAL_RUNTIME_CONTEXT_END = "<<<END_OPENCLAW_INTERNAL_CONTEXT>>>
 const ESCAPED_INTERNAL_RUNTIME_CONTEXT_BEGIN = "[[OPENCLAW_INTERNAL_CONTEXT_BEGIN]]";
 const ESCAPED_INTERNAL_RUNTIME_CONTEXT_END = "[[OPENCLAW_INTERNAL_CONTEXT_END]]";
 
-/** Reused constant for OPENCLAW RUNTIME CONTEXT NOTICE behavior in src/agents. */
+/** Notice attached to generated runtime context so providers treat it as private metadata. */
 export const OPENCLAW_RUNTIME_CONTEXT_NOTICE =
   "This context is runtime-generated, not user-authored. Keep internal details private.";
-/** Reused constant for OPENCLAW NEXT TURN RUNTIME CONTEXT HEADER behavior in src/agents. */
+/** Prompt header for context that only applies to the immediately preceding user turn. */
 export const OPENCLAW_NEXT_TURN_RUNTIME_CONTEXT_HEADER =
   "OpenClaw runtime context for the immediately preceding user message.";
-/** Reused constant for OPENCLAW RUNTIME EVENT HEADER behavior in src/agents. */
+/** Prompt header for runtime events injected into transcript context. */
 export const OPENCLAW_RUNTIME_EVENT_HEADER = "OpenClaw runtime event.";
-/** Reused constant for OPENCLAW RUNTIME CONTEXT CUSTOM TYPE behavior in src/agents. */
+/** Custom content type used for structured OpenClaw runtime-context messages. */
 export const OPENCLAW_RUNTIME_CONTEXT_CUSTOM_TYPE = "openclaw.runtime-context";
 
 const LEGACY_INTERNAL_CONTEXT_HEADER =

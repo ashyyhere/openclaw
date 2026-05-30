@@ -92,7 +92,7 @@ export function buildAssistantMessageWithZeroUsage(params: {
 // This constant is the single source of truth used by replay normalization and
 // session-file repair as well, so a session repaired offline reads identically
 // to a live stream-error turn (and the repair pass remains idempotent).
-/** Reused constant for STREAM ERROR FALLBACK TEXT behavior in src/agents. */
+/** Replay-safe placeholder for assistant turns that failed before producing provider content. */
 export const STREAM_ERROR_FALLBACK_TEXT = "[assistant turn failed before producing content]";
 
 /** Builds a replay-safe assistant error turn with details kept outside replayed content. */

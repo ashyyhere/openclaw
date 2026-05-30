@@ -4,7 +4,7 @@ export type ProviderSystemPromptSectionId =
   | "tool_call_style"
   | "execution_bias";
 
-/** Shared type for Provider System Prompt Contribution in src/agents. */
+/** Provider-owned prompt additions split by cache-stable and dynamic insertion points. */
 export type ProviderSystemPromptContribution = {
   /**
    * Cache-stable provider guidance inserted above the system-prompt cache boundary.

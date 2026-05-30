@@ -13,7 +13,7 @@ import { resolveDefaultAgentWorkspaceDir } from "./workspace-default.js";
 
 type AgentEntry = NonNullable<NonNullable<OpenClawConfig["agents"]>["list"]>[number];
 
-/** Shared type for Resolved Agent Config in src/agents. */
+/** Agent entry resolved with global defaults for the fields used by runtime selection. */
 export type ResolvedAgentConfig = {
   name?: string;
   workspace?: string;
