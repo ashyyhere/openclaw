@@ -1,7 +1,8 @@
-// infra plugin approvals helpers and runtime behavior.
+// Plugin approval request/response contracts.
+// Provides bounded approval payload shapes, timeout defaults, decision labels, and status text.
 import type { ExecApprovalDecision } from "./exec-approvals.js";
 
-/** Shared type for Plugin Approval Action View in src/infra. */
+/** Button/command descriptor shown with a plugin approval request. */
 export type PluginApprovalActionView = {
   kind?: "command" | "decision";
   label: string;
@@ -10,7 +11,7 @@ export type PluginApprovalActionView = {
   style?: "primary" | "secondary" | "success" | "danger";
 };
 
-/** Shared type for Plugin Approval Request Payload in src/infra. */
+/** User-facing plugin approval payload and routing context. */
 export type PluginApprovalRequestPayload = {
   pluginId?: string | null;
   title: string;
@@ -28,7 +29,7 @@ export type PluginApprovalRequestPayload = {
   turnSourceThreadId?: string | number | null;
 };
 
-/** Shared type for Plugin Approval Request in src/infra. */
+/** Pending plugin approval request with id and expiry metadata. */
 export type PluginApprovalRequest = {
   id: string;
   request: PluginApprovalRequestPayload;
@@ -36,7 +37,7 @@ export type PluginApprovalRequest = {
   expiresAtMs: number;
 };
 
-/** Shared type for Plugin Approval Resolved in src/infra. */
+/** Resolved plugin approval decision and resolver metadata. */
 export type PluginApprovalResolved = {
   id: string;
   decision: ExecApprovalDecision;
@@ -45,22 +46,22 @@ export type PluginApprovalResolved = {
   request?: PluginApprovalRequestPayload;
 };
 
-/** Reused constant for DEFAULT PLUGIN APPROVAL TIMEOUT MS behavior in src/infra. */
+/** Default plugin approval expiry window. */
 export const DEFAULT_PLUGIN_APPROVAL_TIMEOUT_MS = 120_000;
-/** Reused constant for MAX PLUGIN APPROVAL TIMEOUT MS behavior in src/infra. */
+/** Maximum plugin approval expiry window accepted by callers. */
 export const MAX_PLUGIN_APPROVAL_TIMEOUT_MS = 600_000;
-/** Reused constant for PLUGIN APPROVAL TITLE MAX LENGTH behavior in src/infra. */
+/** Maximum normalized plugin approval title length. */
 export const PLUGIN_APPROVAL_TITLE_MAX_LENGTH = 80;
-/** Reused constant for PLUGIN APPROVAL DESCRIPTION MAX LENGTH behavior in src/infra. */
+/** Maximum normalized plugin approval description length. */
 export const PLUGIN_APPROVAL_DESCRIPTION_MAX_LENGTH = 256;
-/** Reused constant for DEFAULT PLUGIN APPROVAL DECISIONS behavior in src/infra. */
+/** Default decision set offered for plugin approval requests. */
 export const DEFAULT_PLUGIN_APPROVAL_DECISIONS = [
   "allow-once",
   "allow-always",
   "deny",
 ] as const satisfies readonly ExecApprovalDecision[];
 
-/** Reused helper for approval Decision Label behavior in src/infra. */
+/** Convert an approval decision into past-tense status text. */
 export function approvalDecisionLabel(decision: ExecApprovalDecision): string {
   if (decision === "allow-once") {
     return "allowed once";
@@ -71,7 +72,7 @@ export function approvalDecisionLabel(decision: ExecApprovalDecision): string {
   return "denied";
 }
 
-/** Reused helper for resolve Plugin Approval Request Allowed Decisions behavior in src/infra. */
+/** Normalize the allowed decision list for a plugin approval request. */
 export function resolvePluginApprovalRequestAllowedDecisions(params?: {
   allowedDecisions?: readonly ExecApprovalDecision[] | readonly string[] | null;
 }): readonly ExecApprovalDecision[] {
@@ -89,7 +90,7 @@ export function resolvePluginApprovalRequestAllowedDecisions(params?: {
   return explicit.length > 0 ? explicit : DEFAULT_PLUGIN_APPROVAL_DECISIONS;
 }
 
-/** Reused helper for build Plugin Approval Request Message behavior in src/infra. */
+/** Build the text body for a pending plugin approval request. */
 export function buildPluginApprovalRequestMessage(
   request: PluginApprovalRequest,
   nowMsValue: number,
@@ -120,14 +121,14 @@ export function buildPluginApprovalRequestMessage(
   return lines.join("\n");
 }
 
-/** Reused helper for build Plugin Approval Resolved Message behavior in src/infra. */
+/** Build the text body for a resolved plugin approval notification. */
 export function buildPluginApprovalResolvedMessage(resolved: PluginApprovalResolved): string {
   const base = `✅ Plugin approval ${approvalDecisionLabel(resolved.decision)}.`;
   const by = resolved.resolvedBy ? ` Resolved by ${resolved.resolvedBy}.` : "";
   return `${base}${by} ID: ${resolved.id}`;
 }
 
-/** Reused helper for build Plugin Approval Expired Message behavior in src/infra. */
+/** Build the text body for an expired plugin approval notification. */
 export function buildPluginApprovalExpiredMessage(request: PluginApprovalRequest): string {
   return `⏱️ Plugin approval expired. ID: ${request.id}`;
 }

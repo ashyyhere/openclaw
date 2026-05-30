@@ -1,16 +1,17 @@
-// infra http body helpers and runtime behavior.
+// HTTP request body size/timeout guards.
+// Shared by webhook-style endpoints that need bounded raw and JSON body reads.
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { clearTimeout as clearNodeTimeout, setTimeout as setNodeTimeout } from "node:timers";
 import { resolveTimerTimeoutMs } from "../shared/number-coercion.js";
 import { formatErrorMessage } from "./errors.js";
 import { parseStrictNonNegativeInteger } from "./parse-finite-number.js";
 
-/** Reused constant for DEFAULT WEBHOOK MAX BODY BYTES behavior in src/infra. */
+/** Default maximum webhook request body size. */
 export const DEFAULT_WEBHOOK_MAX_BODY_BYTES = 1024 * 1024;
-/** Reused constant for DEFAULT WEBHOOK BODY TIMEOUT MS behavior in src/infra. */
+/** Default timeout for reading webhook request bodies. */
 export const DEFAULT_WEBHOOK_BODY_TIMEOUT_MS = 30_000;
 
-/** Shared type for Request Body Limit Error Code in src/infra. */
+/** Stable error codes produced by request body limit guards. */
 export type RequestBodyLimitErrorCode =
   | "PAYLOAD_TOO_LARGE"
   | "REQUEST_BODY_TIMEOUT"
@@ -39,7 +40,7 @@ const DEFAULT_RESPONSE_MESSAGE: Record<RequestBodyLimitErrorCode, string> = {
   CONNECTION_CLOSED: "Connection closed",
 };
 
-/** Reused class for Request Body Limit Error behavior in src/infra. */
+/** Error thrown when a request body exceeds size/time/connection limits. */
 export class RequestBodyLimitError extends Error {
   readonly code: RequestBodyLimitErrorCode;
   readonly statusCode: number;
@@ -52,7 +53,7 @@ export class RequestBodyLimitError extends Error {
   }
 }
 
-/** Reused helper for is Request Body Limit Error behavior in src/infra. */
+/** Type guard for request body limit errors, optionally matching one code. */
 export function isRequestBodyLimitError(
   error: unknown,
   code?: RequestBodyLimitErrorCode,
@@ -66,7 +67,7 @@ export function isRequestBodyLimitError(
   return error.code === code;
 }
 
-/** Reused helper for request Body Error To Text behavior in src/infra. */
+/** Convert a request body limit code to client-facing response text. */
 export function requestBodyErrorToText(code: RequestBodyLimitErrorCode): string {
   return DEFAULT_RESPONSE_MESSAGE[code];
 }
@@ -84,7 +85,7 @@ function parseContentLengthHeader(req: IncomingMessage): number | null {
   return parsed;
 }
 
-/** Shared type for Read Request Body Options in src/infra. */
+/** Options for reading a bounded raw request body. */
 export type ReadRequestBodyOptions = {
   maxBytes: number;
   timeoutMs?: number;
@@ -133,7 +134,7 @@ function advanceRequestBodyChunk(
   };
 }
 
-/** Reused helper for read Request Body With Limit behavior in src/infra. */
+/** Read a raw request body with size and timeout enforcement. */
 export async function readRequestBodyWithLimit(
   req: IncomingMessage,
   options: ReadRequestBodyOptions,
@@ -230,17 +231,17 @@ export async function readRequestBodyWithLimit(
   });
 }
 
-/** Shared type for Read Json Body Result in src/infra. */
+/** Result of reading and parsing a bounded JSON request body. */
 export type ReadJsonBodyResult =
   | { ok: true; value: unknown }
   | { ok: false; error: string; code: RequestBodyLimitErrorCode | "INVALID_JSON" };
 
-/** Shared type for Read Json Body Options in src/infra. */
+/** Options for bounded JSON body parsing. */
 export type ReadJsonBodyOptions = ReadRequestBodyOptions & {
   emptyObjectOnEmpty?: boolean;
 };
 
-/** Reused helper for read Json Body With Limit behavior in src/infra. */
+/** Read and parse a bounded JSON request body without throwing for parse/limit errors. */
 export async function readJsonBodyWithLimit(
   req: IncomingMessage,
   options: ReadJsonBodyOptions,
@@ -275,14 +276,14 @@ export async function readJsonBodyWithLimit(
   }
 }
 
-/** Shared type for Request Body Limit Guard in src/infra. */
+/** Installed guard handle for streaming body limit enforcement. */
 export type RequestBodyLimitGuard = {
   dispose: () => void;
   isTripped: () => boolean;
   code: () => RequestBodyLimitErrorCode | null;
 };
 
-/** Shared type for Request Body Limit Guard Options in src/infra. */
+/** Options for installing an early body limit guard on an HTTP request/response. */
 export type RequestBodyLimitGuardOptions = {
   maxBytes: number;
   timeoutMs?: number;
@@ -290,7 +291,7 @@ export type RequestBodyLimitGuardOptions = {
   responseText?: Partial<Record<RequestBodyLimitErrorCode, string>>;
 };
 
-/** Reused helper for install Request Body Limit Guard behavior in src/infra. */
+/** Install streaming size/timeout enforcement that can respond before full body reads. */
 export function installRequestBodyLimitGuard(
   req: IncomingMessage,
   res: ServerResponse,
