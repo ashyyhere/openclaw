@@ -1,4 +1,3 @@
-/** Tests lazy CLI bootstrap ordering and plugin registry policy setup. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const ensureConfigReadyMock = vi.hoisted(() => vi.fn(async () => {}));

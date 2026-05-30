@@ -1,4 +1,3 @@
-/** Formats daemon command responses and platform-specific hints. */
 import { Writable } from "node:stream";
 import type { GatewayService } from "../../daemon/service.js";
 import {

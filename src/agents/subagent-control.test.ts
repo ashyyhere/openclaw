@@ -1,4 +1,3 @@
-/** Regression coverage for subagent control target resolution, kill, steer, and message flows. */
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

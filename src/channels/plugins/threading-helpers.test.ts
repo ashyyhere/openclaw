@@ -1,4 +1,3 @@
-/** Tests reply-to mode resolvers for scoped and static channel threading config. */
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../../config/config.js";
 import {

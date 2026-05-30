@@ -1,4 +1,3 @@
-/** Tests compact status overview value formatting. */
 import { describe, expect, it } from "vitest";
 import {
   buildStatusAllAgentsValue,

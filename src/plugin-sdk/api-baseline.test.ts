@@ -1,4 +1,3 @@
-/** Tests Plugin SDK API baseline rendering, hashing, and statefile checks. */
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { normalizePluginSdkApiDeclarationText } from "./api-baseline.js";

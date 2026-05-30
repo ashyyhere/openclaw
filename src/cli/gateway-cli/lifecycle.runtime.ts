@@ -1,4 +1,3 @@
-/** Runtime re-exports for embedded gateway lifecycle helpers. */
 export {
   abortEmbeddedAgentRun,
   getActiveEmbeddedRunCount,

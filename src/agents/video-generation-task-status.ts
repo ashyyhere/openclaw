@@ -1,4 +1,3 @@
-/** Formats video generation task records for agent-visible status output. */
 import type { TaskRecord } from "../tasks/task-registry.types.js";
 import {
   buildActiveMediaGenerationTaskPromptContextForSession,

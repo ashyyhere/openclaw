@@ -1,4 +1,3 @@
-/** Commander argument parser for allowed CLI log levels. */
 import { InvalidArgumentError } from "commander";
 import { ALLOWED_LOG_LEVELS, type LogLevel, tryParseLogLevel } from "../logging/levels.js";
 

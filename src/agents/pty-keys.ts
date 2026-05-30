@@ -1,4 +1,3 @@
-/** Encodes human-readable PTY key names into terminal byte sequences. */
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import { escapeRegExp } from "../utils.js";
 

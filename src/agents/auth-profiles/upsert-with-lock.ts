@@ -1,4 +1,3 @@
-/** Upserts one auth profile while holding the auth store lock. */
 import { normalizeSecretInput } from "../../utils/normalize-secret-input.js";
 import { ensureAuthStoreFile, resolveAuthStorePath } from "./paths.js";
 import { updateAuthProfileStoreWithLock } from "./store.js";

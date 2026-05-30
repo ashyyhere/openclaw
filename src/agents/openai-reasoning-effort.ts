@@ -1,4 +1,3 @@
-/** Resolves supported OpenAI reasoning effort levels per model family. */
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import { normalizeStringEntries, uniqueStrings } from "../shared/string-normalization.js";
 

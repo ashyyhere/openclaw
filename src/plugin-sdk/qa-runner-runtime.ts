@@ -1,4 +1,3 @@
-/** Runtime SDK helpers for QA runner command registration and execution. */
 import type { Command } from "commander";
 import type { PluginManifestRecord } from "../plugins/manifest-registry.js";
 import { loadPluginManifestRegistry } from "../plugins/manifest-registry.js";

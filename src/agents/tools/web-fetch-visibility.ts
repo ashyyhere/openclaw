@@ -1,4 +1,3 @@
-/** Sanitizes hidden HTML content and invisible Unicode for web tools. */
 import {
   normalizeLowercaseStringOrEmpty,
   normalizeOptionalLowercaseString,

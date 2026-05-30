@@ -1,4 +1,3 @@
-/** Tests provider policy lookup-key resolution. */
 import { describe, expect, it } from "vitest";
 import { resolveProviderPluginLookupKey } from "./models-config.providers.policy.lookup.js";
 

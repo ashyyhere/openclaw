@@ -1,4 +1,3 @@
-/** Tests gateway connection detail resolution for status output. */
 import { describe, expect, it, vi } from "vitest";
 import {
   logGatewayConnectionDetails,

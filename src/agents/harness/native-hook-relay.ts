@@ -1,4 +1,3 @@
-/** Hosts native provider hook relays for harness lifecycle/tool events. */
 import { createHash, randomUUID } from "node:crypto";
 import {
   chmodSync,

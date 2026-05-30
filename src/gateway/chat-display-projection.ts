@@ -1,4 +1,3 @@
-/** Sanitizes and projects chat history into UI-safe display messages. */
 import { createHash } from "node:crypto";
 import { OPENCLAW_RUNTIME_CONTEXT_CUSTOM_TYPE } from "../agents/internal-runtime-context.js";
 import { isHeartbeatOkResponse, isHeartbeatUserMessage } from "../auto-reply/heartbeat-filter.js";

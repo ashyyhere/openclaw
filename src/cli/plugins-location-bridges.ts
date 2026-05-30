@@ -1,4 +1,3 @@
-/** Builds bridge records for externalized bundled plugin install locations. */
 import type { ExternalizedBundledPluginBridge } from "../plugins/externalized-bundled-plugins.js";
 import { readPersistedInstalledPluginIndex } from "../plugins/installed-plugin-index-store.js";
 import type { InstalledPluginIndexRecord } from "../plugins/installed-plugin-index.js";

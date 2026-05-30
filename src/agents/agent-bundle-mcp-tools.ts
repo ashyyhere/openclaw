@@ -1,4 +1,3 @@
-/** Public bundled MCP runtime/tool barrel for agent tool assembly. */
 export type {
   BundleMcpToolRuntime,
   McpCatalogTool,

@@ -1,4 +1,3 @@
-/** Public sandbox API barrel for config, backends, bridges, and policies. */
 export {
   resolveSandboxBrowserConfig,
   resolveSandboxConfigForAgent,

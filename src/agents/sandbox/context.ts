@@ -1,4 +1,3 @@
-/** Resolves sandbox runtime context and workspace setup for sessions. */
 import fs from "node:fs/promises";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import {

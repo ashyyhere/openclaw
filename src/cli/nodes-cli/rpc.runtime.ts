@@ -1,4 +1,3 @@
-/** Runtime gateway client helpers for nodes CLI RPC calls. */
 import {
   GATEWAY_CLIENT_MODES,
   GATEWAY_CLIENT_NAMES,

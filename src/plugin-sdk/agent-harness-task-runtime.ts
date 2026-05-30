@@ -1,4 +1,3 @@
-/** Public SDK runtime for scoped agent harness task records and completion announcements. */
 import { buildAnnounceIdempotencyKey } from "../agents/announce-idempotency.js";
 import {
   AGENT_INTERNAL_EVENT_TYPE_TASK_COMPLETION,

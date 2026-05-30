@@ -1,4 +1,3 @@
-/** Applies context-engine transcript rewrite requests to session state. */
 import type {
   TranscriptRewriteReplacement,
   TranscriptRewriteRequest,

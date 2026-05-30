@@ -1,4 +1,3 @@
-/** Implements channel target resolution command. */
 import { getChannelPlugin } from "../../channels/plugins/index.js";
 import type {
   ChannelResolveKind,

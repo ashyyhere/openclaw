@@ -1,4 +1,3 @@
-/** Persists session quota/circuit suspension state and lane throttling. */
 import path from "node:path";
 import { resolveAgentMaxConcurrent, resolveSubagentMaxConcurrent } from "../config/agent-limits.js";
 import { resolveCronMaxConcurrentRuns } from "../config/cron-limits.js";

@@ -1,4 +1,3 @@
-/** Builds lazy runtime dependencies used by CLI command handlers. */
 import { normalizeChannelId } from "../channels/registry.js";
 import type { OutboundSendDeps } from "../infra/outbound/send-deps.js";
 import { createLazyRuntimeSurface } from "../shared/lazy-runtime.js";

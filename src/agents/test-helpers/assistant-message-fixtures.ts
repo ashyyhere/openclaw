@@ -1,4 +1,3 @@
-/** Test fixtures for LLM assistant messages. */
 import type { AssistantMessage } from "openclaw/plugin-sdk/llm";
 import { ZERO_USAGE_FIXTURE } from "./usage-fixtures.js";
 

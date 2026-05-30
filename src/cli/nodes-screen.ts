@@ -1,4 +1,3 @@
-/** Helpers for remote node screen capture response handling. */
 import * as path from "node:path";
 import { writeBase64ToFile } from "./nodes-camera.js";
 import { asRecord, asString, resolveTempPathParts } from "./nodes-media-utils.js";

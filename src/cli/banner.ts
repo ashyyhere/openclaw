@@ -1,4 +1,3 @@
-/** Formats and emits the OpenClaw CLI startup banner. */
 import { visibleWidth } from "../../packages/terminal-core/src/ansi.js";
 import {
   decorativeEmoji,

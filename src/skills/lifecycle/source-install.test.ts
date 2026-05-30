@@ -1,4 +1,3 @@
-/** Regression coverage for path and git skill source installs. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { describe, expect, it } from "vitest";

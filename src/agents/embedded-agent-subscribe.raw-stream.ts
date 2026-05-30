@@ -1,4 +1,3 @@
-/** Optional raw embedded-agent stream logger for diagnostics. */
 import fs from "node:fs";
 import path from "node:path";
 import { resolveStateDir } from "../config/paths.js";

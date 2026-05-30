@@ -1,4 +1,3 @@
-/** Shared harness for embedded-agent session-history sanitization tests. */
 import { expect, vi } from "vitest";
 import type { AgentMessage } from "./runtime/index.js";
 import type { SessionManager } from "./sessions/index.js";

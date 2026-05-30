@@ -1,4 +1,3 @@
-/** Resolves the delivery origin a spawned child should inherit from its requester. */
 import type { ChatType } from "../channels/chat-type.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveFirstBoundAccountId } from "../routing/bound-account-read.js";

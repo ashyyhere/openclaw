@@ -1,4 +1,3 @@
-/** Gateway status discovery helpers for local network beacons. */
 import type { GatewayBonjourBeacon } from "../../infra/bonjour-discovery.js";
 import {
   buildGatewayDiscoveryTarget,

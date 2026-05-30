@@ -1,4 +1,3 @@
-/** Emits diagnostics for tool policy decisions. */
 import { createSubsystemLogger } from "../logging/subsystem.js";
 import type { SandboxConfig } from "./sandbox/types.js";
 import { isToolAllowedByPolicyName } from "./tool-policy-match.js";

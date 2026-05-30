@@ -1,4 +1,3 @@
-/** Agent command-lane constants and nested-lane resolution helpers. */
 import { CommandLane } from "../process/lanes.js";
 
 /** Default lane for nested agent work. */

@@ -1,4 +1,3 @@
-/** Helper functions for PDF tool input/model/text handling. */
 import {
   resolveAgentModelFallbackValues,
   resolveAgentModelPrimaryValue,

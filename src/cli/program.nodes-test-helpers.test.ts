@@ -1,4 +1,3 @@
-/** Tests nodes program fixture helpers. */
 import { describe, expect, it } from "vitest";
 import { IOS_NODE, createIosNodeListResponse } from "./program.nodes-test-helpers.js";
 

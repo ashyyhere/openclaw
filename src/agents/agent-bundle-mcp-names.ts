@@ -1,4 +1,3 @@
-/** Provider-safe name builders for bundled MCP servers and tools. */
 import {
   normalizeLowercaseStringOrEmpty,
   normalizeOptionalLowercaseString,

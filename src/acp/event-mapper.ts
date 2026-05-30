@@ -1,4 +1,3 @@
-/** Maps OpenClaw gateway content and tool events into ACP protocol updates. */
 import type {
   ContentBlock,
   ImageContent,

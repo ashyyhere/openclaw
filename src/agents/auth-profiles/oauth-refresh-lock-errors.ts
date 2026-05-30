@@ -1,4 +1,3 @@
-/** Classifies global OAuth refresh lock contention errors. */
 import { FILE_LOCK_TIMEOUT_ERROR_CODE } from "../../infra/file-lock.js";
 
 /** Detects contention on the global OAuth refresh file lock. */

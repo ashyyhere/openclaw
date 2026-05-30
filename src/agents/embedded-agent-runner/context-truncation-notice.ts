@@ -1,4 +1,3 @@
-/** Formats tool-output truncation notices for context-limit handling. */
 export const CONTEXT_LIMIT_TRUNCATION_NOTICE = "more characters truncated";
 const CONTEXT_LIMIT_TRUNCATION_HINT = "rerun with narrower args if needed";
 

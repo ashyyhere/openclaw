@@ -1,4 +1,3 @@
-/** Public SDK helpers for replacing managed markdown blocks. */
 export type ManagedMarkdownBlockParams = {
   original: string;
   body: string;

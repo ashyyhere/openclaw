@@ -1,4 +1,3 @@
-/** Tests interactive presentation adaptation and action limits for channels. */
 import { describe, expect, it } from "vitest";
 import {
   adaptMessagePresentationForChannel,

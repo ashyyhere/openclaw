@@ -1,4 +1,3 @@
-/** Runtime SDK pair-loop guard for suppressing repeated bidirectional auto-pair messages. */
 export type PairLoopGuardSettings = {
   enabled: boolean;
   maxEventsPerWindow: number;

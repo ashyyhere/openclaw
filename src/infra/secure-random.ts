@@ -1,4 +1,3 @@
-/** Cryptographically secure random helpers for ids, tokens, hex, and ranges. */
 import { randomBytes, randomInt, randomUUID } from "node:crypto";
 
 /** Generate a random UUID using the platform crypto provider. */

@@ -1,4 +1,3 @@
-/** Registers Discord admin message commands. */
 import type { Command } from "commander";
 import type { MessageCliHelpers } from "./helpers.js";
 

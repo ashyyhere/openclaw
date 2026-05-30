@@ -1,4 +1,3 @@
-/** Tests durable final delivery support and fallback dispatch paths. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({

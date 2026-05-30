@@ -1,4 +1,3 @@
-/** Long-running gateway server loop and restart handoff logic. */
 import { randomUUID } from "node:crypto";
 import net from "node:net";
 import { clearRuntimeConfigSnapshot } from "../../config/runtime-snapshot.js";

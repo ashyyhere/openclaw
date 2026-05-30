@@ -1,4 +1,3 @@
-/** Agent tool for running configured web search providers. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { RuntimeWebSearchMetadata } from "../../secrets/runtime-web-tools.types.js";
 import { resolveWebSearchProviderId, runWebSearch } from "../../web-search/runtime.js";

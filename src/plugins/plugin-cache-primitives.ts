@@ -1,4 +1,3 @@
-/** Small cache primitives used by plugin metadata and runtime loaders. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 
 /** Lookup result for plugin LRU caches that distinguishes misses from undefined values. */

@@ -1,4 +1,3 @@
-/** SSH-backed sandbox backend implementation. */
 import path from "node:path";
 import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";
 import type {

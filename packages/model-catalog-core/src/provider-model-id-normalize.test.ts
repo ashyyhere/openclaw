@@ -1,4 +1,3 @@
-/** Tests provider-specific model id normalization helpers. */
 import { describe, expect, it } from "vitest";
 import { normalizeGooglePreviewModelId } from "./provider-model-id-normalize.js";
 

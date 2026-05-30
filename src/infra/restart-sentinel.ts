@@ -1,4 +1,3 @@
-/** Persists restart/update handoff state so the restarted gateway can report outcome. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { formatCliCommand } from "../cli/command-format.js";

@@ -1,4 +1,3 @@
-/** Tests Codex MCP config projection from bundle MCP settings. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { buildCodexMcpServersConfig, loadCodexBundleMcpThreadConfig } from "./codex-mcp-config.js";
 

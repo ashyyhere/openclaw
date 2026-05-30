@@ -1,4 +1,3 @@
-/** Test helpers for writing temporary plugins with skills. */
 import fs from "node:fs/promises";
 import path from "node:path";
 

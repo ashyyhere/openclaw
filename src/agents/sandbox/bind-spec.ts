@@ -1,4 +1,3 @@
-/** Parses host/container/options bind mount specifications. */
 type SplitBindSpec = {
   host: string;
   container: string;

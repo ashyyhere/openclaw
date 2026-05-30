@@ -1,4 +1,3 @@
-/** Regression coverage for ZAI tool-stream extra params. */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createLlmStreamSimpleMock } from "../../../test/helpers/agents/llm-stream-simple-mock.js";
 import type { OpenClawConfig } from "../../config/config.js";

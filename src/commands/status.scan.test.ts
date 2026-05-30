@@ -1,4 +1,3 @@
-/** Tests status scan orchestration and summary output. */
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   applyStatusScanDefaults,

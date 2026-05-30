@@ -1,4 +1,3 @@
-/** Builds channel threading adapters from static or scoped config values. */
 import type { ReplyToMode } from "../../config/types.base.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { ChannelThreadingAdapter } from "./types.core.js";

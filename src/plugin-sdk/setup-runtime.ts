@@ -1,4 +1,3 @@
-/** Runtime SDK barrel for setup wizard contracts and config helpers. */
 export type { OpenClawConfig } from "../config/config.js";
 /** Prompting interface used by setup wizards. */
 export type { WizardPrompter } from "../wizard/prompts.js";

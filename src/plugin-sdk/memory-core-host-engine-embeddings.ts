@@ -1,4 +1,3 @@
-/** Memory host SDK barrel for engine embedding helpers. */
 export {
   applyEmbeddingBatchOutputLine,
   buildBatchHeaders,

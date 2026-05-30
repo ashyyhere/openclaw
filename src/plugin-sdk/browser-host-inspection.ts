@@ -1,4 +1,3 @@
-/** Public SDK facade for host browser executable and version inspection. */
 import { loadBundledPluginPublicSurfaceModuleSync } from "./facade-loader.js";
 
 /** Browser executable candidate found on the local host. */

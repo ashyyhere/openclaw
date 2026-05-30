@@ -1,4 +1,3 @@
-/** Public type barrel for channel plugin authors. */
 import type { ChannelMessageActionName as ChannelMessageActionNameFromList } from "./message-action-names.js";
 
 /** Re-exported API for src/channels/plugins, starting with CHANNEL MESSAGE ACTION NAMES. */

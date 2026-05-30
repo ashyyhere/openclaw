@@ -1,4 +1,3 @@
-/** Regression coverage for OAuth identity comparison and mirror decisions. */
 import { describe, expect, it } from "vitest";
 import { MAX_DATE_TIMESTAMP_MS } from "../../shared/number-coercion.js";
 import {

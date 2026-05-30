@@ -1,4 +1,3 @@
-/** Fetches Minimax usage quota windows for provider usage summaries. */
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import { isRecord } from "../utils.js";
 import {

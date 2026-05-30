@@ -1,4 +1,3 @@
-/** Public SDK facade for resolving browser config and named browser profiles. */
 import path from "node:path";
 import type { BrowserConfig, BrowserProfileConfig, OpenClawConfig } from "../config/config.js";
 import type { SsrFPolicy } from "../infra/net/ssrf.js";

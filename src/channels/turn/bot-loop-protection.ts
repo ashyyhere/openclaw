@@ -1,4 +1,3 @@
-/** Bot-loop guard integration for channel message turns. */
 import {
   createPairLoopGuard,
   resolvePairLoopGuardSettings,

@@ -1,4 +1,3 @@
-/** Bridges managed control-plane update handoff state into restart sentinels. */
 import fs from "node:fs/promises";
 import { isRecord } from "../shared/record-coerce.js";
 import {

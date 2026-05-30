@@ -1,4 +1,3 @@
-/** Runtime SDK barrel for native command registry helpers. */
 export {
   buildCommandTextFromArgs,
   findCommandByNativeName,

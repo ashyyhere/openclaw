@@ -1,4 +1,3 @@
-/** Tests main agent command behavior and options. */
 import fs from "node:fs";
 import path from "node:path";
 import { withTempHome as withTempHomeBase } from "openclaw/plugin-sdk/test-env";

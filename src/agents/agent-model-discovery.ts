@@ -1,4 +1,3 @@
-/** Model/auth discovery facade for embedded agent runtimes. */
 import path from "node:path";
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
 import type { OpenClawConfig } from "../config/types.openclaw.js";

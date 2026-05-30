@@ -1,4 +1,3 @@
-/** Lazy loader for plugin registry state used by CLI commands. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { loggingState } from "../logging/state.js";
 import { createLazyImportLoader } from "../shared/lazy-promise.js";

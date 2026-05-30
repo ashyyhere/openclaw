@@ -1,4 +1,3 @@
-/** Program-level context shared across CLI command registration. */
 import { VERSION } from "../../version.js";
 import { resolveCliChannelOptions } from "../channel-options.js";
 

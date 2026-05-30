@@ -1,4 +1,3 @@
-/** Regression coverage for model forward-compat fallback behavior. */
 import { describe, it, vi } from "vitest";
 import {
   buildForwardCompatTemplate,

@@ -1,4 +1,3 @@
-/** Core public channel plugin capability and runtime surface contracts. */
 import type { TSchema } from "typebox";
 import type {
   GatewayClientMode,

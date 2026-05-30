@@ -1,4 +1,3 @@
-/** Collects runtime/channel capabilities for prompt and tool surfaces. */
 import {
   resolveThreadBindingSpawnPolicy,
   supportsAutomaticThreadBindingSpawn,

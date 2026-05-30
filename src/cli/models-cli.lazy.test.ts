@@ -1,4 +1,3 @@
-/** Tests lazy registration behavior for models CLI commands. */
 import { Command } from "commander";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 

@@ -1,4 +1,3 @@
-/** Liveness predicates for active, stale, and recently ended subagent runs. */
 import type { SubagentRunRecord } from "./subagent-registry.types.js";
 import { getSubagentSessionStartedAt } from "./subagent-session-metrics.js";
 

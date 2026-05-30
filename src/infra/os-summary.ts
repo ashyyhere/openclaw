@@ -1,4 +1,3 @@
-/** Builds a cached human-readable summary for the current operating system. */
 import { spawnSync } from "node:child_process";
 import os from "node:os";
 import { normalizeOptionalString } from "../shared/string-coerce.js";

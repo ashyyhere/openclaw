@@ -1,4 +1,3 @@
-/** Normalizes legacy talk config sections during doctor migration. */
 import { isDeepStrictEqual } from "node:util";
 import { normalizeTalkSection } from "../../../config/talk.js";
 import type { OpenClawConfig } from "../../../config/types.js";

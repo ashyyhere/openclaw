@@ -1,4 +1,3 @@
-/** Loader helpers for resolving values from the active plugin channel registry. */
 import type { PluginChannelRegistration } from "../../plugins/registry-types.js";
 import { getActivePluginChannelRegistry, getActivePluginRegistry } from "../../plugins/runtime.js";
 import type { ChannelId } from "./channel-id.types.js";

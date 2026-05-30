@@ -1,4 +1,3 @@
-/** Tests live-test API key collection and rate-limit classifiers. */
 import { beforeAll, describe, expect, it, vi } from "vitest";
 
 vi.unmock("../secrets/provider-env-vars.js");

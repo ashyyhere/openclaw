@@ -1,4 +1,3 @@
-/** Tests reset command cleanup planning and prompts. */
 import { beforeAll, beforeEach, describe, expect, it } from "vitest";
 import {
   cleanupCommandLogMessages,

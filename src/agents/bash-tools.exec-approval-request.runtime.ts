@@ -1,4 +1,3 @@
-/** Lazy runtime for command-span extraction in exec approval requests. */
 import { explainShellCommand, formatCommandSpans } from "../infra/command-explainer/index.js";
 import type { ExecApprovalCommandSpan } from "../infra/exec-approvals.js";
 

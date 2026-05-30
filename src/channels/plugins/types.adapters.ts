@@ -1,4 +1,3 @@
-/** Adapter contracts implemented by channel plugins for runtime integration. */
 import type { ReplyPayload } from "../../auto-reply/reply-payload.js";
 import type { LegacyConfigRule } from "../../config/legacy.shared.js";
 import type { AgentBinding } from "../../config/types.agents.js";

@@ -1,4 +1,3 @@
-/** Tests Moonshot extra-params handling in embedded-agent runner. */
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import {
   createMoonshotThinkingWrapper,

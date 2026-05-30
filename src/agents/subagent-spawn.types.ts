@@ -1,4 +1,3 @@
-/** Public option enums for subagent spawn mode, sandbox mode, and context mode. */
 export const SUBAGENT_SPAWN_MODES = ["run", "session"] as const;
 /** Whether a spawn creates a one-shot run or reusable child session. */
 export type SpawnSubagentMode = (typeof SUBAGENT_SPAWN_MODES)[number];

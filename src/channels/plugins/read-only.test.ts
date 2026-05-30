@@ -1,4 +1,3 @@
-/** Tests read-only plugin surface loading, caching, and fallback behavior. */
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";

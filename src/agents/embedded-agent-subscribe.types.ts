@@ -1,4 +1,3 @@
-/** Public subscription parameters for embedded-agent session streaming. */
 import type {
   PartialReplyPayload,
   SourceReplyDeliveryMode,

@@ -1,4 +1,3 @@
-/** Exec approval request registration, wait, and command-span helpers. */
 import type {
   ExecApprovalCommandSpan,
   ExecAsk,

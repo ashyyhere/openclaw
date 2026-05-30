@@ -1,4 +1,3 @@
-/** Tests QA runner runtime helpers and command wiring. */
 import path from "node:path";
 import type { Command } from "commander";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";

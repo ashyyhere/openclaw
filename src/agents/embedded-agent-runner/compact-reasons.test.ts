@@ -1,4 +1,3 @@
-/** Regression coverage for compaction reason classification. */
 import { describe, expect, it } from "vitest";
 import {
   classifyCompactionReason,

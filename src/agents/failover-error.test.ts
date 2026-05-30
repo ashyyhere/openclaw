@@ -1,4 +1,3 @@
-/** Tests failover error classification and coercion. */
 import { describe, expect, it } from "vitest";
 import { classifyFailoverSignal } from "./embedded-agent-helpers/errors.js";
 import {

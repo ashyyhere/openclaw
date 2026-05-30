@@ -1,4 +1,3 @@
-/** Tests public browser SDK subpath export availability. */
 import { describe, expect, it } from "vitest";
 import { parseBrowserHttpUrl, redactCdpUrl } from "./browser-cdp.js";
 import { resolveBrowserControlAuth } from "./browser-control-auth.js";

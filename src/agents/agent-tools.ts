@@ -1,4 +1,3 @@
-/** Builds the default OpenClaw coding tool set and applies runtime tool policies. */
 import path from "node:path";
 import type { SourceReplyDeliveryMode } from "../auto-reply/get-reply-options.types.js";
 import { HEARTBEAT_RESPONSE_TOOL_NAME } from "../auto-reply/heartbeat-tool-response.js";

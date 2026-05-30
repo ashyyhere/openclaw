@@ -1,4 +1,3 @@
-/** Collects warnings when allowlist policy has no allowed senders. */
 import type { OpenClawConfig } from "../../../config/types.openclaw.js";
 import { getDoctorChannelCapabilities } from "../channel-capabilities.js";
 import type { DoctorAccountRecord, DoctorAllowFromList } from "../types.js";

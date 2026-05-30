@@ -1,4 +1,3 @@
-/** Read API over the process subagent registry with agent-run context filtering. */
 import { getAgentRunContext } from "../infra/agent-events.js";
 import { subagentRuns } from "./subagent-registry-memory.js";
 import {

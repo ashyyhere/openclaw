@@ -1,4 +1,3 @@
-/** Generates short human-readable session slugs. */
 import { generateSecureInt } from "../infra/secure-random.js";
 
 const SLUG_ADJECTIVES = [

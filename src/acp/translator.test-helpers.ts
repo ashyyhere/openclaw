@@ -1,4 +1,3 @@
-/** Shared mock connection/gateway helpers for ACP translator tests. */
 import type { AgentSideConnection } from "@agentclientprotocol/sdk";
 import { vi } from "vitest";
 import type { GatewayClient } from "../gateway/client.js";

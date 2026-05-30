@@ -1,4 +1,3 @@
-/** Regression coverage for OAuth manager refresh/adoption behavior. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

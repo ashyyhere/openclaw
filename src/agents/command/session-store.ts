@@ -1,4 +1,3 @@
-/** Updates session-store entries after agent command runs and CLI compaction. */
 import path from "node:path";
 import {
   canonicalizeAbsoluteSessionFilePath,

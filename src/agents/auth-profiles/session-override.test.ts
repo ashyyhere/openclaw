@@ -1,4 +1,3 @@
-/** Regression coverage for session-level auth profile overrides. */
 import fs from "node:fs/promises";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { SessionEntry } from "../../config/sessions/types.js";

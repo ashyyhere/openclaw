@@ -1,4 +1,3 @@
-/** Normalizes resolved provider/model metadata after model lookup. */
 import type { Model } from "../../llm/types.js";
 import { normalizeModelCompat } from "../../plugins/provider-model-compat.js";
 

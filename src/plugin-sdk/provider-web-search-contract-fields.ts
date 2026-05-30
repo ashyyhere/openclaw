@@ -1,4 +1,3 @@
-/** Public SDK helpers for web-search provider config field contracts. */
 import type { SearchConfigRecord } from "../agents/tools/web-search-provider-common.js";
 import {
   getScopedCredentialValue,

@@ -1,4 +1,3 @@
-/** Estimates message size for context-budget and tool-result guards. */
 import type { AgentMessage } from "../runtime/index.js";
 
 /** General text-to-token approximation used when only character counts are available. */

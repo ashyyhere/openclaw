@@ -1,4 +1,3 @@
-/** Normalizes cron thread id options shared by cron commands. */
 import {
   normalizeLowercaseStringOrEmpty,
   normalizeOptionalString,

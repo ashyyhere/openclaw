@@ -1,4 +1,3 @@
-/** Resolves external CLI auth overlay scope for a selected provider/model. */
 import {
   findNormalizedProviderValue,
   normalizeProviderId,

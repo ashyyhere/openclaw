@@ -1,4 +1,3 @@
-/** Tests channel registry helper aliases and active-registry version behavior. */
 import { afterEach, describe, expect, it } from "vitest";
 import { createEmptyPluginRegistry } from "../plugins/registry-empty.js";
 import {

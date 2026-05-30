@@ -1,4 +1,3 @@
-/** Tests CLI provider detection in model selection. */
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/types.js";
 import {

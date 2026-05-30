@@ -1,4 +1,3 @@
-/** Compatibility barrel for session store target helpers. */
 import {
   resolveSessionStoreTargets,
   type SessionStoreSelectionOptions,

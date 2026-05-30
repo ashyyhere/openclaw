@@ -1,4 +1,3 @@
-/** Tests cron CLI command registration and job output. */
 import { Command } from "commander";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { CronJob } from "../cron/types.js";

@@ -1,4 +1,3 @@
-/** Tests LM Studio runtime helper behavior. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const loadBundledPluginPublicSurfaceModuleSync = vi.hoisted(() => vi.fn());

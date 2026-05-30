@@ -1,4 +1,3 @@
-/** Runtime SDK barrel for approval reply rendering, parsing, and decision helpers. */
 export {
   buildApprovalInteractiveReplyFromActionDescriptors,
   buildApprovalPresentation,

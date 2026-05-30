@@ -1,4 +1,3 @@
-/** Public SDK barrel for provider contract test suites and assertions. */
 export {
   describeGithubCopilotProviderAuthContract,
   describeOpenAICodexProviderAuthContract,

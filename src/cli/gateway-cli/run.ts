@@ -1,4 +1,3 @@
-/** Implements gateway run command setup and server startup. */
 import fs from "node:fs";
 import { request } from "node:http";
 import path from "node:path";

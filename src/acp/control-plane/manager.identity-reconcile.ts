@@ -1,4 +1,3 @@
-/** Startup reconciliation for ACP session identity metadata and legacy projections. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { logVerbose } from "../../globals.js";
 import { withAcpRuntimeErrorBoundary } from "../runtime/errors.js";

@@ -1,4 +1,3 @@
-/** Normalizes and matches skill filter entries. */
 import { normalizeStringEntries, sortUniqueStrings } from "../../shared/string-normalization.js";
 
 /** Normalizes optional skill filter values for runtime use. */

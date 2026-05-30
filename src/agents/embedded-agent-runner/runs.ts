@@ -1,4 +1,3 @@
-/** Tracks active embedded-agent runs and routes live follow-up messages. */
 import {
   abortActiveReplyRuns,
   abortReplyRunBySessionId,

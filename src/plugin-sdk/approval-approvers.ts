@@ -1,4 +1,3 @@
-/** Public SDK helper for deriving approval approvers from explicit and inferred allowlists. */
 import { uniqueStrings } from "../shared/string-normalization.js";
 
 type ApproverInput = string | number;

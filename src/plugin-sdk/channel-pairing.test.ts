@@ -1,4 +1,3 @@
-/** Tests channel pairing flow helpers and pairing-state behavior. */
 import { describe, expect, it, vi } from "vitest";
 import type { PluginRuntime } from "../plugins/runtime/types.js";
 import {

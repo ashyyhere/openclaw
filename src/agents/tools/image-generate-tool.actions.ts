@@ -1,4 +1,3 @@
-/** Action result helpers for image generation tool providers. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { listRuntimeImageGenerationProviders } from "../../image-generation/runtime.js";
 import type { ImageGenerationProvider } from "../../image-generation/types.js";

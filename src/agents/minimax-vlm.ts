@@ -1,4 +1,3 @@
-/** MiniMax VLM image-understanding helper for providers without native image input. */
 import { ensureGlobalUndiciEnvProxyDispatcher } from "../infra/net/undici-global-dispatcher.js";
 import { isRecord } from "../utils.js";
 import { normalizeSecretInput } from "../utils/normalize-secret-input.js";

@@ -1,4 +1,3 @@
-/** Classifies native harness compaction failures that OpenClaw can retry. */
 import type { EmbeddedAgentCompactResult } from "../embedded-agent-runner/types.js";
 
 /** Returns whether a native harness binding reason is retryable after compaction. */

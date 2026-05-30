@@ -1,4 +1,3 @@
-/** Shared OAuth credential comparison, bootstrap, overlay, and replacement helpers. */
 import { cloneAuthProfileStore } from "./clone.js";
 import { hasUsableOAuthCredential as hasUsableStoredOAuthCredential } from "./credential-state.js";
 import type { AuthProfileStore, OAuthCredential } from "./types.js";

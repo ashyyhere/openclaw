@@ -1,4 +1,3 @@
-/** Covers text output limit normalization and tail appending. */
 import { describe, expect, it } from "vitest";
 import {
   appendBoundedTextTail,

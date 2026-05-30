@@ -1,4 +1,3 @@
-/** Regression coverage for OpenRouter cache-control extra params. */
 import type { StreamFn } from "openclaw/plugin-sdk/agent-core";
 import { describe, expect, it } from "vitest";
 import { createOpenRouterSystemCacheWrapper } from "../../llm/providers/stream-wrappers/proxy.js";

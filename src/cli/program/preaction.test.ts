@@ -1,4 +1,3 @@
-/** Tests pre-action hooks for logging, config, and plugin setup. */
 import { Command } from "commander";
 import { repoInstallSpec } from "openclaw/plugin-sdk/test-fixtures";
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";

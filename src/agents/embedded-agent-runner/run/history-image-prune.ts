@@ -1,4 +1,3 @@
-/** Removes image payloads from history after the model has already seen them. */
 import type { AgentMessage } from "../../runtime/index.js";
 
 /** Replacement text for old image blocks removed from replay history. */

@@ -1,4 +1,3 @@
-/** Tests doctor checks for OAuth sidecar auth profile data. */
 import { createCipheriv } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";

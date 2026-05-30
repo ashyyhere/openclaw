@@ -1,4 +1,3 @@
-/** Summarizes gateway and node daemon state for status output. */
 import { resolveNodeService } from "../daemon/node-service.js";
 import { resolveGatewayService } from "../daemon/service.js";
 import { formatDaemonRuntimeShort } from "./status.format.js";

@@ -1,4 +1,3 @@
-/** Tests media extraction and trust filtering for tool results. */
 import { describe, expect, it } from "vitest";
 import {
   extractToolResultMediaArtifact,

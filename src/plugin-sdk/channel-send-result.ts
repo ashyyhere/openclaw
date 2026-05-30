@@ -1,4 +1,3 @@
-/** Public SDK helpers for normalizing channel outbound send results. */
 import type { ChannelOutboundAdapter } from "../channels/plugins/outbound.types.js";
 import type { ChannelPollResult } from "../channels/plugins/types.public.js";
 import type { OutboundDeliveryResult } from "../infra/outbound/deliver.js";

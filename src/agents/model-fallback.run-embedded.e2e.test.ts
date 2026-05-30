@@ -1,4 +1,3 @@
-/** End-to-end tests for model fallback through embedded-agent runs. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

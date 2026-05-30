@@ -1,4 +1,3 @@
-/** Helper functions for media-understanding image tool config and payloads. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { AssistantMessage } from "../../llm/types.js";
 import { estimateBase64DecodedBytes } from "../../media/base64.js";

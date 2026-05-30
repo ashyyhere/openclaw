@@ -1,4 +1,3 @@
-/** Gateway probing helpers shared by status and doctor commands. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {
   resolveGatewayProbeAuthSafeWithSecretInputs,

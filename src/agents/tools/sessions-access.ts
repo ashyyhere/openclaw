@@ -1,4 +1,3 @@
-/** Session tool access and visibility helpers. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { resolveSandboxSessionToolsVisibility } from "../../plugin-sdk/session-visibility.js";
 import { isSubagentSessionKey } from "../../routing/session-key.js";

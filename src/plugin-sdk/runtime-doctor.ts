@@ -1,4 +1,3 @@
-/** Runtime SDK barrel for doctor/runtime config diagnostics. */
 export { collectProviderDangerousNameMatchingScopes } from "../config/dangerous-name-matching.js";
 /** Re-exported API for src/plugin-sdk. */
 export {

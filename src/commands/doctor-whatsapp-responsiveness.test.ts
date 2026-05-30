@@ -1,4 +1,3 @@
-/** Tests WhatsApp responsiveness doctor checks. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 

@@ -1,4 +1,3 @@
-/** Shared harness for bundled MCP CLI runner tests. */
 import { afterAll, beforeAll } from "vitest";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import {

@@ -1,4 +1,3 @@
-/** Regression coverage for embedded-agent bootstrap context helpers. */
 import { describe, expect, it } from "vitest";
 import { stripThoughtSignatures } from "./bootstrap.js";
 

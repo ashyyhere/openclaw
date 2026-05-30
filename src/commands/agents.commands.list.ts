@@ -1,4 +1,3 @@
-/** Implements agents list command output. */
 import { formatCliCommand } from "../cli/command-format.js";
 import { listRouteBindings } from "../config/bindings.js";
 import type { AgentRouteBinding } from "../config/types.js";

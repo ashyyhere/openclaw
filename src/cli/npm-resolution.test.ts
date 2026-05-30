@@ -1,4 +1,3 @@
-/** Tests npm/package install spec resolution for plugin commands. */
 import { installedPluginRoot } from "openclaw/plugin-sdk/test-fixtures";
 import { describe, expect, it } from "vitest";
 import {

@@ -1,4 +1,3 @@
-/** Legacy runtime config migrations for session settings. */
 import {
   defineLegacyConfigMigration,
   getRecord,

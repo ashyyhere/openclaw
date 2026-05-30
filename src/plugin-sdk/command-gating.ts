@@ -1,4 +1,3 @@
-/** Public SDK barrel for command authorization gates shared by channel plugins. */
 export type {
   CommandAuthorizer,
   CommandGatingModeWhenAccessGroupsOff,

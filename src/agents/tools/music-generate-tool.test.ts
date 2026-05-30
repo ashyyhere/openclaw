@@ -1,4 +1,3 @@
-/** Covers music generation tool provider routing and actions. */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../../config/config.js";
 import * as mediaStore from "../../media/store.js";

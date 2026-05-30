@@ -1,4 +1,3 @@
-/** Formats shell/exec tool invocations for compact display. */
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
 type PreambleResult = {

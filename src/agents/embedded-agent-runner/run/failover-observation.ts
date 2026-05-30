@@ -1,4 +1,3 @@
-/** Normalizes and logs structured failover decision observations. */
 import { redactIdentifier } from "../../../logging/redact-identifier.js";
 import type { AuthProfileFailureReason } from "../../auth-profiles.js";
 import {

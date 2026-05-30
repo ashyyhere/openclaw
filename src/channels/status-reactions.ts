@@ -1,4 +1,3 @@
-/** Manages status reaction updates for channel tool and reply lifecycle events. */
 import { TOOL_DISPLAY_CONFIG } from "../agents/tool-display-config.js";
 import { resolveToolDisplay } from "../agents/tool-display.js";
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";

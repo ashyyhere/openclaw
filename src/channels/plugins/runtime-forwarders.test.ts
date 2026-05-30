@@ -1,4 +1,3 @@
-/** Tests runtime forwarders for directory and outbound channel adapters. */
 import { describe, expect, it, vi } from "vitest";
 import {
   createRuntimeDirectoryLiveAdapter,

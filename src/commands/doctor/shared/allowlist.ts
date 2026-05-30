@@ -1,4 +1,3 @@
-/** Shared allowlist helpers for doctor channel checks. */
 import { normalizeStringEntries } from "../../../shared/string-normalization.js";
 import type { DoctorAllowFromList } from "../types.js";
 

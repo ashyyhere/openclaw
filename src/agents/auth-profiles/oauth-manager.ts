@@ -1,4 +1,3 @@
-/** Coordinates OAuth credential refresh, contention, adoption, and API-key building. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { normalizeSecretInputString } from "../../config/types.secrets.js";
 import { formatErrorMessage } from "../../infra/errors.js";

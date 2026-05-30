@@ -1,4 +1,3 @@
-/** Guards configured tool allowlists against invalid or unsafe entries. */
 import { normalizeStringEntries } from "../shared/string-normalization.js";
 import { normalizeToolList, normalizeToolName } from "./tool-policy.js";
 

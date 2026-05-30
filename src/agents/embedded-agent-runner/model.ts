@@ -1,4 +1,3 @@
-/** Resolves embedded-agent provider/model definitions from config, catalogs, and discovery. */
 import type { ModelCompatConfig, ModelMediaInputConfig } from "../../config/types.models.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { ModelRegistry as CoreModelRegistry } from "../../llm/model-registry.js";

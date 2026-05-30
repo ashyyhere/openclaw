@@ -1,4 +1,3 @@
-/** Registers basic message send command. */
 import type { Command } from "commander";
 import type { MessageCliHelpers } from "./helpers.js";
 

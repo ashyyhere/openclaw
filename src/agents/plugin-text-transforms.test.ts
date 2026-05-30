@@ -1,4 +1,3 @@
-/** Tests plugin text replacement transforms for stream input/output. */
 import type { StreamFn } from "openclaw/plugin-sdk/agent-core";
 import {
   createAssistantMessageEventStream,

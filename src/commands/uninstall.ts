@@ -1,4 +1,3 @@
-/** Uninstalls OpenClaw files and services with confirmation. */
 import path from "node:path";
 import { cancel, confirm, isCancel, multiselect } from "@clack/prompts";
 import {

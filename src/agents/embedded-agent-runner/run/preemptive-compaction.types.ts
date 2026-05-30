@@ -1,4 +1,3 @@
-/** Routes available to preemptive compaction before provider submission. */
 export type PreemptiveCompactionRoute =
   | "fits"
   | "compact_only"

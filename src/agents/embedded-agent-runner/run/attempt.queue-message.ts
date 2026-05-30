@@ -1,4 +1,3 @@
-/** Steers active SDK sessions and optionally waits for transcript commit. */
 import { log } from "../logger.js";
 
 /** Minimal active-session surface needed to steer and observe queued messages. */

@@ -1,4 +1,3 @@
-/** Tests setup-time persistence of channel allowlist access choices. */
 import { describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../../config/config.js";
 import { configureChannelAccessWithAllowlist } from "./setup-group-access-configure.js";

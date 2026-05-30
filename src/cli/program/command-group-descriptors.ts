@@ -1,4 +1,3 @@
-/** Types and builders for grouped CLI command descriptor catalogs. */
 import type { Command } from "commander";
 
 /** CLI command placeholder metadata shown before a lazy command group loads. */

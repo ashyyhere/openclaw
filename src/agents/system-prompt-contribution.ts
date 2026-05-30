@@ -1,4 +1,3 @@
-/** Types for provider/plugin-contributed system prompt sections. */
 export type ProviderSystemPromptSectionId =
   | "interaction_style"
   | "tool_call_style"

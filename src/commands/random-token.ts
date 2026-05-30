@@ -1,4 +1,3 @@
-/** Generates random setup tokens for command flows. */
 import crypto from "node:crypto";
 
 /** Reused helper for random Token behavior in src/commands. */

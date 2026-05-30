@@ -1,4 +1,3 @@
-/** Creates channel typing indicator callbacks with startup guards and keepalives. */
 import { parseFiniteNumber } from "../shared/number-coercion.js";
 import { createTypingKeepaliveLoop } from "./typing-lifecycle.js";
 import { createTypingStartGuard } from "./typing-start-guard.js";

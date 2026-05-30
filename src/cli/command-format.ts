@@ -1,4 +1,3 @@
-/** Formats command examples and paths with the active CLI/profile names. */
 import { replaceCliName, resolveCliName } from "./cli-name.js";
 import { normalizeProfileName } from "./profile-utils.js";
 

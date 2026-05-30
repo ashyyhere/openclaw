@@ -1,4 +1,3 @@
-/** Legacy runtime config migrations for MCP settings. */
 import {
   defineLegacyConfigMigration,
   type LegacyConfigMigrationSpec,

@@ -1,4 +1,3 @@
-/** Session config fixtures for tests. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 
 /** Creates session config with per-sender defaults and overrides. */

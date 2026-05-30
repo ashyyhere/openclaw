@@ -1,4 +1,3 @@
-/** Resolves provider prompt-cache retention policy for model calls. */
 import { resolveAnthropicCacheRetentionFamily } from "../../llm/providers/stream-wrappers/anthropic-family-cache-semantics.js";
 import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";
 

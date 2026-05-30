@@ -1,4 +1,3 @@
-/** Repairs daemon startup state when service start detects stale install data. */
 import { buildGatewayInstallPlan } from "../../commands/daemon-install-helpers.js";
 import { DEFAULT_GATEWAY_DAEMON_RUNTIME } from "../../commands/daemon-runtime.js";
 import { resolveGatewayInstallToken } from "../../commands/gateway-install-token.js";

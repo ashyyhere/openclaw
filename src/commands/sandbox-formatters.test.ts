@@ -1,4 +1,3 @@
-/** Tests sandbox command formatting helpers. */
 import { describe, expect, it } from "vitest";
 import { formatDurationCompact } from "../infra/format-time/format-duration.js";
 import {

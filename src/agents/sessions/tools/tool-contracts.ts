@@ -1,4 +1,3 @@
-/** Public input/detail contracts for built-in session tools. */
 import type { Edit } from "./edit-diff.js";
 import type { TruncationResult } from "./truncate.js";
 

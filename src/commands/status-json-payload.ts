@@ -1,4 +1,3 @@
-/** Builds machine-readable status JSON payloads. */
 import { resolveStatusUpdateChannelInfo } from "./status-all/format.js";
 import {
   buildStatusGatewayJsonPayloadFromSurface,

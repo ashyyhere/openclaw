@@ -1,4 +1,3 @@
-/** Exports session trajectories from stored conversation state. */
 import path from "node:path";
 import { formatCliCommand } from "../cli/command-format.js";
 import {

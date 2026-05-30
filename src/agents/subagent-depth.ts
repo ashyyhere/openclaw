@@ -1,4 +1,3 @@
-/** Resolves subagent depth from session keys and persisted session-store ancestry. */
 import fs from "node:fs";
 import { resolveStorePath } from "../config/sessions/paths.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";

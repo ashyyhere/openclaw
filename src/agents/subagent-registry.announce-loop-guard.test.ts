@@ -1,4 +1,3 @@
-/** Regression coverage for preventing subagent announce feedback loops. */
 import { afterEach, beforeAll, beforeEach, describe, expect, test, vi } from "vitest";
 import type { SubagentRunRecord } from "./subagent-registry.types.js";
 

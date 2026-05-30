@@ -1,4 +1,3 @@
-/** Regression coverage for video generation task status summaries. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { resetRecentMediaGenerationDuplicateGuardsForTests } from "./media-generation-task-status-shared.js";
 import {

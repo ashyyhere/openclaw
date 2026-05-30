@@ -1,4 +1,3 @@
-/** Tests shared status scan probe and memory helpers. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   resolveGatewayProbeSnapshot,

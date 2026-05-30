@@ -1,4 +1,3 @@
-/** Resolves the default workspace directory for agents. */
 import os from "node:os";
 import path from "node:path";
 import { resolveRequiredHomeDir } from "../infra/home-dir.js";

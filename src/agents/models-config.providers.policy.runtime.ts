@@ -1,4 +1,3 @@
-/** Calls provider-runtime policy hooks without loading runtime plugins on hot paths. */
 import {
   applyProviderNativeStreamingUsageCompatWithPlugin,
   normalizeProviderConfigWithPlugin,

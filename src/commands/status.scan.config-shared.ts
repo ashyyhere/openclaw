@@ -1,4 +1,3 @@
-/** Shared config loading helpers for status scans. */
 import { existsSync } from "node:fs";
 import { resolveConfigPath } from "../config/paths.js";
 import type { OpenClawConfig } from "../config/types.js";

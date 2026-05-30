@@ -1,4 +1,3 @@
-/** Parses config set command arguments into mutation modes. */
 type ConfigSetMode = "value" | "json" | "ref_builder" | "provider_builder" | "batch";
 
 type ConfigSetModeResolution =

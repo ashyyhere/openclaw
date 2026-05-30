@@ -1,4 +1,3 @@
-/** Normalizes structured chat tool content blocks for downstream renderers. */
 export type ToolContentBlock = Record<string, unknown>;
 
 function normalizeToolContentType(value: unknown): string {

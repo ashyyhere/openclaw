@@ -1,4 +1,3 @@
-/** Shared harness for embedded-agent subscription E2E-style tests. */
 import { expect } from "vitest";
 import type { AssistantMessage } from "../llm/types.js";
 import { subscribeEmbeddedAgentSession } from "./embedded-agent-subscribe.js";

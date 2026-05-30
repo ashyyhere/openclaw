@@ -1,4 +1,3 @@
-/** Public SDK core lifecycle helpers for channel queues, passive tasks, and server lifetimes. */
 import type { ChannelAccountSnapshot } from "../channels/plugins/types.core.js";
 import { createRunStateMachine, type RunStateStatusSink } from "../channels/run-state-machine.js";
 import { KeyedAsyncQueue } from "./keyed-async-queue.js";

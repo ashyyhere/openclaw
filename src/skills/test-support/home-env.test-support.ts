@@ -1,4 +1,3 @@
-/** Test helpers for temporarily overriding skill home environment paths. */
 import os from "node:os";
 import { vi } from "vitest";
 

@@ -1,4 +1,3 @@
-/** Shared option types for embedded-agent subscription formatting. */
 import type { BlockReplyChunking } from "./embedded-agent-block-chunker.js";
 
 /** Format used when emitting tool results to users. */

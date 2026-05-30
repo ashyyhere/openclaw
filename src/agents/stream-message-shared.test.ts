@@ -1,4 +1,3 @@
-/** Regression coverage for shared stream assistant message builders. */
 import { describe, expect, it } from "vitest";
 import {
   STREAM_ERROR_FALLBACK_TEXT,

@@ -1,4 +1,3 @@
-/** Public SDK in-memory rate/concurrency guards for webhook handlers. */
 import { pruneMapToMaxSize } from "../infra/map-size.js";
 import { resolveWebhookIntegerOption } from "./webhook-numeric-options.js";
 

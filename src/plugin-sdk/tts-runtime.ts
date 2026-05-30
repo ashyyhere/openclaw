@@ -1,4 +1,3 @@
-/** Runtime SDK barrel for text-to-speech provider helpers. */
 export {
   TtsAutoSchema,
   TtsConfigSchema,

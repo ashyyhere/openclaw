@@ -1,4 +1,3 @@
-/** Test helpers for reading CLI command source during coverage checks. */
 import fs from "node:fs/promises";
 import path from "node:path";
 

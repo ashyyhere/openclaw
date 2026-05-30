@@ -1,4 +1,3 @@
-/** Test fixtures and casts for agent runtime messages. */
 import type { AssistantMessage, UserMessage } from "openclaw/plugin-sdk/llm";
 import type { AgentMessage } from "../runtime/index.js";
 import { ZERO_USAGE_FIXTURE } from "./usage-fixtures.js";

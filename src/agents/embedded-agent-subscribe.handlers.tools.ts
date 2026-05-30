@@ -1,4 +1,3 @@
-/** Handles embedded-agent tool execution lifecycle, media, and progress events. */
 import {
   HEARTBEAT_RESPONSE_TOOL_NAME,
   normalizeHeartbeatToolResponse,

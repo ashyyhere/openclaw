@@ -1,4 +1,3 @@
-/** Creates SDK sessions with embedded-agent resource-loader wiring. */
 import type { CreateAgentSessionOptions } from "../../sessions/index.js";
 
 /** SDK session options after embedded-agent runtime resources have been prepared. */

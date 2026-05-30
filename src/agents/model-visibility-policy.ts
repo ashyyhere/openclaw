@@ -1,4 +1,3 @@
-/** Builds model visibility policies from config, catalog, and fallbacks. */
 import { resolveAgentModelFallbackValues } from "../config/model-input.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveAgentModelFallbacksOverride } from "./agent-scope.js";

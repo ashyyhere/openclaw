@@ -1,4 +1,3 @@
-/** Registry for stateful binding target drivers supplied by core and plugins. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type {
   ConfiguredBindingResolution,

@@ -1,4 +1,3 @@
-/** Tests live config data used to render root help plugin sections. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { loadRootHelpRenderOptionsForConfigSensitivePlugins } from "./root-help-live-config.js";
 

@@ -1,4 +1,3 @@
-/** Normalizes legacy subagent completion/delivery fields into current nested state. */
 import type {
   PendingFinalDeliveryPayload,
   SubagentCompletionDeliveryState,

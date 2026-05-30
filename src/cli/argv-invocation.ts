@@ -1,4 +1,3 @@
-/** Resolves structured command invocation facts from raw CLI argv. */
 import {
   getCommandPathWithRootOptions,
   getPrimaryCommand,

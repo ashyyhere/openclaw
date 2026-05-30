@@ -1,4 +1,3 @@
-/** Public SDK helpers for registering, resolving, and authorizing webhook targets. */
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { registerPluginHttpRoute } from "../plugins/http-registry.js";
 import type { FixedWindowRateLimiter } from "./webhook-memory-guards.js";

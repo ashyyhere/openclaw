@@ -1,4 +1,3 @@
-/** Resolves which bootstrap context files should feed an embedded attempt. */
 import type { BootstrapMode } from "../../bootstrap-mode.js";
 import { resolveBootstrapMode } from "../../bootstrap-mode.js";
 import { DEFAULT_BOOTSTRAP_FILENAME, type WorkspaceBootstrapFile } from "../../workspace.js";

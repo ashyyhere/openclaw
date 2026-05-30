@@ -1,4 +1,3 @@
-/** Regression coverage for plugin skill synchronization into sandbox workspaces. */
 import fs from "node:fs";
 import fsPromises from "node:fs/promises";
 import os from "node:os";

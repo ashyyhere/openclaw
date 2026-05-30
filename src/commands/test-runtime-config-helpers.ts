@@ -1,4 +1,3 @@
-/** Shared runtime/config mocks for command tests. */
 import { vi } from "vitest";
 import type { RuntimeEnv } from "../runtime.js";
 import type { MockFn } from "../test-utils/vitest-mock-fn.js";

@@ -1,4 +1,3 @@
-/** Resolves stable auth profile identity metadata from config and credentials. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 import type { AuthProfileStore } from "./types.js";

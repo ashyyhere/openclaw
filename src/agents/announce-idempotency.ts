@@ -1,4 +1,3 @@
-/** Idempotency key builders for child-run announce delivery. */
 type AnnounceIdFromChildRunParams = {
   childSessionKey: string;
   childRunId: string;

@@ -1,4 +1,3 @@
-/** Normalizes MCP server config aliases into canonical OpenClaw shape. */
 import { isRecord } from "../utils.js";
 
 type ConfigMcpServers = Record<string, Record<string, unknown>>;

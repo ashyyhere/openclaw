@@ -1,4 +1,3 @@
-/** Public SDK barrel for proxy capture helpers. */
 export {
   createDebugProxyWebSocketAgent,
   resolveDebugProxySettings,

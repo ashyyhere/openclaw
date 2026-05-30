@@ -1,4 +1,3 @@
-/** Shared prompt, queue, argument, and image helpers for CLI backend runs. */
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import os from "node:os";

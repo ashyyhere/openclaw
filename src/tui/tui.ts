@@ -1,4 +1,3 @@
-/** Terminal UI entrypoint, session resolution, input handling, and shutdown helpers. */
 import { execFileSync, spawn } from "node:child_process";
 import { existsSync } from "node:fs";
 import path from "node:path";

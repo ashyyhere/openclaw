@@ -1,4 +1,3 @@
-/** Tests skills CLI command registration and routing. */
 import { Command } from "commander";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { registerSkillsCli } from "./skills-cli.js";

@@ -1,4 +1,3 @@
-/** Tests heartbeat session target doctor repair logic. */
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

@@ -1,4 +1,3 @@
-/** Host/container filesystem bridge used by sandboxed tools. */
 import fs from "node:fs";
 import { normalizeOptionalLowercaseString } from "../../shared/string-coerce.js";
 import type {

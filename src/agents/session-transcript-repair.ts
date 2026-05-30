@@ -1,4 +1,3 @@
-/** Repairs transcript tool-call/result pairing and unsafe tool-call inputs. */
 import {
   hasNonEmptyString as hasNonEmptyStringField,
   normalizeOptionalString,

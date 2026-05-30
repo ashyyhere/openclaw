@@ -1,4 +1,3 @@
-/** Doctor checks for memory search engine availability and configuration. */
 import fsSync from "node:fs";
 import {
   findNormalizedProviderValue,

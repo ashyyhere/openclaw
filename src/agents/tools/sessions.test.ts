@@ -1,4 +1,3 @@
-/** Integration-style coverage for session tools and channel registry fixtures. */
 import os from "node:os";
 import path from "node:path";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";

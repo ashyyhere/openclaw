@@ -1,4 +1,3 @@
-/** Shared rendering helpers for exec tool output text. */
 const EXEC_NO_OUTPUT_PLACEHOLDER = "(no output)";
 
 /** Render exec output with a stable no-output placeholder. */

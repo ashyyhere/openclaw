@@ -1,4 +1,3 @@
-/** Migrates legacy web search config into current provider config. */
 import { mergeMissing } from "../../../config/legacy.shared.js";
 import {
   cloneRecord,

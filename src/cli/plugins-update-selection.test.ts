@@ -1,4 +1,3 @@
-/** Tests plugin update target selection from installed records. */
 import { describe, expect, it } from "vitest";
 import type { PluginInstallRecord } from "../config/types.plugins.js";
 import { resolvePluginUpdateSelection } from "./plugins-update-selection.js";

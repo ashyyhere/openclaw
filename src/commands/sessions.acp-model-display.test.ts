@@ -1,4 +1,3 @@
-/** Tests ACP model display resolution for sessions output. */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { SessionEntry } from "../config/sessions/types.js";
 import {

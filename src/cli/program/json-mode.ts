@@ -1,4 +1,3 @@
-/** Tracks per-command JSON output mode on Commander command instances. */
 import type { Command } from "commander";
 import { hasFlag } from "../argv.js";
 

@@ -1,4 +1,3 @@
-/** Reads and evaluates provider cache-TTL metadata from session history. */
 import {
   isAnthropicFamilyCacheTtlEligible,
   isAnthropicModelRef,

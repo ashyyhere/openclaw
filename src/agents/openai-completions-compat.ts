@@ -1,4 +1,3 @@
-/** Resolves compatibility defaults for OpenAI Chat Completions-style providers. */
 import type { Model } from "../llm/types.js";
 import type { ProviderEndpointClass, ProviderRequestCapabilities } from "./provider-attribution.js";
 import { resolveProviderRequestCapabilities } from "./provider-attribution.js";

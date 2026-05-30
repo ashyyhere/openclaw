@@ -1,4 +1,3 @@
-/** Shared facade resolution helpers for bundled and registry plugin public surfaces. */
 import fs from "node:fs";
 import path from "node:path";
 import { areBundledPluginsDisabled } from "../plugins/bundled-dir.js";

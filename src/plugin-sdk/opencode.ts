@@ -1,4 +1,3 @@
-/** Public SDK provider entrypoint for OpenCode provider auth/catalog helpers. */
 import { createProviderApiKeyAuthMethod, type OpenClawConfig } from "./provider-auth-api-key.js";
 
 /** Re-exported API for src/plugin-sdk, starting with apply Opencode Zen Model Default. */

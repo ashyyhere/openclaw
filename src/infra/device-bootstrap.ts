@@ -1,4 +1,3 @@
-/** Issues and verifies short-lived bootstrap tokens for device pairing handoff. */
 import path from "node:path";
 import { createSubsystemLogger } from "../logging/subsystem.js";
 import {

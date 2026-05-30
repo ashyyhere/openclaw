@@ -1,4 +1,3 @@
-/** Shared configure wizard section types, prompts, and output helpers. */
 import {
   confirm as clackConfirm,
   intro as clackIntro,

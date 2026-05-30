@@ -1,4 +1,3 @@
-/** Routes raw CLI argv to command handlers and startup policy. */
 import { isTruthyEnvValue } from "../infra/env.js";
 import { defaultRuntime } from "../runtime.js";
 import { resolveCliArgvInvocation } from "./argv-invocation.js";

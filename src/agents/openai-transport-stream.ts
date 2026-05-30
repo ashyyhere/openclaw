@@ -1,4 +1,3 @@
-/** Implements OpenAI Responses/Completions transport streaming and payload builders. */
 import { createHash, randomUUID } from "node:crypto";
 import OpenAI, { AzureOpenAI } from "openai";
 import type { ChatCompletionChunk } from "openai/resources/chat/completions.js";

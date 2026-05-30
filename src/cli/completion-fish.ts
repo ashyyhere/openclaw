@@ -1,4 +1,3 @@
-/** Fish shell completion string escaping helpers. */
 export function escapeFishDescription(value: string): string {
   return value.replace(/'/g, "'\\''");
 }

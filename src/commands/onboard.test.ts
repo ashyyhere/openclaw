@@ -1,4 +1,3 @@
-/** Tests main onboarding command behavior. */
 import path from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { formatCliCommand } from "../cli/command-format.js";

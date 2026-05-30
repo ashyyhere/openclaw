@@ -1,4 +1,3 @@
-/** Tests Commander option inheritance and explicit option detection. */
 import { Command } from "commander";
 import { describe, expect, it } from "vitest";
 import { inheritOptionFromParent } from "./command-options.js";

@@ -1,4 +1,3 @@
-/** Runs compaction lifecycle for CLI-backed sessions. */
 import type { SessionEntry } from "../../config/sessions/types.js";
 import type { AgentCompactionMode } from "../../config/types.agent-defaults.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";

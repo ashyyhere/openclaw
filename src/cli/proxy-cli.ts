@@ -1,4 +1,3 @@
-/** Registers local proxy CLI commands and capture options. */
 import { InvalidArgumentError, type Command } from "commander";
 import { parseStrictInteger } from "../infra/parse-finite-number.js";
 import type { CaptureQueryPreset } from "../proxy-capture/types.js";

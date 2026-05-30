@@ -1,4 +1,3 @@
-/** Runs status scans and reports progress for status commands. */
 import { withProgress } from "../cli/progress.js";
 import { hasConfiguredChannelsForReadOnlyScope } from "../plugins/channel-plugin-ids.js";
 import { buildPluginCompatibilitySnapshotNotices } from "../plugins/status.js";

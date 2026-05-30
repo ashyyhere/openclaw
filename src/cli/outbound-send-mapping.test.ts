@@ -1,4 +1,3 @@
-/** Tests mapping between CLI dependency source fields and outbound send deps. */
 import { describe, expect, it, vi } from "vitest";
 import {
   CLI_OUTBOUND_SEND_FACTORY,

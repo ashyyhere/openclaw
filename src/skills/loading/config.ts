@@ -1,4 +1,3 @@
-/** Skill-loading config helpers for install preferences, allowlists, and eligibility. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { SkillConfig } from "../../config/types.skills.js";
 import {

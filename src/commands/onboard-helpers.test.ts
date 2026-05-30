@@ -1,4 +1,3 @@
-/** Tests shared onboarding filesystem, config, and prompt helpers. */
 import * as fs from "node:fs";
 import fsPromises from "node:fs/promises";
 import os from "node:os";

@@ -1,4 +1,3 @@
-/** Tests cached lazy value getter behavior. */
 import { describe, expect, it, vi } from "vitest";
 import { createCachedLazyValueGetter } from "./lazy-value.js";
 

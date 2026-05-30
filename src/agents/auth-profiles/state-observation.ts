@@ -1,4 +1,3 @@
-/** Logs observable changes in auth profile cooldown/blocked state. */
 import { redactIdentifier } from "../../logging/redact-identifier.js";
 import { createSubsystemLogger } from "../../logging/subsystem.js";
 import { sanitizeForConsole } from "../console-sanitize.js";

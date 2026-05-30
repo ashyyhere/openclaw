@@ -1,4 +1,3 @@
-/** Shared context builders for sessions-send agent-to-agent delivery. */
 import {
   getChannelPlugin,
   normalizeChannelId as normalizeAnyChannelId,

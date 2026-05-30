@@ -1,4 +1,3 @@
-/** Resolves which agent harness should run for a provider/model request. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { AUTO_AGENT_RUNTIME_ID, type EmbeddedAgentRuntime } from "../agent-runtime-id.js";
 import { normalizeOptionalAgentRuntimeId } from "../agent-runtime-id.js";

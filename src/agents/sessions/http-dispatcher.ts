@@ -1,4 +1,3 @@
-/** Configures global Undici dispatcher idle timeouts for session HTTP calls. */
 import * as undici from "undici";
 import { parseStrictNonNegativeInteger } from "../../infra/parse-finite-number.js";
 

@@ -1,4 +1,3 @@
-/** Builds effective MCP tool inventory rows. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { ProviderRuntimeModel } from "../plugins/provider-runtime-model.types.js";
 import {

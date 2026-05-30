@@ -1,4 +1,3 @@
-/** Process-local map of currently tracked subagent run records. */
 import type { SubagentRunRecord } from "./subagent-registry.types.js";
 
 /** Process-local registry of active and recently completed subagent runs. */

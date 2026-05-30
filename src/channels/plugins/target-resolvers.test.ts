@@ -1,4 +1,3 @@
-/** Tests target resolver fallback result helpers. */
 import { describe, expect, it } from "vitest";
 import {
   buildUnresolvedTargetResults,

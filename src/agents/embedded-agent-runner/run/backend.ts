@@ -1,4 +1,3 @@
-/** Dispatches embedded attempts through the selected agent harness backend. */
 import { runAgentHarnessAttempt } from "../../harness/selection.js";
 import type { EmbeddedRunAttemptParams, EmbeddedRunAttemptResult } from "./types.js";
 

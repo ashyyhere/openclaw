@@ -1,4 +1,3 @@
-/** Covers sandbox browser container creation and config hash behavior. */
 import { mkdirSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";

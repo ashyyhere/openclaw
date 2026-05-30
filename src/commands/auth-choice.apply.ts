@@ -1,4 +1,3 @@
-/** Applies selected auth choices to provider and plugin config. */
 import { formatCliCommand } from "../cli/command-format.js";
 import { applyAuthChoiceLoadedPluginProvider } from "../plugins/provider-auth-choice.js";
 import type { ApplyAuthChoiceParams, ApplyAuthChoiceResult } from "./auth-choice.apply.types.js";

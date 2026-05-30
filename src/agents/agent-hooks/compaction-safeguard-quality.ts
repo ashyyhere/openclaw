@@ -1,4 +1,3 @@
-/** Quality checks and fallback structure helpers for compaction summaries. */
 import { extractKeywords, isQueryStopWordToken } from "../../memory-host-sdk/query.js";
 import { localeLowercasePreservingWhitespace } from "../../shared/string-coerce.js";
 import { uniqueStrings } from "../../shared/string-normalization.js";

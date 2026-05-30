@@ -1,4 +1,3 @@
-/** Tests low-level Commander command tree mutation helpers. */
 import { Command } from "commander";
 import { describe, expect, it } from "vitest";
 import { removeCommand, removeCommandByName } from "./command-tree.js";

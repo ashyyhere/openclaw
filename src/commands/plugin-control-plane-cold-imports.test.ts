@@ -1,4 +1,3 @@
-/** Tests plugin control-plane command cold-import boundaries. */
 import { afterEach, describe, expect, it } from "vitest";
 import { refreshPluginRegistry } from "../plugins/plugin-registry.js";
 import {

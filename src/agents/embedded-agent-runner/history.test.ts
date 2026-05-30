@@ -1,4 +1,3 @@
-/** Regression coverage for embedded-agent history limits. */
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../../config/config.js";
 import { getHistoryLimitFromSessionKey } from "./history.js";

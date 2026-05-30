@@ -1,4 +1,3 @@
-/** Serializes bounded append writes to diagnostic/session files. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { appendRegularFile, resolveRegularFileAppendFlags } from "../infra/fs-safe.js";

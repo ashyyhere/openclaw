@@ -1,4 +1,3 @@
-/** Abort-signal wrapper for agent tool execution. */
 import { copyPluginToolMeta } from "../plugins/tools.js";
 import { bindAbortRelay } from "../utils/fetch-timeout.js";
 import { copyBeforeToolCallHookMarker } from "./agent-tools.before-tool-call.js";

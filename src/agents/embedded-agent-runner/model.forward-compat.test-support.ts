@@ -1,4 +1,3 @@
-/** Shared expectations for model forward-compat tests. */
 import { expect } from "vitest";
 
 /** Build a provider catalog template used to verify model forward-compat fallbacks. */

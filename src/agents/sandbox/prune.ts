@@ -1,4 +1,3 @@
-/** Prunes stale sandbox and browser containers from registries. */
 import { getRuntimeConfig } from "../../config/config.js";
 import { stopBrowserBridgeServer } from "../../plugin-sdk/browser-bridge.js";
 import { defaultRuntime } from "../../runtime.js";

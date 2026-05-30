@@ -1,4 +1,3 @@
-/** Shared music generation task status conversion helpers. */
 import type { TaskRecord } from "../tasks/task-registry.types.js";
 import {
   buildActiveMediaGenerationTaskPromptContextForSession,

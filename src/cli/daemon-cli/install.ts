@@ -1,4 +1,3 @@
-/** Installs the gateway daemon service for the current platform. */
 import { resolveNodeStartupTlsEnvironment } from "../../bootstrap/node-startup-env.js";
 import { buildGatewayInstallPlan } from "../../commands/daemon-install-helpers.js";
 import {

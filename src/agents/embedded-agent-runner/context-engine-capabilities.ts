@@ -1,4 +1,3 @@
-/** Resolves context-engine capability flags for embedded-agent runtime choices. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { ContextEngineRuntimeContext } from "../../context-engine/types.js";
 import { normalizeOptionalString } from "../../shared/string-coerce.js";

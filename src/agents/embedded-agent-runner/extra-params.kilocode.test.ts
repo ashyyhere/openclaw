@@ -1,4 +1,3 @@
-/** Regression coverage for Kilocode extra params. */
 import type { StreamFn } from "openclaw/plugin-sdk/agent-core";
 import { afterEach, describe, expect, it } from "vitest";
 import {

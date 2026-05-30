@@ -1,4 +1,3 @@
-/** Bridges gateway exec approval events into ACP permission requests. */
 import type {
   PermissionOption,
   RequestPermissionRequest,

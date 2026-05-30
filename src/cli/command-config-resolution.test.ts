@@ -1,4 +1,3 @@
-/** Tests command config resolution, secret loading, and plugin auto-enable. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({

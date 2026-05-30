@@ -1,4 +1,3 @@
-/** Covers bootstrap context routing for primary and child sessions. */
 import { describe, expect, it } from "vitest";
 import {
   isPrimaryBootstrapRun,

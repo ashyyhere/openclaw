@@ -1,4 +1,3 @@
-/** Warns when daemon install runtime differs from the system Node runtime. */
 import { renderSystemNodeWarning, resolveSystemNodeInfo } from "../daemon/runtime-paths.js";
 
 /** Shared type for Daemon Install Warn Fn in src/commands. */

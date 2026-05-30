@@ -1,4 +1,3 @@
-/** Resolves media paths through sandbox filesystem bridges. */
 import path from "node:path";
 import { resolveMediaReferenceSandboxPath } from "../media/media-reference.js";
 import { assertSandboxPath } from "./sandbox-paths.js";

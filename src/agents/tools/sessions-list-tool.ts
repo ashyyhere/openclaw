@@ -1,4 +1,3 @@
-/** Agent tool for listing visible sessions. */
 import path from "node:path";
 import { Type } from "typebox";
 import { getRuntimeConfig } from "../../config/config.js";

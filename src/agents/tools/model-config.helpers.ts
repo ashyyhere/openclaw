@@ -1,4 +1,3 @@
-/** Shared helpers for tool-specific model config and auth checks. */
 import {
   resolveAgentModelFallbackValues,
   resolveAgentModelPrimaryValue,

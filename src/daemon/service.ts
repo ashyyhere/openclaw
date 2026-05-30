@@ -1,4 +1,3 @@
-/** Cross-platform gateway daemon service abstraction and lifecycle helpers. */
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

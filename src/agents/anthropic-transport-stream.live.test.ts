@@ -1,4 +1,3 @@
-/** Live tests for Anthropic transport streaming. */
 import http from "node:http";
 import type { Model } from "openclaw/plugin-sdk/llm";
 import { describe, expect, it } from "vitest";

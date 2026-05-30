@@ -1,4 +1,3 @@
-/** Test helpers for channel plugin install command flows. */
 import { vi } from "vitest";
 import type { ChannelPluginCatalogEntry } from "../channels/plugins/catalog.js";
 import type { ChannelPlugin } from "../channels/plugins/types.plugin.js";

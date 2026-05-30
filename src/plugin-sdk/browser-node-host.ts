@@ -1,4 +1,3 @@
-/** Runtime SDK facade for browser proxy commands executed through the bundled browser plugin. */
 import { loadActivatedBundledPluginPublicSurfaceModuleSync } from "./facade-runtime.js";
 
 type BrowserNodeHostFacadeModule = {

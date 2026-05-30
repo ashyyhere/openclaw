@@ -1,4 +1,3 @@
-/** Prepares CLI backend context, auth, MCP, prompt, history, and workspace state. */
 import { getRuntimeConfig } from "../../config/config.js";
 import {
   assertContextEngineHostSupport,

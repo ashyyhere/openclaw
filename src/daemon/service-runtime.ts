@@ -1,4 +1,3 @@
-/** Runtime status types and hygiene checks for gateway daemon services. */
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
 /** Systemd-specific runtime metadata read from a gateway service unit. */

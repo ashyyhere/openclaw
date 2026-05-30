@@ -1,4 +1,3 @@
-/** Fixture builder for agent tool sandbox contexts. */
 import type { SandboxContext, SandboxToolPolicy, SandboxWorkspaceAccess } from "../sandbox.js";
 import type { SandboxFsBridge } from "../sandbox/fs-bridge.js";
 

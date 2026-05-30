@@ -1,4 +1,3 @@
-/** Tests indented fenced blocks remain intact while streaming. */
 import { describe, expect, it, vi } from "vitest";
 import {
   createParagraphChunkedBlockReplyHarness,

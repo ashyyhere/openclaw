@@ -1,4 +1,3 @@
-/** Reads and writes OAuth credentials mirrored from local CLI tools. */
 import { execFileSync, execSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import fs from "node:fs";

@@ -1,4 +1,3 @@
-/** Covers agent harness registry mutation and cleanup helpers. */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import {

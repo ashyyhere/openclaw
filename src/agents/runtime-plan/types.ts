@@ -1,4 +1,3 @@
-/** Public type contract for prepared agent runtime plans. */
 import type { TSchema } from "typebox";
 import type { AgentTool } from "../runtime/index.js";
 

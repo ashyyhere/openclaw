@@ -1,4 +1,3 @@
-/** Builds redacted observation metadata for provider/runtime errors. */
 import { readLoggingConfig } from "../logging/config.js";
 import { redactIdentifier } from "../logging/redact-identifier.js";
 import { getDefaultRedactPatterns, redactSensitiveText } from "../logging/redact.js";

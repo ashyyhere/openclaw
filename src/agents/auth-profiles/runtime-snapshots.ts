@@ -1,4 +1,3 @@
-/** Process-local auth profile store snapshots used by runtime auth resolution. */
 import { cloneAuthProfileStore } from "./clone.js";
 import { resolveAuthStorePath } from "./path-resolve.js";
 import type { AuthProfileStore } from "./types.js";

@@ -1,4 +1,3 @@
-/** Shared helpers for channel action defaults and token-source checks. */
 type OptionalDefaultGate<TKey extends string> = (key: TKey, defaultValue?: boolean) => boolean;
 
 type TokenSourcedAccount = {

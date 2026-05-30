@@ -1,4 +1,3 @@
-/** Agent-to-agent send flow used by sessions-send. */
 import crypto from "node:crypto";
 import type { CallGatewayOptions } from "../../gateway/call.js";
 import { formatErrorMessage } from "../../infra/errors.js";

@@ -1,4 +1,3 @@
-/** Runs onboarding from flags without interactive prompts. */
 import { formatCliCommand } from "../cli/command-format.js";
 import { replaceConfigFile } from "../config/config.js";
 import { readConfigFileSnapshot } from "../config/io.js";

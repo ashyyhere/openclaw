@@ -1,4 +1,3 @@
-/** Tests bootstrap budget analysis, warning, and report metadata behavior. */
 import { describe, expect, it } from "vitest";
 import {
   appendBootstrapPromptWarning,

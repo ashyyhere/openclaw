@@ -1,4 +1,3 @@
-/** Extracts and sanitizes tool results, errors, media, and messaging sends. */
 import { getChannelPlugin, normalizeChannelId } from "../channels/plugins/index.js";
 import { normalizeTargetForProvider } from "../infra/outbound/target-normalization.js";
 import { redactSensitiveFieldValue, redactToolPayloadText } from "../logging/redact.js";

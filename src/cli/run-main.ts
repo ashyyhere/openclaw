@@ -1,4 +1,3 @@
-/** Main CLI entrypoint orchestration for profile setup, respawn, and program run. */
 import { existsSync } from "node:fs";
 import path from "node:path";
 import process from "node:process";

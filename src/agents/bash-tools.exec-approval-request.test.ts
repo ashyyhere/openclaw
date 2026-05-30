@@ -1,4 +1,3 @@
-/** Tests exec approval request registration and waiting. */
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   DEFAULT_APPROVAL_REQUEST_TIMEOUT_MS,

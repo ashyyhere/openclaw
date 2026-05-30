@@ -1,4 +1,3 @@
-/** Defers gateway restarts until queues, replies, runs, and tasks are idle. */
 import { getActiveEmbeddedRunCount } from "../agents/embedded-agent-runner/run-state.js";
 import { getTotalPendingReplies } from "../auto-reply/reply/dispatcher-registry.js";
 import { getTotalQueueSize } from "../process/command-queue.js";

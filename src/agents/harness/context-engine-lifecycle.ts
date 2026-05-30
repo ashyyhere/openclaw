@@ -1,4 +1,3 @@
-/** Bridges context-engine bootstrap, assembly, finalize, and maintenance in harnesses. */
 import type { MemoryCitationsMode } from "../../config/types.memory.js";
 import type { ContextEngine, ContextEngineRuntimeContext } from "../../context-engine/types.js";
 import { runContextEngineMaintenance } from "../embedded-agent-runner/context-engine-maintenance.js";

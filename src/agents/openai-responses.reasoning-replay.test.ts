@@ -1,4 +1,3 @@
-/** Tests OpenAI Responses reasoning replay payload construction. */
 import type { AssistantMessage, Model, ToolResultMessage } from "openclaw/plugin-sdk/llm";
 import { stream } from "openclaw/plugin-sdk/llm";
 import { Type } from "typebox";

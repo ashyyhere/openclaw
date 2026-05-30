@@ -1,4 +1,3 @@
-/** Builds an attempt prompt and applies provider runtime transforms. */
 import type { OpenClawConfig } from "../../../config/types.openclaw.js";
 import type { ProviderTransformSystemPromptContext } from "../../../plugins/types.js";
 import { buildEmbeddedSystemPrompt } from "../system-prompt.js";

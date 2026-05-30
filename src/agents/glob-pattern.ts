@@ -1,4 +1,3 @@
-/** Tiny glob compiler for agent matching policies. */
 type CompiledGlobPattern =
   | { kind: "all" }
   | { kind: "exact"; value: string }

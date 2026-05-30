@@ -1,4 +1,3 @@
-/** Defaults shared by OpenClaw-owned session runtime. */
 import type { ThinkingLevel } from "../runtime/index.js";
 
 /** Default thinking level for OpenClaw-owned session model selection. */

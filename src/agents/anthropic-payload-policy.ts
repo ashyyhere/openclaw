@@ -1,4 +1,3 @@
-/** Anthropic-compatible payload policy for cache control and service tier fields. */
 import { resolveProviderRequestCapabilities } from "./provider-attribution.js";
 import {
   splitSystemPromptCacheBoundary,

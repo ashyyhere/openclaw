@@ -1,4 +1,3 @@
-/** Runtime-facing types for resolving and invoking web search providers. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type {
   PluginWebSearchProviderEntry,

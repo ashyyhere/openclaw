@@ -1,4 +1,3 @@
-/** Public barrel for embedded-agent sanitization, bootstrap, and error helpers. */
 export {
   buildBootstrapContextFiles,
   DEFAULT_BOOTSTRAP_MAX_CHARS,

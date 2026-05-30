@@ -1,4 +1,3 @@
-/** Covers shared tool parameter readers and action gates. */
 import { describe, expect, it } from "vitest";
 import {
   createActionGate,

@@ -1,4 +1,3 @@
-/** Routes console logs to stderr when commands emit JSON on stdout. */
 import { loggingState } from "../logging/state.js";
 
 /** Detects whether argv requests JSON output before command separator. */

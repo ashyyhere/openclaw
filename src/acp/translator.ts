@@ -1,4 +1,3 @@
-/** ACP agent implementation that translates ACP requests to gateway operations. */
 import { randomUUID } from "node:crypto";
 import os from "node:os";
 import path from "node:path";

@@ -1,4 +1,3 @@
-/** Shared helpers for gateway service audit tests. */
 import { isEnvironmentFileOnlySource } from "../daemon/service-managed-env.js";
 import type { GatewayServiceEnvironmentValueSource } from "../daemon/service-types.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";

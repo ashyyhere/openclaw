@@ -1,4 +1,3 @@
-/** Error type and guard for session write lock acquisition timeouts. */
 const SESSION_WRITE_LOCK_TIMEOUT_CODE = "OPENCLAW_SESSION_WRITE_LOCK_TIMEOUT";
 
 /** Error thrown when a session write lock cannot be acquired in time. */

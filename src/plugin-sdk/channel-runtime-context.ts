@@ -1,4 +1,3 @@
-/** Public SDK barrel for channel runtime context contracts. */
 export {
   getChannelRuntimeContext,
   registerChannelRuntimeContext,

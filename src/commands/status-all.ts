@@ -1,4 +1,3 @@
-/** Renders the full status report command. */
 import { withProgress } from "../cli/progress.js";
 import type { RuntimeEnv } from "../runtime.js";
 import { buildStatusAllReportData } from "./status-all/report-data.js";

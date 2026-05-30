@@ -1,4 +1,3 @@
-/** Formatting helpers for node and pairing list output. */
 import { normalizeStringifiedOptionalString } from "../../shared/string-coerce.js";
 
 /** Re-exported API for src/cli/nodes-cli, starting with parse Node List. */

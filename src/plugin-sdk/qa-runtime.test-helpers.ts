@@ -1,4 +1,3 @@
-/** Test helpers for QA runtime filesystem and fixture setup. */
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

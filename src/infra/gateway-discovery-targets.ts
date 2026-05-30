@@ -1,4 +1,3 @@
-/** Converts Bonjour gateway beacons into UI/CLI connection targets. */
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import {
   resolveGatewayDiscoveryEndpoint,

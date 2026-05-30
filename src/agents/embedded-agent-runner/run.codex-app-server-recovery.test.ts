@@ -1,4 +1,3 @@
-/** Verifies Codex app-server recovery paths inside embedded-agent fallback loops. */
 import { beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { makeModelFallbackCfg } from "../test-helpers/model-fallback-config-fixture.js";
 import { makeAttemptResult } from "./run.overflow-compaction.fixture.js";

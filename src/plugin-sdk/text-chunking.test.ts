@@ -1,4 +1,3 @@
-/** Tests text chunking helper behavior. */
 import { describe, expect, it } from "vitest";
 import { chunkTextForOutbound } from "./text-chunking.js";
 

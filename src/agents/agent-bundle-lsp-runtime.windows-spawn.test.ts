@@ -1,4 +1,3 @@
-/** Tests bundled LSP runtime Windows spawn command materialization. */
 import { describe, expect, it, vi, beforeEach } from "vitest";
 import { spawnLspServerProcess } from "./agent-bundle-lsp-runtime.js";
 

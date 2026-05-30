@@ -1,4 +1,3 @@
-/** Agent tool for sending messages to other sessions. */
 import crypto from "node:crypto";
 import { Type } from "typebox";
 import { isRequesterParentOfBackgroundAcpSession } from "../../acp/session-interaction-mode.js";

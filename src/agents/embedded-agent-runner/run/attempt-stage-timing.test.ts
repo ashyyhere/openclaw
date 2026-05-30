@@ -1,4 +1,3 @@
-/** Covers timing summaries for embedded-run attempt stages. */
 import { describe, expect, it } from "vitest";
 import {
   createEmbeddedRunStageTracker,

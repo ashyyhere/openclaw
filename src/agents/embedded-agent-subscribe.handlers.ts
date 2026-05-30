@@ -1,4 +1,3 @@
-/** Dispatches embedded-agent session events through ordered async handlers. */
 import {
   handleAgentEnd,
   handleAgentStart,

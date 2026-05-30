@@ -1,4 +1,3 @@
-/** Types for dry-run previews of config set operations. */
 export type ConfigSetDryRunInputMode = "value" | "json" | "builder" | "unset";
 
 /** Shared type for Config Set Dry Run Error in src/cli. */

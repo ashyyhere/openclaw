@@ -1,4 +1,3 @@
-/** Test helpers for inspecting generated Docker argv. */
 export function findDockerArgsCall(calls: unknown[][], command: string): string[] | undefined {
   return calls.find((call) => Array.isArray(call[0]) && call[0][0] === command)?.[0] as
     | string[]

@@ -1,4 +1,3 @@
-/** Registers private QA commands when the private QA feature is enabled. */
 import fs from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";

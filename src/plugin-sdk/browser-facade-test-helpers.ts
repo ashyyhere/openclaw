@@ -1,4 +1,3 @@
-/** Test helpers for mocking browser plugin facade modules. */
 import { expect, vi } from "vitest";
 
 type FacadeLoaderMock = ReturnType<typeof vi.fn>;

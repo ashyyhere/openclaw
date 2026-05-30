@@ -1,4 +1,3 @@
-/** Covers Docker command helpers and sandbox container arguments. */
 import { EventEmitter } from "node:events";
 import { Readable } from "node:stream";
 import { beforeEach, describe, expect, it, vi } from "vitest";

@@ -1,4 +1,3 @@
-/** Serializes inline TOML config overrides for CLI backend arguments. */
 import { isRecord } from "../../shared/record-coerce.js";
 
 function escapeTomlString(value: string): string {

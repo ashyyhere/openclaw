@@ -1,4 +1,3 @@
-/** Public type contracts for channel setup wizard integrations. */
 import type { DmPolicy } from "../../config/types.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { RuntimeEnv } from "../../runtime.js";

@@ -1,4 +1,3 @@
-/** Backend manager/factory contracts for sandbox runtimes. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { SandboxBackendHandle } from "./backend-handle.types.js";
 import type { SandboxRegistryEntry } from "./registry.js";

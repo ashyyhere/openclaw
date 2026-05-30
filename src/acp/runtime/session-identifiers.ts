@@ -1,4 +1,3 @@
-/** Render ACP backend/session identifiers for status and thread replies. */
 import type { SessionAcpIdentity, SessionAcpMeta } from "../../config/sessions/types.js";
 import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";
 import { normalizeText } from "../normalize-text.js";

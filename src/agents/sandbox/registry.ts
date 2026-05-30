@@ -1,4 +1,3 @@
-/** Persists sandbox and browser container registry state. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { z } from "zod";

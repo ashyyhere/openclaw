@@ -1,4 +1,3 @@
-/** Keepalive loop for channel typing indicators during long replies. */
 type AsyncTick = () => Promise<void> | void;
 
 type TypingKeepaliveLoop = {

@@ -1,4 +1,3 @@
-/** Builds the normalized runtime plan used by embedded-agent attempts. */
 import type { TSchema } from "typebox";
 import type { ThinkLevel } from "../../auto-reply/thinking.js";
 import { isSilentReplyPayloadText, SILENT_REPLY_TOKEN } from "../../auto-reply/tokens.js";

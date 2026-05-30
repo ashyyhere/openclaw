@@ -1,4 +1,3 @@
-/** Shared SDK helpers for extension status summaries, config issues, secrets, and proxy setup. */
 import { createAmbientNodeProxyAgent, hasAmbientNodeProxyConfigured } from "@openclaw/proxyline";
 import type { z } from "zod";
 import type { OpenClawConfig } from "../config/config.js";

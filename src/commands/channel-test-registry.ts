@@ -1,4 +1,3 @@
-/** Test registry helpers for channel command suites. */
 import {
   getBundledChannelPlugin,
   listBundledChannelPluginIds,

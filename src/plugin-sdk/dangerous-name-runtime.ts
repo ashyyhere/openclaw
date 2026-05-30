@@ -1,4 +1,3 @@
-/** Runtime SDK barrel for dangerous/sensitive display-name handling. */
 export {
   isDangerousNameMatchingEnabled,
   resolveDangerousNameMatchingEnabled,

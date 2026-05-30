@@ -1,4 +1,3 @@
-/** Tests startup policy decisions for config, secrets, and plugin loading. */
 import { describe, expect, it } from "vitest";
 import {
   resolveCliStartupPolicy,

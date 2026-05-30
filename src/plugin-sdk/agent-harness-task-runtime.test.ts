@@ -1,4 +1,3 @@
-/** Tests scoped agent harness task runtime operations and completion delivery. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { deliverSubagentAnnouncement } from "../agents/subagent-announce-delivery.js";
 import { createAgentHarnessTaskRuntimeScope } from "../tasks/agent-harness-task-runtime-scope.js";

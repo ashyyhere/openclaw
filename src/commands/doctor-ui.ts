@@ -1,4 +1,3 @@
-/** Doctor checks for bundled control UI assets. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { note } from "../../packages/terminal-core/src/note.js";

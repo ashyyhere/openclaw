@@ -1,4 +1,3 @@
-/** Regression coverage for auth profile portability decisions. */
 import { describe, expect, it } from "vitest";
 import {
   buildPortableAuthProfileSecretsStoreForAgentCopy,

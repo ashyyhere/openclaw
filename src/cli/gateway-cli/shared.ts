@@ -1,4 +1,3 @@
-/** Shared gateway CLI labels, service names, and output helpers. */
 import {
   resolveGatewayLaunchAgentLabel,
   resolveGatewaySystemdServiceName,

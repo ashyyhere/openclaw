@@ -1,4 +1,3 @@
-/** Reads channel plugin entries from the active loaded runtime registry. */
 import type { ActiveChannelPluginRuntimeShape } from "../../plugins/channel-registry-state.types.js";
 import { getActivePluginChannelRegistryFromState } from "../../plugins/runtime-channel-state.js";
 import { normalizeOptionalString } from "../../shared/string-coerce.js";

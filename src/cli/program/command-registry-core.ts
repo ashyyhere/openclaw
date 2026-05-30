@@ -1,4 +1,3 @@
-/** Core command registry helpers for lazy and eager command registration. */
 import type { Command } from "commander";
 import { resolveCliArgvInvocation } from "../argv-invocation.js";
 import { shouldRegisterPrimaryCommandOnly } from "../command-registration-policy.js";

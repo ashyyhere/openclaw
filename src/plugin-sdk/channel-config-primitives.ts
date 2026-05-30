@@ -1,4 +1,3 @@
-/** Narrow channel config-schema primitives without provider-schema re-exports. */
 export {
   AllowFromListSchema,
   buildChannelConfigSchema,

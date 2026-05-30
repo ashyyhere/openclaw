@@ -1,4 +1,3 @@
-/** Encodes prompt policy differences between embedded run triggers. */
 import type { EmbeddedRunTrigger } from "./params.js";
 
 type EmbeddedRunTriggerPolicy = {

@@ -1,4 +1,3 @@
-/** Public SDK helpers for memory-host config paths and file access. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import type { OpenClawConfig } from "../config/config.js";

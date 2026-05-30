@@ -1,4 +1,3 @@
-/** Platform service identifiers and profile-aware daemon naming helpers. */
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
 // Default service labels (canonical + legacy compatibility)

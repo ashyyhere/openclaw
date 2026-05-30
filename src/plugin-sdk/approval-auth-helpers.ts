@@ -1,4 +1,3 @@
-/** Public SDK helpers for channel approval authorization adapters. */
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import type { OpenClawConfig } from "./config-runtime.js";
 

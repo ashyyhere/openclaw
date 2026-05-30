@@ -1,4 +1,3 @@
-/** Formats model selections for session and UI display. */
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 
 type ModelDisplaySelectionParams = {

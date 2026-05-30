@@ -1,4 +1,3 @@
-/** Optional JSONL tracing for prompt/session cache diagnostics. */
 import crypto from "node:crypto";
 import path from "node:path";
 import { resolveStateDir } from "../config/paths.js";

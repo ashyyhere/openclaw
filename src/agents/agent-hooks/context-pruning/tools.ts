@@ -1,4 +1,3 @@
-/** Builds predicates that decide which tool messages are safe to prune. */
 import { normalizeLowercaseStringOrEmpty } from "../../../shared/string-coerce.js";
 import { compileGlobPatterns, matchesAnyGlobPattern } from "../../glob-pattern.js";
 import type { ContextPruningToolMatch } from "./settings.js";

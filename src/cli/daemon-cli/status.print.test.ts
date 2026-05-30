@@ -1,4 +1,3 @@
-/** Tests rendered daemon status output. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { formatCliCommand } from "../command-format.js";
 import { printDaemonStatus } from "./status.print.js";

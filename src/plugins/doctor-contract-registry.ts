@@ -1,4 +1,3 @@
-/** Loads plugin doctor contracts for config migration and route-state ownership. */
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";

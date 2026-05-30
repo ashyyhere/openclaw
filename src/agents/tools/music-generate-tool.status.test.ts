@@ -1,4 +1,3 @@
-/** Covers music generation task status and duplicate guard behavior. */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import * as musicGenerationRuntime from "../../music-generation/runtime.js";
 import {

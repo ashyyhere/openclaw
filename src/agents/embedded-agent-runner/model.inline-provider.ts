@@ -1,4 +1,3 @@
-/** Normalizes inline provider/model config into runtime model definitions. */
 import type { ModelDefinitionConfig, ModelProviderConfig } from "../../config/types.js";
 import { normalizeGoogleApiBaseUrl } from "../../infra/google-api-base-url.js";
 import type { Api } from "../../llm/types.js";

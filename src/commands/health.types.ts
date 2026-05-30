@@ -1,4 +1,3 @@
-/** Shared health summary types used by health and status commands. */
 export type ChannelAccountHealthSummary = {
   accountId: string;
   configured?: boolean;

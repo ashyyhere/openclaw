@@ -1,4 +1,3 @@
-/** Live-gated coverage for xAI provider simple completion and streaming. */
 import { completeSimple, type Model, streamSimple } from "openclaw/plugin-sdk/llm";
 import { Type } from "typebox";
 import { describe, expect, it } from "vitest";

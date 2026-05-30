@@ -1,4 +1,3 @@
-/** Shared Vitest mocks for embedded-agent-runner E2E tests. */
 import { vi } from "vitest";
 
 type EmbeddedRunnerFastRunMockOptions = {

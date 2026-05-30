@@ -1,4 +1,3 @@
-/** Shared task status helpers for image/video/music generation tasks. */
 import { resolveNonNegativeIntegerOption } from "../shared/number-coercion.js";
 import {
   normalizeLowercaseStringOrEmpty,

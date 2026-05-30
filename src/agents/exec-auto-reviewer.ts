@@ -1,4 +1,3 @@
-/** Model-backed exec safety reviewer wiring and response parsing. */
 import { z } from "zod";
 import type { AgentModelConfig } from "../config/types.agents-shared.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";

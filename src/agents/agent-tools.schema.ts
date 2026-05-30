@@ -1,4 +1,3 @@
-/** Tool parameter schema normalization wrappers for provider compatibility. */
 import { copyPluginToolMeta } from "../plugins/tools.js";
 import {
   normalizeToolParameterSchema,

@@ -1,4 +1,3 @@
-/** Waits for gateway agent runs and reads updated assistant replies. */
 import { callGateway } from "../gateway/call.js";
 import { formatErrorMessage } from "../infra/errors.js";
 import { normalizeBlockedLivenessWaitStatus } from "../shared/agent-liveness.js";

@@ -1,4 +1,3 @@
-/** Runs selected configure wizard sections from CLI input. */
 import { formatCliCommand } from "../cli/command-format.js";
 import type { RuntimeEnv } from "../runtime.js";
 import { defaultRuntime } from "../runtime.js";

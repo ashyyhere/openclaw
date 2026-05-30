@@ -1,4 +1,3 @@
-/** Hydrates prepared snapshots with resolved skill entries when missing. */
 type SnapshotWithRuntimeSkills = {
   resolvedSkills?: unknown;
 };

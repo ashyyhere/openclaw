@@ -1,4 +1,3 @@
-/** Tests gateway run-loop host, port, and restart helper behavior. */
 import { describe, expect, it, vi } from "vitest";
 import type { GatewayServer } from "../../gateway/server.impl.js";
 import type { GatewayBonjourBeacon } from "../../infra/bonjour-discovery.js";

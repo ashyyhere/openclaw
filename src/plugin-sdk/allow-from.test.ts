@@ -1,4 +1,3 @@
-/** Tests allowFrom normalization and sender matching helpers. */
 import { describe, expect, it } from "vitest";
 import {
   formatAllowFromLowercase,

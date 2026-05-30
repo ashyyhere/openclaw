@@ -1,4 +1,3 @@
-/** Resolves user-facing session references into internal session keys. */
 import {
   GATEWAY_CLIENT_IDS,
   normalizeGatewayClientId,

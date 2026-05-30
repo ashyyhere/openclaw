@@ -1,4 +1,3 @@
-/** Covers nodes tool command and media actions. */
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 const gatewayMocks = vi.hoisted(() => ({

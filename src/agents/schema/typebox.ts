@@ -1,4 +1,3 @@
-/** Shared TypeBox schema helpers for agent tool definitions. */
 import { Type } from "typebox";
 import {
   CHANNEL_TARGET_DESCRIPTION,

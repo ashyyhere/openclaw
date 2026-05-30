@@ -1,4 +1,3 @@
-/** Tests descriptor exports for lazily imported sub-CLIs. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 async function importSubCliDescriptors() {

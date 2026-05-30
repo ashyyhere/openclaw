@@ -1,4 +1,3 @@
-/** Registers generic gateway RPC CLI commands. */
 import type { Command } from "commander";
 import type {
   GatewayClientMode,

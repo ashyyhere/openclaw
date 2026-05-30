@@ -1,4 +1,3 @@
-/** Runtime provider flow re-exports for model picker commands. */
 import {
   resolveProviderModelPickerFlowContributions,
   resolveProviderModelPickerFlowEntries,

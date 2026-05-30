@@ -1,4 +1,3 @@
-/** Regression coverage for runtime external OAuth profile overlays. */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { ProviderExternalAuthProfile } from "../../plugins/types.js";
 import {

@@ -1,4 +1,3 @@
-/** Tests directory lookup CLI commands for channel plugins. */
 import { Command } from "commander";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { registerDirectoryCli } from "./directory-cli.js";

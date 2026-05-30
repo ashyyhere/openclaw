@@ -1,4 +1,3 @@
-/** Delegates tool schema normalization to provider runtime hooks. */
 import type { TSchema } from "typebox";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { ProviderRuntimePluginHandle } from "../../plugins/provider-hook-runtime.js";

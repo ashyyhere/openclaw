@@ -1,4 +1,3 @@
-/** Tests OpenAI-family model default helpers. */
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import {

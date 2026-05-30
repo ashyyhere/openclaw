@@ -1,4 +1,3 @@
-/** Downloads skill-owned tool artifacts and optionally extracts them inside the skill tools root. */
 import { randomUUID } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";

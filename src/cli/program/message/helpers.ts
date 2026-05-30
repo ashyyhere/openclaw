@@ -1,4 +1,3 @@
-/** Shared helpers for registering message-channel CLI subcommands. */
 import type { Command } from "commander";
 import { getChannelPlugin } from "../../../channels/plugins/index.js";
 import {

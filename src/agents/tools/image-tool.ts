@@ -1,4 +1,3 @@
-/** Agent tool for asking vision models about images. */
 import { resolve, isAbsolute } from "node:path";
 import { Type } from "typebox";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";

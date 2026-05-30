@@ -1,4 +1,3 @@
-/** Tracks prompt-cache relevant changes between embedded-agent attempts. */
 import crypto from "node:crypto";
 import type { NormalizedUsage } from "../usage.js";
 

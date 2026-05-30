@@ -1,4 +1,3 @@
-/** Implements lightweight routed command handlers for fast CLI paths. */
 import { defaultRuntime } from "../../runtime.js";
 import { createLazyImportLoader } from "../../shared/lazy-promise.js";
 import {

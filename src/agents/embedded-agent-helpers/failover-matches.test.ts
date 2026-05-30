@@ -1,4 +1,3 @@
-/** Regression coverage for failover string matchers. */
 import { describe, expect, it } from "vitest";
 import {
   isAuthErrorMessage,

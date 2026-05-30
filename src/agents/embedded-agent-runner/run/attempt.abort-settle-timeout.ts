@@ -1,4 +1,3 @@
-/** Resolves how long to wait for SDK sessions to settle after abort. */
 import { parseStrictPositiveInteger } from "../../../infra/parse-finite-number.js";
 
 type AbortSettleTimeoutEnv = Partial<

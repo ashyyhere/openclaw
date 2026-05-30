@@ -1,4 +1,3 @@
-/** Builds human-readable auth labels for selected model providers. */
 import type { SessionEntry } from "../config/sessions.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { uniqueStrings } from "../shared/string-normalization.js";

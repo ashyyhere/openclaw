@@ -1,4 +1,3 @@
-/** Forgiving target-path extractor for apply_patch envelopes. */
 import path from "node:path";
 import { resolveSandboxInputPath } from "./sandbox-paths.js";
 import type { SandboxFsBridge } from "./sandbox/fs-bridge.js";

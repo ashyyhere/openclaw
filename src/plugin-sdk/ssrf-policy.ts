@@ -1,4 +1,3 @@
-/** Public SDK helpers for SSRF policy construction and URL validation. */
 import {
   isBlockedHostnameOrIp,
   isPrivateIpAddress,

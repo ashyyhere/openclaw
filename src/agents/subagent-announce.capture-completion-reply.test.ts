@@ -1,4 +1,3 @@
-/** Regression coverage for delayed subagent completion reply capture. */
 import { describe, expect, it, vi } from "vitest";
 import { captureSubagentCompletionReplyUsing } from "./subagent-announce-capture.js";
 

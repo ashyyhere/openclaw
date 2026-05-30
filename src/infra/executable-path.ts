@@ -1,4 +1,3 @@
-/** Resolves executable paths from user input, cwd, PATH, and Windows PATHEXT. */
 import fs from "node:fs";
 import path from "node:path";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";

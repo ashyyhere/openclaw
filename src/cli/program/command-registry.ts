@@ -1,4 +1,3 @@
-/** Registers all top-level CLI command descriptors into a Commander program. */
 import type { Command } from "commander";
 import {
   getCoreCliCommandDescriptors,

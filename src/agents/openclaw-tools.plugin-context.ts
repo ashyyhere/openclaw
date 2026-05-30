@@ -1,4 +1,3 @@
-/** Builds plugin tool execution context from OpenClaw tool construction options. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { normalizeDeliveryContext } from "../utils/delivery-context.js";
 import type { GatewayMessageChannel } from "../utils/message-channel.js";

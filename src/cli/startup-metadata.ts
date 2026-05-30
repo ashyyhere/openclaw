@@ -1,4 +1,3 @@
-/** Produces cached CLI startup metadata for help and option summaries. */
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";

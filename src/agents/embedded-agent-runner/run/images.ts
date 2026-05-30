@@ -1,4 +1,3 @@
-/** Detects, validates, and loads prompt image references for embedded attempts. */
 import path from "node:path";
 import { formatErrorMessage } from "../../../infra/errors.js";
 import { assertNoWindowsNetworkPath, safeFileURLToPath } from "../../../infra/local-file-access.js";

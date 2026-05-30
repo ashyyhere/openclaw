@@ -1,4 +1,3 @@
-/** Classifies provider/runtime errors for retry, failover, and user-facing copy. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { AssistantMessage } from "../../llm/types.js";
 import { createSubsystemLogger } from "../../logging/subsystem.js";

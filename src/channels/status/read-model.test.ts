@@ -1,4 +1,3 @@
-/** Tests read-model projection of runtime channel account status. */
 import { describe, expect, it } from "vitest";
 import {
   findRuntimeChannelAccount,

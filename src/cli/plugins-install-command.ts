@@ -1,4 +1,3 @@
-/** Implements plugin install and update CLI workflows. */
 import fs from "node:fs";
 import { theme } from "../../packages/terminal-core/src/theme.js";
 import { collectChannelDoctorStaleConfigMutations } from "../commands/doctor/shared/channel-doctor.js";

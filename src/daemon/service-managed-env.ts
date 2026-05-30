@@ -1,4 +1,3 @@
-/** Tracks managed environment keys embedded in daemon service definitions. */
 import { normalizeEnvVarKey } from "../infra/host-env-security.js";
 import { sortUniqueStrings } from "../shared/string-normalization.js";
 import type { GatewayServiceEnvironmentValueSource } from "./service-types.js";

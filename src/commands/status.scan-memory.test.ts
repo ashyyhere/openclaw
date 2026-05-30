@@ -1,4 +1,3 @@
-/** Tests memory status snapshot collection for status scans. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({

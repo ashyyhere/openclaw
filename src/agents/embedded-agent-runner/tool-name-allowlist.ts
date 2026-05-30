@@ -1,4 +1,3 @@
-/** Builds the session tool allowlist for embedded-agent runtime tools. */
 import type { AgentTool } from "../runtime/index.js";
 import type { ClientToolDefinition } from "./run/params.js";
 

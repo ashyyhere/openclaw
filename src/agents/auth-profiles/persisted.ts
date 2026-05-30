@@ -1,4 +1,3 @@
-/** Coerces, merges, migrates, and serializes persisted auth profile stores. */
 import { createHash } from "node:crypto";
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
 import { resolveOAuthPath } from "../../config/paths.js";

@@ -1,4 +1,3 @@
-/** Tests commitments command listing and status updates. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { stripAnsi } from "../../packages/terminal-core/src/ansi.js";
 import type { CommitmentRecord } from "../commitments/types.js";

@@ -1,4 +1,3 @@
-/** Covers abortable promise wrapper behavior. */
 import { describe, expect, it } from "vitest";
 import { abortable } from "./abortable.js";
 

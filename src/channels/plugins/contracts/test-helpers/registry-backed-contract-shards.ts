@@ -1,4 +1,3 @@
-/** Installs sharded registry-backed contract suites for bundled channel plugins. */
 import { expectChannelPluginContract } from "openclaw/plugin-sdk/channel-test-helpers";
 import { beforeAll, describe, it } from "vitest";
 import { getBundledChannelPluginAsync } from "./bundled-channel-plugin-loader.js";

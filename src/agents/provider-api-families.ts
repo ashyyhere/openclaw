@@ -1,4 +1,3 @@
-/** Provider API-family predicates used by GPT request payload patches. */
 const GPT_PARALLEL_TOOL_CALLS_APIS = new Set([
   "openai-completions",
   "openai-responses",

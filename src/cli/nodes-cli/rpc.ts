@@ -1,4 +1,3 @@
-/** Gateway RPC helpers used by nodes CLI commands. */
 import { randomUUID } from "node:crypto";
 import type { Command } from "commander";
 import type { OperatorScope } from "../../gateway/method-scopes.js";

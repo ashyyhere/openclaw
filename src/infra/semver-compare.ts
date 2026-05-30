@@ -1,4 +1,3 @@
-/** Parses and compares semver strings used by release and update checks. */
 type ComparableSemver = {
   major: number;
   minor: number;

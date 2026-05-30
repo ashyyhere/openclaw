@@ -1,4 +1,3 @@
-/** Tests ACP session identifier and resume-hint rendering. */
 import { describe, expect, it } from "vitest";
 import {
   resolveAcpSessionCwd,

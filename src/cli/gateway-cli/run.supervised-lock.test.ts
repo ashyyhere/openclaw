@@ -1,4 +1,3 @@
-/** Tests supervised gateway run lock handling. */
 import { describe, expect, it, vi } from "vitest";
 import { GatewayLockError } from "../../infra/gateway-lock.js";
 import { testing } from "./run.js";

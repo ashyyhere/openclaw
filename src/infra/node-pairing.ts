@@ -1,4 +1,3 @@
-/** Manages pending and approved node pairing records with scoped approvals. */
 import { randomUUID } from "node:crypto";
 import { resolveMissingRequestedScope } from "../shared/operator-scope-compat.js";
 import { normalizeArrayBackedTrimmedStringList } from "../shared/string-normalization.js";

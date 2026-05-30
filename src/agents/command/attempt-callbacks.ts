@@ -1,4 +1,3 @@
-/** Small callback bundle for tracking whether an agent attempt started. */
 import type { AgentMessage } from "../runtime/index.js";
 
 /** Mutable flags tracking lifecycle progress for one agent attempt. */

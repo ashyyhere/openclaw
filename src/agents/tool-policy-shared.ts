@@ -1,4 +1,3 @@
-/** Shared coercion and matching helpers for tool policy modules. */
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import { uniqueStrings } from "../shared/string-normalization.js";
 import {

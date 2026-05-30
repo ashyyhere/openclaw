@@ -1,4 +1,3 @@
-/** High-level exec tool implementation and target selection. */
 import { constants as fsConstants } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";

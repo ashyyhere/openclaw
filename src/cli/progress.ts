@@ -1,4 +1,3 @@
-/** Creates CLI progress reporters for interactive and noninteractive output. */
 import { spinner } from "@clack/prompts";
 import {
   createOscProgressController,

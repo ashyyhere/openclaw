@@ -1,4 +1,3 @@
-/** Shared persisted subagent registry record and delivery state contracts. */
 import type { DeliveryContext } from "../utils/delivery-context.types.js";
 import type { SubagentRunOutcome } from "./subagent-announce-output.js";
 import type { SubagentLifecycleEndedReason } from "./subagent-lifecycle-events.js";

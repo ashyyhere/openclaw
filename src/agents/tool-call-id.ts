@@ -1,4 +1,3 @@
-/** Generates deterministic ids for tool calls without provider-supplied ids. */
 import { createHash } from "node:crypto";
 import type { AgentMessage } from "./runtime/index.js";
 import { isAllowedToolCallName, normalizeAllowedToolNames } from "./tool-call-shared.js";

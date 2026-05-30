@@ -1,4 +1,3 @@
-/** Normalizes embedded-attempt messages before they cross the LLM boundary. */
 import { stripInboundMetadata } from "../../../auto-reply/reply/strip-inbound-meta.js";
 import { stripHistoricalRuntimeContextCustomMessages } from "../../internal-runtime-context.js";
 import type { AgentMessage } from "../../runtime/index.js";

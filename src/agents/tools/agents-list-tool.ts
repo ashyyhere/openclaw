@@ -1,4 +1,3 @@
-/** Tool for listing configured OpenClaw agents. */
 import { Type } from "typebox";
 import { getRuntimeConfig } from "../../config/config.js";
 import {

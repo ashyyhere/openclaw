@@ -1,4 +1,3 @@
-/** Shared mocks for subagent registry tests. */
 import { vi } from "vitest";
 
 const noop = () => {};

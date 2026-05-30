@@ -1,4 +1,3 @@
-/** Internal barrel for channel plugin runtime types and capabilities. */
 import type { ChannelMessageActionName as ChannelMessageActionNameFromList } from "./message-action-names.js";
 
 /** Canonical channel message action names exposed through the channel plugin barrel. */

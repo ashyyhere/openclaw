@@ -1,4 +1,3 @@
-/** Runtime SDK barrel for reply dispatch chunk-mode resolution. */
 export { resolveChunkMode } from "../auto-reply/chunk.js";
 /** Conversation-label helper used by plugins that dispatch replies directly. */
 export { generateConversationLabel } from "../auto-reply/reply/conversation-label-generator.js";

@@ -1,4 +1,3 @@
-/** CLI wrapper around shared TCP port parsing helpers. */
 import { parseTcpPort } from "../../infra/tcp-port.js";
 
 /** Re-exported API for src/cli/shared, starting with MAX TCP PORT. */

@@ -1,4 +1,3 @@
-/** Maps legacy and modern CLI outbound send dependency sources. */
 import { normalizeChannelId } from "../channels/registry.js";
 import {
   resolveLegacyOutboundSendDepKeys,

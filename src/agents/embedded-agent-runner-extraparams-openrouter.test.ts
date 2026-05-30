@@ -1,4 +1,3 @@
-/** Tests OpenRouter extra-params handling in embedded-agent runner. */
 import type { StreamFn } from "openclaw/plugin-sdk/agent-core";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import {

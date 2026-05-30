@@ -1,4 +1,3 @@
-/** Writes bundled MCP configuration files for Gemini CLI runs. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

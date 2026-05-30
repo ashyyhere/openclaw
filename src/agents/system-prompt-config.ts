@@ -1,4 +1,3 @@
-/** Resolves system prompt config flags and additive sections. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { buildTtsSystemPromptHint } from "../tts/tts.js";
 import { resolveAgentConfig } from "./agent-scope.js";

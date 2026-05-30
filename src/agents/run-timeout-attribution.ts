@@ -1,4 +1,3 @@
-/** Normalizes timeout phase attribution for agent runs. */
 export const AGENT_RUN_TIMEOUT_PHASES = [
   "queue",
   "preflight",

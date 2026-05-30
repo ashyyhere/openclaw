@@ -1,4 +1,3 @@
-/** Tests account-scoped allowlist config edit helpers and legacy path cleanup. */
 import { describe, expect, it } from "vitest";
 import {
   buildDmGroupAccountAllowlistAdapter,

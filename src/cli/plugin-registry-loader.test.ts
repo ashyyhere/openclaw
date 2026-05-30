@@ -1,4 +1,3 @@
-/** Tests lazy loading and error handling for the plugin registry. */
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 const ensurePluginRegistryLoadedMock = vi.hoisted(() => vi.fn());

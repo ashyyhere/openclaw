@@ -1,4 +1,3 @@
-/** Applies bounded safety timeouts around embedded-agent compaction operations. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { CompactResult, ContextEngine } from "../../context-engine/types.js";
 import { withTimeout } from "../../node-host/with-timeout.js";

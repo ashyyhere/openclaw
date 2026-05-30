@@ -1,4 +1,3 @@
-/** Regression coverage for steer restart registry replacement. */
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { ContextEngine } from "../context-engine/types.js";
 

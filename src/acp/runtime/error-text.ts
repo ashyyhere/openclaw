@@ -1,4 +1,3 @@
-/** Human-readable ACP runtime error rendering with operator next steps. */
 import { type AcpRuntimeErrorCode, AcpRuntimeError, toAcpRuntimeError } from "./errors.js";
 
 function resolveAcpRuntimeErrorNextStep(error: AcpRuntimeError): string | undefined {

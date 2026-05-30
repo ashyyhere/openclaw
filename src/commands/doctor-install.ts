@@ -1,4 +1,3 @@
-/** Installs missing doctor-managed support files and reports setup status. */
 import fs from "node:fs";
 import path from "node:path";
 import { note } from "../../packages/terminal-core/src/note.js";

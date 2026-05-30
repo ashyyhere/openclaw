@@ -1,4 +1,3 @@
-/** Loads read-only channel plugin surfaces without activating live runtimes. */
 import { createHash } from "node:crypto";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";

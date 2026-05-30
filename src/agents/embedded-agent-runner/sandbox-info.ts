@@ -1,4 +1,3 @@
-/** Builds embedded-agent sandbox metadata exposed to tool runtimes. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { ExecElevatedDefaults, ExecToolDefaults } from "../bash-tools.js";
 import { resolveExecDefaults } from "../exec-defaults.js";

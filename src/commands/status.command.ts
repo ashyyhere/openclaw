@@ -1,4 +1,3 @@
-/** Main human-readable status command implementation. */
 import {
   normalizePairingConnectRequestId,
   readConnectPairingRequiredMessage,

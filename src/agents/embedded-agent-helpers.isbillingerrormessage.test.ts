@@ -1,4 +1,3 @@
-/** Tests billing error message detection. */
 import { describe, expect, it } from "vitest";
 import {
   classifyProviderRuntimeFailureKind,

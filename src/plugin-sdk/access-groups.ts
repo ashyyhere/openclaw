@@ -1,4 +1,3 @@
-/** Public SDK helpers for resolving access-group references embedded in allowFrom lists. */
 import {
   ACCESS_GROUP_ALLOW_FROM_PREFIX,
   parseAccessGroupAllowFromEntry,

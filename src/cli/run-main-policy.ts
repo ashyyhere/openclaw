@@ -1,4 +1,3 @@
-/** Resolves main-process policy before building or executing the CLI program. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { consumeRootOptionToken } from "../infra/cli-root-options.js";
 import {

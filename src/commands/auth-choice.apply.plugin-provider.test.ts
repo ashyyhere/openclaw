@@ -1,4 +1,3 @@
-/** Tests applying auth choices from loaded plugin providers. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   applyAuthChoiceLoadedPluginProvider,

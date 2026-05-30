@@ -1,4 +1,3 @@
-/** Builds diagnostic reports for generated system prompt content. */
 import { createHash } from "node:crypto";
 import type { SessionSystemPromptReport } from "../config/sessions/types.js";
 import { buildBootstrapInjectionStats } from "./bootstrap-budget.js";

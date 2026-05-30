@@ -1,4 +1,3 @@
-/** Assistant message text/thinking extraction helpers for embedded-agent streams. */
 import type { AssistantMessage } from "../llm/types.js";
 import { extractTextFromChatContent } from "../shared/chat-content.js";
 import {

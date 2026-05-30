@@ -1,4 +1,3 @@
-/** Tests update status line formatting. */
 import { describe, expect, it } from "vitest";
 import type { UpdateCheckResult } from "../infra/update-check.js";
 import { VERSION } from "../version.js";

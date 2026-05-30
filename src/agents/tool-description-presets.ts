@@ -1,4 +1,3 @@
-/** Reusable short descriptions for built-in tool display summaries. */
 export const EXEC_TOOL_DISPLAY_SUMMARY = "Run shell now.";
 /** Short display summary for process/session control tools. */
 export const PROCESS_TOOL_DISPLAY_SUMMARY = "Inspect/control exec sessions.";

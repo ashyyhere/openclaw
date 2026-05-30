@@ -1,4 +1,3 @@
-/** Probes gateway status for daemon CLI output and health checks. */
 import type { OpenClawConfig } from "../../config/types.js";
 import type { GatewayProbeResult } from "../../gateway/probe.js";
 import { formatErrorMessage } from "../../infra/errors.js";

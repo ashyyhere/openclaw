@@ -1,4 +1,3 @@
-/** Converts active plugin runtime registration state into channel plugin records. */
 import type {
   ActiveChannelPluginRuntimeShape,
   ActivePluginChannelRegistration,

@@ -1,4 +1,3 @@
-/** Tests secrets CLI list, get, set, and delete behavior. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

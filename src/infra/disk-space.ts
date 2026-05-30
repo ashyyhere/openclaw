@@ -1,4 +1,3 @@
-/** Reads disk capacity and formats low-space warnings for install/update flows. */
 import fs from "node:fs";
 import path from "node:path";
 

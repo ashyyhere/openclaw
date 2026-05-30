@@ -1,4 +1,3 @@
-/** Shared config and runtime helpers for agents subcommands. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { RuntimeEnv } from "../runtime.js";
 import {

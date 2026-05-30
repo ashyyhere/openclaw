@@ -1,4 +1,3 @@
-/** Parse an argument string using simple shell-style single and double quotes. */
 export function parseCommandArgs(argsString: string): string[] {
   const args: string[] = [];
   let current = "";

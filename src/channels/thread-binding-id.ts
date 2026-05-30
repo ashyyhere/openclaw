@@ -1,4 +1,3 @@
-/** Parses conversation ids from channel thread binding identifiers. */
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 
 /** Extracts the conversation id from an account-scoped thread binding id. */

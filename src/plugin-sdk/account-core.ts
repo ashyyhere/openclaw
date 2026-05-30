@@ -1,4 +1,3 @@
-/** Public SDK barrel for account lookup, normalization, and default-account fallback helpers. */
 export type { OpenClawConfig } from "../config/config.js";
 
 /** Account action gate used by channel plugins to serialize account-scoped operations. */

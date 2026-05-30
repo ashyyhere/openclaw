@@ -1,4 +1,3 @@
-/** Applies auth choices for API-key based provider plugins. */
 import { resolveProviderMatch } from "../plugins/provider-auth-choice-helpers.js";
 import { resolvePluginProviders } from "../plugins/provider-auth-choice.runtime.js";
 import type { ProviderAuthKind } from "../plugins/types.js";

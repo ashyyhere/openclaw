@@ -1,4 +1,3 @@
-/** Validation and merge helpers for ACP runtime options carried in session metadata. */
 import { isAbsolute } from "node:path";
 import type { AcpSessionRuntimeOptions, SessionAcpMeta } from "../../config/sessions/types.js";
 import { parseStrictPositiveInteger } from "../../infra/parse-finite-number.js";

@@ -1,4 +1,3 @@
-/** Registers transcript listing and export commands. */
 import type { Dirent } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";

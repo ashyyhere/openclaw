@@ -1,4 +1,3 @@
-/** Secret audit scanner for plaintext values, unresolved refs, and legacy residue. */
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

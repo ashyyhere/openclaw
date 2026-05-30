@@ -1,4 +1,3 @@
-/** Commander option helpers for inherited and explicitly supplied flags. */
 import type { Command } from "commander";
 
 /** Reused helper for has Explicit Options behavior in src/cli. */

@@ -1,4 +1,3 @@
-/** Prunes old tool calls/results while preserving prompt-critical context. */
 import type { ImageContent, TextContent, ToolResultMessage } from "../../../llm/types.js";
 import { CHARS_PER_TOKEN_ESTIMATE, estimateStringChars } from "../../../utils/cjk-chars.js";
 import { dropThinkingBlocks } from "../../embedded-agent-runner/thinking.js";

@@ -1,4 +1,3 @@
-/** Failover error type, classification, and coercion helpers. */
 import { readErrorName } from "../infra/errors.js";
 import { parseStrictNonNegativeInteger } from "../shared/number-coercion.js";
 import {

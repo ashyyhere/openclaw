@@ -1,4 +1,3 @@
-/** Runtime imports isolated for subagent announcement delivery tests and lazy loading. */
 export { getRuntimeConfig } from "../config/config.js";
 /** Session-store helpers used by subagent announce delivery. */
 export {

@@ -1,4 +1,3 @@
-/** Classifies whether tool calls can mutate external or local state. */
 import {
   normalizeLowercaseStringOrEmpty,
   normalizeOptionalLowercaseString,

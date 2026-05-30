@@ -1,4 +1,3 @@
-/** Common legacy channel config keys eligible for single-account promotion. */
 const COMMON_SINGLE_ACCOUNT_PROMOTION_KEYS = [
   "name",
   "token",

@@ -1,4 +1,3 @@
-/** Registers nodes push command. */
 import type { Command } from "commander";
 import { defaultRuntime } from "../../runtime.js";
 import {

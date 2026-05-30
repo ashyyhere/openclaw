@@ -1,4 +1,3 @@
-/** Tests parsing of CLI log level option values. */
 import { describe, expect, it } from "vitest";
 import { parseCliLogLevelOption } from "./log-level-option.js";
 

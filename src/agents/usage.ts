@@ -1,4 +1,3 @@
-/** Normalizes model usage and token accounting from provider responses. */
 import { asFiniteNumber } from "../shared/number-coercion.js";
 
 /** Provider usage payload shape with common token-field aliases. */

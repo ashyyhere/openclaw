@@ -1,4 +1,3 @@
-/** Test fixtures for CLI requirement check reports. */
 function createEmptyRequirements() {
   return {
     bins: [],

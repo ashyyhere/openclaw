@@ -1,4 +1,3 @@
-/** Legacy runtime config migrations for gateway settings. */
 import {
   buildDefaultControlUiAllowedOrigins,
   hasConfiguredControlUiAllowedOrigins,

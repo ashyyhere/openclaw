@@ -1,4 +1,3 @@
-/** Shared status issue normalization helpers for channel account snapshots. */
 import { normalizeOptionalString } from "../../../shared/string-coerce.js";
 import { isRecord } from "../../../utils.js";
 import type { ChannelAccountSnapshot, ChannelStatusIssue } from "../types.public.js";

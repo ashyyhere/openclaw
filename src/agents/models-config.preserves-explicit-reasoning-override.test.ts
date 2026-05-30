@@ -1,4 +1,3 @@
-/** Tests explicit reasoning overrides survive implicit catalog refreshes. */
 import { describe, expect, it } from "vitest";
 import { mergeProviderModels, mergeProviders } from "./models-config.merge.js";
 import type { ProviderConfig } from "./models-config.providers.secrets.js";

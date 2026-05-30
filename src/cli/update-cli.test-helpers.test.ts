@@ -1,4 +1,3 @@
-/** Tests update CLI helper path ownership checks. */
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { isOwningNpmCommand } from "./update-cli.test-helpers.js";

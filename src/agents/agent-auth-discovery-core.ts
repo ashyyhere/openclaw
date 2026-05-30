@@ -1,4 +1,3 @@
-/** Core auth-discovery helpers for env-backed and legacy static credentials. */
 import fs from "node:fs";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { tryReadJsonSync } from "../infra/json-files.js";

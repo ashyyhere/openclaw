@@ -1,4 +1,3 @@
-/** Guards cron dreaming migration constants against drift. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { describe, expect, it } from "vitest";

@@ -1,4 +1,3 @@
-/** Legacy runtime config migrations for diagnostics settings. */
 import {
   defineLegacyConfigMigration,
   getRecord,

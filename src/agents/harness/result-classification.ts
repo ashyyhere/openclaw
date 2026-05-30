@@ -1,4 +1,3 @@
-/** Applies harness-specific result classification to attempt results. */
 import type {
   AgentHarness,
   AgentHarnessAttemptParams,

@@ -1,4 +1,3 @@
-/** Shared fixtures and config mocks for sessions command tests. */
 import { randomUUID } from "node:crypto";
 import fs from "node:fs";
 import os from "node:os";

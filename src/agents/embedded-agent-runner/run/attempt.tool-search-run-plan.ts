@@ -1,4 +1,3 @@
-/** Plans how tool-search tools are exposed during an embedded attempt. */
 import { normalizeToolName } from "../../tool-policy.js";
 import {
   TOOL_CALL_RAW_TOOL_NAME,

@@ -1,4 +1,3 @@
-/** Applies configured, sender, and plugin tool policy filters to available tools. */
 import { filterToolsByPolicy } from "./agent-tools.policy.js";
 import type { AnyAgentTool } from "./agent-tools.types.js";
 import { isKnownCoreToolId } from "./tool-catalog.js";

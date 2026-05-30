@@ -1,4 +1,3 @@
-/** Waits for idle agents before flushing pending tool-result delivery state. */
 type IdleAwareAgent = {
   waitForIdle?: (() => Promise<void>) | undefined;
 };

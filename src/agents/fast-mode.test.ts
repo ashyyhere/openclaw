@@ -1,4 +1,3 @@
-/** Tests fast-mode state resolution. */
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import { resolveFastModeState } from "./fast-mode.js";

@@ -1,4 +1,3 @@
-/** Shared types for inbound channel session routing updates. */
 import type { MsgContext } from "../auto-reply/templating.js";
 import type { GroupKeyResolution, SessionEntry } from "../config/sessions/types.js";
 import type { ChannelRouteRef } from "../plugin-sdk/channel-route.js";

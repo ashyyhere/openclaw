@@ -1,4 +1,3 @@
-/** Decodes HTML entities that appear inside provider-emitted tool call arguments. */
 import { streamSimple } from "../../llm/stream.js";
 import { visitObjectContentBlocks } from "../../shared/message-content-blocks.js";
 import type { StreamFn } from "../runtime/index.js";

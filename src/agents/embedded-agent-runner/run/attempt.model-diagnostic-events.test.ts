@@ -1,4 +1,3 @@
-/** Covers diagnostic model-call events emitted around attempt streams. */
 import type { StreamFn } from "openclaw/plugin-sdk/agent-core";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {

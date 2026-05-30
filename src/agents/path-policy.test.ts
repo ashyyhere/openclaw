@@ -1,4 +1,3 @@
-/** Tests workspace/sandbox path boundary policy helpers. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { withMockedWindowsPlatform } from "../test-utils/vitest-spies.js";
 

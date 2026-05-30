@@ -1,4 +1,3 @@
-/** Tests ACP session metadata store read/list/upsert behavior. */
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../../config/config.js";
 

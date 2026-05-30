@@ -1,4 +1,3 @@
-/** Tests visible model catalog filtering. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveVisibleModelCatalog } from "./model-catalog-visibility.js";

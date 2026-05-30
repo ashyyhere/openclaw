@@ -1,4 +1,3 @@
-/** Tests provider auth alias resolution from plugin metadata. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const pluginRegistryMocks = vi.hoisted(() => {

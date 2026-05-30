@@ -1,4 +1,3 @@
-/** Tests simple completion model preparation and execution. */
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { Model } from "../llm/types.js";

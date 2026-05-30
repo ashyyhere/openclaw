@@ -1,4 +1,3 @@
-/** Assertions shared by agent filesystem tool tests. */
 import { expect } from "vitest";
 
 type TextResultBlock = { type: string; text?: string };

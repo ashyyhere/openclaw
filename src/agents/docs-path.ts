@@ -1,4 +1,3 @@
-/** Resolves local docs/source checkout paths and public reference URLs. */
 import fs from "node:fs";
 import path from "node:path";
 import { resolveOpenClawPackageRoot } from "../infra/openclaw-root.js";

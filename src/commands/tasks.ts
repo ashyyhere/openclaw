@@ -1,4 +1,3 @@
-/** Implements task listing, inspection, cleanup, and audit commands. */
 import fs from "node:fs";
 import { isRich, theme } from "../../packages/terminal-core/src/theme.js";
 import { formatCliCommand } from "../cli/command-format.js";

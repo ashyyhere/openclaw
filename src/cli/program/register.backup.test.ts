@@ -1,4 +1,3 @@
-/** Tests backup command registration. */
 import { Command } from "commander";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { registerBackupCommand } from "./register.backup.js";

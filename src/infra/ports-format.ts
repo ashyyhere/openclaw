@@ -1,4 +1,3 @@
-/** Classifies and formats port listener diagnostics for gateway startup checks. */
 import { formatCliCommand } from "../cli/command-format.js";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import type { PortListener, PortListenerKind, PortUsage } from "./ports-types.js";

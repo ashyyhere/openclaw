@@ -1,4 +1,3 @@
-/** Runtime helper re-exports used by media and model-backed tools. */
 export { getApiKeyForModel, requireApiKey } from "../model-auth.js";
 /** Image model fallback runner shared by media tools. */
 export { runWithImageModelFallback } from "../model-fallback.js";

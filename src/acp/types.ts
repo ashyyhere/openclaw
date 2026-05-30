@@ -1,4 +1,3 @@
-/** Shared ACP server/session option types and agent metadata. */
 import type { SessionId } from "@agentclientprotocol/sdk";
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 import { VERSION } from "../version.js";

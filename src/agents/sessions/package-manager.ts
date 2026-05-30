@@ -1,4 +1,3 @@
-/** Discovers user/project/package resources for session loading. */
 import { createHash } from "node:crypto";
 import { existsSync, readdirSync, readFileSync, realpathSync, statSync } from "node:fs";
 import { homedir, tmpdir } from "node:os";

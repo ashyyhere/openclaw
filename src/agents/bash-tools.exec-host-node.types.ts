@@ -1,4 +1,3 @@
-/** Shared parameter type for node-host exec execution. */
 import type { ExecAsk, ExecSecurity } from "../infra/exec-approvals.js";
 import type { ExecAutoReviewer } from "../infra/exec-auto-review.js";
 import type { ExecElevatedDefaults } from "./bash-tools.exec-types.js";

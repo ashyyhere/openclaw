@@ -1,4 +1,3 @@
-/** Test support for background media generation task assertions. */
 import { expect, vi } from "vitest";
 
 type MockWithReset = {

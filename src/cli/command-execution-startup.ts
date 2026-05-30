@@ -1,4 +1,3 @@
-/** Runs common startup steps before executing a CLI command handler. */
 import { routeLogsToStderr } from "../logging/console.js";
 import type { RuntimeEnv } from "../runtime.js";
 import { resolveCliArgvInvocation } from "./argv-invocation.js";

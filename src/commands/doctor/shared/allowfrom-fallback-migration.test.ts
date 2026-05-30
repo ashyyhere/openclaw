@@ -1,4 +1,3 @@
-/** Tests migration of group allowFrom fallback config. */
 import { describe, expect, it, vi } from "vitest";
 import { maybeRepairGroupAllowFromFallback } from "./allowfrom-fallback-migration.js";
 

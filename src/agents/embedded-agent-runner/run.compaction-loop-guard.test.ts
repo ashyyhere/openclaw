@@ -1,4 +1,3 @@
-/** Guards against repeated compaction retries becoming an embedded-run loop. */
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type {
   diagnosticSessionStates as DiagnosticSessionStatesType,

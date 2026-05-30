@@ -1,4 +1,3 @@
-/** Tests channel listing and metadata CLI commands. */
 import { Command } from "commander";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { PluginPackageChannel } from "../plugins/manifest.js";

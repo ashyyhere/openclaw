@@ -1,4 +1,3 @@
-/** Mutable plan for assembling daemon service environment variables. */
 import { normalizeEnvVarKey } from "../infra/host-env-security.js";
 import type { GatewayServiceEnvironmentValueSource } from "./service-types.js";
 

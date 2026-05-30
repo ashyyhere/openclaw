@@ -1,4 +1,3 @@
-/** Tests agent command ACP session behavior. */
 import fs from "node:fs";
 import path from "node:path";
 import { withTempHome as withTempHomeBase } from "openclaw/plugin-sdk/test-env";

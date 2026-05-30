@@ -1,4 +1,3 @@
-/** Prompts and normalizes group access policy for channel setup wizards. */
 import { normalizeStringEntries } from "../../shared/string-normalization.js";
 import type { WizardPrompter } from "../../wizard/prompts.js";
 

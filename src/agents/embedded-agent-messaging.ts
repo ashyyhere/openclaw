@@ -1,4 +1,3 @@
-/** Identifies messaging tools and send actions during embedded-agent runs. */
 import { getChannelPlugin, normalizeChannelId } from "../channels/plugins/index.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 

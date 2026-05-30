@@ -1,4 +1,3 @@
-/** Legacy runtime config migrations for provider settings. */
 import {
   defineLegacyConfigMigration,
   type LegacyConfigMigrationSpec,

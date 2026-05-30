@@ -1,4 +1,3 @@
-/** Public SDK helpers for LM Studio provider config/auth setup. */
 import type { OpenClawConfig } from "../config/types.js";
 import type {
   ProviderAuthMethodNonInteractiveContext,

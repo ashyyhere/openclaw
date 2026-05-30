@@ -1,4 +1,3 @@
-/** Shared backup command test fixtures and runtime mocks. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { vi } from "vitest";

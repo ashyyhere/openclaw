@@ -1,4 +1,3 @@
-/** Merges media payloads from tool calls into embedded-run reply payloads. */
 import type { SourceReplyDeliveryMode } from "../../../auto-reply/get-reply-options.types.js";
 import {
   copyReplyPayloadMetadata,

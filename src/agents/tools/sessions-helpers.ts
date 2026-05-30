@@ -1,4 +1,3 @@
-/** Shared helpers and re-exports for session-related tools. */
 export {
   createAgentToAgentPolicy,
   createSessionVisibilityGuard,

@@ -1,4 +1,3 @@
-/** Registry accessors for channel setup plugins and setup wizards. */
 import { listChannelSetupPlugins } from "../../channels/plugins/setup-registry.js";
 import { buildChannelSetupWizardAdapterFromSetupWizard } from "../../channels/plugins/setup-wizard.js";
 import type { ChannelSetupWizard } from "../../channels/plugins/setup-wizard.js";

@@ -1,4 +1,3 @@
-/** Shared helpers for onboarding config writes and prompt orchestration. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { inspect } from "node:util";

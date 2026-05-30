@@ -1,4 +1,3 @@
-/** Public SDK helper for plugin runtime singleton slots. */
 export type { PluginRuntime } from "../plugins/runtime/types.js";
 
 const pluginRuntimeStoreRegistryKey = Symbol.for("openclaw.plugin-sdk.runtime-store-registry");

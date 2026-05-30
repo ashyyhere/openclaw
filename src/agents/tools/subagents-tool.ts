@@ -1,4 +1,3 @@
-/** Compatibility tool that exposes subagent/session-spawn guidance. */
 import { Type } from "typebox";
 import { getRuntimeConfig } from "../../config/config.js";
 import { optionalPositiveIntegerSchema, optionalStringEnum } from "../schema/typebox.js";

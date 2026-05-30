@@ -1,4 +1,3 @@
-/** Resolves telemetry/source labels for skill entries. */
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 import type { SkillTelemetrySource } from "../types.js";
 import type { Skill } from "./skill-contract.js";

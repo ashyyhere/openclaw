@@ -1,4 +1,3 @@
-/** Test helpers for reading generated models.json fixtures. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { resolveDefaultAgentDir } from "./agent-scope.js";

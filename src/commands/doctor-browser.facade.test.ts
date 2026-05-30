@@ -1,4 +1,3 @@
-/** Tests doctor browser facade checks and legacy residue detection. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import {

@@ -1,4 +1,3 @@
-/** Tests fast status JSON scan defaults and output. */
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   applyStatusScanDefaults,

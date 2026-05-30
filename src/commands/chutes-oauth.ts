@@ -1,4 +1,3 @@
-/** Implements the Chutes OAuth browser callback command flow. */
 import { randomBytes } from "node:crypto";
 import { createServer } from "node:http";
 import type { ChutesOAuthAppConfig } from "../agents/chutes-oauth.js";

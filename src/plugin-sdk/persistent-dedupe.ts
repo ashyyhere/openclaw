@@ -1,4 +1,3 @@
-/** Public SDK helper for process-persistent dedupe caches. */
 import { createDedupeCache } from "../infra/dedupe.js";
 import { resolveNonNegativeIntegerOption } from "../infra/numeric-options.js";
 import type { FileLockOptions } from "./file-lock.js";

@@ -1,4 +1,3 @@
-/** Tests compact status number and cache formatting. */
 import { describe, expect, it } from "vitest";
 import { formatPromptCacheCompact, formatTokensCompact } from "./status.format.js";
 

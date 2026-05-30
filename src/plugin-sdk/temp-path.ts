@@ -1,4 +1,3 @@
-/** Public SDK barrel for temp path helpers. */
 export {
   buildRandomTempFilePath,
   createTempDownloadTarget,

@@ -1,4 +1,3 @@
-/** Repairs stale bundled plugin load paths in config and install records. */
 import path from "node:path";
 import { sanitizeForLog } from "../../../../packages/terminal-core/src/ansi.js";
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../../../agents/agent-scope.js";

@@ -1,4 +1,3 @@
-/** ACP enablement and allowlist policy checks for dispatch/session creation. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { normalizeAgentId } from "../routing/session-key.js";
 import { AcpRuntimeError } from "./runtime/errors.js";

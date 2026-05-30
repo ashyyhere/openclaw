@@ -1,4 +1,3 @@
-/** Builds normalized tool catalog entries for model and UI surfaces. */
 import {
   CRON_TOOL_DISPLAY_SUMMARY,
   EXEC_TOOL_DISPLAY_SUMMARY,

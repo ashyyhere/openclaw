@@ -1,4 +1,3 @@
-/** Reconciles subagent registry records with durable session-store state. */
 import { getRuntimeConfig } from "../config/config.js";
 import {
   loadSessionStore,

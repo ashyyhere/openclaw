@@ -1,4 +1,3 @@
-/** Tests session conversation resolution against active channel plugin registries. */
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { clearRuntimeConfigSnapshot, setRuntimeConfigSnapshot } from "../../config/io.js";
 import { resetPluginRuntimeStateForTest, setActivePluginRegistry } from "../../plugins/runtime.js";

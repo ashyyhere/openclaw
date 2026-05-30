@@ -1,4 +1,3 @@
-/** Resolves whether subagent session cleanup can run now or must defer. */
 import { getDeliveryAttemptCount } from "./subagent-delivery-state.js";
 import {
   SUBAGENT_ENDED_REASON_COMPLETE,

@@ -1,4 +1,3 @@
-/** Barrel for generated models.json provider discovery, normalization, and secrets. */
 export { resolveImplicitProviders } from "./models-config.providers.implicit.js";
 /** Normalize provider entries and generated catalog models for models.json planning. */
 export {

@@ -1,4 +1,3 @@
-/** Builds input text used to discover message-channel actions. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 
 /** Normalizes optional channel/session identifiers for message-action discovery. */

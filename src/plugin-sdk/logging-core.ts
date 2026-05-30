@@ -1,4 +1,3 @@
-/** Public SDK barrel for subsystem logger creation. */
 export { createSubsystemLogger } from "../logging/subsystem.js";
 /** Re-exported API for src/plugin-sdk. */
 export {

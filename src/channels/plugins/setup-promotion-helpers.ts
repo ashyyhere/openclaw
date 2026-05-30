@@ -1,4 +1,3 @@
-/** Collects single-account channel config entries that can be promoted during setup. */
 import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "../../routing/session-key.js";
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 import { getBundledChannelPlugin, hasBundledChannelPackageSetupFeature } from "./bundled.js";

@@ -1,4 +1,3 @@
-/** Public SDK auth-presence probe for Anthropic Vertex ADC without exposing credential values. */
 import { readFileSync } from "node:fs";
 import { homedir, platform } from "node:os";
 import { join } from "node:path";

@@ -1,4 +1,3 @@
-/** Helpers for redacted provider HTTP errors and response parsing. */
 export { asFiniteNumber } from "../shared/number-coercion.js";
 import { redactSensitiveText } from "../logging/redact.js";
 import { readResponseWithLimit } from "../media/read-response-with-limit.js";

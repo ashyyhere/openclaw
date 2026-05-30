@@ -1,4 +1,3 @@
-/** Public barrel for model picker config mutation helpers. */
 export {
   applyModelAllowlist,
   applyModelFallbacksFromSelection,

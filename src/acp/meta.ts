@@ -1,4 +1,3 @@
-/** Typed readers for optional ACP metadata maps. */
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 
 function readMetaValue<T>(

@@ -1,4 +1,3 @@
-/** Persistent ACP event ledger used to replay session output across reconnects. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import type { ContentBlock, SessionUpdate } from "@agentclientprotocol/sdk";

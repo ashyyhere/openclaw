@@ -1,4 +1,3 @@
-/** ACP client process wrapper and JSON-RPC transport lifecycle. */
 import { spawn, type ChildProcess } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";

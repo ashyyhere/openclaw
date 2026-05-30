@@ -1,4 +1,3 @@
-/** Verifies overflow compaction exits cleanly instead of cycling forever. */
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   makeAttemptResult,

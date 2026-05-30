@@ -1,4 +1,3 @@
-/** Extra live-model turn probes for file and image capability checks. */
 import type { AssistantMessage, Context, Model } from "../llm/types.js";
 
 /** Expected token used by live file probe prompts. */

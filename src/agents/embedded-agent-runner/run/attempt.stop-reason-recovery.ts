@@ -1,4 +1,3 @@
-/** Converts sensitive unhandled stop reasons into safe assistant messages. */
 import { formatErrorMessage } from "../../../infra/errors.js";
 import { createAssistantMessageEventStream } from "../../../llm/utils/event-stream.js";
 import type { StreamFn } from "../../runtime/index.js";

@@ -1,4 +1,3 @@
-/** Resolves heartbeat guidance that is injected into agent system prompts. */
 import {
   DEFAULT_HEARTBEAT_EVERY,
   resolveHeartbeatPrompt as resolveHeartbeatPromptText,

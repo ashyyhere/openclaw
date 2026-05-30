@@ -1,4 +1,3 @@
-/** Guards against repeating the same tool calls immediately after compaction. */
 import type { ToolLoopPostCompactionGuardConfig } from "../../config/types.tools.js";
 import { createSubsystemLogger } from "../../logging/subsystem.js";
 

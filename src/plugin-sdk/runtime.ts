@@ -1,4 +1,3 @@
-/** Public SDK barrel for runtime environment contracts. */
 export type { OutputRuntimeEnv, RuntimeEnv } from "../runtime.js";
 /** Runtime factories that let plugins report exits without terminating the host process. */
 export { createNonExitingRuntime, defaultRuntime } from "../runtime.js";

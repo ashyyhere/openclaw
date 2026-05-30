@@ -1,4 +1,3 @@
-/** Shared runtime auth helpers for provider API key resolution. */
 import { normalizeSecretInput } from "../utils/normalize-secret-input.js";
 
 const AWS_BEARER_ENV = "AWS_BEARER_TOKEN_BEDROCK";

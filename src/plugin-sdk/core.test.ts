@@ -1,4 +1,3 @@
-/** Tests core plugin SDK barrel exports and public compatibility contracts. */
 import { describe, expect, it, vi } from "vitest";
 import type { ChannelPlugin } from "../channels/plugins/types.plugin.js";
 import type { PluginRuntime } from "../plugins/runtime/types.js";

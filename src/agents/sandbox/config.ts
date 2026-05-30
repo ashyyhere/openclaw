@@ -1,4 +1,3 @@
-/** Resolves sandbox config from global, agent, and session settings. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { SandboxSshSettings } from "../../config/types.sandbox.js";
 import { normalizeSecretInputString } from "../../config/types.secrets.js";

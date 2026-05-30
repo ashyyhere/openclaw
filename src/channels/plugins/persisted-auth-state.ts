@@ -1,4 +1,3 @@
-/** Reports bundled channel persisted-auth capabilities from package state probes. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { PluginDiscoveryResult } from "../../plugins/discovery.js";
 import {

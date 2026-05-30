@@ -1,4 +1,3 @@
-/** Built-in task audit findings for system-level task checks. */
 import type {
   TaskFlowAuditCode,
   TaskFlowAuditFinding,

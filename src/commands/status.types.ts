@@ -1,4 +1,3 @@
-/** Shared status summary types used by command and API surfaces. */
 import type { ChannelId } from "../channels/plugins/types.public.js";
 import type { SessionKind } from "../sessions/classify-session-kind.js";
 import type {

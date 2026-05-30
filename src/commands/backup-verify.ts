@@ -1,4 +1,3 @@
-/** Verifies OpenClaw backup archives and reports contents. */
 import path from "node:path";
 import * as tar from "tar";
 import { type RuntimeEnv, writeRuntimeJson } from "../runtime.js";

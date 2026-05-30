@@ -1,4 +1,3 @@
-/** Runtime text-formatting re-exports for status command output. */
 export { formatCliCommand } from "../cli/command-format.js";
 /** Status command logging helper used by text runtime renderers. */
 export { info } from "../globals.js";

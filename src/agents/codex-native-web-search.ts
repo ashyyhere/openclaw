@@ -1,4 +1,3 @@
-/** Public Codex native web-search facade and relevance checks. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {
   hasAvailableCodexAuth,

@@ -1,4 +1,3 @@
-/** Covers malformed tool-call argument repair wrappers. */
 import { describe, expect, it } from "vitest";
 import {
   shouldRepairMalformedToolCallArguments,

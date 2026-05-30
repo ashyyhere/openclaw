@@ -1,4 +1,3 @@
-/** Registry of plugin compatibility contracts, deprecations, and diagnostics. */
 import type { PluginCompatRecord } from "./types.js";
 
 const CHANNEL_RUNTIME_SDK_SURFACE = ["openclaw/plugin-sdk/channel", "runtime"].join("-");

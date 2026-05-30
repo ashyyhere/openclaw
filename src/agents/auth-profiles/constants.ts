@@ -1,4 +1,3 @@
-/** Shared auth profile filenames, ids, timeouts, lock options, and logger. */
 import { createSubsystemLogger } from "../../logging/subsystem.js";
 /** Auth profile filenames shared by profile storage, migration, and doctor code. */
 export {

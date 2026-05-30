@@ -1,4 +1,3 @@
-/** Configure wizard section for gateway host, port, and bind settings. */
 import { validateIPv4AddressInput } from "@openclaw/net-policy/ipv4";
 import { note } from "../../packages/terminal-core/src/note.js";
 import { formatPortRangeHint } from "../cli/error-format.js";

@@ -1,4 +1,3 @@
-/** Tracks auth profile failures, cooldowns, and provider usage blocks. */
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { createSubsystemLogger } from "../../logging/subsystem.js";

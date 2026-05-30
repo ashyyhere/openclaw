@@ -1,4 +1,3 @@
-/** Applies legacy config migrations and validates migrated config. */
 import type { OpenClawConfig } from "../../../config/types.js";
 import { validateConfigObjectWithPlugins } from "../../../config/validation.js";
 import { applyLegacyDoctorMigrations } from "./legacy-config-compat.js";

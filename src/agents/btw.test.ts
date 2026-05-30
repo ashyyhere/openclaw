@@ -1,4 +1,3 @@
-/** Tests /btw side-question transcript extraction and answer flow. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { SessionEntry } from "../config/sessions.js";
 

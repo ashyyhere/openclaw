@@ -1,4 +1,3 @@
-/** Shared metadata/result types for embedded-agent runs. */
 import type { HeartbeatToolResponse } from "../../auto-reply/heartbeat-tool-response.js";
 import type {
   CliSessionBinding,

@@ -1,4 +1,3 @@
-/** Tests status command report data assembly. */
 import { describe, expect, it } from "vitest";
 import { buildStatusCommandReportData } from "./status.command-report-data.ts";
 import { createStatusCommandReportDataParams } from "./status.test-support.ts";

@@ -1,4 +1,3 @@
-/** Resolves gateway URL and token options from flags, files, and defaults. */
 import { readSecretFromFile } from "../acp/secret-file.js";
 import { defaultRuntime } from "../runtime.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";

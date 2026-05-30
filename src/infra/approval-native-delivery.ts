@@ -1,4 +1,3 @@
-/** Plans where channel-native approval prompts should be delivered. */
 import type {
   ChannelApprovalNativeAdapter,
   ChannelApprovalNativeSurface,

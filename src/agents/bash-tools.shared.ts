@@ -1,4 +1,3 @@
-/** Shared helpers for bash exec/process tools and sandbox execution. */
 import { existsSync, statSync } from "node:fs";
 import fs from "node:fs/promises";
 import { homedir } from "node:os";

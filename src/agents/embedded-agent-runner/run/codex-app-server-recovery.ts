@@ -1,4 +1,3 @@
-/** Classifies Codex app-server client-close failures for one retry. */
 import type { EmbeddedRunAttemptResult } from "./types.js";
 
 export function resolveCodexAppServerRecoveryRetry(params: {

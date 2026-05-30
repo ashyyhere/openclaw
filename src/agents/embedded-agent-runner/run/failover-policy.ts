@@ -1,4 +1,3 @@
-/** Decides whether an embedded run should retry, rotate, or surface errors. */
 import type { FailoverReason } from "../../embedded-agent-helpers.js";
 
 /** Normalized action selected after a prompt/assistant/retry-limit failure. */

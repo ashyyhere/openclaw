@@ -1,4 +1,3 @@
-/** Tests model catalog browse loading and timeout behavior. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { loadModelCatalogForBrowse } from "./model-catalog-browse.js";

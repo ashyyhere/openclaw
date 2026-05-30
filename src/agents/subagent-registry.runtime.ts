@@ -1,4 +1,3 @@
-/** Runtime imports isolated for subagent registry persistence tests. */
 export { ensureContextEnginesInitialized } from "../context-engine/init.js";
 /** Context engine resolver used by subagent registry persistence tests. */
 export { resolveContextEngine } from "../context-engine/registry.js";

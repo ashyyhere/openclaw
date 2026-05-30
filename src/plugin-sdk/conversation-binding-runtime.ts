@@ -1,4 +1,3 @@
-/** Runtime SDK barrel for conversation binding persistence helpers. */
 export {
   ensureConfiguredBindingRouteReady,
   resolveConfiguredBindingRoute,

@@ -1,4 +1,3 @@
-/** Collects live-test API keys and classifies live provider rate-limit errors. */
 import { getProviderEnvVars } from "../secrets/provider-env-vars.js";
 import {
   normalizeLowercaseStringOrEmpty,

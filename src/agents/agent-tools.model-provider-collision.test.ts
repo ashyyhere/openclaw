@@ -1,4 +1,3 @@
-/** Tests tool policy collision behavior across model providers. */
 import { describe, expect, it } from "vitest";
 import { testing } from "./agent-tools.js";
 import type { AnyAgentTool } from "./agent-tools.types.js";

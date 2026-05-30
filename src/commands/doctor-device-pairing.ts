@@ -1,4 +1,3 @@
-/** Doctor checks for device pairing auth tokens and state files. */
 import path from "node:path";
 import { note } from "../../packages/terminal-core/src/note.js";
 import { sanitizeTerminalText } from "../../packages/terminal-core/src/safe-text.js";

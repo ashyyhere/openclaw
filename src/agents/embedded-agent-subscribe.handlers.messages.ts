@@ -1,4 +1,3 @@
-/** Handles embedded-agent assistant message streaming, replies, and directives. */
 import { resolveSendableOutboundReplyParts } from "openclaw/plugin-sdk/reply-payload";
 import { createInlineCodeState } from "../../packages/markdown-core/src/code-spans.js";
 import {

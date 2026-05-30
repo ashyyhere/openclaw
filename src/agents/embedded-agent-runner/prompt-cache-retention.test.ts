@@ -1,4 +1,3 @@
-/** Regression coverage for prompt cache retention decisions. */
 import { describe, expect, it } from "vitest";
 import { isGooglePromptCacheEligible, resolveCacheRetention } from "./prompt-cache-retention.js";
 

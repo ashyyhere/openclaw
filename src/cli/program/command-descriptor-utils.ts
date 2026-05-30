@@ -1,4 +1,3 @@
-/** Helpers for adding descriptor-backed commands to Commander programs. */
 import type { Command } from "commander";
 import { sanitizeForLog } from "../../../packages/terminal-core/src/ansi.js";
 import type { NamedCommandDescriptor } from "./command-group-descriptors.js";

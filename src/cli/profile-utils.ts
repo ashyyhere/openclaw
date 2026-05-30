@@ -1,4 +1,3 @@
-/** Validates and normalizes CLI profile names. */
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
 const PROFILE_NAME_RE = /^[a-z0-9][a-z0-9_-]{0,63}$/i;

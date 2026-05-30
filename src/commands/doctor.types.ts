@@ -1,4 +1,3 @@
-/** Shared option type for doctor command flows. */
 export type DoctorOptions = {
   workspaceSuggestions?: boolean;
   yes?: boolean;

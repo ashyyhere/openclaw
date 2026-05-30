@@ -1,4 +1,3 @@
-/** Builds session-manager extensions used by embedded-agent runs. */
 import { randomUUID } from "node:crypto";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { ProviderRuntimeModel } from "../../plugins/provider-runtime-model.types.js";

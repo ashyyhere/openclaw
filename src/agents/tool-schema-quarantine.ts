@@ -1,4 +1,3 @@
-/** Quarantines provider-rejected tool schemas and emits trusted diagnostics. */
 import { emitTrustedDiagnosticEvent } from "../infra/diagnostic-events.js";
 import { createSubsystemLogger } from "../logging/subsystem.js";
 import { getPluginToolMeta } from "../plugins/tools.js";

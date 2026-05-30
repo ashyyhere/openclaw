@@ -1,4 +1,3 @@
-/** Installs skills from local paths or git specs while preserving source provenance. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { redactSensitiveUrlLikeString } from "@openclaw/net-policy/redact-sensitive-url";

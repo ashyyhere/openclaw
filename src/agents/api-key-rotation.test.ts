@@ -1,4 +1,3 @@
-/** Tests provider API-key rotation and retry behavior. */
 import { describe, expect, it, vi } from "vitest";
 import type { TransientProviderRetryParams } from "../provider-runtime/operation-retry.js";
 import { executeWithApiKeyRotation } from "./api-key-rotation.js";

@@ -1,4 +1,3 @@
-/** Shared MCP config normalization for CLI backend bundle adapters. */
 import type { BundleMcpServerConfig } from "../../plugins/bundle-mcp.js";
 import { isRecord } from "../../shared/record-coerce.js";
 /** Record guard shared by bundled-MCP CLI adapter projections. */

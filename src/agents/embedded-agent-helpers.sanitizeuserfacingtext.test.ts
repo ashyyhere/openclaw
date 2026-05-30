@@ -1,4 +1,3 @@
-/** Tests user-facing text sanitization for embedded-agent output. */
 import { describe, expect, it } from "vitest";
 import {
   downgradeOpenAIFunctionCallReasoningPairs,

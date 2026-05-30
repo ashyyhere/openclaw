@@ -1,4 +1,3 @@
-/** Tracks replay history metadata observed during embedded-agent attempts. */
 export type EmbeddedRunReplayState = {
   replayInvalid: boolean;
   hadPotentialSideEffects: boolean;

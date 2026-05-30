@@ -1,4 +1,3 @@
-/** Registers Crestodian maintenance command. */
 import type { Command } from "commander";
 import { theme } from "../../../packages/terminal-core/src/theme.js";
 import { runCrestodian } from "../../crestodian/crestodian.js";

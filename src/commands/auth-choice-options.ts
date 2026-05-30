@@ -1,4 +1,3 @@
-/** Builds grouped auth choices from providers, plugins, and config state. */
 import type { AuthProfileStore } from "../agents/auth-profiles/types.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveProviderSetupFlowContributions } from "../flows/provider-flow.js";

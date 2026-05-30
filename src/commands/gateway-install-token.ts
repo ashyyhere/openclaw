@@ -1,4 +1,3 @@
-/** Resolves and optionally persists gateway install auth tokens. */
 import { formatCliCommand } from "../cli/command-format.js";
 import type { ConfigWriteOptions } from "../config/io.js";
 import type { OpenClawConfig } from "../config/types.js";

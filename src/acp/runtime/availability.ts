@@ -1,4 +1,3 @@
-/** Runtime availability checks for ACP session spawning. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { isAcpEnabledByPolicy } from "../policy.js";
 import { getAcpRuntimeBackend } from "./registry.js";

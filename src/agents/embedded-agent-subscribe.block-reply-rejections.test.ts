@@ -1,4 +1,3 @@
-/** Tests rejected block-reply callbacks do not break subscription flow. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   createSubscribedSessionHarness,

@@ -1,4 +1,3 @@
-/** Runs agent commands through gateway sessions and outbound delivery. */
 import { randomUUID } from "node:crypto";
 import { resolveSendableOutboundReplyParts } from "openclaw/plugin-sdk/reply-payload";
 import {

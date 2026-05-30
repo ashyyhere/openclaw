@@ -1,4 +1,3 @@
-/** Tracks pending assistant tool calls that still need tool results. */
 type PendingToolCall = { id: string; name?: string };
 
 type PendingToolCallState = {

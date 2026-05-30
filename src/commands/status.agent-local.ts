@@ -1,4 +1,3 @@
-/** Collects local agent session facts for status output. */
 import path from "node:path";
 import { resolveAgentWorkspaceDir } from "../agents/agent-scope.js";
 import { resolveStorePath } from "../config/sessions/paths.js";

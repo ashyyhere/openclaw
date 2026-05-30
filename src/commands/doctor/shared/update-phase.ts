@@ -1,4 +1,3 @@
-/** Environment helpers for doctor behavior during update phases. */
 import { isTruthyEnvValue } from "../../../infra/env.js";
 
 /** Reused constant for UPDATE IN PROGRESS ENV behavior in src/commands/doctor. */

@@ -1,4 +1,3 @@
-/** Resolves the effective OAuth credential from managed and fallback sources. */
 import { readManagedExternalCliCredential } from "./external-cli-sync.js";
 import { resolveEffectiveOAuthCredential as resolveManagedOAuthCredential } from "./oauth-manager.js";
 import type { OAuthCredential } from "./types.js";

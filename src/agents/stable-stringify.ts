@@ -1,4 +1,3 @@
-/** Deterministic, cycle-safe serialization for comparing agent payloads in tests/logs. */
 import { Buffer } from "node:buffer";
 
 /** Serializes unknown values with sorted object keys and stable special-object handling. */

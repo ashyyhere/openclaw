@@ -1,4 +1,3 @@
-/** Runtime registry for compaction-safeguard hooks and cancellation reasons. */
 import type { AgentCompactionIdentifierPolicy } from "../../config/types.agent-defaults.js";
 import type { Model } from "../../llm/types.js";
 import { createSessionManagerRuntimeRegistry } from "./session-manager-runtime-registry.js";

@@ -1,4 +1,3 @@
-/** Human-facing descriptions for exec/process tools. */
 import path from "node:path";
 import { loadExecApprovals, resolveExecApprovalsFromFile } from "../infra/exec-approvals.js";
 

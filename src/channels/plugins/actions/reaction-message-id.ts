@@ -1,4 +1,3 @@
-/** Resolves the message id targeted by a channel reaction action. */
 import { readStringOrNumberParam } from "../../../agents/tools/common.js";
 
 type ReactionToolContext = {

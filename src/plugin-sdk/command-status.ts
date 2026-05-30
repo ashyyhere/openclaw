@@ -1,4 +1,3 @@
-/** Public SDK barrel for command/help status message builders. */
 export {
   buildCommandsMessage,
   buildCommandsMessagePaginated,

@@ -1,4 +1,3 @@
-/** Repairs allowlist policy state by writing canonical allowFrom values. */
 import { normalizeChatChannelId } from "../../../channels/ids.js";
 import { setCanonicalDmAllowFrom } from "../../../channels/plugins/dm-access.js";
 import type { OpenClawConfig } from "../../../config/types.openclaw.js";

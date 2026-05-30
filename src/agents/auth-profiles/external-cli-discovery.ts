@@ -1,4 +1,3 @@
-/** Builds external CLI auth discovery scopes for providers and config status. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { normalizeTrimmedStringList } from "../../shared/string-normalization.js";
 import {

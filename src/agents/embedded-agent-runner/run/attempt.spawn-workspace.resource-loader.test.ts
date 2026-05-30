@@ -1,4 +1,3 @@
-/** Covers resource-loader wiring for spawned attempt sessions. */
 import { describe, expect, it, vi } from "vitest";
 import { createEmbeddedAgentSessionWithResourceLoader } from "./attempt-session.js";
 

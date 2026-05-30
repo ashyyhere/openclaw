@@ -1,4 +1,3 @@
-/** Registers CLI commands for channel pairing approval workflows. */
 import type { Command } from "commander";
 import { formatDocsLink } from "../../packages/terminal-core/src/links.js";
 import { getTerminalTableWidth, renderTable } from "../../packages/terminal-core/src/table.js";

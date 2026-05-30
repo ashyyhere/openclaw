@@ -1,4 +1,3 @@
-/** Tests workspace identity markdown parsing and merging. */
 import { describe, expect, it } from "vitest";
 import { mergeIdentityMarkdownContent, parseIdentityMarkdown } from "./identity-file.js";
 

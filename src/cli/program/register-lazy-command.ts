@@ -1,4 +1,3 @@
-/** Registers command placeholders that lazy-load real implementations on use. */
 import type { Command } from "commander";
 import { reparseProgramFromActionArgs } from "./action-reparse.js";
 import { removeCommandByName } from "./command-tree.js";

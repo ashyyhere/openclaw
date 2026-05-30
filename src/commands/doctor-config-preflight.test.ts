@@ -1,4 +1,3 @@
-/** Tests doctor config preflight snapshot promotion. */
 import fs from "node:fs/promises";
 import { describe, expect, it } from "vitest";
 import { promoteConfigSnapshotToLastKnownGood, readConfigFileSnapshot } from "../config/config.js";

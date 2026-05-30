@@ -1,4 +1,3 @@
-/** Resolves session-store keys used for subagent requester bookkeeping. */
 import {
   resolveAgentIdFromSessionKey,
   resolveMainSessionKey,

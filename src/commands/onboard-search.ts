@@ -1,4 +1,3 @@
-/** Public barrel for search provider onboarding helpers. */
 export {
   applySearchKey,
   applySearchProviderSelection,

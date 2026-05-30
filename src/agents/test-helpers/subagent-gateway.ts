@@ -1,4 +1,3 @@
-/** Installs a gateway mock that accepts subagent session requests. */
 export function installAcceptedSubagentGatewayMock(mock: {
   mockImplementation: (
     impl: (opts: { method?: string; params?: unknown }) => Promise<unknown>,

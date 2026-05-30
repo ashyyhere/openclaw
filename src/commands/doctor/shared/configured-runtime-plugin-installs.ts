@@ -1,4 +1,3 @@
-/** Collects configured runtime plugin installs for doctor and release checks. */
 import {
   collectConfiguredAgentHarnessRuntimes,
   type ConfiguredAgentHarnessRuntimeOptions,

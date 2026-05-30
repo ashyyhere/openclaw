@@ -1,4 +1,3 @@
-/** Regression coverage for memory-related system prompt sections. */
 import { afterEach, describe, expect, it } from "vitest";
 import { clearMemoryPluginState, registerMemoryPromptSection } from "../plugins/memory-state.js";
 import { buildAgentSystemPrompt } from "./system-prompt.js";

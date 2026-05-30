@@ -1,4 +1,3 @@
-/** Converts config allow/alsoAllow/deny entries into sandbox tool policy. */
 import { uniqueStrings } from "../shared/string-normalization.js";
 import type { SandboxToolPolicy } from "./sandbox/types.js";
 

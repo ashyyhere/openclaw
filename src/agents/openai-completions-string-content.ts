@@ -1,4 +1,3 @@
-/** Normalizes completion messages for providers that require string content. */
 function flattenStringOnlyCompletionContent(content: unknown): unknown {
   if (!Array.isArray(content)) {
     return content;

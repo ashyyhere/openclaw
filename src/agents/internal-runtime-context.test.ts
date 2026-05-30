@@ -1,4 +1,3 @@
-/** Tests internal runtime-context delimiters and stripping. */
 import { describe, expect, it } from "vitest";
 import {
   escapeInternalRuntimeContextDelimiters,

@@ -1,4 +1,3 @@
-/** Tests reaction action message-id selection from explicit params and context. */
 import { describe, expect, it } from "vitest";
 import { resolveReactionMessageId } from "./reaction-message-id.js";
 

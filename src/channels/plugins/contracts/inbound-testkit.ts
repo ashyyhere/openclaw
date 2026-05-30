@@ -1,4 +1,3 @@
-/** Testkit helpers for capturing inbound dispatch calls in plugin contracts. */
 import { vi } from "vitest";
 
 /** Reused helper for build Dispatch Inbound Capture Mock behavior in src/channels/plugins. */

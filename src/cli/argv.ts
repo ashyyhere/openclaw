@@ -1,4 +1,3 @@
-/** Low-level argv parsing helpers shared by CLI startup and command routing. */
 import { isBunRuntime, isNodeRuntime } from "../daemon/runtime-binary.js";
 import {
   consumeRootOptionToken,

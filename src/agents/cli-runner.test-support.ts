@@ -1,4 +1,3 @@
-/** Shared mocks and helpers for CLI runner tests. */
 import type { Mock } from "vitest";
 import { beforeEach, vi } from "vitest";
 import type { requestHeartbeat } from "../infra/heartbeat-wake.js";

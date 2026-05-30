@@ -1,4 +1,3 @@
-/** Resolves agent run timeout values from config and request overrides. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { clampTimerTimeoutMs, MAX_TIMER_TIMEOUT_MS } from "../shared/number-coercion.js";
 

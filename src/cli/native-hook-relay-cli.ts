@@ -1,4 +1,3 @@
-/** Runs the native hook relay bridge behind a CLI command. */
 import { Readable, Writable } from "node:stream";
 import {
   invokeNativeHookRelayBridge,

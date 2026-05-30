@@ -1,4 +1,3 @@
-/** Enforces config-write policy for plugin install and update commands. */
 import fs from "node:fs";
 import path from "node:path";
 import type { Command } from "commander";

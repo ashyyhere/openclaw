@@ -1,4 +1,3 @@
-/** Resolves workspace directory and metadata for one agent run. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { logWarn } from "../logger.js";
 import { redactIdentifier } from "../logging/redact-identifier.js";

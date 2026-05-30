@@ -1,4 +1,3 @@
-/** Builds shard references for bundled channel plugin contract runs. */
 import type { ChannelId } from "../../channel-id.types.js";
 import { listBundledChannelPluginIds } from "./bundled-channel-plugin-loader.js";
 

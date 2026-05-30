@@ -1,4 +1,3 @@
-/** In-process gateway implementation used by embedded agent tools. */
 import type {
   SessionsListParams,
   SessionsResolveParams,

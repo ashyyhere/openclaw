@@ -1,4 +1,3 @@
-/** Executes full status scan work after fast overview collection. */
 import type { PluginCompatibilityNotice } from "../plugins/status.js";
 import type { RuntimeEnv } from "../runtime.js";
 import type { StatusScanOverviewResult } from "./status.scan-overview.ts";

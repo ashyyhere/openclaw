@@ -1,4 +1,3 @@
-/** Subscribes embedded-agent sessions to stream events and reply delivery. */
 import type { InlineCodeState } from "../../packages/markdown-core/src/code-spans.js";
 import {
   buildCodeSpanIndex,

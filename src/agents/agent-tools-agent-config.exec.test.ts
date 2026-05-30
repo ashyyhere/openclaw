@@ -1,4 +1,3 @@
-/** Tests agent-config exec tool policy behavior. */
 import { beforeEach, describe, expect, it } from "vitest";
 import "./test-helpers/fast-coding-tools.js";
 import "./test-helpers/fast-openclaw-tools.js";

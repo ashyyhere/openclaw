@@ -1,4 +1,3 @@
-/** Legacy auth.json bridge for session-runtime compatibility. */
 import path from "node:path";
 import { z } from "zod";
 import { privateFileStore } from "../infra/private-file-store.js";

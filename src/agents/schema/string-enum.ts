@@ -1,4 +1,3 @@
-/** TypeBox helpers for string enum schemas accepted by providers. */
 import { Type } from "typebox";
 
 type StringEnumOptions<T extends readonly string[]> = {

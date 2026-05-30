@@ -1,4 +1,3 @@
-/** Runtime imports isolated for embedded gateway stub tests and wiring. */
 export { resolveSessionAgentId } from "../../agents/agent-scope.js";
 /** Runtime config accessor used by embedded gateway session tools. */
 export { getRuntimeConfig } from "../../config/config.js";

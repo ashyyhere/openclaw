@@ -1,4 +1,3 @@
-/** Runtime SDK helper for draining outbound deliveries without eagerly loading delivery runtime. */
 import {
   drainPendingDeliveries as coreDrainPendingDeliveries,
   type DeliverFn,

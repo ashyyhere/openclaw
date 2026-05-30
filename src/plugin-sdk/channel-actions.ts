@@ -1,4 +1,3 @@
-/** Public SDK helpers for channel action tools, schemas, gates, and parameter readers. */
 import { Type } from "typebox";
 import type { TSchema } from "typebox";
 import { stringEnum as createStringEnum } from "../agents/schema/typebox.js";

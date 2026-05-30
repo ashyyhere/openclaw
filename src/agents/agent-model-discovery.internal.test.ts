@@ -1,4 +1,3 @@
-/** Tests internal agent model discovery normalization. */
 import { describe, expect, it } from "vitest";
 
 describe("agent-model-discovery internal runtime", () => {

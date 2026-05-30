@@ -1,4 +1,3 @@
-/** Path-boundary helpers for workspace and sandbox-relative paths. */
 import path from "node:path";
 import { normalizeWindowsPathForComparison } from "../infra/path-guards.js";
 import { resolveSandboxInputPath } from "./sandbox-paths.js";

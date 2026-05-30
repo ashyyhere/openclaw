@@ -1,4 +1,3 @@
-/** Hardens manual compaction boundaries by snapshotting nearby transcript context. */
 import type { AgentMessage } from "../runtime/index.js";
 import type { SessionEntry } from "../sessions/index.js";
 import {

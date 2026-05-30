@@ -1,4 +1,3 @@
-/** Tests reply tag parsing and delivery in embedded-agent subscription. */
 import type { AssistantMessage } from "openclaw/plugin-sdk/llm";
 import { describe, expect, it, vi } from "vitest";
 import {

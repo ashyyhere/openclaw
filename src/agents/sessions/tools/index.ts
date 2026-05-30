@@ -1,4 +1,3 @@
-/** Factory exports for built-in session coding tools. */
 export {
   type BashSpawnContext,
   type BashSpawnHook,

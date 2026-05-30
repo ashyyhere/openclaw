@@ -1,4 +1,3 @@
-/** Tests shared cron CLI parsing, formatting, and gateway helpers. */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { CronJob } from "../../cron/types.js";
 import type { RuntimeEnv } from "../../runtime.js";

@@ -1,4 +1,3 @@
-/** Public SDK helpers for channel ingress decisions, diagnostics, and access projections. */
 import {
   decideChannelIngress,
   resolveChannelIngressState as resolveChannelIngressStateInternal,

@@ -1,4 +1,3 @@
-/** Policy helpers for deciding which commands connected nodes may run. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {
   NODE_BROWSER_PROXY_COMMAND,

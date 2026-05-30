@@ -1,4 +1,3 @@
-/** Tests ACP parent-owned background session routing decisions. */
 import { describe, expect, it } from "vitest";
 import {
   isParentOwnedBackgroundAcpSession,

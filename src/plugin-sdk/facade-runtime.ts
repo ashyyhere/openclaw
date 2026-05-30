@@ -1,4 +1,3 @@
-/** Runtime SDK facade loader that enforces bundled-plugin activation before loading surfaces. */
 import { createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";

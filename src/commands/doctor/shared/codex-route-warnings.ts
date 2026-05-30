@@ -1,4 +1,3 @@
-/** Collects doctor warnings for Codex route/provider mismatches. */
 import fs from "node:fs";
 import { AGENT_MODEL_CONFIG_KEYS } from "@openclaw/model-catalog-core/configured-model-refs";
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";

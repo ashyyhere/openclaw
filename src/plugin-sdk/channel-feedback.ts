@@ -1,4 +1,3 @@
-/** Public SDK barrel for channel feedback and acknowledgement reaction helpers. */
 export { resolveAckReaction } from "../agents/identity.js";
 /** Re-exported API for src/plugin-sdk. */
 export {

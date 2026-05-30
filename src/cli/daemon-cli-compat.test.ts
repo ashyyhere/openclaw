@@ -1,4 +1,3 @@
-/** Tests legacy daemon CLI export compatibility surface. */
 import { describe, expect, it } from "vitest";
 import {
   resolveLegacyDaemonCliAccessors,

@@ -1,4 +1,3 @@
-/** Exercises cron delivery coordination before embedded agents emit replies. */
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { SILENT_REPLY_TOKEN } from "../../auto-reply/tokens.js";
 import { makeAttemptResult } from "./run.overflow-compaction.fixture.js";

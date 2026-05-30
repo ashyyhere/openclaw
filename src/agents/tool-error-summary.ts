@@ -1,4 +1,3 @@
-/** Extracts compact, redacted summaries from tool errors. */
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 import type { FileTarget } from "./tool-mutation.js";
 

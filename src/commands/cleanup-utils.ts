@@ -1,4 +1,3 @@
-/** Shared cleanup helpers for files, config, and agent defaults. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { resolveDefaultAgentWorkspaceDir } from "../agents/workspace.js";

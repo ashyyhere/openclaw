@@ -1,4 +1,3 @@
-/** Builds transient system-prompt context listing currently active subagents. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { sanitizeForPromptLiteral } from "./sanitize-for-prompt.js";
 import { listControlledSubagentRuns } from "./subagent-control.js";

@@ -1,4 +1,3 @@
-/** Loads explicit bundled web providers from public plugin artifacts. */
 import { isRecord } from "../shared/record-coerce.js";
 import { sortUniqueStrings } from "../shared/string-normalization.js";
 import {

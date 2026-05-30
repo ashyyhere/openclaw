@@ -1,4 +1,3 @@
-/** Registers the cron add command and request payload construction. */
 import type { Command } from "commander";
 import { theme } from "../../../packages/terminal-core/src/theme.js";
 import type { CronJob } from "../../cron/types.js";

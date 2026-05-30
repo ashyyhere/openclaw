@@ -1,4 +1,3 @@
-/** Applies provider compatibility policy to OpenAI Responses payloads. */
 import { parseStrictPositiveInteger } from "../infra/parse-finite-number.js";
 import { readStringValue } from "../shared/string-coerce.js";
 import { asBoolean } from "../utils/boolean.js";

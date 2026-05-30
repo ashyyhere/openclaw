@@ -1,4 +1,3 @@
-/** Registry for sandbox backend factories and managers. */
 import { normalizeOptionalLowercaseString } from "../../shared/string-coerce.js";
 import type {
   RegisteredSandboxBackend,

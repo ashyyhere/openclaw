@@ -1,4 +1,3 @@
-/** Tests CLI TCP port parsing wrapper behavior. */
 import { describe, expect, it } from "vitest";
 import { parsePort } from "./parse-port.js";
 

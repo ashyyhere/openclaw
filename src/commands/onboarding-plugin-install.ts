@@ -1,4 +1,3 @@
-/** Installs bundled plugins required by onboarding choices. */
 import fs from "node:fs";
 import path from "node:path";
 import { sanitizeTerminalText } from "../../packages/terminal-core/src/safe-text.js";

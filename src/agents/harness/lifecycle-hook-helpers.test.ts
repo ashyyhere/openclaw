@@ -1,4 +1,3 @@
-/** Covers lifecycle hook helpers and finalize retry budgeting. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   awaitAgentHarnessAgentEndHook,

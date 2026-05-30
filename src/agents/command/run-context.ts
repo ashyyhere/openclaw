@@ -1,4 +1,3 @@
-/** Resolves normalized run context from agent command options. */
 import { stringifyRouteThreadId } from "../../plugin-sdk/channel-route.js";
 import { normalizeAccountId } from "../../utils/account-id.js";
 import { resolveMessageChannel } from "../../utils/message-channel.js";

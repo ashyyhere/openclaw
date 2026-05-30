@@ -1,4 +1,3 @@
-/** Shared formatting and error handling for nodes CLI commands. */
 import { isRich, theme } from "../../../packages/terminal-core/src/theme.js";
 import { defaultRuntime } from "../../runtime.js";
 import { runCommandWithRuntime } from "../cli-utils.js";

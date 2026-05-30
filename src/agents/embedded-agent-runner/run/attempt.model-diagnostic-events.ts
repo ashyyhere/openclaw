@@ -1,4 +1,3 @@
-/** Emits diagnostic lifecycle events for embedded-attempt model calls. */
 import { fireAndForgetBoundedHook } from "../../../hooks/fire-and-forget.js";
 import {
   diagnosticErrorCategory,

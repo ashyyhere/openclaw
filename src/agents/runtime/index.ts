@@ -1,4 +1,3 @@
-/** Re-exports the agent-core runtime through OpenClaw's plugin-sdk facade. */
 import {
   Agent as CoreAgent,
   type AgentOptions as CoreAgentOptions,

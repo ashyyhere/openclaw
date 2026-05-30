@@ -1,4 +1,3 @@
-/** Marks and normalizes code-mode control tools for hooks and policy checks. */
 import { isPlainObject } from "../utils.js";
 import { normalizeToolName } from "./tool-policy.js";
 import type { AnyAgentTool } from "./tools/common.js";

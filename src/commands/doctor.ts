@@ -1,4 +1,3 @@
-/** Public doctor command entrypoint. */
 import type { RuntimeEnv } from "../runtime.js";
 import type { DoctorOptions } from "./doctor-prompter.js";
 

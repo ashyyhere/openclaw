@@ -1,4 +1,3 @@
-/** Shared parsing and formatting primitives for tool display rendering. */
 import { parseStrictFiniteNumber } from "../infra/parse-finite-number.js";
 import {
   normalizeLowercaseStringOrEmpty,

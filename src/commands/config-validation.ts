@@ -1,4 +1,3 @@
-/** Validates config snapshots before command execution and formats failures. */
 import { formatCliCommand } from "../cli/command-format.js";
 import { formatPluginPackagingRuntimeOutputRecoveryHint } from "../cli/config-recovery-hints.js";
 import {

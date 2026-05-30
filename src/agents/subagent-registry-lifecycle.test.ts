@@ -1,4 +1,3 @@
-/** Regression coverage for subagent registry lifecycle controller behavior. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { CallGatewayOptions } from "../gateway/call.js";
 import {

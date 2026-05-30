@@ -1,4 +1,3 @@
-/** Tests status JSON command wrapper. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { runStatusJsonCommand } from "./status-json-command.ts";
 

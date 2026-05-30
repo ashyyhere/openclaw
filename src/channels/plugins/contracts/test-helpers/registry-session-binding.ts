@@ -1,4 +1,3 @@
-/** Registry and fixtures for bundled channel session binding contract suites. */
 import fs from "node:fs";
 import path from "node:path";
 import { expect } from "vitest";

@@ -1,4 +1,3 @@
-/** Shared wrappers for provider transport streams and final assistant results. */
 import { createAssistantMessageEventStream } from "../llm/utils/event-stream.js";
 import { redactSensitiveText } from "../logging/redact.js";
 import { truncateErrorDetail } from "./provider-http-errors.js";

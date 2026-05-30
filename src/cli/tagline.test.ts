@@ -1,4 +1,3 @@
-/** Tests deterministic tagline selection. */
 import { describe, expect, it } from "vitest";
 import { DEFAULT_TAGLINE, pickTagline } from "./tagline.js";
 

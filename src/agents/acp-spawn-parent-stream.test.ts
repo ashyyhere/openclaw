@@ -1,4 +1,3 @@
-/** Tests streamed ACP child-session progress relay to parent sessions. */
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { mergeMockedModule } from "../test-utils/vitest-module-mocks.js";
 

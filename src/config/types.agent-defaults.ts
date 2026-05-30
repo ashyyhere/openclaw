@@ -1,4 +1,3 @@
-/** Agent default configuration contracts for models, context, CLI backends, and compaction. */
 import type { SilentReplyPolicyShape } from "../shared/silent-reply-policy.js";
 import type {
   AgentModelConfig,

@@ -1,4 +1,3 @@
-/** Shared assistant message builders for provider stream adapters and error repair. */
 import type { AssistantMessage, StopReason, Usage } from "../llm/types.js";
 
 type StreamModelDescriptor = {

@@ -1,4 +1,3 @@
-/** Shared provider-list and task-status action helpers for media generation tools. */
 import {
   listMediaGenerationProviderModels,
   synthesizeMediaGenerationCatalogEntries,

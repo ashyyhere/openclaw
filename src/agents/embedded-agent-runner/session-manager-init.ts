@@ -1,4 +1,3 @@
-/** Normalizes SessionManager state before the embedded run writes messages. */
 import fs from "node:fs/promises";
 import { serializeJsonlLine, writeJsonlLines } from "../../config/sessions/transcript-jsonl.js";
 

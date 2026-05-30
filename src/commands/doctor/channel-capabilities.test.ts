@@ -1,4 +1,3 @@
-/** Tests doctor channel capability lookup. */
 import { describe, expect, it } from "vitest";
 import { getDoctorChannelCapabilities } from "./channel-capabilities.js";
 

@@ -1,4 +1,3 @@
-/** Builds normalized parameters used by system prompt generation. */
 import fs from "node:fs";
 import path from "node:path";
 import type { OpenClawConfig } from "../config/types.openclaw.js";

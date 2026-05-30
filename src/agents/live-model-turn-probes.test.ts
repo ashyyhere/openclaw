@@ -1,4 +1,3 @@
-/** Tests live model file/image probe helpers. */
 import { describe, expect, it } from "vitest";
 import {
   buildLiveModelFileProbeContext,

@@ -1,4 +1,3 @@
-/** Tests generated models.json write serialization and plugin catalog writes. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";

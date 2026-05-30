@@ -1,4 +1,3 @@
-/** Tests provider-safe bundled MCP server/tool naming. */
 import { describe, expect, it } from "vitest";
 import {
   buildSafeToolName,

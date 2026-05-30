@@ -1,4 +1,3 @@
-/** Tests prompt composition and fallback prompt surface behavior. */
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import {
   createPromptCompositionScenarios,

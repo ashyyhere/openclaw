@@ -1,4 +1,3 @@
-/** Resolves command lanes for embedded-agent runs and sessions. */
 import { CommandLane } from "../../process/lanes.js";
 
 /** Converts a session key into the command lane name for serialized session work. */

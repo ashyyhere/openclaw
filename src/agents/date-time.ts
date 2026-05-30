@@ -1,4 +1,3 @@
-/** Timezone, timestamp, and user-facing time formatting helpers. */
 import { execFileSync } from "node:child_process";
 import { resolveDateTimestampMs } from "../shared/number-coercion.js";
 

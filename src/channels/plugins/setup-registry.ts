@@ -1,4 +1,3 @@
-/** Resolves setup adapters from active plugin runtime registration state. */
 import {
   getActivePluginChannelRegistry,
   requireActivePluginRegistry,

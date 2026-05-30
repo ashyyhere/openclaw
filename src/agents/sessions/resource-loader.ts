@@ -1,4 +1,3 @@
-/** Loads session resources such as tools, skills, prompts, themes, and extensions. */
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { homedir } from "node:os";
 import { join, resolve, sep } from "node:path";

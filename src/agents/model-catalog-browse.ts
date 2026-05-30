@@ -1,4 +1,3 @@
-/** Loads model catalog views for picker/browse surfaces with timeout fallback. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { parseFiniteNumber } from "../shared/number-coercion.js";
 import type { ModelCatalogEntry } from "./model-catalog.types.js";

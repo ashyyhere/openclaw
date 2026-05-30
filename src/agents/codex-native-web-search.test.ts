@@ -1,4 +1,3 @@
-/** Tests Codex native web-search config, activation, and payload injection. */
 import { describe, expect, it } from "vitest";
 import {
   buildCodexNativeWebSearchTool,

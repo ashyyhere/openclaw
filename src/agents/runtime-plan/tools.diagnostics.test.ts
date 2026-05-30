@@ -1,4 +1,3 @@
-/** Covers runtime tool diagnostics delegated to provider hooks. */
 import { describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({

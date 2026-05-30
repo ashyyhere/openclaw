@@ -1,4 +1,3 @@
-/** Tests runtime contract for tool schema normalization. */
 import type { StreamFn } from "openclaw/plugin-sdk/agent-core";
 import {
   createNativeOpenAIResponsesModel,

@@ -1,4 +1,3 @@
-/** Regression coverage for bundled skill frontmatter parsing. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";

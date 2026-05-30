@@ -1,4 +1,3 @@
-/** Tests finalization of doctor config flow mutations. */
 import { describe, expect, it, vi } from "vitest";
 import { finalizeDoctorConfigFlow } from "./finalize-config-flow.js";
 

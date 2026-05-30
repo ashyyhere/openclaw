@@ -1,4 +1,3 @@
-/** Builds diagnostic trace context passed into attempt tool execution. */
 import {
   freezeDiagnosticTraceContext,
   type DiagnosticTraceContext,

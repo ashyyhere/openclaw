@@ -1,4 +1,3 @@
-/** Tests direct-DM SDK helpers and guard behavior. */
 import { describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import {

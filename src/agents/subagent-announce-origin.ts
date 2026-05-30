@@ -1,4 +1,3 @@
-/** Resolves delivery context for subagent completion announcements. */
 import { getLoadedChannelPluginForRead } from "../channels/plugins/registry-loaded-read.js";
 import type { ChannelId } from "../channels/plugins/types.public.js";
 import {

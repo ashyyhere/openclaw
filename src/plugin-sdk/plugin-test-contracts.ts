@@ -1,4 +1,3 @@
-/** Public SDK barrel for reusable plugin/provider contract test helpers. */
 export {
   assertNoImportTimeSideEffects,
   createPluginRegistryFixture,

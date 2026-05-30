@@ -1,4 +1,3 @@
-/** Runtime entrypoints for media understanding over files and remote media refs. */
 import path from "node:path";
 import type { OpenClawConfig } from "../config/types.js";
 import { readLocalFileSafely } from "../infra/fs-safe.js";

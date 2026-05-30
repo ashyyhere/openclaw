@@ -1,4 +1,3 @@
-/** Searches deferred tool metadata and exposes matching tools to the next model turn. */
 import { spawn } from "node:child_process";
 import os from "node:os";
 import { Type } from "typebox";

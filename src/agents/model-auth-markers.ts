@@ -1,4 +1,3 @@
-/** Non-secret auth marker constants and classifiers for model catalogs. */
 import type { SecretRefSource } from "../config/types.secrets.js";
 import { listOpenClawPluginManifestMetadata } from "../plugins/manifest-metadata-scan.js";
 import { normalizeTrimmedStringList, uniqueStrings } from "../shared/string-normalization.js";

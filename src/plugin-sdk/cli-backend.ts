@@ -1,4 +1,3 @@
-/** Public SDK barrel for CLI backend configuration and command backend contracts. */
 export type { CliBackendConfig } from "../config/types.js";
 /** Re-exported API for src/plugin-sdk. */
 export type {

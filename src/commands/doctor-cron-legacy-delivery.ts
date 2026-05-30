@@ -1,4 +1,3 @@
-/** Converts legacy cron payload fields into delivery patch records. */
 import { z } from "zod";
 import {
   DeliveryThreadIdFieldSchema,

@@ -1,4 +1,3 @@
-/** Computes restart hashes for sandbox Docker and browser configs. */
 import { hashTextSha256 } from "./hash.js";
 import type { SandboxBrowserConfig, SandboxDockerConfig, SandboxWorkspaceAccess } from "./types.js";
 

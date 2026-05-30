@@ -1,4 +1,3 @@
-/** Tests execution approval CLI commands and output modes. */
 import { Command } from "commander";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import * as execApprovals from "../infra/exec-approvals.js";

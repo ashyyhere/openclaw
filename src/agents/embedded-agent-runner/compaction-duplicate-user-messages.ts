@@ -1,4 +1,3 @@
-/** Removes duplicate user messages before compaction summary generation. */
 import { isRecord } from "../../shared/record-coerce.js";
 
 const DEFAULT_DUPLICATE_USER_MESSAGE_WINDOW_MS = 60_000;

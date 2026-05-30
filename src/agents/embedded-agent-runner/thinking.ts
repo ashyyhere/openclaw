@@ -1,4 +1,3 @@
-/** Sanitizes provider thinking blocks and retries incomplete Anthropic streams. */
 import { formatErrorMessage } from "../../infra/errors.js";
 import { createAssistantMessageEventStream } from "../../llm/utils/event-stream.js";
 import type { AgentMessage, StreamFn } from "../runtime/index.js";

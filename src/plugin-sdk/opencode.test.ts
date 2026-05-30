@@ -1,4 +1,3 @@
-/** Tests OpenCode provider SDK entrypoint behavior. */
 import { describe, expect, it } from "vitest";
 import { createOpencodeCatalogApiKeyAuthMethod } from "./opencode.js";
 

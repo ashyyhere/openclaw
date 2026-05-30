@@ -1,4 +1,3 @@
-/** Starts MCP transports and exposes client/session cleanup helpers. */
 import {
   SSEClientTransport,
   type SSEClientTransportOptions,

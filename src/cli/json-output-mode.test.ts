@@ -1,4 +1,3 @@
-/** Tests JSON-output log routing and flag detection. */
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { loggingState } from "../logging/state.js";
 import { hasJsonOutputFlag, withConsoleLogsRoutedToStderrForJson } from "./json-output-mode.js";

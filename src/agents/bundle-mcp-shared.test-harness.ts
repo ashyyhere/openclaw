@@ -1,4 +1,3 @@
-/** Shared test harness for generating bundle MCP probe servers/plugins. */
 import fs from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";

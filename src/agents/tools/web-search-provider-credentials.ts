@@ -1,4 +1,3 @@
-/** Resolves web_search provider credentials from config/env/secret refs. */
 import { normalizeSecretInputString, resolveSecretInputRef } from "../../config/types.secrets.js";
 import { normalizeSecretInput } from "../../utils/normalize-secret-input.js";
 

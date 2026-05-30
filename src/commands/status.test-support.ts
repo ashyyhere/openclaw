@@ -1,4 +1,3 @@
-/** Shared status command fixtures and sample report data. */
 import type { HeartbeatEventPayload } from "../infra/heartbeat-events.js";
 import { isBetaTag } from "../infra/update-channels.js";
 import type { Tone } from "../memory-host-sdk/status.js";

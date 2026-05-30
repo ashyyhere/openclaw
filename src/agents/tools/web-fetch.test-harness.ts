@@ -1,4 +1,3 @@
-/** Test harness helpers for web_fetch unit tests. */
 import type { LookupFn } from "../../infra/net/ssrf.js";
 import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";
 

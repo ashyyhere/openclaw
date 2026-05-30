@@ -1,4 +1,3 @@
-/** Registers migration commands for config and state upgrades. */
 import type { Command } from "commander";
 import { theme } from "../../../packages/terminal-core/src/theme.js";
 import {

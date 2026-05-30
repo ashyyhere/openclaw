@@ -1,4 +1,3 @@
-/** Legacy runtime config migrations for TTS settings. */
 import {
   defineLegacyConfigMigration,
   getRecord,

@@ -1,4 +1,3 @@
-/** Tests session-history sanitization policy in embedded-agent runner. */
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   createSanitizeSessionHistoryHelpersMock,

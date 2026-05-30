@@ -1,4 +1,3 @@
-/** Resolves persisted session runtime/provider compatibility values. */
 import type { SessionEntry } from "../config/sessions.js";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import { isDefaultAgentRuntimeId } from "./agent-runtime-id.js";

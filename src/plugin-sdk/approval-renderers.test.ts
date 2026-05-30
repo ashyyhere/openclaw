@@ -1,4 +1,3 @@
-/** Tests shared approval reply payload rendering for exec and plugin approvals. */
 import { describe, expect, it } from "vitest";
 import {
   buildApprovalPendingReplyPayload,

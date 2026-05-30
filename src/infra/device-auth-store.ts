@@ -1,4 +1,3 @@
-/** Stores per-device role tokens in the private OpenClaw state directory. */
 import fs from "node:fs";
 import path from "node:path";
 import { z } from "zod";

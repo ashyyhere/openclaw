@@ -1,4 +1,3 @@
-/** Groups effective tool inventory rows for compact reporting. */
 import type {
   EffectiveToolInventoryEntry,
   EffectiveToolInventoryGroup,

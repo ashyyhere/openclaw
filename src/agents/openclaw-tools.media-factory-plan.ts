@@ -1,4 +1,3 @@
-/** Plans optional media/PDF tool factories from config, policy, and auth signals. */
 import {
   resolveAgentModelFallbackValues,
   resolveAgentModelPrimaryValue,

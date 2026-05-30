@@ -1,4 +1,3 @@
-/** Normalize, merge, and derive ACP session identity metadata. */
 import type {
   SessionAcpIdentity,
   SessionAcpIdentitySource,

@@ -1,4 +1,3 @@
-/** Migrates legacy X search config into current search config. */
 import { isRecord } from "./legacy-config-record-shared.js";
 
 type JsonRecord = Record<string, unknown>;

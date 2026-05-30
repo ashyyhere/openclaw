@@ -1,4 +1,3 @@
-/** Formats restart guidance for completed or pending update handoffs. */
 import type { RestartSentinelPayload } from "../infra/restart-sentinel.js";
 import {
   CONTROL_PLANE_UPDATE_HANDOFF_STARTED_REASON,

@@ -1,4 +1,3 @@
-/** Formats streaming tool progress and text chunks for channel messages. */
 import { formatToolDetail, resolveToolDisplay } from "../agents/tool-display.js";
 import { formatToolAggregate } from "../auto-reply/tool-meta.js";
 import type {

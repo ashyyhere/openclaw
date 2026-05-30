@@ -1,4 +1,3 @@
-/** Resolves channel pairing adapters from loaded plugins and bundled fallbacks. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { RuntimeEnv } from "../../runtime.js";
 import type { ChannelId } from "./channel-id.types.js";

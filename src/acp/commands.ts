@@ -1,4 +1,3 @@
-/** ACP command catalog exposed to connected ACP clients. */
 import type { AvailableCommand } from "@agentclientprotocol/sdk";
 import { getChatCommands } from "../auto-reply/commands-registry.data.js";
 

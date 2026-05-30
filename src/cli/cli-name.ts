@@ -1,4 +1,3 @@
-/** Resolves the displayed CLI binary name from process argv. */
 import path from "node:path";
 
 const DEFAULT_CLI_NAME = "openclaw";

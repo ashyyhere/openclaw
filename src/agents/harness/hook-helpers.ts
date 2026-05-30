@@ -1,4 +1,3 @@
-/** Runs per-tool and per-message hooks around agent harness execution. */
 import { createSubsystemLogger } from "../../logging/subsystem.js";
 import { getGlobalHookRunner } from "../../plugins/hook-runner-global.js";
 import { consumeAdjustedParamsForToolCall } from "../agent-tools.before-tool-call.js";

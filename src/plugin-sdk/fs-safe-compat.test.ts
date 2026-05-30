@@ -1,4 +1,3 @@
-/** Tests fs-safe compatibility defaults exposed through SDK helpers. */
 import fs from "node:fs";
 import path from "node:path";
 import { loadSecretFileSync as loadSecretFileSyncFromCore } from "openclaw/plugin-sdk/core";

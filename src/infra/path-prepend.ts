@@ -1,4 +1,3 @@
-/** Normalizes and applies PATH prepends while preserving platform-specific casing. */
 import path from "node:path";
 import {
   normalizeStringEntries,

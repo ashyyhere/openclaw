@@ -1,4 +1,3 @@
-/** Tests typing start guard sealing, reset, and failure handling. */
 import { describe, expect, it, vi } from "vitest";
 import { createTypingStartGuard } from "./typing-start-guard.js";
 

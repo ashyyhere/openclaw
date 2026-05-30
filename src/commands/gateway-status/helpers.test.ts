@@ -1,4 +1,3 @@
-/** Tests gateway status helper formatting and target selection. */
 import { describe, expect, it } from "vitest";
 import { withEnvAsync } from "../../test-utils/env.js";
 import {

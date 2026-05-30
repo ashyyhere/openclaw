@@ -1,4 +1,3 @@
-/** Tests hooks CLI status and listing output formatters. */
 import { describe, expect, it } from "vitest";
 import type { HookStatusReport } from "../hooks/hooks-status.js";
 import { formatHookInfo, formatHooksCheck, formatHooksList } from "./hooks-cli.js";

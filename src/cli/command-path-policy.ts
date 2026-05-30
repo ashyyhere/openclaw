@@ -1,4 +1,3 @@
-/** Resolves command-path policies for config, secrets, and plugin startup. */
 import { isGatewayConfigBypassCommandPath } from "../gateway/explicit-connection-policy.js";
 import { getCommandPathWithRootOptions } from "./argv.js";
 import {

@@ -1,4 +1,3 @@
-/** Helpers for injecting bootstrap context into embedded attempt workspaces. */
 import path from "node:path";
 import { isAcpSessionKey, isSubagentSessionKey } from "../../../routing/session-key.js";
 import type { EmbeddedContextFile } from "../../embedded-agent-helpers.js";

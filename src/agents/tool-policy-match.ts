@@ -1,4 +1,3 @@
-/** Matches tool names against exact and glob allow/deny policy entries. */
 import { compileGlobPatterns, matchesAnyGlobPattern } from "./glob-pattern.js";
 import type { SandboxToolPolicy } from "./sandbox/types.js";
 import { expandToolGroups, normalizeToolName } from "./tool-policy.js";

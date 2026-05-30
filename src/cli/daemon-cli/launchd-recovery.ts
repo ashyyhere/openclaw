@@ -1,4 +1,3 @@
-/** Attempts launchd repair for installed but unloaded gateway services. */
 import { launchAgentPlistExists, repairLaunchAgentBootstrap } from "../../daemon/launchd.js";
 
 const LAUNCH_AGENT_RECOVERY_MESSAGE =

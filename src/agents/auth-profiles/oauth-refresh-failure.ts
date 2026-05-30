@@ -1,4 +1,3 @@
-/** Classifies OAuth refresh failures and formats recovery commands. */
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
 import { sanitizeForLog } from "../../../packages/terminal-core/src/ansi.js";
 import { formatCliCommand } from "../../cli/command-format.js";

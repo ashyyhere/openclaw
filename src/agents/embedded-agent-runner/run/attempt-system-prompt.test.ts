@@ -1,4 +1,3 @@
-/** Covers provider prompt transforms during embedded attempts. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 let buildAttemptSystemPrompt: typeof import("./attempt-system-prompt.js").buildAttemptSystemPrompt;

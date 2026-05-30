@@ -1,4 +1,3 @@
-/** Tool used by agents to report heartbeat outcome and priority. */
 import { Type } from "typebox";
 import {
   HEARTBEAT_RESPONSE_TOOL_NAME,

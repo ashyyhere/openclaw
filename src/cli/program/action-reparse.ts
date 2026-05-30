@@ -1,4 +1,3 @@
-/** Rebuilds argv and reparses the program when lazy command actions load. */
 import type { Command } from "commander";
 import { buildParseArgv } from "../argv.js";
 import { resolveActionArgs, resolveCommandOptionArgs } from "./helpers.js";

@@ -1,4 +1,3 @@
-/** Tests thread-aware outbound session route recovery. */
 import { describe, expect, it } from "vitest";
 import {
   buildThreadAwareOutboundSessionRoute,

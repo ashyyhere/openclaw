@@ -1,4 +1,3 @@
-/** Normalizes and delivers agent command results to outbound channels. */
 import {
   resolveAgentWorkspaceDir,
   resolveDefaultAgentId,

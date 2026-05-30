@@ -1,4 +1,3 @@
-/** Derives runtime and terminal status metrics from subagent session entries. */
 import { SUBAGENT_ENDED_REASON_KILLED } from "./subagent-lifecycle-events.js";
 import type { SubagentRunRecord } from "./subagent-registry.types.js";
 

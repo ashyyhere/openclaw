@@ -1,4 +1,3 @@
-/** Tests legacy config compatibility normalizers. */
 import { describe, expect, it } from "vitest";
 import { normalizeLegacyStreamingAliases } from "../config/channel-compat-normalization.js";
 import type { OpenClawConfig } from "../config/config.js";

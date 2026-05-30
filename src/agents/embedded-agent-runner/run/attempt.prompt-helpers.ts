@@ -1,4 +1,3 @@
-/** Builds prompt-time context, hook results, and after-turn runtime metadata. */
 import type { OpenClawConfig } from "../../../config/types.openclaw.js";
 import type {
   ContextEnginePromptCacheInfo,

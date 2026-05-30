@@ -1,4 +1,3 @@
-/** Shared helpers for agent compaction and model-aware settings defaults. */
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
 import type { AgentCompactionMode } from "../config/types.agent-defaults.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";

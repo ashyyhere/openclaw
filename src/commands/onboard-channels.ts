@@ -1,4 +1,3 @@
-/** Public barrel for channel onboarding helpers. */
 export {
   createChannelOnboardingPostWriteHook,
   createChannelOnboardingPostWriteHookCollector,

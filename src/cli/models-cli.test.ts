@@ -1,4 +1,3 @@
-/** Tests models CLI command output and provider routing. */
 import { Command } from "commander";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { runRegisteredCli } from "../test-utils/command-runner.js";

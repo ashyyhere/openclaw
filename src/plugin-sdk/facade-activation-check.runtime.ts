@@ -1,4 +1,3 @@
-/** Runtime checks that decide whether bundled plugin facade modules may be loaded. */
 import fs from "node:fs";
 import path from "node:path";
 import JSON5 from "json5";

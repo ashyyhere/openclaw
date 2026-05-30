@@ -1,4 +1,3 @@
-/** Opens or prints dashboard URLs for the configured gateway. */
 import { readConfigFileSnapshot, resolveGatewayPort } from "../config/config.js";
 import { resolveGatewayAuthToken } from "../gateway/auth-token-resolution.js";
 import { copyToClipboard } from "../infra/clipboard.js";

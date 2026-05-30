@@ -1,4 +1,3 @@
-/** Tests GPT-5 prompt overlay runtime contract behavior. */
 import {
   GPT5_CONTRACT_MODEL_ID,
   GPT5_PREFIXED_CONTRACT_MODEL_ID,

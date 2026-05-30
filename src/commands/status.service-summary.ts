@@ -1,4 +1,3 @@
-/** Summarizes daemon service status for status output. */
 import {
   summarizeGatewayServiceLayout,
   type GatewayServiceLayoutSummary,

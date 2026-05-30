@@ -1,4 +1,3 @@
-/** Resets OpenClaw local state with confirmation and cleanup planning. */
 import { cancel, confirm, isCancel } from "@clack/prompts";
 import { selectStyled } from "../../packages/terminal-core/src/prompt-select-styled.js";
 import {

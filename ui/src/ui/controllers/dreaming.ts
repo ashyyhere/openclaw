@@ -1,4 +1,3 @@
-/** Dreaming tab controller state, payload normalization, and gateway actions. */
 import type { GatewayBrowserClient, GatewayHelloOk } from "../gateway.ts";
 import { isPluginEnabledInConfigSnapshot } from "../plugin-activation.ts";
 import type { ConfigSnapshot } from "../types.ts";

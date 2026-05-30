@@ -1,4 +1,3 @@
-/** Applies legacy config repairs through doctor config write paths. */
 import { readConfigFileSnapshot, replaceConfigFile } from "../../config/config.js";
 import { INCLUDE_KEY } from "../../config/includes.js";
 import { validateConfigObjectWithPlugins } from "../../config/validation.js";

@@ -1,4 +1,3 @@
-/** Tests MiniMax provider config generation. */
 import { describe, expect, it } from "vitest";
 
 function buildMinimaxCatalog() {

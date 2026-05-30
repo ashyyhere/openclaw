@@ -1,4 +1,3 @@
-/** Gathers daemon status facts before rendering CLI output. */
 import fs from "node:fs/promises";
 import JSON5 from "json5";
 import {

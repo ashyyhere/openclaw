@@ -1,4 +1,3 @@
-/** Shared small helpers for embedded-run retry, usage, and result metadata. */
 import type { OpenClawConfig } from "../../../config/types.openclaw.js";
 import { generateSecureToken } from "../../../infra/secure-random.js";
 import type { AssistantMessage } from "../../../llm/types.js";

@@ -1,4 +1,3 @@
-/** Constants and payload helpers for subagent lifecycle events. */
 export const SUBAGENT_TARGET_KIND_SUBAGENT = "subagent" as const;
 
 /** Terminal lifecycle reason for a subagent that finished normally. */

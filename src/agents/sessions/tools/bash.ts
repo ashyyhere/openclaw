@@ -1,4 +1,3 @@
-/** Bash tool definition and local process execution operations. */
 import { spawn } from "node:child_process";
 import { existsSync } from "node:fs";
 import { Container, Text, truncateToWidth } from "@earendil-works/pi-tui";

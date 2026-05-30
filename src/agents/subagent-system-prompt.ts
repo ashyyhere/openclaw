@@ -1,4 +1,3 @@
-/** Builds the runtime system prompt injected into spawned subagent sessions. */
 import { DEFAULT_SUBAGENT_MAX_SPAWN_DEPTH } from "../config/agent-limits.js";
 import { normalizeUniqueStringEntries } from "../shared/string-normalization.js";
 import type { DeliveryContext } from "../utils/delivery-context.types.js";

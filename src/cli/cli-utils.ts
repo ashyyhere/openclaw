@@ -1,4 +1,3 @@
-/** Shared helpers for registering and running Commander CLI commands. */
 import type { Command } from "commander";
 import { formatErrorMessage } from "../infra/errors.js";
 

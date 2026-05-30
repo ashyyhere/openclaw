@@ -1,4 +1,3 @@
-/** Helpers for plugin-owned generated model catalog files. */
 import { existsSync, readdirSync } from "node:fs";
 import path from "node:path";
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";

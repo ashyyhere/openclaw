@@ -1,4 +1,3 @@
-/** Resolves model setup inputs before an embedded attempt starts. */
 import type { OpenClawConfig } from "../../../config/types.openclaw.js";
 import type { ProviderRuntimeModel } from "../../../plugins/provider-runtime-model.types.js";
 import type {

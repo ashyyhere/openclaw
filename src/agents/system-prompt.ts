@@ -1,4 +1,3 @@
-/** Builds the primary agent system prompt from config, tools, skills, memory, and runtime context. */
 import { createHmac, createHash } from "node:crypto";
 import type { SourceReplyDeliveryMode } from "../auto-reply/get-reply-options.types.js";
 import type { ReasoningLevel, ThinkLevel } from "../auto-reply/thinking.js";

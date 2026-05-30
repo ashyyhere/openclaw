@@ -1,4 +1,3 @@
-/** Resolves which target agent ids a subagent spawn may use. */
 import { normalizeAgentId } from "../routing/session-key.js";
 import { normalizeUniqueStringEntries, sortUniqueStrings } from "../shared/string-normalization.js";
 

@@ -1,4 +1,3 @@
-/** Tests cron edit command payload and gateway calls. */
 import { Command } from "commander";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 

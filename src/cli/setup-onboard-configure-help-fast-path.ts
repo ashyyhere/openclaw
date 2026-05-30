@@ -1,4 +1,3 @@
-/** Fast-path help renderer for setup/onboard/configure commands. */
 import { Command } from "commander";
 import { VERSION } from "../version.js";
 import { resolveCliArgvInvocation } from "./argv-invocation.js";

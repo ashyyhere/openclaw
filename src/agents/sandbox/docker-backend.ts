@@ -1,4 +1,3 @@
-/** Docker-backed sandbox backend implementation. */
 import { buildDockerExecArgs } from "../bash-tools.shared.js";
 import type { SandboxBackendCommandParams } from "./backend-handle.types.js";
 import type {

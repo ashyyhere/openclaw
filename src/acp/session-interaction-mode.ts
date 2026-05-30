@@ -1,4 +1,3 @@
-/** Helpers for deciding whether ACP sessions should speak directly or via parent. */
 import type { SessionEntry } from "../config/sessions/types.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 

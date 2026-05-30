@@ -1,4 +1,3 @@
-/** Bounds agent cleanup steps so hung cleanup cannot stall runs. */
 import { formatErrorMessage } from "../infra/errors.js";
 import { parseStrictPositiveInteger } from "../infra/parse-finite-number.js";
 

@@ -1,4 +1,3 @@
-/** Internal channel plugin record shape assembled from public adapter contracts. */
 import type { ChannelMessageAdapterShape } from "../message/types.js";
 import type { ChannelSetupWizard, ChannelSetupWizardAdapter } from "./setup-wizard-types.js";
 import type { ChannelConfigSchema } from "./types.config.js";

@@ -1,4 +1,3 @@
-/** Public SDK helpers for constructing plugin test API fixtures. */
 import {
   attachPluginApiFacades,
   type OpenClawPluginApiWithoutFacades,

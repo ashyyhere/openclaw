@@ -1,4 +1,3 @@
-/** Registers nodes camera capture commands. */
 import type { Command } from "commander";
 import { getTerminalTableWidth, renderTable } from "../../../packages/terminal-core/src/table.js";
 import { defaultRuntime } from "../../runtime.js";

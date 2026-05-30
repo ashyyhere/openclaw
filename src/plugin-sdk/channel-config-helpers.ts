@@ -1,4 +1,3 @@
-/** Public SDK builders for channel config adapters, writes, allowlists, and DM policy access. */
 import {
   deleteAccountFromConfigSection as deleteAccountFromConfigSectionInSection,
   setAccountEnabledInConfigSection as setAccountEnabledInConfigSectionInSection,

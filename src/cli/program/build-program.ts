@@ -1,4 +1,3 @@
-/** Builds the configured Commander program for OpenClaw CLI execution. */
 import process from "node:process";
 import { Command } from "commander";
 import { registerProgramCommands } from "./command-registry.js";

@@ -1,4 +1,3 @@
-/** Agent tool for updating structured task plans. */
 import { Type } from "typebox";
 import { stringEnum } from "../schema/typebox.js";
 import {

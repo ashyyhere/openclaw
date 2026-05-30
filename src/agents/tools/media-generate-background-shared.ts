@@ -1,4 +1,3 @@
-/** Shared lifecycle helpers for background media generation tasks. */
 import crypto from "node:crypto";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { clearAgentRunContext, registerAgentRunContext } from "../../infra/agent-events.js";

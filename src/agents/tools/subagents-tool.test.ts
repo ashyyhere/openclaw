@@ -1,4 +1,3 @@
-/** Covers subagents tool advertised availability. */
 import { describe, expect, it } from "vitest";
 import { createSubagentsTool } from "./subagents-tool.js";
 

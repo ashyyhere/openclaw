@@ -1,4 +1,3 @@
-/** Terminates attempts after explicit message tool sends when no LLM text is needed. */
 import type { SourceReplyDeliveryMode } from "../../../auto-reply/get-reply-options.types.js";
 import { isMessageToolSendActionName } from "../../embedded-agent-messaging.js";
 import { isToolResultError } from "../../embedded-agent-subscribe.tools.js";

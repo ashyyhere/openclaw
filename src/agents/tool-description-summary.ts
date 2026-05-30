@@ -1,4 +1,3 @@
-/** Summarizes tool descriptions for compact UI and prompt displays. */
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import { normalizeStringEntries } from "../shared/string-normalization.js";
 

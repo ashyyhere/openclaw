@@ -1,4 +1,3 @@
-/** Regression coverage for bundled static model catalog resolution. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const manifestMocks = vi.hoisted(() => ({

@@ -1,4 +1,3 @@
-/** Builds reusable services needed to construct AgentSession instances. */
 import { join } from "node:path";
 import type { Model } from "../../llm/types.js";
 import { getAgentDir } from "../config.js";

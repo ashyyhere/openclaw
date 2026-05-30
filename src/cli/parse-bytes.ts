@@ -1,4 +1,3 @@
-/** Parses human-readable byte values used by CLI options. */
 import {
   normalizeLowercaseStringOrEmpty,
   normalizeOptionalString,

@@ -1,4 +1,3 @@
-/** Public channel plugin registry lookups with loaded-plugin and bundled fallback order. */
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 import { normalizeAnyChannelId } from "../registry.js";
 import { getBundledChannelPlugin } from "./bundled.js";

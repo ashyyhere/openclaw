@@ -1,4 +1,3 @@
-/** Tests generated models.json provider discovery with config-defined env vars. */
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import { createConfigRuntimeEnv } from "../config/env-vars.js";

@@ -1,4 +1,3 @@
-/** Broad behavior tests for running one embedded-agent attempt. */
 import { describe, expect, it, vi } from "vitest";
 import { streamSimple } from "../../../llm/stream.js";
 

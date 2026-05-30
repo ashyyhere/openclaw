@@ -1,4 +1,3 @@
-/** Regression coverage for auth profile eligibility and ordering. */
 import { mkdtemp, rm } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

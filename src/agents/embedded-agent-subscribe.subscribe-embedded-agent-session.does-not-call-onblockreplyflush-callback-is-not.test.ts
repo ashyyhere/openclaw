@@ -1,4 +1,3 @@
-/** Tests missing block-reply flush callbacks are ignored safely. */
 import { describe, expect, it, vi } from "vitest";
 import { subscribeEmbeddedAgentSession } from "./embedded-agent-subscribe.js";
 

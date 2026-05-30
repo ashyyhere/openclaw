@@ -1,4 +1,3 @@
-/** Commits plugin install record updates only when config changes. */
 import { isDeepStrictEqual } from "node:util";
 import {
   replaceConfigFile,

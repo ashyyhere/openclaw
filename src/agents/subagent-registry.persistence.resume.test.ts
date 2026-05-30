@@ -1,4 +1,3 @@
-/** Regression coverage for resuming persisted subagent registry state. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

@@ -1,4 +1,3 @@
-/** Re-exports hardened path-safety helpers after installing safe fs defaults. */
 import "./fs-safe-defaults.js";
 /** Public path guards and safe filesystem probes from the fs-safe package. */
 export {

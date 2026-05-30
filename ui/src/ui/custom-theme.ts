@@ -1,4 +1,3 @@
-/** Imports, sanitizes, stores, and applies tweakcn custom UI themes. */
 import { z } from "zod";
 import { normalizeOptionalString } from "./string-coerce.ts";
 

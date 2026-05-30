@@ -1,4 +1,3 @@
-/** Env-controlled model transport debugging helpers. */
 import type { createSubsystemLogger } from "../logging/subsystem.js";
 
 type SubsystemLogger = ReturnType<typeof createSubsystemLogger>;

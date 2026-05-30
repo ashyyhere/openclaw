@@ -1,4 +1,3 @@
-/** Tests configure daemon installation prompts and progress output. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { maybeInstallDaemon } from "./configure.daemon.js";
 

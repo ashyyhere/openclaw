@@ -1,4 +1,3 @@
-/** Tests doctor shell completion health and repair effects. */
 import { describe, expect, it } from "vitest";
 import {
   shellCompletionStatusToHealthFindings,

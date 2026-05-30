@@ -1,4 +1,3 @@
-/** Public SDK barrel for channel test helper utilities. */
 export { createDirectoryTestRuntime, expectDirectorySurface } from "./test-helpers/directory.js";
 /** Directory id assertion helpers for channel tests. */
 export { expectDirectoryIds, type DirectoryListFn } from "./test-helpers/directory-ids.js";

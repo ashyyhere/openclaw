@@ -1,4 +1,3 @@
-/** Tests soonest auth-profile cooldown expiry selection. */
 import { describe, expect, it } from "vitest";
 import type { AuthProfileStore } from "./auth-profiles/types.js";
 import { getSoonestCooldownExpiry } from "./auth-profiles/usage-state.js";

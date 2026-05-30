@@ -1,4 +1,3 @@
-/** Tests doctor checks for bootstrap prompt size. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 

@@ -1,4 +1,3 @@
-/** Renders the root CLI help page from descriptors and live plugin metadata. */
 import { Command } from "commander";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { getPluginCliCommandDescriptors } from "../../plugins/cli.js";

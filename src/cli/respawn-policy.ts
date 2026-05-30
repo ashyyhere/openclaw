@@ -1,4 +1,3 @@
-/** Decides whether CLI startup should respawn under a different runtime. */
 import { resolveCliArgvInvocation } from "./argv-invocation.js";
 import { getCommandPositionalsWithRootOptions } from "./argv.js";
 

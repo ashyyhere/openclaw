@@ -1,4 +1,3 @@
-/** Regression coverage for validating tool allowlist entries. */
 import { describe, expect, it } from "vitest";
 import {
   buildEmptyExplicitToolAllowlistError,

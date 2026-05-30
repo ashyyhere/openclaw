@@ -1,4 +1,3 @@
-/** Tests Telegram command config helper behavior. */
 import { describe, expect, it } from "vitest";
 import * as telegramCommandConfig from "./telegram-command-config.js";
 

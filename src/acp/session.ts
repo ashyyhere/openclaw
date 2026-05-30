@@ -1,4 +1,3 @@
-/** In-memory ACP stdio session store and active-run cancellation tracking. */
 import { randomUUID } from "node:crypto";
 import { resolveIntegerOption } from "./numeric-options.js";
 import type { AcpSession } from "./types.js";

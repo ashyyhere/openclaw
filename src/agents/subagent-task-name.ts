@@ -1,4 +1,3 @@
-/** Normalizes optional task names used as stable subagent handles. */
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 
 const SUBAGENT_TASK_NAME_RE = /^[a-z][a-z0-9_-]{0,63}$/;

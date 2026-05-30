@@ -1,4 +1,3 @@
-/** Lifecycle helpers for config-defined ACP session bindings. */
 import type { SessionAcpMeta } from "../config/sessions/types.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { logVerbose } from "../globals.js";

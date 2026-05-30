@@ -1,4 +1,3 @@
-/** Builds setup wizard fields that delegate binary detection to plugin helpers. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { detectBinary as defaultDetectBinary } from "../../plugins/setup-binary.js";
 import type {

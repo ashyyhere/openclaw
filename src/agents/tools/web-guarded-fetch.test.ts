@@ -1,4 +1,3 @@
-/** Covers trusted/self-hosted web tool endpoint guard wrappers. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { fetchWithSsrFGuard, GUARDED_FETCH_MODE } from "../../infra/net/fetch-guard.js";
 import { MAX_TIMER_TIMEOUT_MS } from "../../shared/number-coercion.js";

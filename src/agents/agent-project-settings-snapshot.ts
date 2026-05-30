@@ -1,4 +1,3 @@
-/** Builds sanitized embedded-agent settings snapshots from global, plugin, and project config. */
 import path from "node:path";
 import { applyMergePatch } from "../config/merge-patch.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";

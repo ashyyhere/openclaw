@@ -1,4 +1,3 @@
-/** Tests pair-loop guard config merging, suppression, and pruning behavior. */
 import { describe, expect, it } from "vitest";
 import {
   createPairLoopGuard,

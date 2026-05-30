@@ -1,4 +1,3 @@
-/** Implements plugin uninstall CLI workflow and config cleanup. */
 import os from "node:os";
 import path from "node:path";
 import { theme } from "../../packages/terminal-core/src/theme.js";

@@ -1,4 +1,3 @@
-/** Shared base fields attached to agent trace events. */
 type AgentTraceBase = {
   runId?: string;
   sessionId?: string;

@@ -1,4 +1,3 @@
-/** Covers shared media tool config, model, and reference helpers. */
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { afterEach, describe, expect, it, vi } from "vitest";

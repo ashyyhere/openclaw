@@ -1,4 +1,3 @@
-/** Legacy setup command for writing initial OpenClaw config. */
 import fs from "node:fs/promises";
 import JSON5 from "json5";
 import { z } from "zod";

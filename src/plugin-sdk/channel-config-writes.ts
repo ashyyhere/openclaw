@@ -1,4 +1,3 @@
-/** Public SDK barrel for channel config write scopes, targets, and authorization policy. */
 export {
   authorizeConfigWrite,
   canBypassConfigWritePolicy,

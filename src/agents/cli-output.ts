@@ -1,4 +1,3 @@
-/** Parsers for CLI JSON, JSONL streams, token usage, and error text. */
 import type { CliBackendConfig } from "../config/types.js";
 import { extractBalancedJsonFragments } from "../shared/balanced-json.js";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";

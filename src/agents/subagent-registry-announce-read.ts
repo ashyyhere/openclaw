@@ -1,4 +1,3 @@
-/** Read-only registry selectors used by subagent announce delivery. */
 import { normalizeDeliveryContext } from "../utils/delivery-context.shared.js";
 import type { DeliveryContext } from "../utils/delivery-context.types.js";
 import { subagentRuns } from "./subagent-registry-memory.js";

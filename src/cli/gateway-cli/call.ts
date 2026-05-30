@@ -1,4 +1,3 @@
-/** Registers gateway call command helpers. */
 import type { Command } from "commander";
 import {
   GATEWAY_CLIENT_MODES,

@@ -1,4 +1,3 @@
-/** Shared HTTP auth exports and OpenAI-compatible request context helpers. */
 import { randomUUID } from "node:crypto";
 import type { IncomingMessage } from "node:http";
 import { resolveDefaultAgentId } from "../agents/agent-scope.js";

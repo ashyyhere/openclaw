@@ -1,4 +1,3 @@
-/** Sanitizes image blocks in replayed embedded-agent session messages. */
 import type { ImageSanitizationLimits } from "../image-sanitization.js";
 import type { AgentMessage, AgentToolResult } from "../runtime/index.js";
 import type { ToolCallIdMode } from "../tool-call-id.js";

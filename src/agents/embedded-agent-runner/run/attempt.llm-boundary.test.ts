@@ -1,4 +1,3 @@
-/** Covers prompt/message normalization at the LLM request boundary. */
 import { describe, expect, it } from "vitest";
 import {
   installModelPromptTransform,

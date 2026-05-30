@@ -1,4 +1,3 @@
-/** Runs prompt-build and compaction hooks for agent harnesses. */
 import { createSubsystemLogger } from "../../logging/subsystem.js";
 import { getGlobalHookRunner } from "../../plugins/hook-runner-global.js";
 import type {

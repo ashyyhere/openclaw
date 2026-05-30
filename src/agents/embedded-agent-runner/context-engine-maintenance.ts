@@ -1,4 +1,3 @@
-/** Runs deferred context-engine maintenance after embedded-agent turns. */
 import { randomUUID } from "node:crypto";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { resolveContextEngineOwnerPluginId } from "../../context-engine/registry.js";

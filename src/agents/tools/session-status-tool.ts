@@ -1,4 +1,3 @@
-/** Agent tool for reporting current session status and runtime settings. */
 import { Type } from "typebox";
 import type {
   ElevatedLevel,

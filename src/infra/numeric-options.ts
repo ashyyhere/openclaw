@@ -1,4 +1,3 @@
-/** Infra-facing wrappers for shared numeric option coercion helpers. */
 import {
   resolveIntegerOption as resolveSharedIntegerOption,
   resolveNonNegativeIntegerOption as resolveSharedNonNegativeIntegerOption,

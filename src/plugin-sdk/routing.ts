@@ -1,4 +1,3 @@
-/** Public SDK barrel for account id, session key, and channel route helpers. */
 export {
   buildAgentSessionKey,
   deriveLastRoutePolicy,

@@ -1,4 +1,3 @@
-/** Public SDK contract for defining and loading bundled channel entry modules. */
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";

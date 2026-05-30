@@ -1,4 +1,3 @@
-/** Active background process reference formatting for agent replies. */
 import { formatDurationCompact } from "../infra/format-time/format-duration.js";
 import { listRunningSessions } from "./bash-process-registry.js";
 import { deriveSessionName } from "./bash-tools.shared.js";

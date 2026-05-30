@@ -1,4 +1,3 @@
-/** Reads and clears per-session auth profile override selections. */
 import type { SessionEntry } from "../../config/sessions/types.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { createLazyImportLoader } from "../../shared/lazy-promise.js";

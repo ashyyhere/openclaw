@@ -1,4 +1,3 @@
-/** Tests nested agent lane resolution. */
 import { describe, expect, it } from "vitest";
 import { CommandLane } from "../process/lanes.js";
 import {

@@ -1,4 +1,3 @@
-/** Shared fixtures for gateway status tests. */
 export function createSecretRefGatewayConfig(params?: { gatewayMode?: "local" | "remote" }) {
   return {
     secrets: {

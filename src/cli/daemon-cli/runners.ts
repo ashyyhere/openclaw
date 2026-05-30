@@ -1,4 +1,3 @@
-/** Compatibility barrel for daemon command runners. */
 export { runDaemonInstall } from "./install.js";
 /** Re-exported API for src/cli/daemon-cli. */
 export {

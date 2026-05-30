@@ -1,4 +1,3 @@
-/** Tests session state provider doctor route repairs. */
 import { describe, expect, it, vi } from "vitest";
 import {
   applySessionRouteStateRepair,

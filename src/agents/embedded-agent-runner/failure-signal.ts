@@ -1,4 +1,3 @@
-/** Extracts structured failure signals from embedded-agent run errors/results. */
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 import { isExecLikeToolName, type ToolErrorSummary } from "../tool-error-summary.js";
 import type { EmbeddedRunFailureSignal } from "./types.js";

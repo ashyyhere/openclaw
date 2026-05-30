@@ -1,4 +1,3 @@
-/** Shared normalization helpers for tool call content and metadata. */
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
 const TOOL_CALL_NAME_MAX_CHARS = 64;

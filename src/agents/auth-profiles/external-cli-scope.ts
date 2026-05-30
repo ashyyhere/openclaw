@@ -1,4 +1,3 @@
-/** Resolves which external CLI auth credentials are relevant to config. */
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
 import {
   resolveAgentModelFallbackValues,

@@ -1,4 +1,3 @@
-/** Formats stable prompt cache boundary markers. */
 import { normalizeStructuredPromptSection } from "./prompt-cache-stability.js";
 
 /** Marker separating cache-stable prompt prefix from dynamic suffix content. */

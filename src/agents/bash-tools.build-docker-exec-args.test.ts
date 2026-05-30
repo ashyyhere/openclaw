@@ -1,4 +1,3 @@
-/** Tests docker exec argv construction for sandboxed bash tools. */
 import { describe, expect, it } from "vitest";
 import { buildDockerExecArgs } from "./bash-tools.shared.js";
 

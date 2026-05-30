@@ -1,4 +1,3 @@
-/** Registers CLI commands for trusted exec command policy management. */
 import crypto from "node:crypto";
 import type { Command } from "commander";
 import { formatDocsLink } from "../../packages/terminal-core/src/links.js";

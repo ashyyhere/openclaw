@@ -1,4 +1,3 @@
-/** Normalizes and validates individual workspace directory paths. */
 import path from "node:path";
 import { resolveUserPath } from "../utils.js";
 

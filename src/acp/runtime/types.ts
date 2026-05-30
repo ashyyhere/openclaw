@@ -1,4 +1,3 @@
-/** Public ACP runtime adapter contracts used by core and backend plugins. */
 export type AcpRuntimePromptMode = "prompt" | "steer";
 
 /** Persistence mode requested when an ACP runtime session is created. */

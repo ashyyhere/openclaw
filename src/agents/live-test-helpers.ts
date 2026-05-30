@@ -1,4 +1,3 @@
-/** Shared helpers for live model/provider tests. */
 import { isTruthyEnvValue } from "../infra/env.js";
 import { completeSimple } from "../llm/stream.js";
 import type { Api, Model } from "../llm/types.js";

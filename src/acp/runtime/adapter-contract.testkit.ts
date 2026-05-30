@@ -1,4 +1,3 @@
-/** Shared Vitest contract for ACP runtime adapter implementations. */
 import { randomUUID } from "node:crypto";
 import { expect } from "vitest";
 import { normalizeOptionalString } from "../../shared/string-coerce.js";

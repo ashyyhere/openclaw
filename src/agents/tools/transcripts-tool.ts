@@ -1,4 +1,3 @@
-/** Agent tool and auto-start service for transcript search/read workflows. */
 import { randomUUID } from "node:crypto";
 import path from "node:path";
 import { Type } from "typebox";

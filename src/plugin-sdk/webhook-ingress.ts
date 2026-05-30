@@ -1,4 +1,3 @@
-/** Public SDK barrel for webhook ingress route helpers. */
 export {
   createBoundedCounter,
   createFixedWindowRateLimiter,

@@ -1,4 +1,3 @@
-/** Runtime SDK helpers for reading plugin config from runtime snapshots. */
 import type { OpenClawConfig } from "../config/types.js";
 
 /** Re-exported API for src/plugin-sdk, starting with normalize Plugins Config. */

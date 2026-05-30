@@ -1,4 +1,3 @@
-/** Resolves provider/session stream functions for embedded-agent attempts. */
 import { getApiProvider } from "../../llm/api-registry.js";
 import { streamSimple } from "../../llm/stream.js";
 import { createAnthropicVertexStreamFnForModel } from "../anthropic-vertex-stream.js";

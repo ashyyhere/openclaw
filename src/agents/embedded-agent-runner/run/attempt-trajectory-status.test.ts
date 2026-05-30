@@ -1,4 +1,3 @@
-/** Covers terminal status derivation from embedded-attempt trajectories. */
 import { describe, expect, it } from "vitest";
 import {
   NON_DELIVERABLE_TERMINAL_TURN_REASON,

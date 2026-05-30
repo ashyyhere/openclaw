@@ -1,4 +1,3 @@
-/** Shared naming helpers for sandbox sessions, scopes, and workspaces. */
 import path from "node:path";
 import { normalizeAgentId } from "../../routing/session-key.js";
 import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";

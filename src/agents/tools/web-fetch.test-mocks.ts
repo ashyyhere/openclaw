@@ -1,4 +1,3 @@
-/** Vitest mocks that keep web_fetch tests from loading bundled extractors. */
 import { vi } from "vitest";
 
 // Avoid loading the bundled readability plugin in unit test suites.

@@ -1,4 +1,3 @@
-/** Public SDK barrel for LLM/provider transport contracts. */
 export {
   getApiProvider,
   getApiProviders,

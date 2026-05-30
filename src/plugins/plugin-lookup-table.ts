@@ -1,4 +1,3 @@
-/** Plugin lookup table combining metadata snapshots with gateway startup plans. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {
   resolveGatewayStartupPluginPlanFromRegistry,

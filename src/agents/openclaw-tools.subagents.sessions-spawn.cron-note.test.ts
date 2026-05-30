@@ -1,4 +1,3 @@
-/** Tests sessions_spawn cron completion notes. */
 import { describe, expect, it } from "vitest";
 import {
   resolveSubagentSpawnAcceptedNote,

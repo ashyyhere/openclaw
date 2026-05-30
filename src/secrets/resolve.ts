@@ -1,4 +1,3 @@
-/** Secret reference resolution for env, file, and exec-backed providers. */
 import { spawn } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";

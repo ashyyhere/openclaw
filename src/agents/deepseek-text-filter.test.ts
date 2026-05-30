@@ -1,4 +1,3 @@
-/** Tests DeepSeek text filtering for provider-specific artifacts. */
 import { describe, expect, it } from "vitest";
 import { createDeepSeekTextFilter } from "./deepseek-text-filter.js";
 

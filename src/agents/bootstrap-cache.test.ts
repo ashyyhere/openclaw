@@ -1,4 +1,3 @@
-/** Tests session-scoped bootstrap file cache reuse and invalidation. */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { WorkspaceBootstrapFile } from "./workspace.js";
 

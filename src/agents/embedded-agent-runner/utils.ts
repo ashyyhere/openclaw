@@ -1,4 +1,3 @@
-/** Small normalization helpers shared by embedded-agent runner modules. */
 import type { ReasoningLevel, ThinkLevel } from "../../auto-reply/thinking.js";
 import type { ThinkingLevel } from "../runtime/index.js";
 

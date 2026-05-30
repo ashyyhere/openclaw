@@ -1,4 +1,3 @@
-/** Public SDK barrel for account config merge/list helpers used by channel plugins. */
 export {
   createAccountListHelpers,
   describeAccountSnapshot,

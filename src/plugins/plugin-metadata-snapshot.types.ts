@@ -1,4 +1,3 @@
-/** Shared types for plugin metadata snapshots used by control-plane lookups. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { PluginDiscoveryResult } from "./discovery.js";
 import type { InstalledPluginIndex } from "./installed-plugin-index-types.js";

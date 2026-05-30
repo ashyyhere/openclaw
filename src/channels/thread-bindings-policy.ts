@@ -1,4 +1,3 @@
-/** Resolves whether channel thread binding requires native thread context. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { normalizeAccountId } from "../routing/session-key.js";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";

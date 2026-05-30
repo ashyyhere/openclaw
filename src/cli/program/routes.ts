@@ -1,4 +1,3 @@
-/** Finds lightweight routed commands for raw CLI argv. */
 import { routedCommands, type RouteSpec } from "./route-specs.js";
 
 /** Re-exported API for src/cli/program, starting with Route Spec. */

@@ -1,4 +1,3 @@
-/** Control tokens understood by sessions-send delivery. */
 import { HEARTBEAT_TOKEN, isSilentReplyText, SILENT_REPLY_TOKEN } from "../../auto-reply/tokens.js";
 
 /** Literal reply text that suppresses announce delivery. */

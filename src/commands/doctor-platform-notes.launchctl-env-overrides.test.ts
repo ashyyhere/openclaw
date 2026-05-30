@@ -1,4 +1,3 @@
-/** Tests platform note warnings for launchctl env overrides. */
 import { describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import {

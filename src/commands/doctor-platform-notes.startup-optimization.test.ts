@@ -1,4 +1,3 @@
-/** Tests platform startup optimization doctor notes. */
 import { describe, expect, it, vi } from "vitest";
 import { noteStartupOptimizationHints } from "./doctor-platform-notes.js";
 

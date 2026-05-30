@@ -1,4 +1,3 @@
-/** Shared test harness helpers for ACP translator prompt scenarios. */
 import type { PromptRequest } from "@agentclientprotocol/sdk";
 import { expect, vi } from "vitest";
 import type { EventFrame } from "../../packages/gateway-protocol/src/index.js";

@@ -1,4 +1,3 @@
-/** Armable watchdog for detecting stalled channel transport operations. */
 import type { RuntimeEnv } from "../../runtime.js";
 import { resolveTimerTimeoutMs } from "../../shared/number-coercion.js";
 

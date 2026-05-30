@@ -1,4 +1,3 @@
-/** Hash helper shared by sandbox config fingerprinting. */
 import crypto from "node:crypto";
 
 /** Returns a hex SHA-256 digest for stable config hashes. */

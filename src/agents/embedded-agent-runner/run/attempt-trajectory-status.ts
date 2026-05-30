@@ -1,4 +1,3 @@
-/** Resolves whether an embedded attempt ended successfully, errored, or stopped. */
 import {
   hasAcceptedSessionSpawn,
   type AcceptedSessionSpawn,

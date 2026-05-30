@@ -1,4 +1,3 @@
-/** Runtime helpers for installing and updating shell completion scripts. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

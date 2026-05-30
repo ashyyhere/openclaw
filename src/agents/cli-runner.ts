@@ -1,4 +1,3 @@
-/** Orchestrates prepared CLI backend runs, hooks, transcript updates, and cleanup. */
 import type { ReplyPayload } from "../auto-reply/reply-payload.js";
 import { SILENT_REPLY_TOKEN } from "../auto-reply/tokens.js";
 import { formatErrorMessage } from "../infra/errors.js";

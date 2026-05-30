@@ -1,4 +1,3 @@
-/** Formats generated media attachments for prompts and reply payloads. */
 import { basenameFromAnyPath } from "../media/file-name.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import { uniqueStrings } from "../shared/string-normalization.js";

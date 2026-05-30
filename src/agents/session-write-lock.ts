@@ -1,4 +1,3 @@
-/** File-backed session write lock with stale-lock cleanup and watchdogs. */
 import "../infra/fs-safe-defaults.js";
 import type fsSync from "node:fs";
 import fs from "node:fs/promises";

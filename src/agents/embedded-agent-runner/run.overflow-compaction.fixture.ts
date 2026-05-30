@@ -1,4 +1,3 @@
-/** Shared fixtures for overflow-triggered embedded-agent compaction tests. */
 import { buildAttemptReplayMetadata } from "./run/incomplete-turn.js";
 import type { EmbeddedRunAttemptResult } from "./run/types.js";
 

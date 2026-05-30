@@ -1,4 +1,3 @@
-/** Agent tool for yielding control back to an active session. */
 import { Type } from "typebox";
 import type { AnyAgentTool } from "./common.js";
 import { jsonResult, readStringParam } from "./common.js";

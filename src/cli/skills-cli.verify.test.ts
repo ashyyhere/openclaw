@@ -1,4 +1,3 @@
-/** Tests skills CLI verification against local skill manifests. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

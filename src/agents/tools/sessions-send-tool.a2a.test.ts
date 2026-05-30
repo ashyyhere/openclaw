@@ -1,4 +1,3 @@
-/** Covers agent-to-agent flow for sessions-send. */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { CallGatewayOptions } from "../../gateway/call.js";
 import { setActivePluginRegistry } from "../../plugins/runtime.js";

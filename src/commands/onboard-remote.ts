@@ -1,4 +1,3 @@
-/** Onboards against an existing remote gateway target. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { SecretInput } from "../config/types.secrets.js";
 import { isSecureWebSocketUrl } from "../gateway/net.js";

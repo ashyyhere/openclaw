@@ -1,4 +1,3 @@
-/** Tests ACP child spawn policy, binding, and dispatch behavior. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

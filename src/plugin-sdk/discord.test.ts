@@ -1,4 +1,3 @@
-/** Tests Discord SDK subpath exports and compatibility helpers. */
 import { describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => {

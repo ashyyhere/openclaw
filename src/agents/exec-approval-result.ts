@@ -1,4 +1,3 @@
-/** Parses exec approval wrapper results and denied-user messages. */
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
 type ExecApprovalResult =

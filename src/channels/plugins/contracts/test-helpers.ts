@@ -1,4 +1,3 @@
-/** Shared assertions and fixtures for channel plugin contract suites. */
 import { expect, type Mock } from "vitest";
 import type { DispatchFromConfigResult } from "../../../auto-reply/reply/dispatch-from-config.types.js";
 import type { MsgContext } from "../../../auto-reply/templating.js";

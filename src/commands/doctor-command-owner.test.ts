@@ -1,4 +1,3 @@
-/** Tests doctor checks for configured command owners. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   formatCommandOwnerFromChannelSender,

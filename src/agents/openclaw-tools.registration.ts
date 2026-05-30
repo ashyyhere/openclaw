@@ -1,4 +1,3 @@
-/** Shared OpenClaw core-tool registration and update_plan gating helpers. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { uniqueStrings } from "../shared/string-normalization.js";
 import { isStrictAgenticExecutionContractActive } from "./execution-contract.js";

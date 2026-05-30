@@ -1,4 +1,3 @@
-/** Core implementation for daemon start, stop, and restart commands. */
 import type { Writable } from "node:stream";
 import { readBestEffortConfig, readConfigFileSnapshot } from "../../config/config.js";
 import { resolveFutureConfigActionBlock } from "../../config/future-version-guard.js";

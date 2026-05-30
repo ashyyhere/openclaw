@@ -1,4 +1,3 @@
-/** Contract tests for resolving plugin-authored channel config writes. */
 import { describe, expect, it } from "vitest";
 import { resolveChannelConfigWrites } from "../config-writes.js";
 

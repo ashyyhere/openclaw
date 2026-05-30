@@ -1,4 +1,3 @@
-/** Normalizes prompt sections and capability ids for cache-stable prompts. */
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
 /** Normalize prompt text for deterministic comparison/cache keys. */

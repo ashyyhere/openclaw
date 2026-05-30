@@ -1,4 +1,3 @@
-/** Formats internal child-task events for runtime prompt context. */
 import {
   formatGeneratedAttachmentLines,
   type AgentGeneratedAttachment,

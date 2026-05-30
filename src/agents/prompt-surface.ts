@@ -1,4 +1,3 @@
-/** Resolves prompt-surface-specific OpenClaw tool fallback text. */
 import { isOpenClawMainPromptSurface } from "../plugins/agent-prompt-surface-kind.js";
 import type { AgentPromptSurfaceKind } from "../plugins/types.js";
 import { isAcpSessionKey, isSubagentSessionKey } from "../routing/session-key.js";

@@ -1,4 +1,3 @@
-/** Applies idle timeouts to provider streams during embedded attempts. */
 import { DEFAULT_LLM_IDLE_TIMEOUT_SECONDS } from "../../../config/agent-timeout-defaults.js";
 import type { OpenClawConfig } from "../../../config/types.openclaw.js";
 import {

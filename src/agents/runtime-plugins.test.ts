@@ -1,4 +1,3 @@
-/** Tests runtime plugin loading. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const hoisted = vi.hoisted(() => ({

@@ -1,4 +1,3 @@
-/** Resolves provider-runtime lookup keys for provider-specific policy hooks. */
 import { MODEL_APIS } from "../config/types.models.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import type { ProviderConfig } from "./models-config.providers.secrets.js";

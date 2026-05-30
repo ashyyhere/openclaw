@@ -1,4 +1,3 @@
-/** Tests repeated full text-end events do not duplicate replies. */
 import { describe, expect, it, vi } from "vitest";
 import {
   createTextEndBlockReplyHarness,

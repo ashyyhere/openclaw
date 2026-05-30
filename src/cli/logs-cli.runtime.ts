@@ -1,4 +1,3 @@
-/** Runtime helpers for streaming gateway and local service logs. */
 import { spawn } from "node:child_process";
 
 /** Gateway connection detail formatter used by logs commands. */

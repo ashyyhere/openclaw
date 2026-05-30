@@ -1,4 +1,3 @@
-/** Node daemon runtime option constants and validators. */
 import {
   DEFAULT_GATEWAY_DAEMON_RUNTIME,
   isGatewayDaemonRuntime,

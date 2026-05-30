@@ -1,4 +1,3 @@
-/** Resolves channel option summaries from CLI startup metadata. */
 import { uniqueStrings } from "../shared/string-normalization.js";
 import { readCliStartupMetadata } from "./startup-metadata.js";
 

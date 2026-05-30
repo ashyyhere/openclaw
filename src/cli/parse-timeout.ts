@@ -1,4 +1,3 @@
-/** Parses CLI timeout values as positive millisecond integers. */
 import { parseStrictPositiveInteger } from "../infra/parse-finite-number.js";
 
 /** Reused helper for parse Timeout Ms behavior in src/cli. */

@@ -1,4 +1,3 @@
-/** Registers DNS helper commands delegated to the packaged DNS tool. */
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";

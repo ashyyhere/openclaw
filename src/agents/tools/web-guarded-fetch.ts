@@ -1,4 +1,3 @@
-/** SSRF-guarded fetch wrappers for web tools. */
 import {
   fetchWithSsrFGuard,
   type GuardedFetchOptions,

@@ -1,4 +1,3 @@
-/** Formats provider quota snapshots for status lines and detailed reports. */
 import { clampPercent } from "./provider-usage.shared.js";
 import type { ProviderUsageSnapshot, UsageSummary, UsageWindow } from "./provider-usage.types.js";
 

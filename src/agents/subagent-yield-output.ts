@@ -1,4 +1,3 @@
-/** Detects sessions_yield tool output in subagent transcripts. */
 import { asOptionalRecord } from "../shared/record-coerce.js";
 
 function readToolName(value: unknown): string | undefined {

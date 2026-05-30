@@ -1,4 +1,3 @@
-/** Registers shell completion commands and generates completion scripts. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { Command, Option } from "commander";

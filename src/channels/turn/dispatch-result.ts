@@ -1,4 +1,3 @@
-/** Type guard helpers for dispatch results returned by channel turn handlers. */
 import type { ReplyDispatchKind } from "../../auto-reply/reply/reply-dispatcher.types.js";
 
 /** Shared type for Channel Turn Dispatch Result Like in src/channels/turn. */

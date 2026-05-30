@@ -1,4 +1,3 @@
-/** Guarded fetch wrapper for provider transports, SSRF policy, proxy, and local services. */
 import {
   isCloudMetadataIpAddress,
   isLinkLocalIpAddress,

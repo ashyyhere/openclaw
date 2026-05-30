@@ -1,4 +1,3 @@
-/** Covers runtime context prompt and custom message construction. */
 import { describe, expect, it } from "vitest";
 import {
   buildCurrentInboundPrompt,

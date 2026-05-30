@@ -1,4 +1,3 @@
-/** Reads and writes embedded-agent transcript JSONL state safely. */
 import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";

@@ -1,4 +1,3 @@
-/** Reads, waits for, and formats subagent completion output for announcement flows. */
 import { isSilentReplyText, SILENT_REPLY_TOKEN } from "../auto-reply/tokens.js";
 import { asFiniteNumber } from "../shared/number-coercion.js";
 import { buildAgentRunTerminalOutcomeFromWaitResult } from "./agent-run-terminal-outcome.js";

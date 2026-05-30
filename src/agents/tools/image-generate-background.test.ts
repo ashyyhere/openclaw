@@ -1,4 +1,3 @@
-/** Covers background image generation task lifecycle behavior. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { IMAGE_GENERATION_TASK_KIND } from "../image-generation-task-status.js";
 import {

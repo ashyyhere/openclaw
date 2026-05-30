@@ -1,4 +1,3 @@
-/** Runtime registry for context-pruning extension dependencies. */
 import { createSessionManagerRuntimeRegistry } from "../session-manager-runtime-registry.js";
 import type { EffectiveContextPruningSettings } from "./settings.js";
 

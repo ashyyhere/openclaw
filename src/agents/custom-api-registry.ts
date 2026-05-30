@@ -1,4 +1,3 @@
-/** Registers custom runtime APIs in the shared LLM API registry. */
 import { getApiProvider, registerApiProvider } from "../llm/api-registry.js";
 import type { Api, StreamOptions } from "../llm/types.js";
 import type { StreamFn } from "./runtime/index.js";

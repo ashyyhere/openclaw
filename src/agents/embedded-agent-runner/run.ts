@@ -1,4 +1,3 @@
-/** Main embedded-agent execution loop and provider failover orchestration. */
 import { randomBytes } from "node:crypto";
 import fs from "node:fs/promises";
 import { sanitizeForLog } from "../../../packages/terminal-core/src/ansi.js";

@@ -1,4 +1,3 @@
-/** Tests bundled LSP runtime process, protocol, and tool behavior. */
 import { EventEmitter } from "node:events";
 import { PassThrough, Writable } from "node:stream";
 import { afterEach, describe, expect, it, vi } from "vitest";

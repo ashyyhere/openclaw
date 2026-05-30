@@ -1,4 +1,3 @@
-/** Regression coverage for shared transport stream helpers. */
 import { describe, expect, it, vi } from "vitest";
 import {
   failTransportStream,

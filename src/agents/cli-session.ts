@@ -1,4 +1,3 @@
-/** Session binding helpers for CLI-backed providers. */
 import crypto from "node:crypto";
 import type { CliSessionBinding, SessionEntry } from "../config/sessions.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";

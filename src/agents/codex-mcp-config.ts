@@ -1,4 +1,3 @@
-/** Projects OpenClaw bundle MCP configuration into Codex thread config patches. */
 import crypto from "node:crypto";
 import {
   loadEnabledBundleMcpConfig,

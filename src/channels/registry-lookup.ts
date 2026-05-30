@@ -1,4 +1,3 @@
-/** Low-level lookup helpers for active plugin channel registry snapshots. */
 import type {
   ActivePluginChannelRegistration,
   ActivePluginChannelRegistry,

@@ -1,4 +1,3 @@
-/** Conversation compaction, chunking, fallback summarization, and handoff helpers. */
 import type { AgentCompactionIdentifierPolicy } from "../config/types.agent-defaults.js";
 import { formatErrorMessage } from "../infra/errors.js";
 import { retryAsync } from "../infra/retry.js";

@@ -1,4 +1,3 @@
-/** Gateway daemon runtime option constants. */
 export type GatewayDaemonRuntime = "node" | "bun";
 
 /** Reused constant for DEFAULT GATEWAY DAEMON RUNTIME behavior in src/commands. */

@@ -1,4 +1,3 @@
-/** Matches CLI command paths against exact and prefix policy rules. */
 type StructuredCommandPathMatchRule = {
   pattern: readonly string[];
   exact?: boolean;

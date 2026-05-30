@@ -1,4 +1,3 @@
-/** Tests Chutes OAuth PKCE, callback parsing, token exchange, and refresh. */
 import { describe, expect, it } from "vitest";
 import { generateChutesPkce, parseOAuthCallbackInput } from "./chutes-oauth.js";
 

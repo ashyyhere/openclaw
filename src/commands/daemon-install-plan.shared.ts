@@ -1,4 +1,3 @@
-/** Shared Node/Bun runtime and path resolution for daemon install plans. */
 import fs from "node:fs";
 import path from "node:path";
 import { resolvePreferredNodePath } from "../daemon/runtime-paths.js";

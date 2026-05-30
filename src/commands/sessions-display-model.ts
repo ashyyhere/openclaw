@@ -1,4 +1,3 @@
-/** Resolves display labels for models in session listings. */
 import { DEFAULT_MODEL, DEFAULT_PROVIDER } from "../agents/defaults.js";
 import {
   inferUniqueProviderFromConfiguredModels,

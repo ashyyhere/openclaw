@@ -1,4 +1,3 @@
-/** Tests prompt-cache trace collection and compaction behavior. */
 import crypto from "node:crypto";
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";

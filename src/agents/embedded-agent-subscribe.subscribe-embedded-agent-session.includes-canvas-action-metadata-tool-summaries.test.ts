@@ -1,4 +1,3 @@
-/** Tests canvas action metadata appears in tool summaries. */
 import { describe, expect, it, vi } from "vitest";
 import { createSubscribedSessionHarness } from "./embedded-agent-subscribe.e2e-harness.js";
 

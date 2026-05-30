@@ -1,4 +1,3 @@
-/** Renders update-channel, install-kind, and availability status for the CLI. */
 import { getTerminalTableWidth, renderTable } from "../../../packages/terminal-core/src/table.js";
 import { theme } from "../../../packages/terminal-core/src/theme.js";
 import {

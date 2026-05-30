@@ -1,4 +1,3 @@
-/** Public SDK file-lock helpers backed by fs-safe with OpenClaw stale-lock recovery. */
 import "../infra/fs-safe-defaults.js";
 import {
   acquireFileLock as acquireFsSafeFileLock,

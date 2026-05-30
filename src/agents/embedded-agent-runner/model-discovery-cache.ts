@@ -1,4 +1,3 @@
-/** Discovers cached agent model stores for startup/model resolution. */
 import { statSync } from "node:fs";
 import path from "node:path";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";

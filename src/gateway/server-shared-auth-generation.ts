@@ -1,4 +1,3 @@
-/** Tracks shared gateway auth generations and disconnects stale clients. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveGatewayReloadSettings } from "./config-reload-settings.js";
 

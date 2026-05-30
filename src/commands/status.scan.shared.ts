@@ -1,4 +1,3 @@
-/** Shared status scan helpers for gateway probes, memory, and tasks. */
 import { existsSync } from "node:fs";
 import { isLoopbackIpAddress } from "@openclaw/net-policy/ip";
 import {

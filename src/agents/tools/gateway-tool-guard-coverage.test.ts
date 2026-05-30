@@ -1,4 +1,3 @@
-/** Covers gateway config mutation guard allowlist coverage. */
 import { describe, expect, it } from "vitest";
 import {
   ALLOWED_GATEWAY_CONFIG_PATHS_FOR_TEST,

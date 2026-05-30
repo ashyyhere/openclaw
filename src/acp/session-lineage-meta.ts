@@ -1,4 +1,3 @@
-/** ACP lineage metadata projection for spawned/subagent sessions. */
 import type { GatewaySessionRow } from "../gateway/session-utils.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 

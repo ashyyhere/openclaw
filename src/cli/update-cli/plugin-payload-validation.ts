@@ -1,4 +1,3 @@
-/** Validates bundled plugin payloads before accepting update artifacts. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import type { PluginInstallRecord } from "../../config/types.plugins.js";

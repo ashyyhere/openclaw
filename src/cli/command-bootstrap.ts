@@ -1,4 +1,3 @@
-/** Bootstraps config and plugin registry state before command execution. */
 import type { RuntimeEnv } from "../runtime.js";
 import { createLazyImportLoader } from "../shared/lazy-promise.js";
 import type { CliPluginRegistryPolicy } from "./command-catalog.js";

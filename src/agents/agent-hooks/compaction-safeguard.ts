@@ -1,4 +1,3 @@
-/** Hooks compaction requests to preserve task context and reject unsafe summaries. */
 import fs from "node:fs";
 import path from "node:path";
 import { extractSections } from "../../auto-reply/reply/post-compaction-context.js";

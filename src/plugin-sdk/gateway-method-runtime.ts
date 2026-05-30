@@ -1,4 +1,3 @@
-/** Runtime SDK helper for dispatching gateway server methods in-process. */
 import { dispatchGatewayMethodInProcessRaw } from "../gateway/server-plugins.js";
 import { getPluginRuntimeGatewayRequestScope } from "../plugins/runtime/gateway-request-scope.js";
 

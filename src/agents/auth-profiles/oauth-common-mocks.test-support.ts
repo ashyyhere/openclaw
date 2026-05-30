@@ -1,4 +1,3 @@
-/** Shared mocks for OAuth auth-profile tests. */
 import { vi } from "vitest";
 import type { OAuthCredential } from "./types.js";
 

@@ -1,4 +1,3 @@
-/** Tests armable stall watchdog timing and timeout metadata. */
 import { describe, expect, it, vi } from "vitest";
 import { MAX_TIMER_TIMEOUT_MS } from "../../shared/number-coercion.js";
 import { createArmableStallWatchdog } from "./stall-watchdog.js";

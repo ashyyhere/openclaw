@@ -1,4 +1,3 @@
-/** Regression coverage for fallback thinking-level selection. */
 import { describe, expect, it } from "vitest";
 import { pickFallbackThinkingLevel } from "./thinking.js";
 

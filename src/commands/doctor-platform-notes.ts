@@ -1,4 +1,3 @@
-/** Emits platform-specific doctor notes and optimization hints. */
 import { execFile } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";

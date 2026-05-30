@@ -1,4 +1,3 @@
-/** Low-level Docker CLI helpers for sandbox containers and networks. */
 import { spawn } from "node:child_process";
 import { createSubsystemLogger } from "../../logging/subsystem.js";
 import {

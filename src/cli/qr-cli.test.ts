@@ -1,4 +1,3 @@
-/** Tests QR CLI command output and pairing setup code handling. */
 import { Command } from "commander";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { encodePairingSetupCode } from "../pairing/setup-code.js";

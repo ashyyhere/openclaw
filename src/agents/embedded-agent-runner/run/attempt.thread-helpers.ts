@@ -1,4 +1,3 @@
-/** Helpers for attempt thread prompts, workspace paths, and cache markers. */
 import type { OpenClawConfig } from "../../../config/types.openclaw.js";
 import { joinPresentTextSegments } from "../../../shared/text/join-segments.js";
 import { normalizeStructuredPromptSection } from "../../prompt-cache-stability.js";

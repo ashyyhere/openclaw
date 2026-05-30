@@ -1,4 +1,3 @@
-/** Covers PDF tool input, page, and model helper behavior. */
 import { describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../../config/config.js";
 

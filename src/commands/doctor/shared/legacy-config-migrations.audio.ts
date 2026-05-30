@@ -1,4 +1,3 @@
-/** Legacy config migrations for audio-related settings. */
 import {
   defineLegacyConfigMigration,
   ensureRecord,

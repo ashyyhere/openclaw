@@ -1,4 +1,3 @@
-/** Utility helpers for ACP session keys, errors, metadata, and runtime TTLs. */
 import {
   canonicalizeMainSessionAlias,
   resolveMainSessionKey,

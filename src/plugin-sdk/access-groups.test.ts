@@ -1,4 +1,3 @@
-/** Tests access-group allowFrom expansion and membership resolution helpers. */
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {

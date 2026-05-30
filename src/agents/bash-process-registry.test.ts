@@ -1,4 +1,3 @@
-/** Tests bash process registry buffering, lifecycle, and cleanup. */
 import type { ChildProcessWithoutNullStreams } from "node:child_process";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { ProcessSession } from "./bash-process-registry.js";

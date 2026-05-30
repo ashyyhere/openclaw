@@ -1,4 +1,3 @@
-/** Process-wide registry for ACP runtime backends contributed by plugins. */
 import { resolveGlobalSingleton } from "../../shared/global-singleton.js";
 import { normalizeOptionalLowercaseString } from "../../shared/string-coerce.js";
 import { AcpRuntimeError } from "./errors.js";

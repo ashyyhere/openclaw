@@ -1,4 +1,3 @@
-/** Tests update-phase environment flag helpers. */
 import { describe, expect, it } from "vitest";
 import {
   UPDATE_DEFER_CONFIGURED_PLUGIN_INSTALL_REPAIR_ENV,

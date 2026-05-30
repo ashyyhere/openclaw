@@ -1,4 +1,3 @@
-/** In-memory cache for loaded auth profile stores keyed by file mtimes. */
 import { cloneAuthProfileStore } from "./clone.js";
 import { EXTERNAL_CLI_SYNC_TTL_MS } from "./constants.js";
 import type { AuthProfileStore } from "./types.js";

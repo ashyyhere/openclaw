@@ -1,4 +1,3 @@
-/** Creates full AgentSession runtimes from OpenClaw session services. */
 import { copyFileSync, existsSync, mkdirSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 import type {

@@ -1,4 +1,3 @@
-/** Cooldown probe policy for provider failover reasons. */
 import type { FailoverReason } from "./embedded-agent-helpers.js";
 
 /** Return whether a failover reason is eligible for cooldown probing. */

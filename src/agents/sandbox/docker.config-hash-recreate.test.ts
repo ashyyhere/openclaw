@@ -1,4 +1,3 @@
-/** Covers Docker container recreation when sandbox config hashes change. */
 import { EventEmitter } from "node:events";
 import fs from "node:fs";
 import os from "node:os";

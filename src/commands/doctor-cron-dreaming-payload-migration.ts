@@ -1,4 +1,3 @@
-/** Migrates legacy memory dreaming cron payload shapes. */
 import {
   MANAGED_MEMORY_DREAMING_CRON_NAME,
   MANAGED_MEMORY_DREAMING_CRON_TAG,

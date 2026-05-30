@@ -1,4 +1,3 @@
-/** Implements agents identity read and edit commands. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../agents/agent-scope.js";

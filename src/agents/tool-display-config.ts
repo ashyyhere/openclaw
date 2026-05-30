@@ -1,4 +1,3 @@
-/** Config-level types for custom tool display specifications. */
 import type { ToolDisplaySpec as ToolDisplaySpecBase } from "./tool-display-common.js";
 
 type ToolDisplaySpec = ToolDisplaySpecBase & {

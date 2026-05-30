@@ -1,4 +1,3 @@
-/** Resolves plugin-provided tools and runtime context for OpenClaw tool sets. */
 import { selectApplicableRuntimeConfig } from "../config/config.js";
 import {
   getRuntimeConfigSnapshot,

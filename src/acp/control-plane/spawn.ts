@@ -1,4 +1,3 @@
-/** ACP runtime spawn helpers and close-handle contract. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { callGateway } from "../../gateway/call.js";
 import { logVerbose } from "../../globals.js";

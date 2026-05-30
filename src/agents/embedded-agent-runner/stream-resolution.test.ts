@@ -1,4 +1,3 @@
-/** Covers embedded-agent stream function selection and wrapping. */
 import type { StreamFn } from "openclaw/plugin-sdk/agent-core";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { getApiProvider } from "../../llm/api-registry.js";

@@ -1,4 +1,3 @@
-/** Renders terminal-colored unified diffs for interactive agent mode. */
 import * as Diff from "diff";
 import { theme } from "../theme/theme.js";
 

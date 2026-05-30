@@ -1,4 +1,3 @@
-/** Embedded agent LSP runtime that exposes language-server features as tools. */
 import { spawn, type ChildProcess } from "node:child_process";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { sanitizeHostExecEnv } from "../infra/host-env-security.js";

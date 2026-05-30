@@ -1,4 +1,3 @@
-/** Tests ACP translator permission relay and cancellation paths. */
 import type { CancelNotification } from "@agentclientprotocol/sdk";
 import { describe, expect, it, vi } from "vitest";
 import type { EventFrame } from "../../packages/gateway-protocol/src/index.js";

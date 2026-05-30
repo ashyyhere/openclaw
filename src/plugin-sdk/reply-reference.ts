@@ -1,4 +1,3 @@
-/** Public SDK barrel for reply reference parsing and formatting helpers. */
 export {
   createReplyReferencePlanner,
   isSingleUseReplyToMode,

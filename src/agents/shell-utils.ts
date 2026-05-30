@@ -1,4 +1,3 @@
-/** Shell detection and sanitization helpers for command execution. */
 import fs from "node:fs";
 import path from "node:path";
 

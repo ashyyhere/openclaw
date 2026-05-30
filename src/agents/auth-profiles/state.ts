@@ -1,4 +1,3 @@
-/** Loads, coerces, merges, and saves auth profile mutable state sidecars. */
 import fs from "node:fs";
 import { isDeepStrictEqual } from "node:util";
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";

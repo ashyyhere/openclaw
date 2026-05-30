@@ -1,4 +1,3 @@
-/** Tests embedded agent project settings merge and sanitization. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

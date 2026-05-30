@@ -1,4 +1,3 @@
-/** Implements plugin authoring scaffold commands. */
 import fs from "node:fs";
 import path from "node:path";
 import { getToolPluginMetadata, type ToolPluginMetadata } from "../plugin-sdk/tool-plugin.js";

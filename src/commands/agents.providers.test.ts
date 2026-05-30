@@ -1,4 +1,3 @@
-/** Tests provider status summaries for agents commands. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { buildProviderStatusIndex } from "./agents.providers.js";

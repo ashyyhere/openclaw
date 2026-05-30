@@ -1,4 +1,3 @@
-/** Tests command authorization helpers exposed through the plugin SDK. */
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import {

@@ -1,4 +1,3 @@
-/** Tests system CLI command registration and runtime delegation. */
 import { Command } from "commander";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createCliRuntimeCapture } from "./test-runtime-capture.js";

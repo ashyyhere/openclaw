@@ -1,4 +1,3 @@
-/** Media-related action handlers for the nodes management tool. */
 import crypto from "node:crypto";
 import {
   type CameraFacing,

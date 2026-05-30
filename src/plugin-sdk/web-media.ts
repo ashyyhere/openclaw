@@ -1,4 +1,3 @@
-/** Public SDK barrel for web media extraction helpers. */
 export {
   getDefaultLocalRoots,
   LocalMediaAccessError,

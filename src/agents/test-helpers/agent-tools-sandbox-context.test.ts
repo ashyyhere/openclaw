@@ -1,4 +1,3 @@
-/** Covers sandbox context fixture defaults for agent tool tests. */
 import { describe, expect, it } from "vitest";
 import { createAgentToolsSandboxContext } from "./agent-tools-sandbox-context.js";
 

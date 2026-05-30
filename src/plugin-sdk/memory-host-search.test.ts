@@ -1,4 +1,3 @@
-/** Tests memory host search manager resolution helpers. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import {

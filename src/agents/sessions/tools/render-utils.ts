@@ -1,4 +1,3 @@
-/** Rendering helpers shared by session tool result UIs. */
 import * as os from "node:os";
 import { getCapabilities, getImageDimensions, imageFallback } from "@earendil-works/pi-tui";
 import type { ImageContent, TextContent } from "../../../llm/types.js";

@@ -1,4 +1,3 @@
-/** Regression coverage for embedded run failure signal extraction. */
 import { describe, expect, it } from "vitest";
 import { resolveEmbeddedRunFailureSignal } from "./failure-signal.js";
 

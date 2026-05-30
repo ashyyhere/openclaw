@@ -1,4 +1,3 @@
-/** Builds outbound send functions from channel plugin adapters for CLI use. */
 import { loadChannelOutboundAdapter } from "../../channels/plugins/outbound/load.js";
 import type { ChannelId } from "../../channels/plugins/types.public.js";
 import { getRuntimeConfig } from "../../config/config.js";

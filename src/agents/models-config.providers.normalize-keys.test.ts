@@ -1,4 +1,3 @@
-/** Tests provider auth key normalization for generated models config. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

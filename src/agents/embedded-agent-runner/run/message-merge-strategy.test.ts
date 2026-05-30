@@ -1,4 +1,3 @@
-/** Covers registration and resolution of message merge strategies. */
 import { afterEach, describe, expect, it } from "vitest";
 import {
   DEFAULT_MESSAGE_MERGE_STRATEGY_ID,

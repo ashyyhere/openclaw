@@ -1,4 +1,3 @@
-/** Public SDK helpers for defining tool plugins and TypeBox-backed tool schemas. */
 import { Type, type Static, type TSchema } from "typebox";
 import type { AgentToolResult, AgentToolUpdateCallback } from "../agents/runtime/index.js";
 import { jsonResult, textResult } from "../agents/tools/common.js";

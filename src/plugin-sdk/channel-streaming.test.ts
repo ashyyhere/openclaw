@@ -1,4 +1,3 @@
-/** Tests channel streaming helper behavior and stream state contracts. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   buildChannelProgressDraftLine,

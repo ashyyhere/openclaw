@@ -1,4 +1,3 @@
-/** Public SDK helper for caching computed lazy values. */
 type LazyValue<T> = T | (() => T);
 
 /** Return a getter that evaluates a function value once and returns the cached result afterward. */

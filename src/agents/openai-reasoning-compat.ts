@@ -1,4 +1,3 @@
-/** Maps OpenAI reasoning effort names for model-specific compatibility. */
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import { resolveOpenAIReasoningEffortForModel } from "./openai-reasoning-effort.js";
 

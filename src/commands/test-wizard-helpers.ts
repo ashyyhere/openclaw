@@ -1,4 +1,3 @@
-/** Compatibility barrel for wizard test helper utilities. */
 export {
   createAuthTestLifecycle,
   createExitThrowingRuntime,

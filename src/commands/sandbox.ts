@@ -1,4 +1,3 @@
-/** Implements sandbox list, recreate, and cleanup commands. */
 import { confirm as clackConfirm } from "@clack/prompts";
 import {
   listSandboxBrowsers,

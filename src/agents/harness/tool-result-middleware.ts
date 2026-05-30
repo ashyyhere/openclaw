@@ -1,4 +1,3 @@
-/** Runs harness tool-result middleware before results enter transcripts. */
 import { createSubsystemLogger } from "../../logging/subsystem.js";
 import type {
   AgentToolResultMiddleware,

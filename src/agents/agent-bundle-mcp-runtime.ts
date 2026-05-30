@@ -1,4 +1,3 @@
-/** Session-scoped MCP runtime manager for embedded agent bundle servers. */
 import crypto from "node:crypto";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";

@@ -1,4 +1,3 @@
-/** Shared config parsing for Codex native web search. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { normalizeUniqueTrimmedStringList } from "../shared/string-normalization.js";
 import { isRecord } from "../utils.js";

@@ -1,4 +1,3 @@
-/** Wraps live runtime directory and outbound methods behind stable adapter contracts. */
 import type { ChannelDirectoryAdapter, ChannelOutboundAdapter } from "./types.adapters.js";
 
 type MaybePromise<T> = T | Promise<T>;

@@ -1,4 +1,3 @@
-/** Regression coverage for model/session handling in subagent spawn. */
 import os from "node:os";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import {

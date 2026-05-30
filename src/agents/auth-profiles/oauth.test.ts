@@ -1,4 +1,3 @@
-/** Broad regression coverage for OAuth auth-profile loading and refresh. */
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../../config/config.js";
 import type { AuthProfileStore } from "./types.js";

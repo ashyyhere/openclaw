@@ -1,4 +1,3 @@
-/** Resolves the short OpenClaw commit hash from env, git, build info, or package metadata. */
 import fs from "node:fs";
 import { createRequire } from "node:module";
 import path from "node:path";

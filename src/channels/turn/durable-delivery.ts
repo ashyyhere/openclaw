@@ -1,4 +1,3 @@
-/** Sends final channel turn replies through durable delivery when supported. */
 import type { ReplyPayload } from "../../auto-reply/reply-payload.js";
 import type { FinalizedMsgContext } from "../../auto-reply/templating.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";

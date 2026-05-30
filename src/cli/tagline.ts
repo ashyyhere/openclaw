@@ -1,4 +1,3 @@
-/** Selects the CLI banner tagline from a small deterministic set. */
 import { parseStrictNonNegativeInteger } from "../infra/parse-finite-number.js";
 
 const DEFAULT_TAGLINE = "All your chats, one OpenClaw.";

@@ -1,4 +1,3 @@
-/** Tests Copilot provider routing and dynamic header selection. */
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { modelSelectionShouldEnsureCopilotRuntimePlugin } from "./copilot-routing.js";

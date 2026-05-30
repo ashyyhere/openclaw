@@ -1,4 +1,3 @@
-/** Tests help paths avoid cold-importing heavyweight command modules. */
 import { Command } from "commander";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 

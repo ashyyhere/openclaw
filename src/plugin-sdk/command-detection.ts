@@ -1,4 +1,3 @@
-/** Public SDK barrel for detecting inline/control command text. */
 export {
   hasControlCommand,
   hasInlineCommandTokens,

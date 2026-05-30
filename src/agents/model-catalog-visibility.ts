@@ -1,4 +1,3 @@
-/** Filters model catalog entries for visible/default/configured views. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { ModelCatalogEntry } from "./model-catalog.js";
 import { createProviderAuthChecker } from "./model-provider-auth.js";

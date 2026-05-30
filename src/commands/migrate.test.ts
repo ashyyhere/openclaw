@@ -1,4 +1,3 @@
-/** Tests plugin migration command planning and apply flows. */
 import fs from "node:fs/promises";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { MigrationApplyResult, MigrationPlan } from "../plugins/types.js";

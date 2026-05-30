@@ -1,4 +1,3 @@
-/** Catalog types and policy helpers for CLI command registration. */
 import { hasFlag } from "./argv.js";
 
 /** Plugin-loading policy for a CLI command path. */

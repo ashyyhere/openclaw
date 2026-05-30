@@ -1,4 +1,3 @@
-/** Regression coverage for cache-TTL provider and timestamp helpers. */
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("../../plugins/provider-runtime.js", async () => {

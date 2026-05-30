@@ -1,4 +1,3 @@
-/** Shared types for effective tool inventory reporting. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { ProviderRuntimeModel } from "../plugins/provider-runtime-model.types.js";
 

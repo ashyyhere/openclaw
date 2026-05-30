@@ -1,4 +1,3 @@
-/** Manages provider-owned local service processes for model requests. */
 import { spawn, type ChildProcess } from "node:child_process";
 import path from "node:path";
 import type { ModelProviderLocalServiceConfig } from "../config/types.models.js";

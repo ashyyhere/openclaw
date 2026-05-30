@@ -1,4 +1,3 @@
-/** Covers host path normalization for sandbox bind policies. */
 import { mkdtempSync, mkdirSync, realpathSync, symlinkSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";

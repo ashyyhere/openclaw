@@ -1,4 +1,3 @@
-/** Compatibility facade for auth profile path helpers and file initialization. */
 import fs from "node:fs";
 import { saveJsonFile } from "../../infra/json-file.js";
 import { AUTH_STORE_VERSION } from "./constants.js";

@@ -1,4 +1,3 @@
-/** Tests sensitive field redaction in status summaries. */
 import { describe, expect, it } from "vitest";
 import { redactSensitiveStatusSummary } from "./status.summary.js";
 import type { SessionStatus, StatusSummary } from "./status.types.js";

@@ -1,4 +1,3 @@
-/** Regression coverage for transport message transforms. */
 import type { Api, Context, Model } from "openclaw/plugin-sdk/llm";
 import { describe, expect, it } from "vitest";
 import { transformTransportMessages } from "./transport-message-transform.js";

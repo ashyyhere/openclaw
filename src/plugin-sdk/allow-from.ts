@@ -1,4 +1,3 @@
-/** Public SDK helpers for channel allowFrom normalization, matching, and resolution output. */
 import { isAllowedParsedChatSender as isAllowedParsedChatSenderShared } from "../channels/plugins/chat-target-prefixes.js";
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 import { normalizeStringEntries } from "../shared/string-normalization.js";

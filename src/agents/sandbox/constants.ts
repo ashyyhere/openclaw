@@ -1,4 +1,3 @@
-/** Default sandbox paths, image names, ports, and tool policies. */
 import path from "node:path";
 import { CHANNEL_IDS } from "../../channels/ids.js";
 import { STATE_DIR } from "../../config/paths.js";

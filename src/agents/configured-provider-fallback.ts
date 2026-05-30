@@ -1,4 +1,3 @@
-/** Chooses a configured provider/model when the default provider is unavailable. */
 import type { OpenClawConfig } from "../config/types.js";
 
 type ProviderModelRef = {

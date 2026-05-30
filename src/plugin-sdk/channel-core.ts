@@ -1,4 +1,3 @@
-/** Public SDK barrel for core channel plugin types and base plugin construction. */
 export type {
   ChannelConfigUiHint,
   ChannelPlugin,

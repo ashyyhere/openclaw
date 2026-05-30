@@ -1,4 +1,3 @@
-/** Runtime facade for direct embedded-agent compaction. */
 import { createLazyImportLoader } from "../../shared/lazy-promise.js";
 import type { CompactEmbeddedAgentSessionDirect } from "./compact.runtime.types.js";
 

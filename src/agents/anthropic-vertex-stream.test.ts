@@ -1,4 +1,3 @@
-/** Tests Anthropic Vertex stream facade resolution. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const facadeRuntimeMocks = vi.hoisted(() => ({

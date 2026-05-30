@@ -1,4 +1,3 @@
-/** Resolves whether an embedded run has model fallbacks configured. */
 import type { OpenClawConfig } from "../../../config/types.openclaw.js";
 import { hasConfiguredModelFallbacks } from "../../agent-scope.js";
 

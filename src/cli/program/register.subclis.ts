@@ -1,4 +1,3 @@
-/** Registers optional sub-CLI groups according to startup policy. */
 import type { Command } from "commander";
 import { resolveCliArgvInvocation } from "../argv-invocation.js";
 import {

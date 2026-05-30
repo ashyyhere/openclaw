@@ -1,4 +1,3 @@
-/** Produces status summaries for channel plugin accounts and sessions. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 import { inspectChannelAccount } from "../account-inspection.js";

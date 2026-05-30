@@ -1,4 +1,3 @@
-/** Public SDK builders for channel approval delivery, native surfaces, and split adapters. */
 import type { ExecApprovalRequest } from "../infra/exec-approvals.js";
 import type { PluginApprovalRequest } from "../infra/plugin-approvals.js";
 import type { ChannelApprovalCapability } from "./channel-contract.js";

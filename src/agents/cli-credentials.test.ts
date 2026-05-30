@@ -1,4 +1,3 @@
-/** Tests local CLI credential parsing, caching, and writeback. */
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

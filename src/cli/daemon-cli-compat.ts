@@ -1,4 +1,3 @@
-/** Lists legacy daemon CLI exports kept for internal compatibility checks. */
 export const LEGACY_DAEMON_CLI_EXPORTS = [
   "registerDaemonCli",
   "runDaemonInstall",

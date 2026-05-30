@@ -1,4 +1,3 @@
-/** CLI-provider detection helper for model selection. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveRuntimeCliBackends } from "../plugins/cli-backends.runtime.js";
 import { resolvePluginSetupCliBackendDescriptor } from "../plugins/setup-registry.runtime.js";

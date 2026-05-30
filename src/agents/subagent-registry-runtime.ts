@@ -1,4 +1,3 @@
-/** Runtime imports isolated for subagent registry lazy loading. */
 export {
   countActiveDescendantRuns,
   getLatestSubagentRunByChildSessionKey,

@@ -1,4 +1,3 @@
-/** Resolves OpenClaw and OS home directories across desktop, Windows, and Termux. */
 import os from "node:os";
 import path from "node:path";
 

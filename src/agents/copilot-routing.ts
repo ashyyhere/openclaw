@@ -1,4 +1,3 @@
-/** Routes Copilot model selections to the optional Copilot runtime plugin. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveModelRuntimePolicy } from "./model-runtime-policy.js";
 import { parseModelRefProvider } from "./openai-codex-routing.js";

@@ -1,4 +1,3 @@
-/** Maintains pending and inbound history windows for channel turns. */
 import {
   buildInboundHistoryFromMap,
   buildPendingHistoryContextFromMap,

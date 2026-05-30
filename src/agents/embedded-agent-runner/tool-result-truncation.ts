@@ -1,4 +1,3 @@
-/** Truncates oversized tool-result text in messages, sessions, and transcripts. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { formatErrorMessage } from "../../infra/errors.js";
 import type { TextContent } from "../../llm/types.js";

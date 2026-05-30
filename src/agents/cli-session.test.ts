@@ -1,4 +1,3 @@
-/** Tests CLI session binding persistence and reuse invalidation. */
 import { describe, expect, it } from "vitest";
 import type { SessionEntry } from "../config/sessions.js";
 import {

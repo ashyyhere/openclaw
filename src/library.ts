@@ -1,4 +1,3 @@
-/** Public library facade with lazy runtime imports for optional subsystems. */
 import type { getReplyFromConfig as getReplyFromConfigRuntime } from "./auto-reply/reply.runtime.js";
 import { applyTemplate } from "./auto-reply/templating.js";
 import { createDefaultDeps } from "./cli/deps.js";

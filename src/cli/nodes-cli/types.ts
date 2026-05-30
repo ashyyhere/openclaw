@@ -1,4 +1,3 @@
-/** Shared option types for nodes CLI RPC commands. */
 export type NodesRpcOpts = {
   url?: string;
   token?: string;

@@ -1,4 +1,3 @@
-/** Resolves which tool runtimes and allowlists one embedded attempt needs. */
 import { TOOL_NAME_SEPARATOR } from "../../agent-bundle-mcp-names.js";
 import type { OpenClawCodingToolConstructionPlan } from "../../agent-tools.js";
 import { isToolAllowedByPolicyName } from "../../tool-policy-match.js";

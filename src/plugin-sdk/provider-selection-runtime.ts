@@ -1,4 +1,3 @@
-/** Runtime SDK helpers for selecting configured or auto-selectable capability providers. */
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 
 /** Provider shape that can participate in automatic selection. */

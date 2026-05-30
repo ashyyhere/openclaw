@@ -1,4 +1,3 @@
-/** Finds and frees local TCP ports used by CLI-managed services. */
 import { execFileSync } from "node:child_process";
 import { createServer } from "node:net";
 import { formatErrorMessage } from "../infra/errors.js";

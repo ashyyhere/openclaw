@@ -1,4 +1,3 @@
-/** Test helper for constructing minimal runtime mocks. */
 import type { vi } from "vitest";
 
 type ViLike = Pick<typeof vi, "fn">;

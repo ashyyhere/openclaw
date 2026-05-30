@@ -1,4 +1,3 @@
-/** Read-only channel account inspection that avoids starting live runtimes. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { getBundledChannelAccountInspector } from "./plugins/bundled.js";
 import { getLoadedChannelPlugin } from "./plugins/registry.js";

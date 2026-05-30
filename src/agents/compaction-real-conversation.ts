@@ -1,4 +1,3 @@
-/** Identifies transcript messages that represent real user-visible conversation. */
 import { stripHeartbeatToken } from "../auto-reply/heartbeat.js";
 import { isSilentReplyText } from "../auto-reply/tokens.js";
 import type { AgentMessage } from "./runtime/index.js";

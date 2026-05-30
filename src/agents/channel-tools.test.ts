@@ -1,4 +1,3 @@
-/** Tests channel-provided agent tools and prompt capability discovery. */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { ChannelPlugin } from "../channels/plugins/types.js";
 import type { OpenClawConfig } from "../config/config.js";

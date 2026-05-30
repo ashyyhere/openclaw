@@ -1,4 +1,3 @@
-/** Runtime bridge for provider-owned model id normalization. */
 import { createRequire } from "node:module";
 
 type ProviderRuntimeModule = Pick<

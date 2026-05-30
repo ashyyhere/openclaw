@@ -1,4 +1,3 @@
-/** Covers auth profile failure policy classification. */
 import { describe, expect, it } from "vitest";
 import { resolveAuthProfileFailureReason } from "./auth-profile-failure-policy.js";
 

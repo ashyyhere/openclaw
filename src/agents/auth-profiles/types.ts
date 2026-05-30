@@ -1,4 +1,3 @@
-/** Shared auth profile credential, state, store, and repair result types. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { SecretRef } from "../../config/types.secrets.js";
 

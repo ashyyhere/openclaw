@@ -1,4 +1,3 @@
-/** Shared config write helpers for gateway server methods. */
 import { isDeepStrictEqual } from "node:util";
 import {
   createConfigIO,

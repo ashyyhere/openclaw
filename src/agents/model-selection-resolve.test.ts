@@ -1,4 +1,3 @@
-/** Tests model ref resolution against allowlists. */
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/types.js";
 import { resolveAllowedModelRef, resolveConfiguredModelRef } from "./model-selection-resolve.js";

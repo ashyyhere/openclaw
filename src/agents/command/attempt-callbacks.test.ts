@@ -1,4 +1,3 @@
-/** Regression coverage for agent attempt lifecycle callback state. */
 import { describe, expect, it } from "vitest";
 import { createAgentAttemptLifecycleCallbacks } from "./attempt-callbacks.js";
 

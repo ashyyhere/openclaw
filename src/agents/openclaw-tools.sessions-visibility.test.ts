@@ -1,4 +1,3 @@
-/** Tests OpenClaw session tool visibility rules. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createSessionsHistoryTool } from "./tools/sessions-history-tool.js";
 

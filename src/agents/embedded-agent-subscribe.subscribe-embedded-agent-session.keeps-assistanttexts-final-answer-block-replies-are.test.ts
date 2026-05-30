@@ -1,4 +1,3 @@
-/** Tests final-answer block replies preserve assistant text state. */
 import { describe, expect, it, vi } from "vitest";
 import {
   createReasoningFinalAnswerMessage,

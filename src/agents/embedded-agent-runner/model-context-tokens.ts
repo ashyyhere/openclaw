@@ -1,4 +1,3 @@
-/** Reads context-window token metadata from resolved model definitions. */
 import type { Model } from "../../llm/types.js";
 
 type AgentModelWithOptionalContextTokens = Model & {

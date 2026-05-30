@@ -1,4 +1,3 @@
-/** Errors shared by agent harness registration and selection. */
 export class MissingAgentHarnessError extends Error {
   readonly harnessId: string;
 

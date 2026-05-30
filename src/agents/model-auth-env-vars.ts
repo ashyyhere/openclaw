@@ -1,4 +1,3 @@
-/** Provider auth env-var lookup wrappers used by model auth. */
 import {
   listKnownProviderAuthEnvVarNames,
   resolveProviderAuthEvidence,

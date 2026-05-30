@@ -1,4 +1,3 @@
-/** Public types for plugin middleware that can inspect or rewrite tool results. */
 import type { AgentToolResult } from "../agents/runtime/index.js";
 
 /** Tool result shape exposed to plugin result middleware. */

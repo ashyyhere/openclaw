@@ -1,4 +1,3 @@
-/** Repairs configured plugin ids that lack install records. */
 import { existsSync } from "node:fs";
 import { readFile, rm } from "node:fs/promises";
 import path from "node:path";

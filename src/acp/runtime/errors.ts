@@ -1,4 +1,3 @@
-/** ACP runtime error type, coercion, and chain formatting helpers. */
 import { stringifyNonErrorCause } from "../../infra/errors.js";
 import { redactSensitiveText } from "../../logging/redact.js";
 

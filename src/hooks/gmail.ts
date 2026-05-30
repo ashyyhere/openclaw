@@ -1,4 +1,3 @@
-/** Gmail hook defaults, runtime config resolution, and gog watch command helpers. */
 import { randomBytes } from "node:crypto";
 import path from "node:path";
 import {

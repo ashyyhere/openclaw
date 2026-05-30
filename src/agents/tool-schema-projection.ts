@@ -1,4 +1,3 @@
-/** Projects tool schemas into provider-compatible JSON schema shapes. */
 import type { AnyAgentTool } from "./tools/common.js";
 
 /** JSON value subset allowed for runtime-projected tool input schemas. */

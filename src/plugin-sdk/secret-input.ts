@@ -1,4 +1,3 @@
-/** Public SDK helpers for secret input refs, schemas, and normalized strings. */
 import { z } from "zod";
 import {
   hasConfiguredSecretInput,

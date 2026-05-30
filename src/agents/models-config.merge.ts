@@ -1,4 +1,3 @@
-/** Merges implicit provider catalogs with explicit user models.json provider config. */
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import { isNonSecretApiKeyMarker } from "./model-auth-markers.js";
 import type { ProviderConfig } from "./models-config.providers.secrets.js";

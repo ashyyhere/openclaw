@@ -1,4 +1,3 @@
-/** Covers plugin skill directory discovery and runtime filtering. */
 import fsSync, { type Dirent } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";

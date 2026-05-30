@@ -1,4 +1,3 @@
-/** Grep tool definition for searching text under a workspace. */
 import { spawn } from "node:child_process";
 import { readFileSync, statSync } from "node:fs";
 import path from "node:path";

@@ -1,4 +1,3 @@
-/** Shared provider HTTP, guarded fetch, polling, and transcription helpers. */
 import path from "node:path";
 import {
   assertOkOrThrowHttpError,

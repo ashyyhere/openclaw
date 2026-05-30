@@ -1,4 +1,3 @@
-/** Scans bundled plugin source/dist folders for public and runtime artifacts. */
 import fs from "node:fs";
 import path from "node:path";
 import { normalizeOptionalString } from "../shared/string-coerce.js";

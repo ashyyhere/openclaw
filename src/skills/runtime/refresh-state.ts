@@ -1,4 +1,3 @@
-/** Process-local state for skill snapshot refresh notifications. */
 export type SkillsChangeEvent = {
   workspaceDir?: string;
   reason: "watch" | "watch-targets" | "manual" | "remote-node" | "config-change" | "workshop";

@@ -1,4 +1,3 @@
-/** Registers grouped command descriptors onto the root program. */
 import type { Command } from "commander";
 import { uniqueStrings } from "../../shared/string-normalization.js";
 import { removeCommandByName } from "./command-tree.js";

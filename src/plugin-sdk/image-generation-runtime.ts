@@ -1,4 +1,3 @@
-/** Runtime SDK barrel for image generation provider execution helpers. */
 export {
   generateImage,
   listRuntimeImageGenerationProviders,

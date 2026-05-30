@@ -1,4 +1,3 @@
-/** Fetches Z.ai usage quota windows for provider usage summaries. */
 import {
   buildUsageHttpErrorSnapshot,
   fetchJson,

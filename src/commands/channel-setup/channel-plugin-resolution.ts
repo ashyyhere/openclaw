@@ -1,4 +1,3 @@
-/** Resolves channel setup plugins for command flows. */
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../../agents/agent-scope.js";
 import {
   listChannelPluginCatalogEntries,

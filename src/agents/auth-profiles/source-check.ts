@@ -1,4 +1,3 @@
-/** Detects whether an auth profile source exists for an agent. */
 import fs from "node:fs";
 import {
   resolveAuthStatePath,

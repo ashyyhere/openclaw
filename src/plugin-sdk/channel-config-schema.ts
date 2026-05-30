@@ -1,4 +1,3 @@
-/** Shared config-schema primitives for channel plugins with DM/group policy knobs. */
 export {
   AllowFromListSchema,
   buildChannelConfigSchema,

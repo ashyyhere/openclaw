@@ -1,4 +1,3 @@
-/** Shared runtime helper for non-interactive onboarding tests. */
 import type { RuntimeEnv } from "../runtime.js";
 
 type RuntimeLike = Pick<RuntimeEnv, "log" | "error" | "exit">;

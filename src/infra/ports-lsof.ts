@@ -1,4 +1,3 @@
-/** Locates lsof for port-inspection commands without relying on PATH first. */
 import fs from "node:fs";
 import fsPromises from "node:fs/promises";
 

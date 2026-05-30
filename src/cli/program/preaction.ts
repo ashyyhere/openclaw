@@ -1,4 +1,3 @@
-/** Installs pre-action hooks that prepare runtime state before command handlers. */
 import type { Command } from "commander";
 import { setVerbose } from "../../globals.js";
 import type { LogLevel } from "../../logging/levels.js";

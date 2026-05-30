@@ -1,4 +1,3 @@
-/** Covers Cloudflare markdown extraction path for web_fetch. */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { LookupFn } from "../../infra/net/ssrf.js";
 import * as logger from "../../logger.js";

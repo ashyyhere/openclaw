@@ -1,4 +1,3 @@
-/** Regression coverage for image tool logging behavior. */
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { createSolidPngBuffer } from "../../test/helpers/image-fixtures.js";
 

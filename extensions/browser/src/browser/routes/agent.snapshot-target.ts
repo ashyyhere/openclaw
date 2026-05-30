@@ -1,4 +1,3 @@
-/** Resolve the correct targetId after a navigation that may trigger a renderer swap. */
 export async function resolveTargetIdAfterNavigate(opts: {
   oldTargetId: string;
   navigatedUrl: string;

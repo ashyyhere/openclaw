@@ -1,4 +1,3 @@
-/** Decides which auth profile credentials are safe to copy between agents. */
 import { AUTH_STORE_VERSION } from "./constants.js";
 import type { AuthProfileCredential, AuthProfileSecretsStore, AuthProfileStore } from "./types.js";
 

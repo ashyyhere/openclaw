@@ -1,4 +1,3 @@
-/** Public barrel for exec/process bash tools. */
 export type {
   BashSandboxConfig,
   ExecElevatedDefaults,

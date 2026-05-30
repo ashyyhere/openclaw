@@ -1,4 +1,3 @@
-/** Container path normalization helpers for sandbox policies. */
 import path from "node:path";
 
 /** Normalizes a container path to POSIX absolute-ish form. */

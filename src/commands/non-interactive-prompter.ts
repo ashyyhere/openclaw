@@ -1,4 +1,3 @@
-/** Wizard prompter that logs defaults for non-interactive command flows. */
 import type { RuntimeEnv } from "../runtime.js";
 import type { WizardPrompter } from "../wizard/prompts.js";
 

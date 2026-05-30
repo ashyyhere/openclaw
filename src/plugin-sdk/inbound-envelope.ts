@@ -1,4 +1,3 @@
-/** Public SDK helpers for inbound envelope route and sender metadata. */
 type RouteLike = {
   agentId: string;
   sessionKey: string;

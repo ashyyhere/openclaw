@@ -1,4 +1,3 @@
-/** Tests MCP transport config resolution. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { logWarn } from "../logger.js";
 import { resolveMcpTransportConfig } from "./mcp-transport-config.js";

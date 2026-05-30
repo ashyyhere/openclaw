@@ -1,4 +1,3 @@
-/** Public barrel for channel management command implementations. */
 export type { ChannelsAddOptions } from "./channels/add.js";
 /** Registers the `channels add` command implementation. */
 export { channelsAddCommand } from "./channels/add.js";

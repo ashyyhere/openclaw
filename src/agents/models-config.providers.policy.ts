@@ -1,4 +1,3 @@
-/** Public wrappers around provider-specific config policy hooks. */
 import {
   applyProviderNativeStreamingUsagePolicy,
   normalizeProviderConfigPolicy,

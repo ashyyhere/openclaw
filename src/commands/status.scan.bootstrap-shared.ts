@@ -1,4 +1,3 @@
-/** Cold-start status summary helpers used before runtime state is loaded. */
 import type { OpenClawConfig } from "../config/types.js";
 import type { UpdateCheckResult } from "../infra/update-check.js";
 import { runExec } from "../process/exec.js";

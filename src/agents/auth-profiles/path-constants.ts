@@ -1,4 +1,3 @@
-/** Auth profile and legacy auth state filenames. */
 export const AUTH_PROFILE_FILENAME = "auth-profiles.json";
 /** Legacy mutable auth state sidecar filename. */
 export const AUTH_STATE_FILENAME = "auth-state.json";

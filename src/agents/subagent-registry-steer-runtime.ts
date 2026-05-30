@@ -1,4 +1,3 @@
-/** Runtime bridge for replacing/interupting subagent runs during steer operations. */
 import type { SubagentRunRecord } from "./subagent-registry.types.js";
 
 type ReplaceSubagentRunAfterSteerParams = {

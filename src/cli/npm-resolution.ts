@@ -1,4 +1,3 @@
-/** Resolves npm install specs into package metadata for plugin commands. */
 import {
   buildNpmResolutionFields,
   type NpmSpecResolution as NpmResolutionMetadata,

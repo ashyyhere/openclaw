@@ -1,4 +1,3 @@
-/** Produces immediate accepted notes for spawned subagent run/session modes. */
 import { isCronSessionKey } from "../routing/session-key.js";
 
 /** Model-facing note that tells run-mode subagents to wait for push completions. */

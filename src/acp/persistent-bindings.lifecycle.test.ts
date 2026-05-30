@@ -1,4 +1,3 @@
-/** Tests lifecycle behavior for config-defined ACP bindings. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import {

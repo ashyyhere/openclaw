@@ -1,4 +1,3 @@
-/** Tracks auth profile cooldown and unusable-window state. */
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
 import type { AuthProfileStore, ProfileUsageStats } from "./types.js";
 

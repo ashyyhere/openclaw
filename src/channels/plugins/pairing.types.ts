@@ -1,4 +1,3 @@
-/** Public pairing adapter contract exposed by channel plugins. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { RuntimeEnv } from "../../runtime.js";
 

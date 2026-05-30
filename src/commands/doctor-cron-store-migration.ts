@@ -1,4 +1,3 @@
-/** Normalizes persisted cron jobs and repairs stale schedule fields. */
 import { randomUUID } from "node:crypto";
 import { parseAbsoluteTimeMs } from "../cron/parse.js";
 import { getInvalidPersistedCronJobReason } from "../cron/persisted-shape.js";

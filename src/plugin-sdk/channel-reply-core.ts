@@ -1,4 +1,3 @@
-/** Public SDK barrel for channel reply chunking, dispatch, and payload helpers. */
 export {
   createChannelReplyPipeline,
   createReplyPrefixContext,

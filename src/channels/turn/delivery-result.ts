@@ -1,4 +1,3 @@
-/** Converts message receipts into channel turn delivery result records. */
 import { listMessageReceiptPlatformIds } from "../message/receipt.js";
 import type { MessageReceipt } from "../message/types.js";
 import type { ChannelDeliveryIntent, ChannelDeliveryResult } from "./types.js";

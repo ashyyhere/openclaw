@@ -1,4 +1,3 @@
-/** Runtime handoff state for exec approval follow-up runs. */
 import { randomUUID } from "node:crypto";
 import {
   isFutureDateTimestampMs,

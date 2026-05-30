@@ -1,4 +1,3 @@
-/** Installs skill archives into workspace skill directories with slug and scan enforcement. */
 import path from "node:path";
 import type { ArchiveLogger } from "../../infra/archive.js";
 import { formatErrorMessage } from "../../infra/errors.js";

@@ -1,4 +1,3 @@
-/** Normalizes tool-call ids and names for provider replay compatibility. */
 import { visitObjectContentBlocks } from "../../../shared/message-content-blocks.js";
 import { normalizeLowercaseStringOrEmpty } from "../../../shared/string-coerce.js";
 import {

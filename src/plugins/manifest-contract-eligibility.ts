@@ -1,4 +1,3 @@
-/** Manifest contract eligibility helpers for control-plane plugin queries. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { sortUniqueStrings } from "../shared/string-normalization.js";
 import { isInstalledPluginEnabled } from "./installed-plugin-index.js";

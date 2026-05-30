@@ -1,4 +1,3 @@
-/** Registers CLI commands for exporting and inspecting capability manifests. */
 import { randomUUID } from "node:crypto";
 import { createWriteStream } from "node:fs";
 import fs from "node:fs/promises";

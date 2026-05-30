@@ -1,4 +1,3 @@
-/** Helpers for spawning ACP clients with sanitized environment and invocation metadata. */
 import * as readline from "node:readline";
 import type { RequestPermissionRequest, RequestPermissionResponse } from "@agentclientprotocol/sdk";
 import { sanitizeTerminalText } from "../../packages/terminal-core/src/safe-text.js";

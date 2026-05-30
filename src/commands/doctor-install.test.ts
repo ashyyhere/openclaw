@@ -1,4 +1,3 @@
-/** Tests doctor install prompts and setup output. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { beforeEach, describe, expect, it, vi } from "vitest";

@@ -1,4 +1,3 @@
-/** Public SDK barrel for config mutation logging and after-write hooks. */
 export { logConfigUpdated } from "../config/logging.js";
 /** Re-exported API for src/plugin-sdk, starting with read Config File Snapshot For Write. */
 export { readConfigFileSnapshotForWrite } from "../config/io.js";

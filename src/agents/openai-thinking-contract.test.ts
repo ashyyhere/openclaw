@@ -1,4 +1,3 @@
-/** Tests OpenAI-family thinking level propagation through agent runtime. */
 import { Agent, type StreamFn } from "openclaw/plugin-sdk/agent-core";
 import {
   createAssistantMessageEventStream,

@@ -1,4 +1,3 @@
-/** Builds shard references for channel public surface contract suites. */
 import type { ChannelId } from "../../channel-id.types.js";
 import { listBundledChannelPluginIds } from "./bundled-channel-plugin-loader.js";
 

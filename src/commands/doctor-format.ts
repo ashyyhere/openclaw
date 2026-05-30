@@ -1,4 +1,3 @@
-/** Shared doctor output formatting and gateway runtime hints. */
 import { formatCliCommand } from "../cli/command-format.js";
 import {
   resolveGatewayLaunchAgentLabel,

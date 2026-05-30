@@ -1,4 +1,3 @@
-/** Wraps plugin-injected system context in a stable prompt boundary. */
 import { normalizeStructuredPromptSection } from "./prompt-cache-stability.js";
 
 const HOOK_SYSTEM_CONTEXT_HEADER =

@@ -1,4 +1,3 @@
-/** Tests reasoning stream emission when separate reasoning messages are enabled. */
 import type { AssistantMessage } from "openclaw/plugin-sdk/llm";
 import { describe, expect, it, vi } from "vitest";
 import {

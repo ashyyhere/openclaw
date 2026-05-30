@@ -1,4 +1,3 @@
-/** HTML/text extraction helpers used by web_fetch. */
 import { sanitizeHtml, stripInvisibleUnicode } from "./web-fetch-visibility.js";
 
 /** Extraction output mode requested by web_fetch. */

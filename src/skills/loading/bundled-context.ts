@@ -1,4 +1,3 @@
-/** Loads bundled skills into a compact runtime context. */
 import { createSubsystemLogger } from "../../logging/subsystem.js";
 import { resolveBundledSkillsDir, type BundledSkillsResolveOptions } from "./bundled-dir.js";
 import { loadSkillsFromDirSafe } from "./local-loader.js";

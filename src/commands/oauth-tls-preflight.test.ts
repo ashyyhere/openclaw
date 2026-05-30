@@ -1,4 +1,3 @@
-/** Tests OAuth TLS preflight formatting and execution. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { MAX_TIMER_TIMEOUT_MS } from "../shared/number-coercion.js";
 import {

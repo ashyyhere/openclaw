@@ -1,4 +1,3 @@
-/** Parses gateway self-presence payloads from RPC responses. */
 import { readStringValue } from "../shared/string-coerce.js";
 
 type GatewaySelfPresence = {

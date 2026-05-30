@@ -1,4 +1,3 @@
-/** Renders update command progress and failure guidance. */
 import { spinner } from "@clack/prompts";
 import { theme } from "../../../packages/terminal-core/src/theme.js";
 import { formatDurationPrecise } from "../../infra/format-time/format-duration.ts";

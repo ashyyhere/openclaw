@@ -1,4 +1,3 @@
-/** Covers prompt image reference detection and loading. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

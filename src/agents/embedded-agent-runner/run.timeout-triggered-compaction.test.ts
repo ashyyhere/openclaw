@@ -1,4 +1,3 @@
-/** Verifies timeout-triggered compaction feeds the embedded-agent retry path. */
 import { beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { makeAttemptResult, makeCompactionSuccess } from "./run.overflow-compaction.fixture.js";
 import {

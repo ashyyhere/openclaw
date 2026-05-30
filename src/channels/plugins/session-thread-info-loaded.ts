@@ -1,4 +1,3 @@
-/** Loads thread metadata from active channel plugin session conversation handlers. */
 import {
   parseRawSessionConversationRef,
   parseThreadSessionSuffix,

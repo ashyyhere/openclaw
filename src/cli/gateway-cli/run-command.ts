@@ -1,4 +1,3 @@
-/** Adds gateway run command options to Commander commands. */
 import type { Command } from "commander";
 
 const GATEWAY_AUTH_MODES = ["none", "token", "password", "trusted-proxy"] as const;

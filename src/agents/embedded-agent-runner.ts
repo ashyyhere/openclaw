@@ -1,4 +1,3 @@
-/** Public barrel for embedded-agent runner lifecycle APIs. */
 export { compactEmbeddedAgentSession } from "./embedded-agent-runner/compact.queued.js";
 /** Applies provider/runtime extra params to embedded agent construction. */
 export { applyExtraParamsToAgent } from "./embedded-agent-runner/extra-params.js";

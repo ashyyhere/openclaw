@@ -1,4 +1,3 @@
-/** Sanitizes provider/raw transport errors before showing them to users. */
 import { stripInboundMetadata } from "../../auto-reply/reply/strip-inbound-meta.js";
 import { stripPlainTextToolCallBlocks } from "../../plugin-sdk/tool-payload.js";
 import {

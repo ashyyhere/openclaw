@@ -1,4 +1,3 @@
-/** Lightweight config reader used by banner rendering without full CLI startup. */
 import { createConfigIO } from "../config/config.js";
 import type { TaglineMode } from "./tagline.js";
 

@@ -1,4 +1,3 @@
-/** Shared runtime helpers for status command data collection. */
 import { resolveDefaultAgentDir } from "../agents/agent-scope.js";
 import type { OpenClawConfig } from "../config/types.js";
 import type { HeartbeatEventPayload } from "../infra/heartbeat-events.js";

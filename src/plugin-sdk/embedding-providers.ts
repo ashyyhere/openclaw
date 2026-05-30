@@ -1,4 +1,3 @@
-/** Public SDK barrel for embedding provider contracts and registration helpers. */
 export {
   getEmbeddingProvider,
   listEmbeddingProviders,

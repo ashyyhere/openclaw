@@ -1,4 +1,3 @@
-/** Test helpers for update CLI package ownership checks. */
 import path from "node:path";
 
 function isPathInsideRoot(candidate: string, root: string): boolean {

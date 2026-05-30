@@ -1,4 +1,3 @@
-/** Small text formatting helpers shared by command output. */
 export const shortenText = (value: string, maxLen: number) => {
   const chars = Array.from(value);
   if (chars.length <= maxLen) {

@@ -1,4 +1,3 @@
-/** Tests agent scope resolution for ids, paths, models, and fallbacks. */
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

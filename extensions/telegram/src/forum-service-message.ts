@@ -1,4 +1,3 @@
-/** Telegram forum-topic service-message fields (Bot API). */
 export const TELEGRAM_FORUM_SERVICE_FIELDS = [
   "forum_topic_created",
   "forum_topic_edited",

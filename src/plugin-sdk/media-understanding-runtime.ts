@@ -1,4 +1,3 @@
-/** Runtime SDK barrel for media understanding provider helpers. */
 export {
   describeImageFile,
   describeImageFileWithModel,

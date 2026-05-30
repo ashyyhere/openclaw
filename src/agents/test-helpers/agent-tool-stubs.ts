@@ -1,4 +1,3 @@
-/** Test helpers for minimal agent tool stubs. */
 import { Type } from "typebox";
 import type { AgentTool, AgentToolResult } from "../runtime/index.js";
 

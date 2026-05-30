@@ -1,4 +1,3 @@
-/** Formats common CLI error recovery text and gateway examples. */
 import { formatCliCommand } from "./command-format.js";
 
 const DEFAULT_GATEWAY_PORT_EXAMPLE = 18789;

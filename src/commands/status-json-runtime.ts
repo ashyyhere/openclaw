@@ -1,4 +1,3 @@
-/** Resolves runtime data needed for status JSON output. */
 import type { OpenClawConfig } from "../config/types.js";
 import type { UpdateCheckResult } from "../infra/update-check.js";
 import { buildStatusJsonPayload } from "./status-json-payload.ts";

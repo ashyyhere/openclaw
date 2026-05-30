@@ -1,4 +1,3 @@
-/** Tests status, health, and sessions command registration. */
 import { Command } from "commander";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { registerStatusHealthSessionsCommands } from "./register.status-health-sessions.js";

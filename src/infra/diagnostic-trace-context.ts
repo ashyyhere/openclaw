@@ -1,4 +1,3 @@
-/** Creates, parses, formats, and scopes W3C trace context for diagnostics. */
 import { AsyncLocalStorage } from "node:async_hooks";
 import { randomBytes } from "node:crypto";
 

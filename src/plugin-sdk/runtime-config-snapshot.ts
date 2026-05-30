@@ -1,4 +1,3 @@
-/** Runtime SDK barrel for current config snapshot helpers. */
 export {
   clearRuntimeConfigSnapshot,
   getRuntimeConfigSnapshot,

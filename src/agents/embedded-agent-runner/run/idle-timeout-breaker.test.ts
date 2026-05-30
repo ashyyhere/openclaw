@@ -1,4 +1,3 @@
-/** Covers the breaker that surfaces output after repeated idle timeouts. */
 import { describe, expect, it } from "vitest";
 import {
   MAX_CONSECUTIVE_IDLE_TIMEOUTS_BEFORE_OUTPUT,

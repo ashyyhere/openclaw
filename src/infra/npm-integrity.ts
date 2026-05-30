@@ -1,4 +1,3 @@
-/** Detects npm package integrity drift before archive installs proceed. */
 import type { NpmIntegrityDrift, NpmSpecResolution } from "./install-source-utils.js";
 
 /** Payload describing an expected-vs-actual npm integrity mismatch. */

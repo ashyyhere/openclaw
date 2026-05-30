@@ -1,4 +1,3 @@
-/** Doctor checks for plugin manifest schema and runtime consistency. */
 import fs from "node:fs";
 import path from "node:path";
 import { z } from "zod";

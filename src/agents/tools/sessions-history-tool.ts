@@ -1,4 +1,3 @@
-/** Agent tool for reading visible session history. */
 import { Type } from "typebox";
 import { getRuntimeConfig } from "../../config/config.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";

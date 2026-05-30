@@ -1,4 +1,3 @@
-/** Covers message tool actions, channel targeting, and delivery behavior. */
 import { Type } from "typebox";
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { ChannelMessageAdapterShape } from "../../channels/message/types.js";

@@ -1,4 +1,3 @@
-/** Tests model auth label resolution. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { resolveModelAuthLabel } from "./model-auth-label.js";
 

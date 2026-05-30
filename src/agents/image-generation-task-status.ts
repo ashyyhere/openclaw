@@ -1,4 +1,3 @@
-/** Image-generation task lookup and prompt status helpers. */
 import type { TaskRecord } from "../tasks/task-registry.types.js";
 import {
   buildActiveMediaGenerationTaskPromptContextForSession,

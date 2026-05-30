@@ -1,4 +1,3 @@
-/** Collects doctor warnings for missing default account bindings. */
 import { normalizeChatChannelId } from "../../../channels/ids.js";
 import { listRouteBindings } from "../../../config/bindings.js";
 import type { OpenClawConfig } from "../../../config/types.openclaw.js";

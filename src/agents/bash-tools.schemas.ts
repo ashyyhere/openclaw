@@ -1,4 +1,3 @@
-/** TypeBox schemas for exec and process tools. */
 import { Type } from "typebox";
 import { optionalStringEnum } from "./schema/typebox.js";
 

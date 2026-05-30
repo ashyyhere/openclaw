@@ -1,4 +1,3 @@
-/** Implements subagent list, kill, steer, and message control operations. */
 import crypto from "node:crypto";
 import type { ClearSessionQueueResult } from "../auto-reply/reply/queue.js";
 import {

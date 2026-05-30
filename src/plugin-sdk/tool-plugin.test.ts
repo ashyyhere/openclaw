@@ -1,4 +1,3 @@
-/** Tests tool plugin definition and schema helpers. */
 import { Type } from "typebox";
 import { describe, expect, expectTypeOf, it, vi } from "vitest";
 import { createCapturedPluginRegistration } from "../plugins/captured-registration.js";

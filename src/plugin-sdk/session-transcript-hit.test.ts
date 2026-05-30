@@ -1,4 +1,3 @@
-/** Tests transcript hit formatting and path redaction helpers. */
 import { describe, expect, it } from "vitest";
 import type { SessionEntry } from "../config/sessions/types.js";
 import {

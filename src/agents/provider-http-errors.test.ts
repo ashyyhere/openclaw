@@ -1,4 +1,3 @@
-/** Tests provider HTTP error parsing and response helpers. */
 import { describe, expect, it } from "vitest";
 import {
   assertOkOrThrowProviderError,

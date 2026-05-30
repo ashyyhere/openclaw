@@ -1,4 +1,3 @@
-/** Runtime control parsing and application for active ACP sessions. */
 import { asNullableRecord } from "../../shared/record-coerce.js";
 import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";
 import { AcpRuntimeError, withAcpRuntimeErrorBoundary } from "../runtime/errors.js";

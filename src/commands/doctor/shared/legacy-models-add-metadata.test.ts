@@ -1,4 +1,3 @@
-/** Tests legacy model metadata detection for add commands. */
 import { describe, expect, it } from "vitest";
 import type { ModelDefinitionConfig } from "../../../config/types.models.js";
 import { isLegacyModelsAddCodexMetadataModel } from "./legacy-models-add-metadata.js";

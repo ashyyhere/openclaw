@@ -1,4 +1,3 @@
-/** Regression coverage for workspace skill status rows and install choices. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

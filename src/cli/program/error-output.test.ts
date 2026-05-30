@@ -1,4 +1,3 @@
-/** Tests parse error output for unknown or invalid CLI commands. */
 import { describe, expect, it } from "vitest";
 import { formatCliParseErrorOutput } from "./error-output.js";
 

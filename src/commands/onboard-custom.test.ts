@@ -1,4 +1,3 @@
-/** Tests custom API provider onboarding prompts. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { ensureApiKeyFromEnvOrPrompt } from "../plugins/provider-auth-input.js";
 import { promptCustomApiConfig } from "./onboard-custom.js";

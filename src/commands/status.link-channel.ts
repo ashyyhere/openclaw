@@ -1,4 +1,3 @@
-/** Resolves link-channel guidance from account snapshots and plugin metadata. */
 import { listReadOnlyChannelPluginsForConfig } from "../channels/plugins/read-only.js";
 import type { ChannelPlugin } from "../channels/plugins/types.plugin.js";
 import type { ChannelAccountSnapshot } from "../channels/plugins/types.public.js";

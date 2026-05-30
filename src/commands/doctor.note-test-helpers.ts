@@ -1,4 +1,3 @@
-/** Shared terminal note mocks for doctor tests. */
 import type { Mock } from "vitest";
 import { vi } from "vitest";
 

@@ -1,4 +1,3 @@
-/** Tests outbound direct text/media payload send sequencing and fallbacks. */
 import { describe, expect, it, vi } from "vitest";
 import {
   sendPayloadMediaSequenceAndFinalize,

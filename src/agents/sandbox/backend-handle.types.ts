@@ -1,4 +1,3 @@
-/** Backend handle contracts shared by sandbox implementations. */
 import type { SandboxFsBridge } from "./fs-bridge.types.js";
 
 /** Registered sandbox backend identifier. */

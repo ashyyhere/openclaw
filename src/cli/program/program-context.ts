@@ -1,4 +1,3 @@
-/** Stores OpenClaw program context on Commander command instances. */
 import type { Command } from "commander";
 import type { ProgramContext } from "./context.js";
 

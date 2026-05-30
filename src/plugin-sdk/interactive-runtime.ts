@@ -1,4 +1,3 @@
-/** Runtime SDK barrel for interactive prompt/session helpers. */
 export {
   adaptMessagePresentationForChannel,
   applyPresentationActionLimits,

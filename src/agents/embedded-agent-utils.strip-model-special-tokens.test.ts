@@ -1,4 +1,3 @@
-/** Tests stripping model-specific special tokens. */
 import { describe, expect, it } from "vitest";
 import { stripModelSpecialTokens } from "./embedded-agent-utils.js";
 

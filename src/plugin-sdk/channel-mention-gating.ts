@@ -1,4 +1,3 @@
-/** Public SDK barrel for channel mention gating contracts. */
 export type {
   InboundImplicitMentionKind,
   InboundMentionDecision,

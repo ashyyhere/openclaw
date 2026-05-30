@@ -1,4 +1,3 @@
-/** Agent config lookup and path resolution helpers. */
 import path from "node:path";
 import { resolveStateDir } from "../config/paths.js";
 import type {

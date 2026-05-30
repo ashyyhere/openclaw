@@ -1,4 +1,3 @@
-/** Low-level exec process runtime, environment handling, and result formatting. */
 import path from "node:path";
 import { emitDiagnosticEvent } from "../infra/diagnostic-events.js";
 import {

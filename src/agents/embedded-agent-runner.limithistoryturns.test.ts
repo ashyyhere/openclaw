@@ -1,4 +1,3 @@
-/** Tests embedded-agent history turn limits. */
 import type { AgentMessage } from "openclaw/plugin-sdk/agent-core";
 import { describe, expect, it } from "vitest";
 import { limitHistoryTurns } from "./embedded-agent-runner/history.js";

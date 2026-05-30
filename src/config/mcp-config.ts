@@ -1,4 +1,3 @@
-/** Reads and mutates MCP server entries in the OpenClaw config file. */
 import { isRecord } from "../utils.js";
 import { readSourceConfigSnapshot } from "./io.js";
 import {

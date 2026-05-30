@@ -1,4 +1,3 @@
-/** Resolves auth profile, legacy auth, state, and OAuth lock paths. */
 import { createHash } from "node:crypto";
 import path from "node:path";
 import { resolveStateDir } from "../../config/paths.js";

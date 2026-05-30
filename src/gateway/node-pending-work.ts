@@ -1,4 +1,3 @@
-/** In-memory pending-work queue for connected gateway nodes. */
 import { randomUUID } from "node:crypto";
 import {
   asDateTimestampMs,

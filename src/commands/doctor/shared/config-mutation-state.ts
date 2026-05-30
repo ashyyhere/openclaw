@@ -1,4 +1,3 @@
-/** Mutable config wrapper used by doctor repair steps. */
 import type { OpenClawConfig } from "../../../config/types.openclaw.js";
 
 /** Shared type for Doctor Config Mutation State in src/commands/doctor. */

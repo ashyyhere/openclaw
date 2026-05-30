@@ -1,4 +1,3 @@
-/** Shared Commander helpers for CLI option parsing and action args. */
 import { InvalidArgumentError, type Command } from "commander";
 import { parseStrictPositiveInteger } from "../../infra/parse-finite-number.js";
 

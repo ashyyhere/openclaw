@@ -1,4 +1,3 @@
-/** Covers retry handling for provider failures that arrive without useful text. */
 import { beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { makeAttemptResult } from "./run.overflow-compaction.fixture.js";
 import {

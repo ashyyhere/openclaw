@@ -1,4 +1,3 @@
-/** Tests status overview surface projection. */
 import { describe, expect, it } from "vitest";
 import {
   buildStatusGatewayJsonPayloadFromSurface,

@@ -1,4 +1,3 @@
-/** Resolves skill entries needed by an embedded-agent run. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { resolveSkillRuntimeConfig } from "../loading/runtime-config.js";
 import { loadWorkspaceSkillEntries } from "../loading/workspace.js";

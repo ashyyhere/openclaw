@@ -1,4 +1,3 @@
-/** Regression coverage for OAuth refresh error detection. */
 import { describe, expect, it } from "vitest";
 import {
   makeSeededRandom,

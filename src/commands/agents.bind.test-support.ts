@@ -1,4 +1,3 @@
-/** Test support for loading agent binding command modules with mocks. */
 import type { Mock } from "vitest";
 import { vi } from "vitest";
 import type { OpenClawConfig } from "../config/types.openclaw.js";

@@ -1,4 +1,3 @@
-/** Cleans stale plugin dependency folders from state directories. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { resolveStateDir } from "../../../config/paths.js";

@@ -1,4 +1,3 @@
-/** Prepares and runs single-turn simple completions for agent helpers. */
 import type { ThinkLevel } from "../auto-reply/thinking.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { formatErrorMessage } from "../infra/errors.js";

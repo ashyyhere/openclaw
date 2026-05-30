@@ -1,4 +1,3 @@
-/** Tests channel turn kernel orchestration and callback contracts. */
 import { beforeEach, describe, expect, expectTypeOf, it, vi } from "vitest";
 import type { ReplyPayload } from "../../auto-reply/reply-payload.js";
 import type { HistoryEntry } from "../../auto-reply/reply/history.types.js";

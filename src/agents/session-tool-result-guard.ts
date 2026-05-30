@@ -1,4 +1,3 @@
-/** Guards session transcripts so assistant tool calls have matching results. */
 import {
   boundedJsonUtf8Bytes,
   firstEnumerableOwnKeys,

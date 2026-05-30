@@ -1,4 +1,3 @@
-/** List normalized configured account ids from a raw channel account record map. */
 export function listConfiguredAccountIds(params: {
   accounts: Record<string, unknown> | undefined;
   normalizeAccountId: (accountId: string) => string;

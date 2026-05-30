@@ -1,4 +1,3 @@
-/** Prepares host workspace directories and bootstrap files for sandboxes. */
 import syncFs from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";

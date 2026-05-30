@@ -1,4 +1,3 @@
-/** Tests Slack-specific lifecycle behavior for status reaction controllers. */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   createStatusReactionController,

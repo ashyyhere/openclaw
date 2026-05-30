@@ -1,4 +1,3 @@
-/** Lazy runtime SDK facade for direct session status replies. */
 import { createLazyRuntimeMethodBinder, createLazyRuntimeModule } from "../shared/lazy-runtime.js";
 
 type CommandStatusRuntime = typeof import("./command-status.runtime.js");

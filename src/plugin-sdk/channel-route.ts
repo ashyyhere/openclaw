@@ -1,4 +1,3 @@
-/** Public SDK helpers for canonical channel route identity, matching, and compact keys. */
 import { normalizeOptionalAccountId } from "../routing/account-id.js";
 import {
   normalizeLowercaseStringOrEmpty,

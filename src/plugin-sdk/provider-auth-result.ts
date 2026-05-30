@@ -1,4 +1,3 @@
-/** Public SDK helpers for normalized provider auth result payloads. */
 import { buildAuthProfileId } from "../agents/auth-profiles/identity.js";
 import type { AuthProfileCredential } from "../agents/auth-profiles/types.js";
 import { normalizeConfiguredProviderCatalogModelId } from "../agents/model-ref-shared.js";

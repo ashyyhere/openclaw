@@ -1,4 +1,3 @@
-/** Resolves Claude CLI skill-plugin arguments when available. */
 import { accessSync } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";

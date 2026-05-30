@@ -1,4 +1,3 @@
-/** Public SDK schema builder for secret input strings and refs. */
 import { z } from "zod";
 import { ENV_SECRET_REF_ID_RE } from "../config/types.secrets.js";
 import { sensitive } from "../config/zod-schema.sensitive.js";

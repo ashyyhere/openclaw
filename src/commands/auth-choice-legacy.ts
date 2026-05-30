@@ -1,4 +1,3 @@
-/** Resolves deprecated and legacy auth choice aliases for onboarding. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {
   resolveManifestDeprecatedProviderAuthChoice,

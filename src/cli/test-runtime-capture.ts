@@ -1,4 +1,3 @@
-/** Test helper that captures runtime output writes for CLI command tests. */
 import { vi } from "vitest";
 import type { OutputRuntimeEnv } from "../runtime.js";
 import type { MockFn } from "../test-utils/vitest-mock-fn.js";

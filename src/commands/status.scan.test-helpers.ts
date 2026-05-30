@@ -1,4 +1,3 @@
-/** Shared fixtures and mocks for status scan tests. */
 import type { Mock } from "vitest";
 import { vi } from "vitest";
 import type { OpenClawConfig } from "../config/types.js";

@@ -1,4 +1,3 @@
-/** Coverage tests for nodes CLI command registration. */
 import { Command } from "commander";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { registerNodesCli } from "./nodes-cli.js";

@@ -1,4 +1,3 @@
-/** Shared gateway client helpers for agent tools. */
 import {
   GATEWAY_CLIENT_MODES,
   GATEWAY_CLIENT_NAMES,

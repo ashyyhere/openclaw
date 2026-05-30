@@ -1,4 +1,3 @@
-/** Tests configure wizard orchestration and config persistence. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 

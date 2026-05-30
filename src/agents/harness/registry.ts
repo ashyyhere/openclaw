@@ -1,4 +1,3 @@
-/** Process-local registry for agent harness implementations. */
 import { createSubsystemLogger } from "../../logging/subsystem.js";
 import type { AgentHarness, AgentHarnessResetParams, RegisteredAgentHarness } from "./types.js";
 

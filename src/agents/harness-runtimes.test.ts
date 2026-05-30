@@ -1,4 +1,3 @@
-/** Tests configured agent harness runtime discovery. */
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { collectConfiguredAgentHarnessRuntimes } from "./harness-runtimes.js";

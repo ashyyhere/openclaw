@@ -1,4 +1,3 @@
-/** Reads precomputed startup metadata for root help rendering. */
 import { readCliStartupMetadata } from "./startup-metadata.js";
 
 /** Subcommands whose help text may be precomputed into startup metadata. */

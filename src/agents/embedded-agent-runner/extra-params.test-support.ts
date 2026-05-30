@@ -1,4 +1,3 @@
-/** Test harness for capturing extra params applied to stream payloads. */
 import type { ThinkLevel } from "../../auto-reply/thinking.shared.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { Context, Model, SimpleStreamOptions } from "../../llm/types.js";

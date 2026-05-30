@@ -1,4 +1,3 @@
-/** Normalizes host paths for sandbox bind policy comparisons. */
 import { posix } from "node:path";
 import { resolvePathViaExistingAncestorSync } from "../../infra/boundary-path.js";
 

@@ -1,4 +1,3 @@
-/** Runs plugin-provided migration plans from the CLI. */
 import { cancel, confirm, isCancel, log } from "@clack/prompts";
 import {
   stylePromptHint,

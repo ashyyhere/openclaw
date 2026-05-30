@@ -1,4 +1,3 @@
-/** Required-parameter validation wrappers for built-in agent tools. */
 import type { AnyAgentTool } from "./agent-tools.types.js";
 
 /** One acceptable set of required parameters for a tool call. */

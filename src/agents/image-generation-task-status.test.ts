@@ -1,4 +1,3 @@
-/** Tests image-generation task status helpers. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   buildActiveImageGenerationTaskPromptContextForSession,

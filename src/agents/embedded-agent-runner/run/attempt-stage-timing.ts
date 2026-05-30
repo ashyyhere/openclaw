@@ -1,4 +1,3 @@
-/** Tracks coarse timing for embedded-run attempt stages. */
 export type EmbeddedRunStageTiming = {
   name: string;
   durationMs: number;

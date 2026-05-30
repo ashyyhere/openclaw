@@ -1,4 +1,3 @@
-/** Tests setup wizard helper APIs re-exported through plugin test runtime. */
 import {
   resolveSetupWizardAllowFromEntries,
   resolveSetupWizardGroupAllowlist,

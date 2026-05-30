@@ -1,4 +1,3 @@
-/** Public SDK helpers for resolving active memory host search managers. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { RegisteredMemorySearchManager } from "../plugins/memory-state.js";
 

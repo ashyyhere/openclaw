@@ -1,4 +1,3 @@
-/** Resolves secret scopes for message-channel CLI commands. */
 import { normalizeAccountId } from "../routing/session-key.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import { isDeliverableMessageChannel, normalizeMessageChannel } from "../utils/message-channel.js";

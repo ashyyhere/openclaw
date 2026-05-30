@@ -1,4 +1,3 @@
-/** Runtime OAuth refresh and API-key resolution entry points. */
 import { getRuntimeConfig } from "../../config/config.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { coerceSecretRef } from "../../config/types.secrets.js";

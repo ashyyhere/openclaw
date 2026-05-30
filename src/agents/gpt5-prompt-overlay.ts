@@ -1,4 +1,3 @@
-/** GPT-5 prompt overlay configuration and rendering helpers. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 import type { ProviderSystemPromptContribution } from "./system-prompt-contribution.js";

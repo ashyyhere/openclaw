@@ -1,4 +1,3 @@
-/** Process-local cache for ACP runtime handles and idle lifecycle state. */
 import type { AcpRuntime, AcpRuntimeHandle, AcpRuntimeSessionMode } from "../runtime/types.js";
 
 /** Mutable runtime state retained while an ACP runtime can be reused. */

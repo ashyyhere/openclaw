@@ -1,4 +1,3 @@
-/** Doctor checks for gateway auth token availability. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveSecretInputRef } from "../config/types.secrets.js";
 /** Re-exported API for src/commands, starting with should Require Gateway Token For Install. */

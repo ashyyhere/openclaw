@@ -1,4 +1,3 @@
-/** Regression coverage for tool display summaries. */
 import { describe, expect, it } from "vitest";
 import { resolveToolSearchCodeDisplayTarget } from "./tool-display-common.js";
 import { formatToolDetail, formatToolSummary, resolveToolDisplay } from "./tool-display.js";

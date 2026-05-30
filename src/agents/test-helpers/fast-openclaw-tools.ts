@@ -1,4 +1,3 @@
-/** Fast OpenClaw tool stubs for broad tool registration tests. */
 import { vi } from "vitest";
 import { stubTool } from "./fast-tool-stubs.js";
 

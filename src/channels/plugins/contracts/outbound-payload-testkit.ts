@@ -1,4 +1,3 @@
-/** Testkit for asserting outbound payload delivery contracts. */
 import { beforeEach, expect, it, type Mock } from "vitest";
 import type { ReplyPayload } from "../../../plugin-sdk/reply-payload.js";
 import { resetGlobalHookRunner } from "../../../plugins/hook-runner-global.js";

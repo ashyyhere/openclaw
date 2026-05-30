@@ -1,4 +1,3 @@
-/** Detects which OS supervisor is expected to respawn the gateway. */
 import { GATEWAY_LAUNCH_AGENT_LABEL, resolveGatewayLaunchAgentLabel } from "../daemon/constants.js";
 
 const SUPERVISOR_HINTS = {

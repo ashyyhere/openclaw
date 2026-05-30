@@ -1,4 +1,3 @@
-/** Gateway WebSocket connection policy for Control UI auth and device identity. */
 import type { ConnectParams } from "../../../../packages/gateway-protocol/src/index.js";
 import type { GatewayRole } from "../../role-policy.js";
 import { roleCanSkipDeviceIdentity } from "../../role-policy.js";

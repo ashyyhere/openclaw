@@ -1,4 +1,3 @@
-/** Declares lightweight route specs used before full command registration. */
 import { hasFlag } from "../argv.js";
 import { cliCommandCatalog, type CliCommandCatalogEntry } from "../command-catalog.js";
 import { matchesCommandPath } from "../command-path-matches.js";

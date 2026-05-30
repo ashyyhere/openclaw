@@ -1,4 +1,3 @@
-/** Public SDK barrel for channel status, pairing, and action-progress helpers. */
 export { PAIRING_APPROVED_MESSAGE } from "../channels/plugins/pairing-message.js";
 /** Re-exported API for src/plugin-sdk. */
 export {

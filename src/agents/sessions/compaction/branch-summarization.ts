@@ -1,4 +1,3 @@
-/** Branch summarization wrappers around agent-core compaction helpers. */
 import type { Model } from "../../../llm/types.js";
 import {
   collectEntriesForBranchSummaryFromBranches,

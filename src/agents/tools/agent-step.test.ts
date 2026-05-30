@@ -1,4 +1,3 @@
-/** Covers agent-step tool gateway calls and run waiting behavior. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { CallGatewayOptions } from "../../gateway/call.js";
 import { runAgentStep, testing } from "./agent-step.js";

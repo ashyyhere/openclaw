@@ -1,4 +1,3 @@
-/** Session-scoped cache for workspace bootstrap files. */
 import { loadWorkspaceBootstrapFiles, type WorkspaceBootstrapFile } from "./workspace.js";
 
 type BootstrapSnapshot = {

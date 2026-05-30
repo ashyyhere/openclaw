@@ -1,4 +1,3 @@
-/** Tests onboarding config defaults and workspace settings. */
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import {

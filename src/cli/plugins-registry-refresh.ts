@@ -1,4 +1,3 @@
-/** Refreshes installed plugin registry records after CLI install/update flows. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { formatErrorMessage } from "../infra/errors.js";
 import { loadInstalledPluginIndexInstallRecords } from "../plugins/installed-plugin-index-records.js";

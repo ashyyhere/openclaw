@@ -1,4 +1,3 @@
-/** Resolves plugin-specific session conversation refs into channel conversation metadata. */
 import { getRuntimeConfigSnapshot } from "../../config/runtime-snapshot.js";
 import { tryLoadActivatedBundledPluginPublicSurfaceModuleSync } from "../../plugin-sdk/facade-runtime.js";
 import {

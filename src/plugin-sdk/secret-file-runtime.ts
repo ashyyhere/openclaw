@@ -1,4 +1,3 @@
-/** Runtime SDK barrel for secret file read helpers. */
 export {
   DEFAULT_SECRET_FILE_MAX_BYTES,
   PRIVATE_SECRET_DIR_MODE,

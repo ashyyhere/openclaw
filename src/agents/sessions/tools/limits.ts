@@ -1,4 +1,3 @@
-/** Shared output limit helpers for session tools. */
 export function normalizePositiveLimit(value: number | undefined, fallback: number): number {
   if (value === undefined || !Number.isFinite(value)) {
     return fallback;

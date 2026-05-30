@@ -1,4 +1,3 @@
-/** Covers failover action decisions across retry and provider stages. */
 import { describe, expect, it } from "vitest";
 import { mergeRetryFailoverReason, resolveRunFailoverDecision } from "./failover-policy.js";
 

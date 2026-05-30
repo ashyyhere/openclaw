@@ -1,4 +1,3 @@
-/** E2E-style tests for node media commands through the full program. */
 import * as fs from "node:fs/promises";
 import { Command } from "commander";
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";

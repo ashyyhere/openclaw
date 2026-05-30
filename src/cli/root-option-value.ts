@@ -1,4 +1,3 @@
-/** Consumes separate or inline values for CLI root options. */
 import { isValueToken } from "../infra/cli-root-options.js";
 import { parseInlineOptionToken } from "../infra/inline-option-token.js";
 

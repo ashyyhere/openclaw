@@ -1,4 +1,3 @@
-/** Resolves strict tool mode for native OpenAI-compatible transports. */
 import { readStringValue } from "../shared/string-coerce.js";
 import { resolveProviderRequestCapabilities } from "./provider-attribution.js";
 

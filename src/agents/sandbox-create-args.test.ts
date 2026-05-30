@@ -1,4 +1,3 @@
-/** Tests sandbox create-arg construction. */
 import { describe, expect, it } from "vitest";
 import { OPENCLAW_CLI_ENV_VALUE } from "../infra/openclaw-exec-env.js";
 import { buildSandboxCreateArgs } from "./sandbox/docker.js";

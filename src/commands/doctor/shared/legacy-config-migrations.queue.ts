@@ -1,4 +1,3 @@
-/** Legacy config migrations for queue settings. */
 import {
   defineLegacyConfigMigration,
   getRecord,

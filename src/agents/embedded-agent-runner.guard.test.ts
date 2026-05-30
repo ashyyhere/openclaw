@@ -1,4 +1,3 @@
-/** Tests embedded-agent runner context and execution guards. */
 import type { AgentMessage } from "openclaw/plugin-sdk/agent-core";
 import { SessionManager } from "openclaw/plugin-sdk/agent-sessions";
 import { describe, expect, it } from "vitest";

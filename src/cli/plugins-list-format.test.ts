@@ -1,4 +1,3 @@
-/** Tests plugin list line formatting. */
 import { describe, expect, it } from "vitest";
 import { createPluginRecord } from "../plugins/status.test-helpers.js";
 import { formatPluginLine } from "./plugins-list-format.js";

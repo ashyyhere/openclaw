@@ -1,4 +1,3 @@
-/** Code-mode tool runtime that executes sandboxed JS/TS and bridges catalog tools. */
 import { randomUUID } from "node:crypto";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";

@@ -1,4 +1,3 @@
-/** Static descriptors for core CLI command groups. */
 import { defineCommandDescriptorCatalog } from "./command-descriptor-utils.js";
 import type { NamedCommandDescriptor } from "./command-group-descriptors.js";
 

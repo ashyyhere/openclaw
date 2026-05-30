@@ -1,4 +1,3 @@
-/** Persists, parses, and queries JSONL session transcripts. */
 import { randomUUID } from "node:crypto";
 import {
   closeSync,

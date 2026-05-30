@@ -1,4 +1,3 @@
-/** Warns when selected auth choices do not match configured models. */
 import { ensureAuthProfileStore, listProfilesForProvider } from "../agents/auth-profiles.js";
 import { resolveAgentHarnessPolicy } from "../agents/harness/policy.js";
 import { hasUsableCustomProviderApiKey, resolveEnvApiKey } from "../agents/model-auth.js";

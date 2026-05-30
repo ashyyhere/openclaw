@@ -1,4 +1,3 @@
-/** apply_patch tool parser and executor. */
 import syncFs from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";

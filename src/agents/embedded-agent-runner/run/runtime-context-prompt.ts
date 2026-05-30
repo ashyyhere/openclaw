@@ -1,4 +1,3 @@
-/** Builds current-turn runtime context text and custom messages. */
 import {
   extractInternalRuntimeContext,
   OPENCLAW_NEXT_TURN_RUNTIME_CONTEXT_HEADER,

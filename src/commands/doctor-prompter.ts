@@ -1,4 +1,3 @@
-/** Prompt adapter used by doctor repair flows. */
 import { confirm, select } from "@clack/prompts";
 import {
   stylePromptHint,

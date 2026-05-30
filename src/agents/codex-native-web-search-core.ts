@@ -1,4 +1,3 @@
-/** Core activation and payload helpers for Codex native web search. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { isRecord } from "../utils.js";
 import { externalCliDiscoveryForProviderAuth } from "./auth-profiles/external-cli-discovery.js";

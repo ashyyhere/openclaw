@@ -1,4 +1,3 @@
-/** Registry for message merge behavior applied before provider submission. */
 import { mergeOrphanedTrailingUserPrompt } from "./attempt.prompt-helpers.js";
 import type { EmbeddedRunAttemptParams } from "./types.js";
 

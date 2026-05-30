@@ -1,4 +1,3 @@
-/** Maintains reusable Claude CLI live sessions and runs interactive turns. */
 import crypto from "node:crypto";
 import type { ReplyBackendHandle } from "../../auto-reply/reply/reply-run-registry.js";
 import type { CliBackendConfig } from "../../config/types.js";

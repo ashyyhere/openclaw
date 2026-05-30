@@ -1,4 +1,3 @@
-/** Covers prompt template argument substitution. */
 import { describe, expect, it } from "vitest";
 import { parseCommandArgs, substituteArgs } from "./prompt-templates.js";
 

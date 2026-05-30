@@ -1,4 +1,3 @@
-/** Tests OpenClaw-owned tool runtime contract hook behavior. */
 import type { AgentTool } from "openclaw/plugin-sdk/agent-core";
 import {
   installOpenClawOwnedToolHooks,

@@ -1,4 +1,3 @@
-/** Resolves final citation URLs through a strict web-tools fetch guard. */
 import { withStrictWebToolsEndpoint } from "./web-guarded-fetch.js";
 
 const REDIRECT_TIMEOUT_MS = 5000;

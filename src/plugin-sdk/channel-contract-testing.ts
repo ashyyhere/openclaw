@@ -1,4 +1,3 @@
-/** Public SDK barrel for reusable channel contract test suites and fixtures. */
 export {
   expectChannelInboundContextContract,
   expectChannelTurnDispatchResultContract,

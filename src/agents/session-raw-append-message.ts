@@ -1,4 +1,3 @@
-/** Stores access to unguarded SessionManager.appendMessage implementations. */
 import type { SessionManager } from "./sessions/index.js";
 
 const RAW_APPEND_MESSAGE = Symbol("openclaw.session.rawAppendMessage");

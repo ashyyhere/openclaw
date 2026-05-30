@@ -1,4 +1,3 @@
-/** Builds GitHub Copilot request headers from message and vision state. */
 import type { Context } from "../llm/types.js";
 
 /** @deprecated GitHub Copilot provider-owned helper; do not use from third-party plugins. */

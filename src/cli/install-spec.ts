@@ -1,4 +1,3 @@
-/** Helpers for recognizing local install specs in plugin package inputs. */
 import path from "node:path";
 
 /** Reused helper for looks Like Local Install Spec behavior in src/cli. */

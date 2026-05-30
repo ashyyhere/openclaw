@@ -1,4 +1,3 @@
-/** Formats low-level channel account state codes for status output. */
 export function formatChannelStatusState(statusState: string): string {
   switch (statusState) {
     case "linked":

@@ -1,4 +1,3 @@
-/** Packs an npm registry spec to an archive and installs it with integrity checks. */
 import {
   type NpmIntegrityDrift,
   type NpmSpecResolution,

@@ -1,4 +1,3 @@
-/** Resolves stable registry keys for embedded-agent session files. */
 import fs from "node:fs";
 import path from "node:path";
 

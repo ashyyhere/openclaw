@@ -1,4 +1,3 @@
-/** TUI backend client that talks to the OpenClaw gateway protocol. */
 import { randomUUID } from "node:crypto";
 import {
   GATEWAY_CLIENT_CAPS,

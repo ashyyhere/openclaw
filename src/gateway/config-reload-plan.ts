@@ -1,4 +1,3 @@
-/** Computes hot-reload versus restart actions for changed config paths. */
 import { type ChannelId, listChannelPlugins } from "../channels/plugins/index.js";
 import {
   getActivePluginChannelRegistryVersion,

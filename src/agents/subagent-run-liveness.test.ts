@@ -1,4 +1,3 @@
-/** Regression coverage for subagent run liveness and child-link retention. */
 import { describe, expect, it, vi } from "vitest";
 import {
   isLiveUnendedSubagentRun,

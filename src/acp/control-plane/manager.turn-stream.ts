@@ -1,4 +1,3 @@
-/** ACP turn stream event gating and completion outcome helpers. */
 import { AcpRuntimeError } from "../runtime/errors.js";
 import type {
   AcpRuntime,

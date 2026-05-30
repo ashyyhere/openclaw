@@ -1,4 +1,3 @@
-/** Registers CLI commands for inspecting and managing exec approvals. */
 import fs from "node:fs/promises";
 import type { Command } from "commander";
 import JSON5 from "json5";

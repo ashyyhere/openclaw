@@ -1,4 +1,3 @@
-/** Registers cron edit, pause, resume, delete, and run commands. */
 import type { Command } from "commander";
 import type { CronJob } from "../../cron/types.js";
 import { danger } from "../../globals.js";

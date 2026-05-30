@@ -1,4 +1,3 @@
-/** Docker-specific sandbox config contract with required defaults. */
 import type { SandboxDockerSettings } from "../../config/types.sandbox.js";
 
 type RequiredDockerConfigKeys =

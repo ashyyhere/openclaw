@@ -1,4 +1,3 @@
-/** Tests Chutes OAuth browser callback flow. */
 import { describe, expect, it } from "vitest";
 import { withFetchPreconnect } from "../test-utils/fetch-mock.js";
 import {

@@ -1,4 +1,3 @@
-/** SSH command/session helpers for remote sandbox backends. */
 import { spawn } from "node:child_process";
 import fs from "node:fs/promises";
 import os from "node:os";

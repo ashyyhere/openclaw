@@ -1,4 +1,3 @@
-/** Chat app orchestration for composer sends, queues, slash commands, and avatars. */
 import { setLastActiveSessionKey } from "./app-last-active-session.ts";
 import { scheduleChatScroll, resetChatScroll } from "./app-scroll.ts";
 import { resetToolStream } from "./app-tool-stream.ts";

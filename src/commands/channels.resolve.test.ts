@@ -1,4 +1,3 @@
-/** Tests channel target resolution command. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { channelsResolveCommand } from "./channels/resolve.js";
 

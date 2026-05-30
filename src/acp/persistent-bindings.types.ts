@@ -1,4 +1,3 @@
-/** Types and key encoding helpers for configured ACP conversation bindings. */
 import { createHash } from "node:crypto";
 import type { ChannelId } from "../channels/plugins/types.public.js";
 import type { SessionBindingRecord } from "../infra/outbound/session-binding-service.js";

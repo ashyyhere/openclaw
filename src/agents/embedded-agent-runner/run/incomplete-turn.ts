@@ -1,4 +1,3 @@
-/** Classifies incomplete assistant turns and builds retry instructions. */
 import {
   isSilentReplyPayloadText,
   isSilentReplyText,

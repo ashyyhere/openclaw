@@ -1,4 +1,3 @@
-/** Regression coverage for embedded result fallback classification. */
 import { describe, expect, it } from "vitest";
 import { classifyEmbeddedAgentRunResultForModelFallback } from "./result-fallback-classifier.js";
 

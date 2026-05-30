@@ -1,4 +1,3 @@
-/** Regression coverage for OAuth refresh lock timeout classification. */
 import { describe, expect, it } from "vitest";
 import { FILE_LOCK_TIMEOUT_ERROR_CODE, type FileLockTimeoutError } from "../../infra/file-lock.js";
 import {

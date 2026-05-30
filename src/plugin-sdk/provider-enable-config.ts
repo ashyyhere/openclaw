@@ -1,4 +1,3 @@
-/** Public SDK helper for enabling provider plugins in config patches. */
 import { ensurePluginAllowlisted } from "../config/plugins-allowlist.js";
 
 type ProviderPluginConfig = {

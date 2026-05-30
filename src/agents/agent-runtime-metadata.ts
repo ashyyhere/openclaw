@@ -1,4 +1,3 @@
-/** Runtime metadata resolvers for agent sessions and model-backed harnesses. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { applyAcpRuntimeOverlay, type AgentRuntimeMetadata } from "./acp-runtime-overlay.js";
 import { resolveAgentHarnessPolicy } from "./harness/policy.js";

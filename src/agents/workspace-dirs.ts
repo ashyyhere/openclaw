@@ -1,4 +1,3 @@
-/** Resolves configured workspace directories for an agent. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "./agent-scope.js";
 

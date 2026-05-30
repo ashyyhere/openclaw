@@ -1,4 +1,3 @@
-/** Regression coverage for OpenAI Codex OAuth refresh fallback behavior. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

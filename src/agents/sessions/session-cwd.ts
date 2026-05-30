@@ -1,4 +1,3 @@
-/** Validates and formats missing session cwd errors. */
 import { existsSync } from "node:fs";
 
 /** Missing stored cwd details plus fallback cwd for resumed sessions. */

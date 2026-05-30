@@ -1,4 +1,3 @@
-/** Bridges context-engine bootstrap, cache, and assistant-result helpers. */
 import type { ContextEngine } from "../../../context-engine/types.js";
 import type { AssistantMessage } from "../../../llm/types.js";
 import type { BootstrapMode } from "../../bootstrap-mode.js";

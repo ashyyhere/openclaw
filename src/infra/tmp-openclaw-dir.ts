@@ -1,4 +1,3 @@
-/** Chooses a secure writable temp directory for OpenClaw runtime artifacts. */
 import fs from "node:fs";
 import { tmpdir as getOsTmpDir } from "node:os";
 import path from "node:path";

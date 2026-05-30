@@ -1,4 +1,3 @@
-/** Channel id normalization and registry lookup facade used by core callers. */
 import {
   normalizeOptionalLowercaseString,
   normalizeOptionalString,

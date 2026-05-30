@@ -1,4 +1,3 @@
-/** Helpers for remote node camera capture and returned media persistence. */
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
 import { fetchWithSsrFGuard } from "../infra/net/fetch-guard.js";

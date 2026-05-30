@@ -1,4 +1,3 @@
-/** Resolves command session ids, session keys, and stored session bindings. */
 import crypto from "node:crypto";
 import type { MsgContext } from "../../auto-reply/templating.js";
 import {

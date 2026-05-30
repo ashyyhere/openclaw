@@ -1,4 +1,3 @@
-/** Public SDK helpers for session transcript search-hit formatting. */
 import path from "node:path";
 import { parseUsageCountedSessionIdFromFileName } from "../config/sessions/artifacts.js";
 import type { SessionEntry } from "../config/sessions/types.js";

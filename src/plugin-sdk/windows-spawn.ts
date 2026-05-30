@@ -1,4 +1,3 @@
-/** Public SDK helpers for Windows command spawning compatibility. */
 import { readFileSync, statSync } from "node:fs";
 import path from "node:path";
 import {

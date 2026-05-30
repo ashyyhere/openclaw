@@ -1,4 +1,3 @@
-/** Projects session route records into channel delivery contexts and labels. */
 import type { SessionEntry } from "../config/sessions/types.js";
 import type {
   ConversationRef,

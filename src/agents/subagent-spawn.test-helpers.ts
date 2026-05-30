@@ -1,4 +1,3 @@
-/** Shared fixtures and mocks for subagent spawn tests. */
 import os from "node:os";
 import { expect, vi } from "vitest";
 import type { SubagentLifecycleHookRunner } from "../plugins/hooks.js";

@@ -1,4 +1,3 @@
-/** Temporary plugin registry fixtures for extension tests. */
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

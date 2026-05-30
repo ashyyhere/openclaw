@@ -1,4 +1,3 @@
-/** String pattern matchers for provider failover categories. */
 import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";
 
 type ErrorPattern = RegExp | string;

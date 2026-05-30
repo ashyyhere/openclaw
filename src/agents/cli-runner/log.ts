@@ -1,4 +1,3 @@
-/** Logging helpers for CLI backend execution output. */
 import crypto from "node:crypto";
 import { createSubsystemLogger } from "../../logging/subsystem.js";
 

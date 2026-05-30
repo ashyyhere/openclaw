@@ -1,4 +1,3 @@
-/** Public SDK helpers for parsing and redacting browser CDP/control URLs. */
 import { redactSensitiveText } from "../logging/redact.js";
 
 function hasRawExplicitPort(raw: string): boolean {

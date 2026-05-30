@@ -1,4 +1,3 @@
-/** Tiny event bus abstraction used by AgentSession runtime services. */
 import { EventEmitter } from "node:events";
 
 /** Minimal publish/subscribe surface used by session runtime services. */

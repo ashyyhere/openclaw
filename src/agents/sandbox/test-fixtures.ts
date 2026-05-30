@@ -1,4 +1,3 @@
-/** Test fixtures for sandbox context construction. */
 import type { SandboxContext } from "./types.js";
 
 /** Creates a sandbox context with optional nested overrides. */

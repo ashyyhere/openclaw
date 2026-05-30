@@ -1,4 +1,3 @@
-/** Tests shared exec approval helpers. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { MAX_DATE_TIMESTAMP_MS } from "../shared/number-coercion.js";
 import {

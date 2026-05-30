@@ -1,4 +1,3 @@
-/** Analyzes config validation issues into doctor-friendly findings. */
 import path from "node:path";
 import type { ZodIssue } from "zod";
 import { note } from "../../packages/terminal-core/src/note.js";

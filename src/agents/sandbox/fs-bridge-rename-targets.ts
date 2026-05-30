@@ -1,4 +1,3 @@
-/** Resolves writable source/target pairs for sandbox rename operations. */
 export function resolveWritableRenameTargets<T extends { containerPath: string }>(params: {
   from: string;
   to: string;

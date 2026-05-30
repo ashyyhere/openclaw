@@ -1,4 +1,3 @@
-/** Runtime SDK barrel for secret input normalization helpers. */
 export {
   coerceSecretRef,
   hasConfiguredSecretInput,

@@ -1,4 +1,3 @@
-/** Doctor checks and repairs for workspace and agent files. */
 import fs from "node:fs";
 import path from "node:path";
 import { note } from "../../packages/terminal-core/src/note.js";

@@ -1,4 +1,3 @@
-/** Accumulates streaming command output with truncation and private spill files. */
 import type { WriteStream } from "node:fs";
 import { createPrivateTempWriteStream } from "./private-temp-file.js";
 import {

@@ -1,4 +1,3 @@
-/** Projects status scans into shared overview surfaces. */
 import type { OpenClawConfig } from "../config/types.js";
 import type { UpdateCheckResult } from "../infra/update-check.js";
 import {

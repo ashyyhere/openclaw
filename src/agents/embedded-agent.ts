@@ -1,4 +1,3 @@
-/** Public embedded-agent entrypoint and lifecycle barrel. */
 export type {
   EmbeddedAgentCompactResult,
   EmbeddedAgentMeta,

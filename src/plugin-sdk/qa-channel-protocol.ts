@@ -1,4 +1,3 @@
-/** Public SDK protocol helpers for QA channel request and response payloads. */
 import { isRecord } from "../shared/record-coerce.js";
 
 /** Conversation category used by QA bus messages and search filters. */

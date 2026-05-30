@@ -1,4 +1,3 @@
-/** Resolves doctor repair mode from options and environment. */
 import { isTruthyEnvValue } from "../infra/env.js";
 import type { DoctorOptions } from "./doctor.types.js";
 

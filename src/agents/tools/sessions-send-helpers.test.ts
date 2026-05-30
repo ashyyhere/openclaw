@@ -1,4 +1,3 @@
-/** Covers helper logic for sessions send announcements and ping-pong guards. */
 import { beforeEach, describe, expect, it } from "vitest";
 import { setActivePluginRegistry } from "../../plugins/runtime.js";
 import { createSessionConversationTestRegistry } from "../../test-utils/session-conversation-registry.js";

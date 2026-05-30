@@ -1,4 +1,3 @@
-/** Anchors sandbox filesystem operations to approved host roots. */
 import fs from "node:fs";
 import path from "node:path";
 import type { PathAliasPolicy } from "../../infra/path-alias-guards.js";

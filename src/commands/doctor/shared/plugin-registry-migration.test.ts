@@ -1,4 +1,3 @@
-/** Tests plugin registry migration from legacy config records. */
 import fs from "node:fs";
 import path from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";

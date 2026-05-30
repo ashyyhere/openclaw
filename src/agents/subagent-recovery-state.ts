@@ -1,4 +1,3 @@
-/** Tracks retry/wedged state for orphaned subagent recovery attempts. */
 import type { SessionEntry } from "../config/sessions.js";
 
 const SUBAGENT_RECOVERY_MAX_AUTOMATIC_ATTEMPTS = 2;

@@ -1,4 +1,3 @@
-/** Scans argv for root options that must be forwarded before command dispatch. */
 import { FLAG_TERMINATOR } from "../infra/cli-root-options.js";
 import { forwardConsumedCliRootOption } from "./root-option-forward.js";
 

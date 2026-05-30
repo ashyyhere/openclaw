@@ -1,4 +1,3 @@
-/** Formats exec-family tool calls and results for UI display. */
 import {
   binaryName,
   firstPositional,

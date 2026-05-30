@@ -1,4 +1,3 @@
-/** Expands configured workspace templates into concrete directories and bootstrap files. */
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { resolveOpenClawPackageRoot } from "../infra/openclaw-root.js";

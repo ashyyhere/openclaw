@@ -1,4 +1,3 @@
-/** Contract suites for channel threading and directory adapter behavior. */
 import { expect } from "vitest";
 import type { OpenClawConfig } from "../../../../config/config.js";
 import type { RuntimeEnv } from "../../../../runtime.js";

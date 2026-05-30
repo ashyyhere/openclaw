@@ -1,4 +1,3 @@
-/** Wraps streams with message transforms before provider submission. */
 import type { StreamFn } from "openclaw/plugin-sdk/agent-core";
 import type { AgentMessage } from "../../runtime/index.js";
 

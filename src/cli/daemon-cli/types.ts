@@ -1,4 +1,3 @@
-/** Shared option and result types for daemon CLI commands. */
 import type { FindExtraGatewayServicesOptions } from "../../daemon/inspect.js";
 
 /** Shared type for Gateway Rpc Opts in src/cli/daemon-cli. */

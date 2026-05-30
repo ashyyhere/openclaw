@@ -1,4 +1,3 @@
-/** Collects warnings for allowlist entries referencing missing subagents. */
 import { listAgentIds } from "../../../agents/agent-scope-config.js";
 import type { OpenClawConfig } from "../../../config/types.openclaw.js";
 import { normalizeAgentId } from "../../../routing/session-key.js";

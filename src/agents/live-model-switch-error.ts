@@ -1,4 +1,3 @@
-/** Error used to request live-session model switching through failover paths. */
 type LiveSessionModelSelection = {
   provider: string;
   model: string;

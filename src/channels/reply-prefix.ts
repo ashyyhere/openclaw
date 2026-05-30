@@ -1,4 +1,3 @@
-/** Builds response prefixes that identify agent and model context in replies. */
 import { resolveAgentIdentity, resolveEffectiveMessagesConfig } from "../agents/identity.js";
 import type { GetReplyOptions } from "../auto-reply/get-reply-options.types.js";
 import {

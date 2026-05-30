@@ -1,4 +1,3 @@
-/** Shared request, client, and context types for gateway method handlers. */
 import type {
   ConnectParams,
   ErrorShape,

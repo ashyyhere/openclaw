@@ -1,4 +1,3 @@
-/** Lists and removes sandbox/browser containers from registries. */
 import { getRuntimeConfig } from "../../config/config.js";
 import { stopBrowserBridgeServer } from "../../plugin-sdk/browser-bridge.js";
 import { getSandboxBackendManager } from "./backend.js";

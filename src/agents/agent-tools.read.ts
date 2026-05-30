@@ -1,4 +1,3 @@
-/** Read/write/edit tool wrappers for host workspace and sandbox path policy. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { URL } from "node:url";

@@ -1,4 +1,3 @@
-/** Runtime SDK barrel for model provider registration and runtime model helpers. */
 export {
   buildModelsProviderData,
   formatModelsAvailableHeader,

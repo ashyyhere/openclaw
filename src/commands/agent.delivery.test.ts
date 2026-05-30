@@ -1,4 +1,3 @@
-/** Tests delivery of agent command results to configured channels. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { deliverAgentCommandResult } from "../agents/command/delivery.js";
 import type { ReplyPayload } from "../auto-reply/types.js";

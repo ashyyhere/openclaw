@@ -1,4 +1,3 @@
-/** Applies parsed update hunks to existing file content. */
 import fs from "node:fs/promises";
 
 type UpdateFileChunk = {

@@ -1,4 +1,3 @@
-/** Lists and de-duplicates auth profile ids by provider. */
 import { uniqueStrings } from "../../shared/string-normalization.js";
 import { resolveProviderIdForAuth } from "../provider-auth-aliases.js";
 import type { AuthProfileStore } from "./types.js";

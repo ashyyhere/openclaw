@@ -1,4 +1,3 @@
-/** Builds plugin install plans from registry, local, and bundled inputs. */
 import { parseRegistryNpmSpec } from "../infra/npm-registry-spec.js";
 import type { BundledPluginSource } from "../plugins/bundled-sources.js";
 import { PLUGIN_INSTALL_ERROR_CODE } from "../plugins/install.js";

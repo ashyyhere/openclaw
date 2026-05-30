@@ -1,4 +1,3 @@
-/** Regression coverage for legacy OAuth sidecar credential loading. */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { resetLogger, setLoggerOverride } from "../../logging/logger.js";
 import { loggingState } from "../../logging/state.js";

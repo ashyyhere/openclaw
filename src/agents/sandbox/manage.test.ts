@@ -1,4 +1,3 @@
-/** Covers listing and removal commands for sandbox containers and browsers. */
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 let listSandboxBrowsers: typeof import("./manage.js").listSandboxBrowsers;

@@ -1,4 +1,3 @@
-/** Chooses lower-cost thinking levels for retry/fallback attempts. */
 import { normalizeThinkLevel, type ThinkLevel } from "../../auto-reply/thinking.js";
 import { normalizeStringEntries } from "../../shared/string-normalization.js";
 import { isReasoningConstraintErrorMessage } from "./errors.js";

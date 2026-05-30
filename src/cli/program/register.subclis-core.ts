@@ -1,4 +1,3 @@
-/** Core helpers for selecting and registering sub-CLI command groups. */
 import type { Command } from "commander";
 import { createLazyImportLoader } from "../../shared/lazy-promise.js";
 import { resolveCliArgvInvocation } from "../argv-invocation.js";

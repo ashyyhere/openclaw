@@ -1,4 +1,3 @@
-/** Regression coverage for CLI runner supervisor output capture. */
 import { beforeEach, describe, expect, it } from "vitest";
 import { onAgentEvent, resetAgentEventsForTest } from "../../infra/agent-events.js";
 import type { getProcessSupervisor } from "../../process/supervisor/index.js";

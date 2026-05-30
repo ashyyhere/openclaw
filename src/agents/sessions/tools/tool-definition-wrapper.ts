@@ -1,4 +1,3 @@
-/** Converts extension tool definitions to agent-core tool objects. */
 import type { TSchema } from "typebox";
 import type { AgentTool } from "../../runtime/index.js";
 import type { ExtensionContext, ToolDefinition } from "../extensions/types.js";

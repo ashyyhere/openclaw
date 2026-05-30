@@ -1,4 +1,3 @@
-/** Shared embedded-agent helper types. */
 export type EmbeddedContextFile = { path: string; content: string };
 
 /** Normalized failover reason category used by embedded-agent retries. */

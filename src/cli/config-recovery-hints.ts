@@ -1,4 +1,3 @@
-/** Formats concise recovery hints for invalid config errors. */
 import { formatCliCommand } from "./command-format.js";
 
 /** Reused helper for format Invalid Config Recovery Hint behavior in src/cli. */

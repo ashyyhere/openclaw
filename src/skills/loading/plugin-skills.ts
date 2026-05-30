@@ -1,4 +1,3 @@
-/** Discovers skills contributed by installed plugins. */
 import fs from "node:fs";
 import path from "node:path";
 import { isAcpRuntimeSpawnAvailable } from "../../acp/runtime/availability.js";

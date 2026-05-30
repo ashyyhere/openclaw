@@ -1,4 +1,3 @@
-/** Adapts OpenClaw agent tools to embedded runtime and client tool definitions. */
 import { createHash } from "node:crypto";
 import { logDebug, logError } from "../logger.js";
 import { redactToolDetail } from "../logging/redact.js";

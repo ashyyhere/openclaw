@@ -1,4 +1,3 @@
-/** Tests block-reply flush runs before tool execution starts. */
 import { describe, expect, it, vi } from "vitest";
 import {
   createStubSessionHarness,

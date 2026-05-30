@@ -1,4 +1,3 @@
-/** User-facing auth guidance strings for missing provider credentials. */
 import { join } from "node:path";
 import { getDocsPath } from "../config.js";
 

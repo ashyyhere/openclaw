@@ -1,4 +1,3 @@
-/** Tests message secret scope resolution by channel and account. */
 import { describe, expect, it } from "vitest";
 import { resolveMessageSecretScope } from "./message-secret-scope.js";
 

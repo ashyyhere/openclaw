@@ -1,4 +1,3 @@
-/** Section builders for human status command output. */
 import {
   buildPairingConnectRecoveryTitle,
   describePairingConnectRequirement,

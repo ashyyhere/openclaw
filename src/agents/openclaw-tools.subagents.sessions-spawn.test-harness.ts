@@ -1,4 +1,3 @@
-/** Shared gateway/session harness for sessions_spawn tool tests. */
 import { vi, type Mock } from "vitest";
 import type { SubagentLifecycleHookRunner } from "../plugins/hooks.js";
 import { resolveRequesterStoreKey } from "./subagent-requester-store-key.js";

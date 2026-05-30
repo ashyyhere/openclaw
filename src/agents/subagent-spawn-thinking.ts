@@ -1,4 +1,3 @@
-/** Applies subagent-specific thinking-level overrides. */
 import { normalizeThinkLevel } from "../auto-reply/thinking.shared.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { asOptionalObjectRecord } from "../shared/record-coerce.js";

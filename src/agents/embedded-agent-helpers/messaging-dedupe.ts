@@ -1,4 +1,3 @@
-/** Detects duplicate outbound messaging-tool text. */
 import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";
 
 const MIN_DUPLICATE_TEXT_LENGTH = 10;

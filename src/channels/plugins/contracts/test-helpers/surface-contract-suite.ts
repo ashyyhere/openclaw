@@ -1,4 +1,3 @@
-/** Assertions for required channel plugin public surfaces. */
 import { expect } from "vitest";
 import type { ChannelPlugin } from "../../types.js";
 

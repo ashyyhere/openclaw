@@ -1,4 +1,3 @@
-/** Builds final run results when retry/failover limits are exhausted. */
 import { FailoverError, resolveFailoverStatus } from "../../failover-error.js";
 import type { EmbeddedRunLivenessState } from "../types.js";
 import type { EmbeddedAgentMeta, EmbeddedAgentRunResult } from "../types.js";

@@ -1,4 +1,3 @@
-/** Shared parameter readers, result builders, and progress helpers for tools. */
 import type { TSchema } from "typebox";
 import { readLocalFileSafely } from "../../infra/fs-safe.js";
 import { detectMime } from "../../media/mime.js";

@@ -1,4 +1,3 @@
-/** Tests sessions_spawn lifecycle hooks. */
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   createSubagentSpawnTestConfig,

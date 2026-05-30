@@ -1,4 +1,3 @@
-/** Runtime SDK barrel for approval handler and native runtime adapter contracts. */
 export {
   createChannelApprovalHandler,
   createChannelApprovalNativeRuntimeAdapter,

@@ -1,4 +1,3 @@
-/** Function type for resolving channel outbound adapters by id. */
 import type { ChannelId } from "../channel-id.types.js";
 import type { ChannelOutboundAdapter } from "../outbound.types.js";
 

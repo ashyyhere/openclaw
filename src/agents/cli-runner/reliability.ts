@@ -1,4 +1,3 @@
-/** Reliability timeouts and supervisor scope keys for CLI backend runs. */
 import path from "node:path";
 import type { CliBackendConfig } from "../../config/types.js";
 import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";

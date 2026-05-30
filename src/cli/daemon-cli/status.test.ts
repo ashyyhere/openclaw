@@ -1,4 +1,3 @@
-/** Tests daemon status command wrapper output. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createCliRuntimeCapture } from "../test-runtime-capture.js";
 import type { DaemonStatus } from "./status.gather.js";

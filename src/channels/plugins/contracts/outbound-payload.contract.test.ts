@@ -1,4 +1,3 @@
-/** Contract tests for outbound payload delivery through channel adapters. */
 import { describe, vi } from "vitest";
 import { createDirectTextMediaOutbound } from "../outbound/direct-text-media.js";
 import {

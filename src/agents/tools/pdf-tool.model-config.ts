@@ -1,4 +1,3 @@
-/** Resolves model config used by PDF tool calls. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import {
   providerSupportsNativePdfDocument,

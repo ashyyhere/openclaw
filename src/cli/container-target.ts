@@ -1,4 +1,3 @@
-/** Rewrites CLI invocations to run inside a configured container target. */
 import { spawnSync } from "node:child_process";
 import { isIP } from "node:net";
 import { consumeRootOptionToken, FLAG_TERMINATOR } from "../infra/cli-root-options.js";

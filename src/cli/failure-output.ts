@@ -1,4 +1,3 @@
-/** Formats CLI failure output with optional debug detail. */
 import { isTruthyEnvValue } from "../infra/env.js";
 import { formatErrorMessage, formatUncaughtError } from "../infra/errors.js";
 import { formatCliCommand } from "./command-format.js";

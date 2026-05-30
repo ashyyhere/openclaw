@@ -1,4 +1,3 @@
-/** Shared core auth option key list for onboarding commands. */
 import type { AuthChoice, OnboardOptions } from "./onboard-types.js";
 
 type OnboardCoreAuthOptionKey = Extract<keyof OnboardOptions, string>;

@@ -1,4 +1,3 @@
-/** Registers cron list, status, run, and preview commands. */
 import type { Command } from "commander";
 import type { CronDeliveryPreview, CronJob } from "../../cron/types.js";
 import { parseStrictPositiveInteger } from "../../infra/parse-finite-number.js";

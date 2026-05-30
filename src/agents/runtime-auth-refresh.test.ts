@@ -1,4 +1,3 @@
-/** Tests runtime auth refresh delay clamping. */
 import { describe, expect, it } from "vitest";
 import { clampRuntimeAuthRefreshDelayMs } from "./runtime-auth-refresh.js";
 

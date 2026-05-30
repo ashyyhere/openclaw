@@ -1,4 +1,3 @@
-/** ClawHub skill registry install, update, lockfile, and local card status helpers. */
 import fsSync from "node:fs";
 import path from "node:path";
 import {

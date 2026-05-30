@@ -1,4 +1,3 @@
-/** Formats runtime status values for CLI and diagnostic output. */
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
 type RuntimeStatusFormatInput = {

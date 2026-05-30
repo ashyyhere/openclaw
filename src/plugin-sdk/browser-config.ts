@@ -1,4 +1,3 @@
-/** Public SDK barrel for browser config resolution, auth, CDP URL helpers, and cleanup utilities. */
 export {
   DEFAULT_AI_SNAPSHOT_MAX_CHARS,
   DEFAULT_BROWSER_ACTION_TIMEOUT_MS,

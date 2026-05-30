@@ -1,4 +1,3 @@
-/** Handles sessions-yield interruption and context artifacts during attempts. */
 import type { AgentMessage } from "../../runtime/index.js";
 import { log } from "../logger.js";
 import { resolveEmbeddedAbortSettleTimeoutMs } from "./attempt.abort-settle-timeout.js";

@@ -1,4 +1,3 @@
-/** Runtime SDK barrel for native approval route, session, and target helpers. */
 export {
   createChannelApprovalForwardingEvaluator,
   createChannelApproverDmTargetResolver,

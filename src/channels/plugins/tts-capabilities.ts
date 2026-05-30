@@ -1,4 +1,3 @@
-/** Resolves TTS voice delivery capabilities for channel plugins. */
 import { normalizeChannelId } from "./registry.js";
 import { getChannelPlugin } from "./registry.js";
 import type { ChannelTtsVoiceDeliveryCapabilities } from "./types.core.js";

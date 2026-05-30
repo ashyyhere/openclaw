@@ -1,4 +1,3 @@
-/** Registers nodes pairing approval and listing commands. */
 import type { Command } from "commander";
 import { getTerminalTableWidth } from "../../../packages/terminal-core/src/table.js";
 import type { OperatorScope } from "../../gateway/method-scopes.js";

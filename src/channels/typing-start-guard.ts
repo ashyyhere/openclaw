@@ -1,4 +1,3 @@
-/** Guards typing indicator starts so repeated failures stop retry loops. */
 type TypingStartGuard = {
   run: (start: () => Promise<void> | void) => Promise<"started" | "skipped" | "failed" | "tripped">;
   reset: () => void;

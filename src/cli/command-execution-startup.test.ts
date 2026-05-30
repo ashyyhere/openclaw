@@ -1,4 +1,3 @@
-/** Tests command startup banner, logging, and config bootstrap behavior. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const emitCliBannerMock = vi.hoisted(() => vi.fn());

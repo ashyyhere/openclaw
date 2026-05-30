@@ -1,4 +1,3 @@
-/** Aggregates legacy runtime config migrations. */
 import type { LegacyConfigMigrationSpec } from "../../../config/legacy.shared.js";
 import { LEGACY_CONFIG_MIGRATIONS_RUNTIME_AGENTS } from "./legacy-config-migrations.runtime.agents.js";
 import { LEGACY_CONFIG_MIGRATIONS_RUNTIME_DIAGNOSTICS } from "./legacy-config-migrations.runtime.diagnostics.js";

@@ -1,4 +1,3 @@
-/** Resolves doctor-facing allow-from modes from channel capabilities. */
 import { getDoctorChannelCapabilities } from "../channel-capabilities.js";
 import type { AllowFromMode } from "./allow-from-mode.types.js";
 

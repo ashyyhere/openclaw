@@ -1,4 +1,3 @@
-/** Global runtime plugin registry state shared across plugin surfaces. */
 import type { PluginRegistry } from "./registry-types.js";
 
 /** Global symbol used to store process-local plugin registry state. */

@@ -1,4 +1,3 @@
-/** Helpers for producing unresolved target results from adapter lookups. */
 import type { ChannelResolveResult } from "./types.adapters.js";
 
 /** Reused helper for build Unresolved Target Results behavior in src/channels/plugins. */

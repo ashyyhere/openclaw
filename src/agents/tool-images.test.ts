@@ -1,4 +1,3 @@
-/** Regression coverage for image payload normalization in tools. */
 import { describe, expect, it } from "vitest";
 import {
   createNoisyPngBuffer,

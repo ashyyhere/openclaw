@@ -1,4 +1,3 @@
-/** Applies base config defaults during onboarding. */
 import { setConfigValueAtPath } from "../config/config-paths.js";
 import type { DmScope } from "../config/types.base.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";

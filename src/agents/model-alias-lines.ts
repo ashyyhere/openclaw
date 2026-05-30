@@ -1,4 +1,3 @@
-/** Builds model alias lines for system prompt/context display. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 

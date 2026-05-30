@@ -1,4 +1,3 @@
-/** Tests ACP tool approval classification for command, edit, and filesystem actions. */
 import { describe, expect, it } from "vitest";
 import { classifyAcpToolApproval } from "./approval-classifier.js";
 

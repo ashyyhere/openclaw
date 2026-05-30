@@ -1,4 +1,3 @@
-/** Covers mid-turn context guards for large tool results. */
 import type { AgentMessage } from "openclaw/plugin-sdk/agent-core";
 import { describe, expect, it, vi } from "vitest";
 import type { ContextEngine } from "../../context-engine/types.js";

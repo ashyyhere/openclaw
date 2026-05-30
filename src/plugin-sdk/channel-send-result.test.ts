@@ -1,4 +1,3 @@
-/** Tests channel send-result success/failure normalization. */
 import { describe, expect, it } from "vitest";
 import {
   attachChannelToResult,

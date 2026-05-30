@@ -1,4 +1,3 @@
-/** Tests channel status output for external-env credential state. */
 import fs from "node:fs";
 import path from "node:path";
 import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vitest";

@@ -1,4 +1,3 @@
-/** Gateway-host exec allowlist, approval, and execution flow. */
 import { describeInterpreterInlineEval } from "../infra/command-analysis/inline-eval.js";
 import { detectPolicyInlineEval } from "../infra/command-analysis/policy.js";
 import {

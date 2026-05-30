@@ -1,4 +1,3 @@
-/** Shared filesystem fixtures for workspace skill discovery tests. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { createSyntheticSourceInfo, type Skill } from "../loading/skill-contract.js";

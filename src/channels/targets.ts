@@ -1,4 +1,3 @@
-/** Shared channel target builders and validators for messaging destinations. */
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
 /** Directory config params re-exported for channel setup and docs helpers. */

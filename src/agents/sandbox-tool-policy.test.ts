@@ -1,4 +1,3 @@
-/** Tests sandbox tool policy selection. */
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import { resolveEffectiveToolPolicy } from "./agent-tools.policy.js";

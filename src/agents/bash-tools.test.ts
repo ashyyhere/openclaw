@@ -1,4 +1,3 @@
-/** Tests exec/process bash tool public behavior. */
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { drainFormattedSystemEvents } from "../auto-reply/reply/session-system-events.js";

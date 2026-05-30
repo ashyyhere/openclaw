@@ -1,4 +1,3 @@
-/** Covers ls tool directory listing behavior. */
 import { describe, expect, it } from "vitest";
 import { createLsToolDefinition, type LsOperations } from "./ls.js";
 

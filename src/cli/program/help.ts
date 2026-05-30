@@ -1,4 +1,3 @@
-/** Configures Commander help text, sections, and visible command groups. */
 import type { Command } from "commander";
 import { formatDocsLink } from "../../../packages/terminal-core/src/links.js";
 import { isRich, theme } from "../../../packages/terminal-core/src/theme.js";

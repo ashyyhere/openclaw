@@ -1,4 +1,3 @@
-/** Completion helpers for outcome comparison and one-shot lifecycle hook emission. */
 import { createSubsystemLogger } from "../logging/subsystem.js";
 import { getGlobalHookRunner } from "../plugins/hook-runner-global.js";
 import type { SubagentRunOutcome } from "./subagent-announce-output.js";

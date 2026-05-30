@@ -1,4 +1,3 @@
-/** Writes tasks command JSON output. */
 import type { RuntimeEnv } from "../runtime.js";
 import { writeRuntimeJson } from "../runtime.js";
 import { listTaskRecords } from "../tasks/runtime-internal.js";

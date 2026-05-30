@@ -1,4 +1,3 @@
-/** Covers late-bound web_search runtime invocation. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createWebSearchTool } from "./web-search.js";
 

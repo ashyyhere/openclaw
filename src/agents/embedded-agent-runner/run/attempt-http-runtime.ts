@@ -1,4 +1,3 @@
-/** Configures HTTP proxy and timeout behavior for embedded-agent attempts. */
 import {
   DEFAULT_UNDICI_STREAM_TIMEOUT_MS,
   ensureGlobalUndiciDispatcherStreamTimeouts,

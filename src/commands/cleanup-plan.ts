@@ -1,4 +1,3 @@
-/** Builds cleanup plans for stale OpenClaw config, auth, and cache state. */
 import {
   getRuntimeConfig,
   resolveConfigPath,

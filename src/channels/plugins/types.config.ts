@@ -1,4 +1,3 @@
-/** Config schema metadata types exposed by channel plugin manifests. */
 import type { JsonSchemaObject } from "../../shared/json-schema.types.js";
 
 /** Shared type for Channel Config Ui Hint in src/channels/plugins. */

@@ -1,4 +1,3 @@
-/** Public SDK barrel for channel target parsing and formatting helpers. */
 export {
   applyChannelMatchMeta,
   buildChannelKeyCandidates,

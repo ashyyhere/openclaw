@@ -1,4 +1,3 @@
-/** Discovers setup-capable channel plugins for onboarding and add commands. */
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../../agents/agent-scope.js";
 import { listChatChannels } from "../../channels/chat-meta.js";
 import { type ChannelPluginCatalogEntry } from "../../channels/plugins/catalog.js";

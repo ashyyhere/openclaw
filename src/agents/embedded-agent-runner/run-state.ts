@@ -1,4 +1,3 @@
-/** Process-local state maps for active and abandoned embedded-agent runs. */
 import type { SourceReplyDeliveryMode } from "../../auto-reply/get-reply-options.types.js";
 import {
   getActiveReplyRunCount,

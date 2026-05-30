@@ -1,4 +1,3 @@
-/** Agent auth discovery facade combining profile, env, and synthetic credentials. */
 import { resolveProviderSyntheticAuthWithPlugin } from "../plugins/provider-runtime.js";
 import { resolveRuntimeSyntheticAuthProviderRefs } from "../plugins/synthetic-auth.runtime.js";
 import {

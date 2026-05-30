@@ -1,4 +1,3 @@
-/** Coordinates auth profile selection and provider runtime auth prep. */
 import type { ThinkLevel } from "../../../auto-reply/thinking.js";
 import { formatErrorMessage } from "../../../infra/errors.js";
 import type { Model } from "../../../llm/types.js";

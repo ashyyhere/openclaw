@@ -1,4 +1,3 @@
-/** Creates and prepares agent workspace directories and bootstrap files. */
 import syncFs from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";

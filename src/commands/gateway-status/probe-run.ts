@@ -1,4 +1,3 @@
-/** Runs gateway status probes against selected targets. */
 import type { OpenClawConfig } from "../../config/types.js";
 import { probeGateway } from "../../gateway/probe.js";
 import {

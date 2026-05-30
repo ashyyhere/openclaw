@@ -1,4 +1,3 @@
-/** Regression coverage for provider runtime extra params. */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createLlmStreamSimpleMock } from "../../../test/helpers/agents/llm-stream-simple-mock.js";
 import type { Model } from "../../llm/types.js";

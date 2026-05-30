@@ -1,4 +1,3 @@
-/** Test helpers for embedded-run reply payload assertions. */
 import { expect } from "vitest";
 import { buildEmbeddedRunPayloads } from "./payloads.js";
 

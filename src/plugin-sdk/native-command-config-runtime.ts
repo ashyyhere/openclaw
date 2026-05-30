@@ -1,4 +1,3 @@
-/** Runtime SDK barrel for native command configuration helpers. */
 export {
   isNativeCommandsExplicitlyDisabled,
   resolveNativeCommandsEnabled,

@@ -1,4 +1,3 @@
-/** Validates and formats sender identity fields from inbound message context. */
 import type { MsgContext } from "../auto-reply/templating.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import { normalizeChatType } from "./chat-type.js";

@@ -1,4 +1,3 @@
-/** Detects empty assistant turns with zero usage in replay history. */
 import { asFiniteNumber } from "../../shared/number-coercion.js";
 
 type EmptyAssistantTurnLike = {

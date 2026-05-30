@@ -1,4 +1,3 @@
-/** Small TTL cache for embedded-agent session manager file warmup. */
 import { Buffer } from "node:buffer";
 import fs from "node:fs/promises";
 import {

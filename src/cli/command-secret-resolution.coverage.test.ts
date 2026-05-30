@@ -1,4 +1,3 @@
-/** Coverage tests that command handlers declare their required secret targets. */
 import { bundledPluginFile } from "openclaw/plugin-sdk/test-fixtures";
 import { describe, expect, it } from "vitest";
 import { readCommandSource } from "./command-source.test-helpers.js";

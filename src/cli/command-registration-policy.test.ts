@@ -1,4 +1,3 @@
-/** Tests eager and lazy subcommand registration policy decisions. */
 import { describe, expect, it } from "vitest";
 import {
   shouldEagerRegisterSubcommands,

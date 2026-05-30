@@ -1,4 +1,3 @@
-/** Manages temporary transcripts for internal session-effect runs. */
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { resolveStateDir } from "../config/paths.js";

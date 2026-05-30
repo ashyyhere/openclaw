@@ -1,4 +1,3 @@
-/** Orders and filters auth profiles for provider authentication. */
 import {
   findNormalizedProviderValue,
   normalizeProviderId,

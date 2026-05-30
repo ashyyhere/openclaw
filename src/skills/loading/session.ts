@@ -1,4 +1,3 @@
-/** Discovers, parses, and formats skills for session prompts. */
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { homedir } from "node:os";
 import { basename, dirname, isAbsolute, join, relative, resolve, sep } from "node:path";

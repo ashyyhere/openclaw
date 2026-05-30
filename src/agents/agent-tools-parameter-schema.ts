@@ -1,4 +1,3 @@
-/** Provider-compatible normalization for agent tool parameter schemas. */
 import type { TSchema } from "typebox";
 import type { ModelCompatConfig } from "../config/types.models.js";
 import {

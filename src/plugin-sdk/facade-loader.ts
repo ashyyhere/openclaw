@@ -1,4 +1,3 @@
-/** Public SDK loader for bundled plugin facade modules with boundary checks and lazy proxies. */
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";

@@ -1,4 +1,3 @@
-/** Gateway health and presence snapshot cache for server status broadcasts. */
 import type { Snapshot } from "../../../packages/gateway-protocol/src/index.js";
 import { resolveDefaultAgentId } from "../../agents/agent-scope.js";
 import { getHealthSnapshot, type HealthSummary } from "../../commands/health.js";

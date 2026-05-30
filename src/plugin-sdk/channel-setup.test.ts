@@ -1,4 +1,3 @@
-/** Tests channel setup helper contracts and setup status behavior. */
 import { runSetupWizardFinalize } from "openclaw/plugin-sdk/plugin-test-runtime";
 import { describe, expect, it } from "vitest";
 import { createOptionalChannelSetupSurface } from "./channel-setup.js";

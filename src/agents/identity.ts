@@ -1,4 +1,3 @@
-/** Resolves agent identity, prefixes, reactions, and human-delay config. */
 import type { HumanDelayConfig, IdentityConfig } from "../config/types.base.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveAgentConfig } from "./agent-scope.js";

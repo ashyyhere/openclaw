@@ -1,4 +1,3 @@
-/** Agent tool for spawning subagent or ACP sessions. */
 import { Type } from "typebox";
 import { isAcpRuntimeSpawnAvailable } from "../../acp/runtime/availability.js";
 import {

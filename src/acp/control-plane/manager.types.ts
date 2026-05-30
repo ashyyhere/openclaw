@@ -1,4 +1,3 @@
-/** Shared ACP control-plane types for sessions, turns, lifecycle, and observability. */
 import type {
   SessionAcpIdentity,
   AcpSessionRuntimeOptions,

@@ -1,4 +1,3 @@
-/** Tests extra-params resolution for embedded-agent runner. */
 import { describe, expect, it } from "vitest";
 import { resolveExtraParams } from "./embedded-agent-runner/extra-params.js";
 

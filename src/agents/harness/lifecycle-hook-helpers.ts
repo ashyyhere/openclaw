@@ -1,4 +1,3 @@
-/** Runs lifecycle hooks around LLM input/output and agent finalization. */
 import { createHash } from "node:crypto";
 import { createSubsystemLogger } from "../../logging/subsystem.js";
 import { getGlobalHookRunner } from "../../plugins/hook-runner-global.js";

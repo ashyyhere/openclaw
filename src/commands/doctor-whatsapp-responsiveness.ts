@@ -1,4 +1,3 @@
-/** Doctor checks for WhatsApp channel responsiveness. */
 import { spawnSync } from "node:child_process";
 import path from "node:path";
 import { note } from "../../packages/terminal-core/src/note.js";

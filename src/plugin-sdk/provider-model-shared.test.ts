@@ -1,4 +1,3 @@
-/** Tests shared provider model metadata helpers. */
 import { describe, expect, it } from "vitest";
 import {
   ANTHROPIC_BY_MODEL_REPLAY_HOOKS,

@@ -1,4 +1,3 @@
-/** Test harness for overflow compaction and fallback loop scenarios. */
 import { type Mock, vi } from "vitest";
 import type { ThinkLevel } from "../../auto-reply/thinking.js";
 import { formatErrorMessage } from "../../infra/errors.js";

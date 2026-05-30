@@ -1,4 +1,3 @@
-/** Public SDK helpers for provider-specific model id normalization. */
 const ANTIGRAVITY_BARE_PRO_IDS = new Set(["gemini-3-pro", "gemini-3.1-pro", "gemini-3-1-pro"]);
 const GOOGLE_PROVIDER_PREFIX = "google/";
 

@@ -1,4 +1,3 @@
-/** Registers install/status/start/stop/restart gateway service commands. */
 import type { Command } from "commander";
 import { createLazyImportLoader } from "../../shared/lazy-promise.js";
 import { inheritOptionFromParent } from "../command-options.js";

@@ -1,4 +1,3 @@
-/** Resolves and validates sandbox-local paths and media sources. */
 import os from "node:os";
 import path from "node:path";
 import { URL } from "node:url";

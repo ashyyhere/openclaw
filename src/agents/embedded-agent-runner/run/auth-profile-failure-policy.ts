@@ -1,4 +1,3 @@
-/** Maps failover reasons to auth-profile failure reasons. */
 import type { AuthProfileFailureReason } from "../../auth-profiles/types.js";
 import type { FailoverReason } from "../../embedded-agent-helpers/types.js";
 import type { AuthProfileFailurePolicy } from "./auth-profile-failure-policy.types.js";

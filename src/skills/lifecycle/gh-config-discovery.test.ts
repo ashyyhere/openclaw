@@ -1,4 +1,3 @@
-/** Covers GitHub CLI config discovery for skill runtimes. */
 import { describe, expect, it } from "vitest";
 import {
   detectGhConfigDirMismatch,

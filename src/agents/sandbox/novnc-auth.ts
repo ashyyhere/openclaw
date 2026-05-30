@@ -1,4 +1,3 @@
-/** Issues noVNC passwords and observer tokens for sandbox browsers. */
 import crypto from "node:crypto";
 import {
   isFutureDateTimestampMs,

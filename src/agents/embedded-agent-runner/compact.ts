@@ -1,4 +1,3 @@
-/** Performs embedded-agent session compaction and post-compaction repair. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import { isAcpRuntimeSpawnAvailable } from "../../acp/runtime/availability.js";

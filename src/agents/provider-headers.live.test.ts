@@ -1,4 +1,3 @@
-/** Live tests for provider request header behavior. */
 import { beforeAll, describe, expect, it } from "vitest";
 import {
   LIVE_CACHE_TEST_ENABLED,

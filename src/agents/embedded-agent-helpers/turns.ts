@@ -1,4 +1,3 @@
-/** Normalizes model message turn ordering for provider replay constraints. */
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 import type { AgentMessage } from "../runtime/index.js";
 import { extractToolCallsFromAssistant, extractToolResultId } from "../tool-call-id.js";

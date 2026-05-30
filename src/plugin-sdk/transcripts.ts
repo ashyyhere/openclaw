@@ -1,4 +1,3 @@
-/** Public SDK barrel for transcript contracts. */
 export type {
   TranscriptImportRequest,
   TranscriptParticipant,

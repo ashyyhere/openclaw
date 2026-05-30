@@ -1,4 +1,3 @@
-/** Process-global state for plugin interactive handlers and callback dedupe. */
 import { createDedupeCache, resolveGlobalDedupeCache } from "../infra/dedupe.js";
 import type { DedupeCache } from "../infra/dedupe.js";
 import type { PluginInteractiveHandlerRegistration } from "./types.js";

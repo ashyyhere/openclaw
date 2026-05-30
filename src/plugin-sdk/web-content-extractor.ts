@@ -1,4 +1,3 @@
-/** Public SDK barrel for web content extraction contracts. */
 export type {
   WebContentExtractionRequest,
   WebContentExtractionResult,

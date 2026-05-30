@@ -1,4 +1,3 @@
-/** Runtime SDK barrel for group policy resolution helpers. */
 export {
   GROUP_POLICY_BLOCKED_LABEL,
   resolveAllowlistProviderRuntimeGroupPolicy,

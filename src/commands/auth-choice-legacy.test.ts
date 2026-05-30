@@ -1,4 +1,3 @@
-/** Tests legacy provider auth choice resolution from manifests. */
 import { describe, expect, it, vi } from "vitest";
 
 const manifestAuthChoices = vi.hoisted(() => [

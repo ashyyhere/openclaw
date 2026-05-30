@@ -1,4 +1,3 @@
-/** Creates OpenClaw backup archives from config, sessions, and state. */
 import {
   createBackupArchive,
   formatBackupCreateSummary,

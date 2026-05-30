@@ -1,4 +1,3 @@
-/** Tests uninstall command cleanup planning and prompts. */
 import { beforeEach, describe, expect, it } from "vitest";
 import {
   cleanupCommandLogMessages,

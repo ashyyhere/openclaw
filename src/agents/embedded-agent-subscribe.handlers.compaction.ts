@@ -1,4 +1,3 @@
-/** Handles embedded-agent compaction lifecycle events and persisted counters. */
 import { emitAgentEvent } from "../infra/agent-events.js";
 import { getGlobalHookRunner } from "../plugins/hook-runner-global.js";
 import type { EmbeddedAgentSubscribeContext } from "./embedded-agent-subscribe.handlers.types.js";

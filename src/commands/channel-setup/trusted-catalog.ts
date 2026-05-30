@@ -1,4 +1,3 @@
-/** Trusted channel catalog helpers used during setup command resolution. */
 import {
   getChannelPluginCatalogEntry,
   listChannelPluginCatalogEntries,

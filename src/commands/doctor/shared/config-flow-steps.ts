@@ -1,4 +1,3 @@
-/** Step helpers for doctor config validation and repair flow. */
 import { formatConfigIssueLines } from "../../../config/issue-format.js";
 import { protectActiveAuthProfileConfig } from "../../doctor-auth-profile-config.js";
 import { stripUnknownConfigKeys } from "../../doctor-config-analysis.js";

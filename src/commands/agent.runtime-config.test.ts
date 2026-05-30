@@ -1,4 +1,3 @@
-/** Tests runtime config resolution for agent commands. */
 import path from "node:path";
 import { withTempHome as withTempHomeBase } from "openclaw/plugin-sdk/test-env";
 import { beforeEach, describe, expect, it, vi } from "vitest";

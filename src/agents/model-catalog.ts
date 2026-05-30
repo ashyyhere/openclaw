@@ -1,4 +1,3 @@
-/** Loads model catalog entries from config, plugin manifests, and discovery. */
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";

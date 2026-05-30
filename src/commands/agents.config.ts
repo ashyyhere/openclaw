@@ -1,4 +1,3 @@
-/** Reads and writes agent-specific config files and defaults. */
 import {
   listAgentEntries,
   resolveAgentDir,

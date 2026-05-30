@@ -1,4 +1,3 @@
-/** Parameter types for embedded-agent run and attempt execution. */
 import type {
   PartialReplyPayload,
   SourceReplyDeliveryMode,

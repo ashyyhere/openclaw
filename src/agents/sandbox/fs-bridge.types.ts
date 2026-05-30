@@ -1,4 +1,3 @@
-/** Public types exposed by the sandbox filesystem bridge. */
 export type SandboxResolvedPath = {
   hostPath?: string;
   relativePath: string;

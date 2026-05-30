@@ -1,4 +1,3 @@
-/** Parses registry-only npm specs and enforces OpenClaw prerelease install rules. */
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
 const EXACT_SEMVER_VERSION_RE =

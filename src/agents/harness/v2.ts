@@ -1,4 +1,3 @@
-/** Adapts legacy agent harness implementations to the V2 lifecycle contract. */
 import {
   assertContextEngineHostSupport,
   type ContextEngineHostSupport,

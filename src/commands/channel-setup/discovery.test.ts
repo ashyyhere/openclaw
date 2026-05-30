@@ -1,4 +1,3 @@
-/** Tests channel setup discovery from installed and bundled plugins. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { PluginAutoEnableResult } from "../../config/plugin-auto-enable.js";
 

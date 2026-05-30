@@ -1,4 +1,3 @@
-/** Shared command-runner helpers for plugins CLI tests. */
 import { Command } from "commander";
 import type { Mock } from "vitest";
 import { vi } from "vitest";

@@ -1,4 +1,3 @@
-/** Covers Docker sandbox backend creation and manager behavior. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../../config/config.js";
 

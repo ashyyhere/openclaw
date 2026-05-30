@@ -1,4 +1,3 @@
-/** Chooses direct vs steered delivery paths for subagent completion announcements. */
 type SubagentDeliveryPath = "steered" | "direct" | "none";
 export type SubagentAnnounceDeliveryFailureReason =
   | "completion_handoff_pending"

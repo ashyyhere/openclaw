@@ -1,4 +1,3 @@
-/** Covers gateway call option parsing and gateway tool calls. */
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { CallGatewayScopedOptions } from "../../gateway/call.js";
 import { createEmptyPluginRegistry } from "../../plugins/registry-empty.js";

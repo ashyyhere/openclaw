@@ -1,4 +1,3 @@
-/** Starts and manages browser containers attached to agent sandboxes. */
 import crypto from "node:crypto";
 import { deriveDefaultBrowserCdpPortRange } from "../../config/port-defaults.js";
 import { isSameSsrFPolicy, type SsrFPolicy } from "../../infra/net/ssrf.js";

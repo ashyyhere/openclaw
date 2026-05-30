@@ -1,4 +1,3 @@
-/** Regression coverage for stored subagent capability resolution. */
 import { describe, expect, it } from "vitest";
 import { resolveSubagentCapabilities } from "./subagent-capabilities.js";
 

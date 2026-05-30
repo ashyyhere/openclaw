@@ -1,4 +1,3 @@
-/** Admin tool for gateway status, config, and restart operations. */
 import { isDeepStrictEqual } from "node:util";
 import { Type } from "typebox";
 import { isRestartEnabled } from "../../config/commands.flags.js";

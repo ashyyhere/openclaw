@@ -1,4 +1,3 @@
-/** Shared doctor checks and repairs for channel plugin config. */
 import {
   getBundledChannelPlugin,
   getBundledChannelSetupPlugin,

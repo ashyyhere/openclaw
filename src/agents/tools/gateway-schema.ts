@@ -1,4 +1,3 @@
-/** TypeBox schema fragments shared by gateway-backed tools. */
 import { Type } from "typebox";
 import { optionalPositiveIntegerSchema } from "../schema/typebox.js";
 

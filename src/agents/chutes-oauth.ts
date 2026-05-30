@@ -1,4 +1,3 @@
-/** Chutes OAuth PKCE, callback parsing, token exchange, and refresh helpers. */
 import { createHash, randomBytes } from "node:crypto";
 import { resolveExpiresAtMsFromDurationSeconds } from "../infra/parse-finite-number.js";
 import type { OAuthCredentials } from "../llm/oauth.js";

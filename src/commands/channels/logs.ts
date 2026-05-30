@@ -1,4 +1,3 @@
-/** Implements channel logs command. */
 import fs from "node:fs/promises";
 import { theme } from "../../../packages/terminal-core/src/theme.js";
 import { normalizeChannelId as normalizeBundledChannelId } from "../../channels/registry.js";

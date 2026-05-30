@@ -1,4 +1,3 @@
-/** Builds reusable pairing adapters for channel approval flows. */
 import type { ChannelPairingAdapter } from "./types.adapters.js";
 
 type PairingNotifyParams = Parameters<NonNullable<ChannelPairingAdapter["notifyApproval"]>>[0];

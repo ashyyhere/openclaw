@@ -1,4 +1,3 @@
-/** Tests gateway daemon status probing. */
 import { describe, expect, it, vi } from "vitest";
 import { probeGatewayStatus } from "./probe.js";
 

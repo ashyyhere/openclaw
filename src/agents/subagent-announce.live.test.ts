@@ -1,4 +1,3 @@
-/** Live-gated subagent announcement coverage using real spawned sessions. */
 import { randomBytes, randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";

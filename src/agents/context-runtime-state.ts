@@ -1,4 +1,3 @@
-/** Global runtime state for context-window discovery and cache resets. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { createLazyImportLoader, type LazyPromiseLoader } from "../shared/lazy-promise.js";
 import { MODEL_CONTEXT_TOKEN_CACHE } from "./context-cache.js";

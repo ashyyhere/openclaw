@@ -1,4 +1,3 @@
-/** Tests agent harness runtime SDK contracts and registration helpers. */
 import { describe, expect, it } from "vitest";
 import {
   classifyAgentHarnessTerminalOutcome,

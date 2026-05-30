@@ -1,4 +1,3 @@
-/** Shared vi mocks for skill installer dependency overrides. */
 import { vi } from "vitest";
 import type { Mock } from "vitest";
 

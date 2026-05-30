@@ -1,4 +1,3 @@
-/** Memory host SDK barrel for engine foundation helpers. */
 export * from "../../packages/memory-host-sdk/src/engine-foundation.js";
 /** Agent scope and directory helpers needed by memory host engines. */
 export {

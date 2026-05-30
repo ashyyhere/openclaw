@@ -1,4 +1,3 @@
-/** Provider contracts for realtime transcription session plugins. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 
 /** Stable id for a realtime transcription provider. */

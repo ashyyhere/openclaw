@@ -1,4 +1,3 @@
-/** Core channel turn kernel for history, reply dispatch, and delivery coordination. */
 import type { ReplyPayload } from "../../auto-reply/reply-payload.js";
 import {
   clearHistoryEntriesIfEnabled,

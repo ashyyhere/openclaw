@@ -1,4 +1,3 @@
-/** HTTP MCP launch config normalization and descriptions. */
 import {
   redactSensitiveUrl,
   redactSensitiveUrlLikeString,

@@ -1,4 +1,3 @@
-/** Configure wizard section for gateway auth mode and credentials. */
 import { ensureAuthProfileStore } from "../agents/auth-profiles.js";
 import { resolveDefaultAgentWorkspaceDir } from "../agents/workspace.js";
 import { formatCliCommand } from "../cli/command-format.js";

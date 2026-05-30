@@ -1,4 +1,3 @@
-/** Agent tool for generating videos through configured providers. */
 import { Type, type TSchema } from "typebox";
 import { getRuntimeConfig } from "../../config/config.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";

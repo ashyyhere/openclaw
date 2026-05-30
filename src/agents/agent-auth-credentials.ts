@@ -1,4 +1,3 @@
-/** Converts stored auth profiles into discovery-time agent credential maps. */
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
 import { coerceSecretRef } from "../config/types.secrets.js";
 import { asDateTimestampMs } from "../shared/number-coercion.js";

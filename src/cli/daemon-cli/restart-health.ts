@@ -1,4 +1,3 @@
-/** Evaluates daemon restart health after service lifecycle operations. */
 import type { PluginHealthErrorSummary } from "../../commands/health.types.js";
 import { createConfigIO } from "../../config/io.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";

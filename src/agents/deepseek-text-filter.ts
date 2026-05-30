@@ -1,4 +1,3 @@
-/** Streaming filter for DeepSeek DSML tool-call markup. */
 const DSML_KINDS = ["tool_use_error", "tool_calls", "tool_call", "function_calls"] as const;
 const DSML_BARS = ["|", "｜"] as const;
 

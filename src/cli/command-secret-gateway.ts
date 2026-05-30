@@ -1,4 +1,3 @@
-/** Adds gateway-specific secret targets needed by CLI command execution. */
 import {
   GATEWAY_CLIENT_MODES,
   GATEWAY_CLIENT_NAMES,

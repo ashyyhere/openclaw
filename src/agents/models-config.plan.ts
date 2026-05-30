@@ -1,4 +1,3 @@
-/** Plans generated models.json contents and plugin-owned catalog writes. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { PluginMetadataSnapshot } from "../plugins/plugin-metadata-snapshot.js";
 import { isRecord } from "../utils.js";

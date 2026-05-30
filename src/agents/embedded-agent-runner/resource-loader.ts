@@ -1,4 +1,3 @@
-/** Creates a resource loader for embedded-agent session managers. */
 import { DefaultResourceLoader } from "../sessions/index.js";
 
 type DefaultResourceLoaderInit = ConstructorParameters<typeof DefaultResourceLoader>[0];

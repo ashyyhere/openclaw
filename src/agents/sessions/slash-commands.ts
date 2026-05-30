@@ -1,4 +1,3 @@
-/** Built-in and loaded slash command metadata for sessions. */
 import { APP_NAME } from "../config.js";
 import type { SourceInfo } from "./source-info.js";
 

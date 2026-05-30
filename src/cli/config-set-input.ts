@@ -1,4 +1,3 @@
-/** Parses CLI config set inputs from literals, JSON, files, and stdin. */
 import fs from "node:fs";
 import JSON5 from "json5";
 import {

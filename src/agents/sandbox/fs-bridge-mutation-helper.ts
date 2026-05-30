@@ -1,4 +1,3 @@
-/** Builds pinned Python mutation scripts for sandbox filesystem writes. */
 import { PATH_ALIAS_POLICIES } from "../../infra/path-alias-guards.js";
 import type {
   PathSafetyCheck,

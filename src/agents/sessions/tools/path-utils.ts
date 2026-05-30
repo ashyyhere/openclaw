@@ -1,4 +1,3 @@
-/** Path expansion and read-path resolution helpers for session tools. */
 import { accessSync, constants } from "node:fs";
 import * as os from "node:os";
 import { isAbsolute, resolve as resolvePath } from "node:path";

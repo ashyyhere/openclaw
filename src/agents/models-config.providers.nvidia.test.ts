@@ -1,4 +1,3 @@
-/** Tests NVIDIA provider config generation. */
 import { describe, expect, it, vi } from "vitest";
 import type { ModelDefinitionConfig, ModelProviderConfig } from "../config/types.models.js";
 import { resolveEnvApiKey } from "./model-auth-env.js";

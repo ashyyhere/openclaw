@@ -1,4 +1,3 @@
-/** Covers read tool output, truncation, and media handling. */
 import { Buffer } from "node:buffer";
 import { describe, expect, it } from "vitest";
 import { createReadToolDefinition } from "./read.js";

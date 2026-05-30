@@ -1,4 +1,3 @@
-/** Shared directory listing helpers for plugins that derive users/groups from config maps. */
 export type { DirectoryConfigParams } from "../channels/plugins/directory-types.js";
 /** Re-exported API for src/plugin-sdk. */
 export type {

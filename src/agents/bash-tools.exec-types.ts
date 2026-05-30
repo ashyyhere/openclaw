@@ -1,4 +1,3 @@
-/** Shared types for exec tool defaults, approvals, and result details. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { EventSessionRoutingPolicy } from "../infra/event-session-routing.js";
 import type { ExecApprovalDecision } from "../infra/exec-approvals.js";

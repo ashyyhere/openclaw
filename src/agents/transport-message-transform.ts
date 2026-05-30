@@ -1,4 +1,3 @@
-/** Transforms agent messages into provider transport message payloads. */
 import type { Api, Context, Model } from "../llm/types.js";
 import { repairToolUseResultPairing } from "./session-transcript-repair.js";
 

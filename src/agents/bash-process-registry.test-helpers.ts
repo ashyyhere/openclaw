@@ -1,4 +1,3 @@
-/** Test helpers for bash process registry fixtures. */
 import type { ChildProcessWithoutNullStreams } from "node:child_process";
 import type { ProcessSession } from "./bash-process-registry.js";
 

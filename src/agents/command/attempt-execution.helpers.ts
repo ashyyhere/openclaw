@@ -1,4 +1,3 @@
-/** Helpers for transcript probing, fallback prelude, and visible text accumulation. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import readline from "node:readline";

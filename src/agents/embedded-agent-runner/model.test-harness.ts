@@ -1,4 +1,3 @@
-/** Shared harness helpers for embedded-agent model resolution tests. */
 import { vi } from "vitest";
 import type { ModelDefinitionConfig } from "../../config/types.js";
 

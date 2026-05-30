@@ -1,4 +1,3 @@
-/** Marks parent commands that should show help when no subcommand is provided. */
 import type { Command } from "commander";
 
 const parentDefaultHelpCommands = new WeakSet<Command>();

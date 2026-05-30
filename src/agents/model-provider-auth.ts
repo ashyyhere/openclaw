@@ -1,4 +1,3 @@
-/** Warms and checks provider auth state for model availability/UI paths. */
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { Worker } from "node:worker_threads";

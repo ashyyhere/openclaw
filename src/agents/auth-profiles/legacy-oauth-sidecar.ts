@@ -1,4 +1,3 @@
-/** Loads legacy provider OAuth sidecar files during auth profile migration. */
 import * as childProcess from "node:child_process";
 import { createCipheriv, createDecipheriv, hash } from "node:crypto";
 import fs from "node:fs";

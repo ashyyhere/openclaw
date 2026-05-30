@@ -1,4 +1,3 @@
-/** Tests exec approval result parsing and denial formatting. */
 import { describe, expect, it } from "vitest";
 import {
   formatExecDeniedUserMessage,

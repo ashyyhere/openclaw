@@ -1,4 +1,3 @@
-/** Tests provider API family predicates. */
 import { describe, expect, it } from "vitest";
 import { supportsGptParallelToolCallsPayload } from "./provider-api-families.js";
 

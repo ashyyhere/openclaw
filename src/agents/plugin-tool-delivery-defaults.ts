@@ -1,4 +1,3 @@
-/** Applies delivery defaults to plugin-owned tools. */
 import type { DeliveryContext } from "../utils/delivery-context.types.js";
 import type { AnyAgentTool } from "./tools/common.js";
 

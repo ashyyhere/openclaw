@@ -1,4 +1,3 @@
-/** Public SDK barrel for health/status-related agent and config contracts. */
 export { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../agents/agent-scope.js";
 /** Re-exported API for src/plugin-sdk, starting with read Config File Snapshot. */
 export { readConfigFileSnapshot } from "../config/config.js";

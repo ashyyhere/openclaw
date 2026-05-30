@@ -1,4 +1,3 @@
-/** Preflight checks that promote valid config snapshots for doctor recovery. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { note } from "../../packages/terminal-core/src/note.js";

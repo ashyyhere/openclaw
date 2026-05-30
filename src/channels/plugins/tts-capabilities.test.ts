@@ -1,4 +1,3 @@
-/** Tests channel TTS voice delivery capability resolution from plugin metadata. */
 import { afterEach, describe, expect, it } from "vitest";
 import { createEmptyPluginRegistry } from "../../plugins/registry-empty.js";
 import { setActivePluginRegistry } from "../../plugins/runtime.js";

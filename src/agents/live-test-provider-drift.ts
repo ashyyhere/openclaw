@@ -1,4 +1,3 @@
-/** Classifies live-test provider drift into skip/warn/fail decisions. */
 import { isCloudflareOrHtmlErrorPage } from "../shared/assistant-error-format.js";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import {

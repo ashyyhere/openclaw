@@ -1,4 +1,3 @@
-/** Tests before-tool-call behavior in embedded runtime mode. */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { setEmbeddedMode } from "../infra/embedded-mode.js";
 import { getGlobalHookRunner } from "../plugins/hook-runner-global.js";

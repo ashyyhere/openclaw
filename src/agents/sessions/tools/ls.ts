@@ -1,4 +1,3 @@
-/** Ls tool definition for listing workspace directory entries. */
 import { existsSync, readdirSync, statSync } from "node:fs";
 import nodePath from "node:path";
 import { Text } from "@earendil-works/pi-tui";

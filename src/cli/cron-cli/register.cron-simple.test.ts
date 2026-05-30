@@ -1,4 +1,3 @@
-/** Tests simple cron CLI commands for list/status/run output. */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { CronJob } from "../../cron/types.js";
 import type { GatewayRpcOpts } from "../gateway-rpc.js";

@@ -1,4 +1,3 @@
-/** Regression coverage for agent command result delivery. */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { ReplyPayload } from "../../auto-reply/reply-payload.js";
 import type { ChannelOutboundAdapter } from "../../channels/plugins/types.js";

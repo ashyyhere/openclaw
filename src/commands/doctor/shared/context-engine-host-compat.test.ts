@@ -1,4 +1,3 @@
-/** Tests context-engine host compatibility doctor warnings. */
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../../../config/types.openclaw.js";
 import { registerContextEngine } from "../../../context-engine/registry.js";

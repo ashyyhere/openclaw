@@ -1,4 +1,3 @@
-/** Shared MCP config coercion helpers. */
 import { isDangerousHostEnvVarName } from "../infra/host-env-security.js";
 
 /** Return whether a value can be treated as an MCP config record. */

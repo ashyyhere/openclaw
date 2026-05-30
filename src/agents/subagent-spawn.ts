@@ -1,4 +1,3 @@
-/** Implements direct subagent spawning, session forking, context setup, and registry creation. */
 import crypto from "node:crypto";
 import { promises as fs } from "node:fs";
 import path from "node:path";

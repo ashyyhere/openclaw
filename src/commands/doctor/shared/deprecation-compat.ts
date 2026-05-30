@@ -1,4 +1,3 @@
-/** Tracks deprecation compatibility metadata for doctor warnings. */
 export type DoctorDeprecationCompatStatus = "active" | "deprecated" | "removal-pending" | "removed";
 
 /** Owner category used to route doctor deprecation compatibility records. */

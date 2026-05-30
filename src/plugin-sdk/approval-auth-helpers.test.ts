@@ -1,4 +1,3 @@
-/** Tests approval authorization adapter fallback markers and approver matching. */
 import { describe, expect, it } from "vitest";
 import {
   createResolvedApproverActionAuthAdapter,

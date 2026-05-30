@@ -1,4 +1,3 @@
-/** Shared persistence and prompt helpers used by embedded, CLI, and ACP attempts. */
 import { updateSessionStore } from "../../config/sessions/store.js";
 import { mergeSessionEntry, type SessionEntry } from "../../config/sessions/types.js";
 import {

@@ -1,4 +1,3 @@
-/** Shared usage fixtures for agent tests. */
 import type { Usage } from "openclaw/plugin-sdk/llm";
 
 export const ZERO_USAGE_FIXTURE: Usage = {

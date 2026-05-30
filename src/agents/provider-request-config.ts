@@ -1,4 +1,3 @@
-/** Resolves provider request headers, auth, proxy, TLS, and routing policy. */
 import type { ModelDefinitionConfig } from "../config/types.js";
 import type {
   ConfiguredModelProviderRequest,

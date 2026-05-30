@@ -1,4 +1,3 @@
-/** Tests GitHub Copilot token helper behavior. */
 import { describe, expect, it, vi } from "vitest";
 import { COPILOT_INTEGRATION_ID, buildCopilotIdeHeaders } from "./copilot-dynamic-headers.js";
 import {

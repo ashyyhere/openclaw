@@ -1,4 +1,3 @@
-/** Tests webhook request guard and body read helpers. */
 import { EventEmitter } from "node:events";
 import type { IncomingMessage } from "node:http";
 import { describe, expect, it } from "vitest";

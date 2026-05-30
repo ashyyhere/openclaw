@@ -1,4 +1,3 @@
-/** Extracts downloaded skill archives with traversal preflight and staged merge safety. */
 import { createHash } from "node:crypto";
 import fs from "node:fs";
 import {

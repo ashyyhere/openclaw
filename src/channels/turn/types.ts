@@ -1,4 +1,3 @@
-/** Shared contracts for channel turn kernel dependencies and results. */
 import type { CommandTurnKind } from "../../auto-reply/command-turn-context.js";
 import type { GetReplyOptions } from "../../auto-reply/get-reply-options.types.js";
 import type { ReplyPayload } from "../../auto-reply/reply-payload.js";

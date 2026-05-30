@@ -1,4 +1,3 @@
-/** Resolves strict-agentic execution-contract activation for supported models. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import { resolveAgentExecutionContract, resolveSessionAgentIds } from "./agent-scope.js";

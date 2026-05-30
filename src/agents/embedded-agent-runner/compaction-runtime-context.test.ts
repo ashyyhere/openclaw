@@ -1,4 +1,3 @@
-/** Regression coverage for embedded compaction runtime context resolution. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../../config/config.js";
 import { addSession, resetProcessRegistryForTests } from "../bash-process-registry.js";

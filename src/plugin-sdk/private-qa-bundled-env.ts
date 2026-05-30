@@ -1,4 +1,3 @@
-/** Runtime helper for resolving private QA bundled-plugin environment files. */
 import fs from "node:fs";
 import path from "node:path";
 import { resolveOpenClawPackageRootSync } from "../infra/openclaw-root.js";

@@ -1,4 +1,3 @@
-/** Detects node-only gateway mode for status output. */
 import { DEFAULT_GATEWAY_PORT } from "../config/paths.js";
 import { loadNodeHostConfig } from "../node-host/config.js";
 

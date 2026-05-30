@@ -1,4 +1,3 @@
-/** Tests group access SDK helpers and allowlist behavior. */
 import { describe, expect, it } from "vitest";
 import {
   evaluateGroupRouteAccessForPolicy,

@@ -1,4 +1,3 @@
-/** Public SDK barrel for realtime voice provider plugin contracts. */
 export type { RealtimeVoiceProviderPlugin } from "../plugins/types.js";
 /** Realtime voice provider, bridge, audio, tool, and config contracts. */
 export type {

@@ -1,4 +1,3 @@
-/** Write tool definition for replacing or creating files. */
 import {
   mkdir as fsMkdir,
   readFile as fsReadFile,

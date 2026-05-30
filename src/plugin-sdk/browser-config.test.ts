@@ -1,4 +1,3 @@
-/** Tests browser config SDK exports and profile resolution behavior. */
 import { describe, expect, it } from "vitest";
 import type { BrowserControlAuth } from "./browser-config.js";
 import {

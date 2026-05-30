@@ -1,4 +1,3 @@
-/** Shared stream and client-tool types for command execution. */
 export type AgentStreamParams = {
   /** Provider stream params override (best-effort). */
   temperature?: number;

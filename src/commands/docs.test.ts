@@ -1,4 +1,3 @@
-/** Tests documentation search command fetching and output. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { RuntimeEnv } from "../runtime.js";
 

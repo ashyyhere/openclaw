@@ -1,4 +1,3 @@
-/** Legacy config migrations for web search settings. */
 import {
   defineLegacyConfigMigration,
   type LegacyConfigMigrationSpec,

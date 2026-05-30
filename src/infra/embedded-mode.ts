@@ -1,4 +1,3 @@
-/** Tracks whether the current runtime is embedded inside another OpenClaw surface. */
 let embeddedModeValue = false;
 
 /** Set the process-local embedded-mode flag. */

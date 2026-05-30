@@ -1,4 +1,3 @@
-/** Detects whether OpenAI-compatible message arrays contain a billable turn. */
 function hasNonEmptyString(value: unknown): boolean {
   return typeof value === "string" && value.trim().length > 0;
 }

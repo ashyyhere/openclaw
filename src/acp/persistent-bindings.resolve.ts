@@ -1,4 +1,3 @@
-/** Lookup helpers for config-defined ACP conversation bindings. */
 import {
   resolveConfiguredBindingRecord,
   resolveConfiguredBindingRecordBySessionKey,

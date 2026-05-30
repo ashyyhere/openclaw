@@ -1,4 +1,3 @@
-/** Public SDK utilities for rendering and checking the generated Plugin SDK API baseline. */
 import { createHash } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";

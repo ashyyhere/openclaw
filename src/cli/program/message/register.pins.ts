@@ -1,4 +1,3 @@
-/** Registers message pin commands. */
 import type { Command } from "commander";
 import type { MessageCliHelpers } from "./helpers.js";
 

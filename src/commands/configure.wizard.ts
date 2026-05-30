@@ -1,4 +1,3 @@
-/** Orchestrates configure wizard sections and writes resulting config. */
 import fsPromises from "node:fs/promises";
 import nodePath from "node:path";
 import { isDeepStrictEqual } from "node:util";

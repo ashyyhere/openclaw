@@ -1,4 +1,3 @@
-/** Normalizes tool schemas for OpenAI strict JSON-schema requirements. */
 import type { ModelCompatConfig } from "../config/types.models.js";
 import { shouldOmitEmptyArrayItems } from "../plugins/provider-model-compat.js";
 import { normalizeToolParameterSchema } from "./agent-tools-parameter-schema.js";

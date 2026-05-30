@@ -1,4 +1,3 @@
-/** Tests schema normalization runtime contract helpers. */
 import {
   createNativeOpenAICodexResponsesModel,
   createNativeOpenAIResponsesModel,

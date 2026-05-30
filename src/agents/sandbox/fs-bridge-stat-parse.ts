@@ -1,4 +1,3 @@
-/** Parses stat output returned by sandbox filesystem bridge commands. */
 import { parseStrictNonNegativeInteger } from "../../infra/parse-finite-number.js";
 
 /** Parses byte size from stat output with a safe zero fallback. */

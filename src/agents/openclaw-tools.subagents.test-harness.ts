@@ -1,4 +1,3 @@
-/** Shared mocks and config overrides for OpenClaw subagent tool tests. */
 import { vi } from "vitest";
 import { testing as queueCleanupTesting } from "../auto-reply/reply/queue/cleanup.js";
 import type { CallGatewayOptions } from "../gateway/call.js";

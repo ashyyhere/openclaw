@@ -1,4 +1,3 @@
-/** Tests channel logs command output and file handling. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

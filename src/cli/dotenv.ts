@@ -1,4 +1,3 @@
-/** Loads workspace and global dotenv files for CLI command startup. */
 import path from "node:path";
 import { resolveStateDir } from "../config/paths.js";
 import { loadGlobalRuntimeDotEnvFiles, loadWorkspaceDotEnvFile } from "../infra/dotenv.js";

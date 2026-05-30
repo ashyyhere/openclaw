@@ -1,4 +1,3 @@
-/** Google/Gemma provider helper predicates for embedded-agent runtime. */
 import { isGemma4ModelId } from "../../shared/google-models.js";
 import { sanitizeGoogleTurnOrdering } from "./bootstrap.js";
 

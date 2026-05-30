@@ -1,4 +1,3 @@
-/** Builds human-readable sender labels from channel profile fields. */
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 
 /** Candidate sender identity fields from channel-specific profile data. */

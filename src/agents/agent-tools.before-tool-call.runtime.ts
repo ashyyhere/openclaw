@@ -1,4 +1,3 @@
-/** Runtime dependency bundle for before-tool-call hooks and loop diagnostics. */
 import { getDiagnosticSessionState } from "../logging/diagnostic-session-state.js";
 import { logToolLoopAction } from "../logging/diagnostic.js";
 import {

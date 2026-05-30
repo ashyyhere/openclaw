@@ -1,4 +1,3 @@
-/** Tests parsing, formatting, and prompting of channel group access policy. */
 import { describe, expect, it, vi } from "vitest";
 import {
   formatAllowlistEntries,

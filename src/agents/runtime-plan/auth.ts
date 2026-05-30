@@ -1,4 +1,3 @@
-/** Builds provider auth plans for agent runtime execution. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { normalizeOptionalAgentRuntimeId } from "../agent-runtime-id.js";
 import { resolveProviderIdForAuth } from "../provider-auth-aliases.js";

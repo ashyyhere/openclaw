@@ -1,4 +1,3 @@
-/** Tests channel linking hints for status output. */
 import { describe, expect, it, vi } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 

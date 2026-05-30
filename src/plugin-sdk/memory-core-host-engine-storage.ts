@@ -1,4 +1,3 @@
-/** Memory host SDK barrel for engine storage helpers. */
 export {
   buildFileEntry,
   buildMemoryReadResult,

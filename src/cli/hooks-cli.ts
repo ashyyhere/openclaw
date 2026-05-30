@@ -1,4 +1,3 @@
-/** Registers CLI commands for hook status, checks, and config updates. */
 import type { Command } from "commander";
 import {
   decorativeEmoji,

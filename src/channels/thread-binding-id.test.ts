@@ -1,4 +1,3 @@
-/** Tests conversation id extraction from account-scoped thread binding ids. */
 import { describe, expect, it } from "vitest";
 import { resolveThreadBindingConversationIdFromBindingId } from "./thread-binding-id.js";
 

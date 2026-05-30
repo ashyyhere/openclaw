@@ -1,4 +1,3 @@
-/** Projects bundled MCP catalog/runtime tools into agent tool definitions. */
 import crypto from "node:crypto";
 import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";

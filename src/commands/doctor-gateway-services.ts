@@ -1,4 +1,3 @@
-/** Doctor checks for duplicate or stale gateway services. */
 import { execFile } from "node:child_process";
 import fs from "node:fs/promises";
 import os from "node:os";

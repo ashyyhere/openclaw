@@ -1,4 +1,3 @@
-/** Test helpers for direct subagent registry manipulation. */
 import { subagentRuns } from "./subagent-registry-memory.js";
 import type { SubagentRunRecord } from "./subagent-registry.types.js";
 

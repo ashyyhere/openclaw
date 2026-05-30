@@ -1,4 +1,3 @@
-/** Optional redacted JSONL payload logging for Anthropic-compatible requests. */
 import crypto from "node:crypto";
 import path from "node:path";
 import { resolveStateDir } from "../config/paths.js";

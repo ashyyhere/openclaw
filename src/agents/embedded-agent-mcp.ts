@@ -1,4 +1,3 @@
-/** Loads bundle MCP config for embedded-agent runs. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { BundleMcpDiagnostic, BundleMcpServerConfig } from "../plugins/bundle-mcp.js";
 import type { PluginManifestRegistry } from "../plugins/manifest-registry.js";

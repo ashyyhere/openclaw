@@ -1,4 +1,3 @@
-/** Detects visible outbound delivery evidence from embedded-agent results. */
 import { normalizeStringEntries, uniqueStrings } from "../../shared/string-normalization.js";
 import { hasAcceptedSessionSpawn } from "../accepted-session-spawn.js";
 

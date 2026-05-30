@@ -1,4 +1,3 @@
-/** Signal type used to stop a turn before mid-turn context overflow. */
 import type { PreemptiveCompactionRoute } from "./preemptive-compaction.types.js";
 
 /** Snapshot of the prompt-budget overflow detected before a mid-turn model call. */

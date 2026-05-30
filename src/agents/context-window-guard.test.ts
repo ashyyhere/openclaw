@@ -1,4 +1,3 @@
-/** Tests context-window source resolution, thresholds, warnings, and blocks. */
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import {

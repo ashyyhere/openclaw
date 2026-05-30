@@ -1,4 +1,3 @@
-/** Tests migration of legacy memory dreaming cron payloads. */
 import { describe, expect, it } from "vitest";
 import {
   countStaleDreamingJobs,

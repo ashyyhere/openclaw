@@ -1,4 +1,3 @@
-/** Test helper for sandbox contexts mounted directly to host paths. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

@@ -1,4 +1,3 @@
-/** Ensures provider-owner plugins are active for selected agent harnesses. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { withActivatedPluginIds } from "../../plugins/activation-context.js";
 import {

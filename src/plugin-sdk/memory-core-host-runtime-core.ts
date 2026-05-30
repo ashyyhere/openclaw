@@ -1,4 +1,3 @@
-/** Memory host SDK barrel for core runtime helpers. */
 export * from "../../packages/memory-host-sdk/src/runtime-core.js";
 /** Compaction reserve defaults used by memory host runtime helpers. */
 export {

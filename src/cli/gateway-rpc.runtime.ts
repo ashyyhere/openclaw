@@ -1,4 +1,3 @@
-/** Runtime implementation for gateway RPC CLI calls. */
 import {
   GATEWAY_CLIENT_MODES,
   GATEWAY_CLIENT_NAMES,

@@ -1,4 +1,3 @@
-/** Regression coverage for subagent completion outcome and lifecycle hook emission. */
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { SUBAGENT_ENDED_REASON_COMPLETE } from "./subagent-lifecycle-events.js";
 import type { SubagentRunRecord } from "./subagent-registry.types.js";

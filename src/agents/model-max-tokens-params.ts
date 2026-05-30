@@ -1,4 +1,3 @@
-/** Normalizes max-token params across provider spelling variants. */
 const MAX_TOKENS_PARAM_KEYS = ["maxTokens", "max_completion_tokens", "max_tokens"] as const;
 
 /** Resolve a non-negative max-token value. */

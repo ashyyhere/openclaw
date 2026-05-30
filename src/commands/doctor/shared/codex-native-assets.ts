@@ -1,4 +1,3 @@
-/** Doctor checks for Codex native assets and helper binaries. */
 import type { Dirent } from "node:fs";
 import fs from "node:fs/promises";
 import os from "node:os";

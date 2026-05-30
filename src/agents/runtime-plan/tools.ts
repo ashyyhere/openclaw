@@ -1,4 +1,3 @@
-/** Normalizes and diagnoses tools exposed to provider runtimes. */
 import type { TSchema } from "typebox";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { ProviderRuntimePluginHandle } from "../../plugins/provider-hook-runtime.js";

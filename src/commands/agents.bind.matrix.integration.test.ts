@@ -1,4 +1,3 @@
-/** Integration tests for agent binding matrix resolution. */
 import { afterEach, describe, expect, it } from "vitest";
 import { setActivePluginRegistry } from "../plugins/runtime.js";
 import {

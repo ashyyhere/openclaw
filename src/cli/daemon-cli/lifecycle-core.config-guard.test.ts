@@ -1,4 +1,3 @@
-/** Tests lifecycle core config guard behavior. */
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { VERSION } from "../../version.js";
 import {

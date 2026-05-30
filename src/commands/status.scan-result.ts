@@ -1,4 +1,3 @@
-/** Builds full status scan results from config, runtime, and probe data. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { collectChannelStatusIssues as collectChannelStatusIssuesFn } from "../infra/channels-status-issues.js";
 import { resolveOsSummary } from "../infra/os-summary.js";

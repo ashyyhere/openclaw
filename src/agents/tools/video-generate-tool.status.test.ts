@@ -1,4 +1,3 @@
-/** Covers video generation task status and duplicate guard behavior. */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import * as videoGenerationRuntime from "../../video-generation/runtime.js";
 import {

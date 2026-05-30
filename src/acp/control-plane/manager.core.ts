@@ -1,4 +1,3 @@
-/** ACP session manager core: session lifecycle, runtime ownership, and turn orchestration. */
 import { resolveAgentTimeoutMs } from "../../agents/timeout.js";
 import { resolveRuntimeConfigCacheKey } from "../../config/runtime-snapshot.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";

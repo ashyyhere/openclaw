@@ -1,4 +1,3 @@
-/** Bundled Anthropic Vertex stream facade loader. */
 import { loadBundledPluginPublicSurfaceModuleSync } from "../plugin-sdk/facade-runtime.js";
 import type { StreamFn } from "./runtime/index.js";
 

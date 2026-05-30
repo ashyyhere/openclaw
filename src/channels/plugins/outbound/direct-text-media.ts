@@ -1,4 +1,3 @@
-/** Sends direct outbound text/media payloads through channel adapters. */
 import { sendTextMediaPayload } from "openclaw/plugin-sdk/reply-payload";
 import { chunkText } from "../../../auto-reply/chunk.js";
 import type { OpenClawConfig } from "../../../config/types.openclaw.js";

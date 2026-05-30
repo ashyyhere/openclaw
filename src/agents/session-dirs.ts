@@ -1,4 +1,3 @@
-/** Discovers per-agent session directories under state roots. */
 import fsSync, { type Dirent } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";

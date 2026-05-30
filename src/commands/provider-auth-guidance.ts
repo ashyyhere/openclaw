@@ -1,4 +1,3 @@
-/** Formats provider auth setup guidance for CLI and doctor flows. */
 import { normalizeProviderId } from "../agents/model-selection.js";
 import { resolveProviderAuthAliasMap } from "../agents/provider-auth-aliases.js";
 import { formatCliCommand } from "../cli/command-format.js";

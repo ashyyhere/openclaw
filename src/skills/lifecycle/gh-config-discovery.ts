@@ -1,4 +1,3 @@
-/** Detects mismatches between host and sandbox GitHub CLI config dirs. */
 import { posix as posixPath, win32 as win32Path } from "node:path";
 
 function pathFor(platform: NodeJS.Platform) {

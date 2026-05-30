@@ -1,4 +1,3 @@
-/** Tests gateway CLI option registration does not collide with root options. */
 import { Command } from "commander";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { registerGatewayCli } from "./register.js";

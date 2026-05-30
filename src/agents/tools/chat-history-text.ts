@@ -1,4 +1,3 @@
-/** Extracts visible assistant text from chat history messages. */
 import { extractAssistantTextForPhase } from "../../shared/chat-message-content.js";
 import { sanitizeAssistantVisibleTextWithProfile } from "../../shared/text/assistant-visible-text.js";
 import { sanitizeUserFacingText } from "../embedded-agent-helpers/sanitize-user-facing-text.js";

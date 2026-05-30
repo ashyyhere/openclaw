@@ -1,4 +1,3 @@
-/** Tests channel reply pipeline helpers and delivery decisions. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { ChannelPlugin } from "../channels/plugins/types.plugin.js";
 import { createEmptyPluginRegistry } from "../plugins/registry-empty.js";

@@ -1,4 +1,3 @@
-/** Formats compact aggregate values for status overview rows. */
 type AgentStatusLike = {
   bootstrapPendingCount: number;
   totalSessions: number;

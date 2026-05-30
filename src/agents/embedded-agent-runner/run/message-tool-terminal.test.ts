@@ -1,4 +1,3 @@
-/** Covers early terminal handling for message-tool-only sends. */
 import type { Agent, AfterToolCallContext } from "openclaw/plugin-sdk/agent-core";
 import { describe, expect, it, vi } from "vitest";
 import {

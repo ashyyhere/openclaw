@@ -1,4 +1,3 @@
-/** Regression coverage for stable system prompt byte output. */
 import { describe, expect, it, beforeEach } from "vitest";
 import { makeTempWorkspace, writeWorkspaceFile } from "../test-helpers/workspace.js";
 import {

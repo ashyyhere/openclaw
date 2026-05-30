@@ -1,4 +1,3 @@
-/** Builds safe display labels for auth profiles without exposing secrets. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { resolveAuthProfileMetadata } from "./identity.js";
 import type { AuthProfileStore } from "./types.js";

@@ -1,4 +1,3 @@
-/** ACP session metadata persistence helpers backed by OpenClaw session stores. */
 import { getRuntimeConfig } from "../../config/config.js";
 import { resolveStorePath } from "../../config/sessions/paths.js";
 import { loadSessionStore } from "../../config/sessions/store-load.js";

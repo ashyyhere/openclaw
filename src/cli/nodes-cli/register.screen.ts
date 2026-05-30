@@ -1,4 +1,3 @@
-/** Registers nodes screen capture commands. */
 import type { Command } from "commander";
 import { defaultRuntime } from "../../runtime.js";
 import { shortenHomePath } from "../../utils.js";

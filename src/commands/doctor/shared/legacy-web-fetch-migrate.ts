@@ -1,4 +1,3 @@
-/** Migrates legacy web fetch config into current web search config. */
 import { mergeMissing } from "../../../config/legacy.shared.js";
 import {
   cloneRecord,

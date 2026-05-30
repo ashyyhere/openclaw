@@ -1,4 +1,3 @@
-/** Loads optional thread binding helpers from bundled plugin public artifacts. */
 import { loadBundledPluginPublicArtifactModuleSync } from "../../plugins/public-surface-loader.js";
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 

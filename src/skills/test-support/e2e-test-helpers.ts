@@ -1,4 +1,3 @@
-/** Shared filesystem fixtures for skills end-to-end prompt/status tests. */
 import fs from "node:fs/promises";
 import path from "node:path";
 

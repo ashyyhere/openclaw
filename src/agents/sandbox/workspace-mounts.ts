@@ -1,4 +1,3 @@
-/** Builds Docker mount args for sandbox workspaces and readonly skills. */
 import fs from "node:fs";
 import path from "node:path";
 import { isPathInside } from "../../infra/path-guards.js";

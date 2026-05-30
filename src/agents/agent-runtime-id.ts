@@ -1,4 +1,3 @@
-/** Runtime id normalization for embedded agent harness selection. */
 export type EmbeddedAgentRuntime = "openclaw" | "auto" | (string & {});
 
 /** Canonical runtime id for the built-in OpenClaw agent runtime. */

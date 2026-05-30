@@ -1,4 +1,3 @@
-/** Loads bundled LSP server config for embedded-agent runs. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { BundleLspServerConfig } from "../plugins/bundle-lsp.js";
 import { loadEnabledBundleLspConfig } from "../plugins/bundle-lsp.js";

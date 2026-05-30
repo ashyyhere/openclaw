@@ -1,4 +1,3 @@
-/** Shared mock harness for channel command tests. */
 import { vi } from "vitest";
 import type { MockFn } from "../test-utils/vitest-mock-fn.js";
 

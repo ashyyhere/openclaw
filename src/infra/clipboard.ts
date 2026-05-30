@@ -1,4 +1,3 @@
-/** Cross-platform clipboard write helper used by CLI conveniences. */
 import { runCommandWithTimeout } from "../process/exec.js";
 
 /** Try common platform clipboard commands and report whether any accepted the text. */

@@ -1,4 +1,3 @@
-/** Tests PTY fallback behavior in exec runtime. */
 import { afterEach, beforeAll, beforeEach, expect, test, vi } from "vitest";
 import {
   onInternalDiagnosticEvent,

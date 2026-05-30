@@ -1,4 +1,3 @@
-/** Finds active async media/task state for session status details. */
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import { listTasksForOwnerKey } from "../tasks/runtime-internal.js";
 import type { TaskRecord, TaskRuntime, TaskStatus } from "../tasks/task-registry.types.js";

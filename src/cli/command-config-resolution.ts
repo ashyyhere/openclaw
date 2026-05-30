@@ -1,4 +1,3 @@
-/** Resolves CLI command config snapshots with optional secret hydration. */
 import { applyPluginAutoEnable } from "../config/plugin-auto-enable.js";
 import type { OpenClawConfig } from "../config/types.js";
 import type { RuntimeEnv } from "../runtime.js";

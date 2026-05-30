@@ -1,4 +1,3 @@
-/** Small state machine for tracking active channel runs and busy state. */
 type RunStateStatusPatch = {
   busy?: boolean;
   activeRuns?: number;

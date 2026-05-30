@@ -1,4 +1,3 @@
-/** Scrubs sensitive values from config audit logs. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import { note } from "../../packages/terminal-core/src/note.js";

@@ -1,4 +1,3 @@
-/** Writes status JSON output to the runtime. */
 import { type RuntimeEnv, writeRuntimeJson } from "../runtime.js";
 import { resolveStatusJsonOutput } from "./status-json-runtime.ts";
 

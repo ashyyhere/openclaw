@@ -1,4 +1,3 @@
-/** Shared messaging payload types emitted by embedded-agent tool handling. */
 import type { ReplyPayload } from "../auto-reply/reply-payload.js";
 
 /** Normalized send action extracted from core or channel messaging tools. */

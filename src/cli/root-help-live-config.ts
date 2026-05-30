@@ -1,4 +1,3 @@
-/** Loads config-sensitive plugin metadata for root help rendering. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { RootHelpRenderOptions } from "./program/root-help.js";
 

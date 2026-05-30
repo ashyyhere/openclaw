@@ -1,4 +1,3 @@
-/** Shared fixtures for embedded-agent-runner E2E tests. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

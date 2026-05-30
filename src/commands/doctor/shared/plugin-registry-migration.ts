@@ -1,4 +1,3 @@
-/** Migrates legacy plugin records into installed plugin registry state. */
 import fs from "node:fs";
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
 import {

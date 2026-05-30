@@ -1,4 +1,3 @@
-/** Normalizers for accepted ACP child-session spawn tool results. */
 import { asOptionalRecord } from "../shared/record-coerce.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 

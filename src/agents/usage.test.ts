@@ -1,4 +1,3 @@
-/** Regression coverage for usage accounting helpers. */
 import { describe, expect, it } from "vitest";
 import {
   deriveContextPromptTokens,

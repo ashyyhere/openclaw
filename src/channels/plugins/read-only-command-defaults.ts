@@ -1,4 +1,3 @@
-/** Derives default read-only command capabilities for installed channel plugins. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { isBlockedObjectKey } from "../../infra/prototype-keys.js";
 import { isInstalledPluginEnabled } from "../../plugins/installed-plugin-index.js";

@@ -1,4 +1,3 @@
-/** Tests configured ACP binding key, record, and resolution helpers. */
 import { beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { resolveAgentWorkspaceDir } from "../agents/agent-scope.js";
 import type { ChannelConfiguredBindingProvider, ChannelPlugin } from "../channels/plugins/types.js";

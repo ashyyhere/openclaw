@@ -1,4 +1,3 @@
-/** Shared fixtures and assertions for sandbox filesystem bridge tests. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

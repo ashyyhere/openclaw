@@ -1,4 +1,3 @@
-/** Holds process-wide models.json write/cache state shared by ESM module reloads. */
 const MODELS_JSON_STATE_KEY = Symbol.for("openclaw.modelsJsonState");
 
 type ModelsJsonState = {

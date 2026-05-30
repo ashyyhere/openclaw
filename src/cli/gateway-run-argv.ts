@@ -1,4 +1,3 @@
-/** Parses argv segments that should be forwarded to gateway run commands. */
 import { isValueToken } from "../infra/cli-root-options.js";
 
 const GATEWAY_RUN_VALUE_FLAGS = new Set([

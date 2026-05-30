@@ -1,4 +1,3 @@
-/** CLI bundle MCP test harness helpers. */
 import { createRequire } from "node:module";
 import {
   writeBundleProbeMcpServer,

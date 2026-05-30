@@ -1,4 +1,3 @@
-/** Public SDK helpers for channel-side exec approval client profiles. */
 import type { ExecApprovalForwardTarget } from "../config/types.approvals.js";
 import { matchesApprovalRequestFilters } from "../infra/approval-request-filters.js";
 import { getExecApprovalReplyMetadata } from "../infra/exec-approval-reply.js";

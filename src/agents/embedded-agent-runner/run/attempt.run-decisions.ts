@@ -1,4 +1,3 @@
-/** Small decision helpers for embedded-agent attempt execution. */
 import type { OpenClawConfig } from "../../../config/config.js";
 import {
   resolveSessionLockMaxHoldFromTimeout,

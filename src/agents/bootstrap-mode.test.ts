@@ -1,4 +1,3 @@
-/** Tests bootstrap mode decisions for run kinds and pending state. */
 import { describe, expect, it } from "vitest";
 import { resolveBootstrapMode } from "./bootstrap-mode.js";
 

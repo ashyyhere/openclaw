@@ -1,4 +1,3 @@
-/** Accumulates usage across embedded-agent attempts and provider calls. */
 import { normalizeUsage, type NormalizedUsage, type UsageLike } from "../usage.js";
 
 /** Running usage totals plus the most recent provider-call snapshot. */

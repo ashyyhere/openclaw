@@ -1,4 +1,3 @@
-/** Background task lifecycle wrappers for image generation. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { AgentGeneratedAttachment } from "../generated-attachments.js";
 import { IMAGE_GENERATION_TASK_KIND } from "../image-generation-task-status.js";

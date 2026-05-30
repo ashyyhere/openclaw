@@ -1,4 +1,3 @@
-/** Shared mocks for agent command tests. */
 import { vi } from "vitest";
 
 vi.mock("../logging/subsystem.js", () => {

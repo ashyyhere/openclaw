@@ -1,4 +1,3 @@
-/** Ensures the gateway is ready before commands requiring live service access. */
 import type { DaemonStatus } from "../cli/daemon-cli/status.gather.js";
 import { promptYesNo } from "../cli/prompt.js";
 import type { RuntimeEnv } from "../runtime.js";

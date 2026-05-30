@@ -1,4 +1,3 @@
-/** Implements the agents add command. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import {

@@ -1,4 +1,3 @@
-/** Tests CLI output parsers for JSON, JSONL, streaming, and errors. */
 import { describe, expect, it } from "vitest";
 import {
   createCliJsonlStreamingParser,

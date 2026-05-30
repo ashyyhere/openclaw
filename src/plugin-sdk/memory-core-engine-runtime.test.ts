@@ -1,4 +1,3 @@
-/** Tests memory-core engine runtime SDK behavior. */
 import { describe, expect, it } from "vitest";
 import type { ShortTermAuditIssue } from "./memory-core-engine-runtime.js";
 

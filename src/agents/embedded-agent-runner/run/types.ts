@@ -1,4 +1,3 @@
-/** Attempt parameter and result types for embedded-agent execution. */
 import type { HeartbeatToolResponse } from "../../../auto-reply/heartbeat-tool-response.js";
 import type { ThinkLevel } from "../../../auto-reply/thinking.js";
 import type {

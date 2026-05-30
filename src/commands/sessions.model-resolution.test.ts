@@ -1,4 +1,3 @@
-/** Tests model resolution for session listing rows. */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   mockSessionsConfig,

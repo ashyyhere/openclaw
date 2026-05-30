@@ -1,4 +1,3 @@
-/** Doctor checks for bundled and workspace skill availability. */
 import { existsSync } from "node:fs";
 import { note } from "../../packages/terminal-core/src/note.js";
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../agents/agent-scope.js";

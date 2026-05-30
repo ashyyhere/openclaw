@@ -1,4 +1,3 @@
-/** Normalizes Windows-specific argv quirks before CLI parsing. */
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
 /** Reused helper for normalize Windows Argv behavior in src/cli. */

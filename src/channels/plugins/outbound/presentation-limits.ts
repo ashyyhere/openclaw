@@ -1,4 +1,3 @@
-/** Applies channel-specific presentation size and action limits. */
 import type {
   MessagePresentation,
   MessagePresentationBlock,

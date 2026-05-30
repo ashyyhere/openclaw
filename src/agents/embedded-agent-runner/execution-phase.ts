@@ -1,4 +1,3 @@
-/** Embedded-agent execution phase ids and labels. */
 export const EMBEDDED_AGENT_EXECUTION_PHASES = [
   "runner_entered",
   "workspace",

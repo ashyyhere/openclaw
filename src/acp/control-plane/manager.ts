@@ -1,4 +1,3 @@
-/** Singleton ACP session manager entrypoint and testing reset hooks. */
 import { AcpSessionManager } from "./manager.core.js";
 
 /** Re-exported API for src/acp/control-plane, starting with Acp Session Manager. */

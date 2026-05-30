@@ -1,4 +1,3 @@
-/** Executes prepared CLI backend runs, parses output, and handles failover events. */
 import crypto from "node:crypto";
 import { shouldLogVerbose } from "../../globals.js";
 import { emitAgentEvent } from "../../infra/agent-events.js";

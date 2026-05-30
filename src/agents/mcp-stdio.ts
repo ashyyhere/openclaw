@@ -1,4 +1,3 @@
-/** Stdio MCP launch config normalization and descriptions. */
 import { isMcpConfigRecord, toMcpEnvRecord, toMcpStringArray } from "./mcp-config-shared.js";
 
 /** Resolved stdio MCP server process launch config. */

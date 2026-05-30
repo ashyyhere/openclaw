@@ -1,4 +1,3 @@
-/** Public SDK facade for browser control auth resolution and token generation. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { loadBundledPluginPublicSurfaceModuleSync } from "./facade-loader.js";
 

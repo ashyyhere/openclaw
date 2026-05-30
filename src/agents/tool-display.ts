@@ -1,4 +1,3 @@
-/** Resolves user-facing display text for tool calls and tool results. */
 import { redactToolDetail } from "../logging/redact.js";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import { shortenHomeInString } from "../utils.js";

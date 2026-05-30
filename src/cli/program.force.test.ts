@@ -1,4 +1,3 @@
-/** Tests --force behavior that frees busy service ports. */
 import { afterEach, beforeEach, describe, expect, it, vi, type Mock } from "vitest";
 
 vi.mock("node:child_process", async () => {

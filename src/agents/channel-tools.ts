@@ -1,4 +1,3 @@
-/** Channel-owned agent tools and prompt capability discovery. */
 import { getChannelPlugin, listChannelPlugins } from "../channels/plugins/index.js";
 import {
   createMessageActionDiscoveryContext,

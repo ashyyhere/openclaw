@@ -1,4 +1,3 @@
-/** Resolves whether gateway service repairs should run automatically. */
 import type { DoctorPrompter } from "./doctor-prompter.js";
 
 type ServiceRepairPolicy = "auto" | "external";

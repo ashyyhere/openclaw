@@ -1,4 +1,3 @@
-/** Resolves image size limits for provider/tool input sanitization. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 
 /** Image sanitization limits derived from config. */

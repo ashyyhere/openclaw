@@ -1,4 +1,3 @@
-/** Builds shell command plans for sandbox filesystem bridge reads/stats. */
 import type { AnchoredSandboxEntry, PathSafetyCheck } from "./fs-bridge-path-safety.js";
 import type { SandboxResolvedFsPath } from "./fs-paths.js";
 

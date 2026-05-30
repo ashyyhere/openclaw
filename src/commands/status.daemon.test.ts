@@ -1,4 +1,3 @@
-/** Tests daemon summary collection for status output. */
 import { describe, expect, it, vi } from "vitest";
 import { getDaemonStatusSummary } from "./status.daemon.js";
 

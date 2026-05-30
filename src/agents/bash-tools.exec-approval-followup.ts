@@ -1,4 +1,3 @@
-/** Follow-up delivery for async exec approval results. */
 import {
   resolveExternalBestEffortDeliveryTarget,
   type ExternalBestEffortDeliveryTarget,

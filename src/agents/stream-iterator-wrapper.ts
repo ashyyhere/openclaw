@@ -1,4 +1,3 @@
-/** Wraps async iterators so stream adapters can intercept next/return/throw lifecycle events. */
 type StreamIterator<T> = AsyncIterator<T, unknown, unknown>;
 
 type IteratorHandler<T> = (

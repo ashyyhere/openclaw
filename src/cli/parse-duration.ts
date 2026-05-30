@@ -1,4 +1,3 @@
-/** Parses human-readable duration values used by CLI options. */
 import {
   normalizeLowercaseStringOrEmpty,
   normalizeOptionalString,

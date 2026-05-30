@@ -1,4 +1,3 @@
-/** Resolves plugin ids targeted by uninstall command arguments. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { parseClawHubPluginSpec } from "../infra/clawhub-spec.js";
 import type { PluginRecord } from "../plugins/registry.js";

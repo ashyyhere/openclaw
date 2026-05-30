@@ -1,4 +1,3 @@
-/** Provider secret resolution across config markers, auth profiles, credentials, and env vars. */
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveSecretInputRef } from "../config/types.secrets.js";

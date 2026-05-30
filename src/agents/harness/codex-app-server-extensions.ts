@@ -1,4 +1,3 @@
-/** Runs Codex app-server extension hooks for tool-result processing. */
 import { createSubsystemLogger } from "../../logging/subsystem.js";
 import { listCodexAppServerExtensionFactories } from "../../plugins/codex-app-server-extension-factory.js";
 import type {

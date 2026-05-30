@@ -1,4 +1,3 @@
-/** Registers provider-runtime or OpenClaw transport stream functions for models. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { Api, Model } from "../llm/types.js";
 import { resolveProviderStreamFn } from "../plugins/provider-runtime.js";

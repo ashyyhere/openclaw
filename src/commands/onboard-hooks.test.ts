@@ -1,4 +1,3 @@
-/** Tests hook onboarding status and install prompts. */
 import { describe, expect, it, vi, beforeEach } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import type { HookStatusEntry, HookStatusReport } from "../hooks/hooks-status.js";

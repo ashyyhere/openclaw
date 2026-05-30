@@ -1,4 +1,3 @@
-/** Ensures root and plugin-generated models.json files match current config/catalogs. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import {

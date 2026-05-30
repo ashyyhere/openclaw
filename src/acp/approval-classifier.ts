@@ -1,4 +1,3 @@
-/** Classifies ACP tool calls into approval-risk categories for policy decisions. */
 import { homedir } from "node:os";
 import path from "node:path";
 import { isKnownCoreToolId } from "../agents/tool-catalog.js";

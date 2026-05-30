@@ -1,4 +1,3 @@
-/** Shared archive install flow helpers for plugin and package installers. */
 import type { Stats } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";

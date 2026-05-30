@@ -1,4 +1,3 @@
-/** Tests formatting for CLI failure output and verbose diagnostics. */
 import { describe, expect, it } from "vitest";
 import { formatCliFailureLines } from "./failure-output.js";
 

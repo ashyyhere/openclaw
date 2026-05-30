@@ -1,4 +1,3 @@
-/** Public SDK builders for channel allowlist adapters that read and edit config-backed lists. */
 import type { ConfigWriteTarget } from "../channels/plugins/config-writes.js";
 import type { ChannelAllowlistAdapter } from "../channels/plugins/types.adapters.js";
 import type { ChannelId } from "../channels/plugins/types.public.js";

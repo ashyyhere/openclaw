@@ -1,4 +1,3 @@
-/** Shared temp-home, env, and fixture helpers for models-config tests. */
 import { afterEach, beforeEach } from "vitest";
 import { clearConfigCache, clearRuntimeConfigSnapshot } from "../config/config.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";

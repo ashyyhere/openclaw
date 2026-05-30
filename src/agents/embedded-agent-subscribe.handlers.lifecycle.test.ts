@@ -1,4 +1,3 @@
-/** Tests embedded-agent subscription lifecycle handlers. */
 import { describe, expect, it, vi } from "vitest";
 import { createInlineCodeState } from "../../packages/markdown-core/src/code-spans.js";
 import { handleAgentEnd } from "./embedded-agent-subscribe.handlers.lifecycle.js";

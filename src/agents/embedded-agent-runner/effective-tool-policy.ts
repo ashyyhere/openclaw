@@ -1,4 +1,3 @@
-/** Applies final effective tool policy before embedded-agent model calls. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { getPluginToolMeta } from "../../plugins/tools.js";
 import {

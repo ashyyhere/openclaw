@@ -1,4 +1,3 @@
-/** Resolves memory-search indexing, embedding, and query configuration. */
 import os from "node:os";
 import path from "node:path";
 import {

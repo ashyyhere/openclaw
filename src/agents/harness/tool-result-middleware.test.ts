@@ -1,4 +1,3 @@
-/** Covers fail-closed tool-result middleware execution. */
 import { describe, expect, it } from "vitest";
 import { createAgentToolResultMiddlewareRunner } from "./tool-result-middleware.js";
 

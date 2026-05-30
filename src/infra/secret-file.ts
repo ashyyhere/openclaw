@@ -1,4 +1,3 @@
-/** Re-exports secure secret-file primitives and legacy read result adapter. */
 import "./fs-safe-defaults.js";
 import { readSecretFileSync as readSecretFileSyncImpl } from "@openclaw/fs-safe/secret";
 import { resolveUserPath } from "../utils.js";

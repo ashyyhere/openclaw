@@ -1,4 +1,3 @@
-/** Regression coverage for subagent announcement delivery routing and retry behavior. */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { OutboundDeliveryError } from "../infra/outbound/deliver-types.js";
 import {

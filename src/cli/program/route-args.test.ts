@@ -1,4 +1,3 @@
-/** Tests route argument parsers for routed lightweight commands. */
 import { describe, expect, it } from "vitest";
 import {
   parseAgentsListRouteArgs,

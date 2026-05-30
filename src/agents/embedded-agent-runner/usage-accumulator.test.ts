@@ -1,4 +1,3 @@
-/** Covers usage accumulation and last-call usage normalization. */
 import { describe, expect, it } from "vitest";
 import {
   createUsageAccumulator,

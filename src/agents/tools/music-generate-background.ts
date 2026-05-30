@@ -1,4 +1,3 @@
-/** Background task lifecycle wrappers for music generation. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { AgentGeneratedAttachment } from "../generated-attachments.js";
 import { MUSIC_GENERATION_TASK_KIND } from "../music-generation-task-status.js";

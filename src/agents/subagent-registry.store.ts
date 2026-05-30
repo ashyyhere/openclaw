@@ -1,4 +1,3 @@
-/** Disk store for persisted subagent registry records. */
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

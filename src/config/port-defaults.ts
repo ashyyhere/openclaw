@@ -1,4 +1,3 @@
-/** Default port ranges derived from configured gateway/browser ports. */
 type PortRange = { start: number; end: number };
 
 function isValidPort(port: number): boolean {

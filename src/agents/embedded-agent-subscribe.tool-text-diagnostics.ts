@@ -1,4 +1,3 @@
-/** Warns when assistant text looks like an unstructured tool invocation. */
 import type { AssistantMessage } from "../llm/types.js";
 import { extractTextFromChatContent } from "../shared/chat-content.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";

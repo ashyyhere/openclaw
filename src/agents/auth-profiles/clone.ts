@@ -1,4 +1,3 @@
-/** Clones auth profile stores without sharing mutable nested state. */
 import type { AuthProfileStore } from "./types.js";
 
 /** Deep-clones JSON-compatible auth profile store state. */

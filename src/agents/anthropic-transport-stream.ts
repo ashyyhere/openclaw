@@ -1,4 +1,3 @@
-/** Anthropic Messages transport stream adapter for OpenClaw runtime models. */
 import { getEnvApiKey } from "../llm/env-api-keys.js";
 import { calculateCost } from "../llm/model-utils.js";
 import type { AnthropicOptions } from "../llm/providers/anthropic.js";

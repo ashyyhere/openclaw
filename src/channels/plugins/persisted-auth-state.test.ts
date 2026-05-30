@@ -1,4 +1,3 @@
-/** Tests persisted auth-state capability discovery for bundled channels. */
 import { describe, expect, it } from "vitest";
 import {
   hasBundledChannelPersistedAuthState,

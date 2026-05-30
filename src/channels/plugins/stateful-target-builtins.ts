@@ -1,4 +1,3 @@
-/** Registers built-in stateful binding target drivers once per process. */
 import { registerStatefulBindingTargetDriver } from "./stateful-target-drivers.js";
 
 type AcpStatefulTargetDriverModule = typeof import("./acp-stateful-target-driver.js");

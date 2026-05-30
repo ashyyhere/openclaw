@@ -1,4 +1,3 @@
-/** Registers permission and search message commands. */
 import type { Command } from "commander";
 import { collectOption } from "../helpers.js";
 import type { MessageCliHelpers } from "./helpers.js";

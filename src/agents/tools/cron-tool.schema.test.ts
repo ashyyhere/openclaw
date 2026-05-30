@@ -1,4 +1,3 @@
-/** Covers cron tool TypeBox schema shape. */
 import { describe, expect, it } from "vitest";
 import { CronToolSchema } from "./cron-tool.js";
 

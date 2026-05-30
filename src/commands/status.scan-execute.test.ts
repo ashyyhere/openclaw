@@ -1,4 +1,3 @@
-/** Tests execution of full status scans from overview data. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { executeStatusScanFromOverview } from "./status.scan-execute.ts";
 import type { StatusScanOverviewResult } from "./status.scan-overview.ts";

@@ -1,4 +1,3 @@
-/** Resolves sandbox host/container path mappings and bind mounts. */
 import os from "node:os";
 import path from "node:path";
 import { isPathInside } from "../../infra/path-guards.js";

@@ -1,4 +1,3 @@
-/** Edit tool definition for applying exact or fuzzy text replacements. */
 import { constants } from "node:fs";
 import {
   access as fsAccess,

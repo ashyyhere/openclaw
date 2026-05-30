@@ -1,4 +1,3 @@
-/** Normalizes provider config secrets, model ids, and provider-specific defaults. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { PluginManifestRecord } from "../plugins/manifest-registry.js";
 import { ensureAuthProfileStore } from "./auth-profiles/store.js";

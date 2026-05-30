@@ -1,4 +1,3 @@
-/** Runtime SDK bridge for starting and stopping the bundled browser control server. */
 import type { Server } from "node:http";
 import type { ResolvedBrowserConfig } from "./browser-profiles.js";
 import { loadActivatedBundledPluginPublicSurfaceModuleSync } from "./facade-runtime.js";

@@ -1,4 +1,3 @@
-/** Decides whether CLI subcommands should be registered eagerly at startup. */
 import { isTruthyEnvValue } from "../infra/env.js";
 import { resolveCliArgvInvocation } from "./argv-invocation.js";
 

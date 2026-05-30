@@ -1,4 +1,3 @@
-/** Test support for PDF tool auth and temp agent dirs. */
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

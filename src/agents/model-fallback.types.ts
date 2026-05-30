@@ -1,4 +1,3 @@
-/** Shared model fallback candidate and attempt types. */
 import type { FailoverReason } from "./embedded-agent-helpers/types.js";
 
 /** Provider/model candidate considered by fallback. */

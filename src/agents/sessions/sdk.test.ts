@@ -1,4 +1,3 @@
-/** Covers public session SDK creation and resource wiring. */
 import { Type } from "typebox";
 import { describe, expect, it } from "vitest";
 import type { Model } from "../../llm/types.js";

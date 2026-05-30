@@ -1,4 +1,3 @@
-/** Tests sessions_spawn applies default subagent thinking settings. */
 import { describe, expect, it } from "vitest";
 import type { OpenClawConfig } from "../config/config.js";
 import { resolveSubagentThinkingOverride } from "./subagent-spawn-thinking.js";

@@ -1,4 +1,3 @@
-/** Shared node response fixtures for CLI program tests. */
 export const IOS_NODE = {
   nodeId: "ios-node",
   displayName: "iOS Node",

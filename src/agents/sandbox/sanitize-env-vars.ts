@@ -1,4 +1,3 @@
-/** Sanitizes explicit environment variables before passing them to sandboxes. */
 const BLOCKED_ENV_VAR_PATTERNS: ReadonlyArray<RegExp> = [
   /^ANTHROPIC_API_KEY$/i,
   /^OPENAI_API_KEY$/i,

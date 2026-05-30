@@ -1,4 +1,3 @@
-/** Process-local registry of sandbox browser bridge instances. */
 import type { BrowserBridge } from "../../plugin-sdk/browser-bridge.js";
 
 /** Process-local browser bridge registry keyed by sandbox/browser id. */

@@ -1,4 +1,3 @@
-/** Public SDK barrel for realtime transcription provider plugin contracts. */
 export type { RealtimeTranscriptionProviderPlugin } from "../plugins/types.js";
 /** Re-exported API for src/plugin-sdk. */
 export type {

@@ -1,4 +1,3 @@
-/** Tests ACP event/content mapping between gateway and protocol shapes. */
 import { describe, expect, it } from "vitest";
 import { extractToolCallLocations } from "./event-mapper.js";
 

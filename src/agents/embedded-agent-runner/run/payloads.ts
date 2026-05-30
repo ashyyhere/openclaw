@@ -1,4 +1,3 @@
-/** Builds channel reply payloads from embedded-run results and metadata. */
 import type { SourceReplyDeliveryMode } from "../../../auto-reply/get-reply-options.types.js";
 import {
   createHeartbeatToolResponsePayload,

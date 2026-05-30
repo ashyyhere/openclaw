@@ -1,4 +1,3 @@
-/** Prepares Google prompt cache metadata and stream wrappers. */
 import crypto from "node:crypto";
 import { parseGeminiAuth } from "../../infra/gemini-auth.js";
 import { normalizeGoogleApiBaseUrl } from "../../infra/google-api-base-url.js";

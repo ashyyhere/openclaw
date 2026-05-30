@@ -1,4 +1,3 @@
-/** Regression coverage for provider-specific error patterns. */
 import { describe, expect, it, vi } from "vitest";
 
 const hoisted = vi.hoisted(() => ({

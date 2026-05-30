@@ -1,4 +1,3 @@
-/** Tests status scan config loading and cold-start detection. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   loadStatusScanCommandConfig,

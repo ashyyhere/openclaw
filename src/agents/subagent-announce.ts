@@ -1,4 +1,3 @@
-/** Orchestrates subagent completion announcement capture, delivery, and cleanup. */
 import {
   isSilentReplyText,
   SILENT_REPLY_TOKEN,

@@ -1,4 +1,3 @@
-/** Source metadata attached to loaded session resources. */
 import type { PathMetadata } from "./package-manager.js";
 
 /** Scope that contributed a loaded session resource. */

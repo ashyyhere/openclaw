@@ -1,4 +1,3 @@
-/** Public helper functions exposed to channel setup wizard implementations. */
 import type { DmPolicy, GroupPolicy } from "../../config/types.base.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { SecretInput } from "../../config/types.secrets.js";

@@ -1,4 +1,3 @@
-/** @deprecated Compatibility subpath. Use `openclaw/plugin-sdk/channel-outbound`. */
 export * from "./channel-lifecycle.core.js";
 export * from "../channels/draft-preview-finalizer.js";
 export * from "../channels/draft-stream-controls.js";

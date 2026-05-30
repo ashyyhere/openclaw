@@ -1,4 +1,3 @@
-/** Probes whether a local TCP port can be bound. */
 import net from "node:net";
 
 /** Attempt a temporary listen on a port and reject with the native bind error. */

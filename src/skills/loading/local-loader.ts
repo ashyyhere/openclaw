@@ -1,4 +1,3 @@
-/** Safely loads local skill markdown files from a directory. */
 import fs from "node:fs";
 import path from "node:path";
 import { openRootFileSync } from "../../infra/boundary-file-read.js";

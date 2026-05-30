@@ -1,4 +1,3 @@
-/** Installs runtime hooks that keep tool results within context limits. */
 import type { ContextEngine, ContextEngineRuntimeContext } from "../../context-engine/types.js";
 import type { AgentMessage } from "../runtime/index.js";
 import {

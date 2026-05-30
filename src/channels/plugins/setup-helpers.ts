@@ -1,4 +1,3 @@
-/** Shared setup wizard helpers for config edits, account selection, and secret input. */
 import { z, type ZodType } from "zod";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "../../routing/session-key.js";

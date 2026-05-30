@@ -1,4 +1,3 @@
-/** Host-backed sandbox filesystem bridge for tests. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { resolveSandboxPath } from "../sandbox-paths.js";

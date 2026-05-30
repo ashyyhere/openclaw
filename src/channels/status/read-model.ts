@@ -1,4 +1,3 @@
-/** Read-model helpers for channel account status and credential availability. */
 import { DEFAULT_ACCOUNT_ID } from "../../routing/session-key.js";
 import { asRecord } from "../../shared/record-coerce.js";
 import { normalizeOptionalString } from "../../shared/string-coerce.js";

@@ -1,4 +1,3 @@
-/** Resolves stable/beta/dev update channels from config, versions, and git state. */
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 import { parseComparableSemver } from "./semver-compare.js";
 

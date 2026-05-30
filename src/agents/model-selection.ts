@@ -1,4 +1,3 @@
-/** High-level model selection, persistence, allowlist, and default helpers. */
 import {
   resolveAgentModelFallbackValues,
   resolveAgentModelPrimaryValue,

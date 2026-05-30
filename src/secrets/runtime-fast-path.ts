@@ -1,4 +1,3 @@
-/** Fast-path snapshot preparation for configs that need no secret resolution. */
 import { existsSync } from "node:fs";
 import path from "node:path";
 import {

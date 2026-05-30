@@ -1,4 +1,3 @@
-/** Resolves model, thinking, and timeout choices for subagent spawns. */
 import { formatThinkingLevels } from "../auto-reply/thinking.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveSubagentSpawnModelSelection } from "./model-selection.js";

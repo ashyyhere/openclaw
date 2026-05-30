@@ -1,4 +1,3 @@
-/** Shared type contracts for bundled session MCP runtime/catalog tools. */
 import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import type { TSchema } from "typebox";
 import type { OpenClawConfig } from "../config/types.openclaw.js";

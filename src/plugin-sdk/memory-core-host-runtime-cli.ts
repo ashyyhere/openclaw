@@ -1,4 +1,3 @@
-/** Memory host SDK barrel for CLI runtime helpers. */
 export * from "../../packages/memory-host-sdk/src/runtime-cli.js";
 /** CLI formatting and manager helpers used by memory host commands. */
 export { formatErrorMessage, withManager } from "../cli/cli-utils.js";

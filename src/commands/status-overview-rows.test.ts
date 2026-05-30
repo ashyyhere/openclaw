@@ -1,4 +1,3 @@
-/** Tests status overview row construction. */
 import { describe, expect, it } from "vitest";
 import { VERSION } from "../version.js";
 import {

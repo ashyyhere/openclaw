@@ -1,4 +1,3 @@
-/** Covers timeout classification while compaction is pending or active. */
 import { describe, expect, it } from "vitest";
 import { castAgentMessage } from "../../test-helpers/agent-message-fixtures.js";
 import {

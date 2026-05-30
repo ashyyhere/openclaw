@@ -1,4 +1,3 @@
-/** Doctor checks and repairs for cron job state. */
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { note } from "../../packages/terminal-core/src/note.js";

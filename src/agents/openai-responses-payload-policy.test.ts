@@ -1,4 +1,3 @@
-/** Tests OpenAI Responses payload policy mutations. */
 import type { Model } from "openclaw/plugin-sdk/llm";
 import { describe, expect, it } from "vitest";
 import {

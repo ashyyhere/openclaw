@@ -1,4 +1,3 @@
-/** Runtime-safe exports for built-in model suppression helpers. */
 import {
   buildShouldSuppressBuiltInModel as buildShouldSuppressBuiltInModelImpl,
   shouldSuppressBuiltInModel as shouldSuppressBuiltInModelImpl,

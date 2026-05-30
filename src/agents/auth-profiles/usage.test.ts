@@ -1,4 +1,3 @@
-/** Regression coverage for auth profile usage/cooldown state updates. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { AuthProfileStore, ProfileUsageStats } from "./types.js";
 import {

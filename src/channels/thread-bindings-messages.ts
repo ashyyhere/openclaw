@@ -1,4 +1,3 @@
-/** User-facing system messages for thread binding lifecycle changes. */
 import { prefixSystemMessage } from "../infra/system-message.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 

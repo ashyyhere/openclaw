@@ -1,4 +1,3 @@
-/** Tests message-provider tool filtering. */
 import { describe, expect, it } from "vitest";
 import { filterToolNamesByMessageProvider } from "./agent-tools.message-provider-policy.js";
 

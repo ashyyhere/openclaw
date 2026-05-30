@@ -1,4 +1,3 @@
-/** Runtime SDK barrel for video generation provider helpers. */
 export {
   generateVideo,
   listRuntimeVideoGenerationProviders,

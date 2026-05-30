@@ -1,4 +1,3 @@
-/** Parent-session relay for streamed ACP child-session progress. */
 import { mkdir } from "node:fs/promises";
 import path from "node:path";
 import { readAcpSessionEntry } from "../acp/runtime/session-meta.js";

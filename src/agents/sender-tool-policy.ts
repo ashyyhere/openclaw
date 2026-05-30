@@ -1,4 +1,3 @@
-/** Resolves sender-scoped tool policy from config and trusted sender state. */
 import { resolveToolsBySender } from "../config/group-policy.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveAgentConfig } from "./agent-scope.js";

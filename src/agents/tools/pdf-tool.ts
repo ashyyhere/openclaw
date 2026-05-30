@@ -1,4 +1,3 @@
-/** Agent tool for asking document-capable models about PDFs. */
 import { Type } from "typebox";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { complete } from "../../llm/stream.js";

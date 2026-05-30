@@ -1,4 +1,3 @@
-/** Runtime implementation for building direct `/status` replies for arbitrary sessions. */
 import { listAgentEntries, resolveSessionAgentId } from "../agents/agent-scope.js";
 import { resolveDefaultModelForAgent } from "../agents/model-selection.js";
 import { buildStatusReply } from "../auto-reply/reply/commands-status.js";

@@ -1,4 +1,3 @@
-/** Repairs auth profile ids when legacy defaults move to provider-specific profiles. */
 import {
   findNormalizedProviderKey,
   normalizeProviderId,

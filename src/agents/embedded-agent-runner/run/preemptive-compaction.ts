@@ -1,4 +1,3 @@
-/** Estimates prompt pressure and routes preemptive compaction/truncation. */
 import type { SessionContextBudgetStatus } from "../../../config/sessions.js";
 import { isRecord } from "../../../shared/record-coerce.js";
 import { estimateStringChars } from "../../../utils/cjk-chars.js";

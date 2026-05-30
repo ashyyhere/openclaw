@@ -1,4 +1,3 @@
-/** Handles terminal DSR cursor-position request/response control sequences. */
 const ESC = String.fromCharCode(0x1b);
 const DSR_PATTERN = new RegExp(`${ESC}\\[\\??6n`, "g");
 

@@ -1,4 +1,3 @@
-/** Tests version alias handling in the top-level program. */
 import process from "node:process";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { buildProgram } from "./build-program.js";

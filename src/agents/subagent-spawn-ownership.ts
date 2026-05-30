@@ -1,4 +1,3 @@
-/** Resolves requester/controller ownership for newly spawned subagents. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {
   resolveDisplaySessionKey,

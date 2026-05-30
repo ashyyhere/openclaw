@@ -1,4 +1,3 @@
-/** Covers pre-prompt compaction and tool-result truncation routing. */
 import type { AgentMessage } from "openclaw/plugin-sdk/agent-core";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 import "../../test-helpers/agent-session-token-mock.js";

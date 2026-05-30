@@ -1,4 +1,3 @@
-/** Resolves configured model refs against catalog and allowlist state. */
 import { resolveAgentModelFallbackValues } from "../config/model-input.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { ModelCatalogEntry } from "./model-catalog.types.js";

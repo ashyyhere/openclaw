@@ -1,4 +1,3 @@
-/** Tests profile env setup during run-main startup. */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const fileState = vi.hoisted(() => ({

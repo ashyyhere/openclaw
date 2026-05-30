@@ -1,4 +1,3 @@
-/** Evaluates manifest-declared tool availability from config and auth signals. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { coerceSecretRef, type SecretRef } from "../config/types.secrets.js";
 import { resolveDefaultSecretProviderAlias } from "../secrets/ref-contract.js";

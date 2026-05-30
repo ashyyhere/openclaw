@@ -1,4 +1,3 @@
-/** Public SDK helpers for native approval routing, prompt suppression, and target resolution. */
 import type {
   ExecApprovalForwardingConfig,
   ExecApprovalForwardingMode,

@@ -1,4 +1,3 @@
-/** Tests status JSON command fast path. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { RuntimeEnv } from "../runtime.js";
 import { statusJsonCommand } from "./status-json.js";

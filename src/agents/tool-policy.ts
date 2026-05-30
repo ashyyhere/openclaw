@@ -1,4 +1,3 @@
-/** Resolves high-level allow/deny policy for tool availability and execution. */
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 import { uniqueStrings } from "../shared/string-normalization.js";
 import { IMPLICIT_ALLOW_ALL_FROM_ALSO_ALLOW } from "./sandbox-tool-policy.js";

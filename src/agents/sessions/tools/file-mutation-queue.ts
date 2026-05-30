@@ -1,4 +1,3 @@
-/** Serializes file mutations by canonical path inside session tools. */
 import { realpathSync } from "node:fs";
 import { resolve } from "node:path";
 

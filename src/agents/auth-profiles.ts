@@ -1,4 +1,3 @@
-/** Public auth-profile barrel for agent credential stores and ordering. */
 export { CLAUDE_CLI_PROFILE_ID, CODEX_CLI_PROFILE_ID } from "./auth-profiles/constants.js";
 /** Auth credential state and token expiry reason codes. */
 export type {

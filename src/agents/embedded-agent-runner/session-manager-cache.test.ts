@@ -1,4 +1,3 @@
-/** Covers cache pruning and warmup for embedded session managers. */
 import { describe, expect, it } from "vitest";
 import { createSessionManagerCache } from "./session-manager-cache.js";
 

@@ -1,4 +1,3 @@
-/** Tests final status scan result assembly. */
 import { describe, expect, it } from "vitest";
 import { buildStatusScanResult } from "./status.scan-result.ts";
 import { buildColdStartStatusSummary } from "./status.scan.bootstrap-shared.ts";

@@ -1,4 +1,3 @@
-/** Implements the self-update command and package-manager execution flow. */
 import { execFile, spawn, type ChildProcess } from "node:child_process";
 import { existsSync } from "node:fs";
 import fs from "node:fs/promises";

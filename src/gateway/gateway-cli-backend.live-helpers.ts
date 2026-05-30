@@ -1,4 +1,3 @@
-/** Live-test helpers for CLI backend Gateway sessions, probes, env isolation, and pairing. */
 import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";

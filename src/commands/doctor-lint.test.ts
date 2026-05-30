@@ -1,4 +1,3 @@
-/** Tests doctor lint health check registration and output. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { resetCoreHealthChecksForTest } from "../flows/doctor-core-checks.js";
 import { clearHealthChecksForTest } from "../flows/health-check-registry.js";

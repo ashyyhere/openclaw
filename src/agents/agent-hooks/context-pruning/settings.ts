@@ -1,4 +1,3 @@
-/** Parses and normalizes context-pruning configuration. */
 import { parseDurationMs } from "../../../cli/parse-duration.js";
 
 /** Tool allow/deny match spec used by context pruning. */

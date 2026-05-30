@@ -1,4 +1,3 @@
-/** Classifies Docker network modes for sandbox safety policy. */
 import { normalizeOptionalLowercaseString } from "../../shared/string-coerce.js";
 
 /** Reason a Docker network mode is blocked by sandbox policy. */

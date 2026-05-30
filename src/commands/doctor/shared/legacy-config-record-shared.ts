@@ -1,4 +1,3 @@
-/** Record-shape helpers shared by legacy config migrations. */
 type JsonRecord = Record<string, unknown>;
 
 import { isRecord } from "../../../utils.js";

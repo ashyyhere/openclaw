@@ -1,4 +1,3 @@
-/** Injects bundled MCP config arguments for Claude CLI runs. */
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 
 /** Finds an existing Claude CLI --mcp-config value in argv. */

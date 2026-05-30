@@ -1,4 +1,3 @@
-/** Tests config set input parsing from values, files, and stdin. */
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

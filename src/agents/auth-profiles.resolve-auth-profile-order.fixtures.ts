@@ -1,4 +1,3 @@
-/** Fixtures for auth-profile ordering tests. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { AuthProfileStore } from "./auth-profiles.js";
 

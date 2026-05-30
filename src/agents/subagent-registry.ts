@@ -1,4 +1,3 @@
-/** Owns the in-memory and persisted registry of subagent runs and lifecycle events. */
 import type { cleanupBrowserSessionsForLifecycleEnd } from "../browser-lifecycle-cleanup.js";
 import { getRuntimeConfig } from "../config/config.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";

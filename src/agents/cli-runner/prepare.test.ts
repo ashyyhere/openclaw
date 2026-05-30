@@ -1,4 +1,3 @@
-/** Regression coverage for CLI runner context preparation. */
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

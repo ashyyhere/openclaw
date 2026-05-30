@@ -1,4 +1,3 @@
-/** Descriptor catalog for optional sub-CLI command groups. */
 import { defineCommandDescriptorCatalog } from "./command-descriptor-utils.js";
 import type { NamedCommandDescriptor } from "./command-group-descriptors.js";
 import { isPrivateQaCliEnabled } from "./private-qa-cli.js";

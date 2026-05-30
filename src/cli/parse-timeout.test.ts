@@ -1,4 +1,3 @@
-/** Tests timeout option parsing with strict and fallback modes. */
 import { describe, expect, it } from "vitest";
 import { parseTimeoutMs, parseTimeoutMsWithFallback } from "./parse-timeout.js";
 

@@ -1,4 +1,3 @@
-/** Starts SSH local port forwards for reaching remote OpenClaw gateways. */
 import { spawn } from "node:child_process";
 import net from "node:net";
 import { normalizeStringEntries } from "../shared/string-normalization.js";

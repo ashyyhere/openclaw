@@ -1,4 +1,3 @@
-/** Tests agent command delivery through the gateway path. */
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";

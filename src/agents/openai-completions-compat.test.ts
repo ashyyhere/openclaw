@@ -1,4 +1,3 @@
-/** Tests OpenAI Chat Completions compatibility defaults. */
 import { describe, expect, it } from "vitest";
 import {
   detectOpenAICompletionsCompat,

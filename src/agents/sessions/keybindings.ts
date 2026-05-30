@@ -1,4 +1,3 @@
-/** Loads and migrates keybindings for interactive sessions. */
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import {

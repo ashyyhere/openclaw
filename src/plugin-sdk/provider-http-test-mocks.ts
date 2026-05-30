@@ -1,4 +1,3 @@
-/** Test SDK barrel for provider HTTP mock helpers. */
 export {
   getProviderHttpMocks,
   installProviderHttpMockCleanup,

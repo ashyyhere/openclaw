@@ -1,4 +1,3 @@
-/** Tests splitting SDK tools from model-facing embedded-agent tools. */
 import { describe, expect, it } from "vitest";
 import { splitSdkTools } from "./embedded-agent-runner.js";
 import {

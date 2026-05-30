@@ -1,4 +1,3 @@
-/** Runtime SDK types for text-to-speech provider configuration. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { ResolvedTtsPersona, TtsAutoMode, TtsProvider } from "../config/types.tts.js";
 import type {

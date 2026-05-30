@@ -1,4 +1,3 @@
-/** Resolves sandbox runtime status and tool-policy operator messages. */
 import { formatCliCommand } from "../../cli/command-format.js";
 import {
   canonicalizeMainSessionAlias,

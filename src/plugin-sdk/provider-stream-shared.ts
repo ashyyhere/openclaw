@@ -1,4 +1,3 @@
-/** Shared provider stream wrapper utilities for thinking, tool, and payload compatibility. */
 import { randomUUID } from "node:crypto";
 import type { StreamFn } from "../agents/runtime/index.js";
 import { streamWithPayloadPatch } from "../llm/providers/stream-wrappers/stream-payload-utils.js";

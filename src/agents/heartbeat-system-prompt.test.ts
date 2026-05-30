@@ -1,4 +1,3 @@
-/** Tests heartbeat guidance injection into system prompts. */
 import { describe, expect, it } from "vitest";
 import { resolveHeartbeatPromptForSystemPrompt } from "./heartbeat-system-prompt.js";
 

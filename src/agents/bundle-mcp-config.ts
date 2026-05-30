@@ -1,4 +1,3 @@
-/** Bundle MCP config merge/adaptation for embedded and CLI backends. */
 import { normalizeConfiguredMcpServers } from "../config/mcp-config-normalize.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {

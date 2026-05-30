@@ -1,4 +1,3 @@
-/** Registers nodes location command. */
 import type { Command } from "commander";
 import { randomIdempotencyKey } from "../../gateway/call.js";
 import { defaultRuntime } from "../../runtime.js";

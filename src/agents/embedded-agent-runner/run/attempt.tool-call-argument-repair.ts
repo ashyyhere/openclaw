@@ -1,4 +1,3 @@
-/** Repairs provider-emitted malformed tool-call arguments during streaming. */
 import { extractBalancedJsonPrefix } from "../../../shared/balanced-json.js";
 import { normalizeProviderId } from "../../model-selection.js";
 import type { StreamFn } from "../../runtime/index.js";

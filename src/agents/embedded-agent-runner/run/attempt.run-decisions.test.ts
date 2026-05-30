@@ -1,4 +1,3 @@
-/** Covers small branching decisions used by embedded attempts. */
 import { describe, expect, it } from "vitest";
 import {
   resolveAttemptStreamAuthProfileId,

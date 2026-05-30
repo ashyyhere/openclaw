@@ -1,4 +1,3 @@
-/** Prepared SettingsManager factory for embedded agent runs. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { PluginMetadataSnapshot } from "../plugins/plugin-metadata-snapshot.js";
 import {

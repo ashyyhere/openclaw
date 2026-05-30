@@ -1,4 +1,3 @@
-/** Public SDK facade for Anthropic Vertex provider helpers owned by the bundled plugin. */
 import type { ModelProviderConfig } from "../config/types.js";
 import { loadBundledPluginPublicSurfaceModuleSync } from "./facade-runtime.js";
 

@@ -1,4 +1,3 @@
-/** Runtime implementation for local proxy CLI process orchestration. */
 import { spawn } from "node:child_process";
 import { randomUUID } from "node:crypto";
 import process from "node:process";

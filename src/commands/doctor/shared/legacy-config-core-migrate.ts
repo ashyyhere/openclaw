@@ -1,4 +1,3 @@
-/** Core legacy config migration runner used by doctor repair. */
 import type { OpenClawConfig } from "../../../config/types.openclaw.js";
 import { runPluginSetupConfigMigrations } from "../../../plugins/setup-registry.js";
 import { normalizeAgentId } from "../../../routing/session-key.js";

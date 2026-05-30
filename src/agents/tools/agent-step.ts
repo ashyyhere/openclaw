@@ -1,4 +1,3 @@
-/** Tool helper for sending a prompt to another agent session. */
 import crypto from "node:crypto";
 import { callGateway } from "../../gateway/call.js";
 import { annotateInterSessionPromptText } from "../../sessions/input-provenance.js";

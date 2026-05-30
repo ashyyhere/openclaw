@@ -1,4 +1,3 @@
-/** Regression coverage for Gemini bundled MCP file generation. */
 import fs from "node:fs/promises";
 import { describe, expect, it } from "vitest";
 import { prepareCliBundleMcpConfig } from "./bundle-mcp.js";

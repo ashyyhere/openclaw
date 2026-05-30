@@ -1,4 +1,3 @@
-/** Utilities for removing commands from Commander command trees. */
 import type { Command } from "commander";
 
 /** Reused helper for remove Command behavior in src/cli/program. */

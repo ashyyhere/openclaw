@@ -1,4 +1,3 @@
-/** Regression coverage for workspace inheritance during subagent spawn. */
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   createSubagentSpawnTestConfig,

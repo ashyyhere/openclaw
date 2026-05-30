@@ -1,4 +1,3 @@
-/** Tests OpenAI reasoning effort support and fallback mapping. */
 import { describe, expect, it } from "vitest";
 import {
   resolveOpenAIReasoningEffortForModel,

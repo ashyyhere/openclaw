@@ -1,4 +1,3 @@
-/** E2E tests for models set command behavior. */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({

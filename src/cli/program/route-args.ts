@@ -1,4 +1,3 @@
-/** Parses command-specific args for lightweight routed CLI handlers. */
 import { isValueToken } from "../../infra/cli-root-options.js";
 import {
   getCommandPositionalsWithRootOptions,

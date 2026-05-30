@@ -1,4 +1,3 @@
-/** Regression coverage for MCP resume hash behavior. */
 import { describe, expect, it } from "vitest";
 import {
   prepareBundleProbeCliConfig,

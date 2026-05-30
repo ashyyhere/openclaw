@@ -1,4 +1,3 @@
-/** Tests channel route normalization, matching, and key generation. */
 import { describe, expect, it } from "vitest";
 import {
   channelRouteCompactKey,

@@ -1,4 +1,3 @@
-/** Detects the package manager for a project from package metadata and lockfiles. */
 import fs from "node:fs/promises";
 import { readPackageManagerSpec } from "./package-json.js";
 

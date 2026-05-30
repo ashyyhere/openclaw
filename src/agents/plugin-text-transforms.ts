@@ -1,4 +1,3 @@
-/** Applies plugin-defined text replacements to stream input and output. */
 import type { AssistantMessageEvent } from "../llm/types.js";
 import type { PluginTextReplacement, PluginTextTransforms } from "../plugins/cli-backend.types.js";
 import type { StreamFn } from "./runtime/index.js";

@@ -1,4 +1,3 @@
-/** Regression coverage for Kilocode embedded-agent behavior. */
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("../../plugins/provider-runtime.js", () => ({

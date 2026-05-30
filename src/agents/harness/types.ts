@@ -1,4 +1,3 @@
-/** Public contracts implemented by agent harness integrations. */
 export type AgentHarnessSupportContext = {
   provider: string;
   modelId?: string;

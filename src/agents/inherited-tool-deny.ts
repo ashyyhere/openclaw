@@ -1,4 +1,3 @@
-/** Normalizes inherited tool allow/deny lists and ACP compatibility errors. */
 import { uniqueStrings } from "../shared/string-normalization.js";
 import { isToolAllowedByPolicyName } from "./tool-policy-match.js";
 import { normalizeToolName } from "./tool-policy-shared.js";

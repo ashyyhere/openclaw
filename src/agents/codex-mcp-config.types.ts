@@ -1,4 +1,3 @@
-/** Shared types for projecting bundle MCP into Codex thread configuration. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { BundleMcpDiagnostic } from "../plugins/bundle-mcp.js";
 

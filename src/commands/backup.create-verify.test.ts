@@ -1,4 +1,3 @@
-/** Tests backup create command delegates to archive creation and verify output. */
 import { describe, expect, it, vi } from "vitest";
 import type { RuntimeEnv } from "../runtime.js";
 import { backupCreateCommand } from "./backup.js";

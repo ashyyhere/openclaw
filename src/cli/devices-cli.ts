@@ -1,4 +1,3 @@
-/** Registers devices CLI commands with lazy runtime loading. */
 import type { Command } from "commander";
 import { applyParentDefaultHelpAction } from "./program/parent-default-help.js";
 

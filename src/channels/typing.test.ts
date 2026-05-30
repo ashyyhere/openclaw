@@ -1,4 +1,3 @@
-/** Tests typing callback start, keepalive, stop, and reset behavior. */
 import { describe, expect, it, vi } from "vitest";
 import { createTypingCallbacks } from "./typing.js";
 

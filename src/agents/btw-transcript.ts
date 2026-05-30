@@ -1,4 +1,3 @@
-/** Transcript lookup and branch extraction for /btw side questions. */
 import { readFile } from "node:fs/promises";
 import {
   resolveSessionFilePath,

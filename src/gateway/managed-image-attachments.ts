@@ -1,4 +1,3 @@
-/** Managed outgoing image attachment storage, cleanup, rendering, and HTTP access. */
 import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import type { IncomingMessage, ServerResponse } from "node:http";

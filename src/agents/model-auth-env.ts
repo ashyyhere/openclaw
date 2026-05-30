@@ -1,4 +1,3 @@
-/** Resolves provider API keys and auth evidence from environment/config. */
 import fs from "node:fs";
 import os from "node:os";
 import { normalizeProviderIdForAuth } from "@openclaw/model-catalog-core/provider-id";

@@ -1,4 +1,3 @@
-/** Covers image generation tool actions and provider routing. */
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 const taskRuntimeInternalMocks = vi.hoisted(() => {

@@ -1,4 +1,3 @@
-/** Test-only injection helpers for doctor config flow suites. */
 const DOCTOR_CONFIG_TEST_INPUT = Symbol.for("openclaw.doctorConfigFlow.testInput");
 
 type DoctorConfigTestInput = {

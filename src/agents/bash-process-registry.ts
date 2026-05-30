@@ -1,4 +1,3 @@
-/** In-memory registry for foreground/background bash process sessions. */
 import type { ChildProcessWithoutNullStreams } from "node:child_process";
 import type { EventSessionRoutingPolicy } from "../infra/event-session-routing.js";
 import type { TerminationReason } from "../process/supervisor/types.js";
