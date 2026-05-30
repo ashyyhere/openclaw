@@ -21,14 +21,14 @@ import type {
 } from "./commands-registry.types.js";
 import type { ThinkingCatalogEntry } from "./thinking.shared.js";
 
-/** Re-exported API for src/auto-reply. */
+/** Command enablement and listing helpers. */
 export {
   isCommandEnabled,
   listChatCommands,
   listChatCommandsForConfig,
 } from "./commands-registry-list.js";
 
-/** Re-exported API for src/auto-reply. */
+/** Command detection, alias, normalization, and text resolution helpers. */
 export {
   getCommandDetection,
   maybeResolveTextAlias,
@@ -36,10 +36,10 @@ export {
   resolveTextCommand,
 } from "./commands-registry-normalize.js";
 
-/** Re-exported API for src/auto-reply, starting with is Native Command Surface. */
+/** Native/text command routing helpers. */
 export { isNativeCommandSurface, shouldHandleTextCommands } from "./commands-text-routing.js";
 
-/** Re-exported API for src/auto-reply. */
+/** Public command definition, detection, argument, and routing types. */
 export type {
   ChatCommandDefinition,
   CommandArgChoiceContext,
@@ -129,7 +129,7 @@ function listNativeSpecsFromCommands(
     });
 }
 
-/** Reused helper for list Native Command Specs behavior in src/auto-reply. */
+/** Lists native command specs for channel command-menu registration. */
 export function listNativeCommandSpecs(params?: {
   skillCommands?: SkillCommandSpec[];
   provider?: string;
@@ -140,7 +140,7 @@ export function listNativeCommandSpecs(params?: {
   );
 }
 
-/** Reused helper for list Native Command Specs For Config behavior in src/auto-reply. */
+/** Lists config-filtered native command specs for channel command-menu registration. */
 export function listNativeCommandSpecsForConfig(
   cfg: OpenClawConfig,
   params?: { skillCommands?: SkillCommandSpec[]; provider?: string },
@@ -148,7 +148,7 @@ export function listNativeCommandSpecsForConfig(
   return listNativeSpecsFromCommands(listChatCommandsForConfig(cfg, params), params?.provider);
 }
 
-/** Reused helper for find Command By Native Name behavior in src/auto-reply. */
+/** Finds a registered chat command by provider-specific native name or alias. */
 export function findCommandByNativeName(
   name: string,
   provider?: string,
@@ -167,7 +167,7 @@ export function findCommandByNativeName(
   );
 }
 
-/** Reused helper for build Command Text behavior in src/auto-reply. */
+/** Builds slash-command text from a command name and optional raw args. */
 export function buildCommandText(commandName: string, args?: string): string {
   const trimmedArgs = args?.trim();
   return trimmedArgs ? `/${commandName} ${trimmedArgs}` : `/${commandName}`;
@@ -223,7 +223,7 @@ function formatPositionalArgs(
   return parts.length > 0 ? parts.join(" ") : undefined;
 }
 
-/** Reused helper for parse Command Args behavior in src/auto-reply. */
+/** Parses raw command args according to the command's positional arg schema. */
 export function parseCommandArgs(
   command: ChatCommandDefinition,
   raw?: string,
@@ -241,7 +241,7 @@ export function parseCommandArgs(
   };
 }
 
-/** Reused helper for serialize Command Args behavior in src/auto-reply. */
+/** Serializes parsed command args back to raw command text args. */
 export function serializeCommandArgs(
   command: ChatCommandDefinition,
   args?: CommandArgs,
@@ -262,7 +262,7 @@ export function serializeCommandArgs(
   return formatPositionalArgs(command.args, args.values);
 }
 
-/** Reused helper for build Command Text From Args behavior in src/auto-reply. */
+/** Builds slash-command text from a command definition and parsed args. */
 export function buildCommandTextFromArgs(
   command: ChatCommandDefinition,
   args?: CommandArgs,
@@ -286,10 +286,10 @@ function resolveDefaultCommandContext(cfg?: OpenClawConfig): {
   };
 }
 
-/** Shared type for Resolved Command Arg Choice in src/auto-reply. */
+/** Normalized menu choice for one command argument. */
 export type ResolvedCommandArgChoice = { value: string; label: string };
 
-/** Reused helper for resolve Command Arg Choices behavior in src/auto-reply. */
+/** Resolves static or context-aware choices for one command argument. */
 export function resolveCommandArgChoices(params: {
   command: ChatCommandDefinition;
   arg: CommandArgDefinition;
@@ -322,7 +322,7 @@ export function resolveCommandArgChoices(params: {
   );
 }
 
-/** Reused helper for resolve Command Arg Menu behavior in src/auto-reply. */
+/** Resolves the next command argument menu to show for partially filled args. */
 export function resolveCommandArgMenu(params: {
   command: ChatCommandDefinition;
   args?: CommandArgs;
@@ -382,7 +382,7 @@ export function resolveCommandArgMenu(params: {
   return { arg, choices, title };
 }
 
-/** Reused helper for format Command Arg Menu Title behavior in src/auto-reply. */
+/** Formats a user-facing title for a command argument choice menu. */
 export function formatCommandArgMenuTitle(params: {
   command: ChatCommandDefinition;
   menu: NonNullable<ReturnType<typeof resolveCommandArgMenu>>;
@@ -405,7 +405,7 @@ export function formatCommandArgMenuTitle(params: {
   return `Choose ${menu.arg.description || menu.arg.name} for /${commandLabel}.`;
 }
 
-/** Reused helper for is Command Message behavior in src/auto-reply. */
+/** Checks whether normalized inbound text starts with a slash command. */
 export function isCommandMessage(raw: string): boolean {
   const trimmed = normalizeCommandBody(raw);
   return trimmed.startsWith("/");
