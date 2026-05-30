@@ -3,7 +3,6 @@ export {
   buildCommandsMessagePaginated,
   buildHelpMessage,
 } from "../auto-reply/command-status-builders.js";
-/** Re-exported API for src/plugin-sdk. */
 export type {
   CommandsMessageOptions,
   CommandsMessageResult,
