@@ -31,7 +31,7 @@ import {
   isTimeoutErrorMessage,
 } from "./failover-matches.js";
 
-/** Reused helper for format Billing Error Message behavior in src/agents/embedded-agent-helpers. */
+/** Formats provider/model-specific billing failure copy for users. */
 export function formatBillingErrorMessage(provider?: string, model?: string): string {
   const providerName = provider?.trim();
   const modelName = model?.trim();
@@ -43,7 +43,7 @@ export function formatBillingErrorMessage(provider?: string, model?: string): st
   return "⚠️ API provider returned a billing error — your API key has run out of credits or has an insufficient balance. Check your provider's billing dashboard and top up or switch to a different API key.";
 }
 
-/** Reused constant for BILLING ERROR USER MESSAGE behavior in src/agents/embedded-agent-helpers. */
+/** Generic billing failure copy when provider/model context is unavailable. */
 export const BILLING_ERROR_USER_MESSAGE = formatBillingErrorMessage();
 
 const RATE_LIMIT_ERROR_USER_MESSAGE = "⚠️ API rate limit reached. Please try again later.";
@@ -105,7 +105,7 @@ function extractProviderRateLimitMessage(raw: string): string | undefined {
   return `⚠️ ${trimmed}`;
 }
 
-/** Reused helper for format Rate Limit Or Overloaded Error Copy behavior in src/agents/embedded-agent-helpers. */
+/** Converts rate-limit, capacity, and overload provider errors into user copy. */
 export function formatRateLimitOrOverloadedErrorCopy(raw: string): string | undefined {
   if (isRateLimitErrorMessage(raw)) {
     return extractProviderRateLimitMessage(raw) ?? RATE_LIMIT_ERROR_USER_MESSAGE;
@@ -119,7 +119,7 @@ export function formatRateLimitOrOverloadedErrorCopy(raw: string): string | unde
   return undefined;
 }
 
-/** Reused helper for format Transport Error Copy behavior in src/agents/embedded-agent-helpers. */
+/** Converts low-level provider network failures into concise user copy. */
 export function formatTransportErrorCopy(raw: string): string | undefined {
   if (!raw) {
     return undefined;
@@ -180,7 +180,7 @@ export function formatTransportErrorCopy(raw: string): string | undefined {
   return undefined;
 }
 
-/** Reused helper for format Disk Space Error Copy behavior in src/agents/embedded-agent-helpers. */
+/** Converts local ENOSPC-style write failures into actionable user copy. */
 export function formatDiskSpaceErrorCopy(raw: string): string | undefined {
   if (!raw) {
     return undefined;
@@ -212,7 +212,7 @@ function isReasoningConstraintErrorMessage(raw: string): boolean {
   );
 }
 
-/** Reused helper for is Invalid Streaming Event Order Error behavior in src/agents/embedded-agent-helpers. */
+/** Detects provider streaming event ordering failures that should be hidden. */
 export function isInvalidStreamingEventOrderError(raw: string): boolean {
   if (!raw) {
     return false;
@@ -225,7 +225,7 @@ export function isInvalidStreamingEventOrderError(raw: string): boolean {
   );
 }
 
-/** Reused helper for is Streaming Json Parse Error behavior in src/agents/embedded-agent-helpers. */
+/** Detects the normalized malformed streaming-fragment parse error. */
 export function isStreamingJsonParseError(raw: string): boolean {
   if (!raw) {
     return false;
@@ -294,7 +294,7 @@ function shouldRewriteContextOverflowText(raw: string): boolean {
   );
 }
 
-/** Reused helper for get Api Error Payload Fingerprint behavior in src/agents/embedded-agent-helpers. */
+/** Returns a stable fingerprint for raw structured provider error payloads. */
 export function getApiErrorPayloadFingerprint(raw?: string): string | null {
   if (!raw) {
     return null;
@@ -306,7 +306,7 @@ export function getApiErrorPayloadFingerprint(raw?: string): string | null {
   return stableStringify(payload);
 }
 
-/** Reused helper for is Raw Api Error Payload behavior in src/agents/embedded-agent-helpers. */
+/** Checks whether text is a parseable structured provider error payload. */
 export function isRawApiErrorPayload(raw?: string): boolean {
   return getApiErrorPayloadFingerprint(raw) !== null;
 }
@@ -395,7 +395,7 @@ function collapseConsecutiveDuplicateBlocks(text: string): string {
   return result.join("\n\n");
 }
 
-/** Reused helper for is Likely Http Error Text behavior in src/agents/embedded-agent-helpers. */
+/** Detects HTTP error text that should be reformatted before display. */
 export function isLikelyHttpErrorText(raw: string): boolean {
   if (isCloudflareOrHtmlErrorPage(raw)) {
     return true;
@@ -411,7 +411,7 @@ export function isLikelyHttpErrorText(raw: string): boolean {
   return HTTP_ERROR_HINTS.some((hint) => message.includes(hint));
 }
 
-/** Reused helper for sanitize User Facing Text behavior in src/agents/embedded-agent-helpers. */
+/** Strips internal/tool scaffolding and rewrites raw errors for user display. */
 export function sanitizeUserFacingText(text: unknown, opts?: { errorContext?: boolean }): string {
   const raw = coerceChatContentText(text);
   if (!raw) {

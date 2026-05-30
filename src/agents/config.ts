@@ -317,7 +317,7 @@ function isManagedByGlobalPackageManager(
   });
 }
 
-/** Reused helper for get Self Update Command behavior in src/agents. */
+/** Returns the self-update command only when this install can be updated in place. */
 export function getSelfUpdateCommand(
   packageName: string,
   npmCommand?: string[],
@@ -335,7 +335,7 @@ export function getSelfUpdateCommand(
   return command;
 }
 
-/** Reused helper for get Self Update Unavailable Instruction behavior in src/agents. */
+/** Explains why automatic self-update is unavailable for the current install. */
 export function getSelfUpdateUnavailableInstruction(
   packageName: string,
   npmCommand?: string[],
@@ -358,7 +358,7 @@ export function getSelfUpdateUnavailableInstruction(
   return `Update ${updatePackageName} using the package manager, wrapper, or source checkout that provides this installation.`;
 }
 
-/** Reused helper for get Update Instruction behavior in src/agents. */
+/** Formats the best update instruction for the detected package manager. */
 export function getUpdateInstruction(packageName: string): string {
   const method = detectInstallMethod();
   const command = getSelfUpdateCommandForMethod(method, packageName);
@@ -485,23 +485,23 @@ interface PackageJson {
 const pkg = JSON.parse(readFileSync(getPackageJsonPath(), "utf-8")) as PackageJson;
 
 const openClawConfigName: string | undefined = pkg.openclawConfig?.name;
-/** Reused constant for PACKAGE NAME behavior in src/agents. */
+/** Package name from bundled package metadata. */
 export const PACKAGE_NAME: string = pkg.name || "openclaw/plugin-sdk/agent-sessions";
-/** Reused constant for APP NAME behavior in src/agents. */
+/** Configured application name used for paths and env vars. */
 export const APP_NAME: string = openClawConfigName || "openclaw";
-/** Reused constant for APP TITLE behavior in src/agents. */
+/** Human-facing application title. */
 export const APP_TITLE: string = openClawConfigName ? APP_NAME : "OpenClaw";
-/** Reused constant for CONFIG DIR NAME behavior in src/agents. */
+/** Dot-directory name for user config state. */
 export const CONFIG_DIR_NAME: string = pkg.openclawConfig?.configDir || ".openclaw";
-/** Reused constant for VERSION behavior in src/agents. */
+/** Package version from bundled package metadata. */
 export const VERSION: string = pkg.version || "0.0.0";
 
-/** Reused constant for ENV AGENT DIR behavior in src/agents. */
+/** Env var override for the agent config directory. */
 export const ENV_AGENT_DIR = `${APP_NAME.toUpperCase()}_AGENT_DIR`;
-/** Reused constant for ENV SESSION DIR behavior in src/agents. */
+/** Env var override for the agent session directory. */
 export const ENV_SESSION_DIR = `${APP_NAME.toUpperCase()}_AGENT_SESSION_DIR`;
 
-/** Reused helper for expand Tilde Path behavior in src/agents. */
+/** Expands leading `~` in user-supplied config paths. */
 export function expandTildePath(path: string): string {
   if (path === "~") {
     return homedir();
