@@ -2,25 +2,25 @@
 import type { Edit } from "./edit-diff.js";
 import type { TruncationResult } from "./truncate.js";
 
-/** Shared type for Bash Tool Input in src/agents/sessions. */
+/** Input accepted by the built-in bash execution tool. */
 export interface BashToolInput {
   command: string;
   timeout?: number;
 }
 
-/** Shared type for Bash Tool Details in src/agents/sessions. */
+/** Extra bash execution metadata returned alongside tool output. */
 export interface BashToolDetails {
   truncation?: TruncationResult;
   fullOutputPath?: string;
 }
 
-/** Shared type for Edit Tool Input in src/agents/sessions. */
+/** Input accepted by the built-in multi-edit file mutation tool. */
 export interface EditToolInput {
   path: string;
   edits: Edit[];
 }
 
-/** Shared type for Edit Tool Details in src/agents/sessions. */
+/** Diff metadata returned after applying edit tool changes. */
 export interface EditToolDetails {
   /** Display-oriented diff of the changes made */
   diff: string;
@@ -30,20 +30,20 @@ export interface EditToolDetails {
   firstChangedLine?: number;
 }
 
-/** Shared type for Find Tool Input in src/agents/sessions. */
+/** Input accepted by the built-in filename/content discovery helper. */
 export interface FindToolInput {
   pattern: string;
   path?: string;
   limit?: number;
 }
 
-/** Shared type for Find Tool Details in src/agents/sessions. */
+/** Truncation metadata returned by the find tool. */
 export interface FindToolDetails {
   truncation?: TruncationResult;
   resultLimitReached?: number;
 }
 
-/** Shared type for Grep Tool Input in src/agents/sessions. */
+/** Input accepted by the built-in grep-style search tool. */
 export interface GrepToolInput {
   pattern: string;
   path?: string;
@@ -54,38 +54,38 @@ export interface GrepToolInput {
   limit?: number;
 }
 
-/** Shared type for Grep Tool Details in src/agents/sessions. */
+/** Truncation and match-limit metadata returned by grep. */
 export interface GrepToolDetails {
   truncation?: TruncationResult;
   matchLimitReached?: number;
   linesTruncated?: boolean;
 }
 
-/** Shared type for Ls Tool Input in src/agents/sessions. */
+/** Input accepted by the built-in directory listing tool. */
 export interface LsToolInput {
   path?: string;
   limit?: number;
 }
 
-/** Shared type for Ls Tool Details in src/agents/sessions. */
+/** Entry-limit metadata returned by directory listing. */
 export interface LsToolDetails {
   truncation?: TruncationResult;
   entryLimitReached?: number;
 }
 
-/** Shared type for Read Tool Input in src/agents/sessions. */
+/** Input accepted by the built-in file read tool. */
 export interface ReadToolInput {
   path: string;
   offset?: number;
   limit?: number;
 }
 
-/** Shared type for Read Tool Details in src/agents/sessions. */
+/** Truncation metadata returned by file reads. */
 export interface ReadToolDetails {
   truncation?: TruncationResult;
 }
 
-/** Shared type for Write Tool Input in src/agents/sessions. */
+/** Input accepted by the built-in whole-file write tool. */
 export interface WriteToolInput {
   path: string;
   content: string;

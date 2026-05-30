@@ -3,16 +3,16 @@ import type { SandboxBackendHandle, SandboxBackendId } from "./backend-handle.ty
 import type { SandboxFsBridge } from "./fs-bridge.types.js";
 import type { SandboxDockerConfig } from "./types.docker.js";
 
-/** Re-exported API for src/agents/sandbox, starting with Sandbox Docker Config. */
+/** Docker-specific sandbox configuration re-exported with core sandbox types. */
 export type { SandboxDockerConfig } from "./types.docker.js";
 
-/** Shared type for Sandbox Tool Policy in src/agents/sandbox. */
+/** Allow/deny lists controlling which tools may run inside a sandbox. */
 export type SandboxToolPolicy = {
   allow?: string[];
   deny?: string[];
 };
 
-/** Shared type for Sandbox Tool Policy Source in src/agents/sandbox. */
+/** Human-facing source metadata for a resolved sandbox tool policy list. */
 export type SandboxToolPolicySource = {
   source: "agent" | "global" | "default";
   /**
@@ -22,7 +22,7 @@ export type SandboxToolPolicySource = {
   key: string;
 };
 
-/** Shared type for Sandbox Tool Policy Resolved in src/agents/sandbox. */
+/** Fully resolved sandbox tool policy plus source attribution. */
 export type SandboxToolPolicyResolved = {
   allow: string[];
   deny: string[];
@@ -32,10 +32,10 @@ export type SandboxToolPolicyResolved = {
   };
 };
 
-/** Shared type for Sandbox Workspace Access in src/agents/sandbox. */
+/** Workspace mount/access mode exposed to a sandbox runtime. */
 export type SandboxWorkspaceAccess = "none" | "ro" | "rw";
 
-/** Shared type for Sandbox Browser Config in src/agents/sandbox. */
+/** Browser container settings for sandboxed browser automation. */
 export type SandboxBrowserConfig = {
   enabled: boolean;
   image: string;
@@ -53,13 +53,13 @@ export type SandboxBrowserConfig = {
   binds?: string[];
 };
 
-/** Shared type for Sandbox Prune Config in src/agents/sandbox. */
+/** Retention policy for pruning idle or old sandbox runtimes. */
 export type SandboxPruneConfig = {
   idleHours: number;
   maxAgeDays: number;
 };
 
-/** Shared type for Sandbox Ssh Config in src/agents/sandbox. */
+/** SSH backend configuration used to reach a remote sandbox workspace. */
 export type SandboxSshConfig = {
   target?: string;
   command: string;
@@ -74,10 +74,10 @@ export type SandboxSshConfig = {
   knownHostsData?: string;
 };
 
-/** Shared type for Sandbox Scope in src/agents/sandbox. */
+/** Lifetime/scope used when naming or reusing sandbox runtimes. */
 export type SandboxScope = "session" | "agent" | "shared";
 
-/** Shared type for Sandbox Config in src/agents/sandbox. */
+/** Complete sandbox configuration after defaults and backend choices resolve. */
 export type SandboxConfig = {
   mode: "off" | "non-main" | "all";
   backend: SandboxBackendId;
@@ -91,14 +91,14 @@ export type SandboxConfig = {
   prune: SandboxPruneConfig;
 };
 
-/** Shared type for Sandbox Browser Context in src/agents/sandbox. */
+/** Runtime browser endpoints exposed by an active sandbox. */
 export type SandboxBrowserContext = {
   bridgeUrl: string;
   noVncUrl?: string;
   containerName: string;
 };
 
-/** Shared type for Sandbox Context in src/agents/sandbox. */
+/** Active sandbox runtime context passed to agent execution and tools. */
 export type SandboxContext = {
   enabled: boolean;
   backendId: SandboxBackendId;
@@ -118,7 +118,7 @@ export type SandboxContext = {
   backend?: SandboxBackendHandle;
 };
 
-/** Shared type for Sandbox Workspace Info in src/agents/sandbox. */
+/** Host/container workspace path pair for sandbox-aware tools. */
 export type SandboxWorkspaceInfo = {
   workspaceDir: string;
   containerWorkdir: string;

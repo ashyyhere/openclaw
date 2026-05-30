@@ -28,10 +28,10 @@ import {
 } from "../runtime/index.js";
 import { type BashExecutionMessage, type CustomMessage } from "./messages.js";
 
-/** Re-exported API for src/agents/sessions, starting with CURRENT SESSION VERSION. */
+/** Current transcript schema version written by new sessions. */
 export { CURRENT_SESSION_VERSION };
 
-/** Shared type for Session Header in src/agents/sessions. */
+/** Header record stored as the first entry of a session transcript. */
 export interface SessionHeader {
   type: "session";
   version?: number; // v1 sessions don't have this
@@ -41,13 +41,13 @@ export interface SessionHeader {
   parentSession?: string;
 }
 
-/** Shared type for New Session Options in src/agents/sessions. */
+/** Options used when creating a new session transcript. */
 export interface NewSessionOptions {
   id?: string;
   parentSession?: string;
 }
 
-/** Shared type for Session Entry Base in src/agents/sessions. */
+/** Common tree metadata present on every non-header session entry. */
 export interface SessionEntryBase {
   type: string;
   id: string;
@@ -55,26 +55,26 @@ export interface SessionEntryBase {
   timestamp: string;
 }
 
-/** Shared type for Session Message Entry in src/agents/sessions. */
+/** Transcript entry containing an agent/user/tool message. */
 export interface SessionMessageEntry extends SessionEntryBase {
   type: "message";
   message: AgentMessage;
 }
 
-/** Shared type for Thinking Level Change Entry in src/agents/sessions. */
+/** Transcript entry recording an in-session thinking level change. */
 export interface ThinkingLevelChangeEntry extends SessionEntryBase {
   type: "thinking_level_change";
   thinkingLevel: string;
 }
 
-/** Shared type for Model Change Entry in src/agents/sessions. */
+/** Transcript entry recording an in-session model/provider change. */
 export interface ModelChangeEntry extends SessionEntryBase {
   type: "model_change";
   provider: string;
   modelId: string;
 }
 
-/** Shared type for Compaction Entry in src/agents/sessions. */
+/** Transcript entry recording a compaction summary and first retained entry. */
 export interface CompactionEntry<T = unknown> extends SessionEntryBase {
   type: "compaction";
   summary: string;
@@ -86,7 +86,7 @@ export interface CompactionEntry<T = unknown> extends SessionEntryBase {
   fromHook?: boolean;
 }
 
-/** Shared type for Branch Summary Entry in src/agents/sessions. */
+/** Transcript entry summarizing a branch from an earlier session entry. */
 export interface BranchSummaryEntry<T = unknown> extends SessionEntryBase {
   type: "branch_summary";
   fromId: string;
@@ -171,14 +171,14 @@ export interface SessionTreeNode {
   labelTimestamp?: string;
 }
 
-/** Shared type for Session Context in src/agents/sessions. */
+/** LLM-ready context derived from a session transcript branch. */
 export interface SessionContext {
   messages: AgentMessage[];
   thinkingLevel: string;
   model: { provider: string; modelId: string } | null;
 }
 
-/** Shared type for Session Info in src/agents/sessions. */
+/** Summary metadata used by session list/search surfaces. */
 export interface SessionInfo {
   path: string;
   id: string;
@@ -195,7 +195,7 @@ export interface SessionInfo {
   allMessagesText: string;
 }
 
-/** Shared type for Readonly Session Manager in src/agents/sessions. */
+/** Read-only subset of `SessionManager` exposed to consumers. */
 export type ReadonlySessionManager = Pick<
   SessionManager,
   | "getCwd"
@@ -614,7 +614,7 @@ async function buildSessionInfo(filePath: string): Promise<SessionInfo | null> {
   }
 }
 
-/** Shared type for Session List Progress in src/agents/sessions. */
+/** Progress callback used while loading session summaries. */
 export type SessionListProgress = (loaded: number, total: number) => void;
 
 const MAX_CONCURRENT_SESSION_INFO_LOADS = 10;
