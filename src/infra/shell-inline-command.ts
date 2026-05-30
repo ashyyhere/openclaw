@@ -1,7 +1,8 @@
-// infra shell inline command helpers and runtime behavior.
+// Shell inline-command flag parsing.
+// Covers POSIX shells and PowerShell aliases used by exec approval analysis.
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
-/** Reused constant for POSIX INLINE COMMAND FLAGS behavior in src/infra. */
+/** POSIX shell flags that take an inline command string. */
 export const POSIX_INLINE_COMMAND_FLAGS = new Set(["-lc", "-c", "--command"]);
 
 function expandPowerShellSwitchPrefixForms(match: string, smallestMatch: string): string[] {
@@ -28,7 +29,7 @@ const POWERSHELL_COMMAND_FLAGS = [
 const POWERSHELL_FILE_FLAGS = expandPowerShellSwitchPrefixForms("file", "f");
 const POWERSHELL_INLINE_FILE_FLAGS = new Set(POWERSHELL_FILE_FLAGS);
 
-/** Reused constant for POWERSHELL INLINE COMMAND FLAGS behavior in src/infra. */
+/** PowerShell flags that carry inline command or file payloads. */
 export const POWERSHELL_INLINE_COMMAND_FLAGS = new Set([
   ...POWERSHELL_COMMAND_FLAGS,
   ...POWERSHELL_FILE_FLAGS,
@@ -138,7 +139,7 @@ function isPosixShortOption(token: string, option: string): boolean {
   return hasOption;
 }
 
-/** Reused helper for advance Posix Inline Option Scan behavior in src/infra. */
+/** Return how many argv tokens a POSIX shell option consumes while scanning for -c. */
 export function advancePosixInlineOptionScan(token: string): number {
   const combinedValueCount = combinedSeparateValueOptionCount(token);
   if (combinedValueCount > 0) {
@@ -154,7 +155,7 @@ function isPowerShellOptionToken(token: string): boolean {
   return token.startsWith("-") || /^\/[A-Za-z][A-Za-z0-9]*$/.test(token);
 }
 
-/** Reused helper for resolve Inline Command Match behavior in src/infra. */
+/** Locate an inline command flag and its payload in shell argv. */
 export function resolveInlineCommandMatch(
   argv: string[],
   flags: ReadonlySet<string>,
@@ -216,7 +217,7 @@ export function resolveInlineCommandMatch(
   return { command: null, valueTokenIndex: null };
 }
 
-/** Reused helper for resolve Power Shell Inline Command Match behavior in src/infra. */
+/** Locate a PowerShell inline command or file payload in argv. */
 export function resolvePowerShellInlineCommandMatch(argv: string[]): {
   command: string | null;
   valueTokenIndex: number | null;
@@ -229,17 +230,17 @@ export function resolvePowerShellInlineCommandMatch(argv: string[]): {
   });
 }
 
-/** Reused helper for is Power Shell Inline Rest Command Flag behavior in src/infra. */
+/** Return whether a PowerShell flag consumes the remaining argv as command text. */
 export function isPowerShellInlineRestCommandFlag(token: string): boolean {
   return POWERSHELL_INLINE_REST_COMMAND_FLAGS.has(normalizeLowercaseStringOrEmpty(token));
 }
 
-/** Reused helper for is Power Shell Inline File Command Flag behavior in src/infra. */
+/** Return whether a PowerShell flag names an inline file/script payload. */
 export function isPowerShellInlineFileCommandFlag(token: string): boolean {
   return POWERSHELL_INLINE_FILE_FLAGS.has(normalizeLowercaseStringOrEmpty(token));
 }
 
-/** Reused helper for has Posix Interactive Startup Before Inline Command behavior in src/infra. */
+/** Return whether POSIX interactive startup options appear before the inline command. */
 export function hasPosixInteractiveStartupBeforeInlineCommand(
   argv: string[],
   flags: ReadonlySet<string>,
@@ -268,7 +269,7 @@ export function hasPosixInteractiveStartupBeforeInlineCommand(
   return false;
 }
 
-/** Reused helper for has Posix Login Startup Before Inline Command behavior in src/infra. */
+/** Return whether POSIX login startup options appear before the inline command. */
 export function hasPosixLoginStartupBeforeInlineCommand(
   argv: string[],
   flags: ReadonlySet<string>,
@@ -297,7 +298,7 @@ export function hasPosixLoginStartupBeforeInlineCommand(
   return false;
 }
 
-/** Reused helper for has Fish Init Command Option behavior in src/infra. */
+/** Return whether fish argv includes an init-command option before command execution. */
 export function hasFishInitCommandOption(argv: string[]): boolean {
   for (let i = 1; i < argv.length; i += 1) {
     const token = argv[i]?.trim();
@@ -322,7 +323,7 @@ export function hasFishInitCommandOption(argv: string[]): boolean {
   return false;
 }
 
-/** Reused helper for has Fish Attached Command Option behavior in src/infra. */
+/** Return whether fish argv uses an attached -cCOMMAND form. */
 export function hasFishAttachedCommandOption(argv: string[]): boolean {
   for (let i = 1; i < argv.length; i += 1) {
     const token = argv[i]?.trim();
