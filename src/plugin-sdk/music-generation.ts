@@ -1,6 +1,3 @@
-// Public music-generation helpers and types for provider plugins.
-
-/** Re-exported API for src/plugin-sdk. */
 export type {
   GeneratedMusicAsset,
   MusicGenerationEditCapabilities,
@@ -13,7 +10,6 @@ export type {
   MusicGenerationSourceImage,
   MusicGenerationOutputFormat,
 } from "../music-generation/types.js";
-/** Re-exported API for src/plugin-sdk. */
 export {
   downloadGeneratedMusicAsset,
   extractGeneratedMusicFileCandidates,

@@ -7,7 +7,6 @@ import {
 } from "./facade-runtime.js";
 import { resolvePrivateQaBundledPluginsEnv } from "./private-qa-bundled-env.js";
 
-/** Shared type for Qa Runner Cli Registration in src/plugin-sdk. */
 export type QaRunnerCliRegistration = {
   commandName: string;
   register(qa: Command): void;
@@ -28,7 +27,6 @@ type QaRuntimeSurface = {
   startQaLiveLaneGateway: (...args: unknown[]) => Promise<unknown>;
 };
 
-/** Shared type for Qa Runner Cli Contribution in src/plugin-sdk. */
 export type QaRunnerCliContribution =
   | {
       pluginId: string;
@@ -55,7 +53,6 @@ function isMissingQaRuntimeError(error: unknown) {
   );
 }
 
-/** Reused helper for load Qa Runtime Module behavior in src/plugin-sdk. */
 export function loadQaRuntimeModule(): QaRuntimeSurface {
   const env = resolvePrivateQaBundledPluginsEnv();
   return loadBundledPluginPublicSurfaceModuleSync<QaRuntimeSurface>({
@@ -66,7 +63,6 @@ export function loadQaRuntimeModule(): QaRuntimeSurface {
 }
 
 // oxlint-disable-next-line typescript/no-unnecessary-type-parameters -- QA runtime loader uses caller-supplied test API surface type.
-/** Reused helper for load Qa Runner Bundled Plugin Test Api behavior in src/plugin-sdk. */
 export function loadQaRunnerBundledPluginTestApi<T extends object>(pluginId: string): T {
   const env = resolvePrivateQaBundledPluginsEnv();
   return loadBundledPluginPublicSurfaceModuleSync<T>({
@@ -76,7 +72,6 @@ export function loadQaRunnerBundledPluginTestApi<T extends object>(pluginId: str
   });
 }
 
-/** Reused helper for is Qa Runtime Available behavior in src/plugin-sdk. */
 export function isQaRuntimeAvailable(): boolean {
   try {
     loadQaRuntimeModule();
@@ -151,7 +146,6 @@ function loadQaRunnerRuntimeSurface(
   });
 }
 
-/** Reused helper for list Qa Runner Cli Contributions behavior in src/plugin-sdk. */
 export function listQaRunnerCliContributions(): readonly QaRunnerCliContribution[] {
   const env = resolvePrivateQaBundledPluginsEnv();
   const contributions = new Map<string, QaRunnerCliContribution>();
