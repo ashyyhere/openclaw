@@ -1,4 +1,4 @@
-// config types agent defaults helpers and runtime behavior.
+/** Agent default configuration contracts for models, context, CLI backends, and compaction. */
 import type { SilentReplyPolicyShape } from "../shared/silent-reply-policy.js";
 import type {
   AgentModelConfig,
@@ -14,30 +14,30 @@ import type {
 } from "./types.base.js";
 import type { MemorySearchConfig } from "./types.tools.js";
 
-/** Shared type for Agent Context Injection in src/config. */
+/** Controls when workspace bootstrap context is injected into agent prompts. */
 export type AgentContextInjection = "always" | "continuation-skip" | "never";
-/** Shared type for Optional Bootstrap File Name in src/config. */
+/** Optional bootstrap files that may be skipped during workspace setup. */
 export type OptionalBootstrapFileName = "SOUL.md" | "USER.md" | "HEARTBEAT.md" | "IDENTITY.md";
-/** Shared type for Embedded Agent Execution Contract in src/config. */
+/** Execution contract applied to embedded OpenClaw agent runs. */
 export type EmbeddedAgentExecutionContract = "default" | "strict-agentic";
-/** Shared type for Subagent Delegation Mode in src/config. */
+/** Prompt guidance level for when the main agent should delegate work. */
 export type SubagentDelegationMode = "suggest" | "prefer";
-/** Shared type for Agent Image Quality Preference in src/config. */
+/** Image loading quality preference for agent-visible media. */
 export type AgentImageQualityPreference = "auto" | "efficient" | "balanced" | "high";
 
-/** Shared type for Gpt5 Prompt Overlay Config in src/config. */
+/** GPT-5-family prompt overlay toggles. */
 export type Gpt5PromptOverlayConfig = {
   /** Friendly interaction-style layer for GPT-5-family models (default: friendly). */
   personality?: "friendly" | "on" | "off";
 };
 
-/** Shared type for Prompt Overlays Config in src/config. */
+/** Provider-independent prompt overlays keyed by model family. */
 export type PromptOverlaysConfig = {
   /** Shared GPT-5-family prompt overlay used across providers. */
   gpt5?: Gpt5PromptOverlayConfig;
 };
 
-/** Shared type for Agent Model Entry Config in src/config. */
+/** Per-provider/model catalog entry with aliases and runtime overrides. */
 export type AgentModelEntryConfig = {
   alias?: string;
   /** Provider-specific API parameters (e.g., GLM-4.7 thinking mode). */
@@ -48,13 +48,13 @@ export type AgentModelEntryConfig = {
   streaming?: boolean;
 };
 
-/** Shared type for Agent Model List Config in src/config. */
+/** Primary model plus ordered fallback model refs. */
 export type AgentModelListConfig = {
   primary?: string;
   fallbacks?: string[];
 };
 
-/** Shared type for Agent Context Pruning Config in src/config. */
+/** Context pruning policy for old tool results and large content. */
 export type AgentContextPruningConfig = {
   mode?: "off" | "cache-ttl";
   /** TTL to consider cache expired (duration string, default unit: minutes). */
@@ -78,7 +78,7 @@ export type AgentContextPruningConfig = {
   };
 };
 
-/** Shared type for Agent Startup Context Config in src/config. */
+/** Runtime-owned context injected on bare startup/reset turns. */
 export type AgentStartupContextConfig = {
   /** Enable runtime-owned startup-context prelude on bare session resets (default: true). */
   enabled?: boolean;
@@ -94,7 +94,7 @@ export type AgentStartupContextConfig = {
   maxTotalChars?: number;
 };
 
-/** Shared type for Agent Context Limits Config in src/config. */
+/** Context budget overrides for high-volume agent-visible surfaces. */
 export type AgentContextLimitsConfig = {
   /** Default max chars returned by memory_get before truncation metadata/notice (default: 12000). */
   memoryGetMaxChars?: number;
@@ -106,7 +106,7 @@ export type AgentContextLimitsConfig = {
   postCompactionMaxChars?: number;
 };
 
-/** Shared type for Agent Run Retries Config in src/config. */
+/** Bounds for outer agent run retry iterations. */
 export type AgentRunRetriesConfig = {
   /** Base number of run retry iterations (default: 24). */
   base?: number;
@@ -118,7 +118,7 @@ export type AgentRunRetriesConfig = {
   max?: number;
 };
 
-/** Shared type for Cli Backend Config in src/config. */
+/** Configuration for a CLI-backed model runtime. */
 export type CliBackendConfig = {
   /** CLI command to execute (absolute path or on PATH). */
   command: string;
@@ -213,7 +213,7 @@ export type CliBackendConfig = {
   };
 };
 
-/** Shared type for Agent Defaults Config in src/config. */
+/** Global default settings inherited by configured agents. */
 export type AgentDefaultsConfig = {
   /** Global default provider params applied to all models before per-model and per-agent overrides. */
   params?: Record<string, unknown>;
@@ -481,13 +481,13 @@ export type AgentDefaultsConfig = {
   sandbox?: AgentSandboxConfig;
 };
 
-/** Shared type for Agent Compaction Mode in src/config. */
+/** Compaction mode used when reducing transcript context. */
 export type AgentCompactionMode = "default" | "safeguard";
-/** Shared type for Agent Compaction Post Index Sync Mode in src/config. */
+/** Session-memory index sync behavior after compaction. */
 export type AgentCompactionPostIndexSyncMode = "off" | "async" | "await";
-/** Shared type for Agent Compaction Identifier Policy in src/config. */
+/** Identifier preservation policy for compaction summaries. */
 export type AgentCompactionIdentifierPolicy = "strict" | "off" | "custom";
-/** Shared type for Agent Compaction Quality Guard Config in src/config. */
+/** Quality-audit retry settings for generated compaction summaries. */
 export type AgentCompactionQualityGuardConfig = {
   /** Enable compaction summary quality audits and regeneration retries. Default: false. */
   enabled?: boolean;
@@ -495,7 +495,7 @@ export type AgentCompactionQualityGuardConfig = {
   maxRetries?: number;
 };
 
-/** Shared type for Agent Compaction Mid Turn Precheck Config in src/config. */
+/** Mid-turn context pressure precheck after tool results. */
 export type AgentCompactionMidTurnPrecheckConfig = {
   /**
    * Enable structured context pressure checks after tool results are appended
@@ -504,7 +504,7 @@ export type AgentCompactionMidTurnPrecheckConfig = {
   enabled?: boolean;
 };
 
-/** Shared type for Agent Compaction Config in src/config. */
+/** Compaction thresholds, model/provider overrides, and transcript rotation policy. */
 export type AgentCompactionConfig = {
   /** Compaction summarization mode. */
   mode?: AgentCompactionMode;
@@ -572,7 +572,7 @@ export type AgentCompactionConfig = {
   notifyUser?: boolean;
 };
 
-/** Shared type for Agent Compaction Memory Flush Config in src/config. */
+/** Pre-compaction memory flush turn configuration. */
 export type AgentCompactionMemoryFlushConfig = {
   /** Enable the pre-compaction memory flush (default: true). */
   enabled?: boolean;
