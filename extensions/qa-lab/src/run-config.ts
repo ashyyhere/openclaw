@@ -1,4 +1,4 @@
-// extensions/qa-lab/src run config helpers and runtime behavior.
+// QA Lab run-config helpers normalize model/provider selections and output paths.
 import path from "node:path";
 import { uniqueStrings } from "openclaw/plugin-sdk/string-coerce-runtime";
 import { defaultQaModelForMode as defaultStaticQaModelForMode } from "./model-selection.js";
@@ -12,7 +12,9 @@ import {
 } from "./providers/index.js";
 import type { QaSeedScenario } from "./scenario-catalog.js";
 
+/** QA provider mode type used by run selection. */
 export type { QaProviderMode } from "./model-selection.js";
+/** Raw QA provider mode input accepted by provider normalization. */
 export type { QaProviderModeInput } from "./providers/index.js";
 
 type QaLabRunSelection = {
@@ -39,6 +41,7 @@ type QaLabRunnerSnapshot = {
   error: string | null;
 };
 
+/** Returns the default QA model for a provider mode. */
 export function defaultQaModelForMode(mode: QaProviderMode, alternate = false) {
   return defaultQaRuntimeModelForMode(mode, alternate ? { alternate: true } : undefined);
 }
@@ -49,6 +52,7 @@ function defaultStaticModelForMode(mode: QaProviderMode, alternate = false) {
   return defaultStaticQaModelForMode(mode, alternate ? { alternate: true } : undefined);
 }
 
+/** Creates the default runner selection for the available scenario catalog. */
 export function createDefaultQaRunSelection(
   scenarios: QaSeedScenario[],
   options?: { resolveDefaultModel?: QaDefaultModelResolver },
@@ -64,6 +68,7 @@ export function createDefaultQaRunSelection(
   };
 }
 
+/** Normalizes unknown provider-mode input or throws for unsupported values. */
 export function normalizeQaProviderMode(input: unknown): QaProviderMode {
   if (input === undefined || input === null || input === "") {
     return DEFAULT_QA_LIVE_PROVIDER_MODE;
@@ -91,6 +96,7 @@ function normalizeScenarioIds(input: unknown, scenarios: QaSeedScenario[]) {
   return selectedIds.length > 0 ? selectedIds : scenarios.map((scenario) => scenario.id);
 }
 
+/** Normalizes a persisted or submitted QA run selection payload. */
 export function normalizeQaRunSelection(
   input: unknown,
   scenarios: QaSeedScenario[],
@@ -109,6 +115,7 @@ export function normalizeQaRunSelection(
   };
 }
 
+/** Creates an idle runner snapshot for QA Lab UI state. */
 export function createIdleQaRunnerSnapshot(scenarios: QaSeedScenario[]): QaLabRunnerSnapshot {
   return {
     status: "idle",
@@ -120,6 +127,7 @@ export function createIdleQaRunnerSnapshot(scenarios: QaSeedScenario[]): QaLabRu
   };
 }
 
+/** Creates a timestamped QA run output directory path. */
 export function createQaRunOutputDir(baseDir = process.cwd()) {
   const stamp = new Date().toISOString().replaceAll(":", "").replaceAll(".", "").replace("T", "-");
   return path.join(baseDir, ".artifacts", "qa-e2e", `lab-${stamp}`);

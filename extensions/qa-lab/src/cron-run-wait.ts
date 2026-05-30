@@ -1,4 +1,4 @@
-// extensions/qa-lab/src cron run wait helpers and runtime behavior.
+// QA Lab cron-run wait helper polls gateway cron history for completion.
 import { setTimeout as sleep } from "node:timers/promises";
 import { formatErrorMessage } from "openclaw/plugin-sdk/error-runtime";
 
@@ -14,6 +14,7 @@ type QaCronRunsPage = {
   entries?: QaCronRunLogEntry[];
 };
 
+/** Waits until a cron run after the given timestamp reaches a terminal status. */
 export async function waitForCronRunCompletion(params: {
   callGateway: (
     method: string,

@@ -1,4 +1,4 @@
-// extensions/qa-lab/src self check helpers and runtime behavior.
+// QA Lab self-check helpers run the vertical slice and write its Markdown report.
 import fs from "node:fs/promises";
 import path from "node:path";
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
@@ -8,6 +8,7 @@ import { createQaTransportAdapter, type QaTransportId } from "./qa-transport-reg
 import { runQaScenario, type QaScenarioResult } from "./scenario.js";
 import { createQaSelfCheckScenario } from "./self-check-scenario.js";
 
+/** Result payload returned by QA Lab self-check runs. */
 export type QaSelfCheckResult = {
   outputPath: string;
   report: string;
@@ -15,6 +16,7 @@ export type QaSelfCheckResult = {
   scenarioResult: QaScenarioResult;
 };
 
+/** Resolves the self-check report output path. */
 export function resolveQaSelfCheckOutputPath(params?: { outputPath?: string; repoRoot?: string }) {
   if (params?.outputPath) {
     return params.outputPath;
@@ -23,6 +25,7 @@ export function resolveQaSelfCheckOutputPath(params?: { outputPath?: string; rep
   return path.join(repoRoot, ".artifacts", "qa-e2e", "self-check.md");
 }
 
+/** Runs the QA self-check scenario against an existing bus state and config. */
 export async function runQaSelfCheckAgainstState(params: {
   state: QaBusState;
   cfg: OpenClawConfig;
