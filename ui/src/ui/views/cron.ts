@@ -1,4 +1,3 @@
-// ui/src/ui/views cron helpers and runtime behavior.
 import { html, nothing } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
@@ -28,7 +27,6 @@ import type {
 } from "../types.ts";
 import type { CronFormState } from "../ui-types.ts";
 
-/** Shared type for Cron Props in ui/src/ui/views. */
 export type CronProps = {
   basePath: string;
   loading: boolean;
@@ -361,7 +359,6 @@ function renderFieldLabel(text: string, required = false) {
   </span>`;
 }
 
-/** Reused helper for render Cron behavior in ui/src/ui/views. */
 export function renderCron(props: CronProps) {
   const isEditing = Boolean(props.editingJobId);
   const isAgentTurn = props.form.payloadKind === "agentTurn";

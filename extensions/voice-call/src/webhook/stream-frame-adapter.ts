@@ -1,4 +1,3 @@
-// extensions/voice-call/src/webhook stream frame adapter helpers and runtime behavior.
 export type StreamFrame =
   | { kind: "start"; streamId: string; providerCallId: string }
   | {
