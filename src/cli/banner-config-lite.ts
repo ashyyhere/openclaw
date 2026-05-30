@@ -1,7 +1,7 @@
 import { createConfigIO } from "../config/config.js";
 import type { TaglineMode } from "./tagline.js";
 
-/** Reused helper for parse Tagline Mode behavior in src/cli. */
+/** Narrows raw config values to supported CLI banner tagline modes. */
 export function parseTaglineMode(value: unknown): TaglineMode | undefined {
   if (value === "random" || value === "default" || value === "off") {
     return value;
@@ -9,7 +9,7 @@ export function parseTaglineMode(value: unknown): TaglineMode | undefined {
   return undefined;
 }
 
-/** Reused helper for read Cli Banner Tagline Mode behavior in src/cli. */
+/** Reads banner tagline mode without forcing full CLI config validation. */
 export function readCliBannerTaglineMode(
   env: NodeJS.ProcessEnv = process.env,
 ): TaglineMode | undefined {

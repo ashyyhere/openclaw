@@ -27,7 +27,7 @@ function invalidByteSize(raw: string, reason?: string): Error {
   return new Error(`${prefix} Use values like 512kb, 10mb, 1gb, or 500.`);
 }
 
-/** Reused helper for parse Byte Size behavior in src/cli. */
+/** Parses CLI byte-size strings with optional units into rounded byte counts. */
 export function parseByteSize(raw: string, opts?: BytesParseOptions): number {
   const trimmed = normalizeLowercaseStringOrEmpty(normalizeOptionalString(raw) ?? "");
   if (!trimmed) {

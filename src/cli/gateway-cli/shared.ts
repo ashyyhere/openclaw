@@ -30,7 +30,7 @@ function renderGatewayServiceStopHints(env: NodeJS.ProcessEnv = process.env): st
   }
 }
 
-/** Reused helper for maybe Explain Gateway Service Stop behavior in src/cli/gateway-cli. */
+/** Prints platform-specific stop hints when a supervised gateway may still be running. */
 export async function maybeExplainGatewayServiceStop() {
   const service = resolveGatewayService();
   let loaded: boolean | null = null;

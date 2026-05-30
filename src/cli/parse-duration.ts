@@ -3,7 +3,7 @@ import {
   normalizeOptionalString,
 } from "../shared/string-coerce.js";
 
-/** Shared type for Duration Ms Parse Options in src/cli. */
+/** Unit defaults for bare numeric duration CLI inputs. */
 export type DurationMsParseOptions = {
   defaultUnit?: "ms" | "s" | "m" | "h" | "d";
 };
@@ -30,7 +30,7 @@ function roundSafeDurationMs(raw: string, value: number): number {
   return ms;
 }
 
-/** Reused helper for parse Duration Ms behavior in src/cli. */
+/** Parses single-token or composite duration strings into safe millisecond counts. */
 export function parseDurationMs(raw: string, opts?: DurationMsParseOptions): number {
   const trimmed = normalizeLowercaseStringOrEmpty(normalizeOptionalString(raw) ?? "");
   if (!trimmed) {

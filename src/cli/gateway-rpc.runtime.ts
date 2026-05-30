@@ -18,7 +18,7 @@ type CallGatewayFromCliRuntimeExtra = {
 
 const DEFAULT_GATEWAY_RPC_TIMEOUT_MS = 10_000;
 
-/** Reused helper for call Gateway From Cli Runtime behavior in src/cli. */
+/** Runtime Gateway RPC caller with optional progress, client identity, and scope overrides. */
 export async function callGatewayFromCliRuntime(
   method: string,
   opts: GatewayRpcOpts,
