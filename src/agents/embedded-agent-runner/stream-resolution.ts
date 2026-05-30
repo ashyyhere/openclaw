@@ -215,7 +215,7 @@ export function resolveEmbeddedAgentStreamFn(params: {
   });
 }
 
-/** Reused constant for testing behavior in src/agents/embedded-agent-runner. */
+/** Test hooks for overriding the native Codex Responses stream path. */
 export const testing = {
   setOpenClawNativeCodexResponsesStreamFnForTest(streamFn: StreamFn | undefined): void {
     openClawNativeCodexResponsesStreamFnForTest = streamFn;
@@ -272,5 +272,5 @@ function wrapEmbeddedAgentStreamFn(
     });
   };
 }
-/** Re-exported API for src/agents/embedded-agent-runner, starting with testing. */
+/** Re-export test-only stream resolution hooks for colocated tests. */
 export { testing as __testing };

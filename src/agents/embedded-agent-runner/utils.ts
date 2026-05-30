@@ -23,5 +23,5 @@ export function mapThinkingLevel(level?: ThinkLevel): ThinkingLevel {
   return level;
 }
 
-/** Re-exported API for src/agents/embedded-agent-runner, starting with Reasoning Level. */
+/** Re-export thinking/reasoning level types used by runner callers. */
 export type { ReasoningLevel, ThinkLevel };

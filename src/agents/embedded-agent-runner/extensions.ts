@@ -187,5 +187,5 @@ export function buildEmbeddedExtensionFactories(params: {
   return factories;
 }
 
-/** Re-exported API for src/agents/embedded-agent-runner, starting with ensure Agent Compaction Reserve Tokens. */
+/** Re-export reserve-token helper used by compaction extension callers. */
 export { ensureAgentCompactionReserveTokens };

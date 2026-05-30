@@ -8,7 +8,7 @@ import {
 } from "../../tool-search.js";
 import { collectAllowedToolNames } from "../tool-name-allowlist.js";
 
-/** Reused constant for TOOL SEARCH CONTROL ALLOWLIST NAMES behavior in src/agents/embedded-agent-runner. */
+/** Tool-search control tools auto-added when dynamic tool search is enabled. */
 export const TOOL_SEARCH_CONTROL_ALLOWLIST_NAMES = [
   TOOL_SEARCH_CODE_MODE_TOOL_NAME,
   TOOL_SEARCH_RAW_TOOL_NAME,
@@ -18,7 +18,7 @@ export const TOOL_SEARCH_CONTROL_ALLOWLIST_NAMES = [
 
 type CollectAllowedToolNamesParams = Parameters<typeof collectAllowedToolNames>[0];
 
-/** Shared type for Tool Search Run Plan in src/agents/embedded-agent-runner. */
+/** Effective visible/replay tool allowlists for a tool-search-enabled attempt. */
 export type ToolSearchRunPlan = {
   visibleAllowedToolNames: Set<string>;
   replayAllowedToolNames: Set<string>;

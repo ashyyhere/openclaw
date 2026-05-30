@@ -131,7 +131,7 @@ async function disposeDeferredMaintenanceContextEngine(
   }
 }
 
-/** Reused helper for create Deferred Turn Maintenance Abort Signal behavior in src/agents/embedded-agent-runner. */
+/** Creates an abort signal tied to process shutdown for deferred maintenance. */
 export function createDeferredTurnMaintenanceAbortSignal(params?: {
   processLike?: DeferredTurnMaintenanceProcessLike;
 }): {
@@ -197,7 +197,7 @@ export function createDeferredTurnMaintenanceAbortSignal(params?: {
   };
 }
 
-/** Reused helper for reset Deferred Turn Maintenance State For Test behavior in src/agents/embedded-agent-runner. */
+/** Clears process-local deferred maintenance state for isolated tests. */
 export function resetDeferredTurnMaintenanceStateForTest(): void {
   activeDeferredTurnMaintenanceRuns.clear();
   const processLike = process as DeferredTurnMaintenanceProcessLike;
