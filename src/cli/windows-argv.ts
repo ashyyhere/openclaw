@@ -1,6 +1,6 @@
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
-/** Reused helper for normalize Windows Argv behavior in src/cli. */
+/** Strip duplicated Windows launcher/node argv entries before command routing. */
 export function normalizeWindowsArgv(
   argv: string[],
   options: {

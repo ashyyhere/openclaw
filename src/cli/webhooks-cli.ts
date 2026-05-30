@@ -23,7 +23,7 @@ import { defaultRuntime } from "../runtime.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import { formatCliCommand } from "./command-format.js";
 
-/** Reused helper for register Webhooks Cli behavior in src/cli. */
+/** Register webhook integration helpers, currently Gmail Pub/Sub setup and run modes. */
 export function registerWebhooksCli(program: Command) {
   const webhooks = program
     .command("webhooks")

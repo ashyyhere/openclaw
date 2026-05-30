@@ -41,7 +41,7 @@ function collectOption(value: string, previous: string[] | undefined): string[] 
   return [...(previous ?? []), value];
 }
 
-/** Reused helper for register Proxy Cli behavior in src/cli. */
+/** Register debug proxy commands for capture, validation, querying, and cleanup. */
 export function registerProxyCli(program: Command) {
   const proxy = program
     .command("proxy")

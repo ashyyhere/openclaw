@@ -56,7 +56,7 @@ function createRunner(
 
 // --- Registration ---
 
-/** Reused helper for register Sandbox Cli behavior in src/cli. */
+/** Register sandbox list, recreate, and explain commands for Docker-backed isolation. */
 export function registerSandboxCli(program: Command) {
   const sandbox = program
     .command("sandbox")

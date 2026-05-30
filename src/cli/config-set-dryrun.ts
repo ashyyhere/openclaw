@@ -1,13 +1,16 @@
+/**
+ * Input mode recorded for config-set dry-run summaries.
+ */
 export type ConfigSetDryRunInputMode = "value" | "json" | "builder" | "unset";
 
-/** Shared type for Config Set Dry Run Error in src/cli. */
+/** Structured dry-run failure for path, schema, or secret-resolvability checks. */
 export type ConfigSetDryRunError = {
   kind: "missing-path" | "schema" | "resolvability";
   message: string;
   ref?: string;
 };
 
-/** Shared type for Config Set Dry Run Result in src/cli. */
+/** Dry-run result reported before mutating config so callers can explain planned writes. */
 export type ConfigSetDryRunResult = {
   ok: boolean;
   operations: number;
