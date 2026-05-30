@@ -13,44 +13,44 @@ import {
 import type { CommandHandlerResult, HandleCommandsParams } from "../commands-types.js";
 import { resolveAcpCommandChannel, resolveAcpCommandThreadId } from "./context.js";
 
-/** Reused constant for COMMAND behavior in src/auto-reply/reply. */
+/** Root command token for ACP command handling. */
 export const COMMAND = "/acp";
 const ACP_SPAWN_USAGE =
   "Usage: /acp spawn [harness-id] [--mode persistent|oneshot] [--thread auto|here|off] [--bind here|off] [--cwd <path>] [--label <label>].";
 const ACP_STEER_USAGE =
   "Usage: /acp steer [--session <session-key|session-id|session-label>] <instruction>";
-/** Reused constant for ACP SET MODE USAGE behavior in src/auto-reply/reply. */
+/** Usage text for changing an ACP session runtime mode. */
 export const ACP_SET_MODE_USAGE =
   "Usage: /acp set-mode <mode> [session-key|session-id|session-label]";
 const ACP_SET_USAGE = "Usage: /acp set <key> <value> [session-key|session-id|session-label]";
-/** Reused constant for ACP CWD USAGE behavior in src/auto-reply/reply. */
+/** Usage text for changing an ACP session working directory. */
 export const ACP_CWD_USAGE = "Usage: /acp cwd <path> [session-key|session-id|session-label]";
-/** Reused constant for ACP PERMISSIONS USAGE behavior in src/auto-reply/reply. */
+/** Usage text for changing an ACP session permission profile. */
 export const ACP_PERMISSIONS_USAGE =
   "Usage: /acp permissions <profile> [session-key|session-id|session-label]";
-/** Reused constant for ACP TIMEOUT USAGE behavior in src/auto-reply/reply. */
+/** Usage text for changing an ACP session timeout. */
 export const ACP_TIMEOUT_USAGE =
   "Usage: /acp timeout <seconds> [session-key|session-id|session-label]";
-/** Reused constant for ACP MODEL USAGE behavior in src/auto-reply/reply. */
+/** Usage text for changing an ACP session model. */
 export const ACP_MODEL_USAGE =
   "Usage: /acp model <model-id> [session-key|session-id|session-label]";
-/** Reused constant for ACP RESET OPTIONS USAGE behavior in src/auto-reply/reply. */
+/** Usage text for clearing ACP session runtime option overrides. */
 export const ACP_RESET_OPTIONS_USAGE =
   "Usage: /acp reset-options [session-key|session-id|session-label]";
-/** Reused constant for ACP STATUS USAGE behavior in src/auto-reply/reply. */
+/** Usage text for ACP session status lookup. */
 export const ACP_STATUS_USAGE = "Usage: /acp status [session-key|session-id|session-label]";
-/** Reused constant for ACP INSTALL USAGE behavior in src/auto-reply/reply. */
+/** Usage text for ACP install diagnostics/remediation. */
 export const ACP_INSTALL_USAGE = "Usage: /acp install";
-/** Reused constant for ACP DOCTOR USAGE behavior in src/auto-reply/reply. */
+/** Usage text for ACP doctor diagnostics. */
 export const ACP_DOCTOR_USAGE = "Usage: /acp doctor";
-/** Reused constant for ACP SESSIONS USAGE behavior in src/auto-reply/reply. */
+/** Usage text for listing ACP sessions. */
 export const ACP_SESSIONS_USAGE = "Usage: /acp sessions";
-/** Reused constant for ACP STEER OUTPUT LIMIT behavior in src/auto-reply/reply. */
+/** Maximum characters returned from ACP steer command output. */
 export const ACP_STEER_OUTPUT_LIMIT = 800;
-/** Re-exported API for src/auto-reply/reply, starting with SESSION ID RE. */
+/** Session id matcher reused by ACP command target parsing. */
 export { SESSION_ID_RE } from "../../../sessions/session-id.js";
 
-/** Shared type for Acp Action in src/auto-reply/reply. */
+/** Parsed ACP subcommand action. */
 export type AcpAction =
   | "spawn"
   | "cancel"
@@ -69,12 +69,12 @@ export type AcpAction =
   | "install"
   | "help";
 
-/** Shared type for Acp Spawn Thread Mode in src/auto-reply/reply. */
+/** Thread behavior requested for `/acp spawn`. */
 export type AcpSpawnThreadMode = "auto" | "here" | "off";
-/** Shared type for Acp Spawn Bind Mode in src/auto-reply/reply. */
+/** Existing-thread binding behavior requested for `/acp spawn`. */
 export type AcpSpawnBindMode = "here" | "off";
 
-/** Shared type for Parsed Spawn Input in src/auto-reply/reply. */
+/** Parsed `/acp spawn` input. */
 export type ParsedSpawnInput = {
   agentId: string;
   mode: AcpRuntimeSessionMode;
@@ -84,19 +84,19 @@ export type ParsedSpawnInput = {
   label?: string;
 };
 
-/** Shared type for Parsed Steer Input in src/auto-reply/reply. */
+/** Parsed `/acp steer` input. */
 export type ParsedSteerInput = {
   sessionToken?: string;
   instruction: string;
 };
 
-/** Shared type for Parsed Single Value Command Input in src/auto-reply/reply. */
+/** Parsed ACP command with one value plus optional session target. */
 export type ParsedSingleValueCommandInput = {
   value: string;
   sessionToken?: string;
 };
 
-/** Shared type for Parsed Set Command Input in src/auto-reply/reply. */
+/** Parsed `/acp set` key/value input plus optional session target. */
 export type ParsedSetCommandInput = {
   key: string;
   value: string;
@@ -106,7 +106,7 @@ export type ParsedSetCommandInput = {
 const ACP_UNICODE_DASH_PREFIX_RE =
   /^[\u2010\u2011\u2012\u2013\u2014\u2015\u2212\uFE58\uFE63\uFF0D]+/;
 
-/** Reused helper for stop With Text behavior in src/auto-reply/reply. */
+/** Builds a command result that stops command handling with a text reply. */
 export function stopWithText(text: string): CommandHandlerResult {
   return {
     shouldContinue: false,
@@ -114,7 +114,7 @@ export function stopWithText(text: string): CommandHandlerResult {
   };
 }
 
-/** Reused helper for resolve Acp Action behavior in src/auto-reply/reply. */
+/** Consumes and returns the ACP subcommand action, defaulting to help. */
 export function resolveAcpAction(tokens: string[]): AcpAction {
   const action = normalizeOptionalLowercaseString(tokens[0]);
   if (
@@ -204,7 +204,7 @@ function resolveDefaultSpawnThreadMode(params: HandleCommandsParams): AcpSpawnTh
   return currentThreadId ? "here" : "auto";
 }
 
-/** Reused helper for parse Spawn Input behavior in src/auto-reply/reply. */
+/** Parses `/acp spawn` arguments into validated spawn options. */
 export function parseSpawnInput(
   params: HandleCommandsParams,
   tokens: string[],
@@ -348,7 +348,7 @@ export function parseSpawnInput(
   };
 }
 
-/** Reused helper for parse Steer Input behavior in src/auto-reply/reply. */
+/** Parses `/acp steer` arguments into target session and instruction text. */
 export function parseSteerInput(
   tokens: string[],
 ): { ok: true; value: ParsedSteerInput } | { ok: false; error: string } {
@@ -395,7 +395,7 @@ export function parseSteerInput(
   };
 }
 
-/** Reused helper for parse Single Value Command Input behavior in src/auto-reply/reply. */
+/** Parses one-value ACP commands such as cwd, model, timeout, and permissions. */
 export function parseSingleValueCommandInput(
   tokens: string[],
   usage: string,
@@ -417,7 +417,7 @@ export function parseSingleValueCommandInput(
   };
 }
 
-/** Reused helper for parse Set Command Input behavior in src/auto-reply/reply. */
+/** Parses `/acp set` key/value arguments and optional target session. */
 export function parseSetCommandInput(
   tokens: string[],
 ): { ok: true; value: ParsedSetCommandInput } | { ok: false; error: string } {
@@ -446,7 +446,7 @@ export function parseSetCommandInput(
   };
 }
 
-/** Reused helper for parse Optional Single Target behavior in src/auto-reply/reply. */
+/** Parses commands that accept at most one optional session target. */
 export function parseOptionalSingleTarget(
   tokens: string[],
   usage: string,
@@ -461,7 +461,7 @@ export function parseOptionalSingleTarget(
   };
 }
 
-/** Reused helper for resolve Acp Help Text behavior in src/auto-reply/reply. */
+/** Returns the full user-facing ACP help text. */
 export function resolveAcpHelpText(): string {
   return [
     "ACP commands:",
@@ -490,7 +490,7 @@ export function resolveAcpHelpText(): string {
   ].join("\n");
 }
 
-/** Reused helper for format Runtime Options Text behavior in src/auto-reply/reply. */
+/** Formats ACP runtime options for status output. */
 export function formatRuntimeOptionsText(options: AcpSessionRuntimeOptions): string {
   const extras = options.backendExtras
     ? Object.entries(options.backendExtras)
@@ -512,7 +512,7 @@ export function formatRuntimeOptionsText(options: AcpSessionRuntimeOptions): str
   return parts.join(", ");
 }
 
-/** Reused helper for format Acp Capabilities Text behavior in src/auto-reply/reply. */
+/** Formats ACP capability names for status output. */
 export function formatAcpCapabilitiesText(controls: string[]): string {
   if (controls.length === 0) {
     return "(none)";
@@ -520,7 +520,7 @@ export function formatAcpCapabilitiesText(controls: string[]): string {
   return controls.toSorted().join(", ");
 }
 
-/** Reused helper for resolve Command Request Id behavior in src/auto-reply/reply. */
+/** Resolves a stable request id for ACP command dispatch and idempotency. */
 export function resolveCommandRequestId(params: HandleCommandsParams): string {
   const value =
     params.ctx.MessageSidFull ??
@@ -539,7 +539,7 @@ export function resolveCommandRequestId(params: HandleCommandsParams): string {
   return randomUUID();
 }
 
-/** Reused helper for collect Acp Error Text behavior in src/auto-reply/reply. */
+/** Converts thrown ACP runtime errors into user-facing command error text. */
 export function collectAcpErrorText(params: {
   error: unknown;
   fallbackCode: AcpRuntimeError["code"];
@@ -552,7 +552,7 @@ export function collectAcpErrorText(params: {
   });
 }
 
-/** Reused helper for with Acp Command Error Boundary behavior in src/auto-reply/reply. */
+/** Wraps an ACP command operation and converts failures into text replies. */
 export async function withAcpCommandErrorBoundary<T>(params: {
   run: () => Promise<T>;
   fallbackCode: AcpRuntimeError["code"];
