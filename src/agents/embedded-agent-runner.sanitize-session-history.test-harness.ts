@@ -5,7 +5,7 @@ import type { SessionManager } from "./sessions/index.js";
 import type { TranscriptPolicy } from "./transcript-policy.js";
 
 type SessionEntry = { type: string; customType: string; data: unknown };
-/** Shared type for Sanitize Session History Fn in src/agents. */
+/** Signature under test for replay-history sanitization. */
 export type SanitizeSessionHistoryFn = (params: {
   messages: AgentMessage[];
   modelApi: string;
@@ -18,15 +18,15 @@ export type SanitizeSessionHistoryFn = (params: {
   preserveLatestAssistantThinking?: boolean;
 }) => Promise<AgentMessage[]>;
 type SanitizeSessionHistoryMockedHelpers = typeof import("./embedded-agent-helpers.js");
-/** Shared type for Sanitize Session History Harness in src/agents. */
+/** Loaded sanitization module plus the helper mocks tests assert against. */
 export type SanitizeSessionHistoryHarness = {
   sanitizeSessionHistory: SanitizeSessionHistoryFn;
   mockedHelpers: SanitizeSessionHistoryMockedHelpers;
 };
-/** Reused constant for TEST SESSION ID behavior in src/agents. */
+/** Stable session id shared by sanitization harness calls. */
 export const TEST_SESSION_ID = "test-session";
 
-/** Reused helper for make Model Snapshot Entry behavior in src/agents. */
+/** Builds a transcript model-snapshot entry for replay history tests. */
 export function makeModelSnapshotEntry(data: {
   timestamp?: number;
   provider: string;
@@ -45,7 +45,7 @@ export function makeModelSnapshotEntry(data: {
   };
 }
 
-/** Reused helper for make In Memory Session Manager behavior in src/agents. */
+/** Creates a session manager mock backed by a mutable entry array. */
 export function makeInMemorySessionManager(entries: SessionEntry[]): SessionManager {
   return {
     getEntries: vi.fn(() => entries),
@@ -55,7 +55,7 @@ export function makeInMemorySessionManager(entries: SessionEntry[]): SessionMana
   } as unknown as SessionManager;
 }
 
-/** Reused helper for make Mock Session Manager behavior in src/agents. */
+/** Creates an empty session manager mock for tests that only need calls. */
 export function makeMockSessionManager(): SessionManager {
   return {
     getEntries: vi.fn().mockReturnValue([]),
@@ -63,13 +63,13 @@ export function makeMockSessionManager(): SessionManager {
   } as unknown as SessionManager;
 }
 
-/** Reused helper for make Simple User Messages behavior in src/agents. */
+/** Returns a minimal user-message history for sanitizer tests. */
 export function makeSimpleUserMessages(): AgentMessage[] {
   const messages = [{ role: "user", content: "hello" }];
   return messages as unknown as AgentMessage[];
 }
 
-/** Reused helper for create Sanitize Session History Helpers Mock behavior in src/agents. */
+/** Creates the embedded-agent helper module mock used by sanitizer tests. */
 export async function createSanitizeSessionHistoryHelpersMock(extra: Record<string, unknown> = {}) {
   return {
     ...(await vi.importActual("./embedded-agent-helpers.js")),
@@ -78,7 +78,7 @@ export async function createSanitizeSessionHistoryHelpersMock(extra: Record<stri
   };
 }
 
-/** Reused helper for create Sanitize Session History Provider Runtime Mock behavior in src/agents. */
+/** Creates a provider runtime mock with sanitizer plugin hooks disabled. */
 export async function createSanitizeSessionHistoryProviderRuntimeMock(
   extra: Record<string, unknown> = {},
 ) {
@@ -94,7 +94,7 @@ export async function createSanitizeSessionHistoryProviderRuntimeMock(
   };
 }
 
-/** Reused helper for create Sanitize Session History Provider Hook Runtime Mock behavior in src/agents. */
+/** Creates a provider hook runtime mock with cache-reset test hooks exposed. */
 export async function createSanitizeSessionHistoryProviderHookRuntimeMock(
   extra: Record<string, unknown> = {},
 ) {
@@ -115,7 +115,7 @@ export async function createSanitizeSessionHistoryProviderHookRuntimeMock(
   };
 }
 
-/** Reused helper for load Sanitize Session History With Clean Mocks behavior in src/agents. */
+/** Reloads replay-history with fresh Vitest module and helper mocks. */
 export async function loadSanitizeSessionHistoryWithCleanMocks(): Promise<SanitizeSessionHistoryHarness> {
   vi.resetModules();
   vi.resetAllMocks();
@@ -128,7 +128,7 @@ export async function loadSanitizeSessionHistoryWithCleanMocks(): Promise<Saniti
   };
 }
 
-/** Reused helper for make Reasoning Assistant Messages behavior in src/agents. */
+/** Builds assistant reasoning messages with object or JSON thinking signatures. */
 export function makeReasoningAssistantMessages(opts?: {
   thinkingSignature?: "object" | "json";
   includeText?: boolean;
@@ -160,7 +160,7 @@ export function makeReasoningAssistantMessages(opts?: {
   return messages as unknown as AgentMessage[];
 }
 
-/** Reused helper for sanitize With Open AIResponses behavior in src/agents. */
+/** Runs the sanitizer with OpenAI Responses metadata defaults. */
 export async function sanitizeWithOpenAIResponses(params: {
   sanitizeSessionHistory: SanitizeSessionHistoryFn;
   messages: AgentMessage[];
@@ -177,7 +177,7 @@ export async function sanitizeWithOpenAIResponses(params: {
   });
 }
 
-/** Reused helper for expect Open AIResponses Strict Sanitize Call behavior in src/agents. */
+/** Asserts OpenAI Responses sanitization used strict image-only replay mode. */
 export function expectOpenAIResponsesStrictSanitizeCall(
   sanitizeSessionMessagesImagesMock: unknown,
   messages: AgentMessage[],
@@ -208,7 +208,7 @@ function makeSnapshotChangedOpenAIReasoningScenario() {
   };
 }
 
-/** Reused helper for sanitize Snapshot Changed Open AIReasoning behavior in src/agents. */
+/** Sanitizes the model-snapshot-change scenario for OpenAI reasoning replay. */
 export async function sanitizeSnapshotChangedOpenAIReasoning(params: {
   sanitizeSessionHistory: SanitizeSessionHistoryFn;
 }) {
