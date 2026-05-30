@@ -7,27 +7,27 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { resolveApiKeyForProvider as resolveModelApiKeyForProvider } from "../agents/model-auth.js";
 
-/** Re-exported API for src/plugin-sdk, starting with resolve Env Api Key. */
+/** Resolves provider API keys from environment variables. */
 export { resolveEnvApiKey } from "../agents/model-auth-env.js";
-/** Re-exported API for src/plugin-sdk. */
+/** API-key rotation helpers used by provider execution paths. */
 export {
   collectProviderApiKeysForExecution,
   executeWithApiKeyRotation,
 } from "../agents/api-key-rotation.js";
-/** Re-exported API for src/plugin-sdk, starting with NON ENV SECRETREF MARKER. */
+/** Marker used when a SecretRef cannot be represented as an env var. */
 export { NON_ENV_SECRETREF_MARKER } from "../agents/model-auth-markers.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Shared provider auth runtime helpers and resolved auth type. */
 export {
   requireApiKey,
   resolveAwsSdkEnvVarName,
   type ResolvedProviderAuth,
 } from "../agents/model-auth-runtime-shared.js";
-/** Re-exported API for src/plugin-sdk, starting with Provider Prepared Runtime Auth. */
+/** Prepared auth payload shape passed from provider setup into runtime. */
 export type { ProviderPreparedRuntimeAuth } from "../plugins/types.js";
-/** Re-exported API for src/plugin-sdk, starting with Resolved Provider Runtime Auth. */
+/** Runtime auth result returned for a provider/model pair. */
 export type { ResolvedProviderRuntimeAuth } from "../plugins/runtime/model-auth-types.js";
 
-/** Shared type for OAuth Callback Result in src/plugin-sdk. */
+/** OAuth redirect result returned by local callback helpers. */
 export type OAuthCallbackResult = { code: string; state: string };
 
 // IdP-host allowlist for CORS echo on the loopback OAuth callback. Plugins
@@ -36,7 +36,7 @@ export type OAuthCallbackResult = { code: string; state: string };
 // which is safe for normal browser navigation but blocks cross-origin script
 // reads. The empty allowlist (default) leaves the legacy permissive SDK
 // behavior in place for existing callers.
-/** Reused helper for build OAuth Callback Origin Resolver behavior in src/plugin-sdk. */
+/** Builds the CORS origin resolver for loopback OAuth callback servers. */
 export function buildOAuthCallbackOriginResolver(
   allowedHosts: readonly string[] | undefined,
 ): (originHeader: string | string[] | undefined) => string | undefined {
@@ -66,12 +66,12 @@ export function buildOAuthCallbackOriginResolver(
   };
 }
 
-/** Reused helper for generate OAuth State behavior in src/plugin-sdk. */
+/** Generates a cryptographically random OAuth state token. */
 export function generateOAuthState(): string {
   return crypto.randomBytes(32).toString("hex");
 }
 
-/** Reused helper for parse OAuth Callback Input behavior in src/plugin-sdk. */
+/** Parses a pasted OAuth redirect URL into code/state fields. */
 export function parseOAuthCallbackInput(
   input: string,
   messages: {
@@ -100,7 +100,7 @@ export function parseOAuthCallbackInput(
   }
 }
 
-/** Reused helper for wait For Local OAuth Callback behavior in src/plugin-sdk. */
+/** Starts a loopback server and waits for a matching OAuth redirect callback. */
 export async function waitForLocalOAuthCallback(params: {
   expectedState: string;
   timeoutMs: number;
@@ -307,7 +307,7 @@ async function loadRuntimeModelAuthModule(): Promise<RuntimeModelAuthModule> {
   return (await import(resolveRuntimeModelAuthModuleHref())) as RuntimeModelAuthModule;
 }
 
-/** Reused helper for resolve Api Key For Provider behavior in src/plugin-sdk. */
+/** Resolves an API key for a provider through the runtime auth implementation. */
 export async function resolveApiKeyForProvider(
   params: Parameters<ResolveApiKeyForProvider>[0],
 ): Promise<Awaited<ReturnType<ResolveApiKeyForProvider>>> {
@@ -319,7 +319,7 @@ export async function resolveApiKeyForProvider(
   return resolveApiKeyForProvider(params);
 }
 
-/** Reused helper for get Runtime Auth For Model behavior in src/plugin-sdk. */
+/** Resolves full runtime auth for one provider/model request. */
 export async function getRuntimeAuthForModel(
   params: Parameters<GetRuntimeAuthForModel>[0],
 ): Promise<Awaited<ReturnType<GetRuntimeAuthForModel>>> {

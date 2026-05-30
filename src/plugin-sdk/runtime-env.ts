@@ -1,11 +1,11 @@
 // Shared process/runtime utilities for plugins. This is the public boundary for
 // logger wiring, runtime env shims, and global verbose console helpers.
 
-/** Re-exported API for src/plugin-sdk, starting with Runtime Env. */
+/** Runtime environment abstraction exposed to plugin SDK callers. */
 export type { RuntimeEnv } from "../runtime.js";
-/** Re-exported API for src/plugin-sdk, starting with create Non Exiting Runtime. */
+/** Runtime factories that avoid process exits inside plugin code. */
 export { createNonExitingRuntime, defaultRuntime } from "../runtime.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Global CLI logging and confirmation helpers available to plugins. */
 export {
   danger,
   info,
@@ -19,30 +19,30 @@ export {
   success,
   warn,
 } from "../globals.js";
-/** Re-exported API for src/plugin-sdk, starting with sleep. */
+/** Promise sleep helper used by plugin async flows. */
 export { sleep } from "../utils.js";
-/** Re-exported API for src/plugin-sdk, starting with with Timeout. */
+/** Runs a promise with a timeout guard. */
 export { withTimeout } from "../utils/with-timeout.js";
-/** Re-exported API for src/plugin-sdk, starting with is Truthy Env Value. */
+/** Parses common truthy environment variable values. */
 export { isTruthyEnvValue } from "../infra/env.js";
 export * from "../logging.js";
-/** Re-exported API for src/plugin-sdk, starting with wait For Abort Signal. */
+/** Resolves when an abort signal fires. */
 export { waitForAbortSignal } from "../infra/abort-signal.js";
-/** Re-exported API for src/plugin-sdk, starting with compute Backoff. */
+/** Backoff helpers for retry loops and abort-aware sleeping. */
 export { computeBackoff, sleepWithAbort, type BackoffPolicy } from "../infra/backoff.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Duration formatting helpers for plugin-facing status text. */
 export {
   formatDurationPrecise,
   formatDurationSeconds,
 } from "../infra/format-time/format-duration.ts";
-/** Re-exported API for src/plugin-sdk, starting with retry Async. */
+/** Generic async retry helper for transient plugin operations. */
 export { retryAsync } from "../infra/retry.js";
-/** Re-exported API for src/plugin-sdk, starting with ensure Global Undici Env Proxy Dispatcher. */
+/** Installs the process-global Undici dispatcher from proxy env vars. */
 export { ensureGlobalUndiciEnvProxyDispatcher } from "../infra/net/undici-global-dispatcher.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Process-level unhandled error registration helpers for plugin runtimes. */
 export {
   registerUncaughtExceptionHandler,
   registerUnhandledRejectionHandler,
 } from "../infra/unhandled-rejections.js";
-/** Re-exported API for src/plugin-sdk, starting with is WSL2 Sync. */
+/** Synchronous WSL2 detection helper for platform-specific plugin behavior. */
 export { isWSL2Sync } from "../infra/wsl.js";

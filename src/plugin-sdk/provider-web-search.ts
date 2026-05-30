@@ -7,7 +7,7 @@ import type {
   WebSearchProviderToolDefinition,
   WebSearchProviderToolExecutionContext,
 } from "../plugins/types.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Parameter parsing and JSON result helpers for provider web-search tools. */
 export {
   jsonResult,
   readNonNegativeIntegerParam,
@@ -16,9 +16,9 @@ export {
   readStringArrayParam,
   readStringParam,
 } from "../agents/tools/common.js";
-/** Re-exported API for src/plugin-sdk, starting with resolve Citation Redirect Url. */
+/** Resolves public citation redirect URLs for web-search results. */
 export { resolveCitationRedirectUrl } from "../agents/tools/web-search-citation-redirect.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Shared provider web-search cache, count, freshness, timeout, and fetch helpers. */
 export {
   buildSearchCacheKey,
   buildUnsupportedSearchFilterResponse,
@@ -43,7 +43,7 @@ export {
   withTrustedWebSearchEndpoint,
   writeCachedSearchPayload,
 } from "../agents/tools/web-search-provider-common.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Provider web-search config and credential mutation helpers. */
 export {
   getScopedCredentialValue,
   getTopLevelCredentialValue,
@@ -53,18 +53,18 @@ export {
   setProviderWebSearchPluginConfigValue,
   setTopLevelCredentialValue,
 } from "../agents/tools/web-search-provider-config.js";
-/** Re-exported API for src/plugin-sdk, starting with Search Config Record. */
+/** Mutable search provider config record shape. */
 export type { SearchConfigRecord } from "../agents/tools/web-search-provider-common.js";
-/** Re-exported API for src/plugin-sdk, starting with resolve Web Search Provider Credential. */
+/** Resolves a provider web-search credential from config/runtime state. */
 export { resolveWebSearchProviderCredential } from "../agents/tools/web-search-provider-credentials.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Guarded fetch wrappers for trusted/self-hosted web-tool endpoints. */
 export {
   withSelfHostedWebToolsEndpoint,
   withTrustedWebToolsEndpoint,
 } from "../agents/tools/web-guarded-fetch.js";
-/** Re-exported API for src/plugin-sdk, starting with markdown To Text. */
+/** Web content text normalization helpers. */
 export { markdownToText, truncateText } from "../agents/tools/web-fetch-utils.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Shared web cache, timeout, and response-reading helpers. */
 export {
   DEFAULT_CACHE_TTL_MINUTES,
   DEFAULT_TIMEOUT_SECONDS,
@@ -76,13 +76,13 @@ export {
   resolveTimeoutSeconds,
   writeCache,
 } from "../agents/tools/web-shared.js";
-/** Re-exported API for src/plugin-sdk, starting with enable Plugin In Config. */
+/** Enables a plugin entry in OpenClaw config during setup flows. */
 export { enablePluginInConfig } from "../plugins/enable.js";
-/** Re-exported API for src/plugin-sdk, starting with format Cli Command. */
+/** Formats CLI commands for provider setup instructions. */
 export { formatCliCommand } from "../cli/command-format.js";
-/** Re-exported API for src/plugin-sdk, starting with wrap Web Content. */
+/** Wraps fetched web content with external-content provenance metadata. */
 export { wrapWebContent } from "../security/external-content.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Provider web-search plugin contracts re-exported for SDK consumers. */
 export type {
   WebSearchCredentialResolutionSource,
   WebSearchProviderSetupContext,
