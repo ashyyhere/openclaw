@@ -82,7 +82,7 @@ function isPromiseLike<T>(value: T | Promise<T>): value is Promise<T> {
   return typeof value === "object" && value !== null && "then" in value;
 }
 
-/** Reused helper for is Approval Decision behavior in src/gateway/server-methods. */
+/** Narrow a wire decision string to the exec approval decision contract. */
 export function isApprovalDecision(value: string): value is ExecApprovalDecision {
   return value === "allow-once" || value === "allow-always" || value === "deny";
 }
@@ -117,7 +117,7 @@ function normalizeApprovalIdentity(value: string | null | undefined): string | n
   return normalizeOptionalString(value) ?? null;
 }
 
-/** Reused helper for is Approval Record Visible To Client behavior in src/gateway/server-methods. */
+/** Check whether a pending approval record may be seen by the requesting client. */
 export function isApprovalRecordVisibleToClient<TPayload>(params: {
   record: ExecApprovalRecord<TPayload>;
   client: GatewayClient | null;
@@ -255,7 +255,7 @@ export function resolveApprovalRequestRecipientConnIds<TPayload>(params: {
   );
 }
 
-/** Reused helper for resolve Pending Approval Record behavior in src/gateway/server-methods. */
+/** Resolve a visible, unresolved approval record from an exact id or prefix. */
 export function resolvePendingApprovalRecord<TPayload>(params: {
   manager: ExecApprovalManager<TPayload>;
   inputId: string;
@@ -308,7 +308,7 @@ function resolveApprovalRecordForState<TPayload>(
   return { ok: true, approvalId: resolvedId.id, snapshot };
 }
 
-/** Reused helper for respond Pending Approval Lookup Error behavior in src/gateway/server-methods. */
+/** Send the gateway error response for a failed pending-approval lookup. */
 export function respondPendingApprovalLookupError(params: {
   respond: RespondFn;
   response: PendingApprovalLookupError;
@@ -320,7 +320,7 @@ export function respondPendingApprovalLookupError(params: {
   params.respond(false, undefined, errorShape(params.response.code, params.response.message));
 }
 
-/** Reused helper for handle Approval Wait Decision behavior in src/gateway/server-methods. */
+/** Wait for a visible approval decision and respond with the recorded result. */
 export async function handleApprovalWaitDecision<TPayload>(params: {
   manager: ExecApprovalManager<TPayload>;
   inputId: unknown;
@@ -369,7 +369,7 @@ export async function handleApprovalWaitDecision<TPayload>(params: {
   );
 }
 
-/** Reused helper for handle Pending Approval Request behavior in src/gateway/server-methods. */
+/** Broadcast a new approval request, await its decision, and complete the response. */
 export async function handlePendingApprovalRequest<
   TPayload extends ApprovalTurnSourceFields,
 >(params: {
@@ -488,7 +488,7 @@ export async function handlePendingApprovalRequest<
   );
 }
 
-/** Reused helper for handle Approval Resolve behavior in src/gateway/server-methods. */
+/** Resolve a pending approval, broadcast the resolved event, and run follow-ups. */
 export async function handleApprovalResolve<TPayload, TResolvedEvent extends object>(params: {
   manager: ExecApprovalManager<TPayload>;
   inputId: string;

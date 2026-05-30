@@ -1,4 +1,5 @@
-// gateway/server plugins http helpers and runtime behavior.
+// Gateway HTTP/upgrade dispatch for plugin-owned routes, including auth and
+// runtime scope setup before handlers run.
 import type { IncomingMessage, ServerResponse } from "node:http";
 import type { Duplex } from "node:stream";
 import {
@@ -19,18 +20,18 @@ import {
 import { matchedPluginRoutesRequireGatewayAuth } from "./plugins-http/route-auth.js";
 import { findMatchingPluginHttpRoutes } from "./plugins-http/route-match.js";
 
-/** Re-exported API for src/gateway/server. */
+/** Plugin route path parsing helpers used by the gateway HTTP router. */
 export {
   isProtectedPluginRoutePathFromContext,
   resolvePluginRoutePathContext,
   type PluginRoutePathContext,
 } from "./plugins-http/path-context.js";
-/** Re-exported API for src/gateway/server. */
+/** Registered plugin route lookup helpers for HTTP and upgrade dispatch. */
 export {
   findRegisteredPluginHttpRoute,
   isRegisteredPluginHttpRoutePath,
 } from "./plugins-http/route-match.js";
-/** Re-exported API for src/gateway/server, starting with should Enforce Gateway Auth For Plugin Path. */
+/** Decide whether a plugin route path must satisfy gateway auth before dispatch. */
 export { shouldEnforceGatewayAuthForPluginPath } from "./plugins-http/route-auth.js";
 
 type SubsystemLogger = ReturnType<typeof createSubsystemLogger>;
@@ -119,14 +120,14 @@ function createPluginRouteRuntimeScope(params: {
   };
 }
 
-/** Shared type for Plugin Route Dispatch Context in src/gateway/server. */
+/** Gateway auth and operator-scope context available to plugin route dispatch. */
 export type PluginRouteDispatchContext = {
   gatewayAuthSatisfied?: boolean;
   gatewayRequestAuth?: AuthorizedGatewayHttpRequest;
   gatewayRequestOperatorScopes?: readonly string[];
 };
 
-/** Shared type for Plugin Http Request Handler in src/gateway/server. */
+/** HTTP request handler that returns true when a plugin route handled the request. */
 export type PluginHttpRequestHandler = (
   req: IncomingMessage,
   res: ServerResponse,
@@ -134,7 +135,7 @@ export type PluginHttpRequestHandler = (
   dispatchContext?: PluginRouteDispatchContext,
 ) => Promise<boolean>;
 
-/** Shared type for Plugin Http Upgrade Handler in src/gateway/server. */
+/** WebSocket upgrade handler that returns true when a plugin route handled the socket. */
 export type PluginHttpUpgradeHandler = (
   req: IncomingMessage,
   socket: Duplex,
@@ -143,7 +144,7 @@ export type PluginHttpUpgradeHandler = (
   dispatchContext?: PluginRouteDispatchContext,
 ) => Promise<boolean>;
 
-/** Reused helper for create Gateway Plugin Request Handler behavior in src/gateway/server. */
+/** Create the gateway HTTP dispatcher for registered plugin routes. */
 export function createGatewayPluginRequestHandler(params: {
   registry: PluginRegistry;
   getRouteRegistry?: () => PluginRegistry;
@@ -216,7 +217,7 @@ export function createGatewayPluginRequestHandler(params: {
   };
 }
 
-/** Reused helper for create Gateway Plugin Upgrade Handler behavior in src/gateway/server. */
+/** Create the gateway WebSocket-upgrade dispatcher for registered plugin routes. */
 export function createGatewayPluginUpgradeHandler(params: {
   registry: PluginRegistry;
   getRouteRegistry?: () => PluginRegistry;

@@ -1,34 +1,34 @@
-// gateway gateway connection test mocks helpers and runtime behavior.
+// Shared Vitest mocks for gateway connection tests.
 import { vi, type Mock } from "vitest";
 
 type TestMock<TArgs extends unknown[] = unknown[], TResult = unknown> = Mock<
   (...args: TArgs) => TResult
 >;
 
-/** Reused constant for load Config Mock behavior in src/gateway. */
+/** Mocked config loader used by gateway connection tests. */
 export const loadConfigMock: TestMock = vi.fn();
-/** Reused constant for resolve Gateway Port Mock behavior in src/gateway. */
+/** Mocked gateway port resolver used by connection bootstrap tests. */
 export const resolveGatewayPortMock: TestMock = vi.fn();
-/** Reused constant for resolve State Dir Mock behavior in src/gateway. */
+/** Mocked state-dir resolver with a stable test fallback. */
 export const resolveStateDirMock: TestMock<[NodeJS.ProcessEnv], string> = vi.fn(
   (env: NodeJS.ProcessEnv) => env.OPENCLAW_STATE_DIR ?? "/tmp/openclaw",
 );
-/** Reused constant for resolve Config Path Mock behavior in src/gateway. */
+/** Mocked config-path resolver derived from test env and state dir. */
 export const resolveConfigPathMock: TestMock<[NodeJS.ProcessEnv, string], string> = vi.fn(
   (env: NodeJS.ProcessEnv, stateDir: string) =>
     env.OPENCLAW_CONFIG_PATH ?? `${stateDir}/openclaw.json`,
 );
-/** Reused constant for pick Primary Tailnet IPv4 Mock behavior in src/gateway. */
+/** Mocked Tailnet IPv4 picker for advertised gateway addresses. */
 export const pickPrimaryTailnetIPv4Mock: TestMock = vi.fn();
-/** Reused constant for pick Primary Lan IPv4 Mock behavior in src/gateway. */
+/** Mocked LAN IPv4 picker for advertised gateway addresses. */
 export const pickPrimaryLanIPv4Mock: TestMock = vi.fn();
-/** Reused constant for is Loopback Host Mock behavior in src/gateway. */
+/** Mocked loopback-host guard that matches gateway URL validation behavior. */
 export const isLoopbackHostMock: TestMock<[string], boolean> = vi.fn((host: string) =>
   /^(localhost|127(?:\.\d{1,3}){3}|::1|\[::1\]|::ffff:127(?:\.\d{1,3}){3})$/i.test(
     host.trim().replace(/\.+$/, ""),
   ),
 );
-/** Reused constant for is Secure Web Socket Url Mock behavior in src/gateway. */
+/** Mocked secure-WebSocket guard with optional private ws allowance. */
 export const isSecureWebSocketUrlMock: TestMock<
   [string, { allowPrivateWs?: boolean } | undefined],
   boolean

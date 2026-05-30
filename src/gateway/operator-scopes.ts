@@ -1,18 +1,18 @@
-// gateway operator scopes helpers and runtime behavior.
-/** Reused constant for ADMIN SCOPE behavior in src/gateway. */
+// Operator scope constants used by gateway clients and route authorization.
+/** Full operator access, including privileged gateway mutations. */
 export const ADMIN_SCOPE = "operator.admin" as const;
-/** Reused constant for READ SCOPE behavior in src/gateway. */
+/** Read-only operator access for status and inspection methods. */
 export const READ_SCOPE = "operator.read" as const;
-/** Reused constant for WRITE SCOPE behavior in src/gateway. */
+/** Write operator access for non-admin gateway mutations. */
 export const WRITE_SCOPE = "operator.write" as const;
-/** Reused constant for APPROVALS SCOPE behavior in src/gateway. */
+/** Approval runtime access for reading and resolving pending approvals. */
 export const APPROVALS_SCOPE = "operator.approvals" as const;
-/** Reused constant for PAIRING SCOPE behavior in src/gateway. */
+/** Pairing access used during gateway client enrollment. */
 export const PAIRING_SCOPE = "operator.pairing" as const;
-/** Reused constant for TALK SECRETS SCOPE behavior in src/gateway. */
+/** Talk secret-management access for realtime voice setup. */
 export const TALK_SECRETS_SCOPE = "operator.talk.secrets" as const;
 
-/** Shared type for Operator Scope in src/gateway. */
+/** Closed set of operator scopes accepted by the gateway. */
 export type OperatorScope =
   | typeof ADMIN_SCOPE
   | typeof READ_SCOPE
@@ -32,7 +32,7 @@ const KNOWN_OPERATOR_SCOPE_VALUES: readonly OperatorScope[] = [
 
 const KNOWN_OPERATOR_SCOPES: ReadonlySet<OperatorScope> = new Set(KNOWN_OPERATOR_SCOPE_VALUES);
 
-/** Reused helper for is Operator Scope behavior in src/gateway. */
+/** Narrow arbitrary values to a known operator scope string. */
 export function isOperatorScope(value: unknown): value is OperatorScope {
   return typeof value === "string" && KNOWN_OPERATOR_SCOPES.has(value as OperatorScope);
 }
