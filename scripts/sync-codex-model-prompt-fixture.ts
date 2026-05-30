@@ -1,4 +1,4 @@
-// scripts sync codex model prompt fixture helpers and runtime behavior.
+// Codex model prompt fixture sync renders checked-in prompt snapshots from Codex catalogs.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
@@ -7,6 +7,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const PERSONALITY_PLACEHOLDER = "{{ personality }}";
 
+/** Fixture directory for Codex model catalog prompt snapshots. */
 export const CODEX_MODEL_PROMPT_FIXTURE_DIR =
   "test/fixtures/agents/prompt-snapshots/codex-model-catalog";
 
@@ -87,6 +88,7 @@ function personalityKey(
   return `personality_${personality}`;
 }
 
+/** Render model instructions for one Codex model/personality pair. */
 export function renderCodexModelInstructions(params: {
   model: CodexModelCatalogModel;
   personality: CodexPromptPersonality;
@@ -109,6 +111,7 @@ export function renderCodexModelInstructions(params: {
   throw new Error(`Codex model ${params.model.slug} has no renderable instructions.`);
 }
 
+/** Create one Codex model prompt fixture from a catalog file. */
 export async function createCodexModelPromptFixture(params: {
   catalogPath: string;
   catalogLabel?: string;
@@ -163,6 +166,7 @@ function pushUnique(paths: string[], candidate: string) {
   }
 }
 
+/** Return candidate Codex catalog/cache paths in lookup order. */
 export function defaultCatalogPathCandidates(
   params: {
     env?: Record<string, string | undefined>;
@@ -191,6 +195,7 @@ async function pathExists(filePath: string): Promise<boolean> {
   }
 }
 
+/** Find the first existing Codex catalog/cache path from default candidates. */
 export async function findDefaultCatalogPath(
   params: {
     env?: Record<string, string | undefined>;
@@ -236,6 +241,7 @@ async function writeFixture(params: { fixture: CodexModelPromptFixture; outputDi
   return { promptPath, metadataPath };
 }
 
+/** Run the prompt fixture sync CLI with optional env/home/stdout injection for tests. */
 export async function runCodexModelPromptFixtureSync(
   argv = process.argv.slice(2),
   options: {

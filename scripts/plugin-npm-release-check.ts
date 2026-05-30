@@ -1,5 +1,5 @@
 #!/usr/bin/env -S node --import tsx
-// scripts plugin npm release check helpers and runtime behavior.
+// Plugin npm release check resolves publishable plugin packages and validates metadata.
 
 import { pathToFileURL } from "node:url";
 import {
@@ -10,6 +10,7 @@ import {
   resolveSelectedPublishablePluginPackages,
 } from "./lib/plugin-npm-release.ts";
 
+/** Run plugin npm release metadata checks for selected or changed packages. */
 export function runPluginNpmReleaseCheck(argv: string[]) {
   const { selection, selectionMode, baseRef, headRef } = parsePluginReleaseArgs(argv);
   const changedExtensionIds =

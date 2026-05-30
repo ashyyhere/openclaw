@@ -1,5 +1,5 @@
 #!/usr/bin/env -S node --import tsx
-// scripts/dev channel message flows helpers and runtime behavior.
+// Channel message flow previewer sends Telegram thinking/working drafts plus final replies.
 import { setTimeout as sleep } from "node:timers/promises";
 import { fileURLToPath } from "node:url";
 import { Bot, type ApiClientOptions } from "grammy";
@@ -28,6 +28,7 @@ import { formatChannelProgressDraftText } from "../../src/plugin-sdk/channel-out
 type SupportedChannel = "telegram";
 type SupportedFlow = "thinking-final" | "working-final";
 
+/** Parsed CLI options shared by supported channel message preview flows. */
 export type ChannelMessageFlowArgs = {
   accountId?: string;
   channel: SupportedChannel;
@@ -69,11 +70,13 @@ type TelegramThinkingFinalDeps = {
   sleep?: (ms: number) => Promise<void>;
 };
 
+/** Options for the Telegram thinking-preview-to-final flow. */
 export type TelegramThinkingFinalFlowOptions = ChannelMessageFlowArgs & {
   cfg: OpenClawConfig;
   thinkingUpdates?: readonly string[];
 };
 
+/** Options for the Telegram working-preview-to-final flow. */
 export type TelegramWorkingFinalFlowOptions = ChannelMessageFlowArgs & {
   cfg: OpenClawConfig;
 };
@@ -155,6 +158,7 @@ function parseIntegerFlag(raw: string | undefined, label: string): number | unde
   return Number(raw);
 }
 
+/** Parse CLI flags for channel message flow previews. */
 export function parseChannelMessageFlowArgs(args: readonly string[]): ChannelMessageFlowArgs {
   if (args.includes("--help") || args.includes("-h")) {
     throw new Error(usage());
@@ -228,6 +232,7 @@ function createTelegramFlowApi(params: { accountId?: string; cfg: OpenClawConfig
   } as Bot["api"];
 }
 
+/** Convert an optional Telegram thread ID into a forum thread spec. */
 export function resolveTelegramFlowThreadSpec(threadId?: number): TelegramThreadSpec | undefined {
   return typeof threadId === "number" ? { id: threadId, scope: "forum" } : undefined;
 }
@@ -297,6 +302,7 @@ async function sendTelegramFinal(params: TelegramSendFinalParams): Promise<{ mes
   });
 }
 
+/** Run the Telegram thinking-preview flow and send a final message. */
 export async function runTelegramThinkingFinalFlow(
   options: TelegramThinkingFinalFlowOptions,
   deps: TelegramThinkingFinalDeps = {},
@@ -334,6 +340,7 @@ export async function runTelegramThinkingFinalFlow(
   };
 }
 
+/** Run the Telegram working-progress draft flow and send a final message. */
 export async function runTelegramWorkingFinalFlow(
   options: TelegramWorkingFinalFlowOptions,
   deps: TelegramThinkingFinalDeps = {},
@@ -378,6 +385,7 @@ export async function runTelegramWorkingFinalFlow(
   };
 }
 
+/** CLI entrypoint for channel message flow previews. */
 export async function main(args = process.argv.slice(2)): Promise<void> {
   if (args.includes("--help") || args.includes("-h")) {
     process.stdout.write(`${usage()}\n`);

@@ -1,5 +1,5 @@
 #!/usr/bin/env bun
-// scripts/dev discord acp plain language smoke helpers and runtime behavior.
+// Discord ACP plain-language smoke validates thread routing and cleanup against live Discord.
 import { execFile } from "node:child_process";
 // Manual ACP thread smoke for plain-language routing.
 // Keep this script available for regression/debug validation. Do not delete.
@@ -1052,6 +1052,7 @@ async function main(): Promise<number> {
   return result.ok ? 0 : 1;
 }
 
+/** Test-only access to Discord ACP smoke parsing, timing, and request helpers. */
 export const testing = {
   parseDriverMode,
   parseNumber,

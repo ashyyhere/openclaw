@@ -1,4 +1,4 @@
-// scripts tool display helpers and runtime behavior.
+// Tool display snapshot script verifies shared app metadata for core tool labels/icons.
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";

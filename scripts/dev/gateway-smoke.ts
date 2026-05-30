@@ -1,4 +1,4 @@
-// scripts/dev gateway smoke helpers and runtime behavior.
+// Gateway smoke CLI verifies operator WebSocket connect and health RPC behavior.
 import {
   MIN_CLIENT_PROTOCOL_VERSION,
   PROTOCOL_VERSION,

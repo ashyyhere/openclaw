@@ -1,4 +1,4 @@
-// scripts/dev test device pair telegram helpers and runtime behavior.
+// Telegram device-pair dev helper executes /pair and sends the split response to a chat.
 import { sendMessageTelegram } from "../../extensions/telegram/runtime-api.js";
 import { getRuntimeConfig } from "../../src/config/config.js";
 import { matchPluginCommand, executePluginCommand } from "../../src/plugins/commands.js";

@@ -1,5 +1,5 @@
 #!/usr/bin/env -S node --import tsx
-// scripts plugin clawhub owner preflight helpers and runtime behavior.
+// ClawHub owner preflight verifies OpenClaw owns candidate plugin packages before release.
 
 import { readFileSync } from "node:fs";
 import { pathToFileURL } from "node:url";
@@ -11,6 +11,7 @@ type ReleasePlanFile = {
   }>;
 };
 
+/** Run ClawHub owner validation for plugin packages listed in a release plan. */
 export async function runClawHubOwnerPreflight(argv: string[]) {
   const planPath = argv[0];
   if (!planPath) {

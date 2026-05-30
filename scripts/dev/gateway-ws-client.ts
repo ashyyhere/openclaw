@@ -1,8 +1,10 @@
-// scripts/dev gateway ws client helpers and runtime behavior.
+// Gateway WebSocket dev client sends request frames and dispatches responses/events.
 import { randomUUID } from "node:crypto";
 import WebSocket from "ws";
 
+/** Gateway request frame sent by the dev WebSocket client. */
 export type GatewayReqFrame = { type: "req"; id: string; method: string; params?: unknown };
+/** Gateway response frame matched by request ID. */
 export type GatewayResFrame = {
   type: "res";
   id: string;
@@ -10,13 +12,16 @@ export type GatewayResFrame = {
   payload?: unknown;
   error?: unknown;
 };
+/** Gateway event frame delivered outside request/response flow. */
 export type GatewayEventFrame = { type: "event"; event: string; seq?: number; payload?: unknown };
+/** Any frame shape accepted by the loose dev WebSocket client parser. */
 export type GatewayFrame =
   | GatewayReqFrame
   | GatewayResFrame
   | GatewayEventFrame
   | { type: string; [key: string]: unknown };
 
+/** Create small flag reader helpers for dev gateway scripts. */
 export function createArgReader(argv = process.argv.slice(2)) {
   const get = (flag: string) => {
     const idx = argv.indexOf(flag);
@@ -29,6 +34,7 @@ export function createArgReader(argv = process.argv.slice(2)) {
   return { argv, get, has };
 }
 
+/** Normalize a gateway URL, defaulting to wss and filling the default port. */
 export function resolveGatewayUrl(urlRaw: string): URL {
   const url = new URL(urlRaw.includes("://") ? urlRaw : `wss://${urlRaw}`);
   if (!url.port) {
@@ -50,6 +56,7 @@ function toText(data: WebSocket.RawData): string {
   return Buffer.from(data as Buffer).toString("utf8");
 }
 
+/** Create a request/response WebSocket client for gateway dev smoke scripts. */
 export function createGatewayWsClient(params: {
   url: string;
   handshakeTimeoutMs?: number;
