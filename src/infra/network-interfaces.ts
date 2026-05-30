@@ -1,7 +1,8 @@
-// infra network interfaces helpers and runtime behavior.
+// Network interface discovery helpers.
+// Callers can inject snapshots for tests while production reads node:os directly.
 import os from "node:os";
 
-/** Shared type for Network Interfaces Snapshot in src/infra. */
+/** Raw network interface snapshot shape returned by node:os. */
 export type NetworkInterfacesSnapshot = ReturnType<typeof os.networkInterfaces>;
 type NetworkInterfaceFamily = "IPv4" | "IPv6";
 type ExternalNetworkInterfaceAddress = {
@@ -22,14 +23,14 @@ function normalizeNetworkInterfaceFamily(
   return undefined;
 }
 
-/** Reused helper for read Network Interfaces behavior in src/infra. */
+/** Read the current network interface snapshot from an injectable source. */
 export function readNetworkInterfaces(
   networkInterfaces: () => NetworkInterfacesSnapshot = os.networkInterfaces,
 ): NetworkInterfacesSnapshot {
   return networkInterfaces();
 }
 
-/** Reused helper for safe Network Interfaces behavior in src/infra. */
+/** Read network interfaces and return undefined if the OS call fails. */
 export function safeNetworkInterfaces(
   networkInterfaces: () => NetworkInterfacesSnapshot = os.networkInterfaces,
 ): NetworkInterfacesSnapshot | undefined {
@@ -40,7 +41,7 @@ export function safeNetworkInterfaces(
   }
 }
 
-/** Reused helper for list External Interface Addresses behavior in src/infra. */
+/** List non-internal IPv4/IPv6 interface addresses, optionally filtered by family. */
 export function listExternalInterfaceAddresses(
   snapshot: NetworkInterfacesSnapshot | undefined,
   family?: NetworkInterfaceFamily,
@@ -73,7 +74,7 @@ export function listExternalInterfaceAddresses(
   return addresses;
 }
 
-/** Reused helper for pick Matching External Interface Address behavior in src/infra. */
+/** Pick the first external address matching preferred interface names or predicate. */
 export function pickMatchingExternalInterfaceAddress(
   snapshot: NetworkInterfacesSnapshot | undefined,
   params: {

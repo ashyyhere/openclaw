@@ -1,4 +1,5 @@
-// infra exec approval command display helpers and runtime behavior.
+// Exec approval display sanitization.
+// Redacts secrets and escapes invisible characters before commands are shown to users.
 import { redactSensitiveText, resolveRedactOptions } from "../logging/redact.js";
 import type { ExecApprovalRequestPayload } from "./exec-approvals.js";
 
@@ -39,7 +40,7 @@ function escapeInvisibles(text: string, options?: { preserveLineBreaks?: boolean
   );
 }
 
-/** Shared type for Sanitized Exec Approval Display Text in src/infra. */
+/** Sanitized approval text plus truncation/oversize status for UI decisions. */
 export type SanitizedExecApprovalDisplayText = {
   text: string;
   truncated: boolean;
@@ -182,19 +183,19 @@ function sanitizeExecApprovalDisplayTextInternal(
   return truncateForDisplay(out);
 }
 
-/** Reused helper for sanitize Exec Approval Display Text behavior in src/infra. */
+/** Sanitize command text for approval prompts, returning display text only. */
 export function sanitizeExecApprovalDisplayText(commandText: string): string {
   return sanitizeExecApprovalDisplayTextInternal(commandText).text;
 }
 
-/** Reused helper for sanitize Exec Approval Display Text With Status behavior in src/infra. */
+/** Sanitize command text and report whether truncation or hard suppression happened. */
 export function sanitizeExecApprovalDisplayTextWithStatus(
   commandText: string,
 ): SanitizedExecApprovalDisplayText {
   return sanitizeExecApprovalDisplayTextInternal(commandText);
 }
 
-/** Reused helper for sanitize Exec Approval Warning Text behavior in src/infra. */
+/** Sanitize approval warning text while preserving real line breaks for readability. */
 export function sanitizeExecApprovalWarningText(warningText: string): string {
   return sanitizeExecApprovalDisplayTextInternal(normalizeDisplayLineBreaks(warningText), {
     preserveLineBreaks: true,
@@ -214,7 +215,7 @@ function normalizePreview(commandText: string, commandPreview?: string | null): 
   return preview;
 }
 
-/** Reused helper for resolve Exec Approval Command Display behavior in src/infra. */
+/** Resolve sanitized command text and optional preview from an approval request payload. */
 export function resolveExecApprovalCommandDisplay(request: ExecApprovalRequestPayload): {
   commandText: string;
   commandPreview: string | null;

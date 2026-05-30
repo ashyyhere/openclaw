@@ -1,5 +1,6 @@
-// Shared types for infra/command-explainer types behavior.
-/** Shared type for Command Context in src/infra/command-explainer. */
+// Command explainer result contracts.
+// Parsers fill these shapes so approval logic can reason about command structure and risk.
+/** Syntactic context where a command step was found. */
 export type CommandContext =
   | "top-level"
   | "command-substitution"
@@ -7,7 +8,7 @@ export type CommandContext =
   | "function-definition"
   | "wrapper-payload";
 
-/** Shared type for Command Shape in src/infra/command-explainer. */
+/** Top-level shell control-flow shape detected in a command string. */
 export type CommandShape =
   | "pipeline"
   | "and"
@@ -21,7 +22,7 @@ export type CommandShape =
   | "group"
   | "background";
 
-/** Shared type for Source Span in src/infra/command-explainer. */
+/** Source byte/position span reported by the shell parser. */
 export type SourceSpan = {
   startIndex: number;
   endIndex: number;
@@ -29,7 +30,7 @@ export type SourceSpan = {
   endPosition: { row: number; column: number };
 };
 
-/** Shared type for Command Step in src/infra/command-explainer. */
+/** One executable command discovered in top-level or nested shell syntax. */
 export type CommandStep = {
   context: CommandContext;
   executable: string;
@@ -39,7 +40,7 @@ export type CommandStep = {
   executableSpan: SourceSpan;
 };
 
-/** Shared type for Command Risk in src/infra/command-explainer. */
+/** Risk marker emitted for shell features that can hide or compose execution. */
 export type CommandRisk =
   | { kind: "inline-eval"; command: string; flag: string; text: string; span: SourceSpan }
   | {
@@ -72,7 +73,7 @@ export type CommandRisk =
   | { kind: "redirect"; text: string; span: SourceSpan }
   | { kind: "syntax-error"; text: string; span: SourceSpan };
 
-/** Shared type for Command Explanation in src/infra/command-explainer. */
+/** Complete parser summary used by exec approval and diagnostics. */
 export type CommandExplanation = {
   ok: boolean;
   source: string;

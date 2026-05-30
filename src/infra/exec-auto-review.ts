@@ -1,8 +1,9 @@
-// infra exec auto review helpers and runtime behavior.
-/** Shared type for Exec Auto Review Risk in src/infra. */
+// Exec approval auto-review contracts.
+// Model-backed reviewers can approve low-risk commands; fallback always asks.
+/** Risk level returned by an exec auto reviewer. */
 export type ExecAutoReviewRisk = "unknown" | "low" | "medium" | "high";
 
-/** Shared type for Exec Auto Review Decision in src/infra. */
+/** Auto-review decision used before falling back to human approval. */
 export type ExecAutoReviewDecision =
   | {
       decision: "allow-once";
@@ -15,10 +16,10 @@ export type ExecAutoReviewDecision =
       risk: ExecAutoReviewRisk;
     };
 
-/** Shared type for Exec Auto Review Host in src/infra. */
+/** Runtime host that requested exec approval review. */
 export type ExecAutoReviewHost = "gateway" | "node";
 
-/** Shared type for Exec Auto Review Input in src/infra. */
+/** Command facts and parser analysis passed to an exec auto reviewer. */
 export type ExecAutoReviewInput = {
   command: string;
   argv?: readonly string[];
@@ -46,7 +47,7 @@ export type ExecAutoReviewInput = {
   };
 };
 
-/** Shared type for Exec Auto Reviewer in src/infra. */
+/** Reviewer function that may allow a command once or require approval. */
 export type ExecAutoReviewer = (
   input: ExecAutoReviewInput,
 ) => Promise<ExecAutoReviewDecision> | ExecAutoReviewDecision;

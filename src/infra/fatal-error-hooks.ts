@@ -1,11 +1,12 @@
-// infra fatal error hooks helpers and runtime behavior.
-/** Shared type for Fatal Error Hook Context in src/infra. */
+// Fatal-error hook registry.
+// Hooks can append final diagnostics without throwing through shutdown paths.
+/** Context passed to fatal-error hooks before process exit/reporting. */
 export type FatalErrorHookContext = {
   reason: string;
   error?: unknown;
 };
 
-/** Shared type for Fatal Error Hook in src/infra. */
+/** Hook that may return one diagnostic line for a fatal error. */
 export type FatalErrorHook = (context: FatalErrorHookContext) => string | undefined | void;
 
 const hooks = new Set<FatalErrorHook>();
@@ -15,7 +16,7 @@ function formatHookFailure(error: unknown): string {
   return `fatal-error hook failed: ${name}`;
 }
 
-/** Reused helper for register Fatal Error Hook behavior in src/infra. */
+/** Register a fatal-error hook and return an unregister callback. */
 export function registerFatalErrorHook(hook: FatalErrorHook): () => void {
   hooks.add(hook);
   return () => {
@@ -23,7 +24,7 @@ export function registerFatalErrorHook(hook: FatalErrorHook): () => void {
   };
 }
 
-/** Reused helper for run Fatal Error Hooks behavior in src/infra. */
+/** Run registered fatal-error hooks, converting hook failures into diagnostics. */
 export function runFatalErrorHooks(context: FatalErrorHookContext): string[] {
   const messages: string[] = [];
   for (const hook of hooks) {
@@ -39,7 +40,7 @@ export function runFatalErrorHooks(context: FatalErrorHookContext): string[] {
   return messages;
 }
 
-/** Reused helper for reset Fatal Error Hooks For Test behavior in src/infra. */
+/** Clear hook state for isolated tests. */
 export function resetFatalErrorHooksForTest(): void {
   hooks.clear();
 }
