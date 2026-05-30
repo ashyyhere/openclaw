@@ -1,4 +1,4 @@
-// test/vitest discord api types payloads v10 runtime helpers and runtime behavior.
+// Discord payload API runtime facade exposes CJS enum constants to ESM tests.
 import { createRequire } from "node:module";
 import type * as DiscordPayloadApiTypes from "discord-api-types/payloads/v10";
 
@@ -7,7 +7,9 @@ const discordPayloadApiTypes = requireDiscordPayloadApiTypes(
   "discord-api-types/payloads/v10",
 ) as typeof DiscordPayloadApiTypes;
 
+/** Runtime payload module loaded through Node's CommonJS resolver. */
 export default discordPayloadApiTypes;
+/** Re-exported Discord payload enum and constant values used by ESM tests. */
 export const {
   APIApplicationCommandPermissionsConstant,
   ActivityFlags,

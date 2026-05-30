@@ -1,4 +1,4 @@
-// test/vitest vitest live config helpers and runtime behavior.
+// Live Vitest config overlays the base project with serial live-provider execution settings.
 import { defineConfig } from "vitest/config";
 import { BUNDLED_PLUGIN_LIVE_TEST_GLOB } from "./vitest.bundled-plugin-paths.ts";
 import baseConfig from "./vitest.config.ts";
@@ -14,6 +14,7 @@ const { projects: _projects, ...baseTest } = baseTestWithProjects as {
 };
 const exclude = (baseTest.exclude ?? []).filter((p) => p !== "**/*.live.test.ts");
 
+/** Default live Vitest config with project lists removed and live globs re-enabled. */
 export default defineConfig({
   ...base,
   test: {
