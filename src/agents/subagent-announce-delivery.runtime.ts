@@ -1,28 +1,28 @@
 /** Runtime imports isolated for subagent announcement delivery tests and lazy loading. */
 export { getRuntimeConfig } from "../config/config.js";
-/** Re-exported API for src/agents. */
+/** Session-store helpers used by subagent announce delivery. */
 export {
   loadSessionStore,
   resolveAgentIdFromSessionKey,
   resolveStorePath,
 } from "../config/sessions.js";
-/** Re-exported API for src/agents, starting with call Gateway. */
+/** Gateway caller used when announce delivery routes through gateway RPC. */
 export { callGateway } from "../gateway/call.js";
-/** Re-exported API for src/agents, starting with dispatch Gateway Method In Process. */
+/** In-process gateway dispatcher used by local announce delivery. */
 export { dispatchGatewayMethodInProcess } from "../gateway/server-plugins.js";
-/** Re-exported API for src/agents, starting with resolve Queue Settings. */
+/** Queue settings resolver used before enqueueing announce replies. */
 export { resolveQueueSettings } from "../auto-reply/reply/queue.js";
-/** Re-exported API for src/agents, starting with resolve External Best Effort Delivery Target. */
+/** Best-effort outbound target resolver for announce delivery fallback. */
 export { resolveExternalBestEffortDeliveryTarget } from "../infra/outbound/best-effort-delivery.js";
-/** Re-exported API for src/agents, starting with send Message. */
+/** Outbound message sender used by subagent announce delivery. */
 export { sendMessage } from "../infra/outbound/message.js";
-/** Re-exported API for src/agents, starting with create Bound Delivery Router. */
+/** Bound delivery router factory for scoped announce delivery. */
 export { createBoundDeliveryRouter } from "../infra/outbound/bound-delivery-router.js";
-/** Re-exported API for src/agents, starting with resolve Conversation Id From Targets. */
+/** Conversation id resolver for announce delivery target metadata. */
 export { resolveConversationIdFromTargets } from "../infra/outbound/conversation-id.js";
-/** Re-exported API for src/agents, starting with get Global Hook Runner. */
+/** Hook runner accessor used to notify delivery lifecycle hooks. */
 export { getGlobalHookRunner } from "../plugins/hook-runner-global.js";
-/** Re-exported API for src/agents. */
+/** Embedded run queue helpers used by subagent announce delivery. */
 export {
   formatEmbeddedAgentQueueFailureSummary,
   isEmbeddedAgentRunActive,

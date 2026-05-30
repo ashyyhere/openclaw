@@ -36,7 +36,7 @@ import type {
   ProfileUsageStats,
 } from "./types.js";
 
-/** Shared type for Legacy Auth Store in src/agents/auth-profiles. */
+/** Legacy provider-keyed auth store shape migrated into profile records. */
 export type LegacyAuthStore = Record<string, AuthProfileCredential>;
 
 type LoadPersistedAuthProfileStoreOptions = {
@@ -305,14 +305,14 @@ function resolveLegacyOAuthSidecarCredential(params: {
   return credential;
 }
 
-/** Reused helper for is Runtime Legacy OAuth Sidecar Credential behavior in src/agents/auth-profiles. */
+/** Detects OAuth credentials hydrated from a legacy sidecar during this runtime. */
 export function isRuntimeLegacyOAuthSidecarCredential(
   credential: AuthProfileCredential | undefined,
 ): boolean {
   return credential?.type === "oauth" && runtimeLegacyOAuthSidecarCredentials.has(credential);
 }
 
-/** Reused helper for matches Runtime Legacy OAuth Sidecar Material behavior in src/agents/auth-profiles. */
+/** Matches a credential against runtime fingerprints for legacy OAuth sidecar material. */
 export function matchesRuntimeLegacyOAuthSidecarMaterial(params: {
   authPath?: string;
   profileId: string;
@@ -358,7 +358,7 @@ function coerceLegacyAuthStore(raw: unknown): LegacyAuthStore | null {
   return Object.keys(entries).length > 0 ? entries : null;
 }
 
-/** Reused helper for coerce Persisted Auth Profile Store behavior in src/agents/auth-profiles. */
+/** Coerces persisted auth profile JSON into the normalized profile store shape. */
 export function coercePersistedAuthProfileStore(
   raw: unknown,
   options?: LoadPersistedAuthProfileStoreOptions,
@@ -718,7 +718,7 @@ function reconcileMainStoreOAuthProfileDrift(params: {
   });
 }
 
-/** Reused helper for merge Auth Profile Stores behavior in src/agents/auth-profiles. */
+/** Merges base and override auth profile stores while preserving valid references. */
 export function mergeAuthProfileStores(
   base: AuthProfileStore,
   override: AuthProfileStore,
@@ -814,7 +814,7 @@ export function mergeAuthProfileStores(
   });
 }
 
-/** Reused helper for build Persisted Auth Profile Secrets Store behavior in src/agents/auth-profiles. */
+/** Serializes an auth profile store for persistence with secret values redacted or preserved. */
 export function buildPersistedAuthProfileSecretsStore(
   store: AuthProfileStore,
   shouldPersistProfile?: (params: {
@@ -934,7 +934,7 @@ function isSameLegacyOAuthSecretMaterial(
   );
 }
 
-/** Reused helper for apply Legacy Auth Store behavior in src/agents/auth-profiles. */
+/** Applies legacy provider-keyed credentials as default auth profiles. */
 export function applyLegacyAuthStore(store: AuthProfileStore, legacy: LegacyAuthStore): void {
   for (const [provider, cred] of Object.entries(legacy)) {
     const profileId = `${provider}:default`;
@@ -972,7 +972,7 @@ export function applyLegacyAuthStore(store: AuthProfileStore, legacy: LegacyAuth
   }
 }
 
-/** Reused helper for merge OAuth File Into Store behavior in src/agents/auth-profiles. */
+/** Imports legacy oauth.json credentials into missing default OAuth profiles. */
 export function mergeOAuthFileIntoStore(store: AuthProfileStore): boolean {
   const oauthPath = resolveOAuthPath();
   const oauthRaw = loadJsonFile(oauthPath);
@@ -999,7 +999,7 @@ export function mergeOAuthFileIntoStore(store: AuthProfileStore): boolean {
   return mutated;
 }
 
-/** Reused helper for load Persisted Auth Profile Store behavior in src/agents/auth-profiles. */
+/** Loads the normalized auth profile store plus companion persisted state. */
 export function loadPersistedAuthProfileStore(
   agentDir?: string,
   options?: LoadPersistedAuthProfileStoreOptions,
@@ -1017,7 +1017,7 @@ export function loadPersistedAuthProfileStore(
   return merged;
 }
 
-/** Reused helper for load Legacy Auth Profile Store behavior in src/agents/auth-profiles. */
+/** Loads the legacy auth profile store if present. */
 export function loadLegacyAuthProfileStore(agentDir?: string): LegacyAuthStore | null {
   return coerceLegacyAuthStore(loadJsonFile(resolveLegacyAuthStorePath(agentDir)));
 }

@@ -1,7 +1,7 @@
 /** Normalizes model usage and token accounting from provider responses. */
 import { asFiniteNumber } from "../shared/number-coercion.js";
 
-/** Shared type for Usage Like in src/agents. */
+/** Provider usage payload shape with common token-field aliases. */
 export type UsageLike = {
   input?: number;
   output?: number;
@@ -43,7 +43,7 @@ export type UsageLike = {
   };
 };
 
-/** Shared type for Normalized Usage in src/agents. */
+/** Canonical usage counters used by OpenClaw accounting and display layers. */
 export type NormalizedUsage = {
   input?: number;
   output?: number;
@@ -53,7 +53,7 @@ export type NormalizedUsage = {
   total?: number;
 };
 
-/** Shared type for Open Ai Chat Completions Usage in src/agents. */
+/** OpenAI Chat Completions-compatible usage response shape. */
 export type OpenAiChatCompletionsUsage = {
   prompt_tokens: number;
   completion_tokens: number;
@@ -62,7 +62,7 @@ export type OpenAiChatCompletionsUsage = {
   completion_tokens_details?: { reasoning_tokens: number };
 };
 
-/** Shared type for Assistant Usage Snapshot in src/agents. */
+/** Zero-or-more token and cost counters captured for assistant status. */
 export type AssistantUsageSnapshot = {
   input: number;
   output: number;
@@ -78,7 +78,7 @@ export type AssistantUsageSnapshot = {
   };
 };
 
-/** Reused helper for make Zero Usage Snapshot behavior in src/agents. */
+/** Creates an empty assistant usage snapshot with every counter initialized. */
 export function makeZeroUsageSnapshot(): AssistantUsageSnapshot {
   return {
     input: 0,
@@ -96,7 +96,7 @@ export function makeZeroUsageSnapshot(): AssistantUsageSnapshot {
   };
 }
 
-/** Reused helper for has Nonzero Usage behavior in src/agents. */
+/** Checks whether a normalized usage payload contains any positive counter. */
 export function hasNonzeroUsage(usage?: NormalizedUsage | null): usage is NormalizedUsage {
   if (!usage) {
     return false;
@@ -122,7 +122,7 @@ const normalizeTokenCount = (value: unknown): number | undefined => {
   return Math.min(Math.trunc(numeric), Number.MAX_SAFE_INTEGER);
 };
 
-/** Reused helper for normalize Usage behavior in src/agents. */
+/** Normalizes provider-specific usage aliases into OpenClaw token counters. */
 export function normalizeUsage(raw?: UsageLike | null): NormalizedUsage | undefined {
   if (!raw) {
     return undefined;
@@ -246,7 +246,7 @@ export function toOpenAiChatCompletionsUsage(
   };
 }
 
-/** Reused helper for derive Prompt Tokens behavior in src/agents. */
+/** Derives prompt/context tokens from input plus cache read/write counters. */
 export function derivePromptTokens(usage?: {
   input?: number;
   cacheRead?: number;
@@ -262,7 +262,7 @@ export function derivePromptTokens(usage?: {
   return sum > 0 ? sum : undefined;
 }
 
-/** Reused helper for derive Context Prompt Tokens behavior in src/agents. */
+/** Chooses prompt-token override or derives context prompt tokens from usage. */
 export function deriveContextPromptTokens(params: {
   lastCallUsage?: NormalizedUsage;
   promptTokens?: number;
@@ -276,7 +276,7 @@ export function deriveContextPromptTokens(params: {
   return derivePromptTokens(params.lastCallUsage) ?? derivePromptTokens(params.usage);
 }
 
-/** Reused helper for derive Session Total Tokens behavior in src/agents. */
+/** Derives the session prompt-token snapshot persisted on session entries. */
 export function deriveSessionTotalTokens(params: {
   usage?: {
     input?: number;
