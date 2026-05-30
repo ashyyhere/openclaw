@@ -1,7 +1,5 @@
-// plugins loader cache state helpers and runtime behavior.
 import { PluginLruCache } from "./plugin-cache-primitives.js";
 
-/** Reused class for Plugin Load Reentry Error behavior in src/plugins. */
 export class PluginLoadReentryError extends Error {
   readonly cacheKey: string;
 
@@ -12,7 +10,6 @@ export class PluginLoadReentryError extends Error {
   }
 }
 
-/** Reused class for Plugin Loader Cache State behavior in src/plugins. */
 export class PluginLoaderCacheState<T> {
   readonly #registryCache: PluginLruCache<T>;
   readonly #inFlightLoads = new Set<string>();

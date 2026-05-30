@@ -29,7 +29,6 @@ export type HookDecisionBlock = {
   metadata?: Record<string, unknown>;
 };
 
-/** Reused helper for resolve Block Message behavior in src/plugins. */
 export function resolveBlockMessage(
   decision: HookDecisionBlock,
   params: { blockedBy?: string } = {},

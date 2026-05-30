@@ -1,4 +1,3 @@
-// plugins agent tool result middleware helpers and runtime behavior.
 import type {
   AgentToolResultMiddleware,
   AgentToolResultMiddlewareOptions,
@@ -6,7 +5,6 @@ import type {
 } from "./agent-tool-result-middleware-types.js";
 import { getActivePluginRegistry } from "./runtime.js";
 
-/** Reused constant for AGENT TOOL RESULT MIDDLEWARE RUNTIMES behavior in src/plugins. */
 export const AGENT_TOOL_RESULT_MIDDLEWARE_RUNTIMES = [
   "openclaw",
   "codex",
@@ -36,7 +34,6 @@ function normalizeAgentToolResultMiddlewareRuntime(
     : undefined;
 }
 
-/** Reused helper for normalize Agent Tool Result Middleware Runtimes behavior in src/plugins. */
 export function normalizeAgentToolResultMiddlewareRuntimes(
   options?: AgentToolResultMiddlewareOptions,
 ): AgentToolResultMiddlewareRuntime[] {
@@ -61,7 +58,6 @@ export function normalizeAgentToolResultMiddlewareRuntimes(
 export const normalizeAgentToolResultMiddlewareHarnesses =
   normalizeAgentToolResultMiddlewareRuntimes;
 
-/** Reused helper for normalize Agent Tool Result Middleware Runtime Ids behavior in src/plugins. */
 export function normalizeAgentToolResultMiddlewareRuntimeIds(
   runtimes: readonly string[] | undefined,
 ): AgentToolResultMiddlewareRuntime[] {
@@ -75,7 +71,6 @@ export function normalizeAgentToolResultMiddlewareRuntimeIds(
   return normalized;
 }
 
-/** Reused helper for list Agent Tool Result Middlewares behavior in src/plugins. */
 export function listAgentToolResultMiddlewares(
   runtime: AgentToolResultMiddlewareRuntime,
 ): AgentToolResultMiddleware[] {
