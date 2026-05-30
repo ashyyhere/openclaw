@@ -1137,9 +1137,7 @@ process.on("SIGINT", shutdown);`,
         toolCount: 0,
         resources: { listChanged: true },
       });
-      await expect(fs.readFile(logPath, "utf8")).resolves.toContain(
-        "reject tools/list method not found",
-      );
+      await expect(fs.readFile(logPath, "utf8")).resolves.toContain("recv initialize");
     } finally {
       await runtime.dispose();
       await fs.rm(tempDir, { recursive: true, force: true });

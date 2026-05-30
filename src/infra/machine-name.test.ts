@@ -10,6 +10,7 @@ vi.mock("node:child_process", async () => {
     Object.assign(execFileMock, {
       __promisify__: vi.fn(),
     }) as typeof import("node:child_process").execFile,
+    () => vi.importActual<typeof import("node:child_process")>("node:child_process"),
   );
 });
 
