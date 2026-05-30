@@ -3,7 +3,7 @@ import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 import { uniqueStrings } from "../shared/string-normalization.js";
 import { IMPLICIT_ALLOW_ALL_FROM_ALSO_ALLOW } from "./sandbox-tool-policy.js";
 import { expandToolGroups, normalizeToolList, normalizeToolName } from "./tool-policy-shared.js";
-/** Re-exported API for src/agents. */
+/** Shared tool policy normalization and profile helpers. */
 export {
   expandToolGroups,
   normalizeToolList,
@@ -11,33 +11,33 @@ export {
   resolveToolProfilePolicy,
   TOOL_GROUPS,
 } from "./tool-policy-shared.js";
-/** Re-exported API for src/agents, starting with Tool Profile Id. */
+/** Identifier for a named tool policy profile. */
 export type { ToolProfileId } from "./tool-policy-shared.js";
 
-/** Shared type for Tool Policy Like in src/agents. */
+/** Minimal allow/deny tool policy accepted by policy combinators. */
 export type ToolPolicyLike = {
   allow?: string[];
   deny?: string[];
   [IMPLICIT_ALLOW_ALL_FROM_ALSO_ALLOW]?: true;
 };
 
-/** Shared type for Plugin Tool Groups in src/agents. */
+/** Normalized plugin tool groups by all plugin tools and plugin id. */
 export type PluginToolGroups = {
   all: string[];
   byPlugin: Map<string, string[]>;
 };
 
-/** Shared type for Allowlist Resolution in src/agents. */
+/** Analysis result for allowlists that may target core tools, plugin tools, or unknown names. */
 export type AllowlistResolution = {
   policy: ToolPolicyLike | undefined;
   unknownAllowlist: string[];
   pluginOnlyAllowlist: boolean;
 };
 
-/** Reused constant for DEFAULT PLUGIN TOOLS ALLOWLIST ENTRY behavior in src/agents. */
+/** Synthetic allowlist entry used when also_allow grants default plugin tools. */
 export const DEFAULT_PLUGIN_TOOLS_ALLOWLIST_ENTRY = "__openclaw_default_plugin_tools__";
 
-/** Reused helper for has Restrictive Allow Policy behavior in src/agents. */
+/** Returns true when a policy allowlist names tools beyond wildcards/default plugin tools. */
 export function hasRestrictiveAllowPolicy(policy?: { allow?: string[] }): boolean {
   return (
     Array.isArray(policy?.allow) &&
@@ -52,7 +52,7 @@ export function hasRestrictiveAllowPolicy(policy?: { allow?: string[] }): boolea
   );
 }
 
-/** Reused helper for replace With Effective Tool Allowlist behavior in src/agents. */
+/** Replaces a target allowlist with normalized names from the effective tool set. */
 export function replaceWithEffectiveToolAllowlist(
   target: string[],
   tools: Array<{ name: string }>,
@@ -69,7 +69,7 @@ export function replaceWithEffectiveToolAllowlist(
   }
 }
 
-/** Reused helper for collect Explicit Allowlist behavior in src/agents. */
+/** Collects explicit allowlist entries while preserving the default-plugin-tools marker. */
 export function collectExplicitAllowlist(policies: Array<ToolPolicyLike | undefined>): string[] {
   const entries: string[] = [];
   for (const policy of policies) {
@@ -95,7 +95,7 @@ export function collectExplicitAllowlist(policies: Array<ToolPolicyLike | undefi
   return uniqueStrings(entries);
 }
 
-/** Reused helper for collect Explicit Denylist behavior in src/agents. */
+/** Collects explicit denylist entries from multiple tool policies. */
 export function collectExplicitDenylist(policies: Array<ToolPolicyLike | undefined>): string[] {
   const entries: string[] = [];
   for (const policy of policies) {
@@ -115,7 +115,7 @@ export function collectExplicitDenylist(policies: Array<ToolPolicyLike | undefin
   return entries;
 }
 
-/** Reused helper for build Plugin Tool Groups behavior in src/agents. */
+/** Builds plugin tool lookup groups from tool metadata. */
 export function buildPluginToolGroups<T extends { name: string }>(params: {
   tools: T[];
   toolMeta: (tool: T) => { pluginId: string } | undefined;
@@ -140,7 +140,7 @@ export function buildPluginToolGroups<T extends { name: string }>(params: {
   return { all, byPlugin };
 }
 
-/** Reused helper for expand Plugin Groups behavior in src/agents. */
+/** Expands plugin group entries into concrete normalized tool names. */
 export function expandPluginGroups(
   list: string[] | undefined,
   groups: PluginToolGroups,
@@ -169,7 +169,7 @@ export function expandPluginGroups(
   return uniqueStrings(expanded);
 }
 
-/** Reused helper for expand Policy With Plugin Groups behavior in src/agents. */
+/** Expands allow and deny plugin groups in a tool policy. */
 export function expandPolicyWithPluginGroups(
   policy: ToolPolicyLike | undefined,
   groups: PluginToolGroups,
@@ -183,7 +183,7 @@ export function expandPolicyWithPluginGroups(
   };
 }
 
-/** Reused helper for analyze Allowlist By Tool Type behavior in src/agents. */
+/** Classifies allowlist entries across core tools, plugin ids/tools, and unknown names. */
 export function analyzeAllowlistByToolType(
   policy: ToolPolicyLike | undefined,
   groups: PluginToolGroups,
@@ -224,7 +224,7 @@ export function analyzeAllowlistByToolType(
   };
 }
 
-/** Reused helper for merge Also Allow Policy behavior in src/agents. */
+/** Merges also_allow tool entries into an existing policy allowlist. */
 export function mergeAlsoAllowPolicy<TPolicy extends { allow?: string[] }>(
   policy: TPolicy | undefined,
   alsoAllow?: string[],
