@@ -1,4 +1,5 @@
-// infra/outbound targets helpers and runtime behavior.
+// Outbound delivery target resolution.
+// Handles explicit sends, heartbeat targets, session route adoption, and allowFrom sender context.
 import { mapAllowFromEntries } from "openclaw/plugin-sdk/channel-config-helpers";
 import { normalizeChatType, type ChatType } from "../../channels/chat-type.js";
 import type { ChannelOutboundTargetMode } from "../../channels/plugins/types.core.js";
@@ -31,13 +32,13 @@ import {
   type OutboundTargetResolution,
 } from "./targets-resolve-shared.js";
 
-/** Shared type for Outbound Channel in src/infra/outbound. */
+/** Deliverable outbound message channel id. */
 export type OutboundChannel = DeliverableMessageChannel;
 
-/** Shared type for Heartbeat Target in src/infra/outbound. */
+/** Heartbeat target channel, including "last" and "none" routing modes. */
 export type HeartbeatTarget = OutboundChannel;
 
-/** Shared type for Outbound Target in src/infra/outbound. */
+/** Resolved outbound delivery target plus routing metadata. */
 export type OutboundTarget = {
   channel: OutboundChannel;
   to?: string;
@@ -49,21 +50,21 @@ export type OutboundTarget = {
   lastAccountId?: string;
 };
 
-/** Shared type for Heartbeat Sender Context in src/infra/outbound. */
+/** Sender identity and allowFrom entries used when emitting heartbeat messages. */
 export type HeartbeatSenderContext = {
   sender: string;
   provider?: DeliverableMessageChannel;
   allowFrom: string[];
 };
 
-/** Re-exported API for src/infra/outbound, starting with Outbound Target Resolution. */
+/** Shared outbound target resolution result shape. */
 export type { OutboundTargetResolution } from "./targets-resolve-shared.js";
-/** Re-exported API for src/infra/outbound, starting with resolve Session Delivery Target. */
+/** Session delivery target resolver and result type. */
 export { resolveSessionDeliveryTarget, type SessionDeliveryTarget } from "./targets-session.js";
 import { resolveSessionDeliveryTarget, type SessionDeliveryTarget } from "./targets-session.js";
 
 // Channel docking: prefer plugin.outbound.resolveTarget + allowFrom to normalize destinations.
-/** Reused helper for resolve Outbound Target behavior in src/infra/outbound. */
+/** Resolve an explicit outbound target through the channel plugin facade. */
 export function resolveOutboundTarget(params: {
   channel: GatewayMessageChannel;
   to?: string;
@@ -95,7 +96,7 @@ export function resolveOutboundTarget(params: {
   );
 }
 
-/** Reused helper for resolve Heartbeat Delivery Target behavior in src/infra/outbound. */
+/** Resolve heartbeat delivery target from heartbeat config, session state, and turn source. */
 export function resolveHeartbeatDeliveryTarget(params: {
   cfg: OpenClawConfig;
   entry?: SessionEntry;
@@ -275,7 +276,7 @@ function buildNoHeartbeatDeliveryTarget(params: {
   };
 }
 
-/** Reused helper for resolve Heartbeat Delivery Target With Session Route behavior in src/infra/outbound. */
+/** Resolve heartbeat target and adopt plugin session route details when available. */
 export async function resolveHeartbeatDeliveryTargetWithSessionRoute(params: {
   cfg: OpenClawConfig;
   agentId: string;
@@ -446,7 +447,7 @@ function resolveHeartbeatSenderId(params: {
   return candidates[0] ?? "heartbeat";
 }
 
-/** Reused helper for resolve Heartbeat Sender Context behavior in src/infra/outbound. */
+/** Resolve heartbeat sender id from channel allowFrom entries and delivery/session target. */
 export function resolveHeartbeatSenderContext(params: {
   cfg: OpenClawConfig;
   entry?: SessionEntry;
