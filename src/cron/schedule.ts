@@ -1,11 +1,11 @@
-// cron schedule helpers and runtime behavior.
+// Cron schedule evaluators for one-shot, interval, and croner expression jobs.
 import { Cron } from "croner";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import { parseAbsoluteTimeMs } from "./parse.js";
 import { coerceFiniteScheduleNumber } from "./schedule-number.js";
 import type { CronSchedule } from "./types.js";
 
-/** Re-exported API for src/cron, starting with coerce Finite Schedule Number. */
+/** Numeric coercion used by schedule parsing and tests. */
 export { coerceFiniteScheduleNumber } from "./schedule-number.js";
 
 const CRON_EVAL_CACHE_MAX = 512;
@@ -55,7 +55,7 @@ function resolveCronFromSchedule(schedule: {
   return resolveCachedCron(expr, resolveCronTimezone(schedule.tz));
 }
 
-/** Reused helper for compute Next Run At Ms behavior in src/cron. */
+/** Compute the next eligible run time for all cron schedule variants. */
 export function computeNextRunAtMs(schedule: CronSchedule, nowMs: number): number | undefined {
   if (schedule.kind === "at") {
     // Handle both canonical `at` (string) and legacy `atMs` (number) fields.
@@ -133,7 +133,7 @@ export function computeNextRunAtMs(schedule: CronSchedule, nowMs: number): numbe
   return nextMs;
 }
 
-/** Reused helper for compute Previous Run At Ms behavior in src/cron. */
+/** Compute the previous cron-expression run before `nowMs`; non-cron schedules have none. */
 export function computePreviousRunAtMs(schedule: CronSchedule, nowMs: number): number | undefined {
   if (schedule.kind !== "cron") {
     return undefined;
@@ -157,22 +157,22 @@ export function computePreviousRunAtMs(schedule: CronSchedule, nowMs: number): n
   return previousMs;
 }
 
-/** Reused helper for clear Cron Schedule Cache For Test behavior in src/cron. */
+/** Clear cached Croner evaluators for deterministic schedule tests. */
 export function clearCronScheduleCacheForTest(): void {
   cronEvalCache.clear();
 }
 
-/** Reused helper for get Cron Schedule Cache Size For Test behavior in src/cron. */
+/** Inspect the current Croner evaluator cache size in tests. */
 export function getCronScheduleCacheSizeForTest(): number {
   return cronEvalCache.size;
 }
 
-/** Reused helper for get Cron Schedule Cache Max For Test behavior in src/cron. */
+/** Expose the Croner evaluator cache cap for cache-eviction tests. */
 export function getCronScheduleCacheMaxForTest(): number {
   return CRON_EVAL_CACHE_MAX;
 }
 
-/** Reused helper for has Cron In Cache For Test behavior in src/cron. */
+/** Check whether a timezone/expression pair is cached for schedule tests. */
 export function hasCronInCacheForTest(expr: string, tz: string): boolean {
   return cronEvalCache.has(`${tz}\u0000${expr}`);
 }

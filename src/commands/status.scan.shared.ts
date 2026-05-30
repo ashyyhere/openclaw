@@ -19,7 +19,7 @@ import {
 } from "../shared/string-coerce.js";
 import { pickGatewaySelfPresence } from "./gateway-presence.js";
 import { isProbeReachable } from "./gateway-status/helpers.js";
-/** Re-exported API for src/commands, starting with pick Gateway Self Presence. */
+/** Presence picker shared by status renderers and gateway probe summaries. */
 export { pickGatewaySelfPresence } from "./gateway-presence.js";
 
 const gatewayProbeModuleLoader = createLazyImportLoader(() => import("./status.gateway-probe.js"));
@@ -38,19 +38,19 @@ function loadGatewayCallModule() {
   return gatewayCallModuleLoader.load();
 }
 
-/** Shared type for Memory Status Snapshot in src/commands. */
+/** Memory provider status annotated with the agent inspected by status. */
 export type MemoryStatusSnapshot = MemoryProviderStatus & {
   agentId: string;
 };
 
-/** Shared type for Memory Plugin Status in src/commands. */
+/** Memory plugin enablement and slot choice derived from config. */
 export type MemoryPluginStatus = {
   enabled: boolean;
   slot: string | null;
   reason?: string;
 };
 
-/** Shared type for Gateway Probe Snapshot in src/commands. */
+/** Gateway probe result plus auth, reachability, and local override details. */
 export type GatewayProbeSnapshot = {
   gatewayConnection: ReturnType<typeof buildGatewayConnectionDetailsWithResolvers>;
   remoteUrlMissing: boolean;
@@ -187,7 +187,7 @@ function hasExplicitMemorySearchConfig(cfg: OpenClawConfig, agentId: string): bo
   );
 }
 
-/** Reused helper for resolve Memory Plugin Status behavior in src/commands. */
+/** Resolve whether the configured memory slot should be inspected by status. */
 export function resolveMemoryPluginStatus(cfg: OpenClawConfig): MemoryPluginStatus {
   const pluginsEnabled = cfg.plugins?.enabled !== false;
   if (!pluginsEnabled) {
@@ -200,7 +200,7 @@ export function resolveMemoryPluginStatus(cfg: OpenClawConfig): MemoryPluginStat
   return { enabled: true, slot: raw || defaultSlotIdForKey("memory") };
 }
 
-/** Reused helper for resolve Gateway Probe Snapshot behavior in src/commands. */
+/** Probe the configured gateway target and assemble status-ready connection metadata. */
 export async function resolveGatewayProbeSnapshot(params: {
   cfg: OpenClawConfig;
   opts: {
@@ -292,7 +292,7 @@ export async function resolveGatewayProbeSnapshot(params: {
   };
 }
 
-/** Reused helper for build Tailscale Https Url behavior in src/commands. */
+/** Build the Tailscale HTTPS control UI URL when Tailscale exposure is active. */
 export function buildTailscaleHttpsUrl(params: {
   tailscaleMode: string;
   tailscaleDns: string | null;
@@ -303,7 +303,7 @@ export function buildTailscaleHttpsUrl(params: {
     : null;
 }
 
-/** Reused helper for resolve Shared Memory Status Snapshot behavior in src/commands. */
+/** Resolve memory provider status without creating a default store just for status output. */
 export async function resolveSharedMemoryStatusSnapshot(params: {
   cfg: OpenClawConfig;
   agentStatus: { defaultId?: string | null };

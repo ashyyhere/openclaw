@@ -9,12 +9,12 @@ export type ChannelAccountHealthSummary = {
   [key: string]: unknown;
 };
 
-/** Shared type for Channel Health Summary in src/commands. */
+/** Channel health rollup, optionally keyed by account id for multi-account channels. */
 export type ChannelHealthSummary = ChannelAccountHealthSummary & {
   accounts?: Record<string, ChannelAccountHealthSummary>;
 };
 
-/** Shared type for Agent Health Summary in src/commands. */
+/** Agent-level health summary rendered by health and status commands. */
 export type AgentHealthSummary = {
   agentId: string;
   name?: string;
@@ -23,7 +23,7 @@ export type AgentHealthSummary = {
   sessions: HealthSummary["sessions"];
 };
 
-/** Shared type for Plugin Health Error Summary in src/commands. */
+/** Plugin activation or loading failure shown in health output. */
 export type PluginHealthErrorSummary = {
   id: string;
   origin: string;
@@ -34,13 +34,13 @@ export type PluginHealthErrorSummary = {
   error: string;
 };
 
-/** Shared type for Plugin Health Summary in src/commands. */
+/** Loaded plugin ids and activation errors collected for health output. */
 export type PluginHealthSummary = {
   loaded: string[];
   errors: PluginHealthErrorSummary[];
 };
 
-/** Shared type for Context Engine Health Quarantine Summary in src/commands. */
+/** Context engine quarantine record included in health diagnostics. */
 export type ContextEngineHealthQuarantineSummary = {
   engineId: string;
   owner?: string;
@@ -49,16 +49,16 @@ export type ContextEngineHealthQuarantineSummary = {
   failedAt: number;
 };
 
-/** Shared type for Context Engine Health Summary in src/commands. */
+/** Context engine health section for quarantined engines. */
 export type ContextEngineHealthSummary = {
   quarantined: ContextEngineHealthQuarantineSummary[];
 };
 
-/** Shared type for Model Pricing Health Summary in src/commands. */
+/** Gateway model-pricing cache health section. */
 export type ModelPricingHealthSummary =
   import("../gateway/model-pricing-cache-state.js").GatewayModelPricingHealth;
 
-/** Shared type for Health Summary in src/commands. */
+/** Complete JSON health summary returned by health/status surfaces. */
 export type HealthSummary = {
   ok: true;
   ts: number;

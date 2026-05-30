@@ -32,7 +32,7 @@ import type {
 import { ensurePluginAllowlisted } from "./plugins-allowlist.js";
 import { isBlockedObjectKey } from "./prototype-keys.js";
 import type { OpenClawConfig } from "./types.openclaw.js";
-/** Re-exported API for src/config. */
+/** Public auto-enable candidate/result shapes used by config and setup callers. */
 export type {
   PluginAutoEnableCandidate,
   PluginAutoEnableResult,
@@ -538,7 +538,7 @@ function configMayNeedPluginManifestRegistry(cfg: OpenClawConfig, env: NodeJS.Pr
   return false;
 }
 
-/** Reused helper for config May Need Plugin Auto Enable behavior in src/config. */
+/** Cheap readiness check for whether config could require plugin auto-enable work. */
 export function configMayNeedPluginAutoEnable(
   cfg: OpenClawConfig,
   env: NodeJS.ProcessEnv,
@@ -546,7 +546,7 @@ export function configMayNeedPluginAutoEnable(
   return resolvePluginAutoEnableReadiness(cfg, env).mayNeedAutoEnable;
 }
 
-/** Reused helper for resolve Plugin Auto Enable Readiness behavior in src/config. */
+/** Resolve auto-enable readiness and precomputed configured channel ids. */
 export function resolvePluginAutoEnableReadiness(
   cfg: OpenClawConfig,
   env: NodeJS.ProcessEnv,
@@ -589,7 +589,7 @@ export function resolvePluginAutoEnableReadiness(
   };
 }
 
-/** Reused helper for resolve Plugin Auto Enable Candidate Reason behavior in src/config. */
+/** Format the config signal that caused a plugin auto-enable candidate. */
 export function resolvePluginAutoEnableCandidateReason(
   candidate: PluginAutoEnableCandidate,
 ): string {
@@ -618,7 +618,7 @@ export function resolvePluginAutoEnableCandidateReason(
   throw new Error("Unsupported plugin auto-enable candidate");
 }
 
-/** Reused helper for resolve Configured Plugin Auto Enable Candidates behavior in src/config. */
+/** Collect plugin auto-enable candidates from configured channels, providers, tools, and setup. */
 export function resolveConfiguredPluginAutoEnableCandidates(params: {
   config: OpenClawConfig;
   env: NodeJS.ProcessEnv;
@@ -960,7 +960,7 @@ function formatAutoEnableChange(
   return `${resolvePluginAutoEnableCandidateReason(entry).trim()}, enabled automatically.`;
 }
 
-/** Reused helper for resolve Plugin Auto Enable Manifest Registry behavior in src/config. */
+/** Resolve the manifest registry needed for auto-enable without unnecessary discovery. */
 export function resolvePluginAutoEnableManifestRegistry(params: {
   config: OpenClawConfig;
   env: NodeJS.ProcessEnv;
@@ -1001,7 +1001,7 @@ export function resolvePluginAutoEnableManifestRegistry(params: {
   );
 }
 
-/** Reused helper for materialize Plugin Auto Enable Candidates Internal behavior in src/config. */
+/** Apply auto-enable candidates to config and collect user-facing change reasons. */
 export function materializePluginAutoEnableCandidatesInternal(params: {
   config?: OpenClawConfig;
   candidates: readonly PluginAutoEnableCandidate[];

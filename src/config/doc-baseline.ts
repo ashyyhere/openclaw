@@ -1,4 +1,4 @@
-// config doc baseline helpers and runtime behavior.
+// Config docs baseline generator used to detect schema and help-text drift.
 import { createHash } from "node:crypto";
 import fsSync from "node:fs";
 import os from "node:os";
@@ -30,7 +30,7 @@ type JsonSchemaObject = JsonSchemaNode & {
 
 type ConfigDocBaselineKind = "core" | "channel" | "plugin";
 
-/** Shared type for Config Doc Baseline Entry in src/config. */
+/** One normalized config path entry captured from schema plus UI hints. */
 export type ConfigDocBaselineEntry = {
   path: string;
   kind: ConfigDocBaselineKind;
@@ -390,7 +390,7 @@ async function loadBundledConfigSchemaResponse(): Promise<ConfigSchemaResponse> 
   });
 }
 
-/** Reused helper for collect Config Doc Baseline Entries behavior in src/config. */
+/** Walk a JSON schema tree and collect normalized config docs baseline entries. */
 export function collectConfigDocBaselineEntries(
   schema: JsonSchemaObject,
   uiHints: ConfigSchemaResponse["uiHints"],
@@ -484,7 +484,7 @@ export function collectConfigDocBaselineEntries(
   return entries;
 }
 
-/** Reused helper for dedupe Config Doc Baseline Entries behavior in src/config. */
+/** Merge duplicate baseline paths produced by unions or array/object wildcards. */
 export function dedupeConfigDocBaselineEntries(
   entries: ConfigDocBaselineEntry[],
 ): ConfigDocBaselineEntry[] {
@@ -522,7 +522,7 @@ function splitConfigDocBaselineEntries(entries: ConfigDocBaselineEntry[]): {
   return { coreEntries, channelEntries, pluginEntries };
 }
 
-/** Reused helper for flatten Config Doc Baseline Entries behavior in src/config. */
+/** Flatten the split core/channel/plugin baseline into path-sorted entry groups. */
 export function flattenConfigDocBaselineEntries(
   baseline: ConfigDocBaseline,
 ): ConfigDocBaselineEntry[] {
@@ -578,7 +578,7 @@ function renderKindBaseline(
   return `${JSON.stringify(baseline, null, 2)}\n`;
 }
 
-/** Reused helper for render Config Doc Baseline Artifacts behavior in src/config. */
+/** Render combined and per-kind JSON baseline artifacts without writing them. */
 export async function renderConfigDocBaselineArtifacts(
   baseline?: ConfigDocBaseline | Promise<ConfigDocBaseline>,
 ): Promise<ConfigDocBaselineArtifactsRender> {
@@ -648,7 +648,7 @@ function resolveBaselineArtifactPaths(
   };
 }
 
-/** Reused helper for write Config Doc Baseline Artifacts behavior in src/config. */
+/** Write or check config docs baseline artifacts plus their tracked hash file. */
 export async function writeConfigDocBaselineArtifacts(params?: {
   repoRoot?: string;
   check?: boolean;
@@ -701,7 +701,7 @@ export async function writeConfigDocBaselineArtifacts(params?: {
   };
 }
 
-/** Reused helper for normalize Config Doc Baseline Help Path behavior in src/config. */
+/** Normalize help paths the same way generated baseline paths are normalized. */
 export function normalizeConfigDocBaselineHelpPath(pathValue: string): string {
   return normalizeBaselinePath(pathValue);
 }

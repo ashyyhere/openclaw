@@ -1,12 +1,12 @@
-// cron session target helpers and runtime behavior.
+// Cron session target normalization shared by scheduler storage, delivery, and notifications.
 const INVALID_CRON_SESSION_TARGET_ID_ERROR = "invalid cron sessionTarget session id";
 
-/** Reused helper for is Invalid Cron Session Target Id Error behavior in src/cron. */
+/** Identify the sentinel error thrown for unsafe cron session target ids. */
 export function isInvalidCronSessionTargetIdError(error: unknown): boolean {
   return error instanceof Error && error.message === INVALID_CRON_SESSION_TARGET_ID_ERROR;
 }
 
-/** Reused helper for assert Safe Cron Session Target Id behavior in src/cron. */
+/** Trim and reject empty or NUL-containing session ids before they become store keys. */
 export function assertSafeCronSessionTargetId(sessionId: string): string {
   const trimmed = sessionId.trim();
   if (!trimmed) {
@@ -18,7 +18,7 @@ export function assertSafeCronSessionTargetId(sessionId: string): string {
   return trimmed;
 }
 
-/** Reused helper for resolve Cron Session Target Session Key behavior in src/cron. */
+/** Extract the explicit session key from a `session:<key>` cron target. */
 export function resolveCronSessionTargetSessionKey(
   sessionTarget?: string | null,
 ): string | undefined {
@@ -28,7 +28,7 @@ export function resolveCronSessionTargetSessionKey(
   return assertSafeCronSessionTargetId(sessionTarget.slice(8));
 }
 
-/** Reused helper for resolve Cron Current Session Target behavior in src/cron. */
+/** Resolve the legacy `current` target to the active session, falling back to isolated runs. */
 export function resolveCronCurrentSessionTarget(params: {
   sessionTarget?: string | null;
   sessionKey?: string | null;
@@ -40,7 +40,7 @@ export function resolveCronCurrentSessionTarget(params: {
   return sessionKey ? `session:${assertSafeCronSessionTargetId(sessionKey)}` : "isolated";
 }
 
-/** Reused helper for resolve Cron Delivery Session Key behavior in src/cron. */
+/** Pick the durable delivery session key, preferring explicit `session:<key>` targets. */
 export function resolveCronDeliverySessionKey(job: {
   sessionTarget?: string | null;
   sessionKey?: string | null;
@@ -54,7 +54,7 @@ export function resolveCronDeliverySessionKey(job: {
     : undefined;
 }
 
-/** Reused helper for resolve Cron Notification Session Key behavior in src/cron. */
+/** Pick the session used for failure notifications when a cron run has no delivery session. */
 export function resolveCronNotificationSessionKey(params: {
   jobId: string;
   sessionKey?: string | null;
@@ -64,7 +64,7 @@ export function resolveCronNotificationSessionKey(params: {
     : `cron:${params.jobId}:failure`;
 }
 
-/** Reused helper for resolve Cron Failure Notification Session Key behavior in src/cron. */
+/** Resolve the failure notification session for a stored cron job. */
 export function resolveCronFailureNotificationSessionKey(job: {
   id: string;
   sessionTarget?: string | null;

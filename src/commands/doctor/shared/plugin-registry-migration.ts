@@ -24,18 +24,18 @@ import {
 import { loadPluginManifestRegistryForInstalledIndex } from "../../../plugins/manifest-registry-installed.js";
 import type { PluginManifestRecord } from "../../../plugins/manifest-registry.js";
 
-/** Reused constant for DISABLE PLUGIN REGISTRY MIGRATION ENV behavior in src/commands/doctor. */
+/** Environment override that disables the one-time plugin registry migration. */
 export const DISABLE_PLUGIN_REGISTRY_MIGRATION_ENV = "OPENCLAW_DISABLE_PLUGIN_REGISTRY_MIGRATION";
-/** Reused constant for FORCE PLUGIN REGISTRY MIGRATION ENV behavior in src/commands/doctor. */
+/** Deprecated environment override that forces plugin registry migration. */
 export const FORCE_PLUGIN_REGISTRY_MIGRATION_ENV = "OPENCLAW_FORCE_PLUGIN_REGISTRY_MIGRATION";
 
-/** Shared type for Plugin Registry Install Migration Preflight Action in src/commands/doctor. */
+/** Preflight decision for the plugin install registry migration. */
 export type PluginRegistryInstallMigrationPreflightAction =
   | "disabled"
   | "skip-existing"
   | "migrate";
 
-/** Shared type for Plugin Registry Install Migration Preflight in src/commands/doctor. */
+/** Migration preflight result including target path and deprecation warnings. */
 export type PluginRegistryInstallMigrationPreflight = {
   action: PluginRegistryInstallMigrationPreflightAction;
   filePath: string;
@@ -43,7 +43,7 @@ export type PluginRegistryInstallMigrationPreflight = {
   deprecationWarnings: readonly string[];
 };
 
-/** Shared type for Plugin Registry Install Migration Result in src/commands/doctor. */
+/** Result returned after migrating or skipping the plugin install registry. */
 export type PluginRegistryInstallMigrationResult =
   | {
       status: "disabled" | "skip-existing" | "dry-run";
@@ -58,7 +58,7 @@ export type PluginRegistryInstallMigrationResult =
       current: InstalledPluginIndex;
     };
 
-/** Shared type for Plugin Registry Install Migration Params in src/commands/doctor. */
+/** Inputs for preflighting or running the plugin install registry migration. */
 export type PluginRegistryInstallMigrationParams = LoadInstalledPluginIndexParams &
   InstalledPluginIndexStoreOptions & {
     dryRun?: boolean;
@@ -75,7 +75,7 @@ function forceDeprecationWarning(): string {
   return `${FORCE_PLUGIN_REGISTRY_MIGRATION_ENV} is deprecated and will be removed after the plugin registry migration rollout; use doctor registry repair once available.`;
 }
 
-/** Reused helper for preflight Plugin Registry Install Migration behavior in src/commands/doctor. */
+/** Decide whether plugin registry migration should run before mutating disk. */
 export function preflightPluginRegistryInstallMigration(
   params: PluginRegistryInstallMigrationParams = {},
 ): PluginRegistryInstallMigrationPreflight {
@@ -285,7 +285,7 @@ function listMigrationRelevantPluginRecords(params: {
   });
 }
 
-/** Reused helper for migrate Plugin Registry For Install behavior in src/commands/doctor. */
+/** Migrate shipped plugin install records into the persisted installed-plugin index. */
 export async function migratePluginRegistryForInstall(
   params: PluginRegistryInstallMigrationParams = {},
 ): Promise<PluginRegistryInstallMigrationResult> {

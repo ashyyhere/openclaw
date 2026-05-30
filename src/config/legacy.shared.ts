@@ -1,5 +1,5 @@
-// config legacy shared helpers and runtime behavior.
-/** Shared type for Legacy Config Rule in src/config. */
+// Shared primitives for detecting and migrating legacy config shapes.
+/** Legacy config detector used to produce warnings before migration. */
 export type LegacyConfigRule = {
   path: string[];
   message: string;
@@ -15,7 +15,7 @@ type LegacyConfigMigration = {
   apply: (raw: Record<string, unknown>, changes: string[]) => void;
 };
 
-/** Shared type for Legacy Config Migration Spec in src/config. */
+/** Legacy migration definition plus optional warnings for old config paths. */
 export type LegacyConfigMigrationSpec = LegacyConfigMigration & {
   legacyRules?: LegacyConfigRule[];
 };
@@ -24,11 +24,11 @@ import { isSafeExecutableValue } from "../infra/exec-safety.js";
 import { isRecord } from "../utils.js";
 import { isBlockedObjectKey } from "./prototype-keys.js";
 
-/** Reused constant for get Record behavior in src/config. */
+/** Return object records while rejecting arrays and primitives. */
 export const getRecord = (value: unknown): Record<string, unknown> | null =>
   isRecord(value) ? value : null;
 
-/** Reused constant for ensure Record behavior in src/config. */
+/** Ensure an object child exists under `key` for in-place migration writes. */
 export const ensureRecord = (
   root: Record<string, unknown>,
   key: string,
@@ -42,7 +42,7 @@ export const ensureRecord = (
   return next;
 };
 
-/** Reused constant for merge Missing behavior in src/config. */
+/** Deep-merge only missing keys while skipping blocked prototype-pollution names. */
 export const mergeMissing = (target: Record<string, unknown>, source: Record<string, unknown>) => {
   for (const [key, value] of Object.entries(source)) {
     if (value === undefined || isBlockedObjectKey(key)) {
@@ -59,7 +59,7 @@ export const mergeMissing = (target: Record<string, unknown>, source: Record<str
   }
 };
 
-/** Reused constant for map Legacy Audio Transcription behavior in src/config. */
+/** Convert legacy audio transcription command arrays into the current CLI shape. */
 export const mapLegacyAudioTranscription = (value: unknown): Record<string, unknown> | null => {
   const transcriber = getRecord(value);
   const command = Array.isArray(transcriber?.command) ? transcriber?.command : null;
@@ -94,7 +94,7 @@ export const mapLegacyAudioTranscription = (value: unknown): Record<string, unkn
   return result;
 };
 
-/** Reused constant for define Legacy Config Migration behavior in src/config. */
+/** Identity helper that keeps legacy migration specs typed at declaration sites. */
 export const defineLegacyConfigMigration = (
   migration: LegacyConfigMigrationSpec,
 ): LegacyConfigMigrationSpec => migration;
