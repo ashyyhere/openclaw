@@ -1,10 +1,10 @@
-// daemon service types helpers and runtime behavior.
+// Cross-platform gateway service argument, state, and render contracts.
 import type { GatewayServiceRuntime } from "./service-runtime.js";
 
-/** Shared type for Gateway Service Env in src/daemon. */
+/** Environment map accepted by gateway service managers. */
 export type GatewayServiceEnv = Record<string, string | undefined>;
 
-/** Shared type for Gateway Service Install Args in src/daemon. */
+/** Inputs required to install or stage a managed gateway service. */
 export type GatewayServiceInstallArgs = {
   env: GatewayServiceEnv;
   stdout: NodeJS.WritableStream;
@@ -15,34 +15,34 @@ export type GatewayServiceInstallArgs = {
   description?: string;
 };
 
-/** Shared type for Gateway Service Stage Args in src/daemon. */
+/** Alias for staging a service definition before installation. */
 export type GatewayServiceStageArgs = GatewayServiceInstallArgs;
 
-/** Shared type for Gateway Service Manage Args in src/daemon. */
+/** Common arguments for gateway service management commands. */
 export type GatewayServiceManageArgs = {
   env: GatewayServiceEnv;
   stdout: NodeJS.WritableStream;
 };
 
-/** Shared type for Gateway Service Control Args in src/daemon. */
+/** Inputs for service enable/disable/start/stop control operations. */
 export type GatewayServiceControlArgs = {
   stdout: NodeJS.WritableStream;
   env?: GatewayServiceEnv;
   disable?: boolean;
 };
 
-/** Shared type for Gateway Service Restart Result in src/daemon. */
+/** Result of restarting immediately or scheduling a restart through the service manager. */
 export type GatewayServiceRestartResult = { outcome: "completed" } | { outcome: "scheduled" };
 
-/** Shared type for Gateway Service Env Args in src/daemon. */
+/** Optional environment carrier for service helper calls. */
 export type GatewayServiceEnvArgs = {
   env?: GatewayServiceEnv;
 };
 
-/** Shared type for Gateway Service Environment Value Source in src/daemon. */
+/** Source classification for environment values rendered into service definitions. */
 export type GatewayServiceEnvironmentValueSource = "inline" | "file" | "inline-and-file";
 
-/** Shared type for Gateway Service Command Config in src/daemon. */
+/** Command, working directory, environment, and source path read from a service definition. */
 export type GatewayServiceCommandConfig = {
   programArguments: string[];
   workingDirectory?: string;
@@ -51,7 +51,7 @@ export type GatewayServiceCommandConfig = {
   sourcePath?: string;
 };
 
-/** Shared type for Gateway Service State in src/daemon. */
+/** Installed/loaded/running state plus resolved command and runtime status. */
 export type GatewayServiceState = {
   installed: boolean;
   loaded: boolean;
@@ -61,13 +61,13 @@ export type GatewayServiceState = {
   runtime?: GatewayServiceRuntime;
 };
 
-/** Shared type for Gateway Service Start Repair Issue in src/daemon. */
+/** Repair issue that prevents starting a managed gateway service safely. */
 export type GatewayServiceStartRepairIssue = {
   code: "missing-program" | "temporary-program" | "version-mismatch";
   message: string;
 };
 
-/** Shared type for Gateway Service Start Result in src/daemon. */
+/** Result of attempting to start or repair-start a managed gateway service. */
 export type GatewayServiceStartResult =
   | { outcome: "started"; state: GatewayServiceState }
   | { outcome: "scheduled"; state: GatewayServiceState }
@@ -78,7 +78,7 @@ export type GatewayServiceStartResult =
       issues: GatewayServiceStartRepairIssue[];
     };
 
-/** Shared type for Gateway Service Render Args in src/daemon. */
+/** Inputs used to render a platform-specific gateway service definition. */
 export type GatewayServiceRenderArgs = {
   description?: string;
   programArguments: string[];

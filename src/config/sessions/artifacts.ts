@@ -1,7 +1,7 @@
 import { timestampMsToIsoFileStamp } from "../../shared/number-coercion.js";
 import { escapeRegExp } from "../../shared/regexp.js";
 
-/** Shared type for Session Archive Reason in src/config/sessions. */
+/** Archive suffix reason encoded into session artifact filenames. */
 export type SessionArchiveReason = "bak" | "reset" | "deleted";
 
 const ARCHIVE_TIMESTAMP_RE = /^\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}(?:\.\d{3})?Z$/;
@@ -19,7 +19,7 @@ function hasArchiveSuffix(fileName: string, reason: SessionArchiveReason): boole
   return ARCHIVE_TIMESTAMP_RE.test(raw);
 }
 
-/** Reused helper for is Session Archive Artifact Name behavior in src/config/sessions. */
+/** Detects legacy and timestamped session archive artifact filenames. */
 export function isSessionArchiveArtifactName(fileName: string): boolean {
   if (LEGACY_STORE_BACKUP_RE.test(fileName)) {
     return true;
@@ -54,7 +54,7 @@ function sessionStoreTempPattern(storeBasename: string): RegExp {
 // never the live store, so a stale one is safe to reclaim. `storeBasename` is the
 // store filename (the atomic write's temp prefix, e.g. `sessions.json`), so a
 // custom-named `session.store` is matched too.
-/** Reused helper for is Session Store Temp Artifact Name behavior in src/config/sessions. */
+/** Detects orphaned atomic-write temp files for a session store basename. */
 export function isSessionStoreTempArtifactName(fileName: string, storeBasename: string): boolean {
   if (!storeBasename) {
     return false;
@@ -62,7 +62,7 @@ export function isSessionStoreTempArtifactName(fileName: string, storeBasename: 
   return sessionStoreTempPattern(storeBasename).test(fileName);
 }
 
-/** Reused helper for parse Compaction Checkpoint Transcript File Name behavior in src/config/sessions. */
+/** Parses compaction checkpoint transcript filenames into session and checkpoint ids. */
 export function parseCompactionCheckpointTranscriptFileName(fileName: string): {
   sessionId: string;
   checkpointId: string;
@@ -73,27 +73,27 @@ export function parseCompactionCheckpointTranscriptFileName(fileName: string): {
   return sessionId && checkpointId ? { sessionId, checkpointId } : null;
 }
 
-/** Reused helper for is Compaction Checkpoint Transcript File Name behavior in src/config/sessions. */
+/** Detects compaction checkpoint transcript filenames. */
 export function isCompactionCheckpointTranscriptFileName(fileName: string): boolean {
   return parseCompactionCheckpointTranscriptFileName(fileName) !== null;
 }
 
-/** Reused helper for is Trajectory Runtime Artifact Name behavior in src/config/sessions. */
+/** Detects runtime trajectory transcript artifact filenames. */
 export function isTrajectoryRuntimeArtifactName(fileName: string): boolean {
   return fileName.endsWith(".trajectory.jsonl");
 }
 
-/** Reused helper for is Trajectory Pointer Artifact Name behavior in src/config/sessions. */
+/** Detects trajectory pointer artifact filenames. */
 export function isTrajectoryPointerArtifactName(fileName: string): boolean {
   return fileName.endsWith(".trajectory-path.json");
 }
 
-/** Reused helper for is Trajectory Session Artifact Name behavior in src/config/sessions. */
+/** Detects any trajectory-related session artifact filename. */
 export function isTrajectorySessionArtifactName(fileName: string): boolean {
   return isTrajectoryRuntimeArtifactName(fileName) || isTrajectoryPointerArtifactName(fileName);
 }
 
-/** Reused helper for is Primary Session Transcript File Name behavior in src/config/sessions. */
+/** Detects primary session transcript JSONL files while excluding stores and derived artifacts. */
 export function isPrimarySessionTranscriptFileName(fileName: string): boolean {
   if (fileName === "sessions.json") {
     return false;
@@ -110,7 +110,7 @@ export function isPrimarySessionTranscriptFileName(fileName: string): boolean {
   return !isSessionArchiveArtifactName(fileName);
 }
 
-/** Reused helper for is Usage Counted Session Transcript File Name behavior in src/config/sessions. */
+/** Detects transcript files that should contribute to session usage accounting. */
 export function isUsageCountedSessionTranscriptFileName(fileName: string): boolean {
   if (isPrimarySessionTranscriptFileName(fileName)) {
     return true;
@@ -118,7 +118,7 @@ export function isUsageCountedSessionTranscriptFileName(fileName: string): boole
   return hasArchiveSuffix(fileName, "reset") || hasArchiveSuffix(fileName, "deleted");
 }
 
-/** Reused helper for parse Usage Counted Session Id From File Name behavior in src/config/sessions. */
+/** Extracts the session id from primary or usage-counted archived transcript filenames. */
 export function parseUsageCountedSessionIdFromFileName(fileName: string): string | null {
   if (isPrimarySessionTranscriptFileName(fileName)) {
     return fileName.slice(0, -".jsonl".length);
@@ -133,7 +133,7 @@ export function parseUsageCountedSessionIdFromFileName(fileName: string): string
   return null;
 }
 
-/** Reused helper for format Session Archive Timestamp behavior in src/config/sessions. */
+/** Formats an archive timestamp that is safe for session artifact filenames. */
 export function formatSessionArchiveTimestamp(nowMs = Date.now()): string {
   return timestampMsToIsoFileStamp(nowMs);
 }
@@ -146,7 +146,7 @@ function restoreSessionArchiveTimestamp(raw: string): string {
   return `${datePart}T${timePart.replace(/-/g, ":")}`;
 }
 
-/** Reused helper for parse Session Archive Timestamp behavior in src/config/sessions. */
+/** Parses a timestamp suffix for a specific session archive reason. */
 export function parseSessionArchiveTimestamp(
   fileName: string,
   reason: SessionArchiveReason,
