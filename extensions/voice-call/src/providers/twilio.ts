@@ -1,4 +1,3 @@
-// extensions/voice-call/src/providers twilio helpers and runtime behavior.
 import crypto from "node:crypto";
 import { setTimeout as sleep } from "node:timers/promises";
 import { safeEqualSecret } from "openclaw/plugin-sdk/security-runtime";

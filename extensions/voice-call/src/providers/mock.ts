@@ -1,4 +1,3 @@
-// extensions/voice-call/src/providers mock helpers and runtime behavior.
 import crypto from "node:crypto";
 import { normalizeLowercaseStringOrEmpty } from "openclaw/plugin-sdk/string-coerce-runtime";
 import type {

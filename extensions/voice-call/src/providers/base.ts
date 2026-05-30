@@ -1,4 +1,3 @@
-// extensions/voice-call/src/providers base helpers and runtime behavior.
 import type {
   AnswerCallInput,
   GetCallStatusInput,

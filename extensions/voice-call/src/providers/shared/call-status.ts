@@ -1,4 +1,3 @@
-// extensions/voice-call/src/providers/shared call status helpers and runtime behavior.
 import { normalizeOptionalLowercaseString } from "openclaw/plugin-sdk/string-coerce-runtime";
 import type { EndReason } from "../../types.js";
 
