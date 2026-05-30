@@ -1,4 +1,4 @@
-// Shared types for packages/agent-core/src types behavior.
+// Public agent-loop contracts shared by harness integrations and low-level runtimes.
 import type { Static, TSchema } from "typebox";
 import type {
   AssistantMessage,
@@ -129,10 +129,10 @@ export interface AgentLoopTurnUpdate {
   thinkingLevel?: ThinkingLevel;
 }
 
-/** Public type describing Prepare Next Turn Context for packages/agent-core. */
+/** Hook context passed before preparing another provider request in the same loop run. */
 export interface PrepareNextTurnContext extends ShouldStopAfterTurnContext {}
 
-/** Public type describing Agent Loop Config for packages/agent-core. */
+/** Configuration surface for the low-level agent loop runtime. */
 export interface AgentLoopConfig extends SimpleStreamOptions {
   model: Model;
 

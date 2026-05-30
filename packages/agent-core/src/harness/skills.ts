@@ -1,4 +1,4 @@
-// packages/agent-core/src/harness skills helpers and runtime behavior.
+// Skill discovery and loading helpers for harness execution environments.
 import ignore from "ignore";
 import {
   basenameEnvPath,
@@ -16,7 +16,7 @@ const IGNORE_FILE_NAMES = [".gitignore", ".ignore", ".fdignore"];
 
 type IgnoreMatcher = ReturnType<typeof ignore>;
 
-/** Public type describing Skill Diagnostic Code for packages/agent-core. */
+/** Stable warning codes emitted while discovering and parsing skill files. */
 export type SkillDiagnosticCode =
   | "file_info_failed"
   | "list_failed"
