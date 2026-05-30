@@ -6,7 +6,7 @@ import { buildGroupChatContext, buildGroupIntro } from "./reply/groups.js";
 type GetReplyFromConfig = typeof import("./reply.js").getReplyFromConfig;
 type InboundMessage = Parameters<GetReplyFromConfig>[0];
 
-/** Reused helper for register Group Intro Prompt Cases behavior in src/auto-reply. */
+/** Register table-driven expectations for group intro prompt wording. */
 export function registerGroupIntroPromptCases(): void {
   describe("group intro prompts", () => {
     type GroupIntroCase = {

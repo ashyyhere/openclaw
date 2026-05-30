@@ -185,31 +185,31 @@ export function resolveCommandTurnContext(input: CommandTurnContextInput): Comma
   });
 }
 
-/** Reused helper for is Native Command Turn behavior in src/auto-reply. */
+/** Return whether a turn came from a native channel command. */
 export function isNativeCommandTurn(commandTurn: CommandTurnContext | undefined): boolean {
   return commandTurn?.kind === "native";
 }
 
-/** Reused helper for is Text Slash Command Turn behavior in src/auto-reply. */
+/** Return whether a turn came from a text slash command. */
 export function isTextSlashCommandTurn(commandTurn: CommandTurnContext | undefined): boolean {
   return commandTurn?.kind === "text-slash";
 }
 
-/** Reused helper for is Authorized Text Slash Command Turn behavior in src/auto-reply. */
+/** Return whether a text slash command passed authorization. */
 export function isAuthorizedTextSlashCommandTurn(
   commandTurn: CommandTurnContext | undefined,
 ): boolean {
   return commandTurn?.kind === "text-slash" && commandTurn.authorized;
 }
 
-/** Reused helper for is Explicit Command Turn behavior in src/auto-reply. */
+/** Return whether a turn should be treated as an explicit command invocation. */
 export function isExplicitCommandTurn(commandTurn: CommandTurnContext | undefined): boolean {
   return (
     commandTurn?.kind === "native" || (commandTurn?.kind === "text-slash" && commandTurn.authorized)
   );
 }
 
-/** Reused helper for resolve Command Turn Target Session Key behavior in src/auto-reply. */
+/** Resolve a native command's target session key when the payload carries one. */
 export function resolveCommandTurnTargetSessionKey(input: {
   CommandTurn?: CommandTurnContext;
   CommandSource?: unknown;

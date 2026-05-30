@@ -2,7 +2,7 @@
 import { hasOutboundReplyContent } from "openclaw/plugin-sdk/reply-payload";
 import type { ReplyPayload } from "./types.js";
 
-/** Reused helper for resolve Heartbeat Reply Payload behavior in src/auto-reply. */
+/** Pick the latest heartbeat reply payload that has visible outbound content. */
 export function resolveHeartbeatReplyPayload(
   replyResult: ReplyPayload | ReplyPayload[] | undefined,
 ): ReplyPayload | undefined {

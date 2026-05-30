@@ -4,7 +4,7 @@ import { withTempHome as withTempHomeBase } from "openclaw/plugin-sdk/test-env";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { MsgContext, TemplateContext } from "./templating.js";
 
-/** Reused helper for with Sandbox Media Temp Home behavior in src/auto-reply. */
+/** Run a sandbox media staging test with an isolated temp HOME. */
 export async function withSandboxMediaTempHome<T>(
   prefix: string,
   fn: (home: string) => Promise<T>,
@@ -12,7 +12,7 @@ export async function withSandboxMediaTempHome<T>(
   return withTempHomeBase(async (home) => await fn(home), { prefix, skipSessionCleanup: true });
 }
 
-/** Reused helper for create Sandbox Media Contexts behavior in src/auto-reply. */
+/** Build paired message/template contexts that reference one staged media file. */
 export function createSandboxMediaContexts(mediaPath: string): {
   ctx: MsgContext;
   sessionCtx: TemplateContext;
@@ -30,7 +30,7 @@ export function createSandboxMediaContexts(mediaPath: string): {
   return { ctx, sessionCtx: { ...ctx } };
 }
 
-/** Reused helper for create Sandbox Media Stage Config behavior in src/auto-reply. */
+/** Build config for sandbox media staging with isolated workspace and session store. */
 export function createSandboxMediaStageConfig(home: string): OpenClawConfig {
   return {
     agents: {

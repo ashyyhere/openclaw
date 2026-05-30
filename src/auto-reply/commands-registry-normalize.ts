@@ -136,7 +136,7 @@ export function getCommandDetection(_cfg?: OpenClawConfig): CommandDetection {
   return cachedDetection;
 }
 
-/** Reused helper for maybe Resolve Text Alias behavior in src/auto-reply. */
+/** Resolve a slash-command alias only when the raw text matches command detection rules. */
 export function maybeResolveTextAlias(raw: string, cfg?: OpenClawConfig) {
   const trimmed = normalizeCommandBody(raw).trim();
   if (!trimmed.startsWith("/")) {
@@ -158,7 +158,7 @@ export function maybeResolveTextAlias(raw: string, cfg?: OpenClawConfig) {
   return getTextAliasMap().has(tokenKey) ? tokenKey : null;
 }
 
-/** Reused helper for resolve Text Command behavior in src/auto-reply. */
+/** Resolve a text slash command plus parsed args from raw message text. */
 export function resolveTextCommand(
   raw: string,
   cfg?: OpenClawConfig,
