@@ -1,7 +1,8 @@
-// test/vitest vitest auto reply core config helpers and runtime behavior.
+// Vitest project config for core auto-reply tests.
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 import { autoReplyCoreTestExclude, autoReplyCoreTestInclude } from "./vitest.test-shards.mjs";
 
+/** Create the scoped Vitest config for core auto-reply tests. */
 export function createAutoReplyCoreVitestConfig(env?: Record<string, string | undefined>) {
   return createScopedVitestConfig([...autoReplyCoreTestInclude], {
     dir: "src/auto-reply",
@@ -11,4 +12,5 @@ export function createAutoReplyCoreVitestConfig(env?: Record<string, string | un
   });
 }
 
+/** Default auto-reply core Vitest project configuration. */
 export default createAutoReplyCoreVitestConfig();

@@ -1,6 +1,7 @@
-// test/vitest vitest gateway client config helpers and runtime behavior.
+// Vitest project config for gateway client, protocol, and reconnect tests.
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
+/** Create the scoped Vitest config for gateway client/protocol tests. */
 export function createGatewayClientVitestConfig(env?: Record<string, string | undefined>) {
   return createScopedVitestConfig(
     [
@@ -19,4 +20,5 @@ export function createGatewayClientVitestConfig(env?: Record<string, string | un
   );
 }
 
+/** Default gateway-client Vitest project configuration. */
 export default createGatewayClientVitestConfig();

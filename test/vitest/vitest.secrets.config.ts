@@ -1,6 +1,7 @@
-// test/vitest vitest secrets config helpers and runtime behavior.
+// Vitest project config for secret-management tests.
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
+/** Create the scoped Vitest config for secret-management tests. */
 export function createSecretsVitestConfig(env?: Record<string, string | undefined>) {
   return createScopedVitestConfig(["src/secrets/**/*.test.ts"], {
     dir: "src/secrets",
@@ -10,4 +11,5 @@ export function createSecretsVitestConfig(env?: Record<string, string | undefine
   });
 }
 
+/** Default secrets Vitest project configuration. */
 export default createSecretsVitestConfig();

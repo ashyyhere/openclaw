@@ -1,7 +1,8 @@
-// test/vitest vitest extension msteams config helpers and runtime behavior.
+// Vitest project config for Microsoft Teams plugin tests.
 import { msTeamsExtensionTestRoots } from "./vitest.extension-msteams-paths.mjs";
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
+/** Create the scoped Vitest config for Microsoft Teams plugin tests. */
 export function createExtensionMsTeamsVitestConfig(env?: Record<string, string | undefined>) {
   return createScopedVitestConfig(
     msTeamsExtensionTestRoots.map((root) => `${root}/**/*.test.ts`),
@@ -15,4 +16,5 @@ export function createExtensionMsTeamsVitestConfig(env?: Record<string, string |
   );
 }
 
+/** Default Microsoft Teams plugin Vitest project configuration. */
 export default createExtensionMsTeamsVitestConfig();

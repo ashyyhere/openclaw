@@ -1,4 +1,4 @@
-// test/vitest vitest bundled config helpers and runtime behavior.
+// Vitest project config for unit tests that depend on bundled plugins.
 import path from "node:path";
 import {
   bundledPluginDependentUnitTestFiles,
@@ -30,6 +30,7 @@ const bundledUnitExcludePatterns = unitTestAdditionalExcludePatterns.filter(
     ),
 );
 
+/** Default bundled-plugin-dependent unit Vitest project configuration. */
 export default createUnitVitestConfigWithOptions(process.env, {
   includePatterns: bundledPluginDependentUnitTestFiles,
   extraExcludePatterns: bundledUnitExcludePatterns,
