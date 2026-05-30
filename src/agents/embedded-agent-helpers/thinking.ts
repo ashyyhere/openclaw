@@ -21,7 +21,7 @@ function extractSupportedValues(raw: string): string[] {
   );
 }
 
-/** Reused helper for pick Fallback Thinking Level behavior in src/agents/embedded-agent-helpers. */
+/** Picks the next lower thinking level mentioned by a fallback error. */
 export function pickFallbackThinkingLevel(params: {
   message?: string;
   attempted: Set<ThinkLevel>;

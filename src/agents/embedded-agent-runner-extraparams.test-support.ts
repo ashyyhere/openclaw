@@ -3,7 +3,7 @@ import type { Context, Model } from "../llm/types.js";
 import { applyExtraParamsToAgent } from "./embedded-agent-runner/extra-params.js";
 import type { StreamFn } from "./runtime/index.js";
 
-/** Reused helper for run Extra Params Payload Case behavior in src/agents. */
+/** Runs an embedded-agent extra-params payload fixture case. */
 export function runExtraParamsPayloadCase(params: {
   provider: string;
   modelId: string;

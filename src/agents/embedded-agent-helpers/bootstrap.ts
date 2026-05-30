@@ -87,11 +87,11 @@ export function stripThoughtSignatures<T>(
   }) as T;
 }
 
-/** Reused constant for DEFAULT BOOTSTRAP MAX CHARS behavior in src/agents/embedded-agent-helpers. */
+/** Default per-file character budget for bootstrap prompt context. */
 export const DEFAULT_BOOTSTRAP_MAX_CHARS = 12_000;
-/** Reused constant for DEFAULT BOOTSTRAP TOTAL MAX CHARS behavior in src/agents/embedded-agent-helpers. */
+/** Default total character budget for bootstrap prompt context. */
 export const DEFAULT_BOOTSTRAP_TOTAL_MAX_CHARS = 60_000;
-/** Reused constant for DEFAULT BOOTSTRAP PROMPT TRUNCATION WARNING MODE behavior in src/agents/embedded-agent-helpers. */
+/** Default policy for including bootstrap truncation warnings. */
 export const DEFAULT_BOOTSTRAP_PROMPT_TRUNCATION_WARNING_MODE = "always";
 const MIN_BOOTSTRAP_FILE_BUDGET_CHARS = 64;
 // Ratios split `contentBudget` (= maxChars − marker.length − join separators), not `maxChars`.

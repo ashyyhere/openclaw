@@ -37,10 +37,10 @@ export type CompactionSafeguardRuntimeValue = {
 
 const registry = createSessionManagerRuntimeRegistry<CompactionSafeguardRuntimeValue>();
 
-/** Reused constant for set Compaction Safeguard Runtime behavior in src/agents/agent-hooks. */
+/** Registers compaction-safeguard runtime state for a session manager. */
 export const setCompactionSafeguardRuntime = registry.set;
 
-/** Reused constant for get Compaction Safeguard Runtime behavior in src/agents/agent-hooks. */
+/** Reads compaction-safeguard runtime state for a session manager. */
 export const getCompactionSafeguardRuntime = registry.get;
 
 /** Records why a compaction attempt was cancelled for a session manager. */

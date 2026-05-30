@@ -10,7 +10,7 @@ const require = createRequire(import.meta.url);
 const SDK_CLIENT_INDEX_PATH = require.resolve("@modelcontextprotocol/sdk/client/index.js");
 const SDK_CLIENT_STDIO_PATH = require.resolve("@modelcontextprotocol/sdk/client/stdio.js");
 
-/** Re-exported API for src/agents, starting with write Bundle Probe Mcp Server. */
+/** Shared writers for bundled MCP probe servers and Claude bundles. */
 export { writeBundleProbeMcpServer, writeClaudeBundle };
 
 /** Write a fake live Claude CLI that exercises bundle MCP config. */

@@ -517,7 +517,7 @@ export function startAcpSpawnParentStreamRelay(params: {
   };
 }
 
-/** Shared type for Acp Spawn Parent Relay Handle in src/agents. */
+/** Handle for parent-stream relay cleanup and started notifications. */
 export type AcpSpawnParentRelayHandle = {
   dispose: () => void;
   notifyStarted: () => void;

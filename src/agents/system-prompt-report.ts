@@ -95,7 +95,7 @@ function measureRenderedProjectContextChars(systemPrompt: string): number {
   return extractBetween(systemPrompt, "\n# Project Context\n", "\n## Silent Replies\n").length;
 }
 
-/** Reused helper for build System Prompt Report behavior in src/agents. */
+/** Builds diagnostics for generated system prompt size and sections. */
 export function buildSystemPromptReport(params: {
   source: SessionSystemPromptReport["source"];
   generatedAt: number;

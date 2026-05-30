@@ -876,6 +876,7 @@ async function readWorkspaceContextForSummary(
   }
 }
 
+/** Registers the compaction safeguard extension hook for session compaction. */
 export default function compactionSafeguardExtension(api: ExtensionAPI): void {
   api.on("session_before_compact", async (event, ctx) => {
     const { preparation, customInstructions: eventInstructions, signal } = event;
@@ -1348,5 +1349,5 @@ export const testing = {
   MAX_FILE_OPS_LIST_CHARS,
   SUMMARY_TRUNCATED_MARKER,
 } as const;
-/** Re-exported API for src/agents/agent-hooks, starting with testing. */
+/** Test-only constants and helpers for compaction safeguard hooks. */
 export { testing as __testing };

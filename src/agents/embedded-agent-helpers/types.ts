@@ -1,7 +1,7 @@
 /** Shared embedded-agent helper types. */
 export type EmbeddedContextFile = { path: string; content: string };
 
-/** Shared type for Failover Reason in src/agents/embedded-agent-helpers. */
+/** Normalized failover reason category used by embedded-agent retries. */
 export type FailoverReason =
   | "auth"
   | "auth_permanent"

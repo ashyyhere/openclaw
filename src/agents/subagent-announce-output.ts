@@ -582,5 +582,5 @@ export const testing = {
       : defaultSubagentAnnounceOutputDeps;
   },
 };
-/** Re-exported API for src/agents, starting with testing. */
+/** Test-only dependency overrides for subagent announcement output capture. */
 export { testing as __testing };

@@ -112,7 +112,7 @@ function resolveWaitTimeoutMsForRun(
   return Math.max(1, Math.min(normalizedWaitTimeoutMs, deadlineMs - now));
 }
 
-/** Reused helper for mark Subagent Run Paused After Yield behavior in src/agents. */
+/** Marks a yielded subagent run as paused and clears completion state. */
 export function markSubagentRunPausedAfterYield(params: {
   entry: SubagentRunRecord;
   startedAt?: number;
@@ -158,7 +158,7 @@ export function markSubagentRunPausedAfterYield(params: {
   return mutated;
 }
 
-/** Shared type for Register Subagent Run Params in src/agents. */
+/** Parameters required to register a subagent run in the manager. */
 export type RegisterSubagentRunParams = {
   runId: string;
   childSessionKey: string;
@@ -181,7 +181,7 @@ export type RegisterSubagentRunParams = {
   retainAttachmentsOnKeep?: boolean;
 };
 
-/** Reused helper for create Subagent Run Manager behavior in src/agents. */
+/** Creates the mutable registry manager for subagent run lifecycle state. */
 export function createSubagentRunManager(params: {
   runs: Map<string, SubagentRunRecord>;
   resumedRuns: Set<string>;
