@@ -1,6 +1,6 @@
-// infra path guards helpers and runtime behavior.
+/** Re-exports fs-safe path guards after installing safe fs defaults. */
 import "./fs-safe-defaults.js";
-/** Re-exported API for src/infra. */
+/** Public path containment and node-error guards from fs-safe. */
 export {
   isNotFoundPathError,
   hasNodeErrorCode,

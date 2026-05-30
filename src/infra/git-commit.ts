@@ -1,4 +1,4 @@
-// infra git commit helpers and runtime behavior.
+/** Resolves the short OpenClaw commit hash from env, git, build info, or package metadata. */
 import fs from "node:fs";
 import { createRequire } from "node:module";
 import path from "node:path";
@@ -24,7 +24,7 @@ const formatCommit = (value?: string | null) => {
 
 const cachedGitCommitBySearchDir = new Map<string, string | null>();
 
-/** Shared type for Commit Metadata Readers in src/infra. */
+/** Injectable commit metadata readers used by tests and packaged-runtime fallbacks. */
 export type CommitMetadataReaders = {
   readGitCommit?: (searchDir: string, packageRoot: string | null) => string | null | undefined;
   readBuildInfoCommit?: () => string | null;
@@ -212,7 +212,7 @@ const readCommitFromBuildInfo = () => {
   }
 };
 
-/** Reused constant for resolve Commit Hash behavior in src/infra. */
+/** Resolve and cache the seven-character commit hash for diagnostics/version output. */
 export const resolveCommitHash = (
   options: {
     cwd?: string;
@@ -260,9 +260,9 @@ export const resolveCommitHash = (
   }
 };
 
-/** Reused constant for testing behavior in src/infra. */
+/** Test hook for clearing commit lookup caches between scenarios. */
 export const testing = {
   clearCachedGitCommits,
 };
-/** Re-exported API for src/infra, starting with testing. */
+/** Stable test-only alias for commit metadata cache hooks. */
 export { testing as __testing };

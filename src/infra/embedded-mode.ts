@@ -1,12 +1,12 @@
-// infra embedded mode helpers and runtime behavior.
+/** Tracks whether the current runtime is embedded inside another OpenClaw surface. */
 let embeddedModeValue = false;
 
-/** Reused helper for set Embedded Mode behavior in src/infra. */
+/** Set the process-local embedded-mode flag. */
 export function setEmbeddedMode(value: boolean): void {
   embeddedModeValue = value;
 }
 
-/** Reused helper for is Embedded Mode behavior in src/infra. */
+/** Read the process-local embedded-mode flag. */
 export function isEmbeddedMode(): boolean {
   return embeddedModeValue;
 }

@@ -1,6 +1,6 @@
-// infra local file access helpers and runtime behavior.
+/** Re-exports fs-safe helpers for validating local file and media source paths. */
 import "./fs-safe-defaults.js";
-/** Re-exported API for src/infra. */
+/** Public file URL and Windows network-path guards from fs-safe. */
 export {
   assertNoWindowsNetworkPath,
   basenameFromMediaSource,
