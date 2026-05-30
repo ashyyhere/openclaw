@@ -1,23 +1,23 @@
 // Focused public test helpers for environment, network, and time fixtures.
 
-/** Re-exported API for src/plugin-sdk. */
+/** HTTP capture and hostname pinning fixtures for media-understanding live tests. */
 export {
   createAuthCaptureJsonFetch,
   createRequestCaptureJsonFetch,
   installPinnedHostnameTestHooks,
 } from "../media-understanding/audio.test-helpers.ts";
-/** Re-exported API for src/plugin-sdk. */
+/** Shared live-agent prompt, response, and profile-mode assertions. */
 export {
   createSingleUserPromptMessage,
   extractNonEmptyAssistantText,
   isLiveProfileKeyModeEnabled,
   isLiveTestEnabled,
 } from "../agents/live-test-helpers.js";
-/** Re-exported API for src/plugin-sdk, starting with collect Provider Api Keys. */
+/** Collects provider API keys from live-test environment variables. */
 export { collectProviderApiKeys } from "../agents/live-auth-keys.js";
-/** Re-exported API for src/plugin-sdk, starting with is Model Not Found Error Message. */
+/** Detects provider-specific model-missing errors in live test assertions. */
 export { isModelNotFoundErrorMessage } from "../agents/live-model-errors.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Normalized provider failure classifiers used by failover live tests. */
 export {
   isAuthErrorMessage,
   isBillingErrorMessage,
@@ -25,27 +25,27 @@ export {
   isServerErrorMessage,
   isTimeoutErrorMessage,
 } from "../agents/embedded-agent-helpers/failover-matches.js";
-/** Re-exported API for src/plugin-sdk, starting with maybe Load Shell Env For Generation Providers. */
+/** Loads optional shell env keys needed by generation-provider live lanes. */
 export { maybeLoadShellEnvForGenerationProviders } from "../test-utils/generation-live-test-helpers.js";
-/** Re-exported API for src/plugin-sdk, starting with is Truthy Env Value. */
+/** Shared truthy environment parsing for test toggles. */
 export { isTruthyEnvValue } from "../infra/env.js";
-/** Re-exported API for src/plugin-sdk, starting with get Shell Env Applied Keys. */
+/** Reports which shell environment keys were applied during live-test setup. */
 export { getShellEnvAppliedKeys } from "../infra/shell-env.js";
-/** Re-exported API for src/plugin-sdk, starting with encode Png Rgba. */
+/** Tiny PNG encoder helpers for generated image fixtures. */
 export { encodePngRgba, fillPixel } from "../media/png-encode.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Media-generation live-test filter, model-map, and key-redaction utilities. */
 export {
   parseLiveCsvFilter as parseCsvFilter,
   parseProviderModelMap,
   redactLiveApiKey,
 } from "../media-generation/live-test-helpers.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Music-generation live auth-store and model-selection fixtures. */
 export {
   DEFAULT_LIVE_MUSIC_MODELS,
   resolveConfiguredLiveMusicModels,
   resolveLiveMusicAuthStore,
 } from "../music-generation/live-test-helpers.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Video-generation live auth-store, model, resolution, and buffer-lane fixtures. */
 export {
   canRunBufferBackedImageToVideoLiveLane,
   canRunBufferBackedVideoToVideoLiveLane,
@@ -54,11 +54,11 @@ export {
   resolveLiveVideoAuthStore,
   resolveLiveVideoResolution,
 } from "../video-generation/live-test-helpers.js";
-/** Re-exported API for src/plugin-sdk, starting with normalize Video Generation Duration. */
+/** Normalizes duration inputs to the video-generation provider contract. */
 export { normalizeVideoGenerationDuration } from "../video-generation/duration-support.js";
-/** Re-exported API for src/plugin-sdk, starting with parse Video Generation Model Ref. */
+/** Parses video-generation model refs used by provider live tests. */
 export { parseVideoGenerationModelRef } from "../video-generation/model-ref.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Video-generation request and provider contract types for plugin tests. */
 export type {
   GeneratedVideoAsset,
   VideoGenerationMode,
@@ -66,31 +66,31 @@ export type {
   VideoGenerationProvider,
   VideoGenerationRequest,
 } from "../video-generation/types.js";
-/** Re-exported API for src/plugin-sdk, starting with json Response. */
+/** HTTP request/response helpers for lightweight unit fixtures. */
 export { jsonResponse, requestBodyText, requestUrl } from "../test-helpers/http.js";
-/** Re-exported API for src/plugin-sdk, starting with mock Pinned Hostname Resolution. */
+/** SSRF-safe hostname resolution mock for network-bound tests. */
 export { mockPinnedHostnameResolution } from "../test-helpers/ssrf.js";
-/** Re-exported API for src/plugin-sdk, starting with create Windows Cmd Shim Fixture. */
+/** Windows command shim fixture for cross-platform process tests. */
 export { createWindowsCmdShimFixture } from "../test-helpers/windows-cmd-shim.js";
-/** Re-exported API for src/plugin-sdk, starting with create Provider Usage Fetch. */
+/** Provider-usage fetch mock and response builder. */
 export { createProviderUsageFetch, makeResponse } from "../test-utils/provider-usage-fetch.js";
-/** Re-exported API for src/plugin-sdk, starting with with State Dir Env. */
+/** State-directory environment wrapper for config and persistence tests. */
 export { withStateDirEnv } from "../test-helpers/state-dir-env.js";
-/** Re-exported API for src/plugin-sdk, starting with capture Env. */
+/** Environment capture and scoped mutation helpers for isolated tests. */
 export { captureEnv, withEnv, withEnvAsync } from "../test-utils/env.js";
-/** Re-exported API for src/plugin-sdk, starting with with Fetch Preconnect. */
+/** Fetch preconnect mock used by network tests that assert warmup behavior. */
 export { withFetchPreconnect, type FetchMock } from "../test-utils/fetch-mock.js";
-/** Re-exported API for src/plugin-sdk, starting with create Mock Server Response. */
+/** Minimal server-response mock for handler tests without a real socket. */
 export { createMockServerResponse } from "../test-utils/mock-http-response.js";
-/** Re-exported API for src/plugin-sdk, starting with create Temp Home Env. */
+/** Temporary HOME fixture for tests that need isolated user state. */
 export { createTempHomeEnv, type TempHomeEnv } from "../test-utils/temp-home.js";
-/** Re-exported API for src/plugin-sdk, starting with with Temp Dir. */
+/** Temporary directory helper with automatic cleanup. */
 export { withTempDir } from "../test-utils/temp-dir.js";
-/** Re-exported API for src/plugin-sdk, starting with use Frozen Time. */
+/** Fake-time controls for tests that need deterministic clocks. */
 export { useFrozenTime, useRealTime } from "../test-utils/frozen-time.js";
-/** Re-exported API for src/plugin-sdk, starting with with Server. */
+/** HTTP server fixture for plugin SDK request/response tests. */
 export { withServer } from "./test-helpers/http-test-server.js";
-/** Re-exported API for src/plugin-sdk, starting with create Mock Incoming Request. */
+/** Incoming request mock for testing plugin SDK HTTP handlers. */
 export { createMockIncomingRequest } from "./test-helpers/mock-incoming-request.js";
-/** Re-exported API for src/plugin-sdk, starting with with Temp Home. */
+/** Plugin SDK temporary HOME fixture that mirrors external test consumers. */
 export { withTempHome } from "./test-helpers/temp-home.js";
