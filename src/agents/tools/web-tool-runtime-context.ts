@@ -81,7 +81,7 @@ function resolveWebToolRuntimeContext<TMetadata extends WebProviderRuntimeMetada
   };
 }
 
-/** Reused helper for resolve Web Search Tool Runtime Context behavior in src/agents/tools. */
+/** Resolve web_search config plus active runtime metadata for provider selection. */
 export function resolveWebSearchToolRuntimeContext(params: {
   config?: OpenClawConfig;
   lateBindRuntimeConfig?: boolean;
@@ -103,7 +103,7 @@ export function resolveWebSearchToolRuntimeContext(params: {
   };
 }
 
-/** Reused helper for resolve Web Fetch Tool Runtime Context behavior in src/agents/tools. */
+/** Resolve web_fetch config plus active runtime metadata for provider selection. */
 export function resolveWebFetchToolRuntimeContext(params: {
   config?: OpenClawConfig;
   lateBindRuntimeConfig?: boolean;

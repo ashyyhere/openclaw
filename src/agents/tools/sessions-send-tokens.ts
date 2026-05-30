@@ -1,9 +1,9 @@
 /** Control tokens understood by sessions-send delivery. */
 import { HEARTBEAT_TOKEN, isSilentReplyText, SILENT_REPLY_TOKEN } from "../../auto-reply/tokens.js";
 
-/** Reused constant for ANNOUNCE SKIP TOKEN behavior in src/agents/tools. */
+/** Literal reply text that suppresses announce delivery. */
 export const ANNOUNCE_SKIP_TOKEN = "ANNOUNCE_SKIP";
-/** Reused constant for REPLY SKIP TOKEN behavior in src/agents/tools. */
+/** Literal reply text that suppresses normal reply delivery. */
 export const REPLY_SKIP_TOKEN = "REPLY_SKIP";
 
 const NON_DELIVERABLE_REPLY_TOKENS = [

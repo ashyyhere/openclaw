@@ -1,7 +1,7 @@
 /** HTML/text extraction helpers used by web_fetch. */
 import { sanitizeHtml, stripInvisibleUnicode } from "./web-fetch-visibility.js";
 
-/** Shared type for Extract Mode in src/agents/tools. */
+/** Extraction output mode requested by web_fetch. */
 export type ExtractMode = "markdown" | "text";
 
 function decodeEntities(value: string): string {
@@ -77,7 +77,7 @@ export function markdownToText(markdown: string): string {
   return normalizeWhitespace(text);
 }
 
-/** Reused helper for truncate Text behavior in src/agents/tools. */
+/** Truncate extracted web text and report whether data was dropped. */
 export function truncateText(
   value: string,
   maxChars: number,
