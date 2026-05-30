@@ -42,7 +42,7 @@ import { callGatewayTool } from "../tools/gateway.js";
 import { runAgentHarnessAfterToolCallHook } from "./hook-helpers.js";
 import { runAgentHarnessBeforeAgentFinalizeHook } from "./lifecycle-hook-helpers.js";
 
-/** Shared type for Json Value in src/agents/harness. */
+/** JSON value accepted from native hook relay bridge payloads. */
 export type JsonValue =
   | null
   | boolean
@@ -60,12 +60,12 @@ const NATIVE_HOOK_RELAY_EVENTS = [
 
 const NATIVE_HOOK_RELAY_PROVIDERS = ["codex"] as const;
 
-/** Shared type for Native Hook Relay Event in src/agents/harness. */
+/** Native lifecycle/tool event names supported by the relay. */
 export type NativeHookRelayEvent = (typeof NATIVE_HOOK_RELAY_EVENTS)[number];
-/** Shared type for Native Hook Relay Provider in src/agents/harness. */
+/** Native provider ids supported by the hook relay. */
 export type NativeHookRelayProvider = (typeof NATIVE_HOOK_RELAY_PROVIDERS)[number];
 
-/** Shared type for Native Hook Relay Invocation in src/agents/harness. */
+/** Normalized native hook invocation stored for diagnostics and processing. */
 export type NativeHookRelayInvocation = {
   provider: NativeHookRelayProvider;
   relayId: string;
@@ -88,14 +88,14 @@ export type NativeHookRelayInvocation = {
   receivedAt: string;
 };
 
-/** Shared type for Native Hook Relay Process Response in src/agents/harness. */
+/** Process-style response returned to native hook command invocations. */
 export type NativeHookRelayProcessResponse = {
   stdout: string;
   stderr: string;
   exitCode: number;
 };
 
-/** Shared type for Native Hook Relay Registration in src/agents/harness. */
+/** Active native hook relay registration metadata. */
 export type NativeHookRelayRegistration = {
   relayId: string;
   provider: NativeHookRelayProvider;
@@ -112,7 +112,7 @@ export type NativeHookRelayRegistration = {
   signal?: AbortSignal;
 };
 
-/** Shared type for Native Hook Relay Registration Handle in src/agents/harness. */
+/** Registration handle with command rendering, renewal, and cleanup hooks. */
 export type NativeHookRelayRegistrationHandle = NativeHookRelayRegistration & {
   generation?: string;
   shouldRelayEvent: (event: NativeHookRelayEvent) => boolean;
@@ -121,7 +121,7 @@ export type NativeHookRelayRegistrationHandle = NativeHookRelayRegistration & {
   unregister: () => void;
 };
 
-/** Shared type for Register Native Hook Relay Params in src/agents/harness. */
+/** Inputs for registering a native provider hook relay. */
 export type RegisterNativeHookRelayParams = {
   provider: NativeHookRelayProvider;
   relayId?: string;
@@ -139,7 +139,7 @@ export type RegisterNativeHookRelayParams = {
   signal?: AbortSignal;
 };
 
-/** Shared type for Native Hook Relay Command Options in src/agents/harness. */
+/** Command execution options for native hook relay bridge processes. */
 export type NativeHookRelayCommandOptions = {
   executable?: string;
   nice?: number | false;
@@ -147,7 +147,7 @@ export type NativeHookRelayCommandOptions = {
   timeoutMs?: number;
 };
 
-/** Shared type for Invoke Native Hook Relay Params in src/agents/harness. */
+/** Raw invocation parameters received from a native hook relay command. */
 export type InvokeNativeHookRelayParams = {
   provider: unknown;
   relayId: unknown;
@@ -157,7 +157,7 @@ export type InvokeNativeHookRelayParams = {
   requireGeneration?: boolean;
 };
 
-/** Shared type for Invoke Native Hook Relay Bridge Params in src/agents/harness. */
+/** Invocation parameters for the HTTP bridge path, including bridge timeouts. */
 export type InvokeNativeHookRelayBridgeParams = InvokeNativeHookRelayParams & {
   registrationTimeoutMs?: number;
   timeoutMs?: number;
@@ -305,7 +305,7 @@ type NativeHookRelayPreToolUseApproval = {
   resolutionPromise?: Promise<NativeHookRelayDeferredApprovalOutcome>;
 };
 
-/** Shared type for Native Hook Relay Deferred Approval Outcome in src/agents/harness. */
+/** Terminal outcome for a deferred native pre-tool approval. */
 export type NativeHookRelayDeferredApprovalOutcome =
   | {
       handled: true;
@@ -2289,7 +2289,7 @@ function isJsonObject(value: unknown): value is Record<string, unknown> {
   }
 }
 
-/** Reused constant for testing behavior in src/agents/harness. */
+/** Test hooks for resetting relay state and inspecting bridge/approval internals. */
 export const testing = {
   clearNativeHookRelaysForTests(): void {
     for (const relayId of relayBridges.keys()) {
@@ -2350,5 +2350,5 @@ export const testing = {
     nativeHookRelayDeferredToolApprovalRequester = requester;
   },
 } as const;
-/** Re-exported API for src/agents/harness, starting with testing. */
+/** Internal test-only access to native hook relay reset and inspection hooks. */
 export { testing as __testing };

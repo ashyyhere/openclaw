@@ -25,28 +25,28 @@ import {
   resolveSubagentSessionStatus,
 } from "./subagent-session-metrics.js";
 
-/** Re-exported API for src/agents. */
+/** Subagent session timing and status helpers shared with registry maintenance. */
 export {
   getSubagentSessionRuntimeMs,
   getSubagentSessionStartedAt,
   resolveSubagentSessionStatus,
 } from "./subagent-session-metrics.js";
 
-/** Reused constant for MIN ANNOUNCE RETRY DELAY MS behavior in src/agents. */
+/** Minimum delay before retrying subagent completion announcements. */
 export const MIN_ANNOUNCE_RETRY_DELAY_MS = 1_000;
 const MAX_ANNOUNCE_RETRY_DELAY_MS = 8_000;
-/** Reused constant for MAX ANNOUNCE RETRY COUNT behavior in src/agents. */
+/** Maximum number of subagent announcement retry attempts. */
 export const MAX_ANNOUNCE_RETRY_COUNT = 3;
-/** Reused constant for ANNOUNCE EXPIRY MS behavior in src/agents. */
+/** Soft expiry after which subagent announcement retries give up. */
 export const ANNOUNCE_EXPIRY_MS = 5 * 60_000;
-/** Reused constant for ANNOUNCE COMPLETION HARD EXPIRY MS behavior in src/agents. */
+/** Hard expiry for completion announcement retry bookkeeping. */
 export const ANNOUNCE_COMPLETION_HARD_EXPIRY_MS = 30 * 60_000;
 
 const FROZEN_RESULT_TEXT_MAX_BYTES = 100 * 1024;
 
 type SubagentRunOrphanReason = "missing-session-entry" | "missing-session-id" | "stale-unended-run";
 
-/** Reused helper for cap Frozen Result Text behavior in src/agents. */
+/** Caps frozen subagent completion text to the registry persistence limit. */
 export function capFrozenResultText(resultText: string): string {
   const trimmed = resultText.trim();
   if (!trimmed) {
@@ -65,7 +65,7 @@ export function capFrozenResultText(resultText: string): string {
   return `${payload}${notice}`;
 }
 
-/** Reused helper for resolve Announce Retry Delay Ms behavior in src/agents. */
+/** Computes bounded exponential backoff for subagent announcement retries. */
 export function resolveAnnounceRetryDelayMs(retryCount: number) {
   const boundedRetryCount = Math.max(0, Math.min(retryCount, 10));
   // retryCount is "attempts already made", so retry #1 waits 1s, then 2s, 4s...
@@ -79,7 +79,7 @@ function formatAnnounceGiveUpLogField(value: string): string {
   return JSON.stringify(normalized.length > 2_000 ? `${normalized.slice(0, 2_000)}…` : normalized);
 }
 
-/** Reused helper for log Announce Give Up behavior in src/agents. */
+/** Logs the final reason for abandoning subagent announcement delivery. */
 export function logAnnounceGiveUp(entry: SubagentRunRecord, reason: "retry-limit" | "expiry") {
   const retryCount = getDeliveryAttemptCount(entry);
   const endedAgoMs =
@@ -108,7 +108,7 @@ function findSessionEntryByKey(store: Record<string, SessionEntry>, sessionKey: 
   return undefined;
 }
 
-/** Reused helper for persist Subagent Session Timing behavior in src/agents. */
+/** Persists subagent timing/status fields into the owning session store entry. */
 export async function persistSubagentSessionTiming(entry: SubagentRunRecord) {
   const childSessionKey = entry.childSessionKey?.trim();
   if (!childSessionKey) {
@@ -159,7 +159,7 @@ export async function persistSubagentSessionTiming(entry: SubagentRunRecord) {
   });
 }
 
-/** Reused helper for resolve Subagent Run Orphan Reason behavior in src/agents. */
+/** Detects why a restored subagent run no longer has valid session backing. */
 export function resolveSubagentRunOrphanReason(params: {
   entry: SubagentRunRecord;
   storeCache?: Map<string, Record<string, SessionEntry>>;
@@ -207,7 +207,7 @@ function isResolvedChildPath(params: { childPath: string; rootPath: string }) {
   return params.childPath.startsWith(rootWithSep);
 }
 
-/** Reused helper for safe Remove Attachments Dir behavior in src/agents. */
+/** Best-effort removal for a subagent attachments directory under its root. */
 export async function safeRemoveAttachmentsDir(entry: SubagentRunRecord): Promise<void> {
   if (!entry.attachmentsDir || !entry.attachmentsRootDir) {
     return;
@@ -277,7 +277,7 @@ function safeRemoveAttachmentsDirSync(entry: SubagentRunRecord): void {
   }
 }
 
-/** Reused helper for reconcile Orphaned Run behavior in src/agents. */
+/** Marks an orphaned subagent run failed, cleans attachments, and removes it from active state. */
 export function reconcileOrphanedRun(params: {
   runId: string;
   entry: SubagentRunRecord;
@@ -334,7 +334,7 @@ export function reconcileOrphanedRun(params: {
   return true;
 }
 
-/** Reused helper for reconcile Orphaned Restored Runs behavior in src/agents. */
+/** Reconciles all restored subagent runs that have become orphaned. */
 export function reconcileOrphanedRestoredRuns(params: {
   runs: Map<string, SubagentRunRecord>;
   resumedRuns: Set<string>;
@@ -368,7 +368,7 @@ export function reconcileOrphanedRestoredRuns(params: {
   return changed;
 }
 
-/** Reused helper for resolve Archive After Ms behavior in src/agents. */
+/** Resolves the subagent archive delay from config defaults. */
 export function resolveArchiveAfterMs(cfg?: OpenClawConfig) {
   const config = cfg ?? getRuntimeConfig();
   const minutes =
