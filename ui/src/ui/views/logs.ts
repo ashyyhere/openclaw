@@ -1,4 +1,3 @@
-// ui/src/ui/views logs helpers and runtime behavior.
 import { html, nothing } from "lit";
 import { t } from "../../i18n/index.ts";
 import { normalizeLowercaseStringOrEmpty } from "../string-coerce.ts";
@@ -6,7 +5,6 @@ import type { LogEntry, LogLevel } from "../types.ts";
 
 const LEVELS: LogLevel[] = ["trace", "debug", "info", "warn", "error", "fatal"];
 
-/** Shared type for Logs Props in ui/src/ui/views. */
 export type LogsProps = {
   loading: boolean;
   error: string | null;
@@ -45,7 +43,6 @@ function matchesFilter(entry: LogEntry, needle: string) {
   return haystack.includes(needle);
 }
 
-/** Reused helper for render Logs behavior in ui/src/ui/views. */
 export function renderLogs(props: LogsProps) {
   const needle = normalizeLowercaseStringOrEmpty(props.filterText);
   const levelFiltered = LEVELS.some((level) => !props.levelFilters[level]);
