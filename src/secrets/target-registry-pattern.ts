@@ -1,15 +1,15 @@
-// secrets target registry pattern helpers and runtime behavior.
+// Secret target path-pattern compiler and matcher for config/auth profile discovery.
 import { parseConfigPathArrayIndex } from "../shared/path-array-index.js";
 import { isRecord, parseDotPath } from "./shared.js";
 import type { SecretTargetRegistryEntry } from "./target-registry-types.js";
 
-/** Shared type for Path Pattern Token in src/secrets. */
+/** Compiled segment in a secret target path pattern. */
 export type PathPatternToken =
   | { kind: "literal"; value: string }
   | { kind: "wildcard" }
   | { kind: "array"; field: string };
 
-/** Shared type for Compiled Target Registry Entry in src/secrets. */
+/** Secret target registry entry with compiled value/ref path patterns. */
 export type CompiledTargetRegistryEntry = SecretTargetRegistryEntry & {
   pathTokens: PathPatternToken[];
   pathDynamicTokenCount: number;
@@ -17,7 +17,7 @@ export type CompiledTargetRegistryEntry = SecretTargetRegistryEntry & {
   refPathDynamicTokenCount: number;
 };
 
-/** Shared type for Expanded Path Match in src/secrets. */
+/** Concrete config path/value discovered from a compiled secret target pattern. */
 export type ExpandedPathMatch = {
   segments: string[];
   captures: string[];
@@ -28,7 +28,7 @@ function countDynamicPatternTokens(tokens: PathPatternToken[]): number {
   return tokens.filter((token) => token.kind === "wildcard" || token.kind === "array").length;
 }
 
-/** Reused helper for parse Path Pattern behavior in src/secrets. */
+/** Parses dotted target path patterns with wildcards and array markers. */
 export function parsePathPattern(pathPattern: string): PathPatternToken[] {
   const segments = parseDotPath(pathPattern);
   return segments.map((segment) => {
@@ -46,7 +46,7 @@ export function parsePathPattern(pathPattern: string): PathPatternToken[] {
   });
 }
 
-/** Reused helper for compile Target Registry Entry behavior in src/secrets. */
+/** Compiles a secret target registry entry and validates value/ref capture shape. */
 export function compileTargetRegistryEntry(
   entry: SecretTargetRegistryEntry,
 ): CompiledTargetRegistryEntry {
@@ -70,7 +70,7 @@ export function compileTargetRegistryEntry(
   };
 }
 
-/** Reused helper for match Path Tokens behavior in src/secrets. */
+/** Matches concrete path segments against compiled target pattern tokens. */
 export function matchPathTokens(
   segments: string[],
   tokens: PathPatternToken[],
@@ -109,7 +109,7 @@ export function matchPathTokens(
   return index === segments.length ? { captures } : null;
 }
 
-/** Reused helper for materialize Path Tokens behavior in src/secrets. */
+/** Reconstructs concrete path segments from compiled tokens and captures. */
 export function materializePathTokens(
   tokens: PathPatternToken[],
   captures: string[],
@@ -140,7 +140,7 @@ export function materializePathTokens(
   return captureIndex === captures.length ? out : null;
 }
 
-/** Reused helper for expand Path Tokens behavior in src/secrets. */
+/** Expands wildcard/array pattern tokens into concrete matches under a root object. */
 export function expandPathTokens(root: unknown, tokens: PathPatternToken[]): ExpandedPathMatch[] {
   const out: ExpandedPathMatch[] = [];
   const walk = (

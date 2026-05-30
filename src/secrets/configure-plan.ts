@@ -1,4 +1,4 @@
-// secrets configure plan helpers and runtime behavior.
+// Secret configuration planning for moving config/auth values into secret refs.
 import { isDeepStrictEqual } from "node:util";
 import type { AuthProfileStore } from "../agents/auth-profiles/types.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -15,7 +15,7 @@ import {
   discoverConfigSecretTargets,
 } from "./target-registry.js";
 
-/** Shared type for Configure Candidate in src/secrets. */
+/** Secret-bearing config/auth value that `secrets configure` can convert. */
 export type ConfigureCandidate = {
   type: string;
   path: string;
@@ -31,12 +31,12 @@ export type ConfigureCandidate = {
   authProfileProvider?: string;
 };
 
-/** Shared type for Configure Selected Target in src/secrets. */
+/** Configure candidate selected with the secret ref that should replace it. */
 export type ConfigureSelectedTarget = ConfigureCandidate & {
   ref: SecretRef;
 };
 
-/** Shared type for Configure Provider Changes in src/secrets. */
+/** Secret provider config upserts/deletes collected for an apply plan. */
 export type ConfigureProviderChanges = {
   upserts: Record<string, SecretProviderConfig>;
   deletes: string[];
@@ -49,7 +49,7 @@ function getSecretProviders(config: OpenClawConfig): Record<string, SecretProvid
   return config.secrets.providers;
 }
 
-/** Reused helper for build Configure Candidates behavior in src/secrets. */
+/** Discovers configurable secret targets from the active OpenClaw config. */
 export function buildConfigureCandidates(config: OpenClawConfig): ConfigureCandidate[] {
   return buildConfigureCandidatesForScope({ config });
 }
@@ -78,7 +78,7 @@ function resolveAuthProfileProvider(
   return provider.length > 0 ? provider : undefined;
 }
 
-/** Reused helper for build Configure Candidates For Scope behavior in src/secrets. */
+/** Discovers configurable secret targets for config plus optional auth profile scope. */
 export function buildConfigureCandidatesForScope(params: {
   config: OpenClawConfig;
   authoredOpenClawConfig?: OpenClawConfig;
@@ -191,7 +191,7 @@ function hasPath(root: unknown, segments: string[]): boolean {
   return false;
 }
 
-/** Reused helper for collect Configure Provider Changes behavior in src/secrets. */
+/** Computes provider config upserts and deletes between original and next config. */
 export function collectConfigureProviderChanges(params: {
   original: OpenClawConfig;
   next: OpenClawConfig;
@@ -222,7 +222,7 @@ export function collectConfigureProviderChanges(params: {
   };
 }
 
-/** Reused helper for has Configure Plan Changes behavior in src/secrets. */
+/** Checks whether selected targets or provider edits require an apply plan. */
 export function hasConfigurePlanChanges(params: {
   selectedTargets: ReadonlyMap<string, ConfigureSelectedTarget>;
   providerChanges: ConfigureProviderChanges;
@@ -234,7 +234,7 @@ export function hasConfigurePlanChanges(params: {
   );
 }
 
-/** Reused helper for build Secrets Configure Plan behavior in src/secrets. */
+/** Builds the serializable secrets apply plan for selected targets and providers. */
 export function buildSecretsConfigurePlan(params: {
   selectedTargets: ReadonlyMap<string, ConfigureSelectedTarget>;
   providerChanges: ConfigureProviderChanges;
