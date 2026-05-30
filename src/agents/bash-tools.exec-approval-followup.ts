@@ -272,7 +272,7 @@ async function sendDirectFollowupFallback(params: {
   return true;
 }
 
-/** Reused helper for send Exec Approval Followup behavior in src/agents. */
+/** Deliver exec approval completion text to the originating session or external target. */
 export async function sendExecApprovalFollowup(
   params: ExecApprovalFollowupParams,
 ): Promise<boolean> {

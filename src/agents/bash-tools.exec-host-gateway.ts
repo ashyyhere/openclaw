@@ -57,7 +57,7 @@ import type {
 } from "./bash-tools.exec-types.js";
 import type { AgentToolResult } from "./runtime/index.js";
 
-/** Shared type for Process Gateway Allowlist Params in src/agents. */
+/** Inputs used to evaluate and execute a gateway-hosted exec command. */
 export type ProcessGatewayAllowlistParams = {
   command: string;
   workdir: string;
@@ -95,7 +95,7 @@ export type ProcessGatewayAllowlistParams = {
   trustedSafeBinDirs?: ReadonlySet<string>;
 };
 
-/** Shared type for Process Gateway Allowlist Result in src/agents. */
+/** Gateway exec policy result, including approval-pending or denied tool output. */
 export type ProcessGatewayAllowlistResult = {
   execCommandOverride?: string;
   allowWithoutEnforcedCommand?: boolean;
@@ -336,7 +336,7 @@ async function resolveGatewayExecApprovalFollowupText(params: {
   }
 }
 
-/** Reused helper for process Gateway Allowlist behavior in src/agents. */
+/** Evaluate gateway exec policy, approval state, and allowed command override. */
 export async function processGatewayAllowlist(
   params: ProcessGatewayAllowlistParams,
 ): Promise<ProcessGatewayAllowlistResult> {

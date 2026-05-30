@@ -11,7 +11,7 @@ const EXEC_APPROVAL_FOLLOWUP_IDEMPOTENCY_PREFIX = "exec-approval-followup:";
 const EXEC_APPROVAL_FOLLOWUP_IDEMPOTENCY_NONCE_MARKER = ":nonce:";
 const EXEC_APPROVAL_FOLLOWUP_RUNTIME_HANDOFF_TTL_MS = 5 * 60 * 1000;
 
-/** Shared type for Exec Approval Followup Runtime Handoff in src/agents. */
+/** Serialized state used to resume an approved exec follow-up run. */
 export type ExecApprovalFollowupRuntimeHandoff = {
   kind: "exec-approval-followup";
   approvalId: string;
@@ -20,7 +20,7 @@ export type ExecApprovalFollowupRuntimeHandoff = {
   bashElevated: ExecElevatedDefaults;
 };
 
-/** Shared type for Exec Approval Followup Runtime Handoff Registration in src/agents. */
+/** Identifier pair returned after registering an exec follow-up handoff. */
 export type ExecApprovalFollowupRuntimeHandoffRegistration = {
   handoffId: string;
   idempotencyKey: string;
