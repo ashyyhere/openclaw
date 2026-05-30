@@ -1,4 +1,3 @@
-// extensions/xiaomi speech provider helpers and runtime behavior.
 import { transcodeAudioBufferToOpus } from "openclaw/plugin-sdk/media-runtime";
 import { resolveTimerTimeoutMs } from "openclaw/plugin-sdk/number-runtime";
 import { assertOkOrThrowProviderError } from "openclaw/plugin-sdk/provider-http";

@@ -1,4 +1,3 @@
-// extensions/policy/src policy state helpers and runtime behavior.
 import { createHash } from "node:crypto";
 import { normalizeProviderId } from "openclaw/plugin-sdk/provider-model-shared";
 import { coerceSecretRef } from "openclaw/plugin-sdk/secret-input";
