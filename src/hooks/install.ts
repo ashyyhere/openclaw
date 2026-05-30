@@ -1,4 +1,4 @@
-// hooks install helpers and runtime behavior.
+/** Hook installation helpers for archives, npm specs, packages, and local paths. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import { MANIFEST_KEY } from "../compat/legacy-names.js";
@@ -16,7 +16,7 @@ async function loadHookInstallRuntime() {
   return hookInstallRuntimePromise;
 }
 
-/** Shared type for Hook Install Logger in src/hooks. */
+/** Logger accepted by hook installation flows. */
 export type HookInstallLogger = {
   info?: (message: string) => void;
   warn?: (message: string) => void;
@@ -28,7 +28,7 @@ type HookPackageManifest = {
   dependencies?: Record<string, string>;
 } & Partial<Record<typeof MANIFEST_KEY, { hooks?: string[] }>>;
 
-/** Shared type for Install Hooks Result in src/hooks. */
+/** Result returned after installing or updating hooks. */
 export type InstallHooksResult =
   | {
       ok: true;
@@ -41,7 +41,7 @@ export type InstallHooksResult =
     }
   | { ok: false; error: string };
 
-/** Shared type for Hook Npm Integrity Drift Params in src/hooks. */
+/** Integrity drift details for npm hook package verification. */
 export type HookNpmIntegrityDriftParams = {
   spec: string;
   expectedIntegrity: string;
@@ -89,7 +89,7 @@ function validateHookId(hookId: string): string | null {
   return null;
 }
 
-/** Reused helper for resolve Hook Install Dir behavior in src/hooks. */
+/** Resolves and validates the install directory for one hook id. */
 export function resolveHookInstallDir(hookId: string, hooksDir?: string): string {
   const hooksBase = hooksDir ? resolveUserPath(hooksDir) : path.join(CONFIG_DIR, "hooks");
   const hookIdError = validateHookId(hookId);
@@ -377,7 +377,7 @@ async function installHookFromDir(params: {
   return { ok: true, hookPackId: hookName, hooks: [hookName], targetDir };
 }
 
-/** Reused helper for install Hooks From Archive behavior in src/hooks. */
+/** Installs hooks from a local archive after extracting and validating its root. */
 export async function installHooksFromArchive(
   params: HookArchiveInstallParams,
 ): Promise<InstallHooksResult> {
@@ -410,7 +410,7 @@ export async function installHooksFromArchive(
   });
 }
 
-/** Reused helper for install Hooks From Npm Spec behavior in src/hooks. */
+/** Downloads an npm hook package archive and installs its declared hooks. */
 export async function installHooksFromNpmSpec(params: {
   spec: string;
   dangerouslyForceUnsafeInstall?: boolean;
@@ -453,7 +453,7 @@ export async function installHooksFromNpmSpec(params: {
   });
 }
 
-/** Reused helper for install Hooks From Path behavior in src/hooks. */
+/** Installs hooks from an existing local directory or archive path. */
 export async function installHooksFromPath(
   params: HookPathInstallParams,
 ): Promise<InstallHooksResult> {

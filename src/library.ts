@@ -1,4 +1,4 @@
-// OpenClaw library helpers and runtime behavior.
+/** Public library facade with lazy runtime imports for optional subsystems. */
 import type { getReplyFromConfig as getReplyFromConfigRuntime } from "./auto-reply/reply.runtime.js";
 import { applyTemplate } from "./auto-reply/templating.js";
 import { createDefaultDeps } from "./cli/deps.js";
@@ -62,25 +62,25 @@ function loadWebChannelRuntime() {
   return webChannelRuntimePromise;
 }
 
-/** Reused constant for get Reply From Config behavior in src. */
+/** Lazy facade for auto-reply config resolution. */
 export const getReplyFromConfig: GetReplyFromConfig = async (...args) =>
   (await loadReplyRuntime()).getReplyFromConfig(...args);
-/** Reused constant for prompt Yes No behavior in src. */
+/** Lazy facade for CLI yes/no prompts. */
 export const promptYesNo: PromptYesNo = async (...args) =>
   (await loadPromptRuntime()).promptYesNo(...args);
-/** Reused constant for ensure Binary behavior in src. */
+/** Lazy facade for binary availability checks. */
 export const ensureBinary: EnsureBinary = async (...args) =>
   (await loadBinariesRuntime()).ensureBinary(...args);
-/** Reused constant for run Exec behavior in src. */
+/** Lazy facade for execFile-based command execution. */
 export const runExec: RunExec = async (...args) => (await loadExecRuntime()).runExec(...args);
-/** Reused constant for run Command With Timeout behavior in src. */
+/** Lazy facade for timeout-aware spawn execution. */
 export const runCommandWithTimeout: RunCommandWithTimeout = async (...args) =>
   (await loadExecRuntime()).runCommandWithTimeout(...args);
-/** Reused constant for monitor Web Channel behavior in src. */
+/** Lazy facade for runtime web channel monitoring. */
 export const monitorWebChannel: MonitorWebChannel = async (...args) =>
   (await loadWebChannelRuntime()).monitorWebChannel(...args);
 
-/** Re-exported API for src. */
+/** Stable library exports for config, session, port, template, and utility helpers. */
 export {
   applyTemplate,
   createDefaultDeps,

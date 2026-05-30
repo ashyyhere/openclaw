@@ -1,4 +1,4 @@
-// gateway session transcript files fs helpers and runtime behavior.
+/** Filesystem helpers for archiving and resolving session transcript files. */
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -17,7 +17,7 @@ import { emitSessionTranscriptUpdate } from "../sessions/transcript-events.js";
 import { uniqueStrings } from "../shared/string-normalization.js";
 
 type ArchiveFileReason = SessionArchiveReason;
-/** Shared type for Archived Session Transcript in src/gateway. */
+/** Mapping from an original transcript path to its archive path. */
 export type ArchivedSessionTranscript = {
   sourcePath: string;
   archivedPath: string;
@@ -71,7 +71,7 @@ function canonicalizePathForComparison(filePath: string): string {
   }
 }
 
-/** Reused helper for resolve Session Transcript Candidates behavior in src/gateway. */
+/** Resolves transcript file candidates for a session across current and legacy paths. */
 export function resolveSessionTranscriptCandidates(
   sessionId: string,
   storePath: string | undefined,
@@ -128,7 +128,7 @@ export function resolveSessionTranscriptCandidates(
   return uniqueStrings(candidates);
 }
 
-/** Reused helper for archive File On Disk behavior in src/gateway. */
+/** Renames one transcript file to an archive path and emits a transcript update. */
 export function archiveFileOnDisk(filePath: string, reason: ArchiveFileReason): string {
   const ts = formatSessionArchiveTimestamp();
   const archived = `${filePath}.${reason}.${ts}`;
@@ -146,7 +146,7 @@ export function archiveFileOnDisk(filePath: string, reason: ArchiveFileReason): 
   return archived;
 }
 
-/** Reused helper for archive Session Transcripts behavior in src/gateway. */
+/** Archives matching session transcripts and returns only archive paths. */
 export function archiveSessionTranscripts(opts: {
   sessionId: string;
   storePath: string | undefined;
@@ -163,7 +163,7 @@ export function archiveSessionTranscripts(opts: {
   return archiveSessionTranscriptsDetailed(opts).map((entry) => entry.archivedPath);
 }
 
-/** Reused helper for archive Session Transcripts Detailed behavior in src/gateway. */
+/** Archives matching session transcripts with original/archive path details. */
 export function archiveSessionTranscriptsDetailed(opts: {
   sessionId: string;
   storePath: string | undefined;
@@ -214,7 +214,7 @@ export function archiveSessionTranscriptsDetailed(opts: {
   return archived;
 }
 
-/** Reused helper for resolve Stable Session End Transcript behavior in src/gateway. */
+/** Chooses the transcript path to report after session reset/delete archival. */
 export function resolveStableSessionEndTranscript(params: {
   sessionId: string;
   storePath: string | undefined;
@@ -254,7 +254,7 @@ export function resolveStableSessionEndTranscript(params: {
   return {};
 }
 
-/** Reused helper for cleanup Archived Session Transcripts behavior in src/gateway. */
+/** Removes archived session transcript files older than the requested age. */
 export async function cleanupArchivedSessionTranscripts(opts: {
   directories: string[];
   olderThanMs: number;

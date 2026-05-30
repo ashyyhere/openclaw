@@ -1,4 +1,4 @@
-// plugins bundled plugin scan helpers and runtime behavior.
+/** Scans bundled plugin source/dist folders for public and runtime artifacts. */
 import fs from "node:fs";
 import path from "node:path";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
@@ -13,15 +13,15 @@ const RUNTIME_SIDECAR_ARTIFACTS = new Set([
   "thread-bindings-runtime.js",
 ]);
 
-/** Re-exported API for src/plugins, starting with normalize Optional String. */
+/** Trim helper kept under the bundled-plugin naming used by scan callers. */
 export { normalizeOptionalString as trimBundledPluginString };
 
-/** Reused helper for normalize Bundled Plugin String List behavior in src/plugins. */
+/** Normalizes manifest string arrays used by bundled plugin scan metadata. */
 export function normalizeBundledPluginStringList(value: unknown): string[] {
   return normalizeTrimmedStringList(value);
 }
 
-/** Reused helper for rewrite Bundled Plugin Entry To Built Path behavior in src/plugins. */
+/** Rewrites a bundled plugin source entry to its emitted JavaScript path. */
 export function rewriteBundledPluginEntryToBuiltPath(
   entry: string | undefined,
 ): string | undefined {
@@ -52,7 +52,7 @@ function isTopLevelPublicSurfaceSource(name: string): boolean {
   return !/(\.test|\.spec)(\.[cm]?[jt]s)$/u.test(name);
 }
 
-/** Reused helper for derive Bundled Plugin Id Hint behavior in src/plugins. */
+/** Derives a stable id hint for multi-entry bundled plugin packages. */
 export function deriveBundledPluginIdHint(params: {
   entryPath: string;
   manifestId: string;
@@ -73,7 +73,7 @@ export function deriveBundledPluginIdHint(params: {
   return `${unscoped}/${base}`;
 }
 
-/** Reused helper for collect Bundled Plugin Public Surface Artifacts behavior in src/plugins. */
+/** Lists top-level public surface artifacts emitted for a bundled plugin. */
 export function collectBundledPluginPublicSurfaceArtifacts(params: {
   pluginDir: string;
   sourceEntry: string;
@@ -96,7 +96,7 @@ export function collectBundledPluginPublicSurfaceArtifacts(params: {
   return artifacts.length > 0 ? artifacts : undefined;
 }
 
-/** Reused helper for collect Bundled Plugin Runtime Sidecar Artifacts behavior in src/plugins. */
+/** Filters public artifacts down to runtime sidecars required by loaders. */
 export function collectBundledPluginRuntimeSidecarArtifacts(
   publicSurfaceArtifacts: readonly string[] | undefined,
 ): readonly string[] | undefined {
@@ -109,7 +109,7 @@ export function collectBundledPluginRuntimeSidecarArtifacts(
   return artifacts.length > 0 ? artifacts : undefined;
 }
 
-/** Reused helper for resolve Bundled Plugin Scan Dir behavior in src/plugins. */
+/** Resolves the best source or build directory to scan for bundled plugins. */
 export function resolveBundledPluginScanDir(params: {
   packageRoot: string;
   runningFromBuiltArtifact: boolean;

@@ -1,4 +1,4 @@
-// media-understanding runtime helpers and runtime behavior.
+/** Runtime entrypoints for media understanding over files and remote media refs. */
 import path from "node:path";
 import type { OpenClawConfig } from "../config/types.js";
 import { readLocalFileSafely } from "../infra/fs-safe.js";
@@ -28,7 +28,7 @@ import type {
   RunMediaUnderstandingFileResult,
   TranscribeAudioFileParams,
 } from "./runtime-types.js";
-/** Re-exported API for src/media-understanding. */
+/** Public request/result parameter types for media understanding runtime APIs. */
 export type {
   DescribeImageFileParams,
   DescribeImageFileWithModelParams,
@@ -113,7 +113,7 @@ function hasStructuredImageInput(input: ExtractStructuredWithModelParams["input"
   return input.some((entry) => entry.type === "image");
 }
 
-/** Reused helper for run Media Understanding File behavior in src/media-understanding. */
+/** Runs a media understanding capability for one local file or remote media URL. */
 export async function runMediaUnderstandingFile(
   params: RunMediaUnderstandingFileParams,
 ): Promise<RunMediaUnderstandingFileResult> {
@@ -211,14 +211,14 @@ export async function runMediaUnderstandingFile(
   }
 }
 
-/** Reused helper for describe Image File behavior in src/media-understanding. */
+/** Describes an image file through the configured media understanding runtime. */
 export async function describeImageFile(
   params: DescribeImageFileParams,
 ): Promise<RunMediaUnderstandingFileResult> {
   return await runMediaUnderstandingFile({ ...params, capability: "image" });
 }
 
-/** Reused helper for describe Image File With Model behavior in src/media-understanding. */
+/** Describes an image file with an explicit provider/model path. */
 export async function describeImageFileWithModel(params: DescribeImageFileWithModelParams) {
   const timeoutMs = resolveMediaRuntimeTimeoutMs(params.timeoutMs);
   const providerRegistry = buildProviderRegistry(undefined, params.cfg);
@@ -291,7 +291,7 @@ async function readImageDescriptionInput(params: {
   }
 }
 
-/** Reused helper for extract Structured With Model behavior in src/media-understanding. */
+/** Runs structured extraction with an explicit media provider/model. */
 export async function extractStructuredWithModel(params: ExtractStructuredWithModelParams) {
   const timeoutMs = resolveMediaRuntimeTimeoutMs(params.timeoutMs);
   if (!hasStructuredImageInput(params.input)) {
@@ -321,14 +321,14 @@ export async function extractStructuredWithModel(params: ExtractStructuredWithMo
   });
 }
 
-/** Reused helper for describe Video File behavior in src/media-understanding. */
+/** Describes a video file through the configured media understanding runtime. */
 export async function describeVideoFile(
   params: DescribeVideoFileParams,
 ): Promise<RunMediaUnderstandingFileResult> {
   return await runMediaUnderstandingFile({ ...params, capability: "video" });
 }
 
-/** Reused helper for transcribe Audio File behavior in src/media-understanding. */
+/** Transcribes an audio file through the configured media understanding runtime. */
 export async function transcribeAudioFile(
   params: TranscribeAudioFileParams,
 ): Promise<RunMediaUnderstandingFileResult> {

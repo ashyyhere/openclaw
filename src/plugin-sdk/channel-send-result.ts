@@ -3,18 +3,18 @@ import type { ChannelOutboundAdapter } from "../channels/plugins/outbound.types.
 import type { ChannelPollResult } from "../channels/plugins/types.public.js";
 import type { OutboundDeliveryResult } from "../infra/outbound/deliver.js";
 
-/** Re-exported API for src/plugin-sdk, starting with Channel Outbound Adapter. */
+/** Channel outbound adapter type used by send-result helpers. */
 export type { ChannelOutboundAdapter } from "../channels/plugins/outbound.types.js";
-/** Re-exported API for src/plugin-sdk, starting with Outbound Delivery Result. */
+/** Normalized outbound delivery result type returned by channel adapters. */
 export type { OutboundDeliveryResult } from "../infra/outbound/deliver.js";
-/** Shared type for Channel Send Raw Result in src/plugin-sdk. */
+/** Minimal raw send result accepted from channel-specific send helpers. */
 export type ChannelSendRawResult = {
   ok: boolean;
   messageId?: string | null;
   error?: string | null;
 };
 
-/** Reused helper for attach Channel To Result behavior in src/plugin-sdk. */
+/** Adds a channel id to one outbound result object. */
 export function attachChannelToResult<T extends object>(channel: string, result: T) {
   return {
     channel,
@@ -22,12 +22,12 @@ export function attachChannelToResult<T extends object>(channel: string, result:
   };
 }
 
-/** Reused helper for attach Channel To Results behavior in src/plugin-sdk. */
+/** Adds a channel id to a list of outbound result objects. */
 export function attachChannelToResults<T extends object>(channel: string, results: readonly T[]) {
   return results.map((result) => attachChannelToResult(channel, result));
 }
 
-/** Reused helper for create Empty Channel Result behavior in src/plugin-sdk. */
+/** Creates an empty outbound result for channel operations that produce no id. */
 export function createEmptyChannelResult(
   channel: string,
   result: Partial<Omit<OutboundDeliveryResult, "channel" | "messageId">> & {
@@ -45,7 +45,7 @@ type SendTextParams = Parameters<NonNullable<ChannelOutboundAdapter["sendText"]>
 type SendMediaParams = Parameters<NonNullable<ChannelOutboundAdapter["sendMedia"]>>[0];
 type SendPollParams = Parameters<NonNullable<ChannelOutboundAdapter["sendPoll"]>>[0];
 
-/** Reused helper for create Attached Channel Result Adapter behavior in src/plugin-sdk. */
+/** Wraps send handlers that already return normalized outbound result fields. */
 export function createAttachedChannelResultAdapter(params: {
   channel: string;
   sendText?: (ctx: SendTextParams) => MaybePromise<Omit<OutboundDeliveryResult, "channel">>;
@@ -65,7 +65,7 @@ export function createAttachedChannelResultAdapter(params: {
   };
 }
 
-/** Reused helper for create Raw Channel Send Result Adapter behavior in src/plugin-sdk. */
+/** Wraps send handlers that return raw ok/messageId/error objects. */
 export function createRawChannelSendResultAdapter(params: {
   channel: string;
   sendText?: (ctx: SendTextParams) => MaybePromise<ChannelSendRawResult>;

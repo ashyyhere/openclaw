@@ -1,17 +1,17 @@
-// plugins agent tool result middleware types helpers and runtime behavior.
+/** Public types for plugin middleware that can inspect or rewrite tool results. */
 import type { AgentToolResult } from "../agents/runtime/index.js";
 
-/** Shared type for Open Claw Agent Tool Result in src/plugins. */
+/** Tool result shape exposed to plugin result middleware. */
 export type OpenClawAgentToolResult<TResult = unknown> = AgentToolResult<TResult>;
 
-/** Shared type for Agent Tool Result Middleware Runtime in src/plugins. */
+/** Runtime families that can invoke plugin tool-result middleware. */
 export type AgentToolResultMiddlewareRuntime = "openclaw" | "codex";
 /** @deprecated Use AgentToolResultMiddlewareRuntime. */
 export type AgentToolResultMiddlewareHarness =
   | AgentToolResultMiddlewareRuntime
   | "codex-app-server";
 
-/** Shared type for Agent Tool Result Middleware Event in src/plugins. */
+/** Tool-call event payload passed into result middleware. */
 export type AgentToolResultMiddlewareEvent = {
   threadId?: string;
   turnId?: string;
@@ -23,7 +23,7 @@ export type AgentToolResultMiddlewareEvent = {
   result: OpenClawAgentToolResult;
 };
 
-/** Shared type for Agent Tool Result Middleware Context in src/plugins. */
+/** Runtime/session context passed alongside a tool-result middleware event. */
 export type AgentToolResultMiddlewareContext = {
   runtime: AgentToolResultMiddlewareRuntime;
   /** @deprecated Use runtime. */
@@ -34,18 +34,18 @@ export type AgentToolResultMiddlewareContext = {
   runId?: string;
 };
 
-/** Shared type for Agent Tool Result Middleware Result in src/plugins. */
+/** Optional replacement result returned by tool-result middleware. */
 export type AgentToolResultMiddlewareResult = {
   result: OpenClawAgentToolResult;
 };
 
-/** Shared type for Agent Tool Result Middleware in src/plugins. */
+/** Middleware callback that can observe or replace an agent tool result. */
 export type AgentToolResultMiddleware = (
   event: AgentToolResultMiddlewareEvent,
   ctx: AgentToolResultMiddlewareContext,
 ) => Promise<AgentToolResultMiddlewareResult | void> | AgentToolResultMiddlewareResult | void;
 
-/** Shared type for Agent Tool Result Middleware Options in src/plugins. */
+/** Registration options that scope middleware to runtime families. */
 export type AgentToolResultMiddlewareOptions = {
   runtimes?: AgentToolResultMiddlewareRuntime[];
   /** @deprecated Use runtimes. */

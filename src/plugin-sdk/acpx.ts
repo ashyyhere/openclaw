@@ -1,13 +1,13 @@
 // Private ACPX runtime backend helpers for bundled extensions.
 // Keep this surface narrow and limited to the ACP runtime/backend contract.
 
-/** Re-exported API for src/plugin-sdk, starting with Acp Runtime Error Code. */
+/** ACP runtime error codes exposed to bundled runtime backends. */
 export type { AcpRuntimeErrorCode } from "../acp/runtime/errors.js";
-/** Re-exported API for src/plugin-sdk, starting with Acp Runtime Error. */
+/** ACP runtime error class exposed to bundled runtime backends. */
 export { AcpRuntimeError } from "../acp/runtime/errors.js";
-/** Re-exported API for src/plugin-sdk, starting with register Acp Runtime Backend. */
+/** Registers or unregisters ACP runtime backends. */
 export { registerAcpRuntimeBackend, unregisterAcpRuntimeBackend } from "../acp/runtime/registry.js";
-/** Re-exported API for src/plugin-sdk. */
+/** ACP runtime backend capability, event, turn, and status types. */
 export type {
   AcpRuntime,
   AcpRuntimeCapabilities,
@@ -22,7 +22,7 @@ export type {
   AcpRuntimeTurnResultError,
   AcpSessionUpdateTag,
 } from "../acp/runtime/types.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Plugin service/API types needed by ACP runtime backends. */
 export type {
   OpenClawPluginApi,
   OpenClawPluginConfigSchema,
@@ -30,19 +30,19 @@ export type {
   OpenClawPluginServiceContext,
   PluginLogger,
 } from "../plugins/types.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Windows spawn resolution types shared by ACP runtime helpers. */
 export type {
   WindowsSpawnProgram,
   WindowsSpawnProgramCandidate,
   WindowsSpawnResolution,
 } from "./windows-spawn.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Windows spawn resolution helpers shared by ACP runtime helpers. */
 export {
   applyWindowsSpawnProgramPolicy,
   materializeWindowsSpawnProgram,
   resolveWindowsSpawnProgramCandidate,
 } from "./windows-spawn.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Provider auth env-var helpers shared with ACP runtime setup. */
 export {
   listKnownProviderAuthEnvVarNames,
   omitEnvKeysCaseInsensitive,

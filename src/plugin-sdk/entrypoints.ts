@@ -7,7 +7,7 @@ import privateLocalOnlyPluginSdkSubpathList from "../../scripts/lib/plugin-sdk-p
 /** Every generated Plugin SDK entrypoint, including root index. */
 export const pluginSdkEntrypoints = [...pluginSdkEntryList];
 
-/** Reused constant for plugin Sdk Subpaths behavior in src/plugin-sdk. */
+/** SDK entrypoints excluding the root index. */
 export const pluginSdkSubpaths = pluginSdkEntrypoints.filter((entry) => entry !== "index");
 
 const privateLocalOnlyPluginSdkSubpathSet = new Set<string>(
@@ -16,7 +16,7 @@ const privateLocalOnlyPluginSdkSubpathSet = new Set<string>(
   ),
 );
 
-/** Reused constant for private Local Only Plugin Sdk Entrypoints behavior in src/plugin-sdk. */
+/** SDK entrypoints that are local/test/private and excluded from package exports. */
 export const privateLocalOnlyPluginSdkEntrypoints = pluginSdkSubpaths.filter((entry) =>
   privateLocalOnlyPluginSdkSubpathSet.has(entry),
 );
@@ -26,29 +26,29 @@ export const publicPluginSdkEntrypoints = pluginSdkEntrypoints.filter(
   (entry) => entry === "index" || !privateLocalOnlyPluginSdkSubpathSet.has(entry),
 );
 
-/** Reused constant for public Plugin Sdk Subpaths behavior in src/plugin-sdk. */
+/** Public SDK entrypoints excluding the root index. */
 export const publicPluginSdkSubpaths = publicPluginSdkEntrypoints.filter(
   (entry) => entry !== "index",
 );
 
-/** Reused constant for deprecated Public Plugin Sdk Entrypoints behavior in src/plugin-sdk. */
+/** Public SDK subpaths that remain exported only for deprecation compatibility. */
 export const deprecatedPublicPluginSdkEntrypoints = publicPluginSdkSubpaths.filter((entry) =>
   deprecatedPublicPluginSdkSubpathList.includes(entry),
 );
 
-/** Reused constant for deprecated Barrel Plugin Sdk Entrypoints behavior in src/plugin-sdk. */
+/** Barrel SDK subpaths that are deprecated but still generated. */
 export const deprecatedBarrelPluginSdkEntrypoints = pluginSdkSubpaths.filter((entry) =>
   deprecatedBarrelPluginSdkSubpathList.includes(entry),
 );
 
 // Transitional compatibility/helper surfaces owned by their matching bundled plugin.
 // Cross-owner extension imports are blocked by the package contract guardrails.
-/** Reused constant for reserved Bundled Plugin Sdk Entrypoints behavior in src/plugin-sdk. */
+/** Reserved SDK entrypoints owned by bundled plugin compatibility facades. */
 export const reservedBundledPluginSdkEntrypoints = ["codex-mcp-projection"] as const;
 
 // Supported SDK facades backed by bundled plugins. These are intentionally public
 // until they move to generic, plugin-neutral contracts.
-/** Reused constant for supported Bundled Facade Sdk Entrypoints behavior in src/plugin-sdk. */
+/** Public SDK facades intentionally backed by bundled plugin implementations. */
 export const supportedBundledFacadeSdkEntrypoints = [
   "discord",
   "lmstudio",
@@ -64,7 +64,7 @@ export const supportedBundledFacadeSdkEntrypoints = [
 ] as const;
 
 // Plugin-owned surfaces that are intentionally public and documented for third-party plugins.
-/** Reused constant for public Plugin Owned Sdk Entrypoints behavior in src/plugin-sdk. */
+/** Public SDK entrypoints whose APIs are owned by plugin domains. */
 export const publicPluginOwnedSdkEntrypoints = [
   "browser-config",
   "image-generation-core",

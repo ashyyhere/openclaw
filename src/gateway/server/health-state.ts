@@ -1,4 +1,4 @@
-// gateway/server health state helpers and runtime behavior.
+/** Gateway health and presence snapshot cache for server status broadcasts. */
 import type { Snapshot } from "../../../packages/gateway-protocol/src/index.js";
 import { resolveDefaultAgentId } from "../../agents/agent-scope.js";
 import { getHealthSnapshot, type HealthSummary } from "../../commands/health.js";
@@ -19,7 +19,7 @@ let healthRefresh: Promise<HealthSummary> | null = null;
 let sensitiveHealthRefresh: Promise<HealthSummary> | null = null;
 let broadcastHealthUpdate: ((snap: HealthSummary) => void) | null = null;
 
-/** Reused helper for build Gateway Snapshot behavior in src/gateway/server. */
+/** Builds the synchronous gateway snapshot shell used before async health fills in. */
 export function buildGatewaySnapshot(opts?: { includeSensitive?: boolean }): Snapshot {
   const cfg = getRuntimeConfig();
   const defaultAgentId = resolveDefaultAgentId(cfg);
@@ -54,33 +54,33 @@ export function buildGatewaySnapshot(opts?: { includeSensitive?: boolean }): Sna
   return snapshot;
 }
 
-/** Reused helper for get Health Cache behavior in src/gateway/server. */
+/** Returns the last non-sensitive health summary cached for broadcasts. */
 export function getHealthCache(): HealthSummary | null {
   return healthCache;
 }
 
-/** Reused helper for get Health Version behavior in src/gateway/server. */
+/** Returns the monotonically increasing health state version. */
 export function getHealthVersion(): number {
   return healthVersion;
 }
 
-/** Reused helper for increment Presence Version behavior in src/gateway/server. */
+/** Increments and returns the presence state version. */
 export function incrementPresenceVersion(): number {
   presenceVersion += 1;
   return presenceVersion;
 }
 
-/** Reused helper for get Presence Version behavior in src/gateway/server. */
+/** Returns the current presence state version. */
 export function getPresenceVersion(): number {
   return presenceVersion;
 }
 
-/** Reused helper for set Broadcast Health Update behavior in src/gateway/server. */
+/** Installs the callback used to broadcast refreshed health summaries. */
 export function setBroadcastHealthUpdate(fn: ((snap: HealthSummary) => void) | null) {
   broadcastHealthUpdate = fn;
 }
 
-/** Reused helper for refresh Gateway Health Snapshot behavior in src/gateway/server. */
+/** Refreshes gateway health with in-flight de-duping and optional sensitive data. */
 export async function refreshGatewayHealthSnapshot(opts?: {
   probe?: boolean;
   includeSensitive?: boolean;

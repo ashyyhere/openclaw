@@ -6,45 +6,45 @@
 import { resolveOpenProviderRuntimeGroupPolicy } from "../config/runtime-group-policy.js";
 import type { GroupPolicy } from "../config/types.base.js";
 
-/** Re-exported API for src/plugin-sdk, starting with resolve Open Provider Runtime Group Policy. */
+/** Resolves provider group policy with provider-missing fallback semantics. */
 export { resolveOpenProviderRuntimeGroupPolicy };
-/** Re-exported API for src/plugin-sdk, starting with Group Policy. */
+/** Shared group policy type used by channel ingress compatibility helpers. */
 export type { GroupPolicy };
 
-/** Shared type for Sender Group Access Reason in src/plugin-sdk. */
+/** Reason code for sender-level group access decisions. */
 export type SenderGroupAccessReason =
   | "allowed"
   | "disabled"
   | "empty_allowlist"
   | "sender_not_allowlisted";
-/** Shared type for Sender Group Access Decision in src/plugin-sdk. */
+/** Sender-level group access decision returned by deprecated SDK helpers. */
 export type SenderGroupAccessDecision = {
   allowed: boolean;
   groupPolicy: GroupPolicy;
   providerMissingFallbackApplied: boolean;
   reason: SenderGroupAccessReason;
 };
-/** Shared type for Group Route Access Reason in src/plugin-sdk. */
+/** Reason code for route-level group access decisions. */
 export type GroupRouteAccessReason =
   | "allowed"
   | "disabled"
   | "empty_allowlist"
   | "route_not_allowlisted"
   | "route_disabled";
-/** Shared type for Group Route Access Decision in src/plugin-sdk. */
+/** Route-level group access decision returned by deprecated SDK helpers. */
 export type GroupRouteAccessDecision = {
   allowed: boolean;
   groupPolicy: GroupPolicy;
   reason: GroupRouteAccessReason;
 };
-/** Shared type for Matched Group Access Reason in src/plugin-sdk. */
+/** Reason code for matched-input group access decisions. */
 export type MatchedGroupAccessReason =
   | "allowed"
   | "disabled"
   | "missing_match_input"
   | "empty_allowlist"
   | "not_allowlisted";
-/** Shared type for Matched Group Access Decision in src/plugin-sdk. */
+/** Matched-input group access decision returned by deprecated SDK helpers. */
 export type MatchedGroupAccessDecision = {
   allowed: boolean;
   groupPolicy: GroupPolicy;

@@ -8,14 +8,14 @@ import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import type { ProviderWrapStreamFnContext } from "./plugin-entry.js";
 import { parseStandalonePlainTextToolCallBlocks } from "./tool-payload.js";
 
-/** Shared type for Provider Stream Wrapper Factory in src/plugin-sdk. */
+/** Factory that can wrap or omit a provider stream implementation. */
 export type ProviderStreamWrapperFactory =
   | ((streamFn: StreamFn | undefined) => StreamFn | undefined)
   | null
   | undefined
   | false;
 
-/** Reused helper for compose Provider Stream Wrappers behavior in src/plugin-sdk. */
+/** Applies provider stream wrappers from left to right around a base stream. */
 export function composeProviderStreamWrappers(
   baseStreamFn: StreamFn | undefined,
   ...wrappers: ProviderStreamWrapperFactory[]
@@ -423,7 +423,7 @@ export function defaultToolStreamExtraParams(
   };
 }
 
-/** Reused helper for create Payload Patch Stream Wrapper behavior in src/plugin-sdk. */
+/** Creates a stream wrapper that patches provider request payloads before send. */
 export function createPayloadPatchStreamWrapper(
   baseStreamFn: StreamFn | undefined,
   patchPayload: (params: {
@@ -1072,21 +1072,21 @@ export function createGoogleThinkingStreamWrapper(
   return createGoogleThinkingPayloadWrapper(ctx.streamFn, ctx.thinkingLevel);
 }
 
-/** Re-exported API for src/plugin-sdk. */
+/** Anthropic payload policy helpers exposed to provider stream plugins. */
 export {
   applyAnthropicPayloadPolicyToParams,
   resolveAnthropicPayloadPolicy,
 } from "../agents/anthropic-payload-policy.js";
-/** Re-exported API for src/plugin-sdk, starting with apply Anthropic Ephemeral Cache Control Markers. */
+/** Applies Anthropic ephemeral cache-control markers to stream payloads. */
 export { applyAnthropicEphemeralCacheControlMarkers } from "../llm/providers/stream-wrappers/anthropic-cache-control-payload.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Moonshot thinking payload helpers exposed to provider stream plugins. */
 export {
   createMoonshotThinkingWrapper,
   resolveMoonshotThinkingType,
 } from "../llm/providers/stream-wrappers/moonshot-thinking.js";
-/** Re-exported API for src/plugin-sdk, starting with stream With Payload Patch. */
+/** Low-level stream utility that applies payload patch callbacks. */
 export { streamWithPayloadPatch };
-/** Re-exported API for src/plugin-sdk. */
+/** Z.ai tool-stream wrappers exposed to provider stream plugins. */
 export {
   createToolStreamWrapper,
   createZaiToolStreamWrapper,

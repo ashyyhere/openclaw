@@ -1,5 +1,5 @@
-// Shared types for hooks types behavior.
-/** Shared type for Hook Install Spec in src/hooks. */
+/** Shared hook metadata and registry entry types. */
+/** Install source descriptor for hook packs declared in hook metadata. */
 export type HookInstallSpec = {
   id?: string;
   kind: "bundled" | "npm" | "git";
@@ -9,7 +9,7 @@ export type HookInstallSpec = {
   bins?: string[];
 };
 
-/** Shared type for Open Claw Hook Metadata in src/hooks. */
+/** Metadata parsed from HOOK.md frontmatter and OpenClaw hook manifests. */
 export type OpenClawHookMetadata = {
   always?: boolean;
   hookKey?: string;
@@ -29,15 +29,15 @@ export type OpenClawHookMetadata = {
   install?: HookInstallSpec[];
 };
 
-/** Shared type for Hook Invocation Policy in src/hooks. */
+/** Resolved invocation policy for a hook entry. */
 export type HookInvocationPolicy = {
   enabled: boolean;
 };
 
-/** Shared type for Parsed Hook Frontmatter in src/hooks. */
+/** Parsed HOOK.md frontmatter key/value map. */
 export type ParsedHookFrontmatter = Record<string, string>;
 
-/** Shared type for Hook in src/hooks. */
+/** Discovered hook module with source and filesystem locations. */
 export type Hook = {
   name: string;
   description: string;
@@ -48,10 +48,10 @@ export type Hook = {
   handlerPath: string; // Path to handler module (handler.ts/js)
 };
 
-/** Shared type for Hook Source in src/hooks. */
+/** Source category for a discovered hook. */
 export type HookSource = Hook["source"];
 
-/** Shared type for Hook Entry in src/hooks. */
+/** Loaded hook plus parsed metadata and resolved invocation policy. */
 export type HookEntry = {
   hook: Hook;
   frontmatter: ParsedHookFrontmatter;
@@ -59,7 +59,7 @@ export type HookEntry = {
   invocation?: HookInvocationPolicy;
 };
 
-/** Shared type for Hook Eligibility Context in src/hooks. */
+/** Runtime facts used to evaluate whether a hook is eligible to load. */
 export type HookEligibilityContext = {
   remote?: {
     platforms: string[];
