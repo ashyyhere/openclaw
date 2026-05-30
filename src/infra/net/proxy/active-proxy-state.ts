@@ -1,14 +1,15 @@
-// infra/net/proxy active proxy state helpers and runtime behavior.
+// Process-local active managed proxy registry.
+// Nested users share one proxy URL/TLS tuple and release it by registration count.
 import type { ProxyConfig } from "../../../config/zod-schema.proxy.js";
 import type { ManagedProxyTlsOptions } from "./proxy-tls.js";
 
-/** Shared type for Active Managed Proxy Url in src/infra/net. */
+/** Immutable URL for the currently active managed proxy. */
 export type ActiveManagedProxyUrl = Readonly<URL>;
 
-/** Shared type for Active Managed Proxy Loopback Mode in src/infra/net. */
+/** Loopback interception mode used by the active managed proxy. */
 export type ActiveManagedProxyLoopbackMode = NonNullable<NonNullable<ProxyConfig>["loopbackMode"]>;
 
-/** Shared type for Active Managed Proxy Registration in src/infra/net. */
+/** Registration handle returned to a managed proxy user for later release. */
 export type ActiveManagedProxyRegistration = {
   proxyUrl: ActiveManagedProxyUrl;
   loopbackMode: ActiveManagedProxyLoopbackMode;
@@ -16,7 +17,7 @@ export type ActiveManagedProxyRegistration = {
   stopped: boolean;
 };
 
-/** Shared type for Register Active Managed Proxy Options in src/infra/net. */
+/** Optional loopback/TLS state to bind to the active managed proxy registration. */
 export type RegisterActiveManagedProxyOptions = {
   loopbackMode?: ActiveManagedProxyLoopbackMode;
   proxyTls?: ManagedProxyTlsOptions;
@@ -46,7 +47,7 @@ function readInheritedActiveManagedProxyLoopbackMode(): ActiveManagedProxyLoopba
   );
 }
 
-/** Reused helper for register Active Managed Proxy Url behavior in src/infra/net. */
+/** Register a managed proxy URL, sharing it with compatible nested registrations. */
 export function registerActiveManagedProxyUrl(
   proxyUrl: URL,
   options: ActiveManagedProxyLoopbackMode | RegisterActiveManagedProxyOptions = "gateway-only",
@@ -97,7 +98,7 @@ function areProxyTlsOptionsEqual(
   return left?.ca === right?.ca;
 }
 
-/** Reused helper for stop Active Managed Proxy Registration behavior in src/infra/net. */
+/** Release one active proxy registration and clear singleton state after the last user. */
 export function stopActiveManagedProxyRegistration(
   registration: ActiveManagedProxyRegistration,
 ): void {
@@ -116,22 +117,22 @@ export function stopActiveManagedProxyRegistration(
   }
 }
 
-/** Reused helper for get Active Managed Proxy Loopback Mode behavior in src/infra/net. */
+/** Return the active loopback mode, including inherited child-process proxy state. */
 export function getActiveManagedProxyLoopbackMode(): ActiveManagedProxyLoopbackMode | undefined {
   return activeProxyLoopbackMode ?? readInheritedActiveManagedProxyLoopbackMode();
 }
 
-/** Reused helper for get Active Managed Proxy Url behavior in src/infra/net. */
+/** Return the active managed proxy URL for this process. */
 export function getActiveManagedProxyUrl(): ActiveManagedProxyUrl | undefined {
   return activeProxyUrl;
 }
 
-/** Reused helper for get Active Managed Proxy Tls Options behavior in src/infra/net. */
+/** Return TLS options bound to the active managed proxy registration. */
 export function getActiveManagedProxyTlsOptions(): ManagedProxyTlsOptions | undefined {
   return activeProxyTlsOptions;
 }
 
-/** Reused helper for reset Active Managed Proxy State For Tests behavior in src/infra/net. */
+/** Reset active managed proxy singleton state for tests. */
 export function resetActiveManagedProxyStateForTests(): void {
   activeProxyUrl = undefined;
   activeProxyLoopbackMode = undefined;

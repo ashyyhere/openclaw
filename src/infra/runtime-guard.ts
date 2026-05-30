@@ -1,4 +1,5 @@
-// infra runtime guard helpers and runtime behavior.
+// Startup runtime guard for supported Node versions.
+// Keeps CLI failures explicit before deeper gateway code runs on an unsupported engine.
 import process from "node:process";
 import { defaultRuntime, type RuntimeEnv } from "../runtime.js";
 
@@ -13,7 +14,7 @@ type Semver = {
 const MIN_NODE: Semver = { major: 22, minor: 19, patch: 0 };
 const MINIMUM_ENGINE_RE = /^\s*>=\s*v?(\d+\.\d+\.\d+)\s*$/i;
 
-/** Shared type for Runtime Details in src/infra. */
+/** Runtime facts used for support checks and user-facing diagnostics. */
 export type RuntimeDetails = {
   kind: RuntimeKind;
   version: string | null;
@@ -23,7 +24,7 @@ export type RuntimeDetails = {
 
 const SEMVER_RE = /(\d+)\.(\d+)\.(\d+)/;
 
-/** Reused helper for parse Semver behavior in src/infra. */
+/** Parse the first x.y.z semver triplet from a runtime version string. */
 export function parseSemver(version: string | null): Semver | null {
   if (!version) {
     return null;
@@ -40,7 +41,7 @@ export function parseSemver(version: string | null): Semver | null {
   };
 }
 
-/** Reused helper for is At Least behavior in src/infra. */
+/** Return whether a parsed semver value is greater than or equal to a minimum. */
 export function isAtLeast(version: Semver | null, minimum: Semver): boolean {
   if (!version) {
     return false;
@@ -54,7 +55,7 @@ export function isAtLeast(version: Semver | null, minimum: Semver): boolean {
   return version.patch >= minimum.patch;
 }
 
-/** Reused helper for detect Runtime behavior in src/infra. */
+/** Detect the current JavaScript runtime and PATH context. */
 export function detectRuntime(): RuntimeDetails {
   const kind: RuntimeKind = process.versions?.node ? "node" : "unknown";
   const version = process.versions?.node ?? null;
@@ -67,7 +68,7 @@ export function detectRuntime(): RuntimeDetails {
   };
 }
 
-/** Reused helper for runtime Satisfies behavior in src/infra. */
+/** Return whether detected runtime details satisfy OpenClaw's minimum engine. */
 export function runtimeSatisfies(details: RuntimeDetails): boolean {
   const parsed = parseSemver(details.version);
   if (details.kind === "node") {
@@ -76,12 +77,12 @@ export function runtimeSatisfies(details: RuntimeDetails): boolean {
   return false;
 }
 
-/** Reused helper for is Supported Node Version behavior in src/infra. */
+/** Return whether a Node version string satisfies OpenClaw's built-in minimum. */
 export function isSupportedNodeVersion(version: string | null): boolean {
   return isAtLeast(parseSemver(version), MIN_NODE);
 }
 
-/** Reused helper for parse Minimum Node Engine behavior in src/infra. */
+/** Parse a package engines.node minimum when it is a simple >=x.y.z constraint. */
 export function parseMinimumNodeEngine(engine: string | null): Semver | null {
   if (!engine) {
     return null;
@@ -93,7 +94,7 @@ export function parseMinimumNodeEngine(engine: string | null): Semver | null {
   return parseSemver(match[1] ?? null);
 }
 
-/** Reused helper for node Version Satisfies Engine behavior in src/infra. */
+/** Return whether a Node version satisfies a simple engines.node minimum. */
 export function nodeVersionSatisfiesEngine(
   version: string | null,
   engine: string | null,
@@ -105,7 +106,7 @@ export function nodeVersionSatisfiesEngine(
   return isAtLeast(parseSemver(version), minimum);
 }
 
-/** Reused helper for assert Supported Runtime behavior in src/infra. */
+/** Exit with a clear diagnostic when the current runtime is unsupported. */
 export function assertSupportedRuntime(
   runtime: RuntimeEnv = defaultRuntime,
   details: RuntimeDetails = detectRuntime(),

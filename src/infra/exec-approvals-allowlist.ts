@@ -1,4 +1,5 @@
-// infra exec approvals allowlist helpers and runtime behavior.
+// Exec approval allowlist evaluation.
+// Matches segmented shell analysis against explicit entries, safe bins, and trusted skill bins.
 import path from "node:path";
 import {
   normalizeLowercaseStringOrEmpty,
@@ -56,7 +57,7 @@ function hasShellLineContinuation(command: string): boolean {
   return /\\(?:\r\n|\n|\r)/.test(command);
 }
 
-/** Reused helper for normalize Safe Bins behavior in src/infra. */
+/** Normalize configured safe-bin names into lowercase executable tokens. */
 export function normalizeSafeBins(entries?: readonly string[]): Set<string> {
   if (!Array.isArray(entries)) {
     return new Set();
@@ -67,7 +68,7 @@ export function normalizeSafeBins(entries?: readonly string[]): Set<string> {
   return new Set(normalized);
 }
 
-/** Reused helper for resolve Safe Bins behavior in src/infra. */
+/** Resolve safe-bin configuration, using defaults only when the key is omitted. */
 export function resolveSafeBins(entries?: readonly string[] | null): Set<string> {
   if (entries === undefined) {
     return normalizeSafeBins(DEFAULT_SAFE_BINS);
@@ -75,7 +76,7 @@ export function resolveSafeBins(entries?: readonly string[] | null): Set<string>
   return normalizeSafeBins(entries ?? []);
 }
 
-/** Reused helper for is Safe Bin Usage behavior in src/infra. */
+/** Return whether an argv/resolution pair matches a trusted safe-bin profile. */
 export function isSafeBinUsage(params: {
   argv: string[];
   resolution: ExecutableResolution | null;
@@ -128,7 +129,7 @@ function isPathScopedExecutableToken(token: string): boolean {
   return token.includes("/") || token.includes("\\");
 }
 
-/** Shared type for Exec Allowlist Evaluation in src/infra. */
+/** Result of matching analyzed command segments against allowlist policy. */
 export type ExecAllowlistEvaluation = {
   allowlistSatisfied: boolean;
   allowlistMatches: ExecAllowlistEntry[];
@@ -136,9 +137,9 @@ export type ExecAllowlistEvaluation = {
   segmentSatisfiedBy: ExecSegmentSatisfiedBy[];
 };
 
-/** Shared type for Exec Segment Satisfied By in src/infra. */
+/** Policy source that satisfied one analyzed command segment. */
 export type ExecSegmentSatisfiedBy = "allowlist" | "safeBins" | "inlineChain" | "skills" | null;
-/** Shared type for Skill Bin Trust Entry in src/infra. */
+/** Trusted skill-provided executable path that can auto-satisfy matching segments. */
 export type SkillBinTrustEntry = {
   name: string;
   resolvedPath: string;
@@ -659,7 +660,7 @@ function resolveAnalysisSegmentGroups(analysis: ExecCommandAnalysis): ExecComman
   return [analysis.segments];
 }
 
-/** Reused helper for evaluate Exec Allowlist behavior in src/infra. */
+/** Evaluate segmented command analysis against allowlist, safe-bin, and skill-bin policy. */
 export function evaluateExecAllowlist(
   params: {
     analysis: ExecCommandAnalysis;
@@ -709,7 +710,7 @@ export function evaluateExecAllowlist(
   };
 }
 
-/** Shared type for Exec Allowlist Analysis in src/infra. */
+/** Combined shell analysis and allowlist decision returned to approval callers. */
 export type ExecAllowlistAnalysis = {
   analysisOk: boolean;
   allowlistSatisfied: boolean;
@@ -895,7 +896,7 @@ function isDirectShellPositionalCarrierInvocation(command: string): boolean {
   ).test(trimmed);
 }
 
-/** Shared type for Allow Always Pattern in src/infra. */
+/** Persistable allow-always executable pattern and optional argument pattern. */
 export type AllowAlwaysPattern = {
   pattern: string;
   argPattern?: string;
@@ -1109,7 +1110,7 @@ export function resolveAllowAlwaysPatternEntries(params: {
   return patterns;
 }
 
-/** Reused helper for resolve Allow Always Patterns behavior in src/infra. */
+/** Resolve persisted allow-always executable patterns from analyzed command segments. */
 export function resolveAllowAlwaysPatterns(params: {
   segments: ExecCommandSegment[];
   cwd?: string;
