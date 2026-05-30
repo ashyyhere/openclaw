@@ -412,7 +412,7 @@ export async function materializeBundleMcpToolsForRun(params: {
   };
 }
 
-/** Reused helper for create Bundle Mcp Tool Runtime behavior in src/agents. */
+/** Create and lease a bundle MCP runtime for tool materialization. */
 export async function createBundleMcpToolRuntime(params: {
   workspaceDir: string;
   cfg?: OpenClawConfig;

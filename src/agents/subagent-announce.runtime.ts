@@ -1,19 +1,19 @@
 /** Runtime imports isolated for subagent announcement flow lazy loading. */
 export { getRuntimeConfig } from "../config/config.js";
-/** Re-exported API for src/agents. */
+/** Session store helpers loaded lazily for subagent announcement delivery. */
 export {
   loadSessionStore,
   readSessionEntry,
   resolveAgentIdFromSessionKey,
   resolveStorePath,
 } from "../config/sessions.js";
-/** Re-exported API for src/agents, starting with call Gateway. */
+/** Gateway caller used to post subagent announcement updates. */
 export { callGateway } from "../gateway/call.js";
-/** Re-exported API for src/agents, starting with read Session Messages Async. */
+/** Session transcript reader used to inspect prior announcement state. */
 export { readSessionMessagesAsync } from "../gateway/session-utils.fs.js";
-/** Re-exported API for src/agents, starting with dispatch Gateway Method In Process. */
+/** In-process gateway dispatcher used by local announcement paths. */
 export { dispatchGatewayMethodInProcess } from "../gateway/server-plugins.js";
-/** Re-exported API for src/agents. */
+/** Embedded run status helpers used to avoid duplicate completion announcements. */
 export {
   isEmbeddedAgentRunActive,
   waitForEmbeddedAgentRunEnd,

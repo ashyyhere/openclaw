@@ -22,9 +22,9 @@ export function spawnProcess(
   args: string[],
   options: SpawnOptionsWithStdioTuple<StdioNull, StdioPipe, StdioPipe>,
 ): ChildProcessByStdio<null, Readable, Readable>;
-/** Reused helper for spawn Process behavior in src/agents/utils. */
+/** Generic overload for child process spawning with caller-provided stdio. */
 export function spawnProcess(command: string, args: string[], options: SpawnOptions): ChildProcess;
-/** Reused helper for spawn Process behavior in src/agents/utils. */
+/** Spawn a child process with Windows-safe command lookup. */
 export function spawnProcess(command: string, args: string[], options: SpawnOptions): ChildProcess {
   return process.platform === "win32"
     ? crossSpawn(command, args, options)

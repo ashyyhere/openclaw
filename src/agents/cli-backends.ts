@@ -1,3 +1,4 @@
+// Resolves CLI backend registrations and model/runtime bindings.
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
 import type { CliBackendConfig } from "../config/types.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -34,7 +35,7 @@ const defaultCliBackendsDeps: CliBackendsDeps = {
 
 let cliBackendsDeps: CliBackendsDeps = defaultCliBackendsDeps;
 
-/** Shared type for Resolved Cli Backend in src/agents. */
+/** Fully resolved CLI backend contract after config and plugin fallback merge. */
 export type ResolvedCliBackend = {
   id: string;
   modelProvider?: string;
@@ -60,7 +61,7 @@ type ResolvedCliBackendLiveTest = {
   dockerBinaryName?: string;
 };
 
-/** Shared type for Cli Runtime Model Backend Binding in src/agents. */
+/** Provider/runtime binding used to map model providers to CLI backends. */
 export type CliRuntimeModelBackendBinding = {
   provider: string;
   runtime: string;
@@ -448,7 +449,7 @@ export function resolveCliBackendConfig(
   };
 }
 
-/** Reused constant for testing behavior in src/agents. */
+/** Test hooks for replacing CLI backend registry dependencies. */
 export const testing = {
   resetDepsForTest(): void {
     cliBackendsDeps = defaultCliBackendsDeps;
@@ -460,5 +461,5 @@ export const testing = {
     };
   },
 } as const;
-/** Re-exported API for src/agents, starting with testing. */
+/** Backward-compatible test hook export for underscored internal imports. */
 export { testing as __testing };
