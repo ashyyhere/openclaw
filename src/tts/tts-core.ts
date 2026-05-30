@@ -10,6 +10,7 @@ import { prepareModelForSimpleCompletion } from "../agents/simple-completion-tra
 import type { OpenClawConfig } from "../config/types.js";
 import { completeSimple } from "../llm/stream.js";
 import type { TextContent } from "../llm/types.js";
+import { resolveTimerTimeoutMs } from "../shared/number-coercion.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import type { ResolvedTtsConfig } from "./tts-types.js";
 export {
@@ -105,7 +106,8 @@ export async function summarizeText(
 
   try {
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), timeoutMs);
+    const resolvedTimeoutMs = resolveTimerTimeoutMs(timeoutMs, 1);
+    const timeout = setTimeout(() => controller.abort(), resolvedTimeoutMs);
 
     try {
       const res = await deps.completeSimple(
