@@ -1,4 +1,5 @@
-// secrets channel secret basic runtime helpers and runtime behavior.
+// Channel secret assignment helpers shared by resolvers. They walk top-level and
+// account-scoped config surfaces while preserving active/inactive diagnostics.
 import { coerceSecretRef } from "../config/types.secrets.js";
 import {
   collectSecretInputAssignment,
@@ -10,24 +11,24 @@ import {
 } from "./runtime-shared.js";
 import { isRecord } from "./shared.js";
 
-/** Shared type for Channel Account Entry in src/secrets. */
+/** Normalized channel account config plus its effective enabled state. */
 export type ChannelAccountEntry = {
   accountId: string;
   account: Record<string, unknown>;
   enabled: boolean;
 };
 
-/** Shared type for Channel Account Surface in src/secrets. */
+/** Top-level channel/account view used by secret assignment collectors. */
 export type ChannelAccountSurface = {
   hasExplicitAccounts: boolean;
   channelEnabled: boolean;
   accounts: ChannelAccountEntry[];
 };
 
-/** Shared type for Channel Account Predicate in src/secrets. */
+/** Predicate used to decide whether an account-scoped secret field is active. */
 export type ChannelAccountPredicate = (entry: ChannelAccountEntry) => boolean;
 
-/** Reused helper for get Channel Record behavior in src/secrets. */
+/** Reads one channel config object when present and record-shaped. */
 export function getChannelRecord(
   config: { channels?: Record<string, unknown> },
   channelKey: string,
@@ -40,7 +41,7 @@ export function getChannelRecord(
   return isRecord(channel) ? channel : undefined;
 }
 
-/** Reused helper for get Channel Surface behavior in src/secrets. */
+/** Reads a channel and builds its normalized account surface. */
 export function getChannelSurface(
   config: { channels?: Record<string, unknown> },
   channelKey: string,
@@ -55,7 +56,7 @@ export function getChannelSurface(
   };
 }
 
-/** Reused helper for resolve Channel Account Surface behavior in src/secrets. */
+/** Normalizes top-level versus explicit account channel config into entries. */
 export function resolveChannelAccountSurface(
   channel: Record<string, unknown>,
 ): ChannelAccountSurface {
@@ -86,7 +87,7 @@ export function resolveChannelAccountSurface(
   };
 }
 
-/** Reused helper for is Base Field Active For Channel Surface behavior in src/secrets. */
+/** Decides whether a top-level field is active or inherited by enabled accounts. */
 export function isBaseFieldActiveForChannelSurface(
   surface: ChannelAccountSurface,
   rootKey: string,
@@ -102,12 +103,12 @@ export function isBaseFieldActiveForChannelSurface(
   );
 }
 
-/** Reused helper for normalize Secret String Value behavior in src/secrets. */
+/** Trims configured string secrets while treating non-strings as absent. */
 export function normalizeSecretStringValue(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
 }
 
-/** Reused helper for has Configured Secret Input Value behavior in src/secrets. */
+/** Detects whether a raw config value contains a usable literal or SecretRef. */
 export function hasConfiguredSecretInputValue(
   value: unknown,
   defaults: SecretDefaults | undefined,
@@ -115,7 +116,7 @@ export function hasConfiguredSecretInputValue(
   return normalizeSecretStringValue(value).length > 0 || coerceSecretRef(value, defaults) !== null;
 }
 
-/** Reused helper for collect Simple Channel Field Assignments behavior in src/secrets. */
+/** Collects a simple string secret from top-level and account channel fields. */
 export function collectSimpleChannelFieldAssignments(params: {
   channelKey: string;
   field: string;
@@ -174,7 +175,7 @@ function isConditionalTopLevelFieldActive(params: {
   return params.surface.accounts.some(params.inheritedAccountActive);
 }
 
-/** Reused helper for collect Conditional Channel Field Assignments behavior in src/secrets. */
+/** Collects a string secret whose active state depends on channel/account rules. */
 export function collectConditionalChannelFieldAssignments(params: {
   channelKey: string;
   field: string;
@@ -229,7 +230,7 @@ export function collectConditionalChannelFieldAssignments(params: {
   }
 }
 
-/** Reused helper for collect Nested Channel Field Assignments behavior in src/secrets. */
+/** Collects a nested string secret from top-level and account channel objects. */
 export function collectNestedChannelFieldAssignments(params: {
   channelKey: string;
   nestedKey: string;

@@ -1,5 +1,6 @@
-// shared requirements helpers and runtime behavior.
-/** Shared type for Requirements in src/shared. */
+// Requirement evaluation helpers for plugin/channel availability checks. They
+// compare local facts with optional remote facts without performing IO here.
+/** Requirement lists that gate whether a feature can run in this environment. */
 export type Requirements = {
   bins: string[];
   anyBins: string[];
@@ -8,19 +9,19 @@ export type Requirements = {
   os: string[];
 };
 
-/** Shared type for Requirement Config Check in src/shared. */
+/** Per-config-path satisfaction result surfaced to diagnostics. */
 export type RequirementConfigCheck = {
   path: string;
   satisfied: boolean;
 };
 
-/** Shared type for Requirements Metadata in src/shared. */
+/** Manifest-style requirement metadata accepted by availability evaluators. */
 export type RequirementsMetadata = {
   requires?: Partial<Pick<Requirements, "bins" | "anyBins" | "env" | "config">>;
   os?: string[];
 };
 
-/** Shared type for Requirement Remote in src/shared. */
+/** Remote capability probes that can satisfy requirements absent locally. */
 export type RequirementRemote = {
   hasBin?: (bin: string) => boolean;
   hasAnyBin?: (bins: string[]) => boolean;
@@ -41,7 +42,7 @@ type RequirementsEvaluationRemoteContext = {
   remotePlatforms?: string[];
 };
 
-/** Reused helper for resolve Missing Bins behavior in src/shared. */
+/** Returns required binaries absent from both local and remote probes. */
 export function resolveMissingBins(params: {
   required: string[];
   hasLocalBin: (bin: string) => boolean;
@@ -59,7 +60,7 @@ export function resolveMissingBins(params: {
   });
 }
 
-/** Reused helper for resolve Missing Any Bins behavior in src/shared. */
+/** Returns the any-of binary group only when no candidate is available. */
 export function resolveMissingAnyBins(params: {
   required: string[];
   hasLocalBin: (bin: string) => boolean;
@@ -77,7 +78,7 @@ export function resolveMissingAnyBins(params: {
   return params.required;
 }
 
-/** Reused helper for resolve Missing Os behavior in src/shared. */
+/** Returns OS requirements unmet by local or advertised remote platforms. */
 export function resolveMissingOs(params: {
   required: string[];
   localPlatform: string;
@@ -108,7 +109,7 @@ function normalizeOsRequirementPlatform(platform: string): string {
   return normalized === "macos" ? "darwin" : normalized;
 }
 
-/** Reused helper for resolve Missing Env behavior in src/shared. */
+/** Returns required environment variable names that the caller reports missing. */
 export function resolveMissingEnv(params: {
   required: string[];
   isSatisfied: (envName: string) => boolean;
@@ -123,7 +124,7 @@ export function resolveMissingEnv(params: {
   return missing;
 }
 
-/** Reused helper for build Config Checks behavior in src/shared. */
+/** Builds diagnostic entries for required config paths. */
 export function buildConfigChecks(params: {
   required: string[];
   isSatisfied: (pathStr: string) => boolean;
@@ -134,7 +135,7 @@ export function buildConfigChecks(params: {
   });
 }
 
-/** Reused helper for evaluate Requirements behavior in src/shared. */
+/** Evaluates explicit requirement lists into missing items and eligibility. */
 export function evaluateRequirements(
   params: RequirementsEvaluationContext &
     RequirementsEvaluationRemoteContext & {
@@ -187,7 +188,7 @@ export function evaluateRequirements(
   return { missing, eligible, configChecks };
 }
 
-/** Reused helper for evaluate Requirements From Metadata behavior in src/shared. */
+/** Evaluates requirement metadata after expanding omitted lists to empty arrays. */
 export function evaluateRequirementsFromMetadata(
   params: RequirementsEvaluationContext &
     RequirementsEvaluationRemoteContext & {
@@ -221,7 +222,7 @@ export function evaluateRequirementsFromMetadata(
   return { required, ...result };
 }
 
-/** Reused helper for evaluate Requirements From Metadata With Remote behavior in src/shared. */
+/** Evaluates requirement metadata with optional remote capability probes. */
 export function evaluateRequirementsFromMetadataWithRemote(
   params: RequirementsEvaluationContext & {
     metadata?: RequirementsMetadata;
