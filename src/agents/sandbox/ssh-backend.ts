@@ -38,7 +38,7 @@ type ResolvedSshRuntimePaths = {
   remoteAgentWorkspaceDir: string;
 };
 
-/** Reused constant for ssh Sandbox Backend Manager behavior in src/agents/sandbox. */
+/** SSH sandbox backend manager for remote runtime status, exec, and cleanup. */
 export const sshSandboxBackendManager: SandboxBackendManager = {
   async describeRuntime({ entry, config, agentId }) {
     const cfg = resolveSandboxConfigForAgent(config, agentId);

@@ -1,7 +1,7 @@
 /** Classifies Docker network modes for sandbox safety policy. */
 import { normalizeOptionalLowercaseString } from "../../shared/string-coerce.js";
 
-/** Shared type for Network Mode Block Reason in src/agents/sandbox. */
+/** Reason a Docker network mode is blocked by sandbox policy. */
 export type NetworkModeBlockReason = "host" | "container_namespace_join";
 
 /** Normalizes a configured Docker network mode. */

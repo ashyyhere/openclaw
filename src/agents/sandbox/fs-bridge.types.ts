@@ -5,14 +5,14 @@ export type SandboxResolvedPath = {
   containerPath: string;
 };
 
-/** Shared type for Sandbox Fs Stat in src/agents/sandbox. */
+/** File metadata returned by sandbox filesystem bridge stat calls. */
 export type SandboxFsStat = {
   type: "file" | "directory" | "other";
   size: number;
   mtimeMs: number;
 };
 
-/** Shared type for Sandbox Fs Bridge in src/agents/sandbox. */
+/** Filesystem operations exposed by sandbox backends. */
 export type SandboxFsBridge = {
   resolvePath(params: { filePath: string; cwd?: string }): SandboxResolvedPath;
   readFile(params: { filePath: string; cwd?: string; signal?: AbortSignal }): Promise<Buffer>;

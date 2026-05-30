@@ -31,14 +31,14 @@ const ALLOWED_ENV_VAR_PATTERNS: ReadonlyArray<RegExp> = [
   /^NODE_ENV$/i,
 ];
 
-/** Shared type for Env Var Sanitization Result in src/agents/sandbox. */
+/** Allowed and blocked env vars after sandbox sanitization. */
 export type EnvVarSanitizationResult = {
   allowed: Record<string, string>;
   blocked: string[];
   warnings: string[];
 };
 
-/** Shared type for Env Sanitization Options in src/agents/sandbox. */
+/** Policy knobs for sandbox environment variable sanitization. */
 export type EnvSanitizationOptions = {
   strictMode?: boolean;
   customBlockedPatterns?: ReadonlyArray<RegExp>;

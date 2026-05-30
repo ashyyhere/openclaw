@@ -7,7 +7,7 @@ import type {
 } from "./fs-bridge-path-safety.js";
 import type { SandboxFsCommandPlan } from "./fs-bridge-shell-command-plans.js";
 
-/** Reused constant for SANDBOX PINNED MUTATION PYTHON CANDIDATES behavior in src/agents/sandbox. */
+/** Candidate Python interpreters used for pinned sandbox mutations. */
 export const SANDBOX_PINNED_MUTATION_PYTHON_CANDIDATES = [
   "/usr/bin/python3",
   "/usr/local/bin/python3",
@@ -15,7 +15,7 @@ export const SANDBOX_PINNED_MUTATION_PYTHON_CANDIDATES = [
   "/bin/python3",
 ] as const;
 
-/** Reused constant for SANDBOX PINNED MUTATION PYTHON behavior in src/agents/sandbox. */
+/** Python mutation script that performs pinned filesystem writes safely. */
 export const SANDBOX_PINNED_MUTATION_PYTHON = [
   "import errno",
   "import os",

@@ -1,10 +1,10 @@
 /** Backend handle contracts shared by sandbox implementations. */
 import type { SandboxFsBridge } from "./fs-bridge.types.js";
 
-/** Shared type for Sandbox Backend Id in src/agents/sandbox. */
+/** Registered sandbox backend identifier. */
 export type SandboxBackendId = string;
 
-/** Shared type for Sandbox Backend Exec Spec in src/agents/sandbox. */
+/** Command argv/env/stdin contract returned by sandbox backends. */
 export type SandboxBackendExecSpec = {
   argv: string[];
   env: NodeJS.ProcessEnv;
@@ -12,7 +12,7 @@ export type SandboxBackendExecSpec = {
   finalizeToken?: unknown;
 };
 
-/** Shared type for Sandbox Backend Command Params in src/agents/sandbox. */
+/** Shell command request sent through a sandbox backend. */
 export type SandboxBackendCommandParams = {
   script: string;
   args?: string[];
@@ -21,14 +21,14 @@ export type SandboxBackendCommandParams = {
   signal?: AbortSignal;
 };
 
-/** Shared type for Sandbox Backend Command Result in src/agents/sandbox. */
+/** Captured stdout/stderr/exit code from a sandbox backend command. */
 export type SandboxBackendCommandResult = {
   stdout: Buffer;
   stderr: Buffer;
   code: number;
 };
 
-/** Shared type for Sandbox Fs Bridge Context in src/agents/sandbox. */
+/** Runtime context used to construct a sandbox filesystem bridge. */
 export type SandboxFsBridgeContext = {
   workspaceDir: string;
   agentWorkspaceDir: string;
@@ -43,7 +43,7 @@ export type SandboxFsBridgeContext = {
   };
 };
 
-/** Shared type for Sandbox Backend Handle in src/agents/sandbox. */
+/** Live sandbox backend handle used by exec and filesystem tools. */
 export type SandboxBackendHandle = {
   id: SandboxBackendId;
   runtimeId: string;

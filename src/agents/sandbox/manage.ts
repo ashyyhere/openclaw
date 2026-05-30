@@ -14,13 +14,13 @@ import {
 } from "./registry.js";
 import { resolveSandboxAgentId } from "./shared.js";
 
-/** Shared type for Sandbox Container Info in src/agents/sandbox. */
+/** Sandbox container registry entry plus live runtime status. */
 export type SandboxContainerInfo = SandboxRegistryEntry & {
   running: boolean;
   imageMatch: boolean;
 };
 
-/** Shared type for Sandbox Browser Info in src/agents/sandbox. */
+/** Browser sandbox registry entry plus live runtime status. */
 export type SandboxBrowserInfo = SandboxBrowserRegistryEntry & {
   running: boolean;
   imageMatch: boolean;

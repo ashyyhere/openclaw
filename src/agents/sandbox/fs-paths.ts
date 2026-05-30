@@ -16,7 +16,7 @@ import {
 } from "./path-utils.js";
 import { resolveReadOnlyWorkspaceSkillMounts } from "./workspace-mounts.js";
 
-/** Shared type for Sandbox Fs Mount in src/agents/sandbox. */
+/** Host/container mount mapping visible to the sandbox filesystem bridge. */
 export type SandboxFsMount = {
   hostRoot: string;
   containerRoot: string;
@@ -24,7 +24,7 @@ export type SandboxFsMount = {
   source: "workspace" | "agent" | "bind" | "protectedSkill";
 };
 
-/** Shared type for Sandbox Resolved Fs Path in src/agents/sandbox. */
+/** Resolved host/container path plus writable decision for sandbox access. */
 export type SandboxResolvedFsPath = {
   hostPath: string;
   relativePath: string;

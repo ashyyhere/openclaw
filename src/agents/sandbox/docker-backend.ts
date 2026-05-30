@@ -115,7 +115,7 @@ export function runDockerSandboxShellCommand(
   });
 }
 
-/** Reused constant for docker Sandbox Backend Manager behavior in src/agents/sandbox. */
+/** Docker sandbox backend manager for runtime status, exec, and cleanup. */
 export const dockerSandboxBackendManager: SandboxBackendManager = {
   async describeRuntime({ entry, config, agentId }) {
     const state = await dockerContainerState(entry.containerName);
