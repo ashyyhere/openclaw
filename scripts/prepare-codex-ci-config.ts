@@ -1,4 +1,4 @@
-// scripts prepare codex ci config helpers and runtime behavior.
+// Codex CI config writer renders a minimal trusted-project config for CI runners.
 import fs from "node:fs/promises";
 import path from "node:path";
 
@@ -6,6 +6,7 @@ function tomlString(value: string): string {
   return JSON.stringify(value);
 }
 
+/** Renders a CI-safe Codex config for a trusted checkout path. */
 export function buildCiSafeCodexConfig(params: {
   projectPath: string;
   approvalPolicy?: string;
@@ -33,6 +34,7 @@ export function buildCiSafeCodexConfig(params: {
   ].join("\n");
 }
 
+/** Writes a CI-safe Codex config to disk and returns the rendered TOML. */
 export async function writeCiSafeCodexConfig(params: {
   outputPath: string;
   projectPath: string;

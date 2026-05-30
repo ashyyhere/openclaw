@@ -1,4 +1,4 @@
-// scripts protocol gen helpers and runtime behavior.
+// Gateway protocol schema generator writes the bundled JSON Schema artifact.
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";

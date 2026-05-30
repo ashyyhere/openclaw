@@ -1,4 +1,4 @@
-// scripts ios pin version helpers and runtime behavior.
+// iOS version pinning CLI writes the release version manifest and optional synced artifacts.
 import path from "node:path";
 import {
   normalizePinnedIosVersion,
@@ -15,6 +15,7 @@ type CliOptions = {
   sync: boolean;
 };
 
+/** Result of updating the pinned iOS release version. */
 export type PinIosVersionResult = {
   previousVersion: string | null;
   nextVersion: string;
@@ -33,6 +34,7 @@ function usage(): string {
   ].join("\n");
 }
 
+/** Parses iOS version pinning options from CLI arguments. */
 export function parseArgs(argv: string[]): CliOptions {
   let explicitVersion: string | null = null;
   let fromGateway = false;
@@ -86,6 +88,7 @@ export function parseArgs(argv: string[]): CliOptions {
   return { explicitVersion, fromGateway, rootDir, sync };
 }
 
+/** Pins the iOS version from an explicit value or the current gateway package version. */
 export function pinIosVersion(params: CliOptions): PinIosVersionResult {
   const rootDir = path.resolve(params.rootDir);
   let previousVersion: string | null = null;
@@ -111,6 +114,7 @@ export function pinIosVersion(params: CliOptions): PinIosVersionResult {
   };
 }
 
+/** Runs the iOS version pinning CLI and returns a process-style exit code. */
 export async function main(argv: string[]): Promise<number> {
   try {
     const options = parseArgs(argv);

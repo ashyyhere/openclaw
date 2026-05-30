@@ -1,9 +1,10 @@
-// scripts ios sync versioning helpers and runtime behavior.
+// iOS versioning sync CLI keeps generated iOS version artifacts aligned with the pinned version.
 import path from "node:path";
 import { syncIosVersioning } from "./lib/ios-version.ts";
 
 type Mode = "check" | "write";
 
+/** Parses iOS versioning sync flags for check/write mode and repository root. */
 export function parseArgs(argv: string[]): { mode: Mode; rootDir: string } {
   let mode: Mode = "write";
   let rootDir = path.resolve(".");

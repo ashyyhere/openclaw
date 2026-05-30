@@ -1,5 +1,5 @@
 #!/usr/bin/env -S pnpm tsx
-// scripts release beta smoke helpers and runtime behavior.
+// Beta release smoke CLI runs npm beta validation through Telegram and Parallels lanes.
 import { spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
@@ -15,11 +15,13 @@ interface Options {
   skipTelegram: boolean;
 }
 
+/** Command runner options for beta smoke subprocess calls. */
 export type RunOptions = {
   capture?: boolean;
   timeoutMs?: number;
 };
 
+/** GitHub Actions run fields used while polling Telegram beta E2E. */
 export type WorkflowRunInfo = {
   conclusion: string | null;
   html_url: string;
@@ -27,6 +29,7 @@ export type WorkflowRunInfo = {
   updated_at: string;
 };
 
+/** Polling options and seams for beta Telegram workflow tests. */
 export type PollRunOptions = {
   pollIntervalMs?: number;
   readRun?: (repo: string, runId: string) => WorkflowRunInfo;
@@ -50,6 +53,7 @@ Options:
 `;
 }
 
+/** Parses beta smoke CLI flags. */
 export function parseArgs(argv: string[]): Options {
   const args = stripLeadingPackageManagerSeparator(argv);
   const options: Options = {
@@ -136,6 +140,7 @@ function readPositiveInt(raw: string | undefined, fallback: number): number {
   return Number.isInteger(parsed) && parsed > 0 ? parsed : fallback;
 }
 
+/** Runs a subprocess with beta-smoke timeout and optional captured output. */
 export function run(command: string, args: string[], input?: RunOptions): string {
   const timeoutMs = input?.timeoutMs ?? DEFAULT_COMMAND_TIMEOUT_MS;
   const result = spawnSync(command, args, {
@@ -247,6 +252,7 @@ function ghJson(repo: string, pathSuffix: string): unknown {
   return JSON.parse(result.stdout ?? "");
 }
 
+/** Extracts a GitHub Actions run id from workflow-dispatch output. */
 export function parseWorkflowRunIdFromOutput(output: string): string | undefined {
   return /\/actions\/runs\/(\d+)/u.exec(output)?.[1];
 }
@@ -268,6 +274,7 @@ function normalizeRunId(value: unknown): string | undefined {
   return undefined;
 }
 
+/** Selects the newest workflow-dispatch run id that was not present before dispatch. */
 export function selectNewestDispatchedRunId(params: {
   beforeIds: ReadonlySet<string>;
   runs: readonly WorkflowRunListEntry[];
@@ -347,6 +354,7 @@ async function dispatchTelegram(options: Options, packageSpec: string): Promise<
   });
 }
 
+/** Polls a GitHub Actions run until success or timeout. */
 export async function pollRun(
   repo: string,
   runId: string,
@@ -427,6 +435,7 @@ function findFile(root: string, basename: string): string {
   return "";
 }
 
+/** Inserts or replaces Telegram beta E2E proof in release notes. */
 export function mergeTelegramProofIntoReleaseBody(body: string, telegramLine: string): string {
   if (body.includes(telegramLine)) {
     return body;
