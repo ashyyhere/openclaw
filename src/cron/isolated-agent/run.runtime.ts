@@ -1,5 +1,6 @@
-// Runtime boundary for cron/isolated-agent run runtime behavior.
-/** Re-exported API for src/cron/isolated-agent. */
+// Thin runtime facade for isolated cron agents; keeps the cron runner on stable
+// agent/config helpers without importing broad command modules.
+/** Resolves agent ids, directories, and config records for isolated cron runs. */
 export {
   resolveAgentConfig,
   resolveAgentDir,
@@ -7,35 +8,35 @@ export {
   resolveDefaultAgentId,
   type ResolvedAgentConfig,
 } from "../../agents/agent-scope-config.js";
-/** Re-exported API for src/cron/isolated-agent, starting with resolve Cron Style Now. */
+/** Formats the current timestamp using cron-friendly semantics for prompts/logs. */
 export { resolveCronStyleNow } from "../../agents/current-time.js";
-/** Re-exported API for src/cron/isolated-agent, starting with DEFAULT CONTEXT TOKENS. */
+/** Default context budget used when a cron task omits an explicit token limit. */
 export { DEFAULT_CONTEXT_TOKENS } from "../../agents/defaults.js";
-/** Re-exported API for src/cron/isolated-agent, starting with is Cli Provider. */
+/** Identifies providers that execute through an external CLI session. */
 export { isCliProvider } from "../../agents/model-selection-cli.js";
-/** Re-exported API for src/cron/isolated-agent, starting with resolve Thinking Default. */
+/** Chooses the model thinking level when cron config leaves it unset. */
 export { resolveThinkingDefault } from "../../agents/model-thinking-default.js";
-/** Re-exported API for src/cron/isolated-agent, starting with resolve Agent Timeout Ms. */
+/** Resolves the per-agent execution timeout for isolated cron invocations. */
 export { resolveAgentTimeoutMs } from "../../agents/timeout.js";
-/** Re-exported API for src/cron/isolated-agent, starting with derive Session Total Tokens. */
+/** Computes usage totals from session accounting fields for cron closeout. */
 export { deriveSessionTotalTokens, hasNonzeroUsage } from "../../agents/usage.js";
-/** Re-exported API for src/cron/isolated-agent, starting with DEFAULT IDENTITY FILENAME. */
+/** Creates the workspace and default identity path expected by cron agents. */
 export { DEFAULT_IDENTITY_FILENAME, ensureAgentWorkspace } from "../../agents/workspace.js";
-/** Re-exported API for src/cron/isolated-agent. */
+/** Normalizes and validates model thinking levels before a cron run starts. */
 export {
   isThinkingLevelSupported,
   normalizeThinkLevel,
   resolveSupportedThinkingLevel,
 } from "../../auto-reply/thinking.js";
-/** Re-exported API for src/cron/isolated-agent, starting with resolve Session Transcript Path. */
+/** Locates the transcript file for an isolated cron agent session. */
 export { resolveSessionTranscriptPath } from "../../config/sessions/paths.js";
-/** Re-exported API for src/cron/isolated-agent, starting with set Session Runtime Model. */
+/** Persists the runtime model chosen for the cron-created session. */
 export { setSessionRuntimeModel } from "../../config/sessions/types.js";
-/** Re-exported API for src/cron/isolated-agent, starting with log Warn. */
+/** Warning logger used by cron runtime code without pulling CLI logging state. */
 export { logWarn } from "../../logger.js";
-/** Re-exported API for src/cron/isolated-agent, starting with normalize Agent Id. */
+/** Canonicalizes agent ids before directory and session-key lookups. */
 export { normalizeAgentId } from "../../routing/session-key.js";
-/** Re-exported API for src/cron/isolated-agent. */
+/** Marks hook-originated sessions so external content provenance is preserved. */
 export {
   isExternalHookSession,
   mapHookExternalContentSource,
