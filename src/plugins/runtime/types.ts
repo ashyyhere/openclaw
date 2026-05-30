@@ -1,13 +1,14 @@
-// Shared types for plugins/runtime types behavior.
+// Plugin runtime public types. Native plugins receive this trusted in-process
+// surface for subagent runs, remote node invocation, logging, core, and channel APIs.
 import type { PluginRuntimeChannel } from "./types-channel.js";
 import type { PluginRuntimeCore, RuntimeLogger } from "./types-core.js";
 
-/** Re-exported API for src/plugins/runtime, starting with Runtime Logger. */
+/** Logger contract re-exported with the plugin runtime surface. */
 export type { RuntimeLogger };
 
 // ── Subagent runtime types ──────────────────────────────────────────
 
-/** Shared type for Subagent Run Params in src/plugins/runtime. */
+/** Parameters for starting a subagent run from a plugin. */
 export type SubagentRunParams = {
   sessionKey: string;
   message: string;
@@ -20,30 +21,30 @@ export type SubagentRunParams = {
   idempotencyKey?: string;
 };
 
-/** Shared type for Subagent Run Result in src/plugins/runtime. */
+/** Identifier returned after a subagent run is accepted. */
 export type SubagentRunResult = {
   runId: string;
 };
 
-/** Shared type for Subagent Wait Params in src/plugins/runtime. */
+/** Parameters for waiting on a previously started subagent run. */
 export type SubagentWaitParams = {
   runId: string;
   timeoutMs?: number;
 };
 
-/** Shared type for Subagent Wait Result in src/plugins/runtime. */
+/** Completion status returned by subagent wait operations. */
 export type SubagentWaitResult = {
   status: "ok" | "error" | "timeout";
   error?: string;
 };
 
-/** Shared type for Subagent Get Session Messages Params in src/plugins/runtime. */
+/** Parameters for reading recent messages from a subagent session. */
 export type SubagentGetSessionMessagesParams = {
   sessionKey: string;
   limit?: number;
 };
 
-/** Shared type for Subagent Get Session Messages Result in src/plugins/runtime. */
+/** Messages returned from a subagent session read. */
 export type SubagentGetSessionMessagesResult = {
   messages: unknown[];
 };
@@ -54,18 +55,18 @@ export type SubagentGetSessionParams = SubagentGetSessionMessagesParams;
 /** @deprecated Use SubagentGetSessionMessagesResult. */
 export type SubagentGetSessionResult = SubagentGetSessionMessagesResult;
 
-/** Shared type for Subagent Delete Session Params in src/plugins/runtime. */
+/** Parameters for deleting a subagent session and optionally its transcript. */
 export type SubagentDeleteSessionParams = {
   sessionKey: string;
   deleteTranscript?: boolean;
 };
 
-/** Shared type for Runtime Node List Params in src/plugins/runtime. */
+/** Optional filter for listing runtime-connected nodes. */
 export type RuntimeNodeListParams = {
   connected?: boolean;
 };
 
-/** Shared type for Runtime Node List Result in src/plugins/runtime. */
+/** Nodes visible to the plugin runtime. */
 export type RuntimeNodeListResult = {
   nodes: Array<{
     nodeId: string;
@@ -77,7 +78,7 @@ export type RuntimeNodeListResult = {
   }>;
 };
 
-/** Shared type for Runtime Node Invoke Params in src/plugins/runtime. */
+/** Remote node command invocation request. */
 export type RuntimeNodeInvokeParams = {
   nodeId: string;
   command: string;
@@ -105,7 +106,7 @@ export type PluginRuntime = PluginRuntimeCore & {
   channel: PluginRuntimeChannel;
 };
 
-/** Shared type for Create Plugin Runtime Options in src/plugins/runtime. */
+/** Optional runtime bindings used when constructing a plugin runtime. */
 export type CreatePluginRuntimeOptions = {
   subagent?: PluginRuntime["subagent"];
   nodes?: PluginRuntime["nodes"];
