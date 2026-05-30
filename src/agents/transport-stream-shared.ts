@@ -12,7 +12,7 @@ type TransportUsage = {
   cost: { input: number; output: number; cacheRead: number; cacheWrite: number; total: number };
 };
 
-/** Shared type for Writable Transport Stream in src/agents. */
+/** Minimal event stream surface used by provider transport adapters. */
 export type WritableTransportStream = {
   push(event: unknown): void;
   end(): void;
@@ -27,7 +27,7 @@ type TransportOutputShape = {
 };
 
 const EMPTY_TOOL_RESULT_TEXT = "(no output)";
-/** Reused helper for sanitize Transport Payload Text behavior in src/agents. */
+/** Removes invalid surrogate pairs before sending text through providers. */
 export function sanitizeTransportPayloadText(text: string): string {
   return text.replace(
     /[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]/g,
@@ -35,7 +35,7 @@ export function sanitizeTransportPayloadText(text: string): string {
   );
 }
 
-/** Reused helper for sanitize Non Empty Transport Payload Text behavior in src/agents. */
+/** Sanitizes text and substitutes a fallback when the result is empty. */
 export function sanitizeNonEmptyTransportPayloadText(
   text: string,
   fallback = EMPTY_TOOL_RESULT_TEXT,
@@ -44,7 +44,7 @@ export function sanitizeNonEmptyTransportPayloadText(
   return sanitized.trim().length > 0 ? sanitized : fallback;
 }
 
-/** Reused helper for coerce Transport Tool Call Arguments behavior in src/agents. */
+/** Coerces provider tool-call arguments into an object payload. */
 export function coerceTransportToolCallArguments(argumentsValue: unknown): Record<string, unknown> {
   if (argumentsValue && typeof argumentsValue === "object" && !Array.isArray(argumentsValue)) {
     return argumentsValue as Record<string, unknown>;
@@ -63,7 +63,7 @@ export function coerceTransportToolCallArguments(argumentsValue: unknown): Recor
   return {};
 }
 
-/** Reused helper for merge Transport Headers behavior in src/agents. */
+/** Merges optional transport header maps, omitting an empty result. */
 export function mergeTransportHeaders(
   ...headerSources: Array<Record<string, string> | undefined>
 ): Record<string, string> | undefined {
@@ -76,7 +76,7 @@ export function mergeTransportHeaders(
   return Object.keys(merged).length > 0 ? merged : undefined;
 }
 
-/** Reused helper for merge Transport Metadata behavior in src/agents. */
+/** Adds transport metadata to a payload without discarding existing metadata. */
 export function mergeTransportMetadata<T extends Record<string, unknown>>(
   payload: T,
   metadata?: Record<string, string>,
@@ -97,7 +97,7 @@ export function mergeTransportMetadata<T extends Record<string, unknown>>(
   };
 }
 
-/** Reused helper for create Empty Transport Usage behavior in src/agents. */
+/** Creates a zeroed token/cost usage object for transport outputs. */
 export function createEmptyTransportUsage(): TransportUsage {
   return {
     input: 0,
@@ -109,7 +109,7 @@ export function createEmptyTransportUsage(): TransportUsage {
   };
 }
 
-/** Reused helper for create Writable Transport Event Stream behavior in src/agents. */
+/** Creates an assistant event stream exposed through the writable transport shape. */
 export function createWritableTransportEventStream() {
   const eventStream = createAssistantMessageEventStream();
   return {
@@ -118,7 +118,7 @@ export function createWritableTransportEventStream() {
   };
 }
 
-/** Reused helper for finalize Transport Stream behavior in src/agents. */
+/** Emits the final transport done event or throws for aborted/error outputs. */
 export function finalizeTransportStream(params: {
   stream: WritableTransportStream;
   output: TransportOutputShape;
@@ -188,7 +188,7 @@ function normalizeTransportErrorBody(value: unknown): string | undefined {
   return truncateErrorDetail(redactSensitiveText(text), 500);
 }
 
-/** Reused helper for extract Transport Error Details behavior in src/agents. */
+/** Extracts redacted provider error code/type/body details from transport errors. */
 export function extractTransportErrorDetails(error: unknown): TransportErrorDetails {
   const errorObject = error && typeof error === "object" ? error : undefined;
   const nestedError = readObjectProperty(errorObject, "error");
@@ -213,7 +213,7 @@ export function extractTransportErrorDetails(error: unknown): TransportErrorDeta
   };
 }
 
-/** Reused helper for assign Transport Error Details behavior in src/agents. */
+/** Marks transport output as failed and attaches normalized error details. */
 export function assignTransportErrorDetails(
   output: TransportOutputShape,
   error: unknown,
@@ -224,7 +224,7 @@ export function assignTransportErrorDetails(
   Object.assign(output, extractTransportErrorDetails(error));
 }
 
-/** Reused helper for fail Transport Stream behavior in src/agents. */
+/** Cleans up, emits a transport error event, and ends the stream. */
 export function failTransportStream(params: {
   stream: WritableTransportStream;
   output: TransportOutputShape;

@@ -5,45 +5,45 @@ import {
 } from "../../shared/number-coercion.js";
 import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";
 
-/** Shared type for Cache Entry in src/agents/tools. */
+/** Expiring in-memory cache entry for web tool responses. */
 export type CacheEntry<T> = {
   value: T;
   expiresAt: number;
   insertedAt: number;
 };
 
-/** Reused constant for DEFAULT TIMEOUT SECONDS behavior in src/agents/tools. */
+/** Default web tool request timeout in seconds. */
 export const DEFAULT_TIMEOUT_SECONDS = 30;
-/** Reused constant for DEFAULT CACHE TTL MINUTES behavior in src/agents/tools. */
+/** Default web tool response cache TTL in minutes. */
 export const DEFAULT_CACHE_TTL_MINUTES = 15;
 const DEFAULT_CACHE_MAX_ENTRIES = 100;
 
-/** Reused helper for resolve Timeout Seconds behavior in src/agents/tools. */
+/** Resolves a timeout value, allowing zero/negative input to clamp to one second. */
 export function resolveTimeoutSeconds(value: unknown, fallback: number): number {
   const parsed = typeof value === "number" && Number.isFinite(value) ? value : fallback;
   return Math.min(MAX_TIMER_TIMEOUT_SECONDS, Math.max(1, Math.floor(parsed)));
 }
 
-/** Reused helper for resolve Positive Timeout Seconds behavior in src/agents/tools. */
+/** Resolves a strictly positive timeout value with fallback. */
 export function resolvePositiveTimeoutSeconds(value: unknown, fallback: number): number {
   const parsed =
     typeof value === "number" && Number.isFinite(value) && value > 0 ? value : fallback;
   return Math.min(MAX_TIMER_TIMEOUT_SECONDS, Math.max(1, Math.floor(parsed)));
 }
 
-/** Reused helper for resolve Cache Ttl Ms behavior in src/agents/tools. */
+/** Converts cache TTL minutes into milliseconds with fallback. */
 export function resolveCacheTtlMs(value: unknown, fallbackMinutes: number): number {
   const minutes =
     typeof value === "number" && Number.isFinite(value) ? Math.max(0, value) : fallbackMinutes;
   return Math.round(minutes * 60_000);
 }
 
-/** Reused helper for normalize Cache Key behavior in src/agents/tools. */
+/** Normalizes a web tool cache key for case-insensitive lookup. */
 export function normalizeCacheKey(value: string): string {
   return normalizeLowercaseStringOrEmpty(value);
 }
 
-/** Reused helper for read Cache behavior in src/agents/tools. */
+/** Reads a non-expired cache entry and evicts stale entries. */
 export function readCache<T>(
   cache: Map<string, CacheEntry<T>>,
   key: string,
@@ -60,7 +60,7 @@ export function readCache<T>(
   return { value: entry.value, cached: true };
 }
 
-/** Reused helper for write Cache behavior in src/agents/tools. */
+/** Writes a bounded cache entry when TTL is positive. */
 export function writeCache<T>(
   cache: Map<string, CacheEntry<T>>,
   key: string,
@@ -88,7 +88,7 @@ export function writeCache<T>(
   });
 }
 
-/** Reused helper for with Timeout behavior in src/agents/tools. */
+/** Combines an optional abort signal with a timeout abort signal. */
 export function withTimeout(signal: AbortSignal | undefined, timeoutMs: number): AbortSignal {
   if (timeoutMs <= 0) {
     return signal ?? new AbortController().signal;
@@ -115,7 +115,7 @@ export function withTimeout(signal: AbortSignal | undefined, timeoutMs: number):
   return controller.signal;
 }
 
-/** Shared type for Read Response Text Result in src/agents/tools. */
+/** Decoded response text plus truncation/read-byte metadata. */
 export type ReadResponseTextResult = {
   text: string;
   truncated: boolean;
@@ -230,7 +230,7 @@ function decodeResponseBytes(res: Response, bytes: Uint8Array): string {
   }
 }
 
-/** Reused helper for read Response Text behavior in src/agents/tools. */
+/** Reads and decodes response text with optional byte truncation and charset sniffing. */
 export async function readResponseText(
   res: Response,
   options?: { maxBytes?: number },

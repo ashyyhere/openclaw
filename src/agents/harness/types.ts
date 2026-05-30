@@ -5,18 +5,18 @@ export type AgentHarnessSupportContext = {
   requestedRuntime: import("../agent-runtime-id.js").EmbeddedAgentRuntime;
 };
 
-/** Shared type for Agent Harness Support in src/agents/harness. */
+/** Harness support decision for a provider/model/runtime context. */
 export type AgentHarnessSupport =
   | { supported: true; priority?: number; reason?: string }
   | { supported: false; reason?: string };
 
-/** Shared type for Agent Harness Attempt Params in src/agents/harness. */
+/** Parameters passed to a harness run attempt. */
 export type AgentHarnessAttemptParams =
   import("../embedded-agent-runner/run/types.js").EmbeddedRunAttemptParams;
-/** Shared type for Agent Harness Attempt Result in src/agents/harness. */
+/** Result returned by a harness run attempt. */
 export type AgentHarnessAttemptResult =
   import("../embedded-agent-runner/run/types.js").EmbeddedRunAttemptResult;
-/** Shared type for Agent Harness Side Question Params in src/agents/harness. */
+/** Parameters for harness side-question execution. */
 export type AgentHarnessSideQuestionParams = {
   cfg: import("../../config/types.openclaw.js").OpenClawConfig;
   agentDir: string;
@@ -44,17 +44,17 @@ export type AgentHarnessSideQuestionParams = {
   authProfileId?: string;
   authProfileIdSource?: "auto" | "user";
 };
-/** Shared type for Agent Harness Side Question Result in src/agents/harness. */
+/** Text response from a harness side-question. */
 export type AgentHarnessSideQuestionResult = {
   text: string;
 };
-/** Shared type for Agent Harness Compact Params in src/agents/harness. */
+/** Parameters for harness-driven session compaction. */
 export type AgentHarnessCompactParams =
   import("../embedded-agent-runner/compact.types.js").CompactEmbeddedAgentSessionParams;
-/** Shared type for Agent Harness Compact Result in src/agents/harness. */
+/** Result returned by harness-driven session compaction. */
 export type AgentHarnessCompactResult =
   import("../embedded-agent-runner/types.js").EmbeddedAgentCompactResult;
-/** Shared type for Agent Harness Reset Params in src/agents/harness. */
+/** Session reset notification passed to harnesses. */
 export type AgentHarnessResetParams = {
   sessionId?: string;
   sessionKey?: string;
@@ -62,12 +62,12 @@ export type AgentHarnessResetParams = {
   reason?: "new" | "reset" | "idle" | "daily" | "compaction" | "deleted" | "unknown";
 };
 
-/** Shared type for Agent Harness Result Classification in src/agents/harness. */
+/** Classification override a harness can attach to an attempt result. */
 export type AgentHarnessResultClassification =
   | "ok"
   | NonNullable<AgentHarnessAttemptResult["agentHarnessResultClassification"]>;
 
-/** Shared type for Agent Harness Delivery Defaults in src/agents/harness. */
+/** Delivery defaults supplied by a harness for legacy plugin behavior. */
 export type AgentHarnessDeliveryDefaults = {
   /**
    * @deprecated Prefer `messages.visibleReplies` / `messages.groupChat.visibleReplies`
@@ -76,7 +76,7 @@ export type AgentHarnessDeliveryDefaults = {
   sourceVisibleReplies?: "automatic" | "message_tool";
 };
 
-/** Shared type for Agent Harness in src/agents/harness. */
+/** Registered harness contract for embedded agent runtime integration. */
 export type AgentHarness = {
   id: string;
   label: string;
@@ -100,7 +100,7 @@ export type AgentHarness = {
   dispose?(): Promise<void> | void;
 };
 
-/** Shared type for Registered Agent Harness in src/agents/harness. */
+/** Harness plus optional owning plugin id in the runtime registry. */
 export type RegisteredAgentHarness = {
   harness: AgentHarness;
   ownerPluginId?: string;
