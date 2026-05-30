@@ -105,7 +105,7 @@ type ThemeJson = Static<typeof ThemeJsonSchema>;
 
 const validateThemeJson = Compile(ThemeJsonSchema);
 
-/** Shared type for Theme Color in src/agents/modes. */
+/** Foreground token names a terminal theme must provide for text, markdown, syntax, and borders. */
 export type ThemeColor =
   | "accent"
   | "border"
@@ -153,7 +153,7 @@ export type ThemeColor =
   | "thinkingXhigh"
   | "bashMode";
 
-/** Shared type for Theme Bg in src/agents/modes. */
+/** Background token names a terminal theme must provide for selected rows and message panels. */
 export type ThemeBg =
   | "selectedBg"
   | "userMessageBg"
@@ -336,7 +336,7 @@ function resolveThemeColors<T extends Record<string, ColorValue>>(
 // Theme Class
 // ============================================================================
 
-/** Reused class for Theme behavior in src/agents/modes. */
+/** Resolved terminal theme that applies foreground/background ANSI styling by token. */
 export class Theme {
   readonly name?: string;
   readonly sourcePath?: string;
@@ -485,7 +485,7 @@ export function getAvailableThemes(): string[] {
   return Array.from(themes).toSorted();
 }
 
-/** Shared type for Theme Info in src/agents/modes. */
+/** Theme list entry with the resolved source path when the theme came from disk. */
 export interface ThemeInfo {
   name: string;
   path: string | undefined;
@@ -647,17 +647,17 @@ export function getThemeByName(name: string): Theme | undefined {
   }
 }
 
-/** Shared type for Terminal Theme in src/agents/modes. */
+/** Coarse terminal background family used to choose the default built-in theme. */
 export type TerminalTheme = "dark" | "light";
 
-/** Shared type for Rgb Color in src/agents/modes. */
+/** RGB triplet normalized to 8-bit channels. */
 export interface RgbColor {
   r: number;
   g: number;
   b: number;
 }
 
-/** Shared type for Terminal Theme Detection in src/agents/modes. */
+/** Result of terminal background detection, including provenance and confidence. */
 export interface TerminalThemeDetection {
   theme: TerminalTheme;
   source: "terminal background" | "COLORFGBG" | "fallback";
@@ -665,7 +665,7 @@ export interface TerminalThemeDetection {
   confidence: "high" | "low";
 }
 
-/** Shared type for Terminal Theme Detection Options in src/agents/modes. */
+/** Inputs for terminal theme detection; tests can inject env here. */
 export interface TerminalThemeDetectionOptions {
   env?: NodeJS.ProcessEnv;
 }
@@ -693,7 +693,7 @@ function getAnsiColorLuminance(index: number): number {
   return getRgbColorLuminance(hexToRgb(ansi256ToHex(index)));
 }
 
-/** Reused helper for get Theme For Rgb Color behavior in src/agents/modes. */
+/** Classifies an RGB background color as light or dark by luminance. */
 export function getThemeForRgbColor(rgb: RgbColor): TerminalTheme {
   return getRgbColorLuminance(rgb) >= 0.5 ? "light" : "dark";
 }
@@ -709,7 +709,7 @@ function parseOscHexChannel(channel: string): number | undefined {
   return Math.round((Number.parseInt(channel, 16) / max) * 255);
 }
 
-/** Reused helper for parse Osc11 Background Color behavior in src/agents/modes. */
+/** Parses OSC 11 terminal background replies into an RGB color. */
 export function parseOsc11BackgroundColor(data: string): RgbColor | undefined {
   const prefix = "\u001B]11;";
   const belSuffix = "\u0007";
@@ -780,7 +780,7 @@ export function detectTerminalBackground(
   };
 }
 
-/** Reused helper for get Default Theme behavior in src/agents/modes. */
+/** Chooses the default built-in theme from terminal background hints. */
 export function getDefaultTheme(): string {
   return detectTerminalBackground().theme;
 }
@@ -794,7 +794,7 @@ const THEME_KEY = Symbol.for("openclaw:agent-theme");
 
 // Export theme as a getter that reads from globalThis
 // This ensures all module instances (tsx, jiti) see the same theme
-/** Reused constant for theme behavior in src/agents/modes. */
+/** Global active theme proxy shared across dev-time module loaders. */
 export const theme: Theme = new Proxy({} as Theme, {
   get(_target, prop) {
     const t = (globalThis as Record<symbol, Theme>)[THEME_KEY];
@@ -815,7 +815,7 @@ let themeReloadTimer: NodeJS.Timeout | undefined;
 let onThemeChangeCallback: (() => void) | undefined;
 const registeredThemes = new Map<string, Theme>();
 
-/** Reused helper for set Registered Themes behavior in src/agents/modes. */
+/** Replaces the in-memory theme registry used before built-in/custom theme lookup. */
 export function setRegisteredThemes(themes: Theme[]): void {
   registeredThemes.clear();
   for (const theme of themes) {
@@ -869,7 +869,7 @@ export function setTheme(
   }
 }
 
-/** Reused helper for set Theme Instance behavior in src/agents/modes. */
+/** Sets an already constructed theme instance as active and disables file watching. */
 export function setThemeInstance(themeInstance: Theme): void {
   setGlobalTheme(themeInstance);
   currentThemeName = "<in-memory>";
@@ -1229,7 +1229,7 @@ export function getLanguageFromPath(filePath: string): string | undefined {
   return extToLang[ext];
 }
 
-/** Reused helper for get Markdown Theme behavior in src/agents/modes. */
+/** Builds the Pi TUI markdown theme from the active OpenClaw theme tokens. */
 export function getMarkdownTheme(): MarkdownTheme {
   return {
     heading: (text: string) => theme.fg("mdHeading", text),
@@ -1269,7 +1269,7 @@ export function getMarkdownTheme(): MarkdownTheme {
   };
 }
 
-/** Reused helper for get Select List Theme behavior in src/agents/modes. */
+/** Builds the Pi TUI select-list theme from active accent and muted colors. */
 export function getSelectListTheme(): SelectListTheme {
   return {
     selectedPrefix: (text: string) => theme.fg("accent", text),
@@ -1280,7 +1280,7 @@ export function getSelectListTheme(): SelectListTheme {
   };
 }
 
-/** Reused helper for get Editor Theme behavior in src/agents/modes. */
+/** Builds the Pi TUI editor theme, including nested select-list styling. */
 export function getEditorTheme(): EditorTheme {
   return {
     borderColor: (text: string) => theme.fg("borderMuted", text),
@@ -1288,7 +1288,7 @@ export function getEditorTheme(): EditorTheme {
   };
 }
 
-/** Reused helper for get Settings List Theme behavior in src/agents/modes. */
+/** Builds the Pi TUI settings-list theme from active accent, dim, and muted colors. */
 export function getSettingsListTheme(): SettingsListTheme {
   return {
     label: (text: string, selected: boolean) => (selected ? theme.fg("accent", text) : text),
