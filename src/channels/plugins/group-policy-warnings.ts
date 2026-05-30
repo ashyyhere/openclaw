@@ -17,14 +17,14 @@ type ConfigGroupPolicyWarningCollector<Params extends { cfg: OpenClawConfig }> =
 ) => string[];
 type WarningCollector<Params> = (params: Params) => string[];
 
-/** Reused helper for compose Warning Collectors behavior in src/channels/plugins. */
+/** Combines warning collectors while skipping absent collectors and flattening output. */
 export function composeWarningCollectors<Params>(
   ...collectors: Array<WarningCollector<Params> | null | undefined>
 ): WarningCollector<Params> {
   return (params) => collectors.flatMap((collector) => collector?.(params) ?? []);
 }
 
-/** Reused helper for project Warning Collector behavior in src/channels/plugins. */
+/** Adapts a collector to a wider params object by projecting the collector input. */
 export function projectWarningCollector<Params, Projected>(
   project: (params: Params) => Projected,
   collector: WarningCollector<Projected>,
@@ -32,14 +32,14 @@ export function projectWarningCollector<Params, Projected>(
   return (params) => collector(project(params));
 }
 
-/** Reused helper for project Config Warning Collector behavior in src/channels/plugins. */
+/** Adapts config-only warning collectors to richer channel status params. */
 export function projectConfigWarningCollector<Params extends { cfg: OpenClawConfig }>(
   collector: WarningCollector<{ cfg: OpenClawConfig }>,
 ): WarningCollector<Params> {
   return projectWarningCollector((params) => ({ cfg: params.cfg }), collector);
 }
 
-/** Reused helper for project Config Account Id Warning Collector behavior in src/channels/plugins. */
+/** Adapts config/account-id collectors to richer channel status params. */
 export function projectConfigAccountIdWarningCollector<
   Params extends { cfg: OpenClawConfig; accountId?: string | null },
 >(
@@ -51,7 +51,7 @@ export function projectConfigAccountIdWarningCollector<
   );
 }
 
-/** Reused helper for project Account Warning Collector behavior in src/channels/plugins. */
+/** Adapts account-only warning collectors to account-bearing runtime params. */
 export function projectAccountWarningCollector<
   ResolvedAccount,
   Params extends { account: ResolvedAccount },
@@ -59,7 +59,7 @@ export function projectAccountWarningCollector<
   return projectWarningCollector((params) => params.account, collector);
 }
 
-/** Reused helper for project Account Config Warning Collector behavior in src/channels/plugins. */
+/** Adapts account/config collectors after projecting the config to a channel-specific shape. */
 export function projectAccountConfigWarningCollector<
   ResolvedAccount,
   ProjectedCfg,
@@ -74,7 +74,7 @@ export function projectAccountConfigWarningCollector<
   );
 }
 
-/** Reused helper for create Conditional Warning Collector behavior in src/channels/plugins. */
+/** Builds a collector from predicates that may return one warning, many warnings, or none. */
 export function createConditionalWarningCollector<Params>(
   ...collectors: Array<(params: Params) => string | string[] | null | undefined | false>
 ): WarningCollector<Params> {
@@ -88,7 +88,7 @@ export function createConditionalWarningCollector<Params>(
     });
 }
 
-/** Reused helper for compose Account Warning Collectors behavior in src/channels/plugins. */
+/** Adds simple account predicates after a base account-aware warning collector. */
 export function composeAccountWarningCollectors<
   ResolvedAccount,
   Params extends { account: ResolvedAccount },
@@ -108,7 +108,7 @@ export function composeAccountWarningCollectors<
   );
 }
 
-/** Reused helper for build Open Group Policy Warning behavior in src/channels/plugins. */
+/** Formats the common warning shape for channels that allow open group triggers. */
 export function buildOpenGroupPolicyWarning(params: {
   surface: string;
   openBehavior: string;
@@ -117,7 +117,7 @@ export function buildOpenGroupPolicyWarning(params: {
   return `- ${params.surface}: groupPolicy="open" ${params.openBehavior}. ${params.remediation}.`;
 }
 
-/** Reused helper for build Open Group Policy Restrict Senders Warning behavior in src/channels/plugins. */
+/** Builds an open-policy warning that recommends sender allowlist restrictions. */
 export function buildOpenGroupPolicyRestrictSendersWarning(params: {
   surface: string;
   openScope: string;
@@ -133,7 +133,7 @@ export function buildOpenGroupPolicyRestrictSendersWarning(params: {
   });
 }
 
-/** Reused helper for build Open Group Policy No Route Allowlist Warning behavior in src/channels/plugins. */
+/** Builds an open-policy warning for channels missing a route allowlist. */
 export function buildOpenGroupPolicyNoRouteAllowlistWarning(params: {
   surface: string;
   routeAllowlistPath: string;
@@ -150,7 +150,7 @@ export function buildOpenGroupPolicyNoRouteAllowlistWarning(params: {
   });
 }
 
-/** Reused helper for build Open Group Policy Configure Route Allowlist Warning behavior in src/channels/plugins. */
+/** Builds an open-policy warning that keeps open groups but requires route allowlists. */
 export function buildOpenGroupPolicyConfigureRouteAllowlistWarning(params: {
   surface: string;
   openScope: string;
@@ -166,7 +166,7 @@ export function buildOpenGroupPolicyConfigureRouteAllowlistWarning(params: {
   });
 }
 
-/** Reused helper for collect Open Group Policy Restrict Senders Warnings behavior in src/channels/plugins. */
+/** Emits sender-restriction guidance only when the resolved group policy is open. */
 export function collectOpenGroupPolicyRestrictSendersWarnings(
   params: Parameters<typeof buildOpenGroupPolicyRestrictSendersWarning>[0] & {
     groupPolicy: "open" | "allowlist" | "disabled";
@@ -178,7 +178,7 @@ export function collectOpenGroupPolicyRestrictSendersWarnings(
   return [buildOpenGroupPolicyRestrictSendersWarning(params)];
 }
 
-/** Reused helper for collect Allowlist Provider Restrict Senders Warnings behavior in src/channels/plugins. */
+/** Resolves allowlist-provider policy state before collecting sender restriction warnings. */
 export function collectAllowlistProviderRestrictSendersWarnings(
   params: {
     cfg: OpenClawConfig;
@@ -246,7 +246,7 @@ export function createOpenGroupPolicyRestrictSendersWarningCollector<ResolvedAcc
     });
 }
 
-/** Reused helper for collect Allowlist Provider Group Policy Warnings behavior in src/channels/plugins. */
+/** Resolves the runtime group policy for allowlist-style providers and delegates warning text. */
 export function collectAllowlistProviderGroupPolicyWarnings(params: {
   cfg: OpenClawConfig;
   providerConfigPresent: boolean;
@@ -279,7 +279,7 @@ export function createAllowlistProviderGroupPolicyWarningCollector<
     });
 }
 
-/** Reused helper for collect Open Provider Group Policy Warnings behavior in src/channels/plugins. */
+/** Resolves the runtime group policy for open-style providers and delegates warning text. */
 export function collectOpenProviderGroupPolicyWarnings(params: {
   cfg: OpenClawConfig;
   providerConfigPresent: boolean;
@@ -327,7 +327,7 @@ export function createAllowlistProviderOpenWarningCollector<ResolvedAccount>(par
   });
 }
 
-/** Reused helper for collect Open Group Policy Route Allowlist Warnings behavior in src/channels/plugins. */
+/** Chooses between sender restriction and missing-route warnings for open groups. */
 export function collectOpenGroupPolicyRouteAllowlistWarnings(params: {
   groupPolicy: "open" | "allowlist" | "disabled";
   routeAllowlistConfigured: boolean;
@@ -365,7 +365,7 @@ export function createAllowlistProviderRouteAllowlistWarningCollector<ResolvedAc
   });
 }
 
-/** Reused helper for collect Open Group Policy Configured Route Warnings behavior in src/channels/plugins. */
+/** Chooses configured-route guidance or missing-route guidance for open groups. */
 export function collectOpenGroupPolicyConfiguredRouteWarnings(params: {
   groupPolicy: "open" | "allowlist" | "disabled";
   routeAllowlistConfigured: boolean;
