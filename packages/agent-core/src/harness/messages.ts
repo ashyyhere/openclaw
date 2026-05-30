@@ -37,21 +37,26 @@ function normalizeCompactionSummaryTimestamp(timestamp: number | string): number
   return parsed ?? 0;
 }
 
+/** Prefix used when replaying compacted history as a model-visible summary message. */
 export const COMPACTION_SUMMARY_PREFIX = `The conversation history before this point was compacted into the following summary:
 
 <summary>
 `;
 
+/** Suffix closing the model-visible compaction summary wrapper. */
 export const COMPACTION_SUMMARY_SUFFIX = `
 </summary>`;
 
+/** Prefix used when replaying a branch return summary into the active context. */
 export const BRANCH_SUMMARY_PREFIX = `The following is a summary of a branch that this conversation came back from:
 
 <summary>
 `;
 
+/** Suffix closing the model-visible branch summary wrapper. */
 export const BRANCH_SUMMARY_SUFFIX = `</summary>`;
 
+/** Render a bash execution entry into the exact text passed back into model context. */
 export function bashExecutionToText(msg: BashExecutionMessage): string {
   let text = `Ran \`${msg.command}\`\n`;
   if (msg.output) {
@@ -70,6 +75,7 @@ export function bashExecutionToText(msg: BashExecutionMessage): string {
   return text;
 }
 
+/** Build a branch summary entry while normalizing the persisted session timestamp. */
 export function createBranchSummaryMessage(
   summary: string,
   fromId: string,
@@ -83,6 +89,7 @@ export function createBranchSummaryMessage(
   };
 }
 
+/** Build a compaction summary entry with token-count metadata for future pruning logic. */
 export function createCompactionSummaryMessage(
   summary: string,
   tokensBefore: number,
@@ -96,6 +103,7 @@ export function createCompactionSummaryMessage(
   };
 }
 
+/** Build a custom transcript entry for harness extensions. */
 export function createCustomMessage(
   customType: string,
   content: string | (TextContent | ImageContent)[],
@@ -113,6 +121,7 @@ export function createCustomMessage(
   };
 }
 
+/** Convert persisted harness transcript entries into provider-facing LLM messages. */
 export function convertToLlm(messages: AgentMessage[]): Message[] {
   return messages
     .map((m): Message | undefined => {

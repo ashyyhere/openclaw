@@ -1,7 +1,7 @@
-// packages/agent-core/src/harness system prompt helpers and runtime behavior.
+// Helpers for rendering discovered harness skills into system-prompt instructions.
 import type { Skill } from "./types.js";
 
-/** Public helper for format Skills For System Prompt behavior in packages/agent-core. */
+/** Format model-visible skill metadata, omitting skills hidden from model invocation. */
 export function formatSkillsForSystemPrompt(skills: Skill[]): string {
   const visibleSkills = skills.filter((skill) => !skill.disableModelInvocation);
   if (visibleSkills.length === 0) {
