@@ -12,7 +12,7 @@ import { buildAgentHookContext, type AgentHarnessHookContext } from "./hook-cont
 
 const log = createSubsystemLogger("agents/harness");
 
-/** Shared type for Agent Harness Prompt Build Result in src/agents/harness. */
+/** Prompt and developer instructions after prompt-build hooks run. */
 export type AgentHarnessPromptBuildResult = {
   prompt: string;
   developerInstructions: string;

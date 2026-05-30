@@ -4,7 +4,7 @@ import { applyAcpRuntimeOverlay, type AgentRuntimeMetadata } from "./acp-runtime
 import { resolveAgentHarnessPolicy } from "./harness/policy.js";
 import { resolveDefaultModelForAgent } from "./model-selection.js";
 
-/** Re-exported API for src/agents, starting with Agent Runtime Metadata. */
+/** Runtime metadata exposed for agent/session displays and ACP overlays. */
 export type { AgentRuntimeMetadata };
 
 /** Resolve baseline runtime metadata when only agent/config context is known. */

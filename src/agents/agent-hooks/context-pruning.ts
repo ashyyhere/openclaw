@@ -7,9 +7,9 @@
 
 export { default } from "./context-pruning/extension.js";
 
-/** Re-exported API for src/agents/agent-hooks, starting with prune Context Messages. */
+/** Context pruner used by hooks and direct harness callers. */
 export { pruneContextMessages } from "./context-pruning/pruner.js";
-/** Re-exported API for src/agents/agent-hooks. */
+/** Context pruning settings helpers shared with config and runtime code. */
 export {
   computeEffectiveSettings,
   DEFAULT_CONTEXT_PRUNING_SETTINGS,

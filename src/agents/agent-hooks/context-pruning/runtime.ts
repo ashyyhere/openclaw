@@ -15,8 +15,8 @@ export type ContextPruningRuntimeValue = {
 // ExtensionContext (ctx.sessionManager) that we used when calling setContextPruningRuntime.
 const registry = createSessionManagerRuntimeRegistry<ContextPruningRuntimeValue>();
 
-/** Reused constant for set Context Pruning Runtime behavior in src/agents/agent-hooks. */
+/** Register context-pruning runtime values for a session manager instance. */
 export const setContextPruningRuntime = registry.set;
 
-/** Reused constant for get Context Pruning Runtime behavior in src/agents/agent-hooks. */
+/** Read context-pruning runtime values for the current session manager. */
 export const getContextPruningRuntime = registry.get;

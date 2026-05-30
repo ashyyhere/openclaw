@@ -10,7 +10,7 @@ import { stripRuntimeContextCustomMessages } from "../internal-runtime-context.j
 import type { AgentMessage } from "../runtime/index.js";
 import type { SessionWriteLockAcquireTimeoutConfig } from "../session-write-lock.js";
 
-/** Shared type for Harness Context Engine in src/agents/harness. */
+/** Context engine contract used by harness lifecycle helpers. */
 export type HarnessContextEngine = ContextEngine;
 
 /**

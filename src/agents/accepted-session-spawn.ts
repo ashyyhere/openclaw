@@ -2,7 +2,7 @@
 import { asOptionalRecord } from "../shared/record-coerce.js";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 
-/** Shared type for Accepted Session Spawn in src/agents. */
+/** Accepted child-session spawn metadata returned by ACP tools. */
 export type AcceptedSessionSpawn = {
   runId: string;
   childSessionKey: string;

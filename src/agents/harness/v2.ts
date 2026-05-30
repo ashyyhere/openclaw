@@ -35,24 +35,24 @@ type AgentHarnessV2RunBase = {
   contextEngineHost?: ContextEngineHostSupport;
 };
 
-/** Shared type for Agent Harness V2 Prepared Run in src/agents/harness. */
+/** Prepared V2 harness run before the external session starts. */
 export type AgentHarnessV2PreparedRun = AgentHarnessV2RunBase & {
   lifecycleState: "prepared";
 };
 
-/** Shared type for Agent Harness V2 Session in src/agents/harness. */
+/** Started V2 harness session ready to stream or execute tool calls. */
 export type AgentHarnessV2Session = AgentHarnessV2RunBase & {
   lifecycleState: "started";
 };
 
-/** Shared type for Agent Harness V2 Tool Call in src/agents/harness. */
+/** Tool call shape exchanged with V2 harness lifecycle hooks. */
 export type AgentHarnessV2ToolCall = {
   id?: string;
   name: string;
   input?: unknown;
 };
 
-/** Shared type for Agent Harness V2 Cleanup Params in src/agents/harness. */
+/** Cleanup context passed after V2 harness prepare/start/run attempts. */
 export type AgentHarnessV2CleanupParams = {
   prepared?: AgentHarnessV2PreparedRun;
   session?: AgentHarnessV2Session;
@@ -60,7 +60,7 @@ export type AgentHarnessV2CleanupParams = {
   error?: unknown;
 };
 
-/** Shared type for Agent Harness V2 in src/agents/harness. */
+/** Lifecycle interface for plugin-backed agent harnesses. */
 export type AgentHarnessV2 = {
   id: string;
   label: string;
