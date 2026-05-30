@@ -1086,7 +1086,7 @@ export async function disposeAllSessionMcpRuntimes(): Promise<void> {
   await getSessionMcpRuntimeManager().disposeAll();
 }
 
-/** Reused constant for testing behavior in src/agents. */
+/** Test hooks for session MCP runtime manager state and idle TTL decisions. */
 export const testing = {
   createSessionMcpRuntimeManager,
   async resetSessionMcpRuntimeManager() {
@@ -1097,5 +1097,5 @@ export const testing = {
   },
   resolveSessionMcpRuntimeIdleTtlMs,
 };
-/** Re-exported API for src/agents, starting with testing. */
+/** Backward-compatible test hook export for underscored internal imports. */
 export { testing as __testing };

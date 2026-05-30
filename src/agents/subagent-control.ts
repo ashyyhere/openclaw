@@ -765,5 +765,5 @@ export const testing = {
       : defaultSubagentControlDeps;
   },
 };
-/** Re-exported API for src/agents, starting with testing. */
+/** Backward-compatible test hook export for subagent control dependency overrides. */
 export { testing as __testing };

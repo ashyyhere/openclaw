@@ -810,5 +810,5 @@ export async function runLiveCacheRegression(): Promise<LiveCacheRegressionResul
   }
   return { regressions, summary, warnings };
 }
-/** Re-exported API for src/agents, starting with testing. */
+/** Backward-compatible test hook export for live cache regression fixtures. */
 export { testing as __testing };
