@@ -25,7 +25,7 @@ import {
   type SubCliDescriptor,
 } from "./subcli-descriptors.js";
 
-/** Re-exported API for src/cli/program, starting with get Sub Cli Commands With Subcommands. */
+/** Re-export sub-CLI help metadata from the core registry. */
 export { getSubCliCommandsWithSubcommands };
 
 type SubCliRegistrar = (
@@ -57,12 +57,12 @@ function resolveSubCliCommandGroups(
   );
 }
 
-/** Reused helper for get Sub Cli Entries behavior in src/cli/program. */
+/** Return all sub-CLI descriptors, including wrapper-only entries such as completion. */
 export function getSubCliEntries(): ReadonlyArray<SubCliDescriptor> {
   return getSubCliEntryDescriptors();
 }
 
-/** Reused helper for register Sub Cli By Name behavior in src/cli/program. */
+/** Register one sub-CLI by trying the core registry before wrapper-only entries. */
 export async function registerSubCliByName(
   program: Command,
   name: string,
@@ -75,7 +75,7 @@ export async function registerSubCliByName(
   return registerCommandGroupByName(program, resolveSubCliCommandGroups(argv, context), name);
 }
 
-/** Reused helper for register Sub Cli Commands behavior in src/cli/program. */
+/** Register core sub-CLIs first, then wrapper-only sub-CLIs such as completion. */
 export function registerSubCliCommands(program: Command, argv: string[] = process.argv) {
   registerSubCliCommandsCore(program, argv);
   const { primary } = resolveCliArgvInvocation(argv);

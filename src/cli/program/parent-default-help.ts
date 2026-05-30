@@ -38,7 +38,7 @@ export function applyParentDefaultHelpAction(parent: Command): void {
   });
 }
 
-/** Reused helper for is Parent Default Help Action behavior in src/cli/program. */
+/** Test whether a parent command uses the explicit default-help action marker. */
 export function isParentDefaultHelpAction(parent: Command): boolean {
   return parentDefaultHelpCommands.has(parent);
 }
