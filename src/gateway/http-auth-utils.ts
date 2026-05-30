@@ -1,4 +1,4 @@
-// gateway http auth utils helpers and runtime behavior.
+// Gateway HTTP authentication, bearer-token, origin, and operator-scope helpers.
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { getRuntimeConfig } from "../config/io.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -16,7 +16,7 @@ import { sendGatewayAuthFailure, sendMissingScopeForbidden } from "./http-common
 import { ADMIN_SCOPE, CLI_DEFAULT_OPERATOR_SCOPES } from "./method-scopes.js";
 import { authorizeOperatorScopesForMethod } from "./method-scopes.js";
 
-/** Reused helper for get Header behavior in src/gateway. */
+/** Reads the first HTTP header value after normalizing the requested header name. */
 export function getHeader(req: IncomingMessage, name: string): string | undefined {
   const raw = req.headers[normalizeLowercaseStringOrEmpty(name)];
   if (typeof raw === "string") {
@@ -28,7 +28,7 @@ export function getHeader(req: IncomingMessage, name: string): string | undefine
   return undefined;
 }
 
-/** Reused helper for get Bearer Token behavior in src/gateway. */
+/** Extracts a trimmed bearer token from an HTTP Authorization header. */
 export function getBearerToken(req: IncomingMessage): string | undefined {
   const raw = normalizeOptionalString(getHeader(req, "authorization")) ?? "";
   if (!normalizeLowercaseStringOrEmpty(raw).startsWith("bearer ")) {
@@ -38,13 +38,13 @@ export function getBearerToken(req: IncomingMessage): string | undefined {
 }
 
 type SharedSecretGatewayAuth = Pick<ResolvedGatewayAuth, "mode">;
-/** Shared type for Authorized Gateway Http Request in src/gateway. */
+/** Auth context attached to an accepted gateway HTTP request. */
 export type AuthorizedGatewayHttpRequest = {
   authMethod?: GatewayAuthResult["method"];
   trustDeclaredOperatorScopes: boolean;
 };
 
-/** Shared type for Gateway Http Request Auth Check Result in src/gateway. */
+/** Result of checking gateway HTTP auth before writing a response. */
 export type GatewayHttpRequestAuthCheckResult =
   | {
       ok: true;
@@ -55,7 +55,7 @@ export type GatewayHttpRequestAuthCheckResult =
       authResult: GatewayAuthResult;
     };
 
-/** Reused helper for resolve Http Browser Origin Policy behavior in src/gateway. */
+/** Builds browser origin policy inputs for HTTP gateway authorization. */
 export function resolveHttpBrowserOriginPolicy(
   req: IncomingMessage,
   cfg = getRuntimeConfig(),
@@ -90,7 +90,7 @@ function shouldTrustDeclaredHttpOperatorScopes(
   return !isGatewayBearerHttpRequest(req, authOrRequest);
 }
 
-/** Reused helper for authorize Gateway Http Request Or Reply behavior in src/gateway. */
+/** Authorizes a gateway HTTP request or writes the auth failure response. */
 export async function authorizeGatewayHttpRequestOrReply(params: {
   req: IncomingMessage;
   res: ServerResponse;
@@ -107,7 +107,7 @@ export async function authorizeGatewayHttpRequestOrReply(params: {
   return result.requestAuth;
 }
 
-/** Reused helper for check Gateway Http Request Auth behavior in src/gateway. */
+/** Checks gateway HTTP auth and returns accepted request auth metadata. */
 export async function checkGatewayHttpRequestAuth(params: {
   req: IncomingMessage;
   auth: ResolvedGatewayAuth;
@@ -146,7 +146,7 @@ export async function checkGatewayHttpRequestAuth(params: {
   };
 }
 
-/** Reused helper for authorize Scoped Gateway Http Request Or Reply behavior in src/gateway. */
+/** Authorizes an HTTP request and verifies operator scopes for a gateway method. */
 export async function authorizeScopedGatewayHttpRequestOrReply(params: {
   req: IncomingMessage;
   res: ServerResponse;
@@ -187,7 +187,7 @@ export async function authorizeScopedGatewayHttpRequestOrReply(params: {
   return { cfg, requestAuth, operatorScopes };
 }
 
-/** Reused helper for is Gateway Bearer Http Request behavior in src/gateway. */
+/** Detects bearer-token HTTP requests for shared-secret gateway auth modes. */
 export function isGatewayBearerHttpRequest(
   req: IncomingMessage,
   auth?: SharedSecretGatewayAuth,
@@ -195,7 +195,7 @@ export function isGatewayBearerHttpRequest(
   return usesSharedSecretHttpAuth(auth) && Boolean(getBearerToken(req));
 }
 
-/** Reused helper for resolve Trusted Http Operator Scopes behavior in src/gateway. */
+/** Resolves declared operator scopes only for request paths trusted to self-assert them. */
 export function resolveTrustedHttpOperatorScopes(
   req: IncomingMessage,
   authOrRequest?:
@@ -224,7 +224,7 @@ export function resolveTrustedHttpOperatorScopes(
     .filter((scope) => scope.length > 0);
 }
 
-/** Reused helper for resolve Open Ai Compatible Http Operator Scopes behavior in src/gateway. */
+/** Resolves operator scopes for OpenAI-compatible HTTP endpoints. */
 export function resolveOpenAiCompatibleHttpOperatorScopes(
   req: IncomingMessage,
   requestAuth: AuthorizedGatewayHttpRequest,
@@ -232,7 +232,7 @@ export function resolveOpenAiCompatibleHttpOperatorScopes(
   return resolveSharedSecretHttpOperatorScopes(req, requestAuth);
 }
 
-/** Reused helper for resolve Shared Secret Http Operator Scopes behavior in src/gateway. */
+/** Resolves operator scopes for direct shared-secret HTTP gateway surfaces. */
 export function resolveSharedSecretHttpOperatorScopes(
   req: IncomingMessage,
   requestAuth: AuthorizedGatewayHttpRequest,
@@ -247,7 +247,7 @@ export function resolveSharedSecretHttpOperatorScopes(
   return resolveTrustedHttpOperatorScopes(req, requestAuth);
 }
 
-/** Reused helper for resolve Http Sender Is Owner behavior in src/gateway. */
+/** Determines owner privileges from trusted HTTP operator scopes. */
 export function resolveHttpSenderIsOwner(
   req: IncomingMessage,
   authOrRequest?:
@@ -257,7 +257,7 @@ export function resolveHttpSenderIsOwner(
   return resolveTrustedHttpOperatorScopes(req, authOrRequest).includes(ADMIN_SCOPE);
 }
 
-/** Reused helper for resolve Open Ai Compatible Http Sender Is Owner behavior in src/gateway. */
+/** Determines owner privileges for OpenAI-compatible HTTP endpoints. */
 export function resolveOpenAiCompatibleHttpSenderIsOwner(
   req: IncomingMessage,
   requestAuth: AuthorizedGatewayHttpRequest,

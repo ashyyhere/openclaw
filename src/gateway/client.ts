@@ -1,4 +1,4 @@
-// gateway client helpers and runtime behavior.
+// OpenClaw gateway client wrapper around the shared protocol client package.
 import {
   GatewayClient as BaseGatewayClient,
   GATEWAY_CLOSE_CODE_HINTS as BASE_GATEWAY_CLOSE_CODE_HINTS,
@@ -32,13 +32,13 @@ import { logDebug, logError } from "../logger.js";
 import { redactToolPayloadText } from "../logging/redact.js";
 import { VERSION } from "../version.js";
 
-/** Shared type for Device Auth Token Record in src/gateway. */
+/** Persisted device auth token plus granted scopes for gateway reconnects. */
 export type DeviceAuthTokenRecord = {
   token?: string;
   scopes?: string[];
 };
 
-/** Shared type for Gateway Client Host Deps in src/gateway. */
+/** OpenClaw host hooks injected into the package-level gateway client. */
 export type GatewayClientHostDeps = {
   loadOrCreateDeviceIdentity?: () => DeviceIdentity | undefined;
   signDevicePayload?: (privateKeyPem: string, payload: string) => string;
@@ -68,7 +68,7 @@ export type GatewayClientHostDeps = {
   normalizeTlsFingerprint?: (fingerprint: string | undefined) => string;
 };
 
-/** Shared type for Gateway Client Request Options in src/gateway. */
+/** Options for a single gateway RPC request. */
 export type GatewayClientRequestOptions = {
   expectFinal?: boolean;
   timeoutMs?: number | null;
@@ -76,7 +76,7 @@ export type GatewayClientRequestOptions = {
   onAccepted?: (payload: unknown) => void;
 };
 
-/** Shared type for Gateway Reconnect Paused Info in src/gateway. */
+/** Close-code detail reported when automatic gateway reconnect pauses. */
 export type GatewayReconnectPausedInfo = {
   code: number;
   reason: string;
@@ -91,11 +91,11 @@ type GatewayClientErrorShape = {
   retryAfterMs?: number;
 };
 
-/** Reused constant for GATEWAY CLOSE CODE HINTS behavior in src/gateway. */
+/** Human-readable hints for known gateway WebSocket close codes. */
 export const GATEWAY_CLOSE_CODE_HINTS: Readonly<Record<number, string>> =
   BASE_GATEWAY_CLOSE_CODE_HINTS;
 
-/** Reused constant for Gateway Client Request Error behavior in src/gateway. */
+/** Request error constructor exposed from the shared gateway client package. */
 export const GatewayClientRequestError = BaseGatewayClientRequestError as unknown as {
   new (error: GatewayClientErrorShape): Error & {
     readonly gatewayCode: string;
@@ -105,20 +105,20 @@ export const GatewayClientRequestError = BaseGatewayClientRequestError as unknow
   };
 };
 
-/** Shared type for Gateway Client Request Error in src/gateway. */
+/** Instance type for gateway RPC request failures. */
 export type GatewayClientRequestError = InstanceType<typeof GatewayClientRequestError>;
 
-/** Reused helper for describe Gateway Close Code behavior in src/gateway. */
+/** Describes a gateway WebSocket close code when the package has a known hint. */
 export function describeGatewayCloseCode(code: number): string | undefined {
   return baseDescribeGatewayCloseCode(code);
 }
 
-/** Reused helper for is Gateway Connect Assembly Error behavior in src/gateway. */
+/** Detects connection assembly errors raised before the gateway socket opens. */
 export function isGatewayConnectAssemblyError(value: unknown): value is Error {
   return baseIsGatewayConnectAssemblyError(value);
 }
 
-/** Shared type for Gateway Client Options in src/gateway. */
+/** Options used to configure the OpenClaw gateway client wrapper. */
 export type GatewayClientOptions = {
   url?: string;
   connectChallengeTimeoutMs?: number;
@@ -160,7 +160,7 @@ export type GatewayClientOptions = {
   onGap?: (info: { expected: number; received: number }) => void;
 };
 
-/** Shared type for Gateway Client Connection Metadata in src/gateway. */
+/** Public connection metadata exposed for diagnostics. */
 export type GatewayClientConnectionMetadata = {
   clientName?: GatewayClientName;
   hasDeviceIdentity: boolean;
@@ -190,7 +190,7 @@ function createOpenClawGatewayClientHostDeps(
   };
 }
 
-/** Reused helper for resolve Gateway Client Connect Challenge Timeout Ms behavior in src/gateway. */
+/** Resolves the effective connect-challenge timeout from current and legacy options. */
 export function resolveGatewayClientConnectChallengeTimeoutMs(
   opts: Pick<
     GatewayClientOptions,
@@ -200,7 +200,7 @@ export function resolveGatewayClientConnectChallengeTimeoutMs(
   return baseResolveGatewayClientConnectChallengeTimeoutMs(opts);
 }
 
-/** Reused class for Gateway Client behavior in src/gateway. */
+/** OpenClaw gateway client facade with host deps wired to local runtime services. */
 export class GatewayClient {
   #client: BaseGatewayClient;
 
@@ -243,5 +243,5 @@ export class GatewayClient {
   }
 }
 
-/** Re-exported API for src/gateway, starting with Device Identity. */
+/** Device identity contract used by gateway authentication. */
 export type { DeviceIdentity };

@@ -1,4 +1,4 @@
-// gateway plugin node capability helpers and runtime behavior.
+// Gateway helpers for scoped plugin node capability URLs and tokens.
 import { randomBytes } from "node:crypto";
 import { safeEqualSecret } from "../security/secret-equal.js";
 import {
@@ -8,27 +8,27 @@ import {
   resolveExpiresAtMsFromDurationMs,
 } from "../shared/number-coercion.js";
 
-/** Reused constant for PLUGIN NODE CAPABILITY PATH PREFIX behavior in src/gateway. */
+/** URL path marker used to carry plugin node capability tokens. */
 export const PLUGIN_NODE_CAPABILITY_PATH_PREFIX = "/__openclaw__/cap";
 const PLUGIN_NODE_CAPABILITY_QUERY_PARAM = "oc_cap";
-/** Reused constant for DEFAULT PLUGIN NODE CAPABILITY TTL MS behavior in src/gateway. */
+/** Default lifetime for a minted plugin node capability token. */
 export const DEFAULT_PLUGIN_NODE_CAPABILITY_TTL_MS = 10 * 60_000;
 
-/** Shared type for Plugin Node Capability Surface in src/gateway. */
+/** Plugin surface that requires gateway-scoped node capability authorization. */
 export type PluginNodeCapabilitySurface = {
   surface: string;
   ttlMs?: number;
   scopeKey?: string;
 };
 
-/** Shared type for Plugin Node Capability Client in src/gateway. */
+/** Gateway client state that tracks plugin surface URLs and active capabilities. */
 export type PluginNodeCapabilityClient = {
   pluginSurfaceUrls?: Record<string, string>;
   pluginNodeCapabilitySurfaces?: Record<string, PluginNodeCapabilitySurface>;
   pluginNodeCapabilities?: Record<string, { capability: string; expiresAtMs: number }>;
 };
 
-/** Reused helper for index Plugin Node Capability Surfaces behavior in src/gateway. */
+/** Indexes capability surfaces by normalized surface, keeping the shortest TTL. */
 export function indexPluginNodeCapabilitySurfaces(
   surfaces: readonly PluginNodeCapabilitySurface[],
 ): Record<string, PluginNodeCapabilitySurface> {
@@ -50,7 +50,7 @@ export function indexPluginNodeCapabilitySurfaces(
   return indexed;
 }
 
-/** Shared type for Normalized Plugin Node Capability Url in src/gateway. */
+/** Parsed plugin node capability URL with extracted and rewritten path details. */
 export type NormalizedPluginNodeCapabilityUrl = {
   pathname: string;
   capability?: string;
@@ -78,7 +78,7 @@ function resolvePluginNodeCapabilityStorageKey(surface: PluginNodeCapabilitySurf
   return scopeKey ? `${normalizedSurface}\0${scopeKey}` : normalizedSurface;
 }
 
-/** Reused helper for resolve Plugin Node Capability Ttl Ms behavior in src/gateway. */
+/** Resolves a positive surface TTL or falls back to the default capability lifetime. */
 export function resolvePluginNodeCapabilityTtlMs(surface: PluginNodeCapabilitySurface) {
   return asPositiveSafeInteger(surface.ttlMs) ?? DEFAULT_PLUGIN_NODE_CAPABILITY_TTL_MS;
 }
@@ -90,12 +90,12 @@ export function resolvePluginNodeCapabilityExpiresAtMs(
   return resolveExpiresAtMsFromDurationMs(resolvePluginNodeCapabilityTtlMs(surface), { nowMs });
 }
 
-/** Reused helper for mint Plugin Node Capability Token behavior in src/gateway. */
+/** Mints a URL-safe random token for plugin node capability checks. */
 export function mintPluginNodeCapabilityToken(): string {
   return randomBytes(18).toString("base64url");
 }
 
-/** Reused helper for build Plugin Node Capability Scoped Host Url behavior in src/gateway. */
+/** Adds a capability path segment to a plugin host URL and strips query/hash data. */
 export function buildPluginNodeCapabilityScopedHostUrl(
   baseUrl: string,
   capability: string,
@@ -117,7 +117,7 @@ export function buildPluginNodeCapabilityScopedHostUrl(
   }
 }
 
-/** Reused helper for replace Plugin Node Capability In Scoped Host Url behavior in src/gateway. */
+/** Replaces an existing scoped capability token or adds one to an unscoped URL. */
 export function replacePluginNodeCapabilityInScopedHostUrl(
   scopedUrl: string,
   capability: string,
@@ -151,7 +151,7 @@ export function replacePluginNodeCapabilityInScopedHostUrl(
   }
 }
 
-/** Reused helper for normalize Plugin Node Capability Scoped Url behavior in src/gateway. */
+/** Extracts capability data from scoped paths or legacy query parameters. */
 export function normalizePluginNodeCapabilityScopedUrl(
   rawUrl: string,
 ): NormalizedPluginNodeCapabilityUrl {
@@ -211,7 +211,7 @@ export function normalizePluginNodeCapabilityScopedUrl(
   };
 }
 
-/** Reused helper for set Client Plugin Node Capability behavior in src/gateway. */
+/** Stores an active plugin node capability on a gateway client. */
 export function setClientPluginNodeCapability(params: {
   client: PluginNodeCapabilityClient;
   surface: PluginNodeCapabilitySurface;
@@ -231,7 +231,7 @@ export function setClientPluginNodeCapability(params: {
   };
 }
 
-/** Reused helper for refresh Client Plugin Node Capability behavior in src/gateway. */
+/** Refreshes a client's plugin surface URL with a newly minted capability token. */
 export function refreshClientPluginNodeCapability(params: {
   client: PluginNodeCapabilityClient;
   surface: PluginNodeCapabilitySurface;
@@ -279,7 +279,7 @@ export function refreshClientPluginNodeCapability(params: {
   };
 }
 
-/** Reused helper for has Authorized Plugin Node Capability behavior in src/gateway. */
+/** Checks a presented capability token against connected clients and extends its TTL. */
 export function hasAuthorizedPluginNodeCapability(params: {
   clients: Iterable<PluginNodeCapabilityClient>;
   surface: PluginNodeCapabilitySurface;
