@@ -1,4 +1,4 @@
-// llm/providers transform messages helpers and runtime behavior.
+// Provider message normalization for replay, tool-call ids, thinking blocks, and images.
 import type {
   Api,
   AssistantMessage,
