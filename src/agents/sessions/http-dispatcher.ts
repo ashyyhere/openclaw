@@ -2,10 +2,10 @@
 import * as undici from "undici";
 import { parseStrictNonNegativeInteger } from "../../infra/parse-finite-number.js";
 
-/** Reused constant for DEFAULT HTTP IDLE TIMEOUT MS behavior in src/agents/sessions. */
+/** Default idle timeout for session HTTP requests through Undici. */
 export const DEFAULT_HTTP_IDLE_TIMEOUT_MS = 300_000;
 
-/** Reused constant for HTTP IDLE TIMEOUT CHOICES behavior in src/agents/sessions. */
+/** User-facing idle timeout choices for session HTTP configuration. */
 export const HTTP_IDLE_TIMEOUT_CHOICES = [
   { label: "30 sec", timeoutMs: 30_000 },
   { label: "1 min", timeoutMs: 60_000 },

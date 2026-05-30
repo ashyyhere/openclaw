@@ -2,10 +2,10 @@
 import { APP_NAME } from "../config.js";
 import type { SourceInfo } from "./source-info.js";
 
-/** Shared type for Slash Command Source in src/agents/sessions. */
+/** Source category for slash commands loaded into a session. */
 export type SlashCommandSource = "extension" | "prompt" | "skill";
 
-/** Shared type for Slash Command Info in src/agents/sessions. */
+/** Slash command metadata plus provenance for display and execution. */
 export interface SlashCommandInfo {
   name: string;
   description?: string;
@@ -13,13 +13,13 @@ export interface SlashCommandInfo {
   sourceInfo: SourceInfo;
 }
 
-/** Shared type for Builtin Slash Command in src/agents/sessions. */
+/** Built-in command entry shown by session help and command pickers. */
 export interface BuiltinSlashCommand {
   name: string;
   description: string;
 }
 
-/** Reused constant for BUILTIN SLASH COMMANDS behavior in src/agents/sessions. */
+/** Built-in slash command catalog available before extension commands load. */
 export const BUILTIN_SLASH_COMMANDS: ReadonlyArray<BuiltinSlashCommand> = [
   { name: "settings", description: "Open settings menu" },
   { name: "model", description: "Select model (opens selector UI)" },

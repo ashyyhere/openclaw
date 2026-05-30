@@ -11,7 +11,7 @@ import {
 } from "@earendil-works/pi-tui";
 import { getAgentDir } from "../config.js";
 
-/** Shared type for App Keybindings in src/agents/sessions. */
+/** App-specific keybinding ids layered on top of pi-tui keybindings. */
 export interface AppKeybindings {
   "app.interrupt": true;
   "app.clear": true;
@@ -56,14 +56,14 @@ export interface AppKeybindings {
   "app.tree.filter.cycleBackward": true;
 }
 
-/** Shared type for App Keybinding in src/agents/sessions. */
+/** App keybinding id union for session UI actions. */
 export type AppKeybinding = keyof AppKeybindings;
 
 declare module "@earendil-works/pi-tui" {
   interface Keybindings extends AppKeybindings {}
 }
 
-/** Reused constant for KEYBINDINGS behavior in src/agents/sessions. */
+/** Default keybinding definitions for the interactive session UI. */
 export const KEYBINDINGS = {
   ...TUI_KEYBINDINGS,
   "app.interrupt": { defaultKeys: "escape", description: "Cancel or abort" },
@@ -346,7 +346,7 @@ function loadRawConfig(path: string): Record<string, unknown> | undefined {
   }
 }
 
-/** Reused class for Keybindings Manager behavior in src/agents/sessions. */
+/** Keybinding manager that loads, migrates, and reloads user config. */
 export class KeybindingsManager extends TuiKeybindingsManager {
   private configPath: string | undefined;
 
@@ -381,5 +381,5 @@ export class KeybindingsManager extends TuiKeybindingsManager {
   }
 }
 
-/** Re-exported API for src/agents/sessions, starting with Keybinding. */
+/** Re-export pi-tui keybinding types used by session callers. */
 export type { Keybinding, KeyId, KeybindingsConfig };

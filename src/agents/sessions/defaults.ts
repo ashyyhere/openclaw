@@ -1,5 +1,5 @@
 /** Defaults shared by OpenClaw-owned session runtime. */
 import type { ThinkingLevel } from "../runtime/index.js";
 
-/** Reused constant for DEFAULT THINKING LEVEL behavior in src/agents/sessions. */
+/** Default thinking level for OpenClaw-owned session model selection. */
 export const DEFAULT_THINKING_LEVEL: ThinkingLevel = "medium";

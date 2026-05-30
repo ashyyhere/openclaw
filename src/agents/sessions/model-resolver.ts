@@ -17,7 +17,7 @@ function isValidThinkingLevel(level: string): level is ThinkingLevel {
   return VALID_THINKING_LEVELS.includes(level as ThinkingLevel);
 }
 
-/** Shared type for Scoped Model in src/agents/sessions. */
+/** Model entry available for Ctrl+P cycling, with optional thinking override. */
 export interface ScopedModel {
   model: Model;
   /** Thinking level if explicitly specified in pattern (e.g., "model:high"), undefined otherwise */
@@ -125,7 +125,7 @@ function tryMatchModel(modelPattern: string, availableModels: Model[]): Model | 
   return datedVersions[0];
 }
 
-/** Shared type for Parsed Model Result in src/agents/sessions. */
+/** Parsed model pattern result plus any non-fatal warning. */
 export interface ParsedModelResult {
   model: Model | undefined;
   /** Thinking level if explicitly specified in pattern, undefined otherwise */
@@ -304,7 +304,7 @@ export async function resolveModelScope(
   return scopedModels;
 }
 
-/** Shared type for Resolve Cli Model Result in src/agents/sessions. */
+/** CLI model resolution result, including warning and hard error text. */
 export interface ResolveCliModelResult {
   model: Model | undefined;
   thinkingLevel?: ThinkingLevel;
@@ -466,7 +466,7 @@ export function resolveCliModel(options: {
   };
 }
 
-/** Shared type for Initial Model Result in src/agents/sessions. */
+/** Initial model choice and fallback message used when a session starts. */
 export interface InitialModelResult {
   model: Model | undefined;
   thinkingLevel: ThinkingLevel;

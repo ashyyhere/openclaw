@@ -1,12 +1,12 @@
 /** Source metadata attached to loaded session resources. */
 import type { PathMetadata } from "./package-manager.js";
 
-/** Shared type for Source Scope in src/agents/sessions. */
+/** Scope that contributed a loaded session resource. */
 export type SourceScope = "user" | "project" | "temporary";
-/** Shared type for Source Origin in src/agents/sessions. */
+/** Whether a resource came from a package or a top-level configured path. */
 export type SourceOrigin = "package" | "top-level";
 
-/** Shared type for Source Info in src/agents/sessions. */
+/** Provenance attached to loaded extensions, prompts, skills, and themes. */
 export interface SourceInfo {
   path: string;
   source: string;
