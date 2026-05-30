@@ -1,8 +1,8 @@
-// ui/src/ui/controllers workboard helpers and runtime behavior.
+// Workboard UI controller state, DTO normalization, and card actions.
 import type { GatewayBrowserClient } from "../gateway.ts";
 import type { GatewaySessionRow } from "../types.ts";
 
-/** Reused constant for WORKBOARD STATUSES behavior in ui/src/ui/controllers. */
+/** Ordered columns shown by the Workboard UI. */
 export const WORKBOARD_STATUSES = [
   "triage",
   "backlog",
@@ -15,13 +15,13 @@ export const WORKBOARD_STATUSES = [
   "done",
 ] as const;
 
-/** Reused constant for WORKBOARD PRIORITIES behavior in ui/src/ui/controllers. */
+/** Priority values accepted by Workboard cards. */
 export const WORKBOARD_PRIORITIES = ["low", "normal", "high", "urgent"] as const;
-/** Reused constant for WORKBOARD EXECUTION ENGINES behavior in ui/src/ui/controllers. */
+/** Agent engines that can be started from a Workboard card. */
 export const WORKBOARD_EXECUTION_ENGINES = ["codex", "claude"] as const;
-/** Reused constant for WORKBOARD EXECUTION MODES behavior in ui/src/ui/controllers. */
+/** Start modes for card-linked agent sessions. */
 export const WORKBOARD_EXECUTION_MODES = ["autonomous", "manual"] as const;
-/** Reused constant for WORKBOARD EXECUTION STATUSES behavior in ui/src/ui/controllers. */
+/** Execution states mirrored from linked agent sessions. */
 export const WORKBOARD_EXECUTION_STATUSES = [
   "idle",
   "running",
@@ -29,7 +29,7 @@ export const WORKBOARD_EXECUTION_STATUSES = [
   "blocked",
   "done",
 ] as const;
-/** Reused constant for WORKBOARD EVENT KINDS behavior in ui/src/ui/controllers. */
+/** Event kinds persisted in a card timeline. */
 export const WORKBOARD_EVENT_KINDS = [
   "created",
   "edited",
@@ -56,7 +56,7 @@ export const WORKBOARD_EVENT_KINDS = [
   "unarchived",
   "stale",
 ] as const;
-/** Reused constant for WORKBOARD ATTEMPT STATUSES behavior in ui/src/ui/controllers. */
+/** Per-attempt states tracked in Workboard metadata. */
 export const WORKBOARD_ATTEMPT_STATUSES = [
   "running",
   "succeeded",
@@ -72,41 +72,41 @@ export const WORKBOARD_LINK_TYPES = [
   "relates_to",
 ] as const;
 export const WORKBOARD_PROOF_STATUSES = ["passed", "failed", "skipped", "unknown"] as const;
-/** Reused constant for WORKBOARD TEMPLATE IDS behavior in ui/src/ui/controllers. */
+/** Built-in card templates selectable from the Workboard draft. */
 export const WORKBOARD_TEMPLATE_IDS = ["bugfix", "docs", "release", "pr_review", "plugin"] as const;
-/** Reused constant for WORKBOARD DIAGNOSTIC SEVERITIES behavior in ui/src/ui/controllers. */
+/** Diagnostic severities surfaced in Workboard card metadata. */
 export const WORKBOARD_DIAGNOSTIC_SEVERITIES = ["warning", "error", "critical"] as const;
 
-/** Reused constant for WORKBOARD ENGINE MODELS behavior in ui/src/ui/controllers. */
+/** Default model ref used when launching a card with each engine. */
 export const WORKBOARD_ENGINE_MODELS = {
   codex: "openai/gpt-5.5",
   claude: "anthropic/claude-sonnet-4-6",
 } as const;
 
-/** Shared type for Workboard Status in ui/src/ui/controllers. */
+/** Column/status value assigned to a Workboard card. */
 export type WorkboardStatus = (typeof WORKBOARD_STATUSES)[number];
-/** Shared type for Workboard Priority in ui/src/ui/controllers. */
+/** Priority value assigned to a Workboard card. */
 export type WorkboardPriority = (typeof WORKBOARD_PRIORITIES)[number];
-/** Shared type for Workboard Execution Engine in ui/src/ui/controllers. */
+/** Agent engine selected for a card execution. */
 export type WorkboardExecutionEngine = (typeof WORKBOARD_EXECUTION_ENGINES)[number];
-/** Shared type for Workboard Execution Mode in ui/src/ui/controllers. */
+/** Manual/autonomous mode selected for a card execution. */
 export type WorkboardExecutionMode = (typeof WORKBOARD_EXECUTION_MODES)[number];
-/** Shared type for Workboard Execution Status in ui/src/ui/controllers. */
+/** Current status of the card-linked execution. */
 export type WorkboardExecutionStatus = (typeof WORKBOARD_EXECUTION_STATUSES)[number];
-/** Shared type for Workboard Event Kind in ui/src/ui/controllers. */
+/** Timeline event kind stored with a card. */
 export type WorkboardEventKind = (typeof WORKBOARD_EVENT_KINDS)[number];
-/** Shared type for Workboard Attempt Status in ui/src/ui/controllers. */
+/** Status of one card-linked run attempt. */
 export type WorkboardAttemptStatus = (typeof WORKBOARD_ATTEMPT_STATUSES)[number];
-/** Shared type for Workboard Link Type in ui/src/ui/controllers. */
+/** Relationship type for a link attached to a card. */
 export type WorkboardLinkType = (typeof WORKBOARD_LINK_TYPES)[number];
-/** Shared type for Workboard Proof Status in ui/src/ui/controllers. */
+/** Result status for a proof attached to a card. */
 export type WorkboardProofStatus = (typeof WORKBOARD_PROOF_STATUSES)[number];
-/** Shared type for Workboard Template Id in ui/src/ui/controllers. */
+/** Built-in template id used to seed card drafts. */
 export type WorkboardTemplateId = (typeof WORKBOARD_TEMPLATE_IDS)[number];
-/** Shared type for Workboard Diagnostic Severity in ui/src/ui/controllers. */
+/** Severity for diagnostics attached to a card. */
 export type WorkboardDiagnosticSeverity = (typeof WORKBOARD_DIAGNOSTIC_SEVERITIES)[number];
 
-/** Shared type for Workboard Execution in ui/src/ui/controllers. */
+/** Execution metadata linking a card to an agent session/run. */
 export type WorkboardExecution = {
   id: string;
   kind: "agent-session";
@@ -120,7 +120,7 @@ export type WorkboardExecution = {
   updatedAt: number;
 };
 
-/** Shared type for Workboard Event in ui/src/ui/controllers. */
+/** Timeline event stored on a Workboard card. */
 export type WorkboardEvent = {
   id: string;
   kind: WorkboardEventKind;
@@ -131,7 +131,7 @@ export type WorkboardEvent = {
   runId?: string;
 };
 
-/** Shared type for Workboard Run Attempt in ui/src/ui/controllers. */
+/** One recorded agent run attempt for a Workboard card. */
 export type WorkboardRunAttempt = {
   id: string;
   status: WorkboardAttemptStatus;
@@ -145,7 +145,7 @@ export type WorkboardRunAttempt = {
   error?: string;
 };
 
-/** Shared type for Workboard Comment in ui/src/ui/controllers. */
+/** User-entered comment attached to a card. */
 export type WorkboardComment = {
   id: string;
   body: string;
@@ -153,7 +153,7 @@ export type WorkboardComment = {
   updatedAt?: number;
 };
 
-/** Shared type for Workboard Link in ui/src/ui/controllers. */
+/** External URL or card-to-card relationship attached to a card. */
 export type WorkboardLink = {
   id: string;
   type: WorkboardLinkType;
@@ -163,7 +163,7 @@ export type WorkboardLink = {
   url?: string;
 };
 
-/** Shared type for Workboard Proof in ui/src/ui/controllers. */
+/** Verification proof attached to a card. */
 export type WorkboardProof = {
   id: string;
   status: WorkboardProofStatus;
@@ -174,14 +174,14 @@ export type WorkboardProof = {
   note?: string;
 };
 
-/** Shared type for Workboard Stale State in ui/src/ui/controllers. */
+/** Staleness marker derived from a linked session. */
 export type WorkboardStaleState = {
   detectedAt: number;
   lastSessionUpdatedAt?: number;
   reason: string;
 };
 
-/** Shared type for Workboard Claim in ui/src/ui/controllers. */
+/** Temporary ownership claim for a card. */
 export type WorkboardClaim = {
   ownerId: string;
   token?: string;
@@ -190,7 +190,7 @@ export type WorkboardClaim = {
   expiresAt?: number;
 };
 
-/** Shared type for Workboard Artifact in ui/src/ui/controllers. */
+/** Artifact link or local path attached to a card. */
 export type WorkboardArtifact = {
   id: string;
   createdAt: number;
@@ -228,7 +228,7 @@ export type WorkboardWorkerProtocol = {
   detail?: string;
 };
 
-/** Diagnostic rollup attached to a workboard card. */
+/** Deduplicated diagnostic attached to a card. */
 export type WorkboardDiagnostic = {
   kind: string;
   severity: WorkboardDiagnosticSeverity;
@@ -239,7 +239,7 @@ export type WorkboardDiagnostic = {
   count: number;
 };
 
-/** Shared type for Workboard Notification in ui/src/ui/controllers. */
+/** Notification generated for a Workboard card or run. */
 export type WorkboardNotification = {
   id: string;
   kind: string;
@@ -290,7 +290,7 @@ export type WorkboardMetadata = {
   failureCount?: number;
 };
 
-/** Shared type for Workboard Card in ui/src/ui/controllers. */
+/** Normalized card record rendered by the Workboard UI. */
 export type WorkboardCard = {
   id: string;
   title: string;
@@ -313,7 +313,7 @@ export type WorkboardCard = {
   metadata?: WorkboardMetadata;
 };
 
-/** Shared type for Workboard Lifecycle State in ui/src/ui/controllers. */
+/** Derived lifecycle state for a card's linked session. */
 export type WorkboardLifecycleState =
   | "unlinked"
   | "missing"
@@ -323,14 +323,14 @@ export type WorkboardLifecycleState =
   | "succeeded"
   | "failed";
 
-/** Shared type for Workboard Lifecycle in ui/src/ui/controllers. */
+/** Linked session plus target status derived for Workboard sync. */
 export type WorkboardLifecycle = {
   session: GatewaySessionRow | null;
   state: WorkboardLifecycleState;
   targetStatus?: WorkboardStatus;
 };
 
-/** Shared type for Workboard Ui State in ui/src/ui/controllers. */
+/** Per-host mutable UI state for the Workboard controller. */
 export type WorkboardUiState = {
   loading: boolean;
   loaded: boolean;
@@ -404,7 +404,7 @@ function createDefaultState(): WorkboardUiState {
   };
 }
 
-/** Reused helper for get Workboard State behavior in ui/src/ui/controllers. */
+/** Return or initialize the Workboard UI state for a host object. */
 export function getWorkboardState(host: WorkboardHost): WorkboardUiState {
   let state = workboardStates.get(host);
   if (!state) {
@@ -909,7 +909,7 @@ function normalizeCardPayload(payload: unknown): WorkboardCard {
   return card;
 }
 
-/** Reused helper for load Workboard behavior in ui/src/ui/controllers. */
+/** Load cards once per host/client and normalize the list response into UI state. */
 export async function loadWorkboard(params: {
   host: WorkboardHost;
   client: GatewayBrowserClient | null;
@@ -1050,7 +1050,7 @@ function workboardCardRunId(card: WorkboardCard): string | undefined {
   return card.runId ?? card.execution?.runId;
 }
 
-/** Reused helper for get Workboard Lifecycle behavior in ui/src/ui/controllers. */
+/** Derive linked-session lifecycle and target status for a card. */
 export function getWorkboardLifecycle(
   card: WorkboardCard,
   sessions: readonly GatewaySessionRow[],
@@ -1261,7 +1261,7 @@ function buildSessionCaptureNotes(params: {
   return lines.join("\n");
 }
 
-/** Reused helper for capture Session To Workboard behavior in ui/src/ui/controllers. */
+/** Create or restore a Workboard card from an existing chat session. */
 export async function captureSessionToWorkboard(params: {
   host: WorkboardHost;
   client: GatewayBrowserClient | null;
@@ -1335,7 +1335,7 @@ export async function captureSessionToWorkboard(params: {
   }
 }
 
-/** Reused helper for sync Workboard Lifecycle behavior in ui/src/ui/controllers. */
+/** Patch card status/execution/stale metadata from current session lifecycle. */
 export async function syncWorkboardLifecycle(params: {
   host: WorkboardHost;
   client: GatewayBrowserClient | null;
@@ -1408,7 +1408,7 @@ export async function syncWorkboardLifecycle(params: {
   }
 }
 
-/** Reused helper for create Workboard Card behavior in ui/src/ui/controllers. */
+/** Create a Workboard card from the current draft state. */
 export async function createWorkboardCard(params: {
   host: WorkboardHost;
   client: GatewayBrowserClient | null;
@@ -1433,7 +1433,7 @@ export async function createWorkboardCard(params: {
   }
 }
 
-/** Reused helper for save Workboard Card Draft behavior in ui/src/ui/controllers. */
+/** Save the current draft by creating or updating a card. */
 export async function saveWorkboardCardDraft(params: {
   host: WorkboardHost;
   client: GatewayBrowserClient | null;
@@ -1465,7 +1465,7 @@ export async function saveWorkboardCardDraft(params: {
   }
 }
 
-/** Reused helper for move Workboard Card behavior in ui/src/ui/controllers. */
+/** Move a card to a status/position and update local order. */
 export async function moveWorkboardCard(params: {
   host: WorkboardHost;
   client: GatewayBrowserClient | null;
@@ -1497,7 +1497,7 @@ export async function moveWorkboardCard(params: {
   }
 }
 
-/** Reused helper for delete Workboard Card behavior in ui/src/ui/controllers. */
+/** Delete a card and remove it from local state. */
 export async function deleteWorkboardCard(params: {
   host: WorkboardHost;
   client: GatewayBrowserClient | null;
@@ -1522,7 +1522,7 @@ export async function deleteWorkboardCard(params: {
   }
 }
 
-/** Reused helper for archive Workboard Card behavior in ui/src/ui/controllers. */
+/** Archive a card and replace local state with the server response. */
 export async function archiveWorkboardCard(params: {
   host: WorkboardHost;
   client: GatewayBrowserClient | null;
@@ -1818,7 +1818,7 @@ export async function startWorkboardCard(params: {
   }
 }
 
-/** Reused helper for stop Workboard Card behavior in ui/src/ui/controllers. */
+/** Abort a card-linked run/session and mark the card blocked on success. */
 export async function stopWorkboardCard(params: {
   host: WorkboardHost;
   client: GatewayBrowserClient | null;
@@ -1866,7 +1866,7 @@ export async function stopWorkboardCard(params: {
   }
 }
 
-/** Reused helper for find Workboard Session behavior in ui/src/ui/controllers. */
+/** Find the Gateway session linked to a Workboard card. */
 export function findWorkboardSession(
   card: WorkboardCard,
   sessions: readonly GatewaySessionRow[],
