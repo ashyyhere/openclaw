@@ -1,4 +1,4 @@
-// terminal prompt select styled params helpers and runtime behavior.
+// Applies OpenClaw styling to Clack select prompt parameter objects.
 import { stylePromptHint, stylePromptMessage } from "./prompt-style.js";
 
 type SelectParamsLike = {
@@ -16,7 +16,7 @@ const defaultStylers: PromptSelectStylers = {
   hint: stylePromptHint,
 };
 
-/** Reused helper for style Select Params behavior in src/terminal. */
+/** Return select prompt params with styled message and option hints. */
 export function styleSelectParams<TParams extends SelectParamsLike>(
   params: TParams,
   stylers: PromptSelectStylers = defaultStylers,

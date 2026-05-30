@@ -11,12 +11,12 @@ const graphemeSegmenter =
     ? new Intl.Segmenter(undefined, { granularity: "grapheme" })
     : null;
 
-/** Reused helper for strip Ansi behavior in src/terminal. */
+/** Remove CSI and OSC escape sequences from terminal text. */
 export function stripAnsi(input: string): string {
   return input.replace(ANSI_OSC_REGEX, "").replace(ANSI_CSI_REGEX, "");
 }
 
-/** Reused helper for split Graphemes behavior in src/terminal. */
+/** Split text into grapheme clusters with a safe fallback for older runtimes. */
 export function splitGraphemes(input: string): string[] {
   if (!input) {
     return [];
@@ -114,7 +114,7 @@ function graphemeWidth(grapheme: string): number {
   return sawPrintable ? 1 : 0;
 }
 
-/** Reused helper for visible Width behavior in src/terminal. */
+/** Measure displayed terminal width after stripping ANSI escapes. */
 export function visibleWidth(input: string): number {
   return splitGraphemes(stripAnsi(input)).reduce(
     (sum, grapheme) => sum + graphemeWidth(grapheme),

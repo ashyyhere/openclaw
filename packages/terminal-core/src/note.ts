@@ -1,4 +1,4 @@
-// terminal note helpers and runtime behavior.
+// Wrapped Clack note output with suppression and copy-safe line wrapping.
 import { AsyncLocalStorage } from "node:async_hooks";
 import { note as clackNote } from "@clack/prompts";
 import { visibleWidth } from "./ansi.js";
@@ -166,7 +166,7 @@ function coerceNoteMessage(message: unknown): string {
   return "";
 }
 
-/** Reused helper for wrap Note Message behavior in src/terminal. */
+/** Wrap arbitrary note content to terminal width while preserving copy-sensitive tokens. */
 export function wrapNoteMessage(
   message: unknown,
   options: { maxWidth?: number; columns?: number } = {},
@@ -180,7 +180,7 @@ export function wrapNoteMessage(
     .join("\n");
 }
 
-/** Reused helper for resolve Note Columns behavior in src/terminal. */
+/** Return a sane minimum terminal width for note rendering. */
 export function resolveNoteColumns(columns: number | undefined): number {
   if (!Number.isFinite(columns) || !columns || columns < MIN_NOTE_COLUMNS) {
     return MIN_NOTE_COLUMNS;
@@ -201,7 +201,7 @@ function createNoteOutput(columns: number): NodeJS.WriteStream {
   return output;
 }
 
-/** Reused helper for note behavior in src/terminal. */
+/** Render a wrapped Clack note unless notes are suppressed for this async scope. */
 export function note(message: unknown, title?: string) {
   if (
     suppressNotesStorage.getStore() === true ||
@@ -216,7 +216,7 @@ export function note(message: unknown, title?: string) {
   });
 }
 
-/** Reused helper for with Suppressed Notes behavior in src/terminal. */
+/** Run a callback with terminal notes suppressed for the current async context. */
 export function withSuppressedNotes<T>(callback: () => T): T {
   return suppressNotesStorage.run(true, callback);
 }

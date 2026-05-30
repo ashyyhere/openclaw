@@ -1,4 +1,4 @@
-// media-understanding attachments select helpers and runtime behavior.
+// Media attachment selection policy for image, audio, and video understanding.
 import type { MediaUnderstandingAttachmentsConfig } from "../config/types.tools.js";
 import {
   isAudioAttachment,
@@ -56,7 +56,7 @@ function isAttachmentRecord(value: unknown): value is MediaAttachment {
   return true;
 }
 
-/** Reused helper for select Attachments behavior in src/media-understanding. */
+/** Select capability-matching attachments according to configured ordering and limits. */
 export function selectAttachments(params: {
   capability: MediaUnderstandingCapability;
   attachments: MediaAttachment[];

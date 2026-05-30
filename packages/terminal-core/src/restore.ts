@@ -1,4 +1,4 @@
-// terminal restore helpers and runtime behavior.
+// Terminal cleanup for raw-mode prompts and progress-line escape state.
 import { clearActiveProgressLine } from "./progress-line.js";
 
 const RESET_SEQUENCE =
@@ -31,7 +31,7 @@ function reportRestoreFailure(scope: string, err: unknown, reason?: string): voi
   }
 }
 
-/** Reused helper for restore Terminal State behavior in src/terminal. */
+/** Restore terminal modes and cursor/progress state after prompt or process cleanup. */
 export function restoreTerminalState(
   reason?: string,
   options: RestoreTerminalStateOptions = {},
