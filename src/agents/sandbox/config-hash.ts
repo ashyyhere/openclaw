@@ -2,7 +2,7 @@
 import { hashTextSha256 } from "./hash.js";
 import type { SandboxBrowserConfig, SandboxDockerConfig, SandboxWorkspaceAccess } from "./types.js";
 
-/** Reused constant for SANDBOX DOCKER EXPLICIT ENV POLICY EPOCH behavior in src/agents/sandbox. */
+/** Hash epoch for Docker env policy changes that require sandbox restart. */
 export const SANDBOX_DOCKER_EXPLICIT_ENV_POLICY_EPOCH = "explicit-config-env-v1";
 
 type SandboxHashInput = {

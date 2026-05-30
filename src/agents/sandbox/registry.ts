@@ -13,7 +13,7 @@ import {
 } from "./constants.js";
 import { hashTextSha256 } from "./hash.js";
 
-/** Shared type for Sandbox Registry Entry in src/agents/sandbox. */
+/** Persisted sandbox container registry entry. */
 export type SandboxRegistryEntry = {
   containerName: string;
   backendId?: string;
@@ -30,7 +30,7 @@ type SandboxRegistry = {
   entries: SandboxRegistryEntry[];
 };
 
-/** Shared type for Sandbox Browser Registry Entry in src/agents/sandbox. */
+/** Persisted browser sandbox registry entry with exposed ports. */
 export type SandboxBrowserRegistryEntry = {
   containerName: string;
   sessionKey: string;
@@ -64,14 +64,14 @@ type LegacyRegistryTarget = {
   shardedDir: string;
 };
 
-/** Shared type for Legacy Sandbox Registry Inspection in src/agents/sandbox. */
+/** Inspection result for a legacy monolithic sandbox registry file. */
 export type LegacySandboxRegistryInspection = LegacyRegistryTarget & {
   exists: boolean;
   valid: boolean;
   entries: number;
 };
 
-/** Shared type for Legacy Sandbox Registry Migration Result in src/agents/sandbox. */
+/** Migration outcome for a legacy monolithic sandbox registry file. */
 export type LegacySandboxRegistryMigrationResult = LegacyRegistryTarget & {
   status: "missing" | "migrated" | "removed-empty" | "quarantined-invalid";
   entries: number;
@@ -325,7 +325,7 @@ export async function migrateLegacySandboxRegistryFiles(): Promise<
   return results;
 }
 
-/** Reused helper for read Registry Entry behavior in src/agents/sandbox. */
+/** Reads and normalizes one sandbox container registry entry. */
 export async function readRegistryEntry(
   containerName: string,
 ): Promise<SandboxRegistryEntry | null> {

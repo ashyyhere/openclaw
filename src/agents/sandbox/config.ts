@@ -30,7 +30,7 @@ import type {
   SandboxSshConfig,
 } from "./types.js";
 
-/** Reused constant for DANGEROUS SANDBOX DOCKER BOOLEAN KEYS behavior in src/agents/sandbox. */
+/** Docker boolean keys that require explicit dangerous opt-in handling. */
 export const DANGEROUS_SANDBOX_DOCKER_BOOLEAN_KEYS = [
   "dangerouslyAllowReservedContainerTargets",
   "dangerouslyAllowExternalBindSources",

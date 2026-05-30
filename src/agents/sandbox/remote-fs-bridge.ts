@@ -41,7 +41,7 @@ type MountInfo = {
   source: RemoteMountSource;
 };
 
-/** Shared type for Remote Shell Sandbox Handle in src/agents/sandbox. */
+/** Remote shell runtime used by the sandbox filesystem bridge. */
 export type RemoteShellSandboxHandle = {
   remoteWorkspaceDir: string;
   remoteAgentWorkspaceDir: string;

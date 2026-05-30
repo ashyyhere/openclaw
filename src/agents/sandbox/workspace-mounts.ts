@@ -6,10 +6,10 @@ import { SANDBOX_AGENT_WORKSPACE_MOUNT } from "./constants.js";
 import { resolveSandboxHostPathViaExistingAncestor } from "./host-paths.js";
 import type { SandboxWorkspaceAccess } from "./types.js";
 
-/** Reused constant for SANDBOX MOUNT FORMAT VERSION behavior in src/agents/sandbox. */
+/** Version included in sandbox config hashes when mount formatting changes. */
 export const SANDBOX_MOUNT_FORMAT_VERSION = 3;
 
-/** Shared type for Read Only Workspace Skill Mount in src/agents/sandbox. */
+/** Readonly skill directory mounted inside a sandbox workspace. */
 export type ReadOnlyWorkspaceSkillMount = {
   hostPath: string;
   containerPath: string;

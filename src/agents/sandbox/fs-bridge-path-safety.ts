@@ -12,7 +12,7 @@ import {
 
 type BoundaryAllowedType = "file" | "directory";
 
-/** Shared type for Path Safety Options in src/agents/sandbox. */
+/** Policy options for one sandbox filesystem safety check. */
 export type PathSafetyOptions = {
   action: string;
   aliasPolicy?: PathAliasPolicy;
@@ -20,26 +20,26 @@ export type PathSafetyOptions = {
   allowedType?: BoundaryAllowedType;
 };
 
-/** Shared type for Path Safety Check in src/agents/sandbox. */
+/** Resolved sandbox target plus the path-safety policy to enforce. */
 export type PathSafetyCheck = {
   target: SandboxResolvedFsPath;
   options: PathSafetyOptions;
 };
 
-/** Shared type for Pinned Sandbox Entry in src/agents/sandbox. */
+/** Sandbox path pinned to a mount root and basename for safe mutation. */
 export type PinnedSandboxEntry = {
   mountRootPath: string;
   relativeParentPath: string;
   basename: string;
 };
 
-/** Shared type for Anchored Sandbox Entry in src/agents/sandbox. */
+/** Canonical parent path and basename for host-side sandbox access. */
 export type AnchoredSandboxEntry = {
   canonicalParentPath: string;
   basename: string;
 };
 
-/** Shared type for Pinned Sandbox Directory Entry in src/agents/sandbox. */
+/** Sandbox directory pinned to a mount root for safe traversal. */
 export type PinnedSandboxDirectoryEntry = {
   mountRootPath: string;
   relativePath: string;
@@ -55,7 +55,7 @@ type RunCommand = (
   },
 ) => Promise<{ stdout: Buffer }>;
 
-/** Reused class for Sandbox Fs Path Guard behavior in src/agents/sandbox. */
+/** Guard that anchors sandbox filesystem operations to approved mounts. */
 export class SandboxFsPathGuard {
   private readonly mountsByContainer: SandboxFsMount[];
   private readonly runCommand: RunCommand;

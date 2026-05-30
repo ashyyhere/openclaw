@@ -10,7 +10,7 @@ import { resolveUserPath } from "../../utils.js";
 import type { SandboxBackendCommandResult } from "./backend-handle.types.js";
 import { sanitizeEnvVars } from "./sanitize-env-vars.js";
 
-/** Shared type for Ssh Sandbox Settings in src/agents/sandbox. */
+/** Normalized SSH settings used to create a remote sandbox session. */
 export type SshSandboxSettings = {
   command: string;
   target: string;
@@ -24,14 +24,14 @@ export type SshSandboxSettings = {
   knownHostsData?: string;
 };
 
-/** Shared type for Ssh Sandbox Session in src/agents/sandbox. */
+/** Materialized SSH sandbox session with generated config path. */
 export type SshSandboxSession = {
   command: string;
   configPath: string;
   host: string;
 };
 
-/** Shared type for Run Ssh Sandbox Command Params in src/agents/sandbox. */
+/** Remote command request executed through an SSH sandbox session. */
 export type RunSshSandboxCommandParams = {
   session: SshSandboxSession;
   remoteCommand: string;

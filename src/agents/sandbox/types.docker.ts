@@ -10,6 +10,6 @@ type RequiredDockerConfigKeys =
   | "network"
   | "capDrop";
 
-/** Shared type for Sandbox Docker Config in src/agents/sandbox. */
+/** Docker sandbox config after applying required defaults. */
 export type SandboxDockerConfig = Omit<SandboxDockerSettings, RequiredDockerConfigKeys> &
   Required<Pick<SandboxDockerSettings, RequiredDockerConfigKeys>>;

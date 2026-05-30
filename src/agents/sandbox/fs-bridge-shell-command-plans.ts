@@ -2,7 +2,7 @@
 import type { AnchoredSandboxEntry, PathSafetyCheck } from "./fs-bridge-path-safety.js";
 import type { SandboxResolvedFsPath } from "./fs-paths.js";
 
-/** Shared type for Sandbox Fs Command Plan in src/agents/sandbox. */
+/** Shell command plus path checks for a sandbox filesystem operation. */
 export type SandboxFsCommandPlan = {
   checks: PathSafetyCheck[];
   script: string;
