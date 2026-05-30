@@ -1,4 +1,4 @@
-// ui/src/ui markdown helpers and runtime behavior.
+// Markdown rendering pipeline for chat messages, code blocks, links, and sanitization.
 import DOMPurify from "dompurify";
 import hljs from "highlight.js/lib/core";
 import bash from "highlight.js/lib/languages/bash";
@@ -90,10 +90,10 @@ const HOST_LOCAL_FILE_HREF_RE =
 const markdownCache = new Map<string, string>();
 const TAIL_LINK_BLUR_CLASS = "chat-link-tail-blur";
 
-/** Shared type for Markdown Code Block Chrome in ui/src/ui. */
+/** Code-block chrome mode for rendered markdown snippets. */
 export type MarkdownCodeBlockChrome = "copy" | "none";
 
-/** Shared type for Markdown Render Options in ui/src/ui. */
+/** Options that tune markdown rendering for chat and compact previews. */
 export type MarkdownRenderOptions = {
   codeBlockChrome?: MarkdownCodeBlockChrome;
 };
@@ -285,7 +285,7 @@ function codeClassAttribute(lang: string, highlighted: string): string {
   return classes.length > 0 ? ` class="${escapeHtml(classes.join(" "))}"` : "";
 }
 
-/** Reused constant for md behavior in ui/src/ui. */
+/** Configured markdown-it parser with OpenClaw link, code, and task-list behavior. */
 export const md = new MarkdownIt({
   html: true, // Enable HTML recognition so html_block/html_inline overrides can escape it
   breaks: true,
@@ -617,7 +617,7 @@ md.renderer.rules.code_block = (tokens, idx, _options, env) => {
   return `<div class="code-block-wrapper">${header}${codeBlock}</div>`;
 };
 
-/** Reused helper for to Sanitized Markdown Html behavior in ui/src/ui. */
+/** Render markdown to sanitized HTML safe for chat insertion. */
 export function toSanitizedMarkdownHtml(
   markdown: string,
   options: MarkdownRenderOptions = {},
