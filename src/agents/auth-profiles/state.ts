@@ -147,7 +147,7 @@ function normalizeUsageStats(raw: unknown): AuthProfileState["usageStats"] {
   return Object.keys(normalized).length > 0 ? normalized : undefined;
 }
 
-/** Reused helper for coerce Auth Profile State behavior in src/agents/auth-profiles. */
+/** Coerces persisted auth-profile sidecar data into typed state. */
 export function coerceAuthProfileState(raw: unknown): AuthProfileState {
   if (!isRecord(raw)) {
     return {};
@@ -159,7 +159,7 @@ export function coerceAuthProfileState(raw: unknown): AuthProfileState {
   };
 }
 
-/** Reused helper for merge Auth Profile State behavior in src/agents/auth-profiles. */
+/** Merges auth-profile order, last-good, and usage sidecar state. */
 export function mergeAuthProfileState(
   base: AuthProfileState,
   override: AuthProfileState,
@@ -184,7 +184,7 @@ export function mergeAuthProfileState(
   };
 }
 
-/** Reused helper for load Persisted Auth Profile State behavior in src/agents/auth-profiles. */
+/** Loads persisted auth-profile sidecar state for an agent dir. */
 export function loadPersistedAuthProfileState(agentDir?: string): AuthProfileState {
   return coerceAuthProfileState(loadJsonFile(resolveAuthStatePath(agentDir)));
 }
@@ -202,7 +202,7 @@ function buildPersistedAuthProfileState(store: AuthProfileState): AuthProfileSta
   };
 }
 
-/** Reused helper for save Persisted Auth Profile State behavior in src/agents/auth-profiles. */
+/** Saves or removes persisted auth-profile sidecar state for an agent dir. */
 export function savePersistedAuthProfileState(
   store: AuthProfileState,
   agentDir?: string,

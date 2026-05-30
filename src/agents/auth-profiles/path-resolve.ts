@@ -28,13 +28,13 @@ export function resolveAuthStatePath(agentDir?: string): string {
   return path.join(resolved, AUTH_STATE_FILENAME);
 }
 
-/** Reused helper for resolve Auth Store Path For Display behavior in src/agents/auth-profiles. */
+/** Resolves the auth profile store path for user-facing display. */
 export function resolveAuthStorePathForDisplay(agentDir?: string): string {
   const pathname = resolveAuthStorePath(agentDir);
   return pathname.startsWith("~") ? pathname : resolveUserPath(pathname);
 }
 
-/** Reused helper for resolve Auth State Path For Display behavior in src/agents/auth-profiles. */
+/** Resolves the mutable auth state path for user-facing display. */
 export function resolveAuthStatePathForDisplay(agentDir?: string): string {
   const pathname = resolveAuthStatePath(agentDir);
   return pathname.startsWith("~") ? pathname : resolveUserPath(pathname);

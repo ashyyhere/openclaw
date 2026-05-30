@@ -1,13 +1,14 @@
+/** Tracks auth profile cooldown and unusable-window state. */
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
 import type { AuthProfileStore, ProfileUsageStats } from "./types.js";
 
-/** Reused helper for is Auth Cooldown Bypassed For Provider behavior in src/agents/auth-profiles. */
+/** Detects providers whose auth cooldown windows are intentionally bypassed. */
 export function isAuthCooldownBypassedForProvider(provider: string | undefined): boolean {
   const normalized = normalizeProviderId(provider ?? "");
   return normalized === "openrouter" || normalized === "kilocode";
 }
 
-/** Reused helper for resolve Profile Unusable Until behavior in src/agents/auth-profiles. */
+/** Resolves the latest active unusable timestamp from profile usage stats. */
 export function resolveProfileUnusableUntil(
   stats: Pick<ProfileUsageStats, "blockedUntil" | "cooldownUntil" | "disabledUntil">,
 ): number | null {
@@ -20,7 +21,7 @@ export function resolveProfileUnusableUntil(
   return Math.max(...values);
 }
 
-/** Reused helper for is Active Unusable Window behavior in src/agents/auth-profiles. */
+/** Checks whether a profile unusable window is active at the given time. */
 export function isActiveUnusableWindow(until: number | undefined, now: number): boolean {
   return typeof until === "number" && Number.isFinite(until) && until > 0 && now < until;
 }

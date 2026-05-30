@@ -40,7 +40,7 @@ import {
 } from "./store.js";
 import type { AuthProfileCredential, AuthProfileStore, OAuthCredential } from "./types.js";
 
-/** Re-exported API for src/agents/auth-profiles. */
+/** OAuth identity comparison helpers used by refresh and mirroring logic. */
 export {
   isSafeToCopyOAuthIdentity,
   isSameOAuthIdentity,
@@ -48,7 +48,7 @@ export {
   normalizeAuthIdentityToken,
   shouldMirrorRefreshedOAuthCredential,
 } from "./oauth-identity.js";
-/** Re-exported API for src/agents/auth-profiles, starting with OAuth Mirror Decision. */
+/** OAuth mirror decision contract and reason codes. */
 export type { OAuthMirrorDecision, OAuthMirrorDecisionReason } from "./oauth-identity.js";
 
 function listOAuthProviderIds(): string[] {
@@ -160,7 +160,7 @@ function extractErrorMessage(error: unknown): string {
   return formatErrorMessage(error);
 }
 
-/** Reused helper for is Refresh Token Reused Error behavior in src/agents/auth-profiles. */
+/** Detects provider errors for already-used OAuth refresh tokens. */
 export function isRefreshTokenReusedError(error: unknown): boolean {
   const message = normalizeLowercaseStringOrEmpty(extractErrorMessage(error));
   return (
@@ -205,7 +205,7 @@ async function refreshOAuthCredential(
   return result?.newCredentials ?? null;
 }
 
-/** Reused helper for refresh OAuth Credential For Runtime behavior in src/agents/auth-profiles. */
+/** Refreshes an OAuth credential through plugin, Chutes, or provider runtime. */
 export async function refreshOAuthCredentialForRuntime(params: {
   credential: OAuthCredential;
 }): Promise<OAuthCredential | null> {
@@ -238,7 +238,7 @@ const oauthManager = createOAuthManager({
   isRefreshTokenReusedError,
 });
 
-/** Reused helper for reset OAuth Refresh Queues For Test behavior in src/agents/auth-profiles. */
+/** Clears OAuth refresh queues between tests. */
 export function resetOAuthRefreshQueuesForTest(): void {
   oauthManager.resetRefreshQueuesForTest();
 }
@@ -333,7 +333,7 @@ async function resolveProfileSecretString(params: {
   return normalizeOptionalSecretInput(resolvedValue);
 }
 
-/** Reused helper for resolve Api Key For Profile behavior in src/agents/auth-profiles. */
+/** Resolves the API key usable for a configured auth profile. */
 export async function resolveApiKeyForProfile(
   params: ResolveApiKeyForProfileParams,
 ): Promise<ResolveApiKeyForProfileResult | null> {
