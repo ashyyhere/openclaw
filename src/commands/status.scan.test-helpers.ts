@@ -24,7 +24,7 @@ type StatusScanSharedMocks = {
   buildPluginCompatibilityNotices: Mock<() => unknown[]>;
 };
 
-/** Reused helper for create Status Scan Shared Mocks behavior in src/commands. */
+/** Creates the shared vi mocks used by status scan module-loader tests. */
 export function createStatusScanSharedMocks(configPathLabel: string): StatusScanSharedMocks {
   return {
     resolveConfigPath: vi.fn(() => `/tmp/openclaw-${configPathLabel}-missing-${process.pid}.json`),
@@ -160,21 +160,21 @@ type StatusScanModuleTestMocks = StatusScanSharedMocks & {
   resolveMemorySearchConfig?: UnknownMock;
 };
 
-/** Reused helper for load Status Scan Module For Test behavior in src/commands. */
+/** Loads the fast JSON status scan module after installing mocks. */
 export async function loadStatusScanModuleForTest(
   mocks: StatusScanModuleTestMocks,
   options: {
     fastJson: true;
   },
 ): Promise<typeof import("./status.scan.fast-json.js")>;
-/** Reused helper for load Status Scan Module For Test behavior in src/commands. */
+/** Loads the full status scan module after installing mocks. */
 export async function loadStatusScanModuleForTest(
   mocks: StatusScanModuleTestMocks,
   options?: {
     fastJson?: false;
   },
 ): Promise<typeof import("./status.scan.js")>;
-/** Reused helper for load Status Scan Module For Test behavior in src/commands. */
+/** Installs status scan mocks, resets modules, then imports the selected scan module. */
 export async function loadStatusScanModuleForTest(
   mocks: StatusScanModuleTestMocks,
   options: {
@@ -280,7 +280,7 @@ export async function loadStatusScanModuleForTest(
   return await import("./status.scan.js");
 }
 
-/** Reused helper for create Status Scan Config behavior in src/commands. */
+/** Creates a minimal OpenClaw config fixture for status scan tests. */
 export function createStatusScanConfig<T extends object = OpenClawConfig>(
   overrides: T = {} as T,
 ): OpenClawConfig & T {
@@ -291,7 +291,7 @@ export function createStatusScanConfig<T extends object = OpenClawConfig>(
   } as OpenClawConfig & T;
 }
 
-/** Reused helper for create Status Summary behavior in src/commands. */
+/** Creates a minimal status summary fixture with optional channel/agent overrides. */
 export function createStatusSummary(
   options: {
     linkChannel?: { linked: boolean };
@@ -369,7 +369,7 @@ function createStatusGatewayProbeFailure() {
   };
 }
 
-/** Reused helper for create Status Memory Search Config behavior in src/commands. */
+/** Creates a config fixture with local memory-search enabled. */
 export function createStatusMemorySearchConfig(): OpenClawConfig {
   return createStatusScanConfig({
     agents: {
@@ -384,7 +384,7 @@ export function createStatusMemorySearchConfig(): OpenClawConfig {
   });
 }
 
-/** Reused helper for create Status Memory Search Manager behavior in src/commands. */
+/** Creates the memory manager mock returned by status scan dependency loaders. */
 export function createStatusMemorySearchManager() {
   return {
     manager: {
@@ -395,7 +395,7 @@ export function createStatusMemorySearchManager() {
   };
 }
 
-/** Reused helper for apply Status Scan Defaults behavior in src/commands. */
+/** Applies the default mock return values shared by status scan tests. */
 export function applyStatusScanDefaults(
   mocks: StatusScanSharedMocks,
   options: {
@@ -456,7 +456,7 @@ export function applyStatusScanDefaults(
   }
 }
 
-/** Reused helper for with Temporary Env behavior in src/commands. */
+/** Temporarily patches process.env for a status test and restores previous values. */
 export async function withTemporaryEnv(
   overrides: Record<string, string | undefined>,
   run: () => Promise<void>,

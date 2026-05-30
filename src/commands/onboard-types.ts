@@ -3,7 +3,7 @@ import type { ChannelId } from "../channels/plugins/types.public.js";
 import type { SecretInputMode } from "../plugins/provider-auth-types.js";
 import type { GatewayDaemonRuntime } from "./daemon-runtime.js";
 
-/** Shared type for Onboard Mode in src/commands. */
+/** Installation target for the onboarding flow. */
 export type OnboardMode = "local" | "remote";
 /**
  * Auth choices are plugin-owned contract ids plus a few legacy aliases that
@@ -12,24 +12,24 @@ export type OnboardMode = "local" | "remote";
 type BuiltInAuthChoice =
   /** @deprecated Use `setup-token`. */
   "oauth" | "setup-token" | "token" | "apiKey" | "custom-api-key" | "skip";
-/** Shared type for Auth Choice in src/commands. */
+/** Provider auth choice selected interactively or through non-interactive flags. */
 export type AuthChoice = BuiltInAuthChoice | (string & {});
 
 /** Auth choice groups are plugin-owned ids plus the core `custom` bucket. */
 export type AuthChoiceGroupId = "custom" | (string & {});
-/** Shared type for Gateway Auth Choice in src/commands. */
+/** Gateway authentication mode selected during onboarding. */
 export type GatewayAuthChoice = "token" | "password";
-/** Shared type for Reset Scope in src/commands. */
+/** Data scope removed by reset-oriented onboarding flows. */
 export type ResetScope = "config" | "config+creds+sessions" | "full";
-/** Shared type for Gateway Bind in src/commands. */
+/** Network binding preset for the gateway daemon. */
 export type GatewayBind = "loopback" | "lan" | "auto" | "custom" | "tailnet";
-/** Shared type for Tailscale Mode in src/commands. */
+/** Tailscale exposure mode configured by onboarding. */
 export type TailscaleMode = "off" | "serve" | "funnel";
-/** Shared type for Node Manager Choice in src/commands. */
+/** Package manager used by node-host setup steps. */
 export type NodeManagerChoice = "npm" | "pnpm" | "bun";
-/** Shared type for Channel Choice in src/commands. */
+/** Channel id selected for messaging-channel setup. */
 export type ChannelChoice = ChannelId;
-/** Re-exported API for src/commands, starting with Secret Input Mode. */
+/** Secret input/persistence modes accepted by provider auth setup. */
 export type { SecretInputMode } from "../plugins/provider-auth-types.js";
 
 type OnboardDynamicProviderOptions = {
@@ -40,7 +40,7 @@ type OnboardDynamicProviderOptions = {
   [optionKey: string]: unknown;
 };
 
-/** Shared type for Onboard Options in src/commands. */
+/** CLI and programmatic options consumed by the onboarding command. */
 export type OnboardOptions = OnboardDynamicProviderOptions & {
   mode?: OnboardMode;
   /** "manual" is an alias for "advanced". */

@@ -31,7 +31,7 @@ function loadGatewayCallModule() {
   return gatewayCallModuleLoader.load();
 }
 
-/** Reused helper for resolve Status Security Audit behavior in src/commands. */
+/** Runs the shallow status security audit with read-only channel plugin context. */
 export async function resolveStatusSecurityAudit(params: {
   config: OpenClawConfig;
   sourceConfig: OpenClawConfig;
@@ -63,7 +63,7 @@ type StatusUsageSummaryOptions = {
   agentDir?: string;
 };
 
-/** Reused helper for resolve Status Usage Summary behavior in src/commands. */
+/** Loads provider usage data for the status command with the correct agent dir. */
 export async function resolveStatusUsageSummary(params: StatusUsageSummaryOptions) {
   const { loadProviderUsageSummary } = await loadProviderUsage();
   return await loadProviderUsageSummary({
@@ -73,12 +73,12 @@ export async function resolveStatusUsageSummary(params: StatusUsageSummaryOption
   });
 }
 
-/** Reused helper for load Status Provider Usage Module behavior in src/commands. */
+/** Exposes the lazy provider-usage module loader for tests and status callers. */
 export async function loadStatusProviderUsageModule() {
   return await loadProviderUsage();
 }
 
-/** Reused helper for resolve Status Gateway Health behavior in src/commands. */
+/** Calls the gateway health method used by deep status output. */
 export async function resolveStatusGatewayHealth(params: {
   config: OpenClawConfig;
   timeoutMs?: number;
@@ -92,7 +92,7 @@ export async function resolveStatusGatewayHealth(params: {
   });
 }
 
-/** Reused helper for resolve Status Gateway Health Safe behavior in src/commands. */
+/** Returns gateway health or a structured error without throwing for status output. */
 export async function resolveStatusGatewayHealthSafe(params: {
   config: OpenClawConfig;
   timeoutMs?: number;
@@ -117,7 +117,7 @@ export async function resolveStatusGatewayHealthSafe(params: {
   }).catch((err) => ({ error: String(err) }));
 }
 
-/** Reused helper for resolve Status Gateway Diagnostics Safe behavior in src/commands. */
+/** Fetches stability diagnostics for deep status output when the gateway is reachable. */
 export async function resolveStatusGatewayDiagnosticsSafe(params: {
   config: OpenClawConfig;
   timeoutMs?: number;
@@ -141,7 +141,7 @@ export async function resolveStatusGatewayDiagnosticsSafe(params: {
   }).catch(() => null);
 }
 
-/** Reused helper for resolve Status Last Heartbeat behavior in src/commands. */
+/** Reads the latest heartbeat payload from the gateway when reachable. */
 export async function resolveStatusLastHeartbeat(params: {
   config: OpenClawConfig;
   timeoutMs?: number;
@@ -159,7 +159,7 @@ export async function resolveStatusLastHeartbeat(params: {
   }).catch(() => null);
 }
 
-/** Reused helper for resolve Status Service Summaries behavior in src/commands. */
+/** Collects gateway and node daemon service summaries in parallel. */
 export async function resolveStatusServiceSummaries() {
   return await Promise.all([getDaemonStatusSummary(), getNodeDaemonStatusSummary()]);
 }
@@ -171,7 +171,7 @@ type StatusGatewayServiceSummary = Awaited<ReturnType<typeof getDaemonStatusSumm
 type StatusNodeServiceSummary = Awaited<ReturnType<typeof getNodeDaemonStatusSummary>>;
 type StatusSecurityAudit = Awaited<ReturnType<typeof resolveStatusSecurityAudit>>;
 
-/** Reused helper for resolve Status Runtime Details behavior in src/commands. */
+/** Resolves optional usage/health plus service and heartbeat details for status. */
 export async function resolveStatusRuntimeDetails(params: {
   config: OpenClawConfig;
   timeoutMs?: number;
@@ -228,7 +228,7 @@ export async function resolveStatusRuntimeDetails(params: {
   };
 }
 
-/** Reused helper for resolve Status Runtime Snapshot behavior in src/commands. */
+/** Builds the full runtime snapshot consumed by status report rendering. */
 export async function resolveStatusRuntimeSnapshot(params: {
   config: OpenClawConfig;
   sourceConfig: OpenClawConfig;
