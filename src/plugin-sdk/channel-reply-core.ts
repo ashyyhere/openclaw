@@ -5,7 +5,6 @@ export {
   createTypingCallbacks,
   resolveChannelSourceReplyDeliveryMode,
 } from "../channels/message/reply-pipeline.js";
-/** Re-exported API for src/plugin-sdk. */
 export type {
   ChannelReplyPipeline,
   CreateChannelReplyPipelineParams,

@@ -5,9 +5,8 @@ import { resolveActiveManagedProxyTlsOptions } from "../infra/net/proxy/managed-
 import { resolveDefaultSecretProviderAlias } from "../secrets/ref-contract.js";
 import { runPassiveAccountLifecycle } from "./channel-lifecycle.core.js";
 import { createLoggerBackedRuntime } from "./runtime-logger.js";
-/** Re-exported API for src/plugin-sdk, starting with safe Parse Json With Schema. */
+
 export { safeParseJsonWithSchema, safeParseWithSchema } from "../utils/zod-parse.js";
-/** Re-exported API for src/plugin-sdk, starting with build Timeout Abort Signal. */
 export { buildTimeoutAbortSignal } from "../utils/fetch-timeout.js";
 
 type PassiveChannelStatusSnapshot = {
@@ -117,7 +116,7 @@ export function requireChannelOpenAllowFrom(params: {
   });
 }
 
-/** Reused helper for read Status Issue Fields behavior in src/plugin-sdk. */
+/** Copies selected status fields from an unknown issue payload. */
 export function readStatusIssueFields<TField extends string>(
   value: unknown,
   fields: readonly TField[],
@@ -133,7 +132,7 @@ export function readStatusIssueFields<TField extends string>(
   return result;
 }
 
-/** Reused helper for coerce Status Issue Account Id behavior in src/plugin-sdk. */
+/** Coerces status issue account ids from legacy numeric/string payloads. */
 export function coerceStatusIssueAccountId(value: unknown): string | undefined {
   return typeof value === "string" ? value : typeof value === "number" ? String(value) : undefined;
 }
@@ -187,7 +186,7 @@ export function formatPluginConfigIssue(
   return issue.message;
 }
 
-/** Reused helper for normalize Plugin Config Issue Path behavior in src/plugin-sdk. */
+/** Keeps only zod path segments that plugin config issue records can serialize. */
 export function normalizePluginConfigIssuePath(
   path: readonly unknown[],
 ): PluginConfigIssuePathSegment[] {
