@@ -1,11 +1,11 @@
-// test-utils plugin setup wizard helpers and runtime behavior.
+// Test harness helpers for declarative plugin setup wizards.
 import { vi, type Mock } from "vitest";
 import { buildChannelSetupWizardAdapterFromSetupWizard } from "../channels/plugins/setup-wizard.js";
 import type { ChannelPlugin } from "../channels/plugins/types.js";
 import type { WizardPrompter } from "../wizard/prompts.js";
 import { createRuntimeEnv } from "./plugin-runtime-env.js";
 
-/** Re-exported API for src/test-utils, starting with Wizard Prompter. */
+/** Re-export the wizard prompter contract used by setup wizard tests. */
 export type { WizardPrompter } from "../wizard/prompts.js";
 type UnknownMock = Mock<(...args: unknown[]) => unknown>;
 type AsyncUnknownMock = Mock<(...args: unknown[]) => Promise<unknown>>;
@@ -22,7 +22,7 @@ type QueuedWizardPrompter = {
   prompter: WizardPrompter;
 };
 
-/** Reused helper for select First Wizard Option behavior in src/test-utils. */
+/** Select the first wizard option, matching the default non-interactive test path. */
 export async function selectFirstWizardOption<T>(params: {
   options: Array<{ value: T }>;
 }): Promise<T> {
@@ -33,7 +33,7 @@ export async function selectFirstWizardOption<T>(params: {
   return first.value;
 }
 
-/** Reused helper for create Test Wizard Prompter behavior in src/test-utils. */
+/** Create a WizardPrompter with safe defaults and optional method overrides. */
 export function createTestWizardPrompter(overrides: Partial<WizardPrompter> = {}): WizardPrompter {
   return {
     intro: vi.fn(async () => {}),
@@ -49,7 +49,7 @@ export function createTestWizardPrompter(overrides: Partial<WizardPrompter> = {}
   };
 }
 
-/** Reused helper for create Queued Wizard Prompter behavior in src/test-utils. */
+/** Create a WizardPrompter whose select/text/confirm responses drain from queues. */
 export function createQueuedWizardPrompter(params?: {
   selectValues?: string[];
   textValues?: string[];
@@ -157,12 +157,12 @@ function resolveSetupWizardNotePrompter(prompter?: Pick<WizardPrompter, "note">)
   );
 }
 
-/** Reused helper for create Setup Wizard Adapter behavior in src/test-utils. */
+/** Build a channel setup wizard adapter from declarative wizard metadata. */
 export function createSetupWizardAdapter(params: SetupWizardAdapterParams) {
   return buildChannelSetupWizardAdapterFromSetupWizard(params);
 }
 
-/** Reused helper for create Plugin Setup Wizard Adapter behavior in src/test-utils. */
+/** Build a setup wizard adapter from a test plugin that exposes declarative setupWizard. */
 export function createPluginSetupWizardAdapter(plugin: SetupWizardTestPlugin) {
   const wizard = requireDeclarativeSetupWizard(plugin);
   return createSetupWizardAdapter({
@@ -171,17 +171,17 @@ export function createPluginSetupWizardAdapter(plugin: SetupWizardTestPlugin) {
   });
 }
 
-/** Reused helper for create Plugin Setup Wizard Configure behavior in src/test-utils. */
+/** Return the configure function for a test plugin's setup wizard adapter. */
 export function createPluginSetupWizardConfigure(plugin: SetupWizardTestPlugin) {
   return createPluginSetupWizardAdapter(plugin).configure;
 }
 
-/** Reused helper for create Plugin Setup Wizard Status behavior in src/test-utils. */
+/** Return the getStatus function for a test plugin's setup wizard adapter. */
 export function createPluginSetupWizardStatus(plugin: SetupWizardTestPlugin) {
   return createPluginSetupWizardAdapter(plugin).getStatus;
 }
 
-/** Reused helper for run Setup Wizard Configure behavior in src/test-utils. */
+/** Run a setup wizard configure callback with default config/runtime/test options. */
 export async function runSetupWizardConfigure<
   TCfg,
   TOptions extends Record<string, unknown>,
@@ -217,7 +217,7 @@ export async function runSetupWizardConfigure<
   });
 }
 
-/** Reused helper for run Setup Wizard Prepare behavior in src/test-utils. */
+/** Run an optional setup wizard prepare callback with default account context. */
 export async function runSetupWizardPrepare<
   TCfg,
   TOptions extends Record<string, unknown>,
@@ -252,7 +252,7 @@ export async function runSetupWizardPrepare<
   });
 }
 
-/** Reused helper for run Setup Wizard Finalize behavior in src/test-utils. */
+/** Run an optional setup wizard finalize callback with default account context. */
 export async function runSetupWizardFinalize<
   TCfg,
   TOptions extends Record<string, unknown>,
@@ -290,7 +290,7 @@ export async function runSetupWizardFinalize<
   });
 }
 
-/** Reused helper for prompt Setup Wizard Allow From behavior in src/test-utils. */
+/** Run an optional allow-from prompt hook with a test prompter and account id. */
 export async function promptSetupWizardAllowFrom<TCfg, TResult>(params: {
   promptAllowFrom?: (args: {
     cfg: TCfg;
@@ -312,7 +312,7 @@ export async function promptSetupWizardAllowFrom<TCfg, TResult>(params: {
   });
 }
 
-/** Reused helper for resolve Setup Wizard Allow From Entries behavior in src/test-utils. */
+/** Run an optional allow-from entry resolver with queued credential values. */
 export async function resolveSetupWizardAllowFromEntries<TCfg, TResult>(params: {
   resolveEntries?: (args: {
     cfg: TCfg;
@@ -336,7 +336,7 @@ export async function resolveSetupWizardAllowFromEntries<TCfg, TResult>(params: 
   });
 }
 
-/** Reused helper for resolve Setup Wizard Group Allowlist behavior in src/test-utils. */
+/** Run an optional group allowlist resolver with a note-only test prompter. */
 export async function resolveSetupWizardGroupAllowlist<TCfg, TResult>(params: {
   resolveAllowlist?: (args: {
     cfg: TCfg;
