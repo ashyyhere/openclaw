@@ -1,4 +1,5 @@
-// infra update package manager helpers and runtime behavior.
+// Package manager resolution for update/build flows.
+// Prefers the detected manager, bootstraps pnpm when possible, and falls back only when allowed.
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
@@ -9,14 +10,14 @@ type BuildManager = "pnpm" | "bun" | "npm";
 
 type UpdatePackageManagerRequirement = "allow-fallback" | "require-preferred";
 
-/** Shared type for Update Package Manager Failure Reason in src/infra. */
+/** Reason the preferred package manager could not be used when required. */
 export type UpdatePackageManagerFailureReason =
   | "preferred-manager-unavailable"
   | "pnpm-corepack-enable-failed"
   | "pnpm-corepack-missing"
   | "pnpm-npm-bootstrap-failed";
 
-/** Shared type for Package Manager Command Runner in src/infra. */
+/** Command runner abstraction used to probe and bootstrap package managers. */
 export type PackageManagerCommandRunner = (
   argv: string[],
   options: { timeoutMs: number; env?: NodeJS.ProcessEnv },
@@ -152,7 +153,7 @@ async function bootstrapPnpmViaNpm(params: {
   }
 }
 
-/** Reused helper for resolve Update Build Manager behavior in src/infra. */
+/** Resolve the package manager/env/cleanup tuple used by update build steps. */
 export async function resolveUpdateBuildManager(
   runCommand: PackageManagerCommandRunner,
   root: string,
@@ -217,7 +218,7 @@ export async function resolveUpdateBuildManager(
   return { kind: "resolved", manager: "npm", preferred, fallback: preferred !== "npm" };
 }
 
-/** Reused helper for manager Script Args behavior in src/infra. */
+/** Build argv for running a package-manager script. */
 export function managerScriptArgs(manager: BuildManager, script: string, args: string[] = []) {
   if (manager === "pnpm") {
     return ["pnpm", script, ...args];
@@ -231,7 +232,7 @@ export function managerScriptArgs(manager: BuildManager, script: string, args: s
   return ["npm", "run", script];
 }
 
-/** Reused helper for manager Install Args behavior in src/infra. */
+/** Build argv for dependency installation with optional npm compatibility fallback. */
 export function managerInstallArgs(manager: BuildManager, opts?: { compatFallback?: boolean }) {
   if (manager === "pnpm") {
     return ["pnpm", "install"];
@@ -245,7 +246,7 @@ export function managerInstallArgs(manager: BuildManager, opts?: { compatFallbac
   return ["npm", "install"];
 }
 
-/** Reused helper for manager Install Ignore Scripts Args behavior in src/infra. */
+/** Build argv for installing dependencies while suppressing lifecycle scripts. */
 export function managerInstallIgnoreScriptsArgs(manager: BuildManager): string[] | null {
   if (manager === "pnpm") {
     return ["pnpm", "install", "--ignore-scripts"];

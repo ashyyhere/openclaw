@@ -1,4 +1,5 @@
-// infra push apns http2 helpers and runtime behavior.
+// APNs HTTP/2 connection helpers with managed-proxy support.
+// Authorities are allowlisted before direct or CONNECT-tunneled sessions are opened.
 import http2 from "node:http2";
 import { resolveTimerTimeoutMs } from "../shared/number-coercion.js";
 import { openHttpConnectTunnel } from "./net/http-connect-tunnel.js";
@@ -18,17 +19,17 @@ const APNS_AUTHORITIES = new Set([
 
 type ApnsAuthority = "https://api.push.apple.com" | "https://api.sandbox.push.apple.com";
 
-/** Reused constant for APNS HTTP2 CANCEL CODE behavior in src/infra. */
+/** HTTP/2 cancel code used when aborting APNs streams. */
 export const APNS_HTTP2_CANCEL_CODE = http2.constants.NGHTTP2_CANCEL;
 const APNS_HTTP2_MIN_TIMEOUT_MS = 1000;
 
-/** Shared type for Connect Apns Http2 Session Params in src/infra. */
+/** Parameters for opening an APNs HTTP/2 client session. */
 export type ConnectApnsHttp2SessionParams = {
   authority: string;
   timeoutMs: number;
 };
 
-/** Shared type for Probe Apns Http2 Reachability Via Proxy Params in src/infra. */
+/** Inputs for probing APNs reachability through a specific proxy. */
 export type ProbeApnsHttp2ReachabilityViaProxyParams = {
   authority: string;
   proxyUrl: string;
@@ -36,7 +37,7 @@ export type ProbeApnsHttp2ReachabilityViaProxyParams = {
   timeoutMs: number;
 };
 
-/** Shared type for Probe Apns Http2 Reachability Via Proxy Result in src/infra. */
+/** APNs probe response proving whether the proxy reached Apple. */
 export type ProbeApnsHttp2ReachabilityViaProxyResult = {
   status: number;
   body: string;
@@ -88,7 +89,7 @@ async function openProxiedApnsHttp2Session(params: {
   });
 }
 
-/** Reused helper for connect Apns Http2 Session behavior in src/infra. */
+/** Open an APNs HTTP/2 session, using the active managed proxy when configured. */
 export async function connectApnsHttp2Session(
   params: ConnectApnsHttp2SessionParams,
 ): Promise<http2.ClientHttp2Session> {

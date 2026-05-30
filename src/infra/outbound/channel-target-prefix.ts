@@ -1,4 +1,5 @@
-// infra/outbound channel target prefix helpers and runtime behavior.
+// Channel target prefix helpers.
+// Provider prefixes like `slack:` are validated separately from target-kind prefixes like `user:`.
 import { getActivePluginChannelRegistryFromState } from "../../plugins/runtime-channel-state.js";
 import { normalizeOptionalLowercaseString } from "../../shared/string-coerce.js";
 import { normalizeMessageChannel } from "../../utils/message-channel-core.js";
@@ -13,7 +14,7 @@ const TARGET_KIND_PREFIXES = new Set([
   "user",
 ]);
 
-/** Reused helper for strip Target Provider Prefix behavior in src/infra/outbound. */
+/** Strip a selected provider prefix from a target string. */
 export function stripTargetProviderPrefix(raw: string, ...providers: string[]): string {
   const trimmed = raw.trim();
   const lower = normalizeOptionalLowercaseString(trimmed) ?? "";
@@ -26,7 +27,7 @@ export function stripTargetProviderPrefix(raw: string, ...providers: string[]): 
   return trimmed;
 }
 
-/** Reused helper for strip Target Kind Prefix behavior in src/infra/outbound. */
+/** Strip target-kind prefixes such as user:, channel:, or thread:. */
 export function stripTargetKindPrefix(
   raw: string,
   kinds: readonly string[] = ["channel", "conversation", "dm", "group", "room", "thread", "user"],
@@ -38,7 +39,7 @@ export function stripTargetKindPrefix(
   return kindPattern ? raw.replace(new RegExp(`^(${kindPattern}):`, "i"), "").trim() : raw.trim();
 }
 
-/** Reused helper for strip Target Topic Suffix behavior in src/infra/outbound. */
+/** Strip topic suffixes while preserving numeric chat ids that use colon thread syntax. */
 export function stripTargetTopicSuffix(
   raw: string,
   options: { allowNumericShorthand?: boolean } = {},
@@ -51,7 +52,7 @@ export function stripTargetTopicSuffix(
   return trimmed.replace(/:topic:.*$/i, "").trim();
 }
 
-/** Shared type for Channel Target Provider Prefix in src/infra/outbound. */
+/** Resolved provider prefix and owning channel id from a target string. */
 export type ChannelTargetProviderPrefix = {
   prefix: string;
   channel: string;
@@ -91,12 +92,12 @@ function resolveChannelTargetProviderPrefix(
   return channel ? { prefix, channel } : undefined;
 }
 
-/** Reused helper for resolve Target Prefixed Channel behavior in src/infra/outbound. */
+/** Resolve the channel implied by a registered provider prefix on a target. */
 export function resolveTargetPrefixedChannel(raw?: string | null): string | undefined {
   return resolveChannelTargetProviderPrefix(raw)?.channel;
 }
 
-/** Reused helper for validate Target Provider Prefix behavior in src/infra/outbound. */
+/** Reject targets whose provider prefix belongs to a different selected channel. */
 export function validateTargetProviderPrefix(params: {
   channel: string;
   to?: string | null;

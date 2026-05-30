@@ -1,4 +1,5 @@
-// infra/outbound channel selection helpers and runtime behavior.
+// Outbound message channel selection.
+// Resolves explicit/tool-context/default channels and reports missing official plugin repairs.
 import { listChannelPlugins } from "../../channels/plugins/index.js";
 import type { ChannelPlugin } from "../../channels/plugins/types.plugin.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
@@ -16,9 +17,9 @@ import {
 import { formatErrorMessage } from "../errors.js";
 import { resolveOutboundChannelPlugin } from "./channel-resolution.js";
 
-/** Shared type for Message Channel Id in src/infra/outbound. */
+/** Deliverable channel id accepted by outbound message tools. */
 export type MessageChannelId = DeliverableMessageChannel;
-/** Shared type for Message Channel Selection Source in src/infra/outbound. */
+/** Source that determined the selected outbound channel. */
 export type MessageChannelSelectionSource =
   | "explicit"
   | "tool-context-fallback"
@@ -205,7 +206,7 @@ async function isPluginConfigured(plugin: ChannelPlugin, cfg: OpenClawConfig): P
   return false;
 }
 
-/** Reused helper for list Configured Message Channels behavior in src/infra/outbound. */
+/** List deliverable channels with at least one enabled/configured account. */
 export async function listConfiguredMessageChannels(
   cfg: OpenClawConfig,
 ): Promise<MessageChannelId[]> {
@@ -221,7 +222,7 @@ export async function listConfiguredMessageChannels(
   return channels;
 }
 
-/** Reused helper for resolve Message Channel Selection behavior in src/infra/outbound. */
+/** Resolve the channel for a message action or throw an actionable configuration error. */
 export async function resolveMessageChannelSelection(params: {
   cfg: OpenClawConfig;
   channel?: string | null;
@@ -298,11 +299,11 @@ export async function resolveMessageChannelSelection(params: {
   throw new Error(formatMultipleConfiguredChannelsMessage(configured));
 }
 
-/** Reused constant for testing behavior in src/infra/outbound. */
+/** Test-only controls for channel-selection diagnostic de-duplication. */
 export const testing = {
   resetLoggedChannelSelectionErrors() {
     loggedChannelSelectionErrors.clear();
   },
 };
-/** Re-exported API for src/infra/outbound, starting with testing. */
+/** Stable test hook alias used by channel-selection tests. */
 export { testing as __testing };

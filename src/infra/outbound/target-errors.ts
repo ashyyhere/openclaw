@@ -1,30 +1,31 @@
-// infra/outbound target errors helpers and runtime behavior.
-/** Reused helper for missing Target Message behavior in src/infra/outbound. */
+// Shared outbound target error messages.
+// Helpers keep CLI/tool errors consistent across channel target resolvers.
+/** Build the message for a missing outbound target. */
 export function missingTargetMessage(provider: string, hint?: string): string {
   return `Delivering to ${provider} requires target${formatTargetHint(hint)}`;
 }
 
-/** Reused helper for missing Target Error behavior in src/infra/outbound. */
+/** Build an Error for a missing outbound target. */
 export function missingTargetError(provider: string, hint?: string): Error {
   return new Error(missingTargetMessage(provider, hint));
 }
 
-/** Reused helper for ambiguous Target Message behavior in src/infra/outbound. */
+/** Build the message for an ambiguous directory target match. */
 export function ambiguousTargetMessage(provider: string, raw: string, hint?: string): string {
   return `Ambiguous target "${raw}" for ${provider}. Provide a unique name or an explicit id.${formatTargetHint(hint, true)}`;
 }
 
-/** Reused helper for ambiguous Target Error behavior in src/infra/outbound. */
+/** Build an Error for an ambiguous directory target match. */
 export function ambiguousTargetError(provider: string, raw: string, hint?: string): Error {
   return new Error(ambiguousTargetMessage(provider, raw, hint));
 }
 
-/** Reused helper for unknown Target Message behavior in src/infra/outbound. */
+/** Build the message for an unknown outbound target. */
 export function unknownTargetMessage(provider: string, raw: string, hint?: string): string {
   return `Unknown target "${raw}" for ${provider}.${formatTargetHint(hint, true)}`;
 }
 
-/** Reused helper for unknown Target Error behavior in src/infra/outbound. */
+/** Build an Error for an unknown outbound target. */
 export function unknownTargetError(provider: string, raw: string, hint?: string): Error {
   return new Error(unknownTargetMessage(provider, raw, hint));
 }

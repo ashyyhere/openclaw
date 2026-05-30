@@ -1,4 +1,5 @@
-// infra widearea dns helpers and runtime behavior.
+// Wide-area DNS zone rendering for gateway discovery.
+// Zone files stay under the OpenClaw DNS config dir and use content hashes to avoid serial churn.
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -23,7 +24,7 @@ function normalizedDomainLabels(raw: string): string[] {
   return labels;
 }
 
-/** Reused helper for normalize Wide Area Domain behavior in src/infra. */
+/** Normalize a discovery domain to a fully-qualified DNS name with trailing dot. */
 export function normalizeWideAreaDomain(raw?: string | null): string | null {
   const trimmed = raw?.trim();
   if (!trimmed) {
@@ -33,7 +34,7 @@ export function normalizeWideAreaDomain(raw?: string | null): string | null {
   return `${labels.join(".")}.`;
 }
 
-/** Reused helper for resolve Wide Area Discovery Domain behavior in src/infra. */
+/** Resolve the configured wide-area discovery domain from config or environment. */
 export function resolveWideAreaDiscoveryDomain(params?: {
   env?: NodeJS.ProcessEnv;
   configDomain?: string | null;
@@ -58,7 +59,7 @@ function assertZonePathUnderDnsDir(zonePath: string, dnsDir: string): void {
   }
 }
 
-/** Reused helper for get Wide Area Zone Path behavior in src/infra. */
+/** Resolve the zone file path for a discovery domain under the DNS config dir. */
 export function getWideAreaZonePath(domain: string): string {
   const dnsDir = path.resolve(CONFIG_DIR, "dns");
   const zonePath = path.resolve(dnsDir, zoneFilenameForDomain(domain));
@@ -124,7 +125,7 @@ function computeContentHash(body: string): string {
   return (h >>> 0).toString(16).padStart(8, "0");
 }
 
-/** Shared type for Wide Area Gateway Zone Opts in src/infra. */
+/** Inputs used to render a DNS-SD gateway discovery zone. */
 export type WideAreaGatewayZoneOpts = {
   domain: string;
   gatewayPort: number;
@@ -200,14 +201,14 @@ function renderZone(opts: WideAreaGatewayZoneOpts & { serial: number }): string 
   return `; openclaw-content-hash: ${contentHash}\n${contentBody}`;
 }
 
-/** Reused helper for render Wide Area Gateway Zone Text behavior in src/infra. */
+/** Render DNS zone text for a gateway discovery record set. */
 export function renderWideAreaGatewayZoneText(
   opts: WideAreaGatewayZoneOpts & { serial: number },
 ): string {
   return renderZone(opts);
 }
 
-/** Reused helper for write Wide Area Gateway Zone behavior in src/infra. */
+/** Write or update the gateway discovery zone file, bumping serial only on content changes. */
 export async function writeWideAreaGatewayZone(
   opts: WideAreaGatewayZoneOpts,
 ): Promise<{ zonePath: string; changed: boolean }> {
