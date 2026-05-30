@@ -27,24 +27,24 @@ import { runNativeHookRelayCli, type NativeHookRelayCliOptions } from "./native-
 import { runPluginInstallCommand } from "./plugins-install-command.js";
 import { runPluginUpdateCommand } from "./plugins-update-command.js";
 
-/** Shared type for Hooks List Options in src/cli. */
+/** Output controls for `openclaw hooks list`. */
 export type HooksListOptions = {
   json?: boolean;
   eligible?: boolean;
   verbose?: boolean;
 };
 
-/** Shared type for Hook Info Options in src/cli. */
+/** Output controls for `openclaw hooks info`. */
 export type HookInfoOptions = {
   json?: boolean;
 };
 
-/** Shared type for Hooks Check Options in src/cli. */
+/** Output controls for `openclaw hooks check`. */
 export type HooksCheckOptions = {
   json?: boolean;
 };
 
-/** Shared type for Hooks Update Options in src/cli. */
+/** Options for updating hook definitions from plugins/workspace sources. */
 export type HooksUpdateOptions = {
   all?: boolean;
   dryRun?: boolean;
@@ -427,7 +427,7 @@ export function formatHooksCheck(report: HookStatusReport, opts: HooksCheckOptio
   return lines.join("\n");
 }
 
-/** Reused helper for enable Hook behavior in src/cli. */
+/** Enable one eligible workspace hook in config. */
 export async function enableHook(hookName: string): Promise<void> {
   const snapshot = await readConfigFileSnapshot();
   const config = (snapshot.sourceConfig ?? snapshot.config) as OpenClawConfig;
@@ -448,7 +448,7 @@ export async function enableHook(hookName: string): Promise<void> {
   );
 }
 
-/** Reused helper for disable Hook behavior in src/cli. */
+/** Disable one workspace hook in config. */
 export async function disableHook(hookName: string): Promise<void> {
   const snapshot = await readConfigFileSnapshot();
   const config = (snapshot.sourceConfig ?? snapshot.config) as OpenClawConfig;
@@ -464,7 +464,7 @@ export async function disableHook(hookName: string): Promise<void> {
   );
 }
 
-/** Reused helper for register Hooks Cli behavior in src/cli. */
+/** Register the `openclaw hooks` command tree. */
 export function registerHooksCli(program: Command): void {
   const hooks = program
     .command("hooks")

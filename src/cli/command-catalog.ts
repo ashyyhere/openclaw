@@ -1,20 +1,20 @@
 /** Catalog types and policy helpers for CLI command registration. */
 import { hasFlag } from "./argv.js";
 
-/** Shared type for Cli Command Plugin Load Policy in src/cli. */
+/** Plugin-loading policy for a CLI command path. */
 export type CliCommandPluginLoadPolicy =
   | "never"
   | "always"
   | "text-only"
   | ((ctx: { argv: string[]; commandPath: string[]; jsonOutputMode: boolean }) => boolean);
 type CliRouteConfigGuardPolicy = "never" | "always" | "when-suppressed";
-/** Shared type for Cli Plugin Registry Scope in src/cli. */
+/** Plugin registry scope needed before a CLI command runs. */
 export type CliPluginRegistryScope = "all" | "channels" | "configured-channels";
-/** Shared type for Cli Plugin Registry Policy in src/cli. */
+/** Registry loading policy attached to a CLI command path. */
 export type CliPluginRegistryPolicy = {
   scope: CliPluginRegistryScope;
 };
-/** Shared type for Cli Network Proxy Policy in src/cli. */
+/** Whether a CLI command should bypass configured network proxy settings. */
 export type CliNetworkProxyPolicy = "default" | "bypass";
 type CliNetworkProxyPolicyResolver =
   | CliNetworkProxyPolicy
@@ -35,7 +35,7 @@ type CliRoutedCommandId =
   | "channels-status"
   | "plugins-list";
 
-/** Shared type for Cli Command Path Policy in src/cli. */
+/** Startup policy resolved for one CLI command path. */
 export type CliCommandPathPolicy = {
   bypassConfigGuard: boolean;
   routeConfigGuard: CliRouteConfigGuardPolicy;
@@ -46,7 +46,7 @@ export type CliCommandPathPolicy = {
   networkProxy: CliNetworkProxyPolicyResolver;
 };
 
-/** Shared type for Cli Command Catalog Entry in src/cli. */
+/** Catalog entry that maps a command path to startup policy and optional gateway route. */
 export type CliCommandCatalogEntry = {
   commandPath: readonly string[];
   exact?: boolean;
@@ -57,7 +57,7 @@ export type CliCommandCatalogEntry = {
   };
 };
 
-/** Reused constant for cli Command Catalog behavior in src/cli. */
+/** Declarative command-path policy catalog used before command handlers execute. */
 export const cliCommandCatalog: readonly CliCommandCatalogEntry[] = [
   {
     commandPath: ["crestodian"],

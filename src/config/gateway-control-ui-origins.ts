@@ -1,16 +1,16 @@
-// config gateway control ui origins helpers and runtime behavior.
+// Seeds Control UI allowed origins when gateway bind mode is non-loopback.
 import { DEFAULT_GATEWAY_PORT } from "./paths.js";
 import type { OpenClawConfig } from "./types.openclaw.js";
 
-/** Shared type for Gateway Non Loopback Bind Mode in src/config. */
+/** Gateway bind modes that can expose Control UI beyond loopback. */
 export type GatewayNonLoopbackBindMode = "lan" | "tailnet" | "custom" | "auto";
 
-/** Reused helper for is Gateway Non Loopback Bind Mode behavior in src/config. */
+/** Check whether a raw bind value is one of the non-loopback gateway modes. */
 export function isGatewayNonLoopbackBindMode(bind: unknown): bind is GatewayNonLoopbackBindMode {
   return bind === "lan" || bind === "tailnet" || bind === "custom" || bind === "auto";
 }
 
-/** Reused helper for has Configured Control Ui Allowed Origins behavior in src/config. */
+/** Detect explicit Control UI origin policy, including the dangerous fallback opt-out. */
 export function hasConfiguredControlUiAllowedOrigins(params: {
   allowedOrigins: unknown;
   dangerouslyAllowHostHeaderOriginFallback: unknown;
@@ -24,7 +24,7 @@ export function hasConfiguredControlUiAllowedOrigins(params: {
   );
 }
 
-/** Reused helper for resolve Gateway Port With Default behavior in src/config. */
+/** Resolve a configured gateway port, falling back when the value is missing/invalid. */
 export function resolveGatewayPortWithDefault(
   port: unknown,
   fallback = DEFAULT_GATEWAY_PORT,
@@ -32,7 +32,7 @@ export function resolveGatewayPortWithDefault(
   return typeof port === "number" && port > 0 ? port : fallback;
 }
 
-/** Reused helper for build Default Control Ui Allowed Origins behavior in src/config. */
+/** Build loopback/custom-host origins for the effective gateway port. */
 export function buildDefaultControlUiAllowedOrigins(params: {
   port: number;
   bind: unknown;
@@ -49,7 +49,7 @@ export function buildDefaultControlUiAllowedOrigins(params: {
   return [...origins];
 }
 
-/** Reused helper for ensure Control Ui Allowed Origins For Non Loopback Bind behavior in src/config. */
+/** Add safe default Control UI origins when non-loopback bind would otherwise fail startup. */
 export function ensureControlUiAllowedOriginsForNonLoopbackBind(
   config: OpenClawConfig,
   opts?: {

@@ -542,7 +542,7 @@ async function runProviderAuthMethod(params: {
   });
 }
 
-/** Reused helper for models Auth Setup Token Command behavior in src/commands/models. */
+/** Interactive token-auth setup command for providers that expose token methods. */
 export async function modelsAuthSetupTokenCommand(
   opts: { provider?: string; yes?: boolean; agent?: string },
   runtime: RuntimeEnv,
@@ -599,7 +599,7 @@ export async function modelsAuthSetupTokenCommand(
   });
 }
 
-/** Reused helper for models Auth Paste Token Command behavior in src/commands/models. */
+/** Non-interactive token paste command that writes a token auth profile. */
 export async function modelsAuthPasteTokenCommand(
   opts: {
     provider?: string;
@@ -667,7 +667,7 @@ export async function modelsAuthPasteTokenCommand(
   }
 }
 
-/** Reused helper for models Auth Paste Api Key Command behavior in src/commands/models. */
+/** Non-interactive API-key paste command that writes an API-key auth profile. */
 export async function modelsAuthPasteApiKeyCommand(
   opts: {
     provider?: string;
@@ -729,7 +729,7 @@ async function upsertAuthProfileWithLockOrThrow(params: UpsertAuthProfileParams)
   }
 }
 
-/** Reused helper for models Auth Add Command behavior in src/commands/models. */
+/** Interactive legacy token-profile add flow for provider auth setup. */
 export async function modelsAuthAddCommand(opts: { agent?: string }, runtime: RuntimeEnv) {
   const { config, agentDir, workspaceDir, providers } = await resolveModelsAuthContext({
     rawAgentId: opts.agent,
@@ -862,7 +862,7 @@ async function clearStaleProfileLockouts(provider: string, agentDir: string): Pr
   }
 }
 
-/** Reused helper for resolve Requested Login Provider Or Throw behavior in src/commands/models. */
+/** Resolve the requested provider plugin for login, returning null when none was requested. */
 export function resolveRequestedLoginProviderOrThrow(
   providers: ProviderPlugin[],
   rawProvider?: string,
@@ -880,7 +880,7 @@ function credentialMode(credential: AuthProfileCredential): "api_key" | "oauth" 
   return "oauth";
 }
 
-/** Reused helper for resolve Login Profiles behavior in src/commands/models. */
+/** Apply an optional requested profile id to a provider auth result. */
 export function resolveLoginProfiles(params: {
   result: ProviderAuthResult;
   requestedProfileId?: string;
@@ -909,7 +909,7 @@ function maybeLogOpenAICodexNativeSearchTip(runtime: RuntimeEnv, providerId: str
   );
 }
 
-/** Reused helper for models Auth Login Command behavior in src/commands/models. */
+/** Interactive provider login command for plugin-provided auth methods. */
 export async function modelsAuthLoginCommand(opts: LoginOptions, runtime: RuntimeEnv) {
   if (!process.stdin.isTTY) {
     throw new Error(

@@ -686,7 +686,7 @@ function resolveRequiredDeviceRole(
   return null;
 }
 
-/** Reused helper for run Devices List Command behavior in src/cli. */
+/** List pending and paired gateway device pairing entries. */
 export async function runDevicesListCommand(opts: DevicesRpcOpts): Promise<void> {
   let list: DevicePairingList;
   try {
@@ -774,7 +774,7 @@ export async function runDevicesListCommand(opts: DevicesRpcOpts): Promise<void>
   }
 }
 
-/** Reused helper for run Devices Remove Command behavior in src/cli. */
+/** Remove a paired device by id through the gateway. */
 export async function runDevicesRemoveCommand(
   deviceId: string,
   opts: DevicesRpcOpts,
@@ -795,7 +795,7 @@ export async function runDevicesRemoveCommand(
   defaultRuntime.log(`${theme.warn("Removed")} ${theme.command(trimmed)}`);
 }
 
-/** Reused helper for run Devices Clear Command behavior in src/cli. */
+/** Remove paired devices and optionally reject pending requests, guarded by `--yes`. */
 export async function runDevicesClearCommand(opts: DevicesRpcOpts): Promise<void> {
   if (!opts.yes) {
     defaultRuntime.error("Refusing to clear pairing table without --yes");
@@ -842,7 +842,7 @@ export async function runDevicesClearCommand(opts: DevicesRpcOpts): Promise<void
   }
 }
 
-/** Reused helper for run Devices Approve Command behavior in src/cli. */
+/** Approve a pending device pairing request, with explicit confirmation for implicit selection. */
 export async function runDevicesApproveCommand(
   requestId: string | undefined,
   opts: DevicesRpcOpts,
@@ -947,7 +947,7 @@ export async function runDevicesApproveCommand(
   );
 }
 
-/** Reused helper for run Devices Reject Command behavior in src/cli. */
+/** Reject a pending device pairing request through the gateway. */
 export async function runDevicesRejectCommand(
   requestId: string,
   opts: DevicesRpcOpts,
@@ -961,7 +961,7 @@ export async function runDevicesRejectCommand(
   defaultRuntime.log(`${theme.warn("Rejected")} ${theme.command(deviceId ?? "ok")}`);
 }
 
-/** Reused helper for run Devices Rotate Command behavior in src/cli. */
+/** Rotate a gateway device token for a specific device/role/scope set. */
 export async function runDevicesRotateCommand(opts: DevicesRpcOpts): Promise<void> {
   const required = resolveRequiredDeviceRole(opts);
   if (!required) {
@@ -975,7 +975,7 @@ export async function runDevicesRotateCommand(opts: DevicesRpcOpts): Promise<voi
   defaultRuntime.writeJson(result);
 }
 
-/** Reused helper for run Devices Revoke Command behavior in src/cli. */
+/** Revoke a gateway device token for a specific device and role. */
 export async function runDevicesRevokeCommand(opts: DevicesRpcOpts): Promise<void> {
   const required = resolveRequiredDeviceRole(opts);
   if (!required) {

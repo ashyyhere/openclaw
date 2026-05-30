@@ -18,11 +18,11 @@ import { isPlainObject } from "../utils.js";
 import { parseJsonWithJson5Fallback } from "../utils/parse-json-compat.js";
 import { isBlockedObjectKey } from "./prototype-keys.js";
 
-/** Reused constant for INCLUDE KEY behavior in src/config. */
+/** Config key that declares one or more included JSON/JSON5 files. */
 export const INCLUDE_KEY = "$include";
-/** Reused constant for MAX INCLUDE DEPTH behavior in src/config. */
+/** Maximum recursive include depth before cycle/depth protection fails. */
 export const MAX_INCLUDE_DEPTH = 10;
-/** Reused constant for MAX INCLUDE FILE BYTES behavior in src/config. */
+/** Maximum include file size read through guarded include resolution. */
 export const MAX_INCLUDE_FILE_BYTES = 2 * 1024 * 1024;
 
 /** Maximum length for $include path and resolved path (CWE-22 hardening). */
@@ -32,7 +32,7 @@ export const MAX_INCLUDE_PATH_LENGTH = 4096;
 // Types
 // ============================================================================
 
-/** Shared type for Include Resolver in src/config. */
+/** Pluggable filesystem/parser interface used by config include processing. */
 export type IncludeResolver = {
   readFile: (path: string) => string;
   readFileWithGuards?: (params: IncludeFileReadParams) => string;
@@ -66,7 +66,7 @@ type IncludeRoot = {
 // Errors
 // ============================================================================
 
-/** Reused class for Config Include Error behavior in src/config. */
+/** Error thrown when include resolution, parsing, or boundary checks fail. */
 export class ConfigIncludeError extends Error {
   constructor(
     message: string,
@@ -78,7 +78,7 @@ export class ConfigIncludeError extends Error {
   }
 }
 
-/** Reused class for Circular Include Error behavior in src/config. */
+/** Include error carrying the chain that produced a cycle. */
 export class CircularIncludeError extends ConfigIncludeError {
   constructor(public readonly chain: string[]) {
     super(`Circular include detected: ${chain.join(" -> ")}`, chain[chain.length - 1]);
@@ -382,7 +382,7 @@ function isNotFoundError(error: unknown): boolean {
   );
 }
 
-/** Reused helper for read Config Include File With Guards behavior in src/config. */
+/** Read an included file with root-confined open and size guards when supported. */
 export function readConfigIncludeFileWithGuards(params: IncludeFileReadParams): string {
   const ioFs = params.ioFs ?? fs;
   const maxBytes = params.maxBytes ?? MAX_INCLUDE_FILE_BYTES;

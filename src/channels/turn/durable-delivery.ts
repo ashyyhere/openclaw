@@ -17,7 +17,7 @@ import { sendDurableMessageBatch } from "../message/send.js";
 import { createChannelDeliveryResultFromReceipt } from "./delivery-result.js";
 import type { ChannelDeliveryInfo, ChannelDeliveryResult } from "./types.js";
 
-/** Shared type for Durable Inbound Reply Delivery Options in src/channels/turn. */
+/** Optional delivery controls for final inbound replies that use durable outbound delivery. */
 export type DurableInboundReplyDeliveryOptions = Pick<
   DeliverOutboundPayloadsParams,
   "deps" | "formatting" | "identity" | "mediaAccess" | "replyToMode" | "silent" | "threadId"
@@ -27,7 +27,7 @@ export type DurableInboundReplyDeliveryOptions = Pick<
   requiredCapabilities?: DurableFinalDeliveryRequirements;
 };
 
-/** Shared type for Durable Inbound Reply Delivery Params in src/channels/turn. */
+/** Full input needed to deliver a final inbound reply through durable message sending. */
 export type DurableInboundReplyDeliveryParams = DurableInboundReplyDeliveryOptions & {
   cfg: OpenClawConfig;
   channel: string;
@@ -38,7 +38,7 @@ export type DurableInboundReplyDeliveryParams = DurableInboundReplyDeliveryOptio
   info: ChannelDeliveryInfo;
 };
 
-/** Shared type for Durable Inbound Reply Delivery Result in src/channels/turn. */
+/** Delivery outcome for final inbound replies routed through durable outbound sending. */
 export type DurableInboundReplyDeliveryResult =
   | { status: "not_applicable"; reason: "non_final" }
   | {
@@ -62,7 +62,7 @@ function resolveDeliveryTarget(params: DurableInboundReplyDeliveryParams): strin
   );
 }
 
-/** Reused helper for resolve Durable Inbound Reply To Id behavior in src/channels/turn. */
+/** Resolve reply target id from explicit options, payload override, or inbound context. */
 export function resolveDurableInboundReplyToId(
   params: Pick<DurableInboundReplyDeliveryParams, "ctxPayload" | "payload" | "replyToId">,
 ): string | null | undefined {
@@ -98,7 +98,7 @@ function toDeliveryIntent(intent: OutboundDeliveryIntent): ChannelDeliveryResult
   };
 }
 
-/** Reused helper for is Durable Inbound Reply Delivery Handled behavior in src/channels/turn. */
+/** Check whether durable delivery consumed the final reply path. */
 export function isDurableInboundReplyDeliveryHandled(
   result: DurableInboundReplyDeliveryResult,
 ): result is Extract<
@@ -108,7 +108,7 @@ export function isDurableInboundReplyDeliveryHandled(
   return result.status === "handled_visible" || result.status === "handled_no_send";
 }
 
-/** Reused helper for throw If Durable Inbound Reply Delivery Failed behavior in src/channels/turn. */
+/** Throw durable-delivery failures, preserving whether a visible reply was already sent. */
 export function throwIfDurableInboundReplyDeliveryFailed(
   result: DurableInboundReplyDeliveryResult,
 ): void {
@@ -130,7 +130,7 @@ function markDurableInboundReplyDeliveryErrorVisible(error: unknown): unknown {
   return visibleError;
 }
 
-/** Reused helper for deliver Inbound Reply With Message Send Context behavior in src/channels/turn. */
+/** Deliver a final inbound reply through channel outbound APIs when durability is supported. */
 export async function deliverInboundReplyWithMessageSendContext(
   params: DurableInboundReplyDeliveryParams,
 ): Promise<DurableInboundReplyDeliveryResult> {

@@ -332,7 +332,7 @@ type LinuxMountInfoEntry = {
   source: string;
 };
 
-/** Shared type for Linux Sd Backed State Dir in src/commands. */
+/** Linux state directory mount backed by SD/eMMC storage. */
 export type LinuxSdBackedStateDir = {
   path: string;
   mountPoint: string;
@@ -420,7 +420,7 @@ function tryReadLinuxMountInfo(): string | null {
   }
 }
 
-/** Reused helper for detect Linux Sd Backed State Dir behavior in src/commands. */
+/** Detect whether the OpenClaw state dir is mounted from SD/eMMC media on Linux. */
 export function detectLinuxSdBackedStateDir(
   stateDir: string,
   deps?: {
@@ -473,7 +473,7 @@ export function detectLinuxSdBackedStateDir(
   };
 }
 
-/** Reused helper for format Linux Sd Backed State Dir Warning behavior in src/commands. */
+/** Format the doctor warning for SD/eMMC-backed state directories. */
 export function formatLinuxSdBackedStateDirWarning(
   displayStateDir: string,
   linuxSdBackedStateDir: LinuxSdBackedStateDir,
@@ -492,7 +492,7 @@ export function formatLinuxSdBackedStateDirWarning(
   ].join("\n");
 }
 
-/** Reused helper for detect Mac Cloud Synced State Dir behavior in src/commands. */
+/** Detect macOS state dirs under iCloud Drive or CloudStorage providers. */
 export function detectMacCloudSyncedStateDir(
   stateDir: string,
   deps?: {
@@ -616,7 +616,7 @@ function shouldSuppressOrphanTranscriptWarning(cfg: OpenClawConfig, agentId: str
   return backendConfig?.backend === "qmd" && backendConfig.qmd?.sessions.enabled === true;
 }
 
-/** Reused helper for note State Integrity behavior in src/commands. */
+/** Run state-directory/session-store integrity checks and optional doctor repairs. */
 export async function noteStateIntegrity(
   cfg: OpenClawConfig,
   prompter: DoctorPrompterLike,
@@ -1063,7 +1063,7 @@ export async function noteStateIntegrity(
   }
 }
 
-/** Reused helper for collect Workspace Backup Tip behavior in src/commands. */
+/** Return a workspace backup reminder when the workspace is not a git repo. */
 export function collectWorkspaceBackupTip(workspaceDir: string): string | null {
   if (!existsDir(workspaceDir)) {
     return null;
@@ -1079,7 +1079,7 @@ export function collectWorkspaceBackupTip(workspaceDir: string): string | null {
   ].join("\n");
 }
 
-/** Reused helper for note Workspace Backup Tip behavior in src/commands. */
+/** Print the workspace backup reminder when applicable. */
 export function noteWorkspaceBackupTip(workspaceDir: string) {
   const tip = collectWorkspaceBackupTip(workspaceDir);
   if (tip) {
