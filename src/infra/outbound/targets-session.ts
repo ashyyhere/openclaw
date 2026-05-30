@@ -1,4 +1,4 @@
-// infra/outbound targets session helpers and runtime behavior.
+// Resolves delivery targets from session history and explicit outbound requests.
 import { resolveExplicitDeliveryTargetCompat } from "../../channels/plugins/target-parsing-loaded.js";
 import type { ChannelOutboundTargetMode } from "../../channels/plugins/types.public.js";
 import type { SessionEntry } from "../../config/sessions.js";
@@ -19,7 +19,7 @@ import type {
 } from "../../utils/message-channel-normalize.js";
 import { resolveTargetPrefixedChannel } from "./channel-target-prefix.js";
 
-/** Shared type for Session Delivery Target in src/infra/outbound. */
+/** Effective channel target selected for a session-scoped outbound delivery. */
 export type SessionDeliveryTarget = {
   channel?: DeliverableMessageChannel;
   to?: string;
@@ -58,7 +58,7 @@ function resolveParsedRouteTarget(params: {
   };
 }
 
-/** Reused helper for resolve Session Delivery Target behavior in src/infra/outbound. */
+/** Chooses explicit, turn-source, session-last, or fallback delivery target details. */
 export function resolveSessionDeliveryTarget(params: {
   entry?: SessionEntry;
   requestedChannel?: GatewayMessageChannel;

@@ -1,4 +1,4 @@
-// infra/outbound message action tts helpers and runtime behavior.
+// Applies session-aware TTS settings to outbound message-action payloads.
 import type { ReplyPayload } from "../../auto-reply/reply-payload.js";
 import {
   loadSessionStore,
@@ -16,7 +16,7 @@ function loadMessageActionTtsRuntime() {
   return ttsRuntimePromise;
 }
 
-/** Reused helper for resolve Message Action Session Tts Auto behavior in src/infra/outbound. */
+/** Reads the session-level TTS auto mode for a message-action send. */
 export function resolveMessageActionSessionTtsAuto(params: {
   cfg: OpenClawConfig;
   sessionKey?: string;
@@ -35,7 +35,7 @@ export function resolveMessageActionSessionTtsAuto(params: {
   }
 }
 
-/** Reused helper for maybe Apply Tts To Message Action Send Payload behavior in src/infra/outbound. */
+/** Adds generated TTS media to a send payload when config/session policy allows it. */
 export async function maybeApplyTtsToMessageActionSendPayload(params: {
   payload: ReplyPayload;
   cfg: OpenClawConfig;

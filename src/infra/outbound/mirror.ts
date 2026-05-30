@@ -1,5 +1,5 @@
-// infra/outbound mirror helpers and runtime behavior.
-/** Shared type for Outbound Mirror in src/infra/outbound. */
+// Shared transcript mirror payloads for outbound delivery.
+/** Message content mirrored into a session transcript after outbound delivery. */
 export type OutboundMirror = {
   sessionKey: string;
   agentId?: string;
@@ -8,7 +8,7 @@ export type OutboundMirror = {
   idempotencyKey?: string;
 };
 
-/** Shared type for Delivery Mirror in src/infra/outbound. */
+/** Transcript mirror payload with group/channel correlation fields. */
 export type DeliveryMirror = OutboundMirror & {
   /** Whether this message is being sent in a group/channel context */
   isGroup?: boolean;

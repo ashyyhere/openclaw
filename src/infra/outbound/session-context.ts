@@ -1,11 +1,11 @@
-// infra/outbound session context helpers and runtime behavior.
+// Builds session metadata passed through outbound delivery hooks and policy.
 import { resolveSessionAgentId } from "../../agents/agent-scope.js";
 import { normalizeChatType } from "../../channels/chat-type.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { SilentReplyConversationType } from "../../shared/silent-reply-policy.js";
 import { normalizeOptionalString } from "../../shared/string-coerce.js";
 
-/** Shared type for Outbound Session Context in src/infra/outbound. */
+/** Session and requester metadata carried across outbound delivery boundaries. */
 export type OutboundSessionContext = {
   /**
    * Canonical session key used for internal hook dispatch.
@@ -49,7 +49,7 @@ export type OutboundSessionContext = {
   requesterSenderE164?: string;
 };
 
-/** Reused helper for build Outbound Session Context behavior in src/infra/outbound. */
+/** Builds the minimal outbound session context from delivery and requester fields. */
 export function buildOutboundSessionContext(params: {
   cfg: OpenClawConfig;
   sessionKey?: string | null;

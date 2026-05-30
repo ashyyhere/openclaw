@@ -5,7 +5,7 @@
  */
 export type OutboundSendDeps = { [channelId: string]: unknown };
 
-/** Reused helper for resolve Legacy Outbound Send Dep Keys behavior in src/infra/outbound. */
+/** Builds legacy dependency keys such as sendSlack for a channel id. */
 export function resolveLegacyOutboundSendDepKeys(channelId: string): string[] {
   const compact = channelId.replace(/[^a-z0-9]+/gi, "");
   if (!compact) {
@@ -23,13 +23,13 @@ export function resolveLegacyOutboundSendDepKeys(channelId: string): string[] {
   return [...keys];
 }
 
-/** Shared type for Resolve Outbound Send Dep Options in src/infra/outbound. */
+/** Options for channel send dependency lookup. */
 export type ResolveOutboundSendDepOptions = {
   legacyKeys?: readonly string[];
 };
 
 // oxlint-disable-next-line typescript/no-unnecessary-type-parameters -- Channel-specific dependency lookup returns caller-typed values.
-/** Reused helper for resolve Outbound Send Dep behavior in src/infra/outbound. */
+/** Resolves a channel send dependency by channel id or legacy send* key. */
 export function resolveOutboundSendDep<T>(
   deps: OutboundSendDeps | null | undefined,
   channelId: string,

@@ -1,4 +1,4 @@
-// infra plugin install path warnings helpers and runtime behavior.
+// Detects and formats warnings for path-based plugin installs during updates.
 import fs from "node:fs/promises";
 import path from "node:path";
 import type { PluginInstallRecord } from "../config/types.plugins.js";
@@ -22,7 +22,7 @@ function resolvePluginInstallCandidatePaths(
     .filter(Boolean);
 }
 
-/** Reused helper for detect Plugin Install Path Issue behavior in src/infra. */
+/** Detects whether a path-installed plugin is custom or points to a missing path. */
 export async function detectPluginInstallPathIssue(params: {
   pluginId: string;
   install: PluginInstallRecord | null | undefined;
@@ -52,7 +52,7 @@ export async function detectPluginInstallPathIssue(params: {
   };
 }
 
-/** Reused helper for format Plugin Install Path Issue behavior in src/infra. */
+/** Formats actionable operator warnings for custom or stale plugin install paths. */
 export function formatPluginInstallPathIssue(params: {
   issue: PluginInstallPathIssue;
   pluginLabel: string;

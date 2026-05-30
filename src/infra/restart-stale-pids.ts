@@ -1,4 +1,4 @@
-// infra restart stale pids helpers and runtime behavior.
+// Finds and terminates stale gateway processes before service restart.
 import { spawnSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import path from "node:path";
@@ -622,7 +622,7 @@ export function cleanStaleGatewayProcessesSync(portOverride?: number): number[] 
   }
 }
 
-/** Reused constant for testing behavior in src/infra. */
+/** Test hooks for restart stale-PID cleanup timing and parent-PID behavior. */
 export const testing = {
   setSleepSyncOverride(fn: ((ms: number) => void) | null) {
     sleepSyncOverride = fn;
@@ -636,5 +636,5 @@ export const testing = {
   /** Invoke sleepSync directly (bypasses the override) for unit-testing the real Atomics path. */
   callSleepSyncRaw: sleepSync,
 };
-/** Re-exported API for src/infra, starting with testing. */
+/** Test-only hooks exported under an explicit testing alias. */
 export { testing as __testing };
