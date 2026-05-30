@@ -1,5 +1,5 @@
-// infra parse finite number helpers and runtime behavior.
-/** Re-exported API for src/infra. */
+// Re-exports strict number coercion and timer-safe duration helpers.
+/** Number parsing and duration conversion helpers shared by infra callers. */
 export {
   parseFiniteNumber,
   parseStrictFiniteNumber,

@@ -1,8 +1,8 @@
-// infra/outbound reply payload normalize helpers and runtime behavior.
+// Normalizes loose reply payloads into outbound delivery fields.
 import type { ReplyPayload as InternalReplyPayload } from "../../auto-reply/reply-payload.js";
 import { readStringValue } from "../../shared/string-coerce.js";
 
-/** Shared type for Outbound Reply Payload in src/infra/outbound. */
+/** Supported outbound reply fields accepted from tool or agent payloads. */
 export type OutboundReplyPayload = {
   text?: string;
   mediaUrls?: string[];

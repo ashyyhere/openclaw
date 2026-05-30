@@ -1,5 +1,5 @@
-// infra/outbound message action test fixtures helpers and runtime behavior.
-/** Reused helper for create Pinboard Message Action Bootstrap Registry Mock behavior in src/infra/outbound. */
+// Shared fixtures for message action target alias tests.
+/** Creates a bootstrap registry mock with Pinboard and iMessage action aliases. */
 export function createPinboardMessageActionBootstrapRegistryMock() {
   return (channel: string) => {
     if (channel === "pinboard") {

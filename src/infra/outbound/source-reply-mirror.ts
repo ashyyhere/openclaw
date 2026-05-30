@@ -1,4 +1,4 @@
-// infra/outbound source reply mirror helpers and runtime behavior.
+// Mirrors source-conversation send actions back into the active transcript.
 import type { ReplyPayload } from "../../auto-reply/types.js";
 import { getChannelPlugin } from "../../channels/plugins/index.js";
 import type {
@@ -118,7 +118,7 @@ function isCurrentSourceConversation(
   );
 }
 
-/** Reused helper for mirror Delivered Source Reply To Transcript behavior in src/infra/outbound. */
+/** Appends delivered send-action content to the source transcript when it replies in place. */
 export async function mirrorDeliveredSourceReplyToTranscript(
   params: SourceReplyTranscriptMirrorParams,
 ): Promise<boolean> {

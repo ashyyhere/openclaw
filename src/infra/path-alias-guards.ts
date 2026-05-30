@@ -1,6 +1,6 @@
-// infra path alias guards helpers and runtime behavior.
+// Re-exports fs-safe path alias escape guards with infra defaults loaded.
 import "./fs-safe-defaults.js";
-/** Re-exported API for src/infra. */
+/** Path alias policies and guards that prevent alias escape. */
 export {
   PATH_ALIAS_POLICIES,
   assertNoPathAliasEscape,

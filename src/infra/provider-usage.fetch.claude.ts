@@ -1,4 +1,4 @@
-// infra provider usage fetch claude helpers and runtime behavior.
+// Fetches Anthropic usage windows from OAuth or Claude web session credentials.
 import {
   buildUsageHttpErrorSnapshot,
   fetchJson,
@@ -125,7 +125,7 @@ async function fetchClaudeWebUsage(
   };
 }
 
-/** Reused helper for fetch Claude Usage behavior in src/infra. */
+/** Fetches Claude usage and falls back to the web API when OAuth lacks profile scope. */
 export async function fetchClaudeUsage(
   token: string,
   timeoutMs: number,

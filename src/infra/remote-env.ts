@@ -1,7 +1,7 @@
-// infra remote env helpers and runtime behavior.
+// Detects SSH, container, codespace, and headless Linux remote environments.
 import { isWSLEnv } from "./wsl.js";
 
-/** Reused helper for is Remote Environment behavior in src/infra. */
+/** Returns true when the current process likely lacks a local desktop session. */
 export function isRemoteEnvironment(): boolean {
   if (process.env.SSH_CLIENT || process.env.SSH_TTY || process.env.SSH_CONNECTION) {
     return true;

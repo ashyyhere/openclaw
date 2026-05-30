@@ -1,8 +1,8 @@
-// infra ws helpers and runtime behavior.
+// Converts ws RawData payload variants into strings.
 import { Buffer } from "node:buffer";
 import type WebSocket from "ws";
 
-/** Reused helper for raw Data To String behavior in src/infra. */
+/** Decodes string, Buffer, ArrayBuffer, and chunk-array websocket payloads. */
 export function rawDataToString(
   data: WebSocket.RawData,
   encoding: BufferEncoding = "utf8",

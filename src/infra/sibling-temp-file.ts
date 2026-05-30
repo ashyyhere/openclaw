@@ -1,6 +1,6 @@
-// infra sibling temp file helpers and runtime behavior.
+// Re-exports fs-safe sibling temp-file writes with infra defaults loaded.
 import "./fs-safe-defaults.js";
-/** Re-exported API for src/infra. */
+/** Creates temp files beside the destination so atomic renames stay on-device. */
 export {
   writeSiblingTempFile,
   type WriteSiblingTempFileOptions,

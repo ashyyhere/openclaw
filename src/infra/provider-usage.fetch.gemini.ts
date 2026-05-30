@@ -1,4 +1,4 @@
-// infra provider usage fetch gemini helpers and runtime behavior.
+// Fetches Gemini quota buckets and summarizes Pro/Flash usage.
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import {
   buildUsageHttpErrorSnapshot,
@@ -16,7 +16,7 @@ type GeminiUsageResponse = {
   buckets?: Array<{ modelId?: string; remainingFraction?: number }>;
 };
 
-/** Reused helper for fetch Gemini Usage behavior in src/infra. */
+/** Fetches Gemini quota buckets and converts remaining fractions to used percentages. */
 export async function fetchGeminiUsage(
   token: string,
   timeoutMs: number,

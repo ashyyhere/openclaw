@@ -1,4 +1,4 @@
-// infra/outbound message action threading test helpers helpers and runtime behavior.
+// Test doubles for outbound reply-to, thread, and mirror route resolution.
 import { vi } from "vitest";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 
@@ -39,7 +39,7 @@ function resolveOutboundThreadId(
   return resolved ?? undefined;
 }
 
-/** Reused helper for create Outbound Threading Mock behavior in src/infra/outbound. */
+/** Creates Vitest mocks that emulate outbound threading side effects. */
 export function createOutboundThreadingMock() {
   const resolveOutboundReplyToId = vi.fn(
     (

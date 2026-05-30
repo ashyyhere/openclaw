@@ -1,4 +1,4 @@
-// infra provider usage load helpers and runtime behavior.
+// Loads provider usage summaries from plugin hooks or built-in fallbacks.
 import { getRuntimeConfig, type OpenClawConfig } from "../config/config.js";
 import { resolveProviderUsageSnapshotWithPlugin } from "../plugins/provider-runtime.js";
 import { resolveFetch } from "./fetch.js";
@@ -80,7 +80,7 @@ async function fetchProviderUsageSnapshot(params: {
   });
 }
 
-/** Reused helper for load Provider Usage Summary behavior in src/infra. */
+/** Resolves provider auths, fetches usage snapshots, and returns a timestamped summary. */
 export async function loadProviderUsageSummary(
   opts: UsageSummaryOptions = {},
 ): Promise<UsageSummary> {

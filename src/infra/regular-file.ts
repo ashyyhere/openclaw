@@ -1,6 +1,6 @@
-// infra regular file helpers and runtime behavior.
+// Re-exports fs-safe regular-file helpers with infra defaults loaded.
 import "./fs-safe-defaults.js";
-/** Re-exported API for src/infra. */
+/** Regular-file read, append, and stat helpers that reject unsafe file types. */
 export {
   appendRegularFile,
   appendRegularFileSync,

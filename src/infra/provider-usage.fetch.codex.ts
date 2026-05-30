@@ -1,4 +1,4 @@
-// infra provider usage fetch codex helpers and runtime behavior.
+// Fetches Codex usage and credit balance from ChatGPT backend usage APIs.
 import { resolveProviderRequestHeaders } from "../agents/provider-request-config.js";
 import { parseStrictFiniteNumber } from "./parse-finite-number.js";
 import {
@@ -54,7 +54,7 @@ function resolveSecondaryWindowLabel(params: {
   return "Day";
 }
 
-/** Reused helper for fetch Codex Usage behavior in src/infra. */
+/** Fetches Codex rate-limit windows using token and optional ChatGPT account id. */
 export async function fetchCodexUsage(
   token: string,
   accountId: string | undefined,

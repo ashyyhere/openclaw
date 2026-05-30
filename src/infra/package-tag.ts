@@ -1,7 +1,7 @@
-// infra package tag helpers and runtime behavior.
+// Normalizes package tag inputs relative to known package names.
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 
-/** Reused helper for normalize Package Tag Input behavior in src/infra. */
+/** Returns the explicit tag portion from `pkg@tag`, or the raw tag when unqualified. */
 export function normalizePackageTagInput(
   value: string | undefined | null,
   packageNames: readonly string[],
