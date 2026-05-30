@@ -1,4 +1,5 @@
-// infra exec approvals helpers and runtime behavior.
+// Exec approval policy, durable allowlists, and approval socket requests.
+// Normalizes policy files and decides when command execution must ask the user.
 import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
@@ -18,24 +19,24 @@ import { expandHomePrefix, resolveRequiredHomeDir } from "./home-dir.js";
 import { requestJsonlSocket } from "./jsonl-socket.js";
 export * from "./exec-approvals-analysis.js";
 export * from "./exec-approvals-allowlist.js";
-/** Re-exported API for src/infra, starting with Exec Allowlist Entry. */
+/** Durable allowlist entry shape shared with command analysis helpers. */
 export type { ExecAllowlistEntry } from "./exec-approvals.types.js";
 
-/** Shared type for Exec Host in src/infra. */
+/** Runtime host where a command can execute. */
 export type ExecHost = "sandbox" | "gateway" | "node";
-/** Shared type for Exec Target in src/infra. */
+/** Requested exec target, including automatic host selection. */
 export type ExecTarget = "auto" | ExecHost;
-/** Shared type for Exec Security in src/infra. */
+/** Security level that gates command execution. */
 export type ExecSecurity = "deny" | "allowlist" | "full";
-/** Shared type for Exec Ask in src/infra. */
+/** User-prompt policy for commands that reach the exec approval layer. */
 export type ExecAsk = "off" | "on-miss" | "always";
-/** Shared type for Exec Mode in src/infra. */
+/** Preset combining security, ask behavior, and optional auto-review. */
 export type ExecMode = "deny" | "allowlist" | "ask" | "auto" | "full";
 
-/** Reused constant for EXEC TARGET VALUES behavior in src/infra. */
+/** Supported exec target config values. */
 export const EXEC_TARGET_VALUES: readonly ExecTarget[] = ["auto", "sandbox", "gateway", "node"];
 
-/** Reused helper for normalize Exec Host behavior in src/infra. */
+/** Normalize a raw host string to a concrete exec host. */
 export function normalizeExecHost(value?: string | null): ExecHost | null {
   const normalized = normalizeOptionalLowercaseString(value);
   if (normalized === "sandbox" || normalized === "gateway" || normalized === "node") {
@@ -44,7 +45,7 @@ export function normalizeExecHost(value?: string | null): ExecHost | null {
   return null;
 }
 
-/** Reused helper for normalize Exec Target behavior in src/infra. */
+/** Normalize a raw target string, accepting `auto` plus concrete hosts. */
 export function normalizeExecTarget(value?: string | null): ExecTarget | null {
   const normalized = normalizeOptionalLowercaseString(value);
   if (normalized === "auto") {
@@ -53,7 +54,7 @@ export function normalizeExecTarget(value?: string | null): ExecTarget | null {
   return normalizeExecHost(normalized);
 }
 
-/** Reused helper for require Valid Exec Target behavior in src/infra. */
+/** Validate an exec target field and throw with the allowed values on mismatch. */
 export function requireValidExecTarget(value?: unknown): ExecTarget | null {
   if (value == null) {
     return null;
@@ -81,7 +82,7 @@ export function requireValidExecTarget(value?: unknown): ExecTarget | null {
 /** Coerce a raw JSON field to string, returning undefined for non-string types. */
 const toStringOrUndefined = readStringValue;
 
-/** Reused helper for normalize Exec Security behavior in src/infra. */
+/** Normalize a raw exec security value. */
 export function normalizeExecSecurity(value?: string | null): ExecSecurity | null {
   const normalized = normalizeOptionalLowercaseString(value);
   if (normalized === "deny" || normalized === "allowlist" || normalized === "full") {
@@ -90,7 +91,7 @@ export function normalizeExecSecurity(value?: string | null): ExecSecurity | nul
   return null;
 }
 
-/** Reused helper for normalize Exec Ask behavior in src/infra. */
+/** Normalize a raw exec ask policy value. */
 export function normalizeExecAsk(value?: string | null): ExecAsk | null {
   const normalized = normalizeOptionalLowercaseString(value);
   if (normalized === "off" || normalized === "on-miss" || normalized === "always") {
@@ -99,7 +100,7 @@ export function normalizeExecAsk(value?: string | null): ExecAsk | null {
   return null;
 }
 
-/** Reused helper for normalize Exec Mode behavior in src/infra. */
+/** Normalize a raw exec mode preset. */
 export function normalizeExecMode(value?: string | null): ExecMode | null {
   const normalized = normalizeOptionalLowercaseString(value);
   if (
@@ -114,7 +115,7 @@ export function normalizeExecMode(value?: string | null): ExecMode | null {
   return null;
 }
 
-/** Reused helper for resolve Exec Mode From Policy behavior in src/infra. */
+/** Collapse security and ask fields into the nearest exec mode preset. */
 export function resolveExecModeFromPolicy(params: {
   security: ExecSecurity;
   ask: ExecAsk;
@@ -131,7 +132,7 @@ export function resolveExecModeFromPolicy(params: {
   return "ask";
 }
 
-/** Reused helper for resolve Exec Policy For Mode behavior in src/infra. */
+/** Expand an exec mode preset into security, ask, and auto-review policy fields. */
 export function resolveExecPolicyForMode(mode: ExecMode): {
   security: ExecSecurity;
   ask: ExecAsk;
@@ -153,7 +154,7 @@ export function resolveExecPolicyForMode(mode: ExecMode): {
   throw new Error(`Unsupported exec mode: ${String(exhaustiveMode)}`);
 }
 
-/** Reused helper for resolve Exec Mode Policy behavior in src/infra. */
+/** Resolve explicit mode overrides against raw security and ask policy fields. */
 export function resolveExecModePolicy(params: {
   mode?: ExecMode | null;
   security: ExecSecurity;
@@ -178,7 +179,7 @@ export function resolveExecModePolicy(params: {
   };
 }
 
-/** Shared type for System Run Approval Binding in src/infra. */
+/** Stable command binding used to tie system-run approvals to a session/context. */
 export type SystemRunApprovalBinding = {
   argv: string[];
   cwd: string | null;
@@ -187,14 +188,14 @@ export type SystemRunApprovalBinding = {
   envHash: string | null;
 };
 
-/** Shared type for System Run Approval File Operand in src/infra. */
+/** Mutable file operand fingerprint included in system-run approval plans. */
 export type SystemRunApprovalFileOperand = {
   argvIndex: number;
   path: string;
   sha256: string;
 };
 
-/** Shared type for System Run Approval Plan in src/infra. */
+/** Command plan presented to approval UIs for system-run execution. */
 export type SystemRunApprovalPlan = {
   argv: string[];
   cwd: string | null;
@@ -205,13 +206,13 @@ export type SystemRunApprovalPlan = {
   mutableFileOperand?: SystemRunApprovalFileOperand | null;
 };
 
-/** Shared type for Exec Approval Command Span in src/infra. */
+/** Character span for one analyzed command segment inside an approval prompt. */
 export type ExecApprovalCommandSpan = {
   startIndex: number;
   endIndex: number;
 };
 
-/** Shared type for Exec Approval Request Payload in src/infra. */
+/** Prompt payload sent to approval channels and the exec approval socket. */
 export type ExecApprovalRequestPayload = {
   command: string;
   commandPreview?: string | null;
@@ -238,7 +239,7 @@ export type ExecApprovalRequestPayload = {
   turnSourceThreadId?: string | number | null;
 };
 
-/** Shared type for Exec Approval Request in src/infra. */
+/** Pending approval request with expiry metadata. */
 export type ExecApprovalRequest = {
   id: string;
   request: ExecApprovalRequestPayload;
@@ -246,7 +247,7 @@ export type ExecApprovalRequest = {
   expiresAtMs: number;
 };
 
-/** Shared type for Exec Approval Resolved in src/infra. */
+/** Recorded approval decision with optional original request context. */
 export type ExecApprovalResolved = {
   id: string;
   decision: ExecApprovalDecision;
@@ -255,7 +256,7 @@ export type ExecApprovalResolved = {
   request?: ExecApprovalRequest["request"];
 };
 
-/** Shared type for Exec Approvals Defaults in src/infra. */
+/** Default policy fields stored in the exec approvals file. */
 export type ExecApprovalsDefaults = {
   security?: ExecSecurity;
   ask?: ExecAsk;
@@ -263,12 +264,12 @@ export type ExecApprovalsDefaults = {
   autoAllowSkills?: boolean;
 };
 
-/** Shared type for Exec Approvals Agent in src/infra. */
+/** Per-agent approval policy plus durable command allowlist. */
 export type ExecApprovalsAgent = ExecApprovalsDefaults & {
   allowlist?: ExecAllowlistEntry[];
 };
 
-/** Shared type for Exec Approvals File in src/infra. */
+/** Versioned exec approvals config persisted under the OpenClaw home. */
 export type ExecApprovalsFile = {
   version: 1;
   socket?: {
@@ -279,7 +280,7 @@ export type ExecApprovalsFile = {
   agents?: Record<string, ExecApprovalsAgent>;
 };
 
-/** Shared type for Exec Approvals Snapshot in src/infra. */
+/** Raw and normalized approvals file state captured for restore operations. */
 export type ExecApprovalsSnapshot = {
   path: string;
   exists: boolean;
@@ -288,7 +289,7 @@ export type ExecApprovalsSnapshot = {
   hash: string;
 };
 
-/** Shared type for Exec Approvals Resolved in src/infra. */
+/** Effective policy after defaults, wildcard agent, specific agent, and overrides merge. */
 export type ExecApprovalsResolved = {
   path: string;
   socketPath: string;
@@ -305,12 +306,12 @@ export type ExecApprovalsResolved = {
 };
 
 // Keep CLI + gateway defaults in sync.
-/** Reused constant for DEFAULT EXEC APPROVAL TIMEOUT MS behavior in src/infra. */
+/** Default lifetime for pending exec approval requests. */
 export const DEFAULT_EXEC_APPROVAL_TIMEOUT_MS = 1_800_000;
 
 const DEFAULT_SECURITY: ExecSecurity = "full";
 const DEFAULT_ASK: ExecAsk = "off";
-/** Reused constant for DEFAULT EXEC APPROVAL ASK FALLBACK behavior in src/infra. */
+/** Fallback security level used when approval prompts are unavailable. */
 export const DEFAULT_EXEC_APPROVAL_ASK_FALLBACK: ExecSecurity = "full";
 const DEFAULT_AUTO_ALLOW_SKILLS = false;
 const DEFAULT_SOCKET = "~/.openclaw/exec-approvals.sock";
@@ -323,12 +324,12 @@ function hashExecApprovalsRaw(raw: string | null): string {
     .digest("hex");
 }
 
-/** Reused helper for resolve Exec Approvals Path behavior in src/infra. */
+/** Resolve the persisted exec approvals file path. */
 export function resolveExecApprovalsPath(): string {
   return expandHomePrefix(DEFAULT_FILE);
 }
 
-/** Reused helper for resolve Exec Approvals Socket Path behavior in src/infra. */
+/** Resolve the default JSONL socket path for approval requests. */
 export function resolveExecApprovalsSocketPath(): string {
   return expandHomePrefix(DEFAULT_SOCKET);
 }
@@ -691,7 +692,7 @@ function sanitizeExecApprovalPolicy(
   };
 }
 
-/** Reused helper for normalize Exec Approvals behavior in src/infra. */
+/** Normalize the approvals file shape, migrating legacy agent keys and allowlist entries. */
 export function normalizeExecApprovals(file: ExecApprovalsFile): ExecApprovalsFile {
   const socketPath = file.socket?.path?.trim();
   const token = file.socket?.token?.trim();
@@ -737,7 +738,7 @@ export function normalizeExecApprovals(file: ExecApprovalsFile): ExecApprovalsFi
   return normalized;
 }
 
-/** Reused helper for merge Exec Approvals Socket Defaults behavior in src/infra. */
+/** Preserve existing socket settings or fill missing socket defaults. */
 export function mergeExecApprovalsSocketDefaults(params: {
   normalized: ExecApprovalsFile;
   current?: ExecApprovalsFile;
@@ -760,7 +761,7 @@ function generateToken(): string {
   return crypto.randomBytes(24).toString("base64url");
 }
 
-/** Reused helper for read Exec Approvals Snapshot behavior in src/infra. */
+/** Read the approvals file with raw text and hash for rollback/restore. */
 export function readExecApprovalsSnapshot(): ExecApprovalsSnapshot {
   const filePath = resolveExecApprovalsPath();
   if (!fs.existsSync(filePath)) {
@@ -793,7 +794,7 @@ export function readExecApprovalsSnapshot(): ExecApprovalsSnapshot {
   };
 }
 
-/** Reused helper for load Exec Approvals behavior in src/infra. */
+/** Load and normalize approvals, returning empty defaults on missing or invalid files. */
 export function loadExecApprovals(): ExecApprovalsFile {
   const filePath = resolveExecApprovalsPath();
   try {
@@ -811,7 +812,7 @@ export function loadExecApprovals(): ExecApprovalsFile {
   }
 }
 
-/** Reused helper for save Exec Approvals behavior in src/infra. */
+/** Persist approvals through a symlink-aware, private-permission write path. */
 export function saveExecApprovals(file: ExecApprovalsFile) {
   const filePath = resolveExecApprovalsPath();
   const raw = `${JSON.stringify(file, null, 2)}\n`;
@@ -844,7 +845,7 @@ function writeExecApprovalsRaw(filePath: string, raw: string) {
   }
 }
 
-/** Reused helper for restore Exec Approvals Snapshot behavior in src/infra. */
+/** Restore a previously captured approvals file snapshot. */
 export function restoreExecApprovalsSnapshot(snapshot: ExecApprovalsSnapshot): void {
   if (!snapshot.exists) {
     fs.rmSync(snapshot.path, { force: true });
@@ -857,7 +858,7 @@ export function restoreExecApprovalsSnapshot(snapshot: ExecApprovalsSnapshot): v
   saveExecApprovals(snapshot.file);
 }
 
-/** Reused helper for ensure Exec Approvals behavior in src/infra. */
+/** Ensure the approvals file has a socket path and token, creating it when needed. */
 export function ensureExecApprovals(): ExecApprovalsFile {
   const loaded = loadExecApprovals();
   const next = normalizeExecApprovals(loaded);
@@ -1026,7 +1027,7 @@ function resolveAgentAskField(params: {
   return fallbackField;
 }
 
-/** Shared type for Exec Approvals Default Overrides in src/infra. */
+/** Runtime defaults supplied by callers before policy resolution. */
 export type ExecApprovalsDefaultOverrides = {
   security?: ExecSecurity;
   ask?: ExecAsk;
@@ -1035,7 +1036,7 @@ export type ExecApprovalsDefaultOverrides = {
   requireSocket?: boolean;
 };
 
-/** Reused helper for resolve Exec Approvals behavior in src/infra. */
+/** Resolve effective approvals, avoiding file creation when full/no-ask policy suffices. */
 export function resolveExecApprovals(
   agentId?: string,
   overrides?: ExecApprovalsDefaultOverrides,
@@ -1070,7 +1071,7 @@ export function resolveExecApprovals(
   });
 }
 
-/** Reused helper for resolve Exec Approvals From File behavior in src/infra. */
+/** Resolve effective approvals from a provided normalized or raw approvals file. */
 export function resolveExecApprovalsFromFile(params: {
   file: ExecApprovalsFile;
   agentId?: string;
@@ -1158,7 +1159,7 @@ export function resolveExecApprovalsFromFile(params: {
   };
 }
 
-/** Reused helper for requires Exec Approval behavior in src/infra. */
+/** Decide whether command execution must ask based on ask mode, allowlist, and durability. */
 export function requiresExecApproval(params: {
   ask: ExecAsk;
   security: ExecSecurity;
@@ -1237,7 +1238,7 @@ function removeParsedSegmentText(command: string, segments: Array<{ raw?: string
   return remaining;
 }
 
-/** Reused helper for command Requires Security Audit Suppression Approval behavior in src/infra. */
+/** Require approval for commands that mutate security audit suppressions. */
 export function commandRequiresSecurityAuditSuppressionApproval(params: {
   command: string;
   cwd?: string;
@@ -1285,7 +1286,7 @@ export function commandRequiresSecurityAuditSuppressionApproval(params: {
   return textMentionsSecurityAuditSuppressions(params.command);
 }
 
-/** Reused helper for has Durable Exec Approval behavior in src/infra. */
+/** Return whether exact command or all analyzed segments have durable allow-always approval. */
 export function hasDurableExecApproval(params: {
   analysisOk: boolean;
   segmentAllowlistEntries: Array<ExecAllowlistEntry | null>;
@@ -1337,7 +1338,7 @@ function hasSegmentDurableExecApproval(params: {
   );
 }
 
-/** Reused helper for record Allowlist Use behavior in src/infra. */
+/** Stamp a matched allowlist entry with last-use command and resolved path metadata. */
 export function recordAllowlistUse(
   approvals: ExecApprovalsFile,
   agentId: string | undefined,
@@ -1371,7 +1372,7 @@ function buildAllowlistEntryMatchKey(
   return `${entry.pattern}\x00${entry.argPattern?.trim() ?? ""}`;
 }
 
-/** Reused helper for record Allowlist Matches Use behavior in src/infra. */
+/** Stamp each unique matched allowlist entry once for a command execution. */
 export function recordAllowlistMatchesUse(params: {
   approvals: ExecApprovalsFile;
   agentId: string | undefined;
@@ -1402,7 +1403,7 @@ export function recordAllowlistMatchesUse(params: {
   }
 }
 
-/** Reused helper for add Allowlist Entry behavior in src/infra. */
+/** Add or update one durable allowlist entry for an agent. */
 export function addAllowlistEntry(
   approvals: ExecApprovalsFile,
   agentId: string | undefined,
@@ -1454,7 +1455,7 @@ export function addAllowlistEntry(
   saveExecApprovals(approvals);
 }
 
-/** Reused helper for add Durable Command Approval behavior in src/infra. */
+/** Store an allow-always approval keyed by a stable digest of exact command text. */
 export function addDurableCommandApproval(
   approvals: ExecApprovalsFile,
   agentId: string | undefined,
@@ -1469,7 +1470,7 @@ export function addDurableCommandApproval(
   });
 }
 
-/** Reused helper for persist Allow Always Patterns behavior in src/infra. */
+/** Persist allow-always patterns derived from analyzed command segments. */
 export function persistAllowAlwaysPatterns(params: {
   approvals: ExecApprovalsFile;
   agentId: string | undefined;
@@ -1498,28 +1499,28 @@ export function persistAllowAlwaysPatterns(params: {
   return patterns;
 }
 
-/** Reused helper for min Security behavior in src/infra. */
+/** Return the stricter of two exec security levels. */
 export function minSecurity(a: ExecSecurity, b: ExecSecurity): ExecSecurity {
   const order: Record<ExecSecurity, number> = { deny: 0, allowlist: 1, full: 2 };
   return order[a] <= order[b] ? a : b;
 }
 
-/** Reused helper for max Ask behavior in src/infra. */
+/** Return the more interactive of two ask policies. */
 export function maxAsk(a: ExecAsk, b: ExecAsk): ExecAsk {
   const order: Record<ExecAsk, number> = { off: 0, "on-miss": 1, always: 2 };
   return order[a] >= order[b] ? a : b;
 }
 
-/** Shared type for Exec Approval Decision in src/infra. */
+/** Decisions an approval channel can return for an exec request. */
 export type ExecApprovalDecision = "allow-once" | "allow-always" | "deny";
-/** Reused constant for DEFAULT EXEC APPROVAL DECISIONS behavior in src/infra. */
+/** Default decisions shown for on-miss approval prompts. */
 export const DEFAULT_EXEC_APPROVAL_DECISIONS = [
   "allow-once",
   "allow-always",
   "deny",
 ] as const satisfies readonly ExecApprovalDecision[];
 
-/** Reused helper for resolve Exec Approval Allowed Decisions behavior in src/infra. */
+/** Resolve allowed decisions for an ask policy. */
 export function resolveExecApprovalAllowedDecisions(params?: {
   ask?: string | null;
 }): readonly ExecApprovalDecision[] {
@@ -1530,7 +1531,7 @@ export function resolveExecApprovalAllowedDecisions(params?: {
   return DEFAULT_EXEC_APPROVAL_DECISIONS;
 }
 
-/** Reused helper for resolve Exec Approval Request Allowed Decisions behavior in src/infra. */
+/** Resolve explicit request decision options, falling back to ask-policy defaults. */
 export function resolveExecApprovalRequestAllowedDecisions(params?: {
   ask?: string | null;
   allowedDecisions?: readonly ExecApprovalDecision[] | readonly string[] | null;
@@ -1544,7 +1545,7 @@ export function resolveExecApprovalRequestAllowedDecisions(params?: {
   return explicit.length > 0 ? explicit : resolveExecApprovalAllowedDecisions({ ask: params?.ask });
 }
 
-/** Reused helper for is Exec Approval Decision Allowed behavior in src/infra. */
+/** Return whether a decision is valid for the current ask policy. */
 export function isExecApprovalDecisionAllowed(params: {
   decision: ExecApprovalDecision;
   ask?: string | null;
@@ -1552,7 +1553,7 @@ export function isExecApprovalDecisionAllowed(params: {
   return resolveExecApprovalAllowedDecisions({ ask: params.ask }).includes(params.decision);
 }
 
-/** Reused helper for request Exec Approval Via Socket behavior in src/infra. */
+/** Send an exec approval request over the local JSONL socket and wait for a decision. */
 export async function requestExecApprovalViaSocket(params: {
   socketPath: string;
   token: string;
