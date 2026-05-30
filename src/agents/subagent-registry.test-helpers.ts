@@ -2,12 +2,12 @@
 import { subagentRuns } from "./subagent-registry-memory.js";
 import type { SubagentRunRecord } from "./subagent-registry.types.js";
 
-/** Reused helper for reset Subagent Registry For Tests behavior in src/agents. */
+/** Clear all process-local subagent records between tests. */
 export function resetSubagentRegistryForTests() {
   subagentRuns.clear();
 }
 
-/** Reused helper for add Subagent Run For Tests behavior in src/agents. */
+/** Insert a subagent run record directly for registry-focused tests. */
 export function addSubagentRunForTests(entry: SubagentRunRecord) {
   subagentRuns.set(entry.runId, entry);
 }

@@ -16,10 +16,10 @@ import {
   type SubagentLifecycleEndedReason,
 } from "./subagent-lifecycle-events.js";
 
-/** Shared type for Subagent Session Store Cache in src/agents. */
+/** Cache of session-store files used while reconciling multiple subagent runs. */
 export type SubagentSessionStoreCache = Map<string, Record<string, SessionEntry>>;
 
-/** Shared type for Subagent Session Completion in src/agents. */
+/** Terminal session-store state normalized into subagent registry completion fields. */
 export type SubagentSessionCompletion = {
   startedAt?: number;
   endedAt: number;
@@ -71,7 +71,7 @@ function findSessionEntryByKey(store: Record<string, SessionEntry>, sessionKey: 
   return undefined;
 }
 
-/** Reused helper for load Subagent Session Entry behavior in src/agents. */
+/** Load one child session entry from the correct per-agent session store. */
 export function loadSubagentSessionEntry(params: {
   childSessionKey: string;
   storeCache?: SubagentSessionStoreCache;
@@ -92,7 +92,7 @@ export function loadSubagentSessionEntry(params: {
   return findSessionEntryByKey(store, key);
 }
 
-/** Reused helper for resolve Completion From Session Entry behavior in src/agents. */
+/** Convert a durable session entry into a subagent completion when it belongs to this run. */
 export function resolveCompletionFromSessionEntry(
   sessionEntry: SessionEntry | undefined,
   fallbackEndedAt: number,
@@ -163,7 +163,7 @@ export function resolveCompletionFromSessionEntry(
   return null;
 }
 
-/** Reused helper for resolve Subagent Session Completion behavior in src/agents. */
+/** Resolve terminal completion for a subagent by reading its child session entry. */
 export function resolveSubagentSessionCompletion(params: {
   childSessionKey: string;
   fallbackEndedAt: number;
@@ -182,7 +182,7 @@ export function resolveSubagentSessionCompletion(params: {
   );
 }
 
-/** Reused helper for resolve Subagent Session Started At behavior in src/agents. */
+/** Resolve a child session start time while ignoring stale store entries from older runs. */
 export function resolveSubagentSessionStartedAt(params: {
   childSessionKey: string;
   notBeforeMs?: number;

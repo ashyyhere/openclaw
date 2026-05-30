@@ -1,5 +1,5 @@
 /** Process-local map of currently tracked subagent run records. */
 import type { SubagentRunRecord } from "./subagent-registry.types.js";
 
-/** Reused constant for subagent Runs behavior in src/agents. */
+/** Process-local registry of active and recently completed subagent runs. */
 export const subagentRuns = new Map<string, SubagentRunRecord>();

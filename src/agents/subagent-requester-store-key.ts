@@ -10,7 +10,7 @@ type RequesterStoreKeyConfig = {
   agents?: { list?: Array<{ id?: string; default?: boolean }> };
 };
 
-/** Reused helper for resolve Requester Store Key behavior in src/agents. */
+/** Normalize requester session keys to the canonical session-store key shape. */
 export function resolveRequesterStoreKey(
   cfg: RequesterStoreKeyConfig | undefined,
   requesterSessionKey: string,

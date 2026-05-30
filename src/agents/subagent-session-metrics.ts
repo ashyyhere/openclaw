@@ -16,14 +16,14 @@ function resolveSubagentSessionStartedAtInternal(
     : undefined;
 }
 
-/** Reused helper for get Subagent Session Started At behavior in src/agents. */
+/** Return the best available start timestamp for a subagent session record. */
 export function getSubagentSessionStartedAt(
   entry: Pick<SubagentRunRecord, "sessionStartedAt" | "startedAt" | "createdAt"> | null | undefined,
 ): number | undefined {
   return entry ? resolveSubagentSessionStartedAtInternal(entry) : undefined;
 }
 
-/** Reused helper for get Subagent Session Runtime Ms behavior in src/agents. */
+/** Calculate accumulated plus current-run runtime for a subagent session record. */
 export function getSubagentSessionRuntimeMs(
   entry:
     | Pick<SubagentRunRecord, "startedAt" | "endedAt" | "accumulatedRuntimeMs">
@@ -49,7 +49,7 @@ export function getSubagentSessionRuntimeMs(
   return Math.max(0, accumulatedRuntimeMs + Math.max(0, currentRunEndedAt - entry.startedAt));
 }
 
-/** Reused helper for resolve Subagent Session Status behavior in src/agents. */
+/** Derive the user-facing subagent status from terminal reason and outcome. */
 export function resolveSubagentSessionStatus(
   entry: Pick<SubagentRunRecord, "endedAt" | "endedReason" | "outcome"> | null | undefined,
 ): "running" | "killed" | "failed" | "timeout" | "done" | undefined {
