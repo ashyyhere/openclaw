@@ -1,7 +1,7 @@
-// shared chat message content helpers and runtime behavior.
+// Assistant/chat message text extraction and phase-signature helpers.
 import { readStringValue } from "./string-coerce.js";
 
-/** Reused helper for extract First Text Block behavior in src/shared. */
+/** Returns inline content text or the first text block from a chat message. */
 export function extractFirstTextBlock(message: unknown): string | undefined {
   if (!message || typeof message !== "object") {
     return undefined;
@@ -21,15 +21,15 @@ export function extractFirstTextBlock(message: unknown): string | undefined {
   return readStringValue((first as { text?: unknown }).text);
 }
 
-/** Shared type for Assistant Phase in src/shared. */
+/** Assistant output phase used to separate commentary from final answers. */
 export type AssistantPhase = "commentary" | "final_answer";
 
-/** Reused helper for normalize Assistant Phase behavior in src/shared. */
+/** Narrows unknown values to supported assistant output phases. */
 export function normalizeAssistantPhase(value: unknown): AssistantPhase | undefined {
   return value === "commentary" || value === "final_answer" ? value : undefined;
 }
 
-/** Reused helper for parse Assistant Text Signature behavior in src/shared. */
+/** Parses text block signatures that carry stable ids and phase metadata. */
 export function parseAssistantTextSignature(
   value: unknown,
 ): { id?: string; phase?: AssistantPhase } | null {
@@ -55,7 +55,7 @@ export function parseAssistantTextSignature(
   }
 }
 
-/** Reused helper for encode Assistant Text Signature behavior in src/shared. */
+/** Encodes a text block signature with versioned id/phase metadata. */
 export function encodeAssistantTextSignature(params: {
   id: string;
   phase?: AssistantPhase;
@@ -67,7 +67,7 @@ export function encodeAssistantTextSignature(params: {
   });
 }
 
-/** Reused helper for resolve Assistant Message Phase behavior in src/shared. */
+/** Resolves a message-level assistant phase from direct or text-block metadata. */
 export function resolveAssistantMessagePhase(message: unknown): AssistantPhase | undefined {
   if (!message || typeof message !== "object") {
     return undefined;
@@ -97,7 +97,7 @@ export function resolveAssistantMessagePhase(message: unknown): AssistantPhase |
   return explicitPhases.size === 1 ? [...explicitPhases][0] : undefined;
 }
 
-/** Reused helper for resolve Assistant Event Phase behavior in src/shared. */
+/** Resolves assistant phase from streamed event payload shapes. */
 export function resolveAssistantEventPhase(data: unknown): AssistantPhase | undefined {
   if (!data || typeof data !== "object") {
     return undefined;
@@ -117,7 +117,7 @@ export function resolveAssistantEventPhase(data: unknown): AssistantPhase | unde
   );
 }
 
-/** Reused helper for extract Assistant Text For Phase behavior in src/shared. */
+/** Extracts assistant text matching a requested phase or legacy unphased content. */
 export function extractAssistantTextForPhase(
   message: unknown,
   options?: {
@@ -207,7 +207,7 @@ export function extractAssistantTextForPhase(
   return normalizeJoinedText(parts.join(joinWith));
 }
 
-/** Reused helper for extract Assistant Visible Text behavior in src/shared. */
+/** Returns the final answer text when present, otherwise legacy visible text. */
 export function extractAssistantVisibleText(message: unknown): string | undefined {
   const finalAnswerText = extractAssistantTextForPhase(message, { phase: "final_answer" });
   if (finalAnswerText) {

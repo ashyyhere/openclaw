@@ -1,4 +1,4 @@
-// secrets target registry query helpers and runtime behavior.
+// Secret target registry compilation, lookup, and config discovery helpers.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { loadChannelSecretContractApi } from "./channel-contract-api.js";
 import { getPath } from "./path-utils.js";
@@ -227,7 +227,7 @@ function toResolvedPlanTarget(
   };
 }
 
-/** Reused helper for list Secret Target Registry Entries behavior in src/secrets. */
+/** Lists public registry entries after compiling internal path metadata. */
 export function listSecretTargetRegistryEntries(): SecretTargetRegistryEntry[] {
   return getCompiledSecretTargetRegistryState().compiledSecretTargetRegistry.map((entry) =>
     Object.assign(
@@ -254,14 +254,14 @@ export function listSecretTargetRegistryEntries(): SecretTargetRegistryEntry[] {
   );
 }
 
-/** Reused helper for is Known Secret Target Id behavior in src/secrets. */
+/** Checks whether a value names a registered secret target id. */
 export function isKnownSecretTargetId(value: unknown): value is string {
   return (
     typeof value === "string" && getCompiledSecretTargetRegistryState().knownTargetIds.has(value)
   );
 }
 
-/** Reused helper for resolve Plan Target Against Registry behavior in src/secrets. */
+/** Resolves a plan candidate against registered target type/path patterns. */
 export function resolvePlanTargetAgainstRegistry(candidate: {
   type: string;
   pathSegments: string[];
@@ -316,7 +316,7 @@ function resolvePlanTargetAgainstEntries(
   return null;
 }
 
-/** Reused helper for resolve Config Secret Target By Path behavior in src/secrets. */
+/** Resolves a config path to the matching openclaw.json secret target. */
 export function resolveConfigSecretTargetByPath(pathSegments: string[]): ResolvedPlanTarget | null {
   for (const entry of getCompiledCoreOpenClawTargetState().openClawCompiledSecretTargets) {
     if (!entry.includeInPlan) {
@@ -369,14 +369,14 @@ export function resolveConfigSecretTargetByPath(pathSegments: string[]): Resolve
   return null;
 }
 
-/** Reused helper for discover Config Secret Targets behavior in src/secrets. */
+/** Discovers all registered openclaw.json secret targets in a config object. */
 export function discoverConfigSecretTargets(
   config: OpenClawConfig,
 ): DiscoveredConfigSecretTarget[] {
   return discoverConfigSecretTargetsByIds(config);
 }
 
-/** Reused helper for discover Config Secret Targets By Ids behavior in src/secrets. */
+/** Discovers openclaw.json secret targets, optionally limited to target ids. */
 export function discoverConfigSecretTargetsByIds(
   config: OpenClawConfig,
   targetIds?: Iterable<string>,
@@ -397,7 +397,7 @@ export function discoverConfigSecretTargetsByIds(
   return discoverSecretTargetsFromEntries(config, discoveryEntries);
 }
 
-/** Reused helper for discover Auth Profile Secret Targets behavior in src/secrets. */
+/** Discovers auth-profiles.json secret targets in an auth profile store. */
 export function discoverAuthProfileSecretTargets(
   store: unknown,
   targetIds?: Iterable<string>,
@@ -412,14 +412,14 @@ export function discoverAuthProfileSecretTargets(
   return discoverSecretTargetsFromEntries(store, discoveryEntries);
 }
 
-/** Reused helper for list Auth Profile Secret Target Entries behavior in src/secrets. */
+/** Lists auditable auth-profile secret target entries. */
 export function listAuthProfileSecretTargetEntries(): SecretTargetRegistryEntry[] {
   return getCompiledSecretTargetRegistryState().compiledSecretTargetRegistry.filter(
     (entry) => entry.configFile === "auth-profiles.json" && entry.includeInAudit,
   );
 }
 
-/** Re-exported API for src/secrets. */
+/** Public secret target registry and discovery result types. */
 export type {
   AuthProfileType,
   DiscoveredConfigSecretTarget,

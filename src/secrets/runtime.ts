@@ -1,4 +1,4 @@
-// secrets runtime helpers and runtime behavior.
+// Runtime secret snapshot preparation, activation, refresh, and accessors.
 import { isDeepStrictEqual } from "node:util";
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../agents/agent-scope-config.js";
 import {
@@ -36,9 +36,9 @@ import {
 import { getActiveRuntimeWebToolsMetadata as getActiveRuntimeWebToolsMetadataFromState } from "./runtime-web-tools-state.js";
 import type { RuntimeWebToolsMetadata } from "./runtime-web-tools.types.js";
 
-/** Re-exported API for src/secrets, starting with Secret Resolver Warning. */
+/** Warning emitted while resolving runtime SecretRefs. */
 export type { SecretResolverWarning } from "./runtime-shared.js";
-/** Re-exported API for src/secrets, starting with Prepared Secrets Runtime Snapshot. */
+/** Prepared runtime snapshot shape consumed by active secret resolution. */
 export type { PreparedSecretsRuntimeSnapshot } from "./runtime-state.js";
 
 registerSecretsRuntimeStateClearHook(clearRuntimeAuthProfileStoreSnapshots);
@@ -253,7 +253,7 @@ export async function prepareSecretsRuntimeSnapshot(params: {
   return snapshot;
 }
 
-/** Reused helper for activate Secrets Runtime Snapshot behavior in src/secrets. */
+/** Activates a prepared snapshot and installs refresh/preflight handlers. */
 export function activateSecretsRuntimeSnapshot(snapshot: PreparedSecretsRuntimeSnapshot): void {
   const refreshContext =
     getPreparedSecretsRuntimeSnapshotRefreshContext(snapshot) ??
@@ -333,7 +333,7 @@ export function activateSecretsRuntimeSnapshot(snapshot: PreparedSecretsRuntimeS
   });
 }
 
-/** Reused helper for refresh Active Secrets Runtime Snapshot behavior in src/secrets. */
+/** Rebuilds and activates the current runtime snapshot from its refresh context. */
 export async function refreshActiveSecretsRuntimeSnapshot(): Promise<boolean> {
   const activeSnapshot = getActiveSecretsRuntimeSnapshotState();
   const activeRefreshContext = getActiveSecretsRuntimeRefreshContext();
@@ -357,22 +357,22 @@ export async function refreshActiveSecretsRuntimeSnapshot(): Promise<boolean> {
   return true;
 }
 
-/** Reused helper for get Active Secrets Runtime Snapshot behavior in src/secrets. */
+/** Returns the active secret runtime snapshot, if one is installed. */
 export function getActiveSecretsRuntimeSnapshot(): PreparedSecretsRuntimeSnapshot | null {
   return getActiveSecretsRuntimeSnapshotState();
 }
 
-/** Reused helper for get Active Secrets Runtime Env behavior in src/secrets. */
+/** Returns the environment captured by the active secrets runtime. */
 export function getActiveSecretsRuntimeEnv(): NodeJS.ProcessEnv {
   return getActiveSecretsRuntimeEnvState();
 }
 
-/** Reused helper for get Active Runtime Web Tools Metadata behavior in src/secrets. */
+/** Returns resolved runtime metadata for web-tool secrets. */
 export function getActiveRuntimeWebToolsMetadata(): RuntimeWebToolsMetadata | null {
   return getActiveRuntimeWebToolsMetadataFromState();
 }
 
-/** Reused helper for clear Secrets Runtime Snapshot behavior in src/secrets. */
+/** Clears the active secrets runtime snapshot and dependent caches. */
 export function clearSecretsRuntimeSnapshot(): void {
   clearSecretsRuntimeSnapshotState();
 }
