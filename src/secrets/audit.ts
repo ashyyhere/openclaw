@@ -1,4 +1,4 @@
-// secrets audit helpers and runtime behavior.
+/** Secret audit scanner for plaintext values, unresolved refs, and legacy residue. */
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -39,17 +39,17 @@ import {
 } from "./storage-scan.js";
 import { discoverConfigSecretTargets } from "./target-registry.js";
 
-/** Shared type for Secrets Audit Code in src/secrets. */
+/** Machine-readable category for one secrets audit finding. */
 export type SecretsAuditCode =
   | "PLAINTEXT_FOUND"
   | "REF_UNRESOLVED"
   | "REF_SHADOWED"
   | "LEGACY_RESIDUE";
 
-/** Shared type for Secrets Audit Severity in src/secrets. */
+/** Severity levels emitted by the secrets audit. */
 export type SecretsAuditSeverity = "info" | "warn" | "error"; // pragma: allowlist secret
 
-/** Shared type for Secrets Audit Finding in src/secrets. */
+/** One file/path finding from the secrets audit. */
 export type SecretsAuditFinding = {
   code: SecretsAuditCode;
   severity: SecretsAuditSeverity;
@@ -60,10 +60,10 @@ export type SecretsAuditFinding = {
   profileId?: string;
 };
 
-/** Shared type for Secrets Audit Status in src/secrets. */
+/** Overall secrets audit status derived from all findings. */
 export type SecretsAuditStatus = "clean" | "findings" | "unresolved"; // pragma: allowlist secret
 
-/** Shared type for Secrets Audit Report in src/secrets. */
+/** Full secrets audit report returned by CLI and status callers. */
 export type SecretsAuditReport = {
   version: 1;
   status: SecretsAuditStatus;
@@ -612,7 +612,7 @@ function summarizeFindings(findings: SecretsAuditFinding[]): SecretsAuditReport[
   };
 }
 
-/** Reused helper for run Secrets Audit behavior in src/secrets. */
+/** Runs the full secrets audit across config, auth stores, models files, and env. */
 export async function runSecretsAudit(
   params: {
     env?: NodeJS.ProcessEnv;
@@ -711,7 +711,7 @@ export async function runSecretsAudit(
   };
 }
 
-/** Reused helper for resolve Secrets Audit Exit Code behavior in src/secrets. */
+/** Maps a secrets audit report to CLI exit status. */
 export function resolveSecretsAuditExitCode(report: SecretsAuditReport, check: boolean): number {
   if (report.summary.unresolvedRefCount > 0) {
     return 2;

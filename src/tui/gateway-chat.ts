@@ -1,4 +1,4 @@
-// tui gateway chat helpers and runtime behavior.
+/** TUI backend client that talks to the OpenClaw gateway protocol. */
 import { randomUUID } from "node:crypto";
 import {
   GATEWAY_CLIENT_CAPS,
@@ -39,14 +39,14 @@ import type {
   TuiSessionList,
 } from "./tui-backend.js";
 
-/** Shared type for Gateway Connection Options in src/tui. */
+/** Gateway endpoint and credential overrides supplied by the TUI launcher. */
 export type GatewayConnectionOptions = {
   url?: string;
   token?: string;
   password?: string;
 };
 
-/** Shared type for Gateway Event in src/tui. */
+/** Gateway event shape forwarded into the TUI backend. */
 export type GatewayEvent = TuiEvent;
 
 const STARTUP_CHAT_HISTORY_RETRY_TIMEOUT_MS = 60_000;
@@ -99,14 +99,14 @@ function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-/** Shared type for Gateway Session List in src/tui. */
+/** Session list result returned by the gateway-backed TUI backend. */
 export type GatewaySessionList = TuiSessionList;
-/** Shared type for Gateway Agents List in src/tui. */
+/** Agent list result returned by the gateway-backed TUI backend. */
 export type GatewayAgentsList = TuiAgentsList;
-/** Shared type for Gateway Model Choice in src/tui. */
+/** Model choice result returned by the gateway-backed TUI backend. */
 export type GatewayModelChoice = TuiModelChoice;
 
-/** Reused class for Gateway Chat Client behavior in src/tui. */
+/** Gateway protocol implementation of the TUI chat backend. */
 export class GatewayChatClient implements TuiBackend {
   private client: GatewayClient;
   private readyPromise: Promise<void>;
@@ -272,7 +272,7 @@ export class GatewayChatClient implements TuiBackend {
   }
 }
 
-/** Reused helper for resolve Gateway Connection behavior in src/tui. */
+/** Resolves gateway URL/auth for TUI connections from CLI options, env, and config. */
 export async function resolveGatewayConnection(
   opts: GatewayConnectionOptions,
 ): Promise<ResolvedGatewayConnection> {

@@ -1,25 +1,25 @@
-// realtime-transcription provider types helpers and runtime behavior.
+/** Provider contracts for realtime transcription session plugins. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 
-/** Shared type for Realtime Transcription Provider Id in src/realtime-transcription. */
+/** Stable id for a realtime transcription provider. */
 export type RealtimeTranscriptionProviderId = string;
 
-/** Shared type for Realtime Transcription Provider Config in src/realtime-transcription. */
+/** Provider-specific realtime transcription configuration block. */
 export type RealtimeTranscriptionProviderConfig = Record<string, unknown>;
 
-/** Shared type for Realtime Transcription Provider Resolve Config Context in src/realtime-transcription. */
+/** Context passed when a provider resolves its configured runtime settings. */
 export type RealtimeTranscriptionProviderResolveConfigContext = {
   cfg: OpenClawConfig;
   rawConfig: RealtimeTranscriptionProviderConfig;
 };
 
-/** Shared type for Realtime Transcription Provider Configured Context in src/realtime-transcription. */
+/** Runtime context passed to providers after configuration is resolved. */
 export type RealtimeTranscriptionProviderConfiguredContext = {
   cfg?: OpenClawConfig;
   providerConfig: RealtimeTranscriptionProviderConfig;
 };
 
-/** Shared type for Realtime Transcription Session Callbacks in src/realtime-transcription. */
+/** Callbacks emitted by a realtime transcription session. */
 export type RealtimeTranscriptionSessionCallbacks = {
   onPartial?: (partial: string) => void;
   onTranscript?: (transcript: string) => void;
@@ -27,13 +27,13 @@ export type RealtimeTranscriptionSessionCallbacks = {
   onError?: (error: Error) => void;
 };
 
-/** Shared type for Realtime Transcription Session Create Request in src/realtime-transcription. */
+/** Provider request for creating a realtime transcription session. */
 export type RealtimeTranscriptionSessionCreateRequest = RealtimeTranscriptionSessionCallbacks & {
   cfg?: OpenClawConfig;
   providerConfig: RealtimeTranscriptionProviderConfig;
 };
 
-/** Shared type for Realtime Transcription Session in src/realtime-transcription. */
+/** Live transcription session interface implemented by providers. */
 export type RealtimeTranscriptionSession = {
   connect(): Promise<void>;
   sendAudio(audio: Buffer): void;

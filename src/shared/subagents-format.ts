@@ -1,8 +1,8 @@
-// shared subagents format helpers and runtime behavior.
-/** Re-exported API for src/shared, starting with format Duration Compact. */
+/** Shared formatting helpers for subagent status and token displays. */
+/** Compact duration formatter reused by subagent status renderers. */
 export { formatDurationCompact } from "../infra/format-time/format-duration.ts";
 
-/** Reused helper for format Token Short behavior in src/shared. */
+/** Formats token counts into compact k/m units for status lines. */
 export function formatTokenShort(value?: number) {
   if (!value || !Number.isFinite(value) || value <= 0) {
     return undefined;
@@ -20,7 +20,7 @@ export function formatTokenShort(value?: number) {
   return `${(n / 1_000_000).toFixed(1).replace(/\.0$/, "")}m`;
 }
 
-/** Reused helper for truncate Line behavior in src/shared. */
+/** Truncates a single display line without preserving trailing whitespace. */
 export function truncateLine(value: string, maxLength: number) {
   if (value.length <= maxLength) {
     return value;
@@ -28,14 +28,14 @@ export function truncateLine(value: string, maxLength: number) {
   return `${value.slice(0, maxLength).trimEnd()}...`;
 }
 
-/** Shared type for Token Usage Like in src/shared. */
+/** Minimal token usage shape accepted by shared subagent formatters. */
 export type TokenUsageLike = {
   totalTokens?: unknown;
   inputTokens?: unknown;
   outputTokens?: unknown;
 };
 
-/** Reused helper for resolve Total Tokens behavior in src/shared. */
+/** Resolves total token count from explicit total or input/output fields. */
 export function resolveTotalTokens(entry?: TokenUsageLike) {
   if (!entry || typeof entry !== "object") {
     return undefined;
@@ -49,7 +49,7 @@ export function resolveTotalTokens(entry?: TokenUsageLike) {
   return total > 0 ? total : undefined;
 }
 
-/** Reused helper for resolve Io Tokens behavior in src/shared. */
+/** Resolves input/output token counts when either side is present. */
 export function resolveIoTokens(entry?: TokenUsageLike) {
   if (!entry || typeof entry !== "object") {
     return undefined;
@@ -69,7 +69,7 @@ export function resolveIoTokens(entry?: TokenUsageLike) {
   return { input, output, total };
 }
 
-/** Reused helper for format Token Usage Display behavior in src/shared. */
+/** Builds the compact token usage text shown in subagent summaries. */
 export function formatTokenUsageDisplay(entry?: TokenUsageLike) {
   const io = resolveIoTokens(entry);
   const promptCache = resolveTotalTokens(entry);

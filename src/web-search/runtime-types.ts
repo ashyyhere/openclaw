@@ -1,4 +1,4 @@
-// web-search runtime types helpers and runtime behavior.
+/** Runtime-facing types for resolving and invoking web search providers. */
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type {
   PluginWebSearchProviderEntry,
@@ -12,7 +12,7 @@ type WebSearchConfig = NonNullable<OpenClawConfig["tools"]>["web"] extends infer
     : undefined
   : undefined;
 
-/** Shared type for Resolve Web Search Definition Params in src/web-search. */
+/** Inputs used to choose the active web search tool definition. */
 export type ResolveWebSearchDefinitionParams = {
   config?: OpenClawConfig;
   agentDir?: string;
@@ -23,26 +23,26 @@ export type ResolveWebSearchDefinitionParams = {
   preferInputConfig?: boolean;
 };
 
-/** Shared type for Run Web Search Params in src/web-search. */
+/** Runtime request for invoking a selected web search provider. */
 export type RunWebSearchParams = ResolveWebSearchDefinitionParams & {
   args: Record<string, unknown>;
   signal?: AbortSignal;
 };
 
-/** Shared type for Run Web Search Result in src/web-search. */
+/** Normalized result returned after a web search provider runs. */
 export type RunWebSearchResult = {
   provider: string;
   result: Record<string, unknown>;
 };
 
-/** Shared type for List Web Search Providers Params in src/web-search. */
+/** Inputs for listing web search providers visible to the current config. */
 export type ListWebSearchProvidersParams = {
   config?: OpenClawConfig;
 };
 
-/** Shared type for Runtime Web Search Provider Entry in src/web-search. */
+/** Runtime alias for plugin web search provider entries. */
 export type RuntimeWebSearchProviderEntry = PluginWebSearchProviderEntry;
-/** Shared type for Runtime Web Search Tool Definition in src/web-search. */
+/** Runtime alias for plugin-provided web search tool definitions. */
 export type RuntimeWebSearchToolDefinition = WebSearchProviderToolDefinition;
-/** Shared type for Runtime Web Search Config in src/web-search. */
+/** Extracted config slice that controls runtime web search behavior. */
 export type RuntimeWebSearchConfig = WebSearchConfig;

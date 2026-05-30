@@ -1,4 +1,4 @@
-// src/skills/loading config helpers and runtime behavior.
+/** Skill-loading config helpers for install preferences, allowlists, and eligibility. */
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import type { SkillConfig } from "../../config/types.skills.js";
 import {
@@ -22,10 +22,10 @@ const DEFAULT_CONFIG_VALUES: Record<string, boolean> = {
   "browser.evaluateEnabled": true,
 };
 
-/** Re-exported API for src/skills/loading, starting with has Binary. */
+/** Re-export shared runtime eligibility helpers used by skill loading. */
 export { hasBinary, resolveConfigPath, resolveRuntimePlatform };
 
-/** Reused helper for resolve Skills Install Preferences behavior in src/skills/loading. */
+/** Resolves skill installer preferences with repo defaults for missing config. */
 export function resolveSkillsInstallPreferences(config?: OpenClawConfig): SkillsInstallPreferences {
   const raw = config?.skills?.install;
   const preferBrew = raw?.preferBrew ?? true;
@@ -37,12 +37,12 @@ export function resolveSkillsInstallPreferences(config?: OpenClawConfig): Skills
   return { preferBrew, nodeManager };
 }
 
-/** Reused helper for is Config Path Truthy behavior in src/skills/loading. */
+/** Evaluates a skill config path using skill-loading default values. */
 export function isConfigPathTruthy(config: OpenClawConfig | undefined, pathStr: string): boolean {
   return isConfigPathTruthyWithDefaults(config, pathStr, DEFAULT_CONFIG_VALUES);
 }
 
-/** Reused helper for resolve Skill Config behavior in src/skills/loading. */
+/** Returns the per-skill config block for a resolved skill key. */
 export function resolveSkillConfig(
   config: OpenClawConfig | undefined,
   skillKey: string,
@@ -90,7 +90,7 @@ export function isBundledSkillAllowed(entry: SkillEntry, allowlist?: ReadonlySet
   return allowlist.has(key) || allowlist.has(entry.skill.name);
 }
 
-/** Reused helper for should Include Skill behavior in src/skills/loading. */
+/** Decides whether a skill entry is enabled for the current config and runtime. */
 export function shouldIncludeSkill(params: {
   entry: SkillEntry;
   config?: OpenClawConfig;

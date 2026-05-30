@@ -1,4 +1,4 @@
-// process exec helpers and runtime behavior.
+/** Cross-platform process execution helpers with timeout and output capture. */
 import { execFile, spawn } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
@@ -162,7 +162,7 @@ function resolveChildProcessInvocation(params: {
   };
 }
 
-/** Reused helper for should Spawn With Shell behavior in src/process. */
+/** Central shell policy for argv-based spawning. */
 export function shouldSpawnWithShell(params: {
   resolvedCommand: string;
   platform: NodeJS.Platform;
@@ -177,7 +177,7 @@ export function shouldSpawnWithShell(params: {
 }
 
 // Simple promise-wrapped execFile with optional verbosity logging.
-/** Reused helper for run Exec behavior in src/process. */
+/** Runs a command through execFile and decodes platform-specific output. */
 export async function runExec(
   command: string,
   args: string[],
@@ -235,7 +235,7 @@ export async function runExec(
   }
 }
 
-/** Shared type for Spawn Result in src/process. */
+/** Captured process result returned by timeout-aware spawn helpers. */
 export type SpawnResult = {
   pid?: number;
   stdout: string;
@@ -249,7 +249,7 @@ export type SpawnResult = {
   noOutputTimedOut?: boolean;
 };
 
-/** Shared type for Command Options in src/process. */
+/** Options controlling command timeout, cwd, env, input, and output capture. */
 export type CommandOptions = {
   timeoutMs: number;
   cwd?: string;
@@ -309,7 +309,7 @@ function appendCapturedOutput(
   }
 }
 
-/** Reused helper for resolve Process Exit Code behavior in src/process. */
+/** Resolves the final exit code across normal exits, signals, and Windows shims. */
 export function resolveProcessExitCode(params: {
   explicitCode: number | null | undefined;
   childExitCode: number | null | undefined;
@@ -334,7 +334,7 @@ export function resolveProcessExitCode(params: {
   );
 }
 
-/** Reused helper for resolve Command Env behavior in src/process. */
+/** Merges child env, normalizes Windows key casing, and marks OpenClaw execs. */
 export function resolveCommandEnv(params: {
   argv: string[];
   env?: NodeJS.ProcessEnv;
@@ -368,7 +368,7 @@ export function resolveCommandEnv(params: {
   return markOpenClawExecEnv(resolvedEnv);
 }
 
-/** Reused helper for run Command With Timeout behavior in src/process. */
+/** Spawns argv with timeout/no-output timeout handling and bounded output capture. */
 export async function runCommandWithTimeout(
   argv: string[],
   optionsOrTimeout: number | CommandOptions,

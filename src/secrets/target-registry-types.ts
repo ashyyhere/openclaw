@@ -1,14 +1,14 @@
-// secrets target registry types helpers and runtime behavior.
-/** Shared type for Secret Target Config File in src/secrets. */
+/** Types for registry entries that locate secret-bearing config fields. */
+/** Config files that can contain registered secret targets. */
 export type SecretTargetConfigFile = "openclaw.json" | "auth-profiles.json"; // pragma: allowlist secret
-/** Shared type for Secret Target Shape in src/secrets. */
+/** Storage shape expected for a registered secret target. */
 export type SecretTargetShape = "secret_input" | "sibling_ref"; // pragma: allowlist secret
-/** Shared type for Secret Target Expected in src/secrets. */
+/** Runtime value shape required after secret resolution. */
 export type SecretTargetExpected = "string" | "string-or-object"; // pragma: allowlist secret
-/** Shared type for Auth Profile Type in src/secrets. */
+/** Auth profile credential kinds tracked by secret target discovery. */
 export type AuthProfileType = "api_key" | "token";
 
-/** Shared type for Secret Target Registry Entry in src/secrets. */
+/** Static registry entry describing one secret-bearing config path pattern. */
 export type SecretTargetRegistryEntry = {
   id: string;
   targetType: string;
@@ -27,7 +27,7 @@ export type SecretTargetRegistryEntry = {
   trackProviderShadowing?: boolean;
 };
 
-/** Shared type for Resolved Plan Target in src/secrets. */
+/** Registry target resolved to concrete config path segments for planning. */
 export type ResolvedPlanTarget = {
   entry: SecretTargetRegistryEntry;
   pathSegments: string[];
@@ -36,7 +36,7 @@ export type ResolvedPlanTarget = {
   accountId?: string;
 };
 
-/** Shared type for Discovered Config Secret Target in src/secrets. */
+/** Concrete config value discovered from a registry target during audit/configure. */
 export type DiscoveredConfigSecretTarget = {
   entry: SecretTargetRegistryEntry;
   path: string;
