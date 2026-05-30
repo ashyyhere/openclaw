@@ -5,7 +5,7 @@ export type ParsedGenerationModelRef = {
   model: string;
 };
 
-/** Reused helper for parse Generation Model Ref behavior in src/media-generation. */
+/** Parse a non-empty `provider/model` reference into provider and model components. */
 export function parseGenerationModelRef(raw: string | undefined): ParsedGenerationModelRef | null {
   const trimmed = normalizeOptionalString(raw);
   if (!trimmed) {

@@ -1,4 +1,4 @@
-// crestodian tui backend helpers and runtime behavior.
+// Crestodian TUI backend adapter for overview, chat history, and operations.
 import { randomUUID } from "node:crypto";
 import type {
   SessionsPatchParams,
@@ -27,7 +27,7 @@ import { formatCrestodianStartupMessage, loadCrestodianOverview } from "./overvi
 
 type RunTui = typeof defaultRunTui;
 
-/** Shared type for Crestodian Tui Options in src/crestodian. */
+/** Options and dependency overrides for running the Crestodian TUI backend. */
 export type CrestodianTuiOptions = {
   yes?: boolean;
   deps?: CrestodianCommandDeps;
@@ -325,7 +325,7 @@ class CrestodianTuiBackend implements TuiBackend {
   }
 }
 
-/** Reused helper for run Crestodian Tui behavior in src/crestodian. */
+/** Run the Crestodian TUI loop, executing approved handoff operations between sessions. */
 export async function runCrestodianTui(
   opts: CrestodianTuiOptions,
   runtime: RuntimeEnv,

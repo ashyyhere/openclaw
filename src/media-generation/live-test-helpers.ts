@@ -1,4 +1,4 @@
-// media-generation live test helpers helpers and runtime behavior.
+// Helpers shared by media-generation live tests for filters, model maps, and redaction.
 import type { AuthProfileStore } from "../agents/auth-profiles/types.js";
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 
@@ -10,7 +10,7 @@ type LiveProviderModelConfig =
     }
   | undefined;
 
-/** Reused helper for redact Live Api Key behavior in src/media-generation. */
+/** Redact live API keys while retaining enough prefix/suffix for diagnostics. */
 export function redactLiveApiKey(value: string | undefined): string {
   const trimmed = value?.trim();
   if (!trimmed) {
@@ -22,7 +22,7 @@ export function redactLiveApiKey(value: string | undefined): string {
   return `${trimmed.slice(0, 8)}...${trimmed.slice(-4)}`;
 }
 
-/** Reused helper for parse Live Csv Filter behavior in src/media-generation. */
+/** Parse comma-separated live-test filters; null means no filtering. */
 export function parseLiveCsvFilter(
   raw?: string,
   options: { lowercase?: boolean } = {},
@@ -40,7 +40,7 @@ export function parseLiveCsvFilter(
   return values.length > 0 ? new Set(values) : null;
 }
 
-/** Reused helper for parse Provider Model Map behavior in src/media-generation. */
+/** Parse comma-separated `provider/model` entries into a provider-id lookup map. */
 export function parseProviderModelMap(raw?: string): Map<string, string> {
   const entries = new Map<string, string>();
   for (const token of raw?.split(",") ?? []) {
@@ -61,7 +61,7 @@ export function parseProviderModelMap(raw?: string): Map<string, string> {
   return entries;
 }
 
-/** Reused helper for resolve Configured Live Provider Models behavior in src/media-generation. */
+/** Resolve primary/fallback live model config into provider-id keyed model refs. */
 export function resolveConfiguredLiveProviderModels(
   configured: LiveProviderModelConfig,
 ): Map<string, string> {
@@ -92,7 +92,7 @@ export function resolveConfiguredLiveProviderModels(
   return resolved;
 }
 
-/** Reused helper for resolve Live Auth Store behavior in src/media-generation. */
+/** Provide an empty auth-profile store when live keys should come from env/config. */
 export function resolveLiveAuthStore(params: {
   requireProfileKeys: boolean;
   hasLiveKeys: boolean;

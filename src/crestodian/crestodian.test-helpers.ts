@@ -1,7 +1,7 @@
-// crestodian crestodian test helpers helpers and runtime behavior.
+// Test helper for capturing Crestodian runtime output and exits.
 import type { RuntimeEnv } from "../runtime.js";
 
-/** Reused helper for create Crestodian Test Runtime behavior in src/crestodian. */
+/** Create a fake RuntimeEnv that records output lines and throws on exit. */
 export function createCrestodianTestRuntime(): { runtime: RuntimeEnv; lines: string[] } {
   const lines: string[] = [];
   return {

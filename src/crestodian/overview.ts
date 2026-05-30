@@ -1,4 +1,4 @@
-// crestodian overview helpers and runtime behavior.
+// Crestodian overview helpers for config, agents, tools, gateway, and references.
 import {
   listAgentEntries,
   resolveAgentEffectiveModelPrimary,
@@ -28,7 +28,7 @@ type CrestodianAgentSummary = {
   workspace?: string;
 };
 
-/** Shared type for Crestodian Overview in src/crestodian. */
+/** Snapshot shown at Crestodian startup with config, agent, tool, and gateway state. */
 export type CrestodianOverview = {
   config: {
     path: string;
@@ -140,7 +140,7 @@ function resolveFastTestReferences(env: NodeJS.ProcessEnv): OpenClawReferencePat
   };
 }
 
-/** Reused helper for load Crestodian Overview behavior in src/crestodian. */
+/** Load the startup overview by probing config, local tools, gateway, and repo references. */
 export async function loadCrestodianOverview(
   opts: { env?: NodeJS.ProcessEnv; deps?: CrestodianOverviewDependencies } = {},
 ): Promise<CrestodianOverview> {
@@ -225,7 +225,7 @@ function formatCommandProbe(probe: LocalCommandProbe): string {
   return probe.error ? `found (${probe.error})` : "found";
 }
 
-/** Reused helper for format Crestodian Overview behavior in src/crestodian. */
+/** Format the detailed Crestodian overview for text output. */
 export function formatCrestodianOverview(overview: CrestodianOverview): string {
   const agentLines = overview.agents.map((agent) => {
     const bits = [
@@ -331,7 +331,7 @@ function formatStartupAction(overview: CrestodianOverview): string {
   return "Everything basic is reachable. Use `talk to agent` when you want the normal agent.";
 }
 
-/** Reused helper for format Crestodian Startup Message behavior in src/crestodian. */
+/** Format the compact startup message used as the TUI's initial assistant message. */
 export function formatCrestodianStartupMessage(overview: CrestodianOverview): string {
   const agent = overview.agents.find((entry) => entry.id === overview.defaultAgentId);
   const agentLabel = agent?.name
