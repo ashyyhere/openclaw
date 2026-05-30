@@ -1,4 +1,4 @@
-// scripts write cli startup metadata helpers and runtime behavior.
+// CLI startup metadata writer precomputes channel catalogs and help text for packaged startup.
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -171,6 +171,7 @@ function resolveSubcommandHelpSourceSignature(sourceRootDir: string = rootDir): 
   return hash.digest("hex");
 }
 
+/** Read bundled channel catalog ids and a manifest signature from extension package metadata. */
 export function readBundledChannelCatalog(
   extensionsDirOverride: string = extensionsDir,
 ): BundledChannelCatalog {
@@ -218,6 +219,7 @@ export function readBundledChannelCatalog(
   };
 }
 
+/** Read sorted bundled channel ids for startup metadata and tests. */
 export function readBundledChannelCatalogIds(
   extensionsDirOverride: string = extensionsDir,
 ): string[] {
@@ -257,6 +259,7 @@ function createIsolatedRootHelpRenderContext(
   return { config, env };
 }
 
+/** Render root help text through the built dist root-help bundle. */
 export async function renderBundledRootHelpText(
   _distDirOverride: string = distDir,
   renderContext: RootHelpRenderContext = createIsolatedRootHelpRenderContext(
@@ -437,6 +440,7 @@ function renderSourceSubcommandHelpTextRecord(
   return Object.fromEntries(entries) as PrecomputedSubcommandHelpText;
 }
 
+/** Write CLI startup metadata JSON into dist or an override output path. */
 export async function writeCliStartupMetadata(options?: {
   distDir?: string;
   outputPath?: string;

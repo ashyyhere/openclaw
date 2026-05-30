@@ -1,4 +1,4 @@
-// scripts qa lab up helpers and runtime behavior.
+// QA Lab Docker launcher parses CLI flags and delegates to the QA Lab runtime command.
 import { parseArgs } from "node:util";
 
 const { values } = parseArgs({

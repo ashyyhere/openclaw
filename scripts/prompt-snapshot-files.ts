@@ -1,4 +1,4 @@
-// scripts prompt snapshot files helpers and runtime behavior.
+// Prompt snapshot file helpers prune committed Codex happy-path artifacts that are no longer generated.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { CODEX_RUNTIME_HAPPY_PATH_PROMPT_SNAPSHOT_DIR } from "../test/helpers/agents/prompt-snapshot-paths.js";
@@ -7,6 +7,7 @@ function hasErrorCode(error: unknown, code: string): boolean {
   return Boolean(error && typeof error === "object" && "code" in error && error.code === code);
 }
 
+/** List committed prompt snapshot markdown/JSON artifacts under the snapshot directory. */
 export async function listCommittedSnapshotArtifactPaths(root: string): Promise<string[]> {
   let committedEntries: string[];
   try {
@@ -24,6 +25,7 @@ export async function listCommittedSnapshotArtifactPaths(root: string): Promise<
     .map((entry) => path.join(CODEX_RUNTIME_HAPPY_PATH_PROMPT_SNAPSHOT_DIR, entry));
 }
 
+/** Delete prompt snapshot artifacts that are no longer present in the generated file list. */
 export async function deleteStalePromptSnapshotFiles(
   root: string,
   files: Array<{ path: string }>,

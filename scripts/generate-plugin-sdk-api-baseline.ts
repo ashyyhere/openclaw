@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// scripts generate plugin sdk api baseline helpers and runtime behavior.
+// Plugin SDK API baseline generator writes/checks public surface hash state.
 import path from "node:path";
 import { writePluginSdkApiBaselineStatefile } from "../src/plugin-sdk/api-baseline.ts";
 

@@ -1,4 +1,4 @@
-// scripts load channel config surface helpers and runtime behavior.
+// Channel config surface loader imports bundled plugin config schemas through jiti or Bun.
 import { spawnSync } from "node:child_process";
 import { createRequire } from "node:module";
 import path from "node:path";
@@ -88,6 +88,7 @@ function isMissingExecutableError(error: unknown): boolean {
   return "code" in error && error.code === "ENOENT";
 }
 
+/** Load a channel config surface module and normalize it to schema/uiHints. */
 export async function loadChannelConfigSurfaceModule(
   modulePath: string,
   options?: { repoRoot?: string },

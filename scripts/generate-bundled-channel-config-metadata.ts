@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// scripts generate bundled channel config metadata helpers and runtime behavior.
+// Generate bundled channel config metadata from plugin manifests and config-surface modules.
 import fs from "node:fs";
 import path from "node:path";
 import { loadBundledPluginPublicArtifactModuleSync } from "../src/plugins/public-surface-loader.js";
@@ -235,6 +235,7 @@ function resolveChannelUnsupportedSecretRefSurfacePatterns(
   }
 }
 
+/** Collect bundled channel config metadata entries from bundled plugin sources. */
 export async function collectBundledChannelConfigMetadata(params?: { repoRoot?: string }) {
   const repoRoot = path.resolve(params?.repoRoot ?? process.cwd());
   const sources = collectBundledPluginSources({ repoRoot, requirePackageJson: true });
@@ -289,6 +290,7 @@ export async function collectBundledChannelConfigMetadata(params?: { repoRoot?: 
   return entries.toSorted((left, right) => left.channelId.localeCompare(right.channelId));
 }
 
+/** Write or check the generated bundled channel config metadata module. */
 export async function writeBundledChannelConfigMetadataModule(params?: {
   repoRoot?: string;
   outputPath?: string;
@@ -319,6 +321,7 @@ const RAW_BUNDLED_CHANNEL_CONFIG_METADATA = [
   ${chunks},
 ].join("");
 
+/** Generated bundled channel config metadata parsed from the emitted JSON chunk. */
 export const GENERATED_BUNDLED_CHANNEL_CONFIG_METADATA = JSON.parse(
   RAW_BUNDLED_CHANNEL_CONFIG_METADATA,
 ) as readonly BundledChannelConfigMetadata[];

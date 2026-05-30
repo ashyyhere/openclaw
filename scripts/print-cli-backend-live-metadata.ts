@@ -1,7 +1,8 @@
-// scripts print cli backend live metadata helpers and runtime behavior.
+// CLI backend live metadata script prints command/model defaults for live backend probes.
 import { pathToFileURL } from "node:url";
 import { resolveCliBackendConfig, resolveCliBackendLiveTest } from "../src/agents/cli-backends.js";
 
+/** Resolve live-test metadata for a CLI backend provider id. */
 export async function resolveCliBackendLiveMetadata(provider: string) {
   if (provider === "codex-cli") {
     return {

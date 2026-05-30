@@ -1,4 +1,4 @@
-// scripts check temp path guardrails helpers and runtime behavior.
+// Temp path guardrail check flags weak temp path construction in runtime source files.
 import { execFileSync } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";

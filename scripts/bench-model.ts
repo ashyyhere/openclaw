@@ -1,4 +1,4 @@
-// scripts bench model helpers and runtime behavior.
+// Model benchmark script compares latency and token usage across live Anthropic and MiniMax calls.
 import { completeSimple, type Model } from "openclaw/plugin-sdk/llm";
 
 type Usage = {

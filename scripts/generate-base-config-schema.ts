@@ -1,8 +1,9 @@
 #!/usr/bin/env node
-// scripts generate base config schema helpers and runtime behavior.
+// Base config schema script verifies the runtime-computed config schema can be generated.
 import { pathToFileURL } from "node:url";
 import { computeBaseConfigSchemaResponse } from "../src/config/schema-base.js";
 
+/** Compute the base config schema response to catch schema construction failures. */
 export function checkBaseConfigSchema(): void {
   computeBaseConfigSchemaResponse({
     generatedAt: "2026-05-05T00:00:00.000Z",
