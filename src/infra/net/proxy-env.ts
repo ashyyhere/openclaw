@@ -1,5 +1,5 @@
-// infra/net proxy env helpers and runtime behavior.
-/** Reused constant for PROXY ENV KEYS behavior in src/infra/net. */
+// Mirrors undici proxy-env selection for OpenClaw's trusted env proxy gates.
+/** Proxy environment variables that can affect outbound HTTP(S) routing. */
 export const PROXY_ENV_KEYS = [
   "HTTP_PROXY",
   "HTTPS_PROXY",
@@ -9,7 +9,7 @@ export const PROXY_ENV_KEYS = [
   "all_proxy",
 ] as const;
 
-/** Reused helper for has Proxy Env Configured behavior in src/infra/net. */
+/** Returns whether any HTTP(S) or ALL_PROXY environment variable is set. */
 export function hasProxyEnvConfigured(env: NodeJS.ProcessEnv = process.env): boolean {
   for (const key of PROXY_ENV_KEYS) {
     const value = env[key];
@@ -28,7 +28,7 @@ function normalizeProxyEnvValue(value: string | undefined): string | null | unde
   return trimmed.length > 0 ? trimmed : null;
 }
 
-/** Shared type for Env Http Proxy Agent Proxy Options in src/infra/net. */
+/** Explicit proxy URLs passed into undici EnvHttpProxyAgent. */
 export type EnvHttpProxyAgentProxyOptions = {
   httpProxy?: string;
   httpsProxy?: string;
@@ -56,7 +56,7 @@ export function resolveEnvHttpProxyUrl(
   return httpProxy ?? undefined;
 }
 
-/** Reused helper for has Env Http Proxy Configured behavior in src/infra/net. */
+/** Returns whether undici would select an HTTP(S) proxy for the protocol. */
 export function hasEnvHttpProxyConfigured(
   protocol: "http" | "https" = "https",
   env: NodeJS.ProcessEnv = process.env,
@@ -91,12 +91,12 @@ export function resolveEnvHttpProxyAgentOptions(
   return options.httpProxy || options.httpsProxy ? options : undefined;
 }
 
-/** Reused helper for has Env Http Proxy Agent Configured behavior in src/infra/net. */
+/** Returns whether EnvHttpProxyAgent options can be built from the environment. */
 export function hasEnvHttpProxyAgentConfigured(env: NodeJS.ProcessEnv = process.env): boolean {
   return resolveEnvHttpProxyAgentOptions(env) !== undefined;
 }
 
-/** Reused helper for should Use Env Http Proxy For Url behavior in src/infra/net. */
+/** Applies proxy env and NO_PROXY matching to decide trusted-env proxy usage. */
 export function shouldUseEnvHttpProxyForUrl(
   targetUrl: string,
   env: NodeJS.ProcessEnv = process.env,

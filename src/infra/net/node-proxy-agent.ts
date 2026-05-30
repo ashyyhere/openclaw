@@ -1,10 +1,11 @@
-// infra/net node proxy agent helpers and runtime behavior.
+// Builds Node http/https agents backed by proxyline for env or explicit proxy
+// URLs, including managed-proxy TLS options.
 import type { Agent as HttpAgent } from "node:http";
 import { createRequire } from "node:module";
 import { matchesNoProxy, resolveEnvHttpProxyAgentOptions } from "./proxy-env.js";
 import { resolveActiveManagedProxyTlsOptions } from "./proxy/managed-proxy-undici.js";
 
-/** Reused constant for UNSUPPORTED PROXY PROTOCOL MESSAGE behavior in src/infra/net. */
+/** Error text used when callers configure SOCKS/PAC or another unsupported proxy URL. */
 export const UNSUPPORTED_PROXY_PROTOCOL_MESSAGE =
   "Unsupported proxy protocol. SOCKS and PAC proxy URLs are not supported; use an HTTP or HTTPS proxy URL.";
 
@@ -17,7 +18,7 @@ type ProxylineTlsOptions = ProxylineAgentOptions["proxyTls"];
 
 const require = createRequire(import.meta.url);
 
-/** Shared type for Create Node Proxy Agent Options in src/infra/net. */
+/** Proxy agent creation mode for explicit proxy URLs or env-selected proxies. */
 export type CreateNodeProxyAgentOptions =
   | {
       mode: "env";
@@ -104,7 +105,7 @@ function loadCreateAmbientNodeProxyAgent(): ProxylineCreateAmbientNodeProxyAgent
     .createAmbientNodeProxyAgent;
 }
 
-/** Reused helper for resolve Env Node Proxy Url For Target behavior in src/infra/net. */
+/** Resolves the proxy URL that should handle a target, honoring NO_PROXY. */
 export function resolveEnvNodeProxyUrlForTarget(
   targetUrl: string | URL,
   env: NodeJS.ProcessEnv = process.env,
@@ -147,15 +148,15 @@ function createFixedNodeProxyAgent(
   return agent as HttpAgent;
 }
 
-/** Reused helper for create Node Proxy Agent behavior in src/infra/net. */
+/** Creates a required Node proxy agent for an explicit proxy URL. */
 export function createNodeProxyAgent(
   options: Extract<CreateNodeProxyAgentOptions, { mode: "explicit" }>,
 ): HttpAgent;
-/** Reused helper for create Node Proxy Agent behavior in src/infra/net. */
+/** Creates an optional Node proxy agent selected from proxy environment variables. */
 export function createNodeProxyAgent(
   options: Extract<CreateNodeProxyAgentOptions, { mode: "env" }>,
 ): HttpAgent | undefined;
-/** Reused helper for create Node Proxy Agent behavior in src/infra/net. */
+/** Creates a Node proxy agent for the selected explicit or env mode. */
 export function createNodeProxyAgent(options: CreateNodeProxyAgentOptions): HttpAgent | undefined {
   if (options.mode === "explicit") {
     return createFixedNodeProxyAgent(options.proxyUrl, { protocol: options.protocol });
@@ -179,7 +180,7 @@ function createEnvNodeProxyAgentForTarget(
   });
 }
 
-/** Reused helper for create Fixed Node Proxy Agent Pair behavior in src/infra/net. */
+/** Creates HTTP and HTTPS agents that both route through one fixed proxy URL. */
 export function createFixedNodeProxyAgentPair(proxyUrl: string | URL): {
   httpAgent: HttpAgent;
   httpsAgent: HttpAgent;
