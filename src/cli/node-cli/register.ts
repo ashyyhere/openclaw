@@ -24,7 +24,7 @@ function parsePortOption(value: unknown, fallback: number): number | null {
   return parsePort(value);
 }
 
-/** Reused helper for register Node Cli behavior in src/cli/node-cli. */
+/** Registers foreground and service-management commands for the headless node host. */
 export function registerNodeCli(program: Command) {
   const node = program
     .command("node")

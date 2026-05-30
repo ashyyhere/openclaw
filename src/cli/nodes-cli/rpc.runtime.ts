@@ -15,7 +15,7 @@ function resolveNodesTransportTimeoutMs(opts: NodesRpcOpts, overrideMs?: number)
   return overrideMs ?? parseTimeoutMsWithFallback(opts.timeout, DEFAULT_NODES_RPC_TIMEOUT_MS);
 }
 
-/** Reused helper for call Gateway Cli Runtime behavior in src/cli/nodes-cli. */
+/** Calls node gateway methods from the CLI with JSON-aware progress output. */
 export async function callGatewayCliRuntime(
   method: string,
   opts: NodesRpcOpts,
@@ -41,7 +41,7 @@ export async function callGatewayCliRuntime(
   );
 }
 
-/** Reused helper for call Node Pair Approval Gateway Cli Runtime behavior in src/cli/nodes-cli. */
+/** Calls node pairing approval methods using backend authority and explicit operator scopes. */
 export async function callNodePairApprovalGatewayCliRuntime(
   method: "node.pair.list" | "node.pair.approve",
   opts: NodesRpcOpts,

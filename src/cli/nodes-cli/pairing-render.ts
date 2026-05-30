@@ -3,7 +3,7 @@ import { renderTable } from "../../../packages/terminal-core/src/table.js";
 import { formatTimeAgo } from "../../infra/format-time/format-relative.ts";
 import type { PendingRequest } from "./types.js";
 
-/** Reused helper for render Pending Pairing Requests Table behavior in src/cli/nodes-cli. */
+/** Renders pending node pairing requests as a sanitized terminal table. */
 export function renderPendingPairingRequestsTable(params: {
   pending: PendingRequest[];
   now: number;

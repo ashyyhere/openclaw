@@ -1,9 +1,9 @@
 import { normalizeStringifiedOptionalString } from "../../shared/string-coerce.js";
 
-/** Re-exported API for src/cli/nodes-cli, starting with parse Node List. */
+/** Node list parsers re-exported for nodes CLI renderers and tests. */
 export { parseNodeList, parsePairingList } from "../../shared/node-list-parse.js";
 
-/** Reused helper for format Permissions behavior in src/cli/nodes-cli. */
+/** Formats node permission maps into deterministic compact status text. */
 export function formatPermissions(raw: unknown) {
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) {
     return null;

@@ -12,7 +12,7 @@ import { registerNodesPushCommand } from "./register.push.js";
 import { registerNodesScreenCommands } from "./register.screen.js";
 import { registerNodesStatusCommands } from "./register.status.js";
 
-/** Reused helper for register Nodes Cli behavior in src/cli/nodes-cli. */
+/** Registers gateway-owned node management commands and lazy plugin-provided nodes commands. */
 export async function registerNodesCli(program: Command, argv: readonly string[] = process.argv) {
   const nodes = program
     .command("nodes")

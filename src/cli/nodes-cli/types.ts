@@ -1,3 +1,6 @@
+/**
+ * Shared CLI option bag for nodes status, pairing, invoke, media, and notification commands.
+ */
 export type NodesRpcOpts = {
   url?: string;
   token?: string;
@@ -43,5 +46,5 @@ export type NodesRpcOpts = {
   audio?: boolean;
 };
 
-/** Re-exported API for src/cli/nodes-cli, starting with Node List Node. */
+/** Shared parsed node list result types used by nodes CLI renderers. */
 export type { NodeListNode, PairedNode, PendingRequest } from "../../shared/node-list-types.js";
