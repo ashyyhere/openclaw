@@ -1,4 +1,4 @@
-// extensions/qa-lab/src suite helpers and runtime behavior.
+// QA Lab suite runner starts lab/gateway services, executes scenarios, and writes reports.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { setTimeout as sleep } from "node:timers/promises";
@@ -80,6 +80,7 @@ function resolveQaSuiteControlUiEnabled(params: {
   );
 }
 
+/** Result for one QA suite scenario, including checks and optional parity data. */
 export type QaSuiteScenarioResult = {
   name: string;
   status: "pass" | "fail";
@@ -93,8 +94,10 @@ type QaSuiteEnvironment = {
   webSessionIds: Set<string>;
 } & QaSuiteRuntimeEnv;
 
+/** Factory used by the suite runner when it owns the QA Lab server lifecycle. */
 export type QaSuiteStartLabFn = (params?: QaLabServerStartParams) => Promise<QaLabServerHandle>;
 
+/** Input options accepted by the QA suite runner. */
 export type QaSuiteRunParams = {
   repoRoot?: string;
   outputDir?: string;
@@ -268,6 +271,7 @@ function liveTurnTimeoutMs(
   return resolveQaLiveTurnTimeoutMs(env, fallbackMs);
 }
 
+/** Completed QA suite result with report paths and scenario outcomes. */
 export type QaSuiteResult = {
   outputDir: string;
   reportPath: string;
@@ -531,6 +535,7 @@ function mergeQaRuntimeEnvPatches(
   return Object.keys(merged).length > 0 ? merged : undefined;
 }
 
+/** Inputs used to build the persisted QA suite summary JSON. */
 export type QaSuiteSummaryJsonParams = {
   scenarios: QaSuiteScenarioResult[];
   startedAt: Date;
@@ -997,6 +1002,7 @@ async function captureGatewayHeapSnapshotCheckpoint(params: {
   };
 }
 
+/** Runs the QA suite and writes Markdown plus JSON reports. */
 export async function runQaSuite(params?: QaSuiteRunParams): Promise<QaSuiteResult> {
   const startedAt = new Date();
   const repoRoot = path.resolve(params?.repoRoot ?? process.cwd());
@@ -1586,6 +1592,7 @@ export async function runQaSuite(params?: QaSuiteRunParams): Promise<QaSuiteResu
   }
 }
 
+/** Test-only access to QA suite progress and runtime-env helper functions. */
 export const qaSuiteProgressTesting = {
   appendNodeOption,
   buildQaGatewayHeapCheckpointRuntimeEnvPatch,

@@ -1,26 +1,34 @@
-// extensions/qa-lab/src codex plugin fixture helpers and runtime behavior.
+// QA Lab Codex plugin fixture seeds plugin states and evaluates install lifecycle gates.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { resolveCodexAuthProfile, type QaAuthProfileSnapshot } from "./auth-profile.fixture.js";
 
+/** Fixture version representing the currently supported Codex plugin. */
 export const CODEX_PLUGIN_CURRENT_VERSION = "2026.5.21";
+/** Fixture marker for a local head Codex plugin build. */
 export const CODEX_PLUGIN_HEAD_VERSION = "head";
+/** Plugin id used by Codex runtime fixture state. */
 export const CODEX_PLUGIN_ID = "codex";
 
+/** User-facing lifecycle messages emitted by Codex plugin repair checks. */
 export const CODEX_PLUGIN_LIFECYCLE_MESSAGES = Object.freeze({
   missingPlugin:
     'Codex plugin is required for Codex runtime. Run "openclaw doctor --fix" to install @openclaw/codex, then retry.',
 });
 
+/** Version selector accepted by Codex plugin fixture seeding. */
 export type CodexPluginFixtureVersion = "missing" | "current" | "head" | (string & {});
 
+/** Installed Codex plugin state read from an agent plugin directory. */
 export type CodexPluginState = {
   installed: boolean;
   version?: string;
 };
 
+/** Lifecycle status returned by Codex plugin readiness evaluation. */
 export type CodexPluginLifecycleStatus = "ready" | "repair-required" | "blocked";
 
+/** Codex plugin readiness result with remediation and auth routing details. */
 export type CodexPluginLifecycleResult = {
   status: CodexPluginLifecycleStatus;
   pluginState: CodexPluginState;
@@ -142,6 +150,7 @@ function collectStaleLegacyRuntimePins(config: unknown): string[] {
   return [...markers].toSorted();
 }
 
+/** Seeds a fake Codex plugin package at the requested fixture version. */
 export async function seedCodexPluginAt(
   version: CodexPluginFixtureVersion,
   agentDir: string,
@@ -166,6 +175,7 @@ export async function seedCodexPluginAt(
   );
 }
 
+/** Reads the currently installed Codex plugin fixture state. */
 export async function snapshotCodexPluginState(agentDir: string): Promise<CodexPluginState> {
   const packagePath = path.join(codexPluginDir(agentDir), "package.json");
   const raw = await fs.readFile(packagePath, "utf8").catch((error: unknown) => {
@@ -185,6 +195,7 @@ export async function snapshotCodexPluginState(agentDir: string): Promise<CodexP
   };
 }
 
+/** Evaluates whether the Codex plugin can run or needs repair/remediation. */
 export function evaluateCodexPluginLifecycle(params: {
   plugin: CodexPluginState;
   auth: QaAuthProfileSnapshot;
@@ -250,6 +261,7 @@ export function evaluateCodexPluginLifecycle(params: {
   };
 }
 
+/** Creates a test gate that blocks the first Codex turn until plugin install completes. */
 export function createCodexPluginInstallGate() {
   const events: string[] = [];
   let installed = false;

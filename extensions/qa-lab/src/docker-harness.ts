@@ -1,4 +1,4 @@
-// extensions/qa-lab/src docker harness helpers and runtime behavior.
+// QA Lab Docker harness helpers render compose scaffolds and build local QA images.
 import { execFile } from "node:child_process";
 import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
@@ -210,6 +210,7 @@ kill the container by detaching a replacement child.
 `;
 }
 
+/** Writes a Docker Compose QA harness scaffold and seeded workspace files. */
 export async function writeQaDockerHarnessFiles(params: {
   outputDir: string;
   repoRoot: string;
@@ -317,6 +318,7 @@ export async function writeQaDockerHarnessFiles(params: {
   };
 }
 
+/** Builds the local Docker image used by the QA harness. */
 export async function buildQaDockerHarnessImage(
   params: {
     repoRoot: string;

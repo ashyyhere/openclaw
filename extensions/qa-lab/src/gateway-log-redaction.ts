@@ -1,4 +1,4 @@
-// extensions/qa-lab/src gateway log redaction helpers and runtime behavior.
+// QA Lab gateway-log redaction helpers scrub secrets before surfacing debug logs.
 import { escapeRegExp } from "openclaw/plugin-sdk/text-utility-runtime";
 import {
   QA_PROVIDER_SECRET_ENV_KEY_PATTERNS,
@@ -26,6 +26,7 @@ function redactSecretEnvKeyPattern(text: string, pattern: RegExp) {
     .replace(new RegExp(`"(${source})"\\s*:\\s*"[^"]*"`, "g"), `"$1":"<redacted>"`);
 }
 
+/** Redacts known QA provider and gateway secrets from debug text. */
 export function redactQaGatewayDebugText(text: string) {
   let redacted = text;
   for (const envVar of QA_GATEWAY_DEBUG_SECRET_ENV_VARS) {
@@ -59,6 +60,7 @@ export function redactQaGatewayDebugText(text: string) {
     .replaceAll(/([?#&]token=)[^&\s]+/gi, "$1<redacted>");
 }
 
+/** Formats sanitized gateway logs for inclusion in an error message. */
 export function formatQaGatewayLogsForError(logs: string) {
   const sanitized = redactQaGatewayDebugText(logs).trim();
   return sanitized.length > 0 ? `\nGateway logs:\n${sanitized}` : "";
