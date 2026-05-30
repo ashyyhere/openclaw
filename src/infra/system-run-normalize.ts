@@ -1,13 +1,13 @@
-// infra system run normalize helpers and runtime behavior.
+// Normalizes loose system-run config values into strict strings and arrays.
 import { mapAllowFromEntries } from "openclaw/plugin-sdk/channel-config-helpers";
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 
-/** Reused helper for normalize Non Empty String behavior in src/infra. */
+/** Returns a trimmed non-empty string from unknown input. */
 export function normalizeNonEmptyString(value: unknown): string | null {
   return typeof value === "string" ? (normalizeOptionalString(value) ?? null) : null;
 }
 
-/** Reused helper for normalize String Array behavior in src/infra. */
+/** Normalizes allowFrom-style unknown input into a string array. */
 export function normalizeStringArray(value: unknown): string[] {
   return Array.isArray(value) ? mapAllowFromEntries(value) : [];
 }

@@ -1,4 +1,4 @@
-// infra/tls gateway helpers and runtime behavior.
+// Loads or generates TLS material for the local gateway.
 import { execFile } from "node:child_process";
 import { X509Certificate } from "node:crypto";
 import fs from "node:fs/promises";
@@ -13,7 +13,7 @@ import { normalizeFingerprint } from "./fingerprint.js";
 
 const execFileAsync = promisify(execFile);
 
-/** Shared type for Gateway Tls Runtime in src/infra/tls. */
+/** Resolved gateway TLS state, certificate paths, fingerprint, and Node TLS options. */
 export type GatewayTlsRuntime = {
   enabled: boolean;
   required: boolean;
@@ -65,7 +65,7 @@ async function generateSelfSignedCert(params: {
   );
 }
 
-/** Reused helper for load Gateway Tls Runtime behavior in src/infra/tls. */
+/** Resolves gateway TLS config, generating a self-signed cert when configured. */
 export async function loadGatewayTlsRuntime(
   cfg: GatewayTlsConfig | undefined,
   log?: { info?: (msg: string) => void; warn?: (msg: string) => void },

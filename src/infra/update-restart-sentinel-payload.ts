@@ -1,4 +1,4 @@
-// infra update restart sentinel payload helpers and runtime behavior.
+// Builds restart sentinel payloads emitted after self-update handoff.
 import {
   buildRestartSuccessContinuation,
   formatDoctorNonInteractiveHint,
@@ -6,7 +6,7 @@ import {
 } from "./restart-sentinel.js";
 import type { UpdateRunResult } from "./update-runner.js";
 
-/** Shared type for Update Restart Sentinel Meta in src/infra. */
+/** Delivery and continuation metadata attached to update restart sentinels. */
 export type UpdateRestartSentinelMeta = {
   sessionKey?: string;
   deliveryContext?: {
@@ -20,7 +20,7 @@ export type UpdateRestartSentinelMeta = {
   continuationMessage?: string | null;
 };
 
-/** Reused helper for build Update Restart Sentinel Payload behavior in src/infra. */
+/** Converts an update run result into the persisted restart sentinel payload. */
 export function buildUpdateRestartSentinelPayload(params: {
   result: UpdateRunResult;
   meta: UpdateRestartSentinelMeta;

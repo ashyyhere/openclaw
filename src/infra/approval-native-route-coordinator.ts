@@ -1,4 +1,4 @@
-// infra approval native route coordinator helpers and runtime behavior.
+// Coordinates cross-runtime notices when native approvals route away from origin.
 import {
   normalizeLowercaseStringOrEmpty,
   normalizeOptionalString,
@@ -267,7 +267,7 @@ function resolveApprovalRouteNotice(params: {
   };
 }
 
-/** Reused helper for has Active Approval Native Route Runtime behavior in src/infra. */
+/** Returns whether a native approval runtime can handle the given kind/channel/account. */
 export function hasActiveApprovalNativeRouteRuntime(params: {
   approvalKind: ChannelApprovalKind;
   channel?: string | null;
@@ -326,7 +326,7 @@ async function maybeFinalizeApprovalRouteNotice(approvalId: string): Promise<voi
   }
 }
 
-/** Reused helper for create Approval Native Route Reporter behavior in src/infra. */
+/** Registers a runtime reporter that aggregates approval delivery route outcomes. */
 export function createApprovalNativeRouteReporter(params: {
   handledKinds: ReadonlySet<ChannelApprovalKind>;
   channel?: string;
@@ -440,7 +440,7 @@ export function createApprovalNativeRouteReporter(params: {
   };
 }
 
-/** Reused helper for clear Approval Native Route State For Test behavior in src/infra. */
+/** Clears route runtime and pending notice state between tests. */
 export function clearApprovalNativeRouteStateForTest(): void {
   for (const approvalId of Array.from(pendingApprovalRouteNotices.keys())) {
     clearPendingApprovalRouteNotice(approvalId);

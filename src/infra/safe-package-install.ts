@@ -1,4 +1,4 @@
-// infra safe package install helpers and runtime behavior.
+// Builds npm install env and argv with scripts/audit/fund disabled by default.
 import type { NpmProjectInstallEnvOptions } from "./npm-install-env.js";
 import { createNpmProjectInstallEnv } from "./npm-install-env.js";
 
@@ -19,7 +19,7 @@ type SafeNpmInstallArgsOptions = {
   omitPeer?: boolean;
 };
 
-/** Reused helper for create Safe Npm Install Env behavior in src/infra. */
+/** Creates a package install environment that disables scripts and noisy npm prompts. */
 export function createSafeNpmInstallEnv(
   env: NodeJS.ProcessEnv,
   options: SafeNpmInstallEnvOptions = {},
@@ -47,7 +47,7 @@ export function createSafeNpmInstallEnv(
   return nextEnv;
 }
 
-/** Reused helper for create Safe Npm Install Args behavior in src/infra. */
+/** Creates npm install argv with safe defaults and optional omit/logging flags. */
 export function createSafeNpmInstallArgs(options: SafeNpmInstallArgsOptions = {}): string[] {
   return [
     "install",

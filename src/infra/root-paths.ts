@@ -1,6 +1,6 @@
-// infra root paths helpers and runtime behavior.
+// Re-exports fs-safe root-scoped path helpers with infra defaults loaded.
 import "./fs-safe-defaults.js";
-/** Re-exported API for src/infra. */
+/** Root-bound path resolution helpers for read/write operations. */
 export {
   ensureDirectoryWithinRoot,
   resolveExistingPathsWithinRoot,
@@ -9,5 +9,5 @@ export {
   resolveStrictExistingPathsWithinRoot,
   resolveWritablePathWithinRoot,
 } from "@openclaw/fs-safe/advanced";
-/** Re-exported API for src/infra, starting with path Scope. */
+/** Tagged path scope helper for root-bound fs-safe operations. */
 export { pathScope } from "@openclaw/fs-safe/advanced";

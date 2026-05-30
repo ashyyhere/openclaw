@@ -1,4 +1,4 @@
-// infra approval view model helpers and runtime behavior.
+// Builds channel-facing view models for exec and plugin approval states.
 import type {
   ApprovalMetadataView,
   ApprovalRequest,
@@ -102,7 +102,7 @@ function buildPluginViewBase<TPhase extends ApprovalPhase>(
   };
 }
 
-/** Reused helper for build Pending Approval View behavior in src/infra. */
+/** Builds the pending approval view, including action descriptors and expiry. */
 export function buildPendingApprovalView(request: ApprovalRequest): PendingApprovalView {
   if (request.id.startsWith("plugin:")) {
     const pluginRequest = request as PluginApprovalRequest;
@@ -127,7 +127,7 @@ export function buildPendingApprovalView(request: ApprovalRequest): PendingAppro
   };
 }
 
-/** Reused helper for build Resolved Approval View behavior in src/infra. */
+/** Builds the resolved approval view with decision and resolver metadata. */
 export function buildResolvedApprovalView(
   request: ApprovalRequest,
   resolved: ApprovalResolved,
@@ -148,7 +148,7 @@ export function buildResolvedApprovalView(
   };
 }
 
-/** Reused helper for build Expired Approval View behavior in src/infra. */
+/** Builds the expired approval view for a request that timed out. */
 export function buildExpiredApprovalView(request: ApprovalRequest): ExpiredApprovalView {
   if (request.id.startsWith("plugin:")) {
     return buildPluginViewBase(request as PluginApprovalRequest, "expired");

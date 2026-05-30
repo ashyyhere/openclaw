@@ -1,14 +1,14 @@
-// infra approval native runtime types helpers and runtime behavior.
+// Shared native approval delivery transport and lifecycle contracts.
 import type { ChannelApprovalNativePlannedTarget } from "./approval-native-delivery.js";
 import type { ChannelApprovalKind } from "./approval-types.js";
 
-/** Shared type for Prepared Channel Native Approval Target in src/infra. */
+/** Prepared channel target plus dedupe key used before native approval delivery. */
 export type PreparedChannelNativeApprovalTarget<TPreparedTarget> = {
   dedupeKey: string;
   target: TPreparedTarget;
 };
 
-/** Shared type for Channel Native Approval Transport Spec in src/infra. */
+/** Transport hooks for preparing and delivering one native approval target. */
 export type ChannelNativeApprovalTransportSpec<
   TPendingEntry,
   TPreparedTarget,
@@ -33,7 +33,7 @@ export type ChannelNativeApprovalTransportSpec<
   }) => TPendingEntry | null | Promise<TPendingEntry | null>;
 };
 
-/** Shared type for Channel Native Approval Delivery Callbacks in src/infra. */
+/** Optional lifecycle callbacks emitted during native approval delivery. */
 export type ChannelNativeApprovalDeliveryCallbacks<
   TPendingEntry,
   TPreparedTarget,

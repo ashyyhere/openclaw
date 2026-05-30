@@ -1,10 +1,10 @@
-// infra tcp port helpers and runtime behavior.
+// Parses TCP port values into valid positive port numbers.
 import { parseStrictPositiveInteger } from "./parse-finite-number.js";
 
-/** Reused constant for MAX TCP PORT behavior in src/infra. */
+/** Highest valid TCP/UDP port number. */
 export const MAX_TCP_PORT = 65_535;
 
-/** Reused helper for parse Tcp Port behavior in src/infra. */
+/** Parses unknown input as a TCP port or returns null when invalid/out of range. */
 export function parseTcpPort(raw: unknown): number | null {
   if (raw === undefined || raw === null) {
     return null;
