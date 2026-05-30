@@ -36,7 +36,7 @@ import {
 } from "./plugin-registry-contributions.js";
 import type { PluginRegistrySnapshot } from "./plugin-registry-snapshot.js";
 
-/** Shared type for Gateway Startup Plugin Plan in src/plugins. */
+/** Complete plugin startup plan, including channel-only and deferred channel plugins. */
 export type GatewayStartupPluginPlan = {
   channelPluginIds: readonly string[];
   configuredDeferredChannelPluginIds: readonly string[];
@@ -924,7 +924,7 @@ function canStartConfiguredChannelPlugin(params: {
   return activationState.enabled && activationState.explicitlyEnabled;
 }
 
-/** Reused helper for resolve Channel Plugin Ids behavior in src/plugins. */
+/** Resolve channel plugin ids from the current workspace metadata snapshot. */
 export function resolveChannelPluginIds(params: {
   config: OpenClawConfig;
   workspaceDir?: string;
@@ -933,7 +933,7 @@ export function resolveChannelPluginIds(params: {
   return [...loadGatewayStartupPluginPlan(params).channelPluginIds];
 }
 
-/** Reused helper for resolve Channel Plugin Ids From Registry behavior in src/plugins. */
+/** List manifest-registered plugins that expose at least one channel. */
 export function resolveChannelPluginIdsFromRegistry(params: {
   manifestRegistry: PluginManifestRegistry;
 }): string[] {
@@ -943,7 +943,7 @@ export function resolveChannelPluginIdsFromRegistry(params: {
     .map((plugin) => plugin.id);
 }
 
-/** Reused helper for resolve Configured Deferred Channel Plugin Ids From Registry behavior in src/plugins. */
+/** Resolve configured channel plugins whose full load is deferred until after listen. */
 export function resolveConfiguredDeferredChannelPluginIdsFromRegistry(params: {
   config: OpenClawConfig;
   env: NodeJS.ProcessEnv;
@@ -1008,7 +1008,7 @@ function resolveConfiguredDeferredChannelPluginIdsFromPrepared(params: {
     .map((plugin) => plugin.pluginId);
 }
 
-/** Reused helper for resolve Configured Deferred Channel Plugin Ids behavior in src/plugins. */
+/** Resolve deferred configured channel plugins from the current workspace metadata snapshot. */
 export function resolveConfiguredDeferredChannelPluginIds(params: {
   config: OpenClawConfig;
   workspaceDir?: string;
@@ -1017,7 +1017,7 @@ export function resolveConfiguredDeferredChannelPluginIds(params: {
   return [...loadGatewayStartupPluginPlan(params).configuredDeferredChannelPluginIds];
 }
 
-/** Reused helper for resolve Gateway Startup Plugin Plan From Registry behavior in src/plugins. */
+/** Build a gateway startup plan from prepared plugin registry and manifest snapshots. */
 export function resolveGatewayStartupPluginPlanFromRegistry(params: {
   config: OpenClawConfig;
   activationSourceConfig?: OpenClawConfig;
@@ -1241,7 +1241,7 @@ export function resolveGatewayStartupPluginPlanFromRegistry(params: {
   };
 }
 
-/** Reused helper for resolve Gateway Startup Plugin Ids From Registry behavior in src/plugins. */
+/** Resolve only startup plugin ids from prepared plugin registry and manifest snapshots. */
 export function resolveGatewayStartupPluginIdsFromRegistry(params: {
   config: OpenClawConfig;
   activationSourceConfig?: OpenClawConfig;
@@ -1253,7 +1253,7 @@ export function resolveGatewayStartupPluginIdsFromRegistry(params: {
   return [...resolveGatewayStartupPluginPlanFromRegistry(params).pluginIds];
 }
 
-/** Reused helper for load Gateway Startup Plugin Plan behavior in src/plugins. */
+/** Load plugin metadata and build the gateway startup plan for the workspace. */
 export function loadGatewayStartupPluginPlan(params: {
   config: OpenClawConfig;
   activationSourceConfig?: OpenClawConfig;
@@ -1293,7 +1293,7 @@ export function loadGatewayStartupPluginPlan(params: {
   });
 }
 
-/** Reused helper for resolve Gateway Startup Plugin Ids behavior in src/plugins. */
+/** Resolve gateway startup plugin ids for the current workspace metadata snapshot. */
 export function resolveGatewayStartupPluginIds(params: {
   config: OpenClawConfig;
   activationSourceConfig?: OpenClawConfig;
