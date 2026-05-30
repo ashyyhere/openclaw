@@ -1,4 +1,3 @@
-// extensions/kilocode onboard helpers and runtime behavior.
 import {
   createModelCatalogPresetAppliers,
   type OpenClawConfig,

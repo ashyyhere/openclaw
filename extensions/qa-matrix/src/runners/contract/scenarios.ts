@@ -1,4 +1,3 @@
-// extensions/qa-matrix/src/runners/contract scenarios helpers and runtime behavior.
 import {
   MATRIX_QA_BOT_DM_ROOM_KEY,
   MATRIX_QA_DRIVER_DM_ROOM_KEY,
