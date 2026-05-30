@@ -1,4 +1,4 @@
-// plugins registry types helpers and runtime behavior.
+// Plugin registry record and registration contracts.
 import type { AgentHarness } from "../agents/harness/types.js";
 import type { ChannelPlugin } from "../channels/plugins/types.plugin.js";
 import type { GatewayMethodDescriptor } from "../gateway/methods/descriptor.js";
@@ -71,7 +71,7 @@ import type {
   UnifiedModelCatalogProviderPlugin,
 } from "./types.js";
 
-/** Shared type for Plugin Tool Registration in src/plugins. */
+/** Registered tool factory and declared tool names owned by a plugin. */
 export type PluginToolRegistration = {
   pluginId: string;
   pluginName?: string;
@@ -83,7 +83,7 @@ export type PluginToolRegistration = {
   rootDir?: string;
 };
 
-/** Shared type for Plugin Cli Registration in src/plugins. */
+/** Registered CLI command tree contributed by a plugin. */
 export type PluginCliRegistration = {
   pluginId: string;
   pluginName?: string;
@@ -95,7 +95,7 @@ export type PluginCliRegistration = {
   rootDir?: string;
 };
 
-/** Shared type for Plugin Http Route Registration in src/plugins. */
+/** HTTP route handler registration exposed through the Gateway. */
 export type PluginHttpRouteRegistration = {
   pluginId?: string;
   path: string;
@@ -112,7 +112,7 @@ export type PluginHttpRouteRegistration = {
   source?: string;
 };
 
-/** Shared type for Plugin Hosted Media Resolver Registration in src/plugins. */
+/** Hosted media resolver contributed by a plugin. */
 export type PluginHostedMediaResolverRegistration = {
   pluginId: string;
   pluginName?: string;
@@ -121,7 +121,7 @@ export type PluginHostedMediaResolverRegistration = {
   rootDir?: string;
 };
 
-/** Shared type for Plugin Channel Registration in src/plugins. */
+/** Runtime channel plugin registration. */
 export type PluginChannelRegistration = {
   pluginId: string;
   pluginName?: string;
@@ -130,7 +130,7 @@ export type PluginChannelRegistration = {
   rootDir?: string;
 };
 
-/** Shared type for Plugin Channel Setup Registration in src/plugins. */
+/** Setup-mode channel registration with enabled-state metadata. */
 export type PluginChannelSetupRegistration = {
   pluginId: string;
   pluginName?: string;
@@ -140,7 +140,7 @@ export type PluginChannelSetupRegistration = {
   rootDir?: string;
 };
 
-/** Shared type for Plugin Provider Registration in src/plugins. */
+/** Text-inference provider registration. */
 export type PluginProviderRegistration = {
   pluginId: string;
   pluginName?: string;
@@ -149,7 +149,7 @@ export type PluginProviderRegistration = {
   rootDir?: string;
 };
 
-/** Shared type for Plugin Model Catalog Provider Registration in src/plugins. */
+/** Unified model catalog provider registration. */
 export type PluginModelCatalogProviderRegistration = {
   pluginId: string;
   pluginName?: string;
@@ -158,7 +158,7 @@ export type PluginModelCatalogProviderRegistration = {
   rootDir?: string;
 };
 
-/** Shared type for Plugin Cli Backend Registration in src/plugins. */
+/** CLI backend registration for plugin-owned local inference backends. */
 export type PluginCliBackendRegistration = {
   pluginId: string;
   pluginName?: string;
@@ -167,7 +167,7 @@ export type PluginCliBackendRegistration = {
   rootDir?: string;
 };
 
-/** Shared type for Plugin Text Transforms Registration in src/plugins. */
+/** Text transform registration contributed by a plugin. */
 export type PluginTextTransformsRegistration = {
   pluginId: string;
   pluginName?: string;
@@ -184,46 +184,46 @@ type PluginOwnedProviderRegistration<T extends { id: string }> = {
   rootDir?: string;
 };
 
-/** Shared type for Plugin Speech Provider Registration in src/plugins. */
+/** Speech provider registration owned by a plugin. */
 export type PluginSpeechProviderRegistration =
   PluginOwnedProviderRegistration<SpeechProviderPlugin>;
-/** Shared type for Plugin Embedding Provider Registration in src/plugins. */
+/** Embedding provider registration owned by a plugin. */
 export type PluginEmbeddingProviderRegistration =
   PluginOwnedProviderRegistration<EmbeddingProviderAdapter>;
-/** Shared type for Plugin Realtime Transcription Provider Registration in src/plugins. */
+/** Realtime transcription provider registration owned by a plugin. */
 export type PluginRealtimeTranscriptionProviderRegistration =
   PluginOwnedProviderRegistration<RealtimeTranscriptionProviderPlugin>;
-/** Shared type for Plugin Realtime Voice Provider Registration in src/plugins. */
+/** Realtime voice provider registration owned by a plugin. */
 export type PluginRealtimeVoiceProviderRegistration =
   PluginOwnedProviderRegistration<RealtimeVoiceProviderPlugin>;
-/** Shared type for Plugin Media Understanding Provider Registration in src/plugins. */
+/** Media-understanding provider registration owned by a plugin. */
 export type PluginMediaUnderstandingProviderRegistration =
   PluginOwnedProviderRegistration<MediaUnderstandingProviderPlugin>;
-/** Shared type for Plugin Transcripts Source Provider Registration in src/plugins. */
+/** Transcript source provider registration owned by a plugin. */
 export type PluginTranscriptsSourceProviderRegistration =
   PluginOwnedProviderRegistration<TranscriptSourceProvider>;
-/** Shared type for Plugin Image Generation Provider Registration in src/plugins. */
+/** Image generation provider registration owned by a plugin. */
 export type PluginImageGenerationProviderRegistration =
   PluginOwnedProviderRegistration<ImageGenerationProviderPlugin>;
-/** Shared type for Plugin Video Generation Provider Registration in src/plugins. */
+/** Video generation provider registration owned by a plugin. */
 export type PluginVideoGenerationProviderRegistration =
   PluginOwnedProviderRegistration<VideoGenerationProviderPlugin>;
-/** Shared type for Plugin Music Generation Provider Registration in src/plugins. */
+/** Music generation provider registration owned by a plugin. */
 export type PluginMusicGenerationProviderRegistration =
   PluginOwnedProviderRegistration<MusicGenerationProviderPlugin>;
-/** Shared type for Plugin Web Fetch Provider Registration in src/plugins. */
+/** Web fetch provider registration owned by a plugin. */
 export type PluginWebFetchProviderRegistration =
   PluginOwnedProviderRegistration<WebFetchProviderPlugin>;
-/** Shared type for Plugin Web Search Provider Registration in src/plugins. */
+/** Web search provider registration owned by a plugin. */
 export type PluginWebSearchProviderRegistration =
   PluginOwnedProviderRegistration<WebSearchProviderPlugin>;
-/** Shared type for Plugin Migration Provider Registration in src/plugins. */
+/** Migration provider registration owned by a plugin. */
 export type PluginMigrationProviderRegistration =
   PluginOwnedProviderRegistration<MigrationProviderPlugin>;
-/** Shared type for Plugin Memory Embedding Provider Registration in src/plugins. */
+/** Memory embedding provider registration owned by a plugin. */
 export type PluginMemoryEmbeddingProviderRegistration =
   PluginOwnedProviderRegistration<MemoryEmbeddingProviderAdapter>;
-/** Shared type for Plugin Codex App Server Extension Factory Registration in src/plugins. */
+/** Codex app-server extension factory registration. */
 export type PluginCodexAppServerExtensionFactoryRegistration = {
   pluginId: string;
   pluginName?: string;
@@ -232,7 +232,7 @@ export type PluginCodexAppServerExtensionFactoryRegistration = {
   source: string;
   rootDir?: string;
 };
-/** Shared type for Plugin Agent Tool Result Middleware Registration in src/plugins. */
+/** Agent tool-result middleware registration and runtime filters. */
 export type PluginAgentToolResultMiddlewareRegistration = {
   pluginId: string;
   pluginName?: string;
@@ -242,7 +242,7 @@ export type PluginAgentToolResultMiddlewareRegistration = {
   source: string;
   rootDir?: string;
 };
-/** Shared type for Plugin Agent Harness Registration in src/plugins. */
+/** Agent harness runtime registration. */
 export type PluginAgentHarnessRegistration = {
   pluginId: string;
   pluginName?: string;
@@ -251,7 +251,7 @@ export type PluginAgentHarnessRegistration = {
   rootDir?: string;
 };
 
-/** Shared type for Plugin Hook Registration in src/plugins. */
+/** Hook registration with event names and source metadata. */
 export type PluginHookRegistration = {
   pluginId: string;
   entry: HookEntry;
@@ -260,7 +260,7 @@ export type PluginHookRegistration = {
   rootDir?: string;
 };
 
-/** Shared type for Plugin Service Registration in src/plugins. */
+/** Long-lived plugin service registration. */
 export type PluginServiceRegistration = {
   pluginId: string;
   pluginName?: string;
@@ -271,7 +271,7 @@ export type PluginServiceRegistration = {
   rootDir?: string;
 };
 
-/** Shared type for Plugin Gateway Discovery Service Registration in src/plugins. */
+/** Gateway discovery service registration. */
 export type PluginGatewayDiscoveryServiceRegistration = {
   pluginId: string;
   pluginName?: string;
@@ -280,7 +280,7 @@ export type PluginGatewayDiscoveryServiceRegistration = {
   rootDir?: string;
 };
 
-/** Shared type for Plugin Reload Registration in src/plugins. */
+/** Reload handler registration for plugin-owned runtime state. */
 export type PluginReloadRegistration = {
   pluginId: string;
   pluginName?: string;
@@ -289,7 +289,7 @@ export type PluginReloadRegistration = {
   rootDir?: string;
 };
 
-/** Shared type for Plugin Node Host Command Registration in src/plugins. */
+/** Node-host command registration contributed by a plugin. */
 export type PluginNodeHostCommandRegistration = {
   pluginId: string;
   pluginName?: string;
@@ -298,7 +298,7 @@ export type PluginNodeHostCommandRegistration = {
   rootDir?: string;
 };
 
-/** Shared type for Plugin Node Invoke Policy Registration in src/plugins. */
+/** Node invocation policy registration contributed by a plugin. */
 export type PluginNodeInvokePolicyRegistration = {
   pluginId: string;
   pluginName?: string;
@@ -308,7 +308,7 @@ export type PluginNodeInvokePolicyRegistration = {
   rootDir?: string;
 };
 
-/** Shared type for Plugin Security Audit Collector Registration in src/plugins. */
+/** Security audit collector registration. */
 export type PluginSecurityAuditCollectorRegistration = {
   pluginId: string;
   pluginName?: string;
@@ -317,7 +317,7 @@ export type PluginSecurityAuditCollectorRegistration = {
   rootDir?: string;
 };
 
-/** Shared type for Plugin Command Registration in src/plugins. */
+/** Plugin command definition registration. */
 export type PluginCommandRegistration = {
   pluginId: string;
   pluginName?: string;
@@ -326,7 +326,7 @@ export type PluginCommandRegistration = {
   rootDir?: string;
 };
 
-/** Shared type for Plugin Session Extension Registry Registration in src/plugins. */
+/** Session extension registration stored in the plugin registry. */
 export type PluginSessionExtensionRegistryRegistration = {
   pluginId: string;
   pluginName?: string;
@@ -335,7 +335,7 @@ export type PluginSessionExtensionRegistryRegistration = {
   rootDir?: string;
 };
 
-/** Shared type for Plugin Trusted Tool Policy Registry Registration in src/plugins. */
+/** Trusted tool policy registration stored in the plugin registry. */
 export type PluginTrustedToolPolicyRegistryRegistration = {
   pluginId: string;
   pluginName?: string;
@@ -344,7 +344,7 @@ export type PluginTrustedToolPolicyRegistryRegistration = {
   rootDir?: string;
 };
 
-/** Shared type for Plugin Tool Metadata Registry Registration in src/plugins. */
+/** Tool metadata registration stored in the plugin registry. */
 export type PluginToolMetadataRegistryRegistration = {
   pluginId: string;
   pluginName?: string;
@@ -353,7 +353,7 @@ export type PluginToolMetadataRegistryRegistration = {
   rootDir?: string;
 };
 
-/** Shared type for Plugin Control Ui Descriptor Registry Registration in src/plugins. */
+/** Control UI descriptor registration stored in the plugin registry. */
 export type PluginControlUiDescriptorRegistryRegistration = {
   pluginId: string;
   pluginName?: string;
@@ -362,7 +362,7 @@ export type PluginControlUiDescriptorRegistryRegistration = {
   rootDir?: string;
 };
 
-/** Shared type for Plugin Runtime Lifecycle Registry Registration in src/plugins. */
+/** Runtime lifecycle hook registration stored in the plugin registry. */
 export type PluginRuntimeLifecycleRegistryRegistration = {
   pluginId: string;
   pluginName?: string;
@@ -371,7 +371,7 @@ export type PluginRuntimeLifecycleRegistryRegistration = {
   rootDir?: string;
 };
 
-/** Shared type for Plugin Agent Event Subscription Registry Registration in src/plugins. */
+/** Agent event subscription registration stored in the plugin registry. */
 export type PluginAgentEventSubscriptionRegistryRegistration = {
   pluginId: string;
   pluginName?: string;
@@ -380,7 +380,7 @@ export type PluginAgentEventSubscriptionRegistryRegistration = {
   rootDir?: string;
 };
 
-/** Shared type for Plugin Session Scheduler Job Registry Registration in src/plugins. */
+/** Session scheduler job registration stored in the plugin registry. */
 export type PluginSessionSchedulerJobRegistryRegistration = {
   pluginId: string;
   pluginName?: string;
@@ -390,7 +390,7 @@ export type PluginSessionSchedulerJobRegistryRegistration = {
   rootDir?: string;
 };
 
-/** Shared type for Plugin Session Action Registry Registration in src/plugins. */
+/** Session action registration stored in the plugin registry. */
 export type PluginSessionActionRegistryRegistration = {
   pluginId: string;
   pluginName?: string;
@@ -399,7 +399,7 @@ export type PluginSessionActionRegistryRegistration = {
   rootDir?: string;
 };
 
-/** Shared type for Plugin Conversation Binding Resolved Handler Registration in src/plugins. */
+/** Conversation-binding resolved handler registration. */
 export type PluginConversationBindingResolvedHandlerRegistration = {
   pluginId: string;
   pluginName?: string;
@@ -409,7 +409,7 @@ export type PluginConversationBindingResolvedHandlerRegistration = {
   rootDir?: string;
 };
 
-/** Shared type for Plugin Record in src/plugins. */
+/** Loaded plugin summary record exposed by registry discovery. */
 export type PluginRecord = {
   id: string;
   name: string;
@@ -471,7 +471,7 @@ export type PluginRecord = {
   dependencyStatus?: PluginDependencyStatus;
 };
 
-/** Shared type for Plugin Registry in src/plugins. */
+/** Complete plugin registry snapshot assembled during plugin loading. */
 export type PluginRegistry = {
   plugins: PluginRecord[];
   tools: PluginToolRegistration[];
@@ -524,7 +524,7 @@ export type PluginRegistry = {
   diagnostics: PluginDiagnostic[];
 };
 
-/** Shared type for Plugin Registry Params in src/plugins. */
+/** Host inputs required to assemble a plugin registry. */
 export type PluginRegistryParams = {
   logger: PluginLogger;
   coreGatewayHandlers?: GatewayRequestHandlers;
@@ -537,21 +537,21 @@ export type PluginRegistryParams = {
   activateGlobalSideEffects?: boolean;
 };
 
-/** Shared type for Plugin Registration Mode in src/plugins. */
+/** Plugin registration mode selected by the host loader. */
 export type PluginRegistrationMode = import("./types.js").PluginRegistrationMode;
-/** Shared type for Open Claw Plugin Node Host Command in src/plugins. */
+/** Node host command contract re-exported for registry callers. */
 export type OpenClawPluginNodeHostCommand = import("./types.js").OpenClawPluginNodeHostCommand;
-/** Shared type for Open Claw Plugin Tool Context in src/plugins. */
+/** Tool execution context contract re-exported for registry callers. */
 export type OpenClawPluginToolContext = import("./types.js").OpenClawPluginToolContext;
-/** Shared type for Open Claw Plugin Http Route Params in src/plugins. */
+/** HTTP route parameter contract re-exported for registry callers. */
 export type OpenClawPluginHttpRouteParams = import("./types.js").OpenClawPluginHttpRouteParams;
-/** Shared type for Open Claw Plugin Hook Options in src/plugins. */
+/** Hook registration options re-exported for registry callers. */
 export type OpenClawPluginHookOptions = import("./types.js").OpenClawPluginHookOptions;
-/** Shared type for Plugin Hook Handler Map in src/plugins. */
+/** Typed hook handler map re-exported for registry callers. */
 export type PluginHookHandlerMap = import("./types.js").PluginHookHandlerMap;
-/** Shared type for Open Claw Plugin Api in src/plugins. */
+/** Plugin API contract re-exported for registry callers. */
 export type OpenClawPluginApi = import("./types.js").OpenClawPluginApi;
-/** Shared type for Typed Plugin Hook in src/plugins. */
+/** Typed plugin hook registration alias. */
 export type TypedPluginHook = TypedPluginHookRegistration;
-/** Shared type for Open Claw Plugin Channel Reg in src/plugins. */
+/** Channel registration alias retained for registry callers. */
 export type OpenClawPluginChannelReg = OpenClawPluginChannelRegistration;
