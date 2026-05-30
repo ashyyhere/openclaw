@@ -1,4 +1,4 @@
 import type { CliOutboundSendSource } from "./outbound-send-mapping.js";
 
-/** Shared type for Cli Deps in src/cli. */
+/** CLI dependency bag, currently backed by dynamic outbound-send channel adapters. */
 export type CliDeps = CliOutboundSendSource;

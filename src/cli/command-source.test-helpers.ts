@@ -42,7 +42,7 @@ async function readModuleSource(modulePath: string, seen: Set<string>): Promise<
   return nestedSources.length > 0 ? [source, ...nestedSources].join("\n") : source;
 }
 
-/** Reused helper for read Command Source behavior in src/cli. */
+/** Reads command source plus relevant re-exported/runtime modules for tests. */
 export async function readCommandSource(
   relativePath: string,
   cwd = process.cwd(),

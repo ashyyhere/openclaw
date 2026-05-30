@@ -75,7 +75,7 @@ function createLazySender(
   };
 }
 
-/** Reused helper for create Default Deps behavior in src/cli. */
+/** Creates the CLI dependency proxy that lazy-loads per-channel outbound senders. */
 export function createDefaultDeps(): CliDeps {
   const deps: CliDeps = {};
   const resolveSender = (channelId: string) =>
@@ -117,7 +117,7 @@ export function createDefaultDeps(): CliDeps {
   });
 }
 
-/** Reused helper for create Outbound Send Deps behavior in src/cli. */
+/** Adapts CLI dependency sources into the outbound send dependency contract. */
 export function createOutboundSendDeps(deps: CliDeps): OutboundSendDeps {
   return createOutboundSendDepsFromCliSource(deps);
 }

@@ -5,7 +5,7 @@ function isPathInsideRoot(candidate: string, root: string): boolean {
   return relative === "" || (!relative.startsWith("..") && !path.isAbsolute(relative));
 }
 
-/** Reused helper for is Owning Npm Command behavior in src/cli. */
+/** Detects npm binaries that belong to a staged/owned install prefix in tests. */
 export function isOwningNpmCommand(value: unknown, owningPrefix: string): boolean {
   if (typeof value !== "string" || !path.isAbsolute(value)) {
     return false;
