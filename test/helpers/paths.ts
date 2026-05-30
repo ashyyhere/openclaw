@@ -1,6 +1,7 @@
-// test/helpers paths helpers and runtime behavior.
+// Cross-platform path containment checks shared by filesystem-oriented tests.
 import path from "node:path";
 
+/** Return true when target resolves inside base on the current platform. */
 export function isPathWithinBase(base: string, target: string): boolean {
   if (process.platform === "win32") {
     const normalizedBase = path.win32.normalize(path.win32.resolve(base));

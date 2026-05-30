@@ -1,4 +1,4 @@
-// test non isolated runner helpers and runtime behavior.
+// Custom Vitest runner resets mocks, timers, env, and evaluated modules between non-isolated files.
 import fs from "node:fs";
 import path from "node:path";
 import { TestRunner, type RunnerTask, type RunnerTestSuite, vi } from "vitest";
@@ -66,6 +66,7 @@ function restoreRealTimers(): void {
   }
 }
 
+/** Vitest runner variant for projects that share a worker and need explicit cleanup between files. */
 export default class OpenClawNonIsolatedRunner extends TestRunner {
   override onCollectStart(file: { filepath: string }) {
     super.onCollectStart(file);

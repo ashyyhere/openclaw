@@ -1,4 +1,4 @@
-// extensions/voice-call/src voice mapping helpers and runtime behavior.
+// Voice-call mapping helpers translate OpenAI realtime voice names into Twilio-compatible voices.
 import { normalizeLowercaseStringOrEmpty } from "openclaw/plugin-sdk/string-coerce-runtime";
 
 /**

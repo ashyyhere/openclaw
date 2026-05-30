@@ -1,4 +1,4 @@
-// test/helpers openclaw test instance helpers and runtime behavior.
+// Integration tests use this helper to launch isolated OpenClaw gateway instances and CLI commands.
 import { type ChildProcessWithoutNullStreams, spawn } from "node:child_process";
 import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
@@ -15,6 +15,7 @@ import {
 } from "../../src/test-utils/openclaw-test-state.js";
 import { sleep } from "../../src/utils.js";
 
+/** Options for creating an isolated OpenClaw test gateway instance. */
 export type OpenClawTestInstanceOptions = {
   name: string;
   cwd?: string;
@@ -29,6 +30,7 @@ export type OpenClawTestInstanceOptions = {
   stopTimeoutMs?: number;
 };
 
+/** Captured result from invoking the test instance CLI entrypoint. */
 export type OpenClawTestInstanceCommandResult = {
   code: number | null;
   signal: NodeJS.Signals | null;
@@ -36,6 +38,7 @@ export type OpenClawTestInstanceCommandResult = {
   stderr: string;
 };
 
+/** Running or launchable OpenClaw test instance with cleanup and log access. */
 export type OpenClawTestInstance = {
   name: string;
   port: number;
@@ -312,6 +315,7 @@ function createInstanceEnv(params: {
   return env;
 }
 
+/** Create an isolated OpenClaw instance that can run CLI commands and a gateway subprocess. */
 export async function createOpenClawTestInstance(
   options: OpenClawTestInstanceOptions,
 ): Promise<OpenClawTestInstance> {
@@ -501,6 +505,7 @@ async function runCommand(params: {
   };
 }
 
+/** Internal helpers exported only for focused unit tests of the test-instance harness. */
 export const testing = {
   appendLogChunk,
   createBoundedStringLog,

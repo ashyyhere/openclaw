@@ -1,4 +1,4 @@
-// test/helpers/auto-reply trigger handling test harness helpers and runtime behavior.
+// Shared trigger-handling reply harness for auto-reply tests with mocked agents, catalogs, and temp homes.
 import { rmSync } from "node:fs";
 import fs from "node:fs/promises";
 import os from "node:os";
@@ -39,14 +39,17 @@ const embeddedAgentMocks = getSharedMocks("openclaw.trigger-handling.embedded-ag
   isEmbeddedAgentRunStreaming: vi.fn().mockReturnValue(false),
 }));
 
+/** Return the shared embedded-agent abort mock used by trigger tests. */
 export function getAbortEmbeddedAgentRunMock(): AnyMock {
   return embeddedAgentMocks.abortEmbeddedAgentRun;
 }
 
+/** Return the shared embedded-agent compaction mock used by trigger tests. */
 export function getCompactEmbeddedAgentSessionMock(): AnyMock {
   return embeddedAgentMocks.compactEmbeddedAgentSession;
 }
 
+/** Return the shared embedded-agent run mock used by trigger tests. */
 export function getRunEmbeddedAgentMock(): AnyMock {
   return embeddedAgentMocks.runEmbeddedAgent;
 }
@@ -93,6 +96,7 @@ const providerUsageMocks = vi.hoisted(() => ({
   resolveUsageProviderId: vi.fn((provider: string) => provider.split("/")[0]),
 }));
 
+/** Return provider usage mocks that back `/usage` trigger assertions. */
 export function getProviderUsageMocks(): AnyMocks {
   return providerUsageMocks;
 }
@@ -183,6 +187,7 @@ const installWebSessionMock = () =>
 
 installWebSessionMock();
 
+/** Canonical main session key used by trigger-handling fixture sessions. */
 export const MAIN_SESSION_KEY = "agent:main:main";
 
 type TempHomeEnvSnapshot = {
@@ -259,6 +264,7 @@ afterAll(async () => {
   suiteTempHomeId = 0;
 });
 
+/** Run a trigger test inside an isolated temporary OpenClaw home. */
 export async function withTempHome<T>(fn: (home: string) => Promise<T>): Promise<T> {
   const home = join(suiteTempHomeRoot, `case-${++suiteTempHomeId}`);
   const snapshot = snapshotTempHomeEnv();
@@ -287,6 +293,7 @@ export async function withTempHome<T>(fn: (home: string) => Promise<T>): Promise
   }
 }
 
+/** Build a fast reply config fixture rooted in the provided temp home. */
 export function makeCfg(home: string): OpenClawConfig {
   return withFastReplyConfig({
     agents: {
@@ -313,10 +320,12 @@ export function makeCfg(home: string): OpenClawConfig {
   } as OpenClawConfig);
 }
 
+/** Dynamically import getReplyFromConfig after harness mocks are installed. */
 export async function loadGetReplyFromConfig() {
   return (await import("../../../src/auto-reply/reply.js")).getReplyFromConfig;
 }
 
+/** Install the reply harness and provide getReplyFromConfig to the caller. */
 export function installTriggerHandlingReplyHarness(
   setGetReplyFromConfig: (
     getReplyFromConfig: typeof import("../../../src/auto-reply/reply.js").getReplyFromConfig,
@@ -328,6 +337,7 @@ export function installTriggerHandlingReplyHarness(
   installTriggerHandlingE2eTestHooks();
 }
 
+/** Return the configured session store path or fail the test fixture setup. */
 export function requireSessionStorePath(cfg: { session?: { store?: string } }): string {
   const storePath = cfg.session?.store;
   if (!storePath) {
@@ -336,6 +346,7 @@ export function requireSessionStorePath(cfg: { session?: { store?: string } }): 
   return storePath;
 }
 
+/** Assert inline slash commands are handled and stripped before agent execution. */
 export async function expectInlineCommandHandledAndStripped(params: {
   home: string;
   getReplyFromConfig: typeof import("../../../src/auto-reply/reply.js").getReplyFromConfig;
@@ -369,6 +380,7 @@ export async function expectInlineCommandHandledAndStripped(params: {
   expect(text).toBe("ok");
 }
 
+/** Assert bare `/new` and `/reset` commands acknowledge without running the agent. */
 export async function expectBareNewOrResetAcknowledged(params: {
   home: string;
   body: "/new" | "/reset";
@@ -399,6 +411,7 @@ export async function expectBareNewOrResetAcknowledged(params: {
   expect(runEmbeddedAgentMock).not.toHaveBeenCalled();
 }
 
+/** Install per-test cleanup hooks for trigger-handling E2E tests. */
 export function installTriggerHandlingE2eTestHooks() {
   afterEach(() => {
     clearRuntimeAuthProfileStoreSnapshots();
@@ -406,6 +419,7 @@ export function installTriggerHandlingE2eTestHooks() {
   });
 }
 
+/** Make the shared embedded-agent mock resolve with a simple text payload. */
 export function mockRunEmbeddedAgentOk(text = "ok"): AnyMock {
   const runEmbeddedAgentMock = getRunEmbeddedAgentMock();
   runEmbeddedAgentMock.mockResolvedValue({
@@ -418,6 +432,7 @@ export function mockRunEmbeddedAgentOk(text = "ok"): AnyMock {
   return runEmbeddedAgentMock;
 }
 
+/** Collect block replies emitted through the reply handler callbacks. */
 export function createBlockReplyCollector() {
   const blockReplies: Array<{ text?: string }> = [];
   return {
