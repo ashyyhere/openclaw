@@ -574,7 +574,7 @@ function buildDynamicModel(
   }
 }
 
-/** Reused helper for create Provider Runtime Test Mock behavior in src/agents/embedded-agent-runner. */
+/** Create a provider-runtime mock that emulates dynamic catalog and extra-param hooks. */
 export function createProviderRuntimeTestMock(options: ProviderRuntimeTestMockOptions = {}) {
   const handledDynamicProviders = new Set(
     options.handledDynamicProviders ?? [

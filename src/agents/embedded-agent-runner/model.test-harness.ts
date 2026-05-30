@@ -4,7 +4,7 @@ import type { ModelDefinitionConfig } from "../../config/types.js";
 
 type DiscoverModelsMock = typeof import("../agent-model-discovery.js").discoverModels;
 
-/** Reused constant for make Model behavior in src/agents/embedded-agent-runner. */
+/** Build the smallest model definition needed for resolution tests. */
 export const makeModel = (id: string): ModelDefinitionConfig => ({
   id,
   name: id,
@@ -15,7 +15,7 @@ export const makeModel = (id: string): ModelDefinitionConfig => ({
   maxTokens: 1,
 });
 
-/** Reused constant for OPENAI CODEX TEMPLATE MODEL behavior in src/agents/embedded-agent-runner. */
+/** Template model used when tests need OpenAI Codex catalog defaults. */
 export const OPENAI_CODEX_TEMPLATE_MODEL = {
   id: "gpt-5.3-codex",
   name: "GPT-5.3 Codex",
@@ -43,7 +43,7 @@ function mockTemplateModel(
   });
 }
 
-/** Reused helper for mock Open AICodex Template Model behavior in src/agents/embedded-agent-runner. */
+/** Mock discovery so OpenAI Codex lookups return the shared template model. */
 export function mockOpenAICodexTemplateModel(discoverModelsMock: DiscoverModelsMock): void {
   mockTemplateModel(
     discoverModelsMock,
@@ -53,7 +53,7 @@ export function mockOpenAICodexTemplateModel(discoverModelsMock: DiscoverModelsM
   );
 }
 
-/** Reused helper for build Open AICodex Forward Compat Expectation behavior in src/agents/embedded-agent-runner. */
+/** Build expected forward-compat fields for OpenAI Codex fallback model ids. */
 export function buildOpenAICodexForwardCompatExpectation(
   id: string = "gpt-5.3-codex",
 ): Partial<ModelDefinitionConfig> & {
@@ -92,14 +92,14 @@ export function buildOpenAICodexForwardCompatExpectation(
   };
 }
 
-/** Reused helper for reset Mock Discover Models behavior in src/agents/embedded-agent-runner. */
+/** Reset discovery mocks to the no-model-found baseline. */
 export function resetMockDiscoverModels(discoverModelsMock: DiscoverModelsMock): void {
   vi.mocked(discoverModelsMock).mockReturnValue({
     find: vi.fn(() => null),
   } as unknown as ReturnType<DiscoverModelsMock>);
 }
 
-/** Reused helper for mock Discovered Model behavior in src/agents/embedded-agent-runner. */
+/** Mock discovery for one provider/model id pair and leave all other ids missing. */
 export function mockDiscoveredModel(
   discoverModelsMock: DiscoverModelsMock,
   params: {
