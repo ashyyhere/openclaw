@@ -1,4 +1,4 @@
-// infra npm pack install helpers and runtime behavior.
+/** Packs an npm registry spec to an archive and installs it with integrity checks. */
 import {
   type NpmIntegrityDrift,
   type NpmSpecResolution,
@@ -27,7 +27,7 @@ type NpmSpecArchiveInstallFlowResult<TResult extends { ok: boolean }> =
       integrityDrift?: NpmIntegrityDrift;
     };
 
-/** Reused helper for install From Npm Spec Archive With Installer behavior in src/infra. */
+/** Install a packed npm spec while adapting extra archive installer params. */
 export async function installFromNpmSpecArchiveWithInstaller<
   TResult extends { ok: boolean },
   TArchiveInstallParams extends { archivePath: string },
@@ -56,7 +56,7 @@ export async function installFromNpmSpecArchiveWithInstaller<
   });
 }
 
-/** Shared type for Npm Spec Archive Final Install Result in src/infra. */
+/** Final install result with npm resolution metadata attached on success. */
 export type NpmSpecArchiveFinalInstallResult<TResult extends { ok: boolean }> =
   | { ok: false; error: string }
   | Exclude<TResult, { ok: true }>
@@ -71,7 +71,7 @@ function isSuccessfulInstallResult<TResult extends { ok: boolean }>(
   return result.ok;
 }
 
-/** Reused helper for finalize Npm Spec Archive Install behavior in src/infra. */
+/** Merge packed-spec metadata into successful installer results. */
 export function finalizeNpmSpecArchiveInstall<TResult extends { ok: boolean }>(
   flowResult: NpmSpecArchiveInstallFlowResult<TResult>,
 ): NpmSpecArchiveFinalInstallResult<TResult> {
@@ -93,7 +93,7 @@ export function finalizeNpmSpecArchiveInstall<TResult extends { ok: boolean }>(
   return finalized;
 }
 
-/** Reused helper for install From Npm Spec Archive behavior in src/infra. */
+/** Pack a registry spec, enforce prerelease/integrity policy, then install the archive. */
 export async function installFromNpmSpecArchive<TResult extends { ok: boolean }>(params: {
   tempDirPrefix: string;
   spec: string;
