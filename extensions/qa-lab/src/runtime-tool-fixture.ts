@@ -1,4 +1,4 @@
-// extensions/qa-lab/src runtime tool fixture helpers and runtime behavior.
+// QA Lab runtime tool fixture runs happy and failure prompts against one exposed tool.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { readRuntimeToolCoverageMetadata } from "./runtime-tool-metadata.js";
@@ -148,6 +148,7 @@ function formatKnownHarnessGapDetails(toolName: string, config: QaRuntimeToolFix
     .join("\n");
 }
 
+/** Runs a runtime tool fixture and returns diagnostic details for the QA scenario. */
 export async function runRuntimeToolFixture(
   env: QaSuiteRuntimeEnv,
   config: QaRuntimeToolFixtureConfig,

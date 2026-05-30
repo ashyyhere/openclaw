@@ -1,4 +1,4 @@
-// extensions/qa-lab/src lab server ui helpers and runtime behavior.
+// QA Lab server UI helpers serve the debugger bundle and proxy embedded Control UI traffic.
 import { createHash } from "node:crypto";
 import fs from "node:fs";
 import { request as httpRequest, type IncomingMessage, type ServerResponse } from "node:http";
@@ -11,6 +11,7 @@ import { fileURLToPath } from "node:url";
 import { normalizeLowercaseStringOrEmpty } from "openclaw/plugin-sdk/string-coerce-runtime";
 import { writeError } from "./bus-server.js";
 
+/** Detects the content type for a served QA Lab UI asset path. */
 export function detectContentType(filePath: string): string {
   if (filePath.endsWith(".css")) {
     return "text/css; charset=utf-8";
@@ -27,6 +28,7 @@ export function detectContentType(filePath: string): string {
   return "text/html; charset=utf-8";
 }
 
+/** Renders the fallback HTML shown when the QA Lab UI bundle is missing. */
 export function missingUiHtml() {
   return `<!doctype html>
 <html lang="en">
@@ -90,6 +92,7 @@ function listUiAssetFiles(rootDir: string, currentDir = rootDir): string[] {
   return files;
 }
 
+/** Resolves a stable asset version hash for the built QA Lab UI bundle. */
 export function resolveUiAssetVersion(overrideDir?: string | null): string | null {
   try {
     const distDir = resolveUiDistDir(overrideDir);
@@ -110,6 +113,7 @@ export function resolveUiAssetVersion(overrideDir?: string | null): string | nul
   }
 }
 
+/** Builds the base URL that QA Lab advertises for browser clients. */
 export function resolveAdvertisedBaseUrl(params: {
   bindHost?: string;
   bindPort: number;
@@ -126,6 +130,7 @@ export function resolveAdvertisedBaseUrl(params: {
   return `http://${advertisedHost}:${advertisedPort}`;
 }
 
+/** Returns whether a request path should be proxied to embedded Control UI. */
 export function isControlUiProxyPath(pathname: string) {
   return pathname === "/control-ui" || pathname.startsWith("/control-ui/");
 }
@@ -151,6 +156,7 @@ function rewriteEmbeddedControlUiHeaders(
   return rewritten;
 }
 
+/** Proxies an HTTP request from the QA Lab server to embedded Control UI. */
 export async function proxyHttpRequest(params: {
   req: IncomingMessage;
   res: ServerResponse;
@@ -199,6 +205,7 @@ export async function proxyHttpRequest(params: {
   params.req.pipe(upstreamReq);
 }
 
+/** Proxies an upgraded socket request, such as WebSocket, to embedded Control UI. */
 export function proxyUpgradeRequest(params: {
   req: IncomingMessage;
   socket: Duplex;
@@ -270,6 +277,7 @@ export function proxyUpgradeRequest(params: {
   params.socket.on("close", closeBoth);
 }
 
+/** Resolves a safe on-disk QA Lab UI asset path with SPA index fallback. */
 export function tryResolveUiAsset(
   pathname: string,
   overrideDir?: string | null,

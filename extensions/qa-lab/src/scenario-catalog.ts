@@ -1,9 +1,10 @@
-// extensions/qa-lab/src scenario catalog helpers and runtime behavior.
+// QA Lab scenario catalog loads Markdown scenario packs and validates YAML fences.
 import fs from "node:fs";
 import path from "node:path";
 import YAML from "yaml";
 import { z } from "zod";
 
+/** Default QA agent identity used when a scenario pack omits one. */
 export const DEFAULT_QA_AGENT_IDENTITY_MARKDOWN = `# Dev C-3PO
 
 You are the OpenClaw QA operator agent.
@@ -94,6 +95,7 @@ const qaScenarioGatewayRuntimeSchema = z.object({
   forwardHostHome: z.boolean().optional(),
 });
 
+/** Runtime parity tier labels supported by QA scenario metadata. */
 export const QA_RUNTIME_PARITY_TIERS = ["standard", "optional", "live-only", "soak"] as const;
 const qaRuntimeParityTierSchema = z.enum(QA_RUNTIME_PARITY_TIERS);
 
@@ -209,10 +211,15 @@ const qaScenarioPackSchema = z.object({
   kickoffTask: z.string().trim().min(1),
 });
 
+/** Parsed execution metadata for one QA scenario. */
 export type QaScenarioExecution = z.infer<typeof qaScenarioExecutionSchema>;
+/** Parsed flow definition for scenario action steps. */
 export type QaScenarioFlow = z.infer<typeof qaFlowSchema>;
+/** Runtime parity tier inferred from scenario metadata. */
 export type QaRuntimeParityTier = z.infer<typeof qaRuntimeParityTierSchema>;
+/** Seed scenario metadata parsed from a scenario Markdown file. */
 export type QaSeedScenario = z.infer<typeof qaSeedScenarioSchema>;
+/** Seed scenario plus source path and parsed execution flow. */
 export type QaSeedScenarioWithSource = QaSeedScenario & {
   sourcePath: string;
   execution: QaScenarioExecution & {
@@ -220,16 +227,19 @@ export type QaSeedScenarioWithSource = QaSeedScenario & {
   };
 };
 
+/** Parsed scenario pack index and its scenario entries. */
 export type QaScenarioPack = z.infer<typeof qaScenarioPackSchema> & {
   scenarios: QaSeedScenarioWithSource[];
 };
 
+/** Bootstrap payload exposed to QA Lab clients. */
 export type QaBootstrapScenarioCatalog = {
   agentIdentityMarkdown: string;
   kickoffTask: string;
   scenarios: QaSeedScenarioWithSource[];
 };
 
+/** Scenario pack ids and resolver helpers shared with catalog consumers. */
 export {
   QA_OBSERVABILITY_SCENARIO_IDS,
   QA_PERSONAL_AGENT_SCENARIO_IDS,
@@ -281,6 +291,7 @@ function resolveRepoPath(relativePath: string, kind: "file" | "directory" = "fil
   return null;
 }
 
+/** Returns whether the optional QA scenario pack is present in this checkout. */
 export function hasQaScenarioPack(): boolean {
   return resolveRepoPath(QA_SCENARIO_PACK_INDEX_PATH, "file") !== null;
 }
@@ -334,6 +345,7 @@ function parseQaYamlWithContext<T>(schema: z.ZodType<T>, value: unknown, label: 
   throw new Error(`${label}: ${issues}`);
 }
 
+/** Reads the scenario pack index plus scenario Markdown files as one document. */
 export function readQaScenarioPackMarkdown(): string {
   const chunks = [readTextFile(QA_SCENARIO_PACK_INDEX_PATH).trim()];
   for (const relativePath of listQaScenarioMarkdownPaths()) {
@@ -342,6 +354,7 @@ export function readQaScenarioPackMarkdown(): string {
   return chunks.filter(Boolean).join("\n\n");
 }
 
+/** Reads, validates, and caches the QA scenario pack. */
 export function readQaScenarioPack(): QaScenarioPack {
   if (qaScenarioPackCache) {
     return qaScenarioPackCache;
@@ -402,6 +415,7 @@ export function readQaScenarioPack(): QaScenarioPack {
   return qaScenarioPackCache;
 }
 
+/** Lists scenario Markdown paths in deterministic order. */
 export function listQaScenarioMarkdownPaths(): string[] {
   if (qaScenarioMarkdownPathsCache) {
     return qaScenarioMarkdownPathsCache;
@@ -443,10 +457,12 @@ function listQaScenarioMarkdownPathsInDirectory(
   return paths;
 }
 
+/** Reads the legacy scenario overview Markdown. */
 export function readQaScenarioOverviewMarkdown(): string {
   return readTextFile(QA_SCENARIO_LEGACY_OVERVIEW_PATH).trim();
 }
 
+/** Builds the bootstrap catalog sent to QA Lab UI and runtime consumers. */
 export function readQaBootstrapScenarioCatalog(): QaBootstrapScenarioCatalog {
   const pack = readQaScenarioPack();
   return {
@@ -456,6 +472,7 @@ export function readQaBootstrapScenarioCatalog(): QaBootstrapScenarioCatalog {
   };
 }
 
+/** Reads one scenario by id or throws when it is unknown. */
 export function readQaScenarioById(id: string): QaSeedScenarioWithSource {
   const scenario = readQaScenarioPack().scenarios.find((candidate) => candidate.id === id);
   if (!scenario) {
@@ -464,10 +481,12 @@ export function readQaScenarioById(id: string): QaSeedScenarioWithSource {
   return scenario;
 }
 
+/** Reads the optional execution config for one scenario id. */
 export function readQaScenarioExecutionConfig(id: string): Record<string, unknown> | undefined {
   return readQaScenarioPack().scenarios.find((candidate) => candidate.id === id)?.execution?.config;
 }
 
+/** Validates ad hoc scenario execution config against the catalog schema. */
 export function validateQaScenarioExecutionConfig(config: Record<string, unknown>) {
   return qaScenarioConfigSchema.parse(config);
 }
