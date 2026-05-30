@@ -184,7 +184,7 @@ export async function runSessionsSendA2AFlow(params: {
   }
 }
 
-/** Reused constant for testing behavior in src/agents/tools. */
+/** Test hook for replacing the gateway caller used by sessions_send announce delivery. */
 export const testing = {
   setDepsForTest(overrides?: Partial<{ callGateway: GatewayCaller }>) {
     sessionsSendA2ADeps = overrides
@@ -195,5 +195,5 @@ export const testing = {
       : defaultSessionsSendA2ADeps;
   },
 };
-/** Re-exported API for src/agents/tools, starting with testing. */
+/** Backward-compatible test hook export for underscored internal imports. */
 export { testing as __testing };

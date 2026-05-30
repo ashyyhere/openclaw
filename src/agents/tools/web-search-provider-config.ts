@@ -8,7 +8,7 @@ export function getTopLevelCredentialValue(searchConfig?: Record<string, unknown
   return searchConfig?.apiKey;
 }
 
-/** Reused helper for set Top Level Credential Value behavior in src/agents/tools. */
+/** Write the legacy top-level web search API key field. */
 export function setTopLevelCredentialValue(
   searchConfigTarget: Record<string, unknown>,
   value: unknown,
@@ -16,7 +16,7 @@ export function setTopLevelCredentialValue(
   searchConfigTarget.apiKey = value;
 }
 
-/** Reused helper for get Scoped Credential Value behavior in src/agents/tools. */
+/** Read an API key from a provider-scoped web search config object. */
 export function getScopedCredentialValue(
   searchConfig: Record<string, unknown> | undefined,
   key: string,
@@ -28,7 +28,7 @@ export function getScopedCredentialValue(
   return (scoped as Record<string, unknown>).apiKey;
 }
 
-/** Reused helper for set Scoped Credential Value behavior in src/agents/tools. */
+/** Write an API key into a provider-scoped web search config object. */
 export function setScopedCredentialValue(
   searchConfigTarget: Record<string, unknown>,
   key: string,
@@ -101,7 +101,7 @@ function ensureObject(target: Record<string, unknown>, key: string): Record<stri
   return next;
 }
 
-/** Reused helper for set Provider Web Search Plugin Config Value behavior in src/agents/tools. */
+/** Write plugin-owned web_search config while ensuring the plugin entry is enabled. */
 export function setProviderWebSearchPluginConfigValue(
   configTarget: OpenClawConfig,
   pluginId: string,

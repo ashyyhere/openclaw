@@ -7,7 +7,7 @@ import { resolveSessionConversationRef } from "../../channels/plugins/session-co
 import { normalizeChannelId as normalizeChatChannelId } from "../../channels/registry.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { ANNOUNCE_SKIP_TOKEN, REPLY_SKIP_TOKEN } from "./sessions-send-tokens.js";
-/** Re-exported API for src/agents/tools. */
+/** Skip-token helpers re-exported for sessions_send callers. */
 export {
   isAnnounceSkip,
   isNonDeliverableSessionsReply,
@@ -17,7 +17,7 @@ export {
 const DEFAULT_AGENTNG_PONG_TURNS = 5;
 const MAX_PING_PONG_TURNS = 20;
 
-/** Shared type for Announce Target in src/agents/tools. */
+/** Normalized channel target used by sessions_send announce delivery. */
 export type AnnounceTarget = {
   channel: string;
   to: string;

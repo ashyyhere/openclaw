@@ -114,11 +114,11 @@ export function createWebSearchTool(options?: {
   };
 }
 
-/** Reused constant for testing behavior in src/agents/tools. */
+/** Test hooks for web search cache and provider resolution. */
 export const testing = {
   SEARCH_CACHE,
   resolveSearchProvider: (search?: Parameters<typeof resolveWebSearchProviderId>[0]["search"]) =>
     resolveWebSearchProviderId({ search }),
 };
-/** Re-exported API for src/agents/tools, starting with testing. */
+/** Backward-compatible test hook export for underscored internal imports. */
 export { testing as __testing };
