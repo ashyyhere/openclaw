@@ -801,5 +801,5 @@ export function wrapStreamFnDecodeXaiToolCallArguments(baseFn: StreamFn): Stream
   return createHtmlEntityToolCallArgumentDecodingWrapper(baseFn);
 }
 
-/** Re-exported API for src/agents/embedded-agent-runner, starting with decode Html Entities In Object. */
+/** Expose the low-level decoder for focused tool-call repair tests. */
 export { decodeHtmlEntitiesInObject };
