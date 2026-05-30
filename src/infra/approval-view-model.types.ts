@@ -1,4 +1,5 @@
-// Shared types for infra approval view model types behavior.
+// Approval view-model contracts for native/channel presentation.
+// Views normalize exec and plugin approvals into pending/resolved/expired display shapes.
 import type { InteractiveReplyButton } from "../interactive/payload.js";
 import type { ChannelApprovalKind } from "./approval-types.js";
 import type { CommandExplanationSummary } from "./command-analysis/explain.js";
@@ -11,7 +12,7 @@ import type { PluginApprovalRequest, PluginApprovalResolved } from "./plugin-app
 
 type ApprovalPhase = "pending" | "resolved" | "expired";
 
-/** Shared type for Approval Action View in src/infra. */
+/** Display-ready approval action button/command. */
 export type ApprovalActionView = {
   kind?: "command" | "decision";
   decision: ExecApprovalDecision;
@@ -20,7 +21,7 @@ export type ApprovalActionView = {
   command: string;
 };
 
-/** Shared type for Approval Metadata View in src/infra. */
+/** Label/value metadata row shown with an approval view. */
 export type ApprovalMetadataView = {
   label: string;
   value: string;
@@ -35,7 +36,7 @@ type ApprovalViewBase = {
   metadata: ApprovalMetadataView[];
 };
 
-/** Shared type for Exec Approval View Base in src/infra. */
+/** Shared display fields for all exec approval phases. */
 export type ExecApprovalViewBase = ApprovalViewBase & {
   approvalKind: "exec";
   ask?: string | null;
@@ -51,26 +52,26 @@ export type ExecApprovalViewBase = ApprovalViewBase & {
   sessionKey?: string | null;
 };
 
-/** Shared type for Exec Approval Pending View in src/infra. */
+/** Pending exec approval view with available actions and expiry. */
 export type ExecApprovalPendingView = ExecApprovalViewBase & {
   phase: "pending";
   actions: ApprovalActionView[];
   expiresAtMs: number;
 };
 
-/** Shared type for Exec Approval Resolved View in src/infra. */
+/** Resolved exec approval view with final decision and resolver. */
 export type ExecApprovalResolvedView = ExecApprovalViewBase & {
   phase: "resolved";
   decision: ExecApprovalDecision;
   resolvedBy?: string | null;
 };
 
-/** Shared type for Exec Approval Expired View in src/infra. */
+/** Expired exec approval view after no decision was received. */
 export type ExecApprovalExpiredView = ExecApprovalViewBase & {
   phase: "expired";
 };
 
-/** Shared type for Plugin Approval View Base in src/infra. */
+/** Shared display fields for all plugin approval phases. */
 export type PluginApprovalViewBase = ApprovalViewBase & {
   approvalKind: "plugin";
   agentId?: string | null;
@@ -79,35 +80,35 @@ export type PluginApprovalViewBase = ApprovalViewBase & {
   severity: "info" | "warning" | "critical";
 };
 
-/** Shared type for Plugin Approval Pending View in src/infra. */
+/** Pending plugin approval view with available actions and expiry. */
 export type PluginApprovalPendingView = PluginApprovalViewBase & {
   phase: "pending";
   actions: ApprovalActionView[];
   expiresAtMs: number;
 };
 
-/** Shared type for Plugin Approval Resolved View in src/infra. */
+/** Resolved plugin approval view with final decision and resolver. */
 export type PluginApprovalResolvedView = PluginApprovalViewBase & {
   phase: "resolved";
   decision: ExecApprovalDecision;
   resolvedBy?: string | null;
 };
 
-/** Shared type for Plugin Approval Expired View in src/infra. */
+/** Expired plugin approval view after no decision was received. */
 export type PluginApprovalExpiredView = PluginApprovalViewBase & {
   phase: "expired";
 };
 
-/** Shared type for Pending Approval View in src/infra. */
+/** Union of pending exec and plugin approval views. */
 export type PendingApprovalView = ExecApprovalPendingView | PluginApprovalPendingView;
-/** Shared type for Resolved Approval View in src/infra. */
+/** Union of resolved exec and plugin approval views. */
 export type ResolvedApprovalView = ExecApprovalResolvedView | PluginApprovalResolvedView;
-/** Shared type for Expired Approval View in src/infra. */
+/** Union of expired exec and plugin approval views. */
 export type ExpiredApprovalView = ExecApprovalExpiredView | PluginApprovalExpiredView;
-/** Shared type for Approval View Model in src/infra. */
+/** Full approval view model union consumed by presentation runtimes. */
 export type ApprovalViewModel = PendingApprovalView | ResolvedApprovalView | ExpiredApprovalView;
 
-/** Shared type for Approval Request in src/infra. */
+/** Approval request union represented by the view model layer. */
 export type ApprovalRequest = ExecApprovalRequest | PluginApprovalRequest;
-/** Shared type for Approval Resolved in src/infra. */
+/** Approval resolution union represented by the view model layer. */
 export type ApprovalResolved = ExecApprovalResolved | PluginApprovalResolved;

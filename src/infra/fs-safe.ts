@@ -1,4 +1,5 @@
-// infra fs safe helpers and runtime behavior.
+// fs-safe facade and compatibility helpers.
+// Centralizes re-exports from @openclaw/fs-safe plus legacy within-root wrappers.
 import "./fs-safe-defaults.js";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -9,9 +10,9 @@ import {
 } from "@openclaw/fs-safe/advanced";
 import { root as fsSafeRoot, type ReadResult } from "@openclaw/fs-safe/root";
 
-/** Re-exported API for src/infra, starting with Fs Safe Error. */
+/** fs-safe error type and code exports. */
 export { FsSafeError, type FsSafeErrorCode } from "@openclaw/fs-safe/errors";
-/** Re-exported API for src/infra. */
+/** Absolute path resolution and directory safety helpers from fs-safe. */
 export {
   assertAbsolutePathInput,
   canonicalPathFromExistingAncestor,
@@ -24,15 +25,15 @@ export {
   type ResolvedAbsolutePath,
   type ResolvedWritableAbsolutePath,
 } from "@openclaw/fs-safe/advanced";
-/** Re-exported API for src/infra, starting with is Path Inside. */
+/** Path containment predicate from fs-safe. */
 export { isPathInside } from "@openclaw/fs-safe/path";
-/** Re-exported API for src/infra, starting with path Exists. */
+/** Existence helpers from fs-safe advanced APIs. */
 export { pathExists, pathExistsSync } from "@openclaw/fs-safe/advanced";
-/** Re-exported API for src/infra, starting with move Path To Trash. */
+/** Trash-moving helper from fs-safe advanced APIs. */
 export { movePathToTrash, type MovePathToTrashOptions } from "@openclaw/fs-safe/advanced";
-/** Re-exported API for src/infra, starting with read Local File From Roots. */
+/** Local-root file resolution/read helpers from fs-safe advanced APIs. */
 export { readLocalFileFromRoots, resolveLocalPathFromRootsSync } from "@openclaw/fs-safe/advanced";
-/** Re-exported API for src/infra. */
+/** Regular-file read/append/stat helpers from fs-safe advanced APIs. */
 export {
   appendRegularFile,
   appendRegularFileSync,
@@ -42,7 +43,7 @@ export {
   statRegularFile,
   statRegularFileSync,
 } from "@openclaw/fs-safe/advanced";
-/** Re-exported API for src/infra. */
+/** Root-scoped file APIs from fs-safe. */
 export {
   openLocalFileSafely,
   readLocalFileSafely,
@@ -51,15 +52,15 @@ export {
   type OpenResult,
   type ReadResult,
 } from "@openclaw/fs-safe/root";
-/** Re-exported API for src/infra, starting with sanitize Untrusted File Name. */
+/** Untrusted filename sanitizer from fs-safe. */
 export { sanitizeUntrustedFileName } from "@openclaw/fs-safe/advanced";
-/** Re-exported API for src/infra. */
+/** Secure-file read helpers from fs-safe. */
 export {
   readSecureFile,
   type SecureFileReadOptions,
   type SecureFileReadResult,
 } from "@openclaw/fs-safe/secure-file";
-/** Re-exported API for src/infra. */
+/** Directory walk helpers from fs-safe. */
 export {
   walkDirectory,
   walkDirectorySync,
@@ -67,10 +68,10 @@ export {
   type WalkDirectoryOptions,
   type WalkDirectoryResult,
 } from "@openclaw/fs-safe/walk";
-/** Re-exported API for src/infra, starting with with Timeout. */
+/** Timeout wrapper helper from fs-safe advanced APIs. */
 export { withTimeout } from "@openclaw/fs-safe/advanced";
 
-/** Shared type for External File Write Options in src/infra. */
+/** Options for safely writing an externally named file under a root directory. */
 export type ExternalFileWriteOptions = {
   rootDir: string;
   path: string;
@@ -79,12 +80,12 @@ export type ExternalFileWriteOptions = {
   tempPrefix?: string;
 };
 
-/** Shared type for External File Write Result in src/infra. */
+/** Result of writing an external file under a root directory. */
 export type ExternalFileWriteResult = {
   path: string;
 };
 
-/** Reused helper for ensure Absolute Directory behavior in src/infra. */
+/** Ensure an absolute directory exists without escaping its existing ancestor root. */
 export async function ensureAbsoluteDirectory(
   dirPath: string,
   options?: { scopeLabel?: string; mode?: number },
@@ -118,7 +119,7 @@ export async function ensureAbsoluteDirectory(
   return { ok: false, error: new Error(result.error) };
 }
 
-/** Reused helper for write External File Within Root behavior in src/infra. */
+/** Write a file under a root using a sibling temp path for atomic replacement. */
 export async function writeExternalFileWithinRoot(
   options: ExternalFileWriteOptions,
 ): Promise<ExternalFileWriteResult> {
