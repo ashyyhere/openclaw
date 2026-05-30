@@ -7,25 +7,25 @@ import type { PluginsListOptions } from "./plugins-list-command.js";
 import { parseStrictPositiveIntOption } from "./program/helpers.js";
 import { applyParentDefaultHelpAction } from "./program/parent-default-help.js";
 
-/** Shared type for Plugin Update Options in src/cli. */
+/** Options for updating one or all installed plugins. */
 export type PluginUpdateOptions = {
   all?: boolean;
   dryRun?: boolean;
   dangerouslyForceUnsafeInstall?: boolean;
 };
 
-/** Shared type for Plugin Marketplace List Options in src/cli. */
+/** Options for listing plugins from a marketplace source. */
 export type PluginMarketplaceListOptions = {
   json?: boolean;
 };
 
-/** Shared type for Plugin Search Options in src/cli. */
+/** Options for ClawHub plugin search output and limit. */
 export type PluginSearchOptions = {
   json?: boolean;
   limit?: number;
 };
 
-/** Shared type for Plugin Uninstall Options in src/cli. */
+/** Options controlling plugin uninstall safety and file retention. */
 export type PluginUninstallOptions = {
   keepFiles?: boolean;
   /** @deprecated Use keepFiles. */
@@ -34,26 +34,26 @@ export type PluginUninstallOptions = {
   dryRun?: boolean;
 };
 
-/** Shared type for Plugin Registry Options in src/cli. */
+/** Options for inspecting or refreshing the persisted plugin registry. */
 export type PluginRegistryOptions = {
   json?: boolean;
   refresh?: boolean;
 };
 
-/** Shared type for Plugin Authoring Build Options in src/cli. */
+/** Options for generating simple-tool plugin metadata. */
 export type PluginAuthoringBuildOptions = {
   root?: string;
   entry?: string;
   check?: boolean;
 };
 
-/** Shared type for Plugin Authoring Validate Options in src/cli. */
+/** Options for validating generated simple-tool plugin metadata. */
 export type PluginAuthoringValidateOptions = {
   root?: string;
   entry?: string;
 };
 
-/** Shared type for Plugin Authoring Init Options in src/cli. */
+/** Options for scaffolding a simple-tool plugin project. */
 export type PluginAuthoringInitOptions = {
   directory?: string;
   force?: boolean;

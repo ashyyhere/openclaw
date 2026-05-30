@@ -13,18 +13,18 @@ import {
   type ConfigWriteTargetLike,
 } from "./config-write-policy-shared.js";
 import type { ChannelId } from "./types.core.js";
-/** Shared type for Config Write Scope in src/channels/plugins. */
+/** Origin scope for a channel/plugin config write request. */
 export type ConfigWriteScope = ConfigWriteScopeLike;
-/** Shared type for Config Write Target in src/channels/plugins. */
+/** Config subtree target resolved for a channel/plugin write. */
 export type ConfigWriteTarget = ConfigWriteTargetLike;
-/** Shared type for Config Write Authorization Result in src/channels/plugins. */
+/** Authorization result for channel/plugin config writes. */
 export type ConfigWriteAuthorizationResult = ConfigWriteAuthorizationResultLike;
 
 function isInternalConfigWriteMessageChannel(channel?: string | null): boolean {
   return normalizeLowercaseStringOrEmpty(channel) === "webchat";
 }
 
-/** Reused helper for resolve Channel Config Writes behavior in src/channels/plugins. */
+/** Resolve whether a channel/account may write config from current config policy. */
 export function resolveChannelConfigWrites(params: {
   cfg: OpenClawConfig;
   channelId?: ChannelId | null;
@@ -33,7 +33,7 @@ export function resolveChannelConfigWrites(params: {
   return resolveChannelConfigWritesShared(params);
 }
 
-/** Reused helper for authorize Config Write behavior in src/channels/plugins. */
+/** Authorize a config write against origin scope, target, and bypass policy. */
 export function authorizeConfigWrite(params: {
   cfg: OpenClawConfig;
   origin?: ConfigWriteScope;
@@ -43,12 +43,12 @@ export function authorizeConfigWrite(params: {
   return authorizeConfigWriteShared(params);
 }
 
-/** Reused helper for resolve Explicit Config Write Target behavior in src/channels/plugins. */
+/** Resolve the config target implied directly by a write origin scope. */
 export function resolveExplicitConfigWriteTarget(scope: ConfigWriteScope): ConfigWriteTarget {
   return resolveExplicitConfigWriteTargetShared(scope);
 }
 
-/** Reused helper for resolve Config Write Target From Path behavior in src/channels/plugins. */
+/** Resolve a config write target from a config path array. */
 export function resolveConfigWriteTargetFromPath(path: string[]): ConfigWriteTarget {
   return resolveConfigWriteTargetFromPathShared({
     path,
@@ -56,7 +56,7 @@ export function resolveConfigWriteTargetFromPath(path: string[]): ConfigWriteTar
   });
 }
 
-/** Reused helper for can Bypass Config Write Policy behavior in src/channels/plugins. */
+/** Check whether gateway scopes/internal channel allow bypassing write policy. */
 export function canBypassConfigWritePolicy(params: {
   channel?: string | null;
   gatewayClientScopes?: string[] | null;
@@ -67,7 +67,7 @@ export function canBypassConfigWritePolicy(params: {
   });
 }
 
-/** Reused helper for format Config Write Denied Message behavior in src/channels/plugins. */
+/** Format a user-facing denial reason for blocked config writes. */
 export function formatConfigWriteDeniedMessage(params: {
   result: Exclude<ConfigWriteAuthorizationResult, { allowed: true }>;
   fallbackChannelId?: ChannelId | null;

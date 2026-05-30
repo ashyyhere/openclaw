@@ -6,12 +6,12 @@ import { uniqueStrings } from "../../shared/string-normalization.js";
 import { hasConfiguredUnavailableCredentialStatus } from "../account-snapshot-fields.js";
 import type { ChannelAccountSnapshot } from "../plugins/types.public.js";
 
-/** Shared type for Runtime Channel Status Payload in src/channels/status. */
+/** Gateway status payload shape containing live channel account snapshots. */
 export type RuntimeChannelStatusPayload = {
   channelAccounts?: unknown;
 };
 
-/** Shared type for Runtime Channel Account in src/channels/status. */
+/** Raw live channel account object read from gateway status. */
 export type RuntimeChannelAccount = Record<string, unknown>;
 
 const CREDENTIAL_STATUS_KEYS = [
@@ -26,7 +26,7 @@ function readRuntimeAccountsByChannel(payload: unknown): Record<string, unknown>
   return asRecord(asRecord(payload).channelAccounts);
 }
 
-/** Reused helper for get Runtime Channel Accounts behavior in src/channels/status. */
+/** Read raw live account records for one channel from a gateway payload. */
 export function getRuntimeChannelAccounts(params: {
   payload: unknown;
   channelId: string;
@@ -35,7 +35,7 @@ export function getRuntimeChannelAccounts(params: {
   return Array.isArray(raw) ? raw.map(asRecord) : [];
 }
 
-/** Reused helper for normalize Runtime Channel Account Snapshots behavior in src/channels/status. */
+/** Normalize gateway channel account payloads into snapshot arrays by channel id. */
 export function normalizeRuntimeChannelAccountSnapshots(
   payload: unknown,
 ): Map<string, ChannelAccountSnapshot[]> {
@@ -57,7 +57,7 @@ export function normalizeRuntimeChannelAccountSnapshots(
   return out;
 }
 
-/** Reused helper for resolve Runtime Channel Account Id behavior in src/channels/status. */
+/** Resolve the account id for a raw live account with default-account fallback. */
 export function resolveRuntimeChannelAccountId(account: RuntimeChannelAccount): string {
   return (
     normalizeOptionalString(account.accountId) ??
@@ -67,7 +67,7 @@ export function resolveRuntimeChannelAccountId(account: RuntimeChannelAccount): 
   );
 }
 
-/** Reused helper for find Runtime Channel Account behavior in src/channels/status. */
+/** Find the matching live account, accepting the only account as default. */
 export function findRuntimeChannelAccount(params: {
   liveAccounts: RuntimeChannelAccount[];
   accountId: string;
@@ -82,7 +82,7 @@ export function findRuntimeChannelAccount(params: {
   );
 }
 
-/** Reused helper for has Runtime Credential Available behavior in src/channels/status. */
+/** Check whether a live account reports a usable configured credential. */
 export function hasRuntimeCredentialAvailable(params: {
   liveAccounts: RuntimeChannelAccount[];
   accountId: string;
@@ -97,7 +97,7 @@ export function hasRuntimeCredentialAvailable(params: {
   return account.running === true || account.connected === true;
 }
 
-/** Reused helper for mark Configured Unavailable Credential Statuses Available behavior in src/channels/status. */
+/** Rewrite configured-unavailable credential statuses after live runtime confirms access. */
 export function markConfiguredUnavailableCredentialStatusesAvailable(
   account: unknown,
 ): Record<string, unknown> {
@@ -110,7 +110,7 @@ export function markConfiguredUnavailableCredentialStatusesAvailable(
   return record;
 }
 
-/** Reused helper for resolve Channel Account Status Rows behavior in src/channels/status. */
+/** Merge configured account ids and live snapshots into status table rows. */
 export async function resolveChannelAccountStatusRows(params: {
   localAccountIds: string[];
   runtimeAccounts: ChannelAccountSnapshot[];

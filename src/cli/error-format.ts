@@ -7,12 +7,12 @@ function formatInlineCliCommand(command: string): string {
   return `\`${formatCliCommand(command)}\``;
 }
 
-/** Reused helper for format Port Range Hint behavior in src/cli. */
+/** Format a reusable CLI hint for valid TCP port ranges. */
 export function formatPortRangeHint(example = DEFAULT_GATEWAY_PORT_EXAMPLE): string {
   return `Use a port number from 1 to 65535, for example ${example}.`;
 }
 
-/** Reused helper for format Invalid Port Option behavior in src/cli. */
+/** Format an invalid port flag error with a concrete example. */
 export function formatInvalidPortOption(
   option: string,
   example = DEFAULT_GATEWAY_PORT_EXAMPLE,
@@ -20,7 +20,7 @@ export function formatInvalidPortOption(
   return `Invalid ${option}. ${formatPortRangeHint(example)}`;
 }
 
-/** Reused helper for format Invalid Config Port behavior in src/cli. */
+/** Format an invalid config port error with config path and override hint. */
 export function formatInvalidConfigPort(
   path: string,
   example = DEFAULT_GATEWAY_PORT_EXAMPLE,
@@ -28,7 +28,7 @@ export function formatInvalidConfigPort(
   return `Invalid ${path} in config. Set ${path} to a number from 1 to 65535, or pass --port ${example}.`;
 }
 
-/** Reused helper for format Unknown Channel Message behavior in src/cli. */
+/** Format a channel lookup miss with the relevant list command. */
 export function formatUnknownChannelMessage(params: {
   channel: string;
   listCommand?: string;
@@ -41,7 +41,7 @@ export function formatUnknownChannelMessage(params: {
   )} to see configured and installable channels.`;
 }
 
-/** Reused helper for format Unsupported Channel Action Message behavior in src/cli. */
+/** Format an unsupported channel action with an inspect-capabilities hint. */
 export function formatUnsupportedChannelActionMessage(params: {
   channel: string;
   action: string;
@@ -54,7 +54,7 @@ export function formatUnsupportedChannelActionMessage(params: {
   )} to inspect supported actions.`;
 }
 
-/** Reused helper for format Strict Json Parse Failure behavior in src/cli. */
+/** Format a strict-JSON parse failure with safe preview and recovery command. */
 export function formatStrictJsonParseFailure(params: { value: string; cause: unknown }): string {
   const rawCause = params.cause instanceof Error ? params.cause.message : String(params.cause);
   const cause = rawCause.trim().replace(/[.。]+$/u, "");
@@ -70,7 +70,7 @@ export function formatStrictJsonParseFailure(params: { value: string; cause: unk
   ].join(" ");
 }
 
-/** Reused helper for format Gateway Command Failure behavior in src/cli. */
+/** Format gateway RPC failures without duplicating lower-level doctor/status hints. */
 export function formatGatewayCommandFailure(params: {
   action: string;
   error: unknown;
@@ -90,7 +90,7 @@ export function formatGatewayCommandFailure(params: {
   )} to inspect the active Gateway.`;
 }
 
-/** Reused helper for format Lookup Miss behavior in src/cli. */
+/** Format a generic lookup miss with the command that lists valid values. */
 export function formatLookupMiss(params: {
   noun: string;
   value: string;
@@ -103,7 +103,7 @@ export function formatLookupMiss(params: {
   )} to see recent ${valueLabel}s.`;
 }
 
-/** Reused helper for format Missing Plugin Message behavior in src/cli. */
+/** Format an installed-plugin lookup miss with optional search guidance. */
 export function formatMissingPluginMessage(params: {
   id: string;
   listCommand?: string;
