@@ -1,3 +1,4 @@
+/** Converts stored auth profiles into discovery-time agent credential maps. */
 import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
 import { coerceSecretRef } from "../config/types.secrets.js";
 import { asDateTimestampMs } from "../shared/number-coercion.js";
@@ -12,12 +13,12 @@ type AgentOAuthCredential = {
   expires: number;
 };
 
-/** Shared type for Agent Credential in src/agents. */
+/** Runtime credential shape exposed to model/provider discovery. */
 export type AgentCredential = AgentApiKeyCredential | AgentOAuthCredential;
-/** Shared type for Agent Credential Map in src/agents. */
+/** Provider-id keyed credential map used while resolving available models. */
 export type AgentCredentialMap = Record<string, AgentCredential>;
 
-/** Shared type for Resolve Agent Credential Map Options in src/agents. */
+/** Options for preserving configured-but-unreadable secret-ref placeholders. */
 export type ResolveAgentCredentialMapOptions = {
   includeSecretRefPlaceholders?: boolean;
 };

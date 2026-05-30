@@ -18,7 +18,7 @@ import {
   loadAuthProfileStoreForSecretsRuntime,
 } from "./auth-profiles/store.js";
 
-/** Shared type for Discover Auth Storage Options in src/agents. */
+/** Options controlling auth-profile, env, and synthetic credential discovery. */
 export type DiscoverAuthStorageOptions = {
   externalCli?: ExternalCliAuthDiscovery;
   readOnly?: boolean;
@@ -85,7 +85,7 @@ export function resolveAgentCredentialsForDiscovery(
   return credentials;
 }
 
-/** Re-exported API for src/agents. */
+/** Core env-backed auth discovery helpers exposed through the facade. */
 export {
   addEnvBackedAgentCredentials,
   scrubLegacyStaticAuthJsonEntriesForDiscovery,

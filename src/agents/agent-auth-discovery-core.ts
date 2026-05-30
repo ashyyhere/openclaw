@@ -11,7 +11,7 @@ import {
 } from "./model-auth-env-vars.js";
 import { resolveEnvApiKey } from "./model-auth-env.js";
 
-/** Shared type for Agent Discovery Auth Lookup Options in src/agents. */
+/** Inputs used when discovery looks up env-backed provider credentials. */
 export type AgentDiscoveryAuthLookupOptions = {
   config?: OpenClawConfig;
   workspaceDir?: string;

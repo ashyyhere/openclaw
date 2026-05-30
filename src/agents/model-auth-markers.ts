@@ -14,9 +14,9 @@ export const OLLAMA_LOCAL_AUTH_MARKER = "ollama-local";
 export const CUSTOM_LOCAL_AUTH_MARKER = "custom-local";
 /** Marker for GCP Vertex credential-file auth. */
 export const GCP_VERTEX_CREDENTIALS_MARKER = "gcp-vertex-credentials";
-/** Reused constant for NON ENV SECRETREF MARKER behavior in src/agents. */
+/** Non-secret placeholder for secret refs that are not backed by an env var. */
 export const NON_ENV_SECRETREF_MARKER = "secretref-managed"; // pragma: allowlist secret
-/** Reused constant for SECRETREF ENV HEADER MARKER PREFIX behavior in src/agents. */
+/** Header marker prefix for secret refs that resolve through env vars. */
 export const SECRETREF_ENV_HEADER_MARKER_PREFIX = "secretref-env:"; // pragma: allowlist secret
 
 const AWS_SDK_ENV_MARKERS = new Set([
