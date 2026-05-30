@@ -1,5 +1,4 @@
 export type { CliBackendConfig } from "../config/types.js";
-/** Re-exported API for src/plugin-sdk. */
 export type {
   CliBackendAuthEpochMode,
   CliBackendNormalizeConfigContext,
@@ -11,7 +10,6 @@ export type {
   CliBackendResolveExecutionArgsContext,
   CliBackendThinkingLevel,
 } from "../plugins/types.js";
-/** Re-exported API for src/plugin-sdk. */
 export {
   CLI_FRESH_WATCHDOG_DEFAULTS,
   CLI_RESUME_WATCHDOG_DEFAULTS,

@@ -30,7 +30,6 @@ import type {
 import { toSafeImportPath } from "../shared/import-specifier.js";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
-/** Re-exported API for src/plugin-sdk. */
 export type {
   AnyAgentTool,
   OpenClawPluginApi,

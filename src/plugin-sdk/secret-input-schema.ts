@@ -8,7 +8,7 @@ import {
   SECRET_PROVIDER_ALIAS_PATTERN,
 } from "../secrets/ref-contract.js";
 
-/** Reused helper for build Secret Input Schema behavior in src/plugin-sdk. */
+/** Returns the shared sensitive zod schema for secret input config values. */
 export function buildSecretInputSchema() {
   return secretInputSchema;
 }
