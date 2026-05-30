@@ -4,7 +4,7 @@ import type { CompactResult, ContextEngine } from "../../context-engine/types.js
 import { withTimeout } from "../../node-host/with-timeout.js";
 import { finiteSecondsToTimerSafeMilliseconds } from "../../shared/number-coercion.js";
 
-/** Reused constant for EMBEDDED COMPACTION TIMEOUT MS behavior in src/agents/embedded-agent-runner. */
+/** Default hard cap for embedded compaction when config has no timeout override. */
 export const EMBEDDED_COMPACTION_TIMEOUT_MS = 900_000;
 
 function createAbortError(signal: AbortSignal): Error {
@@ -55,7 +55,7 @@ function composeAbortSignals(...signals: Array<AbortSignal | undefined>): {
   };
 }
 
-/** Reused helper for resolve Compaction Timeout Ms behavior in src/agents/embedded-agent-runner. */
+/** Resolves compaction timeout from config seconds or the embedded default. */
 export function resolveCompactionTimeoutMs(cfg?: OpenClawConfig): number {
   return (
     finiteSecondsToTimerSafeMilliseconds(cfg?.agents?.defaults?.compaction?.timeoutSeconds, {
@@ -64,7 +64,7 @@ export function resolveCompactionTimeoutMs(cfg?: OpenClawConfig): number {
   );
 }
 
-/** Reused helper for compact With Safety Timeout behavior in src/agents/embedded-agent-runner. */
+/** Runs compaction with composed abort signals and a safety timeout. */
 export async function compactWithSafetyTimeout<T>(
   compact: (abortSignal?: AbortSignal) => Promise<T>,
   timeoutMs: number = EMBEDDED_COMPACTION_TIMEOUT_MS,

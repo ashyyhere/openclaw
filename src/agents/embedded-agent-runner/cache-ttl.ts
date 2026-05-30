@@ -14,7 +14,7 @@ type CustomEntryLike = { type?: unknown; customType?: unknown; data?: unknown };
 
 const CACHE_TTL_CUSTOM_TYPE = "openclaw.cache-ttl";
 
-/** Shared type for Cache Ttl Entry Data in src/agents/embedded-agent-runner. */
+/** Data stored in transcript custom entries that preserve provider prompt cache TTL. */
 export type CacheTtlEntryData = {
   timestamp: number;
   provider?: string;
@@ -26,7 +26,7 @@ type CacheTtlContext = {
   modelId?: string;
 };
 
-/** Reused helper for is Cache Ttl Eligible Provider behavior in src/agents/embedded-agent-runner. */
+/** Checks provider/model support for prompt-cache TTL preservation markers. */
 export function isCacheTtlEligibleProvider(
   provider: string,
   modelId: string,
@@ -78,7 +78,7 @@ function matchesCacheTtlContext(
   return true;
 }
 
-/** Reused helper for read Last Cache Ttl Timestamp behavior in src/agents/embedded-agent-runner. */
+/** Reads the newest matching cache-TTL marker timestamp from transcript history. */
 export function readLastCacheTtlTimestamp(
   sessionManager: unknown,
   context?: CacheTtlContext,

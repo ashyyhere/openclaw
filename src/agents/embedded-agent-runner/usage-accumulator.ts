@@ -1,7 +1,7 @@
 /** Accumulates usage across embedded-agent attempts and provider calls. */
 import { normalizeUsage, type NormalizedUsage, type UsageLike } from "../usage.js";
 
-/** Shared type for Usage Accumulator in src/agents/embedded-agent-runner. */
+/** Running usage totals plus the most recent provider-call snapshot. */
 export type UsageAccumulator = {
   input: number;
   output: number;
