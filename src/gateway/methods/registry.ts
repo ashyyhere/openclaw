@@ -1,4 +1,4 @@
-// gateway/methods registry helpers and runtime behavior.
+// Builds the gateway method registry from core handlers and plugin descriptors.
 import type { PluginRegistry } from "../../plugins/registry-types.js";
 import { normalizePluginGatewayMethodScope } from "../../shared/gateway-method-policy.js";
 import { ADMIN_SCOPE, type OperatorScope } from "../operator-scopes.js";
@@ -16,9 +16,9 @@ import {
   NODE_GATEWAY_METHOD_SCOPE,
 } from "./descriptor.js";
 
-/** Shared type for Gateway Method Registry in src/gateway/methods. */
+/** Read-only gateway method registry view used by dispatch and discovery. */
 export type GatewayMethodRegistry = GatewayMethodRegistryView;
-/** Re-exported API for src/gateway/methods, starting with create Core Gateway Method Descriptors. */
+/** Core gateway method descriptor helpers used during registry construction. */
 export { createCoreGatewayMethodDescriptors, isCoreGatewayMethodClassified };
 
 function normalizeMethodName(name: string): string {
@@ -51,7 +51,7 @@ function normalizeDescriptor(input: GatewayMethodDescriptorInput): GatewayMethod
   };
 }
 
-/** Reused helper for create Gateway Method Registry behavior in src/gateway/methods. */
+/** Normalize descriptors and build lookup/listing functions for gateway dispatch. */
 export function createGatewayMethodRegistry(
   inputs: readonly GatewayMethodDescriptorInput[],
 ): GatewayMethodRegistry {
@@ -77,7 +77,7 @@ export function createGatewayMethodRegistry(
   };
 }
 
-/** Reused helper for create Gateway Method Descriptors From Handlers behavior in src/gateway/methods. */
+/** Convert a handler map into scoped gateway method descriptors. */
 export function createGatewayMethodDescriptorsFromHandlers(params: {
   handlers: Record<string, GatewayMethodHandler>;
   owner: GatewayMethodOwner;
@@ -99,7 +99,7 @@ export function createGatewayMethodDescriptorsFromHandlers(params: {
   });
 }
 
-/** Reused helper for create Plugin Gateway Method Descriptor behavior in src/gateway/methods. */
+/** Create a single plugin-owned gateway method descriptor with normalized scope. */
 export function createPluginGatewayMethodDescriptor(params: {
   pluginId: string;
   name: string;
@@ -115,7 +115,7 @@ export function createPluginGatewayMethodDescriptor(params: {
   };
 }
 
-/** Reused helper for create Plugin Gateway Method Descriptors behavior in src/gateway/methods. */
+/** Resolve plugin gateway descriptors, falling back to legacy handler maps. */
 export function createPluginGatewayMethodDescriptors(
   registry: Pick<PluginRegistry, "gatewayHandlers"> &
     Partial<Pick<PluginRegistry, "gatewayMethodDescriptors">>,

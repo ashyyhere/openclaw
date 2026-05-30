@@ -1,4 +1,4 @@
-// gateway security path helpers and runtime behavior.
+// Canonicalizes HTTP paths before applying protected-prefix security checks.
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
 type SecurityPathCanonicalization = {
@@ -47,7 +47,7 @@ function pushNormalizedCandidate(candidates: string[], seen: Set<string>, value:
   candidates.push(normalized);
 }
 
-/** Reused helper for build Canonical Path Candidates behavior in src/gateway. */
+/** Build normalized path candidates across repeated percent-decoding passes. */
 export function buildCanonicalPathCandidates(
   pathname: string,
   maxDecodePasses = MAX_PATH_DECODE_PASSES,
@@ -95,7 +95,7 @@ export function buildCanonicalPathCandidates(
   };
 }
 
-/** Reused helper for canonicalize Path Variant behavior in src/gateway. */
+/** Return the deepest normalized path variant used for display/diagnostics. */
 export function canonicalizePathVariant(pathname: string): string {
   const { candidates } = buildCanonicalPathCandidates(pathname);
   return candidates[candidates.length - 1] ?? "/";
@@ -110,7 +110,7 @@ function prefixMatch(pathname: string, prefix: string): boolean {
   );
 }
 
-/** Reused helper for canonicalize Path For Security behavior in src/gateway. */
+/** Return all canonicalization facts needed to make fail-closed path decisions. */
 export function canonicalizePathForSecurity(pathname: string): SecurityPathCanonicalization {
   const { candidates, decodePasses, decodePassLimitReached, malformedEncoding } =
     buildCanonicalPathCandidates(pathname);
@@ -137,7 +137,7 @@ function getNormalizedPrefixes(prefixes: readonly string[]): readonly string[] {
   return normalized;
 }
 
-/** Reused helper for is Path Protected By Prefixes behavior in src/gateway. */
+/** Check whether any canonical path variant falls under a protected prefix. */
 export function isPathProtectedByPrefixes(pathname: string, prefixes: readonly string[]): boolean {
   const canonical = canonicalizePathForSecurity(pathname);
   const normalizedPrefixes = getNormalizedPrefixes(prefixes);
@@ -158,10 +158,10 @@ export function isPathProtectedByPrefixes(pathname: string, prefixes: readonly s
   return normalizedPrefixes.some((prefix) => prefixMatch(canonical.rawNormalizedPath, prefix));
 }
 
-/** Reused constant for PROTECTED PLUGIN ROUTE PREFIXES behavior in src/gateway. */
+/** Plugin route prefixes that require protected gateway handling. */
 export const PROTECTED_PLUGIN_ROUTE_PREFIXES = ["/api/channels"] as const;
 
-/** Reused helper for is Protected Plugin Route Path behavior in src/gateway. */
+/** Check whether a request path targets protected plugin routes. */
 export function isProtectedPluginRoutePath(pathname: string): boolean {
   return isPathProtectedByPrefixes(pathname, PROTECTED_PLUGIN_ROUTE_PREFIXES);
 }

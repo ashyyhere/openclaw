@@ -1,4 +1,4 @@
-// gateway server restart sentinel helpers and runtime behavior.
+// Recovers restart/update sentinels and resumes queued session continuations after gateway restart.
 import { resolveSessionAgentId } from "../agents/agent-scope.js";
 import { REPLY_RUN_STILL_SHUTTING_DOWN_TEXT } from "../auto-reply/reply/get-reply-run-queue.js";
 import { finalizeInboundContext } from "../auto-reply/reply/inbound-context.js";
@@ -425,7 +425,7 @@ async function drainRestartContinuationQueue(params: {
   }
 }
 
-/** Reused helper for recover Pending Restart Continuation Deliveries behavior in src/gateway. */
+/** Recover queued restart-continuation deliveries that were pending before shutdown. */
 export async function recoverPendingRestartContinuationDeliveries(params: {
   deps: CliDeps;
   log?: SessionDeliveryRecoveryLogger;
@@ -636,17 +636,17 @@ async function scheduleRestartSentinelWakeAttempt(params: { deps: CliDeps; attem
   await runStartupTasks({ tasks: [task], log });
 }
 
-/** Reused helper for schedule Restart Sentinel Wake behavior in src/gateway. */
+/** Schedule startup processing for restart sentinel wake and continuation work. */
 export async function scheduleRestartSentinelWake(params: { deps: CliDeps }) {
   await scheduleRestartSentinelWakeAttempt({ ...params, attempt: 0 });
 }
 
-/** Reused helper for should Wake From Restart Sentinel behavior in src/gateway. */
+/** Skip restart sentinel wakeups in test runtimes. */
 export function shouldWakeFromRestartSentinel() {
   return !process.env.VITEST && process.env.NODE_ENV !== "test";
 }
 
-/** Reused helper for refresh Latest Update Restart Sentinel behavior in src/gateway. */
+/** Refresh the cached update restart sentinel after startup/version finalization. */
 export async function refreshLatestUpdateRestartSentinel(): Promise<RestartSentinelPayload | null> {
   const finalized = await finalizeUpdateRestartSentinelRunningVersion();
   const sentinel = finalized ?? (await readRestartSentinel());
@@ -656,12 +656,12 @@ export async function refreshLatestUpdateRestartSentinel(): Promise<RestartSenti
   return cloneRestartSentinelPayload(latestUpdateRestartSentinel);
 }
 
-/** Reused helper for get Latest Update Restart Sentinel behavior in src/gateway. */
+/** Return a defensive copy of the last update restart sentinel payload. */
 export function getLatestUpdateRestartSentinel(): RestartSentinelPayload | null {
   return cloneRestartSentinelPayload(latestUpdateRestartSentinel);
 }
 
-/** Reused helper for record Latest Update Restart Sentinel behavior in src/gateway. */
+/** Store the latest update restart sentinel payload for status/control-plane reads. */
 export function recordLatestUpdateRestartSentinel(payload: RestartSentinelPayload): void {
   latestUpdateRestartSentinel = cloneRestartSentinelPayload(payload);
 }

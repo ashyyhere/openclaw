@@ -1,14 +1,14 @@
-// gateway secret input paths helpers and runtime behavior.
+// Maps gateway auth/remote secret-input paths to config reads and writes.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 
-/** Shared type for Supported Gateway Secret Input Path in src/gateway. */
+/** Config paths whose gateway credentials may be resolved from secret input. */
 export type SupportedGatewaySecretInputPath =
   | "gateway.auth.token"
   | "gateway.auth.password"
   | "gateway.remote.token"
   | "gateway.remote.password";
 
-/** Reused constant for ALL GATEWAY SECRET INPUT PATHS behavior in src/gateway. */
+/** Complete set of supported gateway credential config paths. */
 export const ALL_GATEWAY_SECRET_INPUT_PATHS: SupportedGatewaySecretInputPath[] = [
   "gateway.auth.token",
   "gateway.auth.password",
@@ -16,14 +16,14 @@ export const ALL_GATEWAY_SECRET_INPUT_PATHS: SupportedGatewaySecretInputPath[] =
   "gateway.remote.password",
 ];
 
-/** Reused helper for is Supported Gateway Secret Input Path behavior in src/gateway. */
+/** Type guard for gateway credential paths accepted by secret-input resolution. */
 export function isSupportedGatewaySecretInputPath(
   path: string,
 ): path is SupportedGatewaySecretInputPath {
   return ALL_GATEWAY_SECRET_INPUT_PATHS.includes(path as SupportedGatewaySecretInputPath);
 }
 
-/** Reused helper for read Gateway Secret Input Value behavior in src/gateway. */
+/** Read the raw configured value at one supported gateway credential path. */
 export function readGatewaySecretInputValue(
   config: OpenClawConfig,
   path: SupportedGatewaySecretInputPath,
@@ -40,7 +40,7 @@ export function readGatewaySecretInputValue(
   return config.gateway?.remote?.password;
 }
 
-/** Reused helper for assign Resolved Gateway Secret Input behavior in src/gateway. */
+/** Write a resolved gateway credential value back into its config path. */
 export function assignResolvedGatewaySecretInput(params: {
   config: OpenClawConfig;
   path: SupportedGatewaySecretInputPath;
@@ -70,7 +70,7 @@ export function assignResolvedGatewaySecretInput(params: {
   }
 }
 
-/** Reused helper for is Token Gateway Secret Input Path behavior in src/gateway. */
+/** Distinguish token paths from password paths for prompting/display policy. */
 export function isTokenGatewaySecretInputPath(path: SupportedGatewaySecretInputPath): boolean {
   return path === "gateway.auth.token" || path === "gateway.remote.token";
 }

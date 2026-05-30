@@ -1,14 +1,14 @@
-// gateway mcp http protocol helpers and runtime behavior.
-/** Reused constant for MCP LOOPBACK SERVER NAME behavior in src/gateway. */
+// JSON-RPC helpers and protocol metadata for the gateway MCP loopback server.
+/** MCP server name announced by the gateway loopback endpoint. */
 export const MCP_LOOPBACK_SERVER_NAME = "openclaw";
-/** Reused constant for MCP LOOPBACK SERVER VERSION behavior in src/gateway. */
+/** MCP loopback server protocol-facing version. */
 export const MCP_LOOPBACK_SERVER_VERSION = "0.1.0";
-/** Reused constant for MCP LOOPBACK SUPPORTED PROTOCOL VERSIONS behavior in src/gateway. */
+/** Protocol versions accepted by the gateway MCP loopback endpoint. */
 export const MCP_LOOPBACK_SUPPORTED_PROTOCOL_VERSIONS = ["2025-03-26", "2024-11-05"] as const;
 
 type JsonRpcId = string | number | null | undefined;
 
-/** Shared type for Json Rpc Request in src/gateway. */
+/** Minimal JSON-RPC request shape accepted by the MCP loopback endpoint. */
 export type JsonRpcRequest = {
   jsonrpc: "2.0";
   id?: JsonRpcId;
@@ -16,12 +16,12 @@ export type JsonRpcRequest = {
   params?: Record<string, unknown>;
 };
 
-/** Reused helper for json Rpc Result behavior in src/gateway. */
+/** Build a JSON-RPC success envelope with a normalized null id. */
 export function jsonRpcResult(id: JsonRpcId, result: unknown) {
   return { jsonrpc: "2.0" as const, id: id ?? null, result };
 }
 
-/** Reused helper for json Rpc Error behavior in src/gateway. */
+/** Build a JSON-RPC error envelope with a normalized null id. */
 export function jsonRpcError(id: JsonRpcId, code: number, message: string) {
   return { jsonrpc: "2.0" as const, id: id ?? null, error: { code, message } };
 }

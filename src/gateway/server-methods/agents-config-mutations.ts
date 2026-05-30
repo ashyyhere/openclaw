@@ -1,4 +1,4 @@
-// gateway/server-methods agents config mutations helpers and runtime behavior.
+// Gateway method helpers that mutate configured agent entries in the root config file.
 import { resolveAgentDir, resolveAgentWorkspaceDir } from "../../agents/agent-scope.js";
 import {
   applyAgentConfig,
@@ -11,7 +11,7 @@ import { resolveSessionTranscriptsDirForAgent } from "../../config/sessions.js";
 import type { IdentityConfig } from "../../config/types.base.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 
-/** Shared type for Agent Delete Mutation Result in src/gateway/server-methods. */
+/** Filesystem/config details returned after an agent entry is removed. */
 export type AgentDeleteMutationResult = {
   workspaceDir: string;
   agentDir: string;
@@ -19,7 +19,7 @@ export type AgentDeleteMutationResult = {
   removedBindings: number;
 };
 
-/** Reused class for Agent Config Precondition Error behavior in src/gateway/server-methods. */
+/** Error thrown when an agent create/update/delete precondition fails. */
 export class AgentConfigPreconditionError extends Error {
   constructor(
     readonly kind: "already-exists" | "not-found",
@@ -34,12 +34,12 @@ export class AgentConfigPreconditionError extends Error {
   }
 }
 
-/** Reused helper for is Configured Agent behavior in src/gateway/server-methods. */
+/** Check whether an agent id is already present in root config. */
 export function isConfiguredAgent(cfg: OpenClawConfig, agentId: string): boolean {
   return findAgentEntryIndex(listAgentEntries(cfg), agentId) >= 0;
 }
 
-/** Reused helper for create Agent Config Entry behavior in src/gateway/server-methods. */
+/** Add a new agent entry through the config retry writer. */
 export async function createAgentConfigEntry(params: {
   agentId: string;
   name: string;
@@ -67,7 +67,7 @@ export async function createAgentConfigEntry(params: {
   });
 }
 
-/** Reused helper for update Agent Config Entry behavior in src/gateway/server-methods. */
+/** Update an existing agent entry through the config retry writer. */
 export async function updateAgentConfigEntry(params: {
   agentId: string;
   name?: string;
@@ -93,7 +93,7 @@ export async function updateAgentConfigEntry(params: {
   });
 }
 
-/** Reused helper for delete Agent Config Entry behavior in src/gateway/server-methods. */
+/** Remove an agent entry and return the derived workspace/session paths for cleanup. */
 export async function deleteAgentConfigEntry(params: { agentId: string }): Promise<{
   nextConfig: OpenClawConfig;
   result: AgentDeleteMutationResult | undefined;

@@ -1,4 +1,4 @@
-// gateway control ui helpers and runtime behavior.
+// Serves Control UI assets plus authenticated avatar and assistant-media routes.
 import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
 import fs from "node:fs";
 import type { IncomingMessage, ServerResponse } from "node:http";
@@ -67,7 +67,7 @@ const CONTROL_UI_OPERATOR_READ_SCOPE = "operator.read";
 const CONTROL_UI_OPERATOR_ROLE = "operator";
 const controlUiAssistantMediaTicketSecret = randomBytes(32);
 
-/** Shared type for Control Ui Request Options in src/gateway. */
+/** Request options for Control UI static, avatar, and assistant-media handlers. */
 export type ControlUiRequestOptions = {
   basePath?: string;
   config?: OpenClawConfig;
@@ -79,7 +79,7 @@ export type ControlUiRequestOptions = {
   rateLimiter?: AuthRateLimiter;
 };
 
-/** Shared type for Control Ui Root State in src/gateway. */
+/** Resolved Control UI asset root state used by the HTTP handler. */
 export type ControlUiRootState =
   | { kind: "bundled"; path: string }
   | { kind: "resolved"; path: string }
@@ -152,7 +152,7 @@ const CONTROL_UI_ROOT_PUBLIC_ASSETS = new Set([
   "sw.js",
 ]);
 
-/** Shared type for Control Ui Avatar Resolution in src/gateway. */
+/** Avatar source resolution before the Control UI handler streams or redirects it. */
 export type ControlUiAvatarResolution =
   | { kind: "none"; reason: string; source?: string | null }
   | { kind: "local"; filePath: string; source?: string | null }
@@ -529,7 +529,7 @@ async function resolveAssistantMediaAvailability(
   }
 }
 
-/** Reused helper for handle Control Ui Assistant Media Request behavior in src/gateway. */
+/** Handle authenticated assistant-media ticket requests for Control UI previews. */
 export async function handleControlUiAssistantMediaRequest(
   req: IncomingMessage,
   res: ServerResponse,
@@ -644,7 +644,7 @@ export async function handleControlUiAssistantMediaRequest(
   }
 }
 
-/** Reused helper for handle Control Ui Avatar Request behavior in src/gateway. */
+/** Handle authenticated Control UI avatar requests for local/remote/data sources. */
 export async function handleControlUiAvatarRequest(
   req: IncomingMessage,
   res: ServerResponse,
@@ -820,7 +820,7 @@ function isSafeRelativePath(relPath: string) {
   return true;
 }
 
-/** Reused helper for handle Control Ui Http Request behavior in src/gateway. */
+/** Serve Control UI routes, static assets, bootstrap config, avatars, and assistant media. */
 export async function handleControlUiHttpRequest(
   req: IncomingMessage,
   res: ServerResponse,

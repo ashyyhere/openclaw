@@ -11,7 +11,7 @@ import { asOptionalRecord } from "../../shared/record-coerce.js";
 import { setSafeTimeout } from "../../utils/timer-delay.js";
 import type { DedupeEntry } from "../server-shared.js";
 
-/** Shared type for Agent Wait Terminal Snapshot in src/gateway/server-methods. */
+/** Terminal run snapshot derived from chat/agent dedupe entries. */
 export type AgentWaitTerminalSnapshot = {
   status: "ok" | "error" | "timeout";
   startedAt?: number;
@@ -238,7 +238,7 @@ export function readTerminalSnapshotFromGatewayDedupe(params: {
   return agentSnapshot ?? chatSnapshot;
 }
 
-/** Reused helper for wait For Terminal Gateway Dedupe behavior in src/gateway/server-methods. */
+/** Wait for a dedupe terminal snapshot, waking immediately when a matching run completes. */
 export async function waitForTerminalGatewayDedupe(params: {
   dedupe: Map<string, DedupeEntry>;
   runId: string;
@@ -296,7 +296,7 @@ export async function waitForTerminalGatewayDedupe(params: {
   });
 }
 
-/** Reused helper for set Gateway Dedupe Entry behavior in src/gateway/server-methods. */
+/** Store a dedupe entry and notify run waiters when it contains a terminal snapshot. */
 export function setGatewayDedupeEntry(params: {
   dedupe: Map<string, DedupeEntry>;
   key: string;
@@ -333,7 +333,7 @@ export function setGatewayDedupeEntry(params: {
   notifyWaiters(runId);
 }
 
-/** Reused constant for testing behavior in src/gateway/server-methods. */
+/** Test hooks for inspecting/resetting in-memory run waiters. */
 export const testing = {
   getWaiterCount(runId?: string): number {
     if (runId) {
@@ -349,5 +349,5 @@ export const testing = {
     AGENT_WAITERS_BY_RUN_ID.clear();
   },
 };
-/** Re-exported API for src/gateway/server-methods, starting with testing. */
+/** Test-only alias for gateway dedupe waiter internals. */
 export { testing as __testing };
