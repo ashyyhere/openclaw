@@ -10,7 +10,7 @@ import type { SandboxBackendExecSpec } from "./sandbox/backend-handle.types.js";
 
 const CHUNK_LIMIT = 8 * 1024;
 
-/** Shared type for Bash Sandbox Config in src/agents. */
+/** Sandbox execution context used by bash exec/process tools. */
 export type BashSandboxConfig = {
   containerName: string;
   workspaceDir: string;

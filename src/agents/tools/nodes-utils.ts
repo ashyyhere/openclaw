@@ -5,7 +5,7 @@ import { resolveNodeFromNodeList, resolveNodeIdFromNodeList } from "../../shared
 import { normalizeOptionalLowercaseString } from "../../shared/string-coerce.js";
 import { callGatewayTool, type GatewayCallOptions } from "./gateway.js";
 
-/** Re-exported API for src/agents/tools, starting with Node List Node. */
+/** Gateway node metadata returned by node-list commands. */
 export type { NodeListNode };
 
 type DefaultNodeFallback = "none" | "first";
@@ -142,7 +142,7 @@ export async function listNodes(opts: GatewayCallOptions): Promise<NodeListNode[
   return loadNodes(opts);
 }
 
-/** Reused helper for resolve Node Id From List behavior in src/agents/tools. */
+/** Resolve a node id from an already-loaded node list and optional defaulting. */
 export function resolveNodeIdFromList(
   nodes: NodeListNode[],
   query?: string,
@@ -163,7 +163,7 @@ export async function resolveNodeId(
   return (await resolveNode(opts, query, allowDefault)).nodeId;
 }
 
-/** Reused helper for resolve Node behavior in src/agents/tools. */
+/** Resolve a full node record from the gateway node list. */
 export async function resolveNode(
   opts: GatewayCallOptions,
   query?: string,

@@ -4,7 +4,7 @@ import {
   CHANNEL_TARGET_DESCRIPTION,
   CHANNEL_TARGETS_DESCRIPTION,
 } from "../../infra/outbound/channel-target.js";
-/** Re-exported API for src/agents/schema, starting with optional String Enum. */
+/** String enum schema helpers shared by tool parameter definitions. */
 export { optionalStringEnum, stringEnum } from "./string-enum.js";
 
 /** Builds a schema for one outbound channel target. */

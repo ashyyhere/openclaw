@@ -89,7 +89,7 @@ type AnthropicContentBlock = AnthropicDocBlock | AnthropicTextBlock;
 
 type AnthropicResponseContent = Array<{ type: string; text?: string }>;
 
-/** Reused helper for anthropic Analyze Pdf behavior in src/agents/tools. */
+/** Submit PDFs through Anthropic's native document blocks and return text output. */
 export async function anthropicAnalyzePdf(params: {
   apiKey: string;
   modelId: string;
@@ -172,7 +172,7 @@ type GeminiCandidate = {
   content?: { parts?: Array<{ text?: string }> };
 };
 
-/** Reused helper for gemini Analyze Pdf behavior in src/agents/tools. */
+/** Submit PDFs through Gemini generateContent inline data and return text output. */
 export async function geminiAnalyzePdf(params: {
   apiKey: string;
   modelId: string;
