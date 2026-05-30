@@ -1,48 +1,49 @@
-// Runtime boundary for gateway server node events runtime behavior.
-/** Re-exported API for src/gateway, starting with resolve Session Agent Id. */
+// Lazy runtime boundary for gateway node-event handling; keeps server startup
+// separated from heavier command, channel, session, and media helpers.
+/** Resolves the agent scope for session-backed node events. */
 export { resolveSessionAgentId } from "../agents/agent-scope.js";
-/** Re-exported API for src/gateway, starting with sanitize Inbound System Tags. */
+/** Normalizes inbound system tags before node events enter reply handling. */
 export { sanitizeInboundSystemTags } from "../auto-reply/reply/inbound-text.js";
-/** Re-exported API for src/gateway, starting with normalize Channel Id. */
+/** Normalizes plugin channel ids carried by node event payloads. */
 export { normalizeChannelId } from "../channels/plugins/index.js";
-/** Re-exported API for src/gateway, starting with send Durable Message Batch. */
+/** Durable channel send helper used when node events fan out messages. */
 export { sendDurableMessageBatch } from "../channels/message/runtime.js";
-/** Re-exported API for src/gateway, starting with create Outbound Send Deps. */
+/** Creates outbound-send dependencies for gateway-originated node events. */
 export { createOutboundSendDeps } from "../cli/outbound-send-deps.js";
-/** Re-exported API for src/gateway, starting with agent Command From Ingress. */
+/** Routes ingress-style node events into the agent command path. */
 export { agentCommandFromIngress } from "../commands/agent.js";
-/** Re-exported API for src/gateway, starting with get Runtime Config. */
+/** Reads current runtime config for node-event decisions. */
 export { getRuntimeConfig } from "../config/io.js";
-/** Re-exported API for src/gateway, starting with update Session Store. */
+/** Session-store writer used by node-event handlers. */
 export { updateSessionStore } from "../config/sessions.js";
-/** Re-exported API for src/gateway, starting with load Or Create Device Identity. */
+/** Device identity loader used by node-event push/device flows. */
 export { loadOrCreateDeviceIdentity } from "../infra/device-identity.js";
-/** Re-exported API for src/gateway, starting with request Heartbeat. */
+/** Heartbeat wake helper used after event-driven session updates. */
 export { requestHeartbeat } from "../infra/heartbeat-wake.js";
-/** Re-exported API for src/gateway, starting with build Outbound Session Context. */
+/** Builds outbound session context for node-event replies. */
 export { buildOutboundSessionContext } from "../infra/outbound/session-context.js";
-/** Re-exported API for src/gateway, starting with resolve Outbound Target. */
+/** Resolves outbound channel targets carried by node event payloads. */
 export { resolveOutboundTarget } from "../infra/outbound/targets.js";
-/** Re-exported API for src/gateway, starting with register Apns Registration. */
+/** APNs registration helper for gateway node/device events. */
 export { registerApnsRegistration } from "../infra/push-apns.js";
-/** Re-exported API for src/gateway, starting with enqueue System Event. */
+/** Queues system events emitted while processing gateway node events. */
 export { enqueueSystemEvent } from "../infra/system-events.js";
-/** Re-exported API for src/gateway, starting with delete Media Buffer. */
+/** Removes temporary media buffers referenced by node events. */
 export { deleteMediaBuffer } from "../media/store.js";
-/** Re-exported API for src/gateway, starting with normalize Main Key. */
+/** Session-key helpers for heartbeat scoping from node events. */
 export { normalizeMainKey, scopedHeartbeatWakeOptions } from "../routing/session-key.js";
-/** Re-exported API for src/gateway, starting with default Runtime. */
+/** Default model runtime used by node-event agent invocations. */
 export { defaultRuntime } from "../runtime.js";
-/** Re-exported API for src/gateway, starting with parse Message With Attachments. */
+/** Attachment parsing helpers for chat-like node event payloads. */
 export { parseMessageWithAttachments, resolveChatAttachmentMaxBytes } from "./chat-attachments.js";
-/** Re-exported API for src/gateway, starting with normalize Rpc Attachments To Chat Attachments. */
+/** Converts RPC attachment payloads to chat attachment records. */
 export { normalizeRpcAttachmentsToChatAttachments } from "./server-methods/attachment-normalize.js";
-/** Re-exported API for src/gateway. */
+/** Session lookup/model helpers reused by node-event handlers. */
 export {
   loadSessionEntry,
   migrateAndPruneGatewaySessionStoreKey,
   resolveGatewayModelSupportsImages,
   resolveSessionModelRef,
 } from "./session-utils.js";
-/** Re-exported API for src/gateway, starting with format For Log. */
+/** Log formatter for bounded node-event payload diagnostics. */
 export { formatForLog } from "./ws-log.js";
