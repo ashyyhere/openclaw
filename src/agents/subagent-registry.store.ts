@@ -78,18 +78,18 @@ function resolveSubagentStateDir(env: NodeJS.ProcessEnv = process.env): string {
   return resolveStateDir(env);
 }
 
-/** Reused helper for resolve Subagent Registry Path behavior in src/agents. */
+/** Resolve the persisted subagent run registry path under the active state dir. */
 export function resolveSubagentRegistryPath(): string {
   return path.join(resolveSubagentStateDir(process.env), "subagents", "runs.json");
 }
 
-/** Reused helper for load Subagent Registry From Disk behavior in src/agents. */
+/** Load a cloned mutable subagent registry snapshot from disk. */
 export function loadSubagentRegistryFromDisk(): Map<string, SubagentRunRecord>;
-/** Reused helper for load Subagent Registry From Disk behavior in src/agents. */
+/** Load a cached read-only subagent registry snapshot without cloning records. */
 export function loadSubagentRegistryFromDisk(options: {
   clone: false;
 }): ReadonlyMap<string, ReadonlySubagentRunRecord>;
-/** Reused helper for load Subagent Registry From Disk behavior in src/agents. */
+/** Load subagent runs from disk, migrating legacy records when encountered. */
 export function loadSubagentRegistryFromDisk(options?: {
   clone?: boolean;
 }): Map<string, SubagentRunRecord> | ReadonlyMap<string, ReadonlySubagentRunRecord> {
@@ -199,7 +199,7 @@ function loadSubagentRegistrySnapshotForRead(): ReadonlyMap<string, ReadonlySuba
   return out;
 }
 
-/** Reused helper for save Subagent Registry To Disk behavior in src/agents. */
+/** Persist normalized subagent run records and refresh the read cache. */
 export function saveSubagentRegistryToDisk(runs: Map<string, SubagentRunRecord>) {
   const pathname = resolveSubagentRegistryPath();
   const serialized: Record<string, PersistedSubagentRunRecord> = {};
