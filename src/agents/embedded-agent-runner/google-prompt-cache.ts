@@ -453,7 +453,7 @@ async function ensureGooglePromptCache(
   return created.cachedContent;
 }
 
-/** Reused helper for prepare Google Prompt Cache Stream Fn behavior in src/agents/embedded-agent-runner. */
+/** Wraps a Google stream function with managed cached-content setup when eligible. */
 export async function prepareGooglePromptCacheStreamFn(
   params: PrepareGooglePromptCacheStreamFnParams,
   deps: GooglePromptCacheDeps = {},

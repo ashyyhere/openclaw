@@ -57,7 +57,7 @@ type FinalEffectiveToolPolicyParams = {
   warn: (message: string) => void;
 };
 
-/** Reused helper for apply Final Effective Tool Policy behavior in src/agents/embedded-agent-runner. */
+/** Applies the final policy pass to bundled tools added after core tool creation. */
 export function applyFinalEffectiveToolPolicy(
   params: FinalEffectiveToolPolicyParams,
 ): AnyAgentTool[] {

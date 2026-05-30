@@ -136,7 +136,7 @@ function discoverFreshAgentStores(
   return { authStorage, modelRegistry };
 }
 
-/** Reused helper for discover Cached Agent Stores behavior in src/agents/embedded-agent-runner. */
+/** Discovers auth/model stores with a process cache when runtime sources are stable. */
 export function discoverCachedAgentStores(
   options: DiscoverCachedAgentStoresOptions,
 ): DiscoveryStores {
@@ -175,7 +175,7 @@ export function discoverCachedAgentStores(
   return stores;
 }
 
-/** Reused helper for reset Model Discovery Cache For Test behavior in src/agents/embedded-agent-runner. */
+/** Clears cached model discovery stores for isolated tests. */
 export function resetModelDiscoveryCacheForTest(): void {
   DISCOVERY_STORE_CACHE.clear();
 }
