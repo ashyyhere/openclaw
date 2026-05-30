@@ -1,4 +1,4 @@
-// video-generation dashscope compatible helpers and runtime behavior.
+// Shared DashScope-compatible video generation request, polling, and download helpers.
 import {
   assertOkOrThrowHttpError,
   createProviderOperationDeadline,
@@ -22,9 +22,9 @@ import type {
   VideoGenerationSourceAsset,
 } from "./types.js";
 
-/** Reused constant for DEFAULT DASHSCOPE WAN VIDEO MODEL behavior in src/video-generation. */
+/** Default DashScope WAN video model used when a provider does not override it. */
 export const DEFAULT_DASHSCOPE_WAN_VIDEO_MODEL = "wan2.6-t2v";
-/** Reused constant for DASHSCOPE WAN VIDEO MODELS behavior in src/video-generation. */
+/** Known DashScope WAN video model ids supported by compatible providers. */
 export const DASHSCOPE_WAN_VIDEO_MODELS = [
   DEFAULT_DASHSCOPE_WAN_VIDEO_MODEL,
   "wan2.6-i2v",
@@ -32,7 +32,7 @@ export const DASHSCOPE_WAN_VIDEO_MODELS = [
   "wan2.6-r2v-flash",
   "wan2.7-r2v",
 ];
-/** Reused constant for DASHSCOPE WAN VIDEO CAPABILITIES behavior in src/video-generation. */
+/** Capability declaration for DashScope-compatible WAN video generation. */
 export const DASHSCOPE_WAN_VIDEO_CAPABILITIES = {
   generate: {
     maxVideos: 1,
@@ -67,11 +67,11 @@ export const DASHSCOPE_WAN_VIDEO_CAPABILITIES = {
   },
 } satisfies VideoGenerationProviderCapabilities;
 
-/** Reused constant for DEFAULT VIDEO GENERATION DURATION SECONDS behavior in src/video-generation. */
+/** Default video duration when request duration is omitted. */
 export const DEFAULT_VIDEO_GENERATION_DURATION_SECONDS = 5;
-/** Reused constant for DEFAULT VIDEO GENERATION TIMEOUT MS behavior in src/video-generation. */
+/** Default end-to-end timeout for submitting, polling, and downloading video output. */
 export const DEFAULT_VIDEO_GENERATION_TIMEOUT_MS = 120_000;
-/** Reused constant for DEFAULT VIDEO RESOLUTION TO SIZE behavior in src/video-generation. */
+/** DashScope size strings derived from standard resolution labels. */
 export const DEFAULT_VIDEO_RESOLUTION_TO_SIZE: Record<string, string> = {
   "480P": "832*480",
   "720P": "1280*720",
@@ -81,7 +81,7 @@ export const DEFAULT_VIDEO_RESOLUTION_TO_SIZE: Record<string, string> = {
 const DEFAULT_VIDEO_GENERATION_POLL_INTERVAL_MS = 2_500;
 const DEFAULT_VIDEO_GENERATION_MAX_POLL_ATTEMPTS = 120;
 
-/** Shared type for Dashscope Video Generation Response in src/video-generation. */
+/** DashScope async task response payload for video generation. */
 export type DashscopeVideoGenerationResponse = {
   output?: {
     task_id?: string;
@@ -101,7 +101,7 @@ export type DashscopeVideoGenerationResponse = {
   message?: string;
 };
 
-/** Reused helper for build Dashscope Video Generation Input behavior in src/video-generation. */
+/** Builds the DashScope input object and rejects local buffered reference assets. */
 export function buildDashscopeVideoGenerationInput(params: {
   providerLabel: string;
   req: VideoGenerationRequest;
@@ -133,7 +133,7 @@ export function buildDashscopeVideoGenerationInput(params: {
   return input;
 }
 
-/** Reused helper for resolve Video Generation Reference Urls behavior in src/video-generation. */
+/** Collects remote reference image/video URLs for DashScope-compatible requests. */
 export function resolveVideoGenerationReferenceUrls(
   inputImages: VideoGenerationSourceAsset[] | undefined,
   inputVideos: VideoGenerationSourceAsset[] | undefined,
@@ -143,7 +143,7 @@ export function resolveVideoGenerationReferenceUrls(
     .filter((value): value is string => Boolean(value));
 }
 
-/** Reused helper for build Dashscope Video Generation Parameters behavior in src/video-generation. */
+/** Builds DashScope generation parameters from normalized video request options. */
 export function buildDashscopeVideoGenerationParameters(
   req: VideoGenerationRequest,
   resolutionToSize: Record<string, string> = DEFAULT_VIDEO_RESOLUTION_TO_SIZE,
@@ -168,7 +168,7 @@ export function buildDashscopeVideoGenerationParameters(
   return Object.keys(parameters).length > 0 ? parameters : undefined;
 }
 
-/** Reused helper for extract Dashscope Video Urls behavior in src/video-generation. */
+/** Extracts unique output video URLs from DashScope completion payloads. */
 export function extractDashscopeVideoUrls(payload: DashscopeVideoGenerationResponse): string[] {
   const urls = [
     ...(payload.output?.results?.map((entry) => entry.video_url).filter(Boolean) ?? []),
@@ -177,7 +177,7 @@ export function extractDashscopeVideoUrls(payload: DashscopeVideoGenerationRespo
   return uniqueStrings(urls);
 }
 
-/** Reused helper for poll Dashscope Video Task Until Complete behavior in src/video-generation. */
+/** Polls a DashScope task until it succeeds, fails, cancels, or times out. */
 export async function pollDashscopeVideoTaskUntilComplete(params: {
   providerLabel: string;
   taskId: string;
@@ -227,7 +227,7 @@ export async function pollDashscopeVideoTaskUntilComplete(params: {
   );
 }
 
-/** Reused helper for run Dashscope Video Generation Task behavior in src/video-generation. */
+/** Submits a DashScope-compatible video job, polls it, and downloads outputs. */
 export async function runDashscopeVideoGenerationTask(params: {
   providerLabel: string;
   model: string;
@@ -313,7 +313,7 @@ export async function runDashscopeVideoGenerationTask(params: {
   }
 }
 
-/** Reused helper for download Dashscope Generated Videos behavior in src/video-generation. */
+/** Downloads generated videos with provider timeouts and configured byte limits. */
 export async function downloadDashscopeGeneratedVideos(params: {
   providerLabel: string;
   urls: string[];
