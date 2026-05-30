@@ -1,4 +1,4 @@
-// infra node pairing helpers and runtime behavior.
+/** Manages pending and approved node pairing records with scoped approvals. */
 import { randomUUID } from "node:crypto";
 import { resolveMissingRequestedScope } from "../shared/operator-scope-compat.js";
 import { normalizeArrayBackedTrimmedStringList } from "../shared/string-normalization.js";
@@ -35,22 +35,22 @@ type NodeDeclaredSurface = {
 
 type NodeApprovedSurface = NodeDeclaredSurface;
 
-/** Shared type for Node Pairing Request Input in src/infra. */
+/** Node-declared surface submitted when a remote node requests pairing. */
 export type NodePairingRequestInput = NodeDeclaredSurface & {
   silent?: boolean;
 };
 
-/** Shared type for Node Pairing Pending Request in src/infra. */
+/** Pending node pairing request persisted until approval, rejection, or TTL expiry. */
 export type NodePairingPendingRequest = NodePairingRequestInput & {
   requestId: string;
   silent?: boolean;
   ts: number;
 };
 
-/** Shared type for Node Pairing Superseded Request in src/infra. */
+/** Older pending request removed after a replacement changes the approval surface. */
 export type NodePairingSupersededRequest = Pick<NodePairingPendingRequest, "requestId" | "nodeId">;
 
-/** Shared type for Request Node Pairing Result in src/infra. */
+/** Result from creating or refreshing a pending node pairing request. */
 export type RequestNodePairingResult = {
   status: "pending";
   request: NodePairingPendingRequest;
@@ -62,7 +62,7 @@ type NodePairingPendingEntry = NodePairingPendingRequest & {
   requiredApproveScopes: NodeApprovalScope[];
 };
 
-/** Shared type for Node Pairing Paired Node in src/infra. */
+/** Approved node record with auth token and last-seen metadata. */
 export type NodePairingPairedNode = NodeApprovedSurface & {
   token: string;
   bins?: string[];
@@ -227,7 +227,7 @@ function newToken() {
   return generatePairingToken();
 }
 
-/** Reused helper for list Node Pairing behavior in src/infra. */
+/** List pending and approved node pairings, with pending approval scopes attached. */
 export async function listNodePairing(baseDir?: string): Promise<NodePairingList> {
   const state = await loadState(baseDir);
   const pending = Object.values(state.pendingById)
@@ -239,7 +239,7 @@ export async function listNodePairing(baseDir?: string): Promise<NodePairingList
   return { pending, paired };
 }
 
-/** Reused helper for get Paired Node behavior in src/infra. */
+/** Load one approved node pairing by normalized node id. */
 export async function getPairedNode(
   nodeId: string,
   baseDir?: string,
@@ -248,7 +248,7 @@ export async function getPairedNode(
   return state.pairedByNodeId[normalizeNodeId(nodeId)] ?? null;
 }
 
-/** Reused helper for request Node Pairing behavior in src/infra. */
+/** Create, refresh, or replace a pending pairing request for a node. */
 export async function requestNodePairing(
   req: NodePairingRequestInput,
   baseDir?: string,
@@ -286,7 +286,7 @@ export async function requestNodePairing(
   });
 }
 
-/** Reused helper for approve Node Pairing behavior in src/infra. */
+/** Approve a pending node pairing after checking required operator scopes. */
 export async function approveNodePairing(
   requestId: string,
   options: { callerScopes?: readonly string[] },
@@ -337,7 +337,7 @@ export async function approveNodePairing(
   });
 }
 
-/** Reused helper for reject Node Pairing behavior in src/infra. */
+/** Reject and remove a pending node pairing request. */
 export async function rejectNodePairing(
   requestId: string,
   baseDir?: string,
@@ -357,7 +357,7 @@ export async function rejectNodePairing(
   });
 }
 
-/** Reused helper for remove Paired Node behavior in src/infra. */
+/** Remove an approved node pairing and its token. */
 export async function removePairedNode(
   nodeId: string,
   baseDir?: string,
@@ -374,7 +374,7 @@ export async function removePairedNode(
   });
 }
 
-/** Reused helper for verify Node Token behavior in src/infra. */
+/** Verify a node pairing token against the stored approved node record. */
 export async function verifyNodeToken(
   nodeId: string,
   token: string,
@@ -389,7 +389,7 @@ export async function verifyNodeToken(
   return verifyPairingToken(token, node.token) ? { ok: true, node } : { ok: false };
 }
 
-/** Reused helper for update Paired Node Metadata behavior in src/infra. */
+/** Patch mutable metadata for an approved node without replacing its token. */
 export async function updatePairedNodeMetadata(
   nodeId: string,
   patch: Partial<Omit<NodePairingPairedNode, "nodeId" | "token" | "createdAtMs" | "approvedAtMs">>,
@@ -430,7 +430,7 @@ export async function updatePairedNodeMetadata(
   });
 }
 
-/** Reused helper for rename Paired Node behavior in src/infra. */
+/** Rename an approved node's display name. */
 export async function renamePairedNode(
   nodeId: string,
   displayName: string,
