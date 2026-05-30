@@ -274,8 +274,8 @@ describe("runEmbeddedAttempt context engine sessionKey forwarding", () => {
         execute: async () => ({ text: "ok" }),
       },
       {
-        name: "dofbot_move_angles",
-        label: "Dofbot Move Angles",
+        name: "fuzz_move_angles",
+        label: "Fuzz Move Angles",
         description: "Move robot joints.",
         parameters: {
           type: "object",
@@ -296,6 +296,114 @@ describe("runEmbeddedAttempt context engine sessionKey forwarding", () => {
         disableTools: false,
         config: {
           tools: {
+            codeMode: { enabled: false },
+            toolSearch: false,
+          },
+        } as OpenClawConfig,
+      },
+      createSession: () => {
+        const session = createDefaultEmbeddedSession();
+        session.setActiveToolsByName = (toolNames) => {
+          activeToolNames.push([...toolNames]);
+        };
+        return session;
+      },
+    });
+
+    const sessionOptions = mockParams(
+      hoisted.createAgentSessionMock,
+      0,
+      "createAgentSession options",
+    );
+    const customTools = requireRecords(sessionOptions.customTools, "customTools");
+    expect(customTools.map((tool) => tool.name)).toEqual(["healthy_lookup"]);
+    expect(activeToolNames).toEqual([["healthy_lookup"]]);
+  });
+
+  it("quarantines unreadable tool schemas before provider normalization", async () => {
+    const unreadableTool: Record<string, unknown> = {
+      name: "fuzz_move_angles",
+      label: "Fuzz Move Angles",
+      description: "Move synthetic joints.",
+      execute: async () => ({ text: "bad" }),
+    };
+    Object.defineProperty(unreadableTool, "parameters", {
+      enumerable: true,
+      get() {
+        throw new Error("fuzz tool parameters are unreadable");
+      },
+    });
+    hoisted.createOpenClawCodingToolsMock.mockReturnValue([
+      {
+        name: "healthy_lookup",
+        label: "Healthy Lookup",
+        description: "Look up safe data.",
+        parameters: { type: "object", properties: {} },
+        execute: async () => ({ text: "ok" }),
+      },
+      unreadableTool,
+    ]);
+
+    const activeToolNames: string[][] = [];
+    await createContextEngineAttemptRunner({
+      contextEngine: createContextEngineBootstrapAndAssemble(),
+      sessionKey,
+      tempPaths,
+      attemptOverrides: {
+        disableTools: false,
+        config: {
+          tools: {
+            codeMode: { enabled: false },
+            toolSearch: false,
+          },
+        } as OpenClawConfig,
+      },
+      createSession: () => {
+        const session = createDefaultEmbeddedSession();
+        session.setActiveToolsByName = (toolNames) => {
+          activeToolNames.push([...toolNames]);
+        };
+        return session;
+      },
+    });
+
+    const sessionOptions = mockParams(
+      hoisted.createAgentSessionMock,
+      0,
+      "createAgentSession options",
+    );
+    const customTools = requireRecords(sessionOptions.customTools, "customTools");
+    expect(customTools.map((tool) => tool.name)).toEqual(["healthy_lookup"]);
+    expect(activeToolNames).toEqual([["healthy_lookup"]]);
+  });
+
+  it("does not crash explicit tool allowlists on unreadable tool rows", async () => {
+    const healthyTool = {
+      name: "healthy_lookup",
+      label: "Healthy Lookup",
+      description: "Look up safe data.",
+      parameters: { type: "object", properties: {} },
+      execute: async () => ({ text: "ok" }),
+    };
+    const tools = [undefined, healthyTool] as unknown[];
+    Object.defineProperty(tools, "0", {
+      enumerable: true,
+      get() {
+        throw new Error("fuzz tool row is unreadable");
+      },
+    });
+    hoisted.createOpenClawCodingToolsMock.mockReturnValue(tools as never);
+
+    const activeToolNames: string[][] = [];
+    await createContextEngineAttemptRunner({
+      contextEngine: createContextEngineBootstrapAndAssemble(),
+      sessionKey,
+      tempPaths,
+      attemptOverrides: {
+        disableTools: false,
+        config: {
+          tools: {
+            allow: ["healthy_lookup"],
             codeMode: { enabled: false },
             toolSearch: false,
           },

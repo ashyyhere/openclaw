@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  filterProviderNormalizableTools,
   filterRuntimeCompatibleTools,
   inspectRuntimeToolInputSchemas,
   projectRuntimeToolInputSchema,
@@ -29,15 +30,15 @@ describe("runtime tool input schema projection", () => {
     expect(
       inspectRuntimeToolInputSchemas([
         {
-          name: "dofbot_move_angles",
+          name: "fuzz_move_angles",
           parameters: { type: "array", items: { type: "number" } },
         },
       ] as never),
     ).toEqual([
       {
-        toolName: "dofbot_move_angles",
+        toolName: "fuzz_move_angles",
         toolIndex: 0,
-        violations: ['dofbot_move_angles.parameters.type must be "object"'],
+        violations: ['fuzz_move_angles.parameters.type must be "object"'],
       },
     ]);
   });
@@ -86,7 +87,7 @@ describe("runtime tool input schema projection", () => {
       parameters: { type: "object", properties: {} },
     };
     const broken = {
-      name: "dofbot_move_angles",
+      name: "fuzz_move_angles",
       parameters: { type: "array", items: { type: "number" } },
     };
 
@@ -94,9 +95,110 @@ describe("runtime tool input schema projection", () => {
       tools: [healthy],
       diagnostics: [
         {
-          toolName: "dofbot_move_angles",
+          toolName: "fuzz_move_angles",
           toolIndex: 1,
-          violations: ['dofbot_move_angles.parameters.type must be "object"'],
+          violations: ['fuzz_move_angles.parameters.type must be "object"'],
+        },
+      ],
+    });
+  });
+
+  it("keeps provider-repairable schemas before provider normalization", () => {
+    const missingParameters = {
+      name: "missing_parameters",
+      parameters: undefined,
+    };
+    const nonObjectSchema = {
+      name: "fuzz_move_angles",
+      parameters: { type: "array", items: { type: "number" } },
+    };
+    const circularSchema = {
+      name: "circular_schema",
+      parameters: {} as { self?: unknown },
+    };
+    circularSchema.parameters.self = circularSchema.parameters;
+
+    expect(
+      filterProviderNormalizableTools([
+        missingParameters,
+        nonObjectSchema,
+        circularSchema,
+      ] as never),
+    ).toEqual({
+      tools: [missingParameters, nonObjectSchema],
+      diagnostics: [
+        {
+          toolName: "circular_schema",
+          toolIndex: 2,
+          violations: ["circular_schema.parameters is not JSON-serializable"],
+        },
+      ],
+    });
+  });
+
+  it("filters tools with unreadable descriptors without dropping healthy tools", () => {
+    const unreadableName: Record<string, unknown> = {
+      parameters: { type: "object", properties: {} },
+    };
+    Object.defineProperty(unreadableName, "name", {
+      enumerable: true,
+      get() {
+        throw new Error("fuzzplugin name is unreadable");
+      },
+    });
+    const unreadableParameters: Record<string, unknown> = {
+      name: "fuzz_move_delta",
+    };
+    Object.defineProperty(unreadableParameters, "parameters", {
+      enumerable: true,
+      get() {
+        throw new Error("fuzzplugin parameters are unreadable");
+      },
+    });
+    const healthy = {
+      name: "healthy",
+      parameters: { type: "object", properties: {} },
+    };
+
+    expect(
+      filterRuntimeCompatibleTools([unreadableName, unreadableParameters, healthy] as never),
+    ).toEqual({
+      tools: [healthy],
+      diagnostics: [
+        {
+          toolName: "tool[0]",
+          toolIndex: 0,
+          violations: ["tool[0].name is unreadable"],
+        },
+        {
+          toolName: "fuzz_move_delta",
+          toolIndex: 1,
+          violations: ["fuzz_move_delta.parameters is unreadable"],
+        },
+      ],
+    });
+  });
+
+  it("filters unreadable tool rows without dropping healthy tools", () => {
+    const healthy = {
+      name: "healthy",
+      parameters: { type: "object", properties: {} },
+    };
+    const tools = [undefined, healthy] as unknown[];
+    Object.defineProperty(tools, "0", {
+      enumerable: true,
+      get() {
+        throw new Error("fuzzplugin tool row is unreadable");
+      },
+    });
+
+    expect(filterRuntimeCompatibleTools(tools as never)).toEqual({
+      tools: [healthy],
+      diagnostics: [
+        {
+          toolName: "tool[0]",
+          toolIndex: 0,
+          violations: ["tool[0] is unreadable"],
         },
       ],
     });
