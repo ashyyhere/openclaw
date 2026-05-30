@@ -1,4 +1,4 @@
-// cron/service jobs helpers and runtime behavior.
+// Validates cron jobs, computes schedule state, and applies job mutations.
 import crypto from "node:crypto";
 import { normalizeAgentId } from "../../routing/session-key.js";
 import {
@@ -39,7 +39,7 @@ import type { CronServiceState } from "./state.js";
 const STUCK_RUN_MS = 2 * 60 * 60 * 1000;
 const STAGGER_OFFSET_CACHE_MAX = 4096;
 const staggerOffsetCache = new Map<string, number>();
-/** Reused constant for DEFAULT ERROR BACKOFF SCHEDULE MS behavior in src/cron/service. */
+/** Default retry backoff after consecutive cron job execution errors. */
 export const DEFAULT_ERROR_BACKOFF_SCHEDULE_MS = [
   30_000,
   60_000,
@@ -52,12 +52,12 @@ function isFiniteTimestamp(value: unknown): value is number {
   return typeof value === "number" && Number.isFinite(value);
 }
 
-/** Reused helper for has Scheduled Next Run At Ms behavior in src/cron/service. */
+/** Narrows a stored next-run value to a positive timestamp. */
 export function hasScheduledNextRunAtMs(value: unknown): value is number {
   return isFiniteTimestamp(value) && value > 0;
 }
 
-/** Reused helper for error Backoff Ms behavior in src/cron/service. */
+/** Resolves the retry backoff duration for a consecutive error count. */
 export function errorBackoffMs(
   consecutiveErrors: number,
   scheduleMs = DEFAULT_ERROR_BACKOFF_SCHEDULE_MS,
@@ -66,7 +66,7 @@ export function errorBackoffMs(
   return scheduleMs[Math.max(0, idx)] ?? DEFAULT_ERROR_BACKOFF_SCHEDULE_MS[0];
 }
 
-/** Reused helper for resolve Job Error Backoff Until Ms behavior in src/cron/service. */
+/** Computes the earliest retry timestamp for a job in error state. */
 export function resolveJobErrorBackoffUntilMs(
   job: CronJob,
   scheduleMs = DEFAULT_ERROR_BACKOFF_SCHEDULE_MS,
@@ -261,7 +261,7 @@ function resolveEveryAnchorMs(params: {
   return 0;
 }
 
-/** Reused helper for assert Supported Job Spec behavior in src/cron/service. */
+/** Validates that a job payload kind is compatible with its session target. */
 export function assertSupportedJobSpec(job: Pick<CronJob, "sessionTarget" | "payload">) {
   if (typeof job.sessionTarget !== "string") {
     throw new Error(
@@ -346,7 +346,7 @@ function assertFailureDestinationSupport(job: Pick<CronJob, "sessionTarget" | "d
   }
 }
 
-/** Reused helper for find Job Or Throw behavior in src/cron/service. */
+/** Finds a cron job in state or throws a stable unknown-id error. */
 export function findJobOrThrow(state: CronServiceState, id: string) {
   const job = state.store?.jobs.find((j) => j.id === id);
   if (!job) {
@@ -355,12 +355,12 @@ export function findJobOrThrow(state: CronServiceState, id: string) {
   return job;
 }
 
-/** Reused helper for is Job Enabled behavior in src/cron/service. */
+/** Treats omitted enabled flags as enabled. */
 export function isJobEnabled(job: Pick<CronJob, "enabled">): boolean {
   return job.enabled ?? true;
 }
 
-/** Reused helper for compute Job Next Run At Ms behavior in src/cron/service. */
+/** Computes the next eligible run timestamp for every/at/cron schedules. */
 export function computeJobNextRunAtMs(job: CronJob, nowMs: number): number | undefined {
   if (!isJobEnabled(job)) {
     return undefined;
@@ -417,7 +417,7 @@ export function computeJobNextRunAtMs(job: CronJob, nowMs: number): number | und
   return isFiniteTimestamp(next) ? next : undefined;
 }
 
-/** Reused helper for compute Job Previous Run At Ms behavior in src/cron/service. */
+/** Computes the previous effective cron slot after stagger offsets are applied. */
 export function computeJobPreviousRunAtMs(job: CronJob, nowMs: number): number | undefined {
   if (!isJobEnabled(job) || job.schedule.kind !== "cron") {
     return undefined;
@@ -429,7 +429,7 @@ export function computeJobPreviousRunAtMs(job: CronJob, nowMs: number): number |
 /** Maximum consecutive schedule errors before auto-disabling a job. */
 const MAX_SCHEDULE_ERRORS = 3;
 
-/** Reused helper for record Schedule Compute Error behavior in src/cron/service. */
+/** Records a schedule computation failure and auto-disables after repeated errors. */
 export function recordScheduleComputeError(params: {
   state: CronServiceState;
   job: CronJob;
@@ -593,7 +593,7 @@ function recomputeJobNextRunAtMs(params: { state: CronServiceState; job: CronJob
   return changed;
 }
 
-/** Reused helper for recompute Next Runs behavior in src/cron/service. */
+/** Recomputes next-run state for schedulable jobs that are missing, due, or stale. */
 export function recomputeNextRuns(state: CronServiceState): boolean {
   return walkSchedulableJobs(state, ({ job, nowMs: now }) => {
     let changed = false;
@@ -669,7 +669,7 @@ export function recomputeNextRunsForMaintenance(
   );
 }
 
-/** Reused helper for next Wake At Ms behavior in src/cron/service. */
+/** Returns the earliest scheduled wake timestamp across enabled jobs. */
 export function nextWakeAtMs(state: CronServiceState) {
   const jobs = state.store?.jobs ?? [];
   const enabled = jobs.filter((j) => j.enabled && hasScheduledNextRunAtMs(j.state.nextRunAtMs));
@@ -686,7 +686,7 @@ export function nextWakeAtMs(state: CronServiceState) {
   }, first);
 }
 
-/** Reused helper for create Job behavior in src/cron/service. */
+/** Creates a normalized cron job and initializes its next-run state. */
 export function createJob(state: CronServiceState, input: CronJobCreate): CronJob {
   const now = state.deps.nowMs();
   const id = crypto.randomUUID();
@@ -746,7 +746,7 @@ export function createJob(state: CronServiceState, input: CronJobCreate): CronJo
   return job;
 }
 
-/** Reused helper for apply Job Patch behavior in src/cron/service. */
+/** Applies a validated patch to an existing cron job in place. */
 export function applyJobPatch(
   job: CronJob,
   patch: CronJobPatch,
@@ -1020,7 +1020,7 @@ function mergeCronFailureAlert(
   return next;
 }
 
-/** Reused helper for is Job Due behavior in src/cron/service. */
+/** Checks whether a job should run for the current tick or forced request. */
 export function isJobDue(job: CronJob, nowMs: number, opts: { forced: boolean }) {
   if (!job.state) {
     job.state = {};
@@ -1038,7 +1038,7 @@ export function isJobDue(job: CronJob, nowMs: number, opts: { forced: boolean })
   );
 }
 
-/** Reused helper for resolve Job Payload Text For Main behavior in src/cron/service. */
+/** Extracts normalized system-event text for main-session cron jobs. */
 export function resolveJobPayloadTextForMain(job: CronJob): string | undefined {
   if (job.payload.kind !== "systemEvent") {
     return undefined;
