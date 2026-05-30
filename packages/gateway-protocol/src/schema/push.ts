@@ -1,10 +1,10 @@
-// packages/gateway-protocol/src/schema push helpers and runtime behavior.
+// Gateway protocol schemas for APNs push testing and browser Web Push subscriptions.
 import { Type } from "typebox";
 import { NonEmptyString } from "./primitives.js";
 
 const ApnsEnvironmentSchema = Type.String({ enum: ["sandbox", "production"] });
 
-/** Public constant for Push Test Params Schema behavior in packages/gateway-protocol. */
+/** Params for sending a test APNs notification to a paired node. */
 export const PushTestParamsSchema = Type.Object(
   {
     nodeId: NonEmptyString,
@@ -15,7 +15,7 @@ export const PushTestParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Push Test Result Schema behavior in packages/gateway-protocol. */
+/** Result for an APNs push test, including provider status and token diagnostics. */
 export const PushTestResultSchema = Type.Object(
   {
     ok: Type.Boolean(),
@@ -40,10 +40,10 @@ const WebPushKeysSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Web Push Vapid Public Key Params Schema behavior in packages/gateway-protocol. */
+/** Empty params contract for requesting the gateway Web Push VAPID public key. */
 export const WebPushVapidPublicKeyParamsSchema = Type.Object({}, { additionalProperties: false });
 
-/** Public constant for Web Push Subscribe Params Schema behavior in packages/gateway-protocol. */
+/** Browser Web Push subscription payload with endpoint and encryption keys. */
 export const WebPushSubscribeParamsSchema = Type.Object(
   {
     endpoint: Type.String({ minLength: 1, maxLength: 2048, pattern: "^https://" }),
@@ -52,7 +52,7 @@ export const WebPushSubscribeParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Web Push Unsubscribe Params Schema behavior in packages/gateway-protocol. */
+/** Browser Web Push unsubscribe payload keyed by endpoint. */
 export const WebPushUnsubscribeParamsSchema = Type.Object(
   {
     endpoint: Type.String({ minLength: 1, maxLength: 2048, pattern: "^https://" }),
@@ -60,7 +60,7 @@ export const WebPushUnsubscribeParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public constant for Web Push Test Params Schema behavior in packages/gateway-protocol. */
+/** Params for sending a test notification to the current Web Push subscription. */
 export const WebPushTestParamsSchema = Type.Object(
   {
     title: Type.Optional(Type.String()),
@@ -69,18 +69,18 @@ export const WebPushTestParamsSchema = Type.Object(
   { additionalProperties: false },
 );
 
-/** Public type describing Web Push Vapid Public Key Params for packages/gateway-protocol. */
+/** TypeScript params type for requesting the Web Push VAPID public key. */
 export type WebPushVapidPublicKeyParams = Record<string, never>;
-/** Public type describing Web Push Subscribe Params for packages/gateway-protocol. */
+/** TypeScript params type for registering a browser Web Push subscription. */
 export type WebPushSubscribeParams = {
   endpoint: string;
   keys: { p256dh: string; auth: string };
 };
-/** Public type describing Web Push Unsubscribe Params for packages/gateway-protocol. */
+/** TypeScript params type for removing a browser Web Push subscription. */
 export type WebPushUnsubscribeParams = {
   endpoint: string;
 };
-/** Public type describing Web Push Test Params for packages/gateway-protocol. */
+/** TypeScript params type for sending a browser Web Push test notification. */
 export type WebPushTestParams = {
   title?: string;
   body?: string;
