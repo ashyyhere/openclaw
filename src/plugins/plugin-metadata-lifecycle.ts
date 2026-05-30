@@ -1,16 +1,16 @@
-// plugins plugin metadata lifecycle helpers and runtime behavior.
+// Lifecycle hooks for clearing process-local plugin metadata caches.
 import { clearCurrentPluginMetadataSnapshotState } from "./current-plugin-metadata-state.js";
 
 const pluginMetadataProcessMemoClears = new Set<() => void>();
 
-/** Reused helper for register Plugin Metadata Process Memo Lifecycle Clear behavior in src/plugins. */
+/** Register a process memo clear callback for plugin metadata lifecycle resets. */
 export function registerPluginMetadataProcessMemoLifecycleClear(
   clearProcessMemo: () => void,
 ): void {
   pluginMetadataProcessMemoClears.add(clearProcessMemo);
 }
 
-/** Reused helper for clear Plugin Metadata Lifecycle Caches behavior in src/plugins. */
+/** Clear current plugin metadata snapshots and registered process-local memos. */
 export function clearPluginMetadataLifecycleCaches(): void {
   clearCurrentPluginMetadataSnapshotState();
   for (const clearProcessMemo of pluginMetadataProcessMemoClears) {

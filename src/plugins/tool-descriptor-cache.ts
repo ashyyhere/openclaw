@@ -1,4 +1,4 @@
-// plugins tool descriptor cache helpers and runtime behavior.
+// Plugin tool descriptor cache keyed by plugin source, context, and config.
 import fs from "node:fs";
 import type { AnyAgentTool } from "../agents/tools/common.js";
 import { resolveRuntimeConfigCacheKey } from "../config/runtime-snapshot.js";
@@ -9,7 +9,7 @@ import type { OpenClawPluginToolContext } from "./types.js";
 const PLUGIN_TOOL_DESCRIPTOR_CACHE_VERSION = 1;
 const PLUGIN_TOOL_DESCRIPTOR_CACHE_LIMIT = 256;
 
-/** Shared type for Cached Plugin Tool Descriptor in src/plugins. */
+/** Cached descriptor metadata for one plugin tool. */
 export type CachedPluginToolDescriptor = {
   descriptor: ToolDescriptor;
   displaySummary?: string;
@@ -20,15 +20,15 @@ const descriptorCache = new Map<string, CachedPluginToolDescriptor[]>();
 let descriptorCacheObjectIds = new WeakMap<object, number>();
 let nextDescriptorCacheObjectId = 1;
 
-/** Shared type for Plugin Tool Descriptor Config Cache Key Memo in src/plugins. */
+/** Per-run memo for deriving stable config cache keys from config objects. */
 export type PluginToolDescriptorConfigCacheKeyMemo = WeakMap<object, string | number | null>;
 
-/** Reused helper for create Plugin Tool Descriptor Config Cache Key Memo behavior in src/plugins. */
+/** Create a memo used while building plugin tool descriptor cache keys. */
 export function createPluginToolDescriptorConfigCacheKeyMemo(): PluginToolDescriptorConfigCacheKeyMemo {
   return new WeakMap();
 }
 
-/** Reused helper for reset Plugin Tool Descriptor Cache behavior in src/plugins. */
+/** Clear cached plugin tool descriptors and object ids. */
 export function resetPluginToolDescriptorCache(): void {
   descriptorCache.clear();
   descriptorCacheObjectIds = new WeakMap();
@@ -118,7 +118,7 @@ function buildDescriptorContextCacheKey(params: {
   });
 }
 
-/** Reused helper for build Plugin Tool Descriptor Cache Key behavior in src/plugins. */
+/** Build a stable cache key for plugin tool descriptors in a runtime context. */
 export function buildPluginToolDescriptorCacheKey(params: {
   pluginId: string;
   source: string;
@@ -147,7 +147,7 @@ function asJsonObject(value: unknown): JsonObject {
   return value as JsonObject;
 }
 
-/** Reused helper for capture Plugin Tool Descriptor behavior in src/plugins. */
+/** Capture a plugin tool into the descriptor shape exposed to clients. */
 export function capturePluginToolDescriptor(params: {
   pluginId: string;
   tool: AnyAgentTool;
@@ -169,14 +169,14 @@ export function capturePluginToolDescriptor(params: {
   };
 }
 
-/** Reused helper for read Cached Plugin Tool Descriptors behavior in src/plugins. */
+/** Read cached plugin tool descriptors by cache key. */
 export function readCachedPluginToolDescriptors(
   cacheKey: string,
 ): readonly CachedPluginToolDescriptor[] | undefined {
   return descriptorCache.get(cacheKey);
 }
 
-/** Reused helper for write Cached Plugin Tool Descriptors behavior in src/plugins. */
+/** Store plugin tool descriptors, evicting the oldest cache entry at capacity. */
 export function writeCachedPluginToolDescriptors(params: {
   cacheKey: string;
   descriptors: readonly CachedPluginToolDescriptor[];
