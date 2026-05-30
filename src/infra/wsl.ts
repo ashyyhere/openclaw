@@ -1,16 +1,16 @@
-// infra wsl helpers and runtime behavior.
+// Detects WSL/WSL2 environments from env vars and Linux proc files.
 import { readFileSync } from "node:fs";
 import fs from "node:fs/promises";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
 let wslCached: boolean | null = null;
 
-/** Reused helper for reset WSLState For Tests behavior in src/infra. */
+/** Clears cached async WSL detection state between tests. */
 export function resetWSLStateForTests(): void {
   wslCached = null;
 }
 
-/** Reused helper for is WSLEnv behavior in src/infra. */
+/** Detects WSL from environment variables only. */
 export function isWSLEnv(): boolean {
   if (process.env.WSL_INTEROP || process.env.WSL_DISTRO_NAME || process.env.WSLENV) {
     return true;
@@ -52,7 +52,7 @@ export function isWSL2Sync(): boolean {
   }
 }
 
-/** Reused helper for is WSL behavior in src/infra. */
+/** Asynchronously detects WSL and caches the result for the process. */
 export async function isWSL(): Promise<boolean> {
   if (wslCached !== null) {
     return wslCached;

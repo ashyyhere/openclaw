@@ -1,12 +1,12 @@
-// Shared types for infra provider usage types behavior.
-/** Shared type for Usage Window in src/infra. */
+// Shared provider usage summary types.
+/** Usage percentage and reset metadata for one provider quota window. */
 export type UsageWindow = {
   label: string;
   usedPercent: number;
   resetAt?: number;
 };
 
-/** Shared type for Provider Usage Snapshot in src/infra. */
+/** Usage state for one provider, including optional plan or error text. */
 export type ProviderUsageSnapshot = {
   provider: UsageProviderId;
   displayName: string;
@@ -15,13 +15,13 @@ export type ProviderUsageSnapshot = {
   error?: string;
 };
 
-/** Shared type for Usage Summary in src/infra. */
+/** Timestamped usage snapshot collection. */
 export type UsageSummary = {
   updatedAt: number;
   providers: ProviderUsageSnapshot[];
 };
 
-/** Shared type for Usage Provider Id in src/infra. */
+/** Provider ids supported by usage summary loading. */
 export type UsageProviderId =
   | "anthropic"
   | "github-copilot"

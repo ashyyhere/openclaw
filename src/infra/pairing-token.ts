@@ -1,16 +1,16 @@
-// infra pairing token helpers and runtime behavior.
+// Generates and verifies operator pairing tokens.
 import { randomBytes } from "node:crypto";
 import { safeEqualSecret } from "../security/secret-equal.js";
 
-/** Reused constant for PAIRING TOKEN BYTES behavior in src/infra. */
+/** Number of random bytes used for generated pairing tokens. */
 export const PAIRING_TOKEN_BYTES = 32;
 
-/** Reused helper for generate Pairing Token behavior in src/infra. */
+/** Generates a URL-safe random pairing token. */
 export function generatePairingToken(): string {
   return randomBytes(PAIRING_TOKEN_BYTES).toString("base64url");
 }
 
-/** Reused helper for verify Pairing Token behavior in src/infra. */
+/** Compares provided and expected pairing tokens with constant-time equality. */
 export function verifyPairingToken(provided: string, expected: string): boolean {
   if (provided.trim().length === 0 || expected.trim().length === 0) {
     return false;

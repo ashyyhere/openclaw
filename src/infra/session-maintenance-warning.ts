@@ -1,4 +1,4 @@
-// infra session maintenance warning helpers and runtime behavior.
+// Delivers warn-only session maintenance notices to chat or system events.
 import type { SessionMaintenanceWarning } from "../config/sessions/store-maintenance.js";
 import type { SessionEntry } from "../config/sessions/types.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -24,7 +24,7 @@ function resetSessionMaintenanceWarningForTests() {
   messageRuntimePromise = null;
 }
 
-/** Reused constant for testing behavior in src/infra. */
+/** Test hooks for resetting session maintenance warning state. */
 export const testing = {
   resetSessionMaintenanceWarningForTests,
 } as const;
@@ -102,7 +102,7 @@ function resolveWarningDeliveryTarget(entry: SessionEntry): {
   };
 }
 
-/** Reused helper for deliver Session Maintenance Warning behavior in src/infra. */
+/** Sends a deduped warn-only session maintenance notice for an active session. */
 export async function deliverSessionMaintenanceWarning(params: WarningParams): Promise<void> {
   if (!shouldSendWarning()) {
     return;
@@ -151,5 +151,5 @@ export async function deliverSessionMaintenanceWarning(params: WarningParams): P
     enqueueSystemEvent(text, { sessionKey: params.sessionKey });
   }
 }
-/** Re-exported API for src/infra, starting with testing. */
+/** Test-only session maintenance warning hooks. */
 export { testing as __testing };

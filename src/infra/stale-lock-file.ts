@@ -1,17 +1,17 @@
-// infra stale lock file helpers and runtime behavior.
+// Decides whether lock files are owned by dead or expired owners.
 import {
   getProcessStartTime as defaultGetProcessStartTime,
   isPidDefinitelyDead as defaultIsPidDefinitelyDead,
 } from "../shared/pid-alive.js";
 
-/** Shared type for Lock File Owner Payload in src/infra. */
+/** Owner metadata read from a lock file. */
 export type LockFileOwnerPayload = {
   pid?: number;
   createdAt?: string;
   starttime?: number;
 };
 
-/** Reused helper for read Lock File Owner Payload behavior in src/infra. */
+/** Extracts typed lock-owner fields from loose JSON payloads. */
 export function readLockFileOwnerPayload(
   payload: Record<string, unknown> | null,
 ): LockFileOwnerPayload | null {
@@ -25,7 +25,7 @@ export function readLockFileOwnerPayload(
   };
 }
 
-/** Reused helper for should Remove Dead Owner Or Expired Lock behavior in src/infra. */
+/** Returns whether a lock should be removed because its owner is dead or stale. */
 export function shouldRemoveDeadOwnerOrExpiredLock(params: {
   payload: Record<string, unknown> | null;
   staleMs: number;

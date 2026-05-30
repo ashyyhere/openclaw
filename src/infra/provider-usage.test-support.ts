@@ -1,10 +1,10 @@
-// infra provider usage test support helpers and runtime behavior.
+// Shared test support for provider usage summary loaders.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { createProviderUsageFetch } from "../test-utils/provider-usage-fetch.js";
 import type { ProviderAuth } from "./provider-usage.auth.js";
 import type { UsageSummary } from "./provider-usage.types.js";
 
-/** Reused constant for usage Now behavior in src/infra. */
+/** Fixed timestamp used by provider usage tests. */
 export const usageNow = Date.UTC(2026, 0, 7, 0, 0, 0);
 
 type ProviderUsageLoader = (params: {
@@ -14,12 +14,12 @@ type ProviderUsageLoader = (params: {
   config?: OpenClawConfig;
 }) => Promise<UsageSummary>;
 
-/** Shared type for Provider Usage Auth in src/infra. */
+/** Auth entry type inferred from a provider usage loader. */
 export type ProviderUsageAuth<T extends ProviderUsageLoader> = NonNullable<
   NonNullable<Parameters<T>[0]>["auth"]
 >[number];
 
-/** Reused helper for load Usage With Auth behavior in src/infra. */
+/** Loads usage with explicit auth and a mocked fetch implementation. */
 export async function loadUsageWithAuth<T extends ProviderUsageLoader>(
   loadProviderUsageSummary: T,
   auth: ProviderUsageAuth<T>[],
