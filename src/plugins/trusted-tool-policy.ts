@@ -52,11 +52,20 @@ function unreadableTrustedPolicyRegistration(): TrustedPolicyRegistration {
 function copyTrustedPolicyRegistrations(
   registry: PluginRegistry | null | undefined,
 ): TrustedPolicyRegistration[] {
-  const policies = registry?.trustedToolPolicies;
+  let policies: unknown;
+  try {
+    policies = registry?.trustedToolPolicies;
+  } catch {
+    return [unreadableTrustedPolicyRegistration()];
+  }
   if (!policies) {
     return [];
   }
-  if (!Array.isArray(policies)) {
+  try {
+    if (!Array.isArray(policies)) {
+      return [unreadableTrustedPolicyRegistration()];
+    }
+  } catch {
     return [unreadableTrustedPolicyRegistration()];
   }
 

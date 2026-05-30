@@ -445,6 +445,39 @@ describe("host-hook fixture plugin contract", () => {
     });
   });
 
+  it.each([
+    [
+      "unreadable list accessor",
+      (registry: ReturnType<typeof createEmptyPluginRegistry>) => {
+        Object.defineProperty(registry, "trustedToolPolicies", {
+          enumerable: true,
+          get() {
+            throw new Error("fuzzplugin trusted policy list is unreadable");
+          },
+        });
+      },
+    ],
+    [
+      "revoked list proxy",
+      (registry: ReturnType<typeof createEmptyPluginRegistry>) => {
+        const revokedList = Proxy.revocable([], {});
+        revokedList.revoke();
+        registry.trustedToolPolicies = revokedList.proxy as never;
+      },
+    ],
+  ])("fails closed when a trusted policy registry exposes %s", async (_label, prepareRegistry) => {
+    const registry = createEmptyPluginRegistry();
+    prepareRegistry(registry);
+    setActivePluginRegistry(registry);
+
+    await expect(
+      runTrustedToolPolicies({ toolName: "exec", params: {} }, { toolName: "exec" }),
+    ).resolves.toEqual({
+      block: true,
+      blockReason: "blocked by unknown-plugin: policy is unreadable",
+    });
+  });
+
   it("fails closed when a trusted policy returns an unreadable decision", async () => {
     const registry = createEmptyPluginRegistry();
     registry.trustedToolPolicies = [
