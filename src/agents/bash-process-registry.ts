@@ -20,10 +20,10 @@ function clampTtl(value: number | undefined) {
 
 let jobTtlMs = clampTtl(readEnvInt("OPENCLAW_BASH_JOB_TTL_MS", "PI_BASH_JOB_TTL_MS"));
 
-/** Shared type for Process Status in src/agents. */
+/** Terminal status for a tracked bash process session. */
 export type ProcessStatus = "running" | "completed" | "failed" | "killed";
 
-/** Shared type for Session Stdin in src/agents. */
+/** Writable stdin surface shared by child-process and PTY-backed sessions. */
 export type SessionStdin = {
   write: (data: string, cb?: (err?: Error | null) => void) => void;
   end: () => void;
@@ -35,7 +35,7 @@ export type SessionStdin = {
   writableFinished?: boolean;
 };
 
-/** Shared type for Process Session in src/agents. */
+/** Mutable registry state for a running foreground or background bash process. */
 export interface ProcessSession {
   id: string;
   command: string;
@@ -82,7 +82,7 @@ export interface ProcessSession {
   cursorKeyMode: "unknown" | "normal" | "application";
 }
 
-/** Shared type for Finished Session in src/agents. */
+/** Retained summary for a backgrounded process after it exits. */
 export interface FinishedSession {
   id: string;
   command: string;
@@ -167,7 +167,7 @@ export function appendOutput(session: ProcessSession, stream: "stdout" | "stderr
   session.tail = tail(session.aggregated, 2000);
 }
 
-/** Reused helper for drain Session behavior in src/agents. */
+/** Drains pending stdout/stderr chunks from a running process session. */
 export function drainSession(session: ProcessSession) {
   const stdout = session.pendingStdout.join("");
   const stderr = session.pendingStderr.join("");
@@ -178,7 +178,7 @@ export function drainSession(session: ProcessSession) {
   return { stdout, stderr };
 }
 
-/** Reused helper for mark Exited behavior in src/agents. */
+/** Marks a process session exited and moves backgrounded sessions to finished state. */
 export function markExited(
   session: ProcessSession,
   exitCode: number | null,
@@ -194,7 +194,7 @@ export function markExited(
   moveToFinished(session, status);
 }
 
-/** Reused helper for mark Backgrounded behavior in src/agents. */
+/** Marks a process session as backgrounded so exit state is retained. */
 export function markBackgrounded(session: ProcessSession) {
   session.backgrounded = true;
 }
@@ -254,7 +254,7 @@ function moveToFinished(session: ProcessSession, status: ProcessStatus) {
   });
 }
 
-/** Reused helper for tail behavior in src/agents. */
+/** Returns the last characters of process output. */
 export function tail(text: string, max = 2000) {
   if (text.length <= max) {
     return text;
@@ -300,7 +300,7 @@ function capPendingBuffer(buffer: string[], pendingChars: number, cap: number) {
   return pendingChars;
 }
 
-/** Reused helper for trim With Cap behavior in src/agents. */
+/** Trims text to the configured trailing character cap. */
 export function trimWithCap(text: string, max: number) {
   if (text.length <= max) {
     return text;
@@ -308,29 +308,29 @@ export function trimWithCap(text: string, max: number) {
   return text.slice(text.length - max);
 }
 
-/** Reused helper for list Running Sessions behavior in src/agents. */
+/** Lists backgrounded process sessions that are still running. */
 export function listRunningSessions() {
   return Array.from(runningSessions.values()).filter((s) => s.backgrounded);
 }
 
-/** Reused helper for list Finished Sessions behavior in src/agents. */
+/** Lists retained finished background process sessions. */
 export function listFinishedSessions() {
   return Array.from(finishedSessions.values());
 }
 
-/** Reused helper for clear Finished behavior in src/agents. */
+/** Clears retained finished background process sessions. */
 export function clearFinished() {
   finishedSessions.clear();
 }
 
-/** Reused helper for reset Process Registry For Tests behavior in src/agents. */
+/** Clears process registry state and sweeper timers for tests. */
 export function resetProcessRegistryForTests() {
   runningSessions.clear();
   finishedSessions.clear();
   stopSweeper();
 }
 
-/** Reused helper for set Job Ttl Ms behavior in src/agents. */
+/** Sets the retention TTL for finished background process sessions. */
 export function setJobTtlMs(value?: number) {
   if (value === undefined || Number.isNaN(value)) {
     return;

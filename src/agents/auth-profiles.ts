@@ -1,17 +1,17 @@
 /** Public auth-profile barrel for agent credential stores and ordering. */
 export { CLAUDE_CLI_PROFILE_ID, CODEX_CLI_PROFILE_ID } from "./auth-profiles/constants.js";
-/** Re-exported API for src/agents. */
+/** Auth credential state and token expiry reason codes. */
 export type {
   AuthCredentialReasonCode,
   TokenExpiryState,
 } from "./auth-profiles/credential-state.js";
-/** Re-exported API for src/agents, starting with Auth Profile Eligibility Reason Code. */
+/** Reason code explaining auth profile ordering eligibility. */
 export type { AuthProfileEligibilityReasonCode } from "./auth-profiles/order.js";
-/** Re-exported API for src/agents, starting with resolve Auth Profile Display Label. */
+/** Resolves user-facing labels for auth profiles. */
 export { resolveAuthProfileDisplayLabel } from "./auth-profiles/display.js";
-/** Re-exported API for src/agents, starting with format Auth Doctor Hint. */
+/** Formats doctor hints for auth profile repair/setup guidance. */
 export { formatAuthDoctorHint } from "./auth-profiles/doctor.js";
-/** Re-exported API for src/agents. */
+/** External CLI auth discovery modes used by provider auth setup. */
 export {
   externalCliDiscoveryExisting,
   externalCliDiscoveryForConfigStatus,
@@ -21,23 +21,23 @@ export {
   externalCliDiscoveryScoped,
   type ExternalCliAuthDiscovery,
 } from "./auth-profiles/external-cli-discovery.js";
-/** Re-exported API for src/agents. */
+/** OAuth refresh and API-key resolution helpers for runtime auth. */
 export {
   refreshOAuthCredentialForRuntime,
   resolveApiKeyForProfile,
 } from "./auth-profiles/oauth.js";
-/** Re-exported API for src/agents. */
+/** Auth profile eligibility and provider ordering helpers. */
 export {
   isConfiguredAwsSdkAuthProfileForProvider,
   resolveAuthProfileEligibility,
   resolveAuthProfileOrder,
 } from "./auth-profiles/order.js";
-/** Re-exported API for src/agents. */
+/** Display-safe auth profile path resolvers. */
 export {
   resolveAuthStatePathForDisplay,
   resolveAuthStorePathForDisplay,
 } from "./auth-profiles/paths.js";
-/** Re-exported API for src/agents. */
+/** Auth profile list, mutation, ordering, and removal helpers. */
 export {
   dedupeProfileIds,
   listProfilesForProvider,
@@ -47,12 +47,12 @@ export {
   upsertAuthProfile,
   upsertAuthProfileWithLock,
 } from "./auth-profiles/profiles.js";
-/** Re-exported API for src/agents. */
+/** Auth profile id repair helpers for legacy OAuth defaults. */
 export {
   repairOAuthProfileIdMismatch,
   suggestOAuthProfileIdForLegacyDefault,
 } from "./auth-profiles/repair.js";
-/** Re-exported API for src/agents. */
+/** Auth profile portability helpers for copying agent credentials. */
 export {
   buildPortableAuthProfileSecretsStoreForAgentCopy,
   isAuthProfileCredentialPortableForAgentCopy,
@@ -60,7 +60,7 @@ export {
   type AuthProfilePortability,
   type AuthProfilePortabilityReason,
 } from "./auth-profiles/portability.js";
-/** Re-exported API for src/agents. */
+/** Auth profile store loading, saving, snapshot, and persisted credential helpers. */
 export {
   clearRuntimeAuthProfileStoreSnapshots,
   ensureAuthProfileStore,
@@ -76,7 +76,7 @@ export {
   findPersistedAuthProfileCredential,
   resolvePersistedAuthProfileOwnerAgentDir,
 } from "./auth-profiles/store.js";
-/** Re-exported API for src/agents. */
+/** Core auth profile credential, state, store, and failure types. */
 export type {
   ApiKeyCredential,
   AuthProfileBlockedReason,
@@ -90,7 +90,7 @@ export type {
   ProfileUsageStats,
   TokenCredential,
 } from "./auth-profiles/types.js";
-/** Re-exported API for src/agents. */
+/** Auth profile cooldown, failure, block, and usability helpers. */
 export {
   calculateAuthProfileCooldownMs,
   clearAuthProfileCooldown,
