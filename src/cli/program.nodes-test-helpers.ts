@@ -1,3 +1,6 @@
+/**
+ * Stable connected iOS node fixture used by CLI node tests.
+ */
 export const IOS_NODE = {
   nodeId: "ios-node",
   displayName: "iOS Node",
@@ -5,7 +8,7 @@ export const IOS_NODE = {
   connected: true,
 } as const;
 
-/** Reused helper for create Ios Node List Response behavior in src/cli. */
+/** Build a stable iOS node-list response for CLI tests. */
 export function createIosNodeListResponse(ts: number = Date.now()) {
   return {
     ts,

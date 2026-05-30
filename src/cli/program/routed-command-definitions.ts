@@ -26,13 +26,13 @@ type ModelsListCommandModule = typeof import("../../commands/models/list.list-co
 type ModelsStatusCommandModule = typeof import("../../commands/models/list.status-command.js");
 type TasksJsonCommandModule = typeof import("../../commands/tasks-json.js");
 
-/** Shared type for Routed Command Definition in src/cli/program. */
+/** Fast-route command definition that parses argv before loading the full CLI tree. */
 export type RoutedCommandDefinition<TParse extends RouteArgParser<unknown>> = {
   parseArgs: TParse;
   runParsedArgs: (args: ParsedRouteArgs<TParse>) => Promise<void>;
 };
 
-/** Shared type for Any Routed Command Definition in src/cli/program. */
+/** Type-erased routed command definition used by the route catalog. */
 export type AnyRoutedCommandDefinition = {
   parseArgs: RouteArgParser<unknown>;
   runParsedArgs: (args: never) => Promise<void>;
@@ -78,6 +78,7 @@ function loadTasksJsonCommand(): Promise<TasksJsonCommandModule> {
   return tasksJsonCommandLoader.load();
 }
 
+/** Route-first command definitions keyed by catalog route id. */
 export const routedCommandDefinitions = {
   health: defineRoutedCommand({
     parseArgs: parseHealthRouteArgs,

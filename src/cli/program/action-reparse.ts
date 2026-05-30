@@ -11,7 +11,7 @@ function buildFallbackArgv(program: Command, actionCommand: Command | undefined)
     : [...parentOptionArgs, ...actionArgsList];
 }
 
-/** Reused helper for reparse Program From Action Args behavior in src/cli/program. */
+/** Reparse the root program after a lazy command replaces its placeholder command. */
 export async function reparseProgramFromActionArgs(
   program: Command,
   actionArgs: unknown[],

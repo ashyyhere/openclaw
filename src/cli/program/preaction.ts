@@ -95,7 +95,7 @@ function isGuidedConfigCommandPath(commandPath: string[]): boolean {
   );
 }
 
-/** Reused helper for register Pre Action Hooks behavior in src/cli/program. */
+/** Register startup hooks that prepare banners, logging, config guards, and plugin loading. */
 export function registerPreActionHooks(program: Command, programVersion: string) {
   program.hook("preAction", async (_thisCommand, actionCommand) => {
     setProcessTitleForCommand(actionCommand);
