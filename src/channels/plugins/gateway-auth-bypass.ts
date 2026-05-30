@@ -1,4 +1,3 @@
-// Gateway auth bypass helpers for channel plugins.
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { loadBundledPluginPublicArtifactModuleSync } from "../../plugins/public-surface-loader.js";
 
@@ -23,7 +22,6 @@ function loadBundledChannelGatewayAuthApi(channelId: string): GatewayAuthBypassA
   }
 }
 
-/** Reused helper for resolve Bundled Channel Gateway Auth Bypass Paths behavior in src/channels/plugins. */
 export function resolveBundledChannelGatewayAuthBypassPaths(params: {
   channelId: string;
   cfg: OpenClawConfig;

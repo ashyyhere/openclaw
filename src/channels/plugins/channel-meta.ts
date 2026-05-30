@@ -1,4 +1,3 @@
-// Channel metadata construction from plugin manifests.
 import type { PluginPackageChannel } from "../../plugins/manifest.js";
 import { resolveChannelExposure } from "./exposure.js";
 import type { ChannelMeta } from "./types.core.js";
@@ -6,7 +5,6 @@ import type { ChannelMeta } from "./types.core.js";
 type ArrayFieldMode = "defined" | "non-empty";
 type OptionalStringMode = "defined" | "truthy";
 
-/** Reused helper for build Manifest Channel Meta behavior in src/channels/plugins. */
 export function buildManifestChannelMeta(params: {
   id: string;
   channel: PluginPackageChannel;
