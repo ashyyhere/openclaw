@@ -1,4 +1,4 @@
-// daemon systemd helpers and runtime behavior.
+// Manages Linux systemd user units for the OpenClaw gateway and node services.
 import * as fsSync from "node:fs";
 import fs from "node:fs/promises";
 import os from "node:os";
@@ -75,17 +75,17 @@ function resolveSystemdUnitPath(env: GatewayServiceEnv): string {
   return resolveSystemdUnitPathForName(env, resolveSystemdServiceName(env));
 }
 
-/** Reused helper for resolve Systemd User Unit Path behavior in src/daemon. */
+/** Resolves the user-level systemd unit path for the configured service profile. */
 export function resolveSystemdUserUnitPath(env: GatewayServiceEnv): string {
   return resolveSystemdUnitPath(env);
 }
 
-/** Re-exported API for src/daemon, starting with enable Systemd User Linger. */
+/** User linger helpers used before installing long-lived user services. */
 export { enableSystemdUserLinger, readSystemdUserLingerStatus };
 
 // Unit file parsing/rendering: see systemd-unit.ts
 
-/** Reused helper for read Systemd Service Exec Start behavior in src/daemon. */
+/** Reads the installed unit command, working directory, and environment sources. */
 export async function readSystemdServiceExecStart(
   env: GatewayServiceEnv,
 ): Promise<GatewayServiceCommandConfig | null> {
@@ -403,7 +403,7 @@ type SystemdServiceInfo = {
   memoryCurrent?: number;
 };
 
-/** Reused helper for parse Systemd Show behavior in src/daemon. */
+/** Parses selected `systemctl show` fields into typed runtime service info. */
 export function parseSystemdShow(output: string): SystemdServiceInfo {
   const entries = parseKeyValueOutput(output, "=");
   const info: SystemdServiceInfo = {};
@@ -458,7 +458,7 @@ export function parseSystemdShow(output: string): SystemdServiceInfo {
   return info;
 }
 
-/** Shared type for Systemd Unit Scope in src/daemon. */
+/** Scope for systemctl activity checks. */
 export type SystemdUnitScope = "system" | "user";
 
 async function execSystemctl(
@@ -530,7 +530,7 @@ function isGenericSystemctlIsEnabledFailure(detail: string): boolean {
   );
 }
 
-/** Reused helper for is Non Fatal Systemd Install Probe Error behavior in src/daemon. */
+/** Classifies install-probe failures that should not abort service staging. */
 export function isNonFatalSystemdInstallProbeError(error: unknown): boolean {
   const detail = error instanceof Error ? error.message : typeof error === "string" ? error : "";
   if (!detail) {
@@ -671,7 +671,7 @@ async function execSystemctlUser(
   return await execSystemctl([...machineScopeArgs, ...args], env);
 }
 
-/** Reused helper for is Systemd User Service Available behavior in src/daemon. */
+/** Checks whether the current environment can talk to a systemd user manager. */
 export async function isSystemdUserServiceAvailable(
   env: GatewayServiceEnv = process.env as GatewayServiceEnv,
 ): Promise<boolean> {
@@ -686,7 +686,7 @@ export async function isSystemdUserServiceAvailable(
   return !isSystemdUserScopeUnavailable(detail);
 }
 
-/** Reused helper for is Systemd Unit Active behavior in src/daemon. */
+/** Checks whether a system or user unit is currently active. */
 export async function isSystemdUnitActive(
   env: GatewayServiceEnv,
   unitName: string,
@@ -924,7 +924,7 @@ async function removeNodeSystemdManagedEnvironmentKeys(env: GatewayServiceEnv): 
   await fs.chmod(envFilePath, 0o600);
 }
 
-/** Reused helper for stage Systemd Service behavior in src/daemon. */
+/** Writes the service unit and env files without enabling or restarting systemd. */
 export async function stageSystemdService({
   stdout,
   ...args
@@ -993,7 +993,7 @@ async function activateSystemdService(params: { env: GatewayServiceEnv }) {
   }
 }
 
-/** Reused helper for install Systemd Service behavior in src/daemon. */
+/** Writes, enables, and restarts the configured systemd user service. */
 export async function installSystemdService(
   args: GatewayServiceInstallArgs,
 ): Promise<{ unitPath: string }> {
@@ -1020,7 +1020,7 @@ export async function installSystemdService(
   return { unitPath };
 }
 
-/** Reused helper for uninstall Systemd Service behavior in src/daemon. */
+/** Disables the current systemd service and removes its generated unit/env state. */
 export async function uninstallSystemdService({
   env,
   stdout,
@@ -1066,7 +1066,7 @@ async function runSystemdServiceAction(params: {
   params.stdout.write(`${formatLine(params.label, unitName)}\n`);
 }
 
-/** Reused helper for stop Systemd Service behavior in src/daemon. */
+/** Stops the configured systemd service. */
 export async function stopSystemdService({
   stdout,
   env,
@@ -1079,7 +1079,7 @@ export async function stopSystemdService({
   });
 }
 
-/** Reused helper for restart Systemd Service behavior in src/daemon. */
+/** Restarts the configured systemd service. */
 export async function restartSystemdService({
   stdout,
   env,
@@ -1093,7 +1093,7 @@ export async function restartSystemdService({
   return { outcome: "completed" };
 }
 
-/** Reused helper for is Systemd Service Enabled behavior in src/daemon. */
+/** Checks whether the generated service is present and enabled. */
 export async function isSystemdServiceEnabled(args: GatewayServiceEnvArgs): Promise<boolean> {
   const env = args.env ?? process.env;
   try {
@@ -1118,7 +1118,7 @@ export async function isSystemdServiceEnabled(args: GatewayServiceEnvArgs): Prom
   throw new Error(`systemctl is-enabled unavailable: ${detail || "unknown error"}`.trim());
 }
 
-/** Reused helper for read Systemd Service Runtime behavior in src/daemon. */
+/** Reads systemd runtime status and resource counters for the managed service. */
 export async function readSystemdServiceRuntime(
   env: GatewayServiceEnv = process.env as GatewayServiceEnv,
 ): Promise<GatewayServiceRuntime> {
@@ -1205,7 +1205,7 @@ async function findLegacySystemdUnits(env: GatewayServiceEnv): Promise<LegacySys
   return results;
 }
 
-/** Reused helper for uninstall Legacy Systemd Units behavior in src/daemon. */
+/** Finds and removes legacy gateway unit names left by older installs. */
 export async function uninstallLegacySystemdUnits({
   env,
   stdout,
