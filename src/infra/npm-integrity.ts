@@ -1,7 +1,7 @@
-// infra npm integrity helpers and runtime behavior.
+/** Detects npm package integrity drift before archive installs proceed. */
 import type { NpmIntegrityDrift, NpmSpecResolution } from "./install-source-utils.js";
 
-/** Shared type for Npm Integrity Drift Payload in src/infra. */
+/** Payload describing an expected-vs-actual npm integrity mismatch. */
 export type NpmIntegrityDriftPayload = {
   spec: string;
   expectedIntegrity: string;
@@ -34,7 +34,7 @@ function normalizeIntegrity(value: string | undefined): string | undefined {
   return normalized ? normalized : undefined;
 }
 
-/** Reused helper for resolve Npm Integrity Drift behavior in src/infra. */
+/** Compare expected and resolved integrity and ask caller whether to proceed on drift. */
 export async function resolveNpmIntegrityDrift<TPayload>(
   params: ResolveNpmIntegrityDriftParams<TPayload>,
 ): Promise<ResolveNpmIntegrityDriftResult<TPayload>> {
@@ -76,7 +76,7 @@ type ResolveNpmIntegrityDriftWithDefaultMessageParams = {
   warn?: (message: string) => void;
 };
 
-/** Reused helper for resolve Npm Integrity Drift With Default Message behavior in src/infra. */
+/** Resolve integrity drift with the default warning/error text used by installers. */
 export async function resolveNpmIntegrityDriftWithDefaultMessage(
   params: ResolveNpmIntegrityDriftWithDefaultMessageParams,
 ): Promise<{ integrityDrift?: NpmIntegrityDrift; error?: string }> {

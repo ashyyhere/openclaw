@@ -1,4 +1,4 @@
-// infra provider usage fetch zai helpers and runtime behavior.
+/** Fetches Z.ai usage quota windows for provider usage summaries. */
 import {
   buildUsageHttpErrorSnapshot,
   fetchJson,
@@ -24,7 +24,7 @@ type ZaiUsageResponse = {
   };
 };
 
-/** Reused helper for fetch Zai Usage behavior in src/infra. */
+/** Fetch and normalize Z.ai quota limits from the monitor endpoint. */
 export async function fetchZaiUsage(
   apiKey: string,
   timeoutMs: number,

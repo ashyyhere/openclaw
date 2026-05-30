@@ -1,4 +1,4 @@
-// infra provider usage format helpers and runtime behavior.
+/** Formats provider quota snapshots for status lines and detailed reports. */
 import { clampPercent } from "./provider-usage.shared.js";
 import type { ProviderUsageSnapshot, UsageSummary, UsageWindow } from "./provider-usage.types.js";
 
@@ -41,7 +41,7 @@ function formatWindowShort(window: UsageWindow, now?: number): string {
   return `${remaining.toFixed(0)}% left (${window.label}${resetSuffix})`;
 }
 
-/** Reused helper for format Usage Window Summary behavior in src/infra. */
+/** Format one provider's usage windows as a compact remaining-quota summary. */
 export function formatUsageWindowSummary(
   snapshot: ProviderUsageSnapshot,
   opts?: { now?: number; maxWindows?: number; includeResets?: boolean },
@@ -68,7 +68,7 @@ export function formatUsageWindowSummary(
   return parts.join(" · ");
 }
 
-/** Reused helper for format Usage Summary Line behavior in src/infra. */
+/** Format a single chat/status line across provider usage summaries. */
 export function formatUsageSummaryLine(
   summary: UsageSummary,
   opts?: { now?: number; maxProviders?: number },
@@ -89,7 +89,7 @@ export function formatUsageSummaryLine(
   return `📊 Usage: ${parts.join(" · ")}`;
 }
 
-/** Reused helper for format Usage Report Lines behavior in src/infra. */
+/** Format a multi-line provider usage report with plan, errors, and reset timing. */
 export function formatUsageReportLines(summary: UsageSummary, opts?: { now?: number }): string[] {
   if (summary.providers.length === 0) {
     return ["Usage: no provider usage available."];
