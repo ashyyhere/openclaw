@@ -1,4 +1,5 @@
-// config io write prepare helpers and runtime behavior.
+// Config write preparation helpers. Build minimal merge patches, preserve
+// authored/include/env-ref values, normalize model refs, and apply unset paths.
 import { isDeepStrictEqual } from "node:util";
 import { normalizeConfiguredProviderCatalogModelId } from "@openclaw/model-catalog-core/provider-model-id-normalization";
 import { parseConfigPathArrayIndex } from "../shared/path-array-index.js";
@@ -27,7 +28,7 @@ function cloneUnknown<T>(value: T): T {
   return structuredClone(value);
 }
 
-/** Reused helper for create Merge Patch behavior in src/config. */
+/** Builds an RFC-style merge patch between authored/runtime config shapes. */
 export function createMergePatch(base: unknown, target: unknown): unknown {
   if (!isRecord(base) || !isRecord(target)) {
     return cloneUnknown(target);
@@ -63,7 +64,7 @@ export function createMergePatch(base: unknown, target: unknown): unknown {
   return patch;
 }
 
-/** Reused helper for project Source Onto Runtime Shape behavior in src/config. */
+/** Projects authored source keys onto the runtime config shape before diffing. */
 export function projectSourceOntoRuntimeShape(source: unknown, runtime: unknown): unknown {
   if (!isRecord(source) || !isRecord(runtime)) {
     return cloneUnknown(source);
@@ -571,7 +572,7 @@ function mergeMissingExplicitValues(
   return { changed, value: changed ? next : currentValue };
 }
 
-/** Reused helper for inject Explicitly Set Paths behavior in src/config. */
+/** Restores explicitly set values that runtime projection would otherwise omit. */
 export function injectExplicitlySetPaths(params: {
   valueSource: unknown;
   persistedCandidate: unknown;
@@ -613,7 +614,7 @@ export function injectExplicitlySetPaths(params: {
   return next;
 }
 
-/** Reused helper for resolve Persist Candidate For Write behavior in src/config. */
+/** Resolves the config object that should be written back to disk. */
 export function resolvePersistCandidateForWrite(params: {
   runtimeConfig: unknown;
   sourceConfig: unknown;
@@ -682,7 +683,7 @@ function preserveRootSchemaUri(params: {
   };
 }
 
-/** Reused helper for format Config Validation Failure behavior in src/config. */
+/** Formats config validation errors with actionable open-DM policy fixes. */
 export function formatConfigValidationFailure(pathLabel: string, issueMessage: string): string {
   const match = issueMessage.match(OPEN_DM_POLICY_ALLOW_FROM_RE);
   const policyPath = match?.groups?.policyPath?.trim();
@@ -795,7 +796,7 @@ function unsetPathForWriteAt(
   };
 }
 
-/** Reused helper for unset Path For Write behavior in src/config. */
+/** Removes one config path while pruning empty parent objects. */
 export function unsetPathForWrite(
   root: OpenClawConfig,
   pathSegments: string[],
@@ -816,7 +817,7 @@ export function unsetPathForWrite(
   return { changed: false, next: root };
 }
 
-/** Reused helper for apply Unset Paths For Write behavior in src/config. */
+/** Applies multiple unset paths to an authored config object. */
 export function applyUnsetPathsForWrite(
   root: OpenClawConfig,
   unsetPaths: readonly string[][] | undefined,
@@ -834,7 +835,7 @@ export function applyUnsetPathsForWrite(
   return next;
 }
 
-/** Reused helper for resolve Managed Unset Paths For Write behavior in src/config. */
+/** Adds internally managed unset paths to caller-requested write removals. */
 export function resolveManagedUnsetPathsForWrite(
   unsetPaths: readonly string[][] | undefined,
 ): string[][] {
@@ -854,7 +855,7 @@ export function resolveManagedUnsetPathsForWrite(
   return next;
 }
 
-/** Reused helper for collect Changed Paths behavior in src/config. */
+/** Collects dotted/bracket paths that differ between two config objects. */
 export function collectChangedPaths(
   base: unknown,
   target: unknown,
@@ -918,7 +919,7 @@ function isPathChanged(path: string, changedPaths: Set<string>): boolean {
   return changedPaths.has("");
 }
 
-/** Reused helper for restore Env Refs From Map behavior in src/config. */
+/** Restores untouched `${ENV}` references after runtime env substitution. */
 export function restoreEnvRefsFromMap(
   value: unknown,
   path: string,
@@ -961,7 +962,7 @@ export function restoreEnvRefsFromMap(
   return value;
 }
 
-/** Reused helper for resolve Write Env Snapshot For Path behavior in src/config. */
+/** Returns the env snapshot only when writes target the expected config path. */
 export function resolveWriteEnvSnapshotForPath(params: {
   actualConfigPath: string;
   expectedConfigPath?: string;

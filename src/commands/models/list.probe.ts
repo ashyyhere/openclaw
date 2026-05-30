@@ -47,7 +47,7 @@ function loadEmbeddedRunnerModule() {
   return embeddedRunnerModuleLoader.load();
 }
 
-/** Shared type for Auth Probe Status in src/commands/models. */
+/** Normalized status bucket for one model auth probe. */
 export type AuthProbeStatus =
   | "ok"
   | "auth"
@@ -58,7 +58,7 @@ export type AuthProbeStatus =
   | "unknown"
   | "no_model";
 
-/** Shared type for Auth Probe Reason Code in src/commands/models. */
+/** Machine-readable reason when a probe target cannot run. */
 export type AuthProbeReasonCode =
   | "excluded_by_auth_order"
   | "missing_credential"
@@ -68,7 +68,7 @@ export type AuthProbeReasonCode =
   | "ineligible_profile"
   | "no_model";
 
-/** Shared type for Auth Probe Result in src/commands/models. */
+/** Result row for one profile/env/models.json auth probe target. */
 export type AuthProbeResult = {
   provider: string;
   model?: string;
@@ -91,7 +91,7 @@ type AuthProbeTarget = {
   mode?: string;
 };
 
-/** Shared type for Auth Probe Summary in src/commands/models. */
+/** Aggregate auth probe run metadata and results. */
 export type AuthProbeSummary = {
   startedAt: number;
   finishedAt: number;
@@ -107,7 +107,7 @@ export type AuthProbeSummary = {
   results: AuthProbeResult[];
 };
 
-/** Shared type for Auth Probe Options in src/commands/models. */
+/** Options controlling provider/profile filtering and probe execution limits. */
 export type AuthProbeOptions = {
   provider?: string;
   profileIds?: string[];
@@ -116,7 +116,7 @@ export type AuthProbeOptions = {
   maxTokens: number;
 };
 
-/** Reused helper for map Failover Reason To Probe Status behavior in src/commands/models. */
+/** Maps agent failover reasons into auth probe status buckets. */
 export function mapFailoverReasonToProbeStatus(reason?: string | null): AuthProbeStatus {
   if (!reason) {
     return "unknown";
@@ -292,7 +292,7 @@ async function maybeResolveUnresolvedRefIssue(params: {
   }
 }
 
-/** Reused helper for build Probe Targets behavior in src/commands/models. */
+/** Builds runnable auth probe targets and preflight failure results. */
 export async function buildProbeTargets(params: {
   cfg: OpenClawConfig;
   agentDir?: string;
@@ -613,7 +613,7 @@ async function runTargetsWithConcurrency(params: {
   return results.filter((entry): entry is AuthProbeResult => Boolean(entry));
 }
 
-/** Reused helper for run Auth Probes behavior in src/commands/models. */
+/** Runs auth probes with bounded concurrency and progress callbacks. */
 export async function runAuthProbes(params: {
   cfg: OpenClawConfig;
   agentId?: string;
@@ -663,7 +663,7 @@ export async function runAuthProbes(params: {
   };
 }
 
-/** Reused helper for format Probe Latency behavior in src/commands/models. */
+/** Formats auth probe latency for status output. */
 export function formatProbeLatency(latencyMs?: number | null) {
   if (!latencyMs && latencyMs !== 0) {
     return "-";
@@ -671,7 +671,7 @@ export function formatProbeLatency(latencyMs?: number | null) {
   return formatMs(latencyMs);
 }
 
-/** Reused helper for group Probe Results behavior in src/commands/models. */
+/** Groups auth probe results by provider id. */
 export function groupProbeResults(results: AuthProbeResult[]): Map<string, AuthProbeResult[]> {
   const map = new Map<string, AuthProbeResult[]>();
   for (const result of results) {
@@ -682,7 +682,7 @@ export function groupProbeResults(results: AuthProbeResult[]): Map<string, AuthP
   return map;
 }
 
-/** Reused helper for sort Probe Results behavior in src/commands/models. */
+/** Sorts auth probe results by provider and display label. */
 export function sortProbeResults(results: AuthProbeResult[]): AuthProbeResult[] {
   return results.slice().toSorted((a, b) => {
     const provider = a.provider.localeCompare(b.provider);
@@ -695,7 +695,7 @@ export function sortProbeResults(results: AuthProbeResult[]): AuthProbeResult[] 
   });
 }
 
-/** Reused helper for describe Probe Summary behavior in src/commands/models. */
+/** Summarizes total auth probe targets and elapsed duration. */
 export function describeProbeSummary(summary: AuthProbeSummary): string {
   if (summary.totalTargets === 0) {
     return "No probe targets.";

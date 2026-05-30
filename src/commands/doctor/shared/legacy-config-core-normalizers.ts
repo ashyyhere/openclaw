@@ -16,10 +16,10 @@ import {
   listLegacyRuntimeModelProviderAliases,
   migrateLegacyRuntimeModelRef,
 } from "./legacy-runtime-model-providers.js";
-/** Re-exported API for src/commands/doctor, starting with normalize Legacy Talk Config. */
+/** Legacy talk config normalizer included in the core doctor normalizer set. */
 export { normalizeLegacyTalkConfig } from "./legacy-talk-config-normalizer.js";
 
-/** Reused helper for normalize Legacy Commands Config behavior in src/commands/doctor. */
+/** Removes deprecated command config keys. */
 export function normalizeLegacyCommandsConfig(
   cfg: OpenClawConfig,
   changes: string[],
@@ -39,7 +39,7 @@ export function normalizeLegacyCommandsConfig(
   };
 }
 
-/** Reused helper for normalize Legacy Browser Config behavior in src/commands/doctor. */
+/** Migrates legacy browser relay/profile/SSRF config keys. */
 export function normalizeLegacyBrowserConfig(
   cfg: OpenClawConfig,
   changes: string[],
@@ -125,7 +125,7 @@ export function normalizeLegacyBrowserConfig(
   };
 }
 
-/** Reused helper for seed Missing Default Accounts From Single Account Base behavior in src/commands/doctor. */
+/** Seeds default channel accounts from legacy single-account top-level config. */
 export function seedMissingDefaultAccountsFromSingleAccountBase(
   cfg: OpenClawConfig,
   changes: string[],
@@ -651,7 +651,7 @@ function normalizeLegacyCodexCliProviderRuntimePins(
     : { config: cfg, changed: false };
 }
 
-/** Reused helper for normalize Legacy Runtime Model Refs behavior in src/commands/doctor. */
+/** Migrates legacy runtime model refs and agent runtime pins to current ids. */
 export function normalizeLegacyRuntimeModelRefs(
   cfg: OpenClawConfig,
   changes: string[],
@@ -705,7 +705,7 @@ export function normalizeLegacyRuntimeModelRefs(
   return nextCfg;
 }
 
-/** Reused helper for normalize Legacy Open AICodex Models Add Metadata behavior in src/commands/doctor. */
+/** Marks legacy OpenAI Codex /models add entries as metadata-backed models. */
 export function normalizeLegacyOpenAICodexModelsAddMetadata(
   cfg: OpenClawConfig,
   changes: string[],
@@ -772,7 +772,7 @@ export function normalizeLegacyOpenAICodexModelsAddMetadata(
   };
 }
 
-/** Reused helper for normalize Legacy Open AIModel Provider Api behavior in src/commands/doctor. */
+/** Migrates legacy OpenAI provider/model api names to openai-completions. */
 export function normalizeLegacyOpenAIModelProviderApi(
   cfg: OpenClawConfig,
   changes: string[],
@@ -844,7 +844,7 @@ export function normalizeLegacyOpenAIModelProviderApi(
   };
 }
 
-/** Reused helper for normalize Legacy Nano Banana Skill behavior in src/commands/doctor. */
+/** Migrates legacy Nano Banana skill config into model/provider config. */
 export function normalizeLegacyNanoBananaSkill(
   cfg: OpenClawConfig,
   changes: string[],
@@ -981,7 +981,7 @@ export function normalizeLegacyNanoBananaSkill(
   };
 }
 
-/** Reused helper for normalize Legacy Cross Context Message Config behavior in src/commands/doctor. */
+/** Migrates legacy cross-context message boolean into explicit policy flags. */
 export function normalizeLegacyCrossContextMessageConfig(
   cfg: OpenClawConfig,
   changes: string[],
@@ -1076,7 +1076,7 @@ function migrateLegacyDeepgramCompat(params: {
   return true;
 }
 
-/** Reused helper for normalize Legacy Media Provider Options behavior in src/commands/doctor. */
+/** Migrates legacy media provider option blocks into providerOptions. */
 export function normalizeLegacyMediaProviderOptions(
   cfg: OpenClawConfig,
   changes: string[],
@@ -1264,7 +1264,7 @@ function applyLegacyOllamaProviderNumCtxParams(params: {
   };
 }
 
-/** Reused helper for normalize Legacy Ollama Native Num Ctx Params behavior in src/commands/doctor. */
+/** Seeds native Ollama params.num_ctx from legacy context/max token fields. */
 export function normalizeLegacyOllamaNativeNumCtxParams(
   cfg: OpenClawConfig,
   changes: string[],
@@ -1367,7 +1367,7 @@ export function normalizeLegacyOllamaNativeNumCtxParams(
   };
 }
 
-/** Reused helper for normalize Legacy Mistral Model Max Tokens behavior in src/commands/doctor. */
+/** Normalizes legacy Mistral maxTokens values against model context windows. */
 export function normalizeLegacyMistralModelMaxTokens(
   cfg: OpenClawConfig,
   changes: string[],
