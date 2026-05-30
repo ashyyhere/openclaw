@@ -89,7 +89,7 @@ function emitQrSecretResolveDiagnostics(diagnostics: string[], opts: QrCliOption
   }
 }
 
-/** Reused helper for register Qr Cli behavior in src/cli. */
+/** Register QR/setup-code generation with local, remote, token, and password payload paths. */
 export function registerQrCli(program: Command) {
   program
     .command("qr")

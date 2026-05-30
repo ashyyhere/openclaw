@@ -9,7 +9,7 @@ import { defaultRuntime } from "../runtime.js";
 import { inheritOptionFromParent } from "./command-options.js";
 import { resolveGatewayAuthOptions } from "./gateway-secret-options.js";
 
-/** Reused helper for register Acp Cli behavior in src/cli. */
+/** Register ACP bridge and local ACP client commands with shared gateway auth options. */
 export function registerAcpCli(program: Command) {
   const acp = program.command("acp").description("Run an ACP bridge backed by the Gateway");
 

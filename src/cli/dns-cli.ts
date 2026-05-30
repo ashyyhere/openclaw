@@ -103,7 +103,7 @@ function ensureImportLine(corefilePath: string, importGlob: string): boolean {
   return true;
 }
 
-/** Reused helper for register Dns Cli behavior in src/cli. */
+/** Register DNS helpers that bootstrap CoreDNS for wide-area discovery. */
 export function registerDnsCli(program: Command) {
   const dns = program
     .command("dns")

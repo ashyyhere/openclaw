@@ -87,7 +87,7 @@ async function addChannelSetupOptions(command: Command): Promise<Command> {
   return command;
 }
 
-/** Reused helper for register Channels Cli behavior in src/cli. */
+/** Register channel catalog, setup, login, logout, status, and destructive account commands. */
 export async function registerChannelsCli(
   program: Command,
   argv: string[] = process.argv,

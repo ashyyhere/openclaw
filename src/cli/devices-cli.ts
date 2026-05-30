@@ -37,7 +37,7 @@ const devicesCallOpts = (cmd: Command, defaults?: { timeoutMs?: number }) =>
     )
     .option("--json", "Output JSON", false);
 
-/** Reused helper for register Devices Cli behavior in src/cli. */
+/** Register gateway-backed device pairing and token lifecycle commands. */
 export function registerDevicesCli(program: Command) {
   const devices = program.command("devices").description("Device pairing and auth tokens");
 
