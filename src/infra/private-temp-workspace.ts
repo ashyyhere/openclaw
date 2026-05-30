@@ -1,6 +1,6 @@
-// infra private temp workspace helpers and runtime behavior.
+// Applies fs-safe defaults before exposing private temporary workspace helpers.
 import "./fs-safe-defaults.js";
-/** Re-exported API for src/infra. */
+/** Temporary workspace helpers with automatic cleanup semantics. */
 export {
   tempWorkspace,
   tempWorkspaceSync,

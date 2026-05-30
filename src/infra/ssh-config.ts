@@ -1,12 +1,12 @@
-// infra ssh config helpers and runtime behavior.
+// Resolves effective ssh -G config values for tunnel targets with bounded output reads.
 import { spawn } from "node:child_process";
 import { parseStrictPositiveInteger } from "./parse-finite-number.js";
 import type { SshParsedTarget } from "./ssh-tunnel.js";
 
-/** Reused constant for SSH CONFIG OUTPUT MAX CHARS behavior in src/infra. */
+/** Maximum ssh -G stdout captured before aborting config resolution. */
 export const SSH_CONFIG_OUTPUT_MAX_CHARS = 64 * 1024;
 
-/** Shared type for Ssh Resolved Config in src/infra. */
+/** Effective SSH connection fields parsed from ssh -G output. */
 export type SshResolvedConfig = {
   user?: string;
   host?: string;
@@ -27,7 +27,7 @@ function parsePort(value: string | undefined): number | undefined {
   return parsed;
 }
 
-/** Reused helper for parse Ssh Config Output behavior in src/infra. */
+/** Parses selected ssh -G output keys into OpenClaw's resolved config shape. */
 export function parseSshConfigOutput(output: string): SshResolvedConfig {
   const result: SshResolvedConfig = { identityFiles: [] };
   const lines = output.split("\n");
@@ -63,7 +63,7 @@ export function parseSshConfigOutput(output: string): SshResolvedConfig {
   return result;
 }
 
-/** Reused helper for append Ssh Config Output behavior in src/infra. */
+/** Appends bounded ssh -G output and reports when the cap is exceeded. */
 export function appendSshConfigOutput(
   current: string,
   chunk: unknown,
@@ -76,7 +76,7 @@ export function appendSshConfigOutput(
   return { ok: true, value: next };
 }
 
-/** Reused helper for resolve Ssh Config behavior in src/infra. */
+/** Runs ssh -G for a target and returns parsed config, or null on timeout/failure. */
 export async function resolveSshConfig(
   target: SshParsedTarget,
   opts: { identity?: string; timeoutMs?: number } = {},

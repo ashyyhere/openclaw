@@ -1,6 +1,6 @@
-// infra boundary file read helpers and runtime behavior.
+// Applies fs-safe defaults before exposing guarded root-file open helpers.
 import "./fs-safe-defaults.js";
-/** Re-exported API for src/infra. */
+/** Root-file open helpers that classify permission and boundary failures. */
 export {
   canUseRootFileOpen,
   matchRootFileOpenFailure,

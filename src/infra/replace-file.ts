@@ -1,4 +1,4 @@
-// infra replace file helpers and runtime behavior.
+// Applies fs-safe defaults and exposes atomic file/directory replacement helpers.
 import "./fs-safe-defaults.js";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -8,7 +8,7 @@ import {
   type MovePathWithCopyFallbackOptions as BaseMovePathWithCopyFallbackOptions,
 } from "@openclaw/fs-safe/atomic";
 
-/** Re-exported API for src/infra. */
+/** Atomic replacement primitives and result types from fs-safe. */
 export {
   replaceDirectoryAtomic,
   replaceFileAtomicSync,
@@ -20,15 +20,15 @@ export {
   type ReplaceFileAtomicSyncOptions,
 } from "@openclaw/fs-safe/atomic";
 
-/** Reused constant for replace File Atomic behavior in src/infra. */
+/** Promise-based atomic file replacement function with OpenClaw fs-safe defaults. */
 export const replaceFileAtomic = replaceFileAtomicBase;
 
-/** Shared type for Move Path With Copy Fallback Options in src/infra. */
+/** Move options with an OpenClaw hardlink rejection policy. */
 export type MovePathWithCopyFallbackOptions = BaseMovePathWithCopyFallbackOptions & {
   sourceHardlinks?: "allow" | "reject";
 };
 
-/** Reused helper for move Path With Copy Fallback behavior in src/infra. */
+/** Moves a path atomically when possible, optionally rejecting hardlinked sources. */
 export async function movePathWithCopyFallback(
   options: MovePathWithCopyFallbackOptions,
 ): Promise<void> {

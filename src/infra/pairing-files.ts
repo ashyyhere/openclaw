@@ -1,11 +1,11 @@
-// infra pairing files helpers and runtime behavior.
+// Shared JSON-file and pending-request helpers for device/node pairing stores.
 import path from "node:path";
 import { resolveStateDir } from "../config/paths.js";
 
-/** Re-exported API for src/infra, starting with create Async Lock. */
+/** JSON persistence primitives reused by pairing state stores. */
 export { createAsyncLock, readJsonIfExists, tryReadJson, writeJson } from "./json-files.js";
 
-/** Reused helper for resolve Pairing Paths behavior in src/infra. */
+/** Resolves pending/paired JSON file paths for a pairing state subdirectory. */
 export function resolvePairingPaths(baseDir: string | undefined, subdir: string) {
   const root = baseDir ?? resolveStateDir();
   const dir = path.join(root, subdir);
@@ -16,7 +16,7 @@ export function resolvePairingPaths(baseDir: string | undefined, subdir: string)
   };
 }
 
-/** Reused helper for coerce Pairing State Record behavior in src/infra. */
+/** Coerces unknown JSON state into a pairing record map. */
 export function coercePairingStateRecord<T>(value: unknown): Record<string, T> {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
     return {};
@@ -24,7 +24,7 @@ export function coercePairingStateRecord<T>(value: unknown): Record<string, T> {
   return value as Record<string, T>;
 }
 
-/** Reused helper for prune Expired Pending behavior in src/infra. */
+/** Removes pending pairing entries older than the TTL from a mutable map. */
 export function pruneExpiredPending<T extends { ts: number }>(
   pendingById: Record<string, T>,
   nowMs: number,
@@ -37,14 +37,14 @@ export function pruneExpiredPending<T extends { ts: number }>(
   }
 }
 
-/** Shared type for Pending Pairing Request Result in src/infra. */
+/** Result returned after refreshing or creating a pending pairing request. */
 export type PendingPairingRequestResult<TPending> = {
   status: "pending";
   request: TPending;
   created: boolean;
 };
 
-/** Reused helper for reconcile Pending Pairing Requests behavior in src/infra. */
+/** Refreshes a single compatible pending pairing or replaces stale/conflicting entries. */
 export async function reconcilePendingPairingRequests<
   TPending extends { requestId: string },
   TIncoming,
