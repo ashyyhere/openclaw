@@ -6,16 +6,16 @@ export {
   listActiveEmbeddedRunSessionKeys,
   waitForActiveEmbeddedRuns,
 } from "../../agents/embedded-agent-runner/runs.js";
-/** Re-exported API for src/cli/gateway-cli, starting with mark Restart Aborted Main Sessions. */
+/** Recovery hook for sessions interrupted by gateway restart. */
 export { markRestartAbortedMainSessions } from "../../agents/main-session-restart-recovery.js";
-/** Re-exported API for src/cli/gateway-cli, starting with get Runtime Config. */
+/** Runtime config loader used by lifecycle commands. */
 export { getRuntimeConfig } from "../../config/config.js";
-/** Re-exported API for src/cli/gateway-cli. */
+/** Process respawn helpers for update-driven gateway restarts. */
 export {
   respawnGatewayProcessForUpdate,
   restartGatewayProcessWithFreshPid,
 } from "../../infra/process-respawn.js";
-/** Re-exported API for src/cli/gateway-cli. */
+/** Restart intent state and SIGUSR1 orchestration helpers for gateway lifecycle. */
 export {
   resolveGatewayRestartDeferralTimeoutMs,
   consumeGatewayRestartIntentPayloadSync,
@@ -28,22 +28,22 @@ export {
   resetGatewayRestartStateForInProcessRestart,
   scheduleGatewaySigusr1Restart,
 } from "../../infra/restart.js";
-/** Re-exported API for src/cli/gateway-cli, starting with write Gateway Restart Handoff Sync. */
+/** Synchronous restart handoff writer used before process replacement. */
 export { writeGatewayRestartHandoffSync } from "../../infra/restart-handoff.js";
-/** Re-exported API for src/cli/gateway-cli, starting with mark Update Restart Sentinel Failure. */
+/** Sentinel failure marker for update restart diagnostics. */
 export { markUpdateRestartSentinelFailure } from "../../infra/restart-sentinel.js";
-/** Re-exported API for src/cli/gateway-cli, starting with detect Respawn Supervisor. */
+/** Supervisor marker detector used to distinguish managed respawns. */
 export { detectRespawnSupervisor } from "../../infra/supervisor-markers.js";
-/** Re-exported API for src/cli/gateway-cli, starting with write Diagnostic Stability Bundle For Failure Sync. */
+/** Diagnostic bundle writer for lifecycle failure closeout. */
 export { writeDiagnosticStabilityBundleForFailureSync } from "../../logging/diagnostic-stability-bundle.js";
-/** Re-exported API for src/cli/gateway-cli. */
+/** Command-queue drain helpers used before gateway shutdown/restart. */
 export {
   getActiveTaskCount,
   markGatewayDraining,
   resetAllLanes,
   waitForActiveTasks,
 } from "../../process/command-queue.js";
-/** Re-exported API for src/cli/gateway-cli, starting with get Inspectable Active Task Restart Blockers. */
+/** Task-registry restart blocker summary for operator diagnostics. */
 export { getInspectableActiveTaskRestartBlockers } from "../../tasks/task-registry.maintenance.js";
-/** Re-exported API for src/cli/gateway-cli, starting with reload Task Registry From Store. */
+/** Task-registry store reload hook used after lifecycle transitions. */
 export { reloadTaskRegistryFromStore } from "../../tasks/runtime-internal.js";
