@@ -10,7 +10,9 @@ import {
 import type { ProgramContext } from "./context.js";
 import { registerSubCliCommands } from "./register.subclis.js";
 
-/** Re-exported API for src/cli/program. */
+/**
+ * Re-export core command registry APIs used by eager and lazy CLI registration.
+ */
 export {
   getCoreCliCommandDescriptors,
   getCoreCliCommandNames,
@@ -18,10 +20,10 @@ export {
   registerCoreCliByName,
   registerCoreCliCommands,
 };
-/** Re-exported API for src/cli/program, starting with Command Registration. */
+/** Core command descriptor shape used by the program registry. */
 export type { CommandRegistration };
 
-/** Reused helper for register Program Commands behavior in src/cli/program. */
+/** Register built-in commands first, then attach external sub-CLI entrypoints. */
 export function registerProgramCommands(
   program: Command,
   ctx: ProgramContext,

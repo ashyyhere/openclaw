@@ -6,7 +6,7 @@ import { configureProgramHelp } from "./help.js";
 import { registerPreActionHooks } from "./preaction.js";
 import { setProgramContext } from "./program-context.js";
 
-/** Reused helper for build Program behavior in src/cli/program. */
+/** Build the root Commander program with context, help, hooks, and lazy command routing. */
 export function buildProgram() {
   const program = new Command();
   program.enablePositionalOptions();

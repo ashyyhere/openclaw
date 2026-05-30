@@ -5,12 +5,12 @@ import type { InstalledPluginIndexRefreshReason } from "../plugins/installed-plu
 import { tracePluginLifecyclePhaseAsync } from "../plugins/plugin-lifecycle-trace.js";
 import { refreshPluginRegistry } from "../plugins/plugin-registry.js";
 
-/** Shared type for Plugin Registry Refresh Logger in src/cli. */
+/** Warning sink used when registry refresh should not fail the caller. */
 export type PluginRegistryRefreshLogger = {
   warn?: (message: string) => void;
 };
 
-/** Reused helper for refresh Plugin Registry After Config Mutation behavior in src/cli. */
+/** Refresh plugin registry metadata after config writes and clear runtime discovery caches. */
 export async function refreshPluginRegistryAfterConfigMutation(params: {
   config: OpenClawConfig;
   reason: InstalledPluginIndexRefreshReason;

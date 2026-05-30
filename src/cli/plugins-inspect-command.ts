@@ -11,7 +11,7 @@ import { shortenHomeInString, shortenHomePath } from "../utils.js";
 import { formatMissingPluginMessage } from "./error-format.js";
 import { quietPluginJsonLogger } from "./plugins-command-helpers.js";
 
-/** Shared type for Plugin Inspect Options in src/cli. */
+/** Options accepted by plugin inspect for JSON, all-plugin, and runtime diagnostics. */
 export type PluginInspectOptions = {
   json?: boolean;
   all?: boolean;
@@ -112,7 +112,7 @@ function formatInstallLines(install: PluginInstallRecord | undefined): string[] 
   return lines;
 }
 
-/** Reused helper for run Plugins Inspect Command behavior in src/cli. */
+/** Build and print plugin inspect reports from config, install records, and runtime state. */
 export async function runPluginsInspectCommand(
   id: string | undefined,
   opts: PluginInspectOptions,
