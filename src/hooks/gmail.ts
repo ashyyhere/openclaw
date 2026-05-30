@@ -1,4 +1,4 @@
-// hooks gmail helpers and runtime behavior.
+/** Gmail hook defaults, runtime config resolution, and gog watch command helpers. */
 import { randomBytes } from "node:crypto";
 import path from "node:path";
 import {
@@ -12,28 +12,28 @@ import { getWindowsInstallRoots } from "../infra/windows-install-roots.js";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 import { normalizeUniqueStringEntries } from "../shared/string-normalization.js";
 
-/** Reused constant for DEFAULT GMAIL LABEL behavior in src/hooks. */
+/** Gmail label watched when no hook-specific label is configured. */
 export const DEFAULT_GMAIL_LABEL = "INBOX";
-/** Reused constant for DEFAULT GMAIL TOPIC behavior in src/hooks. */
+/** Default Pub/Sub topic name used by Gmail watch setup. */
 export const DEFAULT_GMAIL_TOPIC = "gog-gmail-watch";
-/** Reused constant for DEFAULT GMAIL SUBSCRIPTION behavior in src/hooks. */
+/** Default Pub/Sub subscription name used by Gmail watch setup. */
 export const DEFAULT_GMAIL_SUBSCRIPTION = "gog-gmail-watch-push";
-/** Reused constant for DEFAULT GMAIL SERVE BIND behavior in src/hooks. */
+/** Local bind address for the gog Gmail webhook server. */
 export const DEFAULT_GMAIL_SERVE_BIND = "127.0.0.1";
-/** Reused constant for DEFAULT GMAIL SERVE PORT behavior in src/hooks. */
+/** Local port for the gog Gmail webhook server. */
 export const DEFAULT_GMAIL_SERVE_PORT = 8788;
-/** Reused constant for DEFAULT GMAIL SERVE PATH behavior in src/hooks. */
+/** Default path served by gog for Gmail Pub/Sub pushes. */
 export const DEFAULT_GMAIL_SERVE_PATH = "/gmail-pubsub";
-/** Reused constant for DEFAULT GMAIL MAX BYTES behavior in src/hooks. */
+/** Default maximum Gmail body bytes forwarded through the hook. */
 export const DEFAULT_GMAIL_MAX_BYTES = 20_000;
-/** Reused constant for DEFAULT GMAIL RENEW MINUTES behavior in src/hooks. */
+/** Default Gmail watch renewal interval in minutes. */
 export const DEFAULT_GMAIL_RENEW_MINUTES = 12 * 60;
 const DEFAULT_HOOKS_PATH = "/hooks";
 const GMAIL_WATCH_SENSITIVE_FLAGS = new Set(["--token", "--hook-url", "--hook-token"]);
 const WINDOWS_UNSAFE_CMD_CHARS_RE = /[&|<>^%\r\n]/;
 let gogBin: string | undefined;
 
-/** Shared type for Gmail Hook Overrides in src/hooks. */
+/** CLI/runtime overrides layered on top of configured Gmail hook settings. */
 export type GmailHookOverrides = {
   account?: string;
   label?: string;
@@ -53,7 +53,7 @@ export type GmailHookOverrides = {
   tailscaleTarget?: string;
 };
 
-/** Shared type for Gmail Hook Runtime Config in src/hooks. */
+/** Fully resolved Gmail hook config consumed by gog watch commands. */
 export type GmailHookRuntimeConfig = {
   account: string;
   label: string;
@@ -77,19 +77,19 @@ export type GmailHookRuntimeConfig = {
   };
 };
 
-/** Reused helper for generate Hook Token behavior in src/hooks. */
+/** Generates a random hex token for hook authentication. */
 export function generateHookToken(bytes = 24): string {
   return randomBytes(bytes).toString("hex");
 }
 
-/** Reused helper for merge Hook Presets behavior in src/hooks. */
+/** Adds one hook preset while preserving normalized unique existing presets. */
 export function mergeHookPresets(existing: string[] | undefined, preset: string): string[] {
   const next = new Set(normalizeUniqueStringEntries(existing));
   next.add(preset);
   return Array.from(next);
 }
 
-/** Reused helper for normalize Hooks Path behavior in src/hooks. */
+/** Normalizes the Gateway hook base path and rejects root as a base. */
 export function normalizeHooksPath(raw?: string): string {
   const base = raw?.trim() || DEFAULT_HOOKS_PATH;
   if (base === "/") {
@@ -99,7 +99,7 @@ export function normalizeHooksPath(raw?: string): string {
   return withSlash.replace(/\/+$/, "");
 }
 
-/** Reused helper for normalize Serve Path behavior in src/hooks. */
+/** Normalizes the gog serve path while allowing root for Tailscale proxying. */
 export function normalizeServePath(raw?: string): string {
   const base = raw?.trim() || DEFAULT_GMAIL_SERVE_PATH;
   // Tailscale funnel/serve strips the set-path prefix before proxying.
@@ -111,7 +111,7 @@ export function normalizeServePath(raw?: string): string {
   return withSlash.replace(/\/+$/, "");
 }
 
-/** Reused helper for build Default Hook Url behavior in src/hooks. */
+/** Builds the default local Gateway URL used by Gmail Pub/Sub pushes. */
 export function buildDefaultHookUrl(
   hooksPath?: string,
   port: number = DEFAULT_GATEWAY_PORT,
@@ -121,7 +121,7 @@ export function buildDefaultHookUrl(
   return joinUrl(baseUrl, `${basePath}/gmail`);
 }
 
-/** Reused helper for resolve Gmail Hook Runtime Config behavior in src/hooks. */
+/** Resolves Gmail hook config from OpenClaw config plus explicit overrides. */
 export function resolveGmailHookRuntimeConfig(
   cfg: OpenClawConfig,
   overrides: GmailHookOverrides,
@@ -230,7 +230,7 @@ export function resolveGmailHookRuntimeConfig(
   };
 }
 
-/** Reused helper for build Gog Watch Start Args behavior in src/hooks. */
+/** Builds `gog gmail watch start` arguments for Pub/Sub watch registration. */
 export function buildGogWatchStartArgs(
   cfg: Pick<GmailHookRuntimeConfig, "account" | "label" | "topic">,
 ): string[] {
@@ -247,7 +247,7 @@ export function buildGogWatchStartArgs(
   ];
 }
 
-/** Reused helper for build Gog Watch Serve Args behavior in src/hooks. */
+/** Builds `gog gmail watch serve` arguments including hook credentials. */
 export function buildGogWatchServeArgs(cfg: GmailHookRuntimeConfig): string[] {
   const args = [
     "gmail",
@@ -277,7 +277,7 @@ export function buildGogWatchServeArgs(cfg: GmailHookRuntimeConfig): string[] {
   return args;
 }
 
-/** Reused helper for build Gog Watch Serve Log Args behavior in src/hooks. */
+/** Builds log-safe gog serve arguments with sensitive flag values removed. */
 export function buildGogWatchServeLogArgs(cfg: GmailHookRuntimeConfig): string[] {
   return buildGogWatchServeArgs(cfg).filter(
     (arg, index, args) =>
@@ -286,7 +286,7 @@ export function buildGogWatchServeLogArgs(cfg: GmailHookRuntimeConfig): string[]
   );
 }
 
-/** Reused helper for resolve Gog Executable behavior in src/hooks. */
+/** Resolves and caches the gog executable path used for Gmail hooks. */
 export function resolveGogExecutable(): string {
   return (gogBin ??= resolveExecutable("gog"));
 }
@@ -301,7 +301,7 @@ function escapeForCmdExe(arg: string): string {
   return `"${arg.replace(/"/g, '""')}"`;
 }
 
-/** Reused helper for resolve Gog Serve Invocation behavior in src/hooks. */
+/** Resolves the command invocation for gog serve, including Windows cmd shims. */
 export function resolveGogServeInvocation(args: string[]): {
   args: string[];
   command: string;
@@ -322,12 +322,12 @@ export function resolveGogServeInvocation(args: string[]): {
   };
 }
 
-/** Reused helper for build Topic Path behavior in src/hooks. */
+/** Builds a fully qualified Google Pub/Sub topic path. */
 export function buildTopicPath(projectId: string, topicName: string): string {
   return `projects/${projectId}/topics/${topicName}`;
 }
 
-/** Reused helper for parse Topic Path behavior in src/hooks. */
+/** Parses a fully qualified Google Pub/Sub topic path. */
 export function parseTopicPath(topic: string): { projectId: string; topicName: string } | null {
   const match = topic.trim().match(/^projects\/([^/]+)\/topics\/([^/]+)$/i);
   if (!match) {
