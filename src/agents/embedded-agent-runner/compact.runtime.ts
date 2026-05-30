@@ -8,7 +8,7 @@ function loadCompactRuntime() {
   return compactRuntimeLoader.load();
 }
 
-/** Reused helper for compact Embedded Agent Session Direct behavior in src/agents/embedded-agent-runner. */
+/** Invokes direct compaction through a lazy import to keep normal runs lighter. */
 export async function compactEmbeddedAgentSessionDirect(
   ...args: Parameters<CompactEmbeddedAgentSessionDirect>
 ): ReturnType<CompactEmbeddedAgentSessionDirect> {
