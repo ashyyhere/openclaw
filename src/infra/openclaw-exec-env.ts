@@ -1,10 +1,10 @@
-// infra openclaw exec env helpers and runtime behavior.
-/** Reused constant for OPENCLAW CLI ENV VAR behavior in src/infra. */
+/** Marks child processes as launched by the OpenClaw CLI. */
+/** Environment variable used by child processes to detect OpenClaw CLI launch context. */
 export const OPENCLAW_CLI_ENV_VAR = "OPENCLAW_CLI";
-/** Reused constant for OPENCLAW CLI ENV VALUE behavior in src/infra. */
+/** Canonical marker value for OpenClaw CLI launch context. */
 export const OPENCLAW_CLI_ENV_VALUE = "1";
 
-/** Reused helper for mark Open Claw Exec Env behavior in src/infra. */
+/** Return a copy of an environment map with the OpenClaw CLI marker applied. */
 export function markOpenClawExecEnv<T extends Record<string, string | undefined>>(env: T): T {
   return {
     ...env,
@@ -12,7 +12,7 @@ export function markOpenClawExecEnv<T extends Record<string, string | undefined>
   };
 }
 
-/** Reused helper for ensure Open Claw Exec Marker On Process behavior in src/infra. */
+/** Mutate process.env-style maps so the current process advertises CLI ownership. */
 export function ensureOpenClawExecMarkerOnProcess(
   env: NodeJS.ProcessEnv = process.env,
 ): NodeJS.ProcessEnv {

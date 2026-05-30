@@ -1,4 +1,4 @@
-// infra runtime status helpers and runtime behavior.
+/** Formats runtime status values for CLI and diagnostic output. */
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
 type RuntimeStatusFormatInput = {
@@ -8,7 +8,7 @@ type RuntimeStatusFormatInput = {
   details?: string[];
 };
 
-/** Reused helper for format Runtime Status With Details behavior in src/infra. */
+/** Combine status, pid, lifecycle state, and extra details into one compact status line. */
 export function formatRuntimeStatusWithDetails({
   status,
   pid,
