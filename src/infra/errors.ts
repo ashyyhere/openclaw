@@ -1,7 +1,8 @@
-// infra errors helpers and runtime behavior.
+// Shared error inspection and formatting helpers for logs, diagnostics, and
+// provider failover decisions.
 import { redactSensitiveText } from "../logging/redact.js";
 
-/** Reused helper for extract Error Code behavior in src/infra. */
+/** Reads a string or numeric `code` field from unknown error-like values. */
 export function extractErrorCode(err: unknown): string | undefined {
   if (!err || typeof err !== "object") {
     return undefined;
@@ -16,7 +17,7 @@ export function extractErrorCode(err: unknown): string | undefined {
   return undefined;
 }
 
-/** Reused helper for read Error Name behavior in src/infra. */
+/** Reads an error `name` field without assuming the value is an Error instance. */
 export function readErrorName(err: unknown): string {
   if (!err || typeof err !== "object") {
     return "";
@@ -25,7 +26,7 @@ export function readErrorName(err: unknown): string {
   return typeof name === "string" ? name : "";
 }
 
-/** Reused helper for collect Error Graph Candidates behavior in src/infra. */
+/** Breadth-first flattens an error graph while guarding against cycles. */
 export function collectErrorGraphCandidates(
   err: unknown,
   resolveNested?: (current: Record<string, unknown>) => Iterable<unknown>,
@@ -69,7 +70,7 @@ export function hasErrnoCode(err: unknown, code: string): boolean {
   return isErrno(err) && err.code === code;
 }
 
-/** Reused helper for format Error Message behavior in src/infra. */
+/** Formats unknown thrown values and redacts secrets before logging or display. */
 export function formatErrorMessage(err: unknown): string {
   let formatted: string;
   if (err instanceof Error) {
@@ -134,7 +135,7 @@ export function stringifyNonErrorCause(value: unknown): string {
   }
 }
 
-/** Reused helper for format Uncaught Error behavior in src/infra. */
+/** Formats top-level uncaught errors, preserving stacks except for config messages. */
 export function formatUncaughtError(err: unknown): string {
   if (extractErrorCode(err) === "INVALID_CONFIG") {
     return formatErrorMessage(err);
@@ -146,10 +147,10 @@ export function formatUncaughtError(err: unknown): string {
   return formatErrorMessage(err);
 }
 
-/** Shared type for Error Kind in src/infra. */
+/** Coarse error bucket used by retry/failover and UX messaging. */
 export type ErrorKind = "refusal" | "timeout" | "rate_limit" | "context_length" | "unknown";
 
-/** Reused helper for detect Error Kind behavior in src/infra. */
+/** Classifies common provider/runtime failures from redacted message and code text. */
 export function detectErrorKind(err: unknown): ErrorKind | undefined {
   if (err === undefined) {
     return undefined;

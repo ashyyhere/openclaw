@@ -1,4 +1,5 @@
-// infra bonjour discovery helpers and runtime behavior.
+// Discovers OpenClaw gateways advertised via Bonjour/mDNS, Avahi, or wide-area
+// DNS and normalizes TXT/SRV data into websocket endpoints.
 import { runCommandWithTimeout } from "../process/exec.js";
 import { normalizeOptionalLowercaseString } from "../shared/string-coerce.js";
 import { normalizeStringEntries, uniqueStrings } from "../shared/string-normalization.js";
@@ -6,7 +7,7 @@ import { parseStrictInteger } from "./parse-finite-number.js";
 import { isTailnetIPv4 } from "./tailnet.js";
 import { resolveWideAreaDiscoveryDomain } from "./widearea-dns.js";
 
-/** Shared type for Gateway Bonjour Beacon in src/infra. */
+/** Raw gateway beacon fields collected from DNS-SD TXT/SRV records. */
 export type GatewayBonjourBeacon = {
   instanceName: string;
   domain?: string;
@@ -25,7 +26,7 @@ export type GatewayBonjourBeacon = {
   txt?: Record<string, string>;
 };
 
-/** Shared type for Gateway Discovery Resolved Endpoint in src/infra. */
+/** Websocket endpoint derived from a validated gateway beacon. */
 export type GatewayDiscoveryResolvedEndpoint = {
   host: string;
   port: number;
@@ -35,7 +36,7 @@ export type GatewayDiscoveryResolvedEndpoint = {
   wsUrl: string;
 };
 
-/** Reused helper for resolve Gateway Discovery Endpoint behavior in src/infra. */
+/** Converts a beacon with a valid host/port into the websocket endpoint clients use. */
 export function resolveGatewayDiscoveryEndpoint(
   beacon: GatewayBonjourBeacon,
 ): GatewayDiscoveryResolvedEndpoint | null {
@@ -62,17 +63,17 @@ export function resolveGatewayDiscoveryEndpoint(
   };
 }
 
-/** Reused helper for pick Resolved Gateway Host behavior in src/infra. */
+/** Returns the resolved gateway host from a valid discovery beacon. */
 export function pickResolvedGatewayHost(beacon: GatewayBonjourBeacon): string | null {
   return resolveGatewayDiscoveryEndpoint(beacon)?.host ?? null;
 }
 
-/** Reused helper for pick Resolved Gateway Port behavior in src/infra. */
+/** Returns the resolved gateway port from a valid discovery beacon. */
 export function pickResolvedGatewayPort(beacon: GatewayBonjourBeacon): number | null {
   return resolveGatewayDiscoveryEndpoint(beacon)?.port ?? null;
 }
 
-/** Shared type for Gateway Bonjour Discover Opts in src/infra. */
+/** Discovery knobs for tests and platform-specific Bonjour/Avahi callers. */
 export type GatewayBonjourDiscoverOpts = {
   timeoutMs?: number;
   domains?: string[];
@@ -590,7 +591,7 @@ async function discoverViaAvahi(
   return parseAvahiBrowse(browse.stdout).map((beacon) => Object.assign({}, beacon, { domain }));
 }
 
-/** Reused helper for discover Gateway Beacons behavior in src/infra. */
+/** Discovers gateway beacons on the current platform and suppresses resolver failures. */
 export async function discoverGatewayBeacons(
   opts: GatewayBonjourDiscoverOpts = {},
 ): Promise<GatewayBonjourBeacon[]> {
