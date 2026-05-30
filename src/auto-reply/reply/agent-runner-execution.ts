@@ -120,7 +120,7 @@ import type { TypingSignaler } from "./typing-mode.js";
 // user-visible error. Prevents infinite ping-pong when the persisted session
 // selection keeps conflicting with fallback model choices.
 // See: https://github.com/openclaw/openclaw/issues/58348
-/** Reused constant for MAX LIVE SWITCH RETRIES behavior in src/auto-reply/reply. */
+/** Maximum live model-switch retries before surfacing a user-visible failure. */
 export const MAX_LIVE_SWITCH_RETRIES = 2;
 
 type AgentTurnTimingSpan = {
@@ -269,7 +269,7 @@ function readApprovalScopeValue(value: unknown): "turn" | "session" | undefined 
   return value === "turn" || value === "session" ? value : undefined;
 }
 
-/** Shared type for Runtime Fallback Attempt in src/auto-reply/reply. */
+/** Captured failure details for one provider/model fallback attempt. */
 export type RuntimeFallbackAttempt = {
   provider: string;
   model: string;
@@ -279,7 +279,7 @@ export type RuntimeFallbackAttempt = {
   code?: string;
 };
 
-/** Shared type for Agent Run Loop Result in src/auto-reply/reply. */
+/** Terminal result from the agent run loop before final reply delivery. */
 export type AgentRunLoopResult =
   | {
       kind: "success";
@@ -436,7 +436,7 @@ function resolveFallbackSelectionOrigin(params: { entry: SessionEntry; run: Foll
   return { provider: params.run.provider, model: params.run.model };
 }
 
-/** Reused helper for apply Fallback Candidate Selection To Entry behavior in src/auto-reply/reply. */
+/** Persists the selected fallback provider/model/auth state into a session entry. */
 export function applyFallbackCandidateSelectionToEntry(params: {
   entry: SessionEntry;
   run: FollowupRun["run"];
@@ -803,7 +803,7 @@ function markAgentRunFailureReplyPayload<T extends ReplyPayload>(payload: T): T 
   return markReplyPayloadForSourceSuppressionDelivery(payload);
 }
 
-/** Reused helper for build Known Agent Run Failure Reply Payload behavior in src/auto-reply/reply. */
+/** Converts known provider/runtime failures into safe user-facing reply payloads. */
 export function buildKnownAgentRunFailureReplyPayload(params: {
   err: unknown;
   sessionCtx: TemplateContext;
@@ -877,7 +877,7 @@ export function buildKnownAgentRunFailureReplyPayload(params: {
 
 const DEFAULT_RESERVE_TOKENS_FLOOR = 20_000;
 
-/** Reused helper for compute Context Aware Reserve Tokens Floor behavior in src/auto-reply/reply. */
+/** Computes the minimum compaction reserve tokens from a model context window. */
 export function computeContextAwareReserveTokensFloor(contextWindow: number | undefined): number {
   if (typeof contextWindow !== "number" || contextWindow <= 0) {
     return DEFAULT_RESERVE_TOKENS_FLOOR;
@@ -1137,7 +1137,7 @@ function resolveHeartbeatBleedHint(params: {
   );
 }
 
-/** Reused helper for build Context Overflow Recovery Text behavior in src/auto-reply/reply. */
+/** Builds the recovery text shown after context overflow or failed compaction. */
 export function buildContextOverflowRecoveryText(params: {
   duringCompaction?: boolean;
   preserveSessionMapping?: boolean;
@@ -1305,7 +1305,7 @@ function emitModelFallbackStepLifecycle(params: {
   });
 }
 
-/** Reused helper for resolve Session Runtime Override For Provider behavior in src/auto-reply/reply. */
+/** Applies persisted runtime overrides only for providers that support them. */
 export function resolveSessionRuntimeOverrideForProvider(params: {
   provider: string;
   entry?: Pick<SessionEntry, "agentRuntimeOverride">;
@@ -1321,7 +1321,7 @@ export function resolveSessionRuntimeOverrideForProvider(params: {
   return undefined;
 }
 
-/** Reused helper for resolve Run After Auto Fallback Primary Probe Recheck behavior in src/auto-reply/reply. */
+/** Rechecks auto-fallback primary probe state before running a queued reply turn. */
 export function resolveRunAfterAutoFallbackPrimaryProbeRecheck(params: {
   run: FollowupRun["run"];
   entry?: SessionEntry;
@@ -1391,7 +1391,7 @@ export function resolveRunAfterAutoFallbackPrimaryProbeRecheck(params: {
   };
 }
 
-/** Reused helper for run Agent Turn With Fallback behavior in src/auto-reply/reply. */
+/** Runs an agent turn with model fallback, streaming, session updates, and delivery hooks. */
 export async function runAgentTurnWithFallback(params: {
   commandBody: string;
   transcriptCommandBody?: string;

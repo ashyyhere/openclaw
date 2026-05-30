@@ -52,7 +52,7 @@ function shouldStoreNameInAccounts(params: {
   return channelHasAccounts(params.cfg, params.channelKey);
 }
 
-/** Reused helper for apply Account Name To Channel Section behavior in src/channels/plugins. */
+/** Applies a display name either at channel root or under the selected account. */
 export function applyAccountNameToChannelSection(params: {
   cfg: OpenClawConfig;
   channelKey: string;
@@ -112,7 +112,7 @@ export function applyAccountNameToChannelSection(params: {
   } as OpenClawConfig;
 }
 
-/** Reused helper for migrate Base Name To Default Account behavior in src/channels/plugins. */
+/** Moves a legacy root channel name into the default account when accounts are used. */
 export function migrateBaseNameToDefaultAccount(params: {
   cfg: OpenClawConfig;
   channelKey: string;
@@ -147,7 +147,7 @@ export function migrateBaseNameToDefaultAccount(params: {
   } as OpenClawConfig;
 }
 
-/** Reused helper for prepare Scoped Setup Config behavior in src/channels/plugins. */
+/** Prepares setup config with account naming and optional legacy-name migration. */
 export function prepareScopedSetupConfig(params: {
   cfg: OpenClawConfig;
   channelKey: string;
@@ -173,7 +173,7 @@ export function prepareScopedSetupConfig(params: {
   });
 }
 
-/** Reused helper for apply Setup Account Config Patch behavior in src/channels/plugins. */
+/** Applies an account-scoped config patch for a setup adapter. */
 export function applySetupAccountConfigPatch(params: {
   cfg: OpenClawConfig;
   channelKey: string;
@@ -188,7 +188,7 @@ export function applySetupAccountConfigPatch(params: {
   });
 }
 
-/** Reused helper for create Patched Account Setup Adapter behavior in src/channels/plugins. */
+/** Creates a setup adapter that writes account-scoped config patches. */
 export function createPatchedAccountSetupAdapter(params: {
   channelKey: string;
   alwaysUseAccounts?: boolean;
@@ -232,7 +232,7 @@ export function createPatchedAccountSetupAdapter(params: {
   };
 }
 
-/** Reused helper for create Zod Setup Input Validator behavior in src/channels/plugins. */
+/** Creates a setup input validator backed by a Zod schema and optional custom rule. */
 export function createZodSetupInputValidator<T extends ChannelSetupInput>(params: {
   schema: ZodType<T>;
   validate?: (params: { cfg: OpenClawConfig; accountId: string; input: T }) => string | null;
@@ -269,7 +269,7 @@ function hasPresentSetupValue(value: unknown): boolean {
   return value !== undefined && value !== null;
 }
 
-/** Reused helper for create Setup Input Presence Validator behavior in src/channels/plugins. */
+/** Creates a setup validator that enforces required credential fields unless env mode is used. */
 export function createSetupInputPresenceValidator(params: {
   defaultAccountOnlyEnvError?: string;
   whenNotUseEnv?: SetupInputPresenceRequirement[];
@@ -303,7 +303,7 @@ export function createSetupInputPresenceValidator(params: {
   });
 }
 
-/** Reused helper for create Env Patched Account Setup Adapter behavior in src/channels/plugins. */
+/** Creates a patched setup adapter with env-mode and credential-presence checks. */
 export function createEnvPatchedAccountSetupAdapter(params: {
   channelKey: string;
   alwaysUseAccounts?: boolean;
@@ -333,7 +333,7 @@ export function createEnvPatchedAccountSetupAdapter(params: {
   });
 }
 
-/** Reused helper for patch Scoped Account Config behavior in src/channels/plugins. */
+/** Writes a channel config patch at root or account scope depending on account id. */
 export function patchScopedAccountConfig(params: {
   cfg: OpenClawConfig;
   channelKey: string;
@@ -488,7 +488,7 @@ function resolveSingleAccountPromotionTarget(params: { channel: ChannelSectionBa
 // When promoting a single-account channel config to multi-account,
 // move top-level account settings into accounts.default so the original
 // account keeps working without duplicate account values at channel root.
-/** Reused helper for move Single Account Channel Section To Default Account behavior in src/channels/plugins. */
+/** Promotes single-account channel root keys into an account record for multi-account config. */
 export function moveSingleAccountChannelSectionToDefaultAccount(params: {
   cfg: OpenClawConfig;
   channelKey: string;

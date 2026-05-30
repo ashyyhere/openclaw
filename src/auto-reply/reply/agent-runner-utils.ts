@@ -27,20 +27,20 @@ import {
   resolveProviderScopedAuthProfile,
   resolveRunAuthProfile,
 } from "./agent-runner-auth-profile.js";
-/** Re-exported API for src/auto-reply/reply, starting with resolve Provider Scoped Auth Profile. */
+/** Auth-profile resolution helpers used by reply runner setup. */
 export { resolveProviderScopedAuthProfile, resolveRunAuthProfile };
 import {
   buildEmbeddedRunBaseParams as buildEmbeddedRunBaseParamsCore,
   resolveEnforceFinalTagWithResolver,
 } from "./agent-runner-run-params.js";
-/** Re-exported API for src/auto-reply/reply, starting with resolve Model Fallback Options. */
+/** Model fallback option resolver re-exported for reply runner callers. */
 export { resolveModelFallbackOptions } from "./agent-runner-run-params.js";
 import { resolveOriginMessageProvider, resolveOriginMessageTo } from "./origin-routing.js";
 import type { FollowupRun } from "./queue.js";
 
 const BUN_FETCH_SOCKET_ERROR_RE = /socket connection was closed unexpectedly/i;
 
-/** Reused helper for resolve Queued Reply Runtime Config behavior in src/auto-reply/reply. */
+/** Selects the runtime config snapshot that applies to a queued reply run. */
 export function resolveQueuedReplyRuntimeConfig(config: OpenClawConfig): OpenClawConfig {
   const runtimeConfig =
     typeof getRuntimeConfigSnapshot === "function" ? getRuntimeConfigSnapshot() : null;
@@ -55,7 +55,7 @@ export function resolveQueuedReplyRuntimeConfig(config: OpenClawConfig): OpenCla
   );
 }
 
-/** Reused helper for resolve Queued Reply Execution Config behavior in src/auto-reply/reply. */
+/** Resolves command and channel-scoped secret refs before executing a queued reply. */
 export async function resolveQueuedReplyExecutionConfig(
   config: OpenClawConfig,
   params?: {
@@ -171,11 +171,11 @@ export function buildThreadingToolContext(params: {
   };
 }
 
-/** Reused constant for is Bun Fetch Socket Error behavior in src/auto-reply/reply. */
+/** Detects Bun fetch socket-close failures for user-facing LLM error copy. */
 export const isBunFetchSocketError = (message?: string) =>
   message ? BUN_FETCH_SOCKET_ERROR_RE.test(message) : false;
 
-/** Reused constant for format Bun Fetch Socket Error behavior in src/auto-reply/reply. */
+/** Formats Bun fetch socket-close failures for outbound chat replies. */
 export const formatBunFetchSocketError = (message: string) => {
   const trimmed = message.trim();
   return [
@@ -186,14 +186,14 @@ export const formatBunFetchSocketError = (message: string) => {
   ].join("\n");
 };
 
-/** Reused constant for resolve Enforce Final Tag behavior in src/auto-reply/reply. */
+/** Resolves final-tag enforcement with the provider reasoning-tag detector injected. */
 export const resolveEnforceFinalTag = (
   run: FollowupRun["run"],
   provider: string,
   model = run.model,
 ) => resolveEnforceFinalTagWithResolver(run, provider, model, isReasoningTagProvider);
 
-/** Reused helper for build Embedded Run Base Params behavior in src/auto-reply/reply. */
+/** Builds embedded run base params with OpenClaw's reasoning-provider detector. */
 export function buildEmbeddedRunBaseParams(
   params: Parameters<typeof buildEmbeddedRunBaseParamsCore>[0],
 ) {
@@ -252,7 +252,7 @@ function buildTemplateSenderContext(sessionCtx: TemplateContext) {
   };
 }
 
-/** Reused helper for build Embedded Run Contexts behavior in src/auto-reply/reply. */
+/** Builds auth, embedded, and sender contexts for an embedded reply run. */
 export function buildEmbeddedRunContexts(params: {
   run: FollowupRun["run"];
   sessionCtx: TemplateContext;
@@ -270,7 +270,7 @@ export function buildEmbeddedRunContexts(params: {
   };
 }
 
-/** Reused helper for build Embedded Run Execution Params behavior in src/auto-reply/reply. */
+/** Builds the full execution parameter bundle for embedded reply runtime calls. */
 export function buildEmbeddedRunExecutionParams(params: {
   run: FollowupRun["run"];
   sessionCtx: TemplateContext;

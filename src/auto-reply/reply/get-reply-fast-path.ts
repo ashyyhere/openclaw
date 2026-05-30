@@ -59,7 +59,7 @@ function markReplyConfigRuntimeMode(
   });
 }
 
-/** Reused helper for mark Complete Reply Config behavior in src/auto-reply/reply. */
+/** Marks a config override as complete so fast reply tests skip runtime merge work. */
 export function markCompleteReplyConfig<T extends OpenClawConfig>(
   config: T,
   options?: { runtimeMode?: "fast" | "full" },
@@ -73,12 +73,12 @@ export function markCompleteReplyConfig<T extends OpenClawConfig>(
   return config;
 }
 
-/** Reused helper for with Fast Reply Config behavior in src/auto-reply/reply. */
+/** Marks a complete reply config that should use the lightweight fast-test runtime. */
 export function withFastReplyConfig<T extends OpenClawConfig>(config: T): T {
   return markCompleteReplyConfig(config, { runtimeMode: "fast" });
 }
 
-/** Reused helper for with Full Runtime Reply Config behavior in src/auto-reply/reply. */
+/** Marks a complete reply config while preserving full runtime execution in tests. */
 export function withFullRuntimeReplyConfig<T extends OpenClawConfig>(config: T): T {
   return markCompleteReplyConfig(config, { runtimeMode: "full" });
 }
@@ -99,7 +99,7 @@ function usesFullReplyRuntime(config: unknown): boolean {
   );
 }
 
-/** Reused helper for resolve Get Reply Config behavior in src/auto-reply/reply. */
+/** Resolves the effective get-reply config from runtime state and optional override. */
 export function resolveGetReplyConfig(params: {
   getRuntimeConfig: () => OpenClawConfig;
   isFastTestEnv: boolean;
@@ -123,7 +123,7 @@ export function resolveGetReplyConfig(params: {
   return applyMergePatch(params.getRuntimeConfig(), configOverride) as OpenClawConfig;
 }
 
-/** Reused helper for should Use Reply Fast Test Bootstrap behavior in src/auto-reply/reply. */
+/** Chooses the fast bootstrap path for complete fast-test reply configs. */
 export function shouldUseReplyFastTestBootstrap(params: {
   isFastTestEnv: boolean;
   configOverride?: OpenClawConfig;
@@ -135,7 +135,7 @@ export function shouldUseReplyFastTestBootstrap(params: {
   );
 }
 
-/** Reused helper for should Use Reply Fast Test Runtime behavior in src/auto-reply/reply. */
+/** Chooses the lightweight runtime path for complete fast-test reply configs. */
 export function shouldUseReplyFastTestRuntime(params: {
   cfg: OpenClawConfig;
   isFastTestEnv: boolean;
@@ -145,7 +145,7 @@ export function shouldUseReplyFastTestRuntime(params: {
   );
 }
 
-/** Reused helper for should Use Reply Fast Directive Execution behavior in src/auto-reply/reply. */
+/** Chooses fast directive execution for simple non-group, non-reset test turns. */
 export function shouldUseReplyFastDirectiveExecution(params: {
   isFastTestBootstrap: boolean;
   isGroup: boolean;
@@ -164,7 +164,7 @@ export function shouldUseReplyFastDirectiveExecution(params: {
   return !params.triggerBodyNormalized.includes("/");
 }
 
-/** Reused helper for build Fast Reply Command Context behavior in src/auto-reply/reply. */
+/** Builds the command context used by fast reply command execution. */
 export function buildFastReplyCommandContext(params: {
   ctx: MsgContext;
   cfg: OpenClawConfig;
@@ -201,7 +201,7 @@ export function buildFastReplyCommandContext(params: {
   };
 }
 
-/** Reused helper for should Handle Fast Reply Text Commands behavior in src/auto-reply/reply. */
+/** Checks whether fast reply should execute text commands for this source/config. */
 export function shouldHandleFastReplyTextCommands(params: {
   cfg: OpenClawConfig;
   commandSource?: string;
@@ -209,7 +209,7 @@ export function shouldHandleFastReplyTextCommands(params: {
   return params.commandSource === "native" || params.cfg.commands?.text !== false;
 }
 
-/** Reused helper for init Fast Reply Session State behavior in src/auto-reply/reply. */
+/** Initializes session store, reset state, and template context for fast reply tests. */
 export function initFastReplySessionState(params: {
   ctx: MsgContext;
   cfg: OpenClawConfig;
