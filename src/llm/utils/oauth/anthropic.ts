@@ -437,7 +437,7 @@ export async function refreshAnthropicToken(refreshToken: string): Promise<OAuth
   });
 }
 
-/** Reused constant for anthropic OAuth Provider behavior in src/llm/utils. */
+/** OAuth provider implementation for Anthropic Claude Pro/Max credentials. */
 export const anthropicOAuthProvider: OAuthProviderInterface = {
   id: "anthropic",
   name: "Anthropic (Claude Pro/Max)",

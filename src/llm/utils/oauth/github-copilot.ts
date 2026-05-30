@@ -71,7 +71,7 @@ function resolveExpiresAtFromEpochSeconds(value: unknown): number | undefined {
   return resolveExpiresAtMsFromEpochSeconds(value, { bufferMs: 5 * 60 * 1000 });
 }
 
-/** Reused helper for normalize Domain behavior in src/llm/utils. */
+/** Normalize a GitHub or enterprise host input to a hostname. */
 export function normalizeDomain(input: string): string | null {
   const trimmed = input.trim();
   if (!trimmed) {
@@ -113,7 +113,7 @@ function getBaseUrlFromToken(token: string): string | null {
   return `https://${apiHost}`;
 }
 
-/** Reused helper for get Git Hub Copilot Base Url behavior in src/llm/utils. */
+/** Resolve the Copilot API base URL from token proxy metadata or enterprise domain. */
 export function getGitHubCopilotBaseUrl(token?: string, enterpriseDomain?: string): string {
   // If we have a token, extract the base URL from proxy-ep
   if (token) {
@@ -551,7 +551,7 @@ export async function loginGitHubCopilot(options: {
   return credentials;
 }
 
-/** Reused constant for github Copilot OAuth Provider behavior in src/llm/utils. */
+/** OAuth provider implementation for GitHub Copilot device flow credentials. */
 export const githubCopilotOAuthProvider: OAuthProviderInterface = {
   id: "github-copilot",
   name: "GitHub Copilot",
@@ -584,7 +584,7 @@ export const githubCopilotOAuthProvider: OAuthProviderInterface = {
   },
 };
 
-/** Reused constant for testing behavior in src/llm/utils. */
+/** Test hooks for Copilot OAuth and model enablement internals. */
 export const testing = {
   enableGitHubCopilotModel,
   listGitHubCopilotModelIds,
