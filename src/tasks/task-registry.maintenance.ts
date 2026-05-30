@@ -1,4 +1,4 @@
-// tasks task registry maintenance helpers and runtime behavior.
+// Task registry maintenance, recovery, pruning, and operator inspection helpers.
 import { getAcpSessionManager } from "../acp/control-plane/manager.js";
 import {
   listAcpSessionEntries,
@@ -162,7 +162,7 @@ const defaultTaskRegistryMaintenanceRuntime: TaskRegistryMaintenanceRuntime = {
 let taskRegistryMaintenanceRuntime: TaskRegistryMaintenanceRuntime =
   defaultTaskRegistryMaintenanceRuntime;
 
-/** Shared type for Task Registry Maintenance Summary in src/tasks. */
+/** Counts of task records reconciled, recovered, stamped, or pruned by maintenance. */
 export type TaskRegistryMaintenanceSummary = {
   reconciled: number;
   recovered: number;
@@ -170,7 +170,7 @@ export type TaskRegistryMaintenanceSummary = {
   pruned: number;
 };
 
-/** Shared type for Task Registry Maintenance Task Diagnostic in src/tasks. */
+/** Diagnostic explaining how maintenance would handle one stale task. */
 export type TaskRegistryMaintenanceTaskDiagnostic = {
   taskId: string;
   runtime: TaskRecord["runtime"];
@@ -189,7 +189,7 @@ export type TaskRegistryMaintenanceTaskDiagnostic = {
   runId?: string;
 };
 
-/** Shared type for Task Registry Maintenance Diagnostics in src/tasks. */
+/** Maintenance diagnostics grouped by task condition. */
 export type TaskRegistryMaintenanceDiagnostics = {
   staleRunningTasks: TaskRegistryMaintenanceTaskDiagnostic[];
 };
@@ -873,7 +873,7 @@ function reconcileTaskRecordForOperatorInspectionWithContexts(
   return projectTaskLost(task, now, backingSessionContext);
 }
 
-/** Reused helper for reconcile Task Record For Operator Inspection behavior in src/tasks. */
+/** Project how a task should look for operator inspection without mutating the registry. */
 export function reconcileTaskRecordForOperatorInspection(
   task: TaskRecord,
   context: CronRecoveryContext = createCronRecoveryContext(),
@@ -885,7 +885,7 @@ export function reconcileTaskRecordForOperatorInspection(
   );
 }
 
-/** Reused helper for reconcile Inspectable Tasks behavior in src/tasks. */
+/** Return all task records reconciled for operator-facing inspection. */
 export function reconcileInspectableTasks(): TaskRecord[] {
   taskRegistryMaintenanceRuntime.ensureTaskRegistryReady();
   const cronRecoveryContext = createCronRecoveryContext();
@@ -903,7 +903,7 @@ export function reconcileInspectableTasks(): TaskRecord[] {
 
 configureTaskAuditTaskProvider(reconcileInspectableTasks);
 
-/** Shared type for Active Task Restart Blocker in src/tasks. */
+/** Active task that should block gateway restart until resolved. */
 export type ActiveTaskRestartBlocker = {
   taskId: string;
   status: Extract<TaskStatus, "running">;
@@ -929,7 +929,7 @@ function isTaskRestartBlocker(task: TaskRecord): task is TaskRecord & {
   return isActiveTaskRestartBlockerStatus(task.status) && !task.endedAt;
 }
 
-/** Reused helper for get Inspectable Active Task Restart Blockers behavior in src/tasks. */
+/** Return running task records that currently block a restart. */
 export function getInspectableActiveTaskRestartBlockers(): ActiveTaskRestartBlocker[] {
   const blockers: ActiveTaskRestartBlocker[] = [];
   for (const task of reconcileInspectableTasks()) {
@@ -955,23 +955,23 @@ export function getInspectableActiveTaskRestartBlockers(): ActiveTaskRestartBloc
   return blockers;
 }
 
-/** Reused helper for get Inspectable Task Registry Summary behavior in src/tasks. */
+/** Summarize operator-inspectable task registry state. */
 export function getInspectableTaskRegistrySummary(): TaskRegistrySummary {
   return summarizeTaskRecords(reconcileInspectableTasks());
 }
 
-/** Reused helper for get Inspectable Task Audit Summary behavior in src/tasks. */
+/** Summarize task audit findings over inspectable task state. */
 export function getInspectableTaskAuditSummary(): TaskAuditSummary {
   return summarizeTaskAuditFindings(getInspectableTaskAuditFindings());
 }
 
-/** Reused helper for get Inspectable Task Audit Findings behavior in src/tasks. */
+/** List task audit findings over inspectable task state. */
 export function getInspectableTaskAuditFindings(): TaskAuditFinding[] {
   const tasks = reconcileInspectableTasks();
   return listTaskAuditFindings({ tasks });
 }
 
-/** Reused helper for reconcile Task Lookup Token behavior in src/tasks. */
+/** Resolve a task lookup token and reconcile the result for operator inspection. */
 export function reconcileTaskLookupToken(token: string): TaskRecord | undefined {
   taskRegistryMaintenanceRuntime.ensureTaskRegistryReady();
   const task = taskRegistryMaintenanceRuntime.resolveTaskForLookupToken(token);
@@ -981,7 +981,7 @@ export function reconcileTaskLookupToken(token: string): TaskRecord | undefined 
 // Preview is synchronous and cannot call the async detached-task recovery hook,
 // so hook-recovered tasks are counted under reconciled here. Durable cron
 // recovery is synchronous and can be previewed exactly.
-/** Reused helper for preview Task Registry Maintenance behavior in src/tasks. */
+/** Preview what task registry maintenance would change without mutating records. */
 export function previewTaskRegistryMaintenance(): TaskRegistryMaintenanceSummary {
   taskRegistryMaintenanceRuntime.ensureTaskRegistryReady();
   const now = Date.now();
@@ -1044,7 +1044,7 @@ function explainActiveTaskRetention(params: {
   return { decision: "retained", reason: "backing_session_present" };
 }
 
-/** Reused helper for get Task Registry Maintenance Diagnostics behavior in src/tasks. */
+/** Return diagnostics for stale running tasks and maintenance retention decisions. */
 export function getTaskRegistryMaintenanceDiagnostics(): TaskRegistryMaintenanceDiagnostics {
   taskRegistryMaintenanceRuntime.ensureTaskRegistryReady();
   const now = Date.now();
@@ -1098,7 +1098,7 @@ function startScheduledSweep() {
   sweepTaskRegistry().then(clearSweepInProgress, clearSweepInProgress);
 }
 
-/** Reused helper for run Task Registry Maintenance behavior in src/tasks. */
+/** Run one maintenance sweep over task records, stale sessions, and expired state. */
 export async function runTaskRegistryMaintenance(): Promise<TaskRegistryMaintenanceSummary> {
   taskRegistryMaintenanceRuntime.ensureTaskRegistryReady();
   const now = Date.now();
@@ -1211,12 +1211,12 @@ export async function runTaskRegistryMaintenance(): Promise<TaskRegistryMaintena
   return { reconciled, recovered, cleanupStamped, pruned };
 }
 
-/** Reused helper for sweep Task Registry behavior in src/tasks. */
+/** Alias for running one task registry maintenance sweep. */
 export async function sweepTaskRegistry(): Promise<TaskRegistryMaintenanceSummary> {
   return runTaskRegistryMaintenance();
 }
 
-/** Reused helper for start Task Registry Maintenance behavior in src/tasks. */
+/** Start deferred and interval-based task registry maintenance sweeps. */
 export function startTaskRegistryMaintenance() {
   taskRegistryMaintenanceRuntime.ensureTaskRegistryReady();
   deferredSweep = setTimeout(() => {
@@ -1231,7 +1231,7 @@ export function startTaskRegistryMaintenance() {
   sweeper.unref?.();
 }
 
-/** Reused helper for stop Task Registry Maintenance behavior in src/tasks. */
+/** Stop scheduled task registry maintenance sweeps. */
 export function stopTaskRegistryMaintenance() {
   if (deferredSweep) {
     clearTimeout(deferredSweep);
@@ -1244,24 +1244,24 @@ export function stopTaskRegistryMaintenance() {
   sweepInProgress = false;
 }
 
-/** Reused constant for stop Task Registry Maintenance For Tests behavior in src/tasks. */
+/** Test alias for stopping scheduled task registry maintenance. */
 export const stopTaskRegistryMaintenanceForTests = stopTaskRegistryMaintenance;
 
-/** Reused helper for set Task Registry Maintenance Runtime For Tests behavior in src/tasks. */
+/** Replace task registry maintenance dependencies for tests. */
 export function setTaskRegistryMaintenanceRuntimeForTests(
   runtime: TaskRegistryMaintenanceRuntime,
 ): void {
   taskRegistryMaintenanceRuntime = runtime;
 }
 
-/** Reused helper for reset Task Registry Maintenance Runtime For Tests behavior in src/tasks. */
+/** Restore default task registry maintenance dependencies after tests. */
 export function resetTaskRegistryMaintenanceRuntimeForTests(): void {
   taskRegistryMaintenanceRuntime = defaultTaskRegistryMaintenanceRuntime;
   configuredCronStorePath = undefined;
   configuredCronRuntimeAuthoritative = false;
 }
 
-/** Reused helper for configure Task Registry Maintenance behavior in src/tasks. */
+/** Configure cron-store authority and path inputs used by maintenance. */
 export function configureTaskRegistryMaintenance(options: {
   cronStorePath?: string;
   cronRuntimeAuthoritative?: boolean;
@@ -1272,7 +1272,7 @@ export function configureTaskRegistryMaintenance(options: {
   }
 }
 
-/** Reused helper for get Reconciled Task By Id behavior in src/tasks. */
+/** Return one task reconciled for operator inspection by task id. */
 export function getReconciledTaskById(taskId: string): TaskRecord | undefined {
   const task = getTaskById(taskId);
   return task ? reconcileTaskRecordForOperatorInspection(task) : undefined;
