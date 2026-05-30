@@ -10,7 +10,7 @@ import {
 
 const DEFAULT_CHAT_RUN_ABORT_GRACE_MS = 60_000;
 
-/** Shared type for Chat Abort Controller Entry in src/gateway. */
+/** Active chat or agent run registered for cancellation and session projection. */
 export type ChatAbortControllerEntry = {
   controller: AbortController;
   sessionId: string;
@@ -45,7 +45,7 @@ type RegisteredChatAbortController = {
   cleanup: () => void;
 };
 
-/** Reused helper for is Chat Stop Command Text behavior in src/gateway. */
+/** Check whether user text is a stop/cancel command for an active chat run. */
 export function isChatStopCommandText(text: string): boolean {
   return isAbortRequestText(text);
 }
@@ -88,7 +88,7 @@ export function resolveChatRunExpiresAtMs(params: {
   return Math.min(max, Math.max(min, target));
 }
 
-/** Reused helper for resolve Agent Run Expires At Ms behavior in src/gateway. */
+/** Resolve the idempotency/cleanup expiry for agent-only abort registrations. */
 export function resolveAgentRunExpiresAtMs(params: {
   now: number;
   timeoutMs: number;
@@ -104,7 +104,7 @@ export function resolveAgentRunExpiresAtMs(params: {
   });
 }
 
-/** Reused helper for register Chat Abort Controller behavior in src/gateway. */
+/** Register a chat or agent run abort controller when the run has a session key. */
 export function registerChatAbortController(params: {
   chatAbortControllers: Map<string, ChatAbortControllerEntry>;
   runId: string;
@@ -250,7 +250,7 @@ function resolveDefaultGlobalAgentId(ops: ChatAbortOps): string | undefined {
   return cfg ? resolveDefaultAgentId(cfg) : undefined;
 }
 
-/** Reused helper for abort Chat Run By Id behavior in src/gateway. */
+/** Abort one active chat run and emit final cancelled lifecycle/session events. */
 export function abortChatRunById(
   ops: ChatAbortOps,
   params: {
@@ -306,7 +306,7 @@ export function abortChatRunById(
   return { aborted: true };
 }
 
-/** Reused helper for update Chat Run Provider behavior in src/gateway. */
+/** Update provider/auth-provider ids tracked on an active chat run. */
 export function updateChatRunProvider(
   chatAbortControllers: Map<string, ChatAbortControllerEntry>,
   params: {
@@ -324,7 +324,7 @@ export function updateChatRunProvider(
   return true;
 }
 
-/** Reused helper for abort Chat Runs For Provider behavior in src/gateway. */
+/** Abort all active chat runs associated with a provider or auth provider. */
 export function abortChatRunsForProvider(
   ops: ChatAbortOps,
   params: {

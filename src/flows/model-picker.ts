@@ -1,4 +1,4 @@
-// flows model picker helpers and runtime behavior.
+// Interactive model picker and allowlist helpers for configure/onboarding flows.
 import { resolveDefaultAgentDir } from "../agents/agent-scope.js";
 import { DEFAULT_MODEL, DEFAULT_PROVIDER } from "../agents/defaults.js";
 import { resolveVisibleModelCatalog } from "../agents/model-catalog-visibility.js";
@@ -36,7 +36,7 @@ import { t } from "../wizard/i18n/index.js";
 import type { WizardPrompter, WizardSelectOption } from "../wizard/prompts.js";
 import { loadPreferredProviderPickerCatalog } from "./model-picker.provider-catalog.js";
 
-/** Re-exported API for src/flows, starting with apply Primary Model. */
+/** Apply the selected primary model to provider-owned config. */
 export { applyPrimaryModel } from "../plugins/provider-model-primary.js";
 
 const KEEP_VALUE = "__keep__";
@@ -81,7 +81,7 @@ function resolvePickerAgentDir(params: {
   return params.agentDir ?? resolveDefaultAgentDir(params.cfg, params.env ?? process.env);
 }
 
-/** Shared type for Prompt Default Model Params in src/flows. */
+/** Inputs controlling default-model selection prompts and provider setup hooks. */
 export type PromptDefaultModelParams = {
   config: OpenClawConfig;
   prompter: WizardPrompter;
@@ -99,9 +99,9 @@ export type PromptDefaultModelParams = {
   message?: string;
 };
 
-/** Shared type for Prompt Default Model Result in src/flows. */
+/** Selected default model plus optional config changes from provider setup. */
 export type PromptDefaultModelResult = { model?: string; config?: OpenClawConfig };
-/** Shared type for Prompt Model Allowlist Result in src/flows. */
+/** Selected model allowlist and optional scope keys for partial allowlist edits. */
 export type PromptModelAllowlistResult = { models?: string[]; scopeKeys?: string[] };
 
 async function loadModelPickerRuntime() {
@@ -633,7 +633,7 @@ async function maybeHandleProviderPluginSelection(params: {
   return { model: applied.defaultModel, config: applied.config };
 }
 
-/** Reused helper for prompt Default Model behavior in src/flows. */
+/** Prompt for the default agent model, including catalog browse and plugin setup choices. */
 export async function promptDefaultModel(
   params: PromptDefaultModelParams,
 ): Promise<PromptDefaultModelResult> {
@@ -977,7 +977,7 @@ export async function promptDefaultModel(
   return { model };
 }
 
-/** Reused helper for prompt Model Allowlist behavior in src/flows. */
+/** Prompt for the configured model allowlist, optionally scoped to one provider. */
 export async function promptModelAllowlist(params: {
   config: OpenClawConfig;
   prompter: WizardPrompter;
@@ -1303,7 +1303,7 @@ export async function promptModelAllowlist(params: {
   return { models: [] };
 }
 
-/** Reused helper for apply Model Allowlist behavior in src/flows. */
+/** Apply a selected model allowlist to agents.defaults.models. */
 export function applyModelAllowlist(
   cfg: OpenClawConfig,
   models: string[],
@@ -1380,7 +1380,7 @@ export function applyModelAllowlist(
   };
 }
 
-/** Reused helper for apply Model Fallbacks From Selection behavior in src/flows. */
+/** Convert a selected model set into primary-model fallback config. */
 export function applyModelFallbacksFromSelection(
   cfg: OpenClawConfig,
   selection: string[],
