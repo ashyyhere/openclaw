@@ -1,4 +1,4 @@
-// ui/src/ui app chat helpers and runtime behavior.
+/** Chat app orchestration for composer sends, queues, slash commands, and avatars. */
 import { setLastActiveSessionKey } from "./app-last-active-session.ts";
 import { scheduleChatScroll, resetChatScroll } from "./app-scroll.ts";
 import { resetToolStream } from "./app-tool-stream.ts";
@@ -50,7 +50,7 @@ import type { ChatAttachment, ChatQueueItem } from "./ui-types.ts";
 import { generateUUID } from "./uuid.ts";
 import { isRenderableControlUiAvatarUrl } from "./views/agents-utils.ts";
 
-/** Shared type for Chat Host in ui/src/ui. */
+/** App host shape required by chat orchestration helpers. */
 export type ChatHost = ChatInputHistoryState & {
   client: GatewayBrowserClient | null;
   chatStream: string | null;
@@ -88,13 +88,13 @@ export type ChatHost = ChatInputHistoryState & {
   onSlashAction?: (action: string) => void | Promise<void>;
 };
 
-/** Shared type for Chat Send Options in ui/src/ui. */
+/** Options for programmatic chat sends from slash commands and UI actions. */
 export type ChatSendOptions = {
   confirmReset?: boolean;
   restoreDraft?: boolean;
 };
 
-/** Shared type for Chat Abort Options in ui/src/ui. */
+/** Options controlling draft preservation when aborting a run. */
 export type ChatAbortOptions = {
   preserveDraft?: boolean;
 };
@@ -105,12 +105,12 @@ type SessionDefaultsSnapshot = {
 };
 
 // Chat pickers need recency-free session rows so older channel chats remain selectable.
-/** Reused constant for CHAT SESSIONS ACTIVE MINUTES behavior in ui/src/ui. */
+/** Active-session recency window used when refreshing chat session rows. */
 export const CHAT_SESSIONS_ACTIVE_MINUTES = 0;
-/** Reused constant for CHAT SESSIONS REFRESH LIMIT behavior in ui/src/ui. */
+/** Default number of session rows loaded alongside chat state. */
 export const CHAT_SESSIONS_REFRESH_LIMIT = 50;
 
-/** Reused helper for create Chat Sessions Load Overrides behavior in ui/src/ui. */
+/** Builds session-list overrides needed by chat refresh and reset flows. */
 export function createChatSessionsLoadOverrides(
   state: { sessionsShowArchived?: boolean },
   options: { offset?: number; append?: boolean; search?: string | null } = {},
@@ -141,22 +141,22 @@ export function createChatSessionsLoadOverrides(
   }
   return overrides;
 }
-/** Re-exported API for ui/src/ui. */
+/** Input-history actions re-exported for chat view components. */
 export {
   handleChatDraftChange,
   handleChatInputHistoryKey,
   navigateChatInputHistory,
   resetChatInputHistoryNavigation,
 };
-/** Re-exported API for ui/src/ui, starting with Chat Input History Key Input. */
+/** Input-history key event contracts re-exported for chat view components. */
 export type { ChatInputHistoryKeyInput, ChatInputHistoryKeyResult };
 
-/** Reused helper for is Chat Busy behavior in ui/src/ui. */
+/** Returns whether a send or streamed run currently blocks normal submission. */
 export function isChatBusy(host: ChatHost) {
   return host.chatSending || Boolean(host.chatRunId);
 }
 
-/** Reused helper for has Abortable Session Run behavior in ui/src/ui. */
+/** Checks local and session-list state for a run that can still be aborted. */
 export function hasAbortableSessionRun(host: {
   chatRunId?: string | null;
   sessionKey: string;
@@ -172,7 +172,7 @@ export function hasAbortableSessionRun(host: {
   );
 }
 
-/** Reused helper for is Chat Stop Command behavior in ui/src/ui. */
+/** Recognizes composer text that should abort the active chat run. */
 export function isChatStopCommand(text: string) {
   const trimmed = text.trim();
   if (!trimmed) {
@@ -850,7 +850,7 @@ async function sendDetachedBtwMessage(
   return ok;
 }
 
-/** Reused helper for steer Queued Chat Message behavior in ui/src/ui. */
+/** Sends a queued message as steering input to the currently running chat. */
 export async function steerQueuedChatMessage(host: ChatHost, id: string) {
   if (!host.connected || !host.chatRunId) {
     return;
@@ -928,7 +928,7 @@ async function flushChatQueue(host: ChatHost) {
   }
 }
 
-/** Reused helper for remove Queued Message behavior in ui/src/ui. */
+/** Removes a queued composer item and releases detached attachment payloads. */
 export function removeQueuedMessage(host: ChatHost, id: string) {
   const removed = host.chatQueue.filter((item) => item.id === id);
   host.chatQueue = host.chatQueue.filter((item) => item.id !== id);
@@ -937,7 +937,7 @@ export function removeQueuedMessage(host: ChatHost, id: string) {
   }
 }
 
-/** Reused helper for clear Pending Queue Items For Run behavior in ui/src/ui. */
+/** Clears queued steering items attached to a completed or aborted run. */
 export function clearPendingQueueItemsForRun(host: ChatHost, runId: string | undefined) {
   if (!runId) {
     return;
@@ -958,14 +958,14 @@ function chatQueueCollections(host: ChatQueueStoreHost): ChatQueueItem[][] {
   return [host.chatQueue, ...Object.values(host.chatQueueBySession ?? {})];
 }
 
-/** Reused helper for has Reconnectable Queued Chat Sends behavior in ui/src/ui. */
+/** Detects queued sends that should retry after Gateway reconnect. */
 export function hasReconnectableQueuedChatSends(host: ChatQueueStoreHost): boolean {
   return chatQueueCollections(host).some((queue) =>
     queue.some((item) => item.sendRunId && item.sendState === "waiting-reconnect"),
   );
 }
 
-/** Reused helper for mark Queued Chat Sends Waiting For Reconnect behavior in ui/src/ui. */
+/** Moves in-flight queued sends back to waiting state after disconnect. */
 export function markQueuedChatSendsWaitingForReconnect(host: ChatQueueStoreHost) {
   const markQueue = (queue: ChatQueueItem[]): { changed: boolean; queue: ChatQueueItem[] } => {
     let changed = false;
@@ -1001,7 +1001,7 @@ export function markQueuedChatSendsWaitingForReconnect(host: ChatQueueStoreHost)
   }
 }
 
-/** Reused helper for retry Reconnectable Queued Chat Sends behavior in ui/src/ui. */
+/** Retries reconnectable queued sends across the current and background sessions. */
 export async function retryReconnectableQueuedChatSends(host: ChatHost) {
   if (!host.connected || !host.client || host.chatSending) {
     return;
@@ -1033,7 +1033,7 @@ export async function retryReconnectableQueuedChatSends(host: ChatHost) {
   }
 }
 
-/** Reused helper for retry Queued Chat Message behavior in ui/src/ui. */
+/** Retries one failed queued send from the current chat session. */
 export async function retryQueuedChatMessage(host: ChatHost, id: string) {
   const item = host.chatQueue.find((entry) => entry.id === id);
   if (!item || item.localCommandName || item.pendingRunId || item.sendState === "sending") {
@@ -1050,7 +1050,7 @@ export async function retryQueuedChatMessage(host: ChatHost, id: string) {
   }
 }
 
-/** Reused helper for handle Send Chat behavior in ui/src/ui. */
+/** Handles composer submission, local slash commands, side messages, and queuing. */
 export async function handleSendChat(
   host: ChatHost,
   messageOverride?: string,
@@ -1305,7 +1305,7 @@ function injectCommandResult(host: ChatHost, content: string) {
   ];
 }
 
-/** Reused helper for refresh Chat behavior in ui/src/ui. */
+/** Refreshes chat history plus secondary chat-side metadata. */
 export async function refreshChat(
   host: ChatHost,
   opts?: { scheduleScroll?: boolean; awaitHistory?: boolean },
@@ -1356,7 +1356,7 @@ async function refreshChatCommands(host: ChatHost) {
   });
 }
 
-/** Reused constant for flush Chat Queue For Event behavior in ui/src/ui. */
+/** Queue-drain hook exposed for event handlers that just unblocked chat sending. */
 export const flushChatQueueForEvent = flushChatQueue;
 const chatAvatarRequestVersions = new WeakMap<object, number>();
 
@@ -1453,7 +1453,7 @@ function isLocalControlUiAvatarUrl(avatarUrl: string): boolean {
   return avatarUrl.startsWith("/");
 }
 
-/** Reused helper for refresh Chat Avatar behavior in ui/src/ui. */
+/** Refreshes the active session avatar metadata and renderable image URL. */
 export async function refreshChatAvatar(host: ChatHost) {
   if (!host.connected) {
     clearChatAvatarState(host);
