@@ -1,9 +1,7 @@
-// extensions/firecrawl api helpers and runtime behavior.
 import type { OpenClawConfig } from "openclaw/plugin-sdk/config-contracts";
 import { readStringValue } from "openclaw/plugin-sdk/string-coerce-runtime";
 import { runFirecrawlScrape } from "./src/firecrawl-client.js";
 
-/** Public firecrawl plugin type for Fetch Firecrawl Content Params. */
 export type FetchFirecrawlContentParams = {
   url: string;
   extractMode: "markdown" | "text";
@@ -17,7 +15,6 @@ export type FetchFirecrawlContentParams = {
   maxChars?: number;
 };
 
-/** Public firecrawl plugin type for Fetch Firecrawl Content Result. */
 export type FetchFirecrawlContentResult = {
   text: string;
   title?: string;
@@ -26,7 +23,6 @@ export type FetchFirecrawlContentResult = {
   warning?: string;
 };
 
-/** Public firecrawl plugin helper for fetch Firecrawl Content behavior. */
 export async function fetchFirecrawlContent(
   params: FetchFirecrawlContentParams,
 ): Promise<FetchFirecrawlContentResult> {

@@ -1,4 +1,3 @@
-// extensions/voice-call/src/providers/twilio api helpers and runtime behavior.
 import { fetchWithSsrFGuard } from "../../../api.js";
 
 type ParsedTwilioApiError = {
