@@ -2,7 +2,7 @@ import { normalizeProviderId } from "@openclaw/model-catalog-core/provider-id";
 import { normalizeModelRef } from "../agents/model-selection.js";
 import { normalizeLowercaseStringOrEmpty } from "../shared/string-coerce.js";
 
-/** Shared type for Cached Pricing Tier in src/gateway. */
+/** Tiered cached pricing for a half-open input token range. */
 export type CachedPricingTier = {
   input: number;
   output: number;
@@ -12,7 +12,7 @@ export type CachedPricingTier = {
   range: [number, number];
 };
 
-/** Shared type for Cached Model Pricing in src/gateway. */
+/** Cached model pricing values, with optional tiered overrides. */
 export type CachedModelPricing = {
   input: number;
   output: number;
@@ -22,10 +22,10 @@ export type CachedModelPricing = {
   tieredPricing?: CachedPricingTier[];
 };
 
-/** Shared type for Gateway Model Pricing Health Source in src/gateway. */
+/** Upstream source that can refresh or seed Gateway model pricing. */
 export type GatewayModelPricingHealthSource = "openrouter" | "litellm" | "bootstrap" | "refresh";
 
-/** Shared type for Gateway Model Pricing Health in src/gateway. */
+/** Health summary for pricing cache refresh sources. */
 export type GatewayModelPricingHealth = {
   state: "ok" | "degraded" | "disabled";
   sources: Array<{
@@ -58,7 +58,7 @@ function modelPricingCacheKey(provider: string, model: string): string {
     : `${providerId}/${modelId}`;
 }
 
-/** Reused helper for replace Gateway Model Pricing Cache behavior in src/gateway. */
+/** Replaces the full in-memory pricing cache and cache timestamp. */
 export function replaceGatewayModelPricingCache(
   nextPricing: Map<string, CachedModelPricing>,
   nextCachedAt = Date.now(),
@@ -67,14 +67,14 @@ export function replaceGatewayModelPricingCache(
   cachedAt = nextCachedAt;
 }
 
-/** Reused helper for clear Gateway Model Pricing Cache State behavior in src/gateway. */
+/** Clears pricing cache entries, timestamp, and source failure state. */
 export function clearGatewayModelPricingCacheState(): void {
   cachedPricing = new Map();
   cachedAt = 0;
   clearGatewayModelPricingFailures();
 }
 
-/** Reused helper for record Gateway Model Pricing Source Failure behavior in src/gateway. */
+/** Records the latest pricing refresh failure for one source. */
 export function recordGatewayModelPricingSourceFailure(
   source: GatewayModelPricingHealthSource,
   detail: string,
@@ -86,19 +86,19 @@ export function recordGatewayModelPricingSourceFailure(
   });
 }
 
-/** Reused helper for clear Gateway Model Pricing Source Failure behavior in src/gateway. */
+/** Clears failure state for one pricing source. */
 export function clearGatewayModelPricingSourceFailure(
   source: GatewayModelPricingHealthSource,
 ): void {
   sourceFailures.delete(source);
 }
 
-/** Reused helper for clear Gateway Model Pricing Failures behavior in src/gateway. */
+/** Clears all pricing source failure state. */
 export function clearGatewayModelPricingFailures(): void {
   sourceFailures.clear();
 }
 
-/** Reused helper for get Gateway Model Pricing Health behavior in src/gateway. */
+/** Returns aggregate pricing source health for status and diagnostics. */
 export function getGatewayModelPricingHealth(params?: {
   enabled?: boolean;
 }): GatewayModelPricingHealth {
@@ -130,7 +130,7 @@ export function getGatewayModelPricingHealth(params?: {
   };
 }
 
-/** Reused helper for get Cached Gateway Model Pricing behavior in src/gateway. */
+/** Looks up cached pricing by provider/model, including normalized model refs. */
 export function getCachedGatewayModelPricing(params: {
   provider?: string;
   model?: string;
@@ -153,7 +153,7 @@ export function getCachedGatewayModelPricing(params: {
   return normalizedKey ? cachedPricing.get(normalizedKey) : undefined;
 }
 
-/** Reused helper for get Gateway Model Pricing Cache Meta behavior in src/gateway. */
+/** Returns cache timestamp, placeholder TTL, and entry count metadata. */
 export function getGatewayModelPricingCacheMeta(): {
   cachedAt: number;
   ttlMs: number;
@@ -184,18 +184,18 @@ function stablePricingValue(value: unknown): string {
     .join(",")}}`;
 }
 
-/** Reused helper for get Gateway Model Pricing Cache Fingerprint behavior in src/gateway. */
+/** Builds a deterministic cache fingerprint for prompt/cache invalidation. */
 export function getGatewayModelPricingCacheFingerprint(): string {
   const entries = Array.from(cachedPricing.entries()).toSorted(([a], [b]) => a.localeCompare(b));
   return stablePricingValue(entries);
 }
 
-/** Reused helper for reset Gateway Model Pricing Cache For Test behavior in src/gateway. */
+/** Resets pricing cache state for isolated tests. */
 export function resetGatewayModelPricingCacheForTest(): void {
   clearGatewayModelPricingCacheState();
 }
 
-/** Reused helper for set Gateway Model Pricing For Test behavior in src/gateway. */
+/** Installs explicit provider/model pricing entries for tests. */
 export function setGatewayModelPricingForTest(
   entries: Array<{ provider: string; model: string; pricing: CachedModelPricing }>,
 ): void {
