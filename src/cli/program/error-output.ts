@@ -41,7 +41,7 @@ function formatDocsHint(): string {
   return `${theme.muted("Docs:")} ${formatDocsLink("/cli", "docs.openclaw.ai/cli")}`;
 }
 
-/** Reused helper for format Cli Parse Error Output behavior in src/cli/program. */
+/** Convert Commander parse errors into OpenClaw-specific help and docs hints. */
 export function formatCliParseErrorOutput(
   raw: string,
   options: FormatCliParseErrorOptions = {},

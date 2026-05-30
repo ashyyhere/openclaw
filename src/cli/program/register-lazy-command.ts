@@ -15,7 +15,7 @@ type RegisterLazyCommandParams = {
   register: () => Promise<void> | void;
 };
 
-/** Reused helper for register Lazy Command behavior in src/cli/program. */
+/** Register a placeholder command that loads the real command tree only when invoked. */
 export function registerLazyCommand({
   program,
   name,

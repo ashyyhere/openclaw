@@ -43,7 +43,7 @@ const EXAMPLES = [
   ],
 ] as const;
 
-/** Reused helper for configure Program Help behavior in src/cli/program. */
+/** Configure root CLI help, global options, command hints, and parse-error formatting. */
 export function configureProgramHelp(
   program: Command,
   ctx: ProgramContext,

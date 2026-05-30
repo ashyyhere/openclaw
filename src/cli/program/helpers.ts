@@ -1,12 +1,12 @@
 import { InvalidArgumentError, type Command } from "commander";
 import { parseStrictPositiveInteger } from "../../infra/parse-finite-number.js";
 
-/** Reused helper for collect Option behavior in src/cli/program. */
+/** Commander collector for repeatable string options. */
 export function collectOption(value: string, previous: string[] = []): string[] {
   return [...previous, value];
 }
 
-/** Reused helper for parse Positive Int Or Undefined behavior in src/cli/program. */
+/** Parse optional positive integers while preserving omitted values as undefined. */
 export function parsePositiveIntOrUndefined(value: unknown): number | undefined {
   if (value === undefined || value === null || value === "") {
     return undefined;
@@ -14,12 +14,12 @@ export function parsePositiveIntOrUndefined(value: unknown): number | undefined 
   return parseStrictPositiveInteger(value);
 }
 
-/** Reused helper for parse Strict Positive Int Or Undefined behavior in src/cli/program. */
+/** Strictly parse a positive integer or return undefined for invalid input. */
 export function parseStrictPositiveIntOrUndefined(value: unknown): number | undefined {
   return parseStrictPositiveInteger(value);
 }
 
-/** Reused helper for parse Strict Positive Int Option behavior in src/cli/program. */
+/** Commander parser that reports invalid positive integers as option errors. */
 export function parseStrictPositiveIntOption(value: string, flag: string): number {
   const parsed = parseStrictPositiveInteger(value);
   if (parsed === undefined) {
@@ -28,7 +28,7 @@ export function parseStrictPositiveIntOption(value: string, flag: string): numbe
   return parsed;
 }
 
-/** Reused helper for resolve Action Args behavior in src/cli/program. */
+/** Read Commander action args from a command object without depending on private types. */
 export function resolveActionArgs(actionCommand?: Command): string[] {
   if (!actionCommand) {
     return [];
@@ -77,7 +77,7 @@ function stringifyOptionValue(value: unknown): string | undefined {
   return undefined;
 }
 
-/** Reused helper for resolve Command Option Args behavior in src/cli/program. */
+/** Reconstruct explicitly supplied option argv so lazy commands can reparse faithfully. */
 export function resolveCommandOptionArgs(command?: Command): string[] {
   if (!command) {
     return [];
