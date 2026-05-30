@@ -37,7 +37,7 @@ async function prepareRoutedCommand(params: {
   });
 }
 
-/** Reused helper for try Route Cli behavior in src/cli. */
+/** Try the route-first CLI path after startup policy setup, returning false to fall back. */
 export async function tryRouteCli(argv: string[]): Promise<boolean> {
   if (isTruthyEnvValue(process.env.OPENCLAW_DISABLE_ROUTE_FIRST)) {
     return false;

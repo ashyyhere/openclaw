@@ -63,7 +63,7 @@ async function resolveApproveScopesForRequest(
   }
 }
 
-/** Reused helper for register Nodes Pairing Commands behavior in src/cli/nodes-cli. */
+/** Register node pairing pending/approve/reject helpers with approval-scope resolution. */
 export function registerNodesPairingCommands(nodes: Command) {
   nodesCallOpts(
     nodes

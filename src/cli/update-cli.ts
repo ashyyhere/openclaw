@@ -14,9 +14,11 @@ import { updateStatusCommand } from "./update-cli/status.js";
 import { updateCommand, updateFinalizeCommand } from "./update-cli/update-command.js";
 import { updateWizardCommand } from "./update-cli/wizard.js";
 
-/** Re-exported API for src/cli, starting with update Command. */
+/**
+ * Re-export update command implementations for tests and legacy command assembly.
+ */
 export { updateCommand, updateFinalizeCommand, updateStatusCommand, updateWizardCommand };
-/** Re-exported API for src/cli. */
+/** Option shapes consumed by the update command implementations. */
 export type {
   UpdateCommandOptions,
   UpdateFinalizeOptions,
@@ -39,7 +41,7 @@ function inheritedUpdateTimeout(
   return inheritOptionFromParent<string>(command, "timeout");
 }
 
-/** Reused helper for register Update Cli behavior in src/cli. */
+/** Register update status, wizard, finalize, and default update flows. */
 export function registerUpdateCli(program: Command) {
   program.enablePositionalOptions();
   const update = program

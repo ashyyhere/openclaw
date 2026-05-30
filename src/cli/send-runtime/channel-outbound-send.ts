@@ -36,7 +36,7 @@ function resolveRuntimeReplyToId(opts: RuntimeSendOpts): string | undefined {
   return raw == null ? undefined : normalizeOptionalString(String(raw));
 }
 
-/** Reused helper for create Channel Outbound Runtime Send behavior in src/cli/send-runtime. */
+/** Build the send runtime adapter that normalizes text, media, thread, and reply fields. */
 export function createChannelOutboundRuntimeSend(params: {
   channelId: ChannelId;
   unavailableMessage: string;

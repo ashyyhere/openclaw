@@ -3,15 +3,17 @@ import { defaultRuntime } from "../runtime.js";
 import { resolveOptionFromCommand, runCommandWithRuntime } from "./cli-utils.js";
 import { formatCliCommand } from "./command-format.js";
 
-/** Re-exported API for src/cli, starting with default Runtime. */
+/**
+ * Re-export the CLI runtime used by model command tests.
+ */
 export { defaultRuntime };
 
-/** Reused helper for run Models Command behavior in src/cli. */
+/** Run a models command through the shared runtime error/exit path. */
 export function runModelsCommand(action: () => Promise<void>) {
   return runCommandWithRuntime(defaultRuntime, action);
 }
 
-/** Reused helper for resolve Model Agent Option behavior in src/cli. */
+/** Resolve --agent from the current command or inherited parent options. */
 export function resolveModelAgentOption(
   command: Command | undefined,
   opts?: { agent?: unknown },
@@ -22,7 +24,7 @@ export function resolveModelAgentOption(
   );
 }
 
-/** Reused helper for reject Agent Scoped Model Write behavior in src/cli. */
+/** Reject global model writes when the caller selected an agent-scoped view. */
 export function rejectAgentScopedModelWrite(
   command: Command,
   commandName: "set" | "set-image",
