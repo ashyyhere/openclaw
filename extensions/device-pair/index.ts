@@ -1,4 +1,3 @@
-// extensions/device-pair index helpers and runtime behavior.
 import { rm } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";

@@ -1,4 +1,3 @@
-// extensions/device-pair pair command approve helpers and runtime behavior.
 import {
   normalizeLowercaseStringOrEmpty,
   normalizeOptionalString,

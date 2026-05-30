@@ -1,4 +1,3 @@
-// extensions/byteplus provider discovery helpers and runtime behavior.
 import type { ProviderPlugin } from "openclaw/plugin-sdk/provider-model-shared";
 import { buildBytePlusCodingProvider, buildBytePlusProvider } from "./provider-catalog.js";
 
