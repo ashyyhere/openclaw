@@ -1,9 +1,10 @@
-// infra/net runtime fetch helpers and runtime behavior.
+// Routes network calls through the runtime undici stack while preserving test
+// mocks that intentionally replace global fetch.
 import type { Dispatcher } from "undici";
 import { normalizeHeadersInitForFetch } from "../fetch-headers.js";
 import { loadUndiciRuntimeDeps, type UndiciRuntimeDeps } from "./undici-runtime.js";
 
-/** Shared type for Dispatcher Aware Request Init in src/infra/net. */
+/** Fetch init accepted by undici when a per-request dispatcher is supplied. */
 export type DispatcherAwareRequestInit = RequestInit & { dispatcher?: Dispatcher };
 
 type FetchLike = (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
@@ -35,7 +36,7 @@ function normalizeRuntimeFormData(
   const next = new RuntimeFormData();
   for (const [key, value] of body.entries()) {
     const namedValue = value as FormDataEntryValueWithOptionalName;
-    // File.name is the standard filename property; skip empty/whitespace-only values
+    // Preserve filenames when adapting DOM FormData into undici's FormData.
     const fileName =
       typeof namedValue.name === "string" && namedValue.name.trim() ? namedValue.name : undefined;
     if (fileName) {
@@ -78,7 +79,7 @@ function normalizeRuntimeRequestInit(
   };
 }
 
-/** Reused helper for is Mocked Fetch behavior in src/infra/net. */
+/** Detects Vitest/Jest-style fetch mocks so tests keep controlling network calls. */
 export function isMockedFetch(fetchImpl: FetchLike | undefined): boolean {
   if (typeof fetchImpl !== "function") {
     return false;
@@ -86,7 +87,7 @@ export function isMockedFetch(fetchImpl: FetchLike | undefined): boolean {
   return typeof (fetchImpl as FetchLike & { mock?: unknown }).mock === "object";
 }
 
-/** Reused helper for fetch With Runtime Dispatcher behavior in src/infra/net. */
+/** Executes fetch through runtime undici deps so dispatcher and FormData agree. */
 export async function fetchWithRuntimeDispatcher(
   input: RequestInfo | URL,
   init?: DispatcherAwareRequestInit,
@@ -102,7 +103,7 @@ export async function fetchWithRuntimeDispatcher(
   )) as Response;
 }
 
-/** Reused helper for fetch With Runtime Dispatcher Or Mocked Global behavior in src/infra/net. */
+/** Uses mocked global fetch in tests, otherwise delegates to runtime undici fetch. */
 export async function fetchWithRuntimeDispatcherOrMockedGlobal(
   input: RequestInfo | URL,
   init?: DispatcherAwareRequestInit,

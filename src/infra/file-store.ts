@@ -1,6 +1,6 @@
-// infra file store helpers and runtime behavior.
+// Imports fs-safe defaults before exposing the shared file-store facade.
 import "./fs-safe-defaults.js";
-/** Re-exported API for src/infra. */
+/** File-backed store API with OpenClaw's fs-safe defaults applied first. */
 export {
   fileStore,
   type FileStore,

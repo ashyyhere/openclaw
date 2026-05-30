@@ -1,9 +1,10 @@
-// infra/net configured local origin bypass helpers and runtime behavior.
+// Allows managed proxy callers to bypass proxying only for an explicitly
+// configured loopback origin whose DNS resolution stays pinned to loopback.
 import { isLoopbackIpAddress } from "@openclaw/net-policy/ip";
 import { getActiveManagedProxyLoopbackMode } from "./proxy/active-proxy-state.js";
 import { SsrFBlockedError } from "./ssrf.js";
 
-/** Shared type for Configured Local Origin Managed Proxy Bypass in src/infra/net. */
+/** Managed-proxy bypass granted to one configured local provider origin. */
 export type ConfiguredLocalOriginManagedProxyBypass = {
   kind: "configured-local-origin";
   baseUrl: string;
@@ -58,7 +59,7 @@ function isPinnedLoopbackTarget(addresses: readonly string[]): boolean {
   return addresses.length > 0 && addresses.every((address) => isLoopbackIpAddress(address));
 }
 
-/** Reused helper for should Use Configured Local Origin Managed Proxy Bypass behavior in src/infra/net. */
+/** Returns whether a resolved request may skip the managed proxy local-origin path. */
 export function shouldUseConfiguredLocalOriginManagedProxyBypass(params: {
   url: URL;
   managedProxyBypass: ConfiguredLocalOriginManagedProxyBypass | undefined;
