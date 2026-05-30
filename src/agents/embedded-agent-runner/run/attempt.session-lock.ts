@@ -351,13 +351,13 @@ const sessionFileOwnerState = resolveGlobalSingleton(
   }),
 );
 
-/** Shared type for Embedded Attempt Session File Owner in src/agents/embedded-agent-runner. */
+/** Ownership token for serializing prompt-time access to a transcript file. */
 export type EmbeddedAttemptSessionFileOwner = {
   sessionFileKey: string;
   release(): void;
 };
 
-/** Reused class for Embedded Attempt Session File Owner Timeout Error behavior in src/agents/embedded-agent-runner. */
+/** Raised when another attempt keeps ownership of a session file past the wait budget. */
 export class EmbeddedAttemptSessionFileOwnerTimeoutError extends Error {
   constructor(sessionFile: string, timeoutMs: number) {
     super(`timed out waiting for embedded session file owner after ${timeoutMs}ms: ${sessionFile}`);
@@ -564,7 +564,7 @@ function readSessionFileFingerprintSync(sessionFile: string): SessionFileFingerp
 
 async function waitForSessionEventQueue(_session: unknown): Promise<void> {}
 
-/** Reused class for Embedded Attempt Session Takeover Error behavior in src/agents/embedded-agent-runner. */
+/** Raised when the session file changes while prompt execution temporarily released the lock. */
 export class EmbeddedAttemptSessionTakeoverError extends Error {
   constructor(sessionFile: string) {
     super(`session file changed while embedded prompt lock was released: ${sessionFile}`);
@@ -572,7 +572,7 @@ export class EmbeddedAttemptSessionTakeoverError extends Error {
   }
 }
 
-/** Shared type for Embedded Attempt Session Lock Controller in src/agents/embedded-agent-runner. */
+/** Coordinates session write locks across prompt execution, abort cleanup, and takeover checks. */
 export type EmbeddedAttemptSessionLockController = {
   releaseForPrompt(): Promise<void>;
   releaseHeldLockForAbort(): Promise<void>;
