@@ -2,12 +2,11 @@ type LazyValue<T> = T | (() => T);
 
 /** Return a getter that evaluates a function value once and returns the cached result afterward. */
 export function createCachedLazyValueGetter<T>(value: LazyValue<T>): () => T;
-/** Reused helper for create Cached Lazy Value Getter behavior in src/plugin-sdk. */
+/** Return a cached getter that falls back when the lazy value resolves nullish. */
 export function createCachedLazyValueGetter<T>(
   value: LazyValue<T | null | undefined>,
   fallback: T,
 ): () => T;
-/** Reused helper for create Cached Lazy Value Getter behavior in src/plugin-sdk. */
 export function createCachedLazyValueGetter<T>(
   value: LazyValue<T | null | undefined>,
   fallback?: T,

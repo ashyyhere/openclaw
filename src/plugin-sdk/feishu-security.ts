@@ -1,4 +1,3 @@
-// Manual facade. Keep loader boundary explicit.
 import type { OpenClawConfig } from "../config/types.js";
 import type { SecurityAuditFinding } from "../security/audit.types.js";
 import { loadBundledPluginPublicSurfaceModuleSync } from "./facade-loader.js";
@@ -14,7 +13,7 @@ function loadSecuritySurface(): SecuritySurface {
   });
 }
 
-/** Reused constant for collect Feishu Security Audit Findings behavior in src/plugin-sdk. */
+/** Lazy facade for Feishu security audit rules owned by the bundled plugin. */
 export const collectFeishuSecurityAuditFindings: SecuritySurface["collectFeishuSecurityAuditFindings"] =
   ((...args) =>
     loadSecuritySurface().collectFeishuSecurityAuditFindings(

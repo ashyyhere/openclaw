@@ -1,4 +1,3 @@
-// Manual facade. Keep loader boundary explicit.
 import type { SecurityAuditFinding } from "../security/audit.types.js";
 import { loadBundledPluginPublicSurfaceModuleSync } from "./facade-loader.js";
 
@@ -21,7 +20,7 @@ function loadFacadeModule(): FacadeModule {
   });
 }
 
-/** Reused constant for collect Synology Chat Security Audit Findings behavior in src/plugin-sdk. */
+/** Lazy facade for Synology Chat security audit rules owned by the bundled plugin. */
 export const collectSynologyChatSecurityAuditFindings: FacadeModule["collectSynologyChatSecurityAuditFindings"] =
   ((...args) =>
     loadFacadeModule().collectSynologyChatSecurityAuditFindings(

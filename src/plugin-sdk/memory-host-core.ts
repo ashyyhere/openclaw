@@ -32,7 +32,7 @@ async function listMarkdownFilesRecursive(rootDir: string): Promise<string[]> {
   return files.toSorted((left, right) => left.localeCompare(right));
 }
 
-/** Reused helper for list Memory Workspace Public Artifacts behavior in src/plugin-sdk. */
+/** Lists public memory artifacts found under one workspace directory. */
 export async function listMemoryWorkspacePublicArtifacts(params: {
   workspaceDir: string;
   agentIds: string[];
@@ -88,7 +88,7 @@ export async function listMemoryWorkspacePublicArtifacts(params: {
   return [...deduped.values()];
 }
 
-/** Reused helper for list Memory Host Public Artifacts behavior in src/plugin-sdk. */
+/** Lists public memory artifacts for every configured memory workspace. */
 export async function listMemoryHostPublicArtifacts(params: {
   cfg: OpenClawConfig;
 }): Promise<MemoryPluginPublicArtifact[]> {
