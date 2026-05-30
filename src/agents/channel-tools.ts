@@ -193,5 +193,5 @@ export const testing = {
     messageActionTesting.resetLoggedMessageActionErrors();
   },
 };
-/** Re-exported API for src/agents, starting with testing. */
+/** Backward-compatible test hook export for channel tool discovery state. */
 export { testing as __testing };

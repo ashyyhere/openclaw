@@ -25,13 +25,13 @@ import {
   type WorkspaceBootstrapFile,
 } from "./workspace.js";
 
-/** Shared type for Bootstrap Context Mode in src/agents. */
+/** Bootstrap prompt detail mode used for full startup versus lightweight turns. */
 export type BootstrapContextMode = "full" | "lightweight";
 type BootstrapContextRunKind = "default" | "heartbeat" | "cron";
 
 const CONTINUATION_SCAN_MAX_TAIL_BYTES = 256 * 1024;
 const CONTINUATION_SCAN_MAX_RECORDS = 500;
-/** Reused constant for FULL BOOTSTRAP COMPLETED CUSTOM TYPE behavior in src/agents. */
+/** Custom event type marking that full bootstrap context has been injected. */
 export const FULL_BOOTSTRAP_COMPLETED_CUSTOM_TYPE = "openclaw:bootstrap-context:full";
 const BOOTSTRAP_WARNING_DEDUPE_LIMIT = 1024;
 const seenBootstrapWarnings = new Set<string>();
@@ -367,5 +367,5 @@ export function buildBootstrapContextForFiles(
   return contextFiles;
 }
 
-/** Re-exported API for src/agents, starting with is Workspace Bootstrap Pending. */
+/** Workspace bootstrap status helper used by callers that only need pending state. */
 export { isWorkspaceBootstrapPending };

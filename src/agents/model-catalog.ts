@@ -43,9 +43,9 @@ import {
 const log = createSubsystemLogger("model-catalog");
 const AGENT_CUSTOM_MODEL_DEFAULT_CONTEXT_WINDOW = 128_000;
 
-/** Re-exported API for src/agents, starting with Model Catalog Entry. */
+/** Public model catalog row and input capability types. */
 export type { ModelCatalogEntry, ModelInputType } from "./model-catalog.types.js";
-/** Re-exported API for src/agents. */
+/** Catalog lookup helpers shared by model selection and UI surfaces. */
 export {
   findModelCatalogEntry,
   findModelInCatalog,

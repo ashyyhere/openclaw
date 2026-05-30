@@ -6,5 +6,5 @@ export type ToolResultFormat = "markdown" | "plain";
 /** Level of detail used for tool progress messages. */
 export type ToolProgressDetailMode = "explain" | "raw";
 
-/** Re-exported API for src/agents, starting with Block Reply Chunking. */
+/** Chunking mode shared by embedded subscription output and block chunkers. */
 export type { BlockReplyChunking };

@@ -142,10 +142,10 @@ export async function suspendSession(params: {
   }
 }
 
-/** Reused constant for testing behavior in src/agents. */
+/** Test hooks for lane resume concurrency and suspension reason resolution. */
 export const testing = {
   resolveLaneResumeConcurrency,
   resolveSessionSuspensionReason,
 } as const;
-/** Re-exported API for src/agents, starting with testing. */
+/** Backward-compatible test hook export for underscored internal imports. */
 export { testing as __testing };
