@@ -1,2 +1,2 @@
-// packages/plugin-sdk/src video generation helpers and runtime behavior.
+// Public package barrel for video generation contracts.
 export * from "../../../src/plugin-sdk/video-generation.js";

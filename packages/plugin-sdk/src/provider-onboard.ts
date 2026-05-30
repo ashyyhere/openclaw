@@ -1,2 +1,2 @@
-// packages/plugin-sdk/src provider onboard helpers and runtime behavior.
+// Public package barrel for provider onboarding contracts.
 export * from "../../../src/plugin-sdk/provider-onboard.js";

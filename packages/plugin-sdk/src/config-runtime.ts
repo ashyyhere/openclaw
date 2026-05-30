@@ -1,2 +1,2 @@
-// packages/plugin-sdk/src config runtime helpers and runtime behavior.
+// Public package barrel for plugin configuration runtime contracts.
 export * from "../../../src/plugin-sdk/config-runtime.js";

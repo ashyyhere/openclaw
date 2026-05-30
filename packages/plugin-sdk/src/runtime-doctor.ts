@@ -1,2 +1,2 @@
-// packages/plugin-sdk/src runtime doctor helpers and runtime behavior.
+// Public package barrel for runtime doctor contracts.
 export * from "../../../src/plugin-sdk/runtime-doctor.js";

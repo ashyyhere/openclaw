@@ -1,2 +1,2 @@
-// packages/plugin-sdk/src provider auth helpers and runtime behavior.
+// Public package barrel for provider authentication contracts.
 export * from "../../../src/plugin-sdk/provider-auth.js";

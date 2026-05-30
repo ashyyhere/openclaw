@@ -1,2 +1,2 @@
-// packages/plugin-sdk/src gateway method runtime helpers and runtime behavior.
+// Public package barrel for gateway method runtime contracts.
 export * from "../../../src/plugin-sdk/gateway-method-runtime.js";

@@ -1,2 +1,2 @@
-// packages/plugin-sdk/src browser config helpers and runtime behavior.
+// Public package barrel for browser configuration contracts.
 export * from "../../../src/plugin-sdk/browser-config.js";

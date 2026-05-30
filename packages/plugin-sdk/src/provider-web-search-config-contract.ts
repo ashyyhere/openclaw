@@ -1,2 +1,2 @@
-// packages/plugin-sdk/src provider web search config contract helpers and runtime behavior.
+// Public package barrel for provider web-search configuration contracts.
 export * from "../../../src/plugin-sdk/provider-web-search-config-contract.js";

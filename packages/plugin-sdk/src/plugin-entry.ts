@@ -1,2 +1,2 @@
-// packages/plugin-sdk/src plugin entry helpers and runtime behavior.
+// Public package barrel for plugin entrypoint contracts.
 export * from "../../../src/plugin-sdk/plugin-entry.js";

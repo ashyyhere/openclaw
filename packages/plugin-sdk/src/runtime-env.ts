@@ -1,2 +1,2 @@
-// packages/plugin-sdk/src runtime env helpers and runtime behavior.
+// Public package barrel for plugin runtime environment contracts.
 export * from "../../../src/plugin-sdk/runtime-env.js";
