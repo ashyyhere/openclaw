@@ -1,17 +1,17 @@
-// llm/providers/stream-wrappers moonshot helpers and runtime behavior.
+// Moonshot/SiliconFlow payload compatibility wrappers for thinking controls.
 import type { StreamFn } from "../../../agents/runtime/index.js";
 import type { ThinkLevel } from "../../../auto-reply/thinking.js";
 import { streamSimple } from "../../stream.js";
 import { streamWithPayloadPatch } from "./stream-payload-utils.js";
 
-/** Re-exported API for src/llm/providers. */
+/** Re-export Moonshot thinking payload helpers. */
 export {
   createMoonshotThinkingWrapper,
   resolveMoonshotThinkingKeep,
   resolveMoonshotThinkingType,
 } from "./moonshot-thinking.js";
 
-/** Reused helper for should Apply Silicon Flow Thinking Off Compat behavior in src/llm/providers. */
+/** Return whether SiliconFlow Pro models need `thinking: null` for thinking-off mode. */
 export function shouldApplySiliconFlowThinkingOffCompat(params: {
   provider: string;
   modelId: string;
@@ -24,7 +24,7 @@ export function shouldApplySiliconFlowThinkingOffCompat(params: {
   );
 }
 
-/** Reused helper for create Silicon Flow Thinking Wrapper behavior in src/llm/providers. */
+/** Wrap a stream function to translate `thinking: "off"` into SiliconFlow-compatible null. */
 export function createSiliconFlowThinkingWrapper(baseStreamFn: StreamFn | undefined): StreamFn {
   const underlying = baseStreamFn ?? streamSimple;
   return (model, context, options) =>

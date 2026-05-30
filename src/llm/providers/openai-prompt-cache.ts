@@ -1,8 +1,8 @@
-// llm/providers openai prompt cache helpers and runtime behavior.
-/** Reused constant for OPENAI PROMPT CACHE KEY MAX LENGTH behavior in src/llm/providers. */
+// OpenAI prompt-cache key helpers.
+/** Maximum prompt-cache key length accepted by OpenAI-compatible APIs. */
 export const OPENAI_PROMPT_CACHE_KEY_MAX_LENGTH = 64;
 
-/** Reused helper for clamp Open AIPrompt Cache Key behavior in src/llm/providers. */
+/** Clamp a prompt-cache key by Unicode code point count. */
 export function clampOpenAIPromptCacheKey(key: string | undefined): string | undefined {
   if (key === undefined) {
     return undefined;

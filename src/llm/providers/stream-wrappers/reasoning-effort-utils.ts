@@ -1,10 +1,10 @@
-// llm/providers/stream-wrappers reasoning effort utils helpers and runtime behavior.
+// Shared mapping from OpenClaw thinking levels to provider reasoning effort names.
 import type { ThinkLevel } from "../../../auto-reply/thinking.js";
 
-/** Shared type for Reasoning Effort in src/llm/providers. */
+/** Provider-facing reasoning effort values used by stream wrappers. */
 export type ReasoningEffort = "none" | "minimal" | "low" | "medium" | "high" | "xhigh";
 
-/** Reused helper for map Thinking Level To Reasoning Effort behavior in src/llm/providers. */
+/** Map OpenClaw thinking levels onto provider reasoning effort values. */
 export function mapThinkingLevelToReasoningEffort(thinkingLevel: ThinkLevel): ReasoningEffort {
   if (thinkingLevel === "off") {
     return "none";

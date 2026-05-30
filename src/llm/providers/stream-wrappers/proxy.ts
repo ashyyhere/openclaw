@@ -1,4 +1,4 @@
-// llm/providers/stream-wrappers proxy helpers and runtime behavior.
+// Proxy-provider stream wrappers for headers, cache controls, and reasoning params.
 import { resolveProviderRequestPolicy } from "../../../agents/provider-attribution.js";
 import { resolveProviderRequestPolicyConfig } from "../../../agents/provider-request-config.js";
 import type { StreamFn } from "../../../agents/runtime/index.js";
