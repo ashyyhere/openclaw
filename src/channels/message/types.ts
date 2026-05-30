@@ -26,15 +26,15 @@ export const durableFinalDeliveryCapabilities = [
   "afterCommit",
 ] as const;
 
-/** Shared type for Durable Final Delivery Capability in src/channels/message. */
+/** Capability token a channel can declare for required final delivery features. */
 export type DurableFinalDeliveryCapability = (typeof durableFinalDeliveryCapabilities)[number];
 
-/** Shared type for Durable Final Delivery Requirement Map in src/channels/message. */
+/** Per-capability requirement map used before committing durable final sends. */
 export type DurableFinalDeliveryRequirementMap = Partial<
   Record<DurableFinalDeliveryCapability, boolean>
 >;
 
-/** Shared type for Durable Final Delivery Payload Shape in src/channels/message. */
+/** Normalized payload facts used to derive durable final delivery requirements. */
 export type DurableFinalDeliveryPayloadShape = {
   text?: string | null;
   replyToId?: string | null;
@@ -42,7 +42,7 @@ export type DurableFinalDeliveryPayloadShape = {
   mediaUrls?: readonly (string | null | undefined)[] | null;
 };
 
-/** Shared type for Message Receipt Source Result in src/channels/message. */
+/** Raw channel send result fields preserved inside durable message receipts. */
 export type MessageReceiptSourceResult = {
   channel?: string;
   messageId?: string;
@@ -56,7 +56,7 @@ export type MessageReceiptSourceResult = {
   meta?: Record<string, unknown>;
 };
 
-/** Shared type for Message Receipt Part Kind in src/channels/message. */
+/** Logical kind for one platform message part in a durable receipt. */
 export type MessageReceiptPartKind =
   | "text"
   | "media"
@@ -66,7 +66,7 @@ export type MessageReceiptPartKind =
   | "preview"
   | "unknown";
 
-/** Shared type for Message Receipt Part in src/channels/message. */
+/** One platform message id emitted while sending a rendered batch. */
 export type MessageReceiptPart = {
   platformMessageId: string;
   kind: MessageReceiptPartKind;
@@ -76,7 +76,7 @@ export type MessageReceiptPart = {
   raw?: MessageReceiptSourceResult;
 };
 
-/** Shared type for Message Receipt in src/channels/message. */
+/** Durable send receipt used for edit, delete, reconciliation, and commit hooks. */
 export type MessageReceipt = {
   primaryPlatformMessageId?: string;
   platformMessageIds: string[];
@@ -89,7 +89,7 @@ export type MessageReceipt = {
   raw?: readonly MessageReceiptSourceResult[];
 };
 
-/** Shared type for Rendered Message Batch Plan Kind in src/channels/message. */
+/** Classification for one rendered outbound message payload. */
 export type RenderedMessageBatchPlanKind =
   | "text"
   | "media"
@@ -99,7 +99,7 @@ export type RenderedMessageBatchPlanKind =
   | "channelData"
   | "empty";
 
-/** Shared type for Rendered Message Batch Plan Item in src/channels/message. */
+/** Summary of one rendered payload inside an outbound batch. */
 export type RenderedMessageBatchPlanItem = {
   index: number;
   kinds: readonly RenderedMessageBatchPlanKind[];
@@ -111,7 +111,7 @@ export type RenderedMessageBatchPlanItem = {
   hasChannelData?: boolean;
 };
 
-/** Shared type for Rendered Message Batch Plan in src/channels/message. */
+/** Aggregate shape of a rendered outbound batch before channel send. */
 export type RenderedMessageBatchPlan = {
   payloadCount: number;
   textCount: number;
@@ -123,16 +123,16 @@ export type RenderedMessageBatchPlan = {
   items: readonly RenderedMessageBatchPlanItem[];
 };
 
-/** Shared type for Rendered Message Batch in src/channels/message. */
+/** Rendered payloads plus a stable plan for send and reconciliation decisions. */
 export type RenderedMessageBatch<TPayload = unknown> = {
   payloads: TPayload[];
   plan: RenderedMessageBatchPlan;
 };
 
-/** Shared type for Live Message Phase in src/channels/message. */
+/** Lifecycle phase for live preview/final message state. */
 export type LiveMessagePhase = "idle" | "previewing" | "finalizing" | "finalized" | "cancelled";
 
-/** Shared type for Live Message State in src/channels/message. */
+/** Current live-preview state carried between render, edit, send, and finalization. */
 export type LiveMessageState<TPayload = unknown> = {
   phase: LiveMessagePhase;
   canFinalizeInPlace: boolean;
@@ -140,7 +140,7 @@ export type LiveMessageState<TPayload = unknown> = {
   lastRendered?: RenderedMessageBatch<TPayload>;
 };
 
-/** Shared type for Message Send Context in src/channels/message. */
+/** Durable send transaction callbacks and state passed to channel send runners. */
 export type MessageSendContext<TPayload = unknown, TSendResult = unknown> = {
   id: string;
   channel: string;
@@ -161,7 +161,7 @@ export type MessageSendContext<TPayload = unknown, TSendResult = unknown> = {
   fail(error: unknown): Promise<void>;
 };
 
-/** Shared type for Channel Message Send Text Context in src/channels/message. */
+/** Text send context exposed to channel message adapters. */
 export type ChannelMessageSendTextContext<TConfig = OpenClawConfig> = {
   cfg: TConfig;
   to: string;
@@ -177,7 +177,7 @@ export type ChannelMessageSendTextContext<TConfig = OpenClawConfig> = {
   gatewayClientScopes?: readonly string[];
 };
 
-/** Shared type for Channel Message Send Media Context in src/channels/message. */
+/** Media send context exposed to channel message adapters. */
 export type ChannelMessageSendMediaContext<TConfig = OpenClawConfig> =
   ChannelMessageSendTextContext<TConfig> & {
     mediaUrl: string;
@@ -189,7 +189,7 @@ export type ChannelMessageSendMediaContext<TConfig = OpenClawConfig> =
     forceDocument?: boolean;
   };
 
-/** Shared type for Channel Message Send Payload Context in src/channels/message. */
+/** Structured reply-payload send context exposed to channel message adapters. */
 export type ChannelMessageSendPayloadContext<TConfig = OpenClawConfig> =
   ChannelMessageSendTextContext<TConfig> & {
     payload: ReplyPayload;
@@ -202,7 +202,7 @@ export type ChannelMessageSendPayloadContext<TConfig = OpenClawConfig> =
     forceDocument?: boolean;
   };
 
-/** Shared type for Channel Message Send Poll Context in src/channels/message. */
+/** Poll send context exposed to channel message adapters. */
 export type ChannelMessageSendPollContext<TConfig = OpenClawConfig> = Omit<
   ChannelMessageSendTextContext<TConfig>,
   "text" | "threadId"
@@ -212,23 +212,23 @@ export type ChannelMessageSendPollContext<TConfig = OpenClawConfig> = Omit<
   isAnonymous?: boolean;
 };
 
-/** Shared type for Channel Message Send Result in src/channels/message. */
+/** Canonical result returned by channel message send adapters. */
 export type ChannelMessageSendResult = {
   receipt: MessageReceipt;
   messageId?: string;
 };
 
-/** Shared type for Channel Message Send Attempt Kind in src/channels/message. */
+/** Discriminator for outbound channel message send attempts. */
 export type ChannelMessageSendAttemptKind = "text" | "media" | "payload" | "poll";
 
-/** Shared type for Channel Message Send Attempt Context in src/channels/message. */
+/** Union of all send attempt contexts delivered to lifecycle hooks. */
 export type ChannelMessageSendAttemptContext<TConfig = OpenClawConfig> =
   | (ChannelMessageSendTextContext<TConfig> & { kind: "text" })
   | (ChannelMessageSendMediaContext<TConfig> & { kind: "media" })
   | (ChannelMessageSendPayloadContext<TConfig> & { kind: "payload" })
   | (ChannelMessageSendPollContext<TConfig> & { kind: "poll" });
 
-/** Shared type for Channel Message Send Success Context in src/channels/message. */
+/** Lifecycle hook context for a successful platform send attempt. */
 export type ChannelMessageSendSuccessContext<
   TConfig = OpenClawConfig,
   TSendResult extends ChannelMessageSendResult = ChannelMessageSendResult,
@@ -237,20 +237,20 @@ export type ChannelMessageSendSuccessContext<
   attemptToken?: unknown;
 };
 
-/** Shared type for Channel Message Send Failure Context in src/channels/message. */
+/** Lifecycle hook context for a failed platform send attempt. */
 export type ChannelMessageSendFailureContext<TConfig = OpenClawConfig> =
   ChannelMessageSendAttemptContext<TConfig> & {
     error: unknown;
     attemptToken?: unknown;
   };
 
-/** Shared type for Channel Message Send Commit Context in src/channels/message. */
+/** Lifecycle hook context after a successful durable send is committed. */
 export type ChannelMessageSendCommitContext<
   TConfig = OpenClawConfig,
   TSendResult extends ChannelMessageSendResult = ChannelMessageSendResult,
 > = ChannelMessageSendSuccessContext<TConfig, TSendResult>;
 
-/** Shared type for Channel Message Unknown Send Context in src/channels/message. */
+/** Reconciliation context for sends whose platform outcome is unknown. */
 export type ChannelMessageUnknownSendContext<TConfig = OpenClawConfig> = {
   cfg: TConfig;
   queueId: string;
@@ -268,7 +268,7 @@ export type ChannelMessageUnknownSendContext<TConfig = OpenClawConfig> = {
   silent?: boolean;
 };
 
-/** Shared type for Channel Message Unknown Send Reconciliation Result in src/channels/message. */
+/** Result of asking a channel whether an unknown send reached the platform. */
 export type ChannelMessageUnknownSendReconciliationResult =
   | {
       status: "sent";
@@ -284,7 +284,7 @@ export type ChannelMessageUnknownSendReconciliationResult =
       retryable?: boolean;
     };
 
-/** Shared type for Channel Message Send Lifecycle Adapter in src/channels/message. */
+/** Optional lifecycle hooks around channel message send attempts and commits. */
 export type ChannelMessageSendLifecycleAdapter<
   TConfig = OpenClawConfig,
   TSendResult extends ChannelMessageSendResult = ChannelMessageSendResult,
@@ -299,7 +299,7 @@ export type ChannelMessageSendLifecycleAdapter<
   ) => Promise<void> | void;
 };
 
-/** Shared type for Channel Message Send Adapter in src/channels/message. */
+/** Channel outbound message adapter grouped by supported payload kind. */
 export type ChannelMessageSendAdapter<
   TConfig = OpenClawConfig,
   TSendResult extends ChannelMessageSendResult = ChannelMessageSendResult,
@@ -311,7 +311,7 @@ export type ChannelMessageSendAdapter<
   lifecycle?: ChannelMessageSendLifecycleAdapter<TConfig, TSendResult>;
 };
 
-/** Shared type for Channel Message Durable Final Adapter in src/channels/message. */
+/** Channel durable-final delivery capabilities and reconciliation hook. */
 export type ChannelMessageDurableFinalAdapter = {
   capabilities?: DurableFinalDeliveryRequirementMap;
   reconcileUnknownSend?: (
@@ -322,7 +322,7 @@ export type ChannelMessageDurableFinalAdapter = {
     | null;
 };
 
-/** Shared type for Channel Message Live Capability in src/channels/message. */
+/** Live-preview behavior a channel can support while generating a final answer. */
 export type ChannelMessageLiveCapability =
   | "draftPreview"
   | "previewFinalization"
@@ -330,7 +330,7 @@ export type ChannelMessageLiveCapability =
   | "nativeStreaming"
   | "quietFinalization";
 
-/** Reused constant for channel Message Live Capabilities behavior in src/channels/message. */
+/** Ordered list of live-preview capability tokens accepted by channel adapters. */
 export const channelMessageLiveCapabilities = [
   "draftPreview",
   "previewFinalization",
@@ -339,7 +339,7 @@ export const channelMessageLiveCapabilities = [
   "quietFinalization",
 ] as const satisfies readonly ChannelMessageLiveCapability[];
 
-/** Reused constant for live Preview Finalizer Capabilities behavior in src/channels/message. */
+/** Ordered list of live-preview finalizer capability tokens. */
 export const livePreviewFinalizerCapabilities = [
   "finalEdit",
   "normalFallback",
@@ -348,33 +348,33 @@ export const livePreviewFinalizerCapabilities = [
   "retainOnAmbiguousFailure",
 ] as const;
 
-/** Shared type for Live Preview Finalizer Capability in src/channels/message. */
+/** Capability token for how a live preview may be finalized. */
 export type LivePreviewFinalizerCapability = (typeof livePreviewFinalizerCapabilities)[number];
 
-/** Shared type for Live Preview Finalizer Capability Map in src/channels/message. */
+/** Per-capability map for live-preview finalization behavior. */
 export type LivePreviewFinalizerCapabilityMap = Partial<
   Record<LivePreviewFinalizerCapability, boolean>
 >;
 
-/** Shared type for Channel Message Live Finalizer Adapter Shape in src/channels/message. */
+/** Channel live-preview finalizer declaration. */
 export type ChannelMessageLiveFinalizerAdapterShape = {
   capabilities?: LivePreviewFinalizerCapabilityMap;
 };
 
-/** Shared type for Channel Message Live Adapter Shape in src/channels/message. */
+/** Channel live-preview adapter declaration. */
 export type ChannelMessageLiveAdapterShape = {
   capabilities?: Partial<Record<ChannelMessageLiveCapability, boolean>>;
   finalizer?: ChannelMessageLiveFinalizerAdapterShape;
 };
 
-/** Shared type for Channel Message Receive Ack Policy in src/channels/message. */
+/** Policy for when inbound channel messages are acknowledged. */
 export type ChannelMessageReceiveAckPolicy =
   | "after_receive_record"
   | "after_agent_dispatch"
   | "after_durable_send"
   | "manual";
 
-/** Reused constant for channel Message Receive Ack Policies behavior in src/channels/message. */
+/** Ordered list of supported inbound receive acknowledgement policies. */
 export const channelMessageReceiveAckPolicies = [
   "after_receive_record",
   "after_agent_dispatch",
@@ -382,13 +382,13 @@ export const channelMessageReceiveAckPolicies = [
   "manual",
 ] as const satisfies readonly ChannelMessageReceiveAckPolicy[];
 
-/** Shared type for Channel Message Receive Adapter Shape in src/channels/message. */
+/** Channel inbound receive acknowledgement declaration. */
 export type ChannelMessageReceiveAdapterShape = {
   defaultAckPolicy?: ChannelMessageReceiveAckPolicy;
   supportedAckPolicies?: readonly ChannelMessageReceiveAckPolicy[];
 };
 
-/** Shared type for Channel Message Adapter Shape in src/channels/message. */
+/** Complete internal channel message adapter declaration. */
 export type ChannelMessageAdapterShape<
   TConfig = OpenClawConfig,
   TSendResult extends ChannelMessageSendResult = ChannelMessageSendResult,
@@ -400,15 +400,15 @@ export type ChannelMessageAdapterShape<
   receive?: ChannelMessageReceiveAdapterShape;
 };
 
-/** Shared type for Channel Message Adapter in src/channels/message. */
+/** Concrete internal channel message adapter type. */
 export type ChannelMessageAdapter<
   TAdapter extends ChannelMessageAdapterShape = ChannelMessageAdapterShape,
 > = TAdapter;
 
-/** Shared type for Durable Final Requirement Extras in src/channels/message. */
+/** Extra durable-final requirements supplied by a caller or channel. */
 export type DurableFinalRequirementExtras = DurableFinalDeliveryRequirementMap;
 
-/** Shared type for Derive Durable Final Delivery Requirements Params in src/channels/message. */
+/** Inputs used to derive the minimum durable-final capabilities for a payload. */
 export type DeriveDurableFinalDeliveryRequirementsParams = {
   payload: DurableFinalDeliveryPayloadShape;
   replyToId?: string | null;
@@ -423,7 +423,7 @@ export type DeriveDurableFinalDeliveryRequirementsParams = {
   extraCapabilities?: DurableFinalRequirementExtras;
 };
 
-/** Shared type for Durable Message Send Intent in src/channels/message. */
+/** Durable outbound send intent carried through queueing and delivery. */
 export type DurableMessageSendIntent<TPayload = unknown> = {
   id: string;
   channel: string;
