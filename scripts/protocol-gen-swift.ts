@@ -1,4 +1,4 @@
-// scripts protocol gen swift helpers and runtime behavior.
+// Generate Swift Gateway protocol models from the TypeScript Gateway protocol schemas.
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";

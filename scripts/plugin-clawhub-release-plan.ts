@@ -1,5 +1,5 @@
 #!/usr/bin/env -S node --import tsx
-// scripts plugin clawhub release plan helpers and runtime behavior.
+// Plugin ClawHub release-plan CLI prints registry publish plans for selected plugins.
 
 import { pathToFileURL } from "node:url";
 import {
@@ -7,6 +7,7 @@ import {
   parsePluginReleaseArgs,
 } from "./lib/plugin-clawhub-release.ts";
 
+/** Collect the ClawHub plugin release plan from CLI-style arguments. */
 export async function collectPluginReleasePlanForClawHub(argv: string[]) {
   const { selection, selectionMode, baseRef, headRef } = parsePluginReleaseArgs(argv);
   return await collectPluginClawHubReleasePlan({

@@ -1,7 +1,8 @@
-// scripts/e2e telegram user credential io helpers and runtime behavior.
+// Telegram user E2E credential helpers run bounded commands and HTTP JSON requests.
 import { spawn } from "node:child_process";
 import { readBoundedResponseText } from "../lib/bounded-response.ts";
 
+/** JSON object payload returned by credential helper endpoints. */
 export type JsonObject = Record<string, unknown>;
 
 type FetchJsonParams = {
@@ -64,6 +65,7 @@ function appendBounded(previous: string, chunk: Buffer, limit: number) {
   return next.slice(next.length - limit);
 }
 
+/** Run a command with bounded output capture and timeout/kill escalation. */
 export function runCommand(
   command: string,
   args: string[],
@@ -140,6 +142,7 @@ export function runCommand(
   });
 }
 
+/** Fetch a JSON payload with timeout and bounded response-body protection. */
 export async function fetchJsonWithTimeout(params: FetchJsonParams) {
   const timeoutMs = Math.max(1, params.timeoutMs);
   const maxBodyBytes = resolveFetchBodyLimit(params.maxBodyBytes);

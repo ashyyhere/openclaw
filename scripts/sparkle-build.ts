@@ -1,8 +1,9 @@
 #!/usr/bin/env -S node --import tsx
-// scripts sparkle build helpers and runtime behavior.
+// Sparkle build helpers derive monotonic macOS build numbers from OpenClaw calver versions.
 
 import { pathToFileURL } from "node:url";
 
+/** Numeric floors derived from a calver version for Sparkle build numbering. */
 export type SparkleBuildFloors = {
   dateKey: number;
   legacyFloor: number;
@@ -12,6 +13,7 @@ export type SparkleBuildFloors = {
 
 const CALVER_REGEX = /^([0-9]{4})\.([0-9]{1,2})\.([0-9]{1,2})([.-].*)?$/;
 
+/** Resolve date and lane build floors from an OpenClaw short version. */
 export function sparkleBuildFloorsFromShortVersion(
   shortVersion: string,
 ): SparkleBuildFloors | null {
@@ -53,6 +55,7 @@ export function sparkleBuildFloorsFromShortVersion(
   return { dateKey, legacyFloor, laneFloor, lane };
 }
 
+/** Return the canonical Sparkle build number for a short version. */
 export function canonicalSparkleBuildFromVersion(shortVersion: string): number | null {
   return sparkleBuildFloorsFromShortVersion(shortVersion)?.laneFloor ?? null;
 }

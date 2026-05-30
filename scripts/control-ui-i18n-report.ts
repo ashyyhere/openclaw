@@ -1,4 +1,4 @@
-// scripts control ui i18n report helpers and runtime behavior.
+// Control UI i18n report script summarizes raw-copy debt and locale fallback coverage.
 import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
@@ -49,6 +49,7 @@ const PATH_LABELS: Record<string, string> = {
 
 type RawCopyKind = "html-attribute" | "html-text" | "object-property";
 
+/** Baseline row for one hardcoded UI string captured by the raw-copy scanner. */
 export type RawCopyBaselineEntry = {
   count: number;
   kind: RawCopyKind;
@@ -80,12 +81,14 @@ type ReportArgs = {
   top: number;
 };
 
+/** Aggregated raw-copy counts used by the report formatter. */
 export type RawCopySummary = {
   entries: number;
   occurrences: number;
   topPaths: Array<{ count: number; path: string }>;
 };
 
+/** Locale metadata and fallback keys scoped to the requested report surface. */
 export type LocaleSummary = {
   fallbackKeysInScope: string[];
   meta: LocaleMeta;
@@ -97,6 +100,7 @@ type ReportInput = {
   surface?: string;
 };
 
+/** Parse CLI flags for the Control UI i18n report. */
 export function parseArgs(argv: string[]): ReportArgs {
   const args: ReportArgs = { top: DEFAULT_TOP };
   for (let index = 0; index < argv.length; index += 1) {
@@ -141,6 +145,7 @@ function parseLocale(locale: string) {
   return locale;
 }
 
+/** Keep raw-copy baseline entries that belong to a named UI surface. */
 export function filterRawCopyEntries(entries: RawCopyBaselineEntry[], surface?: string) {
   if (!surface) {
     return entries;
@@ -149,6 +154,7 @@ export function filterRawCopyEntries(entries: RawCopyBaselineEntry[], surface?: 
   return entries.filter((entry) => pathTokens(entry.path).some((token) => token === normalized));
 }
 
+/** Summarize raw-copy baseline entries and rank the most affected paths. */
 export function summarizeRawCopy(entries: RawCopyBaselineEntry[], top: number): RawCopySummary {
   const byPath = new Map<string, number>();
   let occurrences = 0;
@@ -190,6 +196,7 @@ function normalizeToken(value: string) {
   return value.trim().toLowerCase();
 }
 
+/** Keep fallback translation keys that belong to a named UI surface. */
 export function filterTranslationKeysBySurface(keys: string[], surface?: string) {
   if (!surface) {
     return keys;
@@ -200,6 +207,7 @@ export function filterTranslationKeysBySurface(keys: string[], surface?: string)
   );
 }
 
+/** Format the human-readable i18n status report. */
 export function formatReport(input: ReportInput) {
   const lines = [
     "Control UI i18n baseline report",

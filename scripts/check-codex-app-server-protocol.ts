@@ -1,4 +1,4 @@
-// scripts check codex app server protocol helpers and runtime behavior.
+// Check that the Codex app-server protocol mirror still matches bridge assumptions.
 import fs from "node:fs/promises";
 import path from "node:path";
 import {

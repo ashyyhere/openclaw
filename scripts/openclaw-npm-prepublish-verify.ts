@@ -1,5 +1,5 @@
 #!/usr/bin/env -S node --import tsx
-// scripts openclaw npm prepublish verify helpers and runtime behavior.
+// Prepublish verifier installs a prepared OpenClaw tarball and checks package/runtime smoke behavior.
 
 import { mkdtempSync, readFileSync, realpathSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";

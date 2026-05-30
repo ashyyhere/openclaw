@@ -1,9 +1,10 @@
 #!/usr/bin/env -S node --import tsx
-// scripts plugin npm release plan helpers and runtime behavior.
+// Plugin npm release-plan CLI prints the package publish plan for selected plugins.
 
 import { pathToFileURL } from "node:url";
 import { collectPluginReleasePlan, parsePluginReleaseArgs } from "./lib/plugin-npm-release.ts";
 
+/** Collect the plugin npm release plan from CLI-style arguments. */
 export function collectPluginNpmReleasePlan(argv: string[]) {
   const { selection, selectionMode, baseRef, headRef } = parsePluginReleaseArgs(argv);
   return collectPluginReleasePlan({
