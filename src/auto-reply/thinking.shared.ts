@@ -5,10 +5,10 @@ import {
   normalizeOptionalLowercaseString,
 } from "../shared/string-coerce.js";
 
-/** Re-exported API for src/auto-reply, starting with normalize Fast Mode. */
+/** Fast-mode normalizer shared with thinking directive parsing. */
 export { normalizeFastMode };
 
-/** Shared type for Think Level in src/auto-reply. */
+/** Canonical thinking effort requested for a model response. */
 export type ThinkLevel =
   | "off"
   | "minimal"
@@ -18,21 +18,21 @@ export type ThinkLevel =
   | "xhigh"
   | "adaptive"
   | "max";
-/** Shared type for Verbose Level in src/auto-reply. */
+/** Verbosity level for model-visible or channel-visible diagnostics. */
 export type VerboseLevel = "off" | "on" | "full";
-/** Shared type for Trace Level in src/auto-reply. */
+/** Trace output level for debugging reasoning and provider payloads. */
 export type TraceLevel = "off" | "on" | "raw";
-/** Shared type for Notice Level in src/auto-reply. */
+/** Notice display level for reply-time status messages. */
 export type NoticeLevel = "off" | "on" | "full";
-/** Shared type for Elevated Level in src/auto-reply. */
+/** User directive level for elevated approval behavior. */
 export type ElevatedLevel = "off" | "on" | "ask" | "full";
-/** Shared type for Elevated Mode in src/auto-reply. */
+/** Runtime approval mode derived from an elevated directive. */
 export type ElevatedMode = "off" | "ask" | "full";
-/** Shared type for Reasoning Level in src/auto-reply. */
+/** Reasoning visibility mode for response content and streaming. */
 export type ReasoningLevel = "off" | "on" | "stream";
-/** Shared type for Usage Display Level in src/auto-reply. */
+/** Token usage display mode requested by reply directives. */
 export type UsageDisplayLevel = "off" | "tokens" | "full";
-/** Shared type for Thinking Catalog Entry in src/auto-reply. */
+/** Provider catalog entry used to infer default thinking support. */
 export type ThinkingCatalogEntry = {
   provider: string;
   id: string;
@@ -43,9 +43,9 @@ export type ThinkingCatalogEntry = {
   } | null;
 };
 
-/** Reused constant for BASE THINKING LEVELS behavior in src/auto-reply. */
+/** Ordered baseline thinking levels exposed by simple selectors. */
 export const BASE_THINKING_LEVELS: ThinkLevel[] = ["off", "minimal", "low", "medium", "high"];
-/** Reused constant for THINKING LEVEL RANKS behavior in src/auto-reply. */
+/** Relative ordering used when comparing thinking effort levels. */
 export const THINKING_LEVEL_RANKS: Record<ThinkLevel, number> = {
   off: 0,
   minimal: 10,
@@ -58,7 +58,7 @@ export const THINKING_LEVEL_RANKS: Record<ThinkLevel, number> = {
 };
 
 // Normalize user-provided thinking level strings to the canonical enum.
-/** Reused helper for normalize Think Level behavior in src/auto-reply. */
+/** Normalizes user-facing thinking aliases into canonical thinking levels. */
 export function normalizeThinkLevel(raw?: string | null): ThinkLevel | undefined {
   const key = normalizeOptionalLowercaseString(raw);
   if (!key) {
@@ -98,7 +98,7 @@ export function normalizeThinkLevel(raw?: string | null): ThinkLevel | undefined
   return undefined;
 }
 
-/** Reused helper for is Session Default Directive Value behavior in src/auto-reply. */
+/** Detects directive values that clear or inherit session defaults. */
 export function isSessionDefaultDirectiveValue(raw?: string | null): boolean {
   const key = normalizeOptionalLowercaseString(raw);
   if (!key) {
@@ -107,12 +107,12 @@ export function isSessionDefaultDirectiveValue(raw?: string | null): boolean {
   return ["default", "inherit", "inherited", "clear", "reset", "unpin"].includes(key);
 }
 
-/** Reused helper for format XHigh Model Hint behavior in src/auto-reply. */
+/** Formats the user-facing hint for xhigh-capable model selection. */
 export function formatXHighModelHint(): string {
   return "provider models that advertise xhigh reasoning";
 }
 
-/** Reused helper for resolve Thinking Default For Model behavior in src/auto-reply. */
+/** Chooses the default thinking level from provider/model catalog metadata. */
 export function resolveThinkingDefaultForModel(params: {
   provider: string;
   model: string;
@@ -146,12 +146,12 @@ function normalizeOnOffFullLevel(raw?: string | null): OnOffFullLevel | undefine
   return undefined;
 }
 
-/** Reused helper for normalize Verbose Level behavior in src/auto-reply. */
+/** Normalizes verbose directive aliases into off/on/full. */
 export function normalizeVerboseLevel(raw?: string | null): VerboseLevel | undefined {
   return normalizeOnOffFullLevel(raw);
 }
 
-/** Reused helper for normalize Trace Level behavior in src/auto-reply. */
+/** Normalizes trace directive aliases, including raw trace mode. */
 export function normalizeTraceLevel(raw?: string | null): TraceLevel | undefined {
   const key = normalizeOptionalLowercaseString(raw);
   if (!key) {
@@ -169,12 +169,12 @@ export function normalizeTraceLevel(raw?: string | null): TraceLevel | undefined
   return undefined;
 }
 
-/** Reused helper for normalize Notice Level behavior in src/auto-reply. */
+/** Normalizes notice directive aliases into off/on/full. */
 export function normalizeNoticeLevel(raw?: string | null): NoticeLevel | undefined {
   return normalizeOnOffFullLevel(raw);
 }
 
-/** Reused helper for normalize Usage Display behavior in src/auto-reply. */
+/** Normalizes usage display aliases into token or full usage modes. */
 export function normalizeUsageDisplay(raw?: string | null): UsageDisplayLevel | undefined {
   if (!raw) {
     return undefined;
@@ -195,12 +195,12 @@ export function normalizeUsageDisplay(raw?: string | null): UsageDisplayLevel | 
   return undefined;
 }
 
-/** Reused helper for resolve Response Usage Mode behavior in src/auto-reply. */
+/** Resolves response usage display mode with off as the default. */
 export function resolveResponseUsageMode(raw?: string | null): UsageDisplayLevel {
   return normalizeUsageDisplay(raw) ?? "off";
 }
 
-/** Reused helper for normalize Elevated Level behavior in src/auto-reply. */
+/** Normalizes elevated approval aliases into directive levels. */
 export function normalizeElevatedLevel(raw?: string | null): ElevatedLevel | undefined {
   if (!raw) {
     return undefined;
@@ -221,7 +221,7 @@ export function normalizeElevatedLevel(raw?: string | null): ElevatedLevel | und
   return undefined;
 }
 
-/** Reused helper for resolve Elevated Mode behavior in src/auto-reply. */
+/** Collapses elevated directive levels into runtime approval modes. */
 export function resolveElevatedMode(level?: ElevatedLevel | null): ElevatedMode {
   if (!level || level === "off") {
     return "off";
@@ -232,7 +232,7 @@ export function resolveElevatedMode(level?: ElevatedLevel | null): ElevatedMode 
   return "ask";
 }
 
-/** Reused helper for normalize Reasoning Level behavior in src/auto-reply. */
+/** Normalizes reasoning visibility aliases into off/on/stream. */
 export function normalizeReasoningLevel(raw?: string | null): ReasoningLevel | undefined {
   if (!raw) {
     return undefined;
