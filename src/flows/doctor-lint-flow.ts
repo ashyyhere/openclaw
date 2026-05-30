@@ -1,6 +1,5 @@
-// src/flows doctor lint flow helpers and runtime behavior.
+// Doctor lint flow runner for health-check detection without repairs.
 import { scrubDoctorErrorMessage } from "./doctor-error-message.js";
-// flows doctor lint flow helpers and runtime behavior.
 import { listHealthChecks } from "./health-check-registry.js";
 import {
   HEALTH_FINDING_SEVERITY_RANK,
@@ -11,21 +10,21 @@ import {
   type HealthFindingSeverity,
 } from "./health-checks.js";
 
-/** Shared type for Doctor Lint Run Options in src/flows. */
+/** Options controlling which health checks doctor lint runs. */
 export interface DoctorLintRunOptions {
   readonly checks?: readonly HealthCheck[];
   readonly skipIds?: ReadonlySet<string> | readonly string[];
   readonly onlyIds?: ReadonlySet<string> | readonly string[];
 }
 
-/** Shared type for Doctor Lint Run Result in src/flows. */
+/** Summary of findings and selected health-check execution counts. */
 export interface DoctorLintRunResult {
   readonly findings: readonly HealthFinding[];
   readonly checksRun: number;
   readonly checksSkipped: number;
 }
 
-/** Reused helper for run Doctor Lint Checks behavior in src/flows. */
+/** Run selected health checks and convert thrown detector errors into findings. */
 export async function runDoctorLintChecks(
   ctx: HealthCheckContext,
   opts: DoctorLintRunOptions = {},
@@ -93,7 +92,7 @@ function compareFindings(a: HealthFinding, b: HealthFinding): number {
   return (a.path ?? "").localeCompare(b.path ?? "");
 }
 
-/** Reused helper for exit Code From Findings behavior in src/flows. */
+/** Return a process exit code based on whether findings meet the minimum severity. */
 export function exitCodeFromFindings(
   findings: readonly HealthFinding[],
   severityMin: HealthFindingSeverity = "warning",

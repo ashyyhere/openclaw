@@ -1,4 +1,4 @@
-// Shared types for flows types behavior.
+// Shared setup-flow contribution types and sorting helper.
 type FlowDocsLink = {
   path: string;
   label?: string;
@@ -14,7 +14,7 @@ type FlowOptionGroup = {
   hint?: string;
 };
 
-/** Shared type for Flow Option in src/flows. */
+/** Selectable option contributed to a setup flow surface. */
 export type FlowOption<Value extends string = string> = {
   value: Value;
   label: string;
@@ -25,7 +25,7 @@ export type FlowOption<Value extends string = string> = {
   assistantVisibility?: "visible" | "manual-only";
 };
 
-/** Shared type for Flow Contribution in src/flows. */
+/** Contribution from a core/plugin flow into a setup surface. */
 export type FlowContribution<Value extends string = string> = {
   id: string;
   kind: FlowContributionKind;
@@ -34,7 +34,7 @@ export type FlowContribution<Value extends string = string> = {
   source?: string;
 };
 
-/** Reused helper for sort Flow Contributions By Label behavior in src/flows. */
+/** Sort setup-flow contributions by display label and stable value. */
 export function sortFlowContributionsByLabel<T extends FlowContribution>(
   contributions: readonly T[],
 ): T[] {

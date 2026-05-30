@@ -1,4 +1,4 @@
-// security audit gateway config helpers and runtime behavior.
+// Gateway configuration security audit checks.
 import { isIP } from "node:net";
 import type { GatewayAuthConfig } from "../config/types.gateway.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
@@ -17,7 +17,7 @@ import { DEFAULT_GATEWAY_HTTP_TOOL_DENY } from "./dangerous-tools.js";
 
 type CollectDangerousConfigFlags = (cfg: OpenClawConfig) => string[];
 
-/** Shared type for Collect Gateway Config Findings Options in src/security. */
+/** Optional dependency overrides for gateway config audit collection. */
 export type CollectGatewayConfigFindingsOptions = {
   collectDangerousConfigFlags?: CollectDangerousConfigFlags;
   gatewayAuthOverride?: Pick<GatewayAuthConfig, "mode" | "token" | "password">;
@@ -27,7 +27,7 @@ function hasNonEmptyString(value: unknown): value is string {
   return typeof value === "string" && value.trim().length > 0;
 }
 
-/** Reused helper for collect Gateway Config Findings behavior in src/security. */
+/** Collect security findings for gateway bind, auth, origin, proxy, and tool exposure. */
 export function collectGatewayConfigFindings(
   cfg: OpenClawConfig,
   sourceConfig: OpenClawConfig,

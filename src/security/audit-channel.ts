@@ -1,4 +1,4 @@
-// security audit channel helpers and runtime behavior.
+// Channel-account security audit checks for configured channel plugins.
 import {
   hasConfiguredUnavailableCredentialStatus,
   hasResolvedCredentialValue,
@@ -79,7 +79,7 @@ function formatChannelAccountNote(params: {
     : "";
 }
 
-/** Reused helper for collect Channel Security Findings behavior in src/security. */
+/** Collect channel plugin security findings for credentials, DM policy, and account access. */
 export async function collectChannelSecurityFindings(params: {
   cfg: OpenClawConfig;
   sourceConfig?: OpenClawConfig;
