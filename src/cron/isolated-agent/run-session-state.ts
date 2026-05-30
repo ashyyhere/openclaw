@@ -1,4 +1,4 @@
-// cron/isolated-agent run session state helpers and runtime behavior.
+// Cron isolated-agent session persistence and live model-selection bookkeeping.
 import fs from "node:fs";
 import type { LiveSessionModelSelection } from "../../agents/live-model-switch.js";
 import type { SessionEntry } from "../../config/sessions.js";
@@ -8,14 +8,14 @@ import type { resolveCronSession } from "./session.js";
 
 type MutableSessionStore = Record<string, SessionEntry>;
 
-/** Shared type for Mutable Cron Session Entry in src/cron/isolated-agent. */
+/** Mutable session entry shape used while a cron run updates persisted metadata. */
 export type MutableCronSessionEntry = SessionEntry;
-/** Shared type for Mutable Cron Session in src/cron/isolated-agent. */
+/** Resolved cron session plus writable store references for persistence helpers. */
 export type MutableCronSession = ReturnType<typeof resolveCronSession> & {
   store: MutableSessionStore;
   sessionEntry: MutableCronSessionEntry;
 };
-/** Shared type for Cron Live Selection in src/cron/isolated-agent. */
+/** Live provider/model/auth selection applied to a cron-backed session entry. */
 export type CronLiveSelection = LiveSessionModelSelection;
 
 type UpdateSessionStore = (
@@ -23,7 +23,7 @@ type UpdateSessionStore = (
   update: (store: MutableSessionStore) => void,
 ) => Promise<void>;
 
-/** Shared type for Persist Cron Session Entry in src/cron/isolated-agent. */
+/** Persists the current cron session entry after an isolated agent run changes it. */
 export type PersistCronSessionEntry = () => Promise<void>;
 
 function cronTranscriptExists(entry: SessionEntry): boolean {
@@ -48,7 +48,7 @@ function toNonResumableCronSessionEntry(entry: SessionEntry): SessionEntry {
   return next as SessionEntry;
 }
 
-/** Reused helper for create Persist Cron Session Entry behavior in src/cron/isolated-agent. */
+/** Creates the persistence callback that stores resumable cron session state safely. */
 export function createPersistCronSessionEntry(params: {
   isFastTestEnv: boolean;
   cronSession: MutableCronSession;
@@ -72,7 +72,7 @@ export function createPersistCronSessionEntry(params: {
   };
 }
 
-/** Reused helper for adopt Cron Run Session Metadata behavior in src/cron/isolated-agent. */
+/** Adopts runner-returned session id/file metadata into the cron session entry. */
 export function adoptCronRunSessionMetadata(params: {
   entry: MutableCronSessionEntry;
   sessionKey: string;
@@ -110,7 +110,7 @@ export function adoptCronRunSessionMetadata(params: {
   return changed;
 }
 
-/** Reused helper for persist Cron Skills Snapshot If Changed behavior in src/cron/isolated-agent. */
+/** Persists a new skills snapshot only when the cron session entry actually changed. */
 export async function persistCronSkillsSnapshotIfChanged(params: {
   isFastTestEnv: boolean;
   cronSession: MutableCronSession;
@@ -132,7 +132,7 @@ export async function persistCronSkillsSnapshotIfChanged(params: {
   await params.persistSessionEntry();
 }
 
-/** Reused helper for mark Cron Session Pre Run behavior in src/cron/isolated-agent. */
+/** Marks the provider/model state that should be visible before the cron turn starts. */
 export function markCronSessionPreRun(params: {
   entry: MutableCronSessionEntry;
   provider: string;
@@ -143,7 +143,7 @@ export function markCronSessionPreRun(params: {
   params.entry.systemSent = true;
 }
 
-/** Reused helper for sync Cron Session Live Selection behavior in src/cron/isolated-agent. */
+/** Syncs live model selection and auto auth-profile state back into the session entry. */
 export function syncCronSessionLiveSelection(params: {
   entry: MutableCronSessionEntry;
   liveSelection: CronLiveSelection;

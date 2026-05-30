@@ -1,17 +1,17 @@
-// config types hooks helpers and runtime behavior.
-/** Shared type for Hook Mapping Match in src/config. */
+// Hook-related configuration contracts shared by config loading and hook runtimes.
+/** Match criteria that selects a hook mapping from request path or source metadata. */
 export type HookMappingMatch = {
   path?: string;
   source?: string;
 };
 
-/** Shared type for Hook Mapping Transform in src/config. */
+/** Transform module/export reference used to preprocess matching hook payloads. */
 export type HookMappingTransform = {
   module: string;
   export?: string;
 };
 
-/** Shared type for Hook Mapping Config in src/config. */
+/** Configured action, routing, and safety policy for one hook mapping. */
 export type HookMappingConfig = {
   id?: string;
   match?: HookMappingMatch;
@@ -39,10 +39,10 @@ export type HookMappingConfig = {
   transform?: HookMappingTransform;
 };
 
-/** Shared type for Hooks Gmail Tailscale Mode in src/config. */
+/** Tailscale exposure mode for Gmail push hook receivers. */
 export type HooksGmailTailscaleMode = "off" | "serve" | "funnel";
 
-/** Shared type for Hooks Gmail Config in src/config. */
+/** Gmail hook receiver configuration, Pub/Sub metadata, and model overrides. */
 export type HooksGmailConfig = {
   account?: string;
   label?: string;
@@ -72,19 +72,19 @@ export type HooksGmailConfig = {
   thinking?: "off" | "minimal" | "low" | "medium" | "high";
 };
 
-/** Shared type for Hook Config in src/config. */
+/** Generic hook plugin config block keyed by hook id. */
 export type HookConfig = {
   enabled?: boolean;
   env?: Record<string, string>;
   [key: string]: unknown;
 };
 
-/** Shared type for Hook Install Record in src/config. */
+/** Install record extension that lists hook ids provided by a pack. */
 export type HookInstallRecord = InstallRecordBase & {
   hooks?: string[];
 };
 
-/** Shared type for Internal Hooks Config in src/config. */
+/** Internal hook subsystem config for installed packs and per-hook overrides. */
 export type InternalHooksConfig = {
   /** Enable hooks system */
   enabled?: boolean;
@@ -99,7 +99,7 @@ export type InternalHooksConfig = {
   installs?: Record<string, HookInstallRecord>;
 };
 
-/** Shared type for Hooks Config in src/config. */
+/** Top-level hook config covering HTTP hook routing, presets, mappings, and Gmail. */
 export type HooksConfig = {
   enabled?: boolean;
   path?: string;

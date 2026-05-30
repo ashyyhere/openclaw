@@ -1,20 +1,20 @@
-// daemon launchd plist helpers and runtime behavior.
+// LaunchAgent plist rendering and tolerant reads for generated gateway services.
 import fs from "node:fs/promises";
 import type { GatewayServiceEnvironmentValueSource } from "./service-types.js";
 
 // launchd defaults to a 10s spawn throttle. Keep that default explicitly so
 // crash loops back off instead of respawning every second while still allowing
 // explicit kickstart restarts to take effect.
-/** Reused constant for LAUNCH AGENT THROTTLE INTERVAL SECONDS behavior in src/daemon. */
+/** launchd restart throttle retained explicitly for generated gateway agents. */
 export const LAUNCH_AGENT_THROTTLE_INTERVAL_SECONDS = 10;
-/** Reused constant for LAUNCH AGENT EXIT TIMEOUT SECONDS behavior in src/daemon. */
+/** Grace period launchd gives the gateway process before termination. */
 export const LAUNCH_AGENT_EXIT_TIMEOUT_SECONDS = 20;
 // launchd stores plist integer values in decimal; 0o077 renders as 63 (owner-only files).
-/** Reused constant for LAUNCH AGENT UMASK DECIMAL behavior in src/daemon. */
+/** Owner-only umask value as launchd expects it in plist integer form. */
 export const LAUNCH_AGENT_UMASK_DECIMAL = 0o077;
-/** Reused constant for LAUNCH AGENT PROCESS TYPE behavior in src/daemon. */
+/** Process type used so macOS treats the gateway as an interactive user service. */
 export const LAUNCH_AGENT_PROCESS_TYPE = "Interactive";
-/** Reused constant for LAUNCH AGENT STDIN PATH behavior in src/daemon. */
+/** Standard input sink for generated LaunchAgent plists. */
 export const LAUNCH_AGENT_STDIN_PATH = "/dev/null";
 
 const plistEscape = (value: string): string =>
@@ -185,7 +185,7 @@ const renderEnvDict = (env: Record<string, string | undefined> | undefined): str
   return `\n    <key>EnvironmentVariables</key>\n    <dict>${items}\n    </dict>`;
 };
 
-/** Reused helper for read Launch Agent Program Arguments From File behavior in src/daemon. */
+/** Reads program args and env details from a LaunchAgent plist. */
 export async function readLaunchAgentProgramArgumentsFromFile(plistPath: string): Promise<{
   programArguments: string[];
   workingDirectory?: string;
@@ -193,7 +193,7 @@ export async function readLaunchAgentProgramArgumentsFromFile(plistPath: string)
   environmentValueSources?: Record<string, GatewayServiceEnvironmentValueSource>;
   sourcePath?: string;
 } | null>;
-/** Reused helper for read Launch Agent Program Arguments From File behavior in src/daemon. */
+/** Reads program args and unwraps a generated environment-wrapper plist when expected. */
 export async function readLaunchAgentProgramArgumentsFromFile(
   plistPath: string,
   options: ReadLaunchAgentProgramArgumentsOptions,
@@ -204,7 +204,7 @@ export async function readLaunchAgentProgramArgumentsFromFile(
   environmentValueSources?: Record<string, GatewayServiceEnvironmentValueSource>;
   sourcePath?: string;
 } | null>;
-/** Reused helper for read Launch Agent Program Arguments From File behavior in src/daemon. */
+/** Parses generated LaunchAgent plist state for service repair and status checks. */
 export async function readLaunchAgentProgramArgumentsFromFile(
   plistPath: string,
   options?: ReadLaunchAgentProgramArgumentsOptions,
@@ -268,7 +268,7 @@ export async function readLaunchAgentProgramArgumentsFromFile(
   }
 }
 
-/** Reused helper for build Launch Agent Plist behavior in src/daemon. */
+/** Renders the LaunchAgent plist installed for the macOS gateway supervisor. */
 export function buildLaunchAgentPlist({
   label,
   comment,
