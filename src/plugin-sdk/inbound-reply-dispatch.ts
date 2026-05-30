@@ -29,7 +29,6 @@ export {
   resolveChannelMessageReplyDispatchCounts,
   recordChannelBotPairLoopAndCheckSuppression,
 } from "../channels/message/inbound-reply-dispatch.js";
-/** Re-exported API for src/plugin-sdk. */
 export type {
   ChannelTurnDroppedHistoryOptions,
   ChannelInboundDroppedHistoryOptions,
