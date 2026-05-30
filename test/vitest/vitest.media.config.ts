@@ -1,6 +1,7 @@
-// test/vitest vitest media config helpers and runtime behavior.
+// Vitest project config for core media tests.
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
+/** Create the scoped Vitest config for core media tests. */
 export function createMediaVitestConfig(env?: Record<string, string | undefined>) {
   return createScopedVitestConfig(["src/media/**/*.test.ts"], {
     dir: "src",
@@ -10,4 +11,5 @@ export function createMediaVitestConfig(env?: Record<string, string | undefined>
   });
 }
 
+/** Default media Vitest project configuration. */
 export default createMediaVitestConfig();

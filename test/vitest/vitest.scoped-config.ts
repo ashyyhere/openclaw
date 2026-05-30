@@ -1,4 +1,4 @@
-// test/vitest vitest scoped config helpers and runtime behavior.
+// Shared Vitest config builder normalizes scoped project includes, excludes, and ordering.
 import path from "node:path";
 import { defineConfig } from "vitest/config";
 import { loadPatternListFromEnv, narrowIncludePatternsForCli } from "./vitest.pattern-file.ts";
@@ -58,6 +58,7 @@ function directoryPatternCoversInclude(excludePattern: string, includePattern: s
   return candidate === excludeRoot || candidate.startsWith(`${excludeRoot}/`);
 }
 
+/** Return whether a single include pattern is fully covered by one exclude pattern. */
 export function includePatternIsFullyExcluded(
   includePattern: string,
   excludePattern: string,
@@ -71,6 +72,7 @@ export function includePatternIsFullyExcluded(
   );
 }
 
+/** Decide passWithNoTests for CLI includes that are all excluded by the project lane. */
 export function shouldPassWithNoTestsForCliIncludes(
   cliIncludePatterns: string[] | null,
   excludePatterns: string[],
@@ -88,6 +90,7 @@ export function shouldPassWithNoTestsForCliIncludes(
   );
 }
 
+/** Resolve whether scoped Vitest projects should run with module isolation. */
 export function resolveVitestIsolation(
   _env: Record<string, string | undefined> = process.env,
 ): boolean {
@@ -196,6 +199,7 @@ function resolveScopedProjectGroupOrder(
   return hashFallbackScopedProjectGroupOrder(key);
 }
 
+/** Create a scoped Vitest project config with repo defaults and optional lane overrides. */
 export function createScopedVitestConfig(
   include: string[],
   options?: {

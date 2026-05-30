@@ -1,9 +1,10 @@
-// test/vitest vitest unit fast config helpers and runtime behavior.
+// Vitest project config for the curated fast unit-test lane.
 import { defineConfig } from "vitest/config";
 import { loadPatternListFromEnv, narrowIncludePatternsForCli } from "./vitest.pattern-file.ts";
 import { sharedVitestConfig } from "./vitest.shared.config.ts";
 import { getUnitFastTestFiles, getUnitFastTimerTestFiles } from "./vitest.unit-fast-paths.mjs";
 
+/** Create the Vitest config for the curated unit-fast test file set. */
 export function createUnitFastVitestConfig(
   env: Record<string, string | undefined> = process.env,
   options: { argv?: string[] } = {},
@@ -29,4 +30,5 @@ export function createUnitFastVitestConfig(
   });
 }
 
+/** Default unit-fast Vitest project configuration. */
 export default createUnitFastVitestConfig();

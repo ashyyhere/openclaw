@@ -1,6 +1,7 @@
-// test/vitest vitest extension slack config helpers and runtime behavior.
+// Vitest project config for Slack plugin tests.
 import { createScopedVitestConfig } from "./vitest.scoped-config.ts";
 
+/** Create the scoped Vitest config for Slack plugin tests. */
 export function createExtensionSlackVitestConfig(
   env: Record<string, string | undefined> = process.env,
 ) {
@@ -15,4 +16,5 @@ export function createExtensionSlackVitestConfig(
   });
 }
 
+/** Default Slack plugin Vitest project configuration. */
 export default createExtensionSlackVitestConfig();

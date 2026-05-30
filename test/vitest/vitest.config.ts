@@ -1,4 +1,4 @@
-// test/vitest vitest config helpers and runtime behavior.
+// Root Vitest config lists all project lanes and shared local scheduling helpers.
 import { defineConfig } from "vitest/config";
 import {
   resolveDefaultVitestPool,
@@ -8,8 +8,10 @@ import {
   sharedVitestConfig,
 } from "./vitest.shared.config.ts";
 
+/** Re-export local scheduling helpers for tooling that reads root Vitest behavior. */
 export { resolveDefaultVitestPool, resolveLocalVitestMaxWorkers, resolveLocalVitestScheduling };
 
+/** Ordered Vitest project config files included by the root test command. */
 export const rootVitestProjects = [
   "test/vitest/vitest.unit.config.ts",
   "test/vitest/vitest.unit-ui.config.ts",
@@ -86,6 +88,7 @@ export const rootVitestProjects = [
   "test/vitest/vitest.extensions.config.ts",
 ] as const;
 
+/** Default root Vitest configuration that fans out to all project lanes. */
 export default defineConfig({
   ...sharedVitestConfig,
   test: {

@@ -1,9 +1,10 @@
-// test/vitest vitest contracts channel registry config helpers and runtime behavior.
+// Vitest project config for channel registry contract tests.
 import {
   channelRegistryContractPatterns,
   createContractsVitestConfig,
 } from "./vitest.contracts-shared.ts";
 
+/** Default channel registry contract Vitest project configuration. */
 export default createContractsVitestConfig(
   channelRegistryContractPatterns,
   process.env,

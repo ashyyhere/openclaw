@@ -1,6 +1,7 @@
-// test/vitest vitest unit support config helpers and runtime behavior.
+// Vitest project config for package-level support tests outside gateway protocol lanes.
 import { createUnitVitestConfigWithOptions } from "./vitest.unit.config.ts";
 
+/** Default package support Vitest project configuration. */
 export default createUnitVitestConfigWithOptions(process.env, {
   name: "unit-support",
   includePatterns: ["packages/**/*.test.ts"],
