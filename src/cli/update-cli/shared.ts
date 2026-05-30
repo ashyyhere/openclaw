@@ -27,7 +27,7 @@ import { normalizeLowercaseStringOrEmpty } from "../../shared/string-coerce.js";
 import { pathExists } from "../../utils.js";
 import { COMPLETION_SKIP_PLUGIN_COMMANDS_ENV } from "../completion-runtime.js";
 
-/** Shared type for Update Command Options in src/cli/update-cli. */
+/** Flags accepted by the main update command. */
 export type UpdateCommandOptions = {
   json?: boolean;
   restart?: boolean;
@@ -38,13 +38,13 @@ export type UpdateCommandOptions = {
   yes?: boolean;
 };
 
-/** Shared type for Update Status Options in src/cli/update-cli. */
+/** Flags accepted by the update status command. */
 export type UpdateStatusOptions = {
   json?: boolean;
   timeout?: string;
 };
 
-/** Shared type for Update Finalize Options in src/cli/update-cli. */
+/** Flags accepted when finalizing a staged update. */
 export type UpdateFinalizeOptions = {
   json?: boolean;
   channel?: string;
@@ -53,7 +53,7 @@ export type UpdateFinalizeOptions = {
   restart?: boolean;
 };
 
-/** Shared type for Update Wizard Options in src/cli/update-cli. */
+/** Options accepted by the interactive update wizard. */
 export type UpdateWizardOptions = {
   timeout?: string;
 };
@@ -61,7 +61,7 @@ export type UpdateWizardOptions = {
 const INVALID_TIMEOUT_ERROR = "--timeout must be a positive integer (seconds)";
 const MAX_SAFE_TIMEOUT_SECONDS = Math.floor(Number.MAX_SAFE_INTEGER / 1000);
 
-/** Reused helper for parse Timeout Ms Or Exit behavior in src/cli/update-cli. */
+/** Parses a seconds timeout, reporting a CLI error and exit on invalid input. */
 export function parseTimeoutMsOrExit(timeout?: string): number | undefined | null {
   if (timeout === undefined) {
     return undefined;
@@ -79,11 +79,11 @@ export function parseTimeoutMsOrExit(timeout?: string): number | undefined | nul
 const OPENCLAW_REPO_URL = "https://github.com/openclaw/openclaw.git";
 const MAX_LOG_CHARS = 8000;
 
-/** Reused constant for DEFAULT PACKAGE NAME behavior in src/cli/update-cli. */
+/** npm package name used for registry-backed OpenClaw updates. */
 export const DEFAULT_PACKAGE_NAME = "openclaw";
 const CORE_PACKAGE_NAMES = new Set([DEFAULT_PACKAGE_NAME]);
 
-/** Reused helper for normalize Tag behavior in src/cli/update-cli. */
+/** Normalizes package tags accepted by update commands. */
 export function normalizeTag(value?: string | null): string | null {
   return normalizePackageTagInput(value, ["openclaw", DEFAULT_PACKAGE_NAME]);
 }
@@ -97,10 +97,10 @@ function normalizeVersionTag(tag: string): string | null {
   return parseSemver(cleaned) ? cleaned : null;
 }
 
-/** Re-exported API for src/cli/update-cli, starting with read Package Name. */
+/** Package metadata readers used by update install detection. */
 export { readPackageName, readPackageVersion };
 
-/** Reused helper for resolve Target Version behavior in src/cli/update-cli. */
+/** Resolves a version or npm dist-tag to the target package version. */
 export async function resolveTargetVersion(
   tag: string,
   timeoutMs?: number,
@@ -116,7 +116,7 @@ export async function resolveTargetVersion(
   return res.version ?? null;
 }
 
-/** Reused helper for is Git Checkout behavior in src/cli/update-cli. */
+/** Checks whether a path is a git checkout root. */
 export async function isGitCheckout(root: string): Promise<boolean> {
   try {
     await fs.stat(path.join(root, ".git"));
@@ -131,7 +131,7 @@ async function isCorePackage(root: string): Promise<boolean> {
   return Boolean(name && CORE_PACKAGE_NAMES.has(name));
 }
 
-/** Reused helper for is Empty Dir behavior in src/cli/update-cli. */
+/** Checks whether a directory exists and contains no entries. */
 export async function isEmptyDir(targetPath: string): Promise<boolean> {
   try {
     const entries = await fs.readdir(targetPath);
@@ -141,7 +141,7 @@ export async function isEmptyDir(targetPath: string): Promise<boolean> {
   }
 }
 
-/** Reused helper for resolve Git Install Dir behavior in src/cli/update-cli. */
+/** Resolves the git checkout directory used by git-based updates. */
 export function resolveGitInstallDir(): string {
   const override = process.env.OPENCLAW_GIT_DIR?.trim();
   if (override) {
@@ -158,7 +158,7 @@ function resolveDefaultGitDir(): string {
   return path.join(home, "openclaw");
 }
 
-/** Reused helper for resolve Node Runner behavior in src/cli/update-cli. */
+/** Returns a node executable suitable for spawning CLI helper commands. */
 export function resolveNodeRunner(): string {
   const base = normalizeLowercaseStringOrEmpty(path.basename(process.execPath));
   if (base === "node" || base === "node.exe") {
@@ -167,7 +167,7 @@ export function resolveNodeRunner(): string {
   return "node";
 }
 
-/** Reused helper for resolve Update Root behavior in src/cli/update-cli. */
+/** Resolves the current OpenClaw package root for update operations. */
 export async function resolveUpdateRoot(): Promise<string> {
   return (
     (await resolveOpenClawPackageRoot({
@@ -178,7 +178,7 @@ export async function resolveUpdateRoot(): Promise<string> {
   );
 }
 
-/** Reused helper for run Update Step behavior in src/cli/update-cli. */
+/** Runs one update command step and reports bounded progress/output tails. */
 export async function runUpdateStep(params: {
   name: string;
   argv: string[];
@@ -225,7 +225,7 @@ export async function runUpdateStep(params: {
   };
 }
 
-/** Reused helper for ensure Git Checkout behavior in src/cli/update-cli. */
+/** Ensures the configured git install directory is an OpenClaw checkout. */
 export async function ensureGitCheckout(params: {
   dir: string;
   timeoutMs: number;
@@ -270,7 +270,7 @@ export async function ensureGitCheckout(params: {
   return null;
 }
 
-/** Reused helper for resolve Global Manager behavior in src/cli/update-cli. */
+/** Detects the global package manager used for package-based updates. */
 export async function resolveGlobalManager(params: {
   root: string;
   installKind: "git" | "package" | "unknown";
@@ -297,7 +297,7 @@ const COMPLETION_CACHE_WRITE_TIMEOUT_MS = 30_000;
 const COMPLETION_CACHE_MANUAL_REFRESH_HINT =
   "Shell tab-completion may be stale; refresh manually with: openclaw completion --write-state";
 
-/** Reused helper for try Write Completion Cache behavior in src/cli/update-cli. */
+/** Best-effort refresh of shell completion cache after update changes. */
 export async function tryWriteCompletionCache(root: string, jsonMode: boolean): Promise<void> {
   const binPath = path.join(root, "openclaw.mjs");
   if (!(await pathExists(binPath))) {
@@ -341,7 +341,7 @@ export async function tryWriteCompletionCache(root: string, jsonMode: boolean): 
   }
 }
 
-/** Reused helper for create Global Command Runner behavior in src/cli/update-cli. */
+/** Adapts runCommandWithTimeout to the global-install detector interface. */
 export function createGlobalCommandRunner(): CommandRunner {
   return async (argv, options) => {
     const res = await runCommandWithTimeout(argv, options);
