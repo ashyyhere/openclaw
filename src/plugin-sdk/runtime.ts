@@ -1,18 +1,18 @@
 /** Public SDK barrel for runtime environment contracts. */
 export type { OutputRuntimeEnv, RuntimeEnv } from "../runtime.js";
-/** Re-exported API for src/plugin-sdk, starting with create Non Exiting Runtime. */
+/** Runtime factories that let plugins report exits without terminating the host process. */
 export { createNonExitingRuntime, defaultRuntime } from "../runtime.js";
-/** Re-exported API for src/plugin-sdk, starting with resolve Command Secret Refs Via Gateway. */
+/** Resolves command SecretRefs through the gateway secret bridge. */
 export { resolveCommandSecretRefsViaGateway } from "../cli/command-secret-gateway.js";
-/** Re-exported API for src/plugin-sdk, starting with get Channels Command Secret Target Ids. */
+/** Lists channel command secret targets that plugins may resolve through the gateway. */
 export { getChannelsCommandSecretTargetIds } from "../cli/command-secret-targets.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Runtime environment helpers that route messages through logger-backed exits. */
 export {
   createLoggerBackedRuntime,
   resolveRuntimeEnv,
   resolveRuntimeEnvWithUnavailableExit,
 } from "./runtime-logger.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Global CLI logging and yes/verbose flag helpers used by plugin setup flows. */
 export {
   danger,
   info,
@@ -27,21 +27,21 @@ export {
   warn,
 } from "../globals.js";
 export * from "../logging.js";
-/** Re-exported API for src/plugin-sdk, starting with wait For Abort Signal. */
+/** Promise helper that settles when an AbortSignal fires. */
 export { waitForAbortSignal } from "../infra/abort-signal.js";
-/** Re-exported API for src/plugin-sdk, starting with create Backup Archive. */
+/** Backup archive helper exposed for plugin-managed config/data migrations. */
 export { createBackupArchive } from "../infra/backup-create.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Plugin install path diagnostics for setup and doctor flows. */
 export {
   detectPluginInstallPathIssue,
   formatPluginInstallPathIssue,
 } from "../infra/plugin-install-path-warnings.js";
-/** Re-exported API for src/plugin-sdk, starting with collect Provider Dangerous Name Matching Scopes. */
+/** Collects dangerous provider-name matching scopes for provider auth diagnostics. */
 export { collectProviderDangerousNameMatchingScopes } from "../config/dangerous-name-matching.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Process-level rejection/exception handler registration helpers. */
 export {
   registerUncaughtExceptionHandler,
   registerUnhandledRejectionHandler,
 } from "../infra/unhandled-rejections.js";
-/** Re-exported API for src/plugin-sdk, starting with remove Plugin From Config. */
+/** Removes a plugin entry from config during uninstall or migration flows. */
 export { removePluginFromConfig } from "../plugins/uninstall.js";

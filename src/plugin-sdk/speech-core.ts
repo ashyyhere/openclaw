@@ -1,10 +1,10 @@
 // Shared speech-provider implementation helpers for bundled and third-party plugins.
 
-/** Re-exported API for src/plugin-sdk, starting with Speech Provider Plugin. */
+/** Speech provider plugin contract exposed through the SDK. */
 export type { SpeechProviderPlugin } from "../plugins/types.js";
-/** Re-exported API for src/plugin-sdk, starting with Resolved Tts Config. */
+/** Resolved TTS config shapes consumed after provider/user overrides merge. */
 export type { ResolvedTtsConfig, ResolvedTtsModelOverrides } from "../tts/tts-types.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Speech provider request, override, directive, and voice-list contract types. */
 export type {
   SpeechDirectiveTokenParseContext,
   SpeechDirectiveTokenParseResult,
@@ -28,7 +28,7 @@ export type {
   TtsDirectiveParseResult,
 } from "../tts/provider-types.js";
 
-/** Re-exported API for src/plugin-sdk. */
+/** Core text, numeric, language, seed, and cleanup helpers shared by speech providers. */
 export {
   scheduleCleanup,
   summarizeText,
@@ -37,11 +37,11 @@ export {
   normalizeSeed,
   requireInRange,
 } from "../tts/tts-core.js";
-/** Re-exported API for src/plugin-sdk, starting with parse Tts Directives. */
+/** Parses inline TTS directives from user-facing speech text. */
 export { parseTtsDirectives } from "../tts/directives.js";
-/** Re-exported API for src/plugin-sdk, starting with parse Speech Directive Number Override. */
+/** Parses numeric speech directive overrides such as speed or pitch values. */
 export { parseSpeechDirectiveNumberOverride } from "../tts/directive-number.js";
-/** Re-exported API for src/plugin-sdk. */
+/** Speech provider registry helpers for canonical ids and loaded provider lookup. */
 export {
   canonicalizeSpeechProviderId,
   getSpeechProvider,
@@ -49,13 +49,13 @@ export {
   listSpeechProviders,
   normalizeSpeechProviderId,
 } from "../tts/provider-registry.js";
-/** Re-exported API for src/plugin-sdk, starting with resolve Effective Tts Config. */
+/** Resolves effective TTS config after provider defaults, config, and directive overrides. */
 export { resolveEffectiveTtsConfig } from "../tts/tts-config.js";
-/** Re-exported API for src/plugin-sdk, starting with Tts Config Resolution Context. */
+/** Context object accepted by effective TTS config resolution. */
 export type { TtsConfigResolutionContext } from "../tts/tts-config.js";
-/** Re-exported API for src/plugin-sdk, starting with normalize Tts Auto Mode. */
+/** Auto-mode normalizer and allowed values for TTS provider selection. */
 export { normalizeTtsAutoMode, TTS_AUTO_MODES } from "../tts/tts-auto-mode.js";
-/** Re-exported API for src/plugin-sdk. */
+/** HTTP provider error parsing and formatting helpers for speech provider implementations. */
 export {
   asBoolean,
   asFiniteNumber,
