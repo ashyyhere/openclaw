@@ -1,6 +1,6 @@
-// infra channel activity helpers and runtime behavior.
+// Tracks last inbound and outbound activity timestamps per channel account.
 import type { ChannelId } from "../channels/plugins/channel-id.types.js";
-/** Shared type for Channel Direction in src/infra. */
+/** Direction of observed channel activity. */
 export type ChannelDirection = "inbound" | "outbound";
 
 type ActivityEntry = {
@@ -25,7 +25,7 @@ function ensureEntry(channel: ChannelId, accountId: string): ActivityEntry {
   return created;
 }
 
-/** Reused helper for record Channel Activity behavior in src/infra. */
+/** Records the latest inbound or outbound activity time for a channel account. */
 export function recordChannelActivity(params: {
   channel: ChannelId;
   accountId?: string | null;
@@ -43,7 +43,7 @@ export function recordChannelActivity(params: {
   }
 }
 
-/** Reused helper for get Channel Activity behavior in src/infra. */
+/** Returns last activity timestamps for a channel account. */
 export function getChannelActivity(params: {
   channel: ChannelId;
   accountId?: string | null;
@@ -57,7 +57,7 @@ export function getChannelActivity(params: {
   );
 }
 
-/** Reused helper for reset Channel Activity For Test behavior in src/infra. */
+/** Clears channel activity state between tests. */
 export function resetChannelActivityForTest() {
   activity.clear();
 }

@@ -1,4 +1,4 @@
-// infra diagnostic error metadata helpers and runtime behavior.
+// Extracts low-cardinality diagnostic metadata from nested provider/runtime errors.
 import crypto from "node:crypto";
 
 const HTTP_STATUS_MIN = 100;
@@ -127,7 +127,7 @@ function extractProviderRequestIdFromText(text: string | undefined): string | un
   return undefined;
 }
 
-/** Reused helper for diagnostic Error Category behavior in src/infra. */
+/** Classifies an error by constructor or primitive kind for diagnostics. */
 export function diagnosticErrorCategory(err: unknown): string {
   try {
     if (err instanceof TypeError) {
@@ -160,7 +160,7 @@ export function diagnosticErrorCategory(err: unknown): string {
   return typeof err;
 }
 
-/** Reused helper for diagnostic Http Status Code behavior in src/infra. */
+/** Extracts a valid HTTP status/statusCode from an error object. */
 export function diagnosticHttpStatusCode(err: unknown): string | undefined {
   const status = readOwnDataProperty(err, "status");
   if (isHttpStatusCode(status)) {
@@ -173,7 +173,7 @@ export function diagnosticHttpStatusCode(err: unknown): string | undefined {
   return undefined;
 }
 
-/** Reused helper for diagnostic Error Failure Kind behavior in src/infra. */
+/** Maps common network/runtime error codes and messages to failure kinds. */
 export function diagnosticErrorFailureKind(err: unknown): DiagnosticErrorFailureKind | undefined {
   const code = findDiagnosticErrorProperty(err, readDirectCode)?.trim().toUpperCase();
   switch (code) {
@@ -215,7 +215,7 @@ export function diagnosticErrorFailureKind(err: unknown): DiagnosticErrorFailure
   return undefined;
 }
 
-/** Reused helper for diagnostic Provider Request Id Hash behavior in src/infra. */
+/** Extracts and hashes provider request ids without logging raw identifiers. */
 export function diagnosticProviderRequestIdHash(err: unknown): string | undefined {
   const fromProperty = findDiagnosticErrorProperty(err, readDirectProviderRequestId);
   if (fromProperty) {

@@ -1,4 +1,4 @@
-// infra channel runtime context helpers and runtime behavior.
+// Registers, reads, watches, and scopes channel runtime context objects.
 import type {
   ChannelRuntimeContextKey,
   ChannelRuntimeSurface,
@@ -29,7 +29,7 @@ function resolveRuntimeContextRegistry(params: {
   return params.channelRuntime?.runtimeContexts ?? null;
 }
 
-/** Reused helper for register Channel Runtime Context behavior in src/infra. */
+/** Registers a runtime context for a channel/account/capability key. */
 export function registerChannelRuntimeContext(
   params: ChannelRuntimeContextKey & {
     channelRuntime?: ChannelRuntimeSurface;
@@ -51,7 +51,7 @@ export function registerChannelRuntimeContext(
 }
 
 // oxlint-disable-next-line typescript/no-unnecessary-type-parameters -- Runtime context values are caller-typed by key.
-/** Reused helper for get Channel Runtime Context behavior in src/infra. */
+/** Reads a typed runtime context for a channel/account/capability key. */
 export function getChannelRuntimeContext<T = unknown>(
   params: ChannelRuntimeContextKey & {
     channelRuntime?: ChannelRuntimeSurface;
@@ -68,7 +68,7 @@ export function getChannelRuntimeContext<T = unknown>(
   });
 }
 
-/** Reused helper for watch Channel Runtime Contexts behavior in src/infra. */
+/** Watches context changes for a channel/account/capability key. */
 export function watchChannelRuntimeContexts(
   params: ChannelRuntimeContextKey & {
     channelRuntime?: ChannelRuntimeSurface;
@@ -87,7 +87,7 @@ export function watchChannelRuntimeContexts(
   });
 }
 
-/** Reused helper for create Task Scoped Channel Runtime behavior in src/infra. */
+/** Wraps a channel runtime so registered contexts are disposed with the task. */
 export function createTaskScopedChannelRuntime(params: {
   channelRuntime?: ChannelRuntimeSurface;
 }): {
