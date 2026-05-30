@@ -1,4 +1,5 @@
-// gateway credentials helpers and runtime behavior.
+// Gateway credential resolution. Merges explicit auth, env, local/remote config,
+// secret-reference availability, and probe-specific fallback rules.
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import {
   createGatewayCredentialPlan,
@@ -6,14 +7,14 @@ import {
   trimCredentialToUndefined,
   trimToUndefined,
 } from "./credential-planner.js";
-/** Re-exported API for src/gateway. */
+/** Credential planner helpers re-exported for gateway command paths. */
 export {
   hasGatewayPasswordEnvCandidate,
   hasGatewayTokenEnvCandidate,
   trimToUndefined,
 } from "./credential-planner.js";
 
-/** Shared type for Explicit Gateway Auth in src/gateway. */
+/** Explicit token/password auth supplied by CLI or caller options. */
 export type ExplicitGatewayAuth = {
   token?: string;
   password?: string;
@@ -24,18 +25,18 @@ type ResolvedGatewayCredentials = {
   password?: string;
 };
 
-/** Shared type for Gateway Credential Mode in src/gateway. */
+/** Credential lookup mode for local gateway versus remote targets. */
 export type GatewayCredentialMode = "local" | "remote";
-/** Shared type for Gateway Credential Precedence in src/gateway. */
+/** Precedence rule for choosing between env and local config credentials. */
 export type GatewayCredentialPrecedence = "env-first" | "config-first";
-/** Shared type for Gateway Remote Credential Precedence in src/gateway. */
+/** Precedence rule for remote credential values versus env values. */
 export type GatewayRemoteCredentialPrecedence = "remote-first" | "env-first";
-/** Shared type for Gateway Remote Credential Fallback in src/gateway. */
+/** Whether remote credential lookup may fall back to env/local values. */
 export type GatewayRemoteCredentialFallback = "remote-env-local" | "remote-only";
 
 const GATEWAY_SECRET_REF_UNAVAILABLE_ERROR_CODE = "GATEWAY_SECRET_REF_UNAVAILABLE"; // pragma: allowlist secret
 
-/** Reused class for Gateway Secret Ref Unavailable Error behavior in src/gateway. */
+/** Error raised when a configured gateway secret reference cannot be resolved here. */
 export class GatewaySecretRefUnavailableError extends Error {
   readonly code = GATEWAY_SECRET_REF_UNAVAILABLE_ERROR_CODE;
   readonly path: string;
@@ -53,7 +54,7 @@ export class GatewaySecretRefUnavailableError extends Error {
   }
 }
 
-/** Reused helper for is Gateway Secret Ref Unavailable Error behavior in src/gateway. */
+/** Type guard for unresolved gateway secret-reference failures. */
 export function isGatewaySecretRefUnavailableError(
   error: unknown,
   expectedPath?: string,
@@ -80,7 +81,7 @@ function throwUnresolvedGatewaySecretInput(path: string): never {
   throw new GatewaySecretRefUnavailableError(path);
 }
 
-/** Reused helper for resolve Gateway Credentials From Values behavior in src/gateway. */
+/** Resolves token/password from raw config values and environment variables. */
 export function resolveGatewayCredentialsFromValues(params: {
   configToken?: unknown;
   configPassword?: unknown;
@@ -251,7 +252,7 @@ function resolveRemoteGatewayCredentials(params: {
   return { token, password };
 }
 
-/** Reused helper for resolve Gateway Credentials From Config behavior in src/gateway. */
+/** Resolves gateway credentials from config, env, explicit auth, URL, and mode. */
 export function resolveGatewayCredentialsFromConfig(params: {
   cfg: OpenClawConfig;
   env?: NodeJS.ProcessEnv;
@@ -319,7 +320,7 @@ export function resolveGatewayCredentialsFromConfig(params: {
   });
 }
 
-/** Reused helper for resolve Gateway Probe Credentials From Config behavior in src/gateway. */
+/** Resolves probe credentials without falling back from remote refs to local config. */
 export function resolveGatewayProbeCredentialsFromConfig(params: {
   cfg: OpenClawConfig;
   mode: GatewayCredentialMode;

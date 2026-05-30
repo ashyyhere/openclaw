@@ -1,4 +1,5 @@
-// daemon schtasks helpers and runtime behavior.
+// Windows Scheduled Task service backend. Renders task scripts, installs or
+// falls back to Startup entries, controls runtime state, and reads task status.
 import { spawn, spawnSync } from "node:child_process";
 import fs from "node:fs/promises";
 import os from "node:os";
@@ -53,7 +54,7 @@ function shouldFallbackToStartupEntry(params: { code: number; detail: string }):
   );
 }
 
-/** Reused helper for resolve Task Script Path behavior in src/daemon. */
+/** Resolves the generated gateway task launcher script path. */
 export function resolveTaskScriptPath(env: GatewayServiceEnv): string {
   return resolveGatewayTaskScriptPath(env);
 }
@@ -235,7 +236,7 @@ function resolveTaskLauncherScriptPath(env: GatewayServiceEnv, scriptPath: strin
   return path.join(parsed.dir, `${parsed.name}.vbs`);
 }
 
-/** Reused helper for read Scheduled Task Command behavior in src/daemon. */
+/** Reads the generated task script back into command/environment config. */
 export async function readScheduledTaskCommand(
   env: GatewayServiceEnv,
 ): Promise<GatewayServiceCommandConfig | null> {
@@ -292,7 +293,7 @@ export async function readScheduledTaskCommand(
   }
 }
 
-/** Shared type for Scheduled Task Info in src/daemon. */
+/** Parsed schtasks query fields used to infer runtime status. */
 export type ScheduledTaskInfo = {
   status?: string;
   lastRunTime?: string;
@@ -305,7 +306,7 @@ function hasListenerPid<T extends { pid?: number | null }>(
   return typeof listener.pid === "number";
 }
 
-/** Reused helper for parse Schtasks Query behavior in src/daemon. */
+/** Parses locale-dependent schtasks /Query list output into stable fields. */
 export function parseSchtasksQuery(output: string): ScheduledTaskInfo {
   const entries = parseKeyValueOutput(output, ":");
   const info: ScheduledTaskInfo = {};
@@ -950,7 +951,7 @@ async function writeScheduledTaskScript({
   return { scriptPath, taskLaunchPath, taskDescription };
 }
 
-/** Reused helper for stage Scheduled Task behavior in src/daemon. */
+/** Writes the scheduled-task script without installing or running the task. */
 export async function stageScheduledTask({
   stdout,
   ...args
@@ -1233,7 +1234,7 @@ async function activateScheduledTask(params: {
   );
 }
 
-/** Reused helper for install Scheduled Task behavior in src/daemon. */
+/** Installs or updates the Windows Scheduled Task and starts the gateway. */
 export async function installScheduledTask(
   args: GatewayServiceInstallArgs,
 ): Promise<{ scriptPath: string }> {
@@ -1248,7 +1249,7 @@ export async function installScheduledTask(
   return { scriptPath: staged.scriptPath };
 }
 
-/** Reused helper for uninstall Scheduled Task behavior in src/daemon. */
+/** Removes the Scheduled Task, Startup fallback entries, and generated scripts. */
 export async function uninstallScheduledTask({
   env,
   stdout,
@@ -1288,7 +1289,7 @@ function isTaskNotRunning(res: { stdout: string; stderr: string; code: number })
   return detail.includes("not running");
 }
 
-/** Reused helper for stop Scheduled Task behavior in src/daemon. */
+/** Stops the Scheduled Task or Startup fallback and releases the gateway port. */
 export async function stopScheduledTask({ stdout, env }: GatewayServiceControlArgs): Promise<void> {
   const effectiveEnv = env ?? (process.env as GatewayServiceEnv);
   try {
@@ -1332,7 +1333,7 @@ export async function stopScheduledTask({ stdout, env }: GatewayServiceControlAr
   stdout.write(`${formatLine("Stopped Scheduled Task", taskName)}\n`);
 }
 
-/** Reused helper for restart Scheduled Task behavior in src/daemon. */
+/** Restarts the Scheduled Task or Startup fallback after clearing stale listeners. */
 export async function restartScheduledTask({
   stdout,
   env,
@@ -1380,7 +1381,7 @@ export async function restartScheduledTask({
   return { outcome: "completed" };
 }
 
-/** Reused helper for is Scheduled Task Installed behavior in src/daemon. */
+/** Checks whether either the Scheduled Task or Startup fallback is installed. */
 export async function isScheduledTaskInstalled(args: GatewayServiceEnvArgs): Promise<boolean> {
   const effectiveEnv = args.env ?? (process.env as GatewayServiceEnv);
   if (await isRegisteredScheduledTask(effectiveEnv)) {
@@ -1389,7 +1390,7 @@ export async function isScheduledTaskInstalled(args: GatewayServiceEnvArgs): Pro
   return await isStartupEntryInstalled(effectiveEnv);
 }
 
-/** Reused helper for read Scheduled Task Runtime behavior in src/daemon. */
+/** Reads Scheduled Task or Startup fallback runtime status. */
 export async function readScheduledTaskRuntime(
   env: GatewayServiceEnv = process.env as GatewayServiceEnv,
 ): Promise<GatewayServiceRuntime> {
