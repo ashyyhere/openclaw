@@ -10,7 +10,7 @@ export {
   resolveBootstrapTotalMaxChars,
   stripThoughtSignatures,
 } from "./embedded-agent-helpers/bootstrap.js";
-/** Re-exported API for src/agents. */
+/** Provider error classifiers and UI copy helpers shared by embedded agent runtimes. */
 export {
   BILLING_ERROR_USER_MESSAGE,
   classifyProviderRuntimeFailureKind,
@@ -47,44 +47,44 @@ export {
   parseImageDimensionError,
   parseImageSizeError,
 } from "./embedded-agent-helpers/errors.js";
-/** Re-exported API for src/agents, starting with Provider Runtime Failure Kind. */
+/** Stable failure categories used when provider routing decides whether failover is allowed. */
 export type { ProviderRuntimeFailureKind } from "./embedded-agent-helpers/errors.js";
-/** Re-exported API for src/agents, starting with sanitize User Facing Text. */
+/** Text sanitizer for assistant/provider output before it reaches user-visible channels. */
 export { sanitizeUserFacingText } from "./embedded-agent-helpers/sanitize-user-facing-text.js";
-/** Re-exported API for src/agents, starting with is Google Model Api. */
+/** Google-specific model and turn-shape helpers used by provider adapters. */
 export { isGoogleModelApi, sanitizeGoogleTurnOrdering } from "./embedded-agent-helpers/google.js";
 
-/** Re-exported API for src/agents. */
+/** OpenAI response downgraders used when older endpoints cannot accept newer reasoning shapes. */
 export {
   downgradeOpenAIFunctionCallReasoningPairs,
   downgradeOpenAIReasoningBlocks,
   normalizeOpenAIResponsesToolCallIds,
 } from "./embedded-agent-helpers/openai.js";
-/** Re-exported API for src/agents. */
+/** Image-content normalization helpers for provider message payloads. */
 export {
   isEmptyAssistantMessageContent,
   sanitizeSessionMessagesImages,
 } from "./embedded-agent-helpers/images.js";
-/** Re-exported API for src/agents. */
+/** Messaging dedupe helpers shared by channel delivery and assistant replay handling. */
 export {
   isMessagingToolDuplicate,
   isMessagingToolDuplicateNormalized,
   normalizeTextForComparison,
 } from "./embedded-agent-helpers/messaging-dedupe.js";
 
-/** Re-exported API for src/agents, starting with pick Fallback Thinking Level. */
+/** Thinking-level fallback selection for providers with narrower reasoning support. */
 export { pickFallbackThinkingLevel } from "./embedded-agent-helpers/thinking.js";
 
-/** Re-exported API for src/agents. */
+/** Turn validators and normalizers that keep provider transcript contracts intact. */
 export {
   mergeConsecutiveUserTurns,
   validateAnthropicTurns,
   validateGeminiTurns,
 } from "./embedded-agent-helpers/turns.js";
-/** Re-exported API for src/agents, starting with Embedded Context File. */
+/** Context-file and failover result shapes shared across embedded agent helpers. */
 export type { EmbeddedContextFile, FailoverReason } from "./embedded-agent-helpers/types.js";
 
-/** Re-exported API for src/agents, starting with Tool Call Id Mode. */
+/** Tool-call id mode names used by provider-specific id sanitizers. */
 export type { ToolCallIdMode } from "./tool-call-id.js";
-/** Re-exported API for src/agents, starting with is Valid Cloud Code Assist Tool Id. */
+/** Tool-call id validation and sanitization for providers with strict id formats. */
 export { isValidCloudCodeAssistToolId, sanitizeToolCallId } from "./tool-call-id.js";

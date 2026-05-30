@@ -1,4 +1,4 @@
-// ui/src/ui/views agents helpers and runtime behavior.
+// Control UI renderer for the selected agent's overview, files, tools, channels, and cron panels.
 import { html, nothing } from "lit";
 import { keyed } from "lit/directives/keyed.js";
 import { t } from "../../i18n/index.ts";
@@ -20,13 +20,13 @@ import {
   renderAgentChannels,
   renderAgentCron,
 } from "./agents-panels-status-files.ts";
-/** Re-exported API for ui/src/ui/views, starting with Agents Panel. */
+/** Panel ids shared between the agent view and its navigation helpers. */
 export type { AgentsPanel } from "./agents.types.ts";
 import { renderAgentTools, renderAgentSkills } from "./agents-panels-tools-skills.ts";
 import { agentBadgeText, buildAgentContext, normalizeAgentLabel } from "./agents-utils.ts";
 import type { AgentsPanel } from "./agents.types.ts";
 
-/** Shared type for Config State in ui/src/ui/views. */
+/** Config form state for the selected agent's editable settings panel. */
 export type ConfigState = {
   form: Record<string, unknown> | null;
   loading: boolean;
@@ -34,7 +34,7 @@ export type ConfigState = {
   dirty: boolean;
 };
 
-/** Shared type for Channels State in ui/src/ui/views. */
+/** Channel status snapshot and loading state for the selected agent. */
 export type ChannelsState = {
   snapshot: ChannelsStatusSnapshot | null;
   loading: boolean;
@@ -42,7 +42,7 @@ export type ChannelsState = {
   lastSuccess: number | null;
 };
 
-/** Shared type for Cron State in ui/src/ui/views. */
+/** Cron job state surfaced in the agent automation panel. */
 export type CronState = {
   status: CronStatus | null;
   jobs: CronJob[];
@@ -50,7 +50,7 @@ export type CronState = {
   error: string | null;
 };
 
-/** Shared type for Agent Files State in ui/src/ui/views. */
+/** Agent file list, active document, editable drafts, and save state. */
 export type AgentFilesState = {
   list: AgentsFilesListResult | null;
   loading: boolean;
@@ -61,7 +61,7 @@ export type AgentFilesState = {
   saving: boolean;
 };
 
-/** Shared type for Agent Skills State in ui/src/ui/views. */
+/** Skill status and filtering state for the selected agent. */
 export type AgentSkillsState = {
   report: SkillStatusReport | null;
   loading: boolean;
@@ -70,21 +70,21 @@ export type AgentSkillsState = {
   filter: string;
 };
 
-/** Shared type for Tools Catalog State in ui/src/ui/views. */
+/** Global tool catalog load state used by the tools panel. */
 export type ToolsCatalogState = {
   loading: boolean;
   error: string | null;
   result: ToolsCatalogResult | null;
 };
 
-/** Shared type for Tools Effective State in ui/src/ui/views. */
+/** Effective per-agent tool policy after profile and override resolution. */
 export type ToolsEffectiveState = {
   loading: boolean;
   error: string | null;
   result: ToolsEffectiveResult | null;
 };
 
-/** Shared type for Agents Props in ui/src/ui/views. */
+/** Complete render model and callbacks for the agent management view. */
 export type AgentsProps = {
   basePath: string;
   loading: boolean;
@@ -130,7 +130,7 @@ export type AgentsProps = {
   onSetDefault: (agentId: string) => void;
 };
 
-/** Reused helper for render Agents behavior in ui/src/ui/views. */
+/** Renders the agent management shell and dispatches the active panel renderer. */
 export function renderAgents(props: AgentsProps) {
   const agents = props.agentsList?.agents ?? [];
   const defaultId = props.agentsList?.defaultId ?? null;

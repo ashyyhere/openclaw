@@ -1,4 +1,4 @@
-// web-search runtime helpers and runtime behavior.
+// Runtime provider selection and execution helpers for the web_search tool.
 import { resolveDefaultAgentDir } from "../agents/agent-scope-config.js";
 import { hasAuthProfileForProvider } from "../agents/tools/model-config.helpers.js";
 import {
@@ -39,7 +39,7 @@ import type {
   RuntimeWebSearchConfig as WebSearchConfig,
 } from "./runtime-types.js";
 
-/** Re-exported API for src/web-search. */
+/** Public request/response and provider-entry types for runtime web_search callers. */
 export type {
   ListWebSearchProvidersParams,
   ResolveWebSearchDefinitionParams,
@@ -68,7 +68,7 @@ function resolveWebSearchRuntimeConfig(params?: {
   });
 }
 
-/** Reused helper for resolve Web Search Enabled behavior in src/web-search. */
+/** Resolves whether web_search should be offered for this config and sandbox state. */
 export function resolveWebSearchEnabled(params: {
   search?: WebSearchConfig;
   sandboxed?: boolean;
@@ -117,7 +117,7 @@ function hasEntryCredential(
   });
 }
 
-/** Reused helper for is Web Search Provider Configured behavior in src/web-search. */
+/** Checks whether a provider can obtain credentials from config, env, or auth profiles. */
 export function isWebSearchProviderConfigured(params: {
   provider: Pick<
     PluginWebSearchProviderEntry,
@@ -136,7 +136,7 @@ export function isWebSearchProviderConfigured(params: {
   return hasEntryCredential(params.provider, config, resolveSearchConfig(config));
 }
 
-/** Reused helper for list Web Search Providers behavior in src/web-search. */
+/** Lists all runtime-loadable web_search providers after config-scoped plugin filtering. */
 export function listWebSearchProviders(params?: {
   config?: OpenClawConfig;
 }): PluginWebSearchProviderEntry[] {
@@ -146,7 +146,7 @@ export function listWebSearchProviders(params?: {
   });
 }
 
-/** Reused helper for list Configured Web Search Providers behavior in src/web-search. */
+/** Lists configured plugin web_search providers without runtime-only metadata fallbacks. */
 export function listConfiguredWebSearchProviders(params?: {
   config?: OpenClawConfig;
 }): PluginWebSearchProviderEntry[] {
@@ -156,7 +156,7 @@ export function listConfiguredWebSearchProviders(params?: {
   });
 }
 
-/** Reused helper for resolve Web Search Provider Id behavior in src/web-search. */
+/** Chooses the provider id, preferring explicit config and otherwise credential-backed providers. */
 export function resolveWebSearchProviderId(params: {
   search?: WebSearchConfig;
   config?: OpenClawConfig;
@@ -445,7 +445,7 @@ function isStructuredAvailabilityError(result: unknown): result is { error: stri
   return typeof error === "string" && /^missing_[a-z0-9_]*api_key$/i.test(error);
 }
 
-/** Reused helper for run Web Search behavior in src/web-search. */
+/** Runs web_search across ordered providers, falling back only when selection was implicit. */
 export async function runWebSearch(params: RunWebSearchParams): Promise<RunWebSearchResult> {
   const config = resolveWebSearchRuntimeConfig({
     config: params.config,
@@ -509,7 +509,7 @@ export async function runWebSearch(params: RunWebSearchParams): Promise<RunWebSe
   throw lastError instanceof Error ? lastError : new Error(String(lastError));
 }
 
-/** Reused constant for testing behavior in src/web-search. */
+/** Test-only access to provider-selection helpers that are intentionally local in production. */
 export const testing = {
   resolveSearchConfig,
   resolveSearchProvider: resolveWebSearchProviderId,
@@ -519,5 +519,5 @@ export const testing = {
   resolveExplicitWebSearchProviderPluginIds,
   hasExplicitWebSearchSelection,
 };
-/** Re-exported API for src/web-search, starting with testing. */
+/** Internal test seam for provider selection and fallback behavior. */
 export { testing as __testing };
