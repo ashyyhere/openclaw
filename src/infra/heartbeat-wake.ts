@@ -1,20 +1,21 @@
-// infra heartbeat wake helpers and runtime behavior.
+// Heartbeat wake coalescing and retry scheduling.
+// Multiple wake requests collapse by target and retry when the heartbeat runner is busy.
 import { normalizeOptionalString } from "../shared/string-coerce.js";
 import { normalizeHeartbeatWakeReason } from "./heartbeat-reason.js";
 
-/** Shared type for Heartbeat Run Result in src/infra. */
+/** Result returned by the heartbeat runner after one wake attempt. */
 export type HeartbeatRunResult =
   | { status: "ran"; durationMs: number }
   | { status: "skipped"; reason: string }
   | { status: "failed"; reason: string };
 
-/** Reused constant for HEARTBEAT SKIP REQUESTS IN FLIGHT behavior in src/infra. */
+/** Busy skip reason when active agent requests block heartbeat work. */
 export const HEARTBEAT_SKIP_REQUESTS_IN_FLIGHT = "requests-in-flight";
-/** Reused constant for HEARTBEAT SKIP CRON IN PROGRESS behavior in src/infra. */
+/** Busy skip reason when cron processing is already running. */
 export const HEARTBEAT_SKIP_CRON_IN_PROGRESS = "cron-in-progress";
-/** Reused constant for HEARTBEAT SKIP LANES BUSY behavior in src/infra. */
+/** Busy skip reason when execution lanes are unavailable. */
 export const HEARTBEAT_SKIP_LANES_BUSY = "lanes-busy";
-/** Shared type for Retryable Heartbeat Busy Skip Reason in src/infra. */
+/** Busy skip reasons that should be retried after a short backoff. */
 export type RetryableHeartbeatBusySkipReason =
   | typeof HEARTBEAT_SKIP_REQUESTS_IN_FLIGHT
   | typeof HEARTBEAT_SKIP_CRON_IN_PROGRESS
@@ -26,15 +27,15 @@ const RETRYABLE_BUSY_SKIP_REASONS = new Set([
   HEARTBEAT_SKIP_LANES_BUSY,
 ]);
 
-/** Reused helper for is Retryable Heartbeat Busy Skip Reason behavior in src/infra. */
+/** Return whether a heartbeat skip reason should be retried. */
 export function isRetryableHeartbeatBusySkipReason(reason: string): boolean {
   return RETRYABLE_BUSY_SKIP_REASONS.has(reason);
 }
 
-/** Shared type for Heartbeat Wake Intent in src/infra. */
+/** Urgency class for a heartbeat wake request. */
 export type HeartbeatWakeIntent = "scheduled" | "event" | "immediate" | "manual";
 
-/** Shared type for Heartbeat Wake Source in src/infra. */
+/** Origin subsystem that requested a heartbeat wake. */
 export type HeartbeatWakeSource =
   | "interval"
   | "manual"
@@ -50,14 +51,14 @@ export type HeartbeatWakeSource =
   | "retry"
   | "other";
 
-/** Shared type for Heartbeat Wake Override in src/infra. */
+/** Optional heartbeat target override carried with a wake request. */
 export type HeartbeatWakeOverride = {
   target?: string;
   to?: string | undefined;
   accountId?: string | undefined;
 };
 
-/** Shared type for Heartbeat Wake Request in src/infra. */
+/** Normalized wake request passed to the heartbeat runner. */
 export type HeartbeatWakeRequest = {
   source: HeartbeatWakeSource;
   intent: HeartbeatWakeIntent;
@@ -67,17 +68,17 @@ export type HeartbeatWakeRequest = {
   heartbeat?: HeartbeatWakeOverride;
 };
 
-/** Shared type for Heartbeat Wake Handler in src/infra. */
+/** Registered heartbeat runner invoked by the wake scheduler. */
 export type HeartbeatWakeHandler = (opts: HeartbeatWakeRequest) => Promise<HeartbeatRunResult>;
 
 let heartbeatsEnabled = true;
 
-/** Reused helper for set Heartbeats Enabled behavior in src/infra. */
+/** Toggle global heartbeat execution. */
 export function setHeartbeatsEnabled(enabled: boolean) {
   heartbeatsEnabled = enabled;
 }
 
-/** Reused helper for are Heartbeats Enabled behavior in src/infra. */
+/** Return whether global heartbeat execution is enabled. */
 export function areHeartbeatsEnabled(): boolean {
   return heartbeatsEnabled;
 }
@@ -325,7 +326,7 @@ export function setHeartbeatWakeHandler(next: HeartbeatWakeHandler | null): () =
   };
 }
 
-/** Reused helper for request Heartbeat behavior in src/infra. */
+/** Queue a heartbeat wake and schedule coalesced execution. */
 export function requestHeartbeat(opts: {
   source: HeartbeatWakeSource;
   intent: HeartbeatWakeIntent;
@@ -346,17 +347,17 @@ export function requestHeartbeat(opts: {
   schedule(opts.coalesceMs ?? DEFAULT_COALESCE_MS, "normal");
 }
 
-/** Reused helper for has Heartbeat Wake Handler behavior in src/infra. */
+/** Return whether a heartbeat wake handler is currently registered. */
 export function hasHeartbeatWakeHandler() {
   return handler !== null;
 }
 
-/** Reused helper for has Pending Heartbeat Wake behavior in src/infra. */
+/** Return whether queued, scheduled, or coalesced heartbeat work exists. */
 export function hasPendingHeartbeatWake() {
   return pendingWakes.size > 0 || Boolean(timer) || scheduled;
 }
 
-/** Reused helper for reset Heartbeat Wake State For Tests behavior in src/infra. */
+/** Reset heartbeat wake scheduler state for tests. */
 export function resetHeartbeatWakeStateForTests() {
   if (timer) {
     clearTimeout(timer);

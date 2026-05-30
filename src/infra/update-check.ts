@@ -1,4 +1,5 @@
-// infra update check helpers and runtime behavior.
+// Update status checks for git, dependencies, and npm registry targets.
+// Used by CLI/status surfaces before deciding whether an update is available or safe.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { runCommandWithTimeout } from "../process/exec.js";
@@ -8,10 +9,10 @@ import { compareOpenClawReleaseVersions } from "./npm-registry-spec.js";
 import { compareComparableSemver, parseComparableSemver } from "./semver-compare.js";
 import { channelToNpmTag, type UpdateChannel } from "./update-channels.js";
 
-/** Shared type for Package Manager in src/infra. */
+/** Package manager detected for an OpenClaw checkout or package root. */
 export type PackageManager = "pnpm" | "bun" | "npm" | "unknown";
 
-/** Shared type for Git Update Status in src/infra. */
+/** Git checkout status used to report branch, tag, dirty, and ahead/behind state. */
 export type GitUpdateStatus = {
   root: string;
   sha: string | null;
@@ -25,7 +26,7 @@ export type GitUpdateStatus = {
   error?: string;
 };
 
-/** Shared type for Deps Status in src/infra. */
+/** Dependency install freshness status relative to lockfile markers. */
 export type DepsStatus = {
   manager: PackageManager;
   status: "ok" | "missing" | "stale" | "unknown";
@@ -34,21 +35,21 @@ export type DepsStatus = {
   reason?: string;
 };
 
-/** Shared type for Registry Status in src/infra. */
+/** Registry version status for the selected update channel. */
 export type RegistryStatus = {
   latestVersion: string | null;
   tag?: string;
   error?: string;
 };
 
-/** Shared type for Npm Tag Status in src/infra. */
+/** npm dist-tag lookup result. */
 export type NpmTagStatus = {
   tag: string;
   version: string | null;
   error?: string;
 };
 
-/** Shared type for Npm Package Target Status in src/infra. */
+/** npm package target lookup result including engines.node metadata. */
 export type NpmPackageTargetStatus = {
   target: string;
   version: string | null;
@@ -56,7 +57,7 @@ export type NpmPackageTargetStatus = {
   error?: string;
 };
 
-/** Shared type for Update Check Result in src/infra. */
+/** Combined update status for a git checkout, package root, or unknown install. */
 export type UpdateCheckResult = {
   root: string | null;
   installKind: "git" | "package" | "unknown";
@@ -66,7 +67,7 @@ export type UpdateCheckResult = {
   registry?: RegistryStatus;
 };
 
-/** Reused helper for format Git Install Label behavior in src/infra. */
+/** Format a compact label for the current git install state. */
 export function formatGitInstallLabel(update: UpdateCheckResult): string | null {
   if (update.installKind !== "git") {
     return null;
@@ -106,7 +107,7 @@ async function detectGitRoot(root: string): Promise<string | null> {
   return top ? path.resolve(top) : null;
 }
 
-/** Reused helper for check Git Update Status behavior in src/infra. */
+/** Inspect a git checkout and optionally fetch upstream before ahead/behind counts. */
 export async function checkGitUpdateStatus(params: {
   root: string;
   timeoutMs?: number;
@@ -236,7 +237,7 @@ function resolveDepsMarker(params: { root: string; manager: PackageManager }): {
   return { lockfilePath: null, markerPath: null };
 }
 
-/** Reused helper for check Deps Status behavior in src/infra. */
+/** Compare lockfile and node_modules marker freshness for a package manager. */
 export async function checkDepsStatus(params: {
   root: string;
   manager: PackageManager;
@@ -305,7 +306,7 @@ export async function checkDepsStatus(params: {
   };
 }
 
-/** Reused helper for fetch Npm Latest Version behavior in src/infra. */
+/** Fetch the latest OpenClaw version from the npm registry. */
 export async function fetchNpmLatestVersion(params?: {
   timeoutMs?: number;
 }): Promise<RegistryStatus> {
@@ -316,7 +317,7 @@ export async function fetchNpmLatestVersion(params?: {
   };
 }
 
-/** Reused helper for fetch Npm Registry Version For Channel behavior in src/infra. */
+/** Fetch the npm version for an OpenClaw update channel. */
 export async function fetchNpmRegistryVersionForChannel(params: {
   channel: UpdateChannel;
   timeoutMs?: number;
@@ -331,7 +332,7 @@ export async function fetchNpmRegistryVersionForChannel(params: {
   };
 }
 
-/** Reused helper for fetch Npm Package Target Status behavior in src/infra. */
+/** Fetch npm metadata for one OpenClaw version/tag target. */
 export async function fetchNpmPackageTargetStatus(params: {
   target: string;
   timeoutMs?: number;
@@ -359,7 +360,7 @@ export async function fetchNpmPackageTargetStatus(params: {
   }
 }
 
-/** Reused helper for fetch Npm Tag Version behavior in src/infra. */
+/** Fetch the version pointed to by one npm dist-tag. */
 export async function fetchNpmTagVersion(params: {
   tag: string;
   timeoutMs?: number;
@@ -375,7 +376,7 @@ export async function fetchNpmTagVersion(params: {
   };
 }
 
-/** Reused helper for resolve Npm Channel Tag behavior in src/infra. */
+/** Resolve the effective npm tag/version for an update channel. */
 export async function resolveNpmChannelTag(params: {
   channel: UpdateChannel;
   timeoutMs?: number;
@@ -400,7 +401,7 @@ export async function resolveNpmChannelTag(params: {
   return { tag: channelTag, version: channelStatus.version };
 }
 
-/** Reused helper for compare Semver Strings behavior in src/infra. */
+/** Compare OpenClaw/semver version strings, including legacy beta forms. */
 export function compareSemverStrings(a: string | null, b: string | null): number | null {
   if (a && b) {
     const openClawReleaseCmp = compareOpenClawReleaseVersions(a, b);
@@ -414,7 +415,7 @@ export function compareSemverStrings(a: string | null, b: string | null): number
   );
 }
 
-/** Reused helper for check Update Status behavior in src/infra. */
+/** Build combined update status for the current install root. */
 export async function checkUpdateStatus(params: {
   root: string | null;
   timeoutMs?: number;
