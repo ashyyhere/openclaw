@@ -1,4 +1,4 @@
-// routing resolve route helpers and runtime behavior.
+// Inbound channel/account/peer routing to agents and session keys.
 import { resolveDefaultAgentId } from "../agents/agent-scope.js";
 import type { ChatType } from "../channels/chat-type.js";
 import { normalizeChatType } from "../channels/chat-type.js";
@@ -26,13 +26,13 @@ import {
 /** @deprecated Use ChatType from channels/chat-type.js */
 export type RoutePeerKind = ChatType;
 
-/** Shared type for Route Peer in src/routing. */
+/** Normalized peer identity used for route binding and session-key matching. */
 export type RoutePeer = {
   kind: ChatType;
   id: string;
 };
 
-/** Shared type for Resolve Agent Route Input in src/routing. */
+/** Inbound routing context used to select an agent and session key. */
 export type ResolveAgentRouteInput = {
   cfg: OpenClawConfig;
   channel: string;
@@ -46,7 +46,7 @@ export type ResolveAgentRouteInput = {
   memberRoleIds?: string[];
 };
 
-/** Shared type for Resolved Agent Route in src/routing. */
+/** Agent route decision including session key and match provenance. */
 export type ResolvedAgentRoute = {
   agentId: string;
   channel: string;
@@ -70,10 +70,10 @@ export type ResolvedAgentRoute = {
     | "default";
 };
 
-/** Re-exported API for src/routing, starting with DEFAULT ACCOUNT ID. */
+/** Default account id used when channel inputs omit account context. */
 export { DEFAULT_ACCOUNT_ID } from "./session-key.js";
 
-/** Reused helper for derive Last Route Policy behavior in src/routing. */
+/** Chooses whether inbound last-route state is stored on main or session key. */
 export function deriveLastRoutePolicy(params: {
   sessionKey: string;
   mainSessionKey: string;
@@ -81,7 +81,7 @@ export function deriveLastRoutePolicy(params: {
   return params.sessionKey === params.mainSessionKey ? "main" : "session";
 }
 
-/** Reused helper for resolve Inbound Last Route Session Key behavior in src/routing. */
+/** Resolves the session key that should receive inbound last-route updates. */
 export function resolveInboundLastRouteSessionKey(params: {
   route: Pick<ResolvedAgentRoute, "lastRoutePolicy" | "mainSessionKey">;
   sessionKey: string;
@@ -97,7 +97,7 @@ function normalizeId(value: unknown): string {
   return normalizeRouteBindingId(value);
 }
 
-/** Reused helper for build Agent Session Key behavior in src/routing. */
+/** Builds the session key for an agent route using peer and DM scope rules. */
 export function buildAgentSessionKey(params: {
   agentId: string;
   channel: string;
@@ -158,7 +158,7 @@ function resolveAgentLookupCache(cfg: OpenClawConfig): AgentLookupCache {
   return next;
 }
 
-/** Reused helper for pick First Existing Agent Id behavior in src/routing. */
+/** Resolves a requested agent id to an existing configured id or default. */
 export function pickFirstExistingAgentId(cfg: OpenClawConfig, agentId: string): string {
   const lookup = resolveAgentLookupCache(cfg);
   const trimmed = (agentId ?? "").trim();
@@ -616,7 +616,7 @@ function matchesBindingScope(match: NormalizedBindingMatch, scope: BindingScope)
   return routeBindingScopeMatches(match, scope);
 }
 
-/** Reused helper for resolve Agent Route behavior in src/routing. */
+/** Resolves an inbound route by binding tiers, then falls back to default agent. */
 export function resolveAgentRoute(input: ResolveAgentRouteInput): ResolvedAgentRoute {
   const channel = normalizeToken(input.channel);
   const accountId = normalizeAccountId(input.accountId);

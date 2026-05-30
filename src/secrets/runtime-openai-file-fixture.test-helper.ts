@@ -1,4 +1,4 @@
-// secrets runtime openai file fixture test helper helpers and runtime behavior.
+// Test fixtures for OpenAI SecretRef resolution from runtime secret files.
 import fs from "node:fs/promises";
 import path from "node:path";
 import { expect } from "vitest";
@@ -9,33 +9,33 @@ import type { PluginOrigin } from "../plugins/plugin-origin.types.js";
 import type { captureEnv } from "../test-utils/env.js";
 import { getActiveSecretsRuntimeSnapshot } from "./runtime.js";
 
-/** Reused constant for OPENAI ENV KEY REF behavior in src/secrets. */
+/** SecretRef fixture for OpenAI API keys resolved from the environment. */
 export const OPENAI_ENV_KEY_REF = {
   source: "env",
   provider: "default",
   id: "OPENAI_API_KEY",
 } as const;
 
-/** Reused constant for OPENAI FILE KEY REF behavior in src/secrets. */
+/** SecretRef fixture for OpenAI API keys resolved from the temp secret file. */
 export const OPENAI_FILE_KEY_REF = {
   source: "file",
   provider: "default",
   id: "/providers/openai/apiKey",
 } as const;
 
-/** Reused constant for EMPTY LOADABLE PLUGIN ORIGINS behavior in src/secrets. */
+/** Empty plugin-origin map used by tests that do not need plugin manifests. */
 export const EMPTY_LOADABLE_PLUGIN_ORIGINS: ReadonlyMap<string, PluginOrigin> = new Map();
-/** Shared type for Secrets Runtime Env Snapshot in src/secrets. */
+/** Captured environment snapshot type used by secrets runtime tests. */
 export type SecretsRuntimeEnvSnapshot = ReturnType<typeof captureEnv>;
 
 const allowInsecureTempSecretFile = process.platform === "win32";
 
-/** Reused helper for as Config behavior in src/secrets. */
+/** Casts fixture literals to OpenClawConfig without widening every nested field. */
 export function asConfig(value: unknown): OpenClawConfig {
   return value as OpenClawConfig;
 }
 
-/** Reused helper for load Auth Store With Profiles behavior in src/secrets. */
+/** Builds a minimal auth-profile store around fixture profiles. */
 export function loadAuthStoreWithProfiles(
   profiles: AuthProfileStore["profiles"],
 ): AuthProfileStore {
@@ -45,7 +45,7 @@ export function loadAuthStoreWithProfiles(
   };
 }
 
-/** Reused helper for create Open AIFile Runtime Fixture behavior in src/secrets. */
+/** Creates temp config, secret, and auth-profile files for OpenAI file SecretRefs. */
 export async function createOpenAIFileRuntimeFixture(home: string) {
   const configDir = path.join(home, ".openclaw");
   const secretFile = path.join(configDir, "secrets.json");
@@ -85,7 +85,7 @@ export async function createOpenAIFileRuntimeFixture(home: string) {
   };
 }
 
-/** Reused helper for create Open AIFile Runtime Config behavior in src/secrets. */
+/** Builds config that points OpenAI provider auth at the fixture secret file. */
 export function createOpenAIFileRuntimeConfig(secretFile: string): OpenClawConfig {
   return asConfig({
     secrets: {
@@ -110,7 +110,7 @@ export function createOpenAIFileRuntimeConfig(secretFile: string): OpenClawConfi
   });
 }
 
-/** Reused helper for expect Resolved Open AIRuntime behavior in src/secrets. */
+/** Asserts OpenAI config and auth profile SecretRefs resolved from fixture files. */
 export function expectResolvedOpenAIRuntime(agentDir: string) {
   expect(getRuntimeConfig().models?.providers?.openai?.apiKey).toBe("sk-file-runtime");
   const activeAuthStore = getActiveSecretsRuntimeSnapshot()?.authStores.find(
